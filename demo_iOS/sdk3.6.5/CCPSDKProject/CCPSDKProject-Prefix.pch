@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'CCPSDKProject' target in the 'CCPSDKProject' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif

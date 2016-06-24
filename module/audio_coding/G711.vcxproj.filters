@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{b651c2fe-1df5-4893-b9a8-477557dd28c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{09e178d4-1a2d-4b17-80a9-194a00b4e46c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="codecs\g711\audio_encoder_pcm.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\g711\g711.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\g711\g711_interface.c">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="codecs\g711\include\audio_encoder_pcm.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\g711\g711.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\g711\include\g711_interface.h">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,429 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AD1950771C5EFF48003841BB /* arith_routines_hist.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19505C1C5EFF48003841BB /* arith_routines_hist.c */; };
+		AD1950781C5EFF48003841BB /* arith_routines_logist.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19505D1C5EFF48003841BB /* arith_routines_logist.c */; };
+		AD1950791C5EFF48003841BB /* arith_routines.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19505E1C5EFF48003841BB /* arith_routines.c */; };
+		AD19507A1C5EFF48003841BB /* audio_encoder_isac.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD1950601C5EFF48003841BB /* audio_encoder_isac.cc */; };
+		AD19507B1C5EFF48003841BB /* bandwidth_estimator.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950611C5EFF48003841BB /* bandwidth_estimator.c */; };
+		AD19507C1C5EFF48003841BB /* crc.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950631C5EFF48003841BB /* crc.c */; };
+		AD19507D1C5EFF48003841BB /* decode_bwe.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950651C5EFF48003841BB /* decode_bwe.c */; };
+		AD19507E1C5EFF48003841BB /* decode.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950661C5EFF48003841BB /* decode.c */; };
+		AD19507F1C5EFF48003841BB /* encode_lpc_swb.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950671C5EFF48003841BB /* encode_lpc_swb.c */; };
+		AD1950801C5EFF48003841BB /* encode.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950691C5EFF48003841BB /* encode.c */; };
+		AD1950811C5EFF48003841BB /* entropy_coding.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19506A1C5EFF48003841BB /* entropy_coding.c */; };
+		AD1950821C5EFF48003841BB /* fft.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19506C1C5EFF48003841BB /* fft.c */; };
+		AD1950831C5EFF48003841BB /* filter_functions.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19506E1C5EFF48003841BB /* filter_functions.c */; };
+		AD1950841C5EFF48003841BB /* filterbank_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19506F1C5EFF48003841BB /* filterbank_tables.c */; };
+		AD1950851C5EFF48003841BB /* filterbanks.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950711C5EFF48003841BB /* filterbanks.c */; };
+		AD1950861C5EFF48003841BB /* intialize.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950721C5EFF48003841BB /* intialize.c */; };
+		AD1950871C5EFF48003841BB /* isac.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950731C5EFF48003841BB /* isac.c */; };
+		AD1950881C5EFF48003841BB /* lattice.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950741C5EFF48003841BB /* lattice.c */; };
+		AD1950891C5EFF48003841BB /* lpc_analysis.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950751C5EFF48003841BB /* lpc_analysis.c */; };
+		AD19509B1C5EFFCE003841BB /* lpc_gain_swb_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19508B1C5EFFCE003841BB /* lpc_gain_swb_tables.c */; };
+		AD19509C1C5EFFCE003841BB /* lpc_shape_swb12_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19508D1C5EFFCE003841BB /* lpc_shape_swb12_tables.c */; };
+		AD19509D1C5EFFCE003841BB /* lpc_shape_swb16_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19508F1C5EFFCE003841BB /* lpc_shape_swb16_tables.c */; };
+		AD19509E1C5EFFCE003841BB /* lpc_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950911C5EFFCE003841BB /* lpc_tables.c */; };
+		AD19509F1C5EFFCE003841BB /* pitch_estimator.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950931C5EFFCE003841BB /* pitch_estimator.c */; };
+		AD1950A01C5EFFCE003841BB /* pitch_filter.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950951C5EFFCE003841BB /* pitch_filter.c */; };
+		AD1950A11C5EFFCE003841BB /* pitch_gain_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950961C5EFFCE003841BB /* pitch_gain_tables.c */; };
+		AD1950A21C5EFFCE003841BB /* spectrum_ar_model_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950981C5EFFCE003841BB /* spectrum_ar_model_tables.c */; };
+		AD1950A31C5EFFCE003841BB /* transform.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19509A1C5EFFCE003841BB /* transform.c */; };
+		AD1950A91C5EFFFF003841BB /* pitch_lag_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950A51C5EFFFF003841BB /* pitch_lag_tables.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AD19504A1C5EF93B003841BB /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		AD19504C1C5EF93B003841BB /* libiSAC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiSAC.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD1950581C5EF969003841BB /* audio_encoder_isac_t_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audio_encoder_isac_t_impl.h; path = ../../audio_encoder_isac_t_impl.h; sourceTree = "<group>"; };
+		AD1950591C5EF969003841BB /* audio_encoder_isac_t.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audio_encoder_isac_t.h; path = ../../audio_encoder_isac_t.h; sourceTree = "<group>"; };
+		AD19505A1C5EFE57003841BB /* audio_encoder_isac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audio_encoder_isac.h; path = ../../main/interface/audio_encoder_isac.h; sourceTree = "<group>"; };
+		AD19505B1C5EFE57003841BB /* isac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = isac.h; path = ../../main/interface/isac.h; sourceTree = "<group>"; };
+		AD19505C1C5EFF48003841BB /* arith_routines_hist.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arith_routines_hist.c; path = ../../main/source/arith_routines_hist.c; sourceTree = "<group>"; };
+		AD19505D1C5EFF48003841BB /* arith_routines_logist.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arith_routines_logist.c; path = ../../main/source/arith_routines_logist.c; sourceTree = "<group>"; };
+		AD19505E1C5EFF48003841BB /* arith_routines.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arith_routines.c; path = ../../main/source/arith_routines.c; sourceTree = "<group>"; };
+		AD19505F1C5EFF48003841BB /* arith_routines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = arith_routines.h; path = ../../main/source/arith_routines.h; sourceTree = "<group>"; };
+		AD1950601C5EFF48003841BB /* audio_encoder_isac.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = audio_encoder_isac.cc; path = ../../main/source/audio_encoder_isac.cc; sourceTree = "<group>"; };
+		AD1950611C5EFF48003841BB /* bandwidth_estimator.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bandwidth_estimator.c; path = ../../main/source/bandwidth_estimator.c; sourceTree = "<group>"; };
+		AD1950621C5EFF48003841BB /* bandwidth_estimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bandwidth_estimator.h; path = ../../main/source/bandwidth_estimator.h; sourceTree = "<group>"; };
+		AD1950631C5EFF48003841BB /* crc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = crc.c; path = ../../main/source/crc.c; sourceTree = "<group>"; };
+		AD1950641C5EFF48003841BB /* crc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = crc.h; path = ../../main/source/crc.h; sourceTree = "<group>"; };
+		AD1950651C5EFF48003841BB /* decode_bwe.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decode_bwe.c; path = ../../main/source/decode_bwe.c; sourceTree = "<group>"; };
+		AD1950661C5EFF48003841BB /* decode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decode.c; path = ../../main/source/decode.c; sourceTree = "<group>"; };
+		AD1950671C5EFF48003841BB /* encode_lpc_swb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = encode_lpc_swb.c; path = ../../main/source/encode_lpc_swb.c; sourceTree = "<group>"; };
+		AD1950681C5EFF48003841BB /* encode_lpc_swb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = encode_lpc_swb.h; path = ../../main/source/encode_lpc_swb.h; sourceTree = "<group>"; };
+		AD1950691C5EFF48003841BB /* encode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = encode.c; path = ../../main/source/encode.c; sourceTree = "<group>"; };
+		AD19506A1C5EFF48003841BB /* entropy_coding.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = entropy_coding.c; path = ../../main/source/entropy_coding.c; sourceTree = "<group>"; };
+		AD19506B1C5EFF48003841BB /* entropy_coding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = entropy_coding.h; path = ../../main/source/entropy_coding.h; sourceTree = "<group>"; };
+		AD19506C1C5EFF48003841BB /* fft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = fft.c; path = ../../main/source/fft.c; sourceTree = "<group>"; };
+		AD19506D1C5EFF48003841BB /* fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fft.h; path = ../../main/source/fft.h; sourceTree = "<group>"; };
+		AD19506E1C5EFF48003841BB /* filter_functions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = filter_functions.c; path = ../../main/source/filter_functions.c; sourceTree = "<group>"; };
+		AD19506F1C5EFF48003841BB /* filterbank_tables.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = filterbank_tables.c; path = ../../main/source/filterbank_tables.c; sourceTree = "<group>"; };
+		AD1950701C5EFF48003841BB /* filterbank_tables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = filterbank_tables.h; path = ../../main/source/filterbank_tables.h; sourceTree = "<group>"; };
+		AD1950711C5EFF48003841BB /* filterbanks.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = filterbanks.c; path = ../../main/source/filterbanks.c; sourceTree = "<group>"; };
+		AD1950721C5EFF48003841BB /* intialize.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = intialize.c; path = ../../main/source/intialize.c; sourceTree = "<group>"; };
+		AD1950731C5EFF48003841BB /* isac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = isac.c; path = ../../main/source/isac.c; sourceTree = "<group>"; };
+		AD1950741C5EFF48003841BB /* lattice.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lattice.c; path = ../../main/source/lattice.c; sourceTree = "<group>"; };
+		AD1950751C5EFF48003841BB /* lpc_analysis.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lpc_analysis.c; path = ../../main/source/lpc_analysis.c; sourceTree = "<group>"; };
+		AD1950761C5EFF48003841BB /* lpc_analysis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lpc_analysis.h; path = ../../main/source/lpc_analysis.h; sourceTree = "<group>"; };
+		AD19508A1C5EFFCE003841BB /* codec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = codec.h; path = ../../main/source/codec.h; sourceTree = "<group>"; };
+		AD19508B1C5EFFCE003841BB /* lpc_gain_swb_tables.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lpc_gain_swb_tables.c; path = ../../main/source/lpc_gain_swb_tables.c; sourceTree = "<group>"; };
+		AD19508C1C5EFFCE003841BB /* lpc_gain_swb_tables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lpc_gain_swb_tables.h; path = ../../main/source/lpc_gain_swb_tables.h; sourceTree = "<group>"; };
+		AD19508D1C5EFFCE003841BB /* lpc_shape_swb12_tables.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lpc_shape_swb12_tables.c; path = ../../main/source/lpc_shape_swb12_tables.c; sourceTree = "<group>"; };
+		AD19508E1C5EFFCE003841BB /* lpc_shape_swb12_tables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lpc_shape_swb12_tables.h; path = ../../main/source/lpc_shape_swb12_tables.h; sourceTree = "<group>"; };
+		AD19508F1C5EFFCE003841BB /* lpc_shape_swb16_tables.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lpc_shape_swb16_tables.c; path = ../../main/source/lpc_shape_swb16_tables.c; sourceTree = "<group>"; };
+		AD1950901C5EFFCE003841BB /* lpc_shape_swb16_tables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lpc_shape_swb16_tables.h; path = ../../main/source/lpc_shape_swb16_tables.h; sourceTree = "<group>"; };
+		AD1950911C5EFFCE003841BB /* lpc_tables.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lpc_tables.c; path = ../../main/source/lpc_tables.c; sourceTree = "<group>"; };
+		AD1950921C5EFFCE003841BB /* lpc_tables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lpc_tables.h; path = ../../main/source/lpc_tables.h; sourceTree = "<group>"; };
+		AD1950931C5EFFCE003841BB /* pitch_estimator.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pitch_estimator.c; path = ../../main/source/pitch_estimator.c; sourceTree = "<group>"; };
+		AD1950941C5EFFCE003841BB /* pitch_estimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pitch_estimator.h; path = ../../main/source/pitch_estimator.h; sourceTree = "<group>"; };
+		AD1950951C5EFFCE003841BB /* pitch_filter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pitch_filter.c; path = ../../main/source/pitch_filter.c; sourceTree = "<group>"; };
+		AD1950961C5EFFCE003841BB /* pitch_gain_tables.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pitch_gain_tables.c; path = ../../main/source/pitch_gain_tables.c; sourceTree = "<group>"; };
+		AD1950971C5EFFCE003841BB /* pitch_gain_tables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pitch_gain_tables.h; path = ../../main/source/pitch_gain_tables.h; sourceTree = "<group>"; };
+		AD1950981C5EFFCE003841BB /* spectrum_ar_model_tables.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = spectrum_ar_model_tables.c; path = ../../main/source/spectrum_ar_model_tables.c; sourceTree = "<group>"; };
+		AD1950991C5EFFCE003841BB /* spectrum_ar_model_tables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = spectrum_ar_model_tables.h; path = ../../main/source/spectrum_ar_model_tables.h; sourceTree = "<group>"; };
+		AD19509A1C5EFFCE003841BB /* transform.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = transform.c; path = ../../main/source/transform.c; sourceTree = "<group>"; };
+		AD1950A41C5EFFFF003841BB /* os_specific_inline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = os_specific_inline.h; path = ../../main/source/os_specific_inline.h; sourceTree = "<group>"; };
+		AD1950A51C5EFFFF003841BB /* pitch_lag_tables.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pitch_lag_tables.c; path = ../../main/source/pitch_lag_tables.c; sourceTree = "<group>"; };
+		AD1950A61C5EFFFF003841BB /* pitch_lag_tables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pitch_lag_tables.h; path = ../../main/source/pitch_lag_tables.h; sourceTree = "<group>"; };
+		AD1950A71C5EFFFF003841BB /* settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = settings.h; path = ../../main/source/settings.h; sourceTree = "<group>"; };
+		AD1950A81C5EFFFF003841BB /* structs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = structs.h; path = ../../main/source/structs.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AD1950491C5EF93B003841BB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AD1950431C5EF93B003841BB = {
+			isa = PBXGroup;
+			children = (
+				AD19504E1C5EF93B003841BB /* iSAC */,
+				AD19504D1C5EF93B003841BB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AD19504D1C5EF93B003841BB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AD19504C1C5EF93B003841BB /* libiSAC.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AD19504E1C5EF93B003841BB /* iSAC */ = {
+			isa = PBXGroup;
+			children = (
+				AD19505A1C5EFE57003841BB /* audio_encoder_isac.h */,
+				AD19505B1C5EFE57003841BB /* isac.h */,
+				AD1950581C5EF969003841BB /* audio_encoder_isac_t_impl.h */,
+				AD1950591C5EF969003841BB /* audio_encoder_isac_t.h */,
+				AD19505C1C5EFF48003841BB /* arith_routines_hist.c */,
+				AD19505D1C5EFF48003841BB /* arith_routines_logist.c */,
+				AD19505E1C5EFF48003841BB /* arith_routines.c */,
+				AD19505F1C5EFF48003841BB /* arith_routines.h */,
+				AD1950601C5EFF48003841BB /* audio_encoder_isac.cc */,
+				AD1950611C5EFF48003841BB /* bandwidth_estimator.c */,
+				AD1950621C5EFF48003841BB /* bandwidth_estimator.h */,
+				AD1950631C5EFF48003841BB /* crc.c */,
+				AD1950641C5EFF48003841BB /* crc.h */,
+				AD1950651C5EFF48003841BB /* decode_bwe.c */,
+				AD1950661C5EFF48003841BB /* decode.c */,
+				AD1950671C5EFF48003841BB /* encode_lpc_swb.c */,
+				AD1950681C5EFF48003841BB /* encode_lpc_swb.h */,
+				AD1950691C5EFF48003841BB /* encode.c */,
+				AD19506A1C5EFF48003841BB /* entropy_coding.c */,
+				AD19506B1C5EFF48003841BB /* entropy_coding.h */,
+				AD19506C1C5EFF48003841BB /* fft.c */,
+				AD19506D1C5EFF48003841BB /* fft.h */,
+				AD19506E1C5EFF48003841BB /* filter_functions.c */,
+				AD19506F1C5EFF48003841BB /* filterbank_tables.c */,
+				AD1950701C5EFF48003841BB /* filterbank_tables.h */,
+				AD1950711C5EFF48003841BB /* filterbanks.c */,
+				AD1950721C5EFF48003841BB /* intialize.c */,
+				AD1950731C5EFF48003841BB /* isac.c */,
+				AD1950741C5EFF48003841BB /* lattice.c */,
+				AD1950751C5EFF48003841BB /* lpc_analysis.c */,
+				AD1950761C5EFF48003841BB /* lpc_analysis.h */,
+				AD19508A1C5EFFCE003841BB /* codec.h */,
+				AD19508B1C5EFFCE003841BB /* lpc_gain_swb_tables.c */,
+				AD19508C1C5EFFCE003841BB /* lpc_gain_swb_tables.h */,
+				AD19508D1C5EFFCE003841BB /* lpc_shape_swb12_tables.c */,
+				AD19508E1C5EFFCE003841BB /* lpc_shape_swb12_tables.h */,
+				AD19508F1C5EFFCE003841BB /* lpc_shape_swb16_tables.c */,
+				AD1950901C5EFFCE003841BB /* lpc_shape_swb16_tables.h */,
+				AD1950911C5EFFCE003841BB /* lpc_tables.c */,
+				AD1950921C5EFFCE003841BB /* lpc_tables.h */,
+				AD1950931C5EFFCE003841BB /* pitch_estimator.c */,
+				AD1950941C5EFFCE003841BB /* pitch_estimator.h */,
+				AD1950951C5EFFCE003841BB /* pitch_filter.c */,
+				AD1950961C5EFFCE003841BB /* pitch_gain_tables.c */,
+				AD1950971C5EFFCE003841BB /* pitch_gain_tables.h */,
+				AD1950981C5EFFCE003841BB /* spectrum_ar_model_tables.c */,
+				AD1950991C5EFFCE003841BB /* spectrum_ar_model_tables.h */,
+				AD19509A1C5EFFCE003841BB /* transform.c */,
+				AD1950A41C5EFFFF003841BB /* os_specific_inline.h */,
+				AD1950A51C5EFFFF003841BB /* pitch_lag_tables.c */,
+				AD1950A61C5EFFFF003841BB /* pitch_lag_tables.h */,
+				AD1950A71C5EFFFF003841BB /* settings.h */,
+				AD1950A81C5EFFFF003841BB /* structs.h */,
+			);
+			path = iSAC;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AD19504B1C5EF93B003841BB /* iSAC */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD1950551C5EF93B003841BB /* Build configuration list for PBXNativeTarget "iSAC" */;
+			buildPhases = (
+				AD1950481C5EF93B003841BB /* Sources */,
+				AD1950491C5EF93B003841BB /* Frameworks */,
+				AD19504A1C5EF93B003841BB /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iSAC;
+			productName = iSAC;
+			productReference = AD19504C1C5EF93B003841BB /* libiSAC.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AD1950441C5EF93B003841BB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = SeanLee;
+				TargetAttributes = {
+					AD19504B1C5EF93B003841BB = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = AD1950471C5EF93B003841BB /* Build configuration list for PBXProject "iSAC" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = AD1950431C5EF93B003841BB;
+			productRefGroup = AD19504D1C5EF93B003841BB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AD19504B1C5EF93B003841BB /* iSAC */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AD1950481C5EF93B003841BB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD19507C1C5EFF48003841BB /* crc.c in Sources */,
+				AD1950771C5EFF48003841BB /* arith_routines_hist.c in Sources */,
+				AD1950881C5EFF48003841BB /* lattice.c in Sources */,
+				AD1950841C5EFF48003841BB /* filterbank_tables.c in Sources */,
+				AD1950A31C5EFFCE003841BB /* transform.c in Sources */,
+				AD19507D1C5EFF48003841BB /* decode_bwe.c in Sources */,
+				AD1950801C5EFF48003841BB /* encode.c in Sources */,
+				AD1950871C5EFF48003841BB /* isac.c in Sources */,
+				AD19509E1C5EFFCE003841BB /* lpc_tables.c in Sources */,
+				AD1950861C5EFF48003841BB /* intialize.c in Sources */,
+				AD1950A01C5EFFCE003841BB /* pitch_filter.c in Sources */,
+				AD19509F1C5EFFCE003841BB /* pitch_estimator.c in Sources */,
+				AD19509D1C5EFFCE003841BB /* lpc_shape_swb16_tables.c in Sources */,
+				AD19507F1C5EFF48003841BB /* encode_lpc_swb.c in Sources */,
+				AD1950A21C5EFFCE003841BB /* spectrum_ar_model_tables.c in Sources */,
+				AD19507B1C5EFF48003841BB /* bandwidth_estimator.c in Sources */,
+				AD1950891C5EFF48003841BB /* lpc_analysis.c in Sources */,
+				AD1950851C5EFF48003841BB /* filterbanks.c in Sources */,
+				AD1950A11C5EFFCE003841BB /* pitch_gain_tables.c in Sources */,
+				AD19509B1C5EFFCE003841BB /* lpc_gain_swb_tables.c in Sources */,
+				AD1950821C5EFF48003841BB /* fft.c in Sources */,
+				AD19507A1C5EFF48003841BB /* audio_encoder_isac.cc in Sources */,
+				AD19507E1C5EFF48003841BB /* decode.c in Sources */,
+				AD1950791C5EFF48003841BB /* arith_routines.c in Sources */,
+				AD1950831C5EFF48003841BB /* filter_functions.c in Sources */,
+				AD19509C1C5EFFCE003841BB /* lpc_shape_swb12_tables.c in Sources */,
+				AD1950781C5EFF48003841BB /* arith_routines_logist.c in Sources */,
+				AD1950811C5EFF48003841BB /* entropy_coding.c in Sources */,
+				AD1950A91C5EFFFF003841BB /* pitch_lag_tables.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AD1950531C5EF93B003841BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		AD1950541C5EF93B003841BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AD1950561C5EF93B003841BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					../../../../../..,
+					../../../../../../common_audio/source/signal_processing/include,
+					../../../../../../../system_wrappers/interface,
+					../../../../../../audio_coding/codecs,
+					../../../../../../audio_coding/codecs/cng/include,
+					../../../../../../../system_wrappers/source,
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "armv7 arm64";
+			};
+			name = Debug;
+		};
+		AD1950571C5EF93B003841BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					../../../../../..,
+					../../../../../../common_audio/source/signal_processing/include,
+					../../../../../../../system_wrappers/interface,
+					../../../../../../audio_coding/codecs,
+					../../../../../../audio_coding/codecs/cng/include,
+					../../../../../../../system_wrappers/source,
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "armv7 arm64";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AD1950471C5EF93B003841BB /* Build configuration list for PBXProject "iSAC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD1950531C5EF93B003841BB /* Debug */,
+				AD1950541C5EF93B003841BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD1950551C5EF93B003841BB /* Build configuration list for PBXNativeTarget "iSAC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD1950561C5EF93B003841BB /* Debug */,
+				AD1950571C5EF93B003841BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AD1950441C5EF93B003841BB /* Project object */;
+}

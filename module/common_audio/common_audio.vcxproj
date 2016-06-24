@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9B70613B-D319-4B1F-812B-B292D8AC8A26}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>common_audio</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)build\$(Configuration)\lib</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)\obj\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)build\$(Configuration)\lib\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)\obj\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../system_wrappers/source;../../system_wrappers/interface;../audioprocess/source;../.;./source/signal_processing/include;./source/resampler;./source/resampler/include;./source/vad/include;./include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../system_wrappers/source;../../system_wrappers/interface;../audioprocess/source;../.;./source/signal_processing/include;./source/resampler;./source/resampler/include;./source/vad/include;./include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\audio_converter.cc" />
+    <ClCompile Include="source\audio_util.cc" />
+    <ClCompile Include="source\blocker.cc" />
+    <ClCompile Include="source\fir_filter.cc" />
+    <ClCompile Include="source\fir_filter_sse.cc" />
+    <ClCompile Include="source\resampler\push_resampler.cc" />
+    <ClCompile Include="source\resampler\push_sinc_resampler.cc" />
+    <ClCompile Include="source\resampler\resampler.cc" />
+    <ClCompile Include="source\resampler\sinc_resampler.cc" />
+    <ClCompile Include="source\resampler\sinc_resampler_sse.cc" />
+    <ClCompile Include="source\ring_buffer.c" />
+    <ClCompile Include="source\signal_processing\auto_correlation.c" />
+    <ClCompile Include="source\signal_processing\auto_corr_to_refl_coef.c" />
+    <ClCompile Include="source\signal_processing\complex_bit_reverse.c" />
+    <ClCompile Include="source\signal_processing\complex_fft.c" />
+    <ClCompile Include="source\signal_processing\copy_set_operations.c" />
+    <ClCompile Include="source\signal_processing\cross_correlation.c" />
+    <ClCompile Include="source\signal_processing\division_operations.c" />
+    <ClCompile Include="source\signal_processing\dot_product_with_scale.c" />
+    <ClCompile Include="source\signal_processing\downsample_fast.c" />
+    <ClCompile Include="source\signal_processing\energy.c" />
+    <ClCompile Include="source\signal_processing\filter_ar.c" />
+    <ClCompile Include="source\signal_processing\filter_ar_fast_q12.c" />
+    <ClCompile Include="source\signal_processing\filter_ma_fast_q12.c" />
+    <ClCompile Include="source\signal_processing\get_hanning_window.c" />
+    <ClCompile Include="source\signal_processing\get_scaling_square.c" />
+    <ClCompile Include="source\signal_processing\ilbc_specific_functions.c" />
+    <ClCompile Include="source\signal_processing\levinson_durbin.c" />
+    <ClCompile Include="source\signal_processing\lpc_to_refl_coef.c" />
+    <ClCompile Include="source\signal_processing\min_max_operations.c" />
+    <ClCompile Include="source\signal_processing\randomization_functions.c" />
+    <ClCompile Include="source\signal_processing\real_fft.c" />
+    <ClCompile Include="source\signal_processing\refl_coef_to_lpc.c" />
+    <ClCompile Include="source\signal_processing\resample.c" />
+    <ClCompile Include="source\signal_processing\resample_48khz.c" />
+    <ClCompile Include="source\signal_processing\resample_by_2.c" />
+    <ClCompile Include="source\signal_processing\resample_by_2_internal.c" />
+    <ClCompile Include="source\signal_processing\resample_fractional.c" />
+    <ClCompile Include="source\signal_processing\splitting_filter.c" />
+    <ClCompile Include="source\signal_processing\spl_init.c" />
+    <ClCompile Include="source\signal_processing\spl_sqrt.c" />
+    <ClCompile Include="source\signal_processing\spl_sqrt_floor.c" />
+    <ClCompile Include="source\signal_processing\sqrt_of_one_minus_x_squared.c" />
+    <ClCompile Include="source\signal_processing\vector_scaling_operations.c" />
+    <ClCompile Include="source\vad\vad.cc" />
+    <ClCompile Include="source\vad\vad_core.c" />
+    <ClCompile Include="source\vad\vad_filterbank.c" />
+    <ClCompile Include="source\vad\vad_gmm.c" />
+    <ClCompile Include="source\vad\vad_sp.c" />
+    <ClCompile Include="source\vad\webrtc_vad.c" />
+    <ClCompile Include="source\wav_file.cc" />
+    <ClCompile Include="source\wav_header.cc" />
+    <ClCompile Include="source\window_generator.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\audio_util.h" />
+    <ClInclude Include="source\audio_converter.h" />
+    <ClInclude Include="source\blocker.h" />
+    <ClInclude Include="source\fir_filter.h" />
+    <ClInclude Include="source\fir_filter_neon.h" />
+    <ClInclude Include="source\fir_filter_sse.h" />
+    <ClInclude Include="source\resampler\include\push_resampler.h" />
+    <ClInclude Include="source\resampler\include\resampler.h" />
+    <ClInclude Include="source\resampler\push_sinc_resampler.h" />
+    <ClInclude Include="source\resampler\sinc_resampler.h" />
+    <ClInclude Include="source\ring_buffer.h" />
+    <ClInclude Include="source\signal_processing\complex_fft_tables.h" />
+    <ClInclude Include="source\signal_processing\include\real_fft.h" />
+    <ClInclude Include="source\signal_processing\include\signal_processing_library.h" />
+    <ClInclude Include="source\signal_processing\include\spl_inl.h" />
+    <ClInclude Include="source\signal_processing\resample_by_2_internal.h" />
+    <ClInclude Include="source\vad\include\vad.h" />
+    <ClInclude Include="source\vad\include\webrtc_vad.h" />
+    <ClInclude Include="source\vad\vad_core.h" />
+    <ClInclude Include="source\vad\vad_filterbank.h" />
+    <ClInclude Include="source\vad\vad_gmm.h" />
+    <ClInclude Include="source\vad\vad_sp.h" />
+    <ClInclude Include="source\wav_file.h" />
+    <ClInclude Include="source\wav_header.h" />
+    <ClInclude Include="source\window_generator.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

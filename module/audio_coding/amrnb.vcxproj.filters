@@ -1,0 +1,468 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{db79e037-17cc-493c-b713-882ed43cd856}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{ba0e6812-ec5e-4a0e-bed4-2543479dad87}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\add.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\az_lsp.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\bitno_tab.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\bitreorder_tab.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\c2_9pf_tab.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\div_s.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\gains_tbl.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\gc_pred.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\get_const_tbls.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\gmed_n.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\gray_tbl.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\grid_tbl.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\int_lpc.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\inv_sqrt.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\inv_sqrt_tbl.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\l_shr_r.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\log2.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\log2_norm.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\log2_tbl.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\lsfwt.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\lsp.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\lsp_az.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\lsp_lsf.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\lsp_lsf_tbl.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\lsp_tab.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\mult_r.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\norm_l.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\norm_s.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\overflow_tbl.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\ph_disp_tab.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\pow2.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\pow2_tbl.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\pred_lt.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\q_plsf.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\q_plsf_3.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\q_plsf_3_tbl.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\q_plsf_5.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\q_plsf_5_tbl.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\qua_gain_tbl.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\reorder.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\residu.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\round.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\shr.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\shr_r.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\sqrt_l.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\sqrt_l_tbl.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\sub.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\syn_filt.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\weight_a.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\window_tab.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\a_refl.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\agc.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\amrdecode.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\b_cn_cod.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\bgnscd.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\c_g_aver.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\d_gain_c.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\d_gain_p.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\d_plsf.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\d_plsf_3.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\d_plsf_5.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\d2_9pf.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\d2_11pf.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\d3_14pf.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\d4_17pf.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\d8_31pf.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\d1035pf.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\dec_amr.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\dec_gain.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\dec_input_format_tab.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\dec_lag3.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\dec_lag6.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\dtx_dec.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\ec_gains.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\ex_ctrl.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\if2_to_ets.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\int_lsf.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\lsp_avg.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\ph_disp.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\post_pro.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\preemph.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\pstfilt.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\qgain475_tab.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\sp_dec.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\dec\src\wmf_to_ets.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\amrencode.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\autocorr.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\c2_9pf.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\c2_11pf.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\c3_14pf.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\c4_17pf.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\c8_31pf.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\c1035pf.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\calc_cor.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\calc_en.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\cbsearch.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\cl_ltp.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\cod_amr.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\convolve.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\cor_h.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\cor_h_x.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\cor_h_x2.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\corrwght_tab.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\div_32.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\dtx_enc.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\enc_lag3.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\enc_lag6.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\enc_output_format_tab.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\ets_to_if2.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\ets_to_wmf.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\g_adapt.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\g_code.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\g_pitch.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\gain_q.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\gsmamr_encoder_wrapper.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\hp_max.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\inter_36.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\inter_36_tab.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\l_abs.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\l_comp.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\l_extract.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\l_negate.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\lag_wind.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\lag_wind_tab.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\levinson.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\lpc.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\ol_ltp.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\p_ol_wgh.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\pitch_fr.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\pitch_ol.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\pre_big.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\pre_proc.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\prm2bits.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\q_gain_c.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\q_gain_p.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\qgain475.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\qgain795.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\qua_gain.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\s10_8pf.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\set_sign.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\sid_sync.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\sp_enc.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\spreproc.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\spstproc.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\ton_stab.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\enc\src\vad1.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\amrnb\amr_interface.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\amrnb\wrapper.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="codecs\opencore-amr\amrnb\amr_interface.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\opencore-amr\amrnb\interf_dec.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\opencore-amr\amrnb\interf_enc.h">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

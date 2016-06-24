@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{d2792f39-1886-4c69-abe7-818a2fd0cfd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{7b254b58-048b-48f5-9f73-13561a6b2fd7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="modules.gyp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="codecs\cng\cng_helpfuns.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\cng\include\audio_encoder_cng.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\cng\include\webrtc_cng.h">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="codecs\cng\cng_helpfuns.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\cng\webrtc_cng.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\cng\audio_encoder_cng.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

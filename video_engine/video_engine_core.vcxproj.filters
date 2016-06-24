@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{af926bcd-f769-4f1a-a5f7-dbf3fe26b5e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{d6c911f7-8190-436b-ba47-e6f051227916}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\vie_base.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vie_capture.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vie_codec.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vie_encryption.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vie_errors.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vie_external_codec.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vie_file.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vie_image_process.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vie_network.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vie_render.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vie_rtp_rtcp.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_base_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_capture_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_capturer.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_channel.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_channel_group.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_channel_manager.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_codec_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_defines.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_encoder.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_external_codec_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_frame_provider_base.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_image_process_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_input_manager.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_manager_base.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_network_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_receiver.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_ref_count.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_remb.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_render_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_render_manager.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_renderer.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_rtp_rtcp_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_sender.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_shared_data.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_sync_module.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\overuse_frame_detector.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_file_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_file_player.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_file_recorder.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_file_image.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\call_stats.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\encoder_state_feedback.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\report_block_stats.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\stream_synchronization.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\receive_statistics_proxy.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\send_statistics_proxy.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vie_desktop_share.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_desktop_capture.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_desktop_share_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vie_desktop_share_manager.h">
+      <Filter>source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\vie_base_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_capture_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_capturer.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_channel.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_channel_group.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_channel_manager.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_codec_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_encoder.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_external_codec_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_file_image.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_frame_provider_base.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_image_process_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_input_manager.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_manager_base.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_network_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_receiver.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_ref_count.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_remb.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_render_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_render_manager.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_renderer.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_rtp_rtcp_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_sender.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_shared_data.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_sync_module.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\overuse_frame_detector.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_file_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_file_player.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_file_recorder.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\call_stats.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\encoder_state_feedback.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\report_block_stats.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\stream_synchronization.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\receive_statistics_proxy.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\send_statistics_proxy.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_desktop_capture.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_desktop_share_impl.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vie_desktop_share_manager.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

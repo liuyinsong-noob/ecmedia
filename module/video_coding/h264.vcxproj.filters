@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="codecs\h264\h264.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\h264\H264_dec.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\h264\h264_record.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="codecs\h264\h264.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\h264\H264_dec.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\h264\H264_dec_c.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\h264\h264_record.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\h264\h264_util.h">
+      <Filter>source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{47842a14-6a0b-4ae0-a594-bc44b9143d06}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

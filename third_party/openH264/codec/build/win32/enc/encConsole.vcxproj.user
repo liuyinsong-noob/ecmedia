@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LocalDebuggerCommandArguments>-bf c:\\users\\yuanlirong\\samples\\encoded_samples.264 -utype 0 -org c:\\users\\yuanlirong\\samples\\Kimono_1920x1080_24.yuv -sw 1920 -sh 1080 -frms -1  -frin 24 -numtl 4 -iper 0 -nalsize 0 -spsid 1 -cabac 0 -denois 1 -scene 1 -bgd 1 -aq 1  -fs 0 -rc 0 -tarb 2500 -maxbrTotal 2500 -numl 4</LocalDebuggerCommandArguments>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+</Project>

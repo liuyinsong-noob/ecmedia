@@ -1,0 +1,29 @@
+1、解压x264
+2、到x264目录下
+#32位编译
+mkdir win32
+cd win32
+../configure --enable-shared --enable-win32thread --extra-ldflags=-static-libgcc --enable-strip 
+make install
+
+
+#64位编译
+mkdir win64
+cd win64
+../configure --cross-prefix=x86_64-w64-mingw32- --host=x86_64-w64-mingw32 --enable-shared --enable-win32thread --extra-ldflags=-static-libgcc --enable-strip
+make install
+
+
+3、使用VS2013编译，到x264目录下,修改configure 文件中CC="${CC-${cross_prefix}gcc}" 为 CC="${CC-${cross_prefix}cl}"
+#32位编译
+mkdir win32
+cd win32
+../configure --host=i686-pc-mingw32 --enable-shared --enable-win32thread --enable-strip --disable-avs --disable-swscale --disable-lavf --disable-ffms --disable-gpac --disable-lsmash
+make install
+
+
+#64位编译
+mkdir win64
+cd win64
+../configure --host=x86_64-pc-mingw64 --enable-shared --enable-win32thread --enable-strip --disable-avs --disable-swscale --disable-lavf --disable-ffms --disable-gpac --disable-lsmash
+make install

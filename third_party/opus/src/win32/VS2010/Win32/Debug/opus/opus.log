@@ -1,0 +1,49 @@
+﻿生成启动时间为 6/16 星期四 18:03:02。
+     1>项目“L:\svn\MyWebRtc_2.0\third_party\opus\src\win32\VS2010\opus.vcxproj”在节点 2 上(build 个目标)。
+     1>InitializeBuildStatus:
+         正在创建“Win32\Debug\opus\opus.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       PreBuildEvent:
+         Description: Generating version.h
+         "L:\svn\MyWebRtc_2.0\third_party\opus\src\win32\VS2010\..\..\win32\genversion.bat" "L:\svn\MyWebRtc_2.0\third_party\opus\src\win32\VS2010\..\..\win32\version.h" PACKAGE_VERSION
+         :VCEnd
+         fatal: Not a git repository: 'L:\svn\MyWebRtc_2.0\third_party\opus\src\win32\..\.git'
+       ClCompile:
+         所有输出均为最新。
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I../../silk /I../../celt /I../../win32 /I../../include /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /Od /Oy- /D HAVE_CONFIG_H /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Debug\opus\\" /Fd"Win32\Debug\opus\vc100.pdb" /Gd /TC /wd4996 /analyze- /errorReport:prompt ..\..\src\analysis.c ..\..\src\mlp.c ..\..\src\mlp_data.c ..\..\src\opus.c ..\..\src\opus_compare.c ..\..\src\opus_decoder.c ..\..\src\opus_encoder.c ..\..\src\opus_multistream.c ..\..\src\opus_multistream_decoder.c ..\..\src\opus_multistream_encoder.c ..\..\src\repacketizer.c
+         repacketizer.c
+         opus_multistream_encoder.c
+         opus_multistream_decoder.c
+         opus_multistream.c
+         opus_encoder.c
+         opus_decoder.c
+         opus_compare.c
+     1>..\..\src\opus_compare.c(78): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+     1>..\..\src\opus_compare.c(233): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>..\..\src\opus_compare.c(349): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+     1>..\..\src\opus_compare.c(367): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+         opus.c
+         mlp_data.c
+         mlp.c
+         analysis.c
+         正在生成代码...
+       Lib:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"L:\svn\MyWebRtc_2.0\demo_Win\build\Debug\lib\opus.lib" /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" /NOLOGO Win32\Debug\opus\analysis.obj
+         Win32\Debug\opus\mlp.obj
+         Win32\Debug\opus\mlp_data.obj
+         Win32\Debug\opus\opus.obj
+         Win32\Debug\opus\opus_compare.obj
+         Win32\Debug\opus\opus_decoder.obj
+         Win32\Debug\opus\opus_encoder.obj
+         Win32\Debug\opus\opus_multistream.obj
+         Win32\Debug\opus\opus_multistream_decoder.obj
+         Win32\Debug\opus\opus_multistream_encoder.obj
+         Win32\Debug\opus\repacketizer.obj
+         opus.vcxproj -> L:\svn\MyWebRtc_2.0\demo_Win\build\Debug\lib\opus.lib
+       FinalizeBuildStatus:
+         正在删除文件“Win32\Debug\opus\opus.unsuccessfulbuild”。
+         正在对“Win32\Debug\opus\opus.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“L:\svn\MyWebRtc_2.0\third_party\opus\src\win32\VS2010\opus.vcxproj”(build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:01.36

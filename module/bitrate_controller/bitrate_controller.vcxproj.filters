@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{c5938d66-dcf4-43ae-8449-dea18820c89e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{ee49da6b-f530-4944-b082-a31a50b540c7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\bitrate_controller.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\bitrate_controller_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\send_side_bandwidth_estimation.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\remb_suppressor.h">
+      <Filter>source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\bitrate_controller_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\send_side_bandwidth_estimation.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\remb_suppressor.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

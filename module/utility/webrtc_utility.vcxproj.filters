@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{88f404b3-1e6f-4bde-81d9-f564055dbf48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{b0f31a8f-bc6b-4b90-84f7-9eae2a61c99d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\audio_frame_operations.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\file_player.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\file_recorder.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\process_thread.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rtp_dump.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\coder.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\file_player_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\file_recorder_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\process_thread_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\rtp_dump_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\audio_frame_operations.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\coder.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\file_player_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\file_recorder_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\process_thread_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\rtp_dump_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\frame_scaler.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\video_coder.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\video_frames_queue.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

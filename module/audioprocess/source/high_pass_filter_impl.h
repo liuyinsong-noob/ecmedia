@@ -1,0 +1,50 @@
+/*
+ *  Copyright (c) 2012 The WebRTC project authors. All Rights Reserved.
+ *
+ *  Use of this source code is governed by a BSD-style license
+ *  that can be found in the LICENSE file in the root of the source
+ *  tree. An additional intellectual property rights grant can be found
+ *  in the file PATENTS.  All contributing project authors may
+ *  be found in the AUTHORS file in the root of the source tree.
+ */
+
+#ifndef WEBRTC_MODULES_AUDIO_PROCESSING_HIGH_PASS_FILTER_IMPL_H_
+#define WEBRTC_MODULES_AUDIO_PROCESSING_HIGH_PASS_FILTER_IMPL_H_
+
+#include "audio_processing.h"
+#include "processing_component.h"
+
+namespace cloopenwebrtc {
+
+class AudioBuffer;
+class CriticalSectionWrapper;
+
+class HighPassFilterImpl : public HighPassFilter,
+                           public ProcessingComponent {
+ public:
+  HighPassFilterImpl(const AudioProcessing* apm, CriticalSectionWrapper* crit);
+  virtual ~HighPassFilterImpl();
+
+  int ProcessCaptureAudio(AudioBuffer* audio);
+
+  // HighPassFilter implementation.
+  virtual bool is_enabled() const OVERRIDE;
+
+ private:
+  // HighPassFilter implementation.
+  virtual int Enable(bool enable) OVERRIDE;
+
+  // ProcessingComponent implementation.
+  virtual void* CreateHandle() const OVERRIDE;
+  virtual int InitializeHandle(void* handle) const OVERRIDE;
+  virtual int ConfigureHandle(void* handle) const OVERRIDE;
+  virtual void DestroyHandle(void* handle) const OVERRIDE;
+  virtual int num_handles_required() const OVERRIDE;
+  virtual int GetHandleError(void* handle) const OVERRIDE;
+
+  const AudioProcessing* apm_;
+  CriticalSectionWrapper* crit_;
+};
+}  // namespace cloopenwebrtc
+
+#endif  // WEBRTC_MODULES_AUDIO_PROCESSING_HIGH_PASS_FILTER_IMPL_H_

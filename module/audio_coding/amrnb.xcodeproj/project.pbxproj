@@ -1,0 +1,1358 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3FAA8C5915C8CB9B00561C64 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAA8C5815C8CB9B00561C64 /* Foundation.framework */; };
+		3FAA8CBD15C8CE1600561C64 /* abs_s.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C6B15C8CE1600561C64 /* abs_s.h */; };
+		3FAA8CBE15C8CE1600561C64 /* add.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C6C15C8CE1600561C64 /* add.h */; };
+		3FAA8CBF15C8CE1600561C64 /* az_lsp.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C6D15C8CE1600561C64 /* az_lsp.h */; };
+		3FAA8CC015C8CE1600561C64 /* basic_op_arm_gcc_v5.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C6E15C8CE1600561C64 /* basic_op_arm_gcc_v5.h */; };
+		3FAA8CC115C8CE1600561C64 /* basic_op_c_equivalent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C6F15C8CE1600561C64 /* basic_op_c_equivalent.h */; };
+		3FAA8CC215C8CE1600561C64 /* basic_op.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7015C8CE1600561C64 /* basic_op.h */; };
+		3FAA8CC315C8CE1600561C64 /* basicop_malloc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7115C8CE1600561C64 /* basicop_malloc.h */; };
+		3FAA8CC415C8CE1600561C64 /* bitno_tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7215C8CE1600561C64 /* bitno_tab.h */; };
+		3FAA8CC515C8CE1600561C64 /* bitreorder_tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7315C8CE1600561C64 /* bitreorder_tab.h */; };
+		3FAA8CC615C8CE1600561C64 /* bytesused.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7415C8CE1600561C64 /* bytesused.h */; };
+		3FAA8CC715C8CE1600561C64 /* cnst_vad.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7515C8CE1600561C64 /* cnst_vad.h */; };
+		3FAA8CC815C8CE1600561C64 /* cnst.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7615C8CE1600561C64 /* cnst.h */; };
+		3FAA8CC915C8CE1600561C64 /* d_gain_c.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7715C8CE1600561C64 /* d_gain_c.h */; };
+		3FAA8CCA15C8CE1600561C64 /* d_gain_p.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7815C8CE1600561C64 /* d_gain_p.h */; };
+		3FAA8CCB15C8CE1600561C64 /* d_plsf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7915C8CE1600561C64 /* d_plsf.h */; };
+		3FAA8CCC15C8CE1600561C64 /* div_s.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7A15C8CE1600561C64 /* div_s.h */; };
+		3FAA8CCD15C8CE1600561C64 /* dtx_common_def.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7B15C8CE1600561C64 /* dtx_common_def.h */; };
+		3FAA8CCE15C8CE1600561C64 /* frame_type_3gpp.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7C15C8CE1600561C64 /* frame_type_3gpp.h */; };
+		3FAA8CCF15C8CE1600561C64 /* frame.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7D15C8CE1600561C64 /* frame.h */; };
+		3FAA8CD015C8CE1600561C64 /* gc_pred.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7E15C8CE1600561C64 /* gc_pred.h */; };
+		3FAA8CD115C8CE1600561C64 /* get_const_tbls.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7F15C8CE1600561C64 /* get_const_tbls.h */; };
+		3FAA8CD215C8CE1600561C64 /* gmed_n.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8015C8CE1600561C64 /* gmed_n.h */; };
+		3FAA8CD315C8CE1600561C64 /* gsm_amr_typedefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8115C8CE1600561C64 /* gsm_amr_typedefs.h */; };
+		3FAA8CD415C8CE1600561C64 /* int_lpc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8215C8CE1600561C64 /* int_lpc.h */; };
+		3FAA8CD515C8CE1600561C64 /* int_lsf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8315C8CE1600561C64 /* int_lsf.h */; };
+		3FAA8CD615C8CE1600561C64 /* inv_sqrt.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8415C8CE1600561C64 /* inv_sqrt.h */; };
+		3FAA8CD715C8CE1600561C64 /* l_add_c.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8515C8CE1600561C64 /* l_add_c.h */; };
+		3FAA8CD815C8CE1600561C64 /* l_add.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8615C8CE1600561C64 /* l_add.h */; };
+		3FAA8CD915C8CE1600561C64 /* l_comp.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8715C8CE1600561C64 /* l_comp.h */; };
+		3FAA8CDA15C8CE1600561C64 /* l_extract.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8815C8CE1600561C64 /* l_extract.h */; };
+		3FAA8CDB15C8CE1600561C64 /* l_mac.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8915C8CE1600561C64 /* l_mac.h */; };
+		3FAA8CDC15C8CE1600561C64 /* l_msu.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8A15C8CE1600561C64 /* l_msu.h */; };
+		3FAA8CDD15C8CE1600561C64 /* l_mult.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8B15C8CE1600561C64 /* l_mult.h */; };
+		3FAA8CDE15C8CE1600561C64 /* l_negate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8C15C8CE1600561C64 /* l_negate.h */; };
+		3FAA8CDF15C8CE1600561C64 /* l_shl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8D15C8CE1600561C64 /* l_shl.h */; };
+		3FAA8CE015C8CE1600561C64 /* l_shr_r.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8E15C8CE1600561C64 /* l_shr_r.h */; };
+		3FAA8CE115C8CE1600561C64 /* l_shr.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8F15C8CE1600561C64 /* l_shr.h */; };
+		3FAA8CE215C8CE1600561C64 /* l_sub.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9015C8CE1600561C64 /* l_sub.h */; };
+		3FAA8CE315C8CE1600561C64 /* log2_norm.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9115C8CE1600561C64 /* log2_norm.h */; };
+		3FAA8CE415C8CE1600561C64 /* log2.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9215C8CE1600561C64 /* log2.h */; };
+		3FAA8CE515C8CE1600561C64 /* lsfwt.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9315C8CE1600561C64 /* lsfwt.h */; };
+		3FAA8CE615C8CE1600561C64 /* lsp_az.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9415C8CE1600561C64 /* lsp_az.h */; };
+		3FAA8CE715C8CE1600561C64 /* lsp_lsf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9515C8CE1600561C64 /* lsp_lsf.h */; };
+		3FAA8CE815C8CE1600561C64 /* lsp_tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9615C8CE1600561C64 /* lsp_tab.h */; };
+		3FAA8CE915C8CE1600561C64 /* lsp.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9715C8CE1600561C64 /* lsp.h */; };
+		3FAA8CEA15C8CE1600561C64 /* mac_32.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9815C8CE1600561C64 /* mac_32.h */; };
+		3FAA8CEB15C8CE1600561C64 /* mode.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9915C8CE1600561C64 /* mode.h */; };
+		3FAA8CEC15C8CE1600561C64 /* mpy_32_16.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9A15C8CE1600561C64 /* mpy_32_16.h */; };
+		3FAA8CED15C8CE1600561C64 /* mpy_32.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9B15C8CE1600561C64 /* mpy_32.h */; };
+		3FAA8CEE15C8CE1600561C64 /* mult_r.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9C15C8CE1600561C64 /* mult_r.h */; };
+		3FAA8CEF15C8CE1700561C64 /* mult.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9D15C8CE1600561C64 /* mult.h */; };
+		3FAA8CF015C8CE1700561C64 /* n_proc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9E15C8CE1600561C64 /* n_proc.h */; };
+		3FAA8CF115C8CE1700561C64 /* negate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9F15C8CE1600561C64 /* negate.h */; };
+		3FAA8CF215C8CE1700561C64 /* norm_l.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CA015C8CE1600561C64 /* norm_l.h */; };
+		3FAA8CF315C8CE1700561C64 /* norm_s.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CA115C8CE1600561C64 /* norm_s.h */; };
+		3FAA8CF415C8CE1700561C64 /* oper_32b.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CA215C8CE1600561C64 /* oper_32b.h */; };
+		3FAA8CF515C8CE1700561C64 /* p_ol_wgh.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CA315C8CE1600561C64 /* p_ol_wgh.h */; };
+		3FAA8CF615C8CE1700561C64 /* pow2.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CA415C8CE1600561C64 /* pow2.h */; };
+		3FAA8CF715C8CE1700561C64 /* pred_lt.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CA515C8CE1600561C64 /* pred_lt.h */; };
+		3FAA8CF815C8CE1700561C64 /* pvgsmamr.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CA615C8CE1600561C64 /* pvgsmamr.h */; };
+		3FAA8CF915C8CE1700561C64 /* q_plsf_3_tbl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CA715C8CE1600561C64 /* q_plsf_3_tbl.h */; };
+		3FAA8CFA15C8CE1700561C64 /* q_plsf_5_tbl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CA815C8CE1600561C64 /* q_plsf_5_tbl.h */; };
+		3FAA8CFB15C8CE1700561C64 /* q_plsf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CA915C8CE1600561C64 /* q_plsf.h */; };
+		3FAA8CFC15C8CE1700561C64 /* qgain475_tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CAA15C8CE1600561C64 /* qgain475_tab.h */; };
+		3FAA8CFD15C8CE1700561C64 /* qua_gain_tbl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CAB15C8CE1600561C64 /* qua_gain_tbl.h */; };
+		3FAA8CFE15C8CE1700561C64 /* qua_gain.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CAC15C8CE1600561C64 /* qua_gain.h */; };
+		3FAA8CFF15C8CE1700561C64 /* reorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CAD15C8CE1600561C64 /* reorder.h */; };
+		3FAA8D0015C8CE1700561C64 /* residu.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CAE15C8CE1600561C64 /* residu.h */; };
+		3FAA8D0115C8CE1700561C64 /* reverse_bits.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CAF15C8CE1600561C64 /* reverse_bits.h */; };
+		3FAA8D0215C8CE1700561C64 /* round.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CB015C8CE1600561C64 /* round.h */; };
+		3FAA8D0315C8CE1700561C64 /* set_zero.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CB115C8CE1600561C64 /* set_zero.h */; };
+		3FAA8D0415C8CE1700561C64 /* shl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CB215C8CE1600561C64 /* shl.h */; };
+		3FAA8D0515C8CE1700561C64 /* shr_r.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CB315C8CE1600561C64 /* shr_r.h */; };
+		3FAA8D0615C8CE1700561C64 /* shr.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CB415C8CE1600561C64 /* shr.h */; };
+		3FAA8D0715C8CE1700561C64 /* sqrt_l.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CB515C8CE1600561C64 /* sqrt_l.h */; };
+		3FAA8D0815C8CE1700561C64 /* sub.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CB615C8CE1600561C64 /* sub.h */; };
+		3FAA8D0915C8CE1700561C64 /* syn_filt.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CB715C8CE1600561C64 /* syn_filt.h */; };
+		3FAA8D0A15C8CE1700561C64 /* typedef.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CB815C8CE1600561C64 /* typedef.h */; };
+		3FAA8D0B15C8CE1700561C64 /* vad.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CB915C8CE1600561C64 /* vad.h */; };
+		3FAA8D0C15C8CE1700561C64 /* weight_a.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CBA15C8CE1600561C64 /* weight_a.h */; };
+		3FAA8D0D15C8CE1700561C64 /* window_tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CBB15C8CE1600561C64 /* window_tab.h */; };
+		3FAA8D0E15C8CE1700561C64 /* wmf_to_ets.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CBC15C8CE1600561C64 /* wmf_to_ets.h */; };
+		3FAA8D8915C8D09400561C64 /* decoder_gsm_amr.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8D8715C8D09400561C64 /* decoder_gsm_amr.h */; };
+		3FAA8D8A15C8D09400561C64 /* pvamrnbdecoder_api.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8D8815C8D09400561C64 /* pvamrnbdecoder_api.h */; };
+		3FAA8DC715C8D0A000561C64 /* a_refl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8D8C15C8D0A000561C64 /* a_refl.h */; };
+		3FAA8DC915C8D0A000561C64 /* agc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8D8E15C8D0A000561C64 /* agc.h */; };
+		3FAA8DCB15C8D0A000561C64 /* amrdecode.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8D9015C8D0A000561C64 /* amrdecode.h */; };
+		3FAA8DCD15C8D0A000561C64 /* b_cn_cod.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8D9215C8D0A000561C64 /* b_cn_cod.h */; };
+		3FAA8DCF15C8D0A000561C64 /* bgnscd.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8D9415C8D0A000561C64 /* bgnscd.h */; };
+		3FAA8DD115C8D0A000561C64 /* c_g_aver.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8D9615C8D0A000561C64 /* c_g_aver.h */; };
+		3FAA8DD815C8D0A000561C64 /* d2_9pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8D9D15C8D0A000561C64 /* d2_9pf.h */; };
+		3FAA8DDA15C8D0A000561C64 /* d2_11pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8D9F15C8D0A000561C64 /* d2_11pf.h */; };
+		3FAA8DDC15C8D0A000561C64 /* d3_14pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DA115C8D0A000561C64 /* d3_14pf.h */; };
+		3FAA8DDE15C8D0A000561C64 /* d4_17pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DA315C8D0A000561C64 /* d4_17pf.h */; };
+		3FAA8DE015C8D0A000561C64 /* d8_31pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DA515C8D0A000561C64 /* d8_31pf.h */; };
+		3FAA8DE215C8D0A000561C64 /* d1035pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DA715C8D0A000561C64 /* d1035pf.h */; };
+		3FAA8DE415C8D0A000561C64 /* dec_amr.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DA915C8D0A000561C64 /* dec_amr.h */; };
+		3FAA8DE615C8D0A000561C64 /* dec_gain.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DAB15C8D0A000561C64 /* dec_gain.h */; };
+		3FAA8DE915C8D0A000561C64 /* dec_lag3.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DAE15C8D0A000561C64 /* dec_lag3.h */; };
+		3FAA8DEB15C8D0A000561C64 /* dec_lag6.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DB015C8D0A000561C64 /* dec_lag6.h */; };
+		3FAA8DED15C8D0A000561C64 /* dtx_dec.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DB215C8D0A000561C64 /* dtx_dec.h */; };
+		3FAA8DEF15C8D0A000561C64 /* ec_gains.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DB415C8D0A000561C64 /* ec_gains.h */; };
+		3FAA8DF115C8D0A000561C64 /* ex_ctrl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DB615C8D0A000561C64 /* ex_ctrl.h */; };
+		3FAA8DF215C8D0A000561C64 /* gsmamr_dec.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DB715C8D0A000561C64 /* gsmamr_dec.h */; };
+		3FAA8DF415C8D0A000561C64 /* if2_to_ets.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DB915C8D0A000561C64 /* if2_to_ets.h */; };
+		3FAA8DF715C8D0A000561C64 /* lsp_avg.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DBC15C8D0A000561C64 /* lsp_avg.h */; };
+		3FAA8DF915C8D0A000561C64 /* ph_disp.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DBE15C8D0A000561C64 /* ph_disp.h */; };
+		3FAA8DFB15C8D0A000561C64 /* post_pro.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DC015C8D0A000561C64 /* post_pro.h */; };
+		3FAA8DFD15C8D0A000561C64 /* preemph.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DC215C8D0A000561C64 /* preemph.h */; };
+		3FAA8DFF15C8D0A000561C64 /* pstfilt.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DC415C8D0A000561C64 /* pstfilt.h */; };
+		3FAA8E0015C8D0A000561C64 /* pvgsmamrdecoder_dpi.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DC515C8D0A000561C64 /* pvgsmamrdecoder_dpi.h */; };
+		3FAA8E0615C8D0B100561C64 /* pvgsmamrdecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E0115C8D0B100561C64 /* pvgsmamrdecoder.h */; };
+		3FAA8E0915C8D0B100561C64 /* sp_dec.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E0415C8D0B100561C64 /* sp_dec.h */; };
+		3FAA8E0C15C8D0BE00561C64 /* gsmamr_encoder_wrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E0B15C8D0BE00561C64 /* gsmamr_encoder_wrapper.h */; };
+		3FAA8E8315C8D0C900561C64 /* amrencode.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E0E15C8D0C900561C64 /* amrencode.h */; };
+		3FAA8E8515C8D0C900561C64 /* autocorr.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E1015C8D0C900561C64 /* autocorr.h */; };
+		3FAA8E8615C8D0C900561C64 /* c2_9pf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8E1115C8D0C900561C64 /* c2_9pf.cpp */; };
+		3FAA8E8715C8D0C900561C64 /* c2_9pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E1215C8D0C900561C64 /* c2_9pf.h */; };
+		3FAA8E8815C8D0C900561C64 /* c2_11pf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8E1315C8D0C900561C64 /* c2_11pf.cpp */; };
+		3FAA8E8915C8D0C900561C64 /* c2_11pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E1415C8D0C900561C64 /* c2_11pf.h */; };
+		3FAA8E8A15C8D0C900561C64 /* c3_14pf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8E1515C8D0C900561C64 /* c3_14pf.cpp */; };
+		3FAA8E8B15C8D0C900561C64 /* c3_14pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E1615C8D0C900561C64 /* c3_14pf.h */; };
+		3FAA8E8C15C8D0C900561C64 /* c4_17pf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8E1715C8D0C900561C64 /* c4_17pf.cpp */; };
+		3FAA8E8D15C8D0C900561C64 /* c4_17pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E1815C8D0C900561C64 /* c4_17pf.h */; };
+		3FAA8E8E15C8D0C900561C64 /* c8_31pf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8E1915C8D0C900561C64 /* c8_31pf.cpp */; };
+		3FAA8E8F15C8D0C900561C64 /* c8_31pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E1A15C8D0C900561C64 /* c8_31pf.h */; };
+		3FAA8E9015C8D0C900561C64 /* c1035pf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8E1B15C8D0C900561C64 /* c1035pf.cpp */; };
+		3FAA8E9115C8D0C900561C64 /* c1035pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E1C15C8D0C900561C64 /* c1035pf.h */; };
+		3FAA8E9315C8D0C900561C64 /* calc_cor.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E1E15C8D0C900561C64 /* calc_cor.h */; };
+		3FAA8E9515C8D0C900561C64 /* calc_en.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E2015C8D0C900561C64 /* calc_en.h */; };
+		3FAA8E9715C8D0C900561C64 /* cbsearch.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E2215C8D0C900561C64 /* cbsearch.h */; };
+		3FAA8E9915C8D0C900561C64 /* cl_ltp.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E2415C8D0C900561C64 /* cl_ltp.h */; };
+		3FAA8E9B15C8D0C900561C64 /* cod_amr.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E2615C8D0C900561C64 /* cod_amr.h */; };
+		3FAA8E9D15C8D0C900561C64 /* convolve.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E2815C8D0C900561C64 /* convolve.h */; };
+		3FAA8E9F15C8D0C900561C64 /* cor_h_x.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E2A15C8D0C900561C64 /* cor_h_x.h */; };
+		3FAA8EA115C8D0C900561C64 /* cor_h_x2.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E2C15C8D0C900561C64 /* cor_h_x2.h */; };
+		3FAA8EA315C8D0C900561C64 /* cor_h.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E2E15C8D0C900561C64 /* cor_h.h */; };
+		3FAA8EA615C8D0C900561C64 /* div_32.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E3115C8D0C900561C64 /* div_32.h */; };
+		3FAA8EA815C8D0C900561C64 /* dtx_enc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E3315C8D0C900561C64 /* dtx_enc.h */; };
+		3FAA8EAA15C8D0C900561C64 /* enc_lag3.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E3515C8D0C900561C64 /* enc_lag3.h */; };
+		3FAA8EAC15C8D0C900561C64 /* enc_lag6.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E3715C8D0C900561C64 /* enc_lag6.h */; };
+		3FAA8EAF15C8D0C900561C64 /* ets_to_if2.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E3A15C8D0C900561C64 /* ets_to_if2.h */; };
+		3FAA8EB115C8D0C900561C64 /* ets_to_wmf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E3C15C8D0C900561C64 /* ets_to_wmf.h */; };
+		3FAA8EB315C8D0C900561C64 /* g_adapt.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E3E15C8D0C900561C64 /* g_adapt.h */; };
+		3FAA8EB515C8D0C900561C64 /* g_code.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E4015C8D0C900561C64 /* g_code.h */; };
+		3FAA8EB715C8D0C900561C64 /* g_pitch.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E4215C8D0C900561C64 /* g_pitch.h */; };
+		3FAA8EB915C8D0C900561C64 /* gain_q.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E4415C8D0C900561C64 /* gain_q.h */; };
+		3FAA8EBA15C8D0C900561C64 /* gsmamr_enc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E4515C8D0C900561C64 /* gsmamr_enc.h */; };
+		3FAA8EBD15C8D0C900561C64 /* hp_max.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E4815C8D0C900561C64 /* hp_max.h */; };
+		3FAA8EBF15C8D0CA00561C64 /* inter_36_tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E4A15C8D0C900561C64 /* inter_36_tab.h */; };
+		3FAA8EC115C8D0CA00561C64 /* inter_36.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E4C15C8D0C900561C64 /* inter_36.h */; };
+		3FAA8EC315C8D0CA00561C64 /* l_abs.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E4E15C8D0C900561C64 /* l_abs.h */; };
+		3FAA8EC815C8D0CA00561C64 /* lag_wind_tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E5315C8D0C900561C64 /* lag_wind_tab.h */; };
+		3FAA8ECA15C8D0CA00561C64 /* lag_wind.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E5515C8D0C900561C64 /* lag_wind.h */; };
+		3FAA8ECC15C8D0CA00561C64 /* levinson.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E5715C8D0C900561C64 /* levinson.h */; };
+		3FAA8ECF15C8D0CA00561C64 /* lpc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E5A15C8D0C900561C64 /* lpc.h */; };
+		3FAA8ED115C8D0CA00561C64 /* ol_ltp.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E5C15C8D0C900561C64 /* ol_ltp.h */; };
+		3FAA8ED415C8D0CA00561C64 /* pitch_fr.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E5F15C8D0C900561C64 /* pitch_fr.h */; };
+		3FAA8ED615C8D0CA00561C64 /* pitch_ol.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E6115C8D0C900561C64 /* pitch_ol.h */; };
+		3FAA8ED815C8D0CA00561C64 /* pre_big.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E6315C8D0C900561C64 /* pre_big.h */; };
+		3FAA8EDA15C8D0CA00561C64 /* pre_proc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E6515C8D0C900561C64 /* pre_proc.h */; };
+		3FAA8EDC15C8D0CA00561C64 /* prm2bits.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E6715C8D0C900561C64 /* prm2bits.h */; };
+		3FAA8EDE15C8D0CA00561C64 /* q_gain_c.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E6915C8D0C900561C64 /* q_gain_c.h */; };
+		3FAA8EE015C8D0CA00561C64 /* q_gain_p.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E6B15C8D0C900561C64 /* q_gain_p.h */; };
+		3FAA8EE215C8D0CA00561C64 /* qgain475.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E6D15C8D0C900561C64 /* qgain475.h */; };
+		3FAA8EE415C8D0CA00561C64 /* qgain795.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E6F15C8D0C900561C64 /* qgain795.h */; };
+		3FAA8EE715C8D0CA00561C64 /* s10_8pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E7215C8D0C900561C64 /* s10_8pf.h */; };
+		3FAA8EE915C8D0CA00561C64 /* set_sign.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E7415C8D0C900561C64 /* set_sign.h */; };
+		3FAA8EEB15C8D0CA00561C64 /* sid_sync.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E7615C8D0C900561C64 /* sid_sync.h */; };
+		3FAA8EED15C8D0CA00561C64 /* sp_enc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E7815C8D0C900561C64 /* sp_enc.h */; };
+		3FAA8EEF15C8D0CA00561C64 /* spreproc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E7A15C8D0C900561C64 /* spreproc.h */; };
+		3FAA8EF115C8D0CA00561C64 /* spstproc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E7C15C8D0C900561C64 /* spstproc.h */; };
+		3FAA8EF315C8D0CA00561C64 /* ton_stab.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E7E15C8D0C900561C64 /* ton_stab.h */; };
+		3FAA8EF515C8D0CA00561C64 /* vad1.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E8015C8D0C900561C64 /* vad1.h */; };
+		3FAA8EF615C8D0CA00561C64 /* vad2.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E8115C8D0C900561C64 /* vad2.h */; };
+		3FAA8EFD15C8D0E100561C64 /* amr_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8EF815C8D0E100561C64 /* amr_interface.h */; };
+		3FAA8EFE15C8D0E100561C64 /* interf_dec.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8EF915C8D0E100561C64 /* interf_dec.h */; };
+		3FAA8EFF15C8D0E100561C64 /* interf_enc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8EFA15C8D0E100561C64 /* interf_enc.h */; };
+		55EA5C9517D82F8A00885688 /* amrAllSrc.CPP in Sources */ = {isa = PBXBuildFile; fileRef = 55EA5C8D17D82F8A00885688 /* amrAllSrc.CPP */; };
+		55EA5C9617D82F8A00885688 /* amrAllSrc.h in Headers */ = {isa = PBXBuildFile; fileRef = 55EA5C8E17D82F8A00885688 /* amrAllSrc.h */; };
+		55EA5C9717D82F8A00885688 /* amrAllSrc2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55EA5C8F17D82F8A00885688 /* amrAllSrc2.cpp */; };
+		55EA5C9817D82F8A00885688 /* amrAllSrc2.h in Headers */ = {isa = PBXBuildFile; fileRef = 55EA5C9017D82F8A00885688 /* amrAllSrc2.h */; };
+		55EA5C9917D82F8A00885688 /* amrAllSrc3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55EA5C9117D82F8A00885688 /* amrAllSrc3.cpp */; };
+		55EA5C9A17D82F8A00885688 /* amrAllSrc3.h in Headers */ = {isa = PBXBuildFile; fileRef = 55EA5C9217D82F8A00885688 /* amrAllSrc3.h */; };
+		55EA5C9B17D82F8A00885688 /* amrAllSrc4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55EA5C9317D82F8A00885688 /* amrAllSrc4.cpp */; };
+		55EA5C9C17D82F8A00885688 /* amrAllSrc4.h in Headers */ = {isa = PBXBuildFile; fileRef = 55EA5C9417D82F8A00885688 /* amrAllSrc4.h */; };
+		910D8E3619C841BD00748D2F /* amr_interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8EF715C8D0E100561C64 /* amr_interface.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3FAA8C5515C8CB9B00561C64 /* libamrnb.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libamrnb.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3FAA8C5815C8CB9B00561C64 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3FAA8C6B15C8CE1600561C64 /* abs_s.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = abs_s.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/abs_s.h"; sourceTree = "<group>"; };
+		3FAA8C6C15C8CE1600561C64 /* add.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = add.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/add.h"; sourceTree = "<group>"; };
+		3FAA8C6D15C8CE1600561C64 /* az_lsp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = az_lsp.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/az_lsp.h"; sourceTree = "<group>"; };
+		3FAA8C6E15C8CE1600561C64 /* basic_op_arm_gcc_v5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = basic_op_arm_gcc_v5.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/basic_op_arm_gcc_v5.h"; sourceTree = "<group>"; };
+		3FAA8C6F15C8CE1600561C64 /* basic_op_c_equivalent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = basic_op_c_equivalent.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/basic_op_c_equivalent.h"; sourceTree = "<group>"; };
+		3FAA8C7015C8CE1600561C64 /* basic_op.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = basic_op.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/basic_op.h"; sourceTree = "<group>"; };
+		3FAA8C7115C8CE1600561C64 /* basicop_malloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = basicop_malloc.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/basicop_malloc.h"; sourceTree = "<group>"; };
+		3FAA8C7215C8CE1600561C64 /* bitno_tab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bitno_tab.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/bitno_tab.h"; sourceTree = "<group>"; };
+		3FAA8C7315C8CE1600561C64 /* bitreorder_tab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bitreorder_tab.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/bitreorder_tab.h"; sourceTree = "<group>"; };
+		3FAA8C7415C8CE1600561C64 /* bytesused.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bytesused.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/bytesused.h"; sourceTree = "<group>"; };
+		3FAA8C7515C8CE1600561C64 /* cnst_vad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cnst_vad.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/cnst_vad.h"; sourceTree = "<group>"; };
+		3FAA8C7615C8CE1600561C64 /* cnst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cnst.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/cnst.h"; sourceTree = "<group>"; };
+		3FAA8C7715C8CE1600561C64 /* d_gain_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = d_gain_c.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/d_gain_c.h"; sourceTree = "<group>"; };
+		3FAA8C7815C8CE1600561C64 /* d_gain_p.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = d_gain_p.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/d_gain_p.h"; sourceTree = "<group>"; };
+		3FAA8C7915C8CE1600561C64 /* d_plsf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = d_plsf.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/d_plsf.h"; sourceTree = "<group>"; };
+		3FAA8C7A15C8CE1600561C64 /* div_s.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = div_s.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/div_s.h"; sourceTree = "<group>"; };
+		3FAA8C7B15C8CE1600561C64 /* dtx_common_def.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dtx_common_def.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/dtx_common_def.h"; sourceTree = "<group>"; };
+		3FAA8C7C15C8CE1600561C64 /* frame_type_3gpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = frame_type_3gpp.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/frame_type_3gpp.h"; sourceTree = "<group>"; };
+		3FAA8C7D15C8CE1600561C64 /* frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = frame.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/frame.h"; sourceTree = "<group>"; };
+		3FAA8C7E15C8CE1600561C64 /* gc_pred.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gc_pred.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/gc_pred.h"; sourceTree = "<group>"; };
+		3FAA8C7F15C8CE1600561C64 /* get_const_tbls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = get_const_tbls.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/get_const_tbls.h"; sourceTree = "<group>"; };
+		3FAA8C8015C8CE1600561C64 /* gmed_n.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gmed_n.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/gmed_n.h"; sourceTree = "<group>"; };
+		3FAA8C8115C8CE1600561C64 /* gsm_amr_typedefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gsm_amr_typedefs.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/gsm_amr_typedefs.h"; sourceTree = "<group>"; };
+		3FAA8C8215C8CE1600561C64 /* int_lpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = int_lpc.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/int_lpc.h"; sourceTree = "<group>"; };
+		3FAA8C8315C8CE1600561C64 /* int_lsf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = int_lsf.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/int_lsf.h"; sourceTree = "<group>"; };
+		3FAA8C8415C8CE1600561C64 /* inv_sqrt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = inv_sqrt.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/inv_sqrt.h"; sourceTree = "<group>"; };
+		3FAA8C8515C8CE1600561C64 /* l_add_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = l_add_c.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/l_add_c.h"; sourceTree = "<group>"; };
+		3FAA8C8615C8CE1600561C64 /* l_add.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = l_add.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/l_add.h"; sourceTree = "<group>"; };
+		3FAA8C8715C8CE1600561C64 /* l_comp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = l_comp.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/l_comp.h"; sourceTree = "<group>"; };
+		3FAA8C8815C8CE1600561C64 /* l_extract.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = l_extract.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/l_extract.h"; sourceTree = "<group>"; };
+		3FAA8C8915C8CE1600561C64 /* l_mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = l_mac.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/l_mac.h"; sourceTree = "<group>"; };
+		3FAA8C8A15C8CE1600561C64 /* l_msu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = l_msu.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/l_msu.h"; sourceTree = "<group>"; };
+		3FAA8C8B15C8CE1600561C64 /* l_mult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = l_mult.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/l_mult.h"; sourceTree = "<group>"; };
+		3FAA8C8C15C8CE1600561C64 /* l_negate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = l_negate.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/l_negate.h"; sourceTree = "<group>"; };
+		3FAA8C8D15C8CE1600561C64 /* l_shl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = l_shl.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/l_shl.h"; sourceTree = "<group>"; };
+		3FAA8C8E15C8CE1600561C64 /* l_shr_r.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = l_shr_r.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/l_shr_r.h"; sourceTree = "<group>"; };
+		3FAA8C8F15C8CE1600561C64 /* l_shr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = l_shr.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/l_shr.h"; sourceTree = "<group>"; };
+		3FAA8C9015C8CE1600561C64 /* l_sub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = l_sub.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/l_sub.h"; sourceTree = "<group>"; };
+		3FAA8C9115C8CE1600561C64 /* log2_norm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = log2_norm.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/log2_norm.h"; sourceTree = "<group>"; };
+		3FAA8C9215C8CE1600561C64 /* log2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = log2.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/log2.h"; sourceTree = "<group>"; };
+		3FAA8C9315C8CE1600561C64 /* lsfwt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lsfwt.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/lsfwt.h"; sourceTree = "<group>"; };
+		3FAA8C9415C8CE1600561C64 /* lsp_az.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lsp_az.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/lsp_az.h"; sourceTree = "<group>"; };
+		3FAA8C9515C8CE1600561C64 /* lsp_lsf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lsp_lsf.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/lsp_lsf.h"; sourceTree = "<group>"; };
+		3FAA8C9615C8CE1600561C64 /* lsp_tab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lsp_tab.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/lsp_tab.h"; sourceTree = "<group>"; };
+		3FAA8C9715C8CE1600561C64 /* lsp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lsp.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/lsp.h"; sourceTree = "<group>"; };
+		3FAA8C9815C8CE1600561C64 /* mac_32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mac_32.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/mac_32.h"; sourceTree = "<group>"; };
+		3FAA8C9915C8CE1600561C64 /* mode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mode.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/mode.h"; sourceTree = "<group>"; };
+		3FAA8C9A15C8CE1600561C64 /* mpy_32_16.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mpy_32_16.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/mpy_32_16.h"; sourceTree = "<group>"; };
+		3FAA8C9B15C8CE1600561C64 /* mpy_32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mpy_32.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/mpy_32.h"; sourceTree = "<group>"; };
+		3FAA8C9C15C8CE1600561C64 /* mult_r.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mult_r.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/mult_r.h"; sourceTree = "<group>"; };
+		3FAA8C9D15C8CE1600561C64 /* mult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mult.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/mult.h"; sourceTree = "<group>"; };
+		3FAA8C9E15C8CE1600561C64 /* n_proc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = n_proc.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/n_proc.h"; sourceTree = "<group>"; };
+		3FAA8C9F15C8CE1600561C64 /* negate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = negate.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/negate.h"; sourceTree = "<group>"; };
+		3FAA8CA015C8CE1600561C64 /* norm_l.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = norm_l.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/norm_l.h"; sourceTree = "<group>"; };
+		3FAA8CA115C8CE1600561C64 /* norm_s.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = norm_s.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/norm_s.h"; sourceTree = "<group>"; };
+		3FAA8CA215C8CE1600561C64 /* oper_32b.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = oper_32b.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/oper_32b.h"; sourceTree = "<group>"; };
+		3FAA8CA315C8CE1600561C64 /* p_ol_wgh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = p_ol_wgh.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/p_ol_wgh.h"; sourceTree = "<group>"; };
+		3FAA8CA415C8CE1600561C64 /* pow2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pow2.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/pow2.h"; sourceTree = "<group>"; };
+		3FAA8CA515C8CE1600561C64 /* pred_lt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pred_lt.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/pred_lt.h"; sourceTree = "<group>"; };
+		3FAA8CA615C8CE1600561C64 /* pvgsmamr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pvgsmamr.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/pvgsmamr.h"; sourceTree = "<group>"; };
+		3FAA8CA715C8CE1600561C64 /* q_plsf_3_tbl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = q_plsf_3_tbl.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/q_plsf_3_tbl.h"; sourceTree = "<group>"; };
+		3FAA8CA815C8CE1600561C64 /* q_plsf_5_tbl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = q_plsf_5_tbl.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/q_plsf_5_tbl.h"; sourceTree = "<group>"; };
+		3FAA8CA915C8CE1600561C64 /* q_plsf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = q_plsf.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/q_plsf.h"; sourceTree = "<group>"; };
+		3FAA8CAA15C8CE1600561C64 /* qgain475_tab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = qgain475_tab.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/qgain475_tab.h"; sourceTree = "<group>"; };
+		3FAA8CAB15C8CE1600561C64 /* qua_gain_tbl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = qua_gain_tbl.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/qua_gain_tbl.h"; sourceTree = "<group>"; };
+		3FAA8CAC15C8CE1600561C64 /* qua_gain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = qua_gain.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/qua_gain.h"; sourceTree = "<group>"; };
+		3FAA8CAD15C8CE1600561C64 /* reorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = reorder.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/reorder.h"; sourceTree = "<group>"; };
+		3FAA8CAE15C8CE1600561C64 /* residu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = residu.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/residu.h"; sourceTree = "<group>"; };
+		3FAA8CAF15C8CE1600561C64 /* reverse_bits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = reverse_bits.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/reverse_bits.h"; sourceTree = "<group>"; };
+		3FAA8CB015C8CE1600561C64 /* round.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = round.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/round.h"; sourceTree = "<group>"; };
+		3FAA8CB115C8CE1600561C64 /* set_zero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = set_zero.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/set_zero.h"; sourceTree = "<group>"; };
+		3FAA8CB215C8CE1600561C64 /* shl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = shl.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/shl.h"; sourceTree = "<group>"; };
+		3FAA8CB315C8CE1600561C64 /* shr_r.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = shr_r.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/shr_r.h"; sourceTree = "<group>"; };
+		3FAA8CB415C8CE1600561C64 /* shr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = shr.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/shr.h"; sourceTree = "<group>"; };
+		3FAA8CB515C8CE1600561C64 /* sqrt_l.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sqrt_l.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/sqrt_l.h"; sourceTree = "<group>"; };
+		3FAA8CB615C8CE1600561C64 /* sub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sub.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/sub.h"; sourceTree = "<group>"; };
+		3FAA8CB715C8CE1600561C64 /* syn_filt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = syn_filt.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/syn_filt.h"; sourceTree = "<group>"; };
+		3FAA8CB815C8CE1600561C64 /* typedef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = typedef.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/typedef.h"; sourceTree = "<group>"; };
+		3FAA8CB915C8CE1600561C64 /* vad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vad.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/vad.h"; sourceTree = "<group>"; };
+		3FAA8CBA15C8CE1600561C64 /* weight_a.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = weight_a.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/weight_a.h"; sourceTree = "<group>"; };
+		3FAA8CBB15C8CE1600561C64 /* window_tab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = window_tab.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/window_tab.h"; sourceTree = "<group>"; };
+		3FAA8CBC15C8CE1600561C64 /* wmf_to_ets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wmf_to_ets.h; path = "codecs/opencore-amr/opencore/amr_nb/common/include/wmf_to_ets.h"; sourceTree = "<group>"; };
+		3FAA8D0F15C8CE2400561C64 /* add.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = add.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/add.cpp"; sourceTree = "<group>"; };
+		3FAA8D1015C8CE2400561C64 /* az_lsp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = az_lsp.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/az_lsp.cpp"; sourceTree = "<group>"; };
+		3FAA8D1115C8CE2400561C64 /* bitno_tab.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bitno_tab.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/bitno_tab.cpp"; sourceTree = "<group>"; };
+		3FAA8D1215C8CE2400561C64 /* bitreorder_tab.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bitreorder_tab.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/bitreorder_tab.cpp"; sourceTree = "<group>"; };
+		3FAA8D1315C8CE2400561C64 /* c2_9pf_tab.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = c2_9pf_tab.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/c2_9pf_tab.cpp"; sourceTree = "<group>"; };
+		3FAA8D1415C8CE2400561C64 /* div_s.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = div_s.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/div_s.cpp"; sourceTree = "<group>"; };
+		3FAA8D1515C8CE2400561C64 /* extract_h.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = extract_h.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/extract_h.cpp"; sourceTree = "<group>"; };
+		3FAA8D1615C8CE2400561C64 /* extract_l.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = extract_l.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/extract_l.cpp"; sourceTree = "<group>"; };
+		3FAA8D1715C8CE2400561C64 /* gains_tbl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gains_tbl.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/gains_tbl.cpp"; sourceTree = "<group>"; };
+		3FAA8D1815C8CE2400561C64 /* gc_pred.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gc_pred.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/gc_pred.cpp"; sourceTree = "<group>"; };
+		3FAA8D1915C8CE2400561C64 /* get_const_tbls.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = get_const_tbls.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/get_const_tbls.cpp"; sourceTree = "<group>"; };
+		3FAA8D1A15C8CE2400561C64 /* gmed_n.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gmed_n.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/gmed_n.cpp"; sourceTree = "<group>"; };
+		3FAA8D1B15C8CE2400561C64 /* gray_tbl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gray_tbl.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/gray_tbl.cpp"; sourceTree = "<group>"; };
+		3FAA8D1C15C8CE2400561C64 /* grid_tbl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = grid_tbl.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/grid_tbl.cpp"; sourceTree = "<group>"; };
+		3FAA8D1D15C8CE2400561C64 /* int_lpc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = int_lpc.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/int_lpc.cpp"; sourceTree = "<group>"; };
+		3FAA8D1E15C8CE2400561C64 /* inv_sqrt_tbl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = inv_sqrt_tbl.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/inv_sqrt_tbl.cpp"; sourceTree = "<group>"; };
+		3FAA8D1F15C8CE2400561C64 /* inv_sqrt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = inv_sqrt.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/inv_sqrt.cpp"; sourceTree = "<group>"; };
+		3FAA8D2015C8CE2400561C64 /* l_deposit_h.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = l_deposit_h.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/l_deposit_h.cpp"; sourceTree = "<group>"; };
+		3FAA8D2115C8CE2400561C64 /* l_deposit_l.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = l_deposit_l.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/l_deposit_l.cpp"; sourceTree = "<group>"; };
+		3FAA8D2215C8CE2400561C64 /* l_shr_r.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = l_shr_r.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/l_shr_r.cpp"; sourceTree = "<group>"; };
+		3FAA8D2315C8CE2400561C64 /* log2_norm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = log2_norm.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/log2_norm.cpp"; sourceTree = "<group>"; };
+		3FAA8D2415C8CE2400561C64 /* log2_tbl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = log2_tbl.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/log2_tbl.cpp"; sourceTree = "<group>"; };
+		3FAA8D2515C8CE2400561C64 /* log2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = log2.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/log2.cpp"; sourceTree = "<group>"; };
+		3FAA8D2615C8CE2400561C64 /* lsfwt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lsfwt.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/lsfwt.cpp"; sourceTree = "<group>"; };
+		3FAA8D2715C8CE2400561C64 /* lsp_az.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lsp_az.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/lsp_az.cpp"; sourceTree = "<group>"; };
+		3FAA8D2815C8CE2400561C64 /* lsp_lsf_tbl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lsp_lsf_tbl.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/lsp_lsf_tbl.cpp"; sourceTree = "<group>"; };
+		3FAA8D2915C8CE2400561C64 /* lsp_lsf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lsp_lsf.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/lsp_lsf.cpp"; sourceTree = "<group>"; };
+		3FAA8D2A15C8CE2400561C64 /* lsp_tab.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lsp_tab.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/lsp_tab.cpp"; sourceTree = "<group>"; };
+		3FAA8D2B15C8CE2400561C64 /* lsp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lsp.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/lsp.cpp"; sourceTree = "<group>"; };
+		3FAA8D2C15C8CE2400561C64 /* mult_r.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mult_r.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/mult_r.cpp"; sourceTree = "<group>"; };
+		3FAA8D2D15C8CE2400561C64 /* negate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = negate.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/negate.cpp"; sourceTree = "<group>"; };
+		3FAA8D2E15C8CE2400561C64 /* norm_l.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = norm_l.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/norm_l.cpp"; sourceTree = "<group>"; };
+		3FAA8D2F15C8CE2400561C64 /* norm_s.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = norm_s.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/norm_s.cpp"; sourceTree = "<group>"; };
+		3FAA8D3015C8CE2400561C64 /* overflow_tbl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = overflow_tbl.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/overflow_tbl.cpp"; sourceTree = "<group>"; };
+		3FAA8D3115C8CE2400561C64 /* ph_disp_tab.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ph_disp_tab.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/ph_disp_tab.cpp"; sourceTree = "<group>"; };
+		3FAA8D3215C8CE2400561C64 /* pow2_tbl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pow2_tbl.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/pow2_tbl.cpp"; sourceTree = "<group>"; };
+		3FAA8D3315C8CE2400561C64 /* pow2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pow2.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/pow2.cpp"; sourceTree = "<group>"; };
+		3FAA8D3415C8CE2400561C64 /* pred_lt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pred_lt.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/pred_lt.cpp"; sourceTree = "<group>"; };
+		3FAA8D3515C8CE2400561C64 /* q_plsf_3_tbl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = q_plsf_3_tbl.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/q_plsf_3_tbl.cpp"; sourceTree = "<group>"; };
+		3FAA8D3615C8CE2400561C64 /* q_plsf_3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = q_plsf_3.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/q_plsf_3.cpp"; sourceTree = "<group>"; };
+		3FAA8D3715C8CE2400561C64 /* q_plsf_5_tbl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = q_plsf_5_tbl.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/q_plsf_5_tbl.cpp"; sourceTree = "<group>"; };
+		3FAA8D3815C8CE2400561C64 /* q_plsf_5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = q_plsf_5.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/q_plsf_5.cpp"; sourceTree = "<group>"; };
+		3FAA8D3915C8CE2400561C64 /* q_plsf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = q_plsf.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/q_plsf.cpp"; sourceTree = "<group>"; };
+		3FAA8D3A15C8CE2400561C64 /* qua_gain_tbl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = qua_gain_tbl.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/qua_gain_tbl.cpp"; sourceTree = "<group>"; };
+		3FAA8D3B15C8CE2400561C64 /* reorder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = reorder.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/reorder.cpp"; sourceTree = "<group>"; };
+		3FAA8D3C15C8CE2400561C64 /* residu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = residu.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/residu.cpp"; sourceTree = "<group>"; };
+		3FAA8D3D15C8CE2400561C64 /* round.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = round.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/round.cpp"; sourceTree = "<group>"; };
+		3FAA8D3E15C8CE2400561C64 /* set_zero.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = set_zero.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/set_zero.cpp"; sourceTree = "<group>"; };
+		3FAA8D3F15C8CE2400561C64 /* shr_r.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = shr_r.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/shr_r.cpp"; sourceTree = "<group>"; };
+		3FAA8D4015C8CE2400561C64 /* shr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = shr.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/shr.cpp"; sourceTree = "<group>"; };
+		3FAA8D4115C8CE2400561C64 /* sqrt_l_tbl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sqrt_l_tbl.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/sqrt_l_tbl.cpp"; sourceTree = "<group>"; };
+		3FAA8D4215C8CE2400561C64 /* sqrt_l.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sqrt_l.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/sqrt_l.cpp"; sourceTree = "<group>"; };
+		3FAA8D4315C8CE2400561C64 /* sub.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sub.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/sub.cpp"; sourceTree = "<group>"; };
+		3FAA8D4415C8CE2400561C64 /* syn_filt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = syn_filt.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/syn_filt.cpp"; sourceTree = "<group>"; };
+		3FAA8D4515C8CE2400561C64 /* weight_a.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = weight_a.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/weight_a.cpp"; sourceTree = "<group>"; };
+		3FAA8D4615C8CE2400561C64 /* window_tab.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = window_tab.cpp; path = "codecs/opencore-amr/opencore/amr_nb/common/src/window_tab.cpp"; sourceTree = "<group>"; };
+		3FAA8D8715C8D09400561C64 /* decoder_gsm_amr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decoder_gsm_amr.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/include/decoder_gsm_amr.h"; sourceTree = "<group>"; };
+		3FAA8D8815C8D09400561C64 /* pvamrnbdecoder_api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pvamrnbdecoder_api.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/include/pvamrnbdecoder_api.h"; sourceTree = "<group>"; };
+		3FAA8D8B15C8D0A000561C64 /* a_refl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = a_refl.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/a_refl.cpp"; sourceTree = "<group>"; };
+		3FAA8D8C15C8D0A000561C64 /* a_refl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a_refl.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/a_refl.h"; sourceTree = "<group>"; };
+		3FAA8D8D15C8D0A000561C64 /* agc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = agc.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/agc.cpp"; sourceTree = "<group>"; };
+		3FAA8D8E15C8D0A000561C64 /* agc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = agc.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/agc.h"; sourceTree = "<group>"; };
+		3FAA8D8F15C8D0A000561C64 /* amrdecode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = amrdecode.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/amrdecode.cpp"; sourceTree = "<group>"; };
+		3FAA8D9015C8D0A000561C64 /* amrdecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = amrdecode.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/amrdecode.h"; sourceTree = "<group>"; };
+		3FAA8D9115C8D0A000561C64 /* b_cn_cod.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = b_cn_cod.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/b_cn_cod.cpp"; sourceTree = "<group>"; };
+		3FAA8D9215C8D0A000561C64 /* b_cn_cod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = b_cn_cod.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/b_cn_cod.h"; sourceTree = "<group>"; };
+		3FAA8D9315C8D0A000561C64 /* bgnscd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bgnscd.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/bgnscd.cpp"; sourceTree = "<group>"; };
+		3FAA8D9415C8D0A000561C64 /* bgnscd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bgnscd.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/bgnscd.h"; sourceTree = "<group>"; };
+		3FAA8D9515C8D0A000561C64 /* c_g_aver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = c_g_aver.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/c_g_aver.cpp"; sourceTree = "<group>"; };
+		3FAA8D9615C8D0A000561C64 /* c_g_aver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = c_g_aver.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/c_g_aver.h"; sourceTree = "<group>"; };
+		3FAA8D9715C8D0A000561C64 /* d_gain_c.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = d_gain_c.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/d_gain_c.cpp"; sourceTree = "<group>"; };
+		3FAA8D9815C8D0A000561C64 /* d_gain_p.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = d_gain_p.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/d_gain_p.cpp"; sourceTree = "<group>"; };
+		3FAA8D9915C8D0A000561C64 /* d_plsf_3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = d_plsf_3.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/d_plsf_3.cpp"; sourceTree = "<group>"; };
+		3FAA8D9A15C8D0A000561C64 /* d_plsf_5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = d_plsf_5.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/d_plsf_5.cpp"; sourceTree = "<group>"; };
+		3FAA8D9B15C8D0A000561C64 /* d_plsf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = d_plsf.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/d_plsf.cpp"; sourceTree = "<group>"; };
+		3FAA8D9C15C8D0A000561C64 /* d2_9pf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = d2_9pf.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/d2_9pf.cpp"; sourceTree = "<group>"; };
+		3FAA8D9D15C8D0A000561C64 /* d2_9pf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = d2_9pf.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/d2_9pf.h"; sourceTree = "<group>"; };
+		3FAA8D9E15C8D0A000561C64 /* d2_11pf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = d2_11pf.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/d2_11pf.cpp"; sourceTree = "<group>"; };
+		3FAA8D9F15C8D0A000561C64 /* d2_11pf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = d2_11pf.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/d2_11pf.h"; sourceTree = "<group>"; };
+		3FAA8DA015C8D0A000561C64 /* d3_14pf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = d3_14pf.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/d3_14pf.cpp"; sourceTree = "<group>"; };
+		3FAA8DA115C8D0A000561C64 /* d3_14pf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = d3_14pf.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/d3_14pf.h"; sourceTree = "<group>"; };
+		3FAA8DA215C8D0A000561C64 /* d4_17pf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = d4_17pf.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/d4_17pf.cpp"; sourceTree = "<group>"; };
+		3FAA8DA315C8D0A000561C64 /* d4_17pf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = d4_17pf.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/d4_17pf.h"; sourceTree = "<group>"; };
+		3FAA8DA415C8D0A000561C64 /* d8_31pf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = d8_31pf.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/d8_31pf.cpp"; sourceTree = "<group>"; };
+		3FAA8DA515C8D0A000561C64 /* d8_31pf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = d8_31pf.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/d8_31pf.h"; sourceTree = "<group>"; };
+		3FAA8DA615C8D0A000561C64 /* d1035pf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = d1035pf.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/d1035pf.cpp"; sourceTree = "<group>"; };
+		3FAA8DA715C8D0A000561C64 /* d1035pf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = d1035pf.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/d1035pf.h"; sourceTree = "<group>"; };
+		3FAA8DA815C8D0A000561C64 /* dec_amr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dec_amr.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/dec_amr.cpp"; sourceTree = "<group>"; };
+		3FAA8DA915C8D0A000561C64 /* dec_amr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dec_amr.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/dec_amr.h"; sourceTree = "<group>"; };
+		3FAA8DAA15C8D0A000561C64 /* dec_gain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dec_gain.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/dec_gain.cpp"; sourceTree = "<group>"; };
+		3FAA8DAB15C8D0A000561C64 /* dec_gain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dec_gain.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/dec_gain.h"; sourceTree = "<group>"; };
+		3FAA8DAC15C8D0A000561C64 /* dec_input_format_tab.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dec_input_format_tab.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/dec_input_format_tab.cpp"; sourceTree = "<group>"; };
+		3FAA8DAD15C8D0A000561C64 /* dec_lag3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dec_lag3.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/dec_lag3.cpp"; sourceTree = "<group>"; };
+		3FAA8DAE15C8D0A000561C64 /* dec_lag3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dec_lag3.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/dec_lag3.h"; sourceTree = "<group>"; };
+		3FAA8DAF15C8D0A000561C64 /* dec_lag6.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dec_lag6.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/dec_lag6.cpp"; sourceTree = "<group>"; };
+		3FAA8DB015C8D0A000561C64 /* dec_lag6.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dec_lag6.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/dec_lag6.h"; sourceTree = "<group>"; };
+		3FAA8DB115C8D0A000561C64 /* dtx_dec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dtx_dec.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/dtx_dec.cpp"; sourceTree = "<group>"; };
+		3FAA8DB215C8D0A000561C64 /* dtx_dec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dtx_dec.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/dtx_dec.h"; sourceTree = "<group>"; };
+		3FAA8DB315C8D0A000561C64 /* ec_gains.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ec_gains.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/ec_gains.cpp"; sourceTree = "<group>"; };
+		3FAA8DB415C8D0A000561C64 /* ec_gains.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ec_gains.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/ec_gains.h"; sourceTree = "<group>"; };
+		3FAA8DB515C8D0A000561C64 /* ex_ctrl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ex_ctrl.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/ex_ctrl.cpp"; sourceTree = "<group>"; };
+		3FAA8DB615C8D0A000561C64 /* ex_ctrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ex_ctrl.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/ex_ctrl.h"; sourceTree = "<group>"; };
+		3FAA8DB715C8D0A000561C64 /* gsmamr_dec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gsmamr_dec.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/gsmamr_dec.h"; sourceTree = "<group>"; };
+		3FAA8DB815C8D0A000561C64 /* if2_to_ets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = if2_to_ets.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/if2_to_ets.cpp"; sourceTree = "<group>"; };
+		3FAA8DB915C8D0A000561C64 /* if2_to_ets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = if2_to_ets.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/if2_to_ets.h"; sourceTree = "<group>"; };
+		3FAA8DBA15C8D0A000561C64 /* int_lsf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = int_lsf.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/int_lsf.cpp"; sourceTree = "<group>"; };
+		3FAA8DBB15C8D0A000561C64 /* lsp_avg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lsp_avg.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/lsp_avg.cpp"; sourceTree = "<group>"; };
+		3FAA8DBC15C8D0A000561C64 /* lsp_avg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lsp_avg.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/lsp_avg.h"; sourceTree = "<group>"; };
+		3FAA8DBD15C8D0A000561C64 /* ph_disp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ph_disp.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/ph_disp.cpp"; sourceTree = "<group>"; };
+		3FAA8DBE15C8D0A000561C64 /* ph_disp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ph_disp.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/ph_disp.h"; sourceTree = "<group>"; };
+		3FAA8DBF15C8D0A000561C64 /* post_pro.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = post_pro.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/post_pro.cpp"; sourceTree = "<group>"; };
+		3FAA8DC015C8D0A000561C64 /* post_pro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = post_pro.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/post_pro.h"; sourceTree = "<group>"; };
+		3FAA8DC115C8D0A000561C64 /* preemph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = preemph.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/preemph.cpp"; sourceTree = "<group>"; };
+		3FAA8DC215C8D0A000561C64 /* preemph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = preemph.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/preemph.h"; sourceTree = "<group>"; };
+		3FAA8DC315C8D0A000561C64 /* pstfilt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pstfilt.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/pstfilt.cpp"; sourceTree = "<group>"; };
+		3FAA8DC415C8D0A000561C64 /* pstfilt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pstfilt.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/pstfilt.h"; sourceTree = "<group>"; };
+		3FAA8DC515C8D0A000561C64 /* pvgsmamrdecoder_dpi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pvgsmamrdecoder_dpi.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/pvgsmamrdecoder_dpi.h"; sourceTree = "<group>"; };
+		3FAA8E0115C8D0B100561C64 /* pvgsmamrdecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pvgsmamrdecoder.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/pvgsmamrdecoder.h"; sourceTree = "<group>"; };
+		3FAA8E0215C8D0B100561C64 /* qgain475_tab.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = qgain475_tab.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/qgain475_tab.cpp"; sourceTree = "<group>"; };
+		3FAA8E0315C8D0B100561C64 /* sp_dec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sp_dec.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/sp_dec.cpp"; sourceTree = "<group>"; };
+		3FAA8E0415C8D0B100561C64 /* sp_dec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sp_dec.h; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/sp_dec.h"; sourceTree = "<group>"; };
+		3FAA8E0515C8D0B100561C64 /* wmf_to_ets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = wmf_to_ets.cpp; path = "codecs/opencore-amr/opencore/amr_nb/dec/src/wmf_to_ets.cpp"; sourceTree = "<group>"; };
+		3FAA8E0B15C8D0BE00561C64 /* gsmamr_encoder_wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gsmamr_encoder_wrapper.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/include/gsmamr_encoder_wrapper.h"; sourceTree = "<group>"; };
+		3FAA8E0D15C8D0C900561C64 /* amrencode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = amrencode.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/amrencode.cpp"; sourceTree = "<group>"; };
+		3FAA8E0E15C8D0C900561C64 /* amrencode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = amrencode.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/amrencode.h"; sourceTree = "<group>"; };
+		3FAA8E0F15C8D0C900561C64 /* autocorr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = autocorr.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/autocorr.cpp"; sourceTree = "<group>"; };
+		3FAA8E1015C8D0C900561C64 /* autocorr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = autocorr.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/autocorr.h"; sourceTree = "<group>"; };
+		3FAA8E1115C8D0C900561C64 /* c2_9pf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = c2_9pf.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/c2_9pf.cpp"; sourceTree = "<group>"; };
+		3FAA8E1215C8D0C900561C64 /* c2_9pf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = c2_9pf.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/c2_9pf.h"; sourceTree = "<group>"; };
+		3FAA8E1315C8D0C900561C64 /* c2_11pf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = c2_11pf.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/c2_11pf.cpp"; sourceTree = "<group>"; };
+		3FAA8E1415C8D0C900561C64 /* c2_11pf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = c2_11pf.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/c2_11pf.h"; sourceTree = "<group>"; };
+		3FAA8E1515C8D0C900561C64 /* c3_14pf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = c3_14pf.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/c3_14pf.cpp"; sourceTree = "<group>"; };
+		3FAA8E1615C8D0C900561C64 /* c3_14pf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = c3_14pf.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/c3_14pf.h"; sourceTree = "<group>"; };
+		3FAA8E1715C8D0C900561C64 /* c4_17pf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = c4_17pf.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/c4_17pf.cpp"; sourceTree = "<group>"; };
+		3FAA8E1815C8D0C900561C64 /* c4_17pf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = c4_17pf.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/c4_17pf.h"; sourceTree = "<group>"; };
+		3FAA8E1915C8D0C900561C64 /* c8_31pf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = c8_31pf.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/c8_31pf.cpp"; sourceTree = "<group>"; };
+		3FAA8E1A15C8D0C900561C64 /* c8_31pf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = c8_31pf.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/c8_31pf.h"; sourceTree = "<group>"; };
+		3FAA8E1B15C8D0C900561C64 /* c1035pf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = c1035pf.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/c1035pf.cpp"; sourceTree = "<group>"; };
+		3FAA8E1C15C8D0C900561C64 /* c1035pf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = c1035pf.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/c1035pf.h"; sourceTree = "<group>"; };
+		3FAA8E1D15C8D0C900561C64 /* calc_cor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = calc_cor.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/calc_cor.cpp"; sourceTree = "<group>"; };
+		3FAA8E1E15C8D0C900561C64 /* calc_cor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = calc_cor.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/calc_cor.h"; sourceTree = "<group>"; };
+		3FAA8E1F15C8D0C900561C64 /* calc_en.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = calc_en.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/calc_en.cpp"; sourceTree = "<group>"; };
+		3FAA8E2015C8D0C900561C64 /* calc_en.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = calc_en.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/calc_en.h"; sourceTree = "<group>"; };
+		3FAA8E2115C8D0C900561C64 /* cbsearch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cbsearch.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/cbsearch.cpp"; sourceTree = "<group>"; };
+		3FAA8E2215C8D0C900561C64 /* cbsearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cbsearch.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/cbsearch.h"; sourceTree = "<group>"; };
+		3FAA8E2315C8D0C900561C64 /* cl_ltp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cl_ltp.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/cl_ltp.cpp"; sourceTree = "<group>"; };
+		3FAA8E2415C8D0C900561C64 /* cl_ltp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cl_ltp.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/cl_ltp.h"; sourceTree = "<group>"; };
+		3FAA8E2515C8D0C900561C64 /* cod_amr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cod_amr.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/cod_amr.cpp"; sourceTree = "<group>"; };
+		3FAA8E2615C8D0C900561C64 /* cod_amr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cod_amr.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/cod_amr.h"; sourceTree = "<group>"; };
+		3FAA8E2715C8D0C900561C64 /* convolve.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = convolve.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/convolve.cpp"; sourceTree = "<group>"; };
+		3FAA8E2815C8D0C900561C64 /* convolve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = convolve.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/convolve.h"; sourceTree = "<group>"; };
+		3FAA8E2915C8D0C900561C64 /* cor_h_x.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cor_h_x.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/cor_h_x.cpp"; sourceTree = "<group>"; };
+		3FAA8E2A15C8D0C900561C64 /* cor_h_x.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cor_h_x.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/cor_h_x.h"; sourceTree = "<group>"; };
+		3FAA8E2B15C8D0C900561C64 /* cor_h_x2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cor_h_x2.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/cor_h_x2.cpp"; sourceTree = "<group>"; };
+		3FAA8E2C15C8D0C900561C64 /* cor_h_x2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cor_h_x2.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/cor_h_x2.h"; sourceTree = "<group>"; };
+		3FAA8E2D15C8D0C900561C64 /* cor_h.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cor_h.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/cor_h.cpp"; sourceTree = "<group>"; };
+		3FAA8E2E15C8D0C900561C64 /* cor_h.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cor_h.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/cor_h.h"; sourceTree = "<group>"; };
+		3FAA8E2F15C8D0C900561C64 /* corrwght_tab.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = corrwght_tab.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/corrwght_tab.cpp"; sourceTree = "<group>"; };
+		3FAA8E3015C8D0C900561C64 /* div_32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = div_32.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/div_32.cpp"; sourceTree = "<group>"; };
+		3FAA8E3115C8D0C900561C64 /* div_32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = div_32.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/div_32.h"; sourceTree = "<group>"; };
+		3FAA8E3215C8D0C900561C64 /* dtx_enc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dtx_enc.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/dtx_enc.cpp"; sourceTree = "<group>"; };
+		3FAA8E3315C8D0C900561C64 /* dtx_enc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dtx_enc.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/dtx_enc.h"; sourceTree = "<group>"; };
+		3FAA8E3415C8D0C900561C64 /* enc_lag3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = enc_lag3.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/enc_lag3.cpp"; sourceTree = "<group>"; };
+		3FAA8E3515C8D0C900561C64 /* enc_lag3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = enc_lag3.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/enc_lag3.h"; sourceTree = "<group>"; };
+		3FAA8E3615C8D0C900561C64 /* enc_lag6.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = enc_lag6.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/enc_lag6.cpp"; sourceTree = "<group>"; };
+		3FAA8E3715C8D0C900561C64 /* enc_lag6.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = enc_lag6.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/enc_lag6.h"; sourceTree = "<group>"; };
+		3FAA8E3815C8D0C900561C64 /* enc_output_format_tab.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = enc_output_format_tab.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/enc_output_format_tab.cpp"; sourceTree = "<group>"; };
+		3FAA8E3915C8D0C900561C64 /* ets_to_if2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ets_to_if2.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/ets_to_if2.cpp"; sourceTree = "<group>"; };
+		3FAA8E3A15C8D0C900561C64 /* ets_to_if2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ets_to_if2.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/ets_to_if2.h"; sourceTree = "<group>"; };
+		3FAA8E3B15C8D0C900561C64 /* ets_to_wmf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ets_to_wmf.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/ets_to_wmf.cpp"; sourceTree = "<group>"; };
+		3FAA8E3C15C8D0C900561C64 /* ets_to_wmf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ets_to_wmf.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/ets_to_wmf.h"; sourceTree = "<group>"; };
+		3FAA8E3D15C8D0C900561C64 /* g_adapt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = g_adapt.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/g_adapt.cpp"; sourceTree = "<group>"; };
+		3FAA8E3E15C8D0C900561C64 /* g_adapt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = g_adapt.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/g_adapt.h"; sourceTree = "<group>"; };
+		3FAA8E3F15C8D0C900561C64 /* g_code.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = g_code.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/g_code.cpp"; sourceTree = "<group>"; };
+		3FAA8E4015C8D0C900561C64 /* g_code.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = g_code.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/g_code.h"; sourceTree = "<group>"; };
+		3FAA8E4115C8D0C900561C64 /* g_pitch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = g_pitch.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/g_pitch.cpp"; sourceTree = "<group>"; };
+		3FAA8E4215C8D0C900561C64 /* g_pitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = g_pitch.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/g_pitch.h"; sourceTree = "<group>"; };
+		3FAA8E4315C8D0C900561C64 /* gain_q.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gain_q.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/gain_q.cpp"; sourceTree = "<group>"; };
+		3FAA8E4415C8D0C900561C64 /* gain_q.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gain_q.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/gain_q.h"; sourceTree = "<group>"; };
+		3FAA8E4515C8D0C900561C64 /* gsmamr_enc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gsmamr_enc.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/gsmamr_enc.h"; sourceTree = "<group>"; };
+		3FAA8E4615C8D0C900561C64 /* gsmamr_encoder_wrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gsmamr_encoder_wrapper.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/gsmamr_encoder_wrapper.cpp"; sourceTree = "<group>"; };
+		3FAA8E4715C8D0C900561C64 /* hp_max.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = hp_max.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/hp_max.cpp"; sourceTree = "<group>"; };
+		3FAA8E4815C8D0C900561C64 /* hp_max.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hp_max.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/hp_max.h"; sourceTree = "<group>"; };
+		3FAA8E4915C8D0C900561C64 /* inter_36_tab.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = inter_36_tab.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/inter_36_tab.cpp"; sourceTree = "<group>"; };
+		3FAA8E4A15C8D0C900561C64 /* inter_36_tab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = inter_36_tab.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/inter_36_tab.h"; sourceTree = "<group>"; };
+		3FAA8E4B15C8D0C900561C64 /* inter_36.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = inter_36.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/inter_36.cpp"; sourceTree = "<group>"; };
+		3FAA8E4C15C8D0C900561C64 /* inter_36.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = inter_36.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/inter_36.h"; sourceTree = "<group>"; };
+		3FAA8E4D15C8D0C900561C64 /* l_abs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = l_abs.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/l_abs.cpp"; sourceTree = "<group>"; };
+		3FAA8E4E15C8D0C900561C64 /* l_abs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = l_abs.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/l_abs.h"; sourceTree = "<group>"; };
+		3FAA8E4F15C8D0C900561C64 /* l_comp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = l_comp.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/l_comp.cpp"; sourceTree = "<group>"; };
+		3FAA8E5015C8D0C900561C64 /* l_extract.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = l_extract.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/l_extract.cpp"; sourceTree = "<group>"; };
+		3FAA8E5115C8D0C900561C64 /* l_negate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = l_negate.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/l_negate.cpp"; sourceTree = "<group>"; };
+		3FAA8E5215C8D0C900561C64 /* lag_wind_tab.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lag_wind_tab.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/lag_wind_tab.cpp"; sourceTree = "<group>"; };
+		3FAA8E5315C8D0C900561C64 /* lag_wind_tab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lag_wind_tab.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/lag_wind_tab.h"; sourceTree = "<group>"; };
+		3FAA8E5415C8D0C900561C64 /* lag_wind.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lag_wind.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/lag_wind.cpp"; sourceTree = "<group>"; };
+		3FAA8E5515C8D0C900561C64 /* lag_wind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lag_wind.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/lag_wind.h"; sourceTree = "<group>"; };
+		3FAA8E5615C8D0C900561C64 /* levinson.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = levinson.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/levinson.cpp"; sourceTree = "<group>"; };
+		3FAA8E5715C8D0C900561C64 /* levinson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = levinson.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/levinson.h"; sourceTree = "<group>"; };
+		3FAA8E5815C8D0C900561C64 /* lflg_upd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lflg_upd.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/lflg_upd.cpp"; sourceTree = "<group>"; };
+		3FAA8E5915C8D0C900561C64 /* lpc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lpc.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/lpc.cpp"; sourceTree = "<group>"; };
+		3FAA8E5A15C8D0C900561C64 /* lpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lpc.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/lpc.h"; sourceTree = "<group>"; };
+		3FAA8E5B15C8D0C900561C64 /* ol_ltp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ol_ltp.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/ol_ltp.cpp"; sourceTree = "<group>"; };
+		3FAA8E5C15C8D0C900561C64 /* ol_ltp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ol_ltp.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/ol_ltp.h"; sourceTree = "<group>"; };
+		3FAA8E5D15C8D0C900561C64 /* p_ol_wgh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = p_ol_wgh.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/p_ol_wgh.cpp"; sourceTree = "<group>"; };
+		3FAA8E5E15C8D0C900561C64 /* pitch_fr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pitch_fr.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/pitch_fr.cpp"; sourceTree = "<group>"; };
+		3FAA8E5F15C8D0C900561C64 /* pitch_fr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pitch_fr.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/pitch_fr.h"; sourceTree = "<group>"; };
+		3FAA8E6015C8D0C900561C64 /* pitch_ol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pitch_ol.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/pitch_ol.cpp"; sourceTree = "<group>"; };
+		3FAA8E6115C8D0C900561C64 /* pitch_ol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pitch_ol.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/pitch_ol.h"; sourceTree = "<group>"; };
+		3FAA8E6215C8D0C900561C64 /* pre_big.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pre_big.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/pre_big.cpp"; sourceTree = "<group>"; };
+		3FAA8E6315C8D0C900561C64 /* pre_big.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pre_big.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/pre_big.h"; sourceTree = "<group>"; };
+		3FAA8E6415C8D0C900561C64 /* pre_proc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pre_proc.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/pre_proc.cpp"; sourceTree = "<group>"; };
+		3FAA8E6515C8D0C900561C64 /* pre_proc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pre_proc.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/pre_proc.h"; sourceTree = "<group>"; };
+		3FAA8E6615C8D0C900561C64 /* prm2bits.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = prm2bits.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/prm2bits.cpp"; sourceTree = "<group>"; };
+		3FAA8E6715C8D0C900561C64 /* prm2bits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = prm2bits.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/prm2bits.h"; sourceTree = "<group>"; };
+		3FAA8E6815C8D0C900561C64 /* q_gain_c.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = q_gain_c.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/q_gain_c.cpp"; sourceTree = "<group>"; };
+		3FAA8E6915C8D0C900561C64 /* q_gain_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = q_gain_c.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/q_gain_c.h"; sourceTree = "<group>"; };
+		3FAA8E6A15C8D0C900561C64 /* q_gain_p.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = q_gain_p.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/q_gain_p.cpp"; sourceTree = "<group>"; };
+		3FAA8E6B15C8D0C900561C64 /* q_gain_p.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = q_gain_p.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/q_gain_p.h"; sourceTree = "<group>"; };
+		3FAA8E6C15C8D0C900561C64 /* qgain475.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = qgain475.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/qgain475.cpp"; sourceTree = "<group>"; };
+		3FAA8E6D15C8D0C900561C64 /* qgain475.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = qgain475.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/qgain475.h"; sourceTree = "<group>"; };
+		3FAA8E6E15C8D0C900561C64 /* qgain795.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = qgain795.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/qgain795.cpp"; sourceTree = "<group>"; };
+		3FAA8E6F15C8D0C900561C64 /* qgain795.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = qgain795.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/qgain795.h"; sourceTree = "<group>"; };
+		3FAA8E7015C8D0C900561C64 /* qua_gain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = qua_gain.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/qua_gain.cpp"; sourceTree = "<group>"; };
+		3FAA8E7115C8D0C900561C64 /* s10_8pf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = s10_8pf.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/s10_8pf.cpp"; sourceTree = "<group>"; };
+		3FAA8E7215C8D0C900561C64 /* s10_8pf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = s10_8pf.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/s10_8pf.h"; sourceTree = "<group>"; };
+		3FAA8E7315C8D0C900561C64 /* set_sign.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = set_sign.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/set_sign.cpp"; sourceTree = "<group>"; };
+		3FAA8E7415C8D0C900561C64 /* set_sign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = set_sign.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/set_sign.h"; sourceTree = "<group>"; };
+		3FAA8E7515C8D0C900561C64 /* sid_sync.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sid_sync.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/sid_sync.cpp"; sourceTree = "<group>"; };
+		3FAA8E7615C8D0C900561C64 /* sid_sync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sid_sync.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/sid_sync.h"; sourceTree = "<group>"; };
+		3FAA8E7715C8D0C900561C64 /* sp_enc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sp_enc.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/sp_enc.cpp"; sourceTree = "<group>"; };
+		3FAA8E7815C8D0C900561C64 /* sp_enc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sp_enc.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/sp_enc.h"; sourceTree = "<group>"; };
+		3FAA8E7915C8D0C900561C64 /* spreproc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = spreproc.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/spreproc.cpp"; sourceTree = "<group>"; };
+		3FAA8E7A15C8D0C900561C64 /* spreproc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = spreproc.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/spreproc.h"; sourceTree = "<group>"; };
+		3FAA8E7B15C8D0C900561C64 /* spstproc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = spstproc.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/spstproc.cpp"; sourceTree = "<group>"; };
+		3FAA8E7C15C8D0C900561C64 /* spstproc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = spstproc.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/spstproc.h"; sourceTree = "<group>"; };
+		3FAA8E7D15C8D0C900561C64 /* ton_stab.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ton_stab.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/ton_stab.cpp"; sourceTree = "<group>"; };
+		3FAA8E7E15C8D0C900561C64 /* ton_stab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ton_stab.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/ton_stab.h"; sourceTree = "<group>"; };
+		3FAA8E7F15C8D0C900561C64 /* vad1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = vad1.cpp; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/vad1.cpp"; sourceTree = "<group>"; };
+		3FAA8E8015C8D0C900561C64 /* vad1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vad1.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/vad1.h"; sourceTree = "<group>"; };
+		3FAA8E8115C8D0C900561C64 /* vad2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vad2.h; path = "codecs/opencore-amr/opencore/amr_nb/enc/src/vad2.h"; sourceTree = "<group>"; };
+		3FAA8EF715C8D0E100561C64 /* amr_interface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = amr_interface.cpp; path = "codecs/opencore-amr/amrnb/amr_interface.cpp"; sourceTree = "<group>"; };
+		3FAA8EF815C8D0E100561C64 /* amr_interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = amr_interface.h; path = "codecs/opencore-amr/amrnb/amr_interface.h"; sourceTree = "<group>"; };
+		3FAA8EF915C8D0E100561C64 /* interf_dec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = interf_dec.h; path = "codecs/opencore-amr/amrnb/interf_dec.h"; sourceTree = "<group>"; };
+		3FAA8EFA15C8D0E100561C64 /* interf_enc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = interf_enc.h; path = "codecs/opencore-amr/amrnb/interf_enc.h"; sourceTree = "<group>"; };
+		3FAA8EFB15C8D0E100561C64 /* wrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = wrapper.cpp; path = "codecs/opencore-amr/amrnb/wrapper.cpp"; sourceTree = "<group>"; };
+		55EA5C8D17D82F8A00885688 /* amrAllSrc.CPP */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = amrAllSrc.CPP; path = "codecs/opencore-amr/amrAllSrc.CPP"; sourceTree = "<group>"; };
+		55EA5C8E17D82F8A00885688 /* amrAllSrc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = amrAllSrc.h; path = "codecs/opencore-amr/amrAllSrc.h"; sourceTree = "<group>"; };
+		55EA5C8F17D82F8A00885688 /* amrAllSrc2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = amrAllSrc2.cpp; path = "codecs/opencore-amr/amrAllSrc2.cpp"; sourceTree = "<group>"; };
+		55EA5C9017D82F8A00885688 /* amrAllSrc2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = amrAllSrc2.h; path = "codecs/opencore-amr/amrAllSrc2.h"; sourceTree = "<group>"; };
+		55EA5C9117D82F8A00885688 /* amrAllSrc3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = amrAllSrc3.cpp; path = "codecs/opencore-amr/amrAllSrc3.cpp"; sourceTree = "<group>"; };
+		55EA5C9217D82F8A00885688 /* amrAllSrc3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = amrAllSrc3.h; path = "codecs/opencore-amr/amrAllSrc3.h"; sourceTree = "<group>"; };
+		55EA5C9317D82F8A00885688 /* amrAllSrc4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = amrAllSrc4.cpp; path = "codecs/opencore-amr/amrAllSrc4.cpp"; sourceTree = "<group>"; };
+		55EA5C9417D82F8A00885688 /* amrAllSrc4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = amrAllSrc4.h; path = "codecs/opencore-amr/amrAllSrc4.h"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3FAA8C5215C8CB9B00561C64 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3FAA8C5915C8CB9B00561C64 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3FAA8C4A15C8CB9B00561C64 = {
+			isa = PBXGroup;
+			children = (
+				55EA5C8D17D82F8A00885688 /* amrAllSrc.CPP */,
+				55EA5C8E17D82F8A00885688 /* amrAllSrc.h */,
+				55EA5C8F17D82F8A00885688 /* amrAllSrc2.cpp */,
+				55EA5C9017D82F8A00885688 /* amrAllSrc2.h */,
+				55EA5C9117D82F8A00885688 /* amrAllSrc3.cpp */,
+				55EA5C9217D82F8A00885688 /* amrAllSrc3.h */,
+				55EA5C9317D82F8A00885688 /* amrAllSrc4.cpp */,
+				55EA5C9417D82F8A00885688 /* amrAllSrc4.h */,
+				3FAA8D8215C8CFD200561C64 /* dec */,
+				3FAA8D8115C8CFD000561C64 /* enc */,
+				3FAA8D8015C8CFCE00561C64 /* amrnb */,
+				3FAA8D7F15C8CFB500561C64 /* common */,
+				3FAA8C5715C8CB9B00561C64 /* Frameworks */,
+				3FAA8C5615C8CB9B00561C64 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3FAA8C5615C8CB9B00561C64 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3FAA8C5515C8CB9B00561C64 /* libamrnb.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3FAA8C5715C8CB9B00561C64 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3FAA8C5815C8CB9B00561C64 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3FAA8C6915C8CBB900561C64 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				3FAA8D0F15C8CE2400561C64 /* add.cpp */,
+				3FAA8D1015C8CE2400561C64 /* az_lsp.cpp */,
+				3FAA8D1115C8CE2400561C64 /* bitno_tab.cpp */,
+				3FAA8D1215C8CE2400561C64 /* bitreorder_tab.cpp */,
+				3FAA8D1315C8CE2400561C64 /* c2_9pf_tab.cpp */,
+				3FAA8D1415C8CE2400561C64 /* div_s.cpp */,
+				3FAA8D1515C8CE2400561C64 /* extract_h.cpp */,
+				3FAA8D1615C8CE2400561C64 /* extract_l.cpp */,
+				3FAA8D1715C8CE2400561C64 /* gains_tbl.cpp */,
+				3FAA8D1815C8CE2400561C64 /* gc_pred.cpp */,
+				3FAA8D1915C8CE2400561C64 /* get_const_tbls.cpp */,
+				3FAA8D1A15C8CE2400561C64 /* gmed_n.cpp */,
+				3FAA8D1B15C8CE2400561C64 /* gray_tbl.cpp */,
+				3FAA8D1C15C8CE2400561C64 /* grid_tbl.cpp */,
+				3FAA8D1D15C8CE2400561C64 /* int_lpc.cpp */,
+				3FAA8D1E15C8CE2400561C64 /* inv_sqrt_tbl.cpp */,
+				3FAA8D1F15C8CE2400561C64 /* inv_sqrt.cpp */,
+				3FAA8D2015C8CE2400561C64 /* l_deposit_h.cpp */,
+				3FAA8D2115C8CE2400561C64 /* l_deposit_l.cpp */,
+				3FAA8D2215C8CE2400561C64 /* l_shr_r.cpp */,
+				3FAA8D2315C8CE2400561C64 /* log2_norm.cpp */,
+				3FAA8D2415C8CE2400561C64 /* log2_tbl.cpp */,
+				3FAA8D2515C8CE2400561C64 /* log2.cpp */,
+				3FAA8D2615C8CE2400561C64 /* lsfwt.cpp */,
+				3FAA8D2715C8CE2400561C64 /* lsp_az.cpp */,
+				3FAA8D2815C8CE2400561C64 /* lsp_lsf_tbl.cpp */,
+				3FAA8D2915C8CE2400561C64 /* lsp_lsf.cpp */,
+				3FAA8D2A15C8CE2400561C64 /* lsp_tab.cpp */,
+				3FAA8D2B15C8CE2400561C64 /* lsp.cpp */,
+				3FAA8D2C15C8CE2400561C64 /* mult_r.cpp */,
+				3FAA8D2D15C8CE2400561C64 /* negate.cpp */,
+				3FAA8D2E15C8CE2400561C64 /* norm_l.cpp */,
+				3FAA8D2F15C8CE2400561C64 /* norm_s.cpp */,
+				3FAA8D3015C8CE2400561C64 /* overflow_tbl.cpp */,
+				3FAA8D3115C8CE2400561C64 /* ph_disp_tab.cpp */,
+				3FAA8D3215C8CE2400561C64 /* pow2_tbl.cpp */,
+				3FAA8D3315C8CE2400561C64 /* pow2.cpp */,
+				3FAA8D3415C8CE2400561C64 /* pred_lt.cpp */,
+				3FAA8D3515C8CE2400561C64 /* q_plsf_3_tbl.cpp */,
+				3FAA8D3615C8CE2400561C64 /* q_plsf_3.cpp */,
+				3FAA8D3715C8CE2400561C64 /* q_plsf_5_tbl.cpp */,
+				3FAA8D3815C8CE2400561C64 /* q_plsf_5.cpp */,
+				3FAA8D3915C8CE2400561C64 /* q_plsf.cpp */,
+				3FAA8D3A15C8CE2400561C64 /* qua_gain_tbl.cpp */,
+				3FAA8D3B15C8CE2400561C64 /* reorder.cpp */,
+				3FAA8D3C15C8CE2400561C64 /* residu.cpp */,
+				3FAA8D3D15C8CE2400561C64 /* round.cpp */,
+				3FAA8D3E15C8CE2400561C64 /* set_zero.cpp */,
+				3FAA8D3F15C8CE2400561C64 /* shr_r.cpp */,
+				3FAA8D4015C8CE2400561C64 /* shr.cpp */,
+				3FAA8D4115C8CE2400561C64 /* sqrt_l_tbl.cpp */,
+				3FAA8D4215C8CE2400561C64 /* sqrt_l.cpp */,
+				3FAA8D4315C8CE2400561C64 /* sub.cpp */,
+				3FAA8D4415C8CE2400561C64 /* syn_filt.cpp */,
+				3FAA8D4515C8CE2400561C64 /* weight_a.cpp */,
+				3FAA8D4615C8CE2400561C64 /* window_tab.cpp */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		3FAA8C6A15C8CBBC00561C64 /* inc */ = {
+			isa = PBXGroup;
+			children = (
+				3FAA8C6B15C8CE1600561C64 /* abs_s.h */,
+				3FAA8C6C15C8CE1600561C64 /* add.h */,
+				3FAA8C6D15C8CE1600561C64 /* az_lsp.h */,
+				3FAA8C6E15C8CE1600561C64 /* basic_op_arm_gcc_v5.h */,
+				3FAA8C6F15C8CE1600561C64 /* basic_op_c_equivalent.h */,
+				3FAA8C7015C8CE1600561C64 /* basic_op.h */,
+				3FAA8C7115C8CE1600561C64 /* basicop_malloc.h */,
+				3FAA8C7215C8CE1600561C64 /* bitno_tab.h */,
+				3FAA8C7315C8CE1600561C64 /* bitreorder_tab.h */,
+				3FAA8C7415C8CE1600561C64 /* bytesused.h */,
+				3FAA8C7515C8CE1600561C64 /* cnst_vad.h */,
+				3FAA8C7615C8CE1600561C64 /* cnst.h */,
+				3FAA8C7715C8CE1600561C64 /* d_gain_c.h */,
+				3FAA8C7815C8CE1600561C64 /* d_gain_p.h */,
+				3FAA8C7915C8CE1600561C64 /* d_plsf.h */,
+				3FAA8C7A15C8CE1600561C64 /* div_s.h */,
+				3FAA8C7B15C8CE1600561C64 /* dtx_common_def.h */,
+				3FAA8C7C15C8CE1600561C64 /* frame_type_3gpp.h */,
+				3FAA8C7D15C8CE1600561C64 /* frame.h */,
+				3FAA8C7E15C8CE1600561C64 /* gc_pred.h */,
+				3FAA8C7F15C8CE1600561C64 /* get_const_tbls.h */,
+				3FAA8C8015C8CE1600561C64 /* gmed_n.h */,
+				3FAA8C8115C8CE1600561C64 /* gsm_amr_typedefs.h */,
+				3FAA8C8215C8CE1600561C64 /* int_lpc.h */,
+				3FAA8C8315C8CE1600561C64 /* int_lsf.h */,
+				3FAA8C8415C8CE1600561C64 /* inv_sqrt.h */,
+				3FAA8C8515C8CE1600561C64 /* l_add_c.h */,
+				3FAA8C8615C8CE1600561C64 /* l_add.h */,
+				3FAA8C8715C8CE1600561C64 /* l_comp.h */,
+				3FAA8C8815C8CE1600561C64 /* l_extract.h */,
+				3FAA8C8915C8CE1600561C64 /* l_mac.h */,
+				3FAA8C8A15C8CE1600561C64 /* l_msu.h */,
+				3FAA8C8B15C8CE1600561C64 /* l_mult.h */,
+				3FAA8C8C15C8CE1600561C64 /* l_negate.h */,
+				3FAA8C8D15C8CE1600561C64 /* l_shl.h */,
+				3FAA8C8E15C8CE1600561C64 /* l_shr_r.h */,
+				3FAA8C8F15C8CE1600561C64 /* l_shr.h */,
+				3FAA8C9015C8CE1600561C64 /* l_sub.h */,
+				3FAA8C9115C8CE1600561C64 /* log2_norm.h */,
+				3FAA8C9215C8CE1600561C64 /* log2.h */,
+				3FAA8C9315C8CE1600561C64 /* lsfwt.h */,
+				3FAA8C9415C8CE1600561C64 /* lsp_az.h */,
+				3FAA8C9515C8CE1600561C64 /* lsp_lsf.h */,
+				3FAA8C9615C8CE1600561C64 /* lsp_tab.h */,
+				3FAA8C9715C8CE1600561C64 /* lsp.h */,
+				3FAA8C9815C8CE1600561C64 /* mac_32.h */,
+				3FAA8C9915C8CE1600561C64 /* mode.h */,
+				3FAA8C9A15C8CE1600561C64 /* mpy_32_16.h */,
+				3FAA8C9B15C8CE1600561C64 /* mpy_32.h */,
+				3FAA8C9C15C8CE1600561C64 /* mult_r.h */,
+				3FAA8C9D15C8CE1600561C64 /* mult.h */,
+				3FAA8C9E15C8CE1600561C64 /* n_proc.h */,
+				3FAA8C9F15C8CE1600561C64 /* negate.h */,
+				3FAA8CA015C8CE1600561C64 /* norm_l.h */,
+				3FAA8CA115C8CE1600561C64 /* norm_s.h */,
+				3FAA8CA215C8CE1600561C64 /* oper_32b.h */,
+				3FAA8CA315C8CE1600561C64 /* p_ol_wgh.h */,
+				3FAA8CA415C8CE1600561C64 /* pow2.h */,
+				3FAA8CA515C8CE1600561C64 /* pred_lt.h */,
+				3FAA8CA615C8CE1600561C64 /* pvgsmamr.h */,
+				3FAA8CA715C8CE1600561C64 /* q_plsf_3_tbl.h */,
+				3FAA8CA815C8CE1600561C64 /* q_plsf_5_tbl.h */,
+				3FAA8CA915C8CE1600561C64 /* q_plsf.h */,
+				3FAA8CAA15C8CE1600561C64 /* qgain475_tab.h */,
+				3FAA8CAB15C8CE1600561C64 /* qua_gain_tbl.h */,
+				3FAA8CAC15C8CE1600561C64 /* qua_gain.h */,
+				3FAA8CAD15C8CE1600561C64 /* reorder.h */,
+				3FAA8CAE15C8CE1600561C64 /* residu.h */,
+				3FAA8CAF15C8CE1600561C64 /* reverse_bits.h */,
+				3FAA8CB015C8CE1600561C64 /* round.h */,
+				3FAA8CB115C8CE1600561C64 /* set_zero.h */,
+				3FAA8CB215C8CE1600561C64 /* shl.h */,
+				3FAA8CB315C8CE1600561C64 /* shr_r.h */,
+				3FAA8CB415C8CE1600561C64 /* shr.h */,
+				3FAA8CB515C8CE1600561C64 /* sqrt_l.h */,
+				3FAA8CB615C8CE1600561C64 /* sub.h */,
+				3FAA8CB715C8CE1600561C64 /* syn_filt.h */,
+				3FAA8CB815C8CE1600561C64 /* typedef.h */,
+				3FAA8CB915C8CE1600561C64 /* vad.h */,
+				3FAA8CBA15C8CE1600561C64 /* weight_a.h */,
+				3FAA8CBB15C8CE1600561C64 /* window_tab.h */,
+				3FAA8CBC15C8CE1600561C64 /* wmf_to_ets.h */,
+			);
+			name = inc;
+			sourceTree = "<group>";
+		};
+		3FAA8D7F15C8CFB500561C64 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				3FAA8C6915C8CBB900561C64 /* src */,
+				3FAA8C6A15C8CBBC00561C64 /* inc */,
+			);
+			name = common;
+			sourceTree = "<group>";
+		};
+		3FAA8D8015C8CFCE00561C64 /* amrnb */ = {
+			isa = PBXGroup;
+			children = (
+				3FAA8EF715C8D0E100561C64 /* amr_interface.cpp */,
+				3FAA8EF815C8D0E100561C64 /* amr_interface.h */,
+				3FAA8EF915C8D0E100561C64 /* interf_dec.h */,
+				3FAA8EFA15C8D0E100561C64 /* interf_enc.h */,
+				3FAA8EFB15C8D0E100561C64 /* wrapper.cpp */,
+			);
+			name = amrnb;
+			sourceTree = "<group>";
+		};
+		3FAA8D8115C8CFD000561C64 /* enc */ = {
+			isa = PBXGroup;
+			children = (
+				3FAA8D8615C8D06800561C64 /* inc */,
+				3FAA8D8515C8D06600561C64 /* src */,
+			);
+			name = enc;
+			sourceTree = "<group>";
+		};
+		3FAA8D8215C8CFD200561C64 /* dec */ = {
+			isa = PBXGroup;
+			children = (
+				3FAA8D8415C8D06000561C64 /* inc */,
+				3FAA8D8315C8D05D00561C64 /* src */,
+			);
+			name = dec;
+			sourceTree = "<group>";
+		};
+		3FAA8D8315C8D05D00561C64 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				3FAA8E0115C8D0B100561C64 /* pvgsmamrdecoder.h */,
+				3FAA8E0215C8D0B100561C64 /* qgain475_tab.cpp */,
+				3FAA8E0315C8D0B100561C64 /* sp_dec.cpp */,
+				3FAA8E0415C8D0B100561C64 /* sp_dec.h */,
+				3FAA8E0515C8D0B100561C64 /* wmf_to_ets.cpp */,
+				3FAA8D8B15C8D0A000561C64 /* a_refl.cpp */,
+				3FAA8D8C15C8D0A000561C64 /* a_refl.h */,
+				3FAA8D8D15C8D0A000561C64 /* agc.cpp */,
+				3FAA8D8E15C8D0A000561C64 /* agc.h */,
+				3FAA8D8F15C8D0A000561C64 /* amrdecode.cpp */,
+				3FAA8D9015C8D0A000561C64 /* amrdecode.h */,
+				3FAA8D9115C8D0A000561C64 /* b_cn_cod.cpp */,
+				3FAA8D9215C8D0A000561C64 /* b_cn_cod.h */,
+				3FAA8D9315C8D0A000561C64 /* bgnscd.cpp */,
+				3FAA8D9415C8D0A000561C64 /* bgnscd.h */,
+				3FAA8D9515C8D0A000561C64 /* c_g_aver.cpp */,
+				3FAA8D9615C8D0A000561C64 /* c_g_aver.h */,
+				3FAA8D9715C8D0A000561C64 /* d_gain_c.cpp */,
+				3FAA8D9815C8D0A000561C64 /* d_gain_p.cpp */,
+				3FAA8D9915C8D0A000561C64 /* d_plsf_3.cpp */,
+				3FAA8D9A15C8D0A000561C64 /* d_plsf_5.cpp */,
+				3FAA8D9B15C8D0A000561C64 /* d_plsf.cpp */,
+				3FAA8D9C15C8D0A000561C64 /* d2_9pf.cpp */,
+				3FAA8D9D15C8D0A000561C64 /* d2_9pf.h */,
+				3FAA8D9E15C8D0A000561C64 /* d2_11pf.cpp */,
+				3FAA8D9F15C8D0A000561C64 /* d2_11pf.h */,
+				3FAA8DA015C8D0A000561C64 /* d3_14pf.cpp */,
+				3FAA8DA115C8D0A000561C64 /* d3_14pf.h */,
+				3FAA8DA215C8D0A000561C64 /* d4_17pf.cpp */,
+				3FAA8DA315C8D0A000561C64 /* d4_17pf.h */,
+				3FAA8DA415C8D0A000561C64 /* d8_31pf.cpp */,
+				3FAA8DA515C8D0A000561C64 /* d8_31pf.h */,
+				3FAA8DA615C8D0A000561C64 /* d1035pf.cpp */,
+				3FAA8DA715C8D0A000561C64 /* d1035pf.h */,
+				3FAA8DA815C8D0A000561C64 /* dec_amr.cpp */,
+				3FAA8DA915C8D0A000561C64 /* dec_amr.h */,
+				3FAA8DAA15C8D0A000561C64 /* dec_gain.cpp */,
+				3FAA8DAB15C8D0A000561C64 /* dec_gain.h */,
+				3FAA8DAC15C8D0A000561C64 /* dec_input_format_tab.cpp */,
+				3FAA8DAD15C8D0A000561C64 /* dec_lag3.cpp */,
+				3FAA8DAE15C8D0A000561C64 /* dec_lag3.h */,
+				3FAA8DAF15C8D0A000561C64 /* dec_lag6.cpp */,
+				3FAA8DB015C8D0A000561C64 /* dec_lag6.h */,
+				3FAA8DB115C8D0A000561C64 /* dtx_dec.cpp */,
+				3FAA8DB215C8D0A000561C64 /* dtx_dec.h */,
+				3FAA8DB315C8D0A000561C64 /* ec_gains.cpp */,
+				3FAA8DB415C8D0A000561C64 /* ec_gains.h */,
+				3FAA8DB515C8D0A000561C64 /* ex_ctrl.cpp */,
+				3FAA8DB615C8D0A000561C64 /* ex_ctrl.h */,
+				3FAA8DB715C8D0A000561C64 /* gsmamr_dec.h */,
+				3FAA8DB815C8D0A000561C64 /* if2_to_ets.cpp */,
+				3FAA8DB915C8D0A000561C64 /* if2_to_ets.h */,
+				3FAA8DBA15C8D0A000561C64 /* int_lsf.cpp */,
+				3FAA8DBB15C8D0A000561C64 /* lsp_avg.cpp */,
+				3FAA8DBC15C8D0A000561C64 /* lsp_avg.h */,
+				3FAA8DBD15C8D0A000561C64 /* ph_disp.cpp */,
+				3FAA8DBE15C8D0A000561C64 /* ph_disp.h */,
+				3FAA8DBF15C8D0A000561C64 /* post_pro.cpp */,
+				3FAA8DC015C8D0A000561C64 /* post_pro.h */,
+				3FAA8DC115C8D0A000561C64 /* preemph.cpp */,
+				3FAA8DC215C8D0A000561C64 /* preemph.h */,
+				3FAA8DC315C8D0A000561C64 /* pstfilt.cpp */,
+				3FAA8DC415C8D0A000561C64 /* pstfilt.h */,
+				3FAA8DC515C8D0A000561C64 /* pvgsmamrdecoder_dpi.h */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		3FAA8D8415C8D06000561C64 /* inc */ = {
+			isa = PBXGroup;
+			children = (
+				3FAA8D8715C8D09400561C64 /* decoder_gsm_amr.h */,
+				3FAA8D8815C8D09400561C64 /* pvamrnbdecoder_api.h */,
+			);
+			name = inc;
+			sourceTree = "<group>";
+		};
+		3FAA8D8515C8D06600561C64 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				3FAA8E0D15C8D0C900561C64 /* amrencode.cpp */,
+				3FAA8E0E15C8D0C900561C64 /* amrencode.h */,
+				3FAA8E0F15C8D0C900561C64 /* autocorr.cpp */,
+				3FAA8E1015C8D0C900561C64 /* autocorr.h */,
+				3FAA8E1115C8D0C900561C64 /* c2_9pf.cpp */,
+				3FAA8E1215C8D0C900561C64 /* c2_9pf.h */,
+				3FAA8E1315C8D0C900561C64 /* c2_11pf.cpp */,
+				3FAA8E1415C8D0C900561C64 /* c2_11pf.h */,
+				3FAA8E1515C8D0C900561C64 /* c3_14pf.cpp */,
+				3FAA8E1615C8D0C900561C64 /* c3_14pf.h */,
+				3FAA8E1715C8D0C900561C64 /* c4_17pf.cpp */,
+				3FAA8E1815C8D0C900561C64 /* c4_17pf.h */,
+				3FAA8E1915C8D0C900561C64 /* c8_31pf.cpp */,
+				3FAA8E1A15C8D0C900561C64 /* c8_31pf.h */,
+				3FAA8E1B15C8D0C900561C64 /* c1035pf.cpp */,
+				3FAA8E1C15C8D0C900561C64 /* c1035pf.h */,
+				3FAA8E1D15C8D0C900561C64 /* calc_cor.cpp */,
+				3FAA8E1E15C8D0C900561C64 /* calc_cor.h */,
+				3FAA8E1F15C8D0C900561C64 /* calc_en.cpp */,
+				3FAA8E2015C8D0C900561C64 /* calc_en.h */,
+				3FAA8E2115C8D0C900561C64 /* cbsearch.cpp */,
+				3FAA8E2215C8D0C900561C64 /* cbsearch.h */,
+				3FAA8E2315C8D0C900561C64 /* cl_ltp.cpp */,
+				3FAA8E2415C8D0C900561C64 /* cl_ltp.h */,
+				3FAA8E2515C8D0C900561C64 /* cod_amr.cpp */,
+				3FAA8E2615C8D0C900561C64 /* cod_amr.h */,
+				3FAA8E2715C8D0C900561C64 /* convolve.cpp */,
+				3FAA8E2815C8D0C900561C64 /* convolve.h */,
+				3FAA8E2915C8D0C900561C64 /* cor_h_x.cpp */,
+				3FAA8E2A15C8D0C900561C64 /* cor_h_x.h */,
+				3FAA8E2B15C8D0C900561C64 /* cor_h_x2.cpp */,
+				3FAA8E2C15C8D0C900561C64 /* cor_h_x2.h */,
+				3FAA8E2D15C8D0C900561C64 /* cor_h.cpp */,
+				3FAA8E2E15C8D0C900561C64 /* cor_h.h */,
+				3FAA8E2F15C8D0C900561C64 /* corrwght_tab.cpp */,
+				3FAA8E3015C8D0C900561C64 /* div_32.cpp */,
+				3FAA8E3115C8D0C900561C64 /* div_32.h */,
+				3FAA8E3215C8D0C900561C64 /* dtx_enc.cpp */,
+				3FAA8E3315C8D0C900561C64 /* dtx_enc.h */,
+				3FAA8E3415C8D0C900561C64 /* enc_lag3.cpp */,
+				3FAA8E3515C8D0C900561C64 /* enc_lag3.h */,
+				3FAA8E3615C8D0C900561C64 /* enc_lag6.cpp */,
+				3FAA8E3715C8D0C900561C64 /* enc_lag6.h */,
+				3FAA8E3815C8D0C900561C64 /* enc_output_format_tab.cpp */,
+				3FAA8E3915C8D0C900561C64 /* ets_to_if2.cpp */,
+				3FAA8E3A15C8D0C900561C64 /* ets_to_if2.h */,
+				3FAA8E3B15C8D0C900561C64 /* ets_to_wmf.cpp */,
+				3FAA8E3C15C8D0C900561C64 /* ets_to_wmf.h */,
+				3FAA8E3D15C8D0C900561C64 /* g_adapt.cpp */,
+				3FAA8E3E15C8D0C900561C64 /* g_adapt.h */,
+				3FAA8E3F15C8D0C900561C64 /* g_code.cpp */,
+				3FAA8E4015C8D0C900561C64 /* g_code.h */,
+				3FAA8E4115C8D0C900561C64 /* g_pitch.cpp */,
+				3FAA8E4215C8D0C900561C64 /* g_pitch.h */,
+				3FAA8E4315C8D0C900561C64 /* gain_q.cpp */,
+				3FAA8E4415C8D0C900561C64 /* gain_q.h */,
+				3FAA8E4515C8D0C900561C64 /* gsmamr_enc.h */,
+				3FAA8E4615C8D0C900561C64 /* gsmamr_encoder_wrapper.cpp */,
+				3FAA8E4715C8D0C900561C64 /* hp_max.cpp */,
+				3FAA8E4815C8D0C900561C64 /* hp_max.h */,
+				3FAA8E4915C8D0C900561C64 /* inter_36_tab.cpp */,
+				3FAA8E4A15C8D0C900561C64 /* inter_36_tab.h */,
+				3FAA8E4B15C8D0C900561C64 /* inter_36.cpp */,
+				3FAA8E4C15C8D0C900561C64 /* inter_36.h */,
+				3FAA8E4D15C8D0C900561C64 /* l_abs.cpp */,
+				3FAA8E4E15C8D0C900561C64 /* l_abs.h */,
+				3FAA8E4F15C8D0C900561C64 /* l_comp.cpp */,
+				3FAA8E5015C8D0C900561C64 /* l_extract.cpp */,
+				3FAA8E5115C8D0C900561C64 /* l_negate.cpp */,
+				3FAA8E5215C8D0C900561C64 /* lag_wind_tab.cpp */,
+				3FAA8E5315C8D0C900561C64 /* lag_wind_tab.h */,
+				3FAA8E5415C8D0C900561C64 /* lag_wind.cpp */,
+				3FAA8E5515C8D0C900561C64 /* lag_wind.h */,
+				3FAA8E5615C8D0C900561C64 /* levinson.cpp */,
+				3FAA8E5715C8D0C900561C64 /* levinson.h */,
+				3FAA8E5815C8D0C900561C64 /* lflg_upd.cpp */,
+				3FAA8E5915C8D0C900561C64 /* lpc.cpp */,
+				3FAA8E5A15C8D0C900561C64 /* lpc.h */,
+				3FAA8E5B15C8D0C900561C64 /* ol_ltp.cpp */,
+				3FAA8E5C15C8D0C900561C64 /* ol_ltp.h */,
+				3FAA8E5D15C8D0C900561C64 /* p_ol_wgh.cpp */,
+				3FAA8E5E15C8D0C900561C64 /* pitch_fr.cpp */,
+				3FAA8E5F15C8D0C900561C64 /* pitch_fr.h */,
+				3FAA8E6015C8D0C900561C64 /* pitch_ol.cpp */,
+				3FAA8E6115C8D0C900561C64 /* pitch_ol.h */,
+				3FAA8E6215C8D0C900561C64 /* pre_big.cpp */,
+				3FAA8E6315C8D0C900561C64 /* pre_big.h */,
+				3FAA8E6415C8D0C900561C64 /* pre_proc.cpp */,
+				3FAA8E6515C8D0C900561C64 /* pre_proc.h */,
+				3FAA8E6615C8D0C900561C64 /* prm2bits.cpp */,
+				3FAA8E6715C8D0C900561C64 /* prm2bits.h */,
+				3FAA8E6815C8D0C900561C64 /* q_gain_c.cpp */,
+				3FAA8E6915C8D0C900561C64 /* q_gain_c.h */,
+				3FAA8E6A15C8D0C900561C64 /* q_gain_p.cpp */,
+				3FAA8E6B15C8D0C900561C64 /* q_gain_p.h */,
+				3FAA8E6C15C8D0C900561C64 /* qgain475.cpp */,
+				3FAA8E6D15C8D0C900561C64 /* qgain475.h */,
+				3FAA8E6E15C8D0C900561C64 /* qgain795.cpp */,
+				3FAA8E6F15C8D0C900561C64 /* qgain795.h */,
+				3FAA8E7015C8D0C900561C64 /* qua_gain.cpp */,
+				3FAA8E7115C8D0C900561C64 /* s10_8pf.cpp */,
+				3FAA8E7215C8D0C900561C64 /* s10_8pf.h */,
+				3FAA8E7315C8D0C900561C64 /* set_sign.cpp */,
+				3FAA8E7415C8D0C900561C64 /* set_sign.h */,
+				3FAA8E7515C8D0C900561C64 /* sid_sync.cpp */,
+				3FAA8E7615C8D0C900561C64 /* sid_sync.h */,
+				3FAA8E7715C8D0C900561C64 /* sp_enc.cpp */,
+				3FAA8E7815C8D0C900561C64 /* sp_enc.h */,
+				3FAA8E7915C8D0C900561C64 /* spreproc.cpp */,
+				3FAA8E7A15C8D0C900561C64 /* spreproc.h */,
+				3FAA8E7B15C8D0C900561C64 /* spstproc.cpp */,
+				3FAA8E7C15C8D0C900561C64 /* spstproc.h */,
+				3FAA8E7D15C8D0C900561C64 /* ton_stab.cpp */,
+				3FAA8E7E15C8D0C900561C64 /* ton_stab.h */,
+				3FAA8E7F15C8D0C900561C64 /* vad1.cpp */,
+				3FAA8E8015C8D0C900561C64 /* vad1.h */,
+				3FAA8E8115C8D0C900561C64 /* vad2.h */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		3FAA8D8615C8D06800561C64 /* inc */ = {
+			isa = PBXGroup;
+			children = (
+				3FAA8E0B15C8D0BE00561C64 /* gsmamr_encoder_wrapper.h */,
+			);
+			name = inc;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		3FAA8C5315C8CB9B00561C64 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3FAA8CBD15C8CE1600561C64 /* abs_s.h in Headers */,
+				3FAA8CBE15C8CE1600561C64 /* add.h in Headers */,
+				3FAA8CBF15C8CE1600561C64 /* az_lsp.h in Headers */,
+				3FAA8CC015C8CE1600561C64 /* basic_op_arm_gcc_v5.h in Headers */,
+				3FAA8CC115C8CE1600561C64 /* basic_op_c_equivalent.h in Headers */,
+				3FAA8CC215C8CE1600561C64 /* basic_op.h in Headers */,
+				3FAA8CC315C8CE1600561C64 /* basicop_malloc.h in Headers */,
+				3FAA8CC415C8CE1600561C64 /* bitno_tab.h in Headers */,
+				3FAA8CC515C8CE1600561C64 /* bitreorder_tab.h in Headers */,
+				3FAA8CC615C8CE1600561C64 /* bytesused.h in Headers */,
+				3FAA8CC715C8CE1600561C64 /* cnst_vad.h in Headers */,
+				3FAA8CC815C8CE1600561C64 /* cnst.h in Headers */,
+				3FAA8CC915C8CE1600561C64 /* d_gain_c.h in Headers */,
+				3FAA8CCA15C8CE1600561C64 /* d_gain_p.h in Headers */,
+				3FAA8CCB15C8CE1600561C64 /* d_plsf.h in Headers */,
+				3FAA8CCC15C8CE1600561C64 /* div_s.h in Headers */,
+				3FAA8CCD15C8CE1600561C64 /* dtx_common_def.h in Headers */,
+				3FAA8CCE15C8CE1600561C64 /* frame_type_3gpp.h in Headers */,
+				3FAA8CCF15C8CE1600561C64 /* frame.h in Headers */,
+				3FAA8CD015C8CE1600561C64 /* gc_pred.h in Headers */,
+				3FAA8CD115C8CE1600561C64 /* get_const_tbls.h in Headers */,
+				3FAA8CD215C8CE1600561C64 /* gmed_n.h in Headers */,
+				3FAA8CD315C8CE1600561C64 /* gsm_amr_typedefs.h in Headers */,
+				3FAA8CD415C8CE1600561C64 /* int_lpc.h in Headers */,
+				3FAA8CD515C8CE1600561C64 /* int_lsf.h in Headers */,
+				3FAA8CD615C8CE1600561C64 /* inv_sqrt.h in Headers */,
+				3FAA8CD715C8CE1600561C64 /* l_add_c.h in Headers */,
+				3FAA8CD815C8CE1600561C64 /* l_add.h in Headers */,
+				3FAA8CD915C8CE1600561C64 /* l_comp.h in Headers */,
+				3FAA8CDA15C8CE1600561C64 /* l_extract.h in Headers */,
+				3FAA8CDB15C8CE1600561C64 /* l_mac.h in Headers */,
+				3FAA8CDC15C8CE1600561C64 /* l_msu.h in Headers */,
+				3FAA8CDD15C8CE1600561C64 /* l_mult.h in Headers */,
+				3FAA8CDE15C8CE1600561C64 /* l_negate.h in Headers */,
+				3FAA8CDF15C8CE1600561C64 /* l_shl.h in Headers */,
+				3FAA8CE015C8CE1600561C64 /* l_shr_r.h in Headers */,
+				3FAA8CE115C8CE1600561C64 /* l_shr.h in Headers */,
+				3FAA8CE215C8CE1600561C64 /* l_sub.h in Headers */,
+				3FAA8CE315C8CE1600561C64 /* log2_norm.h in Headers */,
+				3FAA8CE415C8CE1600561C64 /* log2.h in Headers */,
+				3FAA8CE515C8CE1600561C64 /* lsfwt.h in Headers */,
+				3FAA8CE615C8CE1600561C64 /* lsp_az.h in Headers */,
+				3FAA8CE715C8CE1600561C64 /* lsp_lsf.h in Headers */,
+				3FAA8CE815C8CE1600561C64 /* lsp_tab.h in Headers */,
+				3FAA8CE915C8CE1600561C64 /* lsp.h in Headers */,
+				3FAA8CEA15C8CE1600561C64 /* mac_32.h in Headers */,
+				3FAA8CEB15C8CE1600561C64 /* mode.h in Headers */,
+				3FAA8CEC15C8CE1600561C64 /* mpy_32_16.h in Headers */,
+				3FAA8CED15C8CE1600561C64 /* mpy_32.h in Headers */,
+				3FAA8CEE15C8CE1600561C64 /* mult_r.h in Headers */,
+				3FAA8CEF15C8CE1700561C64 /* mult.h in Headers */,
+				3FAA8CF015C8CE1700561C64 /* n_proc.h in Headers */,
+				3FAA8CF115C8CE1700561C64 /* negate.h in Headers */,
+				3FAA8CF215C8CE1700561C64 /* norm_l.h in Headers */,
+				3FAA8CF315C8CE1700561C64 /* norm_s.h in Headers */,
+				3FAA8CF415C8CE1700561C64 /* oper_32b.h in Headers */,
+				3FAA8CF515C8CE1700561C64 /* p_ol_wgh.h in Headers */,
+				3FAA8CF615C8CE1700561C64 /* pow2.h in Headers */,
+				3FAA8CF715C8CE1700561C64 /* pred_lt.h in Headers */,
+				3FAA8CF815C8CE1700561C64 /* pvgsmamr.h in Headers */,
+				3FAA8CF915C8CE1700561C64 /* q_plsf_3_tbl.h in Headers */,
+				3FAA8CFA15C8CE1700561C64 /* q_plsf_5_tbl.h in Headers */,
+				3FAA8CFB15C8CE1700561C64 /* q_plsf.h in Headers */,
+				3FAA8CFC15C8CE1700561C64 /* qgain475_tab.h in Headers */,
+				3FAA8CFD15C8CE1700561C64 /* qua_gain_tbl.h in Headers */,
+				3FAA8CFE15C8CE1700561C64 /* qua_gain.h in Headers */,
+				3FAA8CFF15C8CE1700561C64 /* reorder.h in Headers */,
+				3FAA8D0015C8CE1700561C64 /* residu.h in Headers */,
+				3FAA8D0115C8CE1700561C64 /* reverse_bits.h in Headers */,
+				3FAA8D0215C8CE1700561C64 /* round.h in Headers */,
+				3FAA8D0315C8CE1700561C64 /* set_zero.h in Headers */,
+				3FAA8D0415C8CE1700561C64 /* shl.h in Headers */,
+				3FAA8D0515C8CE1700561C64 /* shr_r.h in Headers */,
+				3FAA8D0615C8CE1700561C64 /* shr.h in Headers */,
+				3FAA8D0715C8CE1700561C64 /* sqrt_l.h in Headers */,
+				3FAA8D0815C8CE1700561C64 /* sub.h in Headers */,
+				3FAA8D0915C8CE1700561C64 /* syn_filt.h in Headers */,
+				3FAA8D0A15C8CE1700561C64 /* typedef.h in Headers */,
+				3FAA8D0B15C8CE1700561C64 /* vad.h in Headers */,
+				3FAA8D0C15C8CE1700561C64 /* weight_a.h in Headers */,
+				3FAA8D0D15C8CE1700561C64 /* window_tab.h in Headers */,
+				3FAA8D0E15C8CE1700561C64 /* wmf_to_ets.h in Headers */,
+				3FAA8D8915C8D09400561C64 /* decoder_gsm_amr.h in Headers */,
+				3FAA8D8A15C8D09400561C64 /* pvamrnbdecoder_api.h in Headers */,
+				3FAA8DC715C8D0A000561C64 /* a_refl.h in Headers */,
+				3FAA8DC915C8D0A000561C64 /* agc.h in Headers */,
+				3FAA8DCB15C8D0A000561C64 /* amrdecode.h in Headers */,
+				3FAA8DCD15C8D0A000561C64 /* b_cn_cod.h in Headers */,
+				3FAA8DCF15C8D0A000561C64 /* bgnscd.h in Headers */,
+				3FAA8DD115C8D0A000561C64 /* c_g_aver.h in Headers */,
+				3FAA8DD815C8D0A000561C64 /* d2_9pf.h in Headers */,
+				3FAA8DDA15C8D0A000561C64 /* d2_11pf.h in Headers */,
+				3FAA8DDC15C8D0A000561C64 /* d3_14pf.h in Headers */,
+				3FAA8DDE15C8D0A000561C64 /* d4_17pf.h in Headers */,
+				3FAA8DE015C8D0A000561C64 /* d8_31pf.h in Headers */,
+				3FAA8DE215C8D0A000561C64 /* d1035pf.h in Headers */,
+				3FAA8DE415C8D0A000561C64 /* dec_amr.h in Headers */,
+				3FAA8DE615C8D0A000561C64 /* dec_gain.h in Headers */,
+				3FAA8DE915C8D0A000561C64 /* dec_lag3.h in Headers */,
+				3FAA8DEB15C8D0A000561C64 /* dec_lag6.h in Headers */,
+				3FAA8DED15C8D0A000561C64 /* dtx_dec.h in Headers */,
+				3FAA8DEF15C8D0A000561C64 /* ec_gains.h in Headers */,
+				3FAA8DF115C8D0A000561C64 /* ex_ctrl.h in Headers */,
+				3FAA8DF215C8D0A000561C64 /* gsmamr_dec.h in Headers */,
+				3FAA8DF415C8D0A000561C64 /* if2_to_ets.h in Headers */,
+				3FAA8DF715C8D0A000561C64 /* lsp_avg.h in Headers */,
+				3FAA8DF915C8D0A000561C64 /* ph_disp.h in Headers */,
+				3FAA8DFB15C8D0A000561C64 /* post_pro.h in Headers */,
+				3FAA8DFD15C8D0A000561C64 /* preemph.h in Headers */,
+				3FAA8DFF15C8D0A000561C64 /* pstfilt.h in Headers */,
+				3FAA8E0015C8D0A000561C64 /* pvgsmamrdecoder_dpi.h in Headers */,
+				3FAA8E0615C8D0B100561C64 /* pvgsmamrdecoder.h in Headers */,
+				3FAA8E0915C8D0B100561C64 /* sp_dec.h in Headers */,
+				3FAA8E0C15C8D0BE00561C64 /* gsmamr_encoder_wrapper.h in Headers */,
+				3FAA8E8315C8D0C900561C64 /* amrencode.h in Headers */,
+				3FAA8E8515C8D0C900561C64 /* autocorr.h in Headers */,
+				3FAA8E8715C8D0C900561C64 /* c2_9pf.h in Headers */,
+				3FAA8E8915C8D0C900561C64 /* c2_11pf.h in Headers */,
+				3FAA8E8B15C8D0C900561C64 /* c3_14pf.h in Headers */,
+				3FAA8E8D15C8D0C900561C64 /* c4_17pf.h in Headers */,
+				3FAA8E8F15C8D0C900561C64 /* c8_31pf.h in Headers */,
+				3FAA8E9115C8D0C900561C64 /* c1035pf.h in Headers */,
+				3FAA8E9315C8D0C900561C64 /* calc_cor.h in Headers */,
+				3FAA8E9515C8D0C900561C64 /* calc_en.h in Headers */,
+				3FAA8E9715C8D0C900561C64 /* cbsearch.h in Headers */,
+				3FAA8E9915C8D0C900561C64 /* cl_ltp.h in Headers */,
+				3FAA8E9B15C8D0C900561C64 /* cod_amr.h in Headers */,
+				3FAA8E9D15C8D0C900561C64 /* convolve.h in Headers */,
+				3FAA8E9F15C8D0C900561C64 /* cor_h_x.h in Headers */,
+				3FAA8EA115C8D0C900561C64 /* cor_h_x2.h in Headers */,
+				3FAA8EA315C8D0C900561C64 /* cor_h.h in Headers */,
+				3FAA8EA615C8D0C900561C64 /* div_32.h in Headers */,
+				3FAA8EA815C8D0C900561C64 /* dtx_enc.h in Headers */,
+				3FAA8EAA15C8D0C900561C64 /* enc_lag3.h in Headers */,
+				3FAA8EAC15C8D0C900561C64 /* enc_lag6.h in Headers */,
+				3FAA8EAF15C8D0C900561C64 /* ets_to_if2.h in Headers */,
+				3FAA8EB115C8D0C900561C64 /* ets_to_wmf.h in Headers */,
+				3FAA8EB315C8D0C900561C64 /* g_adapt.h in Headers */,
+				3FAA8EB515C8D0C900561C64 /* g_code.h in Headers */,
+				3FAA8EB715C8D0C900561C64 /* g_pitch.h in Headers */,
+				3FAA8EB915C8D0C900561C64 /* gain_q.h in Headers */,
+				3FAA8EBA15C8D0C900561C64 /* gsmamr_enc.h in Headers */,
+				3FAA8EBD15C8D0C900561C64 /* hp_max.h in Headers */,
+				3FAA8EBF15C8D0CA00561C64 /* inter_36_tab.h in Headers */,
+				3FAA8EC115C8D0CA00561C64 /* inter_36.h in Headers */,
+				3FAA8EC315C8D0CA00561C64 /* l_abs.h in Headers */,
+				3FAA8EC815C8D0CA00561C64 /* lag_wind_tab.h in Headers */,
+				3FAA8ECA15C8D0CA00561C64 /* lag_wind.h in Headers */,
+				3FAA8ECC15C8D0CA00561C64 /* levinson.h in Headers */,
+				3FAA8ECF15C8D0CA00561C64 /* lpc.h in Headers */,
+				3FAA8ED115C8D0CA00561C64 /* ol_ltp.h in Headers */,
+				3FAA8ED415C8D0CA00561C64 /* pitch_fr.h in Headers */,
+				3FAA8ED615C8D0CA00561C64 /* pitch_ol.h in Headers */,
+				3FAA8ED815C8D0CA00561C64 /* pre_big.h in Headers */,
+				3FAA8EDA15C8D0CA00561C64 /* pre_proc.h in Headers */,
+				3FAA8EDC15C8D0CA00561C64 /* prm2bits.h in Headers */,
+				3FAA8EDE15C8D0CA00561C64 /* q_gain_c.h in Headers */,
+				3FAA8EE015C8D0CA00561C64 /* q_gain_p.h in Headers */,
+				3FAA8EE215C8D0CA00561C64 /* qgain475.h in Headers */,
+				3FAA8EE415C8D0CA00561C64 /* qgain795.h in Headers */,
+				3FAA8EE715C8D0CA00561C64 /* s10_8pf.h in Headers */,
+				3FAA8EE915C8D0CA00561C64 /* set_sign.h in Headers */,
+				3FAA8EEB15C8D0CA00561C64 /* sid_sync.h in Headers */,
+				3FAA8EED15C8D0CA00561C64 /* sp_enc.h in Headers */,
+				3FAA8EEF15C8D0CA00561C64 /* spreproc.h in Headers */,
+				3FAA8EF115C8D0CA00561C64 /* spstproc.h in Headers */,
+				3FAA8EF315C8D0CA00561C64 /* ton_stab.h in Headers */,
+				3FAA8EF515C8D0CA00561C64 /* vad1.h in Headers */,
+				3FAA8EF615C8D0CA00561C64 /* vad2.h in Headers */,
+				3FAA8EFD15C8D0E100561C64 /* amr_interface.h in Headers */,
+				3FAA8EFE15C8D0E100561C64 /* interf_dec.h in Headers */,
+				3FAA8EFF15C8D0E100561C64 /* interf_enc.h in Headers */,
+				55EA5C9617D82F8A00885688 /* amrAllSrc.h in Headers */,
+				55EA5C9817D82F8A00885688 /* amrAllSrc2.h in Headers */,
+				55EA5C9A17D82F8A00885688 /* amrAllSrc3.h in Headers */,
+				55EA5C9C17D82F8A00885688 /* amrAllSrc4.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		3FAA8C5415C8CB9B00561C64 /* amrnb */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3FAA8C6215C8CB9B00561C64 /* Build configuration list for PBXNativeTarget "amrnb" */;
+			buildPhases = (
+				3FAA8C5115C8CB9B00561C64 /* Sources */,
+				3FAA8C5215C8CB9B00561C64 /* Frameworks */,
+				3FAA8C5315C8CB9B00561C64 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = amrnb;
+			productName = amrnb;
+			productReference = 3FAA8C5515C8CB9B00561C64 /* libamrnb.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3FAA8C4C15C8CB9B00561C64 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = hisunsray;
+			};
+			buildConfigurationList = 3FAA8C4F15C8CB9B00561C64 /* Build configuration list for PBXProject "amrnb" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3FAA8C4A15C8CB9B00561C64;
+			productRefGroup = 3FAA8C5615C8CB9B00561C64 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3FAA8C5415C8CB9B00561C64 /* amrnb */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3FAA8C5115C8CB9B00561C64 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				910D8E3619C841BD00748D2F /* amr_interface.cpp in Sources */,
+				3FAA8E8615C8D0C900561C64 /* c2_9pf.cpp in Sources */,
+				3FAA8E8815C8D0C900561C64 /* c2_11pf.cpp in Sources */,
+				3FAA8E8A15C8D0C900561C64 /* c3_14pf.cpp in Sources */,
+				3FAA8E8C15C8D0C900561C64 /* c4_17pf.cpp in Sources */,
+				3FAA8E8E15C8D0C900561C64 /* c8_31pf.cpp in Sources */,
+				3FAA8E9015C8D0C900561C64 /* c1035pf.cpp in Sources */,
+				55EA5C9517D82F8A00885688 /* amrAllSrc.CPP in Sources */,
+				55EA5C9717D82F8A00885688 /* amrAllSrc2.cpp in Sources */,
+				55EA5C9917D82F8A00885688 /* amrAllSrc3.cpp in Sources */,
+				55EA5C9B17D82F8A00885688 /* amrAllSrc4.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3FAA8C6015C8CB9B00561C64 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		3FAA8C6115C8CB9B00561C64 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3FAA8C6315C8CB9B00561C64 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				DSTROOT = /tmp/amrnb.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				HEADER_SEARCH_PATHS = (
+					"./codecs/opencore-amr/opencore/common/dec/include",
+					"./codecs/opencore-amr/oscl",
+					"./codecs/opencore-amr/opencore/amr-nb/dec/src/",
+					"./codecs/opencore-amr/**",
+					./,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../IOSProject/out/baselib;
+				VALID_ARCHS = "armv7 arm64";
+			};
+			name = Debug;
+		};
+		3FAA8C6415C8CB9B00561C64 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				DSTROOT = /tmp/amrnb.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				HEADER_SEARCH_PATHS = (
+					"./codecs/opencore-amr/opencore/common/dec/include",
+					"./codecs/opencore-amr/oscl",
+					"./codecs/opencore-amr/opencore/amr-nb/dec/src/",
+					"./codecs/opencore-amr/**",
+					./,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../IOSProject/out/baselib;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 arm64";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3FAA8C4F15C8CB9B00561C64 /* Build configuration list for PBXProject "amrnb" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3FAA8C6015C8CB9B00561C64 /* Debug */,
+				3FAA8C6115C8CB9B00561C64 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3FAA8C6215C8CB9B00561C64 /* Build configuration list for PBXNativeTarget "amrnb" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3FAA8C6315C8CB9B00561C64 /* Debug */,
+				3FAA8C6415C8CB9B00561C64 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3FAA8C4C15C8CB9B00561C64 /* Project object */;
+}

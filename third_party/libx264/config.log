@@ -1,0 +1,220 @@
+checking for -mno-cygwin... no
+Failed commandline was:
+--------------------------------------------------
+gcc conftest.c  -Wall -I. -I$(SRCPATH) -mno-cygwin   -Wl,--output-def=libx264.def -o conftest
+gcc: 错误：unrecognized command line option ‘-mno-cygwin’
+--------------------------------------------------
+Failed program was:
+--------------------------------------------------
+int main () {  return 0; }
+--------------------------------------------------
+checking whether defined(__CYGWIN32__) is true... no
+--------------------------------------------------
+conftest.c:2:2: 错误：#error 
+ #error  
+  ^
+--------------------------------------------------
+Failed program was:
+--------------------------------------------------
+#if !(defined(__CYGWIN32__)) 
+#error  
+#endif 
+--------------------------------------------------
+checking for -S... yes
+checking whether windres works... yes
+x264 configure script
+Command line options: "--disable-cli" "--enable-shared" "--extra-ldflags=-Wl,--output-def=libx264.def" "--disable-asm"
+
+checking whether gcc works... yes
+checking whether gcc supports for( int i = 0; i < 9; i++ ); with -std=gnu99... yes
+checking for pthread_create(0,0,0,0); in pthread.h... yes
+checking for return log2f(2); in math.h... yes
+checking for sws_init_context(0,0,0); in libswscale/swscale.h... no
+Failed commandline was:
+--------------------------------------------------
+gcc conftest.c -m64  -Wall -I. -I$(SRCPATH) -std=gnu99  -lswscale -lavutil  -m64  -Wl,--output-def=libx264.def  -Wl,--nxcompat -Wl,--dynamicbase -lpthread -o conftest
+conftest.c:1:32: 致命错误：libswscale/swscale.h：No such file or directory
+ #include <libswscale/swscale.h>
+                                ^
+编译中断。
+--------------------------------------------------
+Failed program was:
+--------------------------------------------------
+#include <libswscale/swscale.h>
+int main () { sws_init_context(0,0,0); return 0; }
+--------------------------------------------------
+checking for -lpostproc... no
+Failed commandline was:
+--------------------------------------------------
+gcc conftest.c -m64  -Wall -I. -I$(SRCPATH) -std=gnu99 -lpostproc  -m64  -Wl,--output-def=libx264.def  -Wl,--nxcompat -Wl,--dynamicbase -lpthread -o conftest
+/usr/bin/ld: cannot find -lpostproc
+collect2: 错误：ld 返回 1
+--------------------------------------------------
+Failed program was:
+--------------------------------------------------
+int main () {  return 0; }
+--------------------------------------------------
+checking for -lavcodec... no
+Failed commandline was:
+--------------------------------------------------
+gcc conftest.c -m64  -Wall -I. -I$(SRCPATH) -std=gnu99 -lavcodec  -m64  -Wl,--output-def=libx264.def  -Wl,--nxcompat -Wl,--dynamicbase -lpthread -o conftest
+/usr/bin/ld: cannot find -lavcodec
+collect2: 错误：ld 返回 1
+--------------------------------------------------
+Failed program was:
+--------------------------------------------------
+int main () {  return 0; }
+--------------------------------------------------
+checking for -lavcore... no
+Failed commandline was:
+--------------------------------------------------
+gcc conftest.c -m64  -Wall -I. -I$(SRCPATH) -std=gnu99 -lavcore  -m64  -Wl,--output-def=libx264.def  -Wl,--nxcompat -Wl,--dynamicbase -lpthread -o conftest
+/usr/bin/ld: cannot find -lavcore
+collect2: 错误：ld 返回 1
+--------------------------------------------------
+Failed program was:
+--------------------------------------------------
+int main () {  return 0; }
+--------------------------------------------------
+checking for -lswscale... no
+Failed commandline was:
+--------------------------------------------------
+gcc conftest.c -m64  -Wall -I. -I$(SRCPATH) -std=gnu99 -lswscale  -m64  -Wl,--output-def=libx264.def  -Wl,--nxcompat -Wl,--dynamicbase -lpthread -o conftest
+/usr/bin/ld: cannot find -lswscale
+collect2: 错误：ld 返回 1
+--------------------------------------------------
+Failed program was:
+--------------------------------------------------
+int main () {  return 0; }
+--------------------------------------------------
+checking for -lavutil... no
+Failed commandline was:
+--------------------------------------------------
+gcc conftest.c -m64  -Wall -I. -I$(SRCPATH) -std=gnu99 -lavutil  -m64  -Wl,--output-def=libx264.def  -Wl,--nxcompat -Wl,--dynamicbase -lpthread -o conftest
+/usr/bin/ld: cannot find -lavutil
+collect2: 错误：ld 返回 1
+--------------------------------------------------
+Failed program was:
+--------------------------------------------------
+int main () {  return 0; }
+--------------------------------------------------
+checking for -lm... yes
+checking for -lz... no
+Failed commandline was:
+--------------------------------------------------
+gcc conftest.c -m64  -Wall -I. -I$(SRCPATH) -std=gnu99 -lz  -m64  -Wl,--output-def=libx264.def  -Wl,--nxcompat -Wl,--dynamicbase -lpthread -o conftest
+/usr/bin/ld: cannot find -lz
+collect2: 错误：ld 返回 1
+--------------------------------------------------
+Failed program was:
+--------------------------------------------------
+int main () {  return 0; }
+--------------------------------------------------
+checking for -lbz2... no
+Failed commandline was:
+--------------------------------------------------
+gcc conftest.c -m64  -Wall -I. -I$(SRCPATH) -std=gnu99 -lbz2  -m64  -Wl,--output-def=libx264.def  -Wl,--nxcompat -Wl,--dynamicbase -lpthread -o conftest
+/usr/bin/ld: cannot find -lbz2
+collect2: 错误：ld 返回 1
+--------------------------------------------------
+Failed program was:
+--------------------------------------------------
+int main () {  return 0; }
+--------------------------------------------------
+checking for -lpthread... yes
+checking for -lavifil32... yes
+checking for avformat_close_input(0); in libavformat/avformat.h... no
+Failed commandline was:
+--------------------------------------------------
+gcc conftest.c -m64  -Wall -I. -I$(SRCPATH) -std=gnu99  -L. -lavformat -lm -lpthread -lavifil32  -m64  -Wl,--output-def=libx264.def  -Wl,--nxcompat -Wl,--dynamicbase -lpthread -o conftest
+conftest.c:1:34: 致命错误：libavformat/avformat.h：No such file or directory
+ #include <libavformat/avformat.h>
+                                  ^
+编译中断。
+--------------------------------------------------
+Failed program was:
+--------------------------------------------------
+#include <libavformat/avformat.h>
+int main () { avformat_close_input(0); return 0; }
+--------------------------------------------------
+checking for FFMS_DestroyVideoSource(0); in ffms.h... no
+Failed commandline was:
+--------------------------------------------------
+gcc conftest.c -m64  -Wall -I. -I$(SRCPATH) -std=gnu99  -lffms2  -m64  -Wl,--output-def=libx264.def  -Wl,--nxcompat -Wl,--dynamicbase -lpthread -o conftest
+conftest.c:1:18: 致命错误：ffms.h：No such file or directory
+ #include <ffms.h>
+                  ^
+编译中断。
+--------------------------------------------------
+Failed program was:
+--------------------------------------------------
+#include <ffms.h>
+int main () { FFMS_DestroyVideoSource(0); return 0; }
+--------------------------------------------------
+checking for FFMS_DestroyVideoSource(0); in ffms.h... no
+Failed commandline was:
+--------------------------------------------------
+gcc conftest.c -m64  -Wall -I. -I$(SRCPATH) -std=gnu99  -lffms2 -lstdc++ -L. -lavformat -lm -lpthread -lavifil32  -m64  -Wl,--output-def=libx264.def  -Wl,--nxcompat -Wl,--dynamicbase -lpthread -o conftest
+conftest.c:1:18: 致命错误：ffms.h：No such file or directory
+ #include <ffms.h>
+                  ^
+编译中断。
+--------------------------------------------------
+Failed program was:
+--------------------------------------------------
+#include <ffms.h>
+int main () { FFMS_DestroyVideoSource(0); return 0; }
+--------------------------------------------------
+checking for -lz... no
+Failed commandline was:
+--------------------------------------------------
+gcc conftest.c -m64  -Wall -I. -I$(SRCPATH) -std=gnu99 -lz  -m64  -Wl,--output-def=libx264.def  -Wl,--nxcompat -Wl,--dynamicbase -lpthread -o conftest
+/usr/bin/ld: cannot find -lz
+collect2: 错误：ld 返回 1
+--------------------------------------------------
+Failed program was:
+--------------------------------------------------
+int main () {  return 0; }
+--------------------------------------------------
+checking for gpac/isomedia.h... no
+Failed commandline was:
+--------------------------------------------------
+gcc conftest.c -m64  -Wall -I. -I$(SRCPATH) -std=gnu99 -lgpac_static -lwinmm  -m64  -Wl,--output-def=libx264.def  -Wl,--nxcompat -Wl,--dynamicbase -lpthread -o conftest
+conftest.c:1:27: 致命错误：gpac/isomedia.h：No such file or directory
+ #include <gpac/isomedia.h>
+                           ^
+编译中断。
+--------------------------------------------------
+Failed program was:
+--------------------------------------------------
+#include <gpac/isomedia.h>
+int main () {  return 0; }
+--------------------------------------------------
+checking for uint32_t test_vec __attribute__ ((vector_size (16))) = {0,1,2,3}; in stdint.h... yes
+checking for stdio.h... yes
+checking for -fno-tree-vectorize... yes
+checking for fseeko(stdin,0,0); in stdio.h... yes
+checking for -Wshadow... yes
+
+platform:      X86_64
+system:        WINDOWS
+cli:           no
+libx264:       internal
+shared:        yes
+static:        no
+asm:           no
+interlaced:    yes
+avs:           avisynth
+lavf:          no
+ffms:          no
+gpac:          no
+gpl:           yes
+thread:        posix
+filters:       crop select_every 
+debug:         no
+gprof:         no
+strip:         no
+PIC:           yes
+visualize:     no
+bit depth:     8
+chroma format: all

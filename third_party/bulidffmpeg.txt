@@ -1,0 +1,37 @@
+#缺少依赖库，编译还不成功
+#
+#
+#
+#1、解压coreutils.zip，将pr.exe、msys-intl-8.dll、msys-iconv-2.dll 添加到/usr/local/bin目录下。
+#2、解压pkg-config_0.26-1_win32.zip，将pkg-config.exe 添加到添加到/usr/local/bin目录下，解压glib_2.18.4-1_win32.zip，将libglib-2.0-0.dll添加到添加到/usr/local/bin目录下。
+1、编译环境的安装参考https://www.ffmpeg.org/platform.html。
+3、解压ffmpeg,将之前编译的faac库放到你的编译器能访问到的地方，注意如果不是使用gcc进行编译，设置gcc的环境变量会不起作用，例如使用的是VC编译器，需要放到vc能访问到的库目录下。
+4、动态库编译, 到ffmpeg目录下
+#32位编译
+mkdir win32
+cd win32
+../configure --toolchain=msvc --target-os=win32 --enable-shared --disable-debug --disable-encoders --disable-decoders --disable-muxers --disable-demuxers --disable-parsers --disable-bsfs --disable-protocols --disable-filters --disable-avfilter --disable-swscale --disable-avdevice --disable-swresample --enable-small --enable-memalign-hack --disable-ffprobe --disable-programs --disable-doc --enable-decoder=h264  --enable-parser=aac --enable-parser=h264 --enable-muxer=mp4 --enable-protocol=file --enable-libfaac --enable-encoder=libfaac --enable-nonfree
+make
+
+
+#64位编译
+mkdir win64
+cd win64
+../configure --toolchain=msvc --enable-cross-compile --arch=x86_64 --target-os=win64 --host-cc="c99wrap cl" --enable-shared --disable-debug --disable-encoders --disable-decoders --disable-muxers --disable-demuxers --disable-parsers --disable-bsfs --disable-protocols --disable-filters --disable-avfilter --disable-swscale --disable-avdevice --disable-swresample --enable-small --enable-memalign-hack --disable-ffprobe --disable-programs --disable-doc --enable-decoder=h264  --enable-parser=aac --enable-parser=h264 --enable-muxer=mp4 --enable-protocol=file --enable-libfaac --enable-encoder=libfaac --enable-nonfree
+make
+
+
+5、静态库编译, 到ffmpeg目录下
+添加合适的编译参数：--extra-cflags=-MTd
+#32位编译
+mkdir win32
+cd win32
+../configure --toolchain=msvc --target-os=win32 --enable-static --disable-debug --disable-encoders --disable-decoders --disable-muxers --disable-demuxers --disable-parsers --disable-bsfs --disable-protocols --disable-filters --disable-avfilter --disable-swscale --disable-avdevice --disable-swresample --enable-small --enable-memalign-hack --disable-ffprobe --disable-programs --disable-doc --enable-decoder=h264  --enable-parser=aac --enable-parser=h264 --enable-muxer=mp4 --enable-protocol=file --enable-libfaac --enable-encoder=libfaac --enable-nonfree
+make
+
+
+#64位编译
+mkdir win64
+cd win64
+../configure --toolchain=msvc --enable-cross-compile --arch=x86_64 --target-os=win64 --host-cc="c99wrap cl" --enable-static --disable-debug --disable-encoders --disable-decoders --disable-muxers --disable-demuxers --disable-parsers --disable-bsfs --disable-protocols --disable-filters --disable-avfilter --disable-swscale --disable-avdevice --disable-swresample --enable-small --enable-memalign-hack --disable-ffprobe --disable-programs --disable-doc --enable-decoder=h264  --enable-parser=aac --enable-parser=h264 --enable-muxer=mp4 --enable-protocol=file --enable-libfaac --enable-encoder=libfaac --enable-nonfree
+make

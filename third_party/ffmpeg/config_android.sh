@@ -1,0 +1,63 @@
+#!/bin/sh
+PREBUILT=/work/android/android-ndk-r8e/toolchains/arm-linux-androideabi-4.4.3/prebuilt/darwin-x86_64
+PLATFORM=/work/android/android-ndk-r8e/platforms/android-8/arch-arm
+./configure --target-os=linux \
+--arch=armv7-a \
+--enable-version3 \
+--disable-everything \
+--enable-decoder=h264 \
+--enable-small \
+--enable-gpl \
+--enable-nonfree \
+--disable-stripping \
+--disable-ffmpeg \
+--disable-ffplay \
+--disable-ffserver \
+--disable-ffprobe \
+--disable-encoders \
+--disable-muxers \
+--disable-devices \
+--disable-protocols \
+--enable-protocol=file \
+--enable-avfilter \
+--disable-network \
+--disable-avdevice \
+--enable-cross-compile \
+--cc="$PREBUILT/bin/arm-linux-androideabi-gcc --sysroot=/work/android/android-ndk-r8e/platforms/android-9/arch-arm" \
+--nm=$PREBUILT/bin/arm-linux-androideabi-nm \
+--extra-cflags="-fPIC -DANDROID -fno-exceptions \
+	-Wno-psabi \
+	-Wno-missing-field-initializers \
+	-fno-strict-aliasing \
+	-fvisibility=hidden \
+	-pipe \
+	-fPIC \
+	-Wextra \
+	-fno-tree-sra \
+	-D__linux__ \
+	-ffunction-sections \
+	-funwind-tables \
+	-mthumb \
+	-mthumb-interwork \
+	-g \
+	-fstack-protector \
+	-fno-short-enums \
+	-finline-limit=64 \
+	-Wa,--noexecstack \
+	-Wno-error=non-virtual-dtor \
+	-Os \
+	-fno-ident \
+	-fdata-sections \
+	-ffunction-sections \
+	-fomit-frame-pointer" \
+--extra-libs="-lgcc" \
+--disable-asm \
+--enable-neon \
+--enable-armv5te \
+--prefix=/Users/leesean/Desktop/newffmpeg/ffmpeg/ffmpeg-android-bin \
+--cross-prefix=$PREBUILT/bin/arm-linux-androideabi- \
+--extra-ldflags="-march=arvm7-a -Wl,-T,$PREBUILT/arm-linux-androideabi/lib/ldscripts/armelf_linux_eabi.x -Wl,\
+-rpath-link=$PLATFORM/usr/lib \
+-L$PLATFORM/usr/lib -nostdlib \
+$PREBUILT/lib/gcc/arm-linux-androideabi/4.4.3/crtbegin.o \
+$PREBUILT/lib/gcc/arm-linux-androideabi/4.4.3/crtend.o -lc -lm -ldl -lgcc"

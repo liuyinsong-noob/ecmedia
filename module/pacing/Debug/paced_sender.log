@@ -1,0 +1,26 @@
+﻿生成启动时间为 15-9-9 上午9:56:16。
+     1>项目“C:\Users\yuanlirong\openh264_merge\module\pacing\paced_sender.vcxproj”在节点 2 上(build 个目标)。
+     1>InitializeBuildStatus:
+         正在创建“Debug\paced_sender.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I./include /I../../system_wrappers/interface /I../interface /I../ /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt source\bitrate_prober.cc source\paced_sender.cc
+         paced_sender.cc
+     1>c:\users\yuanlirong\openh264_merge\module\pacing\source\paced_sender.cc(185): warning C4244: “=”: 从“int64_t”转换到“int”，可能丢失数据
+     1>c:\users\yuanlirong\openh264_merge\module\pacing\source\paced_sender.cc(188): warning C4244: “=”: 从“int64_t”转换到“int”，可能丢失数据
+     1>c:\users\yuanlirong\openh264_merge\module\pacing\source\paced_sender.cc(313): warning C4244: “return”: 从“const int64_t”转换到“int32_t”，可能丢失数据
+         bitrate_prober.cc
+     1>c:\users\yuanlirong\openh264_merge\module\pacing\source\bitrate_prober.cc(65): warning C4244: “=”: 从“const float”转换到“int”，可能丢失数据
+     1>c:\users\yuanlirong\openh264_merge\module\pacing\source\bitrate_prober.cc(93): warning C4244: “=”: 从“int64_t”转换到“int”，可能丢失数据
+         正在生成代码...
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"../..\build\Debug\paced_sender.lib" /NOLOGO Debug\bitrate_prober.obj
+         Debug\paced_sender.obj
+         paced_sender.vcxproj -> C:\Users\yuanlirong\openh264_merge\module\pacing\../..\build\Debug\paced_sender.lib
+       FinalizeBuildStatus:
+         正在删除文件“Debug\paced_sender.unsuccessfulbuild”。
+         正在对“Debug\paced_sender.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“C:\Users\yuanlirong\openh264_merge\module\pacing\paced_sender.vcxproj”(build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:02.91

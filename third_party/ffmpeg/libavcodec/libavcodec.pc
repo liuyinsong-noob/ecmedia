@@ -1,0 +1,14 @@
+prefix=/Users/leesean/Desktop/newffmpeg/ffmpeg/ffmpeg-android-bin
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: libavcodec
+Description: FFmpeg codec library
+Version: 55.1.100
+Requires: libavutil = 52.19.101
+Requires.private: 
+Conflicts:
+Libs: -L${libdir} -lavcodec -lm -lz -lgcc
+Libs.private: 
+Cflags: -I${includedir}

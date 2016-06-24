@@ -1,0 +1,24 @@
+﻿1>------ 已启动生成: 项目: servicecore, 配置: Release Win32 ------
+1>生成启动时间为 6/20 星期一 10:24:44。
+1>ClCompile:
+1>  mediaprocess.cpp
+1>L:\svn\MyWebRtc_2.0\module\common_types.h(941): warning C4351: 新增行为: 默认情况下初始化数组“cloopenwebrtc::OverUseDetectorOptions::initial_e”的元素
+1>L:\svn\MyWebRtc_2.0\module\common_types.h(941): warning C4351: 新增行为: 默认情况下初始化数组“cloopenwebrtc::OverUseDetectorOptions::initial_process_noise”的元素
+1>source\mediaprocess.cpp(67): warning C4005: “min”: 宏重定义
+1>          c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\include\windef.h(194) : 参见“min”的前一个定义
+1>source\mediaprocess.cpp(68): warning C4005: “max”: 宏重定义
+1>          c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\include\windef.h(190) : 参见“max”的前一个定义
+1>source\mediaprocess.cpp(927): warning C4018: “>”: 有符号/无符号不匹配
+1>source\mediaprocess.cpp(1012): warning C4800: “bool_t”: 将值强制为布尔值“true”或“false”(性能警告)
+1>source\mediaprocess.cpp(1018): warning C4800: “bool_t”: 将值强制为布尔值“true”或“false”(性能警告)
+1>source\mediaprocess.cpp(1556): warning C4800: “bool_t”: 将值强制为布尔值“true”或“false”(性能警告)
+1>source\mediaprocess.cpp(1790): warning C4800: “bool_t”: 将值强制为布尔值“true”或“false”(性能警告)
+1>source\mediaprocess.cpp(1793): warning C4800: “bool_t”: 将值强制为布尔值“true”或“false”(性能警告)
+1>source\mediaprocess.cpp(1794): warning C4800: “bool_t”: 将值强制为布尔值“true”或“false”(性能警告)
+1>source\mediaprocess.cpp(3503): warning C4018: “<”: 有符号/无符号不匹配
+1>source\mediaprocess.cpp(3854): warning C4018: “>”: 有符号/无符号不匹配
+1>
+1>生成成功。
+1>
+1>已用时间 00:00:01.98
+========== 生成: 成功 1 个，失败 0 个，最新 0 个，跳过 0 个 ==========

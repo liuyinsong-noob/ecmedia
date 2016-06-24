@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F6734FB1-DD5E-4B30-BEDF-B1E9930985D8}</ProjectGuid>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <Keyword>ManagedCProj</Keyword>
+    <RootNamespace>servicecore</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CLRSupport>false</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CLRSupport>false</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CLRSupport>false</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CLRSupport>false</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)\build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\build\$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <TargetName>ccpclientd</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\build\$(Configuration)\</OutDir>
+    <IntDir>$(OutDir)obj\$(ProjectName)\</IntDir>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <TargetName>ccpclientd</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)\build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\build\$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <TargetName>ccpclient</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\build\$(Configuration)\</OutDir>
+    <IntDir>$(OutDir)obj\$(ProjectName)\</IntDir>
+    <TargetName>ccpclient</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;DEBUG_PRINT_LOG;OSIP_MT;VIDEO_ENABLED;ENABLE_LOG;ORTP_STATIC;WEBRTC_MODULE_UTILITY_VIDEO;ENABLE_REMB_TMMBR_CONFIG</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories>./source;./include;./source/Http;./source/Utility;./interface;../module\exosip\source;../module\exosip\include;../module\osip\include;$(SolutionDir)\third_party\vld\include;..\third_party\libx264\libx264_win\include;../module/interface;../voice_engine\main\source;../voice_engine\main\include;../video_engine\include;../module;..\system_wrappers\interface;../video_engine/source;..\third_party\openssl\inc32;..\third_party;../third_party/oRTP/include;../third_party/oRTP/include/ortp;..\third_party\srtp\crypto\include\win;..\third_party\srtp\crypto\include;../third_party/ffmpeg/ffmpeg_win/include;../module/video_coding/main/include;..\module\video_coding\codecs\h264;..\module\video_coding\codecs\interface;..\module\utility\source;..\;../module/common_video/interface;../module/common_video/source;../module/common_video/source/libyuv/include;../module/common_audio/source/resampler/include;../module/rtp_rtcp/include;../module/remote_bitrate_estimator/source;../module/bitrate_controller/include;../module/remote_bitrate_estimator/include;../module/pacing/include;..\module\video_render\main\include;..\ECMedia\interface</AdditionalIncludeDirectories>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>gdi32.lib;Advapi32.lib;wininet.lib;dnsapi.lib;version.lib;msimg32.lib;ws2_32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib;dmoguids.lib;wmcodecdspuuid.lib;amstrmid.lib;msdmo.lib;IPHLPAPI.lib;strmbasd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)/lib/x86;./;../third_party/openssl</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCMTD.lib;</IgnoreSpecificDefaultLibraries>
+    </Link>
+    <Lib>
+      <OutputFile>$(OutDir)\ccpclientd.lib</OutputFile>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;DEBUG_PRINT_LOG;OSIP_MT;VIDEO_ENABLED;ENABLE_LOG;ORTP_STATIC</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories>./source;./include;./source/Http;./source/Utility;./interface;../module\exosip\source;../module\exosip\include;../module\osip\include;$(SolutionDir)\third_party\vld\include;..\third_party\libx264\libx264_win\include;../module/interface;../voice_engine\main\source;../voice_engine\main\include;../video_engine\include;../module;..\system_wrappers\interface;../video_engine/source;..\third_party\openssl\inc32;..\third_party;../third_party/oRTP/include;../third_party/oRTP/include/ortp;..\third_party\srtp\crypto\include;../third_party/ffmpeg/ffmpeg_win/include;../module/video_coding/main/include;..\module\video_coding\codecs\interface</AdditionalIncludeDirectories>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <ProgramDataBaseFileName>$(OutDir)\ccpclientd.pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>gdi32.lib;Advapi32.lib;wininet.lib;dnsapi.lib;version.lib;msimg32.lib;ws2_32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib;dmoguids.lib;wmcodecdspuuid.lib;amstrmid.lib;msdmo.lib;IPHLPAPI.lib;strmbasd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)/LIB/$(Platform);./;../third_party/openssl</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCMTD.lib;</IgnoreSpecificDefaultLibraries>
+    </Link>
+    <Lib>
+      <OutputFile>$(OutDir)\ccpclientd.lib</OutputFile>
+      <AdditionalLibraryDirectories>../third_party/platformsdk_win7/files/Lib/x64;$(DXSDK_DIR)/LIB/$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;OSIP_MT;VIDEO_ENABLED;ORTP_STATIC;WEBRTC_MODULE_UTILITY_VIDEO;ENABLE_REMB_TMMBR_CONFIG</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories>./source;./include;./source/Http;./source/Utility;./interface;../module\exosip\source;../module\exosip\include;../module\osip\include;$(SolutionDir)\third_party\vld\include;..\third_party\libx264\libx264_win\include;../module/interface;../module;..\system_wrappers\interface;..\third_party\openssl\inc32;..\third_party;../third_party/oRTP/include;../third_party/oRTP/include/ortp;..\third_party\srtp\crypto\include\win;..\third_party\srtp\crypto\include;..\;..\ECMedia\interface</AdditionalIncludeDirectories>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <ProgramDataBaseFileName>$(OutDir)\ccpclient.pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>gdi32.lib;Advapi32.lib;wininet.lib;dnsapi.lib;version.lib;msimg32.lib;ws2_32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib;dmoguids.lib;wmcodecdspuuid.lib;amstrmid.lib;msdmo.lib;IPHLPAPI.lib;strmbase.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)/lib/x86;./;../third_party/openssl</AdditionalLibraryDirectories>
+    </Link>
+    <Lib>
+      <OutputFile>$(OutDir)\ccpclient.lib</OutputFile>
+      <AdditionalLibraryDirectories>../third_party/platformsdk_win7/files/Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+      <AdditionalOptions>/verbose:lib %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;OSIP_MT;VIDEO_ENABLED;ORTP_STATIC</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories>./source;./include;./source/Http;./source/Utility;./interface;../module\exosip\source;../module\exosip\include;../module\osip\include;$(SolutionDir)\third_party\vld\include;..\third_party\libx264\libx264_win\include;../voice_engine\main\source;../voice_engine\main\include;../video_engine\include;../module;..\system_wrappers\interface;../video_engine/source;..\third_party\openssl\inc32;..\third_party;../third_party/oRTP/include;../third_party/oRTP/include/ortp;../third_party/ffmpeg/ffmpeg_win/include;..\third_party\srtp\crypto\include;../module/interface;../module/video_coding/main/include;..\module\video_coding\codecs\interface</AdditionalIncludeDirectories>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <ProgramDataBaseFileName>$(OutDir)\ccpclient.pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>gdi32.lib;Advapi32.lib;wininet.lib;dnsapi.lib;version.lib;msimg32.lib;ws2_32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib;dmoguids.lib;wmcodecdspuuid.lib;amstrmid.lib;msdmo.lib;IPHLPAPI.lib;strmbase.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)/LIB/$(Platform);./;../third_party/openssl</AdditionalLibraryDirectories>
+    </Link>
+    <Lib>
+      <OutputFile>$(OutDir)\ccpclient.lib</OutputFile>
+      <AdditionalLibraryDirectories>../third_party/platformsdk_win7/files/Lib/x64;$(DXSDK_DIR)/LIB/$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\enum.h" />
+    <ClInclude Include="include\friends.h" />
+    <ClInclude Include="include\lpconfig.h" />
+    <ClInclude Include="include\offeranswer.h" />
+    <ClInclude Include="include\salpr.h" />
+    <ClInclude Include="include\sal_eXosip2.h" />
+    <ClInclude Include="include\serphonecall.h" />
+    <ClInclude Include="include\serprivate.h" />
+    <ClInclude Include="include\servicecore.h" />
+    <ClInclude Include="include\sipsetup.h" />
+    <ClInclude Include="include\sometools.h" />
+    <ClInclude Include="interface\CCPClient.h" />
+    <ClInclude Include="interface\CCPClient_Internal.h" />
+    <ClInclude Include="interface\serphoneinterface.h" />
+    <ClInclude Include="source\Http\http.h" />
+    <ClInclude Include="source\Http\HttpClient.h" />
+    <ClInclude Include="source\Http\RESTClient.h" />
+    <ClInclude Include="source\Utility\base64_2.h" />
+    <ClInclude Include="source\Utility\cJSON.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\address.cpp" />
+    <ClCompile Include="source\base64.c" />
+    <ClCompile Include="source\callbacks.cpp" />
+    <ClCompile Include="source\CCPClient.cpp" />
+    <ClCompile Include="source\chat.cpp" />
+    <ClCompile Include="source\enum.cpp" />
+    <ClCompile Include="source\friends.cpp" />
+    <ClCompile Include="source\Http\http.cpp" />
+    <ClCompile Include="source\Http\HttpClient.cpp" />
+    <ClCompile Include="source\Http\RESTClient.cpp" />
+    <ClCompile Include="source\ice.cc" />
+    <ClCompile Include="source\lpconfig.cpp" />
+    <ClCompile Include="source\mediaprocess.cpp" />
+    <ClCompile Include="source\offeranswer.cpp" />
+    <ClCompile Include="source\prensence.cpp" />
+    <ClCompile Include="source\proxy.cpp" />
+    <ClCompile Include="source\salpr.cpp" />
+    <ClCompile Include="source\sal_eXosip2.cpp" />
+    <ClCompile Include="source\sal_eXosip2_presence.cpp" />
+    <ClCompile Include="source\sal_eXosip2_sdp.cpp" />
+    <ClCompile Include="source\serphonecall.cpp" />
+    <ClCompile Include="source\serphoneinterface.cpp" />
+    <ClCompile Include="source\servicecore.cpp" />
+    <ClCompile Include="source\siplogin.cpp" />
+    <ClCompile Include="source\sipsetup.cpp" />
+    <ClCompile Include="source\sometools.cpp" />
+    <ClCompile Include="source\Utility\base64_2.cpp" />
+    <ClCompile Include="source\Utility\cJSON.c" />
+    <ClCompile Include="source\Utility\md5.cpp" />
+    <ClCompile Include="source\Utility\tinyxml2.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ECMedia\Ecmedia.vcxproj">
+      <Project>{86e50404-d26f-405a-9994-c8fb69eb72dd}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\exosip\exosip.vcxproj">
+      <Project>{2f470789-39ef-45b0-87ce-adeac4b0422c}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\module\osip\osip.vcxproj">
+      <Project>{03be4c06-e66d-4fdf-bd0a-b97460db336e}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\third_party\srtp\srtp.vcxproj">
+      <Project>{eef031cb-fed8-451e-a471-91ec8d4f6750}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

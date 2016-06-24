@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\aimd_rate_control.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="source\inter_arrival.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mimd_rate_control.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="source\overuse_detector.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="source\overuse_estimator.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="source\rate_statistics.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="source\remote_rate_control.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\bwe_defines.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\remote_bitrate_estimator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="source\test\bwe_test_logging.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\aimd_rate_control.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\inter_arrival.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mimd_rate_control.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\overuse_detector.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\overuse_estimator.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\rate_statistics.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\remote_bitrate_estimator_abs_send_time.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\remote_bitrate_estimator_single_stream.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\remote_rate_control.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\test\bwe_test_logging.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,348 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3FAA0E3C15C8930A00C33657 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAA0E3B15C8930A00C33657 /* Foundation.framework */; };
+		3FAA0E4F15C896D500C33657 /* udp_transport.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA0E4E15C896D500C33657 /* udp_transport.h */; };
+		3FAA0E6315C896EA00C33657 /* udp_socket_manager_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA0E5215C896EA00C33657 /* udp_socket_manager_posix.cc */; };
+		3FAA0E6415C896EA00C33657 /* udp_socket_manager_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA0E5315C896EA00C33657 /* udp_socket_manager_posix.h */; };
+		3FAA0E6615C896EA00C33657 /* udp_socket_manager_wrapper.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA0E5515C896EA00C33657 /* udp_socket_manager_wrapper.cc */; };
+		3FAA0E6715C896EA00C33657 /* udp_socket_manager_wrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA0E5615C896EA00C33657 /* udp_socket_manager_wrapper.h */; };
+		3FAA0E6815C896EA00C33657 /* udp_socket_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA0E5715C896EA00C33657 /* udp_socket_posix.cc */; };
+		3FAA0E6915C896EA00C33657 /* udp_socket_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA0E5815C896EA00C33657 /* udp_socket_posix.h */; };
+		3FAA0E6A15C896EA00C33657 /* udp_socket_wrapper.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA0E5915C896EA00C33657 /* udp_socket_wrapper.cc */; };
+		3FAA0E6B15C896EA00C33657 /* udp_socket_wrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA0E5A15C896EA00C33657 /* udp_socket_wrapper.h */; };
+		3FAA0E7015C896EA00C33657 /* udp_transport_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA0E5F15C896EA00C33657 /* udp_transport_impl.cc */; };
+		3FAA0E7115C896EA00C33657 /* udp_transport_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA0E6015C896EA00C33657 /* udp_transport_impl.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3FAA0E3815C8930A00C33657 /* libudp_transport.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libudp_transport.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3FAA0E3B15C8930A00C33657 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3FAA0E4E15C896D500C33657 /* udp_transport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = udp_transport.h; path = include/udp_transport.h; sourceTree = "<group>"; };
+		3FAA0E5215C896EA00C33657 /* udp_socket_manager_posix.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = udp_socket_manager_posix.cc; path = source/udp_socket_manager_posix.cc; sourceTree = "<group>"; };
+		3FAA0E5315C896EA00C33657 /* udp_socket_manager_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = udp_socket_manager_posix.h; path = source/udp_socket_manager_posix.h; sourceTree = "<group>"; };
+		3FAA0E5515C896EA00C33657 /* udp_socket_manager_wrapper.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = udp_socket_manager_wrapper.cc; path = source/udp_socket_manager_wrapper.cc; sourceTree = "<group>"; };
+		3FAA0E5615C896EA00C33657 /* udp_socket_manager_wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = udp_socket_manager_wrapper.h; path = source/udp_socket_manager_wrapper.h; sourceTree = "<group>"; };
+		3FAA0E5715C896EA00C33657 /* udp_socket_posix.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = udp_socket_posix.cc; path = source/udp_socket_posix.cc; sourceTree = "<group>"; };
+		3FAA0E5815C896EA00C33657 /* udp_socket_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = udp_socket_posix.h; path = source/udp_socket_posix.h; sourceTree = "<group>"; };
+		3FAA0E5915C896EA00C33657 /* udp_socket_wrapper.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = udp_socket_wrapper.cc; path = source/udp_socket_wrapper.cc; sourceTree = "<group>"; };
+		3FAA0E5A15C896EA00C33657 /* udp_socket_wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = udp_socket_wrapper.h; path = source/udp_socket_wrapper.h; sourceTree = "<group>"; };
+		3FAA0E5F15C896EA00C33657 /* udp_transport_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = udp_transport_impl.cc; path = source/udp_transport_impl.cc; sourceTree = "<group>"; };
+		3FAA0E6015C896EA00C33657 /* udp_transport_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = udp_transport_impl.h; path = source/udp_transport_impl.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3FAA0E3515C8930A00C33657 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3FAA0E3C15C8930A00C33657 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3FAA0E2D15C8930A00C33657 = {
+			isa = PBXGroup;
+			children = (
+				3FAA0E4D15C8967E00C33657 /* inc */,
+				3FAA0E4C15C8967C00C33657 /* src */,
+				3FAA0E3A15C8930A00C33657 /* Frameworks */,
+				3FAA0E3915C8930A00C33657 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3FAA0E3915C8930A00C33657 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3FAA0E3815C8930A00C33657 /* libudp_transport.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3FAA0E3A15C8930A00C33657 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3FAA0E3B15C8930A00C33657 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3FAA0E4C15C8967C00C33657 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				3FAA0E5215C896EA00C33657 /* udp_socket_manager_posix.cc */,
+				3FAA0E5315C896EA00C33657 /* udp_socket_manager_posix.h */,
+				3FAA0E5515C896EA00C33657 /* udp_socket_manager_wrapper.cc */,
+				3FAA0E5615C896EA00C33657 /* udp_socket_manager_wrapper.h */,
+				3FAA0E5715C896EA00C33657 /* udp_socket_posix.cc */,
+				3FAA0E5815C896EA00C33657 /* udp_socket_posix.h */,
+				3FAA0E5915C896EA00C33657 /* udp_socket_wrapper.cc */,
+				3FAA0E5A15C896EA00C33657 /* udp_socket_wrapper.h */,
+				3FAA0E5F15C896EA00C33657 /* udp_transport_impl.cc */,
+				3FAA0E6015C896EA00C33657 /* udp_transport_impl.h */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		3FAA0E4D15C8967E00C33657 /* inc */ = {
+			isa = PBXGroup;
+			children = (
+				3FAA0E4E15C896D500C33657 /* udp_transport.h */,
+			);
+			name = inc;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		3FAA0E3615C8930A00C33657 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3FAA0E4F15C896D500C33657 /* udp_transport.h in Headers */,
+				3FAA0E6415C896EA00C33657 /* udp_socket_manager_posix.h in Headers */,
+				3FAA0E6715C896EA00C33657 /* udp_socket_manager_wrapper.h in Headers */,
+				3FAA0E6915C896EA00C33657 /* udp_socket_posix.h in Headers */,
+				3FAA0E6B15C896EA00C33657 /* udp_socket_wrapper.h in Headers */,
+				3FAA0E7115C896EA00C33657 /* udp_transport_impl.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		3FAA0E3715C8930A00C33657 /* udp_transport */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3FAA0E4515C8930A00C33657 /* Build configuration list for PBXNativeTarget "udp_transport" */;
+			buildPhases = (
+				3FAA0E3415C8930A00C33657 /* Sources */,
+				3FAA0E3515C8930A00C33657 /* Frameworks */,
+				3FAA0E3615C8930A00C33657 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = udp_transport;
+			productName = udp_transport;
+			productReference = 3FAA0E3815C8930A00C33657 /* libudp_transport.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3FAA0E2F15C8930A00C33657 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = hisunsray;
+			};
+			buildConfigurationList = 3FAA0E3215C8930A00C33657 /* Build configuration list for PBXProject "udp_transport" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3FAA0E2D15C8930A00C33657;
+			productRefGroup = 3FAA0E3915C8930A00C33657 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3FAA0E3715C8930A00C33657 /* udp_transport */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3FAA0E3415C8930A00C33657 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3FAA0E6315C896EA00C33657 /* udp_socket_manager_posix.cc in Sources */,
+				3FAA0E6615C896EA00C33657 /* udp_socket_manager_wrapper.cc in Sources */,
+				3FAA0E6815C896EA00C33657 /* udp_socket_posix.cc in Sources */,
+				3FAA0E6A15C896EA00C33657 /* udp_socket_wrapper.cc in Sources */,
+				3FAA0E7015C896EA00C33657 /* udp_transport_impl.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3FAA0E4315C8930A00C33657 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		3FAA0E4415C8930A00C33657 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3FAA0E4615C8930A00C33657 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				DSTROOT = /tmp/udp_transport.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					WEBRTC_MAC,
+					MAC_IPHONE,
+				);
+				HEADER_SEARCH_PATHS = (
+					../,
+					../../,
+					../interface,
+					../../system_wrappers/interface,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_CPLUSPLUSFLAGS = (
+					"-fno-rtti",
+					"-fno-threadsafe-statics",
+					"-fvisibility-inlines-hidden",
+					"-Wsign-compare",
+					"-Woverloaded-virtual",
+					"-Wno-abi",
+					"-Wno-abi",
+					"-Wno-abiWno-abi",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = NO;
+				SYMROOT = ../../IOSProject/out/baselib;
+				VALIDATE_PRODUCT = NO;
+				VALID_ARCHS = "arm64 armv7 armv7s";
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wendif-labels",
+					"-Wextra",
+					"-Wno-unused-parameter",
+					"-Wno-missing-field-initializers",
+					"-Wheader-hygiene",
+					"-Wno-char-subscripts",
+					"-Wno-unused-function",
+					"-Wno-unnamed-type-template-args",
+					"-Wno-c++11-extensions",
+					"-Wno-covered-switch-default",
+				);
+			};
+			name = Debug;
+		};
+		3FAA0E4715C8930A00C33657 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				DSTROOT = /tmp/udp_transport.dst;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					WEBRTC_MAC,
+					MAC_IPHONE,
+				);
+				HEADER_SEARCH_PATHS = (
+					../,
+					../../,
+					../interface,
+					../../system_wrappers/interface,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_CPLUSPLUSFLAGS = (
+					"-fno-rtti",
+					"-fno-threadsafe-statics",
+					"-fvisibility-inlines-hidden",
+					"-Wsign-compare",
+					"-Woverloaded-virtual",
+					"-Wno-abi",
+					"-Wno-abi",
+					"-Wno-abiWno-abi",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = NO;
+				SYMROOT = ../../IOSProject/out/baselib;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s";
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wendif-labels",
+					"-Wextra",
+					"-Wno-unused-parameter",
+					"-Wno-missing-field-initializers",
+					"-Wheader-hygiene",
+					"-Wno-char-subscripts",
+					"-Wno-unused-function",
+					"-Wno-unnamed-type-template-args",
+					"-Wno-c++11-extensions",
+					"-Wno-covered-switch-default",
+				);
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3FAA0E3215C8930A00C33657 /* Build configuration list for PBXProject "udp_transport" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3FAA0E4315C8930A00C33657 /* Debug */,
+				3FAA0E4415C8930A00C33657 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3FAA0E4515C8930A00C33657 /* Build configuration list for PBXNativeTarget "udp_transport" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3FAA0E4615C8930A00C33657 /* Debug */,
+				3FAA0E4715C8930A00C33657 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3FAA0E2F15C8930A00C33657 /* Project object */;
+}

@@ -1,0 +1,324 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{9b52cb66-5d37-422a-ae19-af5c2f200b74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="inc">
+      <UniqueIdentifier>{daf1dcef-4a7d-4788-b049-ad072c749efb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\osip2\internal.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osip2\osip.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osip2\osip_condv.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osip2\osip_dialog.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osip2\osip_fifo.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osip2\osip_mt.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osip2\osip_time.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\osip_body.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\osip_const.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\osip_headers.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\osip_list.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\osip_md5.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\osip_message.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\osip_parser.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\osip_port.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\osip_uri.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\sdp_message.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_accept.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_accept_encoding.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_accept_language.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_alert_info.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_allow.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_authentication_info.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_authorization.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_call_id.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_call_info.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_contact.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_content_disposition.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_content_encoding.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_content_length.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_content_type.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_cseq.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_error_info.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_from.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_header.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_mime_version.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_proxy_authenticate.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_proxy_authentication_info.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_proxy_authorization.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_record_route.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_route.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_to.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_via.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\osipparser2\headers\osip_www_authenticate.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\osip2\fsm.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\osip2\xixt.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\osipparser2\parser.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\osip2\fsm_misc.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osip2\ict.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osip2\ict_fsm.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osip2\ist.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osip2\ist_fsm.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osip2\nict.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osip2\nict_fsm.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osip2\nist.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osip2\nist_fsm.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osip2\osip.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osip2\osip_dialog.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osip2\osip_event.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osip2\osip_time.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osip2\osip_transaction.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osip2\port_condv.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osip2\port_fifo.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osip2\port_sema.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osip2\port_thread.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_accept.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_accept_encoding.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_accept_language.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_alert_info.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_allow.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_authentication_info.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_authorization.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_body.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_call_id.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_call_info.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_contact.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_content_disposition.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_content_encoding.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_content_length.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_content_type.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_cseq.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_error_info.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_from.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_header.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_list.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_md5c.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_message.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_message_parse.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_message_to_str.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_mime_version.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_parser_cfg.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_port.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_proxy_authenticate.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_proxy_authentication_info.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_proxy_authorization.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_record_route.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_route.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_to.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_uri.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_via.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\osip_www_authenticate.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\sdp_accessor.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\osipparser2\sdp_message.c">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

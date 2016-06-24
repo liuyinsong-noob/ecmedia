@@ -1,0 +1,279 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AD8D72AE1C599F1100FB246D /* bitrate_prober.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72AB1C599F1100FB246D /* bitrate_prober.cc */; };
+		AD8D72AF1C599F1100FB246D /* paced_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72AD1C599F1100FB246D /* paced_sender.cc */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AD8D729C1C599EE400FB246D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		AD194FB01C5B3F0A003841BB /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		AD194FB21C5B3F14003841BB /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		AD8D729E1C599EE400FB246D /* libpacing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libpacing.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD8D72AA1C599F0300FB246D /* paced_sender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = paced_sender.h; path = ../../include/paced_sender.h; sourceTree = "<group>"; };
+		AD8D72AB1C599F1100FB246D /* bitrate_prober.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bitrate_prober.cc; path = ../../source/bitrate_prober.cc; sourceTree = "<group>"; };
+		AD8D72AC1C599F1100FB246D /* bitrate_prober.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bitrate_prober.h; path = ../../source/bitrate_prober.h; sourceTree = "<group>"; };
+		AD8D72AD1C599F1100FB246D /* paced_sender.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = paced_sender.cc; path = ../../source/paced_sender.cc; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AD8D729B1C599EE400FB246D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AD8D72951C599EE400FB246D = {
+			isa = PBXGroup;
+			children = (
+				AD194FB21C5B3F14003841BB /* libc++.tbd */,
+				AD194FB01C5B3F0A003841BB /* libz.tbd */,
+				AD8D72A01C599EE400FB246D /* pacing */,
+				AD8D729F1C599EE400FB246D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AD8D729F1C599EE400FB246D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AD8D729E1C599EE400FB246D /* libpacing.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AD8D72A01C599EE400FB246D /* pacing */ = {
+			isa = PBXGroup;
+			children = (
+				AD8D72AA1C599F0300FB246D /* paced_sender.h */,
+				AD8D72AB1C599F1100FB246D /* bitrate_prober.cc */,
+				AD8D72AC1C599F1100FB246D /* bitrate_prober.h */,
+				AD8D72AD1C599F1100FB246D /* paced_sender.cc */,
+			);
+			path = pacing;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AD8D729D1C599EE400FB246D /* pacing */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD8D72A71C599EE400FB246D /* Build configuration list for PBXNativeTarget "pacing" */;
+			buildPhases = (
+				AD8D729A1C599EE400FB246D /* Sources */,
+				AD8D729B1C599EE400FB246D /* Frameworks */,
+				AD8D729C1C599EE400FB246D /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = pacing;
+			productName = pacing;
+			productReference = AD8D729E1C599EE400FB246D /* libpacing.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AD8D72961C599EE400FB246D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = SeanLee;
+				TargetAttributes = {
+					AD8D729D1C599EE400FB246D = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = AD8D72991C599EE400FB246D /* Build configuration list for PBXProject "pacing" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = AD8D72951C599EE400FB246D;
+			productRefGroup = AD8D729F1C599EE400FB246D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AD8D729D1C599EE400FB246D /* pacing */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AD8D729A1C599EE400FB246D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD8D72AF1C599F1100FB246D /* paced_sender.cc in Sources */,
+				AD8D72AE1C599F1100FB246D /* bitrate_prober.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AD8D72A51C599EE400FB246D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		AD8D72A61C599EE400FB246D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AD8D72A81C599EE400FB246D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				HEADER_SEARCH_PATHS = (
+					../../../system_wrappers/interface,
+					../..,
+					../../interface,
+					../include,
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "armv7 arm64";
+			};
+			name = Debug;
+		};
+		AD8D72A91C599EE400FB246D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				HEADER_SEARCH_PATHS = (
+					../../../system_wrappers/interface,
+					../..,
+					../../interface,
+					../include,
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "armv7 arm64";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AD8D72991C599EE400FB246D /* Build configuration list for PBXProject "pacing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD8D72A51C599EE400FB246D /* Debug */,
+				AD8D72A61C599EE400FB246D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD8D72A71C599EE400FB246D /* Build configuration list for PBXNativeTarget "pacing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD8D72A81C599EE400FB246D /* Debug */,
+				AD8D72A91C599EE400FB246D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AD8D72961C599EE400FB246D /* Project object */;
+}

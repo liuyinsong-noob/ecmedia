@@ -1,0 +1,375 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{e2611056-3027-412d-addc-1cc6385341a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{b3ec15bd-e7af-4d2a-bc7b-a2be53aae712}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\aec">
+      <UniqueIdentifier>{f13a243c-8e55-4634-8793-a0e23ddcd00a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\aec\include">
+      <UniqueIdentifier>{b3e872f6-f21e-41f3-bf21-b1d0669d7cd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\aecm">
+      <UniqueIdentifier>{a77432ab-d06b-4a95-b277-21b7bb352a52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\aecm\include">
+      <UniqueIdentifier>{cf881b78-8e48-4f94-88bb-0fa0cb3f72f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\agc">
+      <UniqueIdentifier>{bfc0aac6-fbb3-48ac-beb8-290acfc48b39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\agc\legacy">
+      <UniqueIdentifier>{e646ed19-f0aa-4e1e-bf19-548ff359db78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\beamformer">
+      <UniqueIdentifier>{71a60dae-f537-448f-8bad-42be63bda42c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\transient">
+      <UniqueIdentifier>{c772e032-179d-48ea-b4ae-573617f3b906}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\utility">
+      <UniqueIdentifier>{45162f87-eb07-414b-b160-a95f7fc20c2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\ns">
+      <UniqueIdentifier>{1d2ab532-9573-49ea-9403-f13dd315770f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\ns\include">
+      <UniqueIdentifier>{4ce33fca-464b-4094-9003-20dc7f102a0c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\audio_processing.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\aec\aec_core.h">
+      <Filter>source\aec</Filter>
+    </ClInclude>
+    <ClInclude Include="source\aec\aec_core_internal.h">
+      <Filter>source\aec</Filter>
+    </ClInclude>
+    <ClInclude Include="source\aec\aec_rdft.h">
+      <Filter>source\aec</Filter>
+    </ClInclude>
+    <ClInclude Include="source\aec\aec_resampler.h">
+      <Filter>source\aec</Filter>
+    </ClInclude>
+    <ClInclude Include="source\aec\echo_cancellation_internal.h">
+      <Filter>source\aec</Filter>
+    </ClInclude>
+    <ClInclude Include="source\aec\include\echo_cancellation.h">
+      <Filter>source\aec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\aecm\aecm_core.h">
+      <Filter>source\aecm</Filter>
+    </ClInclude>
+    <ClInclude Include="source\aecm\include\echo_control_mobile.h">
+      <Filter>source\aecm\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\agc\agc.h">
+      <Filter>source\agc</Filter>
+    </ClInclude>
+    <ClInclude Include="source\agc\agc_audio_proc.h">
+      <Filter>source\agc</Filter>
+    </ClInclude>
+    <ClInclude Include="source\agc\agc_audio_proc_internal.h">
+      <Filter>source\agc</Filter>
+    </ClInclude>
+    <ClInclude Include="source\agc\agc_manager_direct.h">
+      <Filter>source\agc</Filter>
+    </ClInclude>
+    <ClInclude Include="source\agc\circular_buffer.h">
+      <Filter>source\agc</Filter>
+    </ClInclude>
+    <ClInclude Include="source\agc\gain_map_internal.h">
+      <Filter>source\agc</Filter>
+    </ClInclude>
+    <ClInclude Include="source\agc\gmm.h">
+      <Filter>source\agc</Filter>
+    </ClInclude>
+    <ClInclude Include="source\agc\histogram.h">
+      <Filter>source\agc</Filter>
+    </ClInclude>
+    <ClInclude Include="source\agc\noise_gmm_tables.h">
+      <Filter>source\agc</Filter>
+    </ClInclude>
+    <ClInclude Include="source\agc\pitch_based_vad.h">
+      <Filter>source\agc</Filter>
+    </ClInclude>
+    <ClInclude Include="source\agc\pitch_internal.h">
+      <Filter>source\agc</Filter>
+    </ClInclude>
+    <ClInclude Include="source\agc\pole_zero_filter.h">
+      <Filter>source\agc</Filter>
+    </ClInclude>
+    <ClInclude Include="source\agc\standalone_vad.h">
+      <Filter>source\agc</Filter>
+    </ClInclude>
+    <ClInclude Include="source\agc\utility.h">
+      <Filter>source\agc</Filter>
+    </ClInclude>
+    <ClInclude Include="source\agc\voice_gmm_tables.h">
+      <Filter>source\agc</Filter>
+    </ClInclude>
+    <ClInclude Include="source\agc\legacy\analog_agc.h">
+      <Filter>source\agc\legacy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\agc\legacy\digital_agc.h">
+      <Filter>source\agc\legacy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\agc\legacy\gain_control.h">
+      <Filter>source\agc\legacy</Filter>
+    </ClInclude>
+    <ClInclude Include="source\beamformer\complex_matrix.h">
+      <Filter>source\beamformer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\beamformer\covariance_matrix_generator.h">
+      <Filter>source\beamformer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\beamformer\matrix.h">
+      <Filter>source\beamformer</Filter>
+    </ClInclude>
+    <ClInclude Include="source\audio_buffer.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\audio_processing_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\channel_buffer.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\echo_cancellation_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\echo_control_mobile_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gain_control_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\high_pass_filter_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\level_estimator_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\noise_suppression_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\processing_component.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\rms_level.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\splitting_filter.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\typing_detection.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\voice_detection_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\transient\daubechies_8_wavelet_coeffs.h">
+      <Filter>source\transient</Filter>
+    </ClInclude>
+    <ClInclude Include="source\transient\dyadic_decimator.h">
+      <Filter>source\transient</Filter>
+    </ClInclude>
+    <ClInclude Include="source\transient\moving_moments.h">
+      <Filter>source\transient</Filter>
+    </ClInclude>
+    <ClInclude Include="source\transient\transient_detector.h">
+      <Filter>source\transient</Filter>
+    </ClInclude>
+    <ClInclude Include="source\transient\transient_suppressor.h">
+      <Filter>source\transient</Filter>
+    </ClInclude>
+    <ClInclude Include="source\transient\wpd_node.h">
+      <Filter>source\transient</Filter>
+    </ClInclude>
+    <ClInclude Include="source\transient\wpd_tree.h">
+      <Filter>source\transient</Filter>
+    </ClInclude>
+    <ClInclude Include="source\utility\delay_estimator.h">
+      <Filter>source\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\utility\delay_estimator_internal.h">
+      <Filter>source\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\utility\delay_estimator_wrapper.h">
+      <Filter>source\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\utility\fft4g.h">
+      <Filter>source\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\audio_process_common.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\agc\agc_common.h">
+      <Filter>source\agc</Filter>
+    </ClInclude>
+    <ClInclude Include="source\transient\transient_common.h">
+      <Filter>source\transient</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ns\defines.h">
+      <Filter>source\ns</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ns\ns_core.h">
+      <Filter>source\ns</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ns\windows_private.h">
+      <Filter>source\ns</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ns\include\noise_suppression.h">
+      <Filter>source\ns\include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\aec\aec_core.c">
+      <Filter>source\aec</Filter>
+    </ClCompile>
+    <ClCompile Include="source\aec\aec_rdft.c">
+      <Filter>source\aec</Filter>
+    </ClCompile>
+    <ClCompile Include="source\aec\aec_resampler.c">
+      <Filter>source\aec</Filter>
+    </ClCompile>
+    <ClCompile Include="source\aec\echo_cancellation.c">
+      <Filter>source\aec</Filter>
+    </ClCompile>
+    <ClCompile Include="source\aecm\aecm_core.c">
+      <Filter>source\aecm</Filter>
+    </ClCompile>
+    <ClCompile Include="source\aecm\echo_control_mobile.c">
+      <Filter>source\aecm</Filter>
+    </ClCompile>
+    <ClCompile Include="source\agc\circular_buffer.cc">
+      <Filter>source\agc</Filter>
+    </ClCompile>
+    <ClCompile Include="source\agc\gmm.cc">
+      <Filter>source\agc</Filter>
+    </ClCompile>
+    <ClCompile Include="source\agc\histogram.cc">
+      <Filter>source\agc</Filter>
+    </ClCompile>
+    <ClCompile Include="source\agc\pitch_based_vad.cc">
+      <Filter>source\agc</Filter>
+    </ClCompile>
+    <ClCompile Include="source\agc\pitch_internal.cc">
+      <Filter>source\agc</Filter>
+    </ClCompile>
+    <ClCompile Include="source\agc\pole_zero_filter.cc">
+      <Filter>source\agc</Filter>
+    </ClCompile>
+    <ClCompile Include="source\agc\standalone_vad.cc">
+      <Filter>source\agc</Filter>
+    </ClCompile>
+    <ClCompile Include="source\agc\utility.cc">
+      <Filter>source\agc</Filter>
+    </ClCompile>
+    <ClCompile Include="source\agc\legacy\analog_agc.c">
+      <Filter>source\agc\legacy</Filter>
+    </ClCompile>
+    <ClCompile Include="source\agc\legacy\digital_agc.c">
+      <Filter>source\agc\legacy</Filter>
+    </ClCompile>
+    <ClCompile Include="source\beamformer\covariance_matrix_generator.cc">
+      <Filter>source\beamformer</Filter>
+    </ClCompile>
+    <ClCompile Include="source\audio_buffer.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\audio_processing_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\channel_buffer.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\echo_cancellation_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\echo_control_mobile_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gain_control_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\high_pass_filter_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\level_estimator_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\noise_suppression_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\processing_component.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\rms_level.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\splitting_filter.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\typing_detection.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\voice_detection_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\transient\moving_moments.cc">
+      <Filter>source\transient</Filter>
+    </ClCompile>
+    <ClCompile Include="source\transient\transient_detector.cc">
+      <Filter>source\transient</Filter>
+    </ClCompile>
+    <ClCompile Include="source\transient\transient_suppressor.cc">
+      <Filter>source\transient</Filter>
+    </ClCompile>
+    <ClCompile Include="source\transient\wpd_node.cc">
+      <Filter>source\transient</Filter>
+    </ClCompile>
+    <ClCompile Include="source\transient\wpd_tree.cc">
+      <Filter>source\transient</Filter>
+    </ClCompile>
+    <ClCompile Include="source\utility\delay_estimator.c">
+      <Filter>source\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="source\utility\delay_estimator_wrapper.c">
+      <Filter>source\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="source\utility\fft4g.c">
+      <Filter>source\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="source\aec\aec_core_sse2.c">
+      <Filter>source\aec</Filter>
+    </ClCompile>
+    <ClCompile Include="source\aec\aec_rdft_sse2.c">
+      <Filter>source\aec</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ns\noise_suppression.c">
+      <Filter>source\ns</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ns\ns_core.c">
+      <Filter>source\ns</Filter>
+    </ClCompile>
+    <ClCompile Include="source\agc\agc_manager_direct.cc">
+      <Filter>source\agc</Filter>
+    </ClCompile>
+    <ClCompile Include="source\aecm\aecm_core_c.c">
+      <Filter>source\aecm</Filter>
+    </ClCompile>
+    <ClCompile Include="source\agc\agc.cc">
+      <Filter>source\agc</Filter>
+    </ClCompile>
+    <ClCompile Include="source\agc\agc_audio_proc.cc">
+      <Filter>source\agc</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

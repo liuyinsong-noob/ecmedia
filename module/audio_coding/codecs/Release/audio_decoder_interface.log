@@ -1,0 +1,17 @@
+﻿生成启动时间为 12/21 星期一 11:45:12。
+     1>项目“L:\svn\MyWebRtc_openH264Merge_new\module\audio_coding\codecs\audio_decoder_interface.vcxproj”在节点 4 上(build 个目标)。
+     1>InitializeBuildStatus:
+         正在创建“Release\audio_decoder_interface.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       ClCompile:
+         所有输出均为最新。
+       Lib:
+         所有输出均为最新。
+         audio_decoder_interface.vcxproj -> L:\svn\MyWebRtc_openH264Merge_new\Release\audio_decoder_interface.lib
+       FinalizeBuildStatus:
+         正在删除文件“Release\audio_decoder_interface.unsuccessfulbuild”。
+         正在对“Release\audio_decoder_interface.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“L:\svn\MyWebRtc_openH264Merge_new\module\audio_coding\codecs\audio_decoder_interface.vcxproj”(build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:00.03

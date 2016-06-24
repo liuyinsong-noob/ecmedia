@@ -1,0 +1,685 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5519CB8F15C812A700719504 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5519CB8E15C812A700719504 /* Foundation.framework */; };
+		5519CC8C15C8136E00719504 /* vie_base_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC4215C8136E00719504 /* vie_base_impl.cc */; };
+		5519CC8E15C8136E00719504 /* vie_capture_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC4415C8136E00719504 /* vie_capture_impl.cc */; };
+		5519CC9015C8136E00719504 /* vie_capturer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC4615C8136E00719504 /* vie_capturer.cc */; };
+		5519CC9415C8136F00719504 /* vie_channel_group.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC4A15C8136E00719504 /* vie_channel_group.cc */; };
+		5519CC9615C8136F00719504 /* vie_channel_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC4C15C8136E00719504 /* vie_channel_manager.cc */; };
+		5519CC9815C8136F00719504 /* vie_codec_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC4E15C8136E00719504 /* vie_codec_impl.cc */; };
+		5519CC9D15C8136F00719504 /* vie_encryption_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC5315C8136E00719504 /* vie_encryption_impl.cc */; };
+		5519CC9F15C8136F00719504 /* vie_external_codec_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC5515C8136E00719504 /* vie_external_codec_impl.cc */; };
+		5519CCA115C8136F00719504 /* vie_file_image.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC5715C8136E00719504 /* vie_file_image.cc */; };
+		5519CCA315C8136F00719504 /* vie_file_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC5915C8136E00719504 /* vie_file_impl.cc */; };
+		5519CCA515C8136F00719504 /* vie_file_player.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC5B15C8136E00719504 /* vie_file_player.cc */; };
+		5519CCA915C8136F00719504 /* vie_frame_provider_base.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC5F15C8136E00719504 /* vie_frame_provider_base.cc */; };
+		5519CCAB15C8136F00719504 /* vie_image_process_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6115C8136E00719504 /* vie_image_process_impl.cc */; };
+		5519CCAD15C8136F00719504 /* vie_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6315C8136E00719504 /* vie_impl.cc */; };
+		5519CCAF15C8136F00719504 /* vie_input_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6515C8136E00719504 /* vie_input_manager.cc */; };
+		5519CCB115C8136F00719504 /* vie_manager_base.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6715C8136E00719504 /* vie_manager_base.cc */; };
+		5519CCB315C8136F00719504 /* vie_network_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6915C8136E00719504 /* vie_network_impl.cc */; };
+		5519CCB515C8136F00719504 /* vie_performance_monitor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6B15C8136E00719504 /* vie_performance_monitor.cc */; };
+		5519CCB715C8136F00719504 /* vie_receiver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6D15C8136E00719504 /* vie_receiver.cc */; };
+		5519CCB915C8136F00719504 /* vie_ref_count.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6F15C8136E00719504 /* vie_ref_count.cc */; };
+		5519CCBD15C8136F00719504 /* vie_render_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC7315C8136E00719504 /* vie_render_impl.cc */; };
+		5519CCBF15C8136F00719504 /* vie_render_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC7515C8136E00719504 /* vie_render_manager.cc */; };
+		5519CCC115C8136F00719504 /* vie_renderer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC7715C8136E00719504 /* vie_renderer.cc */; };
+		5519CCC315C8136F00719504 /* vie_rtp_rtcp_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC7915C8136E00719504 /* vie_rtp_rtcp_impl.cc */; };
+		5519CCC515C8136F00719504 /* vie_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC7B15C8136E00719504 /* vie_sender.cc */; };
+		5519CCC715C8136F00719504 /* vie_shared_data.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC7D15C8136E00719504 /* vie_shared_data.cc */; };
+		558FF076169FEF3E00BEFFED /* vie_channel.cc in Sources */ = {isa = PBXBuildFile; fileRef = 558FF075169FEF3E00BEFFED /* vie_channel.cc */; };
+		55A2B0C615C8855500C857E3 /* vie_encoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A2B0C515C8855500C857E3 /* vie_encoder.cc */; };
+		55A2B0D015C8890E00C857E3 /* vie_file_recorder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A2B0CB15C8890E00C857E3 /* vie_file_recorder.cc */; };
+		55A2B0D215C8890E00C857E3 /* vie_remb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A2B0CD15C8890E00C857E3 /* vie_remb.cc */; };
+		55A2B0D315C8890E00C857E3 /* vie_sync_module.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A2B0CE15C8890E00C857E3 /* vie_sync_module.cc */; };
+		AD194FE41C5B4572003841BB /* vie_desktop_capture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD194FDE1C5B4572003841BB /* vie_desktop_capture.cpp */; };
+		AD194FE51C5B4572003841BB /* vie_desktop_capture.h in Headers */ = {isa = PBXBuildFile; fileRef = AD194FDF1C5B4572003841BB /* vie_desktop_capture.h */; };
+		AD194FE61C5B4572003841BB /* vie_desktop_share_impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD194FE01C5B4572003841BB /* vie_desktop_share_impl.cpp */; };
+		AD194FE71C5B4572003841BB /* vie_desktop_share_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = AD194FE11C5B4572003841BB /* vie_desktop_share_impl.h */; };
+		AD194FE81C5B4572003841BB /* vie_desktop_share_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD194FE21C5B4572003841BB /* vie_desktop_share_manager.cc */; };
+		AD194FE91C5B4572003841BB /* vie_desktop_share_manager.h in Headers */ = {isa = PBXBuildFile; fileRef = AD194FE31C5B4572003841BB /* vie_desktop_share_manager.h */; };
+		AD2E29F51C58C04900FD311B /* report_block_stats.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD2E29F31C58C04900FD311B /* report_block_stats.cc */; };
+		AD2E29F61C58C04900FD311B /* report_block_stats.h in Headers */ = {isa = PBXBuildFile; fileRef = AD2E29F41C58C04900FD311B /* report_block_stats.h */; };
+		AD2E29F91C58C09F00FD311B /* stream_synchronization.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD2E29F71C58C09F00FD311B /* stream_synchronization.cc */; };
+		AD2E29FA1C58C09F00FD311B /* stream_synchronization.h in Headers */ = {isa = PBXBuildFile; fileRef = AD2E29F81C58C09F00FD311B /* stream_synchronization.h */; };
+		AD8D725C1C58C6D400FB246D /* call_stats.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D725A1C58C6D400FB246D /* call_stats.cc */; };
+		AD8D725D1C58C6D400FB246D /* call_stats.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8D725B1C58C6D400FB246D /* call_stats.h */; };
+		AD8D72601C58C9EB00FB246D /* encoder_state_feedback.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D725E1C58C9EB00FB246D /* encoder_state_feedback.cc */; };
+		AD8D72611C58C9EB00FB246D /* encoder_state_feedback.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8D725F1C58C9EB00FB246D /* encoder_state_feedback.h */; };
+		AD8D72FE1C59A39700FB246D /* overuse_frame_detector.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72F81C59A39700FB246D /* overuse_frame_detector.cc */; };
+		AD8D72FF1C59A39700FB246D /* overuse_frame_detector.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8D72F91C59A39700FB246D /* overuse_frame_detector.h */; };
+		AD8D73001C59A39700FB246D /* receive_statistics_proxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72FA1C59A39700FB246D /* receive_statistics_proxy.cc */; };
+		AD8D73011C59A39700FB246D /* receive_statistics_proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8D72FB1C59A39700FB246D /* receive_statistics_proxy.h */; };
+		AD8D73021C59A39700FB246D /* send_statistics_proxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72FC1C59A39700FB246D /* send_statistics_proxy.cc */; };
+		AD8D73031C59A39700FB246D /* send_statistics_proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8D72FD1C59A39700FB246D /* send_statistics_proxy.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		5519CB8B15C812A700719504 /* libvideo_engine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvideo_engine.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5519CB8E15C812A700719504 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		5519CC3615C8136E00719504 /* vie_base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_base.h; sourceTree = "<group>"; };
+		5519CC3715C8136E00719504 /* vie_capture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_capture.h; sourceTree = "<group>"; };
+		5519CC3815C8136E00719504 /* vie_codec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_codec.h; sourceTree = "<group>"; };
+		5519CC3915C8136E00719504 /* vie_encryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_encryption.h; sourceTree = "<group>"; };
+		5519CC3A15C8136E00719504 /* vie_errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_errors.h; sourceTree = "<group>"; };
+		5519CC3B15C8136E00719504 /* vie_external_codec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_external_codec.h; sourceTree = "<group>"; };
+		5519CC3C15C8136E00719504 /* vie_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_file.h; sourceTree = "<group>"; };
+		5519CC3D15C8136E00719504 /* vie_image_process.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_image_process.h; sourceTree = "<group>"; };
+		5519CC3E15C8136E00719504 /* vie_network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_network.h; sourceTree = "<group>"; };
+		5519CC3F15C8136E00719504 /* vie_render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_render.h; sourceTree = "<group>"; };
+		5519CC4015C8136E00719504 /* vie_rtp_rtcp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_rtp_rtcp.h; sourceTree = "<group>"; };
+		5519CC4215C8136E00719504 /* vie_base_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_base_impl.cc; sourceTree = "<group>"; };
+		5519CC4315C8136E00719504 /* vie_base_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_base_impl.h; sourceTree = "<group>"; };
+		5519CC4415C8136E00719504 /* vie_capture_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_capture_impl.cc; sourceTree = "<group>"; };
+		5519CC4515C8136E00719504 /* vie_capture_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_capture_impl.h; sourceTree = "<group>"; };
+		5519CC4615C8136E00719504 /* vie_capturer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_capturer.cc; sourceTree = "<group>"; };
+		5519CC4715C8136E00719504 /* vie_capturer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_capturer.h; sourceTree = "<group>"; };
+		5519CC4A15C8136E00719504 /* vie_channel_group.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_channel_group.cc; sourceTree = "<group>"; };
+		5519CC4B15C8136E00719504 /* vie_channel_group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_channel_group.h; sourceTree = "<group>"; };
+		5519CC4C15C8136E00719504 /* vie_channel_manager.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_channel_manager.cc; sourceTree = "<group>"; };
+		5519CC4D15C8136E00719504 /* vie_channel_manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_channel_manager.h; sourceTree = "<group>"; };
+		5519CC4E15C8136E00719504 /* vie_codec_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_codec_impl.cc; sourceTree = "<group>"; };
+		5519CC4F15C8136E00719504 /* vie_codec_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_codec_impl.h; sourceTree = "<group>"; };
+		5519CC5015C8136E00719504 /* vie_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_defines.h; sourceTree = "<group>"; };
+		5519CC5315C8136E00719504 /* vie_encryption_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_encryption_impl.cc; sourceTree = "<group>"; };
+		5519CC5415C8136E00719504 /* vie_encryption_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_encryption_impl.h; sourceTree = "<group>"; };
+		5519CC5515C8136E00719504 /* vie_external_codec_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_external_codec_impl.cc; sourceTree = "<group>"; };
+		5519CC5615C8136E00719504 /* vie_external_codec_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_external_codec_impl.h; sourceTree = "<group>"; };
+		5519CC5715C8136E00719504 /* vie_file_image.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_file_image.cc; sourceTree = "<group>"; };
+		5519CC5815C8136E00719504 /* vie_file_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_file_image.h; sourceTree = "<group>"; };
+		5519CC5915C8136E00719504 /* vie_file_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_file_impl.cc; sourceTree = "<group>"; };
+		5519CC5A15C8136E00719504 /* vie_file_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_file_impl.h; sourceTree = "<group>"; };
+		5519CC5B15C8136E00719504 /* vie_file_player.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_file_player.cc; sourceTree = "<group>"; };
+		5519CC5C15C8136E00719504 /* vie_file_player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_file_player.h; sourceTree = "<group>"; };
+		5519CC5F15C8136E00719504 /* vie_frame_provider_base.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_frame_provider_base.cc; sourceTree = "<group>"; };
+		5519CC6015C8136E00719504 /* vie_frame_provider_base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_frame_provider_base.h; sourceTree = "<group>"; };
+		5519CC6115C8136E00719504 /* vie_image_process_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_image_process_impl.cc; sourceTree = "<group>"; };
+		5519CC6215C8136E00719504 /* vie_image_process_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_image_process_impl.h; sourceTree = "<group>"; };
+		5519CC6315C8136E00719504 /* vie_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_impl.cc; sourceTree = "<group>"; };
+		5519CC6415C8136E00719504 /* vie_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_impl.h; sourceTree = "<group>"; };
+		5519CC6515C8136E00719504 /* vie_input_manager.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_input_manager.cc; sourceTree = "<group>"; };
+		5519CC6615C8136E00719504 /* vie_input_manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_input_manager.h; sourceTree = "<group>"; };
+		5519CC6715C8136E00719504 /* vie_manager_base.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_manager_base.cc; sourceTree = "<group>"; };
+		5519CC6815C8136E00719504 /* vie_manager_base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_manager_base.h; sourceTree = "<group>"; };
+		5519CC6915C8136E00719504 /* vie_network_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_network_impl.cc; sourceTree = "<group>"; };
+		5519CC6A15C8136E00719504 /* vie_network_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_network_impl.h; sourceTree = "<group>"; };
+		5519CC6B15C8136E00719504 /* vie_performance_monitor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_performance_monitor.cc; sourceTree = "<group>"; };
+		5519CC6C15C8136E00719504 /* vie_performance_monitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_performance_monitor.h; sourceTree = "<group>"; };
+		5519CC6D15C8136E00719504 /* vie_receiver.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_receiver.cc; sourceTree = "<group>"; };
+		5519CC6E15C8136E00719504 /* vie_receiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_receiver.h; sourceTree = "<group>"; };
+		5519CC6F15C8136E00719504 /* vie_ref_count.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_ref_count.cc; sourceTree = "<group>"; };
+		5519CC7015C8136E00719504 /* vie_ref_count.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_ref_count.h; sourceTree = "<group>"; };
+		5519CC7215C8136E00719504 /* vie_remb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_remb.h; sourceTree = "<group>"; };
+		5519CC7315C8136E00719504 /* vie_render_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_render_impl.cc; sourceTree = "<group>"; };
+		5519CC7415C8136E00719504 /* vie_render_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_render_impl.h; sourceTree = "<group>"; };
+		5519CC7515C8136E00719504 /* vie_render_manager.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_render_manager.cc; sourceTree = "<group>"; };
+		5519CC7615C8136E00719504 /* vie_render_manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_render_manager.h; sourceTree = "<group>"; };
+		5519CC7715C8136E00719504 /* vie_renderer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_renderer.cc; sourceTree = "<group>"; };
+		5519CC7815C8136E00719504 /* vie_renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_renderer.h; sourceTree = "<group>"; };
+		5519CC7915C8136E00719504 /* vie_rtp_rtcp_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_rtp_rtcp_impl.cc; sourceTree = "<group>"; };
+		5519CC7A15C8136E00719504 /* vie_rtp_rtcp_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_rtp_rtcp_impl.h; sourceTree = "<group>"; };
+		5519CC7B15C8136E00719504 /* vie_sender.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_sender.cc; sourceTree = "<group>"; };
+		5519CC7C15C8136E00719504 /* vie_sender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_sender.h; sourceTree = "<group>"; };
+		5519CC7D15C8136E00719504 /* vie_shared_data.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_shared_data.cc; sourceTree = "<group>"; };
+		5519CC7E15C8136E00719504 /* vie_shared_data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_shared_data.h; sourceTree = "<group>"; };
+		5519CC8015C8136E00719504 /* vie_sync_module.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_sync_module.h; sourceTree = "<group>"; };
+		5519CE3615C821F500719504 /* vie_channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_channel.h; sourceTree = "<group>"; };
+		558FF075169FEF3E00BEFFED /* vie_channel.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_channel.cc; sourceTree = "<group>"; };
+		55A2B0BA15C881F700C857E3 /* vie_encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_encoder.h; sourceTree = "<group>"; };
+		55A2B0C515C8855500C857E3 /* vie_encoder.cc */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.cpp.cpp; path = vie_encoder.cc; sourceTree = "<group>"; };
+		55A2B0CB15C8890E00C857E3 /* vie_file_recorder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_file_recorder.cc; sourceTree = "<group>"; };
+		55A2B0CC15C8890E00C857E3 /* vie_file_recorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_file_recorder.h; sourceTree = "<group>"; };
+		55A2B0CD15C8890E00C857E3 /* vie_remb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_remb.cc; sourceTree = "<group>"; };
+		55A2B0CE15C8890E00C857E3 /* vie_sync_module.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_sync_module.cc; sourceTree = "<group>"; };
+		AD194FDE1C5B4572003841BB /* vie_desktop_capture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_desktop_capture.cpp; sourceTree = "<group>"; };
+		AD194FDF1C5B4572003841BB /* vie_desktop_capture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_desktop_capture.h; sourceTree = "<group>"; };
+		AD194FE01C5B4572003841BB /* vie_desktop_share_impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_desktop_share_impl.cpp; sourceTree = "<group>"; };
+		AD194FE11C5B4572003841BB /* vie_desktop_share_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_desktop_share_impl.h; sourceTree = "<group>"; };
+		AD194FE21C5B4572003841BB /* vie_desktop_share_manager.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_desktop_share_manager.cc; sourceTree = "<group>"; };
+		AD194FE31C5B4572003841BB /* vie_desktop_share_manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_desktop_share_manager.h; sourceTree = "<group>"; };
+		AD2E29F31C58C04900FD311B /* report_block_stats.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = report_block_stats.cc; sourceTree = "<group>"; };
+		AD2E29F41C58C04900FD311B /* report_block_stats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = report_block_stats.h; sourceTree = "<group>"; };
+		AD2E29F71C58C09F00FD311B /* stream_synchronization.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stream_synchronization.cc; sourceTree = "<group>"; };
+		AD2E29F81C58C09F00FD311B /* stream_synchronization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stream_synchronization.h; sourceTree = "<group>"; };
+		AD8D725A1C58C6D400FB246D /* call_stats.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = call_stats.cc; sourceTree = "<group>"; };
+		AD8D725B1C58C6D400FB246D /* call_stats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = call_stats.h; sourceTree = "<group>"; };
+		AD8D725E1C58C9EB00FB246D /* encoder_state_feedback.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = encoder_state_feedback.cc; sourceTree = "<group>"; };
+		AD8D725F1C58C9EB00FB246D /* encoder_state_feedback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = encoder_state_feedback.h; sourceTree = "<group>"; };
+		AD8D72F81C59A39700FB246D /* overuse_frame_detector.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = overuse_frame_detector.cc; sourceTree = "<group>"; };
+		AD8D72F91C59A39700FB246D /* overuse_frame_detector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = overuse_frame_detector.h; sourceTree = "<group>"; };
+		AD8D72FA1C59A39700FB246D /* receive_statistics_proxy.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = receive_statistics_proxy.cc; sourceTree = "<group>"; };
+		AD8D72FB1C59A39700FB246D /* receive_statistics_proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = receive_statistics_proxy.h; sourceTree = "<group>"; };
+		AD8D72FC1C59A39700FB246D /* send_statistics_proxy.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = send_statistics_proxy.cc; sourceTree = "<group>"; };
+		AD8D72FD1C59A39700FB246D /* send_statistics_proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = send_statistics_proxy.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5519CB8815C812A700719504 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5519CB8F15C812A700719504 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5519CB8015C812A700719504 = {
+			isa = PBXGroup;
+			children = (
+				5519CB9015C812A700719504 /* video_engine */,
+				5519CB8D15C812A700719504 /* Frameworks */,
+				5519CB8C15C812A700719504 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5519CB8C15C812A700719504 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5519CB8B15C812A700719504 /* libvideo_engine.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5519CB8D15C812A700719504 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5519CB8E15C812A700719504 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5519CB9015C812A700719504 /* video_engine */ = {
+			isa = PBXGroup;
+			children = (
+				5519CC3515C8136E00719504 /* include */,
+				5519CC4115C8136E00719504 /* source */,
+			);
+			path = video_engine;
+			sourceTree = "<group>";
+		};
+		5519CC3515C8136E00719504 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				5519CC3615C8136E00719504 /* vie_base.h */,
+				5519CC3715C8136E00719504 /* vie_capture.h */,
+				5519CC3815C8136E00719504 /* vie_codec.h */,
+				5519CC3915C8136E00719504 /* vie_encryption.h */,
+				5519CC3A15C8136E00719504 /* vie_errors.h */,
+				5519CC3B15C8136E00719504 /* vie_external_codec.h */,
+				5519CC3C15C8136E00719504 /* vie_file.h */,
+				5519CC3D15C8136E00719504 /* vie_image_process.h */,
+				5519CC3E15C8136E00719504 /* vie_network.h */,
+				5519CC3F15C8136E00719504 /* vie_render.h */,
+				5519CC4015C8136E00719504 /* vie_rtp_rtcp.h */,
+			);
+			path = include;
+			sourceTree = SOURCE_ROOT;
+		};
+		5519CC4115C8136E00719504 /* source */ = {
+			isa = PBXGroup;
+			children = (
+				AD194FDE1C5B4572003841BB /* vie_desktop_capture.cpp */,
+				AD194FDF1C5B4572003841BB /* vie_desktop_capture.h */,
+				AD194FE01C5B4572003841BB /* vie_desktop_share_impl.cpp */,
+				AD194FE11C5B4572003841BB /* vie_desktop_share_impl.h */,
+				AD194FE21C5B4572003841BB /* vie_desktop_share_manager.cc */,
+				AD194FE31C5B4572003841BB /* vie_desktop_share_manager.h */,
+				AD8D72F81C59A39700FB246D /* overuse_frame_detector.cc */,
+				AD8D72F91C59A39700FB246D /* overuse_frame_detector.h */,
+				AD8D72FA1C59A39700FB246D /* receive_statistics_proxy.cc */,
+				AD8D72FB1C59A39700FB246D /* receive_statistics_proxy.h */,
+				AD8D72FC1C59A39700FB246D /* send_statistics_proxy.cc */,
+				AD8D72FD1C59A39700FB246D /* send_statistics_proxy.h */,
+				AD8D725E1C58C9EB00FB246D /* encoder_state_feedback.cc */,
+				AD8D725F1C58C9EB00FB246D /* encoder_state_feedback.h */,
+				AD8D725A1C58C6D400FB246D /* call_stats.cc */,
+				AD8D725B1C58C6D400FB246D /* call_stats.h */,
+				AD2E29F31C58C04900FD311B /* report_block_stats.cc */,
+				AD2E29F71C58C09F00FD311B /* stream_synchronization.cc */,
+				AD2E29F81C58C09F00FD311B /* stream_synchronization.h */,
+				AD2E29F41C58C04900FD311B /* report_block_stats.h */,
+				558FF075169FEF3E00BEFFED /* vie_channel.cc */,
+				55A2B0CB15C8890E00C857E3 /* vie_file_recorder.cc */,
+				55A2B0CC15C8890E00C857E3 /* vie_file_recorder.h */,
+				55A2B0CD15C8890E00C857E3 /* vie_remb.cc */,
+				55A2B0CE15C8890E00C857E3 /* vie_sync_module.cc */,
+				55A2B0C515C8855500C857E3 /* vie_encoder.cc */,
+				55A2B0BA15C881F700C857E3 /* vie_encoder.h */,
+				5519CE3615C821F500719504 /* vie_channel.h */,
+				5519CC4215C8136E00719504 /* vie_base_impl.cc */,
+				5519CC4315C8136E00719504 /* vie_base_impl.h */,
+				5519CC4415C8136E00719504 /* vie_capture_impl.cc */,
+				5519CC4515C8136E00719504 /* vie_capture_impl.h */,
+				5519CC4615C8136E00719504 /* vie_capturer.cc */,
+				5519CC4715C8136E00719504 /* vie_capturer.h */,
+				5519CC4A15C8136E00719504 /* vie_channel_group.cc */,
+				5519CC4B15C8136E00719504 /* vie_channel_group.h */,
+				5519CC4C15C8136E00719504 /* vie_channel_manager.cc */,
+				5519CC4D15C8136E00719504 /* vie_channel_manager.h */,
+				5519CC4E15C8136E00719504 /* vie_codec_impl.cc */,
+				5519CC4F15C8136E00719504 /* vie_codec_impl.h */,
+				5519CC5015C8136E00719504 /* vie_defines.h */,
+				5519CC5315C8136E00719504 /* vie_encryption_impl.cc */,
+				5519CC5415C8136E00719504 /* vie_encryption_impl.h */,
+				5519CC5515C8136E00719504 /* vie_external_codec_impl.cc */,
+				5519CC5615C8136E00719504 /* vie_external_codec_impl.h */,
+				5519CC5715C8136E00719504 /* vie_file_image.cc */,
+				5519CC5815C8136E00719504 /* vie_file_image.h */,
+				5519CC5915C8136E00719504 /* vie_file_impl.cc */,
+				5519CC5A15C8136E00719504 /* vie_file_impl.h */,
+				5519CC5B15C8136E00719504 /* vie_file_player.cc */,
+				5519CC5C15C8136E00719504 /* vie_file_player.h */,
+				5519CC5F15C8136E00719504 /* vie_frame_provider_base.cc */,
+				5519CC6015C8136E00719504 /* vie_frame_provider_base.h */,
+				5519CC6115C8136E00719504 /* vie_image_process_impl.cc */,
+				5519CC6215C8136E00719504 /* vie_image_process_impl.h */,
+				5519CC6315C8136E00719504 /* vie_impl.cc */,
+				5519CC6415C8136E00719504 /* vie_impl.h */,
+				5519CC6515C8136E00719504 /* vie_input_manager.cc */,
+				5519CC6615C8136E00719504 /* vie_input_manager.h */,
+				5519CC6715C8136E00719504 /* vie_manager_base.cc */,
+				5519CC6815C8136E00719504 /* vie_manager_base.h */,
+				5519CC6915C8136E00719504 /* vie_network_impl.cc */,
+				5519CC6A15C8136E00719504 /* vie_network_impl.h */,
+				5519CC6B15C8136E00719504 /* vie_performance_monitor.cc */,
+				5519CC6C15C8136E00719504 /* vie_performance_monitor.h */,
+				5519CC6D15C8136E00719504 /* vie_receiver.cc */,
+				5519CC6E15C8136E00719504 /* vie_receiver.h */,
+				5519CC6F15C8136E00719504 /* vie_ref_count.cc */,
+				5519CC7015C8136E00719504 /* vie_ref_count.h */,
+				5519CC7215C8136E00719504 /* vie_remb.h */,
+				5519CC7315C8136E00719504 /* vie_render_impl.cc */,
+				5519CC7415C8136E00719504 /* vie_render_impl.h */,
+				5519CC7515C8136E00719504 /* vie_render_manager.cc */,
+				5519CC7615C8136E00719504 /* vie_render_manager.h */,
+				5519CC7715C8136E00719504 /* vie_renderer.cc */,
+				5519CC7815C8136E00719504 /* vie_renderer.h */,
+				5519CC7915C8136E00719504 /* vie_rtp_rtcp_impl.cc */,
+				5519CC7A15C8136E00719504 /* vie_rtp_rtcp_impl.h */,
+				5519CC7B15C8136E00719504 /* vie_sender.cc */,
+				5519CC7C15C8136E00719504 /* vie_sender.h */,
+				5519CC7D15C8136E00719504 /* vie_shared_data.cc */,
+				5519CC7E15C8136E00719504 /* vie_shared_data.h */,
+				5519CC8015C8136E00719504 /* vie_sync_module.h */,
+			);
+			path = source;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		5519CB8915C812A700719504 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD194FE91C5B4572003841BB /* vie_desktop_share_manager.h in Headers */,
+				AD8D73011C59A39700FB246D /* receive_statistics_proxy.h in Headers */,
+				AD8D725D1C58C6D400FB246D /* call_stats.h in Headers */,
+				AD8D72FF1C59A39700FB246D /* overuse_frame_detector.h in Headers */,
+				AD194FE51C5B4572003841BB /* vie_desktop_capture.h in Headers */,
+				AD2E29F61C58C04900FD311B /* report_block_stats.h in Headers */,
+				AD8D72611C58C9EB00FB246D /* encoder_state_feedback.h in Headers */,
+				AD8D73031C59A39700FB246D /* send_statistics_proxy.h in Headers */,
+				AD194FE71C5B4572003841BB /* vie_desktop_share_impl.h in Headers */,
+				AD2E29FA1C58C09F00FD311B /* stream_synchronization.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		5519CB8A15C812A700719504 /* video_engine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5519CB9815C812A700719504 /* Build configuration list for PBXNativeTarget "video_engine" */;
+			buildPhases = (
+				5519CB8715C812A700719504 /* Sources */,
+				5519CB8815C812A700719504 /* Frameworks */,
+				5519CB8915C812A700719504 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = video_engine;
+			productName = video_engine;
+			productReference = 5519CB8B15C812A700719504 /* libvideo_engine.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5519CB8215C812A700719504 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 5519CB8515C812A700719504 /* Build configuration list for PBXProject "video_engine" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 5519CB8015C812A700719504;
+			productRefGroup = 5519CB8C15C812A700719504 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5519CB8A15C812A700719504 /* video_engine */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5519CB8715C812A700719504 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5519CC8C15C8136E00719504 /* vie_base_impl.cc in Sources */,
+				AD2E29F91C58C09F00FD311B /* stream_synchronization.cc in Sources */,
+				5519CC8E15C8136E00719504 /* vie_capture_impl.cc in Sources */,
+				5519CC9015C8136E00719504 /* vie_capturer.cc in Sources */,
+				5519CC9415C8136F00719504 /* vie_channel_group.cc in Sources */,
+				5519CC9615C8136F00719504 /* vie_channel_manager.cc in Sources */,
+				5519CC9815C8136F00719504 /* vie_codec_impl.cc in Sources */,
+				5519CC9D15C8136F00719504 /* vie_encryption_impl.cc in Sources */,
+				5519CC9F15C8136F00719504 /* vie_external_codec_impl.cc in Sources */,
+				5519CCA115C8136F00719504 /* vie_file_image.cc in Sources */,
+				5519CCA315C8136F00719504 /* vie_file_impl.cc in Sources */,
+				AD194FE61C5B4572003841BB /* vie_desktop_share_impl.cpp in Sources */,
+				AD8D725C1C58C6D400FB246D /* call_stats.cc in Sources */,
+				AD8D72601C58C9EB00FB246D /* encoder_state_feedback.cc in Sources */,
+				5519CCA515C8136F00719504 /* vie_file_player.cc in Sources */,
+				5519CCA915C8136F00719504 /* vie_frame_provider_base.cc in Sources */,
+				5519CCAB15C8136F00719504 /* vie_image_process_impl.cc in Sources */,
+				5519CCAD15C8136F00719504 /* vie_impl.cc in Sources */,
+				AD8D73021C59A39700FB246D /* send_statistics_proxy.cc in Sources */,
+				AD8D72FE1C59A39700FB246D /* overuse_frame_detector.cc in Sources */,
+				AD8D73001C59A39700FB246D /* receive_statistics_proxy.cc in Sources */,
+				5519CCAF15C8136F00719504 /* vie_input_manager.cc in Sources */,
+				5519CCB115C8136F00719504 /* vie_manager_base.cc in Sources */,
+				5519CCB315C8136F00719504 /* vie_network_impl.cc in Sources */,
+				5519CCB515C8136F00719504 /* vie_performance_monitor.cc in Sources */,
+				5519CCB715C8136F00719504 /* vie_receiver.cc in Sources */,
+				5519CCB915C8136F00719504 /* vie_ref_count.cc in Sources */,
+				5519CCBD15C8136F00719504 /* vie_render_impl.cc in Sources */,
+				5519CCBF15C8136F00719504 /* vie_render_manager.cc in Sources */,
+				5519CCC115C8136F00719504 /* vie_renderer.cc in Sources */,
+				5519CCC315C8136F00719504 /* vie_rtp_rtcp_impl.cc in Sources */,
+				5519CCC515C8136F00719504 /* vie_sender.cc in Sources */,
+				5519CCC715C8136F00719504 /* vie_shared_data.cc in Sources */,
+				AD194FE41C5B4572003841BB /* vie_desktop_capture.cpp in Sources */,
+				AD194FE81C5B4572003841BB /* vie_desktop_share_manager.cc in Sources */,
+				55A2B0C615C8855500C857E3 /* vie_encoder.cc in Sources */,
+				55A2B0D015C8890E00C857E3 /* vie_file_recorder.cc in Sources */,
+				55A2B0D215C8890E00C857E3 /* vie_remb.cc in Sources */,
+				AD2E29F51C58C04900FD311B /* report_block_stats.cc in Sources */,
+				55A2B0D315C8890E00C857E3 /* vie_sync_module.cc in Sources */,
+				558FF076169FEF3E00BEFFED /* vie_channel.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		5519CB9615C812A700719504 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		5519CB9715C812A700719504 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5519CB9915C812A700719504 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/video_engine.dst;
+				GCC_CW_ASM_SYNTAX = NO;
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"\"WEBRTC_SVNREVISION=\\\"Unavailable(issue687)\\\"\"",
+					"\"ENABLE_ONE_CLICK_SIGNIN\"",
+					"\"ENABLE_REMOTING=1\"",
+					"\"ENABLE_WEBRTC=1\"",
+					"\"ENABLE_CONFIGURATION_POLICY\"",
+					"\"ENABLE_INPUT_SPEECH\"",
+					"\"ENABLE_NOTIFICATIONS\"",
+					"\"ENABLE_HIDPI=1\"",
+					"\"ENABLE_GPU=1\"",
+					"\"ENABLE_EGLIMAGE=1\"",
+					"\"USE_SKIA=1\"",
+					"\"ENABLE_TASK_MANAGER=1\"",
+					"\"ENABLE_WEB_INTENTS=1\"",
+					"\"ENABLE_EXTENSIONS=1\"",
+					"\"ENABLE_PLUGIN_INSTALLATION=1\"",
+					"\"ENABLE_PROTECTOR_SERVICE=1\"",
+					"\"ENABLE_SESSION_SERVICE=1\"",
+					"\"ENABLE_THEMES=1\"",
+					"\"ENABLE_BACKGROUND=1\"",
+					"\"ENABLE_PROMO_RESOURCE_SERVICE=1\"",
+					"\"ENABLE_AUTOMATION=1\"",
+					"\"ENABLE_PRINTING=1\"",
+					"\"ENABLE_CAPTIVE_PORTAL_DETECTION=1\"",
+					"\"WEBRTC_THREAD_RR\"",
+					"\"WEBRTC_CLOCK_TYPE_REALTIME\"",
+					"\"WEBRTC_VIDEO_ENGINE_FILE_API\"",
+					"\"__STDC_FORMAT_MACROS\"",
+					"\"DYNAMIC_ANNOTATIONS_ENABLED=1\"",
+					"\"WTF_USE_DYNAMIC_ANNOTATIONS=1\"",
+					VIDEOCODEC_H264,
+					VIDEOCODEC_VP8,
+				);
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					./include,
+					../module,
+					../module/videojpegyuv/include,
+					../module/bitrate_controller/include,
+					../module/video_capture/main/include,
+					../module/video_render/main/include,
+					../module/media_file/include,
+					../module/interface,
+					../module/rtp_rtcp/include,
+					../module/rtp_rtcp/source,
+					../module/udp_transport/include,
+					../module/utility/include,
+					../module/audio_coding/main/include,
+					../module/bitrate_controller/include,
+					../module/video_coding/main/include,
+					../module/video_coding/codecs/interface,
+					../module/video_processing/main/include,
+					../module/video_render/main/source/mac,
+					../voice_engine/main/include,
+					../system_wrappers/source,
+					../system_wrappers/interface,
+					../servicecore/include,
+					../third_party/oRTP/include/ortp,
+					../module/common_video/interface,
+					../module/common_video/source,
+					../module/remote_bitrate_estimator/source,
+					../module/common_video/source/libyuv/include,
+					../module/remote_bitrate_estimator/include,
+					../module/pacing/include,
+					../module/video_coding/main/source,
+					../module/desktop_capture/source,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_CFLAGS = (
+					"-fno-strict-aliasing",
+					"-fstack-protector-all",
+				);
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SYMROOT = ../IOSProject/out/baselib;
+				VALID_ARCHS = "armv7 arm64";
+				WARNING_CFLAGS = "";
+			};
+			name = Debug;
+		};
+		5519CB9A15C812A700719504 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/video_engine.dst;
+				GCC_CW_ASM_SYNTAX = NO;
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"\"WEBRTC_SVNREVISION=\\\"Unavailable(issue687)\\\"\"",
+					"\"ENABLE_ONE_CLICK_SIGNIN\"",
+					"\"ENABLE_REMOTING=1\"",
+					"\"ENABLE_WEBRTC=1\"",
+					"\"ENABLE_CONFIGURATION_POLICY\"",
+					"\"ENABLE_INPUT_SPEECH\"",
+					"\"ENABLE_NOTIFICATIONS\"",
+					"\"ENABLE_HIDPI=1\"",
+					"\"ENABLE_GPU=1\"",
+					"\"ENABLE_EGLIMAGE=1\"",
+					"\"USE_SKIA=1\"",
+					"\"ENABLE_TASK_MANAGER=1\"",
+					"\"ENABLE_WEB_INTENTS=1\"",
+					"\"ENABLE_EXTENSIONS=1\"",
+					"\"ENABLE_PLUGIN_INSTALLATION=1\"",
+					"\"ENABLE_PROTECTOR_SERVICE=1\"",
+					"\"ENABLE_SESSION_SERVICE=1\"",
+					"\"ENABLE_THEMES=1\"",
+					"\"ENABLE_BACKGROUND=1\"",
+					"\"ENABLE_PROMO_RESOURCE_SERVICE=1\"",
+					"\"ENABLE_AUTOMATION=1\"",
+					"\"ENABLE_PRINTING=1\"",
+					"\"ENABLE_CAPTIVE_PORTAL_DETECTION=1\"",
+					"\"WEBRTC_THREAD_RR\"",
+					"\"WEBRTC_CLOCK_TYPE_REALTIME\"",
+					"\"WEBRTC_VIDEO_ENGINE_FILE_API\"",
+					"\"__STDC_FORMAT_MACROS\"",
+					"\"NDEBUG\"",
+					"\"NVALGRIND\"",
+					"\"DYNAMIC_ANNOTATIONS_ENABLED=0\"",
+					VIDEOCODEC_H264,
+					VIDEOCODEC_VP8,
+				);
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					./include,
+					../module,
+					../module/videojpegyuv/include,
+					../module/bitrate_controller/include,
+					../module/video_capture/main/include,
+					../module/video_render/main/include,
+					../module/media_file/include,
+					../module/interface,
+					../module/rtp_rtcp/include,
+					../module/rtp_rtcp/source,
+					../module/udp_transport/include,
+					../module/utility/include,
+					../module/audio_coding/main/include,
+					../module/bitrate_controller/include,
+					../module/video_coding/main/include,
+					../module/video_coding/codecs/interface,
+					../module/video_processing/main/include,
+					../module/video_render/main/source/mac,
+					../voice_engine/main/include,
+					../system_wrappers/source,
+					../system_wrappers/interface,
+					../servicecore/include,
+					../third_party/oRTP/include/ortp,
+					../module/common_video/interface,
+					../module/common_video/source,
+					../module/remote_bitrate_estimator/source,
+					../module/common_video/source/libyuv/include,
+					../module/remote_bitrate_estimator/include,
+					../module/pacing/include,
+					../module/video_coding/main/source,
+					../module/desktop_capture/source,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_CFLAGS = "-fno-strict-aliasing";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SYMROOT = ../IOSProject/out/baselib;
+				VALIDATE_PRODUCT = NO;
+				VALID_ARCHS = "armv7 arm64";
+				WARNING_CFLAGS = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5519CB8515C812A700719504 /* Build configuration list for PBXProject "video_engine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5519CB9615C812A700719504 /* Debug */,
+				5519CB9715C812A700719504 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5519CB9815C812A700719504 /* Build configuration list for PBXNativeTarget "video_engine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5519CB9915C812A700719504 /* Debug */,
+				5519CB9A15C812A700719504 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5519CB8215C812A700719504 /* Project object */;
+}

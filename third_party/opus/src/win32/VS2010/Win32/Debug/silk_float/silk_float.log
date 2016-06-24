@@ -1,0 +1,88 @@
+﻿生成启动时间为 6/16 星期四 17:32:01。
+     1>项目“L:\svn\MyWebRtc_2.0\third_party\opus\src\win32\VS2010\silk_float.vcxproj”在节点 4 上(rebuild 个目标)。
+     1>_PrepareForClean:
+         正在删除文件“Win32\Debug\silk_float\silk_float.lastbuildstate”。
+       InitializeBuildStatus:
+         正在对“Win32\Debug\silk_float\silk_float.unsuccessfulbuild”执行 Touch 任务。
+       PreBuildEvent:
+         Description: Generating version.h
+         "L:\svn\MyWebRtc_2.0\third_party\opus\src\win32\VS2010\..\..\win32\genversion.bat" "L:\svn\MyWebRtc_2.0\third_party\opus\src\win32\VS2010\..\..\win32\version.h" PACKAGE_VERSION
+         :VCEnd
+         fatal: Not a git repository: 'L:\svn\MyWebRtc_2.0\third_party\opus\src\win32\..\.git'
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I../../silk/float /I../../silk /I../../win32 /I../../celt /I../../include /I../win32 /ZI /nologo /W3 /WX- /Od /Oy- /D HAVE_CONFIG_H /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Debug\silk_float\\" /Fd"Win32\Debug\silk_float\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\silk\float\apply_sine_window_FLP.c ..\..\silk\float\autocorrelation_FLP.c ..\..\silk\float\burg_modified_FLP.c ..\..\silk\float\bwexpander_FLP.c ..\..\silk\float\corrMatrix_FLP.c ..\..\silk\float\encode_frame_FLP.c ..\..\silk\float\energy_FLP.c ..\..\silk\float\find_LPC_FLP.c ..\..\silk\float\find_LTP_FLP.c ..\..\silk\float\find_pitch_lags_FLP.c ..\..\silk\float\find_pred_coefs_FLP.c ..\..\silk\float\inner_product_FLP.c ..\..\silk\float\k2a_FLP.c ..\..\silk\float\levinsondurbin_FLP.c ..\..\silk\float\LPC_analysis_filter_FLP.c ..\..\silk\float\LPC_inv_pred_gain_FLP.c ..\..\silk\float\LTP_analysis_filter_FLP.c ..\..\silk\float\LTP_scale_ctrl_FLP.c ..\..\silk\float\noise_shape_analysis_FLP.c ..\..\silk\float\pitch_analysis_core_FLP.c ..\..\silk\float\prefilter_FLP.c ..\..\silk\float\process_gains_FLP.c ..\..\silk\float\regularize_correlations_FLP.c ..\..\silk\float\residual_energy_FLP.c ..\..\silk\float\scale_copy_vector_FLP.c ..\..\silk\float\scale_vector_FLP.c ..\..\silk\float\schur_FLP.c ..\..\silk\float\solve_LS_FLP.c ..\..\silk\float\sort_FLP.c ..\..\silk\float\warped_autocorrelation_FLP.c ..\..\silk\float\wrappers_FLP.c
+         wrappers_FLP.c
+         warped_autocorrelation_FLP.c
+         sort_FLP.c
+         solve_LS_FLP.c
+         schur_FLP.c
+         scale_vector_FLP.c
+         scale_copy_vector_FLP.c
+         residual_energy_FLP.c
+         regularize_correlations_FLP.c
+         process_gains_FLP.c
+         prefilter_FLP.c
+         pitch_analysis_core_FLP.c
+         noise_shape_analysis_FLP.c
+         LTP_scale_ctrl_FLP.c
+         LTP_analysis_filter_FLP.c
+         LPC_inv_pred_gain_FLP.c
+         LPC_analysis_filter_FLP.c
+         levinsondurbin_FLP.c
+         k2a_FLP.c
+         inner_product_FLP.c
+         正在生成代码...
+         正在编译...
+         find_pred_coefs_FLP.c
+         find_pitch_lags_FLP.c
+         find_LTP_FLP.c
+         find_LPC_FLP.c
+         energy_FLP.c
+         encode_frame_FLP.c
+         corrMatrix_FLP.c
+         bwexpander_FLP.c
+         burg_modified_FLP.c
+         autocorrelation_FLP.c
+         apply_sine_window_FLP.c
+         正在生成代码...
+       Lib:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"L:\svn\MyWebRtc_2.0\demo_Win\build\Debug\lib\silk_float.lib" /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" /NOLOGO Win32\Debug\silk_float\apply_sine_window_FLP.obj
+         Win32\Debug\silk_float\autocorrelation_FLP.obj
+         Win32\Debug\silk_float\burg_modified_FLP.obj
+         Win32\Debug\silk_float\bwexpander_FLP.obj
+         Win32\Debug\silk_float\corrMatrix_FLP.obj
+         Win32\Debug\silk_float\encode_frame_FLP.obj
+         Win32\Debug\silk_float\energy_FLP.obj
+         Win32\Debug\silk_float\find_LPC_FLP.obj
+         Win32\Debug\silk_float\find_LTP_FLP.obj
+         Win32\Debug\silk_float\find_pitch_lags_FLP.obj
+         Win32\Debug\silk_float\find_pred_coefs_FLP.obj
+         Win32\Debug\silk_float\inner_product_FLP.obj
+         Win32\Debug\silk_float\k2a_FLP.obj
+         Win32\Debug\silk_float\levinsondurbin_FLP.obj
+         Win32\Debug\silk_float\LPC_analysis_filter_FLP.obj
+         Win32\Debug\silk_float\LPC_inv_pred_gain_FLP.obj
+         Win32\Debug\silk_float\LTP_analysis_filter_FLP.obj
+         Win32\Debug\silk_float\LTP_scale_ctrl_FLP.obj
+         Win32\Debug\silk_float\noise_shape_analysis_FLP.obj
+         Win32\Debug\silk_float\pitch_analysis_core_FLP.obj
+         Win32\Debug\silk_float\prefilter_FLP.obj
+         Win32\Debug\silk_float\process_gains_FLP.obj
+         Win32\Debug\silk_float\regularize_correlations_FLP.obj
+         Win32\Debug\silk_float\residual_energy_FLP.obj
+         Win32\Debug\silk_float\scale_copy_vector_FLP.obj
+         Win32\Debug\silk_float\scale_vector_FLP.obj
+         Win32\Debug\silk_float\schur_FLP.obj
+         Win32\Debug\silk_float\solve_LS_FLP.obj
+         Win32\Debug\silk_float\sort_FLP.obj
+         Win32\Debug\silk_float\warped_autocorrelation_FLP.obj
+         Win32\Debug\silk_float\wrappers_FLP.obj
+         silk_float.vcxproj -> L:\svn\MyWebRtc_2.0\demo_Win\build\Debug\lib\silk_float.lib
+       FinalizeBuildStatus:
+         正在删除文件“Win32\Debug\silk_float\silk_float.unsuccessfulbuild”。
+         正在对“Win32\Debug\silk_float\silk_float.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“L:\svn\MyWebRtc_2.0\third_party\opus\src\win32\VS2010\silk_float.vcxproj”(rebuild 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:04.89

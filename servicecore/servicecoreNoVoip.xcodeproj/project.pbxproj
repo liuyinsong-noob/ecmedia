@@ -1,0 +1,819 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		550FCC131797E86400D21A07 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 550FCC121797E86400D21A07 /* base64.c */; };
+		55209D05181118A00079F4D6 /* base64_2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55209D04181118A00079F4D6 /* base64_2.cpp */; };
+		5550177115C8CF480023C226 /* servicecore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5550177015C8CF480023C226 /* servicecore.cpp */; };
+		556B7427160EAFB9005574FD /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556B7426160EAFB9005574FD /* tinyxml2.cpp */; };
+		556F879115C8CBFC00904840 /* enum.h in Headers */ = {isa = PBXBuildFile; fileRef = 556F876E15C8CBFC00904840 /* enum.h */; settings = {ATTRIBUTES = (); }; };
+		556F879215C8CBFC00904840 /* friends.h in Headers */ = {isa = PBXBuildFile; fileRef = 556F876F15C8CBFC00904840 /* friends.h */; settings = {ATTRIBUTES = (); }; };
+		556F879315C8CBFC00904840 /* linphonefriend.h in Headers */ = {isa = PBXBuildFile; fileRef = 556F877015C8CBFC00904840 /* linphonefriend.h */; settings = {ATTRIBUTES = (); }; };
+		556F879415C8CBFC00904840 /* lpconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 556F877115C8CBFC00904840 /* lpconfig.h */; settings = {ATTRIBUTES = (); }; };
+		556F879515C8CBFC00904840 /* offeranswer.h in Headers */ = {isa = PBXBuildFile; fileRef = 556F877215C8CBFC00904840 /* offeranswer.h */; settings = {ATTRIBUTES = (); }; };
+		556F879615C8CBFC00904840 /* sal_eXosip2.h in Headers */ = {isa = PBXBuildFile; fileRef = 556F877315C8CBFC00904840 /* sal_eXosip2.h */; settings = {ATTRIBUTES = (); }; };
+		556F879715C8CBFC00904840 /* salpr.h in Headers */ = {isa = PBXBuildFile; fileRef = 556F877415C8CBFC00904840 /* salpr.h */; settings = {ATTRIBUTES = (); }; };
+		556F879815C8CBFC00904840 /* serphonecall.h in Headers */ = {isa = PBXBuildFile; fileRef = 556F877515C8CBFC00904840 /* serphonecall.h */; settings = {ATTRIBUTES = (); }; };
+		556F879915C8CBFC00904840 /* serprivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 556F877615C8CBFC00904840 /* serprivate.h */; settings = {ATTRIBUTES = (); }; };
+		556F879A15C8CBFC00904840 /* servicecore.h in Headers */ = {isa = PBXBuildFile; fileRef = 556F877715C8CBFC00904840 /* servicecore.h */; settings = {ATTRIBUTES = (); }; };
+		556F879B15C8CBFC00904840 /* sipsetup.h in Headers */ = {isa = PBXBuildFile; fileRef = 556F877815C8CBFC00904840 /* sipsetup.h */; settings = {ATTRIBUTES = (); }; };
+		556F879C15C8CBFC00904840 /* sometools.h in Headers */ = {isa = PBXBuildFile; fileRef = 556F877915C8CBFC00904840 /* sometools.h */; settings = {ATTRIBUTES = (); }; };
+		556F879D15C8CBFC00904840 /* serphoneinterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 556F877B15C8CBFC00904840 /* serphoneinterface.h */; settings = {ATTRIBUTES = (); }; };
+		556F879E15C8CBFC00904840 /* address.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556F877D15C8CBFC00904840 /* address.cpp */; };
+		556F879F15C8CBFC00904840 /* callbacks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556F877E15C8CBFC00904840 /* callbacks.cpp */; };
+		556F87A015C8CBFC00904840 /* chat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556F877F15C8CBFC00904840 /* chat.cpp */; };
+		556F87A115C8CBFC00904840 /* enum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556F878015C8CBFC00904840 /* enum.cpp */; };
+		556F87A215C8CBFC00904840 /* friends.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556F878115C8CBFC00904840 /* friends.cpp */; };
+		556F87A315C8CBFC00904840 /* lpconfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556F878215C8CBFC00904840 /* lpconfig.cpp */; };
+		556F87A415C8CBFC00904840 /* mediaprocess.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556F878315C8CBFC00904840 /* mediaprocess.cpp */; };
+		556F87A515C8CBFC00904840 /* offeranswer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556F878415C8CBFC00904840 /* offeranswer.cpp */; };
+		556F87A615C8CBFC00904840 /* prensence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556F878515C8CBFC00904840 /* prensence.cpp */; };
+		556F87A715C8CBFC00904840 /* proxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556F878615C8CBFC00904840 /* proxy.cpp */; };
+		556F87A815C8CBFC00904840 /* sal_eXosip2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556F878715C8CBFC00904840 /* sal_eXosip2.cpp */; };
+		556F87A915C8CBFC00904840 /* sal_eXosip2_presence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556F878815C8CBFC00904840 /* sal_eXosip2_presence.cpp */; };
+		556F87AA15C8CBFC00904840 /* sal_eXosip2_sdp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556F878915C8CBFC00904840 /* sal_eXosip2_sdp.cpp */; };
+		556F87AB15C8CBFC00904840 /* salpr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556F878A15C8CBFC00904840 /* salpr.cpp */; };
+		556F87AC15C8CBFC00904840 /* serphonecall.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556F878B15C8CBFC00904840 /* serphonecall.cpp */; };
+		556F87AD15C8CBFC00904840 /* serphoneinterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556F878C15C8CBFC00904840 /* serphoneinterface.cpp */; };
+		556F87AF15C8CBFC00904840 /* siplogin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556F878E15C8CBFC00904840 /* siplogin.cpp */; };
+		556F87B015C8CBFC00904840 /* sipsetup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556F878F15C8CBFC00904840 /* sipsetup.cpp */; };
+		556F87B115C8CBFC00904840 /* sometools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556F879015C8CBFC00904840 /* sometools.cpp */; };
+		558C1E3D17DDADB6007E3633 /* libamrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 558C1E3C17DDADAB007E3633 /* libamrnb.a */; };
+		55A529E7171D4DF4000BA678 /* CCPClient_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A529E6171D4DF4000BA678 /* CCPClient_Internal.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55A7511315C8CAB9001B246A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A7511215C8CAB9001B246A /* Foundation.framework */; };
+		55A76DCB174C5D2D006BA9B1 /* sdk_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A76DCA174C5D2D006BA9B1 /* sdk_common.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55A9B3FD188929BD009B267B /* cJSON.c in Sources */ = {isa = PBXBuildFile; fileRef = 55A9B3FB188929BD009B267B /* cJSON.c */; };
+		55A9B3FE188929BD009B267B /* cJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A9B3FC188929BD009B267B /* cJSON.h */; };
+		55AAF3F116FAC66600BCCBD5 /* CCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554AD69E16FAB0EB0084F686 /* CCPClient.cpp */; };
+		55AF861B180FD45C00A09E85 /* http.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55AF8615180FD45C00A09E85 /* http.cpp */; };
+		55AF861C180FD45C00A09E85 /* http.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AF8616180FD45C00A09E85 /* http.h */; };
+		55AF861D180FD45C00A09E85 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55AF8617180FD45C00A09E85 /* HttpClient.cpp */; };
+		55AF861E180FD45C00A09E85 /* HttpClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AF8618180FD45C00A09E85 /* HttpClient.h */; };
+		55AF861F180FD45C00A09E85 /* RESTClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55AF8619180FD45C00A09E85 /* RESTClient.cpp */; };
+		55AF8620180FD45C00A09E85 /* RESTClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AF861A180FD45C00A09E85 /* RESTClient.h */; };
+		55AF8624180FD46C00A09E85 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55AF8622180FD46C00A09E85 /* md5.cpp */; };
+		55EA5E7017D859EE00885688 /* ice.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55EA5E6F17D859EE00885688 /* ice.cc */; };
+		55EA5E9617D85B0D00885688 /* libortp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EA5E9517D85B0D00885688 /* libortp.a */; };
+		55F73F4F16FAB3A7008A2F8D /* CCPClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 554AD6A016FAB0F20084F686 /* CCPClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55F7426A16FAB7F6008A2F8D /* libexosip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F741EC16FAB782008A2F8D /* libexosip.a */; };
+		55F7427116FAB7F6008A2F8D /* libosip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F7420816FAB79B008A2F8D /* libosip.a */; };
+		55F7427216FAB7F6008A2F8D /* libresampler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F7421116FAB7A0008A2F8D /* libresampler.a */; };
+		55F7427316FAB7F6008A2F8D /* librtp_rtcp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F7421A16FAB7A5008A2F8D /* librtp_rtcp.a */; };
+		55F7427516FAB7F6008A2F8D /* libsystem_wrappers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F7414716FAB6C9008A2F8D /* libsystem_wrappers.a */; };
+		55F7427616FAB7F6008A2F8D /* libudp_transport.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F7422C16FAB7AD008A2F8D /* libudp_transport.a */; };
+		55F7427E16FAB7F6008A2F8D /* libwebrtc_utility.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F7423516FAB7B1008A2F8D /* libwebrtc_utility.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		558C1E3B17DDADAB007E3633 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 558C1E3717DDADA9007E3633 /* amrnb.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3FAA8C5515C8CB9B00561C64;
+			remoteInfo = amrnb;
+		};
+		55F7414616FAB6C9008A2F8D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F7413F16FAB6C9008A2F8D /* system_wrappers.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5519D05615C82C7E00719504;
+			remoteInfo = system_wrappers;
+		};
+		55F741EB16FAB782008A2F8D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F741E416FAB782008A2F8D /* exosip.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3F96002215C90BD7004FCC3F;
+			remoteInfo = exosip;
+		};
+		55F7420716FAB79B008A2F8D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F7420016FAB79B008A2F8D /* osip.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3F96FF2715C9085E004FCC3F;
+			remoteInfo = osip;
+		};
+		55F7421016FAB7A0008A2F8D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F7420916FAB7A0008A2F8D /* resampler.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3FAA8AC815C8C37C00561C64;
+			remoteInfo = resampler;
+		};
+		55F7421916FAB7A5008A2F8D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F7421216FAB7A4008A2F8D /* rtp_rtcp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3FAF879A15C7E82F000D5497;
+			remoteInfo = rtp_rtcp;
+		};
+		55F7422B16FAB7AD008A2F8D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F7422416FAB7AD008A2F8D /* udp_transport.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3FAA0E3815C8930A00C33657;
+			remoteInfo = udp_transport;
+		};
+		55F7423416FAB7B1008A2F8D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F7422D16FAB7B1008A2F8D /* webrtc_utility.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3FAA8A7715C8BC8800561C64;
+			remoteInfo = webrtc_utility;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		550FCC121797E86400D21A07 /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base64.c; sourceTree = "<group>"; };
+		55209D04181118A00079F4D6 /* base64_2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = base64_2.cpp; path = Utility/base64_2.cpp; sourceTree = "<group>"; };
+		554AD69E16FAB0EB0084F686 /* CCPClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPClient.cpp; sourceTree = "<group>"; };
+		554AD6A016FAB0F20084F686 /* CCPClient.h */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.c.h; path = CCPClient.h; sourceTree = "<group>"; };
+		5550177015C8CF480023C226 /* servicecore.cpp */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.cpp.cpp; path = servicecore.cpp; sourceTree = "<group>"; };
+		556B7426160EAFB9005574FD /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml2.cpp; sourceTree = "<group>"; };
+		556F876E15C8CBFC00904840 /* enum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = enum.h; sourceTree = "<group>"; };
+		556F876F15C8CBFC00904840 /* friends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = friends.h; sourceTree = "<group>"; };
+		556F877015C8CBFC00904840 /* linphonefriend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = linphonefriend.h; sourceTree = "<group>"; };
+		556F877115C8CBFC00904840 /* lpconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lpconfig.h; sourceTree = "<group>"; };
+		556F877215C8CBFC00904840 /* offeranswer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = offeranswer.h; sourceTree = "<group>"; };
+		556F877315C8CBFC00904840 /* sal_eXosip2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sal_eXosip2.h; sourceTree = "<group>"; };
+		556F877415C8CBFC00904840 /* salpr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = salpr.h; sourceTree = "<group>"; };
+		556F877515C8CBFC00904840 /* serphonecall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = serphonecall.h; sourceTree = "<group>"; };
+		556F877615C8CBFC00904840 /* serprivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = serprivate.h; sourceTree = "<group>"; };
+		556F877715C8CBFC00904840 /* servicecore.h */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.c.h; path = servicecore.h; sourceTree = "<group>"; };
+		556F877815C8CBFC00904840 /* sipsetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sipsetup.h; sourceTree = "<group>"; };
+		556F877915C8CBFC00904840 /* sometools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sometools.h; sourceTree = "<group>"; };
+		556F877B15C8CBFC00904840 /* serphoneinterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = serphoneinterface.h; sourceTree = "<group>"; };
+		556F877D15C8CBFC00904840 /* address.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = address.cpp; sourceTree = "<group>"; };
+		556F877E15C8CBFC00904840 /* callbacks.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = callbacks.cpp; sourceTree = "<group>"; };
+		556F877F15C8CBFC00904840 /* chat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = chat.cpp; sourceTree = "<group>"; };
+		556F878015C8CBFC00904840 /* enum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = enum.cpp; sourceTree = "<group>"; };
+		556F878115C8CBFC00904840 /* friends.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = friends.cpp; sourceTree = "<group>"; };
+		556F878215C8CBFC00904840 /* lpconfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lpconfig.cpp; sourceTree = "<group>"; };
+		556F878315C8CBFC00904840 /* mediaprocess.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mediaprocess.cpp; sourceTree = "<group>"; };
+		556F878415C8CBFC00904840 /* offeranswer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = offeranswer.cpp; sourceTree = "<group>"; };
+		556F878515C8CBFC00904840 /* prensence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = prensence.cpp; sourceTree = "<group>"; };
+		556F878615C8CBFC00904840 /* proxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = proxy.cpp; sourceTree = "<group>"; };
+		556F878715C8CBFC00904840 /* sal_eXosip2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sal_eXosip2.cpp; sourceTree = "<group>"; };
+		556F878815C8CBFC00904840 /* sal_eXosip2_presence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sal_eXosip2_presence.cpp; sourceTree = "<group>"; };
+		556F878915C8CBFC00904840 /* sal_eXosip2_sdp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sal_eXosip2_sdp.cpp; sourceTree = "<group>"; };
+		556F878A15C8CBFC00904840 /* salpr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = salpr.cpp; sourceTree = "<group>"; };
+		556F878B15C8CBFC00904840 /* serphonecall.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = serphonecall.cpp; sourceTree = "<group>"; };
+		556F878C15C8CBFC00904840 /* serphoneinterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = serphoneinterface.cpp; sourceTree = "<group>"; };
+		556F878E15C8CBFC00904840 /* siplogin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = siplogin.cpp; sourceTree = "<group>"; };
+		556F878F15C8CBFC00904840 /* sipsetup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sipsetup.cpp; sourceTree = "<group>"; };
+		556F879015C8CBFC00904840 /* sometools.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sometools.cpp; sourceTree = "<group>"; };
+		558C1E3717DDADA9007E3633 /* amrnb.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = amrnb.xcodeproj; path = ../module/audio_coding/amrnb.xcodeproj; sourceTree = "<group>"; };
+		55A529E6171D4DF4000BA678 /* CCPClient_Internal.h */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.c.h; path = CCPClient_Internal.h; sourceTree = "<group>"; };
+		55A7510F15C8CAB9001B246A /* libccpclient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libccpclient.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		55A7511215C8CAB9001B246A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		55A76DCA174C5D2D006BA9B1 /* sdk_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sdk_common.h; path = ../../module/sdk_common.h; sourceTree = "<group>"; };
+		55A9B3FB188929BD009B267B /* cJSON.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cJSON.c; path = Utility/cJSON.c; sourceTree = "<group>"; };
+		55A9B3FC188929BD009B267B /* cJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cJSON.h; path = Utility/cJSON.h; sourceTree = "<group>"; };
+		55AF8615180FD45C00A09E85 /* http.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = http.cpp; path = Http/http.cpp; sourceTree = "<group>"; };
+		55AF8616180FD45C00A09E85 /* http.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = http.h; path = Http/http.h; sourceTree = "<group>"; };
+		55AF8617180FD45C00A09E85 /* HttpClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HttpClient.cpp; path = Http/HttpClient.cpp; sourceTree = "<group>"; };
+		55AF8618180FD45C00A09E85 /* HttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HttpClient.h; path = Http/HttpClient.h; sourceTree = "<group>"; };
+		55AF8619180FD45C00A09E85 /* RESTClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RESTClient.cpp; path = Http/RESTClient.cpp; sourceTree = "<group>"; };
+		55AF861A180FD45C00A09E85 /* RESTClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RESTClient.h; path = Http/RESTClient.h; sourceTree = "<group>"; };
+		55AF8622180FD46C00A09E85 /* md5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = md5.cpp; path = Utility/md5.cpp; sourceTree = "<group>"; };
+		55EA5E6F17D859EE00885688 /* ice.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ice.cc; sourceTree = "<group>"; };
+		55EA5E9517D85B0D00885688 /* libortp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libortp.a; sourceTree = "<group>"; };
+		55F7413F16FAB6C9008A2F8D /* system_wrappers.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = system_wrappers.xcodeproj; path = ../system_wrappers/system_wrappers.xcodeproj; sourceTree = "<group>"; };
+		55F741E416FAB782008A2F8D /* exosip.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = exosip.xcodeproj; path = ../module/exosip/exosip.xcodeproj; sourceTree = "<group>"; };
+		55F7420016FAB79B008A2F8D /* osip.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = osip.xcodeproj; path = ../module/osip/osip.xcodeproj; sourceTree = "<group>"; };
+		55F7420916FAB7A0008A2F8D /* resampler.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = resampler.xcodeproj; path = ../module/resampler/resampler.xcodeproj; sourceTree = "<group>"; };
+		55F7421216FAB7A4008A2F8D /* rtp_rtcp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = rtp_rtcp.xcodeproj; path = ../module/rtp_rtcp/rtp_rtcp.xcodeproj; sourceTree = "<group>"; };
+		55F7422416FAB7AD008A2F8D /* udp_transport.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = udp_transport.xcodeproj; path = ../module/udp_transport/udp_transport.xcodeproj; sourceTree = "<group>"; };
+		55F7422D16FAB7B1008A2F8D /* webrtc_utility.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_utility.xcodeproj; path = ../module/utility/webrtc_utility.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		55A7510C15C8CAB9001B246A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				558C1E3D17DDADB6007E3633 /* libamrnb.a in Frameworks */,
+				55F7426A16FAB7F6008A2F8D /* libexosip.a in Frameworks */,
+				55F7427116FAB7F6008A2F8D /* libosip.a in Frameworks */,
+				55F7427216FAB7F6008A2F8D /* libresampler.a in Frameworks */,
+				55F7427316FAB7F6008A2F8D /* librtp_rtcp.a in Frameworks */,
+				55F7427516FAB7F6008A2F8D /* libsystem_wrappers.a in Frameworks */,
+				55F7427616FAB7F6008A2F8D /* libudp_transport.a in Frameworks */,
+				55F7427E16FAB7F6008A2F8D /* libwebrtc_utility.a in Frameworks */,
+				55A7511315C8CAB9001B246A /* Foundation.framework in Frameworks */,
+				55EA5E9617D85B0D00885688 /* libortp.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		556F876D15C8CBFC00904840 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				556F876E15C8CBFC00904840 /* enum.h */,
+				556F876F15C8CBFC00904840 /* friends.h */,
+				556F877015C8CBFC00904840 /* linphonefriend.h */,
+				556F877115C8CBFC00904840 /* lpconfig.h */,
+				556F877215C8CBFC00904840 /* offeranswer.h */,
+				556F877315C8CBFC00904840 /* sal_eXosip2.h */,
+				556F877415C8CBFC00904840 /* salpr.h */,
+				556F877515C8CBFC00904840 /* serphonecall.h */,
+				556F877615C8CBFC00904840 /* serprivate.h */,
+				556F877715C8CBFC00904840 /* servicecore.h */,
+				556F877815C8CBFC00904840 /* sipsetup.h */,
+				556F877915C8CBFC00904840 /* sometools.h */,
+			);
+			path = include;
+			sourceTree = SOURCE_ROOT;
+		};
+		556F877A15C8CBFC00904840 /* interface */ = {
+			isa = PBXGroup;
+			children = (
+				55A76DCA174C5D2D006BA9B1 /* sdk_common.h */,
+				55A529E6171D4DF4000BA678 /* CCPClient_Internal.h */,
+				554AD6A016FAB0F20084F686 /* CCPClient.h */,
+				556F877B15C8CBFC00904840 /* serphoneinterface.h */,
+			);
+			path = interface;
+			sourceTree = SOURCE_ROOT;
+		};
+		556F877C15C8CBFC00904840 /* source */ = {
+			isa = PBXGroup;
+			children = (
+				55AF8614180FD44900A09E85 /* Utility */,
+				55AF860B180FD44200A09E85 /* Http */,
+				55EA5E6F17D859EE00885688 /* ice.cc */,
+				550FCC121797E86400D21A07 /* base64.c */,
+				554AD69E16FAB0EB0084F686 /* CCPClient.cpp */,
+				556B7426160EAFB9005574FD /* tinyxml2.cpp */,
+				5550177015C8CF480023C226 /* servicecore.cpp */,
+				556F877D15C8CBFC00904840 /* address.cpp */,
+				556F877E15C8CBFC00904840 /* callbacks.cpp */,
+				556F877F15C8CBFC00904840 /* chat.cpp */,
+				556F878015C8CBFC00904840 /* enum.cpp */,
+				556F878115C8CBFC00904840 /* friends.cpp */,
+				556F878215C8CBFC00904840 /* lpconfig.cpp */,
+				556F878315C8CBFC00904840 /* mediaprocess.cpp */,
+				556F878415C8CBFC00904840 /* offeranswer.cpp */,
+				556F878515C8CBFC00904840 /* prensence.cpp */,
+				556F878615C8CBFC00904840 /* proxy.cpp */,
+				556F878715C8CBFC00904840 /* sal_eXosip2.cpp */,
+				556F878815C8CBFC00904840 /* sal_eXosip2_presence.cpp */,
+				556F878915C8CBFC00904840 /* sal_eXosip2_sdp.cpp */,
+				556F878A15C8CBFC00904840 /* salpr.cpp */,
+				556F878B15C8CBFC00904840 /* serphonecall.cpp */,
+				556F878C15C8CBFC00904840 /* serphoneinterface.cpp */,
+				556F878E15C8CBFC00904840 /* siplogin.cpp */,
+				556F878F15C8CBFC00904840 /* sipsetup.cpp */,
+				556F879015C8CBFC00904840 /* sometools.cpp */,
+			);
+			path = source;
+			sourceTree = SOURCE_ROOT;
+		};
+		558C1E0F17DDAD0F007E3633 /* audio_coding */ = {
+			isa = PBXGroup;
+			children = (
+				558C1E3717DDADA9007E3633 /* amrnb.xcodeproj */,
+			);
+			name = audio_coding;
+			sourceTree = "<group>";
+		};
+		558C1E3817DDADA9007E3633 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				558C1E3C17DDADAB007E3633 /* libamrnb.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		55A7510415C8CAB9001B246A = {
+			isa = PBXGroup;
+			children = (
+				55EA5E9517D85B0D00885688 /* libortp.a */,
+				55F73E3C16FAB2ED008A2F8D /* libraries */,
+				55A7511415C8CAB9001B246A /* servicecore */,
+				55A7511115C8CAB9001B246A /* Frameworks */,
+				55A7511015C8CAB9001B246A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		55A7511015C8CAB9001B246A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				55A7510F15C8CAB9001B246A /* libccpclient.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		55A7511115C8CAB9001B246A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				55A7511215C8CAB9001B246A /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		55A7511415C8CAB9001B246A /* servicecore */ = {
+			isa = PBXGroup;
+			children = (
+				556F876D15C8CBFC00904840 /* include */,
+				556F877A15C8CBFC00904840 /* interface */,
+				556F877C15C8CBFC00904840 /* source */,
+			);
+			path = servicecore;
+			sourceTree = "<group>";
+		};
+		55AF860B180FD44200A09E85 /* Http */ = {
+			isa = PBXGroup;
+			children = (
+				55AF8615180FD45C00A09E85 /* http.cpp */,
+				55AF8616180FD45C00A09E85 /* http.h */,
+				55AF8617180FD45C00A09E85 /* HttpClient.cpp */,
+				55AF8618180FD45C00A09E85 /* HttpClient.h */,
+				55AF8619180FD45C00A09E85 /* RESTClient.cpp */,
+				55AF861A180FD45C00A09E85 /* RESTClient.h */,
+			);
+			name = Http;
+			sourceTree = "<group>";
+		};
+		55AF8614180FD44900A09E85 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				55A9B3FB188929BD009B267B /* cJSON.c */,
+				55A9B3FC188929BD009B267B /* cJSON.h */,
+				55209D04181118A00079F4D6 /* base64_2.cpp */,
+				55AF8622180FD46C00A09E85 /* md5.cpp */,
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
+		55F73E3C16FAB2ED008A2F8D /* libraries */ = {
+			isa = PBXGroup;
+			children = (
+				55F7413F16FAB6C9008A2F8D /* system_wrappers.xcodeproj */,
+				55F7415516FAB6FF008A2F8D /* module */,
+			);
+			name = libraries;
+			sourceTree = "<group>";
+		};
+		55F7414016FAB6C9008A2F8D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				55F7414716FAB6C9008A2F8D /* libsystem_wrappers.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		55F7415516FAB6FF008A2F8D /* module */ = {
+			isa = PBXGroup;
+			children = (
+				55F7422D16FAB7B1008A2F8D /* webrtc_utility.xcodeproj */,
+				55F7422416FAB7AD008A2F8D /* udp_transport.xcodeproj */,
+				55F7421216FAB7A4008A2F8D /* rtp_rtcp.xcodeproj */,
+				55F7420916FAB7A0008A2F8D /* resampler.xcodeproj */,
+				55F7420016FAB79B008A2F8D /* osip.xcodeproj */,
+				55F741E416FAB782008A2F8D /* exosip.xcodeproj */,
+				558C1E0F17DDAD0F007E3633 /* audio_coding */,
+			);
+			name = module;
+			sourceTree = "<group>";
+		};
+		55F741E516FAB782008A2F8D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				55F741EC16FAB782008A2F8D /* libexosip.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		55F7420116FAB79B008A2F8D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				55F7420816FAB79B008A2F8D /* libosip.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		55F7420A16FAB7A0008A2F8D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				55F7421116FAB7A0008A2F8D /* libresampler.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		55F7421316FAB7A4008A2F8D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				55F7421A16FAB7A5008A2F8D /* librtp_rtcp.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		55F7422516FAB7AD008A2F8D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				55F7422C16FAB7AD008A2F8D /* libudp_transport.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		55F7422E16FAB7B1008A2F8D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				55F7423516FAB7B1008A2F8D /* libwebrtc_utility.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		55A7510D15C8CAB9001B246A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				556F879115C8CBFC00904840 /* enum.h in Headers */,
+				556F879215C8CBFC00904840 /* friends.h in Headers */,
+				556F879315C8CBFC00904840 /* linphonefriend.h in Headers */,
+				556F879415C8CBFC00904840 /* lpconfig.h in Headers */,
+				556F879515C8CBFC00904840 /* offeranswer.h in Headers */,
+				556F879615C8CBFC00904840 /* sal_eXosip2.h in Headers */,
+				556F879715C8CBFC00904840 /* salpr.h in Headers */,
+				556F879815C8CBFC00904840 /* serphonecall.h in Headers */,
+				556F879915C8CBFC00904840 /* serprivate.h in Headers */,
+				556F879A15C8CBFC00904840 /* servicecore.h in Headers */,
+				556F879B15C8CBFC00904840 /* sipsetup.h in Headers */,
+				556F879C15C8CBFC00904840 /* sometools.h in Headers */,
+				556F879D15C8CBFC00904840 /* serphoneinterface.h in Headers */,
+				55F73F4F16FAB3A7008A2F8D /* CCPClient.h in Headers */,
+				55A529E7171D4DF4000BA678 /* CCPClient_Internal.h in Headers */,
+				55A76DCB174C5D2D006BA9B1 /* sdk_common.h in Headers */,
+				55AF861C180FD45C00A09E85 /* http.h in Headers */,
+				55AF861E180FD45C00A09E85 /* HttpClient.h in Headers */,
+				55A9B3FE188929BD009B267B /* cJSON.h in Headers */,
+				55AF8620180FD45C00A09E85 /* RESTClient.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		55A7510E15C8CAB9001B246A /* servicecoreNoVoip */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55A7511C15C8CAB9001B246A /* Build configuration list for PBXNativeTarget "servicecoreNoVoip" */;
+			buildPhases = (
+				55A7510B15C8CAB9001B246A /* Sources */,
+				55A7510C15C8CAB9001B246A /* Frameworks */,
+				55A7510D15C8CAB9001B246A /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = servicecoreNoVoip;
+			productName = servicecoreNoVoip;
+			productReference = 55A7510F15C8CAB9001B246A /* libccpclient.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		55A7510615C8CAB9001B246A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+			};
+			buildConfigurationList = 55A7510915C8CAB9001B246A /* Build configuration list for PBXProject "servicecoreNoVoip" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 55A7510415C8CAB9001B246A;
+			productRefGroup = 55A7511015C8CAB9001B246A /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 558C1E3817DDADA9007E3633 /* Products */;
+					ProjectRef = 558C1E3717DDADA9007E3633 /* amrnb.xcodeproj */;
+				},
+				{
+					ProductGroup = 55F741E516FAB782008A2F8D /* Products */;
+					ProjectRef = 55F741E416FAB782008A2F8D /* exosip.xcodeproj */;
+				},
+				{
+					ProductGroup = 55F7420116FAB79B008A2F8D /* Products */;
+					ProjectRef = 55F7420016FAB79B008A2F8D /* osip.xcodeproj */;
+				},
+				{
+					ProductGroup = 55F7420A16FAB7A0008A2F8D /* Products */;
+					ProjectRef = 55F7420916FAB7A0008A2F8D /* resampler.xcodeproj */;
+				},
+				{
+					ProductGroup = 55F7421316FAB7A4008A2F8D /* Products */;
+					ProjectRef = 55F7421216FAB7A4008A2F8D /* rtp_rtcp.xcodeproj */;
+				},
+				{
+					ProductGroup = 55F7414016FAB6C9008A2F8D /* Products */;
+					ProjectRef = 55F7413F16FAB6C9008A2F8D /* system_wrappers.xcodeproj */;
+				},
+				{
+					ProductGroup = 55F7422516FAB7AD008A2F8D /* Products */;
+					ProjectRef = 55F7422416FAB7AD008A2F8D /* udp_transport.xcodeproj */;
+				},
+				{
+					ProductGroup = 55F7422E16FAB7B1008A2F8D /* Products */;
+					ProjectRef = 55F7422D16FAB7B1008A2F8D /* webrtc_utility.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				55A7510E15C8CAB9001B246A /* servicecoreNoVoip */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		558C1E3C17DDADAB007E3633 /* libamrnb.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libamrnb.a;
+			remoteRef = 558C1E3B17DDADAB007E3633 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55F7414716FAB6C9008A2F8D /* libsystem_wrappers.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libsystem_wrappers.a;
+			remoteRef = 55F7414616FAB6C9008A2F8D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55F741EC16FAB782008A2F8D /* libexosip.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libexosip.a;
+			remoteRef = 55F741EB16FAB782008A2F8D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55F7420816FAB79B008A2F8D /* libosip.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libosip.a;
+			remoteRef = 55F7420716FAB79B008A2F8D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55F7421116FAB7A0008A2F8D /* libresampler.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libresampler.a;
+			remoteRef = 55F7421016FAB7A0008A2F8D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55F7421A16FAB7A5008A2F8D /* librtp_rtcp.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = librtp_rtcp.a;
+			remoteRef = 55F7421916FAB7A5008A2F8D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55F7422C16FAB7AD008A2F8D /* libudp_transport.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libudp_transport.a;
+			remoteRef = 55F7422B16FAB7AD008A2F8D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55F7423516FAB7B1008A2F8D /* libwebrtc_utility.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libwebrtc_utility.a;
+			remoteRef = 55F7423416FAB7B1008A2F8D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		55A7510B15C8CAB9001B246A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55AAF3F116FAC66600BCCBD5 /* CCPClient.cpp in Sources */,
+				556F879E15C8CBFC00904840 /* address.cpp in Sources */,
+				556F879F15C8CBFC00904840 /* callbacks.cpp in Sources */,
+				55A9B3FD188929BD009B267B /* cJSON.c in Sources */,
+				556F87A015C8CBFC00904840 /* chat.cpp in Sources */,
+				556F87A115C8CBFC00904840 /* enum.cpp in Sources */,
+				556F87A215C8CBFC00904840 /* friends.cpp in Sources */,
+				556F87A315C8CBFC00904840 /* lpconfig.cpp in Sources */,
+				556F87A415C8CBFC00904840 /* mediaprocess.cpp in Sources */,
+				556F87A515C8CBFC00904840 /* offeranswer.cpp in Sources */,
+				556F87A615C8CBFC00904840 /* prensence.cpp in Sources */,
+				556F87A715C8CBFC00904840 /* proxy.cpp in Sources */,
+				556F87A815C8CBFC00904840 /* sal_eXosip2.cpp in Sources */,
+				556F87A915C8CBFC00904840 /* sal_eXosip2_presence.cpp in Sources */,
+				556F87AA15C8CBFC00904840 /* sal_eXosip2_sdp.cpp in Sources */,
+				556F87AB15C8CBFC00904840 /* salpr.cpp in Sources */,
+				556F87AC15C8CBFC00904840 /* serphonecall.cpp in Sources */,
+				556F87AD15C8CBFC00904840 /* serphoneinterface.cpp in Sources */,
+				556F87AF15C8CBFC00904840 /* siplogin.cpp in Sources */,
+				556F87B015C8CBFC00904840 /* sipsetup.cpp in Sources */,
+				556F87B115C8CBFC00904840 /* sometools.cpp in Sources */,
+				5550177115C8CF480023C226 /* servicecore.cpp in Sources */,
+				556B7427160EAFB9005574FD /* tinyxml2.cpp in Sources */,
+				550FCC131797E86400D21A07 /* base64.c in Sources */,
+				55EA5E7017D859EE00885688 /* ice.cc in Sources */,
+				55AF861B180FD45C00A09E85 /* http.cpp in Sources */,
+				55AF861D180FD45C00A09E85 /* HttpClient.cpp in Sources */,
+				55AF861F180FD45C00A09E85 /* RESTClient.cpp in Sources */,
+				55AF8624180FD46C00A09E85 /* md5.cpp in Sources */,
+				55209D05181118A00079F4D6 /* base64_2.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		55A7511A15C8CAB9001B246A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		55A7511B15C8CAB9001B246A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		55A7511D15C8CAB9001B246A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/servicecoreNoVoip.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					OSIP_MT,
+					WEBRTC_MAC,
+					_DEBUG,
+					NO_VOIP_FUNCTION,
+					ENABLE_LOG,
+				);
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = (
+					OSIP_MT,
+					NDEBUG,
+					WEBRTC_MAC,
+				);
+				HEADER_SEARCH_PATHS = (
+					../.,
+					../module/interface,
+					../module/.,
+					../module/exosip/source,
+					../module/exosip/include,
+					../module/osip/include,
+					../video_engine/include,
+					../voice_engine/main/include,
+					../system_wrappers/interface,
+					./include,
+					./interface,
+					./source,
+					../third_party/srtp/crypto/include,
+					../third_party/srtp,
+					../third_party/oRTP/include,
+					../module/udp_transport/source,
+					../voice_engine/main/source/,
+					../module/audio_coding/main/include/,
+					../module/audio_conference_mixer/include/,
+					../third_party/oRTP/include/ortp,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../IOSProject/out/baselib/Release-iphoneos\"",
+					"\"$(SRCROOT)\"",
+				);
+				OTHER_CFLAGS = "-Wno-write-strings";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = ccpclient;
+				PUBLIC_HEADERS_FOLDER_PATH = ../include;
+				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/SharedPrecompiledHeaders";
+				SKIP_INSTALL = YES;
+				SYMROOT = build;
+			};
+			name = Debug;
+		};
+		55A7511E15C8CAB9001B246A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/servicecoreNoVoip.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					OSIP_MT,
+					WEBRTC_MAC,
+					NDEBUG,
+					NO_VOIP_FUNCTION,
+				);
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = (
+					OSIP_MT,
+					NDEBUG,
+					WEBRTC_MAC,
+				);
+				HEADER_SEARCH_PATHS = (
+					../.,
+					../module/interface,
+					../module/.,
+					../module/exosip/source,
+					../module/exosip/include,
+					../module/osip/include,
+					../video_engine/include,
+					../voice_engine/main/include,
+					../system_wrappers/interface,
+					./include,
+					./interface,
+					./source,
+					../third_party/srtp/crypto/include,
+					../third_party/srtp,
+					../third_party/oRTP/include,
+					../module/udp_transport/source,
+					../voice_engine/main/source/,
+					../module/audio_coding/main/include/,
+					../module/audio_conference_mixer/include/,
+					../third_party/oRTP/include/ortp,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../IOSProject/out/baselib/Release-iphoneos\"",
+					"\"$(SRCROOT)\"",
+				);
+				OTHER_CFLAGS = "-Wno-write-strings";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = ccpclient;
+				PUBLIC_HEADERS_FOLDER_PATH = ../include;
+				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/SharedPrecompiledHeaders";
+				SKIP_INSTALL = YES;
+				SYMROOT = build;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		55A7510915C8CAB9001B246A /* Build configuration list for PBXProject "servicecoreNoVoip" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55A7511A15C8CAB9001B246A /* Debug */,
+				55A7511B15C8CAB9001B246A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55A7511C15C8CAB9001B246A /* Build configuration list for PBXNativeTarget "servicecoreNoVoip" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55A7511D15C8CAB9001B246A /* Debug */,
+				55A7511E15C8CAB9001B246A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 55A7510615C8CAB9001B246A /* Project object */;
+}

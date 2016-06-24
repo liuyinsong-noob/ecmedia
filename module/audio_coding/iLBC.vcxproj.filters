@@ -1,0 +1,446 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{0c3b05b3-0e9e-4fb1-b294-ef3a6b7d91c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="interface">
+      <UniqueIdentifier>{5dd0481b-5725-4607-bfc8-1011f00fc40a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="codecs\ilbc\interface\audio_encoder_ilbc.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\interface\ilbc.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\abs_quant.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\abs_quant_loop.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\augmented_cb_corr.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\bw_expand.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\cb_construct.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\cb_mem_energy.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\cb_mem_energy_augmentation.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\cb_mem_energy_calc.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\cb_search.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\cb_search_core.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\cb_update_best_index.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\chebyshev.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\comp_corr.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\constants.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\create_augmented_vec.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\decode.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\decode_residual.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\decoder_interpolate_lsf.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\defines.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\do_plc.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\encode.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\energy_inverse.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\enh_upsample.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\enhancer.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\enhancer_interface.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\filtered_cb_vecs.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\frame_classify.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\gain_dequant.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\gain_quant.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\get_cd_vec.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\get_lsp_poly.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\get_sync_seq.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\hp_input.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\hp_output.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\index_conv_dec.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\index_conv_enc.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\init_decode.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\init_encode.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\interpolate.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\interpolate_samples.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\lpc_encode.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\lsf_check.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\lsf_interpolate_to_poly_dec.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\lsf_interpolate_to_poly_enc.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\lsf_to_lsp.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\lsf_to_poly.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\lsp_to_lsf.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\my_corr.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\nearest_neighbor.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\pack_bits.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\poly_to_lsf.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\poly_to_lsp.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\refiner.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\simple_interpolate_lsf.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\simple_lpc_analysis.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\simple_lsf_dequant.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\simple_lsf_quant.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\smooth.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\smooth_out_data.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\sort_sq.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\split_vq.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\state_construct.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\state_search.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\swap_bytes.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\unpack_bits.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\vq3.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\vq4.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\ilbc\window32_w32.h">
+      <Filter>source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="codecs\ilbc\abs_quant.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\abs_quant_loop.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\audio_encoder_ilbc.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\augmented_cb_corr.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\bw_expand.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\cb_construct.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\cb_mem_energy.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\cb_mem_energy_augmentation.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\cb_mem_energy_calc.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\cb_search.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\cb_search_core.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\cb_update_best_index.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\chebyshev.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\comp_corr.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\constants.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\create_augmented_vec.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\decode.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\decode_residual.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\decoder_interpolate_lsf.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\do_plc.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\encode.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\energy_inverse.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\enh_upsample.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\enhancer.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\enhancer_interface.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\filtered_cb_vecs.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\frame_classify.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\gain_dequant.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\gain_quant.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\get_cd_vec.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\get_lsp_poly.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\get_sync_seq.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\hp_input.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\hp_output.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\ilbc.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\index_conv_dec.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\index_conv_enc.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\init_decode.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\init_encode.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\interpolate.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\interpolate_samples.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\lpc_encode.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\lsf_check.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\lsf_interpolate_to_poly_dec.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\lsf_interpolate_to_poly_enc.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\lsf_to_lsp.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\lsf_to_poly.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\lsp_to_lsf.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\my_corr.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\nearest_neighbor.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\pack_bits.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\poly_to_lsf.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\poly_to_lsp.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\refiner.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\simple_interpolate_lsf.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\simple_lpc_analysis.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\simple_lsf_dequant.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\simple_lsf_quant.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\smooth.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\smooth_out_data.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\sort_sq.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\split_vq.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\state_construct.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\state_search.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\swap_bytes.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\unpack_bits.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\vq3.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\vq4.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\window32_w32.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\ilbc\xcorr_coef.c">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="codecs\ilbc\complexityMeasures.m">
+      <Filter>source</Filter>
+    </None>
+    <None Include="codecs\ilbc\ilbc.gypi">
+      <Filter>source</Filter>
+    </None>
+    <None Include="codecs\ilbc\OWNERS">
+      <Filter>source</Filter>
+    </None>
+  </ItemGroup>
+</Project>

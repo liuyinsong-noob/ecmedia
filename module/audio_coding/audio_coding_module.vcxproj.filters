@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{8A6F5E6E-316F-22D4-1547-253B04CB32E7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{D45E0FBD-84A7-45CA-36AC-7A06BD0C9BF7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="modules.gyp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main\include\audio_coding_module.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="main\include\audio_coding_module_typedefs.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\acm_amr.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\acm_amrwb.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\acm_cng.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\acm_codec_database.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\acm_common_defs.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\acm_dtmf_playout.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\acm_g729.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\acm_g7291.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\acm_generic_codec.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\acm_gsmfr.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\acm_ilbc.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\acm_isac.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\acm_isac_macros.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\acm_pcm16b.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\acm_pcma.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\acm_pcmu.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\acm_receiver.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\acm_red.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\acm_resampler.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\acm_speex.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\audio_coding_module_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\call_statistics.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\initial_delay_manager.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\nack.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="codecs\audio_decoder.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\acm_opus.h">
+      <Filter>source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main\source\acm_amr.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\acm_amrwb.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\acm_cng.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\acm_codec_database.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\acm_dtmf_playout.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\acm_g729.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\acm_g7291.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\acm_generic_codec.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\acm_gsmfr.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\acm_ilbc.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\acm_isac.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\acm_pcm16b.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\acm_pcma.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\acm_pcmu.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\acm_receiver.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\acm_red.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\acm_resampler.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\acm_speex.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\audio_coding_module.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\audio_coding_module_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\call_statistics.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\initial_delay_manager.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\nack.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="codecs\audio_decoder.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\acm_opus.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

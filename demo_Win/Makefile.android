@@ -1,0 +1,59 @@
+NDK_ROOT=/android-ndk-r8b
+
+#CC = $(abspath /home/ronaldo/android-ndk-r8/toolchains/arm-linux-androideabi-4.6/prebuilt//linux-x86/bin//arm-linux-androideabi-gcc)
+#CXX = $(abspath /home/ronaldo/android-ndk-r8/toolchains/arm-linux-androideabi-4.6/prebuilt//linux-x86/bin//arm-linux-androideabi-g++)
+#LINK = $(abspath /home/ronaldo/android-ndk-r8/toolchains/arm-linux-androideabi-4.6/prebuilt//linux-x86/bin//arm-linux-androideabi-gcc)
+SYS_ROOT=$(NDK_ROOT)/platforms/android-9/arch-arm
+ANDROID_INCLUDE =$(NDK_ROOT)/platforms/android-9/arch-arm/usr/include
+STLPORT_DIR=$(NDK_ROOT)/sources/cxx-stl/stlport/stlport
+STLPORT_LIBDIR=$(STLPORT_DIR)/../libs/armeabi
+TOOLSCHAIN=$(NDK_ROOT)/toolchains/arm-linux-androideabi-4.6/prebuilt/linux-x86/bin
+CC = $(TOOLSCHAIN)/arm-linux-androideabi-gcc
+CXX = $(TOOLSCHAIN)/arm-linux-androideabi-g++
+LINK = $(TOOLSCHAIN)/arm-linux-androideabi-g++ --sysroot=$(SYS_ROOT) 
+STRIP =$(TOOLSCHAIN)/arm-linux-androideabi-strip 
+
+OUTLIB = out/Release/lib
+OBJDIR = out/Release/obj
+ARFLAGS=csr
+
+export CC CXX LINK OUTLIB OBJDIR ARFLAGS ANDROID_INCLUDE STLPORT_DIR STLPORT_LIBDIR STRIP
+
+.PHONY: All
+#All: $(OUTLIB)/librtp_rtcp.a $(OUTLIB)/libudp_transport.a
+#	mkdir -p $(OUTLIB)
+All:
+	cd module/rtp_rtcp; $(MAKE) -f rtp_rtcp.mk
+	cd module/udp_transport; $(MAKE) -f udp_transport.mk
+	cd module/utility;  $(MAKE) -f webrtc_utility.mk
+	cd module/resampler; $(MAKE) -f resampler.mk
+	cd module/signalprocess; $(MAKE) -f signalprocess.mk
+	cd module/bitrate_controller;  $(MAKE) -f bitrate_controller.mk
+	cd module/audio_coding;  $(MAKE) -f NetEq.mk
+	cd module/audio_coding;  $(MAKE) -f CNG.mk
+	cd module/audio_coding;  $(MAKE) -f G711.mk
+	cd module/audio_coding;  $(MAKE) -f audio_coding_module.mk
+	cd module/audio_coding;  $(MAKE) -f amrnb.mk
+	cd module/audio_device;  $(MAKE) -f audio_device.mk
+	cd module/audio_conference_mixer;  $(MAKE) -f audio_conference_mixer.mk
+	cd module/osip;  $(MAKE) -f osip.mk
+	cd module/exosip;  $(MAKE) -f exosip.mk
+#	cd module/video_capture;  $(MAKE) -f video_capture_module.mk
+	cd module/video_processing;  $(MAKE) -f video_processing.mk
+#	cd module/video_render;  $(MAKE) -f video_render_module.mk
+	cd module/videojpegyuv;  $(MAKE) -f videojpegyuv.mk
+	cd module/media_file;  $(MAKE) -f media_file.mk
+	cd module/video_coding;  $(MAKE) -f webrtc_video_coding.mk
+	cd module/audioprocess;  $(MAKE) -f audioprocess.mk
+	cd third_party/libjpeg_turbo;  $(MAKE) -f libjpeg.mk
+	cd third_party/libyuv;  $(MAKE) -f libyuv.mk
+	cd system_wrappers/source;  $(MAKE) -f system_wrappers.mk
+	cd voice_engine;  $(MAKE) -f voice_engine_core.mk
+	cd video_engine;  $(MAKE) -f video_engine_core.mk
+	cd servicecore;  $(MAKE) -f servicecore.mk
+	cd jni; $(MAKE) -f ccpclient.mk
+	
+.PHONY: clean
+clean:
+	rm -rdf out
+

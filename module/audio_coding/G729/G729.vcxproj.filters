@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{bc7178cf-8667-40cf-9993-7c831ef6d782}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\bcg729">
+      <UniqueIdentifier>{6464c1c1-5854-457c-b4ac-e20d99ae67f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{e9d24291-f6ff-4e2f-953b-ecda0178b0c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="interface">
+      <UniqueIdentifier>{32a7f33a-a21d-4027-8c9a-87197ea1a52c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\codecs\g729\include\adaptativeCodebookSearch.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\basicOperationsMacros.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\codebooks.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\codecParameters.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\computeAdaptativeCodebookGain.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\computeLP.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\computeWeightedSpeech.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\decodeAdaptativeCodeVector.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\decodeFixedCodeVector.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\decodeGains.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\decodeLSP.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\findOpenLoopPitchDelay.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\fixedCodebookSearch.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\fixedPointMacros.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\floatingPointMacros.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\g729FixedPointMath.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\gainQuantization.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\interpolateqLSP.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\LP2LSPConversion.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\LPSynthesisFilter.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\LSPQuantization.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\postFilter.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\postProcessing.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\preProcessing.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\qLSP2LP.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\typedef.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\utils.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\bcg729\encoder.h">
+      <Filter>include\bcg729</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\include\bcg729\decoder.h">
+      <Filter>include\bcg729</Filter>
+    </ClInclude>
+    <ClInclude Include="..\codecs\g729\interface\g729_interface.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\codecs\g729\source\utils.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\adaptativeCodebookSearch.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\codebooks.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\computeAdaptativeCodebookGain.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\computeLP.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\computeWeightedSpeech.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\decodeAdaptativeCodeVector.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\decodeFixedCodeVector.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\decodeGains.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\decodeLSP.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\decoder.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\encoder.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\findOpenLoopPitchDelay.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\fixedCodebookSearch.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\gainQuantization.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\interpolateqLSP.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\LP2LSPConversion.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\LPSynthesisFilter.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\LSPQuantization.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\postFilter.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\postProcessing.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\preProcessing.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\qLSP2LP.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecs\g729\source\g729_interface.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

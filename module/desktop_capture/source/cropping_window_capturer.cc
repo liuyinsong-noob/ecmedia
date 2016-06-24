@@ -1,0 +1,123 @@
+/*
+ *  Copyright (c) 2014 The WebRTC project authors. All Rights Reserved.
+ *
+ *  Use of this source code is governed by a BSD-style license
+ *  that can be found in the LICENSE file in the root of the source
+ *  tree. An additional intellectual property rights grant can be found
+ *  in the file PATENTS.  All contributing project authors may
+ *  be found in the AUTHORS file in the root of the source tree.
+ */
+
+#include "cropping_window_capturer.h"
+
+#include "cropped_desktop_frame.h"
+#include "trace.h"
+
+namespace cloopenwebrtc {
+
+CroppingWindowCapturer::CroppingWindowCapturer(
+    const DesktopCaptureOptions& options)
+    : options_(options),
+      callback_(NULL),
+      window_capturer_(WindowCapturer::Create(options)),
+      selected_window_(kNullWindowId),
+      excluded_window_(kNullWindowId) {
+}
+
+CroppingWindowCapturer::~CroppingWindowCapturer() {}
+
+void CroppingWindowCapturer::Start(DesktopCapturer::Callback* callback) {
+  callback_ = callback;
+  window_capturer_->Start(callback);
+}
+
+void CroppingWindowCapturer::Capture(const DesktopRegion& region) {
+  if (ShouldUseScreenCapturer()) {
+    if (!screen_capturer_.get()) {
+      screen_capturer_.reset(ScreenCapturer::Create(options_));
+      if (excluded_window_) {
+        screen_capturer_->SetExcludedWindow(excluded_window_);
+      }
+      screen_capturer_->Start(this);
+    }
+    screen_capturer_->Capture(region);
+  } else {
+    window_capturer_->Capture(region);
+  }
+}
+
+void CroppingWindowCapturer::SetExcludedWindow(WindowId window) {
+  excluded_window_ = window;
+  if (screen_capturer_.get()) {
+    screen_capturer_->SetExcludedWindow(window);
+  }
+}
+
+bool CroppingWindowCapturer::GetWindowList(WindowList* windows) {
+  return window_capturer_->GetWindowList(windows);
+}
+
+bool CroppingWindowCapturer::SelectWindow(WindowId id) {
+  if (window_capturer_->SelectWindow(id)) {
+    selected_window_ = id;
+    return true;
+  }
+  return false;
+}
+
+bool CroppingWindowCapturer::BringSelectedWindowToFront() {
+  return window_capturer_->BringSelectedWindowToFront();
+}
+
+bool CroppingWindowCapturer::GetShareCaptureRect(int &width, int &height)
+{
+   if (window_capturer_.get() == NULL)
+   {
+       return false;
+   }
+   return window_capturer_->GetShareCaptureRect(width,height);
+}
+
+SharedMemory* CroppingWindowCapturer::CreateSharedMemory(size_t size) {
+  return callback_->CreateSharedMemory(size);
+}
+
+void CroppingWindowCapturer::OnCaptureCompleted(DesktopFrame* frame, CaptureErrCode errCode /*= 0*/ , DesktopRect *wind_rect /*= NULL*/) {
+  cloopenwebrtc::scoped_ptr<DesktopFrame> screen_frame(frame);
+
+  if (!ShouldUseScreenCapturer()) {
+	WEBRTC_TRACE(kTraceStateInfo, kTraceAudioMixerServer, -1,
+		"Window no longer on top when ScreenCapturer finishes");
+    window_capturer_->Capture(DesktopRegion());
+    return;
+  }
+
+  if (!frame) {
+	WEBRTC_TRACE(kTraceStateInfo, kTraceAudioMixerServer, -1,
+		"ScreenCapturer failed to capture a frame");
+    callback_->OnCaptureCompleted(NULL, kCapture_NoCaptureImage);
+    return;
+  }
+
+  DesktopRect window_rect = GetWindowRectInVirtualScreen();
+  if (window_rect.is_empty()) {
+	WEBRTC_TRACE(kTraceStateInfo, kTraceAudioMixerServer, -1,
+		"Window rect is empty");
+    callback_->OnCaptureCompleted(NULL, kCapture_NoCaptureImage);
+    return;
+  }
+
+  cloopenwebrtc::scoped_ptr<DesktopFrame> window_frame(
+      CreateCroppedDesktopFrame(screen_frame.release(), window_rect));
+  callback_->OnCaptureCompleted(window_frame.release(), kCapture_Ok);
+}
+
+#if !defined(WEBRTC_WIN)
+// static
+WindowCapturer*
+CroppingWindowCapturer::Create(const DesktopCaptureOptions& options) {
+  return WindowCapturer::Create(options);
+}
+#endif
+
+}  // namespace cloopenwebrtc

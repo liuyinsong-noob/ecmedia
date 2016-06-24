@@ -1,0 +1,3 @@
+1、在faac-1.28\libfaac的目录下有VC的工程文件libfaac.vcproj是faac的静态库编译方式,用VS2010打开，会自动进行转换。
+2、libfaac工程中没有64位的编译配置，配置64位模式进行64位库编译。
+3、编译完成后将include目录下的faac.h、faaccfg.h文件和libfaac.lib文件拷贝到需要的位置。

@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="源文件\vad">
+      <UniqueIdentifier>{11eb145e-4a56-4308-b1b4-13f607f059f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\signal_processing">
+      <UniqueIdentifier>{d632db52-fef7-495f-8add-bb462e95926a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\resampler">
+      <UniqueIdentifier>{1dae710d-a7f8-483f-95aa-85e80448d356}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\vad\include">
+      <UniqueIdentifier>{8bb9049d-fdae-4ca1-80df-733ad32f6024}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\signal_processing\include">
+      <UniqueIdentifier>{855a927e-255f-4606-8a2f-061bf610bb01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\resampler\include">
+      <UniqueIdentifier>{49c917bf-1fc0-4ec5-98ab-34df80c07584}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\audio_converter.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\audio_util.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\blocker.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\fir_filter.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ring_buffer.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\wav_file.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\wav_header.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\window_generator.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vad\vad.cc">
+      <Filter>源文件\vad</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vad\vad_core.c">
+      <Filter>源文件\vad</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vad\vad_filterbank.c">
+      <Filter>源文件\vad</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vad\vad_gmm.c">
+      <Filter>源文件\vad</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vad\vad_sp.c">
+      <Filter>源文件\vad</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vad\webrtc_vad.c">
+      <Filter>源文件\vad</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\auto_corr_to_refl_coef.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\auto_correlation.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\complex_fft.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\complex_bit_reverse.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\copy_set_operations.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\cross_correlation.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\division_operations.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\dot_product_with_scale.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\downsample_fast.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\energy.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\filter_ar.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\filter_ar_fast_q12.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\filter_ma_fast_q12.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\get_hanning_window.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\get_scaling_square.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\ilbc_specific_functions.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\levinson_durbin.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\lpc_to_refl_coef.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\min_max_operations.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\randomization_functions.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\refl_coef_to_lpc.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\real_fft.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\resample.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\resample_48khz.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\resample_by_2.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\vector_scaling_operations.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\sqrt_of_one_minus_x_squared.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\splitting_filter.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\spl_sqrt_floor.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\spl_sqrt.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\spl_init.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\resample_by_2_internal.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\signal_processing\resample_fractional.c">
+      <Filter>源文件\signal_processing</Filter>
+    </ClCompile>
+    <ClCompile Include="source\resampler\push_resampler.cc">
+      <Filter>源文件\resampler</Filter>
+    </ClCompile>
+    <ClCompile Include="source\resampler\push_sinc_resampler.cc">
+      <Filter>源文件\resampler</Filter>
+    </ClCompile>
+    <ClCompile Include="source\resampler\resampler.cc">
+      <Filter>源文件\resampler</Filter>
+    </ClCompile>
+    <ClCompile Include="source\resampler\sinc_resampler.cc">
+      <Filter>源文件\resampler</Filter>
+    </ClCompile>
+    <ClCompile Include="source\fir_filter_sse.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\resampler\sinc_resampler_sse.cc">
+      <Filter>源文件\resampler</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\audio_converter.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="source\blocker.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="source\fir_filter.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="source\fir_filter_neon.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="source\fir_filter_sse.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ring_buffer.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="source\wav_file.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="source\wav_header.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="source\window_generator.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vad\include\webrtc_vad.h">
+      <Filter>源文件\vad\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vad\include\vad.h">
+      <Filter>源文件\vad\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vad\vad_core.h">
+      <Filter>源文件\vad</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vad\vad_filterbank.h">
+      <Filter>源文件\vad</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vad\vad_gmm.h">
+      <Filter>源文件\vad</Filter>
+    </ClInclude>
+    <ClInclude Include="source\vad\vad_sp.h">
+      <Filter>源文件\vad</Filter>
+    </ClInclude>
+    <ClInclude Include="source\signal_processing\complex_fft_tables.h">
+      <Filter>源文件\signal_processing</Filter>
+    </ClInclude>
+    <ClInclude Include="source\signal_processing\include\real_fft.h">
+      <Filter>源文件\signal_processing\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\signal_processing\include\spl_inl.h">
+      <Filter>源文件\signal_processing\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\signal_processing\include\signal_processing_library.h">
+      <Filter>源文件\signal_processing\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\resampler\push_sinc_resampler.h">
+      <Filter>源文件\resampler</Filter>
+    </ClInclude>
+    <ClInclude Include="source\resampler\sinc_resampler.h">
+      <Filter>源文件\resampler</Filter>
+    </ClInclude>
+    <ClInclude Include="source\resampler\include\push_resampler.h">
+      <Filter>源文件\resampler\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\resampler\include\resampler.h">
+      <Filter>源文件\resampler\include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\signal_processing\resample_by_2_internal.h">
+      <Filter>源文件\signal_processing</Filter>
+    </ClInclude>
+    <ClInclude Include="include\audio_util.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

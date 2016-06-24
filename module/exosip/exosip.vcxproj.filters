@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{8f4268e2-dd79-46e8-a647-821d748c32b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{848bb978-3b31-48a9-8259-68ef2f53c76a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\eXosip2\eX_call.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\eXosip2\eX_message.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\eXosip2\eX_options.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\eXosip2\eX_publish.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\eXosip2\eX_refer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\eXosip2\eX_register.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\eXosip2\eX_setup.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\eXosip2\eX_subscribe.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\eXosip2\eXosip.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\eXosip2\eXosip_transport_hook.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\jpipe.h">
+      <Filter>source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\eXcall_api.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\eXconf.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\eXinsubscription_api.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\eXmessage_api.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\eXoptions_api.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\eXosip.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\eXpublish_api.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\eXrefer_api.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\eXregister_api.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\eXsubscription_api.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\eXtl.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\eXtl_dtls.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\eXtl_tcp.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\eXtl_tls.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\eXtl_udp.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\eXtransport.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\eXutils.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\inet_ntop.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\jauth.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\jcall.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\jcallback.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\jdialog.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\jevents.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\jnotify.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\jpipe.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\jpublish.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\jreg.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\jrequest.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\jresponse.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\jsubscribe.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\milenage.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\misc.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\rijndael.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\sdp_offans.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\udp.c">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

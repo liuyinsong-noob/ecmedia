@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{97b06bc2-fce0-4ef9-a3e8-665c8e39d98e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{8a6adf24-49bc-4ffb-8d08-6035b4a9442a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="interface">
+      <UniqueIdentifier>{5e5c68e4-04c6-4980-8473-dee3ed2281fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Http">
+      <UniqueIdentifier>{52bf4646-659b-4917-99c3-695cd0c6c9f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Utility">
+      <UniqueIdentifier>{4bf9f758-0533-4745-9ae4-ef5a6e15a6a3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\salpr.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sometools.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\offeranswer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sal_eXosip2.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sipsetup.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\lpconfig.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\enum.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\servicecore.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\serphonecall.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\serprivate.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\friends.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="interface\serphoneinterface.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="interface\CCPClient.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="interface\CCPClient_Internal.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Http\http.h">
+      <Filter>source\Http</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Http\HttpClient.h">
+      <Filter>source\Http</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Http\RESTClient.h">
+      <Filter>source\Http</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Utility\base64_2.h">
+      <Filter>source\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Utility\cJSON.h">
+      <Filter>source\Utility</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\salpr.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\sometools.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\offeranswer.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\sal_eXosip2_presence.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\lpconfig.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\enum.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\sal_eXosip2_sdp.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\sal_eXosip2.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\servicecore.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\serphonecall.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\callbacks.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\address.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\proxy.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\friends.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\prensence.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\chat.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\serphoneinterface.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mediaprocess.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\sipsetup.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\siplogin.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\CCPClient.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\base64.c">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ice.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Http\http.cpp">
+      <Filter>source\Http</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Http\HttpClient.cpp">
+      <Filter>source\Http</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Http\RESTClient.cpp">
+      <Filter>source\Http</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Utility\md5.cpp">
+      <Filter>source\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Utility\tinyxml2.cpp">
+      <Filter>source\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Utility\base64_2.cpp">
+      <Filter>source\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Utility\cJSON.c">
+      <Filter>source\Utility</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

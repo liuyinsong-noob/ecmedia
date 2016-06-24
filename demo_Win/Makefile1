@@ -1,0 +1,60 @@
+
+CC=/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/gcc
+CFLAGS= -arch armv6 -isysroot /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk
+CPP=/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/cpp
+
+#CC:=clang -ccc-host-triple arm-apple-darwin9 
+#CPP:=clang++ -ccc-host-triple arm-apple-darwin9
+#LD:=$(TOOLCHAIN)/pre/bin/arm-apple-darwin9-gcc
+
+#%.o:		%.m
+#		$(CC) -include $(PCH) -c $(CFLAGS) $< -o $@
+		
+#%.o:		%.mm
+#		$(CPP) -include $(PCH) -c $(CFLAGS) $< -o $@
+
+#%.o:		%.c
+#		$(CC) -include $(PCH) -c $(CFLAGS) $< -o $@
+
+#%.o:		%.cpp
+#		$(CPP) -include $(PCH) -c $(CPPFLAGS) $< -o $@
+    
+OUTLIB = out/Release/lib
+OBJDIR = out/Release/obj
+#export OUTLIB OBJDIR
+
+.PHONY: All
+All:
+	cd module/rtp_rtcp; $(MAKE) -f rtp_rtcp_ios.mk
+	cd module/udp_transport; $(MAKE) -f udp_transport_ios.mk
+	cd module/utility;  $(MAKE) -f webrtc_utility_ios.mk
+	cd module/resampler; $(MAKE) -f resampler_ios.mk
+	cd module/signalprocess; $(MAKE) -f signalprocess_ios.mk
+	cd module/bitrate_controller;  $(MAKE) -f bitrate_controller_ios.mk
+	cd module/audio_coding;  $(MAKE) -f NetEq_ios.mk
+	cd module/audio_coding;  $(MAKE) -f CNG_ios.mk
+	cd module/audio_coding;  $(MAKE) -f G711_ios.mk
+	cd module/audio_coding;  $(MAKE) -f audio_coding_module_ios.mk
+	cd module/audio_coding;  $(MAKE) -f amrnb_ios.mk
+	cd module/audio_device;  $(MAKE) -f audio_device_ios.mk
+	cd module/audio_conference_mixer;  $(MAKE) -f audio_conference_mixer_ios.mk
+	cd module/osip;  $(MAKE) -f osip_ios.mk
+	cd module/exosip;  $(MAKE) -f exosip_ios.mk
+	cd module/video_capture;  $(MAKE) -f video_capture_module_ios.mk
+#cd module/video_processing;  $(MAKE) -f video_processing.mk
+#cd module/video_render;  $(MAKE) -f video_render_module.mk
+#cd module/videojpegyuv;  $(MAKE) -f videojpegyuv.mk
+#cd module/media_file;  $(MAKE) -f media_file.mk
+#cd module/video_coding;  $(MAKE) -f webrtc_video_coding.mk
+#cd module/audioprocess;  $(MAKE) -f audioprocess.mk
+#cd third_party/libjpeg_turbo;  $(MAKE) -f libjpeg.mk
+#cd third_party/libyuv;  $(MAKE) -f libyuv.mk
+#cd system_wrappers/source;  $(MAKE) -f system_wrappers.mk
+#cd voice_engine;  $(MAKE) -f voice_engine_core.mk
+#cd video_engine;  $(MAKE) -f video_engine_core.mk
+#cd servicecore;  $(MAKE) -f servicecore.mk
+	
+.PHONY: clean
+clean:
+	rm -rdf out
+

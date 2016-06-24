@@ -1,0 +1,481 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		559BA9FD16F1DAFA00A4F78A /* msvideo_neon.c in Sources */ = {isa = PBXBuildFile; fileRef = 559BA9F916F1DAFA00A4F78A /* msvideo_neon.c */; };
+		559BA9FE16F1DAFA00A4F78A /* msvideo_neon.h in Headers */ = {isa = PBXBuildFile; fileRef = 559BA9FA16F1DAFA00A4F78A /* msvideo_neon.h */; };
+		559BA9FF16F1DAFA00A4F78A /* msvideo.c in Sources */ = {isa = PBXBuildFile; fileRef = 559BA9FB16F1DAFA00A4F78A /* msvideo.c */; };
+		559BAA0016F1DAFA00A4F78A /* msvideo.h in Headers */ = {isa = PBXBuildFile; fileRef = 559BA9FC16F1DAFA00A4F78A /* msvideo.h */; };
+		55A17C4916AF8A1100B5FCDC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A17C4816AF8A1100B5FCDC /* UIKit.framework */; };
+		55A74F8915C8C300001B246A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A74F8815C8C300001B246A /* Foundation.framework */; };
+		55A74FDF15C8C324001B246A /* video_capture.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F9A15C8C324001B246A /* video_capture.h */; };
+		55A74FE015C8C324001B246A /* video_capture_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F9B15C8C324001B246A /* video_capture_defines.h */; };
+		55A74FE115C8C324001B246A /* video_capture_factory.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F9C15C8C324001B246A /* video_capture_factory.h */; };
+		55A74FE915C8C324001B246A /* device_info_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74FAB15C8C324001B246A /* device_info_impl.cc */; };
+		55A74FEA15C8C324001B246A /* device_info_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74FAC15C8C324001B246A /* device_info_impl.h */; };
+		55A74FEB15C8C324001B246A /* device_info_external.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74FAE15C8C324001B246A /* device_info_external.cc */; };
+		55A7500215C8C324001B246A /* video_capture_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74FCA15C8C324001B246A /* video_capture_config.h */; };
+		55A7500315C8C324001B246A /* video_capture_delay.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74FCB15C8C324001B246A /* video_capture_delay.h */; };
+		55A7500415C8C324001B246A /* video_capture_factory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74FCC15C8C324001B246A /* video_capture_factory.cc */; };
+		55A7500515C8C324001B246A /* video_capture_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74FCD15C8C324001B246A /* video_capture_impl.cc */; };
+		55A7500615C8C324001B246A /* video_capture_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74FCE15C8C324001B246A /* video_capture_impl.h */; };
+		914BAF1216991A3C00B177A5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 914BAF1116991A3C00B177A5 /* AVFoundation.framework */; };
+		914C8FDE169A6ED700A4ECEA /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 914C8FDD169A6ED700A4ECEA /* CoreVideo.framework */; };
+		91A084D216C0913700C78D0B /* video_capture_iOS_info.h in Headers */ = {isa = PBXBuildFile; fileRef = 91A084D016C0913700C78D0B /* video_capture_iOS_info.h */; };
+		91A084D316C0913700C78D0B /* video_capture_iOS_info.mm in Sources */ = {isa = PBXBuildFile; fileRef = 91A084D116C0913700C78D0B /* video_capture_iOS_info.mm */; };
+		91C4CD02169BFF7700CC98EF /* video_capture_iOS_device_info_objc.h in Headers */ = {isa = PBXBuildFile; fileRef = 91C4CD00169BFF7700CC98EF /* video_capture_iOS_device_info_objc.h */; };
+		91C4CD03169BFF7700CC98EF /* video_capture_iOS_device_info_objc.mm in Sources */ = {isa = PBXBuildFile; fileRef = 91C4CD01169BFF7700CC98EF /* video_capture_iOS_device_info_objc.mm */; };
+		91C4CD09169C0E9C00CC98EF /* video_capture_iOS_device_info.h in Headers */ = {isa = PBXBuildFile; fileRef = 91C4CD07169C0E9B00CC98EF /* video_capture_iOS_device_info.h */; };
+		91C4CD0A169C0E9C00CC98EF /* video_capture_iOS_device_info.mm in Sources */ = {isa = PBXBuildFile; fileRef = 91C4CD08169C0E9B00CC98EF /* video_capture_iOS_device_info.mm */; };
+		91C4CD0E169C124800CC98EF /* video_capture_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 91C4CD0C169C124700CC98EF /* video_capture_iOS.h */; };
+		91C4CD0F169C124800CC98EF /* video_capture_iOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 91C4CD0D169C124700CC98EF /* video_capture_iOS.mm */; };
+		91DC03631A1C9C1E0088851B /* ioscapture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 55A7A47B16F83A71004970E2 /* ioscapture.mm */; };
+		91DC03651A1CA0090088851B /* ioscapture.h in Headers */ = {isa = PBXBuildFile; fileRef = 91DC03641A1CA0090088851B /* ioscapture.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		559BA9F916F1DAFA00A4F78A /* msvideo_neon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = msvideo_neon.c; path = iOS/msvideo_neon.c; sourceTree = "<group>"; };
+		559BA9FA16F1DAFA00A4F78A /* msvideo_neon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = msvideo_neon.h; path = iOS/msvideo_neon.h; sourceTree = "<group>"; };
+		559BA9FB16F1DAFA00A4F78A /* msvideo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = msvideo.c; path = iOS/msvideo.c; sourceTree = "<group>"; };
+		559BA9FC16F1DAFA00A4F78A /* msvideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = msvideo.h; path = iOS/msvideo.h; sourceTree = "<group>"; };
+		55A17C4816AF8A1100B5FCDC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		55A74F8515C8C300001B246A /* libvideo_capture.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvideo_capture.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		55A74F8815C8C300001B246A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		55A74F9A15C8C324001B246A /* video_capture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_capture.h; sourceTree = "<group>"; };
+		55A74F9B15C8C324001B246A /* video_capture_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_capture_defines.h; sourceTree = "<group>"; };
+		55A74F9C15C8C324001B246A /* video_capture_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_capture_factory.h; sourceTree = "<group>"; };
+		55A74FAB15C8C324001B246A /* device_info_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = device_info_impl.cc; sourceTree = "<group>"; };
+		55A74FAC15C8C324001B246A /* device_info_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = device_info_impl.h; sourceTree = "<group>"; };
+		55A74FAE15C8C324001B246A /* device_info_external.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = device_info_external.cc; sourceTree = "<group>"; };
+		55A74FCA15C8C324001B246A /* video_capture_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_capture_config.h; sourceTree = "<group>"; };
+		55A74FCB15C8C324001B246A /* video_capture_delay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_capture_delay.h; sourceTree = "<group>"; };
+		55A74FCC15C8C324001B246A /* video_capture_factory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_capture_factory.cc; sourceTree = "<group>"; };
+		55A74FCD15C8C324001B246A /* video_capture_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_capture_impl.cc; sourceTree = "<group>"; };
+		55A74FCE15C8C324001B246A /* video_capture_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_capture_impl.h; sourceTree = "<group>"; };
+		55A7A47B16F83A71004970E2 /* ioscapture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ioscapture.mm; path = iOS/ioscapture.mm; sourceTree = "<group>"; };
+		914BAF1116991A3C00B177A5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		914C8FDD169A6ED700A4ECEA /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		91A084D016C0913700C78D0B /* video_capture_iOS_info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = video_capture_iOS_info.h; path = iOS/video_capture_iOS_info.h; sourceTree = "<group>"; };
+		91A084D116C0913700C78D0B /* video_capture_iOS_info.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = video_capture_iOS_info.mm; path = iOS/video_capture_iOS_info.mm; sourceTree = "<group>"; };
+		91C4CD00169BFF7700CC98EF /* video_capture_iOS_device_info_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = video_capture_iOS_device_info_objc.h; path = iOS/video_capture_iOS_device_info_objc.h; sourceTree = "<group>"; };
+		91C4CD01169BFF7700CC98EF /* video_capture_iOS_device_info_objc.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = video_capture_iOS_device_info_objc.mm; path = iOS/video_capture_iOS_device_info_objc.mm; sourceTree = "<group>"; };
+		91C4CD07169C0E9B00CC98EF /* video_capture_iOS_device_info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = video_capture_iOS_device_info.h; path = iOS/video_capture_iOS_device_info.h; sourceTree = "<group>"; };
+		91C4CD08169C0E9B00CC98EF /* video_capture_iOS_device_info.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = video_capture_iOS_device_info.mm; path = iOS/video_capture_iOS_device_info.mm; sourceTree = "<group>"; };
+		91C4CD0C169C124700CC98EF /* video_capture_iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = video_capture_iOS.h; path = iOS/video_capture_iOS.h; sourceTree = "<group>"; };
+		91C4CD0D169C124700CC98EF /* video_capture_iOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = video_capture_iOS.mm; path = iOS/video_capture_iOS.mm; sourceTree = "<group>"; };
+		91DC03641A1CA0090088851B /* ioscapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ioscapture.h; path = iOS/ioscapture.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		55A74F8215C8C300001B246A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55A17C4916AF8A1100B5FCDC /* UIKit.framework in Frameworks */,
+				914C8FDE169A6ED700A4ECEA /* CoreVideo.framework in Frameworks */,
+				914BAF1216991A3C00B177A5 /* AVFoundation.framework in Frameworks */,
+				55A74F8915C8C300001B246A /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		55A74F7A15C8C300001B246A = {
+			isa = PBXGroup;
+			children = (
+				55A17C4816AF8A1100B5FCDC /* UIKit.framework */,
+				55A74F8A15C8C300001B246A /* video_capture */,
+				55A74F8715C8C300001B246A /* Frameworks */,
+				55A74F8615C8C300001B246A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		55A74F8615C8C300001B246A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				55A74F8515C8C300001B246A /* libvideo_capture.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		55A74F8715C8C300001B246A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				914C8FDD169A6ED700A4ECEA /* CoreVideo.framework */,
+				914BAF1116991A3C00B177A5 /* AVFoundation.framework */,
+				55A74F8815C8C300001B246A /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		55A74F8A15C8C300001B246A /* video_capture */ = {
+			isa = PBXGroup;
+			children = (
+				55A74F9815C8C324001B246A /* main */,
+			);
+			path = video_capture;
+			sourceTree = "<group>";
+		};
+		55A74F9815C8C324001B246A /* main */ = {
+			isa = PBXGroup;
+			children = (
+				55A74F9915C8C324001B246A /* include */,
+				55A74F9D15C8C324001B246A /* source */,
+			);
+			path = main;
+			sourceTree = SOURCE_ROOT;
+		};
+		55A74F9915C8C324001B246A /* include */ = {
+			isa = PBXGroup;
+			children = (
+				55A74F9A15C8C324001B246A /* video_capture.h */,
+				55A74F9B15C8C324001B246A /* video_capture_defines.h */,
+				55A74F9C15C8C324001B246A /* video_capture_factory.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		55A74F9D15C8C324001B246A /* source */ = {
+			isa = PBXGroup;
+			children = (
+				914BAF0816990F8500B177A5 /* iOS */,
+				55A74FAB15C8C324001B246A /* device_info_impl.cc */,
+				55A74FAC15C8C324001B246A /* device_info_impl.h */,
+				55A74FAD15C8C324001B246A /* External */,
+				55A74FCA15C8C324001B246A /* video_capture_config.h */,
+				55A74FCB15C8C324001B246A /* video_capture_delay.h */,
+				55A74FCC15C8C324001B246A /* video_capture_factory.cc */,
+				55A74FCD15C8C324001B246A /* video_capture_impl.cc */,
+				55A74FCE15C8C324001B246A /* video_capture_impl.h */,
+			);
+			path = source;
+			sourceTree = "<group>";
+		};
+		55A74FAD15C8C324001B246A /* External */ = {
+			isa = PBXGroup;
+			children = (
+				55A74FAE15C8C324001B246A /* device_info_external.cc */,
+			);
+			path = External;
+			sourceTree = "<group>";
+		};
+		914BAF0816990F8500B177A5 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				91DC03641A1CA0090088851B /* ioscapture.h */,
+				55A7A47B16F83A71004970E2 /* ioscapture.mm */,
+				559BA9F916F1DAFA00A4F78A /* msvideo_neon.c */,
+				559BA9FA16F1DAFA00A4F78A /* msvideo_neon.h */,
+				559BA9FB16F1DAFA00A4F78A /* msvideo.c */,
+				559BA9FC16F1DAFA00A4F78A /* msvideo.h */,
+				91A084D016C0913700C78D0B /* video_capture_iOS_info.h */,
+				91A084D116C0913700C78D0B /* video_capture_iOS_info.mm */,
+				91C4CD00169BFF7700CC98EF /* video_capture_iOS_device_info_objc.h */,
+				91C4CD01169BFF7700CC98EF /* video_capture_iOS_device_info_objc.mm */,
+				91C4CD07169C0E9B00CC98EF /* video_capture_iOS_device_info.h */,
+				91C4CD08169C0E9B00CC98EF /* video_capture_iOS_device_info.mm */,
+				91C4CD0C169C124700CC98EF /* video_capture_iOS.h */,
+				91C4CD0D169C124700CC98EF /* video_capture_iOS.mm */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		55A74F8315C8C300001B246A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55A74FDF15C8C324001B246A /* video_capture.h in Headers */,
+				55A74FE015C8C324001B246A /* video_capture_defines.h in Headers */,
+				55A74FE115C8C324001B246A /* video_capture_factory.h in Headers */,
+				55A74FEA15C8C324001B246A /* device_info_impl.h in Headers */,
+				55A7500215C8C324001B246A /* video_capture_config.h in Headers */,
+				55A7500315C8C324001B246A /* video_capture_delay.h in Headers */,
+				55A7500615C8C324001B246A /* video_capture_impl.h in Headers */,
+				91C4CD02169BFF7700CC98EF /* video_capture_iOS_device_info_objc.h in Headers */,
+				91C4CD09169C0E9C00CC98EF /* video_capture_iOS_device_info.h in Headers */,
+				91C4CD0E169C124800CC98EF /* video_capture_iOS.h in Headers */,
+				91A084D216C0913700C78D0B /* video_capture_iOS_info.h in Headers */,
+				559BA9FE16F1DAFA00A4F78A /* msvideo_neon.h in Headers */,
+				559BAA0016F1DAFA00A4F78A /* msvideo.h in Headers */,
+				91DC03651A1CA0090088851B /* ioscapture.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		55A74F8415C8C300001B246A /* video_capture */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55A74F9215C8C300001B246A /* Build configuration list for PBXNativeTarget "video_capture" */;
+			buildPhases = (
+				55A74F8115C8C300001B246A /* Sources */,
+				55A74F8215C8C300001B246A /* Frameworks */,
+				55A74F8315C8C300001B246A /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = video_capture;
+			productName = video_capture;
+			productReference = 55A74F8515C8C300001B246A /* libvideo_capture.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		55A74F7C15C8C300001B246A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 55A74F7F15C8C300001B246A /* Build configuration list for PBXProject "video_capture" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 55A74F7A15C8C300001B246A;
+			productRefGroup = 55A74F8615C8C300001B246A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				55A74F8415C8C300001B246A /* video_capture */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		55A74F8115C8C300001B246A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55A74FE915C8C324001B246A /* device_info_impl.cc in Sources */,
+				55A74FEB15C8C324001B246A /* device_info_external.cc in Sources */,
+				55A7500415C8C324001B246A /* video_capture_factory.cc in Sources */,
+				55A7500515C8C324001B246A /* video_capture_impl.cc in Sources */,
+				91C4CD03169BFF7700CC98EF /* video_capture_iOS_device_info_objc.mm in Sources */,
+				91C4CD0A169C0E9C00CC98EF /* video_capture_iOS_device_info.mm in Sources */,
+				91C4CD0F169C124800CC98EF /* video_capture_iOS.mm in Sources */,
+				91A084D316C0913700C78D0B /* video_capture_iOS_info.mm in Sources */,
+				559BA9FD16F1DAFA00A4F78A /* msvideo_neon.c in Sources */,
+				559BA9FF16F1DAFA00A4F78A /* msvideo.c in Sources */,
+				91DC03631A1C9C1E0088851B /* ioscapture.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		55A74F9015C8C300001B246A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		55A74F9115C8C300001B246A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		55A74F9315C8C300001B246A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				DSTROOT = /tmp/video_capture.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"WEBRTC_SVNREVISION=\"n/a\"",
+					"_FILE_OFFSET_BITS=64",
+					NO_TCMALLOC,
+					DISABLE_NACL,
+					CHROMIUM_BUILD,
+					USE_PROPRIETARY_CODECS,
+					"ENABLE_GPU=1",
+					"USE_OPENSSL=1",
+					"ENABLE_EGLIMAGE=1",
+					"USE_SKIA=1",
+					WEBRTC_ARCH_ARM,
+					WEBRTC_DETECT_ARM_NEON,
+					WEBRTC_CLOCK_TYPE_REALTIME,
+					WEBRTC_THREAD_RR,
+					WEBRTC_ANDROID_OPENSLES,
+					__STDC_FORMAT_MACROS,
+					"__GNU_SOURCE=1",
+					"USE_STLPORT=1",
+					"_STLP_USE_PTR_SPECIALIZATIONS=1",
+					HAVE_OFF64_T,
+					HAVE_SYS_UIO_H,
+					ANDROID_BINSIZE_HACK,
+					"ANDROID_UPSTREAM_BRINGUP=1",
+					NDEBUG,
+					NVALGRIND,
+					"DYNAMIC_ANNOTATIONS_ENABLED=0",
+					MAC_IPHONE,
+				);
+				HEADER_SEARCH_PATHS = (
+					../../.,
+					../interface,
+					../,
+					../../system_wrappers/interface,
+					./main/include,
+					../videojpegyuv/include,
+					./main/source/Mac,
+					./main/source/Mac/QTKit,
+					./main/source/Mac/QuickTime,
+					./main/source,
+					src/modules/utility/include,
+					../audio_coding/main/include,
+					./main/source/iOS,
+					../../third_party/libyuv/include,
+					../../module/common_video/interface,
+					../../module/video_coding/main/include,
+					../../module/common_video/source,
+					../../module/common_video/source/libyuv/include,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../IOSProject/out/baselib;
+				VALID_ARCHS = "armv7 arm64";
+			};
+			name = Debug;
+		};
+		55A74F9415C8C300001B246A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				DSTROOT = /tmp/video_capture.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"WEBRTC_SVNREVISION=\"n/a\"",
+					"_FILE_OFFSET_BITS=64",
+					NO_TCMALLOC,
+					DISABLE_NACL,
+					CHROMIUM_BUILD,
+					USE_PROPRIETARY_CODECS,
+					"ENABLE_GPU=1",
+					"USE_OPENSSL=1",
+					"ENABLE_EGLIMAGE=1",
+					"USE_SKIA=1",
+					WEBRTC_ARCH_ARM,
+					WEBRTC_DETECT_ARM_NEON,
+					WEBRTC_CLOCK_TYPE_REALTIME,
+					WEBRTC_THREAD_RR,
+					WEBRTC_ANDROID_OPENSLES,
+					__STDC_FORMAT_MACROS,
+					"__GNU_SOURCE=1",
+					"USE_STLPORT=1",
+					"_STLP_USE_PTR_SPECIALIZATIONS=1",
+					HAVE_OFF64_T,
+					HAVE_SYS_UIO_H,
+					ANDROID_BINSIZE_HACK,
+					"ANDROID_UPSTREAM_BRINGUP=1",
+					NDEBUG,
+					NVALGRIND,
+					"DYNAMIC_ANNOTATIONS_ENABLED=0",
+					MAC_IPHONE,
+				);
+				HEADER_SEARCH_PATHS = (
+					../../.,
+					../interface,
+					../,
+					../../system_wrappers/interface,
+					./main/include,
+					../videojpegyuv/include,
+					./main/source/Mac,
+					./main/source/Mac/QTKit,
+					./main/source/Mac/QuickTime,
+					./main/source,
+					src/modules/utility/include,
+					../audio_coding/main/include,
+					./main/source/iOS,
+					../../third_party/libyuv/include,
+					../../module/common_video/interface,
+					../../module/video_coding/main/include,
+					../../module/common_video/source,
+					../../module/common_video/source/libyuv/include,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../IOSProject/out/baselib;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 arm64";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		55A74F7F15C8C300001B246A /* Build configuration list for PBXProject "video_capture" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55A74F9015C8C300001B246A /* Debug */,
+				55A74F9115C8C300001B246A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55A74F9215C8C300001B246A /* Build configuration list for PBXNativeTarget "video_capture" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55A74F9315C8C300001B246A /* Debug */,
+				55A74F9415C8C300001B246A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 55A74F7C15C8C300001B246A /* Project object */;
+}

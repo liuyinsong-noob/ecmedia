@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="simd">
+      <UniqueIdentifier>{D11A6EE5-9897-707D-CCC7-99DBD688FC1F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..">
+      <UniqueIdentifier>{739DB09A-CC57-A953-A6CF-F64FA08E4FA7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\yasm">
+      <UniqueIdentifier>{E019ECA3-7A84-34EF-29C6-5C04E7B41E6E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\yasm\binaries">
+      <UniqueIdentifier>{3A25A068-4337-7214-A6D8-EB21D1D1AC3D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\yasm\binaries\win">
+      <UniqueIdentifier>{47FC5EC4-15EB-E92F-89D7-AFE51CF838A9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\yasm\binaries\win\_excluded_files">
+      <UniqueIdentifier>{158E591E-B6EA-0C85-8F5A-18EAFA09B4CE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="$(OutDir)">
+      <UniqueIdentifier>{ECA95933-7FA6-5798-4EC4-C0CAC6DD34DE}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="jdmaster.c" />
+    <ClCompile Include="jcapimin.c" />
+    <None Include="libjpeg.gyp" />
+    <ClCompile Include="jfdctint.c" />
+    <ClInclude Include="jpegint.h" />
+    <ClCompile Include="jcomapi.c" />
+    <ClCompile Include="jmemnobs.c" />
+    <ClCompile Include="jcprepct.c" />
+    <ClCompile Include="jcsample.c" />
+    <ClInclude Include="jconfig.h" />
+    <ClInclude Include="jpeglib.h" />
+    <ClCompile Include="jcmainct.c" />
+    <ClCompile Include="jdatadst.c" />
+    <ClCompile Include="jcinit.c" />
+    <ClCompile Include="jddctmgr.c" />
+    <ClCompile Include="jdinput.c" />
+    <ClCompile Include="jcmarker.c" />
+    <ClCompile Include="jdmarker.c" />
+    <ClCompile Include="jquant2.c" />
+    <ClInclude Include="jinclude.h" />
+    <ClCompile Include="jcapistd.c" />
+    <ClCompile Include="jdapistd.c" />
+    <ClCompile Include="jdmerge.c" />
+    <ClCompile Include="jchuff.c" />
+    <ClInclude Include="jerror.h" />
+    <ClCompile Include="jfdctfst.c" />
+    <ClCompile Include="jccoefct.c" />
+    <ClCompile Include="jerror.c" />
+    <ClInclude Include="jdct.h" />
+    <ClInclude Include="jchuff.h" />
+    <ClCompile Include="jmemmgr.c" />
+    <ClCompile Include="jdhuff.c" />
+    <ClInclude Include="jdhuff.h" />
+    <ClCompile Include="jcdctmgr.c" />
+    <ClInclude Include="jversion.h" />
+    <ClCompile Include="jfdctflt.c" />
+    <ClCompile Include="jdcoefct.c" />
+    <ClCompile Include="jdatasrc.c" />
+    <ClCompile Include="jidctred.c" />
+    <ClCompile Include="jccolor.c" />
+    <ClCompile Include="jcparam.c" />
+    <ClInclude Include="jmorecfg.h" />
+    <ClCompile Include="jidctint.c" />
+    <ClCompile Include="jcphuff.c" />
+    <ClCompile Include="jdmainct.c" />
+    <ClCompile Include="jdcolor.c" />
+    <ClInclude Include="jmemsys.h" />
+    <ClCompile Include="jcmaster.c" />
+    <ClInclude Include="jpeglibmangler.h" />
+    <ClCompile Include="jutils.c" />
+    <ClCompile Include="jdphuff.c" />
+    <ClCompile Include="jquant1.c" />
+    <ClCompile Include="jdpostct.c" />
+    <ClCompile Include="jdapimin.c" />
+    <ClCompile Include="jidctfst.c" />
+    <ClCompile Include="jdsample.c" />
+    <None Include="..\yasm\binaries\win\yasm.exe">
+      <Filter>..\yasm\binaries\win\_excluded_files</Filter>
+    </None>
+    <ClCompile Include="jidctflt.c" />
+    <ClCompile Include="simd\jsimd_x86_64.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jiss2int.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jdsamss2.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jfmmxfst.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jccolmmx.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jcqnts2i.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jiss2red.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jcqnts2f.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jdmermmx.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jcsamss2.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jimmxred.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jfmmxint.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jiss2fst.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jdcolmmx.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jcsammmx.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jimmxfst.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jccolss2.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jfss2int.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jdsammmx.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jimmxint.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jisseflt.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jdmerss2.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jdcolss2.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jf3dnflt.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jcgrammx.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jfsseflt.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jcqntmmx.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jsimdcpu.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jiss2flt.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jcgrass2.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jfss2fst.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\ji3dnflt.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jcqnt3dn.obj" />
+    <None Include="$(OutDir)\obj\global_intermediate\third_party\libjpeg_turbo\jcqntsse.obj" />
+  </ItemGroup>
+  <ItemGroup>
+    <assemble Include="simd\jccolss2-64.asm" />
+    <assemble Include="simd\jcgrass2-64.asm" />
+    <assemble Include="simd\jcqnts2f-64.asm" />
+    <assemble Include="simd\jcqnts2i-64.asm" />
+    <assemble Include="simd\jcsamss2-64.asm" />
+    <assemble Include="simd\jdcolss2-64.asm" />
+    <assemble Include="simd\jdmerss2-64.asm" />
+    <assemble Include="simd\jdsamss2-64.asm" />
+    <assemble Include="simd\jfss2fst-64.asm" />
+    <assemble Include="simd\jfss2int-64.asm" />
+    <assemble Include="simd\jfsseflt-64.asm" />
+    <assemble Include="simd\jiss2flt-64.asm" />
+    <assemble Include="simd\jiss2fst-64.asm" />
+    <assemble Include="simd\jiss2int-64.asm" />
+    <assemble Include="simd\jiss2red-64.asm" />
+  </ItemGroup>
+</Project>

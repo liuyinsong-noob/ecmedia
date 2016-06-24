@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{b95d3f65-529c-421f-a2a4-779290f9023e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{1ed2bb64-ad3c-49b3-9fa7-bc25d2035ddd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main\source\i_video_render.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\video_render_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\incoming_video_stream.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\video_render_frames.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\external\video_render_external_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main\source\incoming_video_stream.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\video_render_frames.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\external\video_render_external_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

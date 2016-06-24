@@ -1,0 +1,310 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3F96FEED15C90770004FCC3F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F96FEEC15C90770004FCC3F /* Foundation.framework */; };
+		3F96FF0115C9079E004FCC3F /* audio_conference_mixer_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96FEFF15C9079E004FCC3F /* audio_conference_mixer_defines.h */; };
+		3F96FF0215C9079E004FCC3F /* audio_conference_mixer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96FF0015C9079E004FCC3F /* audio_conference_mixer.h */; };
+		3F96FF0E15C907A7004FCC3F /* audio_conference_mixer_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3F96FF0315C907A7004FCC3F /* audio_conference_mixer_impl.cc */; };
+		3F96FF0F15C907A7004FCC3F /* audio_conference_mixer_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96FF0415C907A7004FCC3F /* audio_conference_mixer_impl.h */; };
+		3F96FF1015C907A7004FCC3F /* audio_frame_manipulator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3F96FF0515C907A7004FCC3F /* audio_frame_manipulator.cc */; };
+		3F96FF1115C907A7004FCC3F /* audio_frame_manipulator.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96FF0615C907A7004FCC3F /* audio_frame_manipulator.h */; };
+		3F96FF1215C907A7004FCC3F /* level_indicator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3F96FF0715C907A7004FCC3F /* level_indicator.cc */; };
+		3F96FF1315C907A7004FCC3F /* level_indicator.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96FF0815C907A7004FCC3F /* level_indicator.h */; };
+		3F96FF1415C907A7004FCC3F /* memory_pool_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96FF0915C907A7004FCC3F /* memory_pool_posix.h */; };
+		3F96FF1515C907A8004FCC3F /* memory_pool_win.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96FF0A15C907A7004FCC3F /* memory_pool_win.h */; };
+		3F96FF1615C907A8004FCC3F /* memory_pool.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96FF0B15C907A7004FCC3F /* memory_pool.h */; };
+		3F96FF1715C907A8004FCC3F /* time_scheduler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3F96FF0C15C907A7004FCC3F /* time_scheduler.cc */; };
+		3F96FF1815C907A8004FCC3F /* time_scheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96FF0D15C907A7004FCC3F /* time_scheduler.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3F96FEE915C90770004FCC3F /* libaudio_conference_mixer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaudio_conference_mixer.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F96FEEC15C90770004FCC3F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3F96FEFF15C9079E004FCC3F /* audio_conference_mixer_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audio_conference_mixer_defines.h; path = include/audio_conference_mixer_defines.h; sourceTree = "<group>"; };
+		3F96FF0015C9079E004FCC3F /* audio_conference_mixer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audio_conference_mixer.h; path = include/audio_conference_mixer.h; sourceTree = "<group>"; };
+		3F96FF0315C907A7004FCC3F /* audio_conference_mixer_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = audio_conference_mixer_impl.cc; path = source/audio_conference_mixer_impl.cc; sourceTree = "<group>"; };
+		3F96FF0415C907A7004FCC3F /* audio_conference_mixer_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audio_conference_mixer_impl.h; path = source/audio_conference_mixer_impl.h; sourceTree = "<group>"; };
+		3F96FF0515C907A7004FCC3F /* audio_frame_manipulator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = audio_frame_manipulator.cc; path = source/audio_frame_manipulator.cc; sourceTree = "<group>"; };
+		3F96FF0615C907A7004FCC3F /* audio_frame_manipulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audio_frame_manipulator.h; path = source/audio_frame_manipulator.h; sourceTree = "<group>"; };
+		3F96FF0715C907A7004FCC3F /* level_indicator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = level_indicator.cc; path = source/level_indicator.cc; sourceTree = "<group>"; };
+		3F96FF0815C907A7004FCC3F /* level_indicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = level_indicator.h; path = source/level_indicator.h; sourceTree = "<group>"; };
+		3F96FF0915C907A7004FCC3F /* memory_pool_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = memory_pool_posix.h; path = source/memory_pool_posix.h; sourceTree = "<group>"; };
+		3F96FF0A15C907A7004FCC3F /* memory_pool_win.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = memory_pool_win.h; path = source/memory_pool_win.h; sourceTree = "<group>"; };
+		3F96FF0B15C907A7004FCC3F /* memory_pool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = memory_pool.h; path = source/memory_pool.h; sourceTree = "<group>"; };
+		3F96FF0C15C907A7004FCC3F /* time_scheduler.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = time_scheduler.cc; path = source/time_scheduler.cc; sourceTree = "<group>"; };
+		3F96FF0D15C907A7004FCC3F /* time_scheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = time_scheduler.h; path = source/time_scheduler.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3F96FEE615C90770004FCC3F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F96FEED15C90770004FCC3F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3F96FEDE15C90770004FCC3F = {
+			isa = PBXGroup;
+			children = (
+				3F96FEFE15C9078D004FCC3F /* inc */,
+				3F96FEFD15C9078C004FCC3F /* src */,
+				3F96FEEB15C90770004FCC3F /* Frameworks */,
+				3F96FEEA15C90770004FCC3F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3F96FEEA15C90770004FCC3F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3F96FEE915C90770004FCC3F /* libaudio_conference_mixer.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3F96FEEB15C90770004FCC3F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3F96FEEC15C90770004FCC3F /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3F96FEFD15C9078C004FCC3F /* src */ = {
+			isa = PBXGroup;
+			children = (
+				3F96FF0315C907A7004FCC3F /* audio_conference_mixer_impl.cc */,
+				3F96FF0415C907A7004FCC3F /* audio_conference_mixer_impl.h */,
+				3F96FF0515C907A7004FCC3F /* audio_frame_manipulator.cc */,
+				3F96FF0615C907A7004FCC3F /* audio_frame_manipulator.h */,
+				3F96FF0715C907A7004FCC3F /* level_indicator.cc */,
+				3F96FF0815C907A7004FCC3F /* level_indicator.h */,
+				3F96FF0915C907A7004FCC3F /* memory_pool_posix.h */,
+				3F96FF0A15C907A7004FCC3F /* memory_pool_win.h */,
+				3F96FF0B15C907A7004FCC3F /* memory_pool.h */,
+				3F96FF0C15C907A7004FCC3F /* time_scheduler.cc */,
+				3F96FF0D15C907A7004FCC3F /* time_scheduler.h */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		3F96FEFE15C9078D004FCC3F /* inc */ = {
+			isa = PBXGroup;
+			children = (
+				3F96FEFF15C9079E004FCC3F /* audio_conference_mixer_defines.h */,
+				3F96FF0015C9079E004FCC3F /* audio_conference_mixer.h */,
+			);
+			name = inc;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		3F96FEE715C90770004FCC3F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F96FF0115C9079E004FCC3F /* audio_conference_mixer_defines.h in Headers */,
+				3F96FF0215C9079E004FCC3F /* audio_conference_mixer.h in Headers */,
+				3F96FF0F15C907A7004FCC3F /* audio_conference_mixer_impl.h in Headers */,
+				3F96FF1115C907A7004FCC3F /* audio_frame_manipulator.h in Headers */,
+				3F96FF1315C907A7004FCC3F /* level_indicator.h in Headers */,
+				3F96FF1415C907A7004FCC3F /* memory_pool_posix.h in Headers */,
+				3F96FF1515C907A8004FCC3F /* memory_pool_win.h in Headers */,
+				3F96FF1615C907A8004FCC3F /* memory_pool.h in Headers */,
+				3F96FF1815C907A8004FCC3F /* time_scheduler.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		3F96FEE815C90770004FCC3F /* audio_conference_mixer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3F96FEF615C90770004FCC3F /* Build configuration list for PBXNativeTarget "audio_conference_mixer" */;
+			buildPhases = (
+				3F96FEE515C90770004FCC3F /* Sources */,
+				3F96FEE615C90770004FCC3F /* Frameworks */,
+				3F96FEE715C90770004FCC3F /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = audio_conference_mixer;
+			productName = audio_conference_mixer;
+			productReference = 3F96FEE915C90770004FCC3F /* libaudio_conference_mixer.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3F96FEE015C90770004FCC3F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = hisunsray;
+			};
+			buildConfigurationList = 3F96FEE315C90770004FCC3F /* Build configuration list for PBXProject "audio_conference_mixer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3F96FEDE15C90770004FCC3F;
+			productRefGroup = 3F96FEEA15C90770004FCC3F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3F96FEE815C90770004FCC3F /* audio_conference_mixer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3F96FEE515C90770004FCC3F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F96FF0E15C907A7004FCC3F /* audio_conference_mixer_impl.cc in Sources */,
+				3F96FF1015C907A7004FCC3F /* audio_frame_manipulator.cc in Sources */,
+				3F96FF1215C907A7004FCC3F /* level_indicator.cc in Sources */,
+				3F96FF1715C907A8004FCC3F /* time_scheduler.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3F96FEF415C90770004FCC3F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		3F96FEF515C90770004FCC3F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3F96FEF715C90770004FCC3F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				DSTROOT = /tmp/audio_conference_mixer.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = WEBRTC_POSIX;
+				HEADER_SEARCH_PATHS = (
+					../,
+					../interface,
+					../audioprocess/include,
+					../utility/include,
+					../audio_coding/main/include,
+					../../system_wrappers/interface,
+					../../system_wrappers/source,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../IOSProject/out/baselib;
+				VALID_ARCHS = "armv7 arm64";
+			};
+			name = Debug;
+		};
+		3F96FEF815C90770004FCC3F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				DSTROOT = /tmp/audio_conference_mixer.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = WEBRTC_POSIX;
+				HEADER_SEARCH_PATHS = (
+					../,
+					../interface,
+					../audioprocess/include,
+					../utility/include,
+					../audio_coding/main/include,
+					../../system_wrappers/interface,
+					../../system_wrappers/source,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../IOSProject/out/baselib;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 arm64";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3F96FEE315C90770004FCC3F /* Build configuration list for PBXProject "audio_conference_mixer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3F96FEF415C90770004FCC3F /* Debug */,
+				3F96FEF515C90770004FCC3F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3F96FEF615C90770004FCC3F /* Build configuration list for PBXNativeTarget "audio_conference_mixer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3F96FEF715C90770004FCC3F /* Debug */,
+				3F96FEF815C90770004FCC3F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3F96FEE015C90770004FCC3F /* Project object */;
+}

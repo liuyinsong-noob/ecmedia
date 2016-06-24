@@ -1,0 +1,14 @@
+prefix=/User/leesean/Desktop/newffmpeg/ffmpeg-android-bin
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: libavdevice
+Description: FFmpeg device handling library
+Version: 55.0.100
+Requires: libavfilter = 3.47.103, libavformat = 55.0.100
+Requires.private: 
+Conflicts:
+Libs: -L${libdir} -lavdevice 
+Libs.private: 
+Cflags: -I${includedir}

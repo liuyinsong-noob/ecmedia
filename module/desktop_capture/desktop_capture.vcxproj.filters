@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="desktop_capture">
+      <UniqueIdentifier>{0d069ca4-96f7-4c1d-8aee-3dd87f84d86f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="desktop_capture\source">
+      <UniqueIdentifier>{d5d72dc0-48e4-41c8-83cc-efb767ad1049}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="desktop_capture\source\win">
+      <UniqueIdentifier>{bf57f701-f241-4110-bc8a-2637bd0389e2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\win\cursor.h">
+      <Filter>desktop_capture\source\win</Filter>
+    </ClInclude>
+    <ClInclude Include="source\win\desktop.h">
+      <Filter>desktop_capture\source\win</Filter>
+    </ClInclude>
+    <ClInclude Include="source\win\scoped_gdi_object.h">
+      <Filter>desktop_capture\source\win</Filter>
+    </ClInclude>
+    <ClInclude Include="source\win\scoped_thread_desktop.h">
+      <Filter>desktop_capture\source\win</Filter>
+    </ClInclude>
+    <ClInclude Include="source\win\screen_capture_utils.h">
+      <Filter>desktop_capture\source\win</Filter>
+    </ClInclude>
+    <ClInclude Include="source\win\screen_capturer_win_gdi.h">
+      <Filter>desktop_capture\source\win</Filter>
+    </ClInclude>
+    <ClInclude Include="source\win\screen_capturer_win_magnifier.h">
+      <Filter>desktop_capture\source\win</Filter>
+    </ClInclude>
+    <ClInclude Include="source\win\window_capture_utils.h">
+      <Filter>desktop_capture\source\win</Filter>
+    </ClInclude>
+    <ClInclude Include="source\cropped_desktop_frame.h">
+      <Filter>desktop_capture\source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\cropping_window_capturer.h">
+      <Filter>desktop_capture\source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\desktop_and_cursor_composer.h">
+      <Filter>desktop_capture\source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\desktop_capture_options.h">
+      <Filter>desktop_capture\source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\desktop_capture_types.h">
+      <Filter>desktop_capture\source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\desktop_capturer.h">
+      <Filter>desktop_capture\source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\desktop_frame.h">
+      <Filter>desktop_capture\source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\desktop_frame_win.h">
+      <Filter>desktop_capture\source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\desktop_geometry.h">
+      <Filter>desktop_capture\source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\desktop_region.h">
+      <Filter>desktop_capture\source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\differ.h">
+      <Filter>desktop_capture\source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\differ_block.h">
+      <Filter>desktop_capture\source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\differ_block_sse2.h">
+      <Filter>desktop_capture\source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mouse_cursor.h">
+      <Filter>desktop_capture\source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mouse_cursor_monitor.h">
+      <Filter>desktop_capture\source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\screen_capture_frame_queue.h">
+      <Filter>desktop_capture\source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\screen_capturer.h">
+      <Filter>desktop_capture\source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\screen_capturer_helper.h">
+      <Filter>desktop_capture\source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\shared_desktop_frame.h">
+      <Filter>desktop_capture\source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\shared_memory.h">
+      <Filter>desktop_capture\source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\window_capturer.h">
+      <Filter>desktop_capture\source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\win\cursor.cc">
+      <Filter>desktop_capture\source\win</Filter>
+    </ClCompile>
+    <ClCompile Include="source\win\desktop.cc">
+      <Filter>desktop_capture\source\win</Filter>
+    </ClCompile>
+    <ClCompile Include="source\win\scoped_thread_desktop.cc">
+      <Filter>desktop_capture\source\win</Filter>
+    </ClCompile>
+    <ClCompile Include="source\win\screen_capture_utils.cc">
+      <Filter>desktop_capture\source\win</Filter>
+    </ClCompile>
+    <ClCompile Include="source\win\screen_capturer_win_gdi.cc">
+      <Filter>desktop_capture\source\win</Filter>
+    </ClCompile>
+    <ClCompile Include="source\win\screen_capturer_win_magnifier.cc">
+      <Filter>desktop_capture\source\win</Filter>
+    </ClCompile>
+    <ClCompile Include="source\win\window_capture_utils.cc">
+      <Filter>desktop_capture\source\win</Filter>
+    </ClCompile>
+    <ClCompile Include="source\cropped_desktop_frame.cc">
+      <Filter>desktop_capture\source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\cropping_window_capturer.cc">
+      <Filter>desktop_capture\source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\cropping_window_capturer_win.cc">
+      <Filter>desktop_capture\source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\desktop_and_cursor_composer.cc">
+      <Filter>desktop_capture\source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\desktop_capture_options.cc">
+      <Filter>desktop_capture\source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\desktop_frame.cc">
+      <Filter>desktop_capture\source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\desktop_frame_win.cc">
+      <Filter>desktop_capture\source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\desktop_geometry.cc">
+      <Filter>desktop_capture\source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\desktop_region.cc">
+      <Filter>desktop_capture\source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\differ.cc">
+      <Filter>desktop_capture\source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\differ_block.cc">
+      <Filter>desktop_capture\source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\differ_block_sse2.cc">
+      <Filter>desktop_capture\source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mouse_cursor.cc">
+      <Filter>desktop_capture\source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mouse_cursor_monitor_win.cc">
+      <Filter>desktop_capture\source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\screen_capture_frame_queue.cc">
+      <Filter>desktop_capture\source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\screen_capturer.cc">
+      <Filter>desktop_capture\source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\screen_capturer_helper.cc">
+      <Filter>desktop_capture\source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\screen_capturer_win.cc">
+      <Filter>desktop_capture\source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\shared_desktop_frame.cc">
+      <Filter>desktop_capture\source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\shared_memory.cc">
+      <Filter>desktop_capture\source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\window_capturer.cc">
+      <Filter>desktop_capture\source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\window_capturer_win.cc">
+      <Filter>desktop_capture\source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

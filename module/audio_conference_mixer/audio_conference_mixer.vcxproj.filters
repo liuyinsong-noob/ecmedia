@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{c500f87a-f000-4c7d-b029-7af5d6ded2e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{866df9c6-e600-49c4-b872-090eddcabe0d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\audio_conference_mixer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\audio_conference_mixer_defines.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\audio_conference_mixer_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\audio_frame_manipulator.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\level_indicator.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\memory_pool.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\memory_pool_win.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\time_scheduler.h">
+      <Filter>source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\audio_conference_mixer_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\audio_frame_manipulator.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\level_indicator.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\time_scheduler.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

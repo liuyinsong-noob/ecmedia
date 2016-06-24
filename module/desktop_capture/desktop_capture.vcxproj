@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{19FB7379-3D2A-40D4-8AA7-A513891666A4}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>desktop_capture</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IntDir>$(SolutionDir)build\$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)build\$(Configuration)\lib</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)build\$(Configuration)\lib\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)\obj\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;V8_DEPRECATION_WARNINGS;EXPAT_RELATIVE_PATH;WEBRTC_WIN;_WIN32_WINNT=0x0601;WINVER=0x0601;WIN32;_WINDOWS;NOMINMAX;PSAPI_VERSION=1;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_ATL_NO_OPENGL;_SECURE_ATL;_HAS_EXCEPTIONS=0;_WINSOCK_DEPRECATED_NO_WARNINGS;CHROMIUM_BUILD;TOOLKIT_VIEWS=1;USE_AURA=1;USE_ASH=1;USE_DEFAULT_RENDER_THEME=1;USE_LIBJPEG_TURBO=1;ENABLE_ONE_CLICK_SIGNIN;ENABLE_PRE_SYNC_BACKUP;ENABLE_REMOTING=1;ENABLE_WEBRTC=1;ENABLE_MEDIA_ROUTER=1;ENABLE_PEPPER_CDMS;ENABLE_CONFIGURATION_POLICY;ENABLE_NOTIFICATIONS;ENABLE_HIDPI=1;DONT_EMBED_BUILD_METADATA;NO_TCMALLOC;ALLOCATOR_SHIM;__STD_C;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;NTDDI_VERSION=0x06010000;_USING_V110_SDK71_;ENABLE_TASK_MANAGER=1;ENABLE_EXTENSIONS=1;ENABLE_PLUGIN_INSTALLATION=1;ENABLE_PLUGINS=1;ENABLE_SESSION_SERVICE=1;ENABLE_THEMES=1;ENABLE_AUTOFILL_DIALOG=1;ENABLE_BACKGROUND=1;ENABLE_GOOGLE_NOW=1;CLD_VERSION=2;ENABLE_PRINTING=1;ENABLE_BASIC_PRINTING=1;ENABLE_PRINT_PREVIEW=1;ENABLE_SPELLCHECK=1;ENABLE_CAPTIVE_PORTAL_DETECTION=1;ENABLE_APP_LIST=1;ENABLE_SETTINGS_APP=1;ENABLE_SUPERVISED_USERS=1;ENABLE_MDNS=1;ENABLE_SERVICE_DISCOVERY=1;ENABLE_WIFI_BOOTSTRAPPING=1;V8_USE_EXTERNAL_STARTUP_DATA;FULL_SAFE_BROWSING;SAFE_BROWSING_CSD;SAFE_BROWSING_DB_LOCAL;SAFE_BROWSING_SERVICE;FEATURE_ENABLE_SSL;SSL_USE_OPENSSL;HAVE_OPENSSL_SSL_H;USE_LIBPCI=1;USE_OPENSSL=1;__STDC_CONSTANT_MACROS;__STDC_FORMAT_MACROS;DYNAMIC_ANNOTATIONS_ENABLED=1;WTF_USE_DYNAMIC_ANNOTATIONS=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../.;../.;../interface;source/win;source;../../system_wrappers\interface;../desktop_capture</AdditionalIncludeDirectories>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WEBRTC_SVNREVISION="n/a";_WIN32_WINNT=0x0601;WINVER=0x0601;WIN32;_WINDOWS;NOMINMAX;VIDEOCODEC_H264;VIDEOCODEC_VP8;PSAPI_VERSION=1;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_ATL_NO_OPENGL;_HAS_EXCEPTIONS=0;_SECURE_ATL;CHROMIUM_BUILD;TOOLKIT_VIEWS=1;ENABLE_ONE_CLICK_SIGNIN;ENABLE_REMOTING=1;ENABLE_WEBRTC=1;ENABLE_CONFIGURATION_POLICY;ENABLE_INPUT_SPEECH;ENABLE_NOTIFICATIONS;ENABLE_GPU=1;ENABLE_EGLIMAGE=1;USE_SKIA=1;__STD_C;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ENABLE_TASK_MANAGER=1;ENABLE_WEB_INTENTS=1;ENABLE_EXTENSIONS=1;ENABLE_PLUGIN_INSTALLATION=1;ENABLE_PROTECTOR_SERVICE=1;ENABLE_SESSION_SERVICE=1;ENABLE_THEMES=1;ENABLE_BACKGROUND=1;ENABLE_PROMO_RESOURCE_SERVICE=1;ENABLE_AUTOMATION=1;WEBRTC_WIN;__STDC_FORMAT_MACROS;DYNAMIC_ANNOTATIONS_ENABLED=1;WTF_USE_DYNAMIC_ANNOTATIONS=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../;source;source/win;../../system_wrappers\interface;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>false</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
+      <LinkTimeCodeGeneration>
+      </LinkTimeCodeGeneration>
+      <IgnoreAllDefaultLibraries>
+      </IgnoreAllDefaultLibraries>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="source\cropped_desktop_frame.h" />
+    <ClInclude Include="source\cropping_window_capturer.h" />
+    <ClInclude Include="source\desktop_and_cursor_composer.h" />
+    <ClInclude Include="source\desktop_capturer.h" />
+    <ClInclude Include="source\desktop_capture_options.h" />
+    <ClInclude Include="source\desktop_capture_types.h" />
+    <ClInclude Include="source\desktop_frame.h" />
+    <ClInclude Include="source\desktop_frame_win.h" />
+    <ClInclude Include="source\desktop_geometry.h" />
+    <ClInclude Include="source\desktop_region.h" />
+    <ClInclude Include="source\differ.h" />
+    <ClInclude Include="source\differ_block.h" />
+    <ClInclude Include="source\differ_block_sse2.h" />
+    <ClInclude Include="source\mouse_cursor.h" />
+    <ClInclude Include="source\mouse_cursor_monitor.h" />
+    <ClInclude Include="source\screen_capturer.h" />
+    <ClInclude Include="source\screen_capturer_helper.h" />
+    <ClInclude Include="source\screen_capture_frame_queue.h" />
+    <ClInclude Include="source\shared_desktop_frame.h" />
+    <ClInclude Include="source\shared_memory.h" />
+    <ClInclude Include="source\window_capturer.h" />
+    <ClInclude Include="source\win\cursor.h" />
+    <ClInclude Include="source\win\desktop.h" />
+    <ClInclude Include="source\win\scoped_gdi_object.h" />
+    <ClInclude Include="source\win\scoped_thread_desktop.h" />
+    <ClInclude Include="source\win\screen_capturer_win_gdi.h" />
+    <ClInclude Include="source\win\screen_capturer_win_magnifier.h" />
+    <ClInclude Include="source\win\screen_capture_utils.h" />
+    <ClInclude Include="source\win\window_capture_utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\cropped_desktop_frame.cc" />
+    <ClCompile Include="source\cropping_window_capturer.cc" />
+    <ClCompile Include="source\cropping_window_capturer_win.cc" />
+    <ClCompile Include="source\desktop_and_cursor_composer.cc" />
+    <ClCompile Include="source\desktop_capture_options.cc" />
+    <ClCompile Include="source\desktop_frame.cc" />
+    <ClCompile Include="source\desktop_frame_win.cc" />
+    <ClCompile Include="source\desktop_geometry.cc" />
+    <ClCompile Include="source\desktop_region.cc" />
+    <ClCompile Include="source\differ.cc" />
+    <ClCompile Include="source\differ_block.cc" />
+    <ClCompile Include="source\differ_block_sse2.cc" />
+    <ClCompile Include="source\mouse_cursor.cc" />
+    <ClCompile Include="source\mouse_cursor_monitor_win.cc" />
+    <ClCompile Include="source\screen_capturer.cc" />
+    <ClCompile Include="source\screen_capturer_helper.cc" />
+    <ClCompile Include="source\screen_capturer_win.cc" />
+    <ClCompile Include="source\screen_capture_frame_queue.cc" />
+    <ClCompile Include="source\shared_desktop_frame.cc" />
+    <ClCompile Include="source\shared_memory.cc" />
+    <ClCompile Include="source\window_capturer.cc" />
+    <ClCompile Include="source\window_capturer_win.cc" />
+    <ClCompile Include="source\win\cursor.cc" />
+    <ClCompile Include="source\win\desktop.cc" />
+    <ClCompile Include="source\win\scoped_thread_desktop.cc" />
+    <ClCompile Include="source\win\screen_capturer_win_gdi.cc" />
+    <ClCompile Include="source\win\screen_capturer_win_magnifier.cc" />
+    <ClCompile Include="source\win\screen_capture_utils.cc" />
+    <ClCompile Include="source\win\window_capture_utils.cc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

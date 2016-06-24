@@ -1,0 +1,4 @@
+1、解压yasm.
+2、到yasm目录下
+./configure
+make install

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{60c8e10b-7c56-42b4-b0b4-f891948613dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{0fc38bbd-f78d-4466-ba97-dfedc712d020}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main\source\device_info_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\video_capture_factory.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\video_capture_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main\source\device_info_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\video_capture_config.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\video_capture_delay.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\video_capture_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\include\video_capture.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="main\include\video_capture_defines.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="main\include\video_capture_factory.h">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

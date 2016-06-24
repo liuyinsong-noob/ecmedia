@@ -1,0 +1,480 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3F96002615C90BD7004FCC3F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F96002515C90BD7004FCC3F /* Foundation.framework */; };
+		3F96004215C90C1B004FCC3F /* eX_call.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96003815C90C1B004FCC3F /* eX_call.h */; };
+		3F96004315C90C1B004FCC3F /* eX_message.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96003915C90C1B004FCC3F /* eX_message.h */; };
+		3F96004415C90C1B004FCC3F /* eX_options.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96003A15C90C1B004FCC3F /* eX_options.h */; };
+		3F96004515C90C1B004FCC3F /* eX_publish.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96003B15C90C1B004FCC3F /* eX_publish.h */; };
+		3F96004615C90C1B004FCC3F /* eX_refer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96003C15C90C1B004FCC3F /* eX_refer.h */; };
+		3F96004715C90C1B004FCC3F /* eX_register.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96003D15C90C1B004FCC3F /* eX_register.h */; };
+		3F96004815C90C1B004FCC3F /* eX_setup.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96003E15C90C1B004FCC3F /* eX_setup.h */; };
+		3F96004915C90C1B004FCC3F /* eX_subscribe.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96003F15C90C1B004FCC3F /* eX_subscribe.h */; };
+		3F96004A15C90C1B004FCC3F /* eXosip_transport_hook.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96004015C90C1B004FCC3F /* eXosip_transport_hook.h */; };
+		3F96004B15C90C1B004FCC3F /* eXosip.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96004115C90C1B004FCC3F /* eXosip.h */; };
+		3F96007615C90C26004FCC3F /* eXcall_api.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96004C15C90C26004FCC3F /* eXcall_api.c */; };
+		3F96007715C90C26004FCC3F /* eXconf.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96004D15C90C26004FCC3F /* eXconf.c */; };
+		3F96007815C90C26004FCC3F /* eXinsubscription_api.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96004E15C90C26004FCC3F /* eXinsubscription_api.c */; };
+		3F96007915C90C26004FCC3F /* eXmessage_api.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96004F15C90C26004FCC3F /* eXmessage_api.c */; };
+		3F96007A15C90C26004FCC3F /* eXoptions_api.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96005015C90C26004FCC3F /* eXoptions_api.c */; };
+		3F96007B15C90C26004FCC3F /* eXosip_transport_hook.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96005115C90C26004FCC3F /* eXosip_transport_hook.c */; };
+		3F96007C15C90C26004FCC3F /* eXosip.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96005215C90C26004FCC3F /* eXosip.c */; };
+		3F96007D15C90C26004FCC3F /* eXosip2.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96005315C90C26004FCC3F /* eXosip2.h */; };
+		3F96007E15C90C26004FCC3F /* eXpublish_api.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96005415C90C26004FCC3F /* eXpublish_api.c */; };
+		3F96007F15C90C26004FCC3F /* eXrefer_api.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96005515C90C26004FCC3F /* eXrefer_api.c */; };
+		3F96008015C90C26004FCC3F /* eXregister_api.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96005615C90C26004FCC3F /* eXregister_api.c */; };
+		3F96008115C90C26004FCC3F /* eXsubscription_api.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96005715C90C26004FCC3F /* eXsubscription_api.c */; };
+		3F96008215C90C26004FCC3F /* eXtl_dtls.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96005815C90C26004FCC3F /* eXtl_dtls.c */; };
+		3F96008315C90C26004FCC3F /* eXtl_tcp.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96005915C90C26004FCC3F /* eXtl_tcp.c */; };
+		3F96008415C90C26004FCC3F /* eXtl_tls.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96005A15C90C26004FCC3F /* eXtl_tls.c */; };
+		3F96008515C90C26004FCC3F /* eXtl_udp.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96005B15C90C26004FCC3F /* eXtl_udp.c */; };
+		3F96008615C90C26004FCC3F /* eXtl.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96005C15C90C26004FCC3F /* eXtl.c */; };
+		3F96008715C90C26004FCC3F /* eXtransport.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96005D15C90C26004FCC3F /* eXtransport.c */; };
+		3F96008815C90C26004FCC3F /* eXtransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96005E15C90C26004FCC3F /* eXtransport.h */; };
+		3F96008915C90C26004FCC3F /* eXutils.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96005F15C90C26004FCC3F /* eXutils.c */; };
+		3F96008A15C90C26004FCC3F /* inet_ntop.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96006015C90C26004FCC3F /* inet_ntop.c */; };
+		3F96008B15C90C26004FCC3F /* inet_ntop.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96006115C90C26004FCC3F /* inet_ntop.h */; };
+		3F96008C15C90C26004FCC3F /* jauth.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96006215C90C26004FCC3F /* jauth.c */; };
+		3F96008D15C90C26004FCC3F /* jcall.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96006315C90C26004FCC3F /* jcall.c */; };
+		3F96008E15C90C26004FCC3F /* jcallback.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96006415C90C26004FCC3F /* jcallback.c */; };
+		3F96008F15C90C26004FCC3F /* jdialog.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96006515C90C26004FCC3F /* jdialog.c */; };
+		3F96009015C90C26004FCC3F /* jevents.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96006615C90C26004FCC3F /* jevents.c */; };
+		3F96009115C90C26004FCC3F /* jnotify.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96006715C90C26004FCC3F /* jnotify.c */; };
+		3F96009215C90C26004FCC3F /* jpipe.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96006815C90C26004FCC3F /* jpipe.c */; };
+		3F96009315C90C26004FCC3F /* jpipe.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96006915C90C26004FCC3F /* jpipe.h */; };
+		3F96009415C90C26004FCC3F /* jpublish.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96006A15C90C26004FCC3F /* jpublish.c */; };
+		3F96009515C90C26004FCC3F /* jreg.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96006B15C90C26004FCC3F /* jreg.c */; };
+		3F96009615C90C26004FCC3F /* jrequest.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96006C15C90C26004FCC3F /* jrequest.c */; };
+		3F96009715C90C26004FCC3F /* jresponse.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96006D15C90C26004FCC3F /* jresponse.c */; };
+		3F96009815C90C26004FCC3F /* jsubscribe.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96006E15C90C26004FCC3F /* jsubscribe.c */; };
+		3F96009915C90C26004FCC3F /* milenage.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96006F15C90C26004FCC3F /* milenage.c */; };
+		3F96009A15C90C26004FCC3F /* milenage.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96007015C90C26004FCC3F /* milenage.h */; };
+		3F96009B15C90C26004FCC3F /* misc.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96007115C90C26004FCC3F /* misc.c */; };
+		3F96009C15C90C26004FCC3F /* rijndael.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96007215C90C26004FCC3F /* rijndael.c */; };
+		3F96009D15C90C26004FCC3F /* rijndael.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F96007315C90C26004FCC3F /* rijndael.h */; };
+		3F96009E15C90C26004FCC3F /* sdp_offans.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96007415C90C26004FCC3F /* sdp_offans.c */; };
+		3F96009F15C90C26004FCC3F /* udp.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F96007515C90C26004FCC3F /* udp.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3F96002215C90BD7004FCC3F /* libexosip.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libexosip.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F96002515C90BD7004FCC3F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3F96003815C90C1B004FCC3F /* eX_call.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = eX_call.h; path = include/eXosip2/eX_call.h; sourceTree = "<group>"; };
+		3F96003915C90C1B004FCC3F /* eX_message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = eX_message.h; path = include/eXosip2/eX_message.h; sourceTree = "<group>"; };
+		3F96003A15C90C1B004FCC3F /* eX_options.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = eX_options.h; path = include/eXosip2/eX_options.h; sourceTree = "<group>"; };
+		3F96003B15C90C1B004FCC3F /* eX_publish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = eX_publish.h; path = include/eXosip2/eX_publish.h; sourceTree = "<group>"; };
+		3F96003C15C90C1B004FCC3F /* eX_refer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = eX_refer.h; path = include/eXosip2/eX_refer.h; sourceTree = "<group>"; };
+		3F96003D15C90C1B004FCC3F /* eX_register.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = eX_register.h; path = include/eXosip2/eX_register.h; sourceTree = "<group>"; };
+		3F96003E15C90C1B004FCC3F /* eX_setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = eX_setup.h; path = include/eXosip2/eX_setup.h; sourceTree = "<group>"; };
+		3F96003F15C90C1B004FCC3F /* eX_subscribe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = eX_subscribe.h; path = include/eXosip2/eX_subscribe.h; sourceTree = "<group>"; };
+		3F96004015C90C1B004FCC3F /* eXosip_transport_hook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = eXosip_transport_hook.h; path = include/eXosip2/eXosip_transport_hook.h; sourceTree = "<group>"; };
+		3F96004115C90C1B004FCC3F /* eXosip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = eXosip.h; path = include/eXosip2/eXosip.h; sourceTree = "<group>"; };
+		3F96004C15C90C26004FCC3F /* eXcall_api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = eXcall_api.c; path = source/eXcall_api.c; sourceTree = "<group>"; };
+		3F96004D15C90C26004FCC3F /* eXconf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = eXconf.c; path = source/eXconf.c; sourceTree = "<group>"; };
+		3F96004E15C90C26004FCC3F /* eXinsubscription_api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = eXinsubscription_api.c; path = source/eXinsubscription_api.c; sourceTree = "<group>"; };
+		3F96004F15C90C26004FCC3F /* eXmessage_api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = eXmessage_api.c; path = source/eXmessage_api.c; sourceTree = "<group>"; };
+		3F96005015C90C26004FCC3F /* eXoptions_api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = eXoptions_api.c; path = source/eXoptions_api.c; sourceTree = "<group>"; };
+		3F96005115C90C26004FCC3F /* eXosip_transport_hook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = eXosip_transport_hook.c; path = source/eXosip_transport_hook.c; sourceTree = "<group>"; };
+		3F96005215C90C26004FCC3F /* eXosip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = eXosip.c; path = source/eXosip.c; sourceTree = "<group>"; };
+		3F96005315C90C26004FCC3F /* eXosip2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = eXosip2.h; path = source/eXosip2.h; sourceTree = "<group>"; };
+		3F96005415C90C26004FCC3F /* eXpublish_api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = eXpublish_api.c; path = source/eXpublish_api.c; sourceTree = "<group>"; };
+		3F96005515C90C26004FCC3F /* eXrefer_api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = eXrefer_api.c; path = source/eXrefer_api.c; sourceTree = "<group>"; };
+		3F96005615C90C26004FCC3F /* eXregister_api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = eXregister_api.c; path = source/eXregister_api.c; sourceTree = "<group>"; };
+		3F96005715C90C26004FCC3F /* eXsubscription_api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = eXsubscription_api.c; path = source/eXsubscription_api.c; sourceTree = "<group>"; };
+		3F96005815C90C26004FCC3F /* eXtl_dtls.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = eXtl_dtls.c; path = source/eXtl_dtls.c; sourceTree = "<group>"; };
+		3F96005915C90C26004FCC3F /* eXtl_tcp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = eXtl_tcp.c; path = source/eXtl_tcp.c; sourceTree = "<group>"; };
+		3F96005A15C90C26004FCC3F /* eXtl_tls.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = eXtl_tls.c; path = source/eXtl_tls.c; sourceTree = "<group>"; };
+		3F96005B15C90C26004FCC3F /* eXtl_udp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = eXtl_udp.c; path = source/eXtl_udp.c; sourceTree = "<group>"; };
+		3F96005C15C90C26004FCC3F /* eXtl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = eXtl.c; path = source/eXtl.c; sourceTree = "<group>"; };
+		3F96005D15C90C26004FCC3F /* eXtransport.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = eXtransport.c; path = source/eXtransport.c; sourceTree = "<group>"; };
+		3F96005E15C90C26004FCC3F /* eXtransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = eXtransport.h; path = source/eXtransport.h; sourceTree = "<group>"; };
+		3F96005F15C90C26004FCC3F /* eXutils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = eXutils.c; path = source/eXutils.c; sourceTree = "<group>"; };
+		3F96006015C90C26004FCC3F /* inet_ntop.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = inet_ntop.c; path = source/inet_ntop.c; sourceTree = "<group>"; };
+		3F96006115C90C26004FCC3F /* inet_ntop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = inet_ntop.h; path = source/inet_ntop.h; sourceTree = "<group>"; };
+		3F96006215C90C26004FCC3F /* jauth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jauth.c; path = source/jauth.c; sourceTree = "<group>"; };
+		3F96006315C90C26004FCC3F /* jcall.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcall.c; path = source/jcall.c; sourceTree = "<group>"; };
+		3F96006415C90C26004FCC3F /* jcallback.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcallback.c; path = source/jcallback.c; sourceTree = "<group>"; };
+		3F96006515C90C26004FCC3F /* jdialog.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdialog.c; path = source/jdialog.c; sourceTree = "<group>"; };
+		3F96006615C90C26004FCC3F /* jevents.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jevents.c; path = source/jevents.c; sourceTree = "<group>"; };
+		3F96006715C90C26004FCC3F /* jnotify.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jnotify.c; path = source/jnotify.c; sourceTree = "<group>"; };
+		3F96006815C90C26004FCC3F /* jpipe.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jpipe.c; path = source/jpipe.c; sourceTree = "<group>"; };
+		3F96006915C90C26004FCC3F /* jpipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jpipe.h; path = source/jpipe.h; sourceTree = "<group>"; };
+		3F96006A15C90C26004FCC3F /* jpublish.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jpublish.c; path = source/jpublish.c; sourceTree = "<group>"; };
+		3F96006B15C90C26004FCC3F /* jreg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jreg.c; path = source/jreg.c; sourceTree = "<group>"; };
+		3F96006C15C90C26004FCC3F /* jrequest.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jrequest.c; path = source/jrequest.c; sourceTree = "<group>"; };
+		3F96006D15C90C26004FCC3F /* jresponse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jresponse.c; path = source/jresponse.c; sourceTree = "<group>"; };
+		3F96006E15C90C26004FCC3F /* jsubscribe.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jsubscribe.c; path = source/jsubscribe.c; sourceTree = "<group>"; };
+		3F96006F15C90C26004FCC3F /* milenage.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = milenage.c; path = source/milenage.c; sourceTree = "<group>"; };
+		3F96007015C90C26004FCC3F /* milenage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = milenage.h; path = source/milenage.h; sourceTree = "<group>"; };
+		3F96007115C90C26004FCC3F /* misc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = misc.c; path = source/misc.c; sourceTree = "<group>"; };
+		3F96007215C90C26004FCC3F /* rijndael.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rijndael.c; path = source/rijndael.c; sourceTree = "<group>"; };
+		3F96007315C90C26004FCC3F /* rijndael.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rijndael.h; path = source/rijndael.h; sourceTree = "<group>"; };
+		3F96007415C90C26004FCC3F /* sdp_offans.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sdp_offans.c; path = source/sdp_offans.c; sourceTree = "<group>"; };
+		3F96007515C90C26004FCC3F /* udp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = udp.c; path = source/udp.c; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3F96001F15C90BD7004FCC3F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F96002615C90BD7004FCC3F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3F96001715C90BD7004FCC3F = {
+			isa = PBXGroup;
+			children = (
+				3F96003715C90BFF004FCC3F /* inc */,
+				3F96003615C90BFC004FCC3F /* src */,
+				3F96002415C90BD7004FCC3F /* Frameworks */,
+				3F96002315C90BD7004FCC3F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3F96002315C90BD7004FCC3F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3F96002215C90BD7004FCC3F /* libexosip.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3F96002415C90BD7004FCC3F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3F96002515C90BD7004FCC3F /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3F96003615C90BFC004FCC3F /* src */ = {
+			isa = PBXGroup;
+			children = (
+				3F96004C15C90C26004FCC3F /* eXcall_api.c */,
+				3F96004D15C90C26004FCC3F /* eXconf.c */,
+				3F96004E15C90C26004FCC3F /* eXinsubscription_api.c */,
+				3F96004F15C90C26004FCC3F /* eXmessage_api.c */,
+				3F96005015C90C26004FCC3F /* eXoptions_api.c */,
+				3F96005115C90C26004FCC3F /* eXosip_transport_hook.c */,
+				3F96005215C90C26004FCC3F /* eXosip.c */,
+				3F96005315C90C26004FCC3F /* eXosip2.h */,
+				3F96005415C90C26004FCC3F /* eXpublish_api.c */,
+				3F96005515C90C26004FCC3F /* eXrefer_api.c */,
+				3F96005615C90C26004FCC3F /* eXregister_api.c */,
+				3F96005715C90C26004FCC3F /* eXsubscription_api.c */,
+				3F96005815C90C26004FCC3F /* eXtl_dtls.c */,
+				3F96005915C90C26004FCC3F /* eXtl_tcp.c */,
+				3F96005A15C90C26004FCC3F /* eXtl_tls.c */,
+				3F96005B15C90C26004FCC3F /* eXtl_udp.c */,
+				3F96005C15C90C26004FCC3F /* eXtl.c */,
+				3F96005D15C90C26004FCC3F /* eXtransport.c */,
+				3F96005E15C90C26004FCC3F /* eXtransport.h */,
+				3F96005F15C90C26004FCC3F /* eXutils.c */,
+				3F96006015C90C26004FCC3F /* inet_ntop.c */,
+				3F96006115C90C26004FCC3F /* inet_ntop.h */,
+				3F96006215C90C26004FCC3F /* jauth.c */,
+				3F96006315C90C26004FCC3F /* jcall.c */,
+				3F96006415C90C26004FCC3F /* jcallback.c */,
+				3F96006515C90C26004FCC3F /* jdialog.c */,
+				3F96006615C90C26004FCC3F /* jevents.c */,
+				3F96006715C90C26004FCC3F /* jnotify.c */,
+				3F96006815C90C26004FCC3F /* jpipe.c */,
+				3F96006915C90C26004FCC3F /* jpipe.h */,
+				3F96006A15C90C26004FCC3F /* jpublish.c */,
+				3F96006B15C90C26004FCC3F /* jreg.c */,
+				3F96006C15C90C26004FCC3F /* jrequest.c */,
+				3F96006D15C90C26004FCC3F /* jresponse.c */,
+				3F96006E15C90C26004FCC3F /* jsubscribe.c */,
+				3F96006F15C90C26004FCC3F /* milenage.c */,
+				3F96007015C90C26004FCC3F /* milenage.h */,
+				3F96007115C90C26004FCC3F /* misc.c */,
+				3F96007215C90C26004FCC3F /* rijndael.c */,
+				3F96007315C90C26004FCC3F /* rijndael.h */,
+				3F96007415C90C26004FCC3F /* sdp_offans.c */,
+				3F96007515C90C26004FCC3F /* udp.c */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		3F96003715C90BFF004FCC3F /* inc */ = {
+			isa = PBXGroup;
+			children = (
+				3F96003815C90C1B004FCC3F /* eX_call.h */,
+				3F96003915C90C1B004FCC3F /* eX_message.h */,
+				3F96003A15C90C1B004FCC3F /* eX_options.h */,
+				3F96003B15C90C1B004FCC3F /* eX_publish.h */,
+				3F96003C15C90C1B004FCC3F /* eX_refer.h */,
+				3F96003D15C90C1B004FCC3F /* eX_register.h */,
+				3F96003E15C90C1B004FCC3F /* eX_setup.h */,
+				3F96003F15C90C1B004FCC3F /* eX_subscribe.h */,
+				3F96004015C90C1B004FCC3F /* eXosip_transport_hook.h */,
+				3F96004115C90C1B004FCC3F /* eXosip.h */,
+			);
+			name = inc;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		3F96002015C90BD7004FCC3F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F96004215C90C1B004FCC3F /* eX_call.h in Headers */,
+				3F96004315C90C1B004FCC3F /* eX_message.h in Headers */,
+				3F96004415C90C1B004FCC3F /* eX_options.h in Headers */,
+				3F96004515C90C1B004FCC3F /* eX_publish.h in Headers */,
+				3F96004615C90C1B004FCC3F /* eX_refer.h in Headers */,
+				3F96004715C90C1B004FCC3F /* eX_register.h in Headers */,
+				3F96004815C90C1B004FCC3F /* eX_setup.h in Headers */,
+				3F96004915C90C1B004FCC3F /* eX_subscribe.h in Headers */,
+				3F96004A15C90C1B004FCC3F /* eXosip_transport_hook.h in Headers */,
+				3F96004B15C90C1B004FCC3F /* eXosip.h in Headers */,
+				3F96007D15C90C26004FCC3F /* eXosip2.h in Headers */,
+				3F96008815C90C26004FCC3F /* eXtransport.h in Headers */,
+				3F96008B15C90C26004FCC3F /* inet_ntop.h in Headers */,
+				3F96009315C90C26004FCC3F /* jpipe.h in Headers */,
+				3F96009A15C90C26004FCC3F /* milenage.h in Headers */,
+				3F96009D15C90C26004FCC3F /* rijndael.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		3F96002115C90BD7004FCC3F /* exosip */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3F96002F15C90BD7004FCC3F /* Build configuration list for PBXNativeTarget "exosip" */;
+			buildPhases = (
+				3F96001E15C90BD7004FCC3F /* Sources */,
+				3F96001F15C90BD7004FCC3F /* Frameworks */,
+				3F96002015C90BD7004FCC3F /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = exosip;
+			productName = exosip;
+			productReference = 3F96002215C90BD7004FCC3F /* libexosip.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3F96001915C90BD7004FCC3F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = hisunsray;
+			};
+			buildConfigurationList = 3F96001C15C90BD7004FCC3F /* Build configuration list for PBXProject "exosip" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3F96001715C90BD7004FCC3F;
+			productRefGroup = 3F96002315C90BD7004FCC3F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3F96002115C90BD7004FCC3F /* exosip */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3F96001E15C90BD7004FCC3F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F96007615C90C26004FCC3F /* eXcall_api.c in Sources */,
+				3F96007715C90C26004FCC3F /* eXconf.c in Sources */,
+				3F96007815C90C26004FCC3F /* eXinsubscription_api.c in Sources */,
+				3F96007915C90C26004FCC3F /* eXmessage_api.c in Sources */,
+				3F96007A15C90C26004FCC3F /* eXoptions_api.c in Sources */,
+				3F96007B15C90C26004FCC3F /* eXosip_transport_hook.c in Sources */,
+				3F96007C15C90C26004FCC3F /* eXosip.c in Sources */,
+				3F96007E15C90C26004FCC3F /* eXpublish_api.c in Sources */,
+				3F96007F15C90C26004FCC3F /* eXrefer_api.c in Sources */,
+				3F96008015C90C26004FCC3F /* eXregister_api.c in Sources */,
+				3F96008115C90C26004FCC3F /* eXsubscription_api.c in Sources */,
+				3F96008215C90C26004FCC3F /* eXtl_dtls.c in Sources */,
+				3F96008315C90C26004FCC3F /* eXtl_tcp.c in Sources */,
+				3F96008415C90C26004FCC3F /* eXtl_tls.c in Sources */,
+				3F96008515C90C26004FCC3F /* eXtl_udp.c in Sources */,
+				3F96008615C90C26004FCC3F /* eXtl.c in Sources */,
+				3F96008715C90C26004FCC3F /* eXtransport.c in Sources */,
+				3F96008915C90C26004FCC3F /* eXutils.c in Sources */,
+				3F96008A15C90C26004FCC3F /* inet_ntop.c in Sources */,
+				3F96008C15C90C26004FCC3F /* jauth.c in Sources */,
+				3F96008D15C90C26004FCC3F /* jcall.c in Sources */,
+				3F96008E15C90C26004FCC3F /* jcallback.c in Sources */,
+				3F96008F15C90C26004FCC3F /* jdialog.c in Sources */,
+				3F96009015C90C26004FCC3F /* jevents.c in Sources */,
+				3F96009115C90C26004FCC3F /* jnotify.c in Sources */,
+				3F96009215C90C26004FCC3F /* jpipe.c in Sources */,
+				3F96009415C90C26004FCC3F /* jpublish.c in Sources */,
+				3F96009515C90C26004FCC3F /* jreg.c in Sources */,
+				3F96009615C90C26004FCC3F /* jrequest.c in Sources */,
+				3F96009715C90C26004FCC3F /* jresponse.c in Sources */,
+				3F96009815C90C26004FCC3F /* jsubscribe.c in Sources */,
+				3F96009915C90C26004FCC3F /* milenage.c in Sources */,
+				3F96009B15C90C26004FCC3F /* misc.c in Sources */,
+				3F96009C15C90C26004FCC3F /* rijndael.c in Sources */,
+				3F96009E15C90C26004FCC3F /* sdp_offans.c in Sources */,
+				3F96009F15C90C26004FCC3F /* udp.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3F96002D15C90BD7004FCC3F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		3F96002E15C90BD7004FCC3F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3F96003015C90BD7004FCC3F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				DSTROOT = /tmp/exosip.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_TIME_H,
+					OSIP_MT,
+					HAVE_SYS_SELECT_H,
+					WEBRTC_MAC,
+					ENABLE_TRACE,
+					HAVE_OPENSSL_SSL_H,
+				);
+				HEADER_SEARCH_PATHS = (
+					include,
+					../osip/include,
+					../../third_party/openssl,
+					../../third_party/oRTP/include/ortp/,
+					../../third_party/oRTP/include,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../servicecore\"",
+				);
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../IOSProject/out/baselib;
+			};
+			name = Debug;
+		};
+		3F96003115C90BD7004FCC3F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				DSTROOT = /tmp/exosip.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_TIME_H,
+					OSIP_MT,
+					HAVE_SYS_SELECT_H,
+					WEBRTC_MAC,
+					ENABLE_TRACE,
+					HAVE_OPENSSL_SSL_H,
+				);
+				HEADER_SEARCH_PATHS = (
+					include,
+					../osip/include,
+					../../third_party/openssl,
+					../../third_party/oRTP/include/ortp/,
+					../../third_party/oRTP/include,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../servicecore\"",
+				);
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../IOSProject/out/baselib;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3F96001C15C90BD7004FCC3F /* Build configuration list for PBXProject "exosip" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3F96002D15C90BD7004FCC3F /* Debug */,
+				3F96002E15C90BD7004FCC3F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3F96002F15C90BD7004FCC3F /* Build configuration list for PBXNativeTarget "exosip" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3F96003015C90BD7004FCC3F /* Debug */,
+				3F96003115C90BD7004FCC3F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3F96001915C90BD7004FCC3F /* Project object */;
+}

@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{c4a55299-54b0-49cf-83d9-7b370e49e60e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{a84e6ede-3d44-468b-8cec-687abf2dadee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\utility">
+      <UniqueIdentifier>{ee72146b-6870-407b-82c9-3a1a46873860}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main\include\video_coding.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="main\include\video_coding_defines.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\codec_database.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\codec_timer.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\content_metrics_processing.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\decoding_state.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\encoded_frame.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\er_tables_xor.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\fec_tables_xor.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\frame_buffer.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\generic_decoder.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\generic_encoder.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\inter_frame_delay.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\internal_defines.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\jitter_buffer.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\jitter_buffer_common.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\jitter_estimator.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\media_opt_util.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\media_optimization.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\nack_fec_tables.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\packet.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\qm_select.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\qm_select_data.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\receiver.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\rtt_filter.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\session_info.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\tick_time_base.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\timestamp_map.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\timing.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\video_coding_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\utility\quality_scaler.h">
+      <Filter>source\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\utility\include\frame_dropper.h">
+      <Filter>source\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\utility\include\qp_parser.h">
+      <Filter>source\utility</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main\source\codec_database.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\codec_timer.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\content_metrics_processing.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\decoding_state.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\encoded_frame.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\frame_buffer.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\generic_decoder.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\generic_encoder.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\inter_frame_delay.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\jitter_buffer.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\jitter_estimator.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\media_opt_util.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\media_optimization.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\packet.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\qm_select.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\receiver.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\rtt_filter.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\session_info.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\timestamp_map.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\timing.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\video_coding_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\video_receiver.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\video_sender.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\utility\frame_dropper.cc">
+      <Filter>source\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\utility\quality_scaler.cc">
+      <Filter>source\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\utility\qp_parser.cc">
+      <Filter>source\utility</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

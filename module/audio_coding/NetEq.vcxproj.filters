@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{c75e7b97-a023-407a-8658-7349d3cdb828}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{af788531-be81-4fc4-9535-27136d1c4884}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="neteq\include\neteq.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\accelerate.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\audio_classifier.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\audio_decoder_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\audio_multi_vector.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\audio_vector.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\background_noise.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\buffer_level_filter.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\comfort_noise.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\decision_logic.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\decision_logic_fax.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\decision_logic_normal.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\decoder_database.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\defines.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\delay_manager.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\delay_peak_detector.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\dsp_helper.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\dtmf_buffer.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\dtmf_tone_generator.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\expand.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\merge.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\neteq_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\normal.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\packet.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\packet_buffer.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\payload_splitter.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\post_decode_vad.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\preemptive_expand.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\random_vector.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\rtcp.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\statistics_calculator.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\sync_buffer.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\time_stretch.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="neteq\source\timestamp_scaler.h">
+      <Filter>source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="neteq\source\accelerate.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\audio_classifier.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\audio_decoder_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\audio_multi_vector.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\audio_vector.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\background_noise.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\buffer_level_filter.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\comfort_noise.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\decision_logic.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\decision_logic_fax.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\decision_logic_normal.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\decoder_database.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\delay_manager.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\delay_peak_detector.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\dsp_helper.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\dtmf_buffer.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\dtmf_tone_generator.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\expand.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\merge.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\neteq.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\neteq_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\normal.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\packet_buffer.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\payload_splitter.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\post_decode_vad.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\preemptive_expand.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\random_vector.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\rtcp.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\statistics_calculator.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\sync_buffer.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\time_stretch.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="neteq\source\timestamp_scaler.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="neteq\source\OWNERS">
+      <Filter>source</Filter>
+    </None>
+  </ItemGroup>
+</Project>

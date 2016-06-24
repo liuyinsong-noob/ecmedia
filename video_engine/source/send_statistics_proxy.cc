@@ -1,0 +1,408 @@
+/*
+ *  Copyright (c) 2013 The WebRTC project authors. All Rights Reserved.
+ *
+ *  Use of this source code is governed by a BSD-style license
+ *  that can be found in the LICENSE file in the root of the source
+ *  tree. An additional intellectual property rights grant can be found
+ *  in the file PATENTS.  All contributing project authors may
+ *  be found in the AUTHORS file in the root of the source tree.
+ */
+
+#include "send_statistics_proxy.h"
+
+#include <sstream>
+#include <map>
+#include <string>
+
+#include "timeutils.h"
+
+#include "critical_section_wrapper.h"
+#include "trace.h"
+
+extern char* filename_path;
+
+
+namespace cloopenwebrtc {
+
+std::string SendStatisticsProxy::GenerateFileName(int video_channel)
+	{
+		std::string szRet = "";
+		char timeBuffer[128];
+// 		time_t nowtime = time(NULL);
+// 		tm timeTemp;
+// 		localtime_s(&timeTemp, &nowtime);
+// 		sprintf(timeBuffer, "videochannel%d_SendStats-%04d-%02d-%02d_%02d-%02d-%02d.data",video_channel,
+// 			timeTemp.tm_year + 1900, timeTemp.tm_mon + 1,
+// 			timeTemp.tm_mday, timeTemp.tm_hour, timeTemp.tm_min, timeTemp.tm_sec);
+
+#ifdef _WIN32
+		sprintf(timeBuffer, "videochannel%d_SendStats.data",video_channel);
+#else
+		sprintf(timeBuffer, "%s/videochannel%d_SendStats.data",filename_path, video_channel);
+#endif
+		
+
+		szRet = timeBuffer;
+		return szRet;
+	}
+
+const int SendStatisticsProxy::kStatsTimeoutMs = 5000;
+
+SendStatisticsProxy::SendStatisticsProxy(int video_channel)
+	   :crit_(CriticalSectionWrapper::CreateCriticalSection()),
+		clock_(Clock::GetRealTimeClock()),
+		last_process_time_(clock_->TimeInMilliseconds()),
+		trace_file_(*FileWrapper::Create()),
+		call_stats_(NULL),
+		bitrate_controller_(NULL),
+		remote_bitrate_estimator_(NULL),
+		overuse_detector_(NULL),
+		paced_sender_(NULL){
+	std::string file_name = GenerateFileName(video_channel);
+	trace_file_.OpenFile(file_name.c_str(), false);
+}
+
+SendStatisticsProxy::~SendStatisticsProxy() {
+	trace_file_.Flush();
+	trace_file_.CloseFile();
+	delete &trace_file_;
+}
+
+void SendStatisticsProxy::OutgoingRate(const int video_channel,
+                                       const unsigned int framerate,
+                                       const unsigned int bitrate) {
+  CriticalSectionScoped lock(crit_.get());
+  stats_.encode_frame_rate = framerate;
+  stats_.media_bitrate_bps = bitrate;
+}
+
+void SendStatisticsProxy::SuspendChange(int video_channel, bool is_suspended) {
+  CriticalSectionScoped lock(crit_.get());
+  stats_.suspended = is_suspended;
+}
+
+VideoSendStream::Stats SendStatisticsProxy::GetStats() {
+  CriticalSectionScoped lock(crit_.get());
+  return stats_;
+}
+
+void SendStatisticsProxy::OnSendEncodedImage(
+	const EncodedImage& encoded_image,
+	const RTPVideoHeader* rtp_video_header) {
+		//统计与ssrc相关的信息，暂时没有实现
+	CriticalSectionScoped lock(crit_.get());
+	stats_.sent_width = encoded_image._encodedWidth;
+	stats_.sent_height = encoded_image._encodedHeight;
+	if (rtp_video_header)
+	{
+		if (rtp_video_header->codec == kRtpVideoH264)
+		{
+			stats_.encoder_implementation_name = "h264";
+		}
+		else if (rtp_video_header->codec == kRtpVideoVp8)
+		{
+			stats_.encoder_implementation_name = "libvpx-vp8";
+		}
+	}
+}
+
+void SendStatisticsProxy::OnSetRates(uint32_t bitrate_bps, int framerate) {
+	CriticalSectionScoped lock(crit_.get());
+	stats_.target_media_bitrate_bps = bitrate_bps;
+	stats_.input_frame_rate = framerate;
+}
+
+void SendStatisticsProxy::StatisticsUpdated(const RtcpStatistics& statistics,
+											uint32_t ssrc) {
+	CriticalSectionScoped lock(crit_.get());		
+	stats_.stream.rtcp_stats = statistics;
+
+	//uma
+}
+
+void SendStatisticsProxy::CNameChanged(const char* cname, uint32_t ssrc) {}
+
+
+void SendStatisticsProxy::RtcpPacketTypesCounterUpdated(
+														uint32_t ssrc,
+														const RtcpPacketTypeCounter& packet_counter) {
+	CriticalSectionScoped lock(crit_.get());
+	stats_.stream.rtcp_packet_type_counts = packet_counter;
+// 		if (uma_container_->first_rtcp_stats_time_ms_ == -1)
+// 			uma_container_->first_rtcp_stats_time_ms_ = clock_->TimeInMilliseconds();
+}
+
+
+void SendStatisticsProxy::FrameCountUpdated(const FrameCounts& frame_counts,
+											uint32_t ssrc) {
+		CriticalSectionScoped lock(crit_.get());
+		stats_.stream.frame_counts = frame_counts;
+}
+
+void SendStatisticsProxy::DataCountersUpdated(
+												const StreamDataCounters& counters,
+												uint32_t ssrc) {
+		CriticalSectionScoped lock(crit_.get());
+		stats_.stream.rtp_stats = counters;
+// 		if (uma_container_->first_rtp_stats_time_ms_ == -1)
+// 			uma_container_->first_rtp_stats_time_ms_ = clock_->TimeInMilliseconds();
+}
+
+void SendStatisticsProxy::Notify(const BitrateStatistics& total_stats,
+								const BitrateStatistics& retransmit_stats,
+								uint32_t ssrc) {
+		CriticalSectionScoped lock(crit_.get());
+// 		VideoSendStream::StreamStats* stats = GetStatsEntry(ssrc);
+// 		if (!stats)
+// 			return;
+
+		stats_.stream.total_bitrate_bps = total_stats.bitrate_bps;
+		stats_.stream.retransmit_bitrate_bps = retransmit_stats.bitrate_bps;
+}
+
+void SendStatisticsProxy::SendSideDelayUpdated(int avg_delay_ms,
+												int max_delay_ms,
+												uint32_t ssrc) {
+		CriticalSectionScoped lock(crit_.get());
+// 		VideoSendStream::StreamStats* stats = GetStatsEntry(ssrc);
+// 		if (!stats)
+// 			return;
+
+		stats_.stream.avg_delay_ms = avg_delay_ms;
+		stats_.stream.max_delay_ms = max_delay_ms;
+
+// 		uma_container_->delay_counter_.Add(avg_delay_ms);
+// 		uma_container_->max_delay_counter_.Add(max_delay_ms);
+}
+
+int64_t SendStatisticsProxy::TimeUntilNextProcess()
+{
+//	return 0;
+	const int64_t now = clock_->TimeInMilliseconds();
+	const int64_t kUpdateIntervalMs = 1000;
+	return kUpdateIntervalMs - (now - last_process_time_);
+}
+
+int32_t SendStatisticsProxy::Process()
+{
+	const int64_t now = clock_->TimeInMilliseconds();
+	const int64_t kUpdateIntervalMs = 1000; //1000ms定时器
+	if (now >= last_process_time_ + kUpdateIntervalMs) {
+		//统计各种发送信息
+		std::vector<uint32_t> ssrcs;
+		last_process_time_ = now;
+		if (call_stats_)
+		{
+		//	call_stats_->rtcp_rtt_stats()->LastProcessedRtt();
+			call_.rtt_ms = call_stats_->rtcp_rtt_stats()->LastProcessedRtt();
+			if (bitrate_controller_)
+			{
+				bitrate_controller_->AvailableBandwidth(&call_.send_bandwidth_bps);
+			}
+			if (remote_bitrate_estimator_)
+			{
+				remote_bitrate_estimator_->LatestEstimate(&ssrcs, &call_.recv_bandwidth_bps);
+			}
+			if (paced_sender_)
+			{
+				call_.pacer_delay_ms = paced_sender_->QueueInMs();
+			}
+		}
+
+		if (overuse_detector_)
+		{
+			CpuOveruseMetrics metrics;
+			overuse_detector_->GetCpuOveruseMetrics(&metrics);
+			stats_.avg_encode_time_ms = metrics.avg_encode_time_ms;
+			stats_.encode_usage_percent = metrics.encode_usage_percent;
+		}
+		
+		trace_file_.Write(ToString().c_str(), ToString().length());
+	}
+	return 0;
+}
+
+void SendStatisticsProxy::SetCallStats(CallStats *stats)
+{
+	call_stats_ = stats;
+}
+void SendStatisticsProxy::SetBitrateController(BitrateController *controller)
+{
+	bitrate_controller_ = controller;
+}
+void SendStatisticsProxy::SetRemoteBitrateEstimator(RemoteBitrateEstimator *remote_bitrate_estimator)
+{
+	remote_bitrate_estimator_ = remote_bitrate_estimator;
+}
+
+void SendStatisticsProxy::SetOverUseDetector(OveruseFrameDetector *overuse_detector)
+{
+	overuse_detector_ = overuse_detector;
+}
+
+void SendStatisticsProxy::SetPacedSender(PacedSender *paced_sender)
+{
+	paced_sender_ = paced_sender;
+}
+
+void SendStatisticsProxy::UpdateInputSize(int width, int height)
+{
+	CriticalSectionScoped lock(crit_.get());
+	stats_.input_width = width;
+	stats_.input_height = height;
+}
+
+std::string SendStatisticsProxy::ToString() const
+{
+	char timeBuffer[128];
+	char formatString[128];
+	time_t nowtime = time(NULL);
+	tm timeTemp;
+//	localtime_s(&timeTemp, &nowtime);
+	int microseconds;
+	CurrentTmTime(&timeTemp, &microseconds);
+	sprintf(timeBuffer, "%04d/%02d/%02d_%02d:%02d:%02d",
+		timeTemp.tm_year + 1900, timeTemp.tm_mon + 1,
+		timeTemp.tm_mday, timeTemp.tm_hour, timeTemp.tm_min, timeTemp.tm_sec);
+
+	CriticalSectionScoped lock(crit_.get());
+
+
+
+std::stringstream ss;
+	ss << "{timestamp: " << timeBuffer;
+	ss << "\tCodecName " << stats_.encoder_implementation_name;
+
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-4d", stats_.avg_encode_time_ms);
+	ss << "\tAvgEncodeMs: " << formatString;
+
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-4d", stats_.encode_usage_percent);
+	ss << "\tEncodeUsagePercent: " << formatString;
+
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-4d", stats_.input_frame_rate);
+	ss << "\tFrameRateInput: " << formatString;
+
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-4d", stats_.encode_frame_rate);
+	ss << "\tFrameRateSent: " << formatString;
+
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-4d", stats_.input_width);
+	ss << "\tFrameWidthInput: " << formatString;
+
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-4d", stats_.input_height);
+	ss << "\tFrameHeightInput: " << formatString;
+
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-4d", stats_.sent_width);
+	ss << "\tFrameWidthSent: " << formatString;
+
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-4d", stats_.sent_height);
+	ss << "\tFrameHeightSent: " << formatString;
+
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-9d", stats_.target_media_bitrate_bps);
+	ss << "\tBitrateTargetBps: " << formatString;
+
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-9d", stats_.media_bitrate_bps);
+	ss << "\tBitrateEncodeBps: " << formatString;
+
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-9d", stats_.stream.rtcp_stats.cumulative_lost); 
+	ss << "\tpacketsLost: " << formatString;
+
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-9d", stats_.stream.rtp_stats.packets); 
+	ss << "\tpacketsSent: " << formatString;
+
+	size_t bytsSent = stats_.stream.rtp_stats.bytes 
+					+ stats_.stream.rtp_stats.header_bytes
+					+ stats_.stream.rtp_stats.padding_bytes;
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-9d", bytsSent); 
+	ss << "\tbytesSent: " << formatString;
+
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-9d", stats_.stream.rtcp_packet_type_counts.nack_packets); 
+	ss << "\tNacksReceived: " << formatString;
+
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-9d", stats_.stream.rtcp_packet_type_counts.fir_packets); 
+	ss << "\tFirsReceived: " << formatString;
+
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-9d", call_.rtt_ms); 
+	ss << "\tRtt: " << formatString;
+
+	//bweCompound
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-9d", call_.send_bandwidth_bps); 
+	ss << "\tAvailabeSendBandwidth: " << formatString;
+
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-9d", stats_.media_bitrate_bps); 
+	ss << "\tActualEncBitrate: " << formatString;
+
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-09d", stats_.target_media_bitrate_bps); 
+	ss << "\tTargetEncBitrate: " << formatString;
+
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-9d", stats_.stream.total_bitrate_bps); 
+	ss << "\tTransmitBitrate: " << formatString;
+
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-9d", stats_.stream.retransmit_bitrate_bps); 
+	ss << "\tReransmitBitrate: " << formatString;
+
+
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-9d", call_.recv_bandwidth_bps); 
+	ss << "\tAvailableReceiveBandwidth: " << formatString;
+
+
+	memset(formatString, 0, 128);
+	sprintf(formatString, "%-9d", call_.pacer_delay_ms); 
+	ss << "\tBucketDelay: " << formatString;
+
+	ss << "}\r\n";
+
+#if 0
+	ss << "\tFrameRateInput: " << stats_.input_frame_rate;
+	ss << "\tFrameRateSent: " << stats_.encode_frame_rate;
+	ss << "\tFrameWidthSent: " << stats_.width;
+	ss << "\tFrameHeightSent: " << stats_.height;
+	ss << "\tBitrateTargetBps " << stats_.target_media_bitrate_bps;
+	ss << "\t\t\tBitrateEncodeBps " << stats_.media_bitrate_bps;
+	ss << "\t\tpacketsLost: " << stats_.stream.rtcp_stats.cumulative_lost; 
+	ss << "\t\tpacketsSent: " << stats_.stream.rtp_stats.packets;  
+	size_t bytsSent = stats_.stream.rtp_stats.bytes 
+						+ stats_.stream.rtp_stats.header_bytes
+						+ stats_.stream.rtp_stats.padding_bytes;
+	ss << "\t\tbytesSent: " << bytsSent;
+	ss << "\t\tNacksReceived: " << stats_.stream.rtcp_packet_type_counts.nack_packets;
+	ss << "\t\tFirsReceived: " << stats_.stream.rtcp_packet_type_counts.fir_packets;
+	ss << "\t\tPlisReceived: " << stats_.stream.rtcp_packet_type_counts.pli_packets;
+	ss << "\t\tRtt : " << call_.rtt_ms;
+
+	//bweCompound
+	ss << "\t\tAvailabeSendBandwidth: " << call_.send_bandwidth_bps;
+	ss << "\t\tAvailableReceiveBandwidth: " << call_.recv_bandwidth_bps;
+	ss << "\t\tActualEncBitrate: " << stats_.media_bitrate_bps;
+	ss << "\t\tTargetEncBitrate: " << stats_.target_media_bitrate_bps;
+	ss << "\t\tTransmitBitrate: " << stats_.stream.total_bitrate_bps;
+	ss << "\t\tRetransmitBitrate: " << stats_.stream.retransmit_bitrate_bps;
+	ss << "}\r\n";
+#endif
+
+
+
+	return ss.str();
+}
+}  // namespace webrtc

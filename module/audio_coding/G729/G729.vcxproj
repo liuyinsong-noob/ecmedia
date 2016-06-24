@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{988C5E9F-A81D-429A-BD8D-63919AB1EFA1}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>G729</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)build\$(Configuration)\lib\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <ExecutablePath>$(ExecutablePath);$(MSBuildProjectDirectory)\..\..\third_party\cygwin\bin\;$(MSBuildProjectDirectory)\..\..\third_party\python_26\</ExecutablePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)build\$(Configuration)\lib\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <ExecutablePath>$(ExecutablePath);$(MSBuildProjectDirectory)\..\..\third_party\cygwin\bin\;$(MSBuildProjectDirectory)\..\..\third_party\python_26\</ExecutablePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)build\$(Configuration)\lib\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)\obj\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)build\$(Configuration)\lib\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)\obj\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../..;../codecs/g729/interface;../codecs/g729/include;../codecs/g729/include/bcg729</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../..;../codecs/g729/interface;../codecs/g729/include;../codecs/g729/include/bcg729</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../..;../codecs/g729/interface;../codecs/g729/include;../codecs/g729/include/bcg729</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../..;../codecs/g729/interface;../codecs/g729/include;../codecs/g729/include/bcg729</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\codecs\g729\include\adaptativeCodebookSearch.h" />
+    <ClInclude Include="..\codecs\g729\include\basicOperationsMacros.h" />
+    <ClInclude Include="..\codecs\g729\include\bcg729\decoder.h" />
+    <ClInclude Include="..\codecs\g729\include\bcg729\encoder.h" />
+    <ClInclude Include="..\codecs\g729\include\codebooks.h" />
+    <ClInclude Include="..\codecs\g729\include\codecParameters.h" />
+    <ClInclude Include="..\codecs\g729\include\computeAdaptativeCodebookGain.h" />
+    <ClInclude Include="..\codecs\g729\include\computeLP.h" />
+    <ClInclude Include="..\codecs\g729\include\computeWeightedSpeech.h" />
+    <ClInclude Include="..\codecs\g729\include\decodeAdaptativeCodeVector.h" />
+    <ClInclude Include="..\codecs\g729\include\decodeFixedCodeVector.h" />
+    <ClInclude Include="..\codecs\g729\include\decodeGains.h" />
+    <ClInclude Include="..\codecs\g729\include\decodeLSP.h" />
+    <ClInclude Include="..\codecs\g729\include\findOpenLoopPitchDelay.h" />
+    <ClInclude Include="..\codecs\g729\include\fixedCodebookSearch.h" />
+    <ClInclude Include="..\codecs\g729\include\fixedPointMacros.h" />
+    <ClInclude Include="..\codecs\g729\include\floatingPointMacros.h" />
+    <ClInclude Include="..\codecs\g729\include\g729FixedPointMath.h" />
+    <ClInclude Include="..\codecs\g729\include\gainQuantization.h" />
+    <ClInclude Include="..\codecs\g729\include\interpolateqLSP.h" />
+    <ClInclude Include="..\codecs\g729\include\LP2LSPConversion.h" />
+    <ClInclude Include="..\codecs\g729\include\LPSynthesisFilter.h" />
+    <ClInclude Include="..\codecs\g729\include\LSPQuantization.h" />
+    <ClInclude Include="..\codecs\g729\include\postFilter.h" />
+    <ClInclude Include="..\codecs\g729\include\postProcessing.h" />
+    <ClInclude Include="..\codecs\g729\include\preProcessing.h" />
+    <ClInclude Include="..\codecs\g729\include\qLSP2LP.h" />
+    <ClInclude Include="..\codecs\g729\include\typedef.h" />
+    <ClInclude Include="..\codecs\g729\include\utils.h" />
+    <ClInclude Include="..\codecs\g729\interface\g729_interface.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\codecs\g729\source\adaptativeCodebookSearch.c" />
+    <ClCompile Include="..\codecs\g729\source\codebooks.c" />
+    <ClCompile Include="..\codecs\g729\source\computeAdaptativeCodebookGain.c" />
+    <ClCompile Include="..\codecs\g729\source\computeLP.c" />
+    <ClCompile Include="..\codecs\g729\source\computeWeightedSpeech.c" />
+    <ClCompile Include="..\codecs\g729\source\decodeAdaptativeCodeVector.c" />
+    <ClCompile Include="..\codecs\g729\source\decodeFixedCodeVector.c" />
+    <ClCompile Include="..\codecs\g729\source\decodeGains.c" />
+    <ClCompile Include="..\codecs\g729\source\decodeLSP.c" />
+    <ClCompile Include="..\codecs\g729\source\decoder.c" />
+    <ClCompile Include="..\codecs\g729\source\encoder.c" />
+    <ClCompile Include="..\codecs\g729\source\findOpenLoopPitchDelay.c" />
+    <ClCompile Include="..\codecs\g729\source\fixedCodebookSearch.c" />
+    <ClCompile Include="..\codecs\g729\source\g729_interface.cpp" />
+    <ClCompile Include="..\codecs\g729\source\gainQuantization.c" />
+    <ClCompile Include="..\codecs\g729\source\interpolateqLSP.c" />
+    <ClCompile Include="..\codecs\g729\source\LP2LSPConversion.c" />
+    <ClCompile Include="..\codecs\g729\source\LPSynthesisFilter.c" />
+    <ClCompile Include="..\codecs\g729\source\LSPQuantization.c" />
+    <ClCompile Include="..\codecs\g729\source\postFilter.c" />
+    <ClCompile Include="..\codecs\g729\source\postProcessing.c" />
+    <ClCompile Include="..\codecs\g729\source\preProcessing.c" />
+    <ClCompile Include="..\codecs\g729\source\qLSP2LP.c" />
+    <ClCompile Include="..\codecs\g729\source\utils.c" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

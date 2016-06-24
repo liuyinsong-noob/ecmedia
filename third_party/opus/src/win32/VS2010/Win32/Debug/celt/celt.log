@@ -1,0 +1,22 @@
+﻿生成启动时间为 6/20 星期一 17:23:02。
+     1>项目“L:\svn\MyWebRtc_2.0\third_party\opus\src\win32\VS2010\celt.vcxproj”在节点 2 上(build 个目标)。
+     1>InitializeBuildStatus:
+         正在创建“Win32\Debug\celt\celt.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       PreBuildEvent:
+         Description: Generating version.h
+         "L:\svn\MyWebRtc_2.0\third_party\opus\src\win32\VS2010\..\..\win32\genversion.bat" "L:\svn\MyWebRtc_2.0\third_party\opus\src\win32\VS2010\..\..\win32\version.h" PACKAGE_VERSION
+         :VCEnd
+         fatal: Not a git repository: 'L:\svn\MyWebRtc_2.0\third_party\opus\src\win32\..\.git'
+       ClCompile:
+         所有输出均为最新。
+       Lib:
+         所有输出均为最新。
+         celt.vcxproj -> L:\svn\MyWebRtc_2.0\demo_Win\build\Debug\lib\celt.lib
+       FinalizeBuildStatus:
+         正在删除文件“Win32\Debug\celt\celt.unsuccessfulbuild”。
+         正在对“Win32\Debug\celt\celt.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“L:\svn\MyWebRtc_2.0\third_party\opus\src\win32\VS2010\celt.vcxproj”(build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:00.50

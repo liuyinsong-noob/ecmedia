@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{089AF589-05EC-4526-9F51-FCB120E16E70}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>MyWebRtc</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>.\build\$(Configuration)\</OutDir>
+    <IntDir>$(OutDir)obj\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>.\build\$(Configuration)\</OutDir>
+    <IntDir>$(OutDir)obj\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>WEBRTC_SVNREVISION="n/a";_WIN32_WINNT=0x0601;WINVER=0x0601;WIN32;_WINDOWS;NOMINMAX;PSAPI_VERSION=1;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_ATL_NO_OPENGL;_HAS_EXCEPTIONS=0;_SECURE_ATL;CHROMIUM_BUILD;TOOLKIT_VIEWS=1;ENABLE_ONE_CLICK_SIGNIN;ENABLE_REMOTING=1;ENABLE_WEBRTC=1;ENABLE_CONFIGURATION_POLICY;ENABLE_INPUT_SPEECH;ENABLE_NOTIFICATIONS;ENABLE_GPU=1;ENABLE_EGLIMAGE=1;USE_SKIA=1;__STD_C;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ENABLE_TASK_MANAGER=1;ENABLE_WEB_INTENTS=1;ENABLE_EXTENSIONS=1;ENABLE_PLUGIN_INSTALLATION=1;ENABLE_PROTECTOR_SERVICE=1;ENABLE_SESSION_SERVICE=1;ENABLE_THEMES=1;ENABLE_BACKGROUND=1;ENABLE_PROMO_RESOURCE_SERVICE=1;ENABLE_AUTOMATION=1;WEBRTC_WIN;UNIT_TEST;GFLAGS_DLL_DECL=;GFLAGS_DLL_DECLARE_FLAG=;GFLAGS_DLL_DEFINE_FLAG=;__STDC_FORMAT_MACROS;NDEBUG;NVALGRIND;DYNAMIC_ANNOTATIONS_ENABLED=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>./.;../voice_engine\main\include;../module;../servicecore\include;../servicecore\interface;../system_wrappers/interface</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <StringPooling>false</StringPooling>
+      <ExceptionHandling>false</ExceptionHandling>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>wininet.lib;dnsapi.lib;version.lib;msimg32.lib;ws2_32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib;winmm.lib;dmoguids.lib;wmcodecdspuuid.lib;amstrmid.lib;msdmo.lib;IPHLPAPI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImportLibrary>$(OutDir)lib\$(TargetName).lib</ImportLibrary>
+      <AdditionalOptions>/safeseh /dynamicbase /ignore:4199 /ignore:4221 /nxcompat %(AdditionalOptions)</AdditionalOptions>
+      <DelayLoadDLLs>dbghelp.dll;dwmapi.dll;shell32.dll;uxtheme.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;WEBRTC_SVNREVISION="n/a";_WIN32_WINNT=0x0601;WINVER=0x0601;WIN32;_WINDOWS;NOMINMAX;PSAPI_VERSION=1;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_ATL_NO_OPENGL;_HAS_EXCEPTIONS=0;_SECURE_ATL;CHROMIUM_BUILD;TOOLKIT_VIEWS=1;ENABLE_ONE_CLICK_SIGNIN;ENABLE_REMOTING=1;ENABLE_WEBRTC=1;ENABLE_CONFIGURATION_POLICY;ENABLE_INPUT_SPEECH;ENABLE_NOTIFICATIONS;ENABLE_GPU=1;ENABLE_EGLIMAGE=1;USE_SKIA=1;__STD_C;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ENABLE_TASK_MANAGER=1;ENABLE_WEB_INTENTS=1;ENABLE_EXTENSIONS=1;ENABLE_PLUGIN_INSTALLATION=1;ENABLE_PROTECTOR_SERVICE=1;ENABLE_SESSION_SERVICE=1;ENABLE_THEMES=1;ENABLE_BACKGROUND=1;ENABLE_PROMO_RESOURCE_SERVICE=1;ENABLE_AUTOMATION=1;WEBRTC_WIN;UNIT_TEST;GFLAGS_DLL_DECL=;GFLAGS_DLL_DECLARE_FLAG=;GFLAGS_DLL_DEFINE_FLAG=;__STDC_FORMAT_MACROS;NDEBUG;NVALGRIND;DYNAMIC_ANNOTATIONS_ENABLED=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>./.;../voice_engine\main\include;../module;../servicecore\include;../servicecore\interface</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
+      <DelayLoadDLLs>dbghelp.dll;dwmapi.dll;shell32.dll;uxtheme.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <AdditionalDependencies>wininet.lib;dnsapi.lib;version.lib;msimg32.lib;ws2_32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib;winmm.lib;dmoguids.lib;wmcodecdspuuid.lib;amstrmid.lib;msdmo.lib;IPHLPAPI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MyWebRtc.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="CInterface\CCPClientSDK.vcxproj">
+      <Project>{e56485b4-72ae-4eb4-8a41-e1e940142847}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\audioprocess\audioprocess.vcxproj">
+      <Project>{460d34b6-19e2-467f-a3b6-0128810bb9d8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\audio_coding\amrnba.vcxproj">
+      <Project>{5a683c2a-f44f-4109-9a90-5a648d7fc289}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\audio_coding\audio_coding_module.vcxproj">
+      <Project>{63e456e0-f52c-3d6f-49f5-5f921b8af46e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\audio_coding\CNG.vcxproj">
+      <Project>{a99338f7-fe94-87e1-af79-9a8a37716064}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\audio_coding\G711.vcxproj">
+      <Project>{4a5169c0-5bad-b8d7-b17d-dc5b14754170}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\audio_coding\iLBC.vcxproj">
+      <Project>{4a5169c0-5bed-b8d7-b17d-dc5b14754170}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\audio_coding\NetEq.vcxproj">
+      <Project>{ab38a723-2493-1391-085b-30e85cc7bdfa}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\audio_conference_mixer\audio_conference_mixer.vcxproj">
+      <Project>{26226ac6-c496-904a-3335-547b4e777fd6}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\audio_device\audio_device.vcxproj">
+      <Project>{f89ebf8c-a7f4-9ca0-3510-cf148dbfc58c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\bitrate_controller\bitrate_controller.vcxproj">
+      <Project>{2f39a772-e2ca-52f0-2d95-02b22c0b6cd2}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\exosip\exosip.vcxproj">
+      <Project>{2f470789-39ef-45b0-87ce-adeac4b0422c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\media_file\media_file.vcxproj">
+      <Project>{d869d395-18c3-f5cc-b663-5c336682e365}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\osip\osip.vcxproj">
+      <Project>{03be4c06-e66d-4fdf-bd0a-b97460db336e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\resampler\resampler.vcxproj">
+      <Project>{f6d60a7b-b149-a232-281e-b2315f5da691}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\rtp_rtcp\rtp_rtcp.vcxproj">
+      <Project>{78d8aee5-5111-63e1-c3a6-a6c2114e61ae}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\signalprocess\signalprocess.vcxproj">
+      <Project>{8a1c7745-5e37-47bd-95ad-3ec0cbad0da0}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\udp_transport\udp_transport.vcxproj">
+      <Project>{b9c3d1bf-4a3c-27ec-9885-ba01d9126825}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\utility\webrtc_utility.vcxproj">
+      <Project>{b5ceee5d-3ee6-10fd-25c7-3240f28d42a3}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\videojpegyuv\videojpegyuv.vcxproj">
+      <Project>{8c34eacc-1b9a-473b-ae72-94d9107ca388}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\video_capture\video_capture_module.vcxproj">
+      <Project>{8460e89b-8cbd-62e0-4424-1bc409116bda}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\video_coding\webrtc_video_coding.vcxproj">
+      <Project>{8e16f322-1d7d-2c90-49f4-038ebf7cc264}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\video_processing\video_processing.vcxproj">
+      <Project>{2fd1a9fc-1cdf-704b-c2df-68c97d48617d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\video_render\video_render_module.vcxproj">
+      <Project>{de3f5c87-febb-bc67-f59c-9f73b905c81c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\servicecore\servicecore.vcxproj">
+      <Project>{f6734fb1-dd5e-4b30-bedf-b1e9930985d8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\system_wrappers\source\system_wrappers.vcxproj">
+      <Project>{75f95b97-c0b0-aa5d-4ac8-78cac02dc44e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\third_party\libjpeg_turbo\libjpeg.vcxproj">
+      <Project>{a68e380e-afb4-e4e2-f5ed-0ae20725b7c5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\third_party\libyuv\libyuv.vcxproj">
+      <Project>{1a8364d9-fe77-b61e-ed73-eeb3beb59e8e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\video_engine\video_engine_core.vcxproj">
+      <Project>{c700a37b-d8f2-7f02-030b-8f0fce185d3a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\voice_engine\voice_engine_core.vcxproj">
+      <Project>{ca5a2ec5-2fd1-528f-da51-967660716da2}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

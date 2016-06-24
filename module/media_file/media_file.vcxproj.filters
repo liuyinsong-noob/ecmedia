@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{14b8de82-8b17-4111-b400-e237ea9f9e8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{1d4e3c5f-095c-41f4-afeb-7aaf4a188f19}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\media_file.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\media_file_defines.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\avi_file.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\media_file_impl.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\media_file_utility.h">
+      <Filter>source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\avi_file.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\media_file_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\media_file_utility.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

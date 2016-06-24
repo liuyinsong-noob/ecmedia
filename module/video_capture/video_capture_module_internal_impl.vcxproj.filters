@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="源文件\windows">
+      <UniqueIdentifier>{ec335fdd-8a06-43b3-8e54-148c07fb4300}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main\source\Windows\device_info_ds.cc">
+      <Filter>源文件\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\Windows\device_info_mf.cc">
+      <Filter>源文件\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\Windows\help_functions_ds.cc">
+      <Filter>源文件\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\Windows\sink_filter_ds.cc">
+      <Filter>源文件\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\Windows\video_capture_ds.cc">
+      <Filter>源文件\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\Windows\video_capture_factory_windows.cc">
+      <Filter>源文件\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\Windows\video_capture_mf.cc">
+      <Filter>源文件\windows</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main\source\Windows\device_info_ds.h">
+      <Filter>源文件\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\Windows\device_info_mf.h">
+      <Filter>源文件\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\Windows\help_functions_ds.h">
+      <Filter>源文件\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\Windows\sink_filter_ds.h">
+      <Filter>源文件\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\Windows\video_capture_ds.h">
+      <Filter>源文件\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\Windows\video_capture_mf.h">
+      <Filter>源文件\windows</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

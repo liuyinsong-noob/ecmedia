@@ -1,0 +1,325 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AD8D728B1C58CC2A00FB246D /* aimd_rate_control.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72791C58CC2A00FB246D /* aimd_rate_control.cc */; };
+		AD8D728C1C58CC2A00FB246D /* inter_arrival.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D727B1C58CC2A00FB246D /* inter_arrival.cc */; };
+		AD8D728D1C58CC2A00FB246D /* mimd_rate_control.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D727D1C58CC2A00FB246D /* mimd_rate_control.cc */; };
+		AD8D728E1C58CC2A00FB246D /* overuse_detector.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D727F1C58CC2A00FB246D /* overuse_detector.cc */; };
+		AD8D728F1C58CC2A00FB246D /* overuse_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72811C58CC2A00FB246D /* overuse_estimator.cc */; };
+		AD8D72901C58CC2A00FB246D /* rate_statistics.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72831C58CC2A00FB246D /* rate_statistics.cc */; };
+		AD8D72911C58CC2A00FB246D /* remote_bitrate_estimator_abs_send_time.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72851C58CC2A00FB246D /* remote_bitrate_estimator_abs_send_time.cc */; };
+		AD8D72921C58CC2A00FB246D /* remote_bitrate_estimator_single_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72861C58CC2A00FB246D /* remote_bitrate_estimator_single_stream.cc */; };
+		AD8D72931C58CC2A00FB246D /* remote_rate_control.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72871C58CC2A00FB246D /* remote_rate_control.cc */; };
+		AD8D72941C58CC2A00FB246D /* bwe_test_logging.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72891C58CC2A00FB246D /* bwe_test_logging.cc */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AD8D72691C58CB6C00FB246D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		AD8D726B1C58CB6C00FB246D /* libremote_bitrate_estimator.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libremote_bitrate_estimator.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD8D72771C58CB9A00FB246D /* bwe_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bwe_defines.h; path = ../../include/bwe_defines.h; sourceTree = "<group>"; };
+		AD8D72781C58CB9A00FB246D /* remote_bitrate_estimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = remote_bitrate_estimator.h; path = ../../include/remote_bitrate_estimator.h; sourceTree = "<group>"; };
+		AD8D72791C58CC2A00FB246D /* aimd_rate_control.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aimd_rate_control.cc; path = ../../source/aimd_rate_control.cc; sourceTree = "<group>"; };
+		AD8D727A1C58CC2A00FB246D /* aimd_rate_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aimd_rate_control.h; path = ../../source/aimd_rate_control.h; sourceTree = "<group>"; };
+		AD8D727B1C58CC2A00FB246D /* inter_arrival.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = inter_arrival.cc; path = ../../source/inter_arrival.cc; sourceTree = "<group>"; };
+		AD8D727C1C58CC2A00FB246D /* inter_arrival.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = inter_arrival.h; path = ../../source/inter_arrival.h; sourceTree = "<group>"; };
+		AD8D727D1C58CC2A00FB246D /* mimd_rate_control.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mimd_rate_control.cc; path = ../../source/mimd_rate_control.cc; sourceTree = "<group>"; };
+		AD8D727E1C58CC2A00FB246D /* mimd_rate_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mimd_rate_control.h; path = ../../source/mimd_rate_control.h; sourceTree = "<group>"; };
+		AD8D727F1C58CC2A00FB246D /* overuse_detector.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = overuse_detector.cc; path = ../../source/overuse_detector.cc; sourceTree = "<group>"; };
+		AD8D72801C58CC2A00FB246D /* overuse_detector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = overuse_detector.h; path = ../../source/overuse_detector.h; sourceTree = "<group>"; };
+		AD8D72811C58CC2A00FB246D /* overuse_estimator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = overuse_estimator.cc; path = ../../source/overuse_estimator.cc; sourceTree = "<group>"; };
+		AD8D72821C58CC2A00FB246D /* overuse_estimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = overuse_estimator.h; path = ../../source/overuse_estimator.h; sourceTree = "<group>"; };
+		AD8D72831C58CC2A00FB246D /* rate_statistics.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rate_statistics.cc; path = ../../source/rate_statistics.cc; sourceTree = "<group>"; };
+		AD8D72841C58CC2A00FB246D /* rate_statistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rate_statistics.h; path = ../../source/rate_statistics.h; sourceTree = "<group>"; };
+		AD8D72851C58CC2A00FB246D /* remote_bitrate_estimator_abs_send_time.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = remote_bitrate_estimator_abs_send_time.cc; path = ../../source/remote_bitrate_estimator_abs_send_time.cc; sourceTree = "<group>"; };
+		AD8D72861C58CC2A00FB246D /* remote_bitrate_estimator_single_stream.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = remote_bitrate_estimator_single_stream.cc; path = ../../source/remote_bitrate_estimator_single_stream.cc; sourceTree = "<group>"; };
+		AD8D72871C58CC2A00FB246D /* remote_rate_control.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = remote_rate_control.cc; path = ../../source/remote_rate_control.cc; sourceTree = "<group>"; };
+		AD8D72881C58CC2A00FB246D /* remote_rate_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = remote_rate_control.h; path = ../../source/remote_rate_control.h; sourceTree = "<group>"; };
+		AD8D72891C58CC2A00FB246D /* bwe_test_logging.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bwe_test_logging.cc; path = ../../source/test/bwe_test_logging.cc; sourceTree = "<group>"; };
+		AD8D728A1C58CC2A00FB246D /* bwe_test_logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bwe_test_logging.h; path = ../../source/test/bwe_test_logging.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AD8D72681C58CB6C00FB246D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AD8D72621C58CB6C00FB246D = {
+			isa = PBXGroup;
+			children = (
+				AD8D726D1C58CB6C00FB246D /* remote_bitrate_estimator */,
+				AD8D726C1C58CB6C00FB246D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AD8D726C1C58CB6C00FB246D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AD8D726B1C58CB6C00FB246D /* libremote_bitrate_estimator.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AD8D726D1C58CB6C00FB246D /* remote_bitrate_estimator */ = {
+			isa = PBXGroup;
+			children = (
+				AD8D72791C58CC2A00FB246D /* aimd_rate_control.cc */,
+				AD8D727A1C58CC2A00FB246D /* aimd_rate_control.h */,
+				AD8D727B1C58CC2A00FB246D /* inter_arrival.cc */,
+				AD8D727C1C58CC2A00FB246D /* inter_arrival.h */,
+				AD8D727D1C58CC2A00FB246D /* mimd_rate_control.cc */,
+				AD8D727E1C58CC2A00FB246D /* mimd_rate_control.h */,
+				AD8D727F1C58CC2A00FB246D /* overuse_detector.cc */,
+				AD8D72801C58CC2A00FB246D /* overuse_detector.h */,
+				AD8D72811C58CC2A00FB246D /* overuse_estimator.cc */,
+				AD8D72821C58CC2A00FB246D /* overuse_estimator.h */,
+				AD8D72831C58CC2A00FB246D /* rate_statistics.cc */,
+				AD8D72841C58CC2A00FB246D /* rate_statistics.h */,
+				AD8D72851C58CC2A00FB246D /* remote_bitrate_estimator_abs_send_time.cc */,
+				AD8D72861C58CC2A00FB246D /* remote_bitrate_estimator_single_stream.cc */,
+				AD8D72871C58CC2A00FB246D /* remote_rate_control.cc */,
+				AD8D72881C58CC2A00FB246D /* remote_rate_control.h */,
+				AD8D72891C58CC2A00FB246D /* bwe_test_logging.cc */,
+				AD8D728A1C58CC2A00FB246D /* bwe_test_logging.h */,
+				AD8D72771C58CB9A00FB246D /* bwe_defines.h */,
+				AD8D72781C58CB9A00FB246D /* remote_bitrate_estimator.h */,
+			);
+			path = remote_bitrate_estimator;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AD8D726A1C58CB6C00FB246D /* remote_bitrate_estimator */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD8D72741C58CB6C00FB246D /* Build configuration list for PBXNativeTarget "remote_bitrate_estimator" */;
+			buildPhases = (
+				AD8D72671C58CB6C00FB246D /* Sources */,
+				AD8D72681C58CB6C00FB246D /* Frameworks */,
+				AD8D72691C58CB6C00FB246D /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = remote_bitrate_estimator;
+			productName = remote_bitrate_estimator;
+			productReference = AD8D726B1C58CB6C00FB246D /* libremote_bitrate_estimator.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AD8D72631C58CB6C00FB246D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = SeanLee;
+				TargetAttributes = {
+					AD8D726A1C58CB6C00FB246D = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = AD8D72661C58CB6C00FB246D /* Build configuration list for PBXProject "remote_bitrate_estimator" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = AD8D72621C58CB6C00FB246D;
+			productRefGroup = AD8D726C1C58CB6C00FB246D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AD8D726A1C58CB6C00FB246D /* remote_bitrate_estimator */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AD8D72671C58CB6C00FB246D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD8D728C1C58CC2A00FB246D /* inter_arrival.cc in Sources */,
+				AD8D728F1C58CC2A00FB246D /* overuse_estimator.cc in Sources */,
+				AD8D72931C58CC2A00FB246D /* remote_rate_control.cc in Sources */,
+				AD8D728E1C58CC2A00FB246D /* overuse_detector.cc in Sources */,
+				AD8D728B1C58CC2A00FB246D /* aimd_rate_control.cc in Sources */,
+				AD8D72901C58CC2A00FB246D /* rate_statistics.cc in Sources */,
+				AD8D72941C58CC2A00FB246D /* bwe_test_logging.cc in Sources */,
+				AD8D728D1C58CC2A00FB246D /* mimd_rate_control.cc in Sources */,
+				AD8D72921C58CC2A00FB246D /* remote_bitrate_estimator_single_stream.cc in Sources */,
+				AD8D72911C58CC2A00FB246D /* remote_bitrate_estimator_abs_send_time.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AD8D72721C58CB6C00FB246D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		AD8D72731C58CB6C00FB246D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AD8D72751C58CB6C00FB246D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				HEADER_SEARCH_PATHS = (
+					../../../system_wrappers/interface,
+					../..,
+					../../interface,
+					../../rtp_rtcp/source,
+					../../rtp_rtcp/include,
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "armv7 arm64";
+			};
+			name = Debug;
+		};
+		AD8D72761C58CB6C00FB246D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				HEADER_SEARCH_PATHS = (
+					../../../system_wrappers/interface,
+					../..,
+					../../interface,
+					../../rtp_rtcp/source,
+					../../rtp_rtcp/include,
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "armv7 arm64";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AD8D72661C58CB6C00FB246D /* Build configuration list for PBXProject "remote_bitrate_estimator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD8D72721C58CB6C00FB246D /* Debug */,
+				AD8D72731C58CB6C00FB246D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD8D72741C58CB6C00FB246D /* Build configuration list for PBXNativeTarget "remote_bitrate_estimator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD8D72751C58CB6C00FB246D /* Debug */,
+				AD8D72761C58CB6C00FB246D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AD8D72631C58CB6C00FB246D /* Project object */;
+}

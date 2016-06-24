@@ -1,0 +1,635 @@
+﻿生成启动时间为 6/16 星期四 18:32:43。
+     1>项目“L:\svn\MyWebRtc_2.0\third_party\libvpx\build\win32\vpx.vcxproj”在节点 2 上(build 个目标)。
+     1>PrepareForBuild:
+         正在创建目录“L:\svn\MyWebRtc_2.0\demo_Win\Win32\Release\”。
+       InitializeBuildStatus:
+         正在创建“Win32\Release\vpx\vpx.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       CustomBuild:
+         Assembling emms.asm
+         Assembling intrapred_sse2.asm
+         Assembling intrapred_ssse3.asm
+         Assembling vpx_subpixel_8t_ssse3.asm
+         Assembling vpx_subpixel_8t_sse2.asm
+         Assembling vpx_subpixel_bilinear_sse2.asm
+         Assembling vpx_subpixel_bilinear_ssse3.asm
+         Assembling vpx_convolve_copy_sse2.asm
+         Assembling loopfilter_mmx.asm
+         Assembling inv_wht_sse2.asm
+         Assembling sad_mmx.asm
+         Assembling sad_sse3.asm
+         Assembling sad_ssse3.asm
+         Assembling sad_sse4.asm
+         Assembling sad4d_sse2.asm
+         Assembling sad_sse2.asm
+         Assembling subtract_sse2.asm
+         Assembling variance_impl_mmx.asm
+         Assembling halfpix_variance_impl_sse2.asm
+         Assembling subpel_variance_sse2.asm
+         Assembling dequantize_mmx.asm
+         Assembling idctllm_mmx.asm
+         Assembling iwalsh_mmx.asm
+         Assembling vp8_loopfilter_mmx.asm
+         Assembling recon_mmx.asm
+         Assembling subpixel_mmx.asm
+         Assembling copy_sse2.asm
+         Assembling idctllm_sse2.asm
+         Assembling recon_sse2.asm
+         Assembling subpixel_sse2.asm
+         Assembling loopfilter_sse2.asm
+         Assembling iwalsh_sse2.asm
+         Assembling copy_sse3.asm
+         Assembling subpixel_ssse3.asm
+         Assembling postproc_mmx.asm
+         Assembling mfqe_sse2.asm
+         Assembling postproc_sse2.asm
+         Assembling dct_mmx.asm
+         Assembling dct_sse2.asm
+         Assembling fwalsh_sse2.asm
+         Assembling temporal_filter_apply_sse2.asm
+         Assembling quantize_mmx.asm
+         Assembling encodeopt.asm
+         Assembling vp9_temporal_filter_apply_sse2.asm
+         Assembling vp9_dct_mmx.asm
+         Assembling vp9_error_sse2.asm
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_src_vpx_decoder.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx\src\vpx_decoder.c
+         vpx_decoder.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_src_vpx_encoder.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx\src\vpx_encoder.c
+         vpx_encoder.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_src_vpx_codec.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx\src\vpx_codec.c
+         vpx_codec.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_src_vpx_image.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx\src\vpx_image.c
+         vpx_image.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_src_vpx_psnr.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx\src\vpx_psnr.c
+         vpx_psnr.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_mem_vpx_mem.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_mem\vpx_mem.c
+         vpx_mem.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_scale_generic_vpx_scale.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_scale\generic\vpx_scale.c
+         vpx_scale.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_scale_generic_yv12config.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_scale\generic\yv12config.c
+         yv12config.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_scale_generic_yv12extend.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_scale\generic\yv12extend.c
+         yv12extend.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_scale_generic_gen_scalers.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_scale\generic\gen_scalers.c
+         gen_scalers.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_scale_vpx_scale_rtcd.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_scale\vpx_scale_rtcd.c
+         vpx_scale_rtcd.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_prob.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\prob.c
+         prob.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_bitwriter.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\bitwriter.c
+         bitwriter.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_bitwriter_buffer.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\bitwriter_buffer.c
+         bitwriter_buffer.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_bitreader.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\bitreader.c
+         bitreader.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_bitreader_buffer.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\bitreader_buffer.c
+         bitreader_buffer.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_intrapred.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\intrapred.c
+         intrapred.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_vpx_convolve.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\vpx_convolve.c
+         vpx_convolve.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_x86_vpx_asm_stubs.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\x86\vpx_asm_stubs.c
+         vpx_asm_stubs.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_x86_vpx_subpixel_8t_intrin_ssse3.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\x86\vpx_subpixel_8t_intrin_ssse3.c
+         vpx_subpixel_8t_intrin_ssse3.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_loopfilter.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\loopfilter.c
+         loopfilter.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_x86_loopfilter_sse2.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\x86\loopfilter_sse2.c
+         loopfilter_sse2.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_fwd_txfm.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\fwd_txfm.c
+         fwd_txfm.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_x86_fwd_txfm_sse2.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\x86\fwd_txfm_sse2.c
+         fwd_txfm_sse2.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_inv_txfm.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\inv_txfm.c
+         inv_txfm.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_x86_inv_txfm_sse2.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\x86\inv_txfm_sse2.c
+         inv_txfm_sse2.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_quantize.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\quantize.c
+         quantize.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_x86_quantize_sse2.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\x86\quantize_sse2.c
+         quantize_sse2.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_sad.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\sad.c
+         sad.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_subtract.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\subtract.c
+         subtract.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_variance.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\variance.c
+         variance.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_x86_variance_mmx.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\x86\variance_mmx.c
+         variance_mmx.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_x86_variance_sse2.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\x86\variance_sse2.c
+         variance_sse2.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_x86_halfpix_variance_sse2.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\x86\halfpix_variance_sse2.c
+         halfpix_variance_sse2.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_dsp_vpx_dsp_rtcd.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_dsp\vpx_dsp_rtcd.c
+         vpx_dsp_rtcd.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_util_vpx_thread.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vpx_util\vpx_thread.c
+         vpx_thread.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_alloccommon.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\alloccommon.c
+         alloccommon.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_blockd.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\blockd.c
+         blockd.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_copy_c.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\copy_c.c
+         copy_c.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_debugmodes.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\debugmodes.c
+         debugmodes.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_dequantize.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\dequantize.c
+         dequantize.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_entropy.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\entropy.c
+         entropy.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_entropymode.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\entropymode.c
+         entropymode.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_entropymv.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\entropymv.c
+         entropymv.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_extend.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\extend.c
+         extend.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_filter.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\filter.c
+         filter.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_findnearmv.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\findnearmv.c
+         findnearmv.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_generic_systemdependent.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\generic\systemdependent.c
+         systemdependent.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_idct_blk.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\idct_blk.c
+         idct_blk.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_idctllm.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\idctllm.c
+         idctllm.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_rtcd.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\rtcd.c
+         rtcd.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_vp8_loopfilter.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\vp8_loopfilter.c
+         vp8_loopfilter.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_loopfilter_filters.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\loopfilter_filters.c
+         loopfilter_filters.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_mbpitch.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\mbpitch.c
+         mbpitch.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_modecont.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\modecont.c
+         modecont.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_quant_common.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\quant_common.c
+         quant_common.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_reconinter.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\reconinter.c
+         reconinter.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_reconintra.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\reconintra.c
+         reconintra.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_reconintra4x4.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\reconintra4x4.c
+         reconintra4x4.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_setupintrarecon.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\setupintrarecon.c
+         setupintrarecon.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_swapyv12buffer.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\swapyv12buffer.c
+         swapyv12buffer.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_treecoder.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\treecoder.c
+         treecoder.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_x86_filter_x86.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\x86\filter_x86.c
+         filter_x86.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_x86_vp8_asm_stubs.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\x86\vp8_asm_stubs.c
+         vp8_asm_stubs.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_x86_loopfilter_x86.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\x86\loopfilter_x86.c
+         loopfilter_x86.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_mfqe.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\mfqe.c
+         mfqe.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_postproc.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\postproc.c
+         postproc.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_x86_idct_blk_mmx.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\x86\idct_blk_mmx.c
+         idct_blk_mmx.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_common_x86_idct_blk_sse2.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\common\x86\idct_blk_sse2.c
+         idct_blk_sse2.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_vp8_cx_iface.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\vp8_cx_iface.c
+         vp8_cx_iface.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_bitstream.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\bitstream.c
+         bitstream.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_boolhuff.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\boolhuff.c
+         boolhuff.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_dct.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\dct.c
+         dct.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_encodeframe.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\encodeframe.c
+         encodeframe.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_encodeintra.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\encodeintra.c
+         encodeintra.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_encodemb.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\encodemb.c
+         encodemb.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_encodemv.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\encodemv.c
+         encodemv.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_ethreading.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\ethreading.c
+         ethreading.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_firstpass.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\firstpass.c
+         firstpass.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_denoising.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\denoising.c
+         denoising.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_lookahead.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\lookahead.c
+         lookahead.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_mcomp.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\mcomp.c
+         mcomp.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_modecosts.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\modecosts.c
+         modecosts.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_onyx_if.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\onyx_if.c
+         onyx_if.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_pickinter.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\pickinter.c
+         pickinter.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_picklpf.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\picklpf.c
+         picklpf.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_vp8_quantize.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\vp8_quantize.c
+         vp8_quantize.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_ratectrl.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\ratectrl.c
+         ratectrl.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_rdopt.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\rdopt.c
+         rdopt.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_segmentation.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\segmentation.c
+         segmentation.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_tokenize.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\tokenize.c
+         tokenize.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_treewriter.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\treewriter.c
+         treewriter.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_temporal_filter.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\temporal_filter.c
+         temporal_filter.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_x86_vp8_enc_stubs_mmx.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\x86\vp8_enc_stubs_mmx.c
+         vp8_enc_stubs_mmx.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_x86_vp8_quantize_sse2.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\x86\vp8_quantize_sse2.c
+         vp8_quantize_sse2.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_x86_quantize_ssse3.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\x86\quantize_ssse3.c
+         quantize_ssse3.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_x86_quantize_sse4.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\x86\quantize_sse4.c
+         quantize_sse4.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_x86_denoising_sse2.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\x86\denoising_sse2.c
+         denoising_sse2.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_encoder_x86_vp8_enc_stubs_sse2.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\encoder\x86\vp8_enc_stubs_sse2.c
+         vp8_enc_stubs_sse2.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_vp8_dx_iface.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\vp8_dx_iface.c
+         vp8_dx_iface.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_decoder_dboolhuff.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\decoder\dboolhuff.c
+         dboolhuff.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_decoder_decodemv.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\decoder\decodemv.c
+         decodemv.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_decoder_decodeframe.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\decoder\decodeframe.c
+         decodeframe.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_decoder_detokenize.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\decoder\detokenize.c
+         detokenize.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_decoder_onyxd_if.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\decoder\onyxd_if.c
+         onyxd_if.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp8_decoder_threading.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp8\decoder\threading.c
+         threading.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_vp9_alloccommon.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\vp9_alloccommon.c
+         vp9_alloccommon.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_vp9_blockd.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\vp9_blockd.c
+         vp9_blockd.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_vp9_debugmodes.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\vp9_debugmodes.c
+         vp9_debugmodes.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_vp9_entropy.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\vp9_entropy.c
+         vp9_entropy.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_vp9_entropymode.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\vp9_entropymode.c
+         vp9_entropymode.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_vp9_entropymv.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\vp9_entropymv.c
+         vp9_entropymv.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_vp9_frame_buffers.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\vp9_frame_buffers.c
+         vp9_frame_buffers.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_vp9_idct.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\vp9_idct.c
+         vp9_idct.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_vp9_filter.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\vp9_filter.c
+         vp9_filter.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_vp9_pred_common.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\vp9_pred_common.c
+         vp9_pred_common.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_vp9_rtcd.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\vp9_rtcd.c
+         vp9_rtcd.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_vp9_scale.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\vp9_scale.c
+         vp9_scale.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_vp9_seg_common.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\vp9_seg_common.c
+         vp9_seg_common.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_vp9_tile_common.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\vp9_tile_common.c
+         vp9_tile_common.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_vp9_loopfilter.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\vp9_loopfilter.c
+         vp9_loopfilter.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_vp9_thread_common.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\vp9_thread_common.c
+         vp9_thread_common.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_vp9_mvref_common.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\vp9_mvref_common.c
+         vp9_mvref_common.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_vp9_quant_common.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\vp9_quant_common.c
+         vp9_quant_common.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_vp9_reconinter.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\vp9_reconinter.c
+         vp9_reconinter.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_vp9_reconintra.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\vp9_reconintra.c
+         vp9_reconintra.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_vp9_common_data.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\vp9_common_data.c
+         vp9_common_data.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_vp9_scan.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\vp9_scan.c
+         vp9_scan.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_common_x86_vp9_idct_intrin_sse2.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\common\x86\vp9_idct_intrin_sse2.c
+         vp9_idct_intrin_sse2.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_vp9_cx_iface.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\vp9_cx_iface.c
+         vp9_cx_iface.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_avg.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_avg.c
+         vp9_avg.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_bitstream.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_bitstream.c
+         vp9_bitstream.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_context_tree.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_context_tree.c
+         vp9_context_tree.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_cost.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_cost.c
+         vp9_cost.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_dct.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_dct.c
+         vp9_dct.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_encodeframe.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_encodeframe.c
+         vp9_encodeframe.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_encodemb.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_encodemb.c
+         vp9_encodemb.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_encodemv.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_encodemv.c
+         vp9_encodemv.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_ethread.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_ethread.c
+         vp9_ethread.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_extend.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_extend.c
+         vp9_extend.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_firstpass.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_firstpass.c
+         vp9_firstpass.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_lookahead.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_lookahead.c
+         vp9_lookahead.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_mcomp.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_mcomp.c
+         vp9_mcomp.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_encoder.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_encoder.c
+         vp9_encoder.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_picklpf.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_picklpf.c
+         vp9_picklpf.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_quantize.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_quantize.c
+         vp9_quantize.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_ratectrl.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_ratectrl.c
+         vp9_ratectrl.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_rd.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_rd.c
+         vp9_rd.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_rdopt.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_rdopt.c
+         vp9_rdopt.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_pickmode.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_pickmode.c
+         vp9_pickmode.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_segmentation.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_segmentation.c
+         vp9_segmentation.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_speed_features.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_speed_features.c
+         vp9_speed_features.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_subexp.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_subexp.c
+         vp9_subexp.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_svc_layercontext.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_svc_layercontext.c
+         vp9_svc_layercontext.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_resize.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_resize.c
+         vp9_resize.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_tokenize.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_tokenize.c
+         vp9_tokenize.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_treewriter.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_treewriter.c
+         vp9_treewriter.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_aq_variance.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_aq_variance.c
+         vp9_aq_variance.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_aq_cyclicrefresh.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_aq_cyclicrefresh.c
+         vp9_aq_cyclicrefresh.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_aq_complexity.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_aq_complexity.c
+         vp9_aq_complexity.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_skin_detection.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_skin_detection.c
+         vp9_skin_detection.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_temporal_filter.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_temporal_filter.c
+         vp9_temporal_filter.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_vp9_mbgraph.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\vp9_mbgraph.c
+         vp9_mbgraph.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_x86_vp9_avg_intrin_sse2.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\x86\vp9_avg_intrin_sse2.c
+         vp9_avg_intrin_sse2.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_x86_vp9_quantize_sse2.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\x86\vp9_quantize_sse2.c
+         vp9_quantize_sse2.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_x86_vp9_dct_sse2.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\x86\vp9_dct_sse2.c
+         vp9_dct_sse2.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_encoder_x86_vp9_dct_ssse3.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\encoder\x86\vp9_dct_ssse3.c
+         vp9_dct_ssse3.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_vp9_dx_iface.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\vp9_dx_iface.c
+         vp9_dx_iface.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_decoder_vp9_decodemv.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\decoder\vp9_decodemv.c
+         vp9_decodemv.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_decoder_vp9_decodeframe.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\decoder\vp9_decodeframe.c
+         vp9_decodeframe.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_decoder_vp9_detokenize.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\decoder\vp9_detokenize.c
+         vp9_detokenize.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_decoder_vp9_dthread.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\decoder\vp9_dthread.c
+         vp9_dthread.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_decoder_vp9_decoder.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\decoder\vp9_decoder.c
+         vp9_decoder.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vp9_decoder_vp9_dsubexp.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\libvpx\vp9\decoder\vp9_dsubexp.c
+         vp9_dsubexp.c
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I. /I..\..\libvpx /I"C:\Program Files (x86)\Visual Leak Detector\include" /Zi /nologo /W3 /WX- /O2 /Ot /Oy- /GL /D WIN32 /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Win32\Release\vpx\vpx_config.obj" /Fd"Win32\Release\vpx\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt vpx_config.c
+         vpx_config.c
+       Lib:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"L:\svn\MyWebRtc_2.0\demo_Win\Win32\Release\vpxmd.lib" /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" /NOLOGO /LTCG Win32\Release\vpx\vpx_ports_emms_asm.obj
+         Win32\Release\vpx\vpx_dsp_x86_intrapred_sse2_asm.obj
+         Win32\Release\vpx\vpx_dsp_x86_intrapred_ssse3_asm.obj
+         Win32\Release\vpx\vpx_dsp_x86_vpx_subpixel_8t_ssse3_asm.obj
+         Win32\Release\vpx\vpx_dsp_x86_vpx_subpixel_8t_sse2_asm.obj
+         Win32\Release\vpx\vpx_dsp_x86_vpx_subpixel_bilinear_sse2_asm.obj
+         Win32\Release\vpx\vpx_dsp_x86_vpx_subpixel_bilinear_ssse3_asm.obj
+         Win32\Release\vpx\vpx_dsp_x86_vpx_convolve_copy_sse2_asm.obj
+         Win32\Release\vpx\vpx_dsp_x86_loopfilter_mmx_asm.obj
+         Win32\Release\vpx\vpx_dsp_x86_inv_wht_sse2_asm.obj
+         Win32\Release\vpx\vpx_dsp_x86_sad_mmx_asm.obj
+         Win32\Release\vpx\vpx_dsp_x86_sad_sse3_asm.obj
+         Win32\Release\vpx\vpx_dsp_x86_sad_ssse3_asm.obj
+         Win32\Release\vpx\vpx_dsp_x86_sad_sse4_asm.obj
+         Win32\Release\vpx\vpx_dsp_x86_sad4d_sse2_asm.obj
+         Win32\Release\vpx\vpx_dsp_x86_sad_sse2_asm.obj
+         Win32\Release\vpx\vpx_dsp_x86_subtract_sse2_asm.obj
+         Win32\Release\vpx\vpx_dsp_x86_variance_impl_mmx_asm.obj
+         Win32\Release\vpx\vpx_dsp_x86_halfpix_variance_impl_sse2_asm.obj
+         Win32\Release\vpx\vpx_dsp_x86_subpel_variance_sse2_asm.obj
+         Win32\Release\vpx\vp8_common_x86_dequantize_mmx_asm.obj
+         Win32\Release\vpx\vp8_common_x86_idctllm_mmx_asm.obj
+         Win32\Release\vpx\vp8_common_x86_iwalsh_mmx_asm.obj
+         Win32\Release\vpx\vp8_common_x86_vp8_loopfilter_mmx_asm.obj
+         Win32\Release\vpx\vp8_common_x86_recon_mmx_asm.obj
+         Win32\Release\vpx\vp8_common_x86_subpixel_mmx_asm.obj
+         Win32\Release\vpx\vp8_common_x86_copy_sse2_asm.obj
+         Win32\Release\vpx\vp8_common_x86_idctllm_sse2_asm.obj
+         Win32\Release\vpx\vp8_common_x86_recon_sse2_asm.obj
+         Win32\Release\vpx\vp8_common_x86_subpixel_sse2_asm.obj
+         Win32\Release\vpx\vp8_common_x86_loopfilter_sse2_asm.obj
+         Win32\Release\vpx\vp8_common_x86_iwalsh_sse2_asm.obj
+         Win32\Release\vpx\vp8_common_x86_copy_sse3_asm.obj
+         Win32\Release\vpx\vp8_common_x86_subpixel_ssse3_asm.obj
+         Win32\Release\vpx\vp8_common_x86_postproc_mmx_asm.obj
+         Win32\Release\vpx\vp8_common_x86_mfqe_sse2_asm.obj
+         Win32\Release\vpx\vp8_common_x86_postproc_sse2_asm.obj
+         Win32\Release\vpx\vp8_encoder_x86_dct_mmx_asm.obj
+         Win32\Release\vpx\vp8_encoder_x86_dct_sse2_asm.obj
+         Win32\Release\vpx\vp8_encoder_x86_fwalsh_sse2_asm.obj
+         Win32\Release\vpx\vp8_encoder_x86_temporal_filter_apply_sse2_asm.obj
+         Win32\Release\vpx\vp8_encoder_x86_quantize_mmx_asm.obj
+         Win32\Release\vpx\vp8_encoder_x86_encodeopt_asm.obj
+         Win32\Release\vpx\vp9_encoder_x86_vp9_temporal_filter_apply_sse2_asm.obj
+         Win32\Release\vpx\vp9_encoder_x86_vp9_dct_mmx_asm.obj
+         Win32\Release\vpx\vp9_encoder_x86_vp9_error_sse2_asm.obj
+         Win32\Release\vpx\vpx_src_vpx_decoder.obj
+         Win32\Release\vpx\vpx_src_vpx_encoder.obj
+         Win32\Release\vpx\vpx_src_vpx_codec.obj
+         Win32\Release\vpx\vpx_src_vpx_image.obj
+         Win32\Release\vpx\vpx_src_vpx_psnr.obj
+         Win32\Release\vpx\vpx_mem_vpx_mem.obj
+         Win32\Release\vpx\vpx_scale_generic_vpx_scale.obj
+         Win32\Release\vpx\vpx_scale_generic_yv12config.obj
+         Win32\Release\vpx\vpx_scale_generic_yv12extend.obj
+         Win32\Release\vpx\vpx_scale_generic_gen_scalers.obj
+         Win32\Release\vpx\vpx_scale_vpx_scale_rtcd.obj
+         Win32\Release\vpx\vpx_dsp_prob.obj
+         Win32\Release\vpx\vpx_dsp_bitwriter.obj
+         Win32\Release\vpx\vpx_dsp_bitwriter_buffer.obj
+         Win32\Release\vpx\vpx_dsp_bitreader.obj
+         Win32\Release\vpx\vpx_dsp_bitreader_buffer.obj
+         Win32\Release\vpx\vpx_dsp_intrapred.obj
+         Win32\Release\vpx\vpx_dsp_vpx_convolve.obj
+         Win32\Release\vpx\vpx_dsp_x86_vpx_asm_stubs.obj
+         Win32\Release\vpx\vpx_dsp_x86_vpx_subpixel_8t_intrin_ssse3.obj
+         Win32\Release\vpx\vpx_dsp_loopfilter.obj
+         Win32\Release\vpx\vpx_dsp_x86_loopfilter_sse2.obj
+         Win32\Release\vpx\vpx_dsp_fwd_txfm.obj
+         Win32\Release\vpx\vpx_dsp_x86_fwd_txfm_sse2.obj
+         Win32\Release\vpx\vpx_dsp_inv_txfm.obj
+         Win32\Release\vpx\vpx_dsp_x86_inv_txfm_sse2.obj
+         Win32\Release\vpx\vpx_dsp_quantize.obj
+         Win32\Release\vpx\vpx_dsp_x86_quantize_sse2.obj
+         Win32\Release\vpx\vpx_dsp_sad.obj
+         Win32\Release\vpx\vpx_dsp_subtract.obj
+         Win32\Release\vpx\vpx_dsp_variance.obj
+         Win32\Release\vpx\vpx_dsp_x86_variance_mmx.obj
+         Win32\Release\vpx\vpx_dsp_x86_variance_sse2.obj
+         Win32\Release\vpx\vpx_dsp_x86_halfpix_variance_sse2.obj
+         Win32\Release\vpx\vpx_dsp_vpx_dsp_rtcd.obj
+         Win32\Release\vpx\vpx_util_vpx_thread.obj
+         Win32\Release\vpx\vp8_common_alloccommon.obj
+         Win32\Release\vpx\vp8_common_blockd.obj
+         Win32\Release\vpx\vp8_common_copy_c.obj
+         Win32\Release\vpx\vp8_common_debugmodes.obj
+         Win32\Release\vpx\vp8_common_dequantize.obj
+         Win32\Release\vpx\vp8_common_entropy.obj
+         Win32\Release\vpx\vp8_common_entropymode.obj
+         Win32\Release\vpx\vp8_common_entropymv.obj
+         Win32\Release\vpx\vp8_common_extend.obj
+         Win32\Release\vpx\vp8_common_filter.obj
+         Win32\Release\vpx\vp8_common_findnearmv.obj
+         Win32\Release\vpx\vp8_common_generic_systemdependent.obj
+         Win32\Release\vpx\vp8_common_idct_blk.obj
+         Win32\Release\vpx\vp8_common_idctllm.obj
+         Win32\Release\vpx\vp8_common_rtcd.obj
+         Win32\Release\vpx\vp8_common_vp8_loopfilter.obj
+         Win32\Release\vpx\vp8_common_loopfilter_filters.obj
+         Win32\Release\vpx\vp8_common_mbpitch.obj
+         Win32\Release\vpx\vp8_common_modecont.obj
+         Win32\Release\vpx\vp8_common_quant_common.obj
+         Win32\Release\vpx\vp8_common_reconinter.obj
+         Win32\Release\vpx\vp8_common_reconintra.obj
+         Win32\Release\vpx\vp8_common_reconintra4x4.obj
+         Win32\Release\vpx\vp8_common_setupintrarecon.obj
+         Win32\Release\vpx\vp8_common_swapyv12buffer.obj
+         Win32\Release\vpx\vp8_common_treecoder.obj
+         Win32\Release\vpx\vp8_common_x86_filter_x86.obj
+         Win32\Release\vpx\vp8_common_x86_vp8_asm_stubs.obj
+         Win32\Release\vpx\vp8_common_x86_loopfilter_x86.obj
+         Win32\Release\vpx\vp8_common_mfqe.obj
+         Win32\Release\vpx\vp8_common_postproc.obj
+         Win32\Release\vpx\vp8_common_x86_idct_blk_mmx.obj
+         Win32\Release\vpx\vp8_common_x86_idct_blk_sse2.obj
+         Win32\Release\vpx\vp8_vp8_cx_iface.obj
+         Win32\Release\vpx\vp8_encoder_bitstream.obj
+         Win32\Release\vpx\vp8_encoder_boolhuff.obj
+         Win32\Release\vpx\vp8_encoder_dct.obj
+         Win32\Release\vpx\vp8_encoder_encodeframe.obj
+         Win32\Release\vpx\vp8_encoder_encodeintra.obj
+         Win32\Release\vpx\vp8_encoder_encodemb.obj
+         Win32\Release\vpx\vp8_encoder_encodemv.obj
+         Win32\Release\vpx\vp8_encoder_ethreading.obj
+         Win32\Release\vpx\vp8_encoder_firstpass.obj
+         Win32\Release\vpx\vp8_encoder_denoising.obj
+         Win32\Release\vpx\vp8_encoder_lookahead.obj
+         Win32\Release\vpx\vp8_encoder_mcomp.obj
+         Win32\Release\vpx\vp8_encoder_modecosts.obj
+         Win32\Release\vpx\vp8_encoder_onyx_if.obj
+         Win32\Release\vpx\vp8_encoder_pickinter.obj
+         Win32\Release\vpx\vp8_encoder_picklpf.obj
+         Win32\Release\vpx\vp8_encoder_vp8_quantize.obj
+         Win32\Release\vpx\vp8_encoder_ratectrl.obj
+         Win32\Release\vpx\vp8_encoder_rdopt.obj
+         Win32\Release\vpx\vp8_encoder_segmentation.obj
+         Win32\Release\vpx\vp8_encoder_tokenize.obj
+         Win32\Release\vpx\vp8_encoder_treewriter.obj
+         Win32\Release\vpx\vp8_encoder_temporal_filter.obj
+         Win32\Release\vpx\vp8_encoder_x86_vp8_enc_stubs_mmx.obj
+         Win32\Release\vpx\vp8_encoder_x86_vp8_quantize_sse2.obj
+         Win32\Release\vpx\vp8_encoder_x86_quantize_ssse3.obj
+         Win32\Release\vpx\vp8_encoder_x86_quantize_sse4.obj
+         Win32\Release\vpx\vp8_encoder_x86_denoising_sse2.obj
+         Win32\Release\vpx\vp8_encoder_x86_vp8_enc_stubs_sse2.obj
+         Win32\Release\vpx\vp8_vp8_dx_iface.obj
+         Win32\Release\vpx\vp8_decoder_dboolhuff.obj
+         Win32\Release\vpx\vp8_decoder_decodemv.obj
+         Win32\Release\vpx\vp8_decoder_decodeframe.obj
+         Win32\Release\vpx\vp8_decoder_detokenize.obj
+         Win32\Release\vpx\vp8_decoder_onyxd_if.obj
+         Win32\Release\vpx\vp8_decoder_threading.obj
+         Win32\Release\vpx\vp9_common_vp9_alloccommon.obj
+         Win32\Release\vpx\vp9_common_vp9_blockd.obj
+         Win32\Release\vpx\vp9_common_vp9_debugmodes.obj
+         Win32\Release\vpx\vp9_common_vp9_entropy.obj
+         Win32\Release\vpx\vp9_common_vp9_entropymode.obj
+         Win32\Release\vpx\vp9_common_vp9_entropymv.obj
+         Win32\Release\vpx\vp9_common_vp9_frame_buffers.obj
+         Win32\Release\vpx\vp9_common_vp9_idct.obj
+         Win32\Release\vpx\vp9_common_vp9_filter.obj
+         Win32\Release\vpx\vp9_common_vp9_pred_common.obj
+         Win32\Release\vpx\vp9_common_vp9_rtcd.obj
+         Win32\Release\vpx\vp9_common_vp9_scale.obj
+         Win32\Release\vpx\vp9_common_vp9_seg_common.obj
+         Win32\Release\vpx\vp9_common_vp9_tile_common.obj
+         Win32\Release\vpx\vp9_common_vp9_loopfilter.obj
+         Win32\Release\vpx\vp9_common_vp9_thread_common.obj
+         Win32\Release\vpx\vp9_common_vp9_mvref_common.obj
+         Win32\Release\vpx\vp9_common_vp9_quant_common.obj
+         Win32\Release\vpx\vp9_common_vp9_reconinter.obj
+         Win32\Release\vpx\vp9_common_vp9_reconintra.obj
+         Win32\Release\vpx\vp9_common_vp9_common_data.obj
+         Win32\Release\vpx\vp9_common_vp9_scan.obj
+         Win32\Release\vpx\vp9_common_x86_vp9_idct_intrin_sse2.obj
+         Win32\Release\vpx\vp9_vp9_cx_iface.obj
+         Win32\Release\vpx\vp9_encoder_vp9_avg.obj
+         Win32\Release\vpx\vp9_encoder_vp9_bitstream.obj
+         Win32\Release\vpx\vp9_encoder_vp9_context_tree.obj
+         Win32\Release\vpx\vp9_encoder_vp9_cost.obj
+         Win32\Release\vpx\vp9_encoder_vp9_dct.obj
+         Win32\Release\vpx\vp9_encoder_vp9_encodeframe.obj
+         Win32\Release\vpx\vp9_encoder_vp9_encodemb.obj
+         Win32\Release\vpx\vp9_encoder_vp9_encodemv.obj
+         Win32\Release\vpx\vp9_encoder_vp9_ethread.obj
+         Win32\Release\vpx\vp9_encoder_vp9_extend.obj
+         Win32\Release\vpx\vp9_encoder_vp9_firstpass.obj
+         Win32\Release\vpx\vp9_encoder_vp9_lookahead.obj
+         Win32\Release\vpx\vp9_encoder_vp9_mcomp.obj
+         Win32\Release\vpx\vp9_encoder_vp9_encoder.obj
+         Win32\Release\vpx\vp9_encoder_vp9_picklpf.obj
+         Win32\Release\vpx\vp9_encoder_vp9_quantize.obj
+         Win32\Release\vpx\vp9_encoder_vp9_ratectrl.obj
+         Win32\Release\vpx\vp9_encoder_vp9_rd.obj
+         Win32\Release\vpx\vp9_encoder_vp9_rdopt.obj
+         Win32\Release\vpx\vp9_encoder_vp9_pickmode.obj
+         Win32\Release\vpx\vp9_encoder_vp9_segmentation.obj
+         Win32\Release\vpx\vp9_encoder_vp9_speed_features.obj
+         Win32\Release\vpx\vp9_encoder_vp9_subexp.obj
+         Win32\Release\vpx\vp9_encoder_vp9_svc_layercontext.obj
+         Win32\Release\vpx\vp9_encoder_vp9_resize.obj
+         Win32\Release\vpx\vp9_encoder_vp9_tokenize.obj
+         Win32\Release\vpx\vp9_encoder_vp9_treewriter.obj
+         Win32\Release\vpx\vp9_encoder_vp9_aq_variance.obj
+         Win32\Release\vpx\vp9_encoder_vp9_aq_cyclicrefresh.obj
+         Win32\Release\vpx\vp9_encoder_vp9_aq_complexity.obj
+         Win32\Release\vpx\vp9_encoder_vp9_skin_detection.obj
+         Win32\Release\vpx\vp9_encoder_vp9_temporal_filter.obj
+         Win32\Release\vpx\vp9_encoder_vp9_mbgraph.obj
+         Win32\Release\vpx\vp9_encoder_x86_vp9_avg_intrin_sse2.obj
+         Win32\Release\vpx\vp9_encoder_x86_vp9_quantize_sse2.obj
+         Win32\Release\vpx\vp9_encoder_x86_vp9_dct_sse2.obj
+         Win32\Release\vpx\vp9_encoder_x86_vp9_dct_ssse3.obj
+         Win32\Release\vpx\vp9_vp9_dx_iface.obj
+         Win32\Release\vpx\vp9_decoder_vp9_decodemv.obj
+         Win32\Release\vpx\vp9_decoder_vp9_decodeframe.obj
+         Win32\Release\vpx\vp9_decoder_vp9_detokenize.obj
+         Win32\Release\vpx\vp9_decoder_vp9_dthread.obj
+         Win32\Release\vpx\vp9_decoder_vp9_decoder.obj
+         Win32\Release\vpx\vp9_decoder_vp9_dsubexp.obj
+         Win32\Release\vpx\vpx_config.obj
+         vpx.vcxproj -> L:\svn\MyWebRtc_2.0\demo_Win\Win32\Release\vpxmd.lib
+       FinalizeBuildStatus:
+         正在删除文件“Win32\Release\vpx\vpx.unsuccessfulbuild”。
+         正在对“Win32\Release\vpx\vpx.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“L:\svn\MyWebRtc_2.0\third_party\libvpx\build\win32\vpx.vcxproj”(build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:05:00.22
