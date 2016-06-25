@@ -187,7 +187,7 @@ int NetEqImpl::InsertPacket(const WebRtcRTPHeader& rtp_header,
 }
 
 int NetEqImpl::InsertSyncPacket(const WebRtcRTPHeader& rtp_header,
-                                uint32_t receive_timestamp) {//‰∏ç‰ºöËµ∞Âà∞
+                                uint32_t receive_timestamp) {/*≤ªª·◊ﬂµΩ*/
   CriticalSectionScoped lock(crit_sect_.get());
   LOG(LS_VERBOSE) << "InsertPacket-Sync: ts="
       << rtp_header.header.timestamp <<
@@ -817,26 +817,26 @@ int NetEqImpl::GetAudioInternal(size_t max_length, int16_t* output,
       break;
     }
     case kAlternativePlc: {
-        //Ê≤°ÊúâËµ?//        printf("sean haha kAlternativePlc\n");
+        //?????°Î®®??//        printf("sean haha kAlternativePlc\n");
       // TODO(hlundin): Write test for this.
       DoAlternativePlc(false);
       break;
     }
     case kAlternativePlcIncreaseTimestamp: {
-        //Ê≤°ÊúâËµ?//        printf("sean haha kAlternativePlcIncreaseTimestamp\n");
+        //?????°Î®®??//        printf("sean haha kAlternativePlcIncreaseTimestamp\n");
       // TODO(hlundin): Write test for this.
       DoAlternativePlc(true);
       break;
     }
     case kAudioRepetitionIncreaseTimestamp: {
-        //Ê≤°ÊúâËµ?//        printf("sean haha kAudioRepetitionIncreaseTimestamp\n");
+        //?????°Î®®??//        printf("sean haha kAudioRepetitionIncreaseTimestamp\n");
       // TODO(hlundin): Write test for this.
       sync_buffer_->IncreaseEndTimestamp(output_size_samples_);
       // Skipping break on purpose. Execution should move on into the
       // next case.
     }
     case kAudioRepetition: {
-        //Ê≤°ÊúâËµ?//        printf("sean haha kAudioRepetition\n");
+        //?????°Î®®??//        printf("sean haha kAudioRepetition\n");
       // TODO(hlundin): Write test for this.
       // Copy last |output_size_samples_| from |sync_buffer_| to
       // |algorithm_buffer|.
@@ -1379,7 +1379,7 @@ int NetEqImpl::DecodeLoop(PacketList* packet_list, Operations* operation,
                                       &decoded_buffer_[*decoded_length],
                                       speech_type);
     }
-	int seq = packet->header.sequenceNumber;
+
     delete[] packet->payload;
     delete packet;
     packet = NULL;
@@ -1393,7 +1393,7 @@ int NetEqImpl::DecodeLoop(PacketList* packet_list, Operations* operation,
           " samples per channel)";
     } else if (decode_length < 0) {
       // Error.
-      LOG_FERR3(LS_WARNING, Decode, decode_length, payload_length, seq);
+      LOG_FERR2(LS_WARNING, Decode, decode_length, payload_length);
       *decoded_length = -1;
 #ifndef WIN32
 	  printTime();

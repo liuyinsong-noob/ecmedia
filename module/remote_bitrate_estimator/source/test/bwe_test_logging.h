@@ -161,7 +161,7 @@
       webrtc::testing::bwe::Logging::GetInstance()->Plot(value); \
     } while (0);
 
-namespace webrtc {
+namespace cloopenwebrtc {
 
 class CriticalSectionWrapper;
 

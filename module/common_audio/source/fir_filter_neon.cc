@@ -9,7 +9,7 @@
  */
 
 #include "fir_filter_neon.h"
-
+#if __arm__
 #include <arm_neon.h>
 #include <assert.h>
 #include <string.h>
@@ -70,3 +70,4 @@ void FIRFilterNEON::Filter(const float* in, size_t length, float* out) {
 }
 
 }  // namespace webrtc
+#endif

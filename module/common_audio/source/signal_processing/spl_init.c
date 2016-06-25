@@ -29,7 +29,7 @@ DownsampleFast WebRtcSpl_DownsampleFast;
 ScaleAndAddVectorsWithRound WebRtcSpl_ScaleAndAddVectorsWithRound;
 
 #if (defined(WEBRTC_DETECT_ARM_NEON) || !defined(WEBRTC_ARCH_ARM_NEON)) && \
-     !defined(MIPS32_LE) || defined(__aarch64__)
+     !defined(MIPS32_LE) || defined(__aarch64__) || defined(__i386__) || defined(__x86_64__)
 /* Initialize function pointers to the generic C version. */
 static void InitPointersToC() {
   WebRtcSpl_MaxAbsValueW16 = WebRtcSpl_MaxAbsValueW16C;
@@ -45,7 +45,7 @@ static void InitPointersToC() {
 }
 #endif
 
-#if (defined(WEBRTC_DETECT_ARM_NEON) || defined(WEBRTC_ARCH_ARM_NEON)) && !defined(__aarch64__)
+#if (defined(WEBRTC_DETECT_ARM_NEON) || defined(WEBRTC_ARCH_ARM_NEON)) && !defined(__aarch64__) && defined(__arm__)
 /* Initialize function pointers to the Neon version. */
 static void InitPointersToNeon() {
   WebRtcSpl_MaxAbsValueW16 = WebRtcSpl_MaxAbsValueW16Neon;
@@ -92,7 +92,7 @@ static void InitFunctionPointers(void) {
   } else {
     InitPointersToC();
   }
-#elif defined(WEBRTC_ARCH_ARM_NEON) && !defined(__aarch64__)
+#elif defined(WEBRTC_ARCH_ARM_NEON) && !defined(__aarch64__) && defined(__arm__)
   InitPointersToNeon();
 #elif defined(MIPS32_LE)
   InitPointersToMIPS();

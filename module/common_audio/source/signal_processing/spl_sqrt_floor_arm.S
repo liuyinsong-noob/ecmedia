@@ -1,4 +1,4 @@
-#ifndef __aarch64__
+#if !defined __aarch64__ && defined __arm__
 @
 @ Written by Wilco Dijkstra, 1996. The following email exchange establishes the
 @ license.

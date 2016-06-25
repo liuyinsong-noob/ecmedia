@@ -43,7 +43,7 @@
  *
  * If the input value is negative, it returns 0.
  */
-#if defined(__aarch64__)  || defined(_WIN32) || defined(WEBRTC_ANDROID)
+#if defined(__aarch64__)  || defined(_WIN32) || defined(WEBRTC_ANDROID) || defined(__i386__) || defined(__x86_64__)
 #define WEBRTC_SPL_SQRT_ITER(N)                 \
   try1 = root + (1 << (N));                     \
   if (value >= try1 << (N))                     \

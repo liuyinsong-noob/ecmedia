@@ -127,6 +127,9 @@ public:
     // and low-frequency noise. Recommended to be enabled.
     virtual int EnableHighPassFilter(bool enable) = 0;
     virtual bool IsHighPassFilterEnabled() = 0;
+    
+    virtual int EnableHowlingControl(bool enable) = 0;
+    virtual bool IsHowlingControlEnabled() = 0;
 
     // Sets status and mode of the receiving-side (Rx) NS.
     // The Rx NS reduces noise in the received signal for the specified

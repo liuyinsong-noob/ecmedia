@@ -217,11 +217,6 @@ public:
       return GetREDStatus(channel, enabled, redPayloadtype);
     }
 
-	virtual int SetFECStatus(const int channel,
-		const bool enable,
-		const unsigned char payload_typeRED,
-		const unsigned char payload_typeFEC) = 0;
-
     // This function enables Negative Acknowledgment (NACK) using RTCP,
     // implemented based on RFC 4585. NACK retransmits RTP packets if lost on
     // the network. This creates a lossless transport at the expense of delay.

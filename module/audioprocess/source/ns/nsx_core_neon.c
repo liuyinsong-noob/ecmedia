@@ -9,7 +9,7 @@
  */
 
 #include "nsx_core.h"
-
+#if __arm__
 #include <arm_neon.h>
 #include <assert.h>
 
@@ -596,3 +596,4 @@ void WebRtcNsx_AnalysisUpdateNeon(NoiseSuppressionFixedC* inst,
     p_start_out += 8;
   }
 }
+#endif

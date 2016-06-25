@@ -34,7 +34,6 @@
 #include "statistics.h"
 #include "transmit_mixer.h"
 #include "utility.h"
-#include "fec_receiver.h"
 
 #include "rtp.h"
 
@@ -535,13 +534,12 @@ Channel::OnReceivedPayloadData(const uint8_t* payloadData,
                                size_t payloadSize,
                                const WebRtcRTPHeader* rtpHeader)
 {
-    WEBRTC_TRACE(kTraceError, kTraceVoice, VoEId(_instanceId,_channelId),
+    WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId,_channelId),
                  "Channel::OnReceivedPayloadData(payloadSize=%" PRIuS ","
-                 " payloadType=%u, audioChannel=%u, seqNo=%u)",
+                 " payloadType=%u, audioChannel=%u)",
                  payloadSize,
                  rtpHeader->header.payloadType,
-                 rtpHeader->type.Audio.channel,
-				 rtpHeader->header.sequenceNumber);
+                 rtpHeader->type.Audio.channel);
 
     if (!channel_state_.Get().playing)
     {
@@ -881,7 +879,6 @@ Channel::Channel(int32_t channelId,
         new RTPPayloadRegistry(RTPPayloadStrategy::CreateStrategy(true))),
     rtp_receive_statistics_(ReceiveStatistics::Create(
         Clock::GetRealTimeClock())),
-    fec_receiver_(FecReceiver::Create(this)),
     rtp_receiver_(RtpReceiver::CreateAudioReceiver(
         VoEModuleId(instanceId, channelId), Clock::GetRealTimeClock(), this,
         this, this, rtp_payload_registry_.get())),
@@ -1959,15 +1956,8 @@ bool Channel::ReceivePacket(const uint8_t* packet,
                             const RTPHeader& header,
                             bool in_order) {
   if (rtp_payload_registry_->IsEncapsulated(header)) {
-	  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVoice, _channelId,
-		  "hubintest ReceiveRedPacket seq=%d, packetlen=%d", header.sequenceNumber, packet_length);
-
     return HandleEncapsulation(packet, packet_length, header);
   }
-
-  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVoice, _channelId,
-	  "hubintest ReceivePacket seq=%d, packetlen=%d", header.sequenceNumber, packet_length);
-
   const uint8_t* payload = packet + header.headerLength;
   assert(packet_length >= header.headerLength);
   size_t payload_length = packet_length - header.headerLength;
@@ -1983,47 +1973,31 @@ bool Channel::ReceivePacket(const uint8_t* packet,
 bool Channel::HandleEncapsulation(const uint8_t* packet,
                                   size_t packet_length,
                                   const RTPHeader& header) {
-  if (rtp_payload_registry_->IsRed(header)) {
-	int8_t ulpfec_pt = rtp_payload_registry_->ulpfec_payload_type();
-	if (packet[header.headerLength] == ulpfec_pt)
-		rtp_receive_statistics_->FecPacketReceived(header.ssrc);
-	if (fec_receiver_->AddReceivedRedPacket(
-   		header, packet, packet_length, ulpfec_pt) != 0) {
-	 		return false;
-	 }
-	 return fec_receiver_->ProcessReceivedFec() == 0;
-  } else  if (rtp_payload_registry_->IsRtx(header))
-  {  
-	  // Remove the RTX header and parse the original RTP header.
-	  if (packet_length < header.headerLength)
-		return false;
-	  if (packet_length > kVoiceEngineMaxIpPacketSizeBytes)
-		return false;
-	  if (restored_packet_in_use_) {
-		WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVoice, _channelId,
-					 "Multiple RTX headers detected, dropping packet");
-		return false;
-	  }
-	  uint8_t* restored_packet_ptr = restored_packet_;
-	  if (!rtp_payload_registry_->RestoreOriginalPacket(
-		  &restored_packet_ptr, packet, &packet_length, rtp_receiver_->SSRC(),
-		  header)) {
-		WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVoice, _channelId,
-					 "Incoming RTX packet: invalid RTP header");
-		return false;
-	  }
-	  restored_packet_in_use_ = true;
-	  bool ret = OnRecoveredPacket(restored_packet_ptr, packet_length);
-	  restored_packet_in_use_ = false;
+  if (!rtp_payload_registry_->IsRtx(header))
+    return false;
+
+  // Remove the RTX header and parse the original RTP header.
+  if (packet_length < header.headerLength)
+    return false;
+  if (packet_length > kVoiceEngineMaxIpPacketSizeBytes)
+    return false;
+  if (restored_packet_in_use_) {
+    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVoice, _channelId,
+                 "Multiple RTX headers detected, dropping packet");
+    return false;
   }
-
-  if(rtp_payload_registry_->IsRed(header))
-  {
-
-
+  uint8_t* restored_packet_ptr = restored_packet_;
+  if (!rtp_payload_registry_->RestoreOriginalPacket(
+      &restored_packet_ptr, packet, &packet_length, rtp_receiver_->SSRC(),
+      header)) {
+    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVoice, _channelId,
+                 "Incoming RTX packet: invalid RTP header");
+    return false;
   }
-
-  return false;
+  restored_packet_in_use_ = true;
+  bool ret = OnRecoveredPacket(restored_packet_ptr, packet_length);
+  restored_packet_in_use_ = false;
+  return ret;
 }
 
 bool Channel::IsPacketInOrder(const RTPHeader& header) const {
@@ -3687,27 +3661,6 @@ void Channel::SetNACKStatus(bool enable, int maxNumberOfPackets) {
     audio_coding_->DisableNack();
 }
 
-int32_t Channel::SetFECStatus(const bool enable,
-	const unsigned char payload_typeRED,
-	const unsigned char payload_typeFEC) {
-	// Disable possible NACK.
-	if (enable) {
-		SetNACKStatus(false, 0);
-	}
-	return ProcessFECRequest(enable, payload_typeRED, payload_typeFEC);
-}
-
-int32_t Channel::ProcessFECRequest(
-	const bool enable,
-	const unsigned char payload_typeRED,
-	const unsigned char payload_typeFEC) {
-	if (_rtpRtcpModule->SetGenericFECStatus(enable, payload_typeRED,
-		payload_typeFEC) != 0) {
-			return -1;
-	}
-	return 0;
-}
-
 // Called when we are missing one or more packets.
 int Channel::ResendPackets(const uint16_t* sequence_numbers, int length) {
   return _rtpRtcpModule->SendNACK(sequence_numbers, length);
@@ -4962,7 +4915,7 @@ void
 
 	rtp_header_t *rtp;
 	//Sean ice for STUN Message
-	if ( _stun_cb && 3 == this->_firewall_policy&& rtcpPacketLength>=12 ) //rtp header
+	if ( _stun_cb && rtcpPacketLength>=12 ) //rtp header
 	{
 		rtp = (rtp_header_t*)incomingRtcpPacket;
 		if (rtp->version!=2)
@@ -5107,7 +5060,7 @@ void
 	//    }
 	rtp_header_t *rtp;
 	//Sean ice for STUN Message
-	if ( _stun_cb && 3 == this->_firewall_policy && rtpBufferLength>=12 ) //rtp header
+	if ( _stun_cb && rtpBufferLength>=12 ) //rtp header
 	{
 		rtp = (rtp_header_t*)rtpBufferPtr;
 		if (rtp->version!=2)
@@ -5229,12 +5182,9 @@ void
 		rtp_payload_registry_->GetPayloadTypeFrequency(header.payloadType);
 	if (header.payload_type_frequency < 0)
 		return ;
-
 	bool in_order = IsPacketInOrder(header);
-	//hubintest crash when receive fec audio, since red's frequ is 0.
-	//rtp_receive_statistics_->IncomingPacket(header, rtpPacketLength,
-	//	IsPacketRetransmitted(header, in_order));
-	//end
+	rtp_receive_statistics_->IncomingPacket(header, rtpPacketLength,
+		IsPacketRetransmitted(header, in_order));
 	rtp_payload_registry_->SetIncomingPayloadType(header);
 
 	// Forward any packets to ViE bandwidth estimator, if enabled.
@@ -5412,9 +5362,19 @@ bool Channel::handleRFC2833(const WebRtc_Word8 *packet,const WebRtc_Word32 packe
 		if (pData[0]>-1 && pData[0]<sizeof(rfc2833Char))
 		{
 			rfcChar = rfc2833Char[pData[0]];
+			//callback
+//			if (_serviceCoreCallBack) {
+//				_serviceCoreCallBack->onDtmf(call_id,rfcChar);
+//			}
+            if (_dtmf_cb) {
+                _dtmf_cb(_channelId, rfcChar);
+            }
+			_lastdtmfTimeStampRTP = _dtmfTimeStampRTP;
 		}
-
 	}
+
+
+	//    }
 	return true;
 
 }

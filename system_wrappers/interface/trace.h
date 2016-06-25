@@ -29,8 +29,8 @@ namespace cloopenwebrtc {
 #endif
 
 #define WEBRTC_TRACE_FILTER \
-	cloopenwebrtc::kTraceStateInfo | cloopenwebrtc::kTraceWarning | cloopenwebrtc::kTraceError | cloopenwebrtc::kTraceCritical | \
-	cloopenwebrtc::kTraceApiCall
+cloopenwebrtc::kTraceStateInfo | cloopenwebrtc::kTraceWarning | cloopenwebrtc::kTraceError | cloopenwebrtc::kTraceCritical | \
+cloopenwebrtc::kTraceApiCall
 
 class Trace {
  public:

@@ -113,12 +113,12 @@ static double SincScaleFactor(double io_ratio) {
   return sinc_scale_factor;
 }
 
-#if  !defined(__aarch64__) && !defined(WIN32) && !defined(WEBRTC_ANDROID)
+#if  !defined(__aarch64__) && !defined(WIN32) && !defined(WEBRTC_ANDROID) && !defined(__i386__) && !defined(__x86_64__)
 #define WEBRTC_ARCH_ARM_V7
 #endif
 
 // If we know the minimum architecture at compile time, avoid CPU detection.
-#if defined(WEBRTC_ARCH_X86_FAMILY)
+#if defined(WEBRTC_ARCH_X86_FAMILY) && defined(_MSC_VER)
 #if defined(__SSE2__)
 #define CONVOLVE_FUNC Convolve_SSE
 void SincResampler::InitializeCPUSpecificFeatures() {}

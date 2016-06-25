@@ -155,9 +155,7 @@ RTPSender::RTPSender(int32_t id,
     _keepAliveIsActive(false),
     _keepAlivePayloadType(-1),
     _keepAliveLastSent(0),
-    _keepAliveDeltaTimeSend(0),
-    _payloadType(-1),
-    _payloadTypeMap(){
+    _keepAliveDeltaTimeSend(0){
   memset(nack_byte_count_times_, 0, sizeof(nack_byte_count_times_));
   memset(nack_byte_count_, 0, sizeof(nack_byte_count_));
   // We need to seed the random generator.
@@ -377,8 +375,7 @@ size_t RTPSender::MaxDataPayloadLength() const {
     rtx = rtx_;
   }
   if (audio_configured_) {
-    return max_payload_length_ - RTPHeaderLength() 
-		- audio_->FECPacketOverhead();
+    return max_payload_length_ - RTPHeaderLength();
   } else {
     return max_payload_length_ - RTPHeaderLength()  // RTP overhead.
            - video_->FECPacketOverhead()            // FEC/ULP/RED overhead.
@@ -705,11 +702,6 @@ bool RTPSender::SendPacketToNetwork(const uint8_t *packet, size_t size, int sn) 
   }
   TRACE_EVENT_INSTANT2("webrtc_rtp", "RTPSender::SendPacketToNetwork",
                        "size", size, "sent", bytes_sent);
-
-  //static int i=0;
-  //i++;
-  //LOG(LS_ERROR) << "SendPacketToNetwork num=" << i;
-
   // TODO(pwestin): Add a separate bitrate for sent bitrate after pacer.
   if (bytes_sent <= 0) {
     LOG(LS_WARNING) << "Transport failed to send packet";
@@ -719,19 +711,15 @@ bool RTPSender::SendPacketToNetwork(const uint8_t *packet, size_t size, int sn) 
 }
 
 int RTPSender::SelectiveRetransmissions() const {
-	if (audio_configured_) {
-		return audio_->SelectiveRetransmissions();
-	} else {
-		return video_->SelectiveRetransmissions();
-	}
+  if (!video_)
+    return -1;
+  return video_->SelectiveRetransmissions();
 }
 
 int RTPSender::SetSelectiveRetransmissions(uint8_t settings) {
-	if (audio_configured_) {
-		return audio_->SetSelectiveRetransmissions(settings);
-	} else {
-		 return video_->SetSelectiveRetransmissions(settings);
-	}
+  if (!video_)
+    return -1;
+  return video_->SetSelectiveRetransmissions(settings);
 }
 
 void RTPSender::OnReceivedNACK(const std::list<uint16_t>& nack_sequence_numbers,
@@ -962,9 +950,9 @@ RTPSender::EnableRTPKeepalive( const WebRtc_Word8 unknownPayloadType,
     WEBRTC_TRACE(kTraceApiCall, kTraceRtpRtcp, -1, "EnableRTPKeepalive payloadType=%d time=%d", unknownPayloadType, deltaTransmitTimeMS);
     
     std::map<WebRtc_Word8, RtpUtility::Payload*>::iterator it =
-    _payloadTypeMap.find(unknownPayloadType);
+    payload_type_map_.find(unknownPayloadType);
     
-    if (it == _payloadTypeMap.end()) {
+    if (it == payload_type_map_.end()) {
         WEBRTC_TRACE(kTraceError, kTraceRtpRtcp, -1, "%s invalid argument", __FUNCTION__);
         return -1;
     }
@@ -972,7 +960,7 @@ RTPSender::EnableRTPKeepalive( const WebRtc_Word8 unknownPayloadType,
     _keepAliveIsActive = true;
     _keepAlivePayloadType = unknownPayloadType;
     _keepAliveLastSent = clock_->TimeInMicroseconds();
-    _keepAliveDeltaTimeSend = deltaTransmitTimeMS;
+    _keepAliveDeltaTimeSend = deltaTransmitTimeMS*1000;// Here use macrosecond
     return 0;
 }
 
@@ -1018,7 +1006,10 @@ RTPSender::TimeToSendRTPKeepalive() const
     
     bool timeToSend(false);
     
-    WebRtc_UWord32 dT = clock_->TimeInMicroseconds() - _keepAliveLastSent;
+    WebRtc_Word64 dT = clock_->TimeInMicroseconds() - _keepAliveLastSent;
+    
+//    printTime();printf("sean haha dT %lld\n",dT);
+    
     if (dT > _keepAliveDeltaTimeSend)
     {
         timeToSend = true;
@@ -1042,8 +1033,8 @@ RTPSender::SendRTPKeepalivePacket()
     {
         CriticalSectionScoped lock(statistics_crit_.get());
         
-        WebRtc_UWord32 now = clock_->TimeInMicroseconds();
-        WebRtc_UWord32 dT = now -_keepAliveLastSent; // delta time in MS
+        int64_t now = clock_->TimeInMicroseconds();
+        int64_t dT = now -_keepAliveLastSent; // delta time in MS
         
         WebRtc_UWord32 freqKHz = 90; // video
         if(audio_configured_)
@@ -1063,7 +1054,7 @@ RTPSender::SendRTPKeepalivePacket()
         BuildRTPheader(dataBuffer, _keepAlivePayloadType, false, 0, false);
     }
     
-    return SendToNetwork(dataBuffer, 0, rtpHeaderLength, -1, kAllowRetransmission,PacedSender::kNormalPriority);
+    return SendToNetwork(dataBuffer, 0, rtpHeaderLength, -1, kDontStore,PacedSender::kNormalPriority);
 }
     
     
@@ -1085,15 +1076,6 @@ int32_t RTPSender::SendToNetwork(
     uint8_t *buffer, size_t payload_length, size_t rtp_header_length,
     int64_t capture_time_ms, StorageType storage,
     PacedSender::Priority priority) {
-
-		////hubintest
-		//static int i=0;
-		//i++;
-		//if( i%10 == 1) {
-		//	return 0;
-		//}
-		//end
-
   RtpUtility::RtpHeaderParser rtp_parser(buffer,
                                          payload_length + rtp_header_length);
   RTPHeader rtp_header;
@@ -1761,24 +1743,20 @@ int32_t RTPSender::SetGenericFECStatus(bool enable,
                                        uint8_t payload_type_red,
                                        uint8_t payload_type_fec) {
   if (audio_configured_) {
-	  return audio_->SetGenericFECStatus(enable, payload_type_red,
-		  payload_type_fec);
-  } else {
-	  return video_->SetGenericFECStatus(enable, payload_type_red,
-		  payload_type_fec);
+    return -1;
   }
+  return video_->SetGenericFECStatus(enable, payload_type_red,
+                                     payload_type_fec);
 }
 
 int32_t RTPSender::GenericFECStatus(
     bool *enable, uint8_t *payload_type_red,
     uint8_t *payload_type_fec) const {
   if (audio_configured_) {
-	  return audio_->GenericFECStatus(
-		  *enable, *payload_type_red, *payload_type_fec);
-  } else {
-	  return video_->GenericFECStatus(
-		  *enable, *payload_type_red, *payload_type_fec);
+    return -1;
   }
+  return video_->GenericFECStatus(
+      *enable, *payload_type_red, *payload_type_fec);
 }
 
 int32_t RTPSender::SetFecParameters(

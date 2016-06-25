@@ -9,9 +9,7 @@
  */
 
 #include "signal_processing_library.h"
-
-#if defined(__aarch64__) || defined(WIN32) || defined(WEBRTC_ANDROID)
-
+#if defined(__aarch64__) || defined(WIN32) || defined(WEBRTC_ANDROID) || defined(__i386__) || defined(__x86_64__)
 /* Tables for data buffer indexes that are bit reversed and thus need to be
  * swapped. Note that, index_7[{0, 2, 4, ...}] are for the left side of the swap
  * operations, while index_7[{1, 3, 5, ...}] are for the right side of the

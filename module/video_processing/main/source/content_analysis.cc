@@ -35,7 +35,7 @@ VPMContentAnalysis::VPMContentAnalysis(bool runtime_cpu_detection)
   TemporalDiffMetric = &VPMContentAnalysis::TemporalDiffMetric_C;
 
   if (runtime_cpu_detection) {
-#if defined(WEBRTC_ARCH_X86_FAMILY)
+#if defined(WEBRTC_ARCH_X86_FAMILY) && defined(_MSC_VER)
     if (WebRtc_GetCPUInfo(kSSE2)) {
       ComputeSpatialMetrics = &VPMContentAnalysis::ComputeSpatialMetrics_SSE2;
       TemporalDiffMetric = &VPMContentAnalysis::TemporalDiffMetric_SSE2;

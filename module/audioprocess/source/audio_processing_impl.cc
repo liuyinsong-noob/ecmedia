@@ -24,6 +24,7 @@
 #include "echo_control_mobile_impl.h"
 #include "gain_control_impl.h"
 #include "high_pass_filter_impl.h"
+#include "howling_control_impl.h"
 #include "level_estimator_impl.h"
 #include "noise_suppression_impl.h"
 #include "processing_component.h"
@@ -183,6 +184,7 @@ AudioProcessingImpl::AudioProcessingImpl(const Config& config,
       level_estimator_(NULL),
       noise_suppression_(NULL),
       voice_detection_(NULL),
+	  howling_control_(NULL),
       crit_(CriticalSectionWrapper::CreateCriticalSection()),
 #ifdef WEBRTC_AUDIOPROC_DEBUG_DUMP
       debug_file_(FileWrapper::Create()),
@@ -230,6 +232,9 @@ AudioProcessingImpl::AudioProcessingImpl(const Config& config,
 
   voice_detection_ = new VoiceDetectionImpl(this, crit_);
   component_list_.push_back(voice_detection_);
+
+  howling_control_ = new HowlingControlImpl(this, crit_);
+  component_list_.push_back(howling_control_);
 
   gain_control_for_new_agc_.reset(new GainControlForNewAgc(gain_control_));
 
@@ -641,6 +646,10 @@ int AudioProcessingImpl::ProcessStreamLocked() {
   RETURN_ON_ERR(high_pass_filter_->ProcessCaptureAudio(ca));
   RETURN_ON_ERR(gain_control_->AnalyzeCaptureAudio(ca));
   RETURN_ON_ERR(noise_suppression_->AnalyzeCaptureAudio(ca));
+  //added by zengguoqing
+  RETURN_ON_ERR(howling_control_->AnalyzeCaptureAudio(ca));
+  RETURN_ON_ERR(howling_control_->ProcessCaptureAudio(ca));
+  //end added of zengguoqing
   RETURN_ON_ERR(echo_cancellation_->ProcessCaptureAudio(ca));
 
   if (echo_control_mobile_->is_enabled() && noise_suppression_->is_enabled()) {
@@ -942,6 +951,10 @@ VoiceDetection* AudioProcessingImpl::voice_detection() const {
   return voice_detection_;
 }
 
+HowlingControl* AudioProcessingImpl::howling_control() const {
+  return howling_control_;
+}
+
 bool AudioProcessingImpl::is_data_processed() const {
   if (beamformer_enabled_) {
     return true;
@@ -1186,6 +1199,18 @@ int AudioProcessingImpl::ProcessStreamNoiseSuppression(AudioFrame* frame) {
 	if (err != kNoError) {
 		return err;
 	}
+
+	//
+	err = howling_control_->AnalyzeCaptureAudio(capture_audio_.get());
+	if (err != kNoError) {
+		return err;
+	}
+
+	err = howling_control_->ProcessCaptureAudio(capture_audio_.get());
+	if (err != kNoError) {
+		return err;
+	}
+	//
 
 	err = echo_control_mobile_->ProcessCaptureAudio(capture_audio_.get());
 	if (err != kNoError) {

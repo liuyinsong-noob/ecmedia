@@ -291,13 +291,11 @@ class RTPSender : public RTPSenderInterface {
     
     int32_t  SendRTPKeepalivePacket();
 private:
-    int8_t              _payloadType;
-    std::map<WebRtc_Word8, RtpUtility::Payload*> _payloadTypeMap;
     // keepalive
     bool                      _keepAliveIsActive;
     int8_t              _keepAlivePayloadType;
-    uint32_t            _keepAliveLastSent;
-    uint16_t            _keepAliveDeltaTimeSend;
+    uint64_t            _keepAliveLastSent;
+    uint32_t            _keepAliveDeltaTimeSend;
     
     
  protected:

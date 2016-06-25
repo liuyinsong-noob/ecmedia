@@ -1387,7 +1387,7 @@ int WebRtcAec_CreateAec(AecCore** aecInst) {
   WebRtcAec_ComfortNoise = ComfortNoise;
   WebRtcAec_SubbandCoherence = SubbandCoherence;
 
-#if defined(WEBRTC_ARCH_X86_FAMILY)
+#if defined(WEBRTC_ARCH_X86_FAMILY) && defined(_MSC_VER)
   if (WebRtc_GetCPUInfo(kSSE2)) {
     WebRtcAec_InitAec_SSE2();
   }

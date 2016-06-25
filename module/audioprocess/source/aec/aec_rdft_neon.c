@@ -16,7 +16,7 @@
 
 
 #include "aec_rdft.h"
-
+#if __arm__
 #include <arm_neon.h>
 
 static const ALIGN16_BEG float ALIGN16_END
@@ -353,3 +353,4 @@ void aec_rdft_init_neon(void) {
   rftbsub_128 = rftbsub_128_neon;
 }
 
+#endif

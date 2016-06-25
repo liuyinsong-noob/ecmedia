@@ -63,6 +63,9 @@ class VoEAudioProcessingImpl : public VoEAudioProcessing {
   virtual int EnableHighPassFilter(bool enable);
   virtual bool IsHighPassFilterEnabled();
 
+  virtual int EnableHowlingControl(bool enable);
+  virtual bool IsHowlingControlEnabled();
+
   virtual int RegisterRxVadObserver(int channel,
                                     VoERxVadCallback& observer);
 

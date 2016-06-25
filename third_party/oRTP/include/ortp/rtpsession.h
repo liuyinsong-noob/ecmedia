@@ -41,8 +41,6 @@
 #include <ortp/rtpsignaltable.h>
 #include <ortp/event.h>
 
-//#include "sometools.h"
-
 typedef enum {
 	RTP_SESSION_RECVONLY,
 	RTP_SESSION_SENDONLY,

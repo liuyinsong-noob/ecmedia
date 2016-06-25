@@ -14,6 +14,10 @@
 #ifndef WEBRTC_SYSTEM_WRAPPERS_INTERFACE_TICK_UTIL_H_
 #define WEBRTC_SYSTEM_WRAPPERS_INTERFACE_TICK_UTIL_H_
 
+#if __APPLE__ || __APPLE_CC__
+#define MAC_IPHONE
+#endif
+
 #if _WIN32
 #include <windows.h>
 #include <mmsystem.h>

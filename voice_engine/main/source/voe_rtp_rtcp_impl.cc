@@ -484,37 +484,6 @@ int VoERTP_RTCPImpl::SetNACKStatus(int channel,
     return 0;
 }
 
-int VoERTP_RTCPImpl::SetFECStatus(const int channel,
-	const bool enable,
-	const unsigned char payload_typeRED,
-	const unsigned char payload_typeFEC) 
-{
-	WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
-		"SetFECStatus(channel=%d, enable=%d, payload_typeRED=%d, payload_typeFEC=%d)",
-		channel, enable, payload_typeRED, payload_typeFEC);
-
-	voe::ChannelOwner ch = _shared->channel_manager().GetChannel(channel);
-	voe::Channel* channelPtr = ch.channel();
-	if (channelPtr == NULL)
-	{
-		_shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
-			"SetNACKStatus() failed to locate channel");
-		return -1;
-	}
-	if (channelPtr->SetFECStatus(enable, payload_typeRED,
-		payload_typeFEC) != 0) {
-			//_shared->SetLastError(kViERtpRtcpUnknownError);
-			return -1;
-	}
-	//// Update the encoder.
-	//ViEEncoder* vie_encoder = cs.Encoder(video_channel);
-	//if (!vie_encoder) {
-	//	shared_data_->SetLastError(kViERtpRtcpUnknownError);
-	//	return -1;
-	//}
-	//vie_encoder->UpdateProtectionMethod(false);
-	return 0;
-}
 
 int VoERTP_RTCPImpl::StartRTPDump(int channel,
                                   const char fileNameUTF8[1024],

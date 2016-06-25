@@ -24,9 +24,6 @@
     <ClInclude Include="include\RecordVoip.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="include\sometools.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="include\StunMessageCallBack.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -45,9 +42,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="source\RecordVoip.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="source\sometools.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="source\CaptureScreen.cpp">

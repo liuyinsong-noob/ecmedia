@@ -13,7 +13,7 @@
  *
  * Based on aec_core_sse2.c.
  */
-
+#if __arm__
 #include <arm_neon.h>
 #include <math.h>
 #include <string.h>  // memset
@@ -737,3 +737,4 @@ void WebRtcAec_InitAec_neon(void) {
 }
 #endif
 
+#endif

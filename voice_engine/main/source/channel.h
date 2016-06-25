@@ -76,7 +76,6 @@ class ViENetwork;
 class VoEMediaProcess;
 class VoERTPObserver;
 class VoiceEngineObserver;
-class FecReceiver;
 
 struct CallStatistics;
 struct ReportBlock;
@@ -354,9 +353,6 @@ public:
     int SetCodecFECStatus(bool enable);
     bool GetCodecFECStatus();
     void SetNACKStatus(bool enable, int maxNumberOfPackets);
-	int32_t SetFECStatus(const bool enable,
-		const unsigned char payload_typeRED,
-		const unsigned char payload_typeFEC);
     int StartRTPDump(const char fileNameUTF8[1024], RTPDirections direction);
     int StopRTPDump(RTPDirections direction);
     bool RTPDumpIsActive(RTPDirections direction);
@@ -501,10 +497,6 @@ private:
     int32_t GetPlayoutFrequency();
     int64_t GetRTT() const;
 
-	int32_t ProcessFECRequest(const bool enable,
-		const unsigned char payload_typeRED,
-		const unsigned char payload_typeFEC);
-
     CriticalSectionWrapper& _fileCritSect;
     CriticalSectionWrapper& _callbackCritSect;
     CriticalSectionWrapper& volume_settings_critsect_;
@@ -518,7 +510,6 @@ private:
     scoped_ptr<ReceiveStatistics> rtp_receive_statistics_;
     scoped_ptr<StatisticsProxy> statistics_proxy_;
     scoped_ptr<RtpReceiver> rtp_receiver_;
-	scoped_ptr<FecReceiver> fec_receiver_;
     TelephoneEventHandler* telephone_event_handler_;
     scoped_ptr<RtpRtcp> _rtpRtcpModule;
     scoped_ptr<AudioCodingModule> audio_coding_;

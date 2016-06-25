@@ -429,20 +429,20 @@ void AudioBuffer::InterleaveTo(AudioFrame* frame, bool data_changed) const {
     return;
   }
 
-  //---begin
-  if (num_channels_ == 1) {
-	  if (data_was_mixed_) {
-		  memcpy(frame->data_,
-			  channels_->ibuf()->channel(0),
-			  proc_samples_per_channel_);
-	  } else {
-		  // These should point to the same buffer in this case.
-		 // assert(channels_->ibuf()->channel(0) == frame->data_);
-	  }
-
-	  return;
-  }
-  //---end
+//  //---begin
+//  if (num_channels_ == 1) {
+//	  if (data_was_mixed_) {
+//		  memcpy(frame->data_,
+//			  channels_->ibuf()->channel(0),
+//			  proc_samples_per_channel_);
+//	  } else {
+//		  // These should point to the same buffer in this case.
+//		 // assert(channels_->ibuf()->channel(0) == frame->data_);
+//	  }
+//
+//	  return;
+//  }
+//  //---end
 
   int16_t* interleaved = frame->data_;
   for (int i = 0; i < num_channels_; i++) {

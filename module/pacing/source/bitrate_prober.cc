@@ -111,7 +111,8 @@ int BitrateProber::TimeUntilNextProbe(int64_t now_ms) {
 }
 
 void BitrateProber::PacketSent(int64_t now_ms, size_t packet_size) {
-  assert(packet_size > 0);
+  //TODO: 
+  //assert(packet_size > 0);
   packet_size_last_send_ = packet_size;
   time_last_send_ms_ = now_ms;
   if (probing_state_ != kProbing)

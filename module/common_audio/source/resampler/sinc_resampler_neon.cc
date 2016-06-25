@@ -12,7 +12,7 @@
 // src/media/base/sinc_resampler.cc
 
 #include "sinc_resampler.h"
-
+#if __arm__
 #include <arm_neon.h>
 
 namespace cloopenwebrtc {
@@ -45,3 +45,4 @@ float SincResampler::Convolve_NEON(const float* input_ptr, const float* k1,
 }
 
 }  // namespace webrtc
+#endif

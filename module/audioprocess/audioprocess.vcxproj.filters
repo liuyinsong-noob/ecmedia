@@ -40,6 +40,9 @@
     <Filter Include="source\ns\include">
       <UniqueIdentifier>{4ce33fca-464b-4094-9003-20dc7f102a0c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\afs">
+      <UniqueIdentifier>{b1f4860f-3b5a-438b-976d-1e5aaec68ef9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\audio_processing.h">
@@ -228,6 +231,18 @@
     <ClInclude Include="source\ns\include\noise_suppression.h">
       <Filter>source\ns\include</Filter>
     </ClInclude>
+    <ClInclude Include="source\afs\afs_core.h">
+      <Filter>source\afs</Filter>
+    </ClInclude>
+    <ClInclude Include="source\afs\afs_defines.h">
+      <Filter>source\afs</Filter>
+    </ClInclude>
+    <ClInclude Include="source\afs\howling_control.h">
+      <Filter>source\afs</Filter>
+    </ClInclude>
+    <ClInclude Include="source\afs\howlingfilter_core.h">
+      <Filter>source\afs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\aec\aec_core.c">
@@ -370,6 +385,18 @@
     </ClCompile>
     <ClCompile Include="source\agc\agc_audio_proc.cc">
       <Filter>source\agc</Filter>
+    </ClCompile>
+    <ClCompile Include="source\afs\afs_core.c">
+      <Filter>source\afs</Filter>
+    </ClCompile>
+    <ClCompile Include="source\afs\howling_control.c">
+      <Filter>source\afs</Filter>
+    </ClCompile>
+    <ClCompile Include="source\afs\howlingfilter_core.c">
+      <Filter>source\afs</Filter>
+    </ClCompile>
+    <ClCompile Include="source\howling_control_impl.cc">
+      <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

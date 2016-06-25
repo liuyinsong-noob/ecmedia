@@ -15,10 +15,15 @@
 
 #include "RecordVoip.h"
 #include "utility.h"
-#include "sometools.h"
+//#include "sometools.h"
 #include "tick_util.h"
 
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdarg.h>
+
+extern "C" void PrintConsole(const char * fmt,...);
 
 using namespace cloopenwebrtc;
 
@@ -313,7 +318,7 @@ int RecordVoip::StartRecordVoip(const char *filename)
     }
 
     if(_mp4FileName) {
-		snprintf(_mp4FileName, sizeof(_mp4FileName), "%s", filename);
+		sprintf(_mp4FileName, "%s", filename);
 	}
 
 	_h264Record = new h264_record();
@@ -363,7 +368,7 @@ int RecordVoip::StartRecordAudio(const char *filename)
 		StopRecordAudio(0);
 	}
 	if(filename) {
-		snprintf(_wavFileName, sizeof(_wavFileName), "%s", filename);
+		sprintf(_wavFileName, "%s", filename);
 		_wavRecordFile = fopen(filename, "wb");
 		if( !_wavRecordFile ) {
 			PrintConsole("AudioRecord can't open file");
@@ -394,7 +399,7 @@ int RecordVoip::StartRecordAudioEx(const char *rFileName, const char *lFileName)
 	}
 
 	if(rFileName){
-		snprintf(_wavRemoteFileName, sizeof(_wavRemoteFileName), "%s", rFileName);
+		sprintf(_wavRemoteFileName, "%s", rFileName);
 		_wavRemoteRecordFile = fopen(rFileName, "wb");
 		if( !_wavRemoteRecordFile ) {
 			PrintConsole("AudioRecord can't open file.\n");
@@ -407,7 +412,7 @@ int RecordVoip::StartRecordAudioEx(const char *rFileName, const char *lFileName)
 		}
 	}
 	if(lFileName) {
-		snprintf(_wavLocalFileName, sizeof(_wavLocalFileName), "%s", lFileName);
+		sprintf(_wavLocalFileName, "%s", lFileName);
 		_wavLocalRecordFile = fopen(lFileName, "wb");
 		if( !_wavLocalRecordFile ) {
 			PrintConsole("AudioRecord can't open file.\n");
@@ -511,7 +516,7 @@ int RecordVoip::StartRecordScreen(const char *filename, int bitrates, int fps, i
 		StopRecordScreen(0);
 	}
 
-	snprintf(_recordScreenFileName, sizeof(_recordScreenFileName), "%s", filename);
+	sprintf(_recordScreenFileName, "%s", filename);
 	_h264RecordScreen = new h264_record();
 	if(!_h264RecordScreen) {
 		PrintConsole("%s create _h264RecordScreen failed.\n", __FUNCTION__);
@@ -574,7 +579,7 @@ int RecordVoip::StartRecordScreenEx(const char *filename, int bitrates, int fps,
 		StopRecordScreen(0);
 	}
 
-	snprintf(_recordScreenFileName, sizeof(_recordScreenFileName), "%s", filename);
+	sprintf(_recordScreenFileName, "%s", filename);
 	_h264RecordScreen = new h264_record();
 	if(!_h264RecordScreen) {
 		PrintConsole("%s create _h264RecordScreen failed.\n", __FUNCTION__);

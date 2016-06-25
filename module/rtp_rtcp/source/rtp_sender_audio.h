@@ -17,8 +17,6 @@
 #include "rtp_sender.h"
 #include "rtp_utility.h"
 #include "typedefs.h"
-#include "forward_error_correction.h"
-#include "producer_fec.h"
 
 namespace cloopenwebrtc {
 class RTPSenderAudio: public DTMFqueue
@@ -68,23 +66,6 @@ public:
 
     int32_t RegisterAudioCallback(RtpAudioFeedback* messagesCallback);
 
-	int SelectiveRetransmissions() const;
-	int SetSelectiveRetransmissions(uint8_t settings);
-
-	// FEC
-	size_t FECPacketOverhead() const;
-
-	int32_t SetGenericFECStatus(const bool enable,
-		const uint8_t payloadTypeRED,
-		const uint8_t payloadTypeFEC);
-
-	int32_t GenericFECStatus(bool& enable,
-		uint8_t& payloadTypeRED,
-		uint8_t& payloadTypeFEC) const;
-
-	//int32_t SetFecParameters(const FecProtectionParams* delta_params,
-	//	const FecProtectionParams* key_params);
-
 protected:
     int32_t SendTelephoneEventPacket(const bool ended,
                                      const uint32_t dtmfTimeStamp,
@@ -118,18 +99,6 @@ private:
     uint32_t    _dtmfTimestampLastSent;
 
     int8_t      _REDPayloadType;
-
-	int32_t _retransmissionSettings;
-
-	// FEC
-	ForwardErrorCorrection _fec;
-	bool _fecEnabled;
-	int8_t _payloadTypeRED;
-	int8_t _payloadTypeFEC;
-	unsigned int _numberFirstPartition;
-	FecProtectionParams fec_params_;
-	ProducerFec producer_fec_;
-
 
     // VAD detection, used for markerbit
     bool              _inbandVADactive;

@@ -12,7 +12,7 @@
 #include "signal_processing_library.h"
 
 // TODO(bjornv): Change the return type to report errors.
-#if  !defined(__aarch64__) && !defined(WIN32) && !defined(WEBRTC_ANDROID)
+#if  !defined(__aarch64__) && !defined(WIN32) && !defined(WEBRTC_ANDROID) && !defined(__i386__) && !defined(__x86_64__)
 #define WEBRTC_ARCH_ARM_V7
 #endif
 

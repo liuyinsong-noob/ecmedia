@@ -82,11 +82,6 @@ public:
     virtual int SetNACKStatus(int channel,
                               bool enable,
                               int maxNoPackets = 450);
-	//FEC
-	virtual int SetFECStatus(const int channel,
-		const bool enable,
-		const unsigned char payload_typeRED,
-		const unsigned char payload_typeFEC);
 
     // Store RTP and RTCP packets and dump to file (compatible with rtpplay)
     virtual int StartRTPDump(int channel,

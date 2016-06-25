@@ -21,10 +21,11 @@
 #include "typedefs.h"
 
 
-#if  !defined(__aarch64__) && !defined(WIN32) && !defined(WEBRTC_ANDROID)
-#define WEBRTC_ARCH_ARM_V7
-#endif
+#if  !defined(__aarch64__) && !defined(WIN32) && !defined(WEBRTC_ANDROID) && !defined(__i386__) && !defined(__x86_64__)
 
+#define WEBRTC_ARCH_ARM_V7
+
+#endif
 namespace cloopenwebrtc {
 
 // Callback class for providing more data into the resampler.  Expects |frames|
@@ -108,7 +109,7 @@ class SincResampler {
   // the underlying implementation is chosen at run time.
   static float Convolve_C(const float* input_ptr, const float* k1,
                           const float* k2, double kernel_interpolation_factor);
-#if defined(WEBRTC_ARCH_X86_FAMILY)
+#if defined(WEBRTC_ARCH_X86_FAMILY) && defined(_MSC_VER)
   static float Convolve_SSE(const float* input_ptr, const float* k1,
                             const float* k2,
                             double kernel_interpolation_factor);

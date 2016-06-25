@@ -255,6 +255,11 @@
   <ItemGroup>
     <ProjectReference Include="..\ECMedia\Ecmedia.vcxproj">
       <Project>{86e50404-d26f-405a-9994-c8fb69eb72dd}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\exosip\exosip.vcxproj">
       <Project>{2f470789-39ef-45b0-87ce-adeac4b0422c}</Project>

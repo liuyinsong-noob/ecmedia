@@ -37,6 +37,9 @@ LOCAL_SRC_FILES := \
     agc/pole_zero_filter.cc \
     agc/standalone_vad.cc \
     agc/utility.cc \
+	afs/afs_core.c \
+	afs/howling_control.c \
+	afs/howlingfilter_core.c \
     audio_buffer.cc \
     audio_processing_impl.cc \
     beamformer/covariance_matrix_generator.cc \
@@ -61,7 +64,8 @@ LOCAL_SRC_FILES := \
     utility/delay_estimator.c \
     utility/delay_estimator_wrapper.c \
     utility/fft4g.c \
-    voice_detection_impl.cc
+    voice_detection_impl.cc \
+    howling_control_impl.cc
     
 # Flags passed to both C and C++ files.
 LOCAL_CFLAGS := \
@@ -87,6 +91,7 @@ LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/./utility \
 		$(LOCAL_PATH)/./utility/include \
 		$(LOCAL_PATH)/./transient \
+		$(LOCAL_PATH)/./afs \
     $(LOCAL_PATH)/../include \
     $(LOCAL_PATH)/../.. \
     $(LOCAL_PATH)/../../interface \

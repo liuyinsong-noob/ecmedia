@@ -36,6 +36,7 @@ class NoiseSuppressionImpl;
 class ProcessingComponent;
 class TransientSuppressor;
 class VoiceDetectionImpl;
+class HowlingControlImpl;
 
 #ifdef WEBRTC_AUDIOPROC_DEBUG_DUMP
 namespace audioproc {
@@ -142,6 +143,7 @@ class AudioProcessingImpl : public AudioProcessing {
   virtual LevelEstimator* level_estimator() const OVERRIDE;
   virtual NoiseSuppression* noise_suppression() const OVERRIDE;
   virtual VoiceDetection* voice_detection() const OVERRIDE;
+  virtual HowlingControl* howling_control() const OVERRIDE;
 
  protected:
   // Overridden in a mock.
@@ -180,6 +182,9 @@ class AudioProcessingImpl : public AudioProcessing {
   LevelEstimatorImpl* level_estimator_;
   NoiseSuppressionImpl* noise_suppression_;
   VoiceDetectionImpl* voice_detection_;
+
+  HowlingControlImpl* howling_control_;
+
   scoped_ptr<GainControlForNewAgc> gain_control_for_new_agc_;
 
   std::list<ProcessingComponent*> component_list_;

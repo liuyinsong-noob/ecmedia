@@ -14,12 +14,9 @@
 #include <string.h> //memcpy
 
 #include "trace_event.h"
-#include "trace.h"
 
 namespace cloopenwebrtc {
-	enum { REDForFECHeaderLength = 1 };
-
-	RTPSenderAudio::RTPSenderAudio(const int32_t id, Clock* clock,
+RTPSenderAudio::RTPSenderAudio(const int32_t id, Clock* clock,
                                RTPSender* rtpSender) :
     _id(id),
     _clock(clock),
@@ -45,17 +42,7 @@ namespace cloopenwebrtc {
     _cngSWBPayloadType(-1),
     _cngFBPayloadType(-1),
     _lastPayloadType(-1),
-    _audioLevel_dBov(0),
-	
-	_retransmissionSettings(kRetransmitOff),
-	// Generic FEC
-	_fec(),
-	_fecEnabled(false),
-	_payloadTypeRED(-1),
-	_payloadTypeFEC(-1),
-	_numberFirstPartition(0),
-	fec_params_(),
-	producer_fec_(&_fec){
+    _audioLevel_dBov(0) {
 };
 
 RTPSenderAudio::~RTPSenderAudio()
@@ -71,65 +58,6 @@ RTPSenderAudio::RegisterAudioCallback(RtpAudioFeedback* messagesCallback)
     _audioFeedback = messagesCallback;
     return 0;
 }
-
-int RTPSenderAudio::SelectiveRetransmissions() const {
-	return _retransmissionSettings;
-}
-
-int RTPSenderAudio::SetSelectiveRetransmissions(uint8_t settings) {
-	_retransmissionSettings = settings;
-	return 0;
-}
-
-int32_t RTPSenderAudio::SetGenericFECStatus(const bool enable,
-	const uint8_t payloadTypeRED,
-	const uint8_t payloadTypeFEC) {
-		_fecEnabled = enable;
-		_payloadTypeRED = payloadTypeRED;
-		_payloadTypeFEC = payloadTypeFEC;
-
-		memset(&fec_params_, 0, sizeof(fec_params_));
-		fec_params_.max_fec_frames = 4;
-		fec_params_.fec_mask_type = kFecMaskRandom;
-		fec_params_.fec_rate = 128;
-		fec_params_.use_uep_protection = false;
-		producer_fec_.SetFecParameters(&fec_params_,  _numberFirstPartition);
-
-		return 0;
-}
-
-int32_t RTPSenderAudio::GenericFECStatus(bool& enable,
-	uint8_t& payloadTypeRED,
-	uint8_t& payloadTypeFEC) const {
-		enable = _fecEnabled;
-		payloadTypeRED = _payloadTypeRED;
-		payloadTypeFEC = _payloadTypeFEC;
-		return 0;
-}
-
-size_t RTPSenderAudio::FECPacketOverhead() const {
-	if (_fecEnabled) {
-		// Overhead is FEC headers plus RED for FEC header plus anything in RTP
-		// header beyond the 12 bytes base header (CSRC list, extensions...)
-		// This reason for the header extensions to be included here is that
-		// from an FEC viewpoint, they are part of the payload to be protected.
-		// (The base RTP header is already protected by the FEC header.)
-		return ForwardErrorCorrection::PacketOverhead() + REDForFECHeaderLength +
-			(_rtpSender->RTPHeaderLength() - kRtpHeaderSize);
-	}
-	return 0;
-}
-
-//int32_t 
-//RTPSenderAudio::SetFecParameters(
-//	const FecProtectionParams* delta_params,
-//	const FecProtectionParams* key_params) {
-//		assert(delta_params);
-//		assert(key_params);
-//		delta_fec_params_ = *delta_params;
-//		key_fec_params_ = *key_params;
-//		return 0;
-//}
 
 void
 RTPSenderAudio::SetAudioFrequency(const uint32_t f)
@@ -515,88 +443,6 @@ int32_t RTPSenderAudio::SendAudio(
                                    _audioLevel_dBov);
     }
   }  // end critical section
-
-  if (_fecEnabled) {
-	  int ret = 0;
-	  size_t fec_overhead_sent = 0;
-	  size_t video_sent = 0;
-
-	  RedPacket* red_packet = producer_fec_.BuildRedPacket(
-		  dataBuffer, payloadSize, rtpHeaderLength, _payloadTypeRED);
-
-	  //TRACE_EVENT_INSTANT2("webrtc_rtp",
-		 // "Video::PacketRed",
-		 // "timestamp",
-		 // captureTimeStamp,
-		 // "seqnum",
-		 // _rtpSender.SequenceNumber());
-
-
-	  // Sending the media packet with RED header.
-	  int packet_success =
-		  _rtpSender->SendToNetwork(red_packet->data(),
-		  red_packet->length() - rtpHeaderLength,
-		  rtpHeaderLength,
-		  captureTimeStamp,
-		  kAllowRetransmission,
-		  PacedSender::kNormalPriority);
-
-
-	  WEBRTC_TRACE(kTraceError, kTraceRtpRtcp, 0,
-		  "Send Fec Packet, seqNo=%u)", _rtpSender->SequenceNumber()-1);
-
-	  ret |= packet_success;
-
-	  if (packet_success == 0) {
-		  video_sent += red_packet->length();
-	  }
-	  delete red_packet;
-	  red_packet = NULL;
-
-	  ret = producer_fec_.AddRtpPacketAndGenerateFec(
-		  dataBuffer, payloadSize, rtpHeaderLength);
-	  if (ret != 0)
-		  return ret;
-
-	  while (producer_fec_.FecAvailable()) {
-		  red_packet =
-			  producer_fec_.GetFecPacket(_payloadTypeRED,
-			  _payloadTypeFEC,
-			  _rtpSender->IncrementSequenceNumber(),
-			  rtpHeaderLength);
-		  StorageType storage = kDontRetransmit;
-		  if (_retransmissionSettings & kRetransmitFECPackets) {
-			  storage = kAllowRetransmission;
-		  }
-		  //TRACE_EVENT_INSTANT2("webrtc_rtp",
-			 // "Video::PacketFec",
-			 // "timestamp",
-			 // capture_timestamp,
-			 // "seqnum",
-			 // _rtpSender.SequenceNumber());
-		  // Sending FEC packet with RED header.
-		  int packet_success =
-			  _rtpSender->SendToNetwork(red_packet->data(),
-			  red_packet->length() - rtpHeaderLength,
-			  rtpHeaderLength,
-			  captureTimeStamp,
-			  storage,
-			  PacedSender::kNormalPriority);
-
-		  ret |= packet_success;
-
-		  if (packet_success == 0) {
-			  fec_overhead_sent += red_packet->length();
-		  }
-		  delete red_packet;
-		  red_packet = NULL;
-	  }
-	  //_videoBitrate.Update(video_sent);
-	  //_fecOverheadRate.Update(fec_overhead_sent);
-	  return ret;
-  }
-
-
   TRACE_EVENT_ASYNC_END2("cloopenwebrtc", "Audio", captureTimeStamp,
                          "timestamp", _rtpSender->Timestamp(),
                          "seqnum", _rtpSender->SequenceNumber());

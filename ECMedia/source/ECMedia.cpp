@@ -10,8 +10,6 @@
 #include <ctype.h>
 #include "ECMedia.h"
 #include "voe_base.h"
-#include "sometools.h"
-//#include "serphoneinterface.h"
 #include "voe_volume_control.h"
 #include "trace.h"
 #include "voe_file.h"
@@ -26,6 +24,7 @@
 #ifdef WIN32
 #include "codingHelper.h"
 #endif
+
 #ifdef VIDEO_ENABLED
 #include "vie_network.h"
 #include "vie_base.h"
@@ -157,7 +156,7 @@ static void media_uninit_print_log()
 	g_printConsole_lock = NULL;
 }
 
-void PrintConsole(const char * fmt,...)
+extern "C" void PrintConsole(const char * fmt,...)
 {
     if(!g_media_TraceFlag) {
         return;
@@ -1062,6 +1061,51 @@ int ECMedia_set_SetAecmMode(cloopenwebrtc::AecmModes aecm_mode, bool cng_enabled
 		return -99;
 	}
 }
+int ECMedia_EnableHowlingControl(bool enabled)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins... %d",__FUNCTION__, enabled);
+    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    VoEAudioProcessing *audio = VoEAudioProcessing::GetInterface(m_voe);
+    if (audio) {
+        if(enabled) {
+            audio->StopDebugRecording();
+            audio->StartDebugRecording("/storage/emulated/0/processed_0.pcm");
+        }
+        else {
+            audio->StopDebugRecording();
+            audio->StartDebugRecording("/storage/emulated/0/processed_1.pcm");
+        }
+
+        int ret = audio->EnableHowlingControl(enabled);
+        audio->Release();
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to get VoEAudioProcessing, %s",__FUNCTION__);
+        return -99;
+    }
+}
+
+
+int ECMedia_IsHowlingControlEnabled(bool &enabled)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    VoEAudioProcessing *audio = VoEAudioProcessing::GetInterface(m_voe);
+    if (audio) {
+        enabled = audio->IsHowlingControlEnabled();
+        audio->Release();
+        return 0;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to get VoEAudioProcessing, %s",__FUNCTION__);
+        return -99;
+    }
+}
+
+
 /*
  * NETWORK
  */

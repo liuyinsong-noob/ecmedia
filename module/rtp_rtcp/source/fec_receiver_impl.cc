@@ -17,7 +17,6 @@
 #include "critical_section_wrapper.h"
 #include "logging.h"
 #include "scoped_ptr.h"
-#include "trace.h"
 
 // RFC 5109
 namespace cloopenwebrtc {
@@ -220,11 +219,6 @@ int32_t FecReceiverImpl::ProcessReceivedFec() {
   if (!received_packet_list_.empty()) {
     // Send received media packet to VCM.
     if (!received_packet_list_.front()->is_fec) {
-
-		ForwardErrorCorrection::ReceivedPacket* testPakc = received_packet_list_.front();
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVoice, 0,
-			"ProcessReceivedFec not fec seq=%d", testPakc->seq_num);
-
       ForwardErrorCorrection::Packet* packet =
           received_packet_list_.front()->pkt;
       crit_sect_->Leave();
@@ -249,10 +243,6 @@ int32_t FecReceiverImpl::ProcessReceivedFec() {
     ForwardErrorCorrection::Packet* packet = (*it)->pkt;
     ++packet_counter_.num_recovered_packets;
     crit_sect_->Leave();
-
-	WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVoice, 0,
-		"ProcessReceivedFec fec seq=%d", (*it)->seq_num);
-
     if (!recovered_packet_callback_->OnRecoveredPacket(packet->data,
                                                        packet->length)) {
       return -1;

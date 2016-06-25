@@ -1,4 +1,4 @@
-#ifndef __aarch64__
+#if !defined __aarch64__ && defined __arm__
 @
 @ Copyright (c) 2011 The WebRTC project authors. All Rights Reserved.
 @

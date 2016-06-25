@@ -104,6 +104,9 @@ int ECMedia_set_NsStatus(bool ns_enabled, cloopenwebrtc::NsModes ns_mode);
  */
 int ECMedia_set_SetAecmMode(cloopenwebrtc::AecmModes aecm_mode, bool cng_enabled);
 
+int ECMedia_EnableHowlingControl(bool enabled);
+
+int ECMedia_IsHowlingControlEnabled(bool &enabled);
 /*
  *
  */
@@ -424,7 +427,6 @@ int ECMedia_set_FEC_status_video(const int channelid,
 								const bool enable,
 								const unsigned char payload_typeRED,
 								const unsigned char payload_typeFEC);
-
 int ECMedia_set_HybridNACKFEC_status_video(const int channelid,
 										const bool enable,
 										const unsigned char payload_typeRED,

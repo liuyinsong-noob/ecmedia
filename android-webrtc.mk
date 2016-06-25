@@ -13,9 +13,8 @@ MY_WEBRTC_COMMON_DEFS := \
     '-DWEBRTC_THREAD_RR' \
     '-DWEBRTC_CLOCK_TYPE_REALTIME' \
     '-DWEBRTC_ANDROID' \
-		'-DWEBRTC_SVNREVISION=1.0' \
-		-std=c++11
-
+    -std=c++11
+	
 #    The following macros are used by modules,
 #    we might need to re-organize them
 #    '-DWEBRTC_ANDROID_OPENSLES' [module audio_device]

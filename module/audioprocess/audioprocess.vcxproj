@@ -93,7 +93,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;WEBRTC_SVNREVISION="n/a";_WIN32_WINNT=0x0601;WINVER=0x0601;WIN32;_WINDOWS;NOMINMAX;PSAPI_VERSION=1;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_ATL_NO_OPENGL;_HAS_EXCEPTIONS=0;_SECURE_ATL;CHROMIUM_BUILD;TOOLKIT_VIEWS=1;ENABLE_ONE_CLICK_SIGNIN;ENABLE_REMOTING=1;ENABLE_WEBRTC=1;ENABLE_CONFIGURATION_POLICY;ENABLE_INPUT_SPEECH;ENABLE_NOTIFICATIONS;ENABLE_GPU=1;ENABLE_EGLIMAGE=1;USE_SKIA=1;__STD_C;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ENABLE_TASK_MANAGER=1;ENABLE_WEB_INTENTS=1;ENABLE_EXTENSIONS=1;ENABLE_PLUGIN_INSTALLATION=1;ENABLE_PROTECTOR_SERVICE=1;ENABLE_SESSION_SERVICE=1;ENABLE_THEMES=1;ENABLE_BACKGROUND=1;ENABLE_PROMO_RESOURCE_SERVICE=1;ENABLE_AUTOMATION=1;WEBRTC_WIN;WEBRTC_NS_FLOAT;GOOGLE_PROTOBUF_NO_RTTI;GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER;__STDC_FORMAT_MACROS;DYNAMIC_ANNOTATIONS_ENABLED=1;WTF_USE_DYNAMIC_ANNOTATIONS=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>../.;./include;./source;../../system_wrappers\interface;../../system_wrappers/source;../interface;../signalprocess/include;./source/aecm/include;./source/aec/include;./source/aec;./source/agc/legacy;./source/agc;./source/beamformer;./source/ns;./source/ns/include;./source/utility;./source/utility/include;./source/transient;../common_audio/source;../common_audio/source/signal_processing/include;../common_audio/source/vad/include;../common_audio/source/resampler/include;../common_audio/source/resampler;../common_audio/include;../utility/include;..\audio_coding\main\source\codecs\isac\main\source;..\audio_coding\main\source\codecs\isac\main\interface;..\audio_coding\codecs\g729\source</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;./include;./source;../../system_wrappers\interface;../../system_wrappers/source;../interface;../signalprocess/include;./source/aecm/include;./source/aec/include;./source/aec;./source/agc/legacy;./source/agc;./source/beamformer;./source/afs;./source/ns;./source/ns/include;./source/utility;./source/utility/include;./source/transient;../common_audio/source;../common_audio/source/signal_processing/include;../common_audio/source/vad/include;../common_audio/source/resampler/include;../common_audio/source/resampler;../common_audio/include;../utility/include;..\audio_coding\main\source\codecs\isac\main\source;..\audio_coding\main\source\codecs\isac\main\interface;..\audio_coding\codecs\g729\source</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -126,7 +126,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;WEBRTC_SVNREVISION="n/a";_WIN32_WINNT=0x0601;WINVER=0x0601;WIN32;_WINDOWS;NOMINMAX;PSAPI_VERSION=1;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_ATL_NO_OPENGL;_HAS_EXCEPTIONS=0;_SECURE_ATL;CHROMIUM_BUILD;TOOLKIT_VIEWS=1;ENABLE_ONE_CLICK_SIGNIN;ENABLE_REMOTING=1;ENABLE_WEBRTC=1;ENABLE_CONFIGURATION_POLICY;ENABLE_INPUT_SPEECH;ENABLE_NOTIFICATIONS;ENABLE_GPU=1;ENABLE_EGLIMAGE=1;USE_SKIA=1;__STD_C;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ENABLE_TASK_MANAGER=1;ENABLE_WEB_INTENTS=1;ENABLE_EXTENSIONS=1;ENABLE_PLUGIN_INSTALLATION=1;ENABLE_PROTECTOR_SERVICE=1;ENABLE_SESSION_SERVICE=1;ENABLE_THEMES=1;ENABLE_BACKGROUND=1;ENABLE_PROMO_RESOURCE_SERVICE=1;ENABLE_AUTOMATION=1;WEBRTC_WIN;WEBRTC_NS_FLOAT;GOOGLE_PROTOBUF_NO_RTTI;GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER;__STDC_FORMAT_MACROS;DYNAMIC_ANNOTATIONS_ENABLED=1;WTF_USE_DYNAMIC_ANNOTATIONS=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>../.;./include;./source;../../system_wrappers\interface;../../system_wrappers/source;../interface;../signalprocess/include;./source/aecm/include;./source/aec/include;./source/aec;./source/agc/legacy;./source/agc;./source/beamformer;./source/ns;./source/ns/include;./source/utility;./source/utility/include;./source/transient;../common_audio/source;../common_audio/source/signal_processing/include;../common_audio/source/vad/include;../common_audio/source/resampler/include;../common_audio/source/resampler;../common_audio/include;../utility/include;..\audio_coding\main\source\codecs\isac\main\source;..\audio_coding\main\source\codecs\isac\main\interface</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;./include;./source;../../system_wrappers\interface;../../system_wrappers/source;../interface;../signalprocess/include;./source/aecm/include;./source/aec/include;./source/aec;./source/agc/legacy;./source/agc;./source/beamformer;./source/afs;./source/ns;./source/ns/include;./source/utility;./source/utility/include;./source/transient;../common_audio/source;../common_audio/source/signal_processing/include;../common_audio/source/vad/include;../common_audio/source/resampler/include;../common_audio/source/resampler;../common_audio/include;../utility/include;..\audio_coding\main\source\codecs\isac\main\source;..\audio_coding\main\source\codecs\isac\main\interface</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>false</ExceptionHandling>
@@ -176,6 +176,10 @@
     <ClInclude Include="source\aec\aec_resampler.h" />
     <ClInclude Include="source\aec\echo_cancellation_internal.h" />
     <ClInclude Include="source\aec\include\echo_cancellation.h" />
+    <ClInclude Include="source\afs\afs_core.h" />
+    <ClInclude Include="source\afs\afs_defines.h" />
+    <ClInclude Include="source\afs\howlingfilter_core.h" />
+    <ClInclude Include="source\afs\howling_control.h" />
     <ClInclude Include="source\agc\agc.h" />
     <ClInclude Include="source\agc\agc_audio_proc.h" />
     <ClInclude Include="source\agc\agc_audio_proc_internal.h" />
@@ -240,6 +244,9 @@
     <ClCompile Include="source\aec\aec_rdft_sse2.c" />
     <ClCompile Include="source\aec\aec_resampler.c" />
     <ClCompile Include="source\aec\echo_cancellation.c" />
+    <ClCompile Include="source\afs\afs_core.c" />
+    <ClCompile Include="source\afs\howlingfilter_core.c" />
+    <ClCompile Include="source\afs\howling_control.c" />
     <ClCompile Include="source\agc\agc.cc" />
     <ClCompile Include="source\agc\agc_audio_proc.cc" />
     <ClCompile Include="source\agc\agc_manager_direct.cc" />
@@ -261,6 +268,7 @@
     <ClCompile Include="source\echo_control_mobile_impl.cc" />
     <ClCompile Include="source\gain_control_impl.cc" />
     <ClCompile Include="source\high_pass_filter_impl.cc" />
+    <ClCompile Include="source\howling_control_impl.cc" />
     <ClCompile Include="source\level_estimator_impl.cc" />
     <ClCompile Include="source\noise_suppression_impl.cc" />
     <ClCompile Include="source\ns\noise_suppression.c" />

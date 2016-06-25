@@ -33,6 +33,7 @@ class HighPassFilter;
 class LevelEstimator;
 class NoiseSuppression;
 class VoiceDetection;
+class HowlingControl;
 
 // Use to enable the delay correction feature. This now engages an extended
 // filter mode in the AEC, along with robustness measures around the reported
@@ -371,6 +372,7 @@ class AudioProcessing {
   virtual LevelEstimator* level_estimator() const = 0;
   virtual NoiseSuppression* noise_suppression() const = 0;
   virtual VoiceDetection* voice_detection() const = 0;
+  virtual HowlingControl* howling_control() const = 0;
 
   struct Statistic {
     int instant;  // Instantaneous value.
@@ -767,6 +769,22 @@ class VoiceDetection {
  protected:
   virtual ~VoiceDetection() {}
 };
+
+
+//////////////////////////////////////////////////////////////////////////
+////////////////////The Acoustic feedback Supression//////////////////////
+//////////////////////////////////////////////////////////////////////////
+class HowlingControl {
+ public:
+	 virtual int Enable(bool enable) = 0;
+	 virtual bool is_enabled() const = 0;
+
+ protected:
+	 virtual ~HowlingControl() {}
+};
+
+
+
 }  // namespace webrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_INCLUDE_AUDIO_PROCESSING_H_

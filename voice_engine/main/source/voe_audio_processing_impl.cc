@@ -762,6 +762,28 @@ bool VoEAudioProcessingImpl::IsHighPassFilterEnabled() {
   return _shared->audio_processing()->high_pass_filter()->is_enabled();
 }
 
+//added by zengguoqing
+int VoEAudioProcessingImpl::EnableHowlingControl(bool enable)
+{
+	WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+		"EnableHowlingControl(%d)", enable);
+	if (_shared->audio_processing()->howling_control()->Enable(enable) !=
+		AudioProcessing::kNoError) {
+			_shared->SetLastError(VE_APM_ERROR, kTraceError,
+				"HowlingControl::Enable() failed.");
+			return -1;
+	}
+
+	return 0;
+}
+
+bool VoEAudioProcessingImpl::IsHowlingControlEnabled()
+{
+	WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+		"IsHowlingControlEnabled()");
+	return _shared->audio_processing()->howling_control()->is_enabled();
+}
+//end of added by zengguoqing
 int VoEAudioProcessingImpl::RegisterRxVadObserver(
   int channel,
   VoERxVadCallback& observer) {

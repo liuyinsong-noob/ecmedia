@@ -170,7 +170,6 @@
     <ClInclude Include="include\base64.h" />
     <ClInclude Include="include\CaptureScreen.h" />
     <ClInclude Include="include\RecordVoip.h" />
-    <ClInclude Include="include\sometools.h" />
     <ClInclude Include="include\StunMessageCallBack.h" />
     <ClInclude Include="interface\ECMedia.h" />
   </ItemGroup>
@@ -179,7 +178,6 @@
     <ClCompile Include="source\CaptureScreen.cpp" />
     <ClCompile Include="source\ECMedia.cpp" />
     <ClCompile Include="source\RecordVoip.cpp" />
-    <ClCompile Include="source\sometools.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\module\audioprocess\audioprocess.vcxproj">

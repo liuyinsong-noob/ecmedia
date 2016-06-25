@@ -14,11 +14,11 @@
 #include <cstring> // memcpy
 #include <assert.h>
 
-#include "../../system_wrappers/interface/constructormagic.h"
+#include "constructormagic.h"
 #include "typedefs.h"
 #include "common_types.h"
 
-#include "../../system_wrappers/interface/critical_section_wrapper.h"
+#include "critical_section_wrapper.h"
 
 #ifdef _WIN32
     #pragma warning(disable:4351)       // remove warning "new behavior: elements of array
