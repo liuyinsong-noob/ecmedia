@@ -14,9 +14,6 @@
 #include "codingHelper.h"
 #endif
 
-#include "sdk_common.h"
-#include "common_types.h"
-
 #if !defined(NO_VOIP_FUNCTION)
 #include "ECMedia.h"
 #endif
@@ -2828,7 +2825,7 @@ int ServiceCore::startDeliverVideoFrame(SerPhoneCall *call)
 int ServiceCore::stopDeliverVideoFrame(SerPhoneCall *call)
 {
 #ifdef VIDEO_ENABLED
-	if(!call || call->m_VideoChannelID < 0 || !call->deliver_frame)
+	if(!call || call->m_VideoChannelID < 0 /*|| !call->deliver_frame*/)
 	{
 		PrintConsole("stopDeliverVideoFrame failed, call is not ready!\n");
 		return -1;

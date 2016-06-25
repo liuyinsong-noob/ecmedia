@@ -8,9 +8,9 @@
 //#include "voe_observer.h"
 //#include "RecordVoip.h"
 
-#ifdef VIDEO_ENABLED
-#include "videoframe.h"
-#endif
+//#ifdef VIDEO_ENABLED
+//#include "videoframe.h"
+//#endif
 #endif
 
 #ifdef  WIN32      //for locating memory leak under windows platform added by zdm
@@ -253,32 +253,32 @@ void serphone_call_destroy(SerPhoneCall *obj)
 		ms_free((void **)&obj->auth_token);
 	}
 
-#if !defined(NO_VOIP_FUNCTION)
-
-	if (obj->voe_observer) {
-		delete obj->voe_observer;
-        obj->voe_observer = NULL;
-	}
-
-    if (obj->record_voip) {
-        delete obj->record_voip;
-        obj->record_voip = NULL;
-    }
-
-#ifdef VIDEO_ENABLED
-	if (obj->deliver_frame) {
-		delete obj->deliver_frame;
-        obj->deliver_frame = NULL;
-	}
-
-	if (obj->vie_observer)
-	{
-		delete obj->vie_observer;
-		obj->vie_observer = NULL;
-	}
-	
-#endif
-#endif
+//#if !defined(NO_VOIP_FUNCTION)
+//
+//	if (obj->voe_observer) {
+//		delete obj->voe_observer;
+//        obj->voe_observer = NULL;
+//	}
+//
+//    if (obj->record_voip) {
+//        delete obj->record_voip;
+//        obj->record_voip = NULL;
+//    }
+//
+//#ifdef VIDEO_ENABLED
+//	if (obj->deliver_frame) {
+//		delete obj->deliver_frame;
+//        obj->deliver_frame = NULL;
+//	}
+//
+//	if (obj->vie_observer)
+//	{
+//		delete obj->vie_observer;
+//		obj->vie_observer = NULL;
+//	}
+//	
+//#endif
+//#endif
 
 	ms_free((void **)&obj);
 }

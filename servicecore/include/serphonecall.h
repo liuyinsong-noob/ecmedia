@@ -7,17 +7,17 @@
 //sean ice
 #include "ice.h"
 
-#if !defined(NO_VOIP_FUNCTION)
-class VoeObserver;
-class RecordVoip;
-
-#ifdef VIDEO_ENABLED
-class VideoFrameDeliver;
-class VieObserver;
-//#include "receive_statistics_proxy.h"
-#endif
-
-#endif
+//#if !defined(NO_VOIP_FUNCTION)
+//class VoeObserver;
+//class RecordVoip;
+//
+//#ifdef VIDEO_ENABLED
+//class VideoFrameDeliver;
+//class VieObserver;
+////#include "receive_statistics_proxy.h"
+//#endif
+//
+//#endif
 
 class ServiceCore;
 struct _SerPhoneCall;
@@ -198,15 +198,15 @@ typedef struct _SerPhoneCall
     
     char _user_call_id[9];
     
-#if !defined(NO_VOIP_FUNCTION)
-	VoeObserver *voe_observer;
-    RecordVoip *record_voip;
-    
-#ifdef VIDEO_ENABLED
-	VideoFrameDeliver *deliver_frame;
-	VieObserver *vie_observer;
-#endif
-#endif
+//#if !defined(NO_VOIP_FUNCTION)
+//	VoeObserver *voe_observer;
+//    RecordVoip *record_voip;
+//    
+//#ifdef VIDEO_ENABLED
+//	VideoFrameDeliver *deliver_frame;
+//	VieObserver *vie_observer;
+//#endif
+//#endif
 }SerPhoneCall;
 
 SerphoneCallLog * serphone_call_log_new(SerPhoneCall *call,SerphoneAddress *local, SerphoneAddress * remote);
