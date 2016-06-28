@@ -297,11 +297,6 @@ void ServiceCore::audio_stream_free(AudioStream *stream) {
 void ServiceCore::audio_stream_stop(int channelID)
 {
 #if !defined(NO_VOIP_FUNCTION)
-	if (!m_voe)
-	{
-		PrintConsole("audio_stream_stop m_voe==NULL\n");
-		return;
-	}
 	if (channelID>=0) {
 		if (srtp_enable) {
 			if( ECMedia_shutdown_srtp(channelID) ) {
@@ -519,11 +514,6 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 	ECMedia_init_audio();
 #endif
 	PrintConsole("cloopen trace %s begin\n",__FUNCTION__);
-	if ( !m_voe)
-	{
-		PrintConsole("start_audio_stream failed,pointer is NULL\n");
-		return;
-	}
 	int used_pt=-1;
 	/* look for savp stream first */
 	const SalStreamDescription *stream=sal_media_description_find_stream(call->resultdesc,
@@ -638,7 +628,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 
 
 				//for fec test.
-				cloopenwebrtc::CodecInst redCodec = codec_params;
+/*				cloopenwebrtc::CodecInst redCodec = codec_params;
 				memset(redCodec.plname, 0, RTP_PAYLOAD_NAME_SIZE);
 				memcpy(redCodec.plname, "red", 3);
 				redCodec.pltype = 116;
@@ -648,7 +638,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 				memset(fecCodec.plname, 0, RTP_PAYLOAD_NAME_SIZE);
 				memcpy(fecCodec.plname, "ulpfec", 6);
 				fecCodec.pltype = 117;
-				ECMedia_set_receive_playloadType_audio(call->m_AudioChannelID,fecCodec);					
+				ECMedia_set_receive_playloadType_audio(call->m_AudioChannelID,fecCodec);	*/				
 				//TODO:
 				//rtp_rtcp->SetFECStatus(call->m_AudioChannelID, true, 116, 117);
 
@@ -732,11 +722,6 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const char *cname,bool_t all_inputs_muted)
 { 
 #ifdef VIDEO_ENABLED
-	if ( !m_vie)
-	{
-		PrintConsole("start_video_stream failed,pointer is NULL\n");
-		return;
-	}
 	if (m_SnapshotChannelID>=0) {
 		stopVideoWithoutCall();
 	}
@@ -1307,7 +1292,7 @@ int ServiceCore::getCallStatistics(int type,MediaStatisticsInfo *callStats)
 	if( type == 0)
 	{
 		SerPhoneCall *call =serphone_core_get_current_call();
-		if( call == NULL ||call->m_AudioChannelID == -1 || m_voe == NULL ) {
+		if( call == NULL ||call->m_AudioChannelID == -1 ) {
 			memset(callStats,0,sizeof(MediaStatisticsInfo));
 			return -1;
 		}
@@ -1318,7 +1303,7 @@ int ServiceCore::getCallStatistics(int type,MediaStatisticsInfo *callStats)
 	else if( type == 1 )
 	{
 		SerPhoneCall *call =serphone_core_get_current_call();
-		if( call == NULL ||call->m_VideoChannelID == -1 || m_vie == NULL) {
+		if( call == NULL ||call->m_VideoChannelID == -1) {
 			memset(callStats,0,sizeof(MediaStatisticsInfo));
 			return -1;
 		}
@@ -1484,45 +1469,42 @@ void ServiceCore::serphone_call_init_media_streams(SerPhoneCall *call)
 #ifndef WIN32
 	ECMedia_init_audio();
 #endif
-	if (m_voe){
+	ECMedia_audio_create_channel(call->m_AudioChannelID, false);
 
-		ECMedia_audio_create_channel(call->m_AudioChannelID, false);
+    //TODO:
+	//base->SetFecStatus(call->m_AudioChannelID, m_enable_fec);
+    //base->SetLoss(call->m_AudioChannelID, m_opus_packet_loss_rate);
+	ECMedia_set_network_type(call->m_AudioChannelID, -1, networkType);
+	serphone_core_set_process_audio_data_flag_internel(call);
+	ECMedia_set_local_receiver(call->m_AudioChannelID, md->streams[0].port, md->streams[0].port+1);
 
-        //TODO:
-		//base->SetFecStatus(call->m_AudioChannelID, m_enable_fec);
-        //base->SetLoss(call->m_AudioChannelID, m_opus_packet_loss_rate);
-		ECMedia_set_network_type(call->m_AudioChannelID, -1, networkType);
-		serphone_core_set_process_audio_data_flag_internel(call);
-		ECMedia_set_local_receiver(call->m_AudioChannelID, md->streams[0].port, md->streams[0].port+1);
-
-		//audio->EnableHighPassFilter(true);
-		ECMedia_set_AgcStatus(m_agcEnabled, m_agcMode);
-        //for MOS test
+	//audio->EnableHighPassFilter(true);
+	ECMedia_set_AgcStatus(m_agcEnabled, m_agcMode);
+    //for MOS test
 //            audio->SetAecmMode(kAecmLoudSpeakerphone,true);
 //			audio->SetEcStatus(m_ecEnabled, m_ecMode);
 //			//audio->SetNsStatus(m_nsEnabled, m_nsMode);
 //			audio->SetNsStatus(m_nsEnabled, cloopenwebrtc::kNsVeryHighSuppression);
             
-        ECMedia_set_AgcStatus(false, m_agcMode);
-        ECMedia_set_EcStatus(false, m_ecMode);
-        ECMedia_set_NsStatus(false, cloopenwebrtc::kNsVeryHighSuppression);
+    ECMedia_set_AgcStatus(false, m_agcMode);
+    ECMedia_set_EcStatus(false, m_ecMode);
+    ECMedia_set_NsStatus(false, cloopenwebrtc::kNsVeryHighSuppression);
 
-		//Init Srtp
-		//sean20130428
-		if (srtp_enable) {
-			int err = ECMedia_init_srtp(call->m_AudioChannelID);
-			if (err) {
-				PrintConsole("Init SRTP fail code [%d]\n",err);
-			}
+	//Init Srtp
+	//sean20130428
+	if (srtp_enable) {
+		int err = ECMedia_init_srtp(call->m_AudioChannelID);
+		if (err) {
+			PrintConsole("Init SRTP fail code [%d]\n",err);
 		}
+	}
 		
-		if (serphone_core_get_firewall_policy() == LinphonePolicyUseIce && NULL != call->ice_session)
-		{
-			serphone_call_init_audio_stream(call);
-			//TODO:
-			//call->audiostream->ms.session->VoEBase = base;
-			ECMedia_audio_start_receive(call->m_AudioChannelID);
-		}
+	if (serphone_core_get_firewall_policy() == LinphonePolicyUseIce && NULL != call->ice_session)
+	{
+		serphone_call_init_audio_stream(call);
+		//TODO:
+		//call->audiostream->ms.session->VoEBase = base;
+		ECMedia_audio_start_receive(call->m_AudioChannelID);
 	}
 #ifdef VIDEO_ENABLED
 
@@ -2655,22 +2637,11 @@ int ServiceCore::getPlayoutDeviceInfo(SpeakerInfo** speakerinfo)
 	PrintConsole("start getPlayoutDeviceInfo");
 	bool mediaRelease = false;
 
-	if(!m_voe)
-	{
-		mediaRelease = true;
-#ifndef WIN32
-		ECMedia_init_audio();
-#endif
-		if(!m_voe)
-		{
-			*speakerinfo = NULL;
-			return 0;
-		}
-	}
-
 	if(m_speakerInfo)
 		delete[] m_speakerInfo;
-	ECMedia_get_playout_device_num(m_speakerCount);
+	if( ECMedia_get_playout_device_num(m_speakerCount) < 0) {
+		return 0;
+	}
 	m_speakerInfo = new SpeakerInfo[m_speakerCount];
 	for(int i=0; i<m_speakerCount; i++)
 	{
@@ -2682,12 +2653,7 @@ int ServiceCore::getPlayoutDeviceInfo(SpeakerInfo** speakerinfo)
 			strcpy(m_speakerInfo[i].guid, strGuid);
 		}
 	}
-#ifndef WIN32
-	if(mediaRelease)
-	{
-		ECMedia_uninit_audio();
-	}
-#endif
+
 	*speakerinfo = m_speakerInfo;
 	PrintConsole("end getPlayoutDeviceInfo");
 	return m_speakerCount;
@@ -2712,7 +2678,7 @@ int ServiceCore::selectPlayoutDevice(int index)
 		return 0;
 
 	SerPhoneCall *call =serphone_core_get_current_call();
-	if( call!= NULL && m_voe)
+	if( call!= NULL )
 	{
 		ECMedia_select_playout_device(index);
 	}
@@ -2728,23 +2694,12 @@ int ServiceCore::getRecordDeviceInfo(MicroPhoneInfo** microphoneinfo)
 	PrintConsole("getRecordDeviceInfo");
 	bool mediaRelease = false;
 
-	if(!m_voe)
-	{
-		mediaRelease = true;
-#ifndef WIN32
-		ECMedia_init_audio();
-#endif
-		if(!m_voe)
-		{
-			*microphoneinfo = NULL;
-			return 0;
-		}
-	}
-
 	if(m_microphoneInfo)
 		delete[] m_microphoneInfo;
 
-	ECMedia_get_record_device_num(m_microphoneCount);
+	if( ECMedia_get_record_device_num(m_microphoneCount) < 0) {
+		return 0;
+	}
 	m_microphoneInfo = new MicroPhoneInfo[m_microphoneCount];
 	for(int i=0; i<m_microphoneCount; i++)
 	{
@@ -2756,12 +2711,6 @@ int ServiceCore::getRecordDeviceInfo(MicroPhoneInfo** microphoneinfo)
 			strcpy(m_microphoneInfo[i].guid, strGuid);
 		}
 	}
-#ifndef WIN32
-	if(mediaRelease)
-	{
-		ECMedia_uninit_audio();
-	}
-#endif
 
 	*microphoneinfo = m_microphoneInfo;
 	PrintConsole("getRecordDeviceInfo");
@@ -2788,7 +2737,7 @@ int ServiceCore::selectRecordDevice(int index)
 		return 0;
 
 	SerPhoneCall *call =serphone_core_get_current_call();
-	if( call!= NULL && m_voe)
+	if( call!= NULL)
 	{
 		ECMedia_select_record_device(index);
 	}
@@ -3292,38 +3241,34 @@ int ServiceCore::serphone_call_reset_video_views(SerPhoneCall *call, void* remot
 	}
 #ifdef VIDEO_ENABLED
 	if(remoteView) {
-		if(m_vie) {
-#ifdef WIN32
-			RECT rect;
-			::GetWindowRect((HWND)remoteView, &rect);
-			int tmpSize = (rect.right-rect.left) * (rect.bottom-rect.top);
 
-			if( (remoteView != videoWindow) || (tmpSize > videoWindowSize*1.2  ||  tmpSize < videoWindowSize*0.8) )
-			{
-				ECMedia_stop_render(call->m_VideoChannelID, -1);
-				videoWindowSize = tmpSize;
-				ECMedia_add_render(call->m_VideoChannelID, videoWindow, return_video_width_height);
-			}
-#endif
+#ifdef WIN32
+		RECT rect;
+		::GetWindowRect((HWND)remoteView, &rect);
+		int tmpSize = (rect.right-rect.left) * (rect.bottom-rect.top);
+
+		if( (remoteView != videoWindow) || (tmpSize > videoWindowSize*1.2  ||  tmpSize < videoWindowSize*0.8) )
+		{
+			ECMedia_stop_render(call->m_VideoChannelID, -1);
+			videoWindowSize = tmpSize;
+			ECMedia_add_render(call->m_VideoChannelID, videoWindow, return_video_width_height);
 		}
+#endif
 		videoWindow = remoteView;
 	}
 
 	if(localView) {
 #ifdef WIN32
-		if(m_vie) {
+		RECT rect;
+		::GetWindowRect((HWND)localView, &rect);
+		int tmpSize = (rect.right-rect.left) * (rect.bottom-rect.top);
 
-			RECT rect;
-			::GetWindowRect((HWND)localView, &rect);
-			int tmpSize = (rect.right-rect.left) * (rect.bottom-rect.top);
-
-			if( (localView != localVideoWindow) || (tmpSize > localVideoWindowSize*1.2  ||  tmpSize < localVideoWindowSize*0.8) )
-			{
-				localVideoWindowSize = tmpSize;
-				ECMedia_stop_render(call->m_CaptureDeviceId, -1);
-				videoWindowSize = tmpSize;
-				ECMedia_add_render(call->m_CaptureDeviceId, videoWindow, return_video_width_height);
-			}
+		if( (localView != localVideoWindow) || (tmpSize > localVideoWindowSize*1.2  ||  tmpSize < localVideoWindowSize*0.8) )
+		{
+			localVideoWindowSize = tmpSize;
+			ECMedia_stop_render(call->m_CaptureDeviceId, -1);
+			videoWindowSize = tmpSize;
+			ECMedia_add_render(call->m_CaptureDeviceId, videoWindow, return_video_width_height);
 		}
 #else
 		//capture->SetLocalVideoWindow(call->m_CaptureDeviceId,localVideoWindow);
@@ -4002,11 +3947,7 @@ int ServiceCore::PlayAudioFromRtpDump(int localPort, const char *ptName, int plo
 #ifndef WIN32
 	ECMedia_init_audio();
 #endif
-
-	if (!m_voe){
-		return -1;
-	}
-
+	
 	ECMedia_audio_create_channel(m_AudioChannelIDDump, false);
 
 	ECMedia_set_local_receiver(m_AudioChannelIDDump, localPort, localPort+1);
@@ -4041,10 +3982,6 @@ int ServiceCore::PlayAudioFromRtpDump(int localPort, const char *ptName, int plo
 int ServiceCore::StopPlayAudioFromRtpDump()
 {
 #if !defined(NO_VOIP_FUNCTION)
-	if(!m_voe) {
-		return -1;
-	}
-
 	ECMedia_audio_stop_playout(m_AudioChannelIDDump);
 	ECMedia_audio_stop_receive(m_AudioChannelIDDump);
 	ECMedia_delete_channel(m_AudioChannelIDDump,false);
@@ -4697,11 +4634,6 @@ int ServiceCore::GetRtpStatistics(const char* callid,
 void ServiceCore::serserphone_call_start_desktop_share(SerPhoneCall *call, const char *cname,bool_t all_inputs_muted)
 {
 #ifdef VIDEO_ENABLED
-if ( !m_vie)
-	{
-		PrintConsole("start_video_stream failed,pointer is NULL\n");
-		return;
-	}
 	if (m_SnapshotChannelID>=0) {
 		stopVideoWithoutCall();
 	}

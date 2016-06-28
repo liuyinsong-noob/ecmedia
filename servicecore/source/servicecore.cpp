@@ -64,7 +64,6 @@ extern void CCPClientPrintLog(int loglevel, const char *loginfo);
 //cloopenwebrtc::SerphoneTraceCallBack g_serphoneTraceCallBack;
 std::map<int,VideoConferenceDesc*> ServiceCore::videoConferenceM;
 SerphoneCoreVTable ServiceCore::vtable;
-cloopenwebrtc::VideoEngine* ServiceCore::m_vie = NULL;
 const char *Serphone_reason_to_string(SerphoneReason err)
 {
 	switch(err){
@@ -480,13 +479,7 @@ ServiceCore::ServiceCore()
 
 	memset(local_addr, 0, sizeof(local_addr));
 ///////////the following code added by zdm
-#if !defined(NO_VOIP_FUNCTION)
-	m_voe = NULL;
-#endif
 
-#ifdef VIDEO_ENABLED
-	m_vie =NULL;
-#endif
 	m_ringplay_flag = FALSE;
 	dmfs_playing_start_time = 0;
 	local_playfile_channelID = -1;

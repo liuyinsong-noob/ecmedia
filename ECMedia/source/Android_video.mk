@@ -18,8 +18,7 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_SRC_FILES := \
 		base64.c \
 		ECMedia.cpp \
-		RecordVoip.cpp \
-		sometools.cpp
+		RecordVoip.cpp
 
 	
 LOCAL_CFLAGS := \

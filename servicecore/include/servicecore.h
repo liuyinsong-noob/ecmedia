@@ -749,8 +749,8 @@ public:
 	bool_t ringstream_autorelease;
 	int max_calls;
 //////the following code added fromwebrtc
-    cloopenwebrtc::VoiceEngine* m_voe;
-	static cloopenwebrtc::VideoEngine* m_vie;
+ //   cloopenwebrtc::VoiceEngine* m_voe;
+	//static cloopenwebrtc::VideoEngine* m_vie;
     cloopenwebrtc::CriticalSectionWrapper *m_criticalSection;
 	bool_t m_ringplay_flag;
 	time_t dmfs_playing_start_time;

@@ -496,6 +496,9 @@ int ECMedia_init_audio()
     VoEBase* base = VoEBase::GetInterface(m_voe);
     PrintConsole("Init Voice Engine...\n");
     if( base->Init() != 0) {
+		VoiceEngine::Delete(m_voe);
+		m_voe = NULL;
+
         PrintConsole("Init Voice Engine Error, error code is %d\n",base->LastError());
         return base->LastError(); //base init failed
     }
