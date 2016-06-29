@@ -17,10 +17,18 @@
 
 // NOTE: This include order must remain to avoid compile errors, even though
 //       it breaks the style guide.
+
+#if __APPLE__
+#include "vpx_ios/vpx_encoder.h"
+#include "vpx_ios/vpx_decoder.h"
+#include "vpx_ios/vp8cx.h"
+#include "vpx_ios/vp8dx.h"
+#else
 #include "vpx/vpx_encoder.h"
 #include "vpx/vpx_decoder.h"
 #include "vpx/vp8cx.h"
 #include "vpx/vp8dx.h"
+#endif
 
 #include "i420_video_frame.h"
 #include "video_codec_interface.h"

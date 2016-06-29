@@ -37,7 +37,7 @@
 		82D003C6193DC01200C7E565 /* CAStreamBasicDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82D003BC193DC01200C7E565 /* CAStreamBasicDescription.cpp */; };
 		82D003C7193DC01200C7E565 /* CAXException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82D003BE193DC01200C7E565 /* CAXException.cpp */; };
 		82E9DDA118B1BA3900DF221E /* CLOPcrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 82E9DD9E18B1BA3900DF221E /* CLOPcrypto.m */; };
-		AD0183FD1C58BE5C00132626 /* libccpclient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9136BBAC1A8C9B8300350A26 /* libccpclient.a */; };
+		AD0199B81D239A16003C2BB9 /* libccpclient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9136BBAC1A8C9B8300350A26 /* libccpclient.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,7 +112,6 @@
 		05C42AD516FABC790023A950 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		05C42B8316FABD5D0023A950 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		05C42BBE16FACFC90023A950 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		05D64AAE19F90A5F00C6D35A /* libccpclient.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libccpclient.a; sourceTree = "<group>"; };
 		8237C17A17968C4D00AC953E /* Consumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Consumer.h; sourceTree = "<group>"; };
 		8237C17B17968C4D00AC953E /* Consumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Consumer.m; sourceTree = "<group>"; };
 		8237C18117968C4D00AC953E /* Transaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transaction.h; sourceTree = "<group>"; };
@@ -147,7 +146,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD0183FD1C58BE5C00132626 /* libccpclient.a in Frameworks */,
+				AD0199B81D239A16003C2BB9 /* libccpclient.a in Frameworks */,
 				825FBF9B17D7107D00B0943D /* CoreTelephony.framework in Frameworks */,
 				05C42AD616FABC790023A950 /* CoreFoundation.framework in Frameworks */,
 				05C42AD416FABC6B0023A950 /* Foundation.framework in Frameworks */,
@@ -223,7 +222,6 @@
 			isa = PBXGroup;
 			children = (
 				0580DB8F19C2DDCD00DBFBE6 /* CCPClient_Internal.h */,
-				05D64AAE19F90A5F00C6D35A /* libccpclient.a */,
 				05C4296B16FAB9E70023A950 /* CCPClient.h */,
 				050207F716FAB900008FBA62 /* CCPSDKProject-Prefix.pch */,
 			);

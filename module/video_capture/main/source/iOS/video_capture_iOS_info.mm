@@ -68,6 +68,12 @@ namespace cloopenwebrtc
         {
             [videoCaptureiOSObjc performSelectorOnMainThread:@selector(setParentView:) withObject:(UIView*)view waitUntilDone:NO];
             return 0;
-        }        
+        }
+        
+        int VideoCaptureiOSInfo::updateLossRate(int lossRate)
+        {
+            [videoCaptureiOSObjc updateLossRate:lossRate];
+            return 0;
+        }
     }
 }

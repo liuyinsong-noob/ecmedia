@@ -110,20 +110,15 @@ extern "C" {
         SerphoneAudioModeGoodHighQuality
     } SerphoneAudioMode;
     
-	enum  {
-		codec_iLBC,
+    enum  {
+        codec_PCMU,
 		codec_G729,
-		codec_PCMU,
-		codec_PCMA,
+        Codec_OPUS8K,
+        Codec_OPUS16K,
+        Codec_OPUS48K,
 		codec_VP8,
 		codec_H264,
 		codec_H264SVC,
-		codec_SILK8K,
-		codec_SILK12K,
-		codec_SILK16K,
-		Codec_OPUS8K,
-		Codec_OPUS16K,
-		Codec_OPUS48K,
 		codec_AMR
 	};
 

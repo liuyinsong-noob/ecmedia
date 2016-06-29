@@ -43,6 +43,8 @@ extern "C" {
 }
 #endif
 
+#include "sdk_common.h"
+
 #import <CoreTelephony/CTCall.h>
 #import <CoreTelephony/CTCallCenter.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
@@ -1868,7 +1870,7 @@ static CCPCallService * ccpcallserviceSharedInstance;
         voipCallDict = [[NSMutableDictionary alloc] init];
 //        setCodecEnabled(4, 0);
         setDtxEnabled(true);
-//        setTraceFlag(true);
+        setTraceFlag(true);
         self.player = nil;
         recorder = new YtxAQRecorder();
         self.playRingName = nil;

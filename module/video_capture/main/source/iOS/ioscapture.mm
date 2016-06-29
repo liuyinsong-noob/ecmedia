@@ -30,6 +30,7 @@ char *globalFilePathcapture = NULL;
 @implementation ECIOSCaptureCCP
 
 @synthesize parentView;
+@synthesize triggered;
 
 #pragma mark - public methods
 
@@ -659,5 +660,16 @@ char *globalFilePathcapture = NULL;
     funlockfile(fout);
 }
 #endif
+
+- (NSNumber *)updateLossRate:(int)lossRate
+{
+    //    NSLog(@"sean haha lossRate %d",lossRate);
+    if (lossRate > 30) {
+        triggered = true;
+    }
+    else
+        triggered = false;
+    return [NSNumber numberWithInt:0];
+}
 @end
 //#endif /*TARGET_IPHONE_SIMULATOR*/

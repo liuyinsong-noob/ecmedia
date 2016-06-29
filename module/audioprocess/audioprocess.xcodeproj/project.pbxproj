@@ -9,6 +9,15 @@
 /* Begin PBXBuildFile section */
 		55AD134F15C89A52008A2BDA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55AD134E15C89A52008A2BDA /* Foundation.framework */; };
 		55AD13A315C89A81008A2BDA /* audio_processing.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AD136015C89A81008A2BDA /* audio_processing.h */; };
+		AD01999B1D2374B3003C2BB9 /* howling_control_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD0199991D2374B3003C2BB9 /* howling_control_impl.cc */; };
+		AD01999C1D2374B3003C2BB9 /* howling_control_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = AD01999A1D2374B3003C2BB9 /* howling_control_impl.h */; };
+		AD0199A51D2374F6003C2BB9 /* afs_core.c in Sources */ = {isa = PBXBuildFile; fileRef = AD01999E1D2374F6003C2BB9 /* afs_core.c */; };
+		AD0199A61D2374F6003C2BB9 /* afs_core.h in Headers */ = {isa = PBXBuildFile; fileRef = AD01999F1D2374F6003C2BB9 /* afs_core.h */; };
+		AD0199A71D2374F6003C2BB9 /* afs_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = AD0199A01D2374F6003C2BB9 /* afs_defines.h */; };
+		AD0199A81D2374F6003C2BB9 /* howling_control.c in Sources */ = {isa = PBXBuildFile; fileRef = AD0199A11D2374F6003C2BB9 /* howling_control.c */; };
+		AD0199A91D2374F6003C2BB9 /* howling_control.h in Headers */ = {isa = PBXBuildFile; fileRef = AD0199A21D2374F6003C2BB9 /* howling_control.h */; };
+		AD0199AA1D2374F6003C2BB9 /* howlingfilter_core.c in Sources */ = {isa = PBXBuildFile; fileRef = AD0199A31D2374F6003C2BB9 /* howlingfilter_core.c */; };
+		AD0199AB1D2374F6003C2BB9 /* howlingfilter_core.h in Headers */ = {isa = PBXBuildFile; fileRef = AD0199A41D2374F6003C2BB9 /* howlingfilter_core.h */; };
 		AD3A67CA1C5765270010CB68 /* audio_buffer.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A67AD1C5765270010CB68 /* audio_buffer.cc */; };
 		AD3A67CB1C5765270010CB68 /* audio_buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A67AE1C5765270010CB68 /* audio_buffer.h */; };
 		AD3A67CC1C5765270010CB68 /* audio_process_common.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A67AF1C5765270010CB68 /* audio_process_common.h */; };
@@ -125,6 +134,15 @@
 		55AD134B15C89A52008A2BDA /* libaudioprocess.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaudioprocess.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		55AD134E15C89A52008A2BDA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		55AD136015C89A81008A2BDA /* audio_processing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_processing.h; sourceTree = "<group>"; };
+		AD0199991D2374B3003C2BB9 /* howling_control_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = howling_control_impl.cc; sourceTree = "<group>"; };
+		AD01999A1D2374B3003C2BB9 /* howling_control_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = howling_control_impl.h; sourceTree = "<group>"; };
+		AD01999E1D2374F6003C2BB9 /* afs_core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = afs_core.c; path = afs/afs_core.c; sourceTree = "<group>"; };
+		AD01999F1D2374F6003C2BB9 /* afs_core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = afs_core.h; path = afs/afs_core.h; sourceTree = "<group>"; };
+		AD0199A01D2374F6003C2BB9 /* afs_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = afs_defines.h; path = afs/afs_defines.h; sourceTree = "<group>"; };
+		AD0199A11D2374F6003C2BB9 /* howling_control.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = howling_control.c; path = afs/howling_control.c; sourceTree = "<group>"; };
+		AD0199A21D2374F6003C2BB9 /* howling_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = howling_control.h; path = afs/howling_control.h; sourceTree = "<group>"; };
+		AD0199A31D2374F6003C2BB9 /* howlingfilter_core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = howlingfilter_core.c; path = afs/howlingfilter_core.c; sourceTree = "<group>"; };
+		AD0199A41D2374F6003C2BB9 /* howlingfilter_core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = howlingfilter_core.h; path = afs/howlingfilter_core.h; sourceTree = "<group>"; };
 		AD3A67AD1C5765270010CB68 /* audio_buffer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_buffer.cc; sourceTree = "<group>"; };
 		AD3A67AE1C5765270010CB68 /* audio_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_buffer.h; sourceTree = "<group>"; };
 		AD3A67AF1C5765270010CB68 /* audio_process_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_process_common.h; sourceTree = "<group>"; };
@@ -294,6 +312,8 @@
 		55AD136615C89A81008A2BDA /* source */ = {
 			isa = PBXGroup;
 			children = (
+				AD0199991D2374B3003C2BB9 /* howling_control_impl.cc */,
+				AD01999A1D2374B3003C2BB9 /* howling_control_impl.h */,
 				AD3A67AD1C5765270010CB68 /* audio_buffer.cc */,
 				AD3A67AE1C5765270010CB68 /* audio_buffer.h */,
 				AD3A67AF1C5765270010CB68 /* audio_process_common.h */,
@@ -323,6 +343,7 @@
 				AD3A67C71C5765270010CB68 /* typing_detection.h */,
 				AD3A67C81C5765270010CB68 /* voice_detection_impl.cc */,
 				AD3A67C91C5765270010CB68 /* voice_detection_impl.h */,
+				AD01999D1D2374E6003C2BB9 /* afs */,
 				AD3A67AC1C5764E30010CB68 /* utility */,
 				AD3A67AB1C5764D60010CB68 /* transient */,
 				AD3A67AA1C5764CF0010CB68 /* ns */,
@@ -333,6 +354,20 @@
 			);
 			path = source;
 			sourceTree = SOURCE_ROOT;
+		};
+		AD01999D1D2374E6003C2BB9 /* afs */ = {
+			isa = PBXGroup;
+			children = (
+				AD01999E1D2374F6003C2BB9 /* afs_core.c */,
+				AD01999F1D2374F6003C2BB9 /* afs_core.h */,
+				AD0199A01D2374F6003C2BB9 /* afs_defines.h */,
+				AD0199A11D2374F6003C2BB9 /* howling_control.c */,
+				AD0199A21D2374F6003C2BB9 /* howling_control.h */,
+				AD0199A31D2374F6003C2BB9 /* howlingfilter_core.c */,
+				AD0199A41D2374F6003C2BB9 /* howlingfilter_core.h */,
+			);
+			name = afs;
+			sourceTree = "<group>";
 		};
 		AD3A67A41C5764930010CB68 /* aec */ = {
 			isa = PBXGroup;
@@ -475,6 +510,7 @@
 				AD3A68051C5765850010CB68 /* moving_moments.h in Headers */,
 				AD3A685B1C57666D0010CB68 /* pitch_internal.h in Headers */,
 				AD3A67F21C5765520010CB68 /* delay_estimator.h in Headers */,
+				AD0199AB1D2374F6003C2BB9 /* howlingfilter_core.h in Headers */,
 				AD3A67DC1C5765270010CB68 /* noise_suppression_impl.h in Headers */,
 				AD3A685D1C57666D0010CB68 /* pole_zero_filter.h in Headers */,
 				AD3A68551C57666D0010CB68 /* digital_agc.h in Headers */,
@@ -482,12 +518,15 @@
 				AD3A687D1C5766F50010CB68 /* aec_resampler.h in Headers */,
 				AD3A681F1C5765FF0010CB68 /* complex_matrix.h in Headers */,
 				AD3A686C1C5766B90010CB68 /* echo_control_mobile.h in Headers */,
+				AD0199A91D2374F6003C2BB9 /* howling_control.h in Headers */,
 				AD3A684F1C57666D0010CB68 /* gmm.h in Headers */,
 				AD3A68221C5765FF0010CB68 /* matrix.h in Headers */,
+				AD01999C1D2374B3003C2BB9 /* howling_control_impl.h in Headers */,
 				AD3A67E21C5765270010CB68 /* splitting_filter.h in Headers */,
 				AD3A68161C5765D90010CB68 /* noise_suppression.h in Headers */,
 				AD3A685F1C57666D0010CB68 /* standalone_vad.h in Headers */,
 				AD3A68451C57666D0010CB68 /* agc_audio_proc.h in Headers */,
+				AD0199A71D2374F6003C2BB9 /* afs_defines.h in Headers */,
 				AD3A67D21C5765270010CB68 /* echo_cancellation_impl.h in Headers */,
 				AD3A68031C5765850010CB68 /* dyadic_decimator.h in Headers */,
 				AD3A680C1C5765850010CB68 /* wpd_node.h in Headers */,
@@ -504,6 +543,7 @@
 				AD3A68801C5766F50010CB68 /* echo_cancellation.h in Headers */,
 				AD3A67F41C5765520010CB68 /* fft4g.h in Headers */,
 				AD3A68431C57666D0010CB68 /* agc_audio_proc_internal.h in Headers */,
+				AD0199A61D2374F6003C2BB9 /* afs_core.h in Headers */,
 				AD3A68081C5765850010CB68 /* transient_detector.h in Headers */,
 				AD3A68511C57666D0010CB68 /* histogram.h in Headers */,
 				AD3A67DA1C5765270010CB68 /* level_estimator_impl.h in Headers */,
@@ -592,6 +632,7 @@
 				AD3A687A1C5766F50010CB68 /* aec_rdft.c in Sources */,
 				AD3A68071C5765850010CB68 /* transient_detector.cc in Sources */,
 				AD3A68501C57666D0010CB68 /* histogram.cc in Sources */,
+				AD0199A51D2374F6003C2BB9 /* afs_core.c in Sources */,
 				AD3A684B1C57666D0010CB68 /* circular_buffer.cc in Sources */,
 				AD3A68181C5765D90010CB68 /* ns_core.c in Sources */,
 				AD3A67CA1C5765270010CB68 /* audio_buffer.cc in Sources */,
@@ -605,17 +646,20 @@
 				AD3A68491C57666D0010CB68 /* agc.cc in Sources */,
 				AD3A68681C5766B90010CB68 /* aecm_core_c.c in Sources */,
 				AD3A67D31C5765270010CB68 /* echo_control_mobile_impl.cc in Sources */,
+				AD0199AA1D2374F6003C2BB9 /* howlingfilter_core.c in Sources */,
 				AD3A67D11C5765270010CB68 /* echo_cancellation_impl.cc in Sources */,
 				AD3A686B1C5766B90010CB68 /* echo_control_mobile.c in Sources */,
 				AD3A68441C57666D0010CB68 /* agc_audio_proc.cc in Sources */,
 				AD3A68831C57673F0010CB68 /* aec_core_neon.c in Sources */,
 				AD3A687C1C5766F50010CB68 /* aec_resampler.c in Sources */,
 				AD3A67E31C5765270010CB68 /* typing_detection.cc in Sources */,
+				AD0199A81D2374F6003C2BB9 /* howling_control.c in Sources */,
 				AD3A68881C5767610010CB68 /* nsx_core_neon.c in Sources */,
 				AD3A684E1C57666D0010CB68 /* gmm.cc in Sources */,
 				AD3A67F31C5765520010CB68 /* fft4g.c in Sources */,
 				AD3A67D91C5765270010CB68 /* level_estimator_impl.cc in Sources */,
 				AD3A68171C5765D90010CB68 /* noise_suppression.c in Sources */,
+				AD01999B1D2374B3003C2BB9 /* howling_control_impl.cc in Sources */,
 				AD3A68581C57666D0010CB68 /* pitch_based_vad.cc in Sources */,
 				AD3A685A1C57666D0010CB68 /* pitch_internal.cc in Sources */,
 				AD3A67CF1C5765270010CB68 /* channel_buffer.cc in Sources */,

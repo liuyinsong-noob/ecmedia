@@ -691,7 +691,6 @@
 		82A5E77218FE334000318CE0 /* playerStart.png in Resources */ = {isa = PBXBuildFile; fileRef = 82A5E77018FE334000318CE0 /* playerStart.png */; };
 		82A5E77318FE334000318CE0 /* playerStart@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 82A5E77118FE334000318CE0 /* playerStart@2x.png */; };
 		82AC78CD18D2EDF800190D5D /* SelectPhoneNOViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82AC78CC18D2EDF800190D5D /* SelectPhoneNOViewController.m */; };
-		82B075891A6CF29700C34101 /* libccpapisdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 82B075881A6CF29700C34101 /* libccpapisdk.a */; };
 		82B758DF18BAF830001E06B3 /* vm_crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 82B758DE18BAF830001E06B3 /* vm_crypto.m */; };
 		82BA6DD718064D600049C41D /* ConsultView.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BA6DCE18064D600049C41D /* ConsultView.m */; };
 		82BA6DD818064D600049C41D /* CounselorInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BA6DD018064D600049C41D /* CounselorInfoViewController.m */; };
@@ -954,6 +953,8 @@
 		82F7F98816F2F5950060E9DB /* Statement.m in Sources */ = {isa = PBXBuildFile; fileRef = 82F7F97E16F2F5950060E9DB /* Statement.m */; };
 		82F7F99A16F2F8E40060E9DB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F43C1516A93EE600F6D053 /* AudioToolbox.framework */; };
 		82FF39B418D13EDB002531BF /* CustomPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FF39B318D13EDB002531BF /* CustomPersonViewController.m */; };
+		AD01997F1D2370E7003C2BB9 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD01997E1D2370E7003C2BB9 /* VideoToolbox.framework */; };
+		AD0199B71D23993A003C2BB9 /* libccpapisdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9136BB891A8C9B6F00350A26 /* libccpapisdk.a */; };
 		AD194FB91C5B4066003841BB /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AD194FB81C5B4066003841BB /* libc++.tbd */; };
 		ADA18F171C58B518007F0F8B /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA18F161C58B518007F0F8B /* libz.tbd */; };
 		ADA18F191C58B521007F0F8B /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA18F181C58B521007F0F8B /* libxml2.tbd */; };
@@ -1778,7 +1779,6 @@
 		82A5E77118FE334000318CE0 /* playerStart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "playerStart@2x.png"; sourceTree = "<group>"; };
 		82AC78CB18D2EDF800190D5D /* SelectPhoneNOViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectPhoneNOViewController.h; sourceTree = "<group>"; };
 		82AC78CC18D2EDF800190D5D /* SelectPhoneNOViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectPhoneNOViewController.m; sourceTree = "<group>"; };
-		82B075881A6CF29700C34101 /* libccpapisdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libccpapisdk.a; sourceTree = "<group>"; };
 		82B758DD18BAF830001E06B3 /* vm_crypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vm_crypto.h; path = common/vm_crypto.h; sourceTree = "<group>"; };
 		82B758DE18BAF830001E06B3 /* vm_crypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = vm_crypto.m; path = common/vm_crypto.m; sourceTree = "<group>"; };
 		82BA6DCD18064D600049C41D /* ConsultView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsultView.h; sourceTree = "<group>"; };
@@ -2053,6 +2053,7 @@
 		82FF39B218D13EDB002531BF /* CustomPersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPersonViewController.h; sourceTree = "<group>"; };
 		82FF39B318D13EDB002531BF /* CustomPersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPersonViewController.m; sourceTree = "<group>"; };
 		9136BB841A8C9B6F00350A26 /* CCPSDKProject.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CCPSDKProject.xcodeproj; path = ../sdk3.6.5/CCPSDKProject.xcodeproj; sourceTree = "<group>"; };
+		AD01997E1D2370E7003C2BB9 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		AD194FB81C5B4066003841BB /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		ADA18F161C58B518007F0F8B /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		ADA18F181C58B521007F0F8B /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
@@ -2087,6 +2088,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD0199B71D23993A003C2BB9 /* libccpapisdk.a in Frameworks */,
+				AD01997F1D2370E7003C2BB9 /* VideoToolbox.framework in Frameworks */,
 				AD194FB91C5B4066003841BB /* libc++.tbd in Frameworks */,
 				ADA18F191C58B521007F0F8B /* libxml2.tbd in Frameworks */,
 				ADA18F171C58B518007F0F8B /* libz.tbd in Frameworks */,
@@ -2108,7 +2111,6 @@
 				05F43C1216A93ED500F6D053 /* AVFoundation.framework in Frameworks */,
 				05F43C1016A93ECE00F6D053 /* SystemConfiguration.framework in Frameworks */,
 				05F43C0E16A93EC400F6D053 /* MobileCoreServices.framework in Frameworks */,
-				82B075891A6CF29700C34101 /* libccpapisdk.a in Frameworks */,
 				05F43B8816A92CAA00F6D053 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2119,7 +2121,6 @@
 		0507B31C19862092007A49C0 /* ccpsdk */ = {
 			isa = PBXGroup;
 			children = (
-				82B075881A6CF29700C34101 /* libccpapisdk.a */,
 				0507B31D19862092007A49C0 /* CCPCallEvent.h */,
 				0507B31E19862092007A49C0 /* CCPCallService.h */,
 				0507B31F19862092007A49C0 /* CCPSDKBundle.bundle */,
@@ -2248,6 +2249,7 @@
 		05F43B8616A92CAA00F6D053 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AD01997E1D2370E7003C2BB9 /* VideoToolbox.framework */,
 				AD194FB81C5B4066003841BB /* libc++.tbd */,
 				ADA18F181C58B521007F0F8B /* libxml2.tbd */,
 				ADA18F161C58B518007F0F8B /* libz.tbd */,
@@ -4671,14 +4673,14 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Sean Lee (33QN7P98E8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Sean Lee (33QN7P98E8)";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CCPVoipDemo/CCPVoipDemo-Prefix.pch";
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "CCPVoipDemo/CCPVoipDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/CCPVoipDemo/ccpsdk",
@@ -4691,10 +4693,10 @@
 					"-lz",
 				);
 				OTHER_OSACOMPILEFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ronglian.yuanlr.CCPVoipDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuntongxun.sean.CCPVoipDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3cc622ac-93dd-472c-aa9d-7f20d879202b";
+				PROVISIONING_PROFILE = "7fec8836-33ff-4a92-903e-eacb5610c5c9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7fec8836-33ff-4a92-903e-eacb5610c5c9";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 arm64";
 				WRAPPER_EXTENSION = app;
@@ -4706,14 +4708,14 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Sean Lee (33QN7P98E8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Sean Lee (33QN7P98E8)";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CCPVoipDemo/CCPVoipDemo-Prefix.pch";
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "CCPVoipDemo/CCPVoipDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/CCPVoipDemo/ccpsdk",
@@ -4726,10 +4728,10 @@
 					"-lz",
 				);
 				OTHER_OSACOMPILEFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ronglian.yuanlr.CCPVoipDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuntongxun.sean.CCPVoipDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3cc622ac-93dd-472c-aa9d-7f20d879202b";
+				PROVISIONING_PROFILE = "7fec8836-33ff-4a92-903e-eacb5610c5c9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7fec8836-33ff-4a92-903e-eacb5610c5c9";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 arm64";
 				WRAPPER_EXTENSION = app;

@@ -231,6 +231,11 @@ namespace cloopenwebrtc
             return 0;
         }
         
+        WebRtc_Word32 VideoCaptureiOS::UpdateLossRate(int lossRate)
+        {
+            return _captureDevice->updateLossRate(lossRate);
+        }
+        
         bool VideoCaptureiOS::CaptureStarted()
         {
             return _isCapturing;

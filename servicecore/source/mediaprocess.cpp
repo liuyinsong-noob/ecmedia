@@ -825,8 +825,8 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 
 			//network->SetSendDestination(call->m_VideoChannelID,
 			//	stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr,stream->port);
-			ECMedia_audio_set_send_destination(call->m_VideoChannelID,stream->port,
-				stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr);
+			ECMedia_video_set_send_destination(call->m_VideoChannelID,
+				stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr, stream->port, stream->rtcp_port);
 
 			cloopenwebrtc::VideoCodec codec_params;			
 			bool codec_found = false;
@@ -1512,8 +1512,8 @@ void ServiceCore::serphone_call_init_media_streams(SerPhoneCall *call)
 		ECMedia_audio_create_channel(call->m_VideoChannelID, true);
 
 		if( call->m_VideoChannelID >= 0 &&  md->nstreams > 1 ) {
-			ECMedia_set_network_type(call->m_VideoChannelID, true, networkType);
-			ECMedia_set_local_receiver(call->m_VideoChannelID,call->video_port, call->video_port+1);
+			ECMedia_set_network_type(call->m_AudioChannelID, call->m_VideoChannelID, networkType);
+			ECMedia_video_set_local_receiver(call->m_VideoChannelID,call->video_port, call->video_port+1);
 			ECMedia_set_MTU(call->m_VideoChannelID,1450);
 
 			/*add begin------------------Sean20130722----------for video ice------------*/

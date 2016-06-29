@@ -588,6 +588,38 @@ MSList *ms_list_copy(const MSList *list){
 	return copy;
 }
 
+
+#ifdef __APPLE__
+PayloadType payload_type_opus8k={
+    PAYLOAD_AUDIO_PACKETIZED,
+    8000,
+    0,
+    NULL,
+    0,
+    20000,
+    "opus",
+    1,
+    NULL,
+    NULL,
+    0,
+    NULL
+};
+
+PayloadType payload_type_opus16k={
+    PAYLOAD_AUDIO_PACKETIZED,
+    16000,
+    0,
+    NULL,
+    0,
+    25000,
+    "opus",
+    1,
+    NULL,
+    NULL,
+    0,
+    NULL
+};
+#endif
 ///////////////////////////////////////////////////////////////
 //
 //char offset127=127;
