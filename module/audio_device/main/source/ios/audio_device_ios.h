@@ -279,6 +279,9 @@ class AudioDeviceIOS : public AudioDeviceGeneric {
   // Current total size all data in buffers, used for delay estimate
   uint32_t _recordingBufferTotalSize;
   bool _isIphone6s;
+  const char *_originalMode;
+    const char *_originalCategory;
+    double _originalPreferredSampleRate;
 };
 
 }  // namespace webrtc

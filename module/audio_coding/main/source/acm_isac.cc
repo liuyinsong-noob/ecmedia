@@ -168,6 +168,37 @@ int16_t ACMISAC::REDPayloadISAC(const int32_t /* isac_rate */,
   return -1;
 }
 
+int ACMISAC::DecodePlc(int num_frames, int16_t* decoded) {
+    return -1;
+}
+    
+int ACMISAC::IncomingPacket(const uint8_t* payload,
+                            size_t payload_len,
+                            uint16_t rtp_sequence_number,
+                            uint32_t rtp_timestamp,
+                            uint32_t arrival_timestamp) {
+    return -1;
+}
+    
+int ACMISAC::DecodeRedundant(const uint8_t* encoded,
+                             size_t encoded_len,
+                             int16_t* decoded,
+                             SpeechType* speech_type) {
+
+    return -1;
+}
+
+int ACMISAC::Decode(const uint8_t* encoded,
+                    size_t encoded_len,
+                    int16_t* decoded,
+                    SpeechType* speech_type) {
+    return -1;
+}
+    
+int ACMISAC::ErrorCode() {
+    return -1;
+}
+    
 AudioDecoder* ACMISAC::Decoder(int /* codec_id */) { return NULL; }
 
 #else     //===================== Actual Implementation =======================

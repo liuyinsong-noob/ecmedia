@@ -70,6 +70,7 @@
 		AD0199AD1D239472003C2BB9 /* sometools.h in Headers */ = {isa = PBXBuildFile; fileRef = AD0199AC1D239472003C2BB9 /* sometools.h */; };
 		AD0199AF1D239480003C2BB9 /* sometools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD0199AE1D239480003C2BB9 /* sometools.cpp */; };
 		AD0199B91D239A21003C2BB9 /* libECMedia.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0199571D23648B003C2BB9 /* libECMedia.a */; };
+		AD42CD6E1D23D811009C2E7A /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0199901D2371FD003C2BB9 /* libsrtp.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -200,6 +201,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD42CD6E1D23D811009C2E7A /* libsrtp.a in Frameworks */,
 				AD0199B91D239A21003C2BB9 /* libECMedia.a in Frameworks */,
 				AD0199981D23730D003C2BB9 /* libssl.a in Frameworks */,
 				AD0199971D2372D4003C2BB9 /* libcrypto.a in Frameworks */,

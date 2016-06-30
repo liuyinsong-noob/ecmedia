@@ -49,6 +49,7 @@
 		AD2E29F61C58C04900FD311B /* report_block_stats.h in Headers */ = {isa = PBXBuildFile; fileRef = AD2E29F41C58C04900FD311B /* report_block_stats.h */; };
 		AD2E29F91C58C09F00FD311B /* stream_synchronization.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD2E29F71C58C09F00FD311B /* stream_synchronization.cc */; };
 		AD2E29FA1C58C09F00FD311B /* stream_synchronization.h in Headers */ = {isa = PBXBuildFile; fileRef = AD2E29F81C58C09F00FD311B /* stream_synchronization.h */; };
+		AD42CD711D23E17A009C2E7A /* shared_memory.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD42CD701D23E17A009C2E7A /* shared_memory.cc */; };
 		AD8D725C1C58C6D400FB246D /* call_stats.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D725A1C58C6D400FB246D /* call_stats.cc */; };
 		AD8D725D1C58C6D400FB246D /* call_stats.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8D725B1C58C6D400FB246D /* call_stats.h */; };
 		AD8D72601C58C9EB00FB246D /* encoder_state_feedback.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D725E1C58C9EB00FB246D /* encoder_state_feedback.cc */; };
@@ -148,6 +149,7 @@
 		AD2E29F41C58C04900FD311B /* report_block_stats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = report_block_stats.h; sourceTree = "<group>"; };
 		AD2E29F71C58C09F00FD311B /* stream_synchronization.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stream_synchronization.cc; sourceTree = "<group>"; };
 		AD2E29F81C58C09F00FD311B /* stream_synchronization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stream_synchronization.h; sourceTree = "<group>"; };
+		AD42CD701D23E17A009C2E7A /* shared_memory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = shared_memory.cc; path = ../../module/desktop_capture/source/shared_memory.cc; sourceTree = "<group>"; };
 		AD8D725A1C58C6D400FB246D /* call_stats.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = call_stats.cc; sourceTree = "<group>"; };
 		AD8D725B1C58C6D400FB246D /* call_stats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = call_stats.h; sourceTree = "<group>"; };
 		AD8D725E1C58C9EB00FB246D /* encoder_state_feedback.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = encoder_state_feedback.cc; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				AD194FDE1C5B4572003841BB /* vie_desktop_capture.cpp */,
+				AD42CD701D23E17A009C2E7A /* shared_memory.cc */,
 				AD194FDF1C5B4572003841BB /* vie_desktop_capture.h */,
 				AD194FE01C5B4572003841BB /* vie_desktop_share_impl.cpp */,
 				AD194FE11C5B4572003841BB /* vie_desktop_share_impl.h */,
@@ -397,6 +400,7 @@
 				5519CCA315C8136F00719504 /* vie_file_impl.cc in Sources */,
 				AD194FE61C5B4572003841BB /* vie_desktop_share_impl.cpp in Sources */,
 				AD8D725C1C58C6D400FB246D /* call_stats.cc in Sources */,
+				AD42CD711D23E17A009C2E7A /* shared_memory.cc in Sources */,
 				AD8D72601C58C9EB00FB246D /* encoder_state_feedback.cc in Sources */,
 				5519CCA515C8136F00719504 /* vie_file_player.cc in Sources */,
 				5519CCA915C8136F00719504 /* vie_frame_provider_base.cc in Sources */,

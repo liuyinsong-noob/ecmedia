@@ -37,6 +37,8 @@ extern "C" {
 		LOG_LEVEL_END
 	};
 
+    
+#ifdef OLDERRORCODE
     enum {
         ReasonNone,
         ReasonNoResponse,
@@ -52,6 +54,24 @@ extern "C" {
         ReasonInvalidProxy,
         ReasonHaiyuntongInitFailed
     };
+#else
+    enum {
+        ReasonNone = 175000,
+        ReasonNoResponse,
+        ReasonBadCredentials,
+        ReasonReFetchSoftSwitch,
+        ReasonKickedOff,
+        ReasonCalleeNoVoip,
+        ReasonInvalidProxy,
+        ReasonNoNetwork,
+        ReasonConfNotExist,
+        ReasonConfSipNotIn,
+        ReasonConfMemberNotIn,
+        ReasonConfMemberNOVideo,
+        ReasonHaiyuntongInitFailed
+        
+    };
+#endif
 	enum {
 		USERDATA_FOR_TOKEN	=0,
 		USERDATA_FOR_USER_AGENT,
@@ -78,13 +98,27 @@ extern "C" {
 		G_EVENT_MediaInitFailed,
         G_EVENT_AudioDestinationChanged,
         G_EVENT_VideoDestinationChanged,
-		G_EVENT_OpenCameraFailed
+		G_EVENT_OpenCameraFailed,
+		G_EVENT_VideoCaptureStatus,
+		G_EVENT_VideoPacketTimeOut
 	};
 
     typedef enum _SerphoneAudioMode{
         SerphoneAudioModeLowBandWidth,
         SerphoneAudioModeGoodHighQuality
     } SerphoneAudioMode;
+    
+    enum  {
+        codec_PCMU,
+		codec_G729,
+        Codec_OPUS8K,
+        Codec_OPUS16K,
+        Codec_OPUS48K,
+		codec_VP8,
+		codec_H264,
+		codec_H264SVC,
+		codec_AMR
+	};
 
 //呼叫回调函数
 struct _CALLBACKINTERFACE{
@@ -120,7 +154,8 @@ struct _CALLBACKINTERFACE{
     void (*onRemoteVideoRatioChanged)(const char *callid, int width, int height, bool isVideoConference, const char *sipNo);//远端视频媒体分辨率变化时上报
     void (*onLogOut)();
     void (*oneXosipThreadStop)();
-
+    void (*onReceiverStats)(const char *callid, const int framerate, const int bitrate);//接收端统计的接收帧率，码率，默认1秒更新一次
+	void (*onIncomingCodecChanged)(const char *callid, const int width, const int height); //接收端的解码图像的宽，高
 };
 
 typedef struct _CALLBACKINTERFACE CCallbackInterface;

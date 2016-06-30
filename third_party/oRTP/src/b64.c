@@ -474,7 +474,7 @@ size_t b64_encode2( void const  *src
     return b64_encode_((unsigned char const*)src, srcSize, dest, destLen, (unsigned)lineLen, rc);
 }
 
-size_t b64_decode(char const *src, size_t srcLen, void *dest, size_t destSize)
+size_t b64_decode22(char const *src, size_t srcLen, void *dest, size_t destSize)
 {
     /* Use Null Object (Variable) here for rc and badChar, so do not need to
      * check elsewhere.

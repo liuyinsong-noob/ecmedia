@@ -47,7 +47,7 @@ H264Decoder* H264Decoder::Create() {
 }
     
 H264Decoder::H264Decoder():
-_decodedImage(),
+//_decodedImage(),
 _inited(false),
 _decodeCompleteCallback(NULL),
 _codecContext(NULL),
@@ -58,7 +58,7 @@ fout(NULL),
 fout2(NULL)
 #endif
 {
-    memset((void*)&_decodedImage, 0, sizeof(_decodedImage));
+//    memset((void*)&_decodedImage, 0, sizeof(_decodedImage));
 #if defined(DEBUG_FRAGMENT_FILE) and defined(_WIN32)
 	_fragFIle = fopen("frag.264","wb");
 #endif
@@ -101,15 +101,20 @@ H264Decoder::InitDecode(const VideoCodec* codecSettings, WebRtc_Word32 numberOfC
         return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
     }
 
-	_decoderSetting = *codecSettings;
-	_numberOfCores	= numberOfCores;
+//	_decoderSetting = *codecSettings;
+//	_numberOfCores	= numberOfCores;
 
         
-    //初始化h264解码�?
+    //初始化h264解码???
     avcodec_register_all();
         
     /* find the video encoder */
+#ifdef MAC_IPHONE
     AVCodec *decoder = avcodec_find_decoder(AV_CODEC_ID_H264);
+#else
+    AVCodec *decoder = avcodec_find_decoder(CODEC_ID_H264);
+#endif
+    
     if (!decoder)
     {
         WEBRTC_TRACE(cloopenwebrtc::kTraceError,cloopenwebrtc::kTraceVideoCoding,0,"CODEC NOT FOUND!!!");
@@ -123,7 +128,12 @@ H264Decoder::InitDecode(const VideoCodec* codecSettings, WebRtc_Word32 numberOfC
     }
     ret = avcodec_open2(_codecContext, decoder, NULL);
     if(ret >= 0)
-        pFrame_ = av_frame_alloc();// Allocate video frame
+#ifdef MAC_IPHONE
+        pFrame_ = av_frame_alloc();
+#else
+        pFrame_ = avcodec_alloc_frame();// Allocate video frame
+#endif
+    
     else
     {
         WEBRTC_TRACE(cloopenwebrtc::kTraceError,cloopenwebrtc::kTraceVideoCoding,0,"CANNOT OPEN CODEC %d!",ret);
@@ -141,8 +151,13 @@ void H264Decoder::reInitDec()
 	int error;
     if (_codecContext) {
         avcodec_close(_codecContext);
-    }  
+    }
+#if MAC_IPHONE
     videoCodec=avcodec_find_decoder(AV_CODEC_ID_H264);
+#else
+    videoCodec=avcodec_find_decoder(CODEC_ID_H264);
+#endif
+    
     if (videoCodec==NULL)
         WEBRTC_TRACE(cloopenwebrtc::kTraceError,cloopenwebrtc::kTraceVideoCoding,0,"Could not find H264 decoder in ffmpeg.");
 
@@ -353,8 +368,8 @@ int H264Decoder::get_nal_type( void *p, int len )
 int H264Decoder::PrepareRawImage(AVFrame *pFrame)
 {
 //	int a=0,i;
-	_decodedImage.set_width( pFrame->width);
-	_decodedImage.set_height( pFrame->height);
+//	_decodedImage.set_width( pFrame->width);
+//	_decodedImage.set_height( pFrame->height);
 
 	//_decodedImage._length = 0;
 

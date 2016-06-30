@@ -270,6 +270,7 @@
 		ADDC7D271C5A142900510E7D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
 				HEADER_SEARCH_PATHS = (
 					../../../..,
 					../..,
@@ -288,6 +289,7 @@
 		ADDC7D281C5A142900510E7D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
 				HEADER_SEARCH_PATHS = (
 					../../../..,
 					../..,

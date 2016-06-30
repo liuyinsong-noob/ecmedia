@@ -36,6 +36,8 @@
 		91C4CD0F169C124800CC98EF /* video_capture_iOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 91C4CD0D169C124700CC98EF /* video_capture_iOS.mm */; };
 		91DC03631A1C9C1E0088851B /* ioscapture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 55A7A47B16F83A71004970E2 /* ioscapture.mm */; };
 		91DC03651A1CA0090088851B /* ioscapture.h in Headers */ = {isa = PBXBuildFile; fileRef = 91DC03641A1CA0090088851B /* ioscapture.h */; };
+		AD42CD4B1D23CE18009C2E7A /* keyframe_detector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD42CD491D23CE18009C2E7A /* keyframe_detector.cpp */; };
+		AD42CD4C1D23CE18009C2E7A /* bilteral_filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD42CD4A1D23CE18009C2E7A /* bilteral_filter.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +71,8 @@
 		91C4CD0C169C124700CC98EF /* video_capture_iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = video_capture_iOS.h; path = iOS/video_capture_iOS.h; sourceTree = "<group>"; };
 		91C4CD0D169C124700CC98EF /* video_capture_iOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = video_capture_iOS.mm; path = iOS/video_capture_iOS.mm; sourceTree = "<group>"; };
 		91DC03641A1CA0090088851B /* ioscapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ioscapture.h; path = iOS/ioscapture.h; sourceTree = "<group>"; };
+		AD42CD491D23CE18009C2E7A /* keyframe_detector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = keyframe_detector.cpp; path = iOS/keyframe_detector.cpp; sourceTree = "<group>"; };
+		AD42CD4A1D23CE18009C2E7A /* bilteral_filter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bilteral_filter.cpp; path = iOS/bilteral_filter.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +172,8 @@
 		914BAF0816990F8500B177A5 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				AD42CD491D23CE18009C2E7A /* keyframe_detector.cpp */,
+				AD42CD4A1D23CE18009C2E7A /* bilteral_filter.cpp */,
 				91DC03641A1CA0090088851B /* ioscapture.h */,
 				55A7A47B16F83A71004970E2 /* ioscapture.mm */,
 				559BA9F916F1DAFA00A4F78A /* msvideo_neon.c */,
@@ -262,7 +268,9 @@
 			files = (
 				55A74FE915C8C324001B246A /* device_info_impl.cc in Sources */,
 				55A74FEB15C8C324001B246A /* device_info_external.cc in Sources */,
+				AD42CD4C1D23CE18009C2E7A /* bilteral_filter.cpp in Sources */,
 				55A7500415C8C324001B246A /* video_capture_factory.cc in Sources */,
+				AD42CD4B1D23CE18009C2E7A /* keyframe_detector.cpp in Sources */,
 				55A7500515C8C324001B246A /* video_capture_impl.cc in Sources */,
 				91C4CD03169BFF7700CC98EF /* video_capture_iOS_device_info_objc.mm in Sources */,
 				91C4CD0A169C0E9C00CC98EF /* video_capture_iOS_device_info.mm in Sources */,

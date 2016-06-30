@@ -228,6 +228,7 @@ char *globalFilePathcapture = NULL;
 	start_time=0;
 	frame_count=-1;
 	fps=0;
+    triggered = false;
     
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] addObserver: self selector:   @selector(deviceOrientationNotify) name: UIDeviceOrientationDidChangeNotification object: nil];
@@ -239,6 +240,10 @@ char *globalFilePathcapture = NULL;
         fout = fopen(globalFilePathcapture, "ab+");
     }
 #endif
+    
+    CreateBilterFilter(&bilteralFilter);
+    CreateKeyFrameDetect(&keyframeDector);
+    
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
@@ -323,6 +328,14 @@ char *globalFilePathcapture = NULL;
 											, mDownScalingRequired);
             
             pthread_mutex_lock(&mutex);
+            if (triggered) {
+                BilterFilterProcessCore(bilteralFilter, pict->strides[0], pict->planes[0]);
+                int ret = KeyFrameDetectProcess(keyframeDector, pict->strides[0], pict->planes[0], pict->strides[1], pict->planes[1], pict->strides[2], pict->planes[2]);
+                if (ret != 1) {
+                    return;
+                }
+            }
+            
 #if 0
             [self saveYUVtoFile:pict->planes[0] andwrap:pict->strides[0] andxsize:width andysize:height];
             [self saveYUVtoFile:pict->planes[1] andwrap:pict->strides[1] andxsize:width/2 andysize:height/2];
@@ -386,6 +399,9 @@ char *globalFilePathcapture = NULL;
 	[session removeOutput:output];
 	[output release];
     [input release];
+    
+    BilterFilterFree(bilteralFilter);
+    KeyFrameDetectFree(keyframeDector);
     
     if(self.parentView)
     {
@@ -531,6 +547,8 @@ char *globalFilePathcapture = NULL;
         [self changeSize];
         
 		[session commitConfiguration];
+        BilterFilterInitCore(bilteralFilter, size.width, size.height, 3, 10);
+        KeyFrameDetectInitCore(keyframeDector, size.width, size.height);
 		return;
 	}
 }

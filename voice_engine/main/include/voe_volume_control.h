@@ -108,8 +108,8 @@ public:
     // Don't use. Will be removed.
     virtual int SetSystemOutputMute(bool enable) { return -1; }
     virtual int GetSystemOutputMute(bool &enabled) { return -1; }
-    virtual int SetSystemInputMute(bool enable) { return -1; }
-    virtual int GetSystemInputMute(bool& enabled) { return -1; }
+    virtual int SetSystemInputMute(bool enable) = 0;
+    virtual int GetSystemInputMute(bool& enabled) = 0;
 
 protected:
     VoEVolumeControl() {};

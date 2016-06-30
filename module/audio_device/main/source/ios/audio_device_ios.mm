@@ -749,6 +749,7 @@ int32_t AudioDeviceIOS::SetLoudspeakerStatus(bool enable) {
     [session setCategory:AVAudioSessionCategoryPlayAndRecord
              withOptions:options
                    error:&error];
+    _originalCategory = [AVAudioSessionCategoryPlayAndRecord UTF8String];
     if (error != nil) {
       WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id,
                    "Error changing default output route ");
@@ -1255,10 +1256,11 @@ int32_t AudioDeviceIOS::InitPlayOrRecord() {
     AVAudioSession* session = [AVAudioSession sharedInstance];
     UIDevice *tempDevice = [UIDevice currentDevice];
     
-    Float64 preferredSampleRate(16000.0);
+    Float64 preferredSampleRate(44100.0);
     if (_isIphone6s) {
         preferredSampleRate = 48000.0;
     }
+    _originalPreferredSampleRate = session.currentHardwareSampleRate;
     [session setPreferredSampleRate:preferredSampleRate
                               error:&error];
     if (error != nil) {
@@ -1267,6 +1269,7 @@ int32_t AudioDeviceIOS::InitPlayOrRecord() {
                      "Could not set preferred sample rate: %s", errorString);
     }
     error = nil;
+    _originalMode = [session.mode UTF8String];
     [session setMode:AVAudioSessionModeVoiceChat
                error:&error];
     if (error != nil) {
@@ -1275,6 +1278,7 @@ int32_t AudioDeviceIOS::InitPlayOrRecord() {
                      "Could not set mode: %s", errorString);
     }
     error = nil;
+    _originalCategory = [session.category UTF8String];
     [session setCategory:AVAudioSessionCategoryPlayAndRecord
                    error:&error];
     if (error != nil) {
@@ -1564,6 +1568,34 @@ int32_t AudioDeviceIOS::ShutdownPlayOrRecord() {
         if (0 != result) {
             WEBRTC_TRACE(kTraceWarning, kTraceAudioDevice, _id,
                 "  Error disposing Audio Unit (result=%d)", result);
+        }
+        
+        
+        //Restore preferred sample rate, mode and category
+        AVAudioSession *session = [AVAudioSession sharedInstance];
+        NSError *error = nil;
+        [session setPreferredSampleRate:_originalPreferredSampleRate
+                                  error:&error];
+        if (error != nil) {
+            const char* errorString = [[error localizedDescription] UTF8String];
+            WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id,
+                         "Could not restore preferred sample rate: %s", errorString);
+        }
+        error = nil;
+        [session setMode:[NSString stringWithUTF8String:_originalMode]
+                   error:&error];
+        if (error != nil) {
+            const char* errorString = [[error localizedDescription] UTF8String];
+            WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id,
+                         "Could not restore mode: %s", errorString);
+        }
+        error = nil;
+        [session setCategory:[NSString stringWithUTF8String:_originalCategory]
+                       error:&error];
+        if (error != nil) {
+            const char* errorString = [[error localizedDescription] UTF8String];
+            WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id,
+                         "Could not restore category: %s", errorString);
         }
         
         result = AudioSessionSetActive(NO);
