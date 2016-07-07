@@ -729,6 +729,7 @@ int32_t AudioDeviceIOS::SetLoudspeakerStatus(bool enable) {
     WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id,
                  "AudioDeviceIOS::SetLoudspeakerStatus(enable=%d)", enable);
 
+    NSError* error = nil;
     AVAudioSession* session = [AVAudioSession sharedInstance];
     NSString* category = session.category;
     AVAudioSessionCategoryOptions options = session.categoryOptions;
@@ -742,10 +743,20 @@ int32_t AudioDeviceIOS::SetLoudspeakerStatus(bool enable) {
         options &= ~AVAudioSessionCategoryOptionDefaultToSpeaker;
       }
     } else {
-      options = AVAudioSessionCategoryOptionDefaultToSpeaker;
+        if (enable) {
+            options = AVAudioSessionCategoryOptionDefaultToSpeaker;
+        } else {
+            [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
+            if (error != nil) {
+                WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id,
+                             "Error changing default output route ");
+                return -1;
+            }
+            
+            return 0;
+        }
     }
 
-    NSError* error = nil;
     [session setCategory:AVAudioSessionCategoryPlayAndRecord
              withOptions:options
                    error:&error];
@@ -1256,6 +1267,9 @@ int32_t AudioDeviceIOS::InitPlayOrRecord() {
     AVAudioSession* session = [AVAudioSession sharedInstance];
     UIDevice *tempDevice = [UIDevice currentDevice];
     
+    bool enable = false;
+    GetLoudspeakerStatus(enable);
+    
     Float64 preferredSampleRate(44100.0);
     if (_isIphone6s) {
         preferredSampleRate = 48000.0;
@@ -1277,15 +1291,9 @@ int32_t AudioDeviceIOS::InitPlayOrRecord() {
         WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id,
                      "Could not set mode: %s", errorString);
     }
-    error = nil;
     _originalCategory = [session.category UTF8String];
-    [session setCategory:AVAudioSessionCategoryPlayAndRecord
-                   error:&error];
-    if (error != nil) {
-        const char* errorString = [[error localizedDescription] UTF8String];
-        WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id,
-                     "Could not set category: %s", errorString);
-    }
+    
+    SetLoudspeakerStatus(enable);
 
     //////////////////////
     // Setup Voice Processing Audio Unit

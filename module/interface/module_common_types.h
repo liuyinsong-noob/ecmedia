@@ -292,9 +292,6 @@ public:
 				memcpy(fragmentationPlType, src.fragmentationPlType,
 					src.fragmentationVectorSize * sizeof(uint8_t));
 			}
-			if (src.fragmentationPlType) {
-				fragmentationPlType = new uint8_t[src.fragmentationVectorSize];
-			}
 			if (src.SvcFrameInfo)
 			{
 				memcpy(SvcFrameInfo, src.SvcFrameInfo,
