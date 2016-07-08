@@ -82,7 +82,7 @@
 #include <stdlib.h>
 
 #ifndef snprintf
-#define snprintf _snprintf
+//#define snprintf _snprintf
 #endif
 
 /* #include <io.h> */

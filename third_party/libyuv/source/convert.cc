@@ -63,7 +63,7 @@ int I420Copy(const uint8* src_y, int src_stride_y,
 
 #if !defined(YUV_DISABLE_ASM) && defined(_M_IX86)
 #define HAS_HALFROW_SSE2
-__declspec(naked) __declspec(align(16))
+__declspec(naked)
 static void HalfRow_SSE2(const uint8* src_uv, int src_uv_stride,
                          uint8* dst_uv, int pix) {
   __asm {
@@ -455,7 +455,7 @@ int M420ToI420(const uint8* src_m420, int src_stride_m420,
 
 #if !defined(YUV_DISABLE_ASM) && defined(_M_IX86)
 #define HAS_SPLITYUY2_SSE2
-__declspec(naked) __declspec(align(16))
+__declspec(naked)
 static void SplitYUY2_SSE2(const uint8* src_yuy2,
                            uint8* dst_y, uint8* dst_u, uint8* dst_v, int pix) {
   __asm {

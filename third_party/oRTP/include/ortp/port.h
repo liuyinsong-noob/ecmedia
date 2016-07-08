@@ -194,7 +194,7 @@ ORTP_PUBLIC int WIN_cond_destroy(ortp_cond_t * cond);
 #endif
 
 #define SOCKET_OPTION_VALUE	char *
-#define inline			__inline
+//#define inline			__inline
 
 #if defined(_WIN32_WCE)
 

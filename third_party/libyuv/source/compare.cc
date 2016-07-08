@@ -72,7 +72,7 @@ static const uvec32 kHashMul3 = {
 #define pmulld(reg) _asm _emit 0x66 _asm _emit 0x0F _asm _emit 0x38 \
     _asm _emit 0x40 _asm _emit reg
 
-__declspec(naked) __declspec(align(16))
+__declspec(naked)
 static uint32 HashDjb2_SSE41(const uint8* src, int count, uint32 seed) {
   __asm {
     mov        eax, [esp + 4]    // src
@@ -284,7 +284,7 @@ static uint32 SumSquareError_NEON(const uint8* src_a, const uint8* src_b,
 
 #elif !defined(YUV_DISABLE_ASM) && defined(_M_IX86)
 #define HAS_SUMSQUAREERROR_SSE2
-__declspec(naked) __declspec(align(16))
+__declspec(naked)
 static uint32 SumSquareError_SSE2(const uint8* src_a, const uint8* src_b,
                                   int count) {
   __asm {

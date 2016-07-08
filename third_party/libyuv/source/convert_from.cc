@@ -207,7 +207,7 @@ int I400Copy(const uint8* src_y, int src_stride_y,
 
 #if !defined(YUV_DISABLE_ASM) && defined(_M_IX86)
 #define HAS_I42XTOYUY2ROW_SSE2
-__declspec(naked) __declspec(align(16))
+__declspec(naked)
 static void I42xToYUY2Row_SSE2(const uint8* src_y,
                                const uint8* src_u,
                                const uint8* src_v,
@@ -246,7 +246,7 @@ static void I42xToYUY2Row_SSE2(const uint8* src_y,
 }
 
 #define HAS_I42XTOUYVYROW_SSE2
-__declspec(naked) __declspec(align(16))
+__declspec(naked)
 static void I42xToUYVYRow_SSE2(const uint8* src_y,
                                const uint8* src_u,
                                const uint8* src_v,

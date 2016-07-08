@@ -26,7 +26,7 @@ extern "C" {
 
 #if !defined(YUV_DISABLE_ASM) && defined(_M_IX86)
 #define HAS_ARGBTOBAYERROW_SSSE3
-__declspec(naked) __declspec(align(16))
+__declspec(naked)
 static void ARGBToBayerRow_SSSE3(const uint8* src_argb,
                                  uint8* dst_bayer, uint32 selector, int pix) {
   __asm {
