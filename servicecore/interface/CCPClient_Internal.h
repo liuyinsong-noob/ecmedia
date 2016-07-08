@@ -619,6 +619,7 @@ extern "C" {
 	 *******************************************************************************/
     CCPAPI int setNackEnabled(bool audioEnabled, bool videoEnabled);
 	CCPAPI int setVideoProtectionMode(int mode);
+#define ENABLE_REMB_TMMBR_CONFIG
 #ifdef ENABLE_REMB_TMMBR_CONFIG
 	CCPAPI int setP2PEnabled(bool enabled);
 	CCPAPI int setRembEnabled(bool enabled);

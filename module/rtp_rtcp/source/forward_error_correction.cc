@@ -111,7 +111,7 @@ int32_t ForwardErrorCorrection::GenerateFEC(const PacketList& media_packet_list,
                                             bool use_unequal_protection,
                                             FecMaskType fec_mask_type,
                                             PacketList* fec_packet_list) {
-  const uint16_t num_media_packets = media_packet_list.size();
+  const uint32_t num_media_packets = media_packet_list.size();
 
   // Sanity check arguments.
   assert(num_media_packets > 0);

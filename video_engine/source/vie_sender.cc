@@ -131,7 +131,7 @@ int ViESender::SendPacket(int vie_id, const void* data, size_t len, int sn) {
         send_packet_length = return_len + 12;
     }
     
-  int bytes_sent = transport_->SendPacket(channel_id_, send_packet, send_packet_length);
+  uint32_t bytes_sent = transport_->SendPacket(channel_id_, send_packet, send_packet_length);
 
   if (bytes_sent != len) {
 	  WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideo, channel_id_,

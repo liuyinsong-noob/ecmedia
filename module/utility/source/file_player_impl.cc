@@ -581,7 +581,7 @@ int32_t VideoFilePlayerImpl::TimeUntilNextVideoFrame()
         if(_fileFormat == kFileFormatAviFile)
         {
             // Get next video frame
-            size_t encodedBufferLengthInBytes = _encodedData.bufferSize;
+            WebRtc_UWord32 encodedBufferLengthInBytes = _encodedData.bufferSize;
             if(_fileModule.PlayoutAVIVideoData(
                    reinterpret_cast< int8_t*>(_encodedData.payloadData),
                    encodedBufferLengthInBytes) != 0)

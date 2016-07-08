@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -34,6 +34,8 @@
     <ClInclude Include="main\include\voe_rtp_rtcp.h" />
     <ClInclude Include="main\include\voe_video_sync.h" />
     <ClInclude Include="main\include\voe_volume_control.h" />
+    <ClInclude Include="main\source\audio_receive_stream.h" />
+    <ClInclude Include="main\source\audio_send_stream.h" />
     <ClInclude Include="main\source\channel.h" />
     <ClInclude Include="main\source\channel_manager.h" />
     <ClInclude Include="main\source\dtmf_inband.h" />
@@ -65,6 +67,8 @@
     <ClInclude Include="main\source\voice_engine_impl.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="main\source\audio_receive_stream.cc" />
+    <ClCompile Include="main\source\audio_send_stream.cc" />
     <ClCompile Include="main\source\channel.cc" />
     <ClCompile Include="main\source\channel_manager.cc" />
     <ClCompile Include="main\source\dtmf_inband.cc" />
@@ -104,6 +108,18 @@
     <CharacterSet>Unicode</CharacterSet>
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Label="PropertySheets">
@@ -112,14 +128,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <ExecutablePath>$(ExecutablePath);$(MSBuildProjectDirectory)\..\..\third_party\cygwin\bin\;$(MSBuildProjectDirectory)\..\..\third_party\python_26\</ExecutablePath>
-    <OutDir>$(SolutionDir)\build\$(Configuration)\lib\</OutDir>
-    <IntDir>$(SolutionDir)\build\$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\lib\</OutDir>
+    <IntDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
     <TargetName>$(ProjectName)</TargetName>
-    <TargetPath>$(OutDir)\lib\$(ProjectName).lib</TargetPath>
+    <TargetPath>$(OutDir)\$(ProjectName).lib</TargetPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -175,7 +191,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>./main\include;./main\source;../module;../system_wrappers\interface;../module\audio_coding\main\include;../module\audio_conference_mixer\include;../module\audio_device\main\include;../module\audio_device\main\source;../module\audioprocess\include;../module\interface;../module\media_file\include;../module\rtp_rtcp\include;../module\udp_transport\include;../module\utility\include;../module\resampler\include;../module\signalprocess\include;../third_party/srtp/include;../third_party/srtp/crypto/include;../third_party/srtp;../module/rtp_rtcp/source/oRTP/include/ortp;../module/rtp_rtcp/source/oRTP/include;../servicecore/include;../third_party/oRTP/include;../third_party/oRTP/include/ortp</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./main\include;./main\source;../module;../system_wrappers/source;../system_wrappers\interface;../module\audio_coding\main\include;../module/audio_coding/main/source;../module/audio_coding/codecs;../module/audio_coding/codecs/cng/include;../module/audio_coding/neteq/include;../module/audio_coding/neteq/source;../module\audio_conference_mixer\include;../module\audio_device\main\include;../module\audio_device\main\source;../module/audioprocess/source;../module\audioprocess\include;../module\interface;../module\media_file\include;../module/rtp_rtcp/source;../module\rtp_rtcp\include;../module\udp_transport\include;../module\utility\include;../module/common_audio/source/resampler/include;../module/common_audio/source/signal_processing/include;../third_party/srtp/include;../third_party/srtp/crypto/include/win;../third_party/srtp;../module/rtp_rtcp/source/oRTP/include/ortp;../module/rtp_rtcp/source/oRTP/include;../servicecore/include;../third_party/oRTP/include;../third_party/oRTP/include/ortp;../module/common_video/interface;../module/common_video/source;../module/video_coding/main/include;../module/bitrate_controller/include;../video_engine/include;../module/audio_coding/codecs/g729/source</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 %(AdditionalOptions)</AdditionalOptions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <BufferSecurityCheck>true</BufferSecurityCheck>
@@ -194,7 +210,7 @@
     <Lib>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>/ignore:4221 %(AdditionalOptions)</AdditionalOptions>
-      <OutputFile>$(OutDir)lib\$(ProjectName).lib</OutputFile>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
     </Lib>
     <Link>
       <AdditionalDependencies>wininet.lib;dnsapi.lib;version.lib;msimg32.lib;ws2_32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -219,14 +235,14 @@
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
     </Midl>
     <ResourceCompile>
-      <AdditionalIncludeDirectories>../..;$(OutDir)obj/global_intermediate;..;..\..;..\..\third_party\wtl\include;main\interface;..\..\src\modules\audio_device\main\source;..\common_audio\resampler\include;..\common_audio\signal_processing\include;..\modules\audio_coding\main\interface;..\modules\interface;..\modules\audio_conference_mixer\interface;..;..\modules\audio_device\main\interface;..\modules\audio_processing\include;..\modules\media_file\interface;..\modules\rtp_rtcp\interface;..\modules\udp_transport\interface;..\modules\utility\interface;..\system_wrappers\interface;..\..\third_party\directxsdk\files\Include;..\..\third_party\platformsdk_win7\files\Include;$(VSInstallDir)\VC\atlmfc\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./main\include;./main\source;../module;../system_wrappers/source;../system_wrappers\interface;../module\audio_coding\main\include;../module/audio_coding/main/source;../module/audio_coding/codecs;../module/audio_coding/codecs/cng/include;../module/audio_coding/neteq/include;../module/audio_coding/neteq/source;../module\audio_conference_mixer\include;../module\audio_device\main\include;../module\audio_device\main\source;../module/audioprocess/source;../module\audioprocess\include;../module\interface;../module\media_file\include;../module/rtp_rtcp/source;../module\rtp_rtcp\include;../module\udp_transport\include;../module\utility\include;../module/common_audio/source/resampler/include;../module/common_audio/source/signal_processing/include;../third_party/srtp/include;../third_party/srtp/crypto/include/win;../third_party/srtp;../module/rtp_rtcp/source/oRTP/include/ortp;../module/rtp_rtcp/source/oRTP/include;../servicecore/include;../third_party/oRTP/include;../third_party/oRTP/include/ortp;../module/common_video/interface;../module/common_video/source;../module/video_coding/main/include;../module/bitrate_controller/include;../video_engine/include;../module/audio_coding/codecs/g729/source</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
       <PreprocessorDefinitions>_DEBUG;WEBRTC_SVNREVISION="n/a";_WIN32_WINNT=0x0601;WINVER=0x0601;WIN32;_WINDOWS;NOMINMAX;PSAPI_VERSION=1;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_ATL_NO_OPENGL;_HAS_EXCEPTIONS=0;_SECURE_ATL;CHROMIUM_BUILD;TOOLKIT_VIEWS=1;ENABLE_ONE_CLICK_SIGNIN;ENABLE_REMOTING=1;ENABLE_WEBRTC=1;ENABLE_CONFIGURATION_POLICY;ENABLE_INPUT_SPEECH;ENABLE_NOTIFICATIONS;ENABLE_GPU=1;ENABLE_EGLIMAGE=1;USE_SKIA=1;__STD_C;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ENABLE_TASK_MANAGER=1;ENABLE_WEB_INTENTS=1;ENABLE_EXTENSIONS=1;ENABLE_PLUGIN_INSTALLATION=1;ENABLE_PROTECTOR_SERVICE=1;ENABLE_SESSION_SERVICE=1;ENABLE_THEMES=1;ENABLE_BACKGROUND=1;ENABLE_PROMO_RESOURCE_SERVICE=1;ENABLE_AUTOMATION=1;WEBRTC_WIN;__STDC_FORMAT_MACROS;NO_TCMALLOC;DYNAMIC_ANNOTATIONS_ENABLED=1;WTF_USE_DYNAMIC_ANNOTATIONS=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>./main\include;./main\source;../module;../system_wrappers/source;../system_wrappers\interface;../module\audio_coding\main\include;../module/audio_coding/main/source;../module/audio_coding/codecs;../module/audio_coding/codecs/cng/include;../module/audio_coding/neteq/include;../module/audio_coding/neteq/source;../module\audio_conference_mixer\include;../module\audio_device\main\include;../module\audio_device\main\source;../module/audioprocess/source;../module\audioprocess\include;../module\interface;../module\media_file\include;../module/rtp_rtcp/source;../module\rtp_rtcp\include;../module\udp_transport\include;../module\utility\include;../module/common_audio/source/resampler/include;../module/common_audio/source/signal_processing/include;../third_party/srtp/include;../third_party/srtp/crypto/include/win;../third_party/srtp;../module/rtp_rtcp/source/oRTP/include/ortp;../module/rtp_rtcp/source/oRTP/include;../servicecore/include;../third_party/oRTP/include;../third_party/oRTP/include/ortp;../module/common_video/interface;../module/common_video/source;../module/video_coding/main/include;../module/bitrate_controller/include;../video_engine/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./main\include;./main\source;../module;../system_wrappers/source;../system_wrappers\interface;../module\audio_coding\main\include;../module/audio_coding/main/source;../module/audio_coding/codecs;../module/audio_coding/codecs/cng/include;../module/audio_coding/neteq/include;../module/audio_coding/neteq/source;../module\audio_conference_mixer\include;../module\audio_device\main\include;../module\audio_device\main\source;../module/audioprocess/source;../module\audioprocess\include;../module\interface;../module\media_file\include;../module/rtp_rtcp/source;../module\rtp_rtcp\include;../module\udp_transport\include;../module\utility\include;../module/common_audio/source/resampler/include;../module/common_audio/source/signal_processing/include;../third_party/srtp/include;../third_party/srtp/crypto/include/win;../third_party/srtp;../module/rtp_rtcp/source/oRTP/include/ortp;../module/rtp_rtcp/source/oRTP/include;../servicecore/include;../third_party/oRTP/include;../third_party/oRTP/include/ortp;../module/common_video/interface;../module/common_video/source;../module/video_coding/main/include;../module/bitrate_controller/include;../video_engine/include;../module/audio_coding/codecs/g729/source</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -253,6 +269,7 @@
       </IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
+      <TargetMachine>MachineX86</TargetMachine>
     </Lib>
     <Link>
       <AdditionalDependencies>wininet.lib;dnsapi.lib;version.lib;msimg32.lib;ws2_32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -279,14 +296,14 @@
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
     </Midl>
     <ResourceCompile>
-      <AdditionalIncludeDirectories>../..;$(OutDir)obj/global_intermediate;..;..\..;..\..\third_party\wtl\include;main\interface;..\..\src\modules\audio_device\main\source;..\common_audio\resampler\include;..\common_audio\signal_processing\include;..\modules\audio_coding\main\interface;..\modules\interface;..\modules\audio_conference_mixer\interface;..;..\modules\audio_device\main\interface;..\modules\audio_processing\include;..\modules\media_file\interface;..\modules\rtp_rtcp\interface;..\modules\udp_transport\interface;..\modules\utility\interface;..\system_wrappers\interface;..\..\third_party\directxsdk\files\Include;..\..\third_party\platformsdk_win7\files\Include;$(VSInstallDir)\VC\atlmfc\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./main\include;./main\source;../module;../system_wrappers/source;../system_wrappers\interface;../module\audio_coding\main\include;../module/audio_coding/main/source;../module/audio_coding/codecs;../module/audio_coding/codecs/cng/include;../module/audio_coding/neteq/include;../module/audio_coding/neteq/source;../module\audio_conference_mixer\include;../module\audio_device\main\include;../module\audio_device\main\source;../module/audioprocess/source;../module\audioprocess\include;../module\interface;../module\media_file\include;../module/rtp_rtcp/source;../module\rtp_rtcp\include;../module\udp_transport\include;../module\utility\include;../module/common_audio/source/resampler/include;../module/common_audio/source/signal_processing/include;../third_party/srtp/include;../third_party/srtp/crypto/include/win;../third_party/srtp;../module/rtp_rtcp/source/oRTP/include/ortp;../module/rtp_rtcp/source/oRTP/include;../servicecore/include;../third_party/oRTP/include;../third_party/oRTP/include/ortp;../module/common_video/interface;../module/common_video/source;../module/video_coding/main/include;../module/bitrate_controller/include;../video_engine/include;../module/audio_coding/codecs/g729/source</AdditionalIncludeDirectories>
       <Culture>0x0409</Culture>
       <PreprocessorDefinitions>WEBRTC_SVNREVISION="n/a";_WIN32_WINNT=0x0601;WINVER=0x0601;WIN32;_WINDOWS;NOMINMAX;PSAPI_VERSION=1;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_ATL_NO_OPENGL;_HAS_EXCEPTIONS=0;_SECURE_ATL;CHROMIUM_BUILD;TOOLKIT_VIEWS=1;ENABLE_ONE_CLICK_SIGNIN;ENABLE_REMOTING=1;ENABLE_WEBRTC=1;ENABLE_CONFIGURATION_POLICY;ENABLE_INPUT_SPEECH;ENABLE_NOTIFICATIONS;ENABLE_GPU=1;ENABLE_EGLIMAGE=1;USE_SKIA=1;__STD_C;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ENABLE_TASK_MANAGER=1;ENABLE_WEB_INTENTS=1;ENABLE_EXTENSIONS=1;ENABLE_PLUGIN_INSTALLATION=1;ENABLE_PROTECTOR_SERVICE=1;ENABLE_SESSION_SERVICE=1;ENABLE_THEMES=1;ENABLE_BACKGROUND=1;ENABLE_PROMO_RESOURCE_SERVICE=1;ENABLE_AUTOMATION=1;WEBRTC_WIN;__STDC_FORMAT_MACROS;NDEBUG;NVALGRIND;DYNAMIC_ANNOTATIONS_ENABLED=0;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>./main\include;./main\source;../module;../system_wrappers\interface;../module\audio_coding\main\include;../module\audio_conference_mixer\include;../module\audio_device\main\include;../module\audio_device\main\source;../module\audioprocess\include;../module\interface;../module\media_file\include;../module\rtp_rtcp\include;../module\udp_transport\include;../module\utility\include;../module\resampler\include;../module\signalprocess\include;../third_party/srtp/include;../third_party/srtp/crypto/include;../third_party/srtp;../module/rtp_rtcp/source/oRTP/include/ortp;../module/rtp_rtcp/source/oRTP/include;../servicecore/include;%(AdditionalIncludeDirectories);../third_party/oRTP/include;../third_party/oRTP/include/ortp</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./main\include;./main\source;../module;../system_wrappers/source;../system_wrappers\interface;../module\audio_coding\main\include;../module/audio_coding/main/source;../module/audio_coding/codecs;../module/audio_coding/codecs/cng/include;../module/audio_coding/neteq/include;../module/audio_coding/neteq/source;../module\audio_conference_mixer\include;../module\audio_device\main\include;../module\audio_device\main\source;../module/audioprocess/source;../module\audioprocess\include;../module\interface;../module\media_file\include;../module/rtp_rtcp/source;../module\rtp_rtcp\include;../module\udp_transport\include;../module\utility\include;../module/common_audio/source/resampler/include;../module/common_audio/source/signal_processing/include;../third_party/srtp/include;../third_party/srtp/crypto/include/win;../third_party/srtp;../module/rtp_rtcp/source/oRTP/include/ortp;../module/rtp_rtcp/source/oRTP/include;../servicecore/include;../third_party/oRTP/include;../third_party/oRTP/include/ortp;../module/common_video/interface;../module/common_video/source;../module/video_coding/main/include;../module/bitrate_controller/include;../video_engine/include;../module/audio_coding/codecs/g729/source</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -306,7 +323,7 @@
     <Lib>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>/ignore:4221 %(AdditionalOptions)</AdditionalOptions>
-      <OutputFile>$(OutDir)lib\$(ProjectName).lib</OutputFile>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
     </Lib>
     <Link>
       <AdditionalDependencies>wininet.lib;dnsapi.lib;version.lib;msimg32.lib;ws2_32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>

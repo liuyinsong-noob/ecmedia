@@ -25,6 +25,6 @@
 ////int my_avcodec_open2(AVCodecContext *avctx, const AVCodec *codec, AVDictionary **options);
 //int my_avcodec_open(AVCodecContext *avctx, AVCodec *codec);
 //
-////AVFrame *avcodec_alloc_frame(void);
-//AVFrame *my_avcodec_alloc_frame(void);
+////AVFrame *av_frame_alloc(void);
+//AVFrame *my_av_frame_alloc(void);
 #endif

@@ -194,7 +194,7 @@ int H264Encoder::Encode(const I420VideoFrame& input_image,
 		CodecSpecificInfo codec;
 		CodecSpecificInfoH264 *h264Info = &(codec.codecSpecific.H264);
 		RTPFragmentationHeader fragment;
-		bool bNonReference = CopyEncodedImage(fragment, xnals, num_nals, &oxpic, input_image, codec_.mode);
+		bool bNonReference = CopyEncodedImage(fragment, xnals, num_nals, &oxpic, input_image);
 		codec.codecType = kVideoCodecH264;
 		h264Info->pictureId = framenum_;
 		h264Info->nonReference = bNonReference;
@@ -238,7 +238,7 @@ WebRtc_Word32 H264Encoder::CodecConfigParameters(WebRtc_UWord8* /*buffer*/, WebR
 void H264Encoder::SetX264EncodeParameters(x264_param_t &params, VideoCodecMode mode)
 {
 	x264_param_t *p_params = &params;
-	if (mode==kRealtimeVideo || mode == kSaveToFile)
+	if (mode==kRealtimeVideo)
 	{
 		x264_param_default_preset(p_params,x264_preset_names[2],"zerolatency");
 	}else if (mode == kScreensharing)
@@ -247,13 +247,13 @@ void H264Encoder::SetX264EncodeParameters(x264_param_t &params, VideoCodecMode m
 	}
 	
 	x264_param_apply_profile(p_params, x264_profile_names[0]);
-	p_params->i_level_idc = 30;  //编码复杂�?
+	p_params->i_level_idc = 30;  //编码复杂度
 	p_params->i_width=codec_.width;
 	p_params->i_height=codec_.height;
 	p_params->i_fps_num = codec_.maxFramerate;
 	p_params->i_fps_den=1;
 	p_params->i_slice_max_size=1300;
-	p_params->b_annexb=1; //already set by defaule:默认支持字节流格式，即包含nal起始码前缀0x00 00 00 01�?
+	p_params->b_annexb=1; //already set by defaule:默认支持字节流格式，即包含nal起始码前缀0x00 00 00 01；
 	p_params->b_intra_refresh = true;
 
 	p_params->rc.i_vbv_max_bitrate = codec_.startBitrate;
@@ -293,7 +293,7 @@ void H264Encoder::InitializeX264Pic(const I420VideoFrame& input_image, x264_pict
 	xpic.img.i_stride[3] = 0;
 }
 
-bool H264Encoder::CopyEncodedImage(RTPFragmentationHeader &fragment, void *xnals, int num_nals, void *oxpic, const I420VideoFrame &input_image, VideoCodecMode mode)
+bool H264Encoder::CopyEncodedImage(RTPFragmentationHeader &fragment, void *xnals, int num_nals, void *oxpic, const I420VideoFrame &input_image)
 {
 #define NALU_START_PREFIX_LENGTH 4
 	assert(num_nals>0);
@@ -312,11 +312,8 @@ bool H264Encoder::CopyEncodedImage(RTPFragmentationHeader &fragment, void *xnals
 	for (int i=0; i<num_nals; i++)
 	{
 		x264_nal_t *current_nal = &_xnals[i];
-		int offset = 0;
-		if( mode != kSaveToFile ) {
-			bool b_long_startcode = current_nal->b_long_startcode;
-			offset = b_long_startcode ? NALU_START_PREFIX_LENGTH : (NALU_START_PREFIX_LENGTH-1);
-		}
+		bool b_long_startcode = current_nal->b_long_startcode;
+		int offset = b_long_startcode ? NALU_START_PREFIX_LENGTH : (NALU_START_PREFIX_LENGTH-1);		
 		memcpy(encoded_image_._buffer+encoded_image_._length, current_nal->p_payload+offset, current_nal->i_payload-offset);
 		fragment.fragmentationLength[i] = current_nal->i_payload-offset;
 		fragment.fragmentationOffset[i] = encoded_image_._length;

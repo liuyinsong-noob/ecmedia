@@ -141,6 +141,8 @@
     <ClInclude Include="main\source\voe_encryption_impl.h">
       <Filter>source</Filter>
     </ClInclude>
+    <ClInclude Include="main\source\audio_receive_stream.h" />
+    <ClInclude Include="main\source\audio_send_stream.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\source\channel.cc">
@@ -227,5 +229,7 @@
     <ClCompile Include="main\source\voe_encryption_impl.cc">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="main\source\audio_receive_stream.cc" />
+    <ClCompile Include="main\source\audio_send_stream.cc" />
   </ItemGroup>
 </Project>

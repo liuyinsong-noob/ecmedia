@@ -7,7 +7,7 @@
 #include "afxdialogex.h"
 #include "CCPClient.h"
 #include "CCPClient_Internal.h"
-#include "minIni.h"
+//#include "minIni.h"
 
 #include < windows.h >
 #include < process.h >

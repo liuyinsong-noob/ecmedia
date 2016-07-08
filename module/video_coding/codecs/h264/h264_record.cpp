@@ -7,8 +7,8 @@ using namespace  cloopenwebrtc;
 
 static AVStream *add_video_stream(AVFormatContext *oc,  enum AVCodecID codec_id, unsigned char *data)
 {
-	AVStream *formatSt = avformat_new_stream(oc, NULL);
-	if (!formatSt) {
+	AVStream *st = avformat_new_stream(oc, NULL);
+	if (!st) {
 		WEBRTC_TRACE(cloopenwebrtc::kTraceError,
 			cloopenwebrtc::kTraceVideoCoding,
 			0,
@@ -16,22 +16,23 @@ static AVStream *add_video_stream(AVFormatContext *oc,  enum AVCodecID codec_id,
 		return NULL;
 	}
 
-	formatSt->id = 0;//oc->nb_streams-1;
+	st->id = 0;//oc->nb_streams-1;
 
 	AVCodec codec= {0};
 	codec.type= AVMEDIA_TYPE_VIDEO;
 
-	AVCodecContext *context = formatSt->codec;
+
+	AVCodecContext *context = st->codec;
 	avcodec_get_context_defaults3( context, &codec );
 	context->codec_type = AVMEDIA_TYPE_VIDEO;
-	context->codec_id = CODEC_ID_H264;
+	context->codec_id = AV_CODEC_ID_H264;
 
 	context->pix_fmt = AV_PIX_FMT_YUV420P;
-	formatSt->avg_frame_rate.num = 1;
-	formatSt->avg_frame_rate.den = 10;
+	st->avg_frame_rate.num = 1;
+	st->avg_frame_rate.den = 10;
 
-	formatSt->time_base.num = 1;
-	formatSt->time_base.den = 10;
+	st->time_base.num = 1;
+	st->time_base.den = 10;
 	context->time_base.num = 1;
 	context->time_base.den = 30;
 
@@ -51,11 +52,11 @@ static AVStream *add_video_stream(AVFormatContext *oc,  enum AVCodecID codec_id,
 	if (oc->oformat->flags & AVFMT_GLOBALHEADER)
 		context->flags |= CODEC_FLAG_GLOBAL_HEADER;
 
-	return formatSt;
+	return st;
 }
 
 /* Add an output stream. */
-static AVStream *add_audio_stream(AVFormatContext *oc, enum AVCodecID codec_id, int freq)
+static AVStream *add_audio_stream(AVFormatContext *oc, enum AVCodecID codec_id)
 {
     /* find the encoder */
 
@@ -69,8 +70,8 @@ static AVStream *add_audio_stream(AVFormatContext *oc, enum AVCodecID codec_id, 
         return NULL;
     }
 	
-    AVStream *formatSt = avformat_new_stream(oc, audio_codec);
-    if (!formatSt) {
+    AVStream *st = avformat_new_stream(oc, audio_codec);
+    if (!st) {
 		WEBRTC_TRACE(cloopenwebrtc::kTraceError,
 			cloopenwebrtc::kTraceVideoCoding,
 			0,
@@ -78,17 +79,17 @@ static AVStream *add_audio_stream(AVFormatContext *oc, enum AVCodecID codec_id, 
 		return NULL;
     }
 
-	formatSt->id = 1;
+	st->id = 1;
 
-    AVCodecContext *c = formatSt->codec;
+    AVCodecContext *c = st->codec;
 	c->codec_type = AVMEDIA_TYPE_AUDIO;
-	c->codec_id = CODEC_ID_AAC;
+	c->codec_id = AV_CODEC_ID_AAC;
 	c->sample_fmt  = AV_SAMPLE_FMT_S16;
-	c->bit_rate    = freq*2;
-	c->sample_rate = freq;
+	c->bit_rate    = 16000;
+	c->sample_rate = 8000;
 	c->channels    = 1;
 
-	c->profile = FF_PROFILE_AAC_LOW;
+	c->profile = FF_PROFILE_AAC_MAIN;
 	c->time_base.num = 1;
 	c->time_base.den = c->sample_rate;
 
@@ -107,33 +108,30 @@ static AVStream *add_audio_stream(AVFormatContext *oc, enum AVCodecID codec_id, 
 		return NULL;
 	}
 
-    return formatSt;
+    return st;
 }
 
-h264_record::h264_record(void):audioStreamdIndex_(-1)
+h264_record::h264_record(void):ai(-1)
 {
-	waitkey_ = 1;
-	videoStreamdIndex_ = -1;
-	audioStreamdIndex_ = -1;
-	formatCtxt_ = NULL;
-	audioFrameSize_ = 0;
-	audioFrameBuf_ = NULL;
-	audioFrameLen_ = 0;
-	isWrited_ = false;
-	audioFreq_ = 0;
-	_recordVoipCrit = CriticalSectionWrapper::CreateCriticalSection();
+	waitkey = 1;
+	vi = -1;
+	ai = -1;
+	fc = NULL;
+	AUDIO_FRAME_SIZE = 0;
+	audio_frame_buf = NULL;
+	audio_frame_len = 0;
+	isWrited = false;
 }
 
 h264_record::~h264_record(void)
 {
-	delete _recordVoipCrit;
-	_recordVoipCrit = NULL;
+
 }
 
 int h264_record::init(const char *filename)
 {
 	if(filename)
-		strcpy(recordFileName_, filename);
+		strcpy(recordFileName, filename);
 
 	return 0;
 }
@@ -148,12 +146,12 @@ int h264_record::uninit()
 int h264_record::wirte_video_data(unsigned char *data, int len, double timestamp)
 {
 	int iRet = 0;
-	if ( !formatCtxt_  && audioFreq_ != 0)
+	if ( !fc )
 		iRet = create( data, len );
 
-	if ( formatCtxt_ ) {
+	if ( fc ) {
 		write_frame( data, len, timestamp);
-		isWrited_ = true;
+		isWrited = true;
 	}
 
 	return iRet;
@@ -161,44 +159,40 @@ int h264_record::wirte_video_data(unsigned char *data, int len, double timestamp
 
 int h264_record::write_audio_data(short *data, int len, int freq)
 {
-	CriticalSectionScoped lock(_recordVoipCrit);
-
-	audioFreq_ = freq;
-
-	if (!formatCtxt_ || audioStreamdIndex_ < 0 )
+	if (!fc || ai < 0 )
 		return -1;
 
 	int got_packet;
 	int ret;
 	int remainDataSize = 0;
-	int remainBufSize = audioFrameSize_-audioFrameLen_;
+	int remainBufSize = AUDIO_FRAME_SIZE-audio_frame_len;
 	if(len >= remainBufSize) {
 		remainDataSize = len - remainBufSize;
-		memcpy(audioFrameBuf_+audioFrameLen_, data, remainBufSize*2);
-		audioFrameLen_ = audioFrameSize_;
+		memcpy(audio_frame_buf+audio_frame_len, data, remainBufSize*2);
+		audio_frame_len = AUDIO_FRAME_SIZE;
 	} else {
-		memcpy(audioFrameBuf_+audioFrameLen_, data, len*2);
-		audioFrameLen_ += len;
+		memcpy(audio_frame_buf+audio_frame_len, data, len*2);
+		audio_frame_len += len;
 	}
 
-	if(audioFrameLen_ == audioFrameSize_)
+	if(audio_frame_len == AUDIO_FRAME_SIZE)
 	{
-		//fwrite(audioFrameBuf_, 1, audioFrameLen_*2, file_test);
+		//fwrite(audio_frame_buf, 1, audio_frame_len*2, file_test);
 
-		audioFrameLen_ = 0;
-		AVStream *pst = formatCtxt_->streams[ audioStreamdIndex_ ];
+		audio_frame_len = 0;
+		AVStream *pst = fc->streams[ ai ];
 		AVCodecContext *c = pst->codec;
 
-		AVFrame *frame = avcodec_alloc_frame();
-		avcodec_get_frame_defaults(frame);
+		AVFrame *frame = av_frame_alloc();
+		av_frame_unref(frame);
 
 		AVPacket pkt = { 0 }; // data and size must be 0;
 		av_init_packet(&pkt);
 		
-		frame->nb_samples = audioFrameSize_;
+		frame->nb_samples = AUDIO_FRAME_SIZE;
 
 		ret = avcodec_fill_audio_frame(frame, c->channels, c->sample_fmt,
-			(uint8_t *)audioFrameBuf_, audioFrameSize_*2, 0);
+			(uint8_t *)audio_frame_buf, AUDIO_FRAME_SIZE*2, 0);
 		if(ret < 0) {
 			char buf[123];
 			av_strerror(ret, buf, 123);
@@ -207,7 +201,7 @@ int h264_record::write_audio_data(short *data, int len, int freq)
 				0,
 				"Error avcodec_fill_audio_frame error=%s\n", buf);
 			//av_destruct_packet(&pkt);
-			avcodec_free_frame(&frame);
+			av_frame_free(&frame);
 			return -1;
 		}
 
@@ -220,11 +214,11 @@ int h264_record::write_audio_data(short *data, int len, int freq)
 				0,
 				"Error encoding audio frame error=%s\n", buf);
 			//av_destruct_packet(&pkt);
-			avcodec_free_frame(&frame);
+			av_frame_free(&frame);
 			return -1;
 		}
 
-		avcodec_free_frame(&frame);
+		av_frame_free(&frame);
 		if (!got_packet) {
 			//av_destruct_packet(&pkt);
 			return -1;
@@ -233,13 +227,13 @@ int h264_record::write_audio_data(short *data, int len, int freq)
 		//fwrite(pkt.data, 1, pkt.size, file_test);
 
 		pkt.stream_index = pst->index;
-		pkt.destruct = av_destruct_packet;
+		//pkt.destruct = av_destruct_packet;
 
 		pkt.dts = AV_NOPTS_VALUE;
 		pkt.pts = AV_NOPTS_VALUE;
 
 		/* Write the compressed frame to the media file. */
-		ret = av_interleaved_write_frame(formatCtxt_, &pkt);
+		ret = av_interleaved_write_frame(fc, &pkt);
 		//av_destruct_packet(&pkt);
 		if (ret != 0) {
 			char buf[123];
@@ -253,8 +247,8 @@ int h264_record::write_audio_data(short *data, int len, int freq)
 	}
 
 	if(remainDataSize) {
-		memcpy(audioFrameBuf_, data+(len-remainDataSize), remainDataSize*2);
-		audioFrameLen_ = remainDataSize;
+		memcpy(audio_frame_buf, data+(len-remainDataSize), remainDataSize*2);
+		audio_frame_len = remainDataSize;
 	}
 
 	return 0 ;
@@ -262,12 +256,10 @@ int h264_record::write_audio_data(short *data, int len, int freq)
 
 void h264_record::write_frame( const void* p, int len, double timestamp  )
 {
-	CriticalSectionScoped lock(_recordVoipCrit);
-
-	if (!formatCtxt_ || videoStreamdIndex_ < 0 )
+	if (!fc || vi < 0 )
 		return;
 	
-	AVStream *pst = formatCtxt_->streams[ videoStreamdIndex_ ];
+	AVStream *pst = fc->streams[ vi ];
 
 	// Init packet
 	AVPacket pkt;
@@ -278,162 +270,143 @@ void h264_record::write_frame( const void* p, int len, double timestamp  )
 	pkt.size = len;
 
 	// Wait for key frame
-	if ( waitkey_ ) {
+	if ( waitkey ) {
 		if ( 0 == ( pkt.flags & AV_PKT_FLAG_KEY ) )
 			return;
 		else
-			waitkey_ = 0;
+			waitkey = 0;
 	}
 
 	pkt.dts = AV_NOPTS_VALUE;
 	pkt.pts = AV_NOPTS_VALUE;
 
-	if(baseH264TimeStamp_ == 0) {
-		baseH264TimeStamp_ = timestamp;
+	if(baseH264TimeStamp == 0) {
+		baseH264TimeStamp = timestamp;
 	}
-	AVStream *vSt = formatCtxt_->streams[videoStreamdIndex_];
+	AVStream *vSt = fc->streams[vi];
 	AVCodecContext *avccxt = vSt->codec;
-	float seconds= (timestamp - baseH264TimeStamp_)/90000;
+	float seconds= (timestamp - baseH264TimeStamp)/90000;
 	float timebase = ((float)avccxt->time_base.num/avccxt->time_base.den);
 	//算出这是第几帧
 	int64_t frame = (float)seconds/timebase;
-	if(frame !=0  && frame == lastFrameNum_) {
+	if(frame !=0  && frame == lastFrameNum) {
 		frame++;
 	}
 	pkt.pts = av_rescale_q(frame, vSt->codec->time_base, vSt->time_base);
-	lastFrameNum_ = frame;
+	lastFrameNum = frame;
 
 	WEBRTC_TRACE(cloopenwebrtc::kTraceInfo,
 		cloopenwebrtc::kTraceVideoCoding,
 		0,
 		"write_frame seconds=%f timebase=%f frame=%d frame2=%d pkt.pts=%lld\n", 
-		seconds, timebase, frame, lastFrameNum_, (long long)pkt.pts);
+		seconds, timebase, frame, lastFrameNum, (long long)pkt.pts);
 
-	int ret = av_interleaved_write_frame( formatCtxt_, &pkt );
-	if(ret != 0) {
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-			cloopenwebrtc::kTraceVideoCoding,
-			0,
-			"av_interleaved_write_frame failed. ret=%d\n", 
-			ret);
-	}
+	av_interleaved_write_frame( fc, &pkt );
 }
 
 void h264_record::destroy()
 {
-	CriticalSectionScoped lock(_recordVoipCrit);
-	if ( !formatCtxt_ )
+	if ( !fc )
 		return;
 
-	av_interleaved_write_frame(formatCtxt_, NULL);//flushing
-	av_write_trailer( formatCtxt_ );
+	av_interleaved_write_frame(fc, NULL);//flushing
 
-	if ( formatCtxt_->oformat && !( formatCtxt_->oformat->flags & AVFMT_NOFILE ) && formatCtxt_->pb )
-		avio_close( formatCtxt_->pb ); 
+	av_write_trailer( fc );
+
+	if ( fc->oformat && !( fc->oformat->flags & AVFMT_NOFILE ) && fc->pb )
+		avio_close( fc->pb ); 
 	
-	AVStream *videoStream = formatCtxt_->streams[videoStreamdIndex_];
-	AVCodecContext *videoCodec = videoStream->codec;
-	free(videoCodec->extradata);
-	videoCodec->extradata = NULL;
-	avcodec_close(videoCodec);
-
-	AVStream *audioStream = formatCtxt_->streams[audioStreamdIndex_];
-	AVCodecContext *audioCodec = audioStream->codec;
-	avcodec_close(audioCodec);
+	AVStream *vSt = fc->streams[vi];
+	AVCodecContext *avccxt = vSt->codec;
+	free(avccxt->extradata);
+	avccxt->extradata = NULL;
 
 	// Free the stream
-	 avformat_free_context( formatCtxt_ );
-	 formatCtxt_ = NULL;
+	 avformat_free_context( fc );
 
-	 free(audioFrameBuf_);
+	 free(audio_frame_buf);
+//	 swr_free(&swr);
 
-	waitkey_ = 1;
-	videoStreamdIndex_ = -1;
+	// fclose(file_test);
+
+	fc = 0;
+	waitkey = 1;
+	vi = -1;
 }
 
 int h264_record::create( void *p, int len )
 {
 	if ( 0x67 != get_nal_type( p, len ) )
 		return -1;
-		
+
+	//file_test = fopen("./audioSave.data", "wb");
+	
 	WEBRTC_TRACE(cloopenwebrtc::kTraceInfo,
 		cloopenwebrtc::kTraceVideoCoding,
 		0,
-		"h264_record::create  fileName=%s", recordFileName_);
+		"h264_record::create  fileName=%s", recordFileName);
 
 	int ret = -1;
 	av_register_all();
 	avcodec_register_all();
 	
-	baseH264TimeStamp_ = 0;
+	baseH264TimeStamp = 0;
 
-	//alloc AVFormatContext
-	if(avformat_alloc_output_context2(&formatCtxt_, NULL, NULL, recordFileName_) < 0) {
+	if(avformat_alloc_output_context2(&fc, NULL, NULL, recordFileName) < 0) {
 			WEBRTC_TRACE(cloopenwebrtc::kTraceError,
 				cloopenwebrtc::kTraceVideoCoding,
 				0,
-				"Could not find create context fileLen=%s", recordFileName_);
+				"Could not find create context fileLen=%s", recordFileName);
 			return -1;
 	}
 
 	AVOutputFormat *fmt;
-	fmt = formatCtxt_->oformat;
+	fmt = fc->oformat;
 	fmt->video_codec = AV_CODEC_ID_H264;
 	fmt->audio_codec = AV_CODEC_ID_AAC;
 
-	AVStream *videoStream = NULL, *audioStream = NULL;
+	AVStream *vPst = NULL, *aPst = NULL;
 
 	if (fmt->video_codec != AV_CODEC_ID_NONE) {
-		videoStream = add_video_stream(formatCtxt_, fmt->video_codec, (unsigned char*)p);
+		vPst = add_video_stream(fc, fmt->video_codec, (unsigned char*)p);
 	}
 	if (fmt->audio_codec != AV_CODEC_ID_NONE) {
-		audioStream = add_audio_stream(formatCtxt_, fmt->audio_codec, audioFreq_);
+		aPst = add_audio_stream(fc, fmt->audio_codec);
 	}
-	if(!videoStream || !audioStream) {
+	if(!vPst || !aPst) {
 		WEBRTC_TRACE(cloopenwebrtc::kTraceError,
 			cloopenwebrtc::kTraceVideoCoding,
 			0,
-			"Could not create stream video=%0x audio=%0x", videoStream, audioStream);
-		if(videoStream) {
-			AVCodecContext *avccxt = videoStream->codec;
+			"Could not create stream video=%0x audio=%0x", vPst, aPst);
+		if(vPst) {
+			AVCodecContext *avccxt = vPst->codec;
 			free(avccxt->extradata);
 			avccxt->extradata = NULL;
-			avcodec_close(avccxt);
 		}
-
-		if(audioStream) {
-			AVCodecContext *audioCodec = audioStream->codec;
-			avcodec_close(audioCodec);
-		}
-
-		avformat_free_context( formatCtxt_ );
-		formatCtxt_ = NULL;
+		avformat_free_context( fc );
+		fc = NULL;
 		return -1;
 	}
 		
-	int byte_per_sample = av_get_bytes_per_sample(audioStream->codec->sample_fmt);
-	audioFrameSize_ = audioStream->codec->frame_size;
-	audioFrameBuf_ = (unsigned short*)malloc(audioFrameSize_*byte_per_sample);
-	audioFrameLen_ = 0;
-	lastFrameNum_ = 0;
+	int byte_per_sample = av_get_bytes_per_sample(aPst->codec->sample_fmt); 
 
-	if ( !( formatCtxt_->oformat->flags & AVFMT_NOFILE ) )
-		ret = avio_open( &formatCtxt_->pb, formatCtxt_->filename, AVIO_FLAG_READ_WRITE );
+	AUDIO_FRAME_SIZE = aPst->codec->frame_size;
+	audio_frame_buf = (unsigned short*)malloc(AUDIO_FRAME_SIZE*byte_per_sample);
+	audio_frame_len = 0;
+	lastFrameNum = 0;
+
+	if ( !( fc->oformat->flags & AVFMT_NOFILE ) )
+		ret = avio_open( &fc->pb, fc->filename, AVIO_FLAG_READ_WRITE );
 
 	if( ret < 0 ) {
-		AVStream *vSt = formatCtxt_->streams[videoStream->index];
+		AVStream *vSt = fc->streams[vPst->index];
 		AVCodecContext *avccxt = vSt->codec;
 		free(avccxt->extradata);
 		avccxt->extradata = NULL;
-		avcodec_close(avccxt);
-
-		AVStream *aSt = formatCtxt_->streams[audioStream->index];
-		AVCodecContext *audioCodec = aSt->codec;
-		avcodec_close(audioCodec);
 
 		// Free the stream
-		avformat_free_context( formatCtxt_ );
-		formatCtxt_ = 0;
+		avformat_free_context( fc );
+		fc = 0;
 
 		WEBRTC_TRACE(cloopenwebrtc::kTraceError,
 			cloopenwebrtc::kTraceVideoCoding,
@@ -442,10 +415,10 @@ int h264_record::create( void *p, int len )
 		return -1;
 	}
 
-	avformat_write_header( formatCtxt_, NULL);
+	avformat_write_header( fc, NULL);
 
-	videoStreamdIndex_ = videoStream->index;
-	audioStreamdIndex_ = audioStream->index;
+	vi = vPst->index;
+	ai = aPst->index;
 	return 0;
 }
 
@@ -531,5 +504,5 @@ int h264_record::get_nal_type( void *p, int len )
 
 bool h264_record::get_write_status()
 {
-	return isWrited_;
+	return isWrited;
 }

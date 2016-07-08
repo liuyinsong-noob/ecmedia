@@ -17,9 +17,9 @@ extern "C"
 #if defined(_WIN32)
     #include "libavcodec/avcodec.h"
 #elif MAC_IPHONE
-    #include "libavcodec_ios/avcodec.h"
+    #include "libavcodec/avcodec_ios.h"
 #else
-    #include "libavcodec/avcodec.h"
+    #include "libavcodec/avcodec_android.h"
 #endif
 }
 
@@ -93,8 +93,8 @@ namespace cloopenwebrtc
 
 		int PrepareRawImage(AVFrame *pframe);
         
-//        I420VideoFrame              _decodedImage;
-//		VideoCodec					_decoderSetting;
+        I420VideoFrame              _decodedImage;
+		VideoCodec					_decoderSetting;
         bool                        _inited;
         DecodedImageCallback*       _decodeCompleteCallback;
        
@@ -102,7 +102,7 @@ namespace cloopenwebrtc
         AVCodecContext *_codecContext;
         AVFrame *pFrame_;
 
-//		int							_numberOfCores;
+		int							_numberOfCores;
 #ifdef _WIN32
 		FILE		*_fragFIle;
 #endif
