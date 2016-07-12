@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/video_bg"
+    android:paddingBottom="@dimen/small_margin_space"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/nav_title"
+        layout="@layout/ccp_title" />
+    <TextView
+        android:id="@+id/video_notice_tips"
+        style="@style/notice_statusbar_appearance"
+        android:layout_below="@+id/nav_title"
+        android:text="@string/str_account_choose_notice" />
+
+    <TextView
+        android:id="@+id/account_tips"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/video_notice_tips"
+        android:drawableLeft="@drawable/attention"
+        android:drawablePadding="@dimen/mode_desc_space"
+        android:padding="@dimen/small_margin_space"
+        android:text="@string/str_account_choose_tips"
+        android:textAppearance="@style/attentoin_text_appearance" />
+
+    <TextView
+        android:id="@+id/account_label_id"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/account_tips"
+        android:paddingLeft="@dimen/small_margin_space"
+        android:paddingRight="@dimen/small_margin_space"
+        android:text="@string/str_account_list_label"
+        android:textAppearance="@style/mode_desc_text_appearance" />
+
+    <ListView
+        android:id="@+id/account_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/account_label_id"
+        android:layout_above="@+id/account_confrim"
+        android:layout_margin="@dimen/small_margin_space"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="2.0px"
+        android:fadingEdgeLength="0.0dip"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none"
+        android:scrollingCache="false" />
+
+    <com.voice.demo.views.CCPButton
+        android:id="@+id/account_confrim"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/small_margin_space"
+        android:layout_marginRight="@dimen/small_margin_space"
+        android:background="@drawable/ccp_no_enabled"/>
+
+</RelativeLayout>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F4F4"
+    android:orientation="vertical" >
+
+    <!--
+         <include
+        android:id="@+id/head"
+        layout="@layout/voice_head" />    -->
+
+    <LinearLayout
+        android:id="@+id/head"
+        android:layout_width="fill_parent"
+        android:layout_height="50.0dip"
+        android:background="@drawable/head_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="5.0dip"
+        android:paddingRight="5.0dip" >
+
+        <Button
+            android:id="@+id/voice_btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/title_btn_right"
+            android:focusable="true"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:visibility="invisible" />
+
+        <LinearLayout
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:id="@+id/switching_ly"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13.0dip"
+                android:layout_marginRight="13.0dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/title_group_left"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/title_group_detail"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:background="@null"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:text="@string/app_title_group_detail"
+                    android:textColor="@color/white"
+                    android:textSize="16.0sp" />
+
+                <Button
+                    android:id="@+id/title_group_card"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:background="@null"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:text="@string/app_title_group_card"
+                    android:textColor="@color/white"
+                    android:textSize="16.0sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/voice_right_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/title_btn_right"
+            android:focusable="true"
+            android:gravity="center"
+            android:paddingLeft="6.0dip"
+            android:paddingRight="6.0dip"
+            android:textColor="@color/white"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/group_info_ly"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/head"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <LinearLayout
+            android:id="@+id/gnotice_ly"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/gnotice_tips"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/list_bg"
+                android:gravity="center_vertical"
+                android:paddingLeft="25.0dip"
+                android:text="@string/str_group_notice_tips"
+                android:textColor="@android:color/white"
+                android:textSize="16.0sp" />
+
+            <EditText
+                android:id="@+id/group_notice_input"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5.0dip"
+                android:background="@drawable/input_box"
+                android:lines="3"
+                android:padding="1.0dip"
+                android:paddingLeft="3.0dip"
+                android:textColorHint="#000000"
+                android:textSize="15.0sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/gmembers_tips"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/gnotice_ly"
+            android:background="@drawable/list_bg"
+            android:gravity="center_vertical"
+            android:paddingLeft="25.0dip"
+            android:text="@string/str_group_members_tips"
+            android:textColor="@android:color/white"
+            android:textSize="16.0sp" />
+
+        <GridView
+            android:id="@+id/member_list_gd"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/bottom_ly"
+            android:layout_below="@+id/gnotice_ly"
+            android:layout_marginTop="30.0dip"
+            android:gravity="center"
+            android:horizontalSpacing="1.0dip"
+            android:numColumns="4"
+            android:paddingLeft="2.0dip"
+            android:paddingRight="2.0dip"
+            android:scrollbars="none"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="1.0dip"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/bottom_ly"
+            android:layout_width="fill_parent"
+            android:layout_height="45.0dip"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10.0dip"
+            android:layout_marginTop="10.0dip"
+            android:visibility="gone" >
+
+            <Button
+                android:id="@+id/clear_msg_btn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11.0dip"
+                android:layout_marginRight="11.0dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/netphone_direct_call_selector"
+                android:enabled="false"
+                android:text="@string/str_clear_chat_message"
+                android:textColor="@android:color/white"
+                android:textSize="19.0sp" />
+
+            <Button
+                android:id="@+id/quit_group_btn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11.0dip"
+                android:layout_marginRight="11.0dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/button_red"
+                android:enabled="false"
+                android:text="@string/str_group_quit"
+                android:textColor="@android:color/white"
+                android:textSize="19.0sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/apply_join_ly"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/gnotice_ly"
+            android:layout_marginTop="50.0dip"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/str_not_see_all_mgroup_info"
+                android:textColor="#9F9F9F"
+                android:textSize="18.0sp" />
+
+            <Button
+                android:id="@+id/apply_join"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30.0dip"
+                android:background="@drawable/voice_start_inter_selector"
+                android:text="@string/str_apply_join_group"
+                android:textColor="@android:color/white"
+                android:textSize="19.0sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/group_card_ly"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/head"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <include
+            layout="@layout/group_card_detail" />
+    </LinearLayout>
+
+</RelativeLayout>

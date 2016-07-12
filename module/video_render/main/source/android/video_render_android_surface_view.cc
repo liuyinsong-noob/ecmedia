@@ -119,14 +119,14 @@ int32_t AndroidSurfaceViewRenderer::Init() {
     isAttached = true;
   }
 
-  jstring tempName = env->NewStringUTF("org/webrtc/videoengine/ViESurfaceRenderer");
+  jstring tempName = env->NewStringUTF("com/yuntongxun/ecsdk/core/voip/ViESurfaceRenderer");
 
   jclass renderSurfaceClass = reinterpret_cast<jclass>(env->CallObjectMethod(g_classLoader, g_loadClassID, tempName, 1));
 
   // get the method ID for the constructor
   jmethodID cid = env->GetMethodID(renderSurfaceClass,
                                    "<init>",
-                                   "(Landroid/view/SurfaceView;)V");
+                                   "(Ljava/lang/String;)V");
   if (cid == NULL) {
     WEBRTC_TRACE(kTraceError,
                  kTraceVideoRenderer,
@@ -139,7 +139,7 @@ int32_t AndroidSurfaceViewRenderer::Init() {
   // construct the object
   jobject javaRenderObjLocal = env->NewObject(renderSurfaceClass,
                                               cid,
-                                              _ptrWindow);
+                                              env->NewStringUTF((const char *)_ptrWindow));
   if (!javaRenderObjLocal) {
     WEBRTC_TRACE(kTraceError,
                  kTraceVideoRenderer,
@@ -314,7 +314,7 @@ int32_t AndroidSurfaceViewChannel::Init(
     }
     isAttached = true;
   }
-    jstring tempName = env->NewStringUTF("org/webrtc/videoengine/ViESurfaceRenderer");
+    jstring tempName = env->NewStringUTF("com/yuntongxun/ecsdk/core/voip/ViESurfaceRenderer");
     jclass renderSurfaceClass = reinterpret_cast<jclass>(env->CallObjectMethod(VideoRenderAndroid::g_classLoader, VideoRenderAndroid::g_loadClassID, tempName, 1));
 
   // get the method ID for the CreateIntArray

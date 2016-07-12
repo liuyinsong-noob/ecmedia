@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/video_bg"
+    android:orientation="vertical" >
+    
+    <include layout="@layout/ccp_title" />
+
+    <LinearLayout
+        android:id="@+id/view_head"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nav_title"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/switch_login_view"
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:background="@drawable/switch_login_selector"/>
+        <Button
+            android:id="@+id/switch_regist_view"
+            android:layout_weight="1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:enabled="true"
+            android:background="@drawable/switch_regist_selector"/>
+    </LinearLayout>
+    <FrameLayout 
+        android:id="@+id/view_body"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/view_head"
+        android:layout_marginRight="@dimen/small_margin_space"
+    	android:layout_marginLeft="@dimen/small_margin_space"
+        android:orientation="vertical">
+        <include 
+            android:id="@+id/experience_login_id"
+            layout="@layout/experience_login_layout"/>
+        <include 
+            android:id="@+id/experience_regist_id"
+            layout="@layout/experience_regist_frame"/>
+    </FrameLayout>
+</RelativeLayout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#f4f4f4"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/voice_head"
+        layout="@layout/voice_head" />
+
+    <LinearLayout
+        android:id="@+id/input_account"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/voice_head"
+        android:background="#D4D4D4"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10.0dip" >
+        <Button 
+	        android:id="@+id/create_delay_voice_btn"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:textSize="19.0sp"
+	        android:textColor="@android:color/white"
+	        android:text="创建会话"
+	        android:background="@drawable/voice_start_inter_selector"/>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/voice_list"
+        android:layout_below="@id/input_account"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@drawable/listview_diviver_line"
+        android:dividerHeight="2.0px"
+        android:fadingEdgeLength="0.0dip"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none"
+        android:scrollingCache="false" />
+
+</RelativeLayout>

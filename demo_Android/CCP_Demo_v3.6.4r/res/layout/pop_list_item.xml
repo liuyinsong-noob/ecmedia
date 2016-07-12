@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="59.0dip"
+    android:background="@drawable/pop_listview_back"
+    android:paddingTop="8dip"
+    android:paddingBottom="8dip"
+    android:paddingLeft="15dip"
+    android:paddingRight="15dip"
+    android:id="@+id/popListItem" >
+    <TextView
+        android:id="@+id/pop_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:background="@android:color/transparent"
+        android:textSize="16.0sp" />
+
+</LinearLayout>

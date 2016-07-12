@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F4F4"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/head"
+        layout="@layout/voice_head" />
+
+    <LinearLayout
+        android:id="@+id/notice_tips_ly"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/head"
+        android:background="@drawable/top_point_bg"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:id="@+id/notice_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:paddingLeft="25.0dip"
+            android:singleLine="true"
+            android:text="@string/str_top_voip_call_tips"
+            android:textColor="@android:color/white"
+            android:textSize="15.0sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/netphone_content_ly"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/netphone_bottom_ly"
+        android:layout_below="@+id/notice_tips_ly"
+        android:orientation="vertical"
+        android:paddingBottom="30.0dip"
+        android:paddingLeft="20.0dip"
+        android:paddingRight="20.0dip"
+        android:paddingTop="25.0dip" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="体验接听VoIP电话"
+                android:textColor="#292929"
+                android:textSize="18.0sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8.0dip"
+                android:text="请将您的VoIP帐号告诉您的伙伴,如下显示"
+                android:textColor="#7B7B7B" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11.0dip"
+                android:gravity="right|center_vertical"
+                android:background="@drawable/internet_box" >
+                <EditText
+                    android:id="@+id/phone_num_input"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right|center"
+                    android:background="@null"
+                    android:ellipsize="none"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:minWidth="140.0dip"
+                    android:paddingLeft="5.0dip"
+                    android:paddingRight="7.0dip"
+                    android:singleLine="true"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="38.0dip"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="体验拨打VoIP电话"
+                android:textColor="#292929"
+                android:textSize="18.0sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8.0dip"
+                android:text="请选择您伙伴的VoIP账号跟他通话"
+                android:textColor="#7B7B7B" />
+
+            <LinearLayout
+                android:id="@+id/voip_ly"
+                android:layout_width="fill_parent"
+                android:layout_height="40.0dip"
+                android:layout_marginTop="11.0dip"
+                android:background="@drawable/voice_vericode_input"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="4.0dip" >
+
+                <TextView
+                    android:id="@+id/voip_input"
+                    style="@style/VoiceAccountTitleValue"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40.0dip"
+                    android:layout_below="@+id/recive_number_input"
+                    android:layout_marginBottom="4.0dip"
+                    android:layout_marginTop="4.0dip"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="请选择被叫VoIP"
+                    android:maxHeight="40.0dip"
+                    android:singleLine="true" />
+
+                <ImageButton
+                    android:id="@+id/btn_select_voip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="39.0dip"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="-36.0dip"
+                    android:layout_marginRight="1.0dip"
+                    android:background="@null"
+                    android:minHeight="45.0dip"
+                    android:minWidth="40.0dip"
+                    android:src="@drawable/voip_select_icon" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/netphone_voip_call"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11.0dip"
+            android:layout_marginRight="11.0dip"
+            android:layout_marginTop="18.0dip"
+            android:background="@drawable/voice_start_inter_selector"
+            android:text="VoIP呼叫"
+            android:enabled="false"
+            android:textColor="@android:color/white"
+            android:textSize="19.0sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/netphone_bottom_ly"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20.0dip"
+        android:layout_marginLeft="20.0dip"
+        android:gravity="left" >
+
+        <ImageView
+            android:id="@+id/ready_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/status_quit" />
+
+        <TextView
+             android:id="@+id/ready_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5.0dip"
+            android:text="输入被叫VoIP后,才能呼出VoIP电话"
+            android:textColor="#7B7B7B" />
+    </LinearLayout>
+
+</RelativeLayout>

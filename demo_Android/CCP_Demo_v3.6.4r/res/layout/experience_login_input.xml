@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/sid_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/small_margin_space" >
+
+        <include
+            android:id="@+id/mail"
+            layout="@layout/ccp_textview" />
+
+        <include
+            android:id="@+id/nick"
+            layout="@layout/ccp_textview" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/app_info_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/small_margin_space"
+        android:paddingRight="@dimen/small_margin_space" >
+
+        <include
+            android:id="@+id/main_account"
+            layout="@layout/ccp_textview" />
+
+        <include
+            android:id="@+id/appid"
+            layout="@layout/ccp_textview" />
+
+        <include
+            android:id="@+id/appname"
+            layout="@layout/ccp_textview" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/small_margin_space" >
+
+        <include
+            android:id="@+id/bind_test_num"
+            layout="@layout/ccp_sub_textview" />
+    </LinearLayout>
+
+    <com.voice.demo.views.CCPButton
+        android:id="@+id/unlogin_confrim"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/small_margin_space"
+        android:layout_marginRight="@dimen/small_margin_space"
+        android:background="@drawable/video_red_button_selector" />
+
+    <TextView
+        android:id="@+id/bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/small_margin_space"
+        android:layout_marginRight="@dimen/small_margin_space"
+        android:layout_marginTop="@dimen/small_margin_space"
+        android:text="@string/experience_account_tip_str"
+        android:textAppearance="@style/attentoin_text_appearance"
+        android:textSize="13sp" />
+
+</LinearLayout>

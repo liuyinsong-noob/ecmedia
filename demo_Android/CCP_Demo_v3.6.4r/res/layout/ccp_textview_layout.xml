@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ccp_layout"
+    android:layout_width="fill_parent"
+    android:layout_marginBottom="@dimen/ccp_item_space"
+    android:background="@drawable/background_black"
+    android:layout_height="@dimen/ccp_icontext_item_height" >
+
+    <TextView
+        android:id="@+id/textview"
+        style="@style/VoiceAccountTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1.0dp"
+        android:drawableLeft="@drawable/mobile"
+        android:drawablePadding="@dimen/mode_desc_space"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:textSize="16sp"
+        android:textColor="@android:color/white" />
+    <TextView
+        android:id="@+id/verify_flag"
+        style="@style/VoiceAccountTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1.0dp"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/small_text_size"
+        android:layout_marginLeft="@dimen/small_margin_space"
+        android:layout_marginRight="@dimen/small_margin_space"
+        android:drawableRight="@drawable/video_item_goto"
+        android:textColor="@color/ccp_attentoin_color"
+        android:textAppearance="@style/text_inner_desc_appearance"
+        android:orientation="vertical"/>
+
+</LinearLayout>

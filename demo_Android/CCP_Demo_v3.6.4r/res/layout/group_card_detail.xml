@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/gnotice_tips"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/list_bg"
+        android:gravity="center_vertical"
+        android:paddingLeft="25.0dip"
+        android:text="@string/str_editor_group_card_information_tips"
+        android:textColor="@android:color/white"
+        android:textSize="16.0sp" />
+
+    <LinearLayout
+        android:id="@+id/group_card_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="11dip"
+        android:layout_marginRight="11dip"
+        android:orientation="vertical"
+        android:paddingBottom="5dip"
+        android:paddingTop="8dip" >
+    </LinearLayout>
+
+</LinearLayout>

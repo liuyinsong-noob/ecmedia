@@ -660,7 +660,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 				ECMedia_set_playout_device(m_usedSpeakerIndex);
 			if(m_usedMicrophoneIndex >= 0)
 				ECMedia_set_recording_device(m_usedMicrophoneIndex);
-			//hardware->SetPlayoutDevice(0);   //??????±?Ω???￡¨÷±�????????μ???a?????±??
+			//hardware->SetPlayoutDevice(0);   //??????Â±?Î©???ï¿¡Â¨Ã·Â±Î????????Î¼???a?????Â±??
 			PrintConsole("cloopen trace %s middle 113.\n",__FUNCTION__);
 			if ( local_stream){
 				switch(local_stream->dir)
@@ -909,7 +909,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 				//pReceiveStats_ = Serphone_set_video_receive_statistics_porxy(call->m_VideoChannelID);
 
 				//TODO:
-				////add by ylr 20151010 回调实现
+				////add by ylr 20151010 å›žè°ƒå®žçŽ°
 				//if (!call->vie_observer)
 				//{
 				//	call->vie_observer = new VieObserver(this);
@@ -2503,7 +2503,7 @@ RtpSession * ServiceCore::create_duplex_rtpsession(int loc_rtp_port, int loc_rtc
 	//	rtp_session_set_blocking_mode(rtpr, 0);
 	//	rtp_session_enable_adaptive_jitter_compensation(rtpr, TRUE);
 	//	rtp_session_set_symmetric_rtp(rtpr, TRUE);
-	//    暂时不创建socket
+	//    æš‚æ—¶ä¸åˆ›å»ºsocket
 	//	rtp_session_set_local_addr(rtpr, ipv6 ? "::" : "0.0.0.0", loc_rtp_port, loc_rtcp_port);
 	//	rtp_session_signal_connect(rtpr, "timestamp_jump", (RtpCallback)rtp_session_resync, (long)NULL);
 	//	rtp_session_signal_connect(rtpr, "ssrc_changed", (RtpCallback)rtp_session_resync, (long)NULL);
@@ -3367,7 +3367,7 @@ int ServiceCore::serphone_deregister_audio_device()
 
 
 //sean add begin 20140616 video conference
-//sdk设置视频会议的服务器地址
+//sdkè®¾ç½®è§†é¢‘ä¼šè®®çš„æœåŠ¡å™¨åœ°å€
 int ServiceCore::serphone_set_video_conference_addr(const char *ip)
 {
 	int ret = -1;
@@ -3488,11 +3488,11 @@ int ServiceCore::serphone_set_video_window_and_request_video_accord_sip(const ch
 	temp->conference_state = Video_Conference_State_Nomal;
 	//    request video after succeeding doing this
 	//    build request body
-	//     [ client_id:客户端SIP号码, conf_id:会议号码, member_id:请求成员的SIP号码,conf_pass:会议密码]
+	//     [ client_id:å®¢æˆ·ç«¯SIPå·ç , conf_id:ä¼šè®®å·ç , member_id:è¯·æ±‚æˆå‘˜çš„SIPå·ç ,conf_pass:ä¼šè®®å¯†ç ]
 	char *data = new char[512];
 	memset(data, 0, 512);
 
-	//伪造rtp包头
+	//ä¼ªé€ rtpåŒ…å¤´
 	int cursor = 0;
 	memcpy(data, "yuntongxunyt", 12);
 	cursor = 12;
@@ -3743,12 +3743,12 @@ void ServiceCore::onVideoConference(int channelID, int status, int payload)
 				tempVideoConfDesc->conference_state = Video_Conference_State_Streaming;
 			}
 			break;
-		case Video_Conference_status_NotExist://会议不存在，
-		case Video_Conference_status_UserExclusive://自己不在会议�?
-		case Video_Conference_status_RequestedUserExclusive://请求目标不在会议�?
-		case Video_Conference_status_RequestedUserNoVideo://请求目标没有视频
+		case Video_Conference_status_NotExist://ä¼šè®®ä¸å­˜åœ¨ï¼Œ
+		case Video_Conference_status_UserExclusive://è‡ªå·±ä¸åœ¨ä¼šè®®ä¸?
+		case Video_Conference_status_RequestedUserExclusive://è¯·æ±‚ç›®æ ‡ä¸åœ¨ä¼šè®®ä¸?
+		case Video_Conference_status_RequestedUserNoVideo://è¯·æ±‚ç›®æ ‡æ²¡æœ‰è§†é¢‘
 			{
-				//请求失败，置状态，稍后稍后处理
+				//è¯·æ±‚å¤±è´¥ï¼Œç½®çŠ¶æ€ï¼Œç¨åŽç¨åŽå¤„ç†
 			}
 			break;
 		default:
@@ -3771,12 +3771,12 @@ void ServiceCore::onVideoConference(int channelID, int status, int payload)
 
 			}
 			break;
-		case Video_Conference_status_NotExist://会议不存在，
-		case Video_Conference_status_UserExclusive://自己不在会议�?
-		case Video_Conference_status_RequestedUserExclusive://请求目标不在会议�?
-		case Video_Conference_status_RequestedUserNoVideo://请求目标没有视频
+		case Video_Conference_status_NotExist://ä¼šè®®ä¸å­˜åœ¨ï¼Œ
+		case Video_Conference_status_UserExclusive://è‡ªå·±ä¸åœ¨ä¼šè®®ä¸?
+		case Video_Conference_status_RequestedUserExclusive://è¯·æ±‚ç›®æ ‡ä¸åœ¨ä¼šè®®ä¸?
+		case Video_Conference_status_RequestedUserNoVideo://è¯·æ±‚ç›®æ ‡æ²¡æœ‰è§†é¢‘
 			{
-				//请求失败，置状态，稍后稍后处理
+				//è¯·æ±‚å¤±è´¥ï¼Œç½®çŠ¶æ€ï¼Œç¨åŽç¨åŽå¤„ç†
 			}
 			break;
 		default:
@@ -3790,7 +3790,7 @@ void ServiceCore::onVideoConference(int channelID, int status, int payload)
 		//            videoConferencePairSipChannel.erase(it2);
 		//        }
 		//        
-		//        //根据channelID释放资源
+		//        //æ ¹æ®channelIDé‡Šæ”¾èµ„æº
 		//        if (0 == tempVideoConfDesc->request_status) {
 		//            ViERender* render =  ViERender::GetInterface(m_vie);
 		//            render->StopRender(channelID);
@@ -4288,7 +4288,7 @@ void ServiceCore::serphone_core_restart_nack(SerPhoneCall *call)
 //	}
 //}
 
-//// This method will be called periodically delivering a dead‐or‐alive
+//// This method will be called periodically delivering a deadâ€orâ€alive
 //// decision for a specified channel.
 //void ServiceCore::OnPeriodicDeadOrAlive(const int video_channel, const bool alive)
 //{
@@ -4735,7 +4735,7 @@ void ServiceCore::serserphone_call_start_desktop_share(SerPhoneCall *call, const
 //				pSendStats_ = Serphone_set_video_send_statistics_proxy(call->m_VideoChannelID);
 //				pReceiveStats_ = Serphone_set_video_receive_statistics_porxy(call->m_VideoChannelID);
 //
-//				//add by ylr 20151010 回调实现
+//				//add by ylr 20151010 å›žè°ƒå®žçŽ°
 //				if (!call->vie_observer)
 //				{
 //					call->vie_observer = new VieObserver(this);
@@ -4826,7 +4826,7 @@ int ServiceCore::getShareScreenInfo(ScreenInfo **screenId)
 	//DesktopShareType type = ShareScreen;
 	//ViEDesktopShare *desktopshare = ViEDesktopShare::GetInterface(m_vie);
 	//if (desktopshare) {
-	//	int ret = desktopshare->AllocateDesktopShareCapturer(m_desktopCaptureId, (DesktopShareType)type); //返回m_desktopCaptureId
+	//	int ret = desktopshare->AllocateDesktopShareCapturer(m_desktopCaptureId, (DesktopShareType)type); //è¿”å›žm_desktopCaptureId
 	//	if (ret != 0)
 	//	{
 	//		desktopshare->Release();
@@ -4834,7 +4834,7 @@ int ServiceCore::getShareScreenInfo(ScreenInfo **screenId)
 	//		return ret;
 	//	}
 
-	//	int num = desktopshare->NumberOfScreen(m_desktopCaptureId); //返回screen num
+	//	int num = desktopshare->NumberOfScreen(m_desktopCaptureId); //è¿”å›žscreen num
 	//	if(num<=0)
 	//	{
 	//		desktopshare->Release();

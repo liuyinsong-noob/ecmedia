@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/conversation_item_ll"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="23.0dip"
+        android:layout_gravity="center"
+        android:layout_margin="1.0dip"
+        android:layout_weight="1.0" >
+
+        <ImageView
+            android:id="@+id/chatroom_join_statu_l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="1.0dip"
+            android:src="@drawable/status_join" />
+
+        <TextView
+            android:id="@+id/chatroom_name_l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="4.0dip"
+            android:layout_toRightOf="@+id/chatroom_join_statu_l"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxWidth="140.0dip"
+            android:minWidth="140.0dip"
+            android:singleLine="true"
+            android:text="80010000000008"
+            android:textColor="#545454" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="23.0dip"
+        android:layout_gravity="center"
+        android:layout_margin="1.0dip"
+        android:layout_weight="1.0" >
+
+        <ImageView
+            android:id="@+id/chatroom_join_statu_r"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="1.0dip"/>
+
+        <TextView
+            android:id="@+id/chatroom_name_r"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="4.0dip"
+            android:layout_toRightOf="@+id/chatroom_join_statu_r"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxWidth="140.0dip"
+            android:minWidth="140.0dip"
+            android:singleLine="true"
+            android:textColor="#545454" />
+    </RelativeLayout>
+
+</LinearLayout>

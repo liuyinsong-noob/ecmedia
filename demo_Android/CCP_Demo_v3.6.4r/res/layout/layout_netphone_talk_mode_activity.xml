@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F4F4"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/head"
+        layout="@layout/voice_head" />
+
+    <LinearLayout
+        android:id="@+id/notice_tips_ly"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/head"
+        android:background="@drawable/top_point_bg"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:id="@+id/notice_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:paddingLeft="25.0dip"
+            android:singleLine="true"
+            android:text="@string/str_net_phone_talk_mode"
+            android:textColor="@android:color/white"
+            android:textSize="15.0sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/notice_tips_ly"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="20.0dip">
+		<ImageButton 
+		    android:id="@+id/netphone_voip_call"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@drawable/netphone_voip_call_selector"/>
+		<ImageButton 
+		    android:id="@+id/netphone_landing_call"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_marginTop="40.0dip"
+		    android:background="@drawable/netphone_landing_call_selector"/>
+    </LinearLayout>
+
+</RelativeLayout>

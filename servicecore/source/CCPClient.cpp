@@ -2001,7 +2001,7 @@ extern "C" int getCallMediaType(const char *callid)
     return 0;
 }
 
-//�ýӿ���callidδ�õ�. ֻ�Ǹ�ǰ�ļ����call����DTMF.
+//?y????callidδ???. ???????????call????DTMF.
 extern "C"  int sendDTMF(const char *callid, const char dtmf)
 {
 	PrintConsole("[APICall] sendDTMF (callid=%s,dtmf=%c ) \n",callid ? callid  :"null",dtmf);
@@ -3319,28 +3319,39 @@ extern "C" int setVideoProtectionMode(int mode)
 	return 0;
 }
 
-#ifdef ENABLE_REMB_TMMBR_CONFIG
+
 extern "C" int setP2PEnabled(bool enabled)
 {
+#ifdef ENABLE_REMB_TMMBR_CONFIG
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	g_pSerCore->SetP2PEnabled(enabled);
 	return 0;
+#else
+    return -1;
+#endif
 }
 
 extern "C" int setRembEnabled(bool enabled)
 {
-	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+#ifdef ENABLE_REMB_TMMBR_CONFIG
+    SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	g_pSerCore->SetRembEnabled(enabled);
 	return 0;
+#else
+    return -1;
+#endif
 }
 
 extern "C" int setTmmbrEnabled(bool enabled)
 {
-	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+#ifdef ENABLE_REMB_TMMBR_CONFIG
+    SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	g_pSerCore->SetTmmbrEnabled(enabled);
 	return 0;
-}
+#else
+    return -1;
 #endif
+}
 
 extern "C" int setVideoMode(int videoModeIndex)
 {

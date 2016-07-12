@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="75dp" 
+    android:orientation="horizontal"
+   	>
+
+    <!-- 首字母 -->
+	 <CheckBox
+        android:id="@+id/cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="0"
+        android:layout_marginLeft="37dp"
+        android:layout_marginRight="5dp"
+        android:layout_gravity="center_vertical"
+        android:focusable="false"
+        android:clickable="false"
+       android:button="@drawable/cb_check"
+         />
+   
+    <TextView
+        android:id="@+id/phone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+        android:text="11111111111"
+        android:paddingLeft="10dip" />
+
+     
+
+</LinearLayout>

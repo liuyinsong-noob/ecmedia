@@ -133,7 +133,7 @@ WebRtc_Word32 VideoCaptureAndroid::SetAndroidObjects(void* javaVM, void* env,
 	    g_javaCmDevInfoClass,
 	    "CreateVideoCaptureDeviceInfoAndroid",
 	    "(ILandroid/content/Context;)"
-	    "Lorg/webrtc/videoengine/VideoCaptureDeviceInfoAndroid;");
+	    "Lcom/yuntongxun/ecsdk/core/voip/VideoCaptureDeviceInfoAndroid;");
 	if (cid == NULL) {
 	  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
 	               "%s: could not get java"
@@ -215,7 +215,7 @@ WebRtc_Word32 VideoCaptureAndroid::AttachAndUseAndroidDeviceInfoObjects(
     }
     attached = true;
   }
-
+    
   if(!g_javaCmDevInfoClass  || !g_javaCmDevInfoObject) {
       WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
                    "%s: g_javaCmDevInfoClass or g_javaCmDevInfoObject is NULL",
@@ -405,7 +405,7 @@ VideoCaptureAndroid::~VideoCaptureAndroid() {
     jmethodID cid = env->GetStaticMethodID(
         g_javaCmClass,
         "DeleteVideoCaptureAndroid",
-        "(Lorg/webrtc/videoengine/VideoCaptureAndroid;)V");
+        "(Lcom/yuntongxun/ecsdk/core/voip/VideoCaptureAndroid;)V");
     if (cid != NULL) {
       WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, -1,
                    "%s: Call DeleteVideoCaptureAndroid", __FUNCTION__);

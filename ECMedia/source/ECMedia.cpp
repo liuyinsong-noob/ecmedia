@@ -253,7 +253,7 @@ int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level)
 //	LOG_LEVEL_WARNING,
 //	LOG_LEVEL_INFO,
 //	LOG_LEVEL_DEBUG,
-//	LOG_LEVEL_MEDIA_ERR=20,//媒体库日�?
+//	LOG_LEVEL_MEDIA_ERR=20,//媒体库日??
 //	LOG_LEVEL_MEDIA_WARNING,
 //	LOG_LEVEL_MEDIA_INFO,
 //	LOG_LEVEL_MEDIA_DEBUG,
@@ -279,7 +279,7 @@ int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level)
 		}
 	case 23:
 		{
-			nLevel=kTraceError|kTraceWarning|kTraceStateInfo|kTraceInfo|kTraceCritical|kTraceApiCall;
+			nLevel=kTraceDefault;
 			break;
 		}
 	case 24:
@@ -448,7 +448,7 @@ int ECMedia_ring_start(int& channelid, const char *filename, bool loop)
     if (m_voe){
         VoEBase* base = VoEBase::GetInterface(m_voe);
         VoEFile* file  = VoEFile::GetInterface(m_voe);
-        
+
         channelid = base->CreateChannel();
         string strFileName;
 #ifdef WIN32
@@ -462,7 +462,7 @@ int ECMedia_ring_start(int& channelid, const char *filename, bool loop)
         PrintConsole("playfile is processing,channelID=%d,name:%s,ret:%d\n",channelid,filename, ret);
         PrintConsole("playfile is processing,name:%s,ret:%d\n",
                      filename, ret);
-        
+
         if (ret >=0)
         {
             base->StartPlayout(channelid);

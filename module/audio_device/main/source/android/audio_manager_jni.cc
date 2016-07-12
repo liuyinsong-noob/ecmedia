@@ -58,7 +58,7 @@ void AudioManagerJni::SetAndroidAudioDeviceObjects(void* jvm, void* env,
   // as to why this is necessary.
   // Get the AudioManagerAndroid class object.
   jclass javaAmClassLocal = g_jni_env_->FindClass(
-      "org/webrtc/voiceengine/AudioManagerAndroid");
+      "com/yuntongxun/ecsdk/core/voip/AudioManagerAndroid");
   assert(javaAmClassLocal);
 
   // Create a global reference such that the class object is not recycled by

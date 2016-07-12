@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/video_bg"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/small_margin_space" >
+
+    <include
+        android:id="@+id/nav_title"
+        layout="@layout/ccp_title" />
+
+    <TextView
+        android:id="@+id/video_notice_tips"
+        style="@style/notice_statusbar_appearance"
+        android:layout_below="@+id/nav_title"
+        android:text="@string/str_building_tips" />
+
+    <TextView
+        android:id="@+id/account_tips"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/video_notice_tips"
+        android:drawableLeft="@drawable/attention"
+        android:drawablePadding="@dimen/mode_desc_space"
+        android:padding="@dimen/small_margin_space"
+        android:text="@string/str_building_attention"
+        android:textAppearance="@style/attentoin_text_appearance" />
+
+    <TextView
+        android:id="@+id/account_label_id"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/account_tips"
+        android:paddingLeft="@dimen/small_margin_space"
+        android:paddingRight="@dimen/small_margin_space"
+        android:text="@string/str_building_label"
+        android:textAppearance="@style/mode_desc_text_appearance" />
+
+    <LinearLayout
+        android:id="@+id/number_area"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:layout_below="@+id/account_label_id"
+        android:padding="@dimen/small_margin_space"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/regist_phone"
+            layout="@layout/ccp_textview" />
+
+        <include
+            android:id="@+id/testnumber1"
+            layout="@layout/ccp_textview_layout" />
+
+        <include
+            android:id="@+id/testnumber2"
+            layout="@layout/ccp_textview_layout" />
+    </LinearLayout>
+
+    <com.voice.demo.views.CCPButton
+        android:id="@+id/build_confrim"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/number_area"
+        android:layout_marginLeft="@dimen/small_margin_space"
+        android:layout_marginRight="@dimen/small_margin_space"
+        android:background="@drawable/ccp_no_enabled" />
+
+</RelativeLayout>

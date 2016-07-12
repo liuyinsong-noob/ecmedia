@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F4F4"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/head"
+        layout="@layout/voice_head" />
+
+    <LinearLayout
+        android:id="@+id/verify_tips_ly"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/head"
+        android:layout_marginTop="41.0dip"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/verify_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="23.0dip"
+            android:layout_weight="1.0"
+            android:singleLine="true"
+            android:text="验证失败"
+            android:textColor="#464646"
+            android:textSize="19.0sp" />
+
+        <TextView
+            android:id="@+id/verify_status_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="39.0dip"
+            android:layout_weight="1.0"
+            android:singleLine="true"
+            android:text="验证密码不正确,请按以下提示操作:"
+            android:textColor="#B9B9B9"
+            android:textSize="15.0sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/verify_failed_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:layout_below="@+id/verify_tips_ly"
+        android:visibility="gone"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/verify_input_again"
+            android:layout_width="170.0dip"
+            android:layout_height="wrap_content"
+            android:background="@drawable/netphone_direct_call_selector"
+            android:text="返回重新输入"
+            android:layout_alignLeft="@+id/verify_get_again"
+            android:layout_alignRight="@+id/verify_input_again"
+            android:layout_marginBottom="22.0dip"
+            android:textColor="@android:color/white"
+            android:textSize="19.0sp" />
+
+        <Button
+            android:id="@+id/verify_get_again"
+            android:layout_width="170.0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11.0dip"
+            android:layout_marginRight="11.0dip"
+            android:layout_below="@+id/verify_input_again"
+            android:background="@drawable/verify_get_again_selector"
+            android:layout_marginBottom="22.0dip"
+            android:textColor="@android:color/white"
+            android:textSize="19.0sp" />
+
+        <Button
+            android:id="@+id/verify_show_end"
+            android:layout_width="170.0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11.0dip"
+            android:layout_marginRight="11.0dip"
+            android:layout_below="@+id/verify_get_again"
+            android:background="@drawable/verify_show_end_selector"
+            android:text="结束演示"
+            android:textColor="@android:color/white"
+            android:textSize="19.0sp" />
+    </RelativeLayout>
+	<Button
+            android:id="@+id/verify_success"
+            android:layout_width="170.0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11.0dip"
+            android:layout_marginRight="11.0dip"
+            android:layout_below="@+id/verify_tips_ly"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/netphone_direct_call_selector"
+            android:text="完成"
+            android:textColor="@android:color/white"
+            android:textSize="19.0sp" />
+</RelativeLayout>

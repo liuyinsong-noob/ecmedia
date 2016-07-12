@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/video_bg"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/nav_title"
+        layout="@layout/ccp_title" />
+
+    <TextView
+        android:id="@+id/video_notice_tips"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nav_title"
+        android:background="#55BC75"
+        android:gravity="center_vertical"
+        android:minHeight="37.0dip"
+        android:paddingLeft="25.0dip"
+        android:text="@string/str_tips_no_video_c"
+        android:textColor="@android:color/white"
+        android:textSize="16.0sp" />
+
+    <ListView
+        android:id="@+id/video_conferenc_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/video_notice_tips"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="2.0px"
+        android:fadingEdgeLength="0.0dip"
+        android:layout_margin="12.0dip"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none"
+        android:scrollingCache="false" />
+
+    <RelativeLayout
+        android:id="@+id/video_conferenc_empty"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/notice_tips"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/empty_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/str_create_new_video_conference"
+            android:drawableLeft="@drawable/attention"
+            android:textColor="#CCCCCC"
+            android:layout_centerInParent="true"
+            android:drawablePadding="15.0dip"
+            android:textSize="18.0sp" />
+
+        <Button
+            android:id="@+id/begin_create_video_conference"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="13.0dip"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/video_blue_button_selector"
+            android:drawableBottom="@drawable/video_create" />
+    </RelativeLayout>
+
+</RelativeLayout>

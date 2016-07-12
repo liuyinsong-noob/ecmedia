@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/conversation_item_ll"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/voice_list_item_selector"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:minHeight="40.0dip"
+    android:padding="4.0dip" >
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:paddingLeft="25.0dip"
+        android:singleLine="true"
+        android:text="Jorstin Chan"
+        android:textColor="@color/voice_conv_textcolor"
+        android:textSize="16.0dip" />
+
+    <Button
+        android:id="@+id/kicked_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="1.0dip"
+        android:background="@drawable/system_button_selector"
+        android:duplicateParentState="false"
+        android:includeFontPadding="false"
+        android:minWidth="68.0dip"
+        android:minHeight="35.0dip"
+        android:paddingLeft="3.0dip"
+        android:paddingRight="3.0dip"
+        android:layout_marginRight="5.0dip"
+        android:text="踢出"
+        android:textColor="#ff333333"
+        android:visibility="visible" />
+    <Button
+        android:id="@+id/forbid_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="1.0dip"
+        android:background="@drawable/system_button_selector"
+        android:duplicateParentState="false"
+        android:includeFontPadding="false"
+        android:minWidth="68.0dip"
+        android:minHeight="35.0dip"
+        android:paddingLeft="3.0dip"
+        android:paddingRight="3.0dip"
+        android:layout_marginRight="5.0dip"
+        android:textColor="#ff333333"
+        android:visibility="gone" />
+
+</LinearLayout>

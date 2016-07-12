@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="10.0dip"
+        android:paddingLeft="6.0dip"
+        android:paddingRight="6.0dip" >
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ProgressBar
+                android:id="@+id/voice_sending_r"
+                style="?android:attr/progressBarStyleSmallInverse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="6.0dip"
+                android:layout_marginBottom="16.0dip"
+                android:layout_marginRight="3.0dip"
+                android:layout_toLeftOf="@+id/message_content" />
+
+            <ImageView
+                android:id="@+id/error_Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="6.0dip"
+                android:layout_marginBottom="16.0dip"
+                android:layout_marginRight="3.0dip"
+                android:layout_toLeftOf="@+id/message_content" 
+                android:src="@drawable/icon_sms_failure" />
+
+            <LinearLayout
+                android:id="@+id/message_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/voice_chat_ly_r"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48.0dip"
+                    android:layout_marginLeft="6.0dip"
+                    android:background="@drawable/voice_outbox_recd_selectot"
+                    android:gravity="center_vertical|right"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/voice_content_len_r"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_marginRight="10.0dip"
+                        android:gravity="center_vertical"
+                        android:padding="3.0dip"
+                        android:shadowColor="#80ffffff"
+                        android:shadowDx="1.4"
+                        android:shadowDy="1.4"
+                        android:shadowRadius="1.0"
+                        android:text="60&apos;&apos;"
+                        android:textColor="#ff888888"
+                        android:textSize="14.0sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/voice_chat_recd_tv_r"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="25.0dip"
+                        android:src="@anim/voice_play_to" />
+                </LinearLayout>
+
+                <include
+                    android:id="@id/im_chat_ly_r"
+                    layout="@layout/im_chat_send_item" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3.0dip"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/voice_chat_avatar_r"
+                android:layout_width="48.0dip"
+                android:layout_height="48.0dip"
+                android:background="@drawable/photo_default"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/name_r"
+                android:layout_width="48.0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3.0dip"
+                android:gravity="center_horizontal"
+                android:text="8203"
+                android:textColor="#ADADAD"
+                android:textSize="15.0sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

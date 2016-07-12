@@ -619,12 +619,11 @@ extern "C" {
 	 *******************************************************************************/
     CCPAPI int setNackEnabled(bool audioEnabled, bool videoEnabled);
 	CCPAPI int setVideoProtectionMode(int mode);
-#define ENABLE_REMB_TMMBR_CONFIG
-#ifdef ENABLE_REMB_TMMBR_CONFIG
+
 	CCPAPI int setP2PEnabled(bool enabled);
 	CCPAPI int setRembEnabled(bool enabled);
 	CCPAPI int setTmmbrEnabled(bool enabled);
-#endif
+
 	CCPAPI int setVideoMode(int videoModeIndex); //only for demo test 0: Real-time, 1:screen-share
 	CCPAPI int setDesktopShareParam(int desktop_width, int desktop_height, int desktop_frame_rate, int desktop_bit_rate);
 	 /*! @function

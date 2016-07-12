@@ -15,8 +15,8 @@
 #include "../video_capture_impl.h"
 #include "../device_info_impl.h"
 
-#define AndroidJavaCaptureDeviceInfoClass "org/webrtc/videoengine/VideoCaptureDeviceInfoAndroid"
-#define AndroidJavaCaptureCapabilityClass "org/webrtc/videoengine/CaptureCapabilityAndroid"
+#define AndroidJavaCaptureDeviceInfoClass "com/yuntongxun/ecsdk/core/voip/VideoCaptureDeviceInfoAndroid"
+#define AndroidJavaCaptureCapabilityClass "com/yuntongxun/ecsdk/core/voip/CaptureCapabilityAndroid"
 
 namespace cloopenwebrtc
 {

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/im_root"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#f4f4f4"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/voice_head"
+        android:layout_width="match_parent"
+        layout="@layout/voice_head" />
+
+    <TextView
+        android:id="@+id/notice_tips"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/voice_head"
+        android:background="@drawable/top_point_bg"
+        android:gravity="center_vertical"
+        android:paddingLeft="25.0dip"
+        android:text="@string/str_click_into_interphone"
+        android:textColor="@android:color/white"
+        android:textSize="16.0sp" />
+
+    <ListView
+        android:id="@+id/im_chat_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/im_chat_foot"
+        android:layout_below="@+id/notice_tips"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@null"
+        android:dividerHeight="5dp"
+        android:fadingEdgeLength="0.0dip"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:listSelector="@android:color/transparent"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="none"
+        android:scrollingCache="false"
+        android:stackFromBottom="true" />
+
+    <LinearLayout
+        android:id="@+id/im_chat_foot"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#E1E1E1"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:paddingTop="5.0dip"
+        android:paddingLeft="14.0dip"
+        android:paddingRight="14.0dip" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <EditText
+                android:id="@+id/im_content_et"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3.0dip"
+                android:layout_marginTop="3.0dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/talk_input_box"
+                android:gravity="center_vertical"
+                android:hint="@null"
+                android:paddingLeft="2.0dip"
+                android:inputType="textCapSentences|textAutoCorrect|textMultiLine|textShortMessage"
+                android:maxHeight="80.0dip"
+                android:minHeight="41.0dip"
+                android:singleLine="false"
+                android:textColorHint="#ff888888" />
+
+            <Button
+                android:id="@+id/im_send_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/im_talk_send_button_selector"
+                android:maxHeight="80.0dip"
+                android:minHeight="41.0dip"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="12.0dip"
+                android:text="@string/str_im_send"
+                android:textColor="@color/white"
+                android:textSize="16.0sp" />
+        </LinearLayout>
+
+        <include 
+            android:id="@+id/tools_stub"
+            layout="@layout/stub_expend_im_chat" />
+    </LinearLayout>
+
+</RelativeLayout>

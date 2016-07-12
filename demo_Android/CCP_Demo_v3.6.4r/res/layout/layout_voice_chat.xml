@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#f4f4f4"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/voice_head"
+        android:layout_width="match_parent"
+        layout="@layout/voice_head" />
+
+    <ListView
+        android:id="@+id/voice_chat_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/voice_head"
+        android:layout_above="@+id/voice_chat_foot"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@null"
+        android:dividerHeight="5dp"
+        android:fadingEdgeLength="0.0dip"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:listSelector="@android:color/transparent"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="none"
+        android:scrollingCache="false"
+        android:stackFromBottom="true" />
+
+    <LinearLayout
+        android:id="@+id/voice_chat_foot"
+        android:layout_width="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        android:background="#466692"
+        android:gravity="bottom"
+        android:minHeight="50.0dip"
+        android:orientation="horizontal"
+        android:paddingLeft="14.0dip"
+        android:paddingRight="14.0dip" >
+
+        <Button
+            android:id="@+id/voice_record_bt"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="5.0dip"
+            android:layout_marginTop="5.0dip"
+            android:layout_weight="1.0"
+            android:background="@drawable/voice_rcd_btn_normal"
+            android:maxHeight="60.0dip"
+            android:minHeight="41.0dip"
+            android:shadowColor="#ffffffff"
+            android:shadowDx="1.0"
+            android:shadowDy="1.0"
+            android:shadowRadius="2.0"
+            android:soundEffectsEnabled="true"
+            android:text="@string/voice_chat_recode_start"
+            android:textColor="#ff000000"
+            android:textSize="17.0sp" />
+    </LinearLayout>
+
+</RelativeLayout>

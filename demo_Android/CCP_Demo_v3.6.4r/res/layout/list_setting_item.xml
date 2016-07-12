@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/setting_item_root"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" 
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/notice_tips"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/top_point_bg"
+        android:gravity="center_vertical"
+        android:paddingLeft="20.0dip"
+        android:visibility="gone"
+        android:text="@string/str_setting_head2"
+        android:textColor="@android:color/white"
+        android:textSize="16.0sp" />
+
+    <RelativeLayout
+        android:id="@+id/setting_item"
+        android:layout_width="fill_parent"
+        android:layout_height="60.0dip"
+        android:duplicateParentState="true"
+        android:background="@drawable/voice_list_item_selector"
+        android:gravity="center_vertical"
+        android:minHeight="60.0dip"
+        android:orientation="horizontal"
+        android:paddingBottom="4.0dip"
+        android:paddingLeft="4.0dip"
+        android:paddingRight="4.0dip"
+        android:paddingTop="4.0dip" >
+
+        <com.voice.demo.setting.SlipButton
+            android:id="@+id/switch_btn"
+            android:layout_width="80dip"
+            android:layout_height="40dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="60.0dip"
+            android:layout_toLeftOf="@id/switch_btn"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingLeft="5.0dip"
+            android:paddingRight="3.0dip" >
+
+            <TextView
+                android:id="@+id/item_textView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxWidth="140.0dip"
+                android:paddingLeft="11.0dip"
+                android:singleLine="true"
+                android:textColor="@color/voice_conv_textcolor"
+                android:textSize="16.0dip"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/item_sub_textView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                android:ellipsize="end"
+                android:gravity="left|center"
+                android:paddingLeft="10.0dip"
+                android:singleLine="true"
+                android:textColor="@color/voice_conv_time_textcolor"
+                android:textSize="14.0dip" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

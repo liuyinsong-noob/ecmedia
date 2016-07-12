@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F4F4"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/head"
+        layout="@layout/voice_head" />
+
+    <LinearLayout
+        android:id="@+id/notice_tips_ly"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/head"
+            android:gravity="center_vertical"
+        android:background="@drawable/top_point_bg" >
+
+        <TextView
+            android:id="@+id/notice_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="25.0dip"
+            android:layout_weight="1.0"
+            android:singleLine="true"
+            android:textColor="@android:color/white"
+            android:textSize="15.0sp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:paddingRight="9.0dip" >
+
+            <ImageView
+                android:id="@+id/ic_person"
+                android:layout_width="15.0dip"
+                android:layout_height="15.0dip"
+                android:layout_centerVertical="true"
+                android:layout_gravity="right"
+                android:layout_marginLeft="10.0dip"
+                android:contentDescription="@null"
+                android:scaleType="fitXY"
+                android:layout_marginRight="2.0dip"
+                android:src="@drawable/inter_phone_persons_ic" />
+
+            <TextView
+                android:id="@+id/count_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/ic_person"
+                android:gravity="right"
+                android:shadowColor="@color/black"
+                android:shadowDx="0.0"
+                android:shadowDy="-1.2"
+                android:shadowRadius="1.0"
+                android:singleLine="true"
+                android:textSize="13.0sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/interphone_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/interphone_speak_ly"
+        android:layout_below="@+id/notice_tips_ly"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@null"
+        android:dividerHeight="2.0px"
+        android:fadingEdgeLength="0.0dip"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:listSelector="@android:color/transparent"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="vertical"
+        android:scrollingCache="false" />
+
+    <FrameLayout
+        android:id="@+id/interphone_speak_ly"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom"
+        android:background="#D4D4D4" >
+
+        <Button
+            android:id="@+id/interphone_speak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/voice_rec_button_selector" />
+
+        <Chronometer
+            android:id="@+id/chronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="right|top"
+            android:layout_marginTop="7.0dip"
+            android:visibility="gone"
+            android:layout_marginRight="10.0dip"
+            android:textColor="@color/blue"
+            android:textSize="13.0sp"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:padding="15.0dip" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/str_voice_room_bottom1"
+            android:textColor="#2B2B2B"
+            android:textSize="17.0sp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4.0dip"
+            android:gravity="center_horizontal"
+            android:text="@string/str_voice_room_bottom2"
+            android:textColor="#4D4D4D"
+            android:textSize="15.0sp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2.0dip"
+            android:gravity="center_horizontal"
+            android:text="@string/str_voice_room_bottom3"
+            android:textColor="#424242"
+            android:textSize="14.0sp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4.0dip"
+            android:gravity="center_horizontal"
+            android:text="@string/str_voice_room_bottom4"
+            android:textColor="#8F8F8F" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/layout_callin_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/call_interface_bg_01"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="20dip"
+        android:paddingTop="20dip" >
+
+        <TextView
+            android:id="@+id/layout_callin_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/voip_unknown_user"
+            android:textColor="@color/voip_interface_text_color"
+            android:visibility="invisible"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/layout_callin_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/voip_interface_text_color"
+            android:textSize="20dp" />
+        <Chronometer
+            android:id="@+id/chronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:textColor="@color/voip_interface_text_color"
+            android:textSize="15.0sp"
+            android:visibility="gone"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/layout_callin_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="2"
+       		android:gravity="center_horizontal"
+            android:textColor="@color/voip_interface_text_color"
+            android:textSize="15dp" 
+            android:visibility="visible"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/call_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|top"
+        android:layout_marginLeft="7.0dip"
+        android:layout_marginTop="7.0dip"
+        android:background="@null"
+        android:visibility="gone"
+        android:text="@string/str_call_status"
+        android:textColor="@android:color/white"
+        android:textSize="16.0sp" />
+	<FrameLayout 
+	    android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/layout_callin_dev"
+        android:layout_below="@id/layout_callin_top">
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="fill_parent"
+	        android:background="@drawable/call_interface_bg_02"
+	        android:gravity="center_horizontal"
+	        android:orientation="vertical"
+	        android:id="@+id/layout_centre"
+	        android:paddingTop="20dip" >
+	
+	        <ImageView
+	            android:id="@+id/layout_callin_photo"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/call_interface_head_portrait" />
+	        <Button  
+	            android:id="@+id/pause"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:visibility="gone"
+	            android:text="Pause"/>
+	    </LinearLayout>
+	    <include 
+	        android:id="@+id/layout_diaerpad"
+	        layout="@layout/voip_dialerpad"/>
+	</FrameLayout>
+	<!-- 2013 04 16 video ..begin -->
+	<RelativeLayout 
+        android:layout_above="@+id/layout_callin_dev"
+	    android:layout_below="@id/layout_callin_top"
+	    android:visibility="gone"
+        android:layout_width="match_parent"
+    	android:layout_height="fill_parent"
+    	android:id="@+id/Video_layout"
+    	android:background="@color/black">
+        <SurfaceView
+			android:id="@+id/video_view"
+			android:layout_width="80dp"
+    		android:layout_height="80dp"
+    		android:layout_alignParentTop="true"
+    		android:layout_alignParentLeft="true">
+    	</SurfaceView>
+    	<RelativeLayout
+			android:id="@+id/localvideo_view"
+			android:layout_width="80dp"
+    		android:layout_height="80dp"
+    		android:layout_toRightOf="@+id/video_view"
+    		android:layout_alignParentBottom="true"
+    		android:layout_alignParentRight="true">
+    	</RelativeLayout>
+    </RelativeLayout>
+	<!-- 2013 04 16 video ..end -->
+    <ImageView
+        android:id="@id/layout_callin_dev"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/layout_callin_bottom"
+        android:background="@drawable/call_interface_background_03" />
+
+    <LinearLayout
+        android:id="@id/layout_callin_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/call_interface_bg_04"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="15dip"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip"
+        android:paddingTop="10dip" >
+
+        <LinearLayout
+            android:id="@+id/layout_call_audio"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/call_interface_black_button"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="1dip" >
+
+            <ImageView
+                android:id="@+id/layout_callin_diaerpad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:paddingBottom="5dip"
+                android:paddingTop="5dip"
+                android:src="@drawable/call_interface_diaerpad" />
+            <ImageView
+                android:id="@+id/layout_callin_divid"
+                android:layout_width="wrap_content"
+                android:layout_height="42dip"
+                android:background="@drawable/call_interface_dividing_line" />
+
+            <ImageView
+                android:id="@+id/layout_callin_mute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:paddingBottom="5dip"
+                android:paddingTop="5dip"
+                android:src="@drawable/call_interface_mute" />
+			<ImageView
+                android:id="@+id/layout_callin_divid_2"
+                android:layout_width="wrap_content"
+                android:layout_height="42dip"
+                android:background="@drawable/call_interface_dividing_line" />
+            <ImageView
+                android:id="@+id/layout_callin_handfree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:paddingBottom="5dip"
+                android:paddingTop="5dip"
+                android:src="@drawable/call_interface_hands_free" />
+			<ImageView
+                android:id="@+id/layout_callin_divid_3"
+                android:layout_width="wrap_content"
+                android:layout_height="42dip"
+                android:background="@drawable/call_interface_dividing_line" />
+            <ImageView
+                android:id="@+id/layout_callin_transfer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:paddingBottom="5dip"
+                android:paddingTop="5dip"
+                android:src="@drawable/call_transfer_icon" />
+        </LinearLayout>
+        
+        <ImageButton
+            android:id="@+id/layout_call_reject"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:background="@drawable/call_button_reject"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip"
+            android:src="@drawable/call_interface_hang_up" />
+    </LinearLayout>
+
+</RelativeLayout>

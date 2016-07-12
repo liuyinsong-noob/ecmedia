@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:paddingLeft="10.0dip"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="70.0dip"
+        android:layout_marginBottom="10.0dip"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/voice_chat_avatar_l"
+                android:layout_width="48.0dip"
+                android:layout_height="48.0dip"
+                android:layout_marginRight="8.0dip"
+                android:background="@drawable/photo_default"
+                android:focusable="false"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/name_l"
+                android:layout_width="48.0dip"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="8203"
+                android:textColor="#ADADAD"
+                android:textStyle="bold"
+                android:layout_marginTop="3.0dip"
+                android:textSize="15.0sp" />
+        </LinearLayout>
+		<LinearLayout 
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="vertical">
+		    
+        <LinearLayout
+            android:id="@+id/voice_chat_ly_l"
+            android:layout_width="wrap_content"
+            android:layout_height="48.0dip"
+            android:background="@drawable/voice_inbox_recd_selector"
+            android:gravity="center_vertical"
+            android:minHeight="49.0dip"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/voice_chat_recd_tv_l"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="25.0dip"
+                android:src="@anim/voice_play_from" />
+
+            <TextView
+                android:id="@+id/voice_content_len_l"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="10.0dip"
+                android:gravity="center_vertical"
+                android:padding="3.0dip"
+                android:shadowColor="#80ffffff"
+                android:shadowDx="1.4"
+                android:shadowDy="1.4"
+                android:shadowRadius="1.0"
+                android:text="60&apos;&apos;"
+                android:textColor="#ff888888"
+                android:textSize="14.0sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+		<include 
+		    android:id="@+id/im_chat_ly"
+		    layout="@layout/im_chat_receive_item"/>
+		</LinearLayout>
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1.0px"
+            android:layout_weight="1.0" />
+    </LinearLayout>
+
+</LinearLayout>

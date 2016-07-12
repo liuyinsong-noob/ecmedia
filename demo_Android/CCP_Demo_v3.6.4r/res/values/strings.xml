@@ -1,0 +1,638 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="app_name">云通讯平台</string>
+    <string name="launcher_name">云通讯平台</string>
+    <string name="config_error_text">读取配置账号信息错误，请核对后重新输入</string>
+    <string name="im_btn_text">IM Demo</string>
+    <string name="rest_btn_text">Rest Demo</string>
+    <string name="voip_btn_text">VoIP Demo</string>
+    <string name="guide_title_text">导航</string>
+    <string name="guide_input_hint">请输入主账号</string>
+    <string name="guide_token_hint">请输入令牌</string>
+    <string name="guide_appid_hint">请输入应用ID</string>
+    <string name="guide_nikename_hint">请输入别名</string>
+    <string name="guide_explain_text">使用说明</string>
+    <string name="account_offline_notify">下线通知</string>
+    <string name="ccp_http_err" formatted="false">与云通讯服务器断开连接,请检查你的网络或稍后重试</string>
+    <string name="ccp_http_err_voip">网络断开，VoIP通话结束</string>
+    <string name="ccp_http_connect">已连接到云通讯服务器</string>
+    <string name="settings_logout">退出登录</string>
+    <string name="settings_logout_warning_tip">退出后不会删除任何历史数据，下次登录依然可以使用本帐号或者切换体验模式</string>
+    <string name="str_automatic_gain_label">kAgcAdaptiveDigital</string>
+    <string name="str_echocancelled_label">kEcAecm</string>
+    <string name="str_silencerestrain_label">kNsVeryHighSuppression</string>
+
+    <!-- voip -->
+    <string name="voip_btn_accept_text">接受</string>
+    <string name="voip_btn_reject_text">拒绝</string>
+    <string name="voip_btn_back_text">回拨呼叫</string>
+    <string name="voip_btn_voice_text">语音留言</string>
+    <string name="voip_btn_voip_text">免费电话</string>
+    <string name="voip_btn_direct_text">电话直拨</string>
+    <string name="voip_talk_dsp_text">请呼叫</string>
+    <string name="voip_unknown_user">未知联系人</string>
+    <string name="voip_unknown_num">未知号码</string>
+    <string name="voip_calling_finish">通话结束</string>
+    <string name="no_support_voip">呼叫失败或者对方不在线！</string>
+    <string name="voip_calling_wait">等待对方接听&#8230;</string>
+    <string name="voip_calling_timeout">无人应答,呼叫超时</string>
+    <string name="voip_call_fail">呼叫失败，请稍后重试&#8230;</string>
+    <string name="voip_calling_network_instability">对方不在线或者网络不给力,请直呼</string>
+    <string name="voip_call_back_success">回拨呼叫成功，请注意接听系统来电!</string>
+    <string name="voip_call_connect">正在呼叫对方，请稍后&#8230;</string>
+    <string name="voip_call_back_connect">正在呼叫，请稍后&#8230;</string>
+    <string name="voip_calling_refuse">对方拒接，请稍后再试</string>
+    <string name="voip_calling_busy">对方正忙，请稍后再拨</string>
+    <string name="voip_call_fail_no_cash">呼叫失败，请查询余额</string>
+    <string name="voip_is_talking_tip">云通讯正在通话中, 轻击以继续</string>
+
+    <!-- 增加Voip点对点、直拨错误码： -->
+    <string name="voip_call_fail_connection_failed_auth">第三方鉴权地址连接失败</string>
+    <string name="voip_call_fail_no_pay_account">第三方主账号余额不足</string>
+    <string name="voip_call_fail_not_find_appid">第三方应用ID未找到</string>
+    <string name="voip_call_fail_not_online_only_call">未上线仅限呼叫已配置测试号码</string>
+    <string name="voip_call_auth_failed">第三方鉴权失败，子账号余额不足</string>
+
+    <!-- other -->
+    <string name="notification_calling_title">VoIP通话</string>
+    <string name="notification_calling_content">VoIP通话界面请点击这里</string>
+    <string name="toast_call_phone_error">您手机的拨号权限受到限制，请打开</string>
+    <string name="edit_input_empty">您的输入为空!</string>
+    <string name="toast_invite_group_empty">您未选择任何联系人,请返回重新选择</string>
+    <string name="network_dial_number_format">请输入正确的手机号或带有区号的座机电话。</string>
+    <string name="voip_number_format">请输入正确的VoIP账号。</string>
+    <string name="main_account_empty">主账号为空!</string>
+    <string name="main_token_empty">主账号令牌为空!</string>
+    <string name="appid_empty">应用ID为空!</string>
+    <string name="nickname_empty">别名为空!</string>
+    <string name="phone_empty">手机号码为空!</string>
+
+    <!-- show account activity -->
+    <string name="show_account_title">账号信息</string>
+    <string name="main_account_title_text">主账号:</string>
+    <string name="main_token_title_text">主账号令牌:</string>
+    <string name="sub_account_title_text">子账号：%s</string>
+    <string name="sub_token_title_text">令牌：%s</string>
+    <string name="voip_code_title_text">VoIP账号:</string>
+    <string name="voip_pwd_title_text">VoIP密码：%s</string>
+    <string name="main_account_hint_text">请从网站的账号信息中获取主账号</string>
+    <string name="main_token_hint_text">请从网站的账号信息中获取主账号令牌</string>
+    <string name="sub_account_hint_text">请从网站的DEMO管理中获取子账号</string>
+    <string name="sub_token_hint_text">请从网站的DEMO管理中获取子账号令牌</string>
+    <string name="voip_code_hint_text">请从网站的DEMO管理中获取VoIP账号</string>
+    <string name="voip_pwd_hint_text">请从网站的DEMO管理中获取VoIP账号密码</string>
+    <string name="next_btn_text">下一步</string>
+    <string name="dialog_btn">确定</string>
+    <string name="dialog_cancle_btn">取消</string>
+
+    <!-- input info activity -->
+    <string name="input_info_title">输入信息</string>
+    <string name="app_title_person_info">个人信息</string>
+    <string name="str_voip_regist">注册</string>
+    <string name="src_phone_empty">本机号码为空</string>
+
+    <!-- select call activity -->
+    <string name="select_title_text">选择</string>
+    <string name="select_input_hint_text">请输入被叫手机号或对方VoIP帐号</string>
+    <!-- help activity -->
+    <string name="help_title_text">帮助</string>
+
+    <!-- dialog -->
+    <string name="dialog_message_text">正在登录演示平台,请稍候...</string>
+    <string name="log_regist_failed_text">初始化错误...</string>
+    <string name="log_regist_success_text">注册成功...</string>
+
+    <!-- voice -->
+    <string name="voip_btn_select_voip_text">VoIP演示</string>
+    <string name="voip_btn_select_intercom_text">实时对讲演示</string>
+    <string name="voip_btn_delay_voice_text">语音留言演示</string>
+    <string name="app_title_voice_select">演示选择</string>
+    <string name="app_title_delay_voice">语音留言首页</string>
+    <string name="btn_clear_all_text">清空</string>
+    <string name="create_new_voice">创建会话</string>
+    <string name="btn_title_back">返回</string>
+    <string name="voice_chat_recode_start">按住 说话</string>
+    <string name="voice_chat_recode_finish">松开 结束</string>
+    <string name="toast_recode_is_to_short">时间太短   录音失败</string>
+    <string name="ccp_sdk_init_str">CCPCall.init() already called.</string>
+    <string name="toast_voice_send_success">语音发送成功</string>
+    <string name="voice_cancel_rcd">手指上滑，取消发送</string>
+    <string name="voice_cancel_rcd_release">松开手指，取消发送</string>
+    <string name="notifycation_new_message_recive">发来一条新IM消息</string>
+    <string name="notifycation_new_message_title">新IM消息</string>
+    <string name="notifycation_new_inter_phone_title">新实时对讲通知</string>
+    <string name="str_select_voip_account_hit">选择VoIP帐号登录之后即可体验相关能力</string>
+    <string name="str_select_voip_account">请选择VoIP帐号:</string>
+    <string name="str_login">登录</string>
+    <string name="str_select_voip_list">选中VoIP帐号的基本信息:</string>
+    <string name="str_click_into_interphone">点击即可加入实时对讲</string>
+    <string name="str_top_notice_tips_invite">已邀请<xliff:g id="COUNT">%s</xliff:g>\t人参与,等待对方加入...</string>
+    <string name="str_voice_room_bottom1">长按麦克风开始抢麦</string>
+    <string name="str_voice_room_bottom2">抢麦成功会有振动反馈即可开始说话</string>
+    <string name="str_voice_room_bottom3">失败则需要重新抢</string>
+    <string name="str_voice_room_bottom4">其实...等TA说完再按就不用抢了嘛...</string>
+    <string name="str_interphone_str">对讲机</string>
+    <string name="str_quit">退出</string>
+    <string name="str_join_wait">等待加入</string>
+    <string name="str_join_success">已加入</string>
+    <string name="str_join_speaking">已加入,正在说话中...</string>
+    <string name="str_join_quit">已退出</string>
+    <string name="str_check_participants">请勾选本次对讲参与者(可多选)</string>
+    <string name="str_check_participants_transfer">选择接听方的子帐号或落地呼转到手机座机</string>
+    <string name="str_not_check_participants">还未勾选参与者,请勾选</string>
+    <string name="str_not_check_participants_transfer">还未勾选参与者,请勾选 \n勾选后：点击确定后通话将被转出</string>
+    <string name="str_check_participants_voip_call">请勾选本次VoIP通话参与者(单选)</string>
+    <string name="str_check_to_participants">点击开始实时对讲吧</string>
+    <string name="str_check_to_participants_voip_call">点击开始呼叫吧</string>
+    <string name="str_begin_to_interphone">开始对讲</string>
+    <string name="str_add_number_to_list">添加</string>
+    <string name="str_title_select_join_member">选择参与者</string>
+    <string name="str_btn_launch_talkback">发起对讲</string>
+    <string name="str_has_select_account_info">选中帐号的基本信息：</string>
+    <string name="str_join_inter_phone_failed" formatted="false">加入实时对讲失败！(%d)</string>
+    <string name="str_join_inter_phone_success">\t已加入实时对讲</string>
+    <string name="str_quit_inter_phone">\t已退出实时对讲</string>
+    <string name="str_control_mic_success">您已抢麦成功，可以开始说话</string>
+    <string name="str_control_mic_failed">抢麦失败，请稍后重试！</string>
+    <string name="str_invite_join_inter">%s\t邀请您参与对讲...</string>
+    <string name="str_speaking">\t正在说话...</string>
+    <string name="str_can_control_mic">现在可以开始抢麦对讲了</string>
+    <string name="str_regist_again">长时间未登录,请重新注册...</string>
+    <string name="str_dialog_title">提示</string>
+    <string name="str_dialog_message_default">处理中,请稍候...</string>
+    <string name="str_dialog_message">该功能暂不开放,请联系云通讯客服人员...</string>
+    <string name="str_notifycation_inter_phone">收到一个新的实时对讲邀请</string>
+    <string name="str_notifycation_inter_phone_clear">%s解散了</string>
+    <string name="str_inter_phone_room_title">在%s对讲</string>
+
+    <!-- video -->
+    <string name="str_video_call_begin">开始视频通话</string>
+    <string name="str_video_call_stop">结束视频通话</string>
+    <string name="str_video_btn_call_end">结束</string>
+    <string name="app_title_video">视频通话</string>
+    <string name="str_tips_wait_invited">正在等待对方接受邀请...</string>
+    <string name="str_tips_video_nvited">请选择本次视频通话的参与者（单选）</string>
+    <string name="str_check_to_participants_video_call">点击开始视频呼叫吧</string>
+    <string name="str_video_bottom_time" formatted="false">与%1$s视频通话中\t</string>
+    <string name="str_call_status" formatted="false">延迟时间%d（毫秒）丢包率:%d</string>
+    <string name="str_call_traffic_status" formatted="false">延迟时间%d（毫秒）丢包率:%d\n
+        发送：%d（KB）接收：%d（KB）</string>
+    <string name="str_traffic_status" formatted="false">发送：%d（KB）接收：%d（KB）</string>
+    <string name="str_video_call_end">%1$s对方拒绝,视频通话结束..</string>
+    <string name="str_video_invited_recivie">%1$s邀请您进行视频通话...</string>
+
+    <!-- market activity -->
+    <string name="str_market_head_note_text">请输入1个或多个需要外呼的号码</string>
+    <string name="str_phonenum_input_hint">手机号/固号（加区号）</string>
+    <string name="str_market_bottom_note_text">上述号码接听后即可听到预设的语音</string>
+    <string name="str_button_str_outbound">开始外呼</string>
+    <string name="str_market_head_text">营销外呼</string>
+    <string name="Toast_market_phone_empty_text">提示：号码不能为空</string>
+    <string name="str_market_state_answer_success">已成功接听</string>
+    <string name="str_market_state_other_busy">对方忙</string>
+    <string name="str_market_state_calling">正在呼叫</string>
+    <string name="str_market_state_call_wait">等待呼叫</string>
+
+    <!-- market state activity -->
+    <string name="str_state_success_listen">已成功接听</string>
+    <string name="str_state_busy">对方忙</string>
+    <string name="str_state_calling">正在呼叫</string>
+    <string name="str_state_wait_for_call">等待呼叫</string>
+    <string name="str_state_head_note">正在处理您提交的%d个号码</string>
+    <string name="str_market_state_head_text">营销外呼结果</string>
+
+    <!-- voice verification code activity -->
+    <string name="str_voice_vericode_top_tips">请输入要接收语音验证码的号码</string>
+    <string name="str_recive_number_input">号码(固号加区号)：</string>
+    <string name="str_code_title">验证码</string>
+    <string name="str_code_submit">提交</string>
+    <string name="app_title_veri_code">语音验证码</string>
+    <string name="app_title_veri_status">验证状态</string>
+    <string name="str_chatroom_name">房间名称:</string>
+    <string name="str_chatroom_pwd">房间密码:</string>
+    <string name="str_chatroom_name_input_hit">请输入群聊房间名称</string>
+    <string name="str_chatroom_pwd_input_hit">请输入群聊房间密码</string>
+    <string name="str_button_create_chatroom">创建</string>
+    <string name="str_click_into_chatroom">点击即可加入语音群聊房间</string>
+    <string name="camera_alert">Device has only one camera!</string>
+    <string name="dialog_alert_close">关闭</string>
+    <string name="camera_switch_front">切换至前置摄像头</string>
+    <string name="camera_switch_back">切换至后置摄像头</string>
+    <string name="str_net_phone_talk_mode">请选择通话方式</string>
+    <string name="str_top_voip_call_tips">您可以呼叫别人也可以让别人呼叫您</string>
+    <string name="str_top_landing_call_tips">请输入被叫号码并选择落地呼叫方式</string>
+    <string name="app_title_voip">VoIP网络语音电话</string>
+    <string name="app_title_landingcall">落地电话</string>
+    <string name="str_get_verify_code">获取语音验证码</string>
+    <string name="str_verify_code_timer">%d秒后重新获取</string>
+    <string name="str_verify_status_success">验证成功</string>
+    <string name="str_verify_status_failed">验证失败</string>
+    <string name="str_verify_status_success_tips">您输入的验证码与系统生成的一致,完成验证</string>
+    <string name="str_verify_status_failed_tips">验证密码不正确,请按以下提示操作:</string>
+    <string name="dialog_verify_message_text">语音验证码验证中,请稍候...</string>
+    <string name="str_chatroom_list_join_unfull" formatted="false">%1$s人加入,由%2$s创建</string>
+    <string name="str_chatroom_list_join_full" formatted="false">%1$s人加入(已满),由%2$s创建</string>
+    <string name="str_join_chatroom_success">\t已加入语音群聊</string>
+    <string name="str_join_chatroom_failed" formatted="false">加入语音群聊失败(%d)</string>
+    <string name="app_title_default">%s的房间</string>
+    <string name="app_title_chatroom_conv">语音群聊演示</string>
+    <string name="app_title_chatroom_create">创建语音房间</string>
+    <string name="app_title_right_button">邀请</string>
+    <string name="dialog_title_invite">接听电话加入群聊</string>
+    <string name="dialog_title_summary">请输入要邀请加入语音会议的电话号码（固号需加拨区号），对方将接到一个电话，接通后即可加入会议</string>
+    <string name="str_invite_join_room" formatted="false">%1$s正在邀请%2$s加入房间</string>
+    <string name="str_chatroom_join">%s加入房间</string>
+    <string name="str_chatroom_kick">%s被踢出房间</string>
+    <string name="str_chatroom_forbid_speak">%s被禁言</string>
+    <string name="str_chatroom_can_speak">%s恢复可讲</string>
+    <string name="str_chatroom_exit">%s退出房间</string>
+    <string name="toast_invite_join_room_success">邀请发送成功,请等待对方同意</string>
+    <string name="toast_invite_join_room_failed">邀请发送失败(%d)</string>
+    <string name="spinner_1_color_prompt">选择环境</string>
+    <string name="toast_get_chatroom_list_failed" formatted="false">获取聊天室列表失败(%1$s,%2$s)</string>
+    <string name="dialog_message_chatroom_auth_reason">该聊天室设置了身份验证,请输入密码</string>
+    <string name="top_tips_connecting_wait">连接中,请稍候...</string>
+    <string name="top_tips_intercom_ing">正在进行实时对讲</string>
+    <string name="toast_voice_send_failed">IM发送失败</string>
+    <string name="toast_local_voice_file_does_not_exist">本地语音文件不存在或已经删除</string>
+    <string name="toast_get_voice_mail_list_failed" formatted="false">获取语音留言列表失败(%1$s,%2$s)</string>
+    <string name="top_tips_chatroom_ing">正在进行语音群聊</string>
+    <string name="str_input_called_voip">输入被叫VoIP后,才能呼出VoIP电话</string>
+    <string name="str_connection_ready">连接已准备就绪,可以呼出或接听电话</string>
+    <string name="str_dialog_init_error_title">注册失败</string>
+    <string name="str_dialog_init_error_message">注册失败,请稍候重试</string>
+    <string name="dialog_title_input_number">请输入要添加的VoIP号码</string>
+    <string name="dialog_title_input_number_transfer">请输入电话号码或选择联系人</string>
+    <string name="dialog_title_input_audio_name">输入外呼语音文件名</string>
+    <string name="str_chatroom_mike_enable">可点击下方麦克风静音</string>
+    <string name="str_chatroom_mike_disenable">麦克风已关闭，可点击开启</string>
+
+    <!-- im -->
+    <string name="app_title_file_browser">选择文件</string>
+    <string name="app_title_IM">XX信 IM</string>
+    <string name="app_title_group_msg_list">XX信 IM</string>
+    <string name="file_name">文件名称：</string>
+    <string name="file_size">文件大小：</string>
+    <string name="empty_folder">当前文件夹没有文件</string>
+    <string name="choose_uploadfile_invalidate">该文件为无效文件</string>
+    <string name="str_im_chat_interphone">对讲</string>
+    <string name="str_im_chat_video">视频</string>
+    <string name="str_im_chat_voice">语音</string>
+    <string name="str_im_chat_file">文件</string>
+    <string name="title_confirm_send">是否发送该文件？</string>
+    <string name="str_im_send">发送</string>
+    <string name="sdcard_not_file_trans_disable">无SD卡，无法发送文件！</string>
+    <string name="str_tips_im_nvited">请选择本次IM点对点聊天的参与者（单选）</string>
+    <string name="str_check_to_participants_im_talk">点击开始IM点对点聊天吧</string>
+    <string name="str_message_list_tips">消息列表</string>
+    <string name="str_contact">联系人</string>
+    <string name="str_group">群组</string>
+    <string name="media_no_memory">储存卡存储空间不足</string>
+    <string name="media_ejected">储存卡已拔出，Demo语音功能将暂时不可用</string>
+    <string name="toast_file_exist">选择的文件本地不存在或者已经删除</string>
+    <string name="toast_get_mediamsg_list_failed" formatted="false">获取多媒体消息列表失败(%1$s,%2$s)</string>
+    <string name="str_group_base_info_tips">群基本信息</string>
+    <string name="str_group_name_hint">群组名称</string>
+    <string name="str_group_notice_hint">群公告(选填)</string>
+    <string name="str_group_notice_tips">群公告</string>
+    <string name="str_group_members_tips">群成员</string>
+    <string name="app_title_create_new_group">建立新群组</string>
+    <string name="str_listview_empty">暂无消息</string>
+    <string name="str_group_notice_default">各位同学,快来一起体验与通讯的信功能演示：群组及点对点IM</string>
+    <string name="str_clear_chat_message">清空聊天记录</string>
+    <string name="str_group_quit">退出该群组</string>
+    <string name="str_group_dissolution">解散群组</string>
+    <string name="str_group_list_join_tips">我加入的群组</string>
+    <string name="str_group_list_pub_tips">公共群组</string>
+    <string name="str_group_listall_tips">群组列表</string>
+    <string name="app_title_group">群组</string>
+    <string name="str_button_new_create_group">新建</string>
+    <string name="toast_group_name_empty">群组名字不能为空</string>
+    <string name="dialog_load_group_list">正在加载群组列表,请稍候...</string>
+    <string name="toast_click_into_group_error">该群组数据不正确,请尝试重新加载</string>
+    <string name="toast_group_id_error">该群组ID不存在,加入失败</string>
+    <string name="dialog_load_group_info">正在加载群信息,请稍候...</string>
+    <string name="dialog_load_hold">正在加载,请稍候...</string>
+    <string name="toast_group_click_error">该成员不存在该群组,请尝试返回刷新列表</string>
+    <string name="toast_delete_group_member_error">删除群组成员失败,请稍候再试</string>
+    <string name="dialod_message_remove_user" formatted="false">您确认要将%1$s移除群组？</string>
+    <string name="dialod_title_remove_user">确认删除</string>
+    <string name="dialod_message_uer_removing">删除中,请稍候...</string>
+    <string name="str_check_participants_group">请勾选待加入群成员（可多选）</string>
+    <string name="str_check_to_participants_group">点击开始邀请加入群</string>
+    <string name="menu_delete_group">删除</string>
+    <string name="right_button_modify_group">修改</string>
+    <string name="dialod_message_modify_group">修改群组信息中,请稍候...</string>
+    <string name="dialod_message_operationling">处理中,请稍候...</string>
+    <string name="toast_message_modify_group_success">更新群组信息成功.</string>
+    <string name="app_title_join_group">加入的群</string>
+    <string name="app_title_public_group">公共群组</string>
+    <string name="str_notice_group_dynamic">群动态预留显示位置</string>
+    <string name="str_title_right_group_info">群资料</string>
+    <string name="dialog_title_auth">身份验证</string>
+    <string name="dialog_message_auth_reason">该群设置了身份验证,请输入加群理由</string>
+    <string name="dialog_message_send_apply_reason">正在发送申请验证请求,请稍候...</string>
+    <string name="toast_wait_auth_success">成功发送验证请求,请等待群管理员验证</string>
+    <string name="str_notice_system_message">显示所有收到的系统通知</string>
+    <string name="app_title_system_notice">系统通知</string>
+    <string name="str_system_message_type_apply">群组申请</string>
+    <string name="str_system_message_type_invite">群组邀请</string>
+    <string name="str_system_message_group_notice">群组通知</string>
+    <string name="str_system_message_operation_result_refuse">已拒绝</string>
+    <string name="str_system_message_operation_result_through">已接受</string>
+    <string name="str_system_apply_reason" formatted="false">申请理由:%1$s</string>
+    <string name="str_system_come_from" formatted="false">所属群组:%1$s</string>
+    <string name="str_group_info">群组类型</string>
+    <string name="str_apply_join_group_model">申请加入模式</string>
+    <string name="str_group_info_spinner">选择一个群组类型</string>
+    <string name="str_apply_join_group_model_spinner">选择申请加入的模式</string>
+    <string name="str_is_need_to_agree">是否需要被邀请人确认</string>
+    <string name="dialog_title_invite_info">邀请信息</string>
+    <string name="dialog_message_invite">请输入邀请对方加入群组的理由,并且选择是否需要被邀请人确认(即自动加入)</string>
+    <string name="toast_clear_all_group_message">已清空所有群组聊天信息</string>
+    <string name="str_system_message_remove">您被群管理员移除出群组</string>
+    <string name="toast_send_group_message_failed">发送失败</string>
+    <string name="str_notice_unread_message" formatted="false">您共有%1$s条未读系统信息</string>
+    <string name="str_apply_join_group">申请加入</string>
+    <string name="str_not_see_all_mgroup_info">您未加入该群组\n\n选择加入该群组可使用更多功能</string>
+    <string name="str_not_group_members">非群成员</string>
+    <string name="toast_declared_word_number">对不起,群组公告字数超过限制！</string>
+    <string name="toast_accept_join_group_op">管理员同意了您的加群请求</string>
+    <string name="str_group_list_desc_join" formatted="false">%1$s人\t已加入</string>
+    <string name="str_group_list_desc_unjoin" formatted="false">%1$s人</string>
+    <string name="dialog_list_item_title">选择</string>
+    <string name="menu_forbidden_to_speak">禁言</string>
+    <string name="fmt_iap_err">网络连接不可用，请稍候重试</string>
+    <string name="menu_forbidden_to_speak_cancle">取消禁言</string>
+    <string name="app_title_group_detail">群资料</string>
+    <string name="app_title_group_card">群名片</string>
+    <string name="str_editor_group_card_information_tips">编辑我在该群的名片信息</string>
+    <string name="app_title_manager_member">成员管理</string>
+    <string name="str_group_card_id">群组ID</string>
+    <string name="str_group_card_voipaccount">VoIP帐号</string>
+    <string name="str_group_card_name">群昵称</string>
+    <string name="str_group_card_sex">性别</string>
+    <string name="str_group_card_birthday">生日</string>
+    <string name="str_group_card_telephone">电话</string>
+    <string name="str_group_card_mail">邮箱</string>
+    <string name="str_group_card_signature">备注</string>
+    <string name="btn_complete">完成</string>
+    <string name="app_title_group_member_card">成员资料</string>
+    <string name="toast_str_modify_card_failed">修改群组名片失败</string>
+    <string name="app_title_right_button_pull_down">管理</string>
+    <string name="app_title_right_button_pull_down_1">其他</string>
+    <string name="pull_invited_phone_member">邀请电话用户加入</string>
+    <string name="pull_manager_member">管理成员</string>
+    <string name="pull_dissolution_room">解散房间</string>
+    <string name="pull_mode_speaker">使用扬声器模式</string>
+    <string name="pull_mode_earpiece">使用听筒模式</string>
+    <string name="fmt_route_phone">已切换为听筒播放模式</string>
+    <string name="fmt_route_speaker">已切换为扬声器播放模式</string>
+    <string name="dialog_title_dissmiss_chatroom">解散确认</string>
+    <string name="dialog_message_dissmiss_chatroom">您确定要解散该房间吗，解散后不可恢复 </string>
+    <string name="dailog_button_dissmiss_chatroom">解散 </string>
+    <string name="dialog_title_be_dissmiss_chatroom">房间被解散 </string>
+    <string name="dialog_message_be_dissmiss_chatroom">抱歉，该房间已被创建者解散，点击确定以退出 </string>
+    <string name="dialog_title_be_kick_chatroom">您已被请出房间 </string>
+    <string name="dialog_message_be_kick_chatroom">抱歉,您被创建者请出房间了,点击确定以退出 </string>
+    <string name="str_member_kicked_out">可将指定成员踢出房间</string>
+    <string name="str_member_kicked_out_failed" formatted="false">踢出成员失败(%1$s)</string>
+    <string name="str_member_forbid_error" formatted="false">设置失败(%1$s)</string>
+    <string name="dialog_chatroom_title">退出选项</string>
+    <string name="dialog_chatroom_message">在您退出后需要保留该房间吗？</string>
+    <string name="dialog_chatroom_exit_message">确认要退出吗？</string>
+    <string name="dialog_n_exit">退出</string>
+    <string name="dialog_p_dissolution">解散</string>
+
+    <!-- setting -->
+    <string name="str_setting_head1">参数配置</string>
+    <string name="str_setting_item_automanage">自动增益控制</string>
+    <string name="str_setting_item_echocancel">回音消除</string>
+    <string name="str_setting_item_silencerestrain">静音抑制</string>
+    <string name="str_setting_item_videostreamcontrol">视频码流控制</string>
+    <string name="str_setting_item_codec">支持编解码</string>
+    <string name="str_setting_item_video_call_resolution">视频通话分辨率</string>
+    <string name="str_setting_item_abount">关于</string>
+    <string name="str_setting_item_netcheck">网络检测</string>
+    <string name="str_setting_item_ischunked">语音边录边传</string>
+    <string name="str_setting_item_p2p">P2P设置</string>
+    <string name="str_setting_item_p2p_startbitrate">通话码流设置</string>
+    <string name="str_setting_item_p2p_video_mosaic">通话马赛克抑制</string>
+    <string name="str_setting_head2">其它</string>
+    <string name="str_setting_head">设置</string>
+    <string name="str_setting_automanage_head_note">请点击选择</string>
+    <string name="str_setting_select_codec">请选择设置编解码</string>
+    <string name="str_setting_select_codec_title">设置编解码</string>
+    <string name="str_tryagain">重试</string>
+    <string name="title_dialog">网络状态提示</string>
+    <string name="content_dialog">当前网络状态差</string>
+    <string name="nivbutton_dialog">知道了</string>
+    <string name="str_network_monitor">停止</string>
+    <string name="str_setting_save">保存</string>
+    <string name="str_setting_dialog_input_vide_rule">输入规则：1-5位整数</string>
+    <string name="str_setting_dialog_input_startbitrate_rule">输入规则：30-600位整数</string>
+    <string name="str_setting_dialog_input_p2p_rule">输入规则：端口不输入默认3478,如(42.121.15.99:3478)</string>
+    <string name="dialog_p2p_mesage">p2p服务器已经改变</string>
+    <string name="str_voip_not_support">该版本暂不不支持语音</string>
+    <string name="str_video_not_support">该版本暂不不支持视频</string>
+    <string name="str_interphone_not_support">该版本暂不不支持实时对讲</string>
+    <string name="str_chatroom_not_support">该版本暂不不支持群聊</string>
+    <string name="str_other_voip_not_support">对方版本不支持音频聊天</string>
+    <string name="str_other_video_not_support">对方版本不支持视频聊天</string>
+    <string name="chatting_rcd_time_limit">录音时间还剩%d秒</string>
+    <string name="str_p2p_enable">P2P服务器设置已启用</string>
+    <string name="str_sdk_support_tips" formatted="true">SDK版本：(%1$s)\t\tDemo版本：(%4$s)\n支持音频：(%3$s)\t\t支持视频：(%2$s)</string>
+    <string name="str_use_handset">使用听筒播放语音</string>
+    <string name="voice_listen_earpiece">当前为(听筒 )播放语音模式</string>
+    <string name="voice_listen_speaker">当前为 (扬声器)播放语音模式</string>
+    <string name="setting_call_recording">音视频通话录音</string>
+
+    <!-- 春雨 -->
+    <string name="xh_apptitle_expert_information">专家咨询</string>
+    <string name="xh_tilte_right_button_admin">管理</string>
+    <string name="xh_horce_str">房地产</string>
+    <string name="xh_bank_str">银行与金融</string>
+    <string name="xh_knowledge_str">知识产权</string>
+    <string name="xh_defend_str">刑事辩护</string>
+    <string name="xh_labour_law_str">劳动法</string>
+    <string name="xh_tax_str">税务</string>
+    <string name="xh_app_name">掌上专家</string>
+    <string name="xh_lawyer_list_str" formatted="false">%1$s专家</string>
+    <string name="xh_lawyer_order_str">预约联系</string>
+    <string name="xh_lawyer_detail_str">专家详情</string>
+    <string name="xh_call_network_str">网络电话拨打</string>
+    <string name="xh_network_hint">当前网络不可用，请稍后重试！</string>
+    <string name="xh_special">"&lt;font color='#000000' size='16'>专业领域：&lt;/font>\t&lt;font color='#9C9C9C' size='13'>中西医结合 | 各种疑难杂症 | 疾病防治 | 急救处理 | 养生保健 | 健康咨询 | 用药建议  | 专业精湛 | 医术高超 | 包治百病 | 华佗再世&lt;/font>"</string>
+    <string name="xh_personal_info">"&lt;font color='#000000' size='16'>个人信息：&lt;/font>\t&lt;font color='#9C9C9C' size='13'>主治医师（attending physician）是医院的职称之名，医生职称的一种，比住院医师高一级，比副主任医师低一级，属于中级职称。 不同与主治医生或“主治大夫”。医院的住院部各科室，将床位分配给各医生，每一床位的主要负责的医生，就被患者和同行称为主治医生或主治大夫，他们可由住院医师、主治医师和副主任医师担任。是一种责任人称呼。&lt;/font>"</string>
+    <string name="progress_text_1">数据加载中,请稍侯...</string>
+    <string name="progress_text_2">请稍侯...</string>
+    <string name="progress_title">提示</string>
+    <string name="loading">正在加载...</string>
+    <string name="request_failed">请求失败...</string>
+    <string name="str_the_lawyer_fee">"医生咨询费：\t&lt;font color='#0074a8'>60\t&lt;/font>元\t/\t15分钟"</string>
+    <string name="str_xh_call_with" formatted="false">与%1$s通话</string>
+    <string name="str_chatting_resend_title">重发</string>
+    <string name="str_chatting_resend_content">确认重发该消息？</string>
+    <string name="str_video_desc">"&lt;font color='#FFFFFF' size='16'>能力介绍：&lt;/font>\t&lt;font color='#D9D4D1' size='13'>云通讯视频会议能力提供多路交叉视频以及一对多视频（可手动切换或自动切换到发言方）并支持电话用户语音加入，同时提供丰富的会议管理能力以满足不同的应用场景&lt;/font>
+       &lt;br/>&lt;br/>&lt;font color='#CCCCCC' size='13'>Demo演示一对多视频会议，即多方查看一方视频、可手动切换，语音为多方实时参与.&lt;/font>"</string>
+    <string name="str_create_new_video_conference">暂无房间，请先创建一个</string>
+    <string name="str_button_new_video_conference">创建视频会议房间</string>
+    <string name="apptitle_video_conference">会议房间列表</string>
+    <string name="video_conference_name" formatted="false">%1$s的房间</string>
+    <string name="str_click_into_video_conference">点击即可加入视频会议</string>
+    <string name="str_video_chatting_tips" formatted="false">已邀请%1$s人参与，等待对方加入...</string>
+    <string name="str_create_input_name">请输入房间名称</string>
+    <string name="str_join_video_c_failed" formatted="false">加入视频会议失败(%d)</string>
+    <string name="video_tips_joining" formatted="false">当前处于%1$s会议中</string>
+    <string name="str_video_conference_join">%s加入了视频会议</string>
+    <string name="str_video_conference_kick">%s被踢出了视频会议</string>
+    <string name="str_video_conference_exit">%s退出了视频会议</string>
+    <string name="dialog_title_be_dissmiss_video_conference">视频会议被解散 !</string>
+    <string name="dialog_message_be_dissmiss_video_conference">抱歉，该视频会议已被创建者解散，点击确定以退出 </string>
+    <string name="video_tips_switch" formatted="false">%1$s被切换为主屏</string>
+    <string name="toast_video_dismiss_result" formatted="false">视频会议解散失败，请稍候重试(%d)</string>
+    <string name="video_c_logout">退出视频会议</string>
+    <string name="video_c_dismiss">解散视频会议</string>
+    <string name="video_c_logout_warning_tip">真的要退出视频会议吗？退出后可以再次点击会议列表加入会议</string>
+    <string name="video_c_dismiss_warning_tip">真的要解散视频会议吗？解散后所有成员将被请出会议</string>
+    <string name="str_tips_no_video_c">暂无视频会议，快去创建一个视频会议体验吧</string>
+    <string name="str_instruction_clicktips_1">点击</string>
+    <string name="str_instruction_clicktips_2">可对会议成员进行管理</string>
+    <string name="str_instruction_clicktips_3">顶部闪动的时候会有新的通知信息，您还可以通过点击“结束”来选择是否退出或者解散视频会议</string>
+    <string name="str_video_manager_main_screen">设置为主屏</string>
+    <string name="str_video_manager_self_main_screen">设置自己为主屏</string>
+    <string name="str_video_manager_remove">移除该成员</string>
+    <string name="str_video_switch_failed" formatted="false">切换视频会议主屏失败,(%d)</string>
+    <string name="str_video_remove_failed" formatted="false">移除成员(%1$s)失败,(%2$s)</string>
+    <string name="str_system_message_remove_v_title">您被群管理员移除出会议！</string>
+    <string name="str_system_message_remove_v_message">抱歉，您被群管理员移除出会议，点击确定以退出</string>
+    <string name="str_switch_video_tips">新设置视频席位的id和当前的id相同， 会取消强制设置视频席位，变成自动切换</string>
+    <string name="str_switch_video_free">设置主屏自动切换</string>
+    <string name="str_call_failed">呼叫失败</string>
+    <string name="voip_not_wifi_warnning_title">提示</string>
+    <string name="voip_not_wifi_warnning_message">在移动网络环境下会影响视频和音频质量，并产生手机流量。</string>
+    <string name="load_failed_network">当前网络不可用,请检查你的网络设置。</string>
+    <string name="str_request_sp">请求视频</string>
+    <string name="str_quxiao_sp">取消视频</string>
+    <string name="str_da">放大</string>
+    <string name="str_xiao">缩小</string>
+
+    <!-- experience model -->
+    <string name="experience_login_head">客户体验登录</string>
+    <string name="experience_forget_password">忘记密码？</string>
+    <string name="experience_input_regist_mail">请输入云通讯注册邮箱</string>
+    <string name="experience_regist_help_01">登录cloopen.com并注册</string>
+    <string name="experience_regist_help_02">填写注册信息</string>
+    <string name="experience_regist_help_03">验证邮箱以及手机号</string>
+    <string name="experience_regist_help_04">注册激活成功获得8元测试体验费</string>
+    <string name="experience_forgetpwd_head">忘记密码帮助</string>
+    <string name="experience_forgetpwd_help_01">登录cloopen.com点击登录</string>
+    <string name="experience_forgetpwd_help_02">点击右侧“忘记密码”</string>
+    <string name="experience_forgetpwd_help_03">输入注册邮箱并按提示操作</string>
+    <string name="experience_forgetpwd_help_04">重置密码成功，使用新密码登录</string>
+    <string name="experience_account_head">账户信息</string>
+    <string name="experience_account_tip_str">您可以登录cloopen.com查询该账户基本信息、余额、应用计费等相关信息及创建新应用、充值等相关操作.</string>
+    <string name="experience_account_btn_str">测试号码绑定</string>
+
+    <!-- version 3.6 -->
+    <string name="app_title_tips">能力演示</string>
+    <!-- the mode developer -->
+    <string name="str_mode_developer">开发模式</string>
+    <!-- the mode developer login desc -->
+    <string name="str_mode_developer_desc">需预先导入配置文件</string>
+    <!-- the mode experience -->
+    <string name="str_mode_experience">体验模式</string>
+    <!-- the mode experience login desc -->
+    <string name="str_mode_experience_desc">用云通讯帐号登录使用</string>
+    <!-- ccp launcher developer mode desc -->
+    <string name="str_developer_mode_desc">请按cloopen.com开发文档说明完善配置文件，并导入SD卡或描述文件来使用</string>
+    <!-- ccp experience developer mode desc -->
+    <string name="str_experience_mode_desc">通过云通讯账户登录即可体验全部功能，但部分功能会因应用为上线而受到限制</string>
+
+    <!-- the capacity main item internet phone call -->
+    <string name="str_voice">通话</string>
+    <string name="str_video">视频</string>
+    <string name="str_ivr">IVR</string>
+    <string name="str_more">More</string>
+    <string name="str_developer_instructions">如果您是开发者
+       \n并已查阅cloopen.com中的
+       \n相关开发文档，
+       \n左侧属于您</string>
+    <string name="str_experienc_instructions">如果您只想体验下云通讯的能力
+		\n不搞代码，请点击右侧</string>
+
+    <!-- The suaccount list select tips -->
+    <string name="str_account_choose_notice">已成功登录，请选择一个子帐号开始体验</string>
+    <!-- Then experience mode select subaccount -->
+    <string name="str_account_choose_tips">子帐号类似手机号，用于区分用户或设备.部分功能需在2&#8211;3台设备登录不同子帐号.</string>
+    <!-- The building test number attentions -->
+    <string name="str_building_attention">未上线应用只能向测试号打电话，发短信. 落地电话，语音验证码、营销外呼受此限制.</string>
+    <!-- The capacity list tips -->
+    <string name="str_capacity_attention">请点击各个功能按钮，体验各项功能演示.</string>
+    <!-- The account list label -->
+    <string name="str_account_list_label">子帐号列表：</string>
+    <!-- The building test number label -->
+    <string name="str_building_label">测试号码：</string>
+    <!-- The experience mode title -->
+    <string name="app_title_experience_login">客户体验登录</string>
+    <!-- The build test number title -->
+    <string name="app_title_build_number">绑定测试号码</string>
+    <!-- The developer mode title -->
+    <string name="app_title_developer_login">开发模式登录</string>
+    <!-- The subaccount list unselected button hint -->
+    <string name="str_no_choice_account">还未选择子帐号，请点选</string>
+    <!-- The building test number tips -->
+    <string name="str_building_tips">Demo及为上线应用建议绑定1&#8211;2个落地测试号码</string>
+    <string name="str_input_testnumber">请输入要绑定的手机或固话号码</string>
+    <string name="str_input_testnumbe_hint">固话需加区号</string>
+    <string name="str_build_failed" formatted="false">绑定失败(%1$s),请稍候重试</string>
+    <!-- The select subaccount label -->
+    <string name="str_select_subaccount_label">请选择子帐号：</string>
+    <string name="str_subaccount_obtaining">子账号初始化中...</string>
+
+    <!-- The login tips -->
+    <string name="str_login_tips">帐号不可直接输入，配置方法请查看开发文档。选择子帐号登录后即可体验相关能力</string>
+    <string name="str_verify">已验证</string>
+    <string name="str_un_building">未绑定</string>
+    <string name="ccp_logout_processing_txt">正在退出...</string>
+    <string name="toast_login_params_empty">邮箱或密码不能为空</string>
+    <string name="str_outcalls_default_mediatext">欢迎使用云通讯外呼通知，外呼通知能给您带来更多客户，支持文字以及固定语音的播放，支持呼叫手机及固定电话，使用方便，质优价廉，谢谢您的收听。</string>
+    <string name="str_call_record_start">开始通话录音</string>
+    <string name="str_call_record_success" formatted="false">通话录音文件保存位置：(%1$s)</string>
+    <string name="str_call_record_error_0" formatted="false">通话录音失败(%d)</string>
+    <string name="str_call_record_error_1" formatted="false">通话录音写文件失败(%d)，保留已经保存的录音</string>
+    <string name="str_call_record_error_2" formatted="false">通话录音失败(%d)，录音文件删除</string>
+    <string name="toast_test_number" formatted="false">绑定测试号码成功，[%1$s]</string>
+    <string name="contact_search">联系人搜索</string>
+    <string name="str_video_switch">音视频切换</string>
+    <string name="vedio_switch">音视频切换</string>
+    <string name="tip_autoclose">创建人退出时自动解散(单击选择)</string>
+    <string name="tip_autojoin">创建人是否自动加入</string>
+    <string name="roometype">房间类型:</string>
+    <string name="vociemode">声音模式:</string>
+    <string name="allnoticevoice">全部提示音</string>
+    <string name="onlybgmusic">没有提示音有背景音</string>
+    <string name="nonevoice">无提示音无背景音</string>
+    <string name="donotdeleteroom">不自动删除房间</string>
+    <string name="deleteroom">自动删除房间</string>
+    <string name="chatroom_control_tip">选择</string>
+    <string name="chatroom_c_join">IP加入会议</string>
+    <string name="chatroom_c_dismiss">解散会议</string>
+    <string name="chatroom_c_managemenber">管理会议</string>
+    <string name="mulit_video_unjoin">未加入</string>
+	<string name="video_publish_video_frame">发布视频</string>
+	<string name="video_unpublish_video_frame">取消发布视频</string>
+</resources>

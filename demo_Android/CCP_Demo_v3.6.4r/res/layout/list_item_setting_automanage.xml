@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/conversation_item_ll"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/voice_list_item_selector"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="4.0dip" >
+
+	<TextView
+        android:id="@+id/name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:paddingLeft="25.0dip"
+        android:singleLine="true"
+        android:text="Jorstin Chan"
+        android:textColor="@color/voice_conv_textcolor"
+        android:textSize="16.0dip" />
+
+    <CheckBox
+        android:id="@+id/check_box"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10.0dip"
+        android:layout_weight="4.0"
+        android:button="@drawable/checkbox_btn"
+        android:clickable="false"
+        android:focusable="false"
+        android:visibility="visible"
+        android:focusableInTouchMode="false"
+        android:gravity="right|center_vertical"
+        android:paddingRight="10dip" />  
+</LinearLayout>

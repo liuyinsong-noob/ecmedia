@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/video_bg"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/small_margin_space" >
+
+    <include
+        android:id="@+id/nav_title"
+        layout="@layout/ccp_title" />
+
+    <TextView
+        android:id="@+id/video_notice_tips"
+        style="@style/notice_statusbar_appearance"
+        android:text="@string/str_input_testnumber" />
+
+    <LinearLayout
+        android:id="@+id/number_area"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/small_margin_space" >
+
+        <include
+            android:id="@+id/test_phone"
+            layout="@layout/ccp_edittext" />
+
+    </LinearLayout>
+
+    <com.voice.demo.views.CCPButton
+        android:id="@+id/build_confrim"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/small_margin_space"
+        android:layout_marginRight="@dimen/small_margin_space"
+        android:background="@drawable/ccp_no_enabled" />
+
+</LinearLayout>

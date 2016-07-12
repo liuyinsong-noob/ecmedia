@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/id_list_ly"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_black"
+    android:paddingLeft="@dimen/mode_desc_space"
+    android:minHeight="90.0dip"
+    android:orientation="vertical"
+    android:visibility="visible" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3.0dip"
+        android:singleLine="true"
+        android:text="@string/str_has_select_account_info"
+        android:textColor="@android:color/white"
+        android:textSize="13.0sp" />
+
+    <TextView
+        android:id="@+id/sub_account"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        style="@style/CCPAccount2"/>
+
+    <TextView
+        android:id="@+id/sub_token"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+		style="@style/CCPAccount2"/>
+
+    <TextView
+        android:id="@+id/voip_token"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+		style="@style/CCPAccount2"/>
+
+</LinearLayout>

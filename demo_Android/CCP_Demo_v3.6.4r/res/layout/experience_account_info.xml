@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/video_bg"
+    android:paddingBottom="@dimen/small_margin_space" >
+
+    <include 
+        android:id="@+id/nav_title"
+        layout="@layout/ccp_title" />
+
+    <ScrollView
+        android:id="@+id/info_content"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nav_title"
+        android:fadingEdge="none"
+        android:scrollbars="none" >
+
+        <include 
+            android:layout_height="wrap_content"
+            layout="@layout/experience_login_input" />
+    </ScrollView>
+
+
+</RelativeLayout>

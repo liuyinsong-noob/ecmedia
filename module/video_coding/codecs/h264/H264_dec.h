@@ -19,7 +19,7 @@ extern "C"
 #elif MAC_IPHONE
     #include "libavcodec/avcodec_ios.h"
 #else
-    #include "libavcodec/avcodec_android.h"
+    #include "libavcodec/avcodec.h"
 #endif
 }
 

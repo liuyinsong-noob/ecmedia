@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+-->
+<resources>
+
+    <color name="white">#FFFFFFFF</color>
+    <color name="darkRed">#AA2222</color>
+    <color name="darkGrey">#848284</color>
+    <color name="blue">#0000FF</color>
+    <color name="black">#FF000000</color>
+    <color name="flash">#D3EBF7</color>
+    <color name="half_transparent">#66000000</color>
+    <color name="white_half_transparent">#66ffffff</color>
+    <!-- 淡色 -->
+    <color name="lightBlue">#00A8FF</color>
+    <color name="lightRed">#FB6D6D</color>
+    <color name="lightYellow">#F9FB6B</color>
+    <color name="lightGreen">#00CD66</color>
+    <color name="lightPurple">#9370DB</color>
+    <color name="lightOrange">#FBB844</color>
+    <color name="lightGrey">#CBCED0</color>
+    <color name="query_free">#708FF6</color>
+    <color name="darkGray">#969395</color>
+    <color name="query_free_sms_title">#277fbd</color>
+    <color name="transparent">#00ffffff</color>
+    <color name="voip_interface_text_color">#bababa</color>
+
+    <drawable name="group_chat_bg_normal">#f4f4f4</drawable>
+    <drawable name="group_chat_bg_pressed">#9ed031</drawable>
+
+    <color name="pop_window_pressed_back">#ff277fbd</color>
+    <color name="header_btn_backgroud_press_color">#ff053e58</color>
+    <color name="lightgrey">#ff888888</color>
+
+    <drawable name="video_notify_original_state">#55BC75</drawable>
+    <drawable name="video_notify_new_state">#222222</drawable>
+    
+    <color name="ccp_alert_bg">#3F474A</color>
+    <color name="ccp_translucent_half">#b0000000</color>
+    <color name="ccp_video_transparent">#f0000000</color>
+	
+	<!-- version 3.6 -->
+	<!-- developer mode launcher normal color -->
+    <color name="ccp_developer_normal">#B6D556</color>
+    <!-- developer mode launcher pressed color -->
+    <color name="ccp_developer_pressed">#88A040</color>
+    <!-- experience mode launcher normal color -->
+    <color name="ccp_experience_normal">#55BC75</color>
+    <!-- experience mode launcher normal color -->
+    <color name="ccp_experience_pressed">#408D58</color>
+    <color name="ccp_attentoin_color">#CCCCCC</color>
+</resources>

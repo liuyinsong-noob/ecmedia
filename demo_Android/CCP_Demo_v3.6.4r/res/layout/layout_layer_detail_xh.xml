@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="1.0"
+    android:background="#f4f4f4"
+    android:orientation="vertical" >
+
+    <include 
+	    android:id="@+id/xh_head"
+	    layout="@layout/ccp_head"/>
+
+    <RelativeLayout
+        android:id="@+id/xh_personal_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/xh_head"
+        android:background="@android:color/transparent" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="6.0dip"
+            android:paddingLeft="6.0dip"
+            android:paddingTop="10.0dip" >
+
+            <FrameLayout
+                android:id="@+id/xh_personal_photo"
+                android:layout_width="72.0dip"
+                android:layout_height="72.0dip"
+                android:layout_centerVertical="true">
+
+                <ImageView
+                    android:id="@+id/xh_edit_photo"
+                    android:layout_width="72.0dip"
+                    android:layout_height="72.0dip"
+                    android:layout_gravity="center"
+                    android:src="@drawable/head_portrait_default" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0.0dip"
+                android:layout_marginLeft="10.0dip"
+                android:layout_weight="1.0"
+                android:duplicateParentState="true"
+                android:gravity="center_vertical"
+                android:minHeight="80.0dip"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/xh_root"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3.0dip"
+                    android:layout_marginTop="5.0dip" >
+
+                    <TextView
+                        android:id="@+id/xh_personal_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="10.0dip"
+                        android:paddingRight="8.0dip"
+                        android:shadowDx="1.0"
+                        android:shadowDy="1.0"
+                        android:shadowRadius="1.0"
+                        android:singleLine="true"
+                        android:text="李小明"
+                        android:textColor="@color/black"
+                        android:textSize="20.0sp" />
+
+                    <TextView
+                        android:id="@+id/xh_layer_levl"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3.0dip"
+                        android:layout_weight="1.0"
+                        android:gravity="left"
+                        android:shadowDx="1.0"
+                        android:shadowDy="1.0"
+                        android:shadowRadius="1.0"
+                        android:text="专家"
+                        android:textAppearance="?android:textAppearanceMediumInverse"
+                        android:textColor="#61A0FF"
+                        android:textSize="13.0sp" />
+                </LinearLayout>
+
+                <RatingBar
+                    android:id="@+id/xh_layer_rating"
+                    style="@style/roomRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4.0dip"
+                    android:layout_marginTop="4.0dip"
+                    android:isIndicator="true"
+                    android:rating="4" />
+
+                <TextView
+                    android:id="@+id/xh_layer_speciality"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10.0dip"
+                    android:paddingRight="25.0dip"
+                    android:shadowDx="1.0"
+                    android:shadowDy="1.0"
+                    android:shadowRadius="1.0"
+                    android:maxLines="2"
+                    android:text="骨关节结核、骨髓炎、小儿麻痹症等疾病明显减少"
+                    android:textColor="#4B4B4B"
+                    android:textSize="11.0sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+    <ScrollView 
+         android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/xh_buttom_btn"
+        android:layout_below="@+id/xh_personal_layout"
+        android:layout_marginLeft="6.0dip"
+        android:layout_marginRight="6.0dip"
+        android:scrollbars="none"
+        android:background="@drawable/input_box" >
+        
+    <LinearLayout
+        android:id="@+id/xh_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" 
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10.0dp"
+            android:paddingRight="10.0dip"
+            android:paddingTop="5.0dip"
+            android:paddingBottom="4dp"
+            android:visibility="visible" >
+
+            <TextView
+                android:id="@+id/Text_item_number_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right|center"
+                android:minWidth="76.0dip"
+                android:text="专业领域："
+                android:textSize="14.0sp"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/EditText_item_number_input"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center"
+                android:layout_marginTop="-2.0dip"
+                android:layout_weight="1.0"
+                android:background="@android:color/transparent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:lineSpacingExtra="1dp"
+                android:minWidth="140.0dip"
+                android:lineSpacingMultiplier="1.2"
+                android:paddingTop="2dp"
+                android:text="@string/xh_special"
+                android:textColor="#9C9C9C"
+                android:textColorHint="#ffcccdce"/>
+        </LinearLayout>
+
+        <include layout="@layout/layout_number_find_splitline_item" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="5.0dip"
+            android:paddingLeft="10.0dp"
+            android:paddingRight="10.0dip"
+            android:paddingTop="5.0dip"
+            android:visibility="visible" >
+
+            <TextView
+                android:id="@+id/Text_item_city_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right|center"
+                android:minWidth="76.0dip"
+                android:text="个人信息："
+                android:textStyle="bold"
+                android:visibility="gone"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/black"
+                android:textSize="16.0sp" />
+
+            <TextView
+                android:id="@+id/EditText_tem_city_result"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center"
+                android:layout_marginTop="-2.0dip"
+                android:layout_weight="1.0"
+                android:lineSpacingMultiplier="1.2"
+                android:background="@android:color/transparent"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:lineSpacingExtra="1dp"
+                android:minWidth="140.0dip"
+                android:paddingTop="2dp"
+                android:text="@string/xh_personal_info"
+                android:textColor="#9C9C9C"
+                android:textColorHint="#ffcccdce"
+                android:visibility="visible" />
+        </LinearLayout>
+    </LinearLayout>
+ </ScrollView>
+    <LinearLayout
+        android:id="@+id/xh_buttom_btn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="5.0dip" >
+
+        <Button
+            android:id="@+id/xh_consult"
+            android:layout_width="fill_parent"
+            android:layout_height="45.0dip"
+            android:layout_weight="1.0"
+            android:paddingLeft="9.0dip"
+            android:background="@drawable/xh_layer_detail_hold_call_select"
+            android:gravity="center"
+            android:layout_margin="15.0dip"
+            android:drawableLeft="@drawable/phone_icon"
+            android:text="立即咨询"
+            android:textColor="@color/white"
+            android:textSize="16.0sp" />
+
+        <Button
+            android:id="@+id/xh_appointment"
+            android:layout_width="fill_parent"
+            android:layout_height="45.0dip"
+            android:layout_weight="1.0"
+            android:layout_margin="15.0dip"
+            android:paddingLeft="9.0dip"
+            android:drawableLeft="@drawable/time_icon"
+            android:background="@drawable/xh_layer_detail_hold_order_select"
+            android:gravity="center"
+            android:text="预约咨询"
+            android:textColor="@color/white"
+            android:textSize="16.0sp" />
+    </LinearLayout>
+
+</RelativeLayout>

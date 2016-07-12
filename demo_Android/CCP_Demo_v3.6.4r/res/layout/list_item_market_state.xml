@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/list_item_market_state"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:layout_width="23.0dip"
+        android:layout_height="23.0dip"
+        android:layout_margin="1.0dip"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/StateImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:padding="1.0dip"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/StateNumTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxWidth="140.0dip"
+        android:singleLine="true"
+        android:text="13800138000"
+        android:textColor="#545454"/>
+    <TextView
+        android:id="@+id/StateTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:text="@string/str_state_wait_for_call"
+        android:layout_marginLeft="4.0dip"
+        android:layout_weight="1.0"
+        android:textColor="#929292"/>
+
+</LinearLayout>

@@ -134,7 +134,7 @@ int ViERenderImpl::AddRenderer(const int render_id, void* window,
 			}
 			return frame_provider->RegisterFrameCallback(render_id, renderer);
 		}
-#endif 
+#endif
 		if (render_id >= kViEChannelIdBase && render_id <= kViEChannelIdMax) {
 			// This is a channel.
 			ViEChannelManagerScoped cm(*(shared_data_->channel_manager()));

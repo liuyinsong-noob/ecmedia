@@ -1701,9 +1701,6 @@ bool AudioDeviceAndroidOpenSLES::RecThreadProcess() {
 
             // Set VQE info, use clockdrift == 0
             _ptrAudioBuffer->SetVQEData(_playoutDelay, _recordingDelay, 0);
-			
-			WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id,
-				"total delay is %d %d", _playoutDelay, _recordingDelay);
 
             // Deliver recorded samples at specified sample rate, mic level
             // etc. to the observer using callback

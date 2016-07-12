@@ -66,7 +66,7 @@ WebRtc_Word32 SetAndroidAudioDeviceObjects(void* javaVM, void* env,
         jclass
                 javaScClassLocal =
                         globalJNIEnv->FindClass(
-                                "org/webrtc/voiceengine/AudioDeviceAndroid");
+                                "com/yuntongxun/ecsdk/core/voip/AudioDeviceAndroid");
         if (!javaScClassLocal)
         {
             WEBRTC_TRACE(kTraceError, kTraceAudioDevice, -1,
@@ -2918,8 +2918,8 @@ bool AudioDeviceAndroidJni::RecThreadProcess()
         // Check again since recording may have stopped during Java call
         if (_recording)
         {
-            WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id,
-                         "total delay is %d", _delayPlayout + _delayRecording);
+//            WEBRTC_TRACE(kTraceDebug, kTraceAudioDevice, _id,
+//                         "total delay is %d", msPlayDelay + _delayRecording);
 
             // Copy data to our direct buffer (held by java sc object)
             // todo: Give _javaDirectRecBuffer directly to VoE?

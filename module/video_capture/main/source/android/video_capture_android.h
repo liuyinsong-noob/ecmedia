@@ -15,7 +15,7 @@
 #include "device_info_android.h"
 #include "../video_capture_impl.h"
 
-#define AndroidJavaCaptureClass "org/webrtc/videoengine/VideoCaptureAndroid"
+#define AndroidJavaCaptureClass "com/yuntongxun/ecsdk/core/voip/VideoCaptureAndroid"
 
 namespace cloopenwebrtc {
 namespace videocapturemodule {

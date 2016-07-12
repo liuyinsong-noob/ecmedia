@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="56.0dip"
+    android:background="@drawable/voice_list_item_selector"
+    android:gravity="center_vertical"
+    android:minHeight="60.0dip"
+    android:orientation="horizontal"
+    android:paddingBottom="4.0dip"
+    android:paddingLeft="4.0dip"
+    android:paddingRight="4.0dip"
+    android:paddingTop="4.0dip" >
+
+    <LinearLayout
+        android:id="@+id/group_icon_ly"
+        android:layout_width="54.0dip"
+        android:layout_height="54.0dip"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="8.0dip"
+        android:layout_marginRight="8.0dip"
+        android:gravity="center_vertical" >
+
+        <ImageView
+            android:id="@+id/group_avatar"
+            android:layout_width="40.0dip"
+            android:layout_height="40.0dip"
+            android:src="@drawable/group_icon" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/desc_ly"
+        android:layout_width="100.0dip"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="2.0dip"
+        android:gravity="center"
+        android:maxWidth="100.0dip" 
+        android:orientation="vertical"
+        >
+		<ImageView 
+		    android:id="@+id/group_lock"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:src="@drawable/lock_closed"
+		    android:visibility="visible"/>
+        <TextView
+            android:id="@+id/group_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:maxWidth="120.0dip"
+            android:shadowColor="#a0ffffff"
+            android:shadowDx="1.2"
+            android:shadowDy="1.2"
+            android:text="200人  已加入"
+            android:shadowRadius="1.0"
+            android:singleLine="false"
+            android:textColor="@color/voice_conv_time_textcolor"
+            android:textSize="14.0dip" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/desc_ly"
+        android:layout_toRightOf="@+id/group_icon_ly"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:id="@+id/group_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="{nick}"
+            android:textColor="@color/voice_conv_textcolor"
+            android:textSize="16.0dip" />
+    </RelativeLayout>
+
+</RelativeLayout>

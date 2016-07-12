@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.voice.demo.group.baseui.EmojiGrid xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/emoji_panel_grid"
+    android:layout_width="fill_parent"
+    android:layout_height="0.0dip"
+    android:layout_margin="0.0dip"
+    android:layout_weight="1.0"
+    android:cacheColorHint="#00000000"
+    android:fadingEdgeLength="0.0dip"
+    android:listSelector="@drawable/ccp_trans" />

@@ -65,7 +65,6 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_setAudioContext
 {
     JavaVM* vm;
     env->GetJavaVM(&vm);
-    __android_log_print(ANDROID_LOG_DEBUG,"JNI", "hubintest audio context setted");
     jobject t = env->NewGlobalRef(c);
     return setAndroidObjects((void*)vm, (void*)env, (void*)t);
 }
@@ -424,10 +423,16 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_setCapabilityToken
 
 static jobject globalRemoteVideoWindow = 0;
 static jobject globalLocalViewWindow = 0;
+static char remoteUserID[126];
 JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_setVideoView
 (JNIEnv * env, jclass cls,jobject remoteView, jobject localView)
 {
-    jobject globalRemoteObj = 0;
+    const char* userid = env->GetStringUTFChars((jstring)remoteView, 0);
+    sprintf(remoteUserID, "%s", userid);
+    int temp = setVideoView((void*)&remoteUserID, NULL);
+    return temp;
+
+ /*   jobject globalRemoteObj = 0;
     if(remoteView)
     	globalRemoteObj = env->NewGlobalRef(remoteView);
     jobject globalLocalObj = 0;
@@ -440,7 +445,7 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_setVideoView
     		env->DeleteGlobalRef(globalLocalViewWindow);
     globalRemoteVideoWindow = globalRemoteObj;
     globalLocalViewWindow = globalLocalObj;
-    return temp;
+    return temp; */
 }
 
 JNIEXPORT void JNICALL Java_com_CCP_phone_NativeInterface_setNetworkType

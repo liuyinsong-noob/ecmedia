@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#f4f4f4"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/head"
+        android:layout_width="match_parent"
+        layout="@layout/voice_head" />
+   <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/head"
+        android:scrollbars="none"
+        android:fadingEdge="none"
+        android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20.0dip" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3.0dip"
+            android:text="@string/str_chatroom_name"
+            android:textColor="#9D9D9D"
+            android:textSize="19.0sp" />
+
+        <EditText
+            android:id="@+id/chatroom_name"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/input_box"
+            android:hint="@string/str_chatroom_name_input_hit"
+            android:padding="3.0dip" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3.0dip"
+            android:text="@string/str_chatroom_pwd"
+            android:textColor="#9D9D9D"
+            android:textSize="19.0sp" />
+
+        <EditText
+            android:id="@+id/chatroom_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/input_box"
+            android:hint="@string/str_chatroom_pwd_input_hit"
+            android:inputType="textPassword"
+            android:maxLength="8"
+            android:padding="3.0dip" />
+
+        <LinearLayout
+            android:id="@+id/ll_cb_autoclose"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/cb_autoclose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/cb_check"
+                android:checked="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tip_autoclose"
+                android:textColor="#9D9D9D"
+                android:textSize="16sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_cb_autojoin"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/cb_autojoin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/cb_check"
+                android:checked="false" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tip_autojoin"
+                android:textColor="#9D9D9D"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+         <TextView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/roometype"
+                     android:layout_marginTop="5dp"
+                      android:textColor="#9D9D9D"
+                    />
+		      
+               <RadioGroup 
+                     android:id="@+id/rg1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                >
+             <RadioButton 
+                 android:id="@+id/rb1"
+                     android:button="@drawable/cb_check"
+                    android:textColor="#9D9D9D"
+                    android:textSize="15sp"
+                    android:text="@string/deleteroom"
+                    />
+                <RadioButton 
+                    android:id="@+id/rb2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                      android:button="@drawable/cb_check"
+                      android:textColor="#9D9D9D"
+                      android:singleLine="true"
+                    android:text="@string/donotdeleteroom"
+                     android:textSize="15sp"
+                    
+                    />
+               </RadioGroup>
+           
+                <TextView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/vociemode"
+                     android:textColor="#9D9D9D"
+                     android:layout_marginTop="5dp"
+                    />
+        
+		        <RadioGroup 
+		             android:id="@+id/rg2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                >
+                <RadioButton 
+                    android:id="@+id/rb3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                     android:button="@drawable/cb_check"
+                    android:textColor="#9D9D9D"
+                    android:text="@string/allnoticevoice"
+                    />
+                <RadioButton 
+                     android:id="@+id/rb4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                      android:button="@drawable/cb_check"
+                      android:textColor="#9D9D9D"
+                       android:layout_marginTop="3dp"
+                    android:text="@string/onlybgmusic"
+                    />
+                <RadioButton 
+                     android:id="@+id/rb5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                      android:button="@drawable/cb_check"
+                      android:textColor="#9D9D9D"
+                       android:layout_marginTop="3dp"
+                    android:text="@string/nonevoice"
+                    />
+		         
+                
+            </RadioGroup>
+        
+        <Button
+            android:id="@+id/create_chatroom_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24.0dip"
+            android:background="@drawable/netphone_direct_call_selector"
+            android:minWidth="160.0dip"
+            android:text="@string/str_button_create_chatroom"
+            android:textColor="@android:color/white"
+            android:textSize="19.0sp" />
+    </LinearLayout>
+</ScrollView>
+</RelativeLayout>

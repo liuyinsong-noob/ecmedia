@@ -85,13 +85,13 @@ WebRtc_Word32 VideoRenderAndroid::SetAndroidEnvVariables(void* javaVM, void* env
                  __FUNCTION__, loadClassMethod);
 
     jclass glRenderClassLocal =
-        thisEnv->FindClass("org/webrtc/videoengine/ViEAndroidGLES20");
+        thisEnv->FindClass("com/yuntongxun/ecsdk/core/voip/ViEAndroidGLES20");
 
     WEBRTC_TRACE(kTraceError, kTraceVideoRenderer, -1,
                  "%s: =======find class is:%X",
                  __FUNCTION__, glRenderClassLocal);
 
-    jstring tempName = thisEnv->NewStringUTF("org/webrtc/videoengine/ViEAndroidGLES20");
+    jstring tempName = thisEnv->NewStringUTF("com/yuntongxun/ecsdk/core/voip/ViEAndroidGLES20");
     jobject temp = thisEnv->CallObjectMethod(classLoaderObj, loadClassMethod, tempName, 1);
 
     g_loadClassID = loadClassMethod;
@@ -120,7 +120,7 @@ WebRtc_Word32 VideoRenderAndroid::SetAndroidEnvVariables(void* javaVM, void* env
     }
 
     glRenderClassLocal =
-        thisEnv->FindClass("org/webrtc/videoengine/ViESurfaceRenderer");
+        thisEnv->FindClass("com/yuntongxun/ecsdk/core/voip/ViESurfaceRenderer");
 
     if (!glRenderClassLocal) {
         WEBRTC_TRACE(kTraceError, kTraceVideoRenderer, -1,

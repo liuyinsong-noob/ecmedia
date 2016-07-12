@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F4F4"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/head"
+        layout="@layout/voice_head" />
+
+    <LinearLayout
+        android:id="@+id/notice_tips_ly"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/head"
+        android:background="@drawable/top_point_bg"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:id="@+id/notice_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:paddingLeft="25.0dip"
+            android:singleLine="true"
+            android:text="@string/str_top_landing_call_tips"
+            android:textColor="@android:color/white"
+            android:textSize="15.0sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/netphone_content_ly"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/netphone_bottom_ly"
+        android:layout_below="@+id/notice_tips_ly"
+        android:orientation="vertical"
+        android:paddingLeft="20.0dip"
+        android:paddingRight="20.0dip"
+        android:paddingTop="30.0dip" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/internet_box"
+            android:gravity="right|center_vertical" >
+
+            <EditText
+                android:id="@+id/phone_num_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:ellipsize="none"
+                android:gravity="right|center"
+                android:minWidth="140.0dip"
+                android:phoneNumber="true"
+                android:paddingLeft="5.0dip"
+                android:paddingRight="5.0dip"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20.0dip"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="请输入被叫号码："
+                android:textColor="#292929"
+                android:textSize="18.0sp" />
+		<RelativeLayout 
+		     android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4.0dip"
+                 android:layout_marginTop="11.0dip">
+            <EditText
+                android:id="@+id/number_input"
+                style="@style/VoiceAccountTitleValue"
+                android:layout_width="fill_parent"
+                android:layout_height="40.0dip"
+                android:layout_below="@+id/recive_number_input"
+                android:background="@drawable/input_box"
+                android:hint="固号需加拨区号"
+                android:phoneNumber="true"
+                android:maxHeight="40.0dip"
+                android:paddingLeft="4.0dip"
+                android:paddingRight="35dip"
+                android:singleLine="true" />
+            <Button
+                android:id="@+id/btn_choosecontact"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/btn_selectcontact"
+                android:layout_marginRight="10dip"
+                android:layout_alignParentRight="true"
+                />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="45.0dip"
+            android:layout_marginTop="18.0dip" >
+
+            <Button
+                android:id="@+id/netphone_direct_call"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11.0dip"
+                android:layout_marginRight="11.0dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/netphone_direct_call_selector"
+                android:text="网络直拨"
+                android:enabled="false"
+                android:textColor="@android:color/white"
+                android:textSize="19.0sp" />
+
+            <Button
+                android:id="@+id/netphone_call_back"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11.0dip"
+                android:layout_marginRight="11.0dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/netphone_call_back_selector"
+                android:text="网络回拨"
+                android:enabled="false"
+                android:textColor="@android:color/white"
+                android:textSize="19.0sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18.0dip"
+            android:orientation="vertical"
+            android:paddingLeft="3.0dip" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="网络直拨：对本地网络质量有要求,建议使用 WIFI / 3G 网络呼出,对被叫网络没有要求" 
+                android:textColor="#7F7F7F"/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24.0dip"
+                android:textColor="#7F7F7F"
+                android:text="网络回拨：通话不依赖网络,成功发起呼叫请求后会先有一个来电,接听后即可呼叫对方" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/netphone_bottom_ly"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20.0dip"
+        android:layout_marginLeft="20.0dip"
+        android:gravity="left" >
+
+        <ImageView
+            android:id="@+id/ready_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/status_quit" />
+
+        <TextView
+            android:id="@+id/ready_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5.0dip"
+            android:text="请先输入本机号码和呼出号码才能进行落地电话呼叫"
+            android:textColor="#7B7B7B" />
+    </LinearLayout>
+
+</RelativeLayout>

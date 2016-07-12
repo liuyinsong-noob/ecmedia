@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#F4F4F4"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:paddingLeft="10.0dip"
+    android:paddingRight="10.0dip"
+    android:visibility="visible" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/groupid"
+            style="@style/detail_p_activity_item_style"
+            android:background="@drawable/group_card_header_selector" >
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/detail_p_activity_title_style"
+                android:text="@string/str_group_card_id" />
+
+            <TextView
+                android:id="@+id/txt"
+                style="@style/detail_p_activity_txt_style"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="" />
+            <ImageView android:id="@+id/indicator" style="@style/detail_p_activity_arrow_style" 
+                android:visibility="invisible"/>
+        </RelativeLayout>
+        <!-- 放下线 -->
+
+        <ImageView
+            android:id="@+id/group_card_botton_line"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2.0dip"
+            android:layout_marginRight="2.0dip"
+            android:background="@drawable/split_line" />
+
+        <RelativeLayout
+            android:id="@+id/voipaccount"
+            style="@style/detail_p_activity_item_style"
+            android:background="@drawable/group_card_middle_selector" >
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/detail_p_activity_title_style"
+                android:text="@string/str_group_card_voipaccount" />
+
+            <TextView
+                android:id="@+id/txt"
+                style="@style/detail_p_activity_txt_style"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="" />
+            <ImageView android:id="@+id/indicator" style="@style/detail_p_activity_arrow_style" 
+                android:visibility="invisible"/>
+        </RelativeLayout>
+        <ImageView
+            android:id="@+id/group_card_botton_line"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2.0dip"
+            android:layout_marginRight="2.0dip"
+            android:background="@drawable/split_line" />
+        <RelativeLayout
+            android:id="@+id/nickname"
+            style="@style/detail_p_activity_item_style"
+            android:background="@drawable/group_card_middle_selector" >
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/detail_p_activity_title_style"
+                android:text="@string/str_group_card_name" />
+
+            <TextView
+                android:id="@+id/txt"
+                style="@style/detail_p_activity_txt_style"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="" />
+            <ImageView android:id="@+id/indicator" style="@style/detail_p_activity_arrow_style" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/group_card_botton_line"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2.0dip"
+            android:layout_marginRight="2.0dip"
+            android:background="@drawable/split_line" />
+
+   <!--      <RelativeLayout
+            android:id="@+id/gender"
+            style="@style/detail_p_activity_item_style"
+            android:background="@drawable/group_card_middle_selector" >
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/detail_p_activity_title_style"
+                android:text="@string/str_group_card_sex" />
+
+            <TextView
+                android:id="@+id/txt"
+                style="@style/detail_p_activity_txt_style"
+                android:singleLine="true"
+                android:text="" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/group_card_botton_line"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2.0dip"
+            android:layout_marginRight="2.0dip"
+            android:background="@drawable/split_line" />
+
+        <RelativeLayout
+            android:id="@+id/birthday"
+            style="@style/detail_p_activity_item_style"
+            android:background="@drawable/group_card_middle_selector" >
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/detail_p_activity_title_style"
+                android:text="@string/str_group_card_birthday" />
+
+            <TextView
+                android:id="@+id/txt"
+                style="@style/detail_p_activity_txt_style"
+                android:singleLine="true"
+                android:text="" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/group_card_botton_line"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2.0dip"
+            android:layout_marginRight="2.0dip"
+            android:background="@drawable/split_line" /> -->
+
+        <RelativeLayout
+            android:id="@+id/tel"
+            style="@style/detail_p_activity_item_style"
+            android:background="@drawable/group_card_middle_selector" >
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/detail_p_activity_title_style"
+                android:text="@string/str_group_card_telephone" />
+
+            <TextView
+                android:id="@+id/txt"
+                style="@style/detail_p_activity_txt_style"
+                android:singleLine="true"
+                android:text="" />
+            <ImageView android:id="@+id/indicator" style="@style/detail_p_activity_arrow_style" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/group_card_botton_line"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2.0dip"
+            android:layout_marginRight="2.0dip"
+            android:background="@drawable/split_line" />
+
+        <RelativeLayout
+            android:id="@+id/mail"
+            style="@style/detail_p_activity_item_style"
+            android:background="@drawable/group_card_middle_selector" >
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/detail_p_activity_title_style"
+                android:text="@string/str_group_card_mail" />
+
+            <TextView
+                android:id="@+id/txt"
+                style="@style/detail_p_activity_txt_style"
+                android:singleLine="true"
+                android:text="" />
+            <ImageView android:id="@+id/indicator" style="@style/detail_p_activity_arrow_style" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/group_card_botton_line"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2.0dip"
+            android:layout_marginRight="2.0dip"
+            android:background="@drawable/split_line" />
+
+        <RelativeLayout
+            android:id="@+id/signature"
+            style="@style/detail_p_activity_item_style"
+            android:background="@drawable/group_card_bottom_selector" >
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/detail_p_activity_title_style"
+                android:text="@string/str_group_card_signature" />
+
+            <TextView
+                android:id="@+id/txt"
+                style="@style/detail_p_activity_txt_style"
+                android:paddingTop="4.0dip"
+                android:paddingBottom="4.0dip"
+                android:gravity="center_vertical"
+                android:singleLine="false"
+                android:lines="4"
+                android:text="" />
+            <ImageView android:id="@+id/indicator" style="@style/detail_p_activity_arrow_style" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>

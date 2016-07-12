@@ -65,7 +65,7 @@ bool AndroidNativeOpenGl2Renderer::UseOpenGL2(void* window) {
 
   // get the renderer class
 
-  jstring tempName = env->NewStringUTF("org/webrtc/videoengine/ViEAndroidGLES20");
+  jstring tempName = env->NewStringUTF("com/yuntongxun/ecsdk/core/voip/ViEAndroidGLES20");
   jclass javaRenderClassLocal = reinterpret_cast<jclass>(env->CallObjectMethod(g_classLoader, g_loadClassID, tempName, 1));
   //jclass javaRenderClassLocal = env->FindClass("org/webrtc/videoengine/ViEAndroidGLES20");
   if (!javaRenderClassLocal) {
@@ -86,7 +86,7 @@ bool AndroidNativeOpenGl2Renderer::UseOpenGL2(void* window) {
   // get the method ID for UseOpenGL
   jmethodID cidUseOpenGL = env->GetStaticMethodID(javaRenderClassLocal,
                                                   "UseOpenGL2",
-                                                  "(Ljava/lang/Object;)Z");
+                                                  "(Ljava/lang/String;)Z");
   if (cidUseOpenGL == NULL) {
     WEBRTC_TRACE(kTraceError, kTraceVideoRenderer, -1,
                  "%s: could not get UseOpenGL ID", __FUNCTION__);
@@ -100,7 +100,7 @@ bool AndroidNativeOpenGl2Renderer::UseOpenGL2(void* window) {
     return false;
   }
   jboolean res = env->CallStaticBooleanMethod(javaRenderClassLocal,
-                                              cidUseOpenGL, (jobject) window);
+                                              cidUseOpenGL, env->NewStringUTF((const char *)window));
 
   // Detach this thread if it was attached
   if (isAttached) {
@@ -181,8 +181,12 @@ int32_t AndroidNativeOpenGl2Renderer::Init() {
   }
 
   // get the ViEAndroidGLES20 class
-    jstring tempName = env->NewStringUTF("org/webrtc/videoengine/ViEAndroidGLES20");
+    jstring tempName = env->NewStringUTF("com/yuntongxun/ecsdk/core/voip/ViEAndroidGLES20");
   jclass javaRenderClassLocal = reinterpret_cast<jclass>(env->CallObjectMethod(g_classLoader, g_loadClassID, tempName, 1));
+  // get the method ID for the constructor
+  jmethodID cid = env->GetMethodID(javaRenderClassLocal,
+                                   "<init>",
+                                   "(Ljava/lang/String;)V");
   //jclass javaRenderClassLocal = env->FindClass("org/webrtc/videoengine/ViEAndroidGLES20");
   if (!javaRenderClassLocal) {
     WEBRTC_TRACE(kTraceError, kTraceVideoRenderer, _id,
@@ -197,10 +201,14 @@ int32_t AndroidNativeOpenGl2Renderer::Init() {
     return -1;
   }
 
+  // construct the object
+  jobject javaRenderObjLocal = env->NewObject(javaRenderClassLocal,
+                                              cid,
+                                              env->NewStringUTF((const char *)_ptrWindow));
   // create a global reference to the class (to tell JNI that
   // we are referencing it after this function has returned)
-  _javaRenderClass =
-      reinterpret_cast<jclass> (env->NewGlobalRef(javaRenderClassLocal));
+  //_javaRenderClass = reinterpret_cast<jclass> (env->NewObject(javaRenderClassLocal));
+  _javaRenderObj = env->NewGlobalRef(javaRenderObjLocal);
   if (!_javaRenderClass) {
     WEBRTC_TRACE(kTraceError, kTraceVideoRenderer, _id,
                  "%s: could not create Java SurfaceHolder class reference",
@@ -289,6 +297,7 @@ AndroidNativeOpenGl2Channel::AndroidNativeOpenGl2Channel(
 AndroidNativeOpenGl2Channel::~AndroidNativeOpenGl2Channel() {
   WEBRTC_TRACE(kTraceInfo, kTraceVideoRenderer, _id,
                "AndroidNativeOpenGl2Channel dtor");
+  delete &_renderCritSect;
   if (_jvm) {
     // get the JNI env for this thread
     bool isAttached = false;
@@ -320,8 +329,6 @@ AndroidNativeOpenGl2Channel::~AndroidNativeOpenGl2Channel() {
       }
     }
   }
-
-  delete &_renderCritSect;
 }
 
 int32_t AndroidNativeOpenGl2Channel::Init(int32_t zOrder,
@@ -357,7 +364,7 @@ int32_t AndroidNativeOpenGl2Channel::Init(int32_t zOrder,
   }
 
 
-  jstring tempName = env->NewStringUTF("org/webrtc/videoengine/ViEAndroidGLES20");
+  jstring tempName = env->NewStringUTF("com/yuntongxun/ecsdk/core/voip/ViEAndroidGLES20");
   jclass javaRenderClass = reinterpret_cast<jclass>(env->CallObjectMethod(VideoRenderAndroid::g_classLoader, VideoRenderAndroid::g_loadClassID, tempName, 1));
   //jclass javaRenderClassLocal = env->FindClass("org/webrtc/videoengine/ViEAndroidGLES20");
 

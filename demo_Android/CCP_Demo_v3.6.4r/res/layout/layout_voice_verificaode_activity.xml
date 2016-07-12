@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F4F4"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/head"
+        layout="@layout/voice_head" />
+
+    <LinearLayout
+        android:id="@+id/notice_tips_ly"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/head"
+        android:background="@drawable/top_point_bg"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:id="@+id/notice_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:paddingLeft="25.0dip"
+            android:singleLine="true"
+            android:text="@string/str_voice_vericode_top_tips"
+            android:textColor="@android:color/white"
+            android:textSize="15.0sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/notice_tips_ly"
+        android:orientation="vertical"
+        android:padding="15.0dip" >
+
+        <TextView
+            android:id="@+id/recive_number_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3.0dip"
+            android:text="@string/str_recive_number_input"
+            android:textColor="#B7B7B7"
+            android:textSize="16.0sp" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4.0dip"
+            android:layout_marginTop="4.0dip" 
+             android:layout_below="@+id/recive_number_input">
+
+            <EditText
+                android:id="@+id/number_input"
+                style="@style/VoiceAccountTitleValue"
+                android:layout_width="fill_parent"
+                android:layout_height="40.0dip"
+                android:background="@drawable/input_box"
+                android:maxHeight="42.0dip"
+                android:paddingLeft="5.0dip"
+                android:paddingRight="30dip"
+                android:phoneNumber="true"
+                android:singleLine="true" />
+              <Button
+                android:id="@+id/btn_choosecontact"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/btn_selectcontact"
+                android:layout_marginRight="10dip"
+                android:layout_alignParentRight="true"
+                />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3.0dip"
+            android:text="@string/str_code_title"
+            android:textColor="#B7B7B7"
+            android:textSize="16.0sp" />
+
+        <LinearLayout
+            android:id="@+id/code_input_ly"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20.0dip" >
+
+            <EditText
+                android:id="@+id/code_input"
+                style="@style/VoiceAccountTitleValue"
+                android:layout_width="wrap_content"
+                android:layout_height="40.0dip"
+                android:layout_below="@+id/recive_number_input"
+                android:layout_marginBottom="4.0dip"
+                android:layout_marginRight="4.0dip"
+                android:layout_marginTop="4.0dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/input_box"
+                android:maxHeight="42.0dip"
+                android:minWidth="220.0dip"
+                android:paddingLeft="5.0dip"
+                android:singleLine="true" />
+
+            <Button
+                android:id="@+id/btn_code"
+                android:layout_width="wrap_content"
+                android:layout_height="40.0dip"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1.0"
+                android:background="@drawable/voice_code_send_selector"
+                android:text="@string/str_get_verify_code"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="15.0sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/code_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/code_input_ly"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5.0dip"
+            android:background="@drawable/netphone_direct_call_selector"
+            android:minWidth="150.0dip"
+            android:text="@string/str_code_submit"
+            android:textColor="@android:color/white"
+            android:textSize="19.0sp" />
+    </LinearLayout>
+
+</RelativeLayout>

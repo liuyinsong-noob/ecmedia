@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F4F4"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/head"
+        layout="@layout/voice_head" />
+    
+	<TextView 
+	    android:id="@+id/headNote"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:background="@drawable/top_point_bg"
+	    android:text="@string/str_market_head_note_text"
+	    android:textColor="@android:color/white"
+	    android:gravity="center_vertical"
+	    android:paddingLeft="25.0dip"
+	    android:textSize="15.0sp"
+	    android:layout_below="@+id/head"/>
+    
+	<RelativeLayout
+	    android:id="@+id/rl_ets"
+		android:layout_width="fill_parent"
+    	android:layout_height="match_parent"
+    	android:paddingRight="35dp"
+    	android:paddingTop="13dip"
+    	android:layout_centerHorizontal="true"
+     	android:layout_below="@id/headNote" >
+
+		<EditText
+	        android:id="@+id/phoneNum_Edit1"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/outbound_input_box"
+	        android:hint="@string/str_phonenum_input_hint"
+	        android:paddingLeft="4.0dip"
+	        android:layout_marginLeft="20dp"
+        	android:layout_marginRight="20dp"
+        	android:layout_marginBottom="13dip"
+	        android:inputType="phone"
+	        android:maxLength="12"
+	        android:textSize="18sp"
+	        android:minHeight="42.0dip"
+			android:singleLine="true" />
+		<ImageView
+	        android:id="@+id/imageLine1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/phoneNum_Edit1"
+	        android:layout_marginBottom="13dip"
+	        android:src="@drawable/listview_diviver_line"/>
+	        
+	    <EditText
+	        android:id="@+id/phoneNum_Edit2"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/outbound_input_box"
+	        android:hint="@string/str_phonenum_input_hint"
+	        android:layout_marginLeft="20dp"
+        	android:layout_marginRight="20dp"
+        	 android:paddingLeft="4.0dip"
+	        android:inputType="phone"
+	        android:maxLength="12"
+	        android:textSize="18sp"
+	        android:minHeight="42.0dip"
+			android:singleLine="true" 
+			android:layout_below="@id/imageLine1"
+			android:layout_marginBottom="13dip"/>
+	    
+		<ImageView
+	        android:id="@+id/imageLine2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/phoneNum_Edit2"
+	        android:src="@drawable/listview_diviver_line"
+	        android:layout_marginBottom="13dip"/>
+
+	    <EditText
+	        android:id="@+id/phoneNum_Edit3"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/outbound_input_box"
+	        android:hint="@string/str_phonenum_input_hint"
+	        android:layout_marginLeft="20dp"
+        	android:layout_marginRight="20dp"
+        	android:layout_below="@id/imageLine2"
+	        android:inputType="phone"
+	        android:maxLength="12"
+	         android:paddingLeft="4.0dip"
+	        android:textSize="18sp"
+	        android:minHeight="42.0dip"
+			android:singleLine="true"
+			android:layout_marginBottom="13dip"/>
+	    
+		<ImageView
+	        android:id="@+id/imageLine3"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/phoneNum_Edit3"
+	        android:src="@drawable/listview_diviver_line"
+	        android:layout_marginBottom="13dip" />
+	        
+	   	<EditText
+	        android:id="@+id/phoneNum_Edit4"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/outbound_input_box"
+	        android:hint="@string/str_phonenum_input_hint"
+	        android:layout_marginLeft="20dp"
+        	android:layout_marginRight="20dp"
+        	android:layout_below="@id/imageLine3"
+	        android:inputType="phone"
+	        android:maxLength="12"
+	        android:textSize="18sp"
+	         android:paddingLeft="4.0dip"
+	        android:minHeight="42.0dip"
+			android:singleLine="true" 
+			android:layout_marginBottom="13dip"/>
+	    
+		<ImageView
+	        android:id="@+id/imageLine4"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/phoneNum_Edit4"
+	        android:src="@drawable/listview_diviver_line"
+	        android:layout_marginBottom="13dip"/>
+	        
+	   	<EditText
+	        android:id="@+id/phoneNum_Edit5"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/outbound_input_box"
+	        android:hint="@string/str_phonenum_input_hint"
+	        android:layout_marginLeft="20dp"
+        	android:layout_marginRight="20dp"
+        	android:layout_below="@id/imageLine4"
+	        android:inputType="phone"
+	        android:maxLength="12"
+	        android:textSize="18sp"
+	         android:paddingLeft="4.0dip"
+	        android:minHeight="42.0dip"
+			android:singleLine="true"
+			android:layout_marginBottom="13dip"/>
+	    
+		<ImageView
+	        android:id="@+id/imageLine5"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/phoneNum_Edit5"
+	        android:src="@drawable/listview_diviver_line" />
+    </RelativeLayout>
+	<LinearLayout
+        android:id="@+id/botto_select_interphone_mem"
+        android:layout_width="fill_parent"
+        android:layout_height="50.0dip"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bottom_bg" >
+		
+	    <TextView
+	        android:id="@+id/bottomNote"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:padding="2.0dip"
+	        android:paddingBottom="15.0dip"
+	        android:gravity="center_vertical"
+	        android:layout_gravity="center_vertical"
+	        android:maxLines="2"
+	        android:text="@string/str_market_bottom_note_text"
+	        android:textColor="@android:color/white"
+	        android:layout_weight="2" />
+		<Button
+	        android:id="@+id/btn_Outbound"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/str_button_str_outbound"
+	        android:textColor="@android:color/white"
+	        android:textSize="20.0sp"
+	        android:background="@drawable/select_member_interphone_selector"
+	        android:layout_weight="1"/>
+	</LinearLayout>
+
+	<Button
+	    android:id="@+id/btn_choosecontact"
+	    android:layout_width="25dp"
+	    android:layout_height="25dp"
+	    android:layout_alignParentRight="true"
+	    android:layout_alignTop="@+id/rl_ets"
+	    android:layout_marginRight="21dp"
+	    android:layout_marginTop="20dp"
+	    android:background="@drawable/btn_selectcontact_big" />
+
+</RelativeLayout>

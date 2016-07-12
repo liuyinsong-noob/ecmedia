@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f4f4f4" >
+
+    <include
+        android:id="@+id/xh_head"
+        layout="@layout/ccp_head" />
+
+    <RelativeLayout
+        android:id="@+id/xh_personal_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/xh_head"
+        android:background="@android:color/transparent" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="6.0dip"
+            android:paddingTop="10.0dip" >
+
+            <FrameLayout
+                android:id="@+id/xh_personal_photo"
+                android:layout_width="72.0dip"
+                android:layout_height="72.0dip"
+                android:layout_centerVertical="true">
+
+                <ImageView
+                    android:id="@+id/xh_edit_photo"
+                    android:layout_width="72.0dip"
+                    android:layout_height="72.0dip"
+                    android:layout_gravity="center"
+                    android:src="@drawable/head_portrait_default" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0.0dip"
+                android:layout_marginLeft="10.0dip"
+                android:layout_weight="1.0"
+                android:duplicateParentState="true"
+                android:gravity="center_vertical"
+                android:minHeight="80.0dip"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:id="@+id/xh_root"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3.0dip"
+                    android:layout_marginTop="5.0dip" >
+
+                    <TextView
+                        android:id="@+id/xh_personal_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="10.0dip"
+                        android:paddingRight="8.0dip"
+                        android:shadowDx="1.0"
+                        android:shadowDy="1.0"
+                        android:shadowRadius="1.0"
+                        android:singleLine="true"
+                        android:text="李小明"
+                        android:textColor="@color/black"
+                        android:textSize="20.0sp" />
+
+                    <TextView
+                        android:id="@+id/xh_layer_levl"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3.0dip"
+                        android:layout_weight="1.0"
+                        android:gravity="left"
+                        android:shadowDx="1.0"
+                        android:shadowDy="1.0"
+                        android:shadowRadius="1.0"
+                        android:text="专家"
+                        android:textAppearance="?android:textAppearanceMediumInverse"
+                        android:textColor="#61A0FF"
+                        android:textSize="13.0sp" />
+                </LinearLayout>
+
+                <RatingBar
+                    android:id="@+id/xh_layer_rating"
+                    style="@style/roomRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4.0dip"
+                    android:layout_marginTop="4.0dip"
+                    android:isIndicator="true"
+                    android:rating="4" />
+
+                <TextView
+                    android:id="@+id/xh_layer_speciality"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10.0dip"
+                    android:paddingRight="25.0dip"
+                    android:shadowDx="1.0"
+                    android:shadowDy="1.0"
+                    android:shadowRadius="1.0"
+                    android:maxLines="2"
+                    android:text="骨关节结核、骨髓炎、小儿麻痹症等疾病明显减少"
+                    android:textColor="#4B4B4B"
+                    android:textSize="11.0sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+    <ImageView android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_margin="6.0dip"
+               android:layout_below="@id/xh_personal_layout"
+               android:src="@drawable/xh_layer_order"/>
+</RelativeLayout>

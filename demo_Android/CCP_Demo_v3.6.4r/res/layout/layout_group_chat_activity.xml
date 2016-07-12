@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/im_root"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#f4f4f4"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/voice_head"
+        android:layout_width="match_parent"
+        layout="@layout/voice_head" />
+
+    <TextView
+        android:id="@+id/notice_tips"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/voice_head"
+        android:background="@drawable/top_point_bg"
+        android:gravity="center_vertical"
+        android:paddingLeft="25.0dip"
+        android:text="@string/str_notice_group_dynamic"
+        android:textColor="@android:color/white"
+        android:textSize="16.0sp" />
+
+    <ListView
+        android:id="@+id/im_chat_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/im_chat_foot_ly"
+        android:layout_below="@+id/notice_tips"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@null"
+        android:dividerHeight="5dp"
+        android:fadingEdgeLength="0.0dip"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:listSelector="@android:color/transparent"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="none"
+        android:scrollingCache="false"
+        android:stackFromBottom="true" />
+    
+	<LinearLayout 
+		android:id="@+id/im_chat_foot_ly"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true">
+		<com.voice.demo.group.baseui.CCPChatFooter
+	        android:id="@+id/nav_footer"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content" />
+	</LinearLayout>
+</RelativeLayout>

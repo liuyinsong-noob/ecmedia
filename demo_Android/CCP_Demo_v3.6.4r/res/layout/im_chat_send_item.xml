@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:visibility="gone"
+    android:orientation="vertical"
+    android:layout_gravity="right">
+
+    <LinearLayout
+        android:layout_width="200.0dip"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingRight="6.0dip" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/talk_line" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ProgressBar
+                android:id="@+id/im_sending_r"
+                style="?android:attr/progressBarStyleSmallInverse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="3.0dip"
+                android:paddingLeft="6.0dip"
+                android:visibility="gone"
+                android:paddingRight="5.0dip" />
+            <RelativeLayout
+                android:id="@+id/im_chat_ly_r"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4.0dip"
+                android:gravity="center" >
+
+                <ImageView
+	                android:id="@+id/im_chatting_file_icon"
+	                android:layout_width="32.0dip"
+	                android:layout_height="40.0dip"
+	                android:layout_alignParentLeft="true"
+	                android:layout_marginLeft="8.0dip"
+	                android:layout_marginRight="8.0dip"
+	                android:visibility="visible"
+	                android:src="@drawable/talk_box_file_icon"
+	                android:scaleType="fitCenter" />
+
+            <com.voice.demo.group.baseui.CCPTextView
+                android:id="@+id/file_name_right"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/im_chatting_file_icon"
+                android:layout_centerVertical="true"
+                android:singleLine="false"
+                android:text="未知"
+                android:textColor="#ff000000"
+                android:gravity="left|center"
+                android:maxWidth="225.0dip"
+                android:minHeight="49.0dip"
+                android:lineSpacingExtra="2.0dip"
+                android:textSize="16.0sp" />
+            </RelativeLayout>
+            
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/im_chat_time_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:gravity="center_horizontal"
+        android:paddingBottom="6.0dip"
+        android:paddingTop="6.0dip"
+        android:shadowColor="#a0ffffff"
+        android:shadowDx="1.2"
+        android:shadowDy="1.2"
+        android:text="7-3 12:22"
+        android:shadowRadius="1.0"
+        android:textColor="#ff888888"
+        android:textSize="12.0dip" />
+    
+      <FrameLayout 
+            android:id="@+id/fl_imageview_right"
+            	android:layout_width="fill_parent"
+	    		android:layout_height="wrap_content"
+	    		android:visibility="gone"
+	    		 >
+
+        <ImageView
+            android:id="@+id/imageview_right"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp" />
+
+	<Button 
+	     android:id="@+id/btn_play_right"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center"
+	    android:background="@drawable/btn_play"
+	    />
+	</FrameLayout>
+
+</LinearLayout>

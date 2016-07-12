@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ccp_head"
+    android:layout_width="fill_parent"
+    android:layout_height="50.0dip"
+    android:background="@drawable/title_bar"
+    android:gravity="center_vertical"
+    android:paddingLeft="5.0dip"
+    android:paddingRight="5.0dip"
+    android:orientation="horizontal" >
+    <ImageButton
+        android:id="@+id/voice_btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/xh_title_button_bg"
+        android:src="@drawable/back_icon"
+        android:textColor="@color/white"
+        android:minWidth="50.0dip"
+        android:focusable="true"
+        android:gravity="center"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:layout_width="0.0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/voice_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/app_name"
+                android:textColor="#ffffffff"
+                android:textSize="19.0dip" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/voice_right_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/xh_title_button_bg"
+        android:focusable="true"
+        android:gravity="center"
+        android:paddingLeft="6.0dip"
+        android:minWidth="50.0dip"
+        android:paddingRight="6.0dip"
+        android:textColor="@color/white"
+        android:visibility="invisible" />
+
+</LinearLayout>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/launcher_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/video_bg"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/splashscreen"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="#2e82d6"
+        android:orientation="vertical" >
+		 
+          <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+       android:paddingLeft="50dp"
+       android:paddingRight="50dp"
+        android:paddingBottom="25dp">
+        <ImageView 
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:scaleType="fitEnd"
+           android:src="@drawable/start"
+            />
+       
+        <TextView 
+            android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:gravity="center_horizontal"
+           android:textColor="#bed3ef"
+           android:text="CopyRight@ 2014 cloopen.com"
+           android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"
+            android:textSize="13sp"
+            />
+        <TextView 
+            android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:gravity="center_horizontal"
+           android:textColor="#bed3ef"
+           android:layout_alignParentBottom="true"
+           android:text="All Rights Reserved"
+           android:textSize="13sp"
+            />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <!-- include ccp top item. -->
+
+    <include layout="@layout/ccp_top" />
+
+</LinearLayout>

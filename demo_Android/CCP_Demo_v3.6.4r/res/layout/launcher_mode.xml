@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:baselineAligned="false"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:id="@+id/developer"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0"
+        android:background="@drawable/ccp_developer_selector" >
+
+        <LinearLayout
+            android:id="@+id/developer_mode"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/developer_desc"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawablePadding="@dimen/mode_desc_space"
+                android:drawableTop="@drawable/ccp_developer_mode_icon"
+                android:gravity="center"
+                android:text="@string/str_mode_developer"
+                android:textAppearance="@style/mode_name_text_appearance" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/mode_sub_desc_space"
+                android:text="@string/str_mode_developer_desc"
+                android:textAppearance="@style/mode_desc_text_appearance" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/developer_desc"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:padding="@dimen/primary_margin_space"
+            android:text="@string/str_developer_mode_desc"
+            android:textAppearance="@style/mode_desc_text_appearance" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/experience"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0"
+        android:background="@drawable/ccp_experience_selector" >
+
+        <LinearLayout
+            android:id="@+id/experience_mode"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/experience_desc"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawablePadding="@dimen/mode_desc_space"
+                android:drawableTop="@drawable/ccp_experience_mode_icon"
+                android:gravity="center"
+                android:text="@string/str_mode_experience"
+                android:textAppearance="@style/mode_name_text_appearance" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/mode_sub_desc_space"
+                android:text="@string/str_mode_experience_desc"
+                android:textAppearance="@style/mode_desc_text_appearance" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/experience_desc"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:padding="@dimen/primary_margin_space"
+            android:text="@string/str_experience_mode_desc"
+            android:textAppearance="@style/mode_desc_text_appearance" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <!-- topbar view -->
+
+    <RelativeLayout
+        android:id="@+id/acbuwa_topbar"
+        style="@style/topbar_bg"
+        android:layout_alignParentTop="true" >
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dip"
+            android:background="@drawable/return_button"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/ll_contacts_control"
+            style="@style/topbar_text" >
+
+            <TextView
+                android:id="@+id/topbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="联系人"
+                android:textColor="#ffffffff"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/addContactBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dip"
+            android:scaleType="fitXY"
+            android:background="@drawable/add_button"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ll_search"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/acbuwa_topbar"
+        android:background="@drawable/bg_search_panel" >
+
+        <!-- searching  view -->
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_contact_search_edittext"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/contact_search_icon" />
+
+            <EditText
+                android:id="@+id/tv_contactsearch"
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                 android:layout_marginBottom="8dp"
+                android:layout_gravity="center_vertical"
+                android:hint="@string/contact_search"
+                android:imeOptions="actionDone"
+                android:paddingRight="30dp"
+                android:paddingLeft="30dp"
+                android:singleLine="true"
+                android:textColor="#88000000"
+                 android:background="@null"
+                android:textSize="15sp" >
+                <requestFocus />
+            </EditText>
+              <ImageView
+                android:id="@+id/img_del"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_centerVertical="true"
+               	android:layout_alignParentRight="true"
+               	 android:layout_marginRight="10dp"
+               	 android:visibility="invisible"
+                android:src="@drawable/btn_del_search_normal" />
+        </RelativeLayout>
+    </RelativeLayout>
+    
+<!-- contactslist view -->
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@id/ll_search"
+            android:background="@drawable/contactlist_body_bg"
+            android:layout_marginBottom="8dp" >
+
+            <LinearLayout
+                android:id="@+id/slidingid"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <ListView
+                    android:id="@+id/acbuwa_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:cacheColorHint="#000000"
+                    android:divider="#33CCDAE1"
+                    android:dividerHeight="0.5dp"
+                    android:fadingEdge="none"
+                    android:scrollbars="none"
+                    android:listSelector="#00000000"
+                    android:scrollingCache="false"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <com.voice.demo.contacts.QuickAlphabeticBar
+                android:id="@+id/fast_scroller"
+                android:layout_width="32dp"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="top|right|center"
+                android:layout_marginTop="0dip"
+                android:background="@null"
+                android:scaleType="centerInside" />
+
+            <TextView
+                android:id="@+id/fast_position"
+                android:layout_width="70dip"
+                android:layout_height="70dip"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal|top"
+                android:layout_margin="34dip"
+                android:gravity="center"
+                android:padding="2dip"
+                android:textColor="#b8ec4c"
+                android:textSize="48sp"
+                android:visibility="invisible" />
+        </RelativeLayout>
+</RelativeLayout>

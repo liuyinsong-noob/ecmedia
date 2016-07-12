@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="92.0dip"
+    android:layout_height="92.0dip"
+    android:background="@android:color/transparent"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4.0dip" >
+
+        <ImageView
+            android:id="@+id/item_icon"
+            android:layout_width="64.0dip"
+            android:layout_height="64.0dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/sigle_icon" />
+		<ImageView 
+		    android:id="@+id/forbidden_to_speak"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:visibility="gone"
+		    android:layout_alignRight="@+id/item_icon"
+		    android:layout_alignBottom="@+id/item_icon"
+		    android:src="@drawable/screen_icon"/>
+        <View
+            android:layout_width="64.0dip"
+            android:layout_height="64.0dip"
+            android:background="@drawable/gird_view_selector" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/item_text"
+        android:layout_width="64.0dip"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:shadowColor="#ff000000"
+        android:shadowDx="1.2"
+        android:shadowDy="1.2"
+        android:shadowRadius="1.0"
+        android:singleLine="true"
+        android:layout_marginTop="5.0dip"
+        android:textColor="@color/voice_conv_textcolor"
+        android:textSize="12.0dip" />
+
+</LinearLayout>

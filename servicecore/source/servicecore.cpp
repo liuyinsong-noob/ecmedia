@@ -49,7 +49,7 @@ extern std::string timetodate(time_t const timer);
 char g_bind_local_addr[64] = {'\0'};
 
 extern void CCPClientPrintLog(int loglevel, const char *loginfo);
-	
+
 //namespace cloopenwebrtc {
 //class SerphoneTraceCallBack : public TraceCallback {
 //public:
@@ -856,7 +856,7 @@ void ServiceCore::sip_config_read()
 		}
 	}
 	/*this is to filter out unsupported encryption schemes*/
-//	linphone_core_set_media_encryption(lc,linphone_core_get_media_encryption(lc)); 暂时不处理加密RTP流工�?
+//	linphone_core_set_media_encryption(lc,linphone_core_get_media_encryption(lc)); 暂时不处理加密RTP流工??
 	/*for tuning or test*/
 	sip_conf.sdp_200_ack=lp_config_get_int(config,"sip","sdp_200_ack",0);
 	sip_conf.ping_with_options=lp_config_get_int(config,"sip","ping_with_options",0);
@@ -3869,7 +3869,7 @@ SerPhoneCall * ServiceCore::serphone_core_invite_address_with_params(const Serph
     if (serphone_core_get_firewall_policy() == LinphonePolicyUseIce) {
 		/* Defer the start of the call after the ICE gathering process. */
 		//serphone_call_init_media_streams(call);
-		serphone_call_start_media_streams_for_ice_gathering(call);//没有实现，没�?		call->start_time=time(NULL);
+		serphone_call_start_media_streams_for_ice_gathering(call);//没有实现，没??		call->start_time=time(NULL);
 		if (serphone_core_gather_ice_candidates(call)<0) {
 			/* Ice candidates gathering failed, proceed with the call anyway. */
 			serphone_call_delete_ice_session(call);
@@ -4814,7 +4814,7 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
 #endif
 
 	/*add all payload type for which we don't care about the number */
-	//固定编码的放前面，动态编码的放后�?�?0','101'，防止被占用,动态编码用'-1'表示 zdm
+	//固定编码的放前面，动态编码的放后????0','101'，防止被占用,动态编码用'-1'表示 zdm
 	//serphone_core_assign_payload_type(&payload_type_amr,-1,"octet-align=1");
 //	serphone_core_assign_payload_type(&payload_type_amrwb,-1,"octet-align=1");
 
@@ -5454,7 +5454,7 @@ static MSList *add_missing_codecs(SalStreamType mtype, MSList *l){
 			    && pt->type!=PAYLOAD_AUDIO_CONTINUOUS)){
 				pt=NULL;
 			}
-			if (pt){ // && ms_filter_codec_supported(pt->mime_type)){  在这里不做这个判�?不会改这个代码，deleted by zdm
+			if (pt){ // && ms_filter_codec_supported(pt->mime_type)){  在这里不做这个判??不会改这个代码，deleted by zdm
 //			if (pt && ms_filter_codec_supported(pt->mime_type)){
 				if (ms_list_find(l,pt)==NULL){
 					/*unranked codecs are disabled by default*/
@@ -6287,7 +6287,7 @@ void serphone_core_set_bind_local_addr(const char* addr)
 
 int ServiceCore::serphone_set_traceFlag(/*bool flag*/) //Don't use flag for the time being
 {
-	ECMedia_set_trace(NULL, (void*)CCPClientPrintLog, 24);
+	ECMedia_set_trace(NULL, (void*)CCPClientPrintLog, 23);
 	return 0;
 }
 
@@ -6317,7 +6317,7 @@ void ServiceCore::onDtmf(const char *callid, char dtmf)
 #if 0
 int ServiceCore::serphone_set_ringback(SerPhoneCall *call, bool flag)
 {
-    //将来若用这个功能的话，还需要在创建audio channel的时候，将ringbackFlag设置到对应的channel中�?    ringbackFlag = flag;
+    //将来若用这个功能的话，还需要在创建audio channel的时候，将ringbackFlag设置到对应的channel中??    ringbackFlag = flag;
     return 0;
 }
 #endif
@@ -6347,20 +6347,25 @@ void ServiceCore::SetVideoProtectionMode(int mode)//0:nack	1:fec	2:hybrid
 {
 	videoProtectionMode = mode;
 }
-#ifdef ENABLE_REMB_TMMBR_CONFIG
+
 void ServiceCore::SetP2PEnabled(bool enable)
 {
-	p2pEnabled = enable;
+#ifdef ENABLE_REMB_TMMBR_CONFIG
+    p2pEnabled = enable;
+#endif
 }
 void ServiceCore::SetRembEnabled(bool enable)
 {
+#ifdef ENABLE_REMB_TMMBR_CONFIG
 	rembEnabled = enable;
+#endif
 }
 void ServiceCore::SetTmmbrEnabled(bool enable)
 {
+#ifdef ENABLE_REMB_TMMBR_CONFIG
 	tmmbrEnabled = enable;
-}
 #endif
+}
 
 void ServiceCore::setVideoMode(int videoModeIndex)
 {

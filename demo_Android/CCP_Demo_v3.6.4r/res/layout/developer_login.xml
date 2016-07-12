@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright (c) 2013 The CCP project authors. All Rights Reserved.
+ 
+   Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
+   that can be found in the LICENSE file in the root of the web site.
+ 
+    				http://www.cloopen.com
+ 
+   An additional intellectual property rights grant can be found
+   in the file PATENTS.  All contributing project authors may
+   be found in the AUTHORS file in the root of the source tree.
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/video_bg"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/small_margin_space" >
+
+    <LinearLayout
+        android:id="@+id/sid_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/small_margin_space" >
+
+        <TextView
+            style="@style/VoiceAccountTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="3.0dip"
+            android:paddingBottom="3.0dip"
+            android:text="@string/main_account_title_text"
+            android:textColor="@android:color/white" />
+
+        <include
+            android:id="@+id/sid"
+            layout="@layout/ccp_textview" />
+
+        <include
+            android:id="@+id/token"
+            layout="@layout/ccp_textview" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/sub_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sid_layout"
+        android:orientation="vertical"
+        android:paddingRight="@dimen/small_margin_space" 
+        android:paddingLeft="@dimen/small_margin_space" >
+
+        <TextView
+            style="@style/VoiceAccountTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="3.0dip"
+            android:paddingBottom="3.0dip"
+            android:text="@string/str_select_subaccount_label"
+            android:textColor="@android:color/white" />
+
+        <include
+            android:id="@+id/sub_sid"
+            layout="@layout/ccp_sub_textview" />
+
+        <include
+            android:id="@+id/sub_info"
+            layout="@layout/sub_account_view" />
+    </LinearLayout>
+
+    <com.voice.demo.views.CCPButton
+        android:id="@+id/login_confrim"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom"
+        android:layout_marginLeft="@dimen/small_margin_space"
+        android:layout_marginRight="@dimen/small_margin_space"
+        android:background="@drawable/video_blue_button_selector" />
+	<TextView
+        android:id="@+id/bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_margin_space"
+        android:layout_marginLeft="@dimen/small_margin_space"
+        android:layout_marginRight="@dimen/small_margin_space"
+        android:layout_alignParentBottom="true"
+        android:text="@string/str_login_tips"
+        android:textAppearance="@style/attentoin_text_appearance"
+        android:textSize="13sp"/>
+</RelativeLayout>

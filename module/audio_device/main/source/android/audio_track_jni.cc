@@ -41,8 +41,10 @@ int32_t AudioTrackJni::SetAndroidAudioDeviceObjects(void* javaVM, void* env,
   globalJNIEnv = reinterpret_cast<JNIEnv*>(env);
 
   // Get java class type (note path to class packet).
+//  jclass javaScClassLocal = globalJNIEnv->FindClass(
+//      "org/webrtc/voiceengine/WebRtcAudioTrack");
   jclass javaScClassLocal = globalJNIEnv->FindClass(
-      "org/webrtc/voiceengine/WebRtcAudioTrack");
+      "com/yuntongxun/ecsdk/core/voip/AudioDeviceAndroid");
   if (!javaScClassLocal) {
     WEBRTC_TRACE(kTraceError, kTraceAudioDevice, -1,
                  "%s: could not find java class", __FUNCTION__);

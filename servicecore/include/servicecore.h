@@ -543,11 +543,9 @@ public:
 	void SetNackEnabled(bool audioEnabled, bool videoEnabled);
 	void SetVideoProtectionMode(int mode);
 
-#ifdef ENABLE_REMB_TMMBR_CONFIG
 	void SetP2PEnabled(bool enable);
 	void SetRembEnabled(bool enable);
 	void SetTmmbrEnabled(bool enable);
-#endif
 
 	//void setVideoCode(int videoCodeIndex); //only for demo test 0: H264, 1:vp8
 	void setVideoMode(int videoModeIndex); //only for demo test 0: Real-time, 1:screen-share
