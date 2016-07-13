@@ -108,7 +108,7 @@
       </AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>libx264.dll.lib;libavcodec.a;libavutil.a;libavformat.a;libswscale.a;libpostproc.a;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libx264.dll.lib;libavcodec.a;libavutil.a;libavformat.a;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\third_party\libx264\libx264_win\lib\;..\..\third_party\ffmpeg\ffmpeg_win\lib</AdditionalLibraryDirectories>
       <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
       <IgnoreSpecificDefaultLibraries>
@@ -151,7 +151,7 @@
       </AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>libx264.dll.lib;libavcodec.a;libavutil.a;libavformat.a;libswscale.a;libpostproc.a;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libx264.dll.lib;libavcodec.a;libavutil.a;libavformat.a;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\third_party\libx264\libx264_win\lib\;..\..\third_party\ffmpeg\ffmpeg_win\lib</AdditionalLibraryDirectories>
       <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
     </Lib>
