@@ -116,10 +116,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>strmbase.lib;</AdditionalDependencies>
+      <AdditionalDependencies>strmiids.lib;directshow_baseclassesd.lib;</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>..\..\third_party\platformsdk_win7\files\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\third_party\platformsdk_win7\files\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -137,7 +137,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>strmbase.lib;strmiids.lib;directshow_baseclassesd.lib;</AdditionalDependencies>
+      <AdditionalDependencies>strmiids.lib;directshow_baseclassesd.lib;</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\third_party\platformsdk_win7\files\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -161,7 +161,7 @@
     </Link>
     <Lib>
       <AdditionalDependencies>Strmiids.lib;directshow_baseclasses.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\third_party\platformsdk_win7\files\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\third_party\platformsdk_win7\files\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
