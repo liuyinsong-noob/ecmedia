@@ -35,6 +35,7 @@
 #include "vie_rtp_rtcp.h"
 #include "RecordVoip.h"
 #include "webrtc_libyuv.h"
+#include "statsCollector.h"
 #endif
 
 #include "sdk_common.h"
@@ -56,6 +57,8 @@ static cloopenwebrtc::VoiceEngine* m_voe = NULL;
 #ifdef VIDEO_ENABLED
 static cloopenwebrtc::VideoEngine* m_vie = NULL;
 static RecordVoip* g_recordVoip = NULL;
+static StatsCollector *g_statsCollector = NULL;
+static int g_CaptureDeviceId = -1;
 #endif
 
 static CameraInfo *m_cameraInfo = NULL;
@@ -678,6 +681,7 @@ int ECMedia_video_start_receive(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ECMedia_set_video_RecvStatistics_proxy(channelid, "AVStats.data", 1000);
     ViEBase *base = ViEBase::GetInterface(m_vie);
     if (base) {
         int ret = base->StartReceive(channelid);
@@ -695,6 +699,7 @@ int ECMedia_video_stop_receive(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ECMedia_stop_Statistics_proxy();
     ViEBase *base = ViEBase::GetInterface(m_vie);
     if (base) {
         int ret = base->StopReceive(channelid);
@@ -712,6 +717,7 @@ int ECMedia_video_start_send(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ECMedia_set_video_SendStatistics_proxy(channelid, "AVstats.data", 1000);
     ViEBase *base = ViEBase::GetInterface(m_vie);
     if (base) {
         int ret = base->StartSend(channelid);
@@ -729,6 +735,7 @@ int ECMedia_video_stop_send(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ECMedia_stop_Statistics_proxy();
     ViEBase *base = ViEBase::GetInterface(m_vie);
     if (base) {
         int ret = base->StopSend(channelid);
@@ -752,11 +759,11 @@ int ECMedia_audio_start_playout(int channelid)
         base->Release();
         return 0;
     }
-    else
-    {
-        PrintConsole("[ECMEDIA WARNNING] failed to get VoEBase, %s",__FUNCTION__);
-        return -99;
-    }
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get VoEBase, %s", __FUNCTION__);
+		return -99;
+	}
 }
 
 int ECMedia_audio_stop_playout(int channelid)
@@ -908,6 +915,7 @@ int ECMedia_audio_start_receive(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ECMedia_set_audio_RecvStatistics_proxy(channelid, "AVStats.data", 1000);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
         base->StartReceive(channelid);
@@ -925,6 +933,7 @@ int ECMedia_audio_stop_receive(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ECMedia_stop_Statistics_proxy();
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
         base->StopReceive(channelid);
@@ -942,6 +951,7 @@ int ECMedia_audio_start_send(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ECMedia_set_audio_SendStatistics_proxy(channelid, "AVStats.data", 1000);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
         base->StartSend(channelid);
@@ -959,6 +969,7 @@ int ECMedia_audio_stop_send(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ECMedia_stop_Statistics_proxy();
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
         base->StopSend(channelid);
@@ -2870,4 +2881,92 @@ int ECMedia_IsIPv6Enabled(int channel)
         return -99;
     }
 }
+
+int ECMedia_set_video_SendStatistics_proxy(int channelid, char* filePath, int intervalMs)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+
+	if (!g_statsCollector)
+	{
+		g_statsCollector = new StatsCollector(filePath, intervalMs);		
+	}
+	if (!g_statsCollector->m_vie)
+	{
+		g_statsCollector->SetVideoEngin(m_vie);
+	}
+	if (g_statsCollector->SetVideoSendStatisticsProxy(channelid, g_CaptureDeviceId))
+		return 0;
+	else
+		return -1;
+}
+int ECMedia_set_video_RecvStatistics_proxy(int channelid, char* filePath, int intervalMs)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	if (!g_statsCollector)
+	{
+		g_statsCollector = new StatsCollector(filePath, intervalMs);
+	}
+	if (!g_statsCollector->m_vie)
+	{
+		g_statsCollector->SetVideoEngin(m_vie);
+	}
+	if (g_statsCollector->SetVideoRecvStatisticsProxy(channelid))
+		return 0;
+	else
+		return -1;
+}
+int ECMedia_set_audio_SendStatistics_proxy(int channelid, char* filePath, int intervalMs)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	if (!g_statsCollector)
+	{
+		g_statsCollector = new StatsCollector(filePath, intervalMs);
+	}
+	if (!g_statsCollector->m_voe)
+	{
+		g_statsCollector->SetVoiceEngin(m_voe);
+	}
+	if (g_statsCollector->SetAudioSendStatisticsProxy(channelid))
+		return 0;
+	else
+		return -1;
+}
+int ECMedia_set_audio_RecvStatistics_proxy(int channelid, char* filePath, int intervalMs)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	if (!g_statsCollector)
+	{
+		g_statsCollector = new StatsCollector(filePath, intervalMs);
+	}
+	if (!g_statsCollector->m_voe)
+	{
+		g_statsCollector->SetVoiceEngin(m_voe);
+	}
+	if (g_statsCollector->SetAudioRecvStatisticsProxy(channelid))
+		return 0;
+	else
+		return -1;
+}
+
+int ECMedia_stop_Statistics_proxy()
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	if (g_statsCollector)
+	{
+		delete g_statsCollector;
+		g_statsCollector = NULL;
+	}
+	return 0;
+}
+
+int ECMedia_set_CaptureDeviceID(int videoCapDevId)
+{
+	g_CaptureDeviceId = videoCapDevId;
+	return 0;
+}
+
 

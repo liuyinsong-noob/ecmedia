@@ -401,7 +401,12 @@ int ViERenderImpl::AddRenderCallback(int render_id,
 	  shared_data_->SetLastError(kViERenderUnknownError);
 	  return -1;
   }
-  if (renderer->SetVideoRenderCallback(render_id, callback) != 0) {
+  //if (renderer->SetVideoRenderCallback(render_id, callback) != 0) {
+	 // shared_data_->SetLastError(kViERenderUnknownError);
+	 // return -1;
+  //}
+  if (renderer->AddVideoRenderCallback(render_id, callback) != 0)
+  {
 	  shared_data_->SetLastError(kViERenderUnknownError);
 	  return -1;
   }

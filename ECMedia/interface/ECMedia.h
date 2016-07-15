@@ -443,11 +443,19 @@ int ECMedia_save_local_video_snapshot(int deviceid, const char* filePath);
 //video channel id
 int ECMedia_get_remote_video_snapshot(int channelid, unsigned char **buf, unsigned int *size, unsigned int *width, unsigned int *height);
 int ECMedia_save_remote_video_snapshot(int channelid, const char* filePath);
+
 #endif
 
+//"filePath" or "intervalMS" is set by the first caller, i.e.: one of the four interfaces,
+//the latter caller's parameters will be discarded.
+int ECMedia_set_video_SendStatistics_proxy(int channelid, char* filePath, int intervalMs);
+int ECMedia_set_video_RecvStatistics_proxy(int channelid, char* filePath, int intervalMs);
+int ECMedia_set_audio_SendStatistics_proxy(int channelid, char* filePath, int intervalMs);
+int ECMedia_set_audio_RecvStatistics_proxy(int channelid, char* filePath, int intervalMs);
 
+//kill statistics thread
+int ECMedia_stop_Statistics_proxy();
 
-
-
+int ECMedia_set_CaptureDeviceID(int videoCapDevId);
 
 #endif /* defined(__servicecoreVideo__ECMedia__) */

@@ -49,6 +49,36 @@ class SendStatisticsProxy : public Module,
 							public StreamDataCountersCallback,
 							public BitrateStatisticsObserver,
 							public SendSideDelayObserver{
+public:
+	struct UploadStats1
+	{
+		char WhichStats[2];
+		char Version[2];
+		char CodecName[4];
+		int	AvgEncodeMs;
+		int EncodeUsagePercent;
+		int FrameRateInput;
+		int FrameRateSent;
+		int FrameWidthInput;
+		int FrameHeightInput;
+		int FrameWidthSent; 
+		int FrameHeightSent;
+		int BitrateTargetBps;
+		int BitrateEncodeBps;
+		int PacketsLost;
+		uint32_t PacketsSent;
+		uint32_t BytesSent;
+		uint32_t NacksReceived;
+		uint32_t FirsReceived;
+		uint32_t Rtt;
+		uint32_t AvailabeSendBandwidth;
+		int ActualEncBitrate; 
+		int TargetEncBitrate;
+		int TransmitBitrate;
+		int ReransmitBitrate;
+		int AvailableReceiveBandwidth;
+		int64_t BucketDelay;
+	};
  public:
   static const int kStatsTimeoutMs;
 
@@ -62,6 +92,9 @@ class SendStatisticsProxy : public Module,
   VideoSendStream::Stats GetStats();
 
   std::string ToString() const;
+  int ToBinary(char* buffer, int buffer_length);
+  int ToFile(FileWrapper *pFile);
+  int ToString(FileWrapper *pFile);
 
 
   //vieEncoder::sendData()
@@ -124,11 +157,13 @@ public:
   void UpdateInputSize(int width, int height);
 private:
 	std::string GenerateFileName(int video_channel);
+	void FillUploadStats();
 
  private: 
   scoped_ptr<CriticalSectionWrapper> crit_;
   VideoSendStream::Stats stats_ GUARDED_BY(crit_);
   Call::Stats	call_ GUARDED_BY(crit_);
+  UploadStats1 UploadStats;
 
 
 private:

@@ -123,6 +123,9 @@ public:
 	WebRtc_UWord32 SetCallbackForWidthHeight(ReturnVideoWidthHeight p_return_video_width_height);
 	/*sean*/
 
+	int AddVideoRenderCallback(int render_id, VideoRenderCallback* callback);
+	VideoRenderCallback* extra_render_callback_;
+
 private:
 	/*sean 20130402*/
 	ReturnVideoWidthHeight return_video_width_height;

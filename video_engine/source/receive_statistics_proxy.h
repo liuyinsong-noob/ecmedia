@@ -43,11 +43,40 @@ class ReceiveStatisticsProxy : public Module,
                                public StreamDataCountersCallback,
 							   public I420FrameCallback,
 							   public VideoRenderCallback{
+public:
+	struct UploadStats1
+	{
+		char WhichStats[2];
+		char Version[2];
+		char CodecName[4];
+		int FrameWidthReceived;
+		int FrameHeightReceived;
+		int64_t BytesReceived;
+		uint32_t PacketsReceived;
+		uint32_t PacketsLost;
+		int CurrentDelayMs;
+		int DecodeMs;
+		int JitterBufferMs;
+		int MaxDecodeMs;
+		int MinPlayoutDelayMs;
+		int RenderDelayMs;
+		int TargetDelayMs;
+		int NacksSent;
+
+		int FrameRateReceived;
+		int FrameRateDecoded;
+		int FrameRateOutput;
+
+	};
  public:
   ReceiveStatisticsProxy(int video_channel);
   virtual ~ReceiveStatisticsProxy();
 
   std::string ToString() const;
+  int ToBinary(char* buffer, int buffer_length);
+  int ToFile(FileWrapper *pFile);
+  int ToString(FileWrapper *pFile);
+
   VideoReceiveStream::Stats GetStats() const;
 
   void OnDecodedFrame();
@@ -102,6 +131,8 @@ class ReceiveStatisticsProxy : public Module,
 
 private:
 	std::string GenerateFileName(int video_channel);
+	void FillUploadStats();
+
  private:
   Clock* const clock_;
   scoped_ptr<CriticalSectionWrapper> crit_;
@@ -110,6 +141,7 @@ private:
   FileWrapper&  trace_file_;
   RateStatistics decode_fps_estimator_ GUARDED_BY(crit_);
   RateStatistics renders_fps_estimator_ GUARDED_BY(crit_);
+  UploadStats1 UploadStats;
 };
 
 }  // namespace webrtc

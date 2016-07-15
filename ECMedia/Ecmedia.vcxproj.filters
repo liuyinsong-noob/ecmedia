@@ -33,6 +33,9 @@
     <ClInclude Include="include\CaptureScreen.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="include\statsCollector.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\base64.c">
@@ -45,6 +48,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="source\CaptureScreen.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\statsCollector.cc">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

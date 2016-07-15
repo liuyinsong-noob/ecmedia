@@ -1058,6 +1058,7 @@ int ServiceCore::startVideoCapture(SerPhoneCall *call)
 			ECMedia_allocate_capture_device(id,strlen(id),call->m_CaptureDeviceId);
 			//TODO:
 			//capture->SetSendStatisticsProxy(call->m_CaptureDeviceId, base->GetSendStatisticsProxy(call->m_VideoChannelID));
+			ECMedia_set_CaptureDeviceID(call->m_CaptureDeviceId);
 		}		
 
 		if( ECMedia_connect_capture_device(call->m_CaptureDeviceId,call->m_VideoChannelID) < 0 ) {
@@ -1177,6 +1178,7 @@ int ServiceCore::selectCamera(int cameraIndex, int capabilityIndex,int fps,int r
 			} 
 			else {
 				ECMedia_allocate_capture_device(id,strlen(id),call->m_CaptureDeviceId);
+				ECMedia_set_CaptureDeviceID(call->m_CaptureDeviceId);
 				if( ECMedia_connect_capture_device(call->m_CaptureDeviceId,call->m_VideoChannelID) < 0 ) {
 					PrintConsole("Open Camera:%s Failed!  \n", name);
 					if(vtable.connect_camera_failed)

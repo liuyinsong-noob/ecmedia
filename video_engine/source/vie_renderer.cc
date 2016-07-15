@@ -118,7 +118,8 @@ ViERenderer::ViERenderer(const int32_t render_id,
       render_manager_(render_manager),
       render_callback_(NULL),
       incoming_external_callback_(new ViEExternalRendererImpl()),
-	  return_video_width_height(NULL){
+	  return_video_width_height(NULL),
+	  extra_render_callback_(NULL) {
 }
 
 int32_t ViERenderer::Init(const uint32_t z_order,
@@ -150,6 +151,10 @@ void ViERenderer::DeliverFrame(int id,
 	/*sean*/
 
   render_callback_->RenderFrame(render_id_, *video_frame);
+  if (extra_render_callback_)
+  {
+	  extra_render_callback_->RenderFrame(render_id_, *video_frame);
+  }
 }
 
 void ViERenderer::DelayChanged(int id, int frame_delay) {}
@@ -277,6 +282,12 @@ void ViEExternalRendererImpl::NotifyFrameSizeChange(
 //sean 20130402
 WebRtc_UWord32 ViERenderer::SetCallbackForWidthHeight(ReturnVideoWidthHeight p_return_video_width_height) {
 	return_video_width_height = p_return_video_width_height;
+	return 0;
+}
+
+int ViERenderer::AddVideoRenderCallback(int render_id, VideoRenderCallback* callback)
+{
+	extra_render_callback_ = callback;
 	return 0;
 }
 }  // namespace webrtc

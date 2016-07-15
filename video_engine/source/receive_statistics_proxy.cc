@@ -49,14 +49,15 @@ ReceiveStatisticsProxy::ReceiveStatisticsProxy(int video_channel)
       // 1000ms window, scale 1000 for ms to s.
       decode_fps_estimator_(1000, 1000),
       renders_fps_estimator_(1000, 1000) {
-
-		  std::string file_name = GenerateFileName(video_channel);
-		  trace_file_.OpenFile(file_name.c_str(), false);
 }
 
 ReceiveStatisticsProxy::~ReceiveStatisticsProxy() {
-	trace_file_.Flush();
-	trace_file_.CloseFile();
+
+	if (trace_file_.Open())
+	{
+		trace_file_.Flush();
+		trace_file_.CloseFile();
+	}
 	delete &trace_file_;
 }
 
@@ -68,14 +69,14 @@ VideoReceiveStream::Stats ReceiveStatisticsProxy::GetStats() const {
 }
 
 void ReceiveStatisticsProxy::IncomingCodecChanged(const int video_channel,
-													const VideoCodec& video_codec)
+												const VideoCodec& video_codec)
 {
 	CriticalSectionScoped lock(crit_.get());
 	stats_.last_height_ = video_codec.height;
 	stats_.last_width_ = video_codec.width;
 	if (video_codec.codecType == kVideoCodecVP8)
 	{
-		stats_.decoder_implementation_name = "libvpx-vp8";
+		stats_.decoder_implementation_name = "vp8";
 	}else if (video_codec.codecType == kVideoCodecH264)
 	{
 		stats_.decoder_implementation_name = "h264";
@@ -182,13 +183,12 @@ int64_t ReceiveStatisticsProxy::TimeUntilNextProcess()
 int32_t ReceiveStatisticsProxy::Process()
 {
 	const int64_t now = clock_->TimeInMilliseconds();
-	const int64_t kUpdateIntervalMs = 1000; //1000ms¶¨Ê±Æ÷
+	const int64_t kUpdateIntervalMs = 1000; //1000ms?¡§¨º¡À?¡Â
 
 	if (now >= last_process_time_ + kUpdateIntervalMs) {
 		last_process_time_ = now;
-		trace_file_.Write(ToString().c_str(), ToString().length());
 	}
-
+	
 	return 0;
 }
 
@@ -213,96 +213,193 @@ std::string ReceiveStatisticsProxy::ToString() const
 	int microseconds;
 
 	CurrentTmTime(&timeTemp, &microseconds);
-	sprintf(timeBuffer, "%04d/%02d/%02d_%02d:%02d:%02d",
-		timeTemp.tm_year + 1900, timeTemp.tm_mon + 1,
-		timeTemp.tm_mday, timeTemp.tm_hour, timeTemp.tm_min, timeTemp.tm_sec);
+	sprintf(timeBuffer, "%02d/%02d/%04d %02d:%02d:%02d",
+		timeTemp.tm_mon + 1,timeTemp.tm_mday, timeTemp.tm_year + 1900,
+		timeTemp.tm_hour, timeTemp.tm_min, timeTemp.tm_sec);
 
 	CriticalSectionScoped lock(crit_.get());
 
 	std::stringstream ss;
-	ss << "{timestamp: " << timeBuffer;
-	ss << "\tCodecName: " << stats_.decoder_implementation_name;
+	ss << "videoRecv timestamp=" << timeBuffer;
+	ss << "\tCodecName=" << stats_.decoder_implementation_name;
 
 	memset(formatString, 0, 128);
 	sprintf(formatString, "%-4d", stats_.last_width_); 
-	ss << "\tFrameWidthReceived: " << formatString;
+	ss << "\tFrameWidthReceived=" << formatString;
 
 	memset(formatString, 0, 128);
 	sprintf(formatString, "%-4d", stats_.last_height_); 
-	ss << "\tFrameHeightReceived: " << formatString;
+	ss << "\tFrameHeightReceived=" << formatString;
 
 	int64_t bytes_rcvd = stats_.rtp_stats.bytes +
 						 stats_.rtp_stats.header_bytes +
 						 stats_.rtp_stats.padding_bytes;
 	memset(formatString, 0, 128);
 	sprintf(formatString, "%-9lld", bytes_rcvd);
-	ss << "\tbytesReceived: " << formatString;
+	ss << "\tbytesReceived=" << formatString;
 
 	memset(formatString, 0, 128);
 	sprintf(formatString, "%-9d", stats_.rtp_stats.packets); 
-	ss << "\tpacketsReceived: " << formatString;
+	ss << "\tpacketsReceived=" << formatString;
 
 	memset(formatString, 0, 128);
 	sprintf(formatString, "%-9d", stats_.rtcp_stats.cumulative_lost); 
-	ss << "\tpacketsLost: " << formatString;
+	ss << "\tpacketsLost=" << formatString;
 
 	memset(formatString, 0, 128);
 	sprintf(formatString, "%-9d", stats_.current_delay_ms); 
-	ss << "\tCurrentDelayMs: " << formatString;
+	ss << "\tCurrentDelayMs=" << formatString;
 
 	memset(formatString, 0, 128);
 	sprintf(formatString, "%-9d", stats_.decode_ms); 
-	ss << "\tDecodeMs: " << formatString;
+	ss << "\tDecodeMs=" << formatString;
 
 	memset(formatString, 0, 128);
 	sprintf(formatString, "%-9d", stats_.jitter_buffer_ms); 
-	ss << "\tJitterBufferMs: " << formatString;
+	ss << "\tJitterBufferMs=" << formatString;
 
 	memset(formatString, 0, 128);
 	sprintf(formatString, "%-9d", stats_.max_decode_ms); 
-	ss << "\tMaxDecodeMs: " << formatString;
+	ss << "\tMaxDecodeMs=" << formatString;
 
 	memset(formatString, 0, 128);
 	sprintf(formatString, "%-9d", stats_.min_playout_delay_ms); 
-	ss << "\tMinPlayoutDelayMs: " << formatString;
+	ss << "\tMinPlayoutDelayMs=" << formatString;
 
 	memset(formatString, 0, 128);
 	sprintf(formatString, "%-9d", stats_.render_delay_ms); 
-	ss << "\tRenderDelayMs: " << formatString;
+	ss << "\tRenderDelayMs=" << formatString;
 
 	memset(formatString, 0, 128);
 	sprintf(formatString, "%-9d", stats_.target_delay_ms); 
-	ss << "\tTargetDelayMs: " << formatString;
+	ss << "\tTargetDelayMs=" << formatString;
 
 	memset(formatString, 0, 128);
 	sprintf(formatString, "%-9d", stats_.rtcp_packet_type_counts.nack_packets); 
-	ss << "\tNacksSent: " << formatString;
+	ss << "\tNacksSent=" << formatString;
 
 // 	memset(formatString, 0, 128);
 // 	sprintf(formatString, "%-9d", stats_.rtcp_packet_type_counts.fir_packets); 
-// 	ss << "\tFirsSent: " << formatString;
+// 	ss << "\tFirsSent=" << formatString;
 
 //	memset(formatString, 0, 128);
 // 	sprintf(formatString, "%-9d", stats_.rtcp_packet_type_counts.pli_packets); 
-// 	ss << "\tPlisSent: " << formatStrin
+// 	ss << "\tPlisSent=" << formatStrin
 
 
 	memset(formatString, 0, 128);
 	sprintf(formatString, "%-9d", stats_.network_frame_rate); 
-	ss << "\tFrameRateReceived: " << formatString;
+	ss << "\tFrameRateReceived=" << formatString;
 
 	memset(formatString, 0, 128);
 	sprintf(formatString, "%-9d", stats_.decode_frame_rate); 
-	ss << "\tFrameRateDecoded: " << formatString;
+	ss << "\tFrameRateDecoded=" << formatString;
 
 	memset(formatString, 0, 128);
 	sprintf(formatString, "%-9d", stats_.render_frame_rate); 
-	ss << "\tFrameRateOutput: " << formatString;
+	ss << "\tFrameRateOutput=" << formatString;
 
-	ss << "}\r\n";
-
-
+	ss << "\r\n";
 
 	return ss.str();
+}
+int ReceiveStatisticsProxy::ToString(FileWrapper *pFile)
+{
+	pFile->Write(ToString().c_str(), ToString().length());
+	return 0;
+}
+
+void ReceiveStatisticsProxy::FillUploadStats()
+{
+	CriticalSectionScoped lock(crit_.get());
+	memset(&UploadStats, 0, sizeof(UploadStats));
+	memcpy(UploadStats.WhichStats, "VR", 2);
+	memcpy(UploadStats.Version,"1", 2);
+	memcpy(UploadStats.CodecName, stats_.decoder_implementation_name.c_str(), 4);
+
+	UploadStats.FrameWidthReceived = stats_.last_width_; 
+	UploadStats.FrameHeightReceived = stats_.last_height_; 
+	UploadStats.BytesReceived = stats_.rtp_stats.bytes 
+		+ stats_.rtp_stats.header_bytes
+		+ stats_.rtp_stats.padding_bytes;
+
+	UploadStats.PacketsReceived = stats_.rtp_stats.packets; 
+	UploadStats.PacketsLost = stats_.rtcp_stats.cumulative_lost; 
+	UploadStats.CurrentDelayMs = stats_.current_delay_ms; 
+	UploadStats.DecodeMs = stats_.decode_ms; 
+	UploadStats.JitterBufferMs = stats_.jitter_buffer_ms; 
+	UploadStats.MaxDecodeMs = stats_.max_decode_ms; 
+
+	UploadStats.MinPlayoutDelayMs = stats_.min_playout_delay_ms; 
+	UploadStats.RenderDelayMs = stats_.render_delay_ms; 
+	UploadStats.TargetDelayMs = stats_.target_delay_ms; 
+	UploadStats.NacksSent = stats_.rtcp_packet_type_counts.nack_packets; 
+	UploadStats.FrameRateReceived =	stats_.network_frame_rate; 
+	UploadStats.FrameRateDecoded = stats_.decode_frame_rate; 
+	UploadStats.FrameRateOutput = stats_.render_frame_rate; 
+}
+
+int ReceiveStatisticsProxy::ToBinary(char* buffer, int buffer_length)
+{
+	FillUploadStats();
+	int length = sizeof(UploadStats);
+	if (buffer_length < length)
+	{
+		return -1;
+	}
+	memcpy(buffer, &UploadStats, length);
+	return length;
+}
+
+int ReceiveStatisticsProxy::ToFile(FileWrapper *pFile)
+{
+	if (pFile)
+	{
+		FillUploadStats();
+		pFile->Write(UploadStats.WhichStats, sizeof(UploadStats.WhichStats));
+		pFile->Write(UploadStats.Version, sizeof(UploadStats.Version));
+		pFile->Write(&UploadStats.CodecName, sizeof(UploadStats.CodecName));
+		pFile->Write(&UploadStats.FrameWidthReceived, sizeof(UploadStats.FrameWidthReceived));
+		pFile->Write(&UploadStats.FrameHeightReceived, sizeof(UploadStats.FrameHeightReceived));
+		pFile->Write(&UploadStats.BytesReceived, sizeof(UploadStats.BytesReceived));
+		pFile->Write(&UploadStats.PacketsReceived, sizeof(UploadStats.PacketsReceived));
+		pFile->Write(&UploadStats.PacketsLost, sizeof(UploadStats.PacketsLost));
+		pFile->Write(&UploadStats.CurrentDelayMs, sizeof(UploadStats.CurrentDelayMs));
+		pFile->Write(&UploadStats.DecodeMs, sizeof(UploadStats.DecodeMs));
+		pFile->Write(&UploadStats.JitterBufferMs, sizeof(UploadStats.JitterBufferMs));
+		pFile->Write(&UploadStats.MaxDecodeMs, sizeof(UploadStats.MaxDecodeMs));
+		pFile->Write(&UploadStats.MinPlayoutDelayMs, sizeof(UploadStats.MinPlayoutDelayMs));
+		pFile->Write(&UploadStats.RenderDelayMs, sizeof(UploadStats.RenderDelayMs));
+		pFile->Write(&UploadStats.TargetDelayMs, sizeof(UploadStats.TargetDelayMs));
+		pFile->Write(&UploadStats.NacksSent, sizeof(UploadStats.NacksSent));
+		pFile->Write(&UploadStats.FrameRateReceived, sizeof(UploadStats.FrameRateReceived));
+		pFile->Write(&UploadStats.FrameRateDecoded, sizeof(UploadStats.FrameRateDecoded));
+		pFile->Write(&UploadStats.FrameRateOutput, sizeof(UploadStats.FrameRateOutput));
+
+		int length = 0;
+		length = sizeof(UploadStats.WhichStats)
+			+sizeof(UploadStats.Version)
+			+sizeof(UploadStats.CodecName)
+			+sizeof(UploadStats.FrameWidthReceived)
+			+sizeof(UploadStats.FrameHeightReceived)
+			+sizeof(UploadStats.BytesReceived)
+			+sizeof(UploadStats.PacketsReceived)
+			+sizeof(UploadStats.PacketsLost)
+			+sizeof(UploadStats.CurrentDelayMs)
+			+sizeof(UploadStats.DecodeMs)
+			+sizeof(UploadStats.JitterBufferMs)
+			+sizeof(UploadStats.MaxDecodeMs)
+			+sizeof(UploadStats.MinPlayoutDelayMs)
+			+sizeof(UploadStats.RenderDelayMs)
+			+sizeof(UploadStats.TargetDelayMs)
+			+sizeof(UploadStats.NacksSent)
+			+sizeof(UploadStats.FrameRateReceived)
+			+sizeof(UploadStats.FrameRateDecoded)
+			+sizeof(UploadStats.FrameRateOutput);
+
+		return length;
+	}
+
+	return -1;
 }
 }  // namespace webrtc
