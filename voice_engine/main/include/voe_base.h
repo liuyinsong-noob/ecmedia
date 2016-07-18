@@ -172,6 +172,10 @@ public:
     // port number for a specified |channel|.
     virtual int StartSend(int channel) = 0;
 
+    virtual int StartRecord(int channel) = 0;
+
+    virtual int StopRecord(int channel) = 0;
+
     // Stops sending packets from a specified |channel|.
     virtual int StopSend(int channel) = 0;
 

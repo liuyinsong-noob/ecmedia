@@ -3641,3 +3641,30 @@ extern "C" int SetOpusPacketLossRate(int rate)
     return g_pSerCore->Serphone_set_opus_packet_loss_rate(rate);
 
 }
+
+extern "C" int StartRecord(const char* callid)
+{
+	if(!callid)
+		return -1;
+
+	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+
+	SerPhoneCall *pCall = NULL;
+	int ret = findCall(callid, &pCall);
+	if(ret != 0)
+		return -1;
+	return g_pSerCore->startRecord(pCall);
+}
+extern "C" int StopRecord(const char* callid)
+{
+	if(!callid)
+		return -1;
+
+	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+
+	SerPhoneCall *pCall = NULL;
+	int ret = findCall(callid, &pCall);
+	if(ret != 0)
+		return -1;
+	return g_pSerCore->stopRecord(pCall);
+}

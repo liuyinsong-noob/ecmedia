@@ -46,6 +46,17 @@ public:
 //    - (-1)          : Error
     WebRtc_Word32 Encode(const I420VideoFrame& inputImage);
 
+// Encode an I420 image. The encoded image is saved to outputImage
+//
+// Input:
+//			- inputImage		: Image to be encoded
+//
+//	  Output:
+//          - outputImage       :Saved image
+//	  - 0			  : OK
+//	  - (-1)		  : Error
+    WebRtc_Word32 Encode(const I420VideoFrame& inputImage, EncodedImage& outputImage);
+
 private:
 
     jpeg_compress_struct*   _cinfo;

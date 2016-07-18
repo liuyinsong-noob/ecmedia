@@ -745,11 +745,7 @@ public class NativeInterface {
 	public static native int stopMemberVideo(String conferenceNo , String conferencePasswd , String remoteSipNo , HashMap<String, Object> map);
 	public static native int resetVideoConfWindow(String sipNo , View videoWindow);
 	
-	
-	
-	
-	
-	
-	
-	
+	public static native int startRecord(String callid);
+
+    public static native int stopRecord(String callid);
 }

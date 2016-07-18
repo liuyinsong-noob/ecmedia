@@ -342,12 +342,12 @@ int ViEFileImpl::StopPlayAudioLocally(const int file_id,
   }
   return 0;
 }
-    
+
 void ViEFileImpl::RegisterVideoFrameStorageCallBack(const int video_channel, VCMFrameStorageCallback *callback) {
     WEBRTC_TRACE(kTraceApiCall, kTraceVideo,
                  ViEId(shared_data_->instance_id(), video_channel),
                  "%s video_channel: %d)", __FUNCTION__, video_channel);
-    
+
     ViEChannelManagerScoped cs(*(shared_data_->channel_manager()));
     ViEChannel* vie_channel = cs.Channel(video_channel);
     if (!vie_channel) {
@@ -361,7 +361,7 @@ void ViEFileImpl::RegisterVideoFrameStorageCallBack(const int video_channel, VCM
     vie_channel->RegisterFrameStorageCallback(callback);
     return ;
 }
-    
+
 
 int ViEFileImpl::StartRecordOutgoingVideo(const int video_channel,
                                           const char* file_nameUTF8,
@@ -613,7 +613,7 @@ int ViEFileImpl::GetRenderSnapshot(const int video_channel,
 }
 
 int ViEFileImpl::GetRenderSnapshot(const int video_channel,
-                                   ViEPicture& picture) {
+                                   ViEPicture& picture, RawVideoType type) {
   // Gain access to the renderer for the specified channel and get it's
   // current frame.
   ViERenderManagerScoped rs(*(shared_data_->render_manager()));
@@ -627,19 +627,38 @@ int ViEFileImpl::GetRenderSnapshot(const int video_channel,
     return -1;
   }
 
-  // Copy from VideoFrame class to ViEPicture struct.
-  int buffer_length =
-      static_cast<int>(video_frame.width() * video_frame.height() * 1.5);
-  picture.data =  static_cast<WebRtc_UWord8*>(malloc(
-      buffer_length * sizeof(WebRtc_UWord8)));
+   if(type == kVideoI420) {
+      // Copy from VideoFrame class to ViEPicture struct.
+      int buffer_length =
+          static_cast<int>(video_frame.width() * video_frame.height() * 1.5);
+      picture.data =  static_cast<WebRtc_UWord8*>(malloc(
+          buffer_length * sizeof(WebRtc_UWord8)));
 
 
-  memcpy(picture.data, video_frame.buffer(kYPlane), video_frame.stride(kYPlane)*video_frame.height());
+      memcpy(picture.data, video_frame.buffer(kYPlane), video_frame.stride(kYPlane)*video_frame.height());
 
-  picture.size = buffer_length;
-  picture.width = video_frame.width();
-  picture.height = video_frame.height();
-  picture.type = kVideoI420;
+      picture.size = buffer_length;
+      picture.width = video_frame.width();
+      picture.height = video_frame.height();
+      picture.type = kVideoI420;
+	} else if(type == kVideoMJPEG) {
+
+	  JpegEncoder jpeg_encoder;
+	  EncodedImage output_image;
+
+	  if (jpeg_encoder.Encode(video_frame, output_image) == -1) {
+		  WEBRTC_TRACE(kTraceError, kTraceVideo, shared_data_->instance_id(), "\tCould not encode i420 -> jpeg");
+		  return -1;
+	   }
+
+	   picture.data = static_cast<WebRtc_UWord8*>(malloc(output_image._length));
+	   memcpy(picture.data, output_image._buffer, output_image._length);
+	   picture.size = output_image._length;
+	   picture.width = video_frame.width();
+	   picture.height = video_frame.width();
+	   picture.type = kVideoMJPEG;
+	}
+
   return 0;
 }
 
@@ -696,7 +715,7 @@ int ViEFileImpl::GetCaptureDeviceSnapshot(const int capture_id,
 }
 
 int ViEFileImpl::GetCaptureDeviceSnapshot(const int capture_id,
-                                          ViEPicture& picture) {
+                                          ViEPicture& picture, RawVideoType type) {
   I420VideoFrame video_frame;
   ViEInputManagerScoped is(*(shared_data_->input_manager()));
   ViECapturer* capturer = is.Capture(capture_id);
@@ -709,25 +728,43 @@ int ViEFileImpl::GetCaptureDeviceSnapshot(const int capture_id,
                  "%s:%d", capture_id, __FUNCTION__);
     return -1;
   }
+  if(type == kVideoI420) {
+      // Copy from VideoFrame class to ViEPicture struct.
+      int buffer_length =
+          static_cast<int>(video_frame.width() * video_frame.height() * 1.5);
+      picture.data = static_cast<WebRtc_UWord8*>(malloc(
+          buffer_length * sizeof(WebRtc_UWord8)));
+     //   memcpy(picture.data, video_frame.Buffer(), buffer_length);
+      int size_y = video_frame.stride(kYPlane)*video_frame.height();
+      int size_u = video_frame.stride(kUPlane)*video_frame.height()/2;
+      int size_v = video_frame.stride(kVPlane)*video_frame.height()/2;
 
-  // Copy from VideoFrame class to ViEPicture struct.
-  int buffer_length =
-      static_cast<int>(video_frame.width() * video_frame.height() * 1.5);
-  picture.data = static_cast<WebRtc_UWord8*>(malloc(
-      buffer_length * sizeof(WebRtc_UWord8)));
- //   memcpy(picture.data, video_frame.Buffer(), buffer_length);
-  int size_y = video_frame.stride(kYPlane)*video_frame.height();
-  int size_u = video_frame.stride(kUPlane)*video_frame.height()/2;
-  int size_v = video_frame.stride(kVPlane)*video_frame.height()/2;
-  
-  memcpy(picture.data, video_frame.buffer(kYPlane), size_y);
-  memcpy(picture.data+size_y, video_frame.buffer(kUPlane), size_u);
-  memcpy(picture.data+size_y+size_u, video_frame.buffer(kVPlane), size_v);
-  
-  picture.size = buffer_length;
-  picture.width = video_frame.width();
-  picture.height = video_frame.height();
-  picture.type = kVideoI420;
+      memcpy(picture.data, video_frame.buffer(kYPlane), size_y);
+      memcpy(picture.data+size_y, video_frame.buffer(kUPlane), size_u);
+      memcpy(picture.data+size_y+size_u, video_frame.buffer(kVPlane), size_v);
+
+      picture.size = buffer_length;
+      picture.width = video_frame.width();
+      picture.height = video_frame.height();
+      picture.type = kVideoI420;
+  } else if(type == kVideoMJPEG) {
+
+    JpegEncoder jpeg_encoder;
+    EncodedImage output_image;
+
+    if (jpeg_encoder.Encode(video_frame, output_image) == -1) {
+        WEBRTC_TRACE(kTraceError, kTraceVideo, shared_data_->instance_id(), "\tCould not encode i420 -> jpeg");
+        return -1;
+     }
+
+     picture.data = static_cast<WebRtc_UWord8*>(malloc(output_image._length));
+     memcpy(picture.data, output_image._buffer, output_image._length);
+     picture.size = output_image._length;
+     picture.width = video_frame.width();
+     picture.height = video_frame.width();
+     picture.type = kVideoMJPEG;
+  }
+
   return 0;
 }
 
@@ -1019,7 +1056,7 @@ bool ViECaptureSnapshot::GetSnapshot(I420VideoFrame& video_frame,
                                      unsigned int max_wait_time) {
   crit_->Enter();
   video_frame_ = new I420VideoFrame();
-  //int size_y = 
+  //int size_y =
   //video_frame_->CreateFrame(size_y, video_frame.buffer(kYPlane),
 		//					size_u, video_frame.buffer(kUPlane),
 		//					)

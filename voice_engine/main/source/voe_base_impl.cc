@@ -700,6 +700,63 @@ int VoEBaseImpl::StopPlayout(int channel)
     return StopPlayout();
 }
 
+int VoEBaseImpl::StartRecord(int channel)
+{
+    WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+                 "StartRecord(channel=%d)", channel);
+    CriticalSectionScoped cs(_shared->crit_sec());
+    if (!_shared->statistics().Initialized())
+    {
+        _shared->SetLastError(VE_NOT_INITED, kTraceError);
+        return -1;
+    }
+
+    if (_shared->audio_device()->Recording())
+    {
+        return 0;
+    }
+    if (!_shared->ext_recording())
+    {
+        if (_shared->audio_device()->InitRecording() != 0)
+        {
+            WEBRTC_TRACE(kTraceError, kTraceVoice,
+                VoEId(_shared->instance_id(), -1),
+                "StartSend() failed to initialize recording");
+            return -1;
+        }
+        if (_shared->audio_device()->StartRecording() != 0)
+        {
+            WEBRTC_TRACE(kTraceError, kTraceVoice,
+                VoEId(_shared->instance_id(), -1),
+                "StartSend() failed to start recording");
+            return -1;
+        }
+    }
+    return 0;
+}
+
+int VoEBaseImpl::StopRecord(int channel)
+{
+    WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+                 "StopPlayout(channel=%d)", channel);
+    CriticalSectionScoped cs(_shared->crit_sec());
+    if (!_shared->statistics().Initialized())
+    {
+        _shared->SetLastError(VE_NOT_INITED, kTraceError);
+        return -1;
+    }
+	// Stop audio-device recording if no channel is recording
+	if (_shared->audio_device()->StopRecording() != 0)
+	{
+		_shared->SetLastError(VE_CANNOT_STOP_RECORDING, kTraceError,
+			"StopSend() failed to stop recording");
+		return -1;
+	}
+
+    return 0;
+}
+
+
 int VoEBaseImpl::StartSend(int channel)
 {
     WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),

@@ -851,6 +851,16 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_openTraceFile
  */
 JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_setReconnectFlag
 (JNIEnv *, jclass, jboolean);
+
+
+JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_startRecord
+(JNIEnv *, jclass, jstring);
+
+
+JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_stopRecord
+(JNIEnv *, jclass, jstring);
+
+
 #ifdef __cplusplus
 }
 #endif

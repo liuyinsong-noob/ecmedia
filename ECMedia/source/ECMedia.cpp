@@ -57,6 +57,7 @@ static cloopenwebrtc::VoiceEngine* m_voe = NULL;
 #ifdef VIDEO_ENABLED
 static cloopenwebrtc::VideoEngine* m_vie = NULL;
 static RecordVoip* g_recordVoip = NULL;
+static unsigned char* g_snapshotBuf = NULL;
 static StatsCollector *g_statsCollector = NULL;
 static int g_CaptureDeviceId = -1;
 #endif
@@ -405,6 +406,12 @@ int ECMedia_uninit_video()
     }
     VideoEngine::Delete(m_vie);
     m_vie= NULL;
+
+    if(g_snapshotBuf) {
+        free(g_snapshotBuf);
+        g_snapshotBuf = NULL;
+    }
+
     PrintConsole("media_uninit_video called out\n");
 #endif
     return 0;
@@ -782,6 +789,40 @@ int ECMedia_audio_stop_playout(int channelid)
         return -99;
     }
 }
+int ECMedia_audio_start_record(int channelid)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    VoEBase *base = VoEBase::GetInterface(m_voe);
+    if (base) {
+        base->StartRecord(channelid);
+        base->Release();
+        return 0;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to get VoEBase, %s",__FUNCTION__);
+        return -99;
+    }
+}
+
+int ECMedia_audio_stop_record(int channelid)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    VoEBase *base = VoEBase::GetInterface(m_voe);
+    if (base) {
+        base->StopRecord(channelid);
+        base->Release();
+        return 0;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to get VoEBase, %s",__FUNCTION__);
+        return -99;
+    }
+}
+
 
 int ECMedia_send_dtmf(int channelid, const char dtmfch)
 {
@@ -2675,7 +2716,10 @@ int ECMedia_stop_record_screen(int channelid)
 		}
 	}
 
-	return g_recordVoip->StopRecordScreen(0);
+	g_recordVoip->StopRecordScreen(0);
+    delete g_recordVoip;
+    g_recordVoip = NULL;
+    return 0;
 }
 
 int ECMedia_get_local_video_snapshot(int deviceid, unsigned char **buf, unsigned int *size, unsigned int *width, unsigned int *height)
@@ -2685,33 +2729,22 @@ int ECMedia_get_local_video_snapshot(int deviceid, unsigned char **buf, unsigned
 
 	 ViEFile *file = ViEFile::GetInterface(m_vie);
 	 ViEPicture capPicture;
-	 if( file->GetCaptureDeviceSnapshot(deviceid, capPicture) < 0) {
-		 PrintConsole("[ECMEDIA Error] %s  GetCaptureDeviceSnapshot failed.",__FUNCTION__);
+	 if( file->GetCaptureDeviceSnapshot(deviceid, capPicture, kVideoMJPEG) < 0) {
+		 PrintConsole("[ECMEDIA Error] %s GetCaptureDeviceSnapshot failed.",__FUNCTION__);
 		 file->Release();
 		 return -1;
 	 }
-	 int bufferSize =  cloopenwebrtc::CalcBufferSize(cloopenwebrtc::kRGB24, capPicture.width, capPicture.height);
-	 uint8_t *rgbBuf = (uint8_t*)malloc(bufferSize);
 
-	 if(rgbBuf) {
-		 int ret = -1;
-         //hubin TODO:
-         //cloopenwebrtc::ConvertFromI420(capPicture.data, capPicture.width, cloopenwebrtc::kRGB24, 0, capPicture.width, capPicture.height, (uint8_t*)rgbBuf);
-		 if(ret < 0) {
-			 PrintConsole("[ECMEDIA Error] %s  ConvertFromI420 failed.",__FUNCTION__);
-			 free(rgbBuf);
-			 *buf = NULL;
-			 *size = 0;
-			 file->FreePicture(capPicture);
-			 file->Release();
-			 return -1;
-		 }
-	 }
-
-	 *buf = rgbBuf;
-	 *size = bufferSize;
-	 *width = capPicture.width;
-	 *height = capPicture.height;
+     if(g_snapshotBuf) {
+        free(g_snapshotBuf);
+        g_snapshotBuf = NULL;
+     }
+     g_snapshotBuf = (uint8_t*)malloc(capPicture.size);
+     memcpy(g_snapshotBuf, capPicture.data, capPicture.size);
+     *size = capPicture.size;
+     *width = capPicture.width;
+     *height = capPicture.height;
+	 *buf = g_snapshotBuf;
 
 	 file->FreePicture(capPicture);
 	 file->Release();
@@ -2745,36 +2778,25 @@ int ECMedia_get_remote_video_snapshot(int channelid, unsigned char **buf, unsign
 
 	ViEFile *file = ViEFile::GetInterface(m_vie);
 	ViEPicture capPicture;
-	if( file->GetRenderSnapshot(channelid, capPicture) < 0) {
+	if( file->GetRenderSnapshot(channelid, capPicture, kVideoMJPEG) < 0) {
 		PrintConsole("[ECMEDIA Error] %s  GetCaptureDeviceSnapshot failed.",__FUNCTION__);
 		file->Release();
 		return -1;
 	}
-	int bufferSize =  cloopenwebrtc::CalcBufferSize(cloopenwebrtc::kRGB24, capPicture.width, capPicture.height);
-	uint8_t *rgbBuf = (uint8_t*)malloc(bufferSize);
 
-	if(rgbBuf) {
-		int ret = -1;
-        //hubin TODO:
-         //cloopenwebrtc::ConvertFromI420(capPicture.data, capPicture.width, cloopenwebrtc::kRGB24, 0, capPicture.width, capPicture.height, (uint8_t*)rgbBuf);
-		if(ret < 0) {
-			PrintConsole("[ECMEDIA Error] %s  ConvertFromI420 failed.",__FUNCTION__);
-			free(rgbBuf);
-			*buf = NULL;
-			*size = 0;
-			file->FreePicture(capPicture);
-			file->Release();
-			return -1;
-		}
-	}
+    if(g_snapshotBuf) {
+        free(g_snapshotBuf);
+        g_snapshotBuf = NULL;
+    }
+    g_snapshotBuf = (uint8_t*)malloc(capPicture.size);
+    memcpy(g_snapshotBuf, capPicture.data, capPicture.size);
+    *size = capPicture.size;
+    *width = capPicture.width;
+    *height = capPicture.height;
+	*buf = g_snapshotBuf;
 
-	*buf = rgbBuf;
-	*size = bufferSize;
-	*width = capPicture.width;
-	*height = capPicture.height;
-
-	file->FreePicture(capPicture);
-	file->Release();
+    file->FreePicture(capPicture);
+    file->Release();
 	return 0;
 }
 

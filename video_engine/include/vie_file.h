@@ -167,7 +167,7 @@ class WEBRTC_DLLEXPORT ViEFile {
   // The function takes a snapshot of the last rendered image for a video
   // channel
   virtual int GetRenderSnapshot(const int video_channel,
-                                ViEPicture& picture) = 0;
+                                ViEPicture& picture, RawVideoType type) = 0;
 
   // The function takes a snapshot of the last captured image by a specified
   // capture device.
@@ -177,7 +177,7 @@ class WEBRTC_DLLEXPORT ViEFile {
   // The function takes a snapshot of the last captured image by a specified
   // capture device.
   virtual int GetCaptureDeviceSnapshot(const int capture_id,
-                                       ViEPicture& picture) = 0;
+                                       ViEPicture& picture, RawVideoType type) = 0;
 
   // This function sets a jpg image to show before the first frame is captured
   // by the capture device. This frame will be encoded and transmitted to a

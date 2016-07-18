@@ -886,8 +886,12 @@ OutputMixer::InsertInbandDtmfTone()
     if (sampleRate != _audioFrame.sample_rate_hz_)
     {
         // Update sample rate of Dtmf tone since the mixing frequency changed.
-        _dtmfGenerator.SetSampleRate(
-            (uint16_t)(_audioFrame.sample_rate_hz_));
+        if( _dtmfGenerator.SetSampleRate(
+            (uint16_t)(_audioFrame.sample_rate_hz_) ) == -1) {
+            WEBRTC_TRACE(kTraceError, kTraceVoice, VoEId(_instanceId, -1),
+             "OutputMixer::InsertInbandDtmfTone() SetSampleRate %d failed.", _audioFrame.sample_rate_hz_);
+            return -1;
+        }
         // Reset the tone to be added taking the new sample rate into account.
         _dtmfGenerator.ResetTone();
     }

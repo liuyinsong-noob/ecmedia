@@ -1,9 +1,10 @@
 /*
  * jpegtran.c
  *
+ * This file was part of the Independent JPEG Group's software:
  * Copyright (C) 1995-2010, Thomas G. Lane, Guido Vollbeding.
+ * libjpeg-turbo Modifications:
  * Copyright (C) 2010, D. R. Commander.
- * This file is part of the Independent JPEG Group's software.
  * For conditions of distribution and use, see the accompanying README file.
  *
  * This file contains a command-line user interface for JPEG transcoding.
@@ -205,7 +206,7 @@ parse_switches (j_compress_ptr cinfo, int argc, char **argv,
 	fprintf(stderr, "%s version %s (build %s)\n",
 		PACKAGE_NAME, VERSION, BUILD);
 	fprintf(stderr, "%s\n\n", JCOPYRIGHT);
-	fprintf(stderr, "Emulating The Independent JPEG Group's libjpeg, version %s\n\n",
+	fprintf(stderr, "Emulating The Independent JPEG Group's software, version %s\n\n",
 		JVERSION);
 	printed_version = TRUE;
       }
@@ -356,7 +357,7 @@ parse_switches (j_compress_ptr cinfo, int argc, char **argv,
   return argn;			/* return index of next arg (file name) */
 }
 
-#ifdef _TEST_JPEG_
+
 /*
  * The main program.
  */
@@ -548,5 +549,3 @@ main (int argc, char **argv)
   exit(jsrcerr.num_warnings + jdsterr.num_warnings ?EXIT_WARNING:EXIT_SUCCESS);
   return 0;			/* suppress no-return-value warnings */
 }
-
-#endif

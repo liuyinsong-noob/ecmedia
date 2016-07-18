@@ -3505,7 +3505,7 @@ Channel::GetRTPStatistics(CallStatistics& stats)
     stats.extendedMax = statistics.extended_max_sequence_number;
     stats.jitterSamples = statistics.jitter;
 
-    WEBRTC_TRACE(kTraceStateInfo, kTraceVoice,
+    WEBRTC_TRACE(kTraceInfo, kTraceVoice,
                  VoEId(_instanceId, _channelId),
                  "GetRTPStatistics() => fractionLost=%lu, cumulativeLost=%lu,"
                  " extendedMax=%lu, jitterSamples=%li)",
@@ -3515,10 +3515,10 @@ Channel::GetRTPStatistics(CallStatistics& stats)
     // --- RTT
     stats.rttMs = GetRTT();
     if (stats.rttMs == 0) {
-      WEBRTC_TRACE(kTraceWarning, kTraceVoice, VoEId(_instanceId, _channelId),
+      WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId, _channelId),
                    "GetRTPStatistics() failed to get RTT");
     } else {
-      WEBRTC_TRACE(kTraceStateInfo, kTraceVoice, VoEId(_instanceId, _channelId),
+      WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId, _channelId),
                    "GetRTPStatistics() => rttMs=%" PRId64, stats.rttMs);
     }
 
@@ -3547,7 +3547,7 @@ Channel::GetRTPStatistics(CallStatistics& stats)
     stats.bytesReceived = bytesReceived;
     stats.packetsReceived = packetsReceived;
 
-    WEBRTC_TRACE(kTraceStateInfo, kTraceVoice,
+    WEBRTC_TRACE(kTraceInfo, kTraceVoice,
                  VoEId(_instanceId, _channelId),
                  "GetRTPStatistics() => bytesSent=%" PRIuS ", packetsSent=%d,"
                  " bytesReceived=%" PRIuS ", packetsReceived=%d)",

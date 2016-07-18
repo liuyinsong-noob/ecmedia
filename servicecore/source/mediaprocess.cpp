@@ -4889,6 +4889,23 @@ int ServiceCore::Serphone_set_opus_packet_loss_rate(int rate)
         return 0;
 }
 
+int ServiceCore::startRecord(SerPhoneCall *call)
+{
+#if !defined(NO_VOIP_FUNCTION)
+	if(!call)
+		return -1;
+    return ECMedia_audio_start_record(call->m_AudioChannelID);
+#endif
+}
+
+int ServiceCore::stopRecord(SerPhoneCall *call)
+{
+#if !defined(NO_VOIP_FUNCTION)
+    if(!call)
+        return -1;
+    return ECMedia_audio_stop_record(call->m_AudioChannelID);
+#endif
+}
 
 //SendStatisticsProxy*  ServiceCore::Serphone_set_video_send_statistics_proxy(int video_channel)
 //{

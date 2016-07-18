@@ -95,7 +95,9 @@ DtmfInband::SetSampleRate(uint16_t frequency)
             frequency != 32000)
     {
         // invalid sample rate
-        assert(false);
+        //assert(false);
+        WEBRTC_TRACE(kTraceWarning, kTraceVoice, VoEId(_id,-1),
+                   "DtmfInband::SetSampleRate() set %d failed.", frequency);
         return -1;
     }
     _outputFrequencyHz = frequency;
@@ -109,7 +111,7 @@ DtmfInband::GetSampleRate(uint16_t& frequency)
     return 0;
 }
 
-void 
+void
 DtmfInband::Init()
 {
     _remainingSamples = 0;
@@ -166,7 +168,6 @@ DtmfInband::ResetTone()
     _frameLengthSamples = static_cast<int16_t> (_outputFrequencyHz / 100);
     _remainingSamples = static_cast<int32_t>
         (_lengthMs * (_outputFrequencyHz / 1000));
-
     return 0;
 }
 
@@ -193,7 +194,6 @@ DtmfInband::StartTone(uint8_t eventCode,
     _eventCode = static_cast<int16_t> (eventCode);
     _attenuationDb = static_cast<int16_t> (attenuationDb);
     _playing = true;
-
     return 0;
 }
 
@@ -213,13 +213,13 @@ DtmfInband::StopTone()
 }
 
 // Shall be called between tones
-void 
+void
 DtmfInband::ReInit()
 {
     _reinit = true;
 }
 
-bool 
+bool
 DtmfInband::IsAddingTone()
 {
     CriticalSectionScoped lock(&_critSect);

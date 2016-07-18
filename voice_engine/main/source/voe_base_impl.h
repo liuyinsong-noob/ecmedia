@@ -55,6 +55,11 @@ public:
 
     virtual int StopSend(int channel);
 
+    virtual int StartRecord(int channel);
+
+    virtual int StopRecord(int channel);
+
+
     virtual int GetVersion(char version[1024]);
 
     virtual int LastError();

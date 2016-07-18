@@ -996,6 +996,20 @@ void CserphonetestDlg::OnBnClickedButton11()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	sendDTMF(g_currentCallId,'5');
+
+	unsigned char *jpgBuf = NULL;
+	unsigned int jpgBufSize = 0;
+	unsigned int width, height;
+	if (getLocalVideoSnapshot(g_currentCallId, &jpgBuf, &jpgBufSize, &width, &height) == 0) {
+		FILE *jpeg = fopen("L:\\local.jpg", "wb");
+		if (jpeg) {
+			fwrite(jpgBuf, 1, jpgBufSize, jpeg);
+			fclose(jpeg);
+		}
+
+		void* aa = malloc(1025);
+		memset(aa, 0xFF, 1025);
+	}
 }
 
 
@@ -1003,6 +1017,17 @@ void CserphonetestDlg::OnBnClickedButton12()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	sendDTMF(g_currentCallId,'6');
+
+	unsigned char *jpgBuf = NULL;
+	unsigned int jpgBufSize = 0;
+	unsigned int width, height;
+	if (getRemoteVideoSnapshot(g_currentCallId, &jpgBuf, &jpgBufSize, &width, &height) == 0) {
+		FILE *jpeg = fopen("L:\\remote.jpg", "wb");
+		if (jpeg) {
+			fwrite(jpgBuf, 1, jpgBufSize, jpeg);
+			fclose(jpeg);
+		}
+	}
 }
 
 

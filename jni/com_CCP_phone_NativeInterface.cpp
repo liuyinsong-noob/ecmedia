@@ -1839,3 +1839,29 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_setReconnectFlag
 {
     return setReconnectFlag(flag);
 }
+
+
+JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_startRecord
+(JNIEnv *env, jclass, jstring callid)
+{
+    if (NULL == callid) {
+		return -1;
+	}
+	const char* ccallid = env->GetStringUTFChars(callid, 0);
+	int ret = StartRecord(ccallid);
+	env->ReleaseStringUTFChars(callid, ccallid);
+    return ret;
+}
+
+
+JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_stopRecord
+(JNIEnv *env, jclass, jstring callid)
+{
+    if (NULL == callid) {
+		return -1;
+	}
+	const char* ccallid = env->GetStringUTFChars(callid, 0);
+	int ret = StopRecord(ccallid);
+	env->ReleaseStringUTFChars(callid, ccallid);
+    return ret;
+}

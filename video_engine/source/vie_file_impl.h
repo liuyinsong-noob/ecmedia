@@ -72,9 +72,9 @@ class ViEFileImpl
   virtual int StartPlayAudioLocally(const int file_id, const int audio_channel,
                                     float volume_scaling = 1);
   virtual int StopPlayAudioLocally(const int file_id, const int audio_channel);
-          
+
   virtual void RegisterVideoFrameStorageCallBack(const int video_channel, VCMFrameStorageCallback *callback);
-          
+
   virtual int StartRecordOutgoingVideo(
       const int video_channel,
       const char* file_nameUTF8,
@@ -98,12 +98,13 @@ class ViEFileImpl
       const FileFormats file_format = kFileFormatAviFile);
   virtual int GetRenderSnapshot(const int video_channel,
                                 const char* file_nameUTF8);
-  virtual int GetRenderSnapshot(const int video_channel, ViEPicture& picture);
+  virtual int GetRenderSnapshot(const int video_channel,
+                                    ViEPicture& picture, RawVideoType type);
   virtual int FreePicture(ViEPicture& picture);
   virtual int GetCaptureDeviceSnapshot(const int capture_id,
                                        const char* file_nameUTF8);
   virtual int GetCaptureDeviceSnapshot(const int capture_id,
-                                       ViEPicture& picture);
+                                       ViEPicture& picture, RawVideoType type);
   virtual int SetCaptureDeviceImage(const int capture_id,
                                     const char* file_nameUTF8);
   virtual int SetCaptureDeviceImage(const int capture_id,

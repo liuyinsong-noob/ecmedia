@@ -137,7 +137,7 @@ JpegEncoder::Encode(const I420VideoFrame& inputImage)
     _cinfo->comp_info[2].v_samp_factor = 1;
     _cinfo->raw_data_in = TRUE;
 
-    WebRtc_UWord32 height16 = (height + 15) & ~15;    
+    WebRtc_UWord32 height16 = (height + 15) & ~15;
     WebRtc_UWord8* origImagePtr = NULL;
     if (height16 != height)
     {
@@ -195,6 +195,127 @@ JpegEncoder::Encode(const I420VideoFrame& inputImage)
 
     return 0;
 }
+
+WebRtc_Word32
+JpegEncoder::Encode(const I420VideoFrame& inputImage, EncodedImage& outputImage)
+{
+	if(inputImage.IsZeroSize())
+		return -1;
+    if (inputImage.width() < 1 || inputImage.height() < 1)
+    {
+        return -1;
+    }
+
+	const WebRtc_UWord32 width = outputImage._encodedWidth = inputImage.width();
+	const WebRtc_UWord32 height = outputImage._encodedHeight = inputImage.height();
+
+	// Set error handler
+	myErrorMgr  jerr;
+	_cinfo->err = jpeg_std_error(&jerr.pub);
+	jerr.pub.error_exit = MyErrorExit;
+	// Establish the setjmp return context
+	if (setjmp(jerr.setjmp_buffer))
+	{
+		// If we get here, the JPEG code has signaled an error.
+		jpeg_destroy_compress(_cinfo);
+		return -3;
+	}
+
+	// Create a compression object
+	jpeg_create_compress(_cinfo);
+
+	// Setting destination image ptr.
+	jpeg_mem_dest (_cinfo, (unsigned char **)&outputImage._buffer, (unsigned long *)&outputImage._length);
+
+	// Set parameters for compression
+	_cinfo->in_color_space = JCS_YCbCr;
+	jpeg_set_defaults(_cinfo);
+
+	_cinfo->image_width = width;
+	_cinfo->image_height = height;
+	_cinfo->input_components = 3;
+
+	_cinfo->comp_info[0].h_samp_factor = 2;   // Y
+	_cinfo->comp_info[0].v_samp_factor = 2;
+	_cinfo->comp_info[1].h_samp_factor = 1;   // U
+	_cinfo->comp_info[1].v_samp_factor = 1;
+	_cinfo->comp_info[2].h_samp_factor = 1;   // V
+	_cinfo->comp_info[2].v_samp_factor = 1;
+	_cinfo->raw_data_in = TRUE;
+
+	//WebRtc_UWord32 height16 = (height + 15) & ~15;
+	//WebRtc_UWord8* imgPtr = inputImage._buffer;
+	//WebRtc_UWord8* origImagePtr = NULL;
+	//if (height16 != height)
+	//{
+	//	// Copy image to an adequate size buffer
+	//	WebRtc_UWord32 requiredSize = height16 * width * 3 >> 1;
+	//	origImagePtr = new WebRtc_UWord8[requiredSize];
+	//	memset(origImagePtr, 0, requiredSize);
+	//	memcpy(origImagePtr, inputImage._buffer, inputImage._length);
+	//	imgPtr = origImagePtr;
+	//}
+
+	WebRtc_UWord32 height16 = (height + 15) & ~15;
+    WebRtc_UWord8* origImagePtr = NULL;
+	WebRtc_UWord32 requiredSize = width * height * 3 >> 1;
+    if (height16 != height)
+    {
+        // Copy image to an adequate size buffer
+		requiredSize = height16 * width * 3 >> 1;
+    }
+	origImagePtr = new WebRtc_UWord8[requiredSize];
+	memset(origImagePtr, 0, requiredSize);
+
+	int size_y = inputImage.stride(kYPlane)*inputImage.height();
+	int size_u = inputImage.stride(kUPlane)*inputImage.height()/2;
+	int size_v = inputImage.stride(kVPlane)*inputImage.height()/2;
+	memcpy(origImagePtr, inputImage.buffer(kYPlane), size_y);
+	memcpy(origImagePtr+size_y, inputImage.buffer(kUPlane), size_u);
+	memcpy(origImagePtr+size_y+size_u, inputImage.buffer(kVPlane), size_v);
+	WebRtc_UWord8* imgPtr = origImagePtr;
+
+	jpeg_start_compress(_cinfo, TRUE);
+
+	JSAMPROW y[16],u[8],v[8];
+	JSAMPARRAY data[3];
+
+	data[0] = y;
+	data[1] = u;
+	data[2] = v;
+
+	WebRtc_UWord32 i, j;
+
+	for (j = 0; j < height; j += 16)
+	{
+		for (i = 0; i < 16; i++)
+		{
+			y[i] = (JSAMPLE*)imgPtr + width * (i + j);
+
+			if (i % 2 == 0)
+			{
+				u[i / 2] = (JSAMPLE*) imgPtr + width * height +
+					width / 2 * ((i + j) / 2);
+				v[i / 2] = (JSAMPLE*) imgPtr + width * height +
+					width * height / 4 + width / 2 * ((i + j) / 2);
+			}
+		}
+		jpeg_write_raw_data(_cinfo, data, 16);
+	}
+
+	jpeg_finish_compress(_cinfo);
+	jpeg_destroy_compress(_cinfo);
+
+	//fclose(outFile);
+
+	if (origImagePtr != NULL)
+	{
+		delete [] origImagePtr;
+	}
+
+	return 0;
+}
+
 
 JpegDecoder::JpegDecoder()
 {
@@ -342,7 +463,7 @@ JpegDecoder::Decode(const EncodedImage& inputImage,
          WebRtc_UWord8* tmpPtr = outPtr;
 
          for (WebRtc_UWord32 p = 0; p < 3; p++)
-         {			
+         {
 			 dstFramePtr = outputImage.buffer((cloopenwebrtc::PlaneType)p);
 
              const WebRtc_UWord32 h = (p == 0) ? height : height >> 1;

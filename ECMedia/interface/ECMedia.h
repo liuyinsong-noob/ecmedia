@@ -273,6 +273,11 @@ int ECMedia_audio_start_playout(int channelid);
  */
 int ECMedia_audio_stop_playout(int channelid);
 
+
+int ECMedia_audio_start_record(int channelid);
+
+int ECMedia_audio_stop_record(int channelid);
+
 /*
  *×Ö·û ÓïÒôÍ¨µÀ
  */

@@ -374,7 +374,7 @@ void dotest1(void)
 	if(bmpbuf) free(bmpbuf);  if(jpgbuf) free(jpgbuf);
 	if(hnd) tjDestroy(hnd);
 }
-#ifdef _TEST_JPEG_
+
 int main(int argc, char *argv[])
 {
 	dotest(35, 41, 3, TJ_444, "test");
@@ -385,4 +385,3 @@ int main(int argc, char *argv[])
 
 	return exitstatus;
 }
-#endif

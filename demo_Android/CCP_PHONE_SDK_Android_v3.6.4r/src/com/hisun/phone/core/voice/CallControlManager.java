@@ -609,6 +609,17 @@ public final class CallControlManager extends AbstractDispatcher {
 		return NativeInterface.cancelCall(callid);
 	}
 
+    public int startRecord(String callid) {
+        Log4Util.i(Device.TAG, "[CallControllerManager - startRecord] callid: "
+                + callid);
+        return NativeInterface.startRecord(callid);
+    }
+    public int stopRecord(String callid) {
+        Log4Util.i(Device.TAG, "[CallControllerManager - stopRecord] callid: "
+                + callid);
+        return NativeInterface.stopRecord(callid);
+    }
+
 	/**********************************************************************
 	 * video methods 2013/5/30 *
 	 **********************************************************************/
