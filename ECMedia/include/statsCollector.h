@@ -4,7 +4,7 @@
 #include "receive_statistics_proxy.h"
 #include "audio_send_stream.h"
 #include "audio_receive_stream.h"
-
+#include "event_wrapper.h"
 #include "file_wrapper.h"
 #include "clock.h"
 
@@ -31,6 +31,7 @@ private:
 	ThreadWrapper *thread_;
 	char*		file_name_;
 	FileWrapper *trace_file_;
+	EventWrapper *updateEvent_;
 
 	cloopenwebrtc::Clock*		clock_;
 	uint32_t	updateIntervalMs_;

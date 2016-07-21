@@ -18,6 +18,7 @@ StatsCollector::StatsCollector(char* file_name, int UpdateIntervalMs)
 
 {
 	unsigned int id;
+	updateEvent_ = EventWrapper::Create();
 	trace_file_->OpenFile(file_name_, false);
 	thread_->Start(id);
 }
@@ -25,8 +26,11 @@ StatsCollector::StatsCollector(char* file_name, int UpdateIntervalMs)
 StatsCollector::~StatsCollector()
 {
 	thread_->SetNotAlive();
+	updateEvent_->Set();
 
 	if(thread_->Stop()) {
+		delete updateEvent_;
+		updateEvent_ = NULL;
 		delete thread_;
 		thread_ = NULL;
 	}
@@ -192,6 +196,7 @@ bool StatsCollector::StatsCollectorThreadRun(void* obj)
 
 bool StatsCollector::ProcessStatsCollector()
 {
+	updateEvent_->Wait(100);
 	const int64_t now = clock_->TimeInMilliseconds();
 	const int64_t kUpdateIntervalMs = updateIntervalMs_; //¶¨Ê±Æ÷
 	if (now >= last_process_time_ + kUpdateIntervalMs) {
@@ -214,21 +219,21 @@ bool StatsCollector::ProcessStatsCollector()
 			pAudioRecvStats_->ToFile(trace_file_);
 		}
 #else
-		if (pVideoSendStats_) {
-			pVideoSendStats_->ToString(trace_file_);
-	}
-		if (pVideoRecvStats_) {
-			pVideoRecvStats_->ToString(trace_file_);
-		}
-
-		if (pAudioSendStats_)
-		{
-			pAudioSendStats_->ToString(trace_file_);
-		}
-		if (pAudioRecvStats_)
-		{
-			pAudioRecvStats_->ToString(trace_file_);
-		}
+// 		if (pVideoSendStats_) {
+// 			pVideoSendStats_->ToString(trace_file_);
+// 	}
+// 		if (pVideoRecvStats_) {
+// 			pVideoRecvStats_->ToString(trace_file_);
+// 		}
+// 
+// 		if (pAudioSendStats_)
+// 		{
+// 			pAudioSendStats_->ToString(trace_file_);
+// 		}
+// 		if (pAudioRecvStats_)
+// 		{
+// 			pAudioRecvStats_->ToString(trace_file_);
+// 		}
 
 #endif
 	}
