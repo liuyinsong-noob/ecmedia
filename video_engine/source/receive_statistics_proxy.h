@@ -25,7 +25,7 @@
 #include "video_receive_stream.h"
 #include "video_renderer.h"
 #include "video_render_defines.h"
-
+#include "event_wrapper.h"
 #include "file_wrapper.h"
 
 namespace cloopenwebrtc {
@@ -139,6 +139,7 @@ private:
   int64_t             last_process_time_;
   VideoReceiveStream::Stats stats_ GUARDED_BY(crit_);
   FileWrapper&  trace_file_;
+  EventWrapper* updateEvent_;
   RateStatistics decode_fps_estimator_ GUARDED_BY(crit_);
   RateStatistics renders_fps_estimator_ GUARDED_BY(crit_);
   UploadStats1 UploadStats;

@@ -25,6 +25,7 @@
 #include "video_send_stream.h"
 #include "video_coding_defines.h"
 
+#include "event_wrapper.h"
 #include "file_wrapper.h"
 #include "call_stats.h"
 #include "bitrate_controller.h"
@@ -170,6 +171,7 @@ private:
 	 Clock*              clock_;
 	 int64_t             last_process_time_;
 	 FileWrapper&		 trace_file_;
+	 EventWrapper *		 updateEvent_;
 	 int				 video_channel_;
 	 CallStats*			 call_stats_;
 	 BitrateController*			bitrate_controller_;

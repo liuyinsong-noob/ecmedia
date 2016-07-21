@@ -49,9 +49,12 @@ ReceiveStatisticsProxy::ReceiveStatisticsProxy(int video_channel)
       // 1000ms window, scale 1000 for ms to s.
       decode_fps_estimator_(1000, 1000),
       renders_fps_estimator_(1000, 1000) {
+	updateEvent_ = EventWrapper::Create();
 }
 
 ReceiveStatisticsProxy::~ReceiveStatisticsProxy() {
+	updateEvent_->Set();
+	delete updateEvent_;
 
 	if (trace_file_.Open())
 	{
@@ -182,6 +185,7 @@ int64_t ReceiveStatisticsProxy::TimeUntilNextProcess()
 
 int32_t ReceiveStatisticsProxy::Process()
 {
+	updateEvent_->Wait(100);
 	const int64_t now = clock_->TimeInMilliseconds();
 	const int64_t kUpdateIntervalMs = 1000; //1000ms?¡§¨º¡À?¡Â
 

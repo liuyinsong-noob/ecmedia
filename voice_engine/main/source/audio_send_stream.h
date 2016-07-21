@@ -15,7 +15,7 @@
 #include "thread_wrapper.h"
 #include "clock.h"
 #include "critical_section_wrapper.h"
-
+#include "event_wrapper.h"
 #include "file_wrapper.h"
 
 namespace cloopenwebrtc {
@@ -97,6 +97,7 @@ private:
 	UploadStats1 UploadStats;
 	ThreadWrapper *thread_;
 	FileWrapper&		 trace_file_;
+	EventWrapper *		 updateEvent_;
 	Clock*              clock_;
 	int64_t             last_process_time_;
 	scoped_ptr<CriticalSectionWrapper> crit_;

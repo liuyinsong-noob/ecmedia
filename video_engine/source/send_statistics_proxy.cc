@@ -53,6 +53,7 @@ SendStatisticsProxy::SendStatisticsProxy(int video_channel)
 		clock_(Clock::GetRealTimeClock()),
 		last_process_time_(clock_->TimeInMilliseconds()),
 		trace_file_(*FileWrapper::Create()),
+	    updateEvent_(EventWrapper::Create()),
 		call_stats_(NULL),
 		bitrate_controller_(NULL),
 		remote_bitrate_estimator_(NULL),
@@ -61,6 +62,10 @@ SendStatisticsProxy::SendStatisticsProxy(int video_channel)
 }
 
 SendStatisticsProxy::~SendStatisticsProxy() {
+
+	updateEvent_->Set();
+	delete updateEvent_;
+
 	if (trace_file_.Open())
 	{
 		trace_file_.Flush();
@@ -177,6 +182,7 @@ int64_t SendStatisticsProxy::TimeUntilNextProcess()
 
 int32_t SendStatisticsProxy::Process()
 {
+	updateEvent_->Wait(100);
 	const int64_t now = clock_->TimeInMilliseconds();
 	const int64_t kUpdateIntervalMs = 1000; //1000ms¶¨Ê±Æ÷
 	if (now >= last_process_time_ + kUpdateIntervalMs) {

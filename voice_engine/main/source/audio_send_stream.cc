@@ -22,11 +22,13 @@ namespace cloopenwebrtc{
 		  crit_(CriticalSectionWrapper::CreateCriticalSection())
 	{
 		unsigned int id;
+		updateEvent_ = EventWrapper::Create();
 		thread_->Start(id);
 	}
 
 	AudioSendStream::~AudioSendStream()
 	{
+		
 		if (trace_file_.Open())
 		{
 			trace_file_.Flush();
@@ -35,8 +37,11 @@ namespace cloopenwebrtc{
 		delete &trace_file_;
 
 		thread_->SetNotAlive();
+		updateEvent_->Set();
 
 		if(thread_->Stop()) {
+			delete updateEvent_;
+			updateEvent_ = NULL;
 			delete thread_;
 			thread_ = NULL;
 		}
@@ -53,6 +58,7 @@ namespace cloopenwebrtc{
 
 	bool AudioSendStream::ProcessSendStatistics()
 	{
+		updateEvent_->Wait(100);
 		const int64_t now = clock_->TimeInMilliseconds();
 		const int64_t kUpdateIntervalMs = 1000; //1000ms¶¨Ê±Æ÷
 		if (now >= last_process_time_ + kUpdateIntervalMs) {
