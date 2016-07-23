@@ -29,6 +29,8 @@
 #ifdef  VIDEOCODEC_H264
 #include "h264.h"
 #include "H264_dec.h"
+#include "h264_video_toolbox_encoder.h"
+#include "h264_video_toolbox_decoder.h"
 #endif
 
 namespace {
@@ -36,7 +38,7 @@ const size_t kDefaultPayloadSize = 1440;
 }
 
 namespace cloopenwebrtc {
-
+    extern bool IsH264CodecSupportedObjC();
 VideoCodecVP8 VideoEncoder::GetDefaultVp8Settings() {
   VideoCodecVP8 vp8_settings;
   memset(&vp8_settings, 0, sizeof(vp8_settings));
@@ -689,7 +691,10 @@ VCMGenericEncoder* VCMCodecDataBase::CreateEncoder(
 #endif
 #ifdef VIDEOCODEC_H264
 	case kVideoCodecH264:
-		return new VCMGenericEncoder(*(H264Encoder::Create()),true);
+          if (!IsH264CodecSupportedObjC())
+              return new VCMGenericEncoder(*(H264Encoder::Create()));
+          else
+              return new VCMGenericEncoder(*(H264VideoToolboxEncoder::Create()));
 #endif
 #ifdef VIDEOCODEC_VP9
     case kVideoCodecVP9:
@@ -723,8 +728,11 @@ VCMGenericDecoder* VCMCodecDataBase::CreateDecoder(VideoCodecType type) const {
       return new VCMGenericDecoder(*(VP8Decoder::Create()));
 #endif
 #ifdef VIDEOCODEC_H264
-	case kVideoCodecH264:
-		return new VCMGenericDecoder(*(H264Decoder::Create()));
+      case kVideoCodecH264:
+          if (!IsH264CodecSupportedObjC())
+              return new VCMGenericDecoder(*(H264Decoder::Create()));
+          else
+              return new VCMGenericDecoder(*(H264VideoToolboxDecoder::Create()));
 #endif
 #ifdef VIDEOCODEC_VP9
     case kVideoCodecVP9:

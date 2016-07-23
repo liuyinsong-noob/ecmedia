@@ -89,11 +89,38 @@
 		AD47AFCE1C58A1510057041A /* vp8_factory.h in Headers */ = {isa = PBXBuildFile; fileRef = AD47AFC61C58A1510057041A /* vp8_factory.h */; };
 		AD47AFCF1C58A1510057041A /* vp8_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD47AFC71C58A1510057041A /* vp8_impl.cc */; };
 		AD47AFD01C58A1510057041A /* vp8_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = AD47AFC81C58A1510057041A /* vp8_impl.h */; };
+		AD70A86E1D1BC10100B52CBA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD70A86D1D1BC10100B52CBA /* VideoToolbox.framework */; };
+		AD714A911D33898E00182A8C /* h264_objc.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD714A8C1D33898E00182A8C /* h264_objc.mm */; };
+		AD714A921D33898E00182A8C /* h264_video_toolbox_encoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD714A8D1D33898E00182A8C /* h264_video_toolbox_encoder.cc */; };
+		AD714A931D33898E00182A8C /* h264_video_toolbox_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = AD714A8E1D33898E00182A8C /* h264_video_toolbox_encoder.h */; };
+		AD714A941D33898E00182A8C /* h264_video_toolbox_nalu.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD714A8F1D33898E00182A8C /* h264_video_toolbox_nalu.cc */; };
+		AD714A951D33898E00182A8C /* h264_video_toolbox_nalu.h in Headers */ = {isa = PBXBuildFile; fileRef = AD714A901D33898E00182A8C /* h264_video_toolbox_nalu.h */; };
+		AD714A9A1D339E1700182A8C /* bitrate_adjuster.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD714A961D339E1700182A8C /* bitrate_adjuster.cc */; };
+		AD714A9B1D339E1700182A8C /* bitrate_adjuster.h in Headers */ = {isa = PBXBuildFile; fileRef = AD714A971D339E1700182A8C /* bitrate_adjuster.h */; };
+		AD714A9D1D339E1700182A8C /* rate_statistics.h in Headers */ = {isa = PBXBuildFile; fileRef = AD714A991D339E1700182A8C /* rate_statistics.h */; };
+		AD714B121D34861000182A8C /* libyuv.h in Headers */ = {isa = PBXBuildFile; fileRef = AD714B111D34861000182A8C /* libyuv.h */; };
+		AD714B141D34867000182A8C /* convert_from.h in Headers */ = {isa = PBXBuildFile; fileRef = AD714B131D34867000182A8C /* convert_from.h */; };
+		AD714B3A1D3488DE00182A8C /* criticalsection.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD714B391D3488DE00182A8C /* criticalsection.cc */; };
+		AD714B3D1D348A1800182A8C /* platform_thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD714B3B1D348A1800182A8C /* platform_thread.cc */; };
+		AD714B3E1D348A1800182A8C /* platform_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = AD714B3C1D348A1800182A8C /* platform_thread.h */; };
+		AD714B421D348A8500182A8C /* thread_checker_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD714B3F1D348A8500182A8C /* thread_checker_impl.cc */; };
+		AD714B431D348A8500182A8C /* thread_checker_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = AD714B401D348A8500182A8C /* thread_checker_impl.h */; };
+		AD714B441D348A8500182A8C /* thread_checker.h in Headers */ = {isa = PBXBuildFile; fileRef = AD714B411D348A8500182A8C /* thread_checker.h */; };
+		AD714B471D348CF000182A8C /* video_coding_event.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD714B451D348CF000182A8C /* video_coding_event.cc */; };
+		AD714B481D348CF000182A8C /* video_coding_event.h in Headers */ = {isa = PBXBuildFile; fileRef = AD714B461D348CF000182A8C /* video_coding_event.h */; };
+		AD714B4B1D34920700182A8C /* RTCUIApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD714B4A1D34920700182A8C /* RTCUIApplication.mm */; };
+		AD714B551D34A18400182A8C /* buffer.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD714B541D34A18400182A8C /* buffer.cc */; };
 		AD8D73061C59A60E00FB246D /* video_receiver.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D73041C59A60E00FB246D /* video_receiver.cc */; };
 		AD8D73071C59A60E00FB246D /* video_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D73051C59A60E00FB246D /* video_sender.cc */; };
 		AD8D73521C59AEE300FB246D /* quality_scaler.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D73501C59AEE300FB246D /* quality_scaler.cc */; };
 		AD8D73531C59AEE300FB246D /* quality_scaler.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8D73511C59AEE300FB246D /* quality_scaler.h */; };
 		AD8D73551C59B07E00FB246D /* frame_dropper.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D73541C59B07E00FB246D /* frame_dropper.cc */; };
+		ADE81D381D35D92000970A58 /* h264_video_toolbox_decoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADE81D361D35D92000970A58 /* h264_video_toolbox_decoder.cc */; };
+		ADE81D391D35D92000970A58 /* h264_video_toolbox_decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = ADE81D371D35D92000970A58 /* h264_video_toolbox_decoder.h */; };
+		ADE81D3B1D35DC8500970A58 /* video_frame_buffer.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADE81D3A1D35DC8500970A58 /* video_frame_buffer.cc */; };
+		ADE81D3E1D35E13700970A58 /* corevideo_frame_buffer.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADE81D3C1D35E13700970A58 /* corevideo_frame_buffer.cc */; };
+		ADE81D3F1D35E13700970A58 /* corevideo_frame_buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = ADE81D3D1D35E13700970A58 /* corevideo_frame_buffer.h */; };
+		ADE81D431D35ECA000970A58 /* bind.h in Headers */ = {isa = PBXBuildFile; fileRef = ADE81D421D35ECA000970A58 /* bind.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -107,7 +134,7 @@
 		558FF1D816A0104000BEFFED /* reference_picture_selection.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = reference_picture_selection.cc; sourceTree = "<group>"; };
 		558FF1D916A0104000BEFFED /* reference_picture_selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reference_picture_selection.h; sourceTree = "<group>"; };
 		558FF1DC16A0104000BEFFED /* temporal_layers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = temporal_layers.h; sourceTree = "<group>"; };
-		55A1B3C61703E26C0015FEB9 /* h264.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = h264.cc; sourceTree = "<group>"; };
+		55A1B3C61703E26C0015FEB9 /* h264.cc */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.cpp.cpp; path = h264.cc; sourceTree = "<group>"; };
 		55A1B3C71703E26C0015FEB9 /* h264.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = h264.h; sourceTree = "<group>"; };
 		55A1B3C91703E26C0015FEB9 /* H264_dec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H264_dec.h; sourceTree = "<group>"; };
 		55A1B3D61703E3B20015FEB9 /* H264_dec.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = H264_dec.cc; sourceTree = "<group>"; };
@@ -180,11 +207,39 @@
 		AD47AFC61C58A1510057041A /* vp8_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vp8_factory.h; sourceTree = "<group>"; };
 		AD47AFC71C58A1510057041A /* vp8_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vp8_impl.cc; sourceTree = "<group>"; };
 		AD47AFC81C58A1510057041A /* vp8_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vp8_impl.h; sourceTree = "<group>"; };
+		AD70A86D1D1BC10100B52CBA /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		AD714A8C1D33898E00182A8C /* h264_objc.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = h264_objc.mm; path = h264_hardcode/h264_objc.mm; sourceTree = "<group>"; };
+		AD714A8D1D33898E00182A8C /* h264_video_toolbox_encoder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = h264_video_toolbox_encoder.cc; path = h264_hardcode/h264_video_toolbox_encoder.cc; sourceTree = "<group>"; };
+		AD714A8E1D33898E00182A8C /* h264_video_toolbox_encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = h264_video_toolbox_encoder.h; path = h264_hardcode/h264_video_toolbox_encoder.h; sourceTree = "<group>"; };
+		AD714A8F1D33898E00182A8C /* h264_video_toolbox_nalu.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = h264_video_toolbox_nalu.cc; path = h264_hardcode/h264_video_toolbox_nalu.cc; sourceTree = "<group>"; };
+		AD714A901D33898E00182A8C /* h264_video_toolbox_nalu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = h264_video_toolbox_nalu.h; path = h264_hardcode/h264_video_toolbox_nalu.h; sourceTree = "<group>"; };
+		AD714A961D339E1700182A8C /* bitrate_adjuster.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bitrate_adjuster.cc; path = h264_hardcode/bitrate_adjuster.cc; sourceTree = "<group>"; };
+		AD714A971D339E1700182A8C /* bitrate_adjuster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bitrate_adjuster.h; path = h264_hardcode/bitrate_adjuster.h; sourceTree = "<group>"; };
+		AD714A991D339E1700182A8C /* rate_statistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rate_statistics.h; path = h264_hardcode/rate_statistics.h; sourceTree = "<group>"; };
+		AD714B111D34861000182A8C /* libyuv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = libyuv.h; path = "../../third_party/libyuv-ios/include/libyuv.h"; sourceTree = "<group>"; };
+		AD714B131D34867000182A8C /* convert_from.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = convert_from.h; path = "../../third_party/libyuv-ios/include/libyuv/convert_from.h"; sourceTree = "<group>"; };
+		AD714B391D3488DE00182A8C /* criticalsection.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = criticalsection.cc; path = ../../audioprocess/source/criticalsection.cc; sourceTree = "<group>"; };
+		AD714B3B1D348A1800182A8C /* platform_thread.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = platform_thread.cc; path = h264_hardcode/platform_thread.cc; sourceTree = "<group>"; };
+		AD714B3C1D348A1800182A8C /* platform_thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = platform_thread.h; path = h264_hardcode/platform_thread.h; sourceTree = "<group>"; };
+		AD714B3F1D348A8500182A8C /* thread_checker_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = thread_checker_impl.cc; path = h264_hardcode/thread_checker_impl.cc; sourceTree = "<group>"; };
+		AD714B401D348A8500182A8C /* thread_checker_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = thread_checker_impl.h; path = h264_hardcode/thread_checker_impl.h; sourceTree = "<group>"; };
+		AD714B411D348A8500182A8C /* thread_checker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = thread_checker.h; path = h264_hardcode/thread_checker.h; sourceTree = "<group>"; };
+		AD714B451D348CF000182A8C /* video_coding_event.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = video_coding_event.cc; path = h264_hardcode/video_coding_event.cc; sourceTree = "<group>"; };
+		AD714B461D348CF000182A8C /* video_coding_event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = video_coding_event.h; path = h264_hardcode/video_coding_event.h; sourceTree = "<group>"; };
+		AD714B4A1D34920700182A8C /* RTCUIApplication.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = RTCUIApplication.mm; path = h264_hardcode/RTCUIApplication.mm; sourceTree = "<group>"; };
+		AD714B501D3495FF00182A8C /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
+		AD714B541D34A18400182A8C /* buffer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = buffer.cc; path = h264_hardcode/buffer.cc; sourceTree = "<group>"; };
 		AD8D73041C59A60E00FB246D /* video_receiver.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_receiver.cc; sourceTree = "<group>"; };
 		AD8D73051C59A60E00FB246D /* video_sender.cc */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.cpp.cpp; path = video_sender.cc; sourceTree = "<group>"; };
 		AD8D73501C59AEE300FB246D /* quality_scaler.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = quality_scaler.cc; path = utility/quality_scaler.cc; sourceTree = "<group>"; };
 		AD8D73511C59AEE300FB246D /* quality_scaler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = quality_scaler.h; path = utility/quality_scaler.h; sourceTree = "<group>"; };
 		AD8D73541C59B07E00FB246D /* frame_dropper.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = frame_dropper.cc; path = utility/frame_dropper.cc; sourceTree = "<group>"; };
+		ADE81D361D35D92000970A58 /* h264_video_toolbox_decoder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = h264_video_toolbox_decoder.cc; path = h264_hardcode/h264_video_toolbox_decoder.cc; sourceTree = "<group>"; };
+		ADE81D371D35D92000970A58 /* h264_video_toolbox_decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = h264_video_toolbox_decoder.h; path = h264_hardcode/h264_video_toolbox_decoder.h; sourceTree = "<group>"; };
+		ADE81D3A1D35DC8500970A58 /* video_frame_buffer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = video_frame_buffer.cc; path = h264_hardcode/video_frame_buffer.cc; sourceTree = "<group>"; };
+		ADE81D3C1D35E13700970A58 /* corevideo_frame_buffer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = corevideo_frame_buffer.cc; path = h264_hardcode/corevideo_frame_buffer.cc; sourceTree = "<group>"; };
+		ADE81D3D1D35E13700970A58 /* corevideo_frame_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = corevideo_frame_buffer.h; path = h264_hardcode/corevideo_frame_buffer.h; sourceTree = "<group>"; };
+		ADE81D421D35ECA000970A58 /* bind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = bind.h; path = codecs/h264_hardcode/bind.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +247,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD70A86E1D1BC10100B52CBA /* VideoToolbox.framework in Frameworks */,
 				55AD14BB15C89FA8008A2BDA /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -202,6 +258,7 @@
 		558FF19A16A0104000BEFFED /* codecs */ = {
 			isa = PBXGroup;
 			children = (
+				AD386DC51D1B72260082180C /* h264_hardcode */,
 				55A1B3C31703E26C0015FEB9 /* h264 */,
 				558FF19B16A0104000BEFFED /* i420 */,
 				558FF1A316A0104000BEFFED /* interface */,
@@ -323,6 +380,9 @@
 		55AD14AC15C89FA8008A2BDA = {
 			isa = PBXGroup;
 			children = (
+				ADE81D421D35ECA000970A58 /* bind.h */,
+				AD714B131D34867000182A8C /* convert_from.h */,
+				AD714B111D34861000182A8C /* libyuv.h */,
 				55AD14BC15C89FA8008A2BDA /* video_coding */,
 				55AD14B915C89FA8008A2BDA /* Frameworks */,
 				55AD14B815C89FA8008A2BDA /* Products */,
@@ -340,6 +400,8 @@
 		55AD14B915C89FA8008A2BDA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AD714B501D3495FF00182A8C /* libstdc++.6.0.9.tbd */,
+				AD70A86D1D1BC10100B52CBA /* VideoToolbox.framework */,
 				55AD14BA15C89FA8008A2BDA /* Foundation.framework */,
 			);
 			name = Frameworks;
@@ -453,6 +515,36 @@
 			path = mock;
 			sourceTree = "<group>";
 		};
+		AD386DC51D1B72260082180C /* h264_hardcode */ = {
+			isa = PBXGroup;
+			children = (
+				ADE81D3C1D35E13700970A58 /* corevideo_frame_buffer.cc */,
+				ADE81D3D1D35E13700970A58 /* corevideo_frame_buffer.h */,
+				ADE81D3A1D35DC8500970A58 /* video_frame_buffer.cc */,
+				ADE81D361D35D92000970A58 /* h264_video_toolbox_decoder.cc */,
+				ADE81D371D35D92000970A58 /* h264_video_toolbox_decoder.h */,
+				AD714B541D34A18400182A8C /* buffer.cc */,
+				AD714B4A1D34920700182A8C /* RTCUIApplication.mm */,
+				AD714B451D348CF000182A8C /* video_coding_event.cc */,
+				AD714B461D348CF000182A8C /* video_coding_event.h */,
+				AD714B3F1D348A8500182A8C /* thread_checker_impl.cc */,
+				AD714B401D348A8500182A8C /* thread_checker_impl.h */,
+				AD714B411D348A8500182A8C /* thread_checker.h */,
+				AD714B391D3488DE00182A8C /* criticalsection.cc */,
+				AD714B3B1D348A1800182A8C /* platform_thread.cc */,
+				AD714B3C1D348A1800182A8C /* platform_thread.h */,
+				AD714A961D339E1700182A8C /* bitrate_adjuster.cc */,
+				AD714A971D339E1700182A8C /* bitrate_adjuster.h */,
+				AD714A991D339E1700182A8C /* rate_statistics.h */,
+				AD714A8C1D33898E00182A8C /* h264_objc.mm */,
+				AD714A8D1D33898E00182A8C /* h264_video_toolbox_encoder.cc */,
+				AD714A8E1D33898E00182A8C /* h264_video_toolbox_encoder.h */,
+				AD714A8F1D33898E00182A8C /* h264_video_toolbox_nalu.cc */,
+				AD714A901D33898E00182A8C /* h264_video_toolbox_nalu.h */,
+			);
+			name = h264_hardcode;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -460,10 +552,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADE81D431D35ECA000970A58 /* bind.h in Headers */,
+				AD714B141D34867000182A8C /* convert_from.h in Headers */,
+				AD714B121D34861000182A8C /* libyuv.h in Headers */,
+				AD714B431D348A8500182A8C /* thread_checker_impl.h in Headers */,
 				55AD151215C8A020008A2BDA /* mock_vcm_callbacks.h in Headers */,
 				55AD151315C8A020008A2BDA /* video_coding.h in Headers */,
 				AD47AFBA1C58A0580057041A /* fec_tables_xor.h in Headers */,
 				55AD151415C8A020008A2BDA /* video_coding_defines.h in Headers */,
+				ADE81D3F1D35E13700970A58 /* corevideo_frame_buffer.h in Headers */,
 				55AD151615C8A020008A2BDA /* codec_database.h in Headers */,
 				55AD151815C8A020008A2BDA /* codec_timer.h in Headers */,
 				55AD151A15C8A020008A2BDA /* content_metrics_processing.h in Headers */,
@@ -474,8 +571,10 @@
 				55AD152615C8A020008A2BDA /* frame_buffer.h in Headers */,
 				55AD152A15C8A020008A2BDA /* generic_decoder.h in Headers */,
 				55AD152C15C8A020008A2BDA /* generic_encoder.h in Headers */,
+				AD714A951D33898E00182A8C /* h264_video_toolbox_nalu.h in Headers */,
 				AD47AFCA1C58A1510057041A /* screenshare_layers.h in Headers */,
 				55AD152E15C8A020008A2BDA /* inter_frame_delay.h in Headers */,
+				AD714B441D348A8500182A8C /* thread_checker.h in Headers */,
 				55AD152F15C8A020008A2BDA /* internal_defines.h in Headers */,
 				55AD153115C8A020008A2BDA /* jitter_buffer.h in Headers */,
 				55AD153315C8A020008A2BDA /* jitter_buffer_common.h in Headers */,
@@ -485,12 +584,16 @@
 				55AD153915C8A020008A2BDA /* media_optimization.h in Headers */,
 				55AD153A15C8A020008A2BDA /* fake_tick_time.h in Headers */,
 				55AD153B15C8A020008A2BDA /* nack_fec_tables.h in Headers */,
+				AD714A9B1D339E1700182A8C /* bitrate_adjuster.h in Headers */,
 				55AD153D15C8A020008A2BDA /* packet.h in Headers */,
 				55AD153F15C8A020008A2BDA /* qm_select.h in Headers */,
 				55AD154015C8A020008A2BDA /* qm_select_data.h in Headers */,
 				55AD154215C8A020008A2BDA /* receiver.h in Headers */,
 				55A9B33518891FAE009B267B /* h264_util.h in Headers */,
 				55AD154415C8A020008A2BDA /* rtt_filter.h in Headers */,
+				AD714B3E1D348A1800182A8C /* platform_thread.h in Headers */,
+				AD714A931D33898E00182A8C /* h264_video_toolbox_encoder.h in Headers */,
+				AD714B481D348CF000182A8C /* video_coding_event.h in Headers */,
 				55AD154615C8A020008A2BDA /* session_info.h in Headers */,
 				55AD154715C8A020008A2BDA /* tick_time_base.h in Headers */,
 				55AD154B15C8A020008A2BDA /* timestamp_map.h in Headers */,
@@ -510,6 +613,8 @@
 				AD47AFD01C58A1510057041A /* vp8_impl.h in Headers */,
 				55A1B3CE1703E26C0015FEB9 /* h264.h in Headers */,
 				55A1B3D01703E26C0015FEB9 /* H264_dec.h in Headers */,
+				AD714A9D1D339E1700182A8C /* rate_statistics.h in Headers */,
+				ADE81D391D35D92000970A58 /* h264_video_toolbox_decoder.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,39 +670,52 @@
 			files = (
 				55AD151515C8A020008A2BDA /* codec_database.cc in Sources */,
 				55AD151715C8A020008A2BDA /* codec_timer.cc in Sources */,
+				AD714B3A1D3488DE00182A8C /* criticalsection.cc in Sources */,
+				AD714A911D33898E00182A8C /* h264_objc.mm in Sources */,
 				55AD151915C8A020008A2BDA /* content_metrics_processing.cc in Sources */,
 				55AD151B15C8A020008A2BDA /* decoding_state.cc in Sources */,
 				AD47AFCF1C58A1510057041A /* vp8_impl.cc in Sources */,
 				AD47AFCB1C58A1510057041A /* simulcast_encoder_adapter.cc in Sources */,
 				55AD151E15C8A020008A2BDA /* encoded_frame.cc in Sources */,
 				55AD152515C8A020008A2BDA /* frame_buffer.cc in Sources */,
+				AD714B4B1D34920700182A8C /* RTCUIApplication.mm in Sources */,
 				AD8D73061C59A60E00FB246D /* video_receiver.cc in Sources */,
 				55AD152915C8A020008A2BDA /* generic_decoder.cc in Sources */,
 				55AD152B15C8A020008A2BDA /* generic_encoder.cc in Sources */,
 				AD47AFC91C58A1510057041A /* screenshare_layers.cc in Sources */,
+				AD714B551D34A18400182A8C /* buffer.cc in Sources */,
 				55AD152D15C8A020008A2BDA /* inter_frame_delay.cc in Sources */,
 				55AD153015C8A020008A2BDA /* jitter_buffer.cc in Sources */,
 				AD47AFCD1C58A1510057041A /* vp8_factory.cc in Sources */,
 				55AD153215C8A020008A2BDA /* jitter_buffer_common.cc in Sources */,
 				55AD153415C8A020008A2BDA /* jitter_estimator.cc in Sources */,
+				AD714B421D348A8500182A8C /* thread_checker_impl.cc in Sources */,
 				55AD153615C8A020008A2BDA /* media_opt_util.cc in Sources */,
 				55AD153815C8A020008A2BDA /* media_optimization.cc in Sources */,
 				55AD153C15C8A020008A2BDA /* packet.cc in Sources */,
 				55AD153E15C8A020008A2BDA /* qm_select.cc in Sources */,
 				AD8D73521C59AEE300FB246D /* quality_scaler.cc in Sources */,
 				55AD154115C8A020008A2BDA /* receiver.cc in Sources */,
+				AD714B471D348CF000182A8C /* video_coding_event.cc in Sources */,
 				55AD154315C8A020008A2BDA /* rtt_filter.cc in Sources */,
+				AD714A941D33898E00182A8C /* h264_video_toolbox_nalu.cc in Sources */,
 				55AD154515C8A020008A2BDA /* session_info.cc in Sources */,
+				AD714A921D33898E00182A8C /* h264_video_toolbox_encoder.cc in Sources */,
 				55AD154A15C8A020008A2BDA /* timestamp_map.cc in Sources */,
 				AD8D73551C59B07E00FB246D /* frame_dropper.cc in Sources */,
+				ADE81D3B1D35DC8500970A58 /* video_frame_buffer.cc in Sources */,
 				55AD154C15C8A020008A2BDA /* timing.cc in Sources */,
 				55AD154E15C8A020008A2BDA /* video_coding_impl.cc in Sources */,
+				AD714B3D1D348A1800182A8C /* platform_thread.cc in Sources */,
 				558FF1EF16A0104000BEFFED /* i420.cc in Sources */,
 				558FF21716A0104000BEFFED /* reference_picture_selection.cc in Sources */,
 				AD47AFBE1C58A0ED0057041A /* default_temporal_layers.cc in Sources */,
+				AD714A9A1D339E1700182A8C /* bitrate_adjuster.cc in Sources */,
 				55A1B3CD1703E26C0015FEB9 /* h264.cc in Sources */,
+				ADE81D3E1D35E13700970A58 /* corevideo_frame_buffer.cc in Sources */,
 				AD47AFC01C58A0ED0057041A /* realtime_temporal_layers.cc in Sources */,
 				AD8D73071C59A60E00FB246D /* video_sender.cc in Sources */,
+				ADE81D381D35D92000970A58 /* h264_video_toolbox_decoder.cc in Sources */,
 				55A1B3D71703E3B30015FEB9 /* H264_dec.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -681,12 +799,17 @@
 					VIDEOCODEC_H264,
 					MAC_IPHONE,
 					VIDEOCODEC_VP8,
+					WEBRTC_VIDEO_TOOLBOX_SUPPORTED,
+					WEBRTC_POSIX,
+					WEBRTC_IOS,
+					WEBRTC_OBJC_H264,
 				);
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					../../,
 					../,
 					../../system_wrappers/interface,
+					../../system_wrappers/source,
 					../interface,
 					../videojpegyuv/include,
 					../utility/include,
@@ -705,6 +828,10 @@
 					../../module/video_coding,
 					../../third_party/libyuv/include/libyuv,
 					../../module/desktop_capture/source/,
+					../../system_wrappers/source,
+					../../module/audioprocess/source/,
+					"../../third_party/libyuv-ios/include",
+					../../module/video_coding/codecs/h264_hardcode,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -723,7 +850,9 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				DSTROOT = /tmp/video_coding.dst;
+				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -753,12 +882,17 @@
 					VIDEOCODEC_H264,
 					MAC_IPHONE,
 					VIDEOCODEC_VP8,
+					WEBRTC_VIDEO_TOOLBOX_SUPPORTED,
+					WEBRTC_POSIX,
+					WEBRTC_IOS,
+					WEBRTC_OBJC_H264,
 				);
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					../../,
 					../,
 					../../system_wrappers/interface,
+					../../system_wrappers/source,
 					../interface,
 					../videojpegyuv/include,
 					../utility/include,
@@ -777,6 +911,10 @@
 					../../module/video_coding,
 					../../third_party/libyuv/include/libyuv,
 					../../module/desktop_capture/source/,
+					../../system_wrappers/source,
+					../../module/audioprocess/source/,
+					"../../third_party/libyuv-ios/include",
+					../../module/video_coding/codecs/h264_hardcode,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
