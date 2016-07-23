@@ -375,8 +375,7 @@ int H264VideoToolboxEncoder::SetChannelParameters(uint32_t packet_loss,
 int H264VideoToolboxEncoder::SetRates(uint32_t new_bitrate_kbit,
                                       uint32_t frame_rate) {
     
-  target_bitrate_bps_ = 1000 * new_bitrate_kbit;
-    printTime();printf("new bit rate %d\n", target_bitrate_bps_);
+//    printTime();printf("new bit rate %d\n", target_bitrate_bps_);
   bitrate_adjuster_.SetTargetBitrateBps(target_bitrate_bps_);
   SetBitrateBps(bitrate_adjuster_.GetAdjustedBitrateBps());
 
@@ -460,10 +459,7 @@ void H264VideoToolboxEncoder::ConfigureCompressionSession() {
     ::internal::SetVTSessionProperty(compression_session_,
                                  kVTCompressionPropertyKey_AllowFrameReordering,
                                  false);
-    ::internal::SetVTSessionProperty(compression_session_,
-                                     kVTCompressionPropertyKey_AverageBitRate,
-                                     800000);
-//  SetEncoderBitrateBps(target_bitrate_bps_*1000);
+  SetEncoderBitrateBps(target_bitrate_bps_);
   // TODO(tkchin): Look at entropy mode and colorspace matrices.
   // TODO(tkchin): Investigate to see if there's any way to make this work.
   // May need it to interop with Android. Currently this call just fails.
@@ -494,21 +490,20 @@ const char* H264VideoToolboxEncoder::ImplementationName() const {
 }
 
 void H264VideoToolboxEncoder::SetBitrateBps(uint32_t bitrate_bps) {
-    return;
-    bitrate_bps *= 1000;
-    printf("bitrate_bps %d\n",bitrate_bps);
+//    printf("bitrate_bps %d\n",bitrate_bps);
   if (encoder_bitrate_bps_ != bitrate_bps) {
-      printf("bitrate_bps 222 %d\n",bitrate_bps);
+//      printf("bitrate_bps 222 %d\n",bitrate_bps);
     SetEncoderBitrateBps(bitrate_bps);
   }
 }
 
 void H264VideoToolboxEncoder::SetEncoderBitrateBps(uint32_t bitrate_bps) {
+    
   if (compression_session_) {
       ::internal::SetVTSessionProperty(compression_session_,
                                    kVTCompressionPropertyKey_AverageBitRate,
-                                   bitrate_bps);
-    encoder_bitrate_bps_ = bitrate_bps;
+                                   bitrate_bps*1000);
+    encoder_bitrate_bps_ = bitrate_bps*1000;
   }
 }
 
