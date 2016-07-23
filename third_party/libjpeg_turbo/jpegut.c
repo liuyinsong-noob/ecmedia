@@ -375,13 +375,13 @@ void dotest1(void)
 	if(hnd) tjDestroy(hnd);
 }
 
-int main(int argc, char *argv[])
-{
-	dotest(35, 41, 3, TJ_444, "test");
-	dotest(35, 41, 4, TJ_444, "test");
-	dotest(35, 41, 3, TJ_GRAYSCALE, "test");
-	dotest(35, 41, 4, TJ_GRAYSCALE, "test");
-	dotest1();
-
-	return exitstatus;
-}
+//int main(int argc, char *argv[])
+//{
+//	dotest(35, 41, 3, TJ_444, "test");
+//	dotest(35, 41, 4, TJ_444, "test");
+//	dotest(35, 41, 3, TJ_GRAYSCALE, "test");
+//	dotest(35, 41, 4, TJ_GRAYSCALE, "test");
+//	dotest1();
+//
+//	return exitstatus;
+//}
