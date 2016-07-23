@@ -34,16 +34,12 @@ static OPUS_INLINE opus_int32 silk_MLA_armv4(opus_int32 a, opus_int32 b,
  opus_int32 c)
 {
   opus_int32 res;
-#ifdef __aarch64__
-    res = (a) + ((b)*(c));
-#else
   __asm__(
       "#silk_MLA\n\t"
       "mla %0, %1, %2, %3\n\t"
       : "=&r"(res)
       : "r"(b), "r"(c), "r"(a)
   );
-#endif
   return res;
 }
 #define silk_MLA(a, b, c) (silk_MLA_armv4(a, b, c))

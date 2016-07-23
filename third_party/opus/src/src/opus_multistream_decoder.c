@@ -369,8 +369,7 @@ int opus_multistream_decode(
       opus_int32 len,
       opus_int16 *pcm,
       int frame_size,
-      int decode_fec,
-      int fs
+      int decode_fec, int fs
 )
 {
    return opus_multistream_decode_native(st, data, len,
@@ -401,8 +400,7 @@ int opus_multistream_decode_float(
       opus_int32 len,
       float *pcm,
       int frame_size,
-      int decode_fec,
-      int fs
+      int decode_fec, int fs
 )
 {
    return opus_multistream_decode_native(st, data, len,

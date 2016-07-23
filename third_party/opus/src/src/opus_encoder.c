@@ -2011,6 +2011,7 @@ opus_int32 opus_encode(OpusEncoder *st, const opus_int16 *pcm, int analysis_fram
          , st->analysis.subframe_mem
 #endif
          );
+//    printf("sean frame_size %d\n", frame_size);
    return opus_encode_native(st, pcm, frame_size, data, out_data_bytes, 16,
                              pcm, analysis_frame_size, 0, -2, st->channels, downmix_int, 0);
 }

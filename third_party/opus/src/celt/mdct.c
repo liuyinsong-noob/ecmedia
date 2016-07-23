@@ -57,6 +57,7 @@
 #include "mips/mdct_mipsr1.h"
 #endif
 
+#include <pthread.h>
 
 #ifdef CUSTOM_MODES
 
@@ -119,6 +120,14 @@ void clt_mdct_clear(mdct_lookup *l, int arch)
 void clt_mdct_forward_c(const mdct_lookup *l, kiss_fft_scalar *in, kiss_fft_scalar * OPUS_RESTRICT out,
       const opus_val16 *window, int overlap, int shift, int stride, int arch)
 {
+//    printf("overlap begin n %d, max_shift %d, overlap %d, shift %d, stride %d\n", l->n, l->maxshift, overlap, shift, stride);
+//    
+//    for ( int ii = 0; ii<overlap; ii++) {
+//        printf("%02d ",window[ii]);
+//    }
+//    
+//    printf("\n\nend window\n");
+    
    int i;
    int N, N2, N4;
    VARDECL(kiss_fft_scalar, f);
@@ -142,6 +151,7 @@ void clt_mdct_forward_c(const mdct_lookup *l, kiss_fft_scalar *in, kiss_fft_scal
       N >>= 1;
       trig += N;
    }
+    
    N2 = N>>1;
    N4 = N>>2;
 
@@ -154,6 +164,7 @@ void clt_mdct_forward_c(const mdct_lookup *l, kiss_fft_scalar *in, kiss_fft_scal
       /* Temp pointers to make it really clear to the compiler what we're doing */
       const kiss_fft_scalar * OPUS_RESTRICT xp1 = in+(overlap>>1);
       const kiss_fft_scalar * OPUS_RESTRICT xp2 = in+N2-1+(overlap>>1);
+//       printf("xp2 %p, N2 %d, xp1 %p, in %p\n", xp2, N2, xp1, in);
       kiss_fft_scalar * OPUS_RESTRICT yp = f;
       const opus_val16 * OPUS_RESTRICT wp1 = window+(overlap>>1);
       const opus_val16 * OPUS_RESTRICT wp2 = window+(overlap>>1)-1;
@@ -169,6 +180,7 @@ void clt_mdct_forward_c(const mdct_lookup *l, kiss_fft_scalar *in, kiss_fft_scal
       }
       wp1 = window;
       wp2 = window+overlap-1;
+       
       for(;i<N4-((overlap+3)>>2);i++)
       {
          /* Real part arranged as a-bR, Imag part arranged as -c-dR */
@@ -177,9 +189,21 @@ void clt_mdct_forward_c(const mdct_lookup *l, kiss_fft_scalar *in, kiss_fft_scal
          xp1+=2;
          xp2-=2;
       }
+//       printf("xp1 %d %d %d %d %d %d\n", xp1[-N2], xp1[-N2+1], xp1[-N2+2], xp1[-N2+3], xp1[-N2+4], xp1[-N2+5]);
+//       printf("wp1 %d %d %d %d %d %d\n", wp1[0], wp1[1], wp1[2], wp1[3], wp1[4], wp1[5]);
+//       printf("xp2 %d %d %d %d %d %d\n", xp2[0], xp2[1], xp2[2], xp2[3], xp2[4], xp2[5]);
+
+//       printf("%d, thread %d\n", i,pthread_self());
+       
+//       printf("window %p, wp2 %p, i %d, N4 %d, in addr %p, xp2 addr %p\n", window, wp2, i, N4, in, xp2);
       for(;i<N4;i++)
       {
+//          printf("");
          /* Real part arranged as a-bR, Imag part arranged as -c-dR */
+          int32_t wp11 = *wp1;
+          int32_t xp11 = xp1[-N2];
+          int32_t wp22 = *wp2;
+          int32_t xp22 = *xp2;
          *yp++ =  -MULT16_32_Q15(*wp1, xp1[-N2]) + MULT16_32_Q15(*wp2, *xp2);
          *yp++ = MULT16_32_Q15(*wp2, *xp1)     + MULT16_32_Q15(*wp1, xp2[N2]);
          xp1+=2;

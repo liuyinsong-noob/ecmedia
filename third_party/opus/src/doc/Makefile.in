@@ -171,6 +171,7 @@ LIBTOOL = @LIBTOOL@
 LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
+LT_SYS_LIBRARY_PATH = @LT_SYS_LIBRARY_PATH@
 MAINT = @MAINT@
 MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
@@ -390,9 +391,9 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+@HAVE_DOXYGEN_FALSE@install-data-local:
 @HAVE_DOXYGEN_FALSE@clean-local:
 @HAVE_DOXYGEN_FALSE@uninstall-local:
-@HAVE_DOXYGEN_FALSE@install-data-local:
 clean: clean-am
 
 clean-am: clean-generic clean-libtool clean-local mostlyclean-am
@@ -498,6 +499,7 @@ uninstall-am: uninstall-local
 @HAVE_DOXYGEN_TRUE@	$(RM) -r latex
 @HAVE_DOXYGEN_TRUE@	$(RM) -r man
 @HAVE_DOXYGEN_TRUE@	$(RM) doxygen-build.stamp
+@HAVE_DOXYGEN_TRUE@	$(RM) doxygen_sqlite3.db
 
 @HAVE_DOXYGEN_TRUE@uninstall-local:
 @HAVE_DOXYGEN_TRUE@	$(RM) -r $(DESTDIR)$(docdir)/html

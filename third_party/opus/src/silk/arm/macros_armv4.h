@@ -72,7 +72,6 @@ static OPUS_INLINE opus_int32 silk_SMULWT_armv4(opus_int32 a, opus_int32 b)
 #undef silk_SMULWW
 static OPUS_INLINE opus_int32 silk_SMULWW_armv4(opus_int32 a, opus_int32 b)
 {
-#ifndef __aarch64__
   unsigned rd_lo;
   int rd_hi;
   __asm__(
@@ -82,9 +81,6 @@ static OPUS_INLINE opus_int32 silk_SMULWW_armv4(opus_int32 a, opus_int32 b)
     : "%r"(a), "r"(b)
   );
   return (rd_hi<<16)+(rd_lo>>16);
-#else
-    return ((a)*(b))>>16;
-#endif
 }
 #define silk_SMULWW(a, b) (silk_SMULWW_armv4(a, b))
 
@@ -92,9 +88,6 @@ static OPUS_INLINE opus_int32 silk_SMULWW_armv4(opus_int32 a, opus_int32 b)
 static OPUS_INLINE opus_int32 silk_SMLAWW_armv4(opus_int32 a, opus_int32 b,
  opus_int32 c)
 {
-#ifdef __aarch64__
-    return (a) + (((b)*(c))>>16);
-#else
   unsigned rd_lo;
   int rd_hi;
   __asm__(
@@ -104,7 +97,6 @@ static OPUS_INLINE opus_int32 silk_SMLAWW_armv4(opus_int32 a, opus_int32 b,
     : "%r"(b), "r"(c)
   );
   return a+(rd_hi<<16)+(rd_lo>>16);
-#endif
 }
 #define silk_SMLAWW(a, b, c) (silk_SMLAWW_armv4(a, b, c))
 

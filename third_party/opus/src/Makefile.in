@@ -101,9 +101,10 @@ host_triplet = @host@
 @HAVE_SSE4_1_TRUE@am__append_8 = $(CELT_SOURCES_SSE4_1)
 @CPU_ARM_TRUE@am__append_9 = $(CELT_SOURCES_ARM)
 @CPU_ARM_TRUE@am__append_10 = $(SILK_SOURCES_ARM)
-@CPU_ARM_TRUE@@OPUS_ARM_NEON_INTR_TRUE@am__append_11 = $(CELT_SOURCES_ARM_NEON_INTR)
-@CPU_ARM_TRUE@@HAVE_ARM_NE10_TRUE@am__append_12 = $(CELT_SOURCES_ARM_NE10)
-@OPUS_ARM_EXTERNAL_ASM_TRUE@am__append_13 = libarmasm.la
+@CPU_ARM_TRUE@@HAVE_ARM_NEON_INTR_TRUE@am__append_11 = $(CELT_SOURCES_ARM_NEON_INTR)
+@CPU_ARM_TRUE@@HAVE_ARM_NEON_INTR_TRUE@am__append_12 = $(SILK_SOURCES_ARM_NEON_INTR)
+@CPU_ARM_TRUE@@HAVE_ARM_NE10_TRUE@am__append_13 = $(CELT_SOURCES_ARM_NE10)
+@OPUS_ARM_EXTERNAL_ASM_TRUE@am__append_14 = libarmasm.la
 @EXTRA_PROGRAMS_TRUE@noinst_PROGRAMS = opus_demo$(EXEEXT) \
 @EXTRA_PROGRAMS_TRUE@	repacketizer_demo$(EXEEXT) \
 @EXTRA_PROGRAMS_TRUE@	opus_compare$(EXEEXT) \
@@ -132,12 +133,12 @@ host_triplet = @host@
 @EXTRA_PROGRAMS_TRUE@	tests/test_opus_decode$(EXEEXT) \
 @EXTRA_PROGRAMS_TRUE@	tests/test_opus_encode$(EXEEXT) \
 @EXTRA_PROGRAMS_TRUE@	tests/test_opus_padding$(EXEEXT)
-@EXTRA_PROGRAMS_TRUE@@OPUS_ARM_EXTERNAL_ASM_TRUE@am__append_14 = libarmasm.la
 @EXTRA_PROGRAMS_TRUE@@OPUS_ARM_EXTERNAL_ASM_TRUE@am__append_15 = libarmasm.la
 @EXTRA_PROGRAMS_TRUE@@OPUS_ARM_EXTERNAL_ASM_TRUE@am__append_16 = libarmasm.la
 @EXTRA_PROGRAMS_TRUE@@OPUS_ARM_EXTERNAL_ASM_TRUE@am__append_17 = libarmasm.la
-@CUSTOM_MODES_TRUE@am__append_18 = include/opus_custom.h
-@CUSTOM_MODES_TRUE@@EXTRA_PROGRAMS_TRUE@am__append_19 = opus_custom_demo
+@EXTRA_PROGRAMS_TRUE@@OPUS_ARM_EXTERNAL_ASM_TRUE@am__append_18 = libarmasm.la
+@CUSTOM_MODES_TRUE@am__append_19 = include/opus_custom.h
+@CUSTOM_MODES_TRUE@@EXTRA_PROGRAMS_TRUE@am__append_20 = opus_custom_demo
 subdir = .
 SUBDIRS =
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -201,7 +202,7 @@ am__v_lt_1 =
 @CPU_ARM_TRUE@@OPUS_ARM_EXTERNAL_ASM_TRUE@am_libarmasm_la_rpath =
 am__DEPENDENCIES_1 =
 libopus_la_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__append_13)
+	$(am__append_14)
 am__libopus_la_SOURCES_DIST = celt/bands.c celt/celt.c \
 	celt/celt_encoder.c celt/celt_decoder.c celt/cwrs.c \
 	celt/entcode.c celt/entdec.c celt/entenc.c celt/kiss_fft.c \
@@ -284,7 +285,8 @@ am__libopus_la_SOURCES_DIST = celt/bands.c celt/celt.c \
 	silk/float/pitch_analysis_core_FLP.c \
 	silk/float/scale_copy_vector_FLP.c \
 	silk/float/scale_vector_FLP.c silk/float/schur_FLP.c \
-	silk/float/sort_FLP.c src/opus.c src/opus_decoder.c \
+	silk/float/sort_FLP.c silk/arm/arm_silk_map.c \
+	silk/arm/NSQ_neon.c src/opus.c src/opus_decoder.c \
 	src/opus_encoder.c src/opus_multistream.c \
 	src/opus_multistream_encoder.c src/opus_multistream_decoder.c \
 	src/repacketizer.c src/analysis.c src/mlp.c src/mlp_data.c
@@ -298,8 +300,8 @@ am__objects_6 = celt/x86/celt_lpc_sse.lo celt/x86/pitch_sse4_1.lo
 am__objects_8 = celt/arm/armcpu.lo celt/arm/arm_celt_map.lo
 @CPU_ARM_TRUE@am__objects_9 = $(am__objects_8)
 am__objects_10 = celt/arm/celt_neon_intr.lo
-@CPU_ARM_TRUE@@OPUS_ARM_NEON_INTR_TRUE@am__objects_11 =  \
-@CPU_ARM_TRUE@@OPUS_ARM_NEON_INTR_TRUE@	$(am__objects_10)
+@CPU_ARM_TRUE@@HAVE_ARM_NEON_INTR_TRUE@am__objects_11 =  \
+@CPU_ARM_TRUE@@HAVE_ARM_NEON_INTR_TRUE@	$(am__objects_10)
 am__objects_12 = celt/arm/celt_ne10_fft.lo celt/arm/celt_ne10_mdct.lo
 @CPU_ARM_TRUE@@HAVE_ARM_NE10_TRUE@am__objects_13 = $(am__objects_12)
 am__objects_14 = celt/bands.lo celt/celt.lo celt/celt_encoder.lo \
@@ -362,7 +364,10 @@ am__objects_20 = silk/float/apply_sine_window_FLP.lo \
 @FIXED_POINT_FALSE@@HAVE_SSE4_1_TRUE@am__objects_22 =  \
 @FIXED_POINT_FALSE@@HAVE_SSE4_1_TRUE@	$(am__objects_17)
 am__objects_23 =
-am__objects_24 = silk/CNG.lo silk/code_signs.lo silk/init_decoder.lo \
+am__objects_24 = silk/arm/arm_silk_map.lo silk/arm/NSQ_neon.lo
+@CPU_ARM_TRUE@@HAVE_ARM_NEON_INTR_TRUE@am__objects_25 =  \
+@CPU_ARM_TRUE@@HAVE_ARM_NEON_INTR_TRUE@	$(am__objects_24)
+am__objects_26 = silk/CNG.lo silk/code_signs.lo silk/init_decoder.lo \
 	silk/decode_core.lo silk/decode_frame.lo \
 	silk/decode_parameters.lo silk/decode_indices.lo \
 	silk/decode_pulses.lo silk/decoder_set_fs.lo silk/dec_API.lo \
@@ -397,15 +402,15 @@ am__objects_24 = silk/CNG.lo silk/code_signs.lo silk/init_decoder.lo \
 	silk/stereo_decode_pred.lo silk/stereo_encode_pred.lo \
 	silk/stereo_find_predictor.lo silk/stereo_quant_pred.lo \
 	$(am__objects_16) $(am__objects_19) $(am__objects_21) \
-	$(am__objects_22) $(am__objects_23)
-am__objects_25 = src/analysis.lo src/mlp.lo src/mlp_data.lo
-@DISABLE_FLOAT_API_FALSE@am__objects_26 = $(am__objects_25)
-am__objects_27 = src/opus.lo src/opus_decoder.lo src/opus_encoder.lo \
+	$(am__objects_22) $(am__objects_23) $(am__objects_25)
+am__objects_27 = src/analysis.lo src/mlp.lo src/mlp_data.lo
+@DISABLE_FLOAT_API_FALSE@am__objects_28 = $(am__objects_27)
+am__objects_29 = src/opus.lo src/opus_decoder.lo src/opus_encoder.lo \
 	src/opus_multistream.lo src/opus_multistream_encoder.lo \
 	src/opus_multistream_decoder.lo src/repacketizer.lo \
-	$(am__objects_26)
-am_libopus_la_OBJECTS = $(am__objects_14) $(am__objects_24) \
-	$(am__objects_27)
+	$(am__objects_28)
+am_libopus_la_OBJECTS = $(am__objects_14) $(am__objects_26) \
+	$(am__objects_29)
 libopus_la_OBJECTS = $(am_libopus_la_OBJECTS)
 libopus_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
@@ -428,7 +433,7 @@ celt_tests_test_unit_dft_OBJECTS =  \
 	$(am_celt_tests_test_unit_dft_OBJECTS)
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_dft_DEPENDENCIES =  \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) \
-@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) $(am__append_14)
+@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) $(am__append_15)
 am__celt_tests_test_unit_entropy_SOURCES_DIST =  \
 	celt/tests/test_unit_entropy.c
 @EXTRA_PROGRAMS_TRUE@am_celt_tests_test_unit_entropy_OBJECTS =  \
@@ -453,7 +458,7 @@ celt_tests_test_unit_mathops_OBJECTS =  \
 	$(am_celt_tests_test_unit_mathops_OBJECTS)
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_mathops_DEPENDENCIES =  \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) \
-@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) $(am__append_15)
+@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) $(am__append_16)
 am__celt_tests_test_unit_mdct_SOURCES_DIST =  \
 	celt/tests/test_unit_mdct.c
 @EXTRA_PROGRAMS_TRUE@am_celt_tests_test_unit_mdct_OBJECTS =  \
@@ -462,7 +467,7 @@ celt_tests_test_unit_mdct_OBJECTS =  \
 	$(am_celt_tests_test_unit_mdct_OBJECTS)
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_mdct_DEPENDENCIES =  \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) \
-@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) $(am__append_16)
+@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) $(am__append_17)
 am__celt_tests_test_unit_rotation_SOURCES_DIST =  \
 	celt/tests/test_unit_rotation.c
 @EXTRA_PROGRAMS_TRUE@am_celt_tests_test_unit_rotation_OBJECTS =  \
@@ -471,7 +476,7 @@ celt_tests_test_unit_rotation_OBJECTS =  \
 	$(am_celt_tests_test_unit_rotation_OBJECTS)
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_rotation_DEPENDENCIES =  \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) \
-@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) $(am__append_17)
+@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) $(am__append_18)
 am__celt_tests_test_unit_types_SOURCES_DIST =  \
 	celt/tests/test_unit_types.c
 @EXTRA_PROGRAMS_TRUE@am_celt_tests_test_unit_types_OBJECTS =  \
@@ -935,6 +940,7 @@ LIBTOOL = @LIBTOOL@
 LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
+LT_SYS_LIBRARY_PATH = @LT_SYS_LIBRARY_PATH@
 MAINT = @MAINT@
 MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
@@ -1043,7 +1049,7 @@ CELT_SOURCES = celt/bands.c celt/celt.c celt/celt_encoder.c \
 	celt/mdct.c celt/modes.c celt/pitch.c celt/celt_lpc.c \
 	celt/quant_bands.c celt/rate.c celt/vq.c $(am__append_6) \
 	$(am__append_7) $(am__append_8) $(am__append_9) \
-	$(am__append_11) $(am__append_12)
+	$(am__append_11) $(am__append_13)
 CELT_SOURCES_SSE = celt/x86/x86cpu.c \
 celt/x86/x86_celt_map.c \
 celt/x86/pitch_sse.c
@@ -1101,12 +1107,16 @@ SILK_SOURCES = silk/CNG.c silk/code_signs.c silk/init_decoder.c \
 	silk/stereo_decode_pred.c silk/stereo_encode_pred.c \
 	silk/stereo_find_predictor.c silk/stereo_quant_pred.c \
 	$(am__append_1) $(am__append_2) $(am__append_3) \
-	$(am__append_4) $(am__append_10)
+	$(am__append_4) $(am__append_10) $(am__append_12)
 SILK_SOURCES_SSE4_1 = silk/x86/NSQ_sse.c \
 silk/x86/NSQ_del_dec_sse.c \
 silk/x86/x86_silk_map.c \
 silk/x86/VAD_sse.c \
 silk/x86/VQ_WMat_EC_sse.c
+
+SILK_SOURCES_ARM_NEON_INTR = \
+silk/arm/arm_silk_map.c \
+silk/arm/NSQ_neon.c
 
 SILK_SOURCES_FIXED = \
 silk/fixed/LTP_analysis_filter_FIX.c \
@@ -1228,6 +1238,7 @@ celt/static_modes_fixed_arm_ne10.h \
 celt/arm/armcpu.h \
 celt/arm/fixed_armv4.h \
 celt/arm/fixed_armv5e.h \
+celt/arm/fixed_arm64.h \
 celt/arm/kiss_fft_armv4.h \
 celt/arm/kiss_fft_armv5e.h \
 celt/arm/pitch_arm.h \
@@ -1259,6 +1270,7 @@ silk/Inlines.h \
 silk/MacroCount.h \
 silk/MacroDebug.h \
 silk/macros.h \
+silk/NSQ.h \
 silk/pitch_est_defines.h \
 silk/resampler_private.h \
 silk/resampler_rom.h \
@@ -1267,8 +1279,10 @@ silk/SigProc_FIX.h \
 silk/x86/SigProc_FIX_sse.h \
 silk/arm/macros_armv4.h \
 silk/arm/macros_armv5e.h \
+silk/arm/macros_arm64.h \
 silk/arm/SigProc_FIX_armv4.h \
 silk/arm/SigProc_FIX_armv5e.h \
+silk/arm/NSQ_neon.h \
 silk/fixed/main_FIX.h \
 silk/fixed/structs_FIX.h \
 silk/fixed/mips/noise_shape_analysis_FIX_mipsr1.h \
@@ -1291,9 +1305,9 @@ src/tansig_table.h
 
 libopus_la_SOURCES = $(CELT_SOURCES) $(SILK_SOURCES) $(OPUS_SOURCES)
 libopus_la_LDFLAGS = -no-undefined -version-info @OPUS_LT_CURRENT@:@OPUS_LT_REVISION@:@OPUS_LT_AGE@
-libopus_la_LIBADD = $(NE10_LIBS) $(LIBM) $(am__append_13)
+libopus_la_LIBADD = $(NE10_LIBS) $(LIBM) $(am__append_14)
 pkginclude_HEADERS = include/opus.h include/opus_multistream.h \
-	include/opus_types.h include/opus_defines.h $(am__append_18)
+	include/opus_types.h include/opus_defines.h $(am__append_19)
 noinst_HEADERS = $(OPUS_HEAD) $(SILK_HEAD) $(CELT_HEAD)
 @EXTRA_PROGRAMS_TRUE@opus_demo_SOURCES = src/opus_demo.c
 @EXTRA_PROGRAMS_TRUE@opus_demo_LDADD = libopus.la $(NE10_LIBS) $(LIBM)
@@ -1313,20 +1327,20 @@ noinst_HEADERS = $(OPUS_HEAD) $(SILK_HEAD) $(CELT_HEAD)
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_cwrs32_LDADD = $(LIBM)
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_dft_SOURCES = celt/tests/test_unit_dft.c
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_dft_LDADD = $(NE10_LIBS) \
-@EXTRA_PROGRAMS_TRUE@	$(LIBM) $(am__append_14)
+@EXTRA_PROGRAMS_TRUE@	$(LIBM) $(am__append_15)
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_entropy_SOURCES = celt/tests/test_unit_entropy.c
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_entropy_LDADD = $(LIBM)
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_laplace_SOURCES = celt/tests/test_unit_laplace.c
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_laplace_LDADD = $(LIBM)
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_mathops_SOURCES = celt/tests/test_unit_mathops.c
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_mathops_LDADD =  \
-@EXTRA_PROGRAMS_TRUE@	$(NE10_LIBS) $(LIBM) $(am__append_15)
+@EXTRA_PROGRAMS_TRUE@	$(NE10_LIBS) $(LIBM) $(am__append_16)
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_mdct_SOURCES = celt/tests/test_unit_mdct.c
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_mdct_LDADD = $(NE10_LIBS) \
-@EXTRA_PROGRAMS_TRUE@	$(LIBM) $(am__append_16)
+@EXTRA_PROGRAMS_TRUE@	$(LIBM) $(am__append_17)
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_rotation_SOURCES = celt/tests/test_unit_rotation.c
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_rotation_LDADD =  \
-@EXTRA_PROGRAMS_TRUE@	$(NE10_LIBS) $(LIBM) $(am__append_17)
+@EXTRA_PROGRAMS_TRUE@	$(NE10_LIBS) $(LIBM) $(am__append_18)
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_types_SOURCES = celt/tests/test_unit_types.c
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_types_LDADD = $(LIBM)
 @CUSTOM_MODES_TRUE@@EXTRA_PROGRAMS_TRUE@opus_custom_demo_SOURCES = celt/opus_custom_demo.c
@@ -1340,25 +1354,25 @@ EXTRA_DIST = version.mk \
              tests/run_vectors.sh \
              celt/arm/arm2gnu.pl \
              celt/arm/celt_pitch_xcorr_arm.s \
-             win32/VS2010/silk_float.vcxproj \
-             win32/VS2010/celt.vcxproj.filters \
-             win32/VS2010/opus.vcxproj \
-             win32/VS2010/silk_common.vcxproj.filters \
-             win32/VS2010/silk_float.vcxproj.filters \
-             win32/VS2010/test_opus_encode.vcxproj.filters \
-             win32/VS2010/silk_common.vcxproj \
-             win32/VS2010/test_opus_encode.vcxproj \
-             win32/VS2010/opus_demo.vcxproj \
-             win32/VS2010/test_opus_api.vcxproj.filters \
-             win32/VS2010/test_opus_api.vcxproj \
-             win32/VS2010/test_opus_decode.vcxproj.filters \
-             win32/VS2010/silk_fixed.vcxproj.filters \
-             win32/VS2010/opus_demo.vcxproj.filters \
-             win32/VS2010/silk_fixed.vcxproj \
-             win32/VS2010/opus.vcxproj.filters \
-             win32/VS2010/test_opus_decode.vcxproj \
-             win32/VS2010/celt.vcxproj \
-             win32/VS2010/opus.sln \
+             win32/VS2015/silk_float.vcxproj \
+             win32/VS2015/celt.vcxproj.filters \
+             win32/VS2015/opus.vcxproj \
+             win32/VS2015/silk_common.vcxproj.filters \
+             win32/VS2015/silk_float.vcxproj.filters \
+             win32/VS2015/test_opus_encode.vcxproj.filters \
+             win32/VS2015/silk_common.vcxproj \
+             win32/VS2015/test_opus_encode.vcxproj \
+             win32/VS2015/opus_demo.vcxproj \
+             win32/VS2015/test_opus_api.vcxproj.filters \
+             win32/VS2015/test_opus_api.vcxproj \
+             win32/VS2015/test_opus_decode.vcxproj.filters \
+             win32/VS2015/silk_fixed.vcxproj.filters \
+             win32/VS2015/opus_demo.vcxproj.filters \
+             win32/VS2015/silk_fixed.vcxproj \
+             win32/VS2015/opus.vcxproj.filters \
+             win32/VS2015/test_opus_decode.vcxproj \
+             win32/VS2015/celt.vcxproj \
+             win32/VS2015/opus.sln \
              win32/genversion.bat \
              win32/config.h
 
@@ -1377,7 +1391,7 @@ OPT_UNIT_TEST_OBJ = $(celt_tests_test_unit_mathops_SOURCES:.c=.o) \
 @HAVE_SSE4_1_TRUE@             $(SILK_SOURCES_SSE4_1:.c=.lo) \
 @HAVE_SSE4_1_TRUE@             $(SILK_SOURCES_FIXED_SSE4_1:.c=.lo)
 
-@OPUS_ARM_NEON_INTR_TRUE@CELT_ARM_NEON_INTR_OBJ = $(CELT_SOURCES_ARM_NEON_INTR:.c=.lo)
+@HAVE_ARM_NEON_INTR_TRUE@ARM_NEON_INTR_OBJ = $(CELT_SOURCES_ARM_NEON_INTR:.c=.lo) $(SILK_SOURCES_ARM_NEON_INTR:.c=.lo)
 all: $(BUILT_SOURCES) config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
@@ -1846,6 +1860,16 @@ silk/float/schur_FLP.lo: silk/float/$(am__dirstamp) \
 	silk/float/$(DEPDIR)/$(am__dirstamp)
 silk/float/sort_FLP.lo: silk/float/$(am__dirstamp) \
 	silk/float/$(DEPDIR)/$(am__dirstamp)
+silk/arm/$(am__dirstamp):
+	@$(MKDIR_P) silk/arm
+	@: > silk/arm/$(am__dirstamp)
+silk/arm/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) silk/arm/$(DEPDIR)
+	@: > silk/arm/$(DEPDIR)/$(am__dirstamp)
+silk/arm/arm_silk_map.lo: silk/arm/$(am__dirstamp) \
+	silk/arm/$(DEPDIR)/$(am__dirstamp)
+silk/arm/NSQ_neon.lo: silk/arm/$(am__dirstamp) \
+	silk/arm/$(DEPDIR)/$(am__dirstamp)
 src/$(am__dirstamp):
 	@$(MKDIR_P) src
 	@: > src/$(am__dirstamp)
@@ -1997,6 +2021,8 @@ mostlyclean-compile:
 	-rm -f celt/x86/*.lo
 	-rm -f silk/*.$(OBJEXT)
 	-rm -f silk/*.lo
+	-rm -f silk/arm/*.$(OBJEXT)
+	-rm -f silk/arm/*.lo
 	-rm -f silk/fixed/*.$(OBJEXT)
 	-rm -f silk/fixed/*.lo
 	-rm -f silk/fixed/x86/*.$(OBJEXT)
@@ -2127,6 +2153,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@silk/$(DEPDIR)/tables_other.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@silk/$(DEPDIR)/tables_pitch_lag.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@silk/$(DEPDIR)/tables_pulses_per_block.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@silk/arm/$(DEPDIR)/NSQ_neon.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@silk/arm/$(DEPDIR)/arm_silk_map.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@silk/fixed/$(DEPDIR)/LTP_analysis_filter_FIX.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@silk/fixed/$(DEPDIR)/LTP_scale_ctrl_FIX.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@silk/fixed/$(DEPDIR)/apply_sine_window_FIX.Plo@am__quote@
@@ -2267,6 +2295,7 @@ clean-libtool:
 	-rm -rf celt/tests/.libs celt/tests/_libs
 	-rm -rf celt/x86/.libs celt/x86/_libs
 	-rm -rf silk/.libs silk/_libs
+	-rm -rf silk/arm/.libs silk/arm/_libs
 	-rm -rf silk/fixed/.libs silk/fixed/_libs
 	-rm -rf silk/fixed/x86/.libs silk/fixed/x86/_libs
 	-rm -rf silk/float/.libs silk/float/_libs
@@ -2929,6 +2958,8 @@ distclean-generic:
 	-rm -f celt/x86/$(am__dirstamp)
 	-rm -f silk/$(DEPDIR)/$(am__dirstamp)
 	-rm -f silk/$(am__dirstamp)
+	-rm -f silk/arm/$(DEPDIR)/$(am__dirstamp)
+	-rm -f silk/arm/$(am__dirstamp)
 	-rm -f silk/fixed/$(DEPDIR)/$(am__dirstamp)
 	-rm -f silk/fixed/$(am__dirstamp)
 	-rm -f silk/fixed/x86/$(DEPDIR)/$(am__dirstamp)
@@ -2953,7 +2984,7 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool clean-local \
 
 distclean: distclean-recursive
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -rf celt/$(DEPDIR) celt/arm/$(DEPDIR) celt/tests/$(DEPDIR) celt/x86/$(DEPDIR) silk/$(DEPDIR) silk/fixed/$(DEPDIR) silk/fixed/x86/$(DEPDIR) silk/float/$(DEPDIR) silk/x86/$(DEPDIR) src/$(DEPDIR) tests/$(DEPDIR)
+	-rm -rf celt/$(DEPDIR) celt/arm/$(DEPDIR) celt/tests/$(DEPDIR) celt/x86/$(DEPDIR) silk/$(DEPDIR) silk/arm/$(DEPDIR) silk/fixed/$(DEPDIR) silk/fixed/x86/$(DEPDIR) silk/float/$(DEPDIR) silk/x86/$(DEPDIR) src/$(DEPDIR) tests/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-libtool distclean-tags
@@ -3002,7 +3033,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-recursive
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-	-rm -rf celt/$(DEPDIR) celt/arm/$(DEPDIR) celt/tests/$(DEPDIR) celt/x86/$(DEPDIR) silk/$(DEPDIR) silk/fixed/$(DEPDIR) silk/fixed/x86/$(DEPDIR) silk/float/$(DEPDIR) silk/x86/$(DEPDIR) src/$(DEPDIR) tests/$(DEPDIR)
+	-rm -rf celt/$(DEPDIR) celt/arm/$(DEPDIR) celt/tests/$(DEPDIR) celt/x86/$(DEPDIR) silk/$(DEPDIR) silk/arm/$(DEPDIR) silk/fixed/$(DEPDIR) silk/fixed/x86/$(DEPDIR) silk/float/$(DEPDIR) silk/x86/$(DEPDIR) src/$(DEPDIR) tests/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -3134,8 +3165,8 @@ $(CELT_SOURCES_ARM_ASM:%.s=%-gnu.S): $(top_srcdir)/celt/arm/arm2gnu.pl
 @HAVE_SSE_TRUE@$(SSE_OBJ) $(OPT_UNIT_TEST_OBJ): CFLAGS += $(OPUS_X86_SSE_CFLAGS)
 @HAVE_SSE2_TRUE@$(SSE2_OBJ) $(OPT_UNIT_TEST_OBJ): CFLAGS += $(OPUS_X86_SSE2_CFLAGS)
 @HAVE_SSE4_1_TRUE@$(SSE4_1_OBJ) $(OPT_UNIT_TEST_OBJ): CFLAGS += $(OPUS_X86_SSE4_1_CFLAGS)
-@OPUS_ARM_NEON_INTR_TRUE@$(CELT_ARM_NEON_INTR_OBJ) $(OPT_UNIT_TEST_OBJ): CFLAGS += \
-@OPUS_ARM_NEON_INTR_TRUE@ $(OPUS_ARM_NEON_INTR_CFLAGS)  $(NE10_CFLAGS)
+@HAVE_ARM_NEON_INTR_TRUE@$(ARM_NEON_INTR_OBJ) $(OPT_UNIT_TEST_OBJ): CFLAGS += \
+@HAVE_ARM_NEON_INTR_TRUE@ $(OPUS_ARM_NEON_INTR_CFLAGS)  $(NE10_CFLAGS)
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

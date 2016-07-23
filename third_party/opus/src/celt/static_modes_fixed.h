@@ -429,6 +429,14 @@ static const opus_int16 fft_bitrev60[60] = {
 
 #ifndef FFT_STATE48000_960_0
 #define FFT_STATE48000_960_0
+/*
+ typedef struct {
+ int n;
+ int maxshift;
+ const kiss_fft_state *kfft[4];
+ const kiss_twiddle_scalar * OPUS_RESTRICT trig;
+ } mdct_lookup;
+ */
 static const kiss_fft_state fft_state48000_960_0 = {
 480,    /* nfft */
 17476,    /* scale */
@@ -867,6 +875,15 @@ static const opus_val16 mdct_twiddles960[1800] = {
 };
 #endif
 
+
+/*
+ typedef struct {
+ int n;
+ int maxshift;
+ const kiss_fft_state *kfft[4];
+ const kiss_twiddle_scalar * OPUS_RESTRICT trig;
+ } mdct_lookup;
+ */
 static const CELTMode mode48000_960_120 = {
 48000,  /* Fs */
 120,    /* overlap */

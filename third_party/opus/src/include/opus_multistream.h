@@ -110,10 +110,10 @@ extern "C" {
   * packets produced by the encoder. Some basic information, such as packet
   * duration, can be computed without any special negotiation.
   *
-  * The format for multistream Opus packets is defined in the
-  * <a href="https://tools.ietf.org/html/draft-ietf-codec-oggopus">Ogg
-  * encapsulation specification</a> and is based on the self-delimited Opus
-  * framing described in Appendix B of <a href="https://tools.ietf.org/html/rfc6716">RFC 6716</a>.
+  * The format for multistream Opus packets is defined in
+  * <a href="https://tools.ietf.org/html/rfc7845">RFC 7845</a>
+  * and is based on the self-delimited Opus framing described in Appendix B of
+  * <a href="https://tools.ietf.org/html/rfc6716">RFC 6716</a>.
   * Normal Opus packets are just a degenerate case of multistream Opus packets,
   * and can be encoded or decoded with the multistream API by setting
   * <code>streams</code> to <code>1</code> when initializing the encoder or
@@ -588,8 +588,7 @@ OPUS_EXPORT OPUS_WARN_UNUSED_RESULT int opus_multistream_decode(
     opus_int32 len,
     opus_int16 *pcm,
     int frame_size,
-    int decode_fec,
-    int fs
+    int decode_fec, int fs
 ) OPUS_ARG_NONNULL(1) OPUS_ARG_NONNULL(4);
 
 /** Decode a multistream Opus packet with floating point output.
@@ -627,8 +626,7 @@ OPUS_EXPORT OPUS_WARN_UNUSED_RESULT int opus_multistream_decode_float(
     opus_int32 len,
     float *pcm,
     int frame_size,
-    int decode_fec,
-    int fs
+    int decode_fec, int fs
 ) OPUS_ARG_NONNULL(1) OPUS_ARG_NONNULL(4);
 
 /** Perform a CTL function on a multistream Opus decoder.

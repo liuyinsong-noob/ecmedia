@@ -634,7 +634,7 @@ int opus_decode_native(OpusDecoder *st, const unsigned char *data,
    packet_stream_channels = opus_packet_get_nb_channels(data);
 
    count = opus_packet_parse_impl(data, len, self_delimited, &toc, NULL,
-                                  size, &offset, packet_offset, fs); //sean just for mos
+                                  size, &offset, packet_offset, fs);
    if (count<0)
       return count;
 
@@ -756,7 +756,7 @@ int opus_decode_float(OpusDecoder *st, const unsigned char *data,
 
 #else
 int opus_decode(OpusDecoder *st, const unsigned char *data,
-      opus_int32 len, opus_int16 *pcm, int frame_size, int decode_fec, int fs)
+      opus_int32 len, opus_int16 *pcm, int frame_size, int decode_fec)
 {
    VARDECL(float, out);
    int ret, i;
@@ -790,7 +790,7 @@ int opus_decode(OpusDecoder *st, const unsigned char *data,
 }
 
 int opus_decode_float(OpusDecoder *st, const unsigned char *data,
-      opus_int32 len, opus_val16 *pcm, int frame_size, int decode_fec, int fs)
+      opus_int32 len, opus_val16 *pcm, int frame_size, int decode_fec)
 {
    if(frame_size<=0)
       return OPUS_BAD_ARG;

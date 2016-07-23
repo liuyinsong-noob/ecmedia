@@ -34,16 +34,12 @@ POSSIBILITY OF SUCH DAMAGE.
 static OPUS_INLINE opus_int32 silk_SMULWB_armv5e(opus_int32 a, opus_int16 b)
 {
   int res;
-#ifdef __aarch64__
-    res = ((a) * (opus_int32)((opus_int16)(b))) >> 16;
-#else
   __asm__(
       "#silk_SMULWB\n\t"
       "smulwb %0, %1, %2\n\t"
       : "=r"(res)
       : "r"(a), "r"(b)
   );
-#endif
   return res;
 }
 #define silk_SMULWB(a, b) (silk_SMULWB_armv5e(a, b))
@@ -54,16 +50,12 @@ static OPUS_INLINE opus_int32 silk_SMLAWB_armv5e(opus_int32 a, opus_int32 b,
  opus_int16 c)
 {
   int res;
-#ifdef __aarch64__
-    res = (a) + (((b) * (opus_int32)((opus_int16)(c))) >> 16);
-#else
   __asm__(
       "#silk_SMLAWB\n\t"
       "smlawb %0, %1, %2, %3\n\t"
       : "=r"(res)
       : "r"(b), "r"(c), "r"(a)
   );
-#endif
   return res;
 }
 #define silk_SMLAWB(a, b, c) (silk_SMLAWB_armv5e(a, b, c))
@@ -104,16 +96,12 @@ static OPUS_INLINE opus_int32 silk_SMLAWT_armv5e(opus_int32 a, opus_int32 b,
 static OPUS_INLINE opus_int32 silk_SMULBB_armv5e(opus_int32 a, opus_int32 b)
 {
   int res;
-#ifdef __aarch64__
-    res = ((opus_int32)((opus_int16)(a))) * ((opus_int32)((opus_int16)(b)));
-#else
   __asm__(
       "#silk_SMULBB\n\t"
       "smulbb %0, %1, %2\n\t"
       : "=r"(res)
       : "%r"(a), "r"(b)
   );
-#endif
   return res;
 }
 #define silk_SMULBB(a, b) (silk_SMULBB_armv5e(a, b))
@@ -124,16 +112,12 @@ static OPUS_INLINE opus_int32 silk_SMLABB_armv5e(opus_int32 a, opus_int32 b,
  opus_int32 c)
 {
   int res;
-#ifdef __aarch64__
-    res = (a) + (opus_int32)((opus_int16)(b)) * (opus_int32)((opus_int16)(c));
-#else
   __asm__(
       "#silk_SMLABB\n\t"
       "smlabb %0, %1, %2, %3\n\t"
       : "=r"(res)
       : "%r"(b), "r"(c), "r"(a)
   );
-#endif
   return res;
 }
 #define silk_SMLABB(a, b, c) (silk_SMLABB_armv5e(a, b, c))
@@ -174,16 +158,12 @@ static OPUS_INLINE opus_int32 silk_SMLABT_armv5e(opus_int32 a, opus_int32 b,
 static OPUS_INLINE opus_int32 silk_ADD_SAT32_armv5e(opus_int32 a, opus_int32 b)
 {
   int res;
-#ifdef __aarch64__
-    res = (a) + (b);
-#else
   __asm__(
       "#silk_ADD_SAT32\n\t"
       "qadd %0, %1, %2\n\t"
       : "=r"(res)
       : "%r"(a), "r"(b)
   );
-#endif
   return res;
 }
 #define silk_ADD_SAT32(a, b) (silk_ADD_SAT32_armv5e(a, b))
@@ -192,16 +172,12 @@ static OPUS_INLINE opus_int32 silk_ADD_SAT32_armv5e(opus_int32 a, opus_int32 b)
 static OPUS_INLINE opus_int32 silk_SUB_SAT32_armv5e(opus_int32 a, opus_int32 b)
 {
   int res;
-#ifdef __aarch64__
-    res = (a) - (b);
-#else
   __asm__(
       "#silk_SUB_SAT32\n\t"
       "qsub %0, %1, %2\n\t"
       : "=r"(res)
       : "r"(a), "r"(b)
   );
-#endif
   return res;
 }
 #define silk_SUB_SAT32(a, b) (silk_SUB_SAT32_armv5e(a, b))
