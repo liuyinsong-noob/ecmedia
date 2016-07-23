@@ -1898,22 +1898,22 @@ void ServiceCore::serphone_core_set_firewall_policy( SerphoneFirewallPolicy pol)
 
 SerphoneFirewallPolicy ServiceCore::serphone_core_get_firewall_policy()
 {
-#ifndef XINWEI
-    if (remoteSipNo) {
-        if(strncmp(remoteSipNo, "8", 1) == 0 && strlen(remoteSipNo) >= 14 )
-            return (SerphoneFirewallPolicy)net_conf.firewall_policy;
-        else
-            return LinphonePolicyNoFirewall;
-    }
-    else
-        return (SerphoneFirewallPolicy)net_conf.firewall_policy;
-#else
-    return (SerphoneFirewallPolicy)net_conf.firewall_policy;
-#endif
+//#ifndef XINWEI
+//    if (remoteSipNo) {
+//        if(strncmp(remoteSipNo, "8", 1) == 0 && strlen(remoteSipNo) >= 14 )
+//            return (SerphoneFirewallPolicy)net_conf.firewall_policy;
+//        else
+//            return LinphonePolicyNoFirewall;
+//    }
+//    else
+//        return (SerphoneFirewallPolicy)net_conf.firewall_policy;
+//#else
+//    return (SerphoneFirewallPolicy)net_conf.firewall_policy;
+//#endif
 
 
 //    sean test for ice
-//    return LinphonePolicyUseIce;
+    return LinphonePolicyUseIce;
 //    return LinphonePolicyNoFirewall;
 }
 

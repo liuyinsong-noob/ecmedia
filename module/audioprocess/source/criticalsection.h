@@ -11,10 +11,10 @@
 #ifndef WEBRTC_BASE_CRITICALSECTION_H_
 #define WEBRTC_BASE_CRITICALSECTION_H_
 
-#include "webrtc/base/atomicops.h"
-#include "webrtc/base/constructormagic.h"
-#include "webrtc/base/thread_annotations.h"
-#include "webrtc/base/platform_thread_types.h"
+#include "atomicops.h"
+#include "constructormagic.h"
+#include "thread_annotations.h"
+#include "platform_thread_types.h"
 
 #if defined(WEBRTC_WIN)
 // Include winsock2.h before including <windows.h> to maintain consistency with
@@ -47,7 +47,7 @@
 #define CS_DEBUG_CODE(x)
 #endif  // !CS_DEBUG_CHECKS
 
-namespace rtc {
+namespace cloopenwebrtc {
 
 // Locking methods (Enter, TryEnter, Leave)are const to permit protecting
 // members inside a const context without requiring mutable CriticalSections
@@ -97,7 +97,7 @@ class SCOPED_LOCKABLE CritScope {
   ~CritScope() UNLOCK_FUNCTION();
  private:
   const CriticalSection* const cs_;
-  RTC_DISALLOW_COPY_AND_ASSIGN(CritScope);
+  DISALLOW_COPY_AND_ASSIGN(CritScope);
 };
 
 // Tries to lock a critical section on construction via
@@ -120,7 +120,7 @@ class TryCritScope {
   const CriticalSection* const cs_;
   const bool locked_;
   CS_DEBUG_CODE(mutable bool lock_was_called_);
-  RTC_DISALLOW_COPY_AND_ASSIGN(TryCritScope);
+  DISALLOW_COPY_AND_ASSIGN(TryCritScope);
 };
 
 // A POD lock used to protect global variables. Do NOT use for other purposes.
@@ -146,7 +146,7 @@ class SCOPED_LOCKABLE GlobalLockScope {
   ~GlobalLockScope() UNLOCK_FUNCTION();
  private:
   GlobalLockPod* const lock_;
-  RTC_DISALLOW_COPY_AND_ASSIGN(GlobalLockScope);
+  DISALLOW_COPY_AND_ASSIGN(GlobalLockScope);
 };
 
 } // namespace rtc

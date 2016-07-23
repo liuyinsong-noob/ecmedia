@@ -113,9 +113,9 @@ extern "C" {
     enum  {
         codec_PCMU,
 		codec_G729,
-        Codec_OPUS8K,
-        Codec_OPUS16K,
-        Codec_OPUS48K,
+        codec_OPUS48K,
+        codec_OPUS16K,
+        codec_OPUS8K,
 		codec_VP8,
 		codec_H264,
 		codec_H264SVC,

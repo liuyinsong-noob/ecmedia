@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD838C401D420E8800050E87 /* libopus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADDC7D791C5A170E00510E7D /* libopus.a */; };
 		ADDC7D2E1C5A145D00510E7D /* audio_encoder_opus.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADDC7D291C5A145D00510E7D /* audio_encoder_opus.cc */; };
 		ADDC7D2F1C5A145D00510E7D /* opus_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = ADDC7D2D1C5A145D00510E7D /* opus_interface.c */; };
 /* End PBXBuildFile section */
@@ -55,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD838C401D420E8800050E87 /* libopus.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

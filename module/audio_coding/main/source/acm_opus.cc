@@ -30,7 +30,9 @@ buf[base+1]=((val)>>8)&0xff; \
 buf[base]=(val)&0xff; \
 }while(0)
 
+#if 0
 char *file_opus = NULL;
+#endif
 
 namespace cloopenwebrtc {
     
@@ -152,7 +154,7 @@ namespace cloopenwebrtc {
         bitrate_(20000),  // Default bit-rate.
         channels_(1),  // Default mono.
         packet_loss_rate_(0)
-#if 1
+#if 0
         , file_(NULL)
 #endif
         {  // Initial packet loss rate.
@@ -167,7 +169,7 @@ namespace cloopenwebrtc {
                 sample_freq_ = 0xFFFF;
                 bitrate_ = -1;
             }
-#if 1
+#if 0
             if (file_opus) {
                 file_ = fopen(file_opus, "wb+");
             }
@@ -180,7 +182,7 @@ namespace cloopenwebrtc {
                 WebRtcOpus_EncoderFree(encoder_inst_ptr_);
                 encoder_inst_ptr_ = NULL;
             }
-#if 1
+#if 0
                 if (file_) {
                     fflush(file_);
                     fclose(file_);

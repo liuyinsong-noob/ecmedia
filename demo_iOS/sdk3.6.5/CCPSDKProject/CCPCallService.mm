@@ -1870,7 +1870,7 @@ static CCPCallService * ccpcallserviceSharedInstance;
         voipCallDict = [[NSMutableDictionary alloc] init];
 //        setCodecEnabled(4, 0);
         setDtxEnabled(true);
-        setTraceFlag(true);
+//        setTraceFlag(true);
         self.player = nil;
         recorder = new YtxAQRecorder();
         self.playRingName = nil;

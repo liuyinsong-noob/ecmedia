@@ -80,6 +80,10 @@
 		9144857D172654E5006598A2 /* SrtpModule.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9144857C172654E4006598A2 /* SrtpModule.cc */; };
 		AD3A67841C575D5E0010CB68 /* network_predictor.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A67821C575D5E0010CB68 /* network_predictor.cc */; };
 		AD3A67851C575D5E0010CB68 /* network_predictor.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A67831C575D5E0010CB68 /* network_predictor.h */; };
+		AD7E73621D3CB68C001C0E04 /* audio_receive_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD7E735E1D3CB68C001C0E04 /* audio_receive_stream.cc */; };
+		AD7E73631D3CB68C001C0E04 /* audio_receive_stream.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E735F1D3CB68C001C0E04 /* audio_receive_stream.h */; };
+		AD7E73641D3CB68C001C0E04 /* audio_send_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD7E73601D3CB68C001C0E04 /* audio_send_stream.cc */; };
+		AD7E73651D3CB68C001C0E04 /* audio_send_stream.h in Headers */ = {isa = PBXBuildFile; fileRef = AD7E73611D3CB68C001C0E04 /* audio_send_stream.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -159,6 +163,10 @@
 		9144857C172654E4006598A2 /* SrtpModule.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SrtpModule.cc; sourceTree = "<group>"; };
 		AD3A67821C575D5E0010CB68 /* network_predictor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = network_predictor.cc; sourceTree = "<group>"; };
 		AD3A67831C575D5E0010CB68 /* network_predictor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = network_predictor.h; sourceTree = "<group>"; };
+		AD7E735E1D3CB68C001C0E04 /* audio_receive_stream.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_receive_stream.cc; sourceTree = "<group>"; };
+		AD7E735F1D3CB68C001C0E04 /* audio_receive_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_receive_stream.h; sourceTree = "<group>"; };
+		AD7E73601D3CB68C001C0E04 /* audio_send_stream.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_send_stream.cc; sourceTree = "<group>"; };
+		AD7E73611D3CB68C001C0E04 /* audio_send_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_send_stream.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,6 +259,10 @@
 		5519CF9D15C8233600719504 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				AD7E735E1D3CB68C001C0E04 /* audio_receive_stream.cc */,
+				AD7E735F1D3CB68C001C0E04 /* audio_receive_stream.h */,
+				AD7E73601D3CB68C001C0E04 /* audio_send_stream.cc */,
+				AD7E73611D3CB68C001C0E04 /* audio_send_stream.h */,
 				5519CF9F15C8233600719504 /* channel.cc */,
 				5519CFA015C8233600719504 /* channel.h */,
 				5519CFA115C8233600719504 /* channel_manager.cc */,
@@ -335,6 +347,7 @@
 				5519CFE415C8233700719504 /* voe_rtp_rtcp.h in Headers */,
 				5519CFE515C8233700719504 /* voe_video_sync.h in Headers */,
 				AD3A67851C575D5E0010CB68 /* network_predictor.h in Headers */,
+				AD7E73651D3CB68C001C0E04 /* audio_send_stream.h in Headers */,
 				5519CFE615C8233700719504 /* voe_volume_control.h in Headers */,
 				5519CFE815C8233700719504 /* channel.h in Headers */,
 				5519CFEA15C8233700719504 /* channel_manager.h in Headers */,
@@ -342,6 +355,7 @@
 				5519CFF015C8233700719504 /* dtmf_inband_queue.h in Headers */,
 				5519CFF215C8233700719504 /* level_indicator.h in Headers */,
 				5519CFF415C8233700719504 /* monitor_module.h in Headers */,
+				AD7E73631D3CB68C001C0E04 /* audio_receive_stream.h in Headers */,
 				5519CFF615C8233700719504 /* output_mixer.h in Headers */,
 				5519CFF815C8233700719504 /* shared_data.h in Headers */,
 				5519CFFA15C8233700719504 /* statistics.h in Headers */,
@@ -419,10 +433,12 @@
 				5519CFE915C8233700719504 /* channel_manager.cc in Sources */,
 				5519CFED15C8233700719504 /* dtmf_inband.cc in Sources */,
 				5519CFEF15C8233700719504 /* dtmf_inband_queue.cc in Sources */,
+				AD7E73641D3CB68C001C0E04 /* audio_send_stream.cc in Sources */,
 				5519CFF115C8233700719504 /* level_indicator.cc in Sources */,
 				5519CFF315C8233700719504 /* monitor_module.cc in Sources */,
 				5519CFF515C8233700719504 /* output_mixer.cc in Sources */,
 				5519CFF715C8233700719504 /* shared_data.cc in Sources */,
+				AD7E73621D3CB68C001C0E04 /* audio_receive_stream.cc in Sources */,
 				5519CFF915C8233700719504 /* statistics.cc in Sources */,
 				AD3A67841C575D5E0010CB68 /* network_predictor.cc in Sources */,
 				5519CFFB15C8233800719504 /* transmit_mixer.cc in Sources */,

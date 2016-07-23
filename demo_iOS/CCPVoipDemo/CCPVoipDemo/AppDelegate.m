@@ -16,7 +16,7 @@
 #import "ModelSelectViewController.h"
 #import "ModelEngineVoip.h"
 #import "VoipIncomingViewController.h"
-#if 1
+#if 0
 extern char *globalFilePathcapture;
 
 extern char *filename_path;
@@ -68,7 +68,7 @@ extern char *neteq_debug;
                                                  name:@"addressbookChanged"
                                                object:nil];
     
-#if 1
+#if 0
     
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *doc_path = [path objectAtIndex:0];

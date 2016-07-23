@@ -861,7 +861,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 					/*codec_params.maxBitrate = min((m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps*4*0.07)/1000, kMaxVideoBitrate);
 					codec_params.minBitrate = max((m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps*1*0.07)/1000, kMinVideoBitrate);*/
 					codec_params.startBitrate = 300;
-					codec_params.maxBitrate = 4000;
+					codec_params.maxBitrate = 1000;
 				}
 
 				codec_params.width = m_sendVideoWidth;
@@ -1318,6 +1318,7 @@ int ServiceCore::getCallStatistics(int type,MediaStatisticsInfo *callStats)
 
 int ServiceCore::serphone_set_louds_speaker_status(bool bLouds)
 {
+    cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
 #if !defined(NO_VOIP_FUNCTION)
 	return ECMedia_set_loudspeaker_status(bLouds);
 #endif
@@ -1326,6 +1327,7 @@ int ServiceCore::serphone_set_louds_speaker_status(bool bLouds)
 
 int ServiceCore::serphone_get_louds_speaker_status()
 {
+    cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
 #if !defined(NO_VOIP_FUNCTION)
 	bool bLouds = false;
 	ECMedia_get_loudpeaker_status(bLouds);

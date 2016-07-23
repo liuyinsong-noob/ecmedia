@@ -2565,14 +2565,14 @@ extern "C" int setCodecEnabled(int type, bool enabled)
         case codec_G729:
             sprintf(mime, "G729");
             break;
-        case Codec_OPUS8K:
+        case codec_OPUS8K:
             sprintf(mime, "opus");
             break;
-        case Codec_OPUS16K:
+        case codec_OPUS16K:
             sprintf(mime, "opus");
             freq = 16000;
             break;
-        case Codec_OPUS48K:
+        case codec_OPUS48K:
             sprintf(mime, "opus");
             freq = 48000;
             break;
@@ -2623,13 +2623,13 @@ bool getCodecEnabled(int type)
         case codec_G729:
             sprintf(mime, "G729");
             break;
-        case Codec_OPUS8K:
+        case codec_OPUS8K:
             sprintf(mime, "opus");
             break;
-        case Codec_OPUS16K:
+        case codec_OPUS16K:
             sprintf(mime, "opus");
             break;
-        case Codec_OPUS48K:
+        case codec_OPUS48K:
             sprintf(mime, "opus");
             break;
         case codec_VP8:

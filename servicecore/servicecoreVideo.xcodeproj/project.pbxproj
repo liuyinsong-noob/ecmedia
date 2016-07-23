@@ -193,7 +193,6 @@
 		AD0199AE1D239480003C2BB9 /* sometools.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sometools.cpp; sourceTree = "<group>"; };
 		AD194FB41C5B3F85003841BB /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		AD194FB61C5B3F90003841BB /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		ADDC7D7B1C5A172200510E7D /* libopus.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libopus.a; path = "../third_party/opus/opus/build/Debug-iphoneos/libopus.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -339,7 +338,6 @@
 				AD01998E1D2371AE003C2BB9 /* libortp.a */,
 				AD194FB61C5B3F90003841BB /* libc++.tbd */,
 				AD194FB41C5B3F85003841BB /* libz.tbd */,
-				ADDC7D7B1C5A172200510E7D /* libopus.a */,
 				55A7511215C8CAB9001B246A /* Foundation.framework */,
 			);
 			name = Frameworks;

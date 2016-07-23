@@ -262,7 +262,16 @@ char *globalFilePathcapture = NULL;
 			
 			/*kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange*/
 			size_t plane_width = CVPixelBufferGetWidthOfPlane(frame, 0);
+            
+            size_t plane_widthu = CVPixelBufferGetWidthOfPlane(frame, 1);
+
+            
+            
 			size_t plane_height = CVPixelBufferGetHeightOfPlane(frame, 0);
+            size_t plane_heightu = CVPixelBufferGetHeightOfPlane(frame, 1);
+
+            
+            size_t plane_count = CVPixelBufferGetPlaneCount(frame);
   
 			uint8_t* y_src= (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(frame, 0);
 			uint8_t* cbcr_src= (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(frame, 1);
