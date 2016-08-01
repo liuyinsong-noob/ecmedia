@@ -7,7 +7,6 @@
 //
 #ifndef WEBRTC_MODULES_VIDEO_CAPTURE_MAIN_SOURCE_iOS_VIDEO_CAPTURE_iOS_INFO_H_
 #define WEBRTC_MODULES_VIDEO_CAPTURE_MAIN_SOURCE_iOS_VIDEO_CAPTURE_iOS_INFO_H_
-
 #include "../../video_capture_impl.h"
 #include "../../device_info_impl.h"
 #include "video_capture_iOS_utility.h"

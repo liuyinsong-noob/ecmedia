@@ -1,5 +1,7 @@
+
 #import <AVFoundation/AVFoundation.h>
 #import <UIKit/UIKit.h>
+#ifdef TARGET_OS_IPHONE
 #import <QuartzCore/CALayer.h>
 #import "video_capture_defines.h"
 #import "video_capture_iOS_ObjC.h"
@@ -62,6 +64,8 @@ using namespace videocapturemodule;
 - (NSNumber*)startCapture;
 - (NSNumber*)stopCapture;
 - (NSNumber*)updateLossRate:(int)lossRate;
+- (void)focusWithMode:(AVCaptureFocusMode)focusMode exposeWithMode:(AVCaptureExposureMode)exposureMode atDevicePoint:(CGPoint)point monitorSubjectAreaChange:(BOOL)monitorSubjectAreaChange;
+- (void)subjectAreaDidChange:(NSNotification *)notification;
 - (void)saveYUVtoFile:(unsigned char *)buf andwrap:(int)wrap andxsize:(int)xsize andysize:(int)ysize;
 #ifdef __APPLE_CC__
 - (void)setCaptureRotate:(VideoCaptureRotation)rotate;
@@ -69,6 +73,7 @@ using namespace videocapturemodule;
 - (BOOL) isAutoOrientation;
 @property (nonatomic, retain, readonly) UIView* parentView;
 @property (nonatomic, assign) bool triggered;
+@property (nonatomic) dispatch_queue_t sessionQueue;
 @end
 
 
@@ -76,3 +81,4 @@ static void capture_queue_cleanup(void* p) {
     ECIOSCaptureCCP *capture = (ECIOSCaptureCCP *)p;
     [capture release];
 }
+#endif

@@ -7,11 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD1F0CAB1D4762E400C33F53 /* paced_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72AD1C599F1100FB246D /* paced_sender.cc */; };
+		AD1F0CAC1D4762E400C33F53 /* bitrate_prober.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72AB1C599F1100FB246D /* bitrate_prober.cc */; };
 		AD8D72AE1C599F1100FB246D /* bitrate_prober.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72AB1C599F1100FB246D /* bitrate_prober.cc */; };
 		AD8D72AF1C599F1100FB246D /* paced_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72AD1C599F1100FB246D /* paced_sender.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		AD1F0CAE1D4762E400C33F53 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AD8D729C1C599EE400FB246D /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -26,6 +37,7 @@
 /* Begin PBXFileReference section */
 		AD194FB01C5B3F0A003841BB /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		AD194FB21C5B3F14003841BB /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		AD1F0CB21D4762E400C33F53 /* libpacing_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libpacing_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD8D729E1C599EE400FB246D /* libpacing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libpacing.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD8D72AA1C599F0300FB246D /* paced_sender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = paced_sender.h; path = ../../include/paced_sender.h; sourceTree = "<group>"; };
 		AD8D72AB1C599F1100FB246D /* bitrate_prober.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bitrate_prober.cc; path = ../../source/bitrate_prober.cc; sourceTree = "<group>"; };
@@ -34,6 +46,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AD1F0CAD1D4762E400C33F53 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AD8D729B1C599EE400FB246D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -58,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				AD8D729E1C599EE400FB246D /* libpacing.a */,
+				AD1F0CB21D4762E400C33F53 /* libpacing_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -76,6 +96,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		AD1F0CA91D4762E400C33F53 /* pacing_Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD1F0CAF1D4762E400C33F53 /* Build configuration list for PBXNativeTarget "pacing_Mac" */;
+			buildPhases = (
+				AD1F0CAA1D4762E400C33F53 /* Sources */,
+				AD1F0CAD1D4762E400C33F53 /* Frameworks */,
+				AD1F0CAE1D4762E400C33F53 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = pacing_Mac;
+			productName = pacing;
+			productReference = AD1F0CB21D4762E400C33F53 /* libpacing_Mac.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		AD8D729D1C599EE400FB246D /* pacing */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AD8D72A71C599EE400FB246D /* Build configuration list for PBXNativeTarget "pacing" */;
@@ -120,11 +157,21 @@
 			projectRoot = "";
 			targets = (
 				AD8D729D1C599EE400FB246D /* pacing */,
+				AD1F0CA91D4762E400C33F53 /* pacing_Mac */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		AD1F0CAA1D4762E400C33F53 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD1F0CAB1D4762E400C33F53 /* paced_sender.cc in Sources */,
+				AD1F0CAC1D4762E400C33F53 /* bitrate_prober.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AD8D729A1C599EE400FB246D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -137,6 +184,43 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		AD1F0CB01D4762E400C33F53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				HEADER_SEARCH_PATHS = (
+					../../../system_wrappers/interface,
+					../..,
+					../../interface,
+					../include,
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Debug;
+		};
+		AD1F0CB11D4762E400C33F53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				HEADER_SEARCH_PATHS = (
+					../../../system_wrappers/interface,
+					../..,
+					../../interface,
+					../include,
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Release;
+		};
 		AD8D72A51C599EE400FB246D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -255,6 +339,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AD1F0CAF1D4762E400C33F53 /* Build configuration list for PBXNativeTarget "pacing_Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD1F0CB01D4762E400C33F53 /* Debug */,
+				AD1F0CB11D4762E400C33F53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AD8D72991C599EE400FB246D /* Build configuration list for PBXProject "pacing" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

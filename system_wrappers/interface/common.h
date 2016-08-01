@@ -97,10 +97,11 @@ namespace cloopenwebrtc
 			static const T def;
 			return def;
 		}
-
+        
+//        int a[20];
 		typedef std::map<OptionIdentifier, BaseOption*> OptionMap;
 		OptionMap options_;
-
+//        int b[6];
 		// DISALLOW_COPY_AND_ASSIGN
 		Config(const Config&);
 		void operator=(const Config&);

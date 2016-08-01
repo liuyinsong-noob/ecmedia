@@ -8,16 +8,16 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "webrtc/engine_configurations.h"
+#include "engine_configurations.h"
 #if defined(COCOA_RENDERING)
 
-#include "webrtc/modules/video_render/mac/cocoa_render_view.h"
-#include "webrtc/modules/video_render/mac/video_render_mac_cocoa_impl.h"
-#include "webrtc/modules/video_render/mac/video_render_nsopengl.h"
-#include "webrtc/system_wrappers/interface/critical_section_wrapper.h"
-#include "webrtc/system_wrappers/interface/trace.h"
+#include "cocoa_render_view.h"
+#include "video_render_mac_cocoa_impl.h"
+#include "video_render_nsopengl.h"
+#include "critical_section_wrapper.h"
+#include "trace.h"
 
-namespace webrtc {
+namespace cloopenwebrtc {
 
 VideoRenderMacCocoaImpl::VideoRenderMacCocoaImpl(const int32_t id,
         const VideoRenderType videoRenderType,

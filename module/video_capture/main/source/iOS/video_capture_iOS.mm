@@ -13,7 +13,6 @@
 #include "trace.h"
 #include "critical_section_wrapper.h"
 #include "../../video_capture_config.h"
-
 namespace cloopenwebrtc
 {
     

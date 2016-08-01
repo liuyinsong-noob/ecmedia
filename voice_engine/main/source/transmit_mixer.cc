@@ -37,8 +37,8 @@ namespace voe {
 void
 TransmitMixer::OnPeriodicProcess()
 {
-    WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId, -1),
-                 "TransmitMixer::OnPeriodicProcess()");
+//    WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId, -1),
+//                 "TransmitMixer::OnPeriodicProcess()");
 
 #if defined(WEBRTC_VOICE_ENGINE_TYPING_DETECTION)
     if (_typingNoiseWarningPending)

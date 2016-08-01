@@ -20,7 +20,7 @@
 #include "libyuv/scale_row.h"  // for ScaleRowDown2
 
 #ifdef __cplusplus
-namespace libyuv {
+namespace cloopenlibyuv {
 extern "C" {
 #endif
 

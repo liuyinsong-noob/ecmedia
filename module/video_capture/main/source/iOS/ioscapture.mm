@@ -17,7 +17,7 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 #import "ioscapture.h"
-
+#ifdef TARGET_OS_IPHONE
 #if 0
 char *globalFilePathcapture = NULL;
 #endif
@@ -31,6 +31,7 @@ char *globalFilePathcapture = NULL;
 
 @synthesize parentView;
 @synthesize triggered;
+@synthesize sessionQueue;
 
 #pragma mark - public methods
 
@@ -233,6 +234,8 @@ char *globalFilePathcapture = NULL;
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] addObserver: self selector:   @selector(deviceOrientationNotify) name: UIDeviceOrientationDidChangeNotification object: nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subjectAreaDidChange:) name:AVCaptureDeviceSubjectAreaDidChangeNotification object:input.device];
+    
     _pict = (MSPicture *)malloc(sizeof(MSPicture));
     _pict->ptr = NULL;
 #if 0
@@ -240,6 +243,8 @@ char *globalFilePathcapture = NULL;
         fout = fopen(globalFilePathcapture, "ab+");
     }
 #endif
+    
+    self.sessionQueue = dispatch_queue_create( "session queue", DISPATCH_QUEUE_SERIAL );
     
     CreateBilterFilter(&bilteralFilter);
     CreateKeyFrameDetect(&keyframeDector);
@@ -388,6 +393,17 @@ char *globalFilePathcapture = NULL;
 	if (device == NULL) {
 		device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
 	}
+    if ([device lockForConfiguration:&error]) {
+        device.subjectAreaChangeMonitoringEnabled=YES;
+        [device unlockForConfiguration];
+    }else{
+        NSLog(@"enable area change monitor error：%@",error.localizedDescription);
+    }
+    if (device.isSubjectAreaChangeMonitoringEnabled) {
+        NSLog(@"haha");
+    }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subjectAreaDidChange:) name:AVCaptureDeviceSubjectAreaDidChangeNotification object:device];
+    
 	input = [AVCaptureDeviceInput deviceInputWithDevice:device
 												  error:&error];
 	[input retain]; // keep reference on an externally allocated object
@@ -438,6 +454,10 @@ char *globalFilePathcapture = NULL;
 - (int)start {
 	NSAutoreleasePool* myPool = [[NSAutoreleasePool alloc] init];
 	@synchronized(self) {
+        
+        CGPoint devicePoint = CGPointMake( 0.5, 0.5 );
+        [self focusWithMode:AVCaptureFocusModeContinuousAutoFocus exposeWithMode:AVCaptureExposureModeContinuousAutoExposure atDevicePoint:devicePoint monitorSubjectAreaChange:NO];
+        
 		AVCaptureSession *session = [(AVCaptureVideoPreviewLayer *)self.layer session];
 		if (!session.running) {
 			// Init queue
@@ -477,7 +497,8 @@ char *globalFilePathcapture = NULL;
 		}
 	}
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
-        
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureDeviceSubjectAreaDidChangeNotification object:nil];
+    
     [self removeFromSuperview];
         
 	[myPool drain];    
@@ -698,5 +719,40 @@ char *globalFilePathcapture = NULL;
         triggered = false;
     return [NSNumber numberWithInt:0];
 }
+
+
+- (void)subjectAreaDidChange:(NSNotification *)notification
+{
+    CGPoint devicePoint = CGPointMake( 0.5, 0.5 );
+    [self focusWithMode:AVCaptureFocusModeContinuousAutoFocus exposeWithMode:AVCaptureExposureModeContinuousAutoExposure atDevicePoint:devicePoint monitorSubjectAreaChange:NO];
+}
+
+- (void)focusWithMode:(AVCaptureFocusMode)focusMode exposeWithMode:(AVCaptureExposureMode)exposureMode atDevicePoint:(CGPoint)point monitorSubjectAreaChange:(BOOL)monitorSubjectAreaChange
+{
+    dispatch_async( self.sessionQueue, ^{
+        AVCaptureDevice *device = input.device;
+        NSError *error = nil;
+        if ( [device lockForConfiguration:&error] ) {
+            // Setting (focus/exposure)PointOfInterest alone does not initiate a (focus/exposure) operation.
+            // Call -set(Focus/Exposure)Mode: to apply the new point of interest.
+            if ( device.isFocusPointOfInterestSupported && [device isFocusModeSupported:focusMode] ) {
+                device.focusPointOfInterest = point;
+                device.focusMode = focusMode;
+            }
+            
+            if ( device.isExposurePointOfInterestSupported && [device isExposureModeSupported:exposureMode] ) {
+                device.exposurePointOfInterest = point;
+                device.exposureMode = exposureMode;
+            }
+            
+            device.subjectAreaChangeMonitoringEnabled = monitorSubjectAreaChange;
+            [device unlockForConfiguration];
+        }
+        else {
+            NSLog( @"Could not lock device for configuration: %@", error );
+        }
+    } );
+}
 @end
 //#endif /*TARGET_IPHONE_SIMULATOR*/
+#endif

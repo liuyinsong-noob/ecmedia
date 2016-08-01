@@ -63,6 +63,90 @@
 		3FAF88D515C7EAB3000D5497 /* vp8_partition_aggregator.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF88A415C7EAB3000D5497 /* vp8_partition_aggregator.h */; };
 		3FAF88DC15C7EAC2000D5497 /* rtp_rtcp_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF88D815C7EAC2000D5497 /* rtp_rtcp_defines.h */; };
 		3FAF88DD15C7EAC2000D5497 /* rtp_rtcp.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF88D915C7EAC2000D5497 /* rtp_rtcp.h */; };
+		AD1F0E871D476ADE00C33F53 /* bitstream_builder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF884C15C7EA93000D5497 /* bitstream_builder.cc */; };
+		AD1F0E881D476ADE00C33F53 /* bitstream_parser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF884E15C7EA93000D5497 /* bitstream_parser.cc */; };
+		AD1F0E891D476ADE00C33F53 /* rtp_format_h264.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A68C91C5775DD0010CB68 /* rtp_format_h264.cc */; };
+		AD1F0E8A1D476ADE00C33F53 /* rtcp_packet.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A68B91C5774A70010CB68 /* rtcp_packet.cc */; };
+		AD1F0E8B1D476ADE00C33F53 /* rtp_receiver_strategy.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A68D01C5775DD0010CB68 /* rtp_receiver_strategy.cc */; };
+		AD1F0E8C1D476ADE00C33F53 /* rtp_format.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A68CD1C5775DD0010CB68 /* rtp_format.cc */; };
+		AD1F0E8D1D476ADE00C33F53 /* bitrate.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF885E15C7EAA8000D5497 /* bitrate.cc */; };
+		AD1F0E8E1D476ADE00C33F53 /* dtmf_queue.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF886015C7EAA8000D5497 /* dtmf_queue.cc */; };
+		AD1F0E8F1D476ADE00C33F53 /* forward_error_correction_internal.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF886415C7EAA8000D5497 /* forward_error_correction_internal.cc */; };
+		AD1F0E901D476ADE00C33F53 /* forward_error_correction.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF886615C7EAA8000D5497 /* forward_error_correction.cc */; };
+		AD1F0E911D476ADE00C33F53 /* fec_receiver_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A68B41C5774A70010CB68 /* fec_receiver_impl.cc */; };
+		AD1F0E921D476ADE00C33F53 /* producer_fec.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF887615C7EAB3000D5497 /* producer_fec.cc */; };
+		AD1F0E931D476ADE00C33F53 /* remote_ntp_time_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A68B81C5774A70010CB68 /* remote_ntp_time_estimator.cc */; };
+		AD1F0E941D476ADE00C33F53 /* rtcp_receiver_help.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF887D15C7EAB3000D5497 /* rtcp_receiver_help.cc */; };
+		AD1F0E951D476ADE00C33F53 /* rtcp_receiver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF887F15C7EAB3000D5497 /* rtcp_receiver.cc */; };
+		AD1F0E961D476ADE00C33F53 /* receive_statistics_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A68B61C5774A70010CB68 /* receive_statistics_impl.cc */; };
+		AD1F0E971D476ADE00C33F53 /* rtcp_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF888115C7EAB3000D5497 /* rtcp_sender.cc */; };
+		AD1F0E981D476ADE00C33F53 /* rtcp_utility.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF888315C7EAB3000D5497 /* rtcp_utility.cc */; };
+		AD1F0E991D476ADE00C33F53 /* rtp_format_vp8.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF888515C7EAB3000D5497 /* rtp_format_vp8.cc */; };
+		AD1F0E9A1D476ADE00C33F53 /* rtp_header_extension.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF888715C7EAB3000D5497 /* rtp_header_extension.cc */; };
+		AD1F0E9B1D476ADE00C33F53 /* rtp_packet_history.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF888915C7EAB3000D5497 /* rtp_packet_history.cc */; };
+		AD1F0E9C1D476ADE00C33F53 /* rtp_receiver_audio.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF888B15C7EAB3000D5497 /* rtp_receiver_audio.cc */; };
+		AD1F0E9D1D476ADE00C33F53 /* rtp_receiver_video.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF888D15C7EAB3000D5497 /* rtp_receiver_video.cc */; };
+		AD1F0E9E1D476ADE00C33F53 /* rtp_rtcp_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF889215C7EAB3000D5497 /* rtp_rtcp_impl.cc */; };
+		AD1F0E9F1D476ADE00C33F53 /* rtp_sender_audio.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF889415C7EAB3000D5497 /* rtp_sender_audio.cc */; };
+		AD1F0EA01D476ADE00C33F53 /* rtp_sender_video.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF889615C7EAB3000D5497 /* rtp_sender_video.cc */; };
+		AD1F0EA11D476ADE00C33F53 /* rtp_header_parser.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A68BB1C5774A70010CB68 /* rtp_header_parser.cc */; };
+		AD1F0EA21D476ADE00C33F53 /* rtp_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF889815C7EAB3000D5497 /* rtp_sender.cc */; };
+		AD1F0EA31D476ADE00C33F53 /* rtp_utility.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF889A15C7EAB3000D5497 /* rtp_utility.cc */; };
+		AD1F0EA41D476ADE00C33F53 /* ssrc_database.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF889C15C7EAB3000D5497 /* ssrc_database.cc */; };
+		AD1F0EA51D476ADE00C33F53 /* rtp_receiver_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A68C51C57753C0010CB68 /* rtp_receiver_impl.cc */; };
+		AD1F0EA61D476ADE00C33F53 /* rtp_payload_registry.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A68CF1C5775DD0010CB68 /* rtp_payload_registry.cc */; };
+		AD1F0EA71D476ADE00C33F53 /* tmmbr_help.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF889E15C7EAB3000D5497 /* tmmbr_help.cc */; };
+		AD1F0EA81D476ADE00C33F53 /* vp8_partition_aggregator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAF88A315C7EAB3000D5497 /* vp8_partition_aggregator.cc */; };
+		AD1F0EA91D476ADE00C33F53 /* rtp_format_video_generic.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A68CB1C5775DD0010CB68 /* rtp_format_video_generic.cc */; };
+		AD1F0EAB1D476ADE00C33F53 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAF879D15C7E82F000D5497 /* Foundation.framework */; };
+		AD1F0EAD1D476ADE00C33F53 /* mock_rtp_receiver_video.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF884A15C7EA7F000D5497 /* mock_rtp_receiver_video.h */; };
+		AD1F0EAE1D476ADE00C33F53 /* rtp_header_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A68AA1C5771CB0010CB68 /* rtp_header_parser.h */; };
+		AD1F0EAF1D476ADE00C33F53 /* bitstream_builder.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF884D15C7EA93000D5497 /* bitstream_builder.h */; };
+		AD1F0EB01D476ADE00C33F53 /* bitstream_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF884F15C7EA93000D5497 /* bitstream_parser.h */; };
+		AD1F0EB11D476ADE00C33F53 /* Bitrate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF885F15C7EAA8000D5497 /* Bitrate.h */; };
+		AD1F0EB21D476ADE00C33F53 /* dtmf_queue.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF886115C7EAA8000D5497 /* dtmf_queue.h */; };
+		AD1F0EB31D476ADE00C33F53 /* fec_receiver.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A68A71C5771CB0010CB68 /* fec_receiver.h */; };
+		AD1F0EB41D476ADE00C33F53 /* fec_private_tables_bursty.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF886215C7EAA8000D5497 /* fec_private_tables_bursty.h */; };
+		AD1F0EB51D476ADE00C33F53 /* fec_private_tables_random.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF886315C7EAA8000D5497 /* fec_private_tables_random.h */; };
+		AD1F0EB61D476ADE00C33F53 /* forward_error_correction_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF886515C7EAA8000D5497 /* forward_error_correction_internal.h */; };
+		AD1F0EB71D476ADE00C33F53 /* forward_error_correction.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF886715C7EAA8000D5497 /* forward_error_correction.h */; };
+		AD1F0EB81D476ADE00C33F53 /* remote_ntp_time_estimator.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A68A91C5771CB0010CB68 /* remote_ntp_time_estimator.h */; };
+		AD1F0EB91D476ADE00C33F53 /* rtp_receiver_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A68C61C57753C0010CB68 /* rtp_receiver_impl.h */; };
+		AD1F0EBA1D476ADE00C33F53 /* producer_fec.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF887715C7EAB3000D5497 /* producer_fec.h */; };
+		AD1F0EBB1D476ADE00C33F53 /* rtcp_receiver_help.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF887E15C7EAB3000D5497 /* rtcp_receiver_help.h */; };
+		AD1F0EBC1D476ADE00C33F53 /* rtcp_receiver.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF888015C7EAB3000D5497 /* rtcp_receiver.h */; };
+		AD1F0EBD1D476ADE00C33F53 /* rtcp_sender.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF888215C7EAB3000D5497 /* rtcp_sender.h */; };
+		AD1F0EBE1D476ADE00C33F53 /* rtcp_utility.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF888415C7EAB3000D5497 /* rtcp_utility.h */; };
+		AD1F0EBF1D476ADE00C33F53 /* rtp_format_vp8.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF888615C7EAB3000D5497 /* rtp_format_vp8.h */; };
+		AD1F0EC01D476ADE00C33F53 /* rtp_format.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A68CE1C5775DD0010CB68 /* rtp_format.h */; };
+		AD1F0EC11D476ADE00C33F53 /* rtp_header_extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF888815C7EAB3000D5497 /* rtp_header_extension.h */; };
+		AD1F0EC21D476ADE00C33F53 /* rtp_packet_history.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF888A15C7EAB3000D5497 /* rtp_packet_history.h */; };
+		AD1F0EC31D476ADE00C33F53 /* rtp_receiver_audio.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF888C15C7EAB3000D5497 /* rtp_receiver_audio.h */; };
+		AD1F0EC41D476ADE00C33F53 /* rtp_payload_registry.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A68AB1C5771CB0010CB68 /* rtp_payload_registry.h */; };
+		AD1F0EC51D476ADE00C33F53 /* rtp_receiver_video.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF888E15C7EAB3000D5497 /* rtp_receiver_video.h */; };
+		AD1F0EC61D476ADE00C33F53 /* rtcp_packet.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A68BA1C5774A70010CB68 /* rtcp_packet.h */; };
+		AD1F0EC71D476ADE00C33F53 /* rtp_rtcp_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF889115C7EAB3000D5497 /* rtp_rtcp_config.h */; };
+		AD1F0EC81D476ADE00C33F53 /* rtp_rtcp_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF889315C7EAB3000D5497 /* rtp_rtcp_impl.h */; };
+		AD1F0EC91D476ADE00C33F53 /* rtp_sender_audio.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF889515C7EAB3000D5497 /* rtp_sender_audio.h */; };
+		AD1F0ECA1D476ADE00C33F53 /* rtp_sender_video.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF889715C7EAB3000D5497 /* rtp_sender_video.h */; };
+		AD1F0ECB1D476ADE00C33F53 /* rtp_sender.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF889915C7EAB3000D5497 /* rtp_sender.h */; };
+		AD1F0ECC1D476ADE00C33F53 /* mock_rtp_rtcp.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A68DB1C5775EE0010CB68 /* mock_rtp_rtcp.h */; };
+		AD1F0ECD1D476ADE00C33F53 /* rtp_receiver_strategy.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A68D11C5775DD0010CB68 /* rtp_receiver_strategy.h */; };
+		AD1F0ECE1D476ADE00C33F53 /* rtp_utility.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF889B15C7EAB3000D5497 /* rtp_utility.h */; };
+		AD1F0ECF1D476ADE00C33F53 /* fec_receiver_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A68B51C5774A70010CB68 /* fec_receiver_impl.h */; };
+		AD1F0ED01D476ADE00C33F53 /* rtp_format_video_generic.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A68CC1C5775DD0010CB68 /* rtp_format_video_generic.h */; };
+		AD1F0ED11D476ADE00C33F53 /* rtp_format_h264.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A68CA1C5775DD0010CB68 /* rtp_format_h264.h */; };
+		AD1F0ED21D476ADE00C33F53 /* ssrc_database.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF889D15C7EAB3000D5497 /* ssrc_database.h */; };
+		AD1F0ED31D476ADE00C33F53 /* tmmbr_help.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF889F15C7EAB3000D5497 /* tmmbr_help.h */; };
+		AD1F0ED41D476ADE00C33F53 /* rtp_receiver.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A68AC1C5771CB0010CB68 /* rtp_receiver.h */; };
+		AD1F0ED51D476ADE00C33F53 /* byte_io.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A68B31C5774A70010CB68 /* byte_io.h */; };
+		AD1F0ED61D476ADE00C33F53 /* video_codec_information.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF88A215C7EAB3000D5497 /* video_codec_information.h */; };
+		AD1F0ED71D476ADE00C33F53 /* receive_statistics.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A68A81C5771CB0010CB68 /* receive_statistics.h */; };
+		AD1F0ED81D476ADE00C33F53 /* mock_rtp_payload_strategy.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A68DD1C5775FB0010CB68 /* mock_rtp_payload_strategy.h */; };
+		AD1F0ED91D476ADE00C33F53 /* vp8_partition_aggregator.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF88A415C7EAB3000D5497 /* vp8_partition_aggregator.h */; };
+		AD1F0EDA1D476ADE00C33F53 /* receive_statistics_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A68B71C5774A70010CB68 /* receive_statistics_impl.h */; };
+		AD1F0EDB1D476ADE00C33F53 /* rtp_rtcp_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF88D815C7EAC2000D5497 /* rtp_rtcp_defines.h */; };
+		AD1F0EDC1D476ADE00C33F53 /* rtp_rtcp.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF88D915C7EAC2000D5497 /* rtp_rtcp.h */; };
 		AD3A68AD1C5771CB0010CB68 /* fec_receiver.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A68A71C5771CB0010CB68 /* fec_receiver.h */; };
 		AD3A68AE1C5771CB0010CB68 /* receive_statistics.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A68A81C5771CB0010CB68 /* receive_statistics.h */; };
 		AD3A68AF1C5771CB0010CB68 /* remote_ntp_time_estimator.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A68A91C5771CB0010CB68 /* remote_ntp_time_estimator.h */; };
@@ -151,6 +235,7 @@
 		3FAF88A415C7EAB3000D5497 /* vp8_partition_aggregator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vp8_partition_aggregator.h; path = source/vp8_partition_aggregator.h; sourceTree = "<group>"; };
 		3FAF88D815C7EAC2000D5497 /* rtp_rtcp_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rtp_rtcp_defines.h; path = include/rtp_rtcp_defines.h; sourceTree = "<group>"; };
 		3FAF88D915C7EAC2000D5497 /* rtp_rtcp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rtp_rtcp.h; path = include/rtp_rtcp.h; sourceTree = "<group>"; };
+		AD1F0EE01D476ADE00C33F53 /* librtp_rtcp_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librtp_rtcp_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD3A68A71C5771CB0010CB68 /* fec_receiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fec_receiver.h; path = include/fec_receiver.h; sourceTree = "<group>"; };
 		AD3A68A81C5771CB0010CB68 /* receive_statistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = receive_statistics.h; path = include/receive_statistics.h; sourceTree = "<group>"; };
 		AD3A68A91C5771CB0010CB68 /* remote_ntp_time_estimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = remote_ntp_time_estimator.h; path = include/remote_ntp_time_estimator.h; sourceTree = "<group>"; };
@@ -190,6 +275,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AD1F0EAA1D476ADE00C33F53 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD1F0EAB1D476ADE00C33F53 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -207,6 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				3FAF879A15C7E82F000D5497 /* librtp_rtcp.a */,
+				AD1F0EE01D476ADE00C33F53 /* librtp_rtcp_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -390,6 +484,61 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AD1F0EAC1D476ADE00C33F53 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD1F0EAD1D476ADE00C33F53 /* mock_rtp_receiver_video.h in Headers */,
+				AD1F0EAE1D476ADE00C33F53 /* rtp_header_parser.h in Headers */,
+				AD1F0EAF1D476ADE00C33F53 /* bitstream_builder.h in Headers */,
+				AD1F0EB01D476ADE00C33F53 /* bitstream_parser.h in Headers */,
+				AD1F0EB11D476ADE00C33F53 /* Bitrate.h in Headers */,
+				AD1F0EB21D476ADE00C33F53 /* dtmf_queue.h in Headers */,
+				AD1F0EB31D476ADE00C33F53 /* fec_receiver.h in Headers */,
+				AD1F0EB41D476ADE00C33F53 /* fec_private_tables_bursty.h in Headers */,
+				AD1F0EB51D476ADE00C33F53 /* fec_private_tables_random.h in Headers */,
+				AD1F0EB61D476ADE00C33F53 /* forward_error_correction_internal.h in Headers */,
+				AD1F0EB71D476ADE00C33F53 /* forward_error_correction.h in Headers */,
+				AD1F0EB81D476ADE00C33F53 /* remote_ntp_time_estimator.h in Headers */,
+				AD1F0EB91D476ADE00C33F53 /* rtp_receiver_impl.h in Headers */,
+				AD1F0EBA1D476ADE00C33F53 /* producer_fec.h in Headers */,
+				AD1F0EBB1D476ADE00C33F53 /* rtcp_receiver_help.h in Headers */,
+				AD1F0EBC1D476ADE00C33F53 /* rtcp_receiver.h in Headers */,
+				AD1F0EBD1D476ADE00C33F53 /* rtcp_sender.h in Headers */,
+				AD1F0EBE1D476ADE00C33F53 /* rtcp_utility.h in Headers */,
+				AD1F0EBF1D476ADE00C33F53 /* rtp_format_vp8.h in Headers */,
+				AD1F0EC01D476ADE00C33F53 /* rtp_format.h in Headers */,
+				AD1F0EC11D476ADE00C33F53 /* rtp_header_extension.h in Headers */,
+				AD1F0EC21D476ADE00C33F53 /* rtp_packet_history.h in Headers */,
+				AD1F0EC31D476ADE00C33F53 /* rtp_receiver_audio.h in Headers */,
+				AD1F0EC41D476ADE00C33F53 /* rtp_payload_registry.h in Headers */,
+				AD1F0EC51D476ADE00C33F53 /* rtp_receiver_video.h in Headers */,
+				AD1F0EC61D476ADE00C33F53 /* rtcp_packet.h in Headers */,
+				AD1F0EC71D476ADE00C33F53 /* rtp_rtcp_config.h in Headers */,
+				AD1F0EC81D476ADE00C33F53 /* rtp_rtcp_impl.h in Headers */,
+				AD1F0EC91D476ADE00C33F53 /* rtp_sender_audio.h in Headers */,
+				AD1F0ECA1D476ADE00C33F53 /* rtp_sender_video.h in Headers */,
+				AD1F0ECB1D476ADE00C33F53 /* rtp_sender.h in Headers */,
+				AD1F0ECC1D476ADE00C33F53 /* mock_rtp_rtcp.h in Headers */,
+				AD1F0ECD1D476ADE00C33F53 /* rtp_receiver_strategy.h in Headers */,
+				AD1F0ECE1D476ADE00C33F53 /* rtp_utility.h in Headers */,
+				AD1F0ECF1D476ADE00C33F53 /* fec_receiver_impl.h in Headers */,
+				AD1F0ED01D476ADE00C33F53 /* rtp_format_video_generic.h in Headers */,
+				AD1F0ED11D476ADE00C33F53 /* rtp_format_h264.h in Headers */,
+				AD1F0ED21D476ADE00C33F53 /* ssrc_database.h in Headers */,
+				AD1F0ED31D476ADE00C33F53 /* tmmbr_help.h in Headers */,
+				AD1F0ED41D476ADE00C33F53 /* rtp_receiver.h in Headers */,
+				AD1F0ED51D476ADE00C33F53 /* byte_io.h in Headers */,
+				AD1F0ED61D476ADE00C33F53 /* video_codec_information.h in Headers */,
+				AD1F0ED71D476ADE00C33F53 /* receive_statistics.h in Headers */,
+				AD1F0ED81D476ADE00C33F53 /* mock_rtp_payload_strategy.h in Headers */,
+				AD1F0ED91D476ADE00C33F53 /* vp8_partition_aggregator.h in Headers */,
+				AD1F0EDA1D476ADE00C33F53 /* receive_statistics_impl.h in Headers */,
+				AD1F0EDB1D476ADE00C33F53 /* rtp_rtcp_defines.h in Headers */,
+				AD1F0EDC1D476ADE00C33F53 /* rtp_rtcp.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -408,6 +557,23 @@
 			name = rtp_rtcp;
 			productName = rtp_rtcp;
 			productReference = 3FAF879A15C7E82F000D5497 /* librtp_rtcp.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		AD1F0E851D476ADE00C33F53 /* rtp_rtcp_Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD1F0EDD1D476ADE00C33F53 /* Build configuration list for PBXNativeTarget "rtp_rtcp_Mac" */;
+			buildPhases = (
+				AD1F0E861D476ADE00C33F53 /* Sources */,
+				AD1F0EAA1D476ADE00C33F53 /* Frameworks */,
+				AD1F0EAC1D476ADE00C33F53 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = rtp_rtcp_Mac;
+			productName = rtp_rtcp;
+			productReference = AD1F0EE01D476ADE00C33F53 /* librtp_rtcp_Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -432,6 +598,7 @@
 			projectRoot = "";
 			targets = (
 				3FAF879915C7E82F000D5497 /* rtp_rtcp */,
+				AD1F0E851D476ADE00C33F53 /* rtp_rtcp_Mac */,
 			);
 		};
 /* End PBXProject section */
@@ -476,6 +643,48 @@
 				3FAF88CF15C7EAB3000D5497 /* tmmbr_help.cc in Sources */,
 				3FAF88D415C7EAB3000D5497 /* vp8_partition_aggregator.cc in Sources */,
 				AD3A68D41C5775DD0010CB68 /* rtp_format_video_generic.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD1F0E861D476ADE00C33F53 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD1F0E871D476ADE00C33F53 /* bitstream_builder.cc in Sources */,
+				AD1F0E881D476ADE00C33F53 /* bitstream_parser.cc in Sources */,
+				AD1F0E891D476ADE00C33F53 /* rtp_format_h264.cc in Sources */,
+				AD1F0E8A1D476ADE00C33F53 /* rtcp_packet.cc in Sources */,
+				AD1F0E8B1D476ADE00C33F53 /* rtp_receiver_strategy.cc in Sources */,
+				AD1F0E8C1D476ADE00C33F53 /* rtp_format.cc in Sources */,
+				AD1F0E8D1D476ADE00C33F53 /* bitrate.cc in Sources */,
+				AD1F0E8E1D476ADE00C33F53 /* dtmf_queue.cc in Sources */,
+				AD1F0E8F1D476ADE00C33F53 /* forward_error_correction_internal.cc in Sources */,
+				AD1F0E901D476ADE00C33F53 /* forward_error_correction.cc in Sources */,
+				AD1F0E911D476ADE00C33F53 /* fec_receiver_impl.cc in Sources */,
+				AD1F0E921D476ADE00C33F53 /* producer_fec.cc in Sources */,
+				AD1F0E931D476ADE00C33F53 /* remote_ntp_time_estimator.cc in Sources */,
+				AD1F0E941D476ADE00C33F53 /* rtcp_receiver_help.cc in Sources */,
+				AD1F0E951D476ADE00C33F53 /* rtcp_receiver.cc in Sources */,
+				AD1F0E961D476ADE00C33F53 /* receive_statistics_impl.cc in Sources */,
+				AD1F0E971D476ADE00C33F53 /* rtcp_sender.cc in Sources */,
+				AD1F0E981D476ADE00C33F53 /* rtcp_utility.cc in Sources */,
+				AD1F0E991D476ADE00C33F53 /* rtp_format_vp8.cc in Sources */,
+				AD1F0E9A1D476ADE00C33F53 /* rtp_header_extension.cc in Sources */,
+				AD1F0E9B1D476ADE00C33F53 /* rtp_packet_history.cc in Sources */,
+				AD1F0E9C1D476ADE00C33F53 /* rtp_receiver_audio.cc in Sources */,
+				AD1F0E9D1D476ADE00C33F53 /* rtp_receiver_video.cc in Sources */,
+				AD1F0E9E1D476ADE00C33F53 /* rtp_rtcp_impl.cc in Sources */,
+				AD1F0E9F1D476ADE00C33F53 /* rtp_sender_audio.cc in Sources */,
+				AD1F0EA01D476ADE00C33F53 /* rtp_sender_video.cc in Sources */,
+				AD1F0EA11D476ADE00C33F53 /* rtp_header_parser.cc in Sources */,
+				AD1F0EA21D476ADE00C33F53 /* rtp_sender.cc in Sources */,
+				AD1F0EA31D476ADE00C33F53 /* rtp_utility.cc in Sources */,
+				AD1F0EA41D476ADE00C33F53 /* ssrc_database.cc in Sources */,
+				AD1F0EA51D476ADE00C33F53 /* rtp_receiver_impl.cc in Sources */,
+				AD1F0EA61D476ADE00C33F53 /* rtp_payload_registry.cc in Sources */,
+				AD1F0EA71D476ADE00C33F53 /* tmmbr_help.cc in Sources */,
+				AD1F0EA81D476ADE00C33F53 /* vp8_partition_aggregator.cc in Sources */,
+				AD1F0EA91D476ADE00C33F53 /* rtp_format_video_generic.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -686,6 +895,174 @@
 			};
 			name = Release;
 		};
+		AD1F0EDE1D476ADE00C33F53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/rtp_rtcp.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"WEBRTC_SVNREVISION=\"n/a\"",
+					"_FILE_OFFSET_BITS=64",
+					NO_TCMALLOC,
+					DISABLE_NACL,
+					CHROMIUM_BUILD,
+					USE_PROPRIETARY_CODECS,
+					"ENABLE_GPU=1",
+					"USE_OPENSSL=1",
+					"ENABLE_EGLIMAGE=1",
+					"USE_SKIA=1",
+					WEBRTC_MAC,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_DETECT_ARM_NEON,
+					WEBRTC_CLOCK_TYPE_REALTIME,
+					WEBRTC_THREAD_RR,
+					__STDC_FORMAT_MACROS,
+					"__GNU_SOURCE=1",
+					"USE_STLPORT=1",
+					"_STLP_USE_PTR_SPECIALIZATIONS=1",
+					HAVE_OFF64_T,
+					HAVE_SYS_UIO_H,
+					NVALGRIND,
+					"DYNAMIC_ANNOTATIONS_ENABLED=0",
+				);
+				HEADER_SEARCH_PATHS = (
+					../,
+					./mock,
+					../interface,
+					../bitrate_controller/include,
+					../../system_wrappers/interface,
+					../../,
+					./source/oRTP/include,
+					./../../third_party/srtp/include,
+					./../../third_party/srtp/crypto/include,
+					./../../third_party/gsm/inc,
+					../../module/remote_bitrate_estimator/include,
+					../../module/pacing/include,
+					../../system_wrappers/source/,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_CPLUSPLUSFLAGS = (
+					"-fno-rtti",
+					"-fno-threadsafe-statics",
+					"-fvisibility-inlines-hidden",
+					"-Wsign-compare",
+					"-Woverloaded-virtual",
+					"-Wno-abi",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = NO;
+				SYMROOT = ../../IOSProject/out/baselib;
+				VALIDATE_PRODUCT = NO;
+				VALID_ARCHS = "x86_64 i386";
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wendif-labels",
+					"-Wextra",
+					"-Wno-unused-parameter",
+					"-Wno-missing-field-initializers",
+					"-Wheader-hygiene",
+					"-Wno-char-subscripts",
+					"-Wno-unused-function",
+					"-Wno-unnamed-type-template-args",
+					"-Wno-c++11-extensions",
+					"-Wno-covered-switch-default",
+				);
+				WEBRTC_SVNREVISION = "\"2518\"";
+			};
+			name = Debug;
+		};
+		AD1F0EDF1D476ADE00C33F53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/rtp_rtcp.dst;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"WEBRTC_SVNREVISION=\"n/a\"",
+					"_FILE_OFFSET_BITS=64",
+					NO_TCMALLOC,
+					DISABLE_NACL,
+					CHROMIUM_BUILD,
+					USE_PROPRIETARY_CODECS,
+					"ENABLE_GPU=1",
+					"USE_OPENSSL=1",
+					"ENABLE_EGLIMAGE=1",
+					"USE_SKIA=1",
+					WEBRTC_MAC,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_DETECT_ARM_NEON,
+					WEBRTC_CLOCK_TYPE_REALTIME,
+					WEBRTC_THREAD_RR,
+					__STDC_FORMAT_MACROS,
+					"__GNU_SOURCE=1",
+					"USE_STLPORT=1",
+					"_STLP_USE_PTR_SPECIALIZATIONS=1",
+					HAVE_OFF64_T,
+					HAVE_SYS_UIO_H,
+					NVALGRIND,
+					"DYNAMIC_ANNOTATIONS_ENABLED=0",
+				);
+				HEADER_SEARCH_PATHS = (
+					../,
+					./mock,
+					../interface,
+					../bitrate_controller/include,
+					../../system_wrappers/interface,
+					../../,
+					./source/oRTP/include,
+					./../../third_party/srtp/include,
+					./../../third_party/srtp/crypto/include,
+					./../../third_party/gsm/inc,
+					../../module/remote_bitrate_estimator/include,
+					../../module/pacing/include,
+					../../system_wrappers/source/,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_CPLUSPLUSFLAGS = (
+					"-fno-rtti",
+					"-fno-threadsafe-statics",
+					"-fvisibility-inlines-hidden",
+					"-Wsign-compare",
+					"-Woverloaded-virtual",
+					"-Wno-abi",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = NO;
+				SYMROOT = ../../IOSProject/out/baselib;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "x86_64 i386";
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wendif-labels",
+					"-Wextra",
+					"-Wno-unused-parameter",
+					"-Wno-missing-field-initializers",
+					"-Wheader-hygiene",
+					"-Wno-char-subscripts",
+					"-Wno-unused-function",
+					"-Wno-unnamed-type-template-args",
+					"-Wno-c++11-extensions",
+					"-Wno-covered-switch-default",
+				);
+				WEBRTC_SVNREVISION = "\"2518\"";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -703,6 +1080,15 @@
 			buildConfigurations = (
 				3FAF87A815C7E82F000D5497 /* Debug */,
 				3FAF87A915C7E82F000D5497 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD1F0EDD1D476ADE00C33F53 /* Build configuration list for PBXNativeTarget "rtp_rtcp_Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD1F0EDE1D476ADE00C33F53 /* Debug */,
+				AD1F0EDF1D476ADE00C33F53 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

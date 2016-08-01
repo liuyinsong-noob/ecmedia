@@ -40,7 +40,7 @@ extern "C" {
 
 #include "libyuv/planar_functions.h"  // For CopyPlane().
 
-namespace libyuv {
+namespace cloopenlibyuv {
 
 #ifdef HAVE_SETJMP
 struct SetJmpErrorMgr {

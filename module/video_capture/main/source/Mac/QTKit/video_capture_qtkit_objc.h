@@ -88,6 +88,8 @@
 - (NSNumber*)startCapture;
 - (NSNumber*)stopCapture;
 
+
+- (NSNumber *)setLocalVieoView:(void*) view;
 @end
 
 #endif  // WEBRTC_MODULES_VIDEO_CAPTURE_MAIN_SOURCE_MAC_QTKIT_VIDEO_CAPTURE_QTKIT_OBJC_H_

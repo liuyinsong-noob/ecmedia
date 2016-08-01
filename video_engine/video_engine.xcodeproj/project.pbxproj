@@ -45,6 +45,59 @@
 		AD194FE71C5B4572003841BB /* vie_desktop_share_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = AD194FE11C5B4572003841BB /* vie_desktop_share_impl.h */; };
 		AD194FE81C5B4572003841BB /* vie_desktop_share_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD194FE21C5B4572003841BB /* vie_desktop_share_manager.cc */; };
 		AD194FE91C5B4572003841BB /* vie_desktop_share_manager.h in Headers */ = {isa = PBXBuildFile; fileRef = AD194FE31C5B4572003841BB /* vie_desktop_share_manager.h */; };
+		AD1F0C0A1D47612200C33F53 /* vie_base_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC4215C8136E00719504 /* vie_base_impl.cc */; };
+		AD1F0C0B1D47612200C33F53 /* stream_synchronization.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD2E29F71C58C09F00FD311B /* stream_synchronization.cc */; };
+		AD1F0C0C1D47612200C33F53 /* vie_capture_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC4415C8136E00719504 /* vie_capture_impl.cc */; };
+		AD1F0C0D1D47612200C33F53 /* vie_capturer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC4615C8136E00719504 /* vie_capturer.cc */; };
+		AD1F0C0E1D47612200C33F53 /* vie_channel_group.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC4A15C8136E00719504 /* vie_channel_group.cc */; };
+		AD1F0C0F1D47612200C33F53 /* vie_channel_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC4C15C8136E00719504 /* vie_channel_manager.cc */; };
+		AD1F0C101D47612200C33F53 /* vie_codec_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC4E15C8136E00719504 /* vie_codec_impl.cc */; };
+		AD1F0C111D47612200C33F53 /* vie_encryption_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC5315C8136E00719504 /* vie_encryption_impl.cc */; };
+		AD1F0C121D47612200C33F53 /* vie_external_codec_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC5515C8136E00719504 /* vie_external_codec_impl.cc */; };
+		AD1F0C131D47612200C33F53 /* vie_file_image.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC5715C8136E00719504 /* vie_file_image.cc */; };
+		AD1F0C141D47612200C33F53 /* vie_file_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC5915C8136E00719504 /* vie_file_impl.cc */; };
+		AD1F0C151D47612200C33F53 /* vie_desktop_share_impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD194FE01C5B4572003841BB /* vie_desktop_share_impl.cpp */; };
+		AD1F0C161D47612200C33F53 /* call_stats.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D725A1C58C6D400FB246D /* call_stats.cc */; };
+		AD1F0C171D47612200C33F53 /* shared_memory.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD42CD701D23E17A009C2E7A /* shared_memory.cc */; };
+		AD1F0C181D47612200C33F53 /* encoder_state_feedback.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D725E1C58C9EB00FB246D /* encoder_state_feedback.cc */; };
+		AD1F0C191D47612200C33F53 /* vie_file_player.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC5B15C8136E00719504 /* vie_file_player.cc */; };
+		AD1F0C1A1D47612200C33F53 /* vie_frame_provider_base.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC5F15C8136E00719504 /* vie_frame_provider_base.cc */; };
+		AD1F0C1B1D47612200C33F53 /* vie_image_process_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6115C8136E00719504 /* vie_image_process_impl.cc */; };
+		AD1F0C1C1D47612200C33F53 /* vie_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6315C8136E00719504 /* vie_impl.cc */; };
+		AD1F0C1D1D47612200C33F53 /* send_statistics_proxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72FC1C59A39700FB246D /* send_statistics_proxy.cc */; };
+		AD1F0C1E1D47612200C33F53 /* overuse_frame_detector.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72F81C59A39700FB246D /* overuse_frame_detector.cc */; };
+		AD1F0C1F1D47612200C33F53 /* receive_statistics_proxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72FA1C59A39700FB246D /* receive_statistics_proxy.cc */; };
+		AD1F0C201D47612200C33F53 /* vie_input_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6515C8136E00719504 /* vie_input_manager.cc */; };
+		AD1F0C211D47612200C33F53 /* vie_manager_base.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6715C8136E00719504 /* vie_manager_base.cc */; };
+		AD1F0C221D47612200C33F53 /* vie_network_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6915C8136E00719504 /* vie_network_impl.cc */; };
+		AD1F0C231D47612200C33F53 /* vie_performance_monitor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6B15C8136E00719504 /* vie_performance_monitor.cc */; };
+		AD1F0C241D47612200C33F53 /* vie_receiver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6D15C8136E00719504 /* vie_receiver.cc */; };
+		AD1F0C251D47612200C33F53 /* vie_ref_count.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6F15C8136E00719504 /* vie_ref_count.cc */; };
+		AD1F0C261D47612200C33F53 /* vie_render_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC7315C8136E00719504 /* vie_render_impl.cc */; };
+		AD1F0C271D47612200C33F53 /* vie_render_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC7515C8136E00719504 /* vie_render_manager.cc */; };
+		AD1F0C281D47612200C33F53 /* vie_renderer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC7715C8136E00719504 /* vie_renderer.cc */; };
+		AD1F0C291D47612200C33F53 /* vie_rtp_rtcp_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC7915C8136E00719504 /* vie_rtp_rtcp_impl.cc */; };
+		AD1F0C2A1D47612200C33F53 /* vie_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC7B15C8136E00719504 /* vie_sender.cc */; };
+		AD1F0C2B1D47612200C33F53 /* vie_shared_data.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC7D15C8136E00719504 /* vie_shared_data.cc */; };
+		AD1F0C2C1D47612200C33F53 /* vie_desktop_capture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD194FDE1C5B4572003841BB /* vie_desktop_capture.cpp */; };
+		AD1F0C2D1D47612200C33F53 /* vie_desktop_share_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD194FE21C5B4572003841BB /* vie_desktop_share_manager.cc */; };
+		AD1F0C2E1D47612200C33F53 /* vie_encoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A2B0C515C8855500C857E3 /* vie_encoder.cc */; };
+		AD1F0C2F1D47612200C33F53 /* vie_file_recorder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A2B0CB15C8890E00C857E3 /* vie_file_recorder.cc */; };
+		AD1F0C301D47612200C33F53 /* vie_remb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A2B0CD15C8890E00C857E3 /* vie_remb.cc */; };
+		AD1F0C311D47612200C33F53 /* report_block_stats.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD2E29F31C58C04900FD311B /* report_block_stats.cc */; };
+		AD1F0C321D47612200C33F53 /* vie_sync_module.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A2B0CE15C8890E00C857E3 /* vie_sync_module.cc */; };
+		AD1F0C331D47612200C33F53 /* vie_channel.cc in Sources */ = {isa = PBXBuildFile; fileRef = 558FF075169FEF3E00BEFFED /* vie_channel.cc */; };
+		AD1F0C351D47612200C33F53 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5519CB8E15C812A700719504 /* Foundation.framework */; };
+		AD1F0C371D47612200C33F53 /* vie_desktop_share_manager.h in Headers */ = {isa = PBXBuildFile; fileRef = AD194FE31C5B4572003841BB /* vie_desktop_share_manager.h */; };
+		AD1F0C381D47612200C33F53 /* receive_statistics_proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8D72FB1C59A39700FB246D /* receive_statistics_proxy.h */; };
+		AD1F0C391D47612200C33F53 /* call_stats.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8D725B1C58C6D400FB246D /* call_stats.h */; };
+		AD1F0C3A1D47612200C33F53 /* overuse_frame_detector.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8D72F91C59A39700FB246D /* overuse_frame_detector.h */; };
+		AD1F0C3B1D47612200C33F53 /* vie_desktop_capture.h in Headers */ = {isa = PBXBuildFile; fileRef = AD194FDF1C5B4572003841BB /* vie_desktop_capture.h */; };
+		AD1F0C3C1D47612200C33F53 /* report_block_stats.h in Headers */ = {isa = PBXBuildFile; fileRef = AD2E29F41C58C04900FD311B /* report_block_stats.h */; };
+		AD1F0C3D1D47612200C33F53 /* encoder_state_feedback.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8D725F1C58C9EB00FB246D /* encoder_state_feedback.h */; };
+		AD1F0C3E1D47612200C33F53 /* send_statistics_proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8D72FD1C59A39700FB246D /* send_statistics_proxy.h */; };
+		AD1F0C3F1D47612200C33F53 /* vie_desktop_share_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = AD194FE11C5B4572003841BB /* vie_desktop_share_impl.h */; };
+		AD1F0C401D47612200C33F53 /* stream_synchronization.h in Headers */ = {isa = PBXBuildFile; fileRef = AD2E29F81C58C09F00FD311B /* stream_synchronization.h */; };
 		AD2E29F51C58C04900FD311B /* report_block_stats.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD2E29F31C58C04900FD311B /* report_block_stats.cc */; };
 		AD2E29F61C58C04900FD311B /* report_block_stats.h in Headers */ = {isa = PBXBuildFile; fileRef = AD2E29F41C58C04900FD311B /* report_block_stats.h */; };
 		AD2E29F91C58C09F00FD311B /* stream_synchronization.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD2E29F71C58C09F00FD311B /* stream_synchronization.cc */; };
@@ -145,6 +198,7 @@
 		AD194FE11C5B4572003841BB /* vie_desktop_share_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_desktop_share_impl.h; sourceTree = "<group>"; };
 		AD194FE21C5B4572003841BB /* vie_desktop_share_manager.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_desktop_share_manager.cc; sourceTree = "<group>"; };
 		AD194FE31C5B4572003841BB /* vie_desktop_share_manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_desktop_share_manager.h; sourceTree = "<group>"; };
+		AD1F0C441D47612200C33F53 /* libvideo_engine_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvideo_engine_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD2E29F31C58C04900FD311B /* report_block_stats.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = report_block_stats.cc; sourceTree = "<group>"; };
 		AD2E29F41C58C04900FD311B /* report_block_stats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = report_block_stats.h; sourceTree = "<group>"; };
 		AD2E29F71C58C09F00FD311B /* stream_synchronization.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stream_synchronization.cc; sourceTree = "<group>"; };
@@ -171,6 +225,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AD1F0C341D47612200C33F53 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD1F0C351D47612200C33F53 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -187,6 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				5519CB8B15C812A700719504 /* libvideo_engine.a */,
+				AD1F0C441D47612200C33F53 /* libvideo_engine_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -337,6 +400,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AD1F0C361D47612200C33F53 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD1F0C371D47612200C33F53 /* vie_desktop_share_manager.h in Headers */,
+				AD1F0C381D47612200C33F53 /* receive_statistics_proxy.h in Headers */,
+				AD1F0C391D47612200C33F53 /* call_stats.h in Headers */,
+				AD1F0C3A1D47612200C33F53 /* overuse_frame_detector.h in Headers */,
+				AD1F0C3B1D47612200C33F53 /* vie_desktop_capture.h in Headers */,
+				AD1F0C3C1D47612200C33F53 /* report_block_stats.h in Headers */,
+				AD1F0C3D1D47612200C33F53 /* encoder_state_feedback.h in Headers */,
+				AD1F0C3E1D47612200C33F53 /* send_statistics_proxy.h in Headers */,
+				AD1F0C3F1D47612200C33F53 /* vie_desktop_share_impl.h in Headers */,
+				AD1F0C401D47612200C33F53 /* stream_synchronization.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -355,6 +435,23 @@
 			name = video_engine;
 			productName = video_engine;
 			productReference = 5519CB8B15C812A700719504 /* libvideo_engine.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		AD1F0C081D47612200C33F53 /* video_engine_Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD1F0C411D47612200C33F53 /* Build configuration list for PBXNativeTarget "video_engine_Mac" */;
+			buildPhases = (
+				AD1F0C091D47612200C33F53 /* Sources */,
+				AD1F0C341D47612200C33F53 /* Frameworks */,
+				AD1F0C361D47612200C33F53 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = video_engine_Mac;
+			productName = video_engine;
+			productReference = AD1F0C441D47612200C33F53 /* libvideo_engine_Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -378,6 +475,7 @@
 			projectRoot = "";
 			targets = (
 				5519CB8A15C812A700719504 /* video_engine */,
+				AD1F0C081D47612200C33F53 /* video_engine_Mac */,
 			);
 		};
 /* End PBXProject section */
@@ -429,6 +527,55 @@
 				AD2E29F51C58C04900FD311B /* report_block_stats.cc in Sources */,
 				55A2B0D315C8890E00C857E3 /* vie_sync_module.cc in Sources */,
 				558FF076169FEF3E00BEFFED /* vie_channel.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD1F0C091D47612200C33F53 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD1F0C0A1D47612200C33F53 /* vie_base_impl.cc in Sources */,
+				AD1F0C0B1D47612200C33F53 /* stream_synchronization.cc in Sources */,
+				AD1F0C0C1D47612200C33F53 /* vie_capture_impl.cc in Sources */,
+				AD1F0C0D1D47612200C33F53 /* vie_capturer.cc in Sources */,
+				AD1F0C0E1D47612200C33F53 /* vie_channel_group.cc in Sources */,
+				AD1F0C0F1D47612200C33F53 /* vie_channel_manager.cc in Sources */,
+				AD1F0C101D47612200C33F53 /* vie_codec_impl.cc in Sources */,
+				AD1F0C111D47612200C33F53 /* vie_encryption_impl.cc in Sources */,
+				AD1F0C121D47612200C33F53 /* vie_external_codec_impl.cc in Sources */,
+				AD1F0C131D47612200C33F53 /* vie_file_image.cc in Sources */,
+				AD1F0C141D47612200C33F53 /* vie_file_impl.cc in Sources */,
+				AD1F0C151D47612200C33F53 /* vie_desktop_share_impl.cpp in Sources */,
+				AD1F0C161D47612200C33F53 /* call_stats.cc in Sources */,
+				AD1F0C171D47612200C33F53 /* shared_memory.cc in Sources */,
+				AD1F0C181D47612200C33F53 /* encoder_state_feedback.cc in Sources */,
+				AD1F0C191D47612200C33F53 /* vie_file_player.cc in Sources */,
+				AD1F0C1A1D47612200C33F53 /* vie_frame_provider_base.cc in Sources */,
+				AD1F0C1B1D47612200C33F53 /* vie_image_process_impl.cc in Sources */,
+				AD1F0C1C1D47612200C33F53 /* vie_impl.cc in Sources */,
+				AD1F0C1D1D47612200C33F53 /* send_statistics_proxy.cc in Sources */,
+				AD1F0C1E1D47612200C33F53 /* overuse_frame_detector.cc in Sources */,
+				AD1F0C1F1D47612200C33F53 /* receive_statistics_proxy.cc in Sources */,
+				AD1F0C201D47612200C33F53 /* vie_input_manager.cc in Sources */,
+				AD1F0C211D47612200C33F53 /* vie_manager_base.cc in Sources */,
+				AD1F0C221D47612200C33F53 /* vie_network_impl.cc in Sources */,
+				AD1F0C231D47612200C33F53 /* vie_performance_monitor.cc in Sources */,
+				AD1F0C241D47612200C33F53 /* vie_receiver.cc in Sources */,
+				AD1F0C251D47612200C33F53 /* vie_ref_count.cc in Sources */,
+				AD1F0C261D47612200C33F53 /* vie_render_impl.cc in Sources */,
+				AD1F0C271D47612200C33F53 /* vie_render_manager.cc in Sources */,
+				AD1F0C281D47612200C33F53 /* vie_renderer.cc in Sources */,
+				AD1F0C291D47612200C33F53 /* vie_rtp_rtcp_impl.cc in Sources */,
+				AD1F0C2A1D47612200C33F53 /* vie_sender.cc in Sources */,
+				AD1F0C2B1D47612200C33F53 /* vie_shared_data.cc in Sources */,
+				AD1F0C2C1D47612200C33F53 /* vie_desktop_capture.cpp in Sources */,
+				AD1F0C2D1D47612200C33F53 /* vie_desktop_share_manager.cc in Sources */,
+				AD1F0C2E1D47612200C33F53 /* vie_encoder.cc in Sources */,
+				AD1F0C2F1D47612200C33F53 /* vie_file_recorder.cc in Sources */,
+				AD1F0C301D47612200C33F53 /* vie_remb.cc in Sources */,
+				AD1F0C311D47612200C33F53 /* report_block_stats.cc in Sources */,
+				AD1F0C321D47612200C33F53 /* vie_sync_module.cc in Sources */,
+				AD1F0C331D47612200C33F53 /* vie_channel.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -662,6 +809,197 @@
 			};
 			name = Release;
 		};
+		AD1F0C421D47612200C33F53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/video_engine.dst;
+				GCC_CW_ASM_SYNTAX = NO;
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"\"WEBRTC_SVNREVISION=\\\"Unavailable(issue687)\\\"\"",
+					"\"ENABLE_ONE_CLICK_SIGNIN\"",
+					"\"ENABLE_REMOTING=1\"",
+					"\"ENABLE_WEBRTC=1\"",
+					"\"ENABLE_CONFIGURATION_POLICY\"",
+					"\"ENABLE_INPUT_SPEECH\"",
+					"\"ENABLE_NOTIFICATIONS\"",
+					"\"ENABLE_HIDPI=1\"",
+					"\"ENABLE_GPU=1\"",
+					"\"ENABLE_EGLIMAGE=1\"",
+					"\"USE_SKIA=1\"",
+					"\"ENABLE_TASK_MANAGER=1\"",
+					"\"ENABLE_WEB_INTENTS=1\"",
+					"\"ENABLE_EXTENSIONS=1\"",
+					"\"ENABLE_PLUGIN_INSTALLATION=1\"",
+					"\"ENABLE_PROTECTOR_SERVICE=1\"",
+					"\"ENABLE_SESSION_SERVICE=1\"",
+					"\"ENABLE_THEMES=1\"",
+					"\"ENABLE_BACKGROUND=1\"",
+					"\"ENABLE_PROMO_RESOURCE_SERVICE=1\"",
+					"\"ENABLE_AUTOMATION=1\"",
+					"\"ENABLE_PRINTING=1\"",
+					"\"ENABLE_CAPTIVE_PORTAL_DETECTION=1\"",
+					"\"WEBRTC_THREAD_RR\"",
+					"\"WEBRTC_CLOCK_TYPE_REALTIME\"",
+					"\"WEBRTC_VIDEO_ENGINE_FILE_API\"",
+					"\"__STDC_FORMAT_MACROS\"",
+					"\"DYNAMIC_ANNOTATIONS_ENABLED=1\"",
+					"\"WTF_USE_DYNAMIC_ANNOTATIONS=1\"",
+					VIDEOCODEC_H264,
+					VIDEOCODEC_VP8,
+				);
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					./include,
+					../module,
+					../module/videojpegyuv/include,
+					../module/bitrate_controller/include,
+					../module/video_capture/main/include,
+					../module/video_render/main/include,
+					../module/media_file/include,
+					../module/interface,
+					../module/rtp_rtcp/include,
+					../module/rtp_rtcp/source,
+					../module/udp_transport/include,
+					../module/utility/include,
+					../module/audio_coding/main/include,
+					../module/bitrate_controller/include,
+					../module/video_coding/main/include,
+					../module/video_coding/codecs/interface,
+					../module/video_processing/main/include,
+					../module/video_render/main/source/mac,
+					../voice_engine/main/include,
+					../system_wrappers/source,
+					../system_wrappers/interface,
+					../servicecore/include,
+					../third_party/oRTP/include/ortp,
+					../module/common_video/interface,
+					../module/common_video/source,
+					../module/remote_bitrate_estimator/source,
+					../module/common_video/source/libyuv/include,
+					../module/remote_bitrate_estimator/include,
+					../module/pacing/include,
+					../module/video_coding/main/source,
+					../module/desktop_capture/source,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_CFLAGS = (
+					"-fno-strict-aliasing",
+					"-fstack-protector-all",
+				);
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SYMROOT = ../IOSProject/out/baselib;
+				VALID_ARCHS = "x86_64 i386";
+				WARNING_CFLAGS = "";
+			};
+			name = Debug;
+		};
+		AD1F0C431D47612200C33F53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/video_engine.dst;
+				GCC_CW_ASM_SYNTAX = NO;
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"\"WEBRTC_SVNREVISION=\\\"Unavailable(issue687)\\\"\"",
+					"\"ENABLE_ONE_CLICK_SIGNIN\"",
+					"\"ENABLE_REMOTING=1\"",
+					"\"ENABLE_WEBRTC=1\"",
+					"\"ENABLE_CONFIGURATION_POLICY\"",
+					"\"ENABLE_INPUT_SPEECH\"",
+					"\"ENABLE_NOTIFICATIONS\"",
+					"\"ENABLE_HIDPI=1\"",
+					"\"ENABLE_GPU=1\"",
+					"\"ENABLE_EGLIMAGE=1\"",
+					"\"USE_SKIA=1\"",
+					"\"ENABLE_TASK_MANAGER=1\"",
+					"\"ENABLE_WEB_INTENTS=1\"",
+					"\"ENABLE_EXTENSIONS=1\"",
+					"\"ENABLE_PLUGIN_INSTALLATION=1\"",
+					"\"ENABLE_PROTECTOR_SERVICE=1\"",
+					"\"ENABLE_SESSION_SERVICE=1\"",
+					"\"ENABLE_THEMES=1\"",
+					"\"ENABLE_BACKGROUND=1\"",
+					"\"ENABLE_PROMO_RESOURCE_SERVICE=1\"",
+					"\"ENABLE_AUTOMATION=1\"",
+					"\"ENABLE_PRINTING=1\"",
+					"\"ENABLE_CAPTIVE_PORTAL_DETECTION=1\"",
+					"\"WEBRTC_THREAD_RR\"",
+					"\"WEBRTC_CLOCK_TYPE_REALTIME\"",
+					"\"WEBRTC_VIDEO_ENGINE_FILE_API\"",
+					"\"__STDC_FORMAT_MACROS\"",
+					"\"NDEBUG\"",
+					"\"NVALGRIND\"",
+					"\"DYNAMIC_ANNOTATIONS_ENABLED=0\"",
+					VIDEOCODEC_H264,
+					VIDEOCODEC_VP8,
+				);
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					./include,
+					../module,
+					../module/videojpegyuv/include,
+					../module/bitrate_controller/include,
+					../module/video_capture/main/include,
+					../module/video_render/main/include,
+					../module/media_file/include,
+					../module/interface,
+					../module/rtp_rtcp/include,
+					../module/rtp_rtcp/source,
+					../module/udp_transport/include,
+					../module/utility/include,
+					../module/audio_coding/main/include,
+					../module/bitrate_controller/include,
+					../module/video_coding/main/include,
+					../module/video_coding/codecs/interface,
+					../module/video_processing/main/include,
+					../module/video_render/main/source/mac,
+					../voice_engine/main/include,
+					../system_wrappers/source,
+					../system_wrappers/interface,
+					../servicecore/include,
+					../third_party/oRTP/include/ortp,
+					../module/common_video/interface,
+					../module/common_video/source,
+					../module/remote_bitrate_estimator/source,
+					../module/common_video/source/libyuv/include,
+					../module/remote_bitrate_estimator/include,
+					../module/pacing/include,
+					../module/video_coding/main/source,
+					../module/desktop_capture/source,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_CFLAGS = "-fno-strict-aliasing";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SYMROOT = ../IOSProject/out/baselib;
+				VALIDATE_PRODUCT = NO;
+				VALID_ARCHS = "x86_64 i386";
+				WARNING_CFLAGS = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -679,6 +1017,15 @@
 			buildConfigurations = (
 				5519CB9915C812A700719504 /* Debug */,
 				5519CB9A15C812A700719504 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD1F0C411D47612200C33F53 /* Build configuration list for PBXNativeTarget "video_engine_Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD1F0C421D47612200C33F53 /* Debug */,
+				AD1F0C431D47612200C33F53 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

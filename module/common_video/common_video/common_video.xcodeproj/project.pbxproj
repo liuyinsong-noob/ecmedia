@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD1F0C9C1D47628D00C33F53 /* jpeg.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADE8C7DE1C5617D1002C707C /* jpeg.cc */; };
+		AD1F0C9D1D47628D00C33F53 /* i420_video_frame.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADE8C7DD1C5617D1002C707C /* i420_video_frame.cc */; };
+		AD1F0C9E1D47628D00C33F53 /* plane.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADE8C7E31C5617D1002C707C /* plane.cc */; };
+		AD1F0C9F1D47628D00C33F53 /* data_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADE8C7DB1C5617D1002C707C /* data_manager.cc */; };
+		AD1F0CA01D47628D00C33F53 /* scaler.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADE8C7E11C5617D1002C707C /* scaler.cc */; };
+		AD1F0CA11D47628D00C33F53 /* texture_video_frame.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADE8C7E51C5617D1002C707C /* texture_video_frame.cc */; };
+		AD1F0CA21D47628D00C33F53 /* webrtc_libyuv.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADE8C7E21C5617D1002C707C /* webrtc_libyuv.cc */; };
 		ADE8C7E61C5617D1002C707C /* data_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADE8C7DB1C5617D1002C707C /* data_manager.cc */; };
 		ADE8C7E71C5617D1002C707C /* i420_video_frame.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADE8C7DD1C5617D1002C707C /* i420_video_frame.cc */; };
 		ADE8C7E81C5617D1002C707C /* jpeg.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADE8C7DE1C5617D1002C707C /* jpeg.cc */; };
@@ -17,6 +24,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		AD1F0CA41D47628D00C33F53 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ADE8C7CA1C560F15002C707C /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -29,6 +45,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AD1F0CA81D47628D00C33F53 /* libcommon_video_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcommon_video_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADE8C7CC1C560F15002C707C /* libcommon_video.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcommon_video.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADE8C7D81C5617A6002C707C /* i420_video_frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = i420_video_frame.h; path = ../../interface/i420_video_frame.h; sourceTree = "<group>"; };
 		ADE8C7D91C5617A6002C707C /* native_handle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = native_handle.h; path = ../../interface/native_handle.h; sourceTree = "<group>"; };
@@ -47,6 +64,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AD1F0CA31D47628D00C33F53 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ADE8C7C91C560F15002C707C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -69,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				ADE8C7CC1C560F15002C707C /* libcommon_video.a */,
+				AD1F0CA81D47628D00C33F53 /* libcommon_video_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -97,6 +122,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		AD1F0C9A1D47628D00C33F53 /* common_video_Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD1F0CA51D47628D00C33F53 /* Build configuration list for PBXNativeTarget "common_video_Mac" */;
+			buildPhases = (
+				AD1F0C9B1D47628D00C33F53 /* Sources */,
+				AD1F0CA31D47628D00C33F53 /* Frameworks */,
+				AD1F0CA41D47628D00C33F53 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = common_video_Mac;
+			productName = common_video;
+			productReference = AD1F0CA81D47628D00C33F53 /* libcommon_video_Mac.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		ADE8C7CB1C560F15002C707C /* common_video */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = ADE8C7D51C560F15002C707C /* Build configuration list for PBXNativeTarget "common_video" */;
@@ -141,11 +183,26 @@
 			projectRoot = "";
 			targets = (
 				ADE8C7CB1C560F15002C707C /* common_video */,
+				AD1F0C9A1D47628D00C33F53 /* common_video_Mac */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		AD1F0C9B1D47628D00C33F53 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD1F0C9C1D47628D00C33F53 /* jpeg.cc in Sources */,
+				AD1F0C9D1D47628D00C33F53 /* i420_video_frame.cc in Sources */,
+				AD1F0C9E1D47628D00C33F53 /* plane.cc in Sources */,
+				AD1F0C9F1D47628D00C33F53 /* data_manager.cc in Sources */,
+				AD1F0CA01D47628D00C33F53 /* scaler.cc in Sources */,
+				AD1F0CA11D47628D00C33F53 /* texture_video_frame.cc in Sources */,
+				AD1F0CA21D47628D00C33F53 /* webrtc_libyuv.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ADE8C7C81C560F15002C707C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -163,6 +220,45 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		AD1F0CA61D47628D00C33F53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				HEADER_SEARCH_PATHS = (
+					../..,
+					../../video_coding/main/include,
+					../interface,
+					../../../system_wrappers/interface,
+					../../../third_party/libyuv/include,
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Debug;
+		};
+		AD1F0CA71D47628D00C33F53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				HEADER_SEARCH_PATHS = (
+					../..,
+					../../video_coding/main/include,
+					../interface,
+					../../../system_wrappers/interface,
+					../../../third_party/libyuv/include,
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Release;
+		};
 		ADE8C7D31C560F15002C707C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -246,6 +342,7 @@
 		ADE8C7D61C560F15002C707C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
 				HEADER_SEARCH_PATHS = (
 					../..,
 					../../video_coding/main/include,
@@ -264,6 +361,7 @@
 		ADE8C7D71C560F15002C707C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
 				HEADER_SEARCH_PATHS = (
 					../..,
 					../../video_coding/main/include,
@@ -281,6 +379,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AD1F0CA51D47628D00C33F53 /* Build configuration list for PBXNativeTarget "common_video_Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD1F0CA61D47628D00C33F53 /* Debug */,
+				AD1F0CA71D47628D00C33F53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		ADE8C7C71C560F15002C707C /* Build configuration list for PBXProject "common_video" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

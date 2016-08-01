@@ -118,10 +118,21 @@ ModuleVideoRenderImpl::ModuleVideoRenderImpl(
             }
         }
             break;
-#ifndef _WIN32
+#ifdef MAC_IPHONE
         case kRenderiOS:
         {
             VideoRenderIPhoneImpl* ptrRenderer = new VideoRenderIPhoneImpl(_id, videoRenderType, window, _fullScreen);
+            if(ptrRenderer)
+            {
+                _ptrRenderer = reinterpret_cast<IVideoRender*>(ptrRenderer);
+            }
+        }
+            break;
+#endif
+#ifdef WEBRTC_MAC
+        case kRenderCocoa:
+        {
+            VideoRenderMacCocoaImpl* ptrRenderer = new VideoRenderMacCocoaImpl(_id, videoRenderType, window, _fullScreen);
             if(ptrRenderer)
             {
                 _ptrRenderer = reinterpret_cast<IVideoRender*>(ptrRenderer);

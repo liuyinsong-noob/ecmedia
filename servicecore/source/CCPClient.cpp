@@ -1784,8 +1784,8 @@ extern "C"  const char* makeCall(int callType, const char *called )
 extern "C" int setVideoView(void* view,void *localView)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	g_pSerCore->videoWindow = view;
-    g_pSerCore->localVideoWindow = localView;
+    g_pSerCore->videoWindow = localView;//view;
+    g_pSerCore->localVideoWindow = view;//localView;
 	return 0;
 }
 extern "C" int resetVideoViews(const char *callid, void* rWnd, void* lWnd)
@@ -2469,8 +2469,8 @@ extern "C" void setNetworkType(int networktype,bool connected,bool reconnect)
 }
 extern "C" int selectCamera(int cameraIndex, int capabilityIndex,int fps,int rotate,bool force)
 {
-//     cameraIndex = 1;
-//     capabilityIndex = 1;
+     cameraIndex = 0;
+     capabilityIndex = 2;
 	PrintConsole("[APICall] selectCamera (cameraIndex=%d,capabilityIndex=%d,fps=%d,ratate=%d force=%d )\n",
 		cameraIndex,capabilityIndex,fps,rotate,force);
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);

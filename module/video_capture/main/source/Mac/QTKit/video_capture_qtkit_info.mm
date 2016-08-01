@@ -64,12 +64,13 @@ WebRtc_Word32 VideoCaptureMacQTKitInfo::GetDeviceName(
 WebRtc_Word32 VideoCaptureMacQTKitInfo::NumberOfCapabilities(
     const char* deviceUniqueIdUTF8)
 {
-    // Not implemented. Mac doesn't use discrete steps in capabilities, rather
-    // "analog". QTKit will do it's best to convert frames to what ever format
-    // you ask for.
-    WEBRTC_TRACE(webrtc::kTraceError, webrtc::kTraceVideoCapture, _id,
-                 "NumberOfCapabilities is not supported on the Mac platform.");
-    return -1;
+    return 5;
+//    // Not implemented. Mac doesn't use discrete steps in capabilities, rather
+//    // "analog". QTKit will do it's best to convert frames to what ever format
+//    // you ask for.
+//    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+//                 "NumberOfCapabilities is not supported on the Mac platform.");
+//    return -1;
 }
 
 
@@ -78,12 +79,54 @@ WebRtc_Word32 VideoCaptureMacQTKitInfo::GetCapability(
     const WebRtc_UWord32 deviceCapabilityNumber,
     VideoCaptureCapability& capability)
 {
-    // Not implemented. Mac doesn't use discrete steps in capabilities, rather
-    // "analog". QTKit will do it's best to convert frames to what ever format
-    // you ask for.
-    WEBRTC_TRACE(webrtc::kTraceError, webrtc::kTraceVideoCapture, _id,
-                 "NumberOfCapabilities is not supported on the Mac platform.");
-    return -1;
+    
+    switch (deviceCapabilityNumber) {
+        case 0:
+        {
+            capability.width = 240; //288;
+            capability.height = 320; //352;
+            capability.maxFPS = 15;
+        }
+            break;
+        case 1:
+        {
+            capability.width = 288; //288;
+            capability.height = 352; //352;
+            capability.maxFPS = 15;
+        }
+            break;
+        case 2:
+        {
+            capability.width = 480; //288;
+            capability.height = 640; //352;
+            capability.maxFPS = 15;
+        }
+            break;
+        case 3:
+        {
+            capability.width = 540; //288;
+            capability.height = 960; //352;
+            capability.maxFPS = 15;
+        }
+            break;
+        case 4:
+        {
+            capability.width = 720;
+            capability.height = 1280;
+            capability.maxFPS = 15;
+        }
+            break;
+        default:
+            break;
+    }
+    
+    return 0;
+//    // Not implemented. Mac doesn't use discrete steps in capabilities, rather
+//    // "analog". QTKit will do it's best to convert frames to what ever format
+//    // you ask for.
+//    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+//                 "NumberOfCapabilities is not supported on the Mac platform.");
+//    return -1;
 }
 
 
@@ -94,7 +137,7 @@ WebRtc_Word32 VideoCaptureMacQTKitInfo::GetBestMatchedCapability(
     // Not implemented. Mac doesn't use discrete steps in capabilities, rather
     // "analog". QTKit will do it's best to convert frames to what ever format
     // you ask for.
-    WEBRTC_TRACE(webrtc::kTraceInfo, webrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
                  "NumberOfCapabilities is not supported on the Mac platform.");
     return -1;
 }
@@ -118,7 +161,7 @@ WebRtc_Word32 VideoCaptureMacQTKitInfo::CreateCapabilityMap(
     // Not implemented. Mac doesn't use discrete steps in capabilities, rather
     // "analog". QTKit will do it's best to convert frames to what ever format
     // you ask for.
-    WEBRTC_TRACE(webrtc::kTraceInfo, webrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
                  "NumberOfCapabilities is not supported on the Mac platform.");
      return -1;
 }

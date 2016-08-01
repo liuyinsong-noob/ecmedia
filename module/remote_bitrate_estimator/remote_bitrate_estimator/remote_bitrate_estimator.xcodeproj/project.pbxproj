@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD1F0CF11D47640B00C33F53 /* inter_arrival.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D727B1C58CC2A00FB246D /* inter_arrival.cc */; };
+		AD1F0CF21D47640B00C33F53 /* overuse_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72811C58CC2A00FB246D /* overuse_estimator.cc */; };
+		AD1F0CF31D47640B00C33F53 /* remote_rate_control.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72871C58CC2A00FB246D /* remote_rate_control.cc */; };
+		AD1F0CF41D47640B00C33F53 /* overuse_detector.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D727F1C58CC2A00FB246D /* overuse_detector.cc */; };
+		AD1F0CF51D47640B00C33F53 /* aimd_rate_control.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72791C58CC2A00FB246D /* aimd_rate_control.cc */; };
+		AD1F0CF61D47640B00C33F53 /* rate_statistics.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72831C58CC2A00FB246D /* rate_statistics.cc */; };
+		AD1F0CF71D47640B00C33F53 /* bwe_test_logging.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72891C58CC2A00FB246D /* bwe_test_logging.cc */; };
+		AD1F0CF81D47640B00C33F53 /* mimd_rate_control.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D727D1C58CC2A00FB246D /* mimd_rate_control.cc */; };
+		AD1F0CF91D47640B00C33F53 /* remote_bitrate_estimator_single_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72861C58CC2A00FB246D /* remote_bitrate_estimator_single_stream.cc */; };
+		AD1F0CFA1D47640B00C33F53 /* remote_bitrate_estimator_abs_send_time.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72851C58CC2A00FB246D /* remote_bitrate_estimator_abs_send_time.cc */; };
 		AD8D728B1C58CC2A00FB246D /* aimd_rate_control.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72791C58CC2A00FB246D /* aimd_rate_control.cc */; };
 		AD8D728C1C58CC2A00FB246D /* inter_arrival.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D727B1C58CC2A00FB246D /* inter_arrival.cc */; };
 		AD8D728D1C58CC2A00FB246D /* mimd_rate_control.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D727D1C58CC2A00FB246D /* mimd_rate_control.cc */; };
@@ -20,6 +30,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		AD1F0CFC1D47640B00C33F53 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AD8D72691C58CB6C00FB246D /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -32,6 +51,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AD1F0D001D47640B00C33F53 /* libremote_bitrate_estimator_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libremote_bitrate_estimator_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD8D726B1C58CB6C00FB246D /* libremote_bitrate_estimator.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libremote_bitrate_estimator.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD8D72771C58CB9A00FB246D /* bwe_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bwe_defines.h; path = ../../include/bwe_defines.h; sourceTree = "<group>"; };
 		AD8D72781C58CB9A00FB246D /* remote_bitrate_estimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = remote_bitrate_estimator.h; path = ../../include/remote_bitrate_estimator.h; sourceTree = "<group>"; };
@@ -56,6 +76,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AD1F0CFB1D47640B00C33F53 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AD8D72681C58CB6C00FB246D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -78,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				AD8D726B1C58CB6C00FB246D /* libremote_bitrate_estimator.a */,
+				AD1F0D001D47640B00C33F53 /* libremote_bitrate_estimator_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -112,6 +140,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		AD1F0CEF1D47640B00C33F53 /* remote_bitrate_estimator_Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD1F0CFD1D47640B00C33F53 /* Build configuration list for PBXNativeTarget "remote_bitrate_estimator_Mac" */;
+			buildPhases = (
+				AD1F0CF01D47640B00C33F53 /* Sources */,
+				AD1F0CFB1D47640B00C33F53 /* Frameworks */,
+				AD1F0CFC1D47640B00C33F53 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = remote_bitrate_estimator_Mac;
+			productName = remote_bitrate_estimator;
+			productReference = AD1F0D001D47640B00C33F53 /* libremote_bitrate_estimator_Mac.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		AD8D726A1C58CB6C00FB246D /* remote_bitrate_estimator */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AD8D72741C58CB6C00FB246D /* Build configuration list for PBXNativeTarget "remote_bitrate_estimator" */;
@@ -156,11 +201,29 @@
 			projectRoot = "";
 			targets = (
 				AD8D726A1C58CB6C00FB246D /* remote_bitrate_estimator */,
+				AD1F0CEF1D47640B00C33F53 /* remote_bitrate_estimator_Mac */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		AD1F0CF01D47640B00C33F53 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD1F0CF11D47640B00C33F53 /* inter_arrival.cc in Sources */,
+				AD1F0CF21D47640B00C33F53 /* overuse_estimator.cc in Sources */,
+				AD1F0CF31D47640B00C33F53 /* remote_rate_control.cc in Sources */,
+				AD1F0CF41D47640B00C33F53 /* overuse_detector.cc in Sources */,
+				AD1F0CF51D47640B00C33F53 /* aimd_rate_control.cc in Sources */,
+				AD1F0CF61D47640B00C33F53 /* rate_statistics.cc in Sources */,
+				AD1F0CF71D47640B00C33F53 /* bwe_test_logging.cc in Sources */,
+				AD1F0CF81D47640B00C33F53 /* mimd_rate_control.cc in Sources */,
+				AD1F0CF91D47640B00C33F53 /* remote_bitrate_estimator_single_stream.cc in Sources */,
+				AD1F0CFA1D47640B00C33F53 /* remote_bitrate_estimator_abs_send_time.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AD8D72671C58CB6C00FB246D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -181,6 +244,45 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		AD1F0CFE1D47640B00C33F53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				HEADER_SEARCH_PATHS = (
+					../../../system_wrappers/interface,
+					../..,
+					../../interface,
+					../../rtp_rtcp/source,
+					../../rtp_rtcp/include,
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Debug;
+		};
+		AD1F0CFF1D47640B00C33F53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				HEADER_SEARCH_PATHS = (
+					../../../system_wrappers/interface,
+					../..,
+					../../interface,
+					../../rtp_rtcp/source,
+					../../rtp_rtcp/include,
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Release;
+		};
 		AD8D72721C58CB6C00FB246D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -301,6 +403,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AD1F0CFD1D47640B00C33F53 /* Build configuration list for PBXNativeTarget "remote_bitrate_estimator_Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD1F0CFE1D47640B00C33F53 /* Debug */,
+				AD1F0CFF1D47640B00C33F53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AD8D72661C58CB6C00FB246D /* Build configuration list for PBXProject "remote_bitrate_estimator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -74,6 +74,73 @@
 		AD3A670F1C5744890010CB68 /* time_stretch.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A67011C5744890010CB68 /* time_stretch.h */; };
 		AD3A67101C5744890010CB68 /* timestamp_scaler.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A67021C5744890010CB68 /* timestamp_scaler.cc */; };
 		AD3A67111C5744890010CB68 /* timestamp_scaler.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A67031C5744890010CB68 /* timestamp_scaler.h */; };
+		ADC549021D485C2400A5C852 /* normal.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66CA1C57445B0010CB68 /* normal.cc */; };
+		ADC549031D485C2400A5C852 /* decision_logic_fax.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66B01C57445B0010CB68 /* decision_logic_fax.cc */; };
+		ADC549041D485C2400A5C852 /* dsp_helper.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66BD1C57445B0010CB68 /* dsp_helper.cc */; };
+		ADC549051D485C2400A5C852 /* audio_vector.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66981C5743A60010CB68 /* audio_vector.cc */; };
+		ADC549061D485C2400A5C852 /* decision_logic.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66B41C57445B0010CB68 /* decision_logic.cc */; };
+		ADC549071D485C2400A5C852 /* statistics_calculator.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66FC1C5744890010CB68 /* statistics_calculator.cc */; };
+		ADC549081D485C2400A5C852 /* accelerate.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66901C5743A60010CB68 /* accelerate.cc */; };
+		ADC549091D485C2400A5C852 /* background_noise.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A669A1C5743A60010CB68 /* background_noise.cc */; };
+		ADC5490A1D485C2400A5C852 /* payload_splitter.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66CF1C57445B0010CB68 /* payload_splitter.cc */; };
+		ADC5490B1D485C2400A5C852 /* merge.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66C51C57445B0010CB68 /* merge.cc */; };
+		ADC5490C1D485C2400A5C852 /* sync_buffer.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66FE1C5744890010CB68 /* sync_buffer.cc */; };
+		ADC5490D1D485C2400A5C852 /* neteq_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66C71C57445B0010CB68 /* neteq_impl.cc */; };
+		ADC5490E1D485C2400A5C852 /* random_vector.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66F81C5744890010CB68 /* random_vector.cc */; };
+		ADC5490F1D485C2400A5C852 /* preemptive_expand.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66F61C5744890010CB68 /* preemptive_expand.cc */; };
+		ADC549101D485C2400A5C852 /* dtmf_buffer.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66BF1C57445B0010CB68 /* dtmf_buffer.cc */; };
+		ADC549111D485C2400A5C852 /* expand.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66C31C57445B0010CB68 /* expand.cc */; };
+		ADC549121D485C2400A5C852 /* decoder_database.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66B61C57445B0010CB68 /* decoder_database.cc */; };
+		ADC549131D485C2400A5C852 /* comfort_noise.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A669E1C5743A60010CB68 /* comfort_noise.cc */; };
+		ADC549141D485C2400A5C852 /* rtcp.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66FA1C5744890010CB68 /* rtcp.cc */; };
+		ADC549151D485C2400A5C852 /* audio_classifier.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66921C5743A60010CB68 /* audio_classifier.cc */; };
+		ADC549161D485C2400A5C852 /* timestamp_scaler.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A67021C5744890010CB68 /* timestamp_scaler.cc */; };
+		ADC549171D485C2400A5C852 /* audio_decoder_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66941C5743A60010CB68 /* audio_decoder_impl.cc */; };
+		ADC549181D485C2400A5C852 /* audio_multi_vector.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66961C5743A60010CB68 /* audio_multi_vector.cc */; };
+		ADC549191D485C2400A5C852 /* buffer_level_filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A669C1C5743A60010CB68 /* buffer_level_filter.cc */; };
+		ADC5491A1D485C2400A5C852 /* packet_buffer.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66CC1C57445B0010CB68 /* packet_buffer.cc */; };
+		ADC5491B1D485C2400A5C852 /* post_decode_vad.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66D11C57445B0010CB68 /* post_decode_vad.cc */; };
+		ADC5491C1D485C2400A5C852 /* decision_logic_normal.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66B21C57445B0010CB68 /* decision_logic_normal.cc */; };
+		ADC5491D1D485C2400A5C852 /* neteq.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66C91C57445B0010CB68 /* neteq.cc */; };
+		ADC5491E1D485C2400A5C852 /* dtmf_tone_generator.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66C11C57445B0010CB68 /* dtmf_tone_generator.cc */; };
+		ADC5491F1D485C2400A5C852 /* delay_peak_detector.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66BB1C57445B0010CB68 /* delay_peak_detector.cc */; };
+		ADC549201D485C2400A5C852 /* time_stretch.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A67001C5744890010CB68 /* time_stretch.cc */; };
+		ADC549211D485C2400A5C852 /* delay_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3A66B91C57445B0010CB68 /* delay_manager.cc */; };
+		ADC549231D485C2400A5C852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAA8F1215C8D23300561C64 /* Foundation.framework */; };
+		ADC549251D485C2400A5C852 /* audio_multi_vector.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66971C5743A60010CB68 /* audio_multi_vector.h */; };
+		ADC549261D485C2400A5C852 /* timestamp_scaler.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A67031C5744890010CB68 /* timestamp_scaler.h */; };
+		ADC549271D485C2400A5C852 /* dtmf_tone_generator.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66C21C57445B0010CB68 /* dtmf_tone_generator.h */; };
+		ADC549281D485C2400A5C852 /* dtmf_buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66C01C57445B0010CB68 /* dtmf_buffer.h */; };
+		ADC549291D485C2400A5C852 /* normal.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66CB1C57445B0010CB68 /* normal.h */; };
+		ADC5492A1D485C2400A5C852 /* post_decode_vad.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66D21C57445B0010CB68 /* post_decode_vad.h */; };
+		ADC5492B1D485C2400A5C852 /* rtcp.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66FB1C5744890010CB68 /* rtcp.h */; };
+		ADC5492C1D485C2400A5C852 /* payload_splitter.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66D01C57445B0010CB68 /* payload_splitter.h */; };
+		ADC5492D1D485C2400A5C852 /* packet.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66CE1C57445B0010CB68 /* packet.h */; };
+		ADC5492E1D485C2400A5C852 /* merge.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66C61C57445B0010CB68 /* merge.h */; };
+		ADC5492F1D485C2400A5C852 /* decision_logic_fax.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66B11C57445B0010CB68 /* decision_logic_fax.h */; };
+		ADC549301D485C2400A5C852 /* buffer_level_filter.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A669D1C5743A60010CB68 /* buffer_level_filter.h */; };
+		ADC549311D485C2400A5C852 /* neteq_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66C81C57445B0010CB68 /* neteq_impl.h */; };
+		ADC549321D485C2400A5C852 /* time_stretch.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A67011C5744890010CB68 /* time_stretch.h */; };
+		ADC549331D485C2400A5C852 /* delay_peak_detector.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66BC1C57445B0010CB68 /* delay_peak_detector.h */; };
+		ADC549341D485C2400A5C852 /* delay_manager.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66BA1C57445B0010CB68 /* delay_manager.h */; };
+		ADC549351D485C2400A5C852 /* neteq.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A668E1C57051E0010CB68 /* neteq.h */; };
+		ADC549361D485C2400A5C852 /* audio_vector.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66991C5743A60010CB68 /* audio_vector.h */; };
+		ADC549371D485C2400A5C852 /* decision_logic.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66B51C57445B0010CB68 /* decision_logic.h */; };
+		ADC549381D485C2400A5C852 /* expand.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66C41C57445B0010CB68 /* expand.h */; };
+		ADC549391D485C2400A5C852 /* packet_buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66CD1C57445B0010CB68 /* packet_buffer.h */; };
+		ADC5493A1D485C2400A5C852 /* audio_classifier.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66931C5743A60010CB68 /* audio_classifier.h */; };
+		ADC5493B1D485C2400A5C852 /* defines.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66B81C57445B0010CB68 /* defines.h */; };
+		ADC5493C1D485C2400A5C852 /* comfort_noise.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A669F1C5743A60010CB68 /* comfort_noise.h */; };
+		ADC5493D1D485C2400A5C852 /* random_vector.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66F91C5744890010CB68 /* random_vector.h */; };
+		ADC5493E1D485C2400A5C852 /* statistics_calculator.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66FD1C5744890010CB68 /* statistics_calculator.h */; };
+		ADC5493F1D485C2400A5C852 /* preemptive_expand.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66F71C5744890010CB68 /* preemptive_expand.h */; };
+		ADC549401D485C2400A5C852 /* sync_buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66FF1C5744890010CB68 /* sync_buffer.h */; };
+		ADC549411D485C2400A5C852 /* audio_decoder_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66951C5743A60010CB68 /* audio_decoder_impl.h */; };
+		ADC549421D485C2400A5C852 /* dsp_helper.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66BE1C57445B0010CB68 /* dsp_helper.h */; };
+		ADC549431D485C2400A5C852 /* decoder_database.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66B71C57445B0010CB68 /* decoder_database.h */; };
+		ADC549441D485C2400A5C852 /* decision_logic_normal.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66B31C57445B0010CB68 /* decision_logic_normal.h */; };
+		ADC549451D485C2400A5C852 /* accelerate.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A66911C5743A60010CB68 /* accelerate.h */; };
+		ADC549461D485C2400A5C852 /* background_noise.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3A669B1C5743A60010CB68 /* background_noise.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -145,6 +212,7 @@
 		AD3A67011C5744890010CB68 /* time_stretch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = time_stretch.h; path = neteq/source/time_stretch.h; sourceTree = "<group>"; };
 		AD3A67021C5744890010CB68 /* timestamp_scaler.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = timestamp_scaler.cc; path = neteq/source/timestamp_scaler.cc; sourceTree = "<group>"; };
 		AD3A67031C5744890010CB68 /* timestamp_scaler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = timestamp_scaler.h; path = neteq/source/timestamp_scaler.h; sourceTree = "<group>"; };
+		ADC5494A1D485C2400A5C852 /* libNetEq_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libNetEq_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +221,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FAA8F1315C8D23300561C64 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADC549221D485C2400A5C852 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADC549231D485C2400A5C852 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,6 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				3FAA8F0F15C8D23300561C64 /* libNetEq.a */,
+				ADC5494A1D485C2400A5C852 /* libNetEq_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -309,6 +386,47 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ADC549241D485C2400A5C852 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADC549251D485C2400A5C852 /* audio_multi_vector.h in Headers */,
+				ADC549261D485C2400A5C852 /* timestamp_scaler.h in Headers */,
+				ADC549271D485C2400A5C852 /* dtmf_tone_generator.h in Headers */,
+				ADC549281D485C2400A5C852 /* dtmf_buffer.h in Headers */,
+				ADC549291D485C2400A5C852 /* normal.h in Headers */,
+				ADC5492A1D485C2400A5C852 /* post_decode_vad.h in Headers */,
+				ADC5492B1D485C2400A5C852 /* rtcp.h in Headers */,
+				ADC5492C1D485C2400A5C852 /* payload_splitter.h in Headers */,
+				ADC5492D1D485C2400A5C852 /* packet.h in Headers */,
+				ADC5492E1D485C2400A5C852 /* merge.h in Headers */,
+				ADC5492F1D485C2400A5C852 /* decision_logic_fax.h in Headers */,
+				ADC549301D485C2400A5C852 /* buffer_level_filter.h in Headers */,
+				ADC549311D485C2400A5C852 /* neteq_impl.h in Headers */,
+				ADC549321D485C2400A5C852 /* time_stretch.h in Headers */,
+				ADC549331D485C2400A5C852 /* delay_peak_detector.h in Headers */,
+				ADC549341D485C2400A5C852 /* delay_manager.h in Headers */,
+				ADC549351D485C2400A5C852 /* neteq.h in Headers */,
+				ADC549361D485C2400A5C852 /* audio_vector.h in Headers */,
+				ADC549371D485C2400A5C852 /* decision_logic.h in Headers */,
+				ADC549381D485C2400A5C852 /* expand.h in Headers */,
+				ADC549391D485C2400A5C852 /* packet_buffer.h in Headers */,
+				ADC5493A1D485C2400A5C852 /* audio_classifier.h in Headers */,
+				ADC5493B1D485C2400A5C852 /* defines.h in Headers */,
+				ADC5493C1D485C2400A5C852 /* comfort_noise.h in Headers */,
+				ADC5493D1D485C2400A5C852 /* random_vector.h in Headers */,
+				ADC5493E1D485C2400A5C852 /* statistics_calculator.h in Headers */,
+				ADC5493F1D485C2400A5C852 /* preemptive_expand.h in Headers */,
+				ADC549401D485C2400A5C852 /* sync_buffer.h in Headers */,
+				ADC549411D485C2400A5C852 /* audio_decoder_impl.h in Headers */,
+				ADC549421D485C2400A5C852 /* dsp_helper.h in Headers */,
+				ADC549431D485C2400A5C852 /* decoder_database.h in Headers */,
+				ADC549441D485C2400A5C852 /* decision_logic_normal.h in Headers */,
+				ADC549451D485C2400A5C852 /* accelerate.h in Headers */,
+				ADC549461D485C2400A5C852 /* background_noise.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -327,6 +445,23 @@
 			name = NetEq;
 			productName = NetEq;
 			productReference = 3FAA8F0F15C8D23300561C64 /* libNetEq.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		ADC549001D485C2400A5C852 /* NetEq_Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ADC549471D485C2400A5C852 /* Build configuration list for PBXNativeTarget "NetEq_Mac" */;
+			buildPhases = (
+				ADC549011D485C2400A5C852 /* Sources */,
+				ADC549221D485C2400A5C852 /* Frameworks */,
+				ADC549241D485C2400A5C852 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NetEq_Mac;
+			productName = NetEq;
+			productReference = ADC5494A1D485C2400A5C852 /* libNetEq_Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -351,6 +486,7 @@
 			projectRoot = "";
 			targets = (
 				3FAA8F0E15C8D23300561C64 /* NetEq */,
+				ADC549001D485C2400A5C852 /* NetEq_Mac */,
 			);
 		};
 /* End PBXProject section */
@@ -392,6 +528,45 @@
 				AD3A66DE1C57445B0010CB68 /* delay_peak_detector.cc in Sources */,
 				AD3A670E1C5744890010CB68 /* time_stretch.cc in Sources */,
 				AD3A66DC1C57445B0010CB68 /* delay_manager.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADC549011D485C2400A5C852 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADC549021D485C2400A5C852 /* normal.cc in Sources */,
+				ADC549031D485C2400A5C852 /* decision_logic_fax.cc in Sources */,
+				ADC549041D485C2400A5C852 /* dsp_helper.cc in Sources */,
+				ADC549051D485C2400A5C852 /* audio_vector.cc in Sources */,
+				ADC549061D485C2400A5C852 /* decision_logic.cc in Sources */,
+				ADC549071D485C2400A5C852 /* statistics_calculator.cc in Sources */,
+				ADC549081D485C2400A5C852 /* accelerate.cc in Sources */,
+				ADC549091D485C2400A5C852 /* background_noise.cc in Sources */,
+				ADC5490A1D485C2400A5C852 /* payload_splitter.cc in Sources */,
+				ADC5490B1D485C2400A5C852 /* merge.cc in Sources */,
+				ADC5490C1D485C2400A5C852 /* sync_buffer.cc in Sources */,
+				ADC5490D1D485C2400A5C852 /* neteq_impl.cc in Sources */,
+				ADC5490E1D485C2400A5C852 /* random_vector.cc in Sources */,
+				ADC5490F1D485C2400A5C852 /* preemptive_expand.cc in Sources */,
+				ADC549101D485C2400A5C852 /* dtmf_buffer.cc in Sources */,
+				ADC549111D485C2400A5C852 /* expand.cc in Sources */,
+				ADC549121D485C2400A5C852 /* decoder_database.cc in Sources */,
+				ADC549131D485C2400A5C852 /* comfort_noise.cc in Sources */,
+				ADC549141D485C2400A5C852 /* rtcp.cc in Sources */,
+				ADC549151D485C2400A5C852 /* audio_classifier.cc in Sources */,
+				ADC549161D485C2400A5C852 /* timestamp_scaler.cc in Sources */,
+				ADC549171D485C2400A5C852 /* audio_decoder_impl.cc in Sources */,
+				ADC549181D485C2400A5C852 /* audio_multi_vector.cc in Sources */,
+				ADC549191D485C2400A5C852 /* buffer_level_filter.cc in Sources */,
+				ADC5491A1D485C2400A5C852 /* packet_buffer.cc in Sources */,
+				ADC5491B1D485C2400A5C852 /* post_decode_vad.cc in Sources */,
+				ADC5491C1D485C2400A5C852 /* decision_logic_normal.cc in Sources */,
+				ADC5491D1D485C2400A5C852 /* neteq.cc in Sources */,
+				ADC5491E1D485C2400A5C852 /* dtmf_tone_generator.cc in Sources */,
+				ADC5491F1D485C2400A5C852 /* delay_peak_detector.cc in Sources */,
+				ADC549201D485C2400A5C852 /* time_stretch.cc in Sources */,
+				ADC549211D485C2400A5C852 /* delay_manager.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,6 +702,97 @@
 			};
 			name = Release;
 		};
+		ADC549481D485C2400A5C852 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/NetEq.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					WEBRTC_CODEC_OPUS,
+					WEBRTC_CODEC_G729,
+				);
+				HEADER_SEARCH_PATHS = (
+					../,
+					../interface,
+					../../module/common_audio/source/signal_processing/include,
+					codecs/cng/include,
+					../../system_wrappers/interface,
+					../../module/audio_coding/codecs,
+					../..,
+					../../module/audio_coding/codecs/ilbc/interface,
+					../../module/audio_coding/codecs/opus/interface,
+					../../module/common_audio/source/vad/include,
+					../../module/common_audio/source,
+					../../third_party/opus/src/celt/,
+					../../third_party/opus/src/include,
+					../../third_party/opus/src/src,
+					../../module/audio_coding/codecs/g711/include,
+					../../module/audio_coding/main/source/codecs/isac,
+					../../system_wrappers/source,
+					../../module/audio_coding/codecs/g729/interface,
+					../../module/audio_coding/codecs/g729/source,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../IOSProject/out/baselib;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Debug;
+		};
+		ADC549491D485C2400A5C852 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/NetEq.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					WEBRTC_CODEC_OPUS,
+					WEBRTC_CODEC_G729,
+				);
+				HEADER_SEARCH_PATHS = (
+					../,
+					../interface,
+					../../module/common_audio/source/signal_processing/include,
+					codecs/cng/include,
+					../../system_wrappers/interface,
+					../../module/audio_coding/codecs,
+					../..,
+					../../module/audio_coding/codecs/ilbc/interface,
+					../../module/audio_coding/codecs/opus/interface,
+					../../module/common_audio/source/vad/include,
+					../../module/common_audio/source,
+					../../third_party/opus/src/celt/,
+					../../third_party/opus/src/include,
+					../../third_party/opus/src/src,
+					../../module/audio_coding/codecs/g711/include,
+					../../module/audio_coding/main/source/codecs/isac,
+					../../system_wrappers/source,
+					../../module/audio_coding/codecs/g729/interface,
+					../../module/audio_coding/codecs/g729/source,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../IOSProject/out/baselib;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -544,6 +810,15 @@
 			buildConfigurations = (
 				3FAA8F1D15C8D23400561C64 /* Debug */,
 				3FAA8F1E15C8D23400561C64 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ADC549471D485C2400A5C852 /* Build configuration list for PBXNativeTarget "NetEq_Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADC549481D485C2400A5C852 /* Debug */,
+				ADC549491D485C2400A5C852 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

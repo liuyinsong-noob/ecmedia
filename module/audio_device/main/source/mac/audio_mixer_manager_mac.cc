@@ -8,8 +8,8 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "cloopenwebrtc/modules/audio_device/mac/audio_mixer_manager_mac.h"
-#include "cloopenwebrtc/system_wrappers/interface/trace.h"
+#include "module/audio_device/main/source/mac/audio_mixer_manager_mac.h"
+#include "trace.h"
 
 #include <unistd.h>             // getpid()
 

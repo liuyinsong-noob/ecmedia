@@ -7,14 +7,14 @@
  *  in the file PATENTS.  All contributing project authors may
  *  be found in the AUTHORS file in the root of the source tree.
  */
-
+#ifdef WEBRTC_MAC
 #ifndef WEBRTC_AUDIO_DEVICE_AUDIO_DEVICE_MAC_H
 #define WEBRTC_AUDIO_DEVICE_AUDIO_DEVICE_MAC_H
 
-#include "cloopenwebrtc/base/thread_annotations.h"
-#include "cloopenwebrtc/modules/audio_device/audio_device_generic.h"
-#include "cloopenwebrtc/modules/audio_device/mac/audio_mixer_manager_mac.h"
-#include "cloopenwebrtc/system_wrappers/interface/critical_section_wrapper.h"
+#include "thread_annotations.h"
+#include "module/audio_device/main/source/audio_device_generic.h"
+#include "module/audio_device/main/source/mac/audio_mixer_manager_mac.h"
+#include "system_wrappers/interface/critical_section_wrapper.h"
 
 #include <AudioToolbox/AudioConverter.h>
 #include <CoreAudio/CoreAudio.h>
@@ -381,3 +381,4 @@ private:
 }  // namespace webrtc
 
 #endif  // MODULES_AUDIO_DEVICE_MAIN_SOURCE_MAC_AUDIO_DEVICE_MAC_H_
+#endif

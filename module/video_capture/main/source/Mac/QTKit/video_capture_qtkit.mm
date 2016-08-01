@@ -41,7 +41,7 @@ VideoCaptureMacQTKit::VideoCaptureMacQTKit(const WebRtc_Word32 id) :
 VideoCaptureMacQTKit::~VideoCaptureMacQTKit()
 {
 
-    WEBRTC_TRACE(webrtc::kTraceDebug, webrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, _id,
                  "~VideoCaptureMacQTKit() called");
     if(_captureDevice)
     {
@@ -73,7 +73,7 @@ WebRtc_Word32 VideoCaptureMacQTKit::Init(
     _captureDevice = [[VideoCaptureMacQTKitObjC alloc] init];
     if(NULL == _captureDevice)
     {
-        WEBRTC_TRACE(webrtc::kTraceError, webrtc::kTraceVideoCapture, id,
+        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, id,
                      "Failed to create an instance of "
                      "VideoCaptureMacQTKitObjC");
         return -1;
@@ -81,7 +81,7 @@ WebRtc_Word32 VideoCaptureMacQTKit::Init(
 
     if(-1 == [[_captureDevice registerOwner:this]intValue])
     {
-        WEBRTC_TRACE(webrtc::kTraceError, webrtc::kTraceVideoCapture, id,
+        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, id,
                      "Failed to register owner for _captureDevice");
         return -1;
     }
@@ -95,14 +95,14 @@ WebRtc_Word32 VideoCaptureMacQTKit::Init(
     _captureInfo = [[VideoCaptureMacQTKitInfoObjC alloc]init];
     if(nil == _captureInfo)
     {
-        WEBRTC_TRACE(webrtc::kTraceError, webrtc::kTraceVideoCapture, id, "Failed to create an instance of VideoCaptureMacQTKitInfoObjC");
+        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, id, "Failed to create an instance of VideoCaptureMacQTKitInfoObjC");
         return -1;
     }
 
     int captureDeviceCount = [[_captureInfo getCaptureDeviceCount]intValue];
     if(captureDeviceCount < 0)
     {
-        WEBRTC_TRACE(webrtc::kTraceError, webrtc::kTraceVideoCapture, id,
+        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, id,
                      "No Capture Devices Present");
         return -1;
     }
@@ -124,7 +124,7 @@ WebRtc_Word32 VideoCaptureMacQTKit::Init(
                    AndProductID:deviceProductUniqueIDUTF8
                    WithLength:NAME_LENGTH]intValue])
         {
-            WEBRTC_TRACE(webrtc::kTraceError, webrtc::kTraceVideoCapture, _id,
+            WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
                          "GetDeviceName returned -1 for index %d", index);
             return -1;
         }
@@ -139,7 +139,7 @@ WebRtc_Word32 VideoCaptureMacQTKit::Init(
 
     if(false == captureDeviceFound)
     {
-        WEBRTC_TRACE(webrtc::kTraceInfo, webrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
                      "Failed to find capture device unique ID %s",
                      iDeviceUniqueIdUTF8);
         return -1;
@@ -151,14 +151,14 @@ WebRtc_Word32 VideoCaptureMacQTKit::Init(
                setCaptureDeviceById:(char*)deviceUniqueIdUTF8]intValue])
     {
         strcpy((char*)_deviceUniqueId, (char*)deviceUniqueIdUTF8);
-        WEBRTC_TRACE(webrtc::kTraceError, webrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
                      "Failed to set capture device %s (unique ID %s) even "
                      "though it was a valid return from "
                      "VideoCaptureMacQTKitInfo");
         return -1;
     }
 
-    WEBRTC_TRACE(webrtc::kTraceInfo, webrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
                  "successfully Init VideoCaptureMacQTKit" );
     return 0;
 }
@@ -174,7 +174,7 @@ WebRtc_Word32 VideoCaptureMacQTKit::StartCapture(
     if(-1 == [[_captureDevice setCaptureHeight:_captureHeight
                AndWidth:_captureWidth AndFrameRate:_captureFrameRate]intValue])
     {
-        WEBRTC_TRACE(webrtc::kTraceInfo, webrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
                      "Could not set width=%d height=%d frameRate=%d",
                      _captureWidth, _captureHeight, _captureFrameRate);
         return -1;
@@ -210,6 +210,11 @@ WebRtc_Word32 VideoCaptureMacQTKit::CaptureSettings(VideoCaptureCapability& sett
 }
 
 
+WebRtc_Word32 VideoCaptureMacQTKit::SetPreviewWindow(void* window)
+{
+    return [[_captureDevice setLocalVieoView:window] intValue];
+}
+
 // ********** begin functions inherited from DeviceInfoImpl **********
 
 struct VideoCaptureCapabilityMacQTKit:public VideoCaptureCapability
@@ -219,5 +224,5 @@ struct VideoCaptureCapabilityMacQTKit:public VideoCaptureCapability
     }
 };
 }  // namespace videocapturemodule
-}  // namespace webrtc
+}  // namespace cloopenwebrtc
 

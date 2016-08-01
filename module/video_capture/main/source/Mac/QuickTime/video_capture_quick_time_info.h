@@ -32,7 +32,7 @@ class EventWrapper;
 class ThreadWrapper;
 class Trace;
 
-class VideoCaptureMacQuickTimeInfo: public DeviceInfoImpl
+class VideoCaptureMacQuickTimeInfo: public videocapturemodule::DeviceInfoImpl
 {
 public:
 

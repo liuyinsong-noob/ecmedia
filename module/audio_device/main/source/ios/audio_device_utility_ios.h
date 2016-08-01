@@ -7,7 +7,7 @@
  *  in the file PATENTS.  All contributing project authors may
  *  be found in the AUTHORS file in the root of the source tree.
  */
-
+#ifdef WEBRTC_IOS
 #ifndef WEBRTC_AUDIO_DEVICE_AUDIO_DEVICE_UTILITY_IOS_H
 #define WEBRTC_AUDIO_DEVICE_AUDIO_DEVICE_UTILITY_IOS_H
 
@@ -34,3 +34,4 @@ class AudioDeviceUtilityIOS: public AudioDeviceUtility {
 }  // namespace webrtc
 
 #endif  // WEBRTC_AUDIO_DEVICE_AUDIO_DEVICE_UTILITY_IOS_H
+#endif

@@ -13,7 +13,6 @@
 
 #ifndef WEBRTC_MODULES_VIDEO_CAPTURE_MAIN_SOURCE_iOS_VIDEO_CAPTURE_DEVICE_INFO_OBJC_H_
 #define WEBRTC_MODULES_VIDEO_CAPTURE_MAIN_SOURCE_iOS_VIDEO_CAPTURE_DEVICE_INFO_OBJC_H_
-
 #import <Foundation/Foundation.h>
 #include "video_capture_iOS_utility.h"
 //#include "video_capture_qtkit_info.h"

@@ -861,7 +861,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 					/*codec_params.maxBitrate = min((m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps*4*0.07)/1000, kMaxVideoBitrate);
 					codec_params.minBitrate = max((m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps*1*0.07)/1000, kMinVideoBitrate);*/
 					codec_params.startBitrate = 300;
-					codec_params.maxBitrate = 1000;
+					codec_params.maxBitrate = 1500;
 				}
 
 				codec_params.width = m_sendVideoWidth;
@@ -1084,7 +1084,7 @@ int ServiceCore::startVideoCapture(SerPhoneCall *call)
 			cap.maxfps = m_maxFPS;
 
 			//capability_conf.hdvideo = 0; //for test, by ylr 
-			if(capability_conf.hdvideo) {
+//			if(capability_conf.hdvideo) {
 #ifdef WEBRTC_ANDROID
 				m_sendVideoWidth = cap.height;
 				m_sendVideoHeight = cap.width;
@@ -1093,7 +1093,7 @@ int ServiceCore::startVideoCapture(SerPhoneCall *call)
 				m_sendVideoHeight = cap.height;
 #endif
 				m_sendVideoFps = cap.maxfps;
-			}
+//			}
 
 			ECMediaRotateCapturedFrame tr = (ECMediaRotateCapturedFrame)m_camerRotate;
 			if(m_camerRotate == -1)  {
@@ -1191,7 +1191,7 @@ int ServiceCore::selectCamera(int cameraIndex, int capabilityIndex,int fps,int r
 				cap.width = cc.width;				
 				cap.maxfps = m_maxFPS; 
 
-				if(capability_conf.hdvideo) {
+//				if(capability_conf.hdvideo) {
 #ifdef WEBRTC_ANDROID
 					m_sendVideoWidth = cap.height;
 					m_sendVideoHeight = cap.width;
@@ -1200,7 +1200,7 @@ int ServiceCore::selectCamera(int cameraIndex, int capabilityIndex,int fps,int r
 					m_sendVideoHeight = cap.height;
 #endif
 					m_sendVideoFps = cap.maxfps;
-				}
+//				}
 
 				ECMediaRotateCapturedFrame tr = (ECMediaRotateCapturedFrame)m_camerRotate;
 				if(m_camerRotate == -1)  {

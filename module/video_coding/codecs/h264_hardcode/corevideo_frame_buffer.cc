@@ -44,7 +44,7 @@ CoreVideoFrameBuffer::NativeToI420Buffer() {
   const uint8_t* src_uv = static_cast<const uint8_t*>(
       CVPixelBufferGetBaseAddressOfPlane(pixel_buffer_, 1));
   size_t src_uv_stride = CVPixelBufferGetBytesPerRowOfPlane(pixel_buffer_, 1);
-  size_t ret = libyuv::NV12ToI420(
+  size_t ret = cloopenlibyuv::NV12ToI420(
       src_y, src_y_stride, src_uv, src_uv_stride,
       buffer->MutableData(kYPlane), buffer->stride(kYPlane),
       buffer->MutableData(kUPlane), buffer->stride(kUPlane),

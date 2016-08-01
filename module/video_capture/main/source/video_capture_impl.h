@@ -31,6 +31,9 @@ class VideoCaptureImpl: public VideoCaptureModule, public VideoCaptureExternal
 {
 public:
 
+//    
+//    static VideoCaptureModule* Create(
+//                                      const WebRtc_Word32 id, const char* deviceUniqueIdUTF8);
     /*
      *   Create a video capture module object
      *

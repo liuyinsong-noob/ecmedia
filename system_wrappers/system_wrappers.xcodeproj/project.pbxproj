@@ -72,6 +72,83 @@
 		55AE06A215C82F8000CE4CF5 /* trace_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AE065715C82F8000CE4CF5 /* trace_posix.h */; };
 		AD194FDD1C5B4477003841BB /* logging.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD194FDC1C5B4477003841BB /* logging.cc */; };
 		AD1950F81C5F281A003841BB /* checks.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD1950F71C5F281A003841BB /* checks.cc */; };
+		AD1F0BB51D47605300C33F53 /* aligned_malloc.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE061015C82F8000CE4CF5 /* aligned_malloc.cc */; };
+		AD1F0BB61D47605300C33F53 /* atomic32_mac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE061115C82F8000CE4CF5 /* atomic32_mac.cc */; };
+		AD1F0BB71D47605300C33F53 /* condition_variable_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE061415C82F8000CE4CF5 /* condition_variable_posix.cc */; };
+		AD1F0BB81D47605300C33F53 /* condition_variable.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE061815C82F8000CE4CF5 /* condition_variable.cc */; };
+		AD1F0BB91D47605300C33F53 /* cpu_features.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE061A15C82F8000CE4CF5 /* cpu_features.cc */; };
+		AD1F0BBA1D47605300C33F53 /* cpu_info.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE061B15C82F8000CE4CF5 /* cpu_info.cc */; };
+		AD1F0BBB1D47605300C33F53 /* event_tracer.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADDC7D811C5A190B00510E7D /* event_tracer.cc */; };
+		AD1F0BBC1D47605300C33F53 /* cpu.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE062615C82F8000CE4CF5 /* cpu.cc */; };
+		AD1F0BBD1D47605300C33F53 /* critical_section.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE062B15C82F8000CE4CF5 /* critical_section.cc */; };
+		AD1F0BBE1D47605300C33F53 /* data_log_c.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE062E15C82F8000CE4CF5 /* data_log_c.cc */; };
+		AD1F0BBF1D47605300C33F53 /* metrics_default.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD2E2A031C58C5AF00FD311B /* metrics_default.cc */; };
+		AD1F0BC01D47605300C33F53 /* data_log.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE063315C82F8000CE4CF5 /* data_log.cc */; };
+		AD1F0BC11D47605300C33F53 /* logging.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD194FDC1C5B4477003841BB /* logging.cc */; };
+		AD1F0BC21D47605300C33F53 /* platform_file.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADDC7D831C5A1FC900510E7D /* platform_file.cc */; };
+		AD1F0BC31D47605300C33F53 /* event_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE063415C82F8000CE4CF5 /* event_posix.cc */; };
+		AD1F0BC41D47605300C33F53 /* event.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE063815C82F8000CE4CF5 /* event.cc */; };
+		AD1F0BC51D47605300C33F53 /* field_trial_default.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D735F1C59B4AE00FB246D /* field_trial_default.cc */; };
+		AD1F0BC61D47605300C33F53 /* timeutils.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D73081C59A71900FB246D /* timeutils.cc */; };
+		AD1F0BC71D47605300C33F53 /* checks.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD1950F71C5F281A003841BB /* checks.cc */; };
+		AD1F0BC81D47605300C33F53 /* file_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE063915C82F8000CE4CF5 /* file_impl.cc */; };
+		AD1F0BC91D47605300C33F53 /* list_no_stl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE063B15C82F8000CE4CF5 /* list_no_stl.cc */; };
+		AD1F0BCA1D47605300C33F53 /* map.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE064315C82F8000CE4CF5 /* map.cc */; };
+		AD1F0BCB1D47605300C33F53 /* timestamp_extrapolator.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D73591C59B24800FB246D /* timestamp_extrapolator.cc */; };
+		AD1F0BCC1D47605300C33F53 /* rw_lock_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE064615C82F8000CE4CF5 /* rw_lock_posix.cc */; };
+		AD1F0BCD1D47605300C33F53 /* rw_lock.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE064A15C82F8000CE4CF5 /* rw_lock.cc */; };
+		AD1F0BCE1D47605300C33F53 /* sort.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE064C15C82F8000CE4CF5 /* sort.cc */; };
+		AD1F0BCF1D47605300C33F53 /* thread_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE064D15C82F8000CE4CF5 /* thread_posix.cc */; };
+		AD1F0BD01D47605300C33F53 /* thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE065215C82F8000CE4CF5 /* thread.cc */; };
+		AD1F0BD11D47605300C33F53 /* trace_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE065415C82F8000CE4CF5 /* trace_impl.cc */; };
+		AD1F0BD21D47605300C33F53 /* trace_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE065615C82F8000CE4CF5 /* trace_posix.cc */; };
+		AD1F0BD31D47605300C33F53 /* sleep.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D73571C59B19200FB246D /* sleep.cc */; };
+		AD1F0BD41D47605300C33F53 /* clock.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45E055951B0C8B6D00611475 /* clock.cc */; };
+		AD1F0BD51D47605300C33F53 /* cpu_mac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AD120215C88E67008A2BDA /* cpu_mac.cc */; };
+		AD1F0BD61D47605300C33F53 /* critical_section_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A85DCF15CAB63C00DC1ABE /* critical_section_posix.cc */; };
+		AD1F0BD71D47605300C33F53 /* rtp_to_ntp.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D735D1C59B2FA00FB246D /* rtp_to_ntp.cc */; };
+		AD1F0BD81D47605300C33F53 /* exp_filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D734E1C59AE7900FB246D /* exp_filter.cc */; };
+		AD1F0BDA1D47605300C33F53 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5519D05915C82C7E00719504 /* Foundation.framework */; };
+		AD1F0BDC1D47605300C33F53 /* aligned_malloc.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0A015C82D1600719504 /* aligned_malloc.h */; };
+		AD1F0BDD1D47605300C33F53 /* atomic32.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0A115C82D1600719504 /* atomic32.h */; };
+		AD1F0BDE1D47605300C33F53 /* compile_assert.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0A215C82D1600719504 /* compile_assert.h */; };
+		AD1F0BDF1D47605300C33F53 /* condition_variable_wrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0A315C82D1600719504 /* condition_variable_wrapper.h */; };
+		AD1F0BE01D47605300C33F53 /* cpu_features_wrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0A515C82D1600719504 /* cpu_features_wrapper.h */; };
+		AD1F0BE11D47605300C33F53 /* cpu_info.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0A615C82D1600719504 /* cpu_info.h */; };
+		AD1F0BE21D47605300C33F53 /* cpu_wrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0A715C82D1600719504 /* cpu_wrapper.h */; };
+		AD1F0BE31D47605300C33F53 /* critical_section_wrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0A815C82D1600719504 /* critical_section_wrapper.h */; };
+		AD1F0BE41D47605300C33F53 /* data_log.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0A915C82D1600719504 /* data_log.h */; };
+		AD1F0BE51D47605300C33F53 /* platform_file.h in Headers */ = {isa = PBXBuildFile; fileRef = ADDC7D841C5A1FC900510E7D /* platform_file.h */; };
+		AD1F0BE61D47605300C33F53 /* clock.h in Headers */ = {isa = PBXBuildFile; fileRef = 45E055971B0C8BEA00611475 /* clock.h */; };
+		AD1F0BE71D47605300C33F53 /* data_log_c.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0AA15C82D1600719504 /* data_log_c.h */; };
+		AD1F0BE81D47605300C33F53 /* timeutils.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8D73091C59A71900FB246D /* timeutils.h */; };
+		AD1F0BE91D47605300C33F53 /* data_log_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0AB15C82D1600719504 /* data_log_impl.h */; };
+		AD1F0BEA1D47605300C33F53 /* event_wrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0AC15C82D1600719504 /* event_wrapper.h */; };
+		AD1F0BEB1D47605300C33F53 /* file_wrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0AD15C82D1600719504 /* file_wrapper.h */; };
+		AD1F0BEC1D47605300C33F53 /* fix_interlocked_exchange_pointer_win.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0AE15C82D1600719504 /* fix_interlocked_exchange_pointer_win.h */; };
+		AD1F0BED1D47605300C33F53 /* checks.h in Headers */ = {isa = PBXBuildFile; fileRef = ADDC7D7E1C5A18D900510E7D /* checks.h */; };
+		AD1F0BEE1D47605300C33F53 /* list_wrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0AF15C82D1600719504 /* list_wrapper.h */; };
+		AD1F0BEF1D47605300C33F53 /* map_wrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0B015C82D1600719504 /* map_wrapper.h */; };
+		AD1F0BF01D47605300C33F53 /* ref_count.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0B115C82D1600719504 /* ref_count.h */; };
+		AD1F0BF11D47605300C33F53 /* rw_lock_wrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0B215C82D1600719504 /* rw_lock_wrapper.h */; };
+		AD1F0BF21D47605300C33F53 /* scoped_ptr.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0B315C82D1600719504 /* scoped_ptr.h */; };
+		AD1F0BF31D47605300C33F53 /* scoped_refptr.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0B415C82D1600719504 /* scoped_refptr.h */; };
+		AD1F0BF41D47605300C33F53 /* sort.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0B515C82D1600719504 /* sort.h */; };
+		AD1F0BF51D47605300C33F53 /* constructor_magic.h in Headers */ = {isa = PBXBuildFile; fileRef = 45E055981B0C8BEA00611475 /* constructor_magic.h */; };
+		AD1F0BF61D47605300C33F53 /* static_instance.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0B615C82D1600719504 /* static_instance.h */; };
+		AD1F0BF71D47605300C33F53 /* thread_wrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0B715C82D1600719504 /* thread_wrapper.h */; };
+		AD1F0BF81D47605300C33F53 /* tick_util.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0B815C82D1600719504 /* tick_util.h */; };
+		AD1F0BF91D47605300C33F53 /* trace.h in Headers */ = {isa = PBXBuildFile; fileRef = 5519D0B915C82D1700719504 /* trace.h */; };
+		AD1F0BFA1D47605300C33F53 /* condition_variable_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AE061515C82F8000CE4CF5 /* condition_variable_posix.h */; };
+		AD1F0BFB1D47605300C33F53 /* cpu_mac.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AE061F15C82F8000CE4CF5 /* cpu_mac.h */; };
+		AD1F0BFC1D47605300C33F53 /* event_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AE063515C82F8000CE4CF5 /* event_posix.h */; };
+		AD1F0BFD1D47605300C33F53 /* file_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AE063A15C82F8000CE4CF5 /* file_impl.h */; };
+		AD1F0BFE1D47605300C33F53 /* list_no_stl.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AE063C15C82F8000CE4CF5 /* list_no_stl.h */; };
+		AD1F0BFF1D47605300C33F53 /* rw_lock_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AE064715C82F8000CE4CF5 /* rw_lock_posix.h */; };
+		AD1F0C001D47605300C33F53 /* thread_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AE064E15C82F8000CE4CF5 /* thread_posix.h */; };
+		AD1F0C011D47605300C33F53 /* trace_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AE065515C82F8000CE4CF5 /* trace_impl.h */; };
+		AD1F0C021D47605300C33F53 /* trace_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AE065715C82F8000CE4CF5 /* trace_posix.h */; };
+		AD1F0C031D47605300C33F53 /* critical_section_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A85DD015CAB63C00DC1ABE /* critical_section_posix.h */; };
 		AD2E2A041C58C5AF00FD311B /* metrics_default.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD2E2A031C58C5AF00FD311B /* metrics_default.cc */; };
 		AD8D730A1C59A71900FB246D /* timeutils.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D73081C59A71900FB246D /* timeutils.cc */; };
 		AD8D730B1C59A71900FB246D /* timeutils.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8D73091C59A71900FB246D /* timeutils.h */; };
@@ -153,6 +230,7 @@
 		55AE065715C82F8000CE4CF5 /* trace_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trace_posix.h; sourceTree = "<group>"; };
 		AD194FDC1C5B4477003841BB /* logging.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = logging.cc; sourceTree = "<group>"; };
 		AD1950F71C5F281A003841BB /* checks.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = checks.cc; sourceTree = "<group>"; };
+		AD1F0C071D47605300C33F53 /* libsystem_wrappers_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libsystem_wrappers_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD2E2A031C58C5AF00FD311B /* metrics_default.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = metrics_default.cc; sourceTree = "<group>"; };
 		AD8D73081C59A71900FB246D /* timeutils.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = timeutils.cc; sourceTree = "<group>"; };
 		AD8D73091C59A71900FB246D /* timeutils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timeutils.h; sourceTree = "<group>"; };
@@ -176,6 +254,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AD1F0BD91D47605300C33F53 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD1F0BDA1D47605300C33F53 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -192,6 +278,7 @@
 			isa = PBXGroup;
 			children = (
 				5519D05615C82C7E00719504 /* libsystem_wrappers.a */,
+				AD1F0C071D47605300C33F53 /* libsystem_wrappers_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -353,6 +440,53 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AD1F0BDB1D47605300C33F53 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD1F0BDC1D47605300C33F53 /* aligned_malloc.h in Headers */,
+				AD1F0BDD1D47605300C33F53 /* atomic32.h in Headers */,
+				AD1F0BDE1D47605300C33F53 /* compile_assert.h in Headers */,
+				AD1F0BDF1D47605300C33F53 /* condition_variable_wrapper.h in Headers */,
+				AD1F0BE01D47605300C33F53 /* cpu_features_wrapper.h in Headers */,
+				AD1F0BE11D47605300C33F53 /* cpu_info.h in Headers */,
+				AD1F0BE21D47605300C33F53 /* cpu_wrapper.h in Headers */,
+				AD1F0BE31D47605300C33F53 /* critical_section_wrapper.h in Headers */,
+				AD1F0BE41D47605300C33F53 /* data_log.h in Headers */,
+				AD1F0BE51D47605300C33F53 /* platform_file.h in Headers */,
+				AD1F0BE61D47605300C33F53 /* clock.h in Headers */,
+				AD1F0BE71D47605300C33F53 /* data_log_c.h in Headers */,
+				AD1F0BE81D47605300C33F53 /* timeutils.h in Headers */,
+				AD1F0BE91D47605300C33F53 /* data_log_impl.h in Headers */,
+				AD1F0BEA1D47605300C33F53 /* event_wrapper.h in Headers */,
+				AD1F0BEB1D47605300C33F53 /* file_wrapper.h in Headers */,
+				AD1F0BEC1D47605300C33F53 /* fix_interlocked_exchange_pointer_win.h in Headers */,
+				AD1F0BED1D47605300C33F53 /* checks.h in Headers */,
+				AD1F0BEE1D47605300C33F53 /* list_wrapper.h in Headers */,
+				AD1F0BEF1D47605300C33F53 /* map_wrapper.h in Headers */,
+				AD1F0BF01D47605300C33F53 /* ref_count.h in Headers */,
+				AD1F0BF11D47605300C33F53 /* rw_lock_wrapper.h in Headers */,
+				AD1F0BF21D47605300C33F53 /* scoped_ptr.h in Headers */,
+				AD1F0BF31D47605300C33F53 /* scoped_refptr.h in Headers */,
+				AD1F0BF41D47605300C33F53 /* sort.h in Headers */,
+				AD1F0BF51D47605300C33F53 /* constructor_magic.h in Headers */,
+				AD1F0BF61D47605300C33F53 /* static_instance.h in Headers */,
+				AD1F0BF71D47605300C33F53 /* thread_wrapper.h in Headers */,
+				AD1F0BF81D47605300C33F53 /* tick_util.h in Headers */,
+				AD1F0BF91D47605300C33F53 /* trace.h in Headers */,
+				AD1F0BFA1D47605300C33F53 /* condition_variable_posix.h in Headers */,
+				AD1F0BFB1D47605300C33F53 /* cpu_mac.h in Headers */,
+				AD1F0BFC1D47605300C33F53 /* event_posix.h in Headers */,
+				AD1F0BFD1D47605300C33F53 /* file_impl.h in Headers */,
+				AD1F0BFE1D47605300C33F53 /* list_no_stl.h in Headers */,
+				AD1F0BFF1D47605300C33F53 /* rw_lock_posix.h in Headers */,
+				AD1F0C001D47605300C33F53 /* thread_posix.h in Headers */,
+				AD1F0C011D47605300C33F53 /* trace_impl.h in Headers */,
+				AD1F0C021D47605300C33F53 /* trace_posix.h in Headers */,
+				AD1F0C031D47605300C33F53 /* critical_section_posix.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -371,6 +505,23 @@
 			name = system_wrappers;
 			productName = system_wrappers;
 			productReference = 5519D05615C82C7E00719504 /* libsystem_wrappers.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		AD1F0BB31D47605300C33F53 /* system_wrappers_Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD1F0C041D47605300C33F53 /* Build configuration list for PBXNativeTarget "system_wrappers_Mac" */;
+			buildPhases = (
+				AD1F0BB41D47605300C33F53 /* Sources */,
+				AD1F0BD91D47605300C33F53 /* Frameworks */,
+				AD1F0BDB1D47605300C33F53 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = system_wrappers_Mac;
+			productName = system_wrappers;
+			productReference = AD1F0C071D47605300C33F53 /* libsystem_wrappers_Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -394,6 +545,7 @@
 			projectRoot = "";
 			targets = (
 				5519D05515C82C7E00719504 /* system_wrappers */,
+				AD1F0BB31D47605300C33F53 /* system_wrappers_Mac */,
 			);
 		};
 /* End PBXProject section */
@@ -439,6 +591,49 @@
 				55A85DD115CAB63C00DC1ABE /* critical_section_posix.cc in Sources */,
 				AD8D735E1C59B2FA00FB246D /* rtp_to_ntp.cc in Sources */,
 				AD8D734F1C59AE7900FB246D /* exp_filter.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD1F0BB41D47605300C33F53 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD1F0BB51D47605300C33F53 /* aligned_malloc.cc in Sources */,
+				AD1F0BB61D47605300C33F53 /* atomic32_mac.cc in Sources */,
+				AD1F0BB71D47605300C33F53 /* condition_variable_posix.cc in Sources */,
+				AD1F0BB81D47605300C33F53 /* condition_variable.cc in Sources */,
+				AD1F0BB91D47605300C33F53 /* cpu_features.cc in Sources */,
+				AD1F0BBA1D47605300C33F53 /* cpu_info.cc in Sources */,
+				AD1F0BBB1D47605300C33F53 /* event_tracer.cc in Sources */,
+				AD1F0BBC1D47605300C33F53 /* cpu.cc in Sources */,
+				AD1F0BBD1D47605300C33F53 /* critical_section.cc in Sources */,
+				AD1F0BBE1D47605300C33F53 /* data_log_c.cc in Sources */,
+				AD1F0BBF1D47605300C33F53 /* metrics_default.cc in Sources */,
+				AD1F0BC01D47605300C33F53 /* data_log.cc in Sources */,
+				AD1F0BC11D47605300C33F53 /* logging.cc in Sources */,
+				AD1F0BC21D47605300C33F53 /* platform_file.cc in Sources */,
+				AD1F0BC31D47605300C33F53 /* event_posix.cc in Sources */,
+				AD1F0BC41D47605300C33F53 /* event.cc in Sources */,
+				AD1F0BC51D47605300C33F53 /* field_trial_default.cc in Sources */,
+				AD1F0BC61D47605300C33F53 /* timeutils.cc in Sources */,
+				AD1F0BC71D47605300C33F53 /* checks.cc in Sources */,
+				AD1F0BC81D47605300C33F53 /* file_impl.cc in Sources */,
+				AD1F0BC91D47605300C33F53 /* list_no_stl.cc in Sources */,
+				AD1F0BCA1D47605300C33F53 /* map.cc in Sources */,
+				AD1F0BCB1D47605300C33F53 /* timestamp_extrapolator.cc in Sources */,
+				AD1F0BCC1D47605300C33F53 /* rw_lock_posix.cc in Sources */,
+				AD1F0BCD1D47605300C33F53 /* rw_lock.cc in Sources */,
+				AD1F0BCE1D47605300C33F53 /* sort.cc in Sources */,
+				AD1F0BCF1D47605300C33F53 /* thread_posix.cc in Sources */,
+				AD1F0BD01D47605300C33F53 /* thread.cc in Sources */,
+				AD1F0BD11D47605300C33F53 /* trace_impl.cc in Sources */,
+				AD1F0BD21D47605300C33F53 /* trace_posix.cc in Sources */,
+				AD1F0BD31D47605300C33F53 /* sleep.cc in Sources */,
+				AD1F0BD41D47605300C33F53 /* clock.cc in Sources */,
+				AD1F0BD51D47605300C33F53 /* cpu_mac.cc in Sources */,
+				AD1F0BD61D47605300C33F53 /* critical_section_posix.cc in Sources */,
+				AD1F0BD71D47605300C33F53 /* rtp_to_ntp.cc in Sources */,
+				AD1F0BD81D47605300C33F53 /* exp_filter.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -621,6 +816,144 @@
 			};
 			name = Release;
 		};
+		AD1F0C051D47605300C33F53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/system_wrappers.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"WEBRTC_SVNREVISION=\"n/a\"",
+					"_FILE_OFFSET_BITS=64",
+					NO_TCMALLOC,
+					DISABLE_NACL,
+					CHROMIUM_BUILD,
+					USE_PROPRIETARY_CODECS,
+					"ENABLE_GPU=1",
+					"USE_OPENSSL=1",
+					"ENABLE_EGLIMAGE=1",
+					"USE_SKIA=1",
+					WEBRTC_ARCH_ARM,
+					WEBRTC_DETECT_ARM_NEON,
+					WEBRTC_CLOCK_TYPE_REALTIME,
+					WEBRTC_THREAD_RR,
+					__STDC_FORMAT_MACROS,
+					"__GNU_SOURCE=1",
+					"USE_STLPORT=1",
+					"_STLP_USE_PTR_SPECIALIZATIONS=1",
+					HAVE_OFF64_T,
+					HAVE_SYS_UIO_H,
+					NVALGRIND,
+					"DYNAMIC_ANNOTATIONS_ENABLED=0",
+					WEBRTC_POSIX,
+					WEBRTC_MAC,
+					WEBRTC_RESTRICT_LOGGING,
+				);
+				HEADER_SEARCH_PATHS = (
+					../.,
+					../module/interface,
+					../module/.,
+					./source/spreadsortlib,
+					./interface,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SYMROOT = ../IOSProject/out/baselib;
+				VALID_ARCHS = "x86_64 i386";
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wendif-labels",
+					"-Wextra",
+					"-Wno-unused-parameter",
+					"-Wno-missing-field-initializers",
+					"-Wheader-hygiene",
+					"-Wno-char-subscripts",
+					"-Wno-unused-function",
+					"-Wno-unnamed-type-template-args",
+					"-Wno-c++11-extensions",
+					"-Wno-covered-switch-default",
+				);
+			};
+			name = Debug;
+		};
+		AD1F0C061D47605300C33F53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/system_wrappers.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"WEBRTC_SVNREVISION=\"n/a\"",
+					"_FILE_OFFSET_BITS=64",
+					NO_TCMALLOC,
+					DISABLE_NACL,
+					CHROMIUM_BUILD,
+					USE_PROPRIETARY_CODECS,
+					"ENABLE_GPU=1",
+					"USE_OPENSSL=1",
+					"ENABLE_EGLIMAGE=1",
+					"USE_SKIA=1",
+					WEBRTC_ARCH_ARM,
+					WEBRTC_DETECT_ARM_NEON,
+					WEBRTC_CLOCK_TYPE_REALTIME,
+					WEBRTC_THREAD_RR,
+					__STDC_FORMAT_MACROS,
+					"__GNU_SOURCE=1",
+					"USE_STLPORT=1",
+					"_STLP_USE_PTR_SPECIALIZATIONS=1",
+					HAVE_OFF64_T,
+					HAVE_SYS_UIO_H,
+					NVALGRIND,
+					"DYNAMIC_ANNOTATIONS_ENABLED=0",
+					WEBRTC_POSIX,
+					WEBRTC_RESTRICT_LOGGING,
+					WEBRTC_MAC,
+				);
+				HEADER_SEARCH_PATHS = (
+					../.,
+					../module/interface,
+					../module/.,
+					./source/spreadsortlib,
+					./interface,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SYMROOT = ../IOSProject/out/baselib;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "x86_64 i386";
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wendif-labels",
+					"-Wextra",
+					"-Wno-unused-parameter",
+					"-Wno-missing-field-initializers",
+					"-Wheader-hygiene",
+					"-Wno-char-subscripts",
+					"-Wno-unused-function",
+					"-Wno-unnamed-type-template-args",
+					"-Wno-c++11-extensions",
+					"-Wno-covered-switch-default",
+				);
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -638,6 +971,15 @@
 			buildConfigurations = (
 				5519D06415C82C7E00719504 /* Debug */,
 				5519D06515C82C7E00719504 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD1F0C041D47605300C33F53 /* Build configuration list for PBXNativeTarget "system_wrappers_Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD1F0C051D47605300C33F53 /* Debug */,
+				AD1F0C061D47605300C33F53 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -11,7 +11,8 @@
 #pragma mark **** imports/includes
 
 #import "video_capture_qtkit_info_objc.h"
-
+#import <AppKit/AppKit.h>
+#import <QTKit/QTKit.h>
 #include "trace.h"
 
 using namespace cloopenwebrtc;
@@ -19,7 +20,6 @@ using namespace cloopenwebrtc;
 #pragma mark **** hidden class interface
 
 @implementation VideoCaptureMacQTKitInfoObjC
-
 // ****************** over-written OS methods ***********************
 #pragma mark **** over-written OS methods
 

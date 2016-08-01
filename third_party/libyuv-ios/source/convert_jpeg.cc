@@ -16,7 +16,7 @@
 #endif
 
 #ifdef __cplusplus
-namespace libyuv {
+namespace cloopenlibyuv {
 extern "C" {
 #endif
 

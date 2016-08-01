@@ -13,7 +13,7 @@
 #include <string.h>  // For memchr.
 
 #ifdef __cplusplus
-namespace libyuv {
+namespace cloopenlibyuv {
 extern "C" {
 #endif
 

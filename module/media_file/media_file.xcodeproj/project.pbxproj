@@ -16,6 +16,15 @@
 		55AD157F15C8A275008A2BDA /* media_file_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AD157715C8A275008A2BDA /* media_file_impl.h */; };
 		55AD158015C8A275008A2BDA /* media_file_utility.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AD157815C8A275008A2BDA /* media_file_utility.cc */; };
 		55AD158115C8A275008A2BDA /* media_file_utility.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AD157915C8A275008A2BDA /* media_file_utility.h */; };
+		AD1F0E761D476AA400C33F53 /* avi_file.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AD157415C8A275008A2BDA /* avi_file.cc */; };
+		AD1F0E771D476AA400C33F53 /* media_file_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AD157615C8A275008A2BDA /* media_file_impl.cc */; };
+		AD1F0E781D476AA400C33F53 /* media_file_utility.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AD157815C8A275008A2BDA /* media_file_utility.cc */; };
+		AD1F0E7A1D476AA400C33F53 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55AD155F15C8A221008A2BDA /* Foundation.framework */; };
+		AD1F0E7C1D476AA400C33F53 /* media_file.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AD157115C8A275008A2BDA /* media_file.h */; };
+		AD1F0E7D1D476AA400C33F53 /* media_file_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AD157215C8A275008A2BDA /* media_file_defines.h */; };
+		AD1F0E7E1D476AA400C33F53 /* avi_file.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AD157515C8A275008A2BDA /* avi_file.h */; };
+		AD1F0E7F1D476AA400C33F53 /* media_file_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AD157715C8A275008A2BDA /* media_file_impl.h */; };
+		AD1F0E801D476AA400C33F53 /* media_file_utility.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AD157915C8A275008A2BDA /* media_file_utility.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +38,7 @@
 		55AD157715C8A275008A2BDA /* media_file_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = media_file_impl.h; sourceTree = "<group>"; };
 		55AD157815C8A275008A2BDA /* media_file_utility.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = media_file_utility.cc; sourceTree = "<group>"; };
 		55AD157915C8A275008A2BDA /* media_file_utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = media_file_utility.h; sourceTree = "<group>"; };
+		AD1F0E841D476AA400C33F53 /* libmedia_file_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libmedia_file_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +47,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				55AD156015C8A221008A2BDA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD1F0E791D476AA400C33F53 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD1F0E7A1D476AA400C33F53 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				55AD155C15C8A221008A2BDA /* libmedia_file.a */,
+				AD1F0E841D476AA400C33F53 /* libmedia_file_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -114,6 +133,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AD1F0E7B1D476AA400C33F53 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD1F0E7C1D476AA400C33F53 /* media_file.h in Headers */,
+				AD1F0E7D1D476AA400C33F53 /* media_file_defines.h in Headers */,
+				AD1F0E7E1D476AA400C33F53 /* avi_file.h in Headers */,
+				AD1F0E7F1D476AA400C33F53 /* media_file_impl.h in Headers */,
+				AD1F0E801D476AA400C33F53 /* media_file_utility.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -132,6 +163,23 @@
 			name = media_file;
 			productName = media_file;
 			productReference = 55AD155C15C8A221008A2BDA /* libmedia_file.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		AD1F0E741D476AA400C33F53 /* media_file_Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD1F0E811D476AA400C33F53 /* Build configuration list for PBXNativeTarget "media_file_Mac" */;
+			buildPhases = (
+				AD1F0E751D476AA400C33F53 /* Sources */,
+				AD1F0E791D476AA400C33F53 /* Frameworks */,
+				AD1F0E7B1D476AA400C33F53 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = media_file_Mac;
+			productName = media_file;
+			productReference = AD1F0E841D476AA400C33F53 /* libmedia_file_Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -155,6 +203,7 @@
 			projectRoot = "";
 			targets = (
 				55AD155B15C8A221008A2BDA /* media_file */,
+				AD1F0E741D476AA400C33F53 /* media_file_Mac */,
 			);
 		};
 /* End PBXProject section */
@@ -167,6 +216,16 @@
 				55AD157C15C8A275008A2BDA /* avi_file.cc in Sources */,
 				55AD157E15C8A275008A2BDA /* media_file_impl.cc in Sources */,
 				55AD158015C8A275008A2BDA /* media_file_utility.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD1F0E751D476AA400C33F53 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD1F0E761D476AA400C33F53 /* avi_file.cc in Sources */,
+				AD1F0E771D476AA400C33F53 /* media_file_impl.cc in Sources */,
+				AD1F0E781D476AA400C33F53 /* media_file_utility.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +380,120 @@
 			};
 			name = Release;
 		};
+		AD1F0E821D476AA400C33F53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/media_file.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"WEBRTC_SVNREVISION=\"n/a\"",
+					"_FILE_OFFSET_BITS=64",
+					NO_TCMALLOC,
+					DISABLE_NACL,
+					CHROMIUM_BUILD,
+					USE_PROPRIETARY_CODECS,
+					"ENABLE_GPU=1",
+					"USE_OPENSSL=1",
+					"ENABLE_EGLIMAGE=1",
+					"USE_SKIA=1",
+					WEBRTC_MAC,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_DETECT_ARM_NEON,
+					WEBRTC_CLOCK_TYPE_REALTIME,
+					WEBRTC_THREAD_RR,
+					WEBRTC_MODULE_UTILITY_VIDEO,
+					__STDC_FORMAT_MACROS,
+					"__GNU_SOURCE=1",
+					"USE_STLPORT=1",
+					"_STLP_USE_PTR_SPECIALIZATIONS=1",
+					HAVE_OFF64_T,
+					HAVE_SYS_UIO_H,
+					NVALGRIND,
+					"DYNAMIC_ANNOTATIONS_ENABLED=0",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
+				HEADER_SEARCH_PATHS = (
+					../../.,
+					../interface,
+					../,
+					../../system_wrappers/interface,
+					./include,
+					./source,
+					../utility/include,
+					../audio_coding/main/include,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../IOSProject/out/baselib;
+			};
+			name = Debug;
+		};
+		AD1F0E831D476AA400C33F53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/media_file.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"WEBRTC_SVNREVISION=\"n/a\"",
+					"_FILE_OFFSET_BITS=64",
+					NO_TCMALLOC,
+					DISABLE_NACL,
+					CHROMIUM_BUILD,
+					USE_PROPRIETARY_CODECS,
+					"ENABLE_GPU=1",
+					"USE_OPENSSL=1",
+					"ENABLE_EGLIMAGE=1",
+					"USE_SKIA=1",
+					WEBRTC_MAC,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_DETECT_ARM_NEON,
+					WEBRTC_CLOCK_TYPE_REALTIME,
+					WEBRTC_THREAD_RR,
+					WEBRTC_MODULE_UTILITY_VIDEO,
+					__STDC_FORMAT_MACROS,
+					"__GNU_SOURCE=1",
+					"USE_STLPORT=1",
+					"_STLP_USE_PTR_SPECIALIZATIONS=1",
+					HAVE_OFF64_T,
+					HAVE_SYS_UIO_H,
+					NVALGRIND,
+					"DYNAMIC_ANNOTATIONS_ENABLED=0",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
+				HEADER_SEARCH_PATHS = (
+					../../.,
+					../interface,
+					../,
+					../../system_wrappers/interface,
+					./include,
+					./source,
+					../utility/include,
+					../audio_coding/main/include,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../IOSProject/out/baselib;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -338,6 +511,15 @@
 			buildConfigurations = (
 				55AD156A15C8A221008A2BDA /* Debug */,
 				55AD156B15C8A221008A2BDA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD1F0E811D476AA400C33F53 /* Build configuration list for PBXNativeTarget "media_file_Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD1F0E821D476AA400C33F53 /* Debug */,
+				AD1F0E831D476AA400C33F53 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

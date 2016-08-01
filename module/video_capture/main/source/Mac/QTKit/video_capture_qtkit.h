@@ -59,6 +59,7 @@ public:
     virtual bool CaptureStarted();
 
     WebRtc_Word32 CaptureSettings(VideoCaptureCapability& settings);
+    WebRtc_Word32 SetPreviewWindow(void* window);
 
 protected:
     // Help functions

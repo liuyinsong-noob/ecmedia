@@ -6,7 +6,6 @@
 //
 //
 #import "video_capture_iOS.h"
-
 @class VideoCaptureiOSObjC;
 @class ECIOSCaptureCCP;
 

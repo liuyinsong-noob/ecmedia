@@ -7,15 +7,15 @@
  *  in the file PATENTS.  All contributing project authors may
  *  be found in the AUTHORS file in the root of the source tree.
  */
+#ifdef WEBRTC_MAC
+#include "module/audio_device/main/source/audio_device_config.h"
+#include "module/audio_device/main/source/audio_device_utility.h"
+#include "module/audio_device/main/source/mac/audio_device_mac.h"
 
-#include "cloopenwebrtc/modules/audio_device/audio_device_config.h"
-#include "cloopenwebrtc/modules/audio_device/audio_device_utility.h"
-#include "cloopenwebrtc/modules/audio_device/mac/audio_device_mac.h"
-
-#include "cloopenwebrtc/modules/audio_device/mac/portaudio/pa_ringbuffer.h"
-#include "cloopenwebrtc/system_wrappers/interface/event_wrapper.h"
-#include "cloopenwebrtc/system_wrappers/interface/thread_wrapper.h"
-#include "cloopenwebrtc/system_wrappers/interface/trace.h"
+#include "module/audio_device/main/source/mac/portaudio/pa_ringbuffer.h"
+#include "system_wrappers/interface/event_wrapper.h"
+#include "system_wrappers/interface/thread_wrapper.h"
+#include "system_wrappers/interface/trace.h"
 
 #include <ApplicationServices/ApplicationServices.h>
 #include <assert.h>
@@ -3278,3 +3278,4 @@ bool AudioDeviceMac::KeyPressed() {
   return key_down;
 }
 }  // namespace webrtc
+#endif

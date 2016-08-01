@@ -15,7 +15,7 @@
 #include "libyuv/rotate.h"
 
 #ifdef __cplusplus
-namespace libyuv {
+namespace cloopenlibyuv {
 extern "C" {
 #endif
 

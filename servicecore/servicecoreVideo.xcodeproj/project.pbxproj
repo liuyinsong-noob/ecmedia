@@ -64,13 +64,9 @@
 		55F73F4F16FAB3A7008A2F8D /* CCPClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 554AD6A016FAB0F20084F686 /* CCPClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AD01998C1D237128003C2BB9 /* libexosip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD01998B1D23711E003C2BB9 /* libexosip.a */; };
 		AD01998D1D237130003C2BB9 /* libosip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0199851D23710D003C2BB9 /* libosip.a */; };
-		AD01998F1D2371AE003C2BB9 /* libortp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD01998E1D2371AE003C2BB9 /* libortp.a */; };
-		AD0199971D2372D4003C2BB9 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0199961D2372D4003C2BB9 /* libcrypto.a */; };
-		AD0199981D23730D003C2BB9 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0199941D237299003C2BB9 /* libssl.a */; };
 		AD0199AD1D239472003C2BB9 /* sometools.h in Headers */ = {isa = PBXBuildFile; fileRef = AD0199AC1D239472003C2BB9 /* sometools.h */; };
 		AD0199AF1D239480003C2BB9 /* sometools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD0199AE1D239480003C2BB9 /* sometools.cpp */; };
 		AD0199B91D239A21003C2BB9 /* libECMedia.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0199571D23648B003C2BB9 /* libECMedia.a */; };
-		AD42CD6E1D23D811009C2E7A /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0199901D2371FD003C2BB9 /* libsrtp.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -185,10 +181,6 @@
 		AD0199341D23648A003C2BB9 /* ECMedia.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ECMedia.xcodeproj; path = ../ECMedia/ECMedia/ECMedia.xcodeproj; sourceTree = "<group>"; };
 		AD0199801D23710D003C2BB9 /* osip.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = osip.xcodeproj; path = ../module/osip/osip.xcodeproj; sourceTree = "<group>"; };
 		AD0199861D23711E003C2BB9 /* exosip.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = exosip.xcodeproj; path = ../module/exosip/exosip.xcodeproj; sourceTree = "<group>"; };
-		AD01998E1D2371AE003C2BB9 /* libortp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libortp.a; sourceTree = "<group>"; };
-		AD0199901D2371FD003C2BB9 /* libsrtp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsrtp.a; sourceTree = "<group>"; };
-		AD0199941D237299003C2BB9 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
-		AD0199961D2372D4003C2BB9 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		AD0199AC1D239472003C2BB9 /* sometools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sometools.h; sourceTree = "<group>"; };
 		AD0199AE1D239480003C2BB9 /* sometools.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sometools.cpp; sourceTree = "<group>"; };
 		AD194FB41C5B3F85003841BB /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -200,11 +192,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD42CD6E1D23D811009C2E7A /* libsrtp.a in Frameworks */,
 				AD0199B91D239A21003C2BB9 /* libECMedia.a in Frameworks */,
-				AD0199981D23730D003C2BB9 /* libssl.a in Frameworks */,
-				AD0199971D2372D4003C2BB9 /* libcrypto.a in Frameworks */,
-				AD01998F1D2371AE003C2BB9 /* libortp.a in Frameworks */,
 				AD01998D1D237130003C2BB9 /* libosip.a in Frameworks */,
 				AD01998C1D237128003C2BB9 /* libexosip.a in Frameworks */,
 				55A7511315C8CAB9001B246A /* Foundation.framework in Frameworks */,
@@ -332,10 +320,6 @@
 		55A7511115C8CAB9001B246A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AD0199961D2372D4003C2BB9 /* libcrypto.a */,
-				AD0199941D237299003C2BB9 /* libssl.a */,
-				AD0199901D2371FD003C2BB9 /* libsrtp.a */,
-				AD01998E1D2371AE003C2BB9 /* libortp.a */,
 				AD194FB61C5B3F90003841BB /* libc++.tbd */,
 				AD194FB41C5B3F85003841BB /* libz.tbd */,
 				55A7511215C8CAB9001B246A /* Foundation.framework */,

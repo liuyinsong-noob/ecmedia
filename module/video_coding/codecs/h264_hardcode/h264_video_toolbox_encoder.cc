@@ -176,7 +176,7 @@ bool CopyVideoFrameToPixelBuffer(const cloopenwebrtc::I420VideoFrame& frame,
       CVPixelBufferGetBaseAddressOfPlane(pixel_buffer, 1));
   size_t dst_stride_uv = CVPixelBufferGetBytesPerRowOfPlane(pixel_buffer, 1);
   // Convert I420 to NV12.
-    int ret = libyuv::I420ToNV12(
+    int ret = cloopenlibyuv::I420ToNV12(
       frame.buffer(cloopenwebrtc::kYPlane), frame.stride(cloopenwebrtc::kYPlane),
       frame.buffer(cloopenwebrtc::kUPlane), frame.stride(cloopenwebrtc::kUPlane),
       frame.buffer(cloopenwebrtc::kVPlane), frame.stride(cloopenwebrtc::kVPlane), dst_y,

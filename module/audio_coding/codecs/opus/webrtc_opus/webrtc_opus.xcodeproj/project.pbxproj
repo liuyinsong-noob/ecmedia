@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		AD838C401D420E8800050E87 /* libopus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADDC7D791C5A170E00510E7D /* libopus.a */; };
+		ADC548331D485C1100A5C852 /* opus_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = ADDC7D2D1C5A145D00510E7D /* opus_interface.c */; };
+		ADC548341D485C1100A5C852 /* audio_encoder_opus.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADDC7D291C5A145D00510E7D /* audio_encoder_opus.cc */; };
+		ADC54A5B1D485DF300A5C852 /* libopus_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC54A581D485D6800A5C852 /* libopus_Mac.a */; };
 		ADDC7D2E1C5A145D00510E7D /* audio_encoder_opus.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADDC7D291C5A145D00510E7D /* audio_encoder_opus.cc */; };
 		ADDC7D2F1C5A145D00510E7D /* opus_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = ADDC7D2D1C5A145D00510E7D /* opus_interface.c */; };
 /* End PBXBuildFile section */
@@ -20,6 +23,20 @@
 			remoteGlobalIDString = AD8D73AD1C59FC5300FB246D;
 			remoteInfo = opus;
 		};
+		ADC54A571D485D6800A5C852 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ADDC7D741C5A170D00510E7D /* opus.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ADC54A551D485CFB00A5C852;
+			remoteInfo = opus_Mac;
+		};
+		ADC54A591D485D6A00A5C852 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ADDC7D741C5A170D00510E7D /* opus.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = ADC549CD1D485CFB00A5C852;
+			remoteInfo = opus_Mac;
+		};
 		ADDC7D781C5A170E00510E7D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ADDC7D741C5A170D00510E7D /* opus.xcodeproj */;
@@ -30,6 +47,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		ADC548371D485C1100A5C852 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ADDC7D1B1C5A142900510E7D /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -42,6 +68,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		ADC5483B1D485C1100A5C852 /* libwebrtc_opus_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_opus_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADDC7D1D1C5A142900510E7D /* libwebrtc_opus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_opus.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADDC7D291C5A145D00510E7D /* audio_encoder_opus.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = audio_encoder_opus.cc; path = ../../audio_encoder_opus.cc; sourceTree = "<group>"; };
 		ADDC7D2A1C5A145D00510E7D /* audio_encoder_opus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audio_encoder_opus.h; path = ../../interface/audio_encoder_opus.h; sourceTree = "<group>"; };
@@ -52,6 +79,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		ADC548351D485C1100A5C852 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADC54A5B1D485DF300A5C852 /* libopus_Mac.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ADDC7D1A1C5A142900510E7D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -76,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				ADDC7D1D1C5A142900510E7D /* libwebrtc_opus.a */,
+				ADC5483B1D485C1100A5C852 /* libwebrtc_opus_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -96,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				ADDC7D791C5A170E00510E7D /* libopus.a */,
+				ADC54A581D485D6800A5C852 /* libopus_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -103,6 +140,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		ADC5482F1D485C1100A5C852 /* webrtc_opus_Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ADC548381D485C1100A5C852 /* Build configuration list for PBXNativeTarget "webrtc_opus_Mac" */;
+			buildPhases = (
+				ADC548321D485C1100A5C852 /* Sources */,
+				ADC548351D485C1100A5C852 /* Frameworks */,
+				ADC548371D485C1100A5C852 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ADC54A5A1D485D6A00A5C852 /* PBXTargetDependency */,
+			);
+			name = webrtc_opus_Mac;
+			productName = webrtc_opus;
+			productReference = ADC5483B1D485C1100A5C852 /* libwebrtc_opus_Mac.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		ADDC7D1C1C5A142900510E7D /* webrtc_opus */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = ADDC7D261C5A142900510E7D /* Build configuration list for PBXNativeTarget "webrtc_opus" */;
@@ -154,11 +209,19 @@
 			projectRoot = "";
 			targets = (
 				ADDC7D1C1C5A142900510E7D /* webrtc_opus */,
+				ADC5482F1D485C1100A5C852 /* webrtc_opus_Mac */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		ADC54A581D485D6800A5C852 /* libopus_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libopus_Mac.a;
+			remoteRef = ADC54A571D485D6800A5C852 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		ADDC7D791C5A170E00510E7D /* libopus.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -169,6 +232,15 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
+		ADC548321D485C1100A5C852 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADC548331D485C1100A5C852 /* opus_interface.c in Sources */,
+				ADC548341D485C1100A5C852 /* audio_encoder_opus.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ADDC7D191C5A142900510E7D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -186,9 +258,53 @@
 			name = opus;
 			targetProxy = AD860FD21C86DF7300DEAC0C /* PBXContainerItemProxy */;
 		};
+		ADC54A5A1D485D6A00A5C852 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = opus_Mac;
+			targetProxy = ADC54A591D485D6A00A5C852 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		ADC548391D485C1100A5C852 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				HEADER_SEARCH_PATHS = (
+					../../../..,
+					../..,
+					../../../../common_audio/source,
+					../../../../../third_party/opus/src/include,
+					../../../../../system_wrappers/source,
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Debug;
+		};
+		ADC5483A1D485C1100A5C852 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				HEADER_SEARCH_PATHS = (
+					../../../..,
+					../..,
+					../../../../common_audio/source,
+					../../../../../third_party/opus/src/include,
+					../../../../../system_wrappers/source,
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Release;
+		};
 		ADDC7D241C5A142900510E7D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -309,6 +425,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		ADC548381D485C1100A5C852 /* Build configuration list for PBXNativeTarget "webrtc_opus_Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADC548391D485C1100A5C852 /* Debug */,
+				ADC5483A1D485C1100A5C852 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		ADDC7D181C5A142900510E7D /* Build configuration list for PBXProject "webrtc_opus" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

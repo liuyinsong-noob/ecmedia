@@ -16,7 +16,7 @@
 #include "libyuv/rotate.h"  // For enum RotationMode.
 
 #ifdef __cplusplus
-namespace libyuv {
+namespace cloopenlibyuv {
 extern "C" {
 #endif
 

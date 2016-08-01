@@ -33,10 +33,45 @@
 		3FB2BAF31659FE1D00A49E13 /* qLSP2LP.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BADA1659FE1D00A49E13 /* qLSP2LP.c */; };
 		3FB2BAF41659FE1D00A49E13 /* utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BADB1659FE1D00A49E13 /* utils.c */; };
 		AD48BA921C76C0B200DD1F2E /* wavfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD48BA901C76C0B200DD1F2E /* wavfile.cpp */; };
+		ADC549AD1D485C5000A5C852 /* adaptativeCodebookSearch.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BAC31659FE1D00A49E13 /* adaptativeCodebookSearch.c */; };
+		ADC549AE1D485C5000A5C852 /* codebooks.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BAC51659FE1D00A49E13 /* codebooks.c */; };
+		ADC549AF1D485C5000A5C852 /* computeAdaptativeCodebookGain.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BAC61659FE1D00A49E13 /* computeAdaptativeCodebookGain.c */; };
+		ADC549B01D485C5000A5C852 /* computeLP.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BAC71659FE1D00A49E13 /* computeLP.c */; };
+		ADC549B11D485C5000A5C852 /* computeWeightedSpeech.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BAC81659FE1D00A49E13 /* computeWeightedSpeech.c */; };
+		ADC549B21D485C5000A5C852 /* decodeAdaptativeCodeVector.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BAC91659FE1D00A49E13 /* decodeAdaptativeCodeVector.c */; };
+		ADC549B31D485C5000A5C852 /* decodeFixedCodeVector.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BACA1659FE1D00A49E13 /* decodeFixedCodeVector.c */; };
+		ADC549B41D485C5000A5C852 /* decodeGains.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BACB1659FE1D00A49E13 /* decodeGains.c */; };
+		ADC549B51D485C5000A5C852 /* decodeLSP.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BACC1659FE1D00A49E13 /* decodeLSP.c */; };
+		ADC549B61D485C5000A5C852 /* decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BACD1659FE1D00A49E13 /* decoder.c */; };
+		ADC549B71D485C5000A5C852 /* wavfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD48BA901C76C0B200DD1F2E /* wavfile.cpp */; };
+		ADC549B81D485C5000A5C852 /* encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BACE1659FE1D00A49E13 /* encoder.c */; };
+		ADC549B91D485C5000A5C852 /* findOpenLoopPitchDelay.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BACF1659FE1D00A49E13 /* findOpenLoopPitchDelay.c */; };
+		ADC549BA1D485C5000A5C852 /* fixedCodebookSearch.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BAD01659FE1D00A49E13 /* fixedCodebookSearch.c */; };
+		ADC549BB1D485C5000A5C852 /* g729_interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BAD11659FE1D00A49E13 /* g729_interface.cpp */; };
+		ADC549BC1D485C5000A5C852 /* gainQuantization.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BAD21659FE1D00A49E13 /* gainQuantization.c */; };
+		ADC549BD1D485C5000A5C852 /* interpolateqLSP.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BAD31659FE1D00A49E13 /* interpolateqLSP.c */; };
+		ADC549BE1D485C5000A5C852 /* LP2LSPConversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BAD41659FE1D00A49E13 /* LP2LSPConversion.c */; };
+		ADC549BF1D485C5000A5C852 /* LPSynthesisFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BAD51659FE1D00A49E13 /* LPSynthesisFilter.c */; };
+		ADC549C01D485C5000A5C852 /* LSPQuantization.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BAD61659FE1D00A49E13 /* LSPQuantization.c */; };
+		ADC549C11D485C5000A5C852 /* postFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BAD71659FE1D00A49E13 /* postFilter.c */; };
+		ADC549C21D485C5000A5C852 /* postProcessing.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BAD81659FE1D00A49E13 /* postProcessing.c */; };
+		ADC549C31D485C5000A5C852 /* preProcessing.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BAD91659FE1D00A49E13 /* preProcessing.c */; };
+		ADC549C41D485C5000A5C852 /* qLSP2LP.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BADA1659FE1D00A49E13 /* qLSP2LP.c */; };
+		ADC549C51D485C5000A5C852 /* utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FB2BADB1659FE1D00A49E13 /* utils.c */; };
+		ADC549C71D485C5000A5C852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FB2BA891659E5E200A49E13 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		3FB2BA841659E5E200A49E13 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADC549C81D485C5000A5C852 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/${PRODUCT_NAME}";
@@ -106,6 +141,7 @@
 		3FB2BADB1659FE1D00A49E13 /* utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = utils.c; sourceTree = "<group>"; };
 		AD48BA901C76C0B200DD1F2E /* wavfile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wavfile.cpp; sourceTree = "<group>"; };
 		AD48BA911C76C0B200DD1F2E /* wavfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wavfile.h; sourceTree = "<group>"; };
+		ADC549CC1D485C5000A5C852 /* libG729_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libG729_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +150,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FB2BA8A1659E5E200A49E13 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADC549C61D485C5000A5C852 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADC549C71D485C5000A5C852 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				3FB2BA861659E5E200A49E13 /* libG729.a */,
+				ADC549CC1D485C5000A5C852 /* libG729_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -255,6 +300,23 @@
 			productReference = 3FB2BA861659E5E200A49E13 /* libG729.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		ADC549AB1D485C5000A5C852 /* G729_Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ADC549C91D485C5000A5C852 /* Build configuration list for PBXNativeTarget "G729_Mac" */;
+			buildPhases = (
+				ADC549AC1D485C5000A5C852 /* Sources */,
+				ADC549C61D485C5000A5C852 /* Frameworks */,
+				ADC549C81D485C5000A5C852 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = G729_Mac;
+			productName = G729;
+			productReference = ADC549CC1D485C5000A5C852 /* libG729_Mac.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -277,6 +339,7 @@
 			projectRoot = "";
 			targets = (
 				3FB2BA851659E5E200A49E13 /* G729 */,
+				ADC549AB1D485C5000A5C852 /* G729_Mac */,
 			);
 		};
 /* End PBXProject section */
@@ -311,6 +374,38 @@
 				3FB2BAF21659FE1D00A49E13 /* preProcessing.c in Sources */,
 				3FB2BAF31659FE1D00A49E13 /* qLSP2LP.c in Sources */,
 				3FB2BAF41659FE1D00A49E13 /* utils.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADC549AC1D485C5000A5C852 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADC549AD1D485C5000A5C852 /* adaptativeCodebookSearch.c in Sources */,
+				ADC549AE1D485C5000A5C852 /* codebooks.c in Sources */,
+				ADC549AF1D485C5000A5C852 /* computeAdaptativeCodebookGain.c in Sources */,
+				ADC549B01D485C5000A5C852 /* computeLP.c in Sources */,
+				ADC549B11D485C5000A5C852 /* computeWeightedSpeech.c in Sources */,
+				ADC549B21D485C5000A5C852 /* decodeAdaptativeCodeVector.c in Sources */,
+				ADC549B31D485C5000A5C852 /* decodeFixedCodeVector.c in Sources */,
+				ADC549B41D485C5000A5C852 /* decodeGains.c in Sources */,
+				ADC549B51D485C5000A5C852 /* decodeLSP.c in Sources */,
+				ADC549B61D485C5000A5C852 /* decoder.c in Sources */,
+				ADC549B71D485C5000A5C852 /* wavfile.cpp in Sources */,
+				ADC549B81D485C5000A5C852 /* encoder.c in Sources */,
+				ADC549B91D485C5000A5C852 /* findOpenLoopPitchDelay.c in Sources */,
+				ADC549BA1D485C5000A5C852 /* fixedCodebookSearch.c in Sources */,
+				ADC549BB1D485C5000A5C852 /* g729_interface.cpp in Sources */,
+				ADC549BC1D485C5000A5C852 /* gainQuantization.c in Sources */,
+				ADC549BD1D485C5000A5C852 /* interpolateqLSP.c in Sources */,
+				ADC549BE1D485C5000A5C852 /* LP2LSPConversion.c in Sources */,
+				ADC549BF1D485C5000A5C852 /* LPSynthesisFilter.c in Sources */,
+				ADC549C01D485C5000A5C852 /* LSPQuantization.c in Sources */,
+				ADC549C11D485C5000A5C852 /* postFilter.c in Sources */,
+				ADC549C21D485C5000A5C852 /* postProcessing.c in Sources */,
+				ADC549C31D485C5000A5C852 /* preProcessing.c in Sources */,
+				ADC549C41D485C5000A5C852 /* qLSP2LP.c in Sources */,
+				ADC549C51D485C5000A5C852 /* utils.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +500,53 @@
 			};
 			name = Release;
 		};
+		ADC549CA1D485C5000A5C852 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/G729.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				HEADER_SEARCH_PATHS = (
+					../../,
+					../codecs/g729/include,
+				);
+				OBJROOT = "$(SYMROOT)/build";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../../IOSProject/out/baselib;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Debug;
+		};
+		ADC549CB1D485C5000A5C852 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/G729.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				HEADER_SEARCH_PATHS = (
+					../../,
+					../codecs/g729/include,
+				);
+				OBJROOT = "$(SYMROOT)/build";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../../IOSProject/out/baselib;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -422,6 +564,15 @@
 			buildConfigurations = (
 				3FB2BA951659E5E200A49E13 /* Debug */,
 				3FB2BA961659E5E200A49E13 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ADC549C91D485C5000A5C852 /* Build configuration list for PBXNativeTarget "G729_Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADC549CA1D485C5000A5C852 /* Debug */,
+				ADC549CB1D485C5000A5C852 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

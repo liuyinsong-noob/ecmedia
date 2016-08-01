@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#ifdef TARGET_OS_IPHONE
 #import <AVFoundation/AVFoundation.h>
 
 #import "video_capture_iOS_device_info_objc.h"
@@ -174,3 +174,4 @@ using namespace cloopenwebrtc;
 
 
 @end
+#endif

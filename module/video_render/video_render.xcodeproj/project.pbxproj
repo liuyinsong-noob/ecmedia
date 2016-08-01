@@ -31,6 +31,35 @@
 		55B6767216AE8D050086E5B1 /* iosdisplay.mm in Sources */ = {isa = PBXBuildFile; fileRef = 55B6767016AE8D050086E5B1 /* iosdisplay.mm */; };
 		55B6767316AE8D050086E5B1 /* opengles_display.mm in Sources */ = {isa = PBXBuildFile; fileRef = 55B6767116AE8D050086E5B1 /* opengles_display.mm */; };
 		55B6767516AE8D230086E5B1 /* shaders.mm in Sources */ = {isa = PBXBuildFile; fileRef = 55B6767416AE8D230086E5B1 /* shaders.mm */; };
+		ADC547B41D4855D000A5C852 /* video_render_external_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AD15EA15C8A834008A2BDA /* video_render_external_impl.cc */; };
+		ADC547B51D4855D000A5C852 /* incoming_video_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AD15ED15C8A834008A2BDA /* incoming_video_stream.cc */; };
+		ADC547B61D4855D000A5C852 /* video_render_frames.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AD160315C8A834008A2BDA /* video_render_frames.cc */; };
+		ADC547B71D4855D000A5C852 /* video_render_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AD160515C8A834008A2BDA /* video_render_impl.cc */; };
+		ADC547BE1D4855D000A5C852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55AD15C315C8A801008A2BDA /* Foundation.framework */; };
+		ADC547C01D4855D000A5C852 /* video_render.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AD15D615C8A834008A2BDA /* video_render.h */; };
+		ADC547C11D4855D000A5C852 /* video_render_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AD15D715C8A834008A2BDA /* video_render_defines.h */; };
+		ADC547C21D4855D000A5C852 /* video_render_external_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AD15EB15C8A834008A2BDA /* video_render_external_impl.h */; };
+		ADC547C31D4855D000A5C852 /* i_video_render.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AD15EC15C8A834008A2BDA /* i_video_render.h */; };
+		ADC547C41D4855D000A5C852 /* incoming_video_stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AD15EE15C8A834008A2BDA /* incoming_video_stream.h */; };
+		ADC547C51D4855D000A5C852 /* video_render_frames.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AD160415C8A834008A2BDA /* video_render_frames.h */; };
+		ADC547C61D4855D000A5C852 /* video_render_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AD160615C8A834008A2BDA /* video_render_impl.h */; };
+		ADC547C71D4855D000A5C852 /* iosdisplay.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B6765816AE8CD50086E5B1 /* iosdisplay.h */; };
+		ADC547C81D4855D000A5C852 /* opengles_display.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B6765B16AE8CD50086E5B1 /* opengles_display.h */; };
+		ADC547C91D4855D000A5C852 /* shaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B6765D16AE8CD50086E5B1 /* shaders.h */; };
+		ADC547CA1D4855D000A5C852 /* yuv2rgb.fs.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B6765E16AE8CD50086E5B1 /* yuv2rgb.fs.h */; };
+		ADC547CB1D4855D000A5C852 /* yuv2rgb.vs.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B6765F16AE8CD50086E5B1 /* yuv2rgb.vs.h */; };
+		ADC547CC1D4855D000A5C852 /* video_render_iphone_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B6766016AE8CD50086E5B1 /* video_render_iphone_impl.h */; };
+		ADC547CD1D4855D000A5C852 /* video_render_nsopengl.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B6766216AE8CD50086E5B1 /* video_render_nsopengl.h */; };
+		ADC547DC1D48588800A5C852 /* cocoa_full_screen_window.h in Sources */ = {isa = PBXBuildFile; fileRef = ADC547D21D48588800A5C852 /* cocoa_full_screen_window.h */; };
+		ADC547DD1D48588800A5C852 /* cocoa_full_screen_window.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADC547D31D48588800A5C852 /* cocoa_full_screen_window.mm */; };
+		ADC547DE1D48588800A5C852 /* cocoa_render_view.h in Sources */ = {isa = PBXBuildFile; fileRef = ADC547D41D48588800A5C852 /* cocoa_render_view.h */; };
+		ADC547DF1D48588800A5C852 /* cocoa_render_view.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADC547D51D48588800A5C852 /* cocoa_render_view.mm */; };
+		ADC547E01D48588800A5C852 /* video_render_agl.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADC547D61D48588800A5C852 /* video_render_agl.cc */; };
+		ADC547E11D48588800A5C852 /* video_render_agl.h in Sources */ = {isa = PBXBuildFile; fileRef = ADC547D71D48588800A5C852 /* video_render_agl.h */; };
+		ADC547E21D48588800A5C852 /* video_render_mac_cocoa_impl.h in Sources */ = {isa = PBXBuildFile; fileRef = ADC547D81D48588800A5C852 /* video_render_mac_cocoa_impl.h */; };
+		ADC547E31D48588800A5C852 /* video_render_mac_cocoa_impl.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADC547D91D48588800A5C852 /* video_render_mac_cocoa_impl.mm */; };
+		ADC547E41D48588800A5C852 /* video_render_nsopengl.h in Sources */ = {isa = PBXBuildFile; fileRef = ADC547DA1D48588800A5C852 /* video_render_nsopengl.h */; };
+		ADC547E51D48588800A5C852 /* video_render_nsopengl.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADC547DB1D48588800A5C852 /* video_render_nsopengl.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +88,17 @@
 		55B6767016AE8D050086E5B1 /* iosdisplay.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iosdisplay.mm; sourceTree = "<group>"; };
 		55B6767116AE8D050086E5B1 /* opengles_display.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = opengles_display.mm; sourceTree = "<group>"; };
 		55B6767416AE8D230086E5B1 /* shaders.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = shaders.mm; sourceTree = "<group>"; };
+		ADC547D11D4855D000A5C852 /* libvideo_render_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvideo_render_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADC547D21D48588800A5C852 /* cocoa_full_screen_window.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = cocoa_full_screen_window.h; path = mac/cocoa_full_screen_window.h; sourceTree = "<group>"; };
+		ADC547D31D48588800A5C852 /* cocoa_full_screen_window.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = cocoa_full_screen_window.mm; path = mac/cocoa_full_screen_window.mm; sourceTree = "<group>"; };
+		ADC547D41D48588800A5C852 /* cocoa_render_view.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = cocoa_render_view.h; path = mac/cocoa_render_view.h; sourceTree = "<group>"; };
+		ADC547D51D48588800A5C852 /* cocoa_render_view.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = cocoa_render_view.mm; path = mac/cocoa_render_view.mm; sourceTree = "<group>"; };
+		ADC547D61D48588800A5C852 /* video_render_agl.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = video_render_agl.cc; path = mac/video_render_agl.cc; sourceTree = "<group>"; };
+		ADC547D71D48588800A5C852 /* video_render_agl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = video_render_agl.h; path = mac/video_render_agl.h; sourceTree = "<group>"; };
+		ADC547D81D48588800A5C852 /* video_render_mac_cocoa_impl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = video_render_mac_cocoa_impl.h; path = mac/video_render_mac_cocoa_impl.h; sourceTree = "<group>"; };
+		ADC547D91D48588800A5C852 /* video_render_mac_cocoa_impl.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = video_render_mac_cocoa_impl.mm; path = mac/video_render_mac_cocoa_impl.mm; sourceTree = "<group>"; };
+		ADC547DA1D48588800A5C852 /* video_render_nsopengl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = video_render_nsopengl.h; path = mac/video_render_nsopengl.h; sourceTree = "<group>"; };
+		ADC547DB1D48588800A5C852 /* video_render_nsopengl.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = video_render_nsopengl.mm; path = mac/video_render_nsopengl.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +107,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				55AD15C415C8A801008A2BDA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADC547BD1D4855D000A5C852 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADC547BE1D4855D000A5C852 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				55AD15C015C8A801008A2BDA /* libvideo_render.a */,
+				ADC547D11D4855D000A5C852 /* libvideo_render_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -127,6 +176,7 @@
 		55AD15D815C8A834008A2BDA /* source */ = {
 			isa = PBXGroup;
 			children = (
+				ADC547E61D48588F00A5C852 /* mac */,
 				55B6765616AE8CD50086E5B1 /* iphone */,
 				55AD15E915C8A834008A2BDA /* external */,
 				55AD15EC15C8A834008A2BDA /* i_video_render.h */,
@@ -176,6 +226,23 @@
 			path = linphonerender;
 			sourceTree = "<group>";
 		};
+		ADC547E61D48588F00A5C852 /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				ADC547D21D48588800A5C852 /* cocoa_full_screen_window.h */,
+				ADC547D31D48588800A5C852 /* cocoa_full_screen_window.mm */,
+				ADC547D41D48588800A5C852 /* cocoa_render_view.h */,
+				ADC547D51D48588800A5C852 /* cocoa_render_view.mm */,
+				ADC547D61D48588800A5C852 /* video_render_agl.cc */,
+				ADC547D71D48588800A5C852 /* video_render_agl.h */,
+				ADC547D81D48588800A5C852 /* video_render_mac_cocoa_impl.h */,
+				ADC547D91D48588800A5C852 /* video_render_mac_cocoa_impl.mm */,
+				ADC547DA1D48588800A5C852 /* video_render_nsopengl.h */,
+				ADC547DB1D48588800A5C852 /* video_render_nsopengl.mm */,
+			);
+			name = mac;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -200,6 +267,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ADC547BF1D4855D000A5C852 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADC547C01D4855D000A5C852 /* video_render.h in Headers */,
+				ADC547C11D4855D000A5C852 /* video_render_defines.h in Headers */,
+				ADC547C21D4855D000A5C852 /* video_render_external_impl.h in Headers */,
+				ADC547C31D4855D000A5C852 /* i_video_render.h in Headers */,
+				ADC547C41D4855D000A5C852 /* incoming_video_stream.h in Headers */,
+				ADC547C51D4855D000A5C852 /* video_render_frames.h in Headers */,
+				ADC547C61D4855D000A5C852 /* video_render_impl.h in Headers */,
+				ADC547C71D4855D000A5C852 /* iosdisplay.h in Headers */,
+				ADC547C81D4855D000A5C852 /* opengles_display.h in Headers */,
+				ADC547C91D4855D000A5C852 /* shaders.h in Headers */,
+				ADC547CA1D4855D000A5C852 /* yuv2rgb.fs.h in Headers */,
+				ADC547CB1D4855D000A5C852 /* yuv2rgb.vs.h in Headers */,
+				ADC547CC1D4855D000A5C852 /* video_render_iphone_impl.h in Headers */,
+				ADC547CD1D4855D000A5C852 /* video_render_nsopengl.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -218,6 +306,23 @@
 			name = video_render;
 			productName = video_render;
 			productReference = 55AD15C015C8A801008A2BDA /* libvideo_render.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		ADC547B21D4855D000A5C852 /* video_render_Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ADC547CE1D4855D000A5C852 /* Build configuration list for PBXNativeTarget "video_render_Mac" */;
+			buildPhases = (
+				ADC547B31D4855D000A5C852 /* Sources */,
+				ADC547BD1D4855D000A5C852 /* Frameworks */,
+				ADC547BF1D4855D000A5C852 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = video_render_Mac;
+			productName = video_render;
+			productReference = ADC547D11D4855D000A5C852 /* libvideo_render_Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -241,6 +346,7 @@
 			projectRoot = "";
 			targets = (
 				55AD15BF15C8A801008A2BDA /* video_render */,
+				ADC547B21D4855D000A5C852 /* video_render_Mac */,
 			);
 		};
 /* End PBXProject section */
@@ -259,6 +365,27 @@
 				55B6767216AE8D050086E5B1 /* iosdisplay.mm in Sources */,
 				55B6767316AE8D050086E5B1 /* opengles_display.mm in Sources */,
 				55B6767516AE8D230086E5B1 /* shaders.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADC547B31D4855D000A5C852 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADC547DC1D48588800A5C852 /* cocoa_full_screen_window.h in Sources */,
+				ADC547DD1D48588800A5C852 /* cocoa_full_screen_window.mm in Sources */,
+				ADC547DE1D48588800A5C852 /* cocoa_render_view.h in Sources */,
+				ADC547DF1D48588800A5C852 /* cocoa_render_view.mm in Sources */,
+				ADC547E01D48588800A5C852 /* video_render_agl.cc in Sources */,
+				ADC547E11D48588800A5C852 /* video_render_agl.h in Sources */,
+				ADC547E21D48588800A5C852 /* video_render_mac_cocoa_impl.h in Sources */,
+				ADC547E31D48588800A5C852 /* video_render_mac_cocoa_impl.mm in Sources */,
+				ADC547E41D48588800A5C852 /* video_render_nsopengl.h in Sources */,
+				ADC547E51D48588800A5C852 /* video_render_nsopengl.mm in Sources */,
+				ADC547B41D4855D000A5C852 /* video_render_external_impl.cc in Sources */,
+				ADC547B51D4855D000A5C852 /* incoming_video_stream.cc in Sources */,
+				ADC547B61D4855D000A5C852 /* video_render_frames.cc in Sources */,
+				ADC547B71D4855D000A5C852 /* video_render_impl.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,7 +466,6 @@
 					HAVE_SYS_UIO_H,
 					NVALGRIND,
 					"DYNAMIC_ANNOTATIONS_ENABLED=0",
-					WEBRTC_MAC,
 					IPHONE_GLES_RENDERING,
 					MAC_IPHONE,
 					WEBRTC_INCLUDE_INTERNAL_VIDEO_RENDER,
@@ -407,7 +533,6 @@
 					NDEBUG,
 					NVALGRIND,
 					"DYNAMIC_ANNOTATIONS_ENABLED=0",
-					WEBRTC_MAC,
 					MAC_IPHONE,
 					IPHONE_GLES_RENDERING,
 					WEBRTC_INCLUDE_INTERNAL_VIDEO_RENDER,
@@ -443,6 +568,150 @@
 			};
 			name = Release;
 		};
+		ADC547CF1D4855D000A5C852 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/video_render.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"WEBRTC_SVNREVISION=\"n/a\"",
+					"_FILE_OFFSET_BITS=64",
+					NO_TCMALLOC,
+					DISABLE_NACL,
+					CHROMIUM_BUILD,
+					USE_PROPRIETARY_CODECS,
+					"ENABLE_GPU=1",
+					"USE_OPENSSL=1",
+					"ENABLE_EGLIMAGE=1",
+					"USE_SKIA=1",
+					WEBRTC_ARCH_ARM,
+					WEBRTC_DETECT_ARM_NEON,
+					WEBRTC_CLOCK_TYPE_REALTIME,
+					WEBRTC_THREAD_RR,
+					WEBRTC_ANDROID_OPENSLES,
+					WEBRTC_INCLUDE_INTERNAL_VIDEO_RENDER,
+					__STDC_FORMAT_MACROS,
+					"__GNU_SOURCE=1",
+					"USE_STLPORT=1",
+					"_STLP_USE_PTR_SPECIALIZATIONS=1",
+					HAVE_OFF64_T,
+					HAVE_SYS_UIO_H,
+					NVALGRIND,
+					"DYNAMIC_ANNOTATIONS_ENABLED=0",
+					WEBRTC_MAC,
+					IPHONE_GLES_RENDERING,
+					WEBRTC_INCLUDE_INTERNAL_VIDEO_RENDER,
+					COCOA_RENDERING,
+					WEBRTC_MAC,
+				);
+				HEADER_SEARCH_PATHS = (
+					../../.,
+					../interface,
+					../,
+					../../system_wrappers/interface,
+					./main/source,
+					./main/source/external,
+					./main/source/mac,
+					./main/include,
+					../utility/include,
+					../audio_coding/main/include,
+					../videojpegyuv/include,
+					../../servicecore/include/,
+					../common_video/interface,
+					../../module/video_coding/main/include,
+					../../module/common_video/source,
+					../../module/common_video/source/libyuv/include,
+					../../third_party/libyuv/include,
+					../../module/video_render/main/source/mac,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../IOSProject/out/baselib;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Debug;
+		};
+		ADC547D01D4855D000A5C852 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/video_render.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"WEBRTC_SVNREVISION=\"n/a\"",
+					"_FILE_OFFSET_BITS=64",
+					NO_TCMALLOC,
+					DISABLE_NACL,
+					CHROMIUM_BUILD,
+					USE_PROPRIETARY_CODECS,
+					"ENABLE_GPU=1",
+					"USE_OPENSSL=1",
+					"ENABLE_EGLIMAGE=1",
+					"USE_SKIA=1",
+					WEBRTC_ARCH_ARM,
+					WEBRTC_DETECT_ARM_NEON,
+					WEBRTC_CLOCK_TYPE_REALTIME,
+					WEBRTC_THREAD_RR,
+					WEBRTC_INCLUDE_INTERNAL_VIDEO_RENDER,
+					__STDC_FORMAT_MACROS,
+					"__GNU_SOURCE=1",
+					"USE_STLPORT=1",
+					"_STLP_USE_PTR_SPECIALIZATIONS=1",
+					HAVE_OFF64_T,
+					HAVE_SYS_UIO_H,
+					NDEBUG,
+					NVALGRIND,
+					"DYNAMIC_ANNOTATIONS_ENABLED=0",
+					WEBRTC_MAC,
+					IPHONE_GLES_RENDERING,
+					WEBRTC_INCLUDE_INTERNAL_VIDEO_RENDER,
+					COCOA_RENDERING,
+					WEBRTC_MAC,
+				);
+				HEADER_SEARCH_PATHS = (
+					../../.,
+					../interface,
+					../,
+					../../system_wrappers/interface,
+					./main/source,
+					./main/source/external,
+					./main/source/mac,
+					./main/include,
+					../utility/include,
+					../audio_coding/main/include,
+					../videojpegyuv/include,
+					../../servicecore/include/,
+					../common_video/interface,
+					../../module/video_coding/main/include,
+					../../module/common_video/source,
+					../../module/common_video/source/libyuv/include,
+					../../third_party/libyuv/include,
+					../../module/video_render/main/source/mac,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../IOSProject/out/baselib;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -460,6 +729,15 @@
 			buildConfigurations = (
 				55AD15CE15C8A801008A2BDA /* Debug */,
 				55AD15CF15C8A801008A2BDA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ADC547CE1D4855D000A5C852 /* Build configuration list for PBXNativeTarget "video_render_Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADC547CF1D4855D000A5C852 /* Debug */,
+				ADC547D01D4855D000A5C852 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

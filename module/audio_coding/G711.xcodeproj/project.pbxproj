@@ -12,6 +12,11 @@
 		3FAA8FE515C8DBCA00561C64 /* g711_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8FE315C8DBCA00561C64 /* g711_interface.c */; };
 		3FAA8FE615C8DBCA00561C64 /* g711.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8FE415C8DBCA00561C64 /* g711.c */; };
 		3FAA8FE815C8DBD100561C64 /* g711.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8FE715C8DBD100561C64 /* g711.h */; };
+		ADC5494D1D485C2D00A5C852 /* g711_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8FE315C8DBCA00561C64 /* g711_interface.c */; };
+		ADC5494E1D485C2D00A5C852 /* g711.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8FE415C8DBCA00561C64 /* g711.c */; };
+		ADC549501D485C2D00A5C852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAA8FCE15C8DB6100561C64 /* Foundation.framework */; };
+		ADC549521D485C2D00A5C852 /* g711_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8FE115C8DBB700561C64 /* g711_interface.h */; };
+		ADC549531D485C2D00A5C852 /* g711.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8FE715C8DBD100561C64 /* g711.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +26,7 @@
 		3FAA8FE315C8DBCA00561C64 /* g711_interface.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = g711_interface.c; path = codecs/g711/g711_interface.c; sourceTree = "<group>"; };
 		3FAA8FE415C8DBCA00561C64 /* g711.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = g711.c; path = codecs/g711/g711.c; sourceTree = "<group>"; };
 		3FAA8FE715C8DBD100561C64 /* g711.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = g711.h; path = codecs/g711/g711.h; sourceTree = "<group>"; };
+		ADC549571D485C2D00A5C852 /* libG711_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libG711_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +35,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FAA8FCF15C8DB6100561C64 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADC5494F1D485C2D00A5C852 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADC549501D485C2D00A5C852 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -49,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				3FAA8FCB15C8DB6100561C64 /* libG711.a */,
+				ADC549571D485C2D00A5C852 /* libG711_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -91,6 +106,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ADC549511D485C2D00A5C852 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADC549521D485C2D00A5C852 /* g711_interface.h in Headers */,
+				ADC549531D485C2D00A5C852 /* g711.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -109,6 +133,23 @@
 			name = G711;
 			productName = G711;
 			productReference = 3FAA8FCB15C8DB6100561C64 /* libG711.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		ADC5494B1D485C2D00A5C852 /* G711_Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ADC549541D485C2D00A5C852 /* Build configuration list for PBXNativeTarget "G711_Mac" */;
+			buildPhases = (
+				ADC5494C1D485C2D00A5C852 /* Sources */,
+				ADC5494F1D485C2D00A5C852 /* Frameworks */,
+				ADC549511D485C2D00A5C852 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = G711_Mac;
+			productName = G711;
+			productReference = ADC549571D485C2D00A5C852 /* libG711_Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -133,6 +174,7 @@
 			projectRoot = "";
 			targets = (
 				3FAA8FCA15C8DB6100561C64 /* G711 */,
+				ADC5494B1D485C2D00A5C852 /* G711_Mac */,
 			);
 		};
 /* End PBXProject section */
@@ -144,6 +186,15 @@
 			files = (
 				3FAA8FE515C8DBCA00561C64 /* g711_interface.c in Sources */,
 				3FAA8FE615C8DBCA00561C64 /* g711.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADC5494C1D485C2D00A5C852 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADC5494D1D485C2D00A5C852 /* g711_interface.c in Sources */,
+				ADC5494E1D485C2D00A5C852 /* g711.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,6 +284,55 @@
 			};
 			name = Release;
 		};
+		ADC549551D485C2D00A5C852 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/G711.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				HEADER_SEARCH_PATHS = (
+					../,
+					../interface,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../IOSProject/out/baselib;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Debug;
+		};
+		ADC549561D485C2D00A5C852 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/G711.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				HEADER_SEARCH_PATHS = (
+					../,
+					../interface,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../IOSProject/out/baselib;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -250,6 +350,15 @@
 			buildConfigurations = (
 				3FAA8FD915C8DB6100561C64 /* Debug */,
 				3FAA8FDA15C8DB6100561C64 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ADC549541D485C2D00A5C852 /* Build configuration list for PBXNativeTarget "G711_Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADC549551D485C2D00A5C852 /* Debug */,
+				ADC549561D485C2D00A5C852 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

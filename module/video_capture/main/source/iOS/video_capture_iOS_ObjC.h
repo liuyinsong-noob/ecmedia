@@ -5,7 +5,7 @@
 //  Created by Lee Sean on 13-1-8.
 //
 //
-
+#ifdef TARGET_OS_IPHONE
 #ifndef WEBRTC_MODULES_VIDEO_CAPTURE_MAIN_SOURCE_iOS_VIDEO_CAPTURE_iOS_OBJC_H_
 #define WEBRTC_MODULES_VIDEO_CAPTURE_MAIN_SOURCE_iOS_VIDEO_CAPTURE_iOS_OBJC_H_
 #import <Foundation/Foundation.h>
@@ -84,4 +84,5 @@ class CriticalSectionWrapper;
 - (NSNumber*)stopCapture;
 @end
 
+#endif
 #endif

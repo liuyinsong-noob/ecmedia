@@ -260,7 +260,10 @@ using namespace videocapturemodule;
 
     if(YES == _capturing)
     {
-        [_captureSession stopRunning];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_captureSession stopRunning];
+        });
     }
 
     _capturing = NO;
@@ -457,6 +460,23 @@ using namespace videocapturemodule;
     {
         [_rLock unlock];
     }
+}
+
+- (NSNumber *)setLocalVieoView:(void*) view
+{
+    
+    QTCaptureView *tempView = (QTCaptureView *)view;
+    
+    if(tempView != nil) {
+        [tempView setCaptureSession:_captureSession];
+        return [NSNumber numberWithInt:0];
+    }
+    else
+    {
+        return [NSNumber numberWithInt:-1];
+    }
+    
+    
 }
 
 @end

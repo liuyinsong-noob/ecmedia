@@ -956,6 +956,10 @@
 		AD01997F1D2370E7003C2BB9 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD01997E1D2370E7003C2BB9 /* VideoToolbox.framework */; };
 		AD194FB91C5B4066003841BB /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AD194FB81C5B4066003841BB /* libc++.tbd */; };
 		AD42CE9F1D2A511C009C2E7A /* libccpapisdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD42CE9E1D2A510A009C2E7A /* libccpapisdk.a */; };
+		AD4B6A241D48C25800731C5B /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A201D48C25800731C5B /* libcrypto.a */; };
+		AD4B6A251D48C25800731C5B /* libortp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A211D48C25800731C5B /* libortp.a */; };
+		AD4B6A261D48C25800731C5B /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A221D48C25800731C5B /* libsrtp.a */; };
+		AD4B6A271D48C25800731C5B /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A231D48C25800731C5B /* libssl.a */; };
 		ADA18F171C58B518007F0F8B /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA18F161C58B518007F0F8B /* libz.tbd */; };
 		ADA18F191C58B521007F0F8B /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA18F181C58B521007F0F8B /* libxml2.tbd */; };
 		F113E878179640E4007A26FF /* GroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F113E877179640E4007A26FF /* GroupListViewController.m */; };
@@ -2049,6 +2053,13 @@
 		AD194FB81C5B4066003841BB /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		AD42CD6A1D23D6F9009C2E7A /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../../servicecore/libcrypto.a; sourceTree = "<group>"; };
 		AD42CE771D2A510A009C2E7A /* CCPSDKProject.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CCPSDKProject.xcodeproj; path = ../sdk3.6.5/CCPSDKProject.xcodeproj; sourceTree = "<group>"; };
+		AD4B6A1A1D48C07F00731C5B /* libortp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libortp.a; path = ../../servicecore/libortp.a; sourceTree = "<group>"; };
+		AD4B6A1B1D48C07F00731C5B /* libsrtp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsrtp.a; path = ../../servicecore/libsrtp.a; sourceTree = "<group>"; };
+		AD4B6A1C1D48C07F00731C5B /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../../servicecore/libssl.a; sourceTree = "<group>"; };
+		AD4B6A201D48C25800731C5B /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
+		AD4B6A211D48C25800731C5B /* libortp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libortp.a; sourceTree = "<group>"; };
+		AD4B6A221D48C25800731C5B /* libsrtp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsrtp.a; sourceTree = "<group>"; };
+		AD4B6A231D48C25800731C5B /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
 		ADA18F161C58B518007F0F8B /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		ADA18F181C58B521007F0F8B /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		F113E876179640E4007A26FF /* GroupListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupListViewController.h; sourceTree = "<group>"; };
@@ -2082,6 +2093,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD4B6A241D48C25800731C5B /* libcrypto.a in Frameworks */,
+				AD4B6A251D48C25800731C5B /* libortp.a in Frameworks */,
+				AD4B6A261D48C25800731C5B /* libsrtp.a in Frameworks */,
+				AD4B6A271D48C25800731C5B /* libssl.a in Frameworks */,
 				AD42CE9F1D2A511C009C2E7A /* libccpapisdk.a in Frameworks */,
 				AD01997F1D2370E7003C2BB9 /* VideoToolbox.framework in Frameworks */,
 				AD194FB91C5B4066003841BB /* libc++.tbd in Frameworks */,
@@ -2243,6 +2258,13 @@
 		05F43B8616A92CAA00F6D053 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AD4B6A201D48C25800731C5B /* libcrypto.a */,
+				AD4B6A211D48C25800731C5B /* libortp.a */,
+				AD4B6A221D48C25800731C5B /* libsrtp.a */,
+				AD4B6A231D48C25800731C5B /* libssl.a */,
+				AD4B6A1A1D48C07F00731C5B /* libortp.a */,
+				AD4B6A1B1D48C07F00731C5B /* libsrtp.a */,
+				AD4B6A1C1D48C07F00731C5B /* libssl.a */,
 				AD42CD6A1D23D6F9009C2E7A /* libcrypto.a */,
 				AD01997E1D2370E7003C2BB9 /* VideoToolbox.framework */,
 				AD194FB81C5B4066003841BB /* libc++.tbd */,

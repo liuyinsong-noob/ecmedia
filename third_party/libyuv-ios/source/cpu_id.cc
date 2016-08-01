@@ -30,7 +30,7 @@
 #include "libyuv/basic_types.h"  // For CPU_X86
 
 #ifdef __cplusplus
-namespace libyuv {
+namespace cloopenlibyuv {
 extern "C" {
 #endif
 

@@ -34,7 +34,7 @@ class CriticalSectionWrapper;
 class EventWrapper;
 class ThreadWrapper;
 
-class VideoCaptureMacQuickTime : public VideoCaptureImpl
+class VideoCaptureMacQuickTime : public videocapturemodule::VideoCaptureImpl
 {
 
 public:

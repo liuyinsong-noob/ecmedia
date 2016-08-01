@@ -8,7 +8,7 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "webrtc/engine_configurations.h"
+#include "engine_configurations.h"
 #if defined(COCOA_RENDERING)
 
 #ifndef WEBRTC_MODULES_VIDEO_RENDER_MAIN_SOURCE_MAC_VIDEO_RENDER_NSOPENGL_H_
@@ -22,15 +22,15 @@
 #include <list>
 #include <map>
 
-#include "webrtc/base/thread_annotations.h"
-#include "webrtc/modules/video_render/include/video_render_defines.h"
+#include "thread_annotations.h"
+#include "video_render_defines.h"
 
-#import "webrtc/modules/video_render/mac/cocoa_full_screen_window.h"
-#import "webrtc/modules/video_render/mac/cocoa_render_view.h"
+#import "cocoa_full_screen_window.h"
+#import "cocoa_render_view.h"
 
 class Trace;
 
-namespace webrtc {
+namespace cloopenwebrtc {
 class EventWrapper;
 class ThreadWrapper;
 class VideoRenderNSOpenGL;

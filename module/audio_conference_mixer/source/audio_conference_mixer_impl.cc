@@ -16,6 +16,8 @@
 #include "critical_section_wrapper.h"
 #include "trace.h"
 #include "thread_wrapper.h"
+#include "common.h"
+
 namespace cloopenwebrtc {
 namespace {
 
@@ -149,7 +151,7 @@ bool AudioConferenceMixerImpl::Init() {
     if(_cbCrit.get() == NULL)
         return false;
 
-    Config config;
+    cloopenwebrtc::Config config;
     config.Set<ExperimentalAgc>(new ExperimentalAgc(false));
     _limiter.reset(AudioProcessing::Create(config));
     if(!_limiter.get())

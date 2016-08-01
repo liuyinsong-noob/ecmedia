@@ -36,10 +36,48 @@
 		AD1950A21C5EFFCE003841BB /* spectrum_ar_model_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950981C5EFFCE003841BB /* spectrum_ar_model_tables.c */; };
 		AD1950A31C5EFFCE003841BB /* transform.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19509A1C5EFFCE003841BB /* transform.c */; };
 		AD1950A91C5EFFFF003841BB /* pitch_lag_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950A51C5EFFFF003841BB /* pitch_lag_tables.c */; };
+		ADC5480C1D485C0700A5C852 /* crc.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950631C5EFF48003841BB /* crc.c */; };
+		ADC5480D1D485C0700A5C852 /* arith_routines_hist.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19505C1C5EFF48003841BB /* arith_routines_hist.c */; };
+		ADC5480E1D485C0700A5C852 /* lattice.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950741C5EFF48003841BB /* lattice.c */; };
+		ADC5480F1D485C0700A5C852 /* filterbank_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19506F1C5EFF48003841BB /* filterbank_tables.c */; };
+		ADC548101D485C0700A5C852 /* transform.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19509A1C5EFFCE003841BB /* transform.c */; };
+		ADC548111D485C0700A5C852 /* decode_bwe.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950651C5EFF48003841BB /* decode_bwe.c */; };
+		ADC548121D485C0700A5C852 /* encode.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950691C5EFF48003841BB /* encode.c */; };
+		ADC548131D485C0700A5C852 /* isac.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950731C5EFF48003841BB /* isac.c */; };
+		ADC548141D485C0700A5C852 /* lpc_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950911C5EFFCE003841BB /* lpc_tables.c */; };
+		ADC548151D485C0700A5C852 /* intialize.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950721C5EFF48003841BB /* intialize.c */; };
+		ADC548161D485C0700A5C852 /* pitch_filter.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950951C5EFFCE003841BB /* pitch_filter.c */; };
+		ADC548171D485C0700A5C852 /* pitch_estimator.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950931C5EFFCE003841BB /* pitch_estimator.c */; };
+		ADC548181D485C0700A5C852 /* lpc_shape_swb16_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19508F1C5EFFCE003841BB /* lpc_shape_swb16_tables.c */; };
+		ADC548191D485C0700A5C852 /* encode_lpc_swb.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950671C5EFF48003841BB /* encode_lpc_swb.c */; };
+		ADC5481A1D485C0700A5C852 /* spectrum_ar_model_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950981C5EFFCE003841BB /* spectrum_ar_model_tables.c */; };
+		ADC5481B1D485C0700A5C852 /* bandwidth_estimator.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950611C5EFF48003841BB /* bandwidth_estimator.c */; };
+		ADC5481C1D485C0700A5C852 /* lpc_analysis.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950751C5EFF48003841BB /* lpc_analysis.c */; };
+		ADC5481D1D485C0700A5C852 /* filterbanks.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950711C5EFF48003841BB /* filterbanks.c */; };
+		ADC5481E1D485C0700A5C852 /* pitch_gain_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950961C5EFFCE003841BB /* pitch_gain_tables.c */; };
+		ADC5481F1D485C0700A5C852 /* lpc_gain_swb_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19508B1C5EFFCE003841BB /* lpc_gain_swb_tables.c */; };
+		ADC548201D485C0700A5C852 /* fft.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19506C1C5EFF48003841BB /* fft.c */; };
+		ADC548211D485C0700A5C852 /* audio_encoder_isac.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD1950601C5EFF48003841BB /* audio_encoder_isac.cc */; };
+		ADC548221D485C0700A5C852 /* decode.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950661C5EFF48003841BB /* decode.c */; };
+		ADC548231D485C0700A5C852 /* arith_routines.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19505E1C5EFF48003841BB /* arith_routines.c */; };
+		ADC548241D485C0700A5C852 /* filter_functions.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19506E1C5EFF48003841BB /* filter_functions.c */; };
+		ADC548251D485C0700A5C852 /* lpc_shape_swb12_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19508D1C5EFFCE003841BB /* lpc_shape_swb12_tables.c */; };
+		ADC548261D485C0700A5C852 /* arith_routines_logist.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19505D1C5EFF48003841BB /* arith_routines_logist.c */; };
+		ADC548271D485C0700A5C852 /* entropy_coding.c in Sources */ = {isa = PBXBuildFile; fileRef = AD19506A1C5EFF48003841BB /* entropy_coding.c */; };
+		ADC548281D485C0700A5C852 /* pitch_lag_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = AD1950A51C5EFFFF003841BB /* pitch_lag_tables.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		AD19504A1C5EF93B003841BB /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADC5482A1D485C0700A5C852 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/$(PRODUCT_NAME)";
@@ -105,10 +143,18 @@
 		AD1950A61C5EFFFF003841BB /* pitch_lag_tables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pitch_lag_tables.h; path = ../../main/source/pitch_lag_tables.h; sourceTree = "<group>"; };
 		AD1950A71C5EFFFF003841BB /* settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = settings.h; path = ../../main/source/settings.h; sourceTree = "<group>"; };
 		AD1950A81C5EFFFF003841BB /* structs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = structs.h; path = ../../main/source/structs.h; sourceTree = "<group>"; };
+		ADC5482E1D485C0700A5C852 /* libiSAC_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiSAC_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		AD1950491C5EF93B003841BB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADC548291D485C0700A5C852 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -130,6 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				AD19504C1C5EF93B003841BB /* libiSAC.a */,
+				ADC5482E1D485C0700A5C852 /* libiSAC_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -214,6 +261,23 @@
 			productReference = AD19504C1C5EF93B003841BB /* libiSAC.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		ADC5480A1D485C0700A5C852 /* iSAC_Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ADC5482B1D485C0700A5C852 /* Build configuration list for PBXNativeTarget "iSAC_Mac" */;
+			buildPhases = (
+				ADC5480B1D485C0700A5C852 /* Sources */,
+				ADC548291D485C0700A5C852 /* Frameworks */,
+				ADC5482A1D485C0700A5C852 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iSAC_Mac;
+			productName = iSAC;
+			productReference = ADC5482E1D485C0700A5C852 /* libiSAC_Mac.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -241,6 +305,7 @@
 			projectRoot = "";
 			targets = (
 				AD19504B1C5EF93B003841BB /* iSAC */,
+				ADC5480A1D485C0700A5C852 /* iSAC_Mac */,
 			);
 		};
 /* End PBXProject section */
@@ -279,6 +344,42 @@
 				AD1950781C5EFF48003841BB /* arith_routines_logist.c in Sources */,
 				AD1950811C5EFF48003841BB /* entropy_coding.c in Sources */,
 				AD1950A91C5EFFFF003841BB /* pitch_lag_tables.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADC5480B1D485C0700A5C852 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADC5480C1D485C0700A5C852 /* crc.c in Sources */,
+				ADC5480D1D485C0700A5C852 /* arith_routines_hist.c in Sources */,
+				ADC5480E1D485C0700A5C852 /* lattice.c in Sources */,
+				ADC5480F1D485C0700A5C852 /* filterbank_tables.c in Sources */,
+				ADC548101D485C0700A5C852 /* transform.c in Sources */,
+				ADC548111D485C0700A5C852 /* decode_bwe.c in Sources */,
+				ADC548121D485C0700A5C852 /* encode.c in Sources */,
+				ADC548131D485C0700A5C852 /* isac.c in Sources */,
+				ADC548141D485C0700A5C852 /* lpc_tables.c in Sources */,
+				ADC548151D485C0700A5C852 /* intialize.c in Sources */,
+				ADC548161D485C0700A5C852 /* pitch_filter.c in Sources */,
+				ADC548171D485C0700A5C852 /* pitch_estimator.c in Sources */,
+				ADC548181D485C0700A5C852 /* lpc_shape_swb16_tables.c in Sources */,
+				ADC548191D485C0700A5C852 /* encode_lpc_swb.c in Sources */,
+				ADC5481A1D485C0700A5C852 /* spectrum_ar_model_tables.c in Sources */,
+				ADC5481B1D485C0700A5C852 /* bandwidth_estimator.c in Sources */,
+				ADC5481C1D485C0700A5C852 /* lpc_analysis.c in Sources */,
+				ADC5481D1D485C0700A5C852 /* filterbanks.c in Sources */,
+				ADC5481E1D485C0700A5C852 /* pitch_gain_tables.c in Sources */,
+				ADC5481F1D485C0700A5C852 /* lpc_gain_swb_tables.c in Sources */,
+				ADC548201D485C0700A5C852 /* fft.c in Sources */,
+				ADC548211D485C0700A5C852 /* audio_encoder_isac.cc in Sources */,
+				ADC548221D485C0700A5C852 /* decode.c in Sources */,
+				ADC548231D485C0700A5C852 /* arith_routines.c in Sources */,
+				ADC548241D485C0700A5C852 /* filter_functions.c in Sources */,
+				ADC548251D485C0700A5C852 /* lpc_shape_swb12_tables.c in Sources */,
+				ADC548261D485C0700A5C852 /* arith_routines_logist.c in Sources */,
+				ADC548271D485C0700A5C852 /* entropy_coding.c in Sources */,
+				ADC548281D485C0700A5C852 /* pitch_lag_tables.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,6 +505,47 @@
 			};
 			name = Release;
 		};
+		ADC5482C1D485C0700A5C852 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				HEADER_SEARCH_PATHS = (
+					../../../../../..,
+					../../../../../../common_audio/source/signal_processing/include,
+					../../../../../../../system_wrappers/interface,
+					../../../../../../audio_coding/codecs,
+					../../../../../../audio_coding/codecs/cng/include,
+					../../../../../../../system_wrappers/source,
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Debug;
+		};
+		ADC5482D1D485C0700A5C852 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				HEADER_SEARCH_PATHS = (
+					../../../../../..,
+					../../../../../../common_audio/source/signal_processing/include,
+					../../../../../../../system_wrappers/interface,
+					../../../../../../audio_coding/codecs,
+					../../../../../../audio_coding/codecs/cng/include,
+					../../../../../../../system_wrappers/source,
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -421,6 +563,15 @@
 			buildConfigurations = (
 				AD1950561C5EF93B003841BB /* Debug */,
 				AD1950571C5EF93B003841BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ADC5482B1D485C0700A5C852 /* Build configuration list for PBXNativeTarget "iSAC_Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADC5482C1D485C0700A5C852 /* Debug */,
+				ADC5482D1D485C0700A5C852 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

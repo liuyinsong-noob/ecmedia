@@ -12,6 +12,11 @@
 		3FAA8FB815C8DA9E00561C64 /* cng_helpfuns.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8FB515C8DA9E00561C64 /* cng_helpfuns.c */; };
 		3FAA8FBA15C8DA9E00561C64 /* webrtc_cng.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8FB715C8DA9E00561C64 /* webrtc_cng.c */; };
 		3FAA8FBC15C8DAA800561C64 /* cng_helpfuns.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8FBB15C8DAA800561C64 /* cng_helpfuns.h */; };
+		ADC5495A1D485C3800A5C852 /* cng_helpfuns.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8FB515C8DA9E00561C64 /* cng_helpfuns.c */; };
+		ADC5495B1D485C3800A5C852 /* webrtc_cng.c in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8FB715C8DA9E00561C64 /* webrtc_cng.c */; };
+		ADC5495D1D485C3800A5C852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAA8FA015C8D9FB00561C64 /* Foundation.framework */; };
+		ADC5495F1D485C3800A5C852 /* webrtc_cng.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8FB315C8DA8900561C64 /* webrtc_cng.h */; };
+		ADC549601D485C3800A5C852 /* cng_helpfuns.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8FBB15C8DAA800561C64 /* cng_helpfuns.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +26,7 @@
 		3FAA8FB515C8DA9E00561C64 /* cng_helpfuns.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cng_helpfuns.c; path = codecs/cng/cng_helpfuns.c; sourceTree = "<group>"; };
 		3FAA8FB715C8DA9E00561C64 /* webrtc_cng.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = webrtc_cng.c; path = codecs/cng/webrtc_cng.c; sourceTree = "<group>"; };
 		3FAA8FBB15C8DAA800561C64 /* cng_helpfuns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cng_helpfuns.h; path = codecs/cng/cng_helpfuns.h; sourceTree = "<group>"; };
+		ADC549641D485C3800A5C852 /* libCNG_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCNG_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +35,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FAA8FA115C8D9FB00561C64 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADC5495C1D485C3800A5C852 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADC5495D1D485C3800A5C852 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -49,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				3FAA8F9D15C8D9FB00561C64 /* libCNG.a */,
+				ADC549641D485C3800A5C852 /* libCNG_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -91,6 +106,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ADC5495E1D485C3800A5C852 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADC5495F1D485C3800A5C852 /* webrtc_cng.h in Headers */,
+				ADC549601D485C3800A5C852 /* cng_helpfuns.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -109,6 +133,23 @@
 			name = CNG;
 			productName = CNG;
 			productReference = 3FAA8F9D15C8D9FB00561C64 /* libCNG.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		ADC549581D485C3800A5C852 /* CNG_Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ADC549611D485C3800A5C852 /* Build configuration list for PBXNativeTarget "CNG_Mac" */;
+			buildPhases = (
+				ADC549591D485C3800A5C852 /* Sources */,
+				ADC5495C1D485C3800A5C852 /* Frameworks */,
+				ADC5495E1D485C3800A5C852 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CNG_Mac;
+			productName = CNG;
+			productReference = ADC549641D485C3800A5C852 /* libCNG_Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -133,6 +174,7 @@
 			projectRoot = "";
 			targets = (
 				3FAA8F9C15C8D9FA00561C64 /* CNG */,
+				ADC549581D485C3800A5C852 /* CNG_Mac */,
 			);
 		};
 /* End PBXProject section */
@@ -144,6 +186,15 @@
 			files = (
 				3FAA8FB815C8DA9E00561C64 /* cng_helpfuns.c in Sources */,
 				3FAA8FBA15C8DA9E00561C64 /* webrtc_cng.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADC549591D485C3800A5C852 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADC5495A1D485C3800A5C852 /* cng_helpfuns.c in Sources */,
+				ADC5495B1D485C3800A5C852 /* webrtc_cng.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +245,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				DSTROOT = /tmp/CNG.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
@@ -217,6 +270,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				DSTROOT = /tmp/CNG.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
@@ -237,6 +292,59 @@
 			};
 			name = Release;
 		};
+		ADC549621D485C3800A5C852 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/CNG.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				HEADER_SEARCH_PATHS = (
+					../,
+					../interface,
+					../common_audio/source/signal_processing/include,
+					../inc,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../IOSProject/out/baselib;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Debug;
+		};
+		ADC549631D485C3800A5C852 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/CNG.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				HEADER_SEARCH_PATHS = (
+					../,
+					../interface,
+					../common_audio/source/signal_processing/include,
+					../inc,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../IOSProject/out/baselib;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -254,6 +362,15 @@
 			buildConfigurations = (
 				3FAA8FAB15C8D9FB00561C64 /* Debug */,
 				3FAA8FAC15C8D9FB00561C64 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ADC549611D485C3800A5C852 /* Build configuration list for PBXNativeTarget "CNG_Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADC549621D485C3800A5C852 /* Debug */,
+				ADC549631D485C3800A5C852 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

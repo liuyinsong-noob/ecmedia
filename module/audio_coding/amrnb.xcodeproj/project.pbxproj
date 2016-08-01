@@ -195,6 +195,196 @@
 		55EA5C9B17D82F8A00885688 /* amrAllSrc4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55EA5C9317D82F8A00885688 /* amrAllSrc4.cpp */; };
 		55EA5C9C17D82F8A00885688 /* amrAllSrc4.h in Headers */ = {isa = PBXBuildFile; fileRef = 55EA5C9417D82F8A00885688 /* amrAllSrc4.h */; };
 		910D8E3619C841BD00748D2F /* amr_interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8EF715C8D0E100561C64 /* amr_interface.cpp */; };
+		ADC5483E1D485C1B00A5C852 /* amr_interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8EF715C8D0E100561C64 /* amr_interface.cpp */; };
+		ADC5483F1D485C1B00A5C852 /* c2_9pf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8E1115C8D0C900561C64 /* c2_9pf.cpp */; };
+		ADC548401D485C1B00A5C852 /* c2_11pf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8E1315C8D0C900561C64 /* c2_11pf.cpp */; };
+		ADC548411D485C1B00A5C852 /* c3_14pf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8E1515C8D0C900561C64 /* c3_14pf.cpp */; };
+		ADC548421D485C1B00A5C852 /* c4_17pf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8E1715C8D0C900561C64 /* c4_17pf.cpp */; };
+		ADC548431D485C1B00A5C852 /* c8_31pf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8E1915C8D0C900561C64 /* c8_31pf.cpp */; };
+		ADC548441D485C1B00A5C852 /* c1035pf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8E1B15C8D0C900561C64 /* c1035pf.cpp */; };
+		ADC548451D485C1B00A5C852 /* amrAllSrc.CPP in Sources */ = {isa = PBXBuildFile; fileRef = 55EA5C8D17D82F8A00885688 /* amrAllSrc.CPP */; };
+		ADC548461D485C1B00A5C852 /* amrAllSrc2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55EA5C8F17D82F8A00885688 /* amrAllSrc2.cpp */; };
+		ADC548471D485C1B00A5C852 /* amrAllSrc3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55EA5C9117D82F8A00885688 /* amrAllSrc3.cpp */; };
+		ADC548481D485C1B00A5C852 /* amrAllSrc4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55EA5C9317D82F8A00885688 /* amrAllSrc4.cpp */; };
+		ADC5484A1D485C1B00A5C852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAA8C5815C8CB9B00561C64 /* Foundation.framework */; };
+		ADC5484C1D485C1B00A5C852 /* abs_s.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C6B15C8CE1600561C64 /* abs_s.h */; };
+		ADC5484D1D485C1B00A5C852 /* add.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C6C15C8CE1600561C64 /* add.h */; };
+		ADC5484E1D485C1B00A5C852 /* az_lsp.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C6D15C8CE1600561C64 /* az_lsp.h */; };
+		ADC5484F1D485C1B00A5C852 /* basic_op_arm_gcc_v5.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C6E15C8CE1600561C64 /* basic_op_arm_gcc_v5.h */; };
+		ADC548501D485C1B00A5C852 /* basic_op_c_equivalent.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C6F15C8CE1600561C64 /* basic_op_c_equivalent.h */; };
+		ADC548511D485C1B00A5C852 /* basic_op.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7015C8CE1600561C64 /* basic_op.h */; };
+		ADC548521D485C1B00A5C852 /* basicop_malloc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7115C8CE1600561C64 /* basicop_malloc.h */; };
+		ADC548531D485C1B00A5C852 /* bitno_tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7215C8CE1600561C64 /* bitno_tab.h */; };
+		ADC548541D485C1B00A5C852 /* bitreorder_tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7315C8CE1600561C64 /* bitreorder_tab.h */; };
+		ADC548551D485C1B00A5C852 /* bytesused.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7415C8CE1600561C64 /* bytesused.h */; };
+		ADC548561D485C1B00A5C852 /* cnst_vad.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7515C8CE1600561C64 /* cnst_vad.h */; };
+		ADC548571D485C1B00A5C852 /* cnst.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7615C8CE1600561C64 /* cnst.h */; };
+		ADC548581D485C1B00A5C852 /* d_gain_c.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7715C8CE1600561C64 /* d_gain_c.h */; };
+		ADC548591D485C1B00A5C852 /* d_gain_p.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7815C8CE1600561C64 /* d_gain_p.h */; };
+		ADC5485A1D485C1B00A5C852 /* d_plsf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7915C8CE1600561C64 /* d_plsf.h */; };
+		ADC5485B1D485C1B00A5C852 /* div_s.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7A15C8CE1600561C64 /* div_s.h */; };
+		ADC5485C1D485C1B00A5C852 /* dtx_common_def.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7B15C8CE1600561C64 /* dtx_common_def.h */; };
+		ADC5485D1D485C1B00A5C852 /* frame_type_3gpp.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7C15C8CE1600561C64 /* frame_type_3gpp.h */; };
+		ADC5485E1D485C1B00A5C852 /* frame.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7D15C8CE1600561C64 /* frame.h */; };
+		ADC5485F1D485C1B00A5C852 /* gc_pred.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7E15C8CE1600561C64 /* gc_pred.h */; };
+		ADC548601D485C1B00A5C852 /* get_const_tbls.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C7F15C8CE1600561C64 /* get_const_tbls.h */; };
+		ADC548611D485C1B00A5C852 /* gmed_n.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8015C8CE1600561C64 /* gmed_n.h */; };
+		ADC548621D485C1B00A5C852 /* gsm_amr_typedefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8115C8CE1600561C64 /* gsm_amr_typedefs.h */; };
+		ADC548631D485C1B00A5C852 /* int_lpc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8215C8CE1600561C64 /* int_lpc.h */; };
+		ADC548641D485C1B00A5C852 /* int_lsf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8315C8CE1600561C64 /* int_lsf.h */; };
+		ADC548651D485C1B00A5C852 /* inv_sqrt.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8415C8CE1600561C64 /* inv_sqrt.h */; };
+		ADC548661D485C1B00A5C852 /* l_add_c.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8515C8CE1600561C64 /* l_add_c.h */; };
+		ADC548671D485C1B00A5C852 /* l_add.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8615C8CE1600561C64 /* l_add.h */; };
+		ADC548681D485C1B00A5C852 /* l_comp.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8715C8CE1600561C64 /* l_comp.h */; };
+		ADC548691D485C1B00A5C852 /* l_extract.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8815C8CE1600561C64 /* l_extract.h */; };
+		ADC5486A1D485C1B00A5C852 /* l_mac.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8915C8CE1600561C64 /* l_mac.h */; };
+		ADC5486B1D485C1B00A5C852 /* l_msu.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8A15C8CE1600561C64 /* l_msu.h */; };
+		ADC5486C1D485C1B00A5C852 /* l_mult.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8B15C8CE1600561C64 /* l_mult.h */; };
+		ADC5486D1D485C1B00A5C852 /* l_negate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8C15C8CE1600561C64 /* l_negate.h */; };
+		ADC5486E1D485C1B00A5C852 /* l_shl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8D15C8CE1600561C64 /* l_shl.h */; };
+		ADC5486F1D485C1B00A5C852 /* l_shr_r.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8E15C8CE1600561C64 /* l_shr_r.h */; };
+		ADC548701D485C1B00A5C852 /* l_shr.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C8F15C8CE1600561C64 /* l_shr.h */; };
+		ADC548711D485C1B00A5C852 /* l_sub.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9015C8CE1600561C64 /* l_sub.h */; };
+		ADC548721D485C1B00A5C852 /* log2_norm.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9115C8CE1600561C64 /* log2_norm.h */; };
+		ADC548731D485C1B00A5C852 /* log2.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9215C8CE1600561C64 /* log2.h */; };
+		ADC548741D485C1B00A5C852 /* lsfwt.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9315C8CE1600561C64 /* lsfwt.h */; };
+		ADC548751D485C1B00A5C852 /* lsp_az.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9415C8CE1600561C64 /* lsp_az.h */; };
+		ADC548761D485C1B00A5C852 /* lsp_lsf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9515C8CE1600561C64 /* lsp_lsf.h */; };
+		ADC548771D485C1B00A5C852 /* lsp_tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9615C8CE1600561C64 /* lsp_tab.h */; };
+		ADC548781D485C1B00A5C852 /* lsp.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9715C8CE1600561C64 /* lsp.h */; };
+		ADC548791D485C1B00A5C852 /* mac_32.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9815C8CE1600561C64 /* mac_32.h */; };
+		ADC5487A1D485C1B00A5C852 /* mode.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9915C8CE1600561C64 /* mode.h */; };
+		ADC5487B1D485C1B00A5C852 /* mpy_32_16.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9A15C8CE1600561C64 /* mpy_32_16.h */; };
+		ADC5487C1D485C1B00A5C852 /* mpy_32.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9B15C8CE1600561C64 /* mpy_32.h */; };
+		ADC5487D1D485C1B00A5C852 /* mult_r.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9C15C8CE1600561C64 /* mult_r.h */; };
+		ADC5487E1D485C1B00A5C852 /* mult.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9D15C8CE1600561C64 /* mult.h */; };
+		ADC5487F1D485C1B00A5C852 /* n_proc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9E15C8CE1600561C64 /* n_proc.h */; };
+		ADC548801D485C1B00A5C852 /* negate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8C9F15C8CE1600561C64 /* negate.h */; };
+		ADC548811D485C1B00A5C852 /* norm_l.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CA015C8CE1600561C64 /* norm_l.h */; };
+		ADC548821D485C1B00A5C852 /* norm_s.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CA115C8CE1600561C64 /* norm_s.h */; };
+		ADC548831D485C1B00A5C852 /* oper_32b.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CA215C8CE1600561C64 /* oper_32b.h */; };
+		ADC548841D485C1B00A5C852 /* p_ol_wgh.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CA315C8CE1600561C64 /* p_ol_wgh.h */; };
+		ADC548851D485C1B00A5C852 /* pow2.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CA415C8CE1600561C64 /* pow2.h */; };
+		ADC548861D485C1B00A5C852 /* pred_lt.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CA515C8CE1600561C64 /* pred_lt.h */; };
+		ADC548871D485C1B00A5C852 /* pvgsmamr.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CA615C8CE1600561C64 /* pvgsmamr.h */; };
+		ADC548881D485C1B00A5C852 /* q_plsf_3_tbl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CA715C8CE1600561C64 /* q_plsf_3_tbl.h */; };
+		ADC548891D485C1B00A5C852 /* q_plsf_5_tbl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CA815C8CE1600561C64 /* q_plsf_5_tbl.h */; };
+		ADC5488A1D485C1B00A5C852 /* q_plsf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CA915C8CE1600561C64 /* q_plsf.h */; };
+		ADC5488B1D485C1B00A5C852 /* qgain475_tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CAA15C8CE1600561C64 /* qgain475_tab.h */; };
+		ADC5488C1D485C1B00A5C852 /* qua_gain_tbl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CAB15C8CE1600561C64 /* qua_gain_tbl.h */; };
+		ADC5488D1D485C1B00A5C852 /* qua_gain.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CAC15C8CE1600561C64 /* qua_gain.h */; };
+		ADC5488E1D485C1B00A5C852 /* reorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CAD15C8CE1600561C64 /* reorder.h */; };
+		ADC5488F1D485C1B00A5C852 /* residu.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CAE15C8CE1600561C64 /* residu.h */; };
+		ADC548901D485C1B00A5C852 /* reverse_bits.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CAF15C8CE1600561C64 /* reverse_bits.h */; };
+		ADC548911D485C1B00A5C852 /* round.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CB015C8CE1600561C64 /* round.h */; };
+		ADC548921D485C1B00A5C852 /* set_zero.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CB115C8CE1600561C64 /* set_zero.h */; };
+		ADC548931D485C1B00A5C852 /* shl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CB215C8CE1600561C64 /* shl.h */; };
+		ADC548941D485C1B00A5C852 /* shr_r.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CB315C8CE1600561C64 /* shr_r.h */; };
+		ADC548951D485C1B00A5C852 /* shr.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CB415C8CE1600561C64 /* shr.h */; };
+		ADC548961D485C1B00A5C852 /* sqrt_l.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CB515C8CE1600561C64 /* sqrt_l.h */; };
+		ADC548971D485C1B00A5C852 /* sub.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CB615C8CE1600561C64 /* sub.h */; };
+		ADC548981D485C1B00A5C852 /* syn_filt.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CB715C8CE1600561C64 /* syn_filt.h */; };
+		ADC548991D485C1B00A5C852 /* typedef.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CB815C8CE1600561C64 /* typedef.h */; };
+		ADC5489A1D485C1B00A5C852 /* vad.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CB915C8CE1600561C64 /* vad.h */; };
+		ADC5489B1D485C1B00A5C852 /* weight_a.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CBA15C8CE1600561C64 /* weight_a.h */; };
+		ADC5489C1D485C1B00A5C852 /* window_tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CBB15C8CE1600561C64 /* window_tab.h */; };
+		ADC5489D1D485C1B00A5C852 /* wmf_to_ets.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8CBC15C8CE1600561C64 /* wmf_to_ets.h */; };
+		ADC5489E1D485C1B00A5C852 /* decoder_gsm_amr.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8D8715C8D09400561C64 /* decoder_gsm_amr.h */; };
+		ADC5489F1D485C1B00A5C852 /* pvamrnbdecoder_api.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8D8815C8D09400561C64 /* pvamrnbdecoder_api.h */; };
+		ADC548A01D485C1B00A5C852 /* a_refl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8D8C15C8D0A000561C64 /* a_refl.h */; };
+		ADC548A11D485C1B00A5C852 /* agc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8D8E15C8D0A000561C64 /* agc.h */; };
+		ADC548A21D485C1B00A5C852 /* amrdecode.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8D9015C8D0A000561C64 /* amrdecode.h */; };
+		ADC548A31D485C1B00A5C852 /* b_cn_cod.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8D9215C8D0A000561C64 /* b_cn_cod.h */; };
+		ADC548A41D485C1B00A5C852 /* bgnscd.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8D9415C8D0A000561C64 /* bgnscd.h */; };
+		ADC548A51D485C1B00A5C852 /* c_g_aver.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8D9615C8D0A000561C64 /* c_g_aver.h */; };
+		ADC548A61D485C1B00A5C852 /* d2_9pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8D9D15C8D0A000561C64 /* d2_9pf.h */; };
+		ADC548A71D485C1B00A5C852 /* d2_11pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8D9F15C8D0A000561C64 /* d2_11pf.h */; };
+		ADC548A81D485C1B00A5C852 /* d3_14pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DA115C8D0A000561C64 /* d3_14pf.h */; };
+		ADC548A91D485C1B00A5C852 /* d4_17pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DA315C8D0A000561C64 /* d4_17pf.h */; };
+		ADC548AA1D485C1B00A5C852 /* d8_31pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DA515C8D0A000561C64 /* d8_31pf.h */; };
+		ADC548AB1D485C1B00A5C852 /* d1035pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DA715C8D0A000561C64 /* d1035pf.h */; };
+		ADC548AC1D485C1B00A5C852 /* dec_amr.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DA915C8D0A000561C64 /* dec_amr.h */; };
+		ADC548AD1D485C1B00A5C852 /* dec_gain.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DAB15C8D0A000561C64 /* dec_gain.h */; };
+		ADC548AE1D485C1B00A5C852 /* dec_lag3.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DAE15C8D0A000561C64 /* dec_lag3.h */; };
+		ADC548AF1D485C1B00A5C852 /* dec_lag6.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DB015C8D0A000561C64 /* dec_lag6.h */; };
+		ADC548B01D485C1B00A5C852 /* dtx_dec.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DB215C8D0A000561C64 /* dtx_dec.h */; };
+		ADC548B11D485C1B00A5C852 /* ec_gains.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DB415C8D0A000561C64 /* ec_gains.h */; };
+		ADC548B21D485C1B00A5C852 /* ex_ctrl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DB615C8D0A000561C64 /* ex_ctrl.h */; };
+		ADC548B31D485C1B00A5C852 /* gsmamr_dec.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DB715C8D0A000561C64 /* gsmamr_dec.h */; };
+		ADC548B41D485C1B00A5C852 /* if2_to_ets.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DB915C8D0A000561C64 /* if2_to_ets.h */; };
+		ADC548B51D485C1B00A5C852 /* lsp_avg.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DBC15C8D0A000561C64 /* lsp_avg.h */; };
+		ADC548B61D485C1B00A5C852 /* ph_disp.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DBE15C8D0A000561C64 /* ph_disp.h */; };
+		ADC548B71D485C1B00A5C852 /* post_pro.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DC015C8D0A000561C64 /* post_pro.h */; };
+		ADC548B81D485C1B00A5C852 /* preemph.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DC215C8D0A000561C64 /* preemph.h */; };
+		ADC548B91D485C1B00A5C852 /* pstfilt.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DC415C8D0A000561C64 /* pstfilt.h */; };
+		ADC548BA1D485C1B00A5C852 /* pvgsmamrdecoder_dpi.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8DC515C8D0A000561C64 /* pvgsmamrdecoder_dpi.h */; };
+		ADC548BB1D485C1B00A5C852 /* pvgsmamrdecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E0115C8D0B100561C64 /* pvgsmamrdecoder.h */; };
+		ADC548BC1D485C1B00A5C852 /* sp_dec.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E0415C8D0B100561C64 /* sp_dec.h */; };
+		ADC548BD1D485C1B00A5C852 /* gsmamr_encoder_wrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E0B15C8D0BE00561C64 /* gsmamr_encoder_wrapper.h */; };
+		ADC548BE1D485C1B00A5C852 /* amrencode.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E0E15C8D0C900561C64 /* amrencode.h */; };
+		ADC548BF1D485C1B00A5C852 /* autocorr.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E1015C8D0C900561C64 /* autocorr.h */; };
+		ADC548C01D485C1B00A5C852 /* c2_9pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E1215C8D0C900561C64 /* c2_9pf.h */; };
+		ADC548C11D485C1B00A5C852 /* c2_11pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E1415C8D0C900561C64 /* c2_11pf.h */; };
+		ADC548C21D485C1B00A5C852 /* c3_14pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E1615C8D0C900561C64 /* c3_14pf.h */; };
+		ADC548C31D485C1B00A5C852 /* c4_17pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E1815C8D0C900561C64 /* c4_17pf.h */; };
+		ADC548C41D485C1B00A5C852 /* c8_31pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E1A15C8D0C900561C64 /* c8_31pf.h */; };
+		ADC548C51D485C1B00A5C852 /* c1035pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E1C15C8D0C900561C64 /* c1035pf.h */; };
+		ADC548C61D485C1B00A5C852 /* calc_cor.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E1E15C8D0C900561C64 /* calc_cor.h */; };
+		ADC548C71D485C1B00A5C852 /* calc_en.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E2015C8D0C900561C64 /* calc_en.h */; };
+		ADC548C81D485C1B00A5C852 /* cbsearch.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E2215C8D0C900561C64 /* cbsearch.h */; };
+		ADC548C91D485C1B00A5C852 /* cl_ltp.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E2415C8D0C900561C64 /* cl_ltp.h */; };
+		ADC548CA1D485C1B00A5C852 /* cod_amr.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E2615C8D0C900561C64 /* cod_amr.h */; };
+		ADC548CB1D485C1B00A5C852 /* convolve.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E2815C8D0C900561C64 /* convolve.h */; };
+		ADC548CC1D485C1B00A5C852 /* cor_h_x.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E2A15C8D0C900561C64 /* cor_h_x.h */; };
+		ADC548CD1D485C1B00A5C852 /* cor_h_x2.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E2C15C8D0C900561C64 /* cor_h_x2.h */; };
+		ADC548CE1D485C1B00A5C852 /* cor_h.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E2E15C8D0C900561C64 /* cor_h.h */; };
+		ADC548CF1D485C1B00A5C852 /* div_32.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E3115C8D0C900561C64 /* div_32.h */; };
+		ADC548D01D485C1B00A5C852 /* dtx_enc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E3315C8D0C900561C64 /* dtx_enc.h */; };
+		ADC548D11D485C1B00A5C852 /* enc_lag3.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E3515C8D0C900561C64 /* enc_lag3.h */; };
+		ADC548D21D485C1B00A5C852 /* enc_lag6.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E3715C8D0C900561C64 /* enc_lag6.h */; };
+		ADC548D31D485C1B00A5C852 /* ets_to_if2.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E3A15C8D0C900561C64 /* ets_to_if2.h */; };
+		ADC548D41D485C1B00A5C852 /* ets_to_wmf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E3C15C8D0C900561C64 /* ets_to_wmf.h */; };
+		ADC548D51D485C1B00A5C852 /* g_adapt.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E3E15C8D0C900561C64 /* g_adapt.h */; };
+		ADC548D61D485C1B00A5C852 /* g_code.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E4015C8D0C900561C64 /* g_code.h */; };
+		ADC548D71D485C1B00A5C852 /* g_pitch.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E4215C8D0C900561C64 /* g_pitch.h */; };
+		ADC548D81D485C1B00A5C852 /* gain_q.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E4415C8D0C900561C64 /* gain_q.h */; };
+		ADC548D91D485C1B00A5C852 /* gsmamr_enc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E4515C8D0C900561C64 /* gsmamr_enc.h */; };
+		ADC548DA1D485C1B00A5C852 /* hp_max.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E4815C8D0C900561C64 /* hp_max.h */; };
+		ADC548DB1D485C1B00A5C852 /* inter_36_tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E4A15C8D0C900561C64 /* inter_36_tab.h */; };
+		ADC548DC1D485C1B00A5C852 /* inter_36.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E4C15C8D0C900561C64 /* inter_36.h */; };
+		ADC548DD1D485C1B00A5C852 /* l_abs.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E4E15C8D0C900561C64 /* l_abs.h */; };
+		ADC548DE1D485C1B00A5C852 /* lag_wind_tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E5315C8D0C900561C64 /* lag_wind_tab.h */; };
+		ADC548DF1D485C1B00A5C852 /* lag_wind.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E5515C8D0C900561C64 /* lag_wind.h */; };
+		ADC548E01D485C1B00A5C852 /* levinson.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E5715C8D0C900561C64 /* levinson.h */; };
+		ADC548E11D485C1B00A5C852 /* lpc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E5A15C8D0C900561C64 /* lpc.h */; };
+		ADC548E21D485C1B00A5C852 /* ol_ltp.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E5C15C8D0C900561C64 /* ol_ltp.h */; };
+		ADC548E31D485C1B00A5C852 /* pitch_fr.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E5F15C8D0C900561C64 /* pitch_fr.h */; };
+		ADC548E41D485C1B00A5C852 /* pitch_ol.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E6115C8D0C900561C64 /* pitch_ol.h */; };
+		ADC548E51D485C1B00A5C852 /* pre_big.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E6315C8D0C900561C64 /* pre_big.h */; };
+		ADC548E61D485C1B00A5C852 /* pre_proc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E6515C8D0C900561C64 /* pre_proc.h */; };
+		ADC548E71D485C1B00A5C852 /* prm2bits.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E6715C8D0C900561C64 /* prm2bits.h */; };
+		ADC548E81D485C1B00A5C852 /* q_gain_c.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E6915C8D0C900561C64 /* q_gain_c.h */; };
+		ADC548E91D485C1B00A5C852 /* q_gain_p.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E6B15C8D0C900561C64 /* q_gain_p.h */; };
+		ADC548EA1D485C1B00A5C852 /* qgain475.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E6D15C8D0C900561C64 /* qgain475.h */; };
+		ADC548EB1D485C1B00A5C852 /* qgain795.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E6F15C8D0C900561C64 /* qgain795.h */; };
+		ADC548EC1D485C1B00A5C852 /* s10_8pf.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E7215C8D0C900561C64 /* s10_8pf.h */; };
+		ADC548ED1D485C1B00A5C852 /* set_sign.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E7415C8D0C900561C64 /* set_sign.h */; };
+		ADC548EE1D485C1B00A5C852 /* sid_sync.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E7615C8D0C900561C64 /* sid_sync.h */; };
+		ADC548EF1D485C1B00A5C852 /* sp_enc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E7815C8D0C900561C64 /* sp_enc.h */; };
+		ADC548F01D485C1B00A5C852 /* spreproc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E7A15C8D0C900561C64 /* spreproc.h */; };
+		ADC548F11D485C1B00A5C852 /* spstproc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E7C15C8D0C900561C64 /* spstproc.h */; };
+		ADC548F21D485C1B00A5C852 /* ton_stab.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E7E15C8D0C900561C64 /* ton_stab.h */; };
+		ADC548F31D485C1B00A5C852 /* vad1.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E8015C8D0C900561C64 /* vad1.h */; };
+		ADC548F41D485C1B00A5C852 /* vad2.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8E8115C8D0C900561C64 /* vad2.h */; };
+		ADC548F51D485C1B00A5C852 /* amr_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8EF815C8D0E100561C64 /* amr_interface.h */; };
+		ADC548F61D485C1B00A5C852 /* interf_dec.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8EF915C8D0E100561C64 /* interf_dec.h */; };
+		ADC548F71D485C1B00A5C852 /* interf_enc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8EFA15C8D0E100561C64 /* interf_enc.h */; };
+		ADC548F81D485C1B00A5C852 /* amrAllSrc.h in Headers */ = {isa = PBXBuildFile; fileRef = 55EA5C8E17D82F8A00885688 /* amrAllSrc.h */; };
+		ADC548F91D485C1B00A5C852 /* amrAllSrc2.h in Headers */ = {isa = PBXBuildFile; fileRef = 55EA5C9017D82F8A00885688 /* amrAllSrc2.h */; };
+		ADC548FA1D485C1B00A5C852 /* amrAllSrc3.h in Headers */ = {isa = PBXBuildFile; fileRef = 55EA5C9217D82F8A00885688 /* amrAllSrc3.h */; };
+		ADC548FB1D485C1B00A5C852 /* amrAllSrc4.h in Headers */ = {isa = PBXBuildFile; fileRef = 55EA5C9417D82F8A00885688 /* amrAllSrc4.h */; };
+		ADC54D041D489D2700A5C852 /* amrnb_api.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADC54D031D489D2700A5C852 /* amrnb_api.cpp */; };
+		ADC54D051D489D4100A5C852 /* amrnb_api.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADC54D031D489D2700A5C852 /* amrnb_api.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -535,6 +725,8 @@
 		55EA5C9217D82F8A00885688 /* amrAllSrc3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = amrAllSrc3.h; path = "codecs/opencore-amr/amrAllSrc3.h"; sourceTree = "<group>"; };
 		55EA5C9317D82F8A00885688 /* amrAllSrc4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = amrAllSrc4.cpp; path = "codecs/opencore-amr/amrAllSrc4.cpp"; sourceTree = "<group>"; };
 		55EA5C9417D82F8A00885688 /* amrAllSrc4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = amrAllSrc4.h; path = "codecs/opencore-amr/amrAllSrc4.h"; sourceTree = "<group>"; };
+		ADC548FF1D485C1B00A5C852 /* libamrnb_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libamrnb_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADC54D031D489D2700A5C852 /* amrnb_api.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = amrnb_api.cpp; path = "codecs/opencore-amr/amrnb/amrnb_api.cpp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -546,12 +738,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ADC548491D485C1B00A5C852 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADC5484A1D485C1B00A5C852 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		3FAA8C4A15C8CB9B00561C64 = {
 			isa = PBXGroup;
 			children = (
+				ADC54D031D489D2700A5C852 /* amrnb_api.cpp */,
 				55EA5C8D17D82F8A00885688 /* amrAllSrc.CPP */,
 				55EA5C8E17D82F8A00885688 /* amrAllSrc.h */,
 				55EA5C8F17D82F8A00885688 /* amrAllSrc2.cpp */,
@@ -573,6 +774,7 @@
 			isa = PBXGroup;
 			children = (
 				3FAA8C5515C8CB9B00561C64 /* libamrnb.a */,
+				ADC548FF1D485C1B00A5C852 /* libamrnb_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1174,6 +1376,189 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ADC5484B1D485C1B00A5C852 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADC5484C1D485C1B00A5C852 /* abs_s.h in Headers */,
+				ADC5484D1D485C1B00A5C852 /* add.h in Headers */,
+				ADC5484E1D485C1B00A5C852 /* az_lsp.h in Headers */,
+				ADC5484F1D485C1B00A5C852 /* basic_op_arm_gcc_v5.h in Headers */,
+				ADC548501D485C1B00A5C852 /* basic_op_c_equivalent.h in Headers */,
+				ADC548511D485C1B00A5C852 /* basic_op.h in Headers */,
+				ADC548521D485C1B00A5C852 /* basicop_malloc.h in Headers */,
+				ADC548531D485C1B00A5C852 /* bitno_tab.h in Headers */,
+				ADC548541D485C1B00A5C852 /* bitreorder_tab.h in Headers */,
+				ADC548551D485C1B00A5C852 /* bytesused.h in Headers */,
+				ADC548561D485C1B00A5C852 /* cnst_vad.h in Headers */,
+				ADC548571D485C1B00A5C852 /* cnst.h in Headers */,
+				ADC548581D485C1B00A5C852 /* d_gain_c.h in Headers */,
+				ADC548591D485C1B00A5C852 /* d_gain_p.h in Headers */,
+				ADC5485A1D485C1B00A5C852 /* d_plsf.h in Headers */,
+				ADC5485B1D485C1B00A5C852 /* div_s.h in Headers */,
+				ADC5485C1D485C1B00A5C852 /* dtx_common_def.h in Headers */,
+				ADC5485D1D485C1B00A5C852 /* frame_type_3gpp.h in Headers */,
+				ADC5485E1D485C1B00A5C852 /* frame.h in Headers */,
+				ADC5485F1D485C1B00A5C852 /* gc_pred.h in Headers */,
+				ADC548601D485C1B00A5C852 /* get_const_tbls.h in Headers */,
+				ADC548611D485C1B00A5C852 /* gmed_n.h in Headers */,
+				ADC548621D485C1B00A5C852 /* gsm_amr_typedefs.h in Headers */,
+				ADC548631D485C1B00A5C852 /* int_lpc.h in Headers */,
+				ADC548641D485C1B00A5C852 /* int_lsf.h in Headers */,
+				ADC548651D485C1B00A5C852 /* inv_sqrt.h in Headers */,
+				ADC548661D485C1B00A5C852 /* l_add_c.h in Headers */,
+				ADC548671D485C1B00A5C852 /* l_add.h in Headers */,
+				ADC548681D485C1B00A5C852 /* l_comp.h in Headers */,
+				ADC548691D485C1B00A5C852 /* l_extract.h in Headers */,
+				ADC5486A1D485C1B00A5C852 /* l_mac.h in Headers */,
+				ADC5486B1D485C1B00A5C852 /* l_msu.h in Headers */,
+				ADC5486C1D485C1B00A5C852 /* l_mult.h in Headers */,
+				ADC5486D1D485C1B00A5C852 /* l_negate.h in Headers */,
+				ADC5486E1D485C1B00A5C852 /* l_shl.h in Headers */,
+				ADC5486F1D485C1B00A5C852 /* l_shr_r.h in Headers */,
+				ADC548701D485C1B00A5C852 /* l_shr.h in Headers */,
+				ADC548711D485C1B00A5C852 /* l_sub.h in Headers */,
+				ADC548721D485C1B00A5C852 /* log2_norm.h in Headers */,
+				ADC548731D485C1B00A5C852 /* log2.h in Headers */,
+				ADC548741D485C1B00A5C852 /* lsfwt.h in Headers */,
+				ADC548751D485C1B00A5C852 /* lsp_az.h in Headers */,
+				ADC548761D485C1B00A5C852 /* lsp_lsf.h in Headers */,
+				ADC548771D485C1B00A5C852 /* lsp_tab.h in Headers */,
+				ADC548781D485C1B00A5C852 /* lsp.h in Headers */,
+				ADC548791D485C1B00A5C852 /* mac_32.h in Headers */,
+				ADC5487A1D485C1B00A5C852 /* mode.h in Headers */,
+				ADC5487B1D485C1B00A5C852 /* mpy_32_16.h in Headers */,
+				ADC5487C1D485C1B00A5C852 /* mpy_32.h in Headers */,
+				ADC5487D1D485C1B00A5C852 /* mult_r.h in Headers */,
+				ADC5487E1D485C1B00A5C852 /* mult.h in Headers */,
+				ADC5487F1D485C1B00A5C852 /* n_proc.h in Headers */,
+				ADC548801D485C1B00A5C852 /* negate.h in Headers */,
+				ADC548811D485C1B00A5C852 /* norm_l.h in Headers */,
+				ADC548821D485C1B00A5C852 /* norm_s.h in Headers */,
+				ADC548831D485C1B00A5C852 /* oper_32b.h in Headers */,
+				ADC548841D485C1B00A5C852 /* p_ol_wgh.h in Headers */,
+				ADC548851D485C1B00A5C852 /* pow2.h in Headers */,
+				ADC548861D485C1B00A5C852 /* pred_lt.h in Headers */,
+				ADC548871D485C1B00A5C852 /* pvgsmamr.h in Headers */,
+				ADC548881D485C1B00A5C852 /* q_plsf_3_tbl.h in Headers */,
+				ADC548891D485C1B00A5C852 /* q_plsf_5_tbl.h in Headers */,
+				ADC5488A1D485C1B00A5C852 /* q_plsf.h in Headers */,
+				ADC5488B1D485C1B00A5C852 /* qgain475_tab.h in Headers */,
+				ADC5488C1D485C1B00A5C852 /* qua_gain_tbl.h in Headers */,
+				ADC5488D1D485C1B00A5C852 /* qua_gain.h in Headers */,
+				ADC5488E1D485C1B00A5C852 /* reorder.h in Headers */,
+				ADC5488F1D485C1B00A5C852 /* residu.h in Headers */,
+				ADC548901D485C1B00A5C852 /* reverse_bits.h in Headers */,
+				ADC548911D485C1B00A5C852 /* round.h in Headers */,
+				ADC548921D485C1B00A5C852 /* set_zero.h in Headers */,
+				ADC548931D485C1B00A5C852 /* shl.h in Headers */,
+				ADC548941D485C1B00A5C852 /* shr_r.h in Headers */,
+				ADC548951D485C1B00A5C852 /* shr.h in Headers */,
+				ADC548961D485C1B00A5C852 /* sqrt_l.h in Headers */,
+				ADC548971D485C1B00A5C852 /* sub.h in Headers */,
+				ADC548981D485C1B00A5C852 /* syn_filt.h in Headers */,
+				ADC548991D485C1B00A5C852 /* typedef.h in Headers */,
+				ADC5489A1D485C1B00A5C852 /* vad.h in Headers */,
+				ADC5489B1D485C1B00A5C852 /* weight_a.h in Headers */,
+				ADC5489C1D485C1B00A5C852 /* window_tab.h in Headers */,
+				ADC5489D1D485C1B00A5C852 /* wmf_to_ets.h in Headers */,
+				ADC5489E1D485C1B00A5C852 /* decoder_gsm_amr.h in Headers */,
+				ADC5489F1D485C1B00A5C852 /* pvamrnbdecoder_api.h in Headers */,
+				ADC548A01D485C1B00A5C852 /* a_refl.h in Headers */,
+				ADC548A11D485C1B00A5C852 /* agc.h in Headers */,
+				ADC548A21D485C1B00A5C852 /* amrdecode.h in Headers */,
+				ADC548A31D485C1B00A5C852 /* b_cn_cod.h in Headers */,
+				ADC548A41D485C1B00A5C852 /* bgnscd.h in Headers */,
+				ADC548A51D485C1B00A5C852 /* c_g_aver.h in Headers */,
+				ADC548A61D485C1B00A5C852 /* d2_9pf.h in Headers */,
+				ADC548A71D485C1B00A5C852 /* d2_11pf.h in Headers */,
+				ADC548A81D485C1B00A5C852 /* d3_14pf.h in Headers */,
+				ADC548A91D485C1B00A5C852 /* d4_17pf.h in Headers */,
+				ADC548AA1D485C1B00A5C852 /* d8_31pf.h in Headers */,
+				ADC548AB1D485C1B00A5C852 /* d1035pf.h in Headers */,
+				ADC548AC1D485C1B00A5C852 /* dec_amr.h in Headers */,
+				ADC548AD1D485C1B00A5C852 /* dec_gain.h in Headers */,
+				ADC548AE1D485C1B00A5C852 /* dec_lag3.h in Headers */,
+				ADC548AF1D485C1B00A5C852 /* dec_lag6.h in Headers */,
+				ADC548B01D485C1B00A5C852 /* dtx_dec.h in Headers */,
+				ADC548B11D485C1B00A5C852 /* ec_gains.h in Headers */,
+				ADC548B21D485C1B00A5C852 /* ex_ctrl.h in Headers */,
+				ADC548B31D485C1B00A5C852 /* gsmamr_dec.h in Headers */,
+				ADC548B41D485C1B00A5C852 /* if2_to_ets.h in Headers */,
+				ADC548B51D485C1B00A5C852 /* lsp_avg.h in Headers */,
+				ADC548B61D485C1B00A5C852 /* ph_disp.h in Headers */,
+				ADC548B71D485C1B00A5C852 /* post_pro.h in Headers */,
+				ADC548B81D485C1B00A5C852 /* preemph.h in Headers */,
+				ADC548B91D485C1B00A5C852 /* pstfilt.h in Headers */,
+				ADC548BA1D485C1B00A5C852 /* pvgsmamrdecoder_dpi.h in Headers */,
+				ADC548BB1D485C1B00A5C852 /* pvgsmamrdecoder.h in Headers */,
+				ADC548BC1D485C1B00A5C852 /* sp_dec.h in Headers */,
+				ADC548BD1D485C1B00A5C852 /* gsmamr_encoder_wrapper.h in Headers */,
+				ADC548BE1D485C1B00A5C852 /* amrencode.h in Headers */,
+				ADC548BF1D485C1B00A5C852 /* autocorr.h in Headers */,
+				ADC548C01D485C1B00A5C852 /* c2_9pf.h in Headers */,
+				ADC548C11D485C1B00A5C852 /* c2_11pf.h in Headers */,
+				ADC548C21D485C1B00A5C852 /* c3_14pf.h in Headers */,
+				ADC548C31D485C1B00A5C852 /* c4_17pf.h in Headers */,
+				ADC548C41D485C1B00A5C852 /* c8_31pf.h in Headers */,
+				ADC548C51D485C1B00A5C852 /* c1035pf.h in Headers */,
+				ADC548C61D485C1B00A5C852 /* calc_cor.h in Headers */,
+				ADC548C71D485C1B00A5C852 /* calc_en.h in Headers */,
+				ADC548C81D485C1B00A5C852 /* cbsearch.h in Headers */,
+				ADC548C91D485C1B00A5C852 /* cl_ltp.h in Headers */,
+				ADC548CA1D485C1B00A5C852 /* cod_amr.h in Headers */,
+				ADC548CB1D485C1B00A5C852 /* convolve.h in Headers */,
+				ADC548CC1D485C1B00A5C852 /* cor_h_x.h in Headers */,
+				ADC548CD1D485C1B00A5C852 /* cor_h_x2.h in Headers */,
+				ADC548CE1D485C1B00A5C852 /* cor_h.h in Headers */,
+				ADC548CF1D485C1B00A5C852 /* div_32.h in Headers */,
+				ADC548D01D485C1B00A5C852 /* dtx_enc.h in Headers */,
+				ADC548D11D485C1B00A5C852 /* enc_lag3.h in Headers */,
+				ADC548D21D485C1B00A5C852 /* enc_lag6.h in Headers */,
+				ADC548D31D485C1B00A5C852 /* ets_to_if2.h in Headers */,
+				ADC548D41D485C1B00A5C852 /* ets_to_wmf.h in Headers */,
+				ADC548D51D485C1B00A5C852 /* g_adapt.h in Headers */,
+				ADC548D61D485C1B00A5C852 /* g_code.h in Headers */,
+				ADC548D71D485C1B00A5C852 /* g_pitch.h in Headers */,
+				ADC548D81D485C1B00A5C852 /* gain_q.h in Headers */,
+				ADC548D91D485C1B00A5C852 /* gsmamr_enc.h in Headers */,
+				ADC548DA1D485C1B00A5C852 /* hp_max.h in Headers */,
+				ADC548DB1D485C1B00A5C852 /* inter_36_tab.h in Headers */,
+				ADC548DC1D485C1B00A5C852 /* inter_36.h in Headers */,
+				ADC548DD1D485C1B00A5C852 /* l_abs.h in Headers */,
+				ADC548DE1D485C1B00A5C852 /* lag_wind_tab.h in Headers */,
+				ADC548DF1D485C1B00A5C852 /* lag_wind.h in Headers */,
+				ADC548E01D485C1B00A5C852 /* levinson.h in Headers */,
+				ADC548E11D485C1B00A5C852 /* lpc.h in Headers */,
+				ADC548E21D485C1B00A5C852 /* ol_ltp.h in Headers */,
+				ADC548E31D485C1B00A5C852 /* pitch_fr.h in Headers */,
+				ADC548E41D485C1B00A5C852 /* pitch_ol.h in Headers */,
+				ADC548E51D485C1B00A5C852 /* pre_big.h in Headers */,
+				ADC548E61D485C1B00A5C852 /* pre_proc.h in Headers */,
+				ADC548E71D485C1B00A5C852 /* prm2bits.h in Headers */,
+				ADC548E81D485C1B00A5C852 /* q_gain_c.h in Headers */,
+				ADC548E91D485C1B00A5C852 /* q_gain_p.h in Headers */,
+				ADC548EA1D485C1B00A5C852 /* qgain475.h in Headers */,
+				ADC548EB1D485C1B00A5C852 /* qgain795.h in Headers */,
+				ADC548EC1D485C1B00A5C852 /* s10_8pf.h in Headers */,
+				ADC548ED1D485C1B00A5C852 /* set_sign.h in Headers */,
+				ADC548EE1D485C1B00A5C852 /* sid_sync.h in Headers */,
+				ADC548EF1D485C1B00A5C852 /* sp_enc.h in Headers */,
+				ADC548F01D485C1B00A5C852 /* spreproc.h in Headers */,
+				ADC548F11D485C1B00A5C852 /* spstproc.h in Headers */,
+				ADC548F21D485C1B00A5C852 /* ton_stab.h in Headers */,
+				ADC548F31D485C1B00A5C852 /* vad1.h in Headers */,
+				ADC548F41D485C1B00A5C852 /* vad2.h in Headers */,
+				ADC548F51D485C1B00A5C852 /* amr_interface.h in Headers */,
+				ADC548F61D485C1B00A5C852 /* interf_dec.h in Headers */,
+				ADC548F71D485C1B00A5C852 /* interf_enc.h in Headers */,
+				ADC548F81D485C1B00A5C852 /* amrAllSrc.h in Headers */,
+				ADC548F91D485C1B00A5C852 /* amrAllSrc2.h in Headers */,
+				ADC548FA1D485C1B00A5C852 /* amrAllSrc3.h in Headers */,
+				ADC548FB1D485C1B00A5C852 /* amrAllSrc4.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -1192,6 +1577,23 @@
 			name = amrnb;
 			productName = amrnb;
 			productReference = 3FAA8C5515C8CB9B00561C64 /* libamrnb.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		ADC5483C1D485C1B00A5C852 /* amrnb_Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ADC548FC1D485C1B00A5C852 /* Build configuration list for PBXNativeTarget "amrnb_Mac" */;
+			buildPhases = (
+				ADC5483D1D485C1B00A5C852 /* Sources */,
+				ADC548491D485C1B00A5C852 /* Frameworks */,
+				ADC5484B1D485C1B00A5C852 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = amrnb_Mac;
+			productName = amrnb;
+			productReference = ADC548FF1D485C1B00A5C852 /* libamrnb_Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -1216,6 +1618,7 @@
 			projectRoot = "";
 			targets = (
 				3FAA8C5415C8CB9B00561C64 /* amrnb */,
+				ADC5483C1D485C1B00A5C852 /* amrnb_Mac */,
 			);
 		};
 /* End PBXProject section */
@@ -1232,10 +1635,30 @@
 				3FAA8E8C15C8D0C900561C64 /* c4_17pf.cpp in Sources */,
 				3FAA8E8E15C8D0C900561C64 /* c8_31pf.cpp in Sources */,
 				3FAA8E9015C8D0C900561C64 /* c1035pf.cpp in Sources */,
+				ADC54D041D489D2700A5C852 /* amrnb_api.cpp in Sources */,
 				55EA5C9517D82F8A00885688 /* amrAllSrc.CPP in Sources */,
 				55EA5C9717D82F8A00885688 /* amrAllSrc2.cpp in Sources */,
 				55EA5C9917D82F8A00885688 /* amrAllSrc3.cpp in Sources */,
 				55EA5C9B17D82F8A00885688 /* amrAllSrc4.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADC5483D1D485C1B00A5C852 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADC54D051D489D4100A5C852 /* amrnb_api.cpp in Sources */,
+				ADC5483E1D485C1B00A5C852 /* amr_interface.cpp in Sources */,
+				ADC5483F1D485C1B00A5C852 /* c2_9pf.cpp in Sources */,
+				ADC548401D485C1B00A5C852 /* c2_11pf.cpp in Sources */,
+				ADC548411D485C1B00A5C852 /* c3_14pf.cpp in Sources */,
+				ADC548421D485C1B00A5C852 /* c4_17pf.cpp in Sources */,
+				ADC548431D485C1B00A5C852 /* c8_31pf.cpp in Sources */,
+				ADC548441D485C1B00A5C852 /* c1035pf.cpp in Sources */,
+				ADC548451D485C1B00A5C852 /* amrAllSrc.CPP in Sources */,
+				ADC548461D485C1B00A5C852 /* amrAllSrc2.cpp in Sources */,
+				ADC548471D485C1B00A5C852 /* amrAllSrc3.cpp in Sources */,
+				ADC548481D485C1B00A5C852 /* amrAllSrc4.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1331,6 +1754,61 @@
 			};
 			name = Release;
 		};
+		ADC548FD1D485C1B00A5C852 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/amrnb.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				HEADER_SEARCH_PATHS = (
+					"./codecs/opencore-amr/opencore/common/dec/include",
+					"./codecs/opencore-amr/oscl",
+					"./codecs/opencore-amr/opencore/amr-nb/dec/src/",
+					"./codecs/opencore-amr/**",
+					./,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../IOSProject/out/baselib;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Debug;
+		};
+		ADC548FE1D485C1B00A5C852 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DSTROOT = /tmp/amrnb.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				HEADER_SEARCH_PATHS = (
+					"./codecs/opencore-amr/opencore/common/dec/include",
+					"./codecs/opencore-amr/oscl",
+					"./codecs/opencore-amr/opencore/amr-nb/dec/src/",
+					"./codecs/opencore-amr/**",
+					./,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../IOSProject/out/baselib;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1348,6 +1826,15 @@
 			buildConfigurations = (
 				3FAA8C6315C8CB9B00561C64 /* Debug */,
 				3FAA8C6415C8CB9B00561C64 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ADC548FC1D485C1B00A5C852 /* Build configuration list for PBXNativeTarget "amrnb_Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADC548FD1D485C1B00A5C852 /* Debug */,
+				ADC548FE1D485C1B00A5C852 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

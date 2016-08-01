@@ -50,19 +50,19 @@ bool CheckOSVersion()
     err = Gestalt(gestaltSystemVersion, &version);
     if (err != noErr)
     {
-        WEBRTC_TRACE(webrtc::kTraceError, webrtc::kTraceVideoCapture, 0,
+        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, 0,
                      "Could not get OS version");
         return false;
     }
 
     if (version < 0x00001040) // Older version than Mac OSX 10.4
     {
-        WEBRTC_TRACE(webrtc::kTraceError, webrtc::kTraceVideoCapture, 0,
+        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, 0,
                      "OS version too old: 0x%x", version);
         return false;
     }
 
-    WEBRTC_TRACE(webrtc::kTraceDebug, webrtc::kTraceVideoCapture, 0,
+    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, 0,
                  "OS version compatible: 0x%x", version);
 
     return true;
@@ -79,19 +79,19 @@ bool CheckQTVersion()
     err = Gestalt(gestaltQuickTime, &version);
     if (err != noErr)
     {
-        WEBRTC_TRACE(webrtc::kTraceError, webrtc::kTraceVideoCapture, 0,
+        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, 0,
                      "Could not get QuickTime version");
         return false;
     }
 
     if (version < 0x07000000) // QT v. 7.x or newer (QT 5.0.2 0x05020000)
     {
-        WEBRTC_TRACE(webrtc::kTraceError, webrtc::kTraceVideoCapture, 0,
+        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, 0,
                      "QuickTime version too old: 0x%x", version);
         return false;
     }
 
-    WEBRTC_TRACE(webrtc::kTraceDebug, webrtc::kTraceVideoCapture, 0,
+    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, 0,
                  "QuickTime version compatible: 0x%x", version);
     return true;
 }
@@ -113,27 +113,27 @@ bool CheckQTVersion()
  */
 
 VideoCaptureModule* VideoCaptureImpl::Create(
-    const WebRtc_Word32 id, const char* deviceUniqueIdUTF8)
+    const WebRtc_Word32 id, const char* deviceUniqueIdUTF8, VideoCaptureCapability *settings)
 {
 
-    if (webrtc::videocapturemodule::CheckOSVersion() == false)
+    if (cloopenwebrtc::videocapturemodule::CheckOSVersion() == false)
     {
-        WEBRTC_TRACE(webrtc::kTraceError, webrtc::kTraceVideoCapture, id,
+        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, id,
                      "OS version is too old. Could not create video capture "
                      "module. Returning NULL");
         return NULL;
     }
 
 #if __MAC_OS_X_VERSION_MIN_REQUIRED == __MAC_10_4 // QuickTime version
-    if (webrtc::videocapturemodule::CheckQTVersion() == false)
+    if (cloopenwebrtc::videocapturemodule::CheckQTVersion() == false)
     {
-        WEBRTC_TRACE(webrtc::kTraceError, webrtc::kTraceVideoCapture, id,
+        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, id,
                      "QuickTime version is too old. Could not create video "
                      "capture module. Returning NULL");
         return NULL;
     }
 
-    WEBRTC_TRACE(webrtc::kTraceInfo, webrtc::kTraceVideoCapture, id,
+    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, id,
                  "%s line %d. QTKit is not supported on this machine. Using "
                  "QuickTime framework to capture video",
                  __FILE__, __LINE__);
@@ -144,7 +144,7 @@ VideoCaptureModule* VideoCaptureImpl::Create(
 
     if (!newCaptureModule)
     {
-        WEBRTC_TRACE(webrtc::kTraceDebug, webrtc::kTraceVideoCapture, id,
+        WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, id,
                      "could not Create for unique device %s, !newCaptureModule",
                      deviceUniqueIdUTF8);
         return NULL;
@@ -152,7 +152,7 @@ VideoCaptureModule* VideoCaptureImpl::Create(
 
     if (newCaptureModule->Init(id, deviceUniqueIdUTF8) != 0)
     {
-        WEBRTC_TRACE(webrtc::kTraceDebug, webrtc::kTraceVideoCapture, id,
+        WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, id,
                      "could not Create for unique device %s, "
                      "newCaptureModule->Init()!=0",
                      deviceUniqueIdUTF8);
@@ -161,7 +161,7 @@ VideoCaptureModule* VideoCaptureImpl::Create(
     }
 
     // Successfully created VideoCaptureMacQuicktime. Return it
-    WEBRTC_TRACE(webrtc::kTraceInfo, webrtc::kTraceVideoCapture, id,
+    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, id,
                  "Module created for unique device %s. Will use QuickTime "
                  "framework to capture",
                  deviceUniqueIdUTF8);
@@ -169,7 +169,7 @@ VideoCaptureModule* VideoCaptureImpl::Create(
 
 #else // QTKit version
 
-    WEBRTC_TRACE(webrtc::kTraceInfo, webrtc::kTraceVideoCapture, id,
+    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, id,
                  "Using QTKit framework to capture video", id);
 
     RefCountImpl<videocapturemodule::VideoCaptureMacQTKit>* newCaptureModule =
@@ -177,14 +177,14 @@ VideoCaptureModule* VideoCaptureImpl::Create(
 
     if(!newCaptureModule)
     {
-        WEBRTC_TRACE(webrtc::kTraceDebug, webrtc::kTraceVideoCapture, id,
+        WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, id,
                      "could not Create for unique device %s, !newCaptureModule",
                      deviceUniqueIdUTF8);
         return NULL;
     }
     if(newCaptureModule->Init(id, deviceUniqueIdUTF8) != 0)
     {
-        WEBRTC_TRACE(webrtc::kTraceDebug, webrtc::kTraceVideoCapture, id,
+        WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, id,
                      "could not Create for unique device %s, "
                      "newCaptureModule->Init()!=0", deviceUniqueIdUTF8);
         delete newCaptureModule;
@@ -192,7 +192,7 @@ VideoCaptureModule* VideoCaptureImpl::Create(
     }
 
     // Successfully created VideoCaptureMacQuicktime. Return it
-    WEBRTC_TRACE(webrtc::kTraceInfo, webrtc::kTraceVideoCapture, id,
+    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, id,
                  "Module created for unique device %s, will use QTKit "
                  "framework",deviceUniqueIdUTF8);
     return newCaptureModule;
@@ -210,54 +210,54 @@ VideoCaptureImpl::CreateDeviceInfo(const WebRtc_Word32 id)
 {
 
 
-    if (webrtc::videocapturemodule::CheckOSVersion() == false)
+    if (cloopenwebrtc::videocapturemodule::CheckOSVersion() == false)
     {
-        WEBRTC_TRACE(webrtc::kTraceError, webrtc::kTraceVideoCapture, id,
+        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, id,
                      "OS version is too old. Could not create video capture "
                      "module. Returning NULL");
         return NULL;
     }
 
 #if __MAC_OS_X_VERSION_MIN_REQUIRED == __MAC_10_4 // QuickTime version
-    if (webrtc::videocapturemodule::CheckQTVersion() == false)
+    if (cloopenwebrtc::videocapturemodule::CheckQTVersion() == false)
     {
-        WEBRTC_TRACE(webrtc::kTraceError, webrtc::kTraceVideoCapture, id,
+        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, id,
                      "QuickTime version is too old. Could not create video "
                      "capture module. Returning NULL");
         return NULL;
     }
 
-    webrtc::videocapturemodule::VideoCaptureMacQuickTimeInfo* newCaptureInfoModule =
-        new webrtc::videocapturemodule::VideoCaptureMacQuickTimeInfo(id);
+    cloopenwebrtc::videocapturemodule::VideoCaptureMacQuickTimeInfo* newCaptureInfoModule =
+        new cloopenwebrtc::videocapturemodule::VideoCaptureMacQuickTimeInfo(id);
 
     if (!newCaptureInfoModule || newCaptureInfoModule->Init() != 0)
     {
         Destroy(newCaptureInfoModule);
         newCaptureInfoModule = NULL;
-        WEBRTC_TRACE(webrtc::kTraceInfo, webrtc::kTraceVideoCapture, id,
+        WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, id,
                      "Failed to Init newCaptureInfoModule created with id %d "
                      "and device \"\" ", id);
         return NULL;
     }
-    WEBRTC_TRACE(webrtc::kTraceInfo, webrtc::kTraceVideoCapture, id,
+    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, id,
                  "VideoCaptureModule created for id", id);
     return newCaptureInfoModule;
 
 #else // QTKit version
-    webrtc::videocapturemodule::VideoCaptureMacQTKitInfo* newCaptureInfoModule =
-        new webrtc::videocapturemodule::VideoCaptureMacQTKitInfo(id);
+    cloopenwebrtc::videocapturemodule::VideoCaptureMacQTKitInfo* newCaptureInfoModule =
+        new cloopenwebrtc::videocapturemodule::VideoCaptureMacQTKitInfo(id);
 
     if(!newCaptureInfoModule || newCaptureInfoModule->Init() != 0)
     {
         //Destroy(newCaptureInfoModule);
         delete newCaptureInfoModule;
         newCaptureInfoModule = NULL;
-        WEBRTC_TRACE(webrtc::kTraceInfo, webrtc::kTraceVideoCapture, id,
+        WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, id,
                      "Failed to Init newCaptureInfoModule created with id %d "
                      "and device \"\" ", id);
         return NULL;
     }
-    WEBRTC_TRACE(webrtc::kTraceInfo, webrtc::kTraceVideoCapture, id,
+    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, id,
                  "VideoCaptureModule created for id", id);
     return newCaptureInfoModule;
 
@@ -271,5 +271,5 @@ VideoCaptureImpl::CreateDeviceInfo(const WebRtc_Word32 id)
  *
  ***************************************************************************/
 }  // namespace videocapturemodule
-}  // namespace webrtc
+}  // namespace cloopenwebrtc
 

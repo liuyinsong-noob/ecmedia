@@ -8,17 +8,17 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "webrtc/engine_configurations.h"
+#include "engine_configurations.h"
 #if defined(COCOA_RENDERING)
 
-#include "webrtc/common_video/libyuv/include/webrtc_libyuv.h"
-#include "webrtc/modules/video_render/mac/video_render_nsopengl.h"
-#include "webrtc/system_wrappers/interface/critical_section_wrapper.h"
-#include "webrtc/system_wrappers/interface/event_wrapper.h"
-#include "webrtc/system_wrappers/interface/thread_wrapper.h"
-#include "webrtc/system_wrappers/interface/trace.h"
+#include "webrtc_libyuv.h"
+#include "video_render_nsopengl.h"
+#include "critical_section_wrapper.h"
+#include "event_wrapper.h"
+#include "thread_wrapper.h"
+#include "trace.h"
 
-namespace webrtc {
+namespace cloopenwebrtc {
 
 VideoChannelNSOpenGL::VideoChannelNSOpenGL(NSOpenGLContext *nsglContext, int iId, VideoRenderNSOpenGL* owner) :
 _nsglContext( nsglContext),

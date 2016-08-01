@@ -7,12 +7,22 @@
 		<key>opus.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>4</integer>
+			<integer>9</integer>
+		</dict>
+		<key>opus_Mac.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>71</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>AD8D73AD1C59FC5300FB246D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>ADC549CD1D485CFB00A5C852</key>
 		<dict>
 			<key>primary</key>
 			<true/>
