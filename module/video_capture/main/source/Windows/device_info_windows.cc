@@ -412,7 +412,13 @@ WebRtc_Word32 DeviceInfoWindows::CreateCapabilityMap(
         delete item->GetItem();
         _captureCapabilities.Erase(item);
     }
-
+	
+	if(_lastUsedDeviceNameLength > 0) {
+		_lastUsedDeviceNameLength = 0;
+		free(_lastUsedDeviceName);
+		_lastUsedDeviceName = NULL;
+	}
+	
     const WebRtc_Word32 deviceUniqueIdUTF8Length =
         (WebRtc_Word32) strlen((char*) deviceUniqueIdUTF8);
     if (deviceUniqueIdUTF8Length > kVideoCaptureUniqueNameLength)
