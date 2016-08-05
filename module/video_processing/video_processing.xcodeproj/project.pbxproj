@@ -354,6 +354,7 @@
 					HAVE_SYS_UIO_H,
 					NVALGRIND,
 					"DYNAMIC_ANNOTATIONS_ENABLED=0",
+					WEBRTC_HAS_NEON,
 				);
 				HEADER_SEARCH_PATHS = (
 					../third_party/libyuv/include,
@@ -418,6 +419,7 @@
 					HAVE_SYS_UIO_H,
 					NVALGRIND,
 					"DYNAMIC_ANNOTATIONS_ENABLED=0",
+					WEBRTC_HAS_NEON,
 				);
 				HEADER_SEARCH_PATHS = (
 					../third_party/libyuv/include,
