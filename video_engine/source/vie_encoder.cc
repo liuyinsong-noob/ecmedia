@@ -518,10 +518,12 @@ RtpRtcp* ViEEncoder::SendRtpRtcpModule() {
 void ViEEncoder::DeliverFrame(int id,
                               I420VideoFrame* video_frame,
                               const std::vector<uint32_t>& csrcs) {
+//    sean for multivideo encoding begin
   if (default_rtp_rtcp_->SendingMedia() == false) {
     // We've paused or we have no channels attached, don't encode.
     return;
   }
+//    sean for multivideo encoding begin
   {
     CriticalSectionScoped cs(data_cs_.get());
     time_of_last_incoming_frame_ms_ = TickTime::MillisecondTimestamp();

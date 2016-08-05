@@ -252,8 +252,13 @@ void ServiceCore::serphone_call_stop_media_streams(SerPhoneCall *call)
 	{
 		if (call->m_VideoChannelID>=0){
 			video_stream_stop(call->m_VideoChannelID, call->m_CaptureDeviceId);
-			call->m_VideoChannelID=-1;
-			call->m_CaptureDeviceId = -1;
+            call->m_VideoChannelID=-1;
+            call->m_CaptureDeviceId = -1;
+//            video_stream_stop(call->m_VideoChannelID1, call->m_CaptureDeviceId);
+//            call->m_VideoChannelID1 = -1;
+//            video_stream_stop(call->m_VideoChannelID2, call->m_CaptureDeviceId);
+//            call->m_VideoChannelID2 = -1;
+			
 		}
 	}else if (m_videoModeChoose == 1) //screen-share
 	{
@@ -860,8 +865,8 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 					//codec_params.startBitrate = (m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps*2*0.07)/1000;
 					/*codec_params.maxBitrate = min((m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps*4*0.07)/1000, kMaxVideoBitrate);
 					codec_params.minBitrate = max((m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps*1*0.07)/1000, kMinVideoBitrate);*/
-					codec_params.startBitrate = 300;
-					codec_params.maxBitrate = 1500;
+					codec_params.startBitrate = 500;
+					codec_params.maxBitrate = 1000;
 				}
 
 				codec_params.width = m_sendVideoWidth;
@@ -878,11 +883,28 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 				PrintConsole("Video Codec is : playload type = %d, payload name is %s  bitrate=%d width=%d height=%d\n",
 					codec_params.plType, codec_params.plName, codec_params.startBitrate, codec_params.width, codec_params.height);
 
+//                printf("Video Codec is : playload type = %d, payload name is %s  bitrate=%d width=%d height=%d\n",
+//                       codec_params.plType, codec_params.plName, codec_params.startBitrate, codec_params.width, codec_params.height);
 				if (ECMedia_set_send_codec_video(call->m_VideoChannelID, codec_params) < 0)
 				{
 					PrintConsole("Error: ECMedia_set_send_codec_video() fail!");
 				}
-
+                
+//                codec_params.width = 240;
+//                codec_params.height = 320;
+//                if (ECMedia_set_send_codec_video(call->m_VideoChannelID1, codec_params) < 0)
+//                {
+//                    PrintConsole("Error: ECMedia_set_send_codec_video() fail!");
+//                }
+                
+//                codec_params.width = 120;
+//                codec_params.height = 160;
+//                
+//                if (ECMedia_set_send_codec_video(call->m_VideoChannelID2, codec_params) < 0)
+//                {
+//                    PrintConsole("Error: ECMedia_set_send_codec_video() fail!");
+//                }
+                
 				if (ECMedia_set_receive_codec_video(call->m_VideoChannelID,codec_params) < 0)
 				{
 					PrintConsole("Error: ECMedia_set_receive_codec_video() fail!");
@@ -1056,6 +1078,9 @@ int ServiceCore::startVideoCapture(SerPhoneCall *call)
 			cap.width = cc.width;
 			cap.maxfps = m_maxFPS;
 			ECMedia_allocate_capture_device(id,strlen(id),call->m_CaptureDeviceId);
+            ECmedia_enable_deflickering(call->m_CaptureDeviceId, true);
+            ECmedia_enable_EnableBrightnessAlarm(call->m_CaptureDeviceId, true);
+//            ECmedia_enable_EnableDenoising(call->m_CaptureDeviceId, true);
 			//TODO:
 			//capture->SetSendStatisticsProxy(call->m_CaptureDeviceId, base->GetSendStatisticsProxy(call->m_VideoChannelID));
 			ECMedia_set_CaptureDeviceID(call->m_CaptureDeviceId);
@@ -1067,6 +1092,18 @@ int ServiceCore::startVideoCapture(SerPhoneCall *call)
 				vtable.connect_camera_failed(this, this->current_call, m_usedCameraIndex, name);
 		}
 
+//        if( ECMedia_connect_capture_device(call->m_CaptureDeviceId,call->m_VideoChannelID1) < 0 ) {
+//            PrintConsole("Open 1 Camera:%s Failed!  \n", name);
+//            if(vtable.connect_camera_failed)
+//                vtable.connect_camera_failed(this, this->current_call, m_usedCameraIndex, name);
+//        }
+        
+//        if( ECMedia_connect_capture_device(call->m_CaptureDeviceId,call->m_VideoChannelID2) < 0 ) {
+//            PrintConsole("Open 1 Camera:%s Failed!  \n", name);
+//            if(vtable.connect_camera_failed)
+//                vtable.connect_camera_failed(this, this->current_call, m_usedCameraIndex, name);
+//        }
+        
 		if( !m_cameraInfo 
 			|| m_usedCameraIndex >= m_cameraCount
 			|| !m_cameraInfo[m_usedCameraIndex].capability 
@@ -1178,6 +1215,9 @@ int ServiceCore::selectCamera(int cameraIndex, int capabilityIndex,int fps,int r
 			} 
 			else {
 				ECMedia_allocate_capture_device(id,strlen(id),call->m_CaptureDeviceId);
+                ECmedia_enable_deflickering(call->m_CaptureDeviceId, true);
+                ECmedia_enable_EnableBrightnessAlarm(call->m_CaptureDeviceId, true);
+//                ECmedia_enable_EnableDenoising(call->m_CaptureDeviceId, true);
 				ECMedia_set_CaptureDeviceID(call->m_CaptureDeviceId);
 				if( ECMedia_connect_capture_device(call->m_CaptureDeviceId,call->m_VideoChannelID) < 0 ) {
 					PrintConsole("Open Camera:%s Failed!  \n", name);
@@ -1289,7 +1329,7 @@ int ServiceCore::getCameraInfo(CameraInfo **info)
 
 int ServiceCore::getCallStatistics(int type,MediaStatisticsInfo *callStats)
 {
-	cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+//	cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
 #if !defined(NO_VOIP_FUNCTION)
 	if( type == 0)
 	{
@@ -1514,6 +1554,11 @@ void ServiceCore::serphone_call_init_media_streams(SerPhoneCall *call)
 
 	if (call->params.has_video) {
 		ECMedia_audio_create_channel(call->m_VideoChannelID, true);
+//        sean for multivideo encoding begin
+//        ECMedia_audio_create_channel(call->m_VideoChannelID1, true);
+//        ECMedia_audio_create_channel(call->m_VideoChannelID2, true);
+//        sean for multivideo encoding end
+        
 
 		if( call->m_VideoChannelID >= 0 &&  md->nstreams > 1 ) {
 			ECMedia_set_network_type(call->m_AudioChannelID, call->m_VideoChannelID, networkType);

@@ -150,7 +150,7 @@
 
         if (!glInitDone || !animating) {
             glClear(GL_COLOR_BUFFER_BIT);
-        }else ogl_display_render(helper, deviceRotation, (int)self.contentMode);
+        }else ogl_display_render(helper, deviceRotation, UIViewContentModeScaleAspectFit/*(int)self.contentMode*/);
 
         glBindRenderbuffer(GL_RENDERBUFFER, colorRenderBuffer);
 

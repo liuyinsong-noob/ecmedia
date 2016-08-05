@@ -1784,8 +1784,8 @@ extern "C"  const char* makeCall(int callType, const char *called )
 extern "C" int setVideoView(void* view,void *localView)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-    g_pSerCore->videoWindow = localView;//view;
-    g_pSerCore->localVideoWindow = view;//localView;
+    g_pSerCore->videoWindow = view;
+    g_pSerCore->localVideoWindow = localView;
 	return 0;
 }
 extern "C" int resetVideoViews(const char *callid, void* rWnd, void* lWnd)

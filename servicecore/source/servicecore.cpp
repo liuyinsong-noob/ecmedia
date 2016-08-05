@@ -6231,7 +6231,7 @@ int ServiceCore::serphone_set_groupID(const char *group)
 
 int ServiceCore::serphone_set_networkType(const char *type)
 {
-    if (type) {
+    if (type && current_call) {
         int newTypeLen = strlen(type);
         if (networkType && strlen(networkType) < newTypeLen) {
             delete [] networkType;

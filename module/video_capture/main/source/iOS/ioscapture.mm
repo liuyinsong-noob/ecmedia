@@ -616,15 +616,9 @@ char *globalFilePathcapture = NULL;
 		} else {
 			NSArray *connections = output.connections;
 			if ([connections count] > 0) {
-//                if (value >= 12) { //经测试发现，iOS目前12状态最佳
-//                    [[connections objectAtIndex:0] setVideoMinFrameDuration:CMTimeMake(1, 12)];
-//                    [[connections objectAtIndex:0] setVideoMaxFrameDuration:CMTimeMake(1, 12)];
-//                }
-//                else
-                {
-                    [[connections objectAtIndex:0] setVideoMinFrameDuration:CMTimeMake(1, value)];
-                    [[connections objectAtIndex:0] setVideoMaxFrameDuration:CMTimeMake(1, value)];
-                }
+                CMTime frameDuration = CMTimeMake(1, value);
+                [input.device setActiveVideoMinFrameDuration:frameDuration];
+                [input.device setActiveVideoMaxFrameDuration:frameDuration];
 			}
 			
 		}

@@ -13,12 +13,14 @@
  */
 #ifndef WEBRTC_MODULES_VIDEO_PROCESSING_MAIN_SOURCE_FRAME_PREPROCESSOR_H
 #define WEBRTC_MODULES_VIDEO_PROCESSING_MAIN_SOURCE_FRAME_PREPROCESSOR_H
+#include <memory>
 
 #include "video_processing.h"
 #include "content_analysis.h"
 #include "spatial_resampler.h"
 #include "video_decimator.h"
 #include "typedefs.h"
+#include "video_denoiser.h"
 
 namespace cloopenwebrtc {
 
@@ -58,6 +60,8 @@ class VPMFramePreprocessor {
                           I420VideoFrame** processed_frame);
   VideoContentMetrics* ContentMetrics() const;
 
+  void EnableDenoising(bool enable);
+
  private:
   // The content does not change so much every frame, so to reduce complexity
   // we can compute new content metrics every |kSkipFrameCA| frames.
@@ -72,6 +76,9 @@ class VPMFramePreprocessor {
   bool enable_ca_;
   int frame_cnt_;
 
+  std::unique_ptr<VideoDenoiser> denoiser_;
+  I420VideoFrame denoised_frame_[2];
+  uint8_t denoised_frame_toggle_;
 };
 
 }  // namespace webrtc

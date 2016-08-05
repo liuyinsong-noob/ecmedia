@@ -196,16 +196,16 @@ void VTCompressionOutputCallback(void* encoder,
                                  OSStatus status,
                                  VTEncodeInfoFlags info_flags,
                                  CMSampleBufferRef sample_buffer) {
-    CMBlockBufferRef block = CMSampleBufferGetDataBuffer(sample_buffer);
-    size_t frame_size = CMBlockBufferGetDataLength(block);
-    static int count = 0;
-    static int total = 0;
-    total += frame_size;
-    if (count++ == 15) {
-        cloopenwebrtc::printTime(); printf("%d\n",total);
-        count = 0;
-        total = 0;
-    }
+//    CMBlockBufferRef block = CMSampleBufferGetDataBuffer(sample_buffer);
+//    size_t frame_size = CMBlockBufferGetDataLength(block);
+//    static int count = 0;
+//    static int total = 0;
+//    total += frame_size;
+//    if (count++ == 15) {
+//        cloopenwebrtc::printTime(); printf("%d\n",total);
+//        count = 0;
+//        total = 0;
+//    }
     
   FrameEncodeParams * encode_params(
       reinterpret_cast<FrameEncodeParams*>(params));

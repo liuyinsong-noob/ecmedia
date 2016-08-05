@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		456DC51E1D543B19007C20BA /* denoiser_filter_c.cc in Sources */ = {isa = PBXBuildFile; fileRef = 456DC5121D543B19007C20BA /* denoiser_filter_c.cc */; };
+		456DC51F1D543B19007C20BA /* denoiser_filter_c.h in Headers */ = {isa = PBXBuildFile; fileRef = 456DC5131D543B19007C20BA /* denoiser_filter_c.h */; };
+		456DC5201D543B19007C20BA /* denoiser_filter_neon.cc in Sources */ = {isa = PBXBuildFile; fileRef = 456DC5141D543B19007C20BA /* denoiser_filter_neon.cc */; };
+		456DC5211D543B19007C20BA /* denoiser_filter_neon.h in Headers */ = {isa = PBXBuildFile; fileRef = 456DC5151D543B19007C20BA /* denoiser_filter_neon.h */; };
+		456DC5241D543B19007C20BA /* denoiser_filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 456DC5181D543B19007C20BA /* denoiser_filter.cc */; };
+		456DC5251D543B19007C20BA /* denoiser_filter.h in Headers */ = {isa = PBXBuildFile; fileRef = 456DC5191D543B19007C20BA /* denoiser_filter.h */; };
+		456DC5261D543B19007C20BA /* noise_estimation.cc in Sources */ = {isa = PBXBuildFile; fileRef = 456DC51A1D543B19007C20BA /* noise_estimation.cc */; };
+		456DC5271D543B19007C20BA /* noise_estimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 456DC51B1D543B19007C20BA /* noise_estimation.h */; };
+		456DC5281D543B19007C20BA /* skin_detection.cc in Sources */ = {isa = PBXBuildFile; fileRef = 456DC51C1D543B19007C20BA /* skin_detection.cc */; };
+		456DC5291D543B19007C20BA /* skin_detection.h in Headers */ = {isa = PBXBuildFile; fileRef = 456DC51D1D543B19007C20BA /* skin_detection.h */; };
+		456DC52D1D544320007C20BA /* video_denoiser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 456DC52B1D544320007C20BA /* video_denoiser.cc */; };
+		456DC52E1D544320007C20BA /* video_denoiser.h in Headers */ = {isa = PBXBuildFile; fileRef = 456DC52C1D544320007C20BA /* video_denoiser.h */; };
 		55A74F3815C8C146001B246A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A74F3715C8C146001B246A /* Foundation.framework */; };
 		55A74F6215C8C169001B246A /* video_processing.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F4915C8C169001B246A /* video_processing.h */; };
 		55A74F6315C8C169001B246A /* video_processing_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F4A15C8C169001B246A /* video_processing_defines.h */; };
@@ -20,8 +32,6 @@
 		55A74F6C15C8C169001B246A /* content_analysis.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F5415C8C169001B246A /* content_analysis.h */; };
 		55A74F6E15C8C169001B246A /* deflickering.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F5615C8C169001B246A /* deflickering.cc */; };
 		55A74F6F15C8C169001B246A /* deflickering.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F5715C8C169001B246A /* deflickering.h */; };
-		55A74F7015C8C169001B246A /* denoising.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F5815C8C169001B246A /* denoising.cc */; };
-		55A74F7115C8C169001B246A /* denoising.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F5915C8C169001B246A /* denoising.h */; };
 		55A74F7215C8C169001B246A /* frame_preprocessor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F5A15C8C169001B246A /* frame_preprocessor.cc */; };
 		55A74F7315C8C169001B246A /* frame_preprocessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F5B15C8C169001B246A /* frame_preprocessor.h */; };
 		55A74F7415C8C169001B246A /* spatial_resampler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F5C15C8C169001B246A /* spatial_resampler.cc */; };
@@ -30,32 +40,21 @@
 		55A74F7715C8C169001B246A /* video_decimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F5F15C8C169001B246A /* video_decimator.h */; };
 		55A74F7815C8C169001B246A /* video_processing_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F6015C8C169001B246A /* video_processing_impl.cc */; };
 		55A74F7915C8C169001B246A /* video_processing_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F6115C8C169001B246A /* video_processing_impl.h */; };
-		ADC547951D48556600A5C852 /* brighten.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F4C15C8C169001B246A /* brighten.cc */; };
-		ADC547961D48556600A5C852 /* brightness_detection.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F4E15C8C169001B246A /* brightness_detection.cc */; };
-		ADC547971D48556600A5C852 /* color_enhancement.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F5015C8C169001B246A /* color_enhancement.cc */; };
-		ADC547981D48556600A5C852 /* content_analysis.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F5315C8C169001B246A /* content_analysis.cc */; };
-		ADC547991D48556600A5C852 /* deflickering.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F5615C8C169001B246A /* deflickering.cc */; };
-		ADC5479A1D48556600A5C852 /* denoising.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F5815C8C169001B246A /* denoising.cc */; };
-		ADC5479B1D48556600A5C852 /* frame_preprocessor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F5A15C8C169001B246A /* frame_preprocessor.cc */; };
-		ADC5479C1D48556600A5C852 /* spatial_resampler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F5C15C8C169001B246A /* spatial_resampler.cc */; };
-		ADC5479D1D48556600A5C852 /* video_decimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F5E15C8C169001B246A /* video_decimator.cc */; };
-		ADC5479E1D48556600A5C852 /* video_processing_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F6015C8C169001B246A /* video_processing_impl.cc */; };
-		ADC547A01D48556600A5C852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A74F3715C8C146001B246A /* Foundation.framework */; };
-		ADC547A21D48556600A5C852 /* video_processing.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F4915C8C169001B246A /* video_processing.h */; };
-		ADC547A31D48556600A5C852 /* video_processing_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F4A15C8C169001B246A /* video_processing_defines.h */; };
-		ADC547A41D48556600A5C852 /* brighten.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F4D15C8C169001B246A /* brighten.h */; };
-		ADC547A51D48556600A5C852 /* brightness_detection.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F4F15C8C169001B246A /* brightness_detection.h */; };
-		ADC547A61D48556600A5C852 /* color_enhancement.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F5115C8C169001B246A /* color_enhancement.h */; };
-		ADC547A71D48556600A5C852 /* content_analysis.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F5415C8C169001B246A /* content_analysis.h */; };
-		ADC547A81D48556600A5C852 /* deflickering.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F5715C8C169001B246A /* deflickering.h */; };
-		ADC547A91D48556600A5C852 /* denoising.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F5915C8C169001B246A /* denoising.h */; };
-		ADC547AA1D48556600A5C852 /* frame_preprocessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F5B15C8C169001B246A /* frame_preprocessor.h */; };
-		ADC547AB1D48556600A5C852 /* spatial_resampler.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F5D15C8C169001B246A /* spatial_resampler.h */; };
-		ADC547AC1D48556600A5C852 /* video_decimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F5F15C8C169001B246A /* video_decimator.h */; };
-		ADC547AD1D48556600A5C852 /* video_processing_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F6115C8C169001B246A /* video_processing_impl.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		456DC5121D543B19007C20BA /* denoiser_filter_c.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = denoiser_filter_c.cc; path = util/denoiser_filter_c.cc; sourceTree = "<group>"; };
+		456DC5131D543B19007C20BA /* denoiser_filter_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = denoiser_filter_c.h; path = util/denoiser_filter_c.h; sourceTree = "<group>"; };
+		456DC5141D543B19007C20BA /* denoiser_filter_neon.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = denoiser_filter_neon.cc; path = util/denoiser_filter_neon.cc; sourceTree = "<group>"; };
+		456DC5151D543B19007C20BA /* denoiser_filter_neon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = denoiser_filter_neon.h; path = util/denoiser_filter_neon.h; sourceTree = "<group>"; };
+		456DC5181D543B19007C20BA /* denoiser_filter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = denoiser_filter.cc; path = util/denoiser_filter.cc; sourceTree = "<group>"; };
+		456DC5191D543B19007C20BA /* denoiser_filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = denoiser_filter.h; path = util/denoiser_filter.h; sourceTree = "<group>"; };
+		456DC51A1D543B19007C20BA /* noise_estimation.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = noise_estimation.cc; path = util/noise_estimation.cc; sourceTree = "<group>"; };
+		456DC51B1D543B19007C20BA /* noise_estimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = noise_estimation.h; path = util/noise_estimation.h; sourceTree = "<group>"; };
+		456DC51C1D543B19007C20BA /* skin_detection.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = skin_detection.cc; path = util/skin_detection.cc; sourceTree = "<group>"; };
+		456DC51D1D543B19007C20BA /* skin_detection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = skin_detection.h; path = util/skin_detection.h; sourceTree = "<group>"; };
+		456DC52B1D544320007C20BA /* video_denoiser.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_denoiser.cc; sourceTree = "<group>"; };
+		456DC52C1D544320007C20BA /* video_denoiser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_denoiser.h; sourceTree = "<group>"; };
 		55A74F3415C8C146001B246A /* libvideo_processing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvideo_processing.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		55A74F3715C8C146001B246A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		55A74F4915C8C169001B246A /* video_processing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_processing.h; sourceTree = "<group>"; };
@@ -70,8 +69,6 @@
 		55A74F5415C8C169001B246A /* content_analysis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = content_analysis.h; sourceTree = "<group>"; };
 		55A74F5615C8C169001B246A /* deflickering.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = deflickering.cc; sourceTree = "<group>"; };
 		55A74F5715C8C169001B246A /* deflickering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = deflickering.h; sourceTree = "<group>"; };
-		55A74F5815C8C169001B246A /* denoising.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = denoising.cc; sourceTree = "<group>"; };
-		55A74F5915C8C169001B246A /* denoising.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = denoising.h; sourceTree = "<group>"; };
 		55A74F5A15C8C169001B246A /* frame_preprocessor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = frame_preprocessor.cc; sourceTree = "<group>"; };
 		55A74F5B15C8C169001B246A /* frame_preprocessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = frame_preprocessor.h; sourceTree = "<group>"; };
 		55A74F5C15C8C169001B246A /* spatial_resampler.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = spatial_resampler.cc; sourceTree = "<group>"; };
@@ -80,7 +77,6 @@
 		55A74F5F15C8C169001B246A /* video_decimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_decimator.h; sourceTree = "<group>"; };
 		55A74F6015C8C169001B246A /* video_processing_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_processing_impl.cc; sourceTree = "<group>"; };
 		55A74F6115C8C169001B246A /* video_processing_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_processing_impl.h; sourceTree = "<group>"; };
-		ADC547B11D48556600A5C852 /* libvideo_processing_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvideo_processing_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,17 +88,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		ADC5479F1D48556600A5C852 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				ADC547A01D48556600A5C852 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		456DC5111D543B06007C20BA /* util */ = {
+			isa = PBXGroup;
+			children = (
+				456DC5121D543B19007C20BA /* denoiser_filter_c.cc */,
+				456DC5131D543B19007C20BA /* denoiser_filter_c.h */,
+				456DC5141D543B19007C20BA /* denoiser_filter_neon.cc */,
+				456DC5151D543B19007C20BA /* denoiser_filter_neon.h */,
+				456DC5181D543B19007C20BA /* denoiser_filter.cc */,
+				456DC5191D543B19007C20BA /* denoiser_filter.h */,
+				456DC51A1D543B19007C20BA /* noise_estimation.cc */,
+				456DC51B1D543B19007C20BA /* noise_estimation.h */,
+				456DC51C1D543B19007C20BA /* skin_detection.cc */,
+				456DC51D1D543B19007C20BA /* skin_detection.h */,
+			);
+			name = util;
+			sourceTree = "<group>";
+		};
 		55A74F2915C8C146001B246A = {
 			isa = PBXGroup;
 			children = (
@@ -116,7 +121,6 @@
 			isa = PBXGroup;
 			children = (
 				55A74F3415C8C146001B246A /* libvideo_processing.a */,
-				ADC547B11D48556600A5C852 /* libvideo_processing_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -151,6 +155,7 @@
 		55A74F4B15C8C169001B246A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				456DC5111D543B06007C20BA /* util */,
 				55A74F4C15C8C169001B246A /* brighten.cc */,
 				55A74F4D15C8C169001B246A /* brighten.h */,
 				55A74F4E15C8C169001B246A /* brightness_detection.cc */,
@@ -161,14 +166,14 @@
 				55A74F5415C8C169001B246A /* content_analysis.h */,
 				55A74F5615C8C169001B246A /* deflickering.cc */,
 				55A74F5715C8C169001B246A /* deflickering.h */,
-				55A74F5815C8C169001B246A /* denoising.cc */,
-				55A74F5915C8C169001B246A /* denoising.h */,
 				55A74F5A15C8C169001B246A /* frame_preprocessor.cc */,
 				55A74F5B15C8C169001B246A /* frame_preprocessor.h */,
 				55A74F5C15C8C169001B246A /* spatial_resampler.cc */,
 				55A74F5D15C8C169001B246A /* spatial_resampler.h */,
 				55A74F5E15C8C169001B246A /* video_decimator.cc */,
 				55A74F5F15C8C169001B246A /* video_decimator.h */,
+				456DC52B1D544320007C20BA /* video_denoiser.cc */,
+				456DC52C1D544320007C20BA /* video_denoiser.h */,
 				55A74F6015C8C169001B246A /* video_processing_impl.cc */,
 				55A74F6115C8C169001B246A /* video_processing_impl.h */,
 			);
@@ -184,36 +189,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				55A74F6215C8C169001B246A /* video_processing.h in Headers */,
+				456DC5211D543B19007C20BA /* denoiser_filter_neon.h in Headers */,
 				55A74F6315C8C169001B246A /* video_processing_defines.h in Headers */,
 				55A74F6515C8C169001B246A /* brighten.h in Headers */,
 				55A74F6715C8C169001B246A /* brightness_detection.h in Headers */,
+				456DC5251D543B19007C20BA /* denoiser_filter.h in Headers */,
 				55A74F6915C8C169001B246A /* color_enhancement.h in Headers */,
 				55A74F6C15C8C169001B246A /* content_analysis.h in Headers */,
 				55A74F6F15C8C169001B246A /* deflickering.h in Headers */,
-				55A74F7115C8C169001B246A /* denoising.h in Headers */,
+				456DC52E1D544320007C20BA /* video_denoiser.h in Headers */,
 				55A74F7315C8C169001B246A /* frame_preprocessor.h in Headers */,
+				456DC5271D543B19007C20BA /* noise_estimation.h in Headers */,
 				55A74F7515C8C169001B246A /* spatial_resampler.h in Headers */,
+				456DC51F1D543B19007C20BA /* denoiser_filter_c.h in Headers */,
+				456DC5291D543B19007C20BA /* skin_detection.h in Headers */,
 				55A74F7715C8C169001B246A /* video_decimator.h in Headers */,
 				55A74F7915C8C169001B246A /* video_processing_impl.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		ADC547A11D48556600A5C852 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				ADC547A21D48556600A5C852 /* video_processing.h in Headers */,
-				ADC547A31D48556600A5C852 /* video_processing_defines.h in Headers */,
-				ADC547A41D48556600A5C852 /* brighten.h in Headers */,
-				ADC547A51D48556600A5C852 /* brightness_detection.h in Headers */,
-				ADC547A61D48556600A5C852 /* color_enhancement.h in Headers */,
-				ADC547A71D48556600A5C852 /* content_analysis.h in Headers */,
-				ADC547A81D48556600A5C852 /* deflickering.h in Headers */,
-				ADC547A91D48556600A5C852 /* denoising.h in Headers */,
-				ADC547AA1D48556600A5C852 /* frame_preprocessor.h in Headers */,
-				ADC547AB1D48556600A5C852 /* spatial_resampler.h in Headers */,
-				ADC547AC1D48556600A5C852 /* video_decimator.h in Headers */,
-				ADC547AD1D48556600A5C852 /* video_processing_impl.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,23 +228,6 @@
 			productReference = 55A74F3415C8C146001B246A /* libvideo_processing.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		ADC547931D48556600A5C852 /* video_processing_Mac */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = ADC547AE1D48556600A5C852 /* Build configuration list for PBXNativeTarget "video_processing_Mac" */;
-			buildPhases = (
-				ADC547941D48556600A5C852 /* Sources */,
-				ADC5479F1D48556600A5C852 /* Frameworks */,
-				ADC547A11D48556600A5C852 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = video_processing_Mac;
-			productName = video_processing;
-			productReference = ADC547B11D48556600A5C852 /* libvideo_processing_Mac.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -275,7 +249,6 @@
 			projectRoot = "";
 			targets = (
 				55A74F3315C8C146001B246A /* video_processing */,
-				ADC547931D48556600A5C852 /* video_processing_Mac */,
 			);
 		};
 /* End PBXProject section */
@@ -285,33 +258,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				456DC5201D543B19007C20BA /* denoiser_filter_neon.cc in Sources */,
 				55A74F6415C8C169001B246A /* brighten.cc in Sources */,
 				55A74F6615C8C169001B246A /* brightness_detection.cc in Sources */,
 				55A74F6815C8C169001B246A /* color_enhancement.cc in Sources */,
+				456DC52D1D544320007C20BA /* video_denoiser.cc in Sources */,
 				55A74F6B15C8C169001B246A /* content_analysis.cc in Sources */,
+				456DC5261D543B19007C20BA /* noise_estimation.cc in Sources */,
+				456DC51E1D543B19007C20BA /* denoiser_filter_c.cc in Sources */,
 				55A74F6E15C8C169001B246A /* deflickering.cc in Sources */,
-				55A74F7015C8C169001B246A /* denoising.cc in Sources */,
+				456DC5281D543B19007C20BA /* skin_detection.cc in Sources */,
 				55A74F7215C8C169001B246A /* frame_preprocessor.cc in Sources */,
 				55A74F7415C8C169001B246A /* spatial_resampler.cc in Sources */,
 				55A74F7615C8C169001B246A /* video_decimator.cc in Sources */,
+				456DC5241D543B19007C20BA /* denoiser_filter.cc in Sources */,
 				55A74F7815C8C169001B246A /* video_processing_impl.cc in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		ADC547941D48556600A5C852 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				ADC547951D48556600A5C852 /* brighten.cc in Sources */,
-				ADC547961D48556600A5C852 /* brightness_detection.cc in Sources */,
-				ADC547971D48556600A5C852 /* color_enhancement.cc in Sources */,
-				ADC547981D48556600A5C852 /* content_analysis.cc in Sources */,
-				ADC547991D48556600A5C852 /* deflickering.cc in Sources */,
-				ADC5479A1D48556600A5C852 /* denoising.cc in Sources */,
-				ADC5479B1D48556600A5C852 /* frame_preprocessor.cc in Sources */,
-				ADC5479C1D48556600A5C852 /* spatial_resampler.cc in Sources */,
-				ADC5479D1D48556600A5C852 /* video_decimator.cc in Sources */,
-				ADC5479E1D48556600A5C852 /* video_processing_impl.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,6 +324,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/video_processing.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
@@ -398,6 +360,7 @@
 					../../.,
 					../interface,
 					../,
+					../../system_wrappers/source,
 					../../system_wrappers/interface,
 					./main/include,
 					./main/source,
@@ -411,6 +374,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				OBJROOT = "$(SYMROOT)/build";
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -425,6 +389,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/video_processing.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
@@ -459,6 +424,7 @@
 					../../.,
 					../interface,
 					../,
+					../../system_wrappers/source,
 					../../system_wrappers/interface,
 					./main/include,
 					./main/source,
@@ -472,6 +438,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				OBJROOT = "$(SYMROOT)/build";
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -479,132 +446,6 @@
 				USER_HEADER_SEARCH_PATHS = "../../. ../interface ../ ../../system_wrappers/interface ./main/include ./main/source ../utility/include ../audio_coding/main/include ../signalprocess/include ../videojpegyuv/include ../third_party/libyuv/include ../common_video/source";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "armv7 arm64";
-			};
-			name = Release;
-		};
-		ADC547AF1D48556600A5C852 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
-				DSTROOT = /tmp/video_processing.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"WEBRTC_SVNREVISION=\"n/a\"",
-					"_FILE_OFFSET_BITS=64",
-					NO_TCMALLOC,
-					DISABLE_NACL,
-					CHROMIUM_BUILD,
-					USE_PROPRIETARY_CODECS,
-					"ENABLE_GPU=1",
-					"USE_OPENSSL=1",
-					"ENABLE_EGLIMAGE=1",
-					"USE_SKIA=1",
-					WEBRTC_MAC,
-					WEBRTC_ARCH_ARM,
-					WEBRTC_DETECT_ARM_NEON,
-					WEBRTC_CLOCK_TYPE_REALTIME,
-					WEBRTC_THREAD_RR,
-					__STDC_FORMAT_MACROS,
-					"__GNU_SOURCE=1",
-					"USE_STLPORT=1",
-					"_STLP_USE_PTR_SPECIALIZATIONS=1",
-					HAVE_OFF64_T,
-					HAVE_SYS_UIO_H,
-					NVALGRIND,
-					"DYNAMIC_ANNOTATIONS_ENABLED=0",
-				);
-				HEADER_SEARCH_PATHS = (
-					../third_party/libyuv/include,
-					../../.,
-					../interface,
-					../,
-					../../system_wrappers/interface,
-					./main/include,
-					./main/source,
-					../utility/include,
-					../audio_coding/main/include,
-					../common_video/interface,
-					../videojpegyuv/include,
-					../video_coding/main/include,
-					../common_audio/source/signal_processing/include,
-					../common_video/source/libyuv/include,
-				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				OBJROOT = "$(SYMROOT)/build";
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SYMROOT = ../../IOSProject/out/baselib;
-				USER_HEADER_SEARCH_PATHS = "../../. ../interface ../ ../../system_wrappers/interface ./main/include ./main/source ../utility/include ../audio_coding/main/include ../signalprocess/include ../videojpegyuv/include ../third_party/libyuv/include ../common_video/source";
-				VALID_ARCHS = "x86_64 i386";
-			};
-			name = Debug;
-		};
-		ADC547B01D48556600A5C852 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
-				DSTROOT = /tmp/video_processing.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"WEBRTC_SVNREVISION=\"n/a\"",
-					"_FILE_OFFSET_BITS=64",
-					NO_TCMALLOC,
-					DISABLE_NACL,
-					CHROMIUM_BUILD,
-					USE_PROPRIETARY_CODECS,
-					"ENABLE_GPU=1",
-					"USE_OPENSSL=1",
-					"ENABLE_EGLIMAGE=1",
-					"USE_SKIA=1",
-					WEBRTC_MAC,
-					WEBRTC_ARCH_ARM,
-					WEBRTC_DETECT_ARM_NEON,
-					WEBRTC_CLOCK_TYPE_REALTIME,
-					WEBRTC_THREAD_RR,
-					__STDC_FORMAT_MACROS,
-					"__GNU_SOURCE=1",
-					"USE_STLPORT=1",
-					"_STLP_USE_PTR_SPECIALIZATIONS=1",
-					HAVE_OFF64_T,
-					HAVE_SYS_UIO_H,
-					NVALGRIND,
-					"DYNAMIC_ANNOTATIONS_ENABLED=0",
-				);
-				HEADER_SEARCH_PATHS = (
-					../third_party/libyuv/include,
-					../../.,
-					../interface,
-					../,
-					../../system_wrappers/interface,
-					./main/include,
-					./main/source,
-					../utility/include,
-					../audio_coding/main/include,
-					../common_video/interface,
-					../videojpegyuv/include,
-					../video_coding/main/include,
-					../common_audio/source/signal_processing/include,
-					../common_video/source/libyuv/include,
-				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				OBJROOT = "$(SYMROOT)/build";
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SYMROOT = ../../IOSProject/out/baselib;
-				USER_HEADER_SEARCH_PATHS = "../../. ../interface ../ ../../system_wrappers/interface ./main/include ./main/source ../utility/include ../audio_coding/main/include ../signalprocess/include ../videojpegyuv/include ../third_party/libyuv/include ../common_video/source";
-				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "x86_64 i386";
 			};
 			name = Release;
 		};
@@ -625,15 +466,6 @@
 			buildConfigurations = (
 				55A74F4215C8C146001B246A /* Debug */,
 				55A74F4315C8C146001B246A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		ADC547AE1D48556600A5C852 /* Build configuration list for PBXNativeTarget "video_processing_Mac" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				ADC547AF1D48556600A5C852 /* Debug */,
-				ADC547B01D48556600A5C852 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

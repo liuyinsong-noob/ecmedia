@@ -10,6 +10,9 @@
     <Filter Include="source">
       <UniqueIdentifier>{99bd0e1b-8c74-460f-b6f1-b2ede6f7ad16}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\util">
+      <UniqueIdentifier>{7663184f-caa9-43fd-b9a9-bba08751ff9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main\include\video_processing.h">
@@ -48,6 +51,24 @@
     <ClInclude Include="main\source\video_processing_impl.h">
       <Filter>source</Filter>
     </ClInclude>
+    <ClInclude Include="main\source\util\denoiser_filter.h">
+      <Filter>source\util</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\util\denoiser_filter_c.h">
+      <Filter>source\util</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\util\denoiser_filter_sse2.h">
+      <Filter>source\util</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\util\noise_estimation.h">
+      <Filter>source\util</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\util\skin_detection.h">
+      <Filter>source\util</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\video_denoiser.h">
+      <Filter>source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\source\brighten.cc">
@@ -78,6 +99,24 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="main\source\content_analysis_sse2.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\util\denoiser_filter.cc">
+      <Filter>source\util</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\util\denoiser_filter_c.cc">
+      <Filter>source\util</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\util\denoiser_filter_sse2.cc">
+      <Filter>source\util</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\util\noise_estimation.cc">
+      <Filter>source\util</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\util\skin_detection.cc">
+      <Filter>source\util</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\video_denoiser.cc">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

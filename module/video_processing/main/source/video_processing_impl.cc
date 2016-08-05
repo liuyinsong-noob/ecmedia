@@ -202,4 +202,10 @@ void VideoProcessingModuleImpl::EnableContentAnalysis(bool enable) {
   frame_pre_processor_.EnableContentAnalysis(enable);
 }
 
+void VideoProcessingModuleImpl::EnableDenoising(bool enable) {
+	CriticalSectionScoped mutex(&mutex_);
+	frame_pre_processor_.EnableDenoising(enable);
+}
+
+
 }  // namespace webrtc

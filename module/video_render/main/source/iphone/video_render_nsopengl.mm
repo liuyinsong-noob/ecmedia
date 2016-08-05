@@ -89,7 +89,7 @@ WebRtc_Word32 VideoChannelNSOpenGL::RenderFrame(const WebRtc_UWord32 /*streamId*
 
     _owner->LockAGLCntx();
 
-    WEBRTC_TRACE(kTraceError, kTraceVideoRenderer, _id, "RenderFrame _width = %d,videoFrame.Width = %d,_height = %d,videoFrame.Height = %d",_width,(int)videoFrame.width(),_height,(int)videoFrame.height());
+    WEBRTC_TRACE(kTraceInfo, kTraceVideoRenderer, _id, "RenderFrame _width = %d,videoFrame.Width = %d,_height = %d,videoFrame.Height = %d",_width,(int)videoFrame.width(),_height,(int)videoFrame.height());
 
     
     if(_width != (int)videoFrame.width() ||
@@ -188,7 +188,7 @@ int VideoChannelNSOpenGL::DeliverFrame(unsigned char* buffer, int bufferSize, un
     mk.h = _height;
     mk.w = _width;
     
-    WEBRTC_TRACE(kTraceError, kTraceVideoRenderer, _id, "DeliverFrame h=%d w=%d datalen=%d", mk.h, mk.w, mk.datalen);
+    WEBRTC_TRACE(kTraceInfo, kTraceVideoRenderer, _id, "DeliverFrame h=%d w=%d datalen=%d", mk.h, mk.w, mk.datalen);
     
     ogl_display_set_yuv_to_display(_displayWindow->helper, &mk);
 

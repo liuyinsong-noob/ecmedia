@@ -271,6 +271,8 @@ class VideoProcessingModule : public Module {
   Enable content analysis
   */
   virtual void EnableContentAnalysis(bool enable) = 0;
+
+  virtual void EnableDenoising(bool enable) = 0;
 };
 
 }  // namespace webrtc

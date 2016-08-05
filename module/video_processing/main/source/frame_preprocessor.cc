@@ -21,6 +21,8 @@ VPMFramePreprocessor::VPMFramePreprocessor()
   spatial_resampler_ = new VPMSimpleSpatialResampler();
   ca_ = new VPMContentAnalysis(true);
   vd_ = new VPMVideoDecimator();
+  EnableDenoising(true);
+  denoised_frame_toggle_ = 0;
 }
 
 VPMFramePreprocessor::~VPMFramePreprocessor() {
@@ -105,13 +107,29 @@ int32_t VPMFramePreprocessor::PreprocessFrame(const I420VideoFrame& frame,
     return 1;  // drop 1 frame
   }
 
+  const  I420VideoFrame* current_frame = &frame;
+  if (denoiser_) {
+	  I420VideoFrame* denoised_frame = &denoised_frame_[0];
+	  I420VideoFrame* denoised_frame_prev = &denoised_frame_[1];
+	  // Swap the buffer to save one memcpy in DenoiseFrame.
+	  if (denoised_frame_toggle_) {
+		  denoised_frame = &denoised_frame_[1];
+		  denoised_frame_prev = &denoised_frame_[0];
+	  }
+	  // Invert the flag.
+	  denoised_frame_toggle_ ^= 1;
+	  denoiser_->DenoiseFrame(*current_frame, denoised_frame, denoised_frame_prev,
+		  true);
+	  current_frame = denoised_frame;
+  }
+
   // Resizing incoming frame if needed. Otherwise, remains NULL.
   // We are not allowed to resample the input frame (must make a copy of it).
   *processed_frame = NULL;
-  if (spatial_resampler_->ApplyResample(frame.width(), frame.height()))  {
-    int32_t ret = spatial_resampler_->ResampleFrame(frame, &resampled_frame_);
+  if (spatial_resampler_->ApplyResample(current_frame->width(), current_frame->height()))  {
+    int32_t ret = spatial_resampler_->ResampleFrame(*current_frame, &resampled_frame_);
     if (ret != VPM_OK) return ret;
-    *processed_frame = &resampled_frame_;
+    current_frame = &resampled_frame_;
   }
 
   // Perform content analysis on the frame to be encoded.
@@ -120,13 +138,15 @@ int32_t VPMFramePreprocessor::PreprocessFrame(const I420VideoFrame& frame,
     // the first frame.
     if (frame_cnt_ % kSkipFrameCA == 0) {
       if (*processed_frame == NULL)  {
-        content_metrics_ = ca_->ComputeContentMetrics(frame);
+        content_metrics_ = ca_->ComputeContentMetrics(*current_frame);
       } else {
         content_metrics_ = ca_->ComputeContentMetrics(resampled_frame_);
       }
     }
     ++frame_cnt_;
   }
+
+  *processed_frame = const_cast<I420VideoFrame*>(current_frame);
   return VPM_OK;
 }
 
@@ -134,4 +154,12 @@ VideoContentMetrics* VPMFramePreprocessor::ContentMetrics() const {
   return content_metrics_;
 }
 
+void VPMFramePreprocessor::EnableDenoising(bool enable) {
+	if (enable) {
+		denoiser_.reset(new VideoDenoiser(true));
+	}
+	else {
+		denoiser_.reset();
+	}
+}
 }  // namespace

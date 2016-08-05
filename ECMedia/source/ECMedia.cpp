@@ -36,6 +36,7 @@
 #include "RecordVoip.h"
 #include "webrtc_libyuv.h"
 #include "statsCollector.h"
+#include "vie_image_process.h"
 #endif
 
 #include "sdk_common.h"
@@ -2989,6 +2990,74 @@ int ECMedia_set_CaptureDeviceID(int videoCapDevId)
 {
 	g_CaptureDeviceId = videoCapDevId;
 	return 0;
+}
+
+int ECmedia_enable_deflickering(int captureid, bool enable)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    ViEImageProcess *imageProcess = ViEImageProcess::GetInterface(m_vie);
+    if (imageProcess) {
+        int ret = imageProcess->EnableDeflickering(captureid, enable);
+        imageProcess->Release();
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to get ViEImageProcess, %s",__FUNCTION__);
+        return -99;
+    }
+}
+
+int ECmedia_enable_EnableColorEnhancement(int channelid, bool enable)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    ViEImageProcess *imageProcess = ViEImageProcess::GetInterface(m_vie);
+    if (imageProcess) {
+        int ret = imageProcess->EnableColorEnhancement(channelid, enable);
+        imageProcess->Release();
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to get ViEImageProcess, %s",__FUNCTION__);
+        return -99;
+    }
+}
+
+int ECmedia_enable_EnableDenoising(int captureid, bool enable)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    ViEImageProcess *imageProcess = ViEImageProcess::GetInterface(m_vie);
+    if (imageProcess) {
+        int ret = imageProcess->EnableDenoising(captureid, enable);
+        imageProcess->Release();
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to get ViEImageProcess, %s",__FUNCTION__);
+        return -99;
+    }
+}
+
+int ECmedia_enable_EnableBrightnessAlarm(int captureid, bool enable)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    ViECapture *capture = ViECapture::GetInterface(m_vie);
+    if (capture) {
+        int ret = capture->EnableBrightnessAlarm(captureid, enable);
+        capture->Release();
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to get ViECapture, %s",__FUNCTION__);
+        return -99;
+    }
 }
 
 

@@ -1395,10 +1395,10 @@ int NetEqImpl::DecodeLoop(PacketList* packet_list, Operations* operation,
       // Error.
       LOG_FERR2(LS_WARNING, Decode, decode_length, payload_length);
       *decoded_length = -1;
-#ifndef WIN32
-	  printTime();
-#endif
-        printf("sean haha 114 Del All Packets\n");
+//#ifndef WIN32
+//	  printTime();
+//#endif
+//        printf("sean haha 114 Del All Packets\n");
       PacketBuffer::DeleteAllPackets(packet_list);
       break;
     }

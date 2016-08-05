@@ -26,19 +26,19 @@ class ViEImageProcessImpl
       public ViERefCount {
  public:
   // Implements ViEImageProcess.
-  virtual int Release();
+  virtual int Release() OVERRIDE;
   virtual int RegisterCaptureEffectFilter(const int capture_id,
-                                          ViEEffectFilter& capture_filter);
-  virtual int DeregisterCaptureEffectFilter(const int capture_id);
+                                          ViEEffectFilter& capture_filter) OVERRIDE;
+  virtual int DeregisterCaptureEffectFilter(const int capture_id) OVERRIDE;
   virtual int RegisterSendEffectFilter(const int video_channel,
-                                       ViEEffectFilter& send_filter);
-  virtual int DeregisterSendEffectFilter(const int video_channel);
+                                       ViEEffectFilter& send_filter) OVERRIDE;
+  virtual int DeregisterSendEffectFilter(const int video_channel) OVERRIDE;
   virtual int RegisterRenderEffectFilter(const int video_channel,
-                                         ViEEffectFilter& render_filter);
-  virtual int DeregisterRenderEffectFilter(const int video_channel);
-  virtual int EnableDeflickering(const int capture_id, const bool enable);
+                                         ViEEffectFilter& render_filter) OVERRIDE;
+  virtual int DeregisterRenderEffectFilter(const int video_channel) OVERRIDE;
+  virtual int EnableDeflickering(const int capture_id, const bool enable) OVERRIDE;
   virtual int EnableColorEnhancement(const int video_channel,
-                                     const bool enable);
+                                     const bool enable) OVERRIDE;
   virtual void RegisterPreEncodeCallback(
       int video_channel,
       I420FrameCallback* pre_encode_callback) OVERRIDE;

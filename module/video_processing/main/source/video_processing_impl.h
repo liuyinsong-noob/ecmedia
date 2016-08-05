@@ -69,6 +69,8 @@ class VideoProcessingModuleImpl : public VideoProcessingModule {
                                   I420VideoFrame** processed_frame) OVERRIDE;
   virtual VideoContentMetrics* ContentMetrics() const OVERRIDE;
 
+  void EnableDenoising(bool enable) override;
+
  private:
   int32_t  id_;
   CriticalSectionWrapper& mutex_;

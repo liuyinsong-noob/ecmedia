@@ -176,6 +176,8 @@ typedef struct _SerPhoneCall
 /////////////////////////
 	int   m_AudioChannelID;
 	int   m_VideoChannelID;
+//    int   m_VideoChannelID1;
+//    int   m_VideoChannelID2;
 	int   m_CaptureDeviceId;
 	int   m_desktopShareDeviceId;
     

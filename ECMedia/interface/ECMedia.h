@@ -463,4 +463,12 @@ int ECMedia_stop_Statistics_proxy();
 
 int ECMedia_set_CaptureDeviceID(int videoCapDevId);
 
+
+int ECmedia_enable_deflickering(int captureid, bool enable);
+
+int ECmedia_enable_EnableColorEnhancement(int channelid, bool enable);
+
+int ECmedia_enable_EnableDenoising(int captureid, bool enable);
+
+int ECmedia_enable_EnableBrightnessAlarm(int captureid, bool enable);
 #endif /* defined(__servicecoreVideo__ECMedia__) */
