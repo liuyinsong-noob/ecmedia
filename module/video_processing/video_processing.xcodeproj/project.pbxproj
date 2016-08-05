@@ -40,6 +40,39 @@
 		55A74F7715C8C169001B246A /* video_decimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F5F15C8C169001B246A /* video_decimator.h */; };
 		55A74F7815C8C169001B246A /* video_processing_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F6015C8C169001B246A /* video_processing_impl.cc */; };
 		55A74F7915C8C169001B246A /* video_processing_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F6115C8C169001B246A /* video_processing_impl.h */; };
+		AD73386F1D548617006A35DF /* brighten.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F4C15C8C169001B246A /* brighten.cc */; };
+		AD7338701D548617006A35DF /* brightness_detection.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F4E15C8C169001B246A /* brightness_detection.cc */; };
+		AD7338711D548617006A35DF /* color_enhancement.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F5015C8C169001B246A /* color_enhancement.cc */; };
+		AD7338721D548617006A35DF /* video_denoiser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 456DC52B1D544320007C20BA /* video_denoiser.cc */; };
+		AD7338731D548617006A35DF /* content_analysis.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F5315C8C169001B246A /* content_analysis.cc */; };
+		AD7338741D548617006A35DF /* noise_estimation.cc in Sources */ = {isa = PBXBuildFile; fileRef = 456DC51A1D543B19007C20BA /* noise_estimation.cc */; };
+		AD7338751D548617006A35DF /* denoiser_filter_c.cc in Sources */ = {isa = PBXBuildFile; fileRef = 456DC5121D543B19007C20BA /* denoiser_filter_c.cc */; };
+		AD7338761D548617006A35DF /* deflickering.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F5615C8C169001B246A /* deflickering.cc */; };
+		AD7338771D548617006A35DF /* skin_detection.cc in Sources */ = {isa = PBXBuildFile; fileRef = 456DC51C1D543B19007C20BA /* skin_detection.cc */; };
+		AD7338781D548617006A35DF /* frame_preprocessor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F5A15C8C169001B246A /* frame_preprocessor.cc */; };
+		AD7338791D548617006A35DF /* spatial_resampler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F5C15C8C169001B246A /* spatial_resampler.cc */; };
+		AD73387A1D548617006A35DF /* video_decimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F5E15C8C169001B246A /* video_decimator.cc */; };
+		AD73387B1D548617006A35DF /* denoiser_filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 456DC5181D543B19007C20BA /* denoiser_filter.cc */; };
+		AD73387C1D548617006A35DF /* video_processing_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74F6015C8C169001B246A /* video_processing_impl.cc */; };
+		AD73387E1D548617006A35DF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A74F3715C8C146001B246A /* Foundation.framework */; };
+		AD7338801D548617006A35DF /* video_processing.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F4915C8C169001B246A /* video_processing.h */; };
+		AD7338811D548617006A35DF /* denoiser_filter_neon.h in Headers */ = {isa = PBXBuildFile; fileRef = 456DC5151D543B19007C20BA /* denoiser_filter_neon.h */; };
+		AD7338821D548617006A35DF /* video_processing_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F4A15C8C169001B246A /* video_processing_defines.h */; };
+		AD7338831D548617006A35DF /* brighten.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F4D15C8C169001B246A /* brighten.h */; };
+		AD7338841D548617006A35DF /* brightness_detection.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F4F15C8C169001B246A /* brightness_detection.h */; };
+		AD7338851D548617006A35DF /* denoiser_filter.h in Headers */ = {isa = PBXBuildFile; fileRef = 456DC5191D543B19007C20BA /* denoiser_filter.h */; };
+		AD7338861D548617006A35DF /* color_enhancement.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F5115C8C169001B246A /* color_enhancement.h */; };
+		AD7338871D548617006A35DF /* content_analysis.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F5415C8C169001B246A /* content_analysis.h */; };
+		AD7338881D548617006A35DF /* deflickering.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F5715C8C169001B246A /* deflickering.h */; };
+		AD7338891D548617006A35DF /* video_denoiser.h in Headers */ = {isa = PBXBuildFile; fileRef = 456DC52C1D544320007C20BA /* video_denoiser.h */; };
+		AD73388A1D548617006A35DF /* frame_preprocessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F5B15C8C169001B246A /* frame_preprocessor.h */; };
+		AD73388B1D548617006A35DF /* noise_estimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 456DC51B1D543B19007C20BA /* noise_estimation.h */; };
+		AD73388C1D548617006A35DF /* spatial_resampler.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F5D15C8C169001B246A /* spatial_resampler.h */; };
+		AD73388D1D548617006A35DF /* denoiser_filter_c.h in Headers */ = {isa = PBXBuildFile; fileRef = 456DC5131D543B19007C20BA /* denoiser_filter_c.h */; };
+		AD73388E1D548617006A35DF /* skin_detection.h in Headers */ = {isa = PBXBuildFile; fileRef = 456DC51D1D543B19007C20BA /* skin_detection.h */; };
+		AD73388F1D548617006A35DF /* video_decimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F5F15C8C169001B246A /* video_decimator.h */; };
+		AD7338901D548617006A35DF /* video_processing_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F6115C8C169001B246A /* video_processing_impl.h */; };
+		AD7338961D548809006A35DF /* denoiser_filter_sse2.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD7338951D548809006A35DF /* denoiser_filter_sse2.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,6 +110,8 @@
 		55A74F5F15C8C169001B246A /* video_decimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_decimator.h; sourceTree = "<group>"; };
 		55A74F6015C8C169001B246A /* video_processing_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_processing_impl.cc; sourceTree = "<group>"; };
 		55A74F6115C8C169001B246A /* video_processing_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_processing_impl.h; sourceTree = "<group>"; };
+		AD7338941D548617006A35DF /* libvideo_processing_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvideo_processing_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD7338951D548809006A35DF /* denoiser_filter_sse2.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = denoiser_filter_sse2.cc; path = main/source/util/denoiser_filter_sse2.cc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +120,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				55A74F3815C8C146001B246A /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD73387D1D548617006A35DF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD73387E1D548617006A35DF /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,6 +154,7 @@
 		55A74F2915C8C146001B246A = {
 			isa = PBXGroup;
 			children = (
+				AD7338951D548809006A35DF /* denoiser_filter_sse2.cc */,
 				55A74F3915C8C146001B246A /* video_processing */,
 				55A74F3615C8C146001B246A /* Frameworks */,
 				55A74F3515C8C146001B246A /* Products */,
@@ -121,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				55A74F3415C8C146001B246A /* libvideo_processing.a */,
+				AD7338941D548617006A35DF /* libvideo_processing_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -208,6 +253,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AD73387F1D548617006A35DF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD7338801D548617006A35DF /* video_processing.h in Headers */,
+				AD7338811D548617006A35DF /* denoiser_filter_neon.h in Headers */,
+				AD7338821D548617006A35DF /* video_processing_defines.h in Headers */,
+				AD7338831D548617006A35DF /* brighten.h in Headers */,
+				AD7338841D548617006A35DF /* brightness_detection.h in Headers */,
+				AD7338851D548617006A35DF /* denoiser_filter.h in Headers */,
+				AD7338861D548617006A35DF /* color_enhancement.h in Headers */,
+				AD7338871D548617006A35DF /* content_analysis.h in Headers */,
+				AD7338881D548617006A35DF /* deflickering.h in Headers */,
+				AD7338891D548617006A35DF /* video_denoiser.h in Headers */,
+				AD73388A1D548617006A35DF /* frame_preprocessor.h in Headers */,
+				AD73388B1D548617006A35DF /* noise_estimation.h in Headers */,
+				AD73388C1D548617006A35DF /* spatial_resampler.h in Headers */,
+				AD73388D1D548617006A35DF /* denoiser_filter_c.h in Headers */,
+				AD73388E1D548617006A35DF /* skin_detection.h in Headers */,
+				AD73388F1D548617006A35DF /* video_decimator.h in Headers */,
+				AD7338901D548617006A35DF /* video_processing_impl.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -226,6 +295,23 @@
 			name = video_processing;
 			productName = video_processing;
 			productReference = 55A74F3415C8C146001B246A /* libvideo_processing.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		AD73386C1D548617006A35DF /* video_processing_Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD7338911D548617006A35DF /* Build configuration list for PBXNativeTarget "video_processing_Mac" */;
+			buildPhases = (
+				AD73386D1D548617006A35DF /* Sources */,
+				AD73387D1D548617006A35DF /* Frameworks */,
+				AD73387F1D548617006A35DF /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = video_processing_Mac;
+			productName = video_processing;
+			productReference = AD7338941D548617006A35DF /* libvideo_processing_Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -249,6 +335,7 @@
 			projectRoot = "";
 			targets = (
 				55A74F3315C8C146001B246A /* video_processing */,
+				AD73386C1D548617006A35DF /* video_processing_Mac */,
 			);
 		};
 /* End PBXProject section */
@@ -273,6 +360,28 @@
 				55A74F7615C8C169001B246A /* video_decimator.cc in Sources */,
 				456DC5241D543B19007C20BA /* denoiser_filter.cc in Sources */,
 				55A74F7815C8C169001B246A /* video_processing_impl.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD73386D1D548617006A35DF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD7338961D548809006A35DF /* denoiser_filter_sse2.cc in Sources */,
+				AD73386F1D548617006A35DF /* brighten.cc in Sources */,
+				AD7338701D548617006A35DF /* brightness_detection.cc in Sources */,
+				AD7338711D548617006A35DF /* color_enhancement.cc in Sources */,
+				AD7338721D548617006A35DF /* video_denoiser.cc in Sources */,
+				AD7338731D548617006A35DF /* content_analysis.cc in Sources */,
+				AD7338741D548617006A35DF /* noise_estimation.cc in Sources */,
+				AD7338751D548617006A35DF /* denoiser_filter_c.cc in Sources */,
+				AD7338761D548617006A35DF /* deflickering.cc in Sources */,
+				AD7338771D548617006A35DF /* skin_detection.cc in Sources */,
+				AD7338781D548617006A35DF /* frame_preprocessor.cc in Sources */,
+				AD7338791D548617006A35DF /* spatial_resampler.cc in Sources */,
+				AD73387A1D548617006A35DF /* video_decimator.cc in Sources */,
+				AD73387B1D548617006A35DF /* denoiser_filter.cc in Sources */,
+				AD73387C1D548617006A35DF /* video_processing_impl.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,6 +560,138 @@
 			};
 			name = Release;
 		};
+		AD7338921D548617006A35DF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				DSTROOT = /tmp/video_processing.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"WEBRTC_SVNREVISION=\"n/a\"",
+					"_FILE_OFFSET_BITS=64",
+					NO_TCMALLOC,
+					DISABLE_NACL,
+					CHROMIUM_BUILD,
+					USE_PROPRIETARY_CODECS,
+					"ENABLE_GPU=1",
+					"USE_OPENSSL=1",
+					"ENABLE_EGLIMAGE=1",
+					"USE_SKIA=1",
+					WEBRTC_MAC,
+					MAC_IPHONE,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_DETECT_ARM_NEON,
+					WEBRTC_CLOCK_TYPE_REALTIME,
+					WEBRTC_THREAD_RR,
+					__STDC_FORMAT_MACROS,
+					"__GNU_SOURCE=1",
+					"USE_STLPORT=1",
+					"_STLP_USE_PTR_SPECIALIZATIONS=1",
+					HAVE_OFF64_T,
+					HAVE_SYS_UIO_H,
+					NVALGRIND,
+					"DYNAMIC_ANNOTATIONS_ENABLED=0",
+				);
+				HEADER_SEARCH_PATHS = (
+					../third_party/libyuv/include,
+					../../.,
+					../interface,
+					../,
+					../../system_wrappers/source,
+					../../system_wrappers/interface,
+					./main/include,
+					./main/source,
+					../utility/include,
+					../audio_coding/main/include,
+					../common_video/interface,
+					../videojpegyuv/include,
+					../video_coding/main/include,
+					../common_audio/source/signal_processing/include,
+					../common_video/source/libyuv/include,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../IOSProject/out/baselib;
+				USER_HEADER_SEARCH_PATHS = "../../. ../interface ../ ../../system_wrappers/interface ./main/include ./main/source ../utility/include ../audio_coding/main/include ../signalprocess/include ../videojpegyuv/include ../third_party/libyuv/include ../common_video/source";
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Debug;
+		};
+		AD7338931D548617006A35DF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				DSTROOT = /tmp/video_processing.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"WEBRTC_SVNREVISION=\"n/a\"",
+					"_FILE_OFFSET_BITS=64",
+					NO_TCMALLOC,
+					DISABLE_NACL,
+					CHROMIUM_BUILD,
+					USE_PROPRIETARY_CODECS,
+					"ENABLE_GPU=1",
+					"USE_OPENSSL=1",
+					"ENABLE_EGLIMAGE=1",
+					"USE_SKIA=1",
+					WEBRTC_MAC,
+					MAC_IPHONE,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_DETECT_ARM_NEON,
+					WEBRTC_CLOCK_TYPE_REALTIME,
+					WEBRTC_THREAD_RR,
+					__STDC_FORMAT_MACROS,
+					"__GNU_SOURCE=1",
+					"USE_STLPORT=1",
+					"_STLP_USE_PTR_SPECIALIZATIONS=1",
+					HAVE_OFF64_T,
+					HAVE_SYS_UIO_H,
+					NVALGRIND,
+					"DYNAMIC_ANNOTATIONS_ENABLED=0",
+				);
+				HEADER_SEARCH_PATHS = (
+					../third_party/libyuv/include,
+					../../.,
+					../interface,
+					../,
+					../../system_wrappers/source,
+					../../system_wrappers/interface,
+					./main/include,
+					./main/source,
+					../utility/include,
+					../audio_coding/main/include,
+					../common_video/interface,
+					../videojpegyuv/include,
+					../video_coding/main/include,
+					../common_audio/source/signal_processing/include,
+					../common_video/source/libyuv/include,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OBJROOT = "$(SYMROOT)/build";
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SYMROOT = ../../IOSProject/out/baselib;
+				USER_HEADER_SEARCH_PATHS = "../../. ../interface ../ ../../system_wrappers/interface ./main/include ./main/source ../utility/include ../audio_coding/main/include ../signalprocess/include ../videojpegyuv/include ../third_party/libyuv/include ../common_video/source";
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -468,6 +709,15 @@
 			buildConfigurations = (
 				55A74F4215C8C146001B246A /* Debug */,
 				55A74F4315C8C146001B246A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD7338911D548617006A35DF /* Build configuration list for PBXNativeTarget "video_processing_Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD7338921D548617006A35DF /* Debug */,
+				AD7338931D548617006A35DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
