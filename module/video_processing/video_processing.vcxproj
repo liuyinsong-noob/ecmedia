@@ -111,12 +111,12 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../.;..\..;./main\include;./main\source;../utility\include;../interface;../audio_coding\main\include;../../system_wrappers\interface;../common_video/source;../common_video/interface;../common_video/source/libyuv/include;../common_audio/source/signal_processing/include;../video_coding/main/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;..\..;./main\include;./main/source/util;./main\source;../utility\include;../interface;../audio_coding\main\include;../../system_wrappers\interface;../../system_wrappers\source;../common_video/source;../common_video/interface;../common_video/source/libyuv/include;../common_audio/source/signal_processing/include;../video_coding/main/include</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 %(AdditionalOptions)</AdditionalOptions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4351;4396;4503;4819;4100;4121;4125;4127;4130;4131;4201;4238;4244;4245;4310;4355;4428;4481;4505;4510;4512;4530;4610;4611;4701;4702;4706;4389;4373;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4351;4396;4503;4819;4100;4121;4125;4127;4130;4131;4201;4238;4244;4245;4310;4355;4428;4481;4505;4510;4512;4530;4610;4611;4701;4702;4706;4389;4373;4456;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ExceptionHandling>false</ExceptionHandling>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <MinimalRebuild>false</MinimalRebuild>
@@ -162,11 +162,11 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../.;..\..;./main\include;./main\source;../utility\include;../interface;../audio_coding\main\include;../../system_wrappers\interface;../common_video/source;../common_video/interface;../common_video/source/libyuv/include;../common_audio/source/signal_processing/include;../video_coding/main/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;..\..;./main\include;./main\source;./main/source/util;../utility\include;../interface;../audio_coding\main\include;../../system_wrappers\source;../../system_wrappers\interface;../common_video/source;../common_video/interface;../common_video/source/libyuv/include;../common_audio/source/signal_processing/include;../video_coding/main/include</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4351;4396;4503;4819;4100;4121;4125;4127;4130;4131;4201;4238;4244;4245;4310;4355;4428;4481;4505;4510;4512;4530;4610;4611;4701;4702;4706;4389;4373;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4351;4396;4503;4819;4100;4121;4125;4127;4130;4131;4201;4238;4244;4245;4310;4355;4428;4481;4505;4510;4512;4530;4610;4611;4701;4702;4706;4389;4373;4456;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ExceptionHandling>false</ExceptionHandling>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -218,7 +218,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../.;..\..;./main\include;./main\source;../utility\include;../interface;../audio_coding\main\include;../../system_wrappers\interface;../common_video/source;../common_video/interface;../common_video/source/libyuv/include;../common_audio/source/signal_processing/include;../video_coding/main/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;..\..;./main\include;./main/source/util;./main\source;../utility\include;../interface;../audio_coding\main\include;../../system_wrappers\source;../../system_wrappers\interface;../common_video/source;../common_video/interface;../common_video/source/libyuv/include;../common_audio/source/signal_processing/include;../video_coding/main/include</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
