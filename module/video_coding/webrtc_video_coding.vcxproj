@@ -132,7 +132,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../.;..\..;./main\include;./main\source;../utility\include;../interface;../../system_wrappers\interface;./codecs\interface;./codecs\vp8\main\interface;./codecs\h264;../../third_party/libx264/libx264_win/include;../../third_party/ffmpeg/ffmpeg_win/include;.\;.\main\source\utility\include;../common_video;../common_video/source;../common_video/source/libyuv/include;../common_video/interface</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;..\..;./main\include;./main\source;../utility\include;../interface;../../system_wrappers\interface;./codecs\interface;./codecs\vp8\main\interface;./codecs\h264;../../third_party/libx264/libx264_win/x86/include;../../third_party/ffmpeg/ffmpeg_win/x86/include;.\;.\main\source\utility\include;../common_video;../common_video/source;../common_video/source/libyuv/include;../common_video/interface</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 %(AdditionalOptions)</AdditionalOptions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <BufferSecurityCheck>true</BufferSecurityCheck>
@@ -184,7 +184,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../.;..\..;./main\include;./main\source;../utility\include;../interface;../../system_wrappers\interface;./codecs\interface;./codecs\vp8\main\interface;./codecs\h264;../../third_party/libx264/libx264_win/include;../../third_party/ffmpeg/ffmpeg_win/include;.\;.\main\source\utility\include;../common_video;../common_video/source;../common_video/source/libyuv/include;../common_video/interface</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;..\..;./main\include;./main\source;../utility\include;../interface;../../system_wrappers\interface;./codecs\interface;./codecs\vp8\main\interface;./codecs\h264;../../third_party/libx264/libx264_win/x64/include;../../third_party/ffmpeg/ffmpeg_win/x64/include;.\;.\main\source\utility\include;../common_video;../common_video/source;../common_video/source/libyuv/include;../common_video/interface</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 %(AdditionalOptions)</AdditionalOptions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <BufferSecurityCheck>true</BufferSecurityCheck>
@@ -235,7 +235,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../.;..\..;./main\include;./main\source;../utility\include;../interface;../../system_wrappers\interface;./codecs\interface;./codecs\vp8\main\interface;./codecs\h264;../../third_party/libx264/libx264_win/include;../../third_party/ffmpeg/ffmpeg_win/include;.\;.\main\source\utility\include;../common_video;../common_video/source;../common_video/source/libyuv/include;../common_video/interface</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;..\..;./main\include;./main\source;../utility\include;../interface;../../system_wrappers\interface;./codecs\interface;./codecs\vp8\main\interface;./codecs\h264;../../third_party/libx264/libx264_win/x86/include;../../third_party/ffmpeg/ffmpeg_win/x86/include;.\;.\main\source\utility\include;../common_video;../common_video/source;../common_video/source/libyuv/include;../common_video/interface</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -291,7 +291,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../.;..\..;./main\include;./main\source;../utility\include;../interface;../../system_wrappers\interface;./codecs\interface;./codecs\vp8\main\interface;./codecs\h264;../../third_party/libx264/libx264_win/include;../../third_party/ffmpeg/ffmpeg_win/include;.\;.\main\source\utility\include;../common_video;../common_video/source;../common_video/source/libyuv/include;../common_video/interface</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;..\..;./main\include;./main\source;../utility\include;../interface;../../system_wrappers\interface;./codecs\interface;./codecs\vp8\main\interface;./codecs\h264;../../third_party/libx264/libx264_win/x64/include;../../third_party/ffmpeg/ffmpeg_win/x64/include;.\;.\main\source\utility\include;../common_video;../common_video/source;../common_video/source/libyuv/include;../common_video/interface</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
