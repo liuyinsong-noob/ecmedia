@@ -756,7 +756,7 @@ int opus_decode_float(OpusDecoder *st, const unsigned char *data,
 
 #else
 int opus_decode(OpusDecoder *st, const unsigned char *data,
-      opus_int32 len, opus_int16 *pcm, int frame_size, int decode_fec)
+      opus_int32 len, opus_int16 *pcm, int frame_size, int decode_fec, int fs)
 {
    VARDECL(float, out);
    int ret, i;
@@ -790,7 +790,7 @@ int opus_decode(OpusDecoder *st, const unsigned char *data,
 }
 
 int opus_decode_float(OpusDecoder *st, const unsigned char *data,
-      opus_int32 len, opus_val16 *pcm, int frame_size, int decode_fec)
+      opus_int32 len, opus_val16 *pcm, int frame_size, int decode_fec, int fs)
 {
    if(frame_size<=0)
       return OPUS_BAD_ARG;

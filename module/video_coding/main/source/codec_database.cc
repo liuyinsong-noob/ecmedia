@@ -29,8 +29,10 @@
 #ifdef  VIDEOCODEC_H264
 #include "h264.h"
 #include "H264_dec.h"
+#ifdef WEBRTC_IOS
 #include "h264_video_toolbox_encoder.h"
 #include "h264_video_toolbox_decoder.h"
+#endif
 #endif
 
 namespace {
@@ -691,10 +693,14 @@ VCMGenericEncoder* VCMCodecDataBase::CreateEncoder(
 #endif
 #ifdef VIDEOCODEC_H264
 	case kVideoCodecH264:
+#ifdef WEBRTC_IOS
           if (!IsH264CodecSupportedObjC())
               return new VCMGenericEncoder(*(H264Encoder::Create()));
           else
               return new VCMGenericEncoder(*(H264VideoToolboxEncoder::Create()));
+#else
+      return new VCMGenericEncoder(*(H264Encoder::Create()));
+#endif 
 #endif
 #ifdef VIDEOCODEC_VP9
     case kVideoCodecVP9:
@@ -729,10 +735,14 @@ VCMGenericDecoder* VCMCodecDataBase::CreateDecoder(VideoCodecType type) const {
 #endif
 #ifdef VIDEOCODEC_H264
       case kVideoCodecH264:
+#ifdef WEBRTC_IOS
           if (!IsH264CodecSupportedObjC())
               return new VCMGenericDecoder(*(H264Decoder::Create()));
           else
               return new VCMGenericDecoder(*(H264VideoToolboxDecoder::Create()));
+#else
+          return new VCMGenericDecoder(*(H264Decoder::Create()));
+#endif
 #endif
 #ifdef VIDEOCODEC_VP9
     case kVideoCodecVP9:
