@@ -32,6 +32,99 @@ void static iir_filter(Howling_Filter* filter,
 	}
 }
 
+int static GetGain(int fs, float fpin, float magn, float* gain)
+{
+	if( fs != 8000 && fs != 16000 )
+		return -1;
+	//
+
+	//
+	return 0;
+}
+
+//Computer the bandwidth of the notchfilter for howling pin
+int static GetBandWidth(int fs, float fpin, float* bandwidth)
+{
+	// for fs = 16000
+	//      8     10    15   20   28   33   35   37   38
+	//     500   1000  2000 3000 4000 5000 6000 7000 8000
+	//==============================================================
+	// for fs = 8000
+	//      8     10     15     25    30
+	//     500   1000   2000   3000  4000
+	//
+	if( fs != 8000 && fs != 16000 )
+		return -1;
+
+	if( fs == 8000 )
+	{
+		if ( fpin < 500 )
+		{
+			*bandwidth = 8.0f;
+		}
+		else if( fpin >= 500 && fpin < 1000 )
+		{
+			*bandwidth = ((fpin - 500.f)/500.f) * (10.0f - 8.0f) + 8.0f;
+		}
+		else if( fpin >= 1000 && fpin < 2000 )
+		{
+			*bandwidth = ((fpin - 1000.0f)/1000.f) * (15.0f - 10.0f) + 10.0f;
+		}
+		else if( fpin >= 2000 && fpin < 3000 )
+		{
+			*bandwidth = ((fpin - 2000.0f)/1000.f) * (25.0f - 15.0f) + 15.0f;
+		}
+		else if( fpin >= 3000 && fpin <= 4000 )
+		{
+			*bandwidth = ((fpin - 3000.0f)/1000.f) * (30.0f - 25.0f) + 25.0f;
+		}
+
+	}
+
+	if( fs == 16000 )
+	{
+		if ( fpin < 500 )
+		{
+			*bandwidth = 8.0f;
+		}
+		else if( fpin >= 500 && fpin < 1000 )
+		{
+			*bandwidth = ((fpin - 500.f)/500.f) * (10.0f - 8.0f) + 8.0f;
+		}
+		else if( fpin >= 1000 && fpin < 2000 )
+		{
+			*bandwidth = ((fpin - 1000.0f)/1000.f) * (15.0f - 10.0f) + 10.0f;
+		}
+		else if( fpin >= 2000 && fpin < 3000 )
+		{
+			*bandwidth = ((fpin - 2000.0f)/1000.f) * (20.0f - 15.0f) + 15.0f;
+		}
+		else if( fpin >= 3000 && fpin < 4000 )
+		{
+			*bandwidth = ((fpin - 3000.0f)/1000.f) * (28.0f - 20.0f) + 20.0f;
+		}
+		else if( fpin >= 4000 && fpin < 5000 )
+		{
+			*bandwidth = ((fpin - 4000.0f)/1000.f) * (33.0f - 28.0f) + 28.0f;
+		}
+		else if( fpin >= 5000 && fpin < 6000 )
+		{
+			*bandwidth = ((fpin - 5000.0f)/1000.f) * (35.0f - 33.0f) + 33.0f;
+		}
+		else if( fpin >= 6000 && fpin < 7000 )
+		{
+			*bandwidth = ((fpin - 6000.0f)/1000.f) * (37.0f - 35.0f) + 35.0f;
+		}
+		else if( fpin >= 7000 && fpin <= 8000 )
+		{
+			*bandwidth = ((fpin - 7000.0f)/1000.f) * (38.0f - 37.0f) + 37.0f;
+		}
+
+	}
+	return 0;
+
+}
+
 //
 int HowlingFilterCreate(Howling_Filter** self)
 {
@@ -54,9 +147,9 @@ int HowlingFilterCreate(Howling_Filter** self)
 
 int HowlingFilterInit(Howling_Filter* self, int fs, int pin)
 {
-	float gain = 30;
-	float f0   = pin*8000.f/512.0f;
-	float B    = 35.0f;
+	float gain = 20;
+	float f0   = pin * fs / 1024.0f;
+	float B    = 30.0f;
 	float Q, k, v;
 
 	if( self == NULL )
@@ -65,8 +158,7 @@ int HowlingFilterInit(Howling_Filter* self, int fs, int pin)
 	if( fs != 8000 && fs != 16000 )
 		return -1;
 	
-	if( f0 <= 1500 )
-		B = 30.f;
+	GetBandWidth(fs, f0, &B);
 
 	Q = f0 / B;    //Q = f0 / (f2 - f1) = f0 / B; B is bandwide, think deeply，do not change!
 
@@ -259,7 +351,8 @@ int HowlingFPoolCreate(HowlingFilterPool** self)
 	return -1;
 }
 
-int HowlingFPoolMakeAndUpdateFilter( HowlingFilterPool* self, int fs, int* howlingpin, int howlingcount )
+
+int HowlingFPoolMakeAndUpdateFilter( HowlingFilterPool* self, int fs, const int* howlingpin, const int howlingcount )
 {
 	int use_size = 0;
 	int i, j;
@@ -274,6 +367,73 @@ int HowlingFPoolMakeAndUpdateFilter( HowlingFilterPool* self, int fs, int* howli
 	//先从work list中查找，
 	//如没有找到则从idle list中查找，如还没有找到则create
 	//最后update list
+
+	use_size = self->Use->count;
+	for( i = 0; i < 513; ++i )
+	{
+		int find = 0;
+		Howling_Filter* pos = self->Use->head;
+
+		if( howlingpin[i] == 0 )
+			continue;
+
+		for( j = 0; j < use_size; ++j )
+		{
+			if( pos->origin_pin == i )
+			{
+				pos->idle_times = 0;
+				find = 1;
+				break;
+			}
+			pos = pos->next;
+		}
+
+		if( find == 0 )
+		{
+			int size = self->Idle->count;
+			Howling_Filter* pos = self->Idle->head;
+			for( j = 0; j < size; ++j )
+			{
+				if( pos->origin_pin == i)
+				{
+					pos->idle_times = 0;
+					find = 1;
+					HowlingFilterListDrop(self->Idle, pos);
+					HowlingFilterListAdd2Tail(self->Use, pos);
+					break;
+				}
+				pos = pos->next;
+			}
+		}
+
+		if( find == 0 )
+		{
+			//create
+			Howling_Filter* filter;
+			HowlingFilterCreate(&filter);
+			HowlingFilterInit(filter, fs, i);
+			HowlingFilterListAdd2Tail(self->Use, filter);
+			self->count++;
+		}
+	}
+
+	//update all worklist items
+	pos = self->Use->head;
+	while( pos != NULL )
+	{
+		pos->idle_times++;
+		if( pos->idle_times >= 50 )
+		{
+			Howling_Filter* pTmp = pos;
+			pos = pTmp->next;
+			HowlingFilterListDrop(self->Use, pTmp);
+			HowlingFilterListAdd2Tail(self->Idle, pTmp);
+		}
+		else
+			pos = pos->next;
+	}
+
+	/*
 	use_size = self->Use->count;
 	for( i = 0; i < howlingcount; ++i )
 	{
@@ -324,7 +484,7 @@ int HowlingFPoolMakeAndUpdateFilter( HowlingFilterPool* self, int fs, int* howli
 	while( pos != NULL )
 	{
 		pos->idle_times++;
-		if( pos->idle_times >= 240 )
+		if( pos->idle_times >= 50 )
 		{
 			Howling_Filter* pTmp = pos;
 			pos = pTmp->next;
@@ -334,10 +494,78 @@ int HowlingFPoolMakeAndUpdateFilter( HowlingFilterPool* self, int fs, int* howli
 		else
 			pos = pos->next;
 	}
+	*/
 
 	return 0;
 }
 
+int HowlingFPoolRemoveAllFilter( HowlingFilterPool* self )
+{
+	Howling_Filter* pos = self->Use->head;
+
+	while( pos != NULL )
+	{
+		Howling_Filter* pTmp = pos;
+		pos = pTmp->next;
+		HowlingFilterListDrop(self->Use, pTmp);
+		HowlingFilterListAdd2Tail(self->Idle, pTmp);
+	}
+
+	return 0;
+}
+
+int HowlingFPoolRemoveFilterPins(  HowlingFilterPool* self,
+	                               const float* magn,
+	                               const int magnLen,
+								   const int* peak_pin,
+								   const int peak_count,
+	                               const float pav )
+{
+	/*return 0;*/
+	//check every used pins
+	Howling_Filter* pos = self->Use->head;
+	while( pos != NULL )
+	{
+		if( pos->idle_times > 10 )
+		{
+// 			int find = 0;
+// 			for( int i = 0; i < peak_count; ++i )
+// 			{
+// 				if( pos->origin_pin == peak_pin[i]/* || pos->origin_pin == peak_pin[i] - 1 || pos->origin_pin == peak_pin[i] + 1 */)
+// 				{
+// 					find = 1;
+// 					break;
+// 				}
+// 			}
+// 			if( find == 0 && magn[pos->origin_pin] >= 10000 && log10(magn[pos->origin_pin] * magn[pos->origin_pin] / pav) < 0.f )
+// 			{
+// 				Howling_Filter* pTmp = pos;
+// 				pos = pTmp->next;
+// 				HowlingFilterListDrop(self->Use, pTmp);
+// 				HowlingFilterListAdd2Tail(self->Idle, pTmp);
+// 			}
+// 			else
+// 			{
+// 				pos = pos->next;
+// 			}
+			
+			if( magn[pos->origin_pin] >= 5000 && log10(magn[pos->origin_pin] * magn[pos->origin_pin] / pav) < 0.5f )
+			{
+				Howling_Filter* pTmp = pos;
+				pos = pTmp->next;
+				HowlingFilterListDrop(self->Use, pTmp);
+				HowlingFilterListAdd2Tail(self->Idle, pTmp);
+			}
+			else
+				pos = pos->next;
+			
+		}
+		else
+			pos = pos->next;
+	}
+
+	return 0;
+}
 int HowlingFPoolProcess( HowlingFilterPool* self, 
 	                     float* in_data,
 	                     float* out_data,

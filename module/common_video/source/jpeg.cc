@@ -403,7 +403,7 @@ JpegDecoder::Decode(const EncodedImage& inputImage,
     WebRtc_UWord32 requiredSize = width * height * 3 >> 1;
 
     // verify sufficient buffer size
- 	int allocated_size = outputImage.allocated_size(kYPlane)+outputImage.allocated_size(kUPlane)+outputImage.allocated_size(kVPlane);
+ 	WebRtc_UWord32 allocated_size = outputImage.allocated_size(kYPlane)+outputImage.allocated_size(kUPlane)+outputImage.allocated_size(kVPlane);
 	if (allocated_size < requiredSize)
 	{
 		int size_y = stride*height16;

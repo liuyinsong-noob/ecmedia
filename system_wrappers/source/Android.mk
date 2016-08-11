@@ -23,7 +23,7 @@ LOCAL_SRC_FILES := \
     sort.cc \
     aligned_malloc.cc \
     atomic32_posix.cc \
-	clock.cc\
+	  clock.cc\
     condition_variable.cc \
     cpu_no_op.cc \
     cpu_features.cc \
@@ -42,7 +42,7 @@ LOCAL_SRC_FILES := \
     thread_posix.cc \
     trace_posix.cc \
     rw_lock_posix.cc \
-		checks.cc \
+    checks.cc \
 		event_tracer.cc \
 		exp_filter.cc \
 		field_trial_default.cc \
@@ -57,10 +57,12 @@ LOCAL_SRC_FILES := \
 		data_log_no_op.cc \
 		timestamp_extrapolator.cc \
 		timeutils.cc
+		
+#		checks.cc \
+#   android/cpu-features.c \
 
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
-    '-DANDROID_UNDER_8' \
     '-DWEBRTC_POSIX'
 
 LOCAL_C_INCLUDES := \

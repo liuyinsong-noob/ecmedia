@@ -1051,7 +1051,7 @@ RTPSender::SendRTPKeepalivePacket()
         
         
         // correct seq num, time stamp and payloadtype
-        BuildRTPheader(dataBuffer, _keepAlivePayloadType, false, 0, false);
+        BuildRTPheader(dataBuffer, _keepAlivePayloadType, false, 0, false, false);
     }
     
     return SendToNetwork(dataBuffer, 0, rtpHeaderLength, -1, kDontStore,PacedSender::kNormalPriority);

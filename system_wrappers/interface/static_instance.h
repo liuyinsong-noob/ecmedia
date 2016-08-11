@@ -121,7 +121,7 @@ static T* GetStaticInstance(CountOperation count_operation) {
     int new_value = InterlockedDecrement(&instance_count);
     if (new_value == 0) {
       state = kDestroy;
-    } else if(instance_count < 0) {
+    } else if(new_value < 0) {
       instance_count = 0;
     }
   }

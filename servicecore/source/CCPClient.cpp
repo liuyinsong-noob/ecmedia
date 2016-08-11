@@ -2628,15 +2628,19 @@ bool getCodecEnabled(int type)
             break;
         case codec_OPUS16K:
             sprintf(mime, "opus");
+			freq = 16000;
             break;
         case codec_OPUS48K:
             sprintf(mime, "opus");
+			freq = 48000;
             break;
         case codec_VP8:
             sprintf(mime, "VP8");
+			freq = 90000;
             break;
         case codec_H264:
             sprintf(mime, "H264");
+			freq = 90000;
             break;
 //		case codec_H264SVC:
 //			sprintf(mime, "H264-SVC");
@@ -2680,6 +2684,8 @@ extern "C" int getAudioConfigEnabled(int type, bool *enabled, int *mode)
     PrintConsole("[APICall getAgcEnabled\n");
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
     int ret =g_pSerCore->serphone_core_get_audio_config_enabled(type, (bool_t*)enabled, mode);
+
+    PrintConsole("[APICall getAgcEnabled type=%d enabled=%d, mode=%d\n", type, enabled, mode);
 
     return ret;
 }
@@ -3668,3 +3674,32 @@ extern "C" int StopRecord(const char* callid)
 		return -1;
 	return g_pSerCore->stopRecord(pCall);
 }
+
+extern "C" int setAudioKeepAlive(char *callid, bool enable, int interval)
+{
+	if (!callid)
+		return -1;
+
+	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+
+	SerPhoneCall *pCall = NULL;
+	int ret = findCall(callid, &pCall);
+	if (ret != 0)
+		return -1;
+	return g_pSerCore->SetAudioKeepAlive(pCall, enable, interval);
+}
+extern "C" int setVideoKeepAlive(char *callid, bool enable, int interval)
+{
+	if (!callid)
+		return -1;
+
+	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+
+	SerPhoneCall *pCall = NULL;
+	int ret = findCall(callid, &pCall);
+	if (ret != 0)
+		return -1;
+	return g_pSerCore->SetVideoKeepAlive(pCall, enable, interval);
+}
+
+

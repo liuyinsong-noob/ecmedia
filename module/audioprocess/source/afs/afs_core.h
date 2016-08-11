@@ -20,7 +20,6 @@
 #define __AFS_CORE_H__
 
 #include <stdio.h>
-#include "typedefs.h"
 #include "afs_defines.h"
 
 
@@ -31,6 +30,7 @@ typedef struct AcousticfeedbackSupressionC_
 
 	float dataBuf[AFSEX_ANAL_BLOCKL_MAX];
 	float datamem[AFSEX_ANAL_BLOCKL_MAX];
+	float magn[HALF_AFSEX_ANAL_BLOCKL];
 
 	const float* window;
 
@@ -38,9 +38,12 @@ typedef struct AcousticfeedbackSupressionC_
 	int magnLen;
 	int blockLen;
 	//
-	int start_pin;     //开始频率点
-	int end_pin;       //结束频率点
-	int peak_maxcount; //峰值最大值,默认10个
+	int start_pin;     //开始频点, low     500Hz
+	int mid_pin;       //中间频点, middle  1000Hz
+	int end_pin;       //结束频点, high    8000Hz
+
+	int peak_maxcount; //峰值最大值，默认8个
+	int peak_lowcount; //低频峰值个数，默认为2个 [0, 500Hz]
 
 	//newly added
 	float* howling_magn_prev;
@@ -57,21 +60,33 @@ typedef struct AcousticfeedbackSupressionC_
 	int*   howling_offset_curr;
 	int    howling_count_curr;
 
-	float howling_magn_buf[1024];
-	int   howling_pin_buf[1024];
-	int   howling_num_buf[1024];
-	int   howling_frezee_buf[1024];
-	int   howling_offset_buf[1024];
+	float howling_magn_buf[2048];
+	int   howling_pin_buf[2048];
+	int   howling_num_buf[2048];
+	int   howling_frezee_buf[2048];
+	int   howling_offset_buf[2048];
 
-	int   howling_history[512];      //历史啸叫频点
+	int   howling_history[513];      //历史啸叫频点
 	int   howling_history_count;     //历史啸叫频点数
 
-	int   howlingpin[30];            //啸叫点
+	int   howlingpin[513];           //啸叫点
 	int   howlingpincount;           //啸叫点计数
-	
-	int   howling_testcount;
+
+	int   howling_testcount;         //
 
 	void* filterPool;
+	int   bmute;                     //是否静音
+
+	//
+	float energy;                    //总能量
+	float energy_low;                //低频总能量[0, 500Hz], ( >2e10为人声 )
+	float energy_mid;                //中频总能力(500Hz, 1000Hz] 
+	float energy_high;               //高频总能量(1000Hz, 8000Hz\4000Hz]
+	float energy_avg;                //平均能量
+	float energy_peak;               //峰值能量
+
+	float rc_alpha;                  //0.8
+	int   reset;                     //是否重置
 	//end of newly added
 	
 	// FFT work arrays.
@@ -82,10 +97,14 @@ typedef struct AcousticfeedbackSupressionC_
 	int blockgroup;
 	int groupInd;
 	int initFlag;
+	float pav;
 
 	//
-	unsigned char* ptmp_data;
-
+	float energys[12];    // |  0   |   1 |   2 |   3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 | 11 |
+	                      // |0  200|  400|  600|  800|  1k|  2k|  3k|  4k|  5k|  6k|  7k|  8k| 
+	int bands[12];
+	int speech;
+	
 }AcousticfeedbackSupressionC;
 
 int YTXAfs_CreateCore( AcousticfeedbackSupressionC** self );

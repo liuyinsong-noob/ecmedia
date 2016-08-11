@@ -15,7 +15,7 @@ include $(LOCAL_PATH)/../../android-webrtc.mk
 LOCAL_MODULE_CLASS := STATIC_LIBRARIES
 LOCAL_MODULE := libjpeg
 LOCAL_MODULE_TAGS := optional
-LOCAL_CPP_EXTENSION := .cc
+#LOCAL_CPP_EXTENSION := .cc
 LOCAL_SRC_FILES := \
 	jcapimin.c \
 	jcapistd.c \

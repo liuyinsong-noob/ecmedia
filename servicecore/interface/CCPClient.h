@@ -566,7 +566,10 @@ typedef struct _CALLBACKINTERFACE CCallbackInterface;
     CCPAPI int setReconnectFlag(bool flag);
     CCPAPI int EnableOpusFEC(bool enable);
     CCPAPI  int SetOpusPacketLossRate(int rate);
-    
+
+	CCPAPI  int setAudioKeepAlive(char *callid, bool enable, int interval);
+	CCPAPI  int setVideoKeepAlive(char *callid, bool enable, int interval);
+	
 #ifdef __cplusplus
 }
 #endif

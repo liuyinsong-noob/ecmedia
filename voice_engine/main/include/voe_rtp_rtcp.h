@@ -103,6 +103,8 @@ struct ReportBlock {
 class WEBRTC_DLLEXPORT VoERTP_RTCP
 {
 public:
+	enum { KDefaultDeltaTransmitTimeSeconds = 15 };
+public:
 
     // Factory for the VoERTP_RTCP sub-API. Increases an internal
     // reference counter if successful. Returns NULL if the API is not
@@ -267,6 +269,19 @@ public:
             const char* data, unsigned short dataLengthInBytes) { return -1; };
     virtual int GetLastRemoteTimeStamp(int channel,
             uint32_t* lastRemoteTimeStamp) { return -1; };
+
+	// This function enables or disables an RTP keep-alive mechanism which can
+	// be used to maintain an existing Network Address Translator (NAT) mapping
+	// while regular RTP is no longer transmitted.
+	virtual int SetRTPKeepAliveStatus(
+		const int videoChannel, bool enable, const char unknownPayloadType,
+		const unsigned int deltaTransmitTimeSeconds =
+		KDefaultDeltaTransmitTimeSeconds) = 0;
+
+	// This function gets the RTP keep-alive status.
+	virtual int GetRTPKeepAliveStatus(
+		const int videoChannel, bool& enabled, char& unkownPayloadType,
+		unsigned int& deltaTransmitTimeSeconds) = 0;
 
 protected:
     VoERTP_RTCP() {}

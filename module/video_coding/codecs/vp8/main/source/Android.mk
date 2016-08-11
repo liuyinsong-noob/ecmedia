@@ -42,7 +42,7 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../../../../../common_video/source \
     $(LOCAL_PATH)/../../../../../common_video/interface \
     $(LOCAL_PATH)/../../../../../videojpegyuv/include \
-    $(LOCAL_PATH)/../../../../../../third_party/libvpx/libvpx_android \
+    $(LOCAL_PATH)/../../../../../../third_party/libvpx/libvpx \
     $(LOCAL_PATH)/../../../../../../third_party/libyuv/include/libyuv \
     $(LOCAL_PATH)/../../../../../../third_party/libyuv/include \
     $(LOCAL_PATH)/../../../../../interface \

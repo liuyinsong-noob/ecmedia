@@ -498,6 +498,7 @@ ServiceCore::ServiceCore()
     m_agcEnabled = false;
     m_ecEnabled = true;
     m_nsEnabled = true;
+    m_hcEnabled = false;
     m_agcMode = cloopenwebrtc::kAgcAdaptiveDigital;
     m_ecMode = cloopenwebrtc::kEcAecm;
     m_nsMode = cloopenwebrtc::kNsVeryHighSuppression;
@@ -2240,6 +2241,11 @@ void ServiceCore::serphone_set_reg_info(const char *proxy_addr, int proxy_port,
 
     memset(&capability_conf, 0, sizeof(capability_conf));
     serphone_core_parse_capability_token(capability_token);
+
+//
+	capability_conf.hdvideo = 1;
+    capability_conf.localrec = 1;
+    capability_conf.localrecvoip = 1;
 
 	return ;
 }
@@ -6054,7 +6060,6 @@ void ServiceCore::serphone_core_parse_capability_token(const char *token)
 		capability_conf.hdvideo = 1;
 	}
 
-	capability_conf.hdvideo = 1;
 
     cJSON_Delete(root);
     free(decode_token);

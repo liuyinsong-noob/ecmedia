@@ -26,6 +26,7 @@
 
 #define AFSEX_SILENCE_THRES 185
 
+#define SPECTRUM_PEAK_MAGNITUDE 3000
 #define LEAST_PEAK_MAGNITUDE 3000
 /////////////////////////////////
 

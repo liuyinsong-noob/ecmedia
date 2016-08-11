@@ -23,10 +23,11 @@
 #include "voe_base_impl.h"
 #include "wavfile.h"
 
-char *filename_path=NULL;
-//char *filename_proc_path;
-//char *filename_record_path;
 
+
+#define RECORD_AUDIO_TEST 0
+
+char *filename_path = NULL;
 
 #define WEBRTC_ABS(a) (((a) < 0) ? -(a) : (a))
 
@@ -255,6 +256,7 @@ TransmitMixer::~TransmitMixer()
     }
     delete &_critSect;
     delete &_callbackCritSect;
+
 }
 
 int32_t
@@ -373,7 +375,7 @@ TransmitMixer::PrepareDemux(const void* audioSamples,
     //
     
 //    char filename_r[256] = "e:105.wav";
-#if 0
+#if RECORD_AUDIO_TEST
     //
     
     char filename_r[256]      = {0};
@@ -386,16 +388,16 @@ TransmitMixer::PrepareDemux(const void* audioSamples,
         if( _audioFrame.sample_rate_hz_ == 8000 )
         {
             sprintf(filename_r, "%s/itu_mos_test_squence/list@8k/%d_src.wav", filename_path, _fileindex);
-            sprintf(filename_record, "%s/itu_mos_test_squence/list@8k/%d_record.wav", filename_path, _fileindex);
-            sprintf(filename_proc, "%s/itu_mos_test_squence/list@8k/%d_proc.wav", filename_path, _fileindex);
+            sprintf(filename_record, "%s/itu_mos_test_squence/list@8k/%d_record.pcm", filename_path, _fileindex);
+            sprintf(filename_proc, "%s/itu_mos_test_squence/list@8k/%d_proc.pcm", filename_path, _fileindex);
         }
         else if( _audioFrame.sample_rate_hz_ == 16000 )
         {
             sprintf(filename_r, "%s/itu_mos_test_squence/list@16k/%d_src.wav", filename_path, _fileindex);
-            sprintf(filename_record, "%s/itu_mos_test_squence/list@16k/%d_record.wav", filename_path, _fileindex);
-            sprintf(filename_proc, "%s/itu_mos_test_squence/list@16k/%d_proc.wav", filename_path, _fileindex);
+            sprintf(filename_record, "%s/itu_mos_test_squence/list@16k/%d_record.pcm", filename_path, _fileindex);
+            sprintf(filename_proc, "%s/itu_mos_test_squence/list@16k/%d_proc.pcm", filename_path, _fileindex);
         }
-#if 1
+#if 0
         if( OpenWavFile(&_wavParams, filename_r, FILE_READ) != -1 && WavFileReadHeader(&_wavParams) == 0 )
         {
             _fileopen = true;
@@ -445,7 +447,7 @@ TransmitMixer::PrepareDemux(const void* audioSamples,
 	//    sean add begin 20140708 original audio sample
 	_audioFrame2Up.CopyFrom(_audioFrame);
 	//    sean add end 20140708 original audio sample
-#if 0
+#if RECORD_AUDIO_TEST
     CodecInst codecInst = {100, "L16", _audioFrame.sample_rate_hz_, _audioFrame.sample_rate_hz_/100, 1, _audioFrame.sample_rate_hz_*16};
 #if 0
     _fileopen = true;
@@ -465,6 +467,7 @@ TransmitMixer::PrepareDemux(const void* audioSamples,
     StartRecordingCall(filename_record, &codecInst);
 #endif
 #endif
+
     // --- Near-end audio processing.
     ProcessAudio(totalDelayMS, clockDrift, currentMicLevel, keyPressed);
 
@@ -505,7 +508,7 @@ TransmitMixer::PrepareDemux(const void* audioSamples,
     
     
     
-#if 0
+#if RECORD_AUDIO_TEST
     
     // --- Record to file
     bool file_recording = false;
@@ -531,8 +534,6 @@ TransmitMixer::PrepareDemux(const void* audioSamples,
     }
     //end for added zenggq
 #endif
-    
-    
     
     
 //    bool file_recording = false;

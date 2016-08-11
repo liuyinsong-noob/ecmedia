@@ -50,8 +50,15 @@ enum {
     ERR_NOT_SUPPORT
 };
 
-#define AUDIO_ENGINE_UN_INITIAL_ERROR(ret) if(!m_voe) {return ret;}
-#define VIDEO_ENGINE_UN_INITIAL_ERROR(ret) if(!m_vie) {return ret;}
+#define AUDIO_ENGINE_UN_INITIAL_ERROR(ret) \
+    if(!m_voe) { \
+    PrintConsole("[ECMEDIA ERROR] %s m_voe is NULL.",__FUNCTION__); \
+    return ret;}
+
+#define VIDEO_ENGINE_UN_INITIAL_ERROR(ret) \
+    if(!m_vie) { \
+    PrintConsole("[ECMEDIA ERROR] %s m_vie is NULL.",__FUNCTION__);\
+    return ret;}
 
 static cloopenwebrtc::VoiceEngine* m_voe = NULL;
 
@@ -253,18 +260,7 @@ int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level)
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     Trace::CreateTrace();
     Trace::SetTraceCallback(&g_mediaTraceCallBack);
-//	enum {//CCPCommon.h
-//	LOG_LEVEL_ERR	=10 ,//10以前预留给中间层日志
-//	LOG_LEVEL_WARNING,
-//	LOG_LEVEL_INFO,
-//	LOG_LEVEL_DEBUG,
-//	LOG_LEVEL_MEDIA_ERR=20,//媒体库日??
-//	LOG_LEVEL_MEDIA_WARNING,
-//	LOG_LEVEL_MEDIA_INFO,
-//	LOG_LEVEL_MEDIA_DEBUG,
-//	LOG_LEVEL_MEDIA_ALL,
-//	LOG_LEVEL_END=99
-//};
+
 	switch(level)
 	{
 	case 20:
@@ -274,12 +270,12 @@ int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level)
 		}
 	case 21:
 		{
-			nLevel=kTraceError;
+			nLevel=kTraceError|kTraceCritical;
 			break;
 		}
 	case 22:
 		{
-			nLevel=kTraceWarning;
+			nLevel=kTraceError|kTraceCritical|kTraceWarning;
 			break;
 		}
 	case 23:
@@ -289,7 +285,7 @@ int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level)
 		}
 	case 24:
 		{
-			nLevel=kTraceError|kTraceWarning|kTraceStateInfo|kTraceInfo|kTraceCritical|kTraceApiCall|kTraceDebug;
+			nLevel=kTraceDefault|kTraceInfo|kTraceDebug;
 			break;
 		}
 	default:
@@ -689,7 +685,7 @@ int ECMedia_video_start_receive(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	ECMedia_set_video_RecvStatistics_proxy(channelid, "AVStats.data", 1000);
+	//ECMedia_set_video_RecvStatistics_proxy(channelid, "AVStats.data", 1000);
     ViEBase *base = ViEBase::GetInterface(m_vie);
     if (base) {
         int ret = base->StartReceive(channelid);
@@ -707,7 +703,7 @@ int ECMedia_video_stop_receive(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	ECMedia_stop_Statistics_proxy();
+	//ECMedia_stop_Statistics_proxy();
     ViEBase *base = ViEBase::GetInterface(m_vie);
     if (base) {
         int ret = base->StopReceive(channelid);
@@ -725,7 +721,7 @@ int ECMedia_video_start_send(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	ECMedia_set_video_SendStatistics_proxy(channelid, "AVstats.data", 1000);
+	//ECMedia_set_video_SendStatistics_proxy(channelid, "AVstats.data", 1000);
     ViEBase *base = ViEBase::GetInterface(m_vie);
     if (base) {
         int ret = base->StartSend(channelid);
@@ -743,7 +739,7 @@ int ECMedia_video_stop_send(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	ECMedia_stop_Statistics_proxy();
+	//ECMedia_stop_Statistics_proxy();
     ViEBase *base = ViEBase::GetInterface(m_vie);
     if (base) {
         int ret = base->StopSend(channelid);
@@ -957,7 +953,7 @@ int ECMedia_audio_start_receive(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	ECMedia_set_audio_RecvStatistics_proxy(channelid, "AVStats.data", 1000);
+	//ECMedia_set_audio_RecvStatistics_proxy(channelid, "AVStats.data", 1000);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
         base->StartReceive(channelid);
@@ -975,7 +971,7 @@ int ECMedia_audio_stop_receive(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	ECMedia_stop_Statistics_proxy();
+	//ECMedia_stop_Statistics_proxy();
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
         base->StopReceive(channelid);
@@ -993,7 +989,7 @@ int ECMedia_audio_start_send(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	ECMedia_set_audio_SendStatistics_proxy(channelid, "AVStats.data", 1000);
+	//ECMedia_set_audio_SendStatistics_proxy(channelid, "AVStats.data", 1000);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
         base->StartSend(channelid);
@@ -1011,7 +1007,7 @@ int ECMedia_audio_stop_send(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	ECMedia_stop_Statistics_proxy();
+	//ECMedia_stop_Statistics_proxy();
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
         base->StopSend(channelid);
@@ -1053,7 +1049,7 @@ int ECMedia_DeRegister_voice_engine_observer()
  */
 int ECMedia_set_AgcStatus(bool agc_enabled, cloopenwebrtc::AgcModes agc_mode)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+    PrintConsole("[ECMEDIA INFO] %s begins. agc_enabled=%d agc_mode=%d",__FUNCTION__, agc_enabled,agc_mode);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEAudioProcessing *audio = VoEAudioProcessing::GetInterface(m_voe);
     if (audio) {
@@ -1070,7 +1066,7 @@ int ECMedia_set_AgcStatus(bool agc_enabled, cloopenwebrtc::AgcModes agc_mode)
 
 int ECMedia_set_EcStatus(bool ec_enabled, cloopenwebrtc::EcModes ec_mode)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+    PrintConsole("[ECMEDIA INFO] %s begins. ec_enabled=%d ec_mode=%d",__FUNCTION__, ec_enabled, ec_mode);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEAudioProcessing *audio = VoEAudioProcessing::GetInterface(m_voe);
     if (audio) {
@@ -1087,7 +1083,7 @@ int ECMedia_set_EcStatus(bool ec_enabled, cloopenwebrtc::EcModes ec_mode)
 
 int ECMedia_set_NsStatus(bool ns_enabled, cloopenwebrtc::NsModes ns_mode)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+    PrintConsole("[ECMEDIA INFO] %s begins. ns_enabled=%d ns_mode=%d",__FUNCTION__, ns_enabled,ns_mode);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEAudioProcessing *audio = VoEAudioProcessing::GetInterface(m_voe);
     if (audio) {
@@ -1103,7 +1099,7 @@ int ECMedia_set_NsStatus(bool ns_enabled, cloopenwebrtc::NsModes ns_mode)
 }
 int ECMedia_set_SetAecmMode(cloopenwebrtc::AecmModes aecm_mode, bool cng_enabled)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins. aecm_mode=%d cng_enabled=%d",__FUNCTION__, aecm_mode, cng_enabled);
 	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	VoEAudioProcessing *audio = VoEAudioProcessing::GetInterface(m_voe);
 	if (audio) {
@@ -1123,15 +1119,6 @@ int ECMedia_EnableHowlingControl(bool enabled)
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEAudioProcessing *audio = VoEAudioProcessing::GetInterface(m_voe);
     if (audio) {
-        if(enabled) {
-            audio->StopDebugRecording();
-            audio->StartDebugRecording("/storage/emulated/0/processed_0.pcm");
-        }
-        else {
-            audio->StopDebugRecording();
-            audio->StartDebugRecording("/storage/emulated/0/processed_1.pcm");
-        }
-
         int ret = audio->EnableHowlingControl(enabled);
         audio->Release();
         return ret;
@@ -1308,15 +1295,15 @@ int ECMedia_set_MTU(int channelid, int mtu)
 /*
  * RTP_RTCP
  */
-int ECMedia_set_rtp_keepalive(int channelid, int interval, int payloadType)
+int ECMedia_video_set_rtp_keepalive(int channelid, bool enable, int interval, int payloadType)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins..., channelid %d, interval %d, payloadType %d",__FUNCTION__, channelid,interval, payloadType);
+    PrintConsole("[ECMEDIA INFO] %s begins..., channelid %d, enable %d interval %d, payloadType %d",__FUNCTION__, channelid,enable,interval, payloadType);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
     if (rtp_rtcp)
     {
         int ret=0;
-        ret = rtp_rtcp->SetRTPKeepAliveStatus(channelid, true, payloadType, interval);
+        ret = rtp_rtcp->SetRTPKeepAliveStatus(channelid, enable, payloadType, interval);
         rtp_rtcp->Release();
         return ret;
     }
@@ -1325,6 +1312,25 @@ int ECMedia_set_rtp_keepalive(int channelid, int interval, int payloadType)
         PrintConsole("[ECMEDIA WARNNING] failed to get ViERTP_RTCP, %s",__FUNCTION__);
         return -99;
     }
+}
+
+int ECMedia_audio_set_rtp_keepalive(int channelid, bool enable, int interval, int payloadType)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins..., channelid %d, enable %d, interval %d, payloadType %d", __FUNCTION__, channelid, enable, interval, payloadType);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	VoERTP_RTCP *rtp_rtcp = VoERTP_RTCP::GetInterface(m_voe);
+	if (rtp_rtcp)
+	{
+		int ret = 0;
+		ret = rtp_rtcp->SetRTPKeepAliveStatus(channelid, enable, payloadType, interval);
+		rtp_rtcp->Release();
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get VoERTP_RTCP, %s", __FUNCTION__);
+		return -99;
+	}
 }
 
 int ECMedia_set_NACK_status(int channelid, bool enabled)
@@ -1637,7 +1643,7 @@ int ECMedia_select_record_device(int index)
 
 int ECMedia_set_loudspeaker_status(bool enabled)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+    PrintConsole("[ECMEDIA INFO] %s begins. enabled=%d",__FUNCTION__, enabled);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEHardware *hardware = VoEHardware::GetInterface(m_voe);
     if( hardware)
@@ -1662,6 +1668,7 @@ int ECMedia_get_loudpeaker_status(bool& enabled)
     if (hardware) {
         int ret = hardware->GetLoudspeakerStatus(enabled);
         hardware->Release();
+        PrintConsole("[ECMEDIA INFO] %s end. enabled=%d",__FUNCTION__, enabled);
         return ret;
     }
     else
@@ -1833,8 +1840,8 @@ int ECMedia_get_speaker_volume(unsigned int& volumep)
     if (volume) {
         int ret = 0;
         ret = volume->GetSpeakerVolume(volumep);
-        return ret;
         volume->Release();
+        return ret;
     }
     else
     {

@@ -7,12 +7,10 @@
 
 extern "C"
 {
-#if defined(_WIN32)
-#include "x264.h"
-#elif MAC_IPHONE
+#if MAC_IPHONE
 #include "x264_ios.h"
 #else
-#include "x264_android.h"
+#include "x264.h"
 #endif
 }
 
@@ -151,7 +149,7 @@ private:
     H264Encoder();
 	void SetX264EncodeParameters(x264_param_t &params,VideoCodecMode mode);
 	void InitializeX264Pic(const I420VideoFrame& input_image, x264_picture_t &xpic, x264_picture_t &oxpic, VideoFrameType frame_type);
-	bool CopyEncodedImage(RTPFragmentationHeader &fragment, void *xnals, int num_nals, void *opic, const I420VideoFrame &input_image);
+	bool CopyEncodedImage(RTPFragmentationHeader &fragment, void *xnals, int num_nals, void *opic, const I420VideoFrame &input_image, VideoCodecMode mode);
     EncodedImage encoded_image_;
     EncodedImageCallback* encoded_complete_callback_;
     VideoCodec codec_;  

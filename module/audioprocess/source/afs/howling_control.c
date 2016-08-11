@@ -16,7 +16,6 @@ int32_t WebRtcAfs_Create( void** AfsInst )
 		self->blockInd = 0;
 		self->groupInd = 0;
 		self->filterPool = NULL;
-		self->ptmp_data  = NULL;
 
 		*AfsInst = (void*)self;
 

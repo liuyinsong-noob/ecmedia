@@ -14,12 +14,31 @@ namespace cloopenwebrtc {
 
 typedef void Handle;
 
-HowlingControlImpl::HowlingControlImpl(const AudioProcessing* apm, 
+void static write_file(const float* data, int samples, FILE* file)
+{
+	short int sdata;
+	if( file )
+	{
+		for( int i = 0; i < samples; ++i )
+		{
+			sdata = data[i];
+			fwrite(&sdata, 2, 1, file);
+		}
+	}
+}
+
+HowlingControlImpl::HowlingControlImpl(const AudioProcessing* apm,
 		                               CriticalSectionWrapper* crit)
   : ProcessingComponent(),
 	apm_(apm),
 	crit_(crit) {
-		filelog = NULL;//fopen("agc_preproc_add.txt", "wb");
+		//filelog = NULL;//fopen("howling_control.txt", "wb");
+		//file_preproc  = NULL;//fopen("howling_control_preproc.pcm", "wb");
+		//file_postproc = NULL;//fopen("howling_control_postproc.pcm", "wb");
+
+		filelog = fopen("/storage/emulated/0/howling_control.txt", "wb");
+		file_preproc  = fopen("/storage/emulated/0/howling_control_preproc.pcm", "wb");
+		file_postproc = fopen("/storage/emulated/0/howling_control_postproc.pcm", "wb");
 }
 
 
@@ -28,6 +47,16 @@ HowlingControlImpl::~HowlingControlImpl() {
 	{
 		fclose(filelog);
 		filelog = NULL;
+	}
+	if( file_preproc != NULL )
+	{
+		fclose(file_preproc);
+		file_preproc = NULL;
+	}
+	if( file_postproc != NULL )
+	{
+		fclose(file_postproc);
+		file_postproc = NULL;
 	}
 }
 
@@ -46,6 +75,9 @@ int HowlingControlImpl::AnalyzeCaptureAudio(AudioBuffer* audio)
 
 		WebRtcAfs_Analyze(my_handle, audio->split_bands_const_f(i)[kBand0To8kHz], filelog);
 	}
+	//
+	write_file( audio->split_bands_const_f(0)[kBand0To8kHz], audio->samples_per_split_channel(), file_preproc );
+	//
 
 	return apm_->kNoError;
 }
@@ -65,6 +97,9 @@ int HowlingControlImpl::ProcessCaptureAudio(AudioBuffer* audio)
 			               audio->split_bands_f(i)[kBand0To8kHz]
 						  );
 	}
+	//
+	write_file( audio->split_bands_f(0)[kBand0To8kHz], audio->samples_per_split_channel(), file_postproc );
+	//
 	return apm_->kNoError;
 }
 
@@ -87,12 +122,12 @@ void* HowlingControlImpl::CreateHandle() const{
   	} else {
   		assert(handle != NULL);
 	}
-  
+
 	return handle;
 }
 
 int HowlingControlImpl::InitializeHandle(void* handle) const{
-	return WebRtcAfs_Init(static_cast<Handle*>(handle), 
+	return WebRtcAfs_Init(static_cast<Handle*>(handle),
 		apm_->proc_sample_rate_hz());
 }
 

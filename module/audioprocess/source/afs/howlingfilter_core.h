@@ -6,6 +6,8 @@
 *
 *  @reference: 《基于DSP的啸叫抑制系统的研究与实现》 邢堃 xx
 *  @version: Newly Create! @20160608
+*            HowlingFPoolRemoveFilterPins() Added @20160701
+*              -designed for removing howling pins, but not used temporary.
 *  
 */
 
@@ -75,8 +77,17 @@ int HowlingFPoolInit(HowlingFilterPool* self);
 
 int HowlingFPoolMakeAndUpdateFilter( HowlingFilterPool* self, 
 	                                 int fs, 
-									 int* howlingpin, 
-									 int howlingcount );
+									 const int* howlingpin, 
+									 const int howlingcount );
+
+int HowlingFPoolRemoveAllFilter( HowlingFilterPool* self );
+
+int HowlingFPoolRemoveFilterPins(  HowlingFilterPool* self,
+	                               const float* magn,
+								   const int magnLen,
+								   const int* peak_pin,
+								   const int peak_count,
+								   const float pav );
 
 int HowlingFPoolProcess(HowlingFilterPool* self, 
 	                    float* in_data,

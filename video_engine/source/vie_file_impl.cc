@@ -655,7 +655,7 @@ int ViEFileImpl::GetRenderSnapshot(const int video_channel,
 	   memcpy(picture.data, output_image._buffer, output_image._length);
 	   picture.size = output_image._length;
 	   picture.width = video_frame.width();
-	   picture.height = video_frame.width();
+	   picture.height = video_frame.height();
 	   picture.type = kVideoMJPEG;
 	}
 
@@ -761,7 +761,7 @@ int ViEFileImpl::GetCaptureDeviceSnapshot(const int capture_id,
      memcpy(picture.data, output_image._buffer, output_image._length);
      picture.size = output_image._length;
      picture.width = video_frame.width();
-     picture.height = video_frame.width();
+     picture.height = video_frame.height();
      picture.type = kVideoMJPEG;
   }
 

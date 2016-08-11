@@ -130,7 +130,9 @@ int ECMedia_set_MTU(int channelid, int mtu);
 /*
  *
  */
-int ECMedia_set_rtp_keepalive(int channelid, int interval, int payloadType);
+int ECMedia_video_set_rtp_keepalive(int channelid, bool enable, int interval, int payloadType);
+
+int ECMedia_audio_set_rtp_keepalive(int channelid, bool enable, int interval, int payloadType);
 /*
  *
  */

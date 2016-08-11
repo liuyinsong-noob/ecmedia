@@ -9,7 +9,10 @@
 #ifndef __WEBRTC_MODULES_AUDIO_PROCESSING_HOWLING_CONTROL_H__
 #define __WEBRTC_MODULES_AUDIO_PROCESSING_HOWLING_CONTROL_H__
 
-#include "typedefs.h"
+//#include "typedefs.h"
+
+typedef int int32_t;
+typedef unsigned int uint32_t;
 
 #ifdef __cplusplus
 extern "C" {

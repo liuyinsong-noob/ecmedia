@@ -2,6 +2,7 @@
 #include "fft4g.h"
 #include <math.h>
 #include <assert.h>
+#include <malloc.h>
 #include <stdlib.h>
 #include <string.h>
 #include "howlingfilter_core.h"
@@ -108,6 +109,7 @@ static int Silence(const float* frame, int frame_length)
 }
 
 
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // analyze spectrum magnitude information and compute peaks in frequency domain.
 //
@@ -121,6 +123,50 @@ static int Silence(const float* frame, int frame_length)
 //       *|peak_inter_l| is the left edge of the peak interval.
 //       *|peak_inter_r| is the right edge of the peak interval.
 //       *|peak_count| is the count of peaks.
+int static SpectrumPeakEx( AcousticfeedbackSupressionC* self,
+	                       const float* magn,
+						   float* peak_magn,
+						   int* peak_pin )
+{
+	int i, j, k;
+	int find;
+	float max;
+	int pin;
+
+	if( self == NULL || self->initFlag != 1 )
+		return -1;
+
+	//statics spectrum info
+	for( i = 0; i < self->peak_maxcount; ++i )
+	{
+		max = -1.f;
+		for( j = self->start_pin; j < self->end_pin; ++j )
+		{
+			if( max < magn[j] )
+			{
+				find = 0;
+				for( k = 0; k < i; ++k )
+				{
+					if( j >= peak_pin[k]-1 && j <= peak_pin[k]+1 )
+					{
+						find = 1;
+						break;
+					}
+				}
+				if( find == 0 )
+				{
+					max = magn[j];
+					pin = j;
+				}
+			}
+		}
+		peak_magn[i] = max;
+		peak_pin[i]  = pin;
+	}
+
+	return 0;
+}
+
 int static SpectrumPeak( AcousticfeedbackSupressionC* self,
 	                      const float* magn,
 						  float* peak_magn,
@@ -131,9 +177,139 @@ int static SpectrumPeak( AcousticfeedbackSupressionC* self,
 {
 	int i, j, k;
 	int left, right;
+	int ind = 0;
+
+	float T;
+	float energy = 0.f;
+	float energy_low  = 0.f;
+	float energy_mid  = 0.f;
+	float energy_high = 0.f;
+	float energy_avg  = 0.f;
+	float energy_peak = 0.f;
+	float energys[12] = {0};
+	int ibeg = 0;
+	int iend = 0;
+	float fLow;
 
 	if( self == NULL || self->initFlag != 1 )
 		return -1;
+
+	/////////////////////////////分析频段能量//////////////////////////////////////////
+	for( i = 0; i < self->start_pin; ++i )
+	{
+		energy_low += magn[i] * magn[i];
+	}
+	for( i = self->start_pin; i < self->mid_pin; ++i )
+	{
+		energy_mid += magn[i] * magn[i];
+	}
+	for( i = self->mid_pin; i < self->magnLen; ++i )
+	{
+		energy_high += magn[i] * magn[i];
+	}
+	energy = energy_low + energy_mid + energy_high;
+
+	//newly added, calculate the energys for multi-frequency bands
+	for( i = 0; i < 12; ++i )
+	{
+		iend = self->bands[i];
+		for( j = ibeg; j <= iend; ++j )
+		{
+			energys[i] += magn[j]*magn[j];
+		}
+		ibeg = iend + 1;
+	}
+
+	///////////////////////////////////语音帧判断/////////////////////////////
+	fLow = energys[0] + energys[1];
+	if( fLow > 1e10 )
+	{
+		for( i = 2; i < 6; ++i )
+		{
+			if( energys[i] / fLow > 200 )
+				break;
+			if( /*energys[i] / fLow < 0.2 ||*/ energys[i] < 2e10 )
+				break;
+		}
+
+		if( i == 6 )
+		{
+			for( i = 6; i < 12; ++i )
+			{
+				if( energys[i] / fLow > 200 )
+					break;
+			}
+		}
+
+		if( i == 12 )
+			self->speech++;
+		else
+			self->speech = 0;
+	}
+	else
+		self->speech = 0;
+	//////////////////////////////////////////////////////////////////////////
+
+	if( self->reset == 1 )
+	{
+		self->energy      = energy;
+		self->energy_low  = energy_low;
+		self->energy_mid  = energy_mid;
+		self->energy_high = energy_high;
+		memcpy(self->energys, energys, 12*sizeof(float));
+	}
+	else
+	{
+		//
+
+		self->energy      = energy + self->rc_alpha * (self->energy - energy);
+		self->energy_low  = energy_low + self->rc_alpha * (self->energy_low - energy_low);
+		self->energy_mid  = energy_mid + self->rc_alpha * (self->energy_mid - energy_mid);
+		self->energy_high = energy_high + self->rc_alpha * (self->energy_high - energy_high);
+		//for( i = 0; i < 12; ++i )
+		//{
+		//	self->energys[i] = 0.5f * self->energys[i] + 0.5f * energys[i];
+		//}
+		memcpy(self->energys, energys, 12*sizeof(float));
+	}
+
+	if( self->energy_low > 1e10)
+	{// have speech signal, 限制啸叫点个数
+		self->peak_maxcount = 5;
+		T = self->energy_mid / self->energy_low;
+		if( T < 15.f )
+			self->peak_lowcount = 0;
+		else if( T >= 15.f && T < 1000.0f )
+			self->peak_lowcount = 1;
+		else
+			self->peak_lowcount = 2;
+
+		if( (self->energy_high + self->energy_mid) / self->energy_low  < 3.f && self->energy_low < 5e12 )
+		{
+			self->peak_maxcount = 0;
+			self->peak_lowcount = 0;
+		}
+	}
+	else
+	{// have no speech \ noise
+		self->peak_maxcount = 8;
+		T = self->energy_mid / self->energy_low;
+		if( T < 50.f )
+			self->peak_lowcount = 0;
+		else if( T >= 50.f && T < 2000.0f )
+			self->peak_lowcount = 1;
+		else
+			self->peak_lowcount = 2;
+		
+		//
+		if( (self->energy_high + self->energy_mid) / self->energy_low < 50.f )
+		{
+			self->peak_maxcount = 0;
+			self->peak_lowcount = 0;
+		}
+		
+	}
+	////////////////////////////////////////////////////////////////////////////
 
 	//statics spectrum info
 	*peak_count = self->peak_maxcount;
@@ -141,37 +317,58 @@ int static SpectrumPeak( AcousticfeedbackSupressionC* self,
 	{
 		peak_magn[i] = 0;
 		peak_pin[i] = -1;
-		for( j = self->start_pin; j <= self->end_pin; ++j )
+		if( ind == self->peak_lowcount )
 		{
-			if( peak_magn[i] < magn[j] )
+			for( j = self->mid_pin; j < self->end_pin; ++j )
 			{
-				int k = 0;
-				for( k = 0; k < i; ++k )
+				if( peak_magn[i] < magn[j] && magn[j] > SPECTRUM_PEAK_MAGNITUDE )
 				{
-					if( j >= peak_inter_l[k] && j <= peak_inter_r[k] )
+					for( k = 0; k < i; ++k )
 					{
-						break;
+						if( j >= peak_inter_l[k] && j <= peak_inter_r[k] )
+						{
+							break;
+						}
 					}
-				}
-				if( k == i )
-				{
-					peak_magn[i] = magn[j];
-					peak_pin[i] = j;
+					if( k == i )
+					{
+						peak_magn[i] = magn[j];
+						peak_pin[i] = j;
+					}
 				}
 			}
 		}
-
+		else
+		{
+			for( j = self->start_pin; j < self->end_pin; ++j )
+			{
+				if( peak_magn[i] < magn[j] && magn[j] > SPECTRUM_PEAK_MAGNITUDE )
+				{
+					for( k = 0; k < i; ++k )
+					{
+						if( j >= peak_inter_l[k] && j <= peak_inter_r[k] )
+						{
+							break;
+						}
+					}
+					if( k == i )
+					{
+						peak_magn[i] = magn[j];
+						peak_pin[i] = j;
+					}
+				}
+			}
+		}
+		
 		if( peak_pin[i] == -1 )
 		{
-			*peak_count = i - 1;
+			*peak_count = i;
+			*peak_count = *peak_count < 0 ? 0 : *peak_count;
 			break;
 		}
-		//限制峰值最小值，至少大于peak_magn[0]的0.05
-		// 			if( peak_magn[i] < peak_magn[0]*0.05f )
-		// 			{
-		// 				self->peak_count = i - 1;
-		// 				break;
-		// 			}
+
+		if( peak_pin[i] < self->mid_pin )
+			ind++;
 
 		//计算峰值区间
 		peak_inter_l[i] = peak_pin[i];
@@ -184,7 +381,6 @@ int static SpectrumPeak( AcousticfeedbackSupressionC* self,
 			if( peak_pin[i] > peak_inter_r[k] && left < peak_inter_r[k] )
 				left = peak_inter_r[k];
 		}
-
 
 		//搜索确定左边界点
 		for( k = peak_inter_l[i]; k > left; --k)
@@ -211,6 +407,15 @@ int static SpectrumPeak( AcousticfeedbackSupressionC* self,
 			else
 				peak_inter_r[i] = k+1;
 		}
+
+		if( peak_pin[i] < self->mid_pin )
+		{
+			peak_inter_r[i] = peak_inter_r[i] > self->mid_pin ? self->mid_pin : peak_inter_r[i];
+		}
+		if( peak_pin[i] >= self->mid_pin )
+		{
+			peak_inter_l[i] = peak_inter_l[i] < self->mid_pin ? self->mid_pin : peak_inter_l[i];
+		}
 	}
 
 	//重新修正左右边界,有待进一步验证
@@ -234,6 +439,93 @@ int static SpectrumPeak( AcousticfeedbackSupressionC* self,
 		}
 	}
 
+	//////////////////////////////////////////////////////////////////////////
+	for( i = 0; i < *peak_count; ++i )
+	{
+		energy_peak += peak_magn[i]*peak_magn[i];
+	}
+	energy_avg = (energy_high + energy_mid - energy_peak) / (self->magnLen - *peak_count - self->start_pin);
+	if( self->reset == 1 )
+	{
+		self->energy_avg  = energy_avg;
+		self->energy_peak = energy_peak;
+		self->reset = 0;
+	}
+	else
+	{
+		self->energy_avg  = energy_avg + self->rc_alpha * (self->energy_avg - energy_avg);//self->rc_alpha * self->energy_avg + (1.f - self->rc_alpha) * energy_avg;
+		self->energy_peak = energy_peak + self->rc_alpha * (self->energy_peak - energy_peak);//self->rc_alpha * self->energy_peak + (1.f - self->rc_alpha) * energy_peak;
+	}
+	//////////////////////////////////////////////////////////////////////////
+
+	return 0;
+}
+
+//
+int static RemoveRepeatHowlingPins( AcousticfeedbackSupressionC* self )
+{
+	int i, j;
+
+	if( self == NULL || self->initFlag != 1 )
+		return -1;
+
+	for( i = 0; i < self->howling_count_curr; ++i )
+	{
+		int pin = self->howling_pin_curr[i];
+		int num = self->howling_num_curr[i];
+		int freeze = self->howling_frezee_curr[i];
+		int offset = self->howling_offset_curr[i];
+		for( j = i + 1; j < self->howling_count_curr; ++j )
+		{
+			/*
+			if( pin == self->howling_pin_curr[j]
+			    && num == self->howling_num_curr[j]
+				&& freeze == self->howling_frezee_curr[j]
+			    && offset == self->howling_offset_curr[j] )
+				{
+					self->howling_count_curr    -= 1;
+					self->howling_pin_curr[j]    = self->howling_pin_curr[self->howling_count_curr];
+					self->howling_num_curr[j]    = self->howling_num_curr[self->howling_count_curr];
+					self->howling_frezee_curr[j] = self->howling_frezee_curr[self->howling_count_curr];
+					self->howling_offset_curr[j] = self->howling_offset_curr[self->howling_count_curr];
+					self->howling_magn_curr[j]   = self->howling_magn_curr[self->howling_count_curr];
+					
+					j -= 1;
+				}
+			*/
+			if( pin == self->howling_pin_curr[j] 
+			    && freeze == self->howling_frezee_curr[j]
+				&& offset == self->howling_offset_curr[j] )
+				{
+					if( num >= self->howling_num_curr[j] )
+					{
+						self->howling_count_curr    -= 1;
+						self->howling_pin_curr[j]    = self->howling_pin_curr[self->howling_count_curr];
+						self->howling_num_curr[j]    = self->howling_num_curr[self->howling_count_curr];
+						self->howling_frezee_curr[j] = self->howling_frezee_curr[self->howling_count_curr];
+						self->howling_offset_curr[j] = self->howling_offset_curr[self->howling_count_curr];
+						self->howling_magn_curr[j]   = self->howling_magn_curr[self->howling_count_curr];
+
+						j -= 1;
+					}
+					else
+					{
+						num = self->howling_num_curr[j];
+						self->howling_magn_curr[i] = self->howling_magn_curr[j];
+
+						self->howling_count_curr    -= 1;
+						self->howling_pin_curr[j]    = self->howling_pin_curr[self->howling_count_curr];
+						self->howling_num_curr[j]    = self->howling_num_curr[self->howling_count_curr];
+						self->howling_frezee_curr[j] = self->howling_frezee_curr[self->howling_count_curr];
+						self->howling_offset_curr[j] = self->howling_offset_curr[self->howling_count_curr];
+						self->howling_magn_curr[j]   = self->howling_magn_curr[self->howling_count_curr];
+
+						j -= 1;
+					}
+				}
+		}
+	}
+
 	return 0;
 }
 
@@ -253,42 +545,156 @@ int static SpectrumPeak( AcousticfeedbackSupressionC* self,
 //      *|real_count| is the real num of the papr.
 //      *|pav| is the left energy equals to total energy substract num of peak_count peak's energy.
 //
-int static ComputePapr( AcousticfeedbackSupressionC* self,
-	                    const float* magn,
-						const float* peak_magn,
-						const int* peak_inter_l,
-						const int* peak_inter_r,
-						int peak_count,
-						float* papr,
-						int* real_peak_count,
-						float* pav,
-						FILE* flog
-						)
+int static ComputeEnergy( AcousticfeedbackSupressionC* self,
+	                      const float* magn,
+						  const float* peak_magn
+						 )
 {
-	int i, k, m;
-	int leak_count = 0;
-	float fpav = 0.0f;
-	//float fpav2= 0.0f; 
+	int i;
+	float energy = 0.f;
+	float energy_low  = 0.f;
+	float energy_high = 0.f;
+	float energy_avg  = 0.f;
+	float energy_peak = 0.f;
+	//float T;
+	
+	if( self == NULL || self->initFlag != 1 )
+		return -1;
+
+	for( i = 0; i < self->start_pin; ++i )
+	{
+		energy_low += magn[i] * magn[i];
+	}
+	for( i = self->start_pin; i < self->magnLen; ++i )
+	{
+		energy_high += magn[i] * magn[i];
+	}
+	energy = energy_low + energy_high;
+
+	for( i = 0; i < self->peak_maxcount; ++i )
+	{
+		energy_peak += peak_magn[i]*peak_magn[i];
+	}
+	//energy_avg = (energy - energy_peak) / (self->magnLen - self->peak_maxcount);
+	energy_avg = (energy_high - energy_peak) / (self->magnLen - self->peak_maxcount - self->start_pin);
+
+	if( self->reset == 1 )
+	{
+		self->energy      = energy;
+		self->energy_low  = energy_low;
+		self->energy_high = energy_high;
+		self->energy_avg  = energy_avg;
+		self->energy_peak = energy_peak;
+		self->reset = 0;
+	}
+	else
+	{
+		self->energy      = self->rc_alpha * self->energy + (1.f - self->rc_alpha) * energy;
+		self->energy_low  = self->rc_alpha * self->energy_low + (1.f - self->rc_alpha) * energy_low;
+		self->energy_high = self->rc_alpha * self->energy_high + (1.f - self->rc_alpha) * energy_high;
+		self->energy_avg  = self->rc_alpha * self->energy_avg + (1.f - self->rc_alpha) * energy_avg;
+		self->energy_peak = self->rc_alpha * self->energy_peak + (1.f - self->rc_alpha) * energy_peak;
+	}
+
+	//T = (self->energy_peak / self->energy_avg);
+	
+	return 0;
+}
+
+int static ComputePaprEx( AcousticfeedbackSupressionC* self,
+	                      const float* magn,
+	                      const float* peak_magn,
+	                      const int* peak_pin,
+						  int peak_count,
+						  float* papr,
+						  int* real_peak_count
+	                      )
+{
+	int i;
+	//int leak_count = 0;
+	//float fpav = 0.0f;
+	//float e = 0.f;
+	//float v = 0.f;
+
 
 	if( self == NULL || self->initFlag != 1 )
 		return -1;
 
 	//计算峰值功率比（Peak-to-Average Power Ratio）
-	for( i = 0; i < self->magnLen; ++i )
+	//for( i = self->start_pin; i < self->magnLen; ++i )
+	//	fpav += magn[i]*magn[i];
+
+	if( peak_count == 0 )
 	{
-		fpav += magn[i]*magn[i];
+		*real_peak_count = 0;
+		self->pav     = self->energy_avg;
+		
+		return 0;
 	}
-	
-	
+
+	//////////////////////////////////////////////////////////////////////////
+
+	//fpav /= (self->magnLen - leak_count);
+	//fpav += 0.00000001f;
+
+	*real_peak_count = 0;
 	for( i = 0; i < peak_count; ++i )
 	{
+		papr[i] = 10.f*log10( peak_magn[i]*peak_magn[i] / self->energy_avg );
+		if( ( papr[i] > 0.f || (papr[i] > -5.0f && peak_magn[i] > 5000.f) ) )
+			(*real_peak_count)++;
+	}
+	self->pav = self->energy_avg;
+
+	return 0;
+}
+
+int static ComputePapr( AcousticfeedbackSupressionC* self,
+	                    const float* magn,
+						const float* peak_magn,
+						const int* peak_pin,
+						const int* peak_inter_l,
+						const int* peak_inter_r,
+						int peak_count,
+						float* papr,
+						int* real_peak_count
+						)
+{
+	int i, k, m;
+	int leak_count = 0;
+	float fpav = 0.0f;
+	float e = 0.f;
+	float v = 0.f;
+	float energy_peak = 0.f;
+	float energy_avg  = 0.f;
+	
+	if( self == NULL || self->initFlag != 1 )
+		return -1;
+
+	//计算峰值功率比（Peak-to-Average Power Ratio）
+	for( i = self->start_pin; i < self->magnLen; ++i )
+		fpav += magn[i]*magn[i];
+
+	if( peak_count == 0 )
+	{
+		*real_peak_count = 0;
+		self->pav        = fpav;
+		return 0;
+	}
+
+	for( i = 0; i < peak_count; ++i )
+	{
+		energy_peak += peak_magn[i]*peak_magn[i];
 		for( k = peak_inter_l[i]; k <= peak_inter_r[i]; ++k )
 		{
-			fpav -= magn[k]*magn[k];
+			e += magn[k]*magn[k];
 		}
 		leak_count += (peak_inter_r[i] - peak_inter_l[i] + 1);
 	}
+	
+	fpav -= e;
 
+	//////////////////////////////////////////////////////////////////////////
 	for( i = 0; i < peak_count; ++i )
 	{
 		k = peak_inter_l[i];
@@ -303,20 +709,81 @@ int static ComputePapr( AcousticfeedbackSupressionC* self,
 		}
 	}
 
-	fpav /= (self->magnLen - leak_count);
+	for( i = 0; i < peak_count; ++i )
+	{
+		k = peak_inter_l[i];
+		for( m = k; m < self->start_pin; ++m )
+		{
+			leak_count--;
+			fpav += magn[m]*magn[m];
+		}
+	}
+
+
+	fpav /= (self->magnLen - leak_count - self->start_pin);
 	fpav += 0.00000001f;
 
 	*real_peak_count = 0;
 	for( i = 0; i < peak_count; ++i )
 	{
 		papr[i] = 10.f*log10(peak_magn[i]*peak_magn[i] / fpav);
-		if( ( papr[i] > 0.f || (papr[i] > -10.0f && peak_magn[i] > 10000.f) ) && peak_magn[i] > 2000.f )
+		if( ( papr[i] > 0.f || (papr[i] > -5.0f && peak_magn[i] > 5000.f) ) )
 			(*real_peak_count)++;
 	}
-
-	*pav = fpav;
-
+	self->pav = fpav;
+	
 	return 0;
+}
+
+//
+//
+//
+int static GetPinTypeEx( int pin,
+	                     float magn_prev,
+	                     const float* magn,
+						 float pav,
+						 int* real_pin )
+{
+	//0 for freeze pin.
+	//1 for noise or error.
+	//2 for true peak
+
+	// freeze judge firstly
+
+	float ff, ff1, ff3;
+	if( magn[pin] <= 3000 )
+		return 0;
+
+	ff = 10.f*log10(magn[pin]*magn[pin] / pav);
+	if( ff <= -10.f )
+		return 0;
+
+	if( ff > 10.f )
+	{
+		*real_pin = pin;
+		return 2;
+	}
+	
+	if( magn[pin-1] >= magn[pin+1] )
+	{
+		ff1 = 10.f*log10(magn[pin-1]*magn[pin-1] / pav);
+		if( (magn_prev <= magn[pin-1] || magn_prev - magn[pin-1] < 0.5f * magn_prev) &&  ff1 > 10.f )
+		{
+			*real_pin = pin-1;
+			return 2;
+		}
+	}
+	else
+	{
+		ff3 = 10.f*log10(magn[pin+1]*magn[pin+1] / pav);
+		if( (magn_prev <= magn[pin+1] || magn_prev - magn[pin+1] < 0.5f * magn_prev) &&  ff3 > 10.f )
+		{
+			*real_pin = pin+1;
+			return 2;
+		}
+	}
+
+	return 1;
 }
 
 
@@ -381,6 +848,316 @@ int static GetPinType(int pin,
 
 	return -1;
 }
+
+int static UpdateHowlingDataEx( AcousticfeedbackSupressionC* self,
+	                            const float* magn,
+	                            const float* peak_magn,
+	                            const int* peak_pin,
+								const int* peak_inter_l,
+								const int* peak_inter_r,
+	                            const int peak_count,
+	                            const int real_peak_count )
+{
+	int i, j;
+	float pav;
+	int find0, find1, find2;
+	float ff, ff1, ff3;
+
+	if( self == NULL || self->initFlag != 1 )
+		return -1;
+
+	if( self->speech > 0 )
+		self->howling_testcount = 0;
+
+	pav = self->pav;
+	if( self->howling_testcount == 0 )
+	{//没有测试啸叫点，启动状态，赋值及初始化
+		for( i = 0; i < real_peak_count; ++i )
+		{
+			if( magn[peak_pin[i] - 1] >= SPECTRUM_PEAK_MAGNITUDE )
+			{
+				self->howling_magn_curr[self->howling_count_curr]   = magn[peak_pin[i] - 1];
+				self->howling_pin_curr[self->howling_count_curr]    = peak_pin[i] - 1;
+				self->howling_num_curr[self->howling_count_curr]    = 1;
+				self->howling_frezee_curr[self->howling_count_curr] = 0;
+				self->howling_offset_curr[self->howling_count_curr] = 0;
+				self->howling_count_curr++;
+				self->howling_testcount++;
+			}
+
+			self->howling_magn_curr[self->howling_count_curr]   = peak_magn[i];
+			self->howling_pin_curr[self->howling_count_curr]    = peak_pin[i];
+			self->howling_num_curr[self->howling_count_curr]    = 1;
+			self->howling_frezee_curr[self->howling_count_curr] = 0;
+			self->howling_offset_curr[self->howling_count_curr] = 0;
+			self->howling_count_curr++;
+			self->howling_testcount++;
+
+			if ( magn[peak_pin[i] + 1] >= SPECTRUM_PEAK_MAGNITUDE )
+			{
+				self->howling_magn_curr[self->howling_count_curr]   = magn[peak_pin[i] + 1];
+				self->howling_pin_curr[self->howling_count_curr]    = peak_pin[i] + 1;
+				self->howling_num_curr[self->howling_count_curr]    = 1;
+				self->howling_frezee_curr[self->howling_count_curr] = 0;
+				self->howling_offset_curr[self->howling_count_curr] = 0;
+				self->howling_count_curr++;
+				self->howling_testcount++;
+			}
+		}
+	}
+	else
+	{
+		if( real_peak_count > 0 )
+		{//验证新的啸叫点
+			for( i = 0; i < real_peak_count; ++i )
+			{
+				//for peak_pin[i]-1
+				find1 = 0;
+				for( j = 0; j < self->howling_count_prev; ++j )
+				{
+					if( peak_pin[i] - 1 == self->howling_pin_prev[j]  
+						/*&&( magn[peak_pin[i] - 1] >= self->howling_magn_prev[j] || log10(magn[peak_pin[i] - 1]*magn[peak_pin[i] - 1] / pav) > 0.5f )*/ )
+					{
+						//self->howling_magn_curr[self->howling_count_curr]   = magn[peak_pin[i] - 1];
+						self->howling_magn_curr[self->howling_count_curr]   = 0.9f*self->howling_magn_prev[self->howling_count_curr] + 0.1f*magn[peak_pin[i] - 1];
+						self->howling_pin_curr[self->howling_count_curr]    = peak_pin[i] - 1;
+						if( self->howling_frezee_prev[j] >= 5 )
+							self->howling_num_curr[self->howling_count_curr]    = self->howling_num_prev[j] + 2;
+						else
+							self->howling_num_curr[self->howling_count_curr]    = self->howling_num_prev[j] + 1;
+						self->howling_frezee_curr[self->howling_count_curr] = 0;
+						self->howling_offset_curr[self->howling_count_curr] = self->howling_offset_prev[j];
+						self->howling_frezee_prev[j] = -1;
+
+						self->howling_count_curr++;
+						find1++;
+					}
+				}
+
+
+				//for peak_pin[i]
+				find0 = 0;
+				for( j = 0; j < self->howling_count_prev; ++j )
+				{
+					if( peak_pin[i] == self->howling_pin_prev[j]  
+						/*&&( peak_magn[i] >= self->howling_magn_prev[j] ||  log10(peak_magn[i]*peak_magn[i] / pav) > 0.5f )*/ )
+					{
+						//self->howling_magn_curr[self->howling_count_curr]   = peak_magn[i];
+						self->howling_magn_curr[self->howling_count_curr]   = 0.9f*self->howling_magn_prev[self->howling_count_curr] + 0.1f*peak_magn[i];
+						self->howling_pin_curr[self->howling_count_curr]    = peak_pin[i];
+						if( self->howling_frezee_prev[j] >= 5 )
+							self->howling_num_curr[self->howling_count_curr]    = self->howling_num_prev[j] + 2;
+						else
+							self->howling_num_curr[self->howling_count_curr]    = self->howling_num_prev[j] + 1;
+						self->howling_frezee_curr[self->howling_count_curr] = 0;
+						self->howling_offset_curr[self->howling_count_curr] = self->howling_offset_prev[j];
+						self->howling_frezee_prev[j] = -1;
+
+						self->howling_count_curr++;
+						find0++;
+					}
+				}
+
+				//for peak_pin[i]+1
+				find2 = 0;
+				for( j = 0; j < self->howling_count_prev; ++j )
+				{
+					if( peak_pin[i] + 1 == self->howling_pin_prev[j] 
+						/*&&( magn[peak_pin[i] + 1] >= self->howling_magn_prev[j] || log10(magn[peak_pin[i] + 1]*magn[peak_pin[i] + 1] / pav) > 0.5f )*/ )
+					{
+						//self->howling_magn_curr[self->howling_count_curr]   = magn[peak_pin[i] + 1];
+						self->howling_magn_curr[self->howling_count_curr]   = 0.9f*self->howling_magn_prev[self->howling_count_curr] + 0.1f*magn[peak_pin[i] + 1];
+						self->howling_pin_curr[self->howling_count_curr]    = peak_pin[i] + 1;
+						if( self->howling_frezee_prev[j] >= 5 )
+							self->howling_num_curr[self->howling_count_curr]    = self->howling_num_prev[j] + 2;
+						else
+							self->howling_num_curr[self->howling_count_curr]    = self->howling_num_prev[j] + 1;
+						self->howling_frezee_curr[self->howling_count_curr] = 0;
+						self->howling_offset_curr[self->howling_count_curr] = self->howling_offset_prev[j];
+						self->howling_frezee_prev[j] = -1;
+
+						self->howling_count_curr++;
+						find2++;
+					}
+				}
+
+
+				//if( 1 ) 所有点都加入到啸叫测试序列中去
+				if( find1 == 0 && magn[peak_pin[i] - 1] >= SPECTRUM_PEAK_MAGNITUDE )
+				{
+					self->howling_magn_curr[self->howling_count_curr]   = magn[peak_pin[i] - 1];
+					self->howling_pin_curr[self->howling_count_curr]    = peak_pin[i] - 1;
+					self->howling_num_curr[self->howling_count_curr]    = 1;
+					self->howling_frezee_curr[self->howling_count_curr] = 0;
+					self->howling_offset_curr[self->howling_count_curr] = 0;
+					self->howling_count_curr++;
+				}
+
+				if( find0 == 0 )
+				{
+					self->howling_magn_curr[self->howling_count_curr]   = peak_magn[i];
+					self->howling_pin_curr[self->howling_count_curr]    = peak_pin[i];
+					self->howling_num_curr[self->howling_count_curr]    = 1;
+					self->howling_frezee_curr[self->howling_count_curr] = 0;
+					self->howling_offset_curr[self->howling_count_curr] = 0;
+					self->howling_count_curr++;
+				}
+
+				if( find2 == 0 && magn[peak_pin[i] + 1] >= SPECTRUM_PEAK_MAGNITUDE )
+				{
+					self->howling_magn_curr[self->howling_count_curr]   = magn[peak_pin[i] + 1];
+					self->howling_pin_curr[self->howling_count_curr]    = peak_pin[i] + 1;
+					self->howling_num_curr[self->howling_count_curr]    = 1;
+					self->howling_frezee_curr[self->howling_count_curr] = 0;
+					self->howling_offset_curr[self->howling_count_curr] = 0;
+					self->howling_count_curr++;
+				}
+			}
+
+			//对剩下的所有频点进行甄别，主要是静音幅度、噪声甄别
+			for( j = 0; j < self->howling_count_prev; ++j )
+			{
+				if( self->howling_frezee_prev[j] != -1 )
+				{
+					// for freeze pin, process specially
+					// freeze judge firstly
+					int pin      = self->howling_pin_prev[j];
+					float magn_p = self->howling_magn_prev[j];
+					ff = 10.f*log10(magn[pin]*magn[pin] / pav);
+
+					if( magn[pin] < magn_p*0.25 || ff < -5.f )
+					{
+						self->howling_magn_curr[self->howling_count_curr]   = 0.9f * magn_p + 0.1f * magn[pin];
+						self->howling_pin_curr[self->howling_count_curr]    = pin;
+						self->howling_num_curr[self->howling_count_curr]    = self->howling_num_prev[j];
+						self->howling_frezee_curr[self->howling_count_curr] = self->howling_frezee_prev[j] + 1;
+						self->howling_offset_curr[self->howling_count_curr] = self->howling_offset_prev[j];
+						self->howling_count_curr++;
+						continue;
+					}
+
+					
+					if( ff > 10.f || (magn_p < magn[pin] && self->howling_frezee_prev[j] >= 5) )
+					{
+						self->howling_magn_curr[self->howling_count_curr]   = 0.9f * magn_p + 0.1f * magn[pin];
+						self->howling_pin_curr[self->howling_count_curr]    = pin;
+						self->howling_num_curr[self->howling_count_curr]    = self->howling_num_prev[j] + 1;
+						self->howling_frezee_curr[self->howling_count_curr] = 0;
+						self->howling_offset_curr[self->howling_count_curr] = self->howling_offset_prev[j];
+						self->howling_count_curr++;
+					}
+
+					ff1 = 10.f*log10(magn[pin-1]*magn[pin-1] / pav);
+					if( (magn_p <= magn[pin-1] || magn_p - magn[pin-1] < 0.5f * magn_p) &&  ff1 > 5.f )
+					{
+						self->howling_magn_curr[self->howling_count_curr]   = 0.9f * magn_p + 0.1f * magn[pin-1];
+						self->howling_pin_curr[self->howling_count_curr]    = pin-1;
+						self->howling_num_curr[self->howling_count_curr]    = self->howling_num_prev[j] + 1;
+						self->howling_frezee_curr[self->howling_count_curr] = 0;
+						self->howling_offset_curr[self->howling_count_curr] = self->howling_offset_prev[j] - 1;
+						self->howling_count_curr++;
+					}
+
+					ff3 = 10.f*log10(magn[pin+1]*magn[pin+1] / pav);
+					if( (magn_p <= magn[pin+1] || magn_p - magn[pin+1] < 0.5f * magn_p) &&  ff3 > 5.f )
+					{
+						self->howling_magn_curr[self->howling_count_curr]   = 0.9f * magn_p + 0.1f * magn[pin+1];
+						self->howling_pin_curr[self->howling_count_curr]    = pin+1;
+						self->howling_num_curr[self->howling_count_curr]    = self->howling_num_prev[j] + 1;
+						self->howling_frezee_curr[self->howling_count_curr] = 0;
+						self->howling_offset_curr[self->howling_count_curr] = self->howling_offset_prev[j] + 1;
+						self->howling_count_curr++;
+					}
+
+
+					/*
+					float ff = 10.f*log10(magn[pin]*magn[pin] / pav);
+					if ( magn[pin] <= 5000 )
+					{
+						self->howling_magn_curr[self->howling_count_curr]   = magn[pin];
+						self->howling_pin_curr[self->howling_count_curr]    = pin;
+						self->howling_num_curr[self->howling_count_curr]    = self->howling_num_prev[j];
+						self->howling_frezee_curr[self->howling_count_curr] = self->howling_frezee_prev[j] + 1;
+						self->howling_offset_curr[self->howling_count_curr] = self->howling_offset_prev[j];
+						self->howling_count_curr++;
+						continue;
+					}
+
+					if( ff > 10.f )
+					{
+						self->howling_magn_curr[self->howling_count_curr]   = magn[pin];
+						self->howling_pin_curr[self->howling_count_curr]    = pin;
+						self->howling_num_curr[self->howling_count_curr]    = self->howling_num_prev[j] + 1;
+						self->howling_frezee_curr[self->howling_count_curr] = 0;
+						self->howling_offset_curr[self->howling_count_curr] = self->howling_offset_prev[j];
+						self->howling_count_curr++;
+					}
+					
+					ff1 = 10.f*log10(magn[pin-1]*magn[pin-1] / pav);
+					if( (magn_p <= magn[pin-1] || magn_p - magn[pin-1] < 0.5f * magn_p) &&  ff1 > 5.f )
+					{
+						self->howling_magn_curr[self->howling_count_curr]   = magn[pin-1];
+						self->howling_pin_curr[self->howling_count_curr]    = pin-1;
+						self->howling_num_curr[self->howling_count_curr]    = self->howling_num_prev[j] + 1;
+						self->howling_frezee_curr[self->howling_count_curr] = 0;
+						self->howling_offset_curr[self->howling_count_curr] = self->howling_offset_prev[j] - 1;
+						self->howling_count_curr++;
+					}
+
+					ff3 = 10.f*log10(magn[pin+1]*magn[pin+1] / pav);
+					if( (magn_p <= magn[pin+1] || magn_p - magn[pin+1] < 0.5f * magn_p) &&  ff3 > 5.f )
+					{
+						self->howling_magn_curr[self->howling_count_curr]   = magn[pin+1];
+						self->howling_pin_curr[self->howling_count_curr]    = pin+1;
+						self->howling_num_curr[self->howling_count_curr]    = self->howling_num_prev[j] + 1;
+						self->howling_frezee_curr[self->howling_count_curr] = 0;
+						self->howling_offset_curr[self->howling_count_curr] = self->howling_offset_prev[j] + 1;
+						self->howling_count_curr++;
+					}
+					*/
+				}
+			}
+		}
+		else
+		{
+			//没有新的啸叫点，需要对之前的啸叫点进行静音幅度判断
+			for( i = 0; i < self->howling_count_prev; ++i )
+			{	
+				int pin      = self->howling_pin_prev[i];
+				float magn_p = self->howling_magn_prev[i];
+				ff = 10.f*log10(magn[pin]*magn[pin] / pav);
+
+				if( magn[pin] < magn_p*0.25 || ff < -10.f )
+				{
+					self->howling_magn_curr[self->howling_count_curr]   = 0.9f * magn_p + 0.1f * magn[pin];
+					self->howling_pin_curr[self->howling_count_curr]    = pin;
+					self->howling_num_curr[self->howling_count_curr]    = self->howling_num_prev[i];
+					self->howling_frezee_curr[self->howling_count_curr] = self->howling_frezee_prev[i] + 1;
+					self->howling_offset_curr[self->howling_count_curr] = self->howling_offset_prev[i];
+					self->howling_count_curr++;
+				}
+				/*
+				int real_pin;
+				int ty = GetPinTypeEx(self->howling_pin_prev[i], self->howling_magn_prev[i], magn, pav, &real_pin);
+				if( ty == 0 )
+				{//当前频点是静音频点
+					self->howling_magn_curr[self->howling_count_curr]   = 0.9f*self->howling_magn_prev[self->howling_count_curr] + 0.1f*magn[self->howling_pin_prev[i]];
+					self->howling_pin_curr[self->howling_count_curr]    = self->howling_pin_prev[i];
+					self->howling_num_curr[self->howling_count_curr]    = self->howling_num_prev[i];
+					self->howling_frezee_curr[self->howling_count_curr] = self->howling_frezee_prev[i] + 1;
+					self->howling_offset_curr[self->howling_count_curr] = self->howling_offset_prev[i];
+					self->howling_count_curr++;
+				}
+				*/
+			}
+		}
+	}
+
+	return 0;
+}
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 // update the howling data, using previous howling data and current peak statistic magnitude information. 
 //
@@ -581,15 +1358,17 @@ int static HowlingPinJudge( AcousticfeedbackSupressionC* self,
 						   )
 {
 	int howlingcount = 0;
-	int num[30]  = {0};
+	int num[512]  = {0};
 	int i, j, k;
 	int find;
 
 	self->howlingpincount = 0;
+	memset(self->howlingpin, 0, sizeof(int)*513);
 
 	if( self == NULL || self->initFlag != 1 )
 		return -1;
 
+	//基本思路正确，但howlingcount只能到30有问题，应该扩展到512，包括num扩展到512...
 	for( i = 0; i < self->howling_count_curr; ++i )
 	{
 		//首先移除偏移量过大的频点(暂时定为+2\-2)
@@ -615,9 +1394,11 @@ int static HowlingPinJudge( AcousticfeedbackSupressionC* self,
 			}
 		}
 
-		if( self->howling_num_curr[i] >= 3 && self->howling_frezee_curr[i] <= 50 )
+		if( self->howling_num_curr[i] >= 5 && self->howling_frezee_curr[i] < 50 )
 		{
-			if( howlingcount < 30 )
+			self->howlingpin[self->howling_pin_curr[i]] += self->howling_num_curr[i];
+			/*
+			if( howlingcount < 512 )
 			{
 				find = 0;
 				for( k = 0; k < howlingcount; ++k )
@@ -636,9 +1417,31 @@ int static HowlingPinJudge( AcousticfeedbackSupressionC* self,
 					howlingcount++;
 				}
 			}
+			*/
 		}
 
-		if( self->howling_frezee_curr[i] > 50 )
+		//仔细考虑
+		if( self->howling_num_curr[i] >= 5 && self->howling_frezee_curr[i] > self->howling_num_curr[i] + 10 )
+		{
+			if( i == self->howling_count_curr - 1 )
+			{
+				self->howling_count_curr -= 1;
+				break;
+			}
+			else
+			{
+				self->howling_magn_curr[i]   = self->howling_magn_curr[self->howling_count_curr - 1];
+				self->howling_pin_curr[i]    = self->howling_pin_curr[self->howling_count_curr - 1];
+				self->howling_num_curr[i]    = self->howling_num_curr[self->howling_count_curr - 1];
+				self->howling_frezee_curr[i] = self->howling_frezee_curr[self->howling_count_curr - 1];
+
+				self->howling_count_curr -= 1;
+				i -= 1;
+				continue;
+			}
+		}
+
+		if( self->howling_frezee_curr[i] >= 50 || self->howling_num_curr[i] >= 20 )
 		{//静音时间太长，删除该频点
 			if( i == self->howling_count_curr - 1 )
 			{
@@ -659,7 +1462,36 @@ int static HowlingPinJudge( AcousticfeedbackSupressionC* self,
 	}
 
 	/////////////////////////////////////////////////
-	//newly added, update history howling pins
+	//newly added, update history howling pins, no problome
+	if( self->speech < 3 )
+	{
+		for( i = 0; i < 513; ++i )
+		{
+			if( self->howlingpin[i] >= 20 )
+			{
+				self->howling_history[i]  = 1;
+			}
+		}
+		for( i = 0; i < real_peak_count; ++i )
+		{
+			if( self->howlingpin[peak_pin[i]] > 0 )
+				continue;
+
+			if( self->howling_history[peak_pin[i]] == 1 )
+			{
+				self->howlingpin[peak_pin[i]] = 1;
+			}
+		}
+	}
+	else
+	{
+		HowlingFPoolRemoveAllFilter((HowlingFilterPool*)(self->filterPool));
+		memset(self->howling_history, 0, sizeof(int)*513);
+		self->howling_history_count = 0;
+	}
+	
+
+	/*
 	for( i = 0; i < howlingcount; ++i )
 	{
 		if( num[i] >= 20 )
@@ -695,15 +1527,15 @@ int static HowlingPinJudge( AcousticfeedbackSupressionC* self,
 			}
 		}
 
-		if( find == 0 && peak_magn[i] > 5000.f )
+		if( find == 0 ) //&& peak_magn[i] > 5000.f 
 		{
 			for( j = 0; j < self->howling_history_count; ++j )
 			{
-				if( peak_pin[i] == self->howling_history[j] 
-				|| peak_pin[i] == self->howling_history[j] - 1 
-					|| peak_pin[i] == self->howling_history[j] + 1 )
+				if( peak_pin[i] == self->howling_history[j] )
+				//|| peak_pin[i] == self->howling_history[j] - 1
+					//|| peak_pin[i] == self->howling_history[j] + 1 
 				{
-					if( howlingcount < 30 )
+					if( howlingcount < 512 )
 					{
 						self->howlingpin[howlingcount] = peak_pin[i];
 						howlingcount++;
@@ -713,6 +1545,7 @@ int static HowlingPinJudge( AcousticfeedbackSupressionC* self,
 			}
 		}
 	}
+	*/
 	
 	self->howlingpincount = howlingcount;
 
@@ -724,6 +1557,7 @@ int static HowlingPinJudgeEx( AcousticfeedbackSupressionC* self,
 	                        int* howlingpin,
 	                        int* howlingcount)
 {
+	//not use now!
 	int i, j, k;
 	int find;
 	int num[30]  = {0};
@@ -758,7 +1592,7 @@ int static HowlingPinJudgeEx( AcousticfeedbackSupressionC* self,
 			}
 		}
 
-		if( self->howling_num_curr[i] >= 3 && self->howling_frezee_curr[i] <= 50 )
+		if( self->howling_num_curr[i] >= 5 && self->howling_frezee_curr[i] <= 50 )
 		{
 			if( *howlingcount < 30 )
 			{
@@ -840,9 +1674,11 @@ int YTXAfs_CreateCore( AcousticfeedbackSupressionC** self )
 		(*self)->initFlag = 0;
 		(*self)->blockInd = 0;
 		(*self)->groupInd = 0;
+		(*self)->bmute    = 0;
+		(*self)->reset    = 1;
+		(*self)->rc_alpha = 0.8f;
 		(*self)->filterPool = NULL;
-		(*self)->ptmp_data  = NULL;
-
+		
 		return 0;
 	}
 
@@ -863,48 +1699,59 @@ int YTXAfs_InitCore( AcousticfeedbackSupressionC* self, uint32_t fs )
 
 	if( fs == 8000 )
 	{
-		self->anaLen   = 512;
-		self->magnLen  = 257;
+		memset(self->dataBuf, 0, sizeof(float) * AFSEX_ANAL_BLOCKL_MAX);
+		memset(self->datamem, 0, sizeof(float) * AFSEX_ANAL_BLOCKL_MAX);
+		memset(self->magn, 0, sizeof(float) * HALF_AFSEX_ANAL_BLOCKL);
+
+		self->anaLen   = 1024;
+		self->magnLen  = 513;
 		self->blockLen = 80;
-		self->window   = NULL;
+		self->window   = kBlocks960w1024;
+
+		self->start_pin= 64;  //512*500/4000 (500Hz)
+		self->end_pin  = 511; //512*4000/4000 (4.0KHz)
+
+		self->blockgroup = 12; //once 12 blocks up to a group, to do fft
 	}
 	else if( fs == 16000 )
 	{
 		memset(self->dataBuf, 0, sizeof(float) * AFSEX_ANAL_BLOCKL_MAX);
 		memset(self->datamem, 0, sizeof(float) * AFSEX_ANAL_BLOCKL_MAX);
+		memset(self->magn, 0, sizeof(float) * HALF_AFSEX_ANAL_BLOCKL);
 		self->anaLen   = 1024;
 		self->magnLen  = 513;
 		self->blockLen = 160;
 		self->window   = kBlocks960w1024;
 
-		self->start_pin= 64; //512*1000/8000 (1.0KHz)
-		self->end_pin  = 480;//512*7500/8000 (7.5KHz)
-	}
+		self->start_pin= 32;  //512*500/8000 (500Hz)
+		self->mid_pin  = 64;  //512*1000/8000 (1000Hz)
+		self->end_pin  = 511; //512*8000/8000 (8000Hz)
 
-	//
-	self->ptmp_data = (unsigned char*)malloc(4096*1000);
-	memset(self->ptmp_data, 0, 4096*1000);
+		self->blockgroup = 6; //once 6 blocks up to a group, to do fft
+	}
 
 	//
 	if( HowlingFPoolCreate( &HFPool ) == -1 )
 		return -1;
 
 	self->filterPool = HFPool;
-
+	self->bmute      = 0;
+	self->reset      = 1;
+	self->rc_alpha      = 0.9f;
 
 	//init fft arrays
 	self->ip[0]      = 0;
 	self->blockInd   = 0;
-	self->blockgroup = 6; //once 6 blocks up to a group, to do fft
 	self->groupInd   = 0;
-	self->peak_maxcount = 10;
+	self->peak_maxcount = 8;
+	self->peak_lowcount = 2;
 
 	//newly added 
-	memset( self->howling_magn_buf, 0, sizeof(float)*1024 );
-	memset( self->howling_pin_buf, 0, sizeof(int)*1024 );
-	memset( self->howling_num_buf, 0, sizeof(int)*1024 );
-	memset( self->howling_frezee_buf, 0, sizeof(int)*1024 );
-	memset( self->howling_offset_buf, 0, sizeof(int)*1024 );
+	memset( self->howling_magn_buf, 0, sizeof(float)*2048 );
+	memset( self->howling_pin_buf, 0, sizeof(int)*2048 );
+	memset( self->howling_num_buf, 0, sizeof(int)*2048 );
+	memset( self->howling_frezee_buf, 0, sizeof(int)*2048 );
+	memset( self->howling_offset_buf, 0, sizeof(int)*2048 );
 
 	self->howling_count_prev  = 0;
 	self->howling_magn_prev   = self->howling_magn_buf;
@@ -914,22 +1761,38 @@ int YTXAfs_InitCore( AcousticfeedbackSupressionC* self, uint32_t fs )
 	self->howling_offset_prev = self->howling_offset_buf;
 
 	self->howling_count_curr  = 0;
-	self->howling_magn_curr   = self->howling_magn_buf + 512;
-	self->howling_pin_curr    = self->howling_pin_buf + 512;
-	self->howling_num_curr    = self->howling_num_buf + 512;
-	self->howling_frezee_curr = self->howling_frezee_buf + 512;
-	self->howling_offset_curr = self->howling_offset_buf + 512;
+	self->howling_magn_curr   = self->howling_magn_buf + 1024;
+	self->howling_pin_curr    = self->howling_pin_buf + 1024;
+	self->howling_num_curr    = self->howling_num_buf + 1024;
+	self->howling_frezee_curr = self->howling_frezee_buf + 1024;
+	self->howling_offset_curr = self->howling_offset_buf + 1024;
 
 	//////////////////////////////////////////////////////////////////////////
-	memset( self->howling_history, 0, sizeof(int)*512 );
+	memset( self->howling_history, 0, sizeof(int)*513 );
 	self->howling_history_count = 0;
-	//
-	self->howlingpincount = 0;
+	memset( self->howlingpin, 0, sizeof(int)*513 );
+	self->howlingpincount   = 0;
+
+	memset( self->energys, 0, sizeof(float)*12 );
+	self->bands[0] = 13;
+	self->bands[1] = 26;
+	self->bands[2] = 39;
+	self->bands[3] = 51;
+	self->bands[4] = 64;
+	self->bands[5] = 128;
+	self->bands[6] = 192;
+	self->bands[7] = 256;
+	self->bands[8] = 320;
+	self->bands[9] = 384;
+	self->bands[10]= 448;
+	self->bands[11]= 512;
+	self->speech = 0;
 
 	self->howling_testcount = 0;
 	//end of newly added
 
 	self->initFlag   = 1;
+	self->pav        = 0.f;
 
 	return 0;
 }
@@ -939,11 +1802,9 @@ int YTXAfs_AnalyzeCore( AcousticfeedbackSupressionC* self,
 	                    const float* inframe,
 					    FILE* logfile )
 {
-// 	if( self == NULL || self->initFlag != 1 )
-// 		return -1;
 	//
 	float windata[AFSEX_ANAL_BLOCKL_MAX];
-	float magn[HALF_AFSEX_ANAL_BLOCKL];
+	//float magn[HALF_AFSEX_ANAL_BLOCKL];
 	float real[HALF_AFSEX_ANAL_BLOCKL];
 	float imag[HALF_AFSEX_ANAL_BLOCKL];
 	//
@@ -954,28 +1815,38 @@ int YTXAfs_AnalyzeCore( AcousticfeedbackSupressionC* self,
 	int   peak_count = 10;
 	float papr[10];
 	int   real_count;
-	float pav;
+	float xx;
 
 	float* ftmp;
 	int* itmp;
 	int i;
 
+	if( self == NULL || self->initFlag != 1 )
+		return -1;
+
+	if( Silence(inframe, self->blockLen) == 1 )
+	{
+		self->bmute = 1;  //静音
+		return 0;
+	}
+
+	self->bmute = 0;      //非静音
 	memcpy( self->datamem + self->blockInd * self->blockLen, inframe, sizeof(float) * self->blockLen );
 	self->blockInd++;
 
-	if( self->blockInd == 6 )
+	if( self->blockInd == self->blockgroup )
 	{
 		self->groupInd++;
 
 		//do FFT
-		UpdateBuffer( self->datamem, self->blockLen * 6, self->anaLen, self->dataBuf );
+		UpdateBuffer( self->datamem, self->blockLen * self->blockgroup, self->anaLen, self->dataBuf );
 		Windowing( self->window, self->dataBuf, self->anaLen, windata );
-		FFT( self, windata, self->anaLen, self->magnLen, real, imag, magn );
+		FFT( self, windata, self->anaLen, self->magnLen, real, imag, self->magn/*magn*/);
 
-		//statics spectrum info
-		SpectrumPeak(self, magn, peak_magn, peak_pin, peak_inter_l, peak_inter_r, &peak_count);
+		//statics spectrum 
+		SpectrumPeak( self, self->magn/*magn*/, peak_magn, peak_pin, peak_inter_l, peak_inter_r, &peak_count );
 		//computepapr
-		ComputePapr( self, magn, peak_magn, peak_inter_l, peak_inter_r, peak_count, papr, &real_count, &pav, logfile );
+		ComputePapr( self, self->magn/*magn*/, peak_magn, peak_pin, peak_inter_l, peak_inter_r, peak_count, papr, &real_count );
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		/////////////////////////////howling frequency pin detection realization(core algorithm)//////////////////////////
@@ -983,34 +1854,49 @@ int YTXAfs_AnalyzeCore( AcousticfeedbackSupressionC* self,
 		//logfile write information
 		if( logfile )
 		{
-			fprintf(logfile, "***************************time = [%.4f, %.4f] %d %.2f %.2f***************************\r\n", (self->groupInd-1)*0.06, self->groupInd*0.06, self->fs, magn[0], magn[self->magnLen-1]);
+			fprintf(logfile, "**********time = [%.4f, %.4f] fs = %d  T = %.4f  TT = %.4f low = %.4f, maxcount = %d***************************\r\n", (self->groupInd-1)*self->blockgroup / 100.0f, self->groupInd*self->blockgroup / 100.0f, self->fs, self->energy_peak / self->energy_avg, (self->energy_high+self->energy_mid) / self->energy_low, self->energy_low, self->peak_maxcount );
 
-			for( i = 0; i < self->howling_count_prev; ++i )
+// 			for( i = 0; i < self->howling_count_prev; ++i )
+// 			{
+// 				fprintf(logfile, "PREV for %d : magn = %.2f\t, pin = %d(%.2f)\t, num = %d\t, freeze = %d\t, offset = %d\r\n", i, self->howling_magn_prev[i],
+// 					self->howling_pin_prev[i], self->howling_pin_prev[i]*self->fs / 1024.f, self->howling_num_prev[i], self->howling_frezee_prev[i], self->howling_offset_prev[i]);
+// 			}
+// 			fprintf(logfile, "\r\n");
+			xx = self->energys[0] + self->energys[1];
+			fprintf(logfile, "Bands for 1 : energys = %.2f\t, T = 1.0\r\n", xx );
+			for( i = 2; i < 12; ++i )
 			{
-				fprintf(logfile, "PREV for %d : magn = %.2f\t, pin = %d(%.2f)\t, num = %d\t, freeze = %d\t, offset = %d\r\n", i, self->howling_magn_prev[i],
-					self->howling_pin_prev[i], self->howling_pin_prev[i]*8000.0/512.f, self->howling_num_prev[i], self->howling_frezee_prev[i], self->howling_offset_prev[i]);
+				fprintf(logfile, "Bands for %d : energys = %.2f\t, T = %.2f\r\n", i, self->energys[i], self->energys[i]/xx );
+			}
+			fprintf(logfile, "\r\n");
+
+			if( self->speech > 0 )
+			{
+				fprintf(logfile, "--------------------speech--------------------\r\n");
 			}
 			fprintf(logfile, "\r\n");
 
 
 			for( i = 0; i < peak_count; ++i )
 			{
-				fprintf(logfile, "PEAK for %d : magn = %.2f\t, pin = %d(%.2f)\t, %.4f\r\n", i, peak_magn[i], peak_pin[i], peak_pin[i]*8000.0/512.f, papr[i]);
+				fprintf(logfile, "PEAK for %d : magn = %.2f\t, pin = %d(%.2f)\t, %.4f\r\n", i, peak_magn[i], peak_pin[i], peak_pin[i]*self->fs / 1024.f, papr[i]);
 			}
 			fprintf(logfile, "\r\n");
 		}
 
 		//update the howling data info
-		UpdateHowlingData( self, magn, peak_magn, peak_pin, peak_count, real_count, pav );
+		UpdateHowlingDataEx( self, self->magn/*magn*/, peak_magn, peak_pin, peak_inter_l, peak_inter_r, peak_count, real_count );
+		//UpdateHowlingData(self, self->magn, peak_magn, peak_pin, peak_count, real_count, self->pav);
+		RemoveRepeatHowlingPins(self);
 
 		if( logfile )
 		{
-			for( i = 0; i < self->howling_count_curr; ++i )
-			{
-				fprintf(logfile, "CURR for %d : magn = %.2f\t, pin = %d(%.2f)\t, num = %d\t, freeze = %d\t, offset = %d\r\n", i, self->howling_magn_curr[i],
-					self->howling_pin_curr[i], self->howling_pin_curr[i]*8000.0/512.f, self->howling_num_curr[i], self->howling_frezee_curr[i], self->howling_offset_curr[i]);
-			}
-			fprintf(logfile, "\r\n");
+// 			for( i = 0; i < self->howling_count_curr; ++i )
+// 			{
+// 				fprintf(logfile, "CURR for %d : magn = %.2f\t, pin = %d(%.2f)\t, num = %d\t, freeze = %d\t, offset = %d\r\n", i, self->howling_magn_curr[i],
+// 					self->howling_pin_curr[i], self->howling_pin_curr[i]*self->fs / 1024.f, self->howling_num_curr[i], self->howling_frezee_curr[i], self->howling_offset_curr[i]);
+// 			}
+// 			fprintf(logfile, "\r\n");
 		}
 
 		//judge the howling pins
@@ -1018,14 +1904,14 @@ int YTXAfs_AnalyzeCore( AcousticfeedbackSupressionC* self,
 
 		if ( logfile )
 		{
-			fprintf(logfile, "RESULT>>>>\r\n");
+			fprintf(logfile, "RESULT>>>>>>\r\n");
 			for( i = 0; i < self->howlingpincount; ++i )
 			{
-				fprintf(logfile, "RESULT for %d : pin =%d\t(%.2f)\r\n", i, self->howlingpin[i], self->howlingpin[i]*8000/512.f);
+				fprintf(logfile, "RESULT for %d : pin =%d\t(%.2f)\r\n", i, self->howlingpin[i], self->howlingpin[i]*self->fs / 1024.f);
 			}
 			for( i = 0; i < self->howling_history_count; ++i )
 			{
-				fprintf(logfile, "HISTORY for %d : pin =%d\t(%.2f)\r\n", i, self->howling_history[i], self->howling_history[i]*8000/512.f);
+				fprintf(logfile, "HISTORY for %d : pin =%d\t(%.2f)\r\n", i, self->howling_history[i], self->howling_history[i]*self->fs / 1024.f);
 			}
 			fprintf(logfile, "<<<<<<RESULT\r\n");
 		}
@@ -1071,8 +1957,15 @@ int YTXAfs_ProcessCore( AcousticfeedbackSupressionC* self,
 	if( self == NULL || self->initFlag != 1 )
 		return -1;
 
+	if( self->bmute == 1 )
+	{
+		memcpy(outframe, inframe, sizeof(float)*self->blockLen);
+		return 0;
+	}
+
 	//
-	HowlingFPoolMakeAndUpdateFilter( (HowlingFilterPool*)(self->filterPool), 16000, self->howlingpin, self->howlingpincount );
+	HowlingFPoolMakeAndUpdateFilter( (HowlingFilterPool*)(self->filterPool), self->fs, self->howlingpin, self->howlingpincount );
+	HowlingFPoolMakeAndUpdateFilter( (HowlingFilterPool*)(self->filterPool), self->fs, self->howling_history, self->howling_history_count );
 
 	memcpy( ibuf, inframe, sizeof(float)*self->blockLen );
 
@@ -1092,11 +1985,8 @@ int YTXAfs_FreeCore( AcousticfeedbackSupressionC* self )
 		HowlingFPoolFree((HowlingFilterPool*)(self->filterPool));
 		self->filterPool = NULL;
 
-		if( self->ptmp_data != NULL )
-		{
-			free(self->ptmp_data);
-			self->ptmp_data = NULL;
-		}
+		//
+
 		free(self);
 		self = NULL;
 	}

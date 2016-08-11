@@ -153,11 +153,6 @@ int ProducerFec::AddRtpPacketAndGenerateFec(const uint8_t* data_buffer,
     ++num_frames_;
     incomplete_frame_ = false;
   }
-
-//TODO:
-//  ++num_frames_;
-//  incomplete_frame_ = false;  //hubin for audio test
-
   // Produce FEC over at most |params_.max_fec_frames| frames, or as soon as:
   // (1) the excess overhead (actual overhead - requested/target overhead) is
   // less than |kMaxExcessOverhead|, and

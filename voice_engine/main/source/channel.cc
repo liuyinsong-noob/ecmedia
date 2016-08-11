@@ -981,7 +981,8 @@ Channel::Channel(int32_t channelId,
     _audio_data_cb(NULL),
     _rtpPacketTimedOut(false),
     _rtpPacketTimeOutIsEnabled(false),
-    _rtpTimeOutSeconds(0)
+    _rtpTimeOutSeconds(0),
+	_processDataFlag(false)
 {
     WEBRTC_TRACE(kTraceMemory, kTraceVoice, VoEId(_instanceId,_channelId),
                  "Channel::Channel() - ctor");
@@ -3156,7 +3157,7 @@ int
 Channel::GetLocalSSRC(unsigned int& ssrc)
 {
     ssrc = _rtpRtcpModule->SSRC();
-    WEBRTC_TRACE(kTraceStateInfo, kTraceVoice,
+    WEBRTC_TRACE(kTraceInfo, kTraceVoice,
                  VoEId(_instanceId,_channelId),
                  "GetLocalSSRC() => ssrc=%lu", ssrc);
     return 0;
@@ -3166,7 +3167,7 @@ int
 Channel::GetRemoteSSRC(unsigned int& ssrc)
 {
     ssrc = rtp_receiver_->SSRC();
-    WEBRTC_TRACE(kTraceStateInfo, kTraceVoice,
+    WEBRTC_TRACE(kTraceInfo, kTraceVoice,
                  VoEId(_instanceId,_channelId),
                  "GetRemoteSSRC() => ssrc=%lu", ssrc);
     return 0;
@@ -5940,6 +5941,99 @@ Channel::OnReceivedPacket(const WebRtc_Word32 id,
                                                      VE_PACKET_RECEIPT_RESTARTED);
         }
     }
+}
+
+int32_t Channel::SetKeepAliveStatus(
+	const bool enable, const int8_t unknownPayloadType,
+	const uint16_t deltaTransmitTimeMS)
+{
+	WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, VoEId(_instanceId, _channelId),
+		"%s", __FUNCTION__);
+
+	if (enable && _rtpRtcpModule->RTPKeepalive())
+	{
+		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+			VoEId(_instanceId, _channelId),
+			"%s: RTP keepalive already enabled", __FUNCTION__);
+		return -1;
+	}
+	else if (!enable && !_rtpRtcpModule->RTPKeepalive())
+	{
+		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+			VoEId(_instanceId, _channelId),
+			"%s: RTP keepalive already disabled", __FUNCTION__);
+		return -1;
+	}
+
+	if (_rtpRtcpModule->SetRTPKeepaliveStatus(enable, unknownPayloadType,
+		deltaTransmitTimeMS) != 0)
+	{
+		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+			VoEId(_instanceId, _channelId),
+			"%s: Could not set RTP keepalive status %d", __FUNCTION__,
+			enable);
+		//        if (enable == false && !_rtpRtcpModule->DefaultModuleRegistered())
+		//        {
+		//            // Not sending media and we try to disable keep alive
+		//            _rtpRtcp.ResetSendDataCountersRTP();
+		//            _rtpRtcp.SetSendingStatus(false);
+		//        }
+		return -1;
+	}
+
+	if (enable && !_rtpRtcpModule->Sending())
+	{
+		// Enable sending to start sending Sender reports instead of receive
+		// reports
+		if (_rtpRtcpModule->SetSendingStatus(true) != 0)
+		{
+			_rtpRtcpModule->SetRTPKeepaliveStatus(false, 0, 0);
+			WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+				VoEId(_instanceId, _channelId),
+				"%s: Could not start sending", __FUNCTION__);
+			return -1;
+		}
+	}
+	else if (!enable && !_rtpRtcpModule->SendingMedia())
+	{
+		// Not sending media and we're disabling keep alive
+		_rtpRtcpModule->ResetSendDataCountersRTP();
+		if (_rtpRtcpModule->SetSendingStatus(false) != 0)
+		{
+			WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+				VoEId(_instanceId, _channelId),
+				"%s: Could not stop sending", __FUNCTION__);
+			return -1;
+		}
+	}
+	return 0;
+}
+
+// ----------------------------------------------------------------------------
+// GetKeepAliveStatus
+// ----------------------------------------------------------------------------
+
+int32_t Channel::GetKeepAliveStatus(
+	bool& enabled, int8_t& unknownPayloadType,
+	uint16_t& deltaTransmitTimeMs)
+{
+	WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, VoEId(_instanceId, _channelId),
+		"%s", __FUNCTION__);
+	if (_rtpRtcpModule->RTPKeepaliveStatus(&enabled, &unknownPayloadType,
+		&deltaTransmitTimeMs) != 0)
+	{
+		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+			VoEId(_instanceId, _channelId),
+			"%s: Could not get RTP keepalive status", __FUNCTION__);
+		return -1;
+	}
+	WEBRTC_TRACE(
+		cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, VoEId(_instanceId, _channelId),
+		"%s: enabled = %d, unknownPayloadType = %d, deltaTransmitTimeMs = %ul",
+		__FUNCTION__, enabled, (int32_t)unknownPayloadType,
+		deltaTransmitTimeMs);
+
+	return 0;
 }
     
 #ifdef WEBRTC_SRTP

@@ -16,6 +16,7 @@
 #include "video_render_android_impl.h"
 #include "video_render_opengles20.h"
 #include "video_render_defines.h"
+//#include <stdio.h>
 
 namespace cloopenwebrtc {
 
@@ -41,16 +42,16 @@ class AndroidNativeOpenGl2Channel: public AndroidStream {
   virtual void DeliverFrame(JNIEnv* jniEnv);
 
  private:
-  static jint JNICALL CreateOpenGLNativeStatic(
-      JNIEnv * env,
-      jobject,
-      jlong context,
-      jint width,
-      jint height);
-  jint CreateOpenGLNative(int width, int height);
+  //static jint JNICALL CreateOpenGLNativeStatic(
+  //    JNIEnv * env,
+  //    jobject,
+  //    jlong context,
+  //    jint width,
+  //    jint height);
+  //jint CreateOpenGLNative(int width, int height);
 
-  static void JNICALL DrawNativeStatic(JNIEnv * env,jobject, jlong context);
-  void DrawNative();
+  //static void JNICALL DrawNativeStatic(JNIEnv * env,jobject, jlong context);
+  //void DrawNative();
   uint32_t _id;
   CriticalSectionWrapper& _renderCritSect;
 
@@ -60,9 +61,21 @@ class AndroidNativeOpenGl2Channel: public AndroidStream {
   jobject     _javaRenderObj;
 
   jmethodID      _redrawCid;
-  jmethodID      _registerNativeCID;
-  jmethodID      _deRegisterNativeCID;
-  VideoRenderOpenGles20 _openGLRenderer;
+  //jmethodID      _registerNativeCID;
+  //jmethodID      _deRegisterNativeCID;
+
+  jmethodID      _setCoordinatesCID;
+
+  int _frameWidth;
+  int _frameHeight;
+ // unsigned char* _directBuffer;
+  jbyteArray _renderFrameData;
+
+  //FILE *_deliveFrameFile;
+  uint8_t* _renderFrameBuf;
+  int _lastWidth;
+  int _lastHeight;
+//  VideoRenderOpenGles20 _openGLRenderer;
 };
 
 

@@ -51,9 +51,13 @@ LOCAL_SRC_FILES := \
     vie_render_manager.cc \
     vie_rtp_rtcp_impl.cc \
     vie_sender.cc \
+	send_statistics_proxy.cc \
+	receive_statistics_proxy.cc \
     vie_shared_data.cc \
-    vie_sync_module.cc
+	vie_sync_module.cc
 
+	
+	
 # Flags passed to both C and C++ files.
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
@@ -61,7 +65,8 @@ LOCAL_CFLAGS := \
 		'-DVIDEOCODEC_VP8'
 
 LOCAL_C_INCLUDES := \
-    $(LOCAL_PATH)/../include\
+	$(LOCAL_PATH)/. \
+    $(LOCAL_PATH)/../include \
     $(LOCAL_PATH)/.. \
     $(LOCAL_PATH)/../../module \
     $(LOCAL_PATH)/../common_video/interface \

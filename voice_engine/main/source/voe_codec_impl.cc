@@ -172,7 +172,7 @@ int VoECodecImpl::GetSendCodec(int channel, CodecInst& codec)
         return -1;
     }
     ACMToExternalCodecRepresentation(codec, acmCodec);
-    WEBRTC_TRACE(kTraceStateInfo, kTraceVoice,
+    WEBRTC_TRACE(kTraceStream, kTraceVoice,
         VoEId(_shared->instance_id(), -1),
         "GetSendCodec() => plname=%s, pacsize=%d, plfreq=%d, "
         "channels=%d, rate=%d", codec.plname, codec.pacsize,
@@ -205,7 +205,7 @@ int VoECodecImpl::GetRecCodec(int channel, CodecInst& codec)
         return -1;
     }
     ACMToExternalCodecRepresentation(codec, acmCodec);
-    WEBRTC_TRACE(kTraceStateInfo, kTraceVoice,
+    WEBRTC_TRACE(kTraceStream, kTraceVoice,
         VoEId(_shared->instance_id(), -1),
         "GetRecCodec() => plname=%s, pacsize=%d, plfreq=%d, "
         "channels=%d, rate=%d", codec.plname, codec.pacsize,

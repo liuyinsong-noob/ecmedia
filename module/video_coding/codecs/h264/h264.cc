@@ -194,7 +194,7 @@ int H264Encoder::Encode(const I420VideoFrame& input_image,
 		CodecSpecificInfo codec;
 		CodecSpecificInfoH264 *h264Info = &(codec.codecSpecific.H264);
 		RTPFragmentationHeader fragment;
-		bool bNonReference = CopyEncodedImage(fragment, xnals, num_nals, &oxpic, input_image);
+		bool bNonReference = CopyEncodedImage(fragment, xnals, num_nals, &oxpic, input_image, codec_.mode);
 		codec.codecType = kVideoCodecH264;
 		h264Info->pictureId = framenum_;
 		h264Info->nonReference = bNonReference;
@@ -238,7 +238,7 @@ WebRtc_Word32 H264Encoder::CodecConfigParameters(WebRtc_UWord8* /*buffer*/, WebR
 void H264Encoder::SetX264EncodeParameters(x264_param_t &params, VideoCodecMode mode)
 {
 	x264_param_t *p_params = &params;
-	if (mode==kRealtimeVideo)
+	if (mode==kRealtimeVideo || mode == kSaveToFile)
 	{
 		x264_param_default_preset(p_params,x264_preset_names[2],"zerolatency");
 	}else if (mode == kScreensharing)
@@ -293,7 +293,7 @@ void H264Encoder::InitializeX264Pic(const I420VideoFrame& input_image, x264_pict
 	xpic.img.i_stride[3] = 0;
 }
 
-bool H264Encoder::CopyEncodedImage(RTPFragmentationHeader &fragment, void *xnals, int num_nals, void *oxpic, const I420VideoFrame &input_image)
+bool H264Encoder::CopyEncodedImage(RTPFragmentationHeader &fragment, void *xnals, int num_nals, void *oxpic, const I420VideoFrame &input_image, VideoCodecMode mode)
 {
 #define NALU_START_PREFIX_LENGTH 4
 	assert(num_nals>0);
@@ -312,8 +312,11 @@ bool H264Encoder::CopyEncodedImage(RTPFragmentationHeader &fragment, void *xnals
 	for (int i=0; i<num_nals; i++)
 	{
 		x264_nal_t *current_nal = &_xnals[i];
-		bool b_long_startcode = current_nal->b_long_startcode;
-		int offset = b_long_startcode ? NALU_START_PREFIX_LENGTH : (NALU_START_PREFIX_LENGTH-1);		
+		int offset = 0;
+		if( mode != kSaveToFile ) {
+			bool b_long_startcode = current_nal->b_long_startcode;
+			offset = b_long_startcode ? NALU_START_PREFIX_LENGTH : (NALU_START_PREFIX_LENGTH-1);
+		}
 		memcpy(encoded_image_._buffer+encoded_image_._length, current_nal->p_payload+offset, current_nal->i_payload-offset);
 		fragment.fragmentationLength[i] = current_nal->i_payload-offset;
 		fragment.fragmentationOffset[i] = encoded_image_._length;

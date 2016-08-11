@@ -96,6 +96,15 @@ public:
 
     virtual int SetVideoEngineBWETarget(int channel, ViENetwork* vie_network,
                                         int video_channel);
+
+	virtual int SetRTPKeepAliveStatus(
+		const int videoChannel, bool enable, const char unknownPayloadType,
+		const unsigned int deltaTransmitTimeSeconds) OVERRIDE;
+
+	virtual int GetRTPKeepAliveStatus(const int videoChannel, bool& enabled,
+		char& unkownPayloadType,
+		unsigned int& deltaTransmitTimeSeconds) OVERRIDE;
+
 protected:
     VoERTP_RTCPImpl(voe::SharedData* shared);
     virtual ~VoERTP_RTCPImpl();

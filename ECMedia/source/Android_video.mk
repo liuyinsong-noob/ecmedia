@@ -18,7 +18,8 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_SRC_FILES := \
 		base64.c \
 		ECMedia.cpp \
-		RecordVoip.cpp
+		RecordVoip.cpp \
+		statsCollector.cc
 
 	
 LOCAL_CFLAGS := \
@@ -41,6 +42,7 @@ LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/../../voice_engine/main/source \
 		$(LOCAL_PATH)/../../video_engine/include \
 		$(LOCAL_PATH)/../../video_engine/source \
+		$(LOCAL_PATH)/../../video_engine/source/video \
 		$(LOCAL_PATH)/../interface \
 		$(LOCAL_PATH)/../.. \
 		$(LOCAL_PATH)/../../module \
@@ -63,7 +65,9 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../../module/common_audio/source/resampler/include \
 	$(LOCAL_PATH)/../../module/bitrate_controller/include \
 	$(LOCAL_PATH)/../../module/remote_bitrate_estimator/include \
-	$(LOCAL_PATH)/../../module/pacing/include
+	$(LOCAL_PATH)/../../module/pacing/include \
+	$(LOCAL_PATH)/../../module/remote_bitrate_estimator/source \
+	$(LOCAL_PATH)/../../module/video_render/main/include
 	
 LOCAL_SHARED_LIBRARIES := \
     libcutils \

@@ -156,9 +156,6 @@ ModuleVideoRenderImpl::ModuleVideoRenderImpl(
         {
             if(AndroidNativeOpenGl2Renderer::UseOpenGL2(window))
             {
-            	WEBRTC_TRACE(kTraceStateInfo, kTraceVideoRenderer, _id,
-	                "%s: Android Video Render Use OpenGL2.", __FUNCTION__);
-
                 AndroidNativeOpenGl2Renderer* ptrRenderer = NULL;
                 ptrRenderer = new AndroidNativeOpenGl2Renderer(_id, videoRenderType, window, _fullScreen);
                 if (ptrRenderer)
@@ -168,8 +165,6 @@ ModuleVideoRenderImpl::ModuleVideoRenderImpl(
             }
             else
             {
-                WEBRTC_TRACE(kTraceStateInfo, kTraceVideoRenderer, _id,
-	                "%s: Android Video Render Use SurfaceView.", __FUNCTION__);
                 AndroidSurfaceViewRenderer* ptrRenderer = NULL;
                 ptrRenderer = new AndroidSurfaceViewRenderer(_id, videoRenderType, window, _fullScreen);
                 if (ptrRenderer)
@@ -218,9 +213,6 @@ ModuleVideoRenderImpl::ModuleVideoRenderImpl(
 				"%s: _ptrRenderer->Init() failed.", __FUNCTION__);
         }
     }
-
-	WEBRTC_TRACE(kTraceError, kTraceVideoRenderer, _id,
-	    "%s: _ptrRenderer->Init() Success.", __FUNCTION__);
 }
 
 ModuleVideoRenderImpl::~ModuleVideoRenderImpl()

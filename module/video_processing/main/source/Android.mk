@@ -27,7 +27,12 @@ LOCAL_SRC_FILES := \
     frame_preprocessor.cc \
     spatial_resampler.cc \
     video_decimator.cc \
-    video_processing_impl.cc
+    video_processing_impl.cc \
+	video_denoiser.cc \
+	./util/denoiser_filter.cc \
+	./util/denoiser_filter_c.cc \
+	./util/noise_estimation.cc \
+	./util/skin_detection.cc
 
 ifeq ($(TARGET_ARCH),x86)
 LOCAL_SRC_FILES += \
@@ -36,9 +41,11 @@ endif
 
 # Flags passed to both C and C++ files.
 LOCAL_CFLAGS := \
-    $(MY_WEBRTC_COMMON_DEFS)
+    $(MY_WEBRTC_COMMON_DEFS) \
+	-D__GXX_EXPERIMENTAL_CXX0X__
 
 LOCAL_C_INCLUDES := \
+	$(LOCAL_PATH)/./util \
     $(LOCAL_PATH)/../include \
     $(LOCAL_PATH)/../../.. \
     $(LOCAL_PATH)/../../../.. \
@@ -54,7 +61,8 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../../../video_coding/main/source \
     $(LOCAL_PATH)/../../../common_video/source/libyuv/include \
     $(LOCAL_PATH)/../../../../common_video/vplib/main/interface \
-    $(LOCAL_PATH)/../../../../system_wrappers/interface
+    $(LOCAL_PATH)/../../../../system_wrappers/interface \
+	$(LOCAL_PATH)/../../../../system_wrappers/source
 
 LOCAL_SHARED_LIBRARIES := \
     libcutils \

@@ -8,7 +8,8 @@ extern "C"
 #include "libavutil/opt.h" 
 //#include "libswresample/swresample.h"
 }
-
+#include "critical_section_wrapper.h"
+using namespace cloopenwebrtc;
 
 class h264_record
 {
@@ -26,7 +27,7 @@ public:
 
 	void write_frame( const void* p, int len , double timestamp );
 	void destroy();
-	int create( void *p, int len );
+	int create( void *p, int len);
 
 	bool get_write_status();
 
@@ -41,21 +42,25 @@ private:
 	int get_nal_type( void *p, int len );
 
 private:
-	char recordFileName[256];
-	AVFormatContext *fc;
+	CriticalSectionWrapper* _recordVoipCrit;
+
+	char recordFileName_[256];
+	AVFormatContext *formatCtxt_;
 	
-	int ai;   //audio stream index
-	int vi;	//video stream index
+	int audioStreamdIndex_;   //audio stream index
+	int videoStreamdIndex_;	//video stream index
 
-	int waitkey;   //wait for I Frame
+	int waitkey_;   //wait for I Frame
 
-	int AUDIO_FRAME_SIZE;
-	unsigned short* audio_frame_buf;
-	int audio_frame_len;
+	int audioFrameSize_;
+	unsigned short* audioFrameBuf_;
+	int audioFrameLen_;
+	int audioFreq_;
 
-	int64_t baseH264TimeStamp;
-	int64_t lastFrameNum;
-	bool  isWrited;
+	int64_t baseH264TimeStamp_;
+	int64_t lastFrameNum_;
+	bool  isWrited_;
+	
 };
 
 #endif

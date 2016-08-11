@@ -47,6 +47,8 @@ class HowlingControlImpl : public HowlingControl,
 	  CriticalSectionWrapper* crit_;
 
 	  FILE* filelog;  //debug used
+	  FILE* file_preproc;
+	  FILE* file_postproc;
 };
 
 };

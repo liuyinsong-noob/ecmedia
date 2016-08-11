@@ -9,6 +9,7 @@
 # These defines will apply to all source files
 # Think again before changing it
 MY_WEBRTC_COMMON_DEFS := \
+    '-DWEBRTC_TARGET_PC' \
     '-DWEBRTC_LINUX' \
     '-DWEBRTC_THREAD_RR' \
     '-DWEBRTC_CLOCK_TYPE_REALTIME' \
@@ -20,13 +21,16 @@ MY_WEBRTC_COMMON_DEFS := \
 #    '-DWEBRTC_ANDROID_OPENSLES' [module audio_device]
 #    '-DNETEQ_VOICEENGINE_CODECS' [module audio_coding neteq]
 #    '-DWEBRTC_MODULE_UTILITY_VIDEO' [module media_file] [module utility]
-ifeq ($(TARGET_ARCH),arm)
+
+ifeq ($(TARGET_ARCH), arm) 
 MY_WEBRTC_COMMON_DEFS += \
     '-DWEBRTC_ARCH_ARM'
+	
 #    '-DWEBRTC_DETECT_ARM_NEON' # only used in a build configuration without Neon
 # TODO(kma): figure out if the above define could be moved to NDK build only.
 
 # TODO(kma): test if the code under next two macros works with generic GCC compilers
+
 ifeq ($(ARCH_ARM_HAVE_NEON),true)
 MY_WEBRTC_COMMON_DEFS += \
     '-DWEBRTC_ARCH_ARM_NEON'
@@ -48,4 +52,18 @@ ifeq ($(TARGET_ARCH_ABI),armeabi)
 MY_WEBRTC_COMMON_DEFS += \
     '-DWEBRTC_ARCH_ARM_V5'
 endif
+
 endif # ifeq ($(TARGET_ARCH),arm)
+
+
+ifeq ($(TARGET_ARCH), arm64) 
+MY_WEBRTC_COMMON_DEFS += \
+    '-DWEBRTC_ARCH_ARM'
+	
+ifeq ($(TARGET_ARCH_ABI), arm64-v8a)
+MY_WEBRTC_COMMON_DEFS += \
+    '-DWEBRTC_ARCH_ARM64_V8A' \
+	'-D__arm64__'
+endif
+
+endif #ifeq ($(TARGET_ARCH), arm64)

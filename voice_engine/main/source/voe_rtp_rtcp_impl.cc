@@ -569,8 +569,67 @@ int VoERTP_RTCPImpl::SetVideoEngineBWETarget(int channel,
   }
   channelPtr->SetVideoEngineBWETarget(vie_network, video_channel);
   return 0;
-}
+	}
 
-#endif  // #ifdef WEBRTC_VOICE_ENGINE_RTP_RTCP_API
+	int VoERTP_RTCPImpl::SetRTPKeepAliveStatus(
+		const int channel, bool enable, const char unknownPayloadType,
+		const unsigned int deltaTransmitTimeSeconds)
+	{
+		WEBRTC_TRACE(cloopenwebrtc::kTraceApiCall, cloopenwebrtc::kTraceVideo,
+			VoEId(_shared->instance_id(), channel),
+			"%s(channel: %d, enable: %d, unknownPayloadType: %d, "
+			"deltaTransmitTimeMS: %ul)",
+			__FUNCTION__, channel, enable, (int)unknownPayloadType,
+			deltaTransmitTimeSeconds);
+
+		// Get the channel
+		voe::ChannelOwner ch = _shared->channel_manager().GetChannel(channel);
+		voe::Channel* channelPtr = ch.channel();
+		if (channelPtr == NULL)
+		{
+			_shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
+				"StopRTPDump() failed to locate channel");
+			return -1;
+		}
+		WebRtc_UWord16 deltaTransmitTimeMs = 1000 * deltaTransmitTimeSeconds;
+		if (channelPtr->SetKeepAliveStatus(enable, unknownPayloadType,
+			deltaTransmitTimeMs) != 0)
+		{
+			//_shared->SetLastError(kViERtpRtcpUnknownError);
+			return -1;
+		}
+		return 0;
+	}
+
+	int VoERTP_RTCPImpl::GetRTPKeepAliveStatus(const int channel, bool& enabled, char& unknownPayloadType,
+		unsigned int& deltaTransmitTimeSeconds)
+	{
+		WEBRTC_TRACE(cloopenwebrtc::kTraceApiCall, cloopenwebrtc::kTraceVideo,
+			VoEId(_shared->instance_id(), channel), "%s(channel: %d)",
+			__FUNCTION__, channel);
+
+		// Get the channel
+		voe::ChannelOwner ch = _shared->channel_manager().GetChannel(channel);
+		voe::Channel* channelPtr = ch.channel();
+		if (channelPtr == NULL)
+		{
+			_shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
+				"StopRTPDump() failed to locate channel");
+			return -1;
+		}
+
+		WebRtc_UWord16 deltaTimeMs = 0;
+		int retVal;
+		retVal = channelPtr->GetKeepAliveStatus(enabled, (int8_t&)unknownPayloadType,
+			deltaTimeMs);
+		deltaTransmitTimeSeconds = deltaTimeMs / 1000;
+		//if (retVal != 0)
+		//{
+		//	_shared->SetLastError(kViERtpRtcpUnknownError);
+		//}
+		return retVal;
+	}
+
+	#endif  // #ifdef WEBRTC_VOICE_ENGINE_RTP_RTCP_API
 
 }  // namespace cloopenwebrtc

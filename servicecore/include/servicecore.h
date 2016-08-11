@@ -707,6 +707,11 @@ public:
 	int StartVirtualBackGround();
 	int StopVirtualBakcGround();
 
+	int StopRecordVoice(SerPhoneCall *call);
+	int StartRecordVoice(SerPhoneCall *call);
+	int SetVideoKeepAlive(SerPhoneCall *call, bool enable, int interval);
+	int SetAudioKeepAlive(SerPhoneCall *call, bool enable, int interval);
+
 public:
 	static SerphoneCoreVTable vtable;
 	Sal    *sal;
@@ -788,6 +793,7 @@ public:
     bool_t m_agcEnabled;
     bool_t m_ecEnabled;
     bool_t m_nsEnabled;
+    bool_t m_hcEnabled;
     cloopenwebrtc::AgcModes m_agcMode;
     cloopenwebrtc::EcModes m_ecMode;
     cloopenwebrtc::NsModes m_nsMode;

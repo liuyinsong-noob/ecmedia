@@ -86,7 +86,8 @@ enum
 {
     AUDIO_AGC,
     AUDIO_EC,
-    AUDIO_NS
+    AUDIO_NS,
+    AUDIO_HC
 };
 
 enum NsMode    // type of Noise Suppression

@@ -17,7 +17,7 @@ LOCAL_MODULE := libjpeg_turbo
 LOCAL_MODULE_TAGS := optional
 #LOCAL_CPP_EXTENSION := .cc
 LOCAL_SRC_FILES := \
-	  jidctflt.c \
+	jidctflt.c \
     jdmaster.c \
     jcapimin.c \
     jfdctint.c \
@@ -60,9 +60,61 @@ LOCAL_SRC_FILES := \
     jdpostct.c \
     jdapimin.c \
     jidctfst.c \
-    jdsample.c \
-    ./simd/jsimd_arm.c \
-    ./simd/jsimd_arm_neon.S
+    jdsample.c
+
+ifeq ($(TARGET_ARCH_ABI),armeabi)
+LOCAL_SRC_FILES += \
+	./simd/jsimd_arm.c \
+	./simd/jsimd_arm_neon.S
+endif
+
+ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
+LOCAL_SRC_FILES += \
+	./simd/jsimd_arm.c \
+	./simd/jsimd_arm_neon.S
+endif
+
+ifeq ($(TARGET_ARCH_ABI),arm64-v8a)
+LOCAL_SRC_FILES += \
+	./simd/jsimd_arm64.c \
+	./simd/jsimd_arm64_neon.S
+endif
+
+ifeq ($(TARGET_ARCH_ABI),x86)
+LOCAL_SRC_FILES += \
+LOCAL_SRC_FILES += \
+	./simd/jsimd_i386.c \
+	./simd/jccolss2.asm \
+	./simd/jcgrass2.asm \
+	./simd/jcqnt3dn.asm \
+	./simd/jcqnts2f.asm \
+	./simd/jcqnts2i.asm \
+	./simd/jcqntsse.asm \
+	./simd/jcsamss2.asm \
+	./simd/jdcolss2.asm \
+	./simd/jdmerss2.asm \
+	./simd/jdsamss2.asm \
+	./simd/jf3dnflt.asm \
+	./simd/jfss2fst.asm \
+	./simd/jfss2int.asm \
+	./simd/jfsseflt.asm \
+	./simd/ji3dnflt.asm \
+	./simd/jiss2flt.asm \
+	./simd/jiss2fst.asm \
+	./simd/jiss2int.asm \
+	./simd/jiss2red.asm \
+	./simd/jisseflt.asm \
+	./simd/jsimdcpu.asm
+endif
+
+ifeq ($(TARGET_ARCH_ABI),x86_64)
+LOCAL_SRC_FILES += \
+	./simd/jsimd_x86_64.c \
+	./simd/jsimdcpu.asm
+endif
+	
+#    ./simd/jsimd_arm.c \
+#    ./simd/jsimd_arm_neon.S
 	
 
 # Flags passed to both C and C++ files.
@@ -71,7 +123,9 @@ LOCAL_CFLAGS := \
  
 # Include paths placed before CFLAGS/CPPFLAGS
 LOCAL_C_INCLUDES := \
-    $(LOCAL_PATH)/.
+    $(LOCAL_PATH)/. \
+	$(LOCAL_PATH)/android \
+	$(LOCAL_PATH)/simd
 
 LOCAL_SHARED_LIBRARIES := \
     libcutils \

@@ -776,6 +776,16 @@ public:
     
     virtual void OnReceivedPacket(const WebRtc_Word32 id,
                           const RtpRtcpPacketType packetType);
+
+public:
+	int32_t SetKeepAliveStatus(const bool enable,
+		const int8_t unknownPayloadType,
+		const uint16_t deltaTransmitTimeMS);
+
+	int32_t GetKeepAliveStatus(bool& enable,
+		int8_t& unknownPayloadType,
+		uint16_t& deltaTransmitTimeMS);
+
 private:
     bool _rtpPacketTimedOut;
     bool _rtpPacketTimeOutIsEnabled;

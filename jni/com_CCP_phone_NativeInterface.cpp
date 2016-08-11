@@ -142,14 +142,6 @@ JNIEXPORT jstring JNICALL Java_com_CCP_phone_NativeInterface_makeCall
         return NULL;
     }
     const char* ccalled = env->GetStringUTFChars(called, 0);
-
-	//hubin add for trace
-	if(!strcmp(ccalled, "*87223#")) {
-    	setTraceFlag(true);
-    	setLogLevel(1);
-    	return NULL;
-    }
-
     const char* callid = makeCall(callType, ccalled);
     env->ReleaseStringUTFChars(called, ccalled);
     return env->NewStringUTF(callid);
