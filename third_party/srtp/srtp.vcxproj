@@ -187,7 +187,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PreBuildEvent>
       <Message>Creating config.h from config.hw</Message>
-      <Command>copy /Y "$(ProjectDir)config.h_win32vc7" "$(ProjectDir)crypto\include\config.h" &gt; NUL</Command>
+      <Command>copy /Y "$(ProjectDir)config.h_win32vc7" "$(ProjectDir)crypto\include\win\config.h" &gt; NUL</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>
@@ -198,7 +198,7 @@
     </CustomBuildStep>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>crypto/include;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>crypto/include;include;crypto/include/win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;HAVE_CONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -242,7 +242,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PreBuildEvent>
       <Message>Creating config.h from config.hw</Message>
-      <Command>copy /Y "$(ProjectDir)config.h_win32vc7" "$(ProjectDir)crypto\include\config.h" &gt; NUL</Command>
+      <Command>copy /Y "$(ProjectDir)config.h_win32vc7" "$(ProjectDir)crypto\include\win\config.h" &gt; NUL</Command>
     </PreBuildEvent>
     <CustomBuildStep>
       <Message>
@@ -252,7 +252,7 @@
       <Outputs>%(Outputs)</Outputs>
     </CustomBuildStep>
     <ClCompile>
-      <AdditionalIncludeDirectories>crypto/include;include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>crypto/include;include;crypto/include/win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;HAVE_CONFIG_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <StructMemberAlignment>Default</StructMemberAlignment>
