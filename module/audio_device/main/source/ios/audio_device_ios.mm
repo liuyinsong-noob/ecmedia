@@ -1674,12 +1674,12 @@ OSStatus
         return 0;
     }
 
-    if(_micphoneMuted)
-    {
-        memset(dataTmp, 0, 2*inNumberFrames);
-    }
+    //if(_micphoneMuted)
+    //{
+    //    memset(dataTmp, 0, 2*inNumberFrames);
+    //}
         
-    if (_recording) {
+    if (_micphoneMuted) {
         // Insert all data in temp buffer into recording buffers
         // There is zero or one buffer partially full at any given time,
         // all others are full or empty
