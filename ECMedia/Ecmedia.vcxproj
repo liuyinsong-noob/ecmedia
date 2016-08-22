@@ -182,6 +182,7 @@
     <ClInclude Include="include\RecordVoip.h" />
     <ClInclude Include="include\statsCollector.h" />
     <ClInclude Include="include\StunMessageCallBack.h" />
+    <ClInclude Include="include\VoeObserver.h" />
     <ClInclude Include="interface\ECMedia.h" />
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +194,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="source\statsCollector.cc" />
+    <ClCompile Include="source\VoeObserver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\module\audioprocess\audioprocess.vcxproj">

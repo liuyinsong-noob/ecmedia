@@ -20,6 +20,8 @@
 #include "voe_rtp_rtcp.h"
 #include "voe_hardware.h"
 #include "voe_dtmf.h"
+#include "statsCollector.h"
+#include "VoeObserver.h"
 
 #ifdef WIN32
 #include "codingHelper.h"
@@ -35,7 +37,6 @@
 #include "vie_rtp_rtcp.h"
 #include "RecordVoip.h"
 #include "webrtc_libyuv.h"
-#include "statsCollector.h"
 #include "vie_image_process.h"
 #endif
 
@@ -55,26 +56,33 @@ enum {
     PrintConsole("[ECMEDIA ERROR] %s m_voe is NULL.",__FUNCTION__); \
     return ret;}
 
+#ifdef VIDEO_ENABLED
 #define VIDEO_ENGINE_UN_INITIAL_ERROR(ret) \
     if(!m_vie) { \
     PrintConsole("[ECMEDIA ERROR] %s m_vie is NULL.",__FUNCTION__);\
     return ret;}
+#endif
 
 static cloopenwebrtc::VoiceEngine* m_voe = NULL;
+static StatsCollector *g_statsCollector = NULL;
+
+static VoeObserver* g_VoeObserver = NULL;
 
 #ifdef VIDEO_ENABLED
 static cloopenwebrtc::VideoEngine* m_vie = NULL;
 static RecordVoip* g_recordVoip = NULL;
 static unsigned char* g_snapshotBuf = NULL;
-static StatsCollector *g_statsCollector = NULL;
 static int g_CaptureDeviceId = -1;
 #endif
 
 static CameraInfo *m_cameraInfo = NULL;
+static char gVersionString[256]={'\0'};
 
 static int m_cameraCount = 0;
 using namespace cloopenwebrtc;
 using namespace std;
+
+#define ECMEDIA_VERSION "2.1.0"
 
 //extern bool g_media_TraceFlag;
 //void PrintConsole(const char * fmt,...){};
@@ -221,6 +229,43 @@ extern "C" void PrintConsole(const char * fmt,...)
 	fflush(g_media_interface_fp);
 	//g_log_line ++;
 
+}//edit liqiang 
+
+extern "C" const char* ECMeida_get_Version()
+{
+    if( strlen(gVersionString) <= 0 )
+    {
+        const char *platform ="unknow",*arch = "arm",*voice="voice=false",*video="video=false";
+#if defined(WEBRTC_ANDROID)
+        platform = "Android";
+#elif defined(WIN32)
+        platform = "Windows";
+#elif defined(WEBRTC_IOS)
+        platform ="iOS";
+#elif defined(WEBRTC_MAC)
+        platform ="Mac OS";
+#elif defined(WEBRTC_LINUX)
+        platform ="Linux";
+#endif
+
+#if defined WEBRTC_ARCH_ARM_V7A
+        arch = "armv7a";
+#elif defined WEBRTC_ARCH_ARM_V5
+        arch = "armv5";
+#elif defined WEBRTC_ARCH_ARM64_V8A
+        arch = "armv8a";
+#endif
+
+#ifndef NO_VOIP_FUNCTION
+        voice="voice=true";
+#ifdef VIDEO_ENABLED
+        video="video=true";
+#endif
+#endif
+        sprintf(gVersionString,"%s#%s#%s#%s#%s#%s %s",ECMEDIA_VERSION,platform,arch,voice, video,__DATE__,__TIME__);
+    }
+
+	return gVersionString;
 }
 
 
@@ -537,6 +582,11 @@ int ECMedia_uninit_audio()
 
     VoiceEngine::Delete(m_voe);
     m_voe = NULL;
+
+    if(g_VoeObserver) {
+        delete g_VoeObserver;
+        g_VoeObserver = NULL;
+    }
     return 0;
 }
 
@@ -932,6 +982,28 @@ int ECMedia_set_audio_data_cb(int channelid, onEcMediaAudioData audio_data_cb)
     }
 }
 
+int ECMedia_set_voe_cb(int channelid, onVoeCallbackOnError voe_callback_cb)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    VoEBase *base = VoEBase::GetInterface(m_voe);
+    if (base) {
+        if(!g_VoeObserver) {
+            g_VoeObserver = new VoeObserver();
+        }
+        g_VoeObserver->SetCallback(channelid, voe_callback_cb);
+        base->RegisterVoiceEngineObserver(*g_VoeObserver);
+        base->Release();
+        return 0;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to get VoEBase, %s",__FUNCTION__);
+        return -99;
+    }
+
+}
+
 int ECMedia_sendRaw(int channelid, int8_t *data, uint32_t length, int32_t isRTCP, uint16_t port, const char* ip)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
@@ -1291,11 +1363,11 @@ int ECMedia_set_MTU(int channelid, int mtu)
         return -99;
     }
 }
-#endif
+
 /*
  * RTP_RTCP
  */
-int ECMedia_video_set_rtp_keepalive(int channelid, bool enable, int interval, int payloadType)
+int ECMedia_set_video_rtp_keepalive(int channelid, bool enable, int interval, int payloadType)
 {
     PrintConsole("[ECMEDIA INFO] %s begins..., channelid %d, enable %d interval %d, payloadType %d",__FUNCTION__, channelid,enable,interval, payloadType);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
@@ -1313,11 +1385,12 @@ int ECMedia_video_set_rtp_keepalive(int channelid, bool enable, int interval, in
         return -99;
     }
 }
+#endif
 
-int ECMedia_audio_set_rtp_keepalive(int channelid, bool enable, int interval, int payloadType)
+int ECMedia_set_audio_rtp_keepalive(int channelid, bool enable, int interval, int payloadType)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins..., channelid %d, enable %d, interval %d, payloadType %d", __FUNCTION__, channelid, enable, interval, payloadType);
-	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	VoERTP_RTCP *rtp_rtcp = VoERTP_RTCP::GetInterface(m_voe);
 	if (rtp_rtcp)
 	{
@@ -2827,6 +2900,75 @@ int ECMedia_save_remote_video_snapshot(int channleid, const char* filePath)
 	PrintConsole("[ECMEDIA Error] %s  get ViEFile failed.",__FUNCTION__);
 	return -1;
 }
+
+int ECmedia_enable_deflickering(int captureid, bool enable)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    ViEImageProcess *imageProcess = ViEImageProcess::GetInterface(m_vie);
+    if (imageProcess) {
+        int ret = imageProcess->EnableDeflickering(captureid, enable);
+        imageProcess->Release();
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to get ViEImageProcess, %s",__FUNCTION__);
+        return -99;
+    }
+}
+
+int ECmedia_enable_EnableColorEnhancement(int channelid, bool enable)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    ViEImageProcess *imageProcess = ViEImageProcess::GetInterface(m_vie);
+    if (imageProcess) {
+        int ret = imageProcess->EnableColorEnhancement(channelid, enable);
+        imageProcess->Release();
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to get ViEImageProcess, %s",__FUNCTION__);
+        return -99;
+    }
+}
+
+int ECmedia_enable_EnableDenoising(int captureid, bool enable)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    ViEImageProcess *imageProcess = ViEImageProcess::GetInterface(m_vie);
+    if (imageProcess) {
+        int ret = imageProcess->EnableDenoising(captureid, enable);
+        imageProcess->Release();
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to get ViEImageProcess, %s",__FUNCTION__);
+        return -99;
+    }
+}
+
+int ECmedia_enable_EnableBrightnessAlarm(int captureid, bool enable)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    ViECapture *capture = ViECapture::GetInterface(m_vie);
+    if (capture) {
+        int ret = capture->EnableBrightnessAlarm(captureid, enable);
+        capture->Release();
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to get ViECapture, %s",__FUNCTION__);
+        return -99;
+    }
+}
+
 #endif
 
 int ECMedia_set_VAD_status(int channelid, VadModes mode, bool dtx_enabled)
@@ -2911,7 +3053,7 @@ int ECMedia_IsIPv6Enabled(int channel)
         return -99;
     }
 }
-
+#ifdef VIDEO_ENABLED
 int ECMedia_set_video_SendStatistics_proxy(int channelid, char* filePath, int intervalMs)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
@@ -2947,6 +3089,8 @@ int ECMedia_set_video_RecvStatistics_proxy(int channelid, char* filePath, int in
 	else
 		return -1;
 }
+#endif
+
 int ECMedia_set_audio_SendStatistics_proxy(int channelid, char* filePath, int intervalMs)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
@@ -2995,76 +3139,12 @@ int ECMedia_stop_Statistics_proxy()
 
 int ECMedia_set_CaptureDeviceID(int videoCapDevId)
 {
+#ifdef VIDEO_ENABLED
 	g_CaptureDeviceId = videoCapDevId;
+#endif
 	return 0;
 }
 
-int ECmedia_enable_deflickering(int captureid, bool enable)
-{
-    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
-    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-    ViEImageProcess *imageProcess = ViEImageProcess::GetInterface(m_vie);
-    if (imageProcess) {
-        int ret = imageProcess->EnableDeflickering(captureid, enable);
-        imageProcess->Release();
-        return ret;
-    }
-    else
-    {
-        PrintConsole("[ECMEDIA WARNNING] failed to get ViEImageProcess, %s",__FUNCTION__);
-        return -99;
-    }
-}
 
-int ECmedia_enable_EnableColorEnhancement(int channelid, bool enable)
-{
-    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
-    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-    ViEImageProcess *imageProcess = ViEImageProcess::GetInterface(m_vie);
-    if (imageProcess) {
-        int ret = imageProcess->EnableColorEnhancement(channelid, enable);
-        imageProcess->Release();
-        return ret;
-    }
-    else
-    {
-        PrintConsole("[ECMEDIA WARNNING] failed to get ViEImageProcess, %s",__FUNCTION__);
-        return -99;
-    }
-}
-
-int ECmedia_enable_EnableDenoising(int captureid, bool enable)
-{
-    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
-    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-    ViEImageProcess *imageProcess = ViEImageProcess::GetInterface(m_vie);
-    if (imageProcess) {
-        int ret = imageProcess->EnableDenoising(captureid, enable);
-        imageProcess->Release();
-        return ret;
-    }
-    else
-    {
-        PrintConsole("[ECMEDIA WARNNING] failed to get ViEImageProcess, %s",__FUNCTION__);
-        return -99;
-    }
-}
-
-int ECmedia_enable_EnableBrightnessAlarm(int captureid, bool enable)
-{
-    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
-    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-    ViECapture *capture = ViECapture::GetInterface(m_vie);
-    if (capture) {
-        int ret = capture->EnableBrightnessAlarm(captureid, enable);
-        capture->Release();
-        return ret;
-    }
-    else
-    {
-        PrintConsole("[ECMEDIA WARNNING] failed to get ViECapture, %s",__FUNCTION__);
-        return -99;
-    }
-}
 
 

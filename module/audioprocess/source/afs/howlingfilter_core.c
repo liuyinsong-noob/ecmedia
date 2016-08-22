@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "howlingfilter_core.h"
-
+#include <assert.h>
 
 
 void static iir_filter(Howling_Filter* filter,
@@ -41,6 +41,7 @@ int static GetGain(int fs, float fpin, float magn, float* gain)
 	//
 	return 0;
 }
+
 
 //Computer the bandwidth of the notchfilter for howling pin
 int static GetBandWidth(int fs, float fpin, float* bandwidth)
@@ -125,6 +126,49 @@ int static GetBandWidth(int fs, float fpin, float* bandwidth)
 
 }
 
+int static GetBandAndGain(int fs, int ibeg, int iend, float* bandwidth, float* gain)
+{
+	int i;
+	float bw;
+
+	if( fs != 8000 && fs != 16000 )
+		return -1;
+
+	//bandwidth 
+	for( i = ibeg; i <= iend; ++i )
+	{
+		GetBandWidth(fs, ibeg, &bw);
+		*bandwidth += bw;
+	}
+	//gain
+	//
+	//    20    25    30   32   34   36   38   40   42   45
+	//     1     2     3   4    5     6    7    8    9   10
+	i = (iend - ibeg + 1);
+	if( i == 1 )
+		*gain = 25;
+	else if( i == 2 )
+		*gain = 25;
+	else if( i == 3 )
+		*gain = 25;
+	else if( i == 4 )
+		*gain = 25;
+	else if( i == 5 )
+		*gain = 25;
+	else if( i == 6 )
+		*gain = 25;
+	else if( i == 7 )
+		*gain = 25;
+	else if( i == 8 )
+		*gain = 25;
+	else if( i == 9 )
+		*gain = 25;
+	else if( i >= 10 )
+		*gain = 25;
+	
+	return 0;
+}
+
 //
 int HowlingFilterCreate(Howling_Filter** self)
 {
@@ -160,7 +204,7 @@ int HowlingFilterInit(Howling_Filter* self, int fs, int pin)
 	
 	GetBandWidth(fs, f0, &B);
 
-	Q = f0 / B;    //Q = f0 / (f2 - f1) = f0 / B; B is bandwide, think deeply£¬do not change!
+	Q = f0 / B;                    //Q = f0 / (f2 - f1) = f0 / B; B is bandwide, think deeply£¬do not change!
 
 	k = tan( 3.14159265f * f0 / fs);
 	v = pow(10.f, gain/20.0f);
@@ -227,6 +271,8 @@ int HowlingFilterListFree(Howling_FilterList* self)
 			self->count--;
 			pPos = pTmp;
 		}
+		self->head = NULL;
+		self->tail = NULL;
 	}
 
 	return 0;
@@ -354,6 +400,7 @@ int HowlingFPoolCreate(HowlingFilterPool** self)
 
 int HowlingFPoolMakeAndUpdateFilter( HowlingFilterPool* self, int fs, const int* howlingpin, const int howlingcount )
 {
+	//no problem, has passed testing.
 	int use_size = 0;
 	int i, j;
 	Howling_Filter* pos;
@@ -432,69 +479,6 @@ int HowlingFPoolMakeAndUpdateFilter( HowlingFilterPool* self, int fs, const int*
 		else
 			pos = pos->next;
 	}
-
-	/*
-	use_size = self->Use->count;
-	for( i = 0; i < howlingcount; ++i )
-	{
-		int find = 0;
-		Howling_Filter* pos = self->Use->head;
-		for( j = 0; j < use_size; ++j )
-		{
-			if( pos->origin_pin == howlingpin[i] )
-			{
-				pos->idle_times = 0;
-				find = 1;
-				break;
-			}
-			pos = pos->next;
-		}
-
-		if( find == 0 )
-		{
-			int size = self->Idle->count;
-			Howling_Filter* pos = self->Idle->head;
-			for( j = 0; j < size; ++j )
-			{
-				if( pos->origin_pin == howlingpin[i] )
-				{
-					pos->idle_times = 0;
-					find = 1;
-					HowlingFilterListDrop(self->Idle, pos);
-					HowlingFilterListAdd2Tail(self->Use, pos);
-					break;
-				}
-				pos = pos->next;
-			}
-		}
-
-		if( find == 0 )
-		{
-			//create
-			Howling_Filter* filter;
-			HowlingFilterCreate(&filter);
-			HowlingFilterInit(filter, fs, howlingpin[i]);
-			HowlingFilterListAdd2Tail(self->Use, filter);
-			self->count++;
-		}
-	}
-	
-	//update all worklist items
-	pos = self->Use->head;
-	while( pos != NULL )
-	{
-		pos->idle_times++;
-		if( pos->idle_times >= 50 )
-		{
-			Howling_Filter* pTmp = pos;
-			pos = pTmp->next;
-			HowlingFilterListDrop(self->Use, pTmp);
-			HowlingFilterListAdd2Tail(self->Idle, pTmp);
-		}
-		else
-			pos = pos->next;
-	}
-	*/
 
 	return 0;
 }

@@ -8,7 +8,10 @@
 #include "file_wrapper.h"
 #include "clock.h"
 
+#ifdef VIDEO_ENABLED
 #include "vie_base.h"
+#endif
+
 #include "voe_base.h"
 
 using namespace cloopenwebrtc;
@@ -42,7 +45,10 @@ private:
 	AudioSendStream	*pAudioSendStats_;
 	AudioReceiveStream	*pAudioRecvStats_;
 public:
+#ifdef VIDEO_ENABLED
 	cloopenwebrtc::VideoEngine *m_vie;
+#endif
+
 	cloopenwebrtc::VoiceEngine *m_voe;
 };
 

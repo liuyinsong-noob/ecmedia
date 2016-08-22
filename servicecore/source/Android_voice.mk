@@ -35,29 +35,24 @@ LOCAL_SRC_FILES := \
 		servicecore.cpp \
 		siplogin.cpp \
 		sipsetup.cpp \
-		sometools.cpp \
 		CCPClient.cpp \
-		tinyxml2.cpp \
 		AuthToken.cpp \
 		base64.c \
 		ice.cc \
-		voe_observer.cpp \
-		RecordVoip.cpp \
+		sometools.cpp \
 		./Http/http.cpp \
 		./Http/HttpClient.cpp \
 		./Http/RESTClient.cpp \
 		./Utility/md5.cpp \
 		./Utility/base64_2.cpp \
-		./Utility/cJSON.c
-
+		./Utility/cJSON.c \
+		./Utility/tinyxml2.cpp
+	
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
     '-DOLDERRORCODE'
-#   '-DENABLE_LOG'
 
-#ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
-#    LOCAL_CFLAGS += '-DVIDEO_ENABLED'
-#endif
+
 
 LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/../include \
@@ -67,6 +62,7 @@ LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/../../voice_engine/main/include \
 		$(LOCAL_PATH)/../../voice_engine/main/source \
 		$(LOCAL_PATH)/../../video_engine/include \
+		$(LOCAL_PATH)/../../video_engine/source \
 		$(LOCAL_PATH)/../interface \
 		$(LOCAL_PATH)/../.. \
 		$(LOCAL_PATH)/../../module \
@@ -74,11 +70,28 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../../module/exosip/include \
     $(LOCAL_PATH)/../../module/exosip/source \
     $(LOCAL_PATH)/../../module/osip/include \
-  $(LOCAL_PATH)/../../third_party/oRTP/include \
-  $(LOCAL_PATH)/../../third_party/oRTP/include/ortp \
-	$(LOCAL_PATH)/../../module/rtp_rtcp/source/oRTP/include/ortp/ \
-	$(LOCAL_PATH)/../../third_party/srtp/crypto/include \
-	$(LOCAL_PATH)/../../third_party/gsm/inc/
+    $(LOCAL_PATH)/../../module/videojpegyuv/include \
+	  $(LOCAL_PATH)/../../third_party/oRTP/include \
+		$(LOCAL_PATH)/../../third_party/oRTP/include/ortp \
+		$(LOCAL_PATH)/../../module/rtp_rtcp/source/oRTP/include/ortp/ \
+		$(LOCAL_PATH)/../../third_party/srtp \
+		$(LOCAL_PATH)/../../third_party/srtp/crypto/include \
+		$(LOCAL_PATH)/../../third_party/gsm/inc/ \
+		$(LOCAL_PATH)/../../third_party/openssl \
+		$(LOCAL_PATH)/../../module/video_coding/codecs/interface \
+		$(LOCAL_PATH)/../../module/video_coding/codecs/h264 \
+		$(LOCAL_PATH)/../../module/common_video/interface \
+		$(LOCAL_PATH)/../../module/video_coding/main/include \
+	  $(LOCAL_PATH)/../../module/common_video/source \
+	  $(LOCAL_PATH)/../../module/rtp_rtcp/include \
+	  $(LOCAL_PATH)/../../module/common_video/source/libyuv/include \
+	  $(LOCAL_PATH)/../../module/common_audio/source/resampler/include \
+	  $(LOCAL_PATH)/../../module/bitrate_controller/include \
+	  $(LOCAL_PATH)/../../module/remote_bitrate_estimator/include \
+	  $(LOCAL_PATH)/../../module/pacing/include \
+	  $(LOCAL_PATH)/../../module/remote_bitrate_estimator/source \
+	  $(LOCAL_PATH)/../../module/video_render/main/include \
+      $(LOCAL_PATH)/../../ECMedia/interface
 LOCAL_SHARED_LIBRARIES := \
     libcutils \
     libdl \

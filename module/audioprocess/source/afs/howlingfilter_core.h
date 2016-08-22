@@ -67,13 +67,10 @@ typedef struct HowlingFilerPoolC_
 	Howling_FilterList* Idle;
 	int count;
 	int initFlag;
-
 }HowlingFilterPool;
 
 
 int HowlingFPoolCreate(HowlingFilterPool** self);
-
-int HowlingFPoolInit(HowlingFilterPool* self);
 
 int HowlingFPoolMakeAndUpdateFilter( HowlingFilterPool* self, 
 	                                 int fs, 

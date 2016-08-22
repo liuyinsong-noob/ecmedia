@@ -18,6 +18,12 @@
 #include "ECMedia.h"
 #endif
 
+int voe_callback(int channel, int errCode) {
+
+	PrintConsole("voe_callback channid=%d, errCode=%d", channel, errCode);
+	return 0;
+}
+
 void ServiceCore::ring_stop(int ringmode)
 {
 #if !defined(NO_VOIP_FUNCTION)
@@ -717,6 +723,8 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 			//}
 			PrintConsole("cloopen trace %s middle 115\n",__FUNCTION__);
 			call->current_params.in_conference=call->params.in_conference;
+
+			ECMedia_set_voe_cb(call->m_AudioChannelID, voe_callback);
 		}else PrintConsole("No audio stream accepted ?\n");
 	}
 #endif
@@ -3159,7 +3167,7 @@ int ServiceCore::serphone_call_start_record_screen(SerPhoneCall *call, const cha
 }
 int ServiceCore::serphone_call_stop_record_screen(SerPhoneCall *call)
 {
-#if !defined(NO_VOIP_FUNCTION)
+#ifdef VIDEO_ENABLED
 
 	if(!capability_conf.localrec) {
 		return -3;

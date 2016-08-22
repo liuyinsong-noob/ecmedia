@@ -1,5 +1,8 @@
 #include "statsCollector.h"
+#ifdef VIDEO_ENABLED
 #include "vie_render.h"
+#endif
+
 #include "trace.h"
 
 StatsCollector::StatsCollector(char* file_name, int UpdateIntervalMs)
@@ -13,7 +16,9 @@ StatsCollector::StatsCollector(char* file_name, int UpdateIntervalMs)
 		pVideoRecvStats_(NULL),
 		pAudioSendStats_(NULL),
 		pAudioRecvStats_(NULL),
+#ifdef VIDEO_ENABLED
 		m_vie(NULL),
+#endif
 		m_voe(NULL)
 
 {
@@ -57,8 +62,11 @@ StatsCollector::~StatsCollector()
 
 bool StatsCollector::SetVideoEngin(VideoEngine *vie)
 {
+#ifdef VIDEO_ENABLED
 	m_vie = vie;
 	return true;
+#endif 
+	return false;
 }
 
 bool StatsCollector::SetVoiceEngin(VoiceEngine* voe)
@@ -203,13 +211,14 @@ bool StatsCollector::ProcessStatsCollector()
 		//统计各种发送信息
 		last_process_time_ = now;
 #ifndef STATS_TO_STRING
+#ifdef VIDEO_ENABLED
 		if(pVideoSendStats_){
 			pVideoSendStats_->ToFile(trace_file_);
 		}
 		if(pVideoRecvStats_){
 			pVideoRecvStats_->ToFile(trace_file_);
 		}
-
+#endif
 		if (pAudioSendStats_)
 		{
 			pAudioSendStats_->ToFile(trace_file_);

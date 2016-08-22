@@ -451,9 +451,9 @@ int VoEBaseImpl::Init(AudioDeviceModule* external_adm,
       LOG_FERR1(LS_ERROR, high_pass_filter()->Enable, true);
       return -1;
     }
-	if (audioproc->howling_control()->Enable(false) != 0)
+	if (audioproc->howling_control()->Enable(true) != 0)
 	{
-		LOG_FERR1(LS_ERROR, howling_control()->Enable, false);
+		LOG_FERR1(LS_ERROR, howling_control()->Enable, true);
 		return -1;
 	}
     if (audioproc->echo_cancellation()->enable_drift_compensation(false) != 0) {

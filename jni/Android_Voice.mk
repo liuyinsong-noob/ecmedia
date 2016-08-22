@@ -11,17 +11,20 @@ JNI_PATH := $(call my-dir)
 
 # voice
 include $(MY_WEBRTC_ROOT_PATH)/system_wrappers/source/Android.mk
-include $(MY_WEBRTC_ROOT_PATH)/module/resampler/source/Android.mk
-include $(MY_WEBRTC_ROOT_PATH)/module/signalprocess/source/Android.mk
+#--include $(MY_WEBRTC_ROOT_PATH)/module/resampler/source/Android.mk
+#--include $(MY_WEBRTC_ROOT_PATH)/module/signalprocess/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/audioprocess/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/audio_coding/main/source/Android.mk
+include $(MY_WEBRTC_ROOT_PATH)/module/audio_coding/codecs/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/audio_coding/codecs/g711/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/audio_coding/codecs/cng/Android.mk
-include $(MY_WEBRTC_ROOT_PATH)/module/audio_coding/codecs/ilbc/Android.mk
-include $(MY_WEBRTC_ROOT_PATH)/module/audio_coding/codecs/silk/Android.mk
+#include $(MY_WEBRTC_ROOT_PATH)/module/audio_coding/codecs/ilbc/Android.mk
+#include $(MY_WEBRTC_ROOT_PATH)/module/audio_coding/codecs/silk/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/audio_coding/codecs/g729/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/audio_coding/codecs/opencore-amr/amrnb/Android.mk
+include $(MY_WEBRTC_ROOT_PATH)/module/audio_coding/codecs/opus/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/audio_coding/neteq/source/Android.mk
+include $(MY_WEBRTC_ROOT_PATH)/module/audio_coding/main/source/codecs/isac/main/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/audio_device/main/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/osip/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/exosip/Android.mk
@@ -29,20 +32,13 @@ include $(MY_WEBRTC_ROOT_PATH)/module/rtp_rtcp/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/udp_transport/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/utility/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/audio_conference_mixer/source/Android.mk
-#include $(MY_WEBRTC_ROOT_PATH)/module/video_capture/main/source/Android.mk
-#include $(MY_WEBRTC_ROOT_PATH)/module/video_render/main/source/Android.mk
-#include $(MY_WEBRTC_ROOT_PATH)/module/video_processing/main/source/Android.mk
-#include $(MY_WEBRTC_ROOT_PATH)/module/video_coding/main/source/Android.mk
-#include $(MY_WEBRTC_ROOT_PATH)/module/videojpegyuv/source/Android.mk
-#include $(MY_WEBRTC_ROOT_PATH)/module/video_coding/codecs/vp8/main/source/Android.mk
-#include $(MY_WEBRTC_ROOT_PATH)/module/video_coding/codecs/h264/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/bitrate_controller/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/media_file/source/Android.mk
+include $(MY_WEBRTC_ROOT_PATH)/module/common_audio/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/voice_engine/main/source/Android.mk
-#include $(MY_WEBRTC_ROOT_PATH)/video_engine/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/servicecore/source/Android_voice.mk
-##include $(MY_WEBRTC_ROOT_PATH)/third_party/libvpx/build/android/jni/Android.mk
-#include $(MY_WEBRTC_ROOT_PATH)/third_party/libyuv/source/Android.mk
+include $(MY_WEBRTC_ROOT_PATH)/ECMedia/source/Android_voice.mk
+
 #include $(MY_WEBRTC_ROOT_PATH)/third_party/libjpeg/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/third_party/oRTP/build/android/Android.mk
 
@@ -60,6 +56,9 @@ LOCAL_LDLIBS := -L$(JNI_PATH)
 LOCAL_SRC_FILES := \
 		callback.cpp \
 		com_CCP_phone_NativeInterface.cpp
+		
+LOCAL_CFLAGS := \
+    $(MY_WEBRTC_COMMON_DEFS)
 
 LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/../servicecore/include \
@@ -69,59 +68,40 @@ LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/../module \
 		$(LOCAL_PATH)/../third_party/ffmpeg \
 		$(LOCAL_PATH)/../module/audio_coding/codecs/opencore-amr/amrnb
-		
+
 LOCAL_WHOLE_STATIC_LIBRARIES :=
-
-
-# Add Neon libraries.
-ifeq ($(WEBRTC_BUILD_NEON_LIBS),true)
-LOCAL_WHOLE_STATIC_LIBRARIES += \
-    libwebrtc_aecm_neon \
-    libwebrtc_ns_neon
-endif
 
 LOCAL_STATIC_LIBRARIES := \
 	libserphone_service_core \
-  libwebrtc_voe_core \
-	libwebrtc_vie_core \
-	libwebrtc_video_coding \
-	libwebrtc_video_capture \
-	libwebrtc_video_processing \
-	libwebrtc_video_render \
-	libwebrtc_vp8 \
-	libwebrtc_h264 \
-	libwebrtc_yuv \
-	libwebrtc_bitrate_controller \
-  libwebrtc_audio_coding \
-  libwebrtc_audio_device \
-  libwebrtc_resampler \
-  libwebrtc_apm \
-  libwebrtc_neteq \
-  libwebrtc_g711 \
-  libwebrtc_g729 \
-  libwebrtc_silk \
-  libwebrtc_cng \
-  libwebrtc_amr_nb \
-  libwebrtc_spl \
-  libwebrtc_exosip \
+	libMedia \
+	libwebrtc_voe_core \
+	libwebrtc_audio_coding \
+	libwebrtc_audio_device \
+	libwebrtc_resampler \
+	libwebrtc_apm \
+	libwebrtc_neteq \
+	libwebrtc_g711 \
+	libwebrtc_g729 \
+	libwebrtc_cng \
+	libwebrtc_amr_nb \
+	libwebrtc_opus \
+	libwebrtc_common_audio \
+	libwebrtc_spl \
+	libwebrtc_exosip \
 	libwebrtc_osip \
-  libwebrtc_rtp_rtcp \
-  libwebrtc_udp_transport \
-  libwebrtc_audio_conference_mixer \
-  libwebrtc_media_file \
-  libwebrtc_utility \
-  libwebrtc_system_wrappers \
-  libstlport_static \
-  libcpufeatures \
-  libortp \
-  libwebrtc_ilbc
-
-#	  libyuv	\
-#	  	libjpeg \
-#    libwebrtc_ilbc \
-#    libpvdecoder_gsmamr \
-#    libpvencoder_gsmamr \
-#    libpv_amr_nb_common_lib \
+	libwebrtc_rtp_rtcp \
+	libwebrtc_udp_transport \
+	libwebrtc_audio_conference_mixer \
+	libwebrtc_media_file \
+	libwebrtc_utility \
+	libstlport_static \
+	libcpufeatures \
+	libortp \
+	libwebrtc_bitrate_controller \
+	libwebrtc_iSAC \
+	libwebrtc_audio_codecs \
+	libwebrtc_media_file \
+	libwebrtc_system_wrappers
 
 LOCAL_SHARED_LIBRARIES := \
     libcutils \
@@ -129,19 +109,33 @@ LOCAL_SHARED_LIBRARIES := \
 #    libstlport 
 #    libOpenSLES
 
-LOCAL_LDLIBS += -llog -lGLESv2 
+LOCAL_LDLIBS += -llog -lGLESv2
+
+LOCAL_DISABLE_FATAL_LINKER_WARNINGS := true
+
+ifeq ($(TARGET_ARCH_ABI),armeabi)
+	LOCAL_LDLIBS +=  -lopus  -lz -lcpufeatures
+endif
+
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
-  LOCAL_LDLIBS += -lsilk_armv7a  -lz  -lsrtp
-else
-  LOCAL_LDLIBS += -lsilk -lz  -lsrtp
+    LOCAL_LDLIBS += -lopus_armv7a -lz -lcpufeatures
+endif
+
+ifeq ($(TARGET_ARCH_ABI),arm64-v8a)
+	LOCAL_LDLIBS += -lopus_armv8a -lz
+endif
+
+ifeq ($(TARGET_ARCH_ABI),x86)
+	LOCAL_LDLIBS += -lopus_x86 -lz -lcpufeatures
+endif
+
+ifeq ($(TARGET_ARCH_ABI),x86_64)
+	LOCAL_LDLIBS += -lopus_x86_64 -lz -lcpufeatures
 endif
 
 
 LOCAL_PRELINK_MODULE := false
 
-ifndef NDK_ROOT
-include external/stlport/libstlport.mk
-endif
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-module,android/cpufeatures)
+#$(call import-module,android/cpufeatures)

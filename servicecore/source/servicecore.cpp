@@ -4851,7 +4851,9 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
 	this->presence_mode=LinphoneStatusOnline;
 	misc_config_read();
 	ui_config_read();
+#ifdef VIDEO_ENABLED
 	ECMedia_init_video();
+#endif
 
 #ifdef WIN32
     //media_init_audio();
@@ -4910,7 +4912,9 @@ void ServiceCore::serphone_core_uninit()
 
 	serphone_core_free_payload_types();
 	PrintConsole("Release Media \n");
+#ifdef VIDEO_ENABLED
 	ECMedia_uninit_video();
+#endif
 #ifdef WIN32
     ECMedia_uninit_audio();
 #endif

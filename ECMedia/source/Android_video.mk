@@ -19,7 +19,8 @@ LOCAL_SRC_FILES := \
 		base64.c \
 		ECMedia.cpp \
 		RecordVoip.cpp \
-		statsCollector.cc
+		statsCollector.cc \
+		VoeObserver.cpp
 
 	
 LOCAL_CFLAGS := \

@@ -79,11 +79,7 @@ typedef struct AcousticfeedbackSupressionC_
 
 	//
 	float energy;                    //总能量
-	float energy_low;                //低频总能量[0, 500Hz], ( >2e10为人声 )
-	float energy_mid;                //中频总能力(500Hz, 1000Hz] 
-	float energy_high;               //高频总能量(1000Hz, 8000Hz\4000Hz]
-	float energy_avg;                //平均能量
-	float energy_peak;               //峰值能量
+	float energy_mute;               //静音能量(325)
 
 	float rc_alpha;                  //0.8
 	int   reset;                     //是否重置
@@ -100,11 +96,23 @@ typedef struct AcousticfeedbackSupressionC_
 	float pav;
 
 	//
-	float energys[12];    // |  0   |   1 |   2 |   3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 | 11 |
+	//float energys[12];    // |  0   |   1 |   2 |   3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 | 11 |
 	                      // |0  200|  400|  600|  800|  1k|  2k|  3k|  4k|  5k|  6k|  7k|  8k| 
-	int bands[12];
-	int speech;
-	
+	//int bands[12];
+	//int speech;
+	float bw;
+	float sc;
+
+	float energys_ex[5];       //  500 | 1000 | 2000 | 4000 | 8000 | = low  mid_low  mid  mid_high  high
+	int   bands_ex[5];         //   32    64     128    256    512
+	int   bands_howl_count[5]; // 默认分段啸叫点个数 0  2  2  3  4
+	int   frametype;           // 0 for speech
+	                           // 1 for howling
+	                           // 2 for speech + howling
+	                           // 3 for noise
+	                           // 4 for unknown 
+	                           // 5 背景噪音
+
 }AcousticfeedbackSupressionC;
 
 int YTXAfs_CreateCore( AcousticfeedbackSupressionC** self );

@@ -28,6 +28,9 @@
 
 #define SPECTRUM_PEAK_MAGNITUDE 3000
 #define LEAST_PEAK_MAGNITUDE 3000
+#define LOWFREQENCYENERGY_THRES    3e10             //最低频能量阈值，语音帧低频需大于该值
+#define NOISEENERGY_THRES 2e10                      //噪声帧能量阈值
+#define LOWFREQENCYENERGY_HTRES_MIN 5e9             //
 /////////////////////////////////
 
 #define PI   3.14159265f
