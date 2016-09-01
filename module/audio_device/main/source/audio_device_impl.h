@@ -204,6 +204,7 @@ public:
     virtual int32_t EnableBuiltInAEC(bool enable) OVERRIDE;
     virtual bool BuiltInAECIsEnabled() const OVERRIDE;
 
+    virtual int CheckRecordPermission(bool &enabled);
 public:
     int32_t Id() {return _id;}
 

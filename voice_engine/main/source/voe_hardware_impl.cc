@@ -600,7 +600,25 @@ int VoEHardwareImpl::GetLoudspeakerStatus(bool& enabled)
         }
         return _shared->audio_device()->GetLoudspeakerStatus(&enabled);
     }
+int VoEHardwareImpl::CheckRecordPermission(bool& enabled)
+{
+	WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+                 "CheckRecordPermission()");
+    if (!_shared->statistics().Initialized())
+    {
+        _shared->SetLastError(VE_NOT_INITED, kTraceError);
+        return -1;
+    }
 
+    if (_shared->audio_device()->CheckRecordPermission(enabled) < 0)
+    {
+        _shared->SetLastError(VE_IGNORED_FUNCTION, kTraceError,
+            "  Failed to Check Record Permission");
+        return -1;
+    }
+
+    return 0;
+}
 #endif  // WEBRTC_VOICE_ENGINE_HARDWARE_API
 
 }  // namespace cloopenwebrtc

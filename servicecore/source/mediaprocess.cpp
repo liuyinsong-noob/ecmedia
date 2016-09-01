@@ -347,6 +347,7 @@ void ServiceCore::audio_stream_stop(int channelID)
 		ECMedia_audio_stop_playout(channelID);
 	    ECMedia_audio_stop_receive(channelID);
 		ECMedia_audio_stop_send(channelID);
+        ECMedia_audio_stop_record();
 		ECMedia_delete_channel(channelID, false);
 	}
 #ifndef WIN32
@@ -676,8 +677,9 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 			if ( local_stream){
 				switch(local_stream->dir)
 				{
-				case SalStreamSendOnly:
+				case SalStreamSendOnly:                    
 					ECMedia_audio_start_send(call->m_AudioChannelID);
+                    ECMedia_audio_start_record();
 					break;
 				case SalStreamRecvOnly:
 					ECMedia_audio_start_receive(call->m_AudioChannelID);
@@ -689,6 +691,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 					ECMedia_audio_start_receive(call->m_AudioChannelID);
 					ECMedia_audio_start_playout(call->m_AudioChannelID);
 					ECMedia_audio_start_send(call->m_AudioChannelID);
+                    ECMedia_audio_start_record();
 					break;
 				}
 			}
@@ -696,6 +699,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 				ECMedia_audio_start_receive(call->m_AudioChannelID);
 				ECMedia_audio_start_playout(call->m_AudioChannelID);
 				ECMedia_audio_start_send(call->m_AudioChannelID);
+                ECMedia_audio_start_record();
 			}
 			PrintConsole("cloopen trace %s middle 114\n",__FUNCTION__);
 
@@ -3439,7 +3443,6 @@ int ServiceCore::serphone_deregister_audio_device()
 
 
 //sean add begin 20140616 video conference
-//sdkè?????è§?é￠‘???è?????????????¨??°??€
 int ServiceCore::serphone_set_video_conference_addr(const char *ip)
 {
 	int ret = -1;
@@ -4959,42 +4962,20 @@ int ServiceCore::Serphone_set_opus_packet_loss_rate(int rate)
         return 0;
 }
 
-int ServiceCore::startRecord(SerPhoneCall *call)
+int ServiceCore::startRecord()
 {
 #if !defined(NO_VOIP_FUNCTION)
-	if(!call)
-		return -1;
-    return ECMedia_audio_start_record(call->m_AudioChannelID);
+    return ECMedia_audio_start_record();
 #endif
 }
 
-int ServiceCore::stopRecord(SerPhoneCall *call)
+int ServiceCore::stopRecord()
 {
 #if !defined(NO_VOIP_FUNCTION)
-    if(!call)
-        return -1;
-    return ECMedia_audio_stop_record(call->m_AudioChannelID);
+    return ECMedia_audio_stop_record();
 #endif
 }
 
-int ServiceCore::StopRecordVoice(SerPhoneCall *call)
-{
-#if !defined(NO_VOIP_FUNCTION)
-	if (!call)
-		return -1;
-	return ECMedia_audio_stop_record(call->m_AudioChannelID);
-#endif
-
-}
-int ServiceCore::StartRecordVoice(SerPhoneCall *call)
-{
-#if !defined(NO_VOIP_FUNCTION)
-	if (!call)
-		return -1;
-	return ECMedia_audio_start_record(call->m_AudioChannelID);
-#endif
-
-}
 int ServiceCore::SetVideoKeepAlive(SerPhoneCall *call, bool enable, int interval)
 {
 #if !defined(NO_VOIP_FUNCTION)
@@ -5004,7 +4985,7 @@ int ServiceCore::SetVideoKeepAlive(SerPhoneCall *call, bool enable, int interval
 
 	cloopenwebrtc::VideoCodec codec;
 	ECMedia_get_send_codec_video(call->m_VideoChannelID, codec);
-	return ECMedia_video_set_rtp_keepalive(call->m_AudioChannelID, enable, interval, codec.plType);
+	return ECMedia_set_video_rtp_keepalive(call->m_AudioChannelID, enable, interval, codec.plType);
 #endif
 #endif
 }
@@ -5015,7 +4996,7 @@ int ServiceCore::SetAudioKeepAlive(SerPhoneCall *call, bool enable, int interval
 		return -1;
 	cloopenwebrtc::CodecInst codec;
 	ECMedia_get_send_codec_audio(call->m_AudioChannelID, codec);
-	return ECMedia_audio_set_rtp_keepalive(call->m_AudioChannelID, enable, interval, codec.pltype);
+	return ECMedia_set_audio_rtp_keepalive(call->m_AudioChannelID, enable, interval, codec.pltype);
 #endif
 
 }

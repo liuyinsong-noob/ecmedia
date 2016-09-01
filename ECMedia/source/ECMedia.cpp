@@ -303,6 +303,7 @@ int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level)
 	}
 	media_init_print_log();
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+    PrintConsole("[ECMEDIA INFO] ECMedia version:%s", ECMeida_get_Version());
     Trace::CreateTrace();
     Trace::SetTraceCallback(&g_mediaTraceCallBack);
 
@@ -836,13 +837,13 @@ int ECMedia_audio_stop_playout(int channelid)
         return -99;
     }
 }
-int ECMedia_audio_start_record(int channelid)
+int ECMedia_audio_start_record()
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
-        base->StartRecord(channelid);
+        base->StartRecord();
         base->Release();
         return 0;
     }
@@ -853,13 +854,13 @@ int ECMedia_audio_start_record(int channelid)
     }
 }
 
-int ECMedia_audio_stop_record(int channelid)
+int ECMedia_audio_stop_record()
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
-        base->StopRecord(channelid);
+        base->StopRecord();
         base->Release();
         return 0;
     }
@@ -3145,6 +3146,19 @@ int ECMedia_set_CaptureDeviceID(int videoCapDevId)
 	return 0;
 }
 
-
-
+int ECMedia_Check_Record_Permission(bool &enabled) {
+	PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    VoEHardware *hardware = VoEHardware::GetInterface(m_voe);
+    if (hardware) {
+        int ret = hardware->CheckRecordPermission(enabled);
+        hardware->Release();
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to get VoEHardware, %s",__FUNCTION__);
+        return -99;
+    }
+}
 

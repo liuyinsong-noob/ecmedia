@@ -1840,7 +1840,7 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_startRecord
 		return -1;
 	}
 	const char* ccallid = env->GetStringUTFChars(callid, 0);
-	int ret = StartRecord(ccallid);
+	int ret = StartRecord();
 	env->ReleaseStringUTFChars(callid, ccallid);
     return ret;
 }
@@ -1853,7 +1853,7 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_stopRecord
 		return -1;
 	}
 	const char* ccallid = env->GetStringUTFChars(callid, 0);
-	int ret = StopRecord(ccallid);
+	int ret = StopRecord();
 	env->ReleaseStringUTFChars(callid, ccallid);
     return ret;
 }

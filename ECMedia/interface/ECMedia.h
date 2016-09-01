@@ -282,9 +282,9 @@ int ECMedia_audio_start_playout(int channelid);
 int ECMedia_audio_stop_playout(int channelid);
 
 
-int ECMedia_audio_start_record(int channelid);
+int ECMedia_audio_start_record();
 
-int ECMedia_audio_stop_record(int channelid);
+int ECMedia_audio_stop_record();
 
 /*
  *×Ö·û ÓïÒôÍ¨µÀ
@@ -473,5 +473,7 @@ int ECMedia_set_audio_RecvStatistics_proxy(int channelid, char* filePath, int in
 //kill statistics thread
 int ECMedia_stop_Statistics_proxy();
 int ECMedia_set_CaptureDeviceID(int videoCapDevId);
+
+int ECMedia_Check_Record_Permission(bool &enabled);
 
 #endif /* defined(__servicecoreVideo__ECMedia__) */

@@ -49,16 +49,15 @@ public:
 
     virtual int StartSend(int channel);
 
+    virtual int StartRecord();
+
     virtual int StopReceive(int channel);
 
     virtual int StopPlayout(int channel);
 
     virtual int StopSend(int channel);
 
-    virtual int StartRecord(int channel);
-
-    virtual int StopRecord(int channel);
-
+    virtual int StopRecord();
 
     virtual int GetVersion(char version[1024]);
 
@@ -131,8 +130,8 @@ protected:
 private:
     int32_t StartPlayout();
     int32_t StopPlayout();
-    int32_t StartSend();
-    int32_t StopSend();
+    //int32_t StartSend();
+    //int32_t StopSend();
     int32_t TerminateInternal();
 
     // Helper function to process the recorded data with AudioProcessing Module,

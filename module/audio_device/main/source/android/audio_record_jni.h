@@ -112,6 +112,8 @@ class AudioRecordJni {
   bool BuiltInAECIsAvailable() const;
   int32_t EnableBuiltInAEC(bool enable);
 
+  int32_t CheckRecordPermission(bool& enabled);
+
  private:
   void Lock() EXCLUSIVE_LOCK_FUNCTION(_critSect) {
     _critSect.Enter();

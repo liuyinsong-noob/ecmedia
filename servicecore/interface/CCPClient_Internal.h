@@ -713,8 +713,8 @@ extern "C" {
 
 	CCPAPI int GetSendStats(const char* callid, int &encode_frame_rate, int &media_bitrate_bps, int &width, int &height, bool &suspended);
 
-	CCPAPI int StartRecord(const char* callid);
-	CCPAPI int StopRecord(const char* callid);
+	CCPAPI int StartRecord();
+	CCPAPI int StopRecord();
 
 #ifdef __cplusplus
 }

@@ -200,6 +200,7 @@ class AudioDeviceModule : public RefCountedModule {
   // Don't use.
   virtual bool BuiltInAECIsEnabled() const { return false; }
 
+  virtual int CheckRecordPermission(bool &enabled) { enabled = true; return 0;};
  protected:
   virtual ~AudioDeviceModule() {};
 };

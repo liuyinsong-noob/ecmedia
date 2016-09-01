@@ -412,7 +412,10 @@ class AudioDeviceTemplate : public AudioDeviceGeneric {
   int32_t EnableBuiltInAEC(bool enable) {
     return input_.EnableBuiltInAEC(enable);
   }
-
+  
+  int32_t CheckRecordPermission(bool& enabled) {
+    return input_.CheckRecordPermission(enabled);
+  }
  private:
   OutputType output_;
   InputType input_;

@@ -2469,8 +2469,6 @@ extern "C" void setNetworkType(int networktype,bool connected,bool reconnect)
 }
 extern "C" int selectCamera(int cameraIndex, int capabilityIndex,int fps,int rotate,bool force)
 {
-     cameraIndex = 0;
-     capabilityIndex = 2;
 	PrintConsole("[APICall] selectCamera (cameraIndex=%d,capabilityIndex=%d,fps=%d,ratate=%d force=%d )\n",
 		cameraIndex,capabilityIndex,fps,rotate,force);
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
@@ -3648,31 +3646,15 @@ extern "C" int SetOpusPacketLossRate(int rate)
 
 }
 
-extern "C" int StartRecord(const char* callid)
+extern "C" int StartRecord()
 {
-	if(!callid)
-		return -1;
-
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-
-	SerPhoneCall *pCall = NULL;
-	int ret = findCall(callid, &pCall);
-	if(ret != 0)
-		return -1;
-	return g_pSerCore->startRecord(pCall);
+	return g_pSerCore->startRecord();
 }
-extern "C" int StopRecord(const char* callid)
+extern "C" int StopRecord()
 {
-	if(!callid)
-		return -1;
-
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-
-	SerPhoneCall *pCall = NULL;
-	int ret = findCall(callid, &pCall);
-	if(ret != 0)
-		return -1;
-	return g_pSerCore->stopRecord(pCall);
+	return g_pSerCore->stopRecord();
 }
 
 extern "C" int setAudioKeepAlive(char *callid, bool enable, int interval)

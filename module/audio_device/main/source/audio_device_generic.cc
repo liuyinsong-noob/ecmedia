@@ -78,4 +78,11 @@ bool AudioDeviceGeneric::BuiltInAECIsEnabled() const
     return false;
 }
 
+int32_t AudioDeviceGeneric::CheckRecordPermission(bool& enabled) 
+{
+       
+    enabled = true; 
+    return 0;
+}
+    
 }  // namespace cloopenwebrtc

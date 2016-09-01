@@ -551,8 +551,8 @@ public:
 	void setVideoMode(int videoModeIndex); //only for demo test 0: Real-time, 1:screen-share
 	void setDesktopShareParam(int desktop_width, int desktop_height, int desktop_frame_rate, int desktop_bit_rate);
 
-    int startRecord(SerPhoneCall *call);
-    int stopRecord(SerPhoneCall *call);
+    int startRecord();
+    int stopRecord();
 protected:
 ///////////////param
 	void serphone_core_init_default_params(SerphoneCallParams *params);
@@ -707,8 +707,6 @@ public:
 	int StartVirtualBackGround();
 	int StopVirtualBakcGround();
 
-	int StopRecordVoice(SerPhoneCall *call);
-	int StartRecordVoice(SerPhoneCall *call);
 	int SetVideoKeepAlive(SerPhoneCall *call, bool enable, int interval);
 	int SetAudioKeepAlive(SerPhoneCall *call, bool enable, int interval);
 

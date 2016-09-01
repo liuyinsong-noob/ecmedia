@@ -53,7 +53,8 @@ public:
     
     virtual int SetLoudspeakerStatus(bool enable);
     virtual int GetLoudspeakerStatus(bool& enabled);
-
+    
+    virtual int CheckRecordPermission(bool& enabled);
 protected:
     VoEHardwareImpl(voe::SharedData* shared);
     virtual ~VoEHardwareImpl();

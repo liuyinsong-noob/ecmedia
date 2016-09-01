@@ -164,6 +164,9 @@ class AudioDeviceGeneric
     // Windows Core Audio only.
     virtual bool BuiltInAECIsEnabled() const;
 
+    // Only in android now.
+    virtual int32_t CheckRecordPermission(bool& enabled);
+
 public:
     virtual bool PlayoutWarning() const = 0;
     virtual bool PlayoutError() const = 0;

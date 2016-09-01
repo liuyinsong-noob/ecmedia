@@ -2044,5 +2044,11 @@ AudioDeviceModule::AudioLayer AudioDeviceModuleImpl::PlatformAudioLayer() const
 
     return _platformAudioLayer;
 }
-
+int AudioDeviceModuleImpl::CheckRecordPermission(bool &enabled)
+{
+    CHECK_INITIALIZED();
+    WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id,
+             "CheckRecordPermission 0000000000");
+    return _ptrAudioDevice->CheckRecordPermission(enabled);
+}
 }  // namespace cloopenwebrtc

@@ -172,13 +172,13 @@ public:
     // port number for a specified |channel|.
     virtual int StartSend(int channel) = 0;
 
-    virtual int StartRecord(int channel) = 0;
-
-    virtual int StopRecord(int channel) = 0;
-
     // Stops sending packets from a specified |channel|.
     virtual int StopSend(int channel) = 0;
 
+    virtual int StartRecord() = 0;
+
+    virtual int StopRecord() = 0;
+    
     // Gets the version information for VoiceEngine and its components.
     virtual int GetVersion(char version[1024]) = 0;
 

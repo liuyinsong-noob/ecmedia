@@ -1330,4 +1330,66 @@ bool AudioRecordJni::RecThreadProcess()
   return true;
 }
 
+int32_t AudioRecordJni::CheckRecordPermission(bool& enabled)
+{
+
+  if (!_recIsInitialized)
+  {
+    //WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id,
+    //             "  Recording not initialized");
+    //return -1;
+    InitRecording();
+  }
+
+  if (_recording)
+  {
+    WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id,
+                 "  Recording already started");
+    return 0;
+  }
+
+  // get the JNI env for this thread
+  JNIEnv *env;
+  bool isAttached = false;
+
+  // get the JNI env for this thread
+  if (_javaVM->GetEnv((void**) &env, JNI_VERSION_1_4) != JNI_OK)
+  {
+    // try to attach the thread and get the env
+    // Attach this thread to JVM
+    jint res = _javaVM->AttachCurrentThread(&env, NULL);
+    if ((res < 0) || !env)
+    {
+      WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id,
+                   "  Could not attach thread to JVM (%d, %p)", res, env);
+      return -1;
+    }
+    isAttached = true;
+  }
+
+  // get the method ID
+  jmethodID checkPermMethodID = env->GetMethodID(_javaScClass,
+                                                  "CheckRecordPermission", "()Z");
+
+  // Call java sc object method
+  // Call java sc object method
+    jboolean isAllowRecord = env->CallBooleanMethod(_javaScObj, checkPermMethodID);
+    if(isAllowRecord) {
+        enabled = true;
+    } else {
+        enabled = false;
+    }
+
+  // Detach this thread if it was attached
+  if (isAttached)
+  {
+    if (_javaVM->DetachCurrentThread() < 0)
+    {
+      WEBRTC_TRACE(kTraceWarning, kTraceAudioDevice, _id,
+                   "  Could not detach thread from JVM");
+    }
+  }
+
+  return 0;
+}
 }  // namespace webrtc

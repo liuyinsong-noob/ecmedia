@@ -102,7 +102,7 @@ public:
     virtual int SetLoudspeakerStatus(bool enable) = 0;
     virtual int GetLoudspeakerStatus(bool& enabled) =0;
     virtual int GetCPULoad(int& loadPercent) { return -1; }
-
+    virtual int CheckRecordPermission(bool& enabled) = 0;
 
 protected:
     VoEHardware() {}
