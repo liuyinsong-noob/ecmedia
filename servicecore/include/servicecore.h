@@ -553,6 +553,8 @@ public:
 	void setVideoMode(int videoModeIndex); //only for demo test 0: Real-time, 1:screen-share
 	void setDesktopShareParam(int desktop_width, int desktop_height, int desktop_frame_rate, int desktop_bit_rate);
 
+    int startRecord();
+    int stopRecord();
 protected:
 ///////////////param
 	void serphone_core_init_default_params(SerphoneCallParams *params);
@@ -707,6 +709,9 @@ public:
 	int StartVirtualBackGround();
 	int StopVirtualBakcGround();
 
+	int SetVideoKeepAlive(SerPhoneCall *call, bool enable, int interval);
+	int SetAudioKeepAlive(SerPhoneCall *call, bool enable, int interval);
+
 public:
 	static SerphoneCoreVTable vtable;
 	Sal    *sal;
@@ -789,6 +794,7 @@ public:
     bool_t m_agcEnabled;
     bool_t m_ecEnabled;
     bool_t m_nsEnabled;
+    bool_t m_hcEnabled;
     cloopenwebrtc::AgcModes m_agcMode;
     cloopenwebrtc::EcModes m_ecMode;
     cloopenwebrtc::NsModes m_nsMode;
