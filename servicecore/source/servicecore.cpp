@@ -33,25 +33,6 @@ extern "C"
     #include <crypto_kernel.h>
 }
 
-
-#ifndef _WIN32
-PayloadType  payload_type_h264_svc = {
-    (PAYLOAD_VIDEO),
-    (90000),
-    (0),
-    (NULL),
-    (0),
-    (256000),
-    ("H264-SVC"),
-    (0),
-    NULL,
-    NULL,
-    0,
-    NULL
-};
-#endif
-
-
 char *ca_certificate_path;
 //#include "thread_wrapper.h"
 #include "cJSON.h"
@@ -517,6 +498,7 @@ ServiceCore::ServiceCore()
     m_agcEnabled = false;
     m_ecEnabled = true;
     m_nsEnabled = true;
+    m_hcEnabled = false;
     m_agcMode = cloopenwebrtc::kAgcAdaptiveDigital;
     m_ecMode = cloopenwebrtc::kEcAecm;
     m_nsMode = cloopenwebrtc::kNsVeryHighSuppression;
@@ -1918,22 +1900,22 @@ void ServiceCore::serphone_core_set_firewall_policy( SerphoneFirewallPolicy pol)
 
 SerphoneFirewallPolicy ServiceCore::serphone_core_get_firewall_policy()
 {
-#ifndef XINWEI
-    if (remoteSipNo) {
-        if(strncmp(remoteSipNo, "8", 1) == 0 && strlen(remoteSipNo) >= 14 )
-            return (SerphoneFirewallPolicy)net_conf.firewall_policy;
-        else
-            return LinphonePolicyNoFirewall;
-    }
-    else
-        return (SerphoneFirewallPolicy)net_conf.firewall_policy;
-#else
-    return (SerphoneFirewallPolicy)net_conf.firewall_policy;
-#endif
+//#ifndef XINWEI
+//    if (remoteSipNo) {
+//        if(strncmp(remoteSipNo, "8", 1) == 0 && strlen(remoteSipNo) >= 14 )
+//            return (SerphoneFirewallPolicy)net_conf.firewall_policy;
+//        else
+//            return LinphonePolicyNoFirewall;
+//    }
+//    else
+//        return (SerphoneFirewallPolicy)net_conf.firewall_policy;
+//#else
+//    return (SerphoneFirewallPolicy)net_conf.firewall_policy;
+//#endif
 
 
 //    sean test for ice
-//    return LinphonePolicyUseIce;
+    return LinphonePolicyUseIce;
 //    return LinphonePolicyNoFirewall;
 }
 
@@ -2260,6 +2242,11 @@ void ServiceCore::serphone_set_reg_info(const char *proxy_addr, int proxy_port,
 
     memset(&capability_conf, 0, sizeof(capability_conf));
     serphone_core_parse_capability_token(capability_token);
+
+//
+	capability_conf.hdvideo = 1;
+    capability_conf.localrec = 1;
+    capability_conf.localrecvoip = 1;
 
 	return ;
 }
@@ -4867,7 +4854,9 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
 	this->presence_mode=LinphoneStatusOnline;
 	misc_config_read();
 	ui_config_read();
+#ifdef VIDEO_ENABLED
 	ECMedia_init_video();
+#endif
 
 #ifdef WIN32
     //media_init_audio();
@@ -4926,7 +4915,9 @@ void ServiceCore::serphone_core_uninit()
 
 	serphone_core_free_payload_types();
 	PrintConsole("Release Media \n");
+#ifdef VIDEO_ENABLED
 	ECMedia_uninit_video();
+#endif
 #ifdef WIN32
     ECMedia_uninit_audio();
 #endif
@@ -6081,7 +6072,6 @@ void ServiceCore::serphone_core_parse_capability_token(const char *token)
 		capability_conf.hdvideo = 1;
 	}
 
-	capability_conf.hdvideo = 1;
 
     cJSON_Delete(root);
     free(decode_token);
@@ -6258,7 +6248,7 @@ int ServiceCore::serphone_set_groupID(const char *group)
 
 int ServiceCore::serphone_set_networkType(const char *type)
 {
-    if (type) {
+    if (type && current_call) {
         int newTypeLen = strlen(type);
         if (networkType && strlen(networkType) < newTypeLen) {
             delete [] networkType;

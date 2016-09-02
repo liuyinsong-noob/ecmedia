@@ -24,7 +24,6 @@ typedef struct{
 	CameraCapability *capability;
 }  CameraInfo ;
 
-<<<<<<< .mine
 #define  kTitleLength 32
 typedef intptr_t ScreenID;
 typedef intptr_t WindowID;
@@ -33,16 +32,6 @@ struct WindowShare {
 	// Title of the window in UTF-8 encoding.
 	char title[kTitleLength];
 };
-=======
-#define  kTitleLength 32
-typedef intptr_t ScreenID;
-typedef intptr_t WindowID;
-struct WindowShare {
-	WindowID id;
-	// Title of the window in UTF-8 encoding.
-	char title[kTitleLength];
-};
->>>>>>> .r74568
 
 
 typedef struct{
@@ -105,7 +94,8 @@ enum
 {
     AUDIO_AGC,
     AUDIO_EC,
-    AUDIO_NS
+    AUDIO_NS,
+    AUDIO_HC
 };
 
 enum NsMode    // type of Noise Suppression

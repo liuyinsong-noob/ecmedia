@@ -197,14 +197,6 @@ int ECMedia_get_loudpeaker_status(bool& enabled);
 /*
  *
  */
-int ECMedia_set_playout_device(int index);
-/*
- *
- */
-int ECMedia_set_recording_device(int index);
-/*
- *
- */
 int ECMedia_reset_audio_device();
 /*
  *
@@ -385,16 +377,16 @@ int ECMedia_stop_capture(int captureid);
 
 /*
 */
-int ECMedia_allocate_desktopShare_capture(int& deviceid, int capture_type);
+int ECMedia_allocate_desktopShare_capture(int& desktop_captureid, int capture_type);
 /*
 */
-int ECMedia_number_of_screen(int capureId);
-int ECMedia_number_of_window(int captureId);
+int ECMedia_number_of_screen(int desktop_captureid);
+int ECMedia_number_of_window(int desktop_captureid);
 
 /*
 */
-bool ECMedia_get_screen_list(int deviceId);
-bool ECMedia_get_window_list(int deviceId);
+bool ECMedia_get_screen_list(int desktop_captureid);
+bool ECMedia_get_window_list(int desktop_captureid);
 
 /*
 */
@@ -403,16 +395,16 @@ int ECMedia_set_windowId(int numOfScreen, WindowShare *pWindowInfo);
 
 /*
 */
-bool ECMedia_select_screen(int captureId, ScreenID screeninfo);
-bool ECMedia_select_window(int captureId, WindowID WindowInfo);
+bool ECMedia_select_screen(int desktop_captureid, ScreenID screeninfo);
+bool ECMedia_select_window(int desktop_captureid, WindowID WindowInfo);
 
-int ECMedia_start_desktop_capture(int captureId, int fps);
+int ECMedia_start_desktop_capture(int desktop_captureid, int fps);
 int ECMedia_stop_desktop_capture(int desktop_captureid);
 int ECMedia_release_desktop_capture(int desktop_captureid);
 int ECMedia_connect_desktop_captureDevice(int desktop_captureid, int video_channelId);
-int ECMedia_set_desktop_share_err_code_cb(int captureid, int channelid, onEcMediaDesktopCaptureErrCode capture_err_code_cb);
-int ECMedia_set_desktop_share_window_change_cb(int captureid, int channelid, onEcMediaShareWindowSizeChange share_window_change_cb);
-int ECMedia_get_desktop_capture_size(int deviceid, int &width, int &height);
+int ECMedia_set_desktop_share_err_code_cb(int desktop_captureid, int channelid, onEcMediaDesktopCaptureErrCode capture_err_code_cb);
+int ECMedia_set_desktop_share_window_change_cb(int desktop_captureid, int channelid, onEcMediaShareWindowSizeChange share_window_change_cb);
+int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &height);
 /*
  *
  */

@@ -3007,7 +3007,7 @@ CCPAPI  int checkUserOnline(const char *user)
 CCPAPI int getNetworkStatistic(const char *callid, long long *duration, long long *send_total_sim, long long *recv_total_sim, long long *send_total_wifi, long long *recv_total_wifi)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall getNetworkStatistic called\n");
+	//PrintConsole("[APICall getNetworkStatistic called\n");
 	SerPhoneCall *pCall = NULL;
 	int ret = findCall(callid, &pCall);
 	if(ret != 0)

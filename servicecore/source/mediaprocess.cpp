@@ -662,10 +662,10 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 
 			PrintConsole("cloopen trace %s middle 112\n",__FUNCTION__);
 			if(m_usedSpeakerIndex >= 0)
-				ECMedia_set_playout_device(m_usedSpeakerIndex);
+				ECMedia_select_playout_device(m_usedSpeakerIndex);
 			if(m_usedMicrophoneIndex >= 0)
-				ECMedia_set_recording_device(m_usedMicrophoneIndex);
-			//hardware->SetPlayoutDevice(0);   //???????±??????????¨?·?±??????????????a??????±??
+				ECMedia_select_record_device(m_usedMicrophoneIndex);
+			//hardware->SetPlayoutDevice(0);
 			PrintConsole("cloopen trace %s middle 113.\n",__FUNCTION__);
 			if ( local_stream){
 				switch(local_stream->dir)
@@ -919,7 +919,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 				//pReceiveStats_ = Serphone_set_video_receive_statistics_porxy(call->m_VideoChannelID);
 
 				//TODO:
-				////add by ylr 20151010 ???è°??????°
+				////add by ylr 20151010
 				//if (!call->vie_observer)
 				//{
 				//	call->vie_observer = new VieObserver(this);
@@ -2605,7 +2605,7 @@ RtpSession * ServiceCore::create_duplex_rtpsession(int loc_rtp_port, int loc_rtc
 	//	rtp_session_set_blocking_mode(rtpr, 0);
 	//	rtp_session_enable_adaptive_jitter_compensation(rtpr, TRUE);
 	//	rtp_session_set_symmetric_rtp(rtpr, TRUE);
-	//    ????—?????????osocket
+
 	//	rtp_session_set_local_addr(rtpr, ipv6 ? "::" : "0.0.0.0", loc_rtp_port, loc_rtcp_port);
 	//	rtp_session_signal_connect(rtpr, "timestamp_jump", (RtpCallback)rtp_session_resync, (long)NULL);
 	//	rtp_session_signal_connect(rtpr, "ssrc_changed", (RtpCallback)rtp_session_resync, (long)NULL);
@@ -3593,7 +3593,6 @@ int ServiceCore::serphone_set_video_window_and_request_video_accord_sip(const ch
 	char *data = new char[512];
 	memset(data, 0, 512);
 
-	//??aé€?rtp??…?¤′
 	int cursor = 0;
 	memcpy(data, "yuntongxunyt", 12);
 	cursor = 12;
@@ -3844,12 +3843,11 @@ void ServiceCore::onVideoConference(int channelID, int status, int payload)
 				tempVideoConfDesc->conference_state = Video_Conference_State_Streaming;
 			}
 			break;
-		case Video_Conference_status_NotExist://???è??????-???¨???
-		case Video_Conference_status_UserExclusive://è?a?·±?????¨???è?????
-		case Video_Conference_status_RequestedUserExclusive://èˉ·?±????????????¨???è?????
-		case Video_Conference_status_RequestedUserNoVideo://èˉ·?±????????2???‰è§?é￠‘
+		case Video_Conference_status_NotExist:
+		case Video_Conference_status_UserExclusive:
+		case Video_Conference_status_RequestedUserExclusive:
+		case Video_Conference_status_RequestedUserNoVideo:
 			{
-				//èˉ·?±??¤±è′￥??????????€?????¨?????¨?????¤????
 			}
 			break;
 		default:
@@ -3872,12 +3870,11 @@ void ServiceCore::onVideoConference(int channelID, int status, int payload)
 
 			}
 			break;
-		case Video_Conference_status_NotExist://???è??????-???¨???
-		case Video_Conference_status_UserExclusive://è?a?·±?????¨???è?????
-		case Video_Conference_status_RequestedUserExclusive://èˉ·?±????????????¨???è?????
-		case Video_Conference_status_RequestedUserNoVideo://èˉ·?±????????2???‰è§?é￠‘
+		case Video_Conference_status_NotExist:
+		case Video_Conference_status_UserExclusive:
+		case Video_Conference_status_RequestedUserExclusive:
+		case Video_Conference_status_RequestedUserNoVideo:
 			{
-				//èˉ·?±??¤±è′￥??????????€?????¨?????¨?????¤????
 			}
 			break;
 		default:
@@ -3891,7 +3888,6 @@ void ServiceCore::onVideoConference(int channelID, int status, int payload)
 		//            videoConferencePairSipChannel.erase(it2);
 		//        }
 		//        
-		//        //??1???channelIDé???”?èμ??o?
 		//        if (0 == tempVideoConfDesc->request_status) {
 		//            ViERender* render =  ViERender::GetInterface(m_vie);
 		//            render->StopRender(channelID);
@@ -4836,7 +4832,6 @@ void ServiceCore::serserphone_call_start_desktop_share(SerPhoneCall *call, const
 //				pSendStats_ = Serphone_set_video_send_statistics_proxy(call->m_VideoChannelID);
 //				pReceiveStats_ = Serphone_set_video_receive_statistics_porxy(call->m_VideoChannelID);
 //
-//				//add by ylr 20151010 ???è°??????°
 //				if (!call->vie_observer)
 //				{
 //					call->vie_observer = new VieObserver(this);
