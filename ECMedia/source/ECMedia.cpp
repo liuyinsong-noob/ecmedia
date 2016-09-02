@@ -65,6 +65,8 @@ static int g_CaptureDeviceId = -1;
 static CameraInfo *m_cameraInfo = NULL;
 ScreenList m_screenlist;
 WindowList m_windowlist;
+ScreenList m_screenlist;
+WindowList m_windowlist;
 
 
 static int m_cameraCount = 0;
@@ -2993,6 +2995,27 @@ int ECMedia_number_of_screen(int captureId)
 	}
 }
 
+<<<<<<< .mine
+
+int ECMedia_number_of_screen(int captureId)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
+	if (vie_desktopshare) {
+		int num = vie_desktopshare->NumberOfScreen(captureId); //screen num
+		if (num <= 0)
+			PrintConsole("failed to get NumberOfScreen, %s", __FUNCTION__);
+		vie_desktopshare->Release();
+		return num;	
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViEDesktopShare, %s", __FUNCTION__);
+		return -99;
+	}
+}
+
 int ECMedia_number_of_window(int captureId)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
@@ -3265,3 +3288,277 @@ int ECMedia_get_desktop_capture_size(int deviceid, int &width, int &height)
 	}
 }
 
+=======
+int ECMedia_number_of_window(int captureId)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
+	if (vie_desktopshare) {
+		int num = vie_desktopshare->NumberOfWindow(captureId); //window num
+		if (num <= 0)
+			PrintConsole("failed to get NumberOfWindow, %s", __FUNCTION__);
+		vie_desktopshare->Release();
+		return num;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViEDesktopShare, %s", __FUNCTION__);
+		return -99;
+	}
+}
+
+int ECMedia_allocate_desktopShare_capture(int& deviceid, int capture_type)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
+	if (vie_desktopshare) {
+		int ret = vie_desktopshare->AllocateDesktopShareCapturer(deviceid, (DesktopShareType)capture_type);
+		if (ret != 0)
+			PrintConsole("failed to AllocateDesktopShareCapturer, %s", __FUNCTION__);
+		vie_desktopshare->Release();
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViEDesktopShare, %s", __FUNCTION__);
+		return -99;
+	}
+}
+
+int ECMedia_release_desktop_capture(int desktop_captureid)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViEDesktopShare *vie_desktopShare = ViEDesktopShare::GetInterface(m_vie);
+	if (vie_desktopShare)
+	{
+		vie_desktopShare->StopDesktopShareCapture(desktop_captureid);
+		vie_desktopShare->ReleaseDesktopShareCapturer(desktop_captureid);
+		vie_desktopShare->Release();
+		return 0;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViEDesktopShare, %s", __FUNCTION__);
+		return -99;
+	}
+}
+
+int ECMedia_connect_desktop_captureDevice(int desktop_captureid, int video_channelId)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViEDesktopShare *vie_desktopShare = ViEDesktopShare::GetInterface(m_vie);
+	if (vie_desktopShare)
+	{
+		int ret = vie_desktopShare->ConnectDesktopCaptureDevice(desktop_captureid, video_channelId);
+		vie_desktopShare->Release();
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViEDesktopShare, %s", __FUNCTION__);
+		return -99;
+	}
+}
+
+
+
+bool ECMedia_get_screen_list(int deviceId)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
+	if (vie_desktopshare) {
+		m_screenlist.clear();
+		bool ret = vie_desktopshare->GetScreenList(deviceId, m_screenlist); 
+		vie_desktopshare->Release();
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViEDesktopShare, %s", __FUNCTION__);
+		return false;
+	}
+}
+
+bool ECMedia_get_window_list(int deviceId)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
+	if (vie_desktopshare) {
+		m_windowlist.clear();
+		bool ret = vie_desktopshare->GetWindowList(deviceId, m_windowlist);
+		vie_desktopshare->Release();
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViEDesktopShare, %s", __FUNCTION__);
+		return false;
+	}
+}
+
+int ECMedia_set_screenId(int numOfScreen, ScreenID *pScreenInfo)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ScreenList::iterator iter = m_screenlist.begin();
+	int i = 0;
+	while (iter != m_screenlist.end())
+	{
+		pScreenInfo[i] = *iter;
+		i++;
+		iter++;
+	}
+	for (int j = 0; j < numOfScreen; ++j)
+		PrintConsole(__FILE__, __LINE__, "getShareScreenInfo, ScreenInfo[%d]=%lld", j, pScreenInfo[j]);
+
+	return i;
+}
+
+int ECMedia_set_windowId(int numOfScreen, WindowShare *pWindowInfo)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	WindowList::iterator iter = m_windowlist.begin();
+	int i = 0;
+	while (iter != m_windowlist.end())
+	{
+		pWindowInfo[i].id = (*iter).id;
+		memcpy(pWindowInfo[i].title, (*iter).title.c_str(), kTitleLength);
+		i++;
+		iter++;
+	}
+	for (int j = 0; j < numOfScreen; ++j)
+		PrintConsole(__FILE__, __LINE__, "getShareWindowInfo, WindowInfo[%d]=%lld", j, pWindowInfo[j].id);
+
+	return i;
+}
+
+bool ECMedia_select_screen(int deviceId, ScreenID screeninfo)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
+	if (vie_desktopshare) {
+		bool ret = vie_desktopshare->SelectScreen(deviceId, screeninfo);
+		vie_desktopshare->Release();
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViEDesktopShare, %s", __FUNCTION__);
+		return false;
+	}
+}
+
+bool ECMedia_select_window(int deviceId, WindowID windowinfo)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
+	if (vie_desktopshare) {
+		bool ret = vie_desktopshare->SelectWindow(deviceId, windowinfo);
+		vie_desktopshare->Release();
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViEDesktopShare, %s", __FUNCTION__);
+		return false;
+	}
+}
+
+
+int ECMedia_start_desktop_capture(int captureId, int fps)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
+	if (vie_desktopshare) {
+		int ret = vie_desktopshare->StartDesktopShareCapture(captureId, fps);
+		vie_desktopshare->Release();
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViEDesktopShare, %s", __FUNCTION__);
+		return -99;
+	}
+}
+
+int ECMedia_stop_desktop_capture(int desktop_captureid)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViEDesktopShare *vie_desktopShare = ViEDesktopShare::GetInterface(m_vie);
+	if (vie_desktopShare)
+	{
+		vie_desktopShare->StopDesktopShareCapture(desktop_captureid);
+		vie_desktopShare->Release();
+		return 0;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViEDesktopShare, %s", __FUNCTION__);
+		return -99;
+	}
+}
+
+int ECMedia_set_desktop_share_err_code_cb(int captureid, int channelid, onEcMediaDesktopCaptureErrCode capture_err_code_cb)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViEDesktopShare *desktop_capture = ViEDesktopShare::GetInterface(m_vie);
+	if (desktop_capture) {
+		desktop_capture->setCaptureErrCb(captureid, channelid, capture_err_code_cb);
+		desktop_capture->Release();
+		return 0;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViENetwork, %s", __FUNCTION__);
+		return -99;
+	}
+}
+
+int ECMedia_set_desktop_share_window_change_cb(int captureid, int channelid, onEcMediaShareWindowSizeChange share_window_change_cb)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViEDesktopShare *desktop_capture = ViEDesktopShare::GetInterface(m_vie);
+	if (desktop_capture) {
+		desktop_capture->setShareWindowChangeCb(captureid, channelid, share_window_change_cb);
+		desktop_capture->Release();
+		return 0;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViENetwork, %s", __FUNCTION__);
+		return -99;
+	}
+}
+
+
+int ECMedia_get_desktop_capture_size(int deviceid, int &width, int &height)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViEDesktopShare *desktopshare = ViEDesktopShare::GetInterface(m_vie);
+	if (desktopshare) {
+		bool ret = desktopshare->GetDesktopShareCaptureRect(deviceid, width, height);
+		desktopshare->Release();
+		return ret ? 0 : -99;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViENetwork, %s", __FUNCTION__);
+		return -99;
+	}
+}
+
+>>>>>>> .r74568

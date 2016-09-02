@@ -18,6 +18,12 @@
 #include "ECMedia.h"
 #endif
 
+int voe_callback(int channel, int errCode) {
+
+	PrintConsole("voe_callback channid=%d, errCode=%d", channel, errCode);
+	return 0;
+}
+
 void ServiceCore::ring_stop(int ringmode)
 {
 #if !defined(NO_VOIP_FUNCTION)
@@ -252,15 +258,20 @@ void ServiceCore::serphone_call_stop_media_streams(SerPhoneCall *call)
 	{
 		if (call->m_VideoChannelID>=0){
 			video_stream_stop(call->m_VideoChannelID, call->m_CaptureDeviceId);
-			call->m_VideoChannelID=-1;
-			call->m_CaptureDeviceId = -1;
+            call->m_VideoChannelID=-1;
+            call->m_CaptureDeviceId = -1;
+//            video_stream_stop(call->m_VideoChannelID1, call->m_CaptureDeviceId);
+//            call->m_VideoChannelID1 = -1;
+//            video_stream_stop(call->m_VideoChannelID2, call->m_CaptureDeviceId);
+//            call->m_VideoChannelID2 = -1;
+			
 		}
 	}else if (m_videoModeChoose == 1) //screen-share
 	{
 		if (call->m_VideoChannelID>=0){
-			video_stream_stop(call->m_VideoChannelID, call->m_desktopShareDeviceId);
+			video_stream_stop(call->m_VideoChannelID, m_desktopCaptureId);
 			call->m_VideoChannelID=-1;
-			call->m_desktopShareDeviceId = -1;
+			m_desktopCaptureId = -1;
 		}
 	}
 	
@@ -336,6 +347,7 @@ void ServiceCore::audio_stream_stop(int channelID)
 		ECMedia_audio_stop_playout(channelID);
 	    ECMedia_audio_stop_receive(channelID);
 		ECMedia_audio_stop_send(channelID);
+        ECMedia_audio_stop_record();
 		ECMedia_delete_channel(channelID, false);
 	}
 #ifndef WIN32
@@ -653,13 +665,14 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 				ECMedia_set_playout_device(m_usedSpeakerIndex);
 			if(m_usedMicrophoneIndex >= 0)
 				ECMedia_set_recording_device(m_usedMicrophoneIndex);
-			//hardware->SetPlayoutDevice(0);   //??????Â±?Î©???ï¿¡Â¨Ã·Â±Î????????Î¼???a?????Â±??
+			//hardware->SetPlayoutDevice(0);   //???????±??????????¨?·?±??????????????a??????±??
 			PrintConsole("cloopen trace %s middle 113.\n",__FUNCTION__);
 			if ( local_stream){
 				switch(local_stream->dir)
 				{
-				case SalStreamSendOnly:
+				case SalStreamSendOnly:                    
 					ECMedia_audio_start_send(call->m_AudioChannelID);
+                    ECMedia_audio_start_record();
 					break;
 				case SalStreamRecvOnly:
 					ECMedia_audio_start_receive(call->m_AudioChannelID);
@@ -671,6 +684,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 					ECMedia_audio_start_receive(call->m_AudioChannelID);
 					ECMedia_audio_start_playout(call->m_AudioChannelID);
 					ECMedia_audio_start_send(call->m_AudioChannelID);
+                    ECMedia_audio_start_record();
 					break;
 				}
 			}
@@ -678,6 +692,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 				ECMedia_audio_start_receive(call->m_AudioChannelID);
 				ECMedia_audio_start_playout(call->m_AudioChannelID);
 				ECMedia_audio_start_send(call->m_AudioChannelID);
+                ECMedia_audio_start_record();
 			}
 			PrintConsole("cloopen trace %s middle 114\n",__FUNCTION__);
 
@@ -705,6 +720,8 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 			//}
 			PrintConsole("cloopen trace %s middle 115\n",__FUNCTION__);
 			call->current_params.in_conference=call->params.in_conference;
+
+			ECMedia_set_voe_cb(call->m_AudioChannelID, voe_callback);
 		}else PrintConsole("No audio stream accepted ?\n");
 	}
 #endif
@@ -802,8 +819,10 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 					//codec_params.startBitrate = (m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps*2*0.07)/1000;
 					/*codec_params.maxBitrate = min((m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps*4*0.07)/1000, kMaxVideoBitrate);
 					codec_params.minBitrate = max((m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps*1*0.07)/1000, kMinVideoBitrate);*/
-					codec_params.startBitrate = 300;
-					codec_params.maxBitrate = 4000;					
+
+					codec_params.startBitrate = m_sendVideoWidth*m_sendVideoHeight*15*2*0.07/1000;
+					codec_params.maxBitrate = 1500;
+
 				}
 
 				codec_params.width = m_sendVideoWidth;
@@ -900,7 +919,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 				//pReceiveStats_ = Serphone_set_video_receive_statistics_porxy(call->m_VideoChannelID);
 
 				//TODO:
-				////add by ylr 20151010 å›žè°ƒå®žçŽ�?
+				////add by ylr 20151010 ???è°??????°
 				//if (!call->vie_observer)
 				//{
 				//	call->vie_observer = new VieObserver(this);
@@ -1047,6 +1066,9 @@ int ServiceCore::startVideoCapture(SerPhoneCall *call)
 			cap.width = cc.width;
 			cap.maxfps = m_maxFPS;
 			ECMedia_allocate_capture_device(id,strlen(id),call->m_CaptureDeviceId);
+            ECmedia_enable_deflickering(call->m_CaptureDeviceId, true);
+            ECmedia_enable_EnableBrightnessAlarm(call->m_CaptureDeviceId, true);
+//            ECmedia_enable_EnableDenoising(call->m_CaptureDeviceId, true);
 			//TODO:
 			//capture->SetSendStatisticsProxy(call->m_CaptureDeviceId, base->GetSendStatisticsProxy(call->m_VideoChannelID));
 			ECMedia_set_CaptureDeviceID(call->m_CaptureDeviceId);
@@ -1075,8 +1097,7 @@ int ServiceCore::startVideoCapture(SerPhoneCall *call)
 			cap.maxfps = m_maxFPS;
 
 			//capability_conf.hdvideo = 0; //for test, by ylr 
-//			if(capability_conf.hdvideo) 
-			{
+//			if(capability_conf.hdvideo) {
 #ifdef WEBRTC_ANDROID
 				m_sendVideoWidth = cap.height;
 				m_sendVideoHeight = cap.width;
@@ -1085,7 +1106,7 @@ int ServiceCore::startVideoCapture(SerPhoneCall *call)
 				m_sendVideoHeight = cap.height;
 #endif
 				m_sendVideoFps = cap.maxfps;
-			}
+//			}
 
 			ECMediaRotateCapturedFrame tr = (ECMediaRotateCapturedFrame)m_camerRotate;
 			if(m_camerRotate == -1)  {
@@ -1102,7 +1123,7 @@ int ServiceCore::startVideoCapture(SerPhoneCall *call)
 				m_usedCameraIndex,name,cap.height,cap.width,cap.maxfps,tr);
 
 			if( localVideoWindow ) {
-				ECMedia_set_local_video_window(call->m_CaptureDeviceId, localVideoWindow);
+				ECMedia_set_local_video_window(call->m_CaptureDeviceId,localVideoWindow);
 			}
 		}
 	}
@@ -1176,7 +1197,6 @@ int ServiceCore::startVideoDesktopCapture(SerPhoneCall *call)
 #else
 #endif
 }
-
 int ServiceCore::selectCamera(int cameraIndex, int capabilityIndex,int fps,int rotate, bool force)
 {
 #ifdef VIDEO_ENABLED
@@ -1235,6 +1255,9 @@ int ServiceCore::selectCamera(int cameraIndex, int capabilityIndex,int fps,int r
 			} 
 			else {
 				ECMedia_allocate_capture_device(id,strlen(id),call->m_CaptureDeviceId);
+                ECmedia_enable_deflickering(call->m_CaptureDeviceId, true);
+                ECmedia_enable_EnableBrightnessAlarm(call->m_CaptureDeviceId, true);
+//                ECmedia_enable_EnableDenoising(call->m_CaptureDeviceId, true);
 				ECMedia_set_CaptureDeviceID(call->m_CaptureDeviceId);
 				if( ECMedia_connect_capture_device(call->m_CaptureDeviceId,call->m_VideoChannelID) < 0 ) {
 					PrintConsole("Open Camera:%s Failed!  \n", name);
@@ -1248,8 +1271,7 @@ int ServiceCore::selectCamera(int cameraIndex, int capabilityIndex,int fps,int r
 				cap.width = cc.width;				
 				cap.maxfps = m_maxFPS; 
 
-//				if(capability_conf.hdvideo) 
-				{
+//				if(capability_conf.hdvideo) {
 #ifdef WEBRTC_ANDROID
 					m_sendVideoWidth = cap.height;
 					m_sendVideoHeight = cap.width;
@@ -1258,7 +1280,7 @@ int ServiceCore::selectCamera(int cameraIndex, int capabilityIndex,int fps,int r
 					m_sendVideoHeight = cap.height;
 #endif
 					m_sendVideoFps = cap.maxfps;
-				}
+//				}
 
 				ECMediaRotateCapturedFrame tr = (ECMediaRotateCapturedFrame)m_camerRotate;
 				if(m_camerRotate == -1)  {
@@ -1347,7 +1369,7 @@ int ServiceCore::getCameraInfo(CameraInfo **info)
 
 int ServiceCore::getCallStatistics(int type,MediaStatisticsInfo *callStats)
 {
-	cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+//	cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
 #if !defined(NO_VOIP_FUNCTION)
 	if( type == 0)
 	{
@@ -1376,6 +1398,7 @@ int ServiceCore::getCallStatistics(int type,MediaStatisticsInfo *callStats)
 
 int ServiceCore::serphone_set_louds_speaker_status(bool bLouds)
 {
+    cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
 #if !defined(NO_VOIP_FUNCTION)
 	return ECMedia_set_loudspeaker_status(bLouds);
 #endif
@@ -1384,6 +1407,7 @@ int ServiceCore::serphone_set_louds_speaker_status(bool bLouds)
 
 int ServiceCore::serphone_get_louds_speaker_status()
 {
+    cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
 #if !defined(NO_VOIP_FUNCTION)
 	bool bLouds = false;
 	ECMedia_get_loudpeaker_status(bLouds);
@@ -1547,8 +1571,9 @@ void ServiceCore::serphone_call_init_media_streams(SerPhoneCall *call)
 //			audio->SetNsStatus(m_nsEnabled, cloopenwebrtc::kNsVeryHighSuppression);
             
     ECMedia_set_AgcStatus(false, m_agcMode);
-    ECMedia_set_EcStatus(false, m_ecMode);
-    ECMedia_set_NsStatus(false, cloopenwebrtc::kNsVeryHighSuppression);
+    ECMedia_set_EcStatus(true, m_ecMode);
+    ECMedia_set_NsStatus(true, cloopenwebrtc::kNsVeryHighSuppression);
+    ECMedia_EnableHowlingControl(m_hcEnabled);
 
 	//Init Srtp
 	//sean20130428
@@ -1570,6 +1595,11 @@ void ServiceCore::serphone_call_init_media_streams(SerPhoneCall *call)
 
 	if (call->params.has_video) {
 		ECMedia_audio_create_channel(call->m_VideoChannelID, true);
+//        sean for multivideo encoding begin
+//        ECMedia_audio_create_channel(call->m_VideoChannelID1, true);
+//        ECMedia_audio_create_channel(call->m_VideoChannelID2, true);
+//        sean for multivideo encoding end
+        
 
 		if( call->m_VideoChannelID >= 0 &&  md->nstreams > 1 ) {
 			ECMedia_set_network_type(call->m_AudioChannelID, call->m_VideoChannelID, networkType);
@@ -1690,6 +1720,15 @@ void ServiceCore::audio_stream_play(SerPhoneCall *call, const char *name)
 void ServiceCore::serphone_core_send_dtmf(char dtmfch)
 {
 	cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+
+    ////hubintest
+    //if(dtmfch == '1') {
+    //    ECMedia_EnableHowlingControl(true);
+    //}
+    //else if(dtmfch == '2') {
+    //    ECMedia_EnableHowlingControl(false);
+    //}    
+    
 #if !defined(NO_VOIP_FUNCTION)
 	SerPhoneCall *call =serphone_core_get_current_call();
 	ECMedia_send_dtmf(call->m_AudioChannelID, dtmfch);
@@ -1763,6 +1802,8 @@ int ServiceCore::serphone_core_set_audio_config_enabled(int type, bool_t enabled
 		if(mode != cloopenwebrtc::kNsUnchanged)
 			m_nsMode = (cloopenwebrtc::NsModes)mode;
 		break;
+    case AUDIO_HC:
+        m_hcEnabled = enabled;
 	default:
 		return -1;
 	}
@@ -1770,7 +1811,8 @@ int ServiceCore::serphone_core_set_audio_config_enabled(int type, bool_t enabled
 	ECMedia_set_EcStatus(m_ecEnabled, m_ecMode);
 	ECMedia_set_SetAecmMode(cloopenwebrtc::kAecmLoudSpeakerphone, false);
 	ECMedia_set_NsStatus(m_nsEnabled, cloopenwebrtc::kNsVeryHighSuppression);
-	return 0;
+    ECMedia_EnableHowlingControl(m_hcEnabled);
+    return 0;
 #endif
 	return 0;
 }
@@ -2563,7 +2605,7 @@ RtpSession * ServiceCore::create_duplex_rtpsession(int loc_rtp_port, int loc_rtc
 	//	rtp_session_set_blocking_mode(rtpr, 0);
 	//	rtp_session_enable_adaptive_jitter_compensation(rtpr, TRUE);
 	//	rtp_session_set_symmetric_rtp(rtpr, TRUE);
-	//    æš‚æ—¶ä¸åˆ›å»ºsocket
+	//    ????—?????????osocket
 	//	rtp_session_set_local_addr(rtpr, ipv6 ? "::" : "0.0.0.0", loc_rtp_port, loc_rtcp_port);
 	//	rtp_session_signal_connect(rtpr, "timestamp_jump", (RtpCallback)rtp_session_resync, (long)NULL);
 	//	rtp_session_signal_connect(rtpr, "ssrc_changed", (RtpCallback)rtp_session_resync, (long)NULL);
@@ -3155,7 +3197,7 @@ int ServiceCore::serphone_call_start_record_screen(SerPhoneCall *call, const cha
 }
 int ServiceCore::serphone_call_stop_record_screen(SerPhoneCall *call)
 {
-#if !defined(NO_VOIP_FUNCTION)
+#ifdef VIDEO_ENABLED
 
 	if(!capability_conf.localrec) {
 		return -3;
@@ -3427,7 +3469,6 @@ int ServiceCore::serphone_deregister_audio_device()
 
 
 //sean add begin 20140616 video conference
-//sdkè®¾ç½®è§†é¢‘ä¼šè®®çš„æœåŠ¡å™¨åœ°å�?
 int ServiceCore::serphone_set_video_conference_addr(const char *ip)
 {
 	int ret = -1;
@@ -3548,11 +3589,11 @@ int ServiceCore::serphone_set_video_window_and_request_video_accord_sip(const ch
 	temp->conference_state = Video_Conference_State_Nomal;
 	//    request video after succeeding doing this
 	//    build request body
-	//     [ client_id:å®¢æˆ·ç«¯SIPå·ç , conf_id:ä¼šè®®å·ç , member_id:è¯·æ±‚æˆå‘˜çš„SIPå·ç ,conf_pass:ä¼šè®®å¯†ç ]
+	//     [ client_id:??￠??·??ˉSIP??·???, conf_id:???è????·???, member_id:èˉ·?±?????‘????SIP??·???,conf_pass:???è???ˉ????]
 	char *data = new char[512];
 	memset(data, 0, 512);
 
-	//ä¼ªé€ rtpåŒ…å¤�?
+	//??aé€?rtp??…?¤′
 	int cursor = 0;
 	memcpy(data, "yuntongxunyt", 12);
 	cursor = 12;
@@ -3803,12 +3844,12 @@ void ServiceCore::onVideoConference(int channelID, int status, int payload)
 				tempVideoConfDesc->conference_state = Video_Conference_State_Streaming;
 			}
 			break;
-		case Video_Conference_status_NotExist://ä¼šè®®ä¸å­˜åœ¨ï¼Œ
-		case Video_Conference_status_UserExclusive://è‡ªå·±ä¸åœ¨ä¼šè®®ä�?
-		case Video_Conference_status_RequestedUserExclusive://è¯·æ±‚ç›®æ ‡ä¸åœ¨ä¼šè®®ä�?
-		case Video_Conference_status_RequestedUserNoVideo://è¯·æ±‚ç›®æ ‡æ²¡æœ‰è§†é¢�?
+		case Video_Conference_status_NotExist://???è??????-???¨???
+		case Video_Conference_status_UserExclusive://è?a?·±?????¨???è?????
+		case Video_Conference_status_RequestedUserExclusive://èˉ·?±????????????¨???è?????
+		case Video_Conference_status_RequestedUserNoVideo://èˉ·?±????????2???‰è§?é￠‘
 			{
-				//è¯·æ±‚å¤±è´¥ï¼Œç½®çŠ¶æ€ï¼Œç¨åŽç¨åŽå¤„ç�?
+				//èˉ·?±??¤±è′￥??????????€?????¨?????¨?????¤????
 			}
 			break;
 		default:
@@ -3831,12 +3872,12 @@ void ServiceCore::onVideoConference(int channelID, int status, int payload)
 
 			}
 			break;
-		case Video_Conference_status_NotExist://ä¼šè®®ä¸å­˜åœ¨ï¼Œ
-		case Video_Conference_status_UserExclusive://è‡ªå·±ä¸åœ¨ä¼šè®®ä�?
-		case Video_Conference_status_RequestedUserExclusive://è¯·æ±‚ç›®æ ‡ä¸åœ¨ä¼šè®®ä�?
-		case Video_Conference_status_RequestedUserNoVideo://è¯·æ±‚ç›®æ ‡æ²¡æœ‰è§†é¢�?
+		case Video_Conference_status_NotExist://???è??????-???¨???
+		case Video_Conference_status_UserExclusive://è?a?·±?????¨???è?????
+		case Video_Conference_status_RequestedUserExclusive://èˉ·?±????????????¨???è?????
+		case Video_Conference_status_RequestedUserNoVideo://èˉ·?±????????2???‰è§?é￠‘
 			{
-				//è¯·æ±‚å¤±è´¥ï¼Œç½®çŠ¶æ€ï¼Œç¨åŽç¨åŽå¤„ç�?
+				//èˉ·?±??¤±è′￥??????????€?????¨?????¨?????¤????
 			}
 			break;
 		default:
@@ -3850,7 +3891,7 @@ void ServiceCore::onVideoConference(int channelID, int status, int payload)
 		//            videoConferencePairSipChannel.erase(it2);
 		//        }
 		//        
-		//        //æ ¹æ®channelIDé‡Šæ”¾èµ„æº�?
+		//        //??1???channelIDé???”?èμ??o?
 		//        if (0 == tempVideoConfDesc->request_status) {
 		//            ViERender* render =  ViERender::GetInterface(m_vie);
 		//            render->StopRender(channelID);
@@ -4082,7 +4123,6 @@ int ServiceCore::PlayVideoFromRtpDump(int localPort, const char *ptName, int plo
 	bool codec_found = false;
 	int codec_num = ECMedia_num_of_supported_codecs_video();
 	cloopenwebrtc::VideoCodec *codecArray = new cloopenwebrtc::VideoCodec[codec_num];
-
 	for (int i = 0; i < codec_num; i++) {
 		codec_params = codecArray[i];
 		if ( strcasecmp( codec_params.plName, ptName) == 0) {
@@ -4349,7 +4389,7 @@ void ServiceCore::serphone_core_restart_nack(SerPhoneCall *call)
 //	}
 //}
 
-//// This method will be called periodically delivering a deadâ€orâ€alive
+//// This method will be called periodically delivering a deada€?ora€?alive
 //// decision for a specified channel.
 //void ServiceCore::OnPeriodicDeadOrAlive(const int video_channel, const bool alive)
 //{
@@ -4796,7 +4836,7 @@ void ServiceCore::serserphone_call_start_desktop_share(SerPhoneCall *call, const
 //				pSendStats_ = Serphone_set_video_send_statistics_proxy(call->m_VideoChannelID);
 //				pReceiveStats_ = Serphone_set_video_receive_statistics_porxy(call->m_VideoChannelID);
 //
-//				//add by ylr 20151010 å›žè°ƒå®žçŽ�?
+//				//add by ylr 20151010 ???è°??????°
 //				if (!call->vie_observer)
 //				{
 //					call->vie_observer = new VieObserver(this);
@@ -4939,6 +4979,44 @@ int ServiceCore::Serphone_set_opus_packet_loss_rate(int rate)
         return 0;
 }
 
+int ServiceCore::startRecord()
+{
+#if !defined(NO_VOIP_FUNCTION)
+    return ECMedia_audio_start_record();
+#endif
+}
+
+int ServiceCore::stopRecord()
+{
+#if !defined(NO_VOIP_FUNCTION)
+    return ECMedia_audio_stop_record();
+#endif
+}
+
+int ServiceCore::SetVideoKeepAlive(SerPhoneCall *call, bool enable, int interval)
+{
+#if !defined(NO_VOIP_FUNCTION)
+#ifdef VIDEO_ENABLED
+	if (!call)
+		return -1;
+
+	cloopenwebrtc::VideoCodec codec;
+	ECMedia_get_send_codec_video(call->m_VideoChannelID, codec);
+	return ECMedia_set_video_rtp_keepalive(call->m_AudioChannelID, enable, interval, codec.plType);
+#endif
+#endif
+}
+int ServiceCore::SetAudioKeepAlive(SerPhoneCall *call, bool enable, int interval)
+{
+#if !defined(NO_VOIP_FUNCTION)
+	if (!call)
+		return -1;
+	cloopenwebrtc::CodecInst codec;
+	ECMedia_get_send_codec_audio(call->m_AudioChannelID, codec);
+	return ECMedia_set_audio_rtp_keepalive(call->m_AudioChannelID, enable, interval, codec.pltype);
+#endif
+
+}
 
 //SendStatisticsProxy*  ServiceCore::Serphone_set_video_send_statistics_proxy(int video_channel)
 //{

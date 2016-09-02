@@ -22,8 +22,10 @@ typedef int (*onEcMediaVideoConference)(int channelid, int status, int payload);
 
 typedef int (*onEcMediaRequestKeyFrameCallback)(const int channelid);
 
+typedef int (*onVoeCallbackOnError)(int channelid, int errCode);
 typedef int(*onEcMediaDesktopCaptureErrCode)(int desktop_capture_id, int errCode);
 typedef int (*onEcMediaShareWindowSizeChange)(int desktop_capture_id, int width, int height);
+
 /*
  * Enable trace.
  */
@@ -40,6 +42,10 @@ int ECMedia_ring_start(int& channelid, const char *filename, bool loop);
 int ECMedia_ring_stop(int& channelid);
 /*
  *
+ @return: 0: success
+         1: already init
+         -99: 
+         VE_AUDIO_DEVICE_MODULE_ERROR: audio device init failed.
  */
 int ECMedia_init_audio();
 /*
@@ -133,7 +139,9 @@ int ECMedia_set_MTU(int channelid, int mtu);
 /*
  *
  */
-int ECMedia_set_rtp_keepalive(int channelid, int interval, int payloadType);
+int ECMedia_set_video_rtp_keepalive(int channelid, bool enable, int interval, int payloadType);
+
+int ECMedia_set_audio_rtp_keepalive(int channelid, bool enable, int interval, int payloadType);
 /*
  *
  */
@@ -276,6 +284,11 @@ int ECMedia_audio_start_playout(int channelid);
  */
 int ECMedia_audio_stop_playout(int channelid);
 
+
+int ECMedia_audio_start_record();
+
+int ECMedia_audio_stop_record();
+
 /*
  *×Ö·û ÓïÒôÍ¨µÀ
  */
@@ -288,7 +301,7 @@ int ECMedia_set_dtmf_cb(int channelid, onEcMediaReceivingDtmf dtmf_cb);
 int ECMedia_set_media_packet_timeout_cb(int channelid, onEcMediaPacketTimeout media_timeout_cb);
 int ECMedia_set_stun_cb(int channelid, onEcMediaStunPacket stun_cb);
 int ECMedia_set_audio_data_cb(int channelid, onEcMediaAudioData audio_data_cb);
-
+int ECMedia_set_voe_cb(int channelid, onVoeCallbackOnError voe_callback_cb);
 /*
  * ONLY USE FOR PEER CONNECTION FOR AUDIO
  */
@@ -323,7 +336,6 @@ int ECMedia_get_capture_capability(const char *id, int id_len, int index, Camera
  *
  */
 int ECMedia_allocate_capture_device(const char *id, size_t len, int& deviceid);
-
 /*
  *
  */
@@ -480,6 +492,10 @@ int ECMedia_save_local_video_snapshot(int deviceid, const char* filePath);
 int ECMedia_get_remote_video_snapshot(int channelid, unsigned char **buf, unsigned int *size, unsigned int *width, unsigned int *height);
 int ECMedia_save_remote_video_snapshot(int channelid, const char* filePath);
 
+int ECmedia_enable_deflickering(int captureid, bool enable);
+int ECmedia_enable_EnableColorEnhancement(int channelid, bool enable);
+int ECmedia_enable_EnableDenoising(int captureid, bool enable);
+int ECmedia_enable_EnableBrightnessAlarm(int captureid, bool enable);
 #endif
 
 //"filePath" or "intervalMS" is set by the first caller, i.e.: one of the four interfaces,
@@ -491,7 +507,8 @@ int ECMedia_set_audio_RecvStatistics_proxy(int channelid, char* filePath, int in
 
 //kill statistics thread
 int ECMedia_stop_Statistics_proxy();
-
 int ECMedia_set_CaptureDeviceID(int videoCapDevId);
+
+int ECMedia_Check_Record_Permission(bool &enabled);
 
 #endif /* defined(__servicecoreVideo__ECMedia__) */
