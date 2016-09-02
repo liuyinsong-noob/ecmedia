@@ -33,6 +33,25 @@ extern "C"
     #include <crypto_kernel.h>
 }
 
+
+#ifndef _WIN32
+PayloadType  payload_type_h264_svc = {
+    (PAYLOAD_VIDEO),
+    (90000),
+    (0),
+    (NULL),
+    (0),
+    (256000),
+    ("H264-SVC"),
+    (0),
+    NULL,
+    NULL,
+    0,
+    NULL
+};
+#endif
+
+
 char *ca_certificate_path;
 //#include "thread_wrapper.h"
 #include "cJSON.h"
@@ -498,7 +517,6 @@ ServiceCore::ServiceCore()
     m_agcEnabled = false;
     m_ecEnabled = true;
     m_nsEnabled = true;
-    m_hcEnabled = false;
     m_agcMode = cloopenwebrtc::kAgcAdaptiveDigital;
     m_ecMode = cloopenwebrtc::kEcAecm;
     m_nsMode = cloopenwebrtc::kNsVeryHighSuppression;
@@ -624,6 +642,7 @@ ServiceCore::ServiceCore()
 
 	m_desktopCaptureId = -1;
 	m_pScreenInfo = NULL;
+	m_pWindowInfo = NULL;
 #if defined __APPLE__ || defined WEBRTC_ANDROID
     m_videoModeChoose = 0;
 #else
@@ -1899,22 +1918,22 @@ void ServiceCore::serphone_core_set_firewall_policy( SerphoneFirewallPolicy pol)
 
 SerphoneFirewallPolicy ServiceCore::serphone_core_get_firewall_policy()
 {
-//#ifndef XINWEI
-//    if (remoteSipNo) {
-//        if(strncmp(remoteSipNo, "8", 1) == 0 && strlen(remoteSipNo) >= 14 )
-//            return (SerphoneFirewallPolicy)net_conf.firewall_policy;
-//        else
-//            return LinphonePolicyNoFirewall;
-//    }
-//    else
-//        return (SerphoneFirewallPolicy)net_conf.firewall_policy;
-//#else
-//    return (SerphoneFirewallPolicy)net_conf.firewall_policy;
-//#endif
+#ifndef XINWEI
+    if (remoteSipNo) {
+        if(strncmp(remoteSipNo, "8", 1) == 0 && strlen(remoteSipNo) >= 14 )
+            return (SerphoneFirewallPolicy)net_conf.firewall_policy;
+        else
+            return LinphonePolicyNoFirewall;
+    }
+    else
+        return (SerphoneFirewallPolicy)net_conf.firewall_policy;
+#else
+    return (SerphoneFirewallPolicy)net_conf.firewall_policy;
+#endif
 
 
 //    sean test for ice
-    return LinphonePolicyUseIce;
+//    return LinphonePolicyUseIce;
 //    return LinphonePolicyNoFirewall;
 }
 
@@ -2241,11 +2260,6 @@ void ServiceCore::serphone_set_reg_info(const char *proxy_addr, int proxy_port,
 
     memset(&capability_conf, 0, sizeof(capability_conf));
     serphone_core_parse_capability_token(capability_token);
-
-//
-	capability_conf.hdvideo = 1;
-    capability_conf.localrec = 1;
-    capability_conf.localrecvoip = 1;
 
 	return ;
 }
@@ -4783,17 +4797,19 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
 	this->dyn_pt=96;
 
 //    //payloadtype 不要修改，和codedatabase.cc里面对应
-    serphone_core_assign_payload_type(&payload_type_opus, 124, NULL);//48k
-    serphone_core_assign_payload_type(&payload_type_opus8k, 121, NULL);
-    serphone_core_assign_payload_type(&payload_type_opus16k, 122, NULL);
+     serphone_core_assign_payload_type(&payload_type_opus, 124, NULL);//48k
+     serphone_core_assign_payload_type(&payload_type_opus8k, 121, NULL);
+     serphone_core_assign_payload_type(&payload_type_opus16k, 122, NULL);
 
 //    serphone_core_assign_payload_type(&payload_type_silk_nb,111,NULL);
 //    serphone_core_assign_payload_type(&payload_type_silk_mb,112,NULL);
 //    serphone_core_assign_payload_type(&payload_type_silk_wb,113,NULL);
 //    serphone_core_assign_payload_type(&payload_type_ilbc,97,NULL);
-	serphone_core_assign_payload_type(&payload_type_g729,18,"annexb=no");
-	serphone_core_assign_payload_type(&payload_type_pcmu8000,0,NULL);
+
+ 	serphone_core_assign_payload_type(&payload_type_g729,18,"annexb=no");
+ 	serphone_core_assign_payload_type(&payload_type_pcmu8000,0,NULL);
 	serphone_core_assign_payload_type(&ccp_payload_type_telephone_event,106,"0-15");
+
 //    serphone_core_assign_payload_type(&payload_type_cn8k,13,NULL);
 //    serphone_core_assign_payload_type(&payload_type_amr, 105, NULL);
 
@@ -4814,7 +4830,7 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
 	serphone_core_assign_payload_type(&payload_type_h264,-1,"profile-level-id=428014");
 	serphone_core_assign_payload_type(&payload_type_vp8,120,NULL);
 
-	//serphone_core_assign_payload_type(&payload_type_h264_svc,98, "profile-level-id=428014"); //profile-level-id need to be fixed.
+    serphone_core_assign_payload_type(&payload_type_h264_svc,98, "profile-level-id=428014"); //profile-level-id need to be fixed.
 	/* due to limited space in SDP, we have to disable this h264 line which is normally no more necessary */
 	/* serphone_core_assign_payload_type(&payload_type_h264,-1,"packetization-mode=1;profile-level-id=428014");*/
 #endif
@@ -4851,9 +4867,7 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
 	this->presence_mode=LinphoneStatusOnline;
 	misc_config_read();
 	ui_config_read();
-#ifdef VIDEO_ENABLED
 	ECMedia_init_video();
-#endif
 
 #ifdef WIN32
     //media_init_audio();
@@ -4912,9 +4926,7 @@ void ServiceCore::serphone_core_uninit()
 
 	serphone_core_free_payload_types();
 	PrintConsole("Release Media \n");
-#ifdef VIDEO_ENABLED
 	ECMedia_uninit_video();
-#endif
 #ifdef WIN32
     ECMedia_uninit_audio();
 #endif
@@ -5427,8 +5439,8 @@ static const char *codec_pref_order[]={
 	"gsm",
     "pcmu",
 	"pcma",
-	"H264",
 	"H264-SVC",
+	"H264",
     "VP8",
 	"MP4V-ES",
 	"H263-1998",
@@ -5677,6 +5689,11 @@ int ServiceCore::serphone_core_set_video_codecs(MSList *codecs)
 {
 	if (this->codecs_conf.video_codecs!=NULL) ms_list_free(this->codecs_conf.video_codecs);
 	this->codecs_conf.video_codecs=codecs;
+// #define OPENH264_TEST
+// #ifdef OPENH264_TEST
+// 	PayloadType pl = payload_type_h264_svc;
+// 	ms_list_append(this->codecs_conf.video_codecs, &pl);
+// #endif
 	return 0;
 }
 
@@ -6064,6 +6081,7 @@ void ServiceCore::serphone_core_parse_capability_token(const char *token)
 		capability_conf.hdvideo = 1;
 	}
 
+	capability_conf.hdvideo = 1;
 
     cJSON_Delete(root);
     free(decode_token);
@@ -6240,7 +6258,7 @@ int ServiceCore::serphone_set_groupID(const char *group)
 
 int ServiceCore::serphone_set_networkType(const char *type)
 {
-    if (type && current_call) {
+    if (type) {
         int newTypeLen = strlen(type);
         if (networkType && strlen(networkType) < newTypeLen) {
             delete [] networkType;

@@ -440,7 +440,8 @@ public:
 
 	int selectCamera(int cameraIndex, int capabilityIndex,int fps,int rotate,bool force);
 	int getCameraInfo(CameraInfo **);
-	int getShareScreenInfo(ScreenInfo **screenId);
+	int getShareScreenInfo(ScreenID **screenId, int captureId);
+	int getShareWindowInfo(WindowShare **windowInfo, int captureId);
 
 	int getCallStatistics(int type, MediaStatisticsInfo *);
 
@@ -534,6 +535,7 @@ public:
 
 	int serphone_call_reset_video_views(SerPhoneCall *call, void* remoteView,void *localView);
 	int startVideoCapture(SerPhoneCall *call);
+	int startVideoDesktopCapture(SerPhoneCall *call);
 
 	int PlayAudioFromRtpDump(int localPort, const char *ptName, int ploadType);
 	int StopPlayAudioFromRtpDump();
@@ -551,8 +553,6 @@ public:
 	void setVideoMode(int videoModeIndex); //only for demo test 0: Real-time, 1:screen-share
 	void setDesktopShareParam(int desktop_width, int desktop_height, int desktop_frame_rate, int desktop_bit_rate);
 
-    int startRecord();
-    int stopRecord();
 protected:
 ///////////////param
 	void serphone_core_init_default_params(SerphoneCallParams *params);
@@ -707,9 +707,6 @@ public:
 	int StartVirtualBackGround();
 	int StopVirtualBakcGround();
 
-	int SetVideoKeepAlive(SerPhoneCall *call, bool enable, int interval);
-	int SetAudioKeepAlive(SerPhoneCall *call, bool enable, int interval);
-
 public:
 	static SerphoneCoreVTable vtable;
 	Sal    *sal;
@@ -767,7 +764,8 @@ public:
 	int m_usedCameraIndex;
 	int m_usedCapabilityIndex;
 
-	ScreenInfo *m_pScreenInfo;
+	ScreenID		*m_pScreenInfo;
+	WindowShare		*m_pWindowInfo;
 	int m_desktopCaptureId;
 
 	int m_maxFPS;
@@ -791,7 +789,6 @@ public:
     bool_t m_agcEnabled;
     bool_t m_ecEnabled;
     bool_t m_nsEnabled;
-    bool_t m_hcEnabled;
     cloopenwebrtc::AgcModes m_agcMode;
     cloopenwebrtc::EcModes m_ecMode;
     cloopenwebrtc::NsModes m_nsMode;
