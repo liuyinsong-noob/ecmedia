@@ -166,7 +166,7 @@ int RtpPacketizerH264::PacketizeStapA(size_t fragment_index,
                                       size_t fragment_offset,
                                       size_t fragment_length) {
   // Aggregate fragments into one packet (STAP-A).
-  size_t payload_size_left = max_payload_len_;
+  size_t payload_size_left = fragment_length;
   int aggregated_fragments = 0;
   size_t fragment_headers_length = 0;
   assert(payload_size_left >= fragment_length);
@@ -177,7 +177,7 @@ int RtpPacketizerH264::PacketizeStapA(size_t fragment_index,
                          fragment_length,
                          aggregated_fragments == 0,
                          false,
-                         true,
+                         false,
                          header));
     payload_size_left -= fragment_length;
     payload_size_left -= fragment_headers_length;
