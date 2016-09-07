@@ -18,7 +18,6 @@ LOCAL_MODULE := libwebrtc_neteq
 LOCAL_MODULE_TAGS := optional
 LOCAL_SRC_FILES := \
     accelerate.cc \
-    audio_classifier.cc \
     audio_decoder_impl.cc \
     audio_multi_vector.cc \
     audio_vector.cc \
@@ -50,6 +49,7 @@ LOCAL_SRC_FILES := \
     timestamp_scaler.cc \
     time_stretch.cc \
 
+#    audio_classifier.cc \
 # Flags passed to both C and C++ files.
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \

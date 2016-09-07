@@ -17,7 +17,6 @@ LOCAL_MODULE := libwebrtc_video_coding
 LOCAL_MODULE_TAGS := optional
 LOCAL_SRC_FILES := \
    	./utility/frame_dropper.cc \
-    ./utility/qp_parser.cc \
    	codec_database.cc \
    	codec_timer.cc \
    	content_metrics_processing.cc \
@@ -43,7 +42,7 @@ LOCAL_SRC_FILES := \
    	video_receiver.cc
    	
 #./utility/quality_scaler.cc \
-
+#    ./utility/qp_parser.cc \
 # Flags passed to both C and C++ files.
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \

@@ -182,7 +182,7 @@ int VoECodecImpl::GetSendCodec(int channel, CodecInst& codec)
 
 int VoECodecImpl::GetRecCodec(int channel, CodecInst& codec)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+    WEBRTC_TRACE(kTraceDebug, kTraceVoice, VoEId(_shared->instance_id(), -1),
                  "GetRecCodec(channel=%d, codec=?)", channel);
     if (!_shared->statistics().Initialized())
     {

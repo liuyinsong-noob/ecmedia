@@ -42,11 +42,12 @@ LOCAL_SRC_FILES := \
 		voe_video_sync_impl.cc \
 		voe_volume_control_impl.cc \
 		voice_engine_impl.cc \
-		voe_encry_srtp.cc \
 		SrtpModule.cc \
 		wavfile.cpp \
 		audio_send_stream.cc \
 		audio_receive_stream.cc
+		
+#		voe_encry_srtp.cc \
 		
 		
 

@@ -22,8 +22,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
-
-extern "C" void PrintConsole(const char * fmt,...);
+#include "ECMedia.h"
 
 using namespace cloopenwebrtc;
 
@@ -955,7 +954,7 @@ int RecordVoip::CompleteWavFile(FILE *wavFile)
 	pcmDATA.dwSize=0; //给pcmDATA.dwsize   0以便于下面给它赋值
 
 	fseek(wavFile, 0L, SEEK_END);
-	int fileSize = ftell(wavFile);
+	unsigned int fileSize = ftell(wavFile);
 	if( fileSize <= (sizeof(pcmHEADER) + sizeof(pcmFMT) + sizeof(pcmDATA)) ) {
 		return -1;
 	}

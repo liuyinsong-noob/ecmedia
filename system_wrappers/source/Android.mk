@@ -25,7 +25,6 @@ LOCAL_SRC_FILES := \
     atomic32_posix.cc \
 	  clock.cc\
     condition_variable.cc \
-    cpu_no_op.cc \
     cpu_features.cc \
     cpu_info.cc \
     critical_section.cc \
@@ -60,6 +59,7 @@ LOCAL_SRC_FILES := \
 		
 #		checks.cc \
 #   android/cpu-features.c \
+#    cpu_no_op.cc \
 
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \

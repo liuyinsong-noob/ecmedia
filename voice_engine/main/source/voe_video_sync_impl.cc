@@ -161,7 +161,7 @@ int VoEVideoSyncImpl::SetInitialPlayoutDelay(int channel, int delay_ms)
 int VoEVideoSyncImpl::GetDelayEstimate(int channel,
                                        int* jitter_buffer_delay_ms,
                                        int* playout_buffer_delay_ms) {
-  WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+  WEBRTC_TRACE(kTraceDebug, kTraceVoice, VoEId(_shared->instance_id(), -1),
                "GetDelayEstimate(channel=%d, delayMs=?)", channel);
 
   if (!_shared->statistics().Initialized()) {

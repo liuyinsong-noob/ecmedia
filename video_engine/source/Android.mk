@@ -51,8 +51,6 @@ LOCAL_SRC_FILES := \
     vie_render_manager.cc \
     vie_rtp_rtcp_impl.cc \
     vie_sender.cc \
-	send_statistics_proxy.cc \
-	receive_statistics_proxy.cc \
     vie_shared_data.cc \
 	vie_sync_module.cc
 

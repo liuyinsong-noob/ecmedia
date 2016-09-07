@@ -46,7 +46,9 @@ LOCAL_SRC_FILES := \
 		./Utility/md5.cpp \
 		./Utility/base64_2.cpp \
 		./Utility/cJSON.c \
-		./Utility/tinyxml2.cpp
+		./Utility/tinyxml2.cpp \
+		critical_section_posix.cc \
+		critical_section.cc
 	
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \

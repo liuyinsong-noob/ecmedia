@@ -87,6 +87,6 @@ LOCAL_C_INCLUDES += \
 	$(LOCAL_PATH)/build/android \
 	$(LOCAL_PATH)/ortp/
 
-LOCAL_LDLIBS += -lpthread
+#LOCAL_LDLIBS += -lpthread
 
 include $(BUILD_STATIC_LIBRARY)

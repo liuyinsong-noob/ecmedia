@@ -289,6 +289,7 @@ void ServiceCore::serphone_call_stop_media_streams(SerPhoneCall *call)
 		call->video_profile=NULL;
 	}
 #endif
+    ECMedia_stop_Statistics_proxy();
 }
 
 void ServiceCore::media_stream_free(MediaStream *stream) {
@@ -490,7 +491,19 @@ void ServiceCore::serphone_call_start_media_streams(SerPhoneCall *call, bool_t a
 	}
 	else
 		call->current_params.has_video= false;
+#if defined(VIDEO_ENABLED)
+    if(call->m_VideoChannelID >= 0) {
+        ECMedia_set_video_SendStatistics_proxy(call->m_VideoChannelID, "/storage/emulated/0/Statistics.log", 1000);
+        ECMedia_set_video_RecvStatistics_proxy(call->m_VideoChannelID, "/storage/emulated/0/Statistics.log", 1000);
+    } 
+    else
+#endif
+    {
+        ECMedia_set_audio_RecvStatistics_proxy(call->m_AudioChannelID, "/storage/emulated/0/Statistics.log", 1000);
+        ECMedia_set_audio_SendStatistics_proxy(call->m_AudioChannelID, "/storage/emulated/0/Statistics.log", 1000);
+    }
 
+        
 	call->all_muted=all_inputs_muted;
 	call->playing_ringbacktone=send_ringbacktone;
 	call->up_bw=serphone_core_get_upload_bandwidth();
@@ -4913,6 +4926,7 @@ void ServiceCore::serserphone_call_start_desktop_share(SerPhoneCall *call, const
 
 int ServiceCore::getShareScreenInfo(ScreenID **screenId, int captureId)
 {
+#ifdef VIDEO_ENABLED
 	if(NULL!=m_pScreenInfo)
 	{
 		delete[] m_pScreenInfo;
@@ -4933,12 +4947,13 @@ int ServiceCore::getShareScreenInfo(ScreenID **screenId, int captureId)
 		*screenId = m_pScreenInfo;
 		return ret;
 	}
-
+#endif
 	return -99;
 }
 
 int ServiceCore::getShareWindowInfo(WindowShare **windowInfo, int captureId)
 {
+#ifdef VIDEO_ENABLED
 	if (NULL != m_pWindowInfo)
 	{
 		delete[] m_pWindowInfo;
@@ -4959,7 +4974,7 @@ int ServiceCore::getShareWindowInfo(WindowShare **windowInfo, int captureId)
 		*windowInfo = m_pWindowInfo;
 		return ret;
 	}
-
+#endif
 	return -99;
 }
 

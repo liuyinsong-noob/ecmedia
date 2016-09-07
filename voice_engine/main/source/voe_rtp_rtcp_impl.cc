@@ -72,7 +72,7 @@ int VoERTP_RTCPImpl::SetLocalSSRC(int channel, unsigned int ssrc)
 
 int VoERTP_RTCPImpl::GetLocalSSRC(int channel, unsigned int& ssrc)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+    WEBRTC_TRACE(kTraceDebug, kTraceVoice, VoEId(_shared->instance_id(), -1),
                  "GetLocalSSRC(channel=%d, ssrc=?)", channel);
     if (!_shared->statistics().Initialized())
     {
@@ -92,7 +92,7 @@ int VoERTP_RTCPImpl::GetLocalSSRC(int channel, unsigned int& ssrc)
 
 int VoERTP_RTCPImpl::GetRemoteSSRC(int channel, unsigned int& ssrc)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+    WEBRTC_TRACE(kTraceDebug, kTraceVoice, VoEId(_shared->instance_id(), -1),
                  "GetRemoteSSRC(channel=%d, ssrc=?)", channel);
     if (!_shared->statistics().Initialized())
     {
@@ -372,7 +372,7 @@ int VoERTP_RTCPImpl::GetRTPStatistics(int channel,
 
 int VoERTP_RTCPImpl::GetRTCPStatistics(int channel, CallStatistics& stats)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+    WEBRTC_TRACE(kTraceDebug, kTraceVoice, VoEId(_shared->instance_id(), -1),
                  "GetRTCPStatistics(channel=%d)", channel);
     if (!_shared->statistics().Initialized())
     {

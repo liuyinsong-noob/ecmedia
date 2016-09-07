@@ -903,7 +903,7 @@ int VoEAudioProcessingImpl::GetEchoMetrics(int& ERL,
                                            int& ERLE,
                                            int& RERL,
                                            int& A_NLP) {
-  WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+  WEBRTC_TRACE(kTraceDebug, kTraceVoice, VoEId(_shared->instance_id(), -1),
                "GetEchoMetrics(ERL=?, ERLE=?, RERL=?, A_NLP=?)");
 #ifdef WEBRTC_VOICE_ENGINE_ECHO
   if (!_shared->statistics().Initialized()) {

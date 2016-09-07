@@ -24,7 +24,7 @@ int AmrNBEncode(short* input,
 int AmrNBEncoderInit(short dtxMode);
 int AmrNBDecode(short* encoded,
                        int len, short* decoded);
-int AmrNBDecodeBitmode(int format);
+//int AmrNBDecodeBitmode(int format);
 int AmrNBVersion(char *versionStr, short len);
 
 #ifdef __cplusplus

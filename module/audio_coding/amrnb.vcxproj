@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="codecs\opencore-amr\amrnb\amrnb_api.cpp" />
     <ClCompile Include="codecs\opencore-amr\amrnb\amr_interface.cpp" />
     <ClCompile Include="codecs\opencore-amr\amrnb\wrapper.cpp" />
     <ClCompile Include="codecs\opencore-amr\opencore\amr_nb\common\src\add.cpp" />

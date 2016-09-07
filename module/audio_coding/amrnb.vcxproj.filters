@@ -453,6 +453,9 @@
     <ClCompile Include="codecs\opencore-amr\amrnb\wrapper.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="codecs\opencore-amr\amrnb\amrnb_api.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="codecs\opencore-amr\amrnb\amr_interface.h">

@@ -13,8 +13,11 @@ namespace cloopenwebrtc {
 SrtpModule* SrtpModule::CreateSrtpModule(const WebRtc_Word32 id)
     
     {
+#ifdef WEBRTC_SRTP
         return new VoeEncrySrtp(id);
-		//return NULL;
+#else
+		return NULL;
+#endif
     }
 void SrtpModule::DestroySrtpModule(SrtpModule* module)
     {

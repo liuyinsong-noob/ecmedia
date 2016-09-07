@@ -46,21 +46,13 @@ LOCAL_SRC_FILES := \
 		./Utility/md5.cpp \
 		./Utility/base64_2.cpp \
 		./Utility/cJSON.c \
-		./Utility/tinyxml2.cpp
+		./Utility/tinyxml2.cpp \
+		critical_section_posix.cc \
+		critical_section.cc
 	
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
-     '-DOLDERRORCODE'
-#    '-DHAIYUNTONG'
-#    '-DXINWEI'
-# ssl
-#    '-DSUPPORT_SSL' \
-#   '-DENABLE_LOG'
-
-#ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
-    LOCAL_CFLAGS += '-DVIDEO_ENABLED'
-#endif
-
+    
 LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/../include \
 		$(LOCAL_PATH)/Http \
@@ -99,7 +91,6 @@ LOCAL_C_INCLUDES := \
 	  $(LOCAL_PATH)/../../module/remote_bitrate_estimator/source \
 	  $(LOCAL_PATH)/../../module/video_render/main/include \
       $(LOCAL_PATH)/../../ECMedia/interface
-
 LOCAL_SHARED_LIBRARIES := \
     libcutils \
     libdl \

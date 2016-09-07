@@ -19,7 +19,6 @@ LOCAL_CPP_EXTENSION := .cc
 LOCAL_SRC_FILES := \
 	compare.cc \
 	convert.cc \
-	convert_from.cc \
 	convertfrom.cc \
 	cpu_id.cc \
 	format_conversion.cc \

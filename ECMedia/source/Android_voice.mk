@@ -25,29 +25,21 @@ LOCAL_SRC_FILES := \
 	
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
-    '-DOLDERRORCODE'
-# ssl
-#    '-DSUPPORT_SSL' \
-#   '-DENABLE_LOG'
-
-#ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
-#    LOCAL_CFLAGS += '-DVIDEO_ENABLED'
-#endif
 
 LOCAL_C_INCLUDES := \
-		$(LOCAL_PATH)/../include \
-		$(LOCAL_PATH)/../../system_wrappers/interface \
-		$(LOCAL_PATH)/../../voice_engine/main/include \
-		$(LOCAL_PATH)/../../voice_engine/main/source \
-		$(LOCAL_PATH)/../../video_engine/include \
-		$(LOCAL_PATH)/../../video_engine/source \
-		$(LOCAL_PATH)/../../video_engine/source/video \
-		$(LOCAL_PATH)/../interface \
-		$(LOCAL_PATH)/../.. \
-		$(LOCAL_PATH)/../../module \
-    $(LOCAL_PATH)/../../module/interface \
-    $(LOCAL_PATH)/../../module/videojpegyuv/include \
-  $(LOCAL_PATH)/../../third_party/oRTP/include \
+	$(LOCAL_PATH)/../include \
+	$(LOCAL_PATH)/../../system_wrappers/interface \
+	$(LOCAL_PATH)/../../voice_engine/main/include \
+	$(LOCAL_PATH)/../../voice_engine/main/source \
+	$(LOCAL_PATH)/../../video_engine/include \
+	$(LOCAL_PATH)/../../video_engine/source \
+	$(LOCAL_PATH)/../../video_engine/source/video \
+	$(LOCAL_PATH)/../interface \
+	$(LOCAL_PATH)/../.. \
+	$(LOCAL_PATH)/../../module \
+	$(LOCAL_PATH)/../../module/interface \
+	$(LOCAL_PATH)/../../module/videojpegyuv/include \
+	$(LOCAL_PATH)/../../third_party/oRTP/include \
 	$(LOCAL_PATH)/../../third_party/oRTP/include/ortp \
 	$(LOCAL_PATH)/../../module/rtp_rtcp/source/oRTP/include/ortp/ \
 	$(LOCAL_PATH)/../../third_party/srtp \
@@ -66,7 +58,8 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../../module/remote_bitrate_estimator/include \
 	$(LOCAL_PATH)/../../module/pacing/include \
 	$(LOCAL_PATH)/../../module/remote_bitrate_estimator/source \
-	$(LOCAL_PATH)/../../module/video_render/main/include
+	$(LOCAL_PATH)/../../module/video_render/main/include \
+	$(LOCAL_PATH)/../../module/audio_coding/codecs/opencore-amr/amrnb
 	
 LOCAL_SHARED_LIBRARIES := \
     libcutils \

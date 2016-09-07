@@ -22,6 +22,7 @@
 #include "voe_dtmf.h"
 #include "statsCollector.h"
 #include "VoeObserver.h"
+#include "amrnb_api.h"
 
 #ifdef WIN32
 #include "codingHelper.h"
@@ -159,7 +160,7 @@ static void media_uninit_print_log()
 	g_printConsole_lock = NULL;
 }
 
-extern "C" void PrintConsole(const char * fmt,...)
+void PrintConsole(const char * fmt,...)
 {
     if(!g_media_TraceFlag) {
         return;
@@ -211,10 +212,9 @@ extern "C" void PrintConsole(const char * fmt,...)
 	fprintf(g_media_interface_fp, "%s\n", log_buffer);
 	fflush(g_media_interface_fp);
 	//g_log_line ++;
-
 }
 
-extern "C" const char* ECMeida_get_Version()
+const char* ECMeida_get_Version()
 {
     if( strlen(gVersionString) <= 0 )
     {
@@ -2973,6 +2973,39 @@ int ECMedia_IsIPv6Enabled(int channel)
         return -99;
     }
 }
+int ECMedia_AmrNBCreateEnc()
+{
+    return AmrNBCreateEnc();
+}
+int ECMedia_AmrNBCreateDec()
+{
+    return AmrNBCreateDec();
+}
+int ECMedia_AmrNBFreeEnc()
+{
+    return AmrNBFreeEnc();
+}
+int ECMedia_AmrNBFreeDec()
+{
+    return AmrNBFreeDec();
+}
+int ECMedia_AmrNBEncode(short* input, short len, short*output, short mode)
+{
+    return AmrNBEncode(input, len, output, mode);
+}
+int ECMedia_AmrNBEncoderInit(short dtxMode)
+{
+    return AmrNBEncoderInit(dtxMode);
+}
+int ECMedia_AmrNBDecode(short* encoded, int len, short* decoded)
+{
+    return AmrNBDecode(encoded, len, decoded);
+}
+
+int ECMedia_AmrNBVersion(char *versionStr, short len)
+{
+    return AmrNBVersion(versionStr, len);
+}
 #ifdef VIDEO_ENABLED
 int ECMedia_set_video_SendStatistics_proxy(int channelid, char* filePath, int intervalMs)
 {
@@ -3079,7 +3112,7 @@ int ECMedia_Check_Record_Permission(bool &enabled) {
         return -99;
     }
 }
-
+#ifdef VIDEO_ENABLED
 
 int ECMedia_number_of_screen(int desktop_captureid)
 {
@@ -3371,4 +3404,5 @@ int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &hei
 		return -99;
 	}
 }
+#endif
 

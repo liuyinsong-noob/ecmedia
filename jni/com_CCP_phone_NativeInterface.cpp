@@ -4,9 +4,9 @@
 #include "callback.h"
 #include "CCPClient.h"
 #include "CCPClient_internal.h"
-#include "amrnb_api.h"
 #include <string.h>
 #include "jni.h"
+#include "ECMedia.h"
 
 JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved)
 {
@@ -579,7 +579,8 @@ JNIEXPORT jstring JNICALL Java_com_CCP_phone_NativeInterface_getCallStatistics
     char buf[1024];
 	MediaStatisticsInfo stats;
     getCallStatistics(type,&stats);
-    sprintf(buf, "%d#%d#%d#%d#%d#%d#%d#%d#%d", stats.fractionLost, stats.cumulativeLost, stats.extendedMax, stats.jitterSamples, stats.rttMs, stats.bytesSent, stats.packetsSent, stats.bytesReceived, stats.packetsReceived);
+    sprintf(buf, "%d#%d#%d#%d#%d#%d#%d#%d#%d", 
+        stats.fractionLost, stats.cumulativeLost, stats.extendedMax, stats.jitterSamples, stats.rttMs, stats.bytesSent, stats.packetsSent, stats.bytesReceived, stats.packetsReceived);
     return env->NewStringUTF(buf);
 }
 
@@ -730,25 +731,25 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_stopRtpDump
 JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_AmrNBCreateEnc
 (JNIEnv * env, jclass cls)
 {
-    return AmrNBCreateEnc();
+    return ECMedia_AmrNBCreateEnc();
 }
 
 JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_AmrNBCreateDec
 (JNIEnv * env, jclass cls)
 {
-    return AmrNBCreateDec();
+    return ECMedia_AmrNBCreateDec();
 }
 
 JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_AmrNBFreeEnc
 (JNIEnv * env, jclass cls)
 {
-    return AmrNBFreeEnc();
+    return ECMedia_AmrNBFreeEnc();
 }
 
 JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_AmrNBFreeDec
 (JNIEnv * env, jclass cls)
 {
-    return AmrNBFreeDec();
+    return ECMedia_AmrNBFreeDec();
 }
 
 JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_AmrNBEncode
@@ -760,11 +761,11 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_AmrNBEncode
     jbyte buf[1024];
     jint outputLen;
     if (0 == ret) {
-        outputLen = AmrNBEncode((short *)noiseBuf, (short)(inputLen/sizeof(short)), (short *)&buf[0], mode);
+        outputLen = ECMedia_AmrNBEncode((short *)noiseBuf, (short)(inputLen/sizeof(short)), (short *)&buf[0], mode);
     }
     else
     {
-        outputLen = AmrNBEncode((short *)inputData, (short)(inputLen/sizeof(short)), (short *)&buf[0], mode);
+        outputLen = ECMedia_AmrNBEncode((short *)inputData, (short)(inputLen/sizeof(short)), (short *)&buf[0], mode);
     }
 
     if(outputLen > 0)
@@ -782,7 +783,7 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_AmrNBEncode
 JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_AmrNBEncoderInit
 (JNIEnv * env, jclass cls, jint dtxmode)
 {
-    return AmrNBEncoderInit(dtxmode);
+    return ECMedia_AmrNBEncoderInit(dtxmode);
 }
 
 JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_AmrNBDecode
@@ -790,7 +791,7 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_AmrNBDecode
 {
     jbyte *encodedData = env->GetByteArrayElements(encoded, 0);
     jbyte buf[1024];
-    int decodedLen = AmrNBDecode((short *)encodedData, encodedLen, (short *)buf);
+    int decodedLen = ECMedia_AmrNBDecode((short *)encodedData, encodedLen, (short *)buf);
     if(decodedLen > 0)
         env->SetByteArrayRegion(decoded, 0, decodedLen-1, buf);
     env->ReleaseByteArrayElements(encoded, encodedData, 0);
@@ -802,7 +803,7 @@ JNIEXPORT jstring JNICALL Java_com_CCP_phone_NativeInterface_AmrNBVersion
 (JNIEnv * env, jclass cls)
 {
     char buffer[1024];
-    AmrNBVersion(buffer, 1024);
+    ECMedia_AmrNBVersion(buffer, 1024);
     return env->NewStringUTF(buffer);
 }
 

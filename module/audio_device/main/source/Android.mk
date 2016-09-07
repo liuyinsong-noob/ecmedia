@@ -23,19 +23,19 @@ LOCAL_SRC_FILES := \
     audio_device_utility.cc \
     audio_device_impl.cc \
     android/audio_device_android_jni.cc \
-    android/audio_device_android_opensles.cc \
     android/audio_device_utility_android.cc \
-    android/audio_manager_jni.cc \
     android/audio_record_jni.cc \
     android/audio_track_jni.cc \
     android/fine_audio_buffer.cc \
-    android/opensles_common.cc \
-    android/opensles_input.cc \
-    android/opensles_output.cc \
     android/single_rw_fifo.cc \
-    dummy/audio_device_utility_dummy.cc \
-    dummy/audio_device_dummy.cc
+	dummy/audio_device_utility_dummy.cc \
+	dummy/audio_device_dummy.cc
 
+#    android/opensles_common.cc \
+#    android/opensles_input.cc \
+#    android/opensles_output.cc \	
+#    android/audio_device_android_opensles.cc \
+#    android/audio_manager_jni.cc \
 #android/audio_device_android_opensles.cc \
 #android/audio_device_android_opensles.cc \
 # Flags passed to both C and C++ files.

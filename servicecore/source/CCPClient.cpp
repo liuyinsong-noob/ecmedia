@@ -1726,6 +1726,7 @@ extern "C"  int setUserName(const char*username)
 
 extern "C"  const char* makeCall(int callType, const char *called )
 {
+
     if(!g_bConnected)
     {
         PrintConsole("[APICall] makeCall (type=%s, called=%s ) Failed! unConnected\n",
