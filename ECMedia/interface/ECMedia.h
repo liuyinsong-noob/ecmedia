@@ -402,18 +402,13 @@ ECMEDIA_API int ECMedia_stop_capture(int captureid);
 ECMEDIA_API int ECMedia_allocate_desktopShare_capture(int& desktop_captureid, int capture_type);
 /*
 */
-ECMEDIA_API int ECMedia_number_of_screen(int desktop_captureid);
-ECMEDIA_API int ECMedia_number_of_window(int desktop_captureid);
 
 /*
 */
-ECMEDIA_API bool ECMedia_get_screen_list(int desktop_captureid);
-ECMEDIA_API bool ECMedia_get_window_list(int desktop_captureid);
+ECMEDIA_API bool ECMedia_get_screen_list(int desktop_captureid, ScreenID *&screenList);
+ECMEDIA_API bool ECMedia_get_window_list(int desktop_captureid, WindowShare *&windowList);
 
-/*
-*/
-ECMEDIA_API int ECMedia_set_screenId(int numOfScreen, ScreenID *pScreenInfo);
-ECMEDIA_API int ECMedia_set_windowId(int numOfScreen, WindowShare *pWindowInfo);
+
 
 /*
 */

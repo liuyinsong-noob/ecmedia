@@ -76,7 +76,10 @@ static RecordVoip* g_recordVoip = NULL;
 static unsigned char* g_snapshotBuf = NULL;
 static int g_CaptureDeviceId = -1;
 ScreenList m_screenlist;
+ScreenID *m_pScreenlist=NULL;
 WindowList m_windowlist;
+WindowShare *m_pWindowlist=NULL;
+
 #endif
 
 static CameraInfo *m_cameraInfo = NULL;
@@ -351,6 +354,9 @@ int ECMedia_init_video()
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
 #ifdef VIDEO_ENABLED
+	m_pScreenlist = NULL;
+	m_pWindowlist = NULL;
+
     //VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     m_vie = VideoEngine::Create();
     if ( NULL == m_vie)
@@ -421,6 +427,10 @@ int ECMedia_init_video()
 int ECMedia_uninit_video()
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+	if (m_pScreenlist != NULL)
+		delete m_pScreenlist;
+	if (m_pWindowlist != NULL)
+		delete m_pWindowlist;
 #ifdef VIDEO_ENABLED
     PrintConsole("media_uninit_video called in\n");
     if(!m_vie)
@@ -3114,43 +3124,7 @@ int ECMedia_Check_Record_Permission(bool &enabled) {
 }
 #ifdef VIDEO_ENABLED
 
-int ECMedia_number_of_screen(int desktop_captureid)
-{
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
-	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
-	if (vie_desktopshare) {
-		int num = vie_desktopshare->NumberOfScreen(desktop_captureid); //screen num
-		if (num <= 0)
-			PrintConsole("failed to get NumberOfScreen, %s", __FUNCTION__);
-		vie_desktopshare->Release();
-		return num;	
-	}
-	else
-	{
-		PrintConsole("[ECMEDIA WARNNING] failed to get ViEDesktopShare, %s", __FUNCTION__);
-		return -99;
-	}
-}
 
-int ECMedia_number_of_window(int desktop_captureid)
-{
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
-	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
-	if (vie_desktopshare) {
-		int num = vie_desktopshare->NumberOfWindow(desktop_captureid); //window num
-		if (num <= 0)
-			PrintConsole("failed to get NumberOfWindow, %s", __FUNCTION__);
-		vie_desktopshare->Release();
-		return num;
-	}
-	else
-	{
-		PrintConsole("[ECMEDIA WARNNING] failed to get ViEDesktopShare, %s", __FUNCTION__);
-		return -99;
-	}
-}
 
 int ECMedia_allocate_desktopShare_capture(int& desktop_captureid, int capture_type)
 {
@@ -3210,34 +3184,59 @@ int ECMedia_connect_desktop_captureDevice(int desktop_captureid, int video_chann
 
 
 
-bool ECMedia_get_screen_list(int desktop_captureid)
+int ECMedia_get_screen_list(int desktop_captureid, ScreenID *&screenList)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopshare) {
+		if (m_pScreenlist != NULL)
+			delete m_pScreenlist;
 		m_screenlist.clear();
-		bool ret = vie_desktopshare->GetScreenList(desktop_captureid, m_screenlist);
+		bool ret = vie_desktopshare->GetScreenList(deviceId, m_screenlist); 
 		vie_desktopshare->Release();
-		return ret;
+		int num = m_screenlist.size();
+		m_pScreenlist = new ScreenID[num];
+		ScreenID *temp = m_pScreenlist;
+		for (ScreenList::iterator it = m_screenlist.begin(); it!=m_screenlist.end(); it++)
+		{			
+			*temp = *it;
+			temp++;
+		}
+		screenList = m_pScreenlist;
+		return num;
 	}
 	else
 	{
 		PrintConsole("[ECMEDIA WARNNING] failed to get ViEDesktopShare, %s", __FUNCTION__);
-		return false;
+		return -1;
 	}
 }
 
-bool ECMedia_get_window_list(int desktop_captureid)
+
+int ECMedia_get_window_list(int desktop_captureid, WindowShare *&windowList)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopshare) {
+		if (m_pWindowlist != NULL)
+			delete m_pWindowlist;
 		m_windowlist.clear();
-		bool ret = vie_desktopshare->GetWindowList(desktop_captureid, m_windowlist);
+		bool ret = vie_desktopshare->GetWindowList(deviceId, m_windowlist);
 		vie_desktopshare->Release();
-		return ret;
+		int num = m_windowlist.size();
+		//m_pWindowlist = (WindowShare*)malloc(num * sizeof(WindowShare));
+		m_pWindowlist = new WindowShare[num];
+		WindowShare *temp = m_pWindowlist;
+		for (WindowList::iterator it = m_windowlist.begin(); it != m_windowlist.end(); it++)
+		{
+			(*temp).id = it->id;
+			memcpy((*temp).title, it->title.c_str(), kTitleLength);
+			temp++;
+		}
+		windowList = m_pWindowlist;
+		return num;
 	}
 	else
 	{
@@ -3246,42 +3245,7 @@ bool ECMedia_get_window_list(int desktop_captureid)
 	}
 }
 
-int ECMedia_set_screenId(int numOfScreen, ScreenID *pScreenInfo)
-{
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
-	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	ScreenList::iterator iter = m_screenlist.begin();
-	int i = 0;
-	while (iter != m_screenlist.end())
-	{
-		pScreenInfo[i] = *iter;
-		i++;
-		iter++;
-	}
-	for (int j = 0; j < numOfScreen; ++j)
-		PrintConsole(__FILE__, __LINE__, "getShareScreenInfo, ScreenInfo[%d]=%lld", j, pScreenInfo[j]);
 
-	return i;
-}
-
-int ECMedia_set_windowId(int numOfScreen, WindowShare *pWindowInfo)
-{
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
-	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	WindowList::iterator iter = m_windowlist.begin();
-	int i = 0;
-	while (iter != m_windowlist.end())
-	{
-		pWindowInfo[i].id = (*iter).id;
-		memcpy(pWindowInfo[i].title, (*iter).title.c_str(), kTitleLength);
-		i++;
-		iter++;
-	}
-	for (int j = 0; j < numOfScreen; ++j)
-		PrintConsole(__FILE__, __LINE__, "getShareWindowInfo, WindowInfo[%d]=%lld", j, pWindowInfo[j].id);
-
-	return i;
-}
 
 bool ECMedia_select_screen(int desktop_captureid, ScreenID screeninfo)
 {

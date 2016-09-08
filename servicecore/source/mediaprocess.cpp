@@ -4927,26 +4927,10 @@ void ServiceCore::serserphone_call_start_desktop_share(SerPhoneCall *call, const
 int ServiceCore::getShareScreenInfo(ScreenID **screenId, int captureId)
 {
 #ifdef VIDEO_ENABLED
-	if(NULL!=m_pScreenInfo)
-	{
-		delete[] m_pScreenInfo;
-		m_pScreenInfo=NULL;
-	}
+	int num = ECMedia_get_screen_list(captureId, m_pScreenInfo);
+	*screenId = m_pScreenInfo;
 
-	int num = ECMedia_number_of_screen(captureId);
-	if (num <= 0)
-		return num;
-
-	m_pScreenInfo = new ScreenID[num];
-
-	memset(m_pScreenInfo, 0, num*sizeof(ScreenID));
-
-	if (ECMedia_get_screen_list(captureId))
-	{
-		int ret = ECMedia_set_screenId(num, m_pScreenInfo);
-		*screenId = m_pScreenInfo;
-		return ret;
-	}
+	return num;
 #endif
 	return -99;
 }
@@ -4954,26 +4938,10 @@ int ServiceCore::getShareScreenInfo(ScreenID **screenId, int captureId)
 int ServiceCore::getShareWindowInfo(WindowShare **windowInfo, int captureId)
 {
 #ifdef VIDEO_ENABLED
-	if (NULL != m_pWindowInfo)
-	{
-		delete[] m_pWindowInfo;
-		m_pWindowInfo = NULL;
-	}
+	int num = ECMedia_get_window_list(captureId, m_pWindowInfo);
+	*windowInfo = m_pWindowInfo;
 
-	int num = ECMedia_number_of_window(captureId);
-	if (num <= 0)
-		return num;
-
-	m_pWindowInfo = new WindowShare[num];
-
-	memset(m_pWindowInfo, 0, num * sizeof(WindowShare)); 
-
-	if (ECMedia_get_window_list(captureId))
-	{
-		int ret = ECMedia_set_windowId(num, m_pWindowInfo);
-		*windowInfo = m_pWindowInfo;
-		return ret;
-	}
+	return num;
 #endif
 	return -99;
 }
