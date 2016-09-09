@@ -228,7 +228,7 @@ int D3D9Channel::DeliverFrame(const I420VideoFrame& videoFrame) {
   }
   UCHAR* pRect = (UCHAR*) lr.pBits;
 
-  ConvertFromI420(videoFrame, kARGB, 0, pRect);
+  ConvertFromI420(videoFrame, kARGB, lr.Pitch, pRect);
 
   
 
@@ -253,7 +253,7 @@ int D3D9Channel::DeliverFrame(const I420VideoFrame& videoFrame) {
   }
   UCHAR* pRect = (UCHAR*) lr.pBits;
 
-  ConvertFromI420(videoFrame, kARGB, 0, pRect);
+  ConvertFromI420(videoFrame, kARGB, lr.Pitch, pRect);
 
   if (FAILED(_pTexture->UnlockRect(0))) {
     WEBRTC_TRACE(kTraceError, kTraceVideo, -1,
