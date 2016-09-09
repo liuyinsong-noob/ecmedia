@@ -977,6 +977,23 @@ int ECMedia_set_audio_data_cb(int channelid, onEcMediaAudioData audio_data_cb)
     }
 }
 
+int ECMedia_set_video_data_cb(int channelid, onEcMediaVideoDataV video_data_cb)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViENetwork *network = ViENetwork::GetInterface(m_vie);
+	if (network) {
+		network->setVideoDataCb(channelid, video_data_cb);
+		network->Release();
+		return 0;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViENetwork, %s", __FUNCTION__);
+		return -99;
+	}
+}
+
 int ECMedia_set_voe_cb(int channelid, onVoeCallbackOnError voe_callback_cb)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);

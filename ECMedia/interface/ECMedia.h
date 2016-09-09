@@ -29,6 +29,7 @@ typedef int (*onEcMediaReceivingDtmf)(int channelid, char dtmfch);//dtmf
 typedef int (*onEcMediaPacketTimeout)(int channelid);
 typedef int (*onEcMediaStunPacket)(int channelid, void *data, int len, const char *fromIP, int fromPort, bool isRTCP, bool isVideo);
 typedef int (*onEcMediaAudioData)(int channelid, const void *data, int inLen, void *outData, int &outLen, bool send);
+typedef int (*onEcMediaVideoDataV)(int channelid, const void *data, int inLen, void *outData, int &outLen, bool send);
 typedef int (*onEcMediaVideoConference)(int channelid, int status, int payload);
 
 typedef int (*onEcMediaRequestKeyFrameCallback)(const int channelid);
@@ -306,6 +307,7 @@ ECMEDIA_API int ECMedia_set_dtmf_cb(int channelid, onEcMediaReceivingDtmf dtmf_c
 ECMEDIA_API int ECMedia_set_media_packet_timeout_cb(int channelid, onEcMediaPacketTimeout media_timeout_cb);
 ECMEDIA_API int ECMedia_set_stun_cb(int channelid, onEcMediaStunPacket stun_cb);
 ECMEDIA_API int ECMedia_set_audio_data_cb(int channelid, onEcMediaAudioData audio_data_cb);
+ECMEDIA_API int ECMedia_set_video_data_cb(int channelid, onEcMediaVideoDataV Video_data_cb);
 ECMEDIA_API int ECMedia_set_voe_cb(int channelid, onVoeCallbackOnError voe_callback_cb);
 /*
  * ONLY USE FOR PEER CONNECTION FOR AUDIO
