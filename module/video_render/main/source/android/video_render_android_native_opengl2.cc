@@ -516,21 +516,7 @@ int32_t AndroidNativeOpenGl2Channel::Init(int32_t zOrder,
 int32_t AndroidNativeOpenGl2Channel::RenderFrame(
     const uint32_t /*streamId*/,
     I420VideoFrame& videoFrame) {
-  //   WEBRTC_TRACE(kTraceInfo, kTraceVideoRenderer,_id, "%s:" ,__FUNCTION__);
-
   _renderCritSect.Enter();
-
-/*	int ySize = videoFrame.width() * videoFrame.height();//_bufferToRender.allocated_size(kYPlane);
-	int uSize = videoFrame.width() * videoFrame.height()/4;//_bufferToRender.allocated_size(kUPlane);
-	int vSize = videoFrame.width() * videoFrame.height()/4;//_bufferToRender.allocated_size(kVPlane);
-
-  	if(_deliveFrameFile) {
-		fwrite(videoFrame.buffer(kYPlane), 1, ySize, _deliveFrameFile);
-		fwrite(videoFrame.buffer(kUPlane), 1, uSize, _deliveFrameFile);
-		fwrite(videoFrame.buffer(kVPlane), 1, vSize, _deliveFrameFile);
-		//fwrite(_renderFrameData, 1, frameSize, _deliveFrameFile);
-	} */
-
   _bufferToRender.SwapFrame(&videoFrame);
   _renderCritSect.Leave();
   _renderer.ReDraw();
@@ -542,25 +528,24 @@ int32_t AndroidNativeOpenGl2Channel::RenderFrame(
  */
 void AndroidNativeOpenGl2Channel::DeliverFrame(JNIEnv* jniEnv) {
   //TickTime timeNow=TickTime::Now();
-	bool isAttached = false;
-	JNIEnv* env = NULL;
-	if (_jvm->GetEnv((void**) &env, JNI_VERSION_1_4) != JNI_OK) {
-		// try to attach the thread and get the env
-		// Attach this thread to JVM
-		jint res = _jvm->AttachCurrentThread(&env, NULL);
+	//bool isAttached = false;
+	//JNIEnv* env = NULL;
+	//if (_jvm->GetEnv((void**) &env, JNI_VERSION_1_4) != JNI_OK) {
+	//	// try to attach the thread and get the env
+	//	// Attach this thread to JVM
+	//	jint res = _jvm->AttachCurrentThread(&env, NULL);
 
-		// Get the JNI env for this thread
-		if ((res < 0) || !env) {
-		  WEBRTC_TRACE(kTraceError, kTraceVideoRenderer, _id,
-		               "%s: Could not attach thread to JVM (%d, %p)",
-		               __FUNCTION__, res, env);
-		  return;
-		}
-		isAttached = true;
-	}
-
+	//	// Get the JNI env for this thread
+	//	if ((res < 0) || !env) {
+	//	  WEBRTC_TRACE(kTraceError, kTraceVideoRenderer, _id,
+	//	               "%s: Could not attach thread to JVM (%d, %p)",
+	//	               __FUNCTION__, res, env);
+	//	  return;
+	//	}
+	//	isAttached = true;
+	//}
+	
 	_renderCritSect.Enter();
-
 
 	uint8_t* yPlane = _bufferToRender.buffer(kYPlane);
 	uint8_t* uPlane = _bufferToRender.buffer(kUPlane);
@@ -574,6 +559,11 @@ void AndroidNativeOpenGl2Channel::DeliverFrame(JNIEnv* jniEnv) {
 	int height = _bufferToRender.height();
 	int frameSize = width*height*3/2;
 
+	if(width == 0 || height == 0) {
+	  _renderCritSect.Leave();
+    return;
+	}
+
 	if(width != _lastWidth || height != _lastHeight) {
 		if(_renderFrameBuf)
 			free(_renderFrameBuf);
@@ -581,17 +571,19 @@ void AndroidNativeOpenGl2Channel::DeliverFrame(JNIEnv* jniEnv) {
 		_lastWidth = width;
 		_lastHeight = height;
 
-		//if(_renderFrameData) {
-		//	env->DeleteGlobalRef(_renderFrameData);
-		//}
-		//_renderFrameData = (jbyteArray)env->NewGlobalRef(env->NewByteArray(frameSize));
+		if(_renderFrameData) {
+			jniEnv->DeleteGlobalRef(_renderFrameData);
+		}
+		jbyteArray frameData = jniEnv->NewByteArray(frameSize);
+		_renderFrameData = (jbyteArray)jniEnv->NewGlobalRef(frameData);
+    jniEnv->DeleteLocalRef(frameData);
+    WEBRTC_TRACE(kTraceWarning, kTraceVideoRenderer, _id,
+         "%s: hubintest 0",
+         __FUNCTION__);
+                     
 	}
-
-//	WEBRTC_TRACE(kTraceWarning, kTraceVideoRenderer, _id,
-//				 "%s: hubin %d %d %d %d %d %d _renderFrameBuf:%0x", __FUNCTION__, width, height, frameSize, yStride, uStride, vStride, _renderFrameBuf);
-
+	
 	int i=0;
-
 	uint8_t* ptr = _renderFrameBuf;
 	memset(ptr, 0, frameSize);
 
@@ -607,31 +599,30 @@ void AndroidNativeOpenGl2Channel::DeliverFrame(JNIEnv* jniEnv) {
 		memcpy(ptr, vPlane+vStride*i, vStride);
 		ptr = ptr+width/2;
 	}
-
-/*	if(!_renderFrameData) {
-		jbyteArray frameData = env->NewByteArray(frameSize);
-		_renderFrameData = env->NewGlobalRef(frameData);
-		env->DeleteLocalRef(frameData);
-	} else if(env->GetArrayLength(_renderFrameData) != frameSize) {
-		env->DeleteLocalRef(_renderFrameData);
-		_renderFrameData = env->NewByteArray(frameSize);
-	}
-	*/
 	_renderCritSect.Leave();
 
-	jbyteArray frameData = env->NewByteArray(frameSize);
-	env->SetByteArrayRegion(frameData, 0, frameSize, (jbyte *)_renderFrameBuf);
+////////////////////hubintest
+	//jbyteArray frameData = jniEnv->NewByteArray(frameSize);
+	//jniEnv->SetByteArrayRegion(frameData, 0, frameSize, (jbyte *)_renderFrameBuf);
+	////Draw
+	//jniEnv->CallVoidMethod(_javaRenderObj, _redrawCid, _bufferToRender.width(), _bufferToRender.height(), frameData, frameSize);
+ // jniEnv->DeleteLocalRef(frameData);
+//////////////////
+	jniEnv->SetByteArrayRegion(_renderFrameData, 0, frameSize, (jbyte *)_renderFrameBuf);
 	//Draw
-	jniEnv->CallVoidMethod(_javaRenderObj, _redrawCid, _bufferToRender.width(), _bufferToRender.height(), frameData, frameSize);
-    env->DeleteLocalRef(frameData);
+	jniEnv->CallVoidMethod(_javaRenderObj, _redrawCid, _bufferToRender.width(), _bufferToRender.height(), _renderFrameData, frameSize);
+
+
+/////////////
+  
 
   // Detach this thread if it was attached
-  if (isAttached) {
-    if (_jvm->DetachCurrentThread() < 0) {
-      WEBRTC_TRACE(kTraceWarning, kTraceVideoRenderer, _id,
-                   "%s: Could not detach thread from JVM", __FUNCTION__);
-    }
-  }
+  //if (isAttached) {
+  //  if (_jvm->DetachCurrentThread() < 0) {
+  //    WEBRTC_TRACE(kTraceWarning, kTraceVideoRenderer, _id,
+  //                 "%s: Could not detach thread from JVM", __FUNCTION__);
+  //  }
+  //}
 
   // WEBRTC_TRACE(kTraceInfo, kTraceVideoRenderer,_id,
   // "%s: time to deliver %lld" ,__FUNCTION__,

@@ -247,7 +247,7 @@ void H264Encoder::SetX264EncodeParameters(x264_param_t &params, VideoCodecMode m
 	}
 	
 	x264_param_apply_profile(p_params, x264_profile_names[0]);
-	p_params->i_level_idc = 30;  //编码复杂度
+	p_params->i_level_idc = 40;  //编码复杂度
 	p_params->i_width=codec_.width;
 	p_params->i_height=codec_.height;
 	p_params->i_fps_num = codec_.maxFramerate;
