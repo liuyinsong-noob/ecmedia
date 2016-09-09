@@ -4814,10 +4814,10 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
 #endif
 
 #ifdef VIDEO_ENABLED
-	serphone_core_assign_payload_type(&payload_type_h264,-1,"profile-level-id=428014");
+	serphone_core_assign_payload_type(&payload_type_h264,-1,"profile-level-id=42C020");
 	serphone_core_assign_payload_type(&payload_type_vp8,120,NULL);
 
-    serphone_core_assign_payload_type(&payload_type_h264_svc,98, "profile-level-id=428014"); //profile-level-id need to be fixed.
+   // serphone_core_assign_payload_type(&payload_type_h264_svc,98, "profile-level-id=428014"); //profile-level-id need to be fixed.
 	/* due to limited space in SDP, we have to disable this h264 line which is normally no more necessary */
 	/* serphone_core_assign_payload_type(&payload_type_h264,-1,"packetization-mode=1;profile-level-id=428014");*/
 #endif
@@ -5430,9 +5430,9 @@ static const char *codec_pref_order[]={
 	"gsm",
     "pcmu",
 	"pcma",
+	"VP8",
+	"H264",    
 	"H264-SVC",
-	"H264",
-    "VP8",
 	"MP4V-ES",
 	"H263-1998",
 	NULL,

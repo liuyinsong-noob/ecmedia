@@ -405,8 +405,8 @@ ECMEDIA_API int ECMedia_allocate_desktopShare_capture(int& desktop_captureid, in
 
 /*
 */
-ECMEDIA_API bool ECMedia_get_screen_list(int desktop_captureid, ScreenID *&screenList);
-ECMEDIA_API bool ECMedia_get_window_list(int desktop_captureid, WindowShare *&windowList);
+ECMEDIA_API int ECMedia_get_screen_list(int desktop_captureid, ScreenID *&screenList);
+ECMEDIA_API int ECMedia_get_window_list(int desktop_captureid, WindowShare *&windowList);
 
 
 

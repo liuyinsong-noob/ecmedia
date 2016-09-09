@@ -4132,6 +4132,7 @@ int ServiceCore::PlayVideoFromRtpDump(int localPort, const char *ptName, int plo
 	bool codec_found = false;
 	int codec_num = ECMedia_num_of_supported_codecs_video();
 	cloopenwebrtc::VideoCodec *codecArray = new cloopenwebrtc::VideoCodec[codec_num];
+	ECMedia_get_supported_codecs_video(codecArray);
 	for (int i = 0; i < codec_num; i++) {
 		codec_params = codecArray[i];
 		if ( strcasecmp( codec_params.plName, ptName) == 0) {
@@ -4149,6 +4150,7 @@ int ServiceCore::PlayVideoFromRtpDump(int localPort, const char *ptName, int plo
 	if (codec_found) {
 		ECMedia_set_receive_codec_video(m_VideoChannelIDDump,codec_params);
 	}
+	ECMedia_video_start_receive(m_VideoChannelIDDump);
 
 //#ifdef	ENABLE_RECORD_RAW_VIDEO
 //	{
@@ -4980,7 +4982,7 @@ int ServiceCore::SetVideoKeepAlive(SerPhoneCall *call, bool enable, int interval
 
 	cloopenwebrtc::VideoCodec codec;
 	ECMedia_get_send_codec_video(call->m_VideoChannelID, codec);
-	return ECMedia_set_video_rtp_keepalive(call->m_AudioChannelID, enable, interval, codec.plType);
+	return ECMedia_set_video_rtp_keepalive(call->m_VideoChannelID, enable, interval, codec.plType);
 #endif
 #endif
 }

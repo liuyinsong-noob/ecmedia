@@ -3193,7 +3193,7 @@ int ECMedia_get_screen_list(int desktop_captureid, ScreenID *&screenList)
 		if (m_pScreenlist != NULL)
 			delete m_pScreenlist;
 		m_screenlist.clear();
-		bool ret = vie_desktopshare->GetScreenList(deviceId, m_screenlist); 
+		bool ret = vie_desktopshare->GetScreenList(desktop_captureid, m_screenlist);
 		vie_desktopshare->Release();
 		int num = m_screenlist.size();
 		m_pScreenlist = new ScreenID[num];
@@ -3223,7 +3223,7 @@ int ECMedia_get_window_list(int desktop_captureid, WindowShare *&windowList)
 		if (m_pWindowlist != NULL)
 			delete m_pWindowlist;
 		m_windowlist.clear();
-		bool ret = vie_desktopshare->GetWindowList(deviceId, m_windowlist);
+		bool ret = vie_desktopshare->GetWindowList(desktop_captureid, m_windowlist);
 		vie_desktopshare->Release();
 		int num = m_windowlist.size();
 		//m_pWindowlist = (WindowShare*)malloc(num * sizeof(WindowShare));
@@ -3241,7 +3241,7 @@ int ECMedia_get_window_list(int desktop_captureid, WindowShare *&windowList)
 	else
 	{
 		PrintConsole("[ECMEDIA WARNNING] failed to get ViEDesktopShare, %s", __FUNCTION__);
-		return false;
+		return -1;
 	}
 }
 
