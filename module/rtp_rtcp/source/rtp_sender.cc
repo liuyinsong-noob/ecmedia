@@ -155,7 +155,8 @@ RTPSender::RTPSender(int32_t id,
     _keepAliveIsActive(false),
     _keepAlivePayloadType(-1),
     _keepAliveLastSent(0),
-    _keepAliveDeltaTimeSend(0){
+    _keepAliveDeltaTimeSend(0),
+    _last_capture_timestamp(0){
   memset(nack_byte_count_times_, 0, sizeof(nack_byte_count_times_));
   memset(nack_byte_count_, 0, sizeof(nack_byte_count_));
   // We need to seed the random generator.
@@ -1034,24 +1035,25 @@ RTPSender::SendRTPKeepalivePacket()
         CriticalSectionScoped lock(statistics_crit_.get());
         
         int64_t now = clock_->TimeInMicroseconds();
-        int64_t dT = now -_keepAliveLastSent; // delta time in MS
-        
-        WebRtc_UWord32 freqKHz = 90; // video
-        if(audio_configured_)
-        {
-            freqKHz = audio_->AudioFrequency()/1000;
-        }
-        WebRtc_UWord32 dSamples = dT*freqKHz;
-        
-        // set timestamp
-        timestamp_ += dSamples;
+        //int64_t dT = now -_keepAliveLastSent; // delta time in MS
+        //
+        //WebRtc_UWord32 freqKHz = 90; // video
+        //if(audio_configured_)
+        //{
+        //    freqKHz = audio_->AudioFrequency()/1000;
+        //}
+        //WebRtc_UWord32 dSamples = dT*freqKHz;
+        //
+        //// set timestamp
+        //timestamp_ += dSamples;
         _keepAliveLastSent = now;
         
         rtpHeaderLength = RTPHeaderLength();
+        if (last_packet_marker_bit_)
+            _last_capture_timestamp++;
         
-        
-        // correct seq num, time stamp and payloadtype
-        BuildRTPheader(dataBuffer, _keepAlivePayloadType, false, 0, false, false);
+        // correct seq num, time stamp and payloadtype        
+        BuildRTPheader(dataBuffer, _keepAlivePayloadType, last_packet_marker_bit_, _last_capture_timestamp, 0);
     }
     
     return SendToNetwork(dataBuffer, 0, rtpHeaderLength, -1, kDontStore,PacedSender::kNormalPriority);
@@ -1252,6 +1254,7 @@ int32_t RTPSender::BuildRTPheader(uint8_t* data_buffer,
 
   if (timestamp_provided) {
     timestamp_ = start_timestamp_ + capture_timestamp;
+    _last_capture_timestamp = capture_timestamp;
   } else {
     // Make a unique time stamp.
     // We can't inc by the actual time, since then we increase the risk of back

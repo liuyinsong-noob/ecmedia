@@ -296,7 +296,7 @@ private:
     int8_t              _keepAlivePayloadType;
     uint64_t            _keepAliveLastSent;
     uint32_t            _keepAliveDeltaTimeSend;
-    
+    uint32_t				_last_capture_timestamp;
     
  protected:
   int32_t CheckPayloadType(int8_t payload_type, RtpVideoCodecTypes* video_type);
