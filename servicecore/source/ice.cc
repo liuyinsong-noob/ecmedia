@@ -37,6 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 #include "servicecore.h"
+#include "ECMedia.h"
 //#include "voe_base.h"
 //#include "vie_network.h"
 #define ICE_MAX_NB_CANDIDATES		10

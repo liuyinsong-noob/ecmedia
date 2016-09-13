@@ -4,7 +4,7 @@
 #include "servicecore.h"
 #include "salpr.h"
 #include "serphoneinterface.h"
-
+#include "ECMedia.h"
 
 SerphoneAddress * serphone_address_new(const char *addr){
 	SalAddress *saddr=sal_address_new(addr);

@@ -1,7 +1,7 @@
 
 #include "salpr.h"
 #include "offeranswer.h"
-
+#include "ECMedia.h"
 
 static bool_t only_telephone_event(const MSList *l){
 	PayloadType *p=(PayloadType*)l->data;

@@ -16,7 +16,9 @@
 #ifdef WEBRTC_ANDROID
 #include "jni.h"
 #define ECMEDIA_API JNIEXPORT
-#else
+#elif  defined(WIN32)
+ #define ECMEDIA_API  _declspec(dllexport)
+ #else
 #define ECMEDIA_API
 #endif
 
@@ -407,8 +409,8 @@ ECMEDIA_API int ECMedia_allocate_desktopShare_capture(int& desktop_captureid, in
 
 /*
 */
-ECMEDIA_API int ECMedia_get_screen_list(int desktop_captureid, ScreenID *&screenList);
-ECMEDIA_API int ECMedia_get_window_list(int desktop_captureid, WindowShare *&windowList);
+ECMEDIA_API int ECMedia_get_screen_list(int desktop_captureid, ScreenID **screenList);
+ECMEDIA_API int ECMedia_get_window_list(int desktop_captureid, WindowShare **windowList);
 
 
 

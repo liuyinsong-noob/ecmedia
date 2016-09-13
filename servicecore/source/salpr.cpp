@@ -13,6 +13,7 @@
 #include   <stdlib.h> 
 #include   <crtdbg.h>
 #endif
+#include "ECMedia.h"
 
 const char* sal_transport_to_string(SalTransport transport) {
 	switch (transport) {

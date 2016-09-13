@@ -7,6 +7,7 @@
 #include "Utility/tinyxml2.h"
 #include <sstream>
 #include "sometools.h"
+#include "ECMedia.h"
 #ifdef WIN32
 #include <Windows.h>
 #pragma warning(disable:4996)

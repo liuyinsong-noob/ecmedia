@@ -81,16 +81,6 @@
     <ClCompile Include="main\source\video_receiver.cc" />
     <ClCompile Include="main\source\video_sender.cc" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="webrtc_vp8.vcxproj">
-      <Project>{b234c1e2-f21f-fa63-8a7c-ddc0ff3fd53a}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8E16F322-1D7D-2C90-49F4-038EBF7CC264}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

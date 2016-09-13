@@ -1,6 +1,7 @@
 
 
 #include "sal_eXosip2.h"
+#include "ECMedia.h"
 
 extern "C" char *osip_call_id_new_random();
 //#include "eXosip2.h"

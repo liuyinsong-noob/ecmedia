@@ -6,6 +6,7 @@
 #include "servicecore.h"
 #include "sipsetup.h"
 #include "eXtransport.h"
+#include "ECMedia.h"
 
 #ifdef  WIN32      //for locating memory leak under windows platform added by zdm
 #include   <stdlib.h> 

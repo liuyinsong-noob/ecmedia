@@ -818,9 +818,14 @@ void CserphonetestDlg::OnBnClickedButton1()
 	g_dlg->m_sipAccount += "@";
 	g_dlg->m_sipAccount += m_MediaServerIP;
 
-	connectToCCP(W2A((LPCTSTR)m_MediaServerIP), atoi(serverPort),W2A((LPCTSTR)m_sipID), W2A((LPCTSTR)m_sipPassword),"eyJsb2NhbHJlYyI6IjEifQ==");
+	int ret = connectToCCP(W2A((LPCTSTR)m_MediaServerIP), atoi(serverPort),W2A((LPCTSTR)m_sipID), W2A((LPCTSTR)m_sipPassword),"eyJsb2NhbHJlYyI6IjEifQ==");
 	setUserData(USERDATA_FOR_INVITE,"phone=15810763885");
-	m_startbutton.EnableWindow(false);
+
+	if (ret <= 0) {
+		g_dlg->SetDlgItemText(IDC_REGISTER_STATE, L"  注册失败，参数不正确");
+		return;
+	}
+		m_startbutton.EnableWindow(false);
 
 //	SetTimer(TIMER_STATISTICS, 1000, 0);
 }
@@ -1273,7 +1278,7 @@ void CserphonetestDlg::OnBnClickedButton25()
 		ptName = "VP8";
 	}
 
-	int ret = PlayVideoFromRtpDump(localPort, ptName, payloadType, m_dlgFullScreen->GetSafeHwnd()/*lcwnd->GetSafeHwnd()*/);
+	int ret = PlayVideoFromRtpDump(localPort, ptName, payloadType, /*m_dlgFullScreen->GetSafeHwnd()*/lcwnd->GetSafeHwnd());
 
 }
 

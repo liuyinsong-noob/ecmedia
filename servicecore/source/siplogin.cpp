@@ -2,7 +2,7 @@
 #include "servicecore.h"
 #include "serprivate.h"
 #include <ctype.h>
-
+#include "ECMedia.h"
 
 static void sip_login_init_instance(SipSetupContext *ctx){
 	SerphoneProxyConfig *cfg=sip_setup_context_get_proxy_config(ctx);

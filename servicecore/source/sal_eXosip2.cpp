@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "sal_eXosip2.h"
 #include "offeranswer.h"
 #include "servicecore.h"
+#include "ECMedia.h"
 
 extern FILE *traceFile;
 extern std::string timetodate(time_t const timer);

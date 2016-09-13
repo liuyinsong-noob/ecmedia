@@ -271,6 +271,7 @@
       </AdditionalLibraryDirectories>
       <AdditionalOptions>/ignore:4221 %(AdditionalOptions)</AdditionalOptions>
       <OutputFile>$(OutDir)lib\$(ProjectName).lib</OutputFile>
+      <AdditionalDependencies>wmcodecdspuuid.lib;dmoguids.lib;msdmo.lib;</AdditionalDependencies>
     </Lib>
     <Link>
       <AdditionalDependencies>wininet.lib;dnsapi.lib;version.lib;msimg32.lib;ws2_32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>

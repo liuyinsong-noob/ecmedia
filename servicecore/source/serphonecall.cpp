@@ -3,6 +3,7 @@
 #include "serphonecall.h"
 #include "servicecore.h"
 #include "sal_eXosip2.h"
+#include "ECMedia.h"
 
 #if !defined(NO_VOIP_FUNCTION)
 //#include "voe_observer.h"

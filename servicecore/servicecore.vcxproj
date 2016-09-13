@@ -195,8 +195,7 @@
     <Lib>
       <OutputFile>$(OutDir)\ccpclient.lib</OutputFile>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>
-      </AdditionalDependencies>
+      <AdditionalDependencies>Iphlpapi.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -219,6 +218,8 @@
     <ClInclude Include="interface\CCPClient.h" />
     <ClInclude Include="interface\CCPClient_Internal.h" />
     <ClInclude Include="interface\serphoneinterface.h" />
+    <ClInclude Include="source\critical_section_win.h" />
+    <ClInclude Include="source\critical_section_wrapper.h" />
     <ClInclude Include="source\Http\http.h" />
     <ClInclude Include="source\Http\HttpClient.h" />
     <ClInclude Include="source\Http\RESTClient.h" />
@@ -231,6 +232,8 @@
     <ClCompile Include="source\callbacks.cpp" />
     <ClCompile Include="source\CCPClient.cpp" />
     <ClCompile Include="source\chat.cpp" />
+    <ClCompile Include="source\critical_section.cc" />
+    <ClCompile Include="source\critical_section_win.cc" />
     <ClCompile Include="source\enum.cpp" />
     <ClCompile Include="source\friends.cpp" />
     <ClCompile Include="source\Http\http.cpp" />

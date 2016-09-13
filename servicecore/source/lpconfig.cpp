@@ -21,7 +21,7 @@
 #define lp_new0(type,n)	(type*)calloc(sizeof(type),n)
 
 #include "lpconfig.h"
-
+#include "ECMedia.h"
 
 typedef struct _LpItem{
 	char *key;

@@ -280,6 +280,9 @@
     <ProjectReference Include="..\..\servicecore\servicecore.vcxproj">
       <Project>{f6734fb1-dd5e-4b30-bedf-b1e9930985d8}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\third_party\oRTP\build\win32native\oRTP.vcxproj">
+      <Project>{4a07bb2b-f56e-4f1b-a719-d28b782ac128}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

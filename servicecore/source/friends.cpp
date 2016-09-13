@@ -5,7 +5,7 @@
 #include "servicecore.h"
 #include "friends.h"
 #include "serphonecall.h"
-
+#include "ECMedia.h"
 
 #define key_compare(s1,s2)	strcmp(s1,s2)
 

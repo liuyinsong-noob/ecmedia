@@ -4,6 +4,7 @@
 #include "friends.h"
 #include "lpconfig.h"
 #include "enum.h"
+#include "ECMedia.h"
 
 void ServiceCore::serphone_subscription_new(SalOp *op, const char *from)
 {

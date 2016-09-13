@@ -6,6 +6,7 @@
 #include "sipsetup.h"
 #include "servicecore.h"
 #include "serprivate.h"
+#include "ECMedia.h"
 
 #if defined(WEBRTC_MAC)
 #include <malloc/malloc.h>

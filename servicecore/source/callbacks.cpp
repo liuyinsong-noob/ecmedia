@@ -7,6 +7,7 @@
 #include "lpconfig.h"
 #include "CCPClient.h"
 #include "sal_eXosip2.h"
+#include "ECMedia.h"
 extern CCallbackInterface g_cbInterface;
 
 static void register_failure(SalOp *op, SalError error, SalReason reason, const char *details);

@@ -610,6 +610,15 @@ int ECMedia_audio_create_channel(int& channelid, bool is_video)
         if (base) {
             base->CreateChannel(channelid);
             base->Release();
+
+			ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
+			if (rtp_rtcp) {
+				rtp_rtcp->SetRembStatus(channelid, true, true);
+				rtp_rtcp->SetTMMBRStatus(channelid, true);
+				rtp_rtcp->SetSendAbsoluteSendTimeStatus(channelid, true, kRtpExtensionAbsoluteSendTime);
+				rtp_rtcp->SetReceiveAbsoluteSendTimeStatus(channelid, true, kRtpExtensionAbsoluteSendTime);
+			}
+			rtp_rtcp->Release();
             return 0;
         }
         else
@@ -3201,10 +3210,14 @@ int ECMedia_connect_desktop_captureDevice(int desktop_captureid, int video_chann
 
 
 
-int ECMedia_get_screen_list(int desktop_captureid, ScreenID *&screenList)
+int ECMedia_get_screen_list(int desktop_captureid, ScreenID **screenList)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	if (!screenList) {
+		PrintConsole("[ECMEDIA INFO] %s screenList is NULL.", __FUNCTION__);
+		return -1;
+	}
 	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopshare) {
 		if (m_pScreenlist != NULL)
@@ -3220,7 +3233,7 @@ int ECMedia_get_screen_list(int desktop_captureid, ScreenID *&screenList)
 			*temp = *it;
 			temp++;
 		}
-		screenList = m_pScreenlist;
+		*screenList = m_pScreenlist;
 		return num;
 	}
 	else
@@ -3231,10 +3244,14 @@ int ECMedia_get_screen_list(int desktop_captureid, ScreenID *&screenList)
 }
 
 
-int ECMedia_get_window_list(int desktop_captureid, WindowShare *&windowList)
+int ECMedia_get_window_list(int desktop_captureid, WindowShare **windowList)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	if (!windowList) {
+		PrintConsole("[ECMEDIA INFO] %s windowList is NULL.", __FUNCTION__);
+		return -1;
+	}
 	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopshare) {
 		if (m_pWindowlist != NULL)
@@ -3252,7 +3269,7 @@ int ECMedia_get_window_list(int desktop_captureid, WindowShare *&windowList)
 			memcpy((*temp).title, it->title.c_str(), kTitleLength);
 			temp++;
 		}
-		windowList = m_pWindowlist;
+		*windowList = m_pWindowlist;
 		return num;
 	}
 	else

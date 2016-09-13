@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "sometools.h"
 #include "salpr.h"
 #include <eXosip2/eXosip.h>
-
+#include "ECMedia.h"
 #include "ice.h"
 
 #define keywordcmp(key,b) strncmp(key,b,sizeof(key))
@@ -213,6 +213,10 @@ static void add_payload(sdp_message_t *msg, int line, const PayloadType *pt, boo
 		sdp_message_a_attribute_add (msg, line, osip_strdup ("rtcp-fb"),
 			osip_strdup(attr));
 	}
+
+	snprintf(attr, sizeof(attr), "%i goog-remb", payload_type_get_number(pt));
+	sdp_message_a_attribute_add(msg, line, osip_strdup("rtcp-fb"),
+		osip_strdup(attr));
 	
 }
 

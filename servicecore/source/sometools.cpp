@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "ECMedia.h"
 
 #if !defined(_WIN32_WCE) && !defined(_WIN32)
 #include <errno.h>

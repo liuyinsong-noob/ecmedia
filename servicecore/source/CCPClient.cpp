@@ -1566,7 +1566,7 @@ extern "C"  int connectToCCP(const char *proxy_addr, int proxy_port,
 		g_pSerCore->serphone_set_reg_info(proxy_addr,proxy_port,account,password,gDisplayName, capability, gToken);
 		return 0;
 	}
-	return 0;
+	return ERR_INVALID_PARAM;
 }
 
 extern "C" int connectToCCPWithXML(const char *addressXML, const char *account, const char *password, const char *capability)

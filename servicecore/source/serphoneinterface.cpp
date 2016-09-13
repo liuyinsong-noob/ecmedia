@@ -6,6 +6,7 @@
 #include "friends.h"
 #include "lpconfig.h"
 #include "enum.h"
+#include "ECMedia.h"
 
 #ifdef  WIN32      //for locating memory leak under windows platform added by zdm
 #include   <stdlib.h> 

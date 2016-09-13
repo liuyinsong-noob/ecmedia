@@ -75,6 +75,12 @@
     <ClInclude Include="source\Utility\cJSON.h">
       <Filter>source\Utility</Filter>
     </ClInclude>
+    <ClInclude Include="source\critical_section_wrapper.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="source\critical_section_win.h">
+      <Filter>source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\salpr.cpp">
@@ -166,6 +172,12 @@
     </ClCompile>
     <ClCompile Include="source\Utility\cJSON.c">
       <Filter>source\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="source\critical_section.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\critical_section_win.cc">
+      <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

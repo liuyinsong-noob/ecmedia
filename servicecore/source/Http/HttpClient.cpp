@@ -2,6 +2,7 @@
 #include <memory.h>
 #include <string.h>
 #include "sometools.h"
+#include "ECMedia.h"
 
 #ifdef WIN32
 #pragma warning(disable:4996)

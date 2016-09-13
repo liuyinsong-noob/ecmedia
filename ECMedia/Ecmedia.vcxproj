@@ -26,7 +26,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
@@ -38,14 +38,14 @@
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
@@ -69,27 +69,27 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\lib\</OutDir>
+    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)build\$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
-    <TargetExt>.lib</TargetExt>
+    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\lib\</OutDir>
+    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)build\$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\lib\</OutDir>
+    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)build\$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
-    <TargetExt>.lib</TargetExt>
+    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\lib\</OutDir>
+    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)build\$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
-    <TargetExt>.lib</TargetExt>
+    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -228,6 +228,12 @@
       <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\module\audio_coding\codecs\audio_decoder_interface.vcxproj">
+      <Project>{2734e26a-1062-4f83-a662-613e712baf1a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\module\audio_coding\codecs\audio_encoder_interface.vcxproj">
+      <Project>{1ccf2900-1342-417e-ab90-daae07c51b69}</Project>
     </ProjectReference>
     <ProjectReference Include="..\module\audio_coding\codecs\silk\silk_android\src\Silk_FIX.vcxproj">
       <Project>{56b91d01-9150-4bbf-afa1-5b68ab991b76}</Project>
@@ -437,11 +443,6 @@
     </ProjectReference>
     <ProjectReference Include="..\module\video_render\video_render_module_impl.vcxproj">
       <Project>{e58ebdaf-e071-428b-a7c8-a4a43939588a}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\system_wrappers\source\system_wrappers.vcxproj">
       <Project>{75f95b97-c0b0-aa5d-4ac8-78cac02dc44e}</Project>
@@ -454,6 +455,13 @@
     <ProjectReference Include="..\third_party\libjpeg_turbo\libjpeg.vcxproj">
       <Project>{a68e380e-afb4-e4e2-f5ed-0ae20725b7c5}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\third_party\libvpx\build\win32\vpx.vcxproj">
+      <Project>{dce19daf-69ac-46db-b14a-39f0faa5db74}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\third_party\libvpx\build\x64\vpx_x64.vcxproj">
+      <Project>{34b221e6-b6c6-47af-bde8-dd578fdaed01}</Project>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
     <ProjectReference Include="..\third_party\libyuv\libyuv.vcxproj">
       <Project>{1a8364d9-fe77-b61e-ed73-eeb3beb59e8e}</Project>
       <Private>true</Private>
@@ -461,6 +469,21 @@
       <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\third_party\openH264\codec\build\win32\dec\WelsDecCore.vcxproj">
+      <Project>{01b4ae41-6ad6-4caf-aeb3-c42f7f9121d5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\third_party\openH264\codec\build\win32\dec\WelsDecPlus.vcxproj">
+      <Project>{1131558a-9986-4f4b-a13f-8b7f4c8438bf}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\third_party\openH264\codec\build\win32\enc\WelsEncCore.vcxproj">
+      <Project>{59208004-1774-4816-ac24-31ff44c324b4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\third_party\openH264\codec\build\win32\enc\WelsEncPlus.vcxproj">
+      <Project>{1e7b4e9a-986e-4167-8c70-6e4f60eaee7f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\third_party\openH264\codec\processing\build\win32\WelsVP.vcxproj">
+      <Project>{e8dfafa1-8dac-4127-8d27-fbd5819ee562}</Project>
     </ProjectReference>
     <ProjectReference Include="..\third_party\opus\src\win32\VS2010\celt.vcxproj">
       <Project>{245603e3-f580-41a5-9632-b25fe3372cbf}</Project>

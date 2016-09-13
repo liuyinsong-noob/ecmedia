@@ -8,7 +8,7 @@
 #include <string.h>
 
 #include "enum.h"
-
+#include "ECMedia.h"
 #define DNS_ANSWER_MAX_SIZE 2048
 
 

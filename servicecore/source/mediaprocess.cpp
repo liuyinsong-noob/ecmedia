@@ -4929,7 +4929,7 @@ void ServiceCore::serserphone_call_start_desktop_share(SerPhoneCall *call, const
 int ServiceCore::getShareScreenInfo(ScreenID **screenId, int captureId)
 {
 #ifdef VIDEO_ENABLED
-	int num = ECMedia_get_screen_list(captureId, m_pScreenInfo);
+	int num = ECMedia_get_screen_list(captureId, &m_pScreenInfo);
 	*screenId = m_pScreenInfo;
 
 	return num;
@@ -4940,7 +4940,7 @@ int ServiceCore::getShareScreenInfo(ScreenID **screenId, int captureId)
 int ServiceCore::getShareWindowInfo(WindowShare **windowInfo, int captureId)
 {
 #ifdef VIDEO_ENABLED
-	int num = ECMedia_get_window_list(captureId, m_pWindowInfo);
+	int num = ECMedia_get_window_list(captureId, &m_pWindowInfo);
 	*windowInfo = m_pWindowInfo;
 
 	return num;
