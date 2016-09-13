@@ -821,7 +821,7 @@ void CserphonetestDlg::OnBnClickedButton1()
 	int ret = connectToCCP(W2A((LPCTSTR)m_MediaServerIP), atoi(serverPort),W2A((LPCTSTR)m_sipID), W2A((LPCTSTR)m_sipPassword),"eyJsb2NhbHJlYyI6IjEifQ==");
 	setUserData(USERDATA_FOR_INVITE,"phone=15810763885");
 
-	if (ret <= 0) {
+	if (ret < 0) {
 		g_dlg->SetDlgItemText(IDC_REGISTER_STATE, L"  注册失败，参数不正确");
 		return;
 	}
