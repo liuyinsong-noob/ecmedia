@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "audioprocess", "..\module\audioprocess\audioprocess.vcxproj", "{460D34B6-19E2-467F-A3B6-0128810BB9D8}"
 EndProject
@@ -552,12 +552,14 @@ Global
 		{DCE19DAF-69AC-46DB-B14A-39F0FAA5DB74}.Debug|Win32.ActiveCfg = Debug|Win32
 		{DCE19DAF-69AC-46DB-B14A-39F0FAA5DB74}.Debug|Win32.Build.0 = Debug|Win32
 		{DCE19DAF-69AC-46DB-B14A-39F0FAA5DB74}.Debug|x64.ActiveCfg = Debug|Win32
+		{DCE19DAF-69AC-46DB-B14A-39F0FAA5DB74}.Debug|x64.Build.0 = Debug|Win32
 		{DCE19DAF-69AC-46DB-B14A-39F0FAA5DB74}.Release Dll|Win32.ActiveCfg = Release|Win32
 		{DCE19DAF-69AC-46DB-B14A-39F0FAA5DB74}.Release Dll|Win32.Build.0 = Release|Win32
 		{DCE19DAF-69AC-46DB-B14A-39F0FAA5DB74}.Release Dll|x64.ActiveCfg = Release|Win32
 		{DCE19DAF-69AC-46DB-B14A-39F0FAA5DB74}.Release|Win32.ActiveCfg = Release|Win32
 		{DCE19DAF-69AC-46DB-B14A-39F0FAA5DB74}.Release|Win32.Build.0 = Release|Win32
 		{DCE19DAF-69AC-46DB-B14A-39F0FAA5DB74}.Release|x64.ActiveCfg = Release|Win32
+		{DCE19DAF-69AC-46DB-B14A-39F0FAA5DB74}.Release|x64.Build.0 = Release|Win32
 		{EEF031CB-FED8-451E-A471-91EC8D4F6750}.Debug Dll|Win32.ActiveCfg = Debug Dll|Win32
 		{EEF031CB-FED8-451E-A471-91EC8D4F6750}.Debug Dll|Win32.Build.0 = Debug Dll|Win32
 		{EEF031CB-FED8-451E-A471-91EC8D4F6750}.Debug Dll|x64.ActiveCfg = Debug Dll|Win32
@@ -1014,6 +1016,7 @@ Global
 		{34B221E6-B6C6-47AF-BDE8-DD578FDAED01}.Debug Dll|x64.ActiveCfg = Debug|x64
 		{34B221E6-B6C6-47AF-BDE8-DD578FDAED01}.Debug Dll|x64.Build.0 = Debug|x64
 		{34B221E6-B6C6-47AF-BDE8-DD578FDAED01}.Debug|Win32.ActiveCfg = Debug|x64
+		{34B221E6-B6C6-47AF-BDE8-DD578FDAED01}.Debug|Win32.Build.0 = Debug|x64
 		{34B221E6-B6C6-47AF-BDE8-DD578FDAED01}.Debug|x64.ActiveCfg = Debug|x64
 		{34B221E6-B6C6-47AF-BDE8-DD578FDAED01}.Debug|x64.Build.0 = Debug|x64
 		{34B221E6-B6C6-47AF-BDE8-DD578FDAED01}.Release Dll|Win32.ActiveCfg = Release|x64
@@ -1021,6 +1024,7 @@ Global
 		{34B221E6-B6C6-47AF-BDE8-DD578FDAED01}.Release Dll|x64.ActiveCfg = Release|x64
 		{34B221E6-B6C6-47AF-BDE8-DD578FDAED01}.Release Dll|x64.Build.0 = Release|x64
 		{34B221E6-B6C6-47AF-BDE8-DD578FDAED01}.Release|Win32.ActiveCfg = Release|x64
+		{34B221E6-B6C6-47AF-BDE8-DD578FDAED01}.Release|Win32.Build.0 = Release|x64
 		{34B221E6-B6C6-47AF-BDE8-DD578FDAED01}.Release|x64.ActiveCfg = Release|x64
 		{34B221E6-B6C6-47AF-BDE8-DD578FDAED01}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection

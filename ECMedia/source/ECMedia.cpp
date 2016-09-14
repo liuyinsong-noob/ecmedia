@@ -367,58 +367,18 @@ int ECMedia_init_video()
     ViEBase* videobase = ViEBase::GetInterface(m_vie);
     PrintConsole("Init Video Engine...\n");
     if(videobase->Init()!= 0) {
-        PrintConsole("Init Video Engine error, error code is %d\n",videobase->LastError());
-             return videobase->LastError(); //base init failed
+		int lastError = videobase->LastError(); //base init failed
+        PrintConsole("Init Video Engine error, error code is %d\n", lastError);		
+		videobase->Release();
+		VideoEngine::Delete(m_vie);
+		return lastError;
     }
     else {
         PrintConsole("Init Video Engine...OK\n");
-        videobase->SetVoiceEngine(m_voe);
     }
-
-//    if(m_cameraInfo)
-//    {
-//        for(int i=0; i< m_cameraCount;i++){
-//            delete m_cameraInfo[i].capability;
-//            m_cameraInfo[i].capability = NULL;
-//        }
-//        delete m_cameraInfo;
-//        m_cameraInfo = NULL;
-//    }
-//
-//    ViECapture* capture = ViECapture::GetInterface(m_vie);
-//    if( capture) {
-//        m_cameraCount = capture->NumberOfCaptureDevices();
-//        if( m_cameraCount > 0)
-//        {
-//            m_cameraInfo = new CameraInfo[m_cameraCount];
-//            for( int i=0; i< m_cameraCount ; i++ ) {
-//                char name[256], id[256];
-//                if ( capture->GetCaptureDevice(i,name,sizeof(name),id,sizeof(id)) == 0)  {
-//                    m_cameraInfo[i].index = i;
-//                    strcpy(m_cameraInfo[i].name,name);
-//                    PrintConsole(" camara device[%d] name[%s]\n",i,name);
-//
-//                    m_cameraInfo[i].capabilityCount = capture->NumberOfCapabilities(id,sizeof(id));
-//                    if( m_cameraInfo[i].capabilityCount >0 )
-//                    {
-//                        m_cameraInfo[i].capability = new CameraCapability[m_cameraInfo[i].capabilityCount];
-//
-//                        strcpy(m_cameraInfo[i].name,name);
-//                        for( int j =0; j<m_cameraInfo[i].capabilityCount ; j++ ) {
-//                            CaptureCapability capability;
-//                            capture->GetCaptureCapability(id,sizeof(id),j,capability);
-//                            m_cameraInfo[i].capability[j].height =capability.height;
-//                            m_cameraInfo[i].capability[j].width =capability.width;
-//                            m_cameraInfo[i].capability[j].maxfps =capability.maxFPS;
-//                            PrintConsole("camera[%d] capability[%d] height:%d ,width:%d,maxFPS:%d\n",
-//                                         i,j,capability.height, capability.width,capability.maxFPS);
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        capture->Release();
-//    }
+	if (m_voe) {
+		videobase->SetVoiceEngine(m_voe);
+	}
     videobase->Release();
 #endif
     return 0;
@@ -557,6 +517,11 @@ int ECMedia_init_audio()
         }
     }
     base->Release();
+	if (m_vie) {
+		ViEBase *viebase = (ViEBase*)ViEBase::GetInterface(m_vie);
+		viebase->SetVoiceEngine(m_voe);
+		viebase->Release();
+	}
     return 0;
 }
 
@@ -614,7 +579,6 @@ int ECMedia_audio_create_channel(int& channelid, bool is_video)
 			ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
 			if (rtp_rtcp) {
 				rtp_rtcp->SetRembStatus(channelid, true, true);
-				rtp_rtcp->SetTMMBRStatus(channelid, true);
 				rtp_rtcp->SetSendAbsoluteSendTimeStatus(channelid, true, kRtpExtensionAbsoluteSendTime);
 				rtp_rtcp->SetReceiveAbsoluteSendTimeStatus(channelid, true, kRtpExtensionAbsoluteSendTime);
 			}

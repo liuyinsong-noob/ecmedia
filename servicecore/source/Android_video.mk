@@ -52,7 +52,8 @@ LOCAL_SRC_FILES := \
 	
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
-    
+    '-DVIDEO_ENABLED'
+
 LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/../include \
 		$(LOCAL_PATH)/Http \
