@@ -39,7 +39,6 @@
 		55A2B0D015C8890E00C857E3 /* vie_file_recorder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A2B0CB15C8890E00C857E3 /* vie_file_recorder.cc */; };
 		55A2B0D215C8890E00C857E3 /* vie_remb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A2B0CD15C8890E00C857E3 /* vie_remb.cc */; };
 		55A2B0D315C8890E00C857E3 /* vie_sync_module.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A2B0CE15C8890E00C857E3 /* vie_sync_module.cc */; };
-		AD194FE41C5B4572003841BB /* vie_desktop_capture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD194FDE1C5B4572003841BB /* vie_desktop_capture.cpp */; };
 		AD194FE51C5B4572003841BB /* vie_desktop_capture.h in Headers */ = {isa = PBXBuildFile; fileRef = AD194FDF1C5B4572003841BB /* vie_desktop_capture.h */; };
 		AD194FE61C5B4572003841BB /* vie_desktop_share_impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD194FE01C5B4572003841BB /* vie_desktop_share_impl.cpp */; };
 		AD194FE71C5B4572003841BB /* vie_desktop_share_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = AD194FE11C5B4572003841BB /* vie_desktop_share_impl.h */; };
@@ -79,7 +78,6 @@
 		AD1F0C291D47612200C33F53 /* vie_rtp_rtcp_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC7915C8136E00719504 /* vie_rtp_rtcp_impl.cc */; };
 		AD1F0C2A1D47612200C33F53 /* vie_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC7B15C8136E00719504 /* vie_sender.cc */; };
 		AD1F0C2B1D47612200C33F53 /* vie_shared_data.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC7D15C8136E00719504 /* vie_shared_data.cc */; };
-		AD1F0C2C1D47612200C33F53 /* vie_desktop_capture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD194FDE1C5B4572003841BB /* vie_desktop_capture.cpp */; };
 		AD1F0C2D1D47612200C33F53 /* vie_desktop_share_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD194FE21C5B4572003841BB /* vie_desktop_share_manager.cc */; };
 		AD1F0C2E1D47612200C33F53 /* vie_encoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A2B0C515C8855500C857E3 /* vie_encoder.cc */; };
 		AD1F0C2F1D47612200C33F53 /* vie_file_recorder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A2B0CB15C8890E00C857E3 /* vie_file_recorder.cc */; };
@@ -113,6 +111,7 @@
 		AD8D73011C59A39700FB246D /* receive_statistics_proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8D72FB1C59A39700FB246D /* receive_statistics_proxy.h */; };
 		AD8D73021C59A39700FB246D /* send_statistics_proxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72FC1C59A39700FB246D /* send_statistics_proxy.cc */; };
 		AD8D73031C59A39700FB246D /* send_statistics_proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8D72FD1C59A39700FB246D /* send_statistics_proxy.h */; };
+		ADE8355A1D8F795F00CCD20D /* vie_desktop_capture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADE835591D8F795F00CCD20D /* vie_desktop_capture.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -192,7 +191,6 @@
 		55A2B0CC15C8890E00C857E3 /* vie_file_recorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_file_recorder.h; sourceTree = "<group>"; };
 		55A2B0CD15C8890E00C857E3 /* vie_remb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_remb.cc; sourceTree = "<group>"; };
 		55A2B0CE15C8890E00C857E3 /* vie_sync_module.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_sync_module.cc; sourceTree = "<group>"; };
-		AD194FDE1C5B4572003841BB /* vie_desktop_capture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_desktop_capture.cpp; sourceTree = "<group>"; };
 		AD194FDF1C5B4572003841BB /* vie_desktop_capture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_desktop_capture.h; sourceTree = "<group>"; };
 		AD194FE01C5B4572003841BB /* vie_desktop_share_impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_desktop_share_impl.cpp; sourceTree = "<group>"; };
 		AD194FE11C5B4572003841BB /* vie_desktop_share_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_desktop_share_impl.h; sourceTree = "<group>"; };
@@ -214,6 +212,7 @@
 		AD8D72FB1C59A39700FB246D /* receive_statistics_proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = receive_statistics_proxy.h; sourceTree = "<group>"; };
 		AD8D72FC1C59A39700FB246D /* send_statistics_proxy.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = send_statistics_proxy.cc; sourceTree = "<group>"; };
 		AD8D72FD1C59A39700FB246D /* send_statistics_proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = send_statistics_proxy.h; sourceTree = "<group>"; };
+		ADE835591D8F795F00CCD20D /* vie_desktop_capture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_desktop_capture.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -292,7 +291,7 @@
 		5519CC4115C8136E00719504 /* source */ = {
 			isa = PBXGroup;
 			children = (
-				AD194FDE1C5B4572003841BB /* vie_desktop_capture.cpp */,
+				ADE835591D8F795F00CCD20D /* vie_desktop_capture.cpp */,
 				AD42CD701D23E17A009C2E7A /* shared_memory.cc */,
 				AD194FDF1C5B4572003841BB /* vie_desktop_capture.h */,
 				AD194FE01C5B4572003841BB /* vie_desktop_share_impl.cpp */,
@@ -517,9 +516,9 @@
 				5519CCBF15C8136F00719504 /* vie_render_manager.cc in Sources */,
 				5519CCC115C8136F00719504 /* vie_renderer.cc in Sources */,
 				5519CCC315C8136F00719504 /* vie_rtp_rtcp_impl.cc in Sources */,
+				ADE8355A1D8F795F00CCD20D /* vie_desktop_capture.cpp in Sources */,
 				5519CCC515C8136F00719504 /* vie_sender.cc in Sources */,
 				5519CCC715C8136F00719504 /* vie_shared_data.cc in Sources */,
-				AD194FE41C5B4572003841BB /* vie_desktop_capture.cpp in Sources */,
 				AD194FE81C5B4572003841BB /* vie_desktop_share_manager.cc in Sources */,
 				55A2B0C615C8855500C857E3 /* vie_encoder.cc in Sources */,
 				55A2B0D015C8890E00C857E3 /* vie_file_recorder.cc in Sources */,
@@ -568,7 +567,6 @@
 				AD1F0C291D47612200C33F53 /* vie_rtp_rtcp_impl.cc in Sources */,
 				AD1F0C2A1D47612200C33F53 /* vie_sender.cc in Sources */,
 				AD1F0C2B1D47612200C33F53 /* vie_shared_data.cc in Sources */,
-				AD1F0C2C1D47612200C33F53 /* vie_desktop_capture.cpp in Sources */,
 				AD1F0C2D1D47612200C33F53 /* vie_desktop_share_manager.cc in Sources */,
 				AD1F0C2E1D47612200C33F53 /* vie_encoder.cc in Sources */,
 				AD1F0C2F1D47612200C33F53 /* vie_file_recorder.cc in Sources */,
@@ -667,6 +665,7 @@
 					VIDEOCODEC_H264,
 					VIDEOCODEC_VP8,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					./include,
@@ -700,6 +699,7 @@
 					../module/pacing/include,
 					../module/video_coding/main/source,
 					../module/desktop_capture/source,
+					"../third_party/libyuv-ios/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				OBJROOT = "$(SYMROOT)/build";
@@ -762,6 +762,7 @@
 					VIDEOCODEC_H264,
 					VIDEOCODEC_VP8,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					./include,
@@ -795,6 +796,7 @@
 					../module/pacing/include,
 					../module/video_coding/main/source,
 					../module/desktop_capture/source,
+					"../third_party/libyuv-ios/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				OBJROOT = "$(SYMROOT)/build";
@@ -854,6 +856,7 @@
 					VIDEOCODEC_H264,
 					VIDEOCODEC_VP8,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					./include,
@@ -951,6 +954,7 @@
 					VIDEOCODEC_H264,
 					VIDEOCODEC_VP8,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					./include,

@@ -494,6 +494,7 @@
 					WEBRTC_IOS,
 					MAC_IPHONE,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../../.,
 					../interface,
@@ -562,6 +563,7 @@
 					"DYNAMIC_ANNOTATIONS_ENABLED=0",
 					MAC_IPHONE,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../../.,
 					../interface,
@@ -633,6 +635,7 @@
 					"DYNAMIC_ANNOTATIONS_ENABLED=0",
 					WEBRTC_MAC,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../../.,
 					../interface,
@@ -702,6 +705,7 @@
 					"DYNAMIC_ANNOTATIONS_ENABLED=0",
 					WEBRTC_MAC,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../../.,
 					../interface,

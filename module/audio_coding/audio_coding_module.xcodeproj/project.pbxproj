@@ -598,6 +598,7 @@
 					WEBRTC_CODEC_OPUS,
 					WEBRTC_IOS,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					./codecs/ilbc/interface,
 					../,
@@ -652,6 +653,7 @@
 					WEBRTC_CODEC_OPUS,
 					WEBRTC_IOS,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					./codecs/ilbc/interface,
 					../,
@@ -708,6 +710,7 @@
 					WEBRTC_CODEC_AMR,
 					WEBRTC_CODEC_OPUS,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					./codecs/ilbc/interface,
 					../,
@@ -763,6 +766,7 @@
 					WEBRTC_CODEC_AMR,
 					WEBRTC_CODEC_OPUS,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					./codecs/ilbc/interface,
 					../,

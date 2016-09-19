@@ -1073,6 +1073,7 @@
 					WEBRTC_IOS,
 					WEBRTC_OBJC_H264,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					../../,
@@ -1156,6 +1157,7 @@
 					WEBRTC_IOS,
 					WEBRTC_OBJC_H264,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					../../,
@@ -1238,6 +1240,7 @@
 					WEBRTC_POSIX,
 					WEBRTC_OBJC_H264,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					../../,
@@ -1321,6 +1324,7 @@
 					WEBRTC_POSIX,
 					WEBRTC_OBJC_H264,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					../../,

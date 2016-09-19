@@ -465,6 +465,7 @@
 					"DYNAMIC_ANNOTATIONS_ENABLED=0",
 					WEBRTC_HAS_NEON,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../third_party/libyuv/include,
 					../../.,
@@ -530,6 +531,7 @@
 					"DYNAMIC_ANNOTATIONS_ENABLED=0",
 					WEBRTC_HAS_NEON,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../third_party/libyuv/include,
 					../../.,
@@ -596,6 +598,7 @@
 					NVALGRIND,
 					"DYNAMIC_ANNOTATIONS_ENABLED=0",
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../third_party/libyuv/include,
 					../../.,
@@ -661,6 +664,7 @@
 					NVALGRIND,
 					"DYNAMIC_ANNOTATIONS_ENABLED=0",
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../third_party/libyuv/include,
 					../../.,

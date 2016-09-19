@@ -765,6 +765,7 @@
 					NVALGRIND,
 					"DYNAMIC_ANNOTATIONS_ENABLED=0",
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../,
 					./mock,
@@ -847,6 +848,7 @@
 					NVALGRIND,
 					"DYNAMIC_ANNOTATIONS_ENABLED=0",
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../,
 					./mock,
@@ -930,6 +932,7 @@
 					NVALGRIND,
 					"DYNAMIC_ANNOTATIONS_ENABLED=0",
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../,
 					./mock,
@@ -1014,6 +1017,7 @@
 					NVALGRIND,
 					"DYNAMIC_ANNOTATIONS_ENABLED=0",
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../,
 					./mock,

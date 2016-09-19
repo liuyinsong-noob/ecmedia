@@ -296,6 +296,7 @@
 					WEBRTC_MAC,
 					MAC_IPHONE,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../,
 					../../,
@@ -350,6 +351,7 @@
 					WEBRTC_MAC,
 					MAC_IPHONE,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../,
 					../../,
@@ -403,6 +405,7 @@
 					WEBRTC_MAC,
 					MAC_IPHONE,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../,
 					../../,
@@ -458,6 +461,7 @@
 					WEBRTC_MAC,
 					MAC_IPHONE,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../,
 					../../,

@@ -16,6 +16,7 @@
 		55F573601C1FB2DE0014FB06 /* libsystem_wrappers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB5197D1B2806460009077D /* libsystem_wrappers.a */; };
 		AD01997D1D236579003C2BB9 /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD01997C1D23655A003C2BB9 /* libyuv.a */; };
 		AD0798991D001E3200D48138 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0798981D001E3200D48138 /* libswresample.a */; };
+		AD2DE0FC1D6BEA4C00FE3814 /* VoeObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD2DE0FB1D6BEA4C00FE3814 /* VoeObserver.cpp */; };
 		AD4B6B9E1D4B4FBD00731C5B /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = AD4B6B9C1D4B4FA800731C5B /* base64.c */; };
 		AD4E8C561CB664F80068C4E9 /* libcommon_audio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4E8C551CB664D00068C4E9 /* libcommon_audio.a */; };
 		AD7E733F1D3CB66A001C0E04 /* statsCollector.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD7E733E1D3CB66A001C0E04 /* statsCollector.cc */; };
@@ -799,7 +800,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = ADB5198B1B2806820009077D /* video_processing.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = ADC547931D48556600A5C852;
+			remoteGlobalIDString = AD73386C1D548617006A35DF;
 			remoteInfo = video_processing_Mac;
 		};
 		ADC54B1D1D48847900A5C852 /* PBXContainerItemProxy */ = {
@@ -1057,6 +1058,7 @@
 		55F3F8C31B8B135C00A19ED6 /* libsrtp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsrtp.a; sourceTree = "<group>"; };
 		AD0199771D23655A003C2BB9 /* yuv.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = yuv.xcodeproj; path = "../../../third_party/libyuv-ios/yuv.xcodeproj"; sourceTree = "<group>"; };
 		AD0798981D001E3200D48138 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = ../../libswresample.a; sourceTree = "<group>"; };
+		AD2DE0FB1D6BEA4C00FE3814 /* VoeObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoeObserver.cpp; sourceTree = "<group>"; };
 		AD4B6B9C1D4B4FA800731C5B /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base64.c; sourceTree = "<group>"; };
 		AD4E8C501CB664D00068C4E9 /* common_audio.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = common_audio.xcodeproj; path = ../../../module/common_audio/common_audio/common_audio.xcodeproj; sourceTree = "<group>"; };
 		AD7E733E1D3CB66A001C0E04 /* statsCollector.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = statsCollector.cc; sourceTree = "<group>"; };
@@ -1208,6 +1210,7 @@
 		05E86F341B3BA16D00BDBCE6 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				AD2DE0FB1D6BEA4C00FE3814 /* VoeObserver.cpp */,
 				ADC54D061D489D9A00A5C852 /* RecordVoip.cpp */,
 				AD7E733E1D3CB66A001C0E04 /* statsCollector.cc */,
 				05B4FEE61B40FA0200274327 /* b64.c */,
@@ -2526,6 +2529,7 @@
 			files = (
 				ADC54D071D489D9A00A5C852 /* RecordVoip.cpp in Sources */,
 				05B4FEE71B40FA0200274327 /* b64.c in Sources */,
+				AD2DE0FC1D6BEA4C00FE3814 /* VoeObserver.cpp in Sources */,
 				05E86F3E1B3BA16D00BDBCE6 /* ECMedia.cpp in Sources */,
 				AD7E733F1D3CB66A001C0E04 /* statsCollector.cc in Sources */,
 			);
@@ -3061,6 +3065,7 @@
 					VIDEO_ENABLED,
 					MAC_IPHONE,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -3088,6 +3093,7 @@
 					../../module/pacing/include,
 					../../module/remote_bitrate_estimator/source,
 					../../module/video_render/main/include,
+					"../../module/audio_coding/codecs/opencore-amr/amrnb",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
@@ -3123,6 +3129,7 @@
 					VIDEO_ENABLED,
 					MAC_IPHONE,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -3150,6 +3157,7 @@
 					../../module/pacing/include,
 					../../module/remote_bitrate_estimator/source,
 					../../module/video_render/main/include,
+					"../../module/audio_coding/codecs/opencore-amr/amrnb",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (

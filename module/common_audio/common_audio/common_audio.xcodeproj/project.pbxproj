@@ -579,6 +579,7 @@
 					WEBRTC_POSIX,
 					WEBRTC_ARCH_ARM_NEON,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../../../system_wrappers/interface,
 					../../../module,
@@ -606,6 +607,7 @@
 					WEBRTC_POSIX,
 					WEBRTC_ARCH_ARM_NEON,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../../../system_wrappers/interface,
 					../../../module,
@@ -713,6 +715,7 @@
 					WEBRTC_POSIX,
 					WEBRTC_ARCH_ARM_NEON,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../../../system_wrappers/interface,
 					../../../module,
@@ -740,6 +743,7 @@
 					WEBRTC_POSIX,
 					WEBRTC_ARCH_ARM_NEON,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../../../system_wrappers/interface,
 					../../../module,

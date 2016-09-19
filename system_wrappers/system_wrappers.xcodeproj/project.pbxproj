@@ -717,6 +717,7 @@
 					WEBRTC_POSIX,
 					WEBRTC_RESTRICT_LOGGING,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../.,
 					../module/interface,
@@ -784,6 +785,7 @@
 					WEBRTC_POSIX,
 					WEBRTC_RESTRICT_LOGGING,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../.,
 					../module/interface,
@@ -853,6 +855,7 @@
 					WEBRTC_MAC,
 					WEBRTC_RESTRICT_LOGGING,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../.,
 					../module/interface,
@@ -921,6 +924,7 @@
 					WEBRTC_RESTRICT_LOGGING,
 					WEBRTC_MAC,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../.,
 					../module/interface,

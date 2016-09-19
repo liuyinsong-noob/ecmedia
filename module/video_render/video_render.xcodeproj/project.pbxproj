@@ -470,6 +470,7 @@
 					MAC_IPHONE,
 					WEBRTC_INCLUDE_INTERNAL_VIDEO_RENDER,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../../.,
 					../interface,
@@ -537,6 +538,7 @@
 					IPHONE_GLES_RENDERING,
 					WEBRTC_INCLUDE_INTERNAL_VIDEO_RENDER,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../../.,
 					../interface,
@@ -609,6 +611,7 @@
 					COCOA_RENDERING,
 					WEBRTC_MAC,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../../.,
 					../interface,
@@ -680,6 +683,7 @@
 					COCOA_RENDERING,
 					WEBRTC_MAC,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../../.,
 					../interface,

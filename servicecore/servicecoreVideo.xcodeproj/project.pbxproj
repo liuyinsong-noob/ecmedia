@@ -595,6 +595,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer: hongwei LI (M5465XZ27U)";
 				DSTROOT = /tmp/servicecore.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -673,6 +674,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer: hongwei LI (M5465XZ27U)";
 				DSTROOT = /tmp/servicecore.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

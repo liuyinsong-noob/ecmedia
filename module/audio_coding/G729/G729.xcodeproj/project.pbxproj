@@ -464,6 +464,7 @@
 				DSTROOT = /tmp/G729.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../../,
 					../codecs/g729/include,
@@ -485,6 +486,7 @@
 				DSTROOT = /tmp/G729.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../../,
 					../codecs/g729/include,
@@ -508,6 +510,7 @@
 				DSTROOT = /tmp/G729.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../../,
 					../codecs/g729/include,
@@ -531,6 +534,7 @@
 				DSTROOT = /tmp/G729.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../../,
 					../codecs/g729/include,

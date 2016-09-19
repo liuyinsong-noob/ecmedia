@@ -1042,6 +1042,7 @@
 					WEBRTC_POSIX,
 					WEBRTC_NS_FLOAT,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../interface,
 					../,
@@ -1106,6 +1107,7 @@
 					WEBRTC_NS_FLOAT,
 					WEBRTC_POSIX,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../interface,
 					../,
@@ -1170,6 +1172,7 @@
 					WEBRTC_POSIX,
 					WEBRTC_NS_FLOAT,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../interface,
 					../,
@@ -1234,6 +1237,7 @@
 					WEBRTC_NS_FLOAT,
 					WEBRTC_POSIX,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../interface,
 					../,
