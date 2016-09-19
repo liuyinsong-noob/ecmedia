@@ -329,7 +329,7 @@ WebRtc_Word32 H264VideoToolboxEncoder::Encode(
   }
 
   CMTime presentation_time_stamp =
-      CMTimeMake(input_image.render_time_ms(), 1000);
+      CMTimeMake(input_image.render_time_ms(), 600);
   CFDictionaryRef frame_properties = nullptr;
   if (is_keyframe_required) {
     CFTypeRef keys[] = {kVTEncodeFrameOptionKey_ForceKeyFrame};
