@@ -1,0 +1,25 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "dd6d2e1d-415a-4aae-9b9e-7302682725ca++3866",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "dd6d2e1d-415a-4aae-9b9e-7302682725ca++3866" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "dd6d2e1d-415a-4aae-9b9e-7302682725ca++3866" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "F3E74BD9-FEC1-462D-886B-262850364F1F",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "dd6d2e1d-415a-4aae-9b9e-7302682725ca++3866" : "yf_audiovideo\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "desktop_capture",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ecmedia\/trunk\/MyWebRtc_2.x\/module\/desktop_capture\/desktop_capture\/desktop_capture.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/192.168.178.11\/iosdb",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "dd6d2e1d-415a-4aae-9b9e-7302682725ca++3866"
+    }
+  ]
+}

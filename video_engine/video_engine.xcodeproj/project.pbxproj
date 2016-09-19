@@ -701,7 +701,7 @@
 					../module/desktop_capture/source,
 					"../third_party/libyuv-ios/include",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CFLAGS = (
 					"-fno-strict-aliasing",
@@ -798,7 +798,7 @@
 					../module/desktop_capture/source,
 					"../third_party/libyuv-ios/include",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CFLAGS = "-fno-strict-aliasing";
 				OTHER_LDFLAGS = "";

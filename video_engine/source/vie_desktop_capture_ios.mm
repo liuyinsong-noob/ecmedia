@@ -1,3 +1,6 @@
+
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #include "vie_desktop_capture.h"
 #include "desktop_capture_options.h"
 #include "cropping_window_capturer.h"
@@ -47,9 +50,30 @@ VieDesktopCapturer::VieDesktopCapturer(int id,int engine_id):
     wait_time_cs_(CriticalSectionWrapper::CreateCriticalSection()),
 	capture_err_code_cb_(NULL), 
 	capture_frame_change_cb_(NULL)
+#ifdef __APPLE__
+    ,dst_y_(NULL),
+    dst_u_(NULL),
+    dst_v_(NULL)
+#endif
 {
 	share_frame_.reset(new I420VideoFrame);
 	temp_frame_.reset(new I420VideoFrame);
+    
+#ifdef __APPLE__
+    int width = [UIScreen mainScreen].bounds.size.width;
+    int height = [UIScreen mainScreen].bounds.size.height;
+    float scale = [UIScreen mainScreen].scale;
+    dst_y_ = new uint8[dst_width_*dst_height_];
+    dst_u_ = new uint8[src_width_*src_height_/4];
+    dst_v_ = new uint8[src_width_*src_height_/4];
+    
+    strides[0] = src_width_;
+    strides[1] = src_width_/2;
+    strides[2] = src_width_/2;
+    
+    //    src_width_ = [uiscr]
+//    src_width_ =
+#endif
 }
 
 VieDesktopCapturer::~VieDesktopCapturer()
@@ -73,6 +97,20 @@ VieDesktopCapturer::~VieDesktopCapturer()
     }
 
     delete &desktop_capture_event_;
+    
+    
+    if (dst_y_) {
+        delete [] dst_y_;
+        dst_y_ = NULL;
+    }
+    if (dst_u_) {
+        delete [] dst_u_;
+        dst_u_ = NULL;
+    }
+    if (dst_v_) {
+        delete [] dst_v_;
+        dst_v_ = NULL;
+    }
 }
 
 
@@ -126,22 +164,13 @@ void VieDesktopCapturer::OnCaptureCompleted( DesktopFrame* frame, CaptureErrCode
 	}
 	// Set the capture time
 	share_frame_->set_render_time_ms(TickTime::MillisecondTimestamp());
-    
-    
-    VideoType src_video_type;
-#ifndef __APPLE__
-    src_video_type = kARGB;
-#else
-    src_video_type = kMJPG;
-#endif
-	const int conversionResult = ConvertToI420(src_video_type,
+	const int conversionResult = ConvertToI420(kARGB,
 		frame->data(),
 		0, 0,  // No cropping
 		width, height,
-		CalcBufferSize(src_video_type, width, height),
+		CalcBufferSize(kARGB, width, height),
 		kRotateNone,
 		share_frame_.get());
-    
 	if (conversionResult < 0)
 	{
 		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
@@ -298,13 +327,56 @@ int VieDesktopCapturer::CaptrueShareFrame( cloopenwebrtc::I420VideoFrame& video_
     default:
         break;
     }
-#else
-    
-#endif
     if(!has_share_frame_)
         return -1;
-
+    
     video_frame.SwapFrame(share_frame_.get());
+#else
+    NSArray* windows = [[UIApplication sharedApplication] windows];
+    UIGraphicsBeginImageContext([UIScreen mainScreen].nativeBounds.size);//全屏截图，包括window nativeBounds:ios 8以上使用
+    for (UIWindow *screenWindow in windows) {
+        [screenWindow drawViewHierarchyInRect:[UIScreen mainScreen].nativeBounds afterScreenUpdates:NO];
+    }
+    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    //保存到相册
+//    UIImageWriteToSavedPhotosAlbum(viewImage, nil, nil, nil);
+    
+    NSData *data = UIImageJPEGRepresentation(viewImage, .0f);
+    
+    
+    I420VideoFrame videoFrame;
+//    //            int size_y = video_frame.height * video_frame.y_pitch;
+//    //            int size_u = video_frame.u_pitch * ((video_frame.height + 1) / 2);
+//    //            int size_v = video_frame.v_pitch * ((video_frame.height + 1) / 2);
+//    
+//    int size_y = pict->h * pict->strides[0];
+//    int size_u = pict->strides[1] * ((pict->h +1) / 2);
+//    int size_v = pict->strides[2] * ((pict->h + 1)/2);
+    
+//    videoFrame.CreateFrame(size_y, pict->planes[0], size_u, pict->planes[1], size_v, pict->planes[2], pict->w, pict->h, pict->strides[0], pict->strides[1], pict->strides[2]);
+    
+    
+    int ret = cloopenlibyuv::ConvertToI420((const uint8 *)data.bytes, data.length,
+                                           dst_y_, strides[0],
+                                           dst_u_, strides[1],
+                                           dst_v_, strides[2],
+                                           0, 0,
+                                           src_width_, src_height_,
+                                           src_width_, src_height_,
+                                           cloopenlibyuv::kRotate0, cloopenlibyuv::FOURCC_MJPG);
+    
+    NSLog(@"convert ret = %d", ret);
+    
+    int size_y = src_width_*src_height_;
+    int size_u = size_y/4;
+    int size_v = size_u;
+    videoFrame.CreateFrame(size_y, dst_y_, size_u, dst_u_, size_v, dst_v_, src_width_, src_height_, strides[0], strides[1], strides[2]);
+    
+    videoFrame.SwapFrame(&videoFrame);
+#endif
+
     return 0;
     return -1;
 }
@@ -372,7 +444,6 @@ VieDesktopCapturer* VieDesktopCapturer::CreateCapture( int capture_id, const Des
 
 int VieDesktopCapturer::CreateDesktopCapture()
 {
-    
 #ifndef __APPLE__
     if(screen_mouse_cursor_ == NULL)
     {
@@ -396,11 +467,8 @@ int VieDesktopCapturer::CreateDesktopCapture()
     }
 
     screen_mouse_blender_->Start(this);
-#else
-    screen_capturer_ = ScreenCapturer::Create();
-    screen_capturer_->Start(this);
-#endif
     return 0;
+#endif
     return -1;
 }
 
@@ -429,11 +497,8 @@ int VieDesktopCapturer::CreateWindowCapture()
     }
 
     window_mouse_blender_->Start(this);
-#else
-    screen_capturer_ = ScreenCapturer::Create();
-    screen_capturer_->Start(this);
-#endif
     return 0;
+#endif
     return -1;
 }
 
