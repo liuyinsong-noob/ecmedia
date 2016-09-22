@@ -1462,8 +1462,10 @@ int ECMedia_get_media_statistics(int channelid, bool is_video, MediaStatisticsIn
         ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
         if(rtp_rtcp){
             cloopenwebrtc::CallStatistics stats;
-            rtp_rtcp->GetSentRTCPStatistics(channelid, stats.fractionLost, stats.cumulativeLost, stats.extendedMax, stats.jitterSamples, stats.rttMs);
+            //rtp_rtcp->GetSentRTCPStatistics(channelid, stats.fractionLost, stats.cumulativeLost, stats.extendedMax, stats.jitterSamples, stats.rttMs);
+			rtp_rtcp->GetReceivedRTCPStatistics(channelid, stats.fractionLost, stats.cumulativeLost, stats.extendedMax, stats.jitterSamples, stats.rttMs);
             rtp_rtcp->GetRTPStatistics(channelid, stats.bytesSent, stats.packetsSent, stats.bytesReceived, stats.packetsReceived);
+
             call_stats.bytesReceived = stats.bytesReceived;
             call_stats.bytesSent =stats.bytesSent;
             call_stats.cumulativeLost = stats.cumulativeLost;
