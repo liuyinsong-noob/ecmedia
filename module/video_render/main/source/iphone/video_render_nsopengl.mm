@@ -241,6 +241,7 @@ _zOrderToChannel( )
     if(parentView){
         _windowRef = [[ECIOSDisplay alloc] initWithFrame:CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height)];
         _windowRef.imageView = parentView;
+        _windowRef.contentMode = parentView.contentMode;
     }
     
     GetWindowRect(_windowRect);
@@ -265,6 +266,7 @@ int VideoRenderNSOpenGL::ChangeWindow(UIView* newWindowRef)
         _windowRef = [[ECIOSDisplay alloc] initWithFrame:CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height)];
     }
     _windowRef.imageView = parentView;
+    _windowRef.contentMode = parentView.contentMode;
     if (parentView)
         [_windowRef performSelectorOnMainThread:@selector(startRendering:) withObject:nil waitUntilDone:NO];
     
