@@ -52,7 +52,7 @@ VideoCodecVP8 VideoEncoder::GetDefaultVp8Settings() {
   vp8_settings.errorConcealmentOn = false;
   vp8_settings.automaticResizeOn = true/*false*/;
   vp8_settings.frameDroppingOn = true;
-  vp8_settings.keyFrameInterval = 3000;
+  vp8_settings.keyFrameInterval = 75;
   return vp8_settings;
 }
 
