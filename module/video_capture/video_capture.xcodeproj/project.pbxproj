@@ -64,21 +64,13 @@
 		AD1F0F361D476BC200C33F53 /* ioscapture.h in Headers */ = {isa = PBXBuildFile; fileRef = 91DC03641A1CA0090088851B /* ioscapture.h */; };
 		AD42CD4B1D23CE18009C2E7A /* keyframe_detector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD42CD491D23CE18009C2E7A /* keyframe_detector.cpp */; };
 		AD42CD4C1D23CE18009C2E7A /* bilteral_filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD42CD4A1D23CE18009C2E7A /* bilteral_filter.cpp */; };
-		ADA0ACAB1DA8888900C4807D /* osxcapture.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADA0AC9C1DA8888800C4807D /* osxcapture.mm */; };
-		ADA0ACAC1DA8888900C4807D /* video_capture_OSX_device_info_objc.h in Headers */ = {isa = PBXBuildFile; fileRef = ADA0AC9D1DA8888800C4807D /* video_capture_OSX_device_info_objc.h */; };
-		ADA0ACAD1DA8888900C4807D /* video_capture_OSX_device_info.h in Headers */ = {isa = PBXBuildFile; fileRef = ADA0AC9E1DA8888900C4807D /* video_capture_OSX_device_info.h */; };
-		ADA0ACAE1DA8888900C4807D /* video_capture_OSX_device_info.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADA0AC9F1DA8888900C4807D /* video_capture_OSX_device_info.mm */; };
-		ADA0ACAF1DA8888900C4807D /* video_capture_OSX_info.h in Headers */ = {isa = PBXBuildFile; fileRef = ADA0ACA01DA8888900C4807D /* video_capture_OSX_info.h */; };
-		ADA0ACB01DA8888900C4807D /* video_capture_OSX.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADA0ACA11DA8888900C4807D /* video_capture_OSX.mm */; };
-		ADA0ACB11DA8888900C4807D /* osxcapture.h in Headers */ = {isa = PBXBuildFile; fileRef = ADA0ACA21DA8888900C4807D /* osxcapture.h */; };
-		ADA0ACB21DA8888900C4807D /* video_capture_OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = ADA0ACA31DA8888900C4807D /* video_capture_OSX.h */; };
-		ADA0ACB31DA8888900C4807D /* video_capture_OSX_device_info_objc.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADA0ACA41DA8888900C4807D /* video_capture_OSX_device_info_objc.mm */; };
-		ADA0ACB41DA8888900C4807D /* video_capture_OSX_info.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADA0ACA51DA8888900C4807D /* video_capture_OSX_info.mm */; };
-		ADA0ACB51DA8888900C4807D /* osxcapture_not_effect.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADA0ACA61DA8888900C4807D /* osxcapture_not_effect.mm */; };
-		ADA0ACB61DA8888900C4807D /* osxcapture_reslution_ok.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADA0ACA71DA8888900C4807D /* osxcapture_reslution_ok.mm */; };
-		ADA0ACB71DA8888900C4807D /* video_capture_OSX_ObjC.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADA0ACA81DA8888900C4807D /* video_capture_OSX_ObjC.mm */; };
-		ADA0ACB81DA8888900C4807D /* video_capture_OSX_ObjC.h in Headers */ = {isa = PBXBuildFile; fileRef = ADA0ACA91DA8888900C4807D /* video_capture_OSX_ObjC.h */; };
-		ADA0ACB91DA8888900C4807D /* video_capture_OSX_utility.h in Headers */ = {isa = PBXBuildFile; fileRef = ADA0ACAA1DA8888900C4807D /* video_capture_OSX_utility.h */; };
+		ADA0ACFF1DA898B600C4807D /* osxcapture.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADA0AC9C1DA8888800C4807D /* osxcapture.mm */; };
+		ADA0AD001DA898B600C4807D /* video_capture_OSX_device_info.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADA0AC9F1DA8888900C4807D /* video_capture_OSX_device_info.mm */; };
+		ADA0AD011DA898B600C4807D /* video_capture_OSX.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADA0ACA11DA8888900C4807D /* video_capture_OSX.mm */; };
+		ADA0AD021DA898B600C4807D /* video_capture_OSX_device_info_objc.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADA0ACA41DA8888900C4807D /* video_capture_OSX_device_info_objc.mm */; };
+		ADA0AD031DA898B600C4807D /* video_capture_OSX_info.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADA0ACA51DA8888900C4807D /* video_capture_OSX_info.mm */; };
+		ADA0AD041DA898B600C4807D /* osxcapture_not_effect.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADA0ACA61DA8888900C4807D /* osxcapture_not_effect.mm */; };
+		ADA0AD051DA898B600C4807D /* osxcapture_reslution_ok.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADA0ACA71DA8888900C4807D /* osxcapture_reslution_ok.mm */; };
 		ADC546E31D48497100A5C852 /* video_capture_mac.h in Headers */ = {isa = PBXBuildFile; fileRef = ADC546E11D48497100A5C852 /* video_capture_mac.h */; };
 		ADC546E71D4849A400A5C852 /* video_capture_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADC546E21D48497100A5C852 /* video_capture_mac.mm */; };
 		ADC546ED1D484CF300A5C852 /* video_capture_qtkit_info_objc.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADC546E81D484CF300A5C852 /* video_capture_qtkit_info_objc.mm */; };
@@ -316,24 +308,17 @@
 				55A74FE015C8C324001B246A /* video_capture_defines.h in Headers */,
 				55A74FE115C8C324001B246A /* video_capture_factory.h in Headers */,
 				55A74FEA15C8C324001B246A /* device_info_impl.h in Headers */,
-				ADA0ACAC1DA8888900C4807D /* video_capture_OSX_device_info_objc.h in Headers */,
 				55A7500215C8C324001B246A /* video_capture_config.h in Headers */,
 				55A7500315C8C324001B246A /* video_capture_delay.h in Headers */,
 				ADC546E31D48497100A5C852 /* video_capture_mac.h in Headers */,
 				55A7500615C8C324001B246A /* video_capture_impl.h in Headers */,
-				ADA0ACB11DA8888900C4807D /* osxcapture.h in Headers */,
-				ADA0ACB81DA8888900C4807D /* video_capture_OSX_ObjC.h in Headers */,
 				91C4CD02169BFF7700CC98EF /* video_capture_iOS_device_info_objc.h in Headers */,
 				91C4CD09169C0E9C00CC98EF /* video_capture_iOS_device_info.h in Headers */,
-				ADA0ACB21DA8888900C4807D /* video_capture_OSX.h in Headers */,
 				91C4CD0E169C124800CC98EF /* video_capture_iOS.h in Headers */,
-				ADA0ACAF1DA8888900C4807D /* video_capture_OSX_info.h in Headers */,
 				91A084D216C0913700C78D0B /* video_capture_iOS_info.h in Headers */,
 				559BA9FE16F1DAFA00A4F78A /* msvideo_neon.h in Headers */,
-				ADA0ACAD1DA8888900C4807D /* video_capture_OSX_device_info.h in Headers */,
 				559BAA0016F1DAFA00A4F78A /* msvideo.h in Headers */,
 				91DC03651A1CA0090088851B /* ioscapture.h in Headers */,
-				ADA0ACB91DA8888900C4807D /* video_capture_OSX_utility.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,26 +412,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				55A74FE915C8C324001B246A /* device_info_impl.cc in Sources */,
-				ADA0ACB51DA8888900C4807D /* osxcapture_not_effect.mm in Sources */,
 				55A74FEB15C8C324001B246A /* device_info_external.cc in Sources */,
-				ADA0ACB71DA8888900C4807D /* video_capture_OSX_ObjC.mm in Sources */,
-				ADA0ACAE1DA8888900C4807D /* video_capture_OSX_device_info.mm in Sources */,
 				AD42CD4C1D23CE18009C2E7A /* bilteral_filter.cpp in Sources */,
-				ADA0ACB61DA8888900C4807D /* osxcapture_reslution_ok.mm in Sources */,
-				ADA0ACAB1DA8888900C4807D /* osxcapture.mm in Sources */,
 				55A7500415C8C324001B246A /* video_capture_factory.cc in Sources */,
 				AD42CD4B1D23CE18009C2E7A /* keyframe_detector.cpp in Sources */,
-				ADA0ACB31DA8888900C4807D /* video_capture_OSX_device_info_objc.mm in Sources */,
 				55A7500515C8C324001B246A /* video_capture_impl.cc in Sources */,
 				91C4CD03169BFF7700CC98EF /* video_capture_iOS_device_info_objc.mm in Sources */,
 				91C4CD0A169C0E9C00CC98EF /* video_capture_iOS_device_info.mm in Sources */,
-				ADA0ACB41DA8888900C4807D /* video_capture_OSX_info.mm in Sources */,
 				91C4CD0F169C124800CC98EF /* video_capture_iOS.mm in Sources */,
 				91A084D316C0913700C78D0B /* video_capture_iOS_info.mm in Sources */,
 				559BA9FD16F1DAFA00A4F78A /* msvideo_neon.c in Sources */,
 				559BA9FF16F1DAFA00A4F78A /* msvideo.c in Sources */,
 				91DC03631A1C9C1E0088851B /* ioscapture.mm in Sources */,
-				ADA0ACB01DA8888900C4807D /* video_capture_OSX.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,6 +431,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADA0ACFF1DA898B600C4807D /* osxcapture.mm in Sources */,
+				ADA0AD001DA898B600C4807D /* video_capture_OSX_device_info.mm in Sources */,
+				ADA0AD011DA898B600C4807D /* video_capture_OSX.mm in Sources */,
+				ADA0AD021DA898B600C4807D /* video_capture_OSX_device_info_objc.mm in Sources */,
+				ADA0AD031DA898B600C4807D /* video_capture_OSX_info.mm in Sources */,
+				ADA0AD041DA898B600C4807D /* osxcapture_not_effect.mm in Sources */,
+				ADA0AD051DA898B600C4807D /* osxcapture_reslution_ok.mm in Sources */,
 				ADC546ED1D484CF300A5C852 /* video_capture_qtkit_info_objc.mm in Sources */,
 				ADC546EE1D484CF300A5C852 /* video_capture_qtkit_info.mm in Sources */,
 				ADC546EF1D484CF300A5C852 /* video_capture_qtkit_objc.mm in Sources */,
