@@ -7,7 +7,7 @@
  *  in the file PATENTS.  All contributing project authors may
  *  be found in the AUTHORS file in the root of the source tree.
  */
-
+#if MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_12
 #include "trace.h"
 #include "../../video_capture_config.h"
 #import "video_capture_qtkit_info_objc.h"
@@ -167,3 +167,4 @@ WebRtc_Word32 VideoCaptureMacQTKitInfo::CreateCapabilityMap(
 }
 }  // namespace videocapturemodule
 }  // namespace webrtc
+#endif

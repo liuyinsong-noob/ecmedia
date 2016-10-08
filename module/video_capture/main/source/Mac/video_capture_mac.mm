@@ -13,7 +13,7 @@
  *
  */
 
-
+#if MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_12
 // super class stuff
 #include "../video_capture_impl.h"
 #include "../device_info_impl.h"
@@ -273,3 +273,4 @@ VideoCaptureImpl::CreateDeviceInfo(const WebRtc_Word32 id)
 }  // namespace videocapturemodule
 }  // namespace cloopenwebrtc
 
+#endif

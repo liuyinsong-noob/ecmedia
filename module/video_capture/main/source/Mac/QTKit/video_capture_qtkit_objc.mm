@@ -7,7 +7,7 @@
  *  in the file PATENTS.  All contributing project authors may
  *  be found in the AUTHORS file in the root of the source tree.
  */
-
+#if MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_12
 #define DEFAULT_CAPTURE_DEVICE_INDEX    1
 #define DEFAULT_FRAME_RATE              30
 #define DEFAULT_FRAME_WIDTH                352
@@ -480,3 +480,4 @@ using namespace videocapturemodule;
 }
 
 @end
+#endif

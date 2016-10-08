@@ -234,7 +234,12 @@ char *globalFilePathcapture = NULL;
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] addObserver: self selector:   @selector(deviceOrientationNotify) name: UIDeviceOrientationDidChangeNotification object: nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subjectAreaDidChange:) name:AVCaptureDeviceSubjectAreaDidChangeNotification object:input.device];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subjectAreaDidChange:) name:AVCaptureDeviceSubjectAreaDidChangeNotification object:input.device];
+    [[NSNotificationCenter defaultCenter] addObserverForName:AVCaptureDeviceSubjectAreaDidChangeNotification object:input.device queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification* notification) {
+        CGPoint devicePoint = CGPointMake( 0.5, 0.5 );
+        [self focusWithMode:AVCaptureFocusModeContinuousAutoFocus exposeWithMode:AVCaptureExposureModeContinuousAutoExposure atDevicePoint:devicePoint monitorSubjectAreaChange:YES];
+    }];
+    
     
     _pict = (MSPicture *)malloc(sizeof(MSPicture));
     _pict->ptr = NULL;
@@ -255,6 +260,7 @@ char *globalFilePathcapture = NULL;
 	   fromConnection:(AVCaptureConnection *)connection {
 #if !TARGET_IPHONE_SIMULATOR
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:AVCaptureDeviceSubjectAreaDidChangeNotification object:input.device];
 	CVImageBufferRef frame = nil;
 	@synchronized(self) { 
 		@try {
@@ -402,7 +408,26 @@ char *globalFilePathcapture = NULL;
     if (device.isSubjectAreaChangeMonitoringEnabled) {
         NSLog(@"haha");
     }
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subjectAreaDidChange:) name:AVCaptureDeviceSubjectAreaDidChangeNotification object:device];
+    if (device.isFocusPointOfInterestSupported) {
+        NSLog(@"sean hehe focus point interest supported");
+    }
+    if ([device isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
+        NSLog(@"sean hehe focus point interest supported AVCaptureFocusModeAutoFocus");
+    }
+    
+    if ([device isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
+        NSLog(@"sean hehe focus point interest supported AVCaptureFocusModeAutoFocus");
+    }
+    
+    if ([device isFocusModeSupported:AVCaptureFocusModeLocked]) {
+        NSLog(@"sean hehe focus point interest supported AVCaptureFocusModeLocked");
+    }
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subjectAreaDidChange:) name:AVCaptureDeviceSubjectAreaDidChangeNotification object:device];
+    [[NSNotificationCenter defaultCenter] addObserverForName:AVCaptureDeviceSubjectAreaDidChangeNotification object:input.device queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification* notification) {
+        CGPoint devicePoint = CGPointMake( 0.5, 0.5 );
+        [self focusWithMode:AVCaptureFocusModeContinuousAutoFocus exposeWithMode:AVCaptureExposureModeContinuousAutoExposure atDevicePoint:devicePoint monitorSubjectAreaChange:YES];
+    }];
     
 	input = [AVCaptureDeviceInput deviceInputWithDevice:device
 												  error:&error];
@@ -456,7 +481,7 @@ char *globalFilePathcapture = NULL;
 	@synchronized(self) {
         
         CGPoint devicePoint = CGPointMake( 0.5, 0.5 );
-        [self focusWithMode:AVCaptureFocusModeContinuousAutoFocus exposeWithMode:AVCaptureExposureModeContinuousAutoExposure atDevicePoint:devicePoint monitorSubjectAreaChange:NO];
+        [self focusWithMode:AVCaptureFocusModeContinuousAutoFocus exposeWithMode:AVCaptureExposureModeContinuousAutoExposure atDevicePoint:devicePoint monitorSubjectAreaChange:YES];
         
 		AVCaptureSession *session = [(AVCaptureVideoPreviewLayer *)self.layer session];
 		if (!session.running) {
@@ -616,9 +641,9 @@ char *globalFilePathcapture = NULL;
 		} else {
 			NSArray *connections = output.connections;
 			if ([connections count] > 0) {
-                CMTime frameDuration = CMTimeMake(1, value);
-                [input.device setActiveVideoMinFrameDuration:frameDuration];
-                [input.device setActiveVideoMaxFrameDuration:frameDuration];
+                    CMTime frameDuration = CMTimeMake(1, value);
+                    [input.device setActiveVideoMinFrameDuration:frameDuration];
+                    [input.device setActiveVideoMaxFrameDuration:frameDuration];
 			}
 			
 		}
@@ -718,7 +743,7 @@ char *globalFilePathcapture = NULL;
 - (void)subjectAreaDidChange:(NSNotification *)notification
 {
     CGPoint devicePoint = CGPointMake( 0.5, 0.5 );
-    [self focusWithMode:AVCaptureFocusModeContinuousAutoFocus exposeWithMode:AVCaptureExposureModeContinuousAutoExposure atDevicePoint:devicePoint monitorSubjectAreaChange:NO];
+    [self focusWithMode:AVCaptureFocusModeContinuousAutoFocus exposeWithMode:AVCaptureExposureModeContinuousAutoExposure atDevicePoint:devicePoint monitorSubjectAreaChange:YES];
 }
 
 - (void)focusWithMode:(AVCaptureFocusMode)focusMode exposeWithMode:(AVCaptureExposureMode)exposureMode atDevicePoint:(CGPoint)point monitorSubjectAreaChange:(BOOL)monitorSubjectAreaChange

@@ -9,7 +9,7 @@
  */
 
 #pragma mark **** imports/includes
-
+#if MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_12
 #import "video_capture_qtkit_info_objc.h"
 #import <AppKit/AppKit.h>
 #import <QTKit/QTKit.h>
@@ -186,3 +186,4 @@ using namespace cloopenwebrtc;
 }
 
 @end
+#endif

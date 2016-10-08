@@ -7,7 +7,7 @@
  *  in the file PATENTS.  All contributing project authors may
  *  be found in the AUTHORS file in the root of the source tree.
  */
-
+#if MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_12
 #include "video_capture_qtkit.h"
 #import "video_capture_qtkit_objc.h"
 #import "video_capture_qtkit_info_objc.h"
@@ -226,3 +226,4 @@ struct VideoCaptureCapabilityMacQTKit:public VideoCaptureCapability
 }  // namespace videocapturemodule
 }  // namespace cloopenwebrtc
 
+#endif
