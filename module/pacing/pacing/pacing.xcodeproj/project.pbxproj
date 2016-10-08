@@ -39,10 +39,10 @@
 		AD194FB21C5B3F14003841BB /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		AD1F0CB21D4762E400C33F53 /* libpacing_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libpacing_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD8D729E1C599EE400FB246D /* libpacing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libpacing.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		AD8D72AA1C599F0300FB246D /* paced_sender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = paced_sender.h; path = ../../include/paced_sender.h; sourceTree = "<group>"; };
-		AD8D72AB1C599F1100FB246D /* bitrate_prober.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bitrate_prober.cc; path = ../../source/bitrate_prober.cc; sourceTree = "<group>"; };
-		AD8D72AC1C599F1100FB246D /* bitrate_prober.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bitrate_prober.h; path = ../../source/bitrate_prober.h; sourceTree = "<group>"; };
-		AD8D72AD1C599F1100FB246D /* paced_sender.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = paced_sender.cc; path = ../../source/paced_sender.cc; sourceTree = "<group>"; };
+		AD8D72AA1C599F0300FB246D /* paced_sender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = paced_sender.h; path = ../include/paced_sender.h; sourceTree = SOURCE_ROOT; };
+		AD8D72AB1C599F1100FB246D /* bitrate_prober.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bitrate_prober.cc; path = ../source/bitrate_prober.cc; sourceTree = SOURCE_ROOT; };
+		AD8D72AC1C599F1100FB246D /* bitrate_prober.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bitrate_prober.h; path = ../source/bitrate_prober.h; sourceTree = SOURCE_ROOT; };
+		AD8D72AD1C599F1100FB246D /* paced_sender.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = paced_sender.cc; path = ../source/paced_sender.cc; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

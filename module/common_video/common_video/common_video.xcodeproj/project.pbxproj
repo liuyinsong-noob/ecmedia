@@ -47,20 +47,20 @@
 /* Begin PBXFileReference section */
 		AD1F0CA81D47628D00C33F53 /* libcommon_video_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcommon_video_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADE8C7CC1C560F15002C707C /* libcommon_video.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcommon_video.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		ADE8C7D81C5617A6002C707C /* i420_video_frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = i420_video_frame.h; path = ../../interface/i420_video_frame.h; sourceTree = "<group>"; };
-		ADE8C7D91C5617A6002C707C /* native_handle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = native_handle.h; path = ../../interface/native_handle.h; sourceTree = "<group>"; };
-		ADE8C7DA1C5617A6002C707C /* texture_video_frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = texture_video_frame.h; path = ../../interface/texture_video_frame.h; sourceTree = "<group>"; };
-		ADE8C7DB1C5617D1002C707C /* data_manager.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = data_manager.cc; path = ../../source/data_manager.cc; sourceTree = "<group>"; };
-		ADE8C7DC1C5617D1002C707C /* data_manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = data_manager.h; path = ../../source/data_manager.h; sourceTree = "<group>"; };
-		ADE8C7DD1C5617D1002C707C /* i420_video_frame.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = i420_video_frame.cc; path = ../../source/i420_video_frame.cc; sourceTree = "<group>"; };
-		ADE8C7DE1C5617D1002C707C /* jpeg.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jpeg.cc; path = ../../source/jpeg.cc; sourceTree = "<group>"; };
-		ADE8C7DF1C5617D1002C707C /* scaler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = scaler.h; path = ../../source/libyuv/include/scaler.h; sourceTree = "<group>"; };
-		ADE8C7E01C5617D1002C707C /* webrtc_libyuv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = webrtc_libyuv.h; path = ../../source/libyuv/include/webrtc_libyuv.h; sourceTree = "<group>"; };
-		ADE8C7E11C5617D1002C707C /* scaler.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = scaler.cc; path = ../../source/libyuv/scaler.cc; sourceTree = "<group>"; };
-		ADE8C7E21C5617D1002C707C /* webrtc_libyuv.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = webrtc_libyuv.cc; path = ../../source/libyuv/webrtc_libyuv.cc; sourceTree = "<group>"; };
-		ADE8C7E31C5617D1002C707C /* plane.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = plane.cc; path = ../../source/plane.cc; sourceTree = "<group>"; };
-		ADE8C7E41C5617D1002C707C /* plane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = plane.h; path = ../../source/plane.h; sourceTree = "<group>"; };
-		ADE8C7E51C5617D1002C707C /* texture_video_frame.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = texture_video_frame.cc; path = ../../source/texture_video_frame.cc; sourceTree = "<group>"; };
+		ADE8C7D81C5617A6002C707C /* i420_video_frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = i420_video_frame.h; path = ../interface/i420_video_frame.h; sourceTree = SOURCE_ROOT; };
+		ADE8C7D91C5617A6002C707C /* native_handle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = native_handle.h; path = ../interface/native_handle.h; sourceTree = SOURCE_ROOT; };
+		ADE8C7DA1C5617A6002C707C /* texture_video_frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = texture_video_frame.h; path = ../interface/texture_video_frame.h; sourceTree = SOURCE_ROOT; };
+		ADE8C7DB1C5617D1002C707C /* data_manager.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = data_manager.cc; path = ../source/data_manager.cc; sourceTree = SOURCE_ROOT; };
+		ADE8C7DC1C5617D1002C707C /* data_manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = data_manager.h; path = ../source/data_manager.h; sourceTree = SOURCE_ROOT; };
+		ADE8C7DD1C5617D1002C707C /* i420_video_frame.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = i420_video_frame.cc; path = ../source/i420_video_frame.cc; sourceTree = SOURCE_ROOT; };
+		ADE8C7DE1C5617D1002C707C /* jpeg.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jpeg.cc; path = ../source/jpeg.cc; sourceTree = SOURCE_ROOT; };
+		ADE8C7DF1C5617D1002C707C /* scaler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = scaler.h; path = ../source/libyuv/include/scaler.h; sourceTree = SOURCE_ROOT; };
+		ADE8C7E01C5617D1002C707C /* webrtc_libyuv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = webrtc_libyuv.h; path = ../source/libyuv/include/webrtc_libyuv.h; sourceTree = SOURCE_ROOT; };
+		ADE8C7E11C5617D1002C707C /* scaler.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = scaler.cc; path = ../source/libyuv/scaler.cc; sourceTree = SOURCE_ROOT; };
+		ADE8C7E21C5617D1002C707C /* webrtc_libyuv.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = webrtc_libyuv.cc; path = ../source/libyuv/webrtc_libyuv.cc; sourceTree = SOURCE_ROOT; };
+		ADE8C7E31C5617D1002C707C /* plane.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = plane.cc; path = ../source/plane.cc; sourceTree = SOURCE_ROOT; };
+		ADE8C7E41C5617D1002C707C /* plane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = plane.h; path = ../source/plane.h; sourceTree = SOURCE_ROOT; };
+		ADE8C7E51C5617D1002C707C /* texture_video_frame.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = texture_video_frame.cc; path = ../source/texture_video_frame.cc; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
