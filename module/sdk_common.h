@@ -1,6 +1,9 @@
 #ifndef _SDK_COMMON_H_
 #define _SDK_COMMON_H_
 #include <time.h>
+#ifdef __APPLE__
+#include <stdint.h>
+#endif
 
 #if defined WEBRTC_ANDROID || defined __APPLE__ 
 typedef long long __int64;

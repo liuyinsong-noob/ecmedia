@@ -18,7 +18,9 @@
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/glext.h>
 #import <OpenGL/glu.h>
+#if MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_12
 #include <QuickTime/QuickTime.h>
+#endif
 #include <list>
 #include <map>
 

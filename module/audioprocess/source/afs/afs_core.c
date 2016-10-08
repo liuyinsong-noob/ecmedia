@@ -2,7 +2,9 @@
 #include "fft4g.h"
 #include <math.h>
 #include <assert.h>
+#ifndef __APPLE__
 #include <malloc.h>
+#endif
 #include <stdlib.h>
 #include <string.h>
 #include "howlingfilter_core.h"

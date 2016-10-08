@@ -962,6 +962,7 @@
 		AD4B6A271D48C25800731C5B /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A231D48C25800731C5B /* libssl.a */; };
 		ADA18F171C58B518007F0F8B /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA18F161C58B518007F0F8B /* libz.tbd */; };
 		ADA18F191C58B521007F0F8B /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA18F181C58B521007F0F8B /* libxml2.tbd */; };
+		ADC50F881D90C86A00A83C04 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC50F871D90C86A00A83C04 /* GLKit.framework */; };
 		F113E878179640E4007A26FF /* GroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F113E877179640E4007A26FF /* GroupListViewController.m */; };
 		F13AF1CC176F06DC004B1804 /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F13AF1B9176F06DC004B1804 /* MWCaptionView.m */; };
 		F13AF1CD176F06DC004B1804 /* MWPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = F13AF1BB176F06DC004B1804 /* MWPhoto.m */; };
@@ -2062,6 +2063,7 @@
 		AD4B6A231D48C25800731C5B /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
 		ADA18F161C58B518007F0F8B /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		ADA18F181C58B521007F0F8B /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		ADC50F871D90C86A00A83C04 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		F113E876179640E4007A26FF /* GroupListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupListViewController.h; sourceTree = "<group>"; };
 		F113E877179640E4007A26FF /* GroupListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupListViewController.m; sourceTree = "<group>"; };
 		F13AF1B8176F06DC004B1804 /* MWCaptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCaptionView.h; sourceTree = "<group>"; };
@@ -2093,6 +2095,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADC50F881D90C86A00A83C04 /* GLKit.framework in Frameworks */,
 				AD4B6A241D48C25800731C5B /* libcrypto.a in Frameworks */,
 				AD4B6A251D48C25800731C5B /* libortp.a in Frameworks */,
 				AD4B6A261D48C25800731C5B /* libsrtp.a in Frameworks */,
@@ -2258,6 +2261,7 @@
 		05F43B8616A92CAA00F6D053 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ADC50F871D90C86A00A83C04 /* GLKit.framework */,
 				AD4B6A201D48C25800731C5B /* libcrypto.a */,
 				AD4B6A211D48C25800731C5B /* libortp.a */,
 				AD4B6A221D48C25800731C5B /* libsrtp.a */,
@@ -3608,7 +3612,7 @@
 				ORGANIZATIONNAME = hisun;
 				TargetAttributes = {
 					05F43B8216A92CAA00F6D053 = {
-						DevelopmentTeam = 84PLDJ3K8X;
+						DevelopmentTeam = 2372872F55;
 					};
 				};
 			};
@@ -4681,14 +4685,14 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Sean Lee (33QN7P98E8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Sean Lee (33QN7P98E8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CCPVoipDemo/CCPVoipDemo-Prefix.pch";
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "CCPVoipDemo/CCPVoipDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/CCPVoipDemo/ccpsdk",
@@ -4702,10 +4706,10 @@
 					"-lz",
 				);
 				OTHER_OSACOMPILEFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yuntongxun.sean.pirate;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ronglian.audioVideo.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7fec8836-33ff-4a92-903e-eacb5610c5c9";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7fec8836-33ff-4a92-903e-eacb5610c5c9";
+				PROVISIONING_PROFILE = "0210f179-2817-47b1-a274-7345a0cf023f";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0210f179-2817-47b1-a274-7345a0cf023f";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 arm64";
 				WRAPPER_EXTENSION = app;
@@ -4717,14 +4721,14 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Sean Lee (33QN7P98E8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Sean Lee (33QN7P98E8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CCPVoipDemo/CCPVoipDemo-Prefix.pch";
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "CCPVoipDemo/CCPVoipDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/CCPVoipDemo/ccpsdk",
@@ -4738,10 +4742,10 @@
 					"-lz",
 				);
 				OTHER_OSACOMPILEFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.yuntongxun.sean.pirate;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ronglian.audioVideo.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7fec8836-33ff-4a92-903e-eacb5610c5c9";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7fec8836-33ff-4a92-903e-eacb5610c5c9";
+				PROVISIONING_PROFILE = "0210f179-2817-47b1-a274-7345a0cf023f";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0210f179-2817-47b1-a274-7345a0cf023f";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 arm64";
 				WRAPPER_EXTENSION = app;
