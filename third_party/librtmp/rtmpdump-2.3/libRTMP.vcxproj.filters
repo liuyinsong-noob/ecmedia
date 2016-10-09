@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="librtmp">
+      <UniqueIdentifier>{2bacf4e3-cf59-405e-9bcf-74b896cbad41}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="librtmp\amf.c">
+      <Filter>librtmp</Filter>
+    </ClCompile>
+    <ClCompile Include="librtmp\hashswf.c">
+      <Filter>librtmp</Filter>
+    </ClCompile>
+    <ClCompile Include="librtmp\log.c">
+      <Filter>librtmp</Filter>
+    </ClCompile>
+    <ClCompile Include="librtmp\parseurl.c">
+      <Filter>librtmp</Filter>
+    </ClCompile>
+    <ClCompile Include="librtmp\rtmp.c">
+      <Filter>librtmp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="librtmp\amf.h">
+      <Filter>librtmp</Filter>
+    </ClInclude>
+    <ClInclude Include="librtmp\bytes.h">
+      <Filter>librtmp</Filter>
+    </ClInclude>
+    <ClInclude Include="librtmp\dh.h">
+      <Filter>librtmp</Filter>
+    </ClInclude>
+    <ClInclude Include="librtmp\dhgroups.h">
+      <Filter>librtmp</Filter>
+    </ClInclude>
+    <ClInclude Include="librtmp\handshake.h">
+      <Filter>librtmp</Filter>
+    </ClInclude>
+    <ClInclude Include="librtmp\http.h">
+      <Filter>librtmp</Filter>
+    </ClInclude>
+    <ClInclude Include="librtmp\log.h">
+      <Filter>librtmp</Filter>
+    </ClInclude>
+    <ClInclude Include="librtmp\rtmp.h">
+      <Filter>librtmp</Filter>
+    </ClInclude>
+    <ClInclude Include="librtmp\rtmp_sys.h">
+      <Filter>librtmp</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
