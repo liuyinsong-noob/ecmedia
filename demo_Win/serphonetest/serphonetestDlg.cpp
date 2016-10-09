@@ -58,6 +58,8 @@ static bool g_bAutoTest = false;
 TStatisticInfo g_statisticInfo;
 unsigned int g_testTimer = 0;
 
+void * g_rtmpLiveStreamHandle = NULL;
+
 wchar_t* TransformUTF8ToUnicodeM(const char* _str)
 {
 	int textlen =0;
@@ -269,6 +271,13 @@ void onIncomingCodecChanged(const char *callid, const int width, const int heigh
 	g_dlg->m_ReceivedResolution_height = height;
 }
 
+void onRemoteVideoRatioChanged(const char *callid, int width, int height, bool isVideoConference, const char *sipNo)
+{
+	char log[1024];
+	sprintf(log, "onRemoteVideoRatioChanged callid=%s width=%d height=%d isVideoConference=%d sipNo=%s\n",
+		callid, width, height, isVideoConference, sipNo);
+	onLogInfo(log);
+}
 
 
 class CAboutDlg : public CDialogEx
@@ -513,6 +522,7 @@ BOOL CserphonetestDlg::OnInitDialog()
 	callback.onTextMessageReceived = onTextMessageReceived;
 	callback.onReceiverStats = onReceiverStats;
 	callback.onIncomingCodecChanged = onIncomingCodecChanged;
+	callback.onRemoteVideoRatioChanged = onRemoteVideoRatioChanged;
 	//	callback.onGroupTextMessageReceived = onGroupTextMessageReceived;
 	setLogLevel(LOG_LEVEL_DEBUG);
 	setTraceFlag(true);
@@ -843,6 +853,10 @@ int CserphonetestDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 }
 void CserphonetestDlg::OnBnClickedOk()
 {
+	if (m_dlgFullScreen)
+		delete m_dlgFullScreen;
+	m_dlgFullScreen = NULL;
+
 	unInitialize();
 //	KillTimer(TIMER_STATISTICS);
 	CDialogEx::OnOK();
@@ -926,7 +940,7 @@ void CserphonetestDlg::OnBnClickedButton7()
 	//setMute(true);
 
 	// TODO: 在此添加控件通知处理程序代码
-	//sendDTMF(g_currentCallId,'1');
+	sendDTMF(g_currentCallId,'1');
 
 	//SpeakerInfo *speak;
 	//getSpeakerInfo(&speak);
@@ -951,18 +965,19 @@ void CserphonetestDlg::OnBnClickedButton7()
 	//}
 
 	//checkUserOnline("801755000");//00006");
-	long long duration,  sendTotal_sim,  recvTotal_sim, sendTotal_wifi, recvTotal_wifi;
+	//long long duration,  sendTotal_sim,  recvTotal_sim, sendTotal_wifi, recvTotal_wifi;
 
-	int ret = getNetworkStatistic(g_currentCallId, &duration, &sendTotal_sim, &recvTotal_sim, &sendTotal_wifi, &recvTotal_wifi);
+	//int ret = getNetworkStatistic(g_currentCallId, &duration, &sendTotal_sim, &recvTotal_sim, &sendTotal_wifi, &recvTotal_wifi);
 
-	char log[256];
-	sprintf(log,"hubintest getNetworkStatistic=%d duration=%d sendTotal=%d recfTotal=%d\r\n\r\n", ret, duration, sendTotal_sim+sendTotal_wifi, recvTotal_sim+recvTotal_wifi);
-	wchar_t *wLog = TransformUTF8ToUnicodeM(log);
-	wprintf(wLog);
+	//char log[256];
+	//sprintf(log,"hubintest getNetworkStatistic=%d duration=%d sendTotal=%d recfTotal=%d\r\n\r\n", ret, duration, sendTotal_sim+sendTotal_wifi, recvTotal_sim+recvTotal_wifi);
+	//wchar_t *wLog = TransformUTF8ToUnicodeM(log);
+	//wprintf(wLog);
+
+	g_rtmpLiveStreamHandle = createLiveStream();
 
 
 }
-
 
 void CserphonetestDlg::OnBnClickedButton14()
 {
@@ -977,7 +992,13 @@ void CserphonetestDlg::OnBnClickedButton8()
 	sendDTMF(g_currentCallId,'2');
 	//stopRecordVoice(g_currentCallId);
 	//setMute(false);
-	stopRecordVoip(g_currentCallId);
+	//stopRecordVoip(g_currentCallId);
+
+	if (g_rtmpLiveStreamHandle) {
+		CWnd *rcwnd = g_dlg->GetDlgItem(IDC_RICHEDIT21); //返回窗口中指定参数ID的子元素的句柄
+		playLiveStream(g_rtmpLiveStreamHandle, "http://live.yuntongxun.com/live/livestream", rcwnd->GetSafeHwnd());
+		//playRtmpStream(g_rtmpLiveStreamHandle, "http://live.yuntongxun.com/live/xzq", rcwnd->GetSafeHwnd());
+	}
 }
 
 
@@ -985,7 +1006,10 @@ void CserphonetestDlg::OnBnClickedButton9()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	sendDTMF(g_currentCallId,'3');
-	startRecordVoice(g_currentCallId, "audio_record.wav");
+	//startRecordVoice(g_currentCallId, "audio_record.wav");
+	if(g_rtmpLiveStreamHandle)
+		stopLiveStream(g_rtmpLiveStreamHandle);
+
 }
 
 
@@ -993,7 +1017,9 @@ void CserphonetestDlg::OnBnClickedButton10()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	sendDTMF(g_currentCallId,'4');
-	stopRecordVoice(g_currentCallId);
+	//stopRecordVoice(g_currentCallId);
+	releaseLiveStream(g_rtmpLiveStreamHandle);
+	g_rtmpLiveStreamHandle = NULL;
 }
 
 
@@ -1045,6 +1071,12 @@ void CserphonetestDlg::OnBnClickedButton13()
 
 void CserphonetestDlg::OnBnClickedButton15()
 {
+	if (g_rtmpLiveStreamHandle) {
+		selectCameraLiveStream(g_rtmpLiveStreamHandle, 1, 640, 480, 15);
+
+		CWnd *lcwnd = g_dlg->GetDlgItem(IDC_RICHEDIT21);
+		pushLiveStream(g_rtmpLiveStreamHandle, "rtmp://live.yuntongxun.com/live/test1", lcwnd->GetSafeHwnd());
+	}
 	// TODO: 在此添加控件通知处理程序代码
 	sendDTMF(g_currentCallId,'9');
 }

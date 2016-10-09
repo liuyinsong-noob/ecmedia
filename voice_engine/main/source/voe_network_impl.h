@@ -27,6 +27,12 @@ public:
 
     virtual int DeRegisterExternalTransport(int channel) OVERRIDE;
 
+	virtual int RegisterExternalPacketization(int channel,
+		AudioPacketizationCallback* transport) OVERRIDE;
+
+	virtual int DeRegisterExternalPacketization(int channel) OVERRIDE;
+
+
     virtual int ReceivedRTPPacket(int channel,
                                   const void* data,
                                   size_t length) OVERRIDE;

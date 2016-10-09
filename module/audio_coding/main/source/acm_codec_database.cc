@@ -41,7 +41,7 @@
 #include "acm_isac_macros.h"
 #endif
 #ifdef WEBRTC_CODEC_PCM16
-#include "cloopenwebrtc/modules/audio_coding/codecs/pcm16b/include/pcm16b.h"
+#include "pcm16b.h"
 #include "acm_pcm16b.h"
 #endif
 #ifdef WEBRTC_CODEC_ILBC

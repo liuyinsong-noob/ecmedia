@@ -29,6 +29,7 @@ typedef int (*onStunPacket)(int channelid, void *data, int len, const char *from
 typedef int (*onEcMediaVideoData)(int channelid, const void *data, int inLen, void *outData, int &outLen, bool send);
 class Transport;
 class VideoEngine;
+class VCMPacketizationCallback;
 
 // This enumerator describes VideoEngine packet timeout states.
 enum ViEPacketTimeout {
@@ -174,6 +175,8 @@ class WEBRTC_DLLEXPORT ViENetwork {
     virtual int EnableIPv6(int video_channel) = 0;
     // The function returns true if IPv6 is enabled, false otherwise.
     virtual bool IsIPv6Enabled(int video_channel) = 0;
+	virtual int RegisterExternalPacketization(const int video_channel, VCMPacketizationCallback * transport) = 0;
+	virtual int DeRegisterExternalPacketization(const int video_channel) = 0;
  protected:
   ViENetwork() {}
   virtual ~ViENetwork() {}

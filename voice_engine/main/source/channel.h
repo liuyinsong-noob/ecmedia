@@ -227,8 +227,9 @@ public:
     // VoENetwork
     int32_t RegisterExternalTransport(Transport& transport);
     int32_t DeRegisterExternalTransport();
-    int32_t ReceivedRTPPacket(const int8_t* data, size_t length,
-                              const PacketTime& packet_time);
+	int32_t RegisterExternalPacketization(AudioPacketizationCallback* transport);
+	int32_t DeRegisterExternalPacketization();
+    int32_t ReceivedRTPPacket(const int8_t* data, size_t length,const PacketTime& packet_time);
     int32_t ReceivedRTCPPacket(const int8_t* data, size_t length);
 
     // VoEFile

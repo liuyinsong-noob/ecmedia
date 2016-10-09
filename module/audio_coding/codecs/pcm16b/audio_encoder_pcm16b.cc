@@ -8,8 +8,8 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "cloopenwebrtc/modules/audio_coding/codecs/pcm16b/include/audio_encoder_pcm16b.h"
-#include "cloopenwebrtc/modules/audio_coding/codecs/pcm16b/include/pcm16b.h"
+#include "audio_encoder_pcm16b.h"
+#include "pcm16b.h"
 
 namespace cloopenwebrtc {
 

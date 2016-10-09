@@ -17,6 +17,7 @@
 #include "channel.h"
 #include "voe_errors.h"
 #include "voice_engine_impl.h"
+#include "audio_coding_module_impl.h"
 
 namespace cloopenwebrtc
 {
@@ -63,6 +64,9 @@ int VoENetworkImpl::RegisterExternalTransport(int channel,
             "SetExternalTransport() failed to locate channel");
         return -1;
     }
+    //add by xzq for live stream
+    transport.SetRtpData(channel,channelPtr,0);
+    //end 
     return channelPtr->RegisterExternalTransport(transport);
 }
 
@@ -85,6 +89,49 @@ int VoENetworkImpl::DeRegisterExternalTransport(int channel)
         return -1;
     }
     return channelPtr->DeRegisterExternalTransport();
+}
+
+int VoENetworkImpl::RegisterExternalPacketization(int channel,
+	AudioPacketizationCallback* transport)
+{
+	WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+		"SetExternalPacketization(channel=%d, transport=0x%x)",
+		channel, &transport);
+	if (!_shared->statistics().Initialized())
+	{
+		_shared->SetLastError(VE_NOT_INITED, kTraceError);
+		return -1;
+	}
+	voe::ChannelOwner ch = _shared->channel_manager().GetChannel(channel);
+	voe::Channel* channelPtr = ch.channel();
+	if (channelPtr == NULL)
+	{
+		_shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
+			"SetExternalTransport() failed to locate channel");
+		return -1;
+	}
+	return channelPtr->RegisterExternalPacketization(transport);
+}
+
+int VoENetworkImpl::DeRegisterExternalPacketization(int channel)
+{
+	WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+		"DeRegisterExternalTransport(channel=%d)", channel);
+	if (!_shared->statistics().Initialized())
+	{
+		WEBRTC_TRACE(kTraceError, kTraceVoice,
+			VoEId(_shared->instance_id(), -1),
+			"DeRegisterExternalTransport() - invalid state");
+	}
+	voe::ChannelOwner ch = _shared->channel_manager().GetChannel(channel);
+	voe::Channel* channelPtr = ch.channel();
+	if (channelPtr == NULL)
+	{
+		_shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
+			"DeRegisterExternalTransport() failed to locate channel");
+		return -1;
+	}
+	return channelPtr->DeRegisterExternalPacketization();
 }
 
 int VoENetworkImpl::ReceivedRTPPacket(int channel,

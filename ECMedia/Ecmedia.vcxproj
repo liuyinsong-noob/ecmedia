@@ -97,12 +97,14 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;DEBUG_PRINT_LOG;ENABLE_LOG;ORTP_STATIC;VIDEO_ENABLED;ENABLE_SCREEN_SHARE;STATS_TO_STRING</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./source;./include;./source/Http;./source/Utility;./interface;../module\exosip\source;../module\exosip\include;../module\osip\include;$(SolutionDir)\third_party\vld\include;..\third_party\libx264\libx264_win\x86\include;../module/videojpegyuv/include;../module/interface;../voice_engine\main\source;../voice_engine\main\include;../module;..\system_wrappers\interface;../video_engine/source;..\third_party\openssl\inc32;..\third_party;../third_party/oRTP/include;../third_party/oRTP/include/ortp;..\third_party\srtp\crypto\include\win;..\third_party\srtp\crypto\include;../third_party/ffmpeg/ffmpeg_win/x86/include;../module/video_coding/main/include;..\module\video_coding\codecs\h264;..\module\video_coding\codecs\interface;../video_engine\include;..\module\common_audio\source\resampler\include;..\module\common_video\source;..\module\common_video\source\libyuv\include;..\module\common_video\interface;..\module\rtp_rtcp\include;..\module\bitrate_controller\include;..\module\remote_bitrate_estimator\include;..\module\remote_bitrate_estimator\source;..\module\pacing\include;..\module\video_render\main\include;..\module\audio_coding\codecs\opencore-amr\amrnb</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./source;./include;./source/Http;./source/Utility;./interface;../module\exosip\source;../module\exosip\include;../module\osip\include;$(SolutionDir)\third_party\vld\include;..\third_party\libx264\libx264_win\x86\include;../module/videojpegyuv/include;../module/interface;../voice_engine\main\source;../voice_engine\main\include;../module;..\system_wrappers\interface;../video_engine/source;..\third_party\openssl\inc32;..\third_party;../third_party/oRTP/include;../third_party/oRTP/include/ortp;..\third_party\srtp\crypto\include\win;..\third_party\srtp\crypto\include;../third_party/ffmpeg/ffmpeg_win/x86/include;../module/video_coding/main/include;..\module\video_coding\codecs\h264;..\module\video_coding\codecs\interface;../video_engine\include;..\module\common_audio\source\resampler\include;..\module\common_video\source;..\module\common_video\source\libyuv\include;..\module\common_video\interface;..\module\rtp_rtcp\include;..\module\bitrate_controller\include;..\module\remote_bitrate_estimator\include;..\module\remote_bitrate_estimator\source;..\module\pacing\include;..\module\video_render\main\include;..\module\audio_coding\codecs\opencore-amr\amrnb;..\module\audio_coding\main\source;..\third_party\libfaad\win\include\faad2;..\third_party\librtmp\rtmpdump-2.3\librtmp;..\third_party\librtmp\rtmpdump-2.3\;..\module\audio_coding\main\include;..\third_party\libfaac\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libeay32.lib;ssleay32.lib;zlib.lib;libfaad2d.lib;libfaac.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\third_party\openssl;..\third_party\libzip;..\third_party\libfaad\win\lib\x86;..\third_party\libfaac\lib\win\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(OutDir)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -137,7 +139,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;DEBUG_PRINT_LOG;VIDEO_ENABLED;ENABLE_LOG;ORTP_STATIC;ENABLE_SCREEN_SHARE</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./source;./include;./source/Http;./source/Utility;./interface;../module\exosip\source;../module\exosip\include;../module\osip\include;$(SolutionDir)\third_party\vld\include;..\third_party\libx264\libx264_win\x86\include;../module/videojpegyuv/include;../module/interface;../voice_engine\main\source;../voice_engine\main\include;../module;..\system_wrappers\interface;../video_engine/source;..\third_party\openssl\inc32;..\third_party;../third_party/oRTP/include;../third_party/oRTP/include/ortp;..\third_party\srtp\crypto\include\win;..\third_party\srtp\crypto\include;../third_party/ffmpeg/ffmpeg_win/x86/include;../module/video_coding/main/include;..\module\video_coding\codecs\h264;..\module\video_coding\codecs\interface;../video_engine\include;..\module\common_audio\source\resampler\include;..\module\common_video\source;..\module\common_video\source\libyuv\include;..\module\common_video\interface;..\module\rtp_rtcp\include;..\module\bitrate_controller\include;..\module\remote_bitrate_estimator\source;..\module\remote_bitrate_estimator\include;..\module\pacing\include;..\module\video_render\main\include;..\module\audio_coding\codecs\opencore-amr\amrnb</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./source;./include;./source/Http;./source/Utility;./interface;../module\exosip\source;../module\exosip\include;../module\osip\include;$(SolutionDir)\third_party\vld\include;..\third_party\libx264\libx264_win\x86\include;../module/videojpegyuv/include;../module/interface;../voice_engine\main\source;../voice_engine\main\include;../module;..\system_wrappers\interface;../video_engine/source;..\third_party\openssl\inc32;..\third_party;../third_party/oRTP/include;../third_party/oRTP/include/ortp;..\third_party\srtp\crypto\include\win;..\third_party\srtp\crypto\include;../third_party/ffmpeg/ffmpeg_win/x86/include;../module/video_coding/main/include;..\module\video_coding\codecs\h264;..\module\video_coding\codecs\interface;../video_engine\include;..\module\common_audio\source\resampler\include;..\module\common_video\source;..\module\common_video\source\libyuv\include;..\module\common_video\interface;..\module\rtp_rtcp\include;..\module\bitrate_controller\include;..\module\remote_bitrate_estimator\include;..\module\remote_bitrate_estimator\source;..\module\pacing\include;..\module\video_render\main\include;..\module\audio_coding\codecs\opencore-amr\amrnb;..\module\audio_coding\main\source;..\third_party\libfaad\win\include\faad2;..\third_party\librtmp\rtmpdump-2.3\librtmp;..\third_party\librtmp\rtmpdump-2.3\;..\module\audio_coding\main\include;..\third_party\libfaac\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -145,6 +147,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;libeay32.lib;ssleay32.lib;zlib.lib;libfaad2d.lib;libfaac.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\third_party\openssl;..\third_party\libzip;..\third_party\libfaad\win\lib\x86;..\third_party\libfaac\lib\win\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(OutDir)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -179,20 +184,26 @@
   <ItemGroup>
     <ClInclude Include="include\base64.h" />
     <ClInclude Include="include\CaptureScreen.h" />
+    <ClInclude Include="include\ECLiveStream.h" />
+    <ClInclude Include="include\faaccodec.h" />
     <ClInclude Include="include\RecordVoip.h" />
     <ClInclude Include="include\statsCollector.h" />
     <ClInclude Include="include\StunMessageCallBack.h" />
     <ClInclude Include="include\VoeObserver.h" />
     <ClInclude Include="interface\ECMedia.h" />
+    <ClInclude Include="source\faaccodec.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\base64.c" />
     <ClCompile Include="source\CaptureScreen.cpp" />
+    <ClCompile Include="source\ECLiveStream.cpp" />
     <ClCompile Include="source\ECMedia.cpp" />
+    <ClCompile Include="source\faaccodec.cpp" />
     <ClCompile Include="source\RecordVoip.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="source\ECLiveStream_rtmp.cpp" />
     <ClCompile Include="source\statsCollector.cc" />
     <ClCompile Include="source\VoeObserver.cpp" />
   </ItemGroup>
@@ -274,6 +285,9 @@
       <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\module\audio_coding\L16.vcxproj">
+      <Project>{a686b620-e45e-4175-a4f9-9db598b804e8}</Project>
     </ProjectReference>
     <ProjectReference Include="..\module\audio_coding\NetEq.vcxproj">
       <Project>{ab38a723-2493-1391-085b-30e85cc7bdfa}</Project>
@@ -454,6 +468,9 @@
     </ProjectReference>
     <ProjectReference Include="..\third_party\libjpeg_turbo\libjpeg.vcxproj">
       <Project>{a68e380e-afb4-e4e2-f5ed-0ae20725b7c5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\third_party\librtmp\rtmpdump-2.3\libRTMP.vcxproj">
+      <Project>{d6cb750a-f811-401d-9efa-f7cbc1b80314}</Project>
     </ProjectReference>
     <ProjectReference Include="..\third_party\libvpx\build\win32\vpx.vcxproj">
       <Project>{dce19daf-69ac-46db-b14a-39f0faa5db74}</Project>

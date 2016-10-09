@@ -96,6 +96,8 @@ class ViENetworkImpl
   explicit ViENetworkImpl(ViESharedData* shared_data);
   virtual ~ViENetworkImpl();
 
+
+
  private:
   ViESharedData* shared_data_;
 public:
@@ -106,6 +108,8 @@ public:
   virtual int EnableIPv6(int video_channel) OVERRIDE;
   // The function returns true if IPv6 is enabled, false otherwise.
   virtual bool IsIPv6Enabled(int video_channel) OVERRIDE;
+  int RegisterExternalPacketization(const int video_channel, VCMPacketizationCallback * transport);
+  int DeRegisterExternalPacketization(const int video_channel);
 };
 
 }  // namespace webrtc

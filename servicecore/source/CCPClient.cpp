@@ -3686,4 +3686,39 @@ extern "C" int setVideoKeepAlive(char *callid, bool enable, int interval)
 	return g_pSerCore->SetVideoKeepAlive(pCall, enable, interval);
 }
 
+extern "C" void *createLiveStream()
+{
+	SDK_UN_INITIAL_ERROR(NULL);
+	return g_pSerCore->createLiveStream();
+}
+extern "C" int playLiveStream(void *handle, const char * url, void *renderView)
+{
+	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+	return g_pSerCore->playLiveStream(handle, url, renderView);
+}
+extern "C" int pushLiveStream(void *handle, const char * url, void *renderView)
+{
+	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+	return g_pSerCore->pushLiveStream(handle, url, renderView);
+}
+extern "C" void stopLiveStream(void *handle)
+{
+	if (!g_pSerCore)
+		return;
 
+	g_pSerCore->stopLiveStream(handle);
+
+}
+extern "C" void releaseLiveStream(void *handle)
+{
+	if (!g_pSerCore)
+		return;
+	g_pSerCore->releaseLiveStream(handle);
+}
+
+extern "C" int selectCameraLiveStream(void *handle, int index, int width, int height, int fps)
+{
+	if (!g_pSerCore)
+		return -1;
+	return g_pSerCore->liveStream_SelectCamera(handle, index, width, height, fps);
+}

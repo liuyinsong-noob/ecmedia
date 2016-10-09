@@ -1902,6 +1902,23 @@ Channel::DeRegisterExternalTransport()
     return 0;
 }
 
+int32_t Channel::RegisterExternalPacketization(AudioPacketizationCallback* transport)
+{
+	WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId, _channelId),
+		"Channel::RegisterExternalPacketization()");
+
+	audio_coding_->RegisterTransportCallback(transport);
+	return 0;
+}
+
+int32_t Channel::DeRegisterExternalPacketization()
+{
+	WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId, _channelId),
+		"Channel::RegisterExternalPacketization()");
+
+	audio_coding_->RegisterTransportCallback(NULL);
+	return 0;
+}
 int32_t Channel::ReceivedRTPPacket(const int8_t* data, size_t length,
                                    const PacketTime& packet_time) {
   WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId,_channelId),

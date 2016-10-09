@@ -11,7 +11,7 @@
 #include "acm_pcm16b.h"
 
 #ifdef WEBRTC_CODEC_PCM16
-#include "cloopenwebrtc/modules/audio_coding/codecs/pcm16b/include/pcm16b.h"
+#include "pcm16b.h"
 #include "acm_codec_database.h"
 #include "acm_common_defs.h"
 #include "trace.h"
@@ -53,9 +53,17 @@ ACMPCM16B::~ACMPCM16B() { return; }
 
 int16_t ACMPCM16B::InternalEncode(uint8_t* bitstream,
                                   int16_t* bitstream_len_byte) {
-  *bitstream_len_byte = WebRtcPcm16b_Encode(&in_audio_[in_audio_ix_read_],
-                                            frame_len_smpl_ * num_channels_,
-                                            bitstream);
+  
+  //hubin changed for LiveStream
+  //*bitstream_len_byte = WebRtcPcm16b_Encode(&in_audio_[in_audio_ix_read_],
+  //                                          frame_len_smpl_ * num_channels_,
+  //                                          bitstream);
+
+  *bitstream_len_byte = WebRtcPcm16b_EncodeW16(&in_audio_[in_audio_ix_read_],
+	  frame_len_smpl_ * num_channels_,
+	  (int16_t*)bitstream);
+
+  
   // Increment the read index to tell the caller that how far
   // we have gone forward in reading the audio buffer.
   in_audio_ix_read_ += frame_len_smpl_ * num_channels_;

@@ -955,6 +955,14 @@ public:
 
 //sean add begin 20140705 video conference
 public:
+	void *createLiveStream();
+	int playLiveStream(void *handle, const char * url, void *renderView);
+	int pushLiveStream(void *handle, const char * url, void *renderView);
+	void stopLiveStream(void *handle);
+	void releaseLiveStream(void *handle);
+	int liveStream_SelectCamera(void *handle, int index, int width, int height, int fps);
+
+public:
     virtual void onVideoConference(int channelID, int status, int payload);
 //sean add end 20140705 video conference
     const char *serphone_get_self_sipNo();

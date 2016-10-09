@@ -461,7 +461,7 @@ ServiceCore::ServiceCore()
 	m_SnapshotDeviceId = -1;
 	m_SnapshotChannelID = -1;
 
-	audioNackEnabled = true;
+	audioNackEnabled = false;
 	videoNackEnabled = true;
 	videoProtectionMode = -1;
 	presence_mode = LinphoneStatusOffline;

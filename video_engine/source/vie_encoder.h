@@ -184,6 +184,11 @@ class ViEEncoder
   //---
   int32_t RegisterEncoderRateObserver(VideoEncoderRateObserver *observer);
 
+  int32_t RegisterExternalPacketization(VCMPacketizationCallback* transport);
+  void DeRegisterExternalPacketization();
+
+
+
   int channel_id() const { return channel_id_; }
 
  protected:

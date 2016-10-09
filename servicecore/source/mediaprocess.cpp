@@ -437,12 +437,12 @@ int ServiceCore::return_video_width_height(int width,int height,int videoChannel
 
 #ifdef VIDEO_ENABLED
 
-	//update receive codec.
-	cloopenwebrtc::VideoCodec codec_params;
-	ECMedia_get_receive_codec_video(videoChannelID, codec_params);
-	codec_params.width = width;
-	codec_params.height = height;
-	ECMedia_set_receive_codec_video(videoChannelID, codec_params);
+	////update receive codec.
+	//cloopenwebrtc::VideoCodec codec_params;
+	//ECMedia_get_receive_codec_video(videoChannelID, codec_params);
+	//codec_params.width = width;
+	//codec_params.height = height;
+	//ECMedia_set_receive_codec_video(videoChannelID, codec_params);
 
 	std::map<int,VideoConferenceDesc *>::iterator itt = videoConferenceM.find(videoChannelID);
 	if (vtable.remote_video_ratio_changed) {
@@ -644,20 +644,19 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
                 //base->SetFecStatus(call->m_AudioChannelID, m_enable_fec);
                 //base->SetLoss(call->m_AudioChannelID, m_opus_packet_loss_rate);
 
+				////for fec test.
+				//cloopenwebrtc::CodecInst redCodec = codec_params;
+				//memset(redCodec.plname, 0, RTP_PAYLOAD_NAME_SIZE);
+				//memcpy(redCodec.plname, "red", 3);
+				//redCodec.pltype = 116;
+				//ECMedia_set_receive_playloadType_audio(call->m_AudioChannelID,redCodec);
 
-				//for fec test.
-/*				cloopenwebrtc::CodecInst redCodec = codec_params;
-				memset(redCodec.plname, 0, RTP_PAYLOAD_NAME_SIZE);
-				memcpy(redCodec.plname, "red", 3);
-				redCodec.pltype = 116;
-				ECMedia_set_receive_playloadType_audio(call->m_AudioChannelID,redCodec);
-
-				cloopenwebrtc::CodecInst fecCodec = codec_params;
-				memset(fecCodec.plname, 0, RTP_PAYLOAD_NAME_SIZE);
-				memcpy(fecCodec.plname, "ulpfec", 6);
-				fecCodec.pltype = 117;
-				ECMedia_set_receive_playloadType_audio(call->m_AudioChannelID,fecCodec);	*/				
-				//TODO:
+				//cloopenwebrtc::CodecInst fecCodec = codec_params;
+				//memset(fecCodec.plname, 0, RTP_PAYLOAD_NAME_SIZE);
+				//memcpy(fecCodec.plname, "ulpfec", 6);
+				//fecCodec.pltype = 117;
+				//ECMedia_set_receive_playloadType_audio(call->m_AudioChannelID,fecCodec);
+				////TODO:
 				//rtp_rtcp->SetFECStatus(call->m_AudioChannelID, true, 116, 117);
 
 				ECMedia_set_VAD_status(call->m_AudioChannelID, cloopenwebrtc::kVadAggressiveHigh, !m_dtxEnabled);
@@ -1744,7 +1743,8 @@ void ServiceCore::serphone_core_send_dtmf(char dtmfch)
     
 #if !defined(NO_VOIP_FUNCTION)
 	SerPhoneCall *call =serphone_core_get_current_call();
-	ECMedia_send_dtmf(call->m_AudioChannelID, dtmfch);
+	if(call)
+		ECMedia_send_dtmf(call->m_AudioChannelID, dtmfch);
 #endif
 }
 
@@ -4998,6 +4998,34 @@ int ServiceCore::SetAudioKeepAlive(SerPhoneCall *call, bool enable, int interval
 
 }
 
+void *ServiceCore::createLiveStream()
+{
+	return ECMedia_createLiveStream(0);
+}
+int ServiceCore::playLiveStream(void *handle, const char * url, void *renderView)
+{
+	return ECMedia_playLiveStream(handle, url, renderView, return_video_width_height);
+}
+int ServiceCore::pushLiveStream(void *handle, const char * url, void *renderView)
+{
+	return ECMedia_pushLiveStream(handle, url, renderView);
+}
+void ServiceCore::stopLiveStream(void *handle)
+{
+	return ECMedia_stopLiveStream(handle);
+}
+void ServiceCore::releaseLiveStream(void *handle)
+{
+	return ECMedia_releaseLiveStream(handle);
+}
+int ServiceCore::liveStream_SelectCamera(void *handle, int index, int width, int height, int fps)
+{
+	CameraCapability cap;
+	cap.width = width;
+	cap.height = height;
+	cap.maxfps = fps;
+	return ECMedia_setVideoProfileLiveStream(handle, index, cap, width*height*fps*0.07/1000);
+}
 //SendStatisticsProxy*  ServiceCore::Serphone_set_video_send_statistics_proxy(int video_channel)
 //{
 //#ifdef VIDEO_ENABLED

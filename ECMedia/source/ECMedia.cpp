@@ -23,6 +23,7 @@
 #include "statsCollector.h"
 #include "VoeObserver.h"
 #include "amrnb_api.h"
+#include "ECLiveStream.h"
 
 #ifdef WIN32
 #include "codingHelper.h"
@@ -65,13 +66,13 @@ enum {
     return ret;}
 #endif
 
-static cloopenwebrtc::VoiceEngine* m_voe = NULL;
+cloopenwebrtc::VoiceEngine* m_voe = NULL;
 static StatsCollector *g_statsCollector = NULL;
 
 static VoeObserver* g_VoeObserver = NULL;
 
 #ifdef VIDEO_ENABLED
-static cloopenwebrtc::VideoEngine* m_vie = NULL;
+cloopenwebrtc::VideoEngine* m_vie = NULL;
 static RecordVoip* g_recordVoip = NULL;
 static unsigned char* g_snapshotBuf = NULL;
 static int g_CaptureDeviceId = -1;
@@ -578,9 +579,10 @@ int ECMedia_audio_create_channel(int& channelid, bool is_video)
 
 			ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
 			if (rtp_rtcp) {
-				rtp_rtcp->SetRembStatus(channelid, true, true);
-				rtp_rtcp->SetSendAbsoluteSendTimeStatus(channelid, true, kRtpExtensionAbsoluteSendTime);
-				rtp_rtcp->SetReceiveAbsoluteSendTimeStatus(channelid, true, kRtpExtensionAbsoluteSendTime);
+				//rtp_rtcp->SetRembStatus(channelid, true, true);
+				//rtp_rtcp->SetTMMBRStatus(channelid, true);
+				//rtp_rtcp->SetSendAbsoluteSendTimeStatus(channelid, true, kRtpExtensionAbsoluteSendTime);
+				//rtp_rtcp->SetReceiveAbsoluteSendTimeStatus(channelid, true, kRtpExtensionAbsoluteSendTime);
 			}
 			rtp_rtcp->Release();
             return 0;
@@ -3350,6 +3352,22 @@ int ECMedia_set_desktop_share_window_change_cb(int desktop_captureid, int channe
 		return -99;
 	}
 }
+int ECmedia_set_shield_mosaic(int video_channel, bool flag)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    ViENetwork *network = ViENetwork::GetInterface(m_vie);
+    if (network) {
+        network->setShieldMosaic(video_channel, flag);
+        network->Release();
+        return 0;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to get ViENetwork, %s", __FUNCTION__);
+        return -99;
+    }
+}
 
 
 int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &height)
@@ -3369,21 +3387,78 @@ int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &hei
 	}
 }
 
-int ECmedia_set_shield_mosaic(int video_channel, bool flag)
+ void *ECMedia_createLiveStream(int type)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
-    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-    ViENetwork *network = ViENetwork::GetInterface(m_vie);
-    if (network) {
-        network->setShieldMosaic(video_channel, flag);
-        network->Release();
-        return 0;
-    }
-    else
-    {
-        PrintConsole("[ECMEDIA WARNNING] failed to get ViENetwork, %s", __FUNCTION__);
-        return -99;
-    }
+#ifdef _WIN32
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	return ECMedia_LiveStream::CreateLiveStream(type);
+#else
+	return NULL;
+#endif
 }
+
+int ECMedia_playLiveStream(void *handle, const char * url, void *renderView, ReturnVideoWidthHeightM callback)
+{
+#ifdef _WIN32
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	RTMPLiveSession *p = (RTMPLiveSession*) handle;
+	return p->PlayStream(url, renderView, callback);
+#else
+	return -1;
+#endif
+}
+
+ int ECMedia_pushLiveStream(void *handle, const char *url, void *localView)
+ {
+#ifdef _WIN32
+	 PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	 RTMPLiveSession *p = (RTMPLiveSession*)handle;
+	 return p->PushStream(url, localView);
+#else
+	 return -1;
+#endif
+ }
+void ECMedia_stopLiveStream(void *handle)
+{
+#ifdef _WIN32
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	RTMPLiveSession *p = (RTMPLiveSession*) handle;
+	p->StopPlay();
+	p->StopPush();
+#endif
+	return;
+}
+
+void ECMedia_releaseLiveStream(void *handle)
+{
+#ifdef _WIN32
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	RTMPLiveSession *p = (RTMPLiveSession*)handle;
+	delete p;
+#endif
+	return;
+}
+
+int ECMedia_setVideoProfileLiveStream(void *handle, int cameraIndex, CameraCapability cam, int bitrRates)
+{
+#ifdef _WIN32
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	RTMPLiveSession *p = (RTMPLiveSession*)handle;
+	return p->setVideoProfile(cameraIndex, cam, bitrRates);
+#else
+	return -1;
+#endif
+}
+
+void ECMedia_setLiveStreamNetworkCallBack(void *handle, onLiveStreamNetworkStatusCallBack callback)
+{
+#ifdef _WIN32
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	RTMPLiveSession *p = (RTMPLiveSession*)handle;
+	p->setNetworkStatusCallBack(callback);
+#endif
+	return;
+}
+
 #endif
 

@@ -1054,6 +1054,17 @@ int32_t ViEEncoder::RegisterEncoderRateObserver(VideoEncoderRateObserver *observ
 	return vcm_.RegisterEncoderRateObserver(observer);
 }
 
+int32_t ViEEncoder::RegisterExternalPacketization(VCMPacketizationCallback* transport)
+{
+	return vcm_.RegisterTransportCallback(transport);
+}
+
+void ViEEncoder::DeRegisterExternalPacketization()
+{
+	vcm_.RegisterTransportCallback(NULL);
+}
+
+
 SendStatisticsProxy* ViEEncoder::GetSendStatisticsProxy()
 {
 	return send_statistics_proxy_;

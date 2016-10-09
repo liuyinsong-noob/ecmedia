@@ -39,6 +39,7 @@
 namespace cloopenwebrtc {
 
 class VoiceEngine;
+class AudioPacketizationCallback;
 
 // VoENetwork
 class WEBRTC_DLLEXPORT VoENetwork
@@ -63,6 +64,11 @@ public:
     // Removes and disables a user-defined external transport protocol for a
     // specified |channel|.
     virtual int DeRegisterExternalTransport(int channel) = 0;
+
+	virtual int RegisterExternalPacketization(int channel,
+		AudioPacketizationCallback* transport) = 0;
+
+	virtual int DeRegisterExternalPacketization(int channel) = 0;
 
     // The packets received from the network should be passed to this
     // function when external transport is enabled. Note that the data

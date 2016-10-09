@@ -40,6 +40,15 @@ typedef int (*onVoeCallbackOnError)(int channelid, int errCode);
 typedef int(*onEcMediaDesktopCaptureErrCode)(int desktop_capture_id, int errCode);
 typedef int (*onEcMediaShareWindowSizeChange)(int desktop_capture_id, int width, int height);
 
+enum NET_STATUS_CODE {
+	NET_STATUS_CONNECTING = 1,
+	NET_STATUS_CONNECTED,
+	NET_STATUS_DISCONNECTED,
+	NET_STATUS_TIMEOUT
+};
+
+typedef int(*onLiveStreamNetworkStatusCallBack)(void *handle, NET_STATUS_CODE code);
+
 /*
  * Enable trace.
  */
@@ -521,9 +530,84 @@ ECMEDIA_API int ECMedia_set_audio_RecvStatistics_proxy(int channelid, char* file
 //kill statistics thread
 ECMEDIA_API int ECMedia_stop_Statistics_proxy();
 ECMEDIA_API int ECMedia_set_CaptureDeviceID(int videoCapDevId);
-
 ECMEDIA_API int ECMedia_Check_Record_Permission(bool &enabled);
 ECMEDIA_API int ECmedia_set_shield_mosaic(int video_channel, bool flag);
+/* LiveSteam
+观看直播调用过程：
+void *handle = ECMedia_createLiveStream(0);
+ECMedia_setLiveStreamNetworkCallBack(statusCallback);
+ECMedia_playLiveStream(handle, "http://livestream.com", wndPtr, callback);
+..
+ECMedia_stopLiveStream(handle);
+ECMedia_releaseLiveStream(handle);
+handle = NULL;
+
+直播推流调用过程：
+void *handle = ECMedia_createLiveStream(0);
+ECMedia_setVideoProfileLiveStream(handle, cameraIndex, capability, bitrates);
+ECMedia_setLiveStreamNetworkCallBack(statusCallback);
+ECMedia_pushLiveStream(handle, "http://livestream.com", wndPtr);
+..
+ECMedia_stopLiveStream(handl);
+ECMedia_releaseLiveStream(handle);
+handle = NULL;
+*/
+
+/*
+功能     : 创建直播模块
+参数     : [IN]  type	  : 类型，必须为0
+返回值   : 返回值直播模块句柄
+*/
+ECMEDIA_API void*ECMedia_createLiveStream(int type);
+
+/*
+功能     : 开始观看直播
+参数     : [IN]  handle		： 句柄
+			 [IN]  url			 : 直播地址
+			 [IN]  renderView	：视频窗口
+			 [IN]  callback		：视频宽高回调
+返回值   : 返回值 0：成功  -1：初始化资源失败 -2：已经在直播或推流  -3：连接失败  -4：建立流失败
+*/
+ECMEDIA_API int  ECMedia_playLiveStream(void *handle, const char * url, void *renderView, ReturnVideoWidthHeightM callback);
+
+/*
+功能     : 开始直播推流
+参数     : [IN]  handle		： 句柄
+			 [IN]  url			 : 推流地址
+			 [IN]  renderView	：本地视频窗口
+返回值   : 返回值 0：成功　-1：初始化资源失败 -2：已经在直播或者推流  -3：连接失败  -4：建立流失败
+*/
+ECMEDIA_API int  ECMedia_pushLiveStream(void *handle, const char * url, void *renderView);
+
+/*
+功能     : 停止观看或推流
+参数     :	  [IN]  handle		： 句柄
+*/
+ECMEDIA_API void ECMedia_stopLiveStream(void *handle);
+
+/*
+功能     : 释放直播模块
+参数     :	  [IN]  handle		： 句柄
+*/
+ECMEDIA_API void ECMedia_releaseLiveStream(void *handle);
+
+/*
+功能     : 设置推流视频参数
+参数     : [IN]  handle		： 句柄
+			 [IN]  cameraIndex			 : 摄像头index
+			 [IN]  cam			 : 视频能力
+			 [IN]  bitrates	：视频码率
+返回值   : 返回值 0：成功　-1：参数不正确
+*/
+ECMEDIA_API int  ECMedia_setVideoProfileLiveStream(void *handle,int cameraIndex, CameraCapability cam, int bitreates);
+
+/*
+功能     : 设置直播网络状态回调
+参数     : [IN]  handle		： 句柄
+			 [IN]  callback	 : 回调
+*/
+ECMEDIA_API void ECMedia_setLiveStreamNetworkCallBack(void *handle, onLiveStreamNetworkStatusCallBack callback);
+
 #ifdef __cplusplus
 }
 #endif

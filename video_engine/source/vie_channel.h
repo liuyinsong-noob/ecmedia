@@ -376,6 +376,7 @@ class ViEChannel
       ReceiveStatisticsProxy* receive_statistics_proxy);
   void ReceivedBWEPacket(int64_t arrival_time_ms, size_t payload_size,
                          const RTPHeader& header);
+  ViEReceiver *GetReceiver() { return &vie_receiver_ ; }
 
   
  protected:

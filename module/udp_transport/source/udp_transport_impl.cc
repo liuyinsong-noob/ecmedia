@@ -2366,21 +2366,24 @@ WebRtc_UWord32 UdpTransport::Htonl(const WebRtc_UWord32 a)
 
 WebRtc_UWord32 UdpTransport::InetAddrIPV4(const char* ip)
 {
-//    return ::inet_addr(ip);
-    struct in_addr addr;
-    int ret = inet_pton(AF_INET, ip, (void *)&addr);
-    if (ret) {
-        return addr.s_addr;
-    }
-    else
-    {
-        WEBRTC_TRACE(
-                     kTraceError,
-                     kTraceTransport,
-                     -1,
-                     "InetAddrIPV4 inet_pton error");
-        return -1;
-    }
+#if defined(_WIN32)
+	return ::inet_addr(ip);
+#else
+	struct in_addr addr;
+	int ret = inet_pton(AF_INET, ip, (void *)&addr);
+	if (ret) {
+		return addr.s_addr;
+	}
+	else
+	{
+		WEBRTC_TRACE(
+			kTraceError,
+			kTraceTransport,
+			-1,
+			"InetAddrIPV4 inet_pton error");
+		return -1;
+	}
+#endif
 }
 
 WebRtc_Word32 UdpTransport::InetPresentationToNumeric(WebRtc_Word32 af,

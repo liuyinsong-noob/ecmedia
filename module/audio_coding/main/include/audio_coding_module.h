@@ -31,18 +31,7 @@ class RTPFragmentationHeader;
 
 #define WEBRTC_10MS_PCM_AUDIO 960  // 16 bits super wideband 48 kHz
 
-// Callback class used for sending data ready to be packetized
-class AudioPacketizationCallback {
- public:
-  virtual ~AudioPacketizationCallback() {}
 
-  virtual int32_t SendData(FrameType frame_type,
-                           uint8_t payload_type,
-                           uint32_t timestamp,
-                           const uint8_t* payload_data,
-                           size_t payload_len_bytes,
-                           const RTPFragmentationHeader* fragmentation) = 0;
-};
 
 // Callback class used for inband Dtmf detection
 class AudioCodingFeedback {

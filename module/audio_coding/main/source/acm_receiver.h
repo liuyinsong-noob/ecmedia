@@ -14,7 +14,7 @@
 #include <vector>
 
 #include "thread_annotations.h"
-#include "webrtc_vad.h"
+//#include "webrtc_vad.h"
 #include "engine_configurations.h"
 #include "audio_coding_module.h"
 #include "acm_codec_database.h"

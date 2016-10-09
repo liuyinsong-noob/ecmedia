@@ -556,7 +556,7 @@ typedef struct _CALLBACKINTERFACE CCallbackInterface;
      功能     : 海运通根据sip判断证书是否存在
      参数     : [IN]  sip	  :  sip号.
      [IN] remoteSipLen    :   sip号长度.
-     返回值   : 成功 0 失败 -1 不支持 -1001
+     返回值   : 成功 0 失败 -1 不支持 -1001-	
      *******************************************************************************/
     CCPAPI int haiyuntongIsExistCert(const char *sip, long sipLen);
     
@@ -569,7 +569,13 @@ typedef struct _CALLBACKINTERFACE CCallbackInterface;
 
 	CCPAPI  int setAudioKeepAlive(char *callid, bool enable, int interval);
 	CCPAPI  int setVideoKeepAlive(char *callid, bool enable, int interval);
-	
+
+	CCPAPI void *createLiveStream();
+	CCPAPI int playLiveStream(void *handle, const char * url, void *renderView);
+	CCPAPI int pushLiveStream(void *handle, const char * url, void *renderView);
+	CCPAPI void stopLiveStream(void *handle);
+	CCPAPI void releaseLiveStream(void *handle);
+	CCPAPI int selectCameraLiveStream(void *handle, int index, int width, int height, int fps);
 #ifdef __cplusplus
 }
 #endif

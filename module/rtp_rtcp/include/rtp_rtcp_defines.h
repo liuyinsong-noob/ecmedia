@@ -223,7 +223,12 @@ public:
         const uint8_t* payloadData,
         const size_t payloadSize,
         const WebRtcRTPHeader* rtpHeader) = 0;
-
+    
+    virtual bool ReceivePacket(const uint8_t* packet,
+                  size_t packet_length,
+                  const RTPHeader& header,
+                  bool in_order) = 0;
+    
     virtual bool OnRecoveredPacket(const uint8_t* packet,
                                    size_t packet_length) = 0;
 };
@@ -371,6 +376,12 @@ class NullRtpData : public RtpData {
     return 0;
   }
 
+  virtual bool ReceivePacket(const uint8_t* packet,
+                               size_t packet_length,
+                               const RTPHeader& header,
+                               bool in_order) OVERRIDE {
+      return true;
+ }
   virtual bool OnRecoveredPacket(const uint8_t* packet,
                                  size_t packet_length) OVERRIDE {
     return true;

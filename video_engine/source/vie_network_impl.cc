@@ -89,6 +89,7 @@ int ViENetworkImpl::RegisterSendTransport(const int video_channel,
     shared_data_->SetLastError(kViENetworkUnknownError);
     return -1;
   }
+  transport.SetRtpData(video_channel,vie_channel->GetReceiver(),1);
   return 0;
 }
 
@@ -110,6 +111,37 @@ int ViENetworkImpl::DeregisterSendTransport(const int video_channel) {
     return -1;
   }
   return 0;
+}
+
+
+int ViENetworkImpl::RegisterExternalPacketization(const int video_channel,
+	VCMPacketizationCallback* transport) {
+	LOG_F(LS_INFO) << "channel: " << video_channel;
+	ViEChannelManagerScoped cs(*(shared_data_->channel_manager()));
+	ViEChannel* vie_channel = cs.Channel(video_channel);
+	if (!vie_channel) {
+		shared_data_->SetLastError(kViENetworkInvalidChannelId);
+		return -1;
+	}
+	ViEEncoder* vie_encoder = cs.Encoder(video_channel);
+	assert(vie_encoder);
+	vie_encoder->RegisterExternalPacketization(transport);
+	return 0;
+}
+
+int ViENetworkImpl::DeRegisterExternalPacketization(const int video_channel) {
+	LOG_F(LS_INFO) << "channel: " << video_channel;
+	ViEChannelManagerScoped cs(*(shared_data_->channel_manager()));
+	ViEChannel* vie_channel = cs.Channel(video_channel);
+	if (!vie_channel) {
+		shared_data_->SetLastError(kViENetworkInvalidChannelId);
+		return -1;
+	}
+	ViEEncoder* vie_encoder = cs.Encoder(video_channel);
+	assert(vie_encoder);
+	vie_encoder->RegisterExternalPacketization(NULL);
+	
+	return 0;
 }
 
 int ViENetworkImpl::ReceivedRTPPacket(const int video_channel, const void* data,

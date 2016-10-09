@@ -279,12 +279,28 @@ enum FrameType
 class Transport
 {
 public:
+   
 	virtual int SendPacket(int channel, const void *data, size_t len, int sn=0) = 0;
 	virtual int SendRTCPPacket(int channel, const void *data, size_t len) = 0;
+    virtual void SetRtpData(int channel,void * ,int type) {};
 
 protected:
 	virtual ~Transport() {}
 	Transport() {}
+};
+
+class RTPFragmentationHeader;
+// Callback class used for sending data ready to be packetized
+class AudioPacketizationCallback {
+public:
+	virtual ~AudioPacketizationCallback() {}
+
+	virtual int32_t SendData(FrameType frame_type,
+		uint8_t payload_type,
+		uint32_t timestamp,
+		const uint8_t* payload_data,
+		size_t payload_len_bytes,
+		const RTPFragmentationHeader* fragmentation) = 0;
 };
 
 // RTP
