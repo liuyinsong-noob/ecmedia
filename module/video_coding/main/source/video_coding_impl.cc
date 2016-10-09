@@ -282,7 +282,7 @@ class VideoCodingModuleImpl : public VideoCodingModule {
   }
 
   virtual int32_t Decode(uint16_t maxWaitTimeMs, bool shieldMosaic) OVERRIDE {
-    return receiver_->Decode(maxWaitTimeMs);
+    return receiver_->Decode(maxWaitTimeMs, shieldMosaic);
   }
 
   virtual int32_t ResetDecoder() OVERRIDE { return receiver_->ResetDecoder(); }
