@@ -274,6 +274,13 @@ WebRtc_Word32 H264VideoToolboxEncoder::Encode(
   if (!callback_ || !compression_session_) {
     return WEBRTC_VIDEO_CODEC_UNINITIALIZED;
   }
+    
+    if (width_ != input_image.width() || height_ != input_image.height()) {
+        width_ = input_image.width();
+        height_ = input_image.height();
+        ResetCompressionSession();
+    }
+    
 #if defined(WEBRTC_IOS)
   if (!RTCIsUIApplicationActive()) {
     // Ignore all encode requests when app isn't active. In this state, the
