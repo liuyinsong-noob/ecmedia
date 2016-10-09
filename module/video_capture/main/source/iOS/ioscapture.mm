@@ -17,6 +17,7 @@
  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 #import "ioscapture.h"
+#import <pthread.h>
 #ifdef TARGET_OS_IPHONE
 #if 0
 char *globalFilePathcapture = NULL;
