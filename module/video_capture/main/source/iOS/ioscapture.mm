@@ -258,7 +258,7 @@ char *globalFilePathcapture = NULL;
 	CVImageBufferRef frame = nil;
 	@synchronized(self) { 
 		@try {
-			CVImageBufferRef frame = CMSampleBufferGetImageBuffer(sampleBuffer); 
+			frame = CMSampleBufferGetImageBuffer(sampleBuffer); 
 			CVReturn status = CVPixelBufferLockBaseAddress(frame, 0);
 			if (kCVReturnSuccess != status) {
 				frame=nil;
@@ -267,6 +267,8 @@ char *globalFilePathcapture = NULL;
 			
 			/*kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange*/
 			size_t plane_width = CVPixelBufferGetWidthOfPlane(frame, 0);
+//            NSLog(@"sean haha plane_width %zu, plane_height %zu", plane_width, CVPixelBufferGetHeightOfPlane(frame, 0));
+            
             
             size_t plane_widthu = CVPixelBufferGetWidthOfPlane(frame, 1);
 
