@@ -303,7 +303,7 @@
 					../interface,
 					../../system_wrappers/interface,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CPLUSPLUSFLAGS = (
 					"-fno-rtti",
@@ -358,7 +358,7 @@
 					../interface,
 					../../system_wrappers/interface,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CPLUSPLUSFLAGS = (
 					"-fno-rtti",
@@ -412,7 +412,8 @@
 					../interface,
 					../../system_wrappers/interface,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CPLUSPLUSFLAGS = (
 					"-fno-rtti",
@@ -468,7 +469,8 @@
 					../interface,
 					../../system_wrappers/interface,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CPLUSPLUSFLAGS = (
 					"-fno-rtti",

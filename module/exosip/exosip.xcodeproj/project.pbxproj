@@ -404,7 +404,7 @@
 					../../third_party/oRTP/include/ortp/,
 					../../third_party/oRTP/include,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../servicecore\"",
@@ -439,7 +439,7 @@
 					../../third_party/oRTP/include/ortp/,
 					../../third_party/oRTP/include,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../servicecore\"",

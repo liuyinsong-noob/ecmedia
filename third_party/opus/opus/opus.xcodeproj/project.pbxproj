@@ -1212,6 +1212,7 @@
 					../src/silk/float,
 					../../../module/video_coding/codecs/h264_hardcode/,
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1245,6 +1246,7 @@
 					../src/silk/float,
 					../../../module/video_coding/codecs/h264_hardcode/,
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-Wno-",
@@ -1277,6 +1279,7 @@
 					../src/silk/float,
 					../../../module/video_coding/codecs/h264_hardcode/,
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1311,6 +1314,7 @@
 					../src/silk/float,
 					../../../module/video_coding/codecs/h264_hardcode/,
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-Wno-",

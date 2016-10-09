@@ -649,7 +649,7 @@
 					../module/video_render/main/include,
 					../ECMedia/interface,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../IOSProject/out/baselib/Release-iphoneos\"",
@@ -727,7 +727,7 @@
 					../module/video_render/main/include,
 					../ECMedia/interface,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../IOSProject/out/baselib/Release-iphoneos\"",

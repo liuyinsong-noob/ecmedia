@@ -780,7 +780,7 @@
 					../video_engine/include,
 					../module/audio_coding/codecs/g729/source,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CFLAGS = (
 					"-fno-strict-aliasing",
@@ -873,7 +873,7 @@
 					../video_engine/include,
 					../module/audio_coding/codecs/g729/source,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CFLAGS = "-fno-strict-aliasing";
 				OTHER_LDFLAGS = "-ObjC";
@@ -963,7 +963,8 @@
 					../video_engine/include,
 					../module/audio_coding/codecs/g729/source,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CFLAGS = (
 					"-fno-strict-aliasing",
@@ -1055,7 +1056,8 @@
 					../video_engine/include,
 					../module/audio_coding/codecs/g729/source,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CFLAGS = "-fno-strict-aliasing";
 				OTHER_LDFLAGS = "-ObjC";

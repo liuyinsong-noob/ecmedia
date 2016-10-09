@@ -20,6 +20,7 @@
 		AD4B6B9E1D4B4FBD00731C5B /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = AD4B6B9C1D4B4FA800731C5B /* base64.c */; };
 		AD4E8C561CB664F80068C4E9 /* libcommon_audio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4E8C551CB664D00068C4E9 /* libcommon_audio.a */; };
 		AD7E733F1D3CB66A001C0E04 /* statsCollector.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD7E733E1D3CB66A001C0E04 /* statsCollector.cc */; };
+		ADA0AD9D1DA8E00C00C4807D /* libcommon_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA0AD971DA8C54400C4807D /* libcommon_video.a */; };
 		ADB51A471B2807B40009077D /* libaudio_coding_module.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB519F11B2807290009077D /* libaudio_coding_module.a */; };
 		ADB51A481B2807B40009077D /* libaudio_conference_mixer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB519D81B2806E40009077D /* libaudio_conference_mixer.a */; };
 		ADB51A491B2807B40009077D /* libaudio_device.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB519D21B2806DC0009077D /* libaudio_device.a */; };
@@ -318,6 +319,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = AD1F0CA81D47628D00C33F53;
 			remoteInfo = common_video_Mac;
+		};
+		ADA0AD9B1DA8DFFC00C4807D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ADF92DA11CB7BC7C0026DF61 /* common_video.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = ADE8C7CB1C560F15002C707C;
+			remoteInfo = common_video;
 		};
 		ADB519701B28062F0009077D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1145,6 +1153,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADA0AD9D1DA8E00C00C4807D /* libcommon_video.a in Frameworks */,
 				ADC50F521D8FC69700A83C04 /* libdesktop_capture.a in Frameworks */,
 				AD01997D1D236579003C2BB9 /* libyuv.a in Frameworks */,
 				ADF92DA81CB7BD5B0026DF61 /* libremote_bitrate_estimator.a in Frameworks */,
@@ -1923,6 +1932,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				ADA0AD9C1DA8DFFC00C4807D /* PBXTargetDependency */,
 				ADC50F8B1D90D62900A83C04 /* PBXTargetDependency */,
 				AD838BE91D420BB400050E87 /* PBXTargetDependency */,
 				AD838BEB1D420BB400050E87 /* PBXTargetDependency */,
@@ -2696,6 +2706,11 @@
 			name = G729;
 			targetProxy = AD838C201D420BB400050E87 /* PBXContainerItemProxy */;
 		};
+		ADA0AD9C1DA8DFFC00C4807D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = common_video;
+			targetProxy = ADA0AD9B1DA8DFFC00C4807D /* PBXContainerItemProxy */;
+		};
 		ADC50F8B1D90D62900A83C04 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = desktop_capture;
@@ -2892,7 +2907,7 @@
 					../../module/common_audio/source/resampler/include/,
 					"../../module/audio_coding/codecs/opencore-amr/amrnb",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../,
@@ -2902,6 +2917,7 @@
 					../../third_party/libx264/libx264_mac/lib,
 					../../third_party/ffmpeg/ffmpeg_mac/lib,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-Wno-write-strings";
 				OTHER_LDFLAGS = "-ObjC";
@@ -2961,7 +2977,7 @@
 					../../module/common_audio/source/resampler/include/,
 					"../../module/audio_coding/codecs/opencore-amr/amrnb",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../,
@@ -2971,6 +2987,7 @@
 					../../third_party/libx264/libx264_mac/lib,
 					../../third_party/ffmpeg/ffmpeg_mac/lib,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-Wno-write-strings";
 				OTHER_LDFLAGS = "-ObjC";

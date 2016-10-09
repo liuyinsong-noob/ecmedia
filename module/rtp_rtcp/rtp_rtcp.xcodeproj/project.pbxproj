@@ -736,6 +736,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				DSTROOT = /tmp/rtp_rtcp.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
@@ -781,7 +782,7 @@
 					../../module/pacing/include,
 					../../system_wrappers/source/,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CPLUSPLUSFLAGS = (
 					"-fno-rtti",
@@ -819,6 +820,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				DSTROOT = /tmp/rtp_rtcp.dst;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -864,7 +866,7 @@
 					../../module/pacing/include,
 					../../system_wrappers/source/,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CPLUSPLUSFLAGS = (
 					"-fno-rtti",
@@ -948,7 +950,8 @@
 					../../module/pacing/include,
 					../../system_wrappers/source/,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CPLUSPLUSFLAGS = (
 					"-fno-rtti",
@@ -1033,7 +1036,8 @@
 					../../module/pacing/include,
 					../../system_wrappers/source/,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CPLUSPLUSFLAGS = (
 					"-fno-rtti",

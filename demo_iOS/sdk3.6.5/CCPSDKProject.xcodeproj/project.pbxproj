@@ -494,7 +494,7 @@
 					"${SDK_DIR}/usr/include/libxml2",
 					"${SDK_DIR}/usr/include",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/CCPSDKProject\"",
@@ -524,7 +524,7 @@
 					"${SDK_DIR}/usr/include/libxml2",
 					"${SDK_DIR}/usr/include",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/CCPSDKProject\"",

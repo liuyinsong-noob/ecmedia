@@ -891,8 +891,8 @@
 					../module/video_coding/main/source,
 					../module/desktop_capture/source,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CFLAGS = (
 					"-fno-strict-aliasing",
@@ -989,8 +989,8 @@
 					../module/video_coding/main/source,
 					../module/desktop_capture/source,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CFLAGS = "-fno-strict-aliasing";
 				OTHER_LDFLAGS = "";
