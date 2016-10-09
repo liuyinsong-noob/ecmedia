@@ -523,7 +523,7 @@ ECMEDIA_API int ECMedia_stop_Statistics_proxy();
 ECMEDIA_API int ECMedia_set_CaptureDeviceID(int videoCapDevId);
 
 ECMEDIA_API int ECMedia_Check_Record_Permission(bool &enabled);
-
+ECMEDIA_API int ECmedia_set_shield_mosaic(int video_channel, bool flag);
 #ifdef __cplusplus
 }
 #endif

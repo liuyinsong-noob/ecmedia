@@ -1785,7 +1785,7 @@ bool ViEChannel::ChannelDecodeThreadFunction(void* obj) {
 }
 
 bool ViEChannel::ChannelDecodeProcess() {
-  vcm_->Decode(kMaxDecodeWaitTimeMs);
+  vcm_->Decode(kMaxDecodeWaitTimeMs, _shield_mosaic);
   return true;
 }
 
@@ -2020,6 +2020,9 @@ int32_t
 	ViEChannel::SetShieldMosaic(bool flag)
 {
 	_shield_mosaic = flag;
+//    if (_shield_mosaic) {
+//        vcm_->SetDecodeErrorMode(kNoErrors);
+//    }
 	return 0;
 }
 //sean add end 0915

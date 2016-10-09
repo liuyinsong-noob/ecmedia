@@ -281,7 +281,7 @@ class VideoCodingModuleImpl : public VideoCodingModule {
     return receiver_->RegisterRenderBufferSizeCallback(callback);
   }
 
-  virtual int32_t Decode(uint16_t maxWaitTimeMs) OVERRIDE {
+  virtual int32_t Decode(uint16_t maxWaitTimeMs, bool shieldMosaic) OVERRIDE {
     return receiver_->Decode(maxWaitTimeMs);
   }
 

@@ -3368,5 +3368,22 @@ int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &hei
 		return -99;
 	}
 }
+
+int ECmedia_set_shield_mosaic(int video_channel, bool flag)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    ViENetwork *network = ViENetwork::GetInterface(m_vie);
+    if (network) {
+        network->setShieldMosaic(video_channel, flag);
+        network->Release();
+        return 0;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to get ViENetwork, %s", __FUNCTION__);
+        return -99;
+    }
+}
 #endif
 

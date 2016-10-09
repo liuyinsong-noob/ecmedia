@@ -22,6 +22,7 @@
 
 
 namespace cloopenwebrtc {
+    extern int printTime();
 namespace vcm {
 
 VideoReceiver::VideoReceiver(Clock* clock, EventFactory* event_factory)
@@ -342,7 +343,7 @@ int VideoReceiver::RegisterRenderBufferSizeCallback(
 
 // Decode next frame, blocking.
 // Should be called as often as possible to get the most out of the decoder.
-int32_t VideoReceiver::Decode(uint16_t maxWaitTimeMs) {
+int32_t VideoReceiver::Decode(uint16_t maxWaitTimeMs, bool shieldMosaic) {
   int64_t nextRenderTimeMs;
   bool supports_render_scheduling;
   {
@@ -356,8 +357,10 @@ int32_t VideoReceiver::Decode(uint16_t maxWaitTimeMs) {
     supports_render_scheduling = _codecDataBase.SupportsRenderScheduling();
   }
 
+    bool complete_flag = false;
+    bool decodable_flag = false;
   VCMEncodedFrame* frame = _receiver.FrameForDecoding(
-      maxWaitTimeMs, nextRenderTimeMs, supports_render_scheduling);
+      maxWaitTimeMs, nextRenderTimeMs, complete_flag, decodable_flag, supports_render_scheduling);
 
   if (frame == NULL) {
     return VCM_FRAME_NOT_READY;
@@ -393,7 +396,23 @@ int32_t VideoReceiver::Decode(uint16_t maxWaitTimeMs) {
 		}
 	}
 
-    const int32_t ret = Decode(*frame);
+      WebRtc_Word32 ret = VCM_OK;
+      if (shieldMosaic) {
+          if (complete_flag) {
+              ret = Decode(*frame);
+          }
+          else if (!complete_flag && decodable_flag)
+          {
+              _scheduleKeyRequest = true;
+          }
+      }
+      else
+      {
+          ret = Decode(*frame);
+      }
+    
+      
+//    const int32_t ret = Decode(*frame);
     _receiver.ReleaseFrame(frame);
     frame = NULL;
     if (ret != VCM_OK) {

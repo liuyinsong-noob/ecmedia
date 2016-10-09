@@ -159,7 +159,7 @@ class VideoReceiver {
   int32_t RegisterPacketRequestCallback(VCMPacketRequestCallback* callback);
   int RegisterRenderBufferSizeCallback(VCMRenderBufferSizeCallback* callback);
 
-  int32_t Decode(uint16_t maxWaitTimeMs);
+  int32_t Decode(uint16_t maxWaitTimeMs, bool shieldMosaic = false);
   int32_t ResetDecoder();
 
   int32_t ReceiveCodec(VideoCodec* currentReceiveCodec) const;

@@ -52,33 +52,33 @@ class ViENetworkImpl
 //  virtual int RegisterServiceCoreCallBack(int channel, ServiceCoreCallBack *messageCallBack, const char* call_id, int firewall_policy);
 
   //sean add begin 0915
-  virtual int setShieldMosaic(int channel,bool flag);
+  virtual int setShieldMosaic(int channel,bool flag) OVERRIDE;
   //sean add end 0915
-  virtual int setProcessData(int channel, bool flag); 
-  virtual int getNetworkStatistic(const int video_channel, time_t &startTime, long long &sendLengthSim, long long &recvLengthSim, long long &sendLengthWifi, long long &recvLengthWifi);
-  virtual int setVideoConferenceFlag(int channel, const char *selfSipNo ,const char *sipNo, const char *conferenceNo, const char *confPasswd, int port, const char *ip);
-  virtual int setNetworkType(int channel, bool isWifi);
+  virtual int setProcessData(int channel, bool flag) OVERRIDE;
+  virtual int getNetworkStatistic(const int video_channel, time_t &startTime, long long &sendLengthSim, long long &recvLengthSim, long long &sendLengthWifi, long long &recvLengthWifi) OVERRIDE;
+  virtual int setVideoConferenceFlag(int channel, const char *selfSipNo ,const char *sipNo, const char *conferenceNo, const char *confPasswd, int port, const char *ip) OVERRIDE;
+  virtual int setNetworkType(int channel, bool isWifi) OVERRIDE;
 
   virtual int SetLocalReceiver(const int video_channel,
 	  const unsigned short rtp_port,
 	  const unsigned short rtcp_port,
-	  const char* ip_address);
+	  const char* ip_address) OVERRIDE;
   virtual int GetLocalReceiver(const int video_channel,
 	  unsigned short& rtp_port,
 	  unsigned short& rtcp_port,
-	  char* ip_address);
+	  char* ip_address) OVERRIDE;
   virtual int SetSendDestination(const int video_channel,
 	  const char* ip_address,
 	  const unsigned short rtp_port,
 	  const unsigned short rtcp_port,
 	  const unsigned short source_rtp_port,
-	  const unsigned short source_rtcp_port);
+	  const unsigned short source_rtcp_port) OVERRIDE;
   virtual int GetSendDestination(const int video_channel,
 	  char* ip_address,
 	  unsigned short& rtp_port,
 	  unsigned short& rtcp_port,
 	  unsigned short& source_rtp_port,
-	  unsigned short& source_rtcp_port);
+	  unsigned short& source_rtcp_port) OVERRIDE;
 
   virtual int SendUDPPacket(const int video_channel,
 	  const void* data,
@@ -89,7 +89,7 @@ class ViENetworkImpl
 	  WebRtc_UWord16 portnr = 0,
 	  const char* ip = NULL
 	  /*add end--------------------Sean20130723----------for video ice------------*/
-	  );
+	  ) OVERRIDE;
 //---end
 
  protected:

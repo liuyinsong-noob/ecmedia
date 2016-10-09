@@ -416,7 +416,7 @@ public:
     //
     // Return value      : VCM_OK, on success.
     //                     < 0,         on error.
-    virtual int32_t Decode(uint16_t maxWaitTimeMs = 200) = 0;
+    virtual int32_t Decode(uint16_t maxWaitTimeMs = 200, bool shieldMosaic = false) = 0;
 
     // Registers a callback which conveys the size of the render buffer.
     virtual int RegisterRenderBufferSizeCallback(

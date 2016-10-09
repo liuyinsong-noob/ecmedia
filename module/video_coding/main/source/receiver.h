@@ -50,6 +50,8 @@ class VCMReceiver {
                        uint16_t frame_height);
   VCMEncodedFrame* FrameForDecoding(uint16_t max_wait_time_ms,
                                     int64_t& next_render_time_ms,
+                                    bool& complete_flag,
+                                    bool& decodable_flag,
                                     bool render_timing = true);
   void ReleaseFrame(VCMEncodedFrame* frame);
   void ReceiveStatistics(uint32_t* bitrate, uint32_t* framerate);
