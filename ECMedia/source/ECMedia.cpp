@@ -3397,7 +3397,7 @@ int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &hei
 #endif
 }
 
-int ECMedia_playLiveStream(void *handle, const char * url, void *renderView, ReturnVideoWidthHeightM callback)
+int ECMedia_playLiveStream(void *handle, const char * url, void *renderView, onLiveStreamVideoResolution callback)
 {
 #ifdef _WIN32
 	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);

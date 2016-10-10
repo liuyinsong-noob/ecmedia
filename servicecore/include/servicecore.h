@@ -446,7 +446,7 @@ public:
 	int getCallStatistics(int type, MediaStatisticsInfo *);
 
     static int return_video_width_height(int width,int height, int videoChannelID);
-
+	static int onLiveStreamVideoResolution(void *handle, int width, int height);
 
 	void serphone_core_set_audio_pacinterval(int pacsize);
 	int serphone_core_get_audio_pacinterval();

@@ -456,6 +456,11 @@ int ServiceCore::return_video_width_height(int width,int height,int videoChannel
 	return 0;
 }
 
+int ServiceCore::onLiveStreamVideoResolution(void *handle, int width, int height)
+{
+	PrintConsole("[DEBUG] %s,width:%d, height:%d\n", __FUNCTION__, width, height);
+	return 0;
+}
 void ServiceCore::serphone_call_start_media_streams(SerPhoneCall *call, bool_t all_inputs_muted,
 	bool_t send_ringbacktone)
 {
@@ -5004,7 +5009,7 @@ void *ServiceCore::createLiveStream()
 }
 int ServiceCore::playLiveStream(void *handle, const char * url, void *renderView)
 {
-	return ECMedia_playLiveStream(handle, url, renderView, return_video_width_height);
+	return ECMedia_playLiveStream(handle, url, renderView, onLiveStreamVideoResolution);
 }
 int ServiceCore::pushLiveStream(void *handle, const char * url, void *renderView)
 {

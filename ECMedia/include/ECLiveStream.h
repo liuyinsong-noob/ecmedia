@@ -90,18 +90,17 @@ namespace cloopenwebrtc {
         RTMPLiveSession(VoiceEngine * voe,VideoEngine *vie);
 		virtual ~RTMPLiveSession();
 
-        int PlayStream(const std::string &url,void *view, ReturnVideoWidthHeightM callback);
+        int PlayStream(const std::string &url,void *view, onLiveStreamVideoResolution callback);
         int PushStream(const std::string &url,void *loadview);
         void StopPlay();
 		void StopPush();
 
-		void setPushVideoBitrates(int bitrates);
 		int setVideoProfile(int index, CameraCapability cam, int bitRates);
 		void setNetworkStatusCallBack(onLiveStreamNetworkStatusCallBack callbck);
 
         static bool NetworkThreadRun(void *pThis);
         bool NetworkThread();
-      
+
     protected:
 		bool Init();
 		void UnInit();
@@ -140,10 +139,14 @@ namespace cloopenwebrtc {
         void HandleAuidoPacket(RTMPPacket *packet);
         void HandleVideoPacket(RTMPPacket *packet);
         
+	public:
+		int video_channel_;
+		onLiveStreamVideoResolution remote_video_resoution_callback_;
+
 	private:	
 		bool playing_;
         int audio_channel_;
-        int video_channel_;
+       
         uint16_t audio_rtp_seq_;
         uint16_t video_rtp_seq_;
 		int capture_id_;

@@ -48,6 +48,7 @@ enum NET_STATUS_CODE {
 };
 
 typedef int(*onLiveStreamNetworkStatusCallBack)(void *handle, NET_STATUS_CODE code);
+typedef int(*onLiveStreamVideoResolution)(void *handle, int width, int height);
 
 /*
  * Enable trace.
@@ -568,7 +569,7 @@ ECMEDIA_API void*ECMedia_createLiveStream(int type);
 			 [IN]  callback		：视频宽高回调
 返回值   : 返回值 0：成功  -1：初始化资源失败 -2：已经在直播或推流  -3：连接失败  -4：建立流失败
 */
-ECMEDIA_API int  ECMedia_playLiveStream(void *handle, const char * url, void *renderView, ReturnVideoWidthHeightM callback);
+ECMEDIA_API int  ECMedia_playLiveStream(void *handle, const char * url, void *renderView, onLiveStreamVideoResolution callback);
 
 /*
 功能     : 开始直播推流
