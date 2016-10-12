@@ -155,7 +155,7 @@ int H264Encoder::Encode(const I420VideoFrame& input_image,
     if (input_image.IsZeroSize()) {
         return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
     }
-
+	
 	for (size_t i = 0; i < frame_types->size();++i) {
 		if ((*frame_types)[i] == kKeyFrame) {
 			send_key_frame = true;
@@ -254,7 +254,9 @@ void H264Encoder::SetX264EncodeParameters(x264_param_t &params, VideoCodecMode m
 	p_params->i_fps_den=1;
 	p_params->i_slice_max_size=1300;
 	p_params->b_annexb=1; //already set by defaule:默认支持字节流格式，即包含nal起始码前缀0x00 00 00 01；
-	p_params->b_intra_refresh = true;
+	//p_params->b_intra_refresh = true;
+	p_params->b_repeat_headers;
+	p_params->i_keyint_max = 50;
 
 	p_params->rc.i_vbv_max_bitrate = codec_.startBitrate;
 	p_params->rc.i_vbv_buffer_size = codec_.startBitrate;
