@@ -41,10 +41,10 @@
 #include "clock.h"
 #include "sdk_common.h"
 #include "faaccodec.h"
-#include "acm_resampler.h"
+
 #include "push_resampler.h"
 //#include "base64.h"
-#include "rtmp.h"
+#include "librtmp/rtmp.h"
 
 
 namespace cloopenwebrtc {
@@ -122,9 +122,9 @@ namespace cloopenwebrtc {
         vnetwork->Release();
  
         RegisterReceiveVideoCodec("H264",90000);
-		RegisterReceiveAudioCodec("L16", 16000, 2);
+		RegisterReceiveAudioCodec("L16", 32000, 2);
 
-		faac_encode_handle_ = faac_encoder_crate(16000, 2, &faac_encode_input_samples_);
+		faac_encode_handle_ = faac_encoder_crate(32000, 2, &faac_encode_input_samples_);
 		rtmp_lock_ = CriticalSectionWrapper::CreateCriticalSection();
 
         return true;
@@ -220,14 +220,14 @@ namespace cloopenwebrtc {
         VoECodec *codec = VoECodec::GetInterface(voe_);
         CodecInst audioCodec;
         strcpy(audioCodec.plname,plname);
-        audioCodec.pltype = 108;
+        audioCodec.pltype = 113;
         audioCodec.plfreq = plfreq;
         audioCodec.channels =channels;
         audioCodec.fecEnabled = false;
         audioCodec.pacsize = plfreq /100;
 		audioCodec.rate = plfreq *16;
         int ret = codec->SetRecPayloadType(audio_channel_, audioCodec);
-        ret = codec->SetSendCodec(audio_channel_, audioCodec);
+        //ret = codec->SetSendCodec(audio_channel_, audioCodec);
         codec->Release();
         return (ret == 0 );
 
@@ -315,7 +315,7 @@ namespace cloopenwebrtc {
                      WebRtcRTPHeader rtpHeader;
                      rtpHeader.header.sequenceNumber = audio_rtp_seq_++;
                      rtpHeader.header.ssrc = 1;
-                     rtpHeader.header.payloadType = 108;
+                     rtpHeader.header.payloadType = 113;
                      rtpHeader.header.timestamp = 320 * rtpHeader.header.sequenceNumber;
                      audio_data_cb_->OnReceivedPayloadData((const uint8_t*)pcmdata, len*2, &rtpHeader);
                  }
@@ -762,11 +762,8 @@ namespace cloopenwebrtc {
 		RTMP_EnableWrite(rtmph_);
 		rtmph_->Link.timeout = 3; //connection timeout
 		rtmph_->Link.lFlags |= RTMP_LF_LIVE;
-#ifdef _WIN32
+
 		if (!RTMP_Connect(rtmph_, NULL))
-#else
-		if (!RTMP_ConnectEx(rtmph_, NULL, 1000))
-#endif 
 		{
 			printf("connect error\n");
 			return -3;
@@ -812,11 +809,7 @@ namespace cloopenwebrtc {
         rtmph_->Link.timeout = 3; //connection timeout
         rtmph_->Link.lFlags |= RTMP_LF_LIVE;
 
-#ifdef _WIN32
 		if (!RTMP_Connect(rtmph_, NULL))
-#else
-		if (!RTMP_ConnectEx(rtmph_, NULL, 1000))
-#endif 
         {
 			StopPlay();
 			PrintConsole("[RTMP ERROR] %s connect error\n", __FUNCTION__);

@@ -688,5 +688,9 @@ typedef enum
 
 - (void)setOpusFec:(BOOL)enable;
 - (int)setLoss:(int)loss;
+-(void*)createLiveStream:(int)type;
+-(int) playStream:(void *)handle url:(NSString *) url view:(UIView*)renderView;
+-(int) pushStream:(void *)handle url:(NSString *) url view:(UIView*)renderView;
+-(void) stopLiveStream:(void *)handle;
 
 @end

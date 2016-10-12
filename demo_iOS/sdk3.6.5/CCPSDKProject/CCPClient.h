@@ -564,6 +564,17 @@ typedef struct _CALLBACKINTERFACE CCallbackInterface;
 
     CCPAPI int EnableOpusFEC(bool enable);
     CCPAPI  int SetOpusPacketLossRate(int rate);
+    
+    
+    CCPAPI  int setAudioKeepAlive(char *callid, bool enable, int interval);
+    CCPAPI  int setVideoKeepAlive(char *callid, bool enable, int interval);
+    
+    CCPAPI void *createLiveStream();
+    CCPAPI int playLiveStream(void *handle, const char * url, void *renderView);
+    CCPAPI int pushLiveStream(void *handle, const char * url, void *renderView);
+    CCPAPI void stopLiveStream(void *handle);
+    CCPAPI void releaseLiveStream(void *handle);
+    CCPAPI int selectCameraLiveStream(void *handle, int index, int width, int height, int fps);
 #ifdef __cplusplus
 }
 #endif

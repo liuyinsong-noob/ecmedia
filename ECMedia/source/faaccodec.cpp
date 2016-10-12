@@ -11,11 +11,12 @@
 #include "faac.h"
 #include <stdlib.h>
 #include <memory.h>
-#include <cstdint>
+
 
 #if defined(_WIN32)
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#include <cstdint>
 #endif
 
 typedef struct {

@@ -4066,4 +4066,19 @@ ModelEngineVoip* gModelEngineVoip = nil;
 {
     return [self.VoipCallService setLoss:loss];
 }
+-(void*)createLiveStream:(int)type
+{
+    return [self.VoipCallService createLiveStream:type];
+}
+-(int) playStream:(void *)handle url:(NSString *) url view:(UIView*)renderView
+{
+    return [self.VoipCallService playStream:handle url:url view:renderView];
+}
+-(int) pushStream:(void *)handle url:(NSString *) url view:(UIView*)renderView
+{
+    return [self.VoipCallService pushStream:handle url:url view:renderView];
+}
+-(void) stopLiveStream:(void *)handle {
+    return [self.VoipCallService stopLiveStream:handle];
+}
 @end

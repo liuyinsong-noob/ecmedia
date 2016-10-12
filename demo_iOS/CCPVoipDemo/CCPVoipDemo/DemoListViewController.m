@@ -24,6 +24,7 @@
 #import "ContactsViewController.h"
 #import "MultiVideoConfIntroduction.h"
 #import "MultiVideoConfListViewController.h"
+#import "CameraViewController.h"
 
 #define TAG_DEMO_GOTO_VOIP          100
 #define TAG_DEMO_GOTO_INTERCOME     101
@@ -38,7 +39,9 @@
 
 #define TAG_DEMO_GOTO_XX_Message    108
 #define TAG_DEMO_GOTO_Contacts      109
-#define TAG_DEMO_GOTO_SETTING       110
+#define TAG_DEMO_GOTO_LIVE_STREAM   110
+#define TAG_DEMO_GOTO_SETTING       111
+
 
 
 @interface DemoListViewController ()
@@ -125,7 +128,7 @@
     [lb1 release];
    
     
-    for (int i=0;i<11;i++)
+    for (int i=0;i<12;i++)
     {
         int x = 114;
         int y = 43;
@@ -156,6 +159,10 @@
         else if (i == 8)
         {
             [self createBlackViewWithRect:CGRectMake(x-103, y, 92, 92) andText:@"MORE" andBGView:scrollView];
+        }
+        else if( i == 10)
+        {
+            [self createBlackViewWithRect:CGRectMake(x-103, y, 92, 92) andText:@"NEW" andBGView:scrollView];
         }
     }
     if (self.modelEngineVoip.addressBookContactList == nil)
@@ -284,6 +291,13 @@
         [button setImage:[UIImage imageNamed:@"new202.png"] forState:(UIControlStateNormal)];
         [button setImage:[UIImage imageNamed:@"new202_on.png"] forState:(UIControlStateSelected)];
     }
+    else if (button.tag == TAG_DEMO_GOTO_LIVE_STREAM)
+    {
+        //多路视频会议
+        [button setImage:[UIImage imageNamed:@"new202.png"] forState:(UIControlStateNormal)];
+        [button setImage:[UIImage imageNamed:@"new202_on.png"] forState:(UIControlStateSelected)];
+    }
+    
 }
 
 - (void)viewDidLoad
@@ -392,6 +406,12 @@
     {
         MultiVideoConfListViewController* view = [[MultiVideoConfListViewController alloc] init];
         view.backView = self;
+        [self.navigationController pushViewController:view animated:YES];
+        [view release];
+    }
+    else if( button.tag == TAG_DEMO_GOTO_LIVE_STREAM )
+    {
+        CameraViewController *view = [[ CameraViewController alloc] init];
         [self.navigationController pushViewController:view animated:YES];
         [view release];
     }

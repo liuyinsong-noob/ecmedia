@@ -388,7 +388,7 @@ RTMP_SetupStream(RTMP *r,
   if (sockshost->av_len)
     {
       const char *socksport = strchr(sockshost->av_val, ':');
-      char *hostname = _strdup(sockshost->av_val);
+      char *hostname = strdup(sockshost->av_val);
 
       if (socksport)
 	hostname[socksport - sockshost->av_val] = '\0';

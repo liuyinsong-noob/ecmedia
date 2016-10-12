@@ -1870,7 +1870,7 @@ static CCPCallService * ccpcallserviceSharedInstance;
         voipCallDict = [[NSMutableDictionary alloc] init];
 //        setCodecEnabled(4, 0);
         setDtxEnabled(true);
-//        setTraceFlag(true);
+        setTraceFlag(true);
         self.player = nil;
         recorder = new YtxAQRecorder();
         self.playRingName = nil;
@@ -5864,5 +5864,23 @@ char *OSTypeToStr(char *buf, OSType t)
 {
     return SetOpusPacketLossRate(loss);
 }
+
+-(void*)createLiveStream:(int)type
+{
+    return createLiveStream();
+}
+-(int) playStream:(void *)handle url:(NSString *) url view:(UIView*)renderView
+{
+    return playLiveStream(handle,[url UTF8String],(void*)renderView);
+}
+-(int) pushStream:(void *)handle url:(NSString *) url view:(UIView*)renderView
+{
+    return pushLiveStream(handle,[url UTF8String],(void*)renderView);
+}
+-(void) stopLiveStream:(void *)handle
+{
+    return stopLiveStream(handle);
+}
+
 @end
 

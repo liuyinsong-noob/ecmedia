@@ -197,6 +197,13 @@
 		05F43C1416A93EDD00F6D053 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F43C1316A93EDD00F6D053 /* CFNetwork.framework */; };
 		05F43C1A16A9419D00F6D053 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F43C1816A9419C00F6D053 /* RegisterViewController.m */; };
 		05F43C1F16A941E700F6D053 /* VoIPCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F43C1D16A941E700F6D053 /* VoIPCallViewController.m */; };
+		1AFBD0E21DAE13C4009B8D23 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A1C1D48C07F00731C5B /* libssl.a */; };
+		1AFBD0E31DAE13C8009B8D23 /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A1B1D48C07F00731C5B /* libsrtp.a */; };
+		1AFBD0E41DAE13CB009B8D23 /* libortp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A1A1D48C07F00731C5B /* libortp.a */; };
+		1AFBD0E51DAE15ED009B8D23 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD42CD6A1D23D6F9009C2E7A /* libcrypto.a */; };
+		1AFBD0F51DAE3585009B8D23 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0F11DAE3585009B8D23 /* CameraViewController.m */; };
+		1AFBD0F61DAE3586009B8D23 /* CameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AFBD0F21DAE3585009B8D23 /* CameraViewController.xib */; };
+		1AFBD0F71DAE3586009B8D23 /* StartLiveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0F41DAE3585009B8D23 /* StartLiveView.m */; };
 		8209EE9218F3F81C00F5FFF4 /* incomingRing.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8209EE9118F3F81C00F5FFF4 /* incomingRing.wav */; };
 		8215383318FBCE460061574B /* IM_video_icon_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 8215382F18FBCE460061574B /* IM_video_icon_on.png */; };
 		8215383418FBCE460061574B /* IM_video_icon_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8215383018FBCE460061574B /* IM_video_icon_on@2x.png */; };
@@ -956,10 +963,6 @@
 		AD01997F1D2370E7003C2BB9 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD01997E1D2370E7003C2BB9 /* VideoToolbox.framework */; };
 		AD194FB91C5B4066003841BB /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AD194FB81C5B4066003841BB /* libc++.tbd */; };
 		AD42CE9F1D2A511C009C2E7A /* libccpapisdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD42CE9E1D2A510A009C2E7A /* libccpapisdk.a */; };
-		AD4B6A241D48C25800731C5B /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A201D48C25800731C5B /* libcrypto.a */; };
-		AD4B6A251D48C25800731C5B /* libortp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A211D48C25800731C5B /* libortp.a */; };
-		AD4B6A261D48C25800731C5B /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A221D48C25800731C5B /* libsrtp.a */; };
-		AD4B6A271D48C25800731C5B /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A231D48C25800731C5B /* libssl.a */; };
 		ADA18F171C58B518007F0F8B /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA18F161C58B518007F0F8B /* libz.tbd */; };
 		ADA18F191C58B521007F0F8B /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA18F181C58B521007F0F8B /* libxml2.tbd */; };
 		ADC50F881D90C86A00A83C04 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC50F871D90C86A00A83C04 /* GLKit.framework */; };
@@ -1227,6 +1230,11 @@
 		05F43C1816A9419C00F6D053 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		05F43C1C16A941E700F6D053 /* VoIPCallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoIPCallViewController.h; sourceTree = "<group>"; };
 		05F43C1D16A941E700F6D053 /* VoIPCallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoIPCallViewController.m; sourceTree = "<group>"; };
+		1AFBD0F01DAE3585009B8D23 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
+		1AFBD0F11DAE3585009B8D23 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
+		1AFBD0F21DAE3585009B8D23 /* CameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraViewController.xib; sourceTree = "<group>"; };
+		1AFBD0F31DAE3585009B8D23 /* StartLiveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartLiveView.h; sourceTree = "<group>"; };
+		1AFBD0F41DAE3585009B8D23 /* StartLiveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartLiveView.m; sourceTree = "<group>"; };
 		8209EE9118F3F81C00F5FFF4 /* incomingRing.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = incomingRing.wav; sourceTree = "<group>"; };
 		8215382F18FBCE460061574B /* IM_video_icon_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IM_video_icon_on.png; sourceTree = "<group>"; };
 		8215383018FBCE460061574B /* IM_video_icon_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IM_video_icon_on@2x.png"; sourceTree = "<group>"; };
@@ -2057,10 +2065,6 @@
 		AD4B6A1A1D48C07F00731C5B /* libortp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libortp.a; path = ../../servicecore/libortp.a; sourceTree = "<group>"; };
 		AD4B6A1B1D48C07F00731C5B /* libsrtp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsrtp.a; path = ../../servicecore/libsrtp.a; sourceTree = "<group>"; };
 		AD4B6A1C1D48C07F00731C5B /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../../servicecore/libssl.a; sourceTree = "<group>"; };
-		AD4B6A201D48C25800731C5B /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
-		AD4B6A211D48C25800731C5B /* libortp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libortp.a; sourceTree = "<group>"; };
-		AD4B6A221D48C25800731C5B /* libsrtp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsrtp.a; sourceTree = "<group>"; };
-		AD4B6A231D48C25800731C5B /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
 		ADA18F161C58B518007F0F8B /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		ADA18F181C58B521007F0F8B /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		ADC50F871D90C86A00A83C04 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -2095,13 +2099,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADC50F881D90C86A00A83C04 /* GLKit.framework in Frameworks */,
-				AD4B6A241D48C25800731C5B /* libcrypto.a in Frameworks */,
-				AD4B6A251D48C25800731C5B /* libortp.a in Frameworks */,
-				AD4B6A261D48C25800731C5B /* libsrtp.a in Frameworks */,
-				AD4B6A271D48C25800731C5B /* libssl.a in Frameworks */,
-				AD42CE9F1D2A511C009C2E7A /* libccpapisdk.a in Frameworks */,
 				AD01997F1D2370E7003C2BB9 /* VideoToolbox.framework in Frameworks */,
+				ADC50F881D90C86A00A83C04 /* GLKit.framework in Frameworks */,
+				AD42CE9F1D2A511C009C2E7A /* libccpapisdk.a in Frameworks */,
+				1AFBD0E31DAE13C8009B8D23 /* libsrtp.a in Frameworks */,
+				1AFBD0E51DAE15ED009B8D23 /* libcrypto.a in Frameworks */,
+				1AFBD0E41DAE13CB009B8D23 /* libortp.a in Frameworks */,
+				1AFBD0E21DAE13C4009B8D23 /* libssl.a in Frameworks */,
 				AD194FB91C5B4066003841BB /* libc++.tbd in Frameworks */,
 				ADA18F191C58B521007F0F8B /* libxml2.tbd in Frameworks */,
 				ADA18F171C58B518007F0F8B /* libz.tbd in Frameworks */,
@@ -2262,10 +2266,6 @@
 			isa = PBXGroup;
 			children = (
 				ADC50F871D90C86A00A83C04 /* GLKit.framework */,
-				AD4B6A201D48C25800731C5B /* libcrypto.a */,
-				AD4B6A211D48C25800731C5B /* libortp.a */,
-				AD4B6A221D48C25800731C5B /* libsrtp.a */,
-				AD4B6A231D48C25800731C5B /* libssl.a */,
 				AD4B6A1A1D48C07F00731C5B /* libortp.a */,
 				AD4B6A1B1D48C07F00731C5B /* libsrtp.a */,
 				AD4B6A1C1D48C07F00731C5B /* libssl.a */,
@@ -2302,6 +2302,7 @@
 		05F43B8D16A92CAA00F6D053 /* CCPVoipDemo */ = {
 			isa = PBXGroup;
 			children = (
+				1AFBD0EF1DAE3585009B8D23 /* LiveStream */,
 				05E450C01964FB5D00562DBE /* MultiVideoConf */,
 				823F9B82193ECCA1003B0F52 /* chatroom */,
 				82631C2618C4660C00BE5A0A /* contacts */,
@@ -2382,6 +2383,18 @@
 				8243F61A1739E6AB0056E670 /* config.plist */,
 			);
 			path = resource;
+			sourceTree = "<group>";
+		};
+		1AFBD0EF1DAE3585009B8D23 /* LiveStream */ = {
+			isa = PBXGroup;
+			children = (
+				1AFBD0F01DAE3585009B8D23 /* CameraViewController.h */,
+				1AFBD0F11DAE3585009B8D23 /* CameraViewController.m */,
+				1AFBD0F21DAE3585009B8D23 /* CameraViewController.xib */,
+				1AFBD0F31DAE3585009B8D23 /* StartLiveView.h */,
+				1AFBD0F41DAE3585009B8D23 /* StartLiveView.m */,
+			);
+			path = LiveStream;
 			sourceTree = "<group>";
 		};
 		823F9B82193ECCA1003B0F52 /* chatroom */ = {
@@ -3612,7 +3625,8 @@
 				ORGANIZATIONNAME = hisun;
 				TargetAttributes = {
 					05F43B8216A92CAA00F6D053 = {
-						DevelopmentTeam = 2372872F55;
+						DevelopmentTeam = BRUKYNGEUG;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -3845,6 +3859,7 @@
 				825C70B3178E4D1E002D0120 /* video_button2_off.png in Resources */,
 				825C70B4178E4D1E002D0120 /* video_button2_off@2x.png in Resources */,
 				825C70B5178E4D1E002D0120 /* video_button2_on.png in Resources */,
+				1AFBD0F61DAE3586009B8D23 /* CameraViewController.xib in Resources */,
 				827166E8181E1678004A5DCF /* videoConf27@2x.png in Resources */,
 				825C70B6178E4D1E002D0120 /* video_button2_on@2x.png in Resources */,
 				825C70B7178E4D1E002D0120 /* video_button_off.png in Resources */,
@@ -4529,6 +4544,7 @@
 				F13AF1CC176F06DC004B1804 /* MWCaptionView.m in Sources */,
 				F13AF1CD176F06DC004B1804 /* MWPhoto.m in Sources */,
 				F13AF1CE176F06DC004B1804 /* MWPhotoBrowser.m in Sources */,
+				1AFBD0F51DAE3585009B8D23 /* CameraViewController.m in Sources */,
 				82631CF918C4686400BE5A0A /* PhoneNamePair.m in Sources */,
 				F13AF1CF176F06DC004B1804 /* MWTapDetectingImageView.m in Sources */,
 				82631CEF18C4686400BE5A0A /* ContactInfoSync.m in Sources */,
@@ -4542,6 +4558,7 @@
 				F1FF741B17783B7200021CBF /* AutoManageViewController.m in Sources */,
 				05E450CF1964FB5D00562DBE /* MultiVideoConfViewController.m in Sources */,
 				82720C651782B303008DDD07 /* ASIAuthenticationDialog.m in Sources */,
+				1AFBD0F71DAE3586009B8D23 /* StartLiveView.m in Sources */,
 				8283D65618D43ADC00429F4A /* selectTableCell.m in Sources */,
 				82720C661782B303008DDD07 /* ASIDataCompressor.m in Sources */,
 				82631CEA18C4686400BE5A0A /* AddressBookContactCanSelect.m in Sources */,
@@ -4687,10 +4704,15 @@
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = BRUKYNGEUG;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CCPVoipDemo/CCPVoipDemo-Prefix.pch";
 				GCC_VERSION = "";
+				HEADER_SEARCH_PATHS = (
+					"${SDK_DIR}/usr/include/libxml2",
+					"\"$(SRCROOT)/../../ECMedia/interface\"",
+				);
 				INFOPLIST_FILE = "CCPVoipDemo/CCPVoipDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -4698,6 +4720,8 @@
 					"$(SRCROOT)/CCPVoipDemo/ccpsdk",
 					"$(PROJECT_DIR)/CCPVoipDemo/ccpsdk",
 					"$(PROJECT_DIR)",
+					"\"$(SRCROOT)/../../ECMedia\"",
+					"\"$(SRCROOT)/../../servicecore\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -4708,7 +4732,7 @@
 				OTHER_OSACOMPILEFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronglian.audioVideo.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0210f179-2817-47b1-a274-7345a0cf023f";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0210f179-2817-47b1-a274-7345a0cf023f";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 arm64";
@@ -4723,10 +4747,15 @@
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = BRUKYNGEUG;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CCPVoipDemo/CCPVoipDemo-Prefix.pch";
 				GCC_VERSION = "";
+				HEADER_SEARCH_PATHS = (
+					"${SDK_DIR}/usr/include/libxml2",
+					"\"$(SRCROOT)/../../ECMedia/interface\"",
+				);
 				INFOPLIST_FILE = "CCPVoipDemo/CCPVoipDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -4734,6 +4763,8 @@
 					"$(SRCROOT)/CCPVoipDemo/ccpsdk",
 					"$(PROJECT_DIR)/CCPVoipDemo/ccpsdk",
 					"$(PROJECT_DIR)",
+					"\"$(SRCROOT)/../../ECMedia\"",
+					"\"$(SRCROOT)/../../servicecore\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -4744,7 +4775,7 @@
 				OTHER_OSACOMPILEFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronglian.audioVideo.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0210f179-2817-47b1-a274-7345a0cf023f";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0210f179-2817-47b1-a274-7345a0cf023f";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 arm64";

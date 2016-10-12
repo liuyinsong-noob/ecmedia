@@ -3389,75 +3389,55 @@ int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &hei
 
  void *ECMedia_createLiveStream(int type)
 {
-#ifdef _WIN32
+
 	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 	return ECMedia_LiveStream::CreateLiveStream(type);
-#else
-	return NULL;
-#endif
+
 }
 
 int ECMedia_playLiveStream(void *handle, const char * url, void *renderView, onLiveStreamVideoResolution callback)
 {
-#ifdef _WIN32
 	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 	RTMPLiveSession *p = (RTMPLiveSession*) handle;
 	return p->PlayStream(url, renderView, callback);
-#else
-	return -1;
-#endif
+
 }
 
  int ECMedia_pushLiveStream(void *handle, const char *url, void *localView)
  {
-#ifdef _WIN32
+
 	 PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 	 RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	 return p->PushStream(url, localView);
-#else
-	 return -1;
-#endif
+
  }
 void ECMedia_stopLiveStream(void *handle)
 {
-#ifdef _WIN32
 	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 	RTMPLiveSession *p = (RTMPLiveSession*) handle;
 	p->StopPlay();
 	p->StopPush();
-#endif
-	return;
 }
 
 void ECMedia_releaseLiveStream(void *handle)
 {
-#ifdef _WIN32
 	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	delete p;
-#endif
-	return;
 }
 
 int ECMedia_setVideoProfileLiveStream(void *handle, int cameraIndex, CameraCapability cam, int bitrRates)
 {
-#ifdef _WIN32
 	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	return p->setVideoProfile(cameraIndex, cam, bitrRates);
-#else
-	return -1;
-#endif
 }
 
 void ECMedia_setLiveStreamNetworkCallBack(void *handle, onLiveStreamNetworkStatusCallBack callback)
 {
-#ifdef _WIN32
 	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	p->setNetworkStatusCallBack(callback);
-#endif
-	return;
 }
 
 #endif

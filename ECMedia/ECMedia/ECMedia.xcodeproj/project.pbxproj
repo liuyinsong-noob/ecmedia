@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		05B4FEE71B40FA0200274327 /* b64.c in Sources */ = {isa = PBXBuildFile; fileRef = 05B4FEE61B40FA0200274327 /* b64.c */; };
 		05E86F3E1B3BA16D00BDBCE6 /* ECMedia.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05E86F371B3BA16D00BDBCE6 /* ECMedia.cpp */; };
+		1AFBD0B71DAE0A59009B8D23 /* ECLiveStream_rtmp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0B41DAE0A59009B8D23 /* ECLiveStream_rtmp.cpp */; };
+		1AFBD0B81DAE0A59009B8D23 /* ECLiveStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0B51DAE0A59009B8D23 /* ECLiveStream.cpp */; };
+		1AFBD0B91DAE0A59009B8D23 /* faaccodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0B61DAE0A59009B8D23 /* faaccodec.cpp */; };
+		1AFBD1221DAE564A009B8D23 /* libfaad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1211DAE564A009B8D23 /* libfaad.a */; };
+		1AFBD1241DAE5839009B8D23 /* libfaac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1231DAE5839009B8D23 /* libfaac.a */; };
+		1AFBD15B1DAE5C6A009B8D23 /* librtmp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1581DAE5C41009B8D23 /* librtmp.a */; };
+		1AFBD1661DAE67D3009B8D23 /* libL16.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1611DAE6592009B8D23 /* libL16.a */; };
 		55D3C7101B81C8CD00D770BC /* b64.c in Sources */ = {isa = PBXBuildFile; fileRef = 05B4FEE61B40FA0200274327 /* b64.c */; };
 		55D3C7111B81C8CD00D770BC /* ECMedia.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05E86F371B3BA16D00BDBCE6 /* ECMedia.cpp */; };
 		55F5735C1C1FB2DE0014FB06 /* libamrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 559586391BABE68000125BC8 /* libamrnb.a */; };
@@ -89,6 +96,34 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1AFBD1571DAE5C41009B8D23 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1AFBD1531DAE5C41009B8D23 /* rtmp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1AFBD12E1DAE58F0009B8D23;
+			remoteInfo = rtmp;
+		};
+		1AFBD1591DAE5C5E009B8D23 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1AFBD1531DAE5C41009B8D23 /* rtmp.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1AFBD12D1DAE58F0009B8D23;
+			remoteInfo = rtmp;
+		};
+		1AFBD1601DAE6592009B8D23 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1AFBD15C1DAE6592009B8D23 /* L16.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1A1EB68F1D9939E300CEEB9E;
+			remoteInfo = L16;
+		};
+		1AFBD1641DAE6677009B8D23 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1AFBD15C1DAE6592009B8D23 /* L16.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1A1EB68E1D9939E300CEEB9E;
+			remoteInfo = L16;
+		};
 		559586381BABE68000125BC8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 559586331BABE67F00125BC8 /* amrnb.xcodeproj */;
@@ -938,6 +973,14 @@
 		05E86F2F1B3BA16D00BDBCE6 /* StunMessageCallBack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StunMessageCallBack.h; sourceTree = "<group>"; };
 		05E86F331B3BA16D00BDBCE6 /* ECMedia.h */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.c.h; path = ECMedia.h; sourceTree = "<group>"; };
 		05E86F371B3BA16D00BDBCE6 /* ECMedia.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ECMedia.cpp; sourceTree = "<group>"; };
+		1AFBD0B41DAE0A59009B8D23 /* ECLiveStream_rtmp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ECLiveStream_rtmp.cpp; sourceTree = "<group>"; };
+		1AFBD0B51DAE0A59009B8D23 /* ECLiveStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ECLiveStream.cpp; sourceTree = "<group>"; };
+		1AFBD0B61DAE0A59009B8D23 /* faaccodec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = faaccodec.cpp; sourceTree = "<group>"; };
+		1AFBD11F1DAE560F009B8D23 /* libfaad.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaad.a; path = ../../third_party/libfaad/lib/ios/libfaad.a; sourceTree = "<group>"; };
+		1AFBD1211DAE564A009B8D23 /* libfaad.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaad.a; path = ../../../third_party/libfaad/lib/ios/libfaad.a; sourceTree = "<group>"; };
+		1AFBD1231DAE5839009B8D23 /* libfaac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaac.a; path = ../../../third_party/libfaac/lib/ios/libfaac.a; sourceTree = "<group>"; };
+		1AFBD1531DAE5C41009B8D23 /* rtmp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = rtmp.xcodeproj; path = "/Users/james/opensource/localsvn/MyWebRtc_2.x/servicecore/../third_party/librtmp/rtmpdump-2.3/librtmp/rtmp.xcodeproj"; sourceTree = "<absolute>"; };
+		1AFBD15C1DAE6592009B8D23 /* L16.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = L16.xcodeproj; path = ../../../module/audio_coding/L16.xcodeproj; sourceTree = "<group>"; };
 		559586331BABE67F00125BC8 /* amrnb.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = amrnb.xcodeproj; path = ../../../module/audio_coding/amrnb.xcodeproj; sourceTree = "<group>"; };
 		55D3C73B1B81C8CD00D770BC /* libECMedia_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libECMedia_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		55F3F81A1B8B0AE400A19ED6 /* avcodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = avcodec.h; sourceTree = "<group>"; };
@@ -1153,8 +1196,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AFBD1661DAE67D3009B8D23 /* libL16.a in Frameworks */,
+				1AFBD15B1DAE5C6A009B8D23 /* librtmp.a in Frameworks */,
 				ADA0AD9D1DA8E00C00C4807D /* libcommon_video.a in Frameworks */,
 				ADC50F521D8FC69700A83C04 /* libdesktop_capture.a in Frameworks */,
+				1AFBD1221DAE564A009B8D23 /* libfaad.a in Frameworks */,
 				AD01997D1D236579003C2BB9 /* libyuv.a in Frameworks */,
 				ADF92DA81CB7BD5B0026DF61 /* libremote_bitrate_estimator.a in Frameworks */,
 				ADF92D921CB7BB230026DF61 /* libiSAC.a in Frameworks */,
@@ -1175,6 +1221,7 @@
 				ADB51A4E1B2807B40009077D /* libG729.a in Frameworks */,
 				ADB51A501B2807B40009077D /* liblibjpeg_turbo.a in Frameworks */,
 				ADB51A511B2807B40009077D /* libmedia_file.a in Frameworks */,
+				1AFBD1241DAE5839009B8D23 /* libfaac.a in Frameworks */,
 				ADB51A521B2807B40009077D /* libNetEq.a in Frameworks */,
 				ADB51A541B2807B40009077D /* librtp_rtcp.a in Frameworks */,
 				ADF92D9B1CB7BBDE0026DF61 /* libavutil.a in Frameworks */,
@@ -1218,6 +1265,9 @@
 		05E86F341B3BA16D00BDBCE6 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				1AFBD0B41DAE0A59009B8D23 /* ECLiveStream_rtmp.cpp */,
+				1AFBD0B51DAE0A59009B8D23 /* ECLiveStream.cpp */,
+				1AFBD0B61DAE0A59009B8D23 /* faaccodec.cpp */,
 				AD2DE0FB1D6BEA4C00FE3814 /* VoeObserver.cpp */,
 				ADC54D061D489D9A00A5C852 /* RecordVoip.cpp */,
 				AD7E733E1D3CB66A001C0E04 /* statsCollector.cc */,
@@ -1227,6 +1277,30 @@
 			);
 			name = source;
 			path = ../../source;
+			sourceTree = "<group>";
+		};
+		1AFBD11E1DAE560E009B8D23 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1AFBD11F1DAE560F009B8D23 /* libfaad.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1AFBD1541DAE5C41009B8D23 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1AFBD1581DAE5C41009B8D23 /* librtmp.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1AFBD15D1DAE6592009B8D23 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1AFBD1611DAE6592009B8D23 /* libL16.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		559586341BABE67F00125BC8 /* Products */ = {
@@ -1241,6 +1315,7 @@
 		55F3F7E01B8B0ABE00A19ED6 /* third_party */ = {
 			isa = PBXGroup;
 			children = (
+				1AFBD1531DAE5C41009B8D23 /* rtmp.xcodeproj */,
 				AD0199771D23655A003C2BB9 /* yuv.xcodeproj */,
 				55F3F89C1B8B135C00A19ED6 /* srtp_mac */,
 				55F3F8861B8B0CD300A19ED6 /* libvpx_mac */,
@@ -1543,6 +1618,7 @@
 				ADB519311B27DFCA0009077D /* ECMedia */,
 				ADB5193E1B27DFCA0009077D /* ECMediaTests */,
 				ADB519301B27DFCA0009077D /* Products */,
+				1AFBD11E1DAE560E009B8D23 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1558,6 +1634,8 @@
 		ADB519311B27DFCA0009077D /* ECMedia */ = {
 			isa = PBXGroup;
 			children = (
+				1AFBD1211DAE564A009B8D23 /* libfaad.a */,
+				1AFBD1231DAE5839009B8D23 /* libfaac.a */,
 				ADF92D931CB7BBDD0026DF61 /* libavcodec.a */,
 				AD0798981D001E3200D48138 /* libswresample.a */,
 				ADF92D941CB7BBDD0026DF61 /* libavutil.a */,
@@ -1763,6 +1841,7 @@
 		ADB519D91B2806EF0009077D /* audio_coding */ = {
 			isa = PBXGroup;
 			children = (
+				1AFBD15C1DAE6592009B8D23 /* L16.xcodeproj */,
 				ADF92D8C1CB7BB1A0026DF61 /* iSAC.xcodeproj */,
 				ADF92D5D1CB7B9260026DF61 /* webrtc_opus.xcodeproj */,
 				559586331BABE67F00125BC8 /* amrnb.xcodeproj */,
@@ -1932,6 +2011,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				1AFBD1651DAE6677009B8D23 /* PBXTargetDependency */,
+				1AFBD15A1DAE5C5E009B8D23 /* PBXTargetDependency */,
 				ADA0AD9C1DA8DFFC00C4807D /* PBXTargetDependency */,
 				ADC50F8B1D90D62900A83C04 /* PBXTargetDependency */,
 				AD838BE91D420BB400050E87 /* PBXTargetDependency */,
@@ -2046,6 +2127,10 @@
 					ProjectRef = ADF92D8C1CB7BB1A0026DF61 /* iSAC.xcodeproj */;
 				},
 				{
+					ProductGroup = 1AFBD15D1DAE6592009B8D23 /* Products */;
+					ProjectRef = 1AFBD15C1DAE6592009B8D23 /* L16.xcodeproj */;
+				},
+				{
 					ProductGroup = ADB51A0B1B2807780009077D /* Products */;
 					ProjectRef = ADB51A0A1B2807780009077D /* libjpeg_turbo.xcodeproj */;
 				},
@@ -2064,6 +2149,10 @@
 				{
 					ProductGroup = ADF92D7D1CB7B9630026DF61 /* Products */;
 					ProjectRef = ADF92D7C1CB7B9630026DF61 /* remote_bitrate_estimator.xcodeproj */;
+				},
+				{
+					ProductGroup = 1AFBD1541DAE5C41009B8D23 /* Products */;
+					ProjectRef = 1AFBD1531DAE5C41009B8D23 /* rtmp.xcodeproj */;
 				},
 				{
 					ProductGroup = ADB519B01B2806A90009077D /* Products */;
@@ -2123,6 +2212,20 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		1AFBD1581DAE5C41009B8D23 /* librtmp.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = librtmp.a;
+			remoteRef = 1AFBD1571DAE5C41009B8D23 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1AFBD1611DAE6592009B8D23 /* libL16.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libL16.a;
+			remoteRef = 1AFBD1601DAE6592009B8D23 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		559586391BABE68000125BC8 /* libamrnb.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -2555,17 +2658,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AFBD0B81DAE0A59009B8D23 /* ECLiveStream.cpp in Sources */,
 				ADC54D071D489D9A00A5C852 /* RecordVoip.cpp in Sources */,
 				05B4FEE71B40FA0200274327 /* b64.c in Sources */,
+				1AFBD0B71DAE0A59009B8D23 /* ECLiveStream_rtmp.cpp in Sources */,
 				AD2DE0FC1D6BEA4C00FE3814 /* VoeObserver.cpp in Sources */,
 				05E86F3E1B3BA16D00BDBCE6 /* ECMedia.cpp in Sources */,
 				AD7E733F1D3CB66A001C0E04 /* statsCollector.cc in Sources */,
+				1AFBD0B91DAE0A59009B8D23 /* faaccodec.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1AFBD15A1DAE5C5E009B8D23 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = rtmp;
+			targetProxy = 1AFBD1591DAE5C5E009B8D23 /* PBXContainerItemProxy */;
+		};
+		1AFBD1651DAE6677009B8D23 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = L16;
+			targetProxy = 1AFBD1641DAE6677009B8D23 /* PBXContainerItemProxy */;
+		};
 		AD838BE91D420BB400050E87 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = yuv;
@@ -3126,12 +3242,17 @@
 					../../module/remote_bitrate_estimator/source,
 					../../module/video_render/main/include,
 					"../../module/audio_coding/codecs/opencore-amr/amrnb",
+					"\"$(SRCROOT)/../../third_party/libfaac/include\"",
+					"\"$(SRCROOT)/../../third_party/libfaad/include\"",
+					"\"$(SRCROOT)/../../third_party/librtmp/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../,
 					"$(PROJECT_DIR)/ECMedia",
+					"\"$(SRCROOT)/../../third_party/libfaad/lib/ios\"",
+					"\"$(SRCROOT)/../../third_party/libfaac/lib/ios\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-Wno-write-strings";
@@ -3190,12 +3311,17 @@
 					../../module/remote_bitrate_estimator/source,
 					../../module/video_render/main/include,
 					"../../module/audio_coding/codecs/opencore-amr/amrnb",
+					"\"$(SRCROOT)/../../third_party/libfaac/include\"",
+					"\"$(SRCROOT)/../../third_party/libfaad/include\"",
+					"\"$(SRCROOT)/../../third_party/librtmp/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../,
 					"$(PROJECT_DIR)/ECMedia",
+					"\"$(SRCROOT)/../../third_party/libfaad/lib/ios\"",
+					"\"$(SRCROOT)/../../third_party/libfaac/lib/ios\"",
 				);
 				OTHER_CFLAGS = "-Wno-write-strings";
 				OTHER_LDFLAGS = "-ObjC";
