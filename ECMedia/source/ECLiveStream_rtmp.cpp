@@ -359,9 +359,17 @@ namespace cloopenwebrtc {
     bool RTMPLiveSession::UnPackNAL(const char *data, int data_size, std::vector<uint8_t> & nal)
     {
         int index =0 ;
+        int count = 0;
         do {
             int nalu_size = ntohl( *(int*)(data+index));
             index += 4;
+            if (count>0) {
+                nal.push_back(0);
+                nal.push_back(0);
+                nal.push_back(0);
+                nal.push_back(1);
+            }
+            count++;
             nal.insert(nal.end(), data+index, data+index+nalu_size);
             index += nalu_size;
         } while( index < data_size);
