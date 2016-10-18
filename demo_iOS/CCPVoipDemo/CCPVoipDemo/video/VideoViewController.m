@@ -167,7 +167,8 @@ extern BOOL globalisVoipView;
     else if(callStatus == 1)
     {
         statusLabel.text = [NSString stringWithFormat:@"%@邀请您进行视频通话", self.voipNo];
-        [self incomingCallViewLayout];
+//        [self incomingCallViewLayout];
+        [self accept];
     }
 
 }

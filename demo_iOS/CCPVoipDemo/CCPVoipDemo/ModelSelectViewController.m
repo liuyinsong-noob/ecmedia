@@ -239,6 +239,15 @@
     [self.modelEngineVoip setModalEngineDelegate:self];
 }
 
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    RegisterViewController *view = [[RegisterViewController alloc] init];
+    [self.navigationController pushViewController:view animated:YES];
+    [view release];
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:NO animated:YES];

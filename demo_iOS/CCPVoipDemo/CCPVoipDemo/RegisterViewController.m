@@ -346,6 +346,27 @@
     
     [configDic release];
 }
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSString *deviceStr = [self.modelEngineVoip.VoipCallService getDeviceVersion];
+    int index = 0;
+    if ([deviceStr isEqualToString:@"iPhone 6s"]) {
+        index = 5;
+    } else if ([deviceStr isEqualToString:@"iPhone 6"])
+    {
+        index = 6;
+    }
+//    index = 5;
+    AccountInfo *info = [self.modelEngineVoip.accountArray objectAtIndex:index];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:info.voipId forKey:@"myPhoneNO"];
+    [defaults synchronize];
+    [self displayProgressingView];
+    [self.modelEngineVoip connectToCCP:self.serverip onPort:[self.serverport integerValue] withAccount:info.voipId withPsw:info.password withAccountSid:info.subAccount withAuthToken:info.subToken];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -550,7 +571,7 @@
         [self.modelEngineVoip setVoipName:btn.titleLabel.text];
         for (AccountInfo* accountinf in self.modelEngineVoip.accountArray)
         {
-            if ([accountinf.voipId isEqualToString:btn.titleLabel.text])
+            if ([accountinf.voipId isEqualToString:str])
             {
                 [rmArray addObject:accountinf];
             }
