@@ -1673,6 +1673,9 @@ OSStatus
         delete [] dataTmp;
         return 0;
     }
+    if(!_recording)
+        return 0;
+        
 
     //if(_micphoneMuted)
     //{

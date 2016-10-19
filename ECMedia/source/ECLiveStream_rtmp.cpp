@@ -35,7 +35,7 @@
 #include "vie_codec.h"
 #include "vie_rtp_rtcp.h"
 #include "webrtc_libyuv.h"
-#include "vie_image_process.h"
+#include "vie_file_impl.h"
 #endif
 
 #include "clock.h"
@@ -73,7 +73,7 @@ namespace cloopenwebrtc {
 	, rtmph_(nullptr)
 	, capture_id_(-1)
 	, clock_(Clock::GetRealTimeClock())
-	, push_video_bitrates_(10000)
+	, push_video_bitrates_(80000)
 	, push_video_width_(640)
 	, push_video_height_(480)
 	, push_video_fps_(15)
@@ -83,6 +83,11 @@ namespace cloopenwebrtc {
 	, network_status_callbck_(nullptr)
 	, remote_video_resoution_callback_(nullptr)
     {
+#ifdef __APPLE__
+        push_video_height_ = 640;
+        push_video_width_ = 480;
+        push_camera_index_ =1;
+#endif
 		g_rtmpLiveSession = this;
     }
 
@@ -122,9 +127,11 @@ namespace cloopenwebrtc {
         vnetwork->Release();
  
         RegisterReceiveVideoCodec("H264",90000);
-		RegisterReceiveAudioCodec("L16", 32000, 2);
-
-		faac_encode_handle_ = faac_encoder_crate(32000, 2, &faac_encode_input_samples_);
+        
+        
+        //AEC only support below 16000 k
+		RegisterReceiveAudioCodec("L16", 16000, 2);
+		faac_encode_handle_ = faac_encoder_crate(16000, 2, &faac_encode_input_samples_);
 		rtmp_lock_ = CriticalSectionWrapper::CreateCriticalSection();
 
         return true;
@@ -188,6 +195,8 @@ namespace cloopenwebrtc {
 		if (capture_id_ >= 0) {
 			capture->StopCapture(capture_id_);
 		}
+  
+
 
 		CameraInfo *camera = cameras_[push_camera_index_];
 		int ret = capture->AllocateCaptureDevice(camera->id, sizeof(camera->id), capture_id_);
@@ -227,7 +236,7 @@ namespace cloopenwebrtc {
         audioCodec.pacsize = plfreq /100;
 		audioCodec.rate = plfreq *16;
         int ret = codec->SetRecPayloadType(audio_channel_, audioCodec);
-        //ret = codec->SetSendCodec(audio_channel_, audioCodec);
+        ret = codec->SetSendCodec(audio_channel_, audioCodec);
         codec->Release();
         return (ret == 0 );
 
@@ -363,13 +372,15 @@ namespace cloopenwebrtc {
         do {
             int nalu_size = ntohl( *(int*)(data+index));
             index += 4;
-            if (count>0) {
+            if( index > 4 ) {
                 nal.push_back(0);
                 nal.push_back(0);
                 nal.push_back(0);
                 nal.push_back(1);
             }
-            count++;
+            printf(" nal type is %d\n", data[index] & 0x1f );
+
+
             nal.insert(nal.end(), data+index, data+index+nalu_size);
             index += nalu_size;
         } while( index < data_size);
@@ -404,10 +415,10 @@ namespace cloopenwebrtc {
                     payloadData = &nal[0];
                     payloadLen = nal.size();
                     if(frameType == 1) {
-						PrintConsole("[RTMP ERROR] %s key frame nalu ,len = %d (%d)\n", __FUNCTION__, payloadLen, packet->m_nBodySize);
+						PrintConsole("[RTMP ERROR] %s key frame nalu  %d timestamp %d\n", __FUNCTION__, packet->m_nBodySize,packet->m_nTimeStamp);
                     }
 					else {
-						PrintConsole("[RTMP ERROR] %s intra frame nalu ,len = %d (%d)\n", __FUNCTION__, payloadLen, packet->m_nBodySize);
+						PrintConsole("[RTMP ERROR] %s intra frame nalu len %d timestamp %d\n", __FUNCTION__, packet->m_nBodySize,packet->m_nTimeStamp);
 					}
                     break;
                 default:
@@ -441,7 +452,10 @@ namespace cloopenwebrtc {
         RTMPPacket packet = { 0 };
         if(!RTMP_IsConnected(rtmph_) ) {
 			PrintConsole("[RTMP ERROR] %s RTMP session not connected\n", __FUNCTION__);
-            return true;
+            if (!RTMP_Connect(rtmph_, NULL))
+                return false;
+            if( !RTMP_ConnectStream(rtmph_, 0))
+                return false;
         }
         if(!RTMP_ReadPacket(rtmph_, &packet)){
 			PrintConsole("[RTMP ERROR] %s RTMP read packet failed\n", __FUNCTION__);
@@ -565,6 +579,7 @@ namespace cloopenwebrtc {
 			uint32_t nalu_size = fragmentationHeader.fragmentationLength[i];
 			uint8_t * nalu = data + fragmentationHeader.fragmentationOffset[i];
 			uint32_t naltype = nalu[0] & 0x1F;
+            printf("encode naltype is %d\n",naltype);
 			if (7 == naltype) { //sps
 				sps.insert(sps.end(), nalu, nalu + nalu_size);
 			}
@@ -576,7 +591,7 @@ namespace cloopenwebrtc {
 					hasSend_SPS_PPS_ = true;
 				}
 			}
-			else if( 5 == naltype || 1 == naltype ) {
+			else if( 5 == naltype || 1 == naltype || naltype > 23 ) {
 				nalus.push_back((nalu_size >> 24) & 0xFF);
 				nalus.push_back((nalu_size >> 16) & 0xFF);
 				nalus.push_back((nalu_size >> 8) & 0xFF);
@@ -763,7 +778,7 @@ namespace cloopenwebrtc {
 		if (!GetAllCameraInfo())
 			return -5;
 		hasSend_SPS_PPS_ = false;
-		RTMP_LogSetLevel(RTMP_LOGALL);
+		//RTMP_LogSetLevel(RTMP_LOGALL);
 		rtmph_ = RTMP_Alloc();
 		RTMP_Init(rtmph_);
 		RTMP_SetupURL(rtmph_, (char*)url.c_str());
@@ -810,7 +825,7 @@ namespace cloopenwebrtc {
 		remote_video_resoution_callback_ = callback;
 
 		//hasSend_SPS_PPS_ = false;
-        //RTMP_debuglevel = RTMP_LOGALL;
+
         rtmph_ = RTMP_Alloc();
         RTMP_Init(rtmph_);
         RTMP_SetupURL(rtmph_, (char*)url.c_str());
@@ -855,6 +870,7 @@ namespace cloopenwebrtc {
         VoEHardware *hardware = VoEHardware::GetInterface(voe_);
         hardware->SetLoudspeakerStatus(true);
         hardware->Release();
+        
         
         unsigned int thread_id = 0;
         bool success = networkThread_->Start(thread_id);
@@ -938,5 +954,6 @@ namespace cloopenwebrtc {
 		}
 
 	}
+
 
 }

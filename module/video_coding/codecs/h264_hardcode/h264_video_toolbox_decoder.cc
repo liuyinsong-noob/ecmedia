@@ -41,10 +41,11 @@ namespace cloopenwebrtc {
     // Struct that we pass to the decoder per frame to decode. We receive it again
     // in the decoder callback.
     struct FrameDecodeParams {
-        FrameDecodeParams(DecodedImageCallback* cb, int64_t ts)
-        : callback(cb), timestamp(ts) {}
+        FrameDecodeParams(DecodedImageCallback* cb, int64_t ts , int64_t ntp_time)
+        : callback(cb), timestamp(ts),ntp_time_ms(ntp_time) {}
         DecodedImageCallback* callback;
         int64_t timestamp;
+        int64_t ntp_time_ms;
     };
     
     // This is the callback function that VideoToolbox calls when decode is
@@ -62,6 +63,7 @@ namespace cloopenwebrtc {
             LOG(LS_ERROR) << "Failed to decode frame. Status: " << status;
             return;
         }
+       
         // TODO(tkchin): Handle CVO properly.
         scoped_refptr<VideoFrameBuffer> buffer2 =
         new RefCountedObject<CoreVideoFrameBuffer>(image_buffer);
@@ -73,9 +75,10 @@ namespace cloopenwebrtc {
         int size_v = ((buffer->height()+1)/2)*buffer->StrideV();
         decoded_frame.CreateFrame(size_y, buffer->DataY(), size_u, buffer->DataU(), size_v, buffer->DataV(), buffer->width(), buffer->height(), buffer->StrideY(), buffer->StrideU(), buffer->StrideV());
         decoded_frame.set_timestamp(decode_params->timestamp);
-        decoded_frame.set_ntp_time_ms( CMTimeGetSeconds(timestamp) * kMsPerSec);
-        
+        //decoded_frame.set_ntp_time_ms( CMTimeGetSeconds(timestamp) * kMsPerSec);
+        decoded_frame.set_ntp_time_ms(decode_params->ntp_time_ms);
         decode_params->callback->Decoded(decoded_frame);
+        //printf("decode success timestamp %lld  %lld %lld\n",decode_params->timestamp/90 ,timestamp.value , duration.value);
         delete decode_params;
     }
     
@@ -150,11 +153,12 @@ namespace cloopenwebrtc {
                                               &sample_buffer)) {
             return WEBRTC_VIDEO_CODEC_ERROR;
         }
+        
         DCHECK(sample_buffer);
         VTDecodeFrameFlags decode_flags =
-        kVTDecodeFrame_EnableAsynchronousDecompression;
+        kVTDecodeFrame_EnableAsynchronousDecompression ;
         FrameDecodeParams* frame_decode_params;
-        frame_decode_params = new FrameDecodeParams(callback_, input_image._timeStamp);
+        frame_decode_params = new FrameDecodeParams(callback_, input_image._timeStamp,input_image.ntp_time_ms_);
         OSStatus status = VTDecompressionSessionDecodeFrame(
                                                             decompression_session_, sample_buffer, decode_flags,
                                                             frame_decode_params, nullptr);
@@ -163,7 +167,7 @@ namespace cloopenwebrtc {
         // active and retry the decode request.
         if (status == kVTInvalidSessionErr &&
             ResetDecompressionSession() == WEBRTC_VIDEO_CODEC_OK) {
-            frame_decode_params = new FrameDecodeParams(callback_, input_image._timeStamp);
+            frame_decode_params = new FrameDecodeParams(callback_, input_image._timeStamp,input_image.ntp_time_ms_);
             status = VTDecompressionSessionDecodeFrame(
                                                        decompression_session_, sample_buffer, decode_flags,
                                                        frame_decode_params, nullptr);

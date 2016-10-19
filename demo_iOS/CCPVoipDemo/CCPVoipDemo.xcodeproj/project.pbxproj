@@ -197,6 +197,10 @@
 		05F43C1416A93EDD00F6D053 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F43C1316A93EDD00F6D053 /* CFNetwork.framework */; };
 		05F43C1A16A9419D00F6D053 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F43C1816A9419C00F6D053 /* RegisterViewController.m */; };
 		05F43C1F16A941E700F6D053 /* VoIPCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F43C1D16A941E700F6D053 /* VoIPCallViewController.m */; };
+		1A77E6E11DAF23AF009F543D /* camra_preview@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A77E6DD1DAF23AF009F543D /* camra_preview@2x.png */; };
+		1A77E6E21DAF23AF009F543D /* camra_preview@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A77E6DE1DAF23AF009F543D /* camra_preview@3x.png */; };
+		1A77E6E31DAF23AF009F543D /* close_preview@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A77E6DF1DAF23AF009F543D /* close_preview@2x.png */; };
+		1A77E6E41DAF23AF009F543D /* close_preview@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A77E6E01DAF23AF009F543D /* close_preview@3x.png */; };
 		1AFBD0E21DAE13C4009B8D23 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A1C1D48C07F00731C5B /* libssl.a */; };
 		1AFBD0E31DAE13C8009B8D23 /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A1B1D48C07F00731C5B /* libsrtp.a */; };
 		1AFBD0E41DAE13CB009B8D23 /* libortp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A1A1D48C07F00731C5B /* libortp.a */; };
@@ -1230,6 +1234,10 @@
 		05F43C1816A9419C00F6D053 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		05F43C1C16A941E700F6D053 /* VoIPCallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoIPCallViewController.h; sourceTree = "<group>"; };
 		05F43C1D16A941E700F6D053 /* VoIPCallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoIPCallViewController.m; sourceTree = "<group>"; };
+		1A77E6DD1DAF23AF009F543D /* camra_preview@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camra_preview@2x.png"; sourceTree = "<group>"; };
+		1A77E6DE1DAF23AF009F543D /* camra_preview@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camra_preview@3x.png"; sourceTree = "<group>"; };
+		1A77E6DF1DAF23AF009F543D /* close_preview@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close_preview@2x.png"; sourceTree = "<group>"; };
+		1A77E6E01DAF23AF009F543D /* close_preview@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close_preview@3x.png"; sourceTree = "<group>"; };
 		1AFBD0F01DAE3585009B8D23 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		1AFBD0F11DAE3585009B8D23 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		1AFBD0F21DAE3585009B8D23 /* CameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraViewController.xib; sourceTree = "<group>"; };
@@ -2385,6 +2393,17 @@
 			path = resource;
 			sourceTree = "<group>";
 		};
+		1A77E6DC1DAF23AF009F543D /* LiveStream */ = {
+			isa = PBXGroup;
+			children = (
+				1A77E6DD1DAF23AF009F543D /* camra_preview@2x.png */,
+				1A77E6DE1DAF23AF009F543D /* camra_preview@3x.png */,
+				1A77E6DF1DAF23AF009F543D /* close_preview@2x.png */,
+				1A77E6E01DAF23AF009F543D /* close_preview@3x.png */,
+			);
+			path = LiveStream;
+			sourceTree = "<group>";
+		};
 		1AFBD0EF1DAE3585009B8D23 /* LiveStream */ = {
 			isa = PBXGroup;
 			children = (
@@ -2415,6 +2434,7 @@
 		8243F63D1739EA9C0056E670 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				1A77E6DC1DAF23AF009F543D /* LiveStream */,
 				82631D1618C5D04100BE5A0A /* contacts */,
 				82CBFDD91847278A007B4BA1 /* newVerIcon */,
 				82CBFD701846EF35007B4BA1 /* newDemoList */,
@@ -3844,6 +3864,7 @@
 				82CBFEBF1847278A007B4BA1 /* new140_on.png in Resources */,
 				825C70AA178E4D1E002D0120 /* status_icon04@2x.png in Resources */,
 				82CBFEB31847278A007B4BA1 /* new134_on@2x.png in Resources */,
+				1A77E6E31DAF23AF009F543D /* close_preview@2x.png in Resources */,
 				825C70AB178E4D1E002D0120 /* status_icon_me.png in Resources */,
 				825C70AC178E4D1E002D0120 /* status_icon_me@2x.png in Resources */,
 				82716709181E1678004A5DCF /* videoConf58_on.png in Resources */,
@@ -3942,6 +3963,7 @@
 				825C70DE178E4D1E002D0120 /* list_bg@2x.png in Resources */,
 				825C70DF178E4D1E002D0120 /* list_icon01.png in Resources */,
 				82CBFEDF1847278A007B4BA1 /* new158@2x.png in Resources */,
+				1A77E6E11DAF23AF009F543D /* camra_preview@2x.png in Resources */,
 				82CBFEAA1847278A007B4BA1 /* new129@2x.png in Resources */,
 				827B0D6E18C8540200AD02C0 /* Customkey2.png in Resources */,
 				829FCC2E18C727C500D10ACA /* personal_details_bg@2x.png in Resources */,
@@ -4169,6 +4191,7 @@
 				82CBFF051847278A007B4BA1 /* new36_on@2x.png in Resources */,
 				825C716F178E4D1E002D0120 /* keyboard_05@2x.png in Resources */,
 				829FCC2618C727C500D10ACA /* head_portrait@2x.png in Resources */,
+				1A77E6E21DAF23AF009F543D /* camra_preview@3x.png in Resources */,
 				825C7170178E4D1E002D0120 /* keyboard_05_on.png in Resources */,
 				825C7171178E4D1E002D0120 /* keyboard_05_on@2x.png in Resources */,
 				825C7172178E4D1E002D0120 /* keyboard_06.png in Resources */,
@@ -4373,6 +4396,7 @@
 				829FCC2918C727C500D10ACA /* more_button.png in Resources */,
 				82CBFDC11846EF36007B4BA1 /* new197_on.png in Resources */,
 				82CBFE971847278A007B4BA1 /* new07@2x.png in Resources */,
+				1A77E6E41DAF23AF009F543D /* close_preview@3x.png in Resources */,
 				82C077941929AEAD00B8CA63 /* call_transfer_icon_on.png in Resources */,
 				05B73C1D17D7477500C32663 /* enter_icon@2x.png in Resources */,
 				82CBFEB61847278A007B4BA1 /* new135_on.png in Resources */,

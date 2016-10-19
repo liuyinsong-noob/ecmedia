@@ -398,6 +398,7 @@ int H264Decoder::ReturnFrame(const AVFrame* img, uint32_t timeStamp, int64_t ntp
 		img->linesize[2]);
 	decodedImage.set_timestamp(timeStamp);
 	decodedImage.set_ntp_time_ms(ntp_time_ms);
+    //printf("decode success timestamp %lld %lld\n",timeStamp/90 ,ntp_time_ms);
 	int ret = _decodeCompleteCallback->Decoded(decodedImage);
 	if (ret != 0)
 		return ret;

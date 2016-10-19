@@ -8,7 +8,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *myTitle;
 @property (strong, nonatomic) IBOutlet UIView *middleView;
 @property (strong, nonatomic) IBOutlet UIButton *backBtn;
-
+@property (strong, nonatomic) IBOutlet UIView *liveView;
 @end
 
 @implementation CameraViewController
@@ -24,7 +24,7 @@
 
     //设置键盘TextField
     [self setupTextField];
-    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"test" style:UIBarButtonItemStylePlain target:self action:@selector(backMain)];
 }
 
 #pragma mark ---- <设置键盘TextField>
@@ -55,15 +55,19 @@
 
 //返回主界面
 - (IBAction)backMain {
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.liveView removeFromSuperview];
+    self.liveView = nil;
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 //开始直播采集
 - (IBAction)startLiveStream {
     
-    StartLiveView *view = [[StartLiveView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:view];
+    
+     StartLiveView* wwwliveView = [[StartLiveView alloc] initWithFrame:self.view.bounds];
+    self.liveView = wwwliveView;
+    [wwwliveView release];
+    [self.view addSubview:self.liveView];
     
     _backBtn.hidden = YES;
     _middleView.hidden = YES;

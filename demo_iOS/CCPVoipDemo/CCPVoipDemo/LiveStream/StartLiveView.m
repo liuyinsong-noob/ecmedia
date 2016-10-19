@@ -18,7 +18,8 @@
 //关闭
 @property (nonatomic, strong) UIButton *closeButton;
 //开始直播
-@property (nonatomic, strong) UIButton *startLiveButton;
+@property (nonatomic, strong) UIButton *startPlayLiveButton;
+@property (nonatomic, strong) UIButton *startPushLiveButton;
 @property (nonatomic, strong) UIView *containerView;
 @property (nonatomic,retain) ModelEngineVoip *modelEngineVoip;
 
@@ -60,7 +61,8 @@ static int padding = 30;
         [self.containerView addSubview:self.closeButton];
         [self.containerView addSubview:self.cameraButton];
         [self.containerView addSubview:self.beautyButton];
-        [self.containerView addSubview:self.startLiveButton];
+        [self.containerView addSubview:self.startPlayLiveButton];
+        [self.containerView addSubview:self.startPushLiveButton];
         
         self.modelEngineVoip = [ModelEngineVoip getInstance];
     }
@@ -194,34 +196,69 @@ static int padding = 30;
 
 #pragma mark ---- <开始录制>
 - (void) startPlay:(id) sender {
-    self.startLiveButton.selected = !self.startLiveButton.selected;
-    if(self.startLiveButton.selected){
+    self.startPlayLiveButton.selected = !self.startPlayLiveButton.selected;
+    if(self.startPlayLiveButton.selected){
+        [self.startPushLiveButton removeFromSuperview];
+        [self.startPlayLiveButton setTitle:@"结束观看" forState:UIControlStateNormal];
+      //  [self.modelEngineVoip playStream:self.session url:@"rtmp://live.yuntongxun.com/live/livestream" view:self.containerView];
+        [self.modelEngineVoip playStream:self.session url:@"rtmp://live.yuntongxun.com/live/test" view:self.containerView];
         
-        [self.startLiveButton setTitle:@"结束直播" forState:UIControlStateNormal];
-        [self.modelEngineVoip playStream:self.session url:@"rtmp://live.yuntongxun.com/live/livestream" view:self.containerView];
-        
+        // [self.modelEngineVoip playStream:self.session url:@"rtmp://live2.fzntv.cn:1935/live/zohi_fztv1" view:self.containerView];
     }else{
         [self.modelEngineVoip stopLiveStream:self.session];
-        [self.startLiveButton setTitle:@"开始直播" forState:UIControlStateNormal];
+        [self.startPlayLiveButton setTitle:@"观看直播" forState:UIControlStateNormal];
         [self.modelEngineVoip stopLiveStream:self.session];
         
     }
 }
-- (UIButton*)startLiveButton{
-    if(!_startLiveButton){
-        _startLiveButton = [UIButton new];
+- (UIButton*)startPlayLiveButton{
+    if(! _startPlayLiveButton){
+        _startPlayLiveButton = [UIButton new];
         //位置
-        _startLiveButton.frame = CGRectMake((XJScreenW - 200) * 0.5, XJScreenH - 100, 200, 40);
-         _startLiveButton.layer.cornerRadius = _startLiveButton.frame.size.height * 0.5;
-        [_startLiveButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [_startLiveButton.titleLabel setFont:[UIFont systemFontOfSize:16]];
-        [_startLiveButton setTitle:@"开始直播" forState:UIControlStateNormal];
-        [_startLiveButton setBackgroundColor:[UIColor grayColor]];
-        _startLiveButton.exclusiveTouch = YES;
-        [_startLiveButton addTarget:self action:@selector(startPlay:)forControlEvents:UIControlEventTouchUpInside];
+        _startPlayLiveButton.frame = CGRectMake((XJScreenW - 200) * 0.5, XJScreenH - 100, 200, 40);
+         _startPlayLiveButton.layer.cornerRadius = _startPlayLiveButton.frame.size.height * 0.5;
+        [_startPlayLiveButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_startPlayLiveButton.titleLabel setFont:[UIFont systemFontOfSize:16]];
+        [_startPlayLiveButton setTitle:@"观看直播" forState:UIControlStateNormal];
+        [_startPlayLiveButton setBackgroundColor:[UIColor grayColor]];
+        _startPlayLiveButton.exclusiveTouch = YES;
+        [_startPlayLiveButton addTarget:self action:@selector(startPlay:)forControlEvents:UIControlEventTouchUpInside];
 
     }
-    return _startLiveButton;
+    return _startPlayLiveButton;
+}
+
+- (void) startPush:(id) sender {
+    self.startPushLiveButton.selected = !self.startPushLiveButton.selected;
+    if(self.startPushLiveButton.selected){
+        
+        [self.startPushLiveButton setTitle:@"结束直播" forState:UIControlStateNormal];
+        [self.startPlayLiveButton removeFromSuperview];
+        [self.modelEngineVoip pushStream:self.session url:@"rtmp://live.yuntongxun.com/live/xzq1" view:self.containerView];
+        
+    }else{
+        [self.modelEngineVoip stopLiveStream:self.session];
+        [self.startPushLiveButton setTitle:@"开始直播" forState:UIControlStateNormal];
+        [self.modelEngineVoip stopLiveStream:self.session];
+        
+    }
+}
+
+- (UIButton*)startPushLiveButton{
+    if(! _startPushLiveButton){
+        _startPushLiveButton = [UIButton new];
+        //位置
+        _startPushLiveButton.frame = CGRectMake((XJScreenW - 200) * 0.5, XJScreenH - 150, 200, 40);
+        _startPushLiveButton.layer.cornerRadius = _startPlayLiveButton.frame.size.height * 0.5;
+        [_startPushLiveButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_startPushLiveButton.titleLabel setFont:[UIFont systemFontOfSize:16]];
+        [_startPushLiveButton setTitle:@"开始直播" forState:UIControlStateNormal];
+        [_startPushLiveButton setBackgroundColor:[UIColor grayColor]];
+        _startPushLiveButton.exclusiveTouch = YES;
+        [_startPushLiveButton addTarget:self action:@selector(startPush:)forControlEvents:UIControlEventTouchUpInside];
+        
+    }
+    return _startPushLiveButton;
 }
 
 - (void)dealloc
