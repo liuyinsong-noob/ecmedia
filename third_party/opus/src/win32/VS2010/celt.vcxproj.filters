@@ -104,12 +104,6 @@
     <ClInclude Include="..\..\celt\entenc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\celt\fixed_c5x.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\celt\fixed_c6x.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\celt\fixed_debug.h">
       <Filter>Header Files</Filter>
     </ClInclude>

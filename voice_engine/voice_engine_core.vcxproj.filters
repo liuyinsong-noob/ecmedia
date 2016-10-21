@@ -15,9 +15,6 @@
     <ClInclude Include="main\include\voe_base.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="main\include\voe_call_report.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="main\include\voe_codec.h">
       <Filter>include</Filter>
     </ClInclude>

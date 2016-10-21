@@ -134,9 +134,6 @@
     <ClInclude Include="..\..\include\ortp\rtp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\rtpmod.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\ortp\rtpprofile.h">
       <Filter>Header Files</Filter>
     </ClInclude>

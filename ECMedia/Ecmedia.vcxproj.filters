@@ -45,12 +45,6 @@
     <ClInclude Include="include\faaccodec.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="source\faaccodec.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\base64.c">
@@ -80,10 +74,5 @@
     <ClCompile Include="source\ECLiveStream_rtmp.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Ecmedia.rc">
-      <Filter>资源文件</Filter>
-    </ResourceCompile>
   </ItemGroup>
 </Project>

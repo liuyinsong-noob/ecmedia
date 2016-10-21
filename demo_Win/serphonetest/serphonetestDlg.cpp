@@ -996,7 +996,7 @@ void CserphonetestDlg::OnBnClickedButton8()
 
 	if (g_rtmpLiveStreamHandle) {
 		CWnd *rcwnd = g_dlg->GetDlgItem(IDC_RICHEDIT21); //返回窗口中指定参数ID的子元素的句柄
-		playLiveStream(g_rtmpLiveStreamHandle, "http://live.yuntongxun.com/live/livestream", rcwnd->GetSafeHwnd());
+		playLiveStream(g_rtmpLiveStreamHandle, "rtmp://live.yuntongxun.com/live/livestream", rcwnd->GetSafeHwnd());
 		//playRtmpStream(g_rtmpLiveStreamHandle, "http://live.yuntongxun.com/live/xzq", rcwnd->GetSafeHwnd());
 	}
 }
@@ -1200,6 +1200,9 @@ void CserphonetestDlg::OnEnChangeRichedit21()
 
 void CserphonetestDlg::OnClose()
 {
+	if (g_rtmpLiveStreamHandle) {
+		stopLiveStream(g_rtmpLiveStreamHandle);
+	}
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	unInitialize();
 	CDialogEx::OnClose();

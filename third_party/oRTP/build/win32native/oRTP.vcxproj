@@ -288,7 +288,6 @@
     <ClInclude Include="..\..\include\ortp\port.h" />
     <ClInclude Include="..\..\include\ortp\rtcp.h" />
     <ClInclude Include="..\..\include\ortp\rtp.h" />
-    <ClInclude Include="..\..\src\rtpmod.h" />
     <ClInclude Include="..\..\include\ortp\rtpprofile.h" />
     <ClInclude Include="..\..\include\ortp\rtpsession.h" />
     <ClInclude Include="..\..\src\rtpsession_priv.h" />

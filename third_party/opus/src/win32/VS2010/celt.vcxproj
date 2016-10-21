@@ -54,8 +54,6 @@
     <ClInclude Include="..\..\celt\entcode.h" />
     <ClInclude Include="..\..\celt\entdec.h" />
     <ClInclude Include="..\..\celt\entenc.h" />
-    <ClInclude Include="..\..\celt\fixed_c5x.h" />
-    <ClInclude Include="..\..\celt\fixed_c6x.h" />
     <ClInclude Include="..\..\celt\fixed_debug.h" />
     <ClInclude Include="..\..\celt\fixed_generic.h" />
     <ClInclude Include="..\..\celt\float_cast.h" />
@@ -142,6 +140,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IntDir>$(SolutionDir)build\$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
     <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\lib\</OutDir>
+    <PreBuildEventUseInBuild>false</PreBuildEventUseInBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IntDir>$(SolutionDir)build\$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
