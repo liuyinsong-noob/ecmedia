@@ -31,6 +31,7 @@ public:
 
 	bool get_write_status();
 
+	int get_audio_freq() { return audioFreq_; }
 	//void open_audio (AVFormatContext *oc , AVStream *st );
 private:
 	// < 0 = error

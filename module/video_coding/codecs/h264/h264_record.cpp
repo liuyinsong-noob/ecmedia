@@ -148,8 +148,14 @@ int h264_record::uninit()
 int h264_record::wirte_video_data(unsigned char *data, int len, double timestamp)
 {
 	int iRet = 0;
-	if ( !formatCtxt_  && audioFreq_ != 0)
-		iRet = create( data, len );
+	if (!formatCtxt_  && audioFreq_ != 0) {
+		iRet = create(data, len);
+		WEBRTC_TRACE(cloopenwebrtc::kTraceApiCall,
+			cloopenwebrtc::kTraceVideoCoding,
+			0,
+			"wirte_video_data create file.\n");
+	}
+		
 
 	if ( formatCtxt_ ) {
 		write_frame( data, len, timestamp);

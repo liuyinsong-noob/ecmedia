@@ -47,6 +47,7 @@ RecordVoip::RecordVoip()
 	,_wavRecordFile(NULL)
 	,_wavRemoteRecordFile(NULL)
 	,_wavLocalRecordFile(NULL)
+	, _audioSamplingFreq(-1)
 	//,_recordVideoType(RecordVideoTypeNone)
 	//,_recordAudioType(RecordAudioTypeNone)
 #ifdef _WIN32
@@ -480,18 +481,23 @@ bool RecordVoip::CaptureScreenThreadRun(void* obj)
 {
 #ifdef _WIN32
 #ifdef VIDEO_ENABLED
-
 	RecordVoip* recordvoip = static_cast<RecordVoip*>(obj);
+
+	if (!recordvoip->isAlreadWriteScreenAudio()) {
+		Sleep(recordvoip->_captureScreenInterval);
+		return true;
+	}
 
 	unsigned char *snapShotBuf = NULL;
 	int size=0, width=0, height=0;
 
 	int ret = recordvoip->_captureScreen->getScreenFrameEx(&snapShotBuf, &size, &width, &height,
-			recordvoip->_recordScreenLeft, recordvoip->_recordScreenTop, recordvoip->_recordScreenWidth, recordvoip->_recordScreenHeight);
+		recordvoip->_recordScreenLeft, recordvoip->_recordScreenTop, recordvoip->_recordScreenWidth, recordvoip->_recordScreenHeight);
 	if( !ret ) {
 		recordvoip->CapturedScreeImage(snapShotBuf, size, width, height);
 	} else {
-		return false;
+		Sleep(recordvoip->_captureScreenInterval);
+		return true;
 	}
 	Sleep(recordvoip->_captureScreenInterval);
 #endif
@@ -545,6 +551,9 @@ int RecordVoip::StartRecordScreen(const char *filename, int bitrates, int fps, i
 	_recordScreenLeft = screenInfo[screenIndex].left;
 	_recordScreenTop = screenInfo[screenIndex].top;
 	_recordScreenWidth = screenInfo[screenIndex].width;
+	if (_recordScreenWidth % 4) {  //width must align 4
+		_recordScreenWidth = _recordScreenWidth - _recordScreenWidth % 4;
+	}
 	_recordScreenHeight = screenInfo[screenIndex].height;
 	_captureScreenIndex = screenIndex;
 
@@ -629,6 +638,9 @@ int RecordVoip::StartRecordScreenEx(const char *filename, int bitrates, int fps,
 	_recordScreenLeft = dstLeft;
 	_recordScreenTop = dstTop;
 	_recordScreenWidth = dstRight - dstLeft;
+	if (_recordScreenWidth % 4) {  //width must align 4
+		_recordScreenWidth = _recordScreenWidth - _recordScreenWidth%4;
+	}
 	_recordScreenHeight = dstButtom - dstTop;
 	_recordScreenBitRates = bitrates;
 	_captureScreenInterval = 1000/fps;
@@ -877,7 +889,13 @@ bool RecordVoip::isStartRecordScree()
 {
 	return _startRecordScreen;
 }
-
+bool RecordVoip::isAlreadWriteScreenAudio()
+{
+	if (_h264RecordScreen && _h264RecordScreen->get_audio_freq() > 0) {
+		return true;
+	}
+	return false;
+}
 typedef struct {
 	char          fccID[4];
 	unsigned long dwSize;

@@ -2662,10 +2662,19 @@ int ECMedia_start_record_screen(int channelid, const char* filename, int bitrate
 	if(!g_recordVoip) {
 		PrintConsole("serphone_call_start_record_screen\n");
 		g_recordVoip = new RecordVoip();
+		if (!g_recordVoip) {
+			PrintConsole("serphone_call_start_record_screen create recorder failed.\n");
+			return -1;
+		}			
 	}
 
 	if(g_recordVoip->isStartRecordScree()) {
 		ECMedia_stop_record_screen(channelid);
+		g_recordVoip = new RecordVoip();
+		if (!g_recordVoip) {
+			PrintConsole("serphone_call_start_record_screen create recorder failed.\n");
+			return -1;
+		}
 	}
 
 	if(m_voe && channelid >= 0) {
@@ -2687,10 +2696,19 @@ int ECMedia_start_record_screen_ex(int channelid, const char* filename, int bitr
 	if(!g_recordVoip) {
 		PrintConsole("serphone_call_start_record_screen\n");
 		g_recordVoip = new RecordVoip();
+		if (!g_recordVoip) {
+			PrintConsole("ECMedia_start_record_screen_ex create recorder failed.\n");
+			return -1;
+		}
 	}
 
 	if(g_recordVoip->isStartRecordScree()) {
 		ECMedia_stop_record_screen(channelid);
+		g_recordVoip = new RecordVoip();
+		if (!g_recordVoip) {
+			PrintConsole("ECMedia_start_record_screen_ex create recorder failed.\n");
+			return -1;
+		}
 	}
 
 	if(m_voe && channelid >= 0) {

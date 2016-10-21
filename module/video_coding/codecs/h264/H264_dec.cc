@@ -9,7 +9,7 @@
 #include "h264_util.h"
 //#include "h264_record.h"
 
-#define DEBUG_FRAGMENT_FILE
+//#define DEBUG_FRAGMENT_FILE
 #include "module_common_types.h"
 
 #include <string.h>

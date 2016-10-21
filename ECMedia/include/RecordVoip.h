@@ -84,6 +84,7 @@ public:
 	bool isStartRecordWav();
 	bool isStartRecordScree();
     
+	bool isAlreadWriteScreenAudio();
 private:
 	int WriteWavFileHeader(FILE *file);
 	int CompleteWavFile(FILE *file);
@@ -97,6 +98,7 @@ public:
 		int _recordScreenTop;
 		int _recordScreenWidth;
 		int _recordScreenHeight;
+		int _audioSamplingFreq;
 
 private:
     ThreadWrapper *_videoThread;
@@ -132,7 +134,6 @@ private:
 	int _recordScreenBitRates;
 
 	int _audioDataLen;   //in short
-	int _audioSamplingFreq; 
 
     //RecordAudioType _recordAudioType;
     //RecordVideoType _recordVideoType;

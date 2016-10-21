@@ -684,7 +684,7 @@ VCMFrameBufferEnum VCMJitterBuffer::InsertPacket(const VCMPacket& packet,
 		CountFrame(*frame);
       if (previous_state != kStateDecodable &&
           previous_state != kStateComplete) {
-        /*CountFrame(*frame);*/ //·ÅÔÚ´Ë´¦Í³¼Æ²»×¼È·£¬ÒÆµ½ÉÏÃæ¡ª¡ª by ylr
+        /*CountFrame(*frame);*/ //????????????????????æ¡ª?? by ylr
         if (continuous) {
           // Signal that we have a complete session.
           frame_event_->Set();
