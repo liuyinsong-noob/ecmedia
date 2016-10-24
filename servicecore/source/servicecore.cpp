@@ -5161,7 +5161,7 @@ void ServiceCore::serphone_core_iterate()
 		}
 		if (call->state==LinphoneCallIncomingReceived){
 			elapsed= int(time(NULL)-call->start_time);
-			PrintConsole("incoming call ringing for %i seconds\n",elapsed);
+//			PrintConsole("incoming call ringing for %i seconds\n",elapsed);
 			if (elapsed>sip_conf.inc_timeout){
 				call->log->status=LinphoneCallMissed;
 				serphone_core_terminate_call(call);
