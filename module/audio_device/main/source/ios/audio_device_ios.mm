@@ -974,7 +974,6 @@ int32_t AudioDeviceIOS::StartRecording() {
     }
 
     _recording = true;
-    _micphoneMuted = false;
     return 0;
 }
 
@@ -998,7 +997,7 @@ int32_t AudioDeviceIOS::StopRecording() {
 
     _recIsInitialized = false;
     _micIsInitialized = false;
-
+    _micphoneMuted = false;
     return 0;
 }
 
