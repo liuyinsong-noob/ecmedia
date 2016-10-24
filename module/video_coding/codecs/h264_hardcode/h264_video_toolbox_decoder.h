@@ -16,6 +16,7 @@
 #include "video_codec_interface.h"
 #include "typedefs.h"
 #include <VideoToolbox/VideoToolbox.h>
+#include <list>
 
 // This file provides a H264 encoder implementation using the VideoToolbox
 // APIs. Since documentation is almost non-existent, this is largely based on
@@ -23,7 +24,7 @@
 // experimentation.
 
 namespace cloopenwebrtc {
-
+const int MaxPicOrderCntLsb = 64;
 class H264VideoToolboxDecoder : public VideoDecoder {
  public:
     
@@ -57,6 +58,16 @@ class H264VideoToolboxDecoder : public VideoDecoder {
   CMVideoFormatDescriptionRef video_format_;
   VTDecompressionSessionRef decompression_session_;
     int							_numberOfCores;
+    
+    uint64_t                         prevPicOrderCntLsb = 0;
+    uint64_t                         prevPicOrderCntMsb = 64;
+#define DEBUG_H264 0
+#if DEBUG_H264
+    FILE*                       debug_h264_;
+#endif
+public:
+    std::list<I420VideoFrame *> decodedList;
+    int                         threshhold;
 };  // H264VideoToolboxDecoder
 
 }  // namespace webrtc

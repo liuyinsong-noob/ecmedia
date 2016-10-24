@@ -115,6 +115,7 @@
 		AD8D73521C59AEE300FB246D /* quality_scaler.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D73501C59AEE300FB246D /* quality_scaler.cc */; };
 		AD8D73531C59AEE300FB246D /* quality_scaler.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8D73511C59AEE300FB246D /* quality_scaler.h */; };
 		AD8D73551C59B07E00FB246D /* frame_dropper.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D73541C59B07E00FB246D /* frame_dropper.cc */; };
+		ADC32DB91DBD9D5300585F1D /* h264_sps_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = ADC32DB81DBD9D5300585F1D /* h264_sps_parser.h */; };
 		ADC5471B1D4854E400A5C852 /* codec_database.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AD14D315C8A020008A2BDA /* codec_database.cc */; };
 		ADC5471C1D4854E400A5C852 /* codec_timer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AD14D515C8A020008A2BDA /* codec_timer.cc */; };
 		ADC5471D1D4854E400A5C852 /* criticalsection.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD714B391D3488DE00182A8C /* criticalsection.cc */; };
@@ -279,7 +280,7 @@
 		55AD14EB15C8A020008A2BDA /* inter_frame_delay.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = inter_frame_delay.cc; sourceTree = "<group>"; };
 		55AD14EC15C8A020008A2BDA /* inter_frame_delay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inter_frame_delay.h; sourceTree = "<group>"; };
 		55AD14ED15C8A020008A2BDA /* internal_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = internal_defines.h; sourceTree = "<group>"; };
-		55AD14EE15C8A020008A2BDA /* jitter_buffer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jitter_buffer.cc; sourceTree = "<group>"; };
+		55AD14EE15C8A020008A2BDA /* jitter_buffer.cc */ = {isa = PBXFileReference; fileEncoding = 2147483673; lastKnownFileType = sourcecode.cpp.cpp; path = jitter_buffer.cc; sourceTree = "<group>"; };
 		55AD14EF15C8A020008A2BDA /* jitter_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jitter_buffer.h; sourceTree = "<group>"; };
 		55AD14F015C8A020008A2BDA /* jitter_buffer_common.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jitter_buffer_common.cc; sourceTree = "<group>"; };
 		55AD14F115C8A020008A2BDA /* jitter_buffer_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jitter_buffer_common.h; sourceTree = "<group>"; };
@@ -348,8 +349,9 @@
 		AD8D73501C59AEE300FB246D /* quality_scaler.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = quality_scaler.cc; path = utility/quality_scaler.cc; sourceTree = "<group>"; };
 		AD8D73511C59AEE300FB246D /* quality_scaler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = quality_scaler.h; path = utility/quality_scaler.h; sourceTree = "<group>"; };
 		AD8D73541C59B07E00FB246D /* frame_dropper.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = frame_dropper.cc; path = utility/frame_dropper.cc; sourceTree = "<group>"; };
+		ADC32DB81DBD9D5300585F1D /* h264_sps_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = h264_sps_parser.h; path = h264_hardcode/h264_sps_parser.h; sourceTree = "<group>"; };
 		ADC547921D4854E400A5C852 /* libvideo_coding_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvideo_coding_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		ADE81D361D35D92000970A58 /* h264_video_toolbox_decoder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = h264_video_toolbox_decoder.cc; path = h264_hardcode/h264_video_toolbox_decoder.cc; sourceTree = "<group>"; };
+		ADE81D361D35D92000970A58 /* h264_video_toolbox_decoder.cc */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp.preprocessed; fileEncoding = 4; name = h264_video_toolbox_decoder.cc; path = h264_hardcode/h264_video_toolbox_decoder.cc; sourceTree = "<group>"; };
 		ADE81D371D35D92000970A58 /* h264_video_toolbox_decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = h264_video_toolbox_decoder.h; path = h264_hardcode/h264_video_toolbox_decoder.h; sourceTree = "<group>"; };
 		ADE81D3A1D35DC8500970A58 /* video_frame_buffer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = video_frame_buffer.cc; path = h264_hardcode/video_frame_buffer.cc; sourceTree = "<group>"; };
 		ADE81D3C1D35E13700970A58 /* corevideo_frame_buffer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = corevideo_frame_buffer.cc; path = h264_hardcode/corevideo_frame_buffer.cc; sourceTree = "<group>"; };
@@ -666,6 +668,7 @@
 				AD714A8E1D33898E00182A8C /* h264_video_toolbox_encoder.h */,
 				AD714A8F1D33898E00182A8C /* h264_video_toolbox_nalu.cc */,
 				AD714A901D33898E00182A8C /* h264_video_toolbox_nalu.h */,
+				ADC32DB81DBD9D5300585F1D /* h264_sps_parser.h */,
 			);
 			name = h264_hardcode;
 			sourceTree = "<group>";
@@ -689,6 +692,7 @@
 				55AD151615C8A020008A2BDA /* codec_database.h in Headers */,
 				55AD151815C8A020008A2BDA /* codec_timer.h in Headers */,
 				55AD151A15C8A020008A2BDA /* content_metrics_processing.h in Headers */,
+				ADC32DB91DBD9D5300585F1D /* h264_sps_parser.h in Headers */,
 				55AD151C15C8A020008A2BDA /* decoding_state.h in Headers */,
 				55AD151F15C8A020008A2BDA /* encoded_frame.h in Headers */,
 				55AD152015C8A020008A2BDA /* er_tables_xor.h in Headers */,

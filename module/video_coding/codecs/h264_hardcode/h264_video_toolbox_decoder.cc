@@ -10,6 +10,7 @@
  */
 
 #include "h264_video_toolbox_decoder.h"
+#include "h264_sps_parser.h"
 
 #if defined(WEBRTC_VIDEO_TOOLBOX_SUPPORTED)
 
@@ -24,10 +25,195 @@
 #include "corevideo_frame_buffer.h"
 #include "h264_video_toolbox_nalu.h"
 #include "video_frame.h"
-
+#if DEBUG_H264
+char *g_h264file = NULL;
+#endif
 namespace cloopenwebrtc {
-    
+    extern int getVopType( const unsigned char p);
     static const int64_t kMsPerSec = 1000;
+    
+    class NewPtsIsLarger {
+    public:
+        explicit NewPtsIsLarger(const I420VideoFrame* new_frame)
+        : new_frame_(new_frame) {
+        }
+        bool operator()(I420VideoFrame* frame) {
+            return (new_frame_->pts >= frame->pts);
+        }
+        
+    private:
+        const I420VideoFrame* new_frame_;
+    };
+    
+    const uint8_t g_kuiLeadingZeroTable[256] = {
+        8,  7,  6,  6,  5,  5,  5,  5,  4,  4,  4,  4,  4,  4,  4,  4,
+        3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,
+        2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,
+        2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,
+        1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
+        1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
+        1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
+        1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
+    };
+    
+    typedef struct TagBitStringAux {
+        uint8_t* pStartBuf;   // buffer to start position
+        uint8_t* pEndBuf;     // buffer + length
+        int32_t  iBits;       // count bits of overall bitstreaming input
+        
+        int32_t iIndex;      //only for cavlc usage
+        uint8_t* pCurBuf;     // current reading position
+        uint32_t uiCurBits;
+        int32_t  iLeftBits;   // count number of available bits left ([1, 8]),
+        // need pointer to next byte start position in case 0 bit left then 8 instead
+    } SBitStringAux, *PBitStringAux;
+    
+#define GET_WORD(iCurBits, pBufPtr, iLeftBits, iAllowedBytes, iReadBytes) { \
+if (iReadBytes > iAllowedBytes+1) { \
+return -1; \
+} \
+iCurBits |= ((uint32_t)((pBufPtr[0] << 8) | pBufPtr[1])) << (iLeftBits); \
+iLeftBits -= 16; \
+pBufPtr +=2; \
+}
+    
+#define WELS_READ_VERIFY(uiRet) do{ \
+uint32_t uiRetTmp = (uint32_t)uiRet; \
+if( uiRetTmp != 0 ) \
+return uiRetTmp; \
+}while(0)
+    
+#define NEED_BITS(iCurBits, pBufPtr, iLeftBits, iAllowedBytes, iReadBytes) { \
+if (iLeftBits > 0) { \
+GET_WORD(iCurBits, pBufPtr, iLeftBits, iAllowedBytes, iReadBytes); \
+} \
+}
+#define UBITS(iCurBits, iNumBits) (iCurBits>>(32-(iNumBits)))
+#define DUMP_BITS(iCurBits, pBufPtr, iLeftBits, iNumBits, iAllowedBytes, iReadBytes) { \
+iCurBits <<= (iNumBits); \
+iLeftBits += (iNumBits); \
+NEED_BITS(iCurBits, pBufPtr, iLeftBits, iAllowedBytes, iReadBytes); \
+}
+    
+    static inline int32_t BsGetBits (PBitStringAux pBs, int32_t iNumBits, uint32_t* pCode) {
+        int32_t iRc = UBITS (pBs->uiCurBits, iNumBits);
+        int32_t iAllowedBytes = pBs->pEndBuf - pBs->pStartBuf; //actual stream bytes
+        int32_t iReadBytes = pBs->pCurBuf - pBs->pStartBuf;
+        DUMP_BITS (pBs->uiCurBits, pBs->pCurBuf, pBs->iLeftBits, iNumBits, iAllowedBytes, iReadBytes);
+        *pCode = (uint32_t)iRc;
+        return 0;
+    }
+    
+    static inline int32_t GetLeadingZeroBits (uint32_t iCurBits) { //<=32 bits
+        uint32_t  uiValue;
+        
+        uiValue = UBITS (iCurBits, 8); //ShowBits( bs, 8 );
+        if (uiValue) {
+            return g_kuiLeadingZeroTable[uiValue];
+        }
+        
+        uiValue = UBITS (iCurBits, 16); //ShowBits( bs, 16 );
+        if (uiValue) {
+            return (g_kuiLeadingZeroTable[uiValue] + 8);
+        }
+        
+        uiValue = UBITS (iCurBits, 24); //ShowBits( bs, 24 );
+        if (uiValue) {
+            return (g_kuiLeadingZeroTable[uiValue] + 16);
+        }
+        
+        uiValue = iCurBits; //ShowBits( bs, 32 );
+        if (uiValue) {
+            return (g_kuiLeadingZeroTable[uiValue] + 24);
+        }
+        //ASSERT(false);  // should not go here
+        return -1;
+    }
+    
+    static inline uint32_t BsGetUe (PBitStringAux pBs, uint32_t* pCode) {
+        uint32_t iValue = 0;
+        int32_t  iLeadingZeroBits = GetLeadingZeroBits (pBs->uiCurBits);
+        int32_t iAllowedBytes, iReadBytes;
+        iAllowedBytes = pBs->pEndBuf - pBs->pStartBuf; //actual stream bytes
+        
+        if (iLeadingZeroBits == -1) { //bistream error
+            return -1;//-1
+        } else if (iLeadingZeroBits >
+                   16) { //rarely into this condition (even may be bitstream error), prevent from 16-bit reading overflow
+            //using two-step reading instead of one time reading of >16 bits.
+            iReadBytes = pBs->pCurBuf - pBs->pStartBuf;
+            DUMP_BITS (pBs->uiCurBits, pBs->pCurBuf, pBs->iLeftBits, 16, iAllowedBytes, iReadBytes);
+            iReadBytes = pBs->pCurBuf - pBs->pStartBuf;
+            DUMP_BITS (pBs->uiCurBits, pBs->pCurBuf, pBs->iLeftBits, iLeadingZeroBits + 1 - 16, iAllowedBytes, iReadBytes);
+        } else {
+            iReadBytes = pBs->pCurBuf - pBs->pStartBuf;
+            DUMP_BITS (pBs->uiCurBits, pBs->pCurBuf, pBs->iLeftBits, iLeadingZeroBits + 1, iAllowedBytes, iReadBytes);
+        }
+        if (iLeadingZeroBits) {
+            iValue = UBITS (pBs->uiCurBits, iLeadingZeroBits);
+            iReadBytes = pBs->pCurBuf - pBs->pStartBuf;
+            DUMP_BITS (pBs->uiCurBits, pBs->pCurBuf, pBs->iLeftBits, iLeadingZeroBits, iAllowedBytes, iReadBytes);
+        }
+        
+        *pCode = ((1u << iLeadingZeroBits) - 1 + iValue);
+        return 0;
+    }
+    
+    int ParseSliceHeader (PBitStringAux pBs, int& sliceType, int &poc) {
+        int uiLog2MaxFrameNum = 4; //how many bits for framenum
+        int iLog2MaxPocLsb = 6; //how many bits for poc lsb
+        
+        // first_mb_in_slice
+        uint32_t uiCode;
+        WELS_READ_VERIFY (BsGetUe (pBs, &uiCode)); //first_mb_in_slice
+        //  printf("yinyinyin first mb = %d\n", uiCode);
+//        printf("yinyinyin first mb = %d\n", uiCode);
+        
+        
+        // slice type
+        WELS_READ_VERIFY (BsGetUe (pBs, &uiCode)); //slice_type
+//        printf("yinyinyin slice type = %d\n", uiCode);
+        sliceType = uiCode;
+        
+        // pps id
+        WELS_READ_VERIFY (BsGetUe (pBs, &uiCode));
+//        printf("yinyinyin pps id = %d\n", uiCode);
+        
+        // frame number
+        WELS_READ_VERIFY (BsGetBits (pBs, uiLog2MaxFrameNum, &uiCode)); //frame_num
+//        printf("yinyinyin frame num = %d\n", uiCode);
+        
+        // picture order count
+        WELS_READ_VERIFY (BsGetBits (pBs, iLog2MaxPocLsb, &uiCode)); //pic_order_cnt_lsb
+//        printf("yinyinyin poc= %d\n", uiCode);
+        poc = uiCode;
+        
+        return uiCode;
+    }
+    
+    inline uint32_t GetValue4Bytes (uint8_t* pDstNal) {
+        uint32_t uiValue = 0;
+        uiValue = (pDstNal[0] << 24) | (pDstNal[1] << 16) | (pDstNal[2] << 8) | (pDstNal[3]);
+        return uiValue;
+    }
+    
+    int32_t InitReadBits (PBitStringAux pBitString, int32_t iEndOffset) {
+        if (pBitString->pCurBuf >= (pBitString->pEndBuf - iEndOffset)) {
+            return -1;
+        }
+        pBitString->uiCurBits  = GetValue4Bytes (pBitString->pCurBuf);
+        pBitString->pCurBuf  += 4;
+        pBitString->iLeftBits = -16;
+        return 0;
+    }
     
     // Convenience function for creating a dictionary.
     inline CFDictionaryRef CreateCFDictionary(CFTypeRef* keys,
@@ -38,14 +224,24 @@ namespace cloopenwebrtc {
                                   &kCFTypeDictionaryValueCallBacks);
     }
     
+    enum sliceType{
+        SliceTypeI = 7,
+        SliceTypeP = 5,
+        sliceTypeB = 6,
+        sliceTypeUnknown
+    };
+    
     // Struct that we pass to the decoder per frame to decode. We receive it again
     // in the decoder callback.
     struct FrameDecodeParams {
-        FrameDecodeParams(DecodedImageCallback* cb, int64_t ts , int64_t ntp_time)
-        : callback(cb), timestamp(ts),ntp_time_ms(ntp_time) {}
+        FrameDecodeParams(DecodedImageCallback* cb, int64_t ts, int64_t ntp_time, uint64_t ptsP, bool isIdr)
+        : callback(cb), timestamp(ts), ntp_time_ms(ntp_time), pts(ptsP) , idr(isIdr){}
         DecodedImageCallback* callback;
         int64_t timestamp;
-        int64_t ntp_time_ms;
+		int64_t ntp_time_ms;
+        uint64_t pts;
+        bool idr;
+        
     };
     
     // This is the callback function that VideoToolbox calls when decode is
@@ -57,28 +253,54 @@ namespace cloopenwebrtc {
                                        CVImageBufferRef image_buffer,
                                        CMTime timestamp,
                                        CMTime duration) {
+//        printf("sean decoder %p\n", decoder);
         FrameDecodeParams* decode_params(
                                          reinterpret_cast<FrameDecodeParams*>(params));
         if (status != noErr) {
             LOG(LS_ERROR) << "Failed to decode frame. Status: " << status;
             return;
         }
-       
+//        printf("current pts %llu\n", decode_params->pts);
         // TODO(tkchin): Handle CVO properly.
         scoped_refptr<VideoFrameBuffer> buffer2 =
         new RefCountedObject<CoreVideoFrameBuffer>(image_buffer);
         scoped_refptr<VideoFrameBuffer> buffer = buffer2->NativeToI420Buffer();
-        I420VideoFrame decoded_frame; 
+        I420VideoFrame *decoded_frame = new I420VideoFrame;
         
         int size_y = buffer->height()*buffer->StrideY();
         int size_u = ((buffer->height()+1)/2)*buffer->StrideU();
         int size_v = ((buffer->height()+1)/2)*buffer->StrideV();
-        decoded_frame.CreateFrame(size_y, buffer->DataY(), size_u, buffer->DataU(), size_v, buffer->DataV(), buffer->width(), buffer->height(), buffer->StrideY(), buffer->StrideU(), buffer->StrideV());
-        decoded_frame.set_timestamp(decode_params->timestamp);
-        //decoded_frame.set_ntp_time_ms( CMTimeGetSeconds(timestamp) * kMsPerSec);
-        decoded_frame.set_ntp_time_ms(decode_params->ntp_time_ms);
-        decode_params->callback->Decoded(decoded_frame);
-        //printf("decode success timestamp %lld  %lld %lld\n",decode_params->timestamp/90 ,timestamp.value , duration.value);
+        decoded_frame->CreateFrame(size_y, buffer->DataY(), size_u, buffer->DataU(), size_v, buffer->DataV(), buffer->width(), buffer->height(), buffer->StrideY(), buffer->StrideU(), buffer->StrideV());
+        decoded_frame->set_timestamp(decode_params->timestamp);
+        
+        decoded_frame->set_ntp_time_ms( CMTimeGetSeconds(timestamp) * kMsPerSec);
+		decoded_frame->set_ntp_time_ms(decode_params->ntp_time_ms);
+        decoded_frame->pts = decode_params->pts;
+        /*
+         buffer
+         */
+
+        if (decode_params->idr) {
+            decode_params->callback->Decoded(*decoded_frame);
+            delete decoded_frame;
+        }
+        else
+        {
+            H264VideoToolboxDecoder *toolboxDecoder = (H264VideoToolboxDecoder *)decoder;
+            I420VideoFrame *frame = new I420VideoFrame;
+            std::list<I420VideoFrame *>::reverse_iterator rit = std::find_if(toolboxDecoder->decodedList.rbegin(), toolboxDecoder->decodedList.rend(), NewPtsIsLarger(decoded_frame));
+            std::list<I420VideoFrame *>::iterator it = rit.base();
+            std::list<I420VideoFrame *>::iterator itt = toolboxDecoder->decodedList.insert(it, decoded_frame);
+            std::list<I420VideoFrame *>::iterator it_check = toolboxDecoder->decodedList.begin();
+
+            if (toolboxDecoder->decodedList.size() > toolboxDecoder->threshhold) {
+                I420VideoFrame *temp = toolboxDecoder->decodedList.front();
+                decode_params->callback->Decoded(*temp);
+                toolboxDecoder->decodedList.pop_front();
+                delete temp;
+            }
+        }
+
         delete decode_params;
     }
     
@@ -93,15 +315,43 @@ namespace cloopenwebrtc {
     H264VideoToolboxDecoder::H264VideoToolboxDecoder()
     : callback_(nullptr),
     video_format_(nullptr),
-    decompression_session_(nullptr) {}
+    decompression_session_(nullptr),
+    prevPicOrderCntLsb(0),
+    prevPicOrderCntMsb(64),
+#if DEBUG_H264
+    debug_h264_(NULL),
+#endif
+    threshhold(8){
+#if DEBUG_H264
+        if (g_h264file) {
+            debug_h264_ = fopen(g_h264file, "wb");
+        }
+#endif
+    
+    }
     
     H264VideoToolboxDecoder::~H264VideoToolboxDecoder() {
         DestroyDecompressionSession();
         SetVideoFormat(nullptr);
+#if DEBUG_H264
+        if (debug_h264_) {
+            fflush(debug_h264_);
+            fclose(debug_h264_);
+        }
+#endif
+        std::list<I420VideoFrame *>::iterator it = decodedList.begin();
+        I420VideoFrame *temp;
+        for (; it != decodedList.end(); ) {
+            temp = decodedList.front();
+            delete temp;
+            decodedList.pop_front();
+            it = decodedList.begin();
+        }
     }
     
     int H264VideoToolboxDecoder::InitDecode(const VideoCodec* video_codec,
                                             int number_of_cores) {
+        
         return WEBRTC_VIDEO_CODEC_OK;
     }
     
@@ -111,8 +361,65 @@ namespace cloopenwebrtc {
                                         const RTPFragmentationHeader* fragmentation,
                                         const CodecSpecificInfo* codec_specific_info,
                                         int64_t render_time_ms) {
+
         DCHECK(input_image._buffer);
         
+        
+        if ((input_image._buffer[4] & 0x1f) == 7) {
+            int level;
+            int profile;
+            bool interlaced = true;
+            int32_t max_ref_frames;
+            parseh264_sps(input_image._buffer+5, input_image._length-5, &level, &profile, &interlaced, &max_ref_frames);
+            threshhold = max_ref_frames;
+        }
+#if DEBUG_H264
+        if (debug_h264_) {
+            fwrite(input_image._buffer, input_image._length, 1, debug_h264_);
+            fflush(debug_h264_);
+        }
+#endif
+        
+        uint64_t current_poc = 0;
+        if ((input_image._buffer[4] & 0x1f) != 6 && (input_image._buffer[4] & 0x1f) != 7 && (input_image._buffer[4] & 0x1f) != 8 && threshhold > 1) {
+            int sliceType = -1;
+            int poc = -1;
+            
+            SBitStringAux aux;
+            aux.pStartBuf = input_image._buffer+5;
+            aux.pEndBuf = input_image._buffer+9;
+            aux.pCurBuf = input_image._buffer+5;
+            aux.iBits = 32;
+            
+            int32_t iErr = InitReadBits (&aux, 0);
+            //                if (-1 == iErr)
+            //                        printf("init decode bit stream error!\n");
+            aux.uiCurBits = GetValue4Bytes(input_image._buffer+5);
+            PBitStringAux pBitstreambuf = &aux;
+            ParseSliceHeader(pBitstreambuf, sliceType, poc);
+           
+            int pic_order_cnt_lsb = poc;
+            uint64_t PicOrderCntMsb = 0;
+            if ((input_image._buffer[4] & 0x1f) == 5) {
+                poc = 0;
+                PicOrderCntMsb = prevPicOrderCntMsb + MaxPicOrderCntLsb;
+            }
+            else{
+                if( ( pic_order_cnt_lsb < prevPicOrderCntLsb ) &&( ( prevPicOrderCntLsb - pic_order_cnt_lsb ) >= ( MaxPicOrderCntLsb / 2 ) ) )
+                    PicOrderCntMsb = prevPicOrderCntMsb + MaxPicOrderCntLsb;
+                else if( ( pic_order_cnt_lsb > prevPicOrderCntLsb ) &&( ( pic_order_cnt_lsb - prevPicOrderCntLsb ) > ( MaxPicOrderCntLsb / 2 ) ) )
+                    PicOrderCntMsb = prevPicOrderCntMsb - MaxPicOrderCntLsb;
+                else
+                    PicOrderCntMsb = prevPicOrderCntMsb;
+            }
+            
+            
+            prevPicOrderCntMsb = PicOrderCntMsb;
+            prevPicOrderCntLsb = poc;
+            printf("nal type %d, slice type %d, poc %d, pts %llu\n", input_image._buffer[4]&0x1f, sliceType, poc,PicOrderCntMsb+poc);
+            current_poc = PicOrderCntMsb + poc;
+        }
+ 
 #if defined(WEBRTC_IOS)
         if (!RTCIsUIApplicationActive()) {
             // Ignore all decode requests when app isn't active. In this state, the
@@ -153,12 +460,11 @@ namespace cloopenwebrtc {
                                               &sample_buffer)) {
             return WEBRTC_VIDEO_CODEC_ERROR;
         }
-        
         DCHECK(sample_buffer);
         VTDecodeFrameFlags decode_flags =
-        kVTDecodeFrame_EnableAsynchronousDecompression ;
+        kVTDecodeFrame_EnableAsynchronousDecompression;
         FrameDecodeParams* frame_decode_params;
-        frame_decode_params = new FrameDecodeParams(callback_, input_image._timeStamp,input_image.ntp_time_ms_);
+        frame_decode_params = new FrameDecodeParams(callback_, input_image._timeStamp, input_image.ntp_time_ms_, current_poc, ((input_image._buffer[4] & 0x1f) == 5));
         OSStatus status = VTDecompressionSessionDecodeFrame(
                                                             decompression_session_, sample_buffer, decode_flags,
                                                             frame_decode_params, nullptr);
@@ -167,7 +473,7 @@ namespace cloopenwebrtc {
         // active and retry the decode request.
         if (status == kVTInvalidSessionErr &&
             ResetDecompressionSession() == WEBRTC_VIDEO_CODEC_OK) {
-            frame_decode_params = new FrameDecodeParams(callback_, input_image._timeStamp,input_image.ntp_time_ms_);
+            frame_decode_params = new FrameDecodeParams(callback_, input_image._timeStamp, input_image.ntp_time_ms_, current_poc, ((input_image._buffer[4] & 0x1f) == 5));
             status = VTDecompressionSessionDecodeFrame(
                                                        decompression_session_, sample_buffer, decode_flags,
                                                        frame_decode_params, nullptr);
@@ -250,6 +556,7 @@ namespace cloopenwebrtc {
             return WEBRTC_VIDEO_CODEC_ERROR;
         }
         ConfigureDecompressionSession();
+        
         
         return WEBRTC_VIDEO_CODEC_OK;
     }

@@ -165,6 +165,8 @@ class I420VideoFrame {
   uint32_t timestamp_;
   int64_t ntp_time_ms_;
   int64_t render_time_ms_;
+public:
+    uint64_t pts;
 };
 
 enum VideoFrameType {
