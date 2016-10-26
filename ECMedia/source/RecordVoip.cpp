@@ -198,7 +198,7 @@ bool RecordVoip::ProcessAudioData()
 		CriticalSectionScoped lock(_audioCrit);
 
 		writeTimes = 10;
-		while ((_playbackList.GetSize() || _recordingList.GetSize()) && writeTimes-- >= 0 ) {
+		while ((_playbackList.GetSize() && _recordingList.GetSize()) && writeTimes-- >= 0 ) {
 			WebRtc_Word16 *playbackData = NULL;
 			WebRtc_Word16 *recordingData = NULL;
 			ListItem *playbackItem = _playbackList.First();

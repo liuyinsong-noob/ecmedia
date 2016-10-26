@@ -335,8 +335,9 @@ int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level)
 }
 int ECMedia_un_trace()
 {
-	media_uninit_print_log();
 	g_media_TraceFlag = false;//
+	media_uninit_print_log();
+	Trace::ReturnTrace();
     return 0;
 }
 
