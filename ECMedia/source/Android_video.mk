@@ -20,7 +20,9 @@ LOCAL_SRC_FILES := \
 		ECMedia.cpp \
 		RecordVoip.cpp \
 		statsCollector.cc \
-		VoeObserver.cpp
+		VoeObserver.cpp \
+		ECLiveStream_rtmp.cpp \
+		ECLiveStream.cpp
 
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
@@ -46,6 +48,7 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../../third_party/srtp/crypto/include \
 	$(LOCAL_PATH)/../../third_party/gsm/inc/ \
 	$(LOCAL_PATH)/../../third_party/openssl \
+	$(LOCAL_PATH)/../../third_party/librtmp/include \
 	$(LOCAL_PATH)/../../module/video_coding/codecs/interface \
 	$(LOCAL_PATH)/../../module/video_coding/codecs/h264 \
 	$(LOCAL_PATH)/../../module/video_coding/main/include \

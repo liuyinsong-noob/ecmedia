@@ -12,26 +12,22 @@ include $(CLEAR_VARS)
 
 include $(LOCAL_PATH)/../../../../android-webrtc.mk
 
-LOCAL_ARM_MODE := arm
 LOCAL_MODULE_CLASS := STATIC_LIBRARIES
-LOCAL_MODULE := libwebrtc_pcm16b
+LOCAL_MODULE := librtmp
 LOCAL_MODULE_TAGS := optional
-LOCAL_SRC_FILES := pcm16b.c
+LOCAL_SRC_FILES := \
+    amf.c \
+    log.c \
+    parseurl.c \
+    rtmp.c 
+
 
 # Flags passed to both C and C++ files.
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS)
 
 LOCAL_C_INCLUDES := \
-    $(LOCAL_PATH)/include \
-    $(LOCAL_PATH)/../../..
+    $(LOCAL_PATH)/../../../openssl
 
-LOCAL_SHARED_LIBRARIES := \
-    libcutils \
-    libdl \
-    libstlport
-
-ifndef NDK_ROOT
-include external/stlport/libstlport.mk
-endif
 include $(BUILD_STATIC_LIBRARY)
+

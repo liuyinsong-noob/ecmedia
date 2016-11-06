@@ -19,6 +19,7 @@ include $(MY_WEBRTC_ROOT_PATH)/module/audio_coding/codecs/cng/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/audio_coding/codecs/g729/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/audio_coding/codecs/opencore-amr/amrnb/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/audio_coding/codecs/opus/Android.mk
+include $(MY_WEBRTC_ROOT_PATH)/module/audio_coding/codecs/pcm16b/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/audio_coding/neteq/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/audio_coding/main/source/codecs/isac/main/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/audio_device/main/source/Android.mk
@@ -43,6 +44,7 @@ include $(MY_WEBRTC_ROOT_PATH)/third_party/libyuv/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/third_party/libjpeg_turbo/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/remote_bitrate_estimator/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/pacing/source/Android.mk
+include $(MY_WEBRTC_ROOT_PATH)/third_party/librtmp/rtmpdump-2.3/librtmp/Android.mk
 
 # build .so
 LOCAL_PATH := $(JNI_PATH)
@@ -80,6 +82,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES := \
 	libwebrtc_iSAC \
 	libwebrtc_g711 \
 	libwebrtc_g729 \
+	libwebrtc_pcm16b \
 	libwebrtc_cng \
 	libwebrtc_amr_nb \
 	libwebrtc_opus \
@@ -96,7 +99,8 @@ LOCAL_WHOLE_STATIC_LIBRARIES := \
 	libcpufeatures \
 	libwebrtc_audio_paced_sender \
 	libwebrtc_audio_codecs \
-	libwebrtc_system_wrappers
+	libwebrtc_system_wrappers \
+	librtmp
 	
 LOCAL_SHARED_LIBRARIES := \
     libcutils \
