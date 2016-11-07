@@ -19,7 +19,8 @@ LOCAL_SRC_FILES := \
     amf.c \
     log.c \
     parseurl.c \
-    rtmp.c 
+    rtmp.c \
+	hashswf.c
 
 
 # Flags passed to both C and C++ files.
@@ -28,6 +29,12 @@ LOCAL_CFLAGS := \
 
 LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../../../openssl
+	
+LOCAL_SHARED_LIBRARIES := \
+    libcutils \
+    libdl
+
+LOCAL_LDLIBS += -llog -lGLESv2 -lz
 
 include $(BUILD_STATIC_LIBRARY)
 

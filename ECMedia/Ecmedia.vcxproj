@@ -191,6 +191,7 @@
     <ClInclude Include="include\StunMessageCallBack.h" />
     <ClInclude Include="include\VoeObserver.h" />
     <ClInclude Include="interface\ECMedia.h" />
+    <ClInclude Include="resource1.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\base64.c" />
@@ -477,7 +478,7 @@
     </ProjectReference>
     <ProjectReference Include="..\third_party\libvpx\build\x64\vpx_x64.vcxproj">
       <Project>{34b221e6-b6c6-47af-bde8-dd578fdaed01}</Project>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <ProjectReference Include="..\third_party\libyuv\libyuv.vcxproj">
       <Project>{1a8364d9-fe77-b61e-ed73-eeb3beb59e8e}</Project>
@@ -574,6 +575,9 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Ecmedia1.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

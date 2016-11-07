@@ -106,6 +106,13 @@ bool VideoEngine::Delete(VideoEngine*& video_engine) {
   }
 #endif
 #endif
+#ifdef WEBRTC_VIDEO_ENGINE_ENCRYPTION_API
+  ViEEncryptionImpl* vie_encryption = vie_impl;
+  if (vie_encryption->GetCount() > 0) {
+	  LOG(LS_ERROR) << "ViEEncryptionImpl ref count > 0: " << vie_encryption->GetCount();
+	  return false;
+  }
+#endif
 
   delete vie_impl;
   vie_impl = NULL;

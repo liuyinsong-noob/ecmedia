@@ -21,30 +21,15 @@ class VoEEncryptionImpl : public VoEEncryption
 {
 public:
     // SRTP
-    virtual int EnableSRTPSend(
-        int channel,
-        CipherTypes cipherType,
-        int cipherKeyLength,
-        AuthenticationTypes authType,
-        int authKeyLength,
-        int authTagLength,
-        SecurityLevels level,
-        const unsigned char key[kVoiceEngineMaxSrtpKeyLength],
-        const WebRtc_UWord32 ssrc,
-        bool useForRTCP = false);
+	virtual int EnableSRTPSend(int channel,
+		ccp_srtp_crypto_suite_t crypt_type,
+		const char* key);
 
     virtual int DisableSRTPSend(int channel);
 
-    virtual int EnableSRTPReceive(
-        int channel,
-        CipherTypes cipherType,
-        int cipherKeyLength,
-        AuthenticationTypes authType,
-        int authKeyLength,
-        int authTagLength,
-        SecurityLevels level,
-        const unsigned char key[kVoiceEngineMaxSrtpKeyLength],
-        bool useForRTCP = false);
+	virtual int EnableSRTPReceive(int channel,
+		ccp_srtp_crypto_suite_t crypt_type,
+		const char* key);
 
     virtual int DisableSRTPReceive(int channel);
 

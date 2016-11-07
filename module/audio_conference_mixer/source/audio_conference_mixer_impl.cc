@@ -112,8 +112,11 @@ void MixHistory::ResetMixedStatus() {
 AudioConferenceMixer* AudioConferenceMixer::Create(int id) {
     AudioConferenceMixerImpl* mixer = new AudioConferenceMixerImpl(id);
     if(!mixer->Init()) {
+		WEBRTC_TRACE(kTraceError, kTraceAudioMixerServer, id,
+			"failed to init AudioConferenceMixerImpl");
         delete mixer;
         return NULL;
+
     }
     return mixer;
 }

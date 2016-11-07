@@ -50,6 +50,7 @@
     <ClInclude Include="source\vie_desktop_share_impl.h" />
     <ClInclude Include="source\vie_desktop_share_manager.h" />
     <ClInclude Include="source\vie_encoder.h" />
+    <ClInclude Include="source\vie_encryption_impl.h" />
     <ClInclude Include="source\vie_external_codec_impl.h" />
     <ClInclude Include="source\vie_file_image.h" />
     <ClInclude Include="source\vie_file_impl.h" />
@@ -91,6 +92,7 @@
     <ClCompile Include="source\vie_desktop_share_impl.cpp" />
     <ClCompile Include="source\vie_desktop_share_manager.cc" />
     <ClCompile Include="source\vie_encoder.cc" />
+    <ClCompile Include="source\vie_encryption_impl.cc" />
     <ClCompile Include="source\vie_external_codec_impl.cc" />
     <ClCompile Include="source\vie_file_image.cc" />
     <ClCompile Include="source\vie_file_impl.cc" />
@@ -155,7 +157,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>./include;./source;../servicecore/include;../voice_engine\main\include;../system_wrappers\source;../system_wrappers\interface;../module;../module\interface;../module\media_file\include;../module\rtp_rtcp\include;../module\udp_transport\include;../module\utility\include;../module\video_capture\main\include;../module\video_coding\main\include;../module\video_processing\main\include;../module\video_render\main\include;../module/rtp_rtcp/source;../module\video_coding\codecs\interface;../module\audio_coding\main\include;../module\bitrate_controller\include;../module/common_video/source;../module/common_video/source/libyuv/include;../module/common_video/interface;../module/video_coding/main/source;../module/pacing/include;../module/remote_bitrate_estimator/include;../module/remote_bitrate_estimator/source;..\module\desktop_capture\source;..\module\desktop_capture\source\win;../third_party/oRTP/include;../third_party/oRTP/include/ortp</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include;./source;../servicecore/include;../voice_engine\main\include;../system_wrappers\source;../system_wrappers\interface;../module;../module\interface;../module\media_file\include;../module\rtp_rtcp\include;../module\udp_transport\include;../module\utility\include;../module\video_capture\main\include;../module\video_coding\main\include;../module\video_processing\main\include;../module\video_render\main\include;../module/rtp_rtcp/source;../module\video_coding\codecs\interface;../module\audio_coding\main\include;../module\bitrate_controller\include;../module/common_video/source;../module/common_video/source/libyuv/include;../module/common_video/interface;../module/video_coding/main/source;../module/pacing/include;../module/remote_bitrate_estimator/include;../module/remote_bitrate_estimator/source;..\module\desktop_capture\source;..\module\desktop_capture\source\win;../third_party/oRTP/include;../third_party/oRTP/include/ortp;../voice_engine\main\source</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 %(AdditionalOptions)</AdditionalOptions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <BufferSecurityCheck>true</BufferSecurityCheck>
@@ -165,7 +167,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <MinimalRebuild>false</MinimalRebuild>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;WEBRTC_SVNREVISION="n/a";_WIN32_WINNT=0x0601;WINVER=0x0601;WIN32;_WINDOWS;NOMINMAX;VIDEOCODEC_H264;VIDEOCODEC_VP8;ENABLE_SCREEN_SHARE;PSAPI_VERSION=1;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_ATL_NO_OPENGL;_HAS_EXCEPTIONS=0;_SECURE_ATL;CHROMIUM_BUILD;TOOLKIT_VIEWS=1;ENABLE_ONE_CLICK_SIGNIN;ENABLE_REMOTING=1;ENABLE_WEBRTC=1;ENABLE_CONFIGURATION_POLICY;ENABLE_INPUT_SPEECH;ENABLE_NOTIFICATIONS;ENABLE_GPU=1;ENABLE_EGLIMAGE=1;USE_SKIA=1;__STD_C;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ENABLE_TASK_MANAGER=1;ENABLE_WEB_INTENTS=1;ENABLE_EXTENSIONS=1;ENABLE_PLUGIN_INSTALLATION=1;ENABLE_PROTECTOR_SERVICE=1;ENABLE_SESSION_SERVICE=1;ENABLE_THEMES=1;ENABLE_BACKGROUND=1;ENABLE_PROMO_RESOURCE_SERVICE=1;ENABLE_AUTOMATION=1;WEBRTC_WIN;__STDC_FORMAT_MACROS;DYNAMIC_ANNOTATIONS_ENABLED=1;WTF_USE_DYNAMIC_ANNOTATIONS=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;WEBRTC_SVNREVISION="n/a";_WIN32_WINNT=0x0601;WINVER=0x0601;WIN32;_WINDOWS;NOMINMAX;VIDEOCODEC_H264;VIDEOCODEC_VP8;ENABLE_SCREEN_SHARE;PSAPI_VERSION=1;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_ATL_NO_OPENGL;_HAS_EXCEPTIONS=0;_SECURE_ATL;CHROMIUM_BUILD;TOOLKIT_VIEWS=1;ENABLE_ONE_CLICK_SIGNIN;ENABLE_REMOTING=1;ENABLE_WEBRTC=1;ENABLE_CONFIGURATION_POLICY;ENABLE_INPUT_SPEECH;ENABLE_NOTIFICATIONS;ENABLE_GPU=1;ENABLE_EGLIMAGE=1;USE_SKIA=1;__STD_C;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ENABLE_TASK_MANAGER=1;ENABLE_WEB_INTENTS=1;ENABLE_EXTENSIONS=1;ENABLE_PLUGIN_INSTALLATION=1;ENABLE_PROTECTOR_SERVICE=1;ENABLE_SESSION_SERVICE=1;ENABLE_THEMES=1;ENABLE_BACKGROUND=1;ENABLE_PROMO_RESOURCE_SERVICE=1;ENABLE_AUTOMATION=1;WEBRTC_WIN;__STDC_FORMAT_MACROS;DYNAMIC_ANNOTATIONS_ENABLED=1;WTF_USE_DYNAMIC_ANNOTATIONS=1;WEBRTC_SRTP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <TreatWarningAsError>false</TreatWarningAsError>
@@ -259,7 +261,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>./include;./source;../servicecore/include;../voice_engine\main\include;../system_wrappers\source;../system_wrappers\interface;../module;../module\interface;../module\media_file\include;../module\rtp_rtcp\include;../module\udp_transport\include;../module\utility\include;../module\video_capture\main\include;../module\video_coding\main\include;../module\video_processing\main\include;../module\video_render\main\include;../module/rtp_rtcp/source;../module\video_coding\codecs\interface;../module\audio_coding\main\include;../module\bitrate_controller\include;../module/common_video/source;../module/common_video/source/libyuv/include;../module/common_video/interface;../module/video_coding/main/source;../module/pacing/include;../module/remote_bitrate_estimator/include;../module/remote_bitrate_estimator/source;..\module\desktop_capture\source;..\module\desktop_capture\source\win;../third_party/oRTP/include;../third_party/oRTP/include/ortp</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include;./source;../servicecore/include;../voice_engine\main\include;../system_wrappers\source;../system_wrappers\interface;../module;../module\interface;../module\media_file\include;../module\rtp_rtcp\include;../module\udp_transport\include;../module\utility\include;../module\video_capture\main\include;../module\video_coding\main\include;../module\video_processing\main\include;../module\video_render\main\include;../module/rtp_rtcp/source;../module\video_coding\codecs\interface;../module\audio_coding\main\include;../module\bitrate_controller\include;../module/common_video/source;../module/common_video/source/libyuv/include;../module/common_video/interface;../module/video_coding/main/source;../module/pacing/include;../module/remote_bitrate_estimator/include;../module/remote_bitrate_estimator/source;..\module\desktop_capture\source;..\module\desktop_capture\source\win;../third_party/oRTP/include;../third_party/oRTP/include/ortp;../voice_engine\main\source</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -270,7 +272,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <OmitFramePointers>false</OmitFramePointers>
       <Optimization>MaxSpeed</Optimization>
-      <PreprocessorDefinitions>WEBRTC_SVNREVISION="n/a";_WIN32_WINNT=0x0601;WINVER=0x0601;WIN32;_WINDOWS;NOMINMAX;PSAPI_VERSION=1;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_ATL_NO_OPENGL;_HAS_EXCEPTIONS=0;_SECURE_ATL;CHROMIUM_BUILD;TOOLKIT_VIEWS=1;ENABLE_ONE_CLICK_SIGNIN;ENABLE_REMOTING=1;ENABLE_WEBRTC=1;ENABLE_CONFIGURATION_POLICY;ENABLE_INPUT_SPEECH;ENABLE_NOTIFICATIONS;ENABLE_GPU=1;ENABLE_EGLIMAGE=1;USE_SKIA=1;__STD_C;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ENABLE_TASK_MANAGER=1;ENABLE_WEB_INTENTS=1;ENABLE_EXTENSIONS=1;ENABLE_PLUGIN_INSTALLATION=1;ENABLE_PROTECTOR_SERVICE=1;ENABLE_SESSION_SERVICE=1;ENABLE_THEMES=1;ENABLE_BACKGROUND=1;ENABLE_PROMO_RESOURCE_SERVICE=1;ENABLE_AUTOMATION=1;WEBRTC_WIN;__STDC_FORMAT_MACROS;NDEBUG;NVALGRIND;DYNAMIC_ANNOTATIONS_ENABLED=0;%(PreprocessorDefinitions);VIDEOCODEC_VP8;VIDEOCODEC_H264;ENABLE_SCREEN_SHARE</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WEBRTC_SVNREVISION="n/a";_WIN32_WINNT=0x0601;WINVER=0x0601;WIN32;_WINDOWS;NOMINMAX;PSAPI_VERSION=1;_CRT_RAND_S;CERT_CHAIN_PARA_HAS_EXTRA_FIELDS;WIN32_LEAN_AND_MEAN;_ATL_NO_OPENGL;_HAS_EXCEPTIONS=0;_SECURE_ATL;CHROMIUM_BUILD;TOOLKIT_VIEWS=1;ENABLE_ONE_CLICK_SIGNIN;ENABLE_REMOTING=1;ENABLE_WEBRTC=1;ENABLE_CONFIGURATION_POLICY;ENABLE_INPUT_SPEECH;ENABLE_NOTIFICATIONS;ENABLE_GPU=1;ENABLE_EGLIMAGE=1;USE_SKIA=1;__STD_C;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ENABLE_TASK_MANAGER=1;ENABLE_WEB_INTENTS=1;ENABLE_EXTENSIONS=1;ENABLE_PLUGIN_INSTALLATION=1;ENABLE_PROTECTOR_SERVICE=1;ENABLE_SESSION_SERVICE=1;ENABLE_THEMES=1;ENABLE_BACKGROUND=1;ENABLE_PROMO_RESOURCE_SERVICE=1;ENABLE_AUTOMATION=1;WEBRTC_WIN;__STDC_FORMAT_MACROS;NDEBUG;NVALGRIND;DYNAMIC_ANNOTATIONS_ENABLED=0;%(PreprocessorDefinitions);VIDEOCODEC_VP8;VIDEOCODEC_H264;ENABLE_SCREEN_SHARE;WEBRTC_SRTP</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <StringPooling>true</StringPooling>

@@ -45,6 +45,9 @@
 #include "vie_desktop_share_impl.h"
 #endif
 #endif
+#ifdef WEBRTC_VIDEO_ENGINE_ENCRYPTION_API
+#include "vie_encryption_impl.h"
+#endif
 
 namespace cloopenwebrtc {
 
@@ -77,6 +80,9 @@ class VideoEngineImpl
 	   public ViEDesktopShareImpl,
 #endif
 #endif
+#ifdef WEBRTC_VIDEO_ENGINE_ENCRYPTION_API
+	public ViEEncryptionImpl,
+#endif
       public VideoEngine
 {  // NOLINT
  public:
@@ -108,6 +114,9 @@ class VideoEngineImpl
 #ifdef WEBRTC_VIDEO_ENGINE_DESKTOP_SHARE_API
 		ViEDesktopShareImpl(ViEBaseImpl::shared_data()),
 #endif
+#endif
+#ifdef WEBRTC_VIDEO_ENGINE_ENCRYPTION_API
+	  ViEEncryptionImpl(ViEBaseImpl::shared_data()),
 #endif
         own_config_(owns_config ? config : NULL)
   {}

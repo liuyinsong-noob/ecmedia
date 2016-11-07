@@ -9,6 +9,7 @@
 
 #include "sometools.h"  //added by zdm
 #include "event.h"
+#include "common_types.h"
 
 #ifndef PAYLOAD_TYPE_FLAG_CAN_RECV
 #define PAYLOAD_TYPE_FLAG_CAN_RECV	PAYLOAD_TYPE_USER_FLAG_1
@@ -135,7 +136,7 @@ typedef struct SalIceRemoteCandidate {
 
 typedef struct SalSrtpCryptoAlgo {
 	unsigned int tag;
-	enum ccportp_srtp_crypto_suite_t algo;
+	cloopenwebrtc::ccp_srtp_crypto_suite_t algo;
 	/* 41= 40 max(key_length for all algo) + '\0' */
 //	char master_key[41];//
     char master_key[65];

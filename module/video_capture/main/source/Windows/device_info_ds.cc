@@ -708,7 +708,7 @@ void DeviceInfoDS::GetProductId(const char* devicePath,
     {
         strncpy_s((char*) productUniqueIdUTF8, productUniqueIdUTF8Length, "", 1);
         WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
-                     "Failed to get the product Id");
+                     "Failed to get the product Id. devicePath:%s", devicePath);
         return;
     }
     startPos += 4;
@@ -718,7 +718,7 @@ void DeviceInfoDS::GetProductId(const char* devicePath,
     {
         strncpy_s((char*) productUniqueIdUTF8, productUniqueIdUTF8Length, "", 1);
         WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
-                     "Failed to get the product Id");
+                     "Failed to get the product Id. devicePath:%s", devicePath);
         return;
     }
     // Find the second occurrence.
@@ -734,7 +734,7 @@ void DeviceInfoDS::GetProductId(const char* devicePath,
     {
         strncpy_s((char*) productUniqueIdUTF8, productUniqueIdUTF8Length, "", 1);
         WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
-                     "Failed to get the product Id");
+                     "Failed to get the product Id. devicePath:%s", devicePath);
     }
 }
 

@@ -13,49 +13,26 @@
 #include "voe_encryption.h"
 //#include "voice_engine_defines.h"
 
-#define kVoiceEngineMaxSrtpKeyLength 30
-
 namespace cloopenwebrtc {
-    class SrtpModule : public Module , public VoEEncryption , public Encryption
+    class SrtpModule : public Module , public Encryption //, public VoEEncryption
     {
     public:
         static SrtpModule* CreateSrtpModule(const WebRtc_Word32 id);
         static void DestroySrtpModule(SrtpModule* module);
-        
-        
-        
-//        virtual int EnableSRTPSend(
-//                                   int channel,
-//                                   CipherTypes cipherType,
-//                                   int cipherKeyLength,
-//                                   AuthenticationTypes authType,
-//                                   int authKeyLength,
-//                                   int authTagLength,
-//                                   SecurityLevels level,
-//                                   const unsigned char key[kVoiceEngineMaxSrtpKeyLength],
-//                                   bool useForRTCP = false);
-//        
-//        virtual int DisableSRTPSend(int channel);
-//        
-//        virtual int EnableSRTPReceive(
-//                                      int channel,
-//                                      CipherTypes cipherType,
-//                                      int cipherKeyLength,
-//                                      AuthenticationTypes authType,
-//                                      int authKeyLength,
-//                                      int authTagLength,
-//                                      SecurityLevels level,
-//                                      const unsigned char key[kVoiceEngineMaxSrtpKeyLength],
-//                                      bool useForRTCP = false);
-//        
-//        virtual int DisableSRTPReceive(int channel);
-//        
-//        // External encryption
-//        virtual int RegisterExternalEncryption(
-//                                               int channel,
-//                                               Encryption& encryption);
-//        
-//        virtual int DeRegisterExternalEncryption(int channel);
+	public:
+		virtual int EnableSRTPSend(int channel,
+			ccp_srtp_crypto_suite_t crypt_type,
+			const char* key,
+			const WebRtc_UWord32 ssrc) = 0;
+
+		virtual int DisableSRTPSend(int channel) = 0;
+
+		virtual int EnableSRTPReceive(int channel, ccp_srtp_crypto_suite_t crypt_type, const char* key) = 0;
+
+		virtual int DisableSRTPReceive(int channel) = 0;
+
+		virtual int CcpSrtpInit(int channel) = 0;
+		virtual int CcpSrtpShutdown(int channel) = 0;
     };
 }
 

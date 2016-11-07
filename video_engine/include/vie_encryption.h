@@ -41,6 +41,18 @@ class WEBRTC_DLLEXPORT ViEEncryption {
   // and disables external encryption.
   virtual int DeregisterExternalEncryption(const int video_channel) = 0;
 
+public:
+	virtual int EnableSRTPSend(int channel, ccp_srtp_crypto_suite_t crypt_type, const char* key) = 0;
+
+	virtual int DisableSRTPSend(int channel) = 0;
+
+	virtual int EnableSRTPReceive(int channel, ccp_srtp_crypto_suite_t crypt_type, const char* key) = 0;
+
+	virtual int DisableSRTPReceive(int channel) = 0;
+
+	virtual int CcpSrtpInit(int channel) = 0;
+	virtual int CcpSrtpShutdown(int channel) = 0;
+
  protected:
   ViEEncryption() {}
   virtual ~ViEEncryption() {}

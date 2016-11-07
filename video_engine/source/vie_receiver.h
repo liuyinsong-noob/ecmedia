@@ -131,6 +131,7 @@ class ViEReceiver : public RtpData {
 private:
 	Encryption* external_decryption_;
 	WebRtc_UWord8* decryption_buffer_;
+	WebRtc_UWord8* callback_decryption_buffer_;
 public:
   int RegisterExternalDecryption(Encryption* decryption);
   int DeregisterExternalDecryption();

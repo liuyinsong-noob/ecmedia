@@ -45,15 +45,15 @@ int VoEEncryptionImpl::CcpSrtpInit(int channel)
             return -1;
         }
         
-        voe::ScopedChannel sc(_shared->channel_manager(), channel);
-        voe::Channel* channelPtr = sc.ChannelPtr();
+		voe::ChannelOwner ch = _shared->channel_manager().GetChannel(channel);
+        voe::Channel* channelPtr = ch.channel();
         if (channelPtr == NULL)
         {
             _shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
                                   "CcpSrtpInit() failed to locate channel");
             return -1;
         }
-        return channelPtr->CcpSrtpInit(channel);
+        return channelPtr->CcpSrtpInit();
 #else
         _shared->SetLastError(VE_FUNC_NOT_SUPPORTED, kTraceError,
                               "EnableSRTPSend() SRTP is not supported");
@@ -71,15 +71,15 @@ int VoEEncryptionImpl::CcpSrtpShutdown(int channel)
             return -1;
         }
         
-        voe::ScopedChannel sc(_shared->channel_manager(), channel);
-        voe::Channel* channelPtr = sc.ChannelPtr();
+		voe::ChannelOwner ch = _shared->channel_manager().GetChannel(channel);
+		voe::Channel* channelPtr = ch.channel();
         if (channelPtr == NULL)
         {
             _shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
                                   "CcpSrtpShutdown() failed to locate channel");
             return -1;
         }
-        return channelPtr->CcpSrtpShutdown(channel);
+        return channelPtr->CcpSrtpShutdown();
 #else
         _shared->SetLastError(VE_FUNC_NOT_SUPPORTED, kTraceError,
                               "EnableSRTPSend() SRTP is not supported");
@@ -100,24 +100,13 @@ VoEEncryptionImpl::~VoEEncryptionImpl()
                  "VoEEncryptionImpl::~VoEEncryptionImpl() - dtor");
 }
 
-int VoEEncryptionImpl::EnableSRTPSend(
-    int channel,
-    CipherTypes cipherType,
-    int cipherKeyLength,
-    AuthenticationTypes authType,
-    int authKeyLength,
-    int authTagLength,
-    SecurityLevels level,
-    const unsigned char key[kVoiceEngineMaxSrtpKeyLength],
-    const WebRtc_UWord32 ssrc,
-    bool useForRTCP)
+int VoEEncryptionImpl::EnableSRTPSend(int channel,
+	ccp_srtp_crypto_suite_t crypt_type,
+	const char* key)
 {
     WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
-                 "EnableSRTPSend(channel=%i, cipherType=%i, cipherKeyLength=%i,"
-                 " authType=%i, authKeyLength=%i, authTagLength=%i, level=%i, "
-                 "key=?, useForRTCP=%d)",
-                 channel, cipherType, cipherKeyLength, authType,
-                 authKeyLength, authTagLength, level, useForRTCP);
+                 "EnableSRTPSend(channel=%i, crypt_type=%i)",
+                 channel, crypt_type);
 #ifdef WEBRTC_SRTP
     if (!_shared->statistics().Initialized())
     {
@@ -125,22 +114,15 @@ int VoEEncryptionImpl::EnableSRTPSend(
         return -1;
     }
 
-    voe::ScopedChannel sc(_shared->channel_manager(), channel);
-    voe::Channel* channelPtr = sc.ChannelPtr();
+	voe::ChannelOwner ch = _shared->channel_manager().GetChannel(channel);
+	voe::Channel* channelPtr = ch.channel();
     if (channelPtr == NULL)
     {
         _shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
             "EnableSRTPSend() failed to locate channel");
         return -1;
     }
-    return channelPtr->EnableSRTPSend(cipherType,
-                                      cipherKeyLength,
-                                      authType,
-                                      authKeyLength,
-                                      authTagLength,
-                                      level,
-                                      key,
-                                      useForRTCP);
+    return channelPtr->EnableSRTPSend(crypt_type, key);
 #else
    _shared->SetLastError(VE_FUNC_NOT_SUPPORTED, kTraceError,
        "EnableSRTPSend() SRTP is not supported");
@@ -159,8 +141,8 @@ int VoEEncryptionImpl::DisableSRTPSend(int channel)
         return -1;
     }
 
-    voe::ScopedChannel sc(_shared->channel_manager(), channel);
-    voe::Channel* channelPtr = sc.ChannelPtr();
+	voe::ChannelOwner ch = _shared->channel_manager().GetChannel(channel);
+	voe::Channel* channelPtr = ch.channel();
     if (channelPtr == NULL)
     {
         _shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
@@ -175,23 +157,13 @@ int VoEEncryptionImpl::DisableSRTPSend(int channel)
 #endif
 }
 
-int VoEEncryptionImpl::EnableSRTPReceive(
-    int channel,
-    CipherTypes cipherType,
-    int cipherKeyLength,
-    AuthenticationTypes authType,
-    int authKeyLength,
-    int authTagLength,
-    SecurityLevels level,
-    const unsigned char key[kVoiceEngineMaxSrtpKeyLength],
-		bool useForRTCP)
+int VoEEncryptionImpl::EnableSRTPReceive(int channel,
+	ccp_srtp_crypto_suite_t crypt_type,
+	const char* key)
 {
     WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
-                 "EnableSRTPReceive(channel=%i, cipherType=%i, "
-                 "cipherKeyLength=%i, authType=%i, authKeyLength=%i, "
-                 "authTagLength=%i, level=%i, key=?, useForRTCP=%d)",
-                 channel, cipherType, cipherKeyLength, authType,
-                 authKeyLength, authTagLength, level, useForRTCP);
+                 "EnableSRTPReceive(channel=%i, crypt_type=%i, ",
+					channel, crypt_type);
 #ifdef WEBRTC_SRTP
     if (!_shared->statistics().Initialized())
     {
@@ -199,22 +171,15 @@ int VoEEncryptionImpl::EnableSRTPReceive(
         return -1;
     }
 
-    voe::ScopedChannel sc(_shared->channel_manager(), channel);
-    voe::Channel* channelPtr = sc.ChannelPtr();
+	voe::ChannelOwner ch = _shared->channel_manager().GetChannel(channel);
+	voe::Channel* channelPtr = ch.channel();
     if (channelPtr == NULL)
     {
         _shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
             "EnableSRTPReceive() failed to locate channel");
         return -1;
     }
-    return channelPtr->EnableSRTPReceive(cipherType,
-                                         cipherKeyLength,
-	                                 authType,
-	                                 authKeyLength,
-	                                 authTagLength,
-	                                 level,
-	                                 key,
-	                                 useForRTCP);
+    return channelPtr->EnableSRTPReceive(crypt_type, key);
 #else
    _shared->SetLastError(VE_FUNC_NOT_SUPPORTED, kTraceError,
        "EnableSRTPReceive() SRTP is not supported");
@@ -233,8 +198,8 @@ int VoEEncryptionImpl::DisableSRTPReceive(int channel)
         return -1;
     }
 
-    voe::ScopedChannel sc(_shared->channel_manager(), channel);
-    voe::Channel* channelPtr = sc.ChannelPtr();
+	voe::ChannelOwner ch = _shared->channel_manager().GetChannel(channel);
+	voe::Channel* channelPtr = ch.channel();
     if (channelPtr == NULL)
     {
         _shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
@@ -260,8 +225,8 @@ int VoEEncryptionImpl::RegisterExternalEncryption(int channel,
         _shared->SetLastError(VE_NOT_INITED, kTraceError);
         return -1;
     }
-    voe::ChannelOwner sc = _shared->channel_manager().GetChannel(channel);
-    voe::Channel* channelPtr = sc.channel();
+	voe::ChannelOwner ch = _shared->channel_manager().GetChannel(channel);
+	voe::Channel* channelPtr = ch.channel();
     if (channelPtr == NULL)
     {
         _shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
@@ -280,8 +245,8 @@ int VoEEncryptionImpl::DeRegisterExternalEncryption(int channel)
         _shared->SetLastError(VE_NOT_INITED, kTraceError);
         return -1;
     }
-    voe::ChannelOwner sc = _shared->channel_manager().GetChannel(channel);
-    voe::Channel* channelPtr = sc.channel();
+	voe::ChannelOwner ch = _shared->channel_manager().GetChannel(channel);
+	voe::Channel* channelPtr = ch.channel();
     if (channelPtr == NULL)
     {
         _shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,

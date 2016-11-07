@@ -508,10 +508,10 @@ ServiceCore::ServiceCore()
     tls_enable = false;
     srtp_enable = false;
     user_mode = false;
-    encryptType = (ccportp_srtp_crypto_suite_t)-1;
-    key = NULL;
-    key = (unsigned char *)malloc(SRTP_KEY_SZ);//currently 100
-    memset(key, 0, SRTP_KEY_SZ);
+    encryptType = (cloopenwebrtc::ccp_srtp_crypto_suite_t)-1;
+	m_SrtpKey = NULL;
+	m_SrtpKey = (char *)malloc(SRTP_KEY_SZ);//currently 100
+    memset(m_SrtpKey, 0, SRTP_KEY_SZ);
 //    key = "012345678901234567890123456789012345678901234";
     _terminate_call = -1;
 
@@ -672,8 +672,8 @@ ServiceCore::~ServiceCore()
 
     delete m_criticalSection;
     m_criticalSection = NULL;
-    free(key);
-    key = NULL;
+    free(m_SrtpKey);
+	m_SrtpKey = NULL;
     if (rootCaPath) {
 
         delete [] rootCaPath;
@@ -2979,27 +2979,22 @@ SalMediaDescription *ServiceCore::_create_local_media_description( SerPhoneCall 
 		l = make_codec_list(this->codecs_conf.video_codecs, 0, NULL);
 		md->streams[i].payloads = l;
 	}
-#ifdef WEBRTC_SRTP
-    if (!userKeySetted) {
-        int err = ortp_crypto_get_random(key, 46);
-        if (err!=0) {
-            PrintConsole("WARNING: Failed to generate random key, use default one\n");
-            memcpy(key,"0000000000000000000000000000000000000000000000",46);
-            key[46] = '\0';
-        }
-    }
-#endif
+
 	for(int i=0; i<md->nstreams; i++) {
 		if (md->streams[i].proto == SalProtoRtpSavp) {
 			md->streams[i].crypto[0].tag = 1;
-			md->streams[i].crypto[0].algo = CCPAES_256_SHA1_80;
-			if (!generate_b64_crypto_key(46, md->streams[i].crypto[0].master_key, (const char *)key))
-				md->streams[i].crypto[0].algo = (ccportp_srtp_crypto_suite_t)0;
+			md->streams[i].crypto[0].algo = cloopenwebrtc::CCPAES_256_SHA1_80;
+			if (!generate_b64_crypto_key(46, md->streams[i].crypto[0].master_key, (const char *)m_SrtpKey)) {
+				md->streams[i].crypto[0].algo = (cloopenwebrtc::ccp_srtp_crypto_suite_t)0;
+			}
+
 			md->streams[i].crypto[1].tag = 2;
-			md->streams[i].crypto[1].algo = CCPAES_256_SHA1_32;
-			if (!generate_b64_crypto_key(46, md->streams[i].crypto[1].master_key, (const char *)key))
-				md->streams[i].crypto[1].algo = (ccportp_srtp_crypto_suite_t)0;
-			md->streams[i].crypto[2].algo = (ccportp_srtp_crypto_suite_t)0;
+			md->streams[i].crypto[1].algo = cloopenwebrtc::CCPAES_256_SHA1_32;
+			if (!generate_b64_crypto_key(46, md->streams[i].crypto[1].master_key, (const char *)m_SrtpKey)) {
+				md->streams[i].crypto[1].algo = (cloopenwebrtc::ccp_srtp_crypto_suite_t)0;
+			}
+
+			md->streams[i].crypto[2].algo = (cloopenwebrtc::ccp_srtp_crypto_suite_t)0;
 		}
 	}
 
@@ -5552,19 +5547,26 @@ bool ServiceCore::serphone_core_is_payload_type_enable(const char *mimeType, int
 
 void ServiceCore::serphone_core_enable_srtp(bool tls, bool srtp, bool userMode, int cryptType, const char *pkey)
 {
-    PrintConsole("[DEBUG] serphone_core_enable_srtp userMode = %d, pkey = %s, kenLen = %d\n",userMode,pkey,strlen(pkey));
-    tls_enable = tls;
-    srtp_enable = srtp;
-    if (srtp_enable) {
-        if (pkey && 46 <= strlen(pkey)) {
-            user_mode = userMode;
-            userKeySetted = true;
-            memcpy(key, pkey, 46);
-            key[46] ='\0';
-        }
-        encryptType = (ccportp_srtp_crypto_suite_t)cryptType;
+    PrintConsole("[DEBUG] serphone_core_enable_srtp userMode = %d, pkey = %s\n",userMode,pkey?pkey:"NULL");
+   // tls_enable = tls;
+   // srtp_enable = srtp;
+   // if (srtp_enable) {
+   //     if (pkey && 46 <= strlen(pkey)) {
+   //         user_mode = userMode;
+   //         userKeySetted = true;
+   //         memcpy(m_SrtpKey, pkey, 46);
+			//m_SrtpKey[46] ='\0';
+   //     }
+   //     encryptType = (ccp_srtp_crypto_suite_t)cryptType;
+   // }
 
-    }
+	tls_enable = tls;
+	srtp_enable = srtp;
+	user_mode = userMode;
+	encryptType = (cloopenwebrtc::ccp_srtp_crypto_suite_t)cryptType;
+	memcpy(m_SrtpKey, pkey, strlen(pkey));
+	m_SrtpKey[strlen(pkey)] = '\0';
+
 }
 
 void ServiceCore::serphone_core_enable_srtp(bool tls, bool srtp, int cryptType, const char *pkey)
@@ -5575,10 +5577,10 @@ void ServiceCore::serphone_core_enable_srtp(bool tls, bool srtp, int cryptType, 
     if (srtp_enable) {
         if (pkey && 46 <= strlen(pkey)) {
             userKeySetted = true;
-            memcpy(key, pkey, 46);
-            key[46] ='\0';
+            memcpy(m_SrtpKey, pkey, 46);
+			m_SrtpKey[46] ='\0';
         }
-        encryptType = (ccportp_srtp_crypto_suite_t)cryptType;
+        encryptType = (cloopenwebrtc::ccp_srtp_crypto_suite_t)cryptType;
     }
 }
 

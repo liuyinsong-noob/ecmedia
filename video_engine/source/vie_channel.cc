@@ -142,6 +142,11 @@ ViEChannel::ViEChannel(int32_t channel_id,
 	  socket_transport_(*UdpTransport::Create(
 	  ViEModuleId(engine_id, channel_id), num_socket_threads_)),
 #endif
+#ifdef WEBRTC_SRTP
+	_srtpModule(*SrtpModule::CreateSrtpModule(ViEModuleId(engine_id, channel_id))),
+#endif
+	_encrypting(false),
+	_decrypting(false),
 	external_encryption_(NULL),
 	file_recorder_(channel_id),
     _video_conf_cb(NULL),
@@ -2201,7 +2206,7 @@ void  ViEChannel::IncomingRTCPPacket(const int8_t* rtcp_packet,
 		rtp = (rtp_header_t*)rtcp_packet;
 		if (rtp->version!=2)
 		{
-			//            WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0,"rtp->version!=2, rtp->version = %d, this looks like a stun packet\n",rtp->version);
+			//            WEBRTC_TRACE(kTraceDebug, kTraceVideo, 0,"rtp->version!=2, rtp->version = %d, this looks like a stun packet\n",rtp->version);
 			//判断是否是stun response消息 
 			unsigned short  stunlen = *((unsigned short *)(rtcp_packet + sizeof(unsigned short)));
 			stunlen = ntohs(stunlen);
@@ -2286,6 +2291,193 @@ int32_t ViEChannel::DeRegisterExternalEncryption() {
 		__FUNCTION__, channel_id_);
 	return 0;
 }
+
+#ifdef WEBRTC_SRTP
+int ViEChannel::CcpSrtpInit()
+{
+	int err = _srtpModule.CcpSrtpInit(channel_id_);
+	return err;
+}
+
+int ViEChannel::CcpSrtpShutdown()
+{
+	int err = _srtpModule.CcpSrtpShutdown(channel_id_);
+	return err;
+}
+
+int ViEChannel::EnableSRTPSend(ccp_srtp_crypto_suite_t crypt_type, const char* key)
+{
+	WEBRTC_TRACE(kTraceInfo, kTraceVideo, ViEId(engine_id_, channel_id_),
+		"ViEChannel::EnableSRTPSend()");
+
+	CriticalSectionScoped cs(callback_cs_.get());
+
+	if (_encrypting)
+	{
+		WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+			"%s: encryption already enabled", __FUNCTION__);
+		return -1;
+	}
+
+	if (key == NULL)
+	{
+		WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+			"%s: invalid key string", __FUNCTION__);
+		return -1;
+	}
+
+	//if (((kEncryption == level ||
+	//	kEncryptionAndAuthentication == level) &&
+	//	(cipherKeyLength < kMinSrtpEncryptLength ||
+	//		cipherKeyLength > kMaxSrtpEncryptLength)) ||
+	//	((kAuthentication == level ||
+	//		kEncryptionAndAuthentication == level) &&
+	//		kAuthHmacSha1 == authType &&
+	//		(authKeyLength > kMaxSrtpAuthSha1Length ||
+	//			authTagLength > kMaxSrtpAuthSha1Length)) ||
+	//	((kAuthentication == level ||
+	//		kEncryptionAndAuthentication == level) &&
+	//		kAuthNull == authType &&
+	//		(authKeyLength > kMaxSrtpKeyAuthNullLength ||
+	//			authTagLength > kMaxSrtpTagAuthNullLength)))
+	//{
+	//	WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+	//		"%s: invalid key length(s) cipherKeyLength:%d authKeyLength:%d authTagLength:%d", __FUNCTION__, 
+	//		cipherKeyLength, authKeyLength, authTagLength);
+	//	return -1;
+	//}
+	unsigned int ssrc;
+	GetLocalSSRC(0, &ssrc);
+	if (_srtpModule.EnableSRTPSend(channel_id_, crypt_type, key, ssrc) == -1)
+	{
+		WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+			"%s: failed to enable SRTP encryption", __FUNCTION__);
+		return -1;
+	}
+
+	external_encryption_ = &_srtpModule;
+	vie_sender_.RegisterExternalEncryption(external_encryption_);
+
+	_encrypting = true;
+
+	return 0;
+}
+
+int ViEChannel::DisableSRTPSend()
+{
+	WEBRTC_TRACE(kTraceInfo, kTraceVideo, ViEId(engine_id_, channel_id_),
+		"ViEChannel::DisableSRTPSend()");
+
+	CriticalSectionScoped cs(callback_cs_.get());
+
+	if (!_encrypting)
+	{
+		WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+			"%s: SRTP encryption already disabled", __FUNCTION__);
+		return 0;
+	}
+
+	_encrypting = false;
+
+	//    if (_srtpModule.DisableSRTPEncrypt() == -1)
+	if (_srtpModule.DisableSRTPSend(channel_id_) == -1)
+	{
+		WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+			"%s: failed to disable SRTP encryption", __FUNCTION__);
+		return -1;
+	}
+	external_transport_ = NULL;
+	vie_sender_.DeregisterExternalEncryption();
+
+	return 0;
+}
+
+int ViEChannel::EnableSRTPReceive(ccp_srtp_crypto_suite_t crypt_type, const char* key)
+{
+	WEBRTC_TRACE(kTraceInfo, kTraceVideo, ViEId(engine_id_, channel_id_),
+		"ViEChannel::EnableSRTPReceive()");
+
+	CriticalSectionScoped cs(callback_cs_.get());
+
+	if (_decrypting)
+	{
+		WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+			"%s: SRTP decryption already enabled", __FUNCTION__);
+		return -1;
+	}
+
+	if (key == NULL)
+	{
+		WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+			"%s: invalid key string", __FUNCTION__);
+		return -1;
+	}
+
+	//if ((((kEncryption == level) ||
+	//	(kEncryptionAndAuthentication == level)) &&
+	//	((cipherKeyLength < kMinSrtpEncryptLength) ||
+	//		(cipherKeyLength > kMaxSrtpEncryptLength))) ||
+	//	(((kAuthentication == level) ||
+	//		(kEncryptionAndAuthentication == level)) &&
+	//		(kAuthHmacSha1 == authType) &&
+	//		((authKeyLength > kMaxSrtpAuthSha1Length) ||
+	//			(authTagLength > kMaxSrtpAuthSha1Length))) ||
+	//	(((kAuthentication == level) ||
+	//		(kEncryptionAndAuthentication == level)) &&
+	//		(kAuthNull == authType) &&
+	//		((authKeyLength > kMaxSrtpKeyAuthNullLength) ||
+	//			(authTagLength > kMaxSrtpTagAuthNullLength))))
+	//{
+	//	WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+	//		"%s: invalid key length(s) cipherKeyLength:%d authKeyLength:%d authTagLength:%d", __FUNCTION__,
+	//		cipherKeyLength, authKeyLength, authTagLength);
+	//	return -1;
+	//}
+
+	if (_srtpModule.EnableSRTPReceive(channel_id_, crypt_type, key) == -1)
+	{
+		WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+			"%s: failed to enable SRTP decryption", __FUNCTION__);
+		return -1;
+	}
+	
+	external_encryption_ = &_srtpModule;
+	vie_receiver_.RegisterExternalDecryption(external_encryption_);
+	_decrypting = true;
+
+	return 0;
+}
+
+int ViEChannel::DisableSRTPReceive()
+{
+	WEBRTC_TRACE(kTraceInfo, kTraceVideo, ViEId(engine_id_, channel_id_),
+		"ViEChannel::DisableSRTPReceive()");
+
+	CriticalSectionScoped cs(callback_cs_.get());
+
+	if (!_decrypting)
+	{
+		WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+			"%s: SRTP decryption already disabled", __FUNCTION__);
+		return 0;
+	}
+
+	_decrypting = false;
+
+	if (_srtpModule.DisableSRTPReceive(channel_id_))
+	{
+		WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+			"%s: failed to disable SRTP decryption", __FUNCTION__);
+		return -1;
+	}
+
+	external_transport_ = NULL;
+	vie_receiver_.DeregisterExternalDecryption();
+
+	return 0;
+}
+
+#endif
 
 int32_t ViEChannel::SetLocalReceiver(const uint16_t rtp_port,
 	const uint16_t rtcp_port,

@@ -52,7 +52,8 @@ LOCAL_SRC_FILES := \
     vie_rtp_rtcp_impl.cc \
     vie_sender.cc \
     vie_shared_data.cc \
-	vie_sync_module.cc
+	vie_sync_module.cc \
+	vie_encryption_impl.cc
 
 	
 	
@@ -60,7 +61,8 @@ LOCAL_SRC_FILES := \
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
     '-DVIDEOCODEC_H264' \
-		'-DVIDEOCODEC_VP8'
+	'-DVIDEOCODEC_VP8' \
+	'-DWEBRTC_SRTP'
 
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/. \
@@ -98,9 +100,10 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../../system_wrappers/interface \
 	$(LOCAL_PATH)/../../system_wrappers/source \
     $(LOCAL_PATH)/../../voice_engine/main/include \
+	$(LOCAL_PATH)/../../voice_engine/main/source \
 	$(LOCAL_PATH)/../../servicecore/include \
 	$(LOCAL_PATH)/../../third_party/oRTP/include/ortp \
-	$(LOCAL_PATH)/../../third_party/oRTP/include
+	$(LOCAL_PATH)/../../third_party/oRTP/include \
 
 LOCAL_SHARED_LIBRARIES := \
     libcutils \

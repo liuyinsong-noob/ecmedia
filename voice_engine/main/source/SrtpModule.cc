@@ -33,7 +33,7 @@ void SrtpModule::DestroySrtpModule(SrtpModule* module)
 //                           int authKeyLength,
 //                           int authTagLength,
 //                           SecurityLevels level,
-//                           const unsigned char key[kVoiceEngineMaxSrtpKeyLength],
+//                           const unsigned char key[kMaxSrtpKeyLength],
 //                           bool useForRTCP)
 //    {
 //        
@@ -52,7 +52,7 @@ void SrtpModule::DestroySrtpModule(SrtpModule* module)
 //                              int authKeyLength,
 //                              int authTagLength,
 //                              SecurityLevels level,
-//                              const unsigned char key[kVoiceEngineMaxSrtpKeyLength],
+//                              const unsigned char key[kMaxSrtpKeyLength],
 //                              bool useForRTCP)
 //    {
 //        

@@ -974,17 +974,10 @@ void CserphonetestDlg::OnBnClickedButton7()
 	//wchar_t *wLog = TransformUTF8ToUnicodeM(log);
 	//wprintf(wLog);
 
-	g_rtmpLiveStreamHandle = createLiveStream();
+	//g_rtmpLiveStreamHandle = createLiveStream();
 
-
+	setSrtpEnabled(false, true, true, 1, "12345678901234567890123456789012345678901234");
 }
-
-void CserphonetestDlg::OnBnClickedButton14()
-{
-	// TODO: 在此添加控件通知处理程序代码
-	sendDTMF(g_currentCallId,'8');
-}
-
 
 void CserphonetestDlg::OnBnClickedButton8()
 {
@@ -994,11 +987,12 @@ void CserphonetestDlg::OnBnClickedButton8()
 	//setMute(false);
 	//stopRecordVoip(g_currentCallId);
 
-	if (g_rtmpLiveStreamHandle) {
-		CWnd *rcwnd = g_dlg->GetDlgItem(IDC_RICHEDIT21); //返回窗口中指定参数ID的子元素的句柄
-		playLiveStream(g_rtmpLiveStreamHandle, "rtmp://live.yuntongxun.com/live/livestream", rcwnd->GetSafeHwnd());
-		//playRtmpStream(g_rtmpLiveStreamHandle, "http://live.yuntongxun.com/live/xzq", rcwnd->GetSafeHwnd());
-	}
+	//if (g_rtmpLiveStreamHandle) {
+	//	CWnd *rcwnd = g_dlg->GetDlgItem(IDC_RICHEDIT21); //返回窗口中指定参数ID的子元素的句柄
+	//	playLiveStream(g_rtmpLiveStreamHandle, "rtmp://live.yuntongxun.com/live/livestream", rcwnd->GetSafeHwnd());
+	//	//playRtmpStream(g_rtmpLiveStreamHandle, "http://live.yuntongxun.com/live/xzq", rcwnd->GetSafeHwnd());
+	//}
+	setSrtpEnabled(false, true, true, 2, "12345678901234567890123456789012345678901234");
 }
 
 
@@ -1007,8 +1001,9 @@ void CserphonetestDlg::OnBnClickedButton9()
 	// TODO: 在此添加控件通知处理程序代码
 	sendDTMF(g_currentCallId,'3');
 	//startRecordVoice(g_currentCallId, "audio_record.wav");
-	if(g_rtmpLiveStreamHandle)
-		stopLiveStream(g_rtmpLiveStreamHandle);
+	//if(g_rtmpLiveStreamHandle)
+	//	stopLiveStream(g_rtmpLiveStreamHandle);
+	setSrtpEnabled(false, true, true, 3, "12345678901234567890123456789012345678901234");
 
 }
 
@@ -1018,8 +1013,9 @@ void CserphonetestDlg::OnBnClickedButton10()
 	// TODO: 在此添加控件通知处理程序代码
 	sendDTMF(g_currentCallId,'4');
 	//stopRecordVoice(g_currentCallId);
-	releaseLiveStream(g_rtmpLiveStreamHandle);
-	g_rtmpLiveStreamHandle = NULL;
+	//releaseLiveStream(g_rtmpLiveStreamHandle);
+	//g_rtmpLiveStreamHandle = NULL;
+	setSrtpEnabled(false, true, true, 4, "12345678901234567890123456789012345678901234");
 }
 
 
@@ -1028,19 +1024,20 @@ void CserphonetestDlg::OnBnClickedButton11()
 	// TODO: 在此添加控件通知处理程序代码
 	sendDTMF(g_currentCallId,'5');
 
-	unsigned char *jpgBuf = NULL;
-	unsigned int jpgBufSize = 0;
-	unsigned int width, height;
-	if (getLocalVideoSnapshot(g_currentCallId, &jpgBuf, &jpgBufSize, &width, &height) == 0) {
-		FILE *jpeg = fopen("L:\\local.jpg", "wb");
-		if (jpeg) {
-			fwrite(jpgBuf, 1, jpgBufSize, jpeg);
-			fclose(jpeg);
-		}
+	//unsigned char *jpgBuf = NULL;
+	//unsigned int jpgBufSize = 0;
+	//unsigned int width, height;
+	//if (getLocalVideoSnapshot(g_currentCallId, &jpgBuf, &jpgBufSize, &width, &height) == 0) {
+	//	FILE *jpeg = fopen("L:\\local.jpg", "wb");
+	//	if (jpeg) {
+	//		fwrite(jpgBuf, 1, jpgBufSize, jpeg);
+	//		fclose(jpeg);
+	//	}
 
-		void* aa = malloc(1025);
-		memset(aa, 0xFF, 1025);
-	}
+	//	void* aa = malloc(1025);
+	//	memset(aa, 0xFF, 1025);
+	//}
+	setSrtpEnabled(false, true, true, 5, "12345678901234567890123456789012345678901234");
 }
 
 
@@ -1049,16 +1046,17 @@ void CserphonetestDlg::OnBnClickedButton12()
 	// TODO: 在此添加控件通知处理程序代码
 	sendDTMF(g_currentCallId,'6');
 
-	unsigned char *jpgBuf = NULL;
-	unsigned int jpgBufSize = 0;
-	unsigned int width, height;
-	if (getRemoteVideoSnapshot(g_currentCallId, &jpgBuf, &jpgBufSize, &width, &height) == 0) {
-		FILE *jpeg = fopen("L:\\remote.jpg", "wb");
-		if (jpeg) {
-			fwrite(jpgBuf, 1, jpgBufSize, jpeg);
-			fclose(jpeg);
-		}
-	}
+	//unsigned char *jpgBuf = NULL;
+	//unsigned int jpgBufSize = 0;
+	//unsigned int width, height;
+	//if (getRemoteVideoSnapshot(g_currentCallId, &jpgBuf, &jpgBufSize, &width, &height) == 0) {
+	//	FILE *jpeg = fopen("L:\\remote.jpg", "wb");
+	//	if (jpeg) {
+	//		fwrite(jpgBuf, 1, jpgBufSize, jpeg);
+	//		fclose(jpeg);
+	//	}
+	//}
+	setSrtpEnabled(false, true, true, 6, "12345678901234567890123456789012345678901234");
 }
 
 
@@ -1066,8 +1064,15 @@ void CserphonetestDlg::OnBnClickedButton13()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	sendDTMF(g_currentCallId,'7');
+	setSrtpEnabled(false, true, true, 1, "1234567890");
 }
 
+void CserphonetestDlg::OnBnClickedButton14()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	sendDTMF(g_currentCallId, '8');
+	setSrtpEnabled(false, true, true, 4, "1234567890");
+}
 
 void CserphonetestDlg::OnBnClickedButton15()
 {
@@ -1086,6 +1091,11 @@ void CserphonetestDlg::OnBnClickedButton16()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	sendDTMF(g_currentCallId,'*');
+	static int index = 0;
+	index++;
+	char filename[256];
+	sprintf(filename, "./RecordFile_%d.mp4", index);
+	startRecordScreen(g_currentCallId, filename, 2000, 10, 0);
 }
 
 
@@ -1093,6 +1103,7 @@ void CserphonetestDlg::OnBnClickedButton17()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	sendDTMF(g_currentCallId,'0');
+	stopRecordScreen(g_currentCallId);
 }
 
 

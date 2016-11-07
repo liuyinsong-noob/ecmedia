@@ -41,9 +41,9 @@
 #include "RecordVoip.h"
 #include "webrtc_libyuv.h"
 #include "vie_image_process.h"
+#include "vie_encryption.h"
 #endif
 
-#include "sdk_common.h"
 #include "base64.h"
 
 enum {
@@ -1774,77 +1774,77 @@ int ECMedia_reset_audio_device()
  * ENCRYPTION
  */
 
-int ECMedia_init_srtp(int channelid)
-{
-    PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
-    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-    VoEEncryption *encrypt = VoEEncryption::GetInterface(m_voe);
-    if (encrypt) {
-        int ret = encrypt->CcpSrtpInit(channelid);
-        encrypt->Release();
-        return ret;
-    }
-    else
-    {
-        PrintConsole("[ECMEDIA WARNNING] failed to get VoEEncryption, %s",__FUNCTION__);
-        return -99;
-    }
-}
-
-int ECMedia_enable_srtp_receive(int channelid, const char *key)
-{
-    PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
-    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-    char master_key[65];
-    Base64decode(master_key, key);
-    VoEEncryption *encrypt = VoEEncryption::GetInterface(m_voe);
-    if (encrypt) {
-        int ret = encrypt->EnableSRTPReceive(channelid, kCipherAes256CounterMode, 64, kAuthHmacSha1, 0, kAuthTagLength80, kEncryptionAndAuthentication, reinterpret_cast<const unsigned char *>(master_key));
-        encrypt->Release();
-        return ret;
-    }
-    else
-    {
-        PrintConsole("[ECMEDIA WARNNING] failed to get VoEEncryption, %s",__FUNCTION__);
-        return -99;
-    }
-}
-
-int ECMedia_enable_srtp_send(int channelid, const char *key)
-{
-    PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
-    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-    char master_key[65];
-    Base64decode(master_key, key);
-    VoEEncryption *encrypt = VoEEncryption::GetInterface(m_voe);
-    if (encrypt) {
-        int ret = encrypt->EnableSRTPSend(channelid, kCipherAes256CounterMode, 64, kAuthHmacSha1, 0, kAuthTagLength80, kEncryptionAndAuthentication, reinterpret_cast<const unsigned char *>(master_key), 0);
-        encrypt->Release();
-        return ret;
-    }
-    else
-    {
-        PrintConsole("[ECMEDIA WARNNING] failed to get VoEEncryption, %s",__FUNCTION__);
-        return -99;
-    }
-}
-
-int ECMedia_shutdown_srtp(int channel)
-{
-    PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
-    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-    VoEEncryption *encrypt = VoEEncryption::GetInterface(m_voe);
-    if (encrypt) {
-        int ret = encrypt->CcpSrtpShutdown(channel);
-        encrypt->Release();
-        return ret;
-    }
-    else
-    {
-        PrintConsole("[ECMEDIA WARNNING] failed to get VoEEncryption, %s",__FUNCTION__);
-        return -99;
-    }
-}
+//int ECMedia_init_srtp(int channelid)
+//{
+//    PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+//    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+//    VoEEncryption *encrypt = VoEEncryption::GetInterface(m_voe);
+//    if (encrypt) {
+//        int ret = encrypt->CcpSrtpInit(channelid);
+//        encrypt->Release();
+//        return ret;
+//    }
+//    else
+//    {
+//        PrintConsole("[ECMEDIA WARNNING] failed to get VoEEncryption, %s",__FUNCTION__);
+//        return -99;
+//    }
+//}
+//
+//int ECMedia_enable_srtp_receive(int channelid, const char *key)
+//{
+//    PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+//    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+//    char master_key[65];
+//    Base64decode(master_key, key);
+//    VoEEncryption *encrypt = VoEEncryption::GetInterface(m_voe);
+//    if (encrypt) {
+//        int ret = encrypt->EnableSRTPReceive(channelid, kCipherAes256CounterMode, 64, kAuthHmacSha1, 0, kAuthTagLength80, kEncryptionAndAuthentication, reinterpret_cast<const unsigned char *>(master_key));
+//        encrypt->Release();
+//        return ret;
+//    }
+//    else
+//    {
+//        PrintConsole("[ECMEDIA WARNNING] failed to get VoEEncryption, %s",__FUNCTION__);
+//        return -99;
+//    }
+//}
+//
+//int ECMedia_enable_srtp_send(int channelid, const char *key)
+//{
+//    PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+//    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+//    char master_key[65];
+//    Base64decode(master_key, key);
+//    VoEEncryption *encrypt = VoEEncryption::GetInterface(m_voe);
+//    if (encrypt) {
+//        int ret = encrypt->EnableSRTPSend(channelid, kCipherAes256CounterMode, 64, kAuthHmacSha1, 0, kAuthTagLength80, kEncryptionAndAuthentication, reinterpret_cast<const unsigned char *>(master_key), 0);
+//        encrypt->Release();
+//        return ret;
+//    }
+//    else
+//    {
+//        PrintConsole("[ECMEDIA WARNNING] failed to get VoEEncryption, %s",__FUNCTION__);
+//        return -99;
+//    }
+//}
+//
+//int ECMedia_shutdown_srtp(int channel)
+//{
+//    PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+//    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+//    VoEEncryption *encrypt = VoEEncryption::GetInterface(m_voe);
+//    if (encrypt) {
+//        int ret = encrypt->CcpSrtpShutdown(channel);
+//        encrypt->Release();
+//        return ret;
+//    }
+//    else
+//    {
+//        PrintConsole("[ECMEDIA WARNNING] failed to get VoEEncryption, %s",__FUNCTION__);
+//        return -99;
+//    }
+//}
 
 /*
  * VOLUME
@@ -2912,6 +2912,81 @@ int ECmedia_enable_EnableBrightnessAlarm(int captureid, bool enable)
     }
 }
 
+int ECMedia_init_srtp_video(int channel)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViEEncryption *encryt = ViEEncryption::GetInterface(m_vie);
+	if (encryt) {
+		int ret = encryt->CcpSrtpInit(channel);
+		encryt->Release();
+		return ret;
+	}
+	return -1;
+}
+int ECMedia_shutdown_srtp_video(int channel)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViEEncryption *encryt = ViEEncryption::GetInterface(m_vie);
+	if (encryt) {
+		int ret = encryt->CcpSrtpShutdown(channel);
+		encryt->Release();
+		return ret;
+	}
+	return -1;
+}
+
+int ECMedia_enable_srtp_send_video(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViEEncryption *encryt = ViEEncryption::GetInterface(m_vie);
+	if (encryt) {
+		int ret = encryt->EnableSRTPSend(channel, crypt_type, key);
+		encryt->Release();
+		return ret;
+	}
+	return -1;
+}
+int ECMedia_disable_srtp_send_video(int channel)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViEEncryption *encryt = ViEEncryption::GetInterface(m_vie);
+	if (encryt) {
+		int ret = encryt->DisableSRTPSend(channel);
+		encryt->Release();
+		return ret;
+	}
+	return -1;
+}
+
+int ECMedia_enable_srtp_recv_video(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViEEncryption *encryt = ViEEncryption::GetInterface(m_vie);
+	if (encryt) {
+		int ret = encryt->EnableSRTPReceive(channel, crypt_type, key);
+		encryt->Release();
+		return ret;
+	}
+	return -1;
+}
+int ECMedia_disable_srtp_recv_video(int channel)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViEEncryption *encryt = ViEEncryption::GetInterface(m_vie);
+	if (encryt) {
+		int ret = encryt->DisableSRTPReceive(channel);
+		encryt->Release();
+		return ret;
+	}
+	return -1;
+}
+
 #endif
 
 int ECMedia_set_VAD_status(int channelid, VadModes mode, bool dtx_enabled)
@@ -2930,7 +3005,6 @@ int ECMedia_set_VAD_status(int channelid, VadModes mode, bool dtx_enabled)
         return -99;
     }
 }
-
 
 
 //CAUTION: noNetwork/wifi/other
@@ -3029,6 +3103,83 @@ int ECMedia_AmrNBVersion(char *versionStr, short len)
 {
     return AmrNBVersion(versionStr, len);
 }
+
+int ECMedia_init_srtp_audio(int channel)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	VoEEncryption *encryt = VoEEncryption::GetInterface(m_voe);
+	if (encryt) {
+		int ret = encryt->CcpSrtpInit(channel);
+		encryt->Release();
+		return ret;
+	}
+	return -1;
+}
+int ECMedia_shutdown_srtp_audio(int channel) 
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	VoEEncryption *encryt = VoEEncryption::GetInterface(m_voe);
+	if (encryt) {
+		int ret = encryt->CcpSrtpShutdown(channel);
+		encryt->Release();
+		return ret;
+	}
+	return -1;
+}
+
+int ECMedia_enable_srtp_send_audio(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+		
+	VoEEncryption *encryt = VoEEncryption::GetInterface(m_voe);
+	if (encryt) {
+		int ret = encryt->EnableSRTPSend(channel, crypt_type, key);
+		encryt->Release();
+		return ret;
+	}
+	return -1;
+}
+int ECMedia_disable_srtp_send_audio(int channel)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	VoEEncryption *encryt = VoEEncryption::GetInterface(m_voe);
+	if (encryt) {
+		int ret = encryt->DisableSRTPSend(channel);
+		encryt->Release();
+		return ret;
+	}
+	return -1;
+}
+
+int ECMedia_enable_srtp_recv_audio(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	VoEEncryption *encryt = VoEEncryption::GetInterface(m_voe);
+	if (encryt) {
+		int ret = encryt->EnableSRTPReceive(channel, crypt_type, key);
+		encryt->Release();
+		return ret;
+	}
+	return -1;
+}
+int ECMedia_disable_srtp_recv_audio(int channel)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	VoEEncryption *encryt = VoEEncryption::GetInterface(m_voe);
+	if (encryt) {
+		int ret = encryt->DisableSRTPReceive(channel);
+		encryt->Release();
+		return ret;
+	}
+	return -1;
+}
+
 #ifdef VIDEO_ENABLED
 int ECMedia_set_video_SendStatistics_proxy(int channelid, char* filePath, int intervalMs)
 {
@@ -3406,29 +3557,28 @@ int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &hei
 	}
 }
 
+
  void *ECMedia_createLiveStream(int type)
 {
-
 	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 	return ECMedia_LiveStream::CreateLiveStream(type);
-
+	return NULL;
 }
 
 int ECMedia_playLiveStream(void *handle, const char * url, void *renderView, onLiveStreamVideoResolution callback)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
-	RTMPLiveSession *p = (RTMPLiveSession*) handle;
+	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	return p->PlayStream(url, renderView, callback);
-
+	return -1;
 }
 
  int ECMedia_pushLiveStream(void *handle, const char *url, void *localView)
  {
-
 	 PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 	 RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	 return p->PushStream(url, localView);
-
+	 return -1;
  }
 void ECMedia_stopLiveStream(void *handle)
 {
@@ -3450,6 +3600,7 @@ int ECMedia_setVideoProfileLiveStream(void *handle, int cameraIndex, CameraCapab
 	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	return p->setVideoProfile(cameraIndex, cam, bitrRates);
+	return -1;
 }
 
 void ECMedia_setLiveStreamNetworkCallBack(void *handle, onLiveStreamNetworkStatusCallBack callback)

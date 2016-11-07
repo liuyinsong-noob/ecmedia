@@ -234,14 +234,7 @@ MS2_PUBLIC int ms_load_plugins(const char *directory);
 
 ///////////////////////////////////end MS stream ///////////////////////////////////////////
 
-enum ccportp_srtp_crypto_suite_t {
-	CCPAES_128_SHA1_80 = 1,
-	CCPAES_128_SHA1_32,
-    CCPAES_256_SHA1_80,
-    CCPAES_256_SHA1_32,
-	CCPAES_128_NO_AUTH,
-	CCPNO_CIPHER_SHA1_80
-};
+
 
 #define UDP_HDR_SZ 8
 #define RTP_HDR_SZ 12

@@ -25,7 +25,7 @@ ViEEncryption* ViEEncryption::GetInterface(VideoEngine* video_engine) {
   if (video_engine == NULL) {
     return NULL;
   }
-  VideoEngineImpl* vie_impl = reinterpret_cast<VideoEngineImpl*>(video_engine);
+  VideoEngineImpl* vie_impl = static_cast<VideoEngineImpl*>(video_engine);
   ViEEncryptionImpl* vie_encryption_impl = (ViEEncryptionImpl*)vie_impl;
   // Increase ref count.
   (*vie_encryption_impl)++;
@@ -107,5 +107,124 @@ int ViEEncryptionImpl::DeregisterExternalEncryption(const int video_channel) {
   }
   return 0;
 }
+
+#ifdef WEBRTC_VIDEO_ENGINE_ENCRYPTION_API
+
+int ViEEncryptionImpl::CcpSrtpInit(int video_channel)
+{
+#ifdef WEBRTC_SRTP
+	ViEChannelManagerScoped cs(*(shared_data_->channel_manager()));
+	ViEChannel* vie_channel = cs.Channel(video_channel);
+	if (vie_channel == NULL)
+	{
+		WEBRTC_TRACE(kTraceError, kTraceVideo,
+			ViEId(shared_data_->instance_id(), video_channel),
+			"%s: No channel %d", __FUNCTION__, video_channel);
+		return -1;
+	}
+	return vie_channel->CcpSrtpInit();
+#else
+	shared_data_->SetLastError(kViEEncryptionSrtpNotSupported);
+	return -1;
+#endif
+}
+
+
+int ViEEncryptionImpl::CcpSrtpShutdown(int video_channel)
+{
+#ifdef WEBRTC_SRTP
+	ViEChannelManagerScoped cs(*(shared_data_->channel_manager()));
+	ViEChannel* vie_channel = cs.Channel(video_channel);
+	if (vie_channel == NULL)
+	{
+		shared_data_->SetLastError(kViEEncryptionInvalidChannelId);
+		return -1;
+	}
+	return vie_channel->CcpSrtpShutdown();
+#else
+	shared_data_->SetLastError(kViEEncryptionSrtpNotSupported);
+	return -1;
+#endif
+}
+
+int ViEEncryptionImpl::EnableSRTPSend(int video_channel, ccp_srtp_crypto_suite_t crypt_type, const char* key)
+{
+	WEBRTC_TRACE(kTraceApiCall, kTraceVideo, ViEId(shared_data_->instance_id(), -1),
+		"EnableSRTPSend(channel=%i, crypt_type=%i)",
+		video_channel, crypt_type);
+
+#ifdef WEBRTC_SRTP
+	ViEChannelManagerScoped cs(*(shared_data_->channel_manager()));
+	ViEChannel* vie_channel = cs.Channel(video_channel);
+	if (vie_channel == NULL)
+	{
+		shared_data_->SetLastError(kViEEncryptionInvalidChannelId);
+		return -1;
+	}
+	return vie_channel->EnableSRTPSend(crypt_type, key);
+#else
+	shared_data_->SetLastError(kViEEncryptionSrtpNotSupported);
+	return -1;
+#endif
+}
+
+int ViEEncryptionImpl::DisableSRTPSend(int video_channel)
+{
+	WEBRTC_TRACE(kTraceApiCall, kTraceVideo, ViEId(shared_data_->instance_id(), -1),
+		"DisableSRTPSend(channel=%i)", video_channel);
+#ifdef WEBRTC_SRTP
+	ViEChannelManagerScoped cs(*(shared_data_->channel_manager()));
+	ViEChannel* vie_channel = cs.Channel(video_channel);
+	if (vie_channel == NULL)
+	{
+		shared_data_->SetLastError(kViEEncryptionInvalidChannelId);
+		return -1;
+	}
+	return vie_channel->DisableSRTPSend();
+#else
+	shared_data_->SetLastError(kViEEncryptionSrtpNotSupported);
+	return -1;
+#endif
+}
+
+int ViEEncryptionImpl::EnableSRTPReceive(int video_channel, ccp_srtp_crypto_suite_t crypt_type, const char* key)
+{
+	WEBRTC_TRACE(kTraceApiCall, kTraceVideo, ViEId(shared_data_->instance_id(), -1),
+		"EnableSRTPReceive(channel=%i, crypt_type=%i)",
+		video_channel, crypt_type);
+#ifdef WEBRTC_SRTP
+	ViEChannelManagerScoped cs(*(shared_data_->channel_manager()));
+	ViEChannel* vie_channel = cs.Channel(video_channel);
+	if (vie_channel == NULL)
+	{
+		shared_data_->SetLastError(kViEEncryptionInvalidChannelId);
+		return -1;
+	}
+	return vie_channel->EnableSRTPReceive(crypt_type, key);
+#else
+	shared_data_->SetLastError(kViEEncryptionSrtpNotSupported);
+	return -1;
+#endif
+}
+
+int ViEEncryptionImpl::DisableSRTPReceive(int video_channel)
+{
+	WEBRTC_TRACE(kTraceApiCall, kTraceVideo, ViEId(shared_data_->instance_id(), -1),
+		"DisableSRTPReceive(channel=%i)", video_channel);
+#ifdef WEBRTC_SRTP
+	ViEChannelManagerScoped cs(*(shared_data_->channel_manager()));
+	ViEChannel* vie_channel = cs.Channel(video_channel);
+	if (vie_channel == NULL)
+	{
+		shared_data_->SetLastError(kViEEncryptionInvalidChannelId);
+		return -1;
+	}
+	return vie_channel->DisableSRTPReceive();
+#else
+	shared_data_->SetLastError(kViEEncryptionSrtpNotSupported);
+	return -1;
+#endif
+}
+#endif
 
 }  // namespace cloopenwebrtc

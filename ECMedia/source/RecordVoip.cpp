@@ -891,13 +891,14 @@ bool RecordVoip::isStartRecordScree()
 }
 bool RecordVoip::isAlreadWriteScreenAudio()
 {
-	#ifdef _WIN32
-	#ifdef VIDEO_ENABLED
-	if (_h264RecordScreen && _h264Record->get_audio_freq() > 0) {
+#ifdef _WIN32
+#ifdef VIDEO_ENABLED
+	if (_h264RecordScreen && _h264RecordScreen->get_audio_freq() > 0) {
 		return true;
 	}
-	#endif
-	#endif
+	return false;
+#endif
+#endif
 	return false;
 }
 typedef struct {

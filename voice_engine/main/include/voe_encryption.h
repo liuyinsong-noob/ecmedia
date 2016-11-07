@@ -54,19 +54,17 @@ public:
     virtual int DeRegisterExternalEncryption(int channel) = 0;
 
     // Not supported
-    virtual int EnableSRTPSend(int channel, CipherTypes cipherType,
-        int cipherKeyLength, AuthenticationTypes authType, int authKeyLength,
-        int authTagLength, SecurityLevels level, const unsigned char key[30],
-        const WebRtc_UWord32 ssrc,bool useForRTCP = false) = 0;
+	virtual int EnableSRTPSend(int channel,
+		ccp_srtp_crypto_suite_t crypt_type,
+		const char* key) = 0;
 
     // Not supported
     virtual int DisableSRTPSend(int channel) = 0;
 
     // Not supported
-    virtual int EnableSRTPReceive(int channel, CipherTypes cipherType,
-        int cipherKeyLength, AuthenticationTypes authType, int authKeyLength,
-        int authTagLength, SecurityLevels level, const unsigned char key[30],
-        bool useForRTCP = false) = 0;
+	virtual int EnableSRTPReceive(int channel,
+		ccp_srtp_crypto_suite_t crypt_type,
+		const char* key) = 0;
 
     // Not supported
     virtual int DisableSRTPReceive(int channel) = 0;

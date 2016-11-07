@@ -253,15 +253,16 @@ Channel::SendPacket(int channel, const void *data, size_t len, int sn)
 	// SRTP or External encryption
 	if (_encrypting)
 	{
-		CriticalSectionScoped cs(&_callbackCritSect);
+		//CriticalSectionScoped cs(&_callbackCritSect);
 
 		if (_encryptionPtr)
 		{
 			if (!_encryptionRTPBufferPtr)
 			{
-				// Allocate memory for encryption buffer one time only
-				_encryptionRTPBufferPtr =
-					new WebRtc_UWord8[kVoiceEngineMaxIpPacketSizeBytes];
+				WEBRTC_TRACE(kTraceError, kTraceVoice,
+					VoEId(_instanceId, _channelId),
+					"Channel::SendPacket() _encryptionRTPBufferPtr is NULL");
+				return -1;
 			}
 
 			// Perform encryption (SRTP or external)
@@ -336,7 +337,7 @@ Channel::SendPacket(int channel, const void *data, size_t len, int sn)
     }
 
 	{
-		CriticalSectionScoped cs(critsect_net_statistic.get());
+		//CriticalSectionScoped cs(critsect_net_statistic.get());
 		if(_startNetworkTime == 0)
 			_startNetworkTime = time(NULL);
 		//			_sendDataTotal += bufferLength;
@@ -379,15 +380,16 @@ Channel::SendRTCPPacket(int channel, const void *data, size_t len)
 	// SRTP or External encryption
 	if (_encrypting)
 	{
-		CriticalSectionScoped cs(&_callbackCritSect);
+		//CriticalSectionScoped cs(&_callbackCritSect);
 
 		if (_encryptionPtr)
 		{
 			if (!_encryptionRTCPBufferPtr)
 			{
-				// Allocate memory for encryption buffer one time only
-				_encryptionRTCPBufferPtr =
-					new WebRtc_UWord8[kVoiceEngineMaxIpPacketSizeBytes];
+				WEBRTC_TRACE(kTraceError, kTraceVoice,
+					VoEId(_instanceId, _channelId),
+					"Channel::SendPacket() _encryptionRTCPBufferPtr is NULL");
+				return -1;
 			}
 
 			// Perform encryption (SRTP or external).
@@ -425,7 +427,7 @@ Channel::SendRTCPPacket(int channel, const void *data, size_t len)
     }
 
 	{
-			CriticalSectionScoped cs(critsect_net_statistic.get());
+			//CriticalSectionScoped cs(critsect_net_statistic.get());
 			if(_startNetworkTime == 0)
 				_startNetworkTime = time(NULL);
 //			_sendDataTotal += bufferLength;
@@ -958,6 +960,11 @@ Channel::Channel(int32_t channelId,
     network_predictor_(new NetworkPredictor(Clock::GetRealTimeClock())),
 	_encrypting(false),
 	_decrypting(false),
+	_encryptionPtr(NULL),
+	_encryptionRTPBufferPtr(NULL),
+	_decryptionRTPBufferPtr(NULL),
+	_encryptionRTCPBufferPtr(NULL),
+	_decryptionRTCPBufferPtr(NULL),
 #ifdef WEBRTC_SRTP
 	_srtpModule(*SrtpModule::CreateSrtpModule(VoEModuleId(instanceId, channelId))),
 #endif
@@ -1112,9 +1119,9 @@ Channel::~Channel()
 	UdpTransport::Destroy(
 		&_socketTransportModule);
 #endif
-#ifdef WEBRTC_SRTP
-	SrtpModule::DestroySrtpModule(&_srtpModule);
-#endif
+//#ifdef WEBRTC_SRTP
+//	SrtpModule::DestroySrtpModule(&_srtpModule);
+//#endif
     if (vie_network_) {
       vie_network_->Release();
       vie_network_ = NULL;
@@ -4957,9 +4964,10 @@ void
 		{
 			if (!_decryptionRTCPBufferPtr)
 			{
-				// Allocate memory for decryption buffer one time only
-				_decryptionRTCPBufferPtr =
-					new WebRtc_UWord8[kVoiceEngineMaxIpPacketSizeBytes];
+				WEBRTC_TRACE(kTraceError, kTraceVoice,
+					VoEId(_instanceId, _channelId),
+					"Channel::IncomingRTPPacket() _decryptionRTCPBufferPtr is NULL");
+				return;
 			}
 
 			// Perform decryption (SRTP or external).
@@ -5009,19 +5017,7 @@ void
 	const char* fromIP,
 	const WebRtc_UWord16 fromPort)
 {
-#if 0
-	if (!_ringback) {
-		return;
-	}
-#endif
 	{
-
-		//        const WebRtc_UWord8 *dumpRtcp = (const WebRtc_UWord8 *)incomingRtpPacket;
-		//        printf("sean haha dump begin:\n");
-		//        for (int ii =0; ii<(rtpPacketLength>20?20:rtpPacketLength); ii++) {
-		//            printf("%02X ",*(dumpRtcp+ii));
-		//        }
-		//        printf("\nsean haha dump end\n");
 		CriticalSectionScoped cs(critsect_net_statistic.get());
 		if(_startNetworkTime == 0)
 			_startNetworkTime = time(NULL);
@@ -5041,10 +5037,12 @@ void
 	if (dtmfret) {
 		return;
 	}
+
 	WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId,_channelId),
 		"Channel::IncomingRTPPacket(rtpPacketLength=%d,"
 		" fromIP=%s, fromPort=%u)",
 		rtpPacketLength, fromIP, fromPort);
+
 	static time_t last = 0;
 	if(time(NULL) > last+5 ) {
 		WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_instanceId,_channelId),
@@ -5064,19 +5062,8 @@ void
 
 	WebRtc_UWord8* rtpBufferPtr = (WebRtc_UWord8*)incomingRtpPacket;
 	WebRtc_Word32 rtpBufferLength = rtpPacketLength;
-	//    
-	//    if (*(rtpBufferPtr) == 0x80 && (*(rtpBufferPtr+1) == 0x12 || *(rtpBufferPtr+1) ==  0x00 || *(rtpBufferPtr+1) == 0x78 || *(rtpBufferPtr+1) == 0x0D || *(rtpBufferPtr+1) == 0x80)) {
-	//        
-	//    }
-	//    else
-	//    {
-	////        printf("Here incomingRTPPacket\n");
-	////        for (int i=0; i<rtpBufferLength; i++) {
-	////            printf("%02X ",*(rtpBufferPtr+i));
-	////        }
-	////        printf("\n************************************\n");
-	//    }
 	rtp_header_t *rtp;
+
 	//Sean ice for STUN Message
 	if ( _stun_cb && rtpBufferLength>=12 ) //rtp header
 	{
@@ -5086,7 +5073,6 @@ void
 			unsigned short stunlen = *((unsigned short *)(rtpBufferPtr + sizeof(unsigned short)));
 			stunlen = ntohs(stunlen);
 			if (stunlen + 20 ==rtpBufferLength) {
-
 				//lock
 				_stun_cb(_channelId, (void*)incomingRtpPacket, rtpPacketLength, fromIP, fromPort, false, false);
 				//unlock
@@ -5100,39 +5086,20 @@ void
 	if (_decrypting)
 	{
 		CriticalSectionScoped cs(&_callbackCritSect);
-
 		if (_encryptionPtr)
 		{
 			if (!_decryptionRTPBufferPtr)
 			{
-				// Allocate memory for decryption buffer one time only
-				_decryptionRTPBufferPtr =
-					new WebRtc_UWord8[kVoiceEngineMaxIpPacketSizeBytes];
+				WEBRTC_TRACE(kTraceError, kTraceVoice,
+					VoEId(_instanceId, _channelId),
+					"Channel::IncomingRTPPacket() _decryptionRTPBufferPtr is NULL");
+				return;
 			}
 
 			// Perform decryption (SRTP or external)
-
-			//            printf("sean111111  rtpBufferLength = %d\n",rtpBufferLength);
-			//            printf("Raw received rtp packet\n");
-			//            for (int i = 0; i<rtpBufferLength; i++) {
-			//                if (12 == i) {
-			//                    printf("\t");
-			//                }
-			//                printf("%02X ",*(rtpBufferPtr+i));
-			//            }
-			//            printf("\n");
-
 			//put the last 4 bytes to rtp header ssrc to restore ssrc that FreeSwitch has changed
 			memcpy(rtpBufferPtr+8, rtpBufferPtr+rtpBufferLength-4, 4);
 			rtpBufferLength -= 4;
-			//            printf("after restore ssrc\n");
-			//            for (int i = 0; i<rtpBufferLength; i++) {
-			//                if (12 == i) {
-			//                    printf("\t");
-			//                }
-			//                printf("%02X ",*(rtpBufferPtr+i));
-			//            }
-			//            printf("\n");
 
 			WebRtc_Word32 decryptedBufferLength = 0;
 			_encryptionPtr->decrypt(_channelId,
@@ -5140,6 +5107,7 @@ void
 				_decryptionRTPBufferPtr,
 				rtpBufferLength,
 				(int*)&decryptedBufferLength);
+
 			if (decryptedBufferLength <= 0)
 			{
 				WEBRTC_TRACE(kTraceDebug, kTraceVoice, VoEId(_instanceId,_channelId),"Channel::IncomingRTPPacket() decryption failed  decryptedBufferLength = %d\n",decryptedBufferLength);
@@ -5159,24 +5127,13 @@ void
 	if (_audio_data_cb && _processDataFlag && rtpBufferLength > 12) {
 		if (NULL == this->_receiveData) {
 			this->_receiveData = (void *)malloc(733);
-
 		}
 		_audio_data_cb(_channelId, rtpBufferPtr+12, rtpBufferLength-12, (WebRtc_UWord8 *)this->_receiveData+12, backDataLen, false);
 		memcpy(this->_receiveData, rtpBufferPtr, 12);
 		rtpBufferPtr = (WebRtc_UWord8*)this->_receiveData;
 		rtpBufferLength = backDataLen+12;
 	}
-
-
-//	if (_processOriginalDataFlag && _serviceCoreCallBack) {
-//		if (NULL == this->_receiveOriginalData) {
-//			this->_receiveOriginalData = (void *)malloc(733);
-//
-//		}
-//		memcpy(this->_receiveOriginalData, rtpBufferPtr+12, rtpBufferLength-12);
-//		_serviceCoreCallBack->onOriginalAudioData(call_id, this->_receiveOriginalData, rtpBufferLength-12,0,0,false);
-//	}
-
+	
 	// Dump the RTP packet to a file (if RTP dump is enabled).
 	if (_rtpDumpIn.DumpPacket(rtpBufferPtr,
 		(WebRtc_UWord16)rtpBufferLength) == -1)
@@ -5187,7 +5144,7 @@ void
 	}
 
 	//---begin
-	const uint8_t* received_packet = reinterpret_cast<const uint8_t*>(incomingRtpPacket);
+	const uint8_t* received_packet = reinterpret_cast<const uint8_t*>(rtpBufferPtr);
 	RTPHeader header;
 	/*if (!rtp_header_parser_->Parse(received_packet, rtpPacketLength, &header)) {
 		WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVoice, _channelId,
@@ -5195,60 +5152,23 @@ void
 		return -1;
 	}*/
 
-	rtp_header_parser_->Parse(received_packet, rtpPacketLength, &header);
+	rtp_header_parser_->Parse(received_packet, rtpBufferLength, &header);
 	header.payload_type_frequency =
 		rtp_payload_registry_->GetPayloadTypeFrequency(header.payloadType);
 	if (header.payload_type_frequency < 0)
 		return ;
 	bool in_order = IsPacketInOrder(header);
-	rtp_receive_statistics_->IncomingPacket(header, rtpPacketLength,
+	rtp_receive_statistics_->IncomingPacket(header, rtpBufferLength,
 		IsPacketRetransmitted(header, in_order));
 	rtp_payload_registry_->SetIncomingPayloadType(header);
 
-	// Forward any packets to ViE bandwidth estimator, if enabled.
-	/*{
-		CriticalSectionScoped cs(&_callbackCritSect);
-		if (vie_network_) {
-			int64_t arrival_time_ms;
-			if (packet_time.timestamp != -1) {
-				arrival_time_ms = (packet_time.timestamp + 500) / 1000;
-			} else {
-				arrival_time_ms = TickTime::MillisecondTimestamp();
-			}
-			size_t payload_length = length - header.headerLength;
-			vie_network_->ReceivedBWEPacket(video_channel_, arrival_time_ms,
-				payload_length, header);
-		}
-	}*/
-	//---end
-
-	// Deliver RTP packet to RTP/RTCP module for parsing
-	// The packet will be pushed back to the channel thru the
-	// OnReceivedPayloadData callback so we don't push it to the ACM here
-	/*if (rtp_receiver_->IncomingRtpPacket((const WebRtc_UWord8*)rtpBufferPtr,
-		(WebRtc_UWord16)rtpBufferLength,) == -1)
-	{
-		_engineStatisticsPtr->SetLastError(
-			VE_SOCKET_TRANSPORT_MODULE_ERROR, kTraceWarning,
-			"Channel::IncomingRTPPacket() RTP packet is invalid");
-		return;
-	}*/
-
-	if(ReceivePacket(received_packet, rtpPacketLength, header, in_order) ==  false)
+	if(ReceivePacket(received_packet, rtpBufferLength, header, in_order) ==  false)
 	{
 		_engineStatisticsPtr->SetLastError(
 			VE_SOCKET_TRANSPORT_MODULE_ERROR, kTraceWarning,
 			"Channel::IncomingRTPPacket() RTP packet is invalid");
 		return;
 	}
-
-
-	//sean here stop playing local voice
-//#ifdef WIN32
-//	if (_serviceCoreCallBack) {
-//		_serviceCoreCallBack->onStopPlayPreRing();
-//	}
-//#endif
 }
 
 int
@@ -6054,28 +5974,20 @@ int32_t Channel::GetKeepAliveStatus(
 }
     
 #ifdef WEBRTC_SRTP
-int Channel::CcpSrtpInit(int channel)
+int Channel::CcpSrtpInit()
 {
 	int err = _srtpModule.CcpSrtpInit(_channelId);
 	return err;
 }
 
-int Channel::CcpSrtpShutdown(int channel)
+int Channel::CcpSrtpShutdown()
 {
 	int err = _srtpModule.CcpSrtpShutdown(_channelId);
 	return err;
 }
 
 int
-	Channel::EnableSRTPSend(
-	CipherTypes cipherType,
-	int cipherKeyLength,
-	AuthenticationTypes authType,
-	int authKeyLength,
-	int authTagLength,
-	SecurityLevels level,
-	const unsigned char key[kVoiceEngineMaxSrtpKeyLength],
-	bool useForRTCP)
+Channel::EnableSRTPSend(ccp_srtp_crypto_suite_t crypt_type, const char* key)
 {
 	WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
 		"Channel::EnableSRTPSend()");
@@ -6097,41 +6009,9 @@ int
 			"EnableSRTPSend() invalid key string");
 		return -1;
 	}
-
-	if (((kEncryption == level ||
-		kEncryptionAndAuthentication == level) &&
-		(cipherKeyLength < kVoiceEngineMinSrtpEncryptLength ||
-		cipherKeyLength > kVoiceEngineMaxSrtpEncryptLength)) ||
-		((kAuthentication == level ||
-		kEncryptionAndAuthentication == level) &&
-		kAuthHmacSha1 == authType &&
-		(authKeyLength > kVoiceEngineMaxSrtpAuthSha1Length ||
-		authTagLength > kVoiceEngineMaxSrtpAuthSha1Length)) ||
-		((kAuthentication == level ||
-		kEncryptionAndAuthentication == level) &&
-		kAuthNull == authType &&
-		(authKeyLength > kVoiceEngineMaxSrtpKeyAuthNullLength ||
-		authTagLength > kVoiceEngineMaxSrtpTagAuthNullLength)))
-	{
-		_engineStatisticsPtr->SetLastError(
-			VE_INVALID_ARGUMENT, kTraceError,
-			"EnableSRTPSend() invalid key length(s)");
-		return -1;
-	}
-
-
-	//    if (_srtpModule.EnableSRTPEncrypt(
-	//        !useForRTCP,
-	//        (SrtpModule::CipherTypes)cipherType,
-	//        cipherKeyLength,
-	//        (SrtpModule::AuthenticationTypes)authType,
-	//        authKeyLength, authTagLength,
-	//        (SrtpModule::SecurityLevels)level,
-	//        key,
-	//        ssrc) == -1)
 	unsigned int ssrc;
 	GetLocalSSRC(ssrc);
-	if (_srtpModule.EnableSRTPSend(_channelId, cipherType, cipherKeyLength, authType, authKeyLength, authTagLength, level, key, ssrc) == -1)
+	if (_srtpModule.EnableSRTPSend(_channelId, crypt_type, key, ssrc) == -1)
 	{
 		_engineStatisticsPtr->SetLastError(
 			VE_SRTP_ERROR, kTraceError,
@@ -6139,10 +6019,14 @@ int
 		return -1;
 	}
 
+	_encryptionRTPBufferPtr = new WebRtc_UWord8[kVoiceEngineMaxIpPacketSizeBytes];
+	_encryptionRTCPBufferPtr = new WebRtc_UWord8[kVoiceEngineMaxIpPacketSizeBytes];
+
 	if (_encryptionPtr == NULL)
 	{
 		_encryptionPtr = &_srtpModule;
 	}
+
 	_encrypting = true;
 
 	return 0;
@@ -6166,6 +6050,15 @@ int
 
 	_encrypting = false;
 
+	if (_encryptionRTPBufferPtr) {
+		delete _encryptionRTPBufferPtr;
+		_encryptionRTPBufferPtr = NULL;
+	}
+	if (_encryptionRTCPBufferPtr) {
+		delete _encryptionRTCPBufferPtr;
+		_encryptionRTCPBufferPtr = NULL;
+	}
+
 	//    if (_srtpModule.DisableSRTPEncrypt() == -1)
 	if (_srtpModule.DisableSRTPSend(_channelId) == -1)
 	{
@@ -6186,15 +6079,8 @@ int
 }
 
 int
-	Channel::EnableSRTPReceive(
-	CipherTypes  cipherType,
-	int cipherKeyLength,
-	AuthenticationTypes authType,
-	int authKeyLength,
-	int authTagLength,
-	SecurityLevels level,
-	const unsigned char key[kVoiceEngineMaxSrtpKeyLength],
-	bool useForRTCP)
+Channel::EnableSRTPReceive(ccp_srtp_crypto_suite_t crypt_type,
+	const char* key)
 {
 	WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
 		"Channel::EnableSRTPReceive()");
@@ -6217,26 +6103,26 @@ int
 		return -1;
 	}
 
-	if ((((kEncryption == level) ||
-		(kEncryptionAndAuthentication == level)) &&
-		((cipherKeyLength < kVoiceEngineMinSrtpEncryptLength) ||
-		(cipherKeyLength > kVoiceEngineMaxSrtpEncryptLength))) ||
-		(((kAuthentication == level) ||
-		(kEncryptionAndAuthentication == level)) &&
-		(kAuthHmacSha1 == authType) &&
-		((authKeyLength > kVoiceEngineMaxSrtpAuthSha1Length) ||
-		(authTagLength > kVoiceEngineMaxSrtpAuthSha1Length))) ||
-		(((kAuthentication == level) ||
-		(kEncryptionAndAuthentication == level)) &&
-		(kAuthNull == authType) &&
-		((authKeyLength > kVoiceEngineMaxSrtpKeyAuthNullLength) ||
-		(authTagLength > kVoiceEngineMaxSrtpTagAuthNullLength))))
-	{
-		_engineStatisticsPtr->SetLastError(
-			VE_INVALID_ARGUMENT, kTraceError,
-			"EnableSRTPReceive() invalid key length(s)");
-		return -1;
-	}
+	//if ((((kEncryption == level) ||
+	//	(kEncryptionAndAuthentication == level)) &&
+	//	((cipherKeyLength < kMinSrtpEncryptLength) ||
+	//	(cipherKeyLength > kMaxSrtpEncryptLength))) ||
+	//	(((kAuthentication == level) ||
+	//	(kEncryptionAndAuthentication == level)) &&
+	//	(kAuthHmacSha1 == authType) &&
+	//	((authKeyLength > kMaxSrtpAuthSha1Length) ||
+	//	(authTagLength > kMaxSrtpAuthSha1Length))) ||
+	//	(((kAuthentication == level) ||
+	//	(kEncryptionAndAuthentication == level)) &&
+	//	(kAuthNull == authType) &&
+	//	((authKeyLength > kMaxSrtpKeyAuthNullLength) ||
+	//	(authTagLength > kMaxSrtpTagAuthNullLength))))
+	//{
+	//	_engineStatisticsPtr->SetLastError(
+	//		VE_INVALID_ARGUMENT, kTraceError,
+	//		"EnableSRTPReceive() invalid key length(s)");
+	//	return -1;
+	//}
 
 	//    if (_srtpModule.EnableSRTPDecrypt(
 	//        !useForRTCP,
@@ -6248,7 +6134,7 @@ int
 	//        (SrtpModule::SecurityLevels)level,
 	//        key) == -1)
 	//    printf("cipherType = %d;cipherKeyLength = %d;authType = %d;authKeyLength = %d;authTagLength = %d;level = %d;key = %s\n",cipherType,cipherKeyLength,authType,authKeyLength,authTagLength,level,key);
-	if (_srtpModule.EnableSRTPReceive(_channelId, cipherType, cipherKeyLength, authType, authKeyLength, authTagLength, level, key) == -1)
+	if (_srtpModule.EnableSRTPReceive(_channelId, crypt_type, key) == -1)
 	{
 		_engineStatisticsPtr->SetLastError(
 			VE_SRTP_ERROR, kTraceError,
@@ -6256,11 +6142,13 @@ int
 		return -1;
 	}
 
+	_decryptionRTPBufferPtr = new WebRtc_UWord8[kVoiceEngineMaxIpPacketSizeBytes];
+	_decryptionRTCPBufferPtr = new WebRtc_UWord8[kVoiceEngineMaxIpPacketSizeBytes];
+
 	if (_encryptionPtr == NULL)
 	{
 		_encryptionPtr = &_srtpModule;
 	}
-
 	_decrypting = true;
 
 	return 0;
@@ -6283,6 +6171,15 @@ int
 	}
 
 	_decrypting = false;
+
+	if (_decryptionRTPBufferPtr) {
+		delete _decryptionRTPBufferPtr;
+		_decryptionRTPBufferPtr = NULL;
+	}
+	if (_decryptionRTCPBufferPtr) {
+		delete _decryptionRTCPBufferPtr;
+		_decryptionRTCPBufferPtr = NULL;
+	}
 
 	//    if (_srtpModule.DisableSRTPDecrypt() == -1)
 	if (_srtpModule.DisableSRTPReceive(_channelId))

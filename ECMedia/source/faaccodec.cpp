@@ -3,7 +3,7 @@
 //  ECMedia
 //
 //  Created by james on 16/9/23.
-//  Copyright © 2016年 Sean Lee. All rights reserved.
+//  Copyright ? 2016年 Sean Lee. All rights reserved.
 //
 
 #include "faaccodec.h"
@@ -17,6 +17,8 @@
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <cstdint>
+#else
+#include <arpa/inet.h>  // ntohl()
 #endif
 
 typedef struct {

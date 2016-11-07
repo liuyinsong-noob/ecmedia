@@ -61,7 +61,10 @@ ViEReceiver::ViEReceiver(const int32_t channel_id,
       restored_packet_in_use_(false),
       receiving_ast_enabled_(false),
       last_packet_log_ms_(-1),
-      video_data_cb_(NULL){
+      video_data_cb_(NULL),
+	external_decryption_(NULL),
+	decryption_buffer_(NULL),
+	callback_decryption_buffer_(NULL){
   assert(remote_bitrate_estimator);
 }
 
@@ -71,6 +74,14 @@ ViEReceiver::~ViEReceiver() {
     rtp_dump_->Stop();
     RtpDump::DestroyRtpDump(rtp_dump_);
     rtp_dump_ = NULL;
+  }
+  if (decryption_buffer_) {
+	  delete decryption_buffer_;
+	  decryption_buffer_ = NULL;
+  }
+  if (callback_decryption_buffer_) {
+	  delete callback_decryption_buffer_;
+	  callback_decryption_buffer_ = NULL;
   }
 }
 
@@ -239,39 +250,63 @@ void ViEReceiver::ReceivedBWEPacket(
 int ViEReceiver::InsertRTPPacket(const uint8_t* rtp_packet,
                                  size_t rtp_packet_length,
                                  const PacketTime& packet_time) {
-    
-	if (rtp_header_parser_->IsRtcp(rtp_packet, rtp_packet_length))  //add by ylr to handle FIR from rtp port
-	{
-		return InsertRTCPPacket(rtp_packet, rtp_packet_length);
+	CriticalSectionScoped cs(receive_cs_.get());
+	if (!receiving_) {
+		return -1;
 	}
-								
-  {
-    CriticalSectionScoped cs(receive_cs_.get());
-    if (!receiving_) {
-      return -1;
-    }
-      
+
+	// TODO(mflodman) Change decrypt to get rid of this cast.
+	unsigned char* received_packet = (unsigned char*)rtp_packet;
+	int received_packet_length = rtp_packet_length;
+
+	if (external_decryption_) {
+		//put the last 4 bytes to rtp header ssrc to restore ssrc that FreeSwitch has changed
+		memcpy(received_packet + 8, received_packet + received_packet_length - 4, 4);
+		received_packet_length -= 4;
+
+		int decrypted_length = 0;
+		external_decryption_->decrypt(channel_id_, received_packet,
+			decryption_buffer_, received_packet_length,
+			&decrypted_length);
+		if (decrypted_length <= 0) {
+			WEBRTC_TRACE(kTraceError, kTraceVideo, channel_id_,
+				"RTP decryption failed");
+			return -1;
+		}
+		else if (decrypted_length > kViEMaxMtu) {
+			WEBRTC_TRACE(kTraceCritical, kTraceVideo, channel_id_,
+				"InsertRTPPacket: %d bytes is allocated as RTP decrytption"
+				" output, external decryption used %d bytes. => memory is "
+				" now corrupted", kViEMaxMtu, decrypted_length);
+			return -1;
+		}
+		received_packet = decryption_buffer_;
+		received_packet_length = decrypted_length;
+	}
+
+	if (rtp_header_parser_->IsRtcp(received_packet, received_packet_length))  //add by ylr to handle FIR from rtp port
+	{
+		return InsertRTCPPacket(received_packet, received_packet_length);
+	}
+					
     if (video_data_cb_) {
       int decrypted_length = 0;
-      video_data_cb_(channel_id_, rtp_packet+12, rtp_packet_length-12, decryption_buffer_+12, decrypted_length, false);
-      memcpy(decryption_buffer_, rtp_packet, 12);
-      rtp_packet = decryption_buffer_;
-      rtp_packet_length = decrypted_length+12;
+      video_data_cb_(channel_id_, received_packet +12, received_packet_length -12, callback_decryption_buffer_ +12, decrypted_length, false);
+      memcpy(callback_decryption_buffer_, received_packet, 12);
+	  received_packet = callback_decryption_buffer_;
+	  received_packet_length = decrypted_length+12;
     }
     if (rtp_dump_) {
-      rtp_dump_->DumpPacket(rtp_packet, rtp_packet_length);
+      rtp_dump_->DumpPacket(received_packet, received_packet_length);
     }
-  }
-
-  
   
   RTPHeader header;
-  if (!rtp_header_parser_->Parse(rtp_packet, rtp_packet_length,
+  if (!rtp_header_parser_->Parse(received_packet, received_packet_length,
                                  &header)) {
     return -1;
   }
 
-  size_t payload_length = rtp_packet_length - header.headerLength;
+  size_t payload_length = received_packet_length - header.headerLength;
   int64_t arrival_time_ms;
   int64_t now_ms = clock_->TimeInMilliseconds();
   if (packet_time.timestamp != -1)
@@ -281,7 +316,6 @@ int ViEReceiver::InsertRTPPacket(const uint8_t* rtp_packet,
 
   {
     // Periodically log the RTP header of incoming packets.
-    CriticalSectionScoped cs(receive_cs_.get());
     if (now_ms - last_packet_log_ms_ > kPacketLogIntervalMs) {
       std::stringstream ss;
       ss << "Packet received on SSRC: " << header.ssrc << " with payload type: "
@@ -303,14 +337,14 @@ int ViEReceiver::InsertRTPPacket(const uint8_t* rtp_packet,
 
   bool in_order = IsPacketInOrder(header);
   rtp_payload_registry_->SetIncomingPayloadType(header);
-  int ret = ReceivePacket(rtp_packet, rtp_packet_length, header, in_order)
+  int ret = ReceivePacket(received_packet, received_packet_length, header, in_order)
       ? 0
       : -1;
   // Update receive statistics after ReceivePacket.
   // Receive statistics will be reset if the payload type changes (make sure
   // that the first packet is included in the stats).
   rtp_receive_statistics_->IncomingPacket(
-      header, rtp_packet_length, IsPacketRetransmitted(header, in_order));
+      header, received_packet_length, IsPacketRetransmitted(header, in_order));
   return ret;
 }
 
@@ -378,24 +412,53 @@ bool ViEReceiver::ParseAndHandleEncapsulatingHeader(const uint8_t* packet,
 
 int ViEReceiver::InsertRTCPPacket(const uint8_t* rtcp_packet,
                                   size_t rtcp_packet_length) {
-  {
     CriticalSectionScoped cs(receive_cs_.get());
     if (!receiving_) {
       return -1;
     }
+	// TODO(mflodman) Change decrypt to get rid of this cast.
+	unsigned char* received_packet = (unsigned char*)rtcp_packet;
+	int received_packet_length = rtcp_packet_length;
+
+	if (external_decryption_) {
+		//put the last 4 bytes to rtp header ssrc to restore ssrc that FreeSwitch has changed
+		memcpy(received_packet + 4, received_packet + received_packet_length - 4, 4);
+		received_packet_length -= 4;
+
+		int decrypted_length = 0;
+		external_decryption_->decrypt_rtcp(channel_id_, received_packet,
+			decryption_buffer_,
+			received_packet_length,
+			&decrypted_length);
+		if (decrypted_length <= 0) {
+			WEBRTC_TRACE(kTraceError, kTraceVideo, channel_id_,
+				"RTP decryption failed");
+			return -1;
+		}
+		else if (decrypted_length > kViEMaxMtu) {
+			WEBRTC_TRACE(kTraceCritical, kTraceVideo, channel_id_,
+				"InsertRTCPPacket: %d bytes is allocated as RTP "
+				" decrytption output, external decryption used %d bytes. "
+				" => memory is now corrupted",
+				kViEMaxMtu, decrypted_length);
+			return -1;
+		}
+		received_packet = decryption_buffer_;
+		received_packet_length = decrypted_length;
+	}
 
     if (rtp_dump_) {
-      rtp_dump_->DumpPacket(rtcp_packet, rtcp_packet_length);
+      rtp_dump_->DumpPacket(received_packet, received_packet_length);
     }
 
     std::list<RtpRtcp*>::iterator it = rtp_rtcp_simulcast_.begin();
     while (it != rtp_rtcp_simulcast_.end()) {
       RtpRtcp* rtp_rtcp = *it++;
-      rtp_rtcp->IncomingRtcpPacket(rtcp_packet, rtcp_packet_length);
+      rtp_rtcp->IncomingRtcpPacket(received_packet, received_packet_length);
     }
-  }
+
   assert(rtp_rtcp_);  // Should be set by owner at construction time.
-  int ret = rtp_rtcp_->IncomingRtcpPacket(rtcp_packet, rtcp_packet_length);
+  int ret = rtp_rtcp_->IncomingRtcpPacket(received_packet, received_packet_length);
   if (ret != 0) {
     return ret;
   }
@@ -519,10 +582,10 @@ int ViEReceiver::DeregisterExternalDecryption() {
     
 int ViEReceiver::SetVideoDataCb(onEcMediaVideoData video_data_cb)
 {
-    if (!decryption_buffer_) {
-        decryption_buffer_ = new WebRtc_UWord8[kViEMaxMtu];
+    if (!callback_decryption_buffer_) {
+		callback_decryption_buffer_ = new WebRtc_UWord8[kViEMaxMtu];
     }
-    if (decryption_buffer_ == NULL) {
+    if (callback_decryption_buffer_ == NULL) {
         return -1;
     }
     video_data_cb_ = video_data_cb;

@@ -45,6 +45,8 @@ include $(MY_WEBRTC_ROOT_PATH)/third_party/libjpeg_turbo/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/remote_bitrate_estimator/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/pacing/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/third_party/librtmp/rtmpdump-2.3/librtmp/Android.mk
+include $(MY_WEBRTC_ROOT_PATH)/third_party/libfaad/faad2-2.7/libfaad/Android.mk
+include $(MY_WEBRTC_ROOT_PATH)/third_party/zlib/Android.mk
 
 # build .so
 LOCAL_PATH := $(JNI_PATH)
@@ -100,7 +102,9 @@ LOCAL_WHOLE_STATIC_LIBRARIES := \
 	libwebrtc_audio_paced_sender \
 	libwebrtc_audio_codecs \
 	libwebrtc_system_wrappers \
-	librtmp
+	librtmp \
+	libfaad \
+	libEC_zlib
 	
 LOCAL_SHARED_LIBRARIES := \
     libcutils \
@@ -114,7 +118,12 @@ LOCAL_LDLIBS += \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libavutil.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libvpx.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libcpufeatures.a \
-	./third_party_libs/$(TARGET_ARCH_ABI)/libopus.a
+	./third_party_libs/$(TARGET_ARCH_ABI)/libopus.a \
+	./third_party_libs/$(TARGET_ARCH_ABI)/libsrtp.a \
+	./third_party_libs/$(TARGET_ARCH_ABI)/libortp.a \
+	./third_party_libs/$(TARGET_ARCH_ABI)/libfaac.a \
+	./third_party_libs/$(TARGET_ARCH_ABI)/libssl.a \
+	./third_party_libs/$(TARGET_ARCH_ABI)/libcrypto.a
 
 LOCAL_DISABLE_FATAL_LINKER_WARNINGS := true
 LOCAL_PRELINK_MODULE := false

@@ -61,6 +61,7 @@ public:
 private:
 	Encryption* external_encryption_;
 	WebRtc_UWord8* encryption_buffer_;
+	WebRtc_UWord8* callback_encryption_buffer_;
 
 	time_t  _startNetworkTime;
 	long long _sendDataTotalSim;

@@ -45,9 +45,8 @@ LOCAL_SRC_FILES := \
 		SrtpModule.cc \
 		wavfile.cpp \
 		audio_send_stream.cc \
-		audio_receive_stream.cc
-		
-#		voe_encry_srtp.cc \
+		audio_receive_stream.cc \
+		voe_encry_srtp.cc \
 		
 		
 
@@ -56,7 +55,8 @@ LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
     '-DHAVE_SRTP_SHUTDOWN' \
 	  '-DWEBRTC_CODEC_RED' \
-	  '-DWEBRTC_POSIX'
+	  '-DWEBRTC_POSIX' \
+	  '-DWEBRTC_SRTP'
 	  
 	#'-DWEBRTC_ANDROID_OPENSLES'
 	#'-DWEBRTC_SRTP' \

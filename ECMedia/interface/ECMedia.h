@@ -224,22 +224,22 @@ ECMEDIA_API int ECMedia_get_loudpeaker_status(bool& enabled);
  *
  */
 ECMEDIA_API int ECMedia_reset_audio_device();
-/*
- *
- */
-ECMEDIA_API int ECMedia_init_srtp(int channelid);
-/*
- *º”√‹
- */
-ECMEDIA_API int ECMedia_enable_srtp_receive(int channelid, const char *key);
-/*
- *
- */
-ECMEDIA_API int ECMedia_enable_srtp_send(int channelid, const char *key);
-/*
- *
- */
-ECMEDIA_API int ECMedia_shutdown_srtp(int channel);
+///*
+// *
+// */
+//ECMEDIA_API int ECMedia_init_srtp(int channelid);
+///*
+// *º”√‹
+// */
+//ECMEDIA_API int ECMedia_enable_srtp_receive(int channelid, const char *key);
+///*
+// *
+// */
+//ECMEDIA_API int ECMedia_enable_srtp_send(int channelid, const char *key);
+///*
+// *
+// */
+//ECMEDIA_API int ECMedia_shutdown_srtp(int channel);
 /*
  *
  */
@@ -337,6 +337,18 @@ ECMEDIA_API int ECMedia_AmrNBEncode(short* input, short len, short*output, short
 ECMEDIA_API int ECMedia_AmrNBEncoderInit(short dtxMode);
 ECMEDIA_API int ECMedia_AmrNBDecode(short* encoded, int len, short* decoded);
 ECMEDIA_API int ECMedia_AmrNBVersion(char *versionStr, short len);
+
+
+//SRTP
+ECMEDIA_API int ECMedia_init_srtp_audio(int channel);
+ECMEDIA_API int ECMedia_shutdown_srtp_audio(int channel);
+
+ECMEDIA_API int ECMedia_enable_srtp_send_audio(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type,	const char* key);
+
+ECMEDIA_API int ECMedia_disable_srtp_send_audio(int channel);
+
+ECMEDIA_API int ECMedia_enable_srtp_recv_audio(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type,	const char* key);
+ECMEDIA_API int ECMedia_disable_srtp_recv_audio(int channel);
 
 #ifdef VIDEO_ENABLED
 /*
@@ -519,6 +531,17 @@ ECMEDIA_API int ECmedia_enable_deflickering(int captureid, bool enable);
 ECMEDIA_API int ECmedia_enable_EnableColorEnhancement(int channelid, bool enable);
 ECMEDIA_API int ECmedia_enable_EnableDenoising(int captureid, bool enable);
 ECMEDIA_API int ECmedia_enable_EnableBrightnessAlarm(int captureid, bool enable);
+
+//SRTP
+ECMEDIA_API int ECMedia_init_srtp_video(int channel);
+ECMEDIA_API int ECMedia_shutdown_srtp_video(int channel);
+
+ECMEDIA_API int ECMedia_enable_srtp_send_video(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key);
+ECMEDIA_API int ECMedia_disable_srtp_send_video(int channel);
+
+ECMEDIA_API int ECMedia_enable_srtp_recv_video(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key);
+ECMEDIA_API int ECMedia_disable_srtp_recv_video(int channel);
+
 #endif
 
 //"filePath" or "intervalMS" is set by the first caller, i.e.: one of the four interfaces,

@@ -311,7 +311,7 @@ void ServiceCore::audio_stream_stop(int channelID)
 #if !defined(NO_VOIP_FUNCTION)
 	if (channelID>=0) {
 		if (srtp_enable) {
-			if( ECMedia_shutdown_srtp(channelID) ) {
+			if( ECMedia_shutdown_srtp_audio(channelID) ) {
 				PrintConsole("Remove SRTP fail code\n");
 			}
 		}
@@ -559,27 +559,50 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 
 			if (srtp_enable) {
 				char master_key[65];
-				//Here we should use b64_encode to encode key
-				generate_b64_crypto_key(46, master_key, (const char *)key);
-				PrintConsole("Here user_mode = %d, before func EnableSRTPReceive and EnableSRTPSend we check master key send = %s,stream->crypto[0].master_key receive = %s, which is after b64_encode\n",user_mode,master_key,stream->crypto[0].master_key);
-			
-				ECMedia_enable_srtp_receive(call->m_AudioChannelID, reinterpret_cast<const char *> (user_mode?master_key:stream->crypto[0].master_key));
-				ECMedia_enable_srtp_send(call->m_AudioChannelID, reinterpret_cast<const char *>(master_key));
-
+				memset(master_key, 0, sizeof(master_key));
+				if (user_mode) {
+					if (encryptType == cloopenwebrtc::CCPAES_128_SHA1_32
+						|| encryptType == cloopenwebrtc::CCPAES_128_SHA1_80
+						|| encryptType == cloopenwebrtc::CCPAES_128_NO_AUTH)
+						generate_b64_crypto_key(30, master_key, m_SrtpKey);
+					else if (encryptType == cloopenwebrtc::CCPNO_CIPHER_SHA1_80)
+						master_key[0] = '\0';
+					else
+						generate_b64_crypto_key(46, master_key, m_SrtpKey);
+				}
+				else {
+					memcpy(master_key, stream->crypto[0].master_key, strlen(stream->crypto[0].master_key));
+				}
 				//encryptType = stream->crypto[0].algo;
+
+				PrintConsole("Here user_mode = %d, before func EnableSRTPReceive and EnableSRTPSend we check master key send = %s, \
+					stream->crypto[0].master_key receive = %s, which is after b64_encode\n",
+					user_mode,master_key,stream->crypto[0].master_key);
+
+				//for test
+				//encryptType = cloopenwebrtc::CCPAES_256_SHA1_80;
+				//end
+
+				ECMedia_enable_srtp_recv_audio(call->m_AudioChannelID, encryptType, master_key);
+				ECMedia_enable_srtp_send_audio(call->m_AudioChannelID, encryptType, master_key);
+
 				//switch (encryptType) {
 				//case CCPAES_256_SHA1_80:
 				//	{
-				//		encrypt->EnableSRTPReceive(call->m_AudioChannelID, kCipherAes256CounterMode, 64, kAuthHmacSha1, 0, kAuthTagLength80, kEncryptionAndAuthentication,reinterpret_cast<const unsigned char *> (user_mode?master_key:stream->crypto[0].master_key) );
+				//		ECMedia_enable_srtp_recv_audio(call->m_AudioChannelID, kCipherAes256CounterMode, 64, kAuthHmacSha1, 0,
+				//			kAuthTagLength80, kEncryptionAndAuthentication, master_key, true);
 
-				//		encrypt->EnableSRTPSend(call->m_AudioChannelID, kCipherAes256CounterMode, 64, kAuthHmacSha1, 0, kAuthTagLength80, kEncryptionAndAuthentication,reinterpret_cast<const unsigned char *>(master_key),0 );
+				//		ECMedia_enable_srtp_send_audio(call->m_AudioChannelID, kCipherAes256CounterMode, 64, kAuthHmacSha1, 0,  
+				//			kAuthTagLength80, kEncryptionAndAuthentication, master_key, 0, true);
 				//	}
 				//	break;
 				//case CCPAES_256_SHA1_32:
 				//	{
-				//		encrypt->EnableSRTPReceive(call->m_AudioChannelID, kCipherAes256CounterMode, 64, kAuthHmacSha1, 0, kAuthTagLength32, kEncryptionAndAuthentication,reinterpret_cast<const unsigned char *> (user_mode?master_key:stream->crypto[0].master_key) );
+				//		ECMedia_enable_srtp_recv_audio(call->m_AudioChannelID, kCipherAes256CounterMode, 64, kAuthHmacSha1, 0,
+				//			kAuthTagLength32, kEncryptionAndAuthentication, master_key, true);
 
-				//		encrypt->EnableSRTPSend(call->m_AudioChannelID, kCipherAes256CounterMode, 64, kAuthHmacSha1, 0, kAuthTagLength32, kEncryptionAndAuthentication,reinterpret_cast<const unsigned char *>(master_key),0 );
+				//		ECMedia_enable_srtp_send_audio(call->m_AudioChannelID, kCipherAes256CounterMode, 64, kAuthHmacSha1, 0,
+				//			kAuthTagLength32, kEncryptionAndAuthentication, master_key, 0, true);
 				//	}
 				//	break;
 				//default:
@@ -774,6 +797,59 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 			PrintConsole("No video stream accepted ?\n");
 		}
 		else {
+
+			if (srtp_enable) {
+				char master_key[65];
+				memset(master_key, 0, sizeof(master_key));
+				if (user_mode) {
+					if (encryptType == cloopenwebrtc::CCPAES_128_SHA1_32
+						|| encryptType == cloopenwebrtc::CCPAES_128_SHA1_80
+						|| encryptType == cloopenwebrtc::CCPAES_128_NO_AUTH)
+						generate_b64_crypto_key(30, master_key, m_SrtpKey);
+					else if (encryptType == cloopenwebrtc::CCPNO_CIPHER_SHA1_80)
+						master_key[0] = '\0';
+					else
+						generate_b64_crypto_key(46, master_key, m_SrtpKey);
+				
+				}
+				else {
+					memcpy(master_key, stream->crypto[0].master_key, strlen(stream->crypto[0].master_key));
+				}
+				//encryptType = stream->crypto[0].algo;
+
+				PrintConsole("Here user_mode = %d, master key send = %s, encryptType=%d,\n", user_mode, master_key, encryptType);
+
+				//for test
+				//encryptType = cloopenwebrtc::CCPAES_256_SHA1_80;
+				//end
+
+				ECMedia_enable_srtp_recv_audio(call->m_AudioChannelID, encryptType, master_key);
+				ECMedia_enable_srtp_send_audio(call->m_AudioChannelID, encryptType, master_key);
+								
+				//switch (encryptType) {
+				//case CCPAES_256_SHA1_80:
+				//{
+				//	ECMedia_enable_srtp_recv_video(call->m_VideoChannelID, kCipherAes256CounterMode, 64, kAuthHmacSha1, 0,
+				//		kAuthTagLength80, kEncryptionAndAuthentication, master_key, false);
+
+				//	ECMedia_enable_srtp_send_video(call->m_VideoChannelID, kCipherAes256CounterMode, 64, kAuthHmacSha1, 0,
+				//		kAuthTagLength80, kEncryptionAndAuthentication, master_key, 0, false);
+				//}
+				//break;
+				//case CCPAES_256_SHA1_32:
+				//{
+				//	ECMedia_enable_srtp_recv_video(call->m_VideoChannelID, kCipherAes256CounterMode, 64, kAuthHmacSha1, 0,
+				//		kAuthTagLength32, kEncryptionAndAuthentication, master_key, false);
+
+				//	ECMedia_enable_srtp_send_video(call->m_VideoChannelID, kCipherAes256CounterMode, 64, kAuthHmacSha1, 0,
+				//		kAuthTagLength32, kEncryptionAndAuthentication, master_key, 0, false);
+				//}
+				//break;
+				//default:
+				//	break;
+				//}
+			}
+
 			call->current_params.video_codec = rtp_profile_get_payload(call->video_profile, used_pt);
 			PayloadType *p=call->current_params.video_codec;
 
@@ -837,8 +913,9 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 					/*codec_params.maxBitrate = min((m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps*4*0.07)/1000, kMaxVideoBitrate);
 					codec_params.minBitrate = max((m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps*1*0.07)/1000, kMinVideoBitrate);*/
 
-					codec_params.startBitrate = m_sendVideoWidth*m_sendVideoHeight*15*2*0.07/1000;
-					codec_params.maxBitrate = 1500;
+					codec_params.startBitrate = m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps *3*0.07/1000;
+					codec_params.maxBitrate = codec_params.startBitrate;
+					codec_params.minBitrate = codec_params.startBitrate/4;
 
 				}
 
@@ -1595,9 +1672,9 @@ void ServiceCore::serphone_call_init_media_streams(SerPhoneCall *call)
 	//Init Srtp
 	//sean20130428
 	if (srtp_enable) {
-		int err = ECMedia_init_srtp(call->m_AudioChannelID);
+		int err = ECMedia_init_srtp_audio(call->m_AudioChannelID);
 		if (err) {
-			PrintConsole("Init SRTP fail code [%d]\n",err);
+			PrintConsole("Init audio SRTP fail code [%d]\n",err);
 		}
 	}
 		
@@ -1616,12 +1693,20 @@ void ServiceCore::serphone_call_init_media_streams(SerPhoneCall *call)
 //        ECMedia_audio_create_channel(call->m_VideoChannelID1, true);
 //        ECMedia_audio_create_channel(call->m_VideoChannelID2, true);
 //        sean for multivideo encoding end
-        
+       
 
 		if( call->m_VideoChannelID >= 0 &&  md->nstreams > 1 ) {
+
+
+
 			ECMedia_set_network_type(call->m_AudioChannelID, call->m_VideoChannelID, networkType);
 			ECMedia_video_set_local_receiver(call->m_VideoChannelID,call->video_port, call->video_port+1);
 			ECMedia_set_MTU(call->m_VideoChannelID,1450);
+
+			int err = ECMedia_init_srtp_video(call->m_VideoChannelID);
+			if (err) {
+				PrintConsole("Init video SRTP fail code [%d]\n", err);
+			}
 
 			/*add begin------------------Sean20130722----------for video ice------------*/
 			//            sean update begin 0926 ice bug when no stunserver
@@ -3607,7 +3692,6 @@ int ServiceCore::serphone_set_video_window_and_request_video_accord_sip(const ch
 	temp->conference_state = Video_Conference_State_Nomal;
 	//    request video after succeeding doing this
 	//    build request body
-	//     [ client_id:??￠??·??ˉSIP??·???, conf_id:???è????·???, member_id:èˉ·?±?????‘????SIP??·???,conf_pass:???è???ˉ????]
 	char *data = new char[512];
 	memset(data, 0, 512);
 
@@ -4405,7 +4489,7 @@ void ServiceCore::serphone_core_restart_nack(SerPhoneCall *call)
 //	}
 //}
 
-//// This method will be called periodically delivering a deada€?ora€?alive
+//// This method will be called periodically delivering a dead alive
 //// decision for a specified channel.
 //void ServiceCore::OnPeriodicDeadOrAlive(const int video_channel, const bool alive)
 //{

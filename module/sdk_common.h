@@ -277,9 +277,6 @@ struct Stats{
 	bool suspended;       
 };
 
-
-
-
 #ifdef __cplusplus
 extern "C" {
 #endif

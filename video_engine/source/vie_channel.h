@@ -34,6 +34,10 @@
 #include "udp_transport.h"
 #include "vie_file_recorder.h"
 
+#ifdef WEBRTC_SRTP
+#include "SrtpModule.h"
+#endif
+
 namespace cloopenwebrtc {
 typedef int (*onEcMediaRequestKeyFrame)(const int channelid);
 class CallStatsObserver;
@@ -578,6 +582,16 @@ private:
 
 	Encryption* external_encryption_;
 
+	bool _encrypting;
+	bool _decrypting;
+	//WebRtc_UWord8* _encryptionRTPBufferPtr;
+	//WebRtc_UWord8* _decryptionRTPBufferPtr;
+	//WebRtc_UWord8* _encryptionRTCPBufferPtr;
+	//WebRtc_UWord8* _decryptionRTCPBufferPtr;
+#ifdef WEBRTC_SRTP
+	SrtpModule& _srtpModule;
+#endif
+
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
 	UdpTransport& socket_transport_;
 #endif
@@ -596,6 +610,14 @@ public:
 
 	int32_t RegisterExternalEncryption(Encryption* encryption);
 	int32_t DeRegisterExternalEncryption();
+#ifdef WEBRTC_SRTP
+	int CcpSrtpInit();
+	int CcpSrtpShutdown();
+	int EnableSRTPSend(ccp_srtp_crypto_suite_t crypt_type, const char* key);
+	int DisableSRTPSend();
+	int EnableSRTPReceive(ccp_srtp_crypto_suite_t crypt_type, const char* key);
+	int DisableSRTPReceive();
+#endif
 
 	// Implements UdpTransportData.
 	virtual void IncomingRTPPacket(const int8_t* rtp_packet,

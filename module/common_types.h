@@ -153,33 +153,31 @@ enum ProcessingTypes
 	kRecordingPreprocessing
 };
 
-// Encryption enums
-enum AuthTagLength
-{
-    kAuthTagLength80 = 0,
-    kAuthTagLength32
-};
-    
-enum CipherTypes
-{
-    kCipherNull               = 0,
-    kCipherAes128CounterMode  = 1,
-    kCipherAes256CounterMode  = 2
+enum ccp_srtp_crypto_suite_t {
+	CCPAES_128_SHA1_80 = 1,
+	CCPAES_128_SHA1_32,
+	CCPAES_256_SHA1_80,
+	CCPAES_256_SHA1_32,
+	CCPAES_128_NO_AUTH,
+	CCPNO_CIPHER_SHA1_80
 };
 
-enum AuthenticationTypes
-{
-    kAuthNull       = 0,
-    kAuthHmacSha1   = 3
-};
-
-enum SecurityLevels
-{
-    kNoProtection                    = 0,
-    kEncryption                      = 1,
-    kAuthentication                  = 2,
-    kEncryptionAndAuthentication     = 3
-};
+// Encryption
+// SRTP uses 30 bytes key length
+enum { kMaxSrtpKeyLength = 30 };
+// SRTP minimum key/tag length for encryption level
+enum { kMinSrtpEncryptLength = 16 };
+// SRTP maximum key/tag length for encryption level
+enum { kMaxSrtpEncryptLength = 256 };
+// SRTP maximum key/tag length for authentication level,
+// HMAC SHA1 authentication type
+enum { kMaxSrtpAuthSha1Length = 20 };
+// SRTP maximum tag length for authentication level,
+// null authentication type
+enum { kMaxSrtpTagAuthNullLength = 12 };
+// SRTP maximum key length for authentication level,
+// null authentication type
+enum { kMaxSrtpKeyAuthNullLength = 256 };
 
 // Interface for encrypting and decrypting regular data and rtp/rtcp packets.
 // Implement this interface if you wish to provide an encryption scheme to

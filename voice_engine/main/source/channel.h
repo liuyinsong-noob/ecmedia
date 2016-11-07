@@ -692,27 +692,11 @@ public:
 #endif
 
 #ifdef WEBRTC_SRTP
-	int CcpSrtpInit(int channel);
-	int CcpSrtpShutdown(int channel);
-	int EnableSRTPSend(
-		CipherTypes cipherType,
-		int cipherKeyLength,
-		AuthenticationTypes authType,
-		int authKeyLength,
-		int authTagLength,
-		SecurityLevels level,
-		const unsigned char key[kVoiceEngineMaxSrtpKeyLength],
-		bool useForRTCP);
+	int CcpSrtpInit();
+	int CcpSrtpShutdown();
+	int EnableSRTPSend(ccp_srtp_crypto_suite_t crypt_type, const char* key);
 	int DisableSRTPSend();
-	int EnableSRTPReceive(
-		CipherTypes cipherType,
-		int cipherKeyLength,
-		AuthenticationTypes authType,
-		int authKeyLength,
-		int authTagLength,
-		SecurityLevels level,
-		const unsigned char key[kVoiceEngineMaxSrtpKeyLength],
-		bool useForRTCP);
+	int EnableSRTPReceive(ccp_srtp_crypto_suite_t crypt_type, const char* key);
 	int DisableSRTPReceive();
 #endif
 	int RegisterExternalEncryption(Encryption& encryption);

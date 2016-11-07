@@ -14,14 +14,14 @@
 #include "SrtpModule.h"
 #include "trace.h"
 
-enum ccportp_srtp_crypto_suite_t {
-	CCPAES_128_SHA1_80 = 1,
-	CCPAES_128_SHA1_32,
-    CCPAES_256_SHA1_80,
-    CCPAES_256_SHA1_32,
-	CCPAES_128_NO_AUTH,
-	CCPNO_CIPHER_SHA1_80
-};
+//enum ccp_srtp_crypto_suite_t {
+//	CCPAES_128_SHA1_80 = 1,
+//	CCPAES_128_SHA1_32,
+//    CCPAES_256_SHA1_80,
+//    CCPAES_256_SHA1_32,
+//	CCPAES_128_NO_AUTH,
+//	CCPNO_CIPHER_SHA1_80
+//};
 
 namespace cloopenwebrtc {
     class VoeEncrySrtp : public SrtpModule
@@ -31,36 +31,19 @@ namespace cloopenwebrtc {
         virtual int64_t TimeUntilNextProcess();
         virtual int32_t Process();
         
-        virtual int EnableSRTPSend(
-                                   int channel,
-                                   CipherTypes cipherType,
-                                   int cipherKeyLength,
-                                   AuthenticationTypes authType,
-                                   int authKeyLength,
-                                   int authTagLength,
-                                   SecurityLevels level,
-                                   const unsigned char key[kVoiceEngineMaxSrtpKeyLength],
-                                   const WebRtc_UWord32 ssrc,
-                                   bool useForRTCP = false);
+		virtual int EnableSRTPSend(int channel,
+								ccp_srtp_crypto_suite_t crypt_type,
+								const char* key,
+								const WebRtc_UWord32 ssrc);
         
         virtual int DisableSRTPSend(int channel);
         
-        virtual int EnableSRTPReceive(
-                                      int channel,
-                                      CipherTypes cipherType,
-                                      int cipherKeyLength,
-                                      AuthenticationTypes authType,
-                                      int authKeyLength,
-                                      int authTagLength,
-                                      SecurityLevels level,
-                                      const unsigned char key[kVoiceEngineMaxSrtpKeyLength],
-                                      bool useForRTCP = false);
+        virtual int EnableSRTPReceive(int channel, ccp_srtp_crypto_suite_t crypt_type, const char* key);
         
         virtual int DisableSRTPReceive(int channel);
         
         // External encryption
-        virtual int RegisterExternalEncryption(
-                                               int channel,
+        virtual int RegisterExternalEncryption(int channel,
                                                Encryption& encryption);
         
         virtual int DeRegisterExternalEncryption(int channel);
@@ -129,9 +112,7 @@ namespace cloopenwebrtc {
         
         int ccp_srtp_shutdown(void);
         
-        
-        
-        int setSSRC();
+       // int setSSRC();
         
         virtual ~VoeEncrySrtp();
         VoeEncrySrtp(WebRtc_Word32 id);
@@ -142,12 +123,12 @@ namespace cloopenwebrtc {
         const WebRtc_UWord32 _ssrc;
         WebRtc_Word32 _id;
         
-        CipherTypes _cipherTypes;
-        AuthenticationTypes _authenticationTypes;
-        int _authkeyLength;
-        int _authtagLength;
-        SecurityLevels _securityLevels;
-        enum ccportp_srtp_crypto_suite_t _suite;
+        //CipherTypes _cipherTypes;
+        //AuthenticationTypes _authenticationTypes;
+        //int _authkeyLength;
+        //int _authtagLength;
+        //SecurityLevels _securityLevels;
+        enum ccp_srtp_crypto_suite_t _suite;
         
         bool _srtpCreate;
         

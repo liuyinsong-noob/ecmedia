@@ -22,6 +22,19 @@ class ViESharedData;
 class ViEEncryptionImpl
     : public ViEEncryption,
       public ViERefCount {
+public:
+	// SRTP
+	virtual int EnableSRTPSend(int channel, ccp_srtp_crypto_suite_t crypt_type, const char* key);
+
+	virtual int DisableSRTPSend(int channel);
+
+	virtual int EnableSRTPReceive(int channel,ccp_srtp_crypto_suite_t crypt_type, const char* key);
+
+	virtual int DisableSRTPReceive(int channel);
+
+	virtual int CcpSrtpInit(int channel);
+	virtual int CcpSrtpShutdown(int channel);
+
  public:
   virtual int Release();
 

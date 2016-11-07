@@ -22,7 +22,8 @@ LOCAL_SRC_FILES := \
 		statsCollector.cc \
 		VoeObserver.cpp \
 		ECLiveStream_rtmp.cpp \
-		ECLiveStream.cpp
+		ECLiveStream.cpp \
+		faaccodec.cpp
 
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
@@ -62,7 +63,9 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../../module/pacing/include \
 	$(LOCAL_PATH)/../../module/remote_bitrate_estimator/source \
 	$(LOCAL_PATH)/../../module/video_render/main/include \
-	$(LOCAL_PATH)/../../module/audio_coding/codecs/opencore-amr/amrnb
+	$(LOCAL_PATH)/../../module/audio_coding/codecs/opencore-amr/amrnb \
+	$(LOCAL_PATH)/../../third_party/libfaad/faad2-2.7/include \
+	$(LOCAL_PATH)/../../third_party/libfaac/include
 	
 LOCAL_SHARED_LIBRARIES := \
     libcutils \

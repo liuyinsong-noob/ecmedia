@@ -165,6 +165,7 @@
     <ClInclude Include="source\vie_desktop_share_manager.h">
       <Filter>source</Filter>
     </ClInclude>
+    <ClInclude Include="source\vie_encryption_impl.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\vie_base_impl.cc">
@@ -284,5 +285,6 @@
     <ClCompile Include="source\vie_desktop_share_manager.cc">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\vie_encryption_impl.cc" />
   </ItemGroup>
 </Project>

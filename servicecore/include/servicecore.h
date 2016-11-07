@@ -11,7 +11,7 @@
 
 //#include "thread_wrapper.h"
 #include "StunMessageCallBack.h"
-
+#include "common_types.h"
 //#ifdef VIDEO_ENABLED
 //#include "vie_capture.h"
 //#include "vie_network.h"
@@ -807,8 +807,8 @@ public:
     bool tls_enable;
     bool srtp_enable;
     bool user_mode;
-    enum ccportp_srtp_crypto_suite_t encryptType;
-    unsigned char *key; //秘钥
+    cloopenwebrtc::ccp_srtp_crypto_suite_t encryptType;
+    char *m_SrtpKey; //秘钥
 
     char local_addr[64];
 

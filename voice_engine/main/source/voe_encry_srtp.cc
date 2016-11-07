@@ -41,70 +41,38 @@ namespace cloopenwebrtc {
         return ccp_srtp_shutdown();
     }
     
-    int VoeEncrySrtp::EnableSRTPSend(
-                               int channel,
-                               CipherTypes cipherType,
-                               int cipherKeyLength,
-                               AuthenticationTypes authType,
-                               int authKeyLength,
-                               int authTagLength,
-                               SecurityLevels level,
-                               const unsigned char key[kVoiceEngineMaxSrtpKeyLength],
-                               const WebRtc_UWord32 ssrc,
-                               bool useForRTCP)
+    int VoeEncrySrtp::EnableSRTPSend(int channel, 
+									ccp_srtp_crypto_suite_t crypt_type,
+									const char* key,
+									const WebRtc_UWord32 ssrc)
     {
-        WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0,"EnableSRTPSend cipherType = %d;cipherKeyLength = %d;authType = %d;authKeyLength = %d;authTagLength = %d;level = %d;key = %s;ssrc = %ld\n",cipherType,cipherKeyLength,authType,authKeyLength,authTagLength,level,key,ssrc);
-//        printf("ssrc in EnableSRTPSend = %u\n",ssrc);
-    /*if (!useForRTCP) {
-            return -1;
-        }*/
-        if (kCipherAes128CounterMode == cipherType
-            && kAuthHmacSha1 == authType
-            && kEncryptionAndAuthentication == level
-            && kAuthTagLength80 == authKeyLength) {
-            _suite = CCPAES_128_SHA1_80;
-            WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0,"_suite = AES_128_SHA1_80\n");
-        }
-        else if (kCipherAes128CounterMode == cipherType
-                 && kAuthHmacSha1 == authType
-                 && kEncryptionAndAuthentication == level
-                 && kAuthTagLength32 == authKeyLength)
-        {
-            _suite = CCPAES_128_SHA1_32;
-            WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0,"_suite = AES_128_SHA1_32\n");
-        }
-        else if (kCipherAes256CounterMode == cipherType
-                 && kAuthHmacSha1 == authType
-                 && kEncryptionAndAuthentication == level
-                 && kAuthTagLength80 == authKeyLength)
-        {
-            _suite = CCPAES_256_SHA1_80;
-            WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0,"_suite = AES_256_SHA1_80\n");
-        }
-        else if (kCipherAes256CounterMode == cipherType
-                 && kAuthHmacSha1 == authType
-                 && kEncryptionAndAuthentication == level
-                 && kAuthTagLength32 == authKeyLength)
-        {
-            _suite = CCPAES_256_SHA1_32;
-            WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0,"_suite = AES_256_SHA1_80\n");
-        }
-        else if (kEncryption == level && kAuthNull == authType)
-        {
-            _suite = CCPAES_128_NO_AUTH;
-            WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0,"_suite = AES_128_NO_AUTH\n");
-        }
-        else if (kCipherNull == cipherType)
-        {
-            _suite = CCPNO_CIPHER_SHA1_80;
-            WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0,"_suite = NO_CIPHER_SHA1_80\n");
-        }
-        else
-        {
-            WEBRTC_TRACE(kTraceError, kTraceVoice, 0,"ERROR: NOT SUPPORT!\n");
-            return -1;
-        }
-//        printf("key = %s\n",key);
+		WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0, "EnableSRTPSend channel = %d;crypt_type = %d;\n", channel, crypt_type);
+		_suite = crypt_type;
+
+		switch (_suite)
+		{
+		case CCPAES_128_SHA1_80:
+			WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0, "EnableSRTPReceive _suite = AES_128_SHA1_80\n");
+			break;
+		case CCPAES_128_SHA1_32:
+			WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0, "EnableSRTPReceive _suite = AES_128_SHA1_32\n");
+			break;
+		case CCPAES_256_SHA1_80:
+			WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0, "EnableSRTPReceive _suite = AES_256_SHA1_80\n");
+			break;
+		case CCPAES_256_SHA1_32:
+			WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0, "EnableSRTPReceive _suite = AES_256_SHA1_32\n");
+			break;
+		case CCPAES_128_NO_AUTH:
+			WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0, "EnableSRTPReceive _suite = AES_128_NO_AUTH\n");
+			break;
+		case CCPNO_CIPHER_SHA1_80:
+			WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0, "EnableSRTPReceive _suite = NO_CIPHER_SHA1_80\n");
+			break;
+		default:
+			WEBRTC_TRACE(kTraceError, kTraceVoice, 0, "ERROR: NOT SUPPORT!\n");
+			return -1;
+		}
         int ret = ccp_srtp_configure_outgoing(ssrc, reinterpret_cast<const char*>(key));
         if (ret != 0) {
             return -1;
@@ -117,74 +85,41 @@ namespace cloopenwebrtc {
         return 0;
     }
     
-    int VoeEncrySrtp::EnableSRTPReceive(
-                                  int channel,
-                                  CipherTypes cipherType,
-                                  int cipherKeyLength,
-                                  AuthenticationTypes authType,
-                                  int authKeyLength,
-                                  int authTagLength,
-                                  SecurityLevels level,
-                                  const unsigned char key[kVoiceEngineMaxSrtpKeyLength],
-                                  bool useForRTCP)
+    int VoeEncrySrtp::EnableSRTPReceive(int channel, ccp_srtp_crypto_suite_t crypt_type, const char* key)
     {
-        WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0,"EnableSRTPReceive cipherType = %d;cipherKeyLength = %d;authType = %d;authKeyLength = %d;authTagLength = %d;level = %d;key = %s\n",cipherType,cipherKeyLength,authType,authKeyLength,authTagLength,level,key);
-        
-       /* if (!useForRTCP) {
-            return -1;
-        }*/
-        if (kCipherAes128CounterMode == cipherType
-            && kAuthHmacSha1 == authType
-            && kEncryptionAndAuthentication == level
-            && kAuthTagLength80 == authTagLength) {
-            _suite = CCPAES_128_SHA1_80;
-            WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0,"EnableSRTPReceive _suite = AES_128_SHA1_80\n");
-        }
-        else if (kCipherAes128CounterMode == cipherType
-                 && kAuthHmacSha1 == authType
-                 && kEncryptionAndAuthentication == level
-                 && kAuthTagLength32 == authTagLength)
-        {
-            _suite = CCPAES_128_SHA1_32;
-            WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0,"EnableSRTPReceive _suite = AES_128_SHA1_32\n");
-        }
-        else if (kCipherAes256CounterMode == cipherType
-                 && kAuthHmacSha1 == authType
-                 && kEncryptionAndAuthentication == level
-                 && kAuthTagLength80 == authKeyLength)
-        {
-            _suite = CCPAES_256_SHA1_80;
-            WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0,"_suite = AES_256_SHA1_80\n");
-        }
-        else if (kCipherAes256CounterMode == cipherType
-                 && kAuthHmacSha1 == authType
-                 && kEncryptionAndAuthentication == level
-                 && kAuthTagLength32 == authKeyLength)
-        {
-            _suite = CCPAES_256_SHA1_32;
-            WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0,"_suite = AES_256_SHA1_80\n");
-        }
-        else if (kEncryption == level && kAuthNull == authType)
-        {
-            _suite = CCPAES_128_NO_AUTH;
-            WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0,"EnableSRTPReceive _suite = AES_128_NO_AUTH\n");
-        }
-        else if (kCipherNull == cipherType)
-        {
-            _suite = CCPNO_CIPHER_SHA1_80;
-            WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0,"EnableSRTPReceive _suite = NO_CIPHER_SHA1_80\n");
-        }
-        else
-        {
-            WEBRTC_TRACE(kTraceError, kTraceVoice, 0,"ERROR: NOT SUPPORT!\n");
-            return -1;
-        }
+		WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0, "EnableSRTPReceive channel = %d;crypt_type = %d;\n", channel, crypt_type);        
+		_suite = crypt_type;
+
+		switch (_suite)
+		{
+		case CCPAES_128_SHA1_80:
+			WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0, "EnableSRTPReceive _suite = AES_128_SHA1_80\n");
+			break;
+		case CCPAES_128_SHA1_32:
+			WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0, "EnableSRTPReceive _suite = AES_128_SHA1_32\n");
+			break;
+		case CCPAES_256_SHA1_80:
+			WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0, "EnableSRTPReceive _suite = AES_256_SHA1_80\n");
+			break;
+		case CCPAES_256_SHA1_32:
+			WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0, "EnableSRTPReceive _suite = AES_256_SHA1_32\n");
+			break;
+		case CCPAES_128_NO_AUTH:
+			WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0, "EnableSRTPReceive _suite = AES_128_NO_AUTH\n");
+			break;
+		case CCPNO_CIPHER_SHA1_80:
+			WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0, "EnableSRTPReceive _suite = NO_CIPHER_SHA1_80\n");
+			break;
+		default:
+			WEBRTC_TRACE(kTraceError, kTraceVoice, 0, "ERROR: NOT SUPPORT!\n");
+			return -1;
+		}
+
         int ret = ccp_srtp_configure_incoming(reinterpret_cast<const char*>(key));
         if (ret != 0) {
-//            printf("********************VoeEncrySrtp::EnableSRTPReceive end error**********************\n");
-            return -1;
+			WEBRTC_TRACE(kTraceError, kTraceVoice, 0, "VoeEncrySrtp::EnableSRTPReceive srtp config failed\n");
+			return -1;
         }
-//        printf("********************VoeEncrySrtp::EnableSRTPReceive**********************\n");
         return 0;
     }
     
@@ -216,10 +151,10 @@ namespace cloopenwebrtc {
         
     }
     VoeEncrySrtp::VoeEncrySrtp(WebRtc_Word32 id):_id(id),
-    _cipherTypes(kCipherAes128CounterMode),
-    _authenticationTypes(kAuthHmacSha1),
-    _authkeyLength(160),
-    _authtagLength(80),//AES_CM_128_HMAC_SHA1_80
+    //_cipherTypes(kCipherAes128CounterMode),
+    //_authenticationTypes(kAuthHmacSha1),
+    //_authkeyLength(160),
+    //_authtagLength(80),//AES_CM_128_HMAC_SHA1_80
     _suite(CCPAES_128_SHA1_80),
     _ssrc(0),
     session(NULL),
@@ -428,7 +363,8 @@ namespace cloopenwebrtc {
             
             if (!ccp_init_srtp_policy(session, &policy, incoming_ssrc, rcv_key)) {
                 ccp_srtp_dealloc(session);
-                return err_status_fail;
+				session = NULL;
+				return err_status_fail;
             }
         }
         // outgoing stream
@@ -443,7 +379,8 @@ namespace cloopenwebrtc {
             
             if (!ccp_init_srtp_policy(session, &policy, outgoing_ssrc, snd_key)) {
                 ccp_srtp_dealloc(session);
-                return err_status_fail;
+				session = NULL;
+				return err_status_fail;
             }
         }
         
@@ -551,10 +488,10 @@ namespace cloopenwebrtc {
 //        printf("srtp_init_done = %d\n",srtp_init_done);
         if (srtp_init_done==0){
 //            printf("We go into srtp shutdown\n");
-#ifdef HAVE_SRTP_SHUTDOWN
+//#ifdef HAVE_SRTP_SHUTDOWN
 //            printf("We Have srtp shotdown\n");
             err = srtp_shutdown();
-#endif
+//#endif
         }
         return err;
     }
@@ -581,6 +518,7 @@ namespace cloopenwebrtc {
         
         if (!ccp_init_srtp_policy(session, &policy, incoming_ssrc, rcv_key)) {
             ccp_srtp_dealloc(session);
+			session = NULL;
             return err_status_fail;
         }
         return 0;
@@ -613,7 +551,8 @@ namespace cloopenwebrtc {
 //        printf("ssrc in %s %u",__FUNCTION__,ssrc);
         if (!ccp_init_srtp_policy(session, &policy, outgoing_ssrc, snd_key)) {
             ccp_srtp_dealloc(session);
-            return err_status_fail;
+			session = NULL;
+			return err_status_fail;
         }
         return 0;
     }

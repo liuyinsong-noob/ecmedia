@@ -28,6 +28,7 @@ ViESender::ViESender(int channel_id)
       rtp_dump_(NULL),
 	  external_encryption_(NULL),
 	  encryption_buffer_(NULL),
+	  callback_encryption_buffer_(NULL),
 	  _startNetworkTime(NULL),
 	  _sendDataTotalSim(0),
 	  _sendDataTotalWifi(0),
@@ -120,20 +121,25 @@ int ViESender::SendPacket(int vie_id, const void* data, size_t len, int sn) {
 	  external_encryption_->encrypt(channel_id_, send_packet,
 									encryption_buffer_, send_packet_length,
 									static_cast<int*>(&send_packet_length));
+
+	  //append ssrc to end, 4 bytes
+	  memcpy(encryption_buffer_ + send_packet_length, encryption_buffer_ + 8, 4);
+	  send_packet_length += 4;
 	  send_packet = encryption_buffer_;
+
   }
 
     int return_len = 0;
     if (video_data_cb_) {
-        video_data_cb_(channel_id_, send_packet+12, send_packet_length-12, encryption_buffer_+12, return_len, true);
-        memcpy(encryption_buffer_, send_packet, 12);
-        send_packet = encryption_buffer_;
+        video_data_cb_(channel_id_, send_packet+12, send_packet_length-12, callback_encryption_buffer_ +12, return_len, true);
+        memcpy(callback_encryption_buffer_, send_packet, 12);
+        send_packet = callback_encryption_buffer_;
         send_packet_length = return_len + 12;
     }
     
-  uint32_t bytes_sent = transport_->SendPacket(channel_id_, send_packet, send_packet_length);
+  int bytes_sent = transport_->SendPacket(channel_id_, send_packet, send_packet_length);
 
-  if (bytes_sent != len) {
+  if (bytes_sent != send_packet_length) {
 	  WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideo, channel_id_,
 		  "ViESender::SendPacket - Transport failed to send RTP packet");
   }
@@ -176,10 +182,14 @@ int ViESender::SendRTCPPacket(int vie_id, const void* data, size_t len) {
 	  external_encryption_->encrypt_rtcp(
 		  channel_id_, send_packet, encryption_buffer_, send_packet_length,
 		  static_cast<int*>(&send_packet_length));
+
+	  //append ssrc to end, 4 bytes
+	  memcpy(encryption_buffer_ + send_packet_length, encryption_buffer_ + 4, 4);
+	  send_packet_length += 4;
 	  send_packet = encryption_buffer_;
   }
 
-  int bytes_sent = transport_->SendRTCPPacket(channel_id_, data, len);
+  int bytes_sent = transport_->SendRTCPPacket(channel_id_, send_packet, send_packet_length);
 
   {
 	  CriticalSectionScoped cs(critsect_net_statistic.get());
@@ -241,10 +251,10 @@ void ViESender::getVieSenderStatistic(long long &startTime, long long &sendDataT
 
 int ViESender::SetVideoDataCb(onEcMediaVideoData video_data_cb)
 {
-    if (!encryption_buffer_) {
-        encryption_buffer_ = new WebRtc_UWord8[kViEMaxMtu];
+    if (!callback_encryption_buffer_) {
+		callback_encryption_buffer_ = new WebRtc_UWord8[kViEMaxMtu];
     }
-    if (encryption_buffer_ == NULL) {
+    if (callback_encryption_buffer_ == NULL) {
         return -1;
     }
     video_data_cb_ = video_data_cb;
