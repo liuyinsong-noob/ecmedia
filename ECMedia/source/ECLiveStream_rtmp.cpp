@@ -280,16 +280,13 @@ namespace cloopenwebrtc {
             return;
         
         unsigned voiceCodec = ((unsigned char)packet->m_body[0]) >> 4;
-        unsigned sampleRate = ( 1 << ((packet->m_body[0]  &0xC ) >>2)  ) *5512.5;
-        unsigned channels = (packet->m_body[0] &0x1) +1;
         unsigned char pcmdata[40960];
         unsigned int payloadLen = packet->m_nBodySize-2 ;
         
         const uint8_t * payloadData = (const uint8_t*)packet->m_body+2;
         static PushResampler<int16_t> resampler;
-        int len = 0;
+        int len = 0,ret = 0;
         uint8_t *audio_data_10ms;
-        static FILE *fp1,*fp2;
         static int num = 0;
         switch (voiceCodec) {
             case 0:
@@ -297,9 +294,10 @@ namespace cloopenwebrtc {
                 break;
             case 10: //AAC
                 if ( !faac_decode_handle_ ) {
-                    faac_decode_handle_ = faad_decoder_create(sampleRate,channels,64000);
-
-                    if( !RegisterReceiveAudioCodec("L16",32000,channels) ) {
+                    
+					faad_decoder_getinfo(packet->m_body + 2, audio_sampleRate_, audio_channels_);
+					faac_decode_handle_ = faad_decoder_create(audio_sampleRate_, audio_channels_,64000);
+                    if( !RegisterReceiveAudioCodec("L16",32000, audio_channels_) ) {
 						PrintConsole("[RTMP ERROR] %s register codec failed\n", __FUNCTION__);
                     }
                     VoEBase *base = VoEBase::GetInterface(voe_);
@@ -307,26 +305,34 @@ namespace cloopenwebrtc {
                         return ;
                     base->StartPlayout(audio_channel_);
                     base->Release();
-                    resampler.InitializeIfNeeded(sampleRate, 32000, channels);
+                    resampler.InitializeIfNeeded(audio_sampleRate_, 32000, audio_channels_);
                 }
                 if( payloadLen <= 7 )
                     return;
 
-                 len = faad_decode_frame(faac_decode_handle_, (unsigned char *)packet->m_body+2, packet->m_nBodySize-2, pcmdata,&payloadLen);
-                 if( payloadLen == 0 )
+                 ret = faad_decode_frame(faac_decode_handle_, (unsigned char *)packet->m_body+2, packet->m_nBodySize-2, pcmdata,&payloadLen);
+				 if (ret < 0)
+					 return;
+
+                 if( payloadLen == 0  )
                      return;
                 
                  playbuffer_.PushData( pcmdata, payloadLen);
                 
-                 while( audio_data_10ms = playbuffer_.ConsumeData(sampleRate/100*4) )
+                 while( audio_data_10ms = playbuffer_.ConsumeData(audio_sampleRate_ /100*4) )
                  {
-                      len = resampler.Resample( (int16_t*)audio_data_10ms, sampleRate/100*2, (int16_t*)pcmdata,sizeof(pcmdata)/2);
+			          len = resampler.Resample( (int16_t*)audio_data_10ms, audio_sampleRate_ /100*2, (int16_t*)pcmdata,sizeof(pcmdata)/2);
+					  if (len < 0) {
+						  PrintConsole("[RTMP ERROR] %s resample error\n", __FUNCTION__);
+						  return;
+					  }
                      WebRtcRTPHeader rtpHeader;
                      rtpHeader.header.sequenceNumber = audio_rtp_seq_++;
                      rtpHeader.header.ssrc = 1;
                      rtpHeader.header.payloadType = 113;
                      rtpHeader.header.timestamp = 320 * rtpHeader.header.sequenceNumber;
                      audio_data_cb_->OnReceivedPayloadData((const uint8_t*)pcmdata, len*2, &rtpHeader);
+					
                  }
                 payloadData = pcmdata;
        
@@ -414,12 +420,12 @@ namespace cloopenwebrtc {
 					}
                     payloadData = &nal[0];
                     payloadLen = nal.size();
-                    if(frameType == 1) {
+                   /* if(frameType == 1) {
 						PrintConsole("[RTMP ERROR] %s key frame nalu  %d timestamp %d\n", __FUNCTION__, packet->m_nBodySize,packet->m_nTimeStamp);
                     }
 					else {
 						PrintConsole("[RTMP ERROR] %s intra frame nalu len %d timestamp %d\n", __FUNCTION__, packet->m_nBodySize,packet->m_nTimeStamp);
-					}
+					}*/
                     break;
                 default:
 					PrintConsole("[RTMP ERROR] %s codec %d not supported\n", __FUNCTION__, packet->m_body[1]);
@@ -783,7 +789,7 @@ namespace cloopenwebrtc {
 		RTMP_Init(rtmph_);
 		RTMP_SetupURL(rtmph_, (char*)url.c_str());
 		RTMP_EnableWrite(rtmph_);
-		rtmph_->Link.timeout = 3; //connection timeout
+		rtmph_->Link.timeout = 30; //connection timeout
 		rtmph_->Link.lFlags |= RTMP_LF_LIVE;
 
 		if (!RTMP_Connect(rtmph_, NULL))

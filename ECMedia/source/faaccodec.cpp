@@ -68,6 +68,7 @@ int faad_decode_frame(void *pParam, unsigned char *pData, int nLen, unsigned cha
 {
     FAADContext* pCtx = (FAADContext*)pParam;
     NeAACDecHandle handle = pCtx->handle;
+	*outLen = 0;
     long res = NeAACDecInit(handle, pData, nLen, (unsigned long*)&pCtx->sample_rate, (unsigned char*)&pCtx->channels);
     if (res < 0) {
         printf("NeAACDecInit failed\n");
@@ -77,37 +78,12 @@ int faad_decode_frame(void *pParam, unsigned char *pData, int nLen, unsigned cha
     uint32_t framelen = _get_frame_length(pData);
     unsigned char *buf = (unsigned char *)NeAACDecDecode(handle, &info, pData, nLen);
     if (buf && info.error == 0) {
-        if (info.samplerate == 44100) {
-            //src: 2048 samples, 4096 bytes
-            //dst: 2048 samples, 4096 bytes
-            int tmplen = (int)info.samples * 16 / 8;
-            memcpy(pPCM,buf,tmplen);
-            *outLen = tmplen;
-        } else if (info.samplerate == 22050) {
-            //src: 1024 samples, 2048 bytes
-            //dst: 2048 samples, 4096 bytes
-            short *ori = (short*)buf;
-
-            short* tmpbuf = new short[info.samples * 2];
-            int tmplen = (int)info.samples * 16 / 8 * 2;
-            for (int32_t i = 0, j = 0; i < info.samples; i += 2) {
-                tmpbuf[j++] = ori[i];
-                tmpbuf[j++] = ori[i + 1];
-                tmpbuf[j++] = ori[i];
-                tmpbuf[j++] = ori[i + 1];
-            }
-            memcpy(pPCM,tmpbuf,tmplen);
-			delete tmpbuf;
-            *outLen = tmplen;
-        }else if(info.samplerate == 8000){
-            //从双声道的数据中提取单通道
-            for(int i=0,j=0; i<4096 && j<2048; i+=4, j+=2)
-            {
-                pPCM[j]= buf[i];
-                pPCM[j+1]=buf[i+1];
-            }
-            *outLen = (unsigned int)info.samples;
-        }
+		if (info.samples == 0) {
+			return 0;
+		}
+        int tmplen = (int)info.samples * 16 / 8;
+        memcpy(pPCM,buf,tmplen);
+        *outLen = tmplen;
     } else {
         printf("NeAACDecDecode failed --- %s\n", NeAACDecGetErrorMessage(info.error));
         return -1;
@@ -194,4 +170,50 @@ int faac_get_decoder_info(void* handle,unsigned char **buf, unsigned long *len)
 		return -1;
 	FAACContext *context = (FAACContext *)handle;
 	return faacEncGetDecoderSpecificInfo(context->handle , buf, len);
+}
+
+int faad_decoder_getinfo(char *aacconfig,unsigned int &sampleRate, unsigned int &channels)
+{
+	int sampleindex = ( (aacconfig[0] & 0x7) << 1) |  ((unsigned char)(aacconfig[1] & 0x80) >> 7);
+	switch (sampleindex) {
+	case 0 :
+		sampleRate = 96000;
+		break;
+	case 1:
+		sampleRate = 88200;
+		break;
+	case 2:
+		sampleRate = 64000;
+		break;
+
+	case 3:
+		sampleRate = 48000;
+		break;
+	case 4:
+		sampleRate = 44100;
+		break;
+	case 5:
+		sampleRate = 32000;
+		break;
+	case 6:
+		sampleRate = 24000;
+		break;
+	case 7:
+		sampleRate = 22050;
+		break;
+	case 8:
+		sampleRate = 16000;
+		break;
+	case 10:
+		sampleRate = 11025;
+		break;
+	case 11:
+		sampleRate = 8000;
+		break;
+	default:
+		break;
+	}
+	channels = (aacconfig[1] & 0x78) >> 3;
+	return 0;
+
 }

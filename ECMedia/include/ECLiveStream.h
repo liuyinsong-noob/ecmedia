@@ -161,6 +161,8 @@ namespace cloopenwebrtc {
 		unsigned long faac_encode_input_samples_;
         void *video_window_;
 		void *local_view_;
+		unsigned int audio_sampleRate_;
+		unsigned int audio_channels_ ;
         RTMP *rtmph_;
         RingBuffer<uint8_t> playbuffer_;
 		RingBuffer<uint8_t> recordbuffer_;
