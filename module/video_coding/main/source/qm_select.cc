@@ -343,7 +343,7 @@ int VCMQmResolution::SelectResolution(VCMResolutionScale** qm) {
       down_action_history_[0].temporal != kNoChangeTemporal) {
     if (GoingUpResolution()) {
       *qm = qm_;
-        printf("sean haha going up width:%d, height:%d\n",qm_->codec_width,qm_->codec_height);
+//        printf("sean haha going up width:%d, height:%d\n",qm_->codec_width,qm_->codec_height);
       return VCM_OK;
     }
   }
@@ -351,7 +351,7 @@ int VCMQmResolution::SelectResolution(VCMResolutionScale** qm) {
   // Check for going down in resolution.
   if (GoingDownResolution()) {
     *qm = qm_;
-      printf("sean haha going down width:%d, height:%d\n",qm_->codec_width,qm_->codec_height);
+//      printf("sean haha going down width:%d, height:%d\n",qm_->codec_width,qm_->codec_height);
     return VCM_OK;
   }
   return VCM_OK;

@@ -547,7 +547,7 @@ int NetEqImpl::InsertPacketInternal(const WebRtcRTPHeader& rtp_header,
 #ifndef WIN32
         printTime();
 #endif
-        printf("sean haha 113 Del All Packets\n");
+//        printf("sean haha 113 Del All Packets\n");
       PacketBuffer::DeleteAllPackets(&packet_list);
       return kRedundancySplitError;
     }
@@ -1214,7 +1214,7 @@ int NetEqImpl::Decode(PacketList* packet_list, Operations* operation,
 #ifndef WIN32
 		printTime();
 #endif
-        printf("sean haha 115 Del All Packets\n");
+//        printf("sean haha 115 Del All Packets\n");
         PacketBuffer::DeleteAllPackets(packet_list);
         return kDecoderNotFound;
       }

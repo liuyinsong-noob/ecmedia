@@ -27,7 +27,7 @@ int32_t VPMSimpleSpatialResampler::SetTargetFrameSize(int32_t width,
   if (resampling_mode_ == kNoRescaling) return VPM_OK;
 
   if (width < 1 || height < 1) return VPM_PARAMETER_ERROR;
-    printf("sean haha got it width%d, height%d\n",width,height);
+//    printf("sean haha got it width%d, height%d\n",width,height);
   target_width_ = width;
   target_height_ = height;
 

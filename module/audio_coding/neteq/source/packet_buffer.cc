@@ -144,7 +144,7 @@ int PacketBuffer::InsertPacketList(PacketList* packet_list,
     } else if (return_val != kOK) {
       // An error occurred. Delete remaining packets in list and return.
         //printTime();
-        printf("sean haha 111 Del All Packets\n");
+//        printf("sean haha 111 Del All Packets\n");
       DeleteAllPackets(packet_list);
       return return_val;
     }

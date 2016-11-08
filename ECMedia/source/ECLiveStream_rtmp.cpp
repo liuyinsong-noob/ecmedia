@@ -384,8 +384,6 @@ namespace cloopenwebrtc {
                 nal.push_back(0);
                 nal.push_back(1);
             }
-            printf(" nal type is %d\n", data[index] & 0x1f );
-
 
             nal.insert(nal.end(), data+index, data+index+nalu_size);
             index += nalu_size;
@@ -585,7 +583,6 @@ namespace cloopenwebrtc {
 			uint32_t nalu_size = fragmentationHeader.fragmentationLength[i];
 			uint8_t * nalu = data + fragmentationHeader.fragmentationOffset[i];
 			uint32_t naltype = nalu[0] & 0x1F;
-            printf("encode naltype is %d\n",naltype);
 			if (7 == naltype) { //sps
 				sps.insert(sps.end(), nalu, nalu + nalu_size);
 			}
@@ -794,12 +791,12 @@ namespace cloopenwebrtc {
 
 		if (!RTMP_Connect(rtmph_, NULL))
 		{
-			printf("connect error\n");
+			PrintConsole("connect error\n");
 			return -3;
 		}
 		if (!RTMP_ConnectStream(rtmph_, 0))
 		{
-			printf("connect stream error\n");
+			PrintConsole("connect stream error\n");
 			return -4;
 		}
 		RTMP_SetBufferMS(rtmph_, 3600 * 1000);

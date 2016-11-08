@@ -402,9 +402,7 @@ char *globalFilePathcapture = NULL;
     }else{
         NSLog(@"enable area change monitor error：%@",error.localizedDescription);
     }
-    if (device.isSubjectAreaChangeMonitoringEnabled) {
-        NSLog(@"haha");
-    }
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subjectAreaDidChange:) name:AVCaptureDeviceSubjectAreaDidChangeNotification object:device];
     
 	input = [AVCaptureDeviceInput deviceInputWithDevice:device
