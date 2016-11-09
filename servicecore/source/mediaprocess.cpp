@@ -3183,113 +3183,30 @@ int ServiceCore::serphone_call_start_record_audio_ex(SerPhoneCall *call, const c
 	return 0;
 }
 
-int ServiceCore::serphone_call_start_record_voip(SerPhoneCall *call, const char *filename)
+int ServiceCore::serphone_call_start_record_r_video(SerPhoneCall *call, const char *filename)
 {
-#ifdef _WIN32
-#ifdef VIDEO_ENABLED
-
-	if(!capability_conf.localrecvoip) {
-		return -3;
-	}  
-
-	if(!call) {
-		return -1;
-	}
-	//if(!call->record_voip) {
-	//	PrintConsole("serphone_call_start_record_voip\n");
-	//	call->record_voip = new RecordVoip();
-	//}
-
-	//if(call->record_voip->isStartRecordMp4()) {
-	//	serphone_call_stop_record_voip(call);
-	//}
-
-	//int ret = call->record_voip->StartRecordVoip(filename);
-
-	//if(m_voe && call->m_AudioChannelID >= 0) {
-	//	PrintConsole("RegisterExternalMediaProcessin in serphone_call_start_record_audio\n");
-	//	VoEExternalMedia* exmedia = VoEExternalMedia::GetInterface(m_voe);
-	//	if(exmedia) {
-	//		exmedia->RegisterExternalMediaProcessing(call->m_AudioChannelID,  kPlaybackPerChannel, *call->record_voip);
-	//		exmedia->RegisterExternalMediaProcessing(call->m_AudioChannelID,  kRecordingPerChannel, *call->record_voip);
-	//	}
-	//	exmedia->Release();
-	//}
-
-	//if(m_vie && call->m_VideoChannelID >= 0) {
-	//	ViEFile *file = ViEFile::GetInterface(m_vie);
-	//	if(file) {
-	//		file->RegisterVideoFrameStorageCallBack(call->m_VideoChannelID, call->record_voip);
-	//		ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
-	//		if(rtp_rtcp) {
-	//			rtp_rtcp->RequestKeyFrame(call->m_VideoChannelID);
-	//			rtp_rtcp->Release();
-	//		}
-	//	}
-	//	file->Release();
-	//}
-
-	//return ret;
-#endif
-#endif
-
-	return -1;
+	return ECMedia_start_record_remote_video(call->m_AudioChannelID, call->m_VideoChannelID, filename);
 }
 
-int ServiceCore::serphone_call_stop_record_voip(SerPhoneCall *call)
+int ServiceCore::serphone_call_stop_record_r_video(SerPhoneCall *call)
 {
-#ifdef _WIN32
-#ifdef VIDEO_ENABLED
-
-	if(!capability_conf.localrecvoip) {
-		return -3;
-	}
-
-	//if(!call || !call->record_voip)
-	//	return -1;
-
-	//if( m_voe && !(call->record_voip->isStartRecordWav() || call->record_voip->isStartRecordScree()) ) {
-	//	VoEExternalMedia* exmedia = VoEExternalMedia::GetInterface(m_voe);
-	//	if(exmedia) {
-	//		exmedia->DeRegisterExternalMediaProcessing(call->m_AudioChannelID,  kPlaybackPerChannel);
-	//		exmedia->DeRegisterExternalMediaProcessing(call->m_AudioChannelID,  kRecordingPerChannel);
-	//		exmedia->Release();
-	//	}
-	//}
-	//if(m_vie && call->m_VideoChannelID >= 0) {
-	//	ViEFile *file = ViEFile::GetInterface(m_vie);
-	//	if(file) {
-	//		file->RegisterVideoFrameStorageCallBack(call->m_VideoChannelID, NULL);
-	//		ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
-	//		if(rtp_rtcp) {
-	//			rtp_rtcp->RequestKeyFrame(call->m_VideoChannelID);
-	//			rtp_rtcp->Release();
-	//		}
-	//	}
-	//	file->Release();
-	//}
-
-	//return call->record_voip->StopRecordVoip(0);
-#endif
-#endif
-	return 0;
+	return ECMedia_stop_record_remote_video(call->m_AudioChannelID, call->m_VideoChannelID);
 }
 
-int ServiceCore::record_voip_status(SerPhoneCall *call, const char *filename, int status)
+int ServiceCore::serphone_call_start_record_l_video(SerPhoneCall *call, const char *filename)
 {
-	PrintConsole("ServiceCore::record_voip_status file=%s, status=%d\n", filename, status);
-	return 0;
+	return ECMedia_start_record_local_video(call->m_AudioChannelID, call->m_VideoChannelID, filename);
+}
+
+int ServiceCore::serphone_call_stop_record_l_video(SerPhoneCall *call)
+{
+	return ECMedia_stop_record_local_video(call->m_AudioChannelID, call->m_VideoChannelID);
 }
 
 int ServiceCore::serphone_call_start_record_screen(SerPhoneCall *call, const char *filename, int bitrates, int fps, int type)
 {
 #ifdef _WIN32
 #ifdef VIDEO_ENABLED
-
-	if(!capability_conf.localrecvoip) {
-		return -3;
-	}
-
 	if(!call) {
 		return -1;
 	}
@@ -3298,6 +3215,25 @@ int ServiceCore::serphone_call_start_record_screen(SerPhoneCall *call, const cha
 #endif
 	return -1;
 }
+
+int ServiceCore::serphone_call_start_record_screen_ex(SerPhoneCall *call, const char *filename, int bitrates, int fps, int type, int left, int top, int width, int height)
+{
+#ifdef _WIN32
+#ifdef VIDEO_ENABLED
+
+	if (!capability_conf.localrecvoip) {
+		return -3;
+	}
+
+	if (!call) {
+		return -1;
+	}
+	return ECMedia_start_record_screen_ex(call->m_AudioChannelID, filename, bitrates, fps, type, left, top, width, height);
+#endif
+#endif
+	return -1;
+}
+
 int ServiceCore::serphone_call_stop_record_screen(SerPhoneCall *call)
 {
 #ifdef VIDEO_ENABLED

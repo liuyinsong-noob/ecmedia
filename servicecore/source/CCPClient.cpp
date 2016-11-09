@@ -2962,34 +2962,62 @@ CCPAPI int getRemoteVideoSnapshotExt(const char *callid, const char *fielName)
 	return g_pSerCore->getRemoteVideoSnapshot(pCall, fielName);
 }
 
-
-CCPAPI int startRecordVoip(const char *callid, const char *filename)
+CCPAPI int startRecordRemoteVideo(const char *callid, const char *filename)
 {
-	if(!callid || !filename) {
-		PrintConsole("[APICall getRemoteVideoSnapshot Failed\n");
+	if (!callid || !filename) {
+		PrintConsole("[APICall startRecordRemoteVideo Failed\n");
 		return -1;
 	}
 
-    PrintConsole("[APICall startRecordVoip callid = %s filename=%s\n",callid, filename);
+	PrintConsole("[APICall startRecordRemoteVideo callid = %s filename=%s\n", callid, filename);
 
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	SerPhoneCall *pCall = NULL;
 	int ret = findCall(callid, &pCall);
-	if(ret != 0)
+	if (ret != 0)
 		return -1;
-	return g_pSerCore->serphone_call_start_record_voip(pCall, filename);
+	return g_pSerCore->serphone_call_start_record_r_video(pCall, filename);
 }
 
-CCPAPI int stopRecordVoip(const char *callid)
+CCPAPI int stopRecordRemoteVideo(const char *callid)
 {
-    PrintConsole("[APICall getRemoteVideoSnapshot callid = %s\n",callid);
+	PrintConsole("[APICall stopRecordRemoteVideo callid = %s\n", callid);
 
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	SerPhoneCall *pCall = NULL;
 	int ret = findCall(callid, &pCall);
-	if(ret != 0)
+	if (ret != 0)
 		return -1;
-	return g_pSerCore->serphone_call_stop_record_voip(pCall);
+	return g_pSerCore->serphone_call_stop_record_r_video(pCall);
+}
+
+CCPAPI int startRecordLocalVideo(const char *callid, const char *filename)
+{
+	if (!callid || !filename) {
+		PrintConsole("[APICall startRecordLocalVideo Failed\n");
+		return -1;
+	}
+
+	PrintConsole("[APICall startRecordLocalVideo callid = %s filename=%s\n", callid, filename);
+
+	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+	SerPhoneCall *pCall = NULL;
+	int ret = findCall(callid, &pCall);
+	if (ret != 0)
+		return -1;
+	return g_pSerCore->serphone_call_start_record_l_video(pCall, filename);
+}
+
+CCPAPI int stopRecordLocalVideo(const char *callid)
+{
+	PrintConsole("[APICall stopRecordLocalVideo callid = %s\n", callid);
+
+	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+	SerPhoneCall *pCall = NULL;
+	int ret = findCall(callid, &pCall);
+	if (ret != 0)
+		return -1;
+	return g_pSerCore->serphone_call_stop_record_l_video(pCall);
 }
 
 CCPAPI int noiseSuppression(const void* audioSamples,short *out)

@@ -166,7 +166,9 @@ ViEEncoder::ViEEncoder(int32_t engine_id,
     send_statistics_proxy_(new SendStatisticsProxy(channel_id)),
     file_recorder_(channel_id),
     capture_(NULL),
-    capture_id_(-1){
+    capture_id_(-1),
+	encoded_packet_observer_(NULL),
+	packet_observer_cs_(CriticalSectionWrapper::CreateCriticalSection()){
   RtpRtcp::Configuration configuration;
   configuration.id = ViEModuleId(engine_id_, channel_id_);
   configuration.audio = false;  // Video.
@@ -767,6 +769,13 @@ int32_t ViEEncoder::SendData(
   if (send_statistics_proxy_ != NULL) {
     send_statistics_proxy_->OnSendEncodedImage(encoded_image, rtp_video_hdr);
   }
+
+  {
+	  CriticalSectionScoped cs(packet_observer_cs_.get());
+	  if (encoded_packet_observer_)
+		  encoded_packet_observer_->SendData(payload_type, encoded_image, fragmentation_header, rtp_video_hdr);
+  }
+
   // New encoded data, hand over to the rtp module.
   return default_rtp_rtcp_->SendOutgoingData(
       VCMEncodedFrame::ConvertFrameType(encoded_image._frameType), payload_type,
@@ -1064,6 +1073,16 @@ void ViEEncoder::DeRegisterExternalPacketization()
 	vcm_.RegisterTransportCallback(NULL);
 }
 
+void ViEEncoder::RegisterEncoderDataObserver(VCMPacketizationCallback* observer)
+{
+	CriticalSectionScoped cs(packet_observer_cs_.get());
+	encoded_packet_observer_ = observer;
+}
+void ViEEncoder::DeRegisterEncoderDataObserver()
+{
+	CriticalSectionScoped cs(callback_cs_.get());
+	encoded_packet_observer_ = NULL;
+}
 
 SendStatisticsProxy* ViEEncoder::GetSendStatisticsProxy()
 {

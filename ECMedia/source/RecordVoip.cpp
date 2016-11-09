@@ -36,10 +36,12 @@ RecordVoip::RecordVoip()
 	,_audioEvent(EventWrapper::Create())
 	,_playbackList()
 	,_recordingList()
-	,_frameStorageList()
+	, _frameRecvList()
+	, _frameSendList()
 	,_frameScreenList()
 	,_startRecordWav(false)
-	,_startRecordMp4(false)
+	, _startRecordRVideo(false)
+	, _startRecordLVideo(false)
 	,_startRecordScreen(false)
 	,_recordScreenBitRates(640)
 	,_captureScreenInterval(100)
@@ -53,7 +55,8 @@ RecordVoip::RecordVoip()
 #ifdef _WIN32
 #ifdef VIDEO_ENABLED
 	,_captureScreethread(NULL)
-	,_h264Record(NULL)
+	, _h264RecordRemote(NULL)
+	, _h264RecordLocal(NULL)
 	,_h264RecordScreen(NULL)
 	,_h264Encoder(NULL)
 	,_captureScreen(NULL)
@@ -82,8 +85,11 @@ RecordVoip::~RecordVoip()
 
 #ifdef _WIN32
 #ifdef VIDEO_ENABLED
-    if(_startRecordMp4)
-        StopRecordVoip(0);
+    if(_startRecordRVideo)
+        StopRecordRemoteVideo(0);
+
+	if (_startRecordRVideo)
+		StopRecordLocalVideo(0);
 
 	if(_startRecordScreen)
 		StopRecordScreen(0);
@@ -140,25 +146,40 @@ bool RecordVoip::ProcessVideoData()
 	
     if( _videoEvent->Wait(100) == kEventSignaled ) {
 		
-		//PrintConsole("record video RL=%d SL=%d.\n", _frameStorageList.GetSize(), _frameScreenList.GetSize());
+		//PrintConsole("record video RL=%d SL=%d.\n", _frameRecvList.GetSize(), _frameScreenList.GetSize());
 
 		CriticalSectionScoped lock(_videoCrit);
 
 #ifdef _WIN32
 #ifdef VIDEO_ENABLED
 		writeTimes = 10;
-		while (_frameStorageList.GetSize() && writeTimes-- >= 0) {
-			ListItem *storageItem =  _frameStorageList.First();
-			if(_startRecordMp4 && storageItem) {
+		while (_frameRecvList.GetSize() && writeTimes-- >= 0) {
+			ListItem *storageItem =  _frameRecvList.First();
+			if(_startRecordRVideo && storageItem) {
 				EncodedVideoData *frame = (EncodedVideoData*)storageItem->GetItem();
-				_h264Record->wirte_video_data(frame->payloadData, frame->payloadSize, (double)frame->timeStamp);
+				_h264RecordRemote->wirte_video_data(frame->payloadData, frame->payloadSize, (double)frame->timeStamp);
 				delete frame;
 			}
-			_frameStorageList.PopFront();
+			_frameRecvList.PopFront();
 		}
-		while (_frameStorageList.GetSize() > 100)
+		while (_frameRecvList.GetSize() > 100)
 		{
-			_frameStorageList.PopFront();
+			_frameRecvList.PopFront();
+		}
+
+		writeTimes = 10;
+		while (_frameSendList.GetSize() && writeTimes-- >= 0) {
+			ListItem *storageItem = _frameSendList.First();
+			if (_startRecordLVideo && storageItem) {
+				EncodedVideoData *frame = (EncodedVideoData*)storageItem->GetItem();
+				_h264RecordLocal->wirte_video_data(frame->payloadData, frame->payloadSize, (double)frame->timeStamp);
+				delete frame;
+			}
+			_frameSendList.PopFront();
+		}
+		while (_frameSendList.GetSize() > 100)
+		{
+			_frameSendList.PopFront();
 		}
 
 		writeTimes = 10;
@@ -197,8 +218,9 @@ bool RecordVoip::ProcessAudioData()
 
 		CriticalSectionScoped lock(_audioCrit);
 
-		writeTimes = 10;
-		while ((_playbackList.GetSize() && _recordingList.GetSize()) && writeTimes-- >= 0 ) {
+		writeTimes = 20;
+		while (_recordingList.GetSize() && writeTimes-- >= 0 ) {
+
 			WebRtc_Word16 *playbackData = NULL;
 			WebRtc_Word16 *recordingData = NULL;
 			ListItem *playbackItem = _playbackList.First();
@@ -228,8 +250,12 @@ bool RecordVoip::ProcessAudioData()
 #ifdef _WIN32
 #ifdef VIDEO_ENABLED
 
-				if(_startRecordMp4 && _h264Record) {
-					_h264Record->write_audio_data(playbackData, _audioDataLen, _audioSamplingFreq) ;
+				if(_startRecordRVideo && _h264RecordRemote) {
+					_h264RecordRemote->write_audio_data(playbackData, _audioDataLen, _audioSamplingFreq) ;
+				}
+
+				if (_startRecordLVideo && _h264RecordLocal) {
+					_h264RecordLocal->write_audio_data(playbackData, _audioDataLen, _audioSamplingFreq);
 				}
 
 				if(_startRecordScreen && _h264RecordScreen) {
@@ -244,28 +270,15 @@ bool RecordVoip::ProcessAudioData()
 					}
 				}
 
-			} else if(playbackData) {
-#ifdef _WIN32
-#ifdef VIDEO_ENABLED
-				if(_startRecordMp4 && _h264Record) {
-					_h264Record->write_audio_data(playbackData, _audioDataLen, _audioSamplingFreq) ;
-				}
-
-				if(_startRecordScreen && _h264RecordScreen) {
-					_h264RecordScreen->write_audio_data(playbackData, _audioDataLen, _audioSamplingFreq);
-				}
-#endif
-#endif //_WIN32
-				if(_startRecordWav && _wavRecordFile) {
-					if(fwrite(playbackData, 2, _audioDataLen, _wavRecordFile) != _audioDataLen) {
-						saveWavFlag = false;
-					}
-				}
 			} else if(recordingData) {
 #ifdef _WIN32
 #ifdef VIDEO_ENABLED
-				if(_startRecordMp4 && _h264Record) {
-					_h264Record->write_audio_data(recordingData, _audioDataLen, _audioSamplingFreq) ;
+				if(_startRecordRVideo && _h264RecordRemote) {
+					_h264RecordRemote->write_audio_data(recordingData, _audioDataLen, _audioSamplingFreq) ;
+				}
+
+				if (_startRecordRVideo && _h264RecordRemote) {
+					_h264RecordRemote->write_audio_data(recordingData, _audioDataLen, _audioSamplingFreq);
 				}
 
 				if(_startRecordScreen && _h264RecordScreen) {
@@ -305,7 +318,7 @@ bool RecordVoip::ProcessAudioData()
 }
 
 
-int RecordVoip::StartRecordVoip(const char *filename)
+int RecordVoip::StartRecordRemoteVideo(const char *filename)
 {
 #ifdef _WIN32
 #ifdef VIDEO_ENABLED
@@ -313,47 +326,103 @@ int RecordVoip::StartRecordVoip(const char *filename)
         return -1;
     }
 
-    if(_startRecordMp4) {
-        StopRecordVoip(0);
+    if(_startRecordRVideo) {
+        StopRecordRemoteVideo(0);
     }
 
-    if(_mp4FileName) {
-		sprintf(_mp4FileName, "%s", filename);
+    if(_remoteVideoFileName) {
+		sprintf(_remoteVideoFileName, "%s", filename);
 	}
 
-	_h264Record = new h264_record();
-	if(!_h264Record) {
+	_h264RecordRemote = new h264_record();
+	if(!_h264RecordRemote) {
 		return -1;
 	}
-	_h264Record->init(_mp4FileName);
+	_h264RecordRemote->init(_remoteVideoFileName);
 
-    _startRecordMp4 = true;
+    _startRecordRVideo = true;
 	return 0;
 #endif
 #endif //_WIN32
     return -1;
 }
 
-int RecordVoip::StopRecordVoip(int status)
+int RecordVoip::StopRecordRemoteVideo(int status)
 {
 #ifdef _WIN32
 #ifdef VIDEO_ENABLED
 	CriticalSectionScoped lock_video(_videoCrit);
 	CriticalSectionScoped lock_audio(_audioCrit);
 
-    if(!_startRecordMp4)
+    if(!_startRecordRVideo)
         return 0;
 
-    _startRecordMp4 = false;
+    _startRecordRVideo = false;
     _videoEvent->Set();
 
-	bool isWrted = _h264Record->get_write_status();
+	bool isWrted = _h264RecordRemote->get_write_status();
 
-	_h264Record->uninit();
-	delete _h264Record;
-	_h264Record = NULL;
+	_h264RecordRemote->uninit();
+	delete _h264RecordRemote;
+	_h264RecordRemote = NULL;
 
 	if(isWrted)
+		return 0;
+	else
+		return -2;
+#endif
+#endif //_WIN32
+	return -1;
+}
+
+int RecordVoip::StartRecordLocalVideo(const char *filename)
+{
+#ifdef _WIN32
+#ifdef VIDEO_ENABLED
+	if (!filename) {
+		return -1;
+	}
+
+	if (_startRecordLVideo) {
+		StopRecordLocalVideo(0);
+	}
+
+	if (_localVideoFileName) {
+		sprintf(_localVideoFileName, "%s", filename);
+	}
+
+	_h264RecordLocal = new h264_record();
+	if (!_h264RecordLocal) {
+		return -1;
+	}
+	_h264RecordLocal->init(_localVideoFileName);
+
+	_startRecordLVideo = true;
+	return 0;
+#endif
+#endif //_WIN32
+	return -1;
+}
+int RecordVoip::StopRecordLocalVideo(int status)
+{
+#ifdef _WIN32
+#ifdef VIDEO_ENABLED
+	CriticalSectionScoped lock_video(_videoCrit);
+	CriticalSectionScoped lock_audio(_audioCrit);
+
+	if (!_startRecordLVideo)
+		return 0;
+
+	_startRecordLVideo = false;
+	_videoEvent->Set();
+
+	bool isWrted = _h264RecordLocal->get_write_status();
+
+	_h264RecordLocal->uninit();
+	delete _h264RecordLocal;
+	_h264RecordLocal = NULL;
+
+	if (isWrted)
 		return 0;
 	else
 		return -2;
@@ -706,12 +775,12 @@ int RecordVoip::StopRecordScreen(int status)
 #if !defined(NO_VOIP_FUNCTION)
 
 //implement VoEMediaProcess
-void RecordVoip::Process(const int channel, const ProcessingTypes type,
-                     WebRtc_Word16 audio10ms[], const int length,
-                         const int samplingFreq, const bool isStereo)
+void RecordVoip::Process(int channel, ProcessingTypes type,
+                     WebRtc_Word16 audio10ms[], int length,
+                         int samplingFreq, bool isStereo)
 {
 	CriticalSectionScoped lock(_audioCrit);
-	if(_startRecordWav  || _startRecordMp4 || _startRecordScreen)  {
+	if(_startRecordWav  || _startRecordRVideo || _startRecordLVideo || _startRecordScreen)  {
 		_audioDataLen = length;
 		_audioSamplingFreq = samplingFreq;
 		int dataLen = length * sizeof(WebRtc_Word16);
@@ -723,10 +792,10 @@ void RecordVoip::Process(const int channel, const ProcessingTypes type,
 		else if (type == kRecordingPerChannel) {
 			_recordingList.PushBack(data);
 		}
-		if(_playbackList.GetSize() > 10 || _recordingList.GetSize() > 10) {
+		if(_recordingList.GetSize() > 5) {
 			_audioEvent->Set();
 		}
-		//PrintConsole("audio in %s RL=%d LL=%d\n", (type==kPlaybackPerChannel)?"R":"L", _playbackList.GetSize(), _recordingList.GetSize());
+		PrintConsole("audio in %s RL=%d LL=%d\n", (type==kPlaybackPerChannel)?"R":"L", _playbackList.GetSize(), _recordingList.GetSize());
 	}
 }
 
@@ -737,10 +806,10 @@ void RecordVoip::Process(const int channel, const ProcessingTypes type,
 WebRtc_Word32 RecordVoip::StoreReceivedFrame(const EncodedVideoData& frameToStore)
 {
 	CriticalSectionScoped lock(_videoCrit);
-	if(_startRecordMp4 && _h264Record)  {
+	if(_startRecordRVideo && _h264RecordRemote)  {
 		if(frameToStore.payloadData && frameToStore.payloadSize > 0) {
 			EncodedVideoData *cloneData = new EncodedVideoData(frameToStore);
-			_frameStorageList.PushBack(cloneData);
+			_frameRecvList.PushBack(cloneData);
 			_videoEvent->Set();
 		}
 	}
@@ -826,19 +895,7 @@ WebRtc_Word32 RecordVoip::CapturedScreeImage(unsigned char *imageData, int size,
 	return 0;
 }
 
-////implement VCMFrameStorageCallback
-//WebRtc_Word32 RecordVoip::StoreScreenFrame(const EncodedVideoData& frameToStore)
-//{
-//	CriticalSectionScoped lock(_videoCrit);
-//	if(_startRecordScreen && _h264RecordScreen)  {
-//		if(frameToStore.payloadData && frameToStore.payloadSize > 0) {
-//			EncodedVideoData *cloneData = new EncodedVideoData(frameToStore);
-//			_frameScreenList.PushBack(cloneData);
-//			_videoEvent->Set();
-//		}
-//	}
-//	return 0;
-//}
+
 int32_t RecordVoip::Encoded(
 	const EncodedImage& encoded_image,
 	const CodecSpecificInfo* codec_specific_info,
@@ -871,24 +928,48 @@ int32_t RecordVoip::Encoded(
 	return 0;
 }
 
+int32_t RecordVoip::SendData(uint8_t payloadType,
+	const EncodedImage& encoded_image,
+	const RTPFragmentationHeader& fragmentationHeader,
+	const RTPVideoHeader* rtpVideoHdr)
+{
+	CriticalSectionScoped lock(_videoCrit);
+	if (_startRecordLVideo && _h264RecordLocal) {
+		if (encoded_image._buffer && encoded_image._size > 0 && encoded_image._completeFrame) {
+			EncodedVideoData *cloneData = new EncodedVideoData();
+			cloneData->timeStamp = encoded_image._timeStamp;
+			cloneData->encodedWidth = encoded_image._encodedWidth;
+			cloneData->encodedHeight = encoded_image._encodedHeight;
+			cloneData->completeFrame = encoded_image._completeFrame;
+			cloneData->payloadSize = encoded_image._length + fragmentationHeader.fragmentationVectorSize * 4;
+			cloneData->fragmentationHeader = fragmentationHeader;
+			cloneData->payloadData = new WebRtc_UWord8[encoded_image._size + fragmentationHeader.fragmentationVectorSize*4];
+			uint8_t *data = encoded_image._buffer;
+
+			uint8_t startcode[4] = { 0x0, 0x0, 0x0, 0x1 };
+			uint32_t offset = 0;
+			for (int i = 0; i < fragmentationHeader.fragmentationVectorSize; i++) {
+				uint32_t nalu_size = fragmentationHeader.fragmentationLength[i];
+				uint8_t * nalu = data + fragmentationHeader.fragmentationOffset[i];
+				memcpy(cloneData->payloadData + offset, &startcode, 4);
+				offset += 4;
+				memcpy(cloneData->payloadData + offset, nalu, nalu_size);
+				offset += nalu_size;
+			}
+
+			//memcpy(cloneData->payloadData, encoded_image._buffer, encoded_image._size);
+			_frameSendList.PushBack(cloneData);
+			_videoEvent->Set();
+		}
+	}
+	return 0;
+}
 
 #endif 
 #endif //_WIN32
 
 #endif 
 
-bool RecordVoip::isStartRecordMp4()
-{
-    return _startRecordMp4;
-}
-bool RecordVoip::isStartRecordWav()
-{
-	return _startRecordWav;
-}
-bool RecordVoip::isStartRecordScree()
-{
-	return _startRecordScreen;
-}
 bool RecordVoip::isAlreadWriteScreenAudio()
 {
 #ifdef _WIN32

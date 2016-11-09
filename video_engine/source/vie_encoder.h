@@ -187,6 +187,8 @@ class ViEEncoder
   int32_t RegisterExternalPacketization(VCMPacketizationCallback* transport);
   void DeRegisterExternalPacketization();
 
+  void RegisterEncoderDataObserver(VCMPacketizationCallback* transport);
+  void DeRegisterEncoderDataObserver();
 
 
   int channel_id() const { return channel_id_; }
@@ -253,6 +255,9 @@ class ViEEncoder
   const int64_t start_ms_;
 
   SendStatisticsProxy* send_statistics_proxy_;
+
+  VCMPacketizationCallback* encoded_packet_observer_;
+  scoped_ptr<CriticalSectionWrapper> packet_observer_cs_;
 
   //---begin
   public:

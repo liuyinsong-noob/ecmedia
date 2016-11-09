@@ -2657,11 +2657,11 @@ int ECMedia_video_IsIPv6Enabled(int channel)
     }
 }
 
-int ECMedia_start_record_screen(int channelid, const char* filename, int bitrates, int fps, int screen_index)
+int ECMedia_start_record_screen(int audioChannel, const char* filename, int bitrates, int fps, int screen_index)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel:%d filename:%s bitrates:%d fps:%d screen_index:%d",__FUNCTION__,
+		audioChannel, filename?filename:"NULL", bitrates, fps, screen_index);
 	if(!g_recordVoip) {
-		PrintConsole("serphone_call_start_record_screen\n");
 		g_recordVoip = new RecordVoip();
 		if (!g_recordVoip) {
 			PrintConsole("serphone_call_start_record_screen create recorder failed.\n");
@@ -2670,20 +2670,15 @@ int ECMedia_start_record_screen(int channelid, const char* filename, int bitrate
 	}
 
 	if(g_recordVoip->isStartRecordScree()) {
-		ECMedia_stop_record_screen(channelid);
-		g_recordVoip = new RecordVoip();
-		if (!g_recordVoip) {
-			PrintConsole("serphone_call_start_record_screen create recorder failed.\n");
-			return -1;
-		}
+		g_recordVoip->StopRecordScreen(0);
 	}
 
-	if(m_voe && channelid >= 0) {
+	if(!g_recordVoip->isRecording() && m_voe && audioChannel >= 0) {
 		PrintConsole("RegisterExternalMediaProcessin in ECMedia_start_record_screen\n");
 		VoEExternalMedia* exmedia = VoEExternalMedia::GetInterface(m_voe);
 		if(exmedia) {
-			exmedia->RegisterExternalMediaProcessing(channelid,  kPlaybackPerChannel, *g_recordVoip);
-			exmedia->RegisterExternalMediaProcessing(channelid,  kRecordingPerChannel, *g_recordVoip);
+			exmedia->RegisterExternalMediaProcessing(audioChannel,  kPlaybackPerChannel, *g_recordVoip);
+			exmedia->RegisterExternalMediaProcessing(audioChannel,  kRecordingPerChannel, *g_recordVoip);
 			exmedia->Release();
 		}
 	}
@@ -2691,11 +2686,11 @@ int ECMedia_start_record_screen(int channelid, const char* filename, int bitrate
 	return g_recordVoip->StartRecordScreen(filename, bitrates, fps, screen_index);
 }
 
-int ECMedia_start_record_screen_ex(int channelid, const char* filename, int bitrates, int fps, int screen_index, int left, int top, int width, int height)
+int ECMedia_start_record_screen_ex(int audioChannel, const char* filename, int bitrates, int fps, int screen_index, int left, int top, int width, int height)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel:%d filename:%s bitrates:%d fps:%d screen_index:%d left:%d top:%d width:%d height:%d",__FUNCTION__,
+		audioChannel, filename?filename:"NULL", bitrates, fps, screen_index, left, top, width, height);
 	if(!g_recordVoip) {
-		PrintConsole("serphone_call_start_record_screen\n");
 		g_recordVoip = new RecordVoip();
 		if (!g_recordVoip) {
 			PrintConsole("ECMedia_start_record_screen_ex create recorder failed.\n");
@@ -2704,47 +2699,195 @@ int ECMedia_start_record_screen_ex(int channelid, const char* filename, int bitr
 	}
 
 	if(g_recordVoip->isStartRecordScree()) {
-		ECMedia_stop_record_screen(channelid);
-		g_recordVoip = new RecordVoip();
-		if (!g_recordVoip) {
-			PrintConsole("ECMedia_start_record_screen_ex create recorder failed.\n");
-			return -1;
-		}
+		g_recordVoip->StopRecordScreen(0);
 	}
 
-	if(m_voe && channelid >= 0) {
-		PrintConsole("RegisterExternalMediaProcessin in ECMedia_start_record_screen\n");
+	if(!g_recordVoip->isRecording() && m_voe) {
+		PrintConsole("RegisterExternalMediaProcessin in ECMedia_start_record_screen_ex\n");
 		VoEExternalMedia* exmedia = VoEExternalMedia::GetInterface(m_voe);
 		if(exmedia) {
-			exmedia->RegisterExternalMediaProcessing(channelid,  kPlaybackPerChannel, *g_recordVoip);
-			exmedia->RegisterExternalMediaProcessing(channelid,  kRecordingPerChannel, *g_recordVoip);
+			exmedia->RegisterExternalMediaProcessing(audioChannel,  kPlaybackPerChannel, *g_recordVoip);
+			exmedia->RegisterExternalMediaProcessing(audioChannel,  kRecordingPerChannel, *g_recordVoip);
 			exmedia->Release();
 		}
 	}
 
 	return g_recordVoip->StartRecordScreenEx(filename, bitrates, fps, screen_index, left, top, width, height);
 }
-int ECMedia_stop_record_screen(int channelid)
+int ECMedia_stop_record_screen(int audioChannel)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel:%d",__FUNCTION__, audioChannel);
 
 	if(!g_recordVoip)
 		return -1;
 
-	if(m_voe) {
+	g_recordVoip->StopRecordScreen(0);
+
+	if(!g_recordVoip->isRecording() && m_voe) {
 		VoEExternalMedia* exmedia = VoEExternalMedia::GetInterface(m_voe);
 		if(exmedia) {
-			exmedia->DeRegisterExternalMediaProcessing(channelid,  kPlaybackPerChannel);
-			exmedia->DeRegisterExternalMediaProcessing(channelid,  kRecordingPerChannel);
+			exmedia->DeRegisterExternalMediaProcessing(audioChannel,  kPlaybackPerChannel);
+			exmedia->DeRegisterExternalMediaProcessing(audioChannel,  kRecordingPerChannel);
+			exmedia->Release();
+		}
+	}
+	if (!g_recordVoip->isRecording()) {
+		delete g_recordVoip;
+		g_recordVoip = NULL;
+	}
+    return 0;
+}
+
+ECMEDIA_API int ECMedia_start_record_remote_video(int audioChannel, int videoChannel, const char* filename)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel:%d videoChannel:%d filename:%s", __FUNCTION__,
+		audioChannel, videoChannel, filename?filename:"NULL");
+	if (!g_recordVoip) {
+		g_recordVoip = new RecordVoip();
+		if (!g_recordVoip) {
+			PrintConsole("ECMedia_start_record_remote_video create recorder failed.\n");
+			return -1;
+		}
+	}
+
+	if (g_recordVoip->isStartRecordRVideo()) {
+		g_recordVoip->StopRecordRemoteVideo(0);
+	}
+
+
+	if (!g_recordVoip->isRecording() && m_voe) {
+		PrintConsole("RegisterExternalMediaProcessin in ECMedia_start_record_screen\n");
+		VoEExternalMedia* exmedia = VoEExternalMedia::GetInterface(m_voe);
+		if (exmedia) {
+			exmedia->RegisterExternalMediaProcessing(audioChannel, kPlaybackPerChannel, *g_recordVoip);
+			exmedia->RegisterExternalMediaProcessing(audioChannel, kRecordingPerChannel, *g_recordVoip);
 			exmedia->Release();
 		}
 	}
 
-	g_recordVoip->StopRecordScreen(0);
-    delete g_recordVoip;
-    g_recordVoip = NULL;
-    return 0;
+	int ret = g_recordVoip->StartRecordRemoteVideo(filename);
+
+	if (m_vie) {
+		ViEFile *file = ViEFile::GetInterface(m_vie);
+		if (file) {
+			file->RegisterVideoFrameStorageCallBack(videoChannel, (cloopenwebrtc::VCMFrameStorageCallback *)g_recordVoip);
+			file->Release();
+		}
+		ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
+		if (rtp_rtcp) {
+			rtp_rtcp->RequestKeyFrame(videoChannel);
+			rtp_rtcp->Release();
+		}
+	}
+
+	return ret;
 }
+ECMEDIA_API int ECMedia_stop_record_remote_video(int audioChannel, int videoChannel)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel:%d videoChannel:%d", __FUNCTION__, audioChannel, videoChannel);
+
+	if (!g_recordVoip)
+		return -1;
+
+	g_recordVoip->StopRecordRemoteVideo(0);
+
+	if (!g_recordVoip->isRecording() && m_voe) {
+		VoEExternalMedia* exmedia = VoEExternalMedia::GetInterface(m_voe);
+		if (exmedia) {
+			exmedia->DeRegisterExternalMediaProcessing(audioChannel, kPlaybackPerChannel);
+			exmedia->DeRegisterExternalMediaProcessing(audioChannel, kRecordingPerChannel);
+			exmedia->Release();
+		}
+	}
+	
+	ViEFile *file = ViEFile::GetInterface(m_vie);
+	if (file) {
+		file->RegisterVideoFrameStorageCallBack(videoChannel, NULL);
+		file->Release();
+	}
+
+	if (!g_recordVoip->isRecording()) {
+		delete g_recordVoip;
+		g_recordVoip = NULL;
+	}
+	return 0;
+}
+
+ECMEDIA_API int ECMedia_start_record_local_video(int audioChannel, int videoChannel, const char* filename)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel:%d videoChannel:%d filename:%s", __FUNCTION__,
+		audioChannel, videoChannel, filename?filename:"NULL");
+	if (!g_recordVoip) {
+		g_recordVoip = new RecordVoip();
+		if (!g_recordVoip) {
+			PrintConsole("ECMedia_start_record_remote_video create recorder failed.\n");
+			return -1;
+		}
+	}
+
+	if (g_recordVoip->isStartRecordLVideo()) {
+		g_recordVoip->StopRecordLocalVideo(0);
+	}
+
+
+	if (!g_recordVoip->isRecording() && m_voe) {
+		PrintConsole("RegisterExternalMediaProcessin in %s\n", __FUNCTION__);
+		VoEExternalMedia* exmedia = VoEExternalMedia::GetInterface(m_voe);
+		if (exmedia) {
+			exmedia->RegisterExternalMediaProcessing(audioChannel, kPlaybackPerChannel, *g_recordVoip);
+			exmedia->RegisterExternalMediaProcessing(audioChannel, kRecordingPerChannel, *g_recordVoip);
+			exmedia->Release();
+		}
+	}
+
+	//should start record before SendKeyFrame.
+	int ret = g_recordVoip->StartRecordLocalVideo(filename);
+
+	if (m_vie) {
+		ViENetwork *vietwork = ViENetwork::GetInterface(m_vie);
+		if (vietwork) {
+			vietwork->RegisterEncoderDataObserver(videoChannel, (cloopenwebrtc::VCMPacketizationCallback *)g_recordVoip);
+			vietwork->Release();
+		}
+		ViECodec *codec = ViECodec::GetInterface(m_vie);
+		if (codec) {
+			codec->SendKeyFrame(videoChannel);
+			codec->Release();
+		}
+	}
+	return ret;
+}
+ECMEDIA_API int ECMedia_stop_record_local_video(int audioChannel, int videoChannel)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel:%d videoChannel:%d", __FUNCTION__, audioChannel, videoChannel);
+
+	if (!g_recordVoip)
+		return -1;
+
+	g_recordVoip->StopRecordLocalVideo(0);
+
+	if (!g_recordVoip->isRecording() && m_voe) {
+		VoEExternalMedia* exmedia = VoEExternalMedia::GetInterface(m_voe);
+		if (exmedia) {
+			exmedia->DeRegisterExternalMediaProcessing(audioChannel, kPlaybackPerChannel);
+			exmedia->DeRegisterExternalMediaProcessing(audioChannel, kRecordingPerChannel);
+			exmedia->Release();
+		}
+	}
+
+	ViENetwork *vietwork = ViENetwork::GetInterface(m_vie);
+	if (vietwork) {
+		vietwork->DeRegisterEncoderDataObserver(videoChannel);
+		vietwork->Release();
+	}
+
+	if (!g_recordVoip->isRecording()) {
+		delete g_recordVoip;
+		g_recordVoip = NULL;
+	}
+	return 0;
+}
+
 
 int ECMedia_get_local_video_snapshot(int deviceid, unsigned char **buf, unsigned int *size, unsigned int *width, unsigned int *height)
 {
@@ -2824,7 +2967,7 @@ int ECMedia_get_remote_video_snapshot(int channelid, unsigned char **buf, unsign
 	return 0;
 }
 
-int ECMedia_save_remote_video_snapshot(int channleid, const char* filePath)
+int ECMedia_save_remote_video_snapshot(int channelid, const char* filePath)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins... filePath:%s",__FUNCTION__, filePath);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
@@ -2832,7 +2975,7 @@ int ECMedia_save_remote_video_snapshot(int channleid, const char* filePath)
 	ViEFile *file = ViEFile::GetInterface(m_vie);
 	if(file) {
 		ViEPicture capPicture;
-		if( file->GetRenderSnapshot(channleid, filePath) < 0) {
+		if( file->GetRenderSnapshot(channelid, filePath) < 0) {
 			PrintConsole("[ECMEDIA Error] %s  GetRenderSnapshot failed.",__FUNCTION__);
 			file->Release();
 			return -1;

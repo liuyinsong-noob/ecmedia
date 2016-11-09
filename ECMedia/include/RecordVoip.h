@@ -32,6 +32,7 @@ class RecordVoip
 #ifdef VIDEO_ENABLED
 		, public VCMFrameStorageCallback
 		, public EncodedImageCallback
+		, public VCMPacketizationCallback
 #endif
 #endif
 {
@@ -40,8 +41,11 @@ public:
     ~RecordVoip();
 
 public:
-	int StartRecordVoip(const char *filename);
-	int StopRecordVoip(int status);
+	int StartRecordRemoteVideo(const char *filename);
+	int StopRecordRemoteVideo(int status);
+
+	int StartRecordLocalVideo(const char *filename);
+	int StopRecordLocalVideo(int status);
 
 	int StartRecordAudio(const char *filename);
 	int StartRecordAudioEx(const char *rFileName, const char *lFileName);
@@ -62,9 +66,9 @@ public:
 public:
 #if !defined(NO_VOIP_FUNCTION)
     //implement VoEMediaProcess
-	virtual void Process(const int channel, const ProcessingTypes type,
-                         WebRtc_Word16 audio10ms[], const int length,
-                         const int samplingFreq, const bool isStereo);
+	virtual void Process(int channel, ProcessingTypes type,
+                         WebRtc_Word16 audio10ms[], int length,
+                         int samplingFreq, bool isStereo);
 #ifdef _WIN32
 #ifdef VIDEO_ENABLED
     //implement VCMFrameStorageCallback
@@ -76,13 +80,22 @@ public:
 		const EncodedImage& encoded_image,
 		const CodecSpecificInfo* codec_specific_info = NULL,
 		const RTPFragmentationHeader* fragmentation = NULL);
+
+	//implement VCMPacketizationCallback
+	virtual int32_t SendData(uint8_t payloadType,
+		const EncodedImage& encoded_image,
+		const RTPFragmentationHeader& fragmentationHeader,
+		const RTPVideoHeader* rtpVideoHdr);
 #endif
 #endif //_WIN32
 #endif   
+	
+	bool isStartRecordRVideo() { return _startRecordRVideo; }
+	bool isStartRecordLVideo() { return _startRecordLVideo; }
+	bool isStartRecordWav() { return _startRecordWav; }
+	bool isStartRecordScree() { return _startRecordScreen; }
 
-    bool isStartRecordMp4();
-	bool isStartRecordWav();
-	bool isStartRecordScree();
+	bool isRecording() { return _startRecordRVideo || _startRecordLVideo || _startRecordWav || _startRecordScreen; };
     
 	bool isAlreadWriteScreenAudio();
 private:
@@ -109,8 +122,10 @@ private:
 
     ListWrapper _playbackList;
     ListWrapper _recordingList;
-	ListWrapper _frameStorageList;
+	ListWrapper _frameRecvList;
+	ListWrapper _frameSendList;
 	ListWrapper _frameScreenList;
+
 	CriticalSectionWrapper* _videoCrit;
 	CriticalSectionWrapper* _audioCrit;
 
@@ -126,8 +141,11 @@ private:
 
 	bool _startRecordWav;
 
-	char _mp4FileName[256];
-    bool _startRecordMp4;
+	char _remoteVideoFileName[256];
+    bool _startRecordRVideo;
+
+	char _localVideoFileName[256];
+	bool _startRecordLVideo;
 
 	char _recordScreenFileName[256];
 	bool _startRecordScreen;
@@ -139,7 +157,8 @@ private:
     //RecordVideoType _recordVideoType;
 #ifdef _WIN32
 #ifdef VIDEO_ENABLED
-	h264_record  *_h264Record;
+	h264_record  *_h264RecordRemote;
+	h264_record  *_h264RecordLocal;
 	h264_record  *_h264RecordScreen;
 
 	H264Encoder *_h264Encoder;

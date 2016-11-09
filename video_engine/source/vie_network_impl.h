@@ -110,6 +110,10 @@ public:
   virtual bool IsIPv6Enabled(int video_channel) OVERRIDE;
   int RegisterExternalPacketization(const int video_channel, VCMPacketizationCallback * transport);
   int DeRegisterExternalPacketization(const int video_channel);
+
+  virtual int RegisterEncoderDataObserver(const int video_channel, VCMPacketizationCallback* observer);
+  virtual int DeRegisterEncoderDataObserver(const int video_channel);
+
 };
 
 }  // namespace webrtc

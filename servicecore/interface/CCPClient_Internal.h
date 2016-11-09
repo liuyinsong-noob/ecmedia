@@ -387,10 +387,14 @@ extern "C" {
      *********************************************************************************/
     CCPAPI int getRemoteVideoSnapshotExt(const char *callid, const char *fielName);
 
+	CCPAPI int startRecordRemoteVideo(const char *callid, const char *filename);
+	CCPAPI int stopRecordRemoteVideo(const char *callid);
 
-
-    CCPAPI int startRecordVoip(const char *callid, const char *filename);
-    CCPAPI int stopRecordVoip(const char *callid);
+	CCPAPI int startRecordLocalVideo(const char *callid, const char *filename);
+	CCPAPI int stopRecordLocalVideo(const char *callid);
+	
+    //CCPAPI int startRecordVoip(const char *callid, const char *filename);
+    //CCPAPI int stopRecordVoip(const char *callid);
 
     /*! @function
      ********************************************************************************
@@ -487,9 +491,11 @@ extern "C" {
                 [IN] filename：录屏保存的文件名；
                 [IN] bitrates：调节录屏压缩码流，默认640；
 				[IN] fps：录屏的帧数，默认10帧每秒；
-				[IN] type: 录屏的屏幕选择， 0：主屏 1：辅屏  2：双屏
+				[IN] type: 录屏的屏幕选择， 0：主屏 1：辅屏
      返回值   : 0：成功   -1：失败
      *******************************************************************************/
+	CCPAPI int startRecordScreen(const char *callid, const char *filename, int bitrates, int fps, int type);
+
 	CCPAPI int startRecordScreen(const char *callid, const char *filename, int bitrates, int fps, int type);
 
 	/*! @function

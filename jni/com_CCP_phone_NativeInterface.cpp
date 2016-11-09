@@ -1084,7 +1084,7 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_startRecordVoip
     }
     const char *CallID = env->GetStringUTFChars(callid, 0);
     const char *FileName = env->GetStringUTFChars(filename, 0);
-    int ret = startRecordVoip(CallID, FileName);
+    int ret = -1;//startRecordVoip(CallID, FileName);
     env->ReleaseStringUTFChars(callid,CallID);
     env->ReleaseStringUTFChars(filename,FileName);
     return ret;
@@ -1102,7 +1102,7 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_stopRecordVoip
         return -1;
     }
     const char *CallID = env->GetStringUTFChars(callid, 0);
-    int ret = stopRecordVoip(CallID);
+    int ret = -1;//stopRecordVoip(CallID);
     env->ReleaseStringUTFChars(callid, CallID);
     return ret;
 }

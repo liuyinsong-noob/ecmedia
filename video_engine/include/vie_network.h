@@ -177,6 +177,10 @@ class WEBRTC_DLLEXPORT ViENetwork {
     virtual bool IsIPv6Enabled(int video_channel) = 0;
 	virtual int RegisterExternalPacketization(const int video_channel, VCMPacketizationCallback * transport) = 0;
 	virtual int DeRegisterExternalPacketization(const int video_channel) = 0;
+
+	virtual int RegisterEncoderDataObserver(const int video_channel, VCMPacketizationCallback* observer) = 0;
+	virtual int DeRegisterEncoderDataObserver(const int video_channel) = 0;
+
  protected:
   ViENetwork() {}
   virtual ~ViENetwork() {}

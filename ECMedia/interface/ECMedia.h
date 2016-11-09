@@ -515,9 +515,15 @@ ECMEDIA_API int ECMedia_set_HybridNACKFEC_status_video(const int channelid,
 										const unsigned char payload_typeRED,
 										const unsigned char payload_typeFEC);
 
-ECMEDIA_API int ECMedia_start_record_screen(int channelid, const char* filename, int bitrates, int fps, int screen_index);
-ECMEDIA_API int ECMedia_start_record_screen_ex(int channelid, const char* filename, int bitrates, int fps, int screen_index, int left, int top, int width, int height);
-ECMEDIA_API int ECMedia_stop_record_screen(int channleid);
+ECMEDIA_API int ECMedia_start_record_screen(int audioChannel, const char* filename, int bitrates, int fps, int screen_index);
+ECMEDIA_API int ECMedia_start_record_screen_ex(int audioChannel, const char* filename, int bitrates, int fps, int screen_index, int left, int top, int width, int height);
+ECMEDIA_API int ECMedia_stop_record_screen(int audioChannel);
+
+ECMEDIA_API int ECMedia_start_record_remote_video(int audioChannel, int videoChannel, const char* filename);
+ECMEDIA_API int ECMedia_stop_record_remote_video(int audioChannel, int videoChannel);
+
+ECMEDIA_API int ECMedia_start_record_local_video(int audioChannel, int videoChannel, const char* filename);
+ECMEDIA_API int ECMedia_stop_record_local_video(int audioChannel, int videoChannel);
 
 //capture device id
 ECMEDIA_API int ECMedia_get_local_video_snapshot(int deviceid, unsigned char **buf, unsigned int *size, unsigned int *width, unsigned int *height);

@@ -493,10 +493,17 @@ public:
     int record_audio_status(SerPhoneCall *call, const char *filename, int status);
 	int serphone_call_start_record_audio_ex(SerPhoneCall *call, const char *rFileName, const char *lFileName);
 
-    int serphone_call_start_record_voip(SerPhoneCall *call, const char *filename);
-    int serphone_call_stop_record_voip(SerPhoneCall *call);
-    int record_voip_status(SerPhoneCall *call, const char *filename, int status);
+	int serphone_call_start_record_r_video(SerPhoneCall *call, const char *filename);
+	int serphone_call_stop_record_r_video(SerPhoneCall *call);
 
+	int serphone_call_start_record_l_video(SerPhoneCall *call, const char *filename);
+	int serphone_call_stop_record_l_video(SerPhoneCall *call);
+
+	/*   int serphone_call_start_record_voip(SerPhoneCall *call, const char *filename);
+	int serphone_call_stop_record_voip(SerPhoneCall *call);
+	int record_voip_status(SerPhoneCall *call, const char *filename, int status);*/
+
+	int serphone_call_start_record_screen_ex(SerPhoneCall *call, const char *filename, int bitrates, int fps, int type, int left, int top, int width, int height);
 	int serphone_call_start_record_screen(SerPhoneCall *call, const char *filename, int bitrates, int fps, int type);
 	int serphone_call_stop_record_screen(SerPhoneCall *call);
 

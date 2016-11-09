@@ -169,8 +169,8 @@ void onCallAnswered( const char *callid)
 	//const char * filen = "./123.wav";
 	//startRecordVoice(callid, filen);
 
-	const char *mp4File = "./callRecord.mp4";
-	startRecordVoip(callid, mp4File);
+	//const char *mp4File = "./callRecord.mp4";
+	//startRecordVoip(callid, mp4File);
 
 	//cctestthread mythread;
 	//cc_test_createthread(mythread, get_networkd_static, (void*)callid);
