@@ -151,7 +151,7 @@ int PayloadSplitter::SplitFec(PacketList* packet_list,
 //      continue;
 //    }
       
-      if (!decoder || info->codec_type == kDecoderPCMu || info->codec_type == kDecoderG729) {
+      if ((!decoder) || (info->codec_type != kDecoderOpus && info->codec_type != kDecoderOpus16K && info->codec_type != kDecoderOpus8K && info->codec_type != kDecoderOpus_2ch)) {
           ++it;
           continue;
       }
