@@ -509,6 +509,10 @@ public:
 
 	int serphone_call_get_network_statistic(SerPhoneCall *call,  long long *duration, long long *sendTotalSim, long long *recvTotalSim, long long *sendTotalWifi, long long *recvTotalWifi);
 
+
+	int startSendRtpPacket(int &channel, const char *ip, int rtp_port);
+	int startRecvRtpPacket(int channelNum);
+
 private:
 //    char _user_call_id[9];
 //    sean add begin 0915
@@ -547,7 +551,8 @@ public:
 	int PlayAudioFromRtpDump(int localPort, const char *ptName, int ploadType);
 	int StopPlayAudioFromRtpDump();
 
-	int PlayVideoFromRtpDump(int localPort, const char *ptName, int ploadType, void *videoWindow);
+	int PlayVideoFromRtpDump(int localPort, const char *ptName, int ploadType, void *videoWindow,
+		cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key);
 	int StopPlayVideoFromRtpDump();
 	void SetNackEnabled(bool audioEnabled, bool videoEnabled);
 	void SetVideoProtectionMode(int mode);

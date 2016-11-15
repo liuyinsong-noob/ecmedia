@@ -3468,13 +3468,14 @@ int ServiceCore::serphone_core_set_speaker_volume(unsigned int volume)
 	if(volume >255)
 		return -1;
 
-	speaker_volume = volume;
+	//speaker_volume = volume;
 	return ECMedia_set_speaker_volume(volume);
 #endif
 	return -1;
 }
 unsigned int ServiceCore::serphone_core_get_speaker_volume()
 {
+	ECMedia_get_speaker_volume(speaker_volume);
 	return speaker_volume;
 }
 
@@ -4129,7 +4130,8 @@ int ServiceCore::StopPlayAudioFromRtpDump()
 	return 0;
 }
 
-int ServiceCore::PlayVideoFromRtpDump(int localPort, const char *ptName, int ploadType, void *videoWindow)
+int ServiceCore::PlayVideoFromRtpDump(int localPort, const char *ptName, int ploadType, void *videoWindow, 
+	cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
 {
 #if !defined(NO_VOIP_FUNCTION)
 #ifdef VIDEO_ENABLED
@@ -4152,6 +4154,10 @@ int ServiceCore::PlayVideoFromRtpDump(int localPort, const char *ptName, int plo
 	ECMedia_set_NACK_status_video(m_VideoChannelIDDump, videoNackEnabled);
 	ECMedia_set_RTCP_status_video(m_VideoChannelIDDump, 2/*kRtcpNonCompound_RFC5506*/);
 
+	if (crypt_type > 0) {
+		ECMedia_init_srtp_video(m_VideoChannelIDDump);
+		ECMedia_enable_srtp_recv_video(m_VideoChannelIDDump, crypt_type, key);
+	}
 
 	cloopenwebrtc::VideoCodec codec_params;
 	bool codec_found = false;
@@ -4212,6 +4218,12 @@ int ServiceCore::StopPlayVideoFromRtpDump()
 	//ViEExternalCodec *extCodec = ViEExternalCodec::GetInterface(m_vie);
 	//extCodec->DeRegisterExternalReceiveCodec(m_VideoChannelIDDump, 98);
 	//extCodec->Release();
+	ECMedia_disable_srtp_recv_video(m_VideoChannelIDDump);
+	ECMedia_shutdown_srtp_video(m_VideoChannelIDDump);
+
+	ECMedia_video_stop_receive(m_VideoChannelIDDump);
+	ECMedia_delete_channel(m_VideoChannelIDDump, true);
+
 #endif
 #endif
 	return 0;
@@ -5130,3 +5142,99 @@ int ServiceCore::liveStream_SelectCamera(void *handle, int index, int width, int
 //#endif
 //
 //}
+
+
+int ServiceCore::startSendRtpPacket(int &channel, const char *ip, int rtp_port)
+{
+	ECMedia_init_audio();
+	//creatChannel
+	ECMedia_audio_create_channel(channel, false);
+	//setCodec
+	cloopenwebrtc::CodecInst codec_params = { 0 };
+	bool codec_found = false;
+
+	const char *ptName = "opus";
+	int ploadType = 121;
+
+	if (rtp_port == 7078) {
+		ptName = "G729";
+		ploadType = 18;
+	}
+
+	int codec_num = ECMedia_num_of_supported_codecs_audio();
+	cloopenwebrtc::CodecInst *codecArray = new cloopenwebrtc::CodecInst[codec_num];
+	ECMedia_get_supported_codecs_audio(codecArray);
+	for (int i = 0; i < codec_num; i++) {
+		codec_params = codecArray[i];
+		if (strcasecmp(codec_params.plname, ptName) == 0) {
+			codec_found = true;
+			codec_params.pltype = ploadType;
+			break;
+		}
+	}
+	delete[]codecArray;
+
+	if (codec_found) {
+		ECMedia_set_receive_playloadType_audio(channel, codec_params);
+		ECMedia_set_send_codec_audio(channel, codec_params);
+	}
+	//setSendDestination
+	ECMedia_audio_set_send_destination(channel, rtp_port, ip);
+	//startRecord
+	ECMedia_audio_start_record();
+	//startSend
+	ECMedia_audio_start_send(channel);
+	//startReceive
+	ECMedia_audio_start_receive(channel);
+	ECMedia_audio_start_playout(channel);
+	return 0;
+}
+
+
+int ServiceCore::startRecvRtpPacket(int channelNum)
+{
+	ECMedia_init_audio();
+	//creatChannel
+	int startport = 7078;
+	int *channel = new int[channelNum];
+	for (int i = 0; i < channelNum; i++) {
+		ECMedia_audio_create_channel(channel[i], false);
+		//setCodec
+		cloopenwebrtc::CodecInst codec_params = { 0 };
+
+		const char *ptName = "opus";
+		int ploadType = 121;
+
+		bool codec_found = false;
+		if (startport == 7078) {
+			ptName = "G729";
+			ploadType = 18;
+		}
+
+		int codec_num = ECMedia_num_of_supported_codecs_audio();
+		cloopenwebrtc::CodecInst *codecArray = new cloopenwebrtc::CodecInst[codec_num];
+		ECMedia_get_supported_codecs_audio(codecArray);
+		for (int i = 0; i < codec_num; i++) {
+			codec_params = codecArray[i];
+			if (strcasecmp(codec_params.plname, ptName) == 0) {
+				codec_found = true;
+				codec_params.pltype = ploadType;
+				break;
+			}
+		}
+		delete[]codecArray;
+
+		ECMedia_set_local_receiver(channel[i], startport, startport + 1);
+		startport += 2;
+
+		if (codec_found) {
+			ECMedia_set_receive_playloadType_audio(channel[i], codec_params);
+		}
+
+		ECMedia_audio_start_receive(channel[i]);
+		ECMedia_audio_start_playout(channel[i]);
+	}
+
+	printf("sean haha end\n");
+	return 0;
+}

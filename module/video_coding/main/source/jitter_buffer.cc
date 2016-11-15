@@ -387,6 +387,8 @@ bool VCMJitterBuffer::NextCompleteTimestamp(
   }
   CleanUpOldOrEmptyFrames();
 
+  //LOG(LS_WARNING) << " VCMJitterBuffer::NextCompleteTimestamp " << decodable_frames_.size();
+
   if (decodable_frames_.empty() ||
       decodable_frames_.Front()->GetState() != kStateComplete) {
     const int64_t end_wait_time_ms = clock_->TimeInMilliseconds() +
@@ -436,20 +438,25 @@ bool VCMJitterBuffer::NextMaybeIncompleteTimestamp(uint32_t* timestamp) {
     return false;
   }
   if (decode_error_mode_ == kNoErrors) {
+	  //LOG(LS_WARNING) << " VCMJitterBuffer::NextMaybeIncompleteTimestamp decode_error_mode_" << decode_error_mode_;
     // No point to continue, as we are not decoding with errors.
     return false;
   }
 
   CleanUpOldOrEmptyFrames();
 
+  //LOG(LS_WARNING) << " VCMJitterBuffer::NextMaybeIncompleteTimestamp " << decodable_frames_.size() << " incomplete:" << incomplete_frames_.size();
+
   VCMFrameBuffer* oldest_frame;
   if (decodable_frames_.empty()) {
 	  if (nack_mode_ != kNoNack || incomplete_frames_.size() <= 1) {
+		  //LOG(LS_WARNING) << " VCMJitterBuffer::NextMaybeIncompleteTimestamp nack" << incomplete_frames_.size();
 		  return false;
 	  }
 	  oldest_frame = incomplete_frames_.Front();
 	  // Frame will only be removed from buffer if it is complete (or decodable).
 	  if (oldest_frame->GetState() < kStateComplete) {
+		  //LOG(LS_WARNING) << " VCMJitterBuffer::NextMaybeIncompleteTimestamp incomplete oldest_frame" << oldest_frame->TimeStamp();
 		  return false;
 	  }
   }else{
@@ -459,6 +466,7 @@ bool VCMJitterBuffer::NextMaybeIncompleteTimestamp(uint32_t* timestamp) {
 	  // check.
 	  if (decodable_frames_.size() == 1 && incomplete_frames_.empty()
 		  && oldest_frame->GetState() != kStateComplete) {
+			  //LOG(LS_WARNING) << " VCMJitterBuffer::NextMaybeIncompleteTimestamp decodeable oldest_frame" << oldest_frame->TimeStamp();
 			  return false;
 	  }
   }
@@ -535,11 +543,13 @@ VCMFrameBufferEnum VCMJitterBuffer::GetFrame(const VCMPacket& packet,
   *frame = incomplete_frames_.PopFrame(packet.timestamp);
   if (*frame != NULL) {
     *frame_list = &incomplete_frames_;
+	//LOG(LS_WARNING) << " VCMJitterBuffer::GetFrame incomplete_frames_" << packet.timestamp;
     return kNoError;
   }
   *frame = decodable_frames_.PopFrame(packet.timestamp);
   if (*frame != NULL) {
     *frame_list = &decodable_frames_;
+	//LOG(LS_WARNING) << " VCMJitterBuffer::GetFrame decodable_frames_" << packet.timestamp;
     return kNoError;
   }
 
@@ -603,6 +613,7 @@ VCMFrameBufferEnum VCMJitterBuffer::InsertPacket(const VCMPacket& packet,
     }
     return kOldPacket;
   }
+ // LOG(LS_WARNING)  << " hubin insertPacket " << packet.seqNum;
 
   num_consecutive_old_packets_ = 0;
 
@@ -652,6 +663,7 @@ VCMFrameBufferEnum VCMJitterBuffer::InsertPacket(const VCMPacket& packet,
                              "timestamp", frame->TimeStamp());
   }
 
+
   if (buffer_state > 0) {
     incoming_bit_count_ += packet.sizeBytes << 3;
     if (first_packet_since_reset_) {
@@ -673,6 +685,9 @@ VCMFrameBufferEnum VCMJitterBuffer::InsertPacket(const VCMPacket& packet,
 
   // Is the frame already in the decodable list?
   bool continuous = IsContinuous(*frame);
+  //LOG(LS_WARNING) << " hubin insertPacket seq:" << packet.seqNum << " mark:" << packet.markerBit << " time:" << packet.timestamp << " incomplete:" << incomplete_frames_.size() << 
+  //	"  decodeable:" << decodable_frames_.size() << " state:" << buffer_state << " contn:"<< continuous;
+
   switch (buffer_state) {
     case kGeneralError:
     case kTimeStampError:

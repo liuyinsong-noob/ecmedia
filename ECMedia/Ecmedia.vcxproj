@@ -192,6 +192,8 @@
     <ClInclude Include="include\VoeObserver.h" />
     <ClInclude Include="interface\ECMedia.h" />
     <ClInclude Include="resource1.h" />
+    <ClInclude Include="resource2.h" />
+    <ClInclude Include="resource3.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\base64.c" />
@@ -575,6 +577,9 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Ecmedia.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

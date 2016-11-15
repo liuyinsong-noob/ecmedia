@@ -573,7 +573,7 @@ extern "C" {
 					 [IN] videoWindow ：
      返回值   : 0：成功   -1：失败
      *******************************************************************************/
-	CCPAPI int PlayVideoFromRtpDump(int localPort, const char *ptName, int ploadType, void *videoWindow);
+	CCPAPI int PlayVideoFromRtpDump(int localPort, const char *ptName, int ploadType, void *videoWindow, int crypt_type, const char* key);
 
 	    /*! @function
      ********************************************************************************

@@ -363,6 +363,7 @@ int32_t VideoReceiver::Decode(uint16_t maxWaitTimeMs, bool shieldMosaic) {
       maxWaitTimeMs, nextRenderTimeMs, complete_flag, decodable_flag, supports_render_scheduling);
 
   if (frame == NULL) {
+	  //LOG(LS_WARNING) << " VideoReceiver::Decode. VCM_FRAME_NOT_READY " << maxWaitTimeMs << " " << nextRenderTimeMs;
     return VCM_FRAME_NOT_READY;
   } else {
     CriticalSectionScoped cs(_receiveCritSect);
@@ -461,6 +462,9 @@ int32_t VideoReceiver::Decode(const VCMEncodedFrame& frame) {
                           "Decode",
                           "type",
                           frame.FrameType());
+
+  //LOG(LS_WARNING) << " VideoReceiver::Decode." << frame.TimeStamp();
+
   // Change decoder if payload type has changed
   const bool renderTimingBefore = _codecDataBase.SupportsRenderScheduling();
   _decoder =
@@ -479,6 +483,8 @@ int32_t VideoReceiver::Decode(const VCMEncodedFrame& frame) {
   // Check for failed decoding, run frame type request callback if needed.
   bool request_key_frame = false;
   if (ret < 0) {
+	  //LOG(LS_WARNING) << " VideoReceiver::Decode. ret:" << ret;
+
     if (ret == VCM_ERROR_REQUEST_SLI) {
       return RequestSliceLossIndication(
           _decodedFrameCallback.LastReceivedPictureID() + 1);
@@ -507,6 +513,8 @@ int32_t VideoReceiver::Decode(const VCMEncodedFrame& frame) {
     }
   }
   if (request_key_frame) {
+	  //LOG(LS_WARNING) << " VideoReceiver::Decode. request_key_frame";
+
     CriticalSectionScoped cs(process_crit_sect_.get());
     _scheduleKeyRequest = true;
   }

@@ -123,8 +123,8 @@ int ViESender::SendPacket(int vie_id, const void* data, size_t len, int sn) {
 									static_cast<int*>(&send_packet_length));
 
 	  //append ssrc to end, 4 bytes
-	  memcpy(encryption_buffer_ + send_packet_length, encryption_buffer_ + 8, 4);
-	  send_packet_length += 4;
+	  //memcpy(encryption_buffer_ + send_packet_length, encryption_buffer_ + 8, 4);
+	  //send_packet_length += 4;
 	  send_packet = encryption_buffer_;
 
   }
@@ -184,8 +184,8 @@ int ViESender::SendRTCPPacket(int vie_id, const void* data, size_t len) {
 		  static_cast<int*>(&send_packet_length));
 
 	  //append ssrc to end, 4 bytes
-	  memcpy(encryption_buffer_ + send_packet_length, encryption_buffer_ + 4, 4);
-	  send_packet_length += 4;
+	  //memcpy(encryption_buffer_ + send_packet_length, encryption_buffer_ + 4, 4);
+	  //send_packet_length += 4;
 	  send_packet = encryption_buffer_;
   }
 

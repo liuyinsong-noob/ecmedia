@@ -105,9 +105,13 @@ namespace cloopenwebrtc {
             found_frame = jitter_buffer_.NextMaybeIncompleteTimestamp(&frame_timestamp);
         
         decodable_flag = found_frame;
-        if (!found_frame)
-            return NULL;
+		if (!found_frame) {
+			//LOG(LS_WARNING) << " VideoReceiver::Decode. not found_frame ";
+			return NULL;
+		}
         
+		//LOG(LS_WARNING) << " VideoReceiver::Decode. found_frame " << complete_flag << " " << decodable_flag << " " << frame_timestamp;
+
         // We have a frame - Set timing and render timestamp.
         timing_->SetJitterDelay(jitter_buffer_.EstimatedJitterMs());
         const int64_t now_ms = clock_->TimeInMilliseconds();
@@ -133,6 +137,8 @@ namespace cloopenwebrtc {
         }
         
         if (timing_error) {
+			//LOG(LS_WARNING) << " VideoReceiver::Decode. timing_error ";
+
             // Timing error => reset timing and flush the jitter buffer.
             jitter_buffer_.Flush();
             timing_->Reset();
@@ -152,6 +158,9 @@ namespace cloopenwebrtc {
                 // waiting as long as we're allowed to avoid busy looping, and then return
                 // NULL. Next call to this function might return the frame.
                 render_wait_event_->Wait(max_wait_time_ms);
+
+				//LOG(LS_WARNING) << " VideoReceiver::Decode. render_wait_event_ " << new_max_wait_time;
+
                 return NULL;
             }
             // Wait until it's time to render.
@@ -161,6 +170,7 @@ namespace cloopenwebrtc {
         // Extract the frame from the jitter buffer and set the render time.
         VCMEncodedFrame* frame = jitter_buffer_.ExtractAndSetDecode(frame_timestamp);
         if (frame == NULL) {
+			//LOG(LS_WARNING) << " VideoReceiver::Decode. ExtractAndSetDecode NULL " << frame_timestamp;
             return NULL;
         }
         frame->SetRenderTime(next_render_time_ms);

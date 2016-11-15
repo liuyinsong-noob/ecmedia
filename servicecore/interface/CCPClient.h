@@ -576,6 +576,9 @@ typedef struct _CALLBACKINTERFACE CCallbackInterface;
 	CCPAPI void stopLiveStream(void *handle);
 	CCPAPI void releaseLiveStream(void *handle);
 	CCPAPI int selectCameraLiveStream(void *handle, int index, int width, int height, int fps);
+
+	CCPAPI int startSendRtpPacket(int &channel, const char *ip, int rtp_port);
+	CCPAPI int startRecvRtpPacket(int channelNum);
 #ifdef __cplusplus
 }
 #endif

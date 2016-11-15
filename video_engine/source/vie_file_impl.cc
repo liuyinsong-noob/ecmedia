@@ -584,7 +584,7 @@ int ViEFileImpl::GetRenderSnapshot(const int video_channel,
   // not return you the buffer. Thus, we are not going to be writing to the
   // disk here.
   JpegEncoder jpeg_encoder;
-  I420VideoFrame input_image;
+  //I420VideoFrame input_image;
   if (jpeg_encoder.SetFileName(file_nameUTF8) == -1) {
     WEBRTC_TRACE(kTraceError, kTraceVideo, shared_data_->instance_id(),
                  "\tCould not open output file '%s' for writing!",
@@ -592,11 +592,11 @@ int ViEFileImpl::GetRenderSnapshot(const int video_channel,
     return -1;
   }
 
-  input_image.set_width(video_frame.width());
-  input_image.set_height(video_frame.height());
-  video_frame.SwapFrame(&input_image);
+  //input_image.set_width(video_frame.width());
+  //input_image.set_height(video_frame.height());
+  //video_frame.SwapFrame(&input_image);
 
-  int ret = jpeg_encoder.Encode(input_image);
+  int ret = jpeg_encoder.Encode(video_frame);
   if (ret != 0) {
     WEBRTC_TRACE(kTraceError, kTraceVideo, shared_data_->instance_id(),
                  "\tCould not encode i420 -> jpeg file '%s' for writing, ret=%d!",
@@ -629,18 +629,39 @@ int ViEFileImpl::GetRenderSnapshot(const int video_channel,
 
    if(type == kVideoI420) {
       // Copy from VideoFrame class to ViEPicture struct.
-      int buffer_length =
-          static_cast<int>(video_frame.width() * video_frame.height() * 1.5);
-      picture.data =  static_cast<WebRtc_UWord8*>(malloc(
-          buffer_length * sizeof(WebRtc_UWord8)));
+      //int buffer_length =
+      //    static_cast<int>(video_frame.width() * video_frame.height() * 1.5);
+      //picture.data =  static_cast<WebRtc_UWord8*>(malloc(
+      //    buffer_length * sizeof(WebRtc_UWord8)));
 
 
-      memcpy(picture.data, video_frame.buffer(kYPlane), video_frame.stride(kYPlane)*video_frame.height());
+      //memcpy(picture.data, video_frame.buffer(kYPlane), video_frame.stride(kYPlane)*video_frame.height());
 
-      picture.size = buffer_length;
-      picture.width = video_frame.width();
-      picture.height = video_frame.height();
-      picture.type = kVideoI420;
+      //picture.size = buffer_length;
+      //picture.width = video_frame.width();
+      //picture.height = video_frame.height();
+      //picture.type = kVideoI420;
+
+
+	  // Copy from VideoFrame class to ViEPicture struct.
+	  int buffer_length =
+		  static_cast<int>(video_frame.width() * video_frame.height() * 1.5);
+	  picture.data = static_cast<WebRtc_UWord8*>(malloc(
+		  buffer_length * sizeof(WebRtc_UWord8)));
+	  //   memcpy(picture.data, video_frame.Buffer(), buffer_length);
+	  int size_y = video_frame.stride(kYPlane)*video_frame.height();
+	  int size_u = video_frame.stride(kUPlane)*video_frame.height() / 2;
+	  int size_v = video_frame.stride(kVPlane)*video_frame.height() / 2;
+
+	  memcpy(picture.data, video_frame.buffer(kYPlane), size_y);
+	  memcpy(picture.data + size_y, video_frame.buffer(kUPlane), size_u);
+	  memcpy(picture.data + size_y + size_u, video_frame.buffer(kVPlane), size_v);
+
+	  picture.size = buffer_length;
+	  picture.width = video_frame.width();
+	  picture.height = video_frame.height();
+	  picture.type = kVideoI420;
+
 	} else if(type == kVideoMJPEG) {
 
 	  JpegEncoder jpeg_encoder;
@@ -682,13 +703,13 @@ int ViEFileImpl::GetCaptureDeviceSnapshot(const int capture_id,
   // not return you the buffer Thusly, we are not going to be writing to the
   // disk here.
   JpegEncoder jpeg_encoder;
-  I420VideoFrame input_image;
-  input_image.set_width(video_frame.width());
-  input_image.set_height (video_frame.height());
+  //I420VideoFrame input_image;
+  //input_image.set_width(video_frame.width());
+  //input_image.set_height (video_frame.height());
   /*video_frame.Swap(input_image._buffer, input_image._length,
   input_image._size);*/
 
-  video_frame.SwapFrame(&input_image);
+  //video_frame.SwapFrame(&input_image);
 
   if (jpeg_encoder.SetFileName(file_nameUTF8) == -1) {
     WEBRTC_TRACE(kTraceError, kTraceVideo, shared_data_->instance_id(),
@@ -700,7 +721,7 @@ int ViEFileImpl::GetCaptureDeviceSnapshot(const int capture_id,
     }*/
     return -1;
   }
-  if (jpeg_encoder.Encode(input_image) == -1) {
+  if (jpeg_encoder.Encode(video_frame) == -1) {
     WEBRTC_TRACE(kTraceError, kTraceVideo, shared_data_->instance_id(),
                  "\tCould not encode i420 -> jpeg file '%s' for "
                  "writing!", file_nameUTF8);

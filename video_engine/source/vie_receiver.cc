@@ -261,8 +261,8 @@ int ViEReceiver::InsertRTPPacket(const uint8_t* rtp_packet,
 
 	if (external_decryption_) {
 		//put the last 4 bytes to rtp header ssrc to restore ssrc that FreeSwitch has changed
-		memcpy(received_packet + 8, received_packet + received_packet_length - 4, 4);
-		received_packet_length -= 4;
+		//memcpy(received_packet + 8, received_packet + received_packet_length - 4, 4);
+		//received_packet_length -= 4;
 
 		int decrypted_length = 0;
 		external_decryption_->decrypt(channel_id_, received_packet,
@@ -422,8 +422,8 @@ int ViEReceiver::InsertRTCPPacket(const uint8_t* rtcp_packet,
 
 	if (external_decryption_) {
 		//put the last 4 bytes to rtp header ssrc to restore ssrc that FreeSwitch has changed
-		memcpy(received_packet + 4, received_packet + received_packet_length - 4, 4);
-		received_packet_length -= 4;
+		//memcpy(received_packet + 4, received_packet + received_packet_length - 4, 4);
+		//received_packet_length -= 4;
 
 		int decrypted_length = 0;
 		external_decryption_->decrypt_rtcp(channel_id_, received_packet,

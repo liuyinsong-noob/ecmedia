@@ -137,22 +137,85 @@ JpegEncoder::Encode(const I420VideoFrame& inputImage)
     _cinfo->comp_info[2].v_samp_factor = 1;
     _cinfo->raw_data_in = TRUE;
 
-    WebRtc_UWord32 height16 = (height + 15) & ~15;
-    WebRtc_UWord8* origImagePtr = NULL;
-    if (height16 != height)
-    {
-        // Copy image to an adequate size buffer
-        WebRtc_UWord32 requiredSize = height16 * width * 3 >> 1;
-        origImagePtr = new WebRtc_UWord8[requiredSize];
-        memset(origImagePtr, 0, requiredSize);
-    }
+    //WebRtc_UWord32 height16 = (height + 15) & ~15;
+    //WebRtc_UWord8* origImagePtr = NULL;
+    //if (height16 != height)
+    //{
+    //    // Copy image to an adequate size buffer
+    //    WebRtc_UWord32 requiredSize = height16 * width * 3 >> 1;
+    //    origImagePtr = new WebRtc_UWord8[requiredSize];
+    //    memset(origImagePtr, 0, requiredSize);
+    //}
 
-	int size_y = inputImage.stride(kYPlane)*inputImage.height();
-	int size_u = inputImage.stride(kUPlane)*inputImage.height()/2;
-	int size_v = inputImage.stride(kVPlane)*inputImage.height()/2;
-	memcpy(origImagePtr, inputImage.buffer(kYPlane), size_y);
-	memcpy(origImagePtr+size_y, inputImage.buffer(kUPlane), size_u);
-	memcpy(origImagePtr+size_y+size_u, inputImage.buffer(kVPlane), size_v);
+	//WebRtc_UWord32 height16 = (height + 15) & ~15;
+	//WebRtc_UWord8* imgPtr = inputImage._buffer;
+	//WebRtc_UWord8* origImagePtr = NULL;
+	//if (height16 != height)
+	//{
+	//	// Copy image to an adequate size buffer
+	//	WebRtc_UWord32 requiredSize = height16 * width * 3 >> 1;
+	//	origImagePtr = new WebRtc_UWord8[requiredSize];
+	//	memset(origImagePtr, 0, requiredSize);
+	//	memcpy(origImagePtr, inputImage._buffer, inputImage._length);
+	//	imgPtr = origImagePtr;
+	//}
+
+	//WebRtc_UWord32 height16 = (height + 15) & ~15;
+	//WebRtc_UWord8* origImagePtr = NULL;
+	//WebRtc_UWord32 requiredSize = width * height * 3 >> 1;
+	//if (height16 != height)
+	//{
+	//	// Copy image to an adequate size buffer
+	//	requiredSize = height16 * width * 3 >> 1;
+	//}
+	//origImagePtr = new WebRtc_UWord8[requiredSize];
+	//memset(origImagePtr, 0, requiredSize);
+
+	//int size_y = inputImage.stride(kYPlane)*inputImage.height();
+	//int size_u = inputImage.stride(kUPlane)*inputImage.height()/2;
+	//int size_v = inputImage.stride(kVPlane)*inputImage.height()/2;
+	//memcpy(origImagePtr, inputImage.buffer(kYPlane), size_y);
+	//memcpy(origImagePtr+size_y, inputImage.buffer(kUPlane), size_u);
+	//memcpy(origImagePtr+size_y+size_u, inputImage.buffer(kVPlane), size_v);
+
+
+	int size_y = inputImage.width()*inputImage.height();
+	int size_u = (inputImage.width() / 2)*(inputImage.height() / 2);
+	int size_v = (inputImage.width() / 2)*(inputImage.height() / 2);
+
+	WebRtc_UWord32 requiredSize = size_y + size_u + size_v;
+	WebRtc_UWord8* origImagePtr = NULL;
+	origImagePtr = new WebRtc_UWord8[requiredSize];
+	memset(origImagePtr, 0, requiredSize);
+
+	WebRtc_UWord8 * inputYPlane = (WebRtc_UWord8 *)inputImage.buffer(kYPlane);
+	WebRtc_UWord8 * inputUPlane = (WebRtc_UWord8 *)inputImage.buffer(kUPlane);
+	WebRtc_UWord8 * inputVPlane = (WebRtc_UWord8 *)inputImage.buffer(kVPlane);
+
+
+	WebRtc_UWord8 * yPlane = origImagePtr;
+	WebRtc_UWord8 * uPlane = origImagePtr + size_y;
+	WebRtc_UWord8 * vPlane = origImagePtr + size_y + size_u;
+
+	for (int i = 0; i < height; i++)
+	{
+		memcpy(yPlane, inputYPlane, width);
+		yPlane += width;
+		inputYPlane += inputImage.stride(kYPlane);
+	}
+
+	for (int i = 0; i < height / 2; i++)
+	{
+		memcpy(uPlane, inputUPlane, width / 2);
+		uPlane += width / 2;
+		inputUPlane += inputImage.stride(kUPlane);
+
+		memcpy(vPlane, inputVPlane, width / 2);
+		vPlane += width / 2;
+		inputVPlane += inputImage.stride(kVPlane);
+	}
+
+
 	WebRtc_UWord8* imgPtr = origImagePtr;
 
     jpeg_start_compress(_cinfo, TRUE);
@@ -199,12 +262,12 @@ JpegEncoder::Encode(const I420VideoFrame& inputImage)
 WebRtc_Word32
 JpegEncoder::Encode(const I420VideoFrame& inputImage, EncodedImage& outputImage)
 {
-	if(inputImage.IsZeroSize())
+	if (inputImage.IsZeroSize())
 		return -1;
-    if (inputImage.width() < 1 || inputImage.height() < 1)
-    {
-        return -1;
-    }
+	if (inputImage.width() < 1 || inputImage.height() < 1)
+	{
+		return -1;
+	}
 
 	const WebRtc_UWord32 width = outputImage._encodedWidth = inputImage.width();
 	const WebRtc_UWord32 height = outputImage._encodedHeight = inputImage.height();
@@ -225,7 +288,7 @@ JpegEncoder::Encode(const I420VideoFrame& inputImage, EncodedImage& outputImage)
 	jpeg_create_compress(_cinfo);
 
 	// Setting destination image ptr.
-	jpeg_mem_dest (_cinfo, (unsigned char **)&outputImage._buffer, (unsigned long *)&outputImage._length);
+	jpeg_mem_dest(_cinfo, (unsigned char **)&outputImage._buffer, (unsigned long *)&outputImage._length);
 
 	// Set parameters for compression
 	_cinfo->in_color_space = JCS_YCbCr;
@@ -256,23 +319,61 @@ JpegEncoder::Encode(const I420VideoFrame& inputImage, EncodedImage& outputImage)
 	//	imgPtr = origImagePtr;
 	//}
 
-	WebRtc_UWord32 height16 = (height + 15) & ~15;
-    WebRtc_UWord8* origImagePtr = NULL;
-	WebRtc_UWord32 requiredSize = width * height * 3 >> 1;
-    if (height16 != height)
-    {
-        // Copy image to an adequate size buffer
-		requiredSize = height16 * width * 3 >> 1;
-    }
+	//int size_y = inputImage.stride(kYPlane)*inputImage.height();
+	//int size_u = inputImage.stride(kUPlane)*(inputImage.height() / 2);
+	//int size_v = inputImage.stride(kVPlane)*(inputImage.height() / 2);
+
+	//WebRtc_UWord32 height16 = (height + 15) & ~15;
+ //   WebRtc_UWord8* origImagePtr = NULL;
+	//WebRtc_UWord32 requiredSize = width * height * 3 >> 1;
+	//if (height16 != height)
+	//{
+	//	// Copy image to an adequate size buffer
+	//	requiredSize = height16 * width * 3 >> 1;
+	//}
+	//origImagePtr = new WebRtc_UWord8[requiredSize];
+	//memset(origImagePtr, 0, requiredSize);
+
+
+	int size_y = inputImage.width()*inputImage.height();
+	int size_u = (inputImage.width() / 2)*(inputImage.height() / 2);
+	int size_v = (inputImage.width() / 2)*(inputImage.height() / 2);
+
+	WebRtc_UWord32 requiredSize = size_y + size_u + size_v;
+	WebRtc_UWord8* origImagePtr = NULL;
 	origImagePtr = new WebRtc_UWord8[requiredSize];
 	memset(origImagePtr, 0, requiredSize);
 
-	int size_y = inputImage.stride(kYPlane)*inputImage.height();
-	int size_u = inputImage.stride(kUPlane)*inputImage.height()/2;
-	int size_v = inputImage.stride(kVPlane)*inputImage.height()/2;
-	memcpy(origImagePtr, inputImage.buffer(kYPlane), size_y);
-	memcpy(origImagePtr+size_y, inputImage.buffer(kUPlane), size_u);
-	memcpy(origImagePtr+size_y+size_u, inputImage.buffer(kVPlane), size_v);
+	WebRtc_UWord8 * inputYPlane = (WebRtc_UWord8 *)inputImage.buffer(kYPlane);
+	WebRtc_UWord8 * inputUPlane = (WebRtc_UWord8 *)inputImage.buffer(kUPlane);
+	WebRtc_UWord8 * inputVPlane = (WebRtc_UWord8 *)inputImage.buffer(kVPlane);
+
+
+	WebRtc_UWord8 * yPlane = origImagePtr;
+	WebRtc_UWord8 * uPlane = origImagePtr + size_y;
+	WebRtc_UWord8 * vPlane = origImagePtr + size_y + size_u;
+
+	for (int i = 0; i < height; i++)
+	{
+		memcpy(yPlane, inputYPlane, width);
+		yPlane += width;
+		inputYPlane += inputImage.stride(kYPlane);
+	}
+
+	for (int i = 0; i < height / 2; i++)
+	{
+		memcpy(uPlane, inputUPlane, width / 2);
+		uPlane += width / 2;
+		inputUPlane += inputImage.stride(kUPlane);
+
+		memcpy(vPlane, inputVPlane, width / 2);
+		vPlane += width / 2;
+		inputVPlane += inputImage.stride(kVPlane);
+	}
+
+	//memcpy(origImagePtr, inputImage.buffer(kYPlane), size_y);
+	//memcpy(origImagePtr+size_y, inputImage.buffer(kUPlane), size_u);
+	//memcpy(origImagePtr+size_y+size_u, inputImage.buffer(kVPlane), size_v);
 	WebRtc_UWord8* imgPtr = origImagePtr;
 
 	jpeg_start_compress(_cinfo, TRUE);

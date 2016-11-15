@@ -282,8 +282,8 @@ Channel::SendPacket(int channel, const void *data, size_t len, int sn)
 			}
 
 			//append ssrc to end, 4 bytes
-			memcpy(_encryptionRTPBufferPtr+encryptedBufferLength, _encryptionRTPBufferPtr+8, 4);
-			encryptedBufferLength += 4;
+			//memcpy(_encryptionRTPBufferPtr+encryptedBufferLength, _encryptionRTPBufferPtr+8, 4);
+			//encryptedBufferLength += 4;
 
 			//            printf("HERE after encrypt and append\n");
 			//            for (int j=0; j<encryptedBufferLength; j++) {
@@ -5098,8 +5098,8 @@ void
 
 			// Perform decryption (SRTP or external)
 			//put the last 4 bytes to rtp header ssrc to restore ssrc that FreeSwitch has changed
-			memcpy(rtpBufferPtr+8, rtpBufferPtr+rtpBufferLength-4, 4);
-			rtpBufferLength -= 4;
+			//memcpy(rtpBufferPtr+8, rtpBufferPtr+rtpBufferLength-4, 4);
+			//rtpBufferLength -= 4;
 
 			WebRtc_Word32 decryptedBufferLength = 0;
 			_encryptionPtr->decrypt(_channelId,

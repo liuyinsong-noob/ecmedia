@@ -1726,6 +1726,23 @@ extern "C"  int setUserName(const char*username)
 
 extern "C"  const char* makeCall(int callType, const char *called )
 {
+/*
+	//hubintest 
+	int channelID;
+	if (strncmp(called, "1906", 4) == 0) {
+		startSendRtpPacket(channelID, "192.168.178.135", 7078);
+		return "as";
+	}
+	else if (strncmp(called, "1907", 4) == 0) {
+		startSendRtpPacket(channelID, "192.168.178.135", 7080);
+		return "as";
+	}
+	else if (strncmp(called, "1908", 4) == 0) {
+		startSendRtpPacket(channelID, "192.168.178.135", 7082);
+		return "as";
+	}
+*/	
+	//end
 
     if(!g_bConnected)
     {
@@ -3309,10 +3326,10 @@ extern "C" int StopPlayAudioFromRtpDump()
 	return g_pSerCore->StopPlayAudioFromRtpDump();
 }
 
-extern "C" int PlayVideoFromRtpDump(int localPort, const char *ptName, int ploadType, void *videoWindow)
+extern "C" int PlayVideoFromRtpDump(int localPort, const char *ptName, int ploadType, void *videoWindow, int crypt_type, const char* key)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	return g_pSerCore->PlayVideoFromRtpDump(localPort, ptName, ploadType, videoWindow);
+	return g_pSerCore->PlayVideoFromRtpDump(localPort, ptName, ploadType, videoWindow, (cloopenwebrtc::ccp_srtp_crypto_suite_t)crypt_type, key);
 }
 extern "C" int StopPlayVideoFromRtpDump()
 {
@@ -3749,4 +3766,20 @@ extern "C" int selectCameraLiveStream(void *handle, int index, int width, int he
 	if (!g_pSerCore)
 		return -1;
 	return g_pSerCore->liveStream_SelectCamera(handle, index, width, height, fps);
+}
+
+extern "C" int startSendRtpPacket(int &channel, const char *ip, int rtp_port)
+{
+	if (!g_pSerCore) {
+		return -1;
+	}
+	return g_pSerCore->startSendRtpPacket(channel, ip, rtp_port);
+}
+
+extern "C" int startRecvRtpPacket(int channelNum)
+{
+	if (!g_pSerCore) {
+		return -1;
+	}
+	return g_pSerCore->startRecvRtpPacket(channelNum);
 }
