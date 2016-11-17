@@ -4971,7 +4971,7 @@ void
 			}
 
 			// Perform decryption (SRTP or external).
-			WebRtc_Word32 decryptedBufferLength = 0;
+			WebRtc_Word32 decryptedBufferLength = rtcpBufferLength;
 			_encryptionPtr->decrypt_rtcp(_channelId,
 				rtcpBufferPtr,
 				_decryptionRTCPBufferPtr,

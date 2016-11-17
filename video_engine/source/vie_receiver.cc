@@ -425,14 +425,14 @@ int ViEReceiver::InsertRTCPPacket(const uint8_t* rtcp_packet,
 		//memcpy(received_packet + 4, received_packet + received_packet_length - 4, 4);
 		//received_packet_length -= 4;
 
-		int decrypted_length = 0;
+		int decrypted_length = received_packet_length;
 		external_decryption_->decrypt_rtcp(channel_id_, received_packet,
 			decryption_buffer_,
 			received_packet_length,
 			&decrypted_length);
 		if (decrypted_length <= 0) {
 			WEBRTC_TRACE(kTraceError, kTraceVideo, channel_id_,
-				"RTP decryption failed");
+				"RTCP decryption failed");
 			return -1;
 		}
 		else if (decrypted_length > kViEMaxMtu) {

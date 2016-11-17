@@ -515,7 +515,8 @@ namespace cloopenwebrtc {
         memset(&policy, 0, sizeof(srtp_policy_t));
         incoming_ssrc.type = ssrc_any_inbound;
 
-        
+		policy.allow_repeat_tx = true;
+
         if (!ccp_init_srtp_policy(session, &policy, incoming_ssrc, rcv_key)) {
             ccp_srtp_dealloc(session);
 			session = NULL;
@@ -548,6 +549,8 @@ namespace cloopenwebrtc {
         outgoing_ssrc.type = ssrc_specific;
         outgoing_ssrc.value = ssrc;
         
+		policy.allow_repeat_tx = true;
+
 //        printf("ssrc in %s %u",__FUNCTION__,ssrc);
         if (!ccp_init_srtp_policy(session, &policy, outgoing_ssrc, snd_key)) {
             ccp_srtp_dealloc(session);

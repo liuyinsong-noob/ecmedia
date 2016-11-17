@@ -823,8 +823,8 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 				//encryptType = cloopenwebrtc::CCPAES_256_SHA1_80;
 				//end
 
-				ECMedia_enable_srtp_recv_audio(call->m_AudioChannelID, encryptType, master_key);
-				ECMedia_enable_srtp_send_audio(call->m_AudioChannelID, encryptType, master_key);
+				ECMedia_enable_srtp_recv_video(call->m_VideoChannelID, encryptType, master_key);
+				ECMedia_enable_srtp_send_video(call->m_VideoChannelID, encryptType, master_key);
 								
 				//switch (encryptType) {
 				//case CCPAES_256_SHA1_80:
@@ -5201,16 +5201,13 @@ int ServiceCore::startRecvRtpPacket(int channelNum)
 		ECMedia_audio_create_channel(channel[i], false);
 		//setCodec
 		cloopenwebrtc::CodecInst codec_params = { 0 };
-
+		bool codec_found = false;
 		const char *ptName = "opus";
 		int ploadType = 121;
-
-		bool codec_found = false;
 		if (startport == 7078) {
 			ptName = "G729";
 			ploadType = 18;
 		}
-
 		int codec_num = ECMedia_num_of_supported_codecs_audio();
 		cloopenwebrtc::CodecInst *codecArray = new cloopenwebrtc::CodecInst[codec_num];
 		ECMedia_get_supported_codecs_audio(codecArray);
@@ -5229,12 +5226,33 @@ int ServiceCore::startRecvRtpPacket(int channelNum)
 
 		if (codec_found) {
 			ECMedia_set_receive_playloadType_audio(channel[i], codec_params);
+			ECMedia_set_send_codec_audio(channel[i], codec_params);
 		}
+
+		//        ECMedia_audio_set_send_destination(channel[i], 7078,"192.168.0.59");
+
+		//        ECMedia_audio_start_send(channel[i]);
 
 		ECMedia_audio_start_receive(channel[i]);
 		ECMedia_audio_start_playout(channel[i]);
 	}
 
+
+	ECMedia_audio_set_send_destination(0, 7078, "192.168.1.101");
+	ECMedia_audio_start_send(0);
+
+	ECMedia_audio_set_send_destination(1, 7080, "192.168.1.103");
+	ECMedia_audio_start_send(1);
+
+	ECMedia_audio_set_send_destination(2, 7082, "192.168.1.106");
+	ECMedia_audio_start_send(2);
+
+
+	ECMedia_audio_set_send_destination(3, 7084, "192.168.1.102");
+	ECMedia_audio_start_send(3);
+
 	printf("sean haha end\n");
+
+
 	return 0;
 }
