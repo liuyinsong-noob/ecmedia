@@ -1726,22 +1726,22 @@ extern "C"  int setUserName(const char*username)
 
 extern "C"  const char* makeCall(int callType, const char *called )
 {
-/*
+
 	//hubintest 
 	int channelID;
 	if (strncmp(called, "1906", 4) == 0) {
-		startSendRtpPacket(channelID, "192.168.178.135", 7078);
+		startSendRtpPacket(channelID, "192.168.0.89", 7084);
 		return "as";
 	}
 	else if (strncmp(called, "1907", 4) == 0) {
-		startSendRtpPacket(channelID, "192.168.178.135", 7080);
+		startSendRtpPacket(channelID, "192.168.0.89", 7086);
 		return "as";
 	}
 	else if (strncmp(called, "1908", 4) == 0) {
-		startSendRtpPacket(channelID, "192.168.178.135", 7082);
+		startSendRtpPacket(channelID, "192.168.0.89", 7088);
 		return "as";
 	}
-*/	
+
 	//end
 
     if(!g_bConnected)

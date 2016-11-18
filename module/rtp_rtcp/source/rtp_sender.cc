@@ -859,6 +859,10 @@ bool RTPSender::PrepareAndSendPacket(uint8_t* buffer,
     TRACE_EVENT_ASYNC_END0("webrtc_rtp", "PacedSend", capture_time_ms);
   }
 
+  if (is_retransmit) {
+//	  TRACE_EVENT_ASYNC_END0("webrtc_rtp", "PacedSend", capture_time_ms);
+  }
+
   TRACE_EVENT_INSTANT2("webrtc_rtp", "PrepareAndSendPacket",
                        "timestamp", rtp_header.timestamp,
                        "seqnum", rtp_header.sequenceNumber);

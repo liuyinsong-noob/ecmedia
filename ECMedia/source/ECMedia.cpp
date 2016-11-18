@@ -359,12 +359,18 @@ int ECMedia_init_video()
 	m_pScreenlist = NULL;
 	m_pWindowlist = NULL;
 
+	if (m_vie)
+	{
+		PrintConsole("ECMedia_init_video Video engine already create\n");
+		return 1;
+	}
+
     //VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     m_vie = VideoEngine::Create();
     if ( NULL == m_vie)
     {
         PrintConsole("media_init Create Video engine fail\n");
-        return 1;
+        return -99;;
     }
     ViEBase* videobase = ViEBase::GetInterface(m_vie);
     PrintConsole("Init Video Engine...\n");
@@ -373,6 +379,7 @@ int ECMedia_init_video()
         PrintConsole("Init Video Engine error, error code is %d\n", lastError);		
 		videobase->Release();
 		VideoEngine::Delete(m_vie);
+		m_vie = NULL;
 		return lastError;
     }
     else {
