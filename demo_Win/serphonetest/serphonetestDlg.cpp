@@ -991,7 +991,7 @@ void CserphonetestDlg::OnBnClickedButton8()
 
 	if (g_rtmpLiveStreamHandle) {
 		CWnd *rcwnd = g_dlg->GetDlgItem(IDC_RICHEDIT21);
-		playLiveStream(g_rtmpLiveStreamHandle, "rtmp:://live.yuntongxun.com/live/jiazyjiazy", rcwnd->GetSafeHwnd());
+		playLiveStream(g_rtmpLiveStreamHandle, "rtmp://live.yuntongxun.com/live/livestream", rcwnd->GetSafeHwnd());
 	}
 	//setSrtpEnabled(false, true, true, 2, "12345678901234567890123456789012345678901234");
 }
@@ -1075,7 +1075,7 @@ void CserphonetestDlg::OnBnClickedButton15()
 		selectCameraLiveStream(g_rtmpLiveStreamHandle, 1, 640, 480, 15);
 
 		CWnd *lcwnd = g_dlg->GetDlgItem(IDC_RICHEDIT21);
-		pushLiveStream(g_rtmpLiveStreamHandle, "rtmp://live.yuntongxun.com/live/jiazyjiazy", lcwnd->GetSafeHwnd());
+		pushLiveStream(g_rtmpLiveStreamHandle, "rtmp://live.yuntongxun.com/live/demo", lcwnd->GetSafeHwnd());
 	}
 	// TODO: 在此添加控件通知处理程序代码
 	sendDTMF(g_currentCallId,'9');
@@ -1319,7 +1319,7 @@ void CserphonetestDlg::OnBnClickedButton25()
 		ptName = "VP8";
 	}
 
-	int ret = PlayVideoFromRtpDump(localPort, ptName, payloadType, /*m_dlgFullScreen->GetSafeHwnd()*/lcwnd->GetSafeHwnd());
+	int ret = PlayVideoFromRtpDump(localPort, ptName, payloadType, /*m_dlgFullScreen->GetSafeHwnd()*/lcwnd->GetSafeHwnd(),0,NULL);
 
 }
 

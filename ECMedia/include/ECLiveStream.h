@@ -98,8 +98,11 @@ namespace cloopenwebrtc {
 		int setVideoProfile(int index, CameraCapability cam, int bitRates);
 		void setNetworkStatusCallBack(onLiveStreamNetworkStatusCallBack callbck);
 
-        static bool NetworkThreadRun(void *pThis);
-        bool NetworkThread();
+        static bool PlayNetworkThreadRun(void *pThis);
+        bool PlayNetworkThread();
+		
+		static bool PushNetworkThreadRun(void *pThis);
+		bool PushNetworkThread();
 
     protected:
 		bool Init();
@@ -123,7 +126,7 @@ namespace cloopenwebrtc {
 
 		int Send_AAC_SPEC();
 		int SendAudioPacket(unsigned char * aac_data, int aac_data_len);
-		int Send_SPS_PPS(char *sps,int sps_len, char *pps,int pps_len);
+		int Send_SPS_PPS();
 		int SendVideoPacket(std::vector<uint8_t> &nalus);
 
 		int startCaputre();
@@ -134,8 +137,9 @@ namespace cloopenwebrtc {
 		bool GetAllCameraInfo();
         
     private:
-		CriticalSectionWrapper* crit_;
-        ThreadWrapper* networkThread_;
+		//CriticalSectionWrapper* crit_;
+        ThreadWrapper* playnetworkThread_;
+		ThreadWrapper* pushnetworkThread_;
         void HandleAuidoPacket(RTMPPacket *packet);
         void HandleVideoPacket(RTMPPacket *packet);
         
@@ -167,11 +171,15 @@ namespace cloopenwebrtc {
         RingBuffer<uint8_t> playbuffer_;
 		RingBuffer<uint8_t> recordbuffer_;
 		std::vector<CameraInfo*> cameras_;
+		std::vector<char> sps_;
+		std::vector<char> pps_;
 		bool hasSend_SPS_PPS_;
+		bool hasSend_AAC_SPEC_;
 		int64_t last_receive_time_;
 		int64_t packet_timeout_ms_;
 		Clock*	clock_;
 		CriticalSectionWrapper* rtmp_lock_;
+		std::string stream_url_;
 
 		int push_video_bitrates_;
 		int push_video_width_;

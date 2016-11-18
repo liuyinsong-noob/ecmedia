@@ -1387,8 +1387,8 @@ WriteN(RTMP *r, const char *buffer, int n)
 
 	  if (sockerr == EINTR && !RTMP_ctrlC)
 	    continue;
-
-	  RTMP_Close(r);
+	  
+	  RTMP_ForceClose(r);
 	  n = 1;
 	  break;
 	}
@@ -3480,6 +3480,16 @@ RTMP_Close(RTMP *r)
       r->Link.rc4keyOut = NULL;
     }
 #endif
+}
+
+
+void RTMP_ForceClose(RTMP *r)
+{
+	if (r->m_stream_id > 0) {
+		RTMPSockBuf_Close(&r->m_sb);
+		r->m_sb.sb_socket = -1;
+	}
+	RTMP_Close(r);
 }
 
 int

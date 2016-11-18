@@ -80,7 +80,7 @@ namespace cloopenwebrtc {
     
     ECMedia_LiveStream::ECMedia_LiveStream()
     {
-        
+
     }
     
     int ECMedia_LiveStream::Init()
@@ -90,6 +90,9 @@ namespace cloopenwebrtc {
     
     RTMPLiveSession* ECMedia_LiveStream::CreateLiveStream(int type)
     {
+#ifndef _WIN32
+		signal(SIGPIPE, SIG_IGN);
+#endif
 		if (type != 0)
 			return NULL;
 

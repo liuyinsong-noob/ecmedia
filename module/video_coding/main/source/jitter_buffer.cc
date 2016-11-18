@@ -604,6 +604,8 @@ VCMFrameBufferEnum VCMJitterBuffer::InsertPacket(const VCMPacket& packet,
     last_decoded_state_.UpdateOldPacket(&packet);
     DropPacketsFromNackList(last_decoded_state_.sequence_num());
 
+
+
     if (num_consecutive_old_packets_ > kMaxConsecutiveOldPackets) {
       LOG(LS_WARNING)
           << num_consecutive_old_packets_
@@ -613,7 +615,6 @@ VCMFrameBufferEnum VCMJitterBuffer::InsertPacket(const VCMPacket& packet,
     }
     return kOldPacket;
   }
- // LOG(LS_WARNING)  << " hubin insertPacket " << packet.seqNum;
 
   num_consecutive_old_packets_ = 0;
 
