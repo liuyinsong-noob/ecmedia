@@ -263,6 +263,7 @@ RTMP_Init(RTMP *r)
   r->m_fVideoCodecs = 252.0;
   r->Link.timeout = 30;
   r->Link.swfAge = 30;
+  r->m_realConnected = 0;
 }
 
 void
@@ -280,7 +281,7 @@ RTMP_GetDuration(RTMP *r)
 int
 RTMP_IsConnected(RTMP *r)
 {
-  return r->m_sb.sb_socket != -1;
+  return r->m_sb.sb_socket != -1 && r->m_realConnected !=0;
 }
 
 int
@@ -820,7 +821,7 @@ RTMP_Connect0(RTMP *r, struct sockaddr * service)
 	  RTMP_Close(r);
 	  return FALSE;
 	}
-
+	  r->m_realConnected = 1;
       if (r->Link.socksport)
 	{
 	  RTMP_Log(RTMP_LOGDEBUG, "%s ... SOCKS negotiation", __FUNCTION__);
@@ -848,6 +849,16 @@ RTMP_Connect0(RTMP *r, struct sockaddr * service)
         RTMP_Log(RTMP_LOGERROR, "%s, Setting socket timeout to %ds failed!",
 	    __FUNCTION__, r->Link.timeout);
       }
+	if (setsockopt
+	(r->m_sb.sb_socket, SOL_SOCKET, SO_SNDTIMEO, (char *)&tv, sizeof(tv)))
+	{
+		RTMP_Log(RTMP_LOGERROR, "%s, Setting socket timeout to %ds failed!",
+			__FUNCTION__, r->Link.timeout);
+	}
+#ifdef __APPLE__
+	int value = 1;
+	setsockopt(r->m_sb.sb_socket, SOL_SOCKET, SO_NOSIGPIPE, &value, sizeof(value));
+#endif
   }
 
   setsockopt(r->m_sb.sb_socket, IPPROTO_TCP, TCP_NODELAY, (char *) &on, sizeof(on));
@@ -3409,6 +3420,7 @@ RTMP_Close(RTMP *r)
 
   r->m_stream_id = -1;
   r->m_sb.sb_socket = -1;
+  r->m_realConnected = 0;
   r->m_nBWCheckCounter = 0;
   r->m_nBytesIn = 0;
   r->m_nBytesInSent = 0;

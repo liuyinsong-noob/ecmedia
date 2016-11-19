@@ -36,6 +36,7 @@
 #include "vie_rtp_rtcp.h"
 #include "webrtc_libyuv.h"
 #include "vie_file_impl.h"
+#include "vie_desktop_share_impl.h"
 #endif
 
 #include "clock.h"
@@ -70,9 +71,13 @@ namespace cloopenwebrtc {
 	, audio_rtp_seq_(0)
 	, video_rtp_seq_(0)
 	, faac_decode_handle_(nullptr)
+	, faac_encode_handle_(nullptr)
 	, video_window_(nullptr)
 	, rtmph_(nullptr)
 	, capture_id_(-1)
+	, desktop_capture_id_(-1)
+	, live_mode_(MODE_LIVE_UNKNOW)
+	, local_view_(NULL)
 	, clock_(Clock::GetRealTimeClock())
 	, push_video_bitrates_(1000)
 	, push_video_width_(640)
@@ -89,12 +94,17 @@ namespace cloopenwebrtc {
         push_video_width_ = 480;
         push_camera_index_ =1;
 #endif
+		rtmp_lock_ = CriticalSectionWrapper::CreateCriticalSection();
 		g_rtmpLiveSession = this;
     }
 
 	RTMPLiveSession::~RTMPLiveSession()
 	{
 		g_rtmpLiveSession = nullptr;
+		if (rtmp_lock_) {
+			delete rtmp_lock_;
+			rtmp_lock_ = nullptr;
+		}
 		UnInit();
 	}
 
@@ -112,7 +122,9 @@ namespace cloopenwebrtc {
         VoEBase *base = VoEBase::GetInterface(voe_);
         audio_channel_ = base->CreateChannel();
         base->Release();
-        
+		//AEC only support below 16000 k
+		RegisterReceiveAudioCodec("L16", 16000, 2);
+
         VoENetwork *network = VoENetwork::GetInterface(voe_);
         network->RegisterExternalTransport(audio_channel_, *this);
 		network->RegisterExternalPacketization(audio_channel_,this);
@@ -127,14 +139,8 @@ namespace cloopenwebrtc {
 		vnetwork->RegisterExternalPacketization(video_channel_, this);
         vnetwork->Release();
  
-        RegisterReceiveVideoCodec("H264",90000);
-        
-        
-        //AEC only support below 16000 k
-		RegisterReceiveAudioCodec("L16", 16000, 2);
-		faac_encode_handle_ = faac_encoder_crate(16000, 2, &faac_encode_input_samples_);
-		rtmp_lock_ = CriticalSectionWrapper::CreateCriticalSection();
-
+        RegisterReceiveVideoCodec("H264",90000);   
+        faac_encode_handle_ = faac_encoder_crate(16000, 2, &faac_encode_input_samples_);
         return true;
     }
 	void RTMPLiveSession::UnInit()
@@ -147,6 +153,7 @@ namespace cloopenwebrtc {
 
 		VoENetwork *network = VoENetwork::GetInterface(voe_);
 		network->DeRegisterExternalTransport(audio_channel_);
+
 		network->DeRegisterExternalPacketization(audio_channel_);
 		network->Release();
 
@@ -178,13 +185,52 @@ namespace cloopenwebrtc {
 			faac_encode_handle_ = nullptr;
 		}
 
-		if (rtmp_lock_) {
-			delete rtmp_lock_;
-			rtmp_lock_ = nullptr;
-		}
 	}
 
-	int RTMPLiveSession::startCaputre()
+	int RTMPLiveSession::startDesktopCapture()
+	{
+		ViEDesktopShare *desktopShare = ViEDesktopShare::GetInterface(vie_);
+		if (desktop_capture_id_ >= 0) {
+			desktopShare->StopDesktopShareCapture(desktop_capture_id_);
+		}
+		int ret = desktopShare->AllocateDesktopShareCapturer(desktop_capture_id_, DesktopShareType::ShareScreen);	
+		WindowList windows;
+		desktopShare->GetWindowList(desktop_capture_id_, windows);
+		ScreenList screens;
+		desktopShare->GetScreenList(desktop_capture_id_, screens);
+
+		desktopShare->SelectScreen(desktop_capture_id_, screens[0]);
+
+		int width =0 , heigth = 0;
+		desktopShare->GetDesktopShareCaptureRect(desktop_capture_id_, push_video_width_, push_video_height_);
+		RegisterReceiveVideoCodec("H264", 90000);
+		int numofscreen = desktopShare->NumberOfScreen(desktop_capture_id_);
+		int numofwindow = desktopShare->NumberOfWindow(desktop_capture_id_);
+
+		
+		//desktopShare->SelectWindow(desktop_capture_id_, windows[15].id);
+
+
+		ret = desktopShare->StartDesktopShareCapture(desktop_capture_id_, 15);
+		ret = desktopShare->ConnectDesktopCaptureDevice(desktop_capture_id_, video_channel_);
+
+#ifdef WIN32
+		ViERender* render = ViERender::GetInterface(vie_);
+		ret = render->AddRenderer(desktop_capture_id_, local_view_, 1, 0, 0, 1, 1, NULL);
+		if (ret) {
+			render->Release();
+			return ret;
+		}
+		ret = render->StartRender(desktop_capture_id_);
+		render->Release();
+#else
+		//ret = desktopShare->SetLocalVideoWindow(desktop_capture_id_, local_view_);
+#endif
+		desktopShare->Release();
+		return 0;
+	}
+
+	int RTMPLiveSession::startCameraCapture()
 	{
 		if (cameras_.size() == 0)
 			GetAllCameraInfo();
@@ -216,7 +262,6 @@ namespace cloopenwebrtc {
 		render->Release();
 #else
 		ret = capture->SetLocalVideoWindow(capture_id_, local_view_);
-		capture->Release();
 #endif
 		capture->Release();
 
@@ -255,6 +300,7 @@ namespace cloopenwebrtc {
         videoCodec.minBitrate = push_video_bitrates_/2;
         videoCodec.targetBitrate = push_video_bitrates_;
         videoCodec.maxFramerate = push_video_fps_;
+		videoCodec.mode = kRealtimeVideo;
 
         int ret = vcodec->SetReceiveCodec(video_channel_, videoCodec);
         ret = vcodec->SetSendCodec(video_channel_, videoCodec);
@@ -513,15 +559,18 @@ namespace cloopenwebrtc {
 
 	bool RTMPLiveSession::PushNetworkThread()
 	{
+		if (live_mode_ != MODE_LIVE_PUSH)
+			return false;
+
 		if (!RTMP_IsConnected(rtmph_)) {
 
 			hasSend_SPS_PPS_ = false;
 			hasSend_AAC_SPEC_= false;
-			PrintConsole("[RTMP ERROR] %s RTMP session not connected\n", __FUNCTION__);
+			PrintConsole("[RTMP INFO] try to connect to server %s\n",stream_url_.c_str());
 			if (network_status_callbck_)
 				network_status_callbck_(this, NET_STATUS_CONNECTING);
 			
-			CriticalSectionScoped lock(rtmp_lock_);
+			rtmp_lock_->Enter();
 			RTMP_SetupURL(rtmph_, (char*)stream_url_.c_str());
 			rtmph_->Link.timeout = 3; //connection timeout
 			rtmph_->Link.lFlags |= RTMP_LF_LIVE;
@@ -530,12 +579,18 @@ namespace cloopenwebrtc {
 			if (!RTMP_Connect(rtmph_, NULL)) {
 				if (network_status_callbck_)
 					network_status_callbck_(this, NET_STATUS_DISCONNECTED);
+				rtmp_lock_->Leave();
+				PrintConsole("[RTMP INFO] connect failed ,try after 1s\n");
 				SleepMs(1000); // try connect after 1s
 				return true;
 			}
 			if (!RTMP_ConnectStream(rtmph_, 0)) {
+				rtmp_lock_->Leave();
+				PrintConsole("[RTMP INFO] try to connect stream,but server close connection\n");
 				return true;
 			}
+			rtmp_lock_->Leave();
+			PrintConsole("[RTMP INFO] RTMP session connected\n");
 			if (network_status_callbck_)
 				network_status_callbck_(this, NET_STATUS_CONNECTED);
 			RTMP_SetBufferMS(rtmph_, 3600 * 1000);
@@ -567,7 +622,7 @@ namespace cloopenwebrtc {
 			capture_id_ = -1;
 			capture->Release();
 
-			startCaputre();
+			startCameraCapture();
 		}
 		RegisterReceiveVideoCodec("H264", 90000);
 		return 0;
@@ -668,6 +723,7 @@ namespace cloopenwebrtc {
 	
 	int  RTMPLiveSession::Send_AAC_SPEC()
 	{
+
 		RTMPPacket * packet = new RTMPPacket;
 		memset(packet, 0, sizeof(RTMPPacket));
 
@@ -695,8 +751,8 @@ namespace cloopenwebrtc {
 		packet->m_body = ((char*)&body[0]) + RTMP_MAX_HEADER_SIZE;
 
 		rtmp_lock_->Enter();
-		if (RTMP_IsConnected(rtmph_)) {
-			RTMP_SendPacket(rtmph_, packet, TRUE);
+		if (RTMP_IsConnected(rtmph_) && RTMP_SendPacket(rtmph_, packet, TRUE)) {
+			PrintConsole("[RTMP INFO] Send AAC SPEC to server ok!\n");
 			hasSend_AAC_SPEC_ = true;
 		}
 		rtmp_lock_->Leave();
@@ -734,7 +790,7 @@ namespace cloopenwebrtc {
 		packet->m_body = ((char*)&body[0]) + RTMP_MAX_HEADER_SIZE;
 
 		rtmp_lock_->Enter();
-		if( RTMP_IsConnected(rtmph_) )
+		if (RTMP_IsConnected(rtmph_)) // put judge here in case of video/audio to close socket twice.
 			RTMP_SendPacket(rtmph_, packet, TRUE);
 		rtmp_lock_->Leave();
 		delete packet;
@@ -793,22 +849,21 @@ namespace cloopenwebrtc {
 		packet->m_body =((char*) &body[0]) + RTMP_MAX_HEADER_SIZE;
 
 		//this->HandleVideoPacket(packet);
+		
 		rtmp_lock_->Enter();
-		if (RTMP_IsConnected(rtmph_)) {
-			PrintConsole("Send sps pps \n");
-			RTMP_SendPacket(rtmph_, packet, TRUE);
+		if (RTMP_IsConnected(rtmph_) && RTMP_SendPacket(rtmph_, packet, TRUE)) {
+			PrintConsole("[RTMP INFO] Send SPS PPS to server ok!\n");
 			hasSend_SPS_PPS_ = true;
 		}
 		rtmp_lock_->Leave();
 		delete packet;
-
 		return 0;
 	}
 	int RTMPLiveSession::SendVideoPacket(std::vector<uint8_t> &nalus)
 	{
 		if (!hasSend_SPS_PPS_)
 			return 0;
-
+		
 		static int64_t start_time = 0;
 		if (start_time == 0)
 			start_time = clock_->TimeInMilliseconds();
@@ -846,9 +901,9 @@ namespace cloopenwebrtc {
 		
 		//this->HandleVideoPacket(packet);
 		rtmp_lock_->Enter();
-		if (RTMP_IsConnected(rtmph_) ) {
-			RTMP_SendPacket(rtmph_, packet, TRUE);
-			PrintConsole("Send video data timestamp %d %d  \n", timestamp, packet->m_nBodySize);
+		//PrintConsole("Send video data \n");
+		if (RTMP_IsConnected(rtmph_) && RTMP_SendPacket(rtmph_, packet, TRUE)) {
+			//PrintConsole("Send video data timestamp %d %d  \n", timestamp, packet->m_nBodySize);
 		}
 		rtmp_lock_->Leave();
 		delete packet;
@@ -869,7 +924,7 @@ namespace cloopenwebrtc {
 		hasSend_SPS_PPS_ = false;
 		hasSend_AAC_SPEC_= false;
 		//RTMP_LogSetLevel(RTMP_LOGALL);
-
+		live_mode_ = MODE_LIVE_PUSH;
 		stream_url_ = url;
 		rtmph_ = RTMP_Alloc();
 		RTMP_Init(rtmph_);
@@ -885,7 +940,7 @@ namespace cloopenwebrtc {
 		}
 		local_view_ = localview;
 		if (capture_id_ < 0)
-			startCaputre();
+			startCameraCapture();
 
 		ViEBase *vbase = ViEBase::GetInterface(vie_);
 		int ret = vbase->StartSend(video_channel_);
@@ -908,7 +963,7 @@ namespace cloopenwebrtc {
         
         if( rtmph_ != NULL)  //already in playing state
             return -2;
-
+		live_mode_ = MODE_LIVE_PLAY;
 		remote_video_resoution_callback_ = callback;
 
 		stream_url_ = url;
@@ -944,9 +999,13 @@ namespace cloopenwebrtc {
 		last_receive_time_ = clock_->TimeInMilliseconds();
         return 0;
     }
-    
+   
     void  RTMPLiveSession::StopPlay()
     {
+		if (live_mode_ != MODE_LIVE_PLAY)
+			return;
+		live_mode_ = MODE_LIVE_UNKNOW;
+
 		VoEBase *base = VoEBase::GetInterface(voe_);
 		base->StopPlayout(audio_channel_);
 		base->StopReceive(audio_channel_);
@@ -956,7 +1015,6 @@ namespace cloopenwebrtc {
         render->StopRender(video_channel_);
 		render->RemoveRenderer(video_channel_);
 		render->Release();
-	
 		
 		ViEBase *vbase = ViEBase::GetInterface(vie_);
 		vbase->StopReceive(video_channel_);
@@ -966,23 +1024,33 @@ namespace cloopenwebrtc {
 			playnetworkThread_->Stop();
 		delete playnetworkThread_;
 		playnetworkThread_ = NULL;
-		
-		if (pushnetworkThread_)
-			pushnetworkThread_->Stop();
-		delete pushnetworkThread_;
-		pushnetworkThread_ = NULL;
 
 		UnInit(); //must before close rtmp connection
+
 		if (rtmph_) {
 			RTMP_Close(rtmph_);
 			RTMP_Free(rtmph_);
 			rtmph_ = NULL;
 		}
-
     }
 	
 	void RTMPLiveSession::StopPush()
 	{
+		if (live_mode_ != MODE_LIVE_PUSH)
+			return;
+		live_mode_ = MODE_LIVE_UNKNOW;
+
+		if (pushnetworkThread_)
+			pushnetworkThread_->Stop();
+		delete pushnetworkThread_;
+		pushnetworkThread_ = NULL;
+		
+		hasSend_AAC_SPEC_ = false;
+		hasSend_SPS_PPS_ = false;
+
+		RTMPSockBuf_Close(&rtmph_->m_sb);
+		rtmph_->m_sb.sb_socket = -1;
+
 #ifdef _WIN32
 		ViERender *render = ViERender::GetInterface(vie_);
 		render->StopRender(capture_id_);
@@ -991,14 +1059,16 @@ namespace cloopenwebrtc {
 #endif
 
 		ViECapture *capture = ViECapture::GetInterface(vie_);
+		capture->DisconnectCaptureDevice(video_channel_);
 		capture->StopCapture(capture_id_);
 		capture->ReleaseCaptureDevice(capture_id_);
 		capture->Release();
 		capture_id_ = -1;
 
 		ViEBase *vbase = ViEBase::GetInterface(vie_);
-	    vbase->StopSend(video_channel_);
+		vbase->StopSend(video_channel_);
 		vbase->Release();
+
 
 
 		VoEBase *base = VoEBase::GetInterface(voe_);
@@ -1007,17 +1077,6 @@ namespace cloopenwebrtc {
 		base->Release();
 
 
-
-		if (playnetworkThread_)
-			playnetworkThread_->Stop();
-		delete playnetworkThread_;
-		playnetworkThread_ = NULL;
-
-		if (pushnetworkThread_)
-			pushnetworkThread_->Stop();
-		delete pushnetworkThread_;
-		pushnetworkThread_ = NULL;
-		
 		UnInit(); //must before close rtmp connection
 		if (rtmph_) {
 			RTMP_Close(rtmph_);

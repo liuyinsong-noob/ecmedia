@@ -3748,10 +3748,12 @@ extern "C" int pushLiveStream(void *handle, const char * url, void *renderView)
 }
 extern "C" void stopLiveStream(void *handle)
 {
+	PrintConsole("try to stop live stream\n");
 	if (!g_pSerCore)
 		return;
 
 	g_pSerCore->stopLiveStream(handle);
+	PrintConsole("live stream stopped\n");
 
 }
 extern "C" void releaseLiveStream(void *handle)

@@ -81,7 +81,11 @@ namespace cloopenwebrtc {
         }
     };
     
-    
+	enum LIVE_MODE  {
+		MODE_LIVE_UNKNOW = 0,
+		MODE_LIVE_PLAY,
+		MODE_LIVE_PUSH,
+	} ;
     class RTMPLiveSession 
 	: public Transport ,
 	  public AudioPacketizationCallback,
@@ -129,7 +133,8 @@ namespace cloopenwebrtc {
 		int Send_SPS_PPS();
 		int SendVideoPacket(std::vector<uint8_t> &nalus);
 
-		int startCaputre();
+		int startCameraCapture();
+		int startDesktopCapture();
 		bool RegisterReceiveAudioCodec(const char * plname , int plfreq, int channels);
         bool RegisterReceiveVideoCodec(const char * plname , int plfreq);
         bool UnpackSpsPps(const char *data , std::vector<uint8_t> &sps_pps);
@@ -137,7 +142,6 @@ namespace cloopenwebrtc {
 		bool GetAllCameraInfo();
         
     private:
-		//CriticalSectionWrapper* crit_;
         ThreadWrapper* playnetworkThread_;
 		ThreadWrapper* pushnetworkThread_;
         void HandleAuidoPacket(RTMPPacket *packet);
@@ -148,12 +152,13 @@ namespace cloopenwebrtc {
 		onLiveStreamVideoResolution remote_video_resoution_callback_;
 
 	private:	
-		bool playing_;
         int audio_channel_;
-       
+		LIVE_MODE live_mode_;
+
         uint16_t audio_rtp_seq_;
         uint16_t video_rtp_seq_;
 		int capture_id_;
+		int desktop_capture_id_;
 
         VoiceEngine *voe_;
         VideoEngine *vie_;

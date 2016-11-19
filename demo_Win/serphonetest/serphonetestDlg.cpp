@@ -7,6 +7,7 @@
 #include "afxdialogex.h"
 #include "CCPClient.h"
 #include "CCPClient_Internal.h"
+
 //#include "minIni.h"
 
 #include < windows.h >
@@ -996,10 +997,14 @@ void CserphonetestDlg::OnBnClickedButton8()
 	//setSrtpEnabled(false, true, true, 2, "12345678901234567890123456789012345678901234");
 }
 
+extern _declspec(dllimport) void PrintConsole(const char * fmt, ...);
 void CserphonetestDlg::OnBnClickedButton9()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	sendDTMF(g_currentCallId,'3');
+	if (g_rtmpLiveStreamHandle) {
+		stopLiveStream(g_rtmpLiveStreamHandle);
+	}
 	//startRecordVoice(g_currentCallId, "audio_record.wav");
 	//setSrtpEnabled(false, true, true, 3, "12345678901234567890123456789012345678901234");
 

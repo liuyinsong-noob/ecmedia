@@ -682,6 +682,8 @@ int32_t VideoRenderDirect3D9::Init()
         WEBRTC_TRACE(kTraceError, kTraceVideo, -1, "Thread not created");
         return -1;
     }
+	int ret = InitDevice();
+
     unsigned int threadId;
     _screenUpdateThread->Start(threadId);
 
@@ -697,7 +699,7 @@ int32_t VideoRenderDirect3D9::Init()
     }
     _screenUpdateEvent->StartTimer(true, 1000 / monitorFreq);
 
-    return InitDevice();
+    return ret;
 }
 
 int32_t VideoRenderDirect3D9::ChangeWindow(void* window)

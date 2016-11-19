@@ -3710,54 +3710,59 @@ int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &hei
 
  void *ECMedia_createLiveStream(int type)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
 	return ECMedia_LiveStream::CreateLiveStream(type);
 	return NULL;
 }
 
 int ECMedia_playLiveStream(void *handle, const char * url, void *renderView, onLiveStreamVideoResolution callback)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	return p->PlayStream(url, renderView, callback);
-	return -1;
+
 }
 
  int ECMedia_pushLiveStream(void *handle, const char *url, void *localView)
  {
-	 PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	 PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
 	 RTMPLiveSession *p = (RTMPLiveSession*)handle;
-	 return p->PushStream(url, localView);
-	 return -1;
+	 int ret =  p->PushStream(url, localView);
+	 PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
+	 return ret;
+
  }
 void ECMedia_stopLiveStream(void *handle)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
 	RTMPLiveSession *p = (RTMPLiveSession*) handle;
 	p->StopPlay();
 	p->StopPush();
+	PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
 }
 
 void ECMedia_releaseLiveStream(void *handle)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	delete p;
+	PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
 }
 
 int ECMedia_setVideoProfileLiveStream(void *handle, int cameraIndex, CameraCapability cam, int bitrRates)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	return p->setVideoProfile(cameraIndex, cam, bitrRates);
-	return -1;
+
 }
 
 void ECMedia_setLiveStreamNetworkCallBack(void *handle, onLiveStreamNetworkStatusCallBack callback)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	p->setNetworkStatusCallBack(callback);
+	PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
 }
 
 #endif

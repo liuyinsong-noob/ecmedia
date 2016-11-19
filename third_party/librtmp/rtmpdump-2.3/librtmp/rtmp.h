@@ -218,6 +218,7 @@ extern "C"
     int m_nBufferMS;
     int m_stream_id;		/* returned in _result from createStream */
     int m_mediaChannel;
+	int m_realConnected;
     uint32_t m_mediaStamp;
     uint32_t m_pauseStamp;
     int m_pausing;

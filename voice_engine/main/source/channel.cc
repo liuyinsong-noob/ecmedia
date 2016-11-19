@@ -1152,26 +1152,7 @@ Channel::Init()
         return -1;
     }
 
-    // --- Add modules to process thread (for periodic schedulation)
 
-    const bool processThreadFail =
-        ((_moduleProcessThreadPtr->RegisterModule(_rtpRtcpModule.get()) != 0) ||
-		(_moduleProcessThreadPtr->RegisterModule(audio_coding_.get()) != 0) ||
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
-		(_moduleProcessThreadPtr->RegisterModule(
-		&_socketTransportModule) != 0));
-#else
-		false);
-#endif
-
-    if (processThreadFail)
-    {
-        _engineStatisticsPtr->SetLastError(
-            VE_CANNOT_INIT_CHANNEL, kTraceError,
-            "Channel::Init() modules not registered");
-        return -1;
-    }
-    // --- ACM initialization
 
     if ((audio_coding_->InitializeReceiver() == -1) ||
 #ifdef WEBRTC_CODEC_AVT
@@ -1303,6 +1284,26 @@ Channel::Init()
 		_transportPtr = &_socketTransportModule;
 	}
 #endif
+
+	// --- Add modules to process thread (for periodic schedulation)
+		const bool processThreadFail =
+		((_moduleProcessThreadPtr->RegisterModule(_rtpRtcpModule.get()) != 0) ||
+		(_moduleProcessThreadPtr->RegisterModule(audio_coding_.get()) != 0) ||
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
+		(_moduleProcessThreadPtr->RegisterModule(
+			&_socketTransportModule) != 0));
+#else
+		false);
+#endif
+
+	if (processThreadFail)
+	{
+		_engineStatisticsPtr->SetLastError(
+			VE_CANNOT_INIT_CHANNEL, kTraceError,
+			"Channel::Init() modules not registered");
+		return -1;
+	}
+	// --- ACM initialization
 
     if (rx_audioproc_->noise_suppression()->set_level(kDefaultNsMode) != 0) {
       LOG_FERR1(LS_ERROR, noise_suppression()->set_level, kDefaultNsMode);
