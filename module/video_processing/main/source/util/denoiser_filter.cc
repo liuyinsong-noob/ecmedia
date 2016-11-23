@@ -8,6 +8,10 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
+#if __APPLE__
+#include <TargetConditionals.h>
+#endif
+
 #include "checks.h"
 #include "denoiser_filter.h"
 #include "denoiser_filter_c.h"
@@ -30,7 +34,7 @@ std::unique_ptr<DenoiserFilter> DenoiserFilter::Create(
     *cpu_type = CPU_NOT_NEON;
   if (runtime_cpu_detection) {
 // If we know the minimum architecture at compile time, avoid CPU detection.
-#if defined(WEBRTC_ARCH_X86_FAMILY)
+#if (defined(WEBRTC_ARCH_X86_FAMILY) && !defined(__APPLE__))
 #if defined(__SSE2__)
     filter.reset(new DenoiserFilterSSE2());
 #else
@@ -41,7 +45,7 @@ std::unique_ptr<DenoiserFilter> DenoiserFilter::Create(
       filter.reset(new DenoiserFilterC());
     }
 #endif
-#elif defined(WEBRTC_HAS_NEON)
+#elif (TARGET_CPU_ARM64 || TARGET_CPU_ARM)//&& !defined(__arm__))
     filter.reset(new DenoiserFilterNEON());
     if (cpu_type != nullptr)
       *cpu_type = CPU_NEON;

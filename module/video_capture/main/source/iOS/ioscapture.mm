@@ -255,7 +255,6 @@ char *globalFilePathcapture = NULL;
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 	   fromConnection:(AVCaptureConnection *)connection {
 #if !TARGET_IPHONE_SIMULATOR
-    
 	CVImageBufferRef frame = nil;
 	@synchronized(self) { 
 		@try {
@@ -481,7 +480,7 @@ char *globalFilePathcapture = NULL;
 }
 
 - (int)stop {
-        
+    
 	NSAutoreleasePool* myPool = [[NSAutoreleasePool alloc] init];
 	@synchronized(self) {
 		AVCaptureSession *session = [(AVCaptureVideoPreviewLayer *)self.layer session];

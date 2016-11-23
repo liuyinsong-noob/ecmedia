@@ -10,9 +10,7 @@
 using namespace cloopenwebrtc;
 using namespace videocapturemodule;
 
-#if !TARGET_IPHONE_SIMULATOR
 #include "msvideo.h"
-#endif
 
 #include "bilteral_filter.h"
 #include "keyframe_detector.h"

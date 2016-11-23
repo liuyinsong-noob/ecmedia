@@ -15,6 +15,9 @@
 #include "thread_wrapper.h"
 #include "tick_util.h"
 #include "vie_encoder.h"
+#if __APPLE__
+#include "window_capturer_ios.h"
+#endif
 
 namespace cloopenwebrtc {
 
@@ -29,8 +32,12 @@ VieDesktopCapturer::VieDesktopCapturer(int id,int engine_id):
     shared_capture_enable_(false),
     share_capture_type_(ShareNone),
     screen_capturer_(NULL),
+#ifdef _WIN32
     screen_mouse_cursor_(MouseCursorMonitor::CreateForScreen(DesktopCaptureOptions::CreateDefault(),
     cloopenwebrtc::kFullDesktopScreenId)),
+#else
+    screen_mouse_cursor_(NULL),
+#endif
     windows_capture_(NULL),
     screen_mouse_blender_(),
     window_mouse_blender_(),
@@ -394,10 +401,9 @@ int VieDesktopCapturer::CreateDesktopCapture()
             -1,"CreateDesktopCapture get  screen_mouse_blender_ ERR ");
         return -1;
     }
-
     screen_mouse_blender_->Start(this);
 #else
-    screen_capturer_ = ScreenCapturer::Create();
+    screen_capturer_ = ScreenCapturerIos::Create();
     screen_capturer_->Start(this);
 #endif
     return 0;
@@ -430,7 +436,7 @@ int VieDesktopCapturer::CreateWindowCapture()
 
     window_mouse_blender_->Start(this);
 #else
-    screen_capturer_ = ScreenCapturer::Create();
+    screen_capturer_ = ScreenCapturerIos::Create();
     screen_capturer_->Start(this);
 #endif
     return 0;

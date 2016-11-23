@@ -8,6 +8,8 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
+#include <TargetConditionals.h>
+#if ((TARGET_CPU_ARM64) || (TARGET_CPU_ARM))
 #include <arm_neon.h>
 
 #include "denoiser_filter_neon.h"
@@ -191,3 +193,4 @@ DenoiserDecision DenoiserFilterNEON::MbDenoise(uint8_t* mc_running_avg_y,
 }
 
 }  // namespace webrtc
+#endif

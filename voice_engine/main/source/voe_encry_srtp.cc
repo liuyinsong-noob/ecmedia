@@ -5,6 +5,9 @@
 //  Created by Lee Sean on 13-4-22.
 //
 //
+#if __APPLE__
+#include <TargetConditionals.h>
+#endif
 
 #include "voe_encry_srtp.h"
 #include <b64.h>
@@ -292,13 +295,19 @@ namespace cloopenwebrtc {
         if (!srtp_init_done) {
 //            printf("srtp init not init\n");
             WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0,"srtp init not init\n");
+#if (TARGET_CPU_ARM64 || TARGET_CPU_ARM || defined(_WIN32) || defined(WEBRTC_ANDROID))
             st=srtp_init();
+#else
+            st = (err_status_t)-1;
+#endif
 //            printf("st = %d\n",st);
             if (st==0) {
                 srtp_init_done++;
             }else{
                 WEBRTC_TRACE(kTraceError, kTraceVoice, 0,"Couldn't initialize SRTP library.");
+#if (TARGET_CPU_ARM64 || TARGET_CPU_ARM || defined(_WIN32) || defined(WEBRTC_ANDROID))
                 err_reporting_init("oRTP");
+#endif
             }
         }else srtp_init_done++;
 //        printf("srtp_init_done = %d after\n",srtp_init_done);
@@ -307,34 +316,45 @@ namespace cloopenwebrtc {
     err_status_t VoeEncrySrtp::ccp_srtp_create(const srtp_policy_t *policy)
     {
 //        printf("sean111111 %s begins ...\n",__FUNCTION__);
-        int i;
+        int i = 0;
 //        err_status_t err;
 //        err = ccp_srtp_init();
 //        if (err) {
 //            printf("error: srtp init failed with error code %d\n", err);
 //            exit(1);
 //        }
-        
+#if (TARGET_CPU_ARM64 || TARGET_CPU_ARM || defined(_WIN32) || defined(WEBRTC_ANDROID))
         i = srtp_create(&session, policy);
+#endif
 //        printf("sean111111 %s ends status = %d ...\n",__FUNCTION__,i);
         return (err_status_t)i;
     }
     err_status_t VoeEncrySrtp::ccp_srtp_dealloc(srtp_t session)
     {
+#if (TARGET_CPU_ARM64 || TARGET_CPU_ARM || defined(_WIN32) || defined(WEBRTC_ANDROID))
         if (session) {
             return srtp_dealloc(session);
             session = NULL;
         }
         return (err_status_t)0;
+#else
+        return (err_status_t)-1;
+#endif
         
     }
     err_status_t VoeEncrySrtp::ccp_srtp_add_stream(srtp_t session, const srtp_policy_t *policy)
     {
+#if (TARGET_CPU_ARM64 || TARGET_CPU_ARM || defined(_WIN32) || defined(WEBRTC_ANDROID))
         return srtp_add_stream(session, policy);
+#endif
+        return (err_status_t)-1;
     }
     err_status_t VoeEncrySrtp::ccp_crypto_get_random(uint8_t *tmp, int size)
     {
+#if (TARGET_CPU_ARM64 || TARGET_CPU_ARM || defined(_WIN32) || defined(WEBRTC_ANDROID))
         return crypto_get_random(tmp, size);
+#endif
+        return (err_status_t)-1;
     }
     bool VoeEncrySrtp::ccp_srtp_supported(void)
     {
@@ -345,8 +365,11 @@ namespace cloopenwebrtc {
     err_status_t VoeEncrySrtp::ccp_srtp_create_configure_session(uint32_t ssrc, const char* snd_key, const char* rcv_key)
     {
         err_status_t err;
-		
+#if (TARGET_CPU_ARM64 || TARGET_CPU_ARM || defined(_WIN32) || defined(WEBRTC_ANDROID))
         err = ccp_srtp_create(NULL);
+#else
+        err = err_status_fail;
+#endif
         if (err != err_status_ok) {
             WEBRTC_TRACE(kTraceError, kTraceVoice, 0,"Failed to create srtp session (%d)\n", err);
             return err;
@@ -391,7 +414,9 @@ namespace cloopenwebrtc {
         uint8_t* key;
         int key_size;
         err_status_t err;
+#if (TARGET_CPU_ARM64 || TARGET_CPU_ARM || defined(_WIN32) || defined(WEBRTC_ANDROID))
         unsigned b64_key_length = strlen(b64_key);
+
 //        printf("b64_key_length = %d\n",b64_key_length);
 		
 //        printf("check key after basd64 = %s\n",b64_key);
@@ -480,6 +505,9 @@ namespace cloopenwebrtc {
 		
         free(key);
         return true;
+#else
+        return false;
+#endif
     }
     
     int VoeEncrySrtp::ccp_srtp_shutdown(void)
@@ -491,7 +519,11 @@ namespace cloopenwebrtc {
 //            printf("We go into srtp shutdown\n");
 //#ifdef HAVE_SRTP_SHUTDOWN
 //            printf("We Have srtp shotdown\n");
+#if (TARGET_CPU_ARM64 || TARGET_CPU_ARM || defined(_WIN32) || defined(WEBRTC_ANDROID))
             err = srtp_shutdown();
+#else
+            err = err_status_fail;
+#endif
 //#endif
         }
         return err;

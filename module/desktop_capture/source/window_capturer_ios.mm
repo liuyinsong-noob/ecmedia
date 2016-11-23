@@ -19,40 +19,8 @@
 #include "scoped_ptr.h"
 #include "trace.h"
 
+#include "window_capturer_ios.h"
 namespace cloopenwebrtc {
-
-namespace {
-
-class ScreenCapturerIos : public ScreenCapturer {
- public:
-  ScreenCapturerIos();
-  virtual ~ScreenCapturerIos();
-
-  // WindowCapturer interface.
-  bool GetShareCaptureRect(int &width, int &height);
-
-  // DesktopCapturer interface.
-  void Start(Callback* callback) ;
-  void Capture(const DesktopRegion& region) ;
-
-    virtual bool GetScreenList(ScreenList* screens);
-    
-    // Select the screen to be captured. Returns false in case of a failure (e.g.
-    // if there is no screen with the specified id). If this is never called, the
-    // full desktop is captured.
-    virtual bool SelectScreen(ScreenId id);
-    
-    
- private:
-  bool IsAeroEnabled();
-
-  Callback* callback_;
-
-
-  DesktopSize previous_size_;
-
-  DISALLOW_COPY_AND_ASSIGN(ScreenCapturerIos);
-};
 
 ScreenCapturerIos::ScreenCapturerIos()
     : callback_(NULL){
@@ -159,12 +127,13 @@ void ScreenCapturerIos::Capture(const DesktopRegion& region) {
   callback_->OnCaptureCompleted(frame.release(), kCapture_Ok, NULL);
 }
 
-}  // namespace
-
 // static
 ScreenCapturer* ScreenCapturer::Create(const DesktopCaptureOptions& options) {
   return new ScreenCapturerIos();
 }
-
-}  // namespace cloopenwebrtc
+    
+ScreenCapturer* ScreenCapturer::Create() {
+    return new ScreenCapturerIos();
+}
+ }  // namespace cloopenwebrtc
 

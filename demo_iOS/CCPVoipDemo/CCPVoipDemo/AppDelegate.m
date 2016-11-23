@@ -24,7 +24,7 @@ extern char *filenameRender_path;
 extern char *file_opus;
 extern char *neteq_debug;
 
-
+extern char *g_h264file;
 #endif
 @implementation AppDelegate
 @synthesize modeEngineVoip;
@@ -68,10 +68,11 @@ extern char *neteq_debug;
                                                  name:@"addressbookChanged"
                                                object:nil];
     
-#if 0
+
     
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *doc_path = [path objectAtIndex:0];
+#if 0
     size_t len = doc_path.length;
     
     filename_path = (char *)malloc(len+1);//new char[len + 1];
@@ -104,6 +105,16 @@ extern char *neteq_debug;
 //    memcpy(globalFilePathcapture, [_filename UTF8String], len);
 //    globalFilePathcapture[len] = '\0';
 #endif
+    
+    
+    
+//    NSString* _filename5 = [doc_path stringByAppendingPathComponent:@"h264_raw.264"];
+//    size_t len5 = _filename5.length;
+//    
+//    g_h264file = (char *)malloc(len5+1);//new char[len + 1];
+//    memcpy(g_h264file, [_filename5 UTF8String], len5);
+//    g_h264file[len5] = '\0';
+    
     return YES;
 }
 

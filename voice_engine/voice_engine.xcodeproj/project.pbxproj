@@ -182,7 +182,7 @@
 		5519CF9A15C8233600719504 /* voe_rtp_rtcp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_rtp_rtcp.h; sourceTree = "<group>"; };
 		5519CF9B15C8233600719504 /* voe_video_sync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_video_sync.h; sourceTree = "<group>"; };
 		5519CF9C15C8233600719504 /* voe_volume_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_volume_control.h; sourceTree = "<group>"; };
-		5519CF9F15C8233600719504 /* channel.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = channel.cc; sourceTree = "<group>"; };
+		5519CF9F15C8233600719504 /* channel.cc */ = {isa = PBXFileReference; fileEncoding = 2147483673; lastKnownFileType = sourcecode.cpp.cpp; path = channel.cc; sourceTree = "<group>"; };
 		5519CFA015C8233600719504 /* channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = channel.h; sourceTree = "<group>"; };
 		5519CFA115C8233600719504 /* channel_manager.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = channel_manager.cc; sourceTree = "<group>"; };
 		5519CFA215C8233600719504 /* channel_manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = channel_manager.h; sourceTree = "<group>"; };
@@ -738,6 +738,7 @@
 					HAVE_SRTP_SHUTDOWN,
 					WEBRTC_POSIX,
 					WEBRTC_IOS,
+					WEBRTC_CODEC_RED,
 				);
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
@@ -831,6 +832,7 @@
 					HAVE_SRTP_SHUTDOWN,
 					WEBRTC_POSIX,
 					WEBRTC_IOS,
+					WEBRTC_CODEC_RED,
 				);
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;

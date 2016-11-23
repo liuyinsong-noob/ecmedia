@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD3EBAE31DE58BF400024454 /* desktop_geometry.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3EBAE21DE58BF400024454 /* desktop_geometry.cc */; };
 		ADC50F491D8FC2F600A83C04 /* desktop_frame.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADC50F481D8FC2F600A83C04 /* desktop_frame.cc */; };
 		ADC50F4B1D8FC65200A83C04 /* window_capturer_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADC50F4A1D8FC65200A83C04 /* window_capturer_ios.mm */; };
 		ADC50F541D8FC7C500A83C04 /* desktop_region.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADC50F531D8FC7C500A83C04 /* desktop_region.cc */; };
@@ -25,6 +26,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AD3EBAE11DE56EE000024454 /* window_capturer_ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = window_capturer_ios.h; sourceTree = "<group>"; };
+		AD3EBAE21DE58BF400024454 /* desktop_geometry.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = desktop_geometry.cc; path = ../../source/desktop_geometry.cc; sourceTree = "<group>"; };
 		ADC50F481D8FC2F600A83C04 /* desktop_frame.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = desktop_frame.cc; path = ../../source/desktop_frame.cc; sourceTree = "<group>"; };
 		ADC50F4A1D8FC65200A83C04 /* window_capturer_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = window_capturer_ios.mm; path = ../../source/window_capturer_ios.mm; sourceTree = "<group>"; };
 		ADC50F531D8FC7C500A83C04 /* desktop_region.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = desktop_region.cc; path = ../../source/desktop_region.cc; sourceTree = "<group>"; };
@@ -61,9 +64,11 @@
 		ADE835661D8F7AF000CCD20D /* desktop_capture */ = {
 			isa = PBXGroup;
 			children = (
+				AD3EBAE21DE58BF400024454 /* desktop_geometry.cc */,
 				ADC50F481D8FC2F600A83C04 /* desktop_frame.cc */,
 				ADC50F531D8FC7C500A83C04 /* desktop_region.cc */,
 				ADC50F4A1D8FC65200A83C04 /* window_capturer_ios.mm */,
+				AD3EBAE11DE56EE000024454 /* window_capturer_ios.h */,
 			);
 			path = desktop_capture;
 			sourceTree = "<group>";
@@ -125,6 +130,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD3EBAE31DE58BF400024454 /* desktop_geometry.cc in Sources */,
 				ADC50F491D8FC2F600A83C04 /* desktop_frame.cc in Sources */,
 				ADC50F4B1D8FC65200A83C04 /* window_capturer_ios.mm in Sources */,
 				ADC50F541D8FC7C500A83C04 /* desktop_region.cc in Sources */,
@@ -225,10 +231,12 @@
 		ADE8356E1D8F7AF000CCD20D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../source/,
 					../../../system_wrappers/interface,
 					../../../module,
+					./desktop_capture/,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "";
@@ -241,10 +249,12 @@
 		ADE8356F1D8F7AF000CCD20D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../source/,
 					../../../system_wrappers/interface,
 					../../../module,
+					./desktop_capture/,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "";

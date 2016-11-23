@@ -197,10 +197,6 @@
 		05F43C1416A93EDD00F6D053 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F43C1316A93EDD00F6D053 /* CFNetwork.framework */; };
 		05F43C1A16A9419D00F6D053 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F43C1816A9419C00F6D053 /* RegisterViewController.m */; };
 		05F43C1F16A941E700F6D053 /* VoIPCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F43C1D16A941E700F6D053 /* VoIPCallViewController.m */; };
-		1A77E6E11DAF23AF009F543D /* camra_preview@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A77E6DD1DAF23AF009F543D /* camra_preview@2x.png */; };
-		1A77E6E21DAF23AF009F543D /* camra_preview@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A77E6DE1DAF23AF009F543D /* camra_preview@3x.png */; };
-		1A77E6E31DAF23AF009F543D /* close_preview@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A77E6DF1DAF23AF009F543D /* close_preview@2x.png */; };
-		1A77E6E41DAF23AF009F543D /* close_preview@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A77E6E01DAF23AF009F543D /* close_preview@3x.png */; };
 		1AFBD0E21DAE13C4009B8D23 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A1C1D48C07F00731C5B /* libssl.a */; };
 		1AFBD0E31DAE13C8009B8D23 /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A1B1D48C07F00731C5B /* libsrtp.a */; };
 		1AFBD0E41DAE13CB009B8D23 /* libortp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A1A1D48C07F00731C5B /* libortp.a */; };
@@ -966,10 +962,10 @@
 		82FF39B418D13EDB002531BF /* CustomPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FF39B318D13EDB002531BF /* CustomPersonViewController.m */; };
 		AD01997F1D2370E7003C2BB9 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD01997E1D2370E7003C2BB9 /* VideoToolbox.framework */; };
 		AD194FB91C5B4066003841BB /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AD194FB81C5B4066003841BB /* libc++.tbd */; };
-		AD42CE9F1D2A511C009C2E7A /* libccpapisdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD42CE9E1D2A510A009C2E7A /* libccpapisdk.a */; };
 		ADA18F171C58B518007F0F8B /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA18F161C58B518007F0F8B /* libz.tbd */; };
 		ADA18F191C58B521007F0F8B /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA18F181C58B521007F0F8B /* libxml2.tbd */; };
 		ADC50F881D90C86A00A83C04 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC50F871D90C86A00A83C04 /* GLKit.framework */; };
+		ADF261331DB8ACBD008420B0 /* libccpapisdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD42CE9E1D2A510A009C2E7A /* libccpapisdk.a */; };
 		F113E878179640E4007A26FF /* GroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F113E877179640E4007A26FF /* GroupListViewController.m */; };
 		F13AF1CC176F06DC004B1804 /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F13AF1B9176F06DC004B1804 /* MWCaptionView.m */; };
 		F13AF1CD176F06DC004B1804 /* MWPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = F13AF1BB176F06DC004B1804 /* MWPhoto.m */; };
@@ -1234,10 +1230,6 @@
 		05F43C1816A9419C00F6D053 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		05F43C1C16A941E700F6D053 /* VoIPCallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoIPCallViewController.h; sourceTree = "<group>"; };
 		05F43C1D16A941E700F6D053 /* VoIPCallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoIPCallViewController.m; sourceTree = "<group>"; };
-		1A77E6DD1DAF23AF009F543D /* camra_preview@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camra_preview@2x.png"; sourceTree = "<group>"; };
-		1A77E6DE1DAF23AF009F543D /* camra_preview@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camra_preview@3x.png"; sourceTree = "<group>"; };
-		1A77E6DF1DAF23AF009F543D /* close_preview@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close_preview@2x.png"; sourceTree = "<group>"; };
-		1A77E6E01DAF23AF009F543D /* close_preview@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close_preview@3x.png"; sourceTree = "<group>"; };
 		1AFBD0F01DAE3585009B8D23 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		1AFBD0F11DAE3585009B8D23 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		1AFBD0F21DAE3585009B8D23 /* CameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraViewController.xib; sourceTree = "<group>"; };
@@ -2107,9 +2099,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADF261331DB8ACBD008420B0 /* libccpapisdk.a in Frameworks */,
 				AD01997F1D2370E7003C2BB9 /* VideoToolbox.framework in Frameworks */,
 				ADC50F881D90C86A00A83C04 /* GLKit.framework in Frameworks */,
-				AD42CE9F1D2A511C009C2E7A /* libccpapisdk.a in Frameworks */,
 				1AFBD0E31DAE13C8009B8D23 /* libsrtp.a in Frameworks */,
 				1AFBD0E51DAE15ED009B8D23 /* libcrypto.a in Frameworks */,
 				1AFBD0E41DAE13CB009B8D23 /* libortp.a in Frameworks */,
@@ -2396,10 +2388,6 @@
 		1A77E6DC1DAF23AF009F543D /* LiveStream */ = {
 			isa = PBXGroup;
 			children = (
-				1A77E6DD1DAF23AF009F543D /* camra_preview@2x.png */,
-				1A77E6DE1DAF23AF009F543D /* camra_preview@3x.png */,
-				1A77E6DF1DAF23AF009F543D /* close_preview@2x.png */,
-				1A77E6E01DAF23AF009F543D /* close_preview@3x.png */,
 			);
 			path = LiveStream;
 			sourceTree = "<group>";
@@ -3645,8 +3633,8 @@
 				ORGANIZATIONNAME = hisun;
 				TargetAttributes = {
 					05F43B8216A92CAA00F6D053 = {
-						DevelopmentTeam = BRUKYNGEUG;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = 2372872F55;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -3864,7 +3852,6 @@
 				82CBFEBF1847278A007B4BA1 /* new140_on.png in Resources */,
 				825C70AA178E4D1E002D0120 /* status_icon04@2x.png in Resources */,
 				82CBFEB31847278A007B4BA1 /* new134_on@2x.png in Resources */,
-				1A77E6E31DAF23AF009F543D /* close_preview@2x.png in Resources */,
 				825C70AB178E4D1E002D0120 /* status_icon_me.png in Resources */,
 				825C70AC178E4D1E002D0120 /* status_icon_me@2x.png in Resources */,
 				82716709181E1678004A5DCF /* videoConf58_on.png in Resources */,
@@ -3963,7 +3950,6 @@
 				825C70DE178E4D1E002D0120 /* list_bg@2x.png in Resources */,
 				825C70DF178E4D1E002D0120 /* list_icon01.png in Resources */,
 				82CBFEDF1847278A007B4BA1 /* new158@2x.png in Resources */,
-				1A77E6E11DAF23AF009F543D /* camra_preview@2x.png in Resources */,
 				82CBFEAA1847278A007B4BA1 /* new129@2x.png in Resources */,
 				827B0D6E18C8540200AD02C0 /* Customkey2.png in Resources */,
 				829FCC2E18C727C500D10ACA /* personal_details_bg@2x.png in Resources */,
@@ -4191,7 +4177,6 @@
 				82CBFF051847278A007B4BA1 /* new36_on@2x.png in Resources */,
 				825C716F178E4D1E002D0120 /* keyboard_05@2x.png in Resources */,
 				829FCC2618C727C500D10ACA /* head_portrait@2x.png in Resources */,
-				1A77E6E21DAF23AF009F543D /* camra_preview@3x.png in Resources */,
 				825C7170178E4D1E002D0120 /* keyboard_05_on.png in Resources */,
 				825C7171178E4D1E002D0120 /* keyboard_05_on@2x.png in Resources */,
 				825C7172178E4D1E002D0120 /* keyboard_06.png in Resources */,
@@ -4396,7 +4381,6 @@
 				829FCC2918C727C500D10ACA /* more_button.png in Resources */,
 				82CBFDC11846EF36007B4BA1 /* new197_on.png in Resources */,
 				82CBFE971847278A007B4BA1 /* new07@2x.png in Resources */,
-				1A77E6E41DAF23AF009F543D /* close_preview@3x.png in Resources */,
 				82C077941929AEAD00B8CA63 /* call_transfer_icon_on.png in Resources */,
 				05B73C1D17D7477500C32663 /* enter_icon@2x.png in Resources */,
 				82CBFEB61847278A007B4BA1 /* new135_on.png in Resources */,
@@ -4728,11 +4712,13 @@
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = BRUKYNGEUG;
+				DEPLOYMENT_POSTPROCESSING = NO;
+				DEVELOPMENT_TEAM = 2372872F55;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CCPVoipDemo/CCPVoipDemo-Prefix.pch";
 				GCC_VERSION = "";
+				GENERATE_MASTER_OBJECT_FILE = NO;
 				HEADER_SEARCH_PATHS = (
 					"${SDK_DIR}/usr/include/libxml2",
 					"\"$(SRCROOT)/../../ECMedia/interface\"",
@@ -4756,8 +4742,10 @@
 				OTHER_OSACOMPILEFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronglian.audioVideo.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "0210f179-2817-47b1-a274-7345a0cf023f";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0210f179-2817-47b1-a274-7345a0cf023f";
+				PROVISIONING_PROFILE_SPECIFIER = AVDepartment;
+				STRIP_STYLE = "non-global";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 arm64";
 				WRAPPER_EXTENSION = app;
@@ -4771,11 +4759,13 @@
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = BRUKYNGEUG;
+				DEPLOYMENT_POSTPROCESSING = NO;
+				DEVELOPMENT_TEAM = 2372872F55;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CCPVoipDemo/CCPVoipDemo-Prefix.pch";
 				GCC_VERSION = "";
+				GENERATE_MASTER_OBJECT_FILE = NO;
 				HEADER_SEARCH_PATHS = (
 					"${SDK_DIR}/usr/include/libxml2",
 					"\"$(SRCROOT)/../../ECMedia/interface\"",
@@ -4799,8 +4789,10 @@
 				OTHER_OSACOMPILEFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronglian.audioVideo.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "0210f179-2817-47b1-a274-7345a0cf023f";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0210f179-2817-47b1-a274-7345a0cf023f";
+				PROVISIONING_PROFILE_SPECIFIER = AVDepartment;
+				STRIP_STYLE = "non-global";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 arm64";
 				WRAPPER_EXTENSION = app;

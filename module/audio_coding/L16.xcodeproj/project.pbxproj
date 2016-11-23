@@ -8,10 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		1AFBD1631DAE65F2009B8D23 /* pcm16b.c in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD1621DAE65F2009B8D23 /* pcm16b.c */; };
+		AD3EBA8A1DE52F8F00024454 /* pcm16b.c in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD1621DAE65F2009B8D23 /* pcm16b.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		1A1EB68D1D9939E300CEEB9E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD3EBA8C1DE52F8F00024454 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/$(PRODUCT_NAME)";
@@ -25,10 +35,18 @@
 /* Begin PBXFileReference section */
 		1A1EB68F1D9939E300CEEB9E /* libL16.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libL16.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AFBD1621DAE65F2009B8D23 /* pcm16b.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pcm16b.c; path = codecs/pcm16b/pcm16b.c; sourceTree = SOURCE_ROOT; };
+		AD3EBA901DE52F8F00024454 /* libL16_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libL16_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		1A1EB68C1D9939E300CEEB9E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD3EBA8B1DE52F8F00024454 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -50,6 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				1A1EB68F1D9939E300CEEB9E /* libL16.a */,
+				AD3EBA901DE52F8F00024454 /* libL16_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -82,6 +101,23 @@
 			productReference = 1A1EB68F1D9939E300CEEB9E /* libL16.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		AD3EBA881DE52F8F00024454 /* L16_Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD3EBA8D1DE52F8F00024454 /* Build configuration list for PBXNativeTarget "L16_Mac" */;
+			buildPhases = (
+				AD3EBA891DE52F8F00024454 /* Sources */,
+				AD3EBA8B1DE52F8F00024454 /* Frameworks */,
+				AD3EBA8C1DE52F8F00024454 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = L16_Mac;
+			productName = L16;
+			productReference = AD3EBA901DE52F8F00024454 /* libL16_Mac.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -110,6 +146,7 @@
 			projectRoot = "";
 			targets = (
 				1A1EB68E1D9939E300CEEB9E /* L16 */,
+				AD3EBA881DE52F8F00024454 /* L16_Mac */,
 			);
 		};
 /* End PBXProject section */
@@ -120,6 +157,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				1AFBD1631DAE65F2009B8D23 /* pcm16b.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD3EBA891DE52F8F00024454 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD3EBA8A1DE52F8F00024454 /* pcm16b.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,6 +297,46 @@
 			};
 			name = Release;
 		};
+		AD3EBA8E1DE52F8F00024454 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					WEBRTC_ARCH_BIG_ENDIAN,
+				);
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../codecs/g711/include\"",
+					"\"$(SRCROOT)/../codecs\"",
+					"\"$(SRCROOT)/../../../system_wrappers/source\"",
+					"\"$(SRCROOT)/..\"",
+					"\"$(SRCROOT)/codecs/pcm16b/include\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		AD3EBA8F1DE52F8F00024454 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = WEBRTC_ARCH_BIG_ENDIAN;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../codecs/g711/include\"",
+					"\"$(SRCROOT)/../codecs\"",
+					"\"$(SRCROOT)/../../../system_wrappers/source\"",
+					"\"$(SRCROOT)/..\"",
+					"\"$(SRCROOT)/codecs/pcm16b/include\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -269,6 +354,15 @@
 			buildConfigurations = (
 				1A1EB6991D9939E300CEEB9E /* Debug */,
 				1A1EB69A1D9939E300CEEB9E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD3EBA8D1DE52F8F00024454 /* Build configuration list for PBXNativeTarget "L16_Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD3EBA8E1DE52F8F00024454 /* Debug */,
+				AD3EBA8F1DE52F8F00024454 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

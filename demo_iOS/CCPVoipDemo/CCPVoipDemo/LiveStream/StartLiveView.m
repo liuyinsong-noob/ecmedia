@@ -201,7 +201,7 @@ static int padding = 30;
         [self.startPushLiveButton removeFromSuperview];
         [self.startPlayLiveButton setTitle:@"结束观看" forState:UIControlStateNormal];
       //  [self.modelEngineVoip playStream:self.session url:@"rtmp://live.yuntongxun.com/live/livestream" view:self.containerView];
-        [self.modelEngineVoip playStream:self.session url:@"rtmp://live.yuntongxun.com/live/test" view:self.containerView];
+        [self.modelEngineVoip playStream:self.session url:@"rtmp://live.yuntongxun.com:1935/live/jiazyjiazy" view:self.containerView];
         
         // [self.modelEngineVoip playStream:self.session url:@"rtmp://live2.fzntv.cn:1935/live/zohi_fztv1" view:self.containerView];
     }else{
@@ -234,7 +234,7 @@ static int padding = 30;
         
         [self.startPushLiveButton setTitle:@"结束直播" forState:UIControlStateNormal];
         [self.startPlayLiveButton removeFromSuperview];
-        [self.modelEngineVoip pushStream:self.session url:@"rtmp://live.yuntongxun.com/live/xzq1" view:self.containerView];
+        [self.modelEngineVoip pushStream:self.session url:@"rtmp://live.yuntongxun.com:1935/live/jiazyjiazy" view:self.containerView];
         
     }else{
         [self.modelEngineVoip stopLiveStream:self.session];

@@ -14,7 +14,6 @@
 		1AFBD0B91DAE0A59009B8D23 /* faaccodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0B61DAE0A59009B8D23 /* faaccodec.cpp */; };
 		1AFBD1221DAE564A009B8D23 /* libfaad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1211DAE564A009B8D23 /* libfaad.a */; };
 		1AFBD1241DAE5839009B8D23 /* libfaac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1231DAE5839009B8D23 /* libfaac.a */; };
-		1AFBD15B1DAE5C6A009B8D23 /* librtmp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1581DAE5C41009B8D23 /* librtmp.a */; };
 		1AFBD1661DAE67D3009B8D23 /* libL16.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1611DAE6592009B8D23 /* libL16.a */; };
 		55D3C7101B81C8CD00D770BC /* b64.c in Sources */ = {isa = PBXBuildFile; fileRef = 05B4FEE61B40FA0200274327 /* b64.c */; };
 		55D3C7111B81C8CD00D770BC /* ECMedia.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05E86F371B3BA16D00BDBCE6 /* ECMedia.cpp */; };
@@ -23,7 +22,17 @@
 		55F573601C1FB2DE0014FB06 /* libsystem_wrappers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB5197D1B2806460009077D /* libsystem_wrappers.a */; };
 		AD01997D1D236579003C2BB9 /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD01997C1D23655A003C2BB9 /* libyuv.a */; };
 		AD0798991D001E3200D48138 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0798981D001E3200D48138 /* libswresample.a */; };
+		AD1123011DAF1B7A006CDD38 /* librtmp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD056FBC1DAF1AB70007DB7A /* librtmp.a */; };
+		AD1123271DAF3108006CDD38 /* libopus_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1123261DAF3108006CDD38 /* libopus_Mac.a */; };
 		AD2DE0FC1D6BEA4C00FE3814 /* VoeObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD2DE0FB1D6BEA4C00FE3814 /* VoeObserver.cpp */; };
+		AD3EBA921DE5324E00024454 /* libcommon_video_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA0AD991DA8C54400C4807D /* libcommon_video_Mac.a */; };
+		AD3EBA991DE5326800024454 /* ECLiveStream_rtmp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0B41DAE0A59009B8D23 /* ECLiveStream_rtmp.cpp */; };
+		AD3EBA9A1DE5326800024454 /* ECLiveStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0B51DAE0A59009B8D23 /* ECLiveStream.cpp */; };
+		AD3EBA9B1DE5327400024454 /* faaccodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0B61DAE0A59009B8D23 /* faaccodec.cpp */; };
+		AD3EBA9C1DE5327E00024454 /* VoeObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD2DE0FB1D6BEA4C00FE3814 /* VoeObserver.cpp */; };
+		AD3EBAA71DE5432F00024454 /* libfaac_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD3EBAA61DE5432F00024454 /* libfaac_osx.a */; };
+		AD3EBAA91DE5433F00024454 /* libfaad_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD3EBAA81DE5433F00024454 /* libfaad_osx.a */; };
+		AD3EBADE1DE5661600024454 /* librtmp_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD3EBA981DE5324E00024454 /* librtmp_Mac.a */; };
 		AD4B6B9E1D4B4FBD00731C5B /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = AD4B6B9C1D4B4FA800731C5B /* base64.c */; };
 		AD4E8C561CB664F80068C4E9 /* libcommon_audio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4E8C551CB664D00068C4E9 /* libcommon_audio.a */; };
 		AD7E733F1D3CB66A001C0E04 /* statsCollector.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD7E733E1D3CB66A001C0E04 /* statsCollector.cc */; };
@@ -76,7 +85,6 @@
 		ADC54AF01D48845700A5C852 /* libwebrtc_opus_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC54ACF1D48845700A5C852 /* libwebrtc_opus_Mac.a */; };
 		ADC54AF11D48845700A5C852 /* libwebrtc_utility_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC54AD21D48845700A5C852 /* libwebrtc_utility_Mac.a */; };
 		ADC54AF21D48845700A5C852 /* libyuv_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC54AD51D48845700A5C852 /* libyuv_Mac.a */; };
-		ADC54AF41D48845700A5C852 /* libopus_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC54AF31D48845700A5C852 /* libopus_Mac.a */; };
 		ADC54B301D488C3C00A5C852 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADF92D931CB7BBDD0026DF61 /* libavcodec.a */; };
 		ADC54B311D488C3C00A5C852 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADF92D941CB7BBDD0026DF61 /* libavutil.a */; };
 		ADC54B321D488C3C00A5C852 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0798981D001E3200D48138 /* libswresample.a */; };
@@ -96,20 +104,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1AFBD1571DAE5C41009B8D23 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1AFBD1531DAE5C41009B8D23 /* rtmp.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 1AFBD12E1DAE58F0009B8D23;
-			remoteInfo = rtmp;
-		};
-		1AFBD1591DAE5C5E009B8D23 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1AFBD1531DAE5C41009B8D23 /* rtmp.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 1AFBD12D1DAE58F0009B8D23;
-			remoteInfo = rtmp;
-		};
 		1AFBD1601DAE6592009B8D23 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1AFBD15C1DAE6592009B8D23 /* L16.xcodeproj */;
@@ -137,6 +131,27 @@
 			proxyType = 2;
 			remoteGlobalIDString = D8DBCA5C1C7894A300669A0A;
 			remoteInfo = yuv;
+		};
+		AD056FBB1DAF1AB70007DB7A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AD056FB71DAF1AB70007DB7A /* rtmp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1AFBD12E1DAE58F0009B8D23;
+			remoteInfo = rtmp;
+		};
+		AD3EBA941DE5324E00024454 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1AFBD15C1DAE6592009B8D23 /* L16.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AD3EBA901DE52F8F00024454;
+			remoteInfo = L16_Mac;
+		};
+		AD3EBA971DE5324E00024454 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AD056FB71DAF1AB70007DB7A /* rtmp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AD3EBA871DE52F1D00024454;
+			remoteInfo = rtmp_Mac;
 		};
 		AD4E8C541CB664D00068C4E9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -915,6 +930,13 @@
 			remoteGlobalIDString = ADC549AB1D485C5000A5C852;
 			remoteInfo = G729_Mac;
 		};
+		ADF261351DB8B906008420B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AD056FB71DAF1AB70007DB7A /* rtmp.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1AFBD12D1DAE58F0009B8D23;
+			remoteInfo = rtmp;
+		};
 		ADF92D791CB7B9260026DF61 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ADF92D5D1CB7B9260026DF61 /* webrtc_opus.xcodeproj */;
@@ -979,7 +1001,6 @@
 		1AFBD11F1DAE560F009B8D23 /* libfaad.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaad.a; path = ../../third_party/libfaad/lib/ios/libfaad.a; sourceTree = "<group>"; };
 		1AFBD1211DAE564A009B8D23 /* libfaad.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaad.a; path = ../../../third_party/libfaad/lib/ios/libfaad.a; sourceTree = "<group>"; };
 		1AFBD1231DAE5839009B8D23 /* libfaac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaac.a; path = ../../../third_party/libfaac/lib/ios/libfaac.a; sourceTree = "<group>"; };
-		1AFBD1531DAE5C41009B8D23 /* rtmp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = rtmp.xcodeproj; path = "/Users/james/opensource/localsvn/MyWebRtc_2.x/servicecore/../third_party/librtmp/rtmpdump-2.3/librtmp/rtmp.xcodeproj"; sourceTree = "<absolute>"; };
 		1AFBD15C1DAE6592009B8D23 /* L16.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = L16.xcodeproj; path = ../../../module/audio_coding/L16.xcodeproj; sourceTree = "<group>"; };
 		559586331BABE67F00125BC8 /* amrnb.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = amrnb.xcodeproj; path = ../../../module/audio_coding/amrnb.xcodeproj; sourceTree = "<group>"; };
 		55D3C73B1B81C8CD00D770BC /* libECMedia_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libECMedia_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1107,8 +1128,14 @@
 		55F3F8C11B8B135C00A19ED6 /* xfm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xfm.h; sourceTree = "<group>"; };
 		55F3F8C31B8B135C00A19ED6 /* libsrtp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsrtp.a; sourceTree = "<group>"; };
 		AD0199771D23655A003C2BB9 /* yuv.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = yuv.xcodeproj; path = "../../../third_party/libyuv-ios/yuv.xcodeproj"; sourceTree = "<group>"; };
+		AD056FB71DAF1AB70007DB7A /* rtmp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = rtmp.xcodeproj; path = "../../../third_party/librtmp/rtmpdump-2.3/librtmp/rtmp.xcodeproj"; sourceTree = "<group>"; };
 		AD0798981D001E3200D48138 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = ../../libswresample.a; sourceTree = "<group>"; };
+		AD1123261DAF3108006CDD38 /* libopus_Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libopus_Mac.a; path = ../../third_party/opus/opus/build/Debug/libopus_Mac.a; sourceTree = "<group>"; };
 		AD2DE0FB1D6BEA4C00FE3814 /* VoeObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoeObserver.cpp; sourceTree = "<group>"; };
+		AD3EBA9D1DE5414C00024454 /* libfaac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaac.a; path = ../../third_party/libfaac/lib/osx/libfaac.a; sourceTree = "<group>"; };
+		AD3EBA9F1DE5416200024454 /* libfaad.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaad.a; path = ../../third_party/libfaad/lib/osx/libfaad.a; sourceTree = "<group>"; };
+		AD3EBAA61DE5432F00024454 /* libfaac_osx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaac_osx.a; path = ../../third_party/libfaac/lib/osx/libfaac_osx.a; sourceTree = "<group>"; };
+		AD3EBAA81DE5433F00024454 /* libfaad_osx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaad_osx.a; path = ../../third_party/libfaad/lib/osx/libfaad_osx.a; sourceTree = "<group>"; };
 		AD4B6B9C1D4B4FA800731C5B /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base64.c; sourceTree = "<group>"; };
 		AD4E8C501CB664D00068C4E9 /* common_audio.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = common_audio.xcodeproj; path = ../../../module/common_audio/common_audio/common_audio.xcodeproj; sourceTree = "<group>"; };
 		AD7E733E1D3CB66A001C0E04 /* statsCollector.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = statsCollector.cc; sourceTree = "<group>"; };
@@ -1137,7 +1164,6 @@
 		ADB51A041B2807470009077D /* NetEq.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = NetEq.xcodeproj; path = ../../../module/audio_coding/NetEq.xcodeproj; sourceTree = "<group>"; };
 		ADB51A0A1B2807780009077D /* libjpeg_turbo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libjpeg_turbo.xcodeproj; path = ../../../third_party/libjpeg_turbo/libjpeg_turbo.xcodeproj; sourceTree = "<group>"; };
 		ADC50F4C1D8FC66E00A83C04 /* desktop_capture.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = desktop_capture.xcodeproj; path = ../../../module/desktop_capture/desktop_capture/desktop_capture.xcodeproj; sourceTree = "<group>"; };
-		ADC54AF31D48845700A5C852 /* libopus_Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libopus_Mac.a; path = "../../../../../../../../../Users/seanlee/Library/Developer/Xcode/DerivedData/CCPVoipDemo-eoxgwrhjyrmuvacahazhkgyeociq/Build/Products/Debug/libopus_Mac.a"; sourceTree = "<group>"; };
 		ADC54D061D489D9A00A5C852 /* RecordVoip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecordVoip.cpp; sourceTree = "<group>"; };
 		ADF92D5D1CB7B9260026DF61 /* webrtc_opus.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_opus.xcodeproj; path = ../../../module/audio_coding/codecs/opus/webrtc_opus/webrtc_opus.xcodeproj; sourceTree = "<group>"; };
 		ADF92D7C1CB7B9630026DF61 /* remote_bitrate_estimator.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = remote_bitrate_estimator.xcodeproj; path = ../../../module/remote_bitrate_estimator/remote_bitrate_estimator/remote_bitrate_estimator.xcodeproj; sourceTree = "<group>"; };
@@ -1155,12 +1181,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD3EBADE1DE5661600024454 /* librtmp_Mac.a in Frameworks */,
+				AD3EBAA91DE5433F00024454 /* libfaad_osx.a in Frameworks */,
+				AD3EBAA71DE5432F00024454 /* libfaac_osx.a in Frameworks */,
+				AD3EBA921DE5324E00024454 /* libcommon_video_Mac.a in Frameworks */,
+				AD1123271DAF3108006CDD38 /* libopus_Mac.a in Frameworks */,
 				ADC54B301D488C3C00A5C852 /* libavcodec.a in Frameworks */,
 				ADC54B311D488C3C00A5C852 /* libavutil.a in Frameworks */,
 				ADC54B321D488C3C00A5C852 /* libswresample.a in Frameworks */,
 				ADC54B331D488C3C00A5C852 /* libvpx.a in Frameworks */,
 				ADC54B341D488C3D00A5C852 /* libx264.a in Frameworks */,
-				ADC54AF41D48845700A5C852 /* libopus_Mac.a in Frameworks */,
 				ADC54AD61D48845700A5C852 /* libamrnb_Mac.a in Frameworks */,
 				ADC54AD71D48845700A5C852 /* libaudio_coding_module_Mac.a in Frameworks */,
 				ADC54AD81D48845700A5C852 /* libaudio_conference_mixer_mac.a in Frameworks */,
@@ -1196,8 +1226,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD1123011DAF1B7A006CDD38 /* librtmp.a in Frameworks */,
 				1AFBD1661DAE67D3009B8D23 /* libL16.a in Frameworks */,
-				1AFBD15B1DAE5C6A009B8D23 /* librtmp.a in Frameworks */,
 				ADA0AD9D1DA8E00C00C4807D /* libcommon_video.a in Frameworks */,
 				ADC50F521D8FC69700A83C04 /* libdesktop_capture.a in Frameworks */,
 				1AFBD1221DAE564A009B8D23 /* libfaad.a in Frameworks */,
@@ -1282,23 +1312,21 @@
 		1AFBD11E1DAE560E009B8D23 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AD3EBAA81DE5433F00024454 /* libfaad_osx.a */,
+				AD3EBAA61DE5432F00024454 /* libfaac_osx.a */,
+				AD3EBA9F1DE5416200024454 /* libfaad.a */,
+				AD3EBA9D1DE5414C00024454 /* libfaac.a */,
+				AD1123261DAF3108006CDD38 /* libopus_Mac.a */,
 				1AFBD11F1DAE560F009B8D23 /* libfaad.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		1AFBD1541DAE5C41009B8D23 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				1AFBD1581DAE5C41009B8D23 /* librtmp.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		1AFBD15D1DAE6592009B8D23 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				1AFBD1611DAE6592009B8D23 /* libL16.a */,
+				AD3EBA951DE5324E00024454 /* libL16_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1315,7 +1343,7 @@
 		55F3F7E01B8B0ABE00A19ED6 /* third_party */ = {
 			isa = PBXGroup;
 			children = (
-				1AFBD1531DAE5C41009B8D23 /* rtmp.xcodeproj */,
+				AD056FB71DAF1AB70007DB7A /* rtmp.xcodeproj */,
 				AD0199771D23655A003C2BB9 /* yuv.xcodeproj */,
 				55F3F89C1B8B135C00A19ED6 /* srtp_mac */,
 				55F3F8861B8B0CD300A19ED6 /* libvpx_mac */,
@@ -1593,6 +1621,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		AD056FB81DAF1AB70007DB7A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AD056FBC1DAF1AB70007DB7A /* librtmp.a */,
+				AD3EBA981DE5324E00024454 /* librtmp_Mac.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		AD4E8C511CB664D00068C4E9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1614,7 +1651,6 @@
 		ADB519261B27DFCA0009077D = {
 			isa = PBXGroup;
 			children = (
-				ADC54AF31D48845700A5C852 /* libopus_Mac.a */,
 				ADB519311B27DFCA0009077D /* ECMedia */,
 				ADB5193E1B27DFCA0009077D /* ECMediaTests */,
 				ADB519301B27DFCA0009077D /* Products */,
@@ -2011,8 +2047,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				ADF261361DB8B906008420B0 /* PBXTargetDependency */,
 				1AFBD1651DAE6677009B8D23 /* PBXTargetDependency */,
-				1AFBD15A1DAE5C5E009B8D23 /* PBXTargetDependency */,
 				ADA0AD9C1DA8DFFC00C4807D /* PBXTargetDependency */,
 				ADC50F8B1D90D62900A83C04 /* PBXTargetDependency */,
 				AD838BE91D420BB400050E87 /* PBXTargetDependency */,
@@ -2151,8 +2187,8 @@
 					ProjectRef = ADF92D7C1CB7B9630026DF61 /* remote_bitrate_estimator.xcodeproj */;
 				},
 				{
-					ProductGroup = 1AFBD1541DAE5C41009B8D23 /* Products */;
-					ProjectRef = 1AFBD1531DAE5C41009B8D23 /* rtmp.xcodeproj */;
+					ProductGroup = AD056FB81DAF1AB70007DB7A /* Products */;
+					ProjectRef = AD056FB71DAF1AB70007DB7A /* rtmp.xcodeproj */;
 				},
 				{
 					ProductGroup = ADB519B01B2806A90009077D /* Products */;
@@ -2212,13 +2248,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		1AFBD1581DAE5C41009B8D23 /* librtmp.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = librtmp.a;
-			remoteRef = 1AFBD1571DAE5C41009B8D23 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		1AFBD1611DAE6592009B8D23 /* libL16.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -2238,6 +2267,27 @@
 			fileType = archive.ar;
 			path = libyuv.a;
 			remoteRef = AD01997B1D23655A003C2BB9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD056FBC1DAF1AB70007DB7A /* librtmp.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = librtmp.a;
+			remoteRef = AD056FBB1DAF1AB70007DB7A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD3EBA951DE5324E00024454 /* libL16_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libL16_Mac.a;
+			remoteRef = AD3EBA941DE5324E00024454 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD3EBA981DE5324E00024454 /* librtmp_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = librtmp_Mac.a;
+			remoteRef = AD3EBA971DE5324E00024454 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		AD4E8C551CB664D00068C4E9 /* libcommon_audio.a */ = {
@@ -2646,6 +2696,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD3EBA9C1DE5327E00024454 /* VoeObserver.cpp in Sources */,
+				AD3EBA9B1DE5327400024454 /* faaccodec.cpp in Sources */,
+				AD3EBA991DE5326800024454 /* ECLiveStream_rtmp.cpp in Sources */,
+				AD3EBA9A1DE5326800024454 /* ECLiveStream.cpp in Sources */,
 				AD4B6B9E1D4B4FBD00731C5B /* base64.c in Sources */,
 				ADC54D0C1D48A7D900A5C852 /* statsCollector.cc in Sources */,
 				ADC54D081D489DAD00A5C852 /* RecordVoip.cpp in Sources */,
@@ -2672,11 +2726,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		1AFBD15A1DAE5C5E009B8D23 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = rtmp;
-			targetProxy = 1AFBD1591DAE5C5E009B8D23 /* PBXContainerItemProxy */;
-		};
 		1AFBD1651DAE6677009B8D23 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = L16;
@@ -2972,6 +3021,11 @@
 			name = G729_Mac;
 			targetProxy = ADC54B2D1D48847900A5C852 /* PBXContainerItemProxy */;
 		};
+		ADF261361DB8B906008420B0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = rtmp;
+			targetProxy = ADF261351DB8B906008420B0 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -2994,6 +3048,7 @@
 					VIDEO_ENABLED,
 					MAC_IPHONE,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -3022,6 +3077,9 @@
 					../../module/video_render/main/include,
 					../../module/common_audio/source/resampler/include/,
 					"../../module/audio_coding/codecs/opencore-amr/amrnb",
+					"\"$(SRCROOT)/../../third_party/libfaac/include\"",
+					"\"$(SRCROOT)/../../third_party/libfaad/include\"",
+					"\"$(SRCROOT)/../../third_party/librtmp/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -3032,6 +3090,8 @@
 					../../third_party/libvpx/libvpx_mac/lib,
 					../../third_party/libx264/libx264_mac/lib,
 					../../third_party/ffmpeg/ffmpeg_mac/lib,
+					../../third_party/libfaac/lib/osx,
+					../../third_party/libfaad/lib/osx,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
@@ -3064,6 +3124,7 @@
 					VIDEO_ENABLED,
 					MAC_IPHONE,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -3092,6 +3153,9 @@
 					../../module/video_render/main/include,
 					../../module/common_audio/source/resampler/include/,
 					"../../module/audio_coding/codecs/opencore-amr/amrnb",
+					"\"$(SRCROOT)/../../third_party/libfaac/include\"",
+					"\"$(SRCROOT)/../../third_party/libfaad/include\"",
+					"\"$(SRCROOT)/../../third_party/librtmp/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -3102,6 +3166,8 @@
 					../../third_party/libvpx/libvpx_mac/lib,
 					../../third_party/libx264/libx264_mac/lib,
 					../../third_party/ffmpeg/ffmpeg_mac/lib,
+					../../third_party/libfaac/lib/osx,
+					../../third_party/libfaad/lib/osx,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
@@ -3275,6 +3341,7 @@
 				CLANG_WARN_CONSTANT_CONVERSION = NO;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Ronglianyitong Information & Technology Co, Ltd";
 				GCC_INPUT_FILETYPE = automatic;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					WEBRTC_MAC,

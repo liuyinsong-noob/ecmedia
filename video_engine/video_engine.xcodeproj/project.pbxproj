@@ -700,6 +700,7 @@
 					../module/video_coding/main/source,
 					../module/desktop_capture/source,
 					"../third_party/libyuv-ios/include",
+					../module/desktop_capture/desktop_capture/desktop_capture,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
@@ -797,6 +798,7 @@
 					../module/video_coding/main/source,
 					../module/desktop_capture/source,
 					"../third_party/libyuv-ios/include",
+					../module/desktop_capture/desktop_capture/desktop_capture,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";

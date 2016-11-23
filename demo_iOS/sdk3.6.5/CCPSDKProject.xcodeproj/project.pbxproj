@@ -37,7 +37,7 @@
 		82D003C6193DC01200C7E565 /* CAStreamBasicDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82D003BC193DC01200C7E565 /* CAStreamBasicDescription.cpp */; };
 		82D003C7193DC01200C7E565 /* CAXException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82D003BE193DC01200C7E565 /* CAXException.cpp */; };
 		82E9DDA118B1BA3900DF221E /* CLOPcrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 82E9DD9E18B1BA3900DF221E /* CLOPcrypto.m */; };
-		AD0199B81D239A16003C2BB9 /* libccpclient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9136BBAC1A8C9B8300350A26 /* libccpclient.a */; };
+		ADF261341DB8B13E008420B0 /* libccpclient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9136BBAC1A8C9B8300350A26 /* libccpclient.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,7 +146,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD0199B81D239A16003C2BB9 /* libccpclient.a in Frameworks */,
+				ADF261341DB8B13E008420B0 /* libccpclient.a in Frameworks */,
 				825FBF9B17D7107D00B0943D /* CoreTelephony.framework in Frameworks */,
 				05C42AD616FABC790023A950 /* CoreFoundation.framework in Frameworks */,
 				05C42AD416FABC6B0023A950 /* Foundation.framework in Frameworks */,
@@ -486,10 +486,13 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = YES;
+				DEPLOYMENT_POSTPROCESSING = NO;
 				DSTROOT = /tmp/CCPSDKProject.dst;
+				ENABLE_BITCODE = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CCPSDKProject/CCPSDKProject-Prefix.pch";
+				GENERATE_MASTER_OBJECT_FILE = NO;
 				HEADER_SEARCH_PATHS = (
 					"${SDK_DIR}/usr/include/libxml2",
 					"${SDK_DIR}/usr/include",
@@ -506,6 +509,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = ccpapisdk;
 				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "armv7 arm64";
 			};
@@ -516,10 +520,13 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LIBRARY = "libc++";
+				DEPLOYMENT_POSTPROCESSING = NO;
 				DSTROOT = /tmp/CCPSDKProject.dst;
+				ENABLE_BITCODE = NO;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CCPSDKProject/CCPSDKProject-Prefix.pch";
+				GENERATE_MASTER_OBJECT_FILE = NO;
 				HEADER_SEARCH_PATHS = (
 					"${SDK_DIR}/usr/include/libxml2",
 					"${SDK_DIR}/usr/include",
@@ -536,6 +543,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = ccpapisdk;
 				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
 				VALID_ARCHS = "armv7 arm64";
 			};
 			name = Release;

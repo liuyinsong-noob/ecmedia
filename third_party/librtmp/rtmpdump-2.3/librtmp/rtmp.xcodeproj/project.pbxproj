@@ -12,10 +12,24 @@
 		1AFBD1411DAE5979009B8D23 /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD13C1DAE5979009B8D23 /* log.c */; };
 		1AFBD1421DAE5979009B8D23 /* parseurl.c in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD13D1DAE5979009B8D23 /* parseurl.c */; };
 		1AFBD1431DAE5979009B8D23 /* rtmp.c in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD13E1DAE5979009B8D23 /* rtmp.c */; };
+		AD3EBA7D1DE52F1D00024454 /* rtmp.c in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD13E1DAE5979009B8D23 /* rtmp.c */; };
+		AD3EBA7E1DE52F1D00024454 /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD13C1DAE5979009B8D23 /* log.c */; };
+		AD3EBA7F1DE52F1D00024454 /* parseurl.c in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD13D1DAE5979009B8D23 /* parseurl.c */; };
+		AD3EBA801DE52F1D00024454 /* hashswf.c in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD13B1DAE5979009B8D23 /* hashswf.c */; };
+		AD3EBA811DE52F1D00024454 /* amf.c in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD13A1DAE5979009B8D23 /* amf.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		1AFBD12C1DAE58F0009B8D23 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD3EBA831DE52F1D00024454 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/$(PRODUCT_NAME)";
@@ -33,10 +47,18 @@
 		1AFBD13C1DAE5979009B8D23 /* log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = log.c; sourceTree = SOURCE_ROOT; };
 		1AFBD13D1DAE5979009B8D23 /* parseurl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = parseurl.c; sourceTree = SOURCE_ROOT; };
 		1AFBD13E1DAE5979009B8D23 /* rtmp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rtmp.c; sourceTree = SOURCE_ROOT; };
+		AD3EBA871DE52F1D00024454 /* librtmp_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librtmp_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		1AFBD12B1DAE58F0009B8D23 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD3EBA821DE52F1D00024454 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -58,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				1AFBD12E1DAE58F0009B8D23 /* librtmp.a */,
+				AD3EBA871DE52F1D00024454 /* librtmp_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -94,6 +117,23 @@
 			productReference = 1AFBD12E1DAE58F0009B8D23 /* librtmp.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		AD3EBA7B1DE52F1D00024454 /* rtmp_Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD3EBA841DE52F1D00024454 /* Build configuration list for PBXNativeTarget "rtmp_Mac" */;
+			buildPhases = (
+				AD3EBA7C1DE52F1D00024454 /* Sources */,
+				AD3EBA821DE52F1D00024454 /* Frameworks */,
+				AD3EBA831DE52F1D00024454 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = rtmp_Mac;
+			productName = librtmp;
+			productReference = AD3EBA871DE52F1D00024454 /* librtmp_Mac.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -122,6 +162,7 @@
 			projectRoot = "";
 			targets = (
 				1AFBD12D1DAE58F0009B8D23 /* rtmp */,
+				AD3EBA7B1DE52F1D00024454 /* rtmp_Mac */,
 			);
 		};
 /* End PBXProject section */
@@ -136,6 +177,18 @@
 				1AFBD1421DAE5979009B8D23 /* parseurl.c in Sources */,
 				1AFBD1401DAE5979009B8D23 /* hashswf.c in Sources */,
 				1AFBD13F1DAE5979009B8D23 /* amf.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD3EBA7C1DE52F1D00024454 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD3EBA7D1DE52F1D00024454 /* rtmp.c in Sources */,
+				AD3EBA7E1DE52F1D00024454 /* log.c in Sources */,
+				AD3EBA7F1DE52F1D00024454 /* parseurl.c in Sources */,
+				AD3EBA801DE52F1D00024454 /* hashswf.c in Sources */,
+				AD3EBA811DE52F1D00024454 /* amf.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,6 +310,35 @@
 			};
 			name = Release;
 		};
+		AD3EBA851DE52F1D00024454 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NO_CRYPTO,
+					"DEBUG=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		AD3EBA861DE52F1D00024454 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = NO_CRYPTO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -274,6 +356,15 @@
 			buildConfigurations = (
 				1AFBD1381DAE58F0009B8D23 /* Debug */,
 				1AFBD1391DAE58F0009B8D23 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD3EBA841DE52F1D00024454 /* Build configuration list for PBXNativeTarget "rtmp_Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD3EBA851DE52F1D00024454 /* Debug */,
+				AD3EBA861DE52F1D00024454 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
