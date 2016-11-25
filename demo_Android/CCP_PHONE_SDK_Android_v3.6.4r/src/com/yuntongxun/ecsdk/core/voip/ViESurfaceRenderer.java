@@ -30,7 +30,7 @@ import java.nio.ByteBuffer;
 
 public class ViESurfaceRenderer implements Callback {
 
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
     private final static String TAG = "console";
 
     // the bitmap used for drawing.

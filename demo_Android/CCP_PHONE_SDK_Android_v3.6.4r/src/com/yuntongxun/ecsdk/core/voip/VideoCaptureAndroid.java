@@ -10,19 +10,18 @@
 
 package com.yuntongxun.ecsdk.core.voip;
 
-import java.util.concurrent.locks.ReentrantLock;
-
-import com.yuntongxun.ecsdk.core.voip.CaptureCapabilityAndroid;
-import com.yuntongxun.ecsdk.core.voip.VideoCaptureDeviceInfoAndroid.AndroidVideoCaptureDevice;
-
-import com.hisun.phone.core.voice.util.Log4Util;
-
 import android.graphics.ImageFormat;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.PreviewCallback;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
+
+import com.hisun.phone.core.voice.util.Log4Util;
+import com.yuntongxun.ecsdk.core.voip.VideoCaptureDeviceInfoAndroid.AndroidVideoCaptureDevice;
+
+import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class VideoCaptureAndroid implements PreviewCallback, Callback {
 
@@ -118,6 +117,16 @@ public class VideoCaptureAndroid implements PreviewCallback, Callback {
 //            parameters.setRotation(currentDevice.orientation);
 //            parameters.set("orientation", "portrait");
 //            parameters.set("rotation", currentDevice.orientation);
+
+            List<String> list= parameters.getSupportedFocusModes();
+            if(list!=null&&list.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)){
+                if(android.os.Build.VERSION.SDK_INT>=14 && currentDevice.frontCameraType ==
+                        VideoCaptureDeviceInfoAndroid.FrontFacingCameraType.None) {
+                    parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);//1连续对焦
+                    camera.cancelAutoFocus();// 2如果要实现连续的自动对焦，这一句必须加上
+                }
+            }
+
             camera.setParameters(parameters);
             
             //camera.setDisplayOrientation(currentDevice.orientation);
@@ -265,15 +274,17 @@ public class VideoCaptureAndroid implements PreviewCallback, Callback {
                 // SetDisplayOrientation will flip the image horizontally
                 // before doing the rotation.
                 resultRotation=(360-rotation) % 360; // compensate the mirror
+                Log4Util.d(TAG, "VideoCaptureAndroid::SetPreviewRotation front rotation:"+rotation+" reRotation:%d"+resultRotation);
             }
             else {
                 // Back facing or 2.2 or previous front camera
                 resultRotation=rotation;
+                Log4Util.d(TAG, "VideoCaptureAndroid::SetPreviewRotation back rotation:"+rotation+" reRotation:%d"+resultRotation);
             }
             camera.setDisplayOrientation(resultRotation);
 
             if (isRestart) {
-                    StartCapture(width, height, framerate);
+                StartCapture(width, height, framerate);
             }
             previewBufferLock.unlock();
         }

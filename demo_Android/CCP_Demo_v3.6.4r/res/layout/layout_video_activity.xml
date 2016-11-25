@@ -35,12 +35,15 @@
         android:background="@drawable/video_bg"
         android:visibility="gone" >
 
-        <SurfaceView
+        <!--com.yuntongxun.ecsdk.core.voip.ViEAndroidGLES20View-->
+        <!--SurfaceView-->
+        <!--com.yuntongxun.ecsdk.voip.video.ECOpenGlView-->
+        <com.yuntongxun.ecsdk.voip.video.ECOpenGlView
             android:id="@+id/video_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" >
-        </SurfaceView>
+        </com.yuntongxun.ecsdk.voip.video.ECOpenGlView>
 
         <RelativeLayout
             android:id="@+id/localvideo_view"

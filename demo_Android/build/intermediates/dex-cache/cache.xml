@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="L:\svn\MyWebRtc_2.x_hubin\demo_Android\CCP_Demo_v3.6.4r\libs\pinyin4j-2.5.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="ae353005f973da1cd8545b54354504c2503f6865">
+        <dex dex="L:\svn\MyWebRtc_2.x_hubin\demo_Android\CCP_Demo_v3.6.4r\build\intermediates\pre-dexed\debug\pinyin4j-2.5.0_f0fdf20c3e9928ab9af935823d6325617ee96a94.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="L:\svn\MyWebRtc_2.x_hubin\demo_Android\CCP_Demo_v3.6.4r\build\intermediates\exploded-aar\demo_Android\CCP_PHONE_SDK_Android_v3.6.4r\unspecified\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="db15bf93a63e9a3ba62556ac4856c02ff9854ad9">
+        <dex dex="L:\svn\MyWebRtc_2.x_hubin\demo_Android\CCP_Demo_v3.6.4r\build\intermediates\pre-dexed\debug\demo_Android-CCP_PHONE_SDK_Android_v3.6.4r-unspecified_0b0322df8e55b179d79468f2c3b57a87bb7235af.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="L:\svn\MyWebRtc_2.x_hubin\demo_Android\CCP_Demo_v3.6.4r\build\intermediates\exploded-aar\demo_Android\CCP_PHONE_SDK_Android_v3.6.4r\unspecified\jars\libs\android-support-v4.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="aaa9bc27cf2226482875d769ac45286970935b21">
+        <dex dex="L:\svn\MyWebRtc_2.x_hubin\demo_Android\CCP_Demo_v3.6.4r\build\intermediates\pre-dexed\debug\android-support-v4_3d902137ce4b54584b290a869945d6bcf4c60d89.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="L:\svn\MyWebRtc_2.x_hubin\demo_Android\CCP_Demo_v3.6.4r\libs\CCP_REST_SDK_JAVA_v2.6r.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="82e7f348f664b4232cf988136af73fcdd846e24e">
+        <dex dex="L:\svn\MyWebRtc_2.x_hubin\demo_Android\CCP_Demo_v3.6.4r\build\intermediates\pre-dexed\debug\CCP_REST_SDK_JAVA_v2.6r_febd37dc1fb78b8c3036245880af4ffdc4696e4a.jar" />
+    </item>
+
+</items>

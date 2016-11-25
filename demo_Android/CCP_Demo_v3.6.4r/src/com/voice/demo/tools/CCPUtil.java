@@ -12,20 +12,6 @@
  */
 package com.voice.demo.tools;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -34,8 +20,8 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.os.Environment;
@@ -55,6 +41,19 @@ import com.voice.demo.CCPApplication;
 import com.voice.demo.R;
 import com.voice.demo.sqlite.CCPSqliteManager;
 import com.voice.demo.ui.CCPHelper;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Simple tools.
@@ -485,6 +484,8 @@ public final class CCPUtil {
 			return flag;
 		}
 		String[] tempList = file.list();
+        if(tempList == null)
+            return flag;
 		File temp = null;
 		for (int i = 0; i < tempList.length; i++) {
 			if (path.endsWith(File.separator)) {
@@ -713,7 +714,6 @@ public final class CCPUtil {
 			return 0;
 		}
 		int pixel[] = new int[caps.length];
-		int _pixel[] = new int[caps.length];
 		for(CameraCapbility cap : caps) {
 			if(cap.index >= pixel.length) {
 				continue;
@@ -721,9 +721,9 @@ public final class CCPUtil {
 			pixel[cap.index] = cap.width * cap.height;
 		}
 		
-		System.arraycopy(pixel, 0, _pixel, 0, caps.length);
+		//System.arraycopy(pixel, 0, _pixel, 0, caps.length);
 		
-		Arrays.sort(_pixel);
+		//Arrays.sort(_pixel);
 		for(int i = 0 ; i < caps.length ; i++) {
 			if(pixel[i] == /*_pixel[0]*/ 640*480) {
 				return i;

@@ -52,6 +52,8 @@ import com.voice.demo.tools.preference.CcpPreferences;
 import com.voice.demo.ui.CCPBaseActivity;
 import com.voice.demo.ui.CCPHelper;
 
+import static java.lang.Math.abs;
+
 /**
  * 
 * <p>Title: AudioVideoCallActivity.java</p>
@@ -508,33 +510,33 @@ public class AudioVideoCallActivity extends CCPBaseActivity implements OnVoIPLis
 	 * @param caps
 	 */
 	public void comportCapbilityIndex(CameraCapbility[] caps) {
-		
-		mCameraCapbilityIndex = CcpPreferences.getSharedPreferences().getInt(CCPPreferenceSettings.SETTING_VIDEO_CALL_RESOLUTION.getId(), (Integer)CCPPreferenceSettings.SETTING_VIDEO_CALL_RESOLUTION.getDefaultValue());
-		
-		if(mCameraCapbilityIndex != -1) {
-			return ;
-		}
-		if(caps == null ) {
-			return;
-		}
+        if(caps == null ) {
+            return;
+        }
+
+        int resolution =  CcpPreferences.getSharedPreferences().
+                getInt(CCPPreferenceSettings.SETTING_VIDEO_CALL_RESOLUTION.getId(),
+                        (Integer)CCPPreferenceSettings.SETTING_VIDEO_CALL_RESOLUTION.getDefaultValue());
+
 		int pixel[] = new int[caps.length];
-		int _pixel[] = new int[caps.length];
 		for(CameraCapbility cap : caps) {
-			if(cap.index >= pixel.length) {
-				continue;
-			}
-			pixel[cap.index] = cap.width * cap.height;
-		}
-		
-		System.arraycopy(pixel, 0, _pixel, 0, caps.length);
-		
-		Arrays.sort(_pixel);
+            if (cap.index >= pixel.length) {
+                continue;
+            }
+            pixel[cap.index] = cap.width * cap.height;
+        }
+
+        int smallestDiff = 0xFFFFFF;
+        int smallestDiffIndex = -1;
 		for(int i = 0 ; i < caps.length ; i++) {
-			if(pixel[i] == /*_pixel[0]*/ 352*288) {
-				mCameraCapbilityIndex = i;
-				return;
-			}
+            int diff = abs(pixel[i] - resolution);
+            if(diff < smallestDiff) {
+                smallestDiff = diff;
+                smallestDiffIndex = i;
+            }
 		}
+        mCameraCapbilityIndex = smallestDiffIndex;
+        Log4Util.i("comportCapbilityIndex w:"+caps[mCameraCapbilityIndex].width + " h:"+caps[mCameraCapbilityIndex].height);
 	}
 	
 	/**

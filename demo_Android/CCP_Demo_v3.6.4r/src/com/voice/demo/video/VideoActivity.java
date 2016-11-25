@@ -12,11 +12,10 @@
  */
 package com.voice.demo.video;
 
-import com.yuntongxun.ecsdk.core.voip.ViERenderer;
-
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Message;
 import android.os.SystemClock;
 import android.text.TextUtils;
@@ -46,6 +45,9 @@ import com.voice.demo.R;
 import com.voice.demo.tools.CCPIntentUtils;
 import com.voice.demo.ui.CCPHelper;
 import com.voice.demo.voip.AudioVideoCallActivity;
+import com.yuntongxun.ecsdk.core.voip.ViERenderer;
+import com.yuntongxun.ecsdk.voip.video.ECOpenGlView;
+
 /**
  * 
  * @author Jorstin Chan
@@ -61,8 +63,10 @@ public class VideoActivity extends AudioVideoCallActivity implements View.OnClic
 	
 	private TextView mVideoTopTips;
 	private TextView mVideoCallTips;
-	private TextView mCallStatus;
-	private SurfaceView mVideoView;
+    private TextView mCallStatus;
+    //private ViEAndroidGLES20View mVideoView;
+    //private SurfaceView mVideoView;
+    private SurfaceView mVideoView;
 	// Remote Video
 	private FrameLayout mVideoLayout;
 	private Chronometer mChronometer;
@@ -112,13 +116,17 @@ public class VideoActivity extends AudioVideoCallActivity implements View.OnClic
                 comportCapbilityIndex(cameraInfos[i].caps);
             }
         }
-		
+
+        Log4Util.e(CCPHelper.DEMO_TAG ,"hubintest " + Environment.getExternalStorageDirectory().getAbsolutePath());
+
 
 		DisplayLocalSurfaceView();
 		
 		if(checkeDeviceHelper())
 			mCurrentCallId = getDeviceHelper().makeCall(Device.CallType.VIDEO, mVoipAccount);
-		
+
+        getDeviceHelper().setScreenShareActivity(mCurrentCallId, this.getWindow().getDecorView().getRootView());
+//
 		if (TextUtils.isEmpty(mCurrentCallId)) {
 			CCPApplication.getInstance().showToast(R.string.no_support_voip);
 			Log4Util.d(CCPHelper.DEMO_TAG ,"[CallOutActivity] Sorry, "+ getString(R.string.no_support_voip)+" , Call failed. ");
@@ -144,9 +152,12 @@ public class VideoActivity extends AudioVideoCallActivity implements View.OnClic
 		mVideoCancle.setOnClickListener(this);
 		mVideoBegin.setOnClickListener(this);
 		mVideoStop.setOnClickListener(this);
-		
-		mVideoView = (SurfaceView) findViewById(R.id.video_view);
-		mVideoView.setVisibility(View.INVISIBLE);
+
+        //mVideoView = (ViEAndroidGLES20View) findViewById(R.id.video_view);
+        //mVideoView = (SurfaceView) findViewById(R.id.video_view);
+        mVideoView = (SurfaceView) findViewById(R.id.video_view);
+
+		mVideoView.setVisibility(View.VISIBLE);
 		mLoaclVideoView = (RelativeLayout) findViewById(R.id.localvideo_view);
 		mVideoLayout = (FrameLayout) findViewById(R.id.Video_layout);
 		mCameraSwitch=   findViewById(R.id.camera_switch);
@@ -156,12 +167,12 @@ public class VideoActivity extends AudioVideoCallActivity implements View.OnClic
 		
 		mCallStatus = (TextView) findViewById(R.id.call_status);
 		mCallStatus.setVisibility(View.GONE);
-		//mVideoView.getHolder().setFixedSize(width, height);
-		mVideoView.getHolder().setFixedSize(240, 320);
+        //mVideoView.getHolder().setFixedSize(width, height);
+		mVideoView.getHolder().setFixedSize(480, 640);
 		
 		if(checkeDeviceHelper())
 			getDeviceHelper().setVideoView(mVoipAccount, mVideoView, null);//hubin modified
-		
+
 		SurfaceView localView = ViERenderer.CreateLocalRenderer(this);
 		mLoaclVideoView.addView(localView);
 	}
@@ -332,7 +343,7 @@ public class VideoActivity extends AudioVideoCallActivity implements View.OnClic
 		if(getCallHandler() != null) {
 			getCallHandler().sendMessage(getCallHandler().obtainMessage(VideoActivity.WHAT_ON_CODE_CALL_STATUS));
 		}
-		
+
 		//getDeviceHelper().enableLoudsSpeaker(true);
 	}
 	
@@ -478,7 +489,7 @@ public class VideoActivity extends AudioVideoCallActivity implements View.OnClic
 			mWidth = width;
 			mHeight = height;
 			if(mVideoView != null) {
-				//mVideoView.getHolder().setFixedSize(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
+				mVideoView.getHolder().setFixedSize(width, height);
 				LayoutParams layoutParams2 = (LayoutParams) mVideoView.getLayoutParams();
 				layoutParams2.width = mWidth;
 				layoutParams2.height = mHeight;

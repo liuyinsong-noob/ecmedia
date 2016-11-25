@@ -12,8 +12,6 @@
  */
 package com.voice.demo.outboundmarketing;
 
-import java.util.ArrayList;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,6 +26,8 @@ import com.voice.demo.contacts.ChooseContactsActivity;
 import com.voice.demo.tools.preference.CCPPreferenceSettings;
 import com.voice.demo.tools.preference.CcpPreferences;
 import com.voice.demo.ui.CCPBaseActivity;
+
+import java.util.ArrayList;
 
 /// Marketing outbound activity
 public class MarketActivity extends CCPBaseActivity implements

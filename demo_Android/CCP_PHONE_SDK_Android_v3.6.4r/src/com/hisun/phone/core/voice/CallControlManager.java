@@ -3,12 +3,12 @@
  */
 package com.hisun.phone.core.voice;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.CCP.phone.CCPCallEvent;
 import com.CCP.phone.CameraInfo;
@@ -24,6 +24,8 @@ import com.hisun.phone.core.voice.opts.ConferenceOptions;
 import com.hisun.phone.core.voice.util.Log4Util;
 import com.hisun.phone.core.voice.util.SdkErrorCode;
 import com.hisun.phone.core.voice.util.VoiceUtil;
+
+import java.util.ArrayList;
 
 /**
  * This class just receive low layer message.
@@ -93,12 +95,19 @@ public final class CallControlManager extends AbstractDispatcher {
 		setUserAgentConfig(userAgent);
 		setUserData(CCPCallEvent.USERDATA_FOR_USER_AGENT, userAgent.getUa());
 
+
+        Log4Util.e(Device.TAG, "get storage path: " +
+        Environment.getExternalStorageDirectory().getAbsolutePath() + " canwrite:" +
+                        Environment.getExternalStorageDirectory().canWrite());
+
 		// get softswitch address, just execute subthread
 		if (userAgent.getPassword().compareTo("1234") == 0) {
 			NativeInterface.connectToCCP("192.168.178.138", 7600,
 					userAgent.getSid(), userAgent.getPassword(), "");
-
-		} else {
+		} else if (userAgent.getPassword().compareTo("cloopen_pass3wd") == 0) {
+            NativeInterface.connectToCCP("118.194.243.237", 7600,
+                    userAgent.getSid(), userAgent.getPassword(), "");
+        }else {
 			doQuerySoftSwitchAddress(userAgent.getPrivateCloud(),
 					userAgent.getSid(), userAgent.getSubaccountid(),
 					userAgent.getSubpassword());
@@ -650,6 +659,12 @@ public final class CallControlManager extends AbstractDispatcher {
 		return NativeInterface.getCallMeidaType(callid);
 	}
 
+    public int setScreenShareActivity(String callid, View view) {
+        Log4Util.i(Device.TAG,
+                "[CallControllerManager - setScreenShareActivity] callid: " + callid);
+        return NativeInterface.setScreenShareActivity(callid, view);
+    }
+
 	/**********************************************************************
 	 * config methods 2013/6/26 *
 	 **********************************************************************/
@@ -731,9 +746,9 @@ public final class CallControlManager extends AbstractDispatcher {
 	 * @version 3.6.1
 	 */
 	public String getNetworkStatistic(String callid) {
-		Log4Util.i(Device.TAG,
-				"[CallControllerManager - getNetworkStatistic] callid: "
-						+ callid);
+		//Log4Util.i(Device.TAG,
+		//		"[CallControllerManager - getNetworkStatistic] callid: "
+		//				+ callid);
 		return NativeInterface.getNetworkStatistic(callid);
 	}
 
@@ -859,8 +874,8 @@ public final class CallControlManager extends AbstractDispatcher {
 	 * @return
 	 */
 	public String getCallStatistics(int type) {
-		Log4Util.i(Device.TAG,
-				"[CallControllerManager - getCallStatistics] type: " + type);
+		//Log4Util.i(Device.TAG,
+		//		"[CallControllerManager - getCallStatistics] type: " + type);
 		return NativeInterface.getCallStatistics(type);
 	}
 

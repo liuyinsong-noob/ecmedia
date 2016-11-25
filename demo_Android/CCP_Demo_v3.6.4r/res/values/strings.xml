@@ -187,10 +187,10 @@
     <string name="str_tips_video_nvited">请选择本次视频通话的参与者（单选）</string>
     <string name="str_check_to_participants_video_call">点击开始视频呼叫吧</string>
     <string name="str_video_bottom_time" formatted="false">与%1$s视频通话中\t</string>
-    <string name="str_call_status" formatted="false">延迟时间%d（毫秒）丢包率:%d</string>
-    <string name="str_call_traffic_status" formatted="false">延迟时间%d（毫秒）丢包率:%d\n
-        发送：%d（KB）接收：%d（KB）</string>
-    <string name="str_traffic_status" formatted="false">发送：%d（KB）接收：%d（KB）</string>
+    <string name="str_call_status" formatted="false">rtt:%dms lost:%d</string>
+    <string name="str_call_traffic_status" formatted="false">delay:%dms lost:%d\n
+        send:%d(KB) recv:%d(KB)</string>
+    <string name="str_traffic_status" formatted="false">send:%d(KB) recv:%d(KB)</string>
     <string name="str_video_call_end">%1$s对方拒绝,视频通话结束..</string>
     <string name="str_video_invited_recivie">%1$s邀请您进行视频通话...</string>
 

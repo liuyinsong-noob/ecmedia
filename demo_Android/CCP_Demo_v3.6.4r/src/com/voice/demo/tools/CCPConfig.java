@@ -49,6 +49,7 @@ public final class CCPConfig {
 		}
 
 		if (isExistExternalStore()) {
+
 			String content = readContentByFile(LOCAL_PATH);
 			if (content != null) {
 				try {

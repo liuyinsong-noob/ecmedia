@@ -226,7 +226,7 @@ public class CCPHelper implements CCPCall.InitListener, DeviceListener
 		//device.setCodecEnabled(Codec.Codec_iLBC, false);
 		device.setCodecEnabled(Codec.Codec_PCMU, true);
 		device.setCodecEnabled(Codec.Codec_G729, true);
-		device.setCodecEnabled(Codec.Codec_OPUS48, true);
+		device.setCodecEnabled(Codec.Codec_OPUS48, false);
 		device.setCodecEnabled(Codec.Codec_OPUS16, true);
 		device.setCodecEnabled(Codec.Codec_OPUS8, true);
 		//device.setCodecEnabled(Codec.Codec_PCMA, false);

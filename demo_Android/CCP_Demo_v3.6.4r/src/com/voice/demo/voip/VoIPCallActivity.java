@@ -12,14 +12,6 @@
  */
 package com.voice.demo.voip;
 
-import com.hisun.phone.core.voice.util.Log4Util;
-import com.voice.demo.R;
-import com.voice.demo.CCPApplication;
-import com.voice.demo.interphone.InviteInterPhoneActivity;
-import com.voice.demo.tools.CCPConfig;
-import com.voice.demo.ui.CCPBaseActivity;
-import com.voice.demo.ui.CCPHelper;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -32,6 +24,15 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.hisun.phone.core.voice.Device;
+import com.hisun.phone.core.voice.util.Log4Util;
+import com.voice.demo.CCPApplication;
+import com.voice.demo.R;
+import com.voice.demo.interphone.InviteInterPhoneActivity;
+import com.voice.demo.tools.CCPConfig;
+import com.voice.demo.ui.CCPBaseActivity;
+import com.voice.demo.ui.CCPHelper;
 
 public class VoIPCallActivity extends CCPBaseActivity implements OnClickListener{
 
@@ -110,7 +111,8 @@ public class VoIPCallActivity extends CCPBaseActivity implements OnClickListener
 			Intent intent = new Intent(VoIPCallActivity.this, InviteInterPhoneActivity.class);
 			intent.putExtra("create_to", InviteInterPhoneActivity.CREATE_TO_VOIP_CALL);
 			startActivityForResult(intent, REQUEST_CODE_VOIP_CALL);
-			
+
+
 			break;
 
 		default:
@@ -166,7 +168,9 @@ public class VoIPCallActivity extends CCPBaseActivity implements OnClickListener
 			return;
 		}
 
-		Intent intent = new Intent(this, CallOutActivity.class);
+        getDeviceHelper().makeCall(Device.CallType.VOICE, phoneStr);
+
+		//Intent intent = new Intent(this, CallOutActivity.class);
 		
 		// need according to the mode transfer of corresponding parameters
 		// VoIP of free telephone
@@ -178,9 +182,9 @@ public class VoIPCallActivity extends CCPBaseActivity implements OnClickListener
 			return;
 		}*/
 
-		intent.putExtra(CCPApplication.VALUE_DIAL_VOIP_INPUT, phoneStr);
-		intent.putExtra(CCPApplication.VALUE_DIAL_MODE,CCPApplication.VALUE_DIAL_MODE_FREE);
-		startActivity(intent);
+//		intent.putExtra(CCPApplication.VALUE_DIAL_VOIP_INPUT, phoneStr);
+//		intent.putExtra(CCPApplication.VALUE_DIAL_MODE,CCPApplication.VALUE_DIAL_MODE_FREE);
+//		startActivity(intent);
 	}
 
 	@Override

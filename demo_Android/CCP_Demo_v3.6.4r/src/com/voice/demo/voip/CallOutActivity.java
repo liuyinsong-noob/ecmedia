@@ -553,7 +553,7 @@ public class CallOutActivity extends AudioVideoCallActivity implements OnClickLi
 
 			if (getCallHandler() != null) {
 				Message callMessage = getCallHandler().obtainMessage(VideoActivity.WHAT_ON_CODE_CALL_STATUS);
-				getCallHandler().sendMessageDelayed(callMessage, 4000);
+				getCallHandler().sendMessageDelayed(callMessage, 1000);
 			}
 			break;
 

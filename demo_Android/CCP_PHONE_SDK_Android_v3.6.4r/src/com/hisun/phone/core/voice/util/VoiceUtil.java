@@ -615,14 +615,14 @@ public final class VoiceUtil {
 		try {
 			int _duration = trafficStats.indexOf("<duration>");
 			int _duration_ext = trafficStats.indexOf("</duration>");
-			int _send = trafficStats.indexOf("<send>");
-			int _send_ext = trafficStats.indexOf("</send>");
-			int _recv = trafficStats.indexOf("<recv>");
-			int _recv_ext = trafficStats.indexOf("</recv>");
+			int _send = trafficStats.indexOf("<sendwifi>");
+			int _send_ext = trafficStats.indexOf("</sendwifi>");
+			int _recv = trafficStats.indexOf("<recvwifi>");
+			int _recv_ext = trafficStats.indexOf("</recvwifi>");
 			
 			String duration = trafficStats.substring(_duration + 10, _duration_ext);
-			String txBytes = trafficStats.substring(_send + 6, _send_ext);
-			String rxBytes = trafficStats.substring(_recv + 6, _recv_ext);
+			String txBytes = trafficStats.substring(_send + 10, _send_ext);
+			String rxBytes = trafficStats.substring(_recv + 10, _recv_ext);
 			Log4Util.d(Device.TAG, "call trafficStats duration:" + duration + " , txBytes :" + txBytes + " , rxBytes:" + rxBytes);
 			return new NetworkStatistic(Long.parseLong(duration) ,Long.parseLong(txBytes) , Long.parseLong(rxBytes));
 			

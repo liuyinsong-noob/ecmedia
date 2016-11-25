@@ -119,7 +119,7 @@ public enum CCPPreferenceSettings {
 	SETTING_CODE_VALUE("com_voice_demo_supcodec_value" , Integer.valueOf(-1)),
 	SETTING_CODE("com_voice_demo_supcodec" , Boolean.TRUE),
 
-	SETTING_VIDEO_CALL_RESOLUTION("com_voice_demo_video_call_resolution" , Integer.valueOf(-1)),
+	SETTING_VIDEO_CALL_RESOLUTION("com_voice_demo_video_call_resolution" , Integer.valueOf(352*288)),
 	/**
 	 * P2P 
 	 */

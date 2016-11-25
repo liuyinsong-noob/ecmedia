@@ -48,6 +48,7 @@ class AudioDeviceAndroid {
     private int _bufferedRecSamples = 0;
     private int _bufferedPlaySamples = 0;
     private int _playPosition = 0;
+    private int _freqSample  = 0;
 
     AudioDeviceAndroid() {
         try {
@@ -104,7 +105,7 @@ class AudioDeviceAndroid {
         }
 
         // DoLog("rec sample rate set to " + sampleRate);
-
+        _freqSample = sampleRate;
         return _bufferedRecSamples;
     }
 
@@ -112,6 +113,9 @@ class AudioDeviceAndroid {
     private int StartRecording() {
         if (_isPlaying == false) {
             SetAudioMode(true);
+        }
+        if(_isRecording) {
+            return 0;
         }
 
         // start recording
@@ -125,6 +129,48 @@ class AudioDeviceAndroid {
 
         _isRecording = true;
         return 0;
+    }
+
+    private boolean CheckRecordPermission() {
+
+        DoLogErr("CheckRecordPermission begin.");
+
+        if (_isPlaying == false) {
+            SetAudioMode(true);
+        }
+
+        // start recording
+        try {
+            _audioRecord.startRecording();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        int recordingState = _audioRecord.getRecordingState();
+        if (recordingState == AudioRecord.RECORDSTATE_STOPPED) {
+            DoLogErr("CheckRecordPermission RecordingState " + recordingState);
+            return false;
+        }
+
+        _isRecording = true;
+
+        int times = 0;
+        int recordLen = 2*10*_freqSample/1000;  //10ms
+        for(; times<10; times++) {
+            if(RecordAudio(recordLen) < 0) {
+                try {
+                    _audioRecord.stop();
+                } catch (IllegalStateException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+                DoLogErr("CheckRecordPermission record failed.");
+                return false;
+            }
+        }
+        DoLogErr("CheckRecordPermission record success.");
+        return true;
     }
 
     @SuppressWarnings("unused")
@@ -205,6 +251,8 @@ class AudioDeviceAndroid {
 
     @SuppressWarnings("unused")
     private int StopRecording() {
+
+        DoLogErr("StopRecording 00");
         _recLock.lock();
         try {
             // only stop if we are recording

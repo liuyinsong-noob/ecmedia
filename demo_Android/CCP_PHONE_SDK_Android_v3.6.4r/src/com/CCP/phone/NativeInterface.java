@@ -2,6 +2,7 @@ package com.CCP.phone;
 
 import java.util.HashMap;
 
+import android.app.Activity;
 import android.view.View;
 
 import com.hisun.phone.core.voice.AbstractDispatcher;
@@ -13,6 +14,7 @@ public class NativeInterface {
 		//System.loadLibrary("crypto");
 		//System.loadLibrary("VoipCpt");
 		System.loadLibrary("serphone");
+        System.loadLibrary("ECMedia");
 	}
 
 	/**
@@ -748,4 +750,6 @@ public class NativeInterface {
 	public static native int startRecord(String callid);
 
     public static native int stopRecord(String callid);
+
+    public static native int setScreenShareActivity(String callid, View view);
 }

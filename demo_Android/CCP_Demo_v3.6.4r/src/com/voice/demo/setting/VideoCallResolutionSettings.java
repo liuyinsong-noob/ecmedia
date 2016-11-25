@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.CCP.phone.CameraCapbility;
 import com.CCP.phone.CameraInfo;
+import com.hisun.phone.core.voice.util.Log4Util;
 import com.voice.demo.R;
 import com.voice.demo.tools.preference.CCPPreferenceSettings;
 import com.voice.demo.tools.preference.CcpPreferences;
@@ -29,7 +30,7 @@ public class VideoCallResolutionSettings extends CCPBaseActivity implements OnIt
 	
 	private ListView mListView;
 	private VideoCallResolutionApapter mVideocallResoluApapter;
-	private int mCameraCapbilityIndex = -1;
+    private int mSavedRosulation = 0;
 	@Override
 	protected int getLayoutId() {
 		return R.layout.video_call_resolution;
@@ -39,9 +40,10 @@ public class VideoCallResolutionSettings extends CCPBaseActivity implements OnIt
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initLayoutTitleBar();
-		
-		mCameraCapbilityIndex = CcpPreferences.getSharedPreferences().getInt(CCPPreferenceSettings.SETTING_VIDEO_CALL_RESOLUTION.getId(), (Integer)CCPPreferenceSettings.SETTING_VIDEO_CALL_RESOLUTION.getDefaultValue());
-		
+
+        mSavedRosulation = CcpPreferences.getSharedPreferences().
+                getInt(CCPPreferenceSettings.SETTING_VIDEO_CALL_RESOLUTION.getId(),
+                        (Integer)CCPPreferenceSettings.SETTING_VIDEO_CALL_RESOLUTION.getDefaultValue());
 		initLayoutView();
 	}
 	
@@ -50,7 +52,8 @@ public class VideoCallResolutionSettings extends CCPBaseActivity implements OnIt
 		super.handleTitleAction(direction);
 		if(direction == TITLE_RIGHT_ACTION) {
 			try {
-				CcpPreferences.savePreference(CCPPreferenceSettings.SETTING_VIDEO_CALL_RESOLUTION, Integer.valueOf(mCameraCapbilityIndex), true);
+				CcpPreferences.savePreference(CCPPreferenceSettings.SETTING_VIDEO_CALL_RESOLUTION,
+                        mSavedRosulation, true);
 			} catch (InvalidClassException e) {
 				e.printStackTrace();
 			}
@@ -65,15 +68,19 @@ public class VideoCallResolutionSettings extends CCPBaseActivity implements OnIt
 		if(checkeDeviceHelper()) {
 			CameraInfo[] cameraInfo = getDeviceHelper().getCameraInfo();
 			mVideocallResoluApapter = new VideoCallResolutionApapter(this);
+
 			mVideocallResoluApapter.setData(cameraInfo[0].caps);
+            if(cameraInfo.length > 1)
+            {
+                mVideocallResoluApapter.setData(cameraInfo[1].caps);
+            }
 			mListView.setAdapter(mVideocallResoluApapter);
 		}
 	}
 	
 	
 	private void initLayoutTitleBar() {
-		handleTitleDisplay(getString(R.string.btn_title_back),
-				getString(R.string.str_setting_select_codec_title), "保存");
+		handleTitleDisplay(getString(R.string.btn_title_back),getString(R.string.str_setting_select_codec_title), "保存");
 	}
 	
 	public class VideoCallResolutionApapter extends ArrayAdapter<CameraCapbility> {
@@ -119,8 +126,8 @@ public class VideoCallResolutionSettings extends CCPBaseActivity implements OnIt
 			if(item != null) {
 
 				mViewHolder.mCodecName.setText(item.height + " x " + item.width);
-				mViewHolder.mCheckBox.setChecked(mCameraCapbilityIndex == item.index);
-			
+				mViewHolder.mCheckBox.setChecked(mSavedRosulation == item.height*item.width);
+
 			}
 			
 			return view;
@@ -138,11 +145,12 @@ public class VideoCallResolutionSettings extends CCPBaseActivity implements OnIt
 		Integer object = Integer.valueOf(position);
 		if(positions.contains(object)) {
 			positions.remove(object);
-			mCameraCapbilityIndex = -1;
+            mSavedRosulation = 352*288;
 		} else {
 			positions.clear();
 			positions.add(object);
-			mCameraCapbilityIndex = mVideocallResoluApapter.getItem(position).index;
+            mSavedRosulation = mVideocallResoluApapter.getItem(position).width *
+                    mVideocallResoluApapter.getItem(position).height;
 		}
 		mVideocallResoluApapter.notifyDataSetChanged();
 	}

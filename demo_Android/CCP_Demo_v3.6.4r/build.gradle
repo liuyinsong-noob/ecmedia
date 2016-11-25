@@ -6,8 +6,12 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 16
+    compileSdkVersion 19
     buildToolsVersion "23.0.3"
+
+//    defaultConfig {
+//        targetSdkVersion 23
+//    }
 
     sourceSets {
         main {

@@ -3,6 +3,7 @@
  */
 package com.hisun.phone.core.voice;
 
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -3350,4 +3351,11 @@ public final class DeviceImpl extends Device implements CCPCallEvent {
 		}
 	}
 
+    public int setScreenShareActivity(String callid, View view)
+    {
+        if (this.callControlManager != null) {
+            return this.callControlManager.setScreenShareActivity(callid, view);
+        }
+        return 0;
+    }
 }

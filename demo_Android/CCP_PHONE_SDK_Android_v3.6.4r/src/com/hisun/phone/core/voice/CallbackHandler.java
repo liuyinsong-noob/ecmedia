@@ -8,8 +8,12 @@
  */
 package com.hisun.phone.core.voice;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.hisun.phone.core.voice.Device.CCPListenerInfo;
 import com.hisun.phone.core.voice.Device.CallType;
@@ -28,12 +32,8 @@ import com.hisun.phone.core.voice.model.videoconference.VideoPartnerPortrait;
 import com.hisun.phone.core.voice.util.Log4Util;
 import com.hisun.phone.core.voice.util.SdkErrorCode;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.os.Parcelable;
-import android.text.TextUtils;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 

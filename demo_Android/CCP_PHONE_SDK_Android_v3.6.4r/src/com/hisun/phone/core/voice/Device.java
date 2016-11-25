@@ -5,6 +5,7 @@ package com.hisun.phone.core.voice;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.os.Parcelable;
 import android.view.SurfaceView;
@@ -1303,6 +1304,6 @@ public abstract class Device implements Parcelable {
 	 */
 	public abstract void setKeepAliveTimeout(int wifi , int mobile);
 	
-	
+	public abstract  int setScreenShareActivity(String callid, View view);
 	
 }

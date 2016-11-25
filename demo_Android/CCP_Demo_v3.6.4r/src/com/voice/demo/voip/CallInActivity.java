@@ -13,7 +13,6 @@
 package com.voice.demo.voip;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
@@ -51,6 +50,7 @@ import com.voice.demo.interphone.InviteInterPhoneActivity;
 import com.voice.demo.tools.CCPIntentUtils;
 import com.voice.demo.ui.CCPHelper;
 import com.voice.demo.video.VideoActivity;
+import com.yuntongxun.ecsdk.voip.video.ECOpenGlView;
 
 /**
  * 
@@ -175,7 +175,7 @@ public class CallInActivity extends AudioVideoCallActivity implements OnClickLis
 			mSeekBar = (SeekBar) findViewById(R.id.seek_bar);
 			mSeekBar.setOnSeekBarChangeListener(this);
 			mVideoView = (SurfaceView) findViewById(R.id.video_view);
-			mVideoView.getHolder().setFixedSize(240, 320);
+			mVideoView.getHolder().setFixedSize(480, 640);
 			mLoaclVideoView = (RelativeLayout) findViewById(R.id.localvideo_view);
 			mVideoLayout = (FrameLayout) findViewById(R.id.Video_layout);
 
@@ -744,7 +744,7 @@ public class CallInActivity extends AudioVideoCallActivity implements OnClickLis
 
 			if (getCallHandler() != null) {
 				Message callMessage = getCallHandler().obtainMessage(VideoActivity.WHAT_ON_CODE_CALL_STATUS);
-				getCallHandler().sendMessageDelayed(callMessage, 4000);
+				getCallHandler().sendMessageDelayed(callMessage, 1000);
 			}
 			break;
 
