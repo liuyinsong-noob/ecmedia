@@ -3496,6 +3496,23 @@ int ECMedia_connect_desktop_captureDevice(int desktop_captureid, int video_chann
 	}
 }
 
+int ECMedia_disconnect_desktop_captureDevice(int video_channelId)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViEDesktopShare *vie_desktopShare = ViEDesktopShare::GetInterface(m_vie);
+	if (vie_desktopShare)
+	{
+		int ret = vie_desktopShare->DisConnectDesktopCaptureDevice(video_channelId);
+		vie_desktopShare->Release();
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViEDesktopShare, %s", __FUNCTION__);
+		return -99;
+	}
+}
 
 
 int ECMedia_get_screen_list(int desktop_captureid, ScreenID **screenList)

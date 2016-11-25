@@ -269,9 +269,8 @@ void ServiceCore::serphone_call_stop_media_streams(SerPhoneCall *call)
 	}else if (m_videoModeChoose == 1) //screen-share
 	{
 		if (call->m_VideoChannelID>=0){
-			video_stream_stop(call->m_VideoChannelID, m_desktopCaptureId);
+			video_stream_stop(call->m_VideoChannelID, call->m_desktopShareDeviceId);
 			call->m_VideoChannelID=-1;
-			m_desktopCaptureId = -1;
 		}
 	}
 	
@@ -393,6 +392,8 @@ void ServiceCore::video_stream_stop(int channelID,int captureID)
 
 	}else if(m_videoModeChoose == 1) //screen-share
 	{
+		ECMedia_disconnect_desktop_captureDevice(channelID);
+		ECMedia_stop_desktop_capture(captureID);		
 		ECMedia_release_desktop_capture(captureID);
 	}
 
@@ -850,6 +851,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 				//}
 			}
 
+
 			call->current_params.video_codec = rtp_profile_get_payload(call->video_profile, used_pt);
 			PayloadType *p=call->current_params.video_codec;
 
@@ -991,6 +993,8 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 				{
 					PrintConsole("Error: ECMedia_set_receive_codec_video() fail!");
 				}
+
+				ECMedia_set_video_rtp_keepalive(call->m_VideoChannelID, true, 10, codec_params.plType);
 #ifdef WIN32 //for ulpfec debug
 				memset(codec_params.plName, 0, cloopenwebrtc::kPayloadNameSize);
 				memcpy(codec_params.plName, "red", 3);
@@ -1268,7 +1272,6 @@ int ServiceCore::startVideoDesktopCapture(SerPhoneCall *call)
 		{
 			if (ECMedia_select_screen(call->m_desktopShareDeviceId, m_pScreenInfo[0]))
 			{
-				ECMedia_stop_desktop_capture(call->m_desktopShareDeviceId);
 				ECMedia_connect_desktop_captureDevice(call->m_desktopShareDeviceId, call->m_VideoChannelID);
 				ECMedia_start_desktop_capture(call->m_desktopShareDeviceId, 15);
 				if (localVideoWindow) {
@@ -1279,7 +1282,6 @@ int ServiceCore::startVideoDesktopCapture(SerPhoneCall *call)
 		{
 			if (ECMedia_select_window(call->m_desktopShareDeviceId, m_pWindowInfo[0].id))
 			{
-				ECMedia_stop_desktop_capture(call->m_desktopShareDeviceId);
 				ECMedia_connect_desktop_captureDevice(call->m_desktopShareDeviceId, call->m_VideoChannelID);
 				ECMedia_start_desktop_capture(call->m_desktopShareDeviceId, 15);
 				if (localVideoWindow) {

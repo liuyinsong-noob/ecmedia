@@ -622,7 +622,6 @@ ServiceCore::ServiceCore()
 	tmmbrEnabled = false;
 #endif
 
-	m_desktopCaptureId = -1;
 	m_pScreenInfo = NULL;
 	m_pWindowInfo = NULL;
 #if defined __APPLE__ || defined WEBRTC_ANDROID

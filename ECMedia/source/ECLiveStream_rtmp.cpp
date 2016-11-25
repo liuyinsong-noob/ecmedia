@@ -244,12 +244,19 @@ namespace cloopenwebrtc {
 		}
 		CameraInfo *camera = cameras_[push_camera_index_];
 		int ret = capture->AllocateCaptureDevice(camera->id, sizeof(camera->id), capture_id_);
+
+		RotateCapturedFrame tr;
+		ret = capture->GetOrientation(camera->id, tr);
+		capture->SetRotateCapturedFrames(capture_id_, tr);
+
 		CaptureCapability cap;
 		cap.height = push_video_height_;
 		cap.width = push_video_width_;
 		cap.maxFPS = push_video_fps_;
 		ret = capture->StartCapture(capture_id_, cap);
 		ret = capture->ConnectCaptureDevice(capture_id_, video_channel_);
+		
+
 
 #ifdef WIN32
 		ViERender* render = ViERender::GetInterface(vie_);

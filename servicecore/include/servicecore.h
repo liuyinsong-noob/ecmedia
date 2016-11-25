@@ -783,7 +783,6 @@ public:
 
 	ScreenID		*m_pScreenInfo;
 	WindowShare		*m_pWindowInfo;
-	int m_desktopCaptureId;
 
 	int m_maxFPS;
 	int m_camerRotate;
