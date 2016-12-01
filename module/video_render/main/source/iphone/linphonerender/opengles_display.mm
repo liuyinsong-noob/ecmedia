@@ -26,6 +26,14 @@
 #include <pthread.h>
 
 #include "trace.h"
+
+//#define DEBUG_OPENGLES_DISPLAY
+
+#if DEBUG_OPENGLES_DISPLAY
+const char *g_opengles_display = NULL;
+FILE *g_file_opengles_display = NULL;
+#endif
+
 using namespace cloopenwebrtc;
 
 enum ImageType {
@@ -155,7 +163,12 @@ void ogl_display_init(struct opengles_display* gldisp, int width, int height) {
 
 	gldisp->backingWidth = width;
 	gldisp->backingHeight = height;
-
+#if DEBUG_OPENGLES_DISPLAY
+    if (g_opengles_display) {
+        g_file_opengles_display = fopen(g_opengles_display, "wb");
+    }
+#endif
+    
 	if (gldisp->glResourcesInitialized)
 		return;
 
@@ -205,7 +218,13 @@ void ogl_display_uninit(struct opengles_display* gldisp, bool freeGLresources) {
         }
 		GL_OPERATION(glDeleteProgram(gldisp->program));
 	}
-
+#if DEBUG_OPENGLES_DISPLAY
+    if (g_file_opengles_display) {
+        fflush(g_file_opengles_display);
+        fclose(g_file_opengles_display);
+    }
+#endif
+    
 	gldisp->glResourcesInitialized = false;
 }
 
@@ -383,13 +402,19 @@ static void ogl_display_render_type(struct opengles_display* gldisp, enum ImageT
     GL_OPERATION(glUniform1f(gldisp->uniforms[UNIFORM_ROTATION], rad))
     
     GL_OPERATION(glActiveTexture(GL_TEXTURE0))
+    GL_OPERATION(glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST))
 	GL_OPERATION(glBindTexture(GL_TEXTURE_2D, gldisp->textures[type][Y]))
+    GL_OPERATION(glGenerateMipmap(GL_TEXTURE_2D))
 	GL_OPERATION(glUniform1i(gldisp->uniforms[UNIFORM_TEXTURE_Y], 0))
     GL_OPERATION(glActiveTexture(GL_TEXTURE1))
+    GL_OPERATION(glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST))
 	GL_OPERATION(glBindTexture(GL_TEXTURE_2D, gldisp->textures[type][U]))
+    GL_OPERATION(glGenerateMipmap(GL_TEXTURE_2D))
 	GL_OPERATION(glUniform1i(gldisp->uniforms[UNIFORM_TEXTURE_U], 1))
     GL_OPERATION(glActiveTexture(GL_TEXTURE2))
+    GL_OPERATION(glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST))
 	GL_OPERATION(glBindTexture(GL_TEXTURE_2D, gldisp->textures[type][V]))
+    GL_OPERATION(glGenerateMipmap(GL_TEXTURE_2D))
 	GL_OPERATION(glUniform1i(gldisp->uniforms[UNIFORM_TEXTURE_V], 2))
     
     //NSLog(@"jiazyjiazy squareVertices[0]=%f,squareVertices[1]=%f,squareVertices[2]=%f,squareVertices[3]=%f,squareVertices[4]=%f,squareVertices[5]=%f,squareVertices[6]=%f,squareVertices[7]=%f, gldisp->backingWidth=%d, gldisp->backingHeight=%d, screenW=%d, screenH=%d",squareVertices[0],squareVertices[1],squareVertices[2],squareVertices[3],squareVertices[4],squareVertices[5],squareVertices[6],squareVertices[7], gldisp->backingWidth, gldisp->backingHeight,screenW,screenH);
@@ -417,19 +442,25 @@ static void check_GL_errors(const char* context) {
         switch(error)
         {
             case GL_INVALID_ENUM:
+                printf("[%2d]GL error: '%s' -> GL_INVALID_ENUM\n", maxIterations, context);
                 WEBRTC_TRACE(kTraceInfo, kTraceVideoRenderer, 0, "[%2d]GL error: '%s' -> GL_INVALID_ENUM\n", maxIterations, context); break;
             case GL_INVALID_VALUE:
+                printf("[%2d]GL error: '%s' -> GL_INVALID_VALUE\n", maxIterations, context);
                 WEBRTC_TRACE(kTraceInfo, kTraceVideoRenderer, 0, "[%2d]GL error: '%s' -> GL_INVALID_VALUE\n", maxIterations, context); break;
             case GL_INVALID_OPERATION:
+                printf("[%2d]GL error: '%s' -> GL_INVALID_OPERATION\n", maxIterations, context);
                 WEBRTC_TRACE(kTraceInfo, kTraceVideoRenderer, 0, "[%2d]GL error: '%s' -> GL_INVALID_OPERATION\n", maxIterations, context); break;
             case GL_OUT_OF_MEMORY:
+                printf("[%2d]GL error: '%s' -> GL_OUT_OF_MEMORY\n", maxIterations, context);
                 WEBRTC_TRACE(kTraceInfo, kTraceVideoRenderer, 0, "[%2d]GL error: '%s' -> GL_OUT_OF_MEMORY\n", maxIterations, context); break;
             case GL_INVALID_FRAMEBUFFER_OPERATION:
+                printf("[%2d]GL error: '%s' -> GL_INVALID_FRAMEBUFFER_OPERATION\n", maxIterations, context);
                 WEBRTC_TRACE(kTraceInfo, kTraceVideoRenderer, 0, "[%2d]GL error: '%s' -> GL_INVALID_FRAMEBUFFER_OPERATION\n", maxIterations, context); break;
             default:
+                printf("[%2d]GL error: '%s' -> %x\n", maxIterations, context, error);
                 WEBRTC_TRACE(kTraceInfo, kTraceVideoRenderer, 0, "[%2d]GL error: '%s' -> %x\n", maxIterations, context, error);
         }
-		  maxIterations--;
+        maxIterations--;
     }
 }
 
@@ -495,33 +526,41 @@ static void load_orthographic_matrix(float left, float right, float bottom, floa
 }
 
 static void allocate_gl_textures(struct opengles_display* gldisp, int w, int h, enum ImageType type) {
-	GL_OPERATION(glActiveTexture(GL_TEXTURE0))
-	GL_OPERATION(glBindTexture(GL_TEXTURE_2D, gldisp->textures[type][Y]))
-	GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR))
-	GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR))
-	GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE))
-	GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE))
-	GL_OPERATION(glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, w, h, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, 0))
-
-	GL_OPERATION(glActiveTexture(GL_TEXTURE1))
-	GL_OPERATION(glBindTexture(GL_TEXTURE_2D, gldisp->textures[type][U]))
-	GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR))
-	GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR))
-	GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE))
-	GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE))
-	GL_OPERATION(glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, w >> 1, h >> 1, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, 0))
-
-	GL_OPERATION(glActiveTexture(GL_TEXTURE2))
-	GL_OPERATION(glBindTexture(GL_TEXTURE_2D, gldisp->textures[type][V]))
-	GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR))
-	GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR))
-	GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE))
-	GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE))
-	GL_OPERATION(glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, w >> 1, h >> 1, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, 0))
-
-	gldisp->allocatedTexturesSize[type].width =  w;
-	gldisp->allocatedTexturesSize[type].height =  h;
-
+    GL_OPERATION(glActiveTexture(GL_TEXTURE0))
+    GL_OPERATION(glBindTexture(GL_TEXTURE_2D, gldisp->textures[type][Y]))
+    GL_OPERATION(glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST))
+    GL_OPERATION(glGenerateMipmap(GL_TEXTURE_2D))
+    GL_OPERATION(glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, w, h, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, 0))
+    GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR))
+    GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR))
+    GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT))
+    GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT))
+    
+    
+    GL_OPERATION(glActiveTexture(GL_TEXTURE1))
+    GL_OPERATION(glBindTexture(GL_TEXTURE_2D, gldisp->textures[type][U]))
+    GL_OPERATION(glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST))
+    GL_OPERATION(glGenerateMipmap(GL_TEXTURE_2D))
+    GL_OPERATION(glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, w >> 1, h >> 1, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, 0))
+    GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR))
+    GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR))
+    GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT))
+    GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT))
+ 
+    
+    GL_OPERATION(glActiveTexture(GL_TEXTURE2))
+    GL_OPERATION(glBindTexture(GL_TEXTURE_2D, gldisp->textures[type][V]))
+    GL_OPERATION(glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST))
+    GL_OPERATION(glGenerateMipmap(GL_TEXTURE_2D))
+    GL_OPERATION(glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, w >> 1, h >> 1, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, 0))
+    GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR))
+    GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR))
+    GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT))
+    GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT))
+    
+    gldisp->allocatedTexturesSize[type].width =  w;
+    gldisp->allocatedTexturesSize[type].height =  h;
+    
     WEBRTC_TRACE(kTraceInfo, kTraceVideoRenderer, 0, "%s: allocated new textures[%d] (%d x %d)\n", __FUNCTION__, type, w, h);
 }
 
@@ -537,6 +576,7 @@ static unsigned int align_on_power_of_2(unsigned int value) {
 }
 
 static bool update_textures_with_yuv(struct opengles_display* gldisp, enum ImageType type) {
+    
 	unsigned int aligned_yuv_w, aligned_yuv_h;
 	MSPicture yuvbuf;
     
@@ -559,7 +599,7 @@ static bool update_textures_with_yuv(struct opengles_display* gldisp, enum Image
 
 	/* upload Y plane */
 	GL_OPERATION(glActiveTexture(GL_TEXTURE0))
-	GL_OPERATION(glBindTexture(GL_TEXTURE_2D, gldisp->textures[type][Y]))
+
 	GL_OPERATION(glTexSubImage2D(GL_TEXTURE_2D, 0,
 			0, 0, yuvbuf.w, yuvbuf.h,
 			GL_LUMINANCE, GL_UNSIGNED_BYTE, yuvbuf.planes[Y]))
@@ -568,6 +608,7 @@ static bool update_textures_with_yuv(struct opengles_display* gldisp, enum Image
 	/* upload U plane */
 	GL_OPERATION(glActiveTexture(GL_TEXTURE1))
 	GL_OPERATION(glBindTexture(GL_TEXTURE_2D, gldisp->textures[type][U]))
+
 	GL_OPERATION(glTexSubImage2D(GL_TEXTURE_2D, 0,
 			0, 0, yuvbuf.w >> 1, yuvbuf.h >> 1,
 			GL_LUMINANCE, GL_UNSIGNED_BYTE, yuvbuf.planes[U]))
@@ -607,5 +648,12 @@ static void yuv_buf_init(MSPicture *buf, int w, int h, uint8_t *ptr){
 	buf->strides[1]=w/2;
 	buf->strides[2]=buf->strides[1];
 	buf->strides[3]=0;
+#if DEBUG_OPENGLES_DISPLAY
+    if (g_file_opengles_display) {
+        fwrite(ptr, ysize+usize+usize, 1, g_file_opengles_display);
+        fflush(g_file_opengles_display);
+    }
+#endif
+    
 }
 
