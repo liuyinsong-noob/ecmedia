@@ -3740,6 +3740,14 @@ int ECMedia_playLiveStream(void *handle, const char * url, void *renderView, onL
 
 }
 
+void ECMedia_SetLiveVideoSource(void *handle,int video_source)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+	RTMPLiveSession *p = (RTMPLiveSession*)handle;
+	p->SetVideoSource((VIDEO_SOURCE)video_source);
+
+}
+
  int ECMedia_pushLiveStream(void *handle, const char *url, void *localView)
  {
 	 PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);

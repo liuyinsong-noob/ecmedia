@@ -101,6 +101,7 @@ private:
 
     DesktopShareType                share_capture_type_;              
     MouseCursorMonitor*             screen_mouse_cursor_;
+	MouseCursorMonitor*				screen_mouse_cursor_for_windows_;
     ScreenCapturer*                 screen_capturer_;  
     WindowCapturer*                 windows_capture_;
 

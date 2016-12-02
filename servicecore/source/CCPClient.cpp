@@ -3770,6 +3770,14 @@ extern "C" int selectCameraLiveStream(void *handle, int index, int width, int he
 	return g_pSerCore->liveStream_SelectCamera(handle, index, width, height, fps);
 }
 
+extern "C" void setLiveVideoSource(void *handle, int video_source)
+{
+	if (!g_pSerCore)
+		return ;
+	 return g_pSerCore->setLiveVideoSource(handle, video_source);
+	 
+}
+
 extern "C" int startSendRtpPacket(int &channel, const char *ip, int rtp_port)
 {
 	if (!g_pSerCore) {

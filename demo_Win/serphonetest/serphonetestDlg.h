@@ -192,4 +192,12 @@ public:
 
 	long long m_RTTSender;
 	CComboBox m_videoProtectionMode;
+	afx_msg void OnCbnSelchangeVideoSource();
+	afx_msg void OnBnClickedPlayStream();
+	afx_msg void OnBnClickedStopLive();
+	afx_msg void OnEnChangeLiveUrl();
+	afx_msg void OnBnClickedPushStream();
+	CString m_live_url;
+
+	CComboBox m_video_source;
 };

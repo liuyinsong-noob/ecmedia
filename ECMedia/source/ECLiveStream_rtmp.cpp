@@ -37,6 +37,7 @@
 #include "webrtc_libyuv.h"
 #include "vie_file_impl.h"
 #include "vie_desktop_share_impl.h"
+#include "vie_image_process_impl.h"
 #endif
 
 #include "clock.h"
@@ -77,9 +78,12 @@ namespace cloopenwebrtc {
 	, capture_id_(-1)
 	, desktop_capture_id_(-1)
 	, live_mode_(MODE_LIVE_UNKNOW)
+	, video_source_(VIDEO_SOURCE_CAMERA)
 	, local_view_(NULL)
 	, clock_(Clock::GetRealTimeClock())
-	, push_video_bitrates_(1000)
+	, push_audio_(true)
+	, push_video_(true)
+	, push_video_bitrates_(2000)
 	, push_video_width_(640)
 	, push_video_height_(480)
 	, push_video_fps_(15)
@@ -187,30 +191,82 @@ namespace cloopenwebrtc {
 
 	}
 
+	int RTMPLiveSession::startCapture()
+	{
+		if (video_source_ == VIDEO_SOURCE_DESKTOP)
+			startDesktopCapture();
+		else
+			startCameraCapture();
+		return 0;
+	}
+
+	int RTMPLiveSession::stopCapture()
+	{
+		if (video_source_ == VIDEO_SOURCE_DESKTOP) {
+			ViEDesktopShare *desktopShare = ViEDesktopShare::GetInterface(vie_);
+#ifdef _WIN32
+			ViERender* render = ViERender::GetInterface(vie_);
+			render = ViERender::GetInterface(vie_);
+			render->StopRender(desktop_capture_id_);
+			render->RemoveRenderer(desktop_capture_id_);
+#endif
+			desktopShare->DisConnectDesktopCaptureDevice(video_channel_);
+			desktopShare->StopDesktopShareCapture(desktop_capture_id_);
+			desktopShare->ReleaseDesktopShareCapturer(desktop_capture_id_);
+			desktopShare->Release();
+			desktop_capture_id_ = -1;
+		}
+		else {
+#ifdef _WIN32
+			ViERender *render = ViERender::GetInterface(vie_);
+			render->StopRender(capture_id_);
+			render->RemoveRenderer(capture_id_);
+			render->Release();
+#endif
+			ViECapture *capture = ViECapture::GetInterface(vie_);
+			capture->DisconnectCaptureDevice(video_channel_);
+			capture->StopCapture(capture_id_);
+			capture->ReleaseCaptureDevice(capture_id_);
+			capture->Release();
+			capture_id_ = -1;
+
+		}
+		return 0;
+	}
+
 	int RTMPLiveSession::startDesktopCapture()
 	{
 		ViEDesktopShare *desktopShare = ViEDesktopShare::GetInterface(vie_);
 		if (desktop_capture_id_ >= 0) {
 			desktopShare->StopDesktopShareCapture(desktop_capture_id_);
 		}
-		int ret = desktopShare->AllocateDesktopShareCapturer(desktop_capture_id_, DesktopShareType::ShareScreen);	
-		WindowList windows;
-		desktopShare->GetWindowList(desktop_capture_id_, windows);
-		ScreenList screens;
-		desktopShare->GetScreenList(desktop_capture_id_, screens);
 
-		desktopShare->SelectScreen(desktop_capture_id_, screens[0]);
+		DesktopShareType mode = DesktopShareType::ShareScreen;
+		int ret = desktopShare->AllocateDesktopShareCapturer(desktop_capture_id_, mode);	
 
+
+		if (mode == ShareWindow) {
+			WindowList windows;
+			desktopShare->GetWindowList(desktop_capture_id_, windows);
+			
+			for (int i = 0; i < windows.size();i++) {
+				if( windows[i].title.find("cdr")!= std::string::npos )
+					desktopShare->SelectWindow(desktop_capture_id_, windows[i].id);
+			}
+		}
+		else if (mode == ShareScreen) {
+			ScreenList screens;
+			desktopShare->GetScreenList(desktop_capture_id_, screens);
+			desktopShare->SelectScreen(desktop_capture_id_, screens[0]);
+		}
 		int width =0 , heigth = 0;
 		desktopShare->GetDesktopShareCaptureRect(desktop_capture_id_, push_video_width_, push_video_height_);
+		//push_video_width_ = 640;// push_video_width_ / 4 * 4;
+		//push_video_height_ = 480;//;push_video_height_ / 4 * 4;
+		push_video_bitrates_ = push_video_width_ * push_video_height_ * 0.07 *15 /1000;
+		PrintConsole("desktop share width is %d heigth is %d \n", push_video_width_, push_video_height_);
 		RegisterReceiveVideoCodec("H264", 90000);
-		int numofscreen = desktopShare->NumberOfScreen(desktop_capture_id_);
-		int numofwindow = desktopShare->NumberOfWindow(desktop_capture_id_);
-
 		
-		//desktopShare->SelectWindow(desktop_capture_id_, windows[15].id);
-
-
 		ret = desktopShare->StartDesktopShareCapture(desktop_capture_id_, 15);
 		ret = desktopShare->ConnectDesktopCaptureDevice(desktop_capture_id_, video_channel_);
 
@@ -223,6 +279,7 @@ namespace cloopenwebrtc {
 		}
 		ret = render->StartRender(desktop_capture_id_);
 		render->Release();
+		
 #else
 		//ret = desktopShare->SetLocalVideoWindow(desktop_capture_id_, local_view_);
 #endif
@@ -255,8 +312,6 @@ namespace cloopenwebrtc {
 		cap.maxFPS = push_video_fps_;
 		ret = capture->StartCapture(capture_id_, cap);
 		ret = capture->ConnectCaptureDevice(capture_id_, video_channel_);
-		
-
 
 #ifdef WIN32
 		ViERender* render = ViERender::GetInterface(vie_);
@@ -730,6 +785,8 @@ namespace cloopenwebrtc {
 	
 	int  RTMPLiveSession::Send_AAC_SPEC()
 	{
+		if (!push_audio_)
+			return 0;
 
 		RTMPPacket * packet = new RTMPPacket;
 		memset(packet, 0, sizeof(RTMPPacket));
@@ -939,24 +996,28 @@ namespace cloopenwebrtc {
 		pushnetworkThread_ = ThreadWrapper::CreateThread(RTMPLiveSession::PushNetworkThreadRun,
 			this,
 			kHighestPriority,
-			"RtmpLiveSession");
+			"RtmpPushThead");
 		if (pushnetworkThread_ == NULL) {
 			StopPush();
 			PrintConsole("[RTMP ERROR] %s CreateThread failed\n", __FUNCTION__);
 			return -1;
 		}
-		local_view_ = localview;
-		if (capture_id_ < 0)
-			startCameraCapture();
 
-		ViEBase *vbase = ViEBase::GetInterface(vie_);
-		int ret = vbase->StartSend(video_channel_);
-		vbase->Release();
+		if (push_video_) {
+			local_view_ = localview;
+			startCapture();
 
-		VoEBase *base = VoEBase::GetInterface(voe_);
-		ret = base->StartRecord();
-		ret = base->StartSend(audio_channel_);
-		base->Release();
+			ViEBase *vbase = ViEBase::GetInterface(vie_);
+			vbase->StartSend(video_channel_);
+			vbase->Release();
+		}
+
+		if (push_audio_) {
+			VoEBase *base = VoEBase::GetInterface(voe_);
+			base->StartRecord();
+			base->StartSend(audio_channel_);
+			base->Release();
+		}
 
 		unsigned int thread_id = 0;
 		pushnetworkThread_->Start(thread_id);
@@ -979,7 +1040,7 @@ namespace cloopenwebrtc {
         playnetworkThread_ = ThreadWrapper::CreateThread(RTMPLiveSession::PlayNetworkThreadRun,
                                                      this,
                                                      kHighestPriority,
-                                                     "RtmpLiveSession");
+                                                     "PrtmpPlayThread");
 		if (playnetworkThread_ == NULL) {
 			StopPlay();
 			PrintConsole("[RTMP ERROR] %s CreateThread failed\n", __FUNCTION__);
@@ -1058,25 +1119,11 @@ namespace cloopenwebrtc {
 		RTMPSockBuf_Close(&rtmph_->m_sb);
 		rtmph_->m_sb.sb_socket = -1;
 
-#ifdef _WIN32
-		ViERender *render = ViERender::GetInterface(vie_);
-		render->StopRender(capture_id_);
-		render->RemoveRenderer(capture_id_);
-		render->Release();
-#endif
-
-		ViECapture *capture = ViECapture::GetInterface(vie_);
-		capture->DisconnectCaptureDevice(video_channel_);
-		capture->StopCapture(capture_id_);
-		capture->ReleaseCaptureDevice(capture_id_);
-		capture->Release();
-		capture_id_ = -1;
+		stopCapture();
 
 		ViEBase *vbase = ViEBase::GetInterface(vie_);
 		vbase->StopSend(video_channel_);
 		vbase->Release();
-
-
 
 		VoEBase *base = VoEBase::GetInterface(voe_);
 		base->StopRecord();
@@ -1091,5 +1138,14 @@ namespace cloopenwebrtc {
 			rtmph_ = NULL;
 		}
 
+	}
+	void RTMPLiveSession::SetPushContent(bool push_audio,bool push_video)
+	{
+		push_video_ = push_video;
+		push_audio_ = push_audio;
+	}
+	void RTMPLiveSession::SetVideoSource(VIDEO_SOURCE video_source)
+	{
+		video_source_ = video_source;
 	}
 }

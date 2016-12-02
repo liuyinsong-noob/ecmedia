@@ -35,6 +35,9 @@ VieDesktopCapturer::VieDesktopCapturer(int id,int engine_id):
 #ifdef _WIN32
     screen_mouse_cursor_(MouseCursorMonitor::CreateForScreen(DesktopCaptureOptions::CreateDefault(),
     cloopenwebrtc::kFullDesktopScreenId)),
+	screen_mouse_cursor_for_windows_(MouseCursorMonitor::CreateForScreen(DesktopCaptureOptions::CreateDefault(),
+		cloopenwebrtc::kFullDesktopScreenId)),
+
 #else
     screen_mouse_cursor_(NULL),
 #endif
@@ -180,10 +183,12 @@ int VieDesktopCapturer::SelectCapture(const DesktopShareType capture_type)
     share_capture_type_ = capture_type;
     switch(capture_type)
     {
-    case ShareScreen:
+	case ShareScreen:
+		CreateWindowCapture();
         ret = CreateDesktopCapture();
         break;
     case ShareWindow:
+		CreateDesktopCapture();
         ret = CreateWindowCapture();
         break;
     default:
@@ -204,7 +209,7 @@ bool VieDesktopCapturer::GetScreenList( ScreenList& screens )
     }
 
     ScreenCapturer::ScreenList screen_list;
-    screen_capturer_->GetScreenList(&screen_list);
+	screen_capturer_->GetScreenList(&screen_list);
 
     CopyScreenList(screen_list,screens);
     return true;
@@ -221,6 +226,7 @@ bool VieDesktopCapturer::SelectScreen( ScreenId id )
             -1, "SelectScreen failed, screen_capturer not exist ");
         return false;
     }
+	share_capture_type_ = ShareScreen;
     return screen_capturer_->SelectScreen(id);
 #endif
     return false;
@@ -229,14 +235,14 @@ bool VieDesktopCapturer::SelectScreen( ScreenId id )
 bool VieDesktopCapturer::GetWindowList( WindowList& windows )
 {
 #ifndef __APPLE__
-    if(windows_capture_ == NULL)
+	if(windows_capture_ == NULL)
     {
         WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
             -1, "%s: windows_capture_ not exist ", __FUNCTION__);
         return false;
     }
     WindowCapturer::WindowList window_list;
-    windows_capture_->GetWindowList(&window_list);
+	windows_capture_->GetWindowList(&window_list);
 
     CopyWindowsList(window_list,windows);
     return true;
@@ -265,6 +271,7 @@ bool VieDesktopCapturer::SelectWindow( WindowId id )
 			-1,"BringSelectedWindowToFront err ");
 		return false;
 	}
+	share_capture_type_ = ShareWindow;
 	return true;
 #endif
     return false;
@@ -413,7 +420,7 @@ int VieDesktopCapturer::CreateDesktopCapture()
 int VieDesktopCapturer::CreateWindowCapture()
 {
 #ifndef __APPLE__
-    if(screen_mouse_cursor_ == NULL)
+    if(screen_mouse_cursor_for_windows_ == NULL)
     {
         WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
             -1,"CreateWindowCapture  get screen_mouse_cursor_  ERR ");
@@ -426,7 +433,7 @@ int VieDesktopCapturer::CreateWindowCapture()
             -1,"CroppingWindowCapturer::Create ERR ");
         return -1;
     }
-    window_mouse_blender_.reset(new DesktopAndCursorComposer(windows_capture_,screen_mouse_cursor_));
+    window_mouse_blender_.reset(new DesktopAndCursorComposer(windows_capture_, screen_mouse_cursor_for_windows_));
     if (window_mouse_blender_.get() == NULL )
     {
         WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
@@ -482,6 +489,9 @@ bool VieDesktopCapturer::ViEDesktopCaptureThreadFunction(void* obj)
 }
 bool VieDesktopCapturer::ViEDesktopCaptureProcess()
 {
+	if (!shared_capture_enable_)
+		return false;
+
     CriticalSectionScoped cs(wait_time_cs_.get());
     if (desktop_capture_event_.Wait(thread_wait_time_ms_) != kEventError) 
     {   

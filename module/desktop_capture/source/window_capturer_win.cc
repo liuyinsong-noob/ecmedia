@@ -219,7 +219,6 @@ void WindowCapturerWin::Capture(const DesktopRegion& region) {
     callback_->OnCaptureCompleted(frame, kCapture_Window_IsIconic);
     return;
   }
-
   DesktopRect original_rect;
   DesktopRect cropped_rect;
   if (!GetCroppedWindowRect(window_, &cropped_rect, &original_rect)) {
@@ -228,7 +227,7 @@ void WindowCapturerWin::Capture(const DesktopRegion& region) {
     callback_->OnCaptureCompleted(NULL, kCapture_NoCaptureImage);
     return;
   }
-
+  //::SetWindowPos(window_, HWND_TOPMOST, 0, 0, original_rect.width(), original_rect.height(), SWP_NOMOVE);
   //Make sure the width and height of the frame are even numbers.
   //If you don't do this, it will cause the I420FRMAE to handle the crash.
   int width = cropped_rect.width();

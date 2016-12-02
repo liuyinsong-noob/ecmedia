@@ -600,6 +600,12 @@ ECMEDIA_API void*ECMedia_createLiveStream(int type);
 返回值   : 返回值 0：成功  -1：初始化资源失败 -2：已经在直播或推流  -3：连接失败  -4：建立流失败
 */
 ECMEDIA_API int  ECMedia_playLiveStream(void *handle, const char * url, void *renderView, onLiveStreamVideoResolution callback);
+/*
+功能     : 设置直播推流的视频来源
+参数     : [IN]  handle		： 句柄
+[IN]  video_source			：视频来源 0 摄像头 1 是桌面
+*/
+ECMEDIA_API void ECMedia_SetLiveVideoSource(void *handle, int video_source);
 
 /*
 功能     : 开始直播推流

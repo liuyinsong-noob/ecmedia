@@ -86,6 +86,11 @@ namespace cloopenwebrtc {
 		MODE_LIVE_PLAY,
 		MODE_LIVE_PUSH,
 	} ;
+
+	enum VIDEO_SOURCE {
+		VIDEO_SOURCE_CAMERA = 0,
+		VIDEO_SOURCE_DESKTOP  
+	};
     class RTMPLiveSession 
 	: public Transport ,
 	  public AudioPacketizationCallback,
@@ -99,8 +104,11 @@ namespace cloopenwebrtc {
         void StopPlay();
 		void StopPush();
 
+		void SetPushContent(bool push_audio, bool push_video);
+		void SetVideoSource(VIDEO_SOURCE video_source);
 		int setVideoProfile(int index, CameraCapability cam, int bitRates);
 		void setNetworkStatusCallBack(onLiveStreamNetworkStatusCallBack callbck);
+
 
         static bool PlayNetworkThreadRun(void *pThis);
         bool PlayNetworkThread();
@@ -146,6 +154,8 @@ namespace cloopenwebrtc {
 		ThreadWrapper* pushnetworkThread_;
         void HandleAuidoPacket(RTMPPacket *packet);
         void HandleVideoPacket(RTMPPacket *packet);
+		int startCapture();
+		int stopCapture();
         
 	public:
 		int video_channel_;
@@ -154,6 +164,7 @@ namespace cloopenwebrtc {
 	private:	
         int audio_channel_;
 		LIVE_MODE live_mode_;
+		VIDEO_SOURCE video_source_;
 
         uint16_t audio_rtp_seq_;
         uint16_t video_rtp_seq_;
@@ -185,6 +196,9 @@ namespace cloopenwebrtc {
 		Clock*	clock_;
 		CriticalSectionWrapper* rtmp_lock_;
 		std::string stream_url_;
+
+		bool push_video_;
+		bool push_audio_;
 
 		int push_video_bitrates_;
 		int push_video_width_;

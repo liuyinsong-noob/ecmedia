@@ -21,7 +21,7 @@ VPMFramePreprocessor::VPMFramePreprocessor()
   spatial_resampler_ = new VPMSimpleSpatialResampler();
   ca_ = new VPMContentAnalysis(true);
   vd_ = new VPMVideoDecimator();
-  EnableDenoising(true);
+  EnableDenoising(false);
   denoised_frame_toggle_ = 0;
 }
 

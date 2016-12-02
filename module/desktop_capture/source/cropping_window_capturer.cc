@@ -32,7 +32,8 @@ void CroppingWindowCapturer::Start(DesktopCapturer::Callback* callback) {
 }
 
 void CroppingWindowCapturer::Capture(const DesktopRegion& region) {
-  if (ShouldUseScreenCapturer()) {
+  if(false) {
+  //if (ShouldUseScreenCapturer()) {  //comment by xzq 
     if (!screen_capturer_.get()) {
       screen_capturer_.reset(ScreenCapturer::Create(options_));
       if (excluded_window_) {

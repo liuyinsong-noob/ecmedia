@@ -5049,6 +5049,11 @@ int ServiceCore::pushLiveStream(void *handle, const char * url, void *renderView
 {
 	return ECMedia_pushLiveStream(handle, url, renderView);
 }
+
+void ServiceCore::setLiveVideoSource(void *handle, int video_source)
+{
+	return ECMedia_SetLiveVideoSource(handle,video_source);
+}
 void ServiceCore::stopLiveStream(void *handle)
 {
 	return ECMedia_stopLiveStream(handle);

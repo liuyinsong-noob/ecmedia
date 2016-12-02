@@ -967,6 +967,7 @@ public:
 //sean add begin 20140705 video conference
 public:
 	void *createLiveStream();
+	void setLiveVideoSource(void *handle,int video_source);
 	int playLiveStream(void *handle, const char * url, void *renderView);
 	int pushLiveStream(void *handle, const char * url, void *renderView);
 	void stopLiveStream(void *handle);

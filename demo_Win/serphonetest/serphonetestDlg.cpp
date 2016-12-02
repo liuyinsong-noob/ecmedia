@@ -320,6 +320,7 @@ CserphonetestDlg::CserphonetestDlg(CWnd* pParent /*=NULL*/)
 	, m_transfercall(_T(""))
 	, m_messagetxt(_T(""))
 	, m_reveiver(_T(""))
+	, m_live_url(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 	m_sipID = _T("1003");
@@ -425,6 +426,8 @@ void CserphonetestDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_VIDEO_MODE, m_videoModeCtrl);
 	DDX_Text(pDX, IDC_STATIC_RTT_SENDER, m_RTTSender);
 	DDX_Control(pDX, IDC_COMBO_VIDEO_PROTECTION_MODE, m_videoProtectionMode);
+	DDX_Text(pDX, IDC_LIVE_URL, m_live_url);
+	DDX_Control(pDX, IDC_VIDEO_SOURCE, m_video_source);
 }
 
 BEGIN_MESSAGE_MAP(CserphonetestDlg, CDialogEx)
@@ -471,6 +474,12 @@ ON_BN_CLICKED(IDC_BUTTON28, &CserphonetestDlg::OnBnClickedButton28)
 ON_BN_CLICKED(IDC_BUTTON29, &CserphonetestDlg::OnBnClickedButton29)
 ON_WM_LBUTTONDBLCLK()
 ON_NOTIFY(EN_MSGFILTER, IDC_RICHEDIT21, &CserphonetestDlg::OnEnMsgfilterRichedit21)
+ON_CBN_SELCHANGE(IDC_VIDEO_SOURCE, &CserphonetestDlg::OnCbnSelchangeVideoSource)
+ON_BN_CLICKED(IDC_PLAY_STREAM, &CserphonetestDlg::OnBnClickedPlayStream)
+ON_BN_CLICKED(IDC_STOP_LIVE, &CserphonetestDlg::OnBnClickedStopLive)
+ON_EN_CHANGE(IDC_LIVE_URL, &CserphonetestDlg::OnEnChangeLiveUrl)
+
+ON_BN_CLICKED(IDC_PUSH_STREAM, &CserphonetestDlg::OnBnClickedPushStream)
 END_MESSAGE_MAP()
 
 
@@ -557,7 +566,10 @@ BOOL CserphonetestDlg::OnInitDialog()
 	m_videoProtectionMode.AddString(_T("FEC"));
 	m_videoProtectionMode.AddString(_T("Hybrid"));
 	m_videoProtectionMode.SetCurSel(0);
-	
+
+	m_video_source.AddString(_T("摄像头"));
+	m_video_source.AddString(_T("桌面"));
+	m_video_source.SetCurSel(0);
 
 	CRect rectNormal;
 	CRect rectExpand;
@@ -585,6 +597,7 @@ BOOL CserphonetestDlg::OnInitDialog()
 	USES_CONVERSION;
 	m_MediaServerIP = A2W(serverIP);
 	m_outCallAddr = A2W(sipAcount2);
+	m_live_url = "rtmp://live.yuntongxun.com/live/livestream";
 	m_sipAccountCtrl.AddString(A2W(sipAcount1));
 	m_sipAccountCtrl.AddString(A2W(sipAcount2));
 	m_sipAccountCtrl.SetCurSel(0);
@@ -974,9 +987,7 @@ void CserphonetestDlg::OnBnClickedButton7()
 	//wchar_t *wLog = TransformUTF8ToUnicodeM(log);
 	//wprintf(wLog);
 
-	if (!g_rtmpLiveStreamHandle) {
-		g_rtmpLiveStreamHandle = createLiveStream();
-	}
+
 
 	//setSrtpEnabled(false, true, true, 1, "12345678901234567890123456789012345678901234");
 }
@@ -990,10 +1001,7 @@ void CserphonetestDlg::OnBnClickedButton8()
 	//stopRecordVoip(g_currentCallId);
 
 
-	if (g_rtmpLiveStreamHandle) {
-		CWnd *rcwnd = g_dlg->GetDlgItem(IDC_RICHEDIT21);
-		playLiveStream(g_rtmpLiveStreamHandle, "rtmp://live.yuntongxun.com/live/livestream", rcwnd->GetSafeHwnd());
-	}
+
 	//setSrtpEnabled(false, true, true, 2, "12345678901234567890123456789012345678901234");
 }
 
@@ -1002,9 +1010,7 @@ void CserphonetestDlg::OnBnClickedButton9()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	sendDTMF(g_currentCallId,'3');
-	if (g_rtmpLiveStreamHandle) {
-		stopLiveStream(g_rtmpLiveStreamHandle);
-	}
+
 	//startRecordVoice(g_currentCallId, "audio_record.wav");
 	//setSrtpEnabled(false, true, true, 3, "12345678901234567890123456789012345678901234");
 
@@ -1076,12 +1082,7 @@ void CserphonetestDlg::OnBnClickedButton14()
 
 void CserphonetestDlg::OnBnClickedButton15()
 {
-	if (g_rtmpLiveStreamHandle) {
-		selectCameraLiveStream(g_rtmpLiveStreamHandle, 1, 640, 480, 15);
 
-		CWnd *lcwnd = g_dlg->GetDlgItem(IDC_RICHEDIT21);
-		pushLiveStream(g_rtmpLiveStreamHandle, "rtmp://live.yuntongxun.com/live/demo", lcwnd->GetSafeHwnd());
-	}
 	// TODO: 在此添加控件通知处理程序代码
 	sendDTMF(g_currentCallId,'9');
 }
@@ -1523,4 +1524,74 @@ void CserphonetestDlg::OnEnMsgfilterRichedit21(NMHDR *pNMHDR, LRESULT *pResult)
 	// TODO:  在此添加控件通知处理程序代码
 
 	*pResult = 0;
+}
+
+
+void CserphonetestDlg::OnBnClickedPlayStream()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	if (!g_rtmpLiveStreamHandle) {
+		g_rtmpLiveStreamHandle = createLiveStream();
+	}
+	else
+		stopLiveStream(g_rtmpLiveStreamHandle);
+	this->UpdateData(true);
+
+	CWnd *rcwnd = g_dlg->GetDlgItem(IDC_RICHEDIT21);
+	USES_CONVERSION;
+	char* url = T2A(m_live_url.GetBuffer(0));
+	playLiveStream(g_rtmpLiveStreamHandle, url, rcwnd->GetSafeHwnd());
+
+}
+
+
+
+void CserphonetestDlg::OnCbnSelchangeVideoSource()
+{
+	// TODO: 在此添加控件通知处理程序代码
+}
+
+
+
+
+
+void CserphonetestDlg::OnBnClickedStopLive()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	if (g_rtmpLiveStreamHandle) {
+		stopLiveStream(g_rtmpLiveStreamHandle);
+	}
+}
+
+
+void CserphonetestDlg::OnEnChangeLiveUrl()
+{
+	// TODO:  如果该控件是 RICHEDIT 控件，它将不
+	// 发送此通知，除非重写 CDialogEx::OnInitDialog()
+	// 函数并调用 CRichEditCtrl().SetEventMask()，
+	// 同时将 ENM_CHANGE 标志“或”运算到掩码中。
+
+	// TODO:  在此添加控件通知处理程序代码
+}
+
+
+
+
+void CserphonetestDlg::OnBnClickedPushStream()
+{
+	if (!g_rtmpLiveStreamHandle) {
+		g_rtmpLiveStreamHandle = createLiveStream();
+	}
+	else
+		stopLiveStream(g_rtmpLiveStreamHandle);
+
+	this->UpdateData(true);
+	int i = m_video_source.GetCurSel();
+	setLiveVideoSource(g_rtmpLiveStreamHandle, i);
+	selectCameraLiveStream(g_rtmpLiveStreamHandle, 1, 640, 480, 15);
+	CWnd *rcwnd = g_dlg->GetDlgItem(IDC_RICHEDIT21);
+
+	USES_CONVERSION;
+	char* url = T2A(m_live_url.GetBuffer(0));
+	pushLiveStream(g_rtmpLiveStreamHandle, url, rcwnd->GetSafeHwnd());
 }
