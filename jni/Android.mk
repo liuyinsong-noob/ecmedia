@@ -13,7 +13,6 @@ include $(MY_WEBRTC_ROOT_PATH)/module/osip/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/exosip/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/servicecore/source/Android_video.mk
 include $(MY_WEBRTC_ROOT_PATH)/jni/BuildECMedia.mk
-include $(MY_WEBRTC_ROOT_PATH)/third_party/oRTP/build/android/Android.mk
 
 # build .so
 LOCAL_PATH := $(JNI_PATH)
