@@ -272,7 +272,7 @@ void H264Encoder::InitializeX264Pic(const I420VideoFrame& input_image, x264_pict
 
 	xpic.i_type=X264_TYPE_AUTO;
 	if(frame_type == kKeyFrame) {
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError,
+		WEBRTC_TRACE(cloopenwebrtc::kTraceApiCall,
 			cloopenwebrtc::kTraceVideoCoding,
 			0,
 			"x264_encoder_intra_refresh called.");

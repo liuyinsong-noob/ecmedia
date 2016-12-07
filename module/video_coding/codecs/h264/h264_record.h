@@ -9,6 +9,8 @@ extern "C"
 //#include "libswresample/swresample.h"
 }
 #include "critical_section_wrapper.h"
+#include "clock.h"
+
 using namespace cloopenwebrtc;
 
 class h264_record
@@ -59,9 +61,12 @@ private:
 	int audioFreq_;
 
 	int64_t baseH264TimeStamp_;
-	int64_t lastFrameNum_;
+	int64_t lastVideoFrameNum_;
 	bool  isWrited_;
 	
+	Clock* clock_;
+	int64_t baseAudioTime_;
+	int64_t lastAudioFrameNum_;
 };
 
 #endif

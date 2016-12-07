@@ -1,6 +1,7 @@
 #include "h264_record.h"
 #include "Trace.h"
 #include "h264_util.h"
+#include "clock.h"
 using namespace  cloopenwebrtc;
 
 //FILE *file_test = NULL;
@@ -122,6 +123,9 @@ h264_record::h264_record(void):audioStreamdIndex_(-1)
 	isWrited_ = false;
 	audioFreq_ = 0;
 	_recordVoipCrit = CriticalSectionWrapper::CreateCriticalSection();
+	clock_ = Clock::GetRealTimeClock();
+	baseAudioTime_ = 0;
+	lastAudioFrameNum_ = 0;
 }
 
 h264_record::~h264_record(void)
@@ -244,6 +248,23 @@ int h264_record::write_audio_data(short *data, int len, int freq)
 		pkt.dts = AV_NOPTS_VALUE;
 		pkt.pts = AV_NOPTS_VALUE;
 
+
+		int64_t now_ms = clock_->TimeInMilliseconds();
+		if (baseAudioTime_ == 0) {
+			baseAudioTime_ = now_ms;
+		}
+
+		AVCodecContext *avccxt = pst->codec;
+		float interal_ms = now_ms - baseAudioTime_;
+		float timebase = ((float)avccxt->time_base.num / avccxt->time_base.den);
+		//算出这是第几帧
+		int64_t frames = (float)interal_ms / timebase/1000;
+		if (frames != 0 && frames == lastAudioFrameNum_) {
+			frames++;
+		}
+		pkt.pts = av_rescale_q(frames, pst->codec->time_base, pst->time_base);
+		lastAudioFrameNum_ = frames;
+		
 		/* Write the compressed frame to the media file. */
 		ret = av_interleaved_write_frame(formatCtxt_, &pkt);
 		//av_destruct_packet(&pkt);
@@ -273,13 +294,13 @@ void h264_record::write_frame( const void* p, int len, double timestamp  )
 	if (!formatCtxt_ || videoStreamdIndex_ < 0 )
 		return;
 	
-	AVStream *pst = formatCtxt_->streams[ videoStreamdIndex_ ];
-
+	//AVStream *pst = formatCtxt_->streams[ videoStreamdIndex_ ];
+	AVStream *vSt = formatCtxt_->streams[videoStreamdIndex_];
 	// Init packet
 	AVPacket pkt;
 	av_init_packet( &pkt );
 	pkt.flags |= ( 0 == getVopType( p, len ) ) ? AV_PKT_FLAG_KEY : 0;   
-	pkt.stream_index = pst->index;
+	pkt.stream_index = vSt->index;
 	pkt.data = (uint8_t*)p;
 	pkt.size = len;
 
@@ -297,23 +318,23 @@ void h264_record::write_frame( const void* p, int len, double timestamp  )
 	if(baseH264TimeStamp_ == 0) {
 		baseH264TimeStamp_ = timestamp;
 	}
-	AVStream *vSt = formatCtxt_->streams[videoStreamdIndex_];
+	
 	AVCodecContext *avccxt = vSt->codec;
 	float seconds= (timestamp - baseH264TimeStamp_)/90000;
 	float timebase = ((float)avccxt->time_base.num/avccxt->time_base.den);
 	//算出这是第几帧
 	int64_t frame = (float)seconds/timebase;
-	if(frame !=0  && frame == lastFrameNum_) {
+	if(frame !=0  && frame == lastVideoFrameNum_) {
 		frame++;
 	}
 	pkt.pts = av_rescale_q(frame, vSt->codec->time_base, vSt->time_base);
-	lastFrameNum_ = frame;
+	lastVideoFrameNum_ = frame;
 
 	WEBRTC_TRACE(cloopenwebrtc::kTraceInfo,
 		cloopenwebrtc::kTraceVideoCoding,
 		0,
 		"write_frame seconds=%f timebase=%f frame=%d frame2=%d pkt.pts=%lld\n", 
-		seconds, timebase, frame, lastFrameNum_, (long long)pkt.pts);
+		seconds, timebase, frame, lastVideoFrameNum_, (long long)pkt.pts);
 
 	int ret = av_interleaved_write_frame( formatCtxt_, &pkt );
 	if(ret != 0) {
@@ -372,6 +393,7 @@ int h264_record::create( void *p, int len )
 	avcodec_register_all();
 	
 	baseH264TimeStamp_ = 0;
+	baseAudioTime_ = 0;
 
 	//alloc AVFormatContext
 	if(avformat_alloc_output_context2(&formatCtxt_, NULL, NULL, recordFileName_) < 0) {
@@ -421,7 +443,7 @@ int h264_record::create( void *p, int len )
 	audioFrameSize_ = audioStream->codec->frame_size;
 	audioFrameBuf_ = (unsigned short*)malloc(audioFrameSize_*byte_per_sample);
 	audioFrameLen_ = 0;
-	lastFrameNum_ = 0;
+	lastVideoFrameNum_ = 0;
 
 	if ( !( formatCtxt_->oformat->flags & AVFMT_NOFILE ) )
 		ret = avio_open( &formatCtxt_->pb, formatCtxt_->filename, AVIO_FLAG_READ_WRITE );

@@ -301,12 +301,12 @@ bool RecordVoip::ProcessAudioData()
 				StopRecordAudio(-2);
 			}
 		}
-		while(_playbackList.GetSize() > 100) {
+		while(_playbackList.GetSize() > 10) {
 			PrintConsole("%s _playbackList delete.\n", __FUNCTION__);
 			_playbackList.PopFront();
 
 		}
-		while(_recordingList.GetSize() > 100) {
+		while(_recordingList.GetSize() > 10) {
 			PrintConsole("%s _recordingList delete.\n", __FUNCTION__);
 			_recordingList.PopFront();
 		}
