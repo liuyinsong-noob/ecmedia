@@ -437,12 +437,29 @@ ECMEDIA_API int ECMedia_get_window_list(int desktop_captureid, WindowShare **win
 
 
 /*
+//桌面共享调用例子
+ECMedia_allocate_desktopShare_capture(call->m_desktopShareDeviceId, type);
+getShareScreenInfo(&screenId, call->m_desktopShareDeviceId);
+getShareWindowInfo(&windowInfo, call->m_desktopShareDeviceId);
+ECMedia_select_screen(call->m_desktopShareDeviceId, m_pScreenInfo[0]);
+ECMedia_connect_desktop_captureDevice(call->m_desktopShareDeviceId, call->m_VideoChannelID);
+ECMedia_start_desktop_capture(call->m_desktopShareDeviceId, 15);
+...
+
+ECMedia_disconnect_desktop_captureDevice(call->m_VideoChannelID);
+ECMedia_stop_desktop_capture(call->m_desktopShareDeviceId);
+ECMedia_release_desktop_capture(call->m_desktopShareDeviceId);
 */
+
 ECMEDIA_API bool ECMedia_select_screen(int desktop_captureid, ScreenID screeninfo);
 ECMEDIA_API bool ECMedia_select_window(int desktop_captureid, WindowID WindowInfo);
 
 ECMEDIA_API int ECMedia_start_desktop_capture(int desktop_captureid, int fps);
+/*
+* Should not invoke from main UI thread.
+*/
 ECMEDIA_API int ECMedia_stop_desktop_capture(int desktop_captureid);
+
 ECMEDIA_API int ECMedia_release_desktop_capture(int desktop_captureid);
 ECMEDIA_API int ECMedia_connect_desktop_captureDevice(int desktop_captureid, int video_channelId);
 ECMEDIA_API int ECMedia_disconnect_desktop_captureDevice(int video_channelId);

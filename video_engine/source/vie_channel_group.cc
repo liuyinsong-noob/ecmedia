@@ -168,6 +168,7 @@ ChannelGroup::ChannelGroup(int engine_id,
   if (!config) {
     own_config_.reset(new Config);
     config_ = own_config_.get();
+	own_config_->Set<RemoteBitrateEstimatorMinRate>(new RemoteBitrateEstimatorMinRate());
   }
   assert(config_);  // Must have a valid config pointer here.
 

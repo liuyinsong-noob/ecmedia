@@ -318,7 +318,8 @@ void VP8EncoderImpl::SetStreamState(bool send_stream,
 void VP8EncoderImpl::SetupTemporalLayers(int num_streams,
                                                  int num_temporal_layers,
                                                  const VideoCodec& codec) {
-  const Config default_options;
+  Config default_options;
+  default_options.Set<TemporalLayers::Factory>(new TemporalLayers::Factory);
   const TemporalLayers::Factory& tl_factory =
       (codec.extra_options ? codec.extra_options : &default_options)
           ->Get<TemporalLayers::Factory>();

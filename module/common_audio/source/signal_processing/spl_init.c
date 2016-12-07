@@ -112,6 +112,8 @@ static void once(void (*func)(void)) {
 #elif defined(_WIN32)
 #include <windows.h>
 
+static CRITICAL_SECTION lock = { (void *)((size_t)-1), -1, 0, 0, 0, 0 };
+
 static void once(void (*func)(void)) {
   /* Didn't use InitializeCriticalSection() since there's no race-free context
    * in which to execute it.
@@ -120,7 +122,7 @@ static void once(void (*func)(void)) {
    * InterlockedCompareExchangePointer) to avoid issues similar to
    * http://code.google.com/p/webm/issues/detail?id=467.
    */
-  static CRITICAL_SECTION lock = {(void *)((size_t)-1), -1, 0, 0, 0, 0};
+  //static CRITICAL_SECTION lock = { (void *)((size_t)-1), -1, 0, 0, 0, 0 };
   static int done = 0;
 
   EnterCriticalSection(&lock);

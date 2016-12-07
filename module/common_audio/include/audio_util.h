@@ -32,15 +32,16 @@ static inline int16_t FloatToS16(float v) {
                    static_cast<int16_t>(-v * limits_int16::min() - 0.5f);
 }
 
+static const float kMaxInt16Inverse = 1.f / limits_int16::max();
+static const float kMinInt16Inverse = 1.f / limits_int16::min();
+
 static inline float S16ToFloat(int16_t v) {
-  static const float kMaxInt16Inverse = 1.f / limits_int16::max();
-  static const float kMinInt16Inverse = 1.f / limits_int16::min();
   return v * (v > 0 ? kMaxInt16Inverse : -kMinInt16Inverse);
 }
 
+static const float kMaxRound = limits_int16::max() - 0.5f;
+static const float kMinRound = limits_int16::min() + 0.5f;
 static inline int16_t FloatS16ToS16(float v) {
-  static const float kMaxRound = limits_int16::max() - 0.5f;
-  static const float kMinRound = limits_int16::min() + 0.5f;
   if (v > 0)
     return v >= kMaxRound ? limits_int16::max() :
                             static_cast<int16_t>(v + 0.5f);
@@ -52,9 +53,9 @@ static inline float FloatToFloatS16(float v) {
   return v * (v > 0 ? limits_int16::max() : -limits_int16::min());
 }
 
+//static const float kMaxInt16Inverse = 1.f / limits_int16::max();
+//static const float kMinInt16Inverse = 1.f / limits_int16::min();
 static inline float FloatS16ToFloat(float v) {
-  static const float kMaxInt16Inverse = 1.f / limits_int16::max();
-  static const float kMinInt16Inverse = 1.f / limits_int16::min();
   return v * (v > 0 ? kMaxInt16Inverse : -kMinInt16Inverse);
 }
 

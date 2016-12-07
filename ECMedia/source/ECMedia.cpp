@@ -3442,13 +3442,15 @@ int ECMedia_Check_Record_Permission(bool &enabled) {
 
 int ECMedia_allocate_desktopShare_capture(int& desktop_captureid, int capture_type)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins... capture_type:%d", __FUNCTION__, capture_type);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopshare) {
 		int ret = vie_desktopshare->AllocateDesktopShareCapturer(desktop_captureid, (DesktopShareType)capture_type);
 		if (ret != 0)
-			PrintConsole("failed to AllocateDesktopShareCapturer, %s", __FUNCTION__);
+			PrintConsole("%s AllocateDesktopShareCapturer failed", __FUNCTION__);
+		else
+			PrintConsole("%s AllocateDesktopShareCapturer desktop_captureid:%d", __FUNCTION__, desktop_captureid);
 		vie_desktopshare->Release();
 		return ret;
 	}
@@ -3461,7 +3463,7 @@ int ECMedia_allocate_desktopShare_capture(int& desktop_captureid, int capture_ty
 
 int ECMedia_release_desktop_capture(int desktop_captureid)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins... desktop_captureid:%d", __FUNCTION__, desktop_captureid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *vie_desktopShare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopShare)
@@ -3480,7 +3482,7 @@ int ECMedia_release_desktop_capture(int desktop_captureid)
 
 int ECMedia_connect_desktop_captureDevice(int desktop_captureid, int video_channelId)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins... desktop_captureid:%d video_channelId:%d", __FUNCTION__, desktop_captureid, video_channelId);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *vie_desktopShare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopShare)
@@ -3498,7 +3500,7 @@ int ECMedia_connect_desktop_captureDevice(int desktop_captureid, int video_chann
 
 int ECMedia_disconnect_desktop_captureDevice(int video_channelId)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins... video_channelId:%d", __FUNCTION__, video_channelId);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *vie_desktopShare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopShare)
@@ -3588,7 +3590,7 @@ int ECMedia_get_window_list(int desktop_captureid, WindowShare **windowList)
 
 bool ECMedia_select_screen(int desktop_captureid, ScreenID screeninfo)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins... captureid:%d", __FUNCTION__, desktop_captureid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopshare) {
@@ -3605,7 +3607,7 @@ bool ECMedia_select_screen(int desktop_captureid, ScreenID screeninfo)
 
 bool ECMedia_select_window(int desktop_captureid, WindowID windowinfo)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins... captureid:%d", __FUNCTION__, desktop_captureid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopshare) {
@@ -3623,7 +3625,7 @@ bool ECMedia_select_window(int desktop_captureid, WindowID windowinfo)
 
 int ECMedia_start_desktop_capture(int captureId, int fps)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins... captureId:%d fps:%d", __FUNCTION__, captureId, fps);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopshare) {
@@ -3640,7 +3642,7 @@ int ECMedia_start_desktop_capture(int captureId, int fps)
 
 int ECMedia_stop_desktop_capture(int desktop_captureid)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins... desktop_captureid:%d", __FUNCTION__, desktop_captureid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *vie_desktopShare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopShare)
@@ -3658,7 +3660,7 @@ int ECMedia_stop_desktop_capture(int desktop_captureid)
 
 int ECMedia_set_desktop_share_err_code_cb(int desktop_captureid, int channelid, onEcMediaDesktopCaptureErrCode capture_err_code_cb)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins... desktop_captureid:%d channelid:%d", __FUNCTION__, desktop_captureid, desktop_captureid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *desktop_capture = ViEDesktopShare::GetInterface(m_vie);
 	if (desktop_capture) {
@@ -3675,7 +3677,7 @@ int ECMedia_set_desktop_share_err_code_cb(int desktop_captureid, int channelid, 
 
 int ECMedia_set_desktop_share_window_change_cb(int desktop_captureid, int channelid, onEcMediaShareWindowSizeChange share_window_change_cb)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins... desktop_captureid:%d channelid:%d", __FUNCTION__, desktop_captureid, channelid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *desktop_capture = ViEDesktopShare::GetInterface(m_vie);
 	if (desktop_capture) {
@@ -3719,7 +3721,7 @@ int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &hei
 	}
 	else
 	{
-		PrintConsole("[ECMEDIA WARNNING] failed to get ViENetwork, %s", __FUNCTION__);
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViEDesktopShare, %s", __FUNCTION__);
 		return -99;
 	}
 }

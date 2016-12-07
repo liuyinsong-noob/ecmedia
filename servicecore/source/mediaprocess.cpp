@@ -14,6 +14,8 @@
 #include "codingHelper.h"
 #endif
 
+int   g_desktopShareDeviceId = 0;
+
 #if !defined(NO_VOIP_FUNCTION)
 #include "ECMedia.h"
 #endif
@@ -391,10 +393,11 @@ void ServiceCore::video_stream_stop(int channelID,int captureID)
 		ECMedia_stop_capture(captureID);
 
 	}else if(m_videoModeChoose == 1) //screen-share
-	{
+	{		
 		ECMedia_disconnect_desktop_captureDevice(channelID);
-		ECMedia_stop_desktop_capture(captureID);		
-		ECMedia_release_desktop_capture(captureID);
+		ECMedia_stop_desktop_capture(captureID);
+						
+		//ECMedia_release_desktop_capture(captureID);
 	}
 
 	MSList *calls;
@@ -1254,7 +1257,11 @@ int ServiceCore::startVideoDesktopCapture(SerPhoneCall *call)
 	ScreenID *screenId;
 	WindowShare *windowInfo;
 	{
-		ECMedia_allocate_desktopShare_capture(call->m_desktopShareDeviceId, type);
+		if(g_desktopShareDeviceId == 0)
+			ECMedia_allocate_desktopShare_capture(g_desktopShareDeviceId, type);
+		call->m_desktopShareDeviceId = g_desktopShareDeviceId;
+
+		//ECMedia_allocate_desktopShare_capture(call->m_desktopShareDeviceId, type);
 		ECMedia_set_CaptureDeviceID(call->m_desktopShareDeviceId);
 		if (type==0)
 		{

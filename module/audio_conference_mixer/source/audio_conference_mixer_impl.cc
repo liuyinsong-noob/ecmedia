@@ -154,8 +154,14 @@ bool AudioConferenceMixerImpl::Init() {
     if(_cbCrit.get() == NULL)
         return false;
 
+
     cloopenwebrtc::Config config;
     config.Set<ExperimentalAgc>(new ExperimentalAgc(false));
+	config.Set<ExperimentalNs>(new ExperimentalNs(false));
+	config.Set<Beamforming>(new Beamforming());
+	config.Set<DelayCorrection>(new DelayCorrection());
+	config.Set<ReportedDelay>(new ReportedDelay());
+
     _limiter.reset(AudioProcessing::Create(config));
     if(!_limiter.get())
         return false;

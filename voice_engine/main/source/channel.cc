@@ -1013,6 +1013,10 @@ Channel::Channel(int32_t channelId,
 
     Config audioproc_config;
     audioproc_config.Set<ExperimentalAgc>(new ExperimentalAgc(false));
+	audioproc_config.Set<ExperimentalNs>(new ExperimentalNs(false));
+	audioproc_config.Set<Beamforming>(new Beamforming());
+	audioproc_config.Set<DelayCorrection>(new DelayCorrection());
+	audioproc_config.Set<ReportedDelay>(new ReportedDelay());
     rx_audioproc_.reset(AudioProcessing::Create(audioproc_config));
 }
 

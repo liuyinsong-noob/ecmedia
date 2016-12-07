@@ -138,6 +138,11 @@ class GainControlForNewAgc : public GainControl, public VolumeCallbacks {
 
 AudioProcessing* AudioProcessing::Create() {
   Config config;
+  config.Set<ExperimentalAgc>(new ExperimentalAgc(false));
+  config.Set<ExperimentalNs>(new ExperimentalNs(false));
+  config.Set<Beamforming>(new Beamforming());
+  config.Set<DelayCorrection>(new DelayCorrection());
+  config.Set<ReportedDelay>(new ReportedDelay());
   return Create(config, nullptr);
 }
 

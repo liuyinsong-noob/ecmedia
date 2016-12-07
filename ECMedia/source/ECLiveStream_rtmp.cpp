@@ -380,6 +380,7 @@ namespace cloopenwebrtc {
         
     }
     
+	static PushResampler<int16_t> resampler;
     void RTMPLiveSession::HandleAuidoPacket(RTMPPacket *packet)
     {
         if(!audio_data_cb_)
@@ -390,7 +391,7 @@ namespace cloopenwebrtc {
         unsigned int payloadLen = packet->m_nBodySize-2 ;
         
         const uint8_t * payloadData = (const uint8_t*)packet->m_body+2;
-        static PushResampler<int16_t> resampler;
+        //static PushResampler<int16_t> resampler;
         int len = 0,ret = 0;
         uint8_t *audio_data_10ms;
         static int num = 0;

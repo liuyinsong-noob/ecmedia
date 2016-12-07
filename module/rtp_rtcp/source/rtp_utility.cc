@@ -46,23 +46,22 @@
 
 namespace cloopenwebrtc {
 
+static NullRtpData null_rtp_data;
 RtpData* NullObjectRtpData() {
-  static NullRtpData null_rtp_data;
   return &null_rtp_data;
 }
-
+static NullRtpFeedback null_rtp_feedback;
 RtpFeedback* NullObjectRtpFeedback() {
-  static NullRtpFeedback null_rtp_feedback;
   return &null_rtp_feedback;
 }
 
+static NullRtpAudioFeedback null_rtp_audio_feedback;
 RtpAudioFeedback* NullObjectRtpAudioFeedback() {
-  static NullRtpAudioFeedback null_rtp_audio_feedback;
   return &null_rtp_audio_feedback;
 }
 
+static NullReceiveStatistics null_receive_statistics;
 ReceiveStatistics* NullObjectReceiveStatistics() {
-  static NullReceiveStatistics null_receive_statistics;
   return &null_receive_statistics;
 }
 

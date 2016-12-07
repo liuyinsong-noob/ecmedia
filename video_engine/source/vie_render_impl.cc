@@ -199,7 +199,23 @@ int ViERenderImpl::RemoveRenderer(const int render_id) {
       return -1;
     }
     channel->DeregisterFrameCallback(renderer);
-  } else {
+  }
+#ifdef ENABLE_SCREEN_SHARE
+  else if (render_id >= kViEDesktopIdBase && render_id <= kViEDesktopIdMax) {
+	  // Desktop capture.
+	  ViEDesktopShareScoped is(*(shared_data_->desktop_share_manager()));
+	  ViEFrameProviderBase* frame_provider = is.FrameProvider(render_id);
+	  if (!frame_provider) {
+		  WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(shared_data_->instance_id()),
+			  "%s: FrameProvider id %d doesn't exist", __FUNCTION__,
+			  render_id);
+		  shared_data_->SetLastError(kViERenderInvalidRenderId);
+		  return -1;
+	  }
+	  frame_provider->DeregisterFrameCallback(renderer);
+  }
+#endif 
+ else {
     // Provider owned by inputmanager, i.e. file or capture device.
     ViEInputManagerScoped is(*(shared_data_->input_manager()));
     ViEFrameProviderBase* provider = is.FrameProvider(render_id);

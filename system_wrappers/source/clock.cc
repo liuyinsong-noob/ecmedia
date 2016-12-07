@@ -252,9 +252,11 @@ static WindowsHelpTimer *SyncGlobalHelpTimer() {
 }
 #endif
 
+static WindowsRealTimeClock clock(SyncGlobalHelpTimer());
+
 Clock* Clock::GetRealTimeClock() {
 #if defined(_WIN32)
-  static WindowsRealTimeClock clock(SyncGlobalHelpTimer());
+  //static WindowsRealTimeClock clock(SyncGlobalHelpTimer());
   return &clock;
 #elif defined(WEBRTC_LINUX) || defined(WEBRTC_MAC) || defined(MAC_IPHONE)
   static UnixRealTimeClock clock;
