@@ -250,10 +250,10 @@ static WindowsHelpTimer *SyncGlobalHelpTimer() {
   Synchronize(&global_help_timer);
   return &global_help_timer;
 }
-#endif
+
 
 static WindowsRealTimeClock clock(SyncGlobalHelpTimer());
-
+#endif
 Clock* Clock::GetRealTimeClock() {
 #if defined(_WIN32)
   //static WindowsRealTimeClock clock(SyncGlobalHelpTimer());
