@@ -217,6 +217,17 @@ static void add_payload(sdp_message_t *msg, int line, const PayloadType *pt, boo
 	snprintf(attr, sizeof(attr), "%i goog-remb", payload_type_get_number(pt));
 	sdp_message_a_attribute_add(msg, line, osip_strdup("rtcp-fb"),
 		osip_strdup(attr));
+    
+    if (osip_strncasecmp("H264", pt->mime_type, 4)==0 || osip_strncasecmp("VP8", pt->mime_type, 3)==0) {
+        snprintf(attr, sizeof(attr), "* ccm fir");
+        sdp_message_a_attribute_add(msg, line, osip_strdup("rtcp-fb"),
+                                    osip_strdup(attr));
+        
+        snprintf(attr, sizeof(attr), "* nack pli");
+        sdp_message_a_attribute_add(msg, line, osip_strdup("rtcp-fb"),
+                                    osip_strdup(attr));
+    }
+   
 	
 }
 

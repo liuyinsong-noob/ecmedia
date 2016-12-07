@@ -4808,7 +4808,7 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
 #endif
 
 #ifdef VIDEO_ENABLED
-	serphone_core_assign_payload_type(&payload_type_h264,-1,"profile-level-id=42C020");
+	serphone_core_assign_payload_type(&payload_type_h264,-1,"profile-level-id=42e01e; packetization-mode=1; max-br=452; max-mbps=11880");
 	serphone_core_assign_payload_type(&payload_type_vp8,120,NULL);
 
    // serphone_core_assign_payload_type(&payload_type_h264_svc,98, "profile-level-id=428014"); //profile-level-id need to be fixed.
