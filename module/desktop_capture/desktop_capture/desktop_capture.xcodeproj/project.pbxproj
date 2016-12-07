@@ -26,11 +26,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		AD3EBAE11DE56EE000024454 /* window_capturer_ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = window_capturer_ios.h; sourceTree = "<group>"; };
 		AD3EBAE21DE58BF400024454 /* desktop_geometry.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = desktop_geometry.cc; path = ../../source/desktop_geometry.cc; sourceTree = "<group>"; };
 		ADC50F481D8FC2F600A83C04 /* desktop_frame.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = desktop_frame.cc; path = ../../source/desktop_frame.cc; sourceTree = "<group>"; };
 		ADC50F4A1D8FC65200A83C04 /* window_capturer_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = window_capturer_ios.mm; path = ../../source/window_capturer_ios.mm; sourceTree = "<group>"; };
 		ADC50F531D8FC7C500A83C04 /* desktop_region.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = desktop_region.cc; path = ../../source/desktop_region.cc; sourceTree = "<group>"; };
+		ADCEAFEA1DE6E4AB00778607 /* window_capturer_ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = window_capturer_ios.h; sourceTree = "<group>"; };
 		ADE835641D8F7AF000CCD20D /* libdesktop_capture.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdesktop_capture.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -68,7 +68,7 @@
 				ADC50F481D8FC2F600A83C04 /* desktop_frame.cc */,
 				ADC50F531D8FC7C500A83C04 /* desktop_region.cc */,
 				ADC50F4A1D8FC65200A83C04 /* window_capturer_ios.mm */,
-				AD3EBAE11DE56EE000024454 /* window_capturer_ios.h */,
+				ADCEAFEA1DE6E4AB00778607 /* window_capturer_ios.h */,
 			);
 			path = desktop_capture;
 			sourceTree = "<group>";
