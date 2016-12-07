@@ -18,6 +18,10 @@
 #include "thread_wrapper.h"
 #include "libyuv.h"
 
+#ifdef seanDebugRender
+const char *g_render_noopengl = NULL;
+#endif
+
 namespace cloopenwebrtc {
 
 VideoChannelNSOpenGL::VideoChannelNSOpenGL(ECIOSDisplay *window, int iId, VideoRenderNSOpenGL* owner) :
@@ -45,7 +49,15 @@ _pixelFormat( GL_RGBA),
 _pixelDataType( GL_UNSIGNED_BYTE),
 _texture( 0),
 _bVideoSizeStartedChanging(false)
+#ifdef seanDebugRender
+    ,_debugFile(NULL)
+#endif
 {
+#ifdef seanDebugRender
+    if (g_render_noopengl) {
+        _debugFile = fopen(g_render_noopengl, "wb");
+    }
+#endif
 
 }
 
@@ -56,6 +68,12 @@ VideoChannelNSOpenGL::~VideoChannelNSOpenGL()
         delete [] _buffer;
         _buffer = NULL;
     }
+#ifdef seanDebugRender
+    if (_debugFile) {
+        fflush(_debugFile);
+        fclose(_debugFile);
+    }
+#endif
 }
 
 int VideoChannelNSOpenGL::ChangeWindow(ECIOSDisplay *window)
@@ -123,6 +141,13 @@ WebRtc_Word32 VideoChannelNSOpenGL::RenderFrame(const WebRtc_UWord32 /*streamId*
         memcpy(_buffer+a,videoFrame.buffer(kVPlane) + i * videoFrame.stride(kVPlane), widtht/2);
         a+=widtht/2;
     }
+    
+#ifdef seanDebugRender
+    if (_debugFile) {
+        fwrite(_buffer, a, 1, _debugFile);
+        fflush(_debugFile);
+    }
+#endif
     
     int ret = DeliverFrame(_buffer, a, videoFrame.timestamp());
 

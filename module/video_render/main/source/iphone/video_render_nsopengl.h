@@ -14,6 +14,9 @@
 #ifndef WEBRTC_MODULES_VIDEO_RENDER_MAIN_SOURCE_MAC_VIDEO_RENDER_NSOPENGL_H_
 #define WEBRTC_MODULES_VIDEO_RENDER_MAIN_SOURCE_MAC_VIDEO_RENDER_NSOPENGL_H_
 
+//#define seanDebugRender
+
+
 #import <UIKit/UIKit.h>
 #include <list>
 #include <map>
@@ -97,6 +100,10 @@ private:
     GLuint _texture;
    
     bool _bVideoSizeStartedChanging;
+    
+#ifdef seanDebugRender
+    FILE* _debugFile;
+#endif
 };
 
 class VideoRenderNSOpenGL
