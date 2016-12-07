@@ -340,19 +340,15 @@ int PayloadSplitter::SplitAudio(PacketList* packet_list,
       }
     case kDecoderG729:
     {
-        size_t bytes_per_frame;
-        int timestamps_per_frame;
-        if (packet->payload_length % 20 == 0) {
-            bytes_per_frame = 10;
-            timestamps_per_frame = 80;
-            
-        }
+        size_t bytes_per_frame = 10;
+        int timestamps_per_frame = 80;
         int ret = SplitByFrames(packet, bytes_per_frame, timestamps_per_frame, &new_packets);
         if (ret < 0) {
             return ret;
         }
         else if(ret == kNoSplit) {
             ++it;
+            continue;
         }
         break;
     }
