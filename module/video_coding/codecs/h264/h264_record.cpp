@@ -255,10 +255,10 @@ int h264_record::write_audio_data(short *data, int len, int freq)
 		}
 
 		AVCodecContext *avccxt = pst->codec;
-		float interal_ms = now_ms - baseAudioTime_;
+		float interval_ms = now_ms - baseAudioTime_;
 		float timebase = ((float)avccxt->time_base.num / avccxt->time_base.den);
 		//算出这是第几帧
-		int64_t frames = (float)interal_ms / timebase/1000;
+		int64_t frames = (float)interval_ms / timebase/1000;
 		if (frames != 0 && frames == lastAudioFrameNum_) {
 			frames++;
 		}
