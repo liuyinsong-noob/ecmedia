@@ -500,17 +500,17 @@ void ServiceCore::serphone_call_start_media_streams(SerPhoneCall *call, bool_t a
 	}
 	else
 		call->current_params.has_video= false;
-#if defined(VIDEO_ENABLED)
-    if(call->m_VideoChannelID >= 0) {
-        ECMedia_set_video_SendStatistics_proxy(call->m_VideoChannelID, "/storage/emulated/0/Statistics.log", 1000);
-        ECMedia_set_video_RecvStatistics_proxy(call->m_VideoChannelID, "/storage/emulated/0/Statistics.log", 1000);
-    } 
-    else
-#endif
-    {
-        ECMedia_set_audio_RecvStatistics_proxy(call->m_AudioChannelID, "/storage/emulated/0/Statistics.log", 1000);
-        ECMedia_set_audio_SendStatistics_proxy(call->m_AudioChannelID, "/storage/emulated/0/Statistics.log", 1000);
-    }
+//#if defined(VIDEO_ENABLED)
+//    if(call->m_VideoChannelID >= 0) {
+//        ECMedia_set_video_SendStatistics_proxy(call->m_VideoChannelID, "/storage/emulated/0/Statistics.log", 1000);
+//        ECMedia_set_video_RecvStatistics_proxy(call->m_VideoChannelID, "/storage/emulated/0/Statistics.log", 1000);
+//    } 
+//    else
+//#endif
+//    {
+//        ECMedia_set_audio_RecvStatistics_proxy(call->m_AudioChannelID, "/storage/emulated/0/Statistics.log", 1000);
+//        ECMedia_set_audio_SendStatistics_proxy(call->m_AudioChannelID, "/storage/emulated/0/Statistics.log", 1000);
+//    }
 
         
 	call->all_muted=all_inputs_muted;

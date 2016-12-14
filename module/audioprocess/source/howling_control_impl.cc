@@ -32,13 +32,18 @@ HowlingControlImpl::HowlingControlImpl(const AudioProcessing* apm,
   : ProcessingComponent(),
 	apm_(apm),
 	crit_(crit) {
+
+	filelog = NULL;
+	file_preproc = NULL;
+	file_postproc = NULL;
+
 		//filelog = NULL;//fopen("howling_control.txt", "wb");
 		//file_preproc  = NULL;//fopen("howling_control_preproc.pcm", "wb");
 		//file_postproc = NULL;//fopen("howling_control_postproc.pcm", "wb");
 
-		filelog = fopen("/storage/emulated/0/howling_control.txt", "wb");
-		file_preproc  = fopen("/storage/emulated/0/howling_control_preproc.pcm", "wb");
-		file_postproc = fopen("/storage/emulated/0/howling_control_postproc.pcm", "wb");
+		//filelog = fopen("/storage/emulated/0/howling_control.txt", "wb");
+		//file_preproc  = fopen("/storage/emulated/0/howling_control_preproc.pcm", "wb");
+		//file_postproc = fopen("/storage/emulated/0/howling_control_postproc.pcm", "wb");
 }
 
 
@@ -73,10 +78,12 @@ int HowlingControlImpl::AnalyzeCaptureAudio(AudioBuffer* audio)
 	for (int i = 0; i < num_handles(); ++i) {
 		Handle* my_handle = static_cast<Handle*>(handle(i));
 
-		WebRtcAfs_Analyze(my_handle, audio->split_bands_const_f(i)[kBand0To8kHz], filelog);
+		if(filelog)
+			WebRtcAfs_Analyze(my_handle, audio->split_bands_const_f(i)[kBand0To8kHz], filelog);
 	}
 	//
-	write_file( audio->split_bands_const_f(0)[kBand0To8kHz], audio->samples_per_split_channel(), file_preproc );
+	if(file_preproc)
+		write_file( audio->split_bands_const_f(0)[kBand0To8kHz], audio->samples_per_split_channel(), file_preproc );
 	//
 
 	return apm_->kNoError;
@@ -98,7 +105,8 @@ int HowlingControlImpl::ProcessCaptureAudio(AudioBuffer* audio)
 						  );
 	}
 	//
-	write_file( audio->split_bands_f(0)[kBand0To8kHz], audio->samples_per_split_channel(), file_postproc );
+	if(file_postproc)
+		write_file( audio->split_bands_f(0)[kBand0To8kHz], audio->samples_per_split_channel(), file_postproc );
 	//
 	return apm_->kNoError;
 }

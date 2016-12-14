@@ -444,6 +444,11 @@ int VCMSessionInfo::InsertPacket(const VCMPacket& packet,
     // Update sequence number of an empty packet.
     // Only media packets are inserted into the packet list.
     InformOfEmptyPacket(packet.seqNum);
+	if (first_packet_seq_num_ == -1 && packet.markerBit) {
+		//empty packet with mark bit
+		complete_ = true;
+		return 3;
+	}
     return 0;
   }
 

@@ -695,7 +695,7 @@ int ViEFileImpl::GetCaptureDeviceSnapshot(const int capture_id,
   if (GetNextCapturedFrame(capture_id, video_frame) == -1) {
     WEBRTC_TRACE(kTraceError, kTraceVideo, shared_data_->instance_id(),
                  "Could not gain acces to capture device %d video frame "
-                 "%s:%d", capture_id, __FUNCTION__);
+                 "%s", capture_id, __FUNCTION__);
     return -1;
   }
 
@@ -1041,6 +1041,10 @@ I420VideoFrame& video_frame) {
   ViEInputManagerScoped is(*(shared_data_->input_manager()));
   ViECapturer* capturer = is.Capture(capture_id);
   if (!capturer) {
+	  WEBRTC_TRACE(kTraceWarning, kTraceVideo,
+		  ViEId(shared_data_->instance_id(), 0),
+		  "%s  Invalid capture_id  %d.",
+		  __FUNCTION__, capture_id);
     return -1;
   }
 

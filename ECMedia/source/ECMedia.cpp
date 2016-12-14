@@ -155,9 +155,12 @@ static void media_init_print_log()
 
 static void media_uninit_print_log()
 {
-	if(g_media_interface_fp)
-		fclose(g_media_interface_fp);
-	g_media_interface_fp = NULL;
+	{
+		cloopenwebrtc::CriticalSectionScoped lock(g_printConsole_lock);
+		if (g_media_interface_fp)
+			fclose(g_media_interface_fp);
+		g_media_interface_fp = NULL;
+	}
 
 	if( g_printConsole_lock)
 		delete g_printConsole_lock;
@@ -209,13 +212,15 @@ void PrintConsole(const char * fmt,...)
 	if( gPrintConsoleHook_media)
 		gPrintConsoleHook_media(0,log_buffer);
 
-	if( NULL == g_media_interface_fp || NULL == g_printConsole_lock ) {
+	if(NULL == g_printConsole_lock ) {
 		return;
 	}
 	cloopenwebrtc::CriticalSectionScoped lock(g_printConsole_lock);
-	fprintf(g_media_interface_fp, "%s\n", log_buffer);
-	fflush(g_media_interface_fp);
-	//g_log_line ++;
+	if (g_media_interface_fp) {
+		fprintf(g_media_interface_fp, "%s\n", log_buffer);
+		fflush(g_media_interface_fp);
+		//g_log_line ++;
+	}
 }
 
 const char* ECMeida_get_Version()

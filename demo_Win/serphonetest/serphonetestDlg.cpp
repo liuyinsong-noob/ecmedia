@@ -1315,7 +1315,7 @@ void CserphonetestDlg::OnBnClickedButton25()
 	//	m_dlgFullScreen->MoveWindow(&temprect, TRUE);
 
 	//}
-	m_dlgFullScreen->ShowWindow(SW_SHOW);
+	//m_dlgFullScreen->ShowWindow(SW_SHOW);
 
 	if (!strcmp(W2A(m_videoPayloadeName.GetBuffer(0)), "H264")||!strcmp(W2A(m_videoPayloadeName.GetBuffer(0)), "h264"))
 	{

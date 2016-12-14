@@ -1060,6 +1060,13 @@ RTPSender::SendRTPKeepalivePacket()
         BuildRTPheader(dataBuffer, _keepAlivePayloadType, last_packet_marker_bit_, _last_capture_timestamp, 0);
     }
     
+
+//	RtpUtility::RtpHeaderParser rtp_parser(dataBuffer, rtpHeaderLength);
+//	RTPHeader rtp_header;
+//	rtp_parser.Parse(rtp_header);
+//
+//	LOG(LS_WARNING) << "SendRTPKeepalivePacket. timestamp:" << rtp_header.timestamp;
+
     return SendToNetwork(dataBuffer, 0, rtpHeaderLength, -1, kDontStore,PacedSender::kNormalPriority);
 }
     
@@ -1087,6 +1094,8 @@ int32_t RTPSender::SendToNetwork(
   RTPHeader rtp_header;
   rtp_parser.Parse(rtp_header);
 
+//  int64_t old_timestamp = rtp_header.timestamp;
+
   int64_t now_ms = clock_->TimeInMilliseconds();
 
   // |capture_time_ms| <= 0 is considered invalid.
@@ -1106,6 +1115,15 @@ int32_t RTPSender::SendToNetwork(
                                    storage) != 0) {
     return -1;
   }
+ // if (rtp_header.payloadType == 96) {
+//	  static int64_t laststamp = 0;
+//	  if (laststamp != rtp_header.timestamp)
+//	  {
+//		  LOG(LS_WARNING) << "SendToNetwork old:" << old_timestamp << " new:" << rtp_header.timestamp << " diff:" << rtp_header.timestamp - laststamp;
+//		  laststamp = rtp_header.timestamp;
+//
+//	  }
+//   }
 
   if (paced_sender_ && storage != kDontStore) {
     // Correct offset between implementations of millisecond time stamps in
