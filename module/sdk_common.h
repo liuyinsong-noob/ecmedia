@@ -33,9 +33,9 @@ typedef intptr_t WindowID;
 struct WindowShare {
 	WindowID id;
 	// Title of the window in UTF-8 encoding.
+	int type;
 	char title[kTitleLength];
 };
-
 
 typedef struct{
 	int index;

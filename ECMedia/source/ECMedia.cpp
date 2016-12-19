@@ -3797,5 +3797,40 @@ void ECMedia_setLiveStreamNetworkCallBack(void *handle, onLiveStreamNetworkStatu
 	PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
 }
 
+ECMEDIA_API int ECMedia_GetShareWindows(void *handle, WindowShare ** windows)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+	RTMPLiveSession *p = (RTMPLiveSession*)handle;
+	std::vector<ShareWindowInfo> list;
+	p->GetShareWindowList(list);
+
+	if (m_pWindowlist != NULL)
+		delete m_pWindowlist;
+
+	if (list.size() == 0)
+		return 0;
+	m_pWindowlist = new WindowShare[list.size()];
+	WindowShare *temp = m_pWindowlist;
+
+	for (int i = 0 ; i< list.size() ; i++ )
+	{
+		(*temp).id = list[i].id;
+		(*temp).type = list[i].type;
+		memcpy((*temp).title, list[i].name.c_str(), kTitleLength);
+		temp++;
+	}
+	*windows = m_pWindowlist;
+	return list.size();
+}
+
+ECMEDIA_API int ECMedia_SelectShareWindow(void *handle, int type, int id)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+	RTMPLiveSession *p = (RTMPLiveSession*)handle;
+	p->SelectShareWindow(type,id);
+	PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
+	return 0;
+}
+
 #endif
 

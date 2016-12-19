@@ -77,8 +77,10 @@ namespace cloopenwebrtc {
 	, rtmph_(nullptr)
 	, capture_id_(-1)
 	, desktop_capture_id_(-1)
+    , share_window_id_(-1)
 	, live_mode_(MODE_LIVE_UNKNOW)
 	, video_source_(VIDEO_SOURCE_CAMERA)
+	, desktop_share_type_(ShareScreen)
 	, local_view_(NULL)
 	, clock_(Clock::GetRealTimeClock())
 	, push_audio_(true)
@@ -215,6 +217,7 @@ namespace cloopenwebrtc {
 			desktopShare->ReleaseDesktopShareCapturer(desktop_capture_id_);
 			desktopShare->Release();
 			desktop_capture_id_ = -1;
+			share_window_id_ = -1;
 		}
 		else {
 #ifdef _WIN32
@@ -240,24 +243,28 @@ namespace cloopenwebrtc {
 		if (desktop_capture_id_ >= 0) {
 			desktopShare->StopDesktopShareCapture(desktop_capture_id_);
 		}
+		int ret = desktopShare->AllocateDesktopShareCapturer(desktop_capture_id_, desktop_share_type_);
 
-		DesktopShareType mode = DesktopShareType::ShareScreen;
-		int ret = desktopShare->AllocateDesktopShareCapturer(desktop_capture_id_, mode);	
+		if (desktop_share_type_ == ShareWindow) {
+			if (share_window_id_ == -1) {
+				WindowList windows;
+				desktopShare->GetWindowList(desktop_capture_id_, windows);
+				for (int i = 0; i < windows.size();i++) {
+					if (windows[i].title.find("cdr") != std::string::npos) {
+						share_window_id_ = windows[i].id;
+					}
+				}
 
-
-		if (mode == ShareWindow) {
-			WindowList windows;
-			desktopShare->GetWindowList(desktop_capture_id_, windows);
-			
-			for (int i = 0; i < windows.size();i++) {
-				if( windows[i].title.find("cdr")!= std::string::npos )
-					desktopShare->SelectWindow(desktop_capture_id_, windows[i].id);
 			}
+			desktopShare->SelectWindow(desktop_capture_id_, share_window_id_);
 		}
-		else if (mode == ShareScreen) {
-			ScreenList screens;
-			desktopShare->GetScreenList(desktop_capture_id_, screens);
-			desktopShare->SelectScreen(desktop_capture_id_, screens[0]);
+		else if (desktop_share_type_ == ShareScreen) {
+			if (share_window_id_ == -1) {
+				ScreenList screens;
+				desktopShare->GetScreenList(desktop_capture_id_, screens);
+				share_window_id_ = screens[0];
+			}
+			desktopShare->SelectScreen(desktop_capture_id_, share_window_id_);
 		}
 		int width =0 , heigth = 0;
 		desktopShare->GetDesktopShareCaptureRect(desktop_capture_id_, push_video_width_, push_video_height_);
@@ -572,7 +579,7 @@ namespace cloopenwebrtc {
 			if (!RTMP_Connect(rtmph_, NULL)) {
 				if( network_status_callbck_)
 					network_status_callbck_(this, NET_STATUS_DISCONNECTED);
-
+				PrintConsole("[RTMP ERROR] %s RTMP connected error\n", __FUNCTION__);
 				SleepMs(1000); //try connect after 1s
 				return true;
 			}
@@ -1089,8 +1096,10 @@ namespace cloopenwebrtc {
 		vbase->StopReceive(video_channel_);
 		vbase->Release();
 
-		if(playnetworkThread_)
+		if (playnetworkThread_) {
 			playnetworkThread_->Stop();
+			SleepMs(2000);
+		}
 		delete playnetworkThread_;
 		playnetworkThread_ = NULL;
 
@@ -1140,13 +1149,64 @@ namespace cloopenwebrtc {
 		}
 
 	}
+
 	void RTMPLiveSession::SetPushContent(bool push_audio,bool push_video)
 	{
 		push_video_ = push_video;
 		push_audio_ = push_audio;
 	}
+
 	void RTMPLiveSession::SetVideoSource(VIDEO_SOURCE video_source)
 	{
-		video_source_ = video_source;
+		if(  MODE_LIVE_UNKNOW == live_mode_ )
+			video_source_ = video_source;
+	}
+
+	void RTMPLiveSession::SelectShareWindow(int type, int id)
+	{
+		share_window_id_ = id;
+		if (desktop_capture_id_ < 0)
+			return;
+		ViEDesktopShare *desktopShare = ViEDesktopShare::GetInterface(vie_);
+		if (DesktopShareType::ShareScreen == type) {
+			desktopShare->SelectScreen(desktop_capture_id_, id);
+		}
+		else if (DesktopShareType::ShareWindow == type) {
+			desktopShare->SelectWindow(desktop_capture_id_, id);
+		}
+		desktopShare->Release();
+
+	}
+	void RTMPLiveSession::GetShareWindowList(std::vector<ShareWindowInfo> & list)
+	{
+		int capture_id;
+		ViEDesktopShare *desktopShare = ViEDesktopShare::GetInterface(vie_);
+		if (desktop_capture_id_ >= 0) {
+			capture_id = desktop_capture_id_;
+		}
+		else {
+			desktopShare->AllocateDesktopShareCapturer(capture_id, desktop_share_type_);
+		}
+		ShareWindowInfo win_info;
+		ScreenList screens;
+		desktopShare->GetScreenList(capture_id, screens);
+		for (int i = 0; i < screens.size(); i++) {
+			win_info.id = screens[i];
+			win_info.name = "desktop";
+			win_info.type = ShareScreen;
+			list.push_back(win_info);
+		}
+		WindowList windows;
+		desktopShare->GetWindowList(capture_id, windows);
+		for (int i = 0; i < windows.size(); i++) {
+			win_info.id = windows[i].id;
+			win_info.name = windows[i].title;
+			win_info.type = ShareWindow;
+			list.push_back(win_info);
+		}
+		if (desktop_capture_id_ < 0) {
+			desktopShare->ReleaseDesktopShareCapturer(capture_id);
+		}
+		desktopShare->Release();
 	}
 }

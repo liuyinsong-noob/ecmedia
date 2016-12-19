@@ -11,6 +11,7 @@
 
 #include "video_encoder.h"
 #include "video_coding_defines.h"
+#include "vie_desktop_share.h"
 
 struct RTMP;
 struct RTMPPacket;
@@ -74,10 +75,21 @@ namespace cloopenwebrtc {
             buffer_ = p;
         }
         else {
-            memmove(buffer_ , buffer_+data_start_ , data_length_);
-            memcpy(buffer_+data_length_, data, size);
-            data_length_ += size;
-            data_start_ = 0;
+
+			if (data_length_ + size > buffer_legnth_) {
+				buffer_legnth_ = data_length_ + size + buffer_legnth_;
+				T *newbuffer = new T[buffer_legnth_];
+				memmove(newbuffer, buffer_, buffer_legnth_);
+				delete buffer_;
+				buffer_ = newbuffer;
+				   
+			}
+			else {
+				memmove(buffer_, buffer_ + data_start_, data_length_);
+				memcpy(buffer_ + data_length_, data, size);
+				data_length_ += size;
+				data_start_ = 0;
+			}
         }
     };
     
@@ -90,6 +102,11 @@ namespace cloopenwebrtc {
 	enum VIDEO_SOURCE {
 		VIDEO_SOURCE_CAMERA = 0,
 		VIDEO_SOURCE_DESKTOP  
+	};
+	struct ShareWindowInfo {
+		int id;
+		int type;
+		std::string name;
 	};
     class RTMPLiveSession 
 	: public Transport ,
@@ -106,6 +123,8 @@ namespace cloopenwebrtc {
 
 		void SetPushContent(bool push_audio, bool push_video);
 		void SetVideoSource(VIDEO_SOURCE video_source);
+		void SelectShareWindow(int type, int id);
+		void GetShareWindowList(std::vector<ShareWindowInfo> & list);
 		int setVideoProfile(int index, CameraCapability cam, int bitRates);
 		void setNetworkStatusCallBack(onLiveStreamNetworkStatusCallBack callbck);
 
@@ -165,6 +184,8 @@ namespace cloopenwebrtc {
         int audio_channel_;
 		LIVE_MODE live_mode_;
 		VIDEO_SOURCE video_source_;
+		int share_window_id_;
+		DesktopShareType desktop_share_type_;
 
         uint16_t audio_rtp_seq_;
         uint16_t video_rtp_seq_;

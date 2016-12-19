@@ -3777,6 +3777,15 @@ extern "C" void setLiveVideoSource(void *handle, int video_source)
 	 return g_pSerCore->setLiveVideoSource(handle, video_source);
 	 
 }
+extern "C" int getShareWindows(void *handle, WindowShare ** windows)
+{
+	return ECMedia_GetShareWindows(handle, windows);
+}
+
+extern "C"  void selectShareWindow(void *handle, int type, int id)
+{
+	ECMedia_SelectShareWindow(handle, type, id);
+}
 
 extern "C" int startSendRtpPacket(int &channel, const char *ip, int rtp_port)
 {

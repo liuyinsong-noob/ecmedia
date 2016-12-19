@@ -200,4 +200,7 @@ public:
 	CString m_live_url;
 
 	CComboBox m_video_source;
+	CComboBox m_share_windows;
+	afx_msg void OnCbnSelchangeShareWindow();
+	afx_msg void OnCbnDropdownShareWindow();
 };

@@ -617,12 +617,6 @@ ECMEDIA_API void*ECMedia_createLiveStream(int type);
 返回值   : 返回值 0：成功  -1：初始化资源失败 -2：已经在直播或推流  -3：连接失败  -4：建立流失败
 */
 ECMEDIA_API int  ECMedia_playLiveStream(void *handle, const char * url, void *renderView, onLiveStreamVideoResolution callback);
-/*
-功能     : 设置直播推流的视频来源
-参数     : [IN]  handle		： 句柄
-[IN]  video_source			：视频来源 0 摄像头 1 是桌面
-*/
-ECMEDIA_API void ECMedia_SetLiveVideoSource(void *handle, int video_source);
 
 /*
 功能     : 开始直播推流
@@ -661,6 +655,30 @@ ECMEDIA_API int  ECMedia_setVideoProfileLiveStream(void *handle,int cameraIndex,
 			 [IN]  callback	 : 回调
 */
 ECMEDIA_API void ECMedia_setLiveStreamNetworkCallBack(void *handle, onLiveStreamNetworkStatusCallBack callback);
+/*
+功能     : 设置直播推流的视频来源
+参数     : [IN]   handle	： 句柄
+		   [OUT]  windows	：windows 数组指针
+		   返回值： 窗口个数
+*/
+ECMEDIA_API int ECMedia_GetShareWindows(void *handle, WindowShare ** windows);
+
+/*
+功能     : 设置直播推流的视频来源
+参数     : [IN]  handle	： 句柄
+[		   [IN]  type	： 0 桌面 1 窗口
+           [IN]  id		： 对于的桌面或者窗口id
+返回值： 窗口个数
+*/
+ECMEDIA_API int ECMedia_SelectShareWindow(void *handle, int type , int id);
+
+/*
+功能     : 设置直播推流的视频来源
+参数     : [IN]  handle		： 句柄
+		   [IN]  video_source			：视频来源 0 摄像头 1 是桌面
+*/
+ECMEDIA_API void ECMedia_SetLiveVideoSource(void *handle, int video_source);
+
 
 #ifdef __cplusplus
 }

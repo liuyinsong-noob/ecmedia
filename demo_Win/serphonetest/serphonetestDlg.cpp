@@ -7,6 +7,7 @@
 #include "afxdialogex.h"
 #include "CCPClient.h"
 #include "CCPClient_Internal.h"
+#include "../ECMedia/interface/ECMedia.h"
 
 //#include "minIni.h"
 
@@ -23,7 +24,6 @@
 
 
 #define TIMER_STATISTICS 2
-
 
 typedef unsigned long cctestthread;
 int cc_test_createthread(cctestthread& t, void *(*f) (void *), void* p)
@@ -428,6 +428,7 @@ void CserphonetestDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_VIDEO_PROTECTION_MODE, m_videoProtectionMode);
 	DDX_Text(pDX, IDC_LIVE_URL, m_live_url);
 	DDX_Control(pDX, IDC_VIDEO_SOURCE, m_video_source);
+	DDX_Control(pDX, IDC_SHARE_WINDOW, m_share_windows);
 }
 
 BEGIN_MESSAGE_MAP(CserphonetestDlg, CDialogEx)
@@ -480,6 +481,8 @@ ON_BN_CLICKED(IDC_STOP_LIVE, &CserphonetestDlg::OnBnClickedStopLive)
 ON_EN_CHANGE(IDC_LIVE_URL, &CserphonetestDlg::OnEnChangeLiveUrl)
 
 ON_BN_CLICKED(IDC_PUSH_STREAM, &CserphonetestDlg::OnBnClickedPushStream)
+ON_CBN_SELCHANGE(IDC_SHARE_WINDOW, &CserphonetestDlg::OnCbnSelchangeShareWindow)
+ON_CBN_DROPDOWN(IDC_SHARE_WINDOW, &CserphonetestDlg::OnCbnDropdownShareWindow)
 END_MESSAGE_MAP()
 
 
@@ -1005,7 +1008,7 @@ void CserphonetestDlg::OnBnClickedButton8()
 	//setSrtpEnabled(false, true, true, 2, "12345678901234567890123456789012345678901234");
 }
 
-extern _declspec(dllimport) void PrintConsole(const char * fmt, ...);
+_declspec(dllimport) void  _stdcall PrintConsole(const char * fmt, ...);
 void CserphonetestDlg::OnBnClickedButton9()
 {
 	// TODO: 在此添加控件通知处理程序代码
@@ -1549,6 +1552,25 @@ void CserphonetestDlg::OnBnClickedPlayStream()
 void CserphonetestDlg::OnCbnSelchangeVideoSource()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	this->UpdateData(true);
+	int i = m_video_source.GetCurSel();
+	if (i == 1) { //share desktop
+		if (!g_rtmpLiveStreamHandle) {
+			g_rtmpLiveStreamHandle = createLiveStream();
+		}
+		int m = m_share_windows.GetCount();
+		m_share_windows.ResetContent();
+		WindowShare *windows;
+		int num = getShareWindows(g_rtmpLiveStreamHandle, &windows);
+		for (int i = 0; i < num; i++) {
+			m_share_windows.AddString(TransformUTF8ToUnicodeM(windows[i].title));
+			PrintConsole("add new %d  id %d\n", i, windows[i].id);
+		}
+		
+	}
+	else if (i == 0) {
+		m_share_windows.ResetContent();
+	}
 }
 
 
@@ -1594,4 +1616,28 @@ void CserphonetestDlg::OnBnClickedPushStream()
 	USES_CONVERSION;
 	char* url = T2A(m_live_url.GetBuffer(0));
 	pushLiveStream(g_rtmpLiveStreamHandle, url, rcwnd->GetSafeHwnd());
+}
+
+
+void CserphonetestDlg::OnCbnSelchangeShareWindow()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	this->UpdateData(true);
+	if (g_rtmpLiveStreamHandle) {
+
+		WindowShare *windows;
+		int index = m_share_windows.GetCurSel();
+		int num = getShareWindows(g_rtmpLiveStreamHandle, &windows);
+		if (index < num) {
+			selectShareWindow(g_rtmpLiveStreamHandle, windows[index].type, windows[index].id);
+			PrintConsole(" select index %d  id %d\n", index, windows[index].id);
+		}
+	}
+}
+
+
+void CserphonetestDlg::OnCbnDropdownShareWindow()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	OnCbnSelchangeVideoSource();
 }
