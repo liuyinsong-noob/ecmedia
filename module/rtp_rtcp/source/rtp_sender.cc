@@ -22,7 +22,7 @@
 #include "trace.h"
 
 namespace cloopenwebrtc {
-
+    extern int printTime();
 // Max in the RFC 3550 is 255 bytes, we limit it to be modulus 32 for SRTP.
 const size_t kMaxPaddingLength = 224;
 const int kSendSideDelayWindowMs = 1000;
@@ -155,6 +155,7 @@ RTPSender::RTPSender(int32_t id,
     _keepAliveIsActive(false),
     _keepAlivePayloadType(-1),
     _keepAliveLastSent(0),
+    _lastSent(0),
     _keepAliveDeltaTimeSend(0),
     _last_capture_timestamp(0){
   memset(nack_byte_count_times_, 0, sizeof(nack_byte_count_times_));
@@ -168,6 +169,7 @@ RTPSender::RTPSender(int32_t id,
   sequence_number_rtx_ = static_cast<uint16_t>(rand() + 1) & 0x7FFF;
   sequence_number_ = static_cast<uint16_t>(rand() + 1) & 0x7FFF;
 
+    _lastSent = clock_->TimeInMicroseconds();
   if (audio) {
     audio_ = new RTPSenderAudio(id, clock_, this);
     audio_->RegisterAudioCallback(audio_feedback);
@@ -697,6 +699,7 @@ int32_t RTPSender::ReSendPacket(uint16_t packet_id, int64_t min_resend_time) {
 }
 
 bool RTPSender::SendPacketToNetwork(const uint8_t *packet, size_t size, int sn) {
+    
   int bytes_sent = -1;
   if (transport_) {
     bytes_sent = transport_->SendPacket(id_, packet, size, sn);
@@ -708,6 +711,7 @@ bool RTPSender::SendPacketToNetwork(const uint8_t *packet, size_t size, int sn) 
     LOG(LS_WARNING) << "Transport failed to send packet";
     return false;
   }
+  _lastSent = clock_->TimeInMicroseconds();
   return true;
 }
 
@@ -1011,9 +1015,7 @@ RTPSender::TimeToSendRTPKeepalive() const
     
     bool timeToSend(false);
     
-    WebRtc_Word64 dT = clock_->TimeInMicroseconds() - _keepAliveLastSent;
-    
-//    printTime();printf("sean haha dT %lld\n",dT);
+    WebRtc_Word64 dT = clock_->TimeInMicroseconds() - _lastSent;
     
     if (dT > _keepAliveDeltaTimeSend)
     {
@@ -1128,6 +1130,7 @@ int32_t RTPSender::SendToNetwork(
   if (paced_sender_ && storage != kDontStore) {
     // Correct offset between implementations of millisecond time stamps in
     // TickTime and Clock.
+      
     int64_t corrected_time_ms = capture_time_ms + clock_delta_ms_;
     if (!paced_sender_->SendPacket(priority, rtp_header.ssrc,
                                    rtp_header.sequenceNumber, corrected_time_ms,
@@ -1146,12 +1149,14 @@ int32_t RTPSender::SendToNetwork(
   if (capture_time_ms > 0) {
     UpdateDelayStatistics(capture_time_ms, now_ms);
   }
+    
   size_t length = payload_length + rtp_header_length;
   if (!SendPacketToNetwork(buffer, length, rtp_header.sequenceNumber))
     return -1;
   {
     CriticalSectionScoped lock(send_critsect_);
     media_has_been_sent_ = true;
+      _lastSent = clock_->TimeInMicroseconds();
   }
   UpdateRtpStats(buffer, length, rtp_header, false, false);
   return 0;

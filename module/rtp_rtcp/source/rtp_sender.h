@@ -295,6 +295,7 @@ private:
     bool                      _keepAliveIsActive;
     int8_t              _keepAlivePayloadType;
     uint64_t            _keepAliveLastSent;
+    uint64_t            _lastSent;
     uint32_t            _keepAliveDeltaTimeSend;
     uint32_t				_last_capture_timestamp;
     
