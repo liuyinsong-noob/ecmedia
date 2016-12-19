@@ -155,6 +155,9 @@ static void media_init_print_log()
 
 static void media_uninit_print_log()
 {
+    if (!g_printConsole_lock) {
+        return;
+    }
 	{
 		cloopenwebrtc::CriticalSectionScoped lock(g_printConsole_lock);
 		if (g_media_interface_fp)
@@ -340,6 +343,9 @@ int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level)
 }
 int ECMedia_un_trace()
 {
+    if (!g_media_TraceFlag) {
+        return -1;
+    }
 	g_media_TraceFlag = false;//
 	media_uninit_print_log();
 	Trace::ReturnTrace();
