@@ -339,6 +339,7 @@ int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level)
 		}
 	}
     Trace::set_level_filter(nLevel);
+    PrintConsole("[ECMEDIA INFO] %s end.",__FUNCTION__);
     return 0;
 }
 int ECMedia_un_trace()
@@ -400,6 +401,7 @@ int ECMedia_init_video()
 		videobase->SetVoiceEngine(m_voe);
 	}
     videobase->Release();
+    PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 #endif
     return 0;
 }
@@ -414,7 +416,10 @@ int ECMedia_uninit_video()
 #ifdef VIDEO_ENABLED
     PrintConsole("media_uninit_video called in\n");
     if(!m_vie)
+    {
+        PrintConsole("[ECMEDIA WARNNING] %s failed.",__FUNCTION__);
         return -99;
+    }
     ViEBase* videobase = ViEBase::GetInterface(m_vie);
     if ( videobase)
     {
@@ -455,6 +460,7 @@ int ECMedia_ring_stop(int& channelid)
         base->Release();
         channelid = -1;
     }
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
     return 0;
 }
 
@@ -465,6 +471,7 @@ int ECMedia_ring_start(int& channelid, const char *filename, bool loop)
     PrintConsole("[ECMEDIA INFO] %s begins... filename:%s loop:%s",__FUNCTION__, filename, loop?"true":"false");
     FILE *fp  = fopen(filename,"r") ;
     if( fp == NULL ) {
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
         return 0;
     }
     fclose(fp);
@@ -496,7 +503,7 @@ int ECMedia_ring_start(int& channelid, const char *filename, bool loop)
         base->Release();
         file->Release();
     }
-
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
     return 0;
 }
 
@@ -542,6 +549,7 @@ int ECMedia_init_audio()
 		viebase->SetVoiceEngine(m_voe);
 		viebase->Release();
 	}
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
     return 0;
 }
 
@@ -550,6 +558,7 @@ int ECMedia_uninit_audio()
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     if( !m_voe)
     {
+        PrintConsole("[ECMEDIA WARNNING] %s failed with error code: %d.", __FUNCTION__ , -99);
         return -99;
     }
     VoEBase* base = VoEBase::GetInterface(m_voe);
@@ -566,6 +575,7 @@ int ECMedia_uninit_audio()
         delete g_VoeObserver;
         g_VoeObserver = NULL;
     }
+    PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
     return 0;
 }
 
@@ -578,6 +588,7 @@ int ECMedia_audio_create_channel(int& channelid, bool is_video)
         if (base) {
             channelid = base->CreateChannel();
             base->Release();
+            PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
             return 0;
         }
         else
@@ -604,6 +615,7 @@ int ECMedia_audio_create_channel(int& channelid, bool is_video)
 				//rtp_rtcp->SetReceiveAbsoluteSendTimeStatus(channelid, true, kRtpExtensionAbsoluteSendTime);
 			}
 			rtp_rtcp->Release();
+            PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
             return 0;
         }
         else
@@ -651,6 +663,7 @@ int ECMedia_delete_channel(int& channelid, bool is_video)
                 PrintConsole("[ECMEDIA WARNNING] failed to delete channel:%d, ret:%d",channelid,ret);
             }
             base->Release();
+            PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
             return ret;
         }
         else
@@ -674,6 +687,7 @@ int ECMedia_delete_channel(int& channelid, bool is_video)
                 PrintConsole("[ECMEDIA WARNNING] failed to delete channel:%d, ret:%d",channelid,ret);
             }
             base->Release();
+            PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
             return ret;
         }
         else
@@ -694,6 +708,7 @@ int ECMedia_set_local_receiver(int channelid, int rtp_port, int rtcp_port)
     if (base) {
         int ret = base->SetLocalReceiver(channelid, rtp_port, rtcp_port);
         base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -712,6 +727,7 @@ int ECMedia_audio_set_send_destination(int channelid, int rtp_port, const char *
     if (base) {
         int ret = base->SetSendDestination(channelid, rtp_port, rtp_addr,source_port, rtcp_port);
         base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else{
@@ -729,6 +745,7 @@ int ECMedia_video_start_receive(int channelid)
     if (base) {
         int ret = base->StartReceive(channelid);
         base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -747,6 +764,7 @@ int ECMedia_video_stop_receive(int channelid)
     if (base) {
         int ret = base->StopReceive(channelid);
         base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -765,6 +783,7 @@ int ECMedia_video_start_send(int channelid)
     if (base) {
         int ret = base->StartSend(channelid);
         base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -783,6 +802,7 @@ int ECMedia_video_stop_send(int channelid)
     if (base) {
         int ret = base->StopSend(channelid);
         base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -800,6 +820,7 @@ int ECMedia_audio_start_playout(int channelid)
     if (base) {
         base->StartPlayout(channelid);
         base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
         return 0;
     }
 	else
@@ -817,6 +838,7 @@ int ECMedia_audio_stop_playout(int channelid)
     if (base) {
         base->StopPlayout(channelid);
         base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
         return 0;
     }
     else
@@ -833,6 +855,7 @@ int ECMedia_audio_start_record()
     if (base) {
         base->StartRecord();
         base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
         return 0;
     }
     else
@@ -850,6 +873,7 @@ int ECMedia_audio_stop_record()
     if (base) {
         base->StopRecord();
         base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
         return 0;
     }
     else
@@ -891,6 +915,7 @@ int ECMedia_send_dtmf(int channelid, const char dtmfch)
         dtmf->SendTelephoneEvent(channelid, playtone,true);
         dtmf->PlayDtmfTone(playtone);
         dtmf->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
         return 0;
     }
     else
@@ -910,6 +935,7 @@ int ECMedia_set_dtmf_cb(int channelid, onEcMediaReceivingDtmf dtmf_cb)
     if (base) {
         base->SetDtmfCb(channelid, dtmf_cb);
         base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
         return 0;
     }
     else
@@ -926,6 +952,7 @@ int ECMedia_set_media_packet_timeout_cb(int channelid, onEcMediaPacketTimeout me
     if (base) {
         base->SetMediaTimeoutCb(channelid, media_timeout_cb);
         base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
         return 0;
     }
     else
@@ -944,6 +971,7 @@ int ECMedia_set_stun_cb(int channelid, onEcMediaStunPacket stun_cb)
     if (base) {
         base->SetStunCb(channelid, stun_cb);
         base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
         return 0;
     }
     else
@@ -962,6 +990,7 @@ int ECMedia_set_audio_data_cb(int channelid, onEcMediaAudioData audio_data_cb)
     if (base) {
         base->SetAudioDataCb(channelid, audio_data_cb);
         base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
         return 0;
     }
     else
@@ -979,6 +1008,7 @@ int ECMedia_set_video_data_cb(int channelid, onEcMediaVideoDataV video_data_cb)
 	if (network) {
 		network->setVideoDataCb(channelid, video_data_cb);
 		network->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
 		return 0;
 	}
 	else
@@ -1000,6 +1030,7 @@ int ECMedia_set_voe_cb(int channelid, onVoeCallbackOnError voe_callback_cb)
         g_VoeObserver->SetCallback(channelid, voe_callback_cb);
         base->RegisterVoiceEngineObserver(*g_VoeObserver);
         base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
         return 0;
     }
     else
@@ -1019,6 +1050,7 @@ int ECMedia_sendRaw(int channelid, int8_t *data, uint32_t length, int32_t isRTCP
     if (base) {
         int ret=base->SendRaw(channelid, data, length, isRTCP, port, ip);
         base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1037,6 +1069,7 @@ int ECMedia_audio_start_receive(int channelid)
     if (base) {
         base->StartReceive(channelid);
         base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
         return 0;
     }
     else
@@ -1055,6 +1088,7 @@ int ECMedia_audio_stop_receive(int channelid)
     if (base) {
         base->StopReceive(channelid);
         base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
         return 0;
     }
     else
@@ -1073,6 +1107,7 @@ int ECMedia_audio_start_send(int channelid)
     if (base) {
         base->StartSend(channelid);
         base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
         return 0;
     }
     else
@@ -1091,6 +1126,7 @@ int ECMedia_audio_stop_send(int channelid)
     if (base) {
         base->StopSend(channelid);
         base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
         return 0;
     }
     else
@@ -1114,6 +1150,7 @@ int ECMedia_DeRegister_voice_engine_observer()
     if (base) {
         base->DeRegisterVoiceEngineObserver();
         base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
         return 0;
     }
     else
@@ -1134,6 +1171,7 @@ int ECMedia_set_AgcStatus(bool agc_enabled, cloopenwebrtc::AgcModes agc_mode)
     if (audio) {
         int ret = audio->SetAgcStatus(agc_enabled, agc_mode);
         audio->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1151,6 +1189,7 @@ int ECMedia_set_EcStatus(bool ec_enabled, cloopenwebrtc::EcModes ec_mode)
     if (audio) {
         int ret = audio->SetEcStatus(ec_enabled, ec_mode);
         audio->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1168,38 +1207,7 @@ int ECMedia_set_NsStatus(bool ns_enabled, cloopenwebrtc::NsModes ns_mode)
     if (audio) {
         int ret = audio->SetNsStatus(ns_enabled, cloopenwebrtc::kNsVeryHighSuppression);
         audio->Release();
-        return ret;
-    }
-    else
-    {
-        PrintConsole("[ECMEDIA WARNNING] failed to get VoEAudioProcessing, %s",__FUNCTION__);
-        return -99;
-    }
-}
-int ECMedia_set_SetAecmMode(cloopenwebrtc::AecmModes aecm_mode, bool cng_enabled)
-{
-	PrintConsole("[ECMEDIA INFO] %s begins. aecm_mode=%d cng_enabled=%s",__FUNCTION__, aecm_mode, cng_enabled?"true":"false");
-	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	VoEAudioProcessing *audio = VoEAudioProcessing::GetInterface(m_voe);
-	if (audio) {
-		int ret = audio->SetAecmMode(aecm_mode,  cng_enabled);
-		audio->Release();
-		return ret;
-	}
-	else
-	{
-		PrintConsole("[ECMEDIA WARNNING] failed to get VoEAudioProcessing, %s",__FUNCTION__);
-		return -99;
-	}
-}
-int ECMedia_EnableHowlingControl(bool enabled)
-{
-    PrintConsole("[ECMEDIA INFO] %s begins... enabled:%s",__FUNCTION__, enabled?"true":"false");
-    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-    VoEAudioProcessing *audio = VoEAudioProcessing::GetInterface(m_voe);
-    if (audio) {
-        int ret = audio->EnableHowlingControl(enabled);
-        audio->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1209,6 +1217,41 @@ int ECMedia_EnableHowlingControl(bool enabled)
     }
 }
 
+int ECMedia_set_SetAecmMode(cloopenwebrtc::AecmModes aecm_mode, bool cng_enabled)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins. aecm_mode=%d cng_enabled=%s",__FUNCTION__, aecm_mode, cng_enabled?"true":"false");
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	VoEAudioProcessing *audio = VoEAudioProcessing::GetInterface(m_voe);
+	if (audio) {
+		int ret = audio->SetAecmMode(aecm_mode,  cng_enabled);
+		audio->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get VoEAudioProcessing, %s",__FUNCTION__);
+		return -99;
+	}
+}
+
+int ECMedia_EnableHowlingControl(bool enabled)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins... enabled:%s",__FUNCTION__, enabled?"true":"false");
+    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    VoEAudioProcessing *audio = VoEAudioProcessing::GetInterface(m_voe);
+    if (audio) {
+        int ret = audio->EnableHowlingControl(enabled);
+        audio->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to get VoEAudioProcessing, %s",__FUNCTION__);
+        return -99;
+    }
+}
 
 int ECMedia_IsHowlingControlEnabled(bool &enabled)
 {
@@ -1218,6 +1261,7 @@ int ECMedia_IsHowlingControlEnabled(bool &enabled)
     if (audio) {
         enabled = audio->IsHowlingControlEnabled();
         audio->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
         return 0;
     }
     else
@@ -1226,7 +1270,6 @@ int ECMedia_IsHowlingControlEnabled(bool &enabled)
         return -99;
     }
 }
-
 
 /*
  * NETWORK
@@ -1241,6 +1284,7 @@ int ECMedia_set_packet_timeout_noti(int channel, int timeout)
         int ret = 0;
         ret = network->SetPacketTimeoutNotification(channel, true, timeout);
         network->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1259,6 +1303,7 @@ int ECMedia_get_packet_timeout_noti(int channel, bool& enabled, int& timeout)
         int ret = 0;
 //        ret = network->GetPacketTimeoutNotification(channel, enabled, timeout);
         network->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1317,6 +1362,7 @@ int ECMedia_get_network_statistic(int channelid_audio, int channelid_video, long
     *sendTotalWifi = voe_send_total_wifi + vie_send_total_wifi;
     *recvTotalSim = voe_recv_total_sim + vie_recv_total_sim;
     *recvTotalWifi = voe_recv_total_wifi + vie_recv_total_wifi;
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
     return 0;
 }
 
@@ -1330,6 +1376,7 @@ int ECMedia_video_set_local_receiver(int channelid, int rtp_port, int rtcp_port)
     if (network) {
         int ret = network->SetLocalReceiver(channelid, rtp_port, rtcp_port);
         network->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1338,6 +1385,7 @@ int ECMedia_video_set_local_receiver(int channelid, int rtp_port, int rtcp_port)
         return -99;
     }
 }
+
 int ECMedia_video_set_send_destination(int channelid, const char *rtp_addr, int rtp_port, int rtcp_port)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... rtp_addr:%s rtp_port:%d rtcp_port:%d",__FUNCTION__, rtp_addr, rtp_port, rtcp_port);
@@ -1346,6 +1394,7 @@ int ECMedia_video_set_send_destination(int channelid, const char *rtp_addr, int 
     if (network) {
         int ret = network->SetSendDestination(channelid, rtp_addr, rtp_port, rtcp_port);
         network->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1363,6 +1412,7 @@ int ECMedia_set_MTU(int channelid, int mtu)
     if (network) {
         int ret = network->SetMTU(channelid, mtu);
         network->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1386,6 +1436,7 @@ int ECMedia_set_video_rtp_keepalive(int channelid, bool enable, int interval, in
         int ret=0;
         ret = rtp_rtcp->SetRTPKeepAliveStatus(channelid, enable, payloadType, interval);
         rtp_rtcp->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1407,6 +1458,7 @@ int ECMedia_set_audio_rtp_keepalive(int channelid, bool enable, int interval, in
 		int ret = 0;
 		ret = rtp_rtcp->SetRTPKeepAliveStatus(channelid, enable, payloadType, interval);
 		rtp_rtcp->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 		return ret;
 	}
 	else
@@ -1424,6 +1476,7 @@ int ECMedia_set_NACK_status(int channelid, bool enabled)
     if (rtp_rtcp) {
         int ret = rtp_rtcp->SetNACKStatus(channelid, enabled);
         rtp_rtcp->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1441,6 +1494,7 @@ int ECMedia_set_RTCP_status(int channelid)
     if (rtp_rtcp) {
         int ret = rtp_rtcp->SetRTCPStatus(channelid, true);
         rtp_rtcp->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1500,6 +1554,7 @@ int ECMedia_get_media_statistics(int channelid, bool is_video, MediaStatisticsIn
         }
     }
 #endif
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
     return 0;
 }
 
@@ -1534,6 +1589,7 @@ int ECMedia_start_rtp_dump(int channelid, bool is_video, const char *file, RTPDi
         rtp_rtcp->Release();
     }
 #endif
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
     return ret;
 }
 
@@ -1568,6 +1624,7 @@ int ECMedia_stop_rtp_dump(int channelid, bool is_video, RTPDirections dir)
         rtp_rtcp->Release();
     }
 #endif
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
     return ret;
 }
 
@@ -1584,6 +1641,7 @@ int ECMedia_get_playout_device_num(int& speaker_count)
         int ret = 0;
         ret = hardware->GetNumOfPlayoutDevices(speaker_count);
         hardware->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1615,6 +1673,7 @@ int ECMedia_get_specified_playout_device_info(int index, char *name, char *guid)
         }
         ret = hardware->GetPlayoutDeviceName(index, name, guid);
         hardware->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1645,6 +1704,7 @@ int ECMedia_select_playout_device(int index)
         }
         ret = hardware->SetPlayoutDevice(index);
         hardware->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1664,6 +1724,7 @@ int ECMedia_get_record_device_num(int& microphone_count)
         int ret = 0;
         ret = hardware->GetNumOfRecordingDevices(microphone_count);
         hardware->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1695,6 +1756,7 @@ int ECMedia_get_specified_record_device_info(int index, char *name, char *guid)
         }
         ret = hardware->GetRecordingDeviceName(index, name, guid);
         hardware->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1725,6 +1787,7 @@ int ECMedia_select_record_device(int index)
         }
         ret = hardware->SetRecordingDevice(index);
         hardware->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1744,6 +1807,7 @@ int ECMedia_set_loudspeaker_status(bool enabled)
         int ret = 0;
         ret = hardware->SetLoudspeakerStatus(enabled);
         hardware->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1779,6 +1843,7 @@ int ECMedia_reset_audio_device()
     if (hardware) {
         int ret = hardware->ResetAudioDevice();
         hardware->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1875,8 +1940,9 @@ int ECMedia_set_speaker_volume(int volumep)
     if (volume) {
         int ret = 0;
         ret = volume->SetSpeakerVolume(volumep);
-        return ret;
         volume->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
+        return ret;
     }
     else
     {
@@ -1894,6 +1960,7 @@ int ECMedia_get_speaker_volume(unsigned int& volumep)
         int ret = 0;
         ret = volume->GetSpeakerVolume(volumep);
         volume->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1911,6 +1978,7 @@ int ECMedia_set_mute_status(bool mute)
     if (volume) {
         int ret = volume->SetSystemInputMute(mute);
         volume->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1928,6 +1996,7 @@ int ECMedia_get_mute_status(bool& mute)
     if (volume) {
         int ret = volume->GetSystemInputMute(mute);
         volume->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1945,6 +2014,7 @@ int ECMedia_set_speaker_mute_status(bool mute)
     if (volume) {
         int ret = volume->SetSystemOutputMute(mute);
         volume->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1962,6 +2032,7 @@ int ECMedia_get_speaker_mute_status(bool& mute)
     if (volume) {
         int ret = volume->GetSystemOutputMute(mute);
         volume->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -1970,6 +2041,7 @@ int ECMedia_get_speaker_mute_status(bool& mute)
         return -99;
     }
 }
+
 /*
  * Capture
  */
@@ -1982,6 +2054,7 @@ int ECMdeia_num_of_capture_devices()
     if (capture) {
         int num = capture->NumberOfCaptureDevices();
         capture->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, num);
         return num;
     }
     else
@@ -2000,6 +2073,7 @@ int ECMedia_get_capture_device(int index, char *name, int name_len, char *id, in
     if (capture) {
         int ret = capture->GetCaptureDevice(index, name, name_len, id, id_len);
         capture->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -2018,6 +2092,7 @@ int ECMedia_num_of_capabilities(const char *id, int id_len)
     if (caputure) {
         int num = caputure->NumberOfCapabilities(id, id_len);
         caputure->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, num);
         return num;
     }
     else
@@ -2040,6 +2115,7 @@ int ECMedia_get_capture_capability(const char *id, int id_len, int index, Camera
         capabilityp.width = capability.width;
         capabilityp.maxfps = capability.maxFPS;
         caputure->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -2057,6 +2133,7 @@ int ECMedia_allocate_capture_device(const char *id, size_t len, int& deviceid)
     if (capture) {
         int ret = capture->AllocateCaptureDevice(id, (unsigned int)len, deviceid);
         capture->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -2074,6 +2151,7 @@ int ECMedia_connect_capture_device(int deviceid, int channelid)
     if (capture) {
         int ret = capture->ConnectCaptureDevice(deviceid, channelid);
         capture->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -2094,6 +2172,7 @@ int ECMedia_getOrientation(const char *id, ECMediaRotateCapturedFrame &tr)
         int ret = capture->GetOrientation(id, tmp_tr);
         tr = (ECMediaRotateCapturedFrame)tmp_tr;
         capture->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -2112,6 +2191,7 @@ int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame 
     if (capture) {
         int ret = capture->SetRotateCapturedFrames(deviceid, (RotateCapturedFrame)tr);
         capture->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -2134,6 +2214,7 @@ int ECMedia_start_capture(int deviceid, CameraCapability cam)
 		//capture->EnableBrightnessAlarm(deviceid, true); //ylr for test 
         int ret = capture->StartCapture(deviceid, cap);
         capture->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -2141,7 +2222,6 @@ int ECMedia_start_capture(int deviceid, CameraCapability cam)
         PrintConsole("[ECMEDIA WARNNING] failed to get ViECapture, %s",__FUNCTION__);
         return -99;
     }
-
 }
 
 int ECMedia_set_local_video_window(int deviceid, void *video_window)
@@ -2156,6 +2236,7 @@ int ECMedia_set_local_video_window(int deviceid, void *video_window)
         ret = render->AddRenderer(deviceid,video_window,1,0,0,1,1,NULL);
         if (ret) {
             render->Release();
+            PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
             return ret;
         }
         ret = render->StartRender(deviceid);
@@ -2164,6 +2245,7 @@ int ECMedia_set_local_video_window(int deviceid, void *video_window)
         ret = capture->SetLocalVideoWindow(deviceid, video_window);
         capture->Release();
 #endif
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -2182,6 +2264,7 @@ int ECMedia_stop_capture(int captureid)
         capture->StopCapture(captureid);
         capture->ReleaseCaptureDevice(captureid);
         capture->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
         return 0;
     }
     else
@@ -2190,7 +2273,6 @@ int ECMedia_stop_capture(int captureid)
         return -99;
     }
 }
-
 
 /*
  * Render
@@ -2205,6 +2287,7 @@ int ECMedia_add_render(int channelid, void *video_window, ReturnVideoWidthHeight
         int ret = render->AddRenderer(channelid, video_window, 2, 0, 0, 1, 1, videoResolutionCallback);
         render->StartRender(channelid);
         render->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -2228,6 +2311,7 @@ int ECMedia_stop_render(int channelid, int deviceid)
 #endif
         render->Release();
     }
+    PrintConsole("[ECMEDIA INFO] %s ends",__FUNCTION__);
     return 0;
 }
 #endif
@@ -2244,6 +2328,7 @@ int ECMedia_num_of_supported_codecs_audio()
     if (codec) {
         int num = codec->NumOfCodecs();
         codec->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, num);
         return num;
     }
     else
@@ -2271,6 +2356,7 @@ int ECMedia_get_supported_codecs_audio(CodecInst codecs[])
         PrintConsole("[ECMEDIA WARNNING] failed to get VoECodec, %s",__FUNCTION__);
         return -99;
     }
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
     return 0;
 }
 #ifdef VIDEO_ENABLED
@@ -2282,6 +2368,7 @@ int ECMedia_num_of_supported_codecs_video()
     if (codec) {
         int num = codec->NumberOfCodecs();
         codec->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, num);
         return num;
     }
     else
@@ -2309,6 +2396,7 @@ int ECMedia_get_supported_codecs_video(VideoCodec codecs[])
         PrintConsole("[ECMEDIA WARNNING] failed to get ViECodec, %s",__FUNCTION__);
         return -99;
     }
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
     return 0;
 }
 
@@ -2326,6 +2414,7 @@ int ECMedia_set_key_frame_request_cb(int channelid, bool isVideoConf,onEcMediaRe
         PrintConsole("[ECMEDIA WARNNING] failed to get ViECodec, %s",__FUNCTION__);
         return -99;
     }
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
     return 0;
 }
 
@@ -2338,6 +2427,7 @@ int ECMedia_get_send_codec_audio(int channelid, CodecInst& audioCodec)
     if (codec) {
         int ret = codec->GetSendCodec(channelid, audioCodec);
         codec->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -2357,6 +2447,7 @@ int ECMedia_set_send_codec_audio(int channelid, CodecInst& audioCodec)
         audioCodec.plname);
         int ret = codec->SetSendCodec(channelid, audioCodec);
         codec->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -2377,6 +2468,7 @@ int ECMedia_set_receive_playloadType_audio(int channelid, CodecInst& audioCodec)
         audioCodec.plname);
         int ret = codec->SetRecPayloadType(channelid, audioCodec);
         codec->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -2394,6 +2486,7 @@ int ECMedia_get_receive_playloadType_audio(int channelid, CodecInst& audioCodec)
     if (codec) {
         int ret = codec->GetRecPayloadType(channelid, audioCodec);
         codec->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -2413,6 +2506,7 @@ int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
         videoCodec.plName);
         int ret = codec->SetSendCodec(channelid, videoCodec);
         codec->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -2432,6 +2526,7 @@ int ECMedia_get_send_codec_video(int channelid, VideoCodec& videoCodec)
         videoCodec.plName);
         int ret = codec->GetSendCodec(channelid, videoCodec);
         codec->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -2449,6 +2544,7 @@ int ECMedia_set_video_conf_cb(int channelid, onEcMediaVideoConference video_conf
     if (network) {
         network->setVideoConfCb(channelid, video_conf_cb);
         network->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
         return 0;
     }
     else
@@ -2466,6 +2562,7 @@ int ECMedia_set_stun_cb_video(int channelid, onEcMediaStunPacket stun_cb)
     if (network) {
         network->setStunCb(channelid, stun_cb);
         network->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
         return 0;
     }
     else
@@ -2483,6 +2580,7 @@ int ECMedia_set_receive_codec_video(int channelid, VideoCodec& videoCodec)
     if (codec) {
         int ret = codec->SetReceiveCodec(channelid, videoCodec);
         codec->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -2500,6 +2598,7 @@ int ECMedia_get_receive_codec_video(int channelid, VideoCodec& videoCodec)
     if (codec) {
         int ret = codec->GetReceiveCodec(channelid, videoCodec);
         codec->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -2522,6 +2621,7 @@ int ECMedia_sendUDPPacket(const int channelid,
     if (network) {
         int ret=network->SendUDPPacket(channelid, data, length, transmitted_bytes, use_rtcp_socket, port, ip);
         network->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -2538,6 +2638,7 @@ int ECMedia_set_NACK_status_video(int channelid, bool enabled)
     if (rtp_rtcp) {
         int ret = rtp_rtcp->SetNACKStatus(channelid, enabled);
         rtp_rtcp->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -2558,6 +2659,7 @@ int ECMedia_set_FEC_status_video(const int channelid,
 	if (rtp_rtcp) {
 		int ret = rtp_rtcp->SetFECStatus(channelid, enable, payload_typeRED, payload_typeFEC);
 		rtp_rtcp->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 		return ret;
 	}
 	else
@@ -2579,6 +2681,7 @@ int ECMedia_set_HybridNACKFEC_status_video(const int channelid,
 	if (rtp_rtcp) {
 		int ret = rtp_rtcp->SetHybridNACKFECStatus(channelid, enable, payload_typeRED, payload_typeFEC);
 		rtp_rtcp->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 		return ret;
 	}
 	else
@@ -2597,6 +2700,7 @@ int ECMedia_set_RTCP_status_video(int channelid, int mode)
     if (rtp_rtcp) {
         int ret = rtp_rtcp->SetRTCPStatus(channelid, (ViERTCPMode)mode);
         rtp_rtcp->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -2613,6 +2717,7 @@ int ECMedia_setVideoConferenceFlag(int channel,const char *selfSipNo ,const char
     if (network) {
         network->setVideoConferenceFlag(channel, selfSipNo, sipNo, conferenceNo, confPasswd, port, ip);
         network->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
         return 0;
     }
     else
@@ -2630,6 +2735,7 @@ int ECMedia_send_key_frame(int channel)
 	{
 		tempCodec->SendKeyFrame(channel);
 		tempCodec->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
 		return 0;
 	}else
     {
@@ -2646,6 +2752,7 @@ int ECMedia_video_EnableIPV6(int channel, bool flag)
     if (network) {
         int ret = network->EnableIPv6(channel);
          network->Release();
+         PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 		 return ret;
     }
     else
@@ -2663,10 +2770,15 @@ int ECMedia_video_IsIPv6Enabled(int channel)
     if (network) {
         bool ret = network->IsIPv6Enabled(channel);
         network->Release();
-		if (ret)
-			return 1; //support IPV6
+        if (ret) {
+            PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 1);
+            return 1; //support IPV6
+        }
 		else
-			return 0; // not support IPV6
+        {
+            PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
+            return 0; // not support IPV6
+        }
     }
     else
     {
@@ -2737,10 +2849,12 @@ int ECMedia_stop_record_screen(int audioChannel)
 	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel:%d",__FUNCTION__, audioChannel);
 
 	if(!g_recordVoip)
-		return -1;
+    {
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
+        return -1;
+    }
 
 	g_recordVoip->StopRecordScreen(0);
-
 	if(!g_recordVoip->isRecording() && m_voe) {
 		VoEExternalMedia* exmedia = VoEExternalMedia::GetInterface(m_voe);
 		if(exmedia) {
@@ -2753,6 +2867,7 @@ int ECMedia_stop_record_screen(int audioChannel)
 		delete g_recordVoip;
 		g_recordVoip = NULL;
 	}
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
     return 0;
 }
 
@@ -2797,15 +2912,19 @@ ECMEDIA_API int ECMedia_start_record_remote_video(int audioChannel, int videoCha
 			rtp_rtcp->Release();
 		}
 	}
-
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 	return ret;
 }
+
 ECMEDIA_API int ECMedia_stop_record_remote_video(int audioChannel, int videoChannel)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel:%d videoChannel:%d", __FUNCTION__, audioChannel, videoChannel);
 
 	if (!g_recordVoip)
-		return -1;
+    {
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
+        return -1;
+    }
 
 	g_recordVoip->StopRecordRemoteVideo(0);
 
@@ -2828,6 +2947,8 @@ ECMEDIA_API int ECMedia_stop_record_remote_video(int audioChannel, int videoChan
 		delete g_recordVoip;
 		g_recordVoip = NULL;
 	}
+    
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
 	return 0;
 }
 
@@ -2846,7 +2967,6 @@ ECMEDIA_API int ECMedia_start_record_local_video(int audioChannel, int videoChan
 	if (g_recordVoip->isStartRecordLVideo()) {
 		g_recordVoip->StopRecordLocalVideo(0);
 	}
-
 
 	if (!g_recordVoip->isRecording() && m_voe) {
 		PrintConsole("RegisterExternalMediaProcessin in %s\n", __FUNCTION__);
@@ -2873,14 +2993,17 @@ ECMEDIA_API int ECMedia_start_record_local_video(int audioChannel, int videoChan
 			codec->Release();
 		}
 	}
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 	return ret;
 }
 ECMEDIA_API int ECMedia_stop_record_local_video(int audioChannel, int videoChannel)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel:%d videoChannel:%d", __FUNCTION__, audioChannel, videoChannel);
 
-	if (!g_recordVoip)
-		return -1;
+    if (!g_recordVoip) {
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
+        return -1;
+    }
 
 	g_recordVoip->StopRecordLocalVideo(0);
 
@@ -2903,6 +3026,7 @@ ECMEDIA_API int ECMedia_stop_record_local_video(int audioChannel, int videoChann
 		delete g_recordVoip;
 		g_recordVoip = NULL;
 	}
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
 	return 0;
 }
 
@@ -2933,6 +3057,8 @@ int ECMedia_get_local_video_snapshot(int deviceid, unsigned char **buf, unsigned
 
 	 file->FreePicture(capPicture);
 	 file->Release();
+    
+     PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
 	 return 0;
 }
 
@@ -2950,6 +3076,7 @@ int ECMedia_save_local_video_snapshot(int deviceid, const char* filePath)
 			return -1;
 		}
 		file->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
 		return 0;
 	}
 	PrintConsole("[ECMEDIA Error] %s  get ViEFile failed.",__FUNCTION__);
@@ -2982,6 +3109,7 @@ int ECMedia_get_remote_video_snapshot(int channelid, unsigned char **buf, unsign
 
     file->FreePicture(capPicture);
     file->Release();
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
 	return 0;
 }
 
@@ -3013,6 +3141,7 @@ int ECmedia_enable_deflickering(int captureid, bool enable)
     if (imageProcess) {
         int ret = imageProcess->EnableDeflickering(captureid, enable);
         imageProcess->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -3030,6 +3159,7 @@ int ECmedia_enable_EnableColorEnhancement(int channelid, bool enable)
     if (imageProcess) {
         int ret = imageProcess->EnableColorEnhancement(channelid, enable);
         imageProcess->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -3047,6 +3177,7 @@ int ECmedia_enable_EnableDenoising(int captureid, bool enable)
     if (imageProcess) {
         int ret = imageProcess->EnableDenoising(captureid, enable);
         imageProcess->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -3064,6 +3195,7 @@ int ECmedia_enable_EnableBrightnessAlarm(int captureid, bool enable)
     if (capture) {
         int ret = capture->EnableBrightnessAlarm(captureid, enable);
         capture->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -3081,8 +3213,10 @@ int ECMedia_init_srtp_video(int channel)
 	if (encryt) {
 		int ret = encryt->CcpSrtpInit(channel);
 		encryt->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 		return ret;
 	}
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
 	return -1;
 }
 int ECMedia_shutdown_srtp_video(int channel)
@@ -3093,8 +3227,10 @@ int ECMedia_shutdown_srtp_video(int channel)
 	if (encryt) {
 		int ret = encryt->CcpSrtpShutdown(channel);
 		encryt->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 		return ret;
 	}
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
 	return -1;
 }
 
@@ -3106,8 +3242,10 @@ int ECMedia_enable_srtp_send_video(int channel, cloopenwebrtc::ccp_srtp_crypto_s
 	if (encryt) {
 		int ret = encryt->EnableSRTPSend(channel, crypt_type, key);
 		encryt->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 		return ret;
 	}
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
 	return -1;
 }
 int ECMedia_disable_srtp_send_video(int channel)
@@ -3118,8 +3256,10 @@ int ECMedia_disable_srtp_send_video(int channel)
 	if (encryt) {
 		int ret = encryt->DisableSRTPSend(channel);
 		encryt->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 		return ret;
 	}
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
 	return -1;
 }
 
@@ -3131,8 +3271,10 @@ int ECMedia_enable_srtp_recv_video(int channel, cloopenwebrtc::ccp_srtp_crypto_s
 	if (encryt) {
 		int ret = encryt->EnableSRTPReceive(channel, crypt_type, key);
 		encryt->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 		return ret;
 	}
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
 	return -1;
 }
 int ECMedia_disable_srtp_recv_video(int channel)
@@ -3143,8 +3285,10 @@ int ECMedia_disable_srtp_recv_video(int channel)
 	if (encryt) {
 		int ret = encryt->DisableSRTPReceive(channel);
 		encryt->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 		return ret;
 	}
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
 	return -1;
 }
 
@@ -3158,6 +3302,7 @@ int ECMedia_set_VAD_status(int channelid, VadModes mode, bool dtx_enabled)
     if (codec) {
         int ret = codec->SetVADStatus(channelid, false, mode, !dtx_enabled);
         codec->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -3191,6 +3336,7 @@ int ECMedia_set_network_type(int audio_channelid, int video_channelid, const cha
     }
 
 #endif
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
     return 0;
 }
 
@@ -3203,6 +3349,7 @@ int ECMedia_EnableIPV6(int channel, bool flag)
     if (network) {
         int ret = network->EnableIPv6(channel);
          network->Release();
+         PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 		 return ret;
     }
     else
@@ -3220,10 +3367,15 @@ int ECMedia_IsIPv6Enabled(int channel)
     if (network) {
 		bool ret = network->IPv6IsEnabled(channel);
         network->Release();
-		if (ret)
-			return 1; //support IPV6
+        if (ret) {
+            PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 1);
+            return 1; //support IPV6
+        }
 		else
-			return 0; // not support IPV6
+        {
+            PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
+            return 0; // not support IPV6
+        }
     }
     else
     {
@@ -3273,8 +3425,10 @@ int ECMedia_init_srtp_audio(int channel)
 	if (encryt) {
 		int ret = encryt->CcpSrtpInit(channel);
 		encryt->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 		return ret;
 	}
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
 	return -1;
 }
 int ECMedia_shutdown_srtp_audio(int channel) 
@@ -3285,8 +3439,10 @@ int ECMedia_shutdown_srtp_audio(int channel)
 	if (encryt) {
 		int ret = encryt->CcpSrtpShutdown(channel);
 		encryt->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 		return ret;
 	}
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
 	return -1;
 }
 
@@ -3299,8 +3455,10 @@ int ECMedia_enable_srtp_send_audio(int channel, cloopenwebrtc::ccp_srtp_crypto_s
 	if (encryt) {
 		int ret = encryt->EnableSRTPSend(channel, crypt_type, key);
 		encryt->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 		return ret;
 	}
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
 	return -1;
 }
 int ECMedia_disable_srtp_send_audio(int channel)
@@ -3311,8 +3469,10 @@ int ECMedia_disable_srtp_send_audio(int channel)
 	if (encryt) {
 		int ret = encryt->DisableSRTPSend(channel);
 		encryt->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 		return ret;
 	}
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
 	return -1;
 }
 
@@ -3324,8 +3484,10 @@ int ECMedia_enable_srtp_recv_audio(int channel, cloopenwebrtc::ccp_srtp_crypto_s
 	if (encryt) {
 		int ret = encryt->EnableSRTPReceive(channel, crypt_type, key);
 		encryt->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 		return ret;
 	}
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
 	return -1;
 }
 int ECMedia_disable_srtp_recv_audio(int channel)
@@ -3336,8 +3498,10 @@ int ECMedia_disable_srtp_recv_audio(int channel)
 	if (encryt) {
 		int ret = encryt->DisableSRTPReceive(channel);
 		encryt->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 		return ret;
 	}
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
 	return -1;
 }
 
@@ -3356,9 +3520,15 @@ int ECMedia_set_video_SendStatistics_proxy(int channelid, char* filePath, int in
 		g_statsCollector->SetVideoEngin(m_vie);
 	}
 	if (g_statsCollector->SetVideoSendStatisticsProxy(channelid, g_CaptureDeviceId))
-		return 0;
+    {
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
+        return 0;
+    }
 	else
-		return -1;
+    {
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
+        return -1;
+    }
 }
 int ECMedia_set_video_RecvStatistics_proxy(int channelid, char* filePath, int intervalMs)
 {
@@ -3373,9 +3543,15 @@ int ECMedia_set_video_RecvStatistics_proxy(int channelid, char* filePath, int in
 		g_statsCollector->SetVideoEngin(m_vie);
 	}
 	if (g_statsCollector->SetVideoRecvStatisticsProxy(channelid))
-		return 0;
+    {
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
+        return 0;
+    }
 	else
-		return -1;
+    {
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
+        return -1;
+    }
 }
 #endif
 
@@ -3392,9 +3568,15 @@ int ECMedia_set_audio_SendStatistics_proxy(int channelid, char* filePath, int in
 		g_statsCollector->SetVoiceEngin(m_voe);
 	}
 	if (g_statsCollector->SetAudioSendStatisticsProxy(channelid))
-		return 0;
+    {
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
+        return 0;
+    }
 	else
-		return -1;
+    {
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
+        return -1;
+    }
 }
 int ECMedia_set_audio_RecvStatistics_proxy(int channelid, char* filePath, int intervalMs)
 {
@@ -3409,9 +3591,15 @@ int ECMedia_set_audio_RecvStatistics_proxy(int channelid, char* filePath, int in
 		g_statsCollector->SetVoiceEngin(m_voe);
 	}
 	if (g_statsCollector->SetAudioRecvStatisticsProxy(channelid))
-		return 0;
+    {
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
+        return 0;
+    }
 	else
-		return -1;
+    {
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
+        return -1;
+    }
 }
 
 int ECMedia_stop_Statistics_proxy()
@@ -3422,13 +3610,16 @@ int ECMedia_stop_Statistics_proxy()
 		delete g_statsCollector;
 		g_statsCollector = NULL;
 	}
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
 	return 0;
 }
 int ECMedia_set_CaptureDeviceID(int videoCapDevId)
 {
+    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
 	g_CaptureDeviceId = videoCapDevId;
 #endif
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
 	return 0;
 }
 
@@ -3439,6 +3630,7 @@ int ECMedia_Check_Record_Permission(bool &enabled) {
     if (hardware) {
         int ret = hardware->CheckRecordPermission(enabled);
         hardware->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
@@ -3463,6 +3655,7 @@ int ECMedia_allocate_desktopShare_capture(int& desktop_captureid, int capture_ty
 		else
 			PrintConsole("%s AllocateDesktopShareCapturer desktop_captureid:%d", __FUNCTION__, desktop_captureid);
 		vie_desktopshare->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 		return ret;
 	}
 	else
@@ -3482,6 +3675,7 @@ int ECMedia_release_desktop_capture(int desktop_captureid)
 		vie_desktopShare->StopDesktopShareCapture(desktop_captureid);
 		vie_desktopShare->ReleaseDesktopShareCapturer(desktop_captureid);
 		vie_desktopShare->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
 		return 0;
 	}
 	else
@@ -3500,6 +3694,7 @@ int ECMedia_connect_desktop_captureDevice(int desktop_captureid, int video_chann
 	{
 		int ret = vie_desktopShare->ConnectDesktopCaptureDevice(desktop_captureid, video_channelId);
 		vie_desktopShare->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d\n",__FUNCTION__, ret);
 		return ret;
 	}
 	else
@@ -3518,6 +3713,7 @@ int ECMedia_disconnect_desktop_captureDevice(int video_channelId)
 	{
 		int ret = vie_desktopShare->DisConnectDesktopCaptureDevice(video_channelId);
 		vie_desktopShare->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d\n",__FUNCTION__, ret);
 		return ret;
 	}
 	else
@@ -3552,6 +3748,7 @@ int ECMedia_get_screen_list(int desktop_captureid, ScreenID **screenList)
 			temp++;
 		}
 		*screenList = m_pScreenlist;
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d\n",__FUNCTION__, num);
 		return num;
 	}
 	else
@@ -3588,6 +3785,7 @@ int ECMedia_get_window_list(int desktop_captureid, WindowShare **windowList)
 			temp++;
 		}
 		*windowList = m_pWindowlist;
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d\n",__FUNCTION__, num);
 		return num;
 	}
 	else
@@ -3607,6 +3805,7 @@ bool ECMedia_select_screen(int desktop_captureid, ScreenID screeninfo)
 	if (vie_desktopshare) {
 		bool ret = vie_desktopshare->SelectScreen(desktop_captureid, screeninfo);
 		vie_desktopshare->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d\n",__FUNCTION__, ret);
 		return ret;
 	}
 	else
@@ -3618,12 +3817,13 @@ bool ECMedia_select_screen(int desktop_captureid, ScreenID screeninfo)
 
 bool ECMedia_select_window(int desktop_captureid, WindowID windowinfo)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... captureid:%d", __FUNCTION__, desktop_captureid);
+	PrintConsole("[ECMEDIA INFO] %s begins... captureid: %d", __FUNCTION__, desktop_captureid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopshare) {
 		bool ret = vie_desktopshare->SelectWindow(desktop_captureid, windowinfo);
 		vie_desktopshare->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d\n",__FUNCTION__, ret);
 		return ret;
 	}
 	else
@@ -3642,6 +3842,7 @@ int ECMedia_start_desktop_capture(int captureId, int fps)
 	if (vie_desktopshare) {
 		int ret = vie_desktopshare->StartDesktopShareCapture(captureId, fps);
 		vie_desktopshare->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d\n",__FUNCTION__, ret);
 		return ret;
 	}
 	else
@@ -3660,6 +3861,7 @@ int ECMedia_stop_desktop_capture(int desktop_captureid)
 	{
 		vie_desktopShare->StopDesktopShareCapture(desktop_captureid);
 		vie_desktopShare->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d\n",__FUNCTION__, 0);
 		return 0;
 	}
 	else
@@ -3677,6 +3879,7 @@ int ECMedia_set_desktop_share_err_code_cb(int desktop_captureid, int channelid, 
 	if (desktop_capture) {
 		desktop_capture->setCaptureErrCb(desktop_captureid, channelid, capture_err_code_cb);
 		desktop_capture->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d\n",__FUNCTION__, 0);
 		return 0;
 	}
 	else
@@ -3694,6 +3897,7 @@ int ECMedia_set_desktop_share_window_change_cb(int desktop_captureid, int channe
 	if (desktop_capture) {
 		desktop_capture->setShareWindowChangeCb(desktop_captureid, channelid, share_window_change_cb);
 		desktop_capture->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d\n",__FUNCTION__, 0);
 		return 0;
 	}
 	else
@@ -3710,6 +3914,7 @@ int ECmedia_set_shield_mosaic(int video_channel, bool flag)
     if (network) {
         network->setShieldMosaic(video_channel, flag);
         network->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d\n",__FUNCTION__, 0);
         return 0;
     }
     else
@@ -3728,6 +3933,7 @@ int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &hei
 	if (desktopshare) {
 		bool ret = desktopshare->GetDesktopShareCaptureRect(desktop_captureid, width, height);
 		desktopshare->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d\n ",__FUNCTION__, ret ? 0 : -99);
 		return ret ? 0 : -99;
 	}
 	else
@@ -3737,20 +3943,19 @@ int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &hei
 	}
 }
 
-
  void *ECMedia_createLiveStream(int type)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+    PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
 	return ECMedia_LiveStream::CreateLiveStream(type);
-	return NULL;
 }
 
 int ECMedia_playLiveStream(void *handle, const char * url, void *renderView, onLiveStreamVideoResolution callback)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
+    PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
 	return p->PlayStream(url, renderView, callback);
-
 }
 
 void ECMedia_SetLiveVideoSource(void *handle,int video_source)
@@ -3758,7 +3963,7 @@ void ECMedia_SetLiveVideoSource(void *handle,int video_source)
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	p->SetVideoSource((VIDEO_SOURCE)video_source);
-
+    PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
 }
 
  int ECMedia_pushLiveStream(void *handle, const char *url, void *localView)
@@ -3768,7 +3973,6 @@ void ECMedia_SetLiveVideoSource(void *handle,int video_source)
 	 int ret =  p->PushStream(url, localView);
 	 PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
 	 return ret;
-
  }
 void ECMedia_stopLiveStream(void *handle)
 {
@@ -3791,8 +3995,8 @@ int ECMedia_setVideoProfileLiveStream(void *handle, int cameraIndex, CameraCapab
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
+    PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
 	return p->setVideoProfile(cameraIndex, cam, bitrRates);
-
 }
 
 void ECMedia_setLiveStreamNetworkCallBack(void *handle, onLiveStreamNetworkStatusCallBack callback)
@@ -3805,37 +4009,37 @@ void ECMedia_setLiveStreamNetworkCallBack(void *handle, onLiveStreamNetworkStatu
 
 ECMEDIA_API int ECMedia_GetShareWindows(void *handle, WindowShare ** windows)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
-	RTMPLiveSession *p = (RTMPLiveSession*)handle;
-	std::vector<ShareWindowInfo> list;
-	p->GetShareWindowList(list);
-
-	if (m_pWindowlist != NULL)
-		delete m_pWindowlist;
-
-	if (list.size() == 0)
-		return 0;
-	m_pWindowlist = new WindowShare[list.size()];
-	WindowShare *temp = m_pWindowlist;
-
-	for (int i = 0 ; i< list.size() ; i++ )
-	{
-		(*temp).id = list[i].id;
-		(*temp).type = list[i].type;
-		memcpy((*temp).title, list[i].name.c_str(), kTitleLength);
-		temp++;
-	}
-	*windows = m_pWindowlist;
-	return list.size();
+    PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+    RTMPLiveSession *p = (RTMPLiveSession*)handle;
+    std::vector<ShareWindowInfo> list;
+    p->GetShareWindowList(list);
+    
+    if (m_pWindowlist != NULL)
+        delete m_pWindowlist;
+    
+    if (list.size() == 0)
+        return 0;
+    m_pWindowlist = new WindowShare[list.size()];
+    WindowShare *temp = m_pWindowlist;
+    
+    for (int i = 0 ; i< list.size() ; i++ )
+    {
+        (*temp).id = list[i].id;
+        (*temp).type = list[i].type;
+        memcpy((*temp).title, list[i].name.c_str(), kTitleLength);
+        temp++;
+    }
+    *windows = m_pWindowlist;
+    return list.size();
 }
 
 ECMEDIA_API int ECMedia_SelectShareWindow(void *handle, int type, int id)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
-	RTMPLiveSession *p = (RTMPLiveSession*)handle;
-	p->SelectShareWindow(type,id);
-	PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
-	return 0;
+    PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+    RTMPLiveSession *p = (RTMPLiveSession*)handle;
+    p->SelectShareWindow(type,id);
+    PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
+    return 0;
 }
 
 #endif
