@@ -276,7 +276,7 @@ void H264Encoder::InitializeX264Pic(const I420VideoFrame& input_image, x264_pict
 			cloopenwebrtc::kTraceVideoCoding,
 			0,
 			"x264_encoder_intra_refresh called.");
-		/*xpic.i_type = X264_TYPE_IDR;*/
+		xpic.i_type = X264_TYPE_IDR;
 		x264_encoder_intra_refresh(encoder_);
 	}
 
