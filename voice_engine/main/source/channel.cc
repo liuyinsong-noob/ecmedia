@@ -312,7 +312,7 @@ Channel::SendPacket(int channel, const void *data, size_t len, int sn)
 //		bufferLength = backDataLen+12;
 //	}
     
-    if (_audio_data_cb && _processDataFlag && bufferLength > 12) {
+    if (_audio_data_cb /*&& _processDataFlag*/ && bufferLength > 12) {
         if (NULL == this->_sendData) {
             this->_sendData = (void *)malloc(733);
             
@@ -5129,7 +5129,7 @@ void
 	}
 
 	int backDataLen = 0;
-	if (_audio_data_cb && _processDataFlag && rtpBufferLength > 12) {
+	if (_audio_data_cb /*&& _processDataFlag*/ && rtpBufferLength > 12) {
 		if (NULL == this->_receiveData) {
 			this->_receiveData = (void *)malloc(733);
 		}
