@@ -989,7 +989,9 @@ Channel::Channel(int32_t channelId,
     _rtpPacketTimedOut(false),
     _rtpPacketTimeOutIsEnabled(false),
     _rtpTimeOutSeconds(0),
-	_processDataFlag(false)
+	_processDataFlag(false),
+    _sendData(NULL),
+    _receiveData(NULL)
 {
     WEBRTC_TRACE(kTraceMemory, kTraceVoice, VoEId(_instanceId,_channelId),
                  "Channel::Channel() - ctor");
@@ -1135,6 +1137,15 @@ Channel::~Channel()
     delete &_callbackCritSect;
     delete &_fileCritSect;
     delete &volume_settings_critsect_;
+    
+    if (this->_sendData) {
+        free(_sendData);
+        _sendData = NULL;
+    }
+    if (this->_receiveData) {
+        free(_receiveData);
+        _receiveData = NULL;
+    }
 }
 
 int32_t
