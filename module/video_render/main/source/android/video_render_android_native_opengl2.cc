@@ -588,15 +588,15 @@ void AndroidNativeOpenGl2Channel::DeliverFrame(JNIEnv* jniEnv) {
 	memset(ptr, 0, frameSize);
 
 	for(i=0; i< height; i++) {
-		memcpy(ptr, yPlane+yStride*i, yStride);
+		memcpy(ptr, yPlane+yStride*i, width);
 		ptr = ptr+width;
 	}
 	for(i=0; i< height/2; i++) {
-		memcpy(ptr, uPlane+uStride*i, uStride);
+		memcpy(ptr, uPlane+uStride*i, width/2);
 		ptr = ptr+width/2;
 	}
 	for(i=0; i< height/2; i++) {
-		memcpy(ptr, vPlane+vStride*i, vStride);
+		memcpy(ptr, vPlane+vStride*i, width/2);
 		ptr = ptr+width/2;
 	}
 	_renderCritSect.Leave();
