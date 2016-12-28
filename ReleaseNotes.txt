@@ -1,4 +1,6 @@
-Version 2.1.1.3
+Version 2.1.2.4
+1. Windows窗口大小变化导致的发虚问题
+Version 2.1.2.3
 1. 解决 render 时 YUV 拷贝存在越界，造成崩溃的问题 
 Version 2.1.2.1
 1, 解决音频数据上抛不成功的问题
