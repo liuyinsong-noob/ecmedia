@@ -581,22 +581,27 @@ int VideoRenderDirect3D9::InitDevice()
                      "VideoRenderDirect3D9::InitDevice Could not get window size");
         return -1;
     }
+	_winWidth = (LONG) ::GetSystemMetrics(SM_CXSCREEN);
+	_winHeight = (LONG) ::GetSystemMetrics(SM_CYSCREEN);
+	_d3dpp.BackBufferWidth = _winWidth;
+	_d3dpp.BackBufferHeight = _winHeight;
+
 	if (!_fullScreen)
 	{
-		_winWidth = _originalHwndRect.right - _originalHwndRect.left;
-		_winHeight = _originalHwndRect.bottom - _originalHwndRect.top;
+		//_winWidth = _originalHwndRect.right - _originalHwndRect.left;
+		//_winHeight = _originalHwndRect.bottom - _originalHwndRect.top;
 		_d3dpp.Windowed = TRUE;
 //		_d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
-		_d3dpp.BackBufferHeight = 0;
-		_d3dpp.BackBufferWidth = 0;
+		//_d3dpp.BackBufferHeight = 0;
+		//_d3dpp.BackBufferWidth = 0;
 	}
 	else
     {
-        _winWidth = (LONG) ::GetSystemMetrics(SM_CXSCREEN);
-        _winHeight = (LONG) ::GetSystemMetrics(SM_CYSCREEN);
+        //_winWidth = (LONG) ::GetSystemMetrics(SM_CXSCREEN);
+        //_winHeight = (LONG) ::GetSystemMetrics(SM_CYSCREEN);
         _d3dpp.Windowed = FALSE;
-        _d3dpp.BackBufferWidth = _winWidth;
-        _d3dpp.BackBufferHeight = _winHeight;
+        //_d3dpp.BackBufferWidth = _winWidth;
+        //_d3dpp.BackBufferHeight = _winHeight;
         _d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
     }
 #ifdef RENDER_USE_SURFACE
