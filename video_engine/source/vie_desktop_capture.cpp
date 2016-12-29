@@ -359,7 +359,7 @@ int VieDesktopCapturer::StopDesktopShareCapture()
             -1,"share capture already stop ");
         return -1;
     }
-
+	desktop_capture_thread_.SetNotAlive();
     shared_capture_enable_ = false;
     return 0;
 }
@@ -491,7 +491,6 @@ bool VieDesktopCapturer::ViEDesktopCaptureProcess()
 {
 	if (!shared_capture_enable_)
 		return false;
-
     CriticalSectionScoped cs(wait_time_cs_.get());
     if (desktop_capture_event_.Wait(thread_wait_time_ms_) != kEventError) 
     {   
@@ -541,10 +540,10 @@ void VieDesktopCapturer::DeliverFrame()
         return;
 
     {
-        CriticalSectionScoped cs(deliver_cs_.get());
-        if (denoising_enabled_) {
-            //image_proc_module_->Denoising(frame); //new version not support
-        }
+        //CriticalSectionScoped cs(deliver_cs_.get());
+        //if (denoising_enabled_) {
+        //    //image_proc_module_->Denoising(frame); //new version not support
+        //}
     }
     ViEFrameProviderBase::DeliverFrame(&frame, std::vector<uint32_t>());
 }
