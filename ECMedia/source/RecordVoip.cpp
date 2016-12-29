@@ -45,6 +45,7 @@ RecordVoip::RecordVoip()
 	,_startRecordScreen(false)
 	,_recordScreenBitRates(640)
 	,_captureScreenInterval(100)
+	, _recordScreenFps(10)
 	,_captureScreenIndex(-1)
 	,_wavRecordFile(NULL)
 	,_wavRemoteRecordFile(NULL)
@@ -627,6 +628,7 @@ int RecordVoip::StartRecordScreen(const char *filename, int bitrates, int fps, i
 	_captureScreenIndex = screenIndex;
 
 	_recordScreenBitRates = bitrates;
+	_recordScreenFps = fps;
 	_captureScreenInterval = 1000/fps;
 
 	_captureScreethread = ThreadWrapper::CreateThread(RecordVoip::CaptureScreenThreadRun, this, kNormalPriority, "CaptureScreen");
@@ -712,6 +714,7 @@ int RecordVoip::StartRecordScreenEx(const char *filename, int bitrates, int fps,
 	}
 	_recordScreenHeight = dstButtom - dstTop;
 	_recordScreenBitRates = bitrates;
+	_recordScreenFps = fps;
 	_captureScreenInterval = 1000/fps;
 	_captureScreenIndex = screenIndex;
 
@@ -879,7 +882,7 @@ WebRtc_Word32 RecordVoip::CapturedScreeImage(unsigned char *imageData, int size,
 		codecInst.startBitrate = _recordScreenBitRates;
 		codecInst.minBitrate = _recordScreenBitRates*3/5;
 		codecInst.maxBitrate = _recordScreenBitRates*7/5;
-		codecInst.maxFramerate = 30;
+		codecInst.maxFramerate = _recordScreenFps;
 		codecInst.width = width;
 		codecInst.height = height;
 		codecInst.numberOfSimulcastStreams = 0;

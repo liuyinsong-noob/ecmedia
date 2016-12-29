@@ -150,6 +150,7 @@ private:
 	char _recordScreenFileName[256];
 	bool _startRecordScreen;
 	int _recordScreenBitRates;
+	int _recordScreenFps;
 
 	int _audioDataLen;   //in short
 
