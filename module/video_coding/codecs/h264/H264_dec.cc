@@ -68,7 +68,8 @@ H264Decoder::~H264Decoder()
 {
     Release();
 #if defined(DEBUG_FRAGMENT_FILE) and defined(_WIN32)
-	fclose(_fragFIle);
+	if(_fragFIle)
+		fclose(_fragFIle);
 #endif
 }
     
@@ -192,11 +193,13 @@ H264Decoder::Decode(const EncodedImage& inputImage,
 			{
 				int offset = fragmentation->fragmentationOffset[num];
 				int len = fragmentation->fragmentationLength[num];
-				fwrite(inputImage._buffer+offset,sizeof(uint8_t), len, _fragFIle);
+				if(_fragFIle)
+					fwrite(inputImage._buffer+offset,sizeof(uint8_t), len, _fragFIle);
 				num++;
 			}
 		}else{
-			fwrite(inputImage._buffer,sizeof(uint8_t), inputImage._length, _fragFIle);
+			if(_fragFIle)	
+				fwrite(inputImage._buffer,sizeof(uint8_t), inputImage._length, _fragFIle);
 		}
 		
 #endif

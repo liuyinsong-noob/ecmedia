@@ -150,7 +150,10 @@ VCMFrameBuffer::InsertPacket(const VCMPacket& packet,
     } else if (_sessionInfo.decodable()) {
       SetState(kStateDecodable);
       return kDecodableSession;
-    }
+	}	else if (!_sessionInfo.complete()) {
+		SetState(kStateIncomplete);
+		return kIncomplete;
+	}
     return kIncomplete;
 }
 
@@ -205,7 +208,7 @@ VCMFrameBuffer::SetState(VCMFrameBufferStateEnum state) {
     switch (state) {
     case kStateIncomplete:
         // we can go to this state from state kStateEmpty
-        assert(_state == kStateEmpty);
+       // assert(_state == kStateEmpty);
 
         // Do nothing, we received a packet
         break;
