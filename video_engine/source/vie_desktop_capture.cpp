@@ -361,6 +361,13 @@ int VieDesktopCapturer::StopDesktopShareCapture()
     }
 	desktop_capture_thread_.SetNotAlive();
     shared_capture_enable_ = false;
+
+#ifndef __APPLE__
+	if (share_capture_type_ == ShareScreen) {
+		screen_mouse_blender_->ResetScreenDC();
+	}
+#endif
+
     return 0;
 }
 

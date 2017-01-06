@@ -37,6 +37,9 @@ class DesktopAndCursorComposer : public DesktopCapturer,
   void SetExcludedWindow(WindowId window) ;
   bool GetShareCaptureRect(int &width, int &height);
 
+  //Reset Screen Capture DC.
+  void ResetScreenDC();
+
  private:
   // DesktopCapturer::Callback interface.
   SharedMemory* CreateSharedMemory(size_t size) ;

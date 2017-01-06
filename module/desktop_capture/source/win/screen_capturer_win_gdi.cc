@@ -277,5 +277,17 @@ bool ScreenCapturerWinGdi::CaptureImage() {
   }
   return true;
 }
+void ScreenCapturerWinGdi::ResetScreenDC()
+{
+	if (desktop_dc_) {
+		ReleaseDC(NULL, desktop_dc_);
+		desktop_dc_ = NULL;
+	}
+	if (memory_dc_) {
+		DeleteDC(memory_dc_);
+		memory_dc_ = NULL;
+	}
+}
+
 
 }  // namespace cloopenwebrtc

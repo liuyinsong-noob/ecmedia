@@ -39,6 +39,8 @@ class ScreenCapturerWinGdi : public ScreenCapturer {
   bool SelectScreen(ScreenId id) ;
   bool GetShareCaptureRect(int &width, int &height);
 
+  void ResetScreenDC();
+
  private:
   typedef HRESULT (WINAPI * DwmEnableCompositionFunc)(UINT);
 

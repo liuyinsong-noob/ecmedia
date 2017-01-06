@@ -188,4 +188,12 @@ void DesktopAndCursorComposer::OnMouseCursorPosition(
   cursor_position_ = position;
 }
 
+void DesktopAndCursorComposer::ResetScreenDC()
+{
+	if (desktop_capturer_.get())
+	{
+		return desktop_capturer_->ResetScreenDC();
+	}
+}
+
 }  // namespace cloopenwebrtc

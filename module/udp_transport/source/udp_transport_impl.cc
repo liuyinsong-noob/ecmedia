@@ -2217,7 +2217,7 @@ void UdpTransportImpl::IncomingRTPFunction(const WebRtc_Word8* rtpPacket,
     if (_packetCallback)
     {
         WEBRTC_TRACE(kTraceStream, kTraceTransport, _id,
-            "Incoming RTP packet from ip:%s port:%d", ipAddress, portNr);
+            "Incoming RTP packet from ip:%s port:%d len:%d", ipAddress, portNr, rtpPacketLength);
         _packetCallback->IncomingRTPPacket(rtpPacket, rtpPacketLength,
                                            ipAddress, portNr);
     }

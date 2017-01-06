@@ -72,6 +72,9 @@ class DesktopCapturer {
 
   //Get Screen width and height
   virtual bool GetShareCaptureRect(int &width, int &height) = 0;
+
+  //Reset Screen Cpature DC.
+  virtual void ResetScreenDC() {}
 };
 
 }  // namespace cloopenwebrtc
