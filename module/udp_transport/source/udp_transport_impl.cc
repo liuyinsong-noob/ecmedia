@@ -1856,6 +1856,8 @@ WebRtc_Word32 UdpTransportImpl::SendRaw(const WebRtc_Word8 *data,
             rtpSock = _ptrRtpSocket;
         } else
         {
+            WEBRTC_TRACE(kTraceError, kTraceTransport, _id,
+                         "SendRaw not socket available");
             return -1;
         }
         if(portnr == 0 && ip == NULL)
