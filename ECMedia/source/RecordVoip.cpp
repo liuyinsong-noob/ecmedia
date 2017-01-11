@@ -111,10 +111,10 @@ RecordVoip::~RecordVoip()
 	}
 
 	if(_audioThread->Stop()) {
-		delete _videoEvent;
-		_videoEvent = NULL;
-		delete _videoThread;
-		_videoThread = NULL;
+		delete _audioEvent;
+		_audioEvent = NULL;
+		delete _audioThread;
+		_audioThread = NULL;
 	}
 	else {
 		PrintConsole("RecordVoip failed to stop thread, leaking");
