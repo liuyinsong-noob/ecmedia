@@ -77,10 +77,11 @@ namespace cloopenwebrtc {
         else {
 
 			if (data_length_ + size > buffer_legnth_) {
-				buffer_legnth_ = data_length_ + size + buffer_legnth_;
-				T *newbuffer = new T[buffer_legnth_];
+				int newbuffer_legnth_ = data_length_ + size + buffer_legnth_;
+				T *newbuffer = new T[newbuffer_legnth_];
 				memmove(newbuffer, buffer_, buffer_legnth_);
 				delete buffer_;
+				buffer_legnth_ = newbuffer_legnth_;
 				buffer_ = newbuffer;
 				   
 			}

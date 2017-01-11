@@ -435,7 +435,7 @@ namespace cloopenwebrtc {
                 
                  while( audio_data_10ms = playbuffer_.ConsumeData(audio_sampleRate_ /100*4) )
                  {
-			          len = resampler.Resample( (int16_t*)audio_data_10ms, audio_sampleRate_ /100*2, (int16_t*)pcmdata,sizeof(pcmdata)/2);
+			          len = resampler.Resample( (int16_t*)audio_data_10ms, audio_sampleRate_ /100* audio_channels_, (int16_t*)pcmdata,sizeof(pcmdata)/2);
 					  if (len < 0) {
 						  PrintConsole("[RTMP ERROR] %s resample error\n", __FUNCTION__);
 						  return;
