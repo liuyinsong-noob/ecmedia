@@ -278,8 +278,8 @@ bool RecordVoip::ProcessAudioData()
 					_h264RecordRemote->write_audio_data(recordingData, _audioDataLen, _audioSamplingFreq) ;
 				}
 
-				if (_startRecordRVideo && _h264RecordRemote) {
-					_h264RecordRemote->write_audio_data(recordingData, _audioDataLen, _audioSamplingFreq);
+				if (_startRecordLVideo && _h264RecordLocal) {
+					_h264RecordLocal->write_audio_data(recordingData, _audioDataLen, _audioSamplingFreq);
 				}
 
 				if(_startRecordScreen && _h264RecordScreen) {
