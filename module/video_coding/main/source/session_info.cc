@@ -138,13 +138,22 @@ size_t VCMSessionInfo::InsertBuffer(uint8_t* frame_buffer,
   if (packet.codecSpecificHeader.codec == kRtpVideoH264 &&
       packet.codecSpecificHeader.codecHeader.H264.stap_a) {
     size_t required_length = 0;
+	size_t nalu_count = 0;
     const uint8_t* nalu_ptr = packet_buffer + kH264NALHeaderLengthInBytes;
     while (nalu_ptr < packet_buffer + packet.sizeBytes) {
       size_t length = BufferToUWord16(nalu_ptr);
       required_length +=
           length + (packet.insertStartCode ? kH264StartCodeLengthBytes : 0);
       nalu_ptr += kLengthFieldLength + length;
+	  nalu_count++;
     }
+	size_t start_len = packet.insertStartCode ? kH264StartCodeLengthBytes : 0;
+	size_t total_len = required_length + nalu_count*(kLengthFieldLength + start_len) + kH264NALHeaderLengthInBytes;
+	if (total_len > packet.sizeBytes) {
+		LOG(LS_ERROR) << " H264 required len "<< total_len << " is biger than packet len " << packet.sizeBytes;
+		return -1;
+	}
+
     ShiftSubsequentPackets(packet_it, required_length);
     nalu_ptr = packet_buffer + kH264NALHeaderLengthInBytes;
     uint8_t* frame_buffer_ptr = frame_buffer + offset;

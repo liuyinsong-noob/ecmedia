@@ -26,6 +26,12 @@
 
 using namespace cloopenwebrtc;
 
+//#define  TEST_RECORD_H264_
+
+#ifdef TEST_RECORD_H264_
+FILE *record_h264_data_ = NULL;
+#endif // TEST_RECORD_H264_
+
 RecordVoip::RecordVoip()
 	:_videoCrit(CriticalSectionWrapper::CreateCriticalSection())
 	,_audioCrit(CriticalSectionWrapper::CreateCriticalSection())
@@ -159,14 +165,19 @@ bool RecordVoip::ProcessVideoData()
 			if(_startRecordRVideo && storageItem) {
 				EncodedVideoData *frame = (EncodedVideoData*)storageItem->GetItem();
 				_h264RecordRemote->wirte_video_data(frame->payloadData, frame->payloadSize, (double)frame->timeStamp);
+#ifdef TEST_RECORD_H264_
+				if(record_h264_data_)
+					fwrite(frame->payloadData, 1, frame->payloadSize, record_h264_data_);
+#endif // DEBUG
 				delete frame;
 			}
 			_frameRecvList.PopFront();
 		}
-		while (_frameRecvList.GetSize() > 100)
-		{
-			_frameRecvList.PopFront();
-		}
+		//while (_frameRecvList.GetSize() > 100)
+		//{
+		//	PrintConsole("drop remote pakcet..\n");
+		//	_frameRecvList.PopFront();
+		//}
 
 		writeTimes = 10;
 		while (_frameSendList.GetSize() && writeTimes-- >= 0) {
@@ -178,10 +189,11 @@ bool RecordVoip::ProcessVideoData()
 			}
 			_frameSendList.PopFront();
 		}
-		while (_frameSendList.GetSize() > 100)
-		{
-			_frameSendList.PopFront();
-		}
+		//while (_frameSendList.GetSize() > 100)
+		//{
+		//		PrintConsole("drop local pakcet..\n");
+		//		_frameSendList.PopFront();
+		//}
 
 		writeTimes = 10;
 		while (_frameScreenList.GetSize() && writeTimes-- >= 0) {
@@ -193,10 +205,11 @@ bool RecordVoip::ProcessVideoData()
 			}
 			_frameScreenList.PopFront();
 		}
-		while (_frameScreenList.GetSize() > 100)
-		{
-			_frameScreenList.PopFront();
-		}
+		//while (_frameScreenList.GetSize() > 100)
+		//{
+		//		PrintConsole("drop screen pakcet..\n");
+		//		_frameScreenList.PopFront();
+		//}
 #endif
 #endif //_WIN32
 	}
@@ -341,6 +354,17 @@ int RecordVoip::StartRecordRemoteVideo(const char *filename)
 	}
 	_h264RecordRemote->init(_remoteVideoFileName);
 
+#ifdef TEST_RECORD_H264_
+	if (!record_h264_data_) {
+		char buf[128];
+		static int i = 0;
+		i++;
+		sprintf(buf, "./record_recv_dat_%d.h264", i);
+		record_h264_data_ = fopen(buf, "wb");
+
+	}
+#endif // TEST_RECORD_H264_
+
     _startRecordRVideo = true;
 	return 0;
 #endif
@@ -355,8 +379,16 @@ int RecordVoip::StopRecordRemoteVideo(int status)
 	CriticalSectionScoped lock_video(_videoCrit);
 	CriticalSectionScoped lock_audio(_audioCrit);
 
-    if(!_startRecordRVideo)
-        return 0;
+	if (!_startRecordRVideo)
+		return 0;
+
+#ifdef TEST_RECORD_H264_
+	if (record_h264_data_)
+	{
+		fclose(record_h264_data_);
+		record_h264_data_ = NULL;
+	}
+#endif // TEST_RECORD_H264_
 
     _startRecordRVideo = false;
     _videoEvent->Set();

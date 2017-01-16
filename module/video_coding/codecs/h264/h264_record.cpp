@@ -149,7 +149,7 @@ int h264_record::uninit()
 	return 0;
 }
 
-int h264_record::wirte_video_data(unsigned char *data, int len, double timestamp)
+int h264_record::wirte_video_data(unsigned char *data, int len, uint32_t timestamp)
 {
 	int iRet = 0;
 	if (!formatCtxt_  && audioFreq_ != 0) {
@@ -287,7 +287,7 @@ int h264_record::write_audio_data(short *data, int len, int freq)
 	return 0 ;
 }
 
-void h264_record::write_frame( const void* p, int len, double timestamp  )
+void h264_record::write_frame( const void* p, int len, uint32_t timestamp  )
 {
 	CriticalSectionScoped lock(_recordVoipCrit);
 
@@ -320,29 +320,41 @@ void h264_record::write_frame( const void* p, int len, double timestamp  )
 	}
 	
 	AVCodecContext *avccxt = vSt->codec;
-	float seconds= (timestamp - baseH264TimeStamp_)/90000;
-	float timebase = ((float)avccxt->time_base.num/avccxt->time_base.den);
-	//算出这是第几帧
-	int64_t frame = (float)seconds/timebase;
-	if(frame !=0  && frame == lastVideoFrameNum_) {
-		frame++;
+
+	float seconds= (float)(timestamp - baseH264TimeStamp_)/90000;
+	if (seconds < 0) {
+		WEBRTC_TRACE(cloopenwebrtc::kTraceError,
+			cloopenwebrtc::kTraceVideoCoding,
+			0,
+			"timestamp:%d baseH264TimeStamp_:%d seconds:%f\n",
+			timestamp, baseH264TimeStamp_, seconds);
+		return;
 	}
+	float timebase = (float)avccxt->time_base.num/avccxt->time_base.den;
+
+	//算出这是第几帧
+	uint32_t frame = (uint32_t)seconds / timebase;;
+	if(frame !=0 && (frame <= lastVideoFrameNum_)) {
+		frame = lastVideoFrameNum_ + 1;
+	}
+
 	pkt.pts = av_rescale_q(frame, vSt->codec->time_base, vSt->time_base);
 	lastVideoFrameNum_ = frame;
 
 	WEBRTC_TRACE(cloopenwebrtc::kTraceInfo,
 		cloopenwebrtc::kTraceVideoCoding,
 		0,
-		"write_frame seconds=%f timebase=%f frame=%d frame2=%d pkt.pts=%lld\n", 
-		seconds, timebase, frame, lastVideoFrameNum_, (long long)pkt.pts);
+		"timestamp=%u baseH264TimeStamp_=%u diff=%u seconds=%f timebase=%f frame=%d pkt.pts=%lld\n",
+		timestamp, baseH264TimeStamp_, (timestamp - baseH264TimeStamp_), seconds, timebase, frame, pkt.pts);
+
 
 	int ret = av_interleaved_write_frame( formatCtxt_, &pkt );
 	if(ret != 0) {
 		WEBRTC_TRACE(cloopenwebrtc::kTraceError,
 			cloopenwebrtc::kTraceVideoCoding,
 			0,
-			"av_interleaved_write_frame failed. ret=%d\n", 
-			ret);
+			"av_interleaved_write_frame failed. frme=%d timestamp=%lld ret=%d\n",
+			frame,  timestamp, ret);
 	}
 }
 

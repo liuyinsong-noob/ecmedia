@@ -23,11 +23,11 @@ public:
 	int init(const char *filename);
 	int uninit();
 
-	int wirte_video_data(unsigned char *data, int len, double timestamp);
+	int wirte_video_data(unsigned char *data, int len, uint32_t timestamp);
 	int write_audio_data(short *data, int len, int freq);
 
 
-	void write_frame( const void* p, int len , double timestamp );
+	void write_frame( const void* p, int len , uint32_t timestamp );
 	void destroy();
 	int create( void *p, int len);
 
@@ -60,8 +60,8 @@ private:
 	int audioFrameLen_;
 	int audioFreq_;
 
-	int64_t baseH264TimeStamp_;
-	int64_t lastVideoFrameNum_;
+	uint32_t baseH264TimeStamp_;
+	uint32_t lastVideoFrameNum_;
 	bool  isWrited_;
 	
 	Clock* clock_;
