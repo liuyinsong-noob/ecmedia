@@ -1,6 +1,6 @@
 Version 2.1.2.10
 1. 接口未变
-2. udp_transport 工程增加 HAVE_STRUCT_SOCKADDR_SA_LEN 宏，解决iPv6情况下不能socket bind失败，客户端不能通讯bug
+2. 解决iPv6情况下不能socket bind失败，客户端不能通讯bug
 Version 2.1.2.9
 1. 接口不变
 2. 修复直播memmove导致的crash的bug
