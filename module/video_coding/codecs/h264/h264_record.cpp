@@ -26,15 +26,13 @@ static AVStream *add_video_stream(AVFormatContext *oc,  enum AVCodecID codec_id,
 	avcodec_get_context_defaults3( context, &codec );
 	context->codec_type = AVMEDIA_TYPE_VIDEO;
 	context->codec_id = AV_CODEC_ID_H264;
-
 	context->pix_fmt = AV_PIX_FMT_YUV420P;
-	formatSt->avg_frame_rate.num = 1;
-	formatSt->avg_frame_rate.den = 10;
 
 	formatSt->time_base.num = 1;
-	formatSt->time_base.den = 10;
+	formatSt->time_base.den = 90000;
+
 	context->time_base.num = 1;
-	context->time_base.den = 30;
+	context->time_base.den = 1000;
 
 	context->extradata = (unsigned char*)malloc(34);
 	memcpy(context->extradata, data, 34); //pps sps data
@@ -333,7 +331,7 @@ void h264_record::write_frame( const void* p, int len, uint32_t timestamp  )
 	float timebase = (float)avccxt->time_base.num/avccxt->time_base.den;
 
 	//算出这是第几帧
-	uint32_t frame = (uint32_t)seconds / timebase;;
+	uint32_t frame = (uint32_t)(seconds / timebase);
 	if(frame !=0 && (frame <= lastVideoFrameNum_)) {
 		frame = lastVideoFrameNum_ + 1;
 	}
