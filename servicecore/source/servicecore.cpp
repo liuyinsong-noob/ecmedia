@@ -499,9 +499,16 @@ ServiceCore::ServiceCore()
     m_ecEnabled = true;
     m_nsEnabled = true;
     m_hcEnabled = false;
+
+#ifdef _WIN32
+	m_agcMode = cloopenwebrtc::kAgcAdaptiveAnalog;
+	m_ecMode = cloopenwebrtc::kEcAec;
+	m_nsMode = cloopenwebrtc::kNsModerateSuppression;
+#else
     m_agcMode = cloopenwebrtc::kAgcAdaptiveDigital;
     m_ecMode = cloopenwebrtc::kEcAecm;
-    m_nsMode = cloopenwebrtc::kNsVeryHighSuppression;
+    m_nsMode = cloopenwebrtc::kNsModerateSuppression;
+#endif
 
     m_dtxEnabled = false;
     //sean 201305009

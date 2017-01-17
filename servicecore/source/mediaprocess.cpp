@@ -949,34 +949,34 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 #endif
 				
 
-				if (codec_params.width==160 && codec_params.height==120)
-				{
-					codec_params.maxFramerate = 15;
-					codec_params.startBitrate = 40;
-					codec_params.maxBitrate = 80;
-					codec_params.minBitrate = 30;
-				}else if (codec_params.width == 320 && codec_params.height == 240)
-				{
-					codec_params.maxFramerate = 15;
-					codec_params.startBitrate = 100;
-					codec_params.maxBitrate = 200;
-					codec_params.minBitrate = 50;
-				}
-				else if (codec_params.width == 640 && codec_params.height == 480)
-				{
-					codec_params.maxFramerate = 15;
-					codec_params.startBitrate = 250;
-					codec_params.maxBitrate = 500;
-					codec_params.minBitrate = 125;
-				}
-				else if (codec_params.width == 1280 && codec_params.height == 720)
-				{
-					codec_params.maxFramerate = 15;
-					codec_params.startBitrate = 500;
-					codec_params.maxBitrate = 1000;
-					codec_params.minBitrate = 250;
-				}
-				
+				//if (codec_params.width==160 && codec_params.height==120)
+				//{
+				//	codec_params.maxFramerate = 15;
+				//	codec_params.startBitrate = 40;
+				//	codec_params.maxBitrate = 80;
+				//	codec_params.minBitrate = 30;
+				//}else if (codec_params.width == 320 && codec_params.height == 240)
+				//{
+				//	codec_params.maxFramerate = 15;
+				//	codec_params.startBitrate = 100;
+				//	codec_params.maxBitrate = 200;
+				//	codec_params.minBitrate = 50;
+				//}
+				//else if (codec_params.width == 640 && codec_params.height == 480)
+				//{
+				//	codec_params.maxFramerate = 15;
+				//	codec_params.startBitrate = 250;
+				//	codec_params.maxBitrate = 500;
+				//	codec_params.minBitrate = 125;
+				//}
+				//else if (codec_params.width == 1280 && codec_params.height == 720)
+				//{
+				//	codec_params.maxFramerate = 15;
+				//	codec_params.startBitrate = 500;
+				//	codec_params.maxBitrate = 1000;
+				//	codec_params.minBitrate = 250;
+				//}
+				//
 
 				if (m_videoModeChoose == 1)
 				{
@@ -1253,7 +1253,7 @@ int ServiceCore::startVideoDesktopCapture(SerPhoneCall *call)
 		PrintConsole("startVideoCapture failed. this call is not video call\n");
 		return -5;
 	}
-	int type = 1; // ShareScreen=0 ShareWindow=1
+	int type = 0; // ShareScreen=0 ShareWindow=1
 	ScreenID *screenId;
 	WindowShare *windowInfo;
 	{
@@ -1667,15 +1667,8 @@ void ServiceCore::serphone_call_init_media_streams(SerPhoneCall *call)
 
 	//audio->EnableHighPassFilter(true);
 	ECMedia_set_AgcStatus(m_agcEnabled, m_agcMode);
-    //for MOS test
-//            audio->SetAecmMode(kAecmLoudSpeakerphone,true);
-//			audio->SetEcStatus(m_ecEnabled, m_ecMode);
-//			//audio->SetNsStatus(m_nsEnabled, m_nsMode);
-//			audio->SetNsStatus(m_nsEnabled, cloopenwebrtc::kNsVeryHighSuppression);
-            
-    ECMedia_set_AgcStatus(false, m_agcMode);
-    ECMedia_set_EcStatus(true, m_ecMode);
-    ECMedia_set_NsStatus(true, cloopenwebrtc::kNsVeryHighSuppression);
+    ECMedia_set_EcStatus(m_ecEnabled, m_ecMode);
+    ECMedia_set_NsStatus(m_nsEnabled, m_nsMode);
     ECMedia_EnableHowlingControl(m_hcEnabled);
 
 	//Init Srtp
@@ -4192,6 +4185,8 @@ int ServiceCore::PlayVideoFromRtpDump(int localPort, const char *ptName, int plo
 	}
 	ECMedia_video_start_receive(m_VideoChannelIDDump);
 
+	//ECMedia_start_record_remote_video(-1, m_VideoChannelIDDump, "./testRecordVideo.mp4");
+
 //#ifdef	ENABLE_RECORD_RAW_VIDEO
 //	{
 //		ViEFile *file_record = ViEFile::GetInterface(m_vie);
@@ -4211,6 +4206,8 @@ int ServiceCore::StopPlayVideoFromRtpDump()
 {
 #if !defined(NO_VOIP_FUNCTION)
 #ifdef VIDEO_ENABLED
+
+	//ECMedia_stop_record_remote_video(-1, m_VideoChannelIDDump);
 	//TODO:
 	//if(!m_vie){
 	//	return -1;
@@ -5077,6 +5074,7 @@ int ServiceCore::liveStream_SelectCamera(void *handle, int index, int width, int
 	cap.maxfps = fps;
 	return ECMedia_setVideoProfileLiveStream(handle, index, cap, width*height*fps*0.07/1000);
 }
+
 //SendStatisticsProxy*  ServiceCore::Serphone_set_video_send_statistics_proxy(int video_channel)
 //{
 //#ifdef VIDEO_ENABLED
