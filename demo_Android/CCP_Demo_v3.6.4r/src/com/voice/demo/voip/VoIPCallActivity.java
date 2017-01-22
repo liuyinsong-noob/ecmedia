@@ -168,9 +168,7 @@ public class VoIPCallActivity extends CCPBaseActivity implements OnClickListener
 			return;
 		}
 
-        getDeviceHelper().makeCall(Device.CallType.VOICE, phoneStr);
-
-		//Intent intent = new Intent(this, CallOutActivity.class);
+		Intent intent = new Intent(this, CallOutActivity.class);
 		
 		// need according to the mode transfer of corresponding parameters
 		// VoIP of free telephone
@@ -182,9 +180,9 @@ public class VoIPCallActivity extends CCPBaseActivity implements OnClickListener
 			return;
 		}*/
 
-//		intent.putExtra(CCPApplication.VALUE_DIAL_VOIP_INPUT, phoneStr);
-//		intent.putExtra(CCPApplication.VALUE_DIAL_MODE,CCPApplication.VALUE_DIAL_MODE_FREE);
-//		startActivity(intent);
+		intent.putExtra(CCPApplication.VALUE_DIAL_VOIP_INPUT, phoneStr);
+		intent.putExtra(CCPApplication.VALUE_DIAL_MODE,CCPApplication.VALUE_DIAL_MODE_FREE);
+		startActivity(intent);
 	}
 
 	@Override

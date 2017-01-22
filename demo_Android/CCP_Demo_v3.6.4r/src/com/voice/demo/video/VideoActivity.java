@@ -125,7 +125,7 @@ public class VideoActivity extends AudioVideoCallActivity implements View.OnClic
 		if(checkeDeviceHelper())
 			mCurrentCallId = getDeviceHelper().makeCall(Device.CallType.VIDEO, mVoipAccount);
 
-        getDeviceHelper().setScreenShareActivity(mCurrentCallId, this.getWindow().getDecorView().getRootView());
+        //getDeviceHelper().setScreenShareActivity(mCurrentCallId, this.getWindow().getDecorView().getRootView());
 //
 		if (TextUtils.isEmpty(mCurrentCallId)) {
 			CCPApplication.getInstance().showToast(R.string.no_support_voip);
