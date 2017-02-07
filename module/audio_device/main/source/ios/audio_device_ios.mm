@@ -756,7 +756,8 @@ int32_t AudioDeviceIOS::SetLoudspeakerStatus(bool enable) {
             return 0;
         }
     }
-
+    
+    options |= AVAudioSessionCategoryOptionMixWithOthers;
     [session setCategory:AVAudioSessionCategoryPlayAndRecord
              withOptions:options
                    error:&error];
