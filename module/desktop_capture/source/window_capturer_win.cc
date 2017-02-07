@@ -219,6 +219,9 @@ void WindowCapturerWin::Capture(const DesktopRegion& region) {
     callback_->OnCaptureCompleted(frame, kCapture_Window_IsIconic);
     return;
   }
+
+  SetProcessDPIAware();
+
   DesktopRect original_rect;
   DesktopRect cropped_rect;
   if (!GetCroppedWindowRect(window_, &cropped_rect, &original_rect)) {
