@@ -218,7 +218,8 @@ void h264_record::write_video_frame(const void *p, int len, uint32_t timestamp)
 		frame_count = lastVideoFrameNum_ + 1;
 	}
 
-// TODO: iOS平台在保存pts时会出问题, 造成视频巨卡, 尚未找到根本原因, 暂时以 frame_count/5.65 这种方式解决, 5.65 是一个测试出来的值, 无具体意义
+// TODO: iOS平台在保存pts时会出问题, 造成视频巨卡, 尚未找到根本原因, 暂时以 frame_count/5.65 这种方式解决, 5.65 是一个测试出来的值, 无具体意义//
+
 #ifdef __APPLE__
 	pkt.pts = av_rescale_q(frame_count/5.65, vSt->codec->time_base, vSt->time_base);
 #else
@@ -532,7 +533,7 @@ int h264_record::getVopType( const void *p, int len )
     
     switch( (*b)&0x1f )
     {
-        case 0x05 :
+       // case 0x05 :
         case 0x07 :
             return 0;
         case 0x01 :

@@ -51,7 +51,10 @@ VideoReceiver::VideoReceiver(Clock* clock, EventFactory* event_factory)
       _receiveStatsTimer(1000, clock_), //1000ms seems not precisely
       _retransmissionTimer(10, clock_),
       _keyRequestTimer(500, clock_),
-	  _frameStorageCallback(NULL)
+	  _frameStorageCallback(NULL),
+	  _waitForKeyFrame(true),
+	 _lastDecodeSeqNum(0),
+	_forTestCount(0)
 {
   assert(clock_);
 #ifdef DEBUG_DECODER_BIT_STREAM
@@ -361,7 +364,7 @@ int32_t VideoReceiver::Decode(uint16_t maxWaitTimeMs, bool shieldMosaic) {
     bool decodable_flag = false;
   VCMEncodedFrame* frame = _receiver.FrameForDecoding(
       maxWaitTimeMs, nextRenderTimeMs, complete_flag, decodable_flag, supports_render_scheduling);
-
+  
   if (frame == NULL) {
 	  //LOG(LS_WARNING) << " VideoReceiver::Decode. VCM_FRAME_NOT_READY " << maxWaitTimeMs << " " << nextRenderTimeMs;
     return VCM_FRAME_NOT_READY;
@@ -396,21 +399,38 @@ int32_t VideoReceiver::Decode(uint16_t maxWaitTimeMs, bool shieldMosaic) {
 			return ret;
 		}
 	}
+	
 
-      WebRtc_Word32 ret = VCM_OK;
-      if (shieldMosaic) {
-          if (complete_flag) {
-              ret = Decode(*frame);
-          }
-          else if (!complete_flag && decodable_flag)
-          {
-              _scheduleKeyRequest = true;
-          }
-      }
-      else
-      {
-          ret = Decode(*frame);
-      }
+	WebRtc_Word32 ret = VCM_OK;
+	if (shieldMosaic) {		
+		if (!complete_flag) {
+			_waitForKeyFrame = true;
+			_scheduleKeyRequest = true;
+		}
+		else {
+			if (frame->FrameType() == kVideoFrameKey) {   // Key Frame
+				ret = Decode(*frame);
+				_waitForKeyFrame = false;
+				_lastDecodeSeqNum = frame->HighSeqNum();
+			}
+			else {  //Not Key Frame
+				if (!_waitForKeyFrame) { //don't need wait for key frame.
+					if (frame->LowSeqNum() == (_lastDecodeSeqNum + 1)) {  //continous
+						ret = Decode(*frame);
+						_lastDecodeSeqNum = frame->HighSeqNum();
+					}
+					else {    // not continous
+						_waitForKeyFrame = true;
+						_scheduleKeyRequest = true;
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		ret = Decode(*frame);
+	}
     
       
 //    const int32_t ret = Decode(*frame);

@@ -61,6 +61,11 @@ public:
     *   Get frame timestamp (90kHz)
     */
     uint32_t TimeStamp() const {return _timeStamp;}
+
+	uint16_t LowSeqNum() const { return _lowSeqNum; }
+
+	uint16_t HighSeqNum() const { return _highSeqNum; }
+
     /**
     *   Get render time in milliseconds
     */

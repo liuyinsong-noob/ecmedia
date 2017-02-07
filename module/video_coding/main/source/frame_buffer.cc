@@ -144,6 +144,9 @@ VCMFrameBuffer::InsertPacket(const VCMPacket& packet,
 
     _latestPacketTimeMs = timeInMs;
 
+	_lowSeqNum = _sessionInfo.LowSequenceNumber();
+	_highSeqNum = _sessionInfo.HighSequenceNumber();
+
     if (_sessionInfo.complete()) {
       SetState(kStateComplete);
       return kCompleteSession;

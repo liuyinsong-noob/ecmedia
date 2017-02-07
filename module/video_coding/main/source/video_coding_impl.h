@@ -237,6 +237,9 @@ class VideoReceiver {
   VCMProcessTimer _retransmissionTimer;
   VCMProcessTimer _keyRequestTimer;
 
+  bool _waitForKeyFrame;
+  uint16_t _lastDecodeSeqNum;
+  int _forTestCount;
   //---begin
 private:
 	VCMFrameStorageCallback*   _frameStorageCallback GUARDED_BY(_receiveCritSect);

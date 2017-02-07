@@ -409,11 +409,11 @@ int ECMedia_init_video()
 int ECMedia_uninit_video()
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+#ifdef VIDEO_ENABLED
 	if (m_pScreenlist != NULL)
 		delete m_pScreenlist;
 	if (m_pWindowlist != NULL)
 		delete m_pWindowlist;
-#ifdef VIDEO_ENABLED
     PrintConsole("media_uninit_video called in\n");
     if(!m_vie)
     {
@@ -544,11 +544,13 @@ int ECMedia_init_audio()
         }
     }
     base->Release();
+#ifdef VIDEO_ENABLED
 	if (m_vie) {
 		ViEBase *viebase = (ViEBase*)ViEBase::GetInterface(m_vie);
 		viebase->SetVoiceEngine(m_voe);
 		viebase->Release();
 	}
+#endif
     PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
     return 0;
 }
@@ -1003,6 +1005,7 @@ int ECMedia_set_audio_data_cb(int channelid, onEcMediaAudioData audio_data_cb)
 int ECMedia_set_video_data_cb(int channelid, onEcMediaVideoDataV video_data_cb)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+#ifdef VIDEO_ENABLED
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViENetwork *network = ViENetwork::GetInterface(m_vie);
 	if (network) {
@@ -1016,6 +1019,9 @@ int ECMedia_set_video_data_cb(int channelid, onEcMediaVideoDataV video_data_cb)
 		PrintConsole("[ECMEDIA WARNNING] failed to get ViENetwork, %s", __FUNCTION__);
 		return -99;
 	}
+#endif
+	PrintConsole("[ECMEDIA WARNNING]  don't support video. %s", __FUNCTION__);
+	return -1;
 }
 
 int ECMedia_set_voe_cb(int channelid, onVoeCallbackOnError voe_callback_cb)
@@ -3948,65 +3954,89 @@ int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &hei
  void *ECMedia_createLiveStream(int type)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+#ifdef ECMEDIA_API_LIVESTREAM
     PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
 	return ECMedia_LiveStream::CreateLiveStream(type);
+#endif
+    PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
+	return NULL;
 }
 
 int ECMedia_playLiveStream(void *handle, const char * url, void *renderView, onLiveStreamVideoResolution callback)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+#ifdef ECMEDIA_API_LIVESTREAM
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
-    PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
 	return p->PlayStream(url, renderView, callback);
+    PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
+#endif
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d\n", __FUNCTION__, -1);
+	return -1;
 }
 
 void ECMedia_SetLiveVideoSource(void *handle,int video_source)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+#ifdef ECMEDIA_API_LIVESTREAM
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	p->SetVideoSource((VIDEO_SOURCE)video_source);
     PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
+#endif
 }
 
  int ECMedia_pushLiveStream(void *handle, const char *url, void *localView)
  {
 	 PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+#ifdef ECMEDIA_API_LIVESTREAM
 	 RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	 int ret =  p->PushStream(url, localView);
 	 PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
 	 return ret;
+#endif
+     PrintConsole("[ECMEDIA INFO] %s end with code: %d\n", __FUNCTION__, -1);
+	 return -1;
  }
 void ECMedia_stopLiveStream(void *handle)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+#ifdef ECMEDIA_API_LIVESTREAM
 	RTMPLiveSession *p = (RTMPLiveSession*) handle;
 	p->StopPlay();
 	p->StopPush();
 	PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
+#endif
 }
 
 void ECMedia_releaseLiveStream(void *handle)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+#ifdef ECMEDIA_API_LIVESTREAM
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	delete p;
 	PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
+#endif
 }
 
 int ECMedia_setVideoProfileLiveStream(void *handle, int cameraIndex, CameraCapability cam, int bitrRates)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+#ifdef ECMEDIA_API_LIVESTREAM
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
     PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
 	return p->setVideoProfile(cameraIndex, cam, bitrRates);
+#endif
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d\n", __FUNCTION__, -1);
+	return -1;
 }
 
 void ECMedia_setLiveStreamNetworkCallBack(void *handle, onLiveStreamNetworkStatusCallBack callback)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+#ifdef ECMEDIA_API_LIVESTREAM
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	p->setNetworkStatusCallBack(callback);
 	PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
+#endif
 }
 
 ECMEDIA_API int ECMedia_GetShareWindows(void *handle, WindowShare ** windows)

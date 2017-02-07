@@ -119,8 +119,8 @@ bool StatsCollector::SetVideoSendStatisticsProxy(int channelid, int capDevId)
 		}
 		return true;
 	}
-	return true;
 #endif
+	return true;
 }
 
 bool StatsCollector::SetVideoRecvStatisticsProxy(int channelid)
@@ -162,8 +162,8 @@ bool StatsCollector::SetVideoRecvStatisticsProxy(int channelid)
 		}
 		return true;
 	}
-	return false;
 #endif
+	return false;
 }
 
 bool StatsCollector::SetAudioSendStatisticsProxy(int channelid)

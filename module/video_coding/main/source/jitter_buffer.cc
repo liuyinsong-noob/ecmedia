@@ -686,7 +686,7 @@ VCMFrameBufferEnum VCMJitterBuffer::InsertPacket(const VCMPacket& packet,
 
   // Is the frame already in the decodable list?
   bool continuous = IsContinuous(*frame);
-  //LOG(LS_WARNING) << " hubin insertPacket seq:" << packet.seqNum << " mark:" << packet.markerBit << " time:" << packet.timestamp << " incomplete:" << incomplete_frames_.size() << 
+  //LOG(LS_WARNING) << " insertPacket seq:" << packet.seqNum << " mark:" << packet.markerBit << " time:" << packet.timestamp << " incomplete:" << incomplete_frames_.size() << 
   //	"  decodeable:" << decodable_frames_.size() << " state:" << buffer_state << " contn:"<< continuous;
 
   switch (buffer_state) {
