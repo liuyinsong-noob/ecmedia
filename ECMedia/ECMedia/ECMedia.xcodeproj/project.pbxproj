@@ -15,6 +15,7 @@
 		1AFBD1221DAE564A009B8D23 /* libfaad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1211DAE564A009B8D23 /* libfaad.a */; };
 		1AFBD1241DAE5839009B8D23 /* libfaac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1231DAE5839009B8D23 /* libfaac.a */; };
 		1AFBD1661DAE67D3009B8D23 /* libL16.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1611DAE6592009B8D23 /* libL16.a */; };
+		1FFBB3B31E49C3A50022EFCF /* RecordLocal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FFBB3B21E49C3A50022EFCF /* RecordLocal.cpp */; };
 		55D3C7101B81C8CD00D770BC /* b64.c in Sources */ = {isa = PBXBuildFile; fileRef = 05B4FEE61B40FA0200274327 /* b64.c */; };
 		55D3C7111B81C8CD00D770BC /* ECMedia.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05E86F371B3BA16D00BDBCE6 /* ECMedia.cpp */; };
 		55F5735C1C1FB2DE0014FB06 /* libamrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 559586391BABE68000125BC8 /* libamrnb.a */; };
@@ -1002,6 +1003,8 @@
 		1AFBD1211DAE564A009B8D23 /* libfaad.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaad.a; path = ../../../third_party/libfaad/lib/ios/libfaad.a; sourceTree = "<group>"; };
 		1AFBD1231DAE5839009B8D23 /* libfaac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaac.a; path = ../../../third_party/libfaac/lib/ios/libfaac.a; sourceTree = "<group>"; };
 		1AFBD15C1DAE6592009B8D23 /* L16.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = L16.xcodeproj; path = ../../../module/audio_coding/L16.xcodeproj; sourceTree = "<group>"; };
+		1FFBB3B21E49C3A50022EFCF /* RecordLocal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecordLocal.cpp; sourceTree = "<group>"; };
+		1FFBB3B71E49C3B10022EFCF /* RecordLocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordLocal.h; sourceTree = "<group>"; };
 		559586331BABE67F00125BC8 /* amrnb.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = amrnb.xcodeproj; path = ../../../module/audio_coding/amrnb.xcodeproj; sourceTree = "<group>"; };
 		55D3C73B1B81C8CD00D770BC /* libECMedia_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libECMedia_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		55F3F81A1B8B0AE400A19ED6 /* avcodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = avcodec.h; sourceTree = "<group>"; };
@@ -1279,6 +1282,7 @@
 		05E86F291B3BA16C00BDBCE6 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				1FFBB3B71E49C3B10022EFCF /* RecordLocal.h */,
 				AD7E735D1D3CB675001C0E04 /* statsCollector.h */,
 				05E86F2C1B3BA16D00BDBCE6 /* codingHelper.h */,
 				05E86F2D1B3BA16D00BDBCE6 /* RecordVoip.h */,
@@ -1300,6 +1304,7 @@
 		05E86F341B3BA16D00BDBCE6 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				1FFBB3B21E49C3A50022EFCF /* RecordLocal.cpp */,
 				1AFBD0B41DAE0A59009B8D23 /* ECLiveStream_rtmp.cpp */,
 				1AFBD0B51DAE0A59009B8D23 /* ECLiveStream.cpp */,
 				1AFBD0B61DAE0A59009B8D23 /* faaccodec.cpp */,
@@ -2723,6 +2728,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1AFBD0B81DAE0A59009B8D23 /* ECLiveStream.cpp in Sources */,
+				1FFBB3B31E49C3A50022EFCF /* RecordLocal.cpp in Sources */,
 				ADC54D071D489D9A00A5C852 /* RecordVoip.cpp in Sources */,
 				05B4FEE71B40FA0200274327 /* b64.c in Sources */,
 				1AFBD0B71DAE0A59009B8D23 /* ECLiveStream_rtmp.cpp in Sources */,

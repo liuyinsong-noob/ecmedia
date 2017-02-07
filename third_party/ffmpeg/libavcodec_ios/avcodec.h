@@ -28,17 +28,17 @@
  */
 
 #include <errno.h>
-#include "libavutil_ios/samplefmt.h"
-#include "libavutil_ios/attributes.h"
-#include "libavutil_ios/avutil.h"
-#include "libavutil_ios/buffer.h"
-#include "libavutil_ios/cpu.h"
-#include "libavutil_ios/channel_layout.h"
-#include "libavutil_ios/dict.h"
-#include "libavutil_ios/frame.h"
-#include "libavutil_ios/log.h"
-#include "libavutil_ios/pixfmt.h"
-#include "libavutil_ios/rational.h"
+#include "libavutil/samplefmt.h"
+#include "libavutil/attributes.h"
+#include "libavutil/avutil.h"
+#include "libavutil/buffer.h"
+#include "libavutil/cpu.h"
+#include "libavutil/channel_layout.h"
+#include "libavutil/dict.h"
+#include "libavutil/frame.h"
+#include "libavutil/log.h"
+#include "libavutil/pixfmt.h"
+#include "libavutil/rational.h"
 
 #include "version.h"
 

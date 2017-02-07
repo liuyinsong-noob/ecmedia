@@ -124,6 +124,8 @@ h264_record::h264_record(void):audioStreamdIndex_(-1)
 	clock_ = Clock::GetRealTimeClock();
 	baseAudioTime_ = 0;
 	lastAudioFrameNum_ = 0;
+    
+    video_frame_coutn = 0;
 }
 
 h264_record::~h264_record(void)
@@ -160,12 +162,89 @@ int h264_record::wirte_video_data(unsigned char *data, int len, uint32_t timesta
 		
 
 	if ( formatCtxt_ ) {
-		write_frame( data, len, timestamp);
+		write_video_frame(data, len, timestamp);
 		isWrited_ = true;
 	}
 
 	return iRet;
 }
+
+void h264_record::write_video_frame(const void *p, int len, uint32_t timestamp)
+{
+	CriticalSectionScoped lock(_recordVoipCrit);
+
+	if (!formatCtxt_ || videoStreamdIndex_ < 0 )
+		return;
+	
+	//AVStream *pst = formatCtxt_->streams[ videoStreamdIndex_ ];
+	AVStream *vSt = formatCtxt_->streams[videoStreamdIndex_];
+	// Init packet
+	AVPacket pkt;
+	av_init_packet( &pkt );
+	pkt.flags |= ( 0 == getVopType( p, len ) ) ? AV_PKT_FLAG_KEY : 0;   
+	pkt.stream_index = vSt->index;
+	pkt.data = (uint8_t*)p;
+	pkt.size = len;
+
+	// Wait for key frame_count
+	if ( waitkey_ ) {
+		if ( 0 == ( pkt.flags & AV_PKT_FLAG_KEY ) )
+			return;
+		else
+			waitkey_ = 0;
+	}
+
+	pkt.dts = AV_NOPTS_VALUE;
+	pkt.pts = AV_NOPTS_VALUE;
+
+	if(baseH264TimeStamp_ == 0) {
+		baseH264TimeStamp_ = timestamp;
+	}
+	
+	AVCodecContext *avccxt = vSt->codec;
+
+	float seconds= (float)(timestamp - baseH264TimeStamp_)/90000;
+	if (seconds < 0) {
+		WEBRTC_TRACE(cloopenwebrtc::kTraceError,
+			cloopenwebrtc::kTraceVideoCoding,
+			0,
+			"timestamp:%d baseH264TimeStamp_:%d seconds:%f\n",
+			timestamp, baseH264TimeStamp_, seconds);
+		return;
+	}
+	float timebase = (float)avccxt->time_base.num/avccxt->time_base.den;
+
+	// count the video frame number.
+	uint32_t frame_count = (uint32_t)(seconds / timebase);
+	if(frame_count !=0 && (frame_count <= lastVideoFrameNum_)) {
+		frame_count = lastVideoFrameNum_ + 1;
+	}
+
+// TODO: iOS平台在保存pts时会出问题, 造成视频巨卡, 尚未找到根本原因, 暂时以 frame_count/5.65 这种方式解决, 5.65 是一个测试出来的值, 无具体意义
+#ifdef __APPLE__
+	pkt.pts = av_rescale_q(frame_count/5.65, vSt->codec->time_base, vSt->time_base);
+#else
+    pkt.pts = av_rescale_q(frame_count, vSt->codec->time_base, vSt->time_base);
+#endif
+	lastVideoFrameNum_ = frame_count;
+
+	WEBRTC_TRACE(cloopenwebrtc::kTraceInfo,
+		cloopenwebrtc::kTraceVideoCoding,
+		0,
+		"timestamp=%u baseH264TimeStamp_=%u diff=%u seconds=%f timebase=%f frame_count=%d pkt.pts=%lld\n",
+		timestamp, baseH264TimeStamp_, (timestamp - baseH264TimeStamp_), seconds, timebase, frame_count, pkt.pts);
+
+
+	int ret = av_interleaved_write_frame( formatCtxt_, &pkt );
+	if(ret != 0) {
+		WEBRTC_TRACE(cloopenwebrtc::kTraceError,
+			cloopenwebrtc::kTraceVideoCoding,
+			0,
+			"av_interleaved_write_frame failed. frme=%d timestamp=%lld ret=%d\n",
+			frame_count,  timestamp, ret);
+	}
+}
+
 
 int h264_record::write_audio_data(short *data, int len, int freq)
 {
@@ -202,18 +281,18 @@ int h264_record::write_audio_data(short *data, int len, int freq)
 
 		AVPacket pkt = { 0 }; // data and size must be 0;
 		av_init_packet(&pkt);
-		
+
 		frame->nb_samples = audioFrameSize_;
 
 		ret = avcodec_fill_audio_frame(frame, c->channels, c->sample_fmt,
-			(uint8_t *)audioFrameBuf_, audioFrameSize_*2, 0);
+				(uint8_t *)audioFrameBuf_, audioFrameSize_*2, 0);
 		if(ret < 0) {
 			char buf[123];
 			av_strerror(ret, buf, 123);
 			WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-				cloopenwebrtc::kTraceVideoCoding,
-				0,
-				"Error avcodec_fill_audio_frame error=%s\n", buf);
+					cloopenwebrtc::kTraceVideoCoding,
+					0,
+					"Error avcodec_fill_audio_frame error=%s\n", buf);
 			//av_destruct_packet(&pkt);
 			av_frame_free(&frame);
 			return -1;
@@ -224,9 +303,9 @@ int h264_record::write_audio_data(short *data, int len, int freq)
 			char buf[123];
 			av_strerror(ret, buf, 123);
 			WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-				cloopenwebrtc::kTraceVideoCoding,
-				0,
-				"Error encoding audio frame error=%s\n", buf);
+					cloopenwebrtc::kTraceVideoCoding,
+					0,
+					"Error encoding audio frame error=%s\n", buf);
 			//av_destruct_packet(&pkt);
 			av_frame_free(&frame);
 			return -1;
@@ -255,14 +334,14 @@ int h264_record::write_audio_data(short *data, int len, int freq)
 		AVCodecContext *avccxt = pst->codec;
 		float interval_ms = now_ms - baseAudioTime_;
 		float timebase = ((float)avccxt->time_base.num / avccxt->time_base.den);
-		//������ǵڼ�֡
-		int64_t frames = (float)interval_ms / timebase/1000;
-		if (frames != 0 && frames == lastAudioFrameNum_) {
-			frames++;
+		// count the audio frame number.
+		int64_t frame_count = (float)interval_ms / timebase/1000;
+		if (frame_count != 0 && frame_count == lastAudioFrameNum_) {
+			frame_count++;
 		}
-		pkt.pts = av_rescale_q(frames, pst->codec->time_base, pst->time_base);
-		lastAudioFrameNum_ = frames;
-		
+		pkt.pts = av_rescale_q(frame_count, pst->codec->time_base, pst->time_base);
+		lastAudioFrameNum_ = frame_count;
+
 		/* Write the compressed frame to the media file. */
 		ret = av_interleaved_write_frame(formatCtxt_, &pkt);
 		//av_destruct_packet(&pkt);
@@ -270,9 +349,9 @@ int h264_record::write_audio_data(short *data, int len, int freq)
 			char buf[123];
 			av_strerror(ret, buf, 123);
 			WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-				cloopenwebrtc::kTraceVideoCoding,
-				0,
-				"Error while writing audio frame error=%s\n", buf);
+					cloopenwebrtc::kTraceVideoCoding,
+					0,
+					"Error while writing audio frame error=%s\n", buf);
 			return -1;
 		}
 	}
@@ -283,77 +362,6 @@ int h264_record::write_audio_data(short *data, int len, int freq)
 	}
 
 	return 0 ;
-}
-
-void h264_record::write_frame( const void* p, int len, uint32_t timestamp  )
-{
-	CriticalSectionScoped lock(_recordVoipCrit);
-
-	if (!formatCtxt_ || videoStreamdIndex_ < 0 )
-		return;
-	
-	//AVStream *pst = formatCtxt_->streams[ videoStreamdIndex_ ];
-	AVStream *vSt = formatCtxt_->streams[videoStreamdIndex_];
-	// Init packet
-	AVPacket pkt;
-	av_init_packet( &pkt );
-	pkt.flags |= ( 0 == getVopType( p, len ) ) ? AV_PKT_FLAG_KEY : 0;   
-	pkt.stream_index = vSt->index;
-	pkt.data = (uint8_t*)p;
-	pkt.size = len;
-
-	// Wait for key frame
-	if ( waitkey_ ) {
-		if ( 0 == ( pkt.flags & AV_PKT_FLAG_KEY ) )
-			return;
-		else
-			waitkey_ = 0;
-	}
-
-	pkt.dts = AV_NOPTS_VALUE;
-	pkt.pts = AV_NOPTS_VALUE;
-
-	if(baseH264TimeStamp_ == 0) {
-		baseH264TimeStamp_ = timestamp;
-	}
-	
-	AVCodecContext *avccxt = vSt->codec;
-
-	float seconds= (float)(timestamp - baseH264TimeStamp_)/90000;
-	if (seconds < 0) {
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-			cloopenwebrtc::kTraceVideoCoding,
-			0,
-			"timestamp:%d baseH264TimeStamp_:%d seconds:%f\n",
-			timestamp, baseH264TimeStamp_, seconds);
-		return;
-	}
-	float timebase = (float)avccxt->time_base.num/avccxt->time_base.den;
-
-	//������ǵڼ�֡
-	uint32_t frame = (uint32_t)(seconds / timebase);
-	if(frame !=0 && (frame <= lastVideoFrameNum_)) {
-		frame = lastVideoFrameNum_ + 1;
-	}
-
-	pkt.pts = av_rescale_q(frame, vSt->codec->time_base, vSt->time_base);
-	lastVideoFrameNum_ = frame;
-
-	WEBRTC_TRACE(cloopenwebrtc::kTraceInfo,
-		cloopenwebrtc::kTraceVideoCoding,
-		0,
-		"timestamp=%u baseH264TimeStamp_=%u diff=%u seconds=%f timebase=%f frame=%d pkt.pts=%lld\n",
-		timestamp, baseH264TimeStamp_, (timestamp - baseH264TimeStamp_), seconds, timebase, frame, pkt.pts);
-
-
-	int ret = av_interleaved_write_frame( formatCtxt_, &pkt );
-	if(ret != 0) {
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-			cloopenwebrtc::kTraceVideoCoding,
-			0,
-			"av_interleaved_write_frame failed. frme=%d timestamp=%lld ret=%d\n",
-			frame,  timestamp, ret);
-	}
 }
 
 void h264_record::destroy()
@@ -390,7 +398,7 @@ void h264_record::destroy()
 
 int h264_record::create( void *p, int len )
 {
-	if ( 0x67 != get_nal_type( p, len ) )
+	if ( 0x07 != get_nal_type( p, len ) )
 		return -1;
 		
 	WEBRTC_TRACE(cloopenwebrtc::kTraceInfo,
@@ -494,77 +502,76 @@ int h264_record::create( void *p, int len )
 // 3 = S-Frame
 int h264_record::getVopType( const void *p, int len )
 {
-	if ( !p || 6 >= len )
-		return -1;
-
-	unsigned char *b = (unsigned char*)p;
-
-	//int aaaaaaaaaa = *b;
-	//WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-	//	cloopenwebrtc::kTraceVideoCoding,
-	//	0,
-	//	"getVopType aaaaaaaaaa=%0x %0x %0x %0x %0x %0x %0x", *b, *(b+1), *(b+2), *(b+3), *(b+4), *(b+5),*(b+6));
-
-
-	// Verify NAL marker
-	if ( b[ 0 ] || b[ 1 ] || 0x01 != b[ 2 ] )
-	{
-		b++;
-
-		if ( b[ 0 ] || b[ 1 ] || 0x01 != b[ 2 ] )
-			return -1;
-	} // end if
-
-	b += 3;
-
-	// Verify VOP id
-	if ( 0xb6 == *b )
-	{
-		b++;
-		return ( *b & 0xc0 ) >> 6;
-	} // end if
-
-	switch( *b )
-	{
-	case 0x65 :
-	case 0x67 :
-		return 0;
-	case 0x61 :
-		return 1;
-	case 0x01 :
-		return 2;
-	default:
-		{
-			//int aaaaaaaaaa = *b;
-			//WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-			//	cloopenwebrtc::kTraceVideoCoding,
-			//	0,
-			//	"getVopType aaaaaaaaaa=%0x", aaaaaaaaaa);
-		}
-		break;
-	} // end switch
-
-	return -1;
+    if ( !p || 6 >= len )
+        return -1;
+    
+    unsigned char *b = (unsigned char*)p;
+    
+    //int aaaaaaaaaa = *b;
+    //WEBRTC_TRACE(cloopenwebrtc::kTraceError,
+    //	cloopenwebrtc::kTraceVideoCoding,
+    //	0,
+    //	"getVopType aaaaaaaaaa=%0x %0x %0x %0x %0x %0x %0x", *b, *(b+1), *(b+2), *(b+3), *(b+4), *(b+5),*(b+6));
+    
+    
+    // Verify NAL marker
+    if ( b[ 0 ] || b[ 1 ] || 0x01 != b[ 2 ] )
+    {
+        b++;
+        
+        if ( b[ 0 ] || b[ 1 ] || 0x01 != b[ 2 ] )
+            return -1;
+    } // end if
+    
+    b += 3;
+    
+    // Verify VOP id
+    if ( 0xb6 == *b )
+    {
+        b++;
+        return ( *b & 0xc0 ) >> 6;
+    } // end if
+    
+    switch( (*b)&0x1f )
+    {
+        case 0x05 :
+        case 0x07 :
+            return 0;
+        case 0x01 :
+            return 1;
+        default:
+        {
+			// TODO:  Nothing to do.
+            //int aaaaaaaaaa = *b;
+            //WEBRTC_TRACE(cloopenwebrtc::kTraceError,
+            //	cloopenwebrtc::kTraceVideoCoding,
+            //	0,
+            //	"getVopType aaaaaaaaaa=%0x", aaaaaaaaaa);
+        }
+            break;
+    } // end switch
+    
+    return -1;
 }
 
 int h264_record::get_nal_type( void *p, int len )
 {
-	if ( !p || 5 >= len )
-		return -1;
-
-	unsigned char *b = (unsigned char*)p;
-
-	// Verify NAL marker
-	if ( b[ 0 ] || b[ 1 ] || 0x01 != b[ 2 ] )
-	{   
-		b++;
-		if ( b[ 0 ] || b[ 1 ] || 0x01 != b[ 2 ] )
-			return -1;
-	} // end if
-
-	b += 3;
-
-	return *b;
+    if ( !p || 5 >= len )
+        return -1;
+    
+    unsigned char *b = (unsigned char*)p;
+    
+    // Verify NAL marker
+    if ( b[ 0 ] || b[ 1 ] || 0x01 != b[ 2 ] )
+    {   
+        b++;
+        if ( b[ 0 ] || b[ 1 ] || 0x01 != b[ 2 ] )
+            return -1;
+    } // end if
+    
+    b += 3;
+    
+    return (*b & 0x1f);
 }
 
 bool h264_record::get_write_status()

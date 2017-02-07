@@ -3,9 +3,15 @@
 
 extern "C"
 {
+#ifdef __APPLE__
+#include "libavcodec_ios/avcodec.h"
+#include "libavformat_ios/avformat.h"
+#include "libavutil_ios/opt.h"
+#else
 #include "libavcodec/avcodec.h"
 #include "libavformat/avformat.h"
-#include "libavutil/opt.h" 
+#include "libavutil/opt.h"
+#endif // endif __APPLE__
 //#include "libswresample/swresample.h"
 }
 #include "critical_section_wrapper.h"
@@ -27,7 +33,7 @@ public:
 	int write_audio_data(short *data, int len, int freq);
 
 
-	void write_frame( const void* p, int len , uint32_t timestamp );
+	void write_video_frame(const void *p, int len, uint32_t timestamp);
 	void destroy();
 	int create( void *p, int len);
 
