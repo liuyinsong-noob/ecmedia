@@ -315,9 +315,9 @@
 
 #include <time.h>
 #include <stdio.h>  /* FILE */
-#include "libavcodec/avcodec.h"
-#include "libavutil/dict.h"
-#include "libavutil/log.h"
+#include "libavcodec_ios/avcodec.h"
+#include "libavutil_ios/dict.h"
+#include "libavutil_ios/log.h"
 
 #include "avio.h"
 #include "libavformat/version.h"

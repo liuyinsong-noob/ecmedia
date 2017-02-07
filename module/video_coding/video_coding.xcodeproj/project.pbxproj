@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1FFBB42C1E49CF790022EFCF /* h264_record.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FFBB42A1E49CF790022EFCF /* h264_record.h */; };
+		1FFBB42D1E49CF790022EFCF /* h264_record.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FFBB42B1E49CF790022EFCF /* h264_record.cpp */; };
 		558FF1EE16A0104000BEFFED /* i420.h in Headers */ = {isa = PBXBuildFile; fileRef = 558FF19E16A0104000BEFFED /* i420.h */; };
 		558FF1EF16A0104000BEFFED /* i420.cc in Sources */ = {isa = PBXBuildFile; fileRef = 558FF1A116A0104000BEFFED /* i420.cc */; };
 		558FF1F016A0104000BEFFED /* mock_video_codec_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 558FF1A516A0104000BEFFED /* mock_video_codec_interface.h */; };
@@ -239,6 +241,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1FFBB42A1E49CF790022EFCF /* h264_record.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = h264_record.h; sourceTree = "<group>"; };
+		1FFBB42B1E49CF790022EFCF /* h264_record.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = h264_record.cpp; sourceTree = "<group>"; };
 		558FF19E16A0104000BEFFED /* i420.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = i420.h; sourceTree = "<group>"; };
 		558FF1A116A0104000BEFFED /* i420.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = i420.cc; sourceTree = "<group>"; };
 		558FF1A516A0104000BEFFED /* mock_video_codec_interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_video_codec_interface.h; sourceTree = "<group>"; };
@@ -494,6 +498,8 @@
 		55A1B3C31703E26C0015FEB9 /* h264 */ = {
 			isa = PBXGroup;
 			children = (
+				1FFBB42A1E49CF790022EFCF /* h264_record.h */,
+				1FFBB42B1E49CF790022EFCF /* h264_record.cpp */,
 				55A9B33418891FAE009B267B /* h264_util.h */,
 				55A1B3C61703E26C0015FEB9 /* h264.cc */,
 				55A1B3C71703E26C0015FEB9 /* h264.h */,
@@ -730,6 +736,7 @@
 				55AD154F15C8A020008A2BDA /* video_coding_impl.h in Headers */,
 				AD8D73531C59AEE300FB246D /* quality_scaler.h in Headers */,
 				558FF1EE16A0104000BEFFED /* i420.h in Headers */,
+				1FFBB42C1E49CF790022EFCF /* h264_record.h in Headers */,
 				AD47AFCC1C58A1510057041A /* simulcast_encoder_adapter.h in Headers */,
 				558FF1F016A0104000BEFFED /* mock_video_codec_interface.h in Headers */,
 				558FF1F116A0104000BEFFED /* video_codec_interface.h in Headers */,
@@ -913,6 +920,7 @@
 				55AD153E15C8A020008A2BDA /* qm_select.cc in Sources */,
 				AD8D73521C59AEE300FB246D /* quality_scaler.cc in Sources */,
 				55AD154115C8A020008A2BDA /* receiver.cc in Sources */,
+				1FFBB42D1E49CF790022EFCF /* h264_record.cpp in Sources */,
 				AD714B471D348CF000182A8C /* video_coding_event.cc in Sources */,
 				55AD154315C8A020008A2BDA /* rtt_filter.cc in Sources */,
 				AD714A941D33898E00182A8C /* h264_video_toolbox_nalu.cc in Sources */,
@@ -1108,6 +1116,7 @@
 					../../module/audioprocess/source/,
 					"../../third_party/libyuv-ios/include",
 					../../module/video_coding/codecs/h264_hardcode,
+					../../third_party/ffmpeg/libavcodec_ios,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -1192,6 +1201,7 @@
 					../../module/audioprocess/source/,
 					"../../third_party/libyuv-ios/include",
 					../../module/video_coding/codecs/h264_hardcode,
+					../../third_party/ffmpeg/libavcodec_ios,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";

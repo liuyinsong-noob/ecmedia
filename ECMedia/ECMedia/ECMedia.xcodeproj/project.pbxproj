@@ -3329,6 +3329,8 @@
 					"\"$(SRCROOT)/../../third_party/libfaac/include\"",
 					"\"$(SRCROOT)/../../third_party/libfaad/include\"",
 					"\"$(SRCROOT)/../../third_party/librtmp/include\"",
+					../../module/video_coding/codecs/h264,
+					../../third_party/ffmpeg,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -3399,6 +3401,8 @@
 					"\"$(SRCROOT)/../../third_party/libfaac/include\"",
 					"\"$(SRCROOT)/../../third_party/libfaad/include\"",
 					"\"$(SRCROOT)/../../third_party/librtmp/include\"",
+					../../module/video_coding/codecs/h264,
+					../../third_party/ffmpeg,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (

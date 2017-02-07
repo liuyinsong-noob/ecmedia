@@ -124,8 +124,6 @@ h264_record::h264_record(void):audioStreamdIndex_(-1)
 	clock_ = Clock::GetRealTimeClock();
 	baseAudioTime_ = 0;
 	lastAudioFrameNum_ = 0;
-    
-    video_frame_coutn = 0;
 }
 
 h264_record::~h264_record(void)
