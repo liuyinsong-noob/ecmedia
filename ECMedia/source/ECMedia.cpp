@@ -39,6 +39,7 @@
 #include "vie_rtp_rtcp.h"
 #include "vie_desktop_share.h"
 #include "RecordVoip.h"
+#include "RecordLocal.h"
 #include "webrtc_libyuv.h"
 #include "vie_image_process.h"
 #include "vie_encryption.h"
@@ -74,6 +75,7 @@ static VoeObserver* g_VoeObserver = NULL;
 #ifdef VIDEO_ENABLED
 cloopenwebrtc::VideoEngine* m_vie = NULL;
 static RecordVoip* g_recordVoip = NULL;
+static RecordLocal* g_recordLocal = NULL;
 static unsigned char* g_snapshotBuf = NULL;
 static int g_CaptureDeviceId = -1;
 ScreenList m_screenlist;
@@ -4072,6 +4074,37 @@ ECMEDIA_API int ECMedia_SelectShareWindow(void *handle, int type, int id)
     p->SelectShareWindow(type,id);
     PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
     return 0;
+}
+
+ECMEDIA_API int  ECMedia_startRecordLocalMedia(const char *fileName, void *localview)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins... \n", __FUNCTION__);
+    if (!g_recordLocal) {
+        g_recordLocal = new RecordLocal();
+        if (!g_recordLocal) {
+            PrintConsole("ECMedia_startRecordLocalMedia create recorder failed.\n");
+            return -1;
+        }
+    }
+    
+    PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
+    return g_recordLocal->Start(fileName, localview);
+}
+
+ECMEDIA_API void ECMedia_stopRecordLocalMedia()
+{
+    PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+    if (!g_recordLocal) {
+        PrintConsole("[ECMEDIA INFO] %s not start recorder", __FUNCTION__);
+        return;
+    }
+    
+    g_recordLocal->Stop();
+    
+    delete g_recordLocal;
+    g_recordLocal = NULL;
+    
+    PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
 }
 
 #endif

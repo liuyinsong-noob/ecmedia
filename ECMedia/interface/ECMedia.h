@@ -679,7 +679,14 @@ ECMEDIA_API int ECMedia_SelectShareWindow(void *handle, int type , int id);
 */
 ECMEDIA_API void ECMedia_SetLiveVideoSource(void *handle, int video_source);
 
-
+/*
+ * 功能： 录制摄像头视频保存为MP4文件
+ * 参数： [IN] filename: MP4小视频文件保存路径
+ *       [IN] localview: 要相机预览view的父view
+ */
+ECMEDIA_API int ECMedia_startRecordLocalMedia(const char *fileName, void *localview);
+ECMEDIA_API void ECMedia_stopRecordLocalMedia();
+    
 #ifdef __cplusplus
 }
 #endif
