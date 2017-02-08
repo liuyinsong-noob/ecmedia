@@ -186,6 +186,7 @@
     <ClInclude Include="include\CaptureScreen.h" />
     <ClInclude Include="include\ECLiveStream.h" />
     <ClInclude Include="include\faaccodec.h" />
+    <ClInclude Include="include\RecordLocal.h" />
     <ClInclude Include="include\RecordVoip.h" />
     <ClInclude Include="include\statsCollector.h" />
     <ClInclude Include="include\StunMessageCallBack.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="source\ECLiveStream.cpp" />
     <ClCompile Include="source\ECMedia.cpp" />
     <ClCompile Include="source\faaccodec.cpp" />
+    <ClCompile Include="source\RecordLocal.cpp" />
     <ClCompile Include="source\RecordVoip.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
