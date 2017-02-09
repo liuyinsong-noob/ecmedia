@@ -27,6 +27,11 @@
 
 #define RECORD_AUDIO_TEST 0
 
+#define RECORD_AUDIO_TEST_2 0
+#if RECORD_AUDIO_TEST_2 
+#include <Shlobj.h>
+#endif
+
 char *filename_path = NULL;
 
 #define WEBRTC_ABS(a) (((a) < 0) ? -(a) : (a))
@@ -371,9 +376,34 @@ TransmitMixer::PrepareDemux(const void* audioSamples,
                        nSamples,
                        nChannels,
                        samplesPerSec);
-    
-    //
-    
+	    
+#if RECORD_AUDIO_TEST_2
+	{
+		if (!_recordCaptureFile)
+		{
+			WCHAR appDir[MAX_PATH];
+			SHGetSpecialFolderPath(NULL, (LPWSTR)appDir, CSIDL_LOCAL_APPDATA, 0);
+
+			int textlen = WideCharToMultiByte(CP_UTF8, 0, appDir, -1, NULL, 0, NULL, NULL);
+			char *result = (char *)malloc((textlen + 1)*sizeof(char));
+			memset(result, 0, sizeof(char) * (textlen + 1));
+			WideCharToMultiByte(CP_UTF8, 0, appDir, -1, result, textlen, NULL, NULL);
+
+			char file_name_r[MAX_PATH];
+			sprintf(file_name_r, "%s/CaptureAudioData.pcm", result);
+
+			_recordCaptureFile = fopen(file_name_r, "wb");
+		}
+
+		if (_recordCaptureFile)
+		{
+			fwrite(_audioFrame.data_, 2, _audioFrame.samples_per_channel_, _recordCaptureFile);
+			fflush(_recordCaptureFile);
+		}
+	}
+
+
+#endif
 //    char filename_r[256] = "e:105.wav";
 #if RECORD_AUDIO_TEST
     //
@@ -471,6 +501,31 @@ TransmitMixer::PrepareDemux(const void* audioSamples,
     // --- Near-end audio processing.
     ProcessAudio(totalDelayMS, clockDrift, currentMicLevel, keyPressed);
 
+#if RECORD_AUDIO_TEST_2
+	{
+		if (!_recordProcesedFile)
+		{
+			WCHAR appDir[MAX_PATH];
+			SHGetSpecialFolderPath(NULL, (LPWSTR)appDir, CSIDL_LOCAL_APPDATA, 0);
+
+			int textlen = WideCharToMultiByte(CP_UTF8, 0, appDir, -1, NULL, 0, NULL, NULL);
+			char *result = (char *)malloc((textlen + 1)*sizeof(char));
+			memset(result, 0, sizeof(char) * (textlen + 1));
+			WideCharToMultiByte(CP_UTF8, 0, appDir, -1, result, textlen, NULL, NULL);
+
+			char processed_file_[MAX_PATH];
+			sprintf(processed_file_, "%s/ProcessedAudioData.pcm", result);
+			_recordProcesedFile = fopen(processed_file_, "wb");
+		}
+
+		if (_recordProcesedFile)
+		{
+			fwrite(_audioFrame.data_, 2, _audioFrame.samples_per_channel_, _recordProcesedFile);
+			fflush(_recordProcesedFile);
+		}
+	}
+
+#endif
     if (swap_stereo_channels_ && stereo_codec_)
       // Only bother swapping if we're using a stereo codec.
       AudioFrameOperations::SwapStereoChannels(&_audioFrame);
@@ -508,7 +563,7 @@ TransmitMixer::PrepareDemux(const void* audioSamples,
     
     
     
-#if RECORD_AUDIO_TEST
+//#if RECORD_AUDIO_TEST
     
     // --- Record to file
     bool file_recording = false;
@@ -518,7 +573,7 @@ TransmitMixer::PrepareDemux(const void* audioSamples,
     }
     if (file_recording)
     {
-        RecordAudioToFile(_audioFrame.sample_rate_hz_);
+        RecordAudioToFile(_audioFrame2Up.sample_rate_hz_);
         _writecount++;
     }
     
@@ -530,10 +585,10 @@ TransmitMixer::PrepareDemux(const void* audioSamples,
     }
     if (file_Callrecording)
     {
-        RecordAudioToFileCall(_audioFrame2Up.sample_rate_hz_);
+        RecordAudioToFileCall(_audioFrame.sample_rate_hz_);
     }
     //end for added zenggq
-#endif
+//#endif
     
     
 //    bool file_recording = false;

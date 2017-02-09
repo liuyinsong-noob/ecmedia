@@ -345,6 +345,10 @@ void ServiceCore::audio_stream_stop(int channelID)
 			calls=calls->next;
 		}
 
+//		ECMedia_stop_record_playout(channelID);
+//		ECMedia_stop_record_microphone();
+//		ECMedia_stop_record_send_voice();
+
 		ECMedia_DeRegister_voice_engine_observer();
 		ECMedia_audio_stop_playout(channelID);
 	    ECMedia_audio_stop_receive(channelID);
@@ -617,6 +621,10 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 			ECMedia_audio_set_send_destination(call->m_AudioChannelID, stream->port,stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr);
 //            For MOS test
 //			ECMedia_audio_set_send_destination(call->m_AudioChannelID, 7078, "127.0.0.1");
+
+//			ECMedia_start_record_microphone("./microphone.pcm");
+//			ECMedia_start_record_playout(call->m_AudioChannelID, "./playout.pcm");
+//			ECMedia_start_record_send_voice("./sendvoice.pcm");
 
 			//add by xzq to trace the stream
 			PrintConsole("Send Stream to Remote [%s:%d]\n",stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr,

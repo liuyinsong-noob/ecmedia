@@ -249,6 +249,14 @@ ECMEDIA_API int ECMedia_set_speaker_volume(int volumep);
  */
 ECMEDIA_API int ECMedia_get_speaker_volume(unsigned int& volumep);
 /*
+*
+*/
+ECMEDIA_API int ECMedia_set_mic_volume(int volumep);
+/*
+*
+*/
+ECMEDIA_API int ECMedia_get_mic_volume(unsigned int& volumep);
+/*
  *
  */
 ECMEDIA_API int ECMedia_set_mute_status(bool mute);
@@ -349,6 +357,15 @@ ECMEDIA_API int ECMedia_disable_srtp_send_audio(int channel);
 
 ECMEDIA_API int ECMedia_enable_srtp_recv_audio(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type,	const char* key);
 ECMEDIA_API int ECMedia_disable_srtp_recv_audio(int channel);
+
+ECMEDIA_API int ECMedia_start_record_playout(int channel, char *filename);
+ECMEDIA_API int ECMedia_stop_record_playout(int channel);
+
+ECMEDIA_API int ECMedia_start_record_microphone(char *filename);
+ECMEDIA_API int ECMedia_stop_record_microphone();
+
+ECMEDIA_API int ECMedia_start_record_send_voice(char *filename);
+ECMEDIA_API int ECMedia_stop_record_send_voice();
 
 #ifdef VIDEO_ENABLED
 /*

@@ -93,7 +93,7 @@ static int m_cameraCount = 0;
 using namespace cloopenwebrtc;
 using namespace std;
 
-#define ECMEDIA_VERSION "2.1.2.11"
+#define ECMEDIA_VERSION "2.1.2.12"
 
 //extern bool g_media_TraceFlag;
 //void PrintConsole(const char * fmt,...){};
@@ -1942,7 +1942,7 @@ int ECMedia_reset_audio_device()
  */
 int ECMedia_set_speaker_volume(int volumep)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+    PrintConsole("[ECMEDIA INFO] %s begins... volume:%d",__FUNCTION__, volumep);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEVolumeControl *volume = VoEVolumeControl::GetInterface(m_voe);
     if (volume) {
@@ -1968,7 +1968,7 @@ int ECMedia_get_speaker_volume(unsigned int& volumep)
         int ret = 0;
         ret = volume->GetSpeakerVolume(volumep);
         volume->Release();
-        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d  volume:%d",__FUNCTION__, ret, volumep);
         return ret;
     }
     else
@@ -1976,6 +1976,49 @@ int ECMedia_get_speaker_volume(unsigned int& volumep)
         PrintConsole("[ECMEDIA WARNNING] failed to get VoEVolumeControl, %s",__FUNCTION__);
         return -99;
     }
+}
+
+/*
+*
+*/
+int ECMedia_set_mic_volume(int volumep)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins... volume:%d", __FUNCTION__, volumep);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	VoEVolumeControl *volume = VoEVolumeControl::GetInterface(m_voe);
+	if (volume) {
+		int ret = 0;
+		ret = volume->SetMicVolume(volumep);
+		volume->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, ret);
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get VoEVolumeControl, %s", __FUNCTION__);
+		return -99;
+	}
+}
+/*
+*
+*/
+int ECMedia_get_mic_volume(unsigned int& volumep)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	VoEVolumeControl *volume = VoEVolumeControl::GetInterface(m_voe);
+	if (volume) {
+		int ret = 0;
+		ret = volume->GetMicVolume(volumep);
+		volume->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d volume:%d", __FUNCTION__, ret, volumep);
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get VoEVolumeControl, %s", __FUNCTION__);
+		return -99;
+	}
 }
 
 int ECMedia_set_mute_status(bool mute)
@@ -3512,6 +3555,96 @@ int ECMedia_disable_srtp_recv_audio(int channel)
 		return ret;
 	}
     PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
+	return -1;
+}
+
+int ECMedia_start_record_playout(int channel, char *filename)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	VoEFile *file = VoEFile::GetInterface(m_voe);
+	if (file) {
+		int ret = file->StartRecordingPlayout(channel, filename);
+		file->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, ret);
+		return ret;
+	}
+	PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, -1);
+	return -1;
+}
+
+int ECMedia_stop_record_playout(int channel)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	VoEFile *file = VoEFile::GetInterface(m_voe);
+	if (file) {
+		int ret = file->StopRecordingPlayout(channel);
+		file->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, ret);
+		return ret;
+	}
+	PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, -1);
+	return -1;
+}
+
+int ECMedia_start_record_microphone(char *filename)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	VoEFile *file = VoEFile::GetInterface(m_voe);
+	if (file) {
+		int ret = file->StartRecordingMicrophone(filename);
+		file->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, ret);
+		return ret;
+	}
+	PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, -1);
+	return -1;
+}
+
+int ECMedia_stop_record_microphone()
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	VoEFile *file = VoEFile::GetInterface(m_voe);
+	if (file) {
+		int ret = file->StopRecordingMicrophone();
+		file->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, ret);
+		return ret;
+	}
+	PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, -1);
+	return -1;
+}
+
+int ECMedia_start_record_send_voice(char *filename)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	VoEFile *file = VoEFile::GetInterface(m_voe);
+	if (file) {
+		int ret = file->StartRecordingCall(filename);
+		file->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, ret);
+		return ret;
+	}
+	PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, -1);
+	return -1;
+}
+
+int ECMedia_stop_record_send_voice()
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	VoEFile *file = VoEFile::GetInterface(m_voe);
+	if (file) {
+		int ret = file->StopRecordingCall();
+		file->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, ret);
+		return ret;
+	}
+	PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, -1);
 	return -1;
 }
 

@@ -131,6 +131,15 @@ public:
     virtual int StartRecordingMicrophone(OutStream* stream,
                                          CodecInst* compression = NULL) = 0;
 
+	virtual int StartRecordingCall(const char* fileNameUTF8,
+		CodecInst* compression = NULL,
+		int maxSizeBytes = -1) = 0;
+
+	virtual int StartRecordingCall(OutStream* stream,
+		CodecInst* compression = NULL) = 0;
+
+	virtual int StopRecordingCall() = 0;
+
     // Stops recording the microphone signal.
     virtual int StopRecordingMicrophone() = 0;
 

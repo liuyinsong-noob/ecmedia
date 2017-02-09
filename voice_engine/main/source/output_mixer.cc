@@ -18,7 +18,15 @@
 #include "voe_external_media.h"
 #include "statistics.h"
 #include "utility.h"
+
 char *filenameRender_path=NULL;
+
+#define RECORD_AUDIO_TEST_2 0
+
+#if RECORD_AUDIO_TEST_2
+#include <Shlobj.h>
+char *hubin_fil_path = NULL;
+#endif
 
 namespace cloopenwebrtc {
 namespace voe {
@@ -331,6 +339,19 @@ OutputMixer::OutputMixer(uint32_t instanceId) :
                      "callbacks");
     }
 
+#if RECORD_AUDIO_TEST_2
+	WCHAR appDir[MAX_PATH];
+	SHGetSpecialFolderPath(NULL, (LPWSTR)appDir, CSIDL_LOCAL_APPDATA, 0);
+
+	int textlen = WideCharToMultiByte(CP_UTF8, 0, appDir, -1, NULL, 0, NULL, NULL);
+	char *result = (char *)malloc((textlen + 1)*sizeof(char));
+	memset(result, 0, sizeof(char) * (textlen + 1));
+	WideCharToMultiByte(CP_UTF8, 0, appDir, -1, result, textlen, NULL, NULL);
+
+	char file_name_r[MAX_PATH];
+	sprintf(file_name_r, "%s/PlayoutAudioData.pcm", result);
+	StartRecordingPlayout(file_name_r, NULL);
+#endif
     _dtmfGenerator.Init();
 }
 
@@ -348,6 +369,11 @@ OutputMixer::~OutputMixer()
 {
     WEBRTC_TRACE(kTraceMemory, kTraceVoice, VoEId(_instanceId,-1),
                  "OutputMixer::~OutputMixer() - dtor");
+
+#if RECORD_AUDIO_TEST_2
+	StopRecordingPlayout();
+#endif
+
     if (_externalMedia)
     {
         DeRegisterExternalMediaProcessing();

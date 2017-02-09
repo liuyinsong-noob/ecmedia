@@ -86,6 +86,17 @@ public:
 
     virtual int StopRecordingMicrophone();
 
+	// Record  signal after process to file
+
+	virtual int StartRecordingCall(const char* fileNameUTF8,
+		CodecInst* compression = NULL,
+		int maxSizeBytes = -1);
+
+	virtual int StartRecordingCall(OutStream* stream,
+		CodecInst* compression = NULL);
+
+	virtual int StopRecordingCall();
+
 protected:
     VoEFileImpl(voe::SharedData* shared);
     virtual ~VoEFileImpl();

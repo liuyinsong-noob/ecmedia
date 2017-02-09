@@ -591,6 +591,76 @@ int VoEFileImpl::StopRecordingMicrophone()
     return err;
 }
 
+
+int VoEFileImpl::StartRecordingCall(
+	const char* fileNameUTF8, CodecInst* compression, int maxSizeBytes)
+{
+	WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+		"StartRecordingCall(fileNameUTF8=%s, compression, "
+		"maxSizeBytes=%d)", fileNameUTF8, maxSizeBytes);
+	assert(1024 == FileWrapper::kMaxFileNameSize);
+
+	if (!_shared->statistics().Initialized())
+	{
+		_shared->SetLastError(VE_NOT_INITED, kTraceError);
+		return -1;
+	}
+	if (_shared->transmit_mixer()->StartRecordingCall(fileNameUTF8,
+		compression))
+	{
+		WEBRTC_TRACE(kTraceError, kTraceVoice,
+			VoEId(_shared->instance_id(), -1),
+			"StartRecordingMicrophone() failed to start recording");
+		return -1;
+	}
+	return 0;
+}
+
+int VoEFileImpl::StartRecordingCall(
+	OutStream* stream, CodecInst* compression)
+{
+	WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+		"StartRecordingCall(stream, compression)");
+
+	if (!_shared->statistics().Initialized())
+	{
+		_shared->SetLastError(VE_NOT_INITED, kTraceError);
+		return -1;
+	}
+	if (_shared->transmit_mixer()->StartRecordingCall(stream,
+		compression) == -1)
+	{
+		WEBRTC_TRACE(kTraceError, kTraceVoice,
+			VoEId(_shared->instance_id(), -1),
+			"StartRecordingCall() failed to start recording");
+		return -1;
+	}
+	return 0;
+}
+
+int VoEFileImpl::StopRecordingCall()
+{
+	WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+		"StopRecordingCall()");
+	if (!_shared->statistics().Initialized())
+	{
+		_shared->SetLastError(VE_NOT_INITED, kTraceError);
+		return -1;
+	}
+
+	int err = 0;
+
+	if (_shared->transmit_mixer()->StopRecordingCall() != 0)
+	{
+		WEBRTC_TRACE(kTraceError, kTraceVoice,
+			VoEId(_shared->instance_id(), -1),
+			"StopRecordingCall() failed to stop recording to mixer");
+		err = -1;
+	}
+
+	return err;
+}
+
 #endif  // #ifdef WEBRTC_VOICE_ENGINE_FILE_API
 
 }  // namespace cloopenwebrtc

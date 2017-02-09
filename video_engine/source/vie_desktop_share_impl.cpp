@@ -18,6 +18,7 @@ namespace cloopenwebrtc {
 
 ViEDesktopShare* ViEDesktopShare::GetInterface(VideoEngine* video_engine) 
 {
+#ifdef ENABLE_SCREEN_SHARE
 #ifdef WEBRTC_VIDEO_ENGINE_DESKTOP_SHARE_API
         if (!video_engine) {
             return NULL;
@@ -28,9 +29,9 @@ ViEDesktopShare* ViEDesktopShare::GetInterface(VideoEngine* video_engine)
         // Increase ref count.
         (*vie_capture_impl)++;
         return vie_capture_impl;
-#else
-        return NULL;
 #endif
+#endif
+        return NULL;
 }
 
 int ViEDesktopShareImpl::Release() {
