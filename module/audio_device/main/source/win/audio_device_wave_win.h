@@ -333,6 +333,8 @@ private:
     uint32_t                          _newMicLevel;
     uint32_t                          _minMicVolume;
     uint32_t                          _maxMicVolume;
+
+	bool _muteEnable;
 };
 
 }  // namespace cloopenwebrtc

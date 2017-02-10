@@ -113,7 +113,8 @@ AudioDeviceWindowsWave::AudioDeviceWindowsWave(const int32_t id) :
     _recError(0),
     _newMicLevel(0),
     _minMicVolume(0),
-    _maxMicVolume(0)
+    _maxMicVolume(0),
+	_muteEnable(false)
 {
     WEBRTC_TRACE(kTraceMemory, kTraceAudioDevice, id, "%s created", __FUNCTION__);
 
@@ -945,7 +946,9 @@ int32_t AudioDeviceWindowsWave::MicrophoneMuteIsAvailable(bool& available)
 
 int32_t AudioDeviceWindowsWave::SetMicrophoneMute(bool enable)
 {
-    return (_mixerManager.SetMicrophoneMute(enable));
+	_muteEnable = enable;
+	return 0;
+    //return (_mixerManager.SetMicrophoneMute(enable));
 }
 
 // ----------------------------------------------------------------------------
@@ -955,14 +958,16 @@ int32_t AudioDeviceWindowsWave::SetMicrophoneMute(bool enable)
 int32_t AudioDeviceWindowsWave::MicrophoneMute(bool& enabled) const
 {
 
-    bool muted(0);
+    //bool muted(0);
 
-    if (_mixerManager.MicrophoneMute(muted) == -1)
-    {
-        return -1;
-    }
+   // if (_mixerManager.MicrophoneMute(muted) == -1)
+    //{
+      //  return -1;
+    //}
 
-    enabled = muted;
+   // enabled = muted;
+
+	enabled = _muteEnable;
     return 0;
 }
 
@@ -3312,15 +3317,17 @@ int32_t AudioDeviceWindowsWave::RecProc(LONGLONG& consumedTime)
 
         LARGE_INTEGER t1={0},t2={0};
 
-        if (send)
-        {
-            QueryPerformanceCounter(&t1);
+		if (send)
+		{
+			QueryPerformanceCounter(&t1);
 
-            // deliver recorded samples at specified sample rate, mic level etc. to the observer using callback
-            UnLock();
-            _ptrAudioBuffer->DeliverRecordedData();
-            Lock();
-
+			// deliver recorded samples at specified sample rate, mic level etc. to the observer using callback
+			if (!_muteEnable)
+			{
+				UnLock();
+				_ptrAudioBuffer->DeliverRecordedData();
+				Lock();
+			}
             QueryPerformanceCounter(&t2);
 
             if (InputSanityCheckAfterUnlockedPeriod() == -1)
