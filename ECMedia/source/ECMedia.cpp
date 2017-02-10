@@ -67,10 +67,50 @@ enum {
     return ret;}
 #endif
 
+class ECViECaptureObserver :public ViECaptureObserver
+{
+public:
+	ECViECaptureObserver(onEcMediaNoCameraCaptureCb fp);
+	virtual ~ECViECaptureObserver() {}
+	// This method is called if a bright or dark captured image is detected.
+	virtual void BrightnessAlarm(const int capture_id, const Brightness brightness) {}
+
+	// This method is called periodically telling the capture device frame rate.
+	virtual void CapturedFrameRate(const int capture_id, const unsigned char frame_rate) {}
+
+	// This method is called if the capture device stops delivering images to VideoEngine.
+	virtual void NoPictureAlarm(const int capture_id, const CaptureAlarm alarm);
+
+private:
+	bool m_firstStart;
+	onEcMediaNoCameraCaptureCb m_callback;
+
+};
+
+ECViECaptureObserver::ECViECaptureObserver(onEcMediaNoCameraCaptureCb fp)
+	:m_firstStart(true),
+	m_callback(fp)
+{
+
+}
+
+void ECViECaptureObserver::NoPictureAlarm(const int capture_id, const CaptureAlarm alarm)
+{
+	if (!alarm && m_firstStart)//when start, the alarm=0
+	{
+		m_firstStart = false;
+	}
+	else
+	{
+		m_callback(capture_id, alarm);
+	}
+}
+
 cloopenwebrtc::VoiceEngine* m_voe = NULL;
 static StatsCollector *g_statsCollector = NULL;
 
 static VoeObserver* g_VoeObserver = NULL;
+static ECViECaptureObserver* g_ECViECaptureObserver = NULL;
 
 #ifdef VIDEO_ENABLED
 cloopenwebrtc::VideoEngine* m_vie = NULL;
@@ -2232,6 +2272,70 @@ int ECMedia_getOrientation(const char *id, ECMediaRotateCapturedFrame &tr)
         return -99;
     }
 }
+
+int ECMedia_set_no_camera_capture_cb(int deviceid, onEcMediaNoCameraCaptureCb no_camera_capture_cb)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViECapture *capture = ViECapture::GetInterface(m_vie);
+	if (capture) {
+		if (g_ECViECaptureObserver)
+		{
+			delete g_ECViECaptureObserver;
+			g_ECViECaptureObserver = NULL;
+		}
+
+		g_ECViECaptureObserver = new ECViECaptureObserver(no_camera_capture_cb);
+		if (!g_ECViECaptureObserver)
+		{
+			PrintConsole("[ECMEDIA INFO] %s create g_ECViECaptureObserver failed\n", __FUNCTION__);
+			capture->Release();
+			return -1;
+		}
+
+		int ret = capture->RegisterObserver(deviceid, *g_ECViECaptureObserver);
+		capture->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d\n", __FUNCTION__, ret);
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViECapture, %s\n", __FUNCTION__);
+		return -99;
+	}
+
+	return 0;
+}
+
+
+int ECMedia_clear_no_camera_capture_cb(int deviceid)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViECapture *capture = ViECapture::GetInterface(m_vie);
+	if (capture) {
+		int ret = capture->DeregisterObserver(deviceid);
+
+		if (g_ECViECaptureObserver)
+		{
+			delete g_ECViECaptureObserver;
+			g_ECViECaptureObserver = NULL;
+		}
+
+		capture->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d\n", __FUNCTION__, ret);
+
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViECapture, %s\n", __FUNCTION__);
+		return -99;
+	}
+
+	return 0;
+}
+
 
 //The deviceid is got by func "ECMedia_allocate_capture_device"
 int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame tr)

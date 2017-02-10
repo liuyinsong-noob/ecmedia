@@ -40,6 +40,8 @@ typedef int (*onVoeCallbackOnError)(int channelid, int errCode);
 typedef int(*onEcMediaDesktopCaptureErrCode)(int desktop_capture_id, int errCode);
 typedef int (*onEcMediaShareWindowSizeChange)(int desktop_capture_id, int width, int height);
 
+typedef int(*onEcMediaNoCameraCaptureCb)(const int id, const bool capture);
+
 enum NET_STATUS_CODE {
 	NET_STATUS_CONNECTING = 1,
 	NET_STATUS_CONNECTED,
@@ -703,6 +705,14 @@ ECMEDIA_API void ECMedia_SetLiveVideoSource(void *handle, int video_source);
  */
 ECMEDIA_API int ECMedia_startRecordLocalMedia(const char *fileName, void *localview);
 ECMEDIA_API void ECMedia_stopRecordLocalMedia();
+
+
+/*
+*功能：设置视频通讯中当本地摄像头无法采集视频时，返回给用户信息的回调函数
+*/
+ECMEDIA_API int ECMedia_set_no_camera_capture_cb(int deviceid, onEcMediaNoCameraCaptureCb no_camera_capture_cb);
+ECMEDIA_API int ECMedia_clear_no_camera_capture_cb(int deviceid);
+
     
 #ifdef __cplusplus
 }

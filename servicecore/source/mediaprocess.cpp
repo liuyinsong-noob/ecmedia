@@ -20,6 +20,26 @@ int   g_desktopShareDeviceId = 0;
 #include "ECMedia.h"
 #endif
 
+/*
+id:local camera device id
+capture: 0, no camera capture; 1,has camera capture
+*/
+static int NoCameraCaptureCb(const int id, const bool capture)
+{
+	PrintConsole("NoCameraCaptureCb id=%d, capture=%d\n", id, capture);
+	if (!capture)
+	{
+		//no camera
+
+	}
+	else
+	{
+		//has camera
+	}
+
+	return 0;
+}
+
 int voe_callback(int channel, int errCode) {
 
 	PrintConsole("voe_callback channid=%d, errCode=%d", channel, errCode);
@@ -394,6 +414,7 @@ void ServiceCore::video_stream_stop(int channelID,int captureID)
 		//TODO:
 		//ViECapture *capture = ViECapture::GetInterface(m_vie);
 		//capture->DeregisterObserver(captureID);
+		ECMedia_clear_no_camera_capture_cb(captureID);
 		ECMedia_stop_capture(captureID);
 
 	}else if(m_videoModeChoose == 1) //screen-share
@@ -1225,6 +1246,7 @@ int ServiceCore::startVideoCapture(SerPhoneCall *call)
 
 			//TODO:
 			//capture->RegisterObserver(call->m_CaptureDeviceId, *this);
+			ECMedia_set_no_camera_capture_cb(call->m_CaptureDeviceId, NoCameraCaptureCb);
 			ECMedia_set_rotate_captured_frames(call->m_CaptureDeviceId,tr);
 			ECMedia_start_capture(call->m_CaptureDeviceId,cap);
 
