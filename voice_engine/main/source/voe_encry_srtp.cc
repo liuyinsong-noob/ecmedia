@@ -304,7 +304,7 @@ namespace cloopenwebrtc {
             if (st==0) {
                 srtp_init_done++;
             }else{
-                WEBRTC_TRACE(kTraceError, kTraceVoice, 0,"Couldn't initialize SRTP library.");
+                WEBRTC_TRACE(kTraceError, kTraceVoice, 0,"Couldn't initialize SRTP library. st %d", st);
 #if (TARGET_CPU_ARM64 || TARGET_CPU_ARM || defined(_WIN32) || defined(WEBRTC_ANDROID))
                 err_reporting_init("oRTP");
 #endif

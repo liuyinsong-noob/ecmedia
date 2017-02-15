@@ -2295,13 +2295,23 @@ int32_t ViEChannel::DeRegisterExternalEncryption() {
 #ifdef WEBRTC_SRTP
 int ViEChannel::CcpSrtpInit()
 {
+    CriticalSectionScoped cs(callback_cs_.get());
 	int err = _srtpModule.CcpSrtpInit(channel_id_);
+    if (err) {
+        WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+                     "%s: CcpSrtpInit failed, channel %d, err %d", __FUNCTION__, channel_id_, err);
+    }
 	return err;
 }
 
 int ViEChannel::CcpSrtpShutdown()
 {
+    CriticalSectionScoped cs(callback_cs_.get());
 	int err = _srtpModule.CcpSrtpShutdown(channel_id_);
+    if (err) {
+        WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+                     "%s: CcpSrtpShutdown failed, channel %d, err %d", __FUNCTION__, channel_id_, err);
+    }
 	return err;
 }
 
