@@ -54,12 +54,17 @@ int ViEEncryptionImpl::Release() {
 }
 
 ViEEncryptionImpl::ViEEncryptionImpl(ViESharedData* shared_data)
-    : shared_data_(shared_data) {
+    : shared_data_(shared_data),
+      vie_encryption_sect_(CriticalSectionWrapper::CreateCriticalSection()){
   WEBRTC_TRACE(kTraceMemory, kTraceVideo, shared_data_->instance_id(),
                "ViEEncryptionImpl::ViEEncryptionImpl() Ctor");
 }
 
 ViEEncryptionImpl::~ViEEncryptionImpl() {
+    if (vie_encryption_sect_) {
+        delete vie_encryption_sect_;
+        vie_encryption_sect_ = NULL;
+    }
   WEBRTC_TRACE(kTraceMemory, kTraceVideo, shared_data_->instance_id(),
                "ViEEncryptionImpl::~ViEEncryptionImpl() Dtor");
 }
@@ -113,6 +118,7 @@ int ViEEncryptionImpl::DeregisterExternalEncryption(const int video_channel) {
 int ViEEncryptionImpl::CcpSrtpInit(int video_channel)
 {
 #ifdef WEBRTC_SRTP
+    CriticalSectionScoped lock(vie_encryption_sect_);
 	ViEChannelManagerScoped cs(*(shared_data_->channel_manager()));
 	ViEChannel* vie_channel = cs.Channel(video_channel);
 	if (vie_channel == NULL)
@@ -122,7 +128,9 @@ int ViEEncryptionImpl::CcpSrtpInit(int video_channel)
 			"%s: No channel %d", __FUNCTION__, video_channel);
 		return -1;
 	}
+
 	return vie_channel->CcpSrtpInit();
+
 #else
 	shared_data_->SetLastError(kViEEncryptionSrtpNotSupported);
 	return -1;
@@ -133,6 +141,7 @@ int ViEEncryptionImpl::CcpSrtpInit(int video_channel)
 int ViEEncryptionImpl::CcpSrtpShutdown(int video_channel)
 {
 #ifdef WEBRTC_SRTP
+	CriticalSectionScoped lock(vie_encryption_sect_);
 	ViEChannelManagerScoped cs(*(shared_data_->channel_manager()));
 	ViEChannel* vie_channel = cs.Channel(video_channel);
 	if (vie_channel == NULL)
@@ -140,7 +149,9 @@ int ViEEncryptionImpl::CcpSrtpShutdown(int video_channel)
 		shared_data_->SetLastError(kViEEncryptionInvalidChannelId);
 		return -1;
 	}
+
 	return vie_channel->CcpSrtpShutdown();
+
 #else
 	shared_data_->SetLastError(kViEEncryptionSrtpNotSupported);
 	return -1;

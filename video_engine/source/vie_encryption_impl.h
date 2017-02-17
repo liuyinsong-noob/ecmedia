@@ -49,6 +49,8 @@ public:
 
  private:
   ViESharedData* shared_data_;
+          
+          CriticalSectionWrapper *vie_encryption_sect_;
 };
 
 }  // namespace cloopenwebrtc
