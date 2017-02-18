@@ -17,6 +17,9 @@
 #include "desktop_frame_win.h"
 #include "window_capture_utils.h"
 #include "trace.h"
+#include <lm.h>  
+#pragma comment(lib, "netapi32.lib")  
+
 
 namespace cloopenwebrtc {
 
@@ -96,12 +99,27 @@ class WindowCapturerWin : public WindowCapturer {
 
   DesktopSize previous_size_;
 
+  DWORD win_version_major_;
+
   DISALLOW_COPY_AND_ASSIGN(WindowCapturerWin);
 };
 
+
+/*
+Windows 8 6.2
+Windows 7 6.1
+Windows Server 2008 R2 6.1
+Windows Server 2008 6.0
+Windows Vista 6.0
+Windows Server 2003 R2 5.2
+Windows Server 2003 5.2
+Windows XP 5.1
+Windows 2000 5.0
+*/
 WindowCapturerWin::WindowCapturerWin()
     : callback_(NULL),
-      window_(NULL) {
+      window_(NULL),
+	  win_version_major_(-1){
   // Try to load dwmapi.dll dynamically since it is not available on XP.
   dwmapi_library_ = LoadLibrary(L"dwmapi.dll");
   if (dwmapi_library_) {
@@ -112,6 +130,19 @@ WindowCapturerWin::WindowCapturerWin()
   } else {
     is_composition_enabled_func_ = NULL;
   }
+
+	WKSTA_INFO_100 *pWkstaInfo = NULL;
+	NET_API_STATUS nRes = NetWkstaGetInfo(NULL, 100, (LPBYTE *)&pWkstaInfo);
+	if (nRes == NERR_Success)
+	{
+		DWORD dwMajor = pWkstaInfo->wki100_ver_major;
+		DWORD dwMinor = pWkstaInfo->wki100_ver_minor;
+
+		WEBRTC_TRACE(kTraceError, kTraceVideoCapture, -1, "window version is %d: %d", dwMajor, dwMinor);
+		NetApiBufferFree(pWkstaInfo);
+
+		win_version_major_ = dwMajor;
+	}
 }
 
 WindowCapturerWin::~WindowCapturerWin() {
@@ -173,7 +204,7 @@ bool  WindowCapturerWin::GetShareCaptureRect(int &width, int &height)
     DesktopRect original_rect;
     DesktopRect cropped_rect;
     if (!GetCroppedWindowRect(window_, &cropped_rect, &original_rect)) {
-        WEBRTC_TRACE(kTraceWarning, kTraceAudioMixerServer, -1,
+        WEBRTC_TRACE(kTraceWarning, kTraceVideoCapture, -1,
             "Failed to get window info: %d",GetLastError());
         return false;
     }
@@ -191,7 +222,7 @@ void WindowCapturerWin::Start(Callback* callback) {
 
 void WindowCapturerWin::Capture(const DesktopRegion& region) {
   if (!window_) {
-	WEBRTC_TRACE(kTraceError, kTraceAudioMixerServer, -1,
+	WEBRTC_TRACE(kTraceError, kTraceVideoCapture, -1,
 		"Window hasn't been selected: %d",GetLastError());
     callback_->OnCaptureCompleted(NULL, kCapture_NoCaptureImage);
     return;
@@ -219,13 +250,15 @@ void WindowCapturerWin::Capture(const DesktopRegion& region) {
     callback_->OnCaptureCompleted(frame, kCapture_Window_IsIconic);
     return;
   }
-
-  SetProcessDPIAware();
+  
+  if (win_version_major_ >= 6) {
+	  SetProcessDPIAware();
+  }
 
   DesktopRect original_rect;
   DesktopRect cropped_rect;
   if (!GetCroppedWindowRect(window_, &cropped_rect, &original_rect)) {
-	WEBRTC_TRACE(kTraceWarning, kTraceAudioMixerServer, -1,
+	WEBRTC_TRACE(kTraceWarning, kTraceVideoCapture, -1,
 		"Failed to get window info: %d",GetLastError());
     callback_->OnCaptureCompleted(NULL, kCapture_NoCaptureImage);
     return;
@@ -245,7 +278,7 @@ void WindowCapturerWin::Capture(const DesktopRegion& region) {
 
   HDC window_dc = GetDC(NULL);
   if (!window_dc) {
-	WEBRTC_TRACE(kTraceWarning, kTraceAudioMixerServer, -1,
+	WEBRTC_TRACE(kTraceWarning, kTraceVideoCapture, -1,
 		"Failed to get window DC: %d",GetLastError());
     callback_->OnCaptureCompleted(NULL, kCapture_NoCaptureImage);
     return;
@@ -305,7 +338,7 @@ void WindowCapturerWin::Capture(const DesktopRegion& region) {
       DesktopRect::MakeSize(frame->size()));
 
   if (!result) {
-	WEBRTC_TRACE(kTraceError, kTraceAudioMixerServer, -1,
+	WEBRTC_TRACE(kTraceError, kTraceVideoCapture, -1,
 		"Both PrintWindow() and BitBlt() failed: %d",GetLastError());
     frame.reset();
   }
