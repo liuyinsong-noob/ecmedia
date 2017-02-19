@@ -2435,6 +2435,28 @@ int ECMedia_stop_capture(int captureid)
 
 int ECMedia_add_render(int channelid, void *video_window, ReturnVideoWidthHeightM videoResolutionCallback)
 {
+	//PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d video_window:%0x", __FUNCTION__, channelid, video_window);
+	//static void *s_video_window = NULL;
+	//static int s_channelid = -1;
+	//static ReturnVideoWidthHeightM s_videoResolutionCallback = NULL;
+	//if (!s_video_window) {
+	//	s_video_window = video_window;
+	//	s_channelid = channelid;
+	//	s_videoResolutionCallback = videoResolutionCallback;
+	//}
+	//else {
+	//	ViERender *render = ViERender::GetInterface(m_vie);
+
+	//		int ret = render->AddRenderer(channelid, s_video_window, 2, 0, 0, 1, 1, s_videoResolutionCallback);
+	//		render->StartRender(channelid);
+
+	//		ret = render->AddRenderer(s_channelid, video_window, 2, 0, 0, 1, 1, videoResolutionCallback);
+	//		render->StartRender(s_channelid);
+
+	//		render->Release();			
+	//}
+	//return 0;
+
     PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d video_window:%0x",__FUNCTION__, channelid, video_window);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViERender *render = ViERender::GetInterface(m_vie);
@@ -3393,7 +3415,7 @@ int ECMedia_shutdown_srtp_video(int channel)
 
 int ECMedia_enable_srtp_send_video(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins... channel:%d type:%d key:%s", __FUNCTION__, channel, crypt_type, key);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEEncryption *encryt = ViEEncryption::GetInterface(m_vie);
 	if (encryt) {
@@ -3422,7 +3444,7 @@ int ECMedia_disable_srtp_send_video(int channel)
 
 int ECMedia_enable_srtp_recv_video(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins... channel:%d type:%d key:%s", __FUNCTION__, channel, crypt_type, key);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEEncryption *encryt = ViEEncryption::GetInterface(m_vie);
 	if (encryt) {

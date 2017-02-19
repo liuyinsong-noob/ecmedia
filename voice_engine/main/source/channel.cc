@@ -378,7 +378,8 @@ Channel::SendRTCPPacket(int channel, const void *data, size_t len)
     }
 
 	// SRTP or External encryption
-	if (_encrypting)
+	//if (_encrypting)
+    if (false)  //hubin 2017.2.18  we don't support rtcp srtp.
 	{
 		//CriticalSectionScoped cs(&_callbackCritSect);
 
@@ -4972,7 +4973,8 @@ void
 	}
 
 	// SRTP or External decryption
-	if (_decrypting)
+	//if (_decrypting)
+	if(false) //hubin 2017.2.18  we don't support rtcp srtp.
 	{
 		CriticalSectionScoped cs(&_callbackCritSect);
 

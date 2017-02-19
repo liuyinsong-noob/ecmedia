@@ -420,7 +420,9 @@ int ViEReceiver::InsertRTCPPacket(const uint8_t* rtcp_packet,
 	unsigned char* received_packet = (unsigned char*)rtcp_packet;
 	int received_packet_length = rtcp_packet_length;
 
-	if (external_decryption_) {
+	//if (external_decryption_) 
+	if (false)  //hubin 2017.2.18  we don't support rtcp srtp.
+	{
 		//put the last 4 bytes to rtp header ssrc to restore ssrc that FreeSwitch has changed
 		//memcpy(received_packet + 4, received_packet + received_packet_length - 4, 4);
 		//received_packet_length -= 4;

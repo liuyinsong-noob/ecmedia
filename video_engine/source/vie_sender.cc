@@ -178,7 +178,9 @@ int ViESender::SendRTCPPacket(int vie_id, const void* data, size_t len) {
     rtp_dump_->DumpPacket(static_cast<const uint8_t*>(data), len);
   }
 
-  if (external_encryption_) {
+//  if (external_encryption_) 
+  if (false)  //hubin 2017.2.18  we don't support rtcp srtp.
+ {
 	  external_encryption_->encrypt_rtcp(
 		  channel_id_, send_packet, encryption_buffer_, send_packet_length,
 		  static_cast<int*>(&send_packet_length));

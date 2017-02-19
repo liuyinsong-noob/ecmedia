@@ -65,7 +65,8 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../../module/video_render/main/include \
 	$(LOCAL_PATH)/../../module/audio_coding/codecs/opencore-amr/amrnb \
 	$(LOCAL_PATH)/../../third_party/libfaad/faad2-2.7/include \
-	$(LOCAL_PATH)/../../third_party/libfaac/include
+	$(LOCAL_PATH)/../../third_party/libfaac/include \
+	$(LOCAL_PATH)/../../third_party/ffmpeg/ffmpeg-android-bin/include
 	
 LOCAL_SHARED_LIBRARIES := \
     libcutils \

@@ -131,7 +131,16 @@ namespace cloopenwebrtc {
         enum ccp_srtp_crypto_suite_t _suite;
         
         bool _srtpCreate;
+
+		int send_channel;
+		ccp_srtp_crypto_suite_t send_crypt_type;
+		char send_key[256];
+		WebRtc_UWord32 send_ssrc;
         
+		int recv_channel;
+		ccp_srtp_crypto_suite_t recv_crypt_type;
+		char recv_key[256];
+
     private:
         err_status_t ccp_srtp_init(void);
         err_status_t ccp_srtp_create(const srtp_policy_t *policy);
@@ -140,7 +149,7 @@ namespace cloopenwebrtc {
         err_status_t ccp_crypto_get_random(uint8_t *tmp, int size);
         bool ccp_init_srtp_policy(srtp_t srtp, srtp_policy_t* policy, ssrc_t ssrc, const char* b64_key);
         
-        err_status_t ccp_srtp_create_configure_session(uint32_t ssrc, const char* snd_key, const char* rcv_key);
+        //err_status_t ccp_srtp_create_configure_session(uint32_t ssrc, const char* snd_key, const char* rcv_key);
         int ccp_srtp_configure_incoming(const char* rcv_key);
         int ccp_srtp_configure_outgoing(uint32_t ssrc, const char* snd_key);
         

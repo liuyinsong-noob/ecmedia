@@ -52,6 +52,11 @@ namespace cloopenwebrtc {
 		WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0, "EnableSRTPSend channel = %d;crypt_type = %d;\n", channel, crypt_type);
 		_suite = crypt_type;
 
+		send_channel = channel;
+		send_crypt_type = crypt_type;
+		sprintf(send_key, "%s", key);
+		send_ssrc = ssrc;
+
 		switch (_suite)
 		{
 		case CCPAES_128_SHA1_80:
@@ -85,6 +90,13 @@ namespace cloopenwebrtc {
     
     int VoeEncrySrtp::DisableSRTPSend(int channel)
     {
+		if (channel == send_channel) {
+			if (recv_channel == -1) {
+				ccp_srtp_dealloc(session);
+				session = NULL;
+				_srtpCreate = false;
+			}
+		}
         return 0;
     }
     
@@ -92,6 +104,10 @@ namespace cloopenwebrtc {
     {
 		WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0, "EnableSRTPReceive channel = %d;crypt_type = %d;\n", channel, crypt_type);        
 		_suite = crypt_type;
+
+		recv_channel = channel;
+		recv_crypt_type = crypt_type;
+		sprintf(recv_key, "%s", key);
 
 		switch (_suite)
 		{
@@ -128,6 +144,13 @@ namespace cloopenwebrtc {
     
     int VoeEncrySrtp::DisableSRTPReceive(int channel)
     {
+		if (channel == recv_channel) {
+			if (send_channel == -1) {
+				ccp_srtp_dealloc(session);
+				_srtpCreate = false;
+				session = NULL;
+			}
+		}
         WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0,"VoeEncrySrtp::DisableSRTPReceive\n");
         return 0;
     }
@@ -161,7 +184,9 @@ namespace cloopenwebrtc {
     _suite(CCPAES_128_SHA1_80),
     _ssrc(0),
     session(NULL),
-    _srtpCreate(false)
+    _srtpCreate(false),
+		recv_channel(-1),
+		send_channel(-1)
     {
         
     }
@@ -213,8 +238,28 @@ namespace cloopenwebrtc {
         {   
              *bytes_out = bytes_in;
             return;
-        }
-        else {
+        }else if (srtp_err == err_status_replay_old) {
+			DisableSRTPReceive(recv_channel);
+			DisableSRTPSend(send_channel);
+			EnableSRTPReceive(recv_channel, recv_crypt_type, recv_key);
+			EnableSRTPSend(send_channel, send_crypt_type, send_key, send_ssrc);
+
+				//srtp_dealloc(rtp_session->send_ctx[rtp_session->srtp_idx_rtp]);
+				//rtp_session->send_ctx[rtp_session->srtp_idx_rtp] = NULL;
+				//if ((stat = srtp_create(&rtp_session->send_ctx[rtp_session->srtp_idx_rtp],
+				//	&rtp_session->send_policy[rtp_session->srtp_idx_rtp])) || !rtp_session->send_ctx[rtp_session->srtp_idx_rtp]) {
+				//	switch_log_printf(SWITCH_CHANNEL_SESSION_LOG(rtp_session->session), SWITCH_LOG_ERROR,
+				//		"Error! RE-Activating %s Secure RTP SEND\n", rtp_type(rtp_session));
+				//	rtp_session->flags[SWITCH_RTP_FLAG_SECURE_SEND] = 0;
+				//	ret = -1;
+				//	goto end;
+				//}
+				//else {
+				//	switch_log_printf(SWITCH_CHANNEL_SESSION_LOG(rtp_session->session), SWITCH_LOG_INFO,
+				//		"RE-Activating %s Secure RTP SEND\n", rtp_type(rtp_session));
+				//}
+
+			} else {
             WEBRTC_TRACE(kTraceError, kTraceVoice, 0,"VoeEncrySrtp->decrypt srtp_unprotect() failed (%d)\n", srtp_err);
             return;
         }
@@ -313,6 +358,25 @@ namespace cloopenwebrtc {
 //        printf("srtp_init_done = %d after\n",srtp_init_done);
         return st;
     }
+	int VoeEncrySrtp::ccp_srtp_shutdown(void)
+	{
+		err_status_t err = err_status_ok;
+		srtp_init_done--;
+		//        printf("srtp_init_done = %d\n",srtp_init_done);
+		if (srtp_init_done == 0) {
+			//            printf("We go into srtp shutdown\n");
+			//#ifdef HAVE_SRTP_SHUTDOWN
+			//            printf("We Have srtp shotdown\n");
+#if (TARGET_CPU_ARM64 || TARGET_CPU_ARM || defined(_WIN32) || defined(WEBRTC_ANDROID))
+			err = srtp_shutdown();
+#else
+			err = err_status_fail;
+#endif
+			//#endif
+		}
+		return err;
+	}
+
     err_status_t VoeEncrySrtp::ccp_srtp_create(const srtp_policy_t *policy)
     {
 //        printf("sean111111 %s begins ...\n",__FUNCTION__);
@@ -362,52 +426,53 @@ namespace cloopenwebrtc {
     }
 
     
-    err_status_t VoeEncrySrtp::ccp_srtp_create_configure_session(uint32_t ssrc, const char* snd_key, const char* rcv_key)
-    {
-        err_status_t err;
-#if (TARGET_CPU_ARM64 || TARGET_CPU_ARM || defined(_WIN32) || defined(WEBRTC_ANDROID))
-        err = ccp_srtp_create(NULL);
-#else
-        err = err_status_fail;
-#endif
-        if (err != err_status_ok) {
-            WEBRTC_TRACE(kTraceError, kTraceVoice, 0,"Failed to create srtp session (%d)\n", err);
-            return err;
-        }
-        
-        // incoming stream
-        {
-            ssrc_t incoming_ssrc;
-            srtp_policy_t policy;
-            
-            memset(&policy, 0, sizeof(srtp_policy_t));
-            incoming_ssrc.type = ssrc_any_inbound;
-            
-            if (!ccp_init_srtp_policy(session, &policy, incoming_ssrc, rcv_key)) {
-                ccp_srtp_dealloc(session);
-				session = NULL;
-				return err_status_fail;
-            }
-        }
-        // outgoing stream
-        {
-            ssrc_t outgoing_ssrc;
-            srtp_policy_t policy;
-            
-            memset(&policy, 0, sizeof(srtp_policy_t));
-            
-            outgoing_ssrc.type = ssrc_specific;
-            outgoing_ssrc.value = ssrc;
-            
-            if (!ccp_init_srtp_policy(session, &policy, outgoing_ssrc, snd_key)) {
-                ccp_srtp_dealloc(session);
-				session = NULL;
-				return err_status_fail;
-            }
-        }
-        
-        return err_status_ok;
-    }
+
+//    err_status_t VoeEncrySrtp::ccp_srtp_create_configure_session(uint32_t ssrc, const char* snd_key, const char* rcv_key)
+//    {
+//        err_status_t err;
+//#if (TARGET_CPU_ARM64 || TARGET_CPU_ARM || defined(_WIN32) || defined(WEBRTC_ANDROID))
+//        err = ccp_srtp_create(NULL);
+//#else
+//        err = err_status_fail;
+//#endif
+//        if (err != err_status_ok) {
+//            WEBRTC_TRACE(kTraceError, kTraceVoice, 0,"Failed to create srtp session (%d)\n", err);
+//            return err;
+//        }
+//        
+//        // incoming stream
+//        {
+//            ssrc_t incoming_ssrc;
+//            srtp_policy_t policy;
+//            
+//            memset(&policy, 0, sizeof(srtp_policy_t));
+//            incoming_ssrc.type = ssrc_any_inbound;
+//            
+//            if (!ccp_init_srtp_policy(session, &policy, incoming_ssrc, rcv_key)) {
+//                ccp_srtp_dealloc(session);
+//				session = NULL;
+//				return err_status_fail;
+//            }
+//        }
+//        // outgoing stream
+//        {
+//            ssrc_t outgoing_ssrc;
+//            srtp_policy_t policy;
+//            
+//            memset(&policy, 0, sizeof(srtp_policy_t));
+//            
+//            outgoing_ssrc.type = ssrc_specific;
+//            outgoing_ssrc.value = ssrc;
+//            
+//            if (!ccp_init_srtp_policy(session, &policy, outgoing_ssrc, snd_key)) {
+//                ccp_srtp_dealloc(session);
+//				session = NULL;
+//				return err_status_fail;
+//            }
+//        }
+//        
+//        return err_status_ok;
+//    }
     
     bool VoeEncrySrtp::ccp_init_srtp_policy(srtp_t srtp, srtp_policy_t* policy, ssrc_t ssrc, const char* b64_key)
     {
@@ -510,24 +575,7 @@ namespace cloopenwebrtc {
 #endif
     }
     
-    int VoeEncrySrtp::ccp_srtp_shutdown(void)
-    {
-        err_status_t err = err_status_ok;
-        srtp_init_done--;
-//        printf("srtp_init_done = %d\n",srtp_init_done);
-        if (srtp_init_done==0){
-//            printf("We go into srtp shutdown\n");
-//#ifdef HAVE_SRTP_SHUTDOWN
-//            printf("We Have srtp shotdown\n");
-#if (TARGET_CPU_ARM64 || TARGET_CPU_ARM || defined(_WIN32) || defined(WEBRTC_ANDROID))
-            err = srtp_shutdown();
-#else
-            err = err_status_fail;
-#endif
-//#endif
-        }
-        return err;
-    }
+
     //正常情况返回0
     //其他返回值参考err.h
     int VoeEncrySrtp::ccp_srtp_configure_incoming(const char* rcv_key)
@@ -551,6 +599,7 @@ namespace cloopenwebrtc {
         if (!ccp_init_srtp_policy(session, &policy, incoming_ssrc, rcv_key)) {
             ccp_srtp_dealloc(session);
 			session = NULL;
+			_srtpCreate = false;
             return err_status_fail;
         }
         return 0;
@@ -584,6 +633,7 @@ namespace cloopenwebrtc {
         if (!ccp_init_srtp_policy(session, &policy, outgoing_ssrc, snd_key)) {
             ccp_srtp_dealloc(session);
 			session = NULL;
+			_srtpCreate = false;
 			return err_status_fail;
         }
         return 0;
