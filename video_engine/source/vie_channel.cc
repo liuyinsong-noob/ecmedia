@@ -262,6 +262,10 @@ ViEChannel::~ViEChannel() {
     StopDecodeThread();
   }
 
+#ifdef WEBRTC_SRTP
+  SrtpModule::DestroySrtpModule(&_srtpModule);
+#endif
+
   if(_isVideoConference) {
 	  if(_sipNo) {
 		  delete[] _sipNo;
@@ -285,6 +289,10 @@ ViEChannel::~ViEChannel() {
 	  }
   }
   // Release modules.
+  if (receive_statistics_proxy_) {
+	  delete receive_statistics_proxy_;
+	  receive_statistics_proxy_ = NULL;
+  }
 
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
   UdpTransport::Destroy(&socket_transport_);

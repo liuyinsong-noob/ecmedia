@@ -1126,9 +1126,9 @@ Channel::~Channel()
 	UdpTransport::Destroy(
 		&_socketTransportModule);
 #endif
-//#ifdef WEBRTC_SRTP
-//	SrtpModule::DestroySrtpModule(&_srtpModule);
-//#endif
+#ifdef WEBRTC_SRTP
+	SrtpModule::DestroySrtpModule(&_srtpModule);
+#endif
     if (vie_network_) {
       vie_network_->Release();
       vie_network_ = NULL;
