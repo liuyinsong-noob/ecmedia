@@ -90,12 +90,15 @@ namespace cloopenwebrtc {
     
     int VoeEncrySrtp::DisableSRTPSend(int channel)
     {
+		WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0, "VoeEncrySrtp::DisableSRTPSend channel:%d send_channel:%d recv_channel:%d\n", 
+			channel, send_channel, recv_channel);
 		if (channel == send_channel) {
 			if (recv_channel == -1) {
 				ccp_srtp_dealloc(session);
 				session = NULL;
 				_srtpCreate = false;
 			}
+			send_channel = -1;
 		}
         return 0;
     }
@@ -144,14 +147,17 @@ namespace cloopenwebrtc {
     
     int VoeEncrySrtp::DisableSRTPReceive(int channel)
     {
+		WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0, "VoeEncrySrtp::DisableSRTPReceive channel:%d recv_channel:%d send_channel:%d\n",
+			channel, recv_channel, send_channel);
+
 		if (channel == recv_channel) {
 			if (send_channel == -1) {
 				ccp_srtp_dealloc(session);
 				_srtpCreate = false;
 				session = NULL;
 			}
+			recv_channel = -1;
 		}
-        WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0,"VoeEncrySrtp::DisableSRTPReceive\n");
         return 0;
     }
     
@@ -169,8 +175,7 @@ namespace cloopenwebrtc {
         WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0,"VoeEncrySrtp::DeRegisterExternalEncryption\n");
         return 0;
     }
-
-    
+	    
     
     VoeEncrySrtp::~VoeEncrySrtp()
     {
@@ -185,8 +190,8 @@ namespace cloopenwebrtc {
     _ssrc(0),
     session(NULL),
     _srtpCreate(false),
-		recv_channel(-1),
-		send_channel(-1)
+	recv_channel(-1),
+	send_channel(-1)
     {
         
     }
@@ -198,12 +203,14 @@ namespace cloopenwebrtc {
                  int bytes_in,
                  int* bytes_out)
     {
-        err_status_t err;
-        
-        memcpy(out_data, in_data, bytes_in);
+		if (session == NULL) {
+			WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0, "VoeEncrySrtp->encrypt  failed session is NULL\n");
+			return;
+		}
 
-        err=srtp_protect(session,out_data,&bytes_in);
-        
+        err_status_t err;        
+        memcpy(out_data, in_data, bytes_in);
+        err=srtp_protect(session,out_data,&bytes_in);        
         if (err==err_status_ok){
             *bytes_out = bytes_in;
             return;
@@ -219,6 +226,11 @@ namespace cloopenwebrtc {
                          int bytes_in,
                          int* bytes_out)
     {
+
+		if (session == NULL) {
+			WEBRTC_TRACE(kTraceDebug, kTraceVoice, 0, "VoeEncrySrtp->decrypt failed session is NULL\n");
+			return;
+		}
         err_status_t srtp_err;
         /* keep NON-RTP data unencrypted */
         rtp_header_t *rtp;
@@ -239,28 +251,15 @@ namespace cloopenwebrtc {
              *bytes_out = bytes_in;
             return;
         }else if (srtp_err == err_status_replay_old) {
+
+			WEBRTC_TRACE(kTraceError, kTraceVoice, 0, "VoeEncrySrtp->decrypt srtp_unprotect() failed (%d)\n", srtp_err);
 			DisableSRTPReceive(recv_channel);
 			DisableSRTPSend(send_channel);
 			EnableSRTPReceive(recv_channel, recv_crypt_type, recv_key);
 			EnableSRTPSend(send_channel, send_crypt_type, send_key, send_ssrc);
 
-				//srtp_dealloc(rtp_session->send_ctx[rtp_session->srtp_idx_rtp]);
-				//rtp_session->send_ctx[rtp_session->srtp_idx_rtp] = NULL;
-				//if ((stat = srtp_create(&rtp_session->send_ctx[rtp_session->srtp_idx_rtp],
-				//	&rtp_session->send_policy[rtp_session->srtp_idx_rtp])) || !rtp_session->send_ctx[rtp_session->srtp_idx_rtp]) {
-				//	switch_log_printf(SWITCH_CHANNEL_SESSION_LOG(rtp_session->session), SWITCH_LOG_ERROR,
-				//		"Error! RE-Activating %s Secure RTP SEND\n", rtp_type(rtp_session));
-				//	rtp_session->flags[SWITCH_RTP_FLAG_SECURE_SEND] = 0;
-				//	ret = -1;
-				//	goto end;
-				//}
-				//else {
-				//	switch_log_printf(SWITCH_CHANNEL_SESSION_LOG(rtp_session->session), SWITCH_LOG_INFO,
-				//		"RE-Activating %s Secure RTP SEND\n", rtp_type(rtp_session));
-				//}
-
-			} else {
-            WEBRTC_TRACE(kTraceError, kTraceVoice, 0,"VoeEncrySrtp->decrypt srtp_unprotect() failed (%d)\n", srtp_err);
+		} else {
+				WEBRTC_TRACE(kTraceError, kTraceVoice, 0,"VoeEncrySrtp->decrypt srtp_unprotect() failed (%d)\n", srtp_err);
             return;
         }
         return;
@@ -603,9 +602,6 @@ namespace cloopenwebrtc {
             return err_status_fail;
         }
         return 0;
-        
-        
-        
         
     }
     int VoeEncrySrtp::ccp_srtp_configure_outgoing(uint32_t ssrc, const char* snd_key)

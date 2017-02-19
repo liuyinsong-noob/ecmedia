@@ -337,14 +337,14 @@ bool IncomingVideoStream::IncomingVideoStreamProcess() {
     // Send frame for rendering.
     if (external_callback_) {
       WEBRTC_TRACE(kTraceStream, kTraceVideoRenderer, module_id_,
-                   "%s: executing external renderer callback to deliver frame",
-                   __FUNCTION__, frame_to_render->render_time_ms());
+                   "%s: executing external renderer callback to deliver frame for stream %d",
+                   __FUNCTION__, frame_to_render->render_time_ms(), stream_id_);
       external_callback_->RenderFrame(stream_id_, *frame_to_render);
     } else {
       if (render_callback_) {
         WEBRTC_TRACE(kTraceStream, kTraceVideoRenderer, module_id_,
-                     "%s: Render frame, time: ", __FUNCTION__,
-                     frame_to_render->render_time_ms());
+                     "%s: Render frame, time: %u for stream %d", __FUNCTION__,
+                     frame_to_render->render_time_ms(), stream_id_);
         render_callback_->RenderFrame(stream_id_, *frame_to_render);
       }
     }

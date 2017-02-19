@@ -43,7 +43,7 @@ BOOL WINAPI DllMain(
     { 
         case DLL_PROCESS_ATTACH:
 
-			OutputDebugString("--> dll_entry.c - oRTP.dll - DLL_PROCESS_ATTACH()\n");
+			OutputDebugStringA("--> dll_entry.c - oRTP.dll - DLL_PROCESS_ATTACH()\n");
 		 
 			wVersionRequested = MAKEWORD( 1, 0 );
 
@@ -53,7 +53,7 @@ BOOL WINAPI DllMain(
 			}
 
             // Create a named file mapping object. 
-            hMapObject = CreateFileMapping( INVALID_HANDLE_VALUE,	// use paging file
+            hMapObject = CreateFileMappingA( INVALID_HANDLE_VALUE,	// use paging file
 											NULL,					// default security attributes
 											PAGE_READWRITE,			// read/write access
 											0,						// size: high 32-bits
@@ -80,7 +80,7 @@ BOOL WINAPI DllMain(
  
             if (fInit) 
 			{
-				OutputDebugString("--> dll_entry.c - oRTP.dll - Initializing module\n");
+				OutputDebugStringA("--> dll_entry.c - oRTP.dll - Initializing module\n");
 
 				lpSharedData->m_dwStartTime	= GetTickCount();
 				lpSharedData->m_nReference	= 1;
@@ -91,7 +91,7 @@ BOOL WINAPI DllMain(
 			}
 			else
 			{
-				OutputDebugString("--> dll_entry.c - oRTP.dll - Binding\n");
+				OutputDebugStringA("--> dll_entry.c - oRTP.dll - Binding\n");
 				lpSharedData->m_nReference++;
 			}
             break;
@@ -120,12 +120,12 @@ BOOL WINAPI DllMain(
 
 			if (lpSharedData != NULL)
 			{			
-				OutputDebugString("--> dll_entry.c - oRTP.dll - Binding\n");
+				OutputDebugStringA("--> dll_entry.c - oRTP.dll - Binding\n");
 				lpSharedData->m_nReference--;
 
 				if (lpSharedData->m_nReference == 0)
 				{
-					OutputDebugString("--> dll_entry.c - oRTP.dll - Detaching\n");
+					OutputDebugStringA("--> dll_entry.c - oRTP.dll - Detaching\n");
 
 					ortp_exit();
 					UnregisterLog(&dwoRTPLogLevel, "LOG_ORTP");

@@ -68,7 +68,7 @@ int32_t VideoCaptureDS::Init(const int32_t id, const char* deviceUniqueIdUTF8)
         return -1;
 
     // Store the device name
-    _deviceUniqueId = new (std::nothrow) char[nameLength + 1];
+    _deviceUniqueId = new char[nameLength + 1];
     memcpy(_deviceUniqueId, deviceUniqueIdUTF8, nameLength + 1);
 
     if (_dsInfo.Init() != 0)

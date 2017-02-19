@@ -453,9 +453,9 @@ int ECMedia_uninit_video()
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
 #ifdef VIDEO_ENABLED
 	if (m_pScreenlist != NULL)
-		delete m_pScreenlist;
+		delete[] m_pScreenlist;
 	if (m_pWindowlist != NULL)
-		delete m_pWindowlist;
+		delete[] m_pWindowlist;
     PrintConsole("media_uninit_video called in\n");
     if(!m_vie)
     {
@@ -632,7 +632,7 @@ int ECMedia_audio_create_channel(int& channelid, bool is_video)
         if (base) {
             channelid = base->CreateChannel();
             base->Release();
-            PrintConsole("[ECMEDIA INFO] %s end with channelid: %d ",__FUNCTION__, channelid);
+            PrintConsole("[ECMEDIA INFO] %s end with audio channelid: %d ",__FUNCTION__, channelid);
             return 0;
         }
         else
@@ -650,16 +650,7 @@ int ECMedia_audio_create_channel(int& channelid, bool is_video)
         if (base) {
             base->CreateChannel(channelid);
             base->Release();
-
-			ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
-			if (rtp_rtcp) {
-				//rtp_rtcp->SetRembStatus(channelid, true, true);
-				//rtp_rtcp->SetTMMBRStatus(channelid, true);
-				//rtp_rtcp->SetSendAbsoluteSendTimeStatus(channelid, true, kRtpExtensionAbsoluteSendTime);
-				//rtp_rtcp->SetReceiveAbsoluteSendTimeStatus(channelid, true, kRtpExtensionAbsoluteSendTime);
-			}
-			rtp_rtcp->Release();
-            PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
+			PrintConsole("[ECMEDIA INFO] %s end with video channelid: %d ", __FUNCTION__, channelid);
             return 0;
         }
         else
@@ -2435,25 +2426,55 @@ int ECMedia_stop_capture(int captureid)
 
 int ECMedia_add_render(int channelid, void *video_window, ReturnVideoWidthHeightM videoResolutionCallback)
 {
-	//PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d video_window:%0x", __FUNCTION__, channelid, video_window);
+	PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d video_window:%0x", __FUNCTION__, channelid, video_window);
+
+	//static void *f_video_window = NULL;
+	//static int f_channelid = -1;
+	//static ReturnVideoWidthHeightM f_videoResolutionCallback = NULL;
+
 	//static void *s_video_window = NULL;
 	//static int s_channelid = -1;
 	//static ReturnVideoWidthHeightM s_videoResolutionCallback = NULL;
-	//if (!s_video_window) {
+
+	//static void *t_video_window = NULL;
+	//static int t_channelid = -1;
+	//static ReturnVideoWidthHeightM t_videoResolutionCallback = NULL;
+
+	//if (channelid == 0) {
+	//	f_video_window = video_window;
+	//	f_channelid = channelid;
+	//	f_videoResolutionCallback = videoResolutionCallback;
+	//}
+	//else if (channelid == 1) {
 	//	s_video_window = video_window;
 	//	s_channelid = channelid;
 	//	s_videoResolutionCallback = videoResolutionCallback;
-	//}
-	//else {
+
 	//	ViERender *render = ViERender::GetInterface(m_vie);
-
-	//		int ret = render->AddRenderer(channelid, s_video_window, 2, 0, 0, 1, 1, s_videoResolutionCallback);
-	//		render->StartRender(channelid);
-
-	//		ret = render->AddRenderer(s_channelid, video_window, 2, 0, 0, 1, 1, videoResolutionCallback);
+	//	if (render) {
+	//		int ret = render->AddRenderer(s_channelid, f_video_window, 2, 0, 0, 1, 1, f_videoResolutionCallback);
 	//		render->StartRender(s_channelid);
 
-	//		render->Release();			
+	//		ret = render->AddRenderer(f_channelid, s_video_window, 2, 0, 0, 1, 1, s_videoResolutionCallback);
+	//		render->StartRender(f_channelid);
+	//		render->Release();
+	//	}
+	//}
+	//else if (channelid == 2) {
+	//	t_video_window = video_window;
+	//	t_channelid = channelid;
+	//	t_videoResolutionCallback = videoResolutionCallback;
+
+	//	ViERender *render = ViERender::GetInterface(m_vie);
+	//	if (render) {
+	//		//int ret = render->AddRenderer(f_channelid, t_video_window, 2, 0, 0, 1, 1, t_videoResolutionCallback);
+	//		//render->StartRender(f_channelid);
+
+	//		int ret = render->AddRenderer(t_channelid, f_video_window, 2, 0, 0, 1, 1, f_videoResolutionCallback);
+	//		render->StartRender(t_channelid);
+
+	//		render->Release();
+	//	}
 	//}
 	//return 0;
 
@@ -2907,15 +2928,15 @@ int ECMedia_setVideoConferenceFlag(int channel,const char *selfSipNo ,const char
 }
 int ECMedia_send_key_frame(int channel)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+    PrintConsole("[ECMEDIA INFO] %s begins... channel=%d",__FUNCTION__, channel);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViECodec *tempCodec = ViECodec::GetInterface(m_vie);
 	if(tempCodec)
 	{
-		tempCodec->SendKeyFrame(channel);
+		int ret = tempCodec->SendKeyFrame(channel);
 		tempCodec->Release();
-        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
-		return 0;
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
+		return ret;
 	}else
     {
         PrintConsole("[ECMEDIA WARNNING] failed to get ViECodec, %s",__FUNCTION__);
@@ -4004,7 +4025,7 @@ int ECMedia_get_screen_list(int desktop_captureid, ScreenID **screenList)
 	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopshare) {
 		if (m_pScreenlist != NULL)
-			delete m_pScreenlist;
+			delete[] m_pScreenlist;
 		m_screenlist.clear();
 		bool ret = vie_desktopshare->GetScreenList(desktop_captureid, m_screenlist);
 		vie_desktopshare->Release();
@@ -4039,7 +4060,7 @@ int ECMedia_get_window_list(int desktop_captureid, WindowShare **windowList)
 	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopshare) {
 		if (m_pWindowlist != NULL)
-			delete m_pWindowlist;
+			delete[] m_pWindowlist;
 		m_windowlist.clear();
 		bool ret = vie_desktopshare->GetWindowList(desktop_captureid, m_windowlist);
 		vie_desktopshare->Release();
@@ -4308,7 +4329,7 @@ ECMEDIA_API int ECMedia_GetShareWindows(void *handle, WindowShare ** windows)
     p->GetShareWindowList(list);
     
     if (m_pWindowlist != NULL)
-        delete m_pWindowlist;
+        delete[] m_pWindowlist;
     
     if (list.size() == 0)
         return 0;
