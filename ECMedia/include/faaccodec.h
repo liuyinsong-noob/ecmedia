@@ -19,5 +19,6 @@ void *faac_encoder_crate(int sample_rate,int channels, unsigned long* inputSampl
 int faac_encode_frame(void* handle, unsigned char *pPCM, unsigned char **pOut, int *outLen);
 void  faac_encoder_close(void *handle);
 int faac_get_decoder_info(void* handle, unsigned char **buf, unsigned long *len);
+int faad_decoder_init(void *pParam, unsigned char *pData, int nLen, unsigned int &sampleRate, unsigned int &channels);
 int faad_decoder_getinfo(char *aacconfig, unsigned int &sampleRate, unsigned int &channels);
 #endif /* faaccodec_h */

@@ -69,11 +69,11 @@ int faad_decode_frame(void *pParam, unsigned char *pData, int nLen, unsigned cha
     FAADContext* pCtx = (FAADContext*)pParam;
     NeAACDecHandle handle = pCtx->handle;
 	*outLen = 0;
-    long res = NeAACDecInit(handle, pData, nLen, (unsigned long*)&pCtx->sample_rate, (unsigned char*)&pCtx->channels);
+    /*long res = NeAACDecInit(handle, pData, nLen, (unsigned long*)&pCtx->sample_rate, (unsigned char*)&pCtx->channels);
     if (res < 0) {
         printf("NeAACDecInit failed\n");
         return -1;
-    }
+    }*/
     NeAACDecFrameInfo info;
     uint32_t framelen = _get_frame_length(pData);
     unsigned char *buf = (unsigned char *)NeAACDecDecode(handle, &info, pData, nLen);
@@ -170,6 +170,20 @@ int faac_get_decoder_info(void* handle,unsigned char **buf, unsigned long *len)
 		return -1;
 	FAACContext *context = (FAACContext *)handle;
 	return faacEncGetDecoderSpecificInfo(context->handle , buf, len);
+}
+
+int faad_decoder_init(void *pParam, unsigned char *pData, int nLen,unsigned int &sampleRate, unsigned int &channels)
+{
+	FAADContext* pCtx = (FAADContext*)pParam;
+	NeAACDecHandle handle = pCtx->handle;
+	long res = NeAACDecInit(handle, pData, nLen, (unsigned long*)&pCtx->sample_rate, (unsigned char*)&pCtx->channels);
+	if (res < 0) {
+		printf("NeAACDecInit failed\n");
+		return -1;
+	}
+	sampleRate = pCtx->sample_rate;
+	channels = pCtx->channels;
+	return 0;
 }
 
 int faad_decoder_getinfo(char *aacconfig,unsigned int &sampleRate, unsigned int &channels)

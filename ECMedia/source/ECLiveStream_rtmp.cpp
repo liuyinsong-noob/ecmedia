@@ -411,6 +411,7 @@ namespace cloopenwebrtc {
                     
 					faad_decoder_getinfo(packet->m_body + 2, audio_sampleRate_, audio_channels_);
 					faac_decode_handle_ = faad_decoder_create(audio_sampleRate_, audio_channels_,64000);
+					faad_decoder_init(faac_decode_handle_, (unsigned char *)packet->m_body + 2, packet->m_nBodySize - 2, audio_sampleRate_, audio_channels_);
                     if( !RegisterReceiveAudioCodec("L16",32000, audio_channels_) ) {
 						PrintConsole("[RTMP ERROR] %s register codec failed\n", __FUNCTION__);
                     }
