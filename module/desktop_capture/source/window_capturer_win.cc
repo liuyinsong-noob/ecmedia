@@ -99,8 +99,6 @@ class WindowCapturerWin : public WindowCapturer {
 
   DesktopSize previous_size_;
 
-  DWORD win_version_major_;
-
   DISALLOW_COPY_AND_ASSIGN(WindowCapturerWin);
 };
 
@@ -118,8 +116,8 @@ Windows 2000 5.0
 */
 WindowCapturerWin::WindowCapturerWin()
     : callback_(NULL),
-      window_(NULL),
-	  win_version_major_(-1){
+      window_(NULL)
+{
   // Try to load dwmapi.dll dynamically since it is not available on XP.
   dwmapi_library_ = LoadLibrary(L"dwmapi.dll");
   if (dwmapi_library_) {
@@ -131,24 +129,25 @@ WindowCapturerWin::WindowCapturerWin()
     is_composition_enabled_func_ = NULL;
   }
 
-	WKSTA_INFO_100 *pWkstaInfo = NULL;
-	NET_API_STATUS nRes = NetWkstaGetInfo(NULL, 100, (LPBYTE *)&pWkstaInfo);
-	if (nRes == NERR_Success)
-	{
-		DWORD dwMajor = pWkstaInfo->wki100_ver_major;
-		DWORD dwMinor = pWkstaInfo->wki100_ver_minor;
+  HINSTANCE hUser32 = LoadLibrary(L"user32.dll");
+  if (hUser32)
+  {
+	  typedef BOOL(WINAPI* LPSetProcessDPIAware)(void);
+	  LPSetProcessDPIAware pSetProcessDPIAware = (LPSetProcessDPIAware)GetProcAddress(hUser32, "SetProcessDPIAware");
+	  if (pSetProcessDPIAware)
+	  {
+		  pSetProcessDPIAware();
+	  }
+	  FreeLibrary(hUser32);
+  }
 
-		WEBRTC_TRACE(kTraceError, kTraceVideoCapture, -1, "window version is %d: %d", dwMajor, dwMinor);
-		NetApiBufferFree(pWkstaInfo);
-
-		win_version_major_ = dwMajor;
-	}
 }
 
 WindowCapturerWin::~WindowCapturerWin() {
   if (dwmapi_library_)
     FreeLibrary(dwmapi_library_);
 }
+
 
 bool WindowCapturerWin::IsAeroEnabled() {
   BOOL result = FALSE;
@@ -251,10 +250,6 @@ void WindowCapturerWin::Capture(const DesktopRegion& region) {
     return;
   }
   
-  if (win_version_major_ >= 6) {
-	  SetProcessDPIAware();
-  }
-
   DesktopRect original_rect;
   DesktopRect cropped_rect;
   if (!GetCroppedWindowRect(window_, &cropped_rect, &original_rect)) {
