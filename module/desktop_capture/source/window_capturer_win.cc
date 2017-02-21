@@ -17,8 +17,8 @@
 #include "desktop_frame_win.h"
 #include "window_capture_utils.h"
 #include "trace.h"
-#include <lm.h>  
-#pragma comment(lib, "netapi32.lib")  
+//#include <lm.h>  
+//#pragma comment(lib, "netapi32.lib")  
 
 
 namespace cloopenwebrtc {
