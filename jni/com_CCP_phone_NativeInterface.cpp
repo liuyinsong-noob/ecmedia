@@ -1871,3 +1871,7 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_startRecordLocalMedia
     const char* mp4_filename = env->GetStringUTFChars(fileName, 0);
     return startRecordLocalMedia(mp4_filename, (void*)globalLocalObj);
 }
+
+JNIEXPORT void JNICALL Java_com_CCP_phone_NativeInterface_stopRecordLocalMedia() {
+    stopRecordLocalMedia();
+}

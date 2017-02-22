@@ -866,6 +866,8 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_stopRecord
 JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_startRecordLocalMedia
 (JNIEnv *, jclass, jstring, jobject );
 
+    
+JNIEXPORT void JNICALL Java_com_CCP_phone_NativeInterface_stopRecordLocalMedia();
 #ifdef __cplusplus
 }
 #endif

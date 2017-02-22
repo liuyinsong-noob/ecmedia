@@ -1091,7 +1091,8 @@ public:
     // record local mp4 video.
     int startRecordLocalMedia(const char *fileName, void *localview);
     void stopRecordLocalMedia();
-	//---begin
+	
+    //---begin
 	private:
 	//cloopenwebrtc::VideoSendStream::Config CreateVideoSendStreamConfig();
 	//cloopenwebrtc::SendStatisticsProxy* Serphone_set_video_send_statistics_proxy(int video_channel);
