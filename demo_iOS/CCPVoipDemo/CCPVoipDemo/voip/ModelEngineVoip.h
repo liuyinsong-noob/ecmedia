@@ -873,4 +873,7 @@ typedef enum {
 -(int) playStream:(void *)handle url:(NSString *) url view:(UIView*)renderView;
 -(int) pushStream:(void *)handle url:(NSString *) url view:(UIView*)renderView;
 -(void) stopLiveStream:(void *)handle;
+
+- (int) startRecordLocalMedia:(NSString *)filename withView: (void *)localview;
+- (void) stopRecordLocalMedia;
 @end

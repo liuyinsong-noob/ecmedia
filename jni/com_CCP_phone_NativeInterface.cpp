@@ -1858,3 +1858,16 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_stopRecord
 	env->ReleaseStringUTFChars(callid, ccallid);
     return ret;
 }
+
+/*
+ * record local video as mp4 file
+ */
+JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_startRecordLocalMedia
+(JNIEnv *env, jclass, jstring fileName, jobject localView) {
+    jobject globalLocalObj = 0;
+    if(localView) {
+        globalLocalObj = env->NewGlobalRef(localView);
+    }
+    const char* mp4_filename = env->GetStringUTFChars(fileName, 0);
+    return startRecordLocalMedia(mp4_filename, (void*)globalLocalObj);
+}

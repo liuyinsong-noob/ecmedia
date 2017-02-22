@@ -581,6 +581,11 @@ typedef struct _CALLBACKINTERFACE CCallbackInterface;
 	CCPAPI int getShareWindows(void *handle, WindowShare ** windows);
 	CCPAPI int startSendRtpPacket(int &channel, const char *ip, int rtp_port);
 	CCPAPI int startRecvRtpPacket(int channelNum);
+    
+    // record local mp4 video.
+    CCPAPI int startRecordLocalMedia(const char *fileName, void *localview);
+    CCPAPI void stopRecordLocalMedia();
+    
 #ifdef __cplusplus
 }
 #endif

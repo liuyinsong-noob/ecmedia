@@ -6427,6 +6427,16 @@ void ServiceCore::onIncomingCodecChanged(const char *callid, const int width, co
 	vtable.receiver_codec_changed(this, callid, width, height);
 }
 
+
+int ServiceCore::startRecordLocalMedia(const char *fileName, void *localview) {
+    return ECMedia_startRecordLocalMedia(fileName, localview);
+}
+
+
+void ServiceCore::stopRecordLocalMedia() {
+    ECMedia_stopRecordLocalMedia();
+}
+
 //cloopenwebrtc::VideoSendStream::Config ServiceCore::CreateVideoSendStreamConfig()
 //{
 //	cloopenwebrtc::VideoSendStream::Config config;

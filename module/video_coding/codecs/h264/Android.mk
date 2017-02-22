@@ -15,8 +15,8 @@ include $(LOCAL_PATH)/../../../../android-webrtc.mk
 LOCAL_MODULE_CLASS := STATIC_LIBRARIES
 LOCAL_MODULE := libwebrtc_h264
 LOCAL_MODULE_TAGS := optional
-LOCAL_CPP_EXTENSION := .cc
 LOCAL_SRC_FILES := \
+	h264_record.cpp \
     H264_dec.cc \
     h264.cc
 
@@ -28,7 +28,7 @@ LOCAL_CFLAGS := \
 LOCAL_C_INCLUDES := \
     $(LOCAL_PATH) \
     $(LOCAL_PATH)/../interface \
-     $(LOCAL_PATH)/../../.. \
+    $(LOCAL_PATH)/../../.. \
     $(LOCAL_PATH)/../../../interface \
     $(LOCAL_PATH)/../../main/include \
     $(LOCAL_PATH)/../../main/source/utility/include \

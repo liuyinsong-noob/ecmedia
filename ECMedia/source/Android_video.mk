@@ -19,6 +19,7 @@ LOCAL_SRC_FILES := \
 		base64.c \
 		ECMedia.cpp \
 		RecordVoip.cpp \
+		RecordLocal.cpp \
 		statsCollector.cc \
 		VoeObserver.cpp \
 		ECLiveStream_rtmp.cpp \

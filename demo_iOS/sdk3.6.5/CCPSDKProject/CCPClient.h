@@ -575,6 +575,10 @@ typedef struct _CALLBACKINTERFACE CCallbackInterface;
     CCPAPI void stopLiveStream(void *handle);
     CCPAPI void releaseLiveStream(void *handle);
     CCPAPI int selectCameraLiveStream(void *handle, int index, int width, int height, int fps);
+    
+    //record mp4 file
+    CCPAPI int startRecordLocalMedia(const char *fileName, void *localview);
+    CCPAPI void stopRecordLocalMedia();
 #ifdef __cplusplus
 }
 #endif

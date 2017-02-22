@@ -860,6 +860,11 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_startRecord
 JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_stopRecord
 (JNIEnv *, jclass, jstring);
 
+/*
+ * record local video as mp4 file
+ */
+JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_startRecordLocalMedia
+(JNIEnv *, jclass, jstring, jobject );
 
 #ifdef __cplusplus
 }

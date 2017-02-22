@@ -4081,4 +4081,14 @@ ModelEngineVoip* gModelEngineVoip = nil;
 -(void) stopLiveStream:(void *)handle {
     return [self.VoipCallService stopLiveStream:handle];
 }
+
+- (int) startRecordLocalMedia:(NSString *)filename withView: (void *)localview
+{
+    [self.VoipCallService startRecordLocalMedia:filename withView:localview];
+}
+
+- (void) stopRecordLocalMedia
+{
+    [self.VoipCallService stopRecordLocalMedia];
+}
 @end

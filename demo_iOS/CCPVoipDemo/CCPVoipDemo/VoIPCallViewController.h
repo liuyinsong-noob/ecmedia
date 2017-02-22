@@ -17,5 +17,6 @@
 {
     UITextField *nickNameTextField;
     UITextField *phoneNumberTextField;
+    bool   isRecordingMP4;
 }
 @end

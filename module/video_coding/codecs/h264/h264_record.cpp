@@ -87,7 +87,7 @@ static AVStream *add_audio_stream(AVFormatContext *oc, enum AVCodecID codec_id, 
 	c->sample_rate = freq;
 	c->channels    = 1;
 
-	c->profile = FF_PROFILE_AAC_LOW;
+	// c->profile = FF_PROFILE_AAC_LOW;
 	c->time_base.num = 1;
 	c->time_base.den = c->sample_rate;
 
@@ -244,6 +244,15 @@ void h264_record::write_video_frame(const void *p, int len, uint32_t timestamp)
 	}
 }
 
+void h264_record::pcm_s16le_to_s16be(short *data, int len)
+{
+	if(data) {
+		for(int i = 0; i< len; i++) {
+			short tmp = ((data[i] & 0xFF00) >> 8) + ((data[i] & 0XFF) << 8);
+			data[i] = tmp;
+		}
+	}
+}
 
 int h264_record::write_audio_data(short *data, int len, int freq)
 {
@@ -253,7 +262,14 @@ int h264_record::write_audio_data(short *data, int len, int freq)
 
 	if (!formatCtxt_ || audioStreamdIndex_ < 0 )
 		return -1;
-
+	/*
+	 * On android, the incoming voice 'data' format is PCM 16BE, iOS and PC is PCM 16LE.
+	 * FFmpeg AAC encoder only supports PCM 16LE, when using android, we must
+	 * covert data to PCM 16LE, otherwise you can hear noise only.
+	 */
+#ifdef __ANDROID__
+	pcm_s16le_to_s16be(data, len);
+#endif
 	int got_packet;
 	int ret;
 	int remainDataSize = 0;
@@ -282,6 +298,8 @@ int h264_record::write_audio_data(short *data, int len, int freq)
 		av_init_packet(&pkt);
 
 		frame->nb_samples = audioFrameSize_;
+		frame->format = c->sample_fmt;
+		frame->channel_layout = c->channel_layout;
 
 		ret = avcodec_fill_audio_frame(frame, c->channels, c->sample_fmt,
 				(uint8_t *)audioFrameBuf_, audioFrameSize_*2, 0);
@@ -316,10 +334,7 @@ int h264_record::write_audio_data(short *data, int len, int freq)
 			return -1;
 		}
 
-		//fwrite(pkt.data, 1, pkt.size, file_test);
-
 		pkt.stream_index = pst->index;
-		//pkt.destruct = av_destruct_packet;
 
 		pkt.dts = AV_NOPTS_VALUE;
 		pkt.pts = AV_NOPTS_VALUE;

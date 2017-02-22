@@ -704,6 +704,9 @@ ECMEDIA_API void ECMedia_SetLiveVideoSource(void *handle, int video_source);
  *       [IN] localview: 要相机预览view的父view
  */
 ECMEDIA_API int ECMedia_startRecordLocalMedia(const char *fileName, void *localview);
+/*
+ * 停止录制小视频
+ */
 ECMEDIA_API void ECMedia_stopRecordLocalMedia();
 
 

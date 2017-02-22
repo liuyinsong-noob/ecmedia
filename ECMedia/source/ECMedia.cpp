@@ -4236,7 +4236,7 @@ int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &hei
  void *ECMedia_createLiveStream(int type)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
-#ifdef ECMEDIA_API_LIVESTREAM
+#ifdef VIDEO_ENABLED
     PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
 	return ECMedia_LiveStream::CreateLiveStream(type);
 #endif
@@ -4247,7 +4247,7 @@ int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &hei
 int ECMedia_playLiveStream(void *handle, const char * url, void *renderView, onLiveStreamVideoResolution callback)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
-#ifdef ECMEDIA_API_LIVESTREAM
+#ifdef VIDEO_ENABLED
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	return p->PlayStream(url, renderView, callback);
     PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
@@ -4259,7 +4259,7 @@ int ECMedia_playLiveStream(void *handle, const char * url, void *renderView, onL
 void ECMedia_SetLiveVideoSource(void *handle,int video_source)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
-#ifdef ECMEDIA_API_LIVESTREAM
+#ifdef VIDEO_ENABLED
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	p->SetVideoSource((VIDEO_SOURCE)video_source);
     PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
@@ -4269,7 +4269,7 @@ void ECMedia_SetLiveVideoSource(void *handle,int video_source)
  int ECMedia_pushLiveStream(void *handle, const char *url, void *localView)
  {
 	 PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
-#ifdef ECMEDIA_API_LIVESTREAM
+#ifdef VIDEO_ENABLED
 	 RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	 int ret =  p->PushStream(url, localView);
 	 PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
@@ -4281,7 +4281,7 @@ void ECMedia_SetLiveVideoSource(void *handle,int video_source)
 void ECMedia_stopLiveStream(void *handle)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
-#ifdef ECMEDIA_API_LIVESTREAM
+#ifdef VIDEO_ENABLED
 	RTMPLiveSession *p = (RTMPLiveSession*) handle;
 	p->StopPlay();
 	p->StopPush();
@@ -4292,7 +4292,7 @@ void ECMedia_stopLiveStream(void *handle)
 void ECMedia_releaseLiveStream(void *handle)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
-#ifdef ECMEDIA_API_LIVESTREAM
+#ifdef VIDEO_ENABLED
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	delete p;
 	PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
@@ -4302,7 +4302,7 @@ void ECMedia_releaseLiveStream(void *handle)
 int ECMedia_setVideoProfileLiveStream(void *handle, int cameraIndex, CameraCapability cam, int bitrRates)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
-#ifdef ECMEDIA_API_LIVESTREAM
+#ifdef VIDEO_ENABLED
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
     PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
 	return p->setVideoProfile(cameraIndex, cam, bitrRates);
@@ -4314,7 +4314,7 @@ int ECMedia_setVideoProfileLiveStream(void *handle, int cameraIndex, CameraCapab
 void ECMedia_setLiveStreamNetworkCallBack(void *handle, onLiveStreamNetworkStatusCallBack callback)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
-#ifdef ECMEDIA_API_LIVESTREAM
+#ifdef VIDEO_ENABLED
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	p->setNetworkStatusCallBack(callback);
 	PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
@@ -4358,6 +4358,7 @@ ECMEDIA_API int ECMedia_SelectShareWindow(void *handle, int type, int id)
 
 ECMEDIA_API int  ECMedia_startRecordLocalMedia(const char *fileName, void *localview)
 {
+#ifdef VIDEO_ENABLED
     PrintConsole("[ECMEDIA INFO] %s begins... \n", __FUNCTION__);
     if (!g_recordLocal) {
         g_recordLocal = new RecordLocal();
@@ -4369,10 +4370,14 @@ ECMEDIA_API int  ECMedia_startRecordLocalMedia(const char *fileName, void *local
     
     PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
     return g_recordLocal->Start(fileName, localview);
+#else
+    return 0;
+#endif
 }
 
 ECMEDIA_API void ECMedia_stopRecordLocalMedia()
 {
+#ifdef VIDEO_ENABLED
     PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
     if (!g_recordLocal) {
         PrintConsole("[ECMEDIA INFO] %s not start recorder", __FUNCTION__);
@@ -4385,6 +4390,7 @@ ECMEDIA_API void ECMedia_stopRecordLocalMedia()
     g_recordLocal = NULL;
     
     PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
+#endif
 }
 
 #endif

@@ -118,15 +118,17 @@ LOCAL_SHARED_LIBRARIES := \
 
 LOCAL_LDLIBS += -llog -lGLESv2
 
-LOCAL_LDLIBS += \
-	./third_party_libs/$(TARGET_ARCH_ABI)/libx264.a \
+LOCAL_LDFLAGS += \
+	./third_party_libs/$(TARGET_ARCH_ABI)/libavformat.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libavcodec.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libavutil.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libvpx.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libcpufeatures.a \
+	./third_party_libs/$(TARGET_ARCH_ABI)/libx264.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libopus.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libssl.a \
-	./third_party_libs/$(TARGET_ARCH_ABI)/libcrypto.a
+	./third_party_libs/$(TARGET_ARCH_ABI)/libcrypto.a \
+	./third_party_libs/$(TARGET_ARCH_ABI)/libfaac.a 
 
 LOCAL_DISABLE_FATAL_LINKER_WARNINGS := true
 LOCAL_PRELINK_MODULE := false

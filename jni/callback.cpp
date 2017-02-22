@@ -329,8 +329,8 @@ void onGetCapabilityToken()
 
 void onLogInfo(const char* loginfo)
 {
-//	  __android_log_print(ANDROID_LOG_INFO,"console", "%s\n", loginfo);
-//    callback(EVENT_LOG_INFO, NULL, (const unsigned char *)loginfo, 0, strlen(loginfo));
+    __android_log_print(ANDROID_LOG_INFO,"console", "%s\n", loginfo);
+    callback(EVENT_LOG_INFO, NULL, (const unsigned char *)loginfo, 0, strlen(loginfo));
 }
 
 void onGeneralEvent(const char* callid, int eventid, const char* data, int flag)

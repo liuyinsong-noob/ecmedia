@@ -1087,6 +1087,10 @@ public:
 	//int GetSendStats(const char* callid, cloopenwebrtc::VideoSendStream::Stats &sendStats);
     int Serphone_enable_opus_FEC(bool enable);
     int Serphone_set_opus_packet_loss_rate(int rate);
+    
+    // record local mp4 video.
+    int startRecordLocalMedia(const char *fileName, void *localview);
+    void stopRecordLocalMedia();
 	//---begin
 	private:
 	//cloopenwebrtc::VideoSendStream::Config CreateVideoSendStreamConfig();

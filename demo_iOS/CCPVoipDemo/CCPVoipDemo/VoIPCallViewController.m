@@ -33,7 +33,7 @@
 {
     if (self = [super init])
     {
-        
+        isRecordingMP4 = false;
     }
     return self;
 }
@@ -75,6 +75,16 @@
     [btnCall setBackgroundImage:[UIImage imageNamed:@"demonstrate_voip_button2_on.png"] forState:(UIControlStateSelected)];
     [btnCall addTarget:self action:@selector(goCallView) forControlEvents:(UIControlEventTouchUpInside)];
     [self.view addSubview:btnCall];
+    
+    // added by zhaoyou 2017-01-16, 录制 mp4 小视频
+    UIButton* btnRecordMp4 = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    btnRecordMp4.frame = CGRectMake(35, 350, 250, 125);
+    [btnRecordMp4 setTitle:@"开始录制视频" forState:UIControlStateNormal];
+    [btnRecordMp4 setTitleColor: [UIColor blackColor] forState:UIControlStateNormal];
+    [btnRecordMp4.layer setBorderWidth:1.0];
+    [btnRecordMp4.layer setBorderColor:[[UIColor blackColor] CGColor]];
+    [btnRecordMp4 addTarget:self action:@selector(goRecordPreview) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:btnRecordMp4];
 }
 
 - (void)viewDidLoad
@@ -115,5 +125,21 @@
     ViewController *voipView = [[ViewController alloc] init];
     [self.navigationController pushViewController:voipView animated:YES];
     [voipView release];
+}
+
+-(void)goRecordPreview {
+    NSLog(@"开始录制视频！！");
+//    UIButton *btn = (UIButton*)sender;
+//    [btn setTitle:@"停止录制视频" forState:UIControlStateNormal];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDir = [paths objectAtIndex:0];
+    docDir = [docDir stringByAppendingString:@"/output.mp4"];
+    if(!isRecordingMP4) {
+        [self.modelEngineVoip startRecordLocalMedia:docDir withView:self.view];
+        isRecordingMP4 = true;
+    } else {
+        [self.modelEngineVoip stopRecordLocalMedia];
+        isRecordingMP4 = false;
+    }
 }
 @end

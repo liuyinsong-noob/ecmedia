@@ -3802,3 +3802,20 @@ extern "C" int startRecvRtpPacket(int channelNum)
 	}
 	return g_pSerCore->startRecvRtpPacket(channelNum);
 }
+
+extern "C" int startRecordLocalMedia(const char *fileName, void *localview)
+{
+    SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+    return g_pSerCore->startRecordLocalMedia(fileName, localview);
+}
+
+extern "C" void stopRecordLocalMedia()
+{
+    PrintConsole("try to stop record local media\n");
+    if (!g_pSerCore)
+        return;
+    
+    g_pSerCore->stopRecordLocalMedia();
+    PrintConsole("record local media stopped\n");
+    
+}

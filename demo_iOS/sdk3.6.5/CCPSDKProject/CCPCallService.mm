@@ -5884,5 +5884,14 @@ char *OSTypeToStr(char *buf, OSType t)
     return stopLiveStream(handle);
 }
 
+- (int) startRecordLocalMedia:(NSString *)filename withView: (void *)localview
+{
+    return startRecordLocalMedia([filename UTF8String], localview);
+}
+
+- (void) stopRecordLocalMedia
+{
+    stopRecordLocalMedia();
+}
 @end
 

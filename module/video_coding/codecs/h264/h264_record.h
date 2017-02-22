@@ -49,6 +49,7 @@ private:
 	// 3 = S-Frame
 	int getVopType( const void *p, int len );
 	int get_nal_type( void *p, int len );
+	void pcm_s16le_to_s16be(short *data, int len);
 
 private:
 	CriticalSectionWrapper* _recordVoipCrit;
