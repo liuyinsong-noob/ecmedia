@@ -12,16 +12,23 @@
  */
 package com.voice.demo.voip;
 
+import com.CCP.phone.NativeInterface;
 import com.hisun.phone.core.voice.Device.State;
 import com.voice.demo.R;
 import com.voice.demo.ui.CCPBaseActivity;
+import com.yuntongxun.ecsdk.core.voip.ViERenderer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.view.Surface;
+import android.view.SurfaceView;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 public class NetPhoneCallActivity extends CCPBaseActivity implements View.OnClickListener{
-
+	public RelativeLayout mLoaclVideoView;
+	private  boolean isRecordMP4 = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,6 +40,11 @@ public class NetPhoneCallActivity extends CCPBaseActivity implements View.OnClic
 		
 		findViewById(R.id.netphone_landing_call).setOnClickListener(this);
 		findViewById(R.id.netphone_voip_call).setOnClickListener(this);
+		findViewById(R.id.netphone_landing_record_video_preview).setOnClickListener(this);
+		// 添加小视频录制预览
+		mLoaclVideoView = (RelativeLayout) findViewById(R.id.record_localvideo_view);
+		SurfaceView localView = ViERenderer.CreateLocalRenderer(this);
+		mLoaclVideoView.addView(localView);
 	}
 
 	@Override
@@ -43,9 +55,25 @@ public class NetPhoneCallActivity extends CCPBaseActivity implements View.OnClic
 			break;
 		case R.id.netphone_landing_call:
 			startActivity(new Intent(NetPhoneCallActivity.this, LandingCallActivity.class));
-			
 			break;
-			
+		case  R.id.netphone_landing_record_video_preview:
+
+			Thread work = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					if(!isRecordMP4) {
+						String sdcard_path = Environment.getExternalStorageDirectory().getPath()  + "/little_video_demo.mp4";
+						NativeInterface.startRecordLocalMedia(sdcard_path , null);
+						isRecordMP4 = true;
+					} else {
+						NativeInterface.stopRecordLocalMedia();
+						isRecordMP4 = false;
+					}
+
+				}
+			});
+			work.start();
+			break;
 		default:
 			break;
 		}

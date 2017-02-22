@@ -57,8 +57,27 @@
 		    android:id="@+id/netphone_landing_call"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:layout_marginTop="40.0dip"
+		    android:layout_marginTop="10.0dip"
 		    android:background="@drawable/netphone_landing_call_selector"/>
+		<Button
+			android:id="@+id/netphone_landing_record_video_preview"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginRight="15.0dip"
+			android:layout_marginLeft="15.0dip"
+			android:background="@drawable/simple_button_style"
+			android:text="开始录制MP4视频"
+			android:textColor="#000000"
+
+			android:textSize="20sp"/>
+
+		<RelativeLayout
+			android:id="@+id/record_localvideo_view"
+			android:layout_width="80dp"
+			android:layout_height="80dp"
+			android:layout_alignParentBottom="true"
+			android:layout_alignParentRight="true" >
+		</RelativeLayout>
     </LinearLayout>
 
 </RelativeLayout>

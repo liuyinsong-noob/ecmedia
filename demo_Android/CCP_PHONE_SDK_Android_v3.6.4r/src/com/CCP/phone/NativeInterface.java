@@ -609,6 +609,7 @@ public class NativeInterface {
 	public static native String getNetworkStatistic(String callid);
 	
 	/**
+	/**
 	 * 设置允许上层处理音频数据
 	 * @param callid 当前呼叫的唯一标识.
 	 * @param flag true 允许上层处理； false 不允许上层处理。
@@ -752,4 +753,13 @@ public class NativeInterface {
     public static native int stopRecord(String callid);
 
     public static native int setScreenShareActivity(String callid, View view);
+
+	/**
+	 * record local camera as mp4 file.
+	 * @param fileName : local file save path.
+	 * @param view : local camera privew view.
+     * @return
+     */
+	public static native int startRecordLocalMedia(String fileName, View view);
+	public static native void stopRecordLocalMedia();
 }
