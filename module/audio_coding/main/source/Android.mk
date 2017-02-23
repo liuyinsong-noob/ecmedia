@@ -50,7 +50,8 @@ LOCAL_CFLAGS := \
     -DWEBRTC_CODEC_AMR \
 	-DWEBRTC_CODEC_RED \
 	-DWEBRTC_CODEC_OPUS \
-	-DWEBRTC_CODEC_AVT
+	-DWEBRTC_CODEC_AVT \
+	-DWEBRTC_CODEC_PCM16
 
 #   -DWEBRTC_CODEC_ILBC \
 # 	-DWEBRTC_CODEC_SILK \
@@ -82,7 +83,9 @@ LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/../../../common_audio/source/resampler/include \
 		$(LOCAL_PATH)/../../../common_audio/source/signal_processing/include \
 		$(LOCAL_PATH)/../../../../voice_engine/main/source \
-		$(LOCAL_PATH)/../../../../third_party/opus/src
+		$(LOCAL_PATH)/../../../../third_party/opus/src \
+		$(LOCAL_PATH)/../../codecs/pcm16b/include
+
 		
 LOCAL_SHARED_LIBRARIES := \
     libcutils \
