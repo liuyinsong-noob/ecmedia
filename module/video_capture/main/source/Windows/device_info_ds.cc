@@ -211,6 +211,7 @@ int32_t DeviceInfoDS::GetDeviceInfo(
                                              cloopenwebrtc::kTraceVideoCapture, _id,
                                              "Failed to convert device name to UTF8. %d",
                                              GetLastError());
+								VariantClear(&varName);
                                 return -1;
                             }
                         }
@@ -242,6 +243,7 @@ int32_t DeviceInfoDS::GetDeviceInfo(
                                                  cloopenwebrtc::kTraceVideoCapture, _id,
                                                  "Failed to convert device name to UTF8. %d",
                                                  GetLastError());
+									VariantClear(&varName);
                                     return -1;
                                 }
                                 if (productUniqueIdUTF8
@@ -496,6 +498,8 @@ int32_t DeviceInfoDS::CreateCapabilityMap(
                              " Device support FORMAT_VideoInfo2");
                 supportFORMAT_VideoInfo = true;
             }
+			DeleteMediaType(pmt);
+			pmt = NULL;
         }
     }
     if (supportFORMAT_VideoInfo2)
@@ -584,6 +588,7 @@ int32_t DeviceInfoDS::CreateCapabilityMap(
                     capability.maxFPS = static_cast<int> (10000000
                                                            / maxFPS);
                     capability.supportFrameRateControl = true;
+					CoTaskMemFree(frameDurationList);
                 }
                 else // use existing method
                 {

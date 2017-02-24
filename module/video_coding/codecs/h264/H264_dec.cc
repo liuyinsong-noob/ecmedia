@@ -270,7 +270,14 @@ H264Decoder::Release()
     _inited = false;
     if (_codecContext) {
         avcodec_close(_codecContext);
+		avcodec_free_context(&_codecContext);
     }
+
+	if (pFrame_)
+	{
+		av_frame_free(&pFrame_);
+		pFrame_ = NULL;
+	}
     return WEBRTC_VIDEO_CODEC_OK;
 }
 

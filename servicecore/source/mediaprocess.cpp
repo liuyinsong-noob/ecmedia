@@ -1699,7 +1699,7 @@ void ServiceCore::serphone_call_init_media_streams(SerPhoneCall *call)
 	ECMedia_set_AgcStatus(m_agcEnabled, m_agcMode);
     ECMedia_set_EcStatus(m_ecEnabled, m_ecMode);
     ECMedia_set_NsStatus(m_nsEnabled, m_nsMode);
-    ECMedia_EnableHowlingControl(m_hcEnabled);
+    //ECMedia_EnableHowlingControl(m_hcEnabled);
 
 	//Init Srtp
 	//sean20130428
@@ -1946,7 +1946,7 @@ int ServiceCore::serphone_core_set_audio_config_enabled(int type, bool_t enabled
 	ECMedia_set_EcStatus(m_ecEnabled, m_ecMode);
 	ECMedia_set_SetAecmMode(cloopenwebrtc::kAecmLoudSpeakerphone, false);
 	ECMedia_set_NsStatus(m_nsEnabled, cloopenwebrtc::kNsVeryHighSuppression);
-    ECMedia_EnableHowlingControl(m_hcEnabled);
+    //ECMedia_EnableHowlingControl(false);
     return 0;
 #endif
 	return 0;
@@ -4119,7 +4119,7 @@ int ServiceCore::PlayAudioFromRtpDump(int localPort, const char *ptName, int plo
 	ECMedia_audio_create_channel(m_AudioChannelIDDump, false);
 
 	ECMedia_set_local_receiver(m_AudioChannelIDDump, localPort, localPort+1);
-
+	
 	cloopenwebrtc::CodecInst codec_params = {0};
 	bool codec_found = false;
 

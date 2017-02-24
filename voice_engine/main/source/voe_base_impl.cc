@@ -452,11 +452,11 @@ int VoEBaseImpl::Init(AudioDeviceModule* external_adm,
       return -1;
     }
 	//benhur test
-	if (audioproc->howling_control()->Enable(false) != 0)
+	/*if (audioproc->howling_control()->Enable(false) != 0)
 	{
 		LOG_FERR1(LS_ERROR, howling_control()->Enable, true);
 		return -1;
-	}
+	}*/
     if (audioproc->echo_cancellation()->enable_drift_compensation(false) != 0) {
       LOG_FERR1(LS_ERROR, enable_drift_compensation, false);
       return -1;
