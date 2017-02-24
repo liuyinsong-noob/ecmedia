@@ -270,7 +270,11 @@ H264Decoder::Release()
     _inited = false;
     if (_codecContext) {
         avcodec_close(_codecContext);
+#ifdef WEBRTC_ANDROID
+		av_free(&_codecContext);
+#else
 		avcodec_free_context(&_codecContext);
+#endif
     }
 
 	if (pFrame_)

@@ -133,13 +133,14 @@ static int m_cameraCount = 0;
 using namespace cloopenwebrtc;
 using namespace std;
 
-#define ECMEDIA_VERSION "2.1.2.14"
+#define ECMEDIA_VERSION "2.1.2.15"
+
 
 //extern bool g_media_TraceFlag;
 //void PrintConsole(const char * fmt,...){};
 
 ///////////////////////////log////////////////////////////////////////////////////
-#define   _CRTDBG_MAP_ALLOC
+//#define   _CRTDBG_MAP_ALLOC
 //#include "serphoneinterface.h"
 //#include "servicecore.h"
 //#include "serphonecall.h"
@@ -4358,6 +4359,7 @@ ECMEDIA_API int ECMedia_SelectShareWindow(void *handle, int type, int id)
 
 ECMEDIA_API int  ECMedia_startRecordLocalMedia(const char *fileName, void *localview)
 {
+
 #ifdef VIDEO_ENABLED
     PrintConsole("[ECMEDIA INFO] %s begins... \n", __FUNCTION__);
     if (!g_recordLocal) {
@@ -4370,9 +4372,8 @@ ECMEDIA_API int  ECMedia_startRecordLocalMedia(const char *fileName, void *local
     
     PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
     return g_recordLocal->Start(fileName, localview);
-#else
-    return 0;
 #endif
+	return -1;
 }
 
 ECMEDIA_API void ECMedia_stopRecordLocalMedia()
@@ -4388,7 +4389,7 @@ ECMEDIA_API void ECMedia_stopRecordLocalMedia()
     
     delete g_recordLocal;
     g_recordLocal = NULL;
-    
+   
     PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
 #endif
 }
