@@ -14,8 +14,6 @@
 #include "codingHelper.h"
 #endif
 
-int   g_desktopShareDeviceId = 0;
-
 #if !defined(NO_VOIP_FUNCTION)
 #include "ECMedia.h"
 #endif
@@ -282,10 +280,6 @@ void ServiceCore::serphone_call_stop_media_streams(SerPhoneCall *call)
 			video_stream_stop(call->m_VideoChannelID, call->m_CaptureDeviceId);
             call->m_VideoChannelID=-1;
             call->m_CaptureDeviceId = -1;
-//            video_stream_stop(call->m_VideoChannelID1, call->m_CaptureDeviceId);
-//            call->m_VideoChannelID1 = -1;
-//            video_stream_stop(call->m_VideoChannelID2, call->m_CaptureDeviceId);
-//            call->m_VideoChannelID2 = -1;
 			
 		}
 	}else if (m_videoModeChoose == 1) //screen-share
@@ -293,6 +287,7 @@ void ServiceCore::serphone_call_stop_media_streams(SerPhoneCall *call)
 		if (call->m_VideoChannelID>=0){
 			video_stream_stop(call->m_VideoChannelID, call->m_desktopShareDeviceId);
 			call->m_VideoChannelID=-1;
+			m_desktopCaptureId = -1;
 		}
 	}
 	
@@ -421,8 +416,6 @@ void ServiceCore::video_stream_stop(int channelID,int captureID)
 	{		
 		ECMedia_disconnect_desktop_captureDevice(channelID);
 		ECMedia_stop_desktop_capture(captureID);
-						
-		//ECMedia_release_desktop_capture(captureID);
 	}
 
 	MSList *calls;
@@ -851,36 +844,10 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 				//encryptType = stream->crypto[0].algo;
 
 				PrintConsole("Here user_mode = %d, master key send = %s, encryptType=%d,\n", user_mode, master_key, encryptType);
-
-				//for test
-				//encryptType = cloopenwebrtc::CCPAES_256_SHA1_80;
-				//end
-
+				
 				ECMedia_enable_srtp_recv_video(call->m_VideoChannelID, encryptType, master_key);
 				ECMedia_enable_srtp_send_video(call->m_VideoChannelID, encryptType, master_key);
 								
-				//switch (encryptType) {
-				//case CCPAES_256_SHA1_80:
-				//{
-				//	ECMedia_enable_srtp_recv_video(call->m_VideoChannelID, kCipherAes256CounterMode, 64, kAuthHmacSha1, 0,
-				//		kAuthTagLength80, kEncryptionAndAuthentication, master_key, false);
-
-				//	ECMedia_enable_srtp_send_video(call->m_VideoChannelID, kCipherAes256CounterMode, 64, kAuthHmacSha1, 0,
-				//		kAuthTagLength80, kEncryptionAndAuthentication, master_key, 0, false);
-				//}
-				//break;
-				//case CCPAES_256_SHA1_32:
-				//{
-				//	ECMedia_enable_srtp_recv_video(call->m_VideoChannelID, kCipherAes256CounterMode, 64, kAuthHmacSha1, 0,
-				//		kAuthTagLength32, kEncryptionAndAuthentication, master_key, false);
-
-				//	ECMedia_enable_srtp_send_video(call->m_VideoChannelID, kCipherAes256CounterMode, 64, kAuthHmacSha1, 0,
-				//		kAuthTagLength32, kEncryptionAndAuthentication, master_key, 0, false);
-				//}
-				//break;
-				//default:
-				//	break;
-				//}
 			}
 
 
@@ -900,10 +867,10 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 				return;
 			}
 
-			if( videoWindow ) {
+			if( m_videoWindow ) {
 #ifdef WIN32
 				RECT remoteRect;
-				::GetWindowRect((HWND)videoWindow, &remoteRect);
+				::GetWindowRect((HWND)m_videoWindow, &remoteRect);
 				videoWindowSize = (remoteRect.right-remoteRect.left) * (remoteRect.bottom-remoteRect.top);
 #endif
 //				ViERender* render =  ViERender::GetInterface(m_vie);
@@ -912,7 +879,9 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 //				render->StartRender(call->m_VideoChannelID);
 //				render->Release();
 
-				ECMedia_add_render(call->m_VideoChannelID,videoWindow,return_video_width_height);
+                PrintConsole(" ECMedia_add_render windows:%d\n", m_videoWindow);
+
+				ECMedia_add_render(call->m_VideoChannelID,m_videoWindow,return_video_width_height);
 			}
 
 			//network->SetSendDestination(call->m_VideoChannelID,
@@ -1010,7 +979,8 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 				if (m_videoModeChoose == 1)
 				{
 					codec_params.mode = cloopenwebrtc::kScreensharing;
-					codec_params.startBitrate = m_desktop_bit_rate;
+					if(m_desktop_bit_rate)
+						codec_params.startBitrate = m_desktop_bit_rate;
 				}
 
 				PrintConsole("Video Codec is : playload type = %d, payload name is %s  bitrate=%d width=%d height=%d\n",
@@ -1269,29 +1239,27 @@ int ServiceCore::startVideoDesktopCapture(SerPhoneCall *call)
 #ifdef VIDEO_ENABLED
 	cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
 
+    PrintConsole("startVideoDesktopCapture . \n");
+
 	if (!call) {
-		PrintConsole("startVideoCapture failed. call=%0x\n", call);
+		PrintConsole("startVideoDesktopCapture failed. call=%0x\n", call);
 		return -3;
 	}
 
 	if (call->m_desktopShareDeviceId != -1) {
-		PrintConsole("startVideoCapture failed. already captured call->m_CaptureDeviceId=%d\n", call->m_CaptureDeviceId);
+		PrintConsole("startVideoDesktopCapture failed. already captured call->m_CaptureDeviceId=%d\n", call->m_CaptureDeviceId);
 		return -4;
 	}
 
 	if (!call->params.has_video) {
-		PrintConsole("startVideoCapture failed. this call is not video call\n");
+		PrintConsole("startVideoDesktopCapture failed. this call is not video call\n");
 		return -5;
 	}
 	int type = 0; // ShareScreen=0 ShareWindow=1
 	ScreenID *screenId;
 	WindowShare *windowInfo;
 	{
-		if(g_desktopShareDeviceId == 0)
-			ECMedia_allocate_desktopShare_capture(g_desktopShareDeviceId, type);
-		call->m_desktopShareDeviceId = g_desktopShareDeviceId;
-
-		//ECMedia_allocate_desktopShare_capture(call->m_desktopShareDeviceId, type);
+		ECMedia_allocate_desktopShare_capture(call->m_desktopShareDeviceId, type);
 		ECMedia_set_CaptureDeviceID(call->m_desktopShareDeviceId);
 		if (type==0)
 		{
@@ -1300,32 +1268,37 @@ int ServiceCore::startVideoDesktopCapture(SerPhoneCall *call)
 		{
 			getShareWindowInfo(&windowInfo, call->m_desktopShareDeviceId);
 		}
-		
 	}
 	if (call->m_desktopShareDeviceId > 0)
 	{
+        ECMedia_set_screen_share_activity(call->m_desktopShareDeviceId, m_desktop_activity);
+        
 		int  ret;
 		if (type==0 && m_pScreenInfo)
 		{
-			if (ECMedia_select_screen(call->m_desktopShareDeviceId, m_pScreenInfo[0]))
-			{
-				ECMedia_connect_desktop_captureDevice(call->m_desktopShareDeviceId, call->m_VideoChannelID);
-				ECMedia_start_desktop_capture(call->m_desktopShareDeviceId, 15);
-				if (localVideoWindow) {
-					ECMedia_set_local_video_window(call->m_desktopShareDeviceId, localVideoWindow);
-				}
-			}
+			if (m_pScreenInfo)
+				ECMedia_select_screen(call->m_desktopShareDeviceId, m_pScreenInfo[0]);
+
+			ECMedia_connect_desktop_captureDevice(call->m_desktopShareDeviceId, call->m_VideoChannelID);
+			ECMedia_start_desktop_capture(call->m_desktopShareDeviceId, 3);
+			if (localVideoWindow) {
+				ECMedia_set_local_video_window(call->m_desktopShareDeviceId, localVideoWindow);
+			}			
 		}else if (type == 1 && m_pWindowInfo)
 		{
-			if (ECMedia_select_window(call->m_desktopShareDeviceId, m_pWindowInfo[0].id))
-			{
-				ECMedia_connect_desktop_captureDevice(call->m_desktopShareDeviceId, call->m_VideoChannelID);
-				ECMedia_start_desktop_capture(call->m_desktopShareDeviceId, 15);
-				if (localVideoWindow) {
-					ECMedia_set_local_video_window(call->m_desktopShareDeviceId, localVideoWindow);
-				}
+			if (m_pWindowInfo)
+				ECMedia_select_window(call->m_desktopShareDeviceId, m_pWindowInfo[0].id);
+
+			ECMedia_connect_desktop_captureDevice(call->m_desktopShareDeviceId, call->m_VideoChannelID);
+			ECMedia_start_desktop_capture(call->m_desktopShareDeviceId, 3);
+			if (localVideoWindow) {
+				ECMedia_set_local_video_window(call->m_desktopShareDeviceId, localVideoWindow);
 			}
 		}
+		ECMedia_get_desktop_capture_size(call->m_desktopShareDeviceId, m_sendVideoWidth, m_sendVideoHeight);
+ //       //benhur test
+ //       m_sendVideoWidth = 360;
+ //       m_sendVideoHeight = 640;
 	}
 #else
 #endif
@@ -3420,14 +3393,14 @@ int ServiceCore::serphone_call_reset_video_views(SerPhoneCall *call, void* remot
 		::GetWindowRect((HWND)remoteView, &rect);
 		int tmpSize = (rect.right-rect.left) * (rect.bottom-rect.top);
 
-		if( (remoteView != videoWindow) || (tmpSize > videoWindowSize*1.2  ||  tmpSize < videoWindowSize*0.8) )
+		if( (remoteView != m_videoWindow) || (tmpSize > videoWindowSize*1.2  ||  tmpSize < videoWindowSize*0.8) )
 		{
 			ECMedia_stop_render(call->m_VideoChannelID, -1);
 			videoWindowSize = tmpSize;
-			ECMedia_add_render(call->m_VideoChannelID, videoWindow, return_video_width_height);
+			ECMedia_add_render(call->m_VideoChannelID, m_videoWindow, return_video_width_height);
 		}
 #endif
-		videoWindow = remoteView;
+		m_videoWindow = remoteView;
 	}
 
 	if(localView) {
@@ -3441,7 +3414,7 @@ int ServiceCore::serphone_call_reset_video_views(SerPhoneCall *call, void* remot
 			localVideoWindowSize = tmpSize;
 			ECMedia_stop_render(call->m_CaptureDeviceId, -1);
 			videoWindowSize = tmpSize;
-			ECMedia_add_render(call->m_CaptureDeviceId, videoWindow, return_video_width_height);
+			ECMedia_add_render(call->m_CaptureDeviceId, m_videoWindow, return_video_width_height);
 		}
 #else
 		//capture->SetLocalVideoWindow(call->m_CaptureDeviceId,localVideoWindow);

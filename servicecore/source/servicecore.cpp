@@ -452,7 +452,7 @@ ServiceCore::ServiceCore()
     audio_bw = 0;
 	netup_time = 0;
 	hooks = NULL;
-	videoWindow = NULL;
+	m_videoWindow = NULL;
 	m_cameraInfo = NULL;
 	m_cameraCount = 0;
 	m_usedCameraIndex = 0;//sean update for easy test
@@ -631,11 +631,8 @@ ServiceCore::ServiceCore()
 
 	m_pScreenInfo = NULL;
 	m_pWindowInfo = NULL;
-#if defined __APPLE__ || defined WEBRTC_ANDROID
-    m_videoModeChoose = 0;
-#else
-	m_videoModeChoose = -1;
-#endif
+
+	m_videoModeChoose = 0;
 	m_desktop_width = -1;
 	m_desktop_height = -1;
 	m_desktop_bit_rate = 0;
@@ -6312,7 +6309,7 @@ void serphone_core_set_bind_local_addr(const char* addr)
 
 int ServiceCore::serphone_set_traceFlag(/*bool flag*/) //Don't use flag for the time being
 {
-	ECMedia_set_trace(NULL, (void*)CCPClientPrintLog, 23);
+	ECMedia_set_trace(NULL, (void*)CCPClientPrintLog, 25);
 	return 0;
 }
 
@@ -6404,6 +6401,11 @@ void ServiceCore::setDesktopShareParam(int desktop_width, int desktop_height, in
 	m_desktop_bit_rate = desktop_bit_rate;
 }
 
+int ServiceCore::setScreeShareActivity(SerPhoneCall *call, void *activity)
+{
+    m_desktop_activity = activity;
+    return ECMedia_set_screen_share_activity(call->m_desktopShareDeviceId, activity);
+}
 
 
 int ServiceCore::serphone_set_reconnect(bool flag)

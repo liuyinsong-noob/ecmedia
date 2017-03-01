@@ -31,6 +31,8 @@ LOCAL_SRC_FILES := \
     vie_channel_manager.cc \
     vie_codec_impl.cc \
     vie_desktop_share_impl.cpp \
+	vie_desktop_share_manager.cc \
+	vie_desktop_capture.cpp \
     vie_encoder.cc \
     vie_external_codec_impl.cc \
     vie_file_image.cc \
@@ -62,7 +64,8 @@ LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
     '-DVIDEOCODEC_H264' \
 	'-DVIDEOCODEC_VP8' \
-	'-DWEBRTC_SRTP'
+	'-DWEBRTC_SRTP' \
+	'-DENABLE_SCREEN_SHARE'
 
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/. \

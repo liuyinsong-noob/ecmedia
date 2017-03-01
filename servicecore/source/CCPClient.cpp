@@ -1802,7 +1802,7 @@ extern "C"  const char* makeCall(int callType, const char *called )
 extern "C" int setVideoView(void* view,void *localView)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-    g_pSerCore->videoWindow = view;
+    g_pSerCore->m_videoWindow = view;
     g_pSerCore->localVideoWindow = localView;
 	return 0;
 }
@@ -3818,4 +3818,18 @@ extern "C" void stopRecordLocalMedia()
     g_pSerCore->stopRecordLocalMedia();
     PrintConsole("record local media stopped\n");
     
+}
+extern "C" int setScreeShareActivity(char *callid, void *activity)
+{
+    SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+	PrintConsole("[APICall setScreeShareActivity called\n");
+    if (g_pSerCore) {
+        SerPhoneCall *pCall = NULL;
+        int ret = findCall(callid, &pCall);
+        if (ret != 0) {
+            return -1;
+        }
+        g_pSerCore->setScreeShareActivity(pCall, activity);
+    }
+    return 0;
 }

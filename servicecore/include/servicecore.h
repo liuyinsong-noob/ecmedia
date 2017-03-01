@@ -565,6 +565,7 @@ public:
 	void setVideoMode(int videoModeIndex); //only for demo test 0: Real-time, 1:screen-share
 	void setDesktopShareParam(int desktop_width, int desktop_height, int desktop_frame_rate, int desktop_bit_rate);
 
+   int setScreeShareActivity(SerPhoneCall *call, void *activity);
     int startRecord();
     int stopRecord();
 protected:
@@ -772,7 +773,7 @@ public:
 	bool_t m_ringplay_flag;
 	time_t dmfs_playing_start_time;
 	int    local_playfile_channelID;
-	void  *videoWindow;
+	void  *m_videoWindow;
     void  *localVideoWindow;
 	int videoWindowSize;
 	int localVideoWindowSize;
@@ -783,6 +784,7 @@ public:
 
 	ScreenID		*m_pScreenInfo;
 	WindowShare		*m_pWindowInfo;
+	int m_desktopCaptureId;
 
 	int m_maxFPS;
 	int m_camerRotate;
@@ -849,7 +851,8 @@ public:
 	int m_desktop_height;
 	int m_desktop_frame_rate;
 	int m_desktop_bit_rate;
-
+  void * m_desktop_activity;
+  
 	int m_VideoTimeOut;
 //#ifdef WIN32
 //	ChromaKeyFilter * m_ChromaKeyFilter;

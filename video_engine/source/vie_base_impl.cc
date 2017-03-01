@@ -30,6 +30,8 @@
 #include "vie_input_manager.h"
 #include "vie_shared_data.h"
 
+#include "screen_capturer.h"
+
 #ifdef WEBRTC_ANDROID
 #include "video_capture_factory.h"
 #endif
@@ -448,6 +450,13 @@ int VideoEngine::SetAndroidObjects(void* javaVM, void* env, void* javaContext) {
 			"Could not set render module Android objects");
 		return -1;
 	}
+#ifdef ENABLE_SCREEN_SHARE
+  if (ScreenCapturer::SetAndroidObjects(javaVM, env, javaContext) != 0) {
+		WEBRTC_TRACE(kTraceError, kTraceVideo, g_vie_active_instance_counter,
+			"Could not set ScreenCapture Android objects");
+		return -1;
+  }
+#endif
 	return 0;
 #else
 	WEBRTC_TRACE(kTraceError, kTraceVideo, g_vie_active_instance_counter,

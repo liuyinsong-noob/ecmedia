@@ -105,6 +105,7 @@ public:
 	virtual int setCaptureErrCb(int desktop_capture_id, int channelid, onDesktopCaptureErrCode capture_err_code_cb) = 0;
 	virtual int setShareWindowChangeCb(int desktop_capture_id, int channelid, onDesktopShareFrameChange capture_frame_change_cb) = 0;
 
+ virtual int SetScreenShareActivity(int desktop_capture_id, void * activity)  = 0;
 protected:
     ViEDesktopShare() {}
     virtual ~ViEDesktopShare() {}

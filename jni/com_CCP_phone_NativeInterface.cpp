@@ -1875,3 +1875,20 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_startRecordLocalMedia
 JNIEXPORT void JNICALL Java_com_CCP_phone_NativeInterface_stopRecordLocalMedia() {
     stopRecordLocalMedia();
 }
+
+JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_setScreenShareActivity
+(JNIEnv *env, jclass, jstring callid, jobject activity)
+{
+    if (NULL == callid) {
+		return -1;
+	}
+
+    jobject gActivity = env->NewGlobalRef(activity);
+	const char* ccallid = env->GetStringUTFChars(callid, 0);
+    int ret = setScreeShareActivity((char*)ccallid, (void*)gActivity);
+
+     __android_log_print(ANDROID_LOG_DEBUG,"JNI", "DEBUG: d setScreenShareActivity callid:%s activity:%0x\n",
+        ccallid, (void*)activity);
+	env->ReleaseStringUTFChars(callid, ccallid);
+    return ret;
+}

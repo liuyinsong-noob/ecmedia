@@ -37,6 +37,7 @@ include $(MY_WEBRTC_ROOT_PATH)/module/bitrate_controller/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/media_file/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/common_audio/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/common_video/source/Android.mk
+include $(MY_WEBRTC_ROOT_PATH)/module/desktop_capture/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/voice_engine/main/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/video_engine/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/ECMedia/source/Android_video.mk
@@ -79,6 +80,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES := \
 	libwebrtc_bitrate_controller \
 	libwebrtc_common_video \
 	libwebrtc_remote_bitrate_estimator \
+	libwebrtc_deskop_capture \
 	libwebrtc_audio_coding \
 	libwebrtc_audio_device \
 	libwebrtc_resampler \
@@ -116,7 +118,7 @@ LOCAL_SHARED_LIBRARIES := \
     libcutils \
     libdl
 
-LOCAL_LDLIBS += -llog -lGLESv2
+LOCAL_LDLIBS += -llog -lGLESv2 -ljnigraphics
 
 LOCAL_LDFLAGS += \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libavformat.a \

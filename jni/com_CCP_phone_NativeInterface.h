@@ -868,6 +868,9 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_startRecordLocalMedia
 
     
 JNIEXPORT void JNICALL Java_com_CCP_phone_NativeInterface_stopRecordLocalMedia();
+
+JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_setScreenShareActivity
+(JNIEnv *, jclass, jstring, jobject);
 #ifdef __cplusplus
 }
 #endif

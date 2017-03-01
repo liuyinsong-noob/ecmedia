@@ -86,6 +86,12 @@ class ScreenCapturer : public DesktopCapturer {
   // if there is no screen with the specified id). If this is never called, the
   // full desktop is captured.
   virtual bool SelectScreen(ScreenId id) = 0;
+
+#ifdef WEBRTC_ANDROID
+  static WebRtc_Word32 SetAndroidObjects(void* javaVM, void* env, void* javaContext);
+  virtual void SetScreenShareActivity(void * activity);
+#endif
+
 };
 
 }  // namespace cloopenwebrtc

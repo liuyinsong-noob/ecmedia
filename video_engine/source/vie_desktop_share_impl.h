@@ -57,6 +57,8 @@ class ViEDesktopShareImpl
 	 virtual int setCaptureErrCb(int desktop_capture_id, int channelid, onDesktopCaptureErrCode capture_err_code_cb) ;
 	 virtual int setShareWindowChangeCb(int desktop_capture_id, int channelid, onDesktopShareFrameChange capture_frame_change_cb) ;
 
+    virtual int SetScreenShareActivity(int desktop_capture_id, void * activity);
+
 protected:
     ViEDesktopShareImpl(ViESharedData* shared_data);
     virtual ~ViEDesktopShareImpl();

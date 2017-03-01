@@ -586,6 +586,7 @@ typedef struct _CALLBACKINTERFACE CCallbackInterface;
     CCPAPI int startRecordLocalMedia(const char *fileName, void *localview);
     CCPAPI void stopRecordLocalMedia();
     
+	CCPAPI  int setScreeShareActivity(char *callid, void *activity);
 #ifdef __cplusplus
 }
 #endif

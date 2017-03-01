@@ -482,4 +482,22 @@ int ViEDesktopShareImpl::setShareWindowChangeCb(int desktop_capture_id, int chan
 }
 
 
+int ViEDesktopShareImpl::SetScreenShareActivity(int desktop_capture_id, void * activity)
+{
+#ifdef ENABLE_SCREEN_SHARE
+	ViEDesktopShareScoped is(*(shared_data_->desktop_share_manager()));
+	VieDesktopCapturer* vie_desktop_capture = is.DesktopCapture(desktop_capture_id);
+	if (!vie_desktop_capture) {
+		WEBRTC_TRACE(kTraceError, kTraceVideo,
+			ViEId(shared_data_->instance_id(), desktop_capture_id),
+			"%s: Capture device %d doesn't exist", __FUNCTION__,
+			desktop_capture_id);
+		shared_data_->SetLastError(kViEDesktopShareDoesNotExist);
+		return -1;
+	}
+    vie_desktop_capture->SetScreenShareActivity(activity); 
+#endif
+    return 0;
+}
+
 } //cloopenwebrtc 

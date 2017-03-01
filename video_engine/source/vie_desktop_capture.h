@@ -61,6 +61,8 @@ public:
 	int setCaptureErrCodeCb(int channelid, onDesktopCaptureErrCode errCodeCb);
 	int setShareWindowChangeCb(int channelid, onDesktopShareFrameChange frameChangeCb);
 
+   void SetScreenShareActivity(void * activity);
+
 protected:
     // Thread functions for deliver desktop captured frames to receivers.
     static bool ViEDesktopCaptureThreadFunction(void* obj);
