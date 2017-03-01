@@ -265,7 +265,9 @@ ViEChannel::~ViEChannel() {
   if (decode_thread_) {
     StopDecodeThread();
   }
-
+#ifdef WEBRTC_SRTP
+  SrtpModule::DestroySrtpModule(&_srtpModule);
+#endif
   if(_isVideoConference) {
 	  if(_sipNo) {
 		  delete[] _sipNo;
