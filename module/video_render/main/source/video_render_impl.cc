@@ -178,9 +178,27 @@ ModuleVideoRenderImpl::~ModuleVideoRenderImpl()
                 delete ptrRenderer;
             }
             break;
-
+#ifdef MAC_IPHONE
+            case kRenderiOS:
+            {
+                VideoRenderIPhoneImpl * ptrRenderer = reinterpret_cast<VideoRenderIPhoneImpl*> (_ptrRenderer);
+                _ptrRenderer = NULL;
+                delete ptrRenderer;
+            }
+                break;
+#endif
+#ifdef WEBRTC_MAC
+            case kRenderCocoa:
+            {
+                VideoRenderMacCocoaImpl * ptrRenderer = reinterpret_cast<VideoRenderMacCocoaImpl*> (_ptrRenderer);
+                _ptrRenderer = NULL;
+                delete ptrRenderer;
+            }
+                break;
+#endif
             default:
                 // Error...
+                
                 break;
         }
     }

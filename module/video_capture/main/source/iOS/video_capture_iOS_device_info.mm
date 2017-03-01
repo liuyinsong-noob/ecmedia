@@ -63,7 +63,7 @@ namespace cloopenwebrtc
         WebRtc_Word32 VideoCaptureiOSDeviceInfo::NumberOfCapabilities(
                                                                      const char* deviceUniqueIdUTF8)
         {
-            return 5;
+            return 4;
         }
         
         
@@ -101,13 +101,6 @@ namespace cloopenwebrtc
                 }
                     break;
                 case 3:
-                {
-                    capability.width = 540; //288;
-                    capability.height = 960; //352;
-                    capability.maxFPS = 15;
-                }
-                    break;
-                case 4:
                 {
                     capability.width = 720;
                     capability.height = 1280;

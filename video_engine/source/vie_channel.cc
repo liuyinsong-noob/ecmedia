@@ -246,6 +246,10 @@ ViEChannel::~ViEChannel() {
   module_process_thread_.DeRegisterModule(vcm_);
   module_process_thread_.DeRegisterModule(&vie_sync_);
   module_process_thread_.DeRegisterModule(receive_statistics_proxy_);
+    if (receive_statistics_proxy_) {
+        delete receive_statistics_proxy_;
+        receive_statistics_proxy_ = NULL;
+    }
   while (simulcast_rtp_rtcp_.size() > 0) {
     std::list<RtpRtcp*>::iterator it = simulcast_rtp_rtcp_.begin();
     RtpRtcp* rtp_rtcp = *it;
@@ -261,10 +265,6 @@ ViEChannel::~ViEChannel() {
   if (decode_thread_) {
     StopDecodeThread();
   }
-
-#ifdef WEBRTC_SRTP
-  SrtpModule::DestroySrtpModule(&_srtpModule);
-#endif
 
   if(_isVideoConference) {
 	  if(_sipNo) {
@@ -289,10 +289,6 @@ ViEChannel::~ViEChannel() {
 	  }
   }
   // Release modules.
-  if (receive_statistics_proxy_) {
-	  delete receive_statistics_proxy_;
-	  receive_statistics_proxy_ = NULL;
-  }
 
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
   UdpTransport::Destroy(&socket_transport_);
@@ -2303,23 +2299,13 @@ int32_t ViEChannel::DeRegisterExternalEncryption() {
 #ifdef WEBRTC_SRTP
 int ViEChannel::CcpSrtpInit()
 {
-    CriticalSectionScoped cs(callback_cs_.get());
 	int err = _srtpModule.CcpSrtpInit(channel_id_);
-    if (err) {
-        WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
-                     "%s: CcpSrtpInit failed, channel %d, err %d", __FUNCTION__, channel_id_, err);
-    }
 	return err;
 }
 
 int ViEChannel::CcpSrtpShutdown()
 {
-    CriticalSectionScoped cs(callback_cs_.get());
 	int err = _srtpModule.CcpSrtpShutdown(channel_id_);
-    if (err) {
-        WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
-                     "%s: CcpSrtpShutdown failed, channel %d, err %d", __FUNCTION__, channel_id_, err);
-    }
 	return err;
 }
 
