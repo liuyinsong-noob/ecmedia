@@ -318,7 +318,6 @@ static void ogl_display_render_type(struct opengles_display* gldisp, enum ImageT
             }
             x = vpx * gldisp->backingWidth;
             y = vpy * gldisp->backingHeight;
-            
         } else {
             
             float ratio = gldisp->yuv_size[type].width / (float)gldisp->yuv_size[type].height;
@@ -363,6 +362,7 @@ static void ogl_display_render_type(struct opengles_display* gldisp, enum ImageT
     squareVertices[6] = (x + w * 0.5) / screenW - 0.;
     squareVertices[7] = (y + h * 0.5) / screenH - 0.;
 
+    
     GL_OPERATION(glViewport(0, 0, gldisp->backingWidth, gldisp->backingHeight))
     
 	GLfloat mat[16];
@@ -526,41 +526,42 @@ static void load_orthographic_matrix(float left, float right, float bottom, floa
 }
 
 static void allocate_gl_textures(struct opengles_display* gldisp, int w, int h, enum ImageType type) {
-    GL_OPERATION(glActiveTexture(GL_TEXTURE0))
-    GL_OPERATION(glBindTexture(GL_TEXTURE_2D, gldisp->textures[type][Y]))
+	GL_OPERATION(glActiveTexture(GL_TEXTURE0))
+	GL_OPERATION(glBindTexture(GL_TEXTURE_2D, gldisp->textures[type][Y]))
     GL_OPERATION(glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST))
     GL_OPERATION(glGenerateMipmap(GL_TEXTURE_2D))
     GL_OPERATION(glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, w, h, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, 0))
     GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR))
     GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR))
-    GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT))
-    GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT))
-    
-    
-    GL_OPERATION(glActiveTexture(GL_TEXTURE1))
-    GL_OPERATION(glBindTexture(GL_TEXTURE_2D, gldisp->textures[type][U]))
+	GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE))
+	GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE))
+	GL_OPERATION(glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, w, h, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, 0))
+
+	GL_OPERATION(glActiveTexture(GL_TEXTURE1))
+	GL_OPERATION(glBindTexture(GL_TEXTURE_2D, gldisp->textures[type][U]))
+    GL_OPERATION(glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST))
+    GL_OPERATION(glGenerateMipmap(GL_TEXTURE_2D))
+    GL_OPERATION(glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, w >> 1, h >> 1, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, 0))
+	GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR))
+    GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR))
+	GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE))
+	GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE))
+	GL_OPERATION(glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, w >> 1, h >> 1, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, 0))
+
+	GL_OPERATION(glActiveTexture(GL_TEXTURE2))
+	GL_OPERATION(glBindTexture(GL_TEXTURE_2D, gldisp->textures[type][V]))
     GL_OPERATION(glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST))
     GL_OPERATION(glGenerateMipmap(GL_TEXTURE_2D))
     GL_OPERATION(glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, w >> 1, h >> 1, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, 0))
     GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR))
     GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR))
-    GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT))
-    GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT))
- 
-    
-    GL_OPERATION(glActiveTexture(GL_TEXTURE2))
-    GL_OPERATION(glBindTexture(GL_TEXTURE_2D, gldisp->textures[type][V]))
-    GL_OPERATION(glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST))
-    GL_OPERATION(glGenerateMipmap(GL_TEXTURE_2D))
-    GL_OPERATION(glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, w >> 1, h >> 1, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, 0))
-    GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR))
-    GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR))
-    GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT))
-    GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT))
-    
-    gldisp->allocatedTexturesSize[type].width =  w;
-    gldisp->allocatedTexturesSize[type].height =  h;
-    
+	GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE))
+	GL_OPERATION(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE))
+	GL_OPERATION(glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, w >> 1, h >> 1, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, 0))
+
+	gldisp->allocatedTexturesSize[type].width =  w;
+	gldisp->allocatedTexturesSize[type].height =  h;
+
     WEBRTC_TRACE(kTraceInfo, kTraceVideoRenderer, 0, "%s: allocated new textures[%d] (%d x %d)\n", __FUNCTION__, type, w, h);
 }
 
@@ -576,7 +577,6 @@ static unsigned int align_on_power_of_2(unsigned int value) {
 }
 
 static bool update_textures_with_yuv(struct opengles_display* gldisp, enum ImageType type) {
-    
 	unsigned int aligned_yuv_w, aligned_yuv_h;
 	MSPicture yuvbuf;
     
