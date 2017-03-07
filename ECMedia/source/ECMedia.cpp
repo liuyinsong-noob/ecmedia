@@ -4250,7 +4250,23 @@ int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &hei
 	}
 }
 
- void *ECMedia_createLiveStream(int type)
+int ECMedia_set_screen_share_activity(int desktop_captureid, void* activity)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins... desktop_captureid:%d activity:%0x", __FUNCTION__, desktop_captureid, activity);
+    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    ViEDesktopShare *desktopshare = ViEDesktopShare::GetInterface(m_vie);
+    if (desktopshare) {
+        int ret = desktopshare->SetScreenShareActivity(desktop_captureid, activity);
+        desktopshare->Release();
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to get ViEDesktopShare, %s", __FUNCTION__);
+        return -99;
+    }
+}
+    void *ECMedia_createLiveStream(int type)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
 #ifdef VIDEO_ENABLED

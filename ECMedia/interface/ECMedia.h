@@ -485,6 +485,8 @@ ECMEDIA_API int ECMedia_disconnect_desktop_captureDevice(int video_channelId);
 ECMEDIA_API int ECMedia_set_desktop_share_err_code_cb(int desktop_captureid, int channelid, onEcMediaDesktopCaptureErrCode capture_err_code_cb);
 ECMEDIA_API int ECMedia_set_desktop_share_window_change_cb(int desktop_captureid, int channelid, onEcMediaShareWindowSizeChange share_window_change_cb);
 ECMEDIA_API int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &height);
+ECMEDIA_API int ECMedia_set_screen_share_activity(int desktop_captureid, void* activity);
+
 /*
  *
  */

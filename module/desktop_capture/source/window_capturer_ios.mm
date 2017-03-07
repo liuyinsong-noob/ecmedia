@@ -50,10 +50,12 @@ void ScreenCapturerIos::Start(Callback* callback) {
   assert(callback);
 
   callback_ = callback;
+   
 }
 
 bool ScreenCapturerIos::GetScreenList(ScreenList* screens)
     {
+        
         return false;
     }
     
@@ -67,19 +69,15 @@ bool ScreenCapturerIos::SelectScreen(ScreenId id)
 
     
 void ScreenCapturerIos::Capture(const DesktopRegion& region) {
-  
+   
+    NSAutoreleasePool *loopPool = [[NSAutoreleasePool alloc] init];
+    
   // Stop capturing if the window has been closed or hidden.
-  if (![UIApplication sharedApplication].isFirstResponder) {
-    callback_->OnCaptureCompleted(NULL, kCapture_Window_Closed);
-    return;
-  }
-
-  if(![UIApplication sharedApplication].isFirstResponder)
-  {
-      callback_->OnCaptureCompleted(NULL, kCapture_Window_Hidden);
-      return;
-  }
-
+  
+    if (![UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+        callback_->OnCaptureCompleted(NULL, kCapture_Window_Closed);
+        return;
+    }
 
   // When desktop composition (Aero) is enabled each window is rendered to a
   // private buffer allowing BitBlt() to get the window content even if the
@@ -98,20 +96,20 @@ void ScreenCapturerIos::Capture(const DesktopRegion& region) {
   // capturing - it somehow affects what we get from BitBlt() on the subsequent
   // captures.
 
-	
     NSArray* windows = [[UIApplication sharedApplication] windows];
-    UIGraphicsBeginImageContext([UIScreen mainScreen].nativeBounds.size);//全屏截图，包括window nativeBounds:ios 8以上使用
+    UIGraphicsBeginImageContext([UIScreen mainScreen].nativeBounds.size); //全屏截图，包括window nativeBounds:ios 8以上使用
     for (UIWindow *screenWindow in windows) {
         [screenWindow drawViewHierarchyInRect:[UIScreen mainScreen].nativeBounds afterScreenUpdates:NO];
     }
+    
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    //保存到相册
-    UIImageWriteToSavedPhotosAlbum(viewImage, nil, nil, nil);
+    // 保存到相册
+    // UIImageWriteToSavedPhotosAlbum(viewImage, nil, nil, nil);
     
     NSData *data = UIImageJPEGRepresentation(viewImage, 1.0f);
-    
+ 
     int width = [UIScreen mainScreen].bounds.size.width * [UIScreen mainScreen].scale;
     int height = [UIScreen mainScreen].bounds.size.height * [UIScreen mainScreen].scale;
     
@@ -122,9 +120,9 @@ void ScreenCapturerIos::Capture(const DesktopRegion& region) {
     }
     
     memcpy((frame.get())->data(), data.bytes, data.length);
-
-
-  callback_->OnCaptureCompleted(frame.release(), kCapture_Ok, NULL);
+    
+    [loopPool release];
+    callback_->OnCaptureCompleted(frame.release(), kCapture_Ok, NULL);
 }
 
 // static
@@ -135,5 +133,5 @@ ScreenCapturer* ScreenCapturer::Create(const DesktopCaptureOptions& options) {
 ScreenCapturer* ScreenCapturer::Create() {
     return new ScreenCapturerIos();
 }
- }  // namespace cloopenwebrtc
+}  // namespace cloopenwebrtc
 

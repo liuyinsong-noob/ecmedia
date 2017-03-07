@@ -79,7 +79,7 @@ namespace cloopenwebrtc {
 	, desktop_capture_id_(-1)
     , share_window_id_(-1)
 	, live_mode_(MODE_LIVE_UNKNOW)
-	, video_source_(VIDEO_SOURCE_CAMERA)
+	, video_source_(VIDEO_SOURCE_DESKTOP)
 	, desktop_share_type_(ShareScreen)
 	, local_view_(NULL)
 	, clock_(Clock::GetRealTimeClock())
@@ -262,7 +262,12 @@ namespace cloopenwebrtc {
 			if (share_window_id_ == -1) {
 				ScreenList screens;
 				desktopShare->GetScreenList(desktop_capture_id_, screens);
-				share_window_id_ = screens[0];
+                if (!screens.empty()) {
+                   share_window_id_ = screens[0];
+                } else {
+                    /*iOS 上没有实现获取窗口list的代码，获取为空时，给share_window_id_随机赋值一个正值，防止访问screens[0] 崩溃*/
+                    share_window_id_ = 1;
+                }
 			}
 			desktopShare->SelectScreen(desktop_capture_id_, share_window_id_);
 		}
