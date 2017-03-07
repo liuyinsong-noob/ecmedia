@@ -409,6 +409,8 @@ void ServiceCore::video_stream_stop(int channelID,int captureID)
 		//TODO:
 		//ViECapture *capture = ViECapture::GetInterface(m_vie);
 		//capture->DeregisterObserver(captureID);
+
+		//ECmedia_enable_EnableBeautyFilter(captureID, false);
 		ECMedia_clear_no_camera_capture_cb(captureID);
 		ECMedia_stop_capture(captureID);
 
@@ -1168,6 +1170,7 @@ int ServiceCore::startVideoCapture(SerPhoneCall *call)
 			ECMedia_allocate_capture_device(id,strlen(id),call->m_CaptureDeviceId);
             ECmedia_enable_deflickering(call->m_CaptureDeviceId, true);
             ECmedia_enable_EnableBrightnessAlarm(call->m_CaptureDeviceId, true);
+			//ECmedia_enable_EnableBeautyFilter(call->m_CaptureDeviceId, true);
 //            ECmedia_enable_EnableDenoising(call->m_CaptureDeviceId, true);
 			//TODO:
 			//capture->SetSendStatisticsProxy(call->m_CaptureDeviceId, base->GetSendStatisticsProxy(call->m_VideoChannelID));
@@ -1364,6 +1367,7 @@ int ServiceCore::selectCamera(int cameraIndex, int capabilityIndex,int fps,int r
                 ECmedia_enable_deflickering(call->m_CaptureDeviceId, true);
                 ECmedia_enable_EnableBrightnessAlarm(call->m_CaptureDeviceId, true);
 //                ECmedia_enable_EnableDenoising(call->m_CaptureDeviceId, true);
+				//ECmedia_enable_EnableBeautyFilter(call->m_CaptureDeviceId, true);
 				ECMedia_set_CaptureDeviceID(call->m_CaptureDeviceId);
 				if( ECMedia_connect_capture_device(call->m_CaptureDeviceId,call->m_VideoChannelID) < 0 ) {
 					PrintConsole("Open Camera:%s Failed!  \n", name);
@@ -4082,7 +4086,8 @@ int ServiceCore::serphone_set_silk_rate(int rate)
 }
 //sean add end 20140705 video conference
 
-int ServiceCore::PlayAudioFromRtpDump(int localPort, const char *ptName, int ploadType)
+int ServiceCore::PlayAudioFromRtpDump(int localPort, const char *ptName, int ploadType, 
+	cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
 {
 #if !defined(NO_VOIP_FUNCTION)
 #ifndef WIN32
@@ -4092,6 +4097,11 @@ int ServiceCore::PlayAudioFromRtpDump(int localPort, const char *ptName, int plo
 	ECMedia_audio_create_channel(m_AudioChannelIDDump, false);
 
 	ECMedia_set_local_receiver(m_AudioChannelIDDump, localPort, localPort+1);
+
+	if (crypt_type > 0) {
+		ECMedia_init_srtp_audio(m_AudioChannelIDDump);
+		ECMedia_enable_srtp_recv_audio(m_AudioChannelIDDump, crypt_type, key);
+	}
 	
 	cloopenwebrtc::CodecInst codec_params = {0};
 	bool codec_found = false;
@@ -5069,6 +5079,17 @@ void ServiceCore::releaseLiveStream(void *handle)
 {
 	return ECMedia_releaseLiveStream(handle);
 }
+
+void ServiceCore::enableLiveStreamBeauty(void *handle)
+{
+	ECMedia_enableLiveStreamBeauty(handle);
+}
+
+void ServiceCore::disableLiveStreamBeauty(void *handle)
+{
+	ECMedia_disableLiveStreamBeauty(handle);
+}
+
 int ServiceCore::liveStream_SelectCamera(void *handle, int index, int width, int height, int fps)
 {
 	CameraCapability cap;

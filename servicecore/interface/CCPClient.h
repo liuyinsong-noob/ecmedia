@@ -576,6 +576,8 @@ typedef struct _CALLBACKINTERFACE CCallbackInterface;
 	CCPAPI void setLiveVideoSource(void *handle, int video_source);
 	CCPAPI void stopLiveStream(void *handle);
 	CCPAPI void releaseLiveStream(void *handle);
+	CCPAPI void enableLiveStreamBeauty(void *handle);
+	CCPAPI void disableLiveStreamBeauty(void *handle);
 	CCPAPI int selectCameraLiveStream(void *handle, int index, int width, int height, int fps);
 	CCPAPI void selectShareWindow(void *handle, int type, int id);
 	CCPAPI int getShareWindows(void *handle, WindowShare ** windows);

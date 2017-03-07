@@ -548,7 +548,8 @@ public:
 	int startVideoCapture(SerPhoneCall *call);
 	int startVideoDesktopCapture(SerPhoneCall *call);
 
-	int PlayAudioFromRtpDump(int localPort, const char *ptName, int ploadType);
+	int PlayAudioFromRtpDump(int localPort, const char *ptName, int ploadType,
+		cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key);
 	int StopPlayAudioFromRtpDump();
 
 	int PlayVideoFromRtpDump(int localPort, const char *ptName, int ploadType, void *videoWindow,
@@ -975,6 +976,8 @@ public:
 	int pushLiveStream(void *handle, const char * url, void *renderView);
 	void stopLiveStream(void *handle);
 	void releaseLiveStream(void *handle);
+	void enableLiveStreamBeauty(void *handle);
+	void disableLiveStreamBeauty(void *handle);
 	int liveStream_SelectCamera(void *handle, int index, int width, int height, int fps);
 
 public:

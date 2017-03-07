@@ -91,6 +91,7 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../../module/video_coding/main/include \
     $(LOCAL_PATH)/../../module/video_mixer/main/interface \
     $(LOCAL_PATH)/../../module/video_processing/main/include \
+	$(LOCAL_PATH)/../../module/video_processing/main/source/beauty_filter \
     $(LOCAL_PATH)/../../module/video_render/main/include \
     $(LOCAL_PATH)/../../module/common_video/source \
     $(LOCAL_PATH)/../../module/common_video/interface \

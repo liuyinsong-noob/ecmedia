@@ -3422,6 +3422,24 @@ int ECmedia_enable_EnableBrightnessAlarm(int captureid, bool enable)
     }
 }
 
+int ECmedia_enable_EnableBeautyFilter(int captureid, bool enable)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins... enable:%s", __FUNCTION__, enable ? "true" : "false");
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViECapture *capture = ViECapture::GetInterface(m_vie);
+	if (capture) {
+		int ret = capture->EnableBeautyFilter(captureid, enable);
+		capture->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, ret);
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViECapture, %s", __FUNCTION__);
+		return -99;
+	}
+}
+
 int ECMedia_init_srtp_video(int channel)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
@@ -4328,6 +4346,26 @@ void ECMedia_releaseLiveStream(void *handle)
 #ifdef VIDEO_ENABLED
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	delete p;
+	PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
+#endif
+}
+
+void ECMedia_enableLiveStreamBeauty(void *handle)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+#ifdef VIDEO_ENABLED
+	RTMPLiveSession *p = (RTMPLiveSession*)handle;
+	p->EnableBeauty();
+	PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
+#endif
+}
+
+void ECMedia_disableLiveStreamBeauty(void *handle)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+#ifdef VIDEO_ENABLED
+	RTMPLiveSession *p = (RTMPLiveSession*)handle;
+	p->DisableBeauty();
 	PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
 #endif
 }

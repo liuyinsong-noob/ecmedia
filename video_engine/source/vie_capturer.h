@@ -29,6 +29,10 @@
 
 #include "send_statistics_proxy.h"
 #include "vie_capturer.h"
+
+#include "video_beauty_filter.h"
+#include "ipl_color.h"
+
 namespace cloopenwebrtc {
 
 class Config;
@@ -100,6 +104,9 @@ class ViECapturer
   int32_t RegisterEffectFilter(ViEEffectFilter* effect_filter);
   int32_t EnableDeflickering(bool enable);
   int32_t EnableBrightnessAlarm(bool enable);
+
+  //Beauty filter
+  int32_t EnableBeautyFilter(bool enable);
 
   // Statistics observer.
   int32_t RegisterObserver(ViECaptureObserver* observer);
@@ -186,6 +193,10 @@ class ViECapturer
   VideoProcessingModule::FrameStats* brightness_frame_stats_;
   Brightness current_brightness_level_;
   Brightness reported_brightness_level_;
+
+  //beauty_filter
+  void *beauty_filter_inst_;
+  scoped_ptr<CriticalSectionWrapper> beauty_filter_cs_;
 
   // Statistics observer.
   scoped_ptr<CriticalSectionWrapper> observer_cs_;

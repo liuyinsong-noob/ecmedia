@@ -102,6 +102,11 @@ int PrintI420VideoFrame(const I420VideoFrame& frame, FILE* file);
 // Return value: length of buffer if OK, < 0 otherwise.
 int ExtractBuffer(const I420VideoFrame& input_frame,
                   size_t size, uint8_t* buffer);
+int ExtractBufferToI420VideoFrame(const I420VideoFrame& input_frame,
+	size_t size, uint8_t* buffer);
+int ExtractBufferToI420VideoFrame_LeftHalf(const I420VideoFrame& input_frame,
+	size_t size, uint8_t* buffer);
+
 // Convert To I420
 // Input:
 //   - src_video_type   : Type of input video.

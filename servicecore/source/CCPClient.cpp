@@ -3314,10 +3314,10 @@ extern "C" int setAudioMode(int mode)
 //    }
     return ret;
 }
-extern "C" int PlayAudioFromRtpDump(int localPort, const char *ptName, int ploadType)
+extern "C" int PlayAudioFromRtpDump(int localPort, const char *ptName, int ploadType, int crypt_type, const char* key)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	return g_pSerCore->PlayAudioFromRtpDump(localPort, ptName, ploadType);
+	return g_pSerCore->PlayAudioFromRtpDump(localPort, ptName, ploadType, (cloopenwebrtc::ccp_srtp_crypto_suite_t)crypt_type, key);
 }
 
 extern "C" int StopPlayAudioFromRtpDump()
@@ -3761,6 +3761,20 @@ extern "C" void releaseLiveStream(void *handle)
 	if (!g_pSerCore)
 		return;
 	g_pSerCore->releaseLiveStream(handle);
+}
+
+extern "C" void enableLiveStreamBeauty(void *handle)
+{
+	if (!g_pSerCore)
+		return;
+	g_pSerCore->enableLiveStreamBeauty(handle);
+}
+
+extern "C" void disableLiveStreamBeauty(void *handle)
+{
+	if (!g_pSerCore)
+		return;
+	g_pSerCore->disableLiveStreamBeauty(handle);
 }
 
 extern "C" int selectCameraLiveStream(void *handle, int index, int width, int height, int fps)

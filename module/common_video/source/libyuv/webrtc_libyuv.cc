@@ -154,6 +154,69 @@ int ExtractBuffer(const I420VideoFrame& input_frame,
   return static_cast<int>(length);
 }
 
+int ExtractBufferToI420VideoFrame(const I420VideoFrame& input_frame,
+	size_t size, uint8_t* buffer) {
+	assert(buffer);
+	if (input_frame.IsZeroSize())
+		return -1;
+	size_t length =
+		CalcBufferSize(kI420, input_frame.width(), input_frame.height());
+	if (size > length) {
+		return -1;
+	}
+
+	int pos = 0;
+	uint8_t* buffer_ptr = buffer;
+
+	for (int plane = 0; plane < kNumOfPlanes; ++plane) {
+		int width = (plane ? (input_frame.width() + 1) / 2 :
+			input_frame.width());
+		int height = (plane ? (input_frame.height() + 1) / 2 :
+			input_frame.height());
+		const uint8_t* plane_ptr = input_frame.buffer(
+			static_cast<PlaneType>(plane));
+		for (int y = 0; y < height; y++) {
+			memcpy((void *)plane_ptr, &buffer_ptr[pos], width);
+			pos += width;
+			plane_ptr += input_frame.stride(static_cast<PlaneType>(plane));
+		}
+	}
+	return static_cast<int>(length);
+}
+
+int ExtractBufferToI420VideoFrame_LeftHalf(const I420VideoFrame& input_frame,
+	size_t size, uint8_t* buffer) {
+	assert(buffer);
+	if (input_frame.IsZeroSize())
+		return -1;
+	size_t length =
+		CalcBufferSize(kI420, input_frame.width(), input_frame.height());
+	if (size > length) {
+		return -1;
+	}
+
+	int pos = 0;
+	uint8_t* buffer_ptr = buffer;
+
+	for (int plane = 0; plane < kNumOfPlanes; ++plane) {
+		int width = (plane ? (input_frame.width() + 1) / 2 :
+			input_frame.width());
+		int height = (plane ? (input_frame.height() + 1) / 2 :
+			input_frame.height());
+
+		int copy_width = (width + 1) / 2;
+
+		const uint8_t* plane_ptr = input_frame.buffer(
+			static_cast<PlaneType>(plane));
+
+		for (int y = 0; y < height; y++) {
+			memcpy((void *)plane_ptr, &buffer_ptr[pos], copy_width);
+			pos += width;
+			plane_ptr += input_frame.stride(static_cast<PlaneType>(plane));
+		}
+	}
+	return static_cast<int>(length);
+}
 
 int ConvertNV12ToRGB565(const uint8_t* src_frame,
                         uint8_t* dst_frame,

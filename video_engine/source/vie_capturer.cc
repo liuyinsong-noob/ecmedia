@@ -56,6 +56,8 @@ ViECapturer::ViECapturer(int capture_id,
       brightness_frame_stats_(NULL),
       current_brightness_level_(Normal),
       reported_brightness_level_(Normal),
+	  beauty_filter_inst_(NULL),
+	  beauty_filter_cs_(CriticalSectionWrapper::CreateCriticalSection()),
       observer_cs_(CriticalSectionWrapper::CreateCriticalSection()),
       observer_(NULL),
       overuse_detector_(new OveruseFrameDetector(Clock::GetRealTimeClock())),
@@ -483,6 +485,23 @@ int32_t ViECapturer::EnableBrightnessAlarm(bool enable) {
   return 0;
 }
 
+int32_t ViECapturer::EnableBeautyFilter(bool enable) {
+	CriticalSectionScoped cs(beauty_filter_cs_.get());
+	if (enable) {
+		if (!beauty_filter_inst_) {
+			Create_Beauty_Filter(&beauty_filter_inst_);
+			Init_Beauty_Filter(beauty_filter_inst_, 20, 28);//default big resolution
+		}
+	}
+	else {
+		if (beauty_filter_inst_) {
+			Free_Beauty_Filter(beauty_filter_inst_);
+			beauty_filter_inst_ = NULL;
+		}
+	}
+	return 0;
+}
+
 bool ViECapturer::ViECaptureThreadFunction(void* obj) {
   return static_cast<ViECapturer*>(obj)->ViECaptureProcess();
 }
@@ -569,6 +588,58 @@ void ViECapturer::DeliverI420Frame(I420VideoFrame* video_frame) {
                               video_frame->width(),
                               video_frame->height());
   }
+
+	{
+		CriticalSectionScoped cs(beauty_filter_cs_.get());
+
+		if (beauty_filter_inst_) {
+			//unsigned long dwStart = GetTickCount();
+			int w = video_frame->width();
+			int h = video_frame->height();
+			size_t length = cloopenwebrtc::CalcBufferSize(kI420, w, h);
+
+			/*dynamic init filter*/
+			static bool big_res = true;//default w > 400 && h > 400
+			if (w > 400 && h > 400) {
+				if (!big_res) {//if small resolution
+					Free_Beauty_Filter(beauty_filter_inst_);
+					Create_Beauty_Filter(&beauty_filter_inst_);
+					Init_Beauty_Filter(beauty_filter_inst_, 20, 28);//init big resolution
+					big_res = true;
+				}
+			}
+			else{
+				if (big_res) {//if big resolution
+					Free_Beauty_Filter(beauty_filter_inst_);
+					Create_Beauty_Filter(&beauty_filter_inst_);
+					Init_Beauty_Filter(beauty_filter_inst_, 15, 20);//init small resolution
+					big_res = false;
+				}
+			}
+
+			scoped_ptr<uint8_t[]> yuv_buf(new uint8_t[length]);
+			scoped_ptr<uint8_t[]> rgb_buf(new uint8_t[w * 3 * h]);
+			scoped_ptr<uint8_t[]> mask_buf(new uint8_t[w*h]);
+
+			ExtractBuffer(*video_frame, length, yuv_buf.get());
+#if 0
+			static FILE* _fout = fopen("./xxxxx.yuv", "wb");
+			fwrite(yuv_buf, 1, w*h * 3 / 2, _fout);
+			fflush(_fout);
+#endif
+			zipl_yuv420p_rgb(w, h, yuv_buf.get(), w * 3, rgb_buf.get());
+			get_skin_mask_rgb(w, h, w * 3, rgb_buf.get(), w, mask_buf.get());
+			Proc_Beauty_Filter(beauty_filter_inst_, w, h, w, yuv_buf.get(), w, mask_buf.get());
+
+			ExtractBufferToI420VideoFrame(*video_frame, length, yuv_buf.get());
+			//ExtractBufferToI420VideoFrame_LeftHalf(*video_frame, length, yuv_buf.get());
+
+			//unsigned long dwFinish = GetTickCount();
+			//LOG_F(LS_ERROR) << "dTime = "<<dwFinish - dwStart;
+		}
+	}
+
+
   // Deliver the captured frame to all observers (channels, renderer or file).
   ViEFrameProviderBase::DeliverFrame(video_frame, std::vector<uint32_t>());
 

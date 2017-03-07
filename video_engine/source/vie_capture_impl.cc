@@ -399,6 +399,23 @@ int ViECaptureImpl::EnableBrightnessAlarm(const int capture_id,
   return 0;
 }
 
+int ViECaptureImpl::EnableBeautyFilter(const int capture_id,
+	const bool enable) {
+	LOG(LS_INFO) << "EnableBeautyFilter for device " << capture_id
+		<< ", status " << enable;
+	ViEInputManagerScoped is(*(shared_data_->input_manager()));
+	ViECapturer* vie_capture = is.Capture(capture_id);
+	if (!vie_capture) {
+		shared_data_->SetLastError(kViECaptureDeviceDoesNotExist);
+		return -1;
+	}
+	if (vie_capture->EnableBeautyFilter(enable) != 0) {
+		shared_data_->SetLastError(kViECaptureDeviceUnknownError);
+		return -1;
+	}
+	return 0;
+}
+
 int ViECaptureImpl::RegisterObserver(const int capture_id,
                                      ViECaptureObserver& observer) {
   LOG(LS_INFO) << "Register capture observer " << capture_id;

@@ -173,10 +173,12 @@ public:
 	UINT m_videoPT;
 	CString m_videoPayloadeName;
 	CString m_audioPayloadName;
+	CString m_encryptionKey;
 	UINT m_audioPT;
 	afx_msg void OnBnClickedButtonDesktopShare();
 	CComboBox m_videoCodecCtrl;
 	CComboBox m_videoModeCtrl;
+	CComboBox m_encryptType;
 	unsigned int m_videoCodec; //0: h264, 1: VP8
 	unsigned int m_videoMode; //0: real-time, 1: screen-share
 	//以下为读配置文件
@@ -203,4 +205,20 @@ public:
 	CComboBox m_share_windows;
 	afx_msg void OnCbnSelchangeShareWindow();
 	afx_msg void OnCbnDropdownShareWindow();
+	afx_msg void OnEnChangeEdit10();
+	afx_msg void OnEnChangeEdit12();
+	afx_msg void OnEnChangeEdit14();
+	afx_msg void OnEnChangeEdit11();
+	afx_msg void OnEnChangeAudioPayloadName();
+	afx_msg void OnEnChangeAudioPt();
+	afx_msg void OnEnChangeVideoPayloadName();
+	afx_msg void OnEnChangeEdit1();
+	afx_msg void OnEnChangeEdit2();
+	afx_msg void OnEnChangeEdit3();
+	afx_msg void OnEnChangeEdit4();
+	afx_msg void OnEnChangeEncryptionKey();
+	afx_msg void OnCbnSelchangeComboVideoCodec();
+	afx_msg void OnCbnSelchangeComboVideoMode();
+	afx_msg void OnCbnSelchangeCombo1();
+	afx_msg void OnCbnSelchangeComboEncryptType();
 };

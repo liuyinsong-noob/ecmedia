@@ -136,6 +136,9 @@ namespace cloopenwebrtc {
 		static bool PushNetworkThreadRun(void *pThis);
 		bool PushNetworkThread();
 
+		void EnableBeauty();
+		void DisableBeauty();
+
     protected:
 		bool Init();
 		void UnInit();

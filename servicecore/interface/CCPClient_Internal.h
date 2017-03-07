@@ -554,7 +554,7 @@ extern "C" {
 					[IN] ploadType :
      返回值   : 0：成功   -1：失败
      *******************************************************************************/
-	CCPAPI int PlayAudioFromRtpDump(int localPort, const char *ptName, int ploadType);
+	CCPAPI int PlayAudioFromRtpDump(int localPort, const char *ptName, int ploadType, int crypt_type, const char* key);
 	    /*! @function
      ********************************************************************************
      函数名   : StopPlayAudioFromRtpDump

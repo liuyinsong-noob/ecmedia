@@ -358,6 +358,7 @@ CserphonetestDlg::CserphonetestDlg(CWnd* pParent /*=NULL*/)
 	m_audioPayloadName = _T("G729");
 	m_videoPT = 97;
 	m_audioPT = 111;
+	m_encryptionKey = _T("");
 	m_bFullScreen = FALSE;
 	m_dlgFullScreen = NULL;
 	m_RTTSender = 0;
@@ -421,9 +422,11 @@ void CserphonetestDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_VIDEO_PT, m_videoPT);
 	DDX_Text(pDX, IDC_VIDEO_PAYLOAD_NAME, m_videoPayloadeName);
 	DDX_Text(pDX, IDC_AUDIO_PAYLOAD_NAME, m_audioPayloadName);
+	DDX_Text(pDX, IDC_ENCRYPTION_KEY, m_encryptionKey);
 	DDX_Text(pDX, IDC_AUDIO_PT, m_audioPT);
 	DDX_Control(pDX, IDC_COMBO_VIDEO_CODEC, m_videoCodecCtrl);
 	DDX_Control(pDX, IDC_COMBO_VIDEO_MODE, m_videoModeCtrl);
+	DDX_Control(pDX, IDC_COMBO_ENCRYPT_TYPE, m_encryptType);
 	DDX_Text(pDX, IDC_STATIC_RTT_SENDER, m_RTTSender);
 	DDX_Control(pDX, IDC_COMBO_VIDEO_PROTECTION_MODE, m_videoProtectionMode);
 	DDX_Text(pDX, IDC_LIVE_URL, m_live_url);
@@ -483,6 +486,21 @@ ON_EN_CHANGE(IDC_LIVE_URL, &CserphonetestDlg::OnEnChangeLiveUrl)
 ON_BN_CLICKED(IDC_PUSH_STREAM, &CserphonetestDlg::OnBnClickedPushStream)
 ON_CBN_SELCHANGE(IDC_SHARE_WINDOW, &CserphonetestDlg::OnCbnSelchangeShareWindow)
 ON_CBN_DROPDOWN(IDC_SHARE_WINDOW, &CserphonetestDlg::OnCbnDropdownShareWindow)
+ON_EN_CHANGE(IDC_EDIT10, &CserphonetestDlg::OnEnChangeEdit10)
+ON_EN_CHANGE(IDC_EDIT12, &CserphonetestDlg::OnEnChangeEdit12)
+ON_EN_CHANGE(IDC_EDIT11, &CserphonetestDlg::OnEnChangeEdit11)
+ON_EN_CHANGE(IDC_AUDIO_PAYLOAD_NAME, &CserphonetestDlg::OnEnChangeAudioPayloadName)
+ON_EN_CHANGE(IDC_AUDIO_PT, &CserphonetestDlg::OnEnChangeAudioPt)
+ON_EN_CHANGE(IDC_VIDEO_PAYLOAD_NAME, &CserphonetestDlg::OnEnChangeVideoPayloadName)
+ON_EN_CHANGE(IDC_EDIT1, &CserphonetestDlg::OnEnChangeEdit1)
+ON_EN_CHANGE(IDC_EDIT2, &CserphonetestDlg::OnEnChangeEdit2)
+ON_EN_CHANGE(IDC_EDIT3, &CserphonetestDlg::OnEnChangeEdit3)
+ON_EN_CHANGE(IDC_EDIT4, &CserphonetestDlg::OnEnChangeEdit4)
+ON_EN_CHANGE(IDC_ENCRYPTION_KEY, &CserphonetestDlg::OnEnChangeEncryptionKey)
+ON_CBN_SELCHANGE(IDC_COMBO_VIDEO_CODEC, &CserphonetestDlg::OnCbnSelchangeComboVideoCodec)
+ON_CBN_SELCHANGE(IDC_COMBO_VIDEO_MODE, &CserphonetestDlg::OnCbnSelchangeComboVideoMode)
+ON_CBN_SELCHANGE(IDC_COMBO1, &CserphonetestDlg::OnCbnSelchangeCombo1)
+ON_CBN_SELCHANGE(IDC_COMBO_ENCRYPT_TYPE, &CserphonetestDlg::OnCbnSelchangeComboEncryptType)
 END_MESSAGE_MAP()
 
 
@@ -573,6 +591,15 @@ BOOL CserphonetestDlg::OnInitDialog()
 	m_video_source.AddString(_T("摄像头"));
 	m_video_source.AddString(_T("桌面"));
 	m_video_source.SetCurSel(0);
+
+	m_encryptType.AddString(_T(""));
+	m_encryptType.AddString(_T("CCPAES_128_SHA1_80"));
+	m_encryptType.AddString(_T("CCPAES_128_SHA1_32"));
+	m_encryptType.AddString(_T("CCPAES_256_SHA1_80"));
+	m_encryptType.AddString(_T("CCPAES_256_SHA1_32"));
+	m_encryptType.AddString(_T("CCPAES_128_NO_AUTH"));
+	m_encryptType.AddString(_T("CCPNO_CIPHER_SHA1_80"));
+	m_encryptType.SetCurSel(0);
 
 	CRect rectNormal;
 	CRect rectExpand;
@@ -1292,13 +1319,6 @@ void CserphonetestDlg::OnBnClickedButton23()
 //}
 
 
-void CserphonetestDlg::OnBnClickedButton24()
-{
-	// TODO: 在此添加控件通知处理程序代码
-//	setDenoisingEnabled(true);
-}
-
-
 void CserphonetestDlg::OnBnClickedButton25()
 {
 	USES_CONVERSION;
@@ -1328,8 +1348,8 @@ void CserphonetestDlg::OnBnClickedButton25()
 		ptName = "VP8";
 	}
 
-	int ret = PlayVideoFromRtpDump(localPort, ptName, payloadType, /*m_dlgFullScreen->GetSafeHwnd()*/lcwnd->GetSafeHwnd(),0,NULL);
-
+	int index = m_encryptType.GetCurSel();
+	int ret = PlayVideoFromRtpDump(localPort, ptName, payloadType, /*m_dlgFullScreen->GetSafeHwnd()*/lcwnd->GetSafeHwnd(), index, W2A(m_encryptionKey.GetBuffer(0)));
 }
 
 
@@ -1345,7 +1365,8 @@ void CserphonetestDlg::OnBnClickedButton26()
 	memcpy(ptName, W2A(m_audioPayloadName.GetBuffer(0)), 4*sizeof(char));
 	CWnd *lcwnd = g_dlg->GetDlgItem(IDC_RICHEDIT21);
 
-	int ret = PlayAudioFromRtpDump(localPort, ptName, payloadType);
+	int index = m_encryptType.GetCurSel();
+	int ret = PlayAudioFromRtpDump(localPort, ptName, payloadType, index, W2A(m_encryptionKey.GetBuffer(0)));
 }
 
 
@@ -1544,7 +1565,6 @@ void CserphonetestDlg::OnBnClickedPlayStream()
 	USES_CONVERSION;
 	char* url = T2A(m_live_url.GetBuffer(0));
 	playLiveStream(g_rtmpLiveStreamHandle, url, rcwnd->GetSafeHwnd());
-
 }
 
 
@@ -1573,15 +1593,21 @@ void CserphonetestDlg::OnCbnSelchangeVideoSource()
 	}
 }
 
-
-
-
+void CserphonetestDlg::OnBnClickedButton24()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	//	setDenoisingEnabled(true);
+	StopPlayAudioFromRtpDump();
+}
 
 void CserphonetestDlg::OnBnClickedStopLive()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	if (g_rtmpLiveStreamHandle) {
 		stopLiveStream(g_rtmpLiveStreamHandle);
+#if 0
+		disableLiveStreamBeauty(g_rtmpLiveStreamHandle);
+#endif
 	}
 }
 
@@ -1616,6 +1642,11 @@ void CserphonetestDlg::OnBnClickedPushStream()
 	USES_CONVERSION;
 	char* url = T2A(m_live_url.GetBuffer(0));
 	pushLiveStream(g_rtmpLiveStreamHandle, url, rcwnd->GetSafeHwnd());
+
+#if 0
+	enableLiveStreamBeauty(g_rtmpLiveStreamHandle);
+#endif
+
 }
 
 
@@ -1640,4 +1671,164 @@ void CserphonetestDlg::OnCbnDropdownShareWindow()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	OnCbnSelchangeVideoSource();
+}
+
+
+void CserphonetestDlg::OnEnChangeEdit10()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialogEx::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	// TODO:  Add your control notification handler code here
+}
+
+
+void CserphonetestDlg::OnEnChangeEdit12()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialogEx::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	// TODO:  Add your control notification handler code here
+}
+
+
+void CserphonetestDlg::OnEnChangeEdit14()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialogEx::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	// TODO:  Add your control notification handler code here
+}
+
+
+void CserphonetestDlg::OnEnChangeEdit11()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialogEx::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	// TODO:  Add your control notification handler code here
+}
+
+
+void CserphonetestDlg::OnEnChangeAudioPayloadName()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialogEx::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	// TODO:  Add your control notification handler code here
+}
+
+
+void CserphonetestDlg::OnEnChangeAudioPt()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialogEx::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	// TODO:  Add your control notification handler code here
+}
+
+
+void CserphonetestDlg::OnEnChangeVideoPayloadName()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialogEx::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	// TODO:  Add your control notification handler code here
+}
+
+
+void CserphonetestDlg::OnEnChangeEdit1()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialogEx::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	// TODO:  Add your control notification handler code here
+}
+
+
+void CserphonetestDlg::OnEnChangeEdit2()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialogEx::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	// TODO:  Add your control notification handler code here
+}
+
+
+void CserphonetestDlg::OnEnChangeEdit3()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialogEx::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	// TODO:  Add your control notification handler code here
+}
+
+
+void CserphonetestDlg::OnEnChangeEdit4()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialogEx::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	// TODO:  Add your control notification handler code here
+}
+
+
+void CserphonetestDlg::OnEnChangeEncryptionKey()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialogEx::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	// TODO:  Add your control notification handler code here
+}
+
+
+void CserphonetestDlg::OnCbnSelchangeComboVideoCodec()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void CserphonetestDlg::OnCbnSelchangeComboVideoMode()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void CserphonetestDlg::OnCbnSelchangeCombo1()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void CserphonetestDlg::OnCbnSelchangeComboEncryptType()
+{
+	// TODO: Add your control notification handler code here
+	// TODO: 在此添加控件通知处理程序代码
+	this->UpdateData(true);
+	m_encryptionKey.Empty();
+	this->UpdateData(false);
 }

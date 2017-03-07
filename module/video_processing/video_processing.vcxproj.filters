@@ -13,6 +13,9 @@
     <Filter Include="source\util">
       <UniqueIdentifier>{7663184f-caa9-43fd-b9a9-bba08751ff9f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\beauty_filter">
+      <UniqueIdentifier>{183ee86a-ef65-4671-abb4-dae6a04ec35a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main\include\video_processing.h">
@@ -69,6 +72,21 @@
     <ClInclude Include="main\source\video_denoiser.h">
       <Filter>source</Filter>
     </ClInclude>
+    <ClInclude Include="main\source\beauty_filter\beauty_filter_core.h">
+      <Filter>source\beauty_filter</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\beauty_filter\ipl_color.h">
+      <Filter>source\beauty_filter</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\beauty_filter\ipl_define.h">
+      <Filter>source\beauty_filter</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\beauty_filter\ipl_sharpen.h">
+      <Filter>source\beauty_filter</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\beauty_filter\video_beauty_filter.h">
+      <Filter>source\beauty_filter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\source\brighten.cc">
@@ -118,6 +136,15 @@
     </ClCompile>
     <ClCompile Include="main\source\video_denoiser.cc">
       <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\beauty_filter\beauty_filter_core.c">
+      <Filter>source\beauty_filter</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\beauty_filter\ipl_color.c">
+      <Filter>source\beauty_filter</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\beauty_filter\ipl_sharpen.c">
+      <Filter>source\beauty_filter</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

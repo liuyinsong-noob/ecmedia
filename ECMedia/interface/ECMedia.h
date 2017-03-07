@@ -583,6 +583,7 @@ ECMEDIA_API int ECmedia_enable_deflickering(int captureid, bool enable);
 ECMEDIA_API int ECmedia_enable_EnableColorEnhancement(int channelid, bool enable);
 ECMEDIA_API int ECmedia_enable_EnableDenoising(int captureid, bool enable);
 ECMEDIA_API int ECmedia_enable_EnableBrightnessAlarm(int captureid, bool enable);
+ECMEDIA_API int ECmedia_enable_EnableBeautyFilter(int captureid, bool enable);
 
 //SRTP
 ECMEDIA_API int ECMedia_init_srtp_video(int channel);
@@ -666,6 +667,19 @@ ECMEDIA_API void ECMedia_stopLiveStream(void *handle);
 参数     :	  [IN]  handle		： 句柄
 */
 ECMEDIA_API void ECMedia_releaseLiveStream(void *handle);
+
+/*
+功能     : 开始直播模块美颜
+参数     :	  [IN]  handle		： 句柄
+*/
+ECMEDIA_API void ECMedia_enableLiveStreamBeauty(void *handle);
+
+/*
+功能     : 停止直播模块美颜
+参数     :	  [IN]  handle		： 句柄
+*/
+ECMEDIA_API void ECMedia_disableLiveStreamBeauty(void *handle);
+
 
 /*
 功能     : 设置推流视频参数

@@ -67,6 +67,7 @@ class ViECaptureImpl
   virtual int GetOrientation(const char* unique_idUTF8,
                              RotateCapturedFrame& orientation);
   virtual int EnableBrightnessAlarm(const int capture_id, const bool enable);
+  virtual int EnableBeautyFilter(const int capture_id, const bool enable);
   virtual int RegisterObserver(const int capture_id,
                                ViECaptureObserver& observer);
   virtual int DeregisterObserver(const int capture_id);

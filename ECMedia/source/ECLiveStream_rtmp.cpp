@@ -1215,4 +1215,22 @@ namespace cloopenwebrtc {
 		}
 		desktopShare->Release();
 	}
+
+	void RTMPLiveSession::EnableBeauty()
+	{
+		ViECapture *capture = ViECapture::GetInterface(vie_);
+		if (capture_id_ >= 0) {
+			capture->EnableBeautyFilter(capture_id_, true);
+		}
+		capture->Release();
+	}
+
+	void RTMPLiveSession::DisableBeauty()
+	{
+		ViECapture *capture = ViECapture::GetInterface(vie_);
+		if (capture_id_ >= 0) {
+			capture->EnableBeautyFilter(capture_id_, false);
+		}
+		capture->Release();
+	}
 }

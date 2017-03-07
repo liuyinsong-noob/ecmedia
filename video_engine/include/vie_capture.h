@@ -251,6 +251,9 @@ class WEBRTC_DLLEXPORT ViECapture {
   // Enables brightness alarm detection and the brightness alarm callback.
   virtual int EnableBrightnessAlarm(const int capture_id,
                                     const bool enable) = 0;
+  virtual int EnableBeautyFilter(const int capture_id, 
+									const bool enable) = 0;
+
 
   // Registers an instance of a user implementation of the ViECaptureObserver.
   virtual int RegisterObserver(const int capture_id,
