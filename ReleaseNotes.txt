@@ -1,3 +1,8 @@
+Version 2.1.2.16
+1、接口改变
+2、yuv缩放功能ECMEDIA_API int ECMedia_set_frame_scale_type(int channelid, cloopenwebrtc::FrameScaleType type);
+3、美颜接口int ECmedia_enable_EnableBeautyFilter(int captureid, bool enable); 
+
 Version 2.1.2.15
 1, 接口不变
 2, 解决几个内存泄漏
