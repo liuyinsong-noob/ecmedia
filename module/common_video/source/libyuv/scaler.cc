@@ -23,7 +23,8 @@ Scaler::Scaler()
       src_height_(0),
       dst_width_(0),
       dst_height_(0),
-      set_(false) {}
+      set_(false),
+      frame_scale_type(kScaleTypeCropping) {}
 
 Scaler::~Scaler() {}
 
@@ -47,8 +48,12 @@ int Scaler::Set(int src_width, int src_height,
   return 0;
 }
 
+void Scaler::setFrameScaleType(FrameScaleType type){
+    frame_scale_type = type;
+}
+    
 int Scaler::Scale(const I420VideoFrame& src_frame,
-                  I420VideoFrame* dst_frame, FrameScaleType sacal_type) {
+                  I420VideoFrame* dst_frame) {
   assert(dst_frame);
   if (src_frame.IsZeroSize())
     return -1;
@@ -61,7 +66,7 @@ int Scaler::Scale(const I420VideoFrame& src_frame,
                               dst_width_, (dst_width_ + 1) / 2,
                               (dst_width_ + 1) / 2);
 
-    switch (sacal_type) {
+    switch (frame_scale_type) {
         case kScaleTypeCropping:
             return ScaleFrameWithTypeCropping(src_frame, dst_frame);
             break;

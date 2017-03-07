@@ -55,7 +55,6 @@ class VPMSimpleSpatialResampler : public VPMSpatialResampler {
   int32_t                     target_width_;
   int32_t                     target_height_;
   Scaler                      scaler_;
-  FrameScaleType              frame_scale_type;
 };
 
 }  // namespace webrtc

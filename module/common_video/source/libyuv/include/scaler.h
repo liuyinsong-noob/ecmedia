@@ -49,8 +49,8 @@ class Scaler {
   //               -1 - parameter error
   //               -2 - scaler not set
   int Scale(const I420VideoFrame& src_frame,
-            I420VideoFrame* dst_frame, FrameScaleType sacal_type);
-
+            I420VideoFrame* dst_frame);
+  void setFrameScaleType(FrameScaleType type);
  private:
   // Determine if the VideoTypes are currently supported.
   bool SupportedVideoType(VideoType src_video_type,
@@ -68,6 +68,8 @@ class Scaler {
   int           dst_width_;
   int           dst_height_;
   bool          set_;
+    
+    FrameScaleType frame_scale_type;
 };
 
 }  // namespace webrtc

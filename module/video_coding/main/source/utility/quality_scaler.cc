@@ -79,7 +79,7 @@ const I420VideoFrame& QualityScaler::GetScaledFrame(
               kI420,
               kI420,
               kScaleBox);
-  if (scaler_.Scale(frame, &scaled_frame_, kScaleTypeFilling) != 0)
+  if (scaler_.Scale(frame, &scaled_frame_) != 0)
     return frame;
   scaled_frame_.set_ntp_time_ms(frame.ntp_time_ms());
   scaled_frame_.set_timestamp(frame.timestamp());
