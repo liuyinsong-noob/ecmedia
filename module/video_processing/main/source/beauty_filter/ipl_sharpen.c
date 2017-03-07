@@ -1,7 +1,12 @@
 #include "ipl_sharpen.h"
 #include "ipl_color.h"
 #include "ipl_define.h"
+#ifdef _WIN32
 #include <malloc.h>
+#endif
+#ifdef __APPLE__
+#include <stdlib.h>
+#endif
 #include <string.h>
 #include <memory.h>
 

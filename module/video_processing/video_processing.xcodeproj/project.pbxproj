@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F5022471E6ED7F2009D9E17 /* beauty_filter_core.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F50223F1E6ED7F2009D9E17 /* beauty_filter_core.c */; };
+		1F5022481E6ED7F2009D9E17 /* beauty_filter_core.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F5022401E6ED7F2009D9E17 /* beauty_filter_core.h */; };
+		1F5022491E6ED7F2009D9E17 /* ipl_color.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F5022411E6ED7F2009D9E17 /* ipl_color.c */; };
+		1F50224A1E6ED7F2009D9E17 /* ipl_color.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F5022421E6ED7F2009D9E17 /* ipl_color.h */; };
+		1F50224B1E6ED7F2009D9E17 /* ipl_define.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F5022431E6ED7F2009D9E17 /* ipl_define.h */; };
+		1F50224C1E6ED7F2009D9E17 /* ipl_sharpen.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F5022441E6ED7F2009D9E17 /* ipl_sharpen.c */; };
+		1F50224D1E6ED7F2009D9E17 /* ipl_sharpen.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F5022451E6ED7F2009D9E17 /* ipl_sharpen.h */; };
+		1F50224E1E6ED7F2009D9E17 /* video_beauty_filter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F5022461E6ED7F2009D9E17 /* video_beauty_filter.h */; };
 		456DC51E1D543B19007C20BA /* denoiser_filter_c.cc in Sources */ = {isa = PBXBuildFile; fileRef = 456DC5121D543B19007C20BA /* denoiser_filter_c.cc */; };
 		456DC51F1D543B19007C20BA /* denoiser_filter_c.h in Headers */ = {isa = PBXBuildFile; fileRef = 456DC5131D543B19007C20BA /* denoiser_filter_c.h */; };
 		456DC5201D543B19007C20BA /* denoiser_filter_neon.cc in Sources */ = {isa = PBXBuildFile; fileRef = 456DC5141D543B19007C20BA /* denoiser_filter_neon.cc */; };
@@ -76,6 +84,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F50223F1E6ED7F2009D9E17 /* beauty_filter_core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = beauty_filter_core.c; path = beauty_filter/beauty_filter_core.c; sourceTree = "<group>"; };
+		1F5022401E6ED7F2009D9E17 /* beauty_filter_core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = beauty_filter_core.h; path = beauty_filter/beauty_filter_core.h; sourceTree = "<group>"; };
+		1F5022411E6ED7F2009D9E17 /* ipl_color.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ipl_color.c; path = beauty_filter/ipl_color.c; sourceTree = "<group>"; };
+		1F5022421E6ED7F2009D9E17 /* ipl_color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ipl_color.h; path = beauty_filter/ipl_color.h; sourceTree = "<group>"; };
+		1F5022431E6ED7F2009D9E17 /* ipl_define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ipl_define.h; path = beauty_filter/ipl_define.h; sourceTree = "<group>"; };
+		1F5022441E6ED7F2009D9E17 /* ipl_sharpen.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ipl_sharpen.c; path = beauty_filter/ipl_sharpen.c; sourceTree = "<group>"; };
+		1F5022451E6ED7F2009D9E17 /* ipl_sharpen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ipl_sharpen.h; path = beauty_filter/ipl_sharpen.h; sourceTree = "<group>"; };
+		1F5022461E6ED7F2009D9E17 /* video_beauty_filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = video_beauty_filter.h; path = beauty_filter/video_beauty_filter.h; sourceTree = "<group>"; };
 		456DC5121D543B19007C20BA /* denoiser_filter_c.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = denoiser_filter_c.cc; path = util/denoiser_filter_c.cc; sourceTree = "<group>"; };
 		456DC5131D543B19007C20BA /* denoiser_filter_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = denoiser_filter_c.h; path = util/denoiser_filter_c.h; sourceTree = "<group>"; };
 		456DC5141D543B19007C20BA /* denoiser_filter_neon.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = denoiser_filter_neon.cc; path = util/denoiser_filter_neon.cc; sourceTree = "<group>"; };
@@ -134,6 +150,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F50223E1E6ED7DE009D9E17 /* beauty_filter */ = {
+			isa = PBXGroup;
+			children = (
+				1F50223F1E6ED7F2009D9E17 /* beauty_filter_core.c */,
+				1F5022401E6ED7F2009D9E17 /* beauty_filter_core.h */,
+				1F5022411E6ED7F2009D9E17 /* ipl_color.c */,
+				1F5022421E6ED7F2009D9E17 /* ipl_color.h */,
+				1F5022431E6ED7F2009D9E17 /* ipl_define.h */,
+				1F5022441E6ED7F2009D9E17 /* ipl_sharpen.c */,
+				1F5022451E6ED7F2009D9E17 /* ipl_sharpen.h */,
+				1F5022461E6ED7F2009D9E17 /* video_beauty_filter.h */,
+			);
+			name = beauty_filter;
+			sourceTree = "<group>";
+		};
 		456DC5111D543B06007C20BA /* util */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,6 +231,7 @@
 		55A74F4B15C8C169001B246A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				1F50223E1E6ED7DE009D9E17 /* beauty_filter */,
 				456DC5111D543B06007C20BA /* util */,
 				55A74F4C15C8C169001B246A /* brighten.cc */,
 				55A74F4D15C8C169001B246A /* brighten.h */,
@@ -238,14 +270,19 @@
 				55A74F6315C8C169001B246A /* video_processing_defines.h in Headers */,
 				55A74F6515C8C169001B246A /* brighten.h in Headers */,
 				55A74F6715C8C169001B246A /* brightness_detection.h in Headers */,
+				1F50224B1E6ED7F2009D9E17 /* ipl_define.h in Headers */,
 				456DC5251D543B19007C20BA /* denoiser_filter.h in Headers */,
 				55A74F6915C8C169001B246A /* color_enhancement.h in Headers */,
+				1F50224E1E6ED7F2009D9E17 /* video_beauty_filter.h in Headers */,
 				55A74F6C15C8C169001B246A /* content_analysis.h in Headers */,
 				55A74F6F15C8C169001B246A /* deflickering.h in Headers */,
+				1F50224A1E6ED7F2009D9E17 /* ipl_color.h in Headers */,
+				1F5022481E6ED7F2009D9E17 /* beauty_filter_core.h in Headers */,
 				456DC52E1D544320007C20BA /* video_denoiser.h in Headers */,
 				55A74F7315C8C169001B246A /* frame_preprocessor.h in Headers */,
 				456DC5271D543B19007C20BA /* noise_estimation.h in Headers */,
 				55A74F7515C8C169001B246A /* spatial_resampler.h in Headers */,
+				1F50224D1E6ED7F2009D9E17 /* ipl_sharpen.h in Headers */,
 				456DC51F1D543B19007C20BA /* denoiser_filter_c.h in Headers */,
 				456DC5291D543B19007C20BA /* skin_detection.h in Headers */,
 				55A74F7715C8C169001B246A /* video_decimator.h in Headers */,
@@ -349,14 +386,17 @@
 				55A74F6415C8C169001B246A /* brighten.cc in Sources */,
 				55A74F6615C8C169001B246A /* brightness_detection.cc in Sources */,
 				55A74F6815C8C169001B246A /* color_enhancement.cc in Sources */,
+				1F5022491E6ED7F2009D9E17 /* ipl_color.c in Sources */,
 				456DC52D1D544320007C20BA /* video_denoiser.cc in Sources */,
 				55A74F6B15C8C169001B246A /* content_analysis.cc in Sources */,
+				1F50224C1E6ED7F2009D9E17 /* ipl_sharpen.c in Sources */,
 				456DC5261D543B19007C20BA /* noise_estimation.cc in Sources */,
 				456DC51E1D543B19007C20BA /* denoiser_filter_c.cc in Sources */,
 				55A74F6E15C8C169001B246A /* deflickering.cc in Sources */,
 				456DC5281D543B19007C20BA /* skin_detection.cc in Sources */,
 				55A74F7215C8C169001B246A /* frame_preprocessor.cc in Sources */,
 				55A74F7415C8C169001B246A /* spatial_resampler.cc in Sources */,
+				1F5022471E6ED7F2009D9E17 /* beauty_filter_core.c in Sources */,
 				55A74F7615C8C169001B246A /* video_decimator.cc in Sources */,
 				456DC5241D543B19007C20BA /* denoiser_filter.cc in Sources */,
 				55A74F7815C8C169001B246A /* video_processing_impl.cc in Sources */,

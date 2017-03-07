@@ -36,8 +36,11 @@ int I420VideoFrame::CreateEmptyFrame(int width, int height,
   width_ = width;
   height_ = height;
   y_plane_.CreateEmptyPlane(size_y, stride_y, size_y);
+  memset(y_plane_.buffer(), 0x00, size_y);
   u_plane_.CreateEmptyPlane(size_u, stride_u, size_u);
+  memset(u_plane_.buffer(), 0x80, size_u);
   v_plane_.CreateEmptyPlane(size_v, stride_v, size_v);
+  memset(v_plane_.buffer(), 0x80, size_v);
   // Creating empty frame - reset all values.
   timestamp_ = 0;
   ntp_time_ms_ = 0;

@@ -1,6 +1,13 @@
 #include "video_beauty_filter.h"
 #include "beauty_filter_core.h"
+#ifdef _WIN32
 #include <malloc.h>
+#endif
+
+#ifdef __APPLE__
+#include <stdlib.h>
+#endif
+
 #ifdef __ANDROID__
 #include <cmath>
 #define ABS std::abs
