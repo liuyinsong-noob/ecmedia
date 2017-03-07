@@ -61,7 +61,8 @@ class VPMFramePreprocessor {
   VideoContentMetrics* ContentMetrics() const;
 
   void EnableDenoising(bool enable);
-
+  void setFrameScaleType(FrameScaleType type);
+        
  private:
   // The content does not change so much every frame, so to reduce complexity
   // we can compute new content metrics every |kSkipFrameCA| frames.

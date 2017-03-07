@@ -364,14 +364,14 @@ int32_t ViEEncoder::DeRegisterExternalEncoder(uint8_t pl_type) {
   }
   return 0;
 }
-
+    
 int32_t ViEEncoder::SetEncoder(const cloopenwebrtc::VideoCodec& video_codec) {
   // Setting target width and height for VPM.
   if (vpm_.SetTargetResolution(video_codec.width, video_codec.height,
                                video_codec.maxFramerate) != VPM_OK) {
     return -1;
   }
-
+  
   if (default_rtp_rtcp_->RegisterSendPayload(video_codec) != 0) {
     return -1;
   }
@@ -420,6 +420,11 @@ int32_t ViEEncoder::SetEncoder(const cloopenwebrtc::VideoCodec& video_codec) {
   return 0;
 }
 
+    
+void ViEEncoder::setFrameScaleType(FrameScaleType frame_scale_type) {
+    vpm_.setFrameScaleType(frame_scale_type);
+}
+    
 int32_t ViEEncoder::GetEncoder(VideoCodec* video_codec) {
   if (vcm_.SendCodec(video_codec) != 0) {
     return -1;

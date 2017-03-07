@@ -17,7 +17,8 @@ VPMSimpleSpatialResampler::VPMSimpleSpatialResampler()
     : resampling_mode_(kFastRescaling),
       target_width_(0),
       target_height_(0),
-      scaler_() {}
+      scaler_(),
+      frame_scale_type(kScaleTypeCropping) {}
 
 VPMSimpleSpatialResampler::~VPMSimpleSpatialResampler() {}
 
@@ -45,6 +46,10 @@ void VPMSimpleSpatialResampler::Reset() {
   target_height_ = 0;
 }
 
+void VPMSimpleSpatialResampler::setFrameScaleType(FrameScaleType type) {
+    frame_scale_type = type;
+}
+
 int32_t VPMSimpleSpatialResampler::ResampleFrame(const I420VideoFrame& inFrame,
                                                  I420VideoFrame* outFrame) {
   // Don't copy if frame remains as is.
@@ -65,7 +70,7 @@ int32_t VPMSimpleSpatialResampler::ResampleFrame(const I420VideoFrame& inFrame,
   if (ret_val < 0)
     return ret_val;
 
-  ret_val = scaler_.Scale(inFrame, outFrame);
+  ret_val = scaler_.Scale(inFrame, outFrame, frame_scale_type);
 
   // Setting time parameters to the output frame.
   // Timestamp will be reset in Scale call above, so we should set it after.

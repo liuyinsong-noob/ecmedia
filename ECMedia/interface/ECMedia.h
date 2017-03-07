@@ -485,7 +485,6 @@ ECMEDIA_API int ECMedia_disconnect_desktop_captureDevice(int video_channelId);
 ECMEDIA_API int ECMedia_set_desktop_share_err_code_cb(int desktop_captureid, int channelid, onEcMediaDesktopCaptureErrCode capture_err_code_cb);
 ECMEDIA_API int ECMedia_set_desktop_share_window_change_cb(int desktop_captureid, int channelid, onEcMediaShareWindowSizeChange share_window_change_cb);
 ECMEDIA_API int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &height);
-ECMEDIA_API int ECMedia_set_screen_share_activity(int desktop_captureid, void* activity);
 /*
  *
  */
@@ -528,7 +527,14 @@ ECMEDIA_API int ECMedia_set_receive_codec_video_fec(int channelid, cloopenwebrtc
  */
 ECMEDIA_API int ECMedia_get_receive_codec_video(int channelid, cloopenwebrtc::VideoCodec& videoCodec);
 
-
+/**
+ * description: 设置底层yuv视频帧的缩放方式
+ * FrameScaleType:
+ *   kScaleTypeCropping -> 以裁剪方式缩放视频帧
+ *   kScaleTypeFilling  -> 以填充方式缩放视频帧
+ */
+ECMEDIA_API int ECMedia_set_frame_scale_type(int channelid, cloopenwebrtc::FrameScaleType type);
+    
 ECMEDIA_API int ECMedia_set_video_conf_cb(int channelid, onEcMediaVideoConference video_conf_cb);
 ECMEDIA_API int ECMedia_set_stun_cb_video(int channelid, onEcMediaStunPacket stun_cb);
 /*

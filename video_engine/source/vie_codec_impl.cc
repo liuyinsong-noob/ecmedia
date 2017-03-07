@@ -262,6 +262,20 @@ int ViECodecImpl::SetSendCodec(const int video_channel,
   return 0;
 }
 
+int ViECodecImpl::SetFrameScaleType(const int video_channel,
+                                    FrameScaleType frame_scale_type) {
+    ViEChannelManagerScoped cs(*(shared_data_->channel_manager()));
+    ViEChannel* vie_channel = cs.Channel(video_channel);
+    if (!vie_channel) {
+        shared_data_->SetLastError(kViECodecInvalidChannelId);
+        return -1;
+    }
+    
+    ViEEncoder* vie_encoder = cs.Encoder(video_channel);
+    vie_encoder->setFrameScaleType(frame_scale_type);
+    return 0;
+}
+    
 int ViECodecImpl::GetSendCodec(const int video_channel,
                                VideoCodec& video_codec) const {
   ViEChannelManagerScoped cs(*(shared_data_->channel_manager()));

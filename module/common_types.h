@@ -694,6 +694,11 @@ enum VideoCodecMode {
 	kSaveToFile
 };
 
+enum FrameScaleType {
+    kScaleTypeCropping,
+    kScaleTypeFilling,
+};
+
 // Common video codec properties
 struct VideoCodec {
 	VideoCodecType      codecType;

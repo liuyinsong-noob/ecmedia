@@ -2736,6 +2736,22 @@ int ECMedia_get_send_codec_video(int channelid, VideoCodec& videoCodec)
     }
 }
 
+int ECMedia_set_frame_scale_type(int channelid, FrameScaleType type) {
+    ViECodec *codec = ViECodec::GetInterface(m_vie);
+    if (codec) {
+        PrintConsole("[ECMEDIA INFO] %s",__FUNCTION__);
+        int ret = codec->SetFrameScaleType(channelid, type);
+        codec->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to set frame scale type, %s",__FUNCTION__);
+        return -99;
+    }
+}
+
 int ECMedia_set_video_conf_cb(int channelid, onEcMediaVideoConference video_conf_cb)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
@@ -4233,23 +4249,7 @@ int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &hei
 		return -99;
 	}
 }
- int ECMedia_set_screen_share_activity(int desktop_captureid, void* activity)
- {
-     PrintConsole("[ECMEDIA INFO] %s begins... desktop_captureid:%d activity:%0x", __FUNCTION__, desktop_captureid, activity);
-     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-     ViEDesktopShare *desktopshare = ViEDesktopShare::GetInterface(m_vie);
-     if (desktopshare) {
-         int ret = desktopshare->SetScreenShareActivity(desktop_captureid, activity);
-         desktopshare->Release();
-         return ret;
-     }
-     else
-     {
-         PrintConsole("[ECMEDIA WARNNING] failed to get ViEDesktopShare, %s", __FUNCTION__);
-         return -99;
-     }
 
- }
  void *ECMedia_createLiveStream(int type)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);

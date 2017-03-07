@@ -75,7 +75,8 @@ size_t CalcBufferSize(VideoType type, int width, int height) {
     case kNV12:
     case kNV21:
     case kIYUV:
-    case kYV12: {
+    case kYV12:
+    case kMJPG:{
       int half_width = (width + 1) >> 1;
       int half_height = (height + 1) >> 1;
       buffer_size = width * height + half_width * half_height * 2;

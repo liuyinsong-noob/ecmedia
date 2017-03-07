@@ -77,6 +77,7 @@ class ViECodecImpl
   virtual int SetKeyFrameRequestCb(const int video_channel, bool isVideoConf,onEcMediaRequestKeyFrame cb);
   virtual int RegisterCaptureObserver(const int video_channel, void *capture, const int capture_id);
   virtual int DeRegisterCaptureObserver(const int video_channel);
+  virtual int SetFrameScaleType(const int video_channel, FrameScaleType frame_scale_type);
  protected:
   explicit ViECodecImpl(ViESharedData* shared_data);
   virtual ~ViECodecImpl();

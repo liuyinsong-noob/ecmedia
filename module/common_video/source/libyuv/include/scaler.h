@@ -49,12 +49,18 @@ class Scaler {
   //               -1 - parameter error
   //               -2 - scaler not set
   int Scale(const I420VideoFrame& src_frame,
-            I420VideoFrame* dst_frame);
+            I420VideoFrame* dst_frame, FrameScaleType sacal_type);
 
  private:
   // Determine if the VideoTypes are currently supported.
   bool SupportedVideoType(VideoType src_video_type,
                           VideoType dst_video_type);
+    
+    int ScaleFrameWithTypeCropping(const I420VideoFrame& src_frame,
+                                           I420VideoFrame* dst_frame);
+    
+    int ScaleFrameWithTypeFilling(const I420VideoFrame& src_frame,
+                                          I420VideoFrame* dst_frame);
 
   ScaleMethod   method_;
   int           src_width_;

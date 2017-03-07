@@ -71,6 +71,7 @@ class VideoProcessingModuleImpl : public VideoProcessingModule {
 
   void EnableDenoising(bool enable) override;
 
+  virtual void setFrameScaleType(FrameScaleType type);
  private:
   int32_t  id_;
   CriticalSectionWrapper& mutex_;

@@ -192,7 +192,7 @@ class ViEEncoder
 
 
   int channel_id() const { return channel_id_; }
-
+  void setFrameScaleType(FrameScaleType frame_scale_type);
  protected:
   // Called by BitrateObserver.
   void OnNetworkChanged(uint32_t bitrate_bps,

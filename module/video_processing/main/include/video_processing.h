@@ -273,6 +273,7 @@ class VideoProcessingModule : public Module {
   virtual void EnableContentAnalysis(bool enable) = 0;
 
   virtual void EnableDenoising(bool enable) = 0;
+  virtual void setFrameScaleType(FrameScaleType type) = 0;
 };
 
 }  // namespace webrtc

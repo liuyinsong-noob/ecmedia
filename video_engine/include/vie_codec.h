@@ -209,7 +209,7 @@ class WEBRTC_DLLEXPORT ViECodec {
   // TODO(holmer): Remove this default implementation when possible.
   virtual bool GetSendSideDelay(int video_channel, int* avg_delay_ms,
                                 int* max_delay_ms) const { return false; }
-
+  virtual int SetFrameScaleType(const int video_channel, FrameScaleType frame_scale_type) = 0;
  protected:
   ViECodec() {}
   virtual ~ViECodec() {}

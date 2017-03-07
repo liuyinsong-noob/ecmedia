@@ -47,6 +47,9 @@ void  VPMFramePreprocessor::Reset() {
 }
 
 
+// void  VPMFramePreprocessor::set()
+    
+    
 void  VPMFramePreprocessor::EnableTemporalDecimation(bool enable) {
   vd_->EnableTemporalDecimation(enable);
 }
@@ -92,6 +95,10 @@ uint32_t VPMFramePreprocessor::DecimatedWidth() const {
 
 uint32_t VPMFramePreprocessor::DecimatedHeight() const {
   return spatial_resampler_->TargetHeight();
+}
+
+void VPMFramePreprocessor::setFrameScaleType(FrameScaleType type) {
+    spatial_resampler_->setFrameScaleType(type);
 }
 
 
