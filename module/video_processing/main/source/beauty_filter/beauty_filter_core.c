@@ -5,9 +5,16 @@
 #else
 #include <stdlib.h>
 #endif
-#include <math.h>
-#include <string.h>
 
+#ifdef __ANDROID__
+#include <cmath>
+#define ABS std::abs
+#else
+#include <math.h>
+#define ABS abs
+#endif
+
+#include <string.h>
 
 //
 unsigned char* Get_Version_Beauty_Filter()
@@ -483,7 +490,7 @@ int init_beauty_filter(Beauty_Filter* self, unsigned char radius, unsigned char 
 		unsigned int* fi = self->table + i * 256;
 		for (j = 0; j < 256; ++j)
 		{
-			int w = 2500 - 1000 * abs(j - i) / thres;
+			int w = 2500 - 1000 * ABS(j - i) / thres;
 			if (w < 0)
 			{
 				w = 0;
@@ -559,7 +566,7 @@ int set_radius_thres(Beauty_Filter* self, unsigned char radius, unsigned char th
 			unsigned int* fi = self->table + i * 256;
 			for (j = 0; j < 256; ++j)
 			{
-				int w = 2500 - 1000 * abs(j - i) / thres;
+				int w = 2500 - 1000 * ABS(j - i) / thres;
 				if (w < 0)
 				{
 					w = 0;
@@ -1081,7 +1088,7 @@ void ZFilter_8u_C1R(int width, int height, int scan_src, unsigned char* pbuf_src
 				unsigned char* ps0 = pss + m*scan_src;
 				for( int n = 0; n < 2*r + 1; ++n)
 				{
-					float f = 1.f - ( abs(ps0[n] - cc) / (2.5f*thres) );
+					float f = 1.f - ( ABS(ps0[n] - cc) / (2.5f*thres) );
 					f = f < 0 ? 0 : f;
 					denom += f;
 					numer += f * ps0[n];

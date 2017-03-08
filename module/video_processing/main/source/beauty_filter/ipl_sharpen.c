@@ -6,6 +6,7 @@
 #else
 #include <stdlib.h>
 #endif
+#include <string.h>
 #include <memory.h>
 
 int zipl_sharpen_get_outbufsize(int w, int h)

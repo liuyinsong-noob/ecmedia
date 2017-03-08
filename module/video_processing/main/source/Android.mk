@@ -45,7 +45,8 @@ endif
 # Flags passed to both C and C++ files.
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
-	-D__GXX_EXPERIMENTAL_CXX0X__
+	-D__GXX_EXPERIMENTAL_CXX0X__ \
+	-fpermissive
 
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/./util \
