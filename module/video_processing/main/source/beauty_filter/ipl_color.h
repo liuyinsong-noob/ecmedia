@@ -55,7 +55,7 @@ int zipl_rgb_yuv420( int w, int h,
 //////////////////////////////////////////////////////////////////////////
 //    yuv420p_hsip      yuv420_hsip
 //    hsip_yuv420p      hsip_yuv420
-//    hsi, h is float type, s i is int type
+//    hsi, h is float type, s i is int type  h [0, 360], s i [0, 255]
 /////////////////////////////////////////////////////////////////////////
 
 int zipl_yuv420p_hsip( int w, 
@@ -121,8 +121,16 @@ int zipl_hsip_rgb_fast( int w,
 	                   );
 
 //
+int zipl_scale_4in1_rgb(int w, int h, int scan, unsigned char* rgb);
+
+
+//
 int get_skin_mask_rgb(int w, int h, int scanrgb, unsigned char* prgb, int scanmask, unsigned char* mask);
-int zipl_fDilation(int ncx, int ncy, int nSrcDstPitch, unsigned char* pSrcDst, int nRow, int nCol);
+int get_skin_mask_hsip(int w, int h, float* hsi, int scanmask, unsigned char* mask);
+int get_skin_mask_yuv420p(int w, int h, unsigned char*pyuv, int scanmask, unsigned char* mask);
+int get_skin_mask_yuv420p_hsip(int w, int h, unsigned char* pyuv, float* hsi, int scanmask, unsigned char* mask);
+int sunshine_comp_rgb(int w, int h, int scanrgb, unsigned char* prgb);
+
 
 #ifdef __cplusplus
 }

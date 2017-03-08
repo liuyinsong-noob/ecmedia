@@ -1449,6 +1449,78 @@ int zipl_hsip_yuv420( int w, int h,
 	return 0;
 }
 
+int get_skin_mask_yuv420p_hsip(int w, int h, unsigned char* pyuv, float* hsi, int scanmask, unsigned char* mask)
+{
+	//h [0 45]
+	//Cb[77 127]  Cr[133 173]
+	int i;
+	int j;
+	unsigned char* pu = pyuv + w*h;
+	unsigned char* pv = pu + w*h / 4;
+	for (i = 0; i < h; ++i)
+	{
+		unsigned char* psu = pu + (i / 2)*w / 2;
+		unsigned char* psv = pv + (i / 2)*w / 2;
+		unsigned char* pm = mask + i*scanmask;
+		for (j = 0; j < w; ++j)
+		{
+			if (psu[j / 2] >= 77 && psu[j / 2] <= 127 && psv[j / 2] >= 133 && psv[j / 2] <= 173 && *hsi >= 0 && *hsi <= 45)
+				pm[j] = 255;
+			else
+				pm[j] = 0;
+
+			hsi++;
+		}
+	}
+
+	return 0;
+}
+
+int get_skin_mask_yuv420p(int w, int h, unsigned char*pyuv, int scanmask, unsigned char* mask)
+{
+	//Cb[77 127]  Cr[133 173]
+	int i;
+	int j;
+	unsigned char* pu = pyuv + w*h;
+	unsigned char* pv = pu + w*h / 4;
+	for (i = 0; i < h; ++i)
+	{
+		unsigned char* psu = pu + (i / 2)*w / 2;
+		unsigned char* psv = pv + (i / 2)*w / 2;
+		unsigned char* pm = mask + i*scanmask;
+		for (j = 0; j < w; ++j)
+		{
+			if (psu[j / 2] >= 77 && psu[j / 2] <= 127 && psv[j / 2] >= 133 && psv[j / 2] <= 173)
+		//	if (psu[j / 2] >= 133 && psu[j / 2] <= 173 && psv[j / 2] >= 77 && psv[j / 2] <= 127)
+				pm[j] = 255;
+			else
+				pm[j] = 0;
+		}
+	}
+
+	return 0;
+}
+
+int get_skin_mask_hsip(int w, int h, float* hsi, int scanmask, unsigned char* mask)
+{
+	int i;
+	int j;
+	for (i = 0; i < h; ++i)
+	{
+		unsigned char* pm = mask + i*scanmask;
+		for (j = 0; j < w; ++j)
+		{
+			float h = *hsi++;
+			if (h >= 20 && h <= 50)
+				pm[j] = 255;
+			else
+				pm[j] = 0;
+		}
+	}
+
+	return 0;
+}
+
 int get_skin_mask_rgb(int w, int h, int scanrgb, unsigned char* prgb, int scanmask, unsigned char* mask)
 {
 	int i;
@@ -1484,7 +1556,207 @@ int get_skin_mask_rgb(int w, int h, int scanrgb, unsigned char* prgb, int scanma
 	return 0;
 }
 
-int zipl_fDilation(int ncx, int ncy, int nSrcDstPitch, unsigned char* pSrcDst, int nRow, int nCol)
+int sunshine_comp_rgb(int w, int h, int scanrgb, unsigned char* prgb)
+{
+	int i;
+	int j;
+	int sumr = 0;
+	int sumg = 0;
+	int sumb = 0;
+	float sumgragy = 0;
+	float fr, fg, fb;
+	float max = 0;
+	float scale = 0;
+	for (i = 0; i < h; ++i)
+	{
+		unsigned char* ps = prgb + i*scanrgb;
+		for (j = 0; j < w; ++j)
+		{
+			sumb += ps[0];  
+			sumg += ps[1];
+			sumr += ps[2];
+			
+			ps += 3;
+		}
+	}
+	//
+	sumgragy = (sumb + sumg + sumr)/3.f;
+	fb = sumgragy / sumb  ;
+	fg = sumgragy / sumg  ;
+	fr = sumgragy / sumr  ;
+
+
+	for (i = 0; i < h; ++i)
+	{
+		unsigned char* ps = prgb + i*scanrgb;
+		for (j = 0; j < w; ++j)
+		{
+			if (max < ps[0] * fb)
+				max = ps[0] * fb;
+			if (max < ps[1] * fg)
+				max = ps[1] * fg;
+			if (max < ps[2] * fr)
+				max = ps[2] * fr;
+
+			ps += 3;
+		}
+	}
+
+	scale = max / 255.f;
+
+	fb = fb / scale;
+	fg = fg / scale;
+	fr = fr / scale;
+
+	for (i = 0; i < h; ++i)
+	{
+		unsigned char* ps = prgb + i*scanrgb;
+		for (j = 0; j < w; ++j)
+		{
+			ps[0] = ps[0] * fb;	
+			ps[1] = ps[1] * fg;
+			ps[2] = ps[2] * fr;
+
+			ps += 3;
+		}
+	}
+
+}
+
+int zipl_xfErosion(int ncx, int ncy, int nSrcDstPitch, unsigned char* pSrcDst, int nRow, int nCol)
+{
+	//边缘外围补255
+	assert(nRow > 0 && nRow < ncy);
+	assert(nCol > 0 && nCol < ncx);
+	//
+	int nWindowY = nRow * 2 + 1;
+	int nWindowX = nCol * 2 + 1;
+	int xx = ncx + 2 * nCol;
+	int yy = ncy + 2 * nRow;
+	int nxless = nWindowX - 1;
+	int nyless = nWindowY - 1;
+
+	
+	void* MemAuto = malloc(xx * sizeof(unsigned char*) + (nWindowX + xx + (yy + nWindowY)*xx + xx));
+	unsigned char** ppAllScrollWinYs = (unsigned char**)MemAuto;
+	unsigned char*  pScrollWinX = (unsigned char*)MemAuto + xx * sizeof(unsigned char*);
+	unsigned char*  pScrollWinX_start = pScrollWinX + nWindowX;
+	unsigned char*  pScrollWinY = pScrollWinX_start + xx;
+	unsigned char*  pScrollWinY_start = pScrollWinY + nWindowY;
+	int        nOffToNextY = nWindowY + yy;
+
+	//清空滑动X窗口前端部分
+	memset(pScrollWinX, 0, nWindowX);
+	//清空滑动Y窗口前端部分
+	for (int i = 0; i < xx; ++i) {
+		memset(pScrollWinY + i*nOffToNextY, 0, nWindowY);
+	}
+
+	//初始化所有Y窗口
+	//特殊y
+	for (int i = 0; i < nCol; ++i) {
+		unsigned char* pWy_l = pScrollWinY_start + i*nOffToNextY;
+		unsigned char* pWy_r = pScrollWinY_start + (ncx + nCol + i)*nOffToNextY;
+		memset(pWy_l, 1, yy);
+		memset(pWy_r, 1, yy);
+	}
+
+	//正常y
+	unsigned char* ps = pSrcDst + nRow*nSrcDstPitch;
+	for (int j = 0; j < ncx; ++j) {
+		unsigned char* pWy = pScrollWinY_start + (j + nCol)*nOffToNextY + nyless;
+		pWy[0] = ps[j] > 0 ? 1 : 0;
+	}
+
+	for (int i = nWindowY - 2; i >= nRow; --i) {
+		unsigned char* ps = pSrcDst + (i - nRow) * nSrcDstPitch;
+		for (int j = 0; j < ncx; ++j) {
+			unsigned char* pWy = pScrollWinY_start + (j + nCol) * nOffToNextY + i;
+			pWy[0] = pWy[1] && ps[j];
+		}
+	}
+
+	for (int i = nRow - 1; i >= 0; --i) {
+		for (int j = 0; j < ncx; ++j) {
+			unsigned char* pWy = pScrollWinY_start + (j + nCol)*nOffToNextY + i;
+			pWy[0] = pWy[1];
+		}
+	}
+
+	for (int i = 0; i < xx; ++i)
+		ppAllScrollWinYs[i] = pScrollWinY_start + i*nOffToNextY;
+
+	//初始化X窗口
+	pScrollWinX_start[nxless] = *(ppAllScrollWinYs[nxless]);
+	for (int j = nWindowX - 2; j >= 0; --j) {
+		pScrollWinX_start[j] = pScrollWinX_start[j + 1] & (*ppAllScrollWinYs[j]);
+	}
+
+	//work...
+	unsigned char*  pRealWinX = pScrollWinX_start;
+	int        nOffSet = ncy - nRow - 1;
+	unsigned char** ppRealAllWinYs = ppAllScrollWinYs + nCol;
+	unsigned char** ppRealWinYs2 = ppRealAllWinYs + nCol + 1;
+	int        nLessX = ncx - 1;
+	int        nLessY = ncy - 1;
+	int        nOffSetOfSrc = (nRow + 1)*nSrcDstPitch;
+	for (int i = 0; i < ncy; ++i) {
+		unsigned char* pd = pSrcDst + i*nSrcDstPitch;
+		for (int j = 0; j < ncx; ++j) {
+			pd[j] = pRealWinX[0] == 0 ? 0 : 255;
+			//更新X窗口
+			if (j < nLessX) {
+				if (*ppRealWinYs2[j] == 0) {
+					pRealWinX = pScrollWinX;
+				}
+				else {
+					pRealWinX[nWindowX] = 1;
+					pRealWinX += 1;
+				}
+			}
+		}
+
+		//更新Y窗口
+		if (i < nOffSet) {
+			unsigned char* ps = pd + nOffSetOfSrc;
+			for (int j = 0; j < ncx; ++j) {
+				if (ps[j] == 0) {
+					ppRealAllWinYs[j] = pScrollWinY + (j + nCol)*nOffToNextY;
+				}
+				else {
+					ppRealAllWinYs[j][nWindowY] = 1;
+					ppRealAllWinYs[j] += 1;
+				}
+			}
+
+			//重新更新X窗口
+			pScrollWinX_start[nxless] = *(ppAllScrollWinYs[nxless]);
+			for (int j = nWindowX - 2; j >= 0; --j) {
+				pScrollWinX_start[j] = pScrollWinX_start[j + 1] & (*ppAllScrollWinYs[j]);
+			}
+			pRealWinX = pScrollWinX_start;
+
+		}
+		else if (i >= nOffSet && i < nLessY) {
+			for (int j = 0; j < ncx; ++j) {
+				ppRealAllWinYs[j][nWindowY] = 1;
+				ppRealAllWinYs[j] += 1;
+			}
+			//更新X窗口
+			pScrollWinX_start[nxless] = *(ppAllScrollWinYs[nxless]);
+			for (int j = nWindowX - 2; j >= 0; --j) {
+				pScrollWinX_start[j] = pScrollWinX_start[j + 1] & (*ppAllScrollWinYs[j]);
+			}
+			pRealWinX = pScrollWinX_start;
+		}
+	}
+
+	free(MemAuto);
+
+	return 0;
+}
+
+int zipl_xfDilation(int ncx, int ncy, int nSrcDstPitch, unsigned char* pSrcDst, int nRow, int nCol)
 {
 	//边缘外围补0
 	assert(nRow > 0 && nRow < ncy);
@@ -1613,6 +1885,30 @@ int zipl_fDilation(int ncx, int ncy, int nSrcDstPitch, unsigned char* pSrcDst, i
 	}
 
 	free(MemAuto);
+
+	return 0;
+}
+
+int zipl_scale_4in1_rgb(int w, int h, int scan, unsigned char* rgb)
+{
+	int i;
+	int j;
+	int ww = w >> 2;
+	int hh = h >> 2;
+	for (i = 0; i < hh; ++i)
+	{
+		unsigned char*pd = rgb + i * 4 * scan;
+		for (j = 0; j < ww; ++j)
+		{
+			pd[j] = pd[j * 4];
+			pd[j + 1] = pd[j];
+			pd[j + 2] = pd[j];
+			pd[j + 3] = pd[j];
+		}
+		memcpy(pd + scan, pd, w);
+		memcpy(pd + 2 * scan, pd, w);
+		memcpy(pd + 3 * scan, pd, w);
+	}
 
 	return 0;
 }

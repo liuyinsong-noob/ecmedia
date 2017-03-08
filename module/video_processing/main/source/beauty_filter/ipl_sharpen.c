@@ -1,13 +1,11 @@
 #include "ipl_sharpen.h"
 #include "ipl_color.h"
 #include "ipl_define.h"
-#ifdef _WIN32
+#ifndef __APPLE__
 #include <malloc.h>
-#endif
-#ifdef __APPLE__
+#else
 #include <stdlib.h>
 #endif
-#include <string.h>
 #include <memory.h>
 
 int zipl_sharpen_get_outbufsize(int w, int h)
