@@ -173,25 +173,88 @@ using namespace std;
 bool g_media_TraceFlag = false;//
 const char * g_log_media_filename = "./mediaConsole.log";
 FILE *g_media_interface_fp =NULL;
-#define MAX_LOG_LINE   3000
+char g_log_file1[100];
+char g_log_file2[100];
+char *g_cur_log_file = NULL;
+#define MAX_LOG_LINE	3000
+#define MAX_LOG_SIZE	104856700//100M bytes
+#define LOG_TIME_SIZE	14 //%02d%02d %02d:%02d:%02d 
+#define LOG_SIZE_CHECK_TIME	60
 //int g_log_line =0;
 
 typedef void (*PrintConsoleHook_media)(int loglevel,const char *);
 PrintConsoleHook_media gPrintConsoleHook_media = NULL;
 cloopenwebrtc::CriticalSectionWrapper  *g_printConsole_lock;
+
+static char * compare_file_new(char *file1, char *file2)
+{
+	FILE *fp1 = fopen(file1, "rb");
+	if (!fp1)			/*file1 not exist*/
+		return file1;
+	else {				/*file1 size small 50M*/	
+		fseek(fp1, 0, SEEK_END);
+		if (ftell(fp1) < MAX_LOG_SIZE) {
+			fclose(fp1);
+			return file1;
+		}
+	}
+
+	/*file1 is exist and full; then judge file2*/
+	FILE *fp2 = fopen(file2, "rb");
+	if (!fp2){			/*file2 not exist*/
+		fclose(fp1);
+		return file2;
+	}else {				/*file2 size small 50M*/
+		fseek(fp2, 0, SEEK_END);
+		if (ftell(fp2) < MAX_LOG_SIZE) {
+			fclose(fp1);
+			fclose(fp2);
+			return file2;
+		}
+	}
+
+	/*file1 and file2 all is exist and full; then judge which is newer*/
+	fseek(fp1, 0, SEEK_SET);
+	fseek(fp2, 0, SEEK_SET);
+	char *file_tmp = NULL;
+	char buf1[LOG_TIME_SIZE] = { 0 };
+	char buf2[LOG_TIME_SIZE] = { 0 };
+	if (fgets(buf1, LOG_TIME_SIZE, fp1) == NULL){
+		file_tmp = file1;
+	}else if (fgets(buf2, LOG_TIME_SIZE, fp2) == NULL) {
+		file_tmp = file2;
+	}else if (strcmp(buf1, buf2) > 0) {/*file1 is newer*/
+		file_tmp = file1;
+	}else{/*file2 is newer*/
+		file_tmp = file2;
+	}
+
+	fclose(fp1);
+	fclose(fp2);
+	return file_tmp;
+}
+
 static void media_init_print_log()
 {
 	if(!g_media_TraceFlag) {
 		return;
 	}
+
+	strcpy(g_log_file1, g_log_media_filename);
+	strcpy(g_log_file2, g_log_media_filename);
+	strcat(g_log_file1, "_1");
+	strcat(g_log_file2, "_2");
+
 	g_printConsole_lock = cloopenwebrtc::CriticalSectionWrapper::CreateCriticalSection();
 	if (NULL == g_media_interface_fp )
     {
-		g_media_interface_fp = fopen(g_log_media_filename,"ab");
+		g_cur_log_file = compare_file_new(g_log_file1, g_log_file2);
+
+		g_media_interface_fp = fopen(g_cur_log_file,"ab");
      //   g_media_interface_fp = fopen(g_log_media_filename,"wb");
 		if (NULL == g_media_interface_fp )
 		{
-			g_media_interface_fp = fopen(g_log_media_filename,"wb");
+			g_media_interface_fp = fopen(g_cur_log_file,"wb");
 		}
 	}
 }
@@ -218,6 +281,9 @@ void PrintConsole(const char * fmt,...)
     if(!g_media_TraceFlag) {
         return;
     }
+
+	static time_t last_time = time(NULL);
+
 	struct tm *pt = NULL;
 	time_t curr_time;
     curr_time = time(NULL);
@@ -266,6 +332,23 @@ void PrintConsole(const char * fmt,...)
 		fprintf(g_media_interface_fp, "%s\n", log_buffer);
 		fflush(g_media_interface_fp);
 		//g_log_line ++;
+	}
+
+	if (curr_time-last_time >= LOG_SIZE_CHECK_TIME)
+	{
+		last_time = curr_time;
+		if (ftell(g_media_interface_fp) >= MAX_LOG_SIZE)//100M,100*1024*1024
+		{
+			fclose(g_media_interface_fp);
+			g_media_interface_fp = NULL;
+
+			if (g_cur_log_file == g_log_file1)
+				g_cur_log_file = g_log_file2;
+			else
+				g_cur_log_file = g_log_file1;
+
+			g_media_interface_fp = fopen(g_cur_log_file, "wb");
+		}
 	}
 }
 
