@@ -110,7 +110,9 @@ cloopenwebrtc::VoiceEngine* m_voe = NULL;
 static StatsCollector *g_statsCollector = NULL;
 
 static VoeObserver* g_VoeObserver = NULL;
+static onEcMediaNoCameraCaptureCb g_NoCameraCaptureCb = NULL;
 static ECViECaptureObserver* g_ECViECaptureObserver = NULL;
+
 
 #ifdef VIDEO_ENABLED
 cloopenwebrtc::VideoEngine* m_vie = NULL;
@@ -2350,85 +2352,8 @@ int ECMedia_getOrientation(const char *id, ECMediaRotateCapturedFrame &tr)
 
 int ECMedia_set_no_camera_capture_cb(int deviceid, onEcMediaNoCameraCaptureCb no_camera_capture_cb)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
-	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	ViECapture *capture = ViECapture::GetInterface(m_vie);
-	if (capture) {
-		if (g_ECViECaptureObserver)
-		{
-			delete g_ECViECaptureObserver;
-			g_ECViECaptureObserver = NULL;
-		}
-
-		g_ECViECaptureObserver = new ECViECaptureObserver(no_camera_capture_cb);
-		if (!g_ECViECaptureObserver)
-		{
-			PrintConsole("[ECMEDIA INFO] %s create g_ECViECaptureObserver failed\n", __FUNCTION__);
-			capture->Release();
-			return -1;
-		}
-
-		int ret = capture->RegisterObserver(deviceid, *g_ECViECaptureObserver);
-		capture->Release();
-		PrintConsole("[ECMEDIA INFO] %s end with code: %d\n", __FUNCTION__, ret);
-		return ret;
-	}
-	else
-	{
-		PrintConsole("[ECMEDIA WARNNING] failed to get ViECapture, %s\n", __FUNCTION__);
-		return -99;
-	}
-
+	g_NoCameraCaptureCb = no_camera_capture_cb;
 	return 0;
-}
-
-
-int ECMedia_clear_no_camera_capture_cb(int deviceid)
-{
-	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
-	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	ViECapture *capture = ViECapture::GetInterface(m_vie);
-	if (capture) {
-		int ret = capture->DeregisterObserver(deviceid);
-
-		if (g_ECViECaptureObserver)
-		{
-			delete g_ECViECaptureObserver;
-			g_ECViECaptureObserver = NULL;
-		}
-
-		capture->Release();
-		PrintConsole("[ECMEDIA INFO] %s end with code: %d\n", __FUNCTION__, ret);
-
-		return ret;
-	}
-	else
-	{
-		PrintConsole("[ECMEDIA WARNNING] failed to get ViECapture, %s\n", __FUNCTION__);
-		return -99;
-	}
-
-	return 0;
-}
-
-
-//The deviceid is got by func "ECMedia_allocate_capture_device"
-int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame tr)
-{
-    PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
-    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-    ViECapture *capture = ViECapture::GetInterface(m_vie);
-    if (capture) {
-        int ret = capture->SetRotateCapturedFrames(deviceid, (RotateCapturedFrame)tr);
-        capture->Release();
-        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
-        return ret;
-    }
-    else
-    {
-        PrintConsole("[ECMEDIA WARNNING] failed to get ViECapture, %s",__FUNCTION__);
-        return -99;
-    }
 }
 
 int ECMedia_start_capture(int deviceid, CameraCapability cam)
@@ -2437,6 +2362,16 @@ int ECMedia_start_capture(int deviceid, CameraCapability cam)
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECapture *capture = ViECapture::GetInterface(m_vie);
     if (capture) {
+
+		if (!g_ECViECaptureObserver) {
+			if (g_NoCameraCaptureCb) {
+				g_ECViECaptureObserver = new ECViECaptureObserver(g_NoCameraCaptureCb);
+			}
+		}
+		if (g_ECViECaptureObserver) {
+			capture->RegisterObserver(deviceid, *g_ECViECaptureObserver);
+		}
+
         CaptureCapability cap;
         cap.height = cam.height;
         cap.width = cam.width;
@@ -2452,6 +2387,50 @@ int ECMedia_start_capture(int deviceid, CameraCapability cam)
         PrintConsole("[ECMEDIA WARNNING] failed to get ViECapture, %s",__FUNCTION__);
         return -99;
     }
+}
+
+int ECMedia_stop_capture(int captureid)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViECapture *capture = ViECapture::GetInterface(m_vie);
+	if (capture) {
+		if (g_ECViECaptureObserver) {
+			capture->DeregisterObserver(captureid);
+			delete g_ECViECaptureObserver;
+			g_ECViECaptureObserver = NULL;
+		}
+
+		capture->StopCapture(captureid);
+		capture->ReleaseCaptureDevice(captureid);
+		capture->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, 0);
+		return 0;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViECapture, %s", __FUNCTION__);
+		return -99;
+	}
+}
+
+//The deviceid is got by func "ECMedia_allocate_capture_device"
+int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame tr)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViECapture *capture = ViECapture::GetInterface(m_vie);
+	if (capture) {
+		int ret = capture->SetRotateCapturedFrames(deviceid, (RotateCapturedFrame)tr);
+		capture->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, ret);
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViECapture, %s", __FUNCTION__);
+		return -99;
+	}
 }
 
 int ECMedia_set_local_video_window(int deviceid, void *video_window)
@@ -2477,25 +2456,6 @@ int ECMedia_set_local_video_window(int deviceid, void *video_window)
 #endif
         PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
-    }
-    else
-    {
-        PrintConsole("[ECMEDIA WARNNING] failed to get ViECapture, %s",__FUNCTION__);
-        return -99;
-    }
-}
-
-int ECMedia_stop_capture(int captureid)
-{
-    PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
-    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-    ViECapture *capture = ViECapture::GetInterface(m_vie);
-    if (capture) {
-        capture->StopCapture(captureid);
-        capture->ReleaseCaptureDevice(captureid);
-        capture->Release();
-        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
-        return 0;
     }
     else
     {

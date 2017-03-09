@@ -411,7 +411,6 @@ void ServiceCore::video_stream_stop(int channelID,int captureID)
 		//capture->DeregisterObserver(captureID);
 
 		//ECmedia_enable_EnableBeautyFilter(captureID, false);
-		ECMedia_clear_no_camera_capture_cb(captureID);
 		ECMedia_stop_capture(captureID);
 
 	}else if(m_videoModeChoose == 1) //screen-share
