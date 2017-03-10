@@ -348,6 +348,9 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
   virtual StreamDataCountersCallback*
       GetSendChannelRtpStatisticsCallback() const OVERRIDE;
 
+  virtual void SetSendRtcpPacketTypeCountObserver(
+	  RtcpPacketTypeCounterObserver *observer) OVERRIDE;
+
   void OnReceivedTMMBR();
 
   // Bad state of RTP receiver request a keyframe.

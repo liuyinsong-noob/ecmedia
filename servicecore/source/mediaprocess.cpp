@@ -305,7 +305,6 @@ void ServiceCore::serphone_call_stop_media_streams(SerPhoneCall *call)
 		call->video_profile=NULL;
 	}
 #endif
-    ECMedia_stop_Statistics_proxy();
 }
 
 void ServiceCore::media_stream_free(MediaStream *stream) {
@@ -4786,17 +4785,27 @@ int ServiceCore::GetRtpStatistics(const char* callid,
 	return 0;
 }
 
-//TODO:
-//int ServiceCore::GetSendStats(const char* callid, VideoSendStream::Stats &sendStats)
-//{
-//	SerPhoneCall *call = serphone_core_get_current_call();
-//	if (!call)
-//	{
-//		return -1;
-//	}
-//	sendStats = pSendStats_->GetStats();
-//	return 0;
-//}
+
+int ServiceCore::GetStatsData(int type, char* callid, void **pb_data)
+{
+	SerPhoneCall *call = serphone_core_get_current_call();
+	if (!call)
+	{
+		return -1;
+	}
+	ECMedia_getStatsReports(type, callid, pb_data);
+	return 0;
+}
+
+void ServiceCore::DeleteStatsData(void *pb_data)
+{
+	SerPhoneCall *call = serphone_core_get_current_call();
+	if (!call)
+	{
+		return;
+	}
+	ECMedia_deletePbData(pb_data);
+}
 
 void ServiceCore::serserphone_call_start_desktop_share(SerPhoneCall *call, const char *cname,bool_t all_inputs_muted)
 {

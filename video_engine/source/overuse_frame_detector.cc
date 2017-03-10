@@ -418,10 +418,17 @@ void OveruseFrameDetector::FrameCaptured(int width,
                                          int64_t capture_time_ms) {
   CriticalSectionScoped cs(crit_.get());
 
+  if (FrameSizeChanged(width*height) && observer_)
+  {
+	  observer_->FrameSizeChanged(width, height);
+  } 
+
   int64_t now = clock_->TimeInMilliseconds();
   if (FrameSizeChanged(width * height) || FrameTimeoutDetected(now)) {
     ResetAll(width * height);
   }
+
+  
 
   if (last_capture_time_ != 0) {
     capture_deltas_.AddSample(now - last_capture_time_);
@@ -526,6 +533,12 @@ int32_t OveruseFrameDetector::Process() {
 
     if (observer_ != NULL)
       observer_->NormalUsage();
+  }
+
+  if (observer_ != NULL){
+	  CpuOveruseMetrics metrics;
+	  GetCpuOveruseMetrics(&metrics);
+	  observer_->CpuOveruseMetricsMeasurements(metrics);
   }
 
   int rampup_delay =

@@ -60,8 +60,7 @@ ViECapturer::ViECapturer(int capture_id,
 	  beauty_filter_cs_(CriticalSectionWrapper::CreateCriticalSection()),
       observer_cs_(CriticalSectionWrapper::CreateCriticalSection()),
       observer_(NULL),
-      overuse_detector_(new OveruseFrameDetector(Clock::GetRealTimeClock())),
-	  send_statistics_(NULL){
+      overuse_detector_(new OveruseFrameDetector(Clock::GetRealTimeClock())){
   unsigned int t_id = 0;
   if (!capture_thread_.Start(t_id)) {
     assert(false);
@@ -105,11 +104,6 @@ ViECapturer::~ViECapturer() {
     deflicker_frame_stats_ = NULL;
   }
   delete brightness_frame_stats_;
-
-  if (send_statistics_)
-  {
-	  send_statistics_->SetOverUseDetector(NULL);
-  }
 }
 
 ViECapturer* ViECapturer::CreateViECapture(
@@ -135,7 +129,6 @@ int32_t ViECapturer::Init(VideoCaptureModule* capture_module) {
   if (module_process_thread_.RegisterModule(capture_module_) != 0) {
     return -1;
   }
-
   return 0;
 }
 
@@ -194,7 +187,6 @@ int32_t ViECapturer::Init(const char* device_unique_idUTF8,
 		if (module_process_thread_.RegisterModule(capture_module_) != 0) {
 			return -1;
 		}
-
 		return 0;
 }
 
@@ -642,11 +634,6 @@ void ViECapturer::DeliverI420Frame(I420VideoFrame* video_frame) {
 
   // Deliver the captured frame to all observers (channels, renderer or file).
   ViEFrameProviderBase::DeliverFrame(video_frame, std::vector<uint32_t>());
-
-  if (send_statistics_)
-  {
-	  send_statistics_->UpdateInputSize(video_frame->width(), video_frame->height());
-  }
 }
 
 int ViECapturer::DeregisterFrameCallback(
@@ -746,17 +733,6 @@ int ViECapturer::SetCaptureSettings(VideoCaptureCapability settings)
 	return capture_module_->SetCaptureSettings(settings);
 }
 
-int ViECapturer::SetSendStatisticsProxy(SendStatisticsProxy* p_sendStats)
-{
-	send_statistics_ = p_sendStats;
-
-	if (send_statistics_)
-	{
-		send_statistics_->SetOverUseDetector(overuse_detector_.get());
-		return 0;
-	}
-	return -1;
-}
 int ViECapturer::UpdateLossRate(int lossRate)
 {
     return capture_module_->UpdateLossRate(lossRate);

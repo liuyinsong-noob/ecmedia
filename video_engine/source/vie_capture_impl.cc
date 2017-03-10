@@ -550,25 +550,6 @@ int ViECaptureImpl::SetLocalVideoWindow(const int capture_id,
     return 0;
 }
 
-int ViECaptureImpl::SetSendStatisticsProxy(const int capture_id, SendStatisticsProxy* p_sendStats)
-{
-	ViEInputManagerScoped is(*(shared_data_->input_manager()));
-	ViECapturer* vie_capture = is.Capture(capture_id);
-	if (!vie_capture) {
-		WEBRTC_TRACE(kTraceError, kTraceVideo,
-			ViEId(shared_data_->instance_id(), capture_id),
-			"%s: Capture device %d doesn't exist", __FUNCTION__,
-			capture_id);
-		shared_data_->SetLastError(kViECaptureDeviceDoesNotExist);
-		return -1;
-	}
-
-	if (vie_capture->SetSendStatisticsProxy(p_sendStats) != 0) {
-		shared_data_->SetLastError(kViECaptureDeviceUnknownError);
-		return -1;
-	}
-	return 0;
-}
 int ViECaptureImpl::UpdateLossRate(const int capture_id, int lossRate)
 {
     ViEInputManagerScoped is(*(shared_data_->input_manager()));

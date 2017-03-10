@@ -8,6 +8,7 @@
 #include "vie_capture.h"
 #include "vie_rtp_rtcp.h"
 #include "vie_renderer.h"
+#include "vie_codec.h"
 #include "ECMedia.h"
 
 using namespace cloopenwebrtc;

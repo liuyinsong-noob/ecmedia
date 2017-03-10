@@ -1,0 +1,42 @@
+﻿生成启动时间为 2015/5/16 17:06:57。
+     1>项目“E:\work\code\newUI\zhangjunliang\ProtoSDKDemo\sdk\protobuf\vsprojects\libprotobuf-lite.vcxproj”在节点 5 上(build 个目标)。
+     1>InitializeBuildStatus:
+         正在创建“Release\libprotobuf-lite.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       ClCompile:
+         D:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I../src /I. /Zi /nologo /W3 /WX- /O2 /Oy- /D WIN32 /D NDEBUG /D _WINDOWS /D _USRDLL /D LIBPROTOBUF_EXPORTS /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\google\protobuf\io\coded_stream.cc ..\src\google\protobuf\stubs\common.cc ..\src\google\protobuf\extension_set.cc ..\src\google\protobuf\generated_message_util.cc ..\src\google\protobuf\message_lite.cc ..\src\google\protobuf\stubs\once.cc ..\src\google\protobuf\stubs\atomicops_internals_x86_msvc.cc ..\src\google\protobuf\repeated_field.cc ..\src\google\protobuf\wire_format_lite.cc ..\src\google\protobuf\io\zero_copy_stream.cc ..\src\google\protobuf\io\zero_copy_stream_impl_lite.cc ..\src\google\protobuf\stubs\stringprintf.cc /wd4244 /wd4267 /wd4018 /wd4355 /wd4800 /wd4251 /wd4996 /wd4146 /wd4305 
+         coded_stream.cc
+         common.cc
+         extension_set.cc
+         generated_message_util.cc
+         message_lite.cc
+         once.cc
+         atomicops_internals_x86_msvc.cc
+         repeated_field.cc
+         wire_format_lite.cc
+         zero_copy_stream.cc
+         zero_copy_stream_impl_lite.cc
+         stringprintf.cc
+         正在生成代码...
+     1>e:\work\code\newui\zhangjunliang\protosdkdemo\sdk\protobuf\src\google\protobuf\extension_set.cc(74): warning C4715: “google::protobuf::internal::`anonymous namespace'::is_packable”: 不是所有的控件路径都返回值
+       Lib:
+         D:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"Release\libprotobuf-lite.lib" /NOLOGO Release\coded_stream.obj
+         Release\common.obj
+         Release\extension_set.obj
+         Release\generated_message_util.obj
+         Release\message_lite.obj
+         Release\once.obj
+         Release\atomicops_internals_x86_msvc.obj
+         Release\repeated_field.obj
+         Release\wire_format_lite.obj
+         Release\zero_copy_stream.obj
+         Release\zero_copy_stream_impl_lite.obj
+         Release\stringprintf.obj
+         libprotobuf-lite.vcxproj -> E:\work\code\newUI\zhangjunliang\ProtoSDKDemo\sdk\protobuf\vsprojects\Release\libprotobuf-lite.lib
+       FinalizeBuildStatus:
+         正在删除文件“Release\libprotobuf-lite.unsuccessfulbuild”。
+         正在对“Release\libprotobuf-lite.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“E:\work\code\newUI\zhangjunliang\ProtoSDKDemo\sdk\protobuf\vsprojects\libprotobuf-lite.vcxproj”(build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:11.62

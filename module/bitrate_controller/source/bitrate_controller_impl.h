@@ -55,6 +55,9 @@ class BitrateControllerImpl : public BitrateController {
 
   virtual void SetCodecMode(cloopenwebrtc::VideoCodecMode mode) OVERRIDE;
 
+  virtual void RegisterSendsideBweObserver(SendsideBweObserver *observer) OVERRIDE;
+  virtual void DeregisterSendsideBweObserver() OVERRIDE;
+
  private:
   class RtcpBandwidthObserverImpl;
 
@@ -134,7 +137,7 @@ class BitrateControllerImpl : public BitrateController {
   bool bitrate_observers_modified_ GUARDED_BY(*critsect_);
   uint32_t last_reserved_bitrate_bps_ GUARDED_BY(*critsect_);
   scoped_ptr<RembSuppressor> remb_suppressor_ GUARDED_BY(*critsect_);
-
+  SendsideBweObserver *sendside_bwe_observer_;
   DISALLOW_IMPLICIT_CONSTRUCTORS(BitrateControllerImpl);
 };
 }  // namespace webrtc

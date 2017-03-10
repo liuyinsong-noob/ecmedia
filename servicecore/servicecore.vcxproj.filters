@@ -179,5 +179,11 @@
     <ClCompile Include="source\critical_section_win.cc">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="..\video_engine\source\stats_types.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\system_wrappers\source\checks.cc">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

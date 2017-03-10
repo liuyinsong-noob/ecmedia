@@ -19,162 +19,475 @@
 #include "critical_section_wrapper.h"
 #include "trace.h"
 
-extern char* filename_path;
+#ifdef ENABLE_LIB_CURL
+#ifdef	WIN32
+#include "curl_post.h"
+extern CurlPost *g_curlpost;
+#endif
+#endif
 
+#include "stats_types.h"
+#define REPORT_TYPE "video_send_statistics"
+
+#define kKiloBits 1000
 
 namespace cloopenwebrtc {
 
-std::string SendStatisticsProxy::GenerateFileName(int video_channel)
-	{
-		std::string szRet = "";
-		char timeBuffer[128];
-// 		time_t nowtime = time(NULL);
-// 		tm timeTemp;
-// 		localtime_s(&timeTemp, &nowtime);
-// 		sprintf(timeBuffer, "videochannel%d_SendStats-%04d-%02d-%02d_%02d-%02d-%02d.data",video_channel,
-// 			timeTemp.tm_year + 1900, timeTemp.tm_mon + 1,
-// 			timeTemp.tm_mday, timeTemp.tm_hour, timeTemp.tm_min, timeTemp.tm_sec);
-
-#ifdef _WIN32
-		sprintf(timeBuffer, "videochannel%d_SendStats.data",video_channel);
-#else
-		sprintf(timeBuffer, "%s/videochannel%d_SendStats.data",filename_path, video_channel);
-#endif
-		
-
-		szRet = timeBuffer;
-		return szRet;
-	}
-
 const int SendStatisticsProxy::kStatsTimeoutMs = 5000;
 
+const int SendStatisticsProxy::RateCounter::kStatsRateTimeoutMs = 5000;
+SendStatisticsProxy::RateCounter::RateCounter() {
+
+}
+
+SendStatisticsProxy::RateCounter::~RateCounter() {
+	sample_list_.clear();
+}
+
+void SendStatisticsProxy::RateCounter::AddSample(uint32_t rate)
+{
+	Sample sample(std::make_pair(Time(), rate));
+	PurgeOldStats();
+	sample_list_.push_back(sample);
+}
+
+uint32_t SendStatisticsProxy::RateCounter::AvgRate()
+{
+	int num = 0;
+	uint32_t sum = 0;
+	for (auto it: sample_list_)
+	{
+		sum += it.second;
+		num++;
+	}
+	if (num == 0)
+	{
+		return 0;
+	}
+	return sum / num + 0.5;
+}
+
+void SendStatisticsProxy::RateCounter::PurgeOldStats()
+{
+	int64_t old_stats_ms = cloopenwebrtc::Time() - kStatsTimeoutMs;
+	std::list<Sample>::iterator it = sample_list_.begin();
+	while(it!= sample_list_.end())
+	{
+		int64_t sample_time = it->first;
+		if (sample_time < old_stats_ms)
+		{
+			it++;
+			sample_list_.pop_front();
+			if (sample_list_.size() == 0)
+			{
+				break;
+			}
+		}
+		else
+			it++;
+	}
+}
+
+void SendStatisticsProxy::RtcpBlocksCounter::AddSample(const RtcpStatistics& rtcp_stats)
+{
+	RtcpSample sample(std::make_pair(Time(), rtcp_stats));
+	PurgeOldStats();
+	sample_list_.push_back(sample);
+}
+
+void SendStatisticsProxy::RtcpBlocksCounter::PurgeOldStats()
+{
+	int64_t old_stats_ms = cloopenwebrtc::Time() - kStatsTimeoutMs;
+	std::list<RtcpSample>::iterator it = sample_list_.begin();
+	while(it != sample_list_.end())
+	{
+		int64_t sample_time = it->first;
+		if (sample_time < old_stats_ms)
+		{
+			it++;
+			sample_list_.pop_front();
+			if (sample_list_.size() == 0)
+			{
+				break;
+			}
+		}
+		else
+			it++;
+	}
+}
+
+uint8_t SendStatisticsProxy::RtcpBlocksCounter::AvgFractionLost() const
+{
+	uint32_t sum = 0;
+	uint32_t num = 0;
+	for (auto it:sample_list_)
+	{
+		sum += it.second.fraction_lost;
+		num++;
+	}
+	return sum / num +0.5;
+}
+
+uint8_t SendStatisticsProxy::RtcpBlocksCounter::AvgJitter() const
+{
+	uint32_t sum = 0;
+	uint32_t num = 0;
+	for (auto it : sample_list_)
+	{
+		sum += it.second.jitter;
+		num++;
+	}
+	return sum / num + 0.5;
+}
+
+
+
+void SendStatisticsProxy::BitrateStatsCounter::AddSample(const BitrateStatistics& stats)
+{
+	BitrateSample sample(std::make_pair(Time(), stats));
+	PurgeOldStats();
+	sample_list_.push_back(sample);
+}
+
+void SendStatisticsProxy::BitrateStatsCounter::PurgeOldStats()
+{
+	int64_t old_stats_ms = cloopenwebrtc::Time() - kStatsTimeoutMs;
+	std::list<BitrateSample>::iterator it = sample_list_.begin();
+	while(it != sample_list_.end())
+	{
+		int64_t sample_time = it->first;
+		if (sample_time < old_stats_ms)
+		{
+			it++;
+			sample_list_.pop_front();
+			if (sample_list_.size() == 0)
+			{
+				break;
+			}
+		}
+		else
+			it++;
+	}
+}
+
+uint32_t SendStatisticsProxy::BitrateStatsCounter::AvgBitbitRate()
+{
+	int num = 0;
+	uint32_t sum = 0;
+	for (auto it : sample_list_)
+	{
+		sum += it.second.bitrate_bps;
+		num++;
+	}
+	if (num == 0)
+	{
+		return 0;
+	}
+	return sum / num + 0.5;
+}
+
+uint32_t SendStatisticsProxy::BitrateStatsCounter::AvgPacketRate()
+{
+	int num = 0;
+	uint32_t sum = 0;
+	for (auto it : sample_list_)
+	{
+		sum += it.second.packet_rate;
+		num++;
+	}
+	if (num == 0)
+	{
+		return 0;
+	}
+	return sum / num + 0.5;
+}
+
 SendStatisticsProxy::SendStatisticsProxy(int video_channel)
-	   :crit_(CriticalSectionWrapper::CreateCriticalSection()),
-		clock_(Clock::GetRealTimeClock()),
-		last_process_time_(clock_->TimeInMilliseconds()),
-		trace_file_(*FileWrapper::Create()),
-	    updateEvent_(EventWrapper::Create()),
-		call_stats_(NULL),
-		bitrate_controller_(NULL),
-		remote_bitrate_estimator_(NULL),
-		overuse_detector_(NULL),
-		paced_sender_(NULL){
+	: channel_id_(video_channel),
+	crit_(CriticalSectionWrapper::CreateCriticalSection()),
+	clock_(Clock::GetRealTimeClock()),
+	last_process_time_(clock_->TimeInMilliseconds()),
+	updateEvent_(EventWrapper::Create()),
+	remote_bitrate_estimator_(NULL),
+	new_config_(false){
 }
 
 SendStatisticsProxy::~SendStatisticsProxy() {
-
 	updateEvent_->Set();
 	delete updateEvent_;
-
-	if (trace_file_.Open())
-	{
-		trace_file_.Flush();
-		trace_file_.CloseFile();
-	}	
-	delete &trace_file_;
 }
 
 void SendStatisticsProxy::OutgoingRate(const int video_channel,
-                                       const unsigned int framerate,
-                                       const unsigned int bitrate) {
-  CriticalSectionScoped lock(crit_.get());
-  stats_.encode_frame_rate = framerate;
-  stats_.media_bitrate_bps = bitrate;
+	const unsigned int framerate,
+	const unsigned int bitrate) {
+	CriticalSectionScoped lock(crit_.get());
+	stats_.actual_enc_framerate = framerate;
+	stats_.actual_enc_bitrate_bps = bitrate;
+
+	avg_rate_stats_.actual_enc_framerate.AddSample(framerate);
+	avg_rate_stats_.actual_enc_bitrate_bps.AddSample(bitrate);
+#ifdef WIN32
+	post_message(StatsReport::kStatsReportTypeVideoSend,
+	{
+		StatsReport::Value(StatsReport::kStatsValueNameActualEncFrameRate,stats_.actual_enc_framerate, StatsReport::Value::kUInt8),
+		StatsReport::Value(StatsReport::kStatsValueNameActualEncBitrate,stats_.actual_enc_bitrate_bps, StatsReport::Value::kUInt16)
+	});
+#endif
 }
 
 void SendStatisticsProxy::SuspendChange(int video_channel, bool is_suspended) {
-  CriticalSectionScoped lock(crit_.get());
-  stats_.suspended = is_suspended;
-}
-
-VideoSendStream::Stats SendStatisticsProxy::GetStats() {
-  CriticalSectionScoped lock(crit_.get());
-  return stats_;
-}
-
-void SendStatisticsProxy::OnSendEncodedImage(
-	const EncodedImage& encoded_image,
-	const RTPVideoHeader* rtp_video_header) {
-		//统计与ssrc相关的信息，暂时没有实现
 	CriticalSectionScoped lock(crit_.get());
-	stats_.sent_width = encoded_image._encodedWidth;
-	stats_.sent_height = encoded_image._encodedHeight;
-	if (rtp_video_header)
+	stats_.suspended = is_suspended;	
+	if (is_suspended)
 	{
-		if (rtp_video_header->codec == kRtpVideoH264)
-		{
-			stats_.encoder_implementation_name = "h264";
-		}
-		else if (rtp_video_header->codec == kRtpVideoVp8)
-		{
-			stats_.encoder_implementation_name = "vp8";
-		}
+		//TODO: alert
+	} 
+}
+
+VideoSendStream::Stats SendStatisticsProxy::GetStats(bool isAvg, int64_t& timestamp) {
+	CriticalSectionScoped lock(crit_.get());
+	timestamp = cloopenwebrtc::Time();
+	if (isAvg)
+	{
+		//TODO: first copy stats_, then copy stats_avg
+		GenerateAvgStats();		
+		return stats_average_;
 	}
+	else {
+		return  stats_;
+	}
+}
+
+void SendStatisticsProxy::GenerateAvgStats()
+{
+	stats_average_ = stats_;
+	stats_average_.actual_enc_bitrate_bps = avg_rate_stats_.actual_enc_bitrate_bps.AvgRate();
+	stats_average_.actual_enc_framerate = avg_rate_stats_.actual_enc_framerate.AvgRate();
+	stats_average_.avg_encode_time_ms = avg_rate_stats_.avg_encode_time_ms.AvgRate();
+	stats_average_.encode_usage_percent = avg_rate_stats_.encode_usage_percent.AvgRate();
+	stats_average_.target_enc_bitrate_bps = avg_rate_stats_.target_enc_bitrate_bps.AvgRate();
+	stats_average_.target_enc_framerate = avg_rate_stats_.target_enc_framerate.AvgRate();
+	stats_average_.call.rtt_ms = avg_rate_stats_.rtt_ms.AvgRate();
+	stats_average_.call.pacer_delay_ms = avg_rate_stats_.pacer_delay_ms.AvgRate();
+	stats_average_.call.sendside_bwe_bps = avg_rate_stats_.sendside_bwe_bps.AvgRate();
+
+	for (auto it : stats_average_.ssrc_streams)
+	{
+		uint32_t ssrc = it;
+		VideoSendStream::StreamStats *stream = GetStatsEntry(true, ssrc);
+		std::map<uint32_t, RtcpBlocksCounter>::iterator it_rtcp = avg_rate_stats_.rtcp_blocks_map.find(ssrc);
+		std::map<uint32_t,BitrateStatsCounter>::iterator it_total = avg_rate_stats_.total_stats_map.find(ssrc);
+		std::map<uint32_t, BitrateStatsCounter>::iterator it_retransmit = avg_rate_stats_.total_stats_map.find(ssrc);
+		if (stream && it_total!= avg_rate_stats_.total_stats_map.end())
+		{
+			stream->total_stats.bitrate_bps = it_total->second.AvgBitbitRate();
+			stream->total_stats.packet_rate = it_total->second.AvgPacketRate();
+			stream->retransmit_stats.bitrate_bps = it_retransmit->second.AvgBitbitRate();
+			stream->retransmit_stats.packet_rate = it_retransmit->second.AvgPacketRate();
+		}
+		if (stream && it_rtcp != avg_rate_stats_.rtcp_blocks_map.end())
+		{
+			stream->rtcp_stats.fraction_lost = it_rtcp->second.AvgFractionLost();
+			stream->rtcp_stats.jitter = it_rtcp->second.AvgJitter();
+		}
+	}	
+}
+
+void SendStatisticsProxy::OnQMSettingChange(const uint32_t frame_rate,
+											const uint32_t width,
+											const uint32_t height) {
+	CriticalSectionScoped lock(crit_.get());
+	stats_.qm_width = width;
+	stats_.qm_height = height;	
+	stats_.qm_framerate = frame_rate;
+#ifdef WIN32
+	post_message(StatsReport::kStatsReportTypeVideoSend,
+	{
+		StatsReport::Value(StatsReport::kStatsValueNameQMFrameWidth, stats_.qm_width, StatsReport::Value::kUInt8),
+		StatsReport::Value(StatsReport::kStatsValueNameQMFrameHeight, stats_.qm_height, StatsReport::Value::kUInt8),
+		StatsReport::Value(StatsReport::kStatsValueNameQMFrameRate, stats_.qm_framerate, StatsReport::Value::kUInt8)
+	});
+#endif
 }
 
 void SendStatisticsProxy::OnSetRates(uint32_t bitrate_bps, int framerate) {
 	CriticalSectionScoped lock(crit_.get());
-	stats_.target_media_bitrate_bps = bitrate_bps;
-	stats_.input_frame_rate = framerate;
+	stats_.target_enc_bitrate_bps = bitrate_bps;
+	stats_.target_enc_framerate = framerate;
+	avg_rate_stats_.target_enc_bitrate_bps.AddSample(bitrate_bps);
+	avg_rate_stats_.target_enc_framerate.AddSample(framerate);
+#ifdef WIN32
+	post_message(StatsReport::kStatsReportTypeVideoSend,
+	{
+		StatsReport::Value(StatsReport::kStatsValueNameTargetEncBitrate, stats_.target_enc_bitrate_bps, StatsReport::Value::kUInt16),
+		StatsReport::Value(StatsReport::kStatsValueNameTargetEncFrameRate, stats_.target_enc_framerate,	StatsReport::Value::kUInt8)
+	});
+#endif
 }
 
 void SendStatisticsProxy::StatisticsUpdated(const RtcpStatistics& statistics,
-											uint32_t ssrc) {
-	CriticalSectionScoped lock(crit_.get());		
-	stats_.stream.rtcp_stats = statistics;
-	//uma
+	uint32_t ssrc) {
+	CriticalSectionScoped lock(crit_.get());	
+	VideoSendStream::StreamStats *stream = GetStreamStats(ssrc);
+	if (!stream)
+	{
+		return;
+	}
+	stream->rtcp_stats = statistics;
+	
+	std::map<uint32_t, RtcpBlocksCounter>::iterator it = avg_rate_stats_.rtcp_blocks_map.find(ssrc);
+	if (it == avg_rate_stats_.rtcp_blocks_map.end())
+	{
+		RtcpBlocksCounter rtcp_block;
+		rtcp_block.AddSample(statistics);
+		avg_rate_stats_.rtcp_blocks_map[ssrc] = rtcp_block;
+	}
+	else {
+		RtcpBlocksCounter rtcp_block = it->second;
+		rtcp_block.AddSample(statistics);
+	}
+#ifdef WIN32
+	post_message(StatsReport::kStatsReportTypeVideoSend,
+	{
+		StatsReport::Value(StatsReport::kStatsValueNameSsrc, ssrc, StatsReport::Value::kUInt32),
+		StatsReport::Value(StatsReport::kStatsValueNamePacketsLost, statistics.cumulative_lost,StatsReport::Value::kUInt32),
+		StatsReport::Value(StatsReport::kStatsValueNameLossFractionInPercent, statistics.fraction_lost,	StatsReport::Value::kUInt8),
+		StatsReport::Value(StatsReport::kStatsValueNameJitterReceived, statistics.jitter,	StatsReport::Value::kUInt16)
+	});
+#endif
 }
 
-void SendStatisticsProxy::CNameChanged(const char* cname, uint32_t ssrc) {}
+void SendStatisticsProxy::CNameChanged(const char* cname, uint32_t ssrc) {
+}
 
 
 void SendStatisticsProxy::RtcpPacketTypesCounterUpdated(
-														uint32_t ssrc,
-														const RtcpPacketTypeCounter& packet_counter) {
+	uint32_t ssrc,
+	const RtcpPacketTypeCounter& packet_counter) {
 	CriticalSectionScoped lock(crit_.get());
-	stats_.stream.rtcp_packet_type_counts = packet_counter;
+	VideoSendStream::StreamStats *stream = GetStreamStats(ssrc);
+	if (!stream)
+	{
+		return;
+	}
+	stream->rtcp_packet_type_counts = packet_counter;
+#ifdef WIN32	
+	post_message(StatsReport::kStatsReportTypeVideoSend,
+	{
+		StatsReport::Value(StatsReport::kStatsValueNameSsrc, ssrc, StatsReport::Value::kUInt32),
+		StatsReport::Value(StatsReport::kStatsValueNameFirsReceived, packet_counter.fir_packets, StatsReport::Value::kUInt32),
+		StatsReport::Value(StatsReport::kStatsValueNameNacksReceived, packet_counter.nack_packets, StatsReport::Value::kUInt32),
+		StatsReport::Value(StatsReport::kStatsValueNameNacksRequestsReceived, packet_counter.nack_requests, StatsReport::Value::kUInt32),
+		StatsReport::Value(StatsReport::kStatsValueNameNacksUniqueRequestsReceived, packet_counter.unique_nack_requests, StatsReport::Value::kUInt32)
+	});
+#endif
 }
 
 
-void SendStatisticsProxy::FrameCountUpdated(const FrameCounts& frame_counts,
-											uint32_t ssrc) {
-		CriticalSectionScoped lock(crit_.get());
-		stats_.stream.frame_counts = frame_counts;
-}
-
-void SendStatisticsProxy::DataCountersUpdated(
-												const StreamDataCounters& counters,
-												uint32_t ssrc) {
-		CriticalSectionScoped lock(crit_.get());
-		stats_.stream.rtp_stats = counters;
+void SendStatisticsProxy::DataCountersUpdated(const StreamDataCounters& counters,
+	uint32_t ssrc) {
+	CriticalSectionScoped lock(crit_.get());
+	VideoSendStream::StreamStats *stream = GetStreamStats(ssrc);
+	if (!stream)
+	{
+		return;
+	}
+	stream->rtp_stats = counters;
+#ifdef WIN32
+	post_message(StatsReport::kStatsReportTypeVideoSend,
+	{
+		StatsReport::Value(StatsReport::kStatsValueNameSsrc, ssrc, StatsReport::Value::kUInt32),
+		StatsReport::Value(StatsReport::kStatsValueNameBytesSent, counters.bytes, StatsReport::Value::kUInt32),
+		StatsReport::Value(StatsReport::kStatsValueNamePacketsSent, counters.packets, StatsReport::Value::kUInt32),
+		StatsReport::Value(StatsReport::kStatsValueNameRetransmittedBytes, counters.retransmitted_bytes, StatsReport::Value::kUInt32),
+		StatsReport::Value(StatsReport::kStatsValueNameRetransmittedPackets, counters.retransmitted_packets, StatsReport::Value::kUInt32),
+		StatsReport::Value(StatsReport::kStatsValueNameFecPackets, counters.fec_packets, StatsReport::Value::kUInt32)
+	});
+#endif
 }
 
 void SendStatisticsProxy::Notify(const BitrateStatistics& total_stats,
-								const BitrateStatistics& retransmit_stats,
-								uint32_t ssrc) {
-		CriticalSectionScoped lock(crit_.get());
-		stats_.stream.total_bitrate_bps = total_stats.bitrate_bps;
-		stats_.stream.retransmit_bitrate_bps = retransmit_stats.bitrate_bps;
+	const BitrateStatistics& retransmit_stats,
+	uint32_t ssrc) {
+	CriticalSectionScoped lock(crit_.get());
+	VideoSendStream::StreamStats *stream = GetStreamStats(ssrc);
+	if (!stream)
+	{
+		return;
+	}
+	stream->total_stats = total_stats;
+	stream->retransmit_stats = retransmit_stats;
+
+	
+	std::map<uint32_t, BitrateStatsCounter>::iterator it_total =  avg_rate_stats_.total_stats_map.find(ssrc);
+	std::map<uint32_t, BitrateStatsCounter>::iterator it_retransmit = avg_rate_stats_.retransmit_stats_map.find(ssrc);
+	if (it_total == avg_rate_stats_.total_stats_map.end())
+	{
+		BitrateStatsCounter total;
+		BitrateStatsCounter retransmit;
+		total.AddSample(total_stats);
+		retransmit.AddSample(retransmit_stats);
+		avg_rate_stats_.total_stats_map[ssrc] = total;
+		avg_rate_stats_.retransmit_stats_map[ssrc] = retransmit;
+	}
+	else {
+		it_total->second.AddSample(total_stats);
+		it_retransmit->second.AddSample(retransmit_stats);
+	}
+#ifdef WIN32
+	post_message(StatsReport::kStatsReportTypeVideoSend,
+	{
+		StatsReport::Value(StatsReport::kStatsValueNameSsrc,ssrc, StatsReport::Value::kUInt32),
+		StatsReport::Value(StatsReport::kStatsValueNameTransmitBitrate, total_stats.bitrate_bps, StatsReport::Value::kUInt32),
+		StatsReport::Value(StatsReport::kStatsValueNameRetransmitBitrate, retransmit_stats.bitrate_bps, StatsReport::Value::kUInt32),
+		StatsReport::Value(StatsReport::kStatsValueNameTransmitPacketsRate, total_stats.packet_rate, StatsReport::Value::kUInt32),
+		StatsReport::Value(StatsReport::kStatsValueNameRetransmitPacketsRate, retransmit_stats.packet_rate, StatsReport::Value::kUInt32),
+	});
+#endif
 }
 
 void SendStatisticsProxy::SendSideDelayUpdated(int avg_delay_ms,
 												int max_delay_ms,
 												uint32_t ssrc) {
-		CriticalSectionScoped lock(crit_.get());
-// 		VideoSendStream::StreamStats* stats = GetStatsEntry(ssrc);
-// 		if (!stats)
-// 			return;
+	CriticalSectionScoped lock(crit_.get());
+	VideoSendStream::StreamStats *stream = GetStreamStats(ssrc);
+	if (!stream)
+	{
+		return;
+	}
+	stream->avg_delay_ms = avg_delay_ms;
+	stream->max_delay_ms = max_delay_ms;
+}
 
-		stats_.stream.avg_delay_ms = avg_delay_ms;
-		stats_.stream.max_delay_ms = max_delay_ms;
+void SendStatisticsProxy::OnRttUpdate(int64_t rtt_ms)
+{
+	CriticalSectionScoped lock(crit_.get());
+	stats_.call.rtt_ms = rtt_ms;
+	avg_rate_stats_.rtt_ms.AddSample(rtt_ms);
+#ifdef WIN32
+	post_message(StatsReport::kStatsReportTypeVideoSend,
+	{
+		StatsReport::Value(StatsReport::kStatsValueNameRttInMs, rtt_ms, StatsReport::Value::kUInt64)
+	});
+#endif
+}
 
-// 		uma_container_->delay_counter_.Add(avg_delay_ms);
-// 		uma_container_->max_delay_counter_.Add(max_delay_ms);
+void SendStatisticsProxy::OnBucketDelay(int64_t delayInMs)
+{
+	CriticalSectionScoped lock(crit_.get());
+	stats_.call.pacer_delay_ms = delayInMs;
+	avg_rate_stats_.pacer_delay_ms.AddSample(delayInMs);
+#ifdef WIN32
+	post_message(StatsReport::kStatsReportTypeVideoSend,
+	{
+		StatsReport::Value(StatsReport::kStatsValueNameBucketDelayInMs, stats_.call.pacer_delay_ms, StatsReport::Value::kUInt64)
+	});
+#endif
 }
 
 int64_t SendStatisticsProxy::TimeUntilNextProcess()
 {
-//	return 0;
+	//return -1;
 	const int64_t now = clock_->TimeInMilliseconds();
 	const int64_t kUpdateIntervalMs = 1000;
 	return kUpdateIntervalMs - (now - last_process_time_);
@@ -182,320 +495,226 @@ int64_t SendStatisticsProxy::TimeUntilNextProcess()
 
 int32_t SendStatisticsProxy::Process()
 {
+	//return -1;
 	updateEvent_->Wait(100);
 	const int64_t now = clock_->TimeInMilliseconds();
 	const int64_t kUpdateIntervalMs = 1000; //1000ms定时器
 	if (now >= last_process_time_ + kUpdateIntervalMs) {
+		CriticalSectionScoped lock(crit_.get());
 		//统计各种发送信息
 		std::vector<uint32_t> ssrcs;
 		last_process_time_ = now;
-		if (call_stats_)
+		
+		if (remote_bitrate_estimator_)
 		{
-		//	call_stats_->rtcp_rtt_stats()->LastProcessedRtt();
-			call_.rtt_ms = call_stats_->rtcp_rtt_stats()->LastProcessedRtt();
-			if (bitrate_controller_)
-			{
-				bitrate_controller_->AvailableBandwidth(&call_.send_bandwidth_bps);
-			}
-			if (remote_bitrate_estimator_)
-			{
-				remote_bitrate_estimator_->LatestEstimate(&ssrcs, &call_.recv_bandwidth_bps);
-			}
-			if (paced_sender_)
-			{
-				call_.pacer_delay_ms = paced_sender_->QueueInMs();
-			}
+			remote_bitrate_estimator_->LatestEstimate(&ssrcs, &stats_.call.recv_bandwidth_bps);
+			avg_rate_stats_.recv_bandwidth_bps.AddSample(stats_.call.recv_bandwidth_bps);
 		}
-
-		if (overuse_detector_)
-		{
-			CpuOveruseMetrics metrics;
-			overuse_detector_->GetCpuOveruseMetrics(&metrics);
-			stats_.avg_encode_time_ms = metrics.avg_encode_time_ms;
-			stats_.encode_usage_percent = metrics.encode_usage_percent;
-		}
+		stats_average_ = stats_;
 	}
 	return 0;
 }
 
-void SendStatisticsProxy::SetCallStats(CallStats *stats)
-{
-	call_stats_ = stats;
-}
-void SendStatisticsProxy::SetBitrateController(BitrateController *controller)
-{
-	bitrate_controller_ = controller;
-}
 void SendStatisticsProxy::SetRemoteBitrateEstimator(RemoteBitrateEstimator *remote_bitrate_estimator)
 {
 	remote_bitrate_estimator_ = remote_bitrate_estimator;
 }
 
-void SendStatisticsProxy::SetOverUseDetector(OveruseFrameDetector *overuse_detector)
-{
-	overuse_detector_ = overuse_detector;
+int SendStatisticsProxy::GetAvailableReceiveBandwidth() {
+	CriticalSectionScoped lock(crit_.get());
+	return stats_.call.recv_bandwidth_bps;
+}
+int SendStatisticsProxy::GetAvailableSendBandwidth() {
+	CriticalSectionScoped lock(crit_.get());
+	return stats_.call.sendside_bwe_bps;
+}
+int64_t SendStatisticsProxy::GetBucketDelay() {
+	CriticalSectionScoped lock(crit_.get());
+	return stats_.call.pacer_delay_ms;
+}
+int SendStatisticsProxy::GetRtt() {
+	CriticalSectionScoped lock(crit_.get());
+	return stats_.call.rtt_ms;
 }
 
-void SendStatisticsProxy::SetPacedSender(PacedSender *paced_sender)
-{
-	paced_sender_ = paced_sender;
-}
-
-void SendStatisticsProxy::UpdateInputSize(int width, int height)
+void SendStatisticsProxy::SetSsrcs(const std::list<unsigned int> &ssrcs)
 {
 	CriticalSectionScoped lock(crit_.get());
-	stats_.input_width = width;
-	stats_.input_height = height;
+	stats_.ssrc_streams.clear();
+	for (std::list<unsigned int>::const_iterator it = ssrcs.begin(); it != ssrcs.end(); ++it)
+	{
+		unsigned int ssrc = *it;
+		stats_.ssrc_streams.push_back(ssrc);
+	}
 }
 
-std::string SendStatisticsProxy::ToString() const
+void SendStatisticsProxy::CapturedFrameRate(const int capture_id,
+											const unsigned char frame_rate)
 {
-	char timeBuffer[128];
-	char formatString[128];
-	time_t nowtime = time(NULL);
-	tm timeTemp;
-//	localtime_s(&timeTemp, &nowtime);
-	int microseconds;
-	CurrentTmTime(&timeTemp, &microseconds);
-	sprintf(timeBuffer, "%02d/%02d/%04d %02d:%02d:%02d",
-		timeTemp.tm_mon + 1, timeTemp.tm_mday, 	
-		timeTemp.tm_year + 1900,
-		timeTemp.tm_hour, timeTemp.tm_min, timeTemp.tm_sec);
+	//TODO: compare capture_id?
+	stats_.captured_framerate = frame_rate;
+#ifdef WIN32
+	post_message(StatsReport::kStatsReportTypeVideoSend,
+	{
+		StatsReport::Value(StatsReport::kStatsValueNameCapturedFrameRate, stats_.captured_framerate, StatsReport::Value::kUInt8),
+	});
+#endif
+}
 
+void SendStatisticsProxy::FrameSizeChanged(const int width,
+										   const int height) {
 	CriticalSectionScoped lock(crit_.get());
-
-
-
-std::stringstream ss;
-	ss << "videoSend timestamp=" << timeBuffer;
-	ss << "\tCodecName=" << stats_.encoder_implementation_name;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-4d", stats_.avg_encode_time_ms);
-	ss << "\tAvgEncodeMs=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-4d", stats_.encode_usage_percent);
-	ss << "\tEncodeUsagePercent=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-4d", stats_.input_frame_rate);
-	ss << "\tFrameRateInput=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-4d", stats_.encode_frame_rate);
-	ss << "\tFrameRateSent=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-4d", stats_.input_width);
-	ss << "\tFrameWidthInput=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-4d", stats_.input_height);
-	ss << "\tFrameHeightInput=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-4d", stats_.sent_width);
-	ss << "\tFrameWidthSent=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-4d", stats_.sent_height);
-	ss << "\tFrameHeightSent=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", stats_.target_media_bitrate_bps);
-	ss << "\tBitrateTargetBps=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", stats_.media_bitrate_bps);
-	ss << "\tBitrateEncodeBps=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", stats_.stream.rtcp_stats.cumulative_lost); 
-	ss << "\tpacketsLost=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", stats_.stream.rtp_stats.packets); 
-	ss << "\tpacketsSent=" << formatString;
-
-	size_t bytsSent = stats_.stream.rtp_stats.bytes 
-					+ stats_.stream.rtp_stats.header_bytes
-					+ stats_.stream.rtp_stats.padding_bytes;
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", bytsSent); 
-	ss << "\tbytesSent=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", stats_.stream.rtcp_packet_type_counts.nack_packets); 
-	ss << "\tNacksReceived=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", stats_.stream.rtcp_packet_type_counts.fir_packets); 
-	ss << "\tFirsReceived=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", call_.rtt_ms); 
-	ss << "\tRtt=" << formatString;
-
-	//bweCompound
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", call_.send_bandwidth_bps); 
-	ss << "\tAvailabeSendBandwidth=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", stats_.media_bitrate_bps); 
-	ss << "\tActualEncBitrate=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-09d", stats_.target_media_bitrate_bps); 
-	ss << "\tTargetEncBitrate=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", stats_.stream.total_bitrate_bps); 
-	ss << "\tTransmitBitrate=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", stats_.stream.retransmit_bitrate_bps); 
-	ss << "\tReransmitBitrate=" << formatString;
-
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", call_.recv_bandwidth_bps); 
-	ss << "\tAvailableReceiveBandwidth=" << formatString;
-
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", call_.pacer_delay_ms); 
-	ss << "\tBucketDelay=" << formatString;
-
-	ss << "\r\n";
-
-	return ss.str();
-}
-
-int SendStatisticsProxy::ToString(FileWrapper *pFile)
-{
-	pFile->Write(ToString().c_str(), ToString().length());
-	return 0;
-}
-
-  void SendStatisticsProxy::FillUploadStats()
-  {
-	  CriticalSectionScoped lock(crit_.get());
-	  memset(&UploadStats, 0, sizeof(UploadStats));
-	  memcpy(UploadStats.WhichStats,"VS",2);
-	  memcpy(UploadStats.Version,"1", 2);
-	  memcpy(UploadStats.CodecName, stats_.encoder_implementation_name.c_str(), 4);
-	  UploadStats.AvgEncodeMs = stats_.avg_encode_time_ms;
-	  UploadStats.EncodeUsagePercent = stats_.encode_usage_percent;
-	  UploadStats.FrameRateInput = stats_.input_frame_rate;
-	  UploadStats.FrameRateSent = stats_.encode_frame_rate;
-	  UploadStats.FrameWidthInput = stats_.input_width;
-	  UploadStats.FrameHeightInput = stats_.input_height;
-	  UploadStats.FrameWidthSent = stats_.sent_width;
-	  UploadStats.FrameHeightSent = stats_.sent_height;
-
-	  UploadStats.BitrateTargetBps = stats_.target_media_bitrate_bps;
-	  UploadStats.BitrateEncodeBps = stats_.media_bitrate_bps;
-
-	  UploadStats.PacketsLost = stats_.stream.rtcp_stats.cumulative_lost; 
-	  UploadStats.PacketsSent =  stats_.stream.rtp_stats.packets; 
-	  UploadStats.BytesSent = stats_.stream.rtp_stats.bytes 
-		  + stats_.stream.rtp_stats.header_bytes
-		  + stats_.stream.rtp_stats.padding_bytes;
-
-	  UploadStats.NacksReceived = stats_.stream.rtcp_packet_type_counts.nack_packets; 
-	  UploadStats.FirsReceived = stats_.stream.rtcp_packet_type_counts.fir_packets; 
-	  UploadStats.Rtt = call_.rtt_ms; 
-	  //bweCompound
-	  UploadStats.AvailabeSendBandwidth = call_.send_bandwidth_bps; 
-	  UploadStats.ActualEncBitrate = stats_.media_bitrate_bps;
-	  UploadStats.TargetEncBitrate = stats_.target_media_bitrate_bps;
-
-	  UploadStats.TransmitBitrate = stats_.stream.total_bitrate_bps;
-	  UploadStats.ReransmitBitrate = stats_.stream.retransmit_bitrate_bps; 
-	  UploadStats.AvailableReceiveBandwidth = call_.recv_bandwidth_bps; 
-
-	  UploadStats.BucketDelay = call_.pacer_delay_ms; 
-  }
-
-int SendStatisticsProxy::ToBinary(char* buffer, int buffer_length)
-{	
-	FillUploadStats();
-	int length = sizeof(UploadStats);
-	memset(buffer, 0, buffer_length);
-	if (buffer_length < length)
+	stats_.captured_width = width;
+	stats_.captured_height = height;	
+#ifdef WIN32
+	post_message(StatsReport::kStatsReportTypeVideoSend,
 	{
-		return -1;
-	}
-	memcpy(buffer, &UploadStats, length);
-	return length;
+		StatsReport::Value(StatsReport::kStatsValueNameCapturedFrameWidth, stats_.captured_width, StatsReport::Value::kUInt8),
+		StatsReport::Value(StatsReport::kStatsValueNameCapturedFrameHeight, stats_.captured_height, StatsReport::Value::kUInt8)
+	});
+#endif
 }
 
-int SendStatisticsProxy::ToFile(FileWrapper *pFile)
+void SendStatisticsProxy::CpuOveruseMetricsMeasurements(const CpuOveruseMetrics &metrics)
 {
-	if (pFile)
+	CriticalSectionScoped lock(crit_.get());
+	stats_.avg_encode_time_ms = metrics.avg_encode_time_ms;
+	stats_.encode_usage_percent = metrics.encode_usage_percent;
+
+	avg_rate_stats_.avg_encode_time_ms.AddSample(metrics.avg_encode_time_ms);
+	avg_rate_stats_.encode_usage_percent.AddSample(metrics.encode_usage_percent);
+#ifdef WIN32
+	post_message(StatsReport::kStatsReportTypeVideoSend,
 	{
-		FillUploadStats();
-		pFile->Write(UploadStats.WhichStats, sizeof(UploadStats.WhichStats));
-		pFile->Write(UploadStats.Version, sizeof(UploadStats.Version));
-		pFile->Write(&UploadStats.CodecName, sizeof(UploadStats.CodecName));
-		pFile->Write(&UploadStats.AvgEncodeMs, sizeof(UploadStats.AvgEncodeMs));
-		pFile->Write(&UploadStats.EncodeUsagePercent, sizeof(UploadStats.EncodeUsagePercent));
-		pFile->Write(&UploadStats.FrameRateInput, sizeof(UploadStats.FrameRateInput));
-		pFile->Write(&UploadStats.FrameRateSent, sizeof(UploadStats.FrameRateSent));
-		pFile->Write(&UploadStats.FrameWidthInput, sizeof(UploadStats.FrameWidthInput));
-		pFile->Write(&UploadStats.FrameHeightInput, sizeof(UploadStats.FrameHeightInput));
-		pFile->Write(&UploadStats.FrameWidthSent, sizeof(UploadStats.FrameWidthSent));
-		pFile->Write(&UploadStats.FrameHeightSent, sizeof(UploadStats.FrameHeightSent));
-		pFile->Write(&UploadStats.BitrateTargetBps, sizeof(UploadStats.BitrateTargetBps));
-		pFile->Write(&UploadStats.BitrateEncodeBps, sizeof(UploadStats.BitrateEncodeBps));
-		pFile->Write(&UploadStats.PacketsLost, sizeof(UploadStats.PacketsLost));
-		pFile->Write(&UploadStats.PacketsSent, sizeof(UploadStats.PacketsSent));
-		pFile->Write(&UploadStats.BytesSent, sizeof(UploadStats.BytesSent));
-		pFile->Write(&UploadStats.NacksReceived, sizeof(UploadStats.NacksReceived));
-		pFile->Write(&UploadStats.FirsReceived, sizeof(UploadStats.FirsReceived));
-		pFile->Write(&UploadStats.Rtt, sizeof(UploadStats.Rtt));
-		pFile->Write(&UploadStats.AvailabeSendBandwidth, sizeof(UploadStats.AvailabeSendBandwidth));
-		pFile->Write(&UploadStats.ActualEncBitrate, sizeof(UploadStats.ActualEncBitrate));
-		pFile->Write(&UploadStats.TargetEncBitrate, sizeof(UploadStats.TargetEncBitrate));
-		pFile->Write(&UploadStats.TransmitBitrate, sizeof(UploadStats.TransmitBitrate));
-		pFile->Write(&UploadStats.ReransmitBitrate, sizeof(UploadStats.ReransmitBitrate));
-		pFile->Write(&UploadStats.AvailableReceiveBandwidth, sizeof(UploadStats.AvailableReceiveBandwidth));
-		pFile->Write(&UploadStats.BucketDelay, sizeof(UploadStats.BucketDelay));
-
-
-		int length = 0;
-		length = sizeof(UploadStats.WhichStats)
-			+sizeof(UploadStats.Version)
-			+sizeof(UploadStats.CodecName)
-			+sizeof(UploadStats.AvgEncodeMs)
-			+sizeof(UploadStats.EncodeUsagePercent)
-			+sizeof(UploadStats.FrameRateInput)
-			+sizeof(UploadStats.FrameRateSent)
-			+sizeof(UploadStats.FrameWidthInput)
-			+sizeof(UploadStats.FrameHeightInput)
-			+sizeof(UploadStats.FrameWidthSent)
-			+sizeof(UploadStats.FrameHeightSent)
-			+sizeof(UploadStats.BitrateTargetBps)
-			+sizeof(UploadStats.BitrateEncodeBps)
-			+sizeof(UploadStats.PacketsLost)
-			+sizeof(UploadStats.PacketsSent)
-			+sizeof(UploadStats.BytesSent)
-			+sizeof(UploadStats.NacksReceived)
-			+sizeof(UploadStats.FirsReceived)
-			+sizeof(UploadStats.Rtt)
-			+sizeof(UploadStats.AvailabeSendBandwidth)
-			+sizeof(UploadStats.ActualEncBitrate)
-			+sizeof(UploadStats.TargetEncBitrate)
-			+sizeof(UploadStats.TransmitBitrate)
-			+sizeof(UploadStats.ReransmitBitrate)
-			+sizeof(UploadStats.AvailableReceiveBandwidth)
-			+sizeof(UploadStats.BucketDelay);
-		return length;	
-	}
-
-	return -1;
+		StatsReport::Value(StatsReport::kStatsValueNameAvgEncodeMs, stats_.avg_encode_time_ms, StatsReport::Value::kUInt8),
+		StatsReport::Value(StatsReport::kStatsValueNameEncodeUsagePercent, stats_.encode_usage_percent, StatsReport::Value::kUInt8)
+	});
+#endif
 }
 
+void SendStatisticsProxy::OnSendsideBwe(uint32_t* estimated_bandwidth, uint8_t *loss, int64_t *rtt)
+{
+	stats_.call.sendside_bwe_bps = *estimated_bandwidth;
+	avg_rate_stats_.sendside_bwe_bps.AddSample(*estimated_bandwidth);
+#ifdef WIN32
+	post_message(StatsReport::kStatsReportTypeVideoSend,
+	{
+		StatsReport::Value(StatsReport::kStatsValueNameAvailableSendBandwidth, (*estimated_bandwidth), StatsReport::Value::kUInt32),
+		StatsReport::Value(StatsReport::kStatsValueNameLossFractionInPercent, (*loss), StatsReport::Value::kUInt8)
+	});
+#endif
+}
+
+VideoSendStream::StreamStats* SendStatisticsProxy::GetStatsEntry(bool isAvg, const uint32_t ssrc)
+{
+	VideoSendStream::Stats *pStats = &stats_;
+	if (isAvg)
+	{
+		pStats = &stats_average_;
+	}
+	
+	std::map<uint32_t, VideoSendStream::StreamStats>::iterator it = pStats->substreams.find(ssrc);
+	if (it != pStats->substreams.end())
+	{
+		return &it->second;
+	}
+	if (std::find(pStats->ssrc_streams.begin(), pStats->ssrc_streams.end(), static_cast<unsigned int>(ssrc)) ==
+		pStats->ssrc_streams.end())
+	{
+		return nullptr;
+	}
+	return &pStats->substreams[ssrc];
+}
+
+int SendStatisticsProxy::NumberOfSimulcastStreams()
+{
+	return stats_.config.encoder_settings.numberOfSimulcastStreams;
+}
+void SendStatisticsProxy::ConfigEncoderSetting(const VideoCodec& video_codec)
+{
+	VideoSendStream::Config &config_ = stats_.config;
+	config_.encoder_settings.payload_name = video_codec.plName;
+	config_.encoder_settings.payload_type = video_codec.plType;
+	config_.encoder_settings.width = video_codec.width;
+	config_.encoder_settings.height = video_codec.height;
+	config_.encoder_settings.maxFramerate = video_codec.maxFramerate;
+	config_.encoder_settings.startBitrate = video_codec.startBitrate;
+	config_.encoder_settings.maxBitrate = video_codec.maxBitrate;
+	config_.encoder_settings.minBitrate = video_codec.minBitrate;
+	config_.encoder_settings.targetBitrate = video_codec.targetBitrate;
+	config_.encoder_settings.codecSpecific = video_codec.codecSpecific;
+	config_.encoder_settings.numberOfSimulcastStreams = video_codec.numberOfSimulcastStreams;
+	for (int i = 0; i < video_codec.numberOfSimulcastStreams; i++) {
+		config_.encoder_settings.simulcastStream[i] = video_codec.simulcastStream[i];
+	}
+	stats_.encoder_implementation_name = video_codec.plName;
+	new_config_ = true;
+
+#ifdef ENABLE_LIB_CURL
+#ifdef	WIN32
+	if (g_curlpost)
+		g_curlpost->AddMessage(StatsReport::kStatsReportTypeVideoSend, config_.ToString());
+#endif
+#endif
+}
+
+VideoSendStream::Config SendStatisticsProxy::GetConfig() const
+{
+	return stats_.config;
+}
+
+VideoSendStream::StreamStats* SendStatisticsProxy::GetStreamStats(uint32_t ssrc)
+{
+	if (NumberOfSimulcastStreams() == 0) {
+		return &stats_.stream;
+	}
+	else 
+		return GetStatsEntry(false, ssrc);
+}
+
+#ifdef WIN32
+void SendStatisticsProxy::post_message(int reportType,
+											std::initializer_list<StatsReport::Value> values)
+{
+	std::stringstream ss;
+	for (auto it:values)
+	{
+		StatsReport::Value value=it;
+		switch (value.type())
+		{
+		case StatsReport::Value::kUInt8:
+			ss << "," << value.display_name() << ":" << value.uint8_val();
+			break;
+		case StatsReport::Value::kUInt16:
+			ss << "," << value.display_name() << ":" << value.uint16_val();
+			break;
+		case StatsReport::Value::kUInt32:
+			ss << "," << value.display_name() << ":" << value.uint32_val();
+			break;
+		case StatsReport::Value::kUInt64:
+			ss << "," << value.display_name() << ":" << value.uint64_val();
+			break;
+		case StatsReport::Value::kString:
+			ss << "," << value.display_name() << ":" << value.string_val();
+			break;
+		case StatsReport::Value::kStaticString:
+			ss << "," << value.display_name() << ":" << value.static_string_val();
+			break;
+		case StatsReport::Value::kBool:
+			ss << "," << value.display_name() << ":" << value.bool_val();
+			break;
+		default:
+			break;
+		}
+		
+	}
+#ifdef ENABLE_LIB_CURL
+#ifdef	WIN32
+	if (g_curlpost)
+		g_curlpost->AddMessage(reportType, ss.str());
+#endif
+#endif
+}
+#endif
 }  // namespace webrtc
+

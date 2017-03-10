@@ -110,6 +110,18 @@ int ViEBaseImpl::RegisterCpuOveruseObserver(int video_channel,
   return 0;
 }
 
+
+int ViEBaseImpl::DeregisterCpuOveruseObserver(int channel)
+{
+	LOG_F(LS_INFO) << "DeregisterCpuOveruseObserver on channel " << channel;
+	std::map<int, CpuOveruseObserver*>::iterator it = 
+		shared_data_.overuse_observers()->find(channel);
+	if (it != shared_data_.overuse_observers()->end()) {
+		shared_data_.overuse_observers()->erase(it);
+	}
+	return 0;
+}
+
 int ViEBaseImpl::SetCpuOveruseOptions(int video_channel,
                                       const CpuOveruseOptions& options) {
   ViEChannelManagerScoped cs(*(shared_data_.channel_manager()));
@@ -386,25 +398,13 @@ void ViEBaseImpl::RegisterSendStatisticsProxy(
   ViEEncoder* vie_encoder = cs.Encoder(channel);
     assert(vie_encoder);
   
-  vie_encoder->RegisterSendStatisticsProxy(send_statistics_proxy);
   vie_channel->RegisterReceiveRtcpPacketTypeCounterObserver(send_statistics_proxy);
   vie_channel->RegisterSendFrameCountObserver(send_statistics_proxy);
   vie_channel->RegisterSendSideDelayObserver(send_statistics_proxy);
-}
-
-void ViEBaseImpl::RegisterReceiveStatisticsProxy(
-    int channel,
-    ReceiveStatisticsProxy* receive_statistics_proxy) {
-  LOG_F(LS_VERBOSE) << "RegisterReceiveStatisticsProxy on channel " << channel;
-  ViEChannelManagerScoped cs(*(shared_data_.channel_manager()));
-  ViEChannel* vie_channel = cs.Channel(channel);
-  if (!vie_channel) {
-    shared_data_.SetLastError(kViEBaseInvalidChannelId);
-    return;
-  }
-  vie_channel->RegisterReceiveStatisticsProxy(receive_statistics_proxy);
-  vie_channel->RegisterReceiveRtcpPacketTypeCounterObserver(receive_statistics_proxy);
-//  vie_channel->RegisterReceiveChannelRtpStatisticsCallback(receive_statistics_proxy);
+  //rtp/rtcp
+  vie_channel->RegisterSendChannelRtpStatisticsCallback(send_statistics_proxy);
+  vie_channel->RegisterSendChannelRtcpStatisticsCallback(send_statistics_proxy);
+  vie_channel->RegisterSendBitrateObserver(send_statistics_proxy);
 }
 
 SendStatisticsProxy* ViEBaseImpl::GetSendStatisticsProxy(const int video_channel)
@@ -429,8 +429,6 @@ ReceiveStatisticsProxy* ViEBaseImpl::GetReceiveStatisticsProxy(const int video_c
 		shared_data_.SetLastError(kViEBaseInvalidChannelId);
 		return NULL;
 	}
-
-	ViEEncoder* vie_encoder = cs.Encoder(video_channel);
 	ReceiveStatisticsProxy *p_receiveStats = vie_channel->GetReceiveStatisticsProxy();
 	return p_receiveStats;
 }

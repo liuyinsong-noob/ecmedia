@@ -36,6 +36,8 @@ class ViEBaseImpl
   virtual int SetVoiceEngine(VoiceEngine* voice_engine);
   virtual int RegisterCpuOveruseObserver(int channel,
                                          CpuOveruseObserver* observer);
+  virtual int DeregisterCpuOveruseObserver(int channel);
+
   virtual int SetCpuOveruseOptions(int channel,
                                    const CpuOveruseOptions& options);
   virtual int GetCpuOveruseMetrics(int channel,
@@ -73,13 +75,9 @@ class ViEBaseImpl
   virtual void RegisterSendStatisticsProxy(
       int channel,
       SendStatisticsProxy* send_statistics_proxy) OVERRIDE;
-  virtual void RegisterReceiveStatisticsProxy(
-      int channel,
-      ReceiveStatisticsProxy* receive_statistics_proxy) OVERRIDE;
 
   virtual SendStatisticsProxy* GetSendStatisticsProxy(const int video_channel) OVERRIDE;
   virtual ReceiveStatisticsProxy* GetReceiveStatisticsProxy(const int video_channel) OVERRIDE;
- // SendStatisticsProxy* send_statistics_proxy_;
 
   // ViEBaseImpl owns ViESharedData used by all interface implementations.
   ViESharedData shared_data_;

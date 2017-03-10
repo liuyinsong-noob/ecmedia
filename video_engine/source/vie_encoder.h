@@ -179,7 +179,6 @@ class ViEEncoder
         EncodedImageCallback* post_encode_callback);
   void DeRegisterPostEncodeImageCallback();
 
-  void RegisterSendStatisticsProxy(SendStatisticsProxy* send_statistics_proxy);
 
   //---
   int32_t RegisterEncoderRateObserver(VideoEncoderRateObserver *observer);
@@ -203,6 +202,7 @@ class ViEEncoder
   bool TimeToSendPacket(uint32_t ssrc, uint16_t sequence_number,
                         int64_t capture_time_ms, bool retransmission);
   size_t TimeToSendPadding(size_t bytes);
+  void BucketDelay(int64_t delayInMs);
  private:
   bool EncoderPaused() const EXCLUSIVE_LOCKS_REQUIRED(data_cs_);
   void TraceFrameDropStart() EXCLUSIVE_LOCKS_REQUIRED(data_cs_);
@@ -222,6 +222,7 @@ class ViEEncoder
   scoped_ptr<BitrateObserver> bitrate_observer_;
   scoped_ptr<PacedSender> paced_sender_;
   scoped_ptr<ViEPacedSenderCallback> pacing_callback_;
+  scoped_ptr<SendStatisticsProxy> send_statistics_proxy_;
 
   BitrateController* bitrate_controller_;
 
@@ -254,8 +255,6 @@ class ViEEncoder
   I420FrameCallback* pre_encode_callback_ GUARDED_BY(callback_cs_);
   const int64_t start_ms_;
 
-  SendStatisticsProxy* send_statistics_proxy_;
-
   VCMPacketizationCallback* encoded_packet_observer_;
   scoped_ptr<CriticalSectionWrapper> packet_observer_cs_;
 
@@ -264,7 +263,6 @@ class ViEEncoder
   // Recording.
   ViEFileRecorder& GetOutgoingFileRecorder();
   SendStatisticsProxy* GetSendStatisticsProxy();
- // void SetSendStatisticsProxy(SendStatisticsProxy* p_sendStats);
 
   private:
 	  ViEFileRecorder file_recorder_;

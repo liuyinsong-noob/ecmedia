@@ -266,6 +266,7 @@ public:
 //    virtual int SetSendFlag(int channelid, bool flag) = 0;
 //    virtual bool GetSendFlag(int channelid) = 0;
     virtual bool GetRecordingIsInitialized() = 0;
+	virtual void* GetChannel(int channel_id) = 0;
 protected:
     VoEBase() {}
     virtual ~VoEBase() {}

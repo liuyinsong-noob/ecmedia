@@ -98,7 +98,8 @@ BitrateControllerImpl::BitrateControllerImpl(Clock* clock,
       last_enforce_min_bitrate_(!enforce_min_bitrate_),
       bitrate_observers_modified_(false),
       last_reserved_bitrate_bps_(0),
-      remb_suppressor_(new RembSuppressor(clock)) {
+      remb_suppressor_(new RembSuppressor(clock)),
+	  sendside_bwe_observer_(NULL){
 }
 
 BitrateControllerImpl::~BitrateControllerImpl() {
@@ -245,7 +246,20 @@ int32_t BitrateControllerImpl::Process() {
     CriticalSectionScoped cs(critsect_);
     bandwidth_estimation_.UpdateEstimate(clock_->TimeInMilliseconds());
     MaybeTriggerOnNetworkChanged();
+	if (sendside_bwe_observer_)
+	{
+		uint32_t bandwidth;
+		uint32_t bitrate;
+		uint8_t fraction_loss;
+		int64_t rtt;
+		bandwidth_estimation_.CurrentEstimate(&bitrate, &fraction_loss, &rtt);
+		if (bitrate) {
+			bandwidth = bitrate - std::min(bitrate, reserved_bitrate_bps_);
+			sendside_bwe_observer_->OnSendsideBwe(&bandwidth, &fraction_loss, &rtt);
+		}
+	}
   }
+  
   last_bitrate_update_ms_ = clock_->TimeInMilliseconds();
   return 0;
 }
@@ -394,4 +408,14 @@ void BitrateControllerImpl::SetCodecMode(cloopenwebrtc::VideoCodecMode mode) {
   remb_suppressor_->SetEnabled(mode == kScreensharing);
 }
 
+void BitrateControllerImpl::RegisterSendsideBweObserver(SendsideBweObserver *observer) {
+	CriticalSectionScoped cs(critsect_);
+	sendside_bwe_observer_ = observer;
+}
+
+void BitrateControllerImpl::DeregisterSendsideBweObserver()
+{
+	CriticalSectionScoped cs(critsect_);
+	sendside_bwe_observer_ = NULL;
+}
 }  // namespace webrtc

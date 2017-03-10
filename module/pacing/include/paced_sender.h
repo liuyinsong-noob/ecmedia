@@ -54,6 +54,8 @@ class PacedSender : public Module {
     // Returns the number of bytes sent.
     virtual size_t TimeToSendPadding(size_t bytes) = 0;
 
+	virtual void BucketDelay(int64_t delayInMs) = 0;
+
    protected:
     virtual ~Callback() {}
   };

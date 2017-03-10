@@ -23,11 +23,10 @@ inline float Q14ToFloat(uint32_t v) {
 extern char* filename_path;
 namespace cloopenwebrtc {
 
-AudioReceiveStream::AudioReceiveStream(VoiceEngine* voe, int channel)
+AudioReceiveStream::AudioReceiveStream(VoiceEngine* voe, int channelid)
 	:  voe_(voe),
 	   thread_(ThreadWrapper::CreateThread(AudioReceiveStream::AudioRecvStatisticsThreadRun, this, kNormalPriority, "AudioRecvStatisticsThread")),
-	trace_file_(*FileWrapper::Create()),
-	channel_(channel),
+       channel_id_(channelid),
 	   clock_(Clock::GetRealTimeClock()),
 	   last_process_time_(clock_->TimeInMilliseconds()),
 	   crit_(CriticalSectionWrapper::CreateCriticalSection())
@@ -39,15 +38,6 @@ AudioReceiveStream::AudioReceiveStream(VoiceEngine* voe, int channel)
 
 AudioReceiveStream::~AudioReceiveStream()
 {
-	
-
-	if (trace_file_.Open())
-	{
-		trace_file_.Flush();
-		trace_file_.CloseFile();
-	}
-	delete &trace_file_;
-
 	thread_->SetNotAlive();
 	updateEvent_->Set();
 	
@@ -82,111 +72,26 @@ bool AudioReceiveStream::ProcessRecvStatistics()
 	return true;
 }
 
-std::string AudioReceiveStream::GenerateFileName(int channel)
+AudioReceiveStream::Stats AudioReceiveStream::GetStats(int64_t &timestamp) const
 {
-	std::string szRet = "";
-	char timeBuffer[128];
-#ifdef _WIN32
-	sprintf(timeBuffer, "audiochannel%d_RcvStats.data",channel);
-#else
-	sprintf(timeBuffer, "%s/audiochannel%d_RcvStats.data",filename_path, channel);
-#endif
-	szRet = timeBuffer;
-	return szRet;
-}
-
-std::string AudioReceiveStream::ToString() const
-{
-	char timeBuffer[128];
-	char formatString[128];
-	//		time_t nowtime = time(NULL);
-	tm timeTemp;
-	//	localtime_s(&timeTemp, &nowtime);
-	int microseconds;
-	CurrentTmTime(&timeTemp, &microseconds);
-	sprintf(timeBuffer, "%02d/%02d/%04d %02d:%02d:%02d",
-		timeTemp.tm_mon + 1, timeTemp.tm_mday, 	
-		timeTemp.tm_year + 1900,
-		timeTemp.tm_hour, timeTemp.tm_min, timeTemp.tm_sec);
-
 	CriticalSectionScoped lock(crit_.get());
-	std::stringstream ss;
-	ss << "audioRecv timestamp=" << timeBuffer;
-	ss << "\tCodecName=" << audioRecvStats_.codec_name;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", audioRecvStats_.audio_level);
-	ss << "\taudioOutputLevel=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9I64d", audioRecvStats_.bytes_rcvd);
-	ss << "\tbytesReceived=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", audioRecvStats_.packets_rcvd);
-	ss << "\tpacketsReceived=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", audioRecvStats_.packets_lost);
-	ss << "\tpacketsLost=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", audioRecvStats_.jitter_ms);
-	ss << "\tjitterReceived=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", audioRecvStats_.delay_estimate_ms);
-	ss << "\tCurrentDelayMs=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", audioRecvStats_.jitter_buffer_ms);
-	ss << "\tjitterBufferMs=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", audioRecvStats_.jitter_buffer_preferred_ms);
-	ss << "\tPreferredjitterBufferMs=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%f", audioRecvStats_.accelerate_rate);
-	ss << "\tAccelerateRate=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%f", audioRecvStats_.expand_rate);
-	ss << "\tExpandRate=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%f", audioRecvStats_.preemptive_expand_rate);
-	ss << "\tPreemptiveExpandRate=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", audioRecvStats_.decoding_normal);
-	ss << "\tDecodingNormal=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", audioRecvStats_.decoding_plc);
-	ss << "\tDecodingPLC=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", audioRecvStats_.decoding_cng);
-	ss << "\tDecodingCNG=" << formatString;
-
-	memset(formatString, 0, 128);
-	sprintf(formatString, "%-9d", audioRecvStats_.decoding_plc_cng);
-	ss << "\tDecodingPLCCNG=" << formatString;
-
-	ss << "\r\n";
-	return ss.str();
+	timestamp = clock_->TimeInMilliseconds();
+	return audioRecvStats_;
 }
-
-int AudioReceiveStream::ToString(FileWrapper *pFile)
-{
-	pFile->Write(ToString().c_str(), ToString().length());
-	return 0;
-}
-
 
 void AudioReceiveStream::UpdateStats()
 {
+	VoEBase *voe_base = VoEBase::GetInterface(voe_);
+	if (voe_base)
+	{
+		if (!voe_base->GetChannel(channel_id_))
+		{
+			voe_base->Release();
+			return;
+		}
+		voe_base->Release();
+	}	
+	
 	VoECodec *voe_codec = VoECodec::GetInterface(voe_);
 	VoERTP_RTCP *voe_rtprtcp = VoERTP_RTCP::GetInterface(voe_);
 	VoENetEqStats* voe_neteq = VoENetEqStats::GetInterface(voe_);
@@ -198,7 +103,10 @@ void AudioReceiveStream::UpdateStats()
 	CriticalSectionScoped lock(crit_.get());
 	if (voe_codec)
 	{
-		voe_codec->GetRecCodec(channel_, codec);
+		if (voe_codec->GetRecCodec(channel_id_, codec) < 0) {
+			voe_codec->Release();
+			return;
+		}
 		audioRecvStats_.codec_name = codec.plname;
 		voe_codec->Release();
 	}
@@ -206,8 +114,8 @@ void AudioReceiveStream::UpdateStats()
 	if (voe_rtprtcp)
 	{
 		CallStatistics callstats;
-		voe_rtprtcp->GetRemoteSSRC(channel_, audioRecvStats_.remote_ssrc);
-		voe_rtprtcp->GetRTCPStatistics(channel_, callstats);
+		voe_rtprtcp->GetRemoteSSRC(channel_id_, audioRecvStats_.remote_ssrc);
+		voe_rtprtcp->GetRTCPStatistics(channel_id_, callstats);
 		audioRecvStats_.bytes_rcvd = callstats.bytesReceived;
 		audioRecvStats_.packets_rcvd = callstats.packetsReceived;
 		audioRecvStats_.packets_lost = callstats.cumulativeLost;
@@ -226,8 +134,8 @@ void AudioReceiveStream::UpdateStats()
 	{
 		AudioDecodingCallStats decodingStats;
 		NetworkStatistics networkStats;
-		voe_neteq->GetDecodingCallStatistics(channel_, &decodingStats);
-		voe_neteq->GetNetworkStatistics(channel_, networkStats);
+		voe_neteq->GetDecodingCallStatistics(channel_id_, &decodingStats);
+		voe_neteq->GetNetworkStatistics(channel_id_, networkStats);
 		audioRecvStats_.decoding_calls_to_silence_generator = decodingStats.calls_to_silence_generator;
 		audioRecvStats_.decoding_calls_to_neteq = decodingStats.calls_to_neteq;
 		audioRecvStats_.decoding_normal = decodingStats.decoded_normal;
@@ -247,7 +155,7 @@ void AudioReceiveStream::UpdateStats()
 	{
 		int jitter_delay_ms=0;
 		int playout_delay_ms=0;
-		voe_sync->GetDelayEstimate(channel_, &jitter_delay_ms, &playout_delay_ms);
+		voe_sync->GetDelayEstimate(channel_id_, &jitter_delay_ms, &playout_delay_ms);
 		audioRecvStats_.delay_estimate_ms = jitter_delay_ms+playout_delay_ms;
 		voe_sync->Release();
 	}
@@ -255,95 +163,9 @@ void AudioReceiveStream::UpdateStats()
 	if (voe_volume)
 	{
 		uint32_t level = 0;
-		voe_volume->GetSpeechOutputLevelFullRange(channel_, level); //[0, 32768]
+		voe_volume->GetSpeechOutputLevelFullRange(channel_id_, level); //[0, 32768]
 		audioRecvStats_.audio_level = static_cast<int32_t>(level);
 		voe_volume->Release();
 	}
 }
-
-void AudioReceiveStream::FillUploadStats()
-{
-	CriticalSectionScoped lock(crit_.get());
-	memset(&UploadStats, 0, sizeof(UploadStats));
-	memcpy(UploadStats.WhichStats,"AR",2);
-	memcpy(UploadStats.Version,"1", 2);
-	memcpy(UploadStats.CodecName, audioRecvStats_.codec_name.c_str(), 4);
-	UploadStats.AudioOutputLevel = audioRecvStats_.audio_level;
-	UploadStats.BytesReceived = audioRecvStats_.bytes_rcvd;
-	UploadStats.PacketsReceived = audioRecvStats_.packets_rcvd;
-	UploadStats.PacketsLost = audioRecvStats_.packets_lost;
-	UploadStats.JitterReceived = audioRecvStats_.jitter_ms;
-	UploadStats.CurrentDelayMs = audioRecvStats_.delay_estimate_ms;
-	UploadStats.JitterBufferMs = audioRecvStats_.jitter_buffer_ms;
-	UploadStats.PreferredjitterBufferMs = audioRecvStats_.jitter_buffer_preferred_ms;
-	UploadStats.AccelerateRate = audioRecvStats_.accelerate_rate;
-	UploadStats.ExpandRate = audioRecvStats_.expand_rate;
-	UploadStats.PreemptiveExpandRate = audioRecvStats_.preemptive_expand_rate;
-	UploadStats.DecodingNormal = audioRecvStats_.decoding_normal;
-	UploadStats.DecodingPLC = audioRecvStats_.decoding_plc;
-	UploadStats.DecodingCNG = audioRecvStats_.decoding_cng;
-	UploadStats.DecodingPLCCNG = audioRecvStats_.decoding_plc_cng;
-}
-
- int AudioReceiveStream::ToBinary(char* buffer, int buffer_length)
- {
-	FillUploadStats();	 
-	 int length = sizeof(UploadStats);
-	 if (buffer_length < length)
-	 {
-		 return -1;
-	 }
-	 memcpy(buffer, &UploadStats, length);
-	 return length;
-}
-
- int AudioReceiveStream::ToFile(FileWrapper *pFile)
- {
-	 if(pFile)
-	 {
-		 FillUploadStats();
-		 pFile->Write(UploadStats.WhichStats, sizeof(UploadStats.WhichStats));
-		 pFile->Write(UploadStats.Version, sizeof(UploadStats.Version));
-		 pFile->Write(&UploadStats.CodecName, sizeof(UploadStats.CodecName));
-		 pFile->Write(&UploadStats.AudioOutputLevel, sizeof(UploadStats.AudioOutputLevel));
-		 pFile->Write(&UploadStats.BytesReceived, sizeof(UploadStats.BytesReceived));
-		 pFile->Write(&UploadStats.PacketsReceived, sizeof(UploadStats.PacketsReceived));
-		 pFile->Write(&UploadStats.PacketsLost, sizeof(UploadStats.PacketsLost));
-		 pFile->Write(&UploadStats.JitterReceived, sizeof(UploadStats.JitterReceived));
-		 pFile->Write(&UploadStats.CurrentDelayMs, sizeof(UploadStats.CurrentDelayMs));
-		 pFile->Write(&UploadStats.JitterBufferMs, sizeof(UploadStats.JitterBufferMs));
-		 pFile->Write(&UploadStats.PreferredjitterBufferMs, sizeof(UploadStats.PreferredjitterBufferMs));
-		 pFile->Write(&UploadStats.AccelerateRate, sizeof(UploadStats.AccelerateRate));
-		 pFile->Write(&UploadStats.ExpandRate, sizeof(UploadStats.ExpandRate));
-		 pFile->Write(&UploadStats.PreemptiveExpandRate, sizeof(UploadStats.PreemptiveExpandRate));
-		 pFile->Write(&UploadStats.DecodingNormal, sizeof(UploadStats.DecodingNormal));
-		 pFile->Write(&UploadStats.DecodingPLC, sizeof(UploadStats.DecodingPLC));
-		 pFile->Write(&UploadStats.DecodingCNG, sizeof(UploadStats.DecodingCNG));
-		 pFile->Write(&UploadStats.DecodingPLCCNG, sizeof(UploadStats.DecodingPLCCNG));
-
-		 int length = 0;
-		 length = sizeof(UploadStats.WhichStats)
-			 +sizeof(UploadStats.Version)
-			 +sizeof(UploadStats.CodecName)
-			 +sizeof(UploadStats.AudioOutputLevel)
-			 +sizeof(UploadStats.BytesReceived)
-			 +sizeof(UploadStats.PacketsReceived)
-			 +sizeof(UploadStats.PacketsLost)
-			 +sizeof(UploadStats.JitterReceived)
-			 +sizeof(UploadStats.CurrentDelayMs)
-			 +sizeof(UploadStats.JitterBufferMs)
-			 +sizeof(UploadStats.PreferredjitterBufferMs)
-			 +sizeof(UploadStats.AccelerateRate)
-			 +sizeof(UploadStats.ExpandRate)
-			 +sizeof(UploadStats.PreemptiveExpandRate)
-			 +sizeof(UploadStats.DecodingNormal)
-			 +sizeof(UploadStats.DecodingPLC)
-			 +sizeof(UploadStats.DecodingCNG)
-			 +sizeof(UploadStats.DecodingPLCCNG);
-
-		 return length;
-	 }
-
-	 return -1;
- }
 }

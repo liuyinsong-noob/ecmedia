@@ -597,16 +597,8 @@ ECMEDIA_API int ECMedia_disable_srtp_recv_video(int channel);
 
 #endif
 
-//"filePath" or "intervalMS" is set by the first caller, i.e.: one of the four interfaces,
-//the latter caller's parameters will be discarded.
-ECMEDIA_API int ECMedia_set_video_SendStatistics_proxy(int channelid, char* filePath, int intervalMs);
-ECMEDIA_API int ECMedia_set_video_RecvStatistics_proxy(int channelid, char* filePath, int intervalMs);
-ECMEDIA_API int ECMedia_set_audio_SendStatistics_proxy(int channelid, char* filePath, int intervalMs);
-ECMEDIA_API int ECMedia_set_audio_RecvStatistics_proxy(int channelid, char* filePath, int intervalMs);
-
-//kill statistics thread
-ECMEDIA_API int ECMedia_stop_Statistics_proxy();
 ECMEDIA_API int ECMedia_set_CaptureDeviceID(int videoCapDevId);
+
 ECMEDIA_API int ECMedia_Check_Record_Permission(bool &enabled);
 ECMEDIA_API int ECmedia_set_shield_mosaic(int video_channel, bool flag);
 /* LiveSteam
@@ -738,6 +730,14 @@ ECMEDIA_API void ECMedia_stopRecordLocalMedia();
 */
 ECMEDIA_API int ECMedia_set_no_camera_capture_cb(int deviceid, onEcMediaNoCameraCaptureCb no_camera_capture_cb);
 
+/*
+功能		：获取统计报告
+参数		：[IN] type: 统计报告类型，详细信息或关键信息
+		  [OUT] reports: 统计报告
+返回值   : 返回值 0：成功　-1：失败
+*/
+ECMEDIA_API int ECMedia_getStatsReports(int type, char* callid, void** mediaStatisticsDataInner);
+ECMEDIA_API void ECMedia_deletePbData(void* mediaStatisticsDataInner);
     
 #ifdef __cplusplus
 }

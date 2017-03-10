@@ -1,0 +1,117 @@
+
+message simplified_VideoSenderStatistics
+{
+	//common field
+	optional int32 kStatsValueNameReportType = 1;
+	optional int32 kStatsValueNameChannelId = 2;
+	optional int64 kStatsValueNameTimestamp = 3;
+	optional string kStatsValueNameCodecImplementationName = 4;
+	
+	//BWE
+	optional int32 kStatsValueNameTargetEncBitrate = 5;
+	optional int32 kStatsValueNameActualEncBitrate = 6;
+	optional int32 kStatsValueNameAvailableSendBandwidth = 7;
+	optional int32 kStatsValueNameAvailableReceiveBandwidth = 8;
+	
+	//Network
+	optional int32 kStatsValueNameLossFractionInPercent = 9;
+	optional int32 kStatsValueNameJitterReceived = 10;
+	optional int32 kStatsValueNameRttInMs = 11;
+	optional int32 kStatsValueNameBucketDelayInMs = 12;
+	
+	//RTP & RTCP
+	optional int32 kStatsValueNameTransmitBitrate = 13;
+	optional int32 kStatsValueNameRetransmitBitrate = 14;
+	optional int32 kStatsValueNameFecBitrate = 15; //reserved
+	
+	optional int32 kStatsValueNameTransmitPacketsRate = 16;
+	optional int32 kStatsValueNameRetransmitPacketsRate = 17;
+		
+	//QMSetting
+	optional int32 kStatsValueNameQMFrameWidth = 18;
+	optional int32 kStatsValueNameQMFrameHeight = 19;
+	optional int32 kStatsValueNameQMFrameRate = 20;
+}
+
+message  simplified_VideoReceiverStatistics
+{
+	//common field
+	optional int32 kStatsValueNameReportType = 1;
+	optional int32 kStatsValueNameChannelId = 2;
+	optional int64 kStatsValueNameTimestamp = 3;
+	optional string kStatsValueNameCodecImplementationName = 4;
+	
+	//basic
+	optional int32 kStatsValueNameFrameWidthReceived = 5;
+	optional int32 kStatsValueNameFrameHeightReceived = 6;		
+	optional int32 kStatsValueNameReceivedFrameRate = 7;
+	optional int32 kStatsValueNameReceivedTotalBitrate = 8;	
+	optional int32 kStatsValueNameJitterBufferMs = 9;
+	
+	//decoder
+	optional int32 kStatsValueNameDecoderFrameRate = 10;
+	optional int32 kStatsValueNameDecodeMs = 11;
+	
+	//render
+	optional int32 kStatsValueNameFrameRateRender = 12;
+	optional int32 kStatsValueNameRenderDelayMs = 13;	
+	
+	//rtp & rtcp
+	optional int32 kStatsValueNameFirsSent = 14;
+	optional int32 kStatsValueNameNacksSent = 15;
+	
+	//loss mode-reserved
+	optional int64 kStatsValueNameLossModePart1 = 16;
+	optional int64 kStatsValueNameLossModePart2 = 17;
+	optional int64 kStatsValueNameLossModePart3 = 18;	
+	optional int64 kStatsValueNameLossModePart4 = 19;
+}
+
+message  simplified_AudioSenderStatistics
+{
+	//common field
+	optional int32 kStatsValueNameReportType = 1;
+	optional int32 kStatsValueNameChannelId = 2;
+	optional int64 kStatsValueNameTimestamp = 3;
+	optional string kStatsValueNameCodecImplementationName = 4;
+	
+	//basic
+	optional int32 kStatsValueNameAudioInputLevel = 5;
+	
+	//network
+	optional int32 kStatsValueNameLossFractionInPercent = 6;
+	optional int32 kStatsValueNameJitterReceived = 7;
+	optional int32 kStatsValueNameRttInMs = 8;
+	
+	//echo cancellation
+	optional int32 kStatsValueNameEchoDelayMedian = 9;
+	optional int32 kStatsValueNameEchoDelayStdDev = 10;
+	optional int32 kStatsValueNameEchoReturnLoss = 11;
+	optional int32 kStatsValueNameEchoReturnLossEnhancement = 12;	
+}
+
+message  simplified_AudioReceiverStatistics
+{
+	//common field
+	optional int32 kStatsValueNameReportType = 1;
+	optional int32 kStatsValueNameChannelId = 2;
+	optional int64 kStatsValueNameTimestamp = 3;
+	optional string kStatsValueNameCodecImplementationName = 4;
+	
+	//basic
+	optional string kStatsValueNameAudioOutputLevel = 5;
+	
+	//network	
+	optional int32 kStatsValueNameCurrentDelayMs = 6;
+	optional int32 kStatsValueNameJitterBufferMs = 7;
+	optional float kStatsValueNameAccelerateRate = 8;
+	optional float kStatsValueNameExpandRate = 9;
+	optional float kStatsValueNamePreemptiveExpandRate = 10;
+	
+	//decoder
+	optional int32 kStatsValueNameDecodingNormal = 11;
+	optional int32 kStatsValueNameDecodingPLC = 12;
+	optional int32 kStatsValueNameDecodingCNG = 13;
+	optional int32 kStatsValueNameDecodingPLCCNG = 14;
+	
+}

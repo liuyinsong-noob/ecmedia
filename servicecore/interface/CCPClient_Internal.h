@@ -2,6 +2,7 @@
 #define _CCPCLIENT_INTERNAL_H_
 
 #include "sdk_common.h"
+#include "../ECMedia/source/MediaStatisticsData.pb.h"
 
 // #ifdef WIN32
 // #define CCPAPI  _declspec(dllexport)
@@ -695,6 +696,9 @@ extern "C" {
 	/************************************************************************/
 	/* 获取统计信息                                                                     */
 	/************************************************************************/
+
+	CCPAPI int GetStatsData(int type, char* callid, MediaStatisticsDataInner** pb_data);
+	CCPAPI int DeleteStatsData(MediaStatisticsDataInner* pb_data);
 	CCPAPI int GetBandwidthUsage(const char* callid,
 								unsigned int& total_bitrate_sent,
 								unsigned int& video_bitrate_sent,

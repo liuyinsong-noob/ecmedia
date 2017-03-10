@@ -1,0 +1,3 @@
+﻿  extension_set.cc
+C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\hash_map(17): error C2338: <hash_map> is deprecated and will be REMOVED. Please use <unordered_map>. You can define _SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS to acknowledge that you have received this warning.
+C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\hash_set(17): error C2338: <hash_set> is deprecated and will be REMOVED. Please use <unordered_set>. You can define _SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS to acknowledge that you have received this warning.

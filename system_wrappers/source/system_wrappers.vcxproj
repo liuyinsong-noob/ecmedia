@@ -277,6 +277,7 @@
   <ItemGroup>
     <ClInclude Include="checks.h" />
     <ClInclude Include="rw_lock_generic.h" />
+    <ClInclude Include="stringencode.h" />
     <ClInclude Include="trace_impl.h" />
     <ClInclude Include="file_impl.h" />
     <ClInclude Include="condition_variable_win.h" />

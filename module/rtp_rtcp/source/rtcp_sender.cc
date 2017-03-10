@@ -136,6 +136,8 @@ RTCPSender::RTCPSender(int32_t id,
     memset(_CNAME, 0, sizeof(_CNAME));
     memset(_lastSendReport, 0, sizeof(_lastSendReport));
     memset(_lastRTCPTime, 0, sizeof(_lastRTCPTime));
+
+	packet_type_counter_observer_ = NULL;
 }
 
 RTCPSender::~RTCPSender() {
@@ -1575,6 +1577,12 @@ int32_t RTCPSender::SendRTCP(const FeedbackState& feedback_state,
   {
       return -1;
   }
+
+  if (packet_type_counter_observer_)
+  {
+	  packet_type_counter_observer_->RtcpPacketTypesCounterUpdated(_SSRC, packet_type_counter_);
+  }
+
   return SendToNetwork(rtcp_buffer, static_cast<size_t>(rtcp_length));
 }
 
@@ -2083,5 +2091,11 @@ int32_t RTCPSender::SetTMMBN(const TMMBRSet* boundingSet,
         return 0;
     }
     return -1;
+}
+
+void RTCPSender::SetRtcpPacketTypeCountObserver(RtcpPacketTypeCounterObserver *observer)
+{
+	CriticalSectionScoped lock(_criticalSectionRTCPSender);
+	packet_type_counter_observer_ = observer;
 }
 }  // namespace webrtc

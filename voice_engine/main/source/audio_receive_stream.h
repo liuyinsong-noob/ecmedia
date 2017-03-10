@@ -77,48 +77,40 @@ class AudioReceiveStream{
     int64_t capture_start_ntp_time_ms;
   };
 
-  struct UploadStats1{
-	  char WhichStats[2];
-	  char Version[2];
-	  char CodecName[4];
-	  int AudioOutputLevel;
-	  int64_t BytesReceived;
-	  uint32_t PacketsReceived;
-	  uint32_t PacketsLost;
-	  uint32_t JitterReceived;
-	  uint32_t CurrentDelayMs;
-	  uint32_t JitterBufferMs;
-	  uint32_t PreferredjitterBufferMs;
-	  float AccelerateRate;
-	  float ExpandRate;
-	  float PreemptiveExpandRate;
-	  int32_t DecodingNormal;
-	  int32_t DecodingPLC;
-	  int32_t DecodingCNG;
-	  int32_t DecodingPLCCNG;
+  enum LINEINFO
+  {
+	  VIDEOSEND = 0,
+	  VIDEORECV,
+	  AUDIOSEND,
+	  AUDIORECV
+  };
+  enum VERSIONINFO
+  {
+	  COMPLETE = 0,
+	  SPECIAL
+  };
+  enum CODECNAME
+  {
+	  PCMU = 0,
+	  G729,
+	  OPUS,
+	  UNKOWN
   };
 
 public:
 	AudioReceiveStream(VoiceEngine* voe, int channel);
 	~AudioReceiveStream();
-	Stats GetStats() const ;
+	Stats GetStats(int64_t &timestamp) const;
 	static bool AudioRecvStatisticsThreadRun(void* obj);
 	bool ProcessRecvStatistics();
-	std::string ToString() const;
-	int ToBinary(char* buffer, int buffer_length);
-	int ToFile(FileWrapper *pFile);
-	int ToString(FileWrapper *pFile);
+	int channelId() { return channel_id_; }
 private:
-	std::string GenerateFileName(int channel);
 	void UpdateStats();
-	void FillUploadStats();
 private:
 	VoiceEngine *voe_;
-	int channel_;
+	int channel_id_;
 	Stats audioRecvStats_;
-	UploadStats1 UploadStats;
 	ThreadWrapper *thread_;
-	FileWrapper&		 trace_file_;
 	EventWrapper*	updateEvent_;
 	Clock*              clock_;
 	int64_t             last_process_time_;

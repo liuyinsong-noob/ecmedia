@@ -87,7 +87,6 @@ public:
 
 	virtual int SetCaptureSettings(const int capture_id, CaptureCapability settings);
 
-	virtual int SetSendStatisticsProxy(const int capture_id, SendStatisticsProxy* p_sendStats);
 	//---end
     virtual int UpdateLossRate(const int capture_id, int lossRate);
 };

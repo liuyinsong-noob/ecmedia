@@ -3614,6 +3614,18 @@ extern "C" int StopVirtualBakcGround()
 	return g_pSerCore->StopVirtualBakcGround();
 }
 
+extern "C" int GetStatsData(int type, char* callid, MediaStatisticsDataInner **pb_data)
+{
+	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+	return g_pSerCore->GetStatsData(type, callid, (void**)pb_data);
+}
+
+extern "C" int DeleteStatsData(MediaStatisticsDataInner* pb_data)
+{
+	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+	g_pSerCore->DeleteStatsData(pb_data);
+	return 0;
+}
 extern "C" int GetBandwidthUsage(const char* callid,
 								unsigned int& total_bitrate_sent,
 								unsigned int& video_bitrate_sent,

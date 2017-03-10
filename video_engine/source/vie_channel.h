@@ -376,8 +376,7 @@ class ViEChannel
 
   void RegisterSendFrameCountObserver(FrameCountObserver* observer);
   void RegisterReceiveRtcpPacketTypeCounterObserver(RtcpPacketTypeCounterObserver* observer);
-  void RegisterReceiveStatisticsProxy(
-      ReceiveStatisticsProxy* receive_statistics_proxy);
+  void RegisterSendRtcpPacketTypeCountObserver(RtcpPacketTypeCounterObserver* observer);
   void ReceivedBWEPacket(int64_t arrival_time_ms, size_t payload_size,
                          const RTPHeader& header);
   ViEReceiver *GetReceiver() { return &vie_receiver_ ; }
@@ -514,8 +513,8 @@ class ViEChannel
   // Not owned.
   VCMReceiveStatisticsCallback* vcm_receive_stats_callback_
   GUARDED_BY(callback_cs_);
-  /*ReceiveStatisticsProxy* receive_stats_proxy_callback_
-	  GUARDED_BY(callback_cs_);*/
+//   ReceiveStatisticsProxy* receive_stats_proxy_callback_
+// 	  GUARDED_BY(callback_cs_);
   FrameCounts receive_frame_counts_ GUARDED_BY(callback_cs_);
   ProcessThread& module_process_thread_;
   ViEDecoderObserver* codec_observer_;
@@ -672,7 +671,7 @@ public:
                                      int8_t& unknownPayloadType,
                                      uint16_t& deltaTransmitTimeMS);
 	private:
-		ReceiveStatisticsProxy *receive_statistics_proxy_;
+		scoped_ptr<ReceiveStatisticsProxy> receive_statistics_proxy_;
 		onVideoConference _video_conf_cb;
 	    onEcMediaVideoData _video_data_cb;
 	    onStunPacket _stun_cb;

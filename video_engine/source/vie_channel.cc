@@ -152,8 +152,7 @@ ViEChannel::ViEChannel(int32_t channel_id,
     _video_conf_cb(NULL),
     _video_data_cb(NULL),
     _stun_cb(NULL),
-    _key_frame_cb(NULL),
-	receive_statistics_proxy_(new ReceiveStatisticsProxy(channel_id)){
+    _key_frame_cb(NULL){
   RtpRtcp::Configuration configuration = CreateRtpRtcpConfiguration();
   configuration.remote_bitrate_estimator = remote_bitrate_estimator;
   configuration.receive_statistics = vie_receiver_.GetReceiveStatistics();
@@ -161,7 +160,12 @@ ViEChannel::ViEChannel(int32_t channel_id,
   vie_receiver_.SetRtpRtcpModule(rtp_rtcp_.get());
   vcm_->SetNackSettings(kMaxNackListSize, max_nack_reordering_threshold_, 0);
 
-  RegisterPreRenderCallback(receive_statistics_proxy_);
+  receive_statistics_proxy_.reset(new ReceiveStatisticsProxy(channel_id));
+  RegisterPreRenderCallback(receive_statistics_proxy_.get());
+  RegisterSendRtcpPacketTypeCountObserver(receive_statistics_proxy_.get());
+  RegisterCodecObserver(receive_statistics_proxy_.get());
+  RegisterReceiveChannelRtpStatisticsCallback(receive_statistics_proxy_.get());
+  RegisterReceiveChannelRtcpStatisticsCallback(receive_statistics_proxy_.get());
 }
 
 int32_t ViEChannel::Init() {
@@ -169,11 +173,6 @@ int32_t ViEChannel::Init() {
       vie_receiver_.GetReceiveStatistics()) != 0) {
     return -1;
   }
-
-  if (module_process_thread_.RegisterModule(receive_statistics_proxy_) != 0) {
-		  return -1;
-  }
-
   // RTP/RTCP initialization.
   rtp_rtcp_->SetSendingMediaStatus(false);
   if (module_process_thread_.RegisterModule(rtp_rtcp_.get()) != 0) {
@@ -245,11 +244,6 @@ ViEChannel::~ViEChannel() {
   module_process_thread_.DeRegisterModule(rtp_rtcp_.get());
   module_process_thread_.DeRegisterModule(vcm_);
   module_process_thread_.DeRegisterModule(&vie_sync_);
-  module_process_thread_.DeRegisterModule(receive_statistics_proxy_);
-    if (receive_statistics_proxy_) {
-        delete receive_statistics_proxy_;
-        receive_statistics_proxy_ = NULL;
-    }
   while (simulcast_rtp_rtcp_.size() > 0) {
     std::list<RtpRtcp*>::iterator it = simulcast_rtp_rtcp_.begin();
     RtpRtcp* rtp_rtcp = *it;
@@ -1531,6 +1525,7 @@ int32_t ViEChannel::StartReceive() {
     return -1;
   }
   vie_receiver_.StartReceive();
+  module_process_thread_.RegisterModule(receive_statistics_proxy_.get());
   return 0;
 }
 
@@ -1554,6 +1549,8 @@ int32_t ViEChannel::StopReceive() {
 	  return -1;
   }
 #endif
+
+  module_process_thread_.DeRegisterModule(receive_statistics_proxy_.get());
   return 0;
 }
 
@@ -1722,7 +1719,6 @@ void ViEChannel::IncomingCodecChanged(const VideoCodec& codec) {
 void ViEChannel::OnReceiveRatesUpdated(uint32_t bit_rate, uint32_t frame_rate) {
   CriticalSectionScoped cs(callback_cs_.get());
   if (codec_observer_)
-    //codec_observer_->IncomingRate(channel_id_, frame_rate, bit_rate);
 	codec_observer_->IncomingRate(channel_id_, frame_rate, bit_rate);
 }
 
@@ -1731,9 +1727,8 @@ void ViEChannel::OnDiscardedPacketsUpdated(int discarded_packets) {
   if (vcm_receive_stats_callback_ != NULL)
   vcm_receive_stats_callback_->OnDiscardedPacketsUpdated(discarded_packets);
 
-  //if (receive_stats_proxy_callback_ != NULL)
-	 // receive_stats_proxy_callback_->OnDiscardedPacketsUpdated(discarded_packets);
-  
+  if (receive_statistics_proxy_ != NULL)
+	  receive_statistics_proxy_->OnDiscardedPacketsUpdated(discarded_packets);
 }
 
 void ViEChannel::OnFrameCountsUpdated(const FrameCounts& frame_counts) {
@@ -1741,8 +1736,6 @@ void ViEChannel::OnFrameCountsUpdated(const FrameCounts& frame_counts) {
   receive_frame_counts_ = frame_counts;
   if (vcm_receive_stats_callback_ != NULL)
     vcm_receive_stats_callback_->OnFrameCountsUpdated(frame_counts);
-  //if (receive_stats_proxy_callback_ != NULL)
-  //  receive_stats_proxy_callback_->OnFrameCountsUpdated(frame_counts);
 }
 
 void ViEChannel::OnDecoderTiming(int decode_ms,
@@ -1998,10 +1991,9 @@ void ViEChannel::RegisterReceiveRtcpPacketTypeCounterObserver(RtcpPacketTypeCoun
 		receive_rtcp_packettype_count_observer_.Set(observer);
 }
 
-void ViEChannel::RegisterReceiveStatisticsProxy(
-    ReceiveStatisticsProxy* receive_statistics_proxy) {
-  CriticalSectionScoped cs(callback_cs_.get());
-  vcm_receive_stats_callback_/*receive_stats_proxy_callback_*/ = receive_statistics_proxy;
+void ViEChannel::RegisterSendRtcpPacketTypeCountObserver(RtcpPacketTypeCounterObserver* observer)
+{
+	rtp_rtcp_->SetSendRtcpPacketTypeCountObserver(observer);
 }
 
 void ViEChannel::ReceivedBWEPacket(int64_t arrival_time_ms,
@@ -2009,22 +2001,6 @@ void ViEChannel::ReceivedBWEPacket(int64_t arrival_time_ms,
                                    const RTPHeader& header) {
   vie_receiver_.ReceivedBWEPacket(arrival_time_ms, payload_size, header);
 }
-
-//int32_t
-//	ViEChannel::RegisterServiceCoreCallBack(ServiceCoreCallBack * serviceCoreCallBack, const char* call_id, int firewall_policy)
-//{
-//	this->_serviceCoreCallBack = serviceCoreCallBack;
-//	if(call_id)
-//		sprintf(this->call_id, "%s", call_id);
-//	_firewallPolicy = firewall_policy;
-//	return 0;
-//}
-//int32_t
-//	ViEChannel::DeRegisterServiceCoreCallBack()
-//{
-//	_serviceCoreCallBack = NULL;
-//	return 0;
-//}
 
 //sean add begin 0915
 int32_t
@@ -3016,7 +2992,7 @@ int32_t ViEChannel::GetKeepAliveStatus(
     
 ReceiveStatisticsProxy* ViEChannel::GetReceiveStatisticsProxy()
 {
-	return receive_statistics_proxy_;
+	return receive_statistics_proxy_.get();
 }
 
 }  // namespace webrtc

@@ -88,8 +88,14 @@ class QMVideoSettingsCallback : public VCMQMSettingsCallback {
                              const uint32_t width,
                              const uint32_t height);
 
+  void SetSendStatsCallback(SendStatisticsProxy *stats_proxy);
+  void InitQMSetting(const uint32_t frame_rate,
+					  const uint32_t width,
+					  const uint32_t height);
+
  private:
   VideoProcessingModule* vpm_;
+  SendStatisticsProxy *stats_proxy_;
 };
 
 class ViEBitrateObserver : public BitrateObserver {
@@ -123,6 +129,10 @@ class ViEPacedSenderCallback : public PacedSender::Callback {
   }
   virtual size_t TimeToSendPadding(size_t bytes) {
     return owner_->TimeToSendPadding(bytes);
+  }
+
+  virtual void BucketDelay(int64_t delayInMs) {
+	  owner_->BucketDelay(delayInMs);
   }
  private:
   ViEEncoder* owner_;
@@ -163,7 +173,6 @@ ViEEncoder::ViEEncoder(int32_t engine_id,
     video_suspended_(false),
     pre_encode_callback_(NULL),
     start_ms_(Clock::GetRealTimeClock()->TimeInMilliseconds()),
-    send_statistics_proxy_(new SendStatisticsProxy(channel_id)),
     file_recorder_(channel_id),
     capture_(NULL),
     capture_id_(-1),
@@ -182,8 +191,7 @@ ViEEncoder::ViEEncoder(int32_t engine_id,
       kDefaultStartBitrateKbps,
       PacedSender::kDefaultPaceMultiplier * kDefaultStartBitrateKbps,
       0));
-
-  send_statistics_proxy_->SetPacedSender(paced_sender_.get());
+  send_statistics_proxy_.reset(new SendStatisticsProxy(channel_id));
 }
 
 bool ViEEncoder::Init() {
@@ -200,10 +208,15 @@ bool ViEEncoder::Init() {
       module_process_thread_.RegisterModule(paced_sender_.get()) != 0) {
     return false;
   }
+
+  if (module_process_thread_.RegisterModule(send_statistics_proxy_.get()) != 0)
+	  return false;//add at 20161110, by ylr
+
   if (qm_callback_) {
     delete qm_callback_;
   }
   qm_callback_ = new QMVideoSettingsCallback(&vpm_);
+  qm_callback_->SetSendStatsCallback(send_statistics_proxy_.get());
 
 #ifdef VIDEOCODEC_VP8
   VideoCodecType codec_type = cloopenwebrtc::kVideoCodecVP8;
@@ -246,16 +259,15 @@ ViEEncoder::~ViEEncoder() {
   if (bitrate_controller_) {
     bitrate_controller_->RemoveBitrateObserver(bitrate_observer_.get());
   }
+  module_process_thread_.DeRegisterModule(send_statistics_proxy_.get());
   module_process_thread_.DeRegisterModule(&vcm_);
   module_process_thread_.DeRegisterModule(&vpm_);
   module_process_thread_.DeRegisterModule(default_rtp_rtcp_.get());
-  module_process_thread_.DeRegisterModule(paced_sender_.get());
-  module_process_thread_.DeRegisterModule(send_statistics_proxy_);
+  module_process_thread_.DeRegisterModule(paced_sender_.get());  
   VideoCodingModule::Destroy(&vcm_);
   VideoProcessingModule::Destroy(&vpm_);
 
   delete qm_callback_;
-  delete send_statistics_proxy_;
 }
 
 void ViEEncoder::UpdateHistograms() {
@@ -364,14 +376,19 @@ int32_t ViEEncoder::DeRegisterExternalEncoder(uint8_t pl_type) {
   }
   return 0;
 }
-    
+
 int32_t ViEEncoder::SetEncoder(const cloopenwebrtc::VideoCodec& video_codec) {
   // Setting target width and height for VPM.
   if (vpm_.SetTargetResolution(video_codec.width, video_codec.height,
                                video_codec.maxFramerate) != VPM_OK) {
     return -1;
   }
-  
+
+  if (qm_callback_)
+  {
+	  qm_callback_->InitQMSetting(video_codec.maxFramerate, video_codec.width, video_codec.height);
+  }
+
   if (default_rtp_rtcp_->RegisterSendPayload(video_codec) != 0) {
     return -1;
   }
@@ -416,15 +433,18 @@ int32_t ViEEncoder::SetEncoder(const cloopenwebrtc::VideoCodec& video_codec) {
       video_codec.startBitrate,
       PacedSender::kDefaultPaceMultiplier * video_codec.startBitrate,
       pad_up_to_bitrate_kbps);
-
+  if (send_statistics_proxy_)
+  {
+	  send_statistics_proxy_->ConfigEncoderSetting(video_codec);
+  }
+ 
+  RegisterEncoderRateObserver(send_statistics_proxy_.get());
   return 0;
 }
 
-    
 void ViEEncoder::setFrameScaleType(FrameScaleType frame_scale_type) {
     vpm_.setFrameScaleType(frame_scale_type);
 }
-    
 int32_t ViEEncoder::GetEncoder(VideoCodec* video_codec) {
   if (vcm_.SendCodec(video_codec) != 0) {
     return -1;
@@ -477,6 +497,12 @@ size_t ViEEncoder::TimeToSendPadding(size_t bytes) {
     return default_rtp_rtcp_->TimeToSendPadding(bytes);
   }
   return 0;
+}
+
+void ViEEncoder::BucketDelay(int64_t delayInMs)
+{
+	if(send_statistics_proxy_)
+		send_statistics_proxy_->OnBucketDelay(delayInMs);
 }
 
 bool ViEEncoder::EncoderPaused() const {
@@ -645,8 +671,6 @@ void ViEEncoder::DeliverFrame(int id,
         return;
     }
 #endif
-
-
   vcm_.AddVideoFrame(*decimated_frame);
 }
 
@@ -771,10 +795,6 @@ int32_t ViEEncoder::SendData(
     const EncodedImage& encoded_image,
     const cloopenwebrtc::RTPFragmentationHeader& fragmentation_header,
     const RTPVideoHeader* rtp_video_hdr) {
-  if (send_statistics_proxy_ != NULL) {
-    send_statistics_proxy_->OnSendEncodedImage(encoded_image, rtp_video_hdr);
-  }
-
   {
 	  CriticalSectionScoped cs(packet_observer_cs_.get());
 	  if (encoded_packet_observer_)
@@ -923,6 +943,8 @@ bool ViEEncoder::SetSsrcs(const std::list<unsigned int>& ssrcs) {
     unsigned int ssrc = *it;
     ssrc_streams_[ssrc] = idx;
   }
+  if(send_statistics_proxy_)
+	  send_statistics_proxy_->SetSsrcs(ssrcs);
   return true;
 }
 
@@ -1008,6 +1030,9 @@ void ViEEncoder::OnNetworkChanged(uint32_t bitrate_bps,
                  << " for channel " << channel_id_;
     codec_observer_->SuspendChange(channel_id_, video_is_suspended);
   }
+  if (send_statistics_proxy_) {
+	  send_statistics_proxy_->SuspendChange(channel_id_, video_is_suspended);
+  }
 }
 
 PacedSender* ViEEncoder::GetPacedSender() {
@@ -1057,13 +1082,6 @@ void ViEEncoder::DeRegisterPostEncodeImageCallback() {
   vcm_.RegisterPostEncodeImageCallback(NULL);
 }
 
-void ViEEncoder::RegisterSendStatisticsProxy(
-    SendStatisticsProxy* send_statistics_proxy) {
-  send_statistics_proxy_ = send_statistics_proxy;
-  module_process_thread_.RegisterModule(send_statistics_proxy_);
-  RegisterEncoderRateObserver(send_statistics_proxy); //add by ylr
-}
-
 int32_t ViEEncoder::RegisterEncoderRateObserver(VideoEncoderRateObserver *observer) {
 	return vcm_.RegisterEncoderRateObserver(observer);
 }
@@ -1091,32 +1109,42 @@ void ViEEncoder::DeRegisterEncoderDataObserver()
 
 SendStatisticsProxy* ViEEncoder::GetSendStatisticsProxy()
 {
-	return send_statistics_proxy_;
+	return send_statistics_proxy_.get();
 }
-
-// void ViEEncoder::SetSendStatisticsProxy(SendStatisticsProxy* p_sendStats)
-//
-// {
-// 	send_statistics_proxy_ = p_sendStats;
-// }
 
 ViEFileRecorder& ViEEncoder::GetOutgoingFileRecorder() {
 	return file_recorder_;
 }
 
 QMVideoSettingsCallback::QMVideoSettingsCallback(VideoProcessingModule* vpm)
-    : vpm_(vpm) {
+    : vpm_(vpm) ,
+	 stats_proxy_(NULL){
 }
 
 QMVideoSettingsCallback::~QMVideoSettingsCallback() {
 }
 
 int32_t QMVideoSettingsCallback::SetVideoQMSettings(
-    const uint32_t frame_rate,
-    const uint32_t width,
-    const uint32_t height) {
+													const uint32_t frame_rate,
+													const uint32_t width,
+													const uint32_t height) {
+	if (stats_proxy_)
+		stats_proxy_->OnQMSettingChange(frame_rate, width, height);
   return vpm_->SetTargetResolution(width, height, frame_rate);
 }
 
+void QMVideoSettingsCallback::SetSendStatsCallback(SendStatisticsProxy *stats_proxy)
+{
+	stats_proxy_ = stats_proxy;
+}
+
+void QMVideoSettingsCallback::InitQMSetting(const uint32_t frame_rate,
+											const uint32_t width,
+											const uint32_t height) {
+	if (stats_proxy_)
+	{
+		stats_proxy_->OnQMSettingChange(frame_rate, width, height);
+	}
+}
 
 }  // namespace cloopenwebrtc

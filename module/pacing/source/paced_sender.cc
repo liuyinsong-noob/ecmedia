@@ -352,6 +352,8 @@ int32_t PacedSender::Process() {
       SendPadding(static_cast<size_t>(padding_needed));
     }
   }
+
+  callback_->BucketDelay(QueueInMs()); //add by ylr
   return 0;
 }
 

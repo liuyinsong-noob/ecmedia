@@ -5,6 +5,7 @@
 #include "voe_codec.h"
 #include "voe_rtp_rtcp.h"
 #include "voe_audio_processing.h"
+#include "voe_volume_control.h"
 
 #include <sstream>
 
@@ -12,11 +13,10 @@ extern char* filename_path;
 
 namespace cloopenwebrtc{
 
-	AudioSendStream::AudioSendStream(VoiceEngine* voe, int channel)
+	AudioSendStream::AudioSendStream(VoiceEngine* voe, int channel_id)
 		: voe_(voe),
 		  thread_(ThreadWrapper::CreateThread(AudioSendStream::AudioSendStatisticsThreadRun, this, kNormalPriority, "AudioSendStatisticsThread")),
-			trace_file_(*FileWrapper::Create()),
-			channel_(channel),
+		  channel_id_(channel_id),
 		  clock_(Clock::GetRealTimeClock()),
 		  last_process_time_(clock_->TimeInMilliseconds()),
 		  crit_(CriticalSectionWrapper::CreateCriticalSection())
@@ -28,14 +28,6 @@ namespace cloopenwebrtc{
 
 	AudioSendStream::~AudioSendStream()
 	{
-		
-		if (trace_file_.Open())
-		{
-			trace_file_.Flush();
-			trace_file_.CloseFile();
-		}
-		delete &trace_file_;
-
 		thread_->SetNotAlive();
 		updateEvent_->Set();
 
@@ -64,88 +56,17 @@ namespace cloopenwebrtc{
 		if (now >= last_process_time_ + kUpdateIntervalMs) {
 			//统计各种发送信息
 			last_process_time_ = now;
+			CriticalSectionScoped lock(crit_.get());
 			UpdateStats();
 		}
 		return true;
 	}
 
-	std::string AudioSendStream::GenerateFileName(int channel)
+	AudioSendStream::Stats AudioSendStream::GetStats(int64_t &timestamp) const
 	{
-		std::string szRet = "";
-		char timeBuffer[128];
-#ifdef _WIN32
-		sprintf(timeBuffer, "audiochannel%d_SendStats.data",channel);
-#else
-		sprintf(timeBuffer, "%s/audiochannel%d_SendStats.data",filename_path, channel);
-#endif
-		szRet = timeBuffer;
-		return szRet;
-	}
-
-	std::string AudioSendStream::ToString() const
-	{
-		char timeBuffer[128];
- 		char formatString[128];
-//		time_t nowtime = time(NULL);
-		tm timeTemp;
-		//	localtime_s(&timeTemp, &nowtime);
-		int microseconds;
-		CurrentTmTime(&timeTemp, &microseconds);
-		sprintf(timeBuffer, "%02d/%02d/%04d %02d:%02d:%02d",
-			timeTemp.tm_mon + 1, timeTemp.tm_mday, 	
-			timeTemp.tm_year + 1900,
-			timeTemp.tm_hour, timeTemp.tm_min, timeTemp.tm_sec);
-
 		CriticalSectionScoped lock(crit_.get());
-		std::stringstream ss;
-		ss << "audioSend timestamp=" << timeBuffer;
-		ss << "\tCodecName=" << audioSendStats_.codec_name;
-
-		memset(formatString, 0, 128);
-		sprintf(formatString, "%-9d", audioSendStats_.bytes_sent);
-		ss << "\tbytesSent=" << formatString;
-
-		memset(formatString, 0, 128);
-		sprintf(formatString, "%-9d", audioSendStats_.packets_sent);
-		ss << "\tpacketsSent=" << formatString;
-
-		memset(formatString, 0, 128);
-		sprintf(formatString, "%-9d", audioSendStats_.rtt_ms);
-		ss << "\tRtt=" << formatString;
-
-		memset(formatString, 0, 128);
-		sprintf(formatString, "%-9d", audioSendStats_.jitter_ms);
-		ss << "\tJitterReceived=" << formatString;
-
-		memset(formatString, 0, 128);
-		sprintf(formatString, "%-9d", audioSendStats_.packets_lost);
-		ss << "\tpacketsLost=" << formatString;
-
-		memset(formatString, 0, 128);
-		sprintf(formatString, "%-4d", audioSendStats_.echo_delay_median_ms);
-		ss << "\tEcEchoDelayMedian=" << formatString;
-
-		memset(formatString, 0, 128);
-		sprintf(formatString, "%-4d", audioSendStats_.echo_delay_std_ms);
-		ss << "\tEcEchoDelayStdDev=" << formatString;
-
-		memset(formatString, 0, 128);
-		sprintf(formatString, "%-4d", audioSendStats_.echo_return_loss);
-		ss << "\tEcReturnLoss=" << formatString;
-
-		memset(formatString, 0, 128);
-		sprintf(formatString, "%-4d", audioSendStats_.echo_return_loss_enhancement);
-		ss << "\tEcRetrunLossEnhancement=" << formatString;
-
-		ss << "\r\n";
-
-		return ss.str();
-	}
-
-	int AudioSendStream::ToString(FileWrapper *pFile)
-	{
-		pFile->Write(ToString().c_str(), ToString().length());
-		return 0;
+		timestamp = clock_->TimeInMilliseconds();
+		return audioSendStats_;
 	}
 
 	void AudioSendStream::UpdateStats()
@@ -153,10 +74,12 @@ namespace cloopenwebrtc{
 		VoECodec *voe_codec = VoECodec::GetInterface(voe_);
 		VoERTP_RTCP *voe_rtprtcp = VoERTP_RTCP::GetInterface(voe_);
 		VoEAudioProcessing *voe_process = VoEAudioProcessing::GetInterface(voe_);
+		VoEVolumeControl *voe_volume = VoEVolumeControl::GetInterface(voe_);
+
 		if (voe_codec)
 		{
 			CodecInst sendcodec;
-			voe_codec->GetSendCodec(channel_, sendcodec);
+			voe_codec->GetSendCodec(channel_id_, sendcodec);
 			audioSendStats_.codec_name = sendcodec.plname;
 			voe_codec->Release();
 		}
@@ -164,8 +87,8 @@ namespace cloopenwebrtc{
 		if (voe_rtprtcp)
 		{
 			CallStatistics callstats;
-			voe_rtprtcp->GetLocalSSRC(channel_, audioSendStats_.local_ssrc);
-			voe_rtprtcp->GetRTCPStatistics(channel_, callstats);
+			voe_rtprtcp->GetLocalSSRC(channel_id_, audioSendStats_.local_ssrc);
+			voe_rtprtcp->GetRTCPStatistics(channel_id_, callstats);
 			audioSendStats_.bytes_sent = callstats.bytesSent;
 			audioSendStats_.packets_sent = callstats.packetsSent;
 			audioSendStats_.jitter_ms = callstats.jitterSamples;
@@ -191,69 +114,12 @@ namespace cloopenwebrtc{
 			}			
 			voe_process->Release();
 		}
-	}
-
-	void AudioSendStream::FillUploadStats()
-	{
-		CriticalSectionScoped lock(crit_.get());
-		memset(&UploadStats, 0, sizeof(UploadStats));
-		memcpy(UploadStats.WhichStats, "AS", 2);
-		memcpy(UploadStats.Version, "1", 2);
-		memcpy(UploadStats.CodecName, audioSendStats_.codec_name.c_str(), 4);
-		UploadStats.BytesSent = audioSendStats_.bytes_sent;
-		UploadStats.PacketsSent = audioSendStats_.packets_sent;
-		UploadStats.Rtt = audioSendStats_.rtt_ms;
-		UploadStats.JitterReceived = audioSendStats_.jitter_ms;
-		UploadStats.PacketsLost = audioSendStats_.packets_lost;
-		UploadStats.EcEchoDelayMedian = audioSendStats_.echo_delay_median_ms;
-		UploadStats.EcEchoDelayStdDev = audioSendStats_.echo_delay_std_ms;
-		UploadStats.EcReturnLoss = audioSendStats_.echo_return_loss;
-		UploadStats.EcRetrunLossEnhancement = audioSendStats_.echo_return_loss_enhancement;
-	}
-	int AudioSendStream::ToBinary(char* buffer, int buffer_length)
-	{		
-		FillUploadStats();
-		int length = sizeof(UploadStats);
-		if(buffer_length < length)
-			return -1;
-		memcpy(buffer, &UploadStats, length);
-		return length;
-	}
-
-	int AudioSendStream::ToFile(FileWrapper *pFile)
-	{
-		if (pFile)
+		if (voe_volume)
 		{
-			FillUploadStats();
-			pFile->Write(UploadStats.WhichStats, sizeof(UploadStats.WhichStats));
-			pFile->Write(UploadStats.Version, sizeof(UploadStats.Version));
-			pFile->Write(&UploadStats.CodecName, sizeof(UploadStats.CodecName));
-			pFile->Write(&UploadStats.BytesSent, sizeof(UploadStats.BytesSent));
-			pFile->Write(&UploadStats.PacketsSent, sizeof(UploadStats.PacketsSent));
-			pFile->Write(&UploadStats.Rtt, sizeof(UploadStats.Rtt));
-			pFile->Write(&UploadStats.JitterReceived, sizeof(UploadStats.JitterReceived));
-			pFile->Write(&UploadStats.PacketsLost, sizeof(UploadStats.PacketsLost));
-			pFile->Write(&UploadStats.EcEchoDelayMedian, sizeof(UploadStats.EcEchoDelayMedian));
-			pFile->Write(&UploadStats.EcEchoDelayStdDev, sizeof(UploadStats.EcEchoDelayStdDev));
-			pFile->Write(&UploadStats.EcReturnLoss, sizeof(UploadStats.EcReturnLoss));
-			pFile->Write(&UploadStats.EcRetrunLossEnhancement, sizeof(UploadStats.EcRetrunLossEnhancement));
-
-			int length = 0;
-			length = sizeof(UploadStats.WhichStats)
-				+sizeof(UploadStats.Version)
-				+sizeof(UploadStats.CodecName)
-				+sizeof(UploadStats.BytesSent)
-				+sizeof(UploadStats.PacketsSent)
-				+sizeof(UploadStats.Rtt)
-				+sizeof(UploadStats.JitterReceived)
-				+sizeof(UploadStats.PacketsLost)
-				+sizeof(UploadStats.EcEchoDelayMedian)
-				+sizeof(UploadStats.EcEchoDelayStdDev)
-				+sizeof(UploadStats.EcReturnLoss)
-				+sizeof(UploadStats.EcRetrunLossEnhancement);
-
-			return length;
+			uint32_t level = 0;
+			voe_volume->GetSpeechInputLevelFullRange(level); //[0, 32768]
+			audioSendStats_.audio_level = static_cast<int32_t>(level);
+			voe_volume->Release();
 		}
-		return -1;
 	}
 }

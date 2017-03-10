@@ -239,6 +239,7 @@ public:
 //	virtual int RegisterServiceCoreCallBack(int channel, ServiceCoreCallBack *messageCallBack, const char* call_id, int firewall_policy);
     virtual int SetFecStatus(int channel, bool enable);
     virtual int SetLoss(int channel, int loss);
+	virtual void* GetChannel(int channelid);
 
 //---end
 };

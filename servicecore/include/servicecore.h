@@ -12,6 +12,9 @@
 //#include "thread_wrapper.h"
 #include "StunMessageCallBack.h"
 #include "common_types.h"
+
+#include "MediaStatisticsData.pb.h"
+
 //#ifdef VIDEO_ENABLED
 //#include "vie_capture.h"
 //#include "vie_network.h"
@@ -1090,6 +1093,8 @@ public:
 		_StreamDataCounters& sent,
 		_StreamDataCounters& received);
 
+	int GetStatsData(int type, char* callid, void **pb_data);
+	void DeleteStatsData(void *pb_data);
 	//int GetSendStats(const char* callid, cloopenwebrtc::VideoSendStream::Stats &sendStats);
     int Serphone_enable_opus_FEC(bool enable);
     int Serphone_set_opus_packet_loss_rate(int rate);

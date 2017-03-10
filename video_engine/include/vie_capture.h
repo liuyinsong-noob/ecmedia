@@ -20,14 +20,12 @@
 
 #include "common_types.h"
 #include "i420_video_frame.h"
-#include "send_statistics_proxy.h"
 
 namespace cloopenwebrtc {
 
 class VideoEngine;
 class VideoCaptureModule;
 class ViEFrameCallback; //add 
-class SendStatisticsProxy;
 
 // This structure describes one set of the supported capabilities for a capture
 // device.
@@ -273,9 +271,7 @@ class WEBRTC_DLLEXPORT ViECapture {
 	  virtual int DeregisterFrameCallback(int capture_id, ViEFrameCallback* callbackObject)=0;
 
 	  virtual int SetCaptureSettings(const int capture_id, CaptureCapability settings) = 0;   //设置摄像头采集参数
- 
-	  virtual int SetSendStatisticsProxy(const int capture_id, SendStatisticsProxy* p_sendStats) = 0;
-	  //---end
+																							  //---end
     virtual int UpdateLossRate(const int capture_id, int lossRate) = 0;
 };
 

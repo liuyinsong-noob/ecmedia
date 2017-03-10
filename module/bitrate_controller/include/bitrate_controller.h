@@ -38,6 +38,14 @@ class BitrateObserver {
   virtual ~BitrateObserver() {}
 };
 
+class SendsideBweObserver {
+public:
+	virtual ~SendsideBweObserver() {}
+	virtual void OnSendsideBwe(uint32_t* estimated_bandwidth,
+							uint8_t *loss,
+							int64_t *rtt) = 0;
+};
+
 class BitrateController : public Module {
 /*
  * This class collects feedback from all streams sent to a peer (via
@@ -83,6 +91,9 @@ class BitrateController : public Module {
   virtual void SetBitrateSent(uint32_t bitrate_sent_bps) = 0;
 
   virtual void SetCodecMode(cloopenwebrtc::VideoCodecMode mode) = 0;
+
+  virtual void RegisterSendsideBweObserver(SendsideBweObserver *observer) = 0;
+  virtual void DeregisterSendsideBweObserver() = 0;
 };
 }  // namespace webrtc
 #endif  // WEBRTC_MODULES_BITRATE_CONTROLLER_INCLUDE_BITRATE_CONTROLLER_H_

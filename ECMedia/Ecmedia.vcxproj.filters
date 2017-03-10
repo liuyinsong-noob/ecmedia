@@ -57,6 +57,12 @@
     <ClInclude Include="include\RecordLocal.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="source\curl_post.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="source\MediaStatisticsData.pb.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\base64.c">
@@ -84,6 +90,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="source\ECLiveStream_rtmp.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\curl_post.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\MediaStatisticsData.pb.cc">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="source\RecordLocal.cpp">

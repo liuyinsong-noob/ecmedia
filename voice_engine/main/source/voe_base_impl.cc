@@ -2087,4 +2087,22 @@ bool VoEBaseImpl::GetRecordingIsInitialized()
     assert(_shared->audio_device() != NULL);
     return _shared->audio_device()->RecordingIsInitialized();
 }
+
+void* VoEBaseImpl::GetChannel(int channelid)
+{
+	CriticalSectionScoped cs(_shared->crit_sec());
+
+	if (!_shared->statistics().Initialized())
+	{
+		_shared->SetLastError(VE_NOT_INITED, kTraceError);
+		return nullptr;
+	}
+	voe::ChannelOwner sc = _shared->channel_manager().GetChannel(channelid);
+	voe::Channel* channelPtr = sc.channel();
+	if (channelPtr == NULL)
+	{
+		return nullptr;
+	}
+	return channelPtr;
+}
 }  // namespace cloopenwebrtc

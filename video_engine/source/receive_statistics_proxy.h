@@ -12,7 +12,9 @@
 #define WEBRTC_VIDEO_RECEIVE_STATISTICS_PROXY_H_
 
 #include <string>
-
+#ifdef WIN32
+#include "initializer_list"
+#endif
 #include "module.h"
 
 #include "thread_annotations.h"
@@ -26,7 +28,8 @@
 #include "video_renderer.h"
 #include "video_render_defines.h"
 #include "event_wrapper.h"
-#include "file_wrapper.h"
+//#include "file_wrapper.h"
+#include "stats_types.h"
 
 namespace cloopenwebrtc {
 
@@ -37,47 +40,16 @@ class ViEDecoderObserver;
 
 class ReceiveStatisticsProxy : public Module,
 							   public ViEDecoderObserver,
-                               public VCMReceiveStatisticsCallback,
 							   public RtcpPacketTypeCounterObserver,
                                public RtcpStatisticsCallback,
                                public StreamDataCountersCallback,
 							   public I420FrameCallback,
 							   public VideoRenderCallback{
-public:
-	struct UploadStats1
-	{
-		char WhichStats[2];
-		char Version[2];
-		char CodecName[4];
-		int FrameWidthReceived;
-		int FrameHeightReceived;
-		int64_t BytesReceived;
-		uint32_t PacketsReceived;
-		uint32_t PacketsLost;
-		int CurrentDelayMs;
-		int DecodeMs;
-		int JitterBufferMs;
-		int MaxDecodeMs;
-		int MinPlayoutDelayMs;
-		int RenderDelayMs;
-		int TargetDelayMs;
-		int NacksSent;
-
-		int FrameRateReceived;
-		int FrameRateDecoded;
-		int FrameRateOutput;
-
-	};
  public:
-  ReceiveStatisticsProxy(int video_channel);
+  ReceiveStatisticsProxy(int channel_id);
   virtual ~ReceiveStatisticsProxy();
 
-  std::string ToString() const;
-  int ToBinary(char* buffer, int buffer_length);
-  int ToFile(FileWrapper *pFile);
-  int ToString(FileWrapper *pFile);
-
-  VideoReceiveStream::Stats GetStats() const;
+  VideoReceiveStream::Stats GetStats(int64_t &timestamp) const;
 
   void OnDecodedFrame();
   void OnRenderedFrame();
@@ -86,17 +58,13 @@ public:
   virtual int64_t TimeUntilNextProcess() OVERRIDE;
   virtual int32_t Process() OVERRIDE;
 
-  // Overrides VCMReceiveStatisticsCallback
-  virtual void OnReceiveRatesUpdated(uint32_t bitRate,
-                                     uint32_t frameRate) OVERRIDE;
-  virtual void OnFrameCountsUpdated(const FrameCounts& frame_counts) OVERRIDE;
-  virtual void OnDiscardedPacketsUpdated(int discarded_packets) OVERRIDE;
+  void OnDiscardedPacketsUpdated(int discarded_packets);
 
   // Overrides ViEDecoderObserver.
-  virtual void IncomingCodecChanged(const int video_channel,
+  virtual void IncomingCodecChanged(const int channel_id,
                                     const VideoCodec& video_codec) OVERRIDE; 
 
-  virtual void IncomingRate(const int video_channel,
+  virtual void IncomingRate(const int channel_id,
                             const unsigned int framerate,
                             const unsigned int bitrate_bps) OVERRIDE;
   virtual void DecoderTiming(int decode_ms,
@@ -129,20 +97,21 @@ public:
   virtual int32_t RenderFrame(const WebRtc_UWord32 streamId,
 								I420VideoFrame& videoFrame) OVERRIDE;
 
-private:
-	std::string GenerateFileName(int video_channel);
-	void FillUploadStats();
+  int channelId() { return channel_id_; }
 
+private:
+#ifdef WIN32
+	void post_message(int reportType, std::initializer_list<StatsReport::Value> values);
+#endif
  private:
+  int channel_id_;
   Clock* const clock_;
   scoped_ptr<CriticalSectionWrapper> crit_;
   int64_t             last_process_time_;
   VideoReceiveStream::Stats stats_ GUARDED_BY(crit_);
-  FileWrapper&  trace_file_;
   EventWrapper* updateEvent_;
   RateStatistics decode_fps_estimator_ GUARDED_BY(crit_);
   RateStatistics renders_fps_estimator_ GUARDED_BY(crit_);
-  UploadStats1 UploadStats;
 };
 
 }  // namespace webrtc

@@ -206,8 +206,6 @@ class ViECapturer
 
   scoped_ptr<OveruseFrameDetector> overuse_detector_;
 
-  SendStatisticsProxy* send_statistics_;
-
   //---begin
   public:
 	  virtual int RegisterFrameCallback(int capture_id, ViEFrameCallback* callbackObject);

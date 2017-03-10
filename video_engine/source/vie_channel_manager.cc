@@ -134,10 +134,15 @@ int ViEChannelManager::CreateChannel(int* channel_id,
 
   //add by ylr
   SendStatisticsProxy *p_sendStats = vie_encoder->GetSendStatisticsProxy();
-  p_sendStats->SetCallStats(group->GetCallStats());
-  p_sendStats->SetBitrateController(bitrate_controller);
-  p_sendStats->SetRemoteBitrateEstimator(remote_bitrate_estimator);
-
+  
+  if (p_sendStats)
+  {
+	  group->GetCallStats()->RegisterStatsObserver(p_sendStats);
+	  p_sendStats->SetRemoteBitrateEstimator(remote_bitrate_estimator);
+	  bitrate_controller->RegisterSendsideBweObserver(p_sendStats);
+  }
+  
+  
   return 0;
 }
 
@@ -214,8 +219,6 @@ int ViEChannelManager::CreateChannel(int* channel_id,
 
   //add by ylr
   SendStatisticsProxy *p_sendStats = vie_encoder->GetSendStatisticsProxy();
-  p_sendStats->SetCallStats(channel_group->GetCallStats());
-  p_sendStats->SetBitrateController(bitrate_controller);
   p_sendStats->SetRemoteBitrateEstimator(remote_bitrate_estimator);
 
   return 0;
@@ -247,10 +250,18 @@ int ViEChannelManager::DeleteChannel(int channel_id) {
     assert(e_it != vie_encoder_map_.end());
     vie_encoder = e_it->second;
 
-    group = FindGroup(channel_id);
+	group = FindGroup(channel_id);
     group->GetCallStats()->DeregisterStatsObserver(
         vie_channel->GetStatsObserver());
     group->SetChannelRembStatus(channel_id, false, false, vie_channel);
+
+	//add by ylr
+	if (vie_encoder->channel_id() == channel_id)
+	{
+		SendStatisticsProxy *p_sendStats = vie_encoder->GetSendStatisticsProxy();
+		group->GetCallStats()->DeregisterStatsObserver(p_sendStats);
+		group->GetBitrateController()->DeregisterSendsideBweObserver();
+	}
 
     // Remove the feedback if we're owning the encoder.
     if (vie_encoder->channel_id() == channel_id) {

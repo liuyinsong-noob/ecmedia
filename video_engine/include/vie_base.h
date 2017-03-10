@@ -27,6 +27,7 @@ class Config;
 class VoiceEngine;
 class ReceiveStatisticsProxy;
 class SendStatisticsProxy;
+struct CpuOveruseMetrics;
 
 // CpuOveruseObserver is called when a system overuse is detected and
 // VideoEngine cannot keep up the encoding frequency.
@@ -36,6 +37,11 @@ class CpuOveruseObserver {
   virtual void OveruseDetected() = 0;
   // Called periodically when the system is not overused any longer.
   virtual void NormalUsage() = 0;
+
+  virtual void FrameSizeChanged( const int width,
+								 const int height) = 0;
+
+  virtual void CpuOveruseMetricsMeasurements(const CpuOveruseMetrics &metrics)=0;
 
  protected:
   virtual ~CpuOveruseObserver() {}
@@ -216,6 +222,9 @@ class WEBRTC_DLLEXPORT ViEBase {
   virtual int RegisterCpuOveruseObserver(int channel,
                                          CpuOveruseObserver* observer) = 0;
 
+
+  virtual int DeregisterCpuOveruseObserver(int channel) = 0;
+
   // Sets options for cpu overuse detector.
   virtual int SetCpuOveruseOptions(int channel,
                                    const CpuOveruseOptions& options) = 0;
@@ -260,10 +269,6 @@ class WEBRTC_DLLEXPORT ViEBase {
   virtual void RegisterSendStatisticsProxy(
       int channel,
       SendStatisticsProxy* send_statistics_proxy) = 0;
-
-  virtual void RegisterReceiveStatisticsProxy(
-      int channel,
-      ReceiveStatisticsProxy* receive_statistics_proxy) = 0;
 
   virtual SendStatisticsProxy* GetSendStatisticsProxy(const int video_channel)=0;
   virtual ReceiveStatisticsProxy* GetReceiveStatisticsProxy(const int video_channel)=0;

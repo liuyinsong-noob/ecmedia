@@ -8,6 +8,10 @@
 
 #include <string>
 #include <ctype.h>
+
+#ifdef WIN32
+#include "curl_post.h"
+#endif
 #include "ECMedia.h"
 #include "voe_base.h"
 #include "voe_volume_control.h"
@@ -24,7 +28,6 @@
 #include "VoeObserver.h"
 #include "amrnb_api.h"
 #include "ECLiveStream.h"
-
 #ifdef WIN32
 #include "codingHelper.h"
 #endif
@@ -46,6 +49,13 @@
 #endif
 
 #include "base64.h"
+#include "MediaStatisticsData.pb.h"
+
+#ifdef ENABLE_LIB_CURL
+#ifdef WIN32
+CurlPost *g_curlpost = nullptr;
+#endif
+#endif
 
 enum {
     ERR_SDK_ALREADY_INIT =-1000,
@@ -127,6 +137,10 @@ WindowShare *m_pWindowlist=NULL;
 
 #endif
 
+#ifdef ENABLE_LIB_CURL
+char g_accountId[128]={'\0'};
+#endif
+
 static CameraInfo *m_cameraInfo = NULL;
 
 static char gVersionString[256]={'\0'};
@@ -136,7 +150,6 @@ using namespace cloopenwebrtc;
 using namespace std;
 
 #define ECMEDIA_VERSION "2.1.2.16"
-
 
 //extern bool g_media_TraceFlag;
 //void PrintConsole(const char * fmt,...){};
@@ -531,6 +544,13 @@ int ECMedia_init_video()
     videobase->Release();
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 #endif
+
+	if (!g_statsCollector)
+	{
+		g_statsCollector = new StatsCollector();
+	}
+	g_statsCollector->SetVideoEngin(m_vie);
+	
     return 0;
 }
 
@@ -563,6 +583,11 @@ int ECMedia_uninit_video()
 
     PrintConsole("media_uninit_video called out\n");
 #endif
+	if (g_statsCollector)
+	{
+		delete g_statsCollector;
+		g_statsCollector = nullptr;
+	}
     return 0;
 
 }
@@ -679,6 +704,23 @@ int ECMedia_init_audio()
 		viebase->Release();
 	}
 #endif
+	if (!g_statsCollector)
+	{
+		g_statsCollector = new StatsCollector();
+	}	
+	g_statsCollector->SetVoiceEngin(m_voe);
+
+#ifdef ENABLE_LIB_CURL
+#ifdef	WIN32
+	if (!g_curlpost)
+	{
+		const char* url = "failover:(tcp://192.168.177.186:61616"")";
+		std::string username("admin");
+		std::string password("admin");
+		g_curlpost = new CurlPost(url, username, password);
+	}
+#endif
+#endif
     PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
     return 0;
 }
@@ -686,6 +728,15 @@ int ECMedia_init_audio()
 int ECMedia_uninit_audio()
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
+#ifdef ENABLE_LIB_CURL
+#ifdef WIN32
+	if (g_curlpost)
+	{
+		delete g_curlpost;
+		g_curlpost = nullptr;
+	}
+#endif
+#endif
     if( !m_voe)
     {
         PrintConsole("[ECMEDIA WARNNING] %s failed with error code: %d.", __FUNCTION__ , -99);
@@ -705,7 +756,13 @@ int ECMedia_uninit_audio()
         delete g_VoeObserver;
         g_VoeObserver = NULL;
     }
-    PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+
+	if (g_statsCollector)
+	{
+		delete g_statsCollector;
+		g_statsCollector = nullptr;
+	}
+	PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
     return 0;
 }
 
@@ -861,7 +918,7 @@ int ECMedia_video_start_receive(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	//ECMedia_set_video_RecvStatistics_proxy(channelid, "AVStats.data", 1000);
+	g_statsCollector->AddVideoRecvStatsProxy(channelid);
     ViEBase *base = ViEBase::GetInterface(m_vie);
     if (base) {
         int ret = base->StartReceive(channelid);
@@ -880,7 +937,7 @@ int ECMedia_video_stop_receive(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	//ECMedia_stop_Statistics_proxy();
+	g_statsCollector->DeleteVideoRecvStatsProxy(channelid);
     ViEBase *base = ViEBase::GetInterface(m_vie);
     if (base) {
         int ret = base->StopReceive(channelid);
@@ -899,7 +956,7 @@ int ECMedia_video_start_send(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	//ECMedia_set_video_SendStatistics_proxy(channelid, "AVstats.data", 1000);
+	g_statsCollector->AddVideoSendStatsProxy(channelid);
     ViEBase *base = ViEBase::GetInterface(m_vie);
     if (base) {
         int ret = base->StartSend(channelid);
@@ -918,7 +975,7 @@ int ECMedia_video_stop_send(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	//ECMedia_stop_Statistics_proxy();
+	g_statsCollector->DeleteVideoSendStatsProxy(channelid);
     ViEBase *base = ViEBase::GetInterface(m_vie);
     if (base) {
         int ret = base->StopSend(channelid);
@@ -1189,7 +1246,7 @@ int ECMedia_audio_start_receive(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	//ECMedia_set_audio_RecvStatistics_proxy(channelid, "AVStats.data", 1000);
+    g_statsCollector->AddAudioRecvStatsProxy(channelid);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
         base->StartReceive(channelid);
@@ -1208,7 +1265,7 @@ int ECMedia_audio_stop_receive(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	//ECMedia_stop_Statistics_proxy();
+	g_statsCollector->DeleteAudioRecvStatsProxy(channelid);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
         base->StopReceive(channelid);
@@ -1227,7 +1284,7 @@ int ECMedia_audio_start_send(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	//ECMedia_set_audio_SendStatistics_proxy(channelid, "AVStats.data", 1000);
+	g_statsCollector->AddAudioSendStatsProxy(channelid);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
         base->StartSend(channelid);
@@ -1246,7 +1303,7 @@ int ECMedia_audio_stop_send(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	//ECMedia_stop_Statistics_proxy();
+	g_statsCollector->DeleteAudioSendStatsProxy(channelid);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
         base->StopSend(channelid);
@@ -3873,114 +3930,6 @@ int ECMedia_stop_record_send_voice()
 	return -1;
 }
 
-#ifdef VIDEO_ENABLED
-int ECMedia_set_video_SendStatistics_proxy(int channelid, char* filePath, int intervalMs)
-{
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
-	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-
-	if (!g_statsCollector)
-	{
-		g_statsCollector = new StatsCollector(filePath, intervalMs);		
-	}
-	if (!g_statsCollector->m_vie)
-	{
-		g_statsCollector->SetVideoEngin(m_vie);
-	}
-	if (g_statsCollector->SetVideoSendStatisticsProxy(channelid, g_CaptureDeviceId))
-    {
-        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
-        return 0;
-    }
-	else
-    {
-        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
-        return -1;
-    }
-}
-int ECMedia_set_video_RecvStatistics_proxy(int channelid, char* filePath, int intervalMs)
-{
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
-	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	if (!g_statsCollector)
-	{
-		g_statsCollector = new StatsCollector(filePath, intervalMs);
-	}
-	if (!g_statsCollector->m_vie)
-	{
-		g_statsCollector->SetVideoEngin(m_vie);
-	}
-	if (g_statsCollector->SetVideoRecvStatisticsProxy(channelid))
-    {
-        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
-        return 0;
-    }
-	else
-    {
-        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
-        return -1;
-    }
-}
-#endif
-
-int ECMedia_set_audio_SendStatistics_proxy(int channelid, char* filePath, int intervalMs)
-{
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
-	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	if (!g_statsCollector)
-	{
-		g_statsCollector = new StatsCollector(filePath, intervalMs);
-	}
-	if (!g_statsCollector->m_voe)
-	{
-		g_statsCollector->SetVoiceEngin(m_voe);
-	}
-	if (g_statsCollector->SetAudioSendStatisticsProxy(channelid))
-    {
-        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
-        return 0;
-    }
-	else
-    {
-        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
-        return -1;
-    }
-}
-int ECMedia_set_audio_RecvStatistics_proxy(int channelid, char* filePath, int intervalMs)
-{
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
-	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	if (!g_statsCollector)
-	{
-		g_statsCollector = new StatsCollector(filePath, intervalMs);
-	}
-	if (!g_statsCollector->m_voe)
-	{
-		g_statsCollector->SetVoiceEngin(m_voe);
-	}
-	if (g_statsCollector->SetAudioRecvStatisticsProxy(channelid))
-    {
-        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
-        return 0;
-    }
-	else
-    {
-        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -1);
-        return -1;
-    }
-}
-
-int ECMedia_stop_Statistics_proxy()
-{
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
-	if (g_statsCollector)
-	{
-		delete g_statsCollector;
-		g_statsCollector = NULL;
-	}
-    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
-	return 0;
-}
 int ECMedia_set_CaptureDeviceID(int videoCapDevId)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
@@ -4023,7 +3972,8 @@ int ECMedia_allocate_desktopShare_capture(int& desktop_captureid, int capture_ty
 		else
 			PrintConsole("%s AllocateDesktopShareCapturer desktop_captureid:%d", __FUNCTION__, desktop_captureid);
 		vie_desktopshare->Release();
-        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
+		g_statsCollector->SetVideoCaptureDeviceId(desktop_captureid);
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 		return ret;
 	}
 	else
@@ -4505,6 +4455,26 @@ ECMEDIA_API void ECMedia_stopRecordLocalMedia()
    
     PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);
 #endif
+}
+
+int ECMedia_getStatsReports(int type, char* callid, void** mediaStatisticsDataInner)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+	if (g_statsCollector)
+	{
+		g_statsCollector->GetStats((StatsContentType)type, callid, (MediaStatisticsDataInner**)mediaStatisticsDataInner);
+		return 0;
+	}
+	return -99;
+}
+
+void ECMedia_deletePbData(void* mediaStatisticsDataInner)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+	if (g_statsCollector)
+	{
+		g_statsCollector->DeletePbData((MediaStatisticsDataInner*)mediaStatisticsDataInner);
+	}
 }
 
 #endif

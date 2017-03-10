@@ -59,44 +59,41 @@ class AudioSendStream {
     bool typing_noise_detected;
   };
 
-  struct UploadStats1
+  enum LINEINFO
   {
-	  char WhichStats[2];
-	  char Version[2];
-	  char CodecName[4];
-	  int32_t PacketsSent;
-	  int32_t JitterReceived;
-	  int32_t PacketsLost;
-	  int32_t EcEchoDelayMedian;
-	  int32_t EcEchoDelayStdDev;
-	  int32_t EcReturnLoss;
-	  int32_t EcRetrunLossEnhancement;
-	  int64_t BytesSent;
-	  int64_t Rtt;
+	  VIDEOSEND = 0,
+	  VIDEORECV,
+	  AUDIOSEND,
+	  AUDIORECV
+  };
+  enum VERSIONINFO
+  {
+	  COMPLETE = 0,
+	  SPECIAL
+  };
+  enum CODECNAME
+  {
+	  PCMU = 0,
+	  G729,
+	  OPUS,
+	  UNKOWN
   };
 
 public:
   AudioSendStream(VoiceEngine* voe, int channel);
   ~AudioSendStream();
 
-  Stats GetStats() const;
+  Stats GetStats(int64_t &timestamp) const;
   static bool AudioSendStatisticsThreadRun(void* obj);
   bool ProcessSendStatistics();
-  std::string ToString() const;
-  int ToBinary(char* buffer, int buffer_length);
-  int ToFile(FileWrapper *pFile);
-  int ToString(FileWrapper *pFile);
+  int channelId() { return channel_id_; }
 private:
-	std::string GenerateFileName(int channel);
 	void UpdateStats();
-	void FillUploadStats();
 private:
 	VoiceEngine *voe_;
-	int channel_;
+	int channel_id_;
 	Stats audioSendStats_;
-	UploadStats1 UploadStats;
 	ThreadWrapper *thread_;
-	FileWrapper&		 trace_file_;
 	EventWrapper *		 updateEvent_;
 	Clock*              clock_;
 	int64_t             last_process_time_;

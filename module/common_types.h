@@ -15,6 +15,7 @@
 
 #include <string>
 #include <vector>
+#include <sstream>
 
 #include "typedefs.h"
 
@@ -685,6 +686,18 @@ struct SimulcastStream {
 
 	bool operator!=(const SimulcastStream& other) const {
 		return !(*this == other);
+	}
+
+	std::string ToString() const {
+		std::stringstream ss;
+		ss << "{width: " << width;
+		ss << ", height: " << height;
+		ss << ", max_bitrate: " << maxBitrate;
+		ss << ", min_bitrate: " << minBitrate;
+		ss << ", target_bitrate: " << targetBitrate;
+		ss << ", temporal_layer_num: " << (int)numberOfTemporalLayers;
+		ss << '}';
+		return ss.str();
 	}
 };
 

@@ -1419,4 +1419,9 @@ bool ModuleRtpRtcpImpl::IsDefaultModule() const {
   return !child_modules_.empty();
 }
 
+void ModuleRtpRtcpImpl::SetSendRtcpPacketTypeCountObserver(RtcpPacketTypeCounterObserver *observer)
+{
+	rtcp_sender_.SetRtcpPacketTypeCountObserver(observer);
+}
+
 }  // Namespace webrtc

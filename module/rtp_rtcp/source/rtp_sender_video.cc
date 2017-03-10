@@ -23,6 +23,10 @@
 #include "logging.h"
 #include "trace_event.h"
 
+#ifdef ENABLE_LIB_CURL
+#include "curl_perform.h"
+#endif
+
 namespace cloopenwebrtc {
 enum { REDForFECHeaderLength = 1 };
 
@@ -373,6 +377,13 @@ bool RTPSenderVideo::Send(const RtpVideoCodecTypes videoType,
 void RTPSenderVideo::ProcessBitrate() {
   _videoBitrate.Process();
   _fecOverheadRate.Process();
+#ifdef ENABLE_LIB_CURL
+  char postdata[128];
+  sprintf(postdata, "body=%s,VideoPacketsRate:%d,FecPacketsRate:%d",
+	  "direction:send,type:PacketsRate", \
+	  _videoBitrate.PacketRate(), _fecOverheadRate.PacketRate());
+  curl_post(postdata);
+#endif
 }
 
 uint32_t RTPSenderVideo::VideoBitrateSent() const {

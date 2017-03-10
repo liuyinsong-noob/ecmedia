@@ -13,6 +13,7 @@
 
 #include <map>
 #include <string>
+#include <list>
 
 #include "common_types.h"
 #include "config.h"
@@ -37,182 +38,90 @@ class VideoSendStreamInput {
 
 class VideoSendStream {
  public:
+	 struct CallStats {
+		 CallStats() :
+			 sendside_bwe_bps(0),
+			 recv_bandwidth_bps(0),
+			 pacer_delay_ms(0),
+			 rtt_ms(-1) {}
+		 uint32_t sendside_bwe_bps;
+		 uint32_t recv_bandwidth_bps;
+		 int64_t pacer_delay_ms;
+		 int64_t rtt_ms;
+	 };
    struct StreamStats {
 	  FrameCounts frame_counts; //通过FrameCountObserver获取
 	  int width;
 	  int height;
-	  // TODO(holmer): Move bitrate_bps out to the webrtc::Call layer.
-	  int total_bitrate_bps; //通过BitrateStatisticsObserver获取
-	  int retransmit_bitrate_bps; //通过BitrateStatisticsObserver获取
+	  BitrateStatistics total_stats;
+	  BitrateStatistics retransmit_stats;
 	  int avg_delay_ms;
 	  int max_delay_ms;
 	  StreamDataCounters rtp_stats; //通过StreamDataCountersCallback获取
 	  RtcpPacketTypeCounter rtcp_packet_type_counts; //通过RtcpPacketTypeCounterObserver获取
 	  RtcpStatistics rtcp_stats;  //通过RtcpStatisticsCallback获取
   };
+   struct Config
+   {
+	   struct EncoderSettings {
+		   std::string	ToString();
+		   std::string	payload_name = "unknown";
+		   int	payload_type;
+		   int	width;
+		   int  height;
+		   int  startBitrate;  // kilobits/sec.
+		   int  maxBitrate;  // kilobits/sec.
+		   int  minBitrate;  // kilobits/sec.
+		   int  targetBitrate;  // kilobits/sec.
+		   int  maxFramerate;
+		   VideoCodecUnion     codecSpecific; //not used for now
+		   unsigned int        qpMax;
+		   uint8_t      numberOfSimulcastStreams;
+		   SimulcastStream     simulcastStream[kMaxSimulcastStreams];
+	   } encoder_settings;
+
+	   std::string ToString();
+   };
   struct Stats{
 	  Stats()
 		  :encoder_implementation_name("unknown"),
-		  input_frame_rate(0),
-		  target_media_bitrate_bps(0),
+		  target_enc_framerate(0),
+		  target_enc_bitrate_bps(0),
 		  avg_encode_time_ms(0),
 	      encode_usage_percent(0),
-		  encode_frame_rate(0),
-		  media_bitrate_bps(0),
-		  input_width(0),
-		  input_height(0),
-		  sent_width(0),
-		  sent_height(0),
+		  actual_enc_framerate(0),
+		  actual_enc_bitrate_bps(0),
+		  captured_width(0),
+		  captured_height(0),
+		  captured_framerate(0),
+		  qm_width(0),
+		  qm_height(0),
+		  qm_framerate(0),
 		  suspended(false){}
 	  std::string encoder_implementation_name;
-	  int input_frame_rate;
-	  int target_media_bitrate_bps;
+	  int target_enc_framerate;
+	  int actual_enc_framerate;
+	  int target_enc_bitrate_bps;
+	  int actual_enc_bitrate_bps;
 	  int avg_encode_time_ms;
 	  int encode_usage_percent;
-	  int encode_frame_rate; //发送端实际的编码帧率
-	  int media_bitrate_bps; //发送端实际的发送速率
-	  int input_width;
-	  int input_height;
-	  int sent_width; //发送图像宽
-	  int sent_height;//发送图像高
+	  int captured_width;
+	  int captured_height;
+	  int captured_framerate;
+	  int qm_width;
+	  int qm_height;
+	  int qm_framerate;
 	  bool suspended;//视频是否挂起
+	  std::list<unsigned int> ssrc_streams;
+	  std::map<uint32_t, StreamStats> substreams;
 	  StreamStats stream;
+	  CallStats	call;
+	  Config	config;
   };
-
-  struct Config {
-	  Config()
-		  : encoder_settings(),
-		    rtp(),
-		    render_delay_ms(0),
-			target_delay_ms(0),
-			suspend_below_min_bitrate(false){} 
-// 	  explicit Config(Transport* send_transport)
-// 		  : send_transport(send_transport) {}
-
-	  std::string ToString() const;
-
-	  struct EncoderSettings {
-		  EncoderSettings()
-			  : payload_name(nullptr),
-				payload_type(-1),
-				internal_source(false),
-				full_overuse_time(false),
-				encoder(nullptr){}
-			    
-
-
-		  std::string ToString() const;
-
-		  std::string payload_name;
-		  int payload_type;
-
-		  // TODO(sophiechang): Delete this field when no one is using internal
-		  // sources anymore.
-		  bool internal_source;
-
-		  // Allow 100% encoder utilization. Used for HW encoders where CPU isn't
-		  // expected to be the limiting factor, but a chip could be running at
-		  // 30fps (for example) exactly.
-		  bool full_overuse_time;
-
-		  // Uninitialized VideoEncoder instance to be used for encoding. Will be
-		  // initialized from inside the VideoSendStream.
-		  VideoEncoder* encoder;
-	  } encoder_settings;
-
-	  static const size_t kDefaultMaxPacketSize = 1500 - 40;  // TCP over IPv4.
-	  struct Rtp {
-		  Rtp()
-			  :	rtcp_mode(RtcpMode::kCompound),
-				max_packet_size(kDefaultMaxPacketSize){}
-				
-		  std::string ToString() const;
-
-		  std::vector<uint32_t> ssrcs;
-
-		  // See RtcpMode for description.
-		  RtcpMode rtcp_mode;
-
-		  // Max RTP packet size delivered to send transport from VideoEngine.
-		  size_t max_packet_size;
-
-		  // RTP header extensions to use for this send stream.
-		  std::vector<RtpExtension> extensions;
-
-		  // See NackConfig for description.
-		  NackConfig nack;
-
-		  // See FecConfig for description.
-		  FecConfig fec;
-
-		  // Settings for RTP retransmission payload format, see RFC 4588 for
-		  // details.
-		  struct Rtx {
-			  std::string ToString() const;
-			  // SSRCs to use for the RTX streams.
-			  std::vector<uint32_t> ssrcs;
-
-			  // Payload type to use for the RTX stream.
-			  int payload_type;
-		  } rtx;
-
-		  // RTCP CNAME, see RFC 3550.
-		  std::string c_name;
-	  } rtp;
-
-// 	  // Transport for outgoing packets.
-// 	  Transport* send_transport = nullptr;
-// 
-// 	  // Callback for overuse and normal usage based on the jitter of incoming
-// 	  // captured frames. 'nullptr' disables the callback.
-// 	  LoadObserver* overuse_callback = nullptr;
-// 
-// 	  // Called for each I420 frame before encoding the frame. Can be used for
-// 	  // effects, snapshots etc. 'nullptr' disables the callback.
-// 	  rtc::VideoSinkInterface<VideoFrame>* pre_encode_callback = nullptr;
-// 
-// 	  // Called for each encoded frame, e.g. used for file storage. 'nullptr'
-// 	  // disables the callback. Also measures timing and passes the time
-// 	  // spent on encoding. This timing will not fire if encoding takes longer
-// 	  // than the measuring window, since the sample data will have been dropped.
-// 	  EncodedFrameObserver* post_encode_callback = nullptr;
-// 
-// 	  // Renderer for local preview. The local renderer will be called even if
-// 	  // sending hasn't started. 'nullptr' disables local rendering.
-// 	  rtc::VideoSinkInterface<VideoFrame>* local_renderer = nullptr;
-
-	  // Expected delay needed by the renderer, i.e. the frame will be delivered
-	  // this many milliseconds, if possible, earlier than expected render time.
-	  // Only valid if |local_renderer| is set.
-	  int render_delay_ms;
-
-	  // Target delay in milliseconds. A positive value indicates this stream is
-	  // used for streaming instead of a real-time call.
-	  int target_delay_ms;
-
-	  // True if the stream should be suspended when the available bitrate fall
-	  // below the minimum configured bitrate. If this variable is false, the
-	  // stream may send at a rate higher than the estimated available bitrate.
-	  bool suspend_below_min_bitrate;
-  };
+  
 
  protected:
   virtual ~VideoSendStream() {}
-};
-
-class Call{
-public:
-struct Stats{
-	Stats() :
-		send_bandwidth_bps(0),
-		recv_bandwidth_bps(0),
-		pacer_delay_ms(0),
-		rtt_ms(-1){}
-	uint32_t send_bandwidth_bps;
-	unsigned int recv_bandwidth_bps;
-	int64_t pacer_delay_ms;
-	int64_t rtt_ms;
-};
 };
 
 }  // namespace webrtc

@@ -110,7 +110,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_UNICODE;UNICODE;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../../servicecore\include;../../servicecore\interface;../../module;../../system_wrappers/interface</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../servicecore\include;../../servicecore\interface;../../module;../../system_wrappers/interface;../../third_party\protobuf\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -172,7 +172,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_UNICODE;UNICODE;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../../servicecore\include;../../servicecore\interface;../../module;../../system_wrappers/interface</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../servicecore\include;../../servicecore\interface;../../module;../../system_wrappers/interface;..\..\third_party\protobuf\src</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
     </ClCompile>

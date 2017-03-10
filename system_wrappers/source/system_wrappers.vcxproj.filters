@@ -216,6 +216,9 @@
     <ClInclude Include="checks.h">
       <Filter>source</Filter>
     </ClInclude>
+    <ClInclude Include="stringencode.h">
+      <Filter>source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="map.cc">

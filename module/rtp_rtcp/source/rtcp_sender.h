@@ -171,6 +171,8 @@ public:
 
     void GetPacketTypeCounter(RtcpPacketTypeCounter* packet_counter) const;
 
+	void SetRtcpPacketTypeCountObserver(RtcpPacketTypeCounterObserver *observer);
+
 private:
  int32_t SendToNetwork(const uint8_t* dataBuffer, size_t length);
 
@@ -349,6 +351,8 @@ private:
 
     RtcpPacketTypeCounter packet_type_counter_
         GUARDED_BY(_criticalSectionRTCPSender);
+	RtcpPacketTypeCounterObserver *packet_type_counter_observer_
+		GUARDED_BY(_criticalSectionRTCPSender);
 
     RTCPUtility::NackStats nack_stats_ GUARDED_BY(_criticalSectionRTCPSender);
 };

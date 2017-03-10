@@ -703,6 +703,8 @@ class RtpRtcp : public Module {
     
     virtual int32_t RegisterRtpReceiver(RtpReceiver* rtpRecever) = 0;
     virtual int32_t DeRegisterRtpReceiver() = 0;
+
+	virtual void SetSendRtcpPacketTypeCountObserver(RtcpPacketTypeCounterObserver *observer)=0;
 //    /*
 //     *   configure a RTP packet timeout value
 //     *
