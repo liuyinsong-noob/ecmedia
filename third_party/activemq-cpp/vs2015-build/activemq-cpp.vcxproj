@@ -2877,7 +2877,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>ws2_32.lib;libapr-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\yuanlirong\Work\open_source\activemq-cpp\apr;$(APR_DIST)\$(PlatformName)\lib;$(APR_DIST)\$(PlatformName)\bin;$(OPENSSL_DIST)\$(PlatformName)\lib;$(OPENSSL_DIST)\$(PlatformName)\bin;$(PLATFORM_SDK)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../apr;$(APR_DIST)\$(PlatformName)\lib;$(APR_DIST)\$(PlatformName)\bin;$(OPENSSL_DIST)\$(PlatformName)\lib;$(OPENSSL_DIST)\$(PlatformName)\bin;$(PLATFORM_SDK)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Lib>
       <OutputFile>$(OutDir)\libactivemq-cpp.lib</OutputFile>
