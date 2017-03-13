@@ -175,7 +175,7 @@ class AudioDeviceIOS : public AudioDeviceGeneric {
   // enable or disable loud speaker (for iphone only)
   virtual int32_t SetLoudspeakerStatus(bool enable);
   virtual int32_t GetLoudspeakerStatus(bool& enabled) const;
-
+  
  private:
   void Lock() {
     _critSect.Enter();
@@ -233,7 +233,8 @@ class AudioDeviceIOS : public AudioDeviceGeneric {
 
   AudioUnit _auVoiceProcessing;
   void* _audioInterruptionObserver;
-
+  // enable bluetooth headset communication.
+  int32_t SetBluetoothEnable(bool enable);
  private:
   bool _initialized;
   bool _isShutDown;

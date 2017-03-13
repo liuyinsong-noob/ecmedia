@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1FBB440B1E7292F8007DBD1D /* stats_types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FBB44091E7292F8007DBD1D /* stats_types.cc */; };
+		1FBB440C1E7292F8007DBD1D /* stats_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FBB440A1E7292F8007DBD1D /* stats_types.h */; };
 		5519CB8F15C812A700719504 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5519CB8E15C812A700719504 /* Foundation.framework */; };
 		5519CC8C15C8136E00719504 /* vie_base_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC4215C8136E00719504 /* vie_base_impl.cc */; };
 		5519CC8E15C8136E00719504 /* vie_capture_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC4415C8136E00719504 /* vie_capture_impl.cc */; };
@@ -115,6 +117,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1FBB44091E7292F8007DBD1D /* stats_types.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stats_types.cc; sourceTree = "<group>"; };
+		1FBB440A1E7292F8007DBD1D /* stats_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stats_types.h; sourceTree = "<group>"; };
 		5519CB8B15C812A700719504 /* libvideo_engine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvideo_engine.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5519CB8E15C812A700719504 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5519CC3615C8136E00719504 /* vie_base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_base.h; sourceTree = "<group>"; };
@@ -291,6 +295,8 @@
 		5519CC4115C8136E00719504 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				1FBB44091E7292F8007DBD1D /* stats_types.cc */,
+				1FBB440A1E7292F8007DBD1D /* stats_types.h */,
 				ADE835591D8F795F00CCD20D /* vie_desktop_capture.cpp */,
 				AD42CD701D23E17A009C2E7A /* shared_memory.cc */,
 				AD194FDF1C5B4572003841BB /* vie_desktop_capture.h */,
@@ -388,6 +394,7 @@
 			files = (
 				AD194FE91C5B4572003841BB /* vie_desktop_share_manager.h in Headers */,
 				AD8D73011C59A39700FB246D /* receive_statistics_proxy.h in Headers */,
+				1FBB440C1E7292F8007DBD1D /* stats_types.h in Headers */,
 				AD8D725D1C58C6D400FB246D /* call_stats.h in Headers */,
 				AD8D72FF1C59A39700FB246D /* overuse_frame_detector.h in Headers */,
 				AD194FE51C5B4572003841BB /* vie_desktop_capture.h in Headers */,
@@ -486,6 +493,7 @@
 			files = (
 				5519CC8C15C8136E00719504 /* vie_base_impl.cc in Sources */,
 				AD2E29F91C58C09F00FD311B /* stream_synchronization.cc in Sources */,
+				1FBB440B1E7292F8007DBD1D /* stats_types.cc in Sources */,
 				5519CC8E15C8136E00719504 /* vie_capture_impl.cc in Sources */,
 				5519CC9015C8136E00719504 /* vie_capturer.cc in Sources */,
 				5519CC9415C8136F00719504 /* vie_channel_group.cc in Sources */,
@@ -704,6 +712,7 @@
 					../module/desktop_capture/source,
 					"../third_party/libyuv-ios/include",
 					../module/desktop_capture/desktop_capture/desktop_capture,
+					../ECMedia/source,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
@@ -805,6 +814,7 @@
 					../module/desktop_capture/source,
 					"../third_party/libyuv-ios/include",
 					../module/desktop_capture/desktop_capture/desktop_capture,
+					../ECMedia/source,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";

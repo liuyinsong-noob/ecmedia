@@ -17,6 +17,9 @@
 		1AFBD1661DAE67D3009B8D23 /* libL16.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1611DAE6592009B8D23 /* libL16.a */; };
 		1F8EE0021E5D6EB200C04C10 /* RecordLocal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EE0011E5D6EB200C04C10 /* RecordLocal.cpp */; };
 		1F8EE0551E5D7B8B00C04C10 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F8EE0541E5D7B8B00C04C10 /* libavformat.a */; };
+		1FBB43FA1E728F35007DBD1D /* MediaStatisticsData.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FBB43F91E728F35007DBD1D /* MediaStatisticsData.pb.cc */; };
+		1FBB44071E72926C007DBD1D /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FBB44041E72925C007DBD1D /* libprotobuf.a */; };
+		1FBB44081E729283007DBD1D /* libprotobuf_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FBB44061E72925C007DBD1D /* libprotobuf_Mac.a */; };
 		55D3C7101B81C8CD00D770BC /* b64.c in Sources */ = {isa = PBXBuildFile; fileRef = 05B4FEE61B40FA0200274327 /* b64.c */; };
 		55D3C7111B81C8CD00D770BC /* ECMedia.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05E86F371B3BA16D00BDBCE6 /* ECMedia.cpp */; };
 		55F5735C1C1FB2DE0014FB06 /* libamrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 559586391BABE68000125BC8 /* libamrnb.a */; };
@@ -119,6 +122,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 1A1EB68E1D9939E300CEEB9E;
 			remoteInfo = L16;
+		};
+		1FBB44031E72925C007DBD1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FBB43FE1E72925C007DBD1D /* protobuf.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0596B6431AAACEC10047B4CA;
+			remoteInfo = protobuf;
+		};
+		1FBB44051E72925C007DBD1D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FBB43FE1E72925C007DBD1D /* protobuf.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55D3C8EA1B81D7AE00D770BC;
+			remoteInfo = protobuf_Mac;
 		};
 		559586381BABE68000125BC8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1007,6 +1024,9 @@
 		1F8EE0011E5D6EB200C04C10 /* RecordLocal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecordLocal.cpp; sourceTree = "<group>"; };
 		1F8EE0061E5D6EBC00C04C10 /* RecordLocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordLocal.h; sourceTree = "<group>"; };
 		1F8EE0541E5D7B8B00C04C10 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ../libavformat.a; sourceTree = "<group>"; };
+		1FBB43F91E728F35007DBD1D /* MediaStatisticsData.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MediaStatisticsData.pb.cc; sourceTree = "<group>"; };
+		1FBB43FE1E72925C007DBD1D /* protobuf.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = protobuf.xcodeproj; path = ../../../third_party/protobuf/protobuf.xcodeproj; sourceTree = "<group>"; };
+		1FBB440D1E729473007DBD1D /* MediaStatisticsData.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaStatisticsData.pb.h; path = ../source/MediaStatisticsData.pb.h; sourceTree = "<group>"; };
 		559586331BABE67F00125BC8 /* amrnb.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = amrnb.xcodeproj; path = ../../../module/audio_coding/amrnb.xcodeproj; sourceTree = "<group>"; };
 		55D3C73B1B81C8CD00D770BC /* libECMedia_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libECMedia_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		55F3F81A1B8B0AE400A19ED6 /* avcodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = avcodec.h; sourceTree = "<group>"; };
@@ -1191,6 +1211,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FBB44081E729283007DBD1D /* libprotobuf_Mac.a in Frameworks */,
 				AD3EBB121DE5B71200024454 /* libvpx_mac.a in Frameworks */,
 				AD3EBB131DE5B71200024454 /* libavcodec_mac.a in Frameworks */,
 				AD3EBB141DE5B71200024454 /* libavutil_mac.a in Frameworks */,
@@ -1236,6 +1257,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FBB44071E72926C007DBD1D /* libprotobuf.a in Frameworks */,
 				1F8EE0551E5D7B8B00C04C10 /* libavformat.a in Frameworks */,
 				AD1123011DAF1B7A006CDD38 /* librtmp.a in Frameworks */,
 				1AFBD1661DAE67D3009B8D23 /* libL16.a in Frameworks */,
@@ -1285,6 +1307,7 @@
 		05E86F291B3BA16C00BDBCE6 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				1FBB440D1E729473007DBD1D /* MediaStatisticsData.pb.h */,
 				1F8EE0061E5D6EBC00C04C10 /* RecordLocal.h */,
 				AD7E735D1D3CB675001C0E04 /* statsCollector.h */,
 				05E86F2C1B3BA16D00BDBCE6 /* codingHelper.h */,
@@ -1307,6 +1330,7 @@
 		05E86F341B3BA16D00BDBCE6 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				1FBB43F91E728F35007DBD1D /* MediaStatisticsData.pb.cc */,
 				1F8EE0011E5D6EB200C04C10 /* RecordLocal.cpp */,
 				1AFBD0B41DAE0A59009B8D23 /* ECLiveStream_rtmp.cpp */,
 				1AFBD0B51DAE0A59009B8D23 /* ECLiveStream.cpp */,
@@ -1350,6 +1374,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		1FBB43FF1E72925C007DBD1D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1FBB44041E72925C007DBD1D /* libprotobuf.a */,
+				1FBB44061E72925C007DBD1D /* libprotobuf_Mac.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		559586341BABE67F00125BC8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1362,6 +1395,7 @@
 		55F3F7E01B8B0ABE00A19ED6 /* third_party */ = {
 			isa = PBXGroup;
 			children = (
+				1FBB43FE1E72925C007DBD1D /* protobuf.xcodeproj */,
 				AD056FB71DAF1AB70007DB7A /* rtmp.xcodeproj */,
 				AD0199771D23655A003C2BB9 /* yuv.xcodeproj */,
 				55F3F89C1B8B135C00A19ED6 /* srtp_mac */,
@@ -2202,6 +2236,10 @@
 					ProjectRef = ADF92D821CB7B9720026DF61 /* pacing.xcodeproj */;
 				},
 				{
+					ProductGroup = 1FBB43FF1E72925C007DBD1D /* Products */;
+					ProjectRef = 1FBB43FE1E72925C007DBD1D /* protobuf.xcodeproj */;
+				},
+				{
 					ProductGroup = ADF92D7D1CB7B9630026DF61 /* Products */;
 					ProjectRef = ADF92D7C1CB7B9630026DF61 /* remote_bitrate_estimator.xcodeproj */;
 				},
@@ -2272,6 +2310,20 @@
 			fileType = archive.ar;
 			path = libL16.a;
 			remoteRef = 1AFBD1601DAE6592009B8D23 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FBB44041E72925C007DBD1D /* libprotobuf.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libprotobuf.a;
+			remoteRef = 1FBB44031E72925C007DBD1D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1FBB44061E72925C007DBD1D /* libprotobuf_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libprotobuf_Mac.a;
+			remoteRef = 1FBB44051E72925C007DBD1D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		559586391BABE68000125BC8 /* libamrnb.a */ = {
@@ -2735,6 +2787,7 @@
 				1F8EE0021E5D6EB200C04C10 /* RecordLocal.cpp in Sources */,
 				ADC54D071D489D9A00A5C852 /* RecordVoip.cpp in Sources */,
 				05B4FEE71B40FA0200274327 /* b64.c in Sources */,
+				1FBB43FA1E728F35007DBD1D /* MediaStatisticsData.pb.cc in Sources */,
 				1AFBD0B71DAE0A59009B8D23 /* ECLiveStream_rtmp.cpp in Sources */,
 				AD2DE0FC1D6BEA4C00FE3814 /* VoeObserver.cpp in Sources */,
 				05E86F3E1B3BA16D00BDBCE6 /* ECMedia.cpp in Sources */,
@@ -3335,6 +3388,7 @@
 					"\"$(SRCROOT)/../../third_party/librtmp/include\"",
 					../../module/video_coding/codecs/h264,
 					../../third_party/ffmpeg,
+					../../third_party/protobuf/src,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -3407,6 +3461,7 @@
 					"\"$(SRCROOT)/../../third_party/librtmp/include\"",
 					../../module/video_coding/codecs/h264,
 					../../third_party/ffmpeg,
+					../../third_party/protobuf/src,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
