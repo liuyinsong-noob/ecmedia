@@ -291,55 +291,55 @@ static void media_uninit_print_log()
 	g_printConsole_lock = NULL;
 }
 
-void PrintConsole(const char * fmt,...)
+void PrintConsole(const char * fmt, ...)
 {
-    if(!g_media_TraceFlag) {
-        return;
-    }
+	if (!g_media_TraceFlag) {
+		return;
+	}
 
 	static time_t last_time = time(NULL);
 
 	struct tm *pt = NULL;
 	time_t curr_time;
-    curr_time = time(NULL);
+	curr_time = time(NULL);
 
-	#ifdef WIN32
-		pt = localtime(&curr_time);
-	#else
-		struct tm t1;
-		pt = localtime_r(&curr_time,&t1);
-	#endif
-	if( !pt)
-		return;
-	char log_buffer[2048] = {0};
-	va_list ap;
-	va_start(ap,fmt);
-#ifndef WIN32
-	int count = sprintf(log_buffer,"%02d%02d %02d:%02d:%02d ",
-			pt->tm_mon+1,pt->tm_mday,
-			pt->tm_hour,pt->tm_min,pt->tm_sec);
-	if(count>0)
-	vsnprintf(log_buffer+count, 2047-count, fmt, ap);
+#ifdef WIN32
+	pt = localtime(&curr_time);
 #else
-	int count = sprintf(log_buffer,"%02d%02d %02d:%02d:%02d ",
-			pt->tm_mon+1,pt->tm_mday,
-			pt->tm_hour,pt->tm_min,pt->tm_sec);
-	if(count>0)
-	_vsnprintf(log_buffer+count, 2047-count, fmt, ap);
+	struct tm t1;
+	pt = localtime_r(&curr_time, &t1);
+#endif
+	if (!pt)
+		return;
+	char log_buffer[2048] = { 0 };
+	va_list ap;
+	va_start(ap, fmt);
+#ifndef WIN32
+	int count = sprintf(log_buffer, "%02d%02d %02d:%02d:%02d ",
+		pt->tm_mon + 1, pt->tm_mday,
+		pt->tm_hour, pt->tm_min, pt->tm_sec);
+	if (count > 0)
+		vsnprintf(log_buffer + count, 2047 - count, fmt, ap);
+#else
+	int count = sprintf(log_buffer, "%02d%02d %02d:%02d:%02d ",
+		pt->tm_mon + 1, pt->tm_mday,
+		pt->tm_hour, pt->tm_min, pt->tm_sec);
+	if (count > 0)
+		_vsnprintf(log_buffer + count, 2047 - count, fmt, ap);
 #endif
 
 	va_end(ap);
 
 #ifdef WEBRTC_ANDROID
-	__android_log_print(ANDROID_LOG_DEBUG,"console","%s", log_buffer);
+	__android_log_print(ANDROID_LOG_DEBUG, "console", "%s", log_buffer);
 #else
-	printf("%s\n",log_buffer);
+	printf("%s\n", log_buffer);
 #endif
 
-	if( gPrintConsoleHook_media)
-		gPrintConsoleHook_media(0,log_buffer);
+	if (gPrintConsoleHook_media)
+		gPrintConsoleHook_media(0, log_buffer);
 
-	if(NULL == g_printConsole_lock ) {
+	if (NULL == g_printConsole_lock) {
 		return;
 	}
 	cloopenwebrtc::CriticalSectionScoped lock(g_printConsole_lock);
@@ -347,22 +347,22 @@ void PrintConsole(const char * fmt,...)
 		fprintf(g_media_interface_fp, "%s\n", log_buffer);
 		fflush(g_media_interface_fp);
 		//g_log_line ++;
-	}
 
-	if (curr_time-last_time >= LOG_SIZE_CHECK_TIME)
-	{
-		last_time = curr_time;
-		if (ftell(g_media_interface_fp) >= MAX_LOG_SIZE)//100M,100*1024*1024
+		if (curr_time - last_time >= LOG_SIZE_CHECK_TIME)
 		{
-			fclose(g_media_interface_fp);
-			g_media_interface_fp = NULL;
+			last_time = curr_time;
+			if (ftell(g_media_interface_fp) >= MAX_LOG_SIZE)//100M,100*1024*1024
+			{
+				fclose(g_media_interface_fp);
+				g_media_interface_fp = NULL;
 
-			if (g_cur_log_file == g_log_file1)
-				g_cur_log_file = g_log_file2;
-			else
-				g_cur_log_file = g_log_file1;
+				if (g_cur_log_file == g_log_file1)
+					g_cur_log_file = g_log_file2;
+				else
+					g_cur_log_file = g_log_file1;
 
-			g_media_interface_fp = fopen(g_cur_log_file, "wb");
+				g_media_interface_fp = fopen(g_cur_log_file, "wb");
+			}
 		}
 	}
 }
