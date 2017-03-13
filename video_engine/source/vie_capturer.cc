@@ -104,6 +104,13 @@ ViECapturer::~ViECapturer() {
     deflicker_frame_stats_ = NULL;
   }
   delete brightness_frame_stats_;
+
+  beauty_filter_cs_->Enter();
+  if (beauty_filter_inst_) {
+	  Free_Beauty_Filter(beauty_filter_inst_);
+	  beauty_filter_inst_ = NULL;
+  }
+  beauty_filter_cs_->Leave();
 }
 
 ViECapturer* ViECapturer::CreateViECapture(

@@ -5,7 +5,7 @@ APP_STL := gnustl_static #stlport_static #gnustl_static#
 #APP_ABI := armeabi-v7a
 #APP_ABI := armeabi arm64-v8a x86_64
 APP_ABI :=armeabi arm64-v8a #armeabi # arm64-v8a x86 x86_64
-APP_CPPFLAGS :=  -std=c++11
+APP_CPPFLAGS :=  -std=c++11 -fexceptions 
 APP_CFLAGS :=-Wno-psabi \
 	-fno-exceptions \
 	-Wno-missing-field-initializers \
@@ -28,4 +28,4 @@ APP_CFLAGS :=-Wno-psabi \
 	-fno-ident \
 	-fdata-sections \
 	-ffunction-sections \
-	-fomit-frame-pointer
+	-fomit-frame-pointer 

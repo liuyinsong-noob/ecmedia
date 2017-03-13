@@ -1,3 +1,11 @@
+Version 2.1.2.17
+1、接口改变
+2、增加统计功能
+	ECMedia_get_media_statistics；
+	ECMEDIA_API int ECMedia_getStatsReports；
+	ECMEDIA_API void ECMedia_deletePbData
+3、停止采集视频时自动释放因美颜功能增加的内存
+
 Version 2.1.2.16
 1、接口改变
 2、yuv缩放功能ECMEDIA_API int ECMedia_set_frame_scale_type(int channelid, cloopenwebrtc::FrameScaleType type);

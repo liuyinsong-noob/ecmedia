@@ -39,7 +39,8 @@ LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/../system_wrappers/interface \
 		$(LOCAL_PATH)/../module \
 		$(LOCAL_PATH)/../third_party/ffmpeg \
-		$(LOCAL_PATH)/../ECMedia/interface
+		$(LOCAL_PATH)/../ECMedia/interface \
+		$(LOCAL_PATH)/../third_party/protobuf/src
 
 LOCAL_STATIC_LIBRARIES := \
 	libserphone_service_core \

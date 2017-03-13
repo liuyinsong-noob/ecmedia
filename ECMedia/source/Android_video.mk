@@ -24,13 +24,15 @@ LOCAL_SRC_FILES := \
 		VoeObserver.cpp \
 		ECLiveStream_rtmp.cpp \
 		ECLiveStream.cpp \
-		faaccodec.cpp
+		faaccodec.cpp \
+		MediaStatisticsData.pb.cc 
 
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
 	'-DVIDEO_ENABLED'
 
 LOCAL_C_INCLUDES := \
+	$(LOCAL_PATH)/. \
 	$(LOCAL_PATH)/../include \
 	$(LOCAL_PATH)/../../system_wrappers/interface \
 	$(LOCAL_PATH)/../../voice_engine/main/include \
@@ -67,7 +69,8 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../../module/audio_coding/codecs/opencore-amr/amrnb \
 	$(LOCAL_PATH)/../../third_party/libfaad/faad2-2.7/include \
 	$(LOCAL_PATH)/../../third_party/libfaac/include \
-	$(LOCAL_PATH)/../../third_party/ffmpeg/ffmpeg-android-bin/include
+	$(LOCAL_PATH)/../../third_party/ffmpeg/ffmpeg-android-bin/include \
+	$(LOCAL_PATH)/../../third_party/protobuf/src
 	
 LOCAL_SHARED_LIBRARIES := \
     libcutils \
