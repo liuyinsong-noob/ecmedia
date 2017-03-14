@@ -249,7 +249,7 @@ namespace cloopenwebrtc {
                 return ret;
             }
             
-            ret = WebRtcOpus_SetPacketLossRate(encoder_inst_ptr_, 5);
+            ret = WebRtcOpus_SetPacketLossRate(encoder_inst_ptr_, 40);//sean test audio mixer, original 5
             if (ret < 0) {
                 WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
                              "Setting initial playback loss rate failed for Opus");
@@ -324,6 +324,10 @@ namespace cloopenwebrtc {
         
         int ACMOpus::SetFEC(bool enable_fec) {
             // Ask the encoder to enable FEC.
+            //sean test audio mixer begin
+            if (WebRtcOpus_EnableFec(encoder_inst_ptr_) == 0)
+                return 0;
+            //sean test audio mixer end
             if (enable_fec) {
                 if (WebRtcOpus_EnableFec(encoder_inst_ptr_) == 0)
                     return 0;
@@ -335,6 +339,7 @@ namespace cloopenwebrtc {
         }
         
         int ACMOpus::SetPacketLossRate(int loss_rate) {
+//            return 0;//sean test audio mixer
             if (loss_rate < 5) {
                 return 0;
             }

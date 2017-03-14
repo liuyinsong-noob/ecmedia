@@ -189,7 +189,7 @@ const CodecInst ACMCodecDB::database_[] = {
   {106, "telephone-event", 8000, 240, 1, 0},
 #endif
 #ifdef WEBRTC_CODEC_RED
-  {127, "red", 8000, 0, 1, 0},
+  {116, "red", 8000, 0, 1, 0},
 #endif
   // To prevent compile errors due to trailing commas.
   {-1, "Null", -1, -1, -1, -1}

@@ -117,6 +117,7 @@
 		AD8D73521C59AEE300FB246D /* quality_scaler.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D73501C59AEE300FB246D /* quality_scaler.cc */; };
 		AD8D73531C59AEE300FB246D /* quality_scaler.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8D73511C59AEE300FB246D /* quality_scaler.h */; };
 		AD8D73551C59B07E00FB246D /* frame_dropper.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D73541C59B07E00FB246D /* frame_dropper.cc */; };
+		ADB126E01E764F44003CBF6C /* h264_record.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FFBB42B1E49CF790022EFCF /* h264_record.cpp */; };
 		ADC32DB91DBD9D5300585F1D /* h264_sps_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = ADC32DB81DBD9D5300585F1D /* h264_sps_parser.h */; };
 		ADC5471B1D4854E400A5C852 /* codec_database.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AD14D315C8A020008A2BDA /* codec_database.cc */; };
 		ADC5471C1D4854E400A5C852 /* codec_timer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AD14D515C8A020008A2BDA /* codec_timer.cc */; };
@@ -949,6 +950,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADB126E01E764F44003CBF6C /* h264_record.cpp in Sources */,
 				ADC5471B1D4854E400A5C852 /* codec_database.cc in Sources */,
 				ADC5471C1D4854E400A5C852 /* codec_timer.cc in Sources */,
 				ADC5471D1D4854E400A5C852 /* criticalsection.cc in Sources */,
@@ -1285,6 +1287,7 @@
 					../../module/audioprocess/source/,
 					"../../third_party/libyuv-ios/include",
 					../../module/video_coding/codecs/h264_hardcode,
+					../../third_party/ffmpeg/libavcodec_ios,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
@@ -1370,6 +1373,7 @@
 					../../module/audioprocess/source/,
 					"../../third_party/libyuv-ios/include",
 					../../module/video_coding/codecs/h264_hardcode,
+					../../third_party/ffmpeg/libavcodec_ios,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";

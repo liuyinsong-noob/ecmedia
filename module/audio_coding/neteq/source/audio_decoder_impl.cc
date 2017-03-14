@@ -509,6 +509,13 @@ int CodecSampleRateHz(NetEqDecoder codec_type) {
       // TODO(tlegrand): Remove limitation once ACM has full 48 kHz support.
       return 32000;
     }
+          
+            //sean test audio mixer begin
+      case kDecoderRED: {
+          return 8000;
+      }
+            //sean test audio mixer end
+          
     default: {
       return -1;  // Undefined sample rate.
     }

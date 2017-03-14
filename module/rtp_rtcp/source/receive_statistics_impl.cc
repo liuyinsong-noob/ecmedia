@@ -351,7 +351,12 @@ bool StreamStatisticianImpl::IsRetransmitOfOldPacket(
     return false;
   }
   uint32_t frequency_khz = header.payload_type_frequency / 1000;
-  assert(frequency_khz > 0);
+    //sean test audio mixer begin
+    if (frequency_khz <= 0) {   //Sometimes client get malformed packet
+        return false;
+    }
+//  assert(frequency_khz > 0);
+    //sean test audio mixer end
 
   int64_t time_diff_ms = clock_->TimeInMilliseconds() -
       last_receive_time_ms_;

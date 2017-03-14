@@ -724,7 +724,10 @@ ECMEDIA_API int ECMedia_startRecordLocalMedia(const char *fileName, void *localv
  */
 ECMEDIA_API void ECMedia_stopRecordLocalMedia();
 
-
+/*
+ * 设置RED
+ */
+ECMEDIA_API int ECMedia_setAudioRed(int channelid, bool enable, int payloadType);
 /*
 *功能：设置视频通讯中当本地摄像头无法采集视频时，返回给用户信息的回调函数
 */

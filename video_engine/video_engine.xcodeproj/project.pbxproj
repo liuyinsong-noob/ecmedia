@@ -908,6 +908,7 @@
 					../module/pacing/include,
 					../module/video_coding/main/source,
 					../module/desktop_capture/source,
+					../module/video_processing/main/source/beauty_filter,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
@@ -1006,6 +1007,7 @@
 					../module/pacing/include,
 					../module/video_coding/main/source,
 					../module/desktop_capture/source,
+					../module/video_processing/main/source/beauty_filter,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;

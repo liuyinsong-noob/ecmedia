@@ -47,6 +47,7 @@ int PayloadSplitter::SplitRed(PacketList* packet_list) {
 
     bool last_block = false;
     size_t sum_length = 0;
+    size_t seq_delta = 4;
     while (!last_block) {
       Packet* new_packet = new Packet;
       new_packet->header = red_packet->header;
@@ -66,16 +67,23 @@ int PayloadSplitter::SplitRed(PacketList* packet_list) {
             ((payload_ptr[2] & 0xFC) >> 2);
         new_packet->header.timestamp = red_packet->header.timestamp -
             timestamp_offset;
+          new_packet->header.sequenceNumber = red_packet->header.sequenceNumber-seq_delta; //sean current red n-2. restore for opus fec
+          seq_delta -= 2;
         // Bits 22 through 31 are payload length.
         new_packet->payload_length = ((payload_ptr[2] & 0x03) << 8) +
             payload_ptr[3];
-        new_packet->primary = false;
+          new_packet->primary = true;   //sean opus red tes
+          new_packet->red = true;
         payload_ptr += 4;  // Advance to next RED header.
+          if ((*payload_ptr & 0x80) == 0) { //if the packet only has one red packet, revise the sequence
+              new_packet->header.sequenceNumber += 2;
+          }
       }
       sum_length += new_packet->payload_length;
       sum_length += 4;  // Account for RED header size of 4 bytes.
       // Store in new list of packets.
       new_packets.push_back(new_packet);
+      
     }
 
     // Populate the new packets with payload data.
@@ -178,9 +186,8 @@ int PayloadSplitter::SplitFec(PacketList* packet_list,
         new_packet->primary = false;
         new_packet->waiting_time = packet->waiting_time;
         new_packet->sync_packet = packet->sync_packet;
-
-        packet_list->insert(it, new_packet);
-//          printf("sean haha fec insert packet_list sn %d, pre %d, cur %d\n",new_packet->header.sequenceNumber, last_sn, cur_sn);
+          new_packet->header.sequenceNumber -= 1;
+          packet_list->insert(it, new_packet);
         break;
       }
       default: {

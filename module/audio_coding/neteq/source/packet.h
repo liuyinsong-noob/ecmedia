@@ -24,6 +24,7 @@ struct Packet {
   uint8_t* payload;  // Datagram excluding RTP header and header extension.
   size_t payload_length;
   bool primary;  // Primary, i.e., not redundant payload.
+    bool red;   // Restored packet.
   int waiting_time;
   bool sync_packet;
 
@@ -32,6 +33,7 @@ struct Packet {
       : payload(NULL),
         payload_length(0),
         primary(true),
+        red(false),
         waiting_time(0),
         sync_packet(false) {
   }
@@ -47,10 +49,16 @@ struct Packet {
     return (this->header.timestamp == rhs.header.timestamp &&
         this->header.sequenceNumber == rhs.header.sequenceNumber &&
         this->primary == rhs.primary &&
-        this->sync_packet == rhs.sync_packet);
+        this->sync_packet == rhs.sync_packet && this->red == rhs.red);
   }
   bool operator!=(const Packet& rhs) const { return !operator==(rhs); }
   bool operator<(const Packet& rhs) const {
+    if (this->header.sequenceNumber == rhs.header.sequenceNumber)
+    {
+        if (this->primary && !rhs.primary) return true;
+        if (!this->primary && rhs.primary) return false;
+    }
+      
     if (this->header.timestamp == rhs.header.timestamp) {
       if (this->header.sequenceNumber == rhs.header.sequenceNumber) {
         // Timestamp and sequence numbers are identical. A sync packet should
@@ -68,7 +76,12 @@ struct Packet {
           return true;
         if (this->sync_packet)
           return false;
-        return (this->primary && !rhs.primary);
+        if (!this->primary && rhs.primary)
+            return true;
+        else if (!this->primary && rhs.primary)
+            return false;
+        else return (!this->red && rhs.red);
+            
       }
       return (static_cast<uint16_t>(rhs.header.sequenceNumber
           - this->header.sequenceNumber) < 0xFFFF / 2);

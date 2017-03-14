@@ -155,6 +155,7 @@ VAR_DECLSPEC PayloadType payload_type_g722;
 /* text */
 VAR_DECLSPEC PayloadType payload_type_t140;
 VAR_DECLSPEC PayloadType payload_type_t140_red;
+VAR_DECLSPEC PayloadType payload_type_red8k;
 
 /* non standard file transfer over UDP */
 VAR_DECLSPEC PayloadType payload_type_x_udpftp;

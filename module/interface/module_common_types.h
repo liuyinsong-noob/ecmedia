@@ -203,6 +203,7 @@ public:
         fragmentationOffset(NULL),
         fragmentationLength(NULL),
         fragmentationTimeDiff(NULL),
+        fragmentationTimestamp(NULL),
         fragmentationPlType(NULL),
 		SvcFrameInfo(NULL),
 		SvcLayerInfo(NULL),
@@ -214,6 +215,7 @@ public:
         delete [] fragmentationOffset;
         delete [] fragmentationLength;
         delete [] fragmentationTimeDiff;
+        delete [] fragmentationTimestamp;
         delete [] fragmentationPlType;
 		delete [] SvcFrameInfo;
 		delete [] SvcLayerInfo;
@@ -234,6 +236,8 @@ public:
 			fragmentationLength = NULL;
 			delete[] fragmentationTimeDiff;
 			fragmentationTimeDiff = NULL;
+            delete[] fragmentationTimestamp;
+            fragmentationTimestamp = NULL;
 			delete[] fragmentationPlType;
 			fragmentationPlType = NULL;
 			delete [] SvcFrameInfo;
@@ -254,6 +258,9 @@ public:
 				if (src.fragmentationTimeDiff) {
 					fragmentationTimeDiff = new uint16_t[src.fragmentationVectorSize];
 				}
+                if (src.fragmentationTimestamp) {
+                    fragmentationTimestamp = new uint32_t[src.fragmentationVectorSize];
+                }
 				if (src.fragmentationPlType) {
 					fragmentationPlType = new uint8_t[src.fragmentationVectorSize];
 				}
@@ -288,6 +295,10 @@ public:
 				memcpy(fragmentationTimeDiff, src.fragmentationTimeDiff,
 					src.fragmentationVectorSize * sizeof(uint16_t));
 			}
+            if (src.fragmentationTimestamp) {
+                memcpy(fragmentationTimestamp, src.fragmentationTimestamp,
+                       src.fragmentationVectorSize * sizeof(uint32_t));
+            }
 			if (src.fragmentationPlType) {
 				memcpy(fragmentationPlType, src.fragmentationPlType,
 					src.fragmentationVectorSize * sizeof(uint8_t));
@@ -327,6 +338,8 @@ public:
             fragmentationLength = NULL;
             delete [] fragmentationTimeDiff;
             fragmentationTimeDiff = NULL;
+            delete [] fragmentationTimestamp;
+            fragmentationTimestamp = NULL;
             delete [] fragmentationPlType;
             fragmentationPlType = NULL;
 			delete [] SvcFrameInfo;
@@ -350,6 +363,10 @@ public:
                 if(header.fragmentationTimeDiff)
                 {
                     fragmentationTimeDiff = new WebRtc_UWord16[header.fragmentationVectorSize];
+                }
+                if(header.fragmentationTimestamp)
+                {
+                    fragmentationTimestamp = new WebRtc_UWord32[header.fragmentationVectorSize];
                 }
                 if(header.fragmentationPlType)
                 {
@@ -389,6 +406,11 @@ public:
             {
                 memcpy(fragmentationTimeDiff, header.fragmentationTimeDiff,
                         header.fragmentationVectorSize * sizeof(WebRtc_UWord16));
+            }
+            if(header.fragmentationTimestamp)
+            {
+                memcpy(fragmentationTimestamp, header.fragmentationTimestamp,
+                       header.fragmentationVectorSize * sizeof(WebRtc_UWord32));
             }
             if(header.fragmentationPlType)
             {
@@ -448,6 +470,17 @@ public:
                        sizeof(WebRtc_UWord16) * oldVectorSize);
                 delete[] oldTimeDiffs;
             }
+            // timestamp
+            {
+                WebRtc_UWord32* oldTimestamp = fragmentationTimestamp;
+                fragmentationTimestamp = new WebRtc_UWord32[size];
+                memset(fragmentationTimestamp+oldVectorSize, 0,
+                       sizeof(WebRtc_UWord32) * (size- oldVectorSize));
+                memcpy(fragmentationTimestamp, oldTimestamp,
+                       sizeof(WebRtc_UWord32) * oldVectorSize);
+                delete[] oldTimestamp;
+            }
+            
             // payload type
             {
                 WebRtc_UWord8* oldTimePlTypes = fragmentationPlType;
@@ -496,6 +529,7 @@ public:
     size_t*   fragmentationLength;        // Data size for each fragmentation
     WebRtc_UWord16*   fragmentationTimeDiff;      // Timestamp difference relative "now" for
                                                   // each fragmentation
+    WebRtc_UWord32*   fragmentationTimestamp;          //Since red need to calculate delta ts with n-2, n-4
     WebRtc_UWord8*    fragmentationPlType;        // Payload type of each fragmentation
 	WebRtc_UWord8*		SvcFrameInfo;
 	WebRtc_UWord8*		SvcLayerInfo;		  // add by ylr

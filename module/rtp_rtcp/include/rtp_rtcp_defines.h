@@ -80,7 +80,8 @@ enum RTPExtensionType
    kRtpExtensionNone,
    kRtpExtensionTransmissionTimeOffset,
    kRtpExtensionAudioLevel,
-   kRtpExtensionAbsoluteSendTime
+   kRtpExtensionAbsoluteSendTime,
+   kRtpExtensionLossRate
 };
 
 enum RTCPAppSubTypes

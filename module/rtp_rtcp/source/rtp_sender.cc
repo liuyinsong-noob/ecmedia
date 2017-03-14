@@ -130,6 +130,8 @@ RTPSender::RTPSender(int32_t id,
       rtp_header_extension_map_(),
       transmission_time_offset_(0),
       absolute_send_time_(0),
+      loss_rate_(0),
+      loss_rate_hd_ext_version_(0),
       // NACK.
       nack_byte_count_times_(),
       nack_byte_count_(),
@@ -267,6 +269,16 @@ int32_t RTPSender::SetAbsoluteSendTime(uint32_t absolute_send_time) {
   CriticalSectionScoped cs(send_critsect_);
   absolute_send_time_ = absolute_send_time;
   return 0;
+}
+    
+int32_t RTPSender::SetLossRate(uint32_t loss_rate, uint8_t loss_rate_hd_ext_version) {
+    if (loss_rate > 0x0f) {  // current only support max loss rate 15*5
+        return -1;
+    }
+    CriticalSectionScoped cs(send_critsect_);
+    loss_rate_hd_ext_version_ = loss_rate_hd_ext_version;
+    loss_rate_ = loss_rate;
+    return 0;
 }
 
 int32_t RTPSender::RegisterRtpHeaderExtension(RTPExtensionType type,
@@ -1328,6 +1340,9 @@ uint16_t RTPSender::BuildRTPHeaderExtension(uint8_t* data_buffer) const {
         block_length = BuildAbsoluteSendTimeExtension(
             data_buffer + kHeaderLength + total_block_length);
         break;
+      case kRtpExtensionLossRate:
+            block_length = BuildLossRateExtension(data_buffer + kHeaderLength + total_block_length);
+            break;
       default:
         assert(false);
     }
@@ -1450,6 +1465,44 @@ uint8_t RTPSender::BuildAbsoluteSendTimeExtension(uint8_t* data_buffer) const {
   return kAbsoluteSendTimeLength;
 }
 
+    
+uint8_t RTPSender::BuildLossRateExtension(uint8_t* data_buffer) const {
+    // An RTP Header Extension for packet loss rate Indication
+    //
+    // https://datatracker.ietf.org/doc/draft-lennox-avt-rtp-audio-level-exthdr/
+    //
+    // The form of the audio level extension block:
+    //
+    //    0                   1                   2                   3
+    //    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    //    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    //    |  ID   | len=0 | V | loss rate |      0x00     |      0x00     |
+    //    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    //
+    // Note that we always include 2 pad bytes, which will result in legal and
+    // correctly parsed RTP, but may be a bit wasteful if more short extensions
+    // are implemented. Right now the pad bytes would anyway be required at end
+    // of the extension block, so it makes no difference.
+    
+    // Get id defined by user.
+    uint8_t id;
+    if (rtp_header_extension_map_.GetId(kRtpExtensionLossRate, &id) != 0) {
+        // Not registered.
+        return 0;
+    }
+    size_t pos = 0;
+    const uint8_t len = 0;
+    const uint8_t version = 0;              //currently version 0
+    data_buffer[pos++] = (id << 4) + len;
+    data_buffer[pos++] = (version << 6) + loss_rate_;     // version, loss rate.
+    data_buffer[pos++] = 0;                // Padding.
+    data_buffer[pos++] = 0;                // Padding.
+    // kAudioLevelLength is including pad bytes.
+    assert(pos == kLossRateLength);
+    return kLossRateLength;
+}
+    
+    
 void RTPSender::UpdateTransmissionTimeOffset(uint8_t* rtp_packet,
                                              size_t rtp_packet_length,
                                              const RTPHeader& rtp_header,
@@ -1586,6 +1639,48 @@ void RTPSender::UpdateAbsoluteSendTime(uint8_t* rtp_packet,
                                     ((now_ms << 18) / 1000) & 0x00ffffff);
 }
 
+bool RTPSender::UpdateLossRate(uint8_t* rtp_packet,
+                                 size_t rtp_packet_length,
+                                 const RTPHeader& rtp_header,
+                                 uint8_t lossRate) const {
+    CriticalSectionScoped cs(send_critsect_);
+    
+    // Get id.
+    uint8_t id = 0;
+    if (rtp_header_extension_map_.GetId(kRtpExtensionLossRate, &id) != 0) {
+        // Not registered.
+        return false;
+    }
+    // Get length until start of header extension block.
+    int extension_block_pos =
+    rtp_header_extension_map_.GetLengthUntilBlockStartInBytes(
+                                                              kRtpExtensionLossRate);
+    if (extension_block_pos < 0) {
+        // The feature is not enabled.
+        return false;
+    }
+    size_t block_pos = 12 + rtp_header.numCSRCs + extension_block_pos;
+    if (rtp_packet_length < block_pos + kLossRateLength ||
+        rtp_header.headerLength < block_pos + kLossRateLength) {
+        LOG(LS_WARNING) << "Failed to update audio level, invalid length.";
+        return false;
+    }
+    // Verify that header contains extension.
+    if (!((rtp_packet[12 + rtp_header.numCSRCs] == 0xBE) &&
+          (rtp_packet[12 + rtp_header.numCSRCs + 1] == 0xDE))) {
+        LOG(LS_WARNING) << "Failed to update loss rate, hdr extension not found.";
+        return false;
+    }
+    // Verify first byte in block.
+    const uint8_t first_block_byte = (id << 4) + 0;
+    if (rtp_packet[block_pos] != first_block_byte) {
+        LOG(LS_WARNING) << "Failed to update loss rate.";
+        return false;
+    }
+    rtp_packet[block_pos + 1] = (loss_rate_hd_ext_version_<<6) + lossRate;
+    return true;
+}
+    
 void RTPSender::SetSendingStatus(bool enabled) {
   if (enabled) {
     uint32_t frequency_hz = SendPayloadFrequency();

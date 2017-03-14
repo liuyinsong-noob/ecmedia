@@ -512,6 +512,23 @@ void RtpHeaderParser::ParseOneByteExtensionHeader(
           header.extension.hasAbsoluteSendTime = true;
           break;
         }
+        case kRtpExtensionLossRate: {
+              if (len != 0) {
+                  LOG(LS_WARNING) << "Incorrect absolute loss rate len: " << len;
+                  return;
+              }
+              header.extension.hasLossRate = true;
+              const uint8_t V = (*ptr & 0xC0) >> 6;
+              switch (V) {
+                  case 0:
+                      header.extension.lossRate = *ptr & 0x3F;
+                      break;
+                      
+                  default:
+                      break;
+              }
+              break;
+          }
         default: {
           LOG(LS_WARNING) << "Extension type not implemented: " << type;
           return;

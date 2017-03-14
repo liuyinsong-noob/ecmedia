@@ -47,6 +47,7 @@
 		AD4E8C561CB664F80068C4E9 /* libcommon_audio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4E8C551CB664D00068C4E9 /* libcommon_audio.a */; };
 		AD7E733F1D3CB66A001C0E04 /* statsCollector.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD7E733E1D3CB66A001C0E04 /* statsCollector.cc */; };
 		ADA0AD9D1DA8E00C00C4807D /* libcommon_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA0AD971DA8C54400C4807D /* libcommon_video.a */; };
+		ADB127321E779225003CBF6C /* libavformat_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB127311E779225003CBF6C /* libavformat_mac.a */; };
 		ADB51A471B2807B40009077D /* libaudio_coding_module.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB519F11B2807290009077D /* libaudio_coding_module.a */; };
 		ADB51A481B2807B40009077D /* libaudio_conference_mixer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB519D81B2806E40009077D /* libaudio_conference_mixer.a */; };
 		ADB51A491B2807B40009077D /* libaudio_device.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB519D21B2806DC0009077D /* libaudio_device.a */; };
@@ -1170,6 +1171,7 @@
 		AD4E8C501CB664D00068C4E9 /* common_audio.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = common_audio.xcodeproj; path = ../../../module/common_audio/common_audio/common_audio.xcodeproj; sourceTree = "<group>"; };
 		AD7E733E1D3CB66A001C0E04 /* statsCollector.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = statsCollector.cc; sourceTree = "<group>"; };
 		AD7E735D1D3CB675001C0E04 /* statsCollector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = statsCollector.h; sourceTree = "<group>"; };
+		ADB127311E779225003CBF6C /* libavformat_mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat_mac.a; path = ../libavformat_mac.a; sourceTree = "<group>"; };
 		ADB5192F1B27DFCA0009077D /* libECMedia.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libECMedia.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADB519401B27DFCA0009077D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADB5196C1B28062F0009077D /* voice_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = voice_engine.xcodeproj; path = ../../../voice_engine/voice_engine.xcodeproj; sourceTree = "<group>"; };
@@ -1211,6 +1213,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADB127321E779225003CBF6C /* libavformat_mac.a in Frameworks */,
 				1FBB44081E729283007DBD1D /* libprotobuf_Mac.a in Frameworks */,
 				AD3EBB121DE5B71200024454 /* libvpx_mac.a in Frameworks */,
 				AD3EBB131DE5B71200024454 /* libavcodec_mac.a in Frameworks */,
@@ -1349,6 +1352,7 @@
 		1AFBD11E1DAE560E009B8D23 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ADB127311E779225003CBF6C /* libavformat_mac.a */,
 				1F8EE0541E5D7B8B00C04C10 /* libavformat.a */,
 				AD3EBB0D1DE5B71200024454 /* libvpx_mac.a */,
 				AD3EBB0E1DE5B71200024454 /* libavcodec_mac.a */,
@@ -3153,6 +3157,9 @@
 					"\"$(SRCROOT)/../../third_party/libfaac/include\"",
 					"\"$(SRCROOT)/../../third_party/libfaad/include\"",
 					"\"$(SRCROOT)/../../third_party/librtmp/include\"",
+					"$(SRCROOT)/../../third_party/protobuf/src",
+					"$(SRCROOT)/../../module/video_coding/codecs/h264",
+					"$(SRCROOT)/../../third_party/ffmpeg/",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -3230,6 +3237,9 @@
 					"\"$(SRCROOT)/../../third_party/libfaac/include\"",
 					"\"$(SRCROOT)/../../third_party/libfaad/include\"",
 					"\"$(SRCROOT)/../../third_party/librtmp/include\"",
+					"$(SRCROOT)/../../third_party/protobuf/src",
+					"$(SRCROOT)/../../module/video_coding/codecs/h264",
+					"$(SRCROOT)/../../third_party/ffmpeg/",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (

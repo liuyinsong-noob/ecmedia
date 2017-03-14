@@ -146,6 +146,7 @@ class RTPSender : public RTPSenderInterface {
   // RTP header extension
   int32_t SetTransmissionTimeOffset(int32_t transmission_time_offset);
   int32_t SetAbsoluteSendTime(uint32_t absolute_send_time);
+    int32_t SetLossRate(uint32_t loss_rate, uint8_t loss_rate_hd_ext_version);
 
   int32_t RegisterRtpHeaderExtension(RTPExtensionType type, uint8_t id);
 
@@ -158,12 +159,17 @@ class RTPSender : public RTPSenderInterface {
   uint8_t BuildTransmissionTimeOffsetExtension(uint8_t *data_buffer) const;
   uint8_t BuildAudioLevelExtension(uint8_t* data_buffer) const;
   uint8_t BuildAbsoluteSendTimeExtension(uint8_t* data_buffer) const;
+  uint8_t BuildLossRateExtension(uint8_t* data_buffer) const;
 
   bool UpdateAudioLevel(uint8_t* rtp_packet,
                         size_t rtp_packet_length,
                         const RTPHeader& rtp_header,
                         bool is_voiced,
                         uint8_t dBov) const;
+    bool UpdateLossRate(uint8_t* rtp_packet,
+                        size_t rtp_packet_length,
+                        const RTPHeader& rtp_header,
+                        uint8_t lossRate) const;
 
   bool TimeToSendPacket(uint16_t sequence_number, int64_t capture_time_ms,
                         bool retransmission);
@@ -381,7 +387,8 @@ private:
   RtpHeaderExtensionMap rtp_header_extension_map_;
   int32_t transmission_time_offset_;
   uint32_t absolute_send_time_;
-
+    uint32_t loss_rate_;
+    uint8_t loss_rate_hd_ext_version_;
   // NACK
   uint32_t nack_byte_count_times_[NACK_BYTECOUNT_SIZE];
   size_t nack_byte_count_[NACK_BYTECOUNT_SIZE];

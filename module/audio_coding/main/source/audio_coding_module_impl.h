@@ -12,6 +12,7 @@
 #define WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_AUDIO_CODING_MODULE_IMPL_H_
 
 #include <vector>
+#include <list>
 
 #include "thread_annotations.h"
 #include "common_types.h"
@@ -29,7 +30,14 @@ namespace acm2 {
 
 class ACMDTMFDetection;
 class ACMGenericCodec;
-
+    
+    typedef struct {
+        uint8_t *buf;
+        uint8_t len;
+        uint32_t ts;
+    } RedBuf;
+    typedef std::list<RedBuf> RedList;
+    
 class AudioCodingModuleImpl : public AudioCodingModule {
  public:
   explicit AudioCodingModuleImpl(const AudioCodingModule::Config& config);
@@ -103,7 +111,7 @@ class AudioCodingModuleImpl : public AudioCodingModule {
 
   // Set target packet loss rate
   virtual int SetPacketLossRate(int loss_rate) OVERRIDE;
-
+  virtual int SetPacketLossRateFromRtpHeaderExt(int loss_rate) OVERRIDE;
   /////////////////////////////////////////
   //   (VAD) Voice Activity Detection
   //   and
@@ -324,12 +332,16 @@ class AudioCodingModuleImpl : public AudioCodingModule {
   // set-up function to allocate them only when they are going to be used, i.e.
   // RED is enabled.
   uint8_t* red_buffer_ GUARDED_BY(acm_crit_sect_);
+    uint8_t* red_buffer2_ GUARDED_BY(acm_crit_sect_);
 
   // TODO(turajs): we actually don't need |fragmentation_| as a member variable.
   // It is sufficient to keep the length & payload type of previous payload in
   // member variables.
   RTPFragmentationHeader fragmentation_ GUARDED_BY(acm_crit_sect_);
   uint32_t last_red_timestamp_ GUARDED_BY(acm_crit_sect_);
+    uint32_t red2_length_;
+    
+    RedList red_list_;
 
   // Codec internal FEC
   bool codec_fec_enabled_ GUARDED_BY(acm_crit_sect_);
@@ -355,6 +367,8 @@ class AudioCodingModuleImpl : public AudioCodingModule {
   AudioPacketizationCallback* packetization_callback_
       GUARDED_BY(callback_crit_sect_);
   ACMVADCallback* vad_callback_ GUARDED_BY(callback_crit_sect_);
+    
+    uint8_t loss_rate_ GUARDED_BY(acm_crit_sect_);
 };
 
 }  // namespace acm2

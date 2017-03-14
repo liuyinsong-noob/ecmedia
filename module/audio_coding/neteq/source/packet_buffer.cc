@@ -78,7 +78,8 @@ int PacketBuffer::InsertPacket(Packet* packet) {
   // timestamp as |rit|, which has a higher priority, do not insert the new
   // packet to list.
   if (rit != buffer_.rend() &&
-      packet->header.timestamp == (*rit)->header.timestamp) {
+      ((packet->header.timestamp == (*rit)->header.timestamp) ||
+       (packet->header.sequenceNumber == (*rit)->header.sequenceNumber && (packet->primary != (*rit)->primary || packet->primary == (*rit)->primary && packet->red != (*rit)->red)))) {
     delete [] packet->payload;
     delete packet;
     return return_val;
@@ -89,8 +90,8 @@ int PacketBuffer::InsertPacket(Packet* packet) {
   // packet.
   PacketList::iterator it = rit.base();
   if (it != buffer_.end() &&
-      packet->header.timestamp == (*it)->header.timestamp) {
-//      printTime();
+      ((packet->header.timestamp == (*it)->header.timestamp) ||
+      (packet->header.sequenceNumber == (*it)->header.sequenceNumber && (packet->primary != (*it)->primary || packet->primary == (*it)->primary && packet->red != (*it)->red)))) {
 //      printf("sean haha packet %d, iterator %d\n",packet->primary, (*it)->primary);
     delete [] (*it)->payload;
     delete *it;

@@ -401,6 +401,7 @@ class AudioCodingModule: public Module {
   //   0 if succeeded.
   //
   virtual int SetPacketLossRate(int packet_loss_rate) = 0;
+    virtual int SetPacketLossRateFromRtpHeaderExt(int packet_loss_rate) = 0;
 
   ///////////////////////////////////////////////////////////////////////////
   //   (VAD) Voice Activity Detection

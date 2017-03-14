@@ -4477,5 +4477,27 @@ void ECMedia_deletePbData(void* mediaStatisticsDataInner)
 	}
 }
 
+
+ECMEDIA_API int ECMedia_setAudioRed(int channelid, bool enable, int payloadType)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d enable:%s payloadType:%d", __FUNCTION__,
+                 channelid, enable?"true":"false", payloadType);
+    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    VoERTP_RTCP *rtp_rtcp = VoERTP_RTCP::GetInterface(m_voe);
+    if (rtp_rtcp)
+    {
+        int ret = 0;
+        ret = rtp_rtcp->SetREDStatus(channelid, enable, payloadType);
+        rtp_rtcp->Release();
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] %s failed to get VoERTP_RTCP", __FUNCTION__);
+        return -99;
+    }
+    
+}
+
 #endif
 

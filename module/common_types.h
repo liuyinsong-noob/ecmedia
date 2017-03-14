@@ -739,6 +739,8 @@ struct VideoCodec {
 	// When using an external encoder/decoder this allows to pass
 	// extra options without requiring webrtc to be aware of them.
 	Config*  extra_options;
+    
+    unsigned int        numberOfLayer; //number of vp8 temporal layer
 
 	bool operator==(const VideoCodec& other) const {
 		bool ret = codecType == other.codecType &&
@@ -1009,7 +1011,9 @@ struct RTPHeaderExtension {
 		hasAbsoluteSendTime(false),
 		absoluteSendTime(0),
 		hasAudioLevel(false),
-		audioLevel(0) {}
+		audioLevel(0),
+        hasLossRate(false),
+        lossRate(0){}
 
 	bool hasTransmissionTimeOffset;
 	int32_t transmissionTimeOffset;
@@ -1020,6 +1024,8 @@ struct RTPHeaderExtension {
 	// https://datatracker.ietf.org/doc/draft-lennox-avt-rtp-audio-level-exthdr/
 	bool hasAudioLevel;
 	uint8_t audioLevel;
+    bool hasLossRate;
+    uint8_t lossRate;
 };
 
 struct RTPHeader {

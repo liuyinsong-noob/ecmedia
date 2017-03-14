@@ -375,39 +375,89 @@ int32_t RTPSenderAudio::SendAudio(
         fragmentation &&
         fragmentation->fragmentationVectorSize > 1 &&
         !markerBit) {
-      if (timestampOffset <= 0x3fff) {
-        if(fragmentation->fragmentationVectorSize != 2) {
-          // we only support 2 codecs when using RED
-          return -1;
+        int maxOffset = 0x3fff;
+        if (fragmentation->fragmentationVectorSize == 3) {
+            maxOffset = fragmentation->fragmentationTimeDiff[2];
         }
+        else if (fragmentation->fragmentationVectorSize == 2)
+        {
+            maxOffset = fragmentation->fragmentationTimeDiff[1];
+        }
+      if (maxOffset <= 0x3fff) {
+//        if(fragmentation->fragmentationVectorSize != 2) {   //sean opus red test
+//          // we only support 2 codecs when using RED
+//          return -1;
+//        }
         // only 0x80 if we have multiple blocks
-        dataBuffer[rtpHeaderLength++] = 0x80 +
-            fragmentation->fragmentationPlType[1];
-        size_t blockLength = fragmentation->fragmentationLength[1];
-
-        // sanity blockLength
-        if(blockLength > 0x3ff) {  // block length 10 bits 1023 bytes
-          return -1;
-        }
-        uint32_t REDheader = (timestampOffset << 10) + blockLength;
-        RtpUtility::AssignUWord24ToBuffer(dataBuffer + rtpHeaderLength,
-                                          REDheader);
-        rtpHeaderLength += 3;
+          size_t blockLength = 0;
+          uint32_t REDheader = 0;
+          if (fragmentation->fragmentationVectorSize == 3) {
+              dataBuffer[rtpHeaderLength++] = 0x80 +
+              fragmentation->fragmentationPlType[2];
+              blockLength = fragmentation->fragmentationLength[2];
+              
+              // sanity blockLength
+              if(blockLength > 0x3ff) {  // block length 10 bits 1023 bytes
+                  return -1;
+              }
+              timestampOffset = fragmentation->fragmentationTimeDiff[2];
+              REDheader = (timestampOffset << 10) + blockLength;
+              RtpUtility::AssignUWord24ToBuffer(dataBuffer + rtpHeaderLength,
+                                                REDheader);
+              rtpHeaderLength += 3;
+          }
+        
+          
+          dataBuffer[rtpHeaderLength++] = 0x80 + fragmentation->fragmentationPlType[1];
+          blockLength = fragmentation->fragmentationLength[1];
+          if (blockLength > 0x3ff) {
+              return -1;
+          }
+          timestampOffset = fragmentation->fragmentationTimeDiff[1];
+          REDheader = (timestampOffset << 10) + blockLength;
+          RtpUtility::AssignUWord24ToBuffer(dataBuffer + rtpHeaderLength, REDheader);
+          rtpHeaderLength += 3;
+          
 
         dataBuffer[rtpHeaderLength++] = fragmentation->fragmentationPlType[0];
-        // copy the RED data
-        memcpy(dataBuffer+rtpHeaderLength,
+        // copy the RED data 2
+          
+          int fragmentationLength2 = 0;
+          if (fragmentation->fragmentationVectorSize == 3) {
+              memcpy(dataBuffer+rtpHeaderLength, payloadData + fragmentation->fragmentationOffset[2], fragmentation->fragmentationLength[2]);
+              fragmentationLength2 = fragmentation->fragmentationLength[2];
+              
+          }
+        
+          //sean check data
+//          printf("sean check data RED2\n");
+//          for (int ii=0; ii<fragmentation->fragmentationLength[2]; ii++) {
+//              printf("%02X ", *(payloadData+fragmentation->fragmentationOffset[2]+ii));
+//          }
+//          printf("\nsean check data RED2 end\n");
+          
+          
+          
+        // copy the RED data 1
+        memcpy(dataBuffer+rtpHeaderLength+fragmentationLength2,
                payloadData + fragmentation->fragmentationOffset[1],
                fragmentation->fragmentationLength[1]);
-
+//          printf("sean check data RED1\n");
+//          for (int ii=0; ii<fragmentation->fragmentationLength[1]; ii++) {
+//              printf("%02X ", *(payloadData+fragmentation->fragmentationOffset[1]+ii));
+//          }
+//          printf("\nsean check data RED1 end\n");
+          
+          
+          
         // copy the normal data
-        memcpy(dataBuffer+rtpHeaderLength +
+        memcpy(dataBuffer+rtpHeaderLength + fragmentationLength2 +
                fragmentation->fragmentationLength[1],
                payloadData + fragmentation->fragmentationOffset[0],
                fragmentation->fragmentationLength[0]);
 
         payloadSize = fragmentation->fragmentationLength[0] +
-            fragmentation->fragmentationLength[1];
+            fragmentation->fragmentationLength[1] + fragmentationLength2;
       } else {
         // silence for too long send only new data
         dataBuffer[rtpHeaderLength++] = fragmentation->fragmentationPlType[0];
@@ -441,6 +491,9 @@ int32_t RTPSenderAudio::SendAudio(
       _rtpSender->UpdateAudioLevel(dataBuffer, packetSize, rtp_header,
                                    (frameType == kAudioFrameSpeech),
                                    _audioLevel_dBov);
+        
+        
+//    _rtpSender->UpdateLossRate(dataBuffer, packetSize, rtp_header, lossRate);
     }
   }  // end critical section
   TRACE_EVENT_ASYNC_END2("cloopenwebrtc", "Audio", captureTimeStamp,

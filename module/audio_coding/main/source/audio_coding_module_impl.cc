@@ -128,7 +128,9 @@ AudioCodingModuleImpl::AudioCodingModuleImpl(
       first_10ms_data_(false),
       callback_crit_sect_(CriticalSectionWrapper::CreateCriticalSection()),
       packetization_callback_(NULL),
-      vad_callback_(NULL) {
+      vad_callback_(NULL),
+      red2_length_(0),
+      loss_rate_(0){
 
   // Nullify send codec memory, set payload type and set codec name to
   // invalid values.
@@ -143,6 +145,7 @@ AudioCodingModuleImpl::AudioCodingModuleImpl(
 
   // Allocate memory for RED.
   red_buffer_ = new uint8_t[MAX_PAYLOAD_SIZE_BYTE];
+  red_buffer2_ = new uint8_t[MAX_PAYLOAD_SIZE_BYTE];
 
   // TODO(turajs): This might not be exactly how this class is supposed to work.
   // The external usage might be that |fragmentationVectorSize| has to match
@@ -206,6 +209,19 @@ AudioCodingModuleImpl::~AudioCodingModuleImpl() {
       delete[] red_buffer_;
       red_buffer_ = NULL;
     }
+      if (red_buffer2_ != NULL) {
+          delete[] red_buffer2_;
+          red_buffer2_ = NULL;
+      }
+      
+      if (red_list_.size()>0) {
+          RedList::iterator it = red_list_.begin();
+          while (it != red_list_.end()) {
+              delete [] it->buf;
+              it++;
+          }
+          red_list_.clear();
+      }
   }
 
   if (aux_rtp_header_ != NULL) {
@@ -253,12 +269,12 @@ int64_t AudioCodingModuleImpl::TimeUntilNextProcess() {
 // Process any pending tasks such as timeouts.
 int32_t AudioCodingModuleImpl::Process() {
   // Make room for 1 RED payload.
-  uint8_t stream[2 * MAX_PAYLOAD_SIZE_BYTE];
+  uint8_t stream[kMaxNumFragmentationVectors * MAX_PAYLOAD_SIZE_BYTE];
   // TODO(turajs): |length_bytes| & |red_length_bytes| can be of type int if
   // ACMGenericCodec::Encode() & ACMGenericCodec::GetRedPayload() allows.
-  int16_t length_bytes = 2 * MAX_PAYLOAD_SIZE_BYTE;
+  int16_t length_bytes = kMaxNumFragmentationVectors * MAX_PAYLOAD_SIZE_BYTE;
   int16_t red_length_bytes = length_bytes;
-  uint32_t rtp_timestamp;
+  uint32_t rtp_timestamp = 0;
   int status;
   WebRtcACMEncodingType encoding_type;
   FrameType frame_type = kAudioFrameSpeech;
@@ -277,10 +293,12 @@ int32_t AudioCodingModuleImpl::Process() {
     status = codecs_[current_send_codec_idx_]->Encode(stream, &length_bytes,
                                                       &rtp_timestamp,
                                                       &encoding_type);
+      int static counter = 0;
     if (status < 0) {
       // Encode failed.
       WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
                    "Process(): Encoding Failed");
+        
       length_bytes = 0;
       return -1;
     } else if (status == 0) {
@@ -375,30 +393,115 @@ int32_t AudioCodingModuleImpl::Process() {
         //  reconstruction is possible.
         red_active = true;
 
-        has_data_to_send = false;
+        has_data_to_send = true;
         // Skip the following part for the first packet in a RED session.
-        if (!is_first_red_) {
-          // Rearrange stream such that RED packets are included.
-          // Replace stream now that we have stored current stream.
-          memcpy(stream + fragmentation_.fragmentationOffset[1], red_buffer_,
-                 fragmentation_.fragmentationLength[1]);
+//      printf("sean haha counter %d\n",counter++);
+              
+      //Adjust size according to loss rate 5, 3, 1
+      //keep list size 5
+      int list_size = 1;
+      if (loss_rate_*5 > 30 && loss_rate_*5 < 45 ) {
+          list_size = 3;
+      }
+      else if (loss_rate_*5 > 45)
+          list_size = 5;
+              
+              
+      list_size = 3;    //sean test audio mixer
+      if (red_list_.size()>=list_size) {
+          RedBuf earse = red_list_.front();
+          delete [] earse.buf;
+          red_list_.pop_front();
+      }
+              
+             
+//            来了一个包，首先放到list队尾
+      RedBuf latestBuf;
+      latestBuf.len = length_bytes;
+      latestBuf.buf = new uint8_t[length_bytes];
+      latestBuf.ts = rtp_timestamp;
+              
+              
+//      printf("sean haah ts %ld\n", rtp_timestamp);
+      memcpy(latestBuf.buf, stream, length_bytes);
+      red_list_.push_back(latestBuf);
+              
+              
+
+//        printf("sean haha list size %zu\n", red_list_.size());
+        if (/*!is_first_red_*/red_list_.size()>=3) {
+//            取出第三个包，放到steam中
+            RedList::iterator it = red_list_.begin();
+            int count = 1;
+            for (; it!=red_list_.end() && red_list_.size()>=3 && count<=3; it++,count++) {
+                switch (count) {
+                    case 1:
+                    {
+                        if (red_list_.size() == 3) {
+                            fragmentation_.fragmentationLength[1] = (*it).len;
+                            fragmentation_.fragmentationTimestamp[1] = (*it).ts;
+                            memcpy(stream+fragmentation_.fragmentationOffset[1], (*it).buf, (*it).len);
+                        }
+                        if (red_list_.size() >= 5) {
+                            fragmentation_.fragmentationLength[2] = (*it).len;
+                            fragmentation_.fragmentationTimestamp[2] = (*it).ts;
+                            memcpy(stream+fragmentation_.fragmentationOffset[2], (*it).buf, (*it).len);
+                        }
+                        
+                    }
+                        break;
+                    case 2:
+                    {
+                        if (red_list_.size() == 4) {
+                            fragmentation_.fragmentationLength[1] = (*it).len;
+                            fragmentation_.fragmentationTimestamp[1] = (*it).ts;
+                            memcpy(stream+fragmentation_.fragmentationOffset[1], (*it).buf, (*it).len);
+                        }
+                        break;
+                    }
+                    case 3:
+                    {
+                        if (red_list_.size()==5) {
+                            fragmentation_.fragmentationLength[1] = (*it).len;
+                            fragmentation_.fragmentationTimestamp[1] = (*it).ts;
+                            memcpy(stream+fragmentation_.fragmentationOffset[1], (*it).buf, (*it).len);
+                        }
+                        
+                    }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+
           // Update the fragmentation time difference vector, in number of
           // timestamps.
           uint16_t time_since_last = static_cast<uint16_t>(
               rtp_timestamp - last_red_timestamp_);
+            
+//            printf("sean haha timestamp diff with last %d\n", time_since_last);
 
           // Update fragmentation vectors.
-          fragmentation_.fragmentationPlType[1] =
-              fragmentation_.fragmentationPlType[0];
-          fragmentation_.fragmentationTimeDiff[1] = time_since_last;
-          has_data_to_send = true;
+            if (red_list_.size() == 5) {
+                fragmentation_.fragmentationPlType[2] = fragmentation_.fragmentationPlType[1];
+                fragmentation_.fragmentationTimeDiff[2] = rtp_timestamp - fragmentation_.fragmentationTimestamp[2];
+            }
+          
+//            printf("sean haha diff check ts[2] %ld, ts[0] %d, diff %d\n", fragmentation_.fragmentationTimestamp[2], rtp_timestamp, fragmentation_.fragmentationTimeDiff[2]);
+          fragmentation_.fragmentationPlType[1] = fragmentation_.fragmentationPlType[0];
+          fragmentation_.fragmentationTimeDiff[1] = rtp_timestamp - fragmentation_.fragmentationTimestamp[1];
+//            printf("sean haha diff check ts[1] %ld, ts[0] %d, diff %d\n", fragmentation_.fragmentationTimestamp[1], rtp_timestamp, fragmentation_.fragmentationTimeDiff[1]);
+          
         }
 
+        has_data_to_send = true;
         // Insert new packet length.
         fragmentation_.fragmentationLength[0] = length_bytes;
 
         // Insert new packet payload type.
         fragmentation_.fragmentationPlType[0] = current_payload_type;
+        fragmentation_.fragmentationTimestamp[0] = rtp_timestamp;
         last_red_timestamp_ = rtp_timestamp;
 
         // Can be modified by the GetRedPayload() call if iSAC is utilized.
@@ -408,31 +511,39 @@ int32_t AudioCodingModuleImpl::Process() {
         // RFC 2198 (RTP Payload for Redundant Audio Data) will be used.
         // First fragment is the current data (new).
         // Second fragment is the previous data (old).
-        length_bytes = static_cast<int16_t>(
-            fragmentation_.fragmentationLength[0] +
-            fragmentation_.fragmentationLength[1]);
+              
+              if (red_list_.size() == 5) {
+                  fragmentation_.fragmentationVectorSize = kMaxNumFragmentationVectors;//kNumRedFragmentationVectors; //sean opus 3 payloads, 2 red
+                  length_bytes = static_cast<int16_t>(
+                                                      fragmentation_.fragmentationLength[0] +
+                                                      fragmentation_.fragmentationLength[1] +
+                                                      fragmentation_.fragmentationLength[2]);
+              }
+              else if (red_list_.size() == 3 || red_list_.size() == 4)
+              {
+                  fragmentation_.fragmentationVectorSize = kNumRedFragmentationVectors; //sean opus 3 payloads, 2 red
+                  length_bytes = static_cast<int16_t>(
+                                                      fragmentation_.fragmentationLength[0] +
+                                                      fragmentation_.fragmentationLength[1]);
+              }
+              else
+              {
+                  fragmentation_.fragmentationVectorSize = 1;//kNumRedFragmentationVectors; //sean opus 3 payloads, 2 red
+                  length_bytes = static_cast<int16_t>(
+                                                      fragmentation_.fragmentationLength[0]);
+              }
 
-        // Get, and store, redundant data from the encoder based on the recently
-        // encoded frame.
-        // NOTE - only iSAC contains an implementation; all other codecs does
-        // nothing and returns -1.
-        if (codecs_[current_send_codec_idx_]->GetRedPayload(
-            red_buffer_, &red_length_bytes) == -1) {
-          // The codec was not iSAC => use current encoder output as redundant
-          // data instead (trivial RED scheme).
-          memcpy(red_buffer_, stream, red_length_bytes);
-        }
 
         is_first_red_ = false;
         // Update payload type with RED payload type.
         current_payload_type = red_pltype_;
         // We have packed 2 payloads.
-        fragmentation_.fragmentationVectorSize = kNumRedFragmentationVectors;
+              
+//        fragmentation_.fragmentationVectorSize = kMaxNumFragmentationVectors;//kNumRedFragmentationVectors; //sean opus 3 payloads, 2 red
 
         // Copy to local variable, as it will be used outside ACM lock.
         my_fragmentation.CopyFrom(fragmentation_);
-        // Store RED length.
-        fragmentation_.fragmentationLength[1] = red_length_bytes;
+
       }
     }
   }
@@ -488,8 +599,12 @@ int AudioCodingModuleImpl::InitializeSender() {
     if (red_buffer_ != NULL) {
       memset(red_buffer_, 0, MAX_PAYLOAD_SIZE_BYTE);
     }
+      if (red_buffer2_ != NULL) {
+          memset(red_buffer2_, 0, MAX_PAYLOAD_SIZE_BYTE);
+      }
     ResetFragmentation(kNumRedFragmentationVectors);
   }
+    
 
   return 0;
 }
@@ -1102,12 +1217,13 @@ int AudioCodingModuleImpl::SetREDStatus(
   if (enable_red == true && codec_fec_enabled_ == true) {
     WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceAudioCoding, id_,
                  "Codec internal FEC and RED cannot be co-enabled.");
-    return -1;
+//    return -1;
   }
 
   if (red_enabled_ != enable_red) {
     // Reset the RED buffer.
     memset(red_buffer_, 0, MAX_PAYLOAD_SIZE_BYTE);
+    memset(red_buffer2_, 0, MAX_PAYLOAD_SIZE_BYTE);
 
     // Reset fragmentation buffers.
     ResetFragmentation(kNumRedFragmentationVectors);
@@ -1165,6 +1281,11 @@ int AudioCodingModuleImpl::SetPacketLossRate(int loss_rate) {
   }
   return 0;
 }
+    
+int AudioCodingModuleImpl::SetPacketLossRateFromRtpHeaderExt(int loss_rate)
+    {
+        loss_rate_ = loss_rate;
+    }
 
 /////////////////////////////////////////
 //   (VAD) Voice Activity Detection
