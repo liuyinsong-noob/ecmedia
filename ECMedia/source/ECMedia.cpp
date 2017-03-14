@@ -937,7 +937,9 @@ int ECMedia_video_stop_receive(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	g_statsCollector->DeleteVideoRecvStatsProxy(channelid);
+    if (g_statsCollector) {
+        g_statsCollector->DeleteVideoRecvStatsProxy(channelid);
+    }
     ViEBase *base = ViEBase::GetInterface(m_vie);
     if (base) {
         int ret = base->StopReceive(channelid);
@@ -975,7 +977,9 @@ int ECMedia_video_stop_send(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	g_statsCollector->DeleteVideoSendStatsProxy(channelid);
+    if (g_statsCollector) {
+        g_statsCollector->DeleteVideoSendStatsProxy(channelid);
+    }
     ViEBase *base = ViEBase::GetInterface(m_vie);
     if (base) {
         int ret = base->StopSend(channelid);
@@ -1265,7 +1269,9 @@ int ECMedia_audio_stop_receive(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	g_statsCollector->DeleteAudioRecvStatsProxy(channelid);
+    if (g_statsCollector) {
+        g_statsCollector->DeleteAudioRecvStatsProxy(channelid);
+    }
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
         base->StopReceive(channelid);
@@ -1303,7 +1309,9 @@ int ECMedia_audio_stop_send(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-	g_statsCollector->DeleteAudioSendStatsProxy(channelid);
+    if (g_statsCollector) {
+        g_statsCollector->DeleteAudioSendStatsProxy(channelid);
+    }
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
         base->StopSend(channelid);
