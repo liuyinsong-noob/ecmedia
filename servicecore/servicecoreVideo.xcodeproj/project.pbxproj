@@ -650,6 +650,8 @@
 					../module/pacing/include,
 					../module/video_render/main/include,
 					../ECMedia/interface,
+					../ECMedia/source,
+					../third_party/protobuf/src,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -728,6 +730,8 @@
 					../module/pacing/include,
 					../module/video_render/main/include,
 					../ECMedia/interface,
+					../ECMedia/source,
+					../third_party/protobuf/src,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
