@@ -298,7 +298,7 @@ size_t b64_encode2( void const  *src
  *
  * \see b64::decode()
  */
-size_t b64_decode(char const *src, size_t srcLen, void *dest, size_t destSize);
+size_t b64_decode3(char const *src, size_t srcLen, void *dest, size_t destSize);
 
 /** \brief Decodes a sequence of Base-64 into a block of binary data
  *

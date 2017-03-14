@@ -533,11 +533,11 @@ namespace cloopenwebrtc {
                 crypto_policy_set_rtcp_default(&policy->rtcp);
             }
         }
-        key_size = b64::b64_decode(b64_key, b64_key_length, 0, 0);
+        key_size = b64::b64_decode3(b64_key, b64_key_length, 0, 0);
 
         key = (uint8_t*) malloc(key_size+2); /*srtp uses padding*/
 
-        int final_key_size = b64::b64_decode(b64_key, b64_key_length, key, key_size);
+        int final_key_size = b64::b64_decode3(b64_key, b64_key_length, key, key_size);
 //        printf("Here we use b64_decode key = %s\n",key);
         if (final_key_size != policy->rtp.cipher_key_len) {
             WEBRTC_TRACE(kTraceError, kTraceVoice, 0,"Key size (%d) doesn't match the selected srtp profile (required %d)\n",
