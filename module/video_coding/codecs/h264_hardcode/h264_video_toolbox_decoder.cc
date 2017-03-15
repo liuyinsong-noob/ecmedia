@@ -416,7 +416,7 @@ namespace cloopenwebrtc {
             
             prevPicOrderCntMsb = PicOrderCntMsb;
             prevPicOrderCntLsb = poc;
-            printf("nal type %d, slice type %d, poc %d, pts %llu\n", input_image._buffer[4]&0x1f, sliceType, poc,PicOrderCntMsb+poc);
+            // printf("nal type %d, slice type %d, poc %d, pts %llu\n", input_image._buffer[4]&0x1f, sliceType, poc,PicOrderCntMsb+poc);
             current_poc = PicOrderCntMsb + poc;
         }
  
