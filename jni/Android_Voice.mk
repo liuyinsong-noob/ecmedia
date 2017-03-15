@@ -13,7 +13,6 @@ include $(MY_WEBRTC_ROOT_PATH)/module/osip/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/exosip/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/servicecore/source/Android_voice.mk
 include $(MY_WEBRTC_ROOT_PATH)/jni/BuildECMedia_Voice.mk
-include $(MY_WEBRTC_ROOT_PATH)/third_party/oRTP/build/android/Android.mk
 
 # build .so
 LOCAL_PATH := $(JNI_PATH)
@@ -29,7 +28,7 @@ LOCAL_LDLIBS := -L$(JNI_PATH)
 LOCAL_SRC_FILES := \
 		callback.cpp \
 		com_CCP_phone_NativeInterface.cpp
-		
+
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS)
 
@@ -47,11 +46,11 @@ LOCAL_STATIC_LIBRARIES := \
 	libwebrtc_exosip \
 	libwebrtc_osip \
 	libortp
-	
+
 LOCAL_SHARED_LIBRARIES := \
     libcutils \
     libdl \
-	libECMedia
+	libECMedia_Voice
 
 LOCAL_LDLIBS += -llog -lGLESv2
 
@@ -60,4 +59,3 @@ LOCAL_DISABLE_FATAL_LINKER_WARNINGS := true
 LOCAL_PRELINK_MODULE := false
 
 include $(BUILD_SHARED_LIBRARY)
-

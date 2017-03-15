@@ -212,6 +212,7 @@ bool StatsCollector::AddVideoRecvStatsProxy(int channelid)
 
 void StatsCollector::DeleteVideoSendStatsProxy(int channelid)
 {
+#ifdef VIDEO_ENABLED
 	CriticalSectionScoped lock(stream_crit_.get());
 	SendStatisticsProxy *pStatsProxy = nullptr;
 	for (auto it : video_send_stats_proxies_)
@@ -234,6 +235,7 @@ void StatsCollector::DeleteVideoSendStatsProxy(int channelid)
 		vie_base->DeregisterCpuOveruseObserver(channelid);
 		vie_base->Release();
 	}
+#endif
 }
 
 void StatsCollector::DeleteVideoRecvStatsProxy(int channelid)
@@ -596,6 +598,7 @@ void StatsCollector::ExtractVideoSenderInfo(bool isFullStats)
 }
 void StatsCollector::ExtractVideoReceiverInfo(bool isFullStats)
 {
+#ifdef VIDEO_ENABLED
 	for (auto it : video_receive_stats_proxies_)
 	{
 		int64_t timestamp;
@@ -616,6 +619,7 @@ void StatsCollector::ExtractVideoReceiverInfo(bool isFullStats)
 		VideoReciverInfo_AddLossModeStats(info, report);
 		Report_AddCommonFiled(report, timestamp);
 	}
+#endif
 }
 void StatsCollector::ExtractAudioSenderInfo(bool isFullStats)
 {

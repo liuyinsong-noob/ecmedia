@@ -6403,8 +6403,11 @@ void ServiceCore::setDesktopShareParam(int desktop_width, int desktop_height, in
 
 int ServiceCore::setScreeShareActivity(SerPhoneCall *call, void *activity)
 {
+#ifdef VIDEO_ENABLED
     m_desktop_activity = activity;
     return ECMedia_set_screen_share_activity(call->m_desktopShareDeviceId, activity);
+#endif
+    return 0;
 }
 
 
@@ -6431,12 +6434,17 @@ void ServiceCore::onIncomingCodecChanged(const char *callid, const int width, co
 
 
 int ServiceCore::startRecordLocalMedia(const char *fileName, void *localview) {
+#ifdef VIDEO_ENABLED
     return ECMedia_startRecordLocalMedia(fileName, localview);
+#endif
+    return 0;
 }
 
 
 void ServiceCore::stopRecordLocalMedia() {
+#ifdef VIDEO_ENABLED
     ECMedia_stopRecordLocalMedia();
+#endif
 }
 
 //cloopenwebrtc::VideoSendStream::Config ServiceCore::CreateVideoSendStreamConfig()

@@ -20,9 +20,10 @@ LOCAL_SRC_FILES := \
 		ECMedia.cpp \
 		RecordVoip.cpp \
 		statsCollector.cc \
-		VoeObserver.cpp
+		VoeObserver.cpp \
+		MediaStatisticsData.pb.cc \
 
-	
+
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
 
@@ -59,8 +60,9 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../../module/pacing/include \
 	$(LOCAL_PATH)/../../module/remote_bitrate_estimator/source \
 	$(LOCAL_PATH)/../../module/video_render/main/include \
-	$(LOCAL_PATH)/../../module/audio_coding/codecs/opencore-amr/amrnb
-	
+	$(LOCAL_PATH)/../../module/audio_coding/codecs/opencore-amr/amrnb \
+    $(LOCAL_PATH)/../../third_party/protobuf/src
+
 LOCAL_SHARED_LIBRARIES := \
     libcutils \
     libdl \

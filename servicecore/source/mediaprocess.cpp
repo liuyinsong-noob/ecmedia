@@ -3192,22 +3192,30 @@ int ServiceCore::serphone_call_start_record_audio_ex(SerPhoneCall *call, const c
 
 int ServiceCore::serphone_call_start_record_r_video(SerPhoneCall *call, const char *filename)
 {
+#ifdef VIDEO_ENABLED
 	return ECMedia_start_record_remote_video(call->m_AudioChannelID, call->m_VideoChannelID, filename);
+#endif
 }
 
 int ServiceCore::serphone_call_stop_record_r_video(SerPhoneCall *call)
 {
+#ifdef VIDEO_ENABLED
 	return ECMedia_stop_record_remote_video(call->m_AudioChannelID, call->m_VideoChannelID);
+#endif
 }
 
 int ServiceCore::serphone_call_start_record_l_video(SerPhoneCall *call, const char *filename)
 {
+#ifdef VIDEO_ENABLED
 	return ECMedia_start_record_local_video(call->m_AudioChannelID, call->m_VideoChannelID, filename);
+#endif
 }
 
 int ServiceCore::serphone_call_stop_record_l_video(SerPhoneCall *call)
 {
+#ifdef VIDEO_ENABLED
 	return ECMedia_stop_record_local_video(call->m_AudioChannelID, call->m_VideoChannelID);
+#endif
 }
 
 int ServiceCore::serphone_call_start_record_screen(SerPhoneCall *call, const char *filename, int bitrates, int fps, int type)
@@ -4788,23 +4796,27 @@ int ServiceCore::GetRtpStatistics(const char* callid,
 
 int ServiceCore::GetStatsData(int type, char* callid, void **pb_data)
 {
+#ifdef VIDEO_ENABLED
 	SerPhoneCall *call = serphone_core_get_current_call();
 	if (!call)
 	{
 		return -1;
 	}
 	ECMedia_getStatsReports(type, callid, pb_data);
+#endif
 	return 0;
 }
 
 void ServiceCore::DeleteStatsData(void *pb_data)
 {
+#ifdef VIDEO_ENABLED
 	SerPhoneCall *call = serphone_core_get_current_call();
 	if (!call)
 	{
 		return;
 	}
 	ECMedia_deletePbData(pb_data);
+#endif
 }
 
 void ServiceCore::serserphone_call_start_desktop_share(SerPhoneCall *call, const char *cname,bool_t all_inputs_muted)
@@ -5064,47 +5076,66 @@ int ServiceCore::SetAudioKeepAlive(SerPhoneCall *call, bool enable, int interval
 
 void *ServiceCore::createLiveStream()
 {
+#ifdef VIDEO_ENABLED
 	return ECMedia_createLiveStream(0);
+#endif
 }
 int ServiceCore::playLiveStream(void *handle, const char * url, void *renderView)
 {
+#ifdef VIDEO_ENABLED
 	return ECMedia_playLiveStream(handle, url, renderView, onLiveStreamVideoResolution);
+#endif
 }
 int ServiceCore::pushLiveStream(void *handle, const char * url, void *renderView)
 {
+#ifdef VIDEO_ENABLED
 	return ECMedia_pushLiveStream(handle, url, renderView);
+#endif
 }
 
 void ServiceCore::setLiveVideoSource(void *handle, int video_source)
 {
+#ifdef VIDEO_ENABLED
 	return ECMedia_SetLiveVideoSource(handle,video_source);
+#endif
 }
 void ServiceCore::stopLiveStream(void *handle)
 {
+#ifdef VIDEO_ENABLED
 	return ECMedia_stopLiveStream(handle);
+#endif
 }
 void ServiceCore::releaseLiveStream(void *handle)
 {
+#ifdef VIDEO_ENABLED
 	return ECMedia_releaseLiveStream(handle);
+#endif
 }
 
 void ServiceCore::enableLiveStreamBeauty(void *handle)
 {
+#ifdef VIDEO_ENABLED
 	ECMedia_enableLiveStreamBeauty(handle);
+#endif
 }
 
 void ServiceCore::disableLiveStreamBeauty(void *handle)
 {
+#ifdef VIDEO_ENABLED
 	ECMedia_disableLiveStreamBeauty(handle);
+#endif
 }
 
 int ServiceCore::liveStream_SelectCamera(void *handle, int index, int width, int height, int fps)
 {
+#ifdef VIDEO_ENABLED
 	CameraCapability cap;
 	cap.width = width;
 	cap.height = height;
 	cap.maxfps = fps;
 	return ECMedia_setVideoProfileLiveStream(handle, index, cap, width*height*fps*0.07/1000);
+#endif
+    return 0;
 }
 
 //SendStatisticsProxy*  ServiceCore::Serphone_set_video_send_statistics_proxy(int video_channel)

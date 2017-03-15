@@ -3805,12 +3805,16 @@ extern "C" void setLiveVideoSource(void *handle, int video_source)
 }
 extern "C" int getShareWindows(void *handle, WindowShare ** windows)
 {
+#ifdef VIDEO_ENABLED
 	return ECMedia_GetShareWindows(handle, windows);
+#endif
 }
 
 extern "C"  void selectShareWindow(void *handle, int type, int id)
 {
+#ifdef VIDEO_ENABLED
 	ECMedia_SelectShareWindow(handle, type, id);
+#endif
 }
 
 extern "C" int startSendRtpPacket(int &channel, const char *ip, int rtp_port)
@@ -3831,18 +3835,23 @@ extern "C" int startRecvRtpPacket(int channelNum)
 
 extern "C" int startRecordLocalMedia(const char *fileName, void *localview)
 {
+#ifdef VIDEO_ENABLED
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
     return g_pSerCore->startRecordLocalMedia(fileName, localview);
+#endif
+    return 0;
 }
 
 extern "C" void stopRecordLocalMedia()
 {
+#ifdef VIDEO_ENABLED
     PrintConsole("try to stop record local media\n");
     if (!g_pSerCore)
         return;
     
     g_pSerCore->stopRecordLocalMedia();
     PrintConsole("record local media stopped\n");
+#endif
     
 }
 extern "C" int setScreeShareActivity(char *callid, void *activity)

@@ -543,14 +543,13 @@ int ECMedia_init_video()
 	}
     videobase->Release();
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
-#endif
 
 	if (!g_statsCollector)
 	{
 		g_statsCollector = new StatsCollector();
 	}
 	g_statsCollector->SetVideoEngin(m_vie);
-	
+#endif
     return 0;
 }
 
