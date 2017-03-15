@@ -554,7 +554,15 @@ namespace cloopenwebrtc {
                 rtpHeader.ssrc = 1;
                 rtpHeader.payloadType = 98;
                 rtpHeader.timestamp = packet->m_nTimeStamp *90;
-                rtpHeader.markerBit = true;
+                if (packet->m_body[1] == 1)
+                {
+                    rtpHeader.markerBit = true;
+                }
+                else
+                {
+                    rtpHeader.markerBit = false;
+                }
+                
                 video_data_cb_->ReceivePacket((const uint8_t*) payloadData, payloadLen, rtpHeader,true);
             }
         }
