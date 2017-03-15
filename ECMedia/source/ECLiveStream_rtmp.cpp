@@ -79,7 +79,7 @@ namespace cloopenwebrtc {
 	, desktop_capture_id_(-1)
     , share_window_id_(-1)
 	, live_mode_(MODE_LIVE_UNKNOW)
-	, video_source_(VIDEO_SOURCE_DESKTOP)
+	, video_source_(VIDEO_SOURCE_CAMERA)
 	, desktop_share_type_(ShareScreen)
 	, local_view_(NULL)
 	, clock_(Clock::GetRealTimeClock())
