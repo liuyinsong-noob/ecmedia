@@ -188,8 +188,8 @@ using namespace std;
 bool g_media_TraceFlag = false;//
 const char * g_log_media_filename = "./mediaConsole.log";
 FILE *g_media_interface_fp =NULL;
-char g_log_file1[100];
-char g_log_file2[100];
+char g_log_file1[1024];
+char g_log_file2[1024];
 char *g_cur_log_file = NULL;
 #define MAX_LOG_LINE	3000
 #define MAX_LOG_SIZE	104856700//100M bytes
