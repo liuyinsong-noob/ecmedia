@@ -1,3 +1,7 @@
+Version 2.1.2.19
+1、接口不变
+2、修改了直播
+
 Version 2.1.2.18
 1、接口改变
 2、增加了audio red 功能；	ECMEDIA_API int ECMedia_setAudioRed(int channelid, bool enable, int payloadType);
