@@ -244,6 +244,8 @@ ViEChannel::~ViEChannel() {
   module_process_thread_.DeRegisterModule(rtp_rtcp_.get());
   module_process_thread_.DeRegisterModule(vcm_);
   module_process_thread_.DeRegisterModule(&vie_sync_);
+  module_process_thread_.DeRegisterModule(receive_statistics_proxy_.get());
+    
   while (simulcast_rtp_rtcp_.size() > 0) {
     std::list<RtpRtcp*>::iterator it = simulcast_rtp_rtcp_.begin();
     RtpRtcp* rtp_rtcp = *it;
@@ -1550,7 +1552,6 @@ int32_t ViEChannel::StopReceive() {
   }
 #endif
 
-  module_process_thread_.DeRegisterModule(receive_statistics_proxy_.get());
   return 0;
 }
 

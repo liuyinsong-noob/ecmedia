@@ -33,6 +33,7 @@ ReceiveStatisticsProxy::ReceiveStatisticsProxy(int channel_id)
 ReceiveStatisticsProxy::~ReceiveStatisticsProxy() {
 	updateEvent_->Set();
 	delete updateEvent_;
+    updateEvent_ = NULL;
 }
 
 VideoReceiveStream::Stats ReceiveStatisticsProxy::GetStats(int64_t &timestamp) const {
