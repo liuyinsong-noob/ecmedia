@@ -112,6 +112,21 @@ namespace cloopenwebrtc {
 			rtmp_lock_ = nullptr;
 		}
 		UnInit();
+
+		int i;
+		CameraInfo *camera;
+
+		if (cameras_.size() != 0)
+		{
+			for (i = 0; i < cameras_.size(); i++)
+			{
+				camera = cameras_[i];
+				delete camera;
+				camera = NULL;
+			}
+
+			cameras_.clear();
+		}
 	}
 
     bool RTMPLiveSession::Init()
@@ -729,11 +744,24 @@ namespace cloopenwebrtc {
 
 	bool RTMPLiveSession::GetAllCameraInfo()
 	{
+		int i;
+		CameraInfo *camera;
+
 		if (cameras_.size() != 0)
-			return true;
+		{
+			for (i = 0; i < cameras_.size(); i++)
+			{
+				camera = cameras_[i];
+				delete camera;
+				camera = NULL;
+			}
+
+			cameras_.clear();
+		}
+
 		ViECapture *capture = ViECapture::GetInterface(vie_);
-		for (int i = 0; i < capture->NumberOfCaptureDevices(); i++) {
-			CameraInfo *camera = new CameraInfo;
+		for (i = 0; i < capture->NumberOfCaptureDevices(); i++) {
+			camera = new CameraInfo;
 			camera->index = i;
 			capture->GetCaptureDevice(i, camera->name, sizeof(camera->name), camera->id, sizeof(camera->id));
 			cameras_.push_back(camera);
@@ -998,14 +1026,15 @@ namespace cloopenwebrtc {
 
 	int  RTMPLiveSession::PushStream(const std::string &url, void *localview)
 	{
+		if (video_source_ == VIDEO_SOURCE_CAMERA)
+			if (!GetAllCameraInfo())
+				return -5;
+
 		if (!Init())
 			return -1;
 
 		if (rtmph_ != NULL)  //already in playing state
 			return -2;
-
-		if (!GetAllCameraInfo())
-			return -5;
 		
 		hasSend_SPS_PPS_ = false;
 		hasSend_AAC_SPEC_= false;
@@ -1043,6 +1072,7 @@ namespace cloopenwebrtc {
 
 		unsigned int thread_id = 0;
 		pushnetworkThread_->Start(thread_id);
+
 		return 0;
 	}
 
@@ -1161,7 +1191,6 @@ namespace cloopenwebrtc {
 			RTMP_Free(rtmph_);
 			rtmph_ = NULL;
 		}
-
 	}
 
 	void RTMPLiveSession::SetPushContent(bool push_audio,bool push_video)
