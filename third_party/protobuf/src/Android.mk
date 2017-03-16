@@ -32,7 +32,8 @@ LOCAL_SRC_FILES := \
              google/protobuf/stubs/atomicops_internals_x86_msvc.cc \
 			 google/protobuf/stubs/common.cc                   \
 			 google/protobuf/stubs/stringprintf.cc             \
-			 google/protobuf/stubs/once.cc                     \
+			 google/protobuf/stubs/once.cc \
+			 google/protobuf/stubs/atomicops_internals_x86_gcc.cc \
 			 google/protobuf/io/zero_copy_stream.cc            \
 			 google/protobuf/io/zero_copy_stream_impl_lite.cc   \
              google/protobuf/io/coded_stream.cc                         
