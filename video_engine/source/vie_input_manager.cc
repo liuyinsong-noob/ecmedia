@@ -278,7 +278,7 @@ int ViEInputManager::CreateCaptureDevice(VideoCaptureModule* capture_module,
 
 int ViEInputManager::DestroyCaptureDevice(const int capture_id) {
   ViECapturer* vie_capture = NULL;
-  {
+  //{
     // We need exclusive access to the object to delete it.
     // Take this write lock first since the read lock is taken before map_cs_.
     ViEManagerWriteScoped wl(this);
@@ -301,7 +301,7 @@ int ViEInputManager::DestroyCaptureDevice(const int capture_id) {
     // Leave cs before deleting the capture object. This is because deleting the
     // object might cause deletions of renderers so we prefer to not have a lock
     // at that time.
-  }
+  //}
   delete vie_capture;
   vie_capture = NULL;
   return 0;
