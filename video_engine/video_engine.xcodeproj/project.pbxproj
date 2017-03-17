@@ -678,6 +678,7 @@
 					VIDEOCODEC_VP8,
 					ENABLE_SCREEN_SHARE,
 					WEBRTC_VIDEO_ENGINE_DESKTOP_SHARE_API,
+					WEBRTC_SRTP,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -717,6 +718,7 @@
 					"../third_party/libyuv-ios/include",
 					../module/desktop_capture/desktop_capture/desktop_capture,
 					../ECMedia/source,
+					../voice_engine/main/source,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
@@ -780,6 +782,7 @@
 					VIDEOCODEC_VP8,
 					ENABLE_SCREEN_SHARE,
 					WEBRTC_VIDEO_ENGINE_DESKTOP_SHARE_API,
+					WEBRTC_SRTP,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -819,6 +822,7 @@
 					"../third_party/libyuv-ios/include",
 					../module/desktop_capture/desktop_capture/desktop_capture,
 					../ECMedia/source,
+					../voice_engine/main/source,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
