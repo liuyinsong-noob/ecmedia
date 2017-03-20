@@ -198,7 +198,6 @@
 		05F43C1A16A9419D00F6D053 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F43C1816A9419C00F6D053 /* RegisterViewController.m */; };
 		05F43C1F16A941E700F6D053 /* VoIPCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F43C1D16A941E700F6D053 /* VoIPCallViewController.m */; };
 		1AFBD0E21DAE13C4009B8D23 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A1C1D48C07F00731C5B /* libssl.a */; };
-		1AFBD0E31DAE13C8009B8D23 /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A1B1D48C07F00731C5B /* libsrtp.a */; };
 		1AFBD0E41DAE13CB009B8D23 /* libortp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A1A1D48C07F00731C5B /* libortp.a */; };
 		1AFBD0E51DAE15ED009B8D23 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD42CD6A1D23D6F9009C2E7A /* libcrypto.a */; };
 		1AFBD0F51DAE3585009B8D23 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0F11DAE3585009B8D23 /* CameraViewController.m */; };
@@ -2102,7 +2101,6 @@
 				ADF261331DB8ACBD008420B0 /* libccpapisdk.a in Frameworks */,
 				AD01997F1D2370E7003C2BB9 /* VideoToolbox.framework in Frameworks */,
 				ADC50F881D90C86A00A83C04 /* GLKit.framework in Frameworks */,
-				1AFBD0E31DAE13C8009B8D23 /* libsrtp.a in Frameworks */,
 				1AFBD0E51DAE15ED009B8D23 /* libcrypto.a in Frameworks */,
 				1AFBD0E41DAE13CB009B8D23 /* libortp.a in Frameworks */,
 				1AFBD0E21DAE13C4009B8D23 /* libssl.a in Frameworks */,
