@@ -1,0 +1,406 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1FDB3D611E8373940018FA08 /* srtp.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D5F1E8373940018FA08 /* srtp.c */; };
+		1FDB3D621E8373940018FA08 /* ekt.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D601E8373940018FA08 /* ekt.c */; };
+		1FDB3D681E8373B00018FA08 /* aes_cbc.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D631E8373B00018FA08 /* aes_cbc.c */; };
+		1FDB3D691E8373B00018FA08 /* aes_icm.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D641E8373B00018FA08 /* aes_icm.c */; };
+		1FDB3D6A1E8373B00018FA08 /* aes.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D651E8373B00018FA08 /* aes.c */; };
+		1FDB3D6B1E8373B00018FA08 /* cipher.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D661E8373B00018FA08 /* cipher.c */; };
+		1FDB3D6C1E8373B00018FA08 /* null_cipher.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D671E8373B00018FA08 /* null_cipher.c */; };
+		1FDB3D711E8373C70018FA08 /* auth.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D6D1E8373C70018FA08 /* auth.c */; };
+		1FDB3D721E8373C70018FA08 /* hmac.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D6E1E8373C70018FA08 /* hmac.c */; };
+		1FDB3D731E8373C70018FA08 /* null_auth.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D6F1E8373C70018FA08 /* null_auth.c */; };
+		1FDB3D741E8373C70018FA08 /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D701E8373C70018FA08 /* sha1.c */; };
+		1FDB3D791E8373D70018FA08 /* alloc.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D751E8373D70018FA08 /* alloc.c */; };
+		1FDB3D7A1E8373D70018FA08 /* crypto_kernel.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D761E8373D70018FA08 /* crypto_kernel.c */; };
+		1FDB3D7B1E8373D70018FA08 /* err.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D771E8373D70018FA08 /* err.c */; };
+		1FDB3D7C1E8373D70018FA08 /* key.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D781E8373D70018FA08 /* key.c */; };
+		1FDB3D811E8373E30018FA08 /* datatypes.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D7D1E8373E30018FA08 /* datatypes.c */; };
+		1FDB3D821E8373E30018FA08 /* gf2_8.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D7E1E8373E30018FA08 /* gf2_8.c */; };
+		1FDB3D841E8373E30018FA08 /* stat.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D801E8373E30018FA08 /* stat.c */; };
+		1FDB3D881E8374150018FA08 /* rdb.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D851E8374150018FA08 /* rdb.c */; };
+		1FDB3D891E8374150018FA08 /* rdbx.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D861E8374150018FA08 /* rdbx.c */; };
+		1FDB3D8A1E8374150018FA08 /* ut_sim.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D871E8374150018FA08 /* ut_sim.c */; };
+		1FDB3D8E1E8374350018FA08 /* ctr_prng.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D8B1E8374350018FA08 /* ctr_prng.c */; };
+		1FDB3D8F1E8374350018FA08 /* prng.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D8C1E8374350018FA08 /* prng.c */; };
+		1FDB3D901E8374350018FA08 /* rand_source.c in Sources */ = {isa = PBXBuildFile; fileRef = 1FDB3D8D1E8374350018FA08 /* rand_source.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1FDB3D4F1E83734B0018FA08 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1FDB3D511E83734B0018FA08 /* libsrtp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libsrtp.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FDB3D5F1E8373940018FA08 /* srtp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = srtp.c; path = srtp/srtp.c; sourceTree = "<group>"; };
+		1FDB3D601E8373940018FA08 /* ekt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ekt.c; path = srtp/ekt.c; sourceTree = "<group>"; };
+		1FDB3D631E8373B00018FA08 /* aes_cbc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = aes_cbc.c; path = crypto/cipher/aes_cbc.c; sourceTree = "<group>"; };
+		1FDB3D641E8373B00018FA08 /* aes_icm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = aes_icm.c; path = crypto/cipher/aes_icm.c; sourceTree = "<group>"; };
+		1FDB3D651E8373B00018FA08 /* aes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = aes.c; path = crypto/cipher/aes.c; sourceTree = "<group>"; };
+		1FDB3D661E8373B00018FA08 /* cipher.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cipher.c; path = crypto/cipher/cipher.c; sourceTree = "<group>"; };
+		1FDB3D671E8373B00018FA08 /* null_cipher.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = null_cipher.c; path = crypto/cipher/null_cipher.c; sourceTree = "<group>"; };
+		1FDB3D6D1E8373C70018FA08 /* auth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = auth.c; path = crypto/hash/auth.c; sourceTree = "<group>"; };
+		1FDB3D6E1E8373C70018FA08 /* hmac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hmac.c; path = crypto/hash/hmac.c; sourceTree = "<group>"; };
+		1FDB3D6F1E8373C70018FA08 /* null_auth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = null_auth.c; path = crypto/hash/null_auth.c; sourceTree = "<group>"; };
+		1FDB3D701E8373C70018FA08 /* sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha1.c; path = crypto/hash/sha1.c; sourceTree = "<group>"; };
+		1FDB3D751E8373D70018FA08 /* alloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = alloc.c; path = crypto/kernel/alloc.c; sourceTree = "<group>"; };
+		1FDB3D761E8373D70018FA08 /* crypto_kernel.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = crypto_kernel.c; path = crypto/kernel/crypto_kernel.c; sourceTree = "<group>"; };
+		1FDB3D771E8373D70018FA08 /* err.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = err.c; path = crypto/kernel/err.c; sourceTree = "<group>"; };
+		1FDB3D781E8373D70018FA08 /* key.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = key.c; path = crypto/kernel/key.c; sourceTree = "<group>"; };
+		1FDB3D7D1E8373E30018FA08 /* datatypes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = datatypes.c; path = crypto/math/datatypes.c; sourceTree = "<group>"; };
+		1FDB3D7E1E8373E30018FA08 /* gf2_8.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = gf2_8.c; path = crypto/math/gf2_8.c; sourceTree = "<group>"; };
+		1FDB3D801E8373E30018FA08 /* stat.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stat.c; path = crypto/math/stat.c; sourceTree = "<group>"; };
+		1FDB3D851E8374150018FA08 /* rdb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rdb.c; path = crypto/replay/rdb.c; sourceTree = "<group>"; };
+		1FDB3D861E8374150018FA08 /* rdbx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rdbx.c; path = crypto/replay/rdbx.c; sourceTree = "<group>"; };
+		1FDB3D871E8374150018FA08 /* ut_sim.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ut_sim.c; path = crypto/replay/ut_sim.c; sourceTree = "<group>"; };
+		1FDB3D8B1E8374350018FA08 /* ctr_prng.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ctr_prng.c; path = crypto/rng/ctr_prng.c; sourceTree = "<group>"; };
+		1FDB3D8C1E8374350018FA08 /* prng.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = prng.c; path = crypto/rng/prng.c; sourceTree = "<group>"; };
+		1FDB3D8D1E8374350018FA08 /* rand_source.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rand_source.c; path = crypto/rng/rand_source.c; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1FDB3D4E1E83734B0018FA08 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1FDB3D481E83734B0018FA08 = {
+			isa = PBXGroup;
+			children = (
+				1FDB3D5D1E8373720018FA08 /* include */,
+				1FDB3D5E1E83737C0018FA08 /* source */,
+				1FDB3D521E83734B0018FA08 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1FDB3D521E83734B0018FA08 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1FDB3D511E83734B0018FA08 /* libsrtp.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1FDB3D5D1E8373720018FA08 /* include */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = include;
+			sourceTree = "<group>";
+		};
+		1FDB3D5E1E83737C0018FA08 /* source */ = {
+			isa = PBXGroup;
+			children = (
+				1FDB3D8B1E8374350018FA08 /* ctr_prng.c */,
+				1FDB3D8C1E8374350018FA08 /* prng.c */,
+				1FDB3D8D1E8374350018FA08 /* rand_source.c */,
+				1FDB3D851E8374150018FA08 /* rdb.c */,
+				1FDB3D861E8374150018FA08 /* rdbx.c */,
+				1FDB3D871E8374150018FA08 /* ut_sim.c */,
+				1FDB3D7D1E8373E30018FA08 /* datatypes.c */,
+				1FDB3D7E1E8373E30018FA08 /* gf2_8.c */,
+				1FDB3D801E8373E30018FA08 /* stat.c */,
+				1FDB3D751E8373D70018FA08 /* alloc.c */,
+				1FDB3D761E8373D70018FA08 /* crypto_kernel.c */,
+				1FDB3D771E8373D70018FA08 /* err.c */,
+				1FDB3D781E8373D70018FA08 /* key.c */,
+				1FDB3D6D1E8373C70018FA08 /* auth.c */,
+				1FDB3D6E1E8373C70018FA08 /* hmac.c */,
+				1FDB3D6F1E8373C70018FA08 /* null_auth.c */,
+				1FDB3D701E8373C70018FA08 /* sha1.c */,
+				1FDB3D631E8373B00018FA08 /* aes_cbc.c */,
+				1FDB3D641E8373B00018FA08 /* aes_icm.c */,
+				1FDB3D651E8373B00018FA08 /* aes.c */,
+				1FDB3D661E8373B00018FA08 /* cipher.c */,
+				1FDB3D671E8373B00018FA08 /* null_cipher.c */,
+				1FDB3D5F1E8373940018FA08 /* srtp.c */,
+				1FDB3D601E8373940018FA08 /* ekt.c */,
+			);
+			name = source;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1FDB3D501E83734B0018FA08 /* srtp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1FDB3D5A1E83734B0018FA08 /* Build configuration list for PBXNativeTarget "srtp" */;
+			buildPhases = (
+				1FDB3D4D1E83734B0018FA08 /* Sources */,
+				1FDB3D4E1E83734B0018FA08 /* Frameworks */,
+				1FDB3D4F1E83734B0018FA08 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = srtp;
+			productName = srtp;
+			productReference = 1FDB3D511E83734B0018FA08 /* libsrtp.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1FDB3D491E83734B0018FA08 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "葛昭友";
+				TargetAttributes = {
+					1FDB3D501E83734B0018FA08 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = GJ633BX28L;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 1FDB3D4C1E83734B0018FA08 /* Build configuration list for PBXProject "srtp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 1FDB3D481E83734B0018FA08;
+			productRefGroup = 1FDB3D521E83734B0018FA08 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1FDB3D501E83734B0018FA08 /* srtp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1FDB3D4D1E83734B0018FA08 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1FDB3D841E8373E30018FA08 /* stat.c in Sources */,
+				1FDB3D8A1E8374150018FA08 /* ut_sim.c in Sources */,
+				1FDB3D7C1E8373D70018FA08 /* key.c in Sources */,
+				1FDB3D621E8373940018FA08 /* ekt.c in Sources */,
+				1FDB3D881E8374150018FA08 /* rdb.c in Sources */,
+				1FDB3D711E8373C70018FA08 /* auth.c in Sources */,
+				1FDB3D731E8373C70018FA08 /* null_auth.c in Sources */,
+				1FDB3D791E8373D70018FA08 /* alloc.c in Sources */,
+				1FDB3D611E8373940018FA08 /* srtp.c in Sources */,
+				1FDB3D6C1E8373B00018FA08 /* null_cipher.c in Sources */,
+				1FDB3D681E8373B00018FA08 /* aes_cbc.c in Sources */,
+				1FDB3D901E8374350018FA08 /* rand_source.c in Sources */,
+				1FDB3D741E8373C70018FA08 /* sha1.c in Sources */,
+				1FDB3D821E8373E30018FA08 /* gf2_8.c in Sources */,
+				1FDB3D6A1E8373B00018FA08 /* aes.c in Sources */,
+				1FDB3D8E1E8374350018FA08 /* ctr_prng.c in Sources */,
+				1FDB3D721E8373C70018FA08 /* hmac.c in Sources */,
+				1FDB3D811E8373E30018FA08 /* datatypes.c in Sources */,
+				1FDB3D891E8374150018FA08 /* rdbx.c in Sources */,
+				1FDB3D7A1E8373D70018FA08 /* crypto_kernel.c in Sources */,
+				1FDB3D6B1E8373B00018FA08 /* cipher.c in Sources */,
+				1FDB3D8F1E8374350018FA08 /* prng.c in Sources */,
+				1FDB3D691E8373B00018FA08 /* aes_icm.c in Sources */,
+				1FDB3D7B1E8373D70018FA08 /* err.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1FDB3D581E83734B0018FA08 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		1FDB3D591E83734B0018FA08 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1FDB3D5B1E83734B0018FA08 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DEVELOPMENT_TEAM = GJ633BX28L;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_STRING_H,
+					HAVE_STDLIB_H,
+					"SIZEOF_UNSIGNED_LONG=4",
+					"SIZEOF_UNSIGNED_LONG_LONG=8",
+					HAVE_STDINT_H,
+					HAVE_INTTYPES_H,
+					HAVE_NETINET_IN_H,
+					HAVE_UINT64_T,
+					HAVE_UINT32_T,
+					HAVE_UINT16_T,
+					HAVE_UINT8_T,
+					HAVE_UINT_T,
+					HAVE_CONFIG_H,
+					CPU_CISC,
+				);
+				HEADER_SEARCH_PATHS = (
+					crypto/include,
+					include,
+					"../libfaad/faad2-2.7/libfaad",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		1FDB3D5C1E83734B0018FA08 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				DEVELOPMENT_TEAM = GJ633BX28L;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_STRING_H,
+					HAVE_STDLIB_H,
+					"SIZEOF_UNSIGNED_LONG=4",
+					"SIZEOF_UNSIGNED_LONG_LONG=8",
+					HAVE_STDINT_H,
+					HAVE_INTTYPES_H,
+					HAVE_NETINET_IN_H,
+					HAVE_UINT64_T,
+					HAVE_UINT32_T,
+					HAVE_UINT16_T,
+					HAVE_UINT8_T,
+					HAVE_UINT_T,
+					HAVE_CONFIG_H,
+					CPU_CISC,
+				);
+				HEADER_SEARCH_PATHS = (
+					crypto/include,
+					include,
+					"../libfaad/faad2-2.7/libfaad",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1FDB3D4C1E83734B0018FA08 /* Build configuration list for PBXProject "srtp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FDB3D581E83734B0018FA08 /* Debug */,
+				1FDB3D591E83734B0018FA08 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1FDB3D5A1E83734B0018FA08 /* Build configuration list for PBXNativeTarget "srtp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FDB3D5B1E83734B0018FA08 /* Debug */,
+				1FDB3D5C1E83734B0018FA08 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1FDB3D491E83734B0018FA08 /* Project object */;
+}
