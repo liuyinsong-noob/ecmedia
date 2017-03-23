@@ -429,7 +429,7 @@ namespace cloopenwebrtc {
             if (packet_loss_rate_ == opt_loss_rate) {
                 return 0;
             }
-            printf("sean haha actual loss_rate for opus:%d\n",opt_loss_rate);
+
             // Ask the encoder to change the target packet loss rate.
             if (WebRtcOpus_SetPacketLossRate(encoder_inst_ptr_, opt_loss_rate) == 0) {
                 packet_loss_rate_ = opt_loss_rate;
