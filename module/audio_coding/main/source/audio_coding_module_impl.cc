@@ -399,7 +399,7 @@ int32_t AudioCodingModuleImpl::Process() {
               
       //Adjust size according to loss rate 5, 3, 1
       //keep list size 5
-      int list_size = 1;
+      unsigned int list_size = 1;
       if (loss_rate_*5 > 30 && loss_rate_*5 < 45 ) {
           list_size = 3;
       }
@@ -477,8 +477,8 @@ int32_t AudioCodingModuleImpl::Process() {
 
           // Update the fragmentation time difference vector, in number of
           // timestamps.
-          uint16_t time_since_last = static_cast<uint16_t>(
-              rtp_timestamp - last_red_timestamp_);
+          //uint16_t time_since_last = static_cast<uint16_t>(
+          //    rtp_timestamp - last_red_timestamp_);
             
 //            printf("sean haha timestamp diff with last %d\n", time_since_last);
 

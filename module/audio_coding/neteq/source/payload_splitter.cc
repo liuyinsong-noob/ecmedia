@@ -47,7 +47,7 @@ int PayloadSplitter::SplitRed(PacketList* packet_list) {
 
     bool last_block = false;
     size_t sum_length = 0;
-    size_t seq_delta = 4;
+    uint16_t seq_delta = 4;
     while (!last_block) {
       Packet* new_packet = new Packet;
       new_packet->header = red_packet->header;
