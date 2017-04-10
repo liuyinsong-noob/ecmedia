@@ -101,6 +101,10 @@ StatsCollector::~StatsCollector()
 	trace_file_->Flush();
 	trace_file_->CloseFile();
 	delete trace_file_;
+	while (!pStatsPBList.empty())
+	{
+		pStatsPBList.erase(pStatsPBList.begin());
+	}
 }
 
 void StatsCollector::Config(char* logFile, int logIntervalMs) {
@@ -359,27 +363,32 @@ void StatsCollector::UpdateStats(bool isFullStats)
 	ExtractAudioReceiverInfo(isFullStats);
 }
 
-void StatsCollector::GetStats(StatsContentType type, char* callid, MediaStatisticsDataInner **mediaStatisticsDataInner)
+void StatsCollector::GetStats(StatsContentType type, char* callid, void **pMediaStatisticsDataInnerArray, int *pArraySize)
 { 
-	WEBRTC_TRACE(kTraceError, kTraceVideoCoding, -1, "GetStats-----type=%d, callid=%s", type, callid);
 	CriticalSectionScoped lock(stream_crit_.get());
+	MediaStatisticsDataInner *pMediaStatisticsDataInner;
 	MediaStatisticsInner *mediaStatsInner;
-	if (*mediaStatisticsDataInner == nullptr)
+	if (*pArraySize == 0)
 	{
-		*mediaStatisticsDataInner = new MediaStatisticsDataInner();
-		mediaStatsInner = (*mediaStatisticsDataInner)->add_mediadata();
+		pMediaStatisticsDataInner = new MediaStatisticsDataInner();
+		mediaStatsInner = pMediaStatisticsDataInner->add_mediadata();
+		pMediaStatisticsDataInner->set_callid(callid);
+		LoadReportsToPbBuffer(type, mediaStatsInner);
+		pMediaStatisticsDataInner->SerializeToArray(*pMediaStatisticsDataInnerArray, *pArraySize);
+		delete pMediaStatisticsDataInner;
+		pStatsPBList.push_back(pMediaStatisticsDataInnerArray);
 	}
-	(*mediaStatisticsDataInner)->set_callid(callid);
-	WEBRTC_TRACE(kTraceError, kTraceVideoCoding, -1, "GetStats-----before:callid=%s", (*mediaStatisticsDataInner)->callid().c_str());
-	LoadReportsToPbBuffer(type, mediaStatsInner);
-	WEBRTC_TRACE(kTraceError, kTraceVideoCoding, -1, "GetStats-----after:callid=%s", (*mediaStatisticsDataInner)->callid().c_str());
 }
 
-void StatsCollector::DeletePbData(MediaStatisticsDataInner *mediaStatisticsDataInner)
+void StatsCollector::DeletePbData(void *pMediaStatisticsDataInnerArray)
 {
-	if (!mediaStatisticsDataInner)
+	std::list<void*>::iterator it = std::find(pStatsPBList.begin(),
+												pStatsPBList.end(),
+												pMediaStatisticsDataInnerArray);
+	if (it == pStatsPBList.end())
 		return;
-	delete mediaStatisticsDataInner;
+	delete pMediaStatisticsDataInnerArray;
+	pStatsPBList.erase(it);
 }
 
 void StatsCollector::LoadReportsToPbBuffer(StatsContentType type, MediaStatisticsInner *mediaStatsInner)

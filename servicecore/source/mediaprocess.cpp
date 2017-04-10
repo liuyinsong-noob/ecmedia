@@ -4794,7 +4794,7 @@ int ServiceCore::GetRtpStatistics(const char* callid,
 }
 
 
-int ServiceCore::GetStatsData(int type, char* callid, void **pb_data)
+int ServiceCore::GetStatsData(int type, char* callid, void** pbDataArray, int *pArraySize)
 {
 #ifdef VIDEO_ENABLED
 	SerPhoneCall *call = serphone_core_get_current_call();
@@ -4802,7 +4802,7 @@ int ServiceCore::GetStatsData(int type, char* callid, void **pb_data)
 	{
 		return -1;
 	}
-	ECMedia_getStatsReports(type, callid, pb_data);
+	ECMedia_getStatsReports(type, callid, pbDataArray,pArraySize);
 #endif
 	return 0;
 }

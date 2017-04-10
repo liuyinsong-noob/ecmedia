@@ -3614,10 +3614,10 @@ extern "C" int StopVirtualBakcGround()
 	return g_pSerCore->StopVirtualBakcGround();
 }
 
-extern "C" int GetStatsData(int type, char* callid, MediaStatisticsDataInner **pb_data)
+extern "C" int GetStatsData(int type, char* callid, void** pbDataArray, int *pArraySize)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	return g_pSerCore->GetStatsData(type, callid, (void**)pb_data);
+	return g_pSerCore->GetStatsData(type, callid, pbDataArray, pArraySize);
 }
 
 extern "C" int DeleteStatsData(MediaStatisticsDataInner* pb_data)

@@ -1093,7 +1093,7 @@ public:
 		_StreamDataCounters& sent,
 		_StreamDataCounters& received);
 
-	int GetStatsData(int type, char* callid, void **pb_data);
+	int GetStatsData(int type, char* callid, void** pbDataArray, int *pArraySize);
 	void DeleteStatsData(void *pb_data);
 	//int GetSendStats(const char* callid, cloopenwebrtc::VideoSendStream::Stats &sendStats);
     int Serphone_enable_opus_FEC(bool enable);

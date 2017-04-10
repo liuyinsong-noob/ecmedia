@@ -41,8 +41,8 @@ public:
 	void Config(char* logFile, int logIntervalMs);
 
 
-	void GetStats(StatsContentType type, char* callid, MediaStatisticsDataInner **mediaStatisticsDataInner);
-	void DeletePbData(MediaStatisticsDataInner *mediaStatisticsDataInner);
+	void GetStats(StatsContentType type, char* callid, void **pMediaStatisticsDataInnerArray, int *pArraySize);
+	void DeletePbData(void *mediaStatisticsDataInner);
 
 private:
 	void AddToReports(StatsReport::StatsReportType type, int channel_id);
@@ -151,6 +151,7 @@ public:
 	cloopenwebrtc::VideoEngine *m_vie;
 #endif
 	cloopenwebrtc::VoiceEngine *m_voe;
+	std::list<void*> pStatsPBList;
 };
 
 #endif

@@ -4464,12 +4464,13 @@ ECMEDIA_API void ECMedia_stopRecordLocalMedia()
 #endif
 }
 
-int ECMedia_getStatsReports(int type, char* callid, void** mediaStatisticsDataInner)
+int ECMedia_getStatsReports(int type, char* callid, void** pMediaStatisticsDataInnerArray, int *pArraySize)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
 	if (g_statsCollector)
 	{
-		g_statsCollector->GetStats((StatsContentType)type, callid, (MediaStatisticsDataInner**)mediaStatisticsDataInner);
+		g_statsCollector->GetStats((StatsContentType)type, callid, pMediaStatisticsDataInnerArray, pArraySize);
+
 		return 0;
 	}
 	return -99;

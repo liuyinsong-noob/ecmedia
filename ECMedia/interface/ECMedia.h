@@ -739,7 +739,7 @@ ECMEDIA_API int ECMedia_set_no_camera_capture_cb(int deviceid, onEcMediaNoCamera
 		  [OUT] reports: 统计报告
 返回值   : 返回值 0：成功　-1：失败
 */
-ECMEDIA_API int ECMedia_getStatsReports(int type, char* callid, void** mediaStatisticsDataInner);
+ECMEDIA_API int ECMedia_getStatsReports(int type, char* callid, void** pMediaStatisticsDataInnerArray, int *pArraySize);
 ECMEDIA_API void ECMedia_deletePbData(void* mediaStatisticsDataInner);
     
 #ifdef __cplusplus
