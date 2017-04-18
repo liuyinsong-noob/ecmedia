@@ -75,7 +75,7 @@ initial_setup (j_decompress_ptr cinfo)
 
 #if JPEG_LIB_VERSION >=80
     cinfo->block_size = DCTSIZE;
-    cinfo->natural_order = jpeg_natural_order;
+    cinfo->natural_order = jpeg_natural_order_turbo;
     cinfo->lim_Se = DCTSIZE2-1;
 #endif
 

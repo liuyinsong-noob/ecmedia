@@ -535,7 +535,7 @@ get_dqt (j_decompress_ptr cinfo)
       else
 	INPUT_BYTE(cinfo, tmp, return FALSE);
       /* We convert the zigzag-order table to natural array order. */
-      quant_ptr->quantval[jpeg_natural_order[i]] = (UINT16) tmp;
+      quant_ptr->quantval[jpeg_natural_order_turbo[i]] = (UINT16) tmp;
     }
 
     if (cinfo->err->trace_level >= 2) {

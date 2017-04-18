@@ -118,7 +118,7 @@ start_pass (j_decompress_ptr cinfo)
       method = JDCT_ISLOW;	/* jidctred uses islow-style table */
       break;
     case 3:
-      method_ptr = jpeg_idct_3x3;
+      method_ptr = jpeg_idct_3x3_turbo;
       method = JDCT_ISLOW;	/* jidctint uses islow-style table */
       break;
     case 4:
@@ -129,15 +129,15 @@ start_pass (j_decompress_ptr cinfo)
       method = JDCT_ISLOW;	/* jidctred uses islow-style table */
       break;
     case 5:
-      method_ptr = jpeg_idct_5x5;
+      method_ptr = jpeg_idct_5x5_turbo;
       method = JDCT_ISLOW;	/* jidctint uses islow-style table */
       break;
     case 6:
-      method_ptr = jpeg_idct_6x6;
+      method_ptr = jpeg_idct_6x6_turbo;
       method = JDCT_ISLOW;	/* jidctint uses islow-style table */
       break;
     case 7:
-      method_ptr = jpeg_idct_7x7;
+      method_ptr = jpeg_idct_7x7_turbo;
       method = JDCT_ISLOW;	/* jidctint uses islow-style table */
       break;
 #endif
@@ -176,35 +176,35 @@ start_pass (j_decompress_ptr cinfo)
       }
       break;
     case 9:
-      method_ptr = jpeg_idct_9x9;
+      method_ptr = jpeg_idct_9x9_turbo;
       method = JDCT_ISLOW;	/* jidctint uses islow-style table */
       break;
     case 10:
-      method_ptr = jpeg_idct_10x10;
+      method_ptr = jpeg_idct_10x10_turbo;
       method = JDCT_ISLOW;	/* jidctint uses islow-style table */
       break;
     case 11:
-      method_ptr = jpeg_idct_11x11;
+      method_ptr = jpeg_idct_11x11_turbo;
       method = JDCT_ISLOW;	/* jidctint uses islow-style table */
       break;
     case 12:
-      method_ptr = jpeg_idct_12x12;
+      method_ptr = jpeg_idct_12x12_turbo;
       method = JDCT_ISLOW;	/* jidctint uses islow-style table */
       break;
     case 13:
-      method_ptr = jpeg_idct_13x13;
+      method_ptr = jpeg_idct_13x13_turbo;
       method = JDCT_ISLOW;	/* jidctint uses islow-style table */
       break;
     case 14:
-      method_ptr = jpeg_idct_14x14;
+      method_ptr = jpeg_idct_14x14_turbo;
       method = JDCT_ISLOW;	/* jidctint uses islow-style table */
       break;
     case 15:
-      method_ptr = jpeg_idct_15x15;
+      method_ptr = jpeg_idct_15x15_turbo;
       method = JDCT_ISLOW;	/* jidctint uses islow-style table */
       break;
     case 16:
-      method_ptr = jpeg_idct_16x16;
+      method_ptr = jpeg_idct_16x16_turbo;
       method = JDCT_ISLOW;	/* jidctint uses islow-style table */
       break;
     default:

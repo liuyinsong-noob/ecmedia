@@ -918,7 +918,7 @@ typedef JMETHOD(boolean, jpeg_marker_parser_method, (j_decompress_ptr cinfo));
 #define jpeg_stdio_dest		jStdDest
 #define jpeg_stdio_src		jStdSrc
 #if JPEG_LIB_VERSION >= 80 || defined(MEM_SRCDST_SUPPORTED)
-#define jpeg_mem_dest		jMemDest
+#define jpeg_mem_dest_burbo		jMemDest
 #define jpeg_mem_src		jMemSrc
 #endif
 #define jpeg_set_defaults	jSetDefaults
@@ -1006,7 +1006,7 @@ EXTERN(void) jpeg_stdio_src JPP((j_decompress_ptr cinfo, FILE * infile));
 
 #if JPEG_LIB_VERSION >= 80 || defined(MEM_SRCDST_SUPPORTED)
 /* Data source and destination managers: memory buffers. */
-EXTERN(void) jpeg_mem_dest JPP((j_compress_ptr cinfo,
+EXTERN(void) jpeg_mem_dest_turbo JPP((j_compress_ptr cinfo,
 			       unsigned char ** outbuffer,
 			       unsigned long * outsize));
 EXTERN(void) jpeg_mem_src JPP((j_decompress_ptr cinfo,

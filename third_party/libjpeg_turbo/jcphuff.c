@@ -485,7 +485,7 @@ encode_mcu_AC_first (j_compress_ptr cinfo, JBLOCKROW *MCU_data)
   r = 0;			/* r = run length of zeros */
    
   for (k = cinfo->Ss; k <= Se; k++) {
-    if ((temp = (*block)[jpeg_natural_order[k]]) == 0) {
+    if ((temp = (*block)[jpeg_natural_order_turbo[k]]) == 0) {
       r++;
       continue;
     }
@@ -642,7 +642,7 @@ encode_mcu_AC_refine (j_compress_ptr cinfo, JBLOCKROW *MCU_data)
    */
   EOB = 0;
   for (k = cinfo->Ss; k <= Se; k++) {
-    temp = (*block)[jpeg_natural_order[k]];
+    temp = (*block)[jpeg_natural_order_turbo[k]];
     /* We must apply the point transform by Al.  For AC coefficients this
      * is an integer division with rounding towards 0.  To do this portably
      * in C, we shift after obtaining the absolute value.
@@ -698,7 +698,7 @@ encode_mcu_AC_refine (j_compress_ptr cinfo, JBLOCKROW *MCU_data)
     emit_symbol(entropy, entropy->ac_tbl_no, (r << 4) + 1);
 
     /* Emit output bit for newly-nonzero coef */
-    temp = ((*block)[jpeg_natural_order[k]] < 0) ? 0 : 1;
+    temp = ((*block)[jpeg_natural_order_turbo[k]] < 0) ? 0 : 1;
     emit_bits(entropy, (unsigned int) temp, 1);
 
     /* Emit buffered correction bits that must be associated with this code */

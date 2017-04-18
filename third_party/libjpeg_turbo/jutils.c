@@ -37,7 +37,7 @@ const int jpeg_zigzag_order[DCTSIZE2] = {
 #endif
 
 /*
- * jpeg_natural_order[i] is the natural-order position of the i'th element
+ * jpeg_natural_order_turbo[i] is the natural-order position of the i'th element
  * of zigzag order.
  *
  * When reading corrupted data, the Huffman decoders could attempt
@@ -50,7 +50,7 @@ const int jpeg_zigzag_order[DCTSIZE2] = {
  * fake entries.
  */
 
-const int jpeg_natural_order[DCTSIZE2+16] = {
+const int jpeg_natural_order_turbo[DCTSIZE2+16] = {
   0,  1,  8, 16,  9,  2,  3, 10,
  17, 24, 32, 25, 18, 11,  4,  5,
  12, 19, 26, 33, 40, 48, 41, 34,

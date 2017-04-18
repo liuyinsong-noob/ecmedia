@@ -329,7 +329,7 @@ struct jpeg_color_quantizer {
 #define jcopy_block_row		jCopyBlocks
 #define jzero_far		jZeroFar
 #define jpeg_zigzag_order	jZIGTable
-#define jpeg_natural_order	jZAGTable
+#define jpeg_natural_order_turbo	jZAGTable
 #define jpeg_aritab		jAriTab
 #endif /* NEED_SHORT_EXTERNAL_NAMES */
 
@@ -386,7 +386,7 @@ EXTERN(void) jzero_far JPP((void FAR * target, size_t bytestozero));
 #if 0				/* This table is not actually needed in v6a */
 extern const int jpeg_zigzag_order[]; /* natural coef order to zigzag order */
 #endif
-extern const int jpeg_natural_order[]; /* zigzag coef order to natural order */
+extern const int jpeg_natural_order_turbo[]; /* zigzag coef order to natural order */
 
 /* Arithmetic coding probability estimation tables in jaricom.c */
 extern const INT32 jpeg_aritab[];

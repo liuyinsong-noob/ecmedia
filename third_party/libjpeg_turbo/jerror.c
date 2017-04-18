@@ -42,12 +42,12 @@
  */
 
 #ifdef NEED_SHORT_EXTERNAL_NAMES
-#define jpeg_std_message_table	jMsgTable
+#define jpeg_std_message_table_turbo	jMsgTable
 #endif
 
 #define JMESSAGE(code,string)	string ,
 
-const char * const jpeg_std_message_table[] = {
+const char * const jpeg_std_message_table_turbo[] = {
 #include "jerror.h"
   NULL
 };
@@ -241,7 +241,7 @@ jpeg_std_error (struct jpeg_error_mgr * err)
   err->msg_code = 0;		/* may be useful as a flag for "no error" */
 
   /* Initialize message table pointers */
-  err->jpeg_message_table = jpeg_std_message_table;
+  err->jpeg_message_table = jpeg_std_message_table_turbo;
   err->last_jpeg_message = (int) JMSG_LASTMSGCODE - 1;
 
   err->addon_message_table = NULL;

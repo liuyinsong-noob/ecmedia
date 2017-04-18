@@ -79,7 +79,7 @@ jpeg_CreateCompress (j_compress_ptr cinfo, int version, size_t structsize)
 #if JPEG_LIB_VERSION >= 80
   /* Must do it here for emit_dqt in case jpeg_write_tables is used */
   cinfo->block_size = DCTSIZE;
-  cinfo->natural_order = jpeg_natural_order;
+  cinfo->natural_order = jpeg_natural_order_turbo;
   cinfo->lim_Se = DCTSIZE2-1;
 #endif
 

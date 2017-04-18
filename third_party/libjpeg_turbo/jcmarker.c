@@ -171,7 +171,7 @@ emit_dqt (j_compress_ptr cinfo, int index)
 
     for (i = 0; i < DCTSIZE2; i++) {
       /* The table entries must be emitted in zigzag order. */
-      unsigned int qval = qtbl->quantval[jpeg_natural_order[i]];
+      unsigned int qval = qtbl->quantval[jpeg_natural_order_turbo[i]];
       if (prec)
 	emit_byte(cinfo, (int) (qval >> 8));
       emit_byte(cinfo, (int) (qval & 0xFF));

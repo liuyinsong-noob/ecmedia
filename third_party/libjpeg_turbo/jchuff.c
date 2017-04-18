@@ -561,7 +561,7 @@ encode_one_block (working_state * state, JCOEFPTR block, int last_dc_val,
   } \
 }
 
-  /* One iteration for each value in jpeg_natural_order[] */
+  /* One iteration for each value in jpeg_natural_order_turbo[] */
   kloop(1);   kloop(8);   kloop(16);  kloop(9);   kloop(2);   kloop(3);
   kloop(10);  kloop(17);  kloop(24);  kloop(32);  kloop(25);  kloop(18);
   kloop(11);  kloop(4);   kloop(5);   kloop(12);  kloop(19);  kloop(26);
@@ -748,7 +748,7 @@ htest_one_block (j_compress_ptr cinfo, JCOEFPTR block, int last_dc_val,
   r = 0;			/* r = run length of zeros */
   
   for (k = 1; k < DCTSIZE2; k++) {
-    if ((temp = block[jpeg_natural_order[k]]) == 0) {
+    if ((temp = block[jpeg_natural_order_turbo[k]]) == 0) {
       r++;
     } else {
       /* if run length > 15, must emit special run-length-16 codes (0xF0) */

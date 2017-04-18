@@ -581,7 +581,7 @@ decode_mcu_slow (j_decompress_ptr cinfo, JBLOCKROW *MCU_data)
       int ci = cinfo->MCU_membership[blkn];
       s += state.last_dc_val[ci];
       state.last_dc_val[ci] = s;
-      /* Output the DC coefficient (assumes jpeg_natural_order[0] = 0) */
+      /* Output the DC coefficient (assumes jpeg_natural_order_turbo[0] = 0) */
       (*block)[0] = (JCOEF) s;
     }
 
@@ -601,10 +601,10 @@ decode_mcu_slow (j_decompress_ptr cinfo, JBLOCKROW *MCU_data)
           r = GET_BITS(s);
           s = HUFF_EXTEND(r, s);
           /* Output coefficient in natural (dezigzagged) order.
-           * Note: the extra entries in jpeg_natural_order[] will save us
+           * Note: the extra entries in jpeg_natural_order_turbo[] will save us
            * if k >= DCTSIZE2, which could happen if the data is corrupted.
            */
-          (*block)[jpeg_natural_order[k]] = (JCOEF) s;
+          (*block)[jpeg_natural_order_turbo[k]] = (JCOEF) s;
         } else {
           if (r != 15)
             break;
@@ -689,7 +689,7 @@ decode_mcu_fast (j_decompress_ptr cinfo, JBLOCKROW *MCU_data)
           FILL_BIT_BUFFER_FAST
           r = GET_BITS(s);
           s = HUFF_EXTEND(r, s);
-          (*block)[jpeg_natural_order[k]] = (JCOEF) s;
+          (*block)[jpeg_natural_order_turbo[k]] = (JCOEF) s;
         } else {
           if (r != 15) break;
           k += 15;

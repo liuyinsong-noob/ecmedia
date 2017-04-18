@@ -240,7 +240,7 @@ jpeg_stdio_dest (j_compress_ptr cinfo, FILE * outfile)
  */
 
 GLOBAL(void)
-jpeg_mem_dest (j_compress_ptr cinfo,
+jpeg_mem_dest_turbo (j_compress_ptr cinfo,
 	       unsigned char ** outbuffer, unsigned long * outsize)
 {
   my_mem_dest_ptr dest;
