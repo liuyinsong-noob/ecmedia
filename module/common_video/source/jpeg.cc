@@ -288,7 +288,7 @@ JpegEncoder::Encode(const I420VideoFrame& inputImage, EncodedImage& outputImage)
 	jpeg_create_compress(_cinfo);
 
 	// Setting destination image ptr.
-	jpeg_mem_dest(_cinfo, (unsigned char **)&outputImage._buffer, (unsigned long *)&outputImage._length);
+	jpeg_mem_dest_turbo(_cinfo, (unsigned char **)&outputImage._buffer, (unsigned long *)&outputImage._length);
 
 	// Set parameters for compression
 	_cinfo->in_color_space = JCS_YCbCr;
