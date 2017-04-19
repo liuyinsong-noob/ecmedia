@@ -18,6 +18,16 @@
  */
 #import "ioscapture.h"
 #import <pthread.h>
+
+#include "video_render_iphone_impl.h"
+#include "video_render_defines.h"
+#include "i_video_render.h"
+#include "video_render_impl.h"
+
+
+// using openGL draw camera preview.
+#define USING_OPENGL;
+
 #ifdef TARGET_OS_IPHONE
 #if 0
 char *globalFilePathcapture = NULL;
@@ -188,6 +198,7 @@ char *globalFilePathcapture = NULL;
 	if (self) {
 		[self initIOSCapture];
 	}
+
 	return self;
 }
 
@@ -249,7 +260,6 @@ char *globalFilePathcapture = NULL;
     
     CreateBilterFilter(&bilteralFilter);
     CreateKeyFrameDetect(&keyframeDector);
-    
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
@@ -367,7 +377,11 @@ char *globalFilePathcapture = NULL;
             int size_v = pict->strides[2] * ((pict->h + 1)/2);
             
             videoFrame.CreateFrame(size_y, pict->planes[0], size_u, pict->planes[1], size_v, pict->planes[2], pict->w, pict->h, pict->strides[0], pict->strides[1], pict->strides[2]);
-            
+#ifdef USING_OPENGL
+            if (_renderCallback) {
+               // _renderCallback->RenderFrame(0, videoFrame);
+            }
+#endif
             if(_owner)
                 _owner->IncomingI420VideoFrame(&videoFrame, 0);
             
@@ -415,10 +429,11 @@ char *globalFilePathcapture = NULL;
     }
 	[session addOutput:output];
     [session commitConfiguration];
+    
+    
 }
 
 - (void)dealloc {
-    
 	AVCaptureSession *session = [(AVCaptureVideoPreviewLayer *)self.layer session];
 	[session removeInput:input];
 	[session removeOutput:output];
@@ -434,6 +449,13 @@ char *globalFilePathcapture = NULL;
         [parentView release];
         parentView = nil;
     }
+#ifdef USING_OPENGL
+    if (_ptrRenderer) {
+        _ptrRenderer->StopRender();
+        delete _ptrRenderer;
+        _ptrRenderer = NULL;
+    }
+#endif
     
     if(_pict)
     {
@@ -630,7 +652,8 @@ char *globalFilePathcapture = NULL;
 }
 
 - (void)setParentView:(UIView*)aparentView{
-	if (parentView == aparentView) {
+#ifndef USING_OPENGL
+    if (parentView == aparentView) {
 		return;
 	}    
 
@@ -651,9 +674,24 @@ char *globalFilePathcapture = NULL;
 		} else {
 			previewLayer.videoGravity = AVLayerVideoGravityResize;
 		}
-		[parentView insertSubview:self atIndex:0];
-		[self setFrame: [parentView bounds]];
+		 [parentView insertSubview:self atIndex:0];
+		 [self setFrame: [parentView bounds]];
 	}
+#else
+    // create render and add renderFrame view
+//    VideoRenderIPhoneImpl* ptrRenderer = new VideoRenderIPhoneImpl(0, kRenderiOS, (void*)aparentView, false);
+//    if (ptrRenderer) {
+//       _ptrRenderer =  reinterpret_cast<cloopenwebrtc::IVideoRender*>(ptrRenderer);
+//    }
+//    
+//    if (_ptrRenderer->Init() == -1) {
+//        NSLog( @"Initialize VideoRenderIPhoneImpl failure\n");
+//    }
+//    
+//    // @see: http://blog.csdn.net/cjj198561/article/details/34196305
+//     _renderCallback = ptrRenderer->AddIncomingRenderStream(0, 0, 0.0, 0.0, 1.0, 1.0);
+//     _ptrRenderer->StartRender();
+#endif
 }
 - (void)deviceOrientationNotify {
 #ifdef __APPLE_CC__    

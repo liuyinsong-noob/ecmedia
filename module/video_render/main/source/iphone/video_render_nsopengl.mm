@@ -119,8 +119,6 @@ WebRtc_Word32 VideoChannelNSOpenGL::RenderFrame(const WebRtc_UWord32 /*streamId*
             return -1;
         }
     }
-    
-    
 
     int heightt = videoFrame.height();
     int widtht = videoFrame.width();
@@ -207,15 +205,14 @@ int VideoChannelNSOpenGL::DeliverFrame(unsigned char* buffer, int bufferSize, un
 {
     _owner->LockAGLCntx();
     
-    mblk_t mk;
-    mk.data_ptr = buffer;
-    mk.datalen = bufferSize;
-    mk.h = _height;
-    mk.w = _width;
+//    mblk_t mk;
+//    mk.data_ptr = buffer;
+//    mk.datalen = bufferSize;
+//    mk.h = _height;
+//    mk.w = _width;
     
-    WEBRTC_TRACE(kTraceInfo, kTraceVideoRenderer, _id, "DeliverFrame h=%d w=%d datalen=%d", mk.h, mk.w, mk.datalen);
-    
-    ogl_display_set_yuv_to_display(_displayWindow->helper, &mk);
+    WEBRTC_TRACE(kTraceInfo, kTraceVideoRenderer, _id, "DeliverFrame h=%d w=%d datalen=%d", _height, _width, bufferSize);
+    [_displayWindow renderI420Frame:(void *)buffer width:(NSInteger)_width height:(NSInteger)_height];
 
     _owner->UnlockAGLCntx();
     return 0;
@@ -246,6 +243,7 @@ int VideoChannelNSOpenGL::SetStreamCropSettings(int /*streamId*/, float /*startW
     return -1;
 }
 
+    
 /*
  *
  *    VideoRenderNSOpenGL
@@ -265,8 +263,8 @@ _zOrderToChannel( )
     UIView *parentView = (UIView *)windowRef;
     if(parentView){
         _windowRef = [[ECIOSDisplay alloc] initWithFrame:CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height)];
-        _windowRef.imageView = parentView;
-        _windowRef.contentMode = parentView.contentMode;
+        _windowRef.parentView = parentView;
+        _windowRef.contentMode =  UIViewContentModeScaleAspectFit;//parentView.contentMode;
     }
     
     GetWindowRect(_windowRect);
@@ -276,13 +274,11 @@ _zOrderToChannel( )
 
 int VideoRenderNSOpenGL::ChangeWindow(UIView* newWindowRef)
 {
-
     LockAGLCntx();
-
     UIView *parentView = newWindowRef;
     
     if (_windowRef) {
-        WEBRTC_TRACE(kTraceStream, kTraceVideoRenderer, _id, "OpenGL view parent changed (%p -> %p)", _windowRef.imageView, parentView);
+        WEBRTC_TRACE(kTraceStream, kTraceVideoRenderer, _id, "OpenGL view parent changed (%p -> %p)", _windowRef.parentView, parentView);
         _windowRef.frame = CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height);
         [_windowRef performSelectorOnMainThread:@selector(stopRendering:) withObject:nil waitUntilDone:NO];
     } else if (parentView == nil) {
@@ -290,7 +286,7 @@ int VideoRenderNSOpenGL::ChangeWindow(UIView* newWindowRef)
     } else {
         _windowRef = [[ECIOSDisplay alloc] initWithFrame:CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height)];
     }
-    _windowRef.imageView = parentView;
+    _windowRef.parentView = parentView;
     _windowRef.contentMode = parentView.contentMode;
     if (parentView)
         [_windowRef performSelectorOnMainThread:@selector(startRendering:) withObject:nil waitUntilDone:NO];
@@ -328,6 +324,7 @@ WebRtc_Word32 VideoRenderNSOpenGL::StartRender()
     UnlockAGLCntx();
     return 0;
 }
+    
 WebRtc_Word32 VideoRenderNSOpenGL::StopRender()
 {
     LockAGLCntx();
@@ -364,7 +361,6 @@ VideoRenderNSOpenGL::~VideoRenderNSOpenGL()
 int VideoRenderNSOpenGL::Init()
 {
     LockAGLCntx();
-
     UnlockAGLCntx();
     return 0;
 }

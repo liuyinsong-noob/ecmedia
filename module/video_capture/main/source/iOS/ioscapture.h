@@ -11,9 +11,13 @@ using namespace cloopenwebrtc;
 using namespace videocapturemodule;
 
 #include "msvideo.h"
-
 #include "bilteral_filter.h"
 #include "keyframe_detector.h"
+
+namespace cloopenwebrtc {
+    class IVideoRender;
+    class VideoRenderCallback;
+}
 
 // AVCaptureVideoPreviewLayer with AVCaptureSession creation
 @interface ECAVCaptureVideoPreviewLayerEx : AVCaptureVideoPreviewLayer
@@ -29,7 +33,7 @@ using namespace videocapturemodule;
     float start_time;
     int frame_count;
     MSVideoSize mOutputVideoSize;
-    MSVideoSize mCameraVideoSize; //required size in portrait mode
+    MSVideoSize mCameraVideoSize;  //required size in portrait mode
     Boolean mDownScalingRequired;
     int mDeviceOrientation;
     #ifdef __APPLE_CC__
@@ -39,7 +43,12 @@ using namespace videocapturemodule;
     char fps_context[64];
     MSPicture *_pict;
     cloopenwebrtc::videocapturemodule::VideoCaptureiOS* _owner;
-    //    UIView* parentView;
+    
+    // about opengl doRenderFrame
+    IVideoRender* _ptrRenderer;
+    VideoRenderCallback* _renderCallback;
+    
+    // UIView* parentView;
     BilteralFilterCore *bilteralFilter;
     KeyFrameDetectCore *keyframeDector;
 #if 0

@@ -20,91 +20,127 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import "iosdisplay.h"
+
 #include "scaler.h"
 #include "opengles_display.h"
+
+enum AttribEnum
+{
+    ATTRIB_VERTEX,
+    ATTRIB_TEXTURE,
+    ATTRIB_COLOR,
+};
+
+enum TextureType
+{
+    TEXY = 0,
+    TEXU,
+    TEXV,
+    TEXC
+};
+
+//fragment shader program
+#define FSH @"varying lowp vec2 TexCoordOut;\
+    \
+    uniform sampler2D SamplerY;\
+    uniform sampler2D SamplerU;\
+    uniform sampler2D SamplerV;\
+    \
+    void main(void)\
+    {\
+    mediump vec3 yuv;\
+    lowp vec3 rgb;\
+    \
+    yuv.x = texture2D(SamplerY, TexCoordOut).r;\
+    yuv.y = texture2D(SamplerU, TexCoordOut).r - 0.5;\
+    yuv.z = texture2D(SamplerV, TexCoordOut).r - 0.5;\
+    \
+    rgb = mat3( 1,       1,         1,\
+    0,       -0.39465,  2.03211,\
+    1.13983, -0.58060,  0) * yuv;\
+    \
+    gl_FragColor = vec4(rgb, 1);\
+    \
+}"
+
+// vertex shader program
+#define VSH @"attribute vec4 position;\
+    attribute vec2 TexCoordIn;\
+    varying vec2 TexCoordOut;\
+    \
+    void main(void)\
+    {\
+    gl_Position = position;\
+    TexCoordOut = TexCoordIn;\
+}"
 
 @interface ECIOSDisplay (PrivateMethods)
 - (BOOL) loadShaders;
 - (void) initGlRendering;
 - (BOOL) isAutoOrientation;
+
+//config YUV Texture
+- (void)configYUVTexture;
+
+//load and init yuv shader
+- (void)loadYUVShader;
+
+// create frame and render buffer
+- (BOOL)createFrameAndRenderBuffer;
+
+// destory frame and render buffer
+- (void)destoryFrameAndRenderBuffer;
+
+/**
+ compile shader program
+ @param shaderCode        代码
+ @param shaderType        类型
+ @return 成功返回着色器 失败返回－1
+ */
+- (GLuint)compileShader:(NSString*)shaderCode withType:(GLenum)shaderType;
+
+// render frame
+- (void)doRenderFrame;
+
+- (void)updatePreview:(id)sender;
 @end
 
 @implementation ECIOSDisplay
 
-@synthesize imageView;
-
-- (id)initWithCoder:(NSCoder *)coder
+@synthesize parentView;
+// start
+- (void) startRendering: (id)sender
 {
-    self = [super initWithCoder:coder];
-    if (self) {
-        [self initGlRendering];
-    }
-    return self;
-}
-
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self initGlRendering];
-    }
-    return self;
-}
-
-- (void)initGlRendering
-{
-    self->helper = ogl_display_new();
-    
-    // Initialization code
-    CAEAGLLayer *eaglLayer = (CAEAGLLayer*) self.layer;
-    eaglLayer.opaque = TRUE;
-    
-    [self setAutoresizingMask: UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-    
-    context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-    
-    if (!context || ![EAGLContext setCurrentContext:context]) {
-//        NSLog(@"Opengl context failure");
-        return;
-    }
-    
-    glGenFramebuffers(1, &defaultFrameBuffer);    
-    glGenRenderbuffers(1, &colorRenderBuffer);
-        
-    glBindFramebuffer(GL_FRAMEBUFFER, defaultFrameBuffer);
-    glBindRenderbuffer(GL_RENDERBUFFER, colorRenderBuffer);
-    
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, colorRenderBuffer);
-
-    // release GL context for this thread
-    [EAGLContext setCurrentContext:nil];
-    
-    glInitDone = FALSE;
-    allocatedW = allocatedH = 0;
-    deviceRotation = 0;
-
-    if ([self respondsToSelector:@selector(isAutoOrientation)]) {
-        if ([self isAutoOrientation]) {
-            UIDeviceOrientation oritentation = [[UIDevice currentDevice] orientation];
-            if (oritentation == UIInterfaceOrientationPortrait ) {
-                deviceRotation = 0;
-            } else if (oritentation == UIInterfaceOrientationLandscapeRight ) {
-                deviceRotation = 270;
-            } else if (oritentation == UIInterfaceOrientationLandscapeLeft ) {
-                deviceRotation = 90;
-            }else if(oritentation == UIInterfaceOrientationMaskAllButUpsideDown) {
-                deviceRotation = 180;
-            }
+    if (!isRunning)
+    {
+        if (self.superview != self.parentView) {
+            // remove from old parent
+            [self removeFromSuperview];
+            // add to new parent
+            [self.parentView addSubview:self];
         }
+
+        [self updatePreview];
+        isRunning = TRUE;
     }
-    
-    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    [[NSNotificationCenter defaultCenter] addObserver: self selector:   @selector(deviceOrientationNotify) name: UIDeviceOrientationDidChangeNotification object: nil];
 }
 
+- (void) stopRendering:(id)ignore
+{
+    if (isRunning)
+    {
+        [self removeFromSuperview];
+        isRunning = FALSE;
+    }
+}
 
++ (Class)layerClass
+{
+    return [CAEAGLLayer class];
+}
+
+// 屏幕旋转
 - (void)deviceOrientationNotify {
-    
     if ([self respondsToSelector:@selector(isAutoOrientation)]) {
         if ([self isAutoOrientation]) {
             int deviceOrientation=0;
@@ -119,7 +155,7 @@
             }else if(oritentation == UIDeviceOrientationPortraitUpsideDown) {
                 deviceOrientation = 180;
             }
-            
+
             if (deviceRotation != deviceOrientation) {
                 deviceRotation = deviceOrientation;
             }
@@ -127,220 +163,354 @@
     }
 }
 
-- (void) drawView:(id)sender
-{
-//    static int invokeCount = 0;
-//    invokeCount++;
-//    if (invokeCount%100 == 0) {
-//        NSLog(@"drawView %d", invokeCount);
-//    }
-    /* no opengl es call made when in background */
-    if ([UIApplication sharedApplication].applicationState !=  UIApplicationStateActive)
-        return;
-    
-    @synchronized(self) {
-        if (![EAGLContext setCurrentContext:context]) {
-            //NSLog(@"Failed to bind GL context");
-            return;
-        }
-        
-        [self updateRenderStorageIfNeeded];
-        
-        glBindFramebuffer(GL_FRAMEBUFFER, defaultFrameBuffer);
-
-        if (!glInitDone || !animating) {
-            glClear(GL_COLOR_BUFFER_BIT);
-        }else ogl_display_render(helper, deviceRotation, UIViewContentModeScaleAspectFit/*(int)self.contentMode*/);
-
-        glBindRenderbuffer(GL_RENDERBUFFER, colorRenderBuffer);
-
-        [context presentRenderbuffer:GL_RENDERBUFFER];
-    }
-}
-
-- (void) updateRenderStorageIfNeeded
-{
-    @synchronized(self) {
-    if (!(allocatedW == (int)self.frame.size.width && allocatedH == (int)self.frame.size.height)) {
-        
-        allocatedH = [self frame].size.height;
-        allocatedW = [self frame].size.width;
-        
-        if (![EAGLContext setCurrentContext:context]) {
-            //NSLog(@"Failed to set EAGLContext - expect issues");
-        }
-        glFinish();
-        glBindRenderbuffer(GL_RENDERBUFFER, colorRenderBuffer);
-        CAEAGLLayer* layer = (CAEAGLLayer*)self.layer;
-        
-        if (allocatedW != 0 || allocatedH != 0) {
-            // release previously allocated storage
-            [context renderbufferStorage:GL_RENDERBUFFER fromDrawable:nil];
-            allocatedW = allocatedH = 0;
-        }
-        // allocate storage
-        if (![context renderbufferStorage:GL_RENDERBUFFER fromDrawable:layer]) {
-            //NSLog(@"Error in renderbufferStorage (layer %p frame size: %f x %f)", layer, layer.frame.size.width, layer.frame.size.height);
-        } else {
-            glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &allocatedW);
-            glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &allocatedH);
-            //NSLog(@"GL renderbuffer allocation size: %dx%d (layer frame size: %f x %f)", allocatedW, allocatedH, layer.frame.size.width, layer.frame.size.height);
-            ogl_display_init(helper, self.frame.size.width, self.frame.size.height);
-        
-            glBindFramebuffer(GL_FRAMEBUFFER, defaultFrameBuffer);
-            glClearColor(0,0,0,1);
-            glClear(GL_COLOR_BUFFER_BIT);
-        }
-    }
-    }
-    glInitDone = TRUE;
-}
-
-- (void) startRendering: (id)ignore
-{
-    if (!animating)
-    {
-        if (self.superview != self.imageView) {
-            // remove from old parent
-            [self removeFromSuperview];
-            // add to new parent
-            [self.imageView addSubview:self];
-        }
-
-        // schedule rendering
-        displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(drawView:)];
-        [displayLink setFrameInterval:4];
-        [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-        animating = TRUE;
-    }
-}
-
-- (void) stopRendering: (id)ignore
-{
-    if (animating)
-    {
-//        sean update begin 20131011 crash
-        if (displayLink) {
-            [displayLink invalidate];
-        }
-//    	[displayLink invalidate];
-//        sean update end 20131011 crash
-        [self removeFromSuperview];
-        displayLink = nil;
-        animating = FALSE;
-        [self drawView:0];
-    }
-}
-
-+ (Class)layerClass
-{
-    return [CAEAGLLayer class];
-}
-
 -(void) dealloc {
-    [EAGLContext setCurrentContext:context];
+    [EAGLContext setCurrentContext:_glContext];
     glFinish();
-    ogl_display_uninit(helper, TRUE);
-    ogl_display_free(helper);
-    helper = NULL;
     [EAGLContext setCurrentContext:0];
-
-    [context release];
-    [imageView release];
+    [_glContext release];
+    [parentView release];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 #if ! __has_feature(objc_arc)
     [super dealloc];
 #endif
 }
-@end
 
-//static void iosdisplay_process(IOSDisplay* thiz, mblk_t *m){
-
-//    
-//    if (thiz != nil && m != nil) {
-//        ogl_display_set_yuv_to_display(thiz->helper, m);
-//    }
-//    
-//}
-
-
-//static void iosdisplay_unit(IOSDisplay* thiz){
-////    IOSDisplay* thiz=(IOSDisplay*)f->data;
-//
-//    [thiz performSelectorOnMainThread:@selector(stopRendering:) withObject:nil waitUntilDone:YES];
-//    
-//    [thiz release];
-//}
-//
-///*filter specific method*/
-///*  This methods declare the PARENT window of the opengl view.
-//    We'll create on gl view for once, and then simply change its parent. 
-//    This works only if parent size is the size in all possible orientation.
-//*/
-static int iosdisplay_set_native_window(ECIOSDisplay* thiz, void *arg) {
-    UIView* parentView = *(UIView**)arg;
-    
-    if (thiz) {
-//        NSLog(@"OpenGL view parent changed (%p -> %lu)", thiz.imageView, *((unsigned long*)arg));
-        thiz.frame = CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height);
-        [thiz performSelectorOnMainThread:@selector(stopRendering:) withObject:nil waitUntilDone:NO];
-    } else if (parentView == nil) {
-        return 0;
-    } else {
-        thiz = [[ECIOSDisplay alloc] initWithFrame:CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height)];
+#pragma mark - INIT
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self)
+    {
+        if (![self initOpengGL])
+        {
+            self = nil;
+        }
     }
-    thiz.contentMode = parentView.contentMode;
-    thiz.imageView = parentView;
-    if (parentView)
-        [thiz performSelectorOnMainThread:@selector(startRendering:) withObject:nil waitUntilDone:NO];
-
-    return 0;
+    return self;
 }
-//
-//    return 0;
-//}
-//
-//static int iosdisplay_get_native_window(IOSDisplay* thiz, void *arg) {
-////    IOSDisplay* thiz=(IOSDisplay*)f->data;
-//    arg = &thiz->imageView;
-//    return 0;
-//}
-//
-//static int iosdisplay_set_device_orientation(IOSDisplay* thiz, void* arg) {
-////    IOSDisplay* thiz=(IOSDisplay*)f->data;
-//    if (!thiz)
-//        return 0;
-//    thiz->deviceRotation = *((int*)arg);
-//    return 0;
-//}
-//
-//static int iosdisplay_set_zoom(IOSDisplay* thiz, void* arg) {
-////    IOSDisplay* thiz=(IOSDisplay*)f->data;
-//    ogl_display_zoom(thiz->helper, arg);
-//}
 
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self)
+    {
+        if (![self initOpengGL])
+        {
+            self = nil;
+        }
+    }
+    return self;
+}
 
-//static MSFilterMethod iosdisplay_methods[]={
-//	{	MS_VIDEO_DISPLAY_SET_NATIVE_WINDOW_ID , iosdisplay_set_native_window },
-//    {	MS_VIDEO_DISPLAY_GET_NATIVE_WINDOW_ID , iosdisplay_get_native_window },
-//    {	MS_VIDEO_DISPLAY_SET_DEVICE_ORIENTATION,        iosdisplay_set_device_orientation },
-//    {   MS_VIDEO_DISPLAY_ZOOM, iosdisplay_set_zoom},
-//	{	0, NULL}
-//};
+- (BOOL)initOpengGL
+{
+    self.contentMode =  UIViewContentModeScaleAspectFit;
+    CAEAGLLayer *eaglLayer = (CAEAGLLayer*) self.layer;
 
-//
-//MSFilterDesc ms_iosdisplay_desc={
-//	.id=MS_IOS_DISPLAY_ID, /* from Allfilters.h*/
-//	.name="IOSDisplay",
-//	.text="IOS Display filter.",
-//	.category=MS_FILTER_OTHER,
-//	.ninputs=2, /*number of inputs*/
-//	.noutputs=0, /*number of outputs*/
-//	.init=iosdisplay_init,
-//	.preprocess=NULL,
-//	.process=iosdisplay_process,
-//	.postprocess=NULL,
-//	.uninit=iosdisplay_unit,
-//	.methods=iosdisplay_methods
-//};
-//MS_FILTER_DESC_EXPORT(ms_iosdisplay_desc)
+    // view opaque, TRUE: opaque
+    eaglLayer.opaque = TRUE;
+    eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   [NSNumber numberWithBool:YES], kEAGLDrawablePropertyRetainedBacking,
+                                   kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat,
+                                   //[NSNumber numberWithBool:YES], kEAGLDrawablePropertyRetainedBacking,
+                                   nil];
+    // view scale
+    self.contentScaleFactor = [UIScreen mainScreen].scale;
+    _viewScale = [UIScreen mainScreen].scale;
+
+    // alloc opengl version 2 context
+    _glContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+    // set context
+    if(!_glContext || ![EAGLContext setCurrentContext:_glContext]) {
+        return NO;
+    }
+
+    // config texture
+    [self configYUVTexture];
+    // load shader
+    [self loadYUVShader];
+
+    glUseProgram(_program);
+
+    //
+    GLuint textureUniformY = glGetUniformLocation(_program, "SamplerY");
+    GLuint textureUniformU = glGetUniformLocation(_program, "SamplerU");
+    GLuint textureUniformV = glGetUniformLocation(_program, "SamplerV");
+    glUniform1i(textureUniformY, 0);
+    glUniform1i(textureUniformU, 1);
+    glUniform1i(textureUniformV, 2);
+
+    return YES;
+}
+
+- (void)configYUVTexture
+{
+    if (_textureYUV[TEXY]) {
+        glDeleteTextures(3, _textureYUV);
+    }
+    glGenTextures(3, _textureYUV);
+    if (!_textureYUV[TEXY] || !_textureYUV[TEXU] || !_textureYUV[TEXV]) {
+        NSLog(@"create texture failed\n");
+        return;
+    }
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXY]);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXU]);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+    glActiveTexture(GL_TEXTURE2);
+    glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXV]);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+}
+
+// load shader
+- (void)loadYUVShader
+{
+    // compile vertext shader
+    GLuint vertexShader = [self compileShader:VSH withType:GL_VERTEX_SHADER];
+    // compile fragment shader
+    GLuint fragmentShader = [self compileShader:FSH withType:GL_FRAGMENT_SHADER];
+
+    // attach shader
+    _program = glCreateProgram();
+    glAttachShader(_program, vertexShader);
+    glAttachShader(_program, fragmentShader);
+
+    // bind program
+    glBindAttribLocation(_program, ATTRIB_VERTEX, "position");
+    glBindAttribLocation(_program, ATTRIB_TEXTURE, "TexCoordIn");
+
+    // link
+    glLinkProgram(_program);
+
+    // is link success
+    GLint linkSuccess;
+    glGetProgramiv(_program, GL_LINK_STATUS, &linkSuccess);
+    if (linkSuccess == GL_FALSE) {
+        GLchar messages[256];
+        glGetProgramInfoLog(_program, sizeof(messages), 0, &messages[0]);
+        NSString *messageString = [NSString stringWithUTF8String:messages];
+        NSLog(@"link shader failed:%@", messageString);
+    }
+
+    // delete shader
+    if (vertexShader) {
+        glDeleteShader(vertexShader);
+    }
+
+    if (fragmentShader) {
+        glDeleteShader(fragmentShader);
+    }
+}
+
+/**
+ * compile shader
+ */
+- (GLuint)compileShader:(NSString*)shaderString withType:(GLenum)shaderType
+{
+    NSError *error;
+    if (!shaderString) {
+        NSLog(@"Error loading shader: %@", error.localizedDescription);
+        exit(1);
+    } else {
+        NSLog(@"shader code-->%@", shaderString);
+    }
+
+    // shader handle
+    GLuint shaderHandle = glCreateShader(shaderType);
+
+    // set shader source
+    const char * shaderStringUTF8 = [shaderString UTF8String];
+    int shaderStringLength = (int)[shaderString length];
+    glShaderSource(shaderHandle, 1, &shaderStringUTF8, &shaderStringLength);
+    
+    // compile shader
+    glCompileShader(shaderHandle);
+    
+    //
+    GLint compileSuccess;
+    glGetShaderiv(shaderHandle, GL_COMPILE_STATUS, &compileSuccess);
+    if (compileSuccess == GL_FALSE) {
+        GLchar messages[256];
+        glGetShaderInfoLog(shaderHandle, sizeof(messages), 0, &messages[0]);
+        NSString *messageString = [NSString stringWithUTF8String:messages];
+        NSLog(@"%@", messageString);
+        return -1;
+    }
+
+    return shaderHandle;
+}
+
+#pragma mark - render i420 frame
+/**
+ * render i420 frame
+ *
+ * @framebuffer: i420 buffer
+ * @width:       frame width
+ * @height:      frame height
+ */
+- (void)renderI420Frame:(void *)framebufer width:(NSInteger)width height:(NSInteger)height
+{
+    // render when view ready
+    if (!self.window) {
+        return;
+    }
+    @synchronized(self)
+    {
+        if (width != _videoW || height != _videoH) {
+            [self setVideoSize:width height:height];
+        }
+
+        // texture setting
+        [EAGLContext setCurrentContext:_glContext];
+        glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXY]);
+        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, GL_RED_EXT, GL_UNSIGNED_BYTE, framebufer);
+
+        glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXU]);
+        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width/2, height/2, GL_RED_EXT, GL_UNSIGNED_BYTE, (uint8_t *)framebufer + width * height);
+
+        glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXV]);
+        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width/2, height/2, GL_RED_EXT, GL_UNSIGNED_BYTE, (uint8_t *)framebufer + width * height * 5 / 4);
+
+        // render frame
+        [self doRenderFrame];
+    }
+}
+
+- (void)setVideoSize:(GLuint)width height:(GLuint)height
+{
+    _videoW = width;
+    _videoH = height;
+
+    // I420 frame size : width * height * 3/2
+    void *frameBuffer = malloc(width * height * 1.5);
+    if(frameBuffer) {
+        memset(frameBuffer, 0x0, width * height * 1.5);
+    }
+
+    [EAGLContext setCurrentContext:_glContext];
+    glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXY]);
+    //    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    //    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    //    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    //    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RED_EXT, width, height, 0, GL_RED_EXT, GL_UNSIGNED_BYTE, frameBuffer);
+    glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXU]);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RED_EXT, width/2, height/2, 0, GL_RED_EXT, GL_UNSIGNED_BYTE, (uint8_t *)frameBuffer + width * height);
+    
+    glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXV]);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RED_EXT, width/2, height/2, 0, GL_RED_EXT, GL_UNSIGNED_BYTE, (uint8_t *)frameBuffer + width * height * 5 / 4);
+    free(frameBuffer);
+}
+
+- (void)doRenderFrame
+{
+    [EAGLContext setCurrentContext:_glContext];
+    CGSize size = self.bounds.size;
+    // coordinate transformation
+    glViewport(0, 0, size.width*_viewScale, size.height*_viewScale);
+
+    static const GLfloat squareVertices[] = {
+            -1.0f, -1.0f,
+             1.0f, -1.0f,
+            -1.0f,  1.0f,
+             1.0f,  1.0f,
+    };
+
+    static const GLfloat coordVertices[] = {
+            0.0f,   1.0f,
+            1.0f,   1.0f,
+            0.0f,   0.0f,
+            1.0f,   0.0f,
+    };
+
+    // update attribute values
+    glVertexAttribPointer(ATTRIB_VERTEX, 2, GL_FLOAT, 0, 0, squareVertices);
+    glEnableVertexAttribArray(ATTRIB_VERTEX);
+
+    glVertexAttribPointer(ATTRIB_TEXTURE, 2, GL_FLOAT, 0, 0, coordVertices);
+    glEnableVertexAttribArray(ATTRIB_TEXTURE);
+
+    // draw frame buffer
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glBindRenderbuffer(GL_RENDERBUFFER, _renderBuffer);
+    [_glContext presentRenderbuffer:GL_RENDERBUFFER];
+}
+
+// not call
+- (void)clearFrame
+{
+    if ([self window])
+    {
+        [EAGLContext setCurrentContext:_glContext];
+        glClearColor(0.0, 0.0, 0.0, 1.0);
+        glClear(GL_COLOR_BUFFER_BIT);
+        glBindRenderbuffer(GL_RENDERBUFFER, _renderBuffer);
+        [_glContext presentRenderbuffer:GL_RENDERBUFFER];
+    }
+}
+
+#pragma mark - updatePreview
+- (void)updatePreview
+{
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        @synchronized(self)
+        {
+            [EAGLContext setCurrentContext:_glContext];
+            [self destoryFrameAndRenderBuffer];
+            [self createFrameAndRenderBuffer];
+        }
+
+        glViewport(0, 0, self.bounds.size.width*_viewScale, self.bounds.size.height*_viewScale);
+    });
+}
+
+- (BOOL)createFrameAndRenderBuffer
+{
+    // create and bind frame buffer
+    glGenFramebuffers(1, &_framebuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
+    // create and bind render buffer
+    glGenRenderbuffers(1, &_renderBuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, _renderBuffer);
+    // attach buffer
+    if (![_glContext renderbufferStorage:GL_RENDERBUFFER fromDrawable:(CAEAGLLayer *)self.layer]) {
+        NSLog(@"attach render buffer failed");
+    }
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _renderBuffer);
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+    {
+        NSLog(@"create buffer failed 0x%x", glCheckFramebufferStatus(GL_FRAMEBUFFER));
+        return NO;
+    }
+    return YES;
+}
+
+- (void)destoryFrameAndRenderBuffer
+{
+    if (_framebuffer) {
+        glDeleteFramebuffers(1, &_framebuffer);
+    }
+
+    if (_renderBuffer) {
+        glDeleteRenderbuffers(1, &_renderBuffer);
+    }
+
+    _framebuffer = 0;
+    _renderBuffer = 0;
+}
+@end

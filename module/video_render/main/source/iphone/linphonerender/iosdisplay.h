@@ -24,30 +24,59 @@
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/EAGLDrawable.h>
 #import <OpenGLES/ES2/gl.h>
+#import <OpenGLES/ES2/glext.h>
+
+
+
+
 
 @interface ECIOSDisplay : UIView {
+    
+    
 @private
-    UIView* imageView;
-    
-    EAGLContext* context;
-    
-    GLuint defaultFrameBuffer, colorRenderBuffer;
-    
-    BOOL glInitDone;    
-    
-    id displayLink;
-    BOOL animating;
+    // parent view
+    // UIView* parentView;
+    // is opengl rending frame
+    BOOL isRunning;
+    //
     int deviceRotation;
+
+    // OpenGL context
+    EAGLContext             *_glContext;
     
-    int allocatedW, allocatedH;
+    // frame buffer
+    GLuint                  _framebuffer;
+    
+    // render buffer
+    GLuint                  _renderBuffer;
+    
+    // shader program handler
+    GLuint                  _program;
+    
+    // YUV texture array
+    GLuint                  _textureYUV[3];
+    
+    // video width
+    GLuint                  _videoW;
+    
+    // video height
+    GLuint                  _videoH;
+    
+    // video preview scale factor
+    GLsizei                 _viewScale;
 @public
-    struct opengles_display* helper;
+  
 }
 
-- (void) drawView:(id)sender;
-- (void) startRendering:(id)ignore;
+- (void) startRendering:(id)sender;
 - (void) stopRendering:(id)ignore;
+@property (nonatomic, retain) UIView* parentView;
 
+#pragma mark - 接口
+- (void)renderI420Frame:(void *)framebufer width:(NSInteger)width height:(NSInteger)height;
 
-@property (nonatomic, retain) UIView* imageView;
+/**
+ 清除画面
+ */
+- (void)clearFrame;
 @end

@@ -2504,7 +2504,8 @@ int ECMedia_set_local_video_window(int deviceid, void *video_window)
     ViECapture *capture = ViECapture::GetInterface(m_vie);
     if (capture) {
         int ret = 0;
-#ifdef WIN32
+// #ifdef WIN32
+#if true
         ViERender* render =  ViERender::GetInterface(m_vie);
         ret = render->AddRenderer(deviceid,video_window,1,0,0,1,1,NULL);
         if (ret) {
