@@ -112,7 +112,6 @@
 		91C4CD0D169C124700CC98EF /* video_capture_iOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = video_capture_iOS.mm; path = iOS/video_capture_iOS.mm; sourceTree = "<group>"; };
 		91DC03641A1CA0090088851B /* ioscapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ioscapture.h; path = iOS/ioscapture.h; sourceTree = "<group>"; };
 		AD1F0F3A1D476BC200C33F53 /* libvideo_capture_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvideo_capture_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		AD2B0B431E8CD5E40089954C /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		AD42CD491D23CE18009C2E7A /* keyframe_detector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = keyframe_detector.cpp; path = iOS/keyframe_detector.cpp; sourceTree = "<group>"; };
 		AD42CD4A1D23CE18009C2E7A /* bilteral_filter.cpp */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.cpp.cpp; name = bilteral_filter.cpp; path = iOS/bilteral_filter.cpp; sourceTree = "<group>"; };
 		ADA0AC9C1DA8888800C4807D /* osxcapture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = osxcapture.mm; path = Mac/osxcapture.mm; sourceTree = "<group>"; };
@@ -187,7 +186,6 @@
 		55A74F8715C8C300001B246A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AD2B0B431E8CD5E40089954C /* opencv2.framework */,
 				914C8FDD169A6ED700A4ECEA /* CoreVideo.framework */,
 				914BAF1116991A3C00B177A5 /* AVFoundation.framework */,
 				55A74F8815C8C300001B246A /* Foundation.framework */,
@@ -506,10 +504,6 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				DSTROOT = /tmp/video_capture.dst;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -543,6 +537,7 @@
 					"DYNAMIC_ANNOTATIONS_ENABLED=0",
 					WEBRTC_IOS,
 					MAC_IPHONE,
+					IPHONE_GLES_RENDERING,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
@@ -564,6 +559,10 @@
 					../../module/video_coding/main/include,
 					../../module/common_video/source,
 					../../module/common_video/source/libyuv/include,
+					../video_render/main/source,
+					../video_render/main/source/ios,
+					../video_render/main/source/iphone,
+					../video_render/main/include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
@@ -581,10 +580,6 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				DSTROOT = /tmp/video_capture.dst;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -616,6 +611,7 @@
 					WEBRTC_IOS,
 					"DYNAMIC_ANNOTATIONS_ENABLED=0",
 					MAC_IPHONE,
+					IPHONE_GLES_RENDERING,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
@@ -637,6 +633,10 @@
 					../../module/video_coding/main/include,
 					../../module/common_video/source,
 					../../module/common_video/source/libyuv/include,
+					../video_render/main/source,
+					../video_render/main/source/ios,
+					../video_render/main/source/iphone,
+					../video_render/main/include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
