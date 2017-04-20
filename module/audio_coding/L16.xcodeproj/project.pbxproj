@@ -274,6 +274,7 @@
 					"\"$(SRCROOT)/..\"",
 					"\"$(SRCROOT)/codecs/pcm16b/include\"",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -291,6 +292,7 @@
 					"\"$(SRCROOT)/..\"",
 					"\"$(SRCROOT)/codecs/pcm16b/include\"",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

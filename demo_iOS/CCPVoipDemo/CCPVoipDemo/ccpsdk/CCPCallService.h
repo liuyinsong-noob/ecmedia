@@ -692,5 +692,5 @@ typedef enum
 -(int) playStream:(void *)handle url:(NSString *) url view:(UIView*)renderView;
 -(int) pushStream:(void *)handle url:(NSString *) url view:(UIView*)renderView;
 -(void) stopLiveStream:(void *)handle;
-
+- (NSString*)getDeviceVersion;
 @end

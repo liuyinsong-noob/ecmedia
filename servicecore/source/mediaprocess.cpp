@@ -244,6 +244,9 @@ void ServiceCore::serphone_core_update_streams(SerPhoneCall *call, SalMediaDescr
 	if (oldmd)
 		sal_media_description_unref(&oldmd);
 
+    SetVideoKeepAlive(call, true, 10);
+    SetAudioKeepAlive(call, true, 10);
+    
 	if (new_md) {
 		bool_t all_muted=FALSE;
 		bool_t send_ringbacktone=FALSE;
@@ -631,7 +634,6 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 				//	break;
 				//}
 			}
-
 			ECMedia_audio_set_send_destination(call->m_AudioChannelID, stream->port,stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr);
 //            For MOS test
 //			ECMedia_audio_set_send_destination(call->m_AudioChannelID, 7078, "127.0.0.1");
@@ -694,16 +696,36 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 				ECMedia_set_send_codec_audio(call->m_AudioChannelID, codec_params);
 				ECMedia_set_receive_playloadType_audio(call->m_AudioChannelID,codec_params);
 
-				//TODO:
-                //base->SetFecStatus(call->m_AudioChannelID, m_enable_fec);
-                //base->SetLoss(call->m_AudioChannelID, m_opus_packet_loss_rate);
-
-				////for fec test.
-				//cloopenwebrtc::CodecInst redCodec = codec_params;
-				//memset(redCodec.plname, 0, RTP_PAYLOAD_NAME_SIZE);
-				//memcpy(redCodec.plname, "red", 3);
-				//redCodec.pltype = 116;
-				//ECMedia_set_receive_playloadType_audio(call->m_AudioChannelID,redCodec);
+                if (!strncmp(codec_params.plname, "red", 3)) {
+                    ECMedia_setAudioRed(call->m_AudioChannelID, true, codec_params.pltype);
+                    //TODO:
+                    //base->SetFecStatus(call->m_AudioChannelID, m_enable_fec);
+                    //base->SetLoss(call->m_AudioChannelID, m_opus_packet_loss_rate);
+                    
+                    ////for fec test.
+                    cloopenwebrtc::CodecInst actualCodec = codec_params;
+                    memset(actualCodec.plname, 0, RTP_PAYLOAD_NAME_SIZE);
+                    //                if (codec_params.plfreq == 8000) {
+                    memcpy(actualCodec.plname, "opus", 4);
+                    actualCodec.pltype = 121;
+                    actualCodec.plfreq = 8000;
+                    actualCodec.rate = 24000;
+                    
+                    //                }
+                    //                else if (codec_params.plfreq == 16000)
+                    //                {
+                    //                    memcpy(redCodec.plname, "red16", 5);
+                    //                    redCodec.pltype = 117;
+                    //                }
+                    //                else if (codec_params.plfreq == 48000)
+                    //                {
+                    //                    memcpy(redCodec.plname, "red48", 5);
+                    //                    redCodec.pltype = 118;
+                    //                }
+                    ECMedia_set_send_codec_audio(call->m_AudioChannelID, actualCodec);
+                    ECMedia_set_receive_playloadType_audio(call->m_AudioChannelID,actualCodec);
+                }
+                
 
 				//cloopenwebrtc::CodecInst fecCodec = codec_params;
 				//memset(fecCodec.plname, 0, RTP_PAYLOAD_NAME_SIZE);
@@ -788,6 +810,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 			call->current_params.in_conference=call->params.in_conference;
 
 			ECMedia_set_voe_cb(call->m_AudioChannelID, voe_callback);
+            SetAudioKeepAlive(call, true, 10);
 		}else PrintConsole("No audio stream accepted ?\n");
 	}
 #endif
@@ -927,6 +950,8 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 				codec_params.maxFramerate = m_sendVideoFps;
 
 				//do some test on simulcast video streams
+                //sean vpx simulcast test begin
+#define NOTDEFINED
 #ifdef NOTDEFINED
 				{
 					codec_params.startBitrate = 1300;
@@ -945,7 +970,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 					codec_params.simulcastStream[1].targetBitrate = 1000;
 				}
 #endif
-				
+				//sean vpx simulcast test end
 
 				//if (codec_params.width==160 && codec_params.height==120)
 				//{
@@ -1106,6 +1131,8 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 				ECMedia_video_start_receive(call->m_VideoChannelID);
 			}
 
+            
+            SetVideoKeepAlive(call, true, 10);
 #ifdef _WIN32         
 			//TODO:
 			//if(call->record_voip && call->record_voip->isStartRecordMp4()) {
@@ -1918,10 +1945,10 @@ int ServiceCore::serphone_core_set_audio_config_enabled(int type, bool_t enabled
 		return -1;
 	}
 	ECMedia_set_AgcStatus(m_agcEnabled, m_agcMode);
-	ECMedia_set_EcStatus(m_ecEnabled, m_ecMode);
-	ECMedia_set_SetAecmMode(cloopenwebrtc::kAecmLoudSpeakerphone, false);
+	ECMedia_set_EcStatus(m_ecEnabled, cloopenwebrtc::kEcAec);
+//	ECMedia_set_SetAecmMode(cloopenwebrtc::kAecmLoudSpeakerphone, false);
 	ECMedia_set_NsStatus(m_nsEnabled, cloopenwebrtc::kNsVeryHighSuppression);
-    //ECMedia_EnableHowlingControl(false);
+    ECMedia_EnableHowlingControl(m_hcEnabled);
     return 0;
 #endif
 	return 0;
@@ -2766,7 +2793,6 @@ VideoStream *ServiceCore::video_stream_new(int loc_rtp_port, int loc_rtcp_port, 
 
 void ServiceCore::serphone_core_set_audio_pacinterval(int pacinterval)
 {
-    pacinterval = 20;
 	PrintConsole("serphone_core_set_audio_pacinterval pacinterval=%d\n",pacinterval);
 	m_packetInterval = pacinterval;
 }

@@ -81,6 +81,9 @@
 		AD73388F1D548617006A35DF /* video_decimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F5F15C8C169001B246A /* video_decimator.h */; };
 		AD7338901D548617006A35DF /* video_processing_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A74F6115C8C169001B246A /* video_processing_impl.h */; };
 		AD7338961D548809006A35DF /* denoiser_filter_sse2.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD7338951D548809006A35DF /* denoiser_filter_sse2.cc */; };
+		ADE780331EA7307600D0E04E /* beauty_filter_core.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F50223F1E6ED7F2009D9E17 /* beauty_filter_core.c */; };
+		ADE780341EA7307600D0E04E /* ipl_color.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F5022411E6ED7F2009D9E17 /* ipl_color.c */; };
+		ADE780351EA7307600D0E04E /* ipl_sharpen.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F5022441E6ED7F2009D9E17 /* ipl_sharpen.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -407,6 +410,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADE780331EA7307600D0E04E /* beauty_filter_core.c in Sources */,
+				ADE780341EA7307600D0E04E /* ipl_color.c in Sources */,
+				ADE780351EA7307600D0E04E /* ipl_sharpen.c in Sources */,
 				AD7338961D548809006A35DF /* denoiser_filter_sse2.cc in Sources */,
 				AD73386F1D548617006A35DF /* brighten.cc in Sources */,
 				AD7338701D548617006A35DF /* brightness_detection.cc in Sources */,

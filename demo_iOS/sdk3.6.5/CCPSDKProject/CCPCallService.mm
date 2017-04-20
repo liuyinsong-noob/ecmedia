@@ -1955,9 +1955,9 @@ static CCPCallService * ccpcallserviceSharedInstance;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editTestNumFinished:) name:kEditTestNumFinished object:nil];
 
     }
-
-    AVAudioSession *avsession = [AVAudioSession sharedInstance];
-    avsession.delegate  = self;
+//
+//    AVAudioSession *avsession = [AVAudioSession sharedInstance];
+//    avsession.delegate  = self;
 
     /*************jiazy interphone**************/
     runningType = ERunningType_None;
@@ -2154,13 +2154,29 @@ static CCPCallService * ccpcallserviceSharedInstance;
 
     [self onLogInfo:[NSString stringWithFormat:@"[CCPCallService] connectToCCP restip=%@ restport=%d account=%@ password=%@ accountSid=%@ authToken=%@",proxy_addr,(int)proxy_port,accountStr,passwordStr,accountSid,authToken]];
 
-    if ([passwordStr isEqualToString:@"1234"]) {
-            self.ccp_server_ip = @"192.168.178.138";
-            self.ccp_serverport = 7600;
+    if ([passwordStr isEqualToString:@"123456"]) {
+            self.ccp_server_ip = @"192.168.177.187";
+            self.ccp_serverport = 8600;
 
             self.account = accountStr;
             self.password = passwordStr;
             connectToCCP([self.ccp_server_ip cStringUsingEncoding:NSUTF8StringEncoding], self.ccp_serverport, [self.account cStringUsingEncoding:NSUTF8StringEncoding], [self.password cStringUsingEncoding:NSUTF8StringEncoding],[self.strCapability cStringUsingEncoding:NSUTF8StringEncoding]);
+    }
+    else if ([passwordStr isEqualToString:@"1234"]) {
+        self.ccp_server_ip = @"192.168.178.138";
+        self.ccp_serverport = 7600;
+        
+        self.account = accountStr;
+        self.password = passwordStr;
+        connectToCCP([self.ccp_server_ip cStringUsingEncoding:NSUTF8StringEncoding], self.ccp_serverport, [self.account cStringUsingEncoding:NSUTF8StringEncoding], [self.password cStringUsingEncoding:NSUTF8StringEncoding],[self.strCapability cStringUsingEncoding:NSUTF8StringEncoding]);
+    }
+    else if ([passwordStr isEqualToString:@"cloopen_password"]) {
+        self.ccp_server_ip = @"114.215.191.62 ";
+        self.ccp_serverport = 8600;
+        
+        self.account = accountStr;
+        self.password = passwordStr;
+        connectToCCP([self.ccp_server_ip cStringUsingEncoding:NSUTF8StringEncoding], self.ccp_serverport, [self.account cStringUsingEncoding:NSUTF8StringEncoding], [self.password cStringUsingEncoding:NSUTF8StringEncoding],[self.strCapability cStringUsingEncoding:NSUTF8StringEncoding]);
     }
     else
     {
@@ -5565,6 +5581,8 @@ char *OSTypeToStr(char *buf, OSType t)
     if ([deviceString isEqualToString:@"x86_64"])       return @"Simulator";
     if ([deviceString isEqualToString:@"iPhone7,2"])    return @"iPhone 6";
     if ([deviceString isEqualToString:@"iPhone8,1"])    return @"iPhone 6s";
+    if ([deviceString isEqualToString:@"iPhone8,4"])    return @"iPhone se";
+    if ([deviceString isEqualToString:@"iPhone9,1"])    return @"iPhone 7";
     return deviceString;
 }
 -(NSInteger)disConnectToCCP

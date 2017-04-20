@@ -114,6 +114,9 @@
 		AD8D73011C59A39700FB246D /* receive_statistics_proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8D72FB1C59A39700FB246D /* receive_statistics_proxy.h */; };
 		AD8D73021C59A39700FB246D /* send_statistics_proxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72FC1C59A39700FB246D /* send_statistics_proxy.cc */; };
 		AD8D73031C59A39700FB246D /* send_statistics_proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8D72FD1C59A39700FB246D /* send_statistics_proxy.h */; };
+		ADE780361EA730CA00D0E04E /* stats_types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FBB44091E7292F8007DBD1D /* stats_types.cc */; };
+		ADE7803E1EA7321B00D0E04E /* video_send_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FDC7C031E7A6335002B9F7C /* video_send_stream.cc */; };
+		ADE7803F1EA73BFA00D0E04E /* vie_desktop_capture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADE835591D8F795F00CCD20D /* vie_desktop_capture.cpp */; };
 		ADE8355A1D8F795F00CCD20D /* vie_desktop_capture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADE835591D8F795F00CCD20D /* vie_desktop_capture.cpp */; };
 /* End PBXBuildFile section */
 
@@ -163,7 +166,7 @@
 		5519CC6215C8136E00719504 /* vie_image_process_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_image_process_impl.h; sourceTree = "<group>"; };
 		5519CC6315C8136E00719504 /* vie_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_impl.cc; sourceTree = "<group>"; };
 		5519CC6415C8136E00719504 /* vie_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_impl.h; sourceTree = "<group>"; };
-		5519CC6515C8136E00719504 /* vie_input_manager.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_input_manager.cc; sourceTree = "<group>"; };
+		5519CC6515C8136E00719504 /* vie_input_manager.cc */ = {isa = PBXFileReference; fileEncoding = 2147483673; lastKnownFileType = sourcecode.cpp.cpp; path = vie_input_manager.cc; sourceTree = "<group>"; };
 		5519CC6615C8136E00719504 /* vie_input_manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_input_manager.h; sourceTree = "<group>"; };
 		5519CC6715C8136E00719504 /* vie_manager_base.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_manager_base.cc; sourceTree = "<group>"; };
 		5519CC6815C8136E00719504 /* vie_manager_base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_manager_base.h; sourceTree = "<group>"; };
@@ -545,6 +548,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADE7803F1EA73BFA00D0E04E /* vie_desktop_capture.cpp in Sources */,
+				ADE7803E1EA7321B00D0E04E /* video_send_stream.cc in Sources */,
+				ADE780361EA730CA00D0E04E /* stats_types.cc in Sources */,
 				AD1F0C0A1D47612200C33F53 /* vie_base_impl.cc in Sources */,
 				AD1F0C0B1D47612200C33F53 /* stream_synchronization.cc in Sources */,
 				AD1F0C0C1D47612200C33F53 /* vie_capture_impl.cc in Sources */,
@@ -917,6 +923,7 @@
 					../module/video_coding/main/source,
 					../module/desktop_capture/source,
 					../module/video_processing/main/source/beauty_filter,
+					../module/desktop_capture/desktop_capture/desktop_capture,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
@@ -1016,6 +1023,7 @@
 					../module/video_coding/main/source,
 					../module/desktop_capture/source,
 					../module/video_processing/main/source/beauty_filter,
+					../module/desktop_capture/desktop_capture/desktop_capture,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;

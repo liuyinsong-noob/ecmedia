@@ -15,6 +15,8 @@ NSString * const kCallBg01pngVoip           = @"call_bg01.png";
 NSString * const kCallHangUpButtonpng       = @"call_hang_up_button.png";
 NSString * const kCallHangUpButtonOnpng     = @"call_hang_up_button_on.png";
 
+#import <AVFoundation/AVAudioSession.h>
+
 #import "VoipCallController.h"
 #import "ModelEngineVoip.h"
 #import "AppDelegate.h"
@@ -248,6 +250,13 @@ extern char *filename_path;
     self.hangUpButton = tempHangupButton;
     [self.bgView addSubview:self.hangUpButton];
     
+//    AVAudioSessionInterruptionNotification
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(respondSystemCall:) name:AVAudioSessionInterruptionNotification object:nil];
+//    [center addObserver:self selector:@selector(respondSystemCall:) name:AVAudioSessionRouteChangeNotification object:nil];
+    
+    
+    
     //进来之后先拨号
     if (voipCallType==0)
     {
@@ -295,6 +304,13 @@ extern char *filename_path;
         [self showKeyboardView];
     }
 }
+
+- (void)respondSystemCall:(NSNotification *)noti
+{
+    NSLog(@"sean haha noti %@", noti);
+    
+}
+
 
 -(void)transferCall:(id)sender
 {

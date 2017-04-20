@@ -62,7 +62,7 @@ static MSList *match_payloads(const MSList *local, const MSList *remote, bool_t 
 			int remote_number=payload_type_get_number(p2);
 
 			if (one_matching_codec){
-				if (strcasecmp(matched->mime_type,"telephone-event")!=0){
+				if (strcasecmp(matched->mime_type,"telephone-event")!=0 && strcasecmp(matched->mime_type, "red")!=0){
 					if (found_codec){/* we have found a real codec already*/
 						continue; /*this codec won't be added*/
 					}else found_codec=TRUE;

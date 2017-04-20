@@ -35,7 +35,7 @@ extern "C"
 
 char *ca_certificate_path;
 //#include "thread_wrapper.h"
-#include "cJSON.h"
+#include "Utility/cJSON.h"
 
 #define MAX_SERVICE_CALL   10
 extern SalCallbacks serphone_sal_callbacks;
@@ -4794,6 +4794,9 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
  	serphone_core_assign_payload_type(&payload_type_g729,18,"annexb=no");
  	serphone_core_assign_payload_type(&payload_type_pcmu8000,0,NULL);
 	serphone_core_assign_payload_type(&ccp_payload_type_telephone_event,106,"0-15");
+    serphone_core_assign_payload_type(&payload_type_red8k, 116, "121/122/124");
+//    serphone_core_assign_payload_type(&payload_type_red16k, 125, NULL);
+//    serphone_core_assign_payload_type(&payload_type_red48k, 126, NULL);
 
 //    serphone_core_assign_payload_type(&payload_type_cn8k,13,NULL);
 //    serphone_core_assign_payload_type(&payload_type_amr, 105, NULL);
@@ -5419,6 +5422,7 @@ const MSList *ServiceCore::serphone_core_get_audio_codecs()
 
 #define RANK_END 10000
 static const char *codec_pref_order[]={
+    "red",
 	"OPUS",
     "SILK",
 	"speex",

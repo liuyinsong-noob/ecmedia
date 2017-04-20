@@ -100,6 +100,8 @@
 		ADC54D071D489D9A00A5C852 /* RecordVoip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADC54D061D489D9A00A5C852 /* RecordVoip.cpp */; };
 		ADC54D081D489DAD00A5C852 /* RecordVoip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADC54D061D489D9A00A5C852 /* RecordVoip.cpp */; };
 		ADC54D0C1D48A7D900A5C852 /* statsCollector.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD7E733E1D3CB66A001C0E04 /* statsCollector.cc */; };
+		ADE780371EA730F000D0E04E /* RecordLocal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EE0011E5D6EB200C04C10 /* RecordLocal.cpp */; };
+		ADE7803D1EA7310200D0E04E /* MediaStatisticsData.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FBB43F91E728F35007DBD1D /* MediaStatisticsData.pb.cc */; };
 		ADF92D881CB7B9830026DF61 /* libpacing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADF92D871CB7B9730026DF61 /* libpacing.a */; };
 		ADF92D891CB7B9830026DF61 /* libwebrtc_opus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADF92D7A1CB7B9260026DF61 /* libwebrtc_opus.a */; };
 		ADF92D921CB7BB230026DF61 /* libiSAC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADF92D911CB7BB1A0026DF61 /* libiSAC.a */; };
@@ -166,6 +168,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 1AFBD12E1DAE58F0009B8D23;
 			remoteInfo = rtmp;
+		};
+		AD3920BD1EA645780099B83F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FDB3DBF1E837CD30018FA08 /* srtp.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1FDB3D501E83734B0018FA08;
+			remoteInfo = srtp;
 		};
 		AD3EBA941DE5324E00024454 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2121,6 +2130,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				AD3920BE1EA645780099B83F /* PBXTargetDependency */,
 				ADF261361DB8B906008420B0 /* PBXTargetDependency */,
 				1AFBD1651DAE6677009B8D23 /* PBXTargetDependency */,
 				ADA0AD9C1DA8DFFC00C4807D /* PBXTargetDependency */,
@@ -2799,6 +2809,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADE7803D1EA7310200D0E04E /* MediaStatisticsData.pb.cc in Sources */,
+				ADE780371EA730F000D0E04E /* RecordLocal.cpp in Sources */,
 				AD3EBA9C1DE5327E00024454 /* VoeObserver.cpp in Sources */,
 				AD3EBA9B1DE5327400024454 /* faaccodec.cpp in Sources */,
 				AD3EBA991DE5326800024454 /* ECLiveStream_rtmp.cpp in Sources */,
@@ -2835,6 +2847,11 @@
 			isa = PBXTargetDependency;
 			name = L16;
 			targetProxy = 1AFBD1641DAE6677009B8D23 /* PBXContainerItemProxy */;
+		};
+		AD3920BE1EA645780099B83F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = srtp;
+			targetProxy = AD3920BD1EA645780099B83F /* PBXContainerItemProxy */;
 		};
 		AD838BE91D420BB400050E87 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

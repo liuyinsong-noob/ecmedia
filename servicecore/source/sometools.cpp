@@ -850,6 +850,21 @@ PayloadType	payload_type_cn8k={
     NULL
 };
 
+PayloadType	payload_type_red8k={
+    PAYLOAD_AUDIO_PACKETIZED, /*type */
+    8000,	/*clock rate */
+    0,		/* bytes per sample N/A */
+    NULL,	/* zero pattern N/A*/
+    0,		/*pattern_length N/A */
+    0,		/*	normal_bitrate */
+    "red",	/* MIME subtype */
+    1,		/* Audio Channels */
+    NULL,
+    NULL,
+    0,		/*flags */
+    NULL
+};
+
 //char *payload_type_get_rtpmap(PayloadType *pt)
 //{
 //	int len=(int)strlen(pt->mime_type)+15;
