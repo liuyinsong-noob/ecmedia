@@ -742,7 +742,6 @@ int32_t AudioDeviceIOS::SetBluetoothEnable(bool enable) {
                      "Error Enable the bluetooth.");
         return -1;
     }
-    
     return 0;
 }
     
@@ -786,6 +785,17 @@ int32_t AudioDeviceIOS::SetLoudspeakerStatus(bool enable) {
     }
     
     options |= AVAudioSessionCategoryOptionMixWithOthers;
+
+    NSString *version = [UIDevice currentDevice].systemVersion;
+    double version_ios_10 = 10.0;
+    // enable bluetooth
+    if (version.doubleValue >= version_ios_10)  {
+        options |= AVAudioSessionCategoryOptionAllowBluetoothA2DP;
+        options |= AVAudioSessionCategoryOptionAllowBluetooth;
+    } else {
+        options |= AVAudioSessionCategoryOptionAllowBluetooth;
+    }
+    
     [session setCategory:AVAudioSessionCategoryPlayAndRecord
              withOptions:options
                    error:&error];
@@ -1323,8 +1333,8 @@ int32_t AudioDeviceIOS::InitPlayOrRecord() {
     
     SetLoudspeakerStatus(enable);
     
-    bool enableBluetooth = true;
-    SetBluetoothEnable(enableBluetooth);
+//    bool enableBluetooth = true;
+//    SetBluetoothEnable(enableBluetooth);
 
     //////////////////////
     // Setup Voice Processing Audio Unit

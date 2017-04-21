@@ -198,6 +198,7 @@
 		05F43C1A16A9419D00F6D053 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F43C1816A9419C00F6D053 /* RegisterViewController.m */; };
 		05F43C1F16A941E700F6D053 /* VoIPCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F43C1D16A941E700F6D053 /* VoIPCallViewController.m */; };
 		1AFBD0E21DAE13C4009B8D23 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A1C1D48C07F00731C5B /* libssl.a */; };
+		1AFBD0E41DAE13CB009B8D23 /* libortp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4B6A1A1D48C07F00731C5B /* libortp.a */; };
 		1AFBD0E51DAE15ED009B8D23 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD42CD6A1D23D6F9009C2E7A /* libcrypto.a */; };
 		1AFBD0F51DAE3585009B8D23 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0F11DAE3585009B8D23 /* CameraViewController.m */; };
 		1AFBD0F61DAE3586009B8D23 /* CameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AFBD0F21DAE3585009B8D23 /* CameraViewController.xib */; };
@@ -960,9 +961,6 @@
 		82FF39B418D13EDB002531BF /* CustomPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FF39B318D13EDB002531BF /* CustomPersonViewController.m */; };
 		AD01997F1D2370E7003C2BB9 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD01997E1D2370E7003C2BB9 /* VideoToolbox.framework */; };
 		AD194FB91C5B4066003841BB /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AD194FB81C5B4066003841BB /* libc++.tbd */; };
-		AD2B0B461E8D15830089954C /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD2B0B451E8D15830089954C /* opencv2.framework */; };
-		AD2B0B491E8D17680089954C /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD2B0B481E8D17680089954C /* AssetsLibrary.framework */; };
-		AD2B239A1E5D2990009095AC /* libortp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD2B23991E5D2990009095AC /* libortp.a */; };
 		ADA18F171C58B518007F0F8B /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA18F161C58B518007F0F8B /* libz.tbd */; };
 		ADA18F191C58B521007F0F8B /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA18F181C58B521007F0F8B /* libxml2.tbd */; };
 		ADC50F881D90C86A00A83C04 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC50F871D90C86A00A83C04 /* GLKit.framework */; };
@@ -2061,12 +2059,9 @@
 		82FF39B318D13EDB002531BF /* CustomPersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPersonViewController.m; sourceTree = "<group>"; };
 		AD01997E1D2370E7003C2BB9 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		AD194FB81C5B4066003841BB /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		AD2B0B451E8D15830089954C /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
-		AD2B0B481E8D17680089954C /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
-		AD2B23991E5D2990009095AC /* libortp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libortp.a; sourceTree = "<group>"; };
-		AD4198531DF1483E004BD9B4 /* CCPVoipDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CCPVoipDemo.entitlements; sourceTree = "<group>"; };
 		AD42CD6A1D23D6F9009C2E7A /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../../servicecore/libcrypto.a; sourceTree = "<group>"; };
 		AD42CE771D2A510A009C2E7A /* CCPSDKProject.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CCPSDKProject.xcodeproj; path = ../sdk3.6.5/CCPSDKProject.xcodeproj; sourceTree = "<group>"; };
+		AD4B6A1A1D48C07F00731C5B /* libortp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libortp.a; path = ../../servicecore/libortp.a; sourceTree = "<group>"; };
 		AD4B6A1B1D48C07F00731C5B /* libsrtp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsrtp.a; path = ../../servicecore/libsrtp.a; sourceTree = "<group>"; };
 		AD4B6A1C1D48C07F00731C5B /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../../servicecore/libssl.a; sourceTree = "<group>"; };
 		ADA18F161C58B518007F0F8B /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -2103,12 +2098,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD2B0B491E8D17680089954C /* AssetsLibrary.framework in Frameworks */,
-				AD2B0B461E8D15830089954C /* opencv2.framework in Frameworks */,
 				ADF261331DB8ACBD008420B0 /* libccpapisdk.a in Frameworks */,
 				AD01997F1D2370E7003C2BB9 /* VideoToolbox.framework in Frameworks */,
 				ADC50F881D90C86A00A83C04 /* GLKit.framework in Frameworks */,
 				1AFBD0E51DAE15ED009B8D23 /* libcrypto.a in Frameworks */,
+				1AFBD0E41DAE13CB009B8D23 /* libortp.a in Frameworks */,
 				1AFBD0E21DAE13C4009B8D23 /* libssl.a in Frameworks */,
 				AD194FB91C5B4066003841BB /* libc++.tbd in Frameworks */,
 				ADA18F191C58B521007F0F8B /* libxml2.tbd in Frameworks */,
@@ -2117,7 +2111,6 @@
 				82631D1218C47D8A00BE5A0A /* CoreText.framework in Frameworks */,
 				82631D1018C47C8100BE5A0A /* AddressBookUI.framework in Frameworks */,
 				82631D0E18C47C7500BE5A0A /* AddressBook.framework in Frameworks */,
-				AD2B239A1E5D2990009095AC /* libortp.a in Frameworks */,
 				F13AF1D9176F0A93004B1804 /* MessageUI.framework in Frameworks */,
 				825FBF9F17D7114E00B0943D /* CoreTelephony.framework in Frameworks */,
 				05A3DD69171EB41E003FEA88 /* CoreVideo.framework in Frameworks */,
@@ -2270,11 +2263,9 @@
 		05F43B8616A92CAA00F6D053 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AD2B0B481E8D17680089954C /* AssetsLibrary.framework */,
-				AD2B0B451E8D15830089954C /* opencv2.framework */,
 				ADC50F871D90C86A00A83C04 /* GLKit.framework */,
+				AD4B6A1A1D48C07F00731C5B /* libortp.a */,
 				AD4B6A1B1D48C07F00731C5B /* libsrtp.a */,
-				AD2B23991E5D2990009095AC /* libortp.a */,
 				AD4B6A1C1D48C07F00731C5B /* libssl.a */,
 				AD42CD6A1D23D6F9009C2E7A /* libcrypto.a */,
 				AD01997E1D2370E7003C2BB9 /* VideoToolbox.framework */,
@@ -2309,7 +2300,6 @@
 		05F43B8D16A92CAA00F6D053 /* CCPVoipDemo */ = {
 			isa = PBXGroup;
 			children = (
-				AD4198531DF1483E004BD9B4 /* CCPVoipDemo.entitlements */,
 				1AFBD0EF1DAE3585009B8D23 /* LiveStream */,
 				05E450C01964FB5D00562DBE /* MultiVideoConf */,
 				823F9B82193ECCA1003B0F52 /* chatroom */,
@@ -3641,18 +3631,8 @@
 				ORGANIZATIONNAME = hisun;
 				TargetAttributes = {
 					05F43B8216A92CAA00F6D053 = {
-						ProvisioningStyle = Manual;
-						SystemCapabilities = {
-							com.apple.BackgroundModes = {
-								enabled = 1;
-							};
-							com.apple.InterAppAudio = {
-								enabled = 1;
-							};
-							com.apple.WAC = {
-								enabled = 0;
-							};
-						};
+						DevelopmentTeam = 2372872F55;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -4728,16 +4708,11 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_ENTITLEMENTS = CCPVoipDemo/CCPVoipDemo.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhengyang jia (5VA354PG2Z)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhengyang jia (5VA354PG2Z)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEPLOYMENT_POSTPROCESSING = NO;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CCPVoipDemo/CCPVoipDemo-Prefix.pch";
 				GCC_VERSION = "";
@@ -4765,9 +4740,9 @@
 				OTHER_OSACOMPILEFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronglian.audioVideo.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0210f179-2817-47b1-a274-7345a0cf023f";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0210f179-2817-47b1-a274-7345a0cf023f";
-				PROVISIONING_PROFILE_SPECIFIER = AVDepartment;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_STYLE = "non-global";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 arm64";
@@ -4780,16 +4755,11 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LIBRARY = "libstdc++";
-				CODE_SIGN_ENTITLEMENTS = CCPVoipDemo/CCPVoipDemo.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: zhengyang jia (5VA354PG2Z)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zhengyang jia (5VA354PG2Z)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEPLOYMENT_POSTPROCESSING = NO;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CCPVoipDemo/CCPVoipDemo-Prefix.pch";
 				GCC_VERSION = "";
@@ -4817,9 +4787,9 @@
 				OTHER_OSACOMPILEFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronglian.audioVideo.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0210f179-2817-47b1-a274-7345a0cf023f";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0210f179-2817-47b1-a274-7345a0cf023f";
-				PROVISIONING_PROFILE_SPECIFIER = AVDepartment;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_STYLE = "non-global";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 arm64";
