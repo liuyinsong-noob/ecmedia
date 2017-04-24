@@ -105,6 +105,9 @@ enum TextureType
 - (void)updatePreview:(id)sender;
 @end
 
+
+
+
 @implementation ECIOSDisplay
 
 @synthesize parentView;
@@ -115,7 +118,9 @@ enum TextureType
     {
         if (self.superview != self.parentView) {
             // remove from old parent
-            [self removeFromSuperview];
+            _parentScreenW = self.parentView.bounds.size.width;
+            _parentScreenH = self.parentView.bounds.size.height;
+             [self removeFromSuperview];
             // add to new parent
             [self.parentView addSubview:self];
         }
@@ -204,7 +209,6 @@ enum TextureType
 
 - (BOOL)initOpengGL
 {
-    self.contentMode =  UIViewContentModeScaleAspectFit;
     CAEAGLLayer *eaglLayer = (CAEAGLLayer*) self.layer;
 
     // view opaque, TRUE: opaque
@@ -326,7 +330,7 @@ enum TextureType
         NSLog(@"Error loading shader: %@", error.localizedDescription);
         exit(1);
     } else {
-        NSLog(@"shader code-->%@", shaderString);
+        // NSLog(@"shader code-->%@", shaderString);
     }
 
     // shader handle
@@ -420,24 +424,78 @@ enum TextureType
 - (void)doRenderFrame
 {
     [EAGLContext setCurrentContext:_glContext];
+
     CGSize size = self.bounds.size;
+    int vpx = 0, vpy = 0, vpw = 1, vph = 1;
+    int x=vpx,y=vpy,w=0,h=0;
+    // Fill the smallest dimension, then compute the other one using the image ratio
+    if (UIViewContentModeScaleAspectFit == self.contentMode) {
+        if (_parentScreenW <= _parentScreenH) {
+            float ratio = (_videoH) / (float)(_videoW);
+            w = _parentScreenW * vpw;
+            h = w * ratio;
+            if (h > _parentScreenH) {
+                w *= _parentScreenH /(float) h;
+                h = _parentScreenH;
+            }
+            x = vpx * _parentScreenW;
+            y = vpy * _parentScreenH;
+        } else {
+            
+            float ratio = _videoW / (float)_videoH;
+            h = _parentScreenH * vph;
+            w = h * ratio;
+            if (w > _parentScreenW) {
+                h *= _parentScreenW / (float)w;
+                w = _parentScreenW;
+            }
+            x = vpx * _parentScreenW;
+            y = vpy * _parentScreenH;
+            
+        }
+    } else if (UIViewContentModeScaleAspectFill == self.contentMode) {
+        
+        if (_parentScreenW <= _parentScreenH) {
+            float ratio = _videoW / (float)_videoH;
+            h = _parentScreenH * vph;
+            w = h * ratio;
+            x = vpx * _parentScreenW;
+            y = vpy * _parentScreenH;
+        } else {
+            float ratio = _videoH / (float)(_videoW);
+            w = _parentScreenW * vpw;
+            h = w * ratio;
+            x = vpx * _parentScreenW;
+            y = vpy * _parentScreenH;
+        }
+    } else {
+        if (_videoH>0 && _videoW>0) {
+            w = _parentScreenW;
+            h = _parentScreenH;
+        }
+    }
+    
+    static GLfloat squareVertices[8];
+    
+    squareVertices[0] = (float)(x - w) / _parentScreenW - 0.;
+    squareVertices[1] = (float)(y - h) / _parentScreenH - 0.;
+    squareVertices[2] = (float)(x + w) / _parentScreenW - 0.;
+    squareVertices[3] = (float)(y - h) / _parentScreenH - 0.;
+    squareVertices[4] = (float)(x - w) / _parentScreenW - 0.;
+    squareVertices[5] = (float)(y + h) / _parentScreenH - 0.;
+    squareVertices[6] = (float)(x + w) / _parentScreenW - 0.;
+    squareVertices[7] = (float)(y + h) / _parentScreenH - 0.;
+
+    static GLfloat coordVertices[] = {
+        0.0f,   1.0f,
+        1.0f,   1.0f,
+        0.0f,   0.0f,
+        1.0f,   0.0f,
+    };
+    
     // coordinate transformation
     glViewport(0, 0, size.width*_viewScale, size.height*_viewScale);
-
-    static const GLfloat squareVertices[] = {
-            -1.0f, -1.0f,
-             1.0f, -1.0f,
-            -1.0f,  1.0f,
-             1.0f,  1.0f,
-    };
-
-    static const GLfloat coordVertices[] = {
-            0.0f,   1.0f,
-            1.0f,   1.0f,
-            0.0f,   0.0f,
-            1.0f,   0.0f,
-    };
-
+    
     // update attribute values
     glVertexAttribPointer(ATTRIB_VERTEX, 2, GL_FLOAT, 0, 0, squareVertices);
     glEnableVertexAttribArray(ATTRIB_VERTEX);

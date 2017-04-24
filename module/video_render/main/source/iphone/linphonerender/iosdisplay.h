@@ -62,6 +62,12 @@
     // video height
     GLuint                  _videoH;
     
+    // parent screen width
+    GLuint                  _parentScreenW;
+    
+    // parent screen height
+    GLuint                  _parentScreenH;
+    
     // video preview scale factor
     GLsizei                 _viewScale;
 @public
