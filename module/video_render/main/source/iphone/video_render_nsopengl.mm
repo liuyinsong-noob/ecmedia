@@ -264,7 +264,7 @@ _zOrderToChannel( )
     if(parentView){
         _windowRef = [[ECIOSDisplay alloc] initWithFrame:CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height)];
         _windowRef.parentView = parentView;
-        _windowRef.contentMode =  UIViewContentModeScaleAspectFit;//parentView.contentMode;
+        _windowRef.contentMode = parentView.contentMode;
     }
     
     GetWindowRect(_windowRect);
@@ -608,7 +608,6 @@ WebRtc_Word32 VideoRenderNSOpenGL::SetText(const WebRtc_UWord8 /*textId*/,
         const float /*right*/,
         const float /*bottom*/)
 {
-
     return 0;
 
 }
