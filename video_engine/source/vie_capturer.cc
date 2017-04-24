@@ -693,7 +693,8 @@ bool ViECapturer::IsObserverRegistered() {
 void ViECapturer::OnCaptureFrameRate(const int32_t id,
                                      const uint32_t frame_rate) {
   CriticalSectionScoped cs(observer_cs_.get());
-  observer_->CapturedFrameRate(id_, static_cast<uint8_t>(frame_rate));
+  if (observer_)
+	observer_->CapturedFrameRate(id_, static_cast<uint8_t>(frame_rate));
 }
 
 void ViECapturer::OnNoPictureAlarm(const int32_t id,
@@ -702,7 +703,8 @@ void ViECapturer::OnNoPictureAlarm(const int32_t id,
 
   CriticalSectionScoped cs(observer_cs_.get());
   CaptureAlarm vie_alarm = (alarm == Raised) ? AlarmRaised : AlarmCleared;
-  observer_->NoPictureAlarm(id, vie_alarm);
+  if (observer_)
+	observer_->NoPictureAlarm(id, vie_alarm);
 }
 
 bool ViECapturer::SwapCapturedAndDeliverFrameIfAvailable() {

@@ -2460,9 +2460,10 @@ int ECMedia_stop_capture(int captureid)
 	ViECapture *capture = ViECapture::GetInterface(m_vie);
 	if (capture) {
 		if (g_ECViECaptureObserver) {
-			capture->DeregisterObserver(captureid);
-			delete g_ECViECaptureObserver;
-			g_ECViECaptureObserver = NULL;
+			if (capture->DeregisterObserver(captureid) == 0) {
+				delete g_ECViECaptureObserver;
+				g_ECViECaptureObserver = NULL;
+			}
 		}
 
 		capture->StopCapture(captureid);
