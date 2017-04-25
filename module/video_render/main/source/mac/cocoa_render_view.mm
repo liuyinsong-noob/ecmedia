@@ -25,8 +25,6 @@ using namespace cloopenwebrtc;
 		
 		WEBRTC_TRACE(kTraceError, kTraceVideoRenderer, 0, "%s:%d Could not create instance", __FUNCTION__, __LINE__); 
 	}
-	
-	
 	_nsOpenGLContext = [self openGLContext];
 
 }
@@ -41,7 +39,7 @@ using namespace cloopenwebrtc;
 //	[_windowRef setFrame:screenRect];
 //	[_windowRef setBounds:screenRect];
     self = [super initWithFrame:screenRect pixelFormat:fmt];
-	if (self == nil){
+	if (self == nil) {
 		
 		WEBRTC_TRACE(kTraceError, kTraceVideoRenderer, 0, "%s:%d Could not create instance", __FUNCTION__, __LINE__); 
 	}

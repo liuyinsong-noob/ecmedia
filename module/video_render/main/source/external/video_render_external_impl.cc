@@ -89,7 +89,7 @@ int32_t VideoRenderExternalImpl::StartRender()
     return 0;
 }
 
-int32_t VideoRenderExternalImpl::StopRender()
+int32_t VideoRenderExternalImpl::StopRender() 
 {
     CriticalSectionScoped cs(&_critSect);
     return 0;

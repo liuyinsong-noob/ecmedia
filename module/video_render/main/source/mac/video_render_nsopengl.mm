@@ -362,8 +362,8 @@ int VideoChannelNSOpenGL::SetStreamCropSettings(int /*streamId*/, float /*startW
  *
  */
 
-VideoRenderNSOpenGL::VideoRenderNSOpenGL(CocoaRenderView *windowRef, bool fullScreen, int iId) :
-_windowRef( (CocoaRenderView*)windowRef),
+VideoRenderNSOpenGL::VideoRenderNSOpenGL(void *windowRef, bool fullScreen, int iId) :
+_parentView((NSView*)windowRef),
 _fullScreen( fullScreen),
 _id( iId),
 _nsglContextCritSec( *CriticalSectionWrapper::CreateCriticalSection()),
@@ -384,6 +384,7 @@ _windowRefSuperViewFrame(NSMakeRect(0,0,0,0))
 {
     _screenUpdateThread = ThreadWrapper::CreateThread(ScreenUpdateThreadProc, this, kRealtimePriority);
     _screenUpdateEvent = EventWrapper::Create();
+    _windowRef = [[CocoaRenderView alloc] initWithFrame: _parentView.bounds];
 }
 
 int VideoRenderNSOpenGL::ChangeWindow(CocoaRenderView* newWindowRef)
@@ -391,7 +392,7 @@ int VideoRenderNSOpenGL::ChangeWindow(CocoaRenderView* newWindowRef)
 
     LockAGLCntx();
 
-    _windowRef = newWindowRef;
+    _parentView = newWindowRef;
 
     if(CreateMixingContext() == -1)
     {
@@ -444,13 +445,11 @@ int32_t VideoRenderNSOpenGL::StartRender()
     }
 
 
-    if (!_screenUpdateThread)
-    {
+    if (!_screenUpdateThread) {
         WEBRTC_TRACE(kTraceDebug, kTraceVideoRenderer, _id, "failed start screenUpdateThread");
         UnlockAGLCntx();
         return -1;
     }
-
 
     UnlockAGLCntx();
     return 0;
@@ -545,8 +544,6 @@ int VideoRenderNSOpenGL::configureNSOpenGLEngine()
 int VideoRenderNSOpenGL::setRenderTargetWindow()
 {
     LockAGLCntx();
-
-
     GLuint attribs[] =
     {
         NSOpenGLPFAColorSize, 24,
@@ -555,10 +552,12 @@ int VideoRenderNSOpenGL::setRenderTargetWindow()
         NSOpenGLPFAAccelerated,
         0
     };
-
+    
     NSOpenGLPixelFormat* fmt = [[[NSOpenGLPixelFormat alloc] initWithAttributes:
                           (NSOpenGLPixelFormatAttribute*) attribs] autorelease];
 
+    
+    
     if(_windowRef)
     {
         [_windowRef initCocoaRenderView:fmt];
@@ -575,7 +574,7 @@ int VideoRenderNSOpenGL::setRenderTargetWindow()
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-
+    [_parentView addSubview:_windowRef];
     DisplayBuffers();
 
     UnlockAGLCntx();
@@ -646,12 +645,12 @@ VideoRenderNSOpenGL::~VideoRenderNSOpenGL()
             // Detach CocoaRenderView from full screen view back to
             // it's original parent.
             [_windowRef removeFromSuperview];
-            if(_windowRefSuperView)
-            {
-              [_windowRefSuperView addSubview:_windowRef];
-              [_windowRef setFrame:_windowRefSuperViewFrame];
-            }
-
+            [_windowRef release];
+//            if(_windowRefSuperView)
+//            {
+//              [_windowRefSuperView addSubview:_windowRef];
+//              [_windowRef setFrame:_windowRefSuperViewFrame];
+//            }
             WEBRTC_TRACE(kTraceDebug, kTraceVideoRenderer, 0, "%s:%d Attempting to release fullscreen window", __FUNCTION__, __LINE__);
             [_fullScreenWindow releaseFullScreen];
 

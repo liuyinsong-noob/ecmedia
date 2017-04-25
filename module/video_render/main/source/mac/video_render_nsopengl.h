@@ -106,7 +106,7 @@ class VideoRenderNSOpenGL
 {
 
 public: // methods
-    VideoRenderNSOpenGL(CocoaRenderView *windowRef, bool fullScreen, int iId);
+    VideoRenderNSOpenGL(void *windowRef, bool fullScreen, int iId);
     ~VideoRenderNSOpenGL();
 
     static int GetOpenGLVersion(int& nsglMajor, int& nsglMinor);
@@ -169,6 +169,7 @@ private: // variables
 
 
     CocoaRenderView* _windowRef;
+    NSView *_parentView;
     bool _fullScreen;
     int _id;
     CriticalSectionWrapper& _nsglContextCritSec;
