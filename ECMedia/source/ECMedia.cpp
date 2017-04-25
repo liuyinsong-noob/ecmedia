@@ -4291,6 +4291,7 @@ void ECMedia_releaseLiveStream(void *handle)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
 #ifdef VIDEO_ENABLED
+    return;//Since RTMPLiveSession is singleton, do not need to release.
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	delete p;
 	PrintConsole("[ECMEDIA INFO] %s end\n", __FUNCTION__);

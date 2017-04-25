@@ -103,7 +103,7 @@ namespace cloopenwebrtc {
             ECMedia_init_video();
         }
         
-        RTMPLiveSession* pLiveSession = new RTMPLiveSession(m_voe,m_vie);
+        RTMPLiveSession* pLiveSession = RTMPLiveSession::CreateRTMPSession(m_voe, m_vie);
         return pLiveSession;
     }
 }

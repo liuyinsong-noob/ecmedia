@@ -114,6 +114,7 @@ namespace cloopenwebrtc {
 	  public AudioPacketizationCallback,
 	  public VCMPacketizationCallback {
     public:
+        static RTMPLiveSession *CreateRTMPSession(VoiceEngine * voe,VideoEngine *vie);
         RTMPLiveSession(VoiceEngine * voe,VideoEngine *vie);
 		virtual ~RTMPLiveSession();
 
@@ -231,6 +232,10 @@ namespace cloopenwebrtc {
 		int push_video_fps_;
 		int push_camera_index_;
 		onLiveStreamNetworkStatusCallBack network_status_callbck_;
+      private:
+          bool inited_;
+          bool capture_started_;
+          bool stoped_;
     };
     
     class ECMedia_LiveStream {

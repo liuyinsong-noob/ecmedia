@@ -1174,6 +1174,7 @@
 		AD056FB71DAF1AB70007DB7A /* rtmp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = rtmp.xcodeproj; path = "../../../third_party/librtmp/rtmpdump-2.3/librtmp/rtmp.xcodeproj"; sourceTree = "<group>"; };
 		AD0798981D001E3200D48138 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = ../../libswresample.a; sourceTree = "<group>"; };
 		AD1123261DAF3108006CDD38 /* libopus_Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libopus_Mac.a; path = ../../third_party/opus/opus/build/Debug/libopus_Mac.a; sourceTree = "<group>"; };
+		AD2D376D1EADA050000170DB /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		AD2DE0FB1D6BEA4C00FE3814 /* VoeObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoeObserver.cpp; sourceTree = "<group>"; };
 		AD3EBA9D1DE5414C00024454 /* libfaac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaac.a; path = ../../third_party/libfaac/lib/osx/libfaac.a; sourceTree = "<group>"; };
 		AD3EBA9F1DE5416200024454 /* libfaad.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaad.a; path = ../../third_party/libfaad/lib/osx/libfaad.a; sourceTree = "<group>"; };
@@ -1370,6 +1371,7 @@
 		1AFBD11E1DAE560E009B8D23 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AD2D376D1EADA050000170DB /* AudioUnit.framework */,
 				ADB127311E779225003CBF6C /* libavformat_mac.a */,
 				1F8EE0541E5D7B8B00C04C10 /* libavformat.a */,
 				AD3EBB0D1DE5B71200024454 /* libvpx_mac.a */,
