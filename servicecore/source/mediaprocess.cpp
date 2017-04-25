@@ -951,7 +951,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 
 				//do some test on simulcast video streams
                 //sean vpx simulcast test begin
-#define NOTDEFINED
+//#define NOTDEFINED
 #ifdef NOTDEFINED
 				{
 					codec_params.startBitrate = 1300;
