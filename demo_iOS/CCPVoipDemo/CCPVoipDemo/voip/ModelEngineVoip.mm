@@ -4082,6 +4082,10 @@ ModelEngineVoip* gModelEngineVoip = nil;
     return [self.VoipCallService stopLiveStream:handle];
 }
 
+-(void) selectLiveCamera:(void *)handle cameraIndex: (int) index width:(int)w height: (int) h fps: (int)fps {
+    [self.VoipCallService selectLiveCamera: handle cameraIndex: index width:w height: h fps: fps];
+}
+
 - (int) startRecordLocalMedia:(NSString *)filename withView: (void *)localview
 {
     [self.VoipCallService startRecordLocalMedia:filename withView:localview];

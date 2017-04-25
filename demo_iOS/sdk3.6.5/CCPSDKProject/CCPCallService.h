@@ -687,6 +687,7 @@ typedef enum
 -(int) playStream:(void *)handle url:(NSString *) url view:(UIView*)renderView;
 -(int) pushStream:(void *)handle url:(NSString *) url view:(UIView*)renderView;
 -(void) stopLiveStream:(void *)handle;
+-(void) selectLiveCamera:(void *)handle cameraIndex: (int) index width:(int)w height: (int) h fps: (int)fps ;
 
 - (int) startRecordLocalMedia:(NSString *)filename withView: (void *)localview;
 - (void) stopRecordLocalMedia;

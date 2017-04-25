@@ -2158,8 +2158,8 @@ static CCPCallService * ccpcallserviceSharedInstance;
             self.ccp_server_ip = @"192.168.177.187";
             self.ccp_serverport = 8600;
 
-            self.account = accountStr;
-            self.password = passwordStr;
+            self.account = @"1005";
+            self.password = @"123456";
             connectToCCP([self.ccp_server_ip cStringUsingEncoding:NSUTF8StringEncoding], self.ccp_serverport, [self.account cStringUsingEncoding:NSUTF8StringEncoding], [self.password cStringUsingEncoding:NSUTF8StringEncoding],[self.strCapability cStringUsingEncoding:NSUTF8StringEncoding]);
     }
     else if ([passwordStr isEqualToString:@"1234"]) {
@@ -2841,6 +2841,9 @@ static CCPCallService * ccpcallserviceSharedInstance;
 - (NSInteger)selectCamera:(NSInteger)cameraIndex capability:(NSInteger)capabilityIndex fps:(NSInteger)fps rotate:(Rotate)rotate
 {
     int ret = selectCamera(cameraIndex, capabilityIndex, fps, rotate,false);
+    
+    // int ret = selectCameraLiveStream(&capabilityIndex, cameraIndex, 100, 100, fps);
+    
     if(ret == 0)
     {
         return ECCP_Success;
@@ -2850,6 +2853,10 @@ static CCPCallService * ccpcallserviceSharedInstance;
         return ECCP_Failed;
     }
 }
+
+
+
+// -(NSInteger)selectCameraLiveStream
 
 -(void)setCodecEnabledWithCodec:(Codec) codec andEnabled:(BOOL) enabled
 {
@@ -5900,6 +5907,10 @@ char *OSTypeToStr(char *buf, OSType t)
 -(void) stopLiveStream:(void *)handle
 {
     return stopLiveStream(handle);
+}
+
+-(void) selectLiveCamera:(void *)handle cameraIndex: (int) index width:(int)w height: (int) h fps: (int)fps {
+    selectCameraLiveStream(handle, index, w, h, fps);
 }
 
 - (int) startRecordLocalMedia:(NSString *)filename withView: (void *)localview
