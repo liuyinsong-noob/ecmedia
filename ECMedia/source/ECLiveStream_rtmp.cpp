@@ -61,11 +61,14 @@ namespace cloopenwebrtc {
 		return 0;
 	}
     
+    CriticalSectionWrapper *RTMPLiveSession::singleProtect_ = CriticalSectionWrapper::CreateCriticalSection();
     RTMPLiveSession *RTMPLiveSession::CreateRTMPSession(VoiceEngine * voe,VideoEngine *vie)
     {
+        singleProtect_->Enter();
         if (!g_rtmpLiveSession) {
             g_rtmpLiveSession = new RTMPLiveSession(voe,vie);
         }
+        singleProtect_->Leave();
         return g_rtmpLiveSession;
     }
     

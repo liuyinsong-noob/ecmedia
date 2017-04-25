@@ -236,6 +236,7 @@ namespace cloopenwebrtc {
           bool inited_;
           bool capture_started_;
           bool stoped_;
+          static CriticalSectionWrapper *singleProtect_;
     };
     
     class ECMedia_LiveStream {
