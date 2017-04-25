@@ -172,6 +172,7 @@ enum TextureType
     [EAGLContext setCurrentContext:_glContext];
     glFinish();
     [EAGLContext setCurrentContext:0];
+    [self removeFromSuperview];
     [_glContext release];
     [parentView release];
     [[NSNotificationCenter defaultCenter] removeObserver:self];

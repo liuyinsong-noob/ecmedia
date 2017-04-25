@@ -24,7 +24,7 @@
 
     //设置键盘TextField
     [self setupTextField];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"test" style:UIBarButtonItemStylePlain target:self action:@selector(backMain)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(backMain)];
 }
 
 #pragma mark ---- <设置键盘TextField>
@@ -62,12 +62,11 @@
 
 //开始直播采集
 - (IBAction)startLiveStream {
-    
-    
-     StartLiveView* wwwliveView = [[StartLiveView alloc] initWithFrame:self.view.bounds];
+
+    StartLiveView* wwwliveView = [[StartLiveView alloc] initWithFrame:self.view.bounds];
     self.liveView = wwwliveView;
     [wwwliveView release];
-    [self.view addSubview:self.liveView];
+     [self.view addSubview:self.liveView];
     
     _backBtn.hidden = YES;
     _middleView.hidden = YES;

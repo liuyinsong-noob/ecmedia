@@ -21,6 +21,7 @@
 @property (nonatomic, strong) UIButton *startPlayLiveButton;
 @property (nonatomic, strong) UIButton *startPushLiveButton;
 @property (nonatomic, strong) UIView *containerView;
+@property (nonatomic, strong) UIView *liveRenderView;
 @property (nonatomic,retain) ModelEngineVoip *modelEngineVoip;
 
 
@@ -54,9 +55,10 @@ static int padding = 30;
         //加载音频录制
         [self requestAccessForAudio];
         
+        self.liveRenderView.contentMode = UIViewContentModeScaleAspectFit;
         //创建界面容器
         [self addSubview:self.containerView];
-        
+        [self.containerView addSubview:self.liveRenderView];
         // 添加按钮
         [self.containerView addSubview:self.closeButton];
         [self.containerView addSubview:self.cameraButton];
@@ -142,6 +144,16 @@ static int padding = 30;
     }
     return _containerView;
 }
+#pragma mark ---- <界面容器>
+- (UIView*)liveRenderView{
+    if(!_liveRenderView){
+        _liveRenderView = [UIView new];
+        _liveRenderView.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height - 200);
+        _liveRenderView.backgroundColor = [UIColor clearColor];
+        _liveRenderView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    }
+    return _liveRenderView;
+}
 
 #pragma mark ---- <关闭界面>
 - (UIButton*)closeButton{
@@ -160,20 +172,34 @@ static int padding = 30;
 -(void) close {
     [[self viewController ]dismissViewControllerAnimated:YES completion:nil];
 }
--(void) selectCamera {
+
+-(void) selectCamera:(id)sender {
+    static int i = 0;
     
+    [self.modelEngineVoip getCameraInfo];
+    [self.modelEngineVoip selectLiveCamera:self.session cameraIndex: i width:100 height: 100 fps: 15];
+    
+    i++;
+    if (i == 2) {
+        i = 0;
+    }
 }
 #pragma mark ---- <切换摄像头>
-- (UIButton*)cameraButton{
+- (UIButton*)cameraButton {
     if(!_cameraButton){
         _cameraButton = [UIButton new];
         
          //位置
-        _cameraButton.frame = CGRectMake(XJScreenW - padding * 4, padding, padding, padding);
+        _cameraButton.frame = CGRectMake((XJScreenW - 200) * 0.5, XJScreenH - 200, 200, 40);
         
-        [_cameraButton setImage:[UIImage imageNamed:@"camra_preview"] forState:UIControlStateNormal];
+        _cameraButton.layer.cornerRadius = _cameraButton.frame.size.height * 0.5;
+        [_cameraButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_cameraButton.titleLabel setFont:[UIFont systemFontOfSize:16]];
+        [_cameraButton setTitle:@"切换相机" forState:UIControlStateNormal];
+        [_cameraButton setBackgroundColor:[UIColor grayColor]];
         _cameraButton.exclusiveTouch = YES;
-         [_cameraButton addTarget:self action:@selector(selectCamera::)forControlEvents:UIControlEventTouchUpInside];
+        _cameraButton.exclusiveTouch = YES;
+        [_cameraButton addTarget:self action:@selector(selectCamera:)forControlEvents:UIControlEventTouchUpInside];
     }
     return _cameraButton;
 }
@@ -200,15 +226,10 @@ static int padding = 30;
     if(self.startPlayLiveButton.selected){
         [self.startPushLiveButton removeFromSuperview];
         [self.startPlayLiveButton setTitle:@"结束观看" forState:UIControlStateNormal];
-      //  [self.modelEngineVoip playStream:self.session url:@"rtmp://live.yuntongxun.com/live/livestream" view:self.containerView];
-        [self.modelEngineVoip playStream:self.session url:@"rtmp://live.yuntongxun.com:1935/live/jiazyjiazy" view:self.containerView];
-        
-        // [self.modelEngineVoip playStream:self.session url:@"rtmp://live2.fzntv.cn:1935/live/zohi_fztv1" view:self.containerView];
+        [self.modelEngineVoip playStream:self.session url:@"rtmp://live.yuntongxun.com:1935/live/gezhaoyou" view:self.liveRenderView];
     }else{
-        [self.modelEngineVoip stopLiveStream:self.session];
         [self.startPlayLiveButton setTitle:@"观看直播" forState:UIControlStateNormal];
         [self.modelEngineVoip stopLiveStream:self.session];
-        
     }
 }
 - (UIButton*)startPlayLiveButton{
@@ -234,20 +255,20 @@ static int padding = 30;
         
         [self.startPushLiveButton setTitle:@"结束直播" forState:UIControlStateNormal];
         [self.startPlayLiveButton removeFromSuperview];
-        [self.modelEngineVoip pushStream:self.session url:@"rtmp://live.yuntongxun.com:1935/live/jiazyjiazy" view:self.containerView];
-        
+        // [self.startPushLiveButton removeFromSuperview] ;
+        [self.modelEngineVoip pushStream:self.session url:@"rtmp://live.yuntongxun.com:1935/live/gezhaoyou" view:self.liveRenderView];
+        // [self.containerView addSubview:self.startPushLiveButton];
+    
     }else{
         [self.modelEngineVoip stopLiveStream:self.session];
         [self.startPushLiveButton setTitle:@"开始直播" forState:UIControlStateNormal];
-        [self.modelEngineVoip stopLiveStream:self.session];
-        
     }
 }
 
-- (UIButton*)startPushLiveButton{
+- (UIButton*)startPushLiveButton {
     if(! _startPushLiveButton){
         _startPushLiveButton = [UIButton new];
-        //位置
+        // 位置
         _startPushLiveButton.frame = CGRectMake((XJScreenW - 200) * 0.5, XJScreenH - 150, 200, 40);
         _startPushLiveButton.layer.cornerRadius = _startPlayLiveButton.frame.size.height * 0.5;
         [_startPushLiveButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
