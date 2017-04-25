@@ -149,7 +149,7 @@ static int m_cameraCount = 0;
 using namespace cloopenwebrtc;
 using namespace std;
 
-#define ECMEDIA_VERSION "2.1.2.20"
+#define ECMEDIA_VERSION "2.1.2.21"
 
 //extern bool g_media_TraceFlag;
 //void PrintConsole(const char * fmt,...){};
@@ -979,10 +979,10 @@ int ECMedia_audio_start_record()
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
-        base->StartRecord();
+        int ret = base->StartRecord();
         base->Release();
-        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
-        return 0;
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
+        return ret;
     }
     else
     {
