@@ -42,32 +42,6 @@
             android:id="@+id/token"
             layout="@layout/ccp_textview" />
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/sub_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/sid_layout"
-        android:orientation="vertical"
-        android:paddingRight="@dimen/small_margin_space" 
-        android:paddingLeft="@dimen/small_margin_space" >
-
-        <TextView
-            style="@style/VoiceAccountTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="3.0dip"
-            android:paddingBottom="3.0dip"
-            android:text="@string/str_select_subaccount_label"
-            android:textColor="@android:color/white" />
-
-        <include
-            android:id="@+id/sub_sid"
-            layout="@layout/ccp_sub_textview" />
-
-        <include
-            android:id="@+id/sub_info"
-            layout="@layout/sub_account_view" />
-    </LinearLayout>
 
     <com.voice.demo.views.CCPButton
         android:id="@+id/login_confrim"
@@ -88,4 +62,70 @@
         android:text="@string/str_login_tips"
         android:textAppearance="@style/attentoin_text_appearance"
         android:textSize="13sp"/>
+
+    <LinearLayout
+        android:id="@+id/sub_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingRight="@dimen/small_margin_space"
+        android:paddingLeft="@dimen/small_margin_space"
+        android:layout_below="@+id/sid_layout"
+        android:layout_alignParentStart="true">
+        <TextView
+            style="@style/VoiceAccountTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="3.0dip"
+            android:paddingBottom="3.0dip"
+            android:text="请输入IP，端口和密码："
+            android:textColor="@android:color/white" />
+
+
+        <LinearLayout
+            android:id="@+id/sub_layoutrr"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/voip_server_ip"
+                style="@style/VoiceAccountTitle"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="192.168.177.187"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/voip_server_port"
+                style="@style/VoiceAccountTitle"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="8600"
+                android:textColor="@android:color/black" />
+            <EditText
+                android:id="@+id/voip_server_password"
+                style="@style/VoiceAccountTitle"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="123456"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+        <TextView
+            style="@style/VoiceAccountTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="3.0dip"
+            android:paddingBottom="3.0dip"
+            android:text="@string/str_select_subaccount_label"
+            android:textColor="@android:color/white" />
+
+        <include
+            android:id="@+id/sub_sid"
+            layout="@layout/ccp_sub_textview" />
+
+        <include
+            android:id="@+id/sub_info"
+            layout="@layout/sub_account_view" />
+    </LinearLayout>
 </RelativeLayout>

@@ -101,17 +101,28 @@ public final class CallControlManager extends AbstractDispatcher {
                         Environment.getExternalStorageDirectory().canWrite());
 
 		// get softswitch address, just execute subthread
-		if (userAgent.getPassword().compareTo("1234") == 0) {
-			NativeInterface.connectToCCP("192.168.178.138", 7600,
+
+		if (!userAgent.getPassword().isEmpty()) {
+			NativeInterface.connectToCCP(userAgent.getUa_server(), userAgent.getUa_port(),
 					userAgent.getSid(), userAgent.getPassword(), "");
-		} else if (userAgent.getPassword().compareTo("cloopen_pass3wd") == 0) {
-            NativeInterface.connectToCCP("118.194.243.237", 7600,
-                    userAgent.getSid(), userAgent.getPassword(), "");
-        }else {
+		} else {
 			doQuerySoftSwitchAddress(userAgent.getPrivateCloud(),
 					userAgent.getSid(), userAgent.getSubaccountid(),
 					userAgent.getSubpassword());
 		}
+
+
+//		if (userAgent.getPassword().compareTo("1234") == 0) {
+//			NativeInterface.connectToCCP("114.215.241.49", 8600,
+//					userAgent.getSid(), "cloopen_pass3wd", "");
+//		} else if (userAgent.getPassword().compareTo("cloopen_pass3wd") == 0) {
+//            NativeInterface.connectToCCP("118.194.243.237", 7600,
+//                    userAgent.getSid(), userAgent.getPassword(), "");
+//        }else {
+//			doQuerySoftSwitchAddress(userAgent.getPrivateCloud(),
+//					userAgent.getSid(), userAgent.getSubaccountid(),
+//					userAgent.getSubpassword());
+//		}
 	}
 
 	private static final int EVENT_MESSAGE = 0x00;

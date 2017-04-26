@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -54,6 +55,9 @@ public class DeveloperLoginActivity extends LoginUIActivity  implements View.OnC
 	private TextView mVoipToken;
 	private TextView mSubAccount;
 	private TextView mSubToken;
+	private EditText mServerIPEditText;
+	private EditText mPassWDEditText;
+	private EditText mServerPortEditText;
 	
 	private LinearLayout mLayoutIdList;
 	
@@ -108,6 +112,12 @@ public class DeveloperLoginActivity extends LoginUIActivity  implements View.OnC
 		mCcpImaButton = (CCPButton) findViewById(R.id.login_confrim);
 		mCcpImaButton.setEnabled(false);
 		mCcpImaButton.setOnClickListener(this);
+
+		mServerIPEditText = (EditText) findViewById(R.id.voip_server_ip);
+		mPassWDEditText = (EditText) findViewById(R.id.voip_server_password);
+		mServerPortEditText = (EditText)findViewById(R.id.voip_server_port);
+
+
 	}
 	
 	/**
@@ -182,7 +192,8 @@ public class DeveloperLoginActivity extends LoginUIActivity  implements View.OnC
 		            	   
 		               // The 'which' argument contains the index position
 		               // of the selected item
-		        	   mSubsidTextView.setText(mVoipArray[which]);	 
+		        	   mSubsidTextView.setText(mVoipArray[which]);
+						   // 选择登陆voip ID , 例如 1004， 1005
 		        	   CCPConfig.VoIP_ID = mVoipArray[which];
 		        	   fillSubAccountInfo(which);
 		        	   dialog.dismiss();
@@ -231,11 +242,20 @@ public class DeveloperLoginActivity extends LoginUIActivity  implements View.OnC
 			mSubToken.setText(getString(R.string.sub_token_title_text, split[index]));
 			CCPConfig.Sub_Token = split[index];
 		}
-		if(CCPConfig.VoIP_PWD_LIST != null ) {
-			String[] split = CCPConfig.VoIP_PWD_LIST.split(",");
-			mVoipToken.setText(getString(R.string.voip_pwd_title_text, split[index]));
-			CCPConfig.VoIP_PWD = split[index];
-		}
+		// server ip address.
+		CCPConfig.REST_SERVER_ADDRESS = mServerIPEditText.getText().toString();
+		// server ip address.
+		CCPConfig.VoIP_PWD = mPassWDEditText.getText().toString();
+		CCPConfig.REST_SERVER_PORT = mServerPortEditText.getText().toString();
+
+
+
+//		if(CCPConfig.VoIP_PWD_LIST != null ) {
+//			String[] split = CCPConfig.VoIP_PWD_LIST.split(",");
+//			mVoipToken.setText(getString(R.string.voip_pwd_title_text, split[index]));
+//			// server ip address.
+//			CCPConfig.VoIP_PWD = mPassWDEditText.getText().toString(); // split[index];
+//		}
 		Log4Util.d(CCPHelper.DEMO_TAG, "1");
 		mCcpImaButton.setEnabled(true);
 		Log4Util.d(CCPHelper.DEMO_TAG, "2");

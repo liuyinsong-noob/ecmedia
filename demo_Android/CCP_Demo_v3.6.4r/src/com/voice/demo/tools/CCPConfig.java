@@ -124,7 +124,7 @@ public final class CCPConfig {
 	/**
 	 *  Demo rest server port info
 	 */
-	public static String REST_SERVER_PORT = "8883";
+	public static String REST_SERVER_PORT = "8600";
 
 	/**
 	 * Demo test main account info
