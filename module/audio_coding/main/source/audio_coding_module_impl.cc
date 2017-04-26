@@ -430,7 +430,7 @@ int32_t AudioCodingModuleImpl::Process() {
 	  RedList::iterator it;
 //        printf("sean haha list size %zu\n", red_list_.size());
         if (/*!is_first_red_*/red_list_.size()>=3) {
-//            取出第三个包，放到steam中
+/*            取出第三个包，放到steam中 */
             it = red_list_.begin();
             int count = 1;
             for (; it!=red_list_.end() && red_list_.size()>=3 && count<=3; it++,count++) {
