@@ -427,6 +427,7 @@ enum TextureType
     [EAGLContext setCurrentContext:_glContext];
 
     CGSize size = self.bounds.size;
+    
     int vpx = 0, vpy = 0, vpw = 1, vph = 1;
     int x=vpx,y=vpy,w=0,h=0;
     // Fill the smallest dimension, then compute the other one using the image ratio
@@ -476,8 +477,9 @@ enum TextureType
         }
     }
     
-    static GLfloat squareVertices[8];
-    
+    // static GLfloat squareVertices[8];
+    GLfloat squareVertices[8];
+
     squareVertices[0] = (float)(x - w) / _parentScreenW - 0.;
     squareVertices[1] = (float)(y - h) / _parentScreenH - 0.;
     squareVertices[2] = (float)(x + w) / _parentScreenW - 0.;
@@ -487,15 +489,16 @@ enum TextureType
     squareVertices[6] = (float)(x + w) / _parentScreenW - 0.;
     squareVertices[7] = (float)(y + h) / _parentScreenH - 0.;
 
-    static GLfloat coordVertices[] = {
+    
+    GLfloat coordVertices[] = {
         0.0f,   1.0f,
         1.0f,   1.0f,
         0.0f,   0.0f,
         1.0f,   0.0f,
     };
-    
+
     // coordinate transformation
-    glViewport(0, 0, size.width*_viewScale, size.height*_viewScale);
+    glViewport(0, 0, _parentScreenW*_viewScale, _parentScreenH*_viewScale);
     
     // update attribute values
     glVertexAttribPointer(ATTRIB_VERTEX, 2, GL_FLOAT, 0, 0, squareVertices);
