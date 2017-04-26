@@ -248,7 +248,7 @@ namespace cloopenwebrtc {
 		
 		if (local_view_)
 		{
-#ifdef WIN32
+#ifdef true
 			ViERender* render = ViERender::GetInterface(vie_);
 			ret = render->AddRenderer(capture_id_, local_view_, 1, 0, 0, 1, 1, NULL);
 			if (ret) {

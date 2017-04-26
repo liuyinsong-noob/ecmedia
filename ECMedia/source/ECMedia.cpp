@@ -2558,7 +2558,7 @@ int ECMedia_stop_render(int channelid, int deviceid)
     if (render) {
         render->StopRender(channelid);
         render->RemoveRenderer(channelid);
-#ifdef _WIN32
+#if true
 		render->StopRender(deviceid);
 		render->RemoveRenderer(deviceid);
 #endif
