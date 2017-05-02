@@ -297,10 +297,9 @@ void PrintConsole(const char * fmt, ...)
 
 				char new_file[1024];
 				strcpy(new_file, g_log_media_filename);
-				strcat(new_file, "_bak");
 
 				char file_postfix[40] = { 0 };
-				sprintf(file_postfix, "_%04d%02d%02d%02d%02d%02d",
+				sprintf(file_postfix, "_%04d%02d%02d%02d%02d%02d.bak",
 					pt->tm_year + 1900, pt->tm_mon + 1, pt->tm_mday,
 					pt->tm_hour, pt->tm_min, pt->tm_sec);
 				strcat(new_file, file_postfix);
