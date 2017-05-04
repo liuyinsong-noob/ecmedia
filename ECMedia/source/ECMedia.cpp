@@ -859,6 +859,24 @@ int ECMedia_audio_set_send_destination(int channelid, int rtp_port, const char *
         return -99;
     }
 }
+
+int ECMedia_audio_set_socket5_send_data(int channel_id, unsigned char *data, int length)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins... ");
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	VoEBase *base = VoEBase::GetInterface(m_voe);
+	if (base) {
+		int ret = base->SetSocket5SendData(data, length);
+		base->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
+		return ret;
+	}
+	else{
+		PrintConsole("[ECMEDIA WARNNING] %s failed to get VoEBase",__FUNCTION__);
+		return -99;
+	}
+}
+
 #ifdef VIDEO_ENABLED
 int ECMedia_video_start_receive(int channelid)
 {
@@ -1522,22 +1540,40 @@ int ECMedia_video_set_local_receiver(int channelid, int rtp_port, int rtcp_port)
     }
 }
 
-int ECMedia_video_set_send_destination(int channelid, const char *rtp_addr, int rtp_port, const char *rtcp_addr, int rtcp_port)
+int ECMedia_video_set_socket5_send_data(int channel_id, unsigned char *data, int length)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... rtp_addr:%s rtp_port:%d rtcp_port:%d",__FUNCTION__, rtp_addr, rtp_port, rtcp_port);
+    PrintConsole("[ECMEDIA INFO] %s begins... ");
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViENetwork *network = ViENetwork::GetInterface(m_vie);
     if (network) {
-        int ret = network->SetSendDestination(channelid, rtp_addr, rtp_port, nullptr, rtcp_addr, rtcp_port, 0);
+        int ret = network->SetSocket5SendData(channel_id, data, length);
         network->Release();
         PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
     {
-        PrintConsole("[ECMEDIA WARNNING] failed to get ViENetwork, %s",__FUNCTION__);
+        PrintConsole("[ECMEDIA WARNNING] failed to get ViENetwork, %s", __FUNCTION__);
         return -99;
     }
+}
+
+int ECMedia_video_set_send_destination(int channelid, const char *rtp_addr, int rtp_port, const char *rtcp_addr, int rtcp_port)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins... rtp_addr:%s rtp_port:%d rtcp_port:%d",__FUNCTION__, rtp_addr, rtp_port, rtcp_port);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViENetwork *network = ViENetwork::GetInterface(m_vie);
+	if (network) {
+		int ret = network->SetSendDestination(channelid, rtp_addr, rtp_port, nullptr, rtcp_addr, rtcp_port, 0);
+		network->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViENetwork, %s",__FUNCTION__);
+		return -99;
+	}
 }
 
 int ECMedia_set_MTU(int channelid, int mtu)

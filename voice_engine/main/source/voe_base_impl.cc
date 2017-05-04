@@ -1738,6 +1738,29 @@ int VoEBaseImpl::SetSendDestination(int channel, int rtp_port, const char *rtp_i
 #endif
 }
 
+
+    int VoEBaseImpl::SetSocket5SendData(int charnnel_id, unsigned char *data, int length) {
+        CriticalSectionScoped cs(_shared->crit_sec());
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
+        if (!_shared->statistics().Initialized())
+        {
+            _shared->SetLastError(VE_NOT_INITED, kTraceError);
+            return -1;
+        }
+        voe::ChannelOwner ch = _shared->channel_manager().GetChannel(charnnel_id);
+        voe::Channel* channelPtr = ch.channel();
+        if (channelPtr == NULL)
+        {
+            _shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
+                    "SetSocket5SendData() failed to locate channel");
+            return -1;
+        }
+        return channelPtr->SetSocket5SendData(data, length);
+#else
+        return -1
+#endif
+    }
+
 int VoEBaseImpl::SetLocalReceiver(int channel, int port, int RTCPport,
 	const char ipAddr[64],
 	const char multiCastAddr[64])

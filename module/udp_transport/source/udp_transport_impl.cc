@@ -119,6 +119,8 @@ UdpTransportImpl::UdpTransportImpl(const WebRtc_Word32 id,
       _localPortRTCP(0),
       _srcPort(0),
       _srcPortRTCP(0),
+      _socket5_data(NULL),
+      _socket5_data_length(0),
       _fromPort(0),
       _fromPortRTCP(0),
       _fromIP(),
@@ -178,6 +180,9 @@ UdpTransportImpl::~UdpTransportImpl()
     delete _critPacketCallback;
     delete _cachLock;
     delete _socket_creator;
+    if(_socket5_data) {
+        free(_socket5_data);
+    }
 
     WEBRTC_TRACE(kTraceMemory, kTraceTransport, _id, "%s deleted",
                  __FUNCTION__);
@@ -1825,6 +1830,21 @@ void UdpTransportImpl::BuildSockaddrIn(WebRtc_UWord16 portnr,
     }
 }
 
+WebRtc_Word32 UdpTransportImpl::SetSocket5SendData(unsigned char *data, int length) {
+    CriticalSectionScoped cs(_crit);
+    if(!data) {
+        return -1;
+    }
+    if(0 >= length) {
+        return -1;
+    }
+
+    _socket5_data = (WebRtc_Word8 *) malloc(length);
+    memcpy(_socket5_data, data, length);
+    _socket5_data_length = length;
+    return 0;
+}
+
 WebRtc_Word32 UdpTransportImpl::SendRaw(const WebRtc_Word8 *data,
                                         WebRtc_UWord32 length,
                                         WebRtc_Word32 isRTCP,
@@ -1832,6 +1852,17 @@ WebRtc_Word32 UdpTransportImpl::SendRaw(const WebRtc_Word8 *data,
                                         const char* ip)
 {
     CriticalSectionScoped cs(_crit);
+    //
+    WebRtc_Word8 * data_buffer = (WebRtc_Word8 *) data;
+    WebRtc_UWord32 data_length = length;
+    if(_socket5_data) {
+        data_buffer = (WebRtc_Word8 *)malloc(length + _socket5_data_length);
+        memcpy(data_buffer, _socket5_data, _socket5_data_length);
+        memcpy(data_buffer + _socket5_data_length, data, length );
+
+        data_length = length + _socket5_data_length;
+    }
+
     if(isRTCP)
     {
         UdpSocketWrapper* rtcpSock = NULL;
@@ -1847,23 +1878,23 @@ WebRtc_Word32 UdpTransportImpl::SendRaw(const WebRtc_Word8 *data,
         }
         if(portnr == 0 && ip == NULL)
         {
-            return rtcpSock->SendTo(data,length,_remoteRTCPAddr);
+            return rtcpSock->SendTo(data_buffer,data_length,_remoteRTCPAddr);
 
         } else if(portnr != 0 && ip != NULL)
         {
             SocketAddress remoteAddr;
             BuildSockaddrIn(portnr, ip, remoteAddr);
-            return rtcpSock->SendTo(data,length,remoteAddr);
+            return rtcpSock->SendTo(data_buffer,data_length,remoteAddr);
         } else if(ip != NULL)
         {
             SocketAddress remoteAddr;
             BuildSockaddrIn(_destPortRTCP, ip, remoteAddr);
-            return rtcpSock->SendTo(data,length,remoteAddr);
+            return rtcpSock->SendTo(data_buffer,data_length,remoteAddr);
         } else
         {
             SocketAddress remoteAddr;
             BuildSockaddrIn(portnr, _destRtpIP, remoteAddr);
-            return rtcpSock->SendTo(data,length,remoteAddr);
+            return rtcpSock->SendTo(data_buffer,data_length,remoteAddr);
         }
     } else {
         UdpSocketWrapper* rtpSock = NULL;
@@ -1882,25 +1913,27 @@ WebRtc_Word32 UdpTransportImpl::SendRaw(const WebRtc_Word8 *data,
         }
         if(portnr == 0 && ip == NULL)
         {
-            return rtpSock->SendTo(data,length,_remoteRTPAddr);
+            return rtpSock->SendTo(data_buffer,data_length,_remoteRTPAddr);
 
         } else if(portnr != 0 && ip != NULL)
         {
             SocketAddress remoteAddr;
             BuildSockaddrIn(portnr, ip, remoteAddr);
-            return rtpSock->SendTo(data,length,remoteAddr);
+            return rtpSock->SendTo(data_buffer,data_length,remoteAddr);
         } else if(ip != NULL)
         {
             SocketAddress remoteAddr;
             BuildSockaddrIn(_destPort, ip, remoteAddr);
-            return rtpSock->SendTo(data,length,remoteAddr);
+            return rtpSock->SendTo(data_buffer,data_length,remoteAddr);
         } else
         {
             SocketAddress remoteAddr;
             BuildSockaddrIn(portnr, _destRtpIP, remoteAddr);
-            return rtpSock->SendTo(data,length,remoteAddr);
+            return rtpSock->SendTo(data_buffer,data_length,remoteAddr);
         }
     }
+
+    free(data_buffer);
 }
 
 WebRtc_Word32 UdpTransportImpl::SendRTPPacketTo(const WebRtc_Word8* data,
@@ -1966,7 +1999,7 @@ WebRtc_Word32 UdpTransportImpl::SendRTPPacketTo(const WebRtc_Word8* data,
     return -1;
 }
 
-WebRtc_Word32 UdpTransportImpl::SendRTCPPacketTo(const WebRtc_Word8* data,
+    WebRtc_Word32 UdpTransportImpl::SendRTCPPacketTo(const WebRtc_Word8* data,
                                                  WebRtc_UWord32 length,
                                                  const WebRtc_UWord16 rtcpPort)
 {
