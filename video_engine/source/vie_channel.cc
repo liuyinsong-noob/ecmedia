@@ -2544,11 +2544,12 @@ int32_t ViEChannel::GetLocalReceiver(uint16_t& rtp_port,
 }
 
 int32_t ViEChannel::SetSendDestination(
-	const char* ip_address,
-	const uint16_t rtp_port,
-	const uint16_t rtcp_port,
-	const uint16_t source_rtp_port,
-	const uint16_t source_rtcp_port) {
+        const char *rtp_ip_address,
+        const uint16_t rtp_port,
+        const char *rtcp_ip_address,
+        const uint16_t rtcp_port,
+        const uint16_t source_rtp_port,
+        const uint16_t source_rtcp_port) {
 		WEBRTC_TRACE(kTraceInfo, kTraceVideo, ViEId(engine_id_, channel_id_), "%s",
 			__FUNCTION__);
 
@@ -2563,13 +2564,12 @@ int32_t ViEChannel::SetSendDestination(
 
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
 		const bool is_ipv6 = socket_transport_.IpV6Enabled();
-		if (UdpTransport::IsIpAddressValid(ip_address, is_ipv6) == false) {
+		if (UdpTransport::IsIpAddressValid(rtp_ip_address, is_ipv6) == false || UdpTransport::IsIpAddressValid(rtcp_ip_address, is_ipv6)) {
 			WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
-				"%s: Not a valid IP address: %s", __FUNCTION__, ip_address);
+				"%s: Not a valid RTP IP address: %s or RTCP IP address: %s", __FUNCTION__, rtp_ip_address, rtcp_ip_address);
 			return -1;
 		}
-		if (socket_transport_.InitializeSendSockets(ip_address, rtp_port,
-			rtcp_port)!= 0) {
+		if (socket_transport_.InitializeSendSockets(rtp_ip_address, rtp_port, rtcp_ip_address, rtcp_port) != 0) {
 				int32_t socket_error = socket_transport_.LastError();
 				WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 					"%s: could not initialize send socket. Socket error: %d",
@@ -2604,15 +2604,17 @@ int32_t ViEChannel::SetSendDestination(
 		}
 		vie_sender_.RegisterSendTransport(&socket_transport_);
 
+
+        /***** 这块 还没有做添加 rtcp ip address 之后的整理 zhaoyou *****/
 		// Workaround to avoid SSRC colision detection in loppback tests.
 		if (!is_ipv6) {
 			WebRtc_UWord32 local_host_address = 0;
 			const WebRtc_UWord32 current_ip_address =
-				UdpTransport::InetAddrIPV4(ip_address);
+				UdpTransport::InetAddrIPV4(rtp_ip_address);
 
 			if ((UdpTransport::LocalHostAddress(local_host_address) == 0 &&
 				local_host_address == current_ip_address) ||
-				strncmp("127.0.0.1", ip_address, 9) == 0) {
+				strncmp("127.0.0.1", rtp_ip_address, 9) == 0) {
 					rtp_rtcp_->SetSSRC(0xFFFFFFFF);
 					WEBRTC_TRACE(kTraceStateInfo, kTraceVideo, ViEId(engine_id_, channel_id_),
 						"Running in loopback. Forcing fixed SSRC");
@@ -2624,7 +2626,7 @@ int32_t ViEChannel::SetSendDestination(
 			int32_t conv_result =
 				UdpTransport::LocalHostAddressIPV6(local_host_address);
 			conv_result += socket_transport_.InetPresentationToNumeric(
-				23, ip_address, current_ip_address);
+				23, rtp_ip_address, current_ip_address);
 			if (conv_result == 0) {
 				bool local_host = true;
 				for (int32_t i = 0; i < 16; i++) {

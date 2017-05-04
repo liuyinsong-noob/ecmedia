@@ -581,7 +581,7 @@ Channel::OnReceivedPayloadData(const uint8_t* payloadData,
       // Can't use nack_list.data() since it's not supported by all
       // compilers.
       ResendPackets(&(nack_list[0]), static_cast<int>(nack_list.size()));
-    }else //add by ylr£¬±ÜÃâ¿ÕvectorÄÚ´æÐ¹Â¶
+    }else //add by ylrï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½vectorï¿½Ú´ï¿½Ð¹Â¶
 	{
 		nack_list.swap(nack_list);
 	}
@@ -4760,8 +4760,7 @@ WebRtc_Word32
 	// However, sockets must exist if a multi-cast address is given as input.
 
 	// Build send structures and enable QoS (if enabled and supported)
-	if (_socketTransportModule.InitializeSendSockets(
-		ipAddr, rtpPort, rtcpPort) != UdpTransport::kNoSocketError)
+	if (_socketTransportModule.InitializeSendSockets(ipAddr, rtpPort, nullptr, rtcpPort) != UdpTransport::kNoSocketError)
 	{
 		UdpTransport::ErrorCode lastSockError(
 			_socketTransportModule.LastError());

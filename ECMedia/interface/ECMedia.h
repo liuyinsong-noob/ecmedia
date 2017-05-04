@@ -419,7 +419,7 @@ ECMEDIA_API int ECMedia_video_set_local_receiver(int channelid, int rtp_port, in
 /*
  *
  */
-ECMEDIA_API int ECMedia_video_set_send_destination(int channelid, const char *rtp_addr, int rtp_port, int rtcp_port);
+ECMEDIA_API int ECMedia_video_set_send_destination(int channelid, const char *rtp_addr, int rtp_port, const char *rtcp_addr, int rtcp_port);
 /*
  *
  */
