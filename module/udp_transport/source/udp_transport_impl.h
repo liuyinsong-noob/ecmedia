@@ -48,10 +48,7 @@ public:
     virtual WebRtc_Word32 Process();
 
     // UdpTransport functions
-    virtual WebRtc_Word32 InitializeSendSockets(
-        const char* ipAddr,
-        const WebRtc_UWord16 rtpPort,
-        const WebRtc_UWord16 rtcpPort = 0);
+    virtual WebRtc_Word32 InitializeSendSockets(const char *ipAddr, const WebRtc_UWord16 rtpPort, const char *rtcp_ipaddr, const WebRtc_UWord16 rtcpPort);
     virtual WebRtc_Word32 InitializeReceiveSockets(
         UdpTransportData* const packetCallback,
         const WebRtc_UWord16 rtpPort,
@@ -154,9 +151,9 @@ protected:
     void CloseSendSockets();
     void CloseReceiveSockets();
 
-    // Update _remoteRTPAddr according to _destPort and _destIP
+    // Update _remoteRTPAddr according to _destPort and _destRtpIP
     void BuildRemoteRTPAddr();
-    // Update _remoteRTCPAddr according to _destPortRTCP and _destIP
+    // Update _remoteRTCPAddr according to _destPortRTCP and _destRtpIP
     void BuildRemoteRTCPAddr();
 
     void BuildSockaddrIn(WebRtc_UWord16 portnr, const char* ip,
@@ -217,7 +214,8 @@ private:
     WebRtc_UWord16 _fromPortRTCP;
 
     char _fromIP[kIpAddressVersion6Length];
-    char _destIP[kIpAddressVersion6Length];
+    char _destRtpIP[kIpAddressVersion6Length];
+    char _destRtcpIP[kIpAddressVersion6Length];
     char _localIP[kIpAddressVersion6Length];
     char _localMulticastIP[kIpAddressVersion6Length];
 

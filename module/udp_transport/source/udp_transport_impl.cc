@@ -122,7 +122,8 @@ UdpTransportImpl::UdpTransportImpl(const WebRtc_Word32 id,
       _fromPort(0),
       _fromPortRTCP(0),
       _fromIP(),
-      _destIP(),
+      _destRtpIP(),
+      _destRtcpIP(),
       _localIP(),
       _localMulticastIP(),
       _ptrRtpSocket(NULL),
@@ -158,7 +159,8 @@ UdpTransportImpl::UdpTransportImpl(const WebRtc_Word32 id,
     memset(&_localRTCPAddr, 0, sizeof(_localRTCPAddr));
 
     memset(_fromIP, 0, sizeof(_fromIP));
-    memset(_destIP, 0, sizeof(_destIP));
+    memset(_destRtpIP, 0, sizeof(_destRtpIP));
+    memset(_destRtcpIP, 0, sizeof(_destRtcpIP));
     memset(_localIP, 0, sizeof(_localIP));
     memset(_localMulticastIP, 0, sizeof(_localMulticastIP));
 
@@ -431,7 +433,7 @@ WebRtc_Word32 UdpTransportImpl::SendSocketInformation(
     CriticalSectionScoped cs(_crit);
     rtpPort = _destPort;
     rtcpPort = _destPortRTCP;
-    strncpy(ipAddr, _destIP, IpV6Enabled() ?
+    strncpy(ipAddr, _destRtpIP, IpV6Enabled() ?
             UdpTransport::kIpAddressVersion6Length :
             UdpTransport::kIpAddressVersion4Length);
     return 0;
@@ -1219,7 +1221,7 @@ void UdpTransportImpl::BuildRemoteRTPAddr()
         _remoteRTPAddr._sockaddr_in6.sin6_flowinfo=0;
         _remoteRTPAddr._sockaddr_in6.sin6_scope_id=0;
         _remoteRTPAddr._sockaddr_in6.sin6_port = Htons(_destPort);
-        InetPresentationToNumeric(AF_INET6,_destIP,
+        InetPresentationToNumeric(AF_INET6,_destRtpIP,
                                   &_remoteRTPAddr._sockaddr_in6.sin6_addr);
     } else
     {
@@ -1230,7 +1232,7 @@ void UdpTransportImpl::BuildRemoteRTPAddr()
         _remoteRTPAddr._sockaddr_storage.sin_family = PF_INET;
 #endif
         _remoteRTPAddr._sockaddr_in.sin_port = Htons(_destPort);
-        _remoteRTPAddr._sockaddr_in.sin_addr = InetAddrIPV4(_destIP);
+        _remoteRTPAddr._sockaddr_in.sin_addr = InetAddrIPV4(_destRtpIP);
     }
 }
 
@@ -1248,7 +1250,7 @@ void UdpTransportImpl::BuildRemoteRTCPAddr()
         _remoteRTCPAddr._sockaddr_in6.sin6_flowinfo=0;
         _remoteRTCPAddr._sockaddr_in6.sin6_scope_id=0;
         _remoteRTCPAddr._sockaddr_in6.sin6_port = Htons(_destPortRTCP);
-        InetPresentationToNumeric(AF_INET6,_destIP,
+        InetPresentationToNumeric(AF_INET6,_destRtcpIP,
                                   &_remoteRTCPAddr._sockaddr_in6.sin6_addr);
 
     } else
@@ -1260,7 +1262,7 @@ void UdpTransportImpl::BuildRemoteRTCPAddr()
         _remoteRTCPAddr._sockaddr_storage.sin_family = PF_INET;
 #endif
         _remoteRTCPAddr._sockaddr_in.sin_port = Htons(_destPortRTCP);
-        _remoteRTCPAddr._sockaddr_in.sin_addr= InetAddrIPV4(_destIP);
+        _remoteRTCPAddr._sockaddr_in.sin_addr= InetAddrIPV4(_destRtcpIP);
     }
 }
 
@@ -1663,11 +1665,12 @@ WebRtc_Word32 UdpTransportImpl::StopReceiving()
     return 0;
 }
 
+/*** 对外接口可以更改 rtcp ip addr 的,仅改了这一个接口, 其他的未动 zhaoyou ******/
 WebRtc_Word32 UdpTransportImpl::InitializeSendSockets(
-    const char* ipaddr,
-    const WebRtc_UWord16 rtpPort,
-    const WebRtc_UWord16 rtcpPort)
-{
+        const char *rtp_ipaddr,
+        const WebRtc_UWord16 rtpPort,
+        const char *rtcp_ipaddr,
+        const WebRtc_UWord16 rtcpPort) {
     {
         CriticalSectionScoped cs(_crit);
         _destPort = rtpPort;
@@ -1679,28 +1682,45 @@ WebRtc_Word32 UdpTransportImpl::InitializeSendSockets(
             _destPortRTCP = rtcpPort;
         }
 
-        if(ipaddr == NULL)
+        if(rtp_ipaddr == NULL || rtcp_ipaddr == NULL)
         {
-            if (!IsIpAddressValid(_destIP, IpV6Enabled()))
+            if (!IsIpAddressValid(_destRtpIP, IpV6Enabled()) || !IsIpAddressValid(_destRtcpIP, IpV6Enabled()))
             {
                 _destPort = 0;
                 _destPortRTCP = 0;
                 _lastError = kIpAddressInvalid;
+                WEBRTC_TRACE(
+                        kTraceError,
+                        kTraceTransport,
+                        _id,
+                        "Invalid rtp or rtcp ip address: %s, %s", rtp_ipaddr, rtcp_ipaddr);
                 return -1;
             }
         } else
         {
-            if (IsIpAddressValid(ipaddr, IpV6Enabled()))
+            if (IsIpAddressValid(rtp_ipaddr, IpV6Enabled()) && IsIpAddressValid(rtcp_ipaddr, IpV6Enabled()))
             {
+                //copy rtp ip address
                 strncpy(
-                    _destIP,
-                    ipaddr,
+                    _destRtpIP,
+                    rtp_ipaddr,
                     IpV6Enabled() ? kIpAddressVersion6Length :
                     kIpAddressVersion4Length);
+                //copy rtcp ip address
+                strncpy(
+                        _destRtcpIP,
+                        rtcp_ipaddr,
+                        IpV6Enabled() ? kIpAddressVersion6Length :
+                                kIpAddressVersion4Length);
             } else {
                 _destPort = 0;
                 _destPortRTCP = 0;
                 _lastError = kIpAddressInvalid;
+                WEBRTC_TRACE(
+                        kTraceError,
+                        kTraceTransport,
+                        _id,
+                        "Invalid rtp or rtcp ip address: %s, %s", rtp_ipaddr, rtcp_ipaddr);
                 return -1;
             }
         }
@@ -1842,7 +1862,7 @@ WebRtc_Word32 UdpTransportImpl::SendRaw(const WebRtc_Word8 *data,
         } else
         {
             SocketAddress remoteAddr;
-            BuildSockaddrIn(portnr, _destIP, remoteAddr);
+            BuildSockaddrIn(portnr, _destRtpIP, remoteAddr);
             return rtcpSock->SendTo(data,length,remoteAddr);
         }
     } else {
@@ -1877,7 +1897,7 @@ WebRtc_Word32 UdpTransportImpl::SendRaw(const WebRtc_Word8 *data,
         } else
         {
             SocketAddress remoteAddr;
-            BuildSockaddrIn(portnr, _destIP, remoteAddr);
+            BuildSockaddrIn(portnr, _destRtpIP, remoteAddr);
             return rtpSock->SendTo(data,length,remoteAddr);
         }
     }
@@ -1981,7 +2001,7 @@ int UdpTransportImpl::SendPacket(int /*channel*/, const void* data, size_t lengt
 
     CriticalSectionScoped cs(_crit);
 
-    if(_destIP[0] == 0)
+    if(_destRtpIP[0] == 0)
     {
         return -1;
     }
@@ -2047,7 +2067,7 @@ int UdpTransportImpl::SendRTCPPacket(int /*channel*/, const void* data,
 {
 
     CriticalSectionScoped cs(_crit);
-    if(_destIP[0] == 0)
+    if(_destRtpIP[0] == 0)
     {
         return -1;
     }
@@ -2114,7 +2134,7 @@ WebRtc_Word32 UdpTransportImpl::SetSendIP(const char* ipaddr)
         return kIpAddressInvalid;
     }
     CriticalSectionScoped cs(_crit);
-    strncpy(_destIP, ipaddr,kIpAddressVersion6Length);
+    strncpy(_destRtpIP, ipaddr,kIpAddressVersion6Length);
     BuildRemoteRTPAddr();
     BuildRemoteRTCPAddr();
     return 0;

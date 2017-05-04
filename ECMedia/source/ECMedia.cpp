@@ -1520,13 +1520,13 @@ int ECMedia_video_set_local_receiver(int channelid, int rtp_port, int rtcp_port)
     }
 }
 
-int ECMedia_video_set_send_destination(int channelid, const char *rtp_addr, int rtp_port, int rtcp_port)
+int ECMedia_video_set_send_destination(int channelid, const char *rtp_addr, int rtp_port, const char *rtcp_addr, int rtcp_port)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... rtp_addr:%s rtp_port:%d rtcp_port:%d",__FUNCTION__, rtp_addr, rtp_port, rtcp_port);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViENetwork *network = ViENetwork::GetInterface(m_vie);
     if (network) {
-        int ret = network->SetSendDestination(channelid, rtp_addr, rtp_port, rtcp_port);
+        int ret = network->SetSendDestination(channelid, rtp_addr, rtp_port, nullptr, rtcp_addr, rtcp_port, 0);
         network->Release();
         PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;

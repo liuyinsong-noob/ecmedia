@@ -322,16 +322,18 @@ int ViENetworkImpl::setNetworkType(int channel, bool isWifi)
 }
 
 int ViENetworkImpl::SetSendDestination(const int video_channel,
-	const char* ip_address,
-	const unsigned short rtp_port,
-	const unsigned short rtcp_port,
-	const unsigned short source_rtp_port,
-	const unsigned short source_rtcp_port) {
+		const char *rtp_ip_address,
+		const unsigned short rtp_port,
+		const char *rtcp_ip_address,
+		const unsigned short rtcp_port,
+		const unsigned short source_rtp_port,
+		const unsigned short source_rtcp_port)
+	{
 		WEBRTC_TRACE(kTraceApiCall, kTraceVideo,
 			ViEId(shared_data_->instance_id(), video_channel),
-			"%s(channel: %d, ip_address: %s, rtp_port: %u, rtcp_port: %u, "
+			"%s(channel: %d, rtp_ip_address: %s, rtp_port: %u, rtcp_ip_address: %s, rtcp_port: %u, "
 			"sourceRtpPort: %u, source_rtcp_port: %u)",
-			__FUNCTION__, video_channel, ip_address, rtp_port, rtcp_port,
+			__FUNCTION__, video_channel, rtp_ip_address, rtp_port, rtcp_ip_address, rtcp_port,
 			source_rtp_port, source_rtcp_port);
 		/*if (!shared_data_->Initialized()) {
 			shared_data_->SetLastError(kViENotInitialized);
@@ -360,9 +362,7 @@ int ViENetworkImpl::SetSendDestination(const int video_channel,
 		//    return -1;
 		//  }
 		/*delete end--------------------Sean20130724----------for video ice------------*/
-		if (vie_channel->SetSendDestination(ip_address, rtp_port, rtcp_port,
-			source_rtp_port,
-			source_rtcp_port) != 0) {
+		if (vie_channel->SetSendDestination(rtp_ip_address, rtp_port, rtcp_ip_address, rtcp_port, source_rtp_port, source_rtcp_port) != 0) {
 				shared_data_->SetLastError(kViENetworkUnknownError);
 				return -1;
 		}
