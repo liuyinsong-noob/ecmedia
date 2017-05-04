@@ -49,6 +49,7 @@ public:
 
     // UdpTransport functions
     virtual WebRtc_Word32 InitializeSendSockets(const char *ipAddr, const WebRtc_UWord16 rtpPort, const char *rtcp_ipaddr, const WebRtc_UWord16 rtcpPort);
+    virtual WebRtc_Word32 SetSocket5SendData(unsigned char *data, int length);
     virtual WebRtc_Word32 InitializeReceiveSockets(
         UdpTransportData* const packetCallback,
         const WebRtc_UWord16 rtpPort,
@@ -103,8 +104,8 @@ public:
     virtual bool SendSocketsInitialized() const;
     virtual bool SourcePortsInitialized() const;
     virtual bool ReceiveSocketsInitialized() const;
-    virtual WebRtc_Word32 SendRaw(const WebRtc_Word8* data,
-                                  WebRtc_UWord32 length, WebRtc_Word32 isRTCP,
+    virtual WebRtc_Word32 SendRaw(const WebRtc_Word8* data_buffer,
+                                  WebRtc_UWord32 data_length, WebRtc_Word32 isRTCP,
                                   WebRtc_UWord16 portnr = 0,
                                   const char* ip = NULL);
     virtual WebRtc_Word32 SendRTPPacketTo(const WebRtc_Word8 *data,
@@ -208,6 +209,8 @@ private:
     // for sending are not the same.
     WebRtc_UWord16 _srcPort;
     WebRtc_UWord16 _srcPortRTCP;
+    WebRtc_Word8 * _socket5_data;
+    WebRtc_UWord32  _socket5_data_length;
 
     // Remote port from which last received packet was sent.
     WebRtc_UWord16 _fromPort;

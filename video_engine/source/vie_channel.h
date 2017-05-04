@@ -266,6 +266,7 @@ class ViEChannel
   int32_t GetLocalReceiver(uint16_t& rtp_port,
 						  uint16_t& rtcp_port,
 						  char* ip_address) const;
+	int32_t SetSocket5SendData(unsigned char *data, int length);
   int32_t SetSendDestination(const char *rtp_ip_address, const uint16_t rtp_port, const char *rtcp_ip_address, const uint16_t rtcp_port, const uint16_t source_rtp_port, const uint16_t source_rtcp_port);
   /* int32_t GetSendDestination(char* ip_address,
   uint16_t* rtp_port,

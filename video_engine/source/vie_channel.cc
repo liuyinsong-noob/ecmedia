@@ -2543,6 +2543,21 @@ int32_t ViEChannel::GetLocalReceiver(uint16_t& rtp_port,
 #endif
 }
 
+int32_t ViEChannel::SetSocket5SendData(unsigned char *data, int length) {
+  callback_cs_->Enter();
+  if (external_transport_) {
+    callback_cs_->Leave();
+    WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+            "%s: external transport registered", __FUNCTION__);
+    return -1;
+  }
+  callback_cs_->Leave();
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
+  socket_transport_.SetSocket5SendData(data, length);
+#endif
+  return 0;
+};
+
 int32_t ViEChannel::SetSendDestination(
         const char *rtp_ip_address,
         const uint16_t rtp_port,

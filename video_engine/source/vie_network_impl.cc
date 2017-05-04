@@ -369,6 +369,25 @@ int ViENetworkImpl::SetSendDestination(const int video_channel,
 		return 0;
 }
 
+	int ViENetworkImpl::SetSocket5SendData(int channel_id, unsigned char *data, int length) {
+		ViEChannelManagerScoped cs(*(shared_data_->channel_manager()));
+		ViEChannel* vie_channel = cs.Channel(channel_id);
+		if (!vie_channel) {
+			WEBRTC_TRACE(kTraceError, kTraceVideo,
+					ViEId(shared_data_->instance_id(), channel_id),
+					"%s Channel doesn't exist", __FUNCTION__);
+			shared_data_->SetLastError(kViENetworkInvalidChannelId);
+			return -1;
+		}
+
+		if (vie_channel->SetSocket5SendData(data, length) != 0) {
+			shared_data_->SetLastError(kViENetworkUnknownError);
+			return -1;
+		}
+		return 0;
+	}
+
+
 int ViENetworkImpl::GetSendDestination(const int video_channel,
 	char* ip_address,
 	unsigned short& rtp_port,

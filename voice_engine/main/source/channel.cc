@@ -4728,6 +4728,21 @@ WebRtc_Word32
 
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
 WebRtc_Word32
+Channel::SetSocket5SendData(unsigned char *data, int length) {
+    WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
+            "Channel::SetSocket5SendData()");
+
+    if (_externalTransport)
+    {
+        _engineStatisticsPtr->SetLastError(
+                VE_EXTERNAL_TRANSPORT_ENABLED, kTraceError,
+                "SetSocket5SendData() conflict with external transport");
+        return -1;
+    }
+    return  _socketTransportModule.SetSocket5SendData(data, length);
+}
+
+WebRtc_Word32
 	Channel::SetSendDestination(const WebRtc_UWord16 rtpPort, const char rtp_ipAddr[64], const int sourcePort, const WebRtc_UWord16 rtcpPort, const char rtcp_ipAddr[64])
 {
 	WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
