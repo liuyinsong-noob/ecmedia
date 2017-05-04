@@ -224,10 +224,7 @@ public:
 
 
 	// Sets the destination port and address for a specified |channel| number.
-	virtual int SetSendDestination(int channel, int port,
-		const char ipAddr[64],
-		int sourcePort = kVoEDefault,
-		int RTCPport = kVoEDefault) = 0;
+	virtual int SetSendDestination(int channel, int rtp_port, const char *ipAddr, int sourcePort, int rtcp_port, const char *rtcp_ipaddr) = 0;
 	// Gets the destination port and address for a specified |channel| number.
 	virtual int GetSendDestination(int channel, int& port, char ipAddr[64],
 		int& sourcePort, int& RTCPport) = 0;

@@ -840,14 +840,14 @@ int ECMedia_set_local_receiver(int channelid, int rtp_port, int rtcp_port)
     }
 }
 
-int ECMedia_audio_set_send_destination(int channelid, int rtp_port, const char *rtp_addr, int source_port, int rtcp_port)
+int ECMedia_audio_set_send_destination(int channelid, int rtp_port, const char *rtp_addr, int source_port, int rtcp_port, const char *rtcp_ipaddr)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d rtp_port:%d rtp_addr:%s source_port:%d rtcp_port:%d",
 		__FUNCTION__, channelid, rtp_port, rtp_addr?"NULL":rtp_addr, source_port,rtcp_port);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
-        int ret = base->SetSendDestination(channelid, rtp_port, rtp_addr,source_port, rtcp_port);
+        int ret = base->SetSendDestination(channelid, rtp_port, rtp_addr, source_port, rtcp_port, rtcp_ipaddr);
         base->Release();
         PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;

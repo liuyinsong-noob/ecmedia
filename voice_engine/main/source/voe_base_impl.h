@@ -213,10 +213,7 @@ public:
 		const char ipAddr[64] = NULL,
 		const char multiCastAddr[64] = NULL);
 
-	virtual int SetSendDestination(int channel, int port,
-		const char ipAddr[64],
-		int sourcePort = kVoEDefault,
-		int RTCPport = kVoEDefault);
+	virtual int SetSendDestination(int channel, int rtp_port, const char *ipAddr, int sourcePort, int rtcp_port, const char *rtcp_ipaddr);
 
 	// Gets the destination port and address for a specified |channel| number.
 	virtual int GetSendDestination(int channel, int& port, char ipAddr[64],
