@@ -6313,7 +6313,7 @@ void serphone_core_set_bind_local_addr(const char* addr)
 
 int ServiceCore::serphone_set_traceFlag(/*bool flag*/) //Don't use flag for the time being
 {
-	ECMedia_set_trace(NULL, (void*)CCPClientPrintLog, 25);
+	ECMedia_set_trace(NULL, (void*)CCPClientPrintLog, 25, 100);
 	return 0;
 }
 
