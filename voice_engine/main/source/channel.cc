@@ -4728,10 +4728,7 @@ WebRtc_Word32
 
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
 WebRtc_Word32
-	Channel::SetSendDestination(const WebRtc_UWord16 rtpPort,
-	const char ipAddr[64],
-	const int sourcePort,
-	const WebRtc_UWord16 rtcpPort)
+	Channel::SetSendDestination(const WebRtc_UWord16 rtpPort, const char rtp_ipAddr[64], const int sourcePort, const WebRtc_UWord16 rtcpPort, const char rtcp_ipAddr[64])
 {
 	WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
 		"Channel::SetSendDestination()");
@@ -4760,7 +4757,7 @@ WebRtc_Word32
 	// However, sockets must exist if a multi-cast address is given as input.
 
 	// Build send structures and enable QoS (if enabled and supported)
-	if (_socketTransportModule.InitializeSendSockets(ipAddr, rtpPort, nullptr, rtcpPort) != UdpTransport::kNoSocketError)
+	if (_socketTransportModule.InitializeSendSockets(rtp_ipAddr, rtpPort, rtcp_ipAddr, rtcpPort) != UdpTransport::kNoSocketError)
 	{
 		UdpTransport::ErrorCode lastSockError(
 			_socketTransportModule.LastError());

@@ -137,7 +137,7 @@ void ServiceCore::serphone_core_update_streams_destinations(SerPhoneCall *call, 
 		rtcp_addr = (new_audiodesc->rtcp_addr[0] != '\0') ? new_audiodesc->rtcp_addr : new_md->addr;
 		PrintConsole("Change audio stream destination: RTP=%s:%d RTCP=%s:%d\n", rtp_addr, new_audiodesc->rtp_port, rtcp_addr, new_audiodesc->rtcp_port);
 
-		int change_audio = ECMedia_audio_set_send_destination(call->m_AudioChannelID, new_audiodesc->rtp_port, rtp_addr,-1,new_audiodesc->rtcp_port);
+		int change_audio = ECMedia_audio_set_send_destination(call->m_AudioChannelID, new_audiodesc->rtp_port, rtp_addr, -1, new_audiodesc->rtcp_port, nullptr);
 //        int change_audio = base->SetSendDestination(call->m_AudioChannelID, 7078, "127.0.0.1",kVoEDefault, 7079);
 
 		if (0 == change_audio && SalStreamSendRecv == new_audiodesc->dir) {
@@ -634,7 +634,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 				//	break;
 				//}
 			}
-			ECMedia_audio_set_send_destination(call->m_AudioChannelID, stream->port,stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr);
+			ECMedia_audio_set_send_destination(call->m_AudioChannelID, stream->port, stream->addr[0] != '\0' ? stream->addr : call->resultdesc->addr, 0, 0, nullptr);
 //            For MOS test
 //			ECMedia_audio_set_send_destination(call->m_AudioChannelID, 7078, "127.0.0.1");
 
@@ -5280,7 +5280,7 @@ int ServiceCore::startSendRtpPacket(int &channel, const char *ip, int rtp_port)
 		ECMedia_set_send_codec_audio(channel, codec_params);
 	}
 	//setSendDestination
-	ECMedia_audio_set_send_destination(channel, rtp_port, ip);
+	ECMedia_audio_set_send_destination(channel, rtp_port, ip, 0, 0, nullptr);
 	//startRecord
 	ECMedia_audio_start_record();
 	//startSend
@@ -5339,17 +5339,17 @@ int ServiceCore::startRecvRtpPacket(int channelNum)
 	}
 
 
-	ECMedia_audio_set_send_destination(0, 7078, "192.168.1.101");
+	ECMedia_audio_set_send_destination(0, 7078, "192.168.1.101", 0, 0, nullptr);
 	ECMedia_audio_start_send(0);
 
-	ECMedia_audio_set_send_destination(1, 7080, "192.168.1.103");
+	ECMedia_audio_set_send_destination(1, 7080, "192.168.1.103", 0, 0, nullptr);
 	ECMedia_audio_start_send(1);
 
-	ECMedia_audio_set_send_destination(2, 7082, "192.168.1.106");
+	ECMedia_audio_set_send_destination(2, 7082, "192.168.1.106", 0, 0, nullptr);
 	ECMedia_audio_start_send(2);
 
 
-	ECMedia_audio_set_send_destination(3, 7084, "192.168.1.102");
+	ECMedia_audio_set_send_destination(3, 7084, "192.168.1.102", 0, 0, nullptr);
 	ECMedia_audio_start_send(3);
 
 	printf("sean haha end\n");
