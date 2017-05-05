@@ -192,7 +192,7 @@ FILE *g_media_interface_fp = NULL;
 //int g_log_line =0;
 #define MAX_LOG_SIZE	104857600//100M bytes
 
-long long  g_max_log_size;
+long long g_max_log_size;
 
 typedef void(*PrintConsoleHook_media)(int loglevel, const char *);
 PrintConsoleHook_media gPrintConsoleHook_media = NULL;
@@ -236,8 +236,6 @@ void PrintConsole(const char * fmt, ...)
 	if (!g_media_TraceFlag) {
 		return;
 	}
-
-	static time_t last_time = time(NULL);
 
 	struct tm *pt = NULL;
 	time_t curr_time;
@@ -295,7 +293,6 @@ void PrintConsole(const char * fmt, ...)
 
 			char new_file[1024];
 			strcpy(new_file, g_log_media_filename);
-
 			char file_postfix[40] = { 0 };
 			sprintf(file_postfix, "_%04d%02d%02d%02d%02d%02d.bak",
 				pt->tm_year + 1900, pt->tm_mon + 1, pt->tm_mday,
@@ -421,12 +418,19 @@ int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level, int le
 		}
 	}
     Trace::set_level_filter(nLevel);
+<<<<<<< HEAD
 
 	if (lenMb > 0)
 		g_max_log_size = lenMb*1024*1024;
 	else
 		g_max_log_size = MAX_LOG_SIZE;
 
+=======
+	if (lenMb > 0)
+		g_max_log_size = lenMb * 1024 * 1024;
+	else
+		g_max_log_size = MAX_LOG_LINE;
+>>>>>>> modify log
     PrintConsole("[ECMEDIA INFO] %s end.",__FUNCTION__);
     return 0;
 }
