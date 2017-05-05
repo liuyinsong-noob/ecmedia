@@ -48,7 +48,10 @@ public:
     virtual WebRtc_Word32 Process();
 
     // UdpTransport functions
-    virtual WebRtc_Word32 InitializeSendSockets(const char *ipAddr, const WebRtc_UWord16 rtpPort, const char *rtcp_ipaddr, const WebRtc_UWord16 rtcpPort);
+    virtual WebRtc_Word32 InitializeSendSockets(const char *rtp_ipaddr,
+                                                const WebRtc_UWord16 rtpPort,
+                                                const char *rtcp_ipaddr,
+                                                const WebRtc_UWord16 rtcpPort);
     virtual WebRtc_Word32 SetSocket5SendData(unsigned char *data, int length);
     virtual WebRtc_Word32 InitializeReceiveSockets(
         UdpTransportData* const packetCallback,
