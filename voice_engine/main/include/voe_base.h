@@ -223,9 +223,9 @@ public:
 	//sean add end 20141224 set network type
 
 	//
-	virtual int SetSocket5SendData(int charnnel_id, unsigned char *data, int length);
+	virtual int SetSocket5SendData(int charnnel_id, unsigned char *data, int length) = 0;
 	// Sets the destination port and address for a specified |channel| number.
-	virtual int SetSendDestination(int channel, int rtp_port, const char *ipAddr, int sourcePort, int rtcp_port, const char *rtcp_ipaddr) = 0;
+	virtual int SetSendDestination(int channel, int rtp_port, const char *rtp_ipaddr, int sourcePort, int rtcp_port, const char *rtcp_ipaddr) = 0;
 	// Gets the destination port and address for a specified |channel| number.
 	virtual int GetSendDestination(int channel, int& port, char ipAddr[64],
 		int& sourcePort, int& RTCPport) = 0;
