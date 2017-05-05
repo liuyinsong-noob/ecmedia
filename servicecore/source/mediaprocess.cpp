@@ -634,7 +634,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 				//	break;
 				//}
 			}
-			ECMedia_audio_set_send_destination(call->m_AudioChannelID, stream->port, stream->addr[0] != '\0' ? stream->addr : call->resultdesc->addr, 0, 0, nullptr);
+			ECMedia_audio_set_send_destination(call->m_AudioChannelID, stream->port, stream->addr[0] != '\0' ? stream->addr : call->resultdesc->addr, 0, 0, "192.168.1.1");
 //            For MOS test
 //			ECMedia_audio_set_send_destination(call->m_AudioChannelID, 7078, "127.0.0.1");
 
