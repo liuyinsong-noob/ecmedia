@@ -68,7 +68,7 @@ class ViENetworkImpl
 	  unsigned short& rtcp_port,
 	  char* ip_address) OVERRIDE;
   virtual int SetSendDestination(const int video_channel, const char *rtp_ip_address, const unsigned short rtp_port, const char *rtcp_ip_address, const unsigned short rtcp_port, const unsigned short source_rtp_port, const unsigned short source_rtcp_port) OVERRIDE;
-  virtual int SetSocket5SendData(int channel_id, unsigned char *data, int length);
+  virtual int SetSocks5SendData(int channel_id, unsigned char *data, int length, bool isRTCP);
 		virtual int GetSendDestination(const int video_channel,
 	  char* ip_address,
 	  unsigned short& rtp_port,

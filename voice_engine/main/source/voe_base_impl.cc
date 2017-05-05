@@ -1739,7 +1739,7 @@ int VoEBaseImpl::SetSendDestination(int channel, int rtp_port, const char *rtp_i
 }
 
 
-    int VoEBaseImpl::SetSocket5SendData(int charnnel_id, unsigned char *data, int length) {
+    int VoEBaseImpl::SetSocks5SendData(int charnnel_id, unsigned char *data, int length, bool isRTCP) {
         CriticalSectionScoped cs(_shared->crit_sec());
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
         if (!_shared->statistics().Initialized())
@@ -1752,10 +1752,10 @@ int VoEBaseImpl::SetSendDestination(int channel, int rtp_port, const char *rtp_i
         if (channelPtr == NULL)
         {
             _shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
-                    "SetSocket5SendData() failed to locate channel");
+                    "SetSocks5SendData() failed to locate channel");
             return -1;
         }
-        return channelPtr->SetSocket5SendData(data, length);
+        return channelPtr->SetSocks5SendData(data, length, isRTCP);
 #else
         return -1
 #endif

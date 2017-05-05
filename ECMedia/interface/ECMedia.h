@@ -108,7 +108,7 @@ ECMEDIA_API int ECMedia_audio_set_send_destination(int channelid, int rtp_port, 
 /**
  *
  */
-ECMEDIA_API int ECMedia_audio_set_socket5_send_data(int channel_id, unsigned char *data, int length);
+ECMEDIA_API int ECMedia_audio_set_socks5_send_data(int channel_id, unsigned char *data, int length, bool isRTCP);
 
 /*
  *1
@@ -430,7 +430,7 @@ ECMEDIA_API int ECMedia_video_set_send_destination(int channelid, const char *rt
 /**
  *
  */
-ECMEDIA_API int ECMedia_video_set_socket5_send_data(int channel_id, unsigned char *data, int length);
+ECMEDIA_API int ECMedia_video_set_socks5_send_data(int channel_id, unsigned char *data, int length, bool isRTCP);
 
 /*
  *

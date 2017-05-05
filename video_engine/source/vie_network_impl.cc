@@ -369,7 +369,7 @@ int ViENetworkImpl::SetSendDestination(const int video_channel,
 		return 0;
 }
 
-	int ViENetworkImpl::SetSocket5SendData(int channel_id, unsigned char *data, int length) {
+	int ViENetworkImpl::SetSocks5SendData(int channel_id, unsigned char *data, int length, bool isRTCP) {
 		ViEChannelManagerScoped cs(*(shared_data_->channel_manager()));
 		ViEChannel* vie_channel = cs.Channel(channel_id);
 		if (!vie_channel) {
@@ -380,7 +380,7 @@ int ViENetworkImpl::SetSendDestination(const int video_channel,
 			return -1;
 		}
 
-		if (vie_channel->SetSocket5SendData(data, length) != 0) {
+		if (vie_channel->SetSocks5SendData(data, length, isRTCP) != 0) {
 			shared_data_->SetLastError(kViENetworkUnknownError);
 			return -1;
 		}

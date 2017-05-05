@@ -683,7 +683,7 @@ public:
 		const char ipAddr[64],
 		const char multicastIpAddr[64]);
 	WebRtc_Word32 GetLocalReceiver(int& port, int& RTCPport, char ipAddr[]);
-    WebRtc_Word32 SetSocket5SendData(unsigned char *data, int length);
+    WebRtc_Word32 SetSocks5SendData(unsigned char *data, int length, bool isRTCP);
 	WebRtc_Word32 SetSendDestination(const WebRtc_UWord16 rtpPort, const char rtp_ipAddr[64], const int sourcePort, const WebRtc_UWord16 rtcpPort, const char rtcp_ipAddr[64]);
 	WebRtc_Word32 GetSendDestination(int& port, char ipAddr[64],
 		int& sourcePort, int& RTCPport);

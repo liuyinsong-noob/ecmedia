@@ -52,7 +52,7 @@ public:
                                                 const WebRtc_UWord16 rtpPort,
                                                 const char *rtcp_ipaddr,
                                                 const WebRtc_UWord16 rtcpPort);
-    virtual WebRtc_Word32 SetSocket5SendData(unsigned char *data, int length);
+    virtual WebRtc_Word32 SetSocks5SendData(unsigned char *data, int length, bool isRTCP);
     virtual WebRtc_Word32 InitializeReceiveSockets(
         UdpTransportData* const packetCallback,
         const WebRtc_UWord16 rtpPort,
@@ -189,6 +189,7 @@ protected:
 private:
     void GetCachedAddress(char* ip, WebRtc_UWord32& ipSize,
                           WebRtc_UWord16& sourcePort);
+    WebRtc_Word32 sendSocks5Data(UdpSocketWrapper *socket, SocketAddress to, bool isRTCP);
 
     WebRtc_Word32 _id;
     SocketFactoryInterface* _socket_creator;
@@ -212,8 +213,11 @@ private:
     // for sending are not the same.
     WebRtc_UWord16 _srcPort;
     WebRtc_UWord16 _srcPortRTCP;
-    WebRtc_Word8 * _socket5_data;
-    WebRtc_UWord32  _socket5_data_length;
+    WebRtc_Word8 * _socks5_rtp_data;
+    WebRtc_UWord32  _socks5_rtp_data_length;
+    
+    WebRtc_Word8 * _socks5_rtcp_data;
+    WebRtc_UWord32  _socks5_rtcp_data_length;
 
     // Remote port from which last received packet was sent.
     WebRtc_UWord16 _fromPort;

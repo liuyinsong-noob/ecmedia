@@ -864,13 +864,13 @@ int ECMedia_audio_set_send_destination(int channelid, int rtp_port, const char *
     }
 }
 
-int ECMedia_audio_set_socket5_send_data(int channel_id, unsigned char *data, int length)
+int ECMedia_audio_set_socks5_send_data(int channel_id, unsigned char *data, int length, bool isRTCP)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins... ");
 	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	VoEBase *base = VoEBase::GetInterface(m_voe);
 	if (base) {
-		int ret = base->SetSocket5SendData(channel_id, data, length);
+		int ret = base->SetSocks5SendData(channel_id, data, length, isRTCP);
 		base->Release();
 		PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 		return ret;
@@ -1544,13 +1544,13 @@ int ECMedia_video_set_local_receiver(int channelid, int rtp_port, int rtcp_port)
     }
 }
 
-int ECMedia_video_set_socket5_send_data(int channel_id, unsigned char *data, int length)
+int ECMedia_video_set_socks5_send_data(int channel_id, unsigned char *data, int length, bool isRTCP)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... ");
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViENetwork *network = ViENetwork::GetInterface(m_vie);
     if (network) {
-        int ret = network->SetSocket5SendData(channel_id, data, length);
+        int ret = network->SetSocks5SendData(channel_id, data, length, isRTCP);
         network->Release();
         PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
@@ -1564,7 +1564,7 @@ int ECMedia_video_set_socket5_send_data(int channel_id, unsigned char *data, int
 
 int ECMedia_video_set_send_destination(int channelid, const char *rtp_addr, int rtp_port, const char *rtcp_addr, int rtcp_port)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... rtp_addr:%s rtp_port:%d rtcp_port:%d",__FUNCTION__, rtp_addr, rtp_port, rtcp_port);
+    PrintConsole("[ECMEDIA INFO] %s begins... rtp_addr:%s rtp_port:%d rtcp_port:%d",__FUNCTION__, rtp_addr, rtp_port, rtcp_port);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViENetwork *network = ViENetwork::GetInterface(m_vie);
 	if (network) {

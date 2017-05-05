@@ -4728,18 +4728,18 @@ WebRtc_Word32
 
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
 WebRtc_Word32
-Channel::SetSocket5SendData(unsigned char *data, int length) {
+Channel::SetSocks5SendData(unsigned char *data, int length, bool isRTCP) {
     WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
-            "Channel::SetSocket5SendData()");
+            "Channel::SetSocks5SendData()");
 
     if (_externalTransport)
     {
         _engineStatisticsPtr->SetLastError(
                 VE_EXTERNAL_TRANSPORT_ENABLED, kTraceError,
-                "SetSocket5SendData() conflict with external transport");
+                "SetSocks5SendData() conflict with external transport");
         return -1;
     }
-    return  _socketTransportModule.SetSocket5SendData(data, length);
+    return _socketTransportModule.SetSocks5SendData(data, length, isRTCP);
 }
 
 WebRtc_Word32
