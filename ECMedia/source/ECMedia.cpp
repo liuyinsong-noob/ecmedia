@@ -375,6 +375,9 @@ int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level, int le
 	{
 		g_log_media_filename=logFileName;
 	}
+	if (lenMb > 0)
+		g_max_log_size = lenMb * 1024 * 1024;
+
 	media_init_print_log();
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
     PrintConsole("[ECMEDIA INFO] ECMedia version:%s", ECMeida_get_Version());
@@ -419,6 +422,7 @@ int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level, int le
 	}
     Trace::set_level_filter(nLevel);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	if (lenMb > 0)
 		g_max_log_size = lenMb*1024*1024;
@@ -430,6 +434,8 @@ int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level, int le
 		g_max_log_size = lenMb * 1024 * 1024;
 	else
 		g_max_log_size = MAX_LOG_LINE;
+>>>>>>> modify log
+=======
 >>>>>>> modify log
     PrintConsole("[ECMEDIA INFO] %s end.",__FUNCTION__);
     return 0;
