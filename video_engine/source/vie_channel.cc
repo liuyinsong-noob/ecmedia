@@ -2579,7 +2579,7 @@ int32_t ViEChannel::SetSendDestination(
 
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
 		const bool is_ipv6 = socket_transport_.IpV6Enabled();
-		if (UdpTransport::IsIpAddressValid(rtp_ip_address, is_ipv6) == false || UdpTransport::IsIpAddressValid(rtcp_ip_address, is_ipv6)) {
+		if (UdpTransport::IsIpAddressValid(rtp_ip_address, is_ipv6) == false || UdpTransport::IsIpAddressValid(rtcp_ip_address, is_ipv6) == false) {
 			WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 				"%s: Not a valid RTP IP address: %s or RTCP IP address: %s", __FUNCTION__, rtp_ip_address, rtcp_ip_address);
 			return -1;
@@ -2617,6 +2617,7 @@ int32_t ViEChannel::SetSendDestination(
 				}
 			}
 		}
+    
 		vie_sender_.RegisterSendTransport(&socket_transport_);
 
 

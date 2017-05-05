@@ -2046,7 +2046,7 @@ int UdpTransportImpl::SendPacket(int /*channel*/, const void* data, size_t lengt
     // Create socket if it hasn't been set up already.
     // TODO (hellner): why not fail here instead. Sockets not being initialized
     //                 indicates that there is a problem somewhere.
-    if( _ptrSendRtpSocket == NULL &&
+    if(_ptrSendRtpSocket == NULL &&
         _ptrRtpSocket == NULL)
     {
         WEBRTC_TRACE(
