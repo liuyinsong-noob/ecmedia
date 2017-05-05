@@ -2543,7 +2543,7 @@ int32_t ViEChannel::GetLocalReceiver(uint16_t& rtp_port,
 #endif
 }
 
-int32_t ViEChannel::SetSocket5SendData(unsigned char *data, int length) {
+int32_t ViEChannel::SetSocks5SendData(unsigned char *data, int length, bool isRTCP) {
   callback_cs_->Enter();
   if (external_transport_) {
     callback_cs_->Leave();
@@ -2553,7 +2553,7 @@ int32_t ViEChannel::SetSocket5SendData(unsigned char *data, int length) {
   }
   callback_cs_->Leave();
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
-  socket_transport_.SetSocket5SendData(data, length);
+  socket_transport_.SetSocks5SendData(data, length, isRTCP);
 #endif
   return 0;
 };
