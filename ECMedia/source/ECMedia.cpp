@@ -191,7 +191,8 @@ FILE *g_media_interface_fp = NULL;
 #define MAX_LOG_LINE   3000
 //int g_log_line =0;
 #define MAX_LOG_SIZE	104857600//100M bytes
-#define LOG_SIZE_CHECK_TIME		60
+
+long long  g_max_log_size;
 
 typedef void(*PrintConsoleHook_media)(int loglevel, const char *);
 PrintConsoleHook_media gPrintConsoleHook_media = NULL;
@@ -287,27 +288,22 @@ void PrintConsole(const char * fmt, ...)
 		fflush(g_media_interface_fp);
 		//g_log_line ++;
 
-		if (curr_time - last_time >= LOG_SIZE_CHECK_TIME)
+		if (ftell(g_media_interface_fp) >= g_max_log_size)//100M,100*1024*1024
 		{
-			last_time = curr_time;
-			if (ftell(g_media_interface_fp) >= MAX_LOG_SIZE)//100M,100*1024*1024
-			{
-				fclose(g_media_interface_fp);
-				g_media_interface_fp = NULL;
+			fclose(g_media_interface_fp);
+			g_media_interface_fp = NULL;
 
-				char new_file[1024];
-				strcpy(new_file, g_log_media_filename);
-				strcat(new_file, "_bak");
+			char new_file[1024];
+			strcpy(new_file, g_log_media_filename);
 
-				char file_postfix[40] = { 0 };
-				sprintf(file_postfix, "_%04d%02d%02d%02d%02d%02d",
-					pt->tm_year + 1900, pt->tm_mon + 1, pt->tm_mday,
-					pt->tm_hour, pt->tm_min, pt->tm_sec);
-				strcat(new_file, file_postfix);
-				rename(g_log_media_filename, new_file);
+			char file_postfix[40] = { 0 };
+			sprintf(file_postfix, "_%04d%02d%02d%02d%02d%02d.bak",
+				pt->tm_year + 1900, pt->tm_mon + 1, pt->tm_mday,
+				pt->tm_hour, pt->tm_min, pt->tm_sec);
+			strcat(new_file, file_postfix);
+			rename(g_log_media_filename, new_file);
 
-				g_media_interface_fp = fopen(g_log_media_filename, "wb");
-			}
+			g_media_interface_fp = fopen(g_log_media_filename, "wb");
 		}
 	}
 }
@@ -370,7 +366,7 @@ namespace cloopenwebrtc {
 cloopenwebrtc::ECMediaTraceCallBack g_mediaTraceCallBack;
 
 
-int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level)
+int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level, int lenMb)
 {
 	uint32_t nLevel=WEBRTC_TRACE_FILTER;
 	g_media_TraceFlag = true;//
@@ -425,6 +421,12 @@ int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level)
 		}
 	}
     Trace::set_level_filter(nLevel);
+
+	if (lenMb > 0)
+		g_max_log_size = lenMb*1024*1024;
+	else
+		g_max_log_size = MAX_LOG_SIZE;
+
     PrintConsole("[ECMEDIA INFO] %s end.",__FUNCTION__);
     return 0;
 }

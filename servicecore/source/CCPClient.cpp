@@ -2251,7 +2251,7 @@ extern "C" int setLogLevel(int level)
 
 extern "C" void setTraceFlag(bool enable)
 {
-	ECMedia_set_trace(NULL, NULL, 23);
+	ECMedia_set_trace(NULL, NULL, 23, 100);
 	ServiceCore::serphone_set_traceFlag();
 }
 
