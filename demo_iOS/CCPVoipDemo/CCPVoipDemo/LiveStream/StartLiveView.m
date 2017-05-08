@@ -214,7 +214,7 @@ static int padding = 30;
 #pragma mark ---- <开始录制>
 - (void) startPlay:(id) sender {
     self.startPlayLiveButton.selected = !self.startPlayLiveButton.selected;
-    if(self.startPlayLiveButton.selected){
+    if(self.startPlayLiveButton.selected) {
         [self.startPushLiveButton removeFromSuperview];
         [self.containerView addSubview:self.liveRenderView];
         [self.startPlayLiveButton setTitle:@"结束观看" forState:UIControlStateNormal];
