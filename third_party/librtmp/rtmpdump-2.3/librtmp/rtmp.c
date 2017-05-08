@@ -813,6 +813,7 @@ RTMP_Connect0(RTMP *r, struct sockaddr * service)
   r->m_sb.sb_socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
   if (r->m_sb.sb_socket != -1)
     {
+        // tcp socket层面的连接服务器
       if (connect(r->m_sb.sb_socket, service, sizeof(struct sockaddr)) < 0)
 	{
 	  int err = GetSockError();

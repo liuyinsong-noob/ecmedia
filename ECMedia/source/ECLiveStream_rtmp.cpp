@@ -1,3 +1,4 @@
+
 //
 //  rtmpsession.cpp
 //  ECMedia
@@ -187,6 +188,7 @@ namespace cloopenwebrtc {
         rtmp_lock_->Leave();
         return true;
     }
+
 	void RTMPLiveSession::UnInit()
 	{
 		if (audio_channel_ == -1 || video_channel_ == -1)
@@ -346,6 +348,9 @@ namespace cloopenwebrtc {
 		return 0;
 	}
 
+    /**
+     * 开始相机捕获视频
+     */
 	int RTMPLiveSession::startCameraCapture()
 	{
 		if (cameras_.size() == 0)
@@ -513,6 +518,10 @@ namespace cloopenwebrtc {
 
        // printf("sample rate is %d KHZ  timestamp %d\n", sampleRate, packet->m_nTimeStamp);
     }
+
+    /**
+     * 拆包 sps & pps
+     */
     bool RTMPLiveSession::UnpackSpsPps(const char *data , std::vector<uint8_t> & sps_pps)
     {
         if(data[0]!= 1) {
@@ -540,6 +549,10 @@ namespace cloopenwebrtc {
         }
         return true;
     }
+
+    /**
+     * 拆包NALU
+     */
     bool RTMPLiveSession::UnPackNAL(const char *data, int data_size, std::vector<uint8_t> & nal)
     {
         int index =0 ;
@@ -563,6 +576,10 @@ namespace cloopenwebrtc {
         
         return true;
     }
+
+    /**
+     * 处理视频包
+     */
     void RTMPLiveSession::HandleVideoPacket(RTMPPacket *packet)
     {
         unsigned frameType = ((unsigned char)packet->m_body[0]) >> 4;
@@ -616,7 +633,11 @@ namespace cloopenwebrtc {
             }
         }
     }
-    
+
+	/**
+	 * RTMP 视频播放线程，改线程会不断循环执行，接收rtmp数据包
+	 * @return
+	 */
     bool RTMPLiveSession::PlayNetworkThread()
     {
 		int64_t now = clock_->TimeInMilliseconds();
@@ -626,7 +647,7 @@ namespace cloopenwebrtc {
 		{
 			last_receive_time_ = 0;  // only one callback
 			if (network_status_callbck_)
-				network_status_callbck_(this, NET_STATUS_TIMEOUT);
+				network_status_callbck_(this, RTMP_STATUS_TIMEOUT);
 			return true;
 		}
 	    RTMPPacket packet = { 0 };
@@ -634,23 +655,29 @@ namespace cloopenwebrtc {
 
 			PrintConsole("[RTMP ERROR] %s RTMP session not connected\n", __FUNCTION__);
 			if(network_status_callbck_)
-				network_status_callbck_(this, NET_STATUS_CONNECTING);
+				network_status_callbck_(this, RTMP_STATUS_CONNECTING);
 			RTMP_SetupURL(rtmph_, (char*)stream_url_.c_str());
 			rtmph_->Link.timeout = 3; //connection timeout
 			rtmph_->Link.lFlags |= RTMP_LF_LIVE;
 
 			if (!RTMP_Connect(rtmph_, NULL)) {
 				if( network_status_callbck_)
-					network_status_callbck_(this, NET_STATUS_DISCONNECTED);
+					network_status_callbck_(this, RTMP_STATUS_CONNECTED_FAILED);
 				PrintConsole("[RTMP ERROR] %s RTMP connected error\n", __FUNCTION__);
 				SleepMs(1000); //try connect after 1s
 				return !stoped_;
 			}
+
+            if (network_status_callbck_) {
+                network_status_callbck_(this, RTMP_STATUS_CONNECTED_SUCCESS);
+            }
+
 			if (!RTMP_ConnectStream(rtmph_, 0)) {
 				return !stoped_;
 			}
+
 			if(network_status_callbck_)
-				network_status_callbck_(this, NET_STATUS_CONNECTED);
+				network_status_callbck_(this, RTMP_STSTUS_PLAY_SUCCESS);
 
 			RTMP_SetBufferMS(rtmph_, 3600 * 1000);
 			ViEBase *vbase = ViEBase::GetInterface(vie_);
@@ -658,8 +685,13 @@ namespace cloopenwebrtc {
 			vbase->StartReceive(video_channel_);
 			vbase->Release();
         }
-        if(!RTMP_ReadPacket(rtmph_, &packet)){
+        
+        // start read rtmp packet
+        if(!RTMP_ReadPacket(rtmph_, &packet)) {
 			RTMP_Close(rtmph_);
+            if(network_status_callbck_) {
+                network_status_callbck_(this, RTMP_STSTUS_PLAY_FAILED);
+            }
 			PrintConsole("[RTMP ERROR] %s RTMP read packet failed\n", __FUNCTION__);
             return !stoped_;
         }
@@ -675,21 +707,28 @@ namespace cloopenwebrtc {
 		last_receive_time_ = clock_->TimeInMilliseconds();
 
 		if (packet.m_packetType == RTMP_PACKET_TYPE_AUDIO) {
+            // handle rtmp audio packet
             HandleAuidoPacket(&packet);
         }
         else if(packet.m_packetType == RTMP_PACKET_TYPE_VIDEO){
+            // handle rtmp video packet
             HandleVideoPacket(&packet);
         }
         else if(packet.m_packetType == RTMP_PACKET_TYPE_INFO){
-            //printf("recv info packet\n");            
+            // todo: do something
         }
         else {
+            // other type rtmp packet
             RTMP_ClientPacket(rtmph_, &packet);
         }
         RTMPPacket_Free(&packet);
         return !stoped_;
     }
 
+	/**
+	 * 推流线程执行函数，主要进行了rtmp连接初始化的推流准备工作
+	 * @return
+	 */
 	bool RTMPLiveSession::PushNetworkThread()
 	{
 		if (live_mode_ != MODE_LIVE_PUSH)
@@ -701,22 +740,28 @@ namespace cloopenwebrtc {
 			hasSend_AAC_SPEC_= false;
 			PrintConsole("[RTMP INFO] try to connect to server %s\n",stream_url_.c_str());
 			if (network_status_callbck_)
-				network_status_callbck_(this, NET_STATUS_CONNECTING);
+				network_status_callbck_(this, RTMP_STATUS_CONNECTING); // 设置回调状态：正在连接
 			
 			rtmp_lock_->Enter();
 			RTMP_SetupURL(rtmph_, (char*)stream_url_.c_str());
 			rtmph_->Link.timeout = 3; //connection timeout
 			rtmph_->Link.lFlags |= RTMP_LF_LIVE;
 			RTMP_EnableWrite(rtmph_);
-
+            // rtmp handshake & connect(app)
 			if (!RTMP_Connect(rtmph_, NULL)) {
 				if (network_status_callbck_)
-					network_status_callbck_(this, NET_STATUS_DISCONNECTED);
+					network_status_callbck_(this, RTMP_STATUS_CONNECTED_FAILED); // 连接失败
 				rtmp_lock_->Leave();
 				PrintConsole("[RTMP INFO] connect failed ,try after 1s\n");
 				SleepMs(1000); // try connect after 1s
 				return true;
 			}
+
+            if (network_status_callbck_) {
+                network_status_callbck_(this, RTMP_STATUS_CONNECTED_SUCCESS);
+            }
+
+            // rtmp create stream & publish stream
 			if (!RTMP_ConnectStream(rtmph_, 0)) {
 				rtmp_lock_->Leave();
 				PrintConsole("[RTMP INFO] try to connect stream,but server close connection\n");
@@ -725,15 +770,24 @@ namespace cloopenwebrtc {
 			rtmp_lock_->Leave();
 			PrintConsole("[RTMP INFO] RTMP session connected\n");
 			if (network_status_callbck_)
-				network_status_callbck_(this, NET_STATUS_CONNECTED);
+				network_status_callbck_(this, RTMP_STSTUS_PUSH_SUCCESS);
 			RTMP_SetBufferMS(rtmph_, 3600 * 1000);
+            // send video & audio codec info
 			Send_AAC_SPEC();
 			Send_SPS_PPS();
 		}
-		SleepMs(1000);
+        // 完成推流准备工作，结束此线程，否则会重复循环执行
+        SleepMs(1000);
 		return true;
 	}
 
+	/**
+	 * 视频参数配置属性配置
+	 * @param index: 相机选择，0 后置相机，1前置相机
+	 * @param cam :视频属性，包括宽高，帧率
+	 * @param bitRates:视频码率
+	 * @return
+	 */
 	int RTMPLiveSession::setVideoProfile(int index, CameraCapability cam, int bitRates)
 	{
 		if( cameras_.size() == 0 )
@@ -762,6 +816,10 @@ namespace cloopenwebrtc {
 		return 0;
 	}
 
+	/**
+	 * 网络状态回调
+	 * @param callback
+	 */
 	void RTMPLiveSession::setNetworkStatusCallBack(onLiveStreamNetworkStatusCallBack callbck)
 	{
 		network_status_callbck_ = callbck;
@@ -805,6 +863,17 @@ namespace cloopenwebrtc {
 		return cameras_.size() != 0;
 	}
 
+    #pragma mark - callback of audio data
+    /**
+     * ECmedia 发送音频的回调，从回调中取出音频数据，进行RTMP封装发送
+     * @param frame_type
+     * @param payload_type
+     * @param timestamp
+     * @param payload_data
+     * @param payload_len_bytes
+     * @param fragmentation
+     * @return
+     */
 	int32_t RTMPLiveSession::SendData(FrameType frame_type,
 		uint8_t payload_type,
 		uint32_t timestamp,
@@ -828,7 +897,16 @@ namespace cloopenwebrtc {
 		}
 		return 0;
 	}
-
+    
+    #pragma mark - callback of video data
+    /**
+     * ECmedia 视频采集完，发送视频的回调，从回调中取出视频数据，进行RTMP封装发送
+     * @param payloadType
+     * @param encoded_image
+     * @param fragmentationHeader
+     * @param rtpVideoHdr
+     * @return
+     */
 	int32_t RTMPLiveSession::SendData(uint8_t payloadType,
 		const EncodedImage& encoded_image,
 		const RTPFragmentationHeader& fragmentationHeader,
@@ -867,7 +945,7 @@ namespace cloopenwebrtc {
 		}
 		return 0;
 	}
-	
+    
 	int  RTMPLiveSession::Send_AAC_SPEC()
 	{
 		if (!push_audio_)
@@ -901,13 +979,24 @@ namespace cloopenwebrtc {
 
 		rtmp_lock_->Enter();
 		if (RTMP_IsConnected(rtmph_) && RTMP_SendPacket(rtmph_, packet, TRUE)) {
-			PrintConsole("[RTMP INFO] Send AAC SPEC to server ok!\n");
+            PrintConsole("[RTMP INFO] Send AAC SPEC to server ok!\n");
 			hasSend_AAC_SPEC_ = true;
-		}
+		} else {
+            if (network_status_callbck_) {
+                network_status_callbck_(this, RTMP_STSTUS_PUSH_FAILED);
+            }
+        }
 		rtmp_lock_->Leave();
 		delete packet;
 		return 0;
 	}
+
+    /**
+     * 音频数据封装RTMP包并发送
+     * @param aac_data
+     * @param aac_data_len
+     * @return
+     */
 	int RTMPLiveSession::SendAudioPacket(unsigned char *aac_data, int aac_data_len)
 	{
 		if (!hasSend_AAC_SPEC_)
@@ -939,8 +1028,15 @@ namespace cloopenwebrtc {
 		packet->m_body = ((char*)&body[0]) + RTMP_MAX_HEADER_SIZE;
 
 		rtmp_lock_->Enter();
-		if (RTMP_IsConnected(rtmph_)) // put judge here in case of video/audio to close socket twice.
-			RTMP_SendPacket(rtmph_, packet, TRUE);
+		if (RTMP_IsConnected(rtmph_)) { // put judge here in case of video/audio to close socket twice.
+            if(RTMP_SendPacket(rtmph_, packet, TRUE)) {
+                //
+            } else {
+                if (network_status_callbck_) {
+                    network_status_callbck_(this, RTMP_STSTUS_PUSH_FAILED);
+                }
+            }
+        }
 		rtmp_lock_->Leave();
 		delete packet;
 		return 0;
@@ -1001,13 +1097,23 @@ namespace cloopenwebrtc {
 		
 		rtmp_lock_->Enter();
 		if (RTMP_IsConnected(rtmph_) && RTMP_SendPacket(rtmph_, packet, TRUE)) {
-			PrintConsole("[RTMP INFO] Send SPS PPS to server ok!\n");
+            PrintConsole("[RTMP INFO] Send SPS PPS to server ok!\n");
 			hasSend_SPS_PPS_ = true;
-		}
+		} else {
+            if(network_status_callbck_) {
+            network_status_callbck_(this, RTMP_STSTUS_PUSH_FAILED);
+            }
+        }
 		rtmp_lock_->Leave();
 		delete packet;
 		return 0;
 	}
+
+    /**
+     * 视频Nalu封装RTMP包并发送
+     * @param nalus
+     * @return
+     */
 	int RTMPLiveSession::SendVideoPacket(std::vector<uint8_t> &nalus)
 	{
 		if (!hasSend_SPS_PPS_)
@@ -1036,7 +1142,7 @@ namespace cloopenwebrtc {
 		body.push_back(0x00);
 		body.push_back(0x00);
 
-		body.insert(body.end(), nalus.begin(),nalus.end());
+		body.insert(body.end(), nalus.begin(), nalus.end());
 
 		packet->m_hasAbsTimestamp = 1;
 		packet->m_packetType = RTMP_PACKET_TYPE_VIDEO;
@@ -1052,14 +1158,24 @@ namespace cloopenwebrtc {
 		rtmp_lock_->Enter();
 		//PrintConsole("Send video data \n");
 		if (RTMP_IsConnected(rtmph_) && RTMP_SendPacket(rtmph_, packet, TRUE)) {
-			//PrintConsole("Send video data timestamp %d %d  \n", timestamp, packet->m_nBodySize);
-		}
+            //PrintConsole("Send video data timestamp %d %d  \n", timestamp, packet->m_nBodySize);
+		} else {
+            if(network_status_callbck_) {
+                network_status_callbck_(this, RTMP_STSTUS_PUSH_FAILED);
+            }
+        }
 		rtmp_lock_->Leave();
 		delete packet;
 		return 0;
 	}
 
-	int  RTMPLiveSession::PushStream(const std::string &url, void *localview)
+    /** API
+     * 发送rtmp推流相关的命令 pushstream 命令，并设置相机预览 view
+     * @param url
+     * @param localview
+     * @return
+     */
+    int  RTMPLiveSession::PushStream(const std::string &url, void *localview)
 	{
 		if (video_source_ == VIDEO_SOURCE_CAMERA)
 			if (!GetAllCameraInfo())
@@ -1076,7 +1192,8 @@ namespace cloopenwebrtc {
 		//RTMP_LogSetLevel(RTMP_LOGALL);
 		live_mode_ = MODE_LIVE_PUSH;
 		stream_url_ = url;
-		rtmph_ = RTMP_Alloc();
+		
+        rtmph_ = RTMP_Alloc();
 		RTMP_Init(rtmph_);
 		
 		pushnetworkThread_ = ThreadWrapper::CreateThread(RTMPLiveSession::PushNetworkThreadRun,
@@ -1091,7 +1208,8 @@ namespace cloopenwebrtc {
 
 		if (push_video_) {
 			local_view_ = localview;
-			startCapture();
+			
+            startCapture();
 
 			ViEBase *vbase = ViEBase::GetInterface(vie_);
 			vbase->StartSend(video_channel_);
@@ -1106,12 +1224,19 @@ namespace cloopenwebrtc {
 		}
 
 		unsigned int thread_id = 0;
+        // 线程中做进行了rtmp连接，创建rtmp推流通道
 		pushnetworkThread_->Start(thread_id);
-
 		return 0;
 	}
 
-    int RTMPLiveSession::PlayStream(const std::string &url,void *view, onLiveStreamVideoResolution callback)
+    /**API
+     * 设置播放 rtmp url，预览view, 并设置回调
+     * @param url
+     * @param view
+     * @param callback
+     * @return
+     */
+    int RTMPLiveSession::PlayStream(const std::string &url, void *view, onLiveStreamVideoResolution callback)
     {
         if( !Init() )
             return -1;
@@ -1157,36 +1282,34 @@ namespace cloopenwebrtc {
     }
 
     extern int printTime();
+
+    /**
+     * 停止播流
+     */
     void  RTMPLiveSession::StopPlay()
     {
 		if (live_mode_ != MODE_LIVE_PLAY)
 			return;
 		live_mode_ = MODE_LIVE_UNKNOW;
 
-//        printTime();printf("sean haha 111111\n");
 		VoEBase *base = VoEBase::GetInterface(voe_);
 		base->StopPlayout(audio_channel_);
 		base->StopReceive(audio_channel_);
 		base->Release();
-//        printTime();printf("sean haha 222222\n");
 		ViERender *render = ViERender::GetInterface(vie_);
         render->StopRender(video_channel_);
 		render->RemoveRenderer(video_channel_);
 		render->Release();
-//		printTime();printf("sean haha 333333\n");
 		ViEBase *vbase = ViEBase::GetInterface(vie_);
 		vbase->StopReceive(video_channel_);
 		vbase->Release();
-//        printTime();printf("sean haha 444444\n");
-		if (playnetworkThread_) {
+		
+        if (playnetworkThread_) {
 			playnetworkThread_->Stop();
-//            printTime();printf("sean haha 444444777777\n");
-//			SleepMs(20);
-//            printTime();printf("sean haha 444444888888\n");
+            // todo: do something
 		}
 		delete playnetworkThread_;
 		playnetworkThread_ = NULL;
-//        printTime();printf("sean haha 555555\n");
         rtmp_lock_->Enter();
 		UnInit(); //must before close rtmp connection
 
@@ -1197,9 +1320,11 @@ namespace cloopenwebrtc {
 		}
         stoped_ = true;
         rtmp_lock_->Leave();
-//        printTime();printf("sean haha 666666\n");
     }
-	
+
+    /**
+     * 停止推流
+     */
 	void RTMPLiveSession::StopPush()
 	{
 		if (live_mode_ != MODE_LIVE_PUSH)
@@ -1239,15 +1364,24 @@ namespace cloopenwebrtc {
         rtmp_lock_->Leave();
 	}
 
+    /**
+     * 选择推流内容
+     * @param push_audio 使能音频推流
+     * @param push_video 使能视频推流
+     */
 	void RTMPLiveSession::SetPushContent(bool push_audio,bool push_video)
 	{
 		push_video_ = push_video;
 		push_audio_ = push_audio;
 	}
 
+    /**
+     * 视频源选择，相机或桌面
+     * @param video_source
+     */
 	void RTMPLiveSession::SetVideoSource(VIDEO_SOURCE video_source)
 	{
-		if(  MODE_LIVE_UNKNOW == live_mode_ )
+		if(  MODE_LIVE_UNKNOW == live_mode_)
 			video_source_ = video_source;
 	}
 
@@ -1299,6 +1433,9 @@ namespace cloopenwebrtc {
 		desktopShare->Release();
 	}
 
+    /**
+     * 使能美颜
+     */
 	void RTMPLiveSession::EnableBeauty()
 	{
 		ViECapture *capture = ViECapture::GetInterface(vie_);
@@ -1308,6 +1445,9 @@ namespace cloopenwebrtc {
 		capture->Release();
 	}
 
+    /**
+     * 失效美颜
+     */
 	void RTMPLiveSession::DisableBeauty()
 	{
 		ViECapture *capture = ViECapture::GetInterface(vie_);
