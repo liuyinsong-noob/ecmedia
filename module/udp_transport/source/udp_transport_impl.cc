@@ -2230,7 +2230,14 @@ void UdpTransportImpl::IncomingRTPCallback(CallbackObj obj,
 {
     if (rtpPacket && rtpPacketLength > 0)
     {
+        
         UdpTransportImpl* socketTransport = (UdpTransportImpl*) obj;
+        if (socketTransport->_socks5_rtp_data) {
+            // jump socks 10 Bytes header
+            // @see http://blog.chinaunix.net/uid-20583479-id-1920093.html
+            rtpPacket += 10;
+            rtpPacketLength -= 10;
+        }
         socketTransport->IncomingRTPFunction(rtpPacket, rtpPacketLength, from);
     }
 }
@@ -2243,6 +2250,14 @@ void UdpTransportImpl::IncomingRTCPCallback(CallbackObj obj,
     if (rtcpPacket && rtcpPacketLength > 0)
     {
         UdpTransportImpl* socketTransport = (UdpTransportImpl*) obj;
+        
+        if (socketTransport->_socks5_rtcp_data) {
+            // jump socks header(10Byts)
+            // @see http://blog.chinaunix.net/uid-20583479-id-1920093.html
+            rtcpPacket += 10;
+            rtcpPacketLength -= 10;
+        }
+        
         socketTransport->IncomingRTCPFunction(rtcpPacket, rtcpPacketLength,
                                               from);
     }
