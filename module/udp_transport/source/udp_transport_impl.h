@@ -189,7 +189,7 @@ protected:
 private:
     void GetCachedAddress(char* ip, WebRtc_UWord32& ipSize,
                           WebRtc_UWord16& sourcePort);
-    WebRtc_Word32 sendSocks5Data(UdpSocketWrapper *socket, SocketAddress to, bool isRTCP);
+    WebRtc_Word32 sendSocks5Data(UdpSocketWrapper *socket, SocketAddress to, bool isRTCP, const WebRtc_Word8 *data, WebRtc_UWord32 length);
 
     WebRtc_Word32 _id;
     SocketFactoryInterface* _socket_creator;

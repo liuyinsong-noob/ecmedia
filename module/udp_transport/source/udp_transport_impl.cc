@@ -1867,17 +1867,32 @@ WebRtc_Word32 UdpTransportImpl::SetSocks5SendData(unsigned char *data, int lengt
     return 0;
 }
 
-WebRtc_Word32 UdpTransportImpl::sendSocks5Data(UdpSocketWrapper *socket, SocketAddress to, bool isRTCP) {
+WebRtc_Word32 UdpTransportImpl::sendSocks5Data(UdpSocketWrapper *socket, SocketAddress to, bool isRTCP, const WebRtc_Word8 *data, WebRtc_UWord32 length) {
+    WebRtc_Word8 *buffer = NULL;
     if (isRTCP) {
         if (_socks5_rtcp_data) {
-            return socket->SendTo(_socks5_rtcp_data, _socks5_rtcp_data_length, to);
+            buffer = (WebRtc_Word8 *) malloc(length + _socks5_rtcp_data_length);
+            memcpy(buffer, _socks5_rtcp_data, _socks5_rtcp_data_length);
+            memcpy(buffer + _socks5_rtcp_data_length, data, length);
+            int ret = socket->SendTo(buffer, _socks5_rtcp_data_length + length, to);
+            free(buffer);
+            return ret;
+        } else {
+            return socket->SendTo(data, length, to);
         }
     } else {
         if (_socks5_rtp_data) {
-            return socket->SendTo(_socks5_rtp_data, _socks5_rtp_data_length, to);
+            buffer = (WebRtc_Word8 *) malloc(length + _socks5_rtp_data_length);
+            memcpy(buffer, _socks5_rtp_data, _socks5_rtp_data_length);
+            memcpy(buffer + _socks5_rtp_data_length, data, length);
+            int ret = socket->SendTo(buffer, _socks5_rtp_data_length + length, to);
+            free(buffer);
+            return ret;
+        } else {
+            return socket->SendTo(data, length, to);
         }
     }
-    return 0;
+    return -1;
 }
 
     WebRtc_Word32 UdpTransportImpl::SendRaw(const WebRtc_Word8 *data,
@@ -1902,35 +1917,23 @@ WebRtc_Word32 UdpTransportImpl::sendSocks5Data(UdpSocketWrapper *socket, SocketA
         }
         if(portnr == 0 && ip == NULL)
         {
-            if(sendSocks5Data(rtcpSock, _remoteRTCPAddr, isRTCP) == -1) {
-                return -1;
-            }
-            return rtcpSock->SendTo(data,length,_remoteRTCPAddr);
+            return sendSocks5Data(rtcpSock, _remoteRTCPAddr, isRTCP, data, length);
 
         } else if(portnr != 0 && ip != NULL)
         {
             SocketAddress remoteAddr;
             BuildSockaddrIn(portnr, ip, remoteAddr);
-            if(sendSocks5Data(rtcpSock, remoteAddr, isRTCP) == -1) {
-                return -1;
-            }
-            return rtcpSock->SendTo(data,length,remoteAddr);
+            return sendSocks5Data(rtcpSock, remoteAddr, isRTCP, data, length);
         } else if(ip != NULL)
         {
             SocketAddress remoteAddr;
             BuildSockaddrIn(_destPortRTCP, ip, remoteAddr);
-            if(sendSocks5Data(rtcpSock, remoteAddr, isRTCP) == -1) {
-                return -1;
-            }
-            return rtcpSock->SendTo(data,length,remoteAddr);
+            return sendSocks5Data(rtcpSock, remoteAddr, isRTCP, data, length);
         } else
         {
             SocketAddress remoteAddr;
             BuildSockaddrIn(portnr, _destRtpIP, remoteAddr);
-            if(sendSocks5Data(rtcpSock, remoteAddr, isRTCP) == -1) {
-                return -1;
-            }
-            return rtcpSock->SendTo(data,length,remoteAddr);
+            return sendSocks5Data(rtcpSock, remoteAddr, isRTCP, data, length);
         }
     } else {
         UdpSocketWrapper* rtpSock = NULL;
@@ -1949,35 +1952,23 @@ WebRtc_Word32 UdpTransportImpl::sendSocks5Data(UdpSocketWrapper *socket, SocketA
         }
         if(portnr == 0 && ip == NULL)
         {
-            if(sendSocks5Data(rtpSock, _remoteRTPAddr, isRTCP) == -1) {
-                return -1;
-            }
-            return rtpSock->SendTo(data,length,_remoteRTPAddr);
+            return sendSocks5Data(rtpSock, _remoteRTPAddr, isRTCP, data, length);
 
         } else if(portnr != 0 && ip != NULL)
         {
             SocketAddress remoteAddr;
             BuildSockaddrIn(portnr, ip, remoteAddr);
-            if(sendSocks5Data(rtpSock, remoteAddr, isRTCP) == -1) {
-                return -1;
-            }
-            return rtpSock->SendTo(data,length,remoteAddr);
+            return sendSocks5Data(rtpSock, remoteAddr, isRTCP, data, length);
         } else if(ip != NULL)
         {
             SocketAddress remoteAddr;
             BuildSockaddrIn(_destPort, ip, remoteAddr);
-            if(sendSocks5Data(rtpSock, remoteAddr, isRTCP) == -1) {
-                return -1;
-            }
-            return rtpSock->SendTo(data,length,remoteAddr);
+            return sendSocks5Data(rtpSock, remoteAddr, isRTCP, data, length);
         } else
         {
             SocketAddress remoteAddr;
             BuildSockaddrIn(portnr, _destRtpIP, remoteAddr);
-            if(sendSocks5Data(rtpSock, remoteAddr, isRTCP) == -1) {
-                return -1;
-            }
-            return rtpSock->SendTo(data,length,remoteAddr);
+            return sendSocks5Data(rtpSock, remoteAddr, isRTCP, data, length);
         }
     }
 }
@@ -1989,17 +1980,11 @@ WebRtc_Word32 UdpTransportImpl::SendRTPPacketTo(const WebRtc_Word8* data,
     CriticalSectionScoped cs(_crit);
     if(_ptrSendRtpSocket)
     {
-        if(sendSocks5Data(_ptrSendRtpSocket, to, false) == -1) {
-            return -1;
-        }
-        return _ptrSendRtpSocket->SendTo(data,length,to);
+        return sendSocks5Data(_ptrSendRtpSocket, to, false, nullptr, length);
 
     } else if(_ptrRtpSocket)
     {
-        if(sendSocks5Data(_ptrRtpSocket, to, false) == -1) {
-            return -1;
-        }
-        return _ptrRtpSocket->SendTo(data,length,to);
+        return sendSocks5Data(_ptrRtpSocket, to, false, data, length);
     }
     return -1;
 }
@@ -2013,17 +1998,11 @@ WebRtc_Word32 UdpTransportImpl::SendRTCPPacketTo(const WebRtc_Word8* data,
 
     if(_ptrSendRtcpSocket)
     {
-        if(sendSocks5Data(_ptrSendRtcpSocket, to, true) == -1) {
-            return -1;
-        }
-        return _ptrSendRtcpSocket->SendTo(data, length, to);
+        return sendSocks5Data(_ptrSendRtcpSocket, to, true, data, length);
 
     } else if(_ptrRtcpSocket)
     {
-        if(sendSocks5Data(_ptrRtcpSocket, to, true) == -1) {
-            return -1;
-        }
-        return _ptrRtcpSocket->SendTo(data, length, to);
+        return sendSocks5Data(_ptrRtcpSocket, to, true, data, length);
     }
     return -1;
 }
@@ -2048,17 +2027,11 @@ WebRtc_Word32 UdpTransportImpl::SendRTPPacketTo(const WebRtc_Word8* data,
 
     if(_ptrSendRtpSocket)
     {
-        if(sendSocks5Data(_ptrSendRtpSocket, to, false) == -1) {
-            return -1;
-        }
-        return _ptrSendRtpSocket->SendTo(data,length,to);
+        return sendSocks5Data(_ptrSendRtpSocket, to, false, data, length);
 
     } else if(_ptrRtpSocket)
     {
-        if(sendSocks5Data(_ptrRtpSocket, to, false) == -1) {
-            return -1;
-        }
-        return _ptrRtpSocket->SendTo(data,length,to);
+        return sendSocks5Data(_ptrRtpSocket, to, false, data, length);
     }
     return -1;
 }
@@ -2083,17 +2056,11 @@ WebRtc_Word32 UdpTransportImpl::SendRTPPacketTo(const WebRtc_Word8* data,
 
     if(_ptrSendRtcpSocket)
     {
-        if(sendSocks5Data(_ptrSendRtcpSocket, to, true) == -1) {
-            return -1;
-        }
-        return _ptrSendRtcpSocket->SendTo(data,length,to);
+        return sendSocks5Data(_ptrSendRtcpSocket, to, true, data, length);
 
     } else if(_ptrRtcpSocket)
     {
-        if(sendSocks5Data(_ptrRtcpSocket, to, true) == -1) {
-            return -1;
-        }
-        return _ptrRtcpSocket->SendTo(data,length,to);
+        return sendSocks5Data(_ptrRtcpSocket, to, true, data, length);
     }
     return -1;
 }
@@ -2154,19 +2121,11 @@ int UdpTransportImpl::SendPacket(int /*channel*/, const void* data, size_t lengt
 
     if(_ptrSendRtpSocket)
     {
-        if(sendSocks5Data(_ptrSendRtpSocket, _remoteRTPAddr, false) == -1) {
-            return -1;
-        }
-        return _ptrSendRtpSocket->SendTo((const WebRtc_Word8*)data, length,
-                                         _remoteRTPAddr);
+        return  sendSocks5Data(_ptrSendRtpSocket, _remoteRTPAddr, false, (const WebRtc_Word8*)data, (WebRtc_UWord32)length);
 
     } else if(_ptrRtpSocket)
     {
-        if(sendSocks5Data(_ptrRtpSocket, _remoteRTPAddr, false) == -1) {
-            return -1;
-        }
-        return _ptrRtpSocket->SendTo((const WebRtc_Word8*)data, length,
-                                     _remoteRTPAddr);
+        return sendSocks5Data(_ptrRtpSocket, _remoteRTPAddr, false, (const WebRtc_Word8*)data, (WebRtc_UWord32)length);
     }
     return -1;
 }
@@ -2226,18 +2185,10 @@ int UdpTransportImpl::SendRTCPPacket(int /*channel*/, const void* data,
 
     if(_ptrSendRtcpSocket)
     {
-        if(sendSocks5Data(_ptrSendRtcpSocket, _remoteRTCPAddr, true) == -1) {
-            return -1;
-        }
-        return _ptrSendRtcpSocket->SendTo((const WebRtc_Word8*)data, length,
-                                          _remoteRTCPAddr);
+        return sendSocks5Data(_ptrSendRtcpSocket, _remoteRTCPAddr, true, (const WebRtc_Word8*)data, (WebRtc_UWord32)length);
     } else if(_ptrRtcpSocket)
     {
-        if(sendSocks5Data(_ptrRtcpSocket, _remoteRTCPAddr, true) == -1) {
-            return -1;
-        }
-        return _ptrRtcpSocket->SendTo((const WebRtc_Word8*)data, length,
-                                      _remoteRTCPAddr);
+        return sendSocks5Data(_ptrRtcpSocket, _remoteRTCPAddr, true, (const WebRtc_Word8*)data, (WebRtc_UWord32)length);
     }
     return -1;
 }
