@@ -243,9 +243,9 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    RegisterViewController *view = [[RegisterViewController alloc] init];
-    [self.navigationController pushViewController:view animated:YES];
-    [view release];
+//    RegisterViewController *view = [[RegisterViewController alloc] init];
+//    [self.navigationController pushViewController:view animated:YES];
+//    [view release];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

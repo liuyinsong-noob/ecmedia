@@ -28,7 +28,11 @@
 - (UILabel *)displayText:(NSString*)text andFrame:(CGRect)rect;
 @end
 
-@implementation RegisterViewController
+@implementation RegisterViewController {
+    UITextField *loginIP_textField;
+    UITextField *loginPort_textField;
+    UITextField *loginPsswd_textField;
+}
 
 @synthesize serverip;
 @synthesize serverport;
@@ -175,67 +179,74 @@
     [mainImgViewBG4 release];
     
     
-    UILabel *selectLabel = [[UILabel alloc] initWithFrame:CGRectMake(17.0f, 208.0f, 150.0f, 20.0f)];
-    selectLabel.text = @"选中账号的基本信息:";
+    UILabel *selectLabel = [[UILabel alloc] initWithFrame:CGRectMake(17.0f, 208.0f, 250.0f, 20.0f)];
+    selectLabel.text = @"请输入登录IP, 端口, 密码信息:";
     selectLabel.font = [UIFont systemFontOfSize:14.0f];
     selectLabel.backgroundColor = [UIColor clearColor];
     selectLabel.textColor = [UIColor colorWithRed:204./255 green:204./255 blue:204./255 alpha:1.];
     [self.view addSubview:selectLabel];
     [selectLabel release];
+ 
+    // config login IP address
+    NSUserDefaults* loginDefault = [NSUserDefaults standardUserDefaults];
+    loginIP_textField = [[UITextField alloc]initWithFrame:CGRectMake(20.0f, 235.0f, 120.0f, 30.0f)];
+    loginIP_textField.delegate = self;
+    loginIP_textField.borderStyle = UITextBorderStyleLine;
+    loginIP_textField.layer.borderColor= [UIColor grayColor].CGColor;
+    loginIP_textField.layer.borderWidth= 1.0f;
+    loginIP_textField.textColor = [UIColor whiteColor];
+    loginIP_textField.font = [UIFont systemFontOfSize:13.0f];
+    loginIP_textField.backgroundColor = [UIColor clearColor];
+    loginIP_textField.textAlignment = NSTextAlignmentCenter;
+    NSString *loginIP = [loginDefault objectForKey:@"loginIP"];
+    if(loginIP == nil) {
+        loginIP_textField.text = @"192.168.177.187";
+    } else {
+        loginIP_textField.text = loginIP;
+    }
+    [self.view addSubview:loginIP_textField];
+    [loginIP_textField release];
     
+    // config login port
+    loginPort_textField = [[UITextField alloc]initWithFrame:CGRectMake(145.0f, 235.0f, 60.0f, 30.0f)];
+    loginPort_textField.delegate = self;
+    loginPort_textField.textColor = [UIColor whiteColor];
+    loginPort_textField.borderStyle = UITextBorderStyleLine;
+    loginPort_textField.layer.borderColor= [UIColor grayColor].CGColor;
+    loginPort_textField.layer.borderWidth= 1.0f;
+    loginPort_textField.font = [UIFont systemFontOfSize:13.0f];
+    loginPort_textField.backgroundColor = [UIColor clearColor];
+    loginPort_textField.textAlignment = NSTextAlignmentCenter;
+    NSString *loginPort = [loginDefault objectForKey:@"loginPort"];
+    if(loginPort == nil) {
+        loginPort_textField.text = @"8600";
+    } else {
+        loginPort_textField.text = loginPort;
+    }
+    [self.view addSubview:loginPort_textField];
+    [loginPort_textField release];
     
-    UILabel *label_1 = [[UILabel alloc] initWithFrame:CGRectMake(17, 230, 70.0f, 20.0f)];
-    [self.view addSubview:label_1];
-    label_1.textAlignment = NSTextAlignmentRight;
-    label_1.textColor = [UIColor colorWithRed:204./255 green:204./255 blue:204./255 alpha:1.];
-    label_1.backgroundColor = [UIColor clearColor];
-    label_1.font = [UIFont systemFontOfSize:13.0f];
-    label_1.text = @"子账号:";
-    [label_1 release];    
-    
-    UILabel *subAccountLabel = [[UILabel alloc] initWithFrame:CGRectMake(98.0f, 230, 200, 20.0f)];
-    subAccountLabel.textColor = [UIColor whiteColor];
-    subAccountLabel.font = [UIFont systemFontOfSize:13.0f];
-    subAccountLabel.tag = TEXTFILED_BASE_TAG + 2;
-    subAccountLabel.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:subAccountLabel];
-    [subAccountLabel release];
-    
-    UILabel *label_2 = [[UILabel alloc] initWithFrame:CGRectMake(17, 251, 70.0f, 20.0f)];
-    [self.view addSubview:label_2];
-    label_2.textAlignment = NSTextAlignmentRight;
-    label_2.textColor = [UIColor colorWithRed:204./255 green:204./255 blue:204./255 alpha:1.];
-    label_2.backgroundColor = [UIColor clearColor];
-    label_2.font = [UIFont systemFontOfSize:13.0f];
-    label_2.text = @"子账号令牌:";
-    [label_2 release];
-    
-    UILabel *subTokenLabel = [[UILabel alloc] initWithFrame:CGRectMake(98.0f, 252, 200, 20.0f)];
-    subTokenLabel.textColor = [UIColor whiteColor];
-    subTokenLabel.tag = TEXTFILED_BASE_TAG + 3;
-    subTokenLabel.font = [UIFont systemFontOfSize:13.0f];
-    subTokenLabel.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:subTokenLabel];
-    [subTokenLabel release];
-    
-    
-    UILabel *label_3 = [[UILabel alloc] initWithFrame:CGRectMake(17, 271, 70.0f, 20.0f)];
-    [self.view addSubview:label_3];
-    label_3.textAlignment = NSTextAlignmentRight;
-    label_3.textColor = [UIColor colorWithRed:204./255 green:204./255 blue:204./255 alpha:1.];
-    label_3.backgroundColor = [UIColor clearColor];
-    label_3.font = [UIFont systemFontOfSize:13.0f];
-    label_3.text = @"VoIP密码:";
-    [label_3 release];
-    
-    UILabel *pwdLabel = [[UILabel alloc] initWithFrame:CGRectMake(98.0f, 271, 200.0f, 20.0f)];
-    pwdLabel.tag = TEXTFILED_BASE_TAG + 5;
-    pwdLabel.font = [UIFont systemFontOfSize:13.0f];
-    pwdLabel.backgroundColor = [UIColor clearColor];
-    pwdLabel.textColor = [UIColor whiteColor];
-    [self.view addSubview:pwdLabel];
-    [pwdLabel release];
-        
+    // config login password info
+    loginPsswd_textField = [[UITextField alloc]initWithFrame:CGRectMake(210.0f, 235.0f, 90.0f, 30.0f)];
+    loginPsswd_textField.delegate = self;
+    loginPsswd_textField.textAlignment = NSTextAlignmentCenter;
+    loginPsswd_textField.textColor = [UIColor whiteColor];
+    loginPsswd_textField.borderStyle = UITextBorderStyleLine;
+    loginPsswd_textField.layer.borderColor= [UIColor grayColor].CGColor;
+    loginPsswd_textField.layer.borderWidth= 1.0f;
+    loginPsswd_textField.font = [UIFont systemFontOfSize:13.0f];
+    loginPsswd_textField.backgroundColor = [UIColor clearColor];
+    NSString *loginPsswd = [loginDefault objectForKey:@"loginPssWD"];
+    if(loginPsswd == nil) {
+        loginPsswd_textField.text = @"123456";
+    } else {
+        loginPsswd_textField.text = loginPsswd;
+    }
+ 
+    [self.view addSubview:loginPsswd_textField];
+    [loginPsswd_textField release];
+
+    // login button
     UIButton *registBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.view addSubview:registBtn];
     registBtn.frame = CGRectMake(11, self.view.frame.size.height - 170, 298, 44);
@@ -253,6 +264,19 @@
     textLabel.lineBreakMode = UILineBreakModeCharacterWrap;
     textLabel.textColor = [UIColor colorWithRed:204./255 green:204./255 blue:204./255 alpha:1.];
     [textLabel release];
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField {
+    NSUserDefaults* loginDefault = [NSUserDefaults standardUserDefaults];
+    if (textField == loginIP_textField) {
+        [loginDefault setObject:textField.text forKey:@"loginIP"];
+    } else if(textField == loginPort_textField) {
+        [loginDefault setObject:textField.text forKey:@"loginPort"];
+    } else if(textField == loginPsswd_textField) {
+        [loginDefault setObject:textField.text forKey:@"loginPssWD"];
+    } else {
+        //todo: something
+    }
 }
 
 - (void)viewDidLoad
@@ -333,12 +357,13 @@
     else
         [self.modelEngineVoip.accountArray removeAllObjects];
     NSArray *accountsArray = [configDic objectForKey:CONFIG_KEY_SUBACCOUNTSINFO];
+    int i = 0;
     for (NSDictionary *subaccountInfo in accountsArray)
     {
         AccountInfo *info = [[AccountInfo alloc] init];
         info.subAccount = [subaccountInfo objectForKey:CONFIG_KEY_SUBACCOUNT];
         info.subToken = [subaccountInfo objectForKey:CONFIG_KEY_SUBTOKEN];
-        info.voipId = [subaccountInfo objectForKey:CONFIG_KEY_VOIPACCOUNT];
+        info.voipId = [NSString stringWithFormat:@"%d", 1000 + (++i)]; // [subaccountInfo objectForKey:CONFIG_KEY_VOIPACCOUNT];
         info.password = [subaccountInfo objectForKey:CONFIG_KEY_VOIPPASSWORD];
         [self.modelEngineVoip.accountArray addObject:info];
         [info release];
@@ -350,21 +375,21 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    NSString *deviceStr = [self.modelEngineVoip.VoipCallService getDeviceVersion];
-    int index = 0;
-    if ([deviceStr isEqualToString:@"iPhone 7"]) {
-        index = 6;
-    } else if ([deviceStr isEqualToString:@"iPhone se"])
-    {
-        index = 5;
-    }
-//    index = 5;
-    AccountInfo *info = [self.modelEngineVoip.accountArray objectAtIndex:index];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:info.voipId forKey:@"myPhoneNO"];
-    [defaults synchronize];
-    [self displayProgressingView];
-    [self.modelEngineVoip connectToCCP:self.serverip onPort:[self.serverport integerValue] withAccount:info.voipId withPsw:info.password withAccountSid:info.subAccount withAuthToken:info.subToken];
+//    NSString *deviceStr = [self.modelEngineVoip.VoipCallService getDeviceVersion];
+//    int index = 0;
+//    if ([deviceStr isEqualToString:@"iPhone 7"]) {
+//        index = 6;
+//    } else if ([deviceStr isEqualToString:@"iPhone se"])
+//    {
+//        index = 5;
+//    }
+////    index = 5;
+//    AccountInfo *info = [self.modelEngineVoip.accountArray objectAtIndex:index];
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    [defaults setObject:info.voipId forKey:@"myPhoneNO"];
+//    [defaults synchronize];
+//    [self displayProgressingView];
+//    [self.modelEngineVoip connectToCCP:self.serverip onPort:[self.serverport integerValue] withAccount:info.voipId withPsw:info.password withAccountSid:info.subAccount withAuthToken:info.subToken];
 }
 
 - (void)didReceiveMemoryWarning
@@ -401,6 +426,7 @@
 
 - (void)registerVoip:(id)sender
 {
+    NSString *str = loginIP_textField.text;
     [self keyboardHide];
     NSString *mainID = @"";
     NSString *mainToken = @"";
@@ -485,7 +511,7 @@
     if (self.modelEngineVoip)
     {
         [self displayProgressingView];
-        [self.modelEngineVoip connectToCCP:self.serverip onPort:[self.serverport integerValue] withAccount:voipID withPsw:voipPwd withAccountSid:subID withAuthToken:subToken];
+        [self.modelEngineVoip connectToCCP:loginIP_textField.text onPort:[loginPort_textField.text integerValue] withAccount:voipID withPsw:loginPsswd_textField.text withAccountSid:subID withAuthToken:subToken];
 
     }
 }
@@ -598,6 +624,19 @@
     {
         [self dismissProgressingView];
     }
+}
+
+// 隐藏键盘
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    for (UIView* view in self.view.subviews)
+    {
+        if ([view isKindOfClass:[UITextField class]])
+        {
+            [view resignFirstResponder];
+        }
+    }
+    
 }
 
 @end
