@@ -215,17 +215,10 @@ static int padding = 30;
 - (void) startPlay:(id) sender {
     self.startPlayLiveButton.selected = !self.startPlayLiveButton.selected;
     if(self.startPlayLiveButton.selected){
-//        [self.startPushLiveButton removeFromSuperview];
-//        [self.containerView addSubview:self.liveRenderView];
-//        [self.startPlayLiveButton setTitle:@"结束观看" forState:UIControlStateNormal];
-//        [self.modelEngineVoip playStream:self.session url:@"rtmp://live.yuntongxun.com:1935/live/gezhaoyou" view:self.liveRenderView];
-        
-        [self.startPushLiveButton setTitle:@"结束直播" forState:UIControlStateNormal];
-        // [self.startPlayLiveButton removeFromSuperview];
+        [self.startPushLiveButton removeFromSuperview];
         [self.containerView addSubview:self.liveRenderView];
-        [self.modelEngineVoip selectLiveCamera:self.session cameraIndex: 1 width:480 height: 640 fps: 15];
-        [self.modelEngineVoip pushStream:self.session url:@"rtmp://live.yuntongxun.com:1935/live/gezhaoyou" view:self.liveRenderView];
-        
+        [self.startPlayLiveButton setTitle:@"结束观看" forState:UIControlStateNormal];
+        [self.modelEngineVoip playStream:self.session url:@"rtmp://live.yuntongxun.com:1935/live/gezhaoyou" view:self.liveRenderView];
     } else {
         [self.startPlayLiveButton setTitle:@"观看直播" forState:UIControlStateNormal];
         [self.liveRenderView removeFromSuperview];
