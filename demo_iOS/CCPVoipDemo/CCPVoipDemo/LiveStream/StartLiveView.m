@@ -58,7 +58,7 @@ static int padding = 30;
         self.liveRenderView.contentMode = UIViewContentModeScaleAspectFit;
         //创建界面容器
         [self addSubview:self.containerView];
-        [self.containerView addSubview:self.liveRenderView];
+        // [self.containerView addSubview:self.liveRenderView];
         // 添加按钮
         [self.containerView addSubview:self.closeButton];
         [self.containerView addSubview:self.cameraButton];
@@ -103,7 +103,7 @@ static int padding = 30;
 }
 
 #pragma mark ---- <加载音频录制>
-- (void)requestAccessForAudio{
+- (void)requestAccessForAudio {
     AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio];
     switch (status) {
         case AVAuthorizationStatusNotDetermined:{
@@ -121,9 +121,6 @@ static int padding = 30;
             break;
     }
 }
-
-
-
 
 #pragma mark ---- <创建会话>
 - (void*)session{
@@ -175,14 +172,8 @@ static int padding = 30;
 
 -(void) selectCamera:(id)sender {
     static int i = 0;
-    
     [self.modelEngineVoip getCameraInfo];
-    [self.modelEngineVoip selectLiveCamera:self.session cameraIndex: i width:100 height: 100 fps: 15];
-    
-    i++;
-    if (i == 2) {
-        i = 0;
-    }
+    [self.modelEngineVoip selectLiveCamera:self.session cameraIndex: i++%2 width:480 height: 640 fps: 15];
 }
 #pragma mark ---- <切换摄像头>
 - (UIButton*)cameraButton {
@@ -224,11 +215,20 @@ static int padding = 30;
 - (void) startPlay:(id) sender {
     self.startPlayLiveButton.selected = !self.startPlayLiveButton.selected;
     if(self.startPlayLiveButton.selected){
-        [self.startPushLiveButton removeFromSuperview];
-        [self.startPlayLiveButton setTitle:@"结束观看" forState:UIControlStateNormal];
-        [self.modelEngineVoip playStream:self.session url:@"rtmp://live.yuntongxun.com:1935/live/gezhaoyou" view:self.liveRenderView];
-    }else{
+//        [self.startPushLiveButton removeFromSuperview];
+//        [self.containerView addSubview:self.liveRenderView];
+//        [self.startPlayLiveButton setTitle:@"结束观看" forState:UIControlStateNormal];
+//        [self.modelEngineVoip playStream:self.session url:@"rtmp://live.yuntongxun.com:1935/live/gezhaoyou" view:self.liveRenderView];
+        
+        [self.startPushLiveButton setTitle:@"结束直播" forState:UIControlStateNormal];
+        // [self.startPlayLiveButton removeFromSuperview];
+        [self.containerView addSubview:self.liveRenderView];
+        [self.modelEngineVoip selectLiveCamera:self.session cameraIndex: 1 width:480 height: 640 fps: 15];
+        [self.modelEngineVoip pushStream:self.session url:@"rtmp://live.yuntongxun.com:1935/live/gezhaoyou" view:self.liveRenderView];
+        
+    } else {
         [self.startPlayLiveButton setTitle:@"观看直播" forState:UIControlStateNormal];
+        [self.liveRenderView removeFromSuperview];
         [self.modelEngineVoip stopLiveStream:self.session];
     }
 }
@@ -254,12 +254,14 @@ static int padding = 30;
     if(self.startPushLiveButton.selected){
         
         [self.startPushLiveButton setTitle:@"结束直播" forState:UIControlStateNormal];
-        [self.startPlayLiveButton removeFromSuperview];
-        // [self.startPushLiveButton removeFromSuperview] ;
+        // [self.startPlayLiveButton removeFromSuperview];
+        [self.containerView addSubview:self.liveRenderView];
+        [self.modelEngineVoip selectLiveCamera:self.session cameraIndex: 1 width:480 height: 640 fps: 15];
         [self.modelEngineVoip pushStream:self.session url:@"rtmp://live.yuntongxun.com:1935/live/gezhaoyou" view:self.liveRenderView];
         // [self.containerView addSubview:self.startPushLiveButton];
     
     }else{
+        [self.liveRenderView removeFromSuperview];
         [self.modelEngineVoip stopLiveStream:self.session];
         [self.startPushLiveButton setTitle:@"开始直播" forState:UIControlStateNormal];
     }

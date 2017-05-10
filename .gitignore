@@ -1,6 +1,7 @@
 #folder
 obj
 libs
+.idea
 
 # c/c++
 # Prerequisites
@@ -122,6 +123,9 @@ out/
 
 # Android Studio captures folder
 captures/
+
+#other
+demo_Android/local.properties
 
 # Intellij
 *.iml

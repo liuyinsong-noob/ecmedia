@@ -43,10 +43,14 @@ typedef int (*onEcMediaShareWindowSizeChange)(int desktop_capture_id, int width,
 typedef int(*onEcMediaNoCameraCaptureCb)(const int id, const bool capture);
 
 enum NET_STATUS_CODE {
-	NET_STATUS_CONNECTING = 1,
-	NET_STATUS_CONNECTED,
-	NET_STATUS_DISCONNECTED,
-	NET_STATUS_TIMEOUT
+	RTMP_STATUS_CONNECTING = 1,
+	RTMP_STATUS_CONNECTED_SUCCESS,
+	RTMP_STATUS_CONNECTED_FAILED,
+	RTMP_STATUS_TIMEOUT,
+    RTMP_STSTUS_PUSH_SUCCESS,
+    RTMP_STSTUS_PUSH_FAILED,
+    RTMP_STSTUS_PLAY_SUCCESS,
+    RTMP_STSTUS_PLAY_FAILED
 };
 
 typedef int(*onLiveStreamNetworkStatusCallBack)(void *handle, NET_STATUS_CODE code);

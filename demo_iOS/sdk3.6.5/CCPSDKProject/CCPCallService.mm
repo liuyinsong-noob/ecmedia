@@ -2154,7 +2154,7 @@ static CCPCallService * ccpcallserviceSharedInstance;
 
     [self onLogInfo:[NSString stringWithFormat:@"[CCPCallService] connectToCCP restip=%@ restport=%d account=%@ password=%@ accountSid=%@ authToken=%@",proxy_addr,(int)proxy_port,accountStr,passwordStr,accountSid,authToken]];
 
-    if ([passwordStr isEqualToString:@"123456"]) {
+    if ([passwordStr isEqualToString:@"YWAYVxL2"]) {
             self.ccp_server_ip = @"192.168.177.187";
             self.ccp_serverport = 8600;
 

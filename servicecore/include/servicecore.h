@@ -977,6 +977,7 @@ public:
 	void setLiveVideoSource(void *handle,int video_source);
 	int playLiveStream(void *handle, const char * url, void *renderView);
 	int pushLiveStream(void *handle, const char * url, void *renderView);
+    // int setLiveStreamNetworkCallBack(void *handle, onLiveStreamNetworkStatusCallBack callback);
 	void stopLiveStream(void *handle);
 	void releaseLiveStream(void *handle);
 	void enableLiveStreamBeauty(void *handle);

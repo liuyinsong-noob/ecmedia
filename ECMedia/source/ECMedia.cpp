@@ -4332,6 +4332,9 @@ int ECMedia_setVideoProfileLiveStream(void *handle, int cameraIndex, CameraCapab
 	return -1;
 }
 
+
+
+
 void ECMedia_setLiveStreamNetworkCallBack(void *handle, onLiveStreamNetworkStatusCallBack callback)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
