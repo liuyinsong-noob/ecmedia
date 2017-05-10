@@ -201,6 +201,8 @@ extern BOOL globalisVoipView;
     [self.modelEngineVoip setModalEngineDelegate:self];
     
     //视频
+    remoteVideoView.contentMode = UIViewContentModeScaleAspectFit;
+    localVideoView.contentMode = UIViewContentModeScaleAspectFit;
     [self.modelEngineVoip setVideoView:remoteVideoView andLocalView:localVideoView];
 }
 

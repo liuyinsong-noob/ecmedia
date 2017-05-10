@@ -402,7 +402,7 @@
 {
     [self setFullScreen:NO];
     [super viewWillDisappear:animated];
-    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+    [[UIApplication sharedApplication]  setIdleTimerDisabled:NO];
     [self.modelEngineVoip setMute:NO];
 }
 
