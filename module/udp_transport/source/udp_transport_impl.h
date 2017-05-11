@@ -48,10 +48,11 @@ public:
     virtual WebRtc_Word32 Process();
 
     // UdpTransport functions
-    virtual WebRtc_Word32 InitializeSendSockets(
-        const char* ipAddr,
-        const WebRtc_UWord16 rtpPort,
-        const WebRtc_UWord16 rtcpPort = 0);
+    virtual WebRtc_Word32 InitializeSendSockets(const char *rtp_ipaddr,
+                                                const WebRtc_UWord16 rtpPort,
+                                                const char *rtcp_ipaddr,
+                                                const WebRtc_UWord16 rtcpPort);
+    virtual WebRtc_Word32 SetSocks5SendData(unsigned char *data, int length, bool isRTCP);
     virtual WebRtc_Word32 InitializeReceiveSockets(
         UdpTransportData* const packetCallback,
         const WebRtc_UWord16 rtpPort,
@@ -106,8 +107,8 @@ public:
     virtual bool SendSocketsInitialized() const;
     virtual bool SourcePortsInitialized() const;
     virtual bool ReceiveSocketsInitialized() const;
-    virtual WebRtc_Word32 SendRaw(const WebRtc_Word8* data,
-                                  WebRtc_UWord32 length, WebRtc_Word32 isRTCP,
+    virtual WebRtc_Word32 SendRaw(const WebRtc_Word8* data_buffer,
+                                  WebRtc_UWord32 data_length, WebRtc_Word32 isRTCP,
                                   WebRtc_UWord16 portnr = 0,
                                   const char* ip = NULL);
     virtual WebRtc_Word32 SendRTPPacketTo(const WebRtc_Word8 *data,
@@ -154,9 +155,9 @@ protected:
     void CloseSendSockets();
     void CloseReceiveSockets();
 
-    // Update _remoteRTPAddr according to _destPort and _destIP
+    // Update _remoteRTPAddr according to _destPort and _destRtpIP
     void BuildRemoteRTPAddr();
-    // Update _remoteRTCPAddr according to _destPortRTCP and _destIP
+    // Update _remoteRTCPAddr according to _destPortRTCP and _destRtpIP
     void BuildRemoteRTCPAddr();
 
     void BuildSockaddrIn(WebRtc_UWord16 portnr, const char* ip,
@@ -188,6 +189,7 @@ protected:
 private:
     void GetCachedAddress(char* ip, WebRtc_UWord32& ipSize,
                           WebRtc_UWord16& sourcePort);
+    WebRtc_Word32 sendSocks5Data(UdpSocketWrapper *socket, SocketAddress to, bool isRTCP, const WebRtc_Word8 *data, WebRtc_UWord32 length);
 
     WebRtc_Word32 _id;
     SocketFactoryInterface* _socket_creator;
@@ -211,13 +213,19 @@ private:
     // for sending are not the same.
     WebRtc_UWord16 _srcPort;
     WebRtc_UWord16 _srcPortRTCP;
+    WebRtc_Word8 * _socks5_rtp_data;
+    WebRtc_UWord32  _socks5_rtp_data_length;
+    
+    WebRtc_Word8 * _socks5_rtcp_data;
+    WebRtc_UWord32  _socks5_rtcp_data_length;
 
     // Remote port from which last received packet was sent.
     WebRtc_UWord16 _fromPort;
     WebRtc_UWord16 _fromPortRTCP;
 
     char _fromIP[kIpAddressVersion6Length];
-    char _destIP[kIpAddressVersion6Length];
+    char _destRtpIP[kIpAddressVersion6Length];
+    char _destRtcpIP[kIpAddressVersion6Length];
     char _localIP[kIpAddressVersion6Length];
     char _localMulticastIP[kIpAddressVersion6Length];
 
