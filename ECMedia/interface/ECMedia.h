@@ -331,8 +331,8 @@ ECMEDIA_API int ECMedia_audio_stop_record();
  *字符 语音通道
  */
 ECMEDIA_API int ECMedia_send_dtmf(int channelid, const char dtmfch);
-ECMEDIA_API int ECMeida_set_send_telephone_event_payload_type(int channelid, unsigned char type);
-ECMEDIA_API int ECMeida_set_recv_telephone_event_payload_type(int channelid, unsigned char type);
+ECMEDIA_API int ECMedia_set_send_telephone_event_payload_type(int channelid, unsigned char type);
+ECMEDIA_API int ECMedia_set_recv_telephone_event_payload_type(int channelid, unsigned char type);
 /*
  *每次产生channel后传进来
  */

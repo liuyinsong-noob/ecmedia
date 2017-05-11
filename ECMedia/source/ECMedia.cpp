@@ -1023,7 +1023,7 @@ int ECMedia_audio_stop_record()
     }
 }
 
-int ECMeida_set_send_telephone_event_payload_type(int channelid, unsigned char type)
+int ECMedia_set_send_telephone_event_payload_type(int channelid, unsigned char type)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d type:%d", __FUNCTION__, channelid, type);
 	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
@@ -1042,7 +1042,7 @@ int ECMeida_set_send_telephone_event_payload_type(int channelid, unsigned char t
 	}
 }
 
-int ECMeida_set_recv_telephone_event_payload_type(int channelid, unsigned char type)
+int ECMedia_set_recv_telephone_event_payload_type(int channelid, unsigned char type)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d type:%d", __FUNCTION__, channelid, type);
 	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
