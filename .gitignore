@@ -4,6 +4,8 @@ libs
 
 #appcode filder
 .idea
+#mac
+.DS_Store
 
 # c/c++
 # Prerequisites
