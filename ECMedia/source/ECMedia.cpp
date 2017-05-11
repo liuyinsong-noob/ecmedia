@@ -1023,6 +1023,43 @@ int ECMedia_audio_stop_record()
     }
 }
 
+int ECMeida_set_send_telephone_event_payload_type(int channelid, unsigned char type)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d type:%d", __FUNCTION__, channelid, type);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	
+	VoEDtmf* dtmf = VoEDtmf::GetInterface(m_voe);
+	if (dtmf) {
+		dtmf->SetSendTelephoneEventPayloadType(channelid, type);
+		dtmf->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, 0);
+		return 0;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] %s failed to get VoEBase", __FUNCTION__);
+		return -99;
+	}
+}
+
+int ECMeida_set_recv_telephone_event_payload_type(int channelid, unsigned char type)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d type:%d", __FUNCTION__, channelid, type);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+
+	VoEDtmf* dtmf = VoEDtmf::GetInterface(m_voe);
+	if (dtmf) {
+		dtmf->SetRecvTelephoneEventPayloadType(channelid, type);
+		dtmf->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, 0);
+		return 0;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] %s failed to get VoEBase", __FUNCTION__);
+		return -99;
+	}
+}
 
 int ECMedia_send_dtmf(int channelid, const char dtmfch)
 {

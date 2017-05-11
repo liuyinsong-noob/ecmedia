@@ -67,6 +67,11 @@ public:
                                                  unsigned char type) = 0;
 
 
+	virtual int SetRecvTelephoneEventPayloadType(int channel,
+		unsigned char type) = 0;
+
+	virtual int GetRecvTelephoneEventPayloadType(int channel,
+		unsigned char& type) = 0;
     // Gets the currently set dynamic payload |type| for telephone events.
     virtual int GetSendTelephoneEventPayloadType(int channel,
                                                  unsigned char& type) = 0;

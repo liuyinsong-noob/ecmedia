@@ -193,6 +193,49 @@ int VoEDtmfImpl::GetSendTelephoneEventPayloadType(int channel,
     return channelPtr->GetSendTelephoneEventPayloadType(type);
 }
 
+int VoEDtmfImpl::SetRecvTelephoneEventPayloadType(int channel,
+	unsigned char type)
+{
+	WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+		"SetRecvTelephoneEventPayloadType(channel=%d, type=%u)",
+		channel, type);
+	if (!_shared->statistics().Initialized())
+	{
+		_shared->SetLastError(VE_NOT_INITED, kTraceError);
+		return -1;
+	}
+	voe::ChannelOwner ch = _shared->channel_manager().GetChannel(channel);
+	voe::Channel* channelPtr = ch.channel();
+	if (channelPtr == NULL)
+	{
+		_shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
+			"SetRecvTelephoneEventPayloadType() failed to locate channel");
+		return -1;
+	}
+	return channelPtr->SetRecvTelephoneEventPayloadType(type);
+}
+
+int VoEDtmfImpl::GetRecvTelephoneEventPayloadType(int channel,
+	unsigned char& type)
+{
+	WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+		"GetRecvTelephoneEventPayloadType(channel=%d)", channel);
+	if (!_shared->statistics().Initialized())
+	{
+		_shared->SetLastError(VE_NOT_INITED, kTraceError);
+		return -1;
+	}
+	voe::ChannelOwner ch = _shared->channel_manager().GetChannel(channel);
+	voe::Channel* channelPtr = ch.channel();
+	if (channelPtr == NULL)
+	{
+		_shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
+			"GetRecvTelephoneEventPayloadType() failed to locate channel");
+		return -1;
+	}
+	return channelPtr->GetRecvTelephoneEventPayloadType(type);
+}
+
 int VoEDtmfImpl::PlayDtmfTone(int eventCode,
                               int lengthMs,
                               int attenuationDb)
