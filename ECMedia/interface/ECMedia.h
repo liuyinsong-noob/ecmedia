@@ -103,7 +103,13 @@ ECMEDIA_API int ECMedia_set_local_receiver(int channelid, int rtp_port, int rtcp
 /*
  *1
  */
-ECMEDIA_API int ECMedia_audio_set_send_destination(int channelid, int rtp_port, const char *rtp_addr, int source_port = -1, int rtcp_port = -1);
+ECMEDIA_API int ECMedia_audio_set_send_destination(int channelid, int rtp_port, const char *rtp_addr, int source_port, int rtcp_port, const char *rtcp_ipaddr);
+
+/**
+ *
+ */
+ECMEDIA_API int ECMedia_audio_set_socks5_send_data(int channel_id, unsigned char *data, int length, bool isRTCP);
+
 /*
  *1
  */
@@ -325,7 +331,8 @@ ECMEDIA_API int ECMedia_audio_stop_record();
  *字符 语音通道
  */
 ECMEDIA_API int ECMedia_send_dtmf(int channelid, const char dtmfch);
-
+ECMEDIA_API int ECMeida_set_send_telephone_event_payload_type(int channelid, unsigned char type);
+ECMEDIA_API int ECMeida_set_recv_telephone_event_payload_type(int channelid, unsigned char type);
 /*
  *每次产生channel后传进来
  */
@@ -419,7 +426,13 @@ ECMEDIA_API int ECMedia_video_set_local_receiver(int channelid, int rtp_port, in
 /*
  *
  */
-ECMEDIA_API int ECMedia_video_set_send_destination(int channelid, const char *rtp_addr, int rtp_port, int rtcp_port);
+ECMEDIA_API int ECMedia_video_set_send_destination(int channelid, const char *rtp_addr, int rtp_port, const char *rtcp_addr, int rtcp_port);
+
+/**
+ *
+ */
+ECMEDIA_API int ECMedia_video_set_socks5_send_data(int channel_id, unsigned char *data, int length, bool isRTCP);
+
 /*
  *
  */

@@ -237,8 +237,6 @@ void PrintConsole(const char * fmt, ...)
 		return;
 	}
 
-	static time_t last_time = time(NULL);
-
 	struct tm *pt = NULL;
 	time_t curr_time;
 	curr_time = time(NULL);
@@ -295,7 +293,6 @@ void PrintConsole(const char * fmt, ...)
 
 			char new_file[1024];
 			strcpy(new_file, g_log_media_filename);
-
 			char file_postfix[40] = { 0 };
 			sprintf(file_postfix, "_%04d%02d%02d%02d%02d%02d.bak",
 				pt->tm_year + 1900, pt->tm_mon + 1, pt->tm_mday,
@@ -839,14 +836,14 @@ int ECMedia_set_local_receiver(int channelid, int rtp_port, int rtcp_port)
     }
 }
 
-int ECMedia_audio_set_send_destination(int channelid, int rtp_port, const char *rtp_addr, int source_port, int rtcp_port)
+int ECMedia_audio_set_send_destination(int channelid, int rtp_port, const char *rtp_addr, int source_port, int rtcp_port, const char *rtcp_ipaddr)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d rtp_port:%d rtp_addr:%s source_port:%d rtcp_port:%d",
 		__FUNCTION__, channelid, rtp_port, rtp_addr?"NULL":rtp_addr, source_port,rtcp_port);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
-        int ret = base->SetSendDestination(channelid, rtp_port, rtp_addr,source_port, rtcp_port);
+        int ret = base->SetSendDestination(channelid, rtp_port, rtp_addr, source_port, rtcp_port, rtcp_ipaddr);
         base->Release();
         PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
@@ -856,6 +853,24 @@ int ECMedia_audio_set_send_destination(int channelid, int rtp_port, const char *
         return -99;
     }
 }
+
+int ECMedia_audio_set_socks5_send_data(int channel_id, unsigned char *data, int length, bool isRTCP)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins... ");
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	VoEBase *base = VoEBase::GetInterface(m_voe);
+	if (base) {
+		int ret = base->SetSocks5SendData(channel_id, data, length, isRTCP);
+		base->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
+		return ret;
+	}
+	else{
+		PrintConsole("[ECMEDIA WARNNING] %s failed to get VoEBase",__FUNCTION__);
+		return -99;
+	}
+}
+
 #ifdef VIDEO_ENABLED
 int ECMedia_video_start_receive(int channelid)
 {
@@ -1008,6 +1023,43 @@ int ECMedia_audio_stop_record()
     }
 }
 
+int ECMeida_set_send_telephone_event_payload_type(int channelid, unsigned char type)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d type:%d", __FUNCTION__, channelid, type);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	
+	VoEDtmf* dtmf = VoEDtmf::GetInterface(m_voe);
+	if (dtmf) {
+		dtmf->SetSendTelephoneEventPayloadType(channelid, type);
+		dtmf->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, 0);
+		return 0;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] %s failed to get VoEBase", __FUNCTION__);
+		return -99;
+	}
+}
+
+int ECMeida_set_recv_telephone_event_payload_type(int channelid, unsigned char type)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d type:%d", __FUNCTION__, channelid, type);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+
+	VoEDtmf* dtmf = VoEDtmf::GetInterface(m_voe);
+	if (dtmf) {
+		dtmf->SetRecvTelephoneEventPayloadType(channelid, type);
+		dtmf->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, 0);
+		return 0;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] %s failed to get VoEBase", __FUNCTION__);
+		return -99;
+	}
+}
 
 int ECMedia_send_dtmf(int channelid, const char dtmfch)
 {
@@ -1519,22 +1571,40 @@ int ECMedia_video_set_local_receiver(int channelid, int rtp_port, int rtcp_port)
     }
 }
 
-int ECMedia_video_set_send_destination(int channelid, const char *rtp_addr, int rtp_port, int rtcp_port)
+int ECMedia_video_set_socks5_send_data(int channel_id, unsigned char *data, int length, bool isRTCP)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... rtp_addr:%s rtp_port:%d rtcp_port:%d",__FUNCTION__, rtp_addr, rtp_port, rtcp_port);
+    PrintConsole("[ECMEDIA INFO] %s begins... ");
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViENetwork *network = ViENetwork::GetInterface(m_vie);
     if (network) {
-        int ret = network->SetSendDestination(channelid, rtp_addr, rtp_port, rtcp_port);
+        int ret = network->SetSocks5SendData(channel_id, data, length, isRTCP);
         network->Release();
         PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
     {
-        PrintConsole("[ECMEDIA WARNNING] failed to get ViENetwork, %s",__FUNCTION__);
+        PrintConsole("[ECMEDIA WARNNING] failed to get ViENetwork, %s", __FUNCTION__);
         return -99;
     }
+}
+
+int ECMedia_video_set_send_destination(int channelid, const char *rtp_addr, int rtp_port, const char *rtcp_addr, int rtcp_port)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins... rtp_addr:%s rtp_port:%d rtcp_port:%d",__FUNCTION__, rtp_addr, rtp_port, rtcp_port);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViENetwork *network = ViENetwork::GetInterface(m_vie);
+	if (network) {
+		int ret = network->SetSendDestination(channelid, rtp_addr, rtp_port, rtcp_addr , rtcp_port);
+        network->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViENetwork, %s",__FUNCTION__);
+		return -99;
+	}
 }
 
 int ECMedia_set_MTU(int channelid, int mtu)

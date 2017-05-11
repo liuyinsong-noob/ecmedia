@@ -581,7 +581,7 @@ Channel::OnReceivedPayloadData(const uint8_t* payloadData,
       // Can't use nack_list.data() since it's not supported by all
       // compilers.
       ResendPackets(&(nack_list[0]), static_cast<int>(nack_list.size()));
-    }else //add by ylr£¬±ÜÃâ¿ÕvectorÄÚ´æÐ¹Â¶
+    }else //add by ylrï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½vectorï¿½Ú´ï¿½Ð¹Â¶
 	{
 		nack_list.swap(nack_list);
 	}
@@ -908,6 +908,7 @@ Channel::Channel(int32_t channelId,
     _outputExternalMediaCallbackPtr(NULL),
     _timeStamp(0), // This is just an offset, RTP module will add it's own random offset
     _sendTelephoneEventPayloadType(106),
+	_recvTelephoneEventPayloadType(106),
     ntp_estimator_(Clock::GetRealTimeClock()),
     jitter_buffer_playout_timestamp_(0),
     playout_timestamp_rtp_(0),
@@ -2870,7 +2871,33 @@ Channel::GetSendTelephoneEventPayloadType(unsigned char& type)
                "GetSendTelephoneEventPayloadType() => type=%u", type);
     return 0;
 }
+int
+Channel::SetRecvTelephoneEventPayloadType(unsigned char type)
+{
+	WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId, _channelId),
+		"Channel::SetRecvTelephoneEventPayloadType() type:%d", type);
+	if (type > 127)
+	{
+		_engineStatisticsPtr->SetLastError(
+			VE_INVALID_ARGUMENT, kTraceError,
+			"SetSendTelephoneEventPayloadType() invalid type");
+		return -1;
+	}
+	_recvTelephoneEventPayloadType = type;
+	return 0;
+}
 
+int
+Channel::GetRecvTelephoneEventPayloadType(unsigned char& type)
+{
+	WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId, _channelId),
+		"Channel::GetRecvTelephoneEventPayloadType()");
+	type = _recvTelephoneEventPayloadType;
+	WEBRTC_TRACE(kTraceStateInfo, kTraceVoice,
+		VoEId(_instanceId, _channelId),
+		"GetRecvTelephoneEventPayloadType() => type=%u", type);
+	return 0;
+}
 int
 Channel::UpdateRxVadDetection(AudioFrame& audioFrame)
 {
@@ -4728,10 +4755,22 @@ WebRtc_Word32
 
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
 WebRtc_Word32
-	Channel::SetSendDestination(const WebRtc_UWord16 rtpPort,
-	const char ipAddr[64],
-	const int sourcePort,
-	const WebRtc_UWord16 rtcpPort)
+Channel::SetSocks5SendData(unsigned char *data, int length, bool isRTCP) {
+    WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
+            "Channel::SetSocks5SendData()");
+
+    if (_externalTransport)
+    {
+        _engineStatisticsPtr->SetLastError(
+                VE_EXTERNAL_TRANSPORT_ENABLED, kTraceError,
+                "SetSocks5SendData() conflict with external transport");
+        return -1;
+    }
+    return _socketTransportModule.SetSocks5SendData(data, length, isRTCP);
+}
+
+WebRtc_Word32
+	Channel::SetSendDestination(const WebRtc_UWord16 rtpPort, const char rtp_ipAddr[64], const int sourcePort, const WebRtc_UWord16 rtcpPort, const char rtcp_ipAddr[64])
 {
 	WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
 		"Channel::SetSendDestination()");
@@ -4760,8 +4799,7 @@ WebRtc_Word32
 	// However, sockets must exist if a multi-cast address is given as input.
 
 	// Build send structures and enable QoS (if enabled and supported)
-	if (_socketTransportModule.InitializeSendSockets(
-		ipAddr, rtpPort, rtcpPort) != UdpTransport::kNoSocketError)
+	if (_socketTransportModule.InitializeSendSockets(rtp_ipAddr, rtpPort, rtcp_ipAddr, rtcpPort) != UdpTransport::kNoSocketError)
 	{
 		UdpTransport::ErrorCode lastSockError(
 			_socketTransportModule.LastError());
@@ -5302,7 +5340,7 @@ bool Channel::handleRFC2833(const WebRtc_Word8 *packet,const WebRtc_Word32 packe
 	char rfcChar;
 	bool end = false;
 
-	if (rtpheader->paytype!=106 || packetlen < 16)
+	if (rtpheader->paytype != _recvTelephoneEventPayloadType || packetlen < 16)
 		return false;
 
 	_dtmfTimeStampRTP = rtpheader->timestamp;

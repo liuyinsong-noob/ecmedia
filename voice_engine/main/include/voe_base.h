@@ -222,12 +222,10 @@ public:
 	virtual int SetNetworkType(int channelid, bool isWifi) = 0;
 	//sean add end 20141224 set network type
 
-
+	//
+	virtual int SetSocks5SendData(int charnnel_id, unsigned char *data, int length, bool isRTCP) = 0;
 	// Sets the destination port and address for a specified |channel| number.
-	virtual int SetSendDestination(int channel, int port,
-		const char ipAddr[64],
-		int sourcePort = kVoEDefault,
-		int RTCPport = kVoEDefault) = 0;
+	virtual int SetSendDestination(int channel, int rtp_port, const char *rtp_ipaddr, int sourcePort, int rtcp_port, const char *rtcp_ipaddr) = 0;
 	// Gets the destination port and address for a specified |channel| number.
 	virtual int GetSendDestination(int channel, int& port, char ipAddr[64],
 		int& sourcePort, int& RTCPport) = 0;
@@ -265,7 +263,7 @@ public:
     virtual int SetAudioDataCb(int channelid, onAudioData audio_data_cb) = 0;
 //    virtual int SetSendFlag(int channelid, bool flag) = 0;
 //    virtual bool GetSendFlag(int channelid) = 0;
-    virtual bool GetRecordingIsInitialized() = 0;
+    virtual bool  GetRecordingIsInitialized() = 0;
 	virtual void* GetChannel(int channel_id) = 0;
 protected:
     VoEBase() {}
