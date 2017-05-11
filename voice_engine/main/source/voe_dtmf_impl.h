@@ -33,6 +33,12 @@ public:
     virtual int GetSendTelephoneEventPayloadType(int channel,
                                                  unsigned char& type);
 
+	virtual int SetRecvTelephoneEventPayloadType(int channel,
+		unsigned char type);
+
+	virtual int GetRecvTelephoneEventPayloadType(int channel,
+		unsigned char& type);
+
     virtual int SetDtmfFeedbackStatus(bool enable,
         bool directFeedback = false);
 

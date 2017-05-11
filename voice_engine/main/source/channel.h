@@ -309,6 +309,9 @@ public:
     int SetSendTelephoneEventPayloadType(unsigned char type);
     int GetSendTelephoneEventPayloadType(unsigned char& type);
 
+	int SetRecvTelephoneEventPayloadType(unsigned char type);
+	int GetRecvTelephoneEventPayloadType(unsigned char& type);
+
     // VoEAudioProcessingImpl
     int UpdateRxVadDetection(AudioFrame& audioFrame);
     int RegisterRxVadObserver(VoERxVadCallback &observer);
@@ -536,6 +539,7 @@ private:
     VoEMediaProcess* _outputExternalMediaCallbackPtr;
     uint32_t _timeStamp;
     uint8_t _sendTelephoneEventPayloadType;
+	uint8_t _recvTelephoneEventPayloadType;
 
     RemoteNtpTimeEstimator ntp_estimator_ GUARDED_BY(ts_stats_lock_);
 

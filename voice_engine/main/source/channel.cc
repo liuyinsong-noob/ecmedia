@@ -908,6 +908,7 @@ Channel::Channel(int32_t channelId,
     _outputExternalMediaCallbackPtr(NULL),
     _timeStamp(0), // This is just an offset, RTP module will add it's own random offset
     _sendTelephoneEventPayloadType(106),
+	_recvTelephoneEventPayloadType(106),
     ntp_estimator_(Clock::GetRealTimeClock()),
     jitter_buffer_playout_timestamp_(0),
     playout_timestamp_rtp_(0),
@@ -2870,7 +2871,33 @@ Channel::GetSendTelephoneEventPayloadType(unsigned char& type)
                "GetSendTelephoneEventPayloadType() => type=%u", type);
     return 0;
 }
+int
+Channel::SetRecvTelephoneEventPayloadType(unsigned char type)
+{
+	WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId, _channelId),
+		"Channel::SetRecvTelephoneEventPayloadType() type:%d", type);
+	if (type > 127)
+	{
+		_engineStatisticsPtr->SetLastError(
+			VE_INVALID_ARGUMENT, kTraceError,
+			"SetSendTelephoneEventPayloadType() invalid type");
+		return -1;
+	}
+	_recvTelephoneEventPayloadType = type;
+	return 0;
+}
 
+int
+Channel::GetRecvTelephoneEventPayloadType(unsigned char& type)
+{
+	WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId, _channelId),
+		"Channel::GetRecvTelephoneEventPayloadType()");
+	type = _recvTelephoneEventPayloadType;
+	WEBRTC_TRACE(kTraceStateInfo, kTraceVoice,
+		VoEId(_instanceId, _channelId),
+		"GetRecvTelephoneEventPayloadType() => type=%u", type);
+	return 0;
+}
 int
 Channel::UpdateRxVadDetection(AudioFrame& audioFrame)
 {
@@ -5302,7 +5329,7 @@ bool Channel::handleRFC2833(const WebRtc_Word8 *packet,const WebRtc_Word32 packe
 	char rfcChar;
 	bool end = false;
 
-	if (rtpheader->paytype!=106 || packetlen < 16)
+	if (rtpheader->paytype != _recvTelephoneEventPayloadType || packetlen < 16)
 		return false;
 
 	_dtmfTimeStampRTP = rtpheader->timestamp;
