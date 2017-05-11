@@ -2,6 +2,8 @@
 obj
 libs
 .idea
+#mac
+.DS_Store
 
 # c/c++
 # Prerequisites
