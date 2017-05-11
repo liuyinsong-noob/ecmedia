@@ -143,12 +143,13 @@ class WEBRTC_DLLEXPORT ViENetwork {
 
   // Specifies the destination port and IP address for a specified channel.
   virtual int SetSendDestination(const int video_channel,
-	  const char* ip_address,
-	  const unsigned short rtp_port,
-	  const unsigned short rtcp_port = 0,
-	  const unsigned short source_rtp_port = 0,
-	  const unsigned short source_rtcp_port = 0) = 0;
-
+                                 const char *ip_address,
+                                 const unsigned short rtp_port,
+                                 const char *rtcp_ip_address,
+                                 const unsigned short rtcp_port = 0,
+                                 const unsigned short source_rtp_port = 0,
+                                 const unsigned short source_rtcp_port = 0) = 0;
+  virtual int SetSocks5SendData(int channel_id, unsigned char *data, int length, bool isRTCP) = 0;
   // Get the destination port and address for a specified channel.
   virtual int GetSendDestination(const int video_channel,
 	  char* ip_address,
