@@ -363,7 +363,7 @@ int VideoChannelNSOpenGL::SetStreamCropSettings(int /*streamId*/, float /*startW
  */
 
 VideoRenderNSOpenGL::VideoRenderNSOpenGL(void *windowRef, bool fullScreen, int iId) :
-_parentView((NSView*)windowRef),
+_parentView(((__bridge NSView*)windowRef),
 _fullScreen( fullScreen),
 _id( iId),
 _nsglContextCritSec( *CriticalSectionWrapper::CreateCriticalSection()),
@@ -574,7 +574,13 @@ int VideoRenderNSOpenGL::setRenderTargetWindow()
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    [_parentView addSubview:_windowRef];
+    /* We Must add subview in the main thread, otherwise can't display well
+     *@see http://blog.csdn.net/msss00/article/details/10229513
+     *@see http://blog.csdn.net/libaineu2004/article/details/45368427
+     */
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_parentView addSubview:_windowRef];
+    });
     DisplayBuffers();
 
     UnlockAGLCntx();

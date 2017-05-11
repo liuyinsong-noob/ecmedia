@@ -2154,52 +2154,52 @@ static CCPCallService * ccpcallserviceSharedInstance;
 
     [self onLogInfo:[NSString stringWithFormat:@"[CCPCallService] connectToCCP restip=%@ restport=%d account=%@ password=%@ accountSid=%@ authToken=%@",proxy_addr,(int)proxy_port,accountStr,passwordStr,accountSid,authToken]];
 
-    if ([passwordStr isEqualToString:@"123456"]) {
-            self.ccp_server_ip = @"192.168.177.187";
-            self.ccp_serverport = 8600;
+ 
+    self.ccp_server_ip = proxy_addr;
+    self.ccp_serverport = proxy_port;
 
-            self.account = @"1005";
-            self.password = @"123456";
-            connectToCCP([self.ccp_server_ip cStringUsingEncoding:NSUTF8StringEncoding], self.ccp_serverport, [self.account cStringUsingEncoding:NSUTF8StringEncoding], [self.password cStringUsingEncoding:NSUTF8StringEncoding],[self.strCapability cStringUsingEncoding:NSUTF8StringEncoding]);
-    }
-    else if ([passwordStr isEqualToString:@"1234"]) {
-        self.ccp_server_ip = @"192.168.178.138";
-        self.ccp_serverport = 7600;
-        
-        self.account = accountStr;
-        self.password = passwordStr;
-        connectToCCP([self.ccp_server_ip cStringUsingEncoding:NSUTF8StringEncoding], self.ccp_serverport, [self.account cStringUsingEncoding:NSUTF8StringEncoding], [self.password cStringUsingEncoding:NSUTF8StringEncoding],[self.strCapability cStringUsingEncoding:NSUTF8StringEncoding]);
-    }
-    else if ([passwordStr isEqualToString:@"cloopen_password"]) {
-        self.ccp_server_ip = @"114.215.191.62 ";
-        self.ccp_serverport = 8600;
-        
-        self.account = accountStr;
-        self.password = passwordStr;
-        connectToCCP([self.ccp_server_ip cStringUsingEncoding:NSUTF8StringEncoding], self.ccp_serverport, [self.account cStringUsingEncoding:NSUTF8StringEncoding], [self.password cStringUsingEncoding:NSUTF8StringEncoding],[self.strCapability cStringUsingEncoding:NSUTF8StringEncoding]);
-    }
-    else
-    {
-        self.account = accountStr;
-        self.password = passwordStr;
-        self.ccpRestService.restip = proxy_addr;
-        self.ccpRestService.restport = proxy_port;
-        self.ccpRestService.account = accountStr;
-        self.ccpRestService.password = passwordStr;
-        self.ccpRestService.accountSid = accountSid;
-        self.ccpRestService.authToken = authToken;
-        if (self.ccpRestService && [self.password length]>0 && [self.ccpValidate length]>0)
-        {
-            NSString *xmlBody = [NSString stringWithFormat:@"<Switch><validate>%@</validate><voippwd>%@</voippwd></Switch>",self.ccpValidate,self.password];
-            NSString *strxmlBody = @"";
-            if ([xmlBody length] >0)
-            {
-                strxmlBody = [CLOPEncrypt clop_encodedData:xmlBody andPrivateKey:@"06dc87af5f37a004da50ceeb32a1b9c7"];
-                ccpRestService.ValidateStr = strxmlBody;
-            }
-        }
-        [self.ccpRestService getSipAddress];
-    }
+    self.account = accountStr;
+    self.password = passwordStr;
+    connectToCCP([self.ccp_server_ip cStringUsingEncoding:NSUTF8StringEncoding], self.ccp_serverport, [self.account cStringUsingEncoding:NSUTF8StringEncoding], [self.password cStringUsingEncoding:NSUTF8StringEncoding],[self.strCapability cStringUsingEncoding:NSUTF8StringEncoding]);
+//    }
+//    else if ([passwordStr isEqualToString:@"1234"]) {
+//        self.ccp_server_ip = @"192.168.178.138";
+//        self.ccp_serverport = 7600;
+//        
+//        self.account = accountStr;
+//        self.password = passwordStr;
+//        connectToCCP([self.ccp_server_ip cStringUsingEncoding:NSUTF8StringEncoding], self.ccp_serverport, [self.account cStringUsingEncoding:NSUTF8StringEncoding], [self.password cStringUsingEncoding:NSUTF8StringEncoding],[self.strCapability cStringUsingEncoding:NSUTF8StringEncoding]);
+//    }
+//    else if ([passwordStr isEqualToString:@"cloopen_password"]) {
+//        self.ccp_server_ip = @"114.215.191.62 ";
+//        self.ccp_serverport = 8600;
+//        
+//        self.account = accountStr;
+//        self.password = passwordStr;
+//        connectToCCP([self.ccp_server_ip cStringUsingEncoding:NSUTF8StringEncoding], self.ccp_serverport, [self.account cStringUsingEncoding:NSUTF8StringEncoding], [self.password cStringUsingEncoding:NSUTF8StringEncoding],[self.strCapability cStringUsingEncoding:NSUTF8StringEncoding]);
+//    }
+//    else
+//    {
+//        self.account = accountStr;
+//        self.password = passwordStr;
+//        self.ccpRestService.restip = proxy_addr;
+//        self.ccpRestService.restport = proxy_port;
+//        self.ccpRestService.account = accountStr;
+//        self.ccpRestService.password = passwordStr;
+//        self.ccpRestService.accountSid = accountSid;
+//        self.ccpRestService.authToken = authToken;
+//        if (self.ccpRestService && [self.password length]>0 && [self.ccpValidate length]>0)
+//        {
+//            NSString *xmlBody = [NSString stringWithFormat:@"<Switch><validate>%@</validate><voippwd>%@</voippwd></Switch>",self.ccpValidate,self.password];
+//            NSString *strxmlBody = @"";
+//            if ([xmlBody length] >0)
+//            {
+//                strxmlBody = [CLOPEncrypt clop_encodedData:xmlBody andPrivateKey:@"06dc87af5f37a004da50ceeb32a1b9c7"];
+//                ccpRestService.ValidateStr = strxmlBody;
+//            }
+//        }
+//        [self.ccpRestService getSipAddress];
+//    }
 
 
 
