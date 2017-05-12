@@ -83,6 +83,7 @@ VieDesktopCapturer::~VieDesktopCapturer()
     }
 
     delete &desktop_capture_event_;
+    delete screen_capturer_;
 }
 
 
