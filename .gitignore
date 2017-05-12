@@ -152,3 +152,12 @@ google-services.json
 freeline.py
 freeline/
 freeline_project_description.json
+
+#vc
+ECMedia/Ecmedia.aps
+demo_win/.vs
+demo_Win/MyWebRtc.VC.VC.opendb
+demo_Win/MyWebRtc.VC.db
+demo_win/Win32
+demo_Win/ipch
+demo_Win/serphonetest/serphonetest.aps
