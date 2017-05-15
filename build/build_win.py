@@ -24,7 +24,7 @@ def build():
 	else:
 		print'%s are not exist!'%CompilePath
         
-def copyfile():
+def copyFiles():
     if os.path.exists(RarPath):
        pass
     else:
@@ -35,6 +35,7 @@ def copyfile():
     print os.system('copy ' + SdkCommonHeader + ' ' + RarPath)
     print os.system('copy ' + TypesDefsHeader + ' ' + RarPath)
 
+def rarFiles():
     os.chdir(BuildPath)
     print os.system('7z a -tzip release.zip release')
 
@@ -136,14 +137,9 @@ def writeReleaseNote(timestamp, sha):
     fdNew.write(origContent)
 		
 if __name__=='__main__' :
+    build()
+    copyFiles()
     timestamp, sha = getLastCommitInfo()
-    timestamp = "1494501657"
     writeReleaseNote(timestamp, sha)
-    #getGitLog()
-    #getEcmediaVersion()
-    #copyfile()
-    #build() 
-    #print'                                                                                  '
-    #print'------------------------****   code compile success   ****------------------------'
-    #copyfile()
-    #print'------------------------****   compress file success   ****------------------------'
+    rarFiles()
+	
