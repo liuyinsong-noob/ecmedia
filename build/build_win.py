@@ -117,6 +117,10 @@ def writeReleaseNote(timestamp, sha):
 
     index = 1
     if isEcmediaHeaderChanged(timestamp):
+        fdNew.write((str(index) + '. ' + '接口改变').decode('utf-8').encode('gbk'))
+        fdNew.write('\n')
+        index = index + 1
+    else:
         fdNew.write((str(index) + '. ' + '接口不变').decode('utf-8').encode('gbk'))
         fdNew.write('\n')
         index = index + 1
@@ -129,9 +133,10 @@ def writeReleaseNote(timestamp, sha):
     fdNew.write(origContent)
 		
 if __name__=='__main__' :
-    #build()
-    #copyFiles()
+    build()
+    copyFiles()
     timestamp, sha = getLastCommitInfo()
+    timestamp = str(int(timestamp) + 1)
     writeReleaseNote(timestamp, sha)
-    #rarFiles()
+    rarFiles()
 	
