@@ -1193,6 +1193,7 @@
 		AD8D73B81C59FC5300FB246D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEPLOYMENT_POSTPROCESSING = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"OPUS_EXPORT=",
@@ -1205,6 +1206,7 @@
 					FIXED_POINT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GENERATE_MASTER_OBJECT_FILE = NO;
 				HEADER_SEARCH_PATHS = (
 					../src/silk,
 					../src/include,
@@ -1228,6 +1230,7 @@
 		AD8D73B91C59FC5300FB246D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEPLOYMENT_POSTPROCESSING = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"OPUS_EXPORT=",
@@ -1240,6 +1243,7 @@
 					FIXED_POINT,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GENERATE_MASTER_OBJECT_FILE = NO;
 				HEADER_SEARCH_PATHS = (
 					../src/silk,
 					../src/include,
@@ -1262,6 +1266,7 @@
 		ADC54A531D485CFB00A5C852 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEPLOYMENT_POSTPROCESSING = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"OPUS_EXPORT=",
@@ -1273,6 +1278,8 @@
 					OPUS_ARM_ASM,
 					FIXED_POINT,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GENERATE_MASTER_OBJECT_FILE = NO;
 				HEADER_SEARCH_PATHS = (
 					../src/silk,
 					../src/include,
@@ -1297,6 +1304,7 @@
 		ADC54A541D485CFB00A5C852 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEPLOYMENT_POSTPROCESSING = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"OPUS_EXPORT=",
@@ -1308,6 +1316,8 @@
 					OPUS_ARM_ASM,
 					FIXED_POINT,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GENERATE_MASTER_OBJECT_FILE = NO;
 				HEADER_SEARCH_PATHS = (
 					../src/silk,
 					../src/include,
