@@ -61,7 +61,7 @@ typedef int(*onLiveStreamVideoResolution)(void *handle, int width, int height);
  */
 ECMEDIA_API int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level, int lenMb);
 ECMEDIA_API int ECMedia_un_trace();
-ECMEDIA_API const char* ECMeida_get_Version();
+ECMEDIA_API const char* ECMedia_get_Version();
 ECMEDIA_API void PrintConsole(const char * fmt,...);
 /*
  *1
