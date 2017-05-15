@@ -46,17 +46,6 @@ def getEcmediaVersion():
         if line.startswith('#define ECMEDIA_VERSION'):
 	    version = line.split(' ')[-1]
     return version.strip('\n').strip('"')
-    
-def getGitLog():
-    if os.path.exists(ProjectPath):                 
-        os.chdir(ProjectPath)
-        output = os.popen('git log --after=1494501657 --pretty=format:"logstart-"%H-%ct-%cn-%s --no-merges --stat')
-	outputStr = output.read().split('\n')
-	for line in outputStr:
-	    if line.startswith('logstart'):
-	        print "------------------------------------------------------------------------------------------"
-		print "\n\n"
-	    print line.decode('utf-8')
 
 def getLatestSHA(timestamp):
     if os.path.exists(ProjectPath):                 
@@ -105,9 +94,12 @@ def getLastCommitInfo():
     fdOrig = open(ProjectPath + '\\ReleaseNotes.txt')
     for line in fdOrig.read().split('\n'):
         if line.startswith('Version'):
-            timestamp = line.split(' ')[2]
-            sha = line.split(' ')[3]
-            return (timestamp, sha)
+            if len(line.split(' ')) == 4:
+                timestamp = line.split(' ')[2]
+                sha = line.split(' ')[3]
+                return (timestamp, sha)
+            else:
+                return (None, None)
 	
 def writeReleaseNote(timestamp, sha):
     fdOrig = open(ProjectPath + '\\ReleaseNotes.txt')
@@ -137,9 +129,9 @@ def writeReleaseNote(timestamp, sha):
     fdNew.write(origContent)
 		
 if __name__=='__main__' :
-    build()
-    copyFiles()
+    #build()
+    #copyFiles()
     timestamp, sha = getLastCommitInfo()
     writeReleaseNote(timestamp, sha)
-    rarFiles()
+    #rarFiles()
 	
