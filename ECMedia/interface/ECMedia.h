@@ -345,7 +345,7 @@ ECMEDIA_API int ECMedia_set_voe_cb(int channelid, onVoeCallbackOnError voe_callb
 /*
  * ONLY USE FOR PEER CONNECTION FOR AUDIO
  */
-ECMEDIA_API int ECMedia_sendRaw(int channelid, int8_t *data, uint32_t length, int32_t isRTCP, uint16_t port = 0, const char* ip = NULL);
+ECMEDIA_API int ECMedia_sendRaw(int channelid, int8_t *data, uint32_t length, bool isRTCP, uint16_t port = 0, const char* ip = NULL);
 
 ECMEDIA_API int ECMedia_EnableIPV6(int channel, bool flag);
 ECMEDIA_API int ECMedia_IsIPv6Enabled(int channel);
