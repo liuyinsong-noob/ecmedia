@@ -305,7 +305,7 @@ void PrintConsole(const char * fmt, ...)
 	}
 }
 
-const char* ECMeida_get_Version()
+const char* ECMedia_get_Version()
 {
     if( strlen(gVersionString) <= 0 )
     {
@@ -380,7 +380,7 @@ int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level, int le
 
 	media_init_print_log();
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
-    PrintConsole("[ECMEDIA INFO] ECMedia version:%s", ECMeida_get_Version());
+    PrintConsole("[ECMEDIA INFO] ECMedia version:%s", ECMedia_get_Version());
     Trace::CreateTrace();
     Trace::SetTraceCallback(&g_mediaTraceCallBack);
 
@@ -1027,7 +1027,7 @@ int ECMedia_audio_stop_record()
     }
 }
 
-int ECMeida_set_send_telephone_event_payload_type(int channelid, unsigned char type)
+int ECMedia_set_send_telephone_event_payload_type(int channelid, unsigned char type)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d type:%d", __FUNCTION__, channelid, type);
 	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
@@ -1046,7 +1046,7 @@ int ECMeida_set_send_telephone_event_payload_type(int channelid, unsigned char t
 	}
 }
 
-int ECMeida_set_recv_telephone_event_payload_type(int channelid, unsigned char type)
+int ECMedia_set_recv_telephone_event_payload_type(int channelid, unsigned char type)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d type:%d", __FUNCTION__, channelid, type);
 	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
