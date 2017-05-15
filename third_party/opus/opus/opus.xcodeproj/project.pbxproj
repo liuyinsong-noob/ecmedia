@@ -1204,6 +1204,7 @@
 					OPUS_ARM_ASM,
 					FIXED_POINT,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../src/silk,
 					../src/include,
@@ -1238,6 +1239,7 @@
 					OPUS_ARM_ASM,
 					FIXED_POINT,
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../src/silk,
 					../src/include,
