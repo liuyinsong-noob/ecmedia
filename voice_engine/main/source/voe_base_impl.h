@@ -184,11 +184,11 @@ private:
 
 public:
 	virtual WebRtc_Word32 SendRaw(int channel,
-		const WebRtc_Word8* data,
-		WebRtc_UWord32 length,
-		WebRtc_Word32 isRTCP,
-		WebRtc_UWord16 portnr = 0,
-		const char* ip = NULL);
+            const WebRtc_Word8 *data,
+            WebRtc_UWord32 length,
+            bool isRTCP,
+            WebRtc_UWord16 portnr = 0,
+            const char *ip = NULL);
 
 	//    Sean add begin 20131119 noise suppression
 	virtual int NoiseSuppression(const void* audioSamples,
