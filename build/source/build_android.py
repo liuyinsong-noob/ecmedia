@@ -10,8 +10,9 @@ CompilePath= ProjectPath + '\\jni'
 LibFilesPath = ProjectPath + '\\libs\\armeabi'
     
 class BuildAndroid(BuildBase):
-    def __init__(self):
-        pass
+    def __init__(self, buildType):
+        platform = 'android'
+        BuildBase.__init__(self, buildType, platform)
         
     def build(self):
         if os.path.exists(CompilePath):
@@ -29,5 +30,9 @@ class BuildAndroid(BuildBase):
         print os.system('copy ' + LibFilesPath + '\libECMedia.so ' + RarLibsPath)
         
 if __name__=='__main__' :
-    buildAndroid = BuildAndroid()
+    buildType = 'release'
+    if len(sys.argv) != 1:
+        buildType = sys.argv[1]
+        
+    buildAndroid = BuildAndroid(buildType)
     buildAndroid.run()

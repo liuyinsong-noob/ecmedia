@@ -10,8 +10,9 @@ CompilePath= ProjectPath + '\\demo_Win'
 LibFilesPath = ProjectPath + '\\demo_Win\\build\\Win32\\Release'
     
 class BuildWindows(BuildBase):
-    def __init__(self):
-        pass
+    def __init__(self, buildType):
+        platform = 'windows'
+        BuildBase.__init__(self, buildType, platform)
         
     def build(self):
         if os.path.exists(CompilePath):
@@ -30,5 +31,8 @@ class BuildWindows(BuildBase):
         print os.system('copy ' + LibFilesPath + '\libx264-148.dll ' + RarLibsPath)
         
 if __name__=='__main__' :
-    buildWindows = BuildWindows()
+    buildType = 'release'
+    if len(sys.argv) != 1:
+        buildType = sys.argv[1]
+    buildWindows = BuildWindows(buildType)
     buildWindows.run()

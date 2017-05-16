@@ -18,8 +18,9 @@ RarIncludePath = RarPath + '\\include'
 RarLibsPath = RarPath + '\\libs'
 
 class BuildBase:
-    def __init__(self):
-        pass
+    def __init__(self, buildType, platform):
+        self.buildType = buildType
+        self.platform = platform
     
     def run(self):
         self.build()
@@ -28,6 +29,8 @@ class BuildBase:
         timestamp = str(int(timestamp) + 1)
         self.writeReleaseNote(timestamp, sha)
         self.rarFiles()
+        self.copyToRemote(self.platform)
+
     def build():
         pass
     
@@ -65,7 +68,7 @@ class BuildBase:
         version = None
         for line in fd.readlines():
             if line.startswith('#define ECMEDIA_VERSION'):
-			    version = line.split(' ')[-1]
+                version = line.split(' ')[-1]
         return version.strip('\n').strip('"')
 
     def getLatestSHA(self, timestamp):
@@ -152,3 +155,8 @@ class BuildBase:
             
         fdNew.write('\n')
         fdNew.write(origContent)
+    
+    def copyToRemote(self, platform):
+        os.chdir(BuildPath)
+        rarFileName = 'release-' + self.getEcmediaVersion() + '.zip' 
+        print os.system('scp -i id_rsa.jenkins ' + rarFileName + ' jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/' + platform)
