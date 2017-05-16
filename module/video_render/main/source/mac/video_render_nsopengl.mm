@@ -363,7 +363,7 @@ int VideoChannelNSOpenGL::SetStreamCropSettings(int /*streamId*/, float /*startW
  */
 
 VideoRenderNSOpenGL::VideoRenderNSOpenGL(void *windowRef, bool fullScreen, int iId) :
-_parentView(((__bridge NSView*)windowRef),
+_parentView((__bridge NSView*)windowRef),
 _fullScreen( fullScreen),
 _id( iId),
 _nsglContextCritSec( *CriticalSectionWrapper::CreateCriticalSection()),
