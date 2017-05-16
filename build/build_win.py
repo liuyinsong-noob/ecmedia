@@ -7,20 +7,23 @@ ProjectPath = os.getcwd() + '\..'
 CompilePath= ProjectPath + '\\demo_Win'
 EcmediaCpp = ProjectPath + '\\ECMedia\\source\\ECMedia.cpp'
 
+EcmediaHeader = ProjectPath + '\\ECMedia\\interface\\ECMedia.h'
 CommonTypesHeader = ProjectPath + '\\module\\common_types.h'
 SdkCommonHeader = ProjectPath + '\\module\\sdk_common.h'
 TypesDefsHeader = ProjectPath + '\\module\\typedefs.h'
 
 ReleaseNoteFile = ProjectPath + '\\ReleaseNotes.txt'
 
-ReleaseFiles = ProjectPath + '\\demo_Win\\build\\Win32\\Release'
-RarPath = ProjectPath + '\\build\\release' 
+ReleaseFiles = ProjectPath + '\\demo_Win\\build\\Win32\\Release' 
 BuildPath = ProjectPath + '\\build'
+RarPath = ProjectPath + '\\build\\release'
+RarIncludePath = RarPath + '\\include'
+RarLibsPath = RarPath + '\\libs'
     
 def build():
 	if os.path.exists(CompilePath):
 		os.chdir(CompilePath)
-		print os.system('devenv.com MyWebRtc.sln /Project ECMedia /Build')
+		print os.system('devenv.com MyWebRtc.sln /build "Release|Win32" /Project ECMedia')
 	else:
 		print'%s are not exist!'%CompilePath
         
@@ -29,15 +32,26 @@ def copyFiles():
        pass
     else:
        os.mkdir(RarPath)
-    print os.system('copy ' + ReleaseFiles + '\Ecmedia.* ' + RarPath)
-    print os.system('copy ' + ReleaseFiles + '\libx264-148.dll ' + RarPath)
-    print os.system('copy ' + CommonTypesHeader + ' ' + RarPath)
-    print os.system('copy ' + SdkCommonHeader + ' ' + RarPath)
-    print os.system('copy ' + TypesDefsHeader + ' ' + RarPath)
+    if os.path.exists(RarIncludePath):
+       pass
+    else:
+       os.mkdir(RarIncludePath)
+    if os.path.exists(RarLibsPath):
+       pass
+    else:
+       os.mkdir(RarLibsPath)
+	
+    print os.system('copy ' + ReleaseFiles + '\Ecmedia.* ' + RarLibsPath)
+    print os.system('copy ' + ReleaseFiles + '\libx264-148.dll ' + RarLibsPath)
+    print os.system('copy ' + EcmediaHeader + ' ' + RarIncludePath)
+    print os.system('copy ' + CommonTypesHeader + ' ' + RarIncludePath)
+    print os.system('copy ' + SdkCommonHeader + ' ' + RarIncludePath)
+    print os.system('copy ' + TypesDefsHeader + ' ' + RarIncludePath)
 
 def rarFiles():
     os.chdir(BuildPath)
-    print os.system('7z a -tzip release.zip release')
+    rarFileName = 'release-' + getEcmediaVersion() + '.zip'
+    print os.system('7z a -tzip ' + rarFileName + ' release')
 
 def getEcmediaVersion():
     fd = open(EcmediaCpp)
