@@ -197,6 +197,13 @@
 			remoteGlobalIDString = ADE8C72E1C55FCF5002C707C;
 			remoteInfo = common_audio;
 		};
+		AD6C06941ECC7F4700BB33CC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FBB43FE1E72925C007DBD1D /* protobuf.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0596B6421AAACEC10047B4CA;
+			remoteInfo = protobuf;
+		};
 		AD838BE81D420BB400050E87 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AD0199771D23655A003C2BB9 /* yuv.xcodeproj */;
@@ -2132,6 +2139,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				AD6C06951ECC7F4700BB33CC /* PBXTargetDependency */,
 				AD3920BE1EA645780099B83F /* PBXTargetDependency */,
 				ADF261361DB8B906008420B0 /* PBXTargetDependency */,
 				1AFBD1651DAE6677009B8D23 /* PBXTargetDependency */,
@@ -2854,6 +2862,11 @@
 			isa = PBXTargetDependency;
 			name = srtp;
 			targetProxy = AD3920BD1EA645780099B83F /* PBXContainerItemProxy */;
+		};
+		AD6C06951ECC7F4700BB33CC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = protobuf;
+			targetProxy = AD6C06941ECC7F4700BB33CC /* PBXContainerItemProxy */;
 		};
 		AD838BE91D420BB400050E87 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
