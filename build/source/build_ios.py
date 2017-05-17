@@ -30,6 +30,13 @@ class BuildIos(BuildBase):
         sourceFile = os.path.join(self.LibFilesPath, 'libECMedia.a')
         print os.system('cp ' + sourceFile + ' ' + self.RarLibsPath)
         
+    def rarFiles(self):
+        os.chdir(self.BuildPath)
+        rarFileName = 'release-' + self.getEcmediaVersion() + '.zip'
+        targetFile = os.path.join(self.BuildPath, rarFileName)
+        sourceFile = os.path.join(self.BuildPath, 'release')
+        print os.system('zip -r ' + targetFile + ' ' + sourceFile)
+        
 if __name__=='__main__' :
     buildType = 'release'
     if len(sys.argv) != 1:
