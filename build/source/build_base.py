@@ -3,24 +3,23 @@
 import os
 import sys
 
-ProjectPath = os.getcwd() + '\..\..'
-
-EcmediaCpp = ProjectPath + '\\ECMedia\\source\\ECMedia.cpp'
-EcmediaHeader = ProjectPath + '\\ECMedia\\interface\\ECMedia.h'
-CommonTypesHeader = ProjectPath + '\\module\\common_types.h'
-SdkCommonHeader = ProjectPath + '\\module\\sdk_common.h'
-TypesDefsHeader = ProjectPath + '\\module\\typedefs.h'
-ReleaseNoteFile = ProjectPath + '\\ReleaseNotes.txt'
-
-BuildPath = ProjectPath + '\\build'
-RarPath = ProjectPath + '\\build\\release'
-RarIncludePath = RarPath + '\\include'
-RarLibsPath = RarPath + '\\libs'
-
 class BuildBase:
-    def __init__(self, buildType, platform):
+    def __init__(self, buildType, platform, projectPath):
         self.buildType = buildType
         self.platform = platform
+        
+        self.ProjectPath = projectPath
+        self.EcmediaCpp = os.path.join(self.ProjectPath, 'ECMedia', 'source', 'ECMedia.cpp')
+        self.EcmediaHeader = os.path.join(self.ProjectPath, 'ECMedia', 'interface', 'ECMedia.h')
+        self.CommonTypesHeader = os.path.join(self.ProjectPath, 'module', 'common_types.h')
+        self.SdkCommonHeader = os.path.join(self.ProjectPath, 'module', 'sdk_common.h')
+        self.TypesDefsHeader = os.path.join(self.ProjectPath, 'module', 'typedefs.h')
+        self.ReleaseNoteFile = os.path.join(self.ProjectPath, 'ReleaseNotes.txt')
+
+        self.BuildPath = os.path.join(self.ProjectPath, 'build')
+        self.RarPath = os.path.join(self.ProjectPath, 'build', 'release')
+        self.RarIncludePath = os.path.join(self.RarPath, 'include')
+        self.RarLibsPath = os.path.join(self.RarPath, 'libs')
     
     def run(self):
         self.build()
@@ -38,42 +37,44 @@ class BuildBase:
         pass
       
     def collectHeaderFiles(self):
-        if os.path.exists(RarIncludePath):
+        if os.path.exists(self.RarIncludePath):
            pass
         else:
            os.mkdir(RarIncludePath)
 
-        print os.system('copy ' + EcmediaHeader + ' ' + RarIncludePath)
-        print os.system('copy ' + CommonTypesHeader + ' ' + RarIncludePath)
-        print os.system('copy ' + SdkCommonHeader + ' ' + RarIncludePath)
-        print os.system('copy ' + TypesDefsHeader + ' ' + RarIncludePath)
+        print os.system('cp ' + self.EcmediaHeader + ' ' + self.RarIncludePath)
+        print os.system('cp ' + self.CommonTypesHeader + ' ' + self.RarIncludePath)
+        print os.system('cp ' + self.SdkCommonHeader + ' ' + self.RarIncludePath)
+        print os.system('cp ' + self.TypesDefsHeader + ' ' + self.RarIncludePath)
            
         
     def collectFiles(self):
-        if os.path.exists(RarPath):
+        if os.path.exists(self.RarPath):
            pass
         else:
-           os.mkdir(RarPath)
+           os.mkdir(self.RarPath)
 
         self.collectLibFiles()
         self.collectHeaderFiles()
 
     def rarFiles(self):
-        os.chdir(BuildPath)
+        os.chdir(self.BuildPath)
         rarFileName = 'release-' + self.getEcmediaVersion() + '.zip'
-        print os.system('7z a -tzip ' + BuildPath + '\\' + rarFileName + ' ' + BuildPath + '\\release')
+        targetFile = os.path.join(self.BuildPath, rarFileName)
+        sourceFile = os.path.join(self.BuildPath, 'release')
+        print os.system('7z a -tzip ' + targetFile + ' ' + sourceFile)
 
     def getEcmediaVersion(self):
-        fd = open(EcmediaCpp)
+        fd = open(self.EcmediaCpp)
         version = None
         for line in fd.readlines():
             if line.startswith('#define ECMEDIA_VERSION'):
                 version = line.split(' ')[-1]
-        return version.strip('\n').strip('"')
+        return version.strip('\r\n').strip('\n').strip('"')
 
     def getLatestSHA(self, timestamp):
-        if os.path.exists(ProjectPath):                 
-            os.chdir(ProjectPath)
+        if os.path.exists(self.ProjectPath):                 
+            os.chdir(self.ProjectPath)
             output = os.popen('git log --after=' + timestamp + ' --pretty=format:"logstart-"%H-%ct-%cn-%s --no-merges --stat')
         outputStr = output.read().split('\n')
         for line in outputStr:
@@ -82,8 +83,8 @@ class BuildBase:
                 return latestSHA
 
     def getLatestTimestamp(self, timestamp):
-        if os.path.exists(ProjectPath):                 
-            os.chdir(ProjectPath)
+        if os.path.exists(self.ProjectPath):                 
+            os.chdir(self.ProjectPath)
             output = os.popen('git log --after=' + timestamp + ' --pretty=format:"logstart-"%H-%ct-%cn-%s --no-merges --stat')
         outputStr = output.read().split('\n')
         for line in outputStr:
@@ -92,8 +93,8 @@ class BuildBase:
                 return latestTimestamp
                 
     def getCommitLogs(self, timestamp):
-        if os.path.exists(ProjectPath):                 
-            os.chdir(ProjectPath)
+        if os.path.exists(self.ProjectPath):                 
+            os.chdir(self.ProjectPath)
             output = os.popen('git log --after=' + timestamp + ' --pretty=format:"logstart-"%H-%ct-%cn-%s --no-merges --stat')
         outputStr = output.read().split('\n')
         commitLogs = []
@@ -104,8 +105,8 @@ class BuildBase:
         return commitLogs
         
     def isEcmediaHeaderChanged(self, timestamp):
-        if os.path.exists(ProjectPath):                 
-            os.chdir(ProjectPath)
+        if os.path.exists(self.ProjectPath):                 
+            os.chdir(self.ProjectPath)
             output = os.popen('git log --after=' + timestamp + ' --pretty=format:"logstart-"%H-%ct-%cn-%s --no-merges --stat')
         
         bEcmediaHeaderChanged = False
@@ -115,7 +116,7 @@ class BuildBase:
         return bEcmediaHeaderChanged
         
     def getLastCommitInfo(self):
-        fdOrig = open(ProjectPath + '\\ReleaseNotes.txt')
+        fdOrig = open(self.ProjectPath + '//ReleaseNotes.txt')
         for line in fdOrig.read().split('\n'):
             if line.startswith('Version'):
                 if len(line.split(' ')) == 4:
@@ -126,7 +127,7 @@ class BuildBase:
                     return (None, None)
         
     def writeReleaseNote(self, timestamp, sha):
-        fdOrig = open(ProjectPath + '\\ReleaseNotes.txt')
+        fdOrig = open(self.ProjectPath + '//ReleaseNotes.txt')
         origContent = fdOrig.read()
 
         ecmediaVersion = self.getEcmediaVersion()
@@ -134,7 +135,7 @@ class BuildBase:
         latestTimestamp = self.getLatestTimestamp(timestamp)
         commitLogs = self.getCommitLogs(timestamp)
 
-        fdNew = open(RarPath + '\ReleaseNotes.txt', 'wb')
+        fdNew = open(self.RarPath + '\ReleaseNotes.txt', 'wb')
         fdNew.write('Version' + ' ' + ecmediaVersion)
         fdNew.write(' ' + latestTimestamp + ' ' + latestSHA)
         fdNew.write('\n')
@@ -157,6 +158,6 @@ class BuildBase:
         fdNew.write(origContent)
     
     def copyToRemote(self, platform):
-        os.chdir(BuildPath)
+        os.chdir(self.BuildPath)
         rarFileName = 'release-' + self.getEcmediaVersion() + '.zip' 
         print os.system('scp -i id_rsa.jenkins ' + rarFileName + ' jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/' + platform)

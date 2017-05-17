@@ -5,30 +5,32 @@ import sys
 
 from build_base import BuildBase
 from build_base import *
-
-CompilePath= ProjectPath + '\\demo_Win'
-LibFilesPath = ProjectPath + '\\demo_Win\\build\\Win32\\Release'
     
 class BuildWindows(BuildBase):
     def __init__(self, buildType):
         platform = 'windows'
-        BuildBase.__init__(self, buildType, platform)
+        projectPath = os.path.join(os.getcwd(), '..', '..')
+        self.CompilePath= os.path.join(projectPath, 'demo_Win')
+        self.LibFilesPath = os.path.join(projectPath, 'demo_Win', 'build', 'Win32', 'Release')
+        BuildBase.__init__(self, buildType, platform, projectPath)
         
     def build(self):
-        if os.path.exists(CompilePath):
-            os.chdir(CompilePath)
+        if os.path.exists(self.CompilePath):
+            os.chdir(self.CompilePath)
             print os.system('devenv.com MyWebRtc.sln /build "Release|Win32" /Project ECMedia')
         else:
-            print'%s are not exist!'%CompilePath
+            print'%s are not exist!'%self.CompilePath
 
     def collectLibFiles(self):
-        if os.path.exists(RarLibsPath):
+        if os.path.exists(self.RarLibsPath):
            pass
         else:
-           os.mkdir(RarLibsPath)
+           os.mkdir(self.RarLibsPath)
 
-        print os.system('copy ' + LibFilesPath + '\Ecmedia.* ' + RarLibsPath)
-        print os.system('copy ' + LibFilesPath + '\libx264-148.dll ' + RarLibsPath)
+        ecmediaTargetFile = os.path.join(self.LibFilesPath + 'Ecmedia.*')
+        x264TargetFile = os.path.join(self.LibFilesPath + 'libx264-148.dll')
+        print os.system('copy ' + ecmediaTargetFile + ' ' + self.RarLibsPath)
+        print os.system('copy ' + x264TargetFile + ' ' + self.RarLibsPath)
         
 if __name__=='__main__' :
     buildType = 'release'

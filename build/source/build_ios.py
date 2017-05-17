@@ -6,18 +6,18 @@ import sys
 from build_base import BuildBase
 from build_base import *
     
-class BuildAndroid(BuildBase):
+class BuildIos(BuildBase):
     def __init__(self, buildType):
-        platform = 'android'
+        platform = 'ios'
         projectPath = os.path.join(os.getcwd(), '..', '..')
-        self.CompilePath = os.path.join(projectPath, 'jni')
-        self.LibFilesPath = os.path.join(projectPath, 'libs', 'armeabi')
+        self.CompilePath = os.path.join(projectPath, 'ECMedia', 'ECMedia')
+        self.LibFilesPath = os.path.join(projectPath, 'ECMedia', 'ECMedia', 'build', 'Release-iphoneos')
         BuildBase.__init__(self, buildType, platform, projectPath)
         
     def build(self):
         if os.path.exists(self.CompilePath):
             os.chdir(self.CompilePath)
-            print os.system('ndk-build')
+            print os.system('xcodebuild -project ECMedia.xcodeproj')
         else:
             print'%s are not exist!'%self.CompilePath
 
@@ -27,7 +27,7 @@ class BuildAndroid(BuildBase):
         else:
            os.mkdir(self.RarLibsPath)
 
-        sourceFile = os.path.join(self.LibFilesPath, 'libECMedia.so')
+        sourceFile = os.path.join(self.LibFilesPath, 'libECMedia.a')
         print os.system('cp ' + sourceFile + ' ' + self.RarLibsPath)
         
 if __name__=='__main__' :
@@ -35,5 +35,5 @@ if __name__=='__main__' :
     if len(sys.argv) != 1:
         buildType = sys.argv[1]
         
-    buildAndroid = BuildAndroid(buildType)
-    buildAndroid.run()
+    buildIos = BuildIos(buildType)
+    buildIos.run()
