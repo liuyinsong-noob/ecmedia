@@ -40,7 +40,7 @@ class BuildBase:
         if os.path.exists(self.RarIncludePath):
            pass
         else:
-           os.mkdir(RarIncludePath)
+           os.mkdir(self.RarIncludePath)
 
         print os.system('cp ' + self.EcmediaHeader + ' ' + self.RarIncludePath)
         print os.system('cp ' + self.CommonTypesHeader + ' ' + self.RarIncludePath)
