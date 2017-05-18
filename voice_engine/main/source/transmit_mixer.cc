@@ -1341,6 +1341,25 @@ bool TransmitMixer::IsRecordingMic()
     return _fileRecording;
 }
 
+#ifdef WIN32_MIC
+bool TransmitMixer::silence(const short* data, int sample_length, float thres, float probility)
+{
+	int real_thres = 0;
+	float f = powf(10, thres / 20.0f) * powf(2, 16);
+	real_thres = f + 0.5f;
+	int cnt = 0;
+	for (int i = 0; i < sample_length; ++i)
+	{
+		if (data[i] > real_thres || data[i] < -real_thres)
+			cnt++;
+	}
+	if (cnt / (float)sample_length > probility)
+		return false;
+	else
+		return true;
+}
+#endif
+
 void TransmitMixer::GenerateAudioFrame(const int16_t* audio,
                                        int samples_per_channel,
                                        int num_channels,
@@ -1373,7 +1392,23 @@ void TransmitMixer::GenerateAudioFrame(const int16_t* audio,
                            mono_buffer_.get(),
                            &resampler_,
                            &_audioFrame);
+#ifdef WIN32_MIC
+	static int currentDataLen = 0;
+
+	if (currentDataLen >= 32000)
+		currentDataLen = 0;
+
+	memcpy((char *)_data1S+currentDataLen, (char *)_audioFrame.data_, 320);
+	currentDataLen += 320;
+#endif
 }
+
+#ifdef WIN32_MIC
+bool TransmitMixer::IsSilence()
+{
+	return silence(_data1S, 16000, (float)-65.0, (float)0.1);
+}
+#endif
 
 int32_t TransmitMixer::RecordAudioToFile(
     uint32_t mixingFrequency)
