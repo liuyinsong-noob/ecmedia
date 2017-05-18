@@ -1323,11 +1323,11 @@ int VoEBaseImpl::SetNetworkType(int channelid, bool isWifi)
 //sean add end 20141224 set network type
 
 WebRtc_Word32 VoEBaseImpl::SendRaw(int channel,
-	const WebRtc_Word8* data,
-	WebRtc_UWord32 length,
-	WebRtc_Word32 isRTCP,
-	WebRtc_UWord16 portnr,
-	const char* ip)
+        const WebRtc_Word8 *data,
+        WebRtc_UWord32 length,
+        bool isRTCP,
+        WebRtc_UWord16 portnr,
+        const char *ip)
 {
 	CriticalSectionScoped cs(_shared->crit_sec());
 

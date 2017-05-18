@@ -196,11 +196,11 @@ public:
         OnHoldModes& mode) { return -1; }
 //---begin
 	virtual WebRtc_Word32 SendRaw(int channel,
-									const WebRtc_Word8* data,
-									WebRtc_UWord32 length,
-									WebRtc_Word32 isRTCP,
-									WebRtc_UWord16 portnr = 0,
-									const char* ip = NULL) = 0;
+            const WebRtc_Word8 *data,
+            WebRtc_UWord32 length,
+            bool isRTCP,
+            WebRtc_UWord16 portnr = 0,
+            const char *ip = NULL) = 0;
 
 	//    Sean add begin 20131119 noise suppression
 	virtual int NoiseSuppression(const void* audioSamples,

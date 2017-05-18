@@ -581,7 +581,7 @@ Channel::OnReceivedPayloadData(const uint8_t* payloadData,
       // Can't use nack_list.data() since it's not supported by all
       // compilers.
       ResendPackets(&(nack_list[0]), static_cast<int>(nack_list.size()));
-    }else //add by ylr�������vector�ڴ�й¶
+    }else //add by ylr��������ector�ڴ�й¶
 	{
 		nack_list.swap(nack_list);
 	}
