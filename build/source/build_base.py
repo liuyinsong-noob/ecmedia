@@ -116,7 +116,7 @@ class BuildBase:
         return bEcmediaHeaderChanged
         
     def getLastCommitInfo(self):
-        fdOrig = open(self.ProjectPath + '//ReleaseNotes.txt')
+        fdOrig = open(os.path.join(self.ProjectPath, 'ReleaseNotes.txt'))
         for line in fdOrig.read().split('\n'):
             if line.startswith('Version'):
                 if len(line.split(' ')) == 4:
@@ -127,37 +127,47 @@ class BuildBase:
                     return (None, None)
         
     def writeReleaseNote(self, timestamp, sha):
-        fdOrig = open(self.ProjectPath + '//ReleaseNotes.txt')
+        fdOrig = open(os.path.join(self.ProjectPath, 'ReleaseNotes.txt'), 'r')
         origContent = fdOrig.read()
+        fdOrig.close()
+        fdOrig = open(os.path.join(self.ProjectPath, 'ReleaseNotes.txt'), 'wb')
 
+        fdNew = open(os.path.join(self.RarPath, 'ReleaseNotes.txt'), 'wb')
+        
         ecmediaVersion = self.getEcmediaVersion()
         latestSHA = self.getLatestSHA(timestamp)
         latestTimestamp = self.getLatestTimestamp(timestamp)
         commitLogs = self.getCommitLogs(timestamp)
-
-        fdNew = open(self.RarPath + '\ReleaseNotes.txt', 'wb')
-        fdNew.write('Version' + ' ' + ecmediaVersion)
-        fdNew.write(' ' + latestTimestamp + ' ' + latestSHA)
-        fdNew.write('\n')
+        
+        insertContent = 'Version' + ' ' + ecmediaVersion
+        insertContent = insertContent + ' ' + latestTimestamp + ' ' + latestSHA
+        insertContent = insertContent + '\n'
 
         index = 1
         if self.isEcmediaHeaderChanged(timestamp):
-            fdNew.write((str(index) + '. ' + '接口改变').decode('utf-8').encode('gbk'))
-            fdNew.write('\n')
+            insertContent = insertContent + (str(index) + '. ' + '接口改变').decode('utf-8').encode('gbk')
+            insertContent = insertContent + '\n'
             index = index + 1
         else:
-            fdNew.write((str(index) + '. ' + '接口不变').decode('utf-8').encode('gbk'))
-            fdNew.write('\n')
+            insertContent = insertContent + (str(index) + '. ' + '接口不变').decode('utf-8').encode('gbk')
+            insertContent = insertContent + '\n'
             index = index + 1
         for commitLog in commitLogs:
-            fdNew.write(str(index) + '. ' + commitLog.encode('gbk'))
-            fdNew.write('\n')
+            insertContent = insertContent + str(index) + '. ' + commitLog.encode('gbk')
+            insertContent = insertContent + '\n'
             index = index + 1
             
-        fdNew.write('\n')
+        insertContent = insertContent + '\n'
+        
+        fdOrig.write(insertContent)
+        fdOrig.write(origContent)
+        
+        fdNew.write(insertContent)
         fdNew.write(origContent)
     
     def copyToRemote(self, platform):
         os.chdir(self.BuildPath)
         rarFileName = 'release-' + self.getEcmediaVersion() + '.zip' 
         print os.system('scp -i id_rsa.jenkins ' + rarFileName + ' jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/' + platform)
+        
+        
