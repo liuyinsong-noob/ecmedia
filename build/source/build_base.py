@@ -172,7 +172,7 @@ class BuildBase:
         print os.system('scp -i id_rsa.jenkins ' + rarFileName + ' jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/' + platform)
         
     def updateReleaseNote(self):
-        print os.system('git commit -a -m ' + 'updste release note for ' + self.getEcmediaVersion())
+        print os.system('git commit -a -m ' + '"updste release note for %s"'%(self.getEcmediaVersion()))
         #print os.system('git push')
         
         
