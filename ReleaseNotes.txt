@@ -1,3 +1,19 @@
+Version 2.1.2.23 1495075590 c06b5f961d95eb0fde7dfb252719674d2b2b1052
+1. 接口不变
+2. refactor ci
+3. fix run error
+4. fix ios build link error
+5. fix ios platform no 7z command
+6. refactor ci
+7. refactor ci
+8. refactor ci
+9. refactor build win
+10. refactor ci
+11. refactor build win
+12. refactor build win
+13. add ci windows file
+14. remove vpx x64 lib reference
+
 Version 2.1.2.23 1494832096 ced04833fb3fe4b6cf38a9085c162d978a200a1b
 1. 接口未变
 2. 修复桌面共享可能照成的内存泄露
