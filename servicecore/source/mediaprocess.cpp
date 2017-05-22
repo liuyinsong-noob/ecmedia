@@ -2835,7 +2835,6 @@ int ServiceCore::serphone_core_start_rtp_dump(SerPhoneCall *call, int mediatype,
 	}
 #endif
 	return ret;
-
 #endif
 	return -1;
 }
