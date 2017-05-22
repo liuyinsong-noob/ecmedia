@@ -456,9 +456,6 @@ int32_t VideoRenderNSOpenGL::StartRender()
 }
 int32_t VideoRenderNSOpenGL::StopRender()
 {
-
-    LockAGLCntx();
-
     /* The code below is functional
      * but it pauses for several seconds
      */
@@ -468,21 +465,17 @@ int32_t VideoRenderNSOpenGL::StopRender()
     {
         _renderingIsPaused = TRUE;
 
-        UnlockAGLCntx();
         return 0;
     }
 
+    _screenUpdateThread->SetNotAlive();
     if(FALSE == _screenUpdateThread->Stop() || FALSE == _screenUpdateEvent->StopTimer())
     {
         _renderingIsPaused = FALSE;
-
-        UnlockAGLCntx();
         return -1;
     }
 
     _renderingIsPaused = TRUE;
-
-    UnlockAGLCntx();
     return 0;
 }
 
