@@ -475,6 +475,7 @@
 					../resampler/include,
 					../common_audio/source/signal_processing/include,
 					main/source/mac/,
+					../../third_party/SoundTouch/SoundTouch,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
@@ -537,6 +538,7 @@
 					../resampler/include,
 					../common_audio/source/signal_processing/include,
 					main/source/mac/,
+					../../third_party/SoundTouch/SoundTouch,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";

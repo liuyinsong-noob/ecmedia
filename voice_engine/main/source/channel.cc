@@ -3930,13 +3930,13 @@ Channel::PrepareEncodeAndSend(int mixingFrequency)
 uint32_t
 Channel::EncodeAndSend()
 {
-    WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId,_channelId),
+    WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId, _channelId),
                  "Channel::EncodeAndSend()");
 
     assert(_audioFrame.num_channels_ <= 2);
     if (_audioFrame.samples_per_channel_ == 0)
     {
-        WEBRTC_TRACE(kTraceWarning, kTraceVoice, VoEId(_instanceId,_channelId),
+        WEBRTC_TRACE(kTraceWarning, kTraceVoice, VoEId(_instanceId, _channelId),
                      "Channel::EncodeAndSend() invalid audio frame");
         return 0xFFFFFFFF;
     }

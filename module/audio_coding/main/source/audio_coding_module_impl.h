@@ -21,6 +21,7 @@
 #include "acm_receiver.h"
 #include "acm_resampler.h"
 #include "scoped_ptr.h"
+#include "SoundTouch.h"
 
 namespace cloopenwebrtc {
 
@@ -299,6 +300,10 @@ class AudioCodingModuleImpl : public AudioCodingModule {
                       int mirror_id, AudioDecoder** decoder)
       EXCLUSIVE_LOCKS_REQUIRED(acm_crit_sect_);
 
+    
+    void setupSoundTouch();
+private:
+    
   CriticalSectionWrapper* acm_crit_sect_;
   int id_;  // TODO(henrik.lundin) Make const.
   uint32_t expected_codec_ts_ GUARDED_BY(acm_crit_sect_);
@@ -369,6 +374,11 @@ class AudioCodingModuleImpl : public AudioCodingModule {
   ACMVADCallback* vad_callback_ GUARDED_BY(callback_crit_sect_);
     
     uint8_t loss_rate_ GUARDED_BY(acm_crit_sect_);
+    
+   soundtouch::SoundTouch *_soundTouch;
+   bool _enableSoundTouch;
+   uint8_t soundTouchBuffer[4096];
+   int16_t _soundTouchSamples;
 };
 
 }  // namespace acm2

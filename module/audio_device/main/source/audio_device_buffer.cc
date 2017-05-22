@@ -53,7 +53,7 @@ AudioDeviceBuffer::AudioDeviceBuffer() :
     _recDelayMS(0),
     _clockDrift(0),
     // Set to the interval in order to log on the first occurrence.
-    high_delay_counter_(kLogHighDelayIntervalFrames) {
+    high_delay_counter_(kLogHighDelayIntervalFrames){
     // valid ID will be set later by SetId, use -1 for now
     WEBRTC_TRACE(kTraceMemory, kTraceAudioDevice, _id, "%s created", __FUNCTION__);
     memset(_recBuffer, 0, kMaxBufferSizeBytes);
@@ -82,7 +82,7 @@ AudioDeviceBuffer::~AudioDeviceBuffer()
     delete &_critSect;
     delete &_critSectCb;
 }
-
+    
 // ----------------------------------------------------------------------------
 //  SetId
 // ----------------------------------------------------------------------------
@@ -393,6 +393,8 @@ int32_t AudioDeviceBuffer::SetRecordedBuffer(const void* audioBuffer,
 {
     CriticalSectionScoped lock(&_critSect);
 
+   
+    
     if (_recBytesPerSample == 0)
     {
         assert(false);

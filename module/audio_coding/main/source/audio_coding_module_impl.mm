@@ -130,7 +130,10 @@ AudioCodingModuleImpl::AudioCodingModuleImpl(
       packetization_callback_(NULL),
       vad_callback_(NULL),
       red2_length_(0),
-      loss_rate_(0){
+      loss_rate_(0),
+      _soundTouch(NULL),
+      _soundTouchSamples(0),
+      _enableSoundTouch(true) {
 
   // Nullify send codec memory, set payload type and set codec name to
   // invalid values.
@@ -228,6 +231,12 @@ AudioCodingModuleImpl::~AudioCodingModuleImpl() {
     delete aux_rtp_header_;
     aux_rtp_header_ = NULL;
   }
+    
+    
+    if(_soundTouch) {
+        delete _soundTouch;
+        _soundTouch = NULL;
+    }
 
   delete callback_crit_sect_;
   callback_crit_sect_ = NULL;
@@ -293,7 +302,8 @@ int32_t AudioCodingModuleImpl::Process() {
     status = codecs_[current_send_codec_idx_]->Encode(stream, &length_bytes,
                                                       &rtp_timestamp,
                                                       &encoding_type);
-      int static counter = 0;
+      
+    int static counter = 0;
     if (status < 0) {
       // Encode failed.
       WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
@@ -466,7 +476,6 @@ int32_t AudioCodingModuleImpl::Process() {
                             fragmentation_.fragmentationTimestamp[1] = (*it).ts;
                             memcpy(stream+fragmentation_.fragmentationOffset[1], (*it).buf, (*it).len);
                         }
-                        
                     }
                         break;
                     default:
@@ -551,8 +560,9 @@ int32_t AudioCodingModuleImpl::Process() {
   if (has_data_to_send) {
     CriticalSectionScoped lock(callback_crit_sect_);
 
-    if (packetization_callback_ != NULL) {
+      if (packetization_callback_ != NULL) {
       if (red_active) {
+          
         // Callback with payload data, including redundant data (RED).
         packetization_callback_->SendData(frame_type, current_payload_type,
                                           rtp_timestamp, stream, length_bytes,
@@ -563,17 +573,33 @@ int32_t AudioCodingModuleImpl::Process() {
                                           rtp_timestamp, stream, length_bytes,
                                           NULL);
       }
+          
+    
     }
+      
 
     if (vad_callback_ != NULL) {
       // Callback with VAD decision.
       vad_callback_->InFrameType(static_cast<int16_t>(encoding_type));
     }
+      
   }
   return length_bytes;
 }
 
-/////////////////////////////////////////
+void AudioCodingModuleImpl::setupSoundTouch() {
+    _soundTouch = new soundtouch::SoundTouch();
+    _soundTouch->setSampleRate(16000); //采样率
+    _soundTouch->setChannels(1);       //设置声音的声道
+    _soundTouch->setTempoChange(0);    //这个就是传说中的变速不变调
+    _soundTouch->setPitchSemiTones(8); //设置声音的pitch (集音高变化semi-tones相比原来的音调) //男: -8 女:8
+    _soundTouch->setRateChange(0);     //设置声音的速率
+    _soundTouch->setSetting(SETTING_SEQUENCE_MS, 40);
+    _soundTouch->setSetting(SETTING_SEEKWINDOW_MS, 15); //寻找帧长
+    _soundTouch->setSetting(SETTING_OVERLAP_MS, 6);  //重叠帧长
+}
+    
+    /////////////////////////////////////////
 //   Sender
 //
 
@@ -1108,11 +1134,43 @@ int AudioCodingModuleImpl::Add10MsData(
   if (send_codec_inst_.channels != ptr_frame->num_channels_)
     ptr_audio = buffer;
 
-  if (codecs_[current_send_codec_idx_]->Add10MsData(
-      ptr_frame->timestamp_, ptr_audio, ptr_frame->samples_per_channel_,
-      send_codec_inst_.channels) < 0)
-    return -1;
+    if (!_enableSoundTouch) {
+        if (codecs_[current_send_codec_idx_]->Add10MsData(ptr_frame->timestamp_, ptr_audio, ptr_frame->samples_per_channel_, send_codec_inst_.channels) < 0) {
+            return -1;
+        }
+        return 0;
+    }
+    
+  if(!_soundTouch) {
+      setupSoundTouch();
+  }
 
+  int inputSamples = ptr_frame->samples_per_channel_;
+  _soundTouch->putSamples((short *)ptr_audio, inputSamples);
+  short outSamplesBuffer[inputSamples];
+  int outputSamplesCount = 0;
+    
+  do {
+      memset(outSamplesBuffer, 0, inputSamples*sizeof(short));
+      //short samples[nSamples];
+      outputSamplesCount = _soundTouch->receiveSamples(outSamplesBuffer, inputSamples);
+
+      if(0 != outputSamplesCount) {
+          memcpy(soundTouchBuffer + (_soundTouchSamples)*sizeof(short), outSamplesBuffer, outputSamplesCount*sizeof(short));
+          _soundTouchSamples += outputSamplesCount;
+      }
+  } while (outputSamplesCount > 0);
+
+  if (_soundTouchSamples > ptr_frame->samples_per_channel_) {
+      if (codecs_[current_send_codec_idx_]->Add10MsData(ptr_frame->timestamp_, (int16_t *)soundTouchBuffer, ptr_frame->samples_per_channel_, send_codec_inst_.channels) < 0) {
+          return -1;
+      }
+      _soundTouchSamples -= ptr_frame->samples_per_channel_;
+
+      char tmpBuffer[4096];
+      memcpy(tmpBuffer, soundTouchBuffer + ptr_frame->samples_per_channel_ * sizeof(short), _soundTouchSamples *2);
+      memcpy(soundTouchBuffer, tmpBuffer, _soundTouchSamples*2);
+  }
   return 0;
 }
 
@@ -1120,7 +1178,7 @@ int AudioCodingModuleImpl::Add10MsData(
 // encoder is mono and input is stereo. In case of dual-streaming, both
 // encoders has to be mono for down-mix to take place.
 // |*ptr_out| will point to the pre-processed audio-frame. If no pre-processing
-// is required, |*ptr_out| points to |in_frame|.
+// is required, |*ptr_out| points to | in_frame|.
 int AudioCodingModuleImpl::PreprocessToAddData(const AudioFrame& in_frame,
                                                const AudioFrame** ptr_out) {
   bool resample = (in_frame.sample_rate_hz_ != send_codec_inst_.plfreq);
@@ -1156,7 +1214,8 @@ int AudioCodingModuleImpl::PreprocessToAddData(const AudioFrame& in_frame,
   int16_t audio[WEBRTC_10MS_PCM_AUDIO];
   const int16_t* src_ptr_audio = in_frame.data_;
   int16_t* dest_ptr_audio = preprocess_frame_.data_;
-  if (down_mix) {
+  
+    if (down_mix) {
     // If a resampling is required the output of a down-mix is written into a
     // local buffer, otherwise, it will be written to the output frame.
     if (resample)
