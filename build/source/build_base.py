@@ -2,6 +2,7 @@
 
 import os
 import sys
+import time
 
 class BuildBase:
     def __init__(self, buildType, platform, projectPath):
@@ -17,17 +18,19 @@ class BuildBase:
         self.ReleaseNoteFile = os.path.join(self.ProjectPath, 'ReleaseNotes.txt')
 
         self.BuildPath = os.path.join(self.ProjectPath, 'build')
-        self.RarPath = os.path.join(self.ProjectPath, 'build', 'release')
+        self.RarPath = os.path.join(self.ProjectPath, 'build', self.buildType)
         self.RarIncludePath = os.path.join(self.RarPath, 'include')
         self.RarLibsPath = os.path.join(self.RarPath, 'libs')
     
     def run(self):
         self.build()
         self.collectFiles()
-        timestamp, sha = self.getLastCommitInfo()
+        version, timestamp, sha = self.getLastCommitInfo()
         timestamp = str(int(timestamp) + 1)
-        self.writeReleaseNote(timestamp, sha)
-        self.updateReleaseNote()
+        if self.buildType == 'release':
+            if self.getEcmediaVersion() != version:
+                self.writeReleaseNote(timestamp, sha)
+                self.updateReleaseNote()
         self.rarFiles()
         self.copyToRemote(self.platform)
 
@@ -60,9 +63,10 @@ class BuildBase:
 
     def rarFiles(self):
         os.chdir(self.BuildPath)
-        rarFileName = 'release-' + self.getEcmediaVersion() + '.zip'
-        targetFile = os.path.join(self.BuildPath, rarFileName)
-        sourceFile = os.path.join(self.BuildPath, 'release')
+        timestamp = time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime(time.time()))
+        self.rarFileName = self.buildType + '-' + self.getEcmediaVersion() + '-' + timestamp + '.zip'
+        targetFile = os.path.join(self.BuildPath, self.rarFileName)
+        sourceFile = os.path.join(self.BuildPath, self.buildType)
         print os.system('7z a -tzip ' + targetFile + ' ' + sourceFile)
 
     def getEcmediaVersion(self):
@@ -121,11 +125,12 @@ class BuildBase:
         for line in fdOrig.read().split('\n'):
             if line.startswith('Version'):
                 if len(line.split(' ')) == 4:
+                    version = line.split(' ')[1]
                     timestamp = line.split(' ')[2]
                     sha = line.split(' ')[3]
-                    return (timestamp, sha)
+                    return (version, timestamp, sha)
                 else:
-                    return (None, None)
+                    return (None, None, None)
         
     def writeReleaseNote(self, timestamp, sha):
         fdOrig = open(os.path.join(self.ProjectPath, 'ReleaseNotes.txt'), 'r')
@@ -154,9 +159,10 @@ class BuildBase:
             insertContent = insertContent + '\n'
             index = index + 1
         for commitLog in commitLogs:
-            insertContent = insertContent + str(index) + '. ' + commitLog.encode('gbk')
-            insertContent = insertContent + '\n'
-            index = index + 1
+            if 'bug fix' in commitLog or 'feature' in commitLog:
+                insertContent = insertContent + str(index) + '. ' + commitLog.encode('gbk')
+                insertContent = insertContent + '\n'
+                index = index + 1
             
         insertContent = insertContent + '\n'
         
@@ -168,8 +174,7 @@ class BuildBase:
     
     def copyToRemote(self, platform):
         os.chdir(self.BuildPath)
-        rarFileName = 'release-' + self.getEcmediaVersion() + '.zip' 
-        print os.system('scp -i id_rsa.jenkins ' + rarFileName + ' jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/' + platform)
+        print os.system('scp -i id_rsa.jenkins ' + self.rarFileName + ' jenkins@192.168.179.129:/app/userhome/jenkins/' + self.buildType + '/ecmedia/' + platform)
         
     def updateReleaseNote(self):
         print os.system('git commit -a -m ' + '"updste release note for %s"'%(self.getEcmediaVersion()))

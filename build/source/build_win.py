@@ -27,8 +27,8 @@ class BuildWindows(BuildBase):
         else:
            os.mkdir(self.RarLibsPath)
 
-        ecmediaTargetFile = os.path.join(self.LibFilesPath + 'Ecmedia.*')
-        x264TargetFile = os.path.join(self.LibFilesPath + 'libx264-148.dll')
+        ecmediaTargetFile = os.path.join(self.LibFilesPath, 'Ecmedia.*')
+        x264TargetFile = os.path.join(self.LibFilesPath, 'libx264-148.dll')
         print os.system('copy ' + ecmediaTargetFile + ' ' + self.RarLibsPath)
         print os.system('copy ' + x264TargetFile + ' ' + self.RarLibsPath)
         
