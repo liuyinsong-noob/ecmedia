@@ -107,10 +107,10 @@ public:
     virtual bool SendSocketsInitialized() const;
     virtual bool SourcePortsInitialized() const;
     virtual bool ReceiveSocketsInitialized() const;
-    virtual WebRtc_Word32 SendRaw(const WebRtc_Word8* data_buffer,
-                                  WebRtc_UWord32 data_length, WebRtc_Word32 isRTCP,
-                                  WebRtc_UWord16 portnr = 0,
-                                  const char* ip = NULL);
+    virtual WebRtc_Word32 SendRaw(const WebRtc_Word8 *data_buffer,
+            WebRtc_UWord32 data_length, bool isRTCP,
+            WebRtc_UWord16 portnr = 0,
+            const char *ip = NULL);
     virtual WebRtc_Word32 SendRTPPacketTo(const WebRtc_Word8 *data,
                                           WebRtc_UWord32 length,
                                           const SocketAddress& to);

@@ -1226,7 +1226,7 @@ int ECMedia_set_voe_cb(int channelid, onVoeCallbackOnError voe_callback_cb)
 
 }
 
-int ECMedia_sendRaw(int channelid, int8_t *data, uint32_t length, int32_t isRTCP, uint16_t port, const char* ip)
+int ECMedia_sendRaw(int channelid, int8_t *data, uint32_t length, bool isRTCP, uint16_t port, const char* ip)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... data:%0x len:%d isRTCP:%d port:%d ip:%s",
 		__FUNCTION__, data, length, isRTCP, port, ip);

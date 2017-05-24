@@ -3620,6 +3620,11 @@ int32_t AudioDeviceWindowsWave::Write(int8_t* data, uint16_t nSamples)
                     WEBRTC_TRACE(kTraceWarning, kTraceUtility, _id, "pending playout error exists");
                 }
                 _playError = 1;  // triggers callback from module process thread
+				_playing = false;
+				_playIsInitialized = false;
+				InitPlayout();
+				_playIsInitialized = true;
+				_startPlay = true;
                 WEBRTC_TRACE(kTraceError, kTraceUtility, _id, "kPlayoutError message posted: _writeErrors=%u", _writeErrors);
             }
 
@@ -3728,6 +3733,7 @@ int32_t AudioDeviceWindowsWave::MonitorRecording(const uint32_t time)
         WEBRTC_TRACE(kTraceError, kTraceUtility, _id, "kRecordingError message posted: time-_prevRecByteCheckTime=%d", time - _prevRecByteCheckTime);
 
         _prevRecByteCheckTime = time;
+		_startRec = true;
     }
 
     return 0;
