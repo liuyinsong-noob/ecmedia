@@ -21,6 +21,8 @@ class BuildBase:
         self.RarPath = os.path.join(self.ProjectPath, 'build', self.buildType)
         self.RarIncludePath = os.path.join(self.RarPath, 'include')
         self.RarLibsPath = os.path.join(self.RarPath, 'libs')
+        timestamp = time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime(time.time()))
+        self.rarFileName = self.buildType + '-' + self.getEcmediaVersion() + '-' + timestamp + '.zip'
     
     def run(self):
         self.build()
@@ -63,8 +65,6 @@ class BuildBase:
 
     def rarFiles(self):
         os.chdir(self.BuildPath)
-        timestamp = time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime(time.time()))
-        self.rarFileName = self.buildType + '-' + self.getEcmediaVersion() + '-' + timestamp + '.zip'
         targetFile = os.path.join(self.BuildPath, self.rarFileName)
         sourceFile = os.path.join(self.BuildPath, self.buildType)
         print os.system('7z a -tzip ' + targetFile + ' ' + sourceFile)

@@ -32,9 +32,8 @@ class BuildIos(BuildBase):
         
     def rarFiles(self):
         os.chdir(self.BuildPath)
-        rarFileName = 'release-' + self.getEcmediaVersion() + '.zip'
-        targetFile = os.path.join(self.BuildPath, rarFileName)
-        sourceFile = os.path.join(self.BuildPath, 'release')
+        targetFile = os.path.join(self.BuildPath, self.rarFileName)
+        sourceFile = os.path.join(self.BuildPath, self.buildType)
         print os.system('zip -r ' + targetFile + ' ' + sourceFile)
         
 if __name__=='__main__' :
