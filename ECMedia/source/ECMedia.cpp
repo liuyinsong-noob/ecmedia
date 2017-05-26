@@ -2631,10 +2631,9 @@ int ECMedia_stop_render(int channelid, int deviceid)
     if (render) {
         render->StopRender(channelid);
         render->RemoveRenderer(channelid);
-#if true
+        
 		render->StopRender(deviceid);
 		render->RemoveRenderer(deviceid);
-#endif
         render->Release();
     }
     PrintConsole("[ECMEDIA INFO] %s ends",__FUNCTION__);
