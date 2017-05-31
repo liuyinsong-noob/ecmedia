@@ -242,13 +242,13 @@ Channel::SendPacket(int channel, const void *data, size_t len, int sn)
     uint8_t* bufferToSendPtr = (uint8_t*)data;
     size_t bufferLength = len;
 
-    //// Dump the RTP packet to a file (if RTP dump is enabled).
-    //if (_rtpDumpOut.DumpPacket((const uint8_t*)data, len) == -1)
-    //{
-    //    WEBRTC_TRACE(kTraceWarning, kTraceVoice,
-    //                 VoEId(_instanceId,_channelId),
-    //                 "Channel::SendPacket() RTP dump to output file failed");
-    //}
+    // Dump the RTP packet to a file (if RTP dump is enabled).
+    if (_rtpDumpOut.DumpPacket((const uint8_t*)data, len) == -1)
+    {
+        WEBRTC_TRACE(kTraceWarning, kTraceVoice,
+                     VoEId(_instanceId,_channelId),
+                     "Channel::SendPacket() RTP dump to output file failed");
+    }
 
 	// SRTP or External encryption
 	if (_encrypting)
