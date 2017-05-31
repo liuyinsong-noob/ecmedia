@@ -517,8 +517,8 @@ private:
     TelephoneEventHandler* telephone_event_handler_;
     scoped_ptr<RtpRtcp> _rtpRtcpModule;
     scoped_ptr<AudioCodingModule> audio_coding_;
-    //RtpDump& _rtpDumpIn;
-    //RtpDump& _rtpDumpOut;
+    RtpDump& _rtpDumpIn;
+    RtpDump& _rtpDumpOut;
     AudioLevel _outputAudioLevel;
     bool _externalTransport;
     AudioFrame _audioFrame;
