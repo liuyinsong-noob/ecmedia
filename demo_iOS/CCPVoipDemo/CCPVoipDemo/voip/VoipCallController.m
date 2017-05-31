@@ -78,7 +78,6 @@ extern char *filename_path;
         [self.modelEngineVoip enableLoudsSpeaker:isLouder];
         return self;
     }
-    
     return nil;
 }
 
