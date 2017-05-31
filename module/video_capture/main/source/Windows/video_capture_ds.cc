@@ -137,6 +137,7 @@ int32_t VideoCaptureDS::Init(const int32_t id, const char* deviceUniqueIdUTF8)
     {
         return -1;
     }
+#if 0
     hr = _mediaControl->Pause();
     if (FAILED(hr))
     {
@@ -145,6 +146,7 @@ int32_t VideoCaptureDS::Init(const int32_t id, const char* deviceUniqueIdUTF8)
                      hr);
         return -1;
     }
+#endif
     WEBRTC_TRACE(cloopenwebrtc::kTraceStateInfo, cloopenwebrtc::kTraceVideoCapture, _id,
                  "Capture device '%s' initialized.", deviceUniqueIdUTF8);
     return 0;
