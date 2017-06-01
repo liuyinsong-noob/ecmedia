@@ -84,9 +84,9 @@ LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/../../../common_audio/source/signal_processing/include \
 		$(LOCAL_PATH)/../../../../voice_engine/main/source \
 		$(LOCAL_PATH)/../../../../third_party/opus/src \
-		$(LOCAL_PATH)/../../codecs/pcm16b/include
+		$(LOCAL_PATH)/../../codecs/pcm16b/include \
+		$(LOCAL_PATH)/../../../../third_party/SoundTouch/SoundTouch \
 
-		
 LOCAL_SHARED_LIBRARIES := \
     libcutils \
     libdl \
