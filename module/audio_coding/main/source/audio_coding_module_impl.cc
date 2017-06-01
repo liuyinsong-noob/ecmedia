@@ -591,7 +591,7 @@ int32_t AudioCodingModuleImpl::Process() {
 }
 
 void AudioCodingModuleImpl::setupSoundTouch(uint16_t sample_rate, u_int8_t channel_count) {
-    _soundTouch = new soundtouch::SoundTouch();
+    _soundTouch = new SoundTouch();
     _soundTouch->setSampleRate(sample_rate); //采样率
     _soundTouch->setChannels(channel_count);       //设置声音的声道
     

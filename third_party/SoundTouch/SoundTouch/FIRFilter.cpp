@@ -46,7 +46,7 @@
 #include "FIRFilter.h"
 #include "cpu_detect.h"
 
-using namespace soundtouch;
+using namespace cloopenwebrtc;
 
 /*****************************************************************************
  *

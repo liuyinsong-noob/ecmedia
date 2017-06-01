@@ -48,7 +48,7 @@
 
 #include "FIFOSamplePipe.h"
 
-namespace soundtouch
+namespace cloopenwebrtc
 {
 
 /// Sample buffer working in FIFO (first-in-first-out) principle. The class takes

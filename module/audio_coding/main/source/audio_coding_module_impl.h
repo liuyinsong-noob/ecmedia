@@ -377,7 +377,7 @@ private:
     uint8_t loss_rate_ GUARDED_BY(acm_crit_sect_);
     
    /****  about soundtouch ****/
-   soundtouch::SoundTouch *_soundTouch;
+   SoundTouch *_soundTouch;
    bool _enableSoundTouch;
    uint8_t soundTouchBuffer[4096];
    int16_t _soundTouchSamples;

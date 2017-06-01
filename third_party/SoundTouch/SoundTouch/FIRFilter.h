@@ -45,7 +45,7 @@
 #include <stddef.h>
 #include "STTypes.h"
 
-namespace soundtouch
+namespace cloopenwebrtc
 {
 
 class FIRFilter 

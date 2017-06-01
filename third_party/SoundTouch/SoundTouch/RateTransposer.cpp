@@ -45,7 +45,7 @@
 #include "RateTransposer.h"
 #include "AAFilter.h"
 
-using namespace soundtouch;
+using namespace cloopenwebrtc;
 
 
 /// A linear samplerate transposer class that uses integer arithmetics.

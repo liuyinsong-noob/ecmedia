@@ -52,7 +52,7 @@
 
 #include "STTypes.h"
 
-namespace soundtouch
+namespace cloopenwebrtc
 {
 
 /// A common linear samplerate transposer class.

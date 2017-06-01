@@ -62,7 +62,7 @@
 #include "PeakFinder.h"
 #include "BPMDetect.h"
 
-using namespace soundtouch;
+using namespace cloopenwebrtc;
 
 #define INPUT_BLOCK_SAMPLES       2048
 #define DECIMATED_BLOCK_SAMPLES   256
