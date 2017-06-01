@@ -15,6 +15,7 @@
 		1AFBD1221DAE564A009B8D23 /* libfaad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1211DAE564A009B8D23 /* libfaad.a */; };
 		1AFBD1241DAE5839009B8D23 /* libfaac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1231DAE5839009B8D23 /* libfaac.a */; };
 		1AFBD1661DAE67D3009B8D23 /* libL16.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1611DAE6592009B8D23 /* libL16.a */; };
+		1F099F111ED5AA0400421B08 /* libSoundTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F099E371ED57CC200421B08 /* libSoundTouch.a */; };
 		1F8EE0021E5D6EB200C04C10 /* RecordLocal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EE0011E5D6EB200C04C10 /* RecordLocal.cpp */; };
 		1F8EE0551E5D7B8B00C04C10 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F8EE0541E5D7B8B00C04C10 /* libavformat.a */; };
 		1FBB43FA1E728F35007DBD1D /* MediaStatisticsData.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FBB43F91E728F35007DBD1D /* MediaStatisticsData.pb.cc */; };
@@ -126,6 +127,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 1A1EB68E1D9939E300CEEB9E;
 			remoteInfo = L16;
+		};
+		1F099E361ED57CC200421B08 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F099E2D1ED57CC200421B08 /* SoundTouch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AD2316FD1BF968D100A662A9;
+			remoteInfo = SoundTouch;
+		};
+		1F099F161ED5AA1000421B08 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F099E2D1ED57CC200421B08 /* SoundTouch.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1FDC34FB1ED67266003D6155;
+			remoteInfo = SoundTouch;
 		};
 		1FBB44031E72925C007DBD1D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1046,6 +1061,7 @@
 		1AFBD1211DAE564A009B8D23 /* libfaad.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaad.a; path = ../../../third_party/libfaad/lib/ios/libfaad.a; sourceTree = "<group>"; };
 		1AFBD1231DAE5839009B8D23 /* libfaac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaac.a; path = ../../../third_party/libfaac/lib/ios/libfaac.a; sourceTree = "<group>"; };
 		1AFBD15C1DAE6592009B8D23 /* L16.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = L16.xcodeproj; path = ../../../module/audio_coding/L16.xcodeproj; sourceTree = "<group>"; };
+		1F099E2D1ED57CC200421B08 /* SoundTouch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoundTouch.xcodeproj; path = ../../../third_party/SoundTouch/SoundTouch.xcodeproj; sourceTree = "<group>"; };
 		1F8EE0011E5D6EB200C04C10 /* RecordLocal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecordLocal.cpp; sourceTree = "<group>"; };
 		1F8EE0061E5D6EBC00C04C10 /* RecordLocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordLocal.h; sourceTree = "<group>"; };
 		1F8EE0541E5D7B8B00C04C10 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ../libavformat.a; sourceTree = "<group>"; };
@@ -1285,6 +1301,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F099F111ED5AA0400421B08 /* libSoundTouch.a in Frameworks */,
 				1FDB3E4C1E839BC30018FA08 /* libsrtp.a in Frameworks */,
 				1FBB44071E72926C007DBD1D /* libprotobuf.a in Frameworks */,
 				1F8EE0551E5D7B8B00C04C10 /* libavformat.a in Frameworks */,
@@ -1405,6 +1422,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		1F099E2E1ED57CC200421B08 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1F099E371ED57CC200421B08 /* libSoundTouch.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		1FBB43FF1E72925C007DBD1D /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1434,6 +1459,7 @@
 		55F3F7E01B8B0ABE00A19ED6 /* third_party */ = {
 			isa = PBXGroup;
 			children = (
+				1F099E2D1ED57CC200421B08 /* SoundTouch.xcodeproj */,
 				1FDB3DBF1E837CD30018FA08 /* srtp.xcodeproj */,
 				1FBB43FE1E72925C007DBD1D /* protobuf.xcodeproj */,
 				AD056FB71DAF1AB70007DB7A /* rtmp.xcodeproj */,
@@ -2139,6 +2165,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				1F099F171ED5AA1000421B08 /* PBXTargetDependency */,
 				AD6C06951ECC7F4700BB33CC /* PBXTargetDependency */,
 				AD3920BE1EA645780099B83F /* PBXTargetDependency */,
 				ADF261361DB8B906008420B0 /* PBXTargetDependency */,
@@ -2293,6 +2320,10 @@
 					ProjectRef = ADB519AF1B2806A90009077D /* rtp_rtcp.xcodeproj */;
 				},
 				{
+					ProductGroup = 1F099E2E1ED57CC200421B08 /* Products */;
+					ProjectRef = 1F099E2D1ED57CC200421B08 /* SoundTouch.xcodeproj */;
+				},
+				{
 					ProductGroup = 1FDB3DC01E837CD30018FA08 /* Products */;
 					ProjectRef = 1FDB3DBF1E837CD30018FA08 /* srtp.xcodeproj */;
 				},
@@ -2355,6 +2386,13 @@
 			fileType = archive.ar;
 			path = libL16.a;
 			remoteRef = 1AFBD1601DAE6592009B8D23 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1F099E371ED57CC200421B08 /* libSoundTouch.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSoundTouch.a;
+			remoteRef = 1F099E361ED57CC200421B08 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		1FBB44041E72925C007DBD1D /* libprotobuf.a */ = {
@@ -2857,6 +2895,11 @@
 			isa = PBXTargetDependency;
 			name = L16;
 			targetProxy = 1AFBD1641DAE6677009B8D23 /* PBXContainerItemProxy */;
+		};
+		1F099F171ED5AA1000421B08 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SoundTouch;
+			targetProxy = 1F099F161ED5AA1000421B08 /* PBXContainerItemProxy */;
 		};
 		AD3920BE1EA645780099B83F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3459,6 +3502,7 @@
 					../../module/video_coding/codecs/h264,
 					../../third_party/ffmpeg,
 					../../third_party/protobuf/src,
+					../../third_party/SoundTouch/SoundTouch,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -3532,6 +3576,7 @@
 					../../module/video_coding/codecs/h264,
 					../../third_party/ffmpeg,
 					../../third_party/protobuf/src,
+					../../third_party/SoundTouch/SoundTouch,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (

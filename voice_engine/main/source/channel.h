@@ -286,7 +286,8 @@ public:
     // VoENetEqStats
     int GetNetworkStatistics(NetworkStatistics& stats);
     void GetDecodingCallStatistics(AudioDecodingCallStats* stats) const;
-
+    void enableSoundTouch(bool is_enable);
+    void setSoundTouch(int pitch, int tempo, int rate);
     // VoEVideoSync
     bool GetDelayEstimate(int* jitter_buffer_delay_ms,
                           int* playout_buffer_delay_ms) const;

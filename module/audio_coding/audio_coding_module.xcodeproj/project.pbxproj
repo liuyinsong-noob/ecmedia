@@ -629,6 +629,7 @@
 					"../../third_party/libogg-1.3.2/include",
 					../../third_party/opus/src,
 					"\"$(SRCROOT)/codecs/pcm16b/include\"",
+					../../third_party/SoundTouch/SoundTouch,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
@@ -688,6 +689,7 @@
 					"../../third_party/libogg-1.3.2/include",
 					../../third_party/opus/src,
 					"\"$(SRCROOT)/codecs/pcm16b/include\"",
+					../../third_party/SoundTouch/SoundTouch,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
