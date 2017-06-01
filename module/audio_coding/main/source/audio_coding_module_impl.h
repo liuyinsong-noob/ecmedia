@@ -248,7 +248,8 @@ class AudioCodingModuleImpl : public AudioCodingModule {
 
   virtual void GetDecodingCallStatistics(
       AudioDecodingCallStats* stats) const OVERRIDE;
-
+  virtual void enableSoundTouch(bool isEnable);
+  virtual void setSoundTouch(int pitch, int tempo, int rate);
  private:
   int UnregisterReceiveCodecSafe(int payload_type);
 
@@ -301,7 +302,7 @@ class AudioCodingModuleImpl : public AudioCodingModule {
       EXCLUSIVE_LOCKS_REQUIRED(acm_crit_sect_);
 
     
-    void setupSoundTouch();
+    void setupSoundTouch(uint16_t sample_rate, u_int8_t channel_count);
 private:
     
   CriticalSectionWrapper* acm_crit_sect_;
@@ -375,10 +376,15 @@ private:
     
     uint8_t loss_rate_ GUARDED_BY(acm_crit_sect_);
     
+   /****  about soundtouch ****/
    soundtouch::SoundTouch *_soundTouch;
    bool _enableSoundTouch;
    uint8_t soundTouchBuffer[4096];
    int16_t _soundTouchSamples;
+    
+   uint8_t _sound_touch_rate;
+   uint8_t _sound_touch_pitch;
+   uint8_t _sound_touch_tempo;
 };
 
 }  // namespace acm2

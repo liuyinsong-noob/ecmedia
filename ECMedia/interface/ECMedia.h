@@ -758,7 +758,9 @@ ECMEDIA_API int ECMedia_set_no_camera_capture_cb(int deviceid, onEcMediaNoCamera
 */
 ECMEDIA_API int ECMedia_getStatsReports(int type, char* callid, void** pMediaStatisticsDataInnerArray, int *pArraySize);
 ECMEDIA_API void ECMedia_deletePbData(void* mediaStatisticsDataInner);
-    
+
+ECMEDIA_API int ECMedia_audio_enable_magic_sound(int channelid, bool is_enable);
+ECMEDIA_API int ECMedia_audio_set_magic_sound(int channelid, int pitch, int tempo, int rate);
 #ifdef __cplusplus
 }
 #endif

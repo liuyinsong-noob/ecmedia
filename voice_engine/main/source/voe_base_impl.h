@@ -237,7 +237,8 @@ public:
     virtual int SetFecStatus(int channel, bool enable);
     virtual int SetLoss(int channel, int loss);
 	virtual void* GetChannel(int channelid);
-
+    virtual int enableSoundTouch(int channelid, bool is_enable);
+    virtual int setSoundTouch(int channelid, int pitch, int tempo, int rate);
 //---end
 };
 

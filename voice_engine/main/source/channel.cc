@@ -4073,6 +4073,14 @@ void Channel::GetDecodingCallStatistics(AudioDecodingCallStats* stats) const {
   audio_coding_->GetDecodingCallStatistics(stats);
 }
 
+void Channel::enableSoundTouch(bool is_enable) {
+    audio_coding_->enableSoundTouch(is_enable);
+}
+    
+void Channel::setSoundTouch(int pitch, int tempo, int rate) {
+    audio_coding_->setSoundTouch(pitch, tempo, rate);
+}
+
 bool Channel::GetDelayEstimate(int* jitter_buffer_delay_ms,
                                int* playout_buffer_delay_ms) const {
   if (_average_jitter_buffer_delay_us == 0) {

@@ -133,7 +133,10 @@ AudioCodingModuleImpl::AudioCodingModuleImpl(
       loss_rate_(0),
       _soundTouch(NULL),
       _soundTouchSamples(0),
-      _enableSoundTouch(true) {
+      _enableSoundTouch(false),
+      _sound_touch_pitch(0),
+      _sound_touch_tempo(0),
+      _sound_touch_rate(0) {
 
   // Nullify send codec memory, set payload type and set codec name to
   // invalid values.
@@ -587,13 +590,14 @@ int32_t AudioCodingModuleImpl::Process() {
   return length_bytes;
 }
 
-void AudioCodingModuleImpl::setupSoundTouch() {
+void AudioCodingModuleImpl::setupSoundTouch(uint16_t sample_rate, u_int8_t channel_count) {
     _soundTouch = new soundtouch::SoundTouch();
-    _soundTouch->setSampleRate(16000); //采样率
-    _soundTouch->setChannels(1);       //设置声音的声道
-    _soundTouch->setTempoChange(0);    //这个就是传说中的变速不变调
-    _soundTouch->setPitchSemiTones(6); //设置声音的pitch (集音高变化semi-tones相比原来的音调) //男: -8 女:8
-    _soundTouch->setRateChange(0);     //设置声音的速率
+    _soundTouch->setSampleRate(sample_rate); //采样率
+    _soundTouch->setChannels(channel_count);       //设置声音的声道
+    
+    _soundTouch->setTempoChange(_sound_touch_tempo);    //这个就是传说中的变速不变调
+    _soundTouch->setPitchSemiTones(_sound_touch_pitch); //设置声音的pitch (集音高变化semi-tones相比原来的音调) //男: -8 女:8
+    _soundTouch->setRateChange(_sound_touch_rate);     //设置声音的速率
     _soundTouch->setSetting(SETTING_SEQUENCE_MS, 40);
     _soundTouch->setSetting(SETTING_SEEKWINDOW_MS, 15); //寻找帧长
     _soundTouch->setSetting(SETTING_OVERLAP_MS, 6);  //重叠帧长
@@ -1133,7 +1137,6 @@ int AudioCodingModuleImpl::Add10MsData(
   // For pushing data to primary, point the |ptr_audio| to correct buffer.
   if (send_codec_inst_.channels != ptr_frame->num_channels_)
     ptr_audio = buffer;
-
     if (!_enableSoundTouch) {
         if (codecs_[current_send_codec_idx_]->Add10MsData(ptr_frame->timestamp_, ptr_audio, ptr_frame->samples_per_channel_, send_codec_inst_.channels) < 0) {
             return -1;
@@ -1141,8 +1144,9 @@ int AudioCodingModuleImpl::Add10MsData(
         return 0;
     }
     
+  /*** soundtouch 变声  begin ***/
   if(!_soundTouch) {
-      setupSoundTouch();
+      setupSoundTouch(ptr_frame->sample_rate_hz_, ptr_frame->num_channels_);
   }
 
   int inputSamples = ptr_frame->samples_per_channel_;
@@ -1171,9 +1175,19 @@ int AudioCodingModuleImpl::Add10MsData(
       memcpy(tmpBuffer, soundTouchBuffer + ptr_frame->samples_per_channel_ * sizeof(short), _soundTouchSamples *2);
       memcpy(soundTouchBuffer, tmpBuffer, _soundTouchSamples*2);
   }
+  /*** soundtouch 变声  end ***/
   return 0;
 }
 
+void AudioCodingModuleImpl::enableSoundTouch(bool isEnable) {
+     _enableSoundTouch = isEnable;
+}
+
+void AudioCodingModuleImpl::setSoundTouch(int pitch, int tempo, int rate) {
+    _sound_touch_pitch = pitch;
+    _sound_touch_tempo = tempo;
+    _sound_touch_rate = rate;
+}
 // Perform a resampling and down-mix if required. We down-mix only if
 // encoder is mono and input is stereo. In case of dual-streaming, both
 // encoders has to be mono for down-mix to take place.
