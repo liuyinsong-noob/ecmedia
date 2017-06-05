@@ -179,6 +179,12 @@ ECMEDIA_API int ECMedia_set_MTU(int channelid, int mtu);
  */
 ECMEDIA_API int ECMedia_set_video_rtp_keepalive(int channelid, bool enable, int interval, int payloadType);
 
+ECMEDIA_API int ECMedia_video_set_local_ssrc(int channelid, unsigned int ssrc);
+
+ECMEDIA_API int ECMedia_video_request_remote_ssrc(int channelid, unsigned int ssrc);
+
+ECMEDIA_API int ECMedia_video_cancel_remote_ssrc(int channelid);
+
 ECMEDIA_API int ECMedia_set_audio_rtp_keepalive(int channelid, bool enable, int interval, int payloadType);
 /*
  *

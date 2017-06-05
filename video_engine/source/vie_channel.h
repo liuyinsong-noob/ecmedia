@@ -88,6 +88,7 @@ class ViEChannel
   ~ViEChannel();
 
   int32_t Init();
+  int32_t SetUdpTransport(UdpTransport *transport);
 
   // Sets the encoder to use for the channel. |new_stream| indicates the encoder
   // type has changed and we should start a new RTP stream.

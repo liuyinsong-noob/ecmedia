@@ -111,6 +111,9 @@ UdpTransportImpl::UdpTransportImpl(const WebRtc_Word32 id,
       _crit(CriticalSectionWrapper::CreateCriticalSection()),
       _critFilter(CriticalSectionWrapper::CreateCriticalSection()),
       _critPacketCallback(CriticalSectionWrapper::CreateCriticalSection()),
+	  _critChannelRef(CriticalSectionWrapper::CreateCriticalSection()),
+	  _channel_ref(0),
+	  _mediaType(-1),
       _mgr(socket_manager),
       _lastError(kNoSocketError),
       _destPort(0),
@@ -180,6 +183,7 @@ UdpTransportImpl::~UdpTransportImpl()
     delete _crit;
     delete _critFilter;
     delete _critPacketCallback;
+	delete _critChannelRef;
     delete _cachLock;
     delete _socket_creator;
     // free socks5 data.
@@ -286,6 +290,28 @@ WebRtc_Word32 UdpTransportImpl::IPAddressCached(const SocketAddress& address,
     return 0;
 }
 
+void UdpTransportImpl::SetMediaType(int mediaType)
+{
+	_mediaType = mediaType;
+}
+
+void UdpTransportImpl::AddRefNum()
+{
+	//CriticalSectionScoped cs(_critChannelRef);
+	_channel_ref++;
+}
+
+void UdpTransportImpl::SubRefNum()
+{
+	//CriticalSectionScoped cs(_critChannelRef);
+	_channel_ref--;
+}
+
+int UdpTransportImpl::GetRefNum()
+{
+	//CriticalSectionScoped cs(_critChannelRef);
+	return _channel_ref;
+}
 WebRtc_Word32 UdpTransportImpl::InitializeReceiveSockets(
     UdpTransportData* const packetCallback,
     const WebRtc_UWord16 portnr,

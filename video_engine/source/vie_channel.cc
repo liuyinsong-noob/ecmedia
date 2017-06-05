@@ -139,8 +139,7 @@ ViEChannel::ViEChannel(int32_t channel_id,
 	  _confPort(0),
 	  _confIP(NULL),	  
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
-	  socket_transport_(*UdpTransport::Create(
-	  ViEModuleId(engine_id, channel_id), num_socket_threads_)),
+	  socket_transport_(NULL),
 #endif
 #ifdef WEBRTC_SRTP
 	_srtpModule(*SrtpModule::CreateSrtpModule(ViEModuleId(engine_id, channel_id))),
@@ -292,6 +291,19 @@ ViEChannel::~ViEChannel() {
   UdpTransport::Destroy(&socket_transport_);
 #endif
   VideoCodingModule::Destroy(vcm_);
+int32_t ViEChannel::SetUdpTransport(UdpTransport *transport)
+{
+	socket_transport_ = transport;
+
+	if (socket_transport_->GetLocalSSrc() != 0){//receive channel
+		if (SetSSRC(socket_transport_->GetLocalSSrc(), kViEStreamTypeNormal, 0) != 0) {
+			LOG(LS_ERROR) << "set receive channel local ssrc failed";
+			return -1;
+		}
+	}
+	
+	return 0;
+}
 }
 
 void ViEChannel::UpdateHistograms() {

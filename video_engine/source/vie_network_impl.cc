@@ -441,14 +441,25 @@ int ViENetworkImpl::SetLocalReceiver(const int video_channel,
 			return -1;
 		}
 
-		if (vie_channel->Receiving()) {
-			shared_data_->SetLastError(kViENetworkAlreadyReceiving);
+		//create or find transport.
+		ViEChannelManager *cm = shared_data_->channel_manager();
+		if (!cm) {
+			WEBRTC_TRACE(kTraceError, kTraceVideo,
+				ViEId(shared_data_->instance_id(), video_channel),
+				"ViEChannelManager doesn't exist");
 			return -1;
 		}
-		if (vie_channel->SetLocalReceiver(rtp_port, rtcp_port, ip_address) != 0) {
-			shared_data_->SetLastError(kViENetworkUnknownError);
+
+		UdpTransport *transport = cm->CreateUdptransport(rtp_port, rtcp_port);
+		if (!transport)
+		{
+			WEBRTC_TRACE(kTraceError, kTraceVideo,
+				ViEId(shared_data_->instance_id(), video_channel),
+				"create Udptransport failed");
 			return -1;
 		}
+
+		vie_channel->SetUdpTransport(transport);
 		return 0;
 }
 

@@ -40,7 +40,9 @@ ViEChannelManager::ViEChannelManager(
       voice_sync_interface_(NULL),
       voice_engine_(NULL),
       module_process_thread_(NULL),
-      engine_config_(config) {
+    module_process_thread_pacer_(NULL),
+      engine_config_(config),
+	  udptransport_critsect_(CriticalSectionWrapper::CreateCriticalSection()){
   for (int idx = 0; idx < free_channel_ids_size_; idx++) {
     free_channel_ids_[idx] = true;
   }
@@ -65,20 +67,35 @@ ViEChannelManager::~ViEChannelManager() {
     free_channel_ids_ = NULL;
     free_channel_ids_size_ = 0;
   }
+
+  while (rtp_udptransport_map_.size() > 0) {
+	  RtpUdpTransportMap::iterator r_it = rtp_udptransport_map_.begin();
+	  r_it->second->StopReceiving();
+	  UdpTransport::Destroy(r_it->second);
+	  rtp_udptransport_map_.erase(r_it);
+  }
+
+  if (udptransport_critsect_) {
+	  delete udptransport_critsect_;
+	  udptransport_critsect_ = NULL;
+  }
   assert(channel_groups_.empty());
   assert(channel_map_.empty());
   assert(vie_encoder_map_.empty());
+  assert(rtp_udptransport_map_.empty());
 }
 
 void ViEChannelManager::SetModuleProcessThread(
-    ProcessThread* module_process_thread) {
+    ProcessThread* module_process_thread, ProcessThread* module_process_thread_pacer) {
   assert(!module_process_thread_);
   module_process_thread_ = module_process_thread;
+    assert(!module_process_thread_pacer_);
+    module_process_thread_pacer_ = module_process_thread_pacer;
 }
 
 int ViEChannelManager::CreateChannel(int* channel_id,
-                                     const Config* channel_group_config) {
-  CriticalSectionScoped cs(channel_id_critsect_);
+	const Config* channel_group_config) {
+	CriticalSectionScoped cs(channel_id_critsect_);
 
   // Get a new channel id.
   int new_channel_id = FreeChannelId();
@@ -86,15 +103,16 @@ int ViEChannelManager::CreateChannel(int* channel_id,
     return -1;
   }
 
-  // Create a new channel group and add this channel.
-  ChannelGroup* group = new ChannelGroup(engine_id_, module_process_thread_,
-                                         channel_group_config);
-  BitrateController* bitrate_controller = group->GetBitrateController();
-  ViEEncoder* vie_encoder = new ViEEncoder(engine_id_, new_channel_id,
-                                           number_of_cores_,
-                                           engine_config_,
-                                           *module_process_thread_,
-                                           bitrate_controller);
+	// Create a new channel group and add this channel.
+	ChannelGroup* group = new ChannelGroup(engine_id_, module_process_thread_,
+		channel_group_config);
+	BitrateController* bitrate_controller = group->GetBitrateController();
+	ViEEncoder* vie_encoder = new ViEEncoder(engine_id_, new_channel_id,
+		number_of_cores_,
+		engine_config_,
+		*module_process_thread_,
+        *module_process_thread_pacer_,
+		bitrate_controller);
 
   RtcpBandwidthObserver* bandwidth_observer =
       bitrate_controller->CreateRtcpBandwidthObserver();
@@ -578,6 +596,57 @@ void ViEChannelManager::ChannelsUsingViEEncoder(int channel_id,
       channels->push_back(c_it->second);
     }
   }
+}
+
+UdpTransport *ViEChannelManager::CreateUdptransport(int rtp_port, int rtcp_port) {
+	CriticalSectionScoped cs(udptransport_critsect_);
+
+	RtpUdpTransportMap::iterator r_it = rtp_udptransport_map_.find(rtp_port);
+	if (r_it == rtp_udptransport_map_.end()) {// No such rtp_port.
+		uint8_t num_socket_threads = 1;
+		UdpTransport *transport = UdpTransport::Create(ViEModuleId(engine_id_, -1), num_socket_threads);
+		if (transport) {//create socket
+			transport->SetMediaType(1);
+			const char* multicast_ip_address = NULL;
+			if (transport->InitializeReceiveSockets(NULL, rtp_port,
+				NULL,
+				multicast_ip_address,
+				rtcp_port) != 0) {
+				LOG(LS_ERROR) << "can not create socket of rtp_port " << rtp_port;
+				UdpTransport::Destroy(transport);
+				return NULL;
+			}
+			rtp_udptransport_map_[rtp_port] = transport;
+			transport->AddRefNum();
+			return transport;
+		}else {
+			return NULL;
+		}
+	}
+
+	//the transport has already int map.
+	r_it->second->AddRefNum();
+	return r_it->second;
+}
+
+int ViEChannelManager::DeleteUdptransport(UdpTransport * transport) {
+	CriticalSectionScoped cs(udptransport_critsect_);
+	if (!transport)
+		return -1;
+
+	transport->SubRefNum();
+	if (transport->GetRefNum() == 0) {
+		RtpUdpTransportMap::iterator r_it = rtp_udptransport_map_.begin();
+		for (; r_it != rtp_udptransport_map_.end(); ++r_it) {
+			if (r_it->second == transport) {
+				rtp_udptransport_map_.erase(r_it);
+				break;
+			}
+		}
+		transport->StopReceiving();
+		UdpTransport::Destroy(transport);
+	}
+	return 0;
 }
 
 ViEChannelManagerScoped::ViEChannelManagerScoped(

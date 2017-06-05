@@ -11,6 +11,8 @@
 #ifndef WEBRTC_MODULES_UDP_TRANSPORT_SOURCE_UDP_TRANSPORT_IMPL_H_
 #define WEBRTC_MODULES_UDP_TRANSPORT_SOURCE_UDP_TRANSPORT_IMPL_H_
 
+#include <map>
+
 #include "udp_transport.h"
 #include "udp_socket_wrapper.h"
 
@@ -18,6 +20,9 @@ namespace cloopenwebrtc {
 class CriticalSectionWrapper;
 class RWLockWrapper;
 class UdpSocketManager;
+
+#define SSRC_MEDIA_BITS  0xFFFFFFF0
+typedef std::map<unsigned int, UdpTransportData*> SsrcChannelMap;
 
 class UdpTransportImpl : public UdpTransport
 {
@@ -140,6 +145,10 @@ public:
                                           WebRtc_UWord16& sourcePort);
 
     WebRtc_Word32 Id() const {return _id;}
+	virtual void SetMediaType(int mediaType);
+	virtual void  AddRefNum();
+	virtual void  SubRefNum();
+	virtual int   GetRefNum();
 protected:
     // IncomingSocketCallback signature functions for receiving callbacks from
     // UdpSocketWrapper.
@@ -264,6 +273,9 @@ private:
     WebRtc_UWord16 _rtpFilterPort;
     WebRtc_UWord16 _rtcpFilterPort;
 
+	CriticalSectionWrapper* _critChannelRef;
+	int _channel_ref;
+	int _mediaType;//0,audio; 1, video
     UdpTransportData* _packetCallback;
 };
 } // namespace cloopenwebrtc
