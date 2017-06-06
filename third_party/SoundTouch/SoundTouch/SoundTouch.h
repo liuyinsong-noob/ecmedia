@@ -75,7 +75,7 @@
 #include "FIFOSamplePipe.h"
 #include "STTypes.h"
 
-namespace cloopenwebrtc
+namespace cloopensoundtouch
 {
 
 /// Soundtouch library version string

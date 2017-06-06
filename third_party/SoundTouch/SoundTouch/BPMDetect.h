@@ -60,7 +60,7 @@
 #include "STTypes.h"
 #include "FIFOSampleBuffer.h"
 
-namespace cloopenwebrtc
+namespace cloopensoundtouch
 {
 
 /// Minimum allowed BPM rate. Used to restrict accepted result above a reasonable limit.
@@ -87,7 +87,7 @@ protected:
     int decimateCount;
 
     /// Sample average accumulator for FIFO-like decimation.
-    cloopenwebrtc::LONG_SAMPLETYPE decimateSum;
+    cloopensoundtouch::LONG_SAMPLETYPE decimateSum;
 
     /// Decimate sound by this coefficient to reach approx. 500 Hz.
     int decimateBy;
@@ -106,7 +106,7 @@ protected:
     int windowStart;
  
     /// FIFO-buffer for decimated processing samples.
-    cloopenwebrtc::FIFOSampleBuffer *buffer;
+    cloopensoundtouch::FIFOSampleBuffer *buffer;
 
     /// Updates auto-correlation function for given number of decimated samples that 
     /// are read from the internal 'buffer' pipe (samples aren't removed from the pipe 
@@ -117,14 +117,14 @@ protected:
     /// Decimates samples to approx. 500 Hz.
     ///
     /// \return Number of output samples.
-    int decimate(cloopenwebrtc::SAMPLETYPE *dest,      ///< Destination buffer
-                 const cloopenwebrtc::SAMPLETYPE *src, ///< Source sample buffer
+    int decimate(cloopensoundtouch::SAMPLETYPE *dest,      ///< Destination buffer
+                 const cloopensoundtouch::SAMPLETYPE *src, ///< Source sample buffer
                  int numsamples                     ///< Number of source samples.
                  );
 
     /// Calculates amplitude envelope for the buffer of samples.
     /// Result is output to 'samples'.
-    void calcEnvelope(cloopenwebrtc::SAMPLETYPE *samples,  ///< Pointer to input/output data buffer
+    void calcEnvelope(cloopensoundtouch::SAMPLETYPE *samples,  ///< Pointer to input/output data buffer
                       int numsamples                    ///< Number of samples in buffer
                       );
 
@@ -146,7 +146,7 @@ public:
     /// function. 
     /// 
     /// Notice that data in 'samples' array can be disrupted in processing.
-    void inputSamples(const cloopenwebrtc::SAMPLETYPE *samples,    ///< Pointer to input/working data buffer
+    void inputSamples(const cloopensoundtouch::SAMPLETYPE *samples,    ///< Pointer to input/working data buffer
                       int numSamples                            ///< Number of samples in buffer
                       );
 

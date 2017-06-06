@@ -63,15 +63,16 @@ typedef unsigned long   ulong;
 #ifndef _WINDEF_
     // if these aren't defined already by Windows headers, define now
 
-    typedef signed char SBOOL;
+
 
     #define FALSE   0
     #define TRUE    1
 
 #endif  // _WINDEF_
 
+typedef signed char SBOOL;
 
-namespace cloopenwebrtc
+namespace cloopensoundtouch
 {
     /// Activate these undef's to overrule the possible sampletype 
     /// setting inherited from some other header file:

@@ -50,7 +50,7 @@
 
 #include "FIFOSampleBuffer.h"
 
-using namespace cloopenwebrtc;
+using namespace cloopensoundtouch;
 
 // Constructor
 FIFOSampleBuffer::FIFOSampleBuffer(int numChannels)

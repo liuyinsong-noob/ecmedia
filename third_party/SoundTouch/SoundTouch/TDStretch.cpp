@@ -53,7 +53,7 @@
 
 #include <stdio.h>
 
-using namespace cloopenwebrtc;
+using namespace cloopensoundtouch;
 
 #define max(x, y) (((x) > (y)) ? (x) : (y))
 

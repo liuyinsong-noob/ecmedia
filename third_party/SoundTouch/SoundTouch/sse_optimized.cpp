@@ -54,7 +54,7 @@
 #include "cpu_detect.h"
 #include "STTypes.h"
 
-using namespace cloopenwebrtc;
+using namespace cloopensoundtouch;
 
 #ifdef SOUNDTOUCH_ALLOW_SSE
 
