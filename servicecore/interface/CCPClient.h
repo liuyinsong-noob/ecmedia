@@ -589,6 +589,8 @@ typedef struct _CALLBACKINTERFACE CCallbackInterface;
     CCPAPI void stopRecordLocalMedia();
     
 	CCPAPI  int setScreeShareActivity(char *callid, void *activity);
+	CCPAPI  int setAudioMagicSoundPara(const char *callid, int pitch, int tempo, int rate);
+	CCPAPI  int setAudioMagicSound(const char *callid, bool is_enable);
 #ifdef __cplusplus
 }
 #endif

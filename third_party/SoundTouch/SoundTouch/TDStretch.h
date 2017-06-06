@@ -49,7 +49,7 @@
 #include "RateTransposer.h"
 #include "FIFOSamplePipe.h"
 
-namespace cloopenwebrtc
+namespace cloopensoundtouch
 {
 
 /// Default values for sound processing parameters:

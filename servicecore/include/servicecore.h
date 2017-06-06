@@ -515,6 +515,8 @@ public:
 
 	int startSendRtpPacket(int &channel, const char *ip, int rtp_port);
 	int startRecvRtpPacket(int channelNum);
+	int serphone_audio_set_magic_sound(SerPhoneCall *call, int pitch, int tempo, int rate);
+	int serphone_audio_enable_magic_sound(SerPhoneCall *call, bool is_enable);
 
 private:
 //    char _user_call_id[9];

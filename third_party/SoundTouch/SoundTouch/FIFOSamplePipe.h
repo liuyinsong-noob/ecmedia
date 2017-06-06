@@ -52,7 +52,7 @@
 #include <stdlib.h>
 #include "STTypes.h"
 
-namespace cloopenwebrtc
+namespace cloopensoundtouch
 {
 
 /// Abstract base class for FIFO (first-in-first-out) sample processing classes.

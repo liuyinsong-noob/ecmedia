@@ -46,7 +46,7 @@
 
 #include "STTypes.h"
 
-namespace cloopenwebrtc
+namespace cloopensoundtouch
 {
 
 class AAFilter

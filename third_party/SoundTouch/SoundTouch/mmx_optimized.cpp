@@ -53,7 +53,8 @@
 #ifdef SOUNDTOUCH_ALLOW_MMX
 // MMX routines available only with integer sample type
 
-using namespace soundtouch;
+//using namespace soundtouch;
+using namespace cloopensoundtouch;
 
 //////////////////////////////////////////////////////////////////////////////
 //
