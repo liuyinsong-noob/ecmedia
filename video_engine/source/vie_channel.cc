@@ -50,6 +50,46 @@
 
 namespace cloopenwebrtc {
 
+#ifdef WIN32
+static const ResolutionInst g_resolution_table[] = {
+	{R_128_96_15,   128,  96,   300},
+	{R_160_120_15,  160,  120,  300},
+	{R_176_144_15,  176,  144,  300},
+	{R_320_240_15,  320,  240,  500},
+	{R_352_288_15,  352,  288,  500},
+	{R_480_360_15,  480,  360,  600},
+	{R_640_360_15,  640,  360,  700},
+	{R_640_480_15,  640,  480,  700},
+	{R_640_480_30,  640,  480,  700},
+	{R_848_480_15,  848,  480,  800},
+	{R_848_480_30,  848,  480,  800},
+	{R_1280_720_15, 1280, 720,  1000},
+	{R_1280_720_30, 1280, 720,  1300},
+	{R_1920_1080_15,1920, 1080, 1500},
+	{R_1920_1080_30,1920, 1080, 1800},
+	{R_2048_1080_30,2048, 1080, 2000}
+};
+#else
+static const ResolutionInst g_resolution_table[] = {
+	{ R_128_96_15,   96,   128,  300 },
+	{ R_160_120_15,  120,  160,  300 },
+	{ R_176_144_15,  144,  176,  300 },
+	{ R_320_240_15,  240,  320,  500 },
+	{ R_352_288_15,  288,  352,  500 },
+	{ R_480_360_15,  360,  480,  600 },
+	{ R_640_360_15,  360,  640,  700 },
+	{ R_640_480_15,  480,  640,  700 },
+	{ R_640_480_30,  480,  640,  700 },
+	{ R_848_480_15,  480,  848,  800 },
+	{ R_848_480_30,  480,  848,  800 },
+	{ R_1280_720_15, 720,  1280, 1000 },
+	{ R_1280_720_30, 720,  1280, 1300 },
+	{ R_1920_1080_15,1080, 1920, 1500 },
+	{ R_1920_1080_30,1080, 1920, 1800 },
+	{ R_2048_1080_30,1080, 2048, 2000 }
+};
+#endif
+
 const int kMaxDecodeWaitTimeMs = 50;
 const int kInvalidRtpExtensionId = 0;
 static const int kMaxTargetDelayMs = 10000;
@@ -139,6 +179,10 @@ ViEChannel::ViEChannel(int32_t channel_id,
 	  _confPort(0),
 	  _confIP(NULL),	  
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
+	  ssrc_all_num_(0),
+	  local_ssrc_main_(0),
+	  local_ssrc_slave_(0),
+	  remote_ssrc_(0),
 	  socket_transport_(NULL),
 #endif
 #ifdef WEBRTC_SRTP
@@ -237,7 +281,10 @@ ViEChannel::~ViEChannel() {
   UpdateHistograms();
   // Make sure we don't get more callbacks from the RTP module.
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
-  socket_transport_.StopReceiving();
+  if (local_ssrc_main_ != 0)
+  socket_transport_->SubRecieveChannel(local_ssrc_main_);
+  if (remote_ssrc_ != 0)
+	  socket_transport_->SubRecieveChannel(remote_ssrc_);
 #endif
   module_process_thread_.DeRegisterModule(vie_receiver_.GetReceiveStatistics());
   module_process_thread_.DeRegisterModule(rtp_rtcp_.get());
@@ -287,10 +334,9 @@ ViEChannel::~ViEChannel() {
   }
   // Release modules.
 
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
-  UdpTransport::Destroy(&socket_transport_);
-#endif
   VideoCodingModule::Destroy(vcm_);
+}
+
 int32_t ViEChannel::SetUdpTransport(UdpTransport *transport)
 {
 	socket_transport_ = transport;
@@ -304,6 +350,10 @@ int32_t ViEChannel::SetUdpTransport(UdpTransport *transport)
 	
 	return 0;
 }
+
+UdpTransport *ViEChannel::GetUdpTransport()
+{
+	return socket_transport_;
 }
 
 void ViEChannel::UpdateHistograms() {
@@ -991,6 +1041,70 @@ int32_t ViEChannel::EnableKeyFrameRequestCallback(const bool enable) {
   return 0;
 }
 
+int32_t ViEChannel::GetResolution(ResolutionInst &info) {
+	int i;
+	int g_resolution_table_size = sizeof(g_resolution_table) / sizeof(g_resolution_table[0]);
+
+	for (i = 0; i < g_resolution_table_size; i++) {
+		if (g_resolution_table[i].index == info.index)
+			break;
+	}
+
+	if (i == g_resolution_table_size) {
+		LOG(LS_ERROR) << "No the resolution " << info.index;
+		return -1;
+	}
+
+	memcpy(&info, &g_resolution_table[i], sizeof(ResolutionInst));
+	return 0;
+}
+
+int32_t ViEChannel::SetLocalSendSSRC(const uint32_t SSRC, const StreamType usage) {
+	if (SSRC == 0)
+		return 0;
+
+	int ssrc_num = 2;
+	uint32_t ssrc_slave = 0;
+	uint32_t resolution_index = SSRC & 0x0F;
+	if (resolution_index <= R_176_144_15) {
+		ssrc_num = 1;
+	}else if (resolution_index <= R_480_360_15){
+		ssrc_slave = (SSRC & 0xFFFFFFF0) | R_128_96_15;
+	}else if (resolution_index <= R_848_480_30) {
+		ssrc_slave = (SSRC & 0xFFFFFFF0) | R_160_120_15;
+	}else {
+		ssrc_slave = (SSRC & 0xFFFFFFF0) | R_176_144_15;
+	}
+
+	if (ssrc_num == 1){//only one ssrc(resolution)
+		if (SetSSRC(SSRC, usage, 0) != 0) {
+			LOG(LS_ERROR) << "set local only one ssrc failed";
+			return -1;
+		}
+		local_ssrc_main_ = SSRC;//only one resolution
+		ssrc_all_num_ = 1;
+
+	}else if (ssrc_num == 2) {
+		if (SetSSRC(ssrc_slave, usage, 0) != 0) {
+			LOG(LS_ERROR) << "set local ssrc slave failed";
+			return -1;
+		}
+		local_ssrc_slave_ = ssrc_slave;//small resolution
+
+		if (SetSSRC(SSRC, usage, 1) != 0) {
+			LOG(LS_ERROR) << "set local ssrc main failed";
+			return -1;
+		}
+		local_ssrc_main_ = SSRC;//big resolution
+		ssrc_all_num_ = 2;
+	}
+
+	socket_transport_->SetLocalSSrc(local_ssrc_main_);
+	socket_transport_->AddRecieveChannel(local_ssrc_main_, this);//receive local rtcp
+	
+	return 0;
+}
+
 int32_t ViEChannel::SetSSRC(const uint32_t SSRC,
                             const StreamType usage,
                             const uint8_t simulcast_idx) {
@@ -1004,7 +1118,39 @@ int32_t ViEChannel::SetSSRC(const uint32_t SSRC,
   } else {
     rtp_rtcp->SetSSRC(SSRC);
   }
+
   return 0;
+}
+
+//maybe change remote ssrc but not calling "CancelRemoteSSRC()" and "StopReceive()"
+int32_t ViEChannel::RequestRemoteSSRC(const uint32_t SSRC) {
+	if (0 == SSRC) {
+		LOG(LS_WARNING) << "request ssrc is 0";
+		return 0;
+	}
+
+	uint32_t bandwidth = 1;
+	int ret = rtp_rtcp_->SendSingleTMMBR(bandwidth, socket_transport_->GetLocalSSrc(), SSRC);
+	if (ret != 0) {
+		LOG(LS_ERROR) << "SendSingleTMMBR request remote failed";
+		return -1;
+	}
+
+	if (remote_ssrc_ > 0) {//change remote_ssrc_
+		socket_transport_->SubRecieveChannel(remote_ssrc_);
+	}
+	remote_ssrc_ = SSRC;
+	socket_transport_->AddRecieveChannel(remote_ssrc_, this);
+	return 0;
+}
+
+int32_t ViEChannel::CancelRemoteSSRC() {
+	int ret = rtp_rtcp_->SendSingleTMMBR(0, socket_transport_->GetLocalSSrc(), remote_ssrc_);
+	if (ret != 0) {
+		LOG(LS_ERROR) << "SendSingleTMMBR cancel remote failed";
+		return -1;
+	}
+	return 0;
 }
 
 int32_t ViEChannel::SetRemoteSSRCType(const StreamType usage,
@@ -1508,70 +1654,54 @@ bool ViEChannel::Sending() {
 }
 
 int32_t ViEChannel::StartReceive() {
-
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
 	if (!external_transport_) {
-		if (socket_transport_.Receiving()) {
-			// Warning, don't return error.
-			WEBRTC_TRACE(kTraceWarning, kTraceVideo, ViEId(engine_id_, channel_id_),
-				"%s: already receiving", __FUNCTION__);
-			return 0;
-		}
-		if (socket_transport_.ReceiveSocketsInitialized() == false) {
-			WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
-				"%s: receive sockets not initialized", __FUNCTION__);
-			return -1;
-		}
-		if (socket_transport_.StartReceiving(kViENumReceiveSocketBuffers) != 0) {
-			int32_t socket_error = socket_transport_.LastError();
-			WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
-				"%s: could not get receive socket information. Socket error:%d",
-				__FUNCTION__, socket_error);
-			return -1;
+		if (!socket_transport_->Receiving()) {
+
+			if (socket_transport_->ReceiveSocketsInitialized() == false) {
+				WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+					"%s: receive sockets not initialized", __FUNCTION__);
+				return -1;
+			}
+			if (socket_transport_->StartReceiving(kViENumReceiveSocketBuffers) != 0) {
+				int32_t socket_error = socket_transport_->LastError();
+				WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+					"%s: could not get receive socket information. Socket error:%d",
+					__FUNCTION__, socket_error);
+				return -1;
+			}
 		}
 	}
 #endif
   if (StartDecodeThread() != 0) {
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
-	  socket_transport_.StopReceiving();
-#endif
     vie_receiver_.StopReceive();
     return -1;
   }
   vie_receiver_.StartReceive();
   module_process_thread_.RegisterModule(receive_statistics_proxy_.get());
+
+  if (remote_ssrc_ != 0)
+	  socket_transport_->AddRecieveChannel(remote_ssrc_, this);
   return 0;
 }
 
+//must not stop socket_transport_ when many channels
 int32_t ViEChannel::StopReceive() {
-  vie_receiver_.StopReceive();
-  StopDecodeThread();
-  vcm_->ResetDecoder();
+	if (remote_ssrc_ != 0)
+		socket_transport_->SubRecieveChannel(remote_ssrc_);
 
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
-  if (socket_transport_.Receiving() == false) {
-	  // Warning, don't return error
-	  WEBRTC_TRACE(kTraceWarning, kTraceVideo,
-		  ViEId(engine_id_, channel_id_), "%s: not receiving",
-		  __FUNCTION__);
-	  return 0;
-  }
-  if (socket_transport_.StopReceiving() != 0) {
-	  int32_t socket_error = socket_transport_.LastError();
-	  WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
-		  "%s: Socket error: %d", __FUNCTION__, socket_error);
-	  return -1;
-  }
-#endif
+	vie_receiver_.StopReceive();
+	StopDecodeThread();
+	vcm_->ResetDecoder();
 
-  return 0;
+	return 0;
 }
 
 int32_t ViEChannel::RegisterSendTransport(Transport* transport) {
 
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
-	if (socket_transport_.SendSocketsInitialized() ||
-		socket_transport_.ReceiveSocketsInitialized()) {
+	if (socket_transport_->SendSocketsInitialized() ||
+		socket_transport_->ReceiveSocketsInitialized()) {
 			WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 				"%s:  socket transport already initialized", __FUNCTION__);
 			return -1;
@@ -1798,7 +1928,10 @@ int32_t ViEChannel::ResendPackets(const uint16_t* sequence_numbers,
 }
 
 bool ViEChannel::ChannelDecodeThreadFunction(void* obj) {
-  return static_cast<ViEChannel*>(obj)->ChannelDecodeProcess();
+  int ret = static_cast<ViEChannel*>(obj)->ChannelDecodeProcess();
+  WEBRTC_TRACE(kTraceError, kTraceVideo, 0,
+	  "%s:this channel id is %d, local_ssrc_main_=%u, remote_ssrc_=%u, decode ret=%d", __FUNCTION__, static_cast<ViEChannel*>(obj)->channel_id_, static_cast<ViEChannel*>(obj)->local_ssrc_main_, static_cast<ViEChannel*>(obj)->remote_ssrc_, ret);
+  return ret;
 }
 
 bool ViEChannel::ChannelDecodeProcess() {
@@ -2105,6 +2238,18 @@ void  ViEChannel::IncomingRTPPacket(const int8_t* rtp_packet,
 	const char* from_ip,
 	const uint16_t from_port)
 {
+	unsigned int r_rtpSsrc = ((unsigned char)rtp_packet[8] << 24)
+		| ((unsigned char)rtp_packet[9] << 16)
+		| ((unsigned char)rtp_packet[10] << 8)
+		| (unsigned char)rtp_packet[11];
+
+	unsigned short seq_num = ((unsigned char)rtp_packet[2] << 8) | (unsigned char)rtp_packet[3];
+
+	WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+		"%s: myself channelid is %d, local_ssrc_main_=%u, remote_ssrc_=%u,  recieve rmote ssrc=%u, seq_num=%u",
+		__FUNCTION__, channel_id_, local_ssrc_main_, remote_ssrc_, r_rtpSsrc, seq_num);
+
+
 	{
 		CriticalSectionScoped cs(critsect_net_statistic.get());
 		if(_startNetworkTime == 0)
@@ -2178,6 +2323,7 @@ void  ViEChannel::IncomingRTCPPacket(const int8_t* rtcp_packet,
 	const char* from_ip,
 	const uint16_t from_port)
 {
+
 	{
 		CriticalSectionScoped cs(critsect_net_statistic.get());
 		if(_startNetworkTime == 0)
@@ -2477,6 +2623,8 @@ int ViEChannel::DisableSRTPReceive()
 int32_t ViEChannel::SetLocalReceiver(const uint16_t rtp_port,
 	const uint16_t rtcp_port,
 	const char* ip_address) {
+
+#if 0
 		WEBRTC_TRACE(kTraceInfo, kTraceVideo, ViEId(engine_id_, channel_id_), "%s",
 			__FUNCTION__);
 
@@ -2490,18 +2638,18 @@ int32_t ViEChannel::SetLocalReceiver(const uint16_t rtp_port,
 		callback_cs_->Leave();
 
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
-		if (socket_transport_.Receiving()) {
+		if (socket_transport_->Receiving()) {
 			WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 				"%s: already receiving", __FUNCTION__);
-			return -1;
+			return 0;
 		}
 
 		const char* multicast_ip_address = NULL;
-		if (socket_transport_.InitializeReceiveSockets(this, rtp_port,
+		if (socket_transport_->InitializeReceiveSockets(this, rtp_port,
 			ip_address,
 			multicast_ip_address,
 			rtcp_port) != 0) {
-				int32_t socket_error = socket_transport_.LastError();
+				int32_t socket_error = socket_transport_->LastError();
 				WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 					"%s: could not initialize receive sockets. Socket error: %d",
 					__FUNCTION__, socket_error);
@@ -2513,6 +2661,10 @@ int32_t ViEChannel::SetLocalReceiver(const uint16_t rtp_port,
 			"%s: not available for external transport", __FUNCTION__);
 		return -1;
 #endif
+
+#endif
+
+		return 0;
 }
 
 int32_t ViEChannel::GetLocalReceiver(uint16_t& rtp_port,
@@ -2531,17 +2683,17 @@ int32_t ViEChannel::GetLocalReceiver(uint16_t& rtp_port,
 		callback_cs_->Leave();
 
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
-		if (socket_transport_.ReceiveSocketsInitialized() == false) {
+		if (socket_transport_->ReceiveSocketsInitialized() == false) {
 			WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 				"%s: receive sockets not initialized", __FUNCTION__);
 			return -1;
 		}
 
 		char multicast_ip_address[UdpTransport::kIpAddressVersion6Length];
-		if (socket_transport_.ReceiveSocketInformation(ip_address, rtp_port,
+		if (socket_transport_->ReceiveSocketInformation(ip_address, rtp_port,
 			rtcp_port,
 			multicast_ip_address) != 0) {
-				int32_t socket_error = socket_transport_.LastError();
+				int32_t socket_error = socket_transport_->LastError();
 				WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 					"%s: could not get receive socket information. Socket error: %d",
 					__FUNCTION__, socket_error);
@@ -2565,7 +2717,7 @@ int32_t ViEChannel::SetSocks5SendData(unsigned char *data, int length, bool isRT
   }
   callback_cs_->Leave();
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
-  socket_transport_.SetSocks5SendData(data, length, isRTCP);
+  socket_transport_->SetSocks5SendData(data, length, isRTCP);
 #endif
   return 0;
 };
@@ -2590,14 +2742,14 @@ int32_t ViEChannel::SetSendDestination(
 		callback_cs_->Leave();
 
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
-		const bool is_ipv6 = socket_transport_.IpV6Enabled();
+		const bool is_ipv6 = socket_transport_->IpV6Enabled();
 		if (UdpTransport::IsIpAddressValid(rtp_ip_address, is_ipv6) == false || UdpTransport::IsIpAddressValid(rtcp_ip_address, is_ipv6) == false) {
 			WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 				"%s: Not a valid RTP IP address: %s or RTCP IP address: %s", __FUNCTION__, rtp_ip_address, rtcp_ip_address);
 			return -1;
 		}
-		if (socket_transport_.InitializeSendSockets(rtp_ip_address, rtp_port, rtcp_ip_address, rtcp_port) != 0) {
-				int32_t socket_error = socket_transport_.LastError();
+		if (socket_transport_->InitializeSendSockets(rtp_ip_address, rtp_port, rtcp_ip_address, rtcp_port) != 0) {
+				int32_t socket_error = socket_transport_->LastError();
 				WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 					"%s: could not initialize send socket. Socket error: %d",
 					__FUNCTION__, socket_error);
@@ -2607,10 +2759,10 @@ int32_t ViEChannel::SetSendDestination(
 		if (source_rtp_port != 0) {
 			uint16_t receive_rtp_port = 0;
 			uint16_t receive_rtcp_port = 0;
-			if (socket_transport_.ReceiveSocketInformation(NULL, receive_rtp_port,
+			if (socket_transport_->ReceiveSocketInformation(NULL, receive_rtp_port,
 				receive_rtcp_port,
 				NULL) != 0) {
-					int32_t socket_error = socket_transport_.LastError();
+					int32_t socket_error = socket_transport_->LastError();
 					WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 						"%s: could not get receive port information. Socket error: %d",
 						__FUNCTION__, socket_error);
@@ -2619,9 +2771,9 @@ int32_t ViEChannel::SetSendDestination(
 			// Initialize an extra socket only if send port differs from receive
 			// port.
 			if (source_rtp_port != receive_rtp_port) {
-				if (socket_transport_.InitializeSourcePorts(source_rtp_port,
+				if (socket_transport_->InitializeSourcePorts(source_rtp_port,
 					source_rtcp_port) != 0) {
-						int32_t socket_error = socket_transport_.LastError();
+						int32_t socket_error = socket_transport_->LastError();
 						WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 							"%s: could not set source ports. Socket error: %d",
 							__FUNCTION__, socket_error);
@@ -2630,7 +2782,7 @@ int32_t ViEChannel::SetSendDestination(
 			}
 		}
     
-		vie_sender_.RegisterSendTransport(&socket_transport_);
+		vie_sender_.RegisterSendTransport(socket_transport_);
 
 
         /***** 这块 还没有做添加 rtcp ip address 之后的整理 zhaoyou *****/
@@ -2653,7 +2805,7 @@ int32_t ViEChannel::SetSendDestination(
 
 			int32_t conv_result =
 				UdpTransport::LocalHostAddressIPV6(local_host_address);
-			conv_result += socket_transport_.InetPresentationToNumeric(
+			conv_result += socket_transport_->InetPresentationToNumeric(
 				23, rtp_ip_address, current_ip_address);
 			if (conv_result == 0) {
 				bool local_host = true;
@@ -2711,14 +2863,14 @@ int32_t ViEChannel::GetSendDestination(
 		callback_cs_->Leave();
 
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
-		if (socket_transport_.SendSocketsInitialized() == false) {
+		if (socket_transport_->SendSocketsInitialized() == false) {
 			WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 				"%s: send sockets not initialized", __FUNCTION__);
 			return -1;
 		}
-		if (socket_transport_.SendSocketInformation(ip_address, rtp_port, rtcp_port)
+		if (socket_transport_->SendSocketInformation(ip_address, rtp_port, rtcp_port)
 			!= 0) {
-				int32_t socket_error = socket_transport_.LastError();
+				int32_t socket_error = socket_transport_->LastError();
 				WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 					"%s: could not get send socket information. Socket error: %d",
 					__FUNCTION__, socket_error);
@@ -2726,8 +2878,8 @@ int32_t ViEChannel::GetSendDestination(
 		}
 		source_rtp_port = 0;
 		source_rtcp_port = 0;
-		if (socket_transport_.SourcePortsInitialized()) {
-			socket_transport_.SourcePorts(source_rtp_port, source_rtcp_port);
+		if (socket_transport_->SourcePortsInitialized()) {
+			socket_transport_->SourcePorts(source_rtp_port, source_rtcp_port);
 		}
 		return 0;
 #else
@@ -2744,7 +2896,7 @@ int32_t ViEChannel::StartSend() {
 
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
 	if (!external_transport_) {
-		if (socket_transport_.SendSocketsInitialized() == false) {
+		if (socket_transport_->SendSocketsInitialized() == false) {
 			WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 				"%s: send sockets not initialized", __FUNCTION__);
 			return -1;
@@ -2752,13 +2904,14 @@ int32_t ViEChannel::StartSend() {
 	}
 #endif
 	rtp_rtcp_->SetSendingMediaStatus(true);
-
+#if 0
 	if (rtp_rtcp_->Sending()) {
 		// Already sending.
 		WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 			"%s: Already sending", __FUNCTION__);
 		return kViEBaseAlreadySending;
 	}
+#endif
 	if (rtp_rtcp_->SetSendingStatus(true) != 0) {
 		WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 			"%s: Could not start sending RTP", __FUNCTION__);
@@ -2777,7 +2930,7 @@ int32_t ViEChannel::StartSend() {
 
 bool ViEChannel::Receiving() {
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
-	return socket_transport_.Receiving();
+	return socket_transport_->Receiving();
 #else
 	return false;
 #endif
@@ -2804,7 +2957,7 @@ int32_t ViEChannel::SendUDPPacket(const int8_t* data,
 		}
 
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
-		transmitted_bytes = socket_transport_.SendRaw(data, length, use_rtcp_socket,portnr,ip);
+		transmitted_bytes = socket_transport_->SendRaw(data, length, use_rtcp_socket,portnr,ip);
 		if (transmitted_bytes == -1) {
 			WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_), "%s",
 				__FUNCTION__);
@@ -2887,14 +3040,14 @@ int32_t ViEChannel::EnableIPv6() {
     callback_cs_->Leave();
     
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
-    if (socket_transport_.IpV6Enabled()) {
+    if (socket_transport_->IpV6Enabled()) {
         WEBRTC_TRACE(kTraceWarning, kTraceVideo, ViEId(engine_id_, channel_id_),
                      "%s: IPv6 already enabled", __FUNCTION__);
         return -1;
     }
     
-    if (socket_transport_.EnableIpV6() != 0) {
-        int32_t socket_error = socket_transport_.LastError();
+    if (socket_transport_->EnableIpV6() != 0) {
+        int32_t socket_error = socket_transport_->LastError();
         WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
                      "%s: could not enable IPv6. Socket error: %d", __FUNCTION__,
                      socket_error);
@@ -2920,7 +3073,7 @@ bool ViEChannel::IsIPv6Enabled() {
         }
     }
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
-    return socket_transport_.IpV6Enabled();
+    return socket_transport_->IpV6Enabled();
 #else
     WEBRTC_TRACE(kTraceStateInfo, kTraceVideo, ViEId(engine_id_, channel_id_),
                  "%s: not available for external transport", __FUNCTION__);

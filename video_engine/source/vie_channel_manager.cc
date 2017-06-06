@@ -135,20 +135,51 @@ int ViEChannelManager::CreateChannel(int* channel_id,
     return -1;
   }
 
+	*channel_id = new_channel_id;
+	group->AddChannel(*channel_id);
+	channel_groups_.push_back(group);
+
+	return 0;
+}
+int ViEChannelManager::AddSsrcToEncoder(int channelid)
+{
   // Add ViEEncoder to EncoderFeedBackObserver.
-  unsigned int ssrc = 0;
-  int idx = 0;
-  channel_map_[new_channel_id]->GetLocalSSRC(idx, &ssrc);
+	CriticalSectionScoped cs(channel_id_critsect_);
+
+	ChannelMap::iterator c_it = channel_map_.find(channelid);
+	if (c_it == channel_map_.end()) {
+		// No such channel.
+		return -1;
+	}
+	unsigned int ssrc = 0;
+	int idx = 0;
+	channel_map_[channelid]->GetLocalSSRC(idx, &ssrc);
+
+	ChannelGroup* group = FindGroup(channelid);
+	if (!group){
+		LOG(LS_ERROR) << "can not find group of channel " << channelid;
+		return -1;
+	}
+
+	EncoderMap::const_iterator it = vie_encoder_map_.find(channelid);
+	if (it == vie_encoder_map_.end()) {
+		LOG(LS_ERROR) << "can not find encoder of channel " << channelid;
+        return -1;
+	}
+	ViEEncoder* vie_encoder = it->second;
+
+	EncoderStateFeedback* encoder_state_feedback =
+		group->GetEncoderStateFeedback();
   encoder_state_feedback->AddEncoder(ssrc, vie_encoder);
   std::list<unsigned int> ssrcs;
   ssrcs.push_back(ssrc);
   vie_encoder->SetSsrcs(ssrcs);
-  *channel_id = new_channel_id;
-  group->AddChannel(*channel_id);
-  channel_groups_.push_back(group);
-  // Register the channel to receive stats updates.
-  group->GetCallStats()->RegisterStatsObserver(
-      channel_map_[new_channel_id]->GetStatsObserver());
+	// Register the channel to receive stats updates.
+	group->GetCallStats()->RegisterStatsObserver(
+		channel_map_[channelid]->GetStatsObserver());
+	RemoteBitrateEstimator* remote_bitrate_estimator =
+		group->GetRemoteBitrateEstimator();
+	BitrateController* bitrate_controller = group->GetBitrateController();
 
   //add by ylr
   SendStatisticsProxy *p_sendStats = vie_encoder->GetSendStatisticsProxy();
@@ -193,6 +224,7 @@ int ViEChannelManager::CreateChannel(int* channel_id,
     vie_encoder = new ViEEncoder(engine_id_, new_channel_id, number_of_cores_,
                                  engine_config_,
                                  *module_process_thread_,
+                                 *module_process_thread_pacer_,
                                  bitrate_controller);
     if (!(vie_encoder->Init() &&
         CreateChannelObject(
@@ -246,6 +278,8 @@ int ViEChannelManager::DeleteChannel(int channel_id) {
   ViEChannel* vie_channel = NULL;
   ViEEncoder* vie_encoder = NULL;
   ChannelGroup* group = NULL;
+  UdpTransport * transport = NULL;
+
   {
     // Write lock to make sure no one is using the channel.
     ViEManagerWriteScoped wl(this);
@@ -262,6 +296,8 @@ int ViEChannelManager::DeleteChannel(int channel_id) {
     channel_map_.erase(c_it);
 
     ReturnChannelId(channel_id);
+
+	transport = vie_channel->GetUdpTransport();
 
     // Find the encoder object.
     EncoderMap::iterator e_it = vie_encoder_map_.find(channel_id);
@@ -322,6 +358,10 @@ int ViEChannelManager::DeleteChannel(int channel_id) {
     // BitrateController object that the group owns.
     LOG(LS_VERBOSE) << "Channel group deleted for channel " << channel_id;
     delete group;
+  }
+  if (transport) {
+	  LOG(LS_VERBOSE) << "delete udptransport for channel " << channel_id;
+	  DeleteUdptransport(transport);
   }
   LOG(LS_VERBOSE) << "Channel deleted " << channel_id;
   return 0;

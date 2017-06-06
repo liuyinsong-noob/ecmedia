@@ -983,7 +983,9 @@ void CserphonetestDlg::OnBnClickedButton7()
 	//setMute(true);
 
 	// TODO: 在此添加控件通知处理程序代码
-	sendDTMF(g_currentCallId,'1');
+	//sendDTMF(g_currentCallId,'1');
+
+	setMute(true);
 
 	//SpeakerInfo *speak;
 	//getSpeakerInfo(&speak);
@@ -1025,7 +1027,8 @@ void CserphonetestDlg::OnBnClickedButton7()
 void CserphonetestDlg::OnBnClickedButton8()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	sendDTMF(g_currentCallId, '2');
+	//sendDTMF(g_currentCallId, '2');
+	setMute(false);
 	//stopRecordVoice(g_currentCallId);
 	//setMute(false);
 	//stopRecordVoip(g_currentCallId);

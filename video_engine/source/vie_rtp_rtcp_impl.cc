@@ -120,10 +120,51 @@ int ViERTP_RTCPImpl::SetLocalSSRC(const int video_channel,
     shared_data_->SetLastError(kViERtpRtcpInvalidChannelId);
     return -1;
   }
-  if (vie_channel->SetSSRC(SSRC, usage, simulcast_idx) != 0) {
-    shared_data_->SetLastError(kViERtpRtcpUnknownError);
-    return -1;
+
+  //judge whether trunk or scv through SSRC(0, trunk; other, svc)
+  if (SSRC != 0) {//trunk, no need to set ssrc
+	  if (vie_channel->SetLocalSendSSRC(SSRC, usage) != 0) {
+		  shared_data_->SetLastError(kViERtpRtcpUnknownError);
+		  return -1;
+	  }
   }
+
+  ViEChannelManager *cm = shared_data_->channel_manager();
+  if (cm) {
+	  cm->AddSsrcToEncoder(video_channel);
+  }
+  return 0;
+}
+
+int ViERTP_RTCPImpl::RequestRemoteSSRC(const int video_channel, const unsigned int SSRC){
+	LOG_F(LS_INFO) << "channel: " << video_channel << " ssrc: " << SSRC << "";
+	ViEChannelManagerScoped cs(*(shared_data_->channel_manager()));
+	ViEChannel* vie_channel = cs.Channel(video_channel);
+	if (!vie_channel) {
+		shared_data_->SetLastError(kViERtpRtcpInvalidChannelId);
+		return -1;
+	}
+	if (vie_channel->RequestRemoteSSRC(SSRC) != 0) {
+		shared_data_->SetLastError(kViERtpRtcpUnknownError);
+		return -1;
+	}
+
+	return 0;
+}
+
+int ViERTP_RTCPImpl::CancelRemoteSSRC(const int video_channel) {
+	LOG_F(LS_INFO) << "channel: " << video_channel;
+	ViEChannelManagerScoped cs(*(shared_data_->channel_manager()));
+	ViEChannel* vie_channel = cs.Channel(video_channel);
+	if (!vie_channel) {
+		shared_data_->SetLastError(kViERtpRtcpInvalidChannelId);
+		return -1;
+	}
+	if (vie_channel->CancelRemoteSSRC() != 0) {
+		shared_data_->SetLastError(kViERtpRtcpUnknownError);
+		return -1;
+	}
+
   return 0;
 }
 

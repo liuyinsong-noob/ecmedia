@@ -23,8 +23,11 @@
 //#include "webrtc/test/testsupport/gtest_prod_util.h"
 
 namespace cloopenwebrtc {
-
+class EventWrapper;
+class ThreadWrapper;
+    
 class ModuleRtpRtcpImpl : public RtpRtcp {
+ // used for
  public:
   explicit ModuleRtpRtcpImpl(const RtpRtcp::Configuration& configuration);
 
@@ -352,6 +355,8 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
 	  RtcpPacketTypeCounterObserver *observer) OVERRIDE;
 
   void OnReceivedTMMBR();
+  // added by zhaoyou.
+  void OnReceivedTMMBN();
 
   // Bad state of RTP receiver request a keyframe.
   void OnRequestIntraFrame();
@@ -365,8 +370,14 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
   void OnReceivedNACK(const std::list<uint16_t>& nack_sequence_numbers);
 
   void OnRequestSendReport();
-
+    
+    
+    
+    
+   virtual int SendSingleTMMBR(uint32_t bandwidth, uint32_t ssrc, uint32_t remote_ssrc);
+    
  protected:
+  
   void RegisterChildModule(RtpRtcp* module);
 
   void DeRegisterChildModule(RtpRtcp* module);
@@ -387,6 +398,7 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
   RTCPReceiver              rtcp_receiver_;
 
   Clock*                    clock_;
+    
 public:
     virtual int32_t RegisterRtpReceiver(RtpReceiver* rtpRecever) {rtp_receiver_ = rtpRecever; return 0;};
     virtual int32_t DeRegisterRtpReceiver() {rtp_receiver_ = NULL; return 0;};
@@ -435,6 +447,12 @@ public:
   // The processed RTT from RtcpRttStats.
   scoped_ptr<CriticalSectionWrapper> critical_section_rtt_;
   int64_t rtt_ms_;
+
+  bool isSendingTmmbr;
+  
+  uint32_t tmmbr_bandwidth;
+  uint32_t tmmbr_remote_ssrc;
+  uint32_t tmmbr_ssrc ;
 };
 
 }  // namespace webrtc

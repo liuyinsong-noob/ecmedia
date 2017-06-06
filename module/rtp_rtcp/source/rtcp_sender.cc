@@ -253,7 +253,7 @@ RTCPSender::TMMBR() const
 
 void RTCPSender::SetTMMBRStatus(bool enable) {
   CriticalSectionScoped lock(_criticalSectionRTCPSender);
-  _TMMBR = enable;
+   _TMMBR = enable; // modified by zhaoyou
 }
 
 bool
@@ -1055,12 +1055,14 @@ RTCPSender::SetTargetBitrate(unsigned int target_bitrate)
 int32_t RTCPSender::BuildTMMBR(ModuleRtpRtcpImpl* rtp_rtcp_module,
                                uint8_t* rtcpbuffer,
                                int& pos) {
+    /* 记录已经发送的 tmmbr*/
     if (rtp_rtcp_module == NULL)
       return -1;
     // Before sending the TMMBR check the received TMMBN, only an owner is allowed to raise the bitrate
     // If the sender is an owner of the TMMBN -> send TMMBR
     // If not an owner but the TMMBR would enter the TMMBN -> send TMMBR
 
+    // bounding : 边界框
     // get current bounding set from RTCP receiver
     bool tmmbrOwner = false;
     // store in candidateSet, allocates one extra slot
@@ -1076,13 +1078,15 @@ int32_t RTCPSender::BuildTMMBR(ModuleRtpRtcpImpl* rtp_rtcp_module,
     {
         for (int32_t i = 0; i < lengthOfBoundingSet; i++)
         {
-            if( candidateSet->Tmmbr(i) == _tmmbr_Send &&
+            // 遍历set中的元素，若tmmb值 和 OK_send值都相等，set中包含要发送的FCI信息，按照程序下面的意思，直接返回了，不在发送.
+            if( candidateSet->Tmmbr(i) ==    _tmmbr_Send &&
                 candidateSet->PacketOH(i) == _packetOH_Send)
             {
                 // do not send the same tuple
                 return 0;
             }
         }
+        
         if(!tmmbrOwner)
         {
             // use received bounding set as candidate set
@@ -1096,8 +1100,10 @@ int32_t RTCPSender::BuildTMMBR(ModuleRtpRtcpImpl* rtp_rtcp_module,
             // find bounding set
             TMMBRSet* boundingSet = NULL;
             int numBoundingSet = _tmmbrHelp.FindTMMBRBoundingSet(boundingSet);
+            // 什么意思？？
             if(numBoundingSet > 0 || numBoundingSet <= numCandidates)
             {
+                // 什么意思啊？？？？
                 tmmbrOwner = _tmmbrHelp.IsOwner(_SSRC, numBoundingSet);
             }
             if(!tmmbrOwner)
@@ -1160,6 +1166,7 @@ int32_t RTCPSender::BuildTMMBR(ModuleRtpRtcpImpl* rtp_rtcp_module,
     return 0;
 }
 
+// 构建 tmmbn
 int32_t
 RTCPSender::BuildTMMBN(uint8_t* rtcpbuffer, int& pos)
 {
@@ -1195,7 +1202,7 @@ RTCPSender::BuildTMMBN(uint8_t* rtcpbuffer, int& pos)
     rtcpbuffer[pos++]=(uint8_t)0;
     rtcpbuffer[pos++]=(uint8_t)0;
     rtcpbuffer[pos++]=(uint8_t)0;
-
+    // 根据set中所有的 tmmbr 对象，循环构建 tmmbn
     // Additional Feedback Control Information (FCI)
     int numBoundingSet = 0;
     for(uint32_t n=0; n< boundingSet->lengthOfSet(); n++)
@@ -1207,16 +1214,19 @@ RTCPSender::BuildTMMBN(uint8_t* rtcpbuffer, int& pos)
             pos += 4;
 
             uint32_t bitRate = boundingSet->Tmmbr(n) * 1000;
+            // get exp of tmmbn
             uint32_t mmbrExp = 0;
             for(int i=0; i<64; i++)
             {
+                // 131071 = 2^17
                 if(bitRate <=  ((uint32_t)131071 << i))
                 {
                     mmbrExp = i;
                     break;
                 }
             }
-            uint32_t mmbrMantissa = (bitRate >> mmbrExp);
+            // bitRate = mmbrMantissa * 2^mmbrExp
+            uint32_t mmbrMantissa = (bitRate >> mmbrExp); // 右移 mmbrExp，相当于 bitRate/(2^mmbrExp).
             uint32_t measuredOH = boundingSet->PacketOH(n);
 
             rtcpbuffer[pos++]=(uint8_t)((mmbrExp << 2) + ((mmbrMantissa >> 15) & 0x03));
@@ -1582,7 +1592,7 @@ int32_t RTCPSender::SendRTCP(const FeedbackState& feedback_state,
   {
 	  packet_type_counter_observer_->RtcpPacketTypesCounterUpdated(_SSRC, packet_type_counter_);
   }
-
+    
   return SendToNetwork(rtcp_buffer, static_cast<size_t>(rtcp_length));
 }
 
@@ -1616,7 +1626,7 @@ int RTCPSender::PrepareRTCP(const FeedbackState& feedback_state,
       rtcpPacketTypeFlags |= kRtcpApp;
       _appSend = false;
   }
-  if(_REMB && _sendREMB) //rtcp合成模式下，remb总是跟在SR之后，所以remb的发送间隔
+  if(_REMB && _sendREMB) //rtcp∫?≥…?￡?Ω??￡¨remb????∏˙‘?SR÷?∫?￡¨à?“‘rembμ?∑￠à?o‰∏ù
   {
       // Always attach REMB to SR if that is configured. Note that REMB is
       // only sent on one of the RTP modules in the REMB group.
@@ -1963,7 +1973,7 @@ int32_t RTCPSender::SendToNetwork(const uint8_t* dataBuffer, size_t length) {
     }
     return -1;
 }
-
+    
 void RTCPSender::SetCsrcs(const std::vector<uint32_t>& csrcs) {
   assert(csrcs.size() <= kRtpCsrcSize);
   CriticalSectionScoped lock(_criticalSectionRTCPSender);
@@ -2097,5 +2107,61 @@ void RTCPSender::SetRtcpPacketTypeCountObserver(RtcpPacketTypeCounterObserver *o
 {
 	CriticalSectionScoped lock(_criticalSectionRTCPSender);
 	packet_type_counter_observer_ = observer;
+}
+    
+    
+// send single tmmbr
+int RTCPSender::SendSingleTMMBR(uint32_t bandwidth, uint32_t ssrc, uint32_t remote_ssrc) {
+    
+    LOG(LS_WARNING) << "gezhaoyou RTCPSender::SendSingleTMMBR begin-------- bandwidth, ssrc, remote_ssrc is:"
+    << bandwidth << ssrc << remote_ssrc;
+    uint8_t rtcpbuffer[100];
+    int pos = 0;
+    
+    // add TMMBR indicator
+    uint8_t FMT = 3;
+    rtcpbuffer[pos++]=(uint8_t)0x80 + FMT;
+    rtcpbuffer[pos++]=(uint8_t)205;
+    
+    //Length of 4
+    rtcpbuffer[pos++]=(uint8_t)0;
+    rtcpbuffer[pos++]=(uint8_t)(4);
+    
+    // Add our own SSRC
+    RtpUtility::AssignUWord32ToBuffer(rtcpbuffer + pos, ssrc);
+    pos += 4;
+    
+    // RFC 5104     4.2.1.2.  Semantics
+    
+    // SSRC of media source
+    rtcpbuffer[pos++]=(uint8_t)0;
+    rtcpbuffer[pos++]=(uint8_t)0;
+    rtcpbuffer[pos++]=(uint8_t)0;
+    rtcpbuffer[pos++]=(uint8_t)0;
+    
+    // Additional Feedback Control Information (FCI)
+    RtpUtility::AssignUWord32ToBuffer(rtcpbuffer + pos, remote_ssrc);
+    pos += 4;
+    
+    uint32_t bitRate = bandwidth*1000;
+    uint32_t mmbrExp = 0;
+    for(uint32_t i=0;i<64;i++)
+    {
+        if(bitRate <= ((uint32_t)131071 << i))
+        {
+            mmbrExp = i;
+            break;
+        }
+    }
+    uint32_t mmbrMantissa = (bitRate >> mmbrExp);
+    
+    rtcpbuffer[pos++]=(uint8_t)((mmbrExp << 2) + ((mmbrMantissa >> 15) & 0x03));
+    rtcpbuffer[pos++]=(uint8_t)(mmbrMantissa >> 7);
+    rtcpbuffer[pos++]=(uint8_t)((mmbrMantissa << 1) + ((_packetOH_Send >> 8)& 0x01));
+    
+    rtcpbuffer[pos++]=(uint8_t)(_packetOH_Send);
+    
+    LOG(LS_WARNING) << "gezhaoyou RTCPSender::SendSingleTMMBR end-------- bandwidth, ssrc, remote_ssrc is:";
+    return SendToNetwork(rtcpbuffer, pos);
 }
 }  // namespace webrtc

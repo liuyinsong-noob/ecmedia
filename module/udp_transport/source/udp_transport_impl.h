@@ -59,7 +59,7 @@ public:
                                                 const WebRtc_UWord16 rtcpPort);
     virtual WebRtc_Word32 SetSocks5SendData(unsigned char *data, int length, bool isRTCP);
     virtual WebRtc_Word32 InitializeReceiveSockets(
-        UdpTransportData* const packetCallback,
+		UdpTransportData* const packetCallback,
         const WebRtc_UWord16 rtpPort,
         const char* ipAddr = NULL,
         const char* multicastIpAddr = NULL,
@@ -145,10 +145,20 @@ public:
                                           WebRtc_UWord16& sourcePort);
 
     WebRtc_Word32 Id() const {return _id;}
+
 	virtual void SetMediaType(int mediaType);
+
+	virtual bool AddRecieveChannel(unsigned int ssrc, UdpTransportData* recieveChannel);
+	virtual bool SubRecieveChannel(unsigned int ssrc);
+
 	virtual void  AddRefNum();
 	virtual void  SubRefNum();
 	virtual int   GetRefNum();
+
+	virtual void SetLocalSSrc(unsigned int ssrc);
+	virtual unsigned int GetLocalSSrc();
+
+
 protected:
     // IncomingSocketCallback signature functions for receiving callbacks from
     // UdpSocketWrapper.
@@ -273,10 +283,13 @@ private:
     WebRtc_UWord16 _rtpFilterPort;
     WebRtc_UWord16 _rtcpFilterPort;
 
+	SsrcChannelMap _packetCallback;
 	CriticalSectionWrapper* _critChannelRef;
 	int _channel_ref;
+
 	int _mediaType;//0,audio; 1, video
-    UdpTransportData* _packetCallback;
+	unsigned int _ssrc;//local ssrc
+	UdpTransportData* _audioPacketCallback;
 };
 } // namespace cloopenwebrtc
 

@@ -60,6 +60,36 @@ class VideoDecoder;
 class VideoRenderCallback;
 class VoEVideoSync;
 
+enum ResolutionIndex
+{
+	R_128_96_15 = 0,
+	R_160_120_15,
+	R_176_144_15,
+	R_320_240_15,
+	R_352_288_15,
+	R_480_360_15,
+	R_640_360_15,
+	R_640_480_15,
+	R_640_480_30,
+	R_848_480_15,
+	R_848_480_30,
+	R_1280_720_15,
+	R_1280_720_30,
+	R_1920_1080_15,
+	R_1920_1080_30,
+	R_2048_1080_30
+};
+
+
+struct ResolutionInst
+{
+	ResolutionIndex index;
+	uint16_t  width;
+	uint16_t  height;
+	uint32_t  targetBitrate;
+};
+
+
 class ViEChannel
     : public VCMFrameTypeCallback,
       public VCMReceiveCallback,
@@ -88,7 +118,9 @@ class ViEChannel
   ~ViEChannel();
 
   int32_t Init();
+
   int32_t SetUdpTransport(UdpTransport *transport);
+  UdpTransport *GetUdpTransport();
 
   // Sets the encoder to use for the channel. |new_stream| indicates the encoder
   // type has changed and we should start a new RTP stream.
@@ -144,9 +176,19 @@ class ViEChannel
   int32_t EnableKeyFrameRequestCallback(const bool enable);
 
   // Sets SSRC for outgoing stream.
+  uint32_t GetSSRCNum() { return ssrc_all_num_; };
+
+  int32_t GetResolution(ResolutionInst &info);
+
+  int32_t SetLocalSendSSRC(const uint32_t SSRC, const StreamType usage);
+
   int32_t SetSSRC(const uint32_t SSRC,
                   const StreamType usage,
                   const unsigned char simulcast_idx);
+
+  int32_t RequestRemoteSSRC(const uint32_t SSRC);
+
+  int32_t CancelRemoteSSRC();
 
   // Gets SSRC for outgoing stream number |idx|.
   int32_t GetLocalSSRC(uint8_t idx, unsigned int* ssrc);
@@ -590,7 +632,11 @@ private:
 #endif
 
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
-	UdpTransport& socket_transport_;
+	uint32_t ssrc_all_num_;
+	uint32_t local_ssrc_main_;  //big resolution
+	uint32_t local_ssrc_slave_; //small resolution 
+	uint32_t remote_ssrc_;
+	UdpTransport *socket_transport_;
 #endif
 
 	 ViEFileRecorder file_recorder_;
