@@ -265,6 +265,8 @@ public:
 //    virtual bool GetSendFlag(int channelid) = 0;
     virtual bool  GetRecordingIsInitialized() = 0;
 	virtual void* GetChannel(int channel_id) = 0;
+    virtual int enableSoundTouch(int channelid, bool is_enable) = 0;
+    virtual int setSoundTouch(int channelid, int pitch, int tempo, int rate) = 0;
 protected:
     VoEBase() {}
     virtual ~VoEBase() {}

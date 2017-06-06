@@ -4526,5 +4526,39 @@ ECMEDIA_API int ECMedia_setAudioRed(int channelid, bool enable, int payloadType)
     
 }
 
+ECMEDIA_API int ECMedia_audio_enable_magic_sound(int channelid, bool is_enable)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d",
+                 __FUNCTION__, channelid);
+    VoEBase *base = VoEBase::GetInterface(m_voe);
+    if (base) {
+        int ret = base->enableSoundTouch(channelid, is_enable);
+        base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
+        return ret;
+    }
+    else{
+        PrintConsole("[ECMEDIA WARNNING] %s failed to get VoEBase",__FUNCTION__);
+        return -99;
+    }
+}
+
+ECMEDIA_API int ECMedia_audio_set_magic_sound(int channelid, int pitch, int tempo, int rate)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d",
+                 __FUNCTION__, channelid);
+    VoEBase *base = VoEBase::GetInterface(m_voe);
+    if (base) {
+        int ret = base->setSoundTouch(channelid, pitch, tempo, rate);
+        base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
+        return ret;
+    }
+    else{
+        PrintConsole("[ECMEDIA WARNNING] %s failed to get VoEBase",__FUNCTION__);
+        return -99;
+    }
+}
+
 #endif
 

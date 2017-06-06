@@ -52,7 +52,7 @@ include $(MY_WEBRTC_ROOT_PATH)/third_party/oRTP/build/android/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/third_party/srtp/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/third_party/zlib/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/third_party/protobuf/src/Android.mk
-
+include $(MY_WEBRTC_ROOT_PATH)/third_party/SoundTouch/SoundTouch/Android.mk
 
 # build .so
 LOCAL_PATH := $(JNI_PATH)
@@ -115,7 +115,9 @@ LOCAL_WHOLE_STATIC_LIBRARIES := \
 	libortp \
 	libfaac \
 	libsrtp \
-	libProtobuf_lite 
+	libProtobuf_lite \
+	libSoundTouch \
+
 	
 LOCAL_SHARED_LIBRARIES := \
     libcutils \

@@ -23,7 +23,7 @@ const uint32_t kMaxBufferSizeBytes = 3840; // 10ms in stereo @ 96kHz
 
 class AudioDeviceObserver;
 class MediaFile;
-
+ 
 class AudioDeviceBuffer
 {
 public:
@@ -70,7 +70,7 @@ public:
     int32_t StopOutputFileRecording();
 
     int32_t SetTypingStatus(bool typingStatus);
-
+    
 private:
     int32_t                   _id;
     CriticalSectionWrapper&         _critSect;
@@ -117,6 +117,8 @@ private:
     int _recDelayMS;
     int _clockDrift;
     int high_delay_counter_;
+    
+  
 };
 
 }  // namespace cloopenwebrtc

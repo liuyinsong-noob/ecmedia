@@ -369,13 +369,13 @@ Channel::SendRTCPPacket(int channel, const void *data, size_t len)
     uint8_t* bufferToSendPtr = (uint8_t*)data;
     size_t bufferLength = len;
 
-    //// Dump the RTCP packet to a file (if RTP dump is enabled).
-    //if (_rtpDumpOut.DumpPacket((const uint8_t*)data, len) == -1)
-    //{
-    //    WEBRTC_TRACE(kTraceWarning, kTraceVoice,
-    //                 VoEId(_instanceId,_channelId),
-    //                 "Channel::SendPacket() RTCP dump to output file failed");
-    //}
+    // Dump the RTCP packet to a file (if RTP dump is enabled).
+    if (_rtpDumpOut.DumpPacket((const uint8_t*)data, len) == -1)
+    {
+        WEBRTC_TRACE(kTraceWarning, kTraceVoice,
+                     VoEId(_instanceId,_channelId),
+                     "Channel::SendPacket() RTCP dump to output file failed");
+    }
 
 	// SRTP or External encryption
 	//if (_encrypting)
@@ -3930,13 +3930,13 @@ Channel::PrepareEncodeAndSend(int mixingFrequency)
 uint32_t
 Channel::EncodeAndSend()
 {
-    WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId,_channelId),
+    WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId, _channelId),
                  "Channel::EncodeAndSend()");
 
     assert(_audioFrame.num_channels_ <= 2);
     if (_audioFrame.samples_per_channel_ == 0)
     {
-        WEBRTC_TRACE(kTraceWarning, kTraceVoice, VoEId(_instanceId,_channelId),
+        WEBRTC_TRACE(kTraceWarning, kTraceVoice, VoEId(_instanceId, _channelId),
                      "Channel::EncodeAndSend() invalid audio frame");
         return 0xFFFFFFFF;
     }
@@ -4071,6 +4071,14 @@ Channel::GetNetworkStatistics(NetworkStatistics& stats)
 
 void Channel::GetDecodingCallStatistics(AudioDecodingCallStats* stats) const {
   audio_coding_->GetDecodingCallStatistics(stats);
+}
+
+void Channel::enableSoundTouch(bool is_enable) {
+    audio_coding_->enableSoundTouch(is_enable);
+}
+    
+void Channel::setSoundTouch(int pitch, int tempo, int rate) {
+    audio_coding_->setSoundTouch(pitch, tempo, rate);
 }
 
 bool Channel::GetDelayEstimate(int* jitter_buffer_delay_ms,
