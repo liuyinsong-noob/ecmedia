@@ -952,12 +952,16 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 				//do some test on simulcast video streams
                 //sean vpx simulcast test begin
 //#define NOTDEFINED
-#ifdef NOTDEFINED
+//#ifdef NOTDEFINED
 				{
-					codec_params.startBitrate = 1300;
-					codec_params.maxBitrate = 4000;
+					if (m_localSSRC)
+					{
+						codec_params.startBitrate = 1300;
+						codec_params.maxBitrate = 4000;
 
-					codec_params.numberOfSimulcastStreams = 2;
+						codec_params.numberOfSimulcastStreams = 2;
+					}
+#if 0
 					codec_params.simulcastStream[0].maxBitrate = codec_params.maxBitrate / 4;;
 					codec_params.simulcastStream[0].width = m_sendVideoWidth / 2;
 					codec_params.simulcastStream[0].height = m_sendVideoHeight / 2;
@@ -968,8 +972,9 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 					codec_params.simulcastStream[1].height = m_sendVideoHeight;
 					codec_params.simulcastStream[1].numberOfTemporalLayers = 2;
 					codec_params.simulcastStream[1].targetBitrate = 1000;
-				}
 #endif
+				}
+//#endif
 				//sean vpx simulcast test end
 
 				//if (codec_params.width==160 && codec_params.height==120)
@@ -1735,8 +1740,8 @@ void ServiceCore::serphone_call_init_media_streams(SerPhoneCall *call)
 
 			ECMedia_set_network_type(call->m_AudioChannelID, call->m_VideoChannelID, networkType);
 			ECMedia_video_set_local_receiver(call->m_VideoChannelID,call->video_port, call->video_port+1);
+			ECMedia_video_set_local_ssrc(call->m_VideoChannelID, m_localSSRC);
 			ECMedia_set_MTU(call->m_VideoChannelID,1450);
-
 			int err = ECMedia_init_srtp_video(call->m_VideoChannelID);
 			if (err) {
 				PrintConsole("Init video SRTP fail code [%d]\n", err);
@@ -5355,4 +5360,29 @@ int ServiceCore::startRecvRtpPacket(int channelNum)
 
 
 	return 0;
+}
+
+int ServiceCore::send_tmmbr_request_video(SerPhoneCall *call, uint32_t ssrc)
+{
+	return ECMedia_video_request_remote_ssrc(call->m_VideoChannelID, ssrc);
+}
+
+void ServiceCore::setLocalSSRC(unsigned int ssrc)
+{
+	m_localSSRC = ssrc;
+}
+
+void ServiceCore::cancel_tmmbr_request_video(SerPhoneCall *call)
+{
+	ECMedia_video_cancel_remote_ssrc(call->m_VideoChannelID);
+}
+
+void ServiceCore::video_start_receive(SerPhoneCall *call)
+{
+	ECMedia_video_start_receive(call->m_VideoChannelID);
+}
+
+void ServiceCore::video_stop_receive(SerPhoneCall *call)
+{
+	ECMedia_video_stop_receive(call->m_VideoChannelID);
 }

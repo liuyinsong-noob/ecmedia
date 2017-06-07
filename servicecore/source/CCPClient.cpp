@@ -3868,3 +3868,72 @@ extern "C" int setScreeShareActivity(char *callid, void *activity)
     }
     return 0;
 }
+
+extern "C"  int sendTmmbr(char *callid, int ssrc)
+{
+	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+	PrintConsole("[APICall sendTmmbr called\n");
+	if (g_pSerCore) {
+		SerPhoneCall *pCall = NULL;
+		int ret = findCall(callid, &pCall);
+		if (ret != 0) {
+			return -1;
+		}
+		g_pSerCore->send_tmmbr_request_video(pCall, ssrc);
+	}
+	return 0;
+}
+
+extern "C" int setLocalSSRC(unsigned int ssrc)
+{
+	PrintConsole("[APICall] setLocalSSRC (ssrc=%u)\n", ssrc);
+	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+	g_pSerCore->setLocalSSRC(ssrc);
+}
+
+
+extern "C"  int cancelTmmbr(char *callid)
+{
+	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+	PrintConsole("[APICall sendTmmbr called\n");
+	if (g_pSerCore) {
+		SerPhoneCall *pCall = NULL;
+		int ret = findCall(callid, &pCall);
+		if (ret != 0) {
+			return -1;
+		}
+		g_pSerCore->cancel_tmmbr_request_video(pCall);
+	}
+	return 0;
+}
+
+extern "C"  int VideoStartReceive(char *callid)
+{
+	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+	PrintConsole("[APICall sendTmmbr called\n");
+	if (g_pSerCore) {
+		SerPhoneCall *pCall = NULL;
+		int ret = findCall(callid, &pCall);
+		if (ret != 0) {
+			return -1;
+		}
+		g_pSerCore->video_start_receive(pCall);
+	}
+	return 0;
+}
+
+extern "C"  int VideoStopReceive(char *callid)
+{
+	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+	PrintConsole("[APICall sendTmmbr called\n");
+	if (g_pSerCore) {
+		SerPhoneCall *pCall = NULL;
+		int ret = findCall(callid, &pCall);
+		if (ret != 0) {
+			return -1;
+		}
+		g_pSerCore->video_stop_receive(pCall);
+	}
+	return 0;
+}
+

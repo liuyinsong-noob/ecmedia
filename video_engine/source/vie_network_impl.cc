@@ -385,8 +385,7 @@ int ViENetworkImpl::SetSendDestination(const int video_channel,
 			return -1;
 		}
 		return 0;
-	}
-
+}
 
 int ViENetworkImpl::GetSendDestination(const int video_channel,
 	char* ip_address,
@@ -429,7 +428,7 @@ int ViENetworkImpl::SetLocalReceiver(const int video_channel,
 				shared_data_->instance_id());
 			return -1;
 		}*/
-
+		
 		ViEChannelManagerScoped cs(*(shared_data_->channel_manager()));
 		ViEChannel* vie_channel = cs.Channel(video_channel);
 		if (!vie_channel) {

@@ -120,9 +120,8 @@ int ViERTP_RTCPImpl::SetLocalSSRC(const int video_channel,
     shared_data_->SetLastError(kViERtpRtcpInvalidChannelId);
     return -1;
   }
-
   if (vie_channel->SetLocalSendSSRC(SSRC, usage) != 0) {
-	shared_data_->SetLastError(kViERtpRtcpUnknownError);
+    shared_data_->SetLastError(kViERtpRtcpUnknownError);
     return -1;
   }
 
@@ -162,7 +161,7 @@ int ViERTP_RTCPImpl::CancelRemoteSSRC(const int video_channel) {
 		return -1;
 	}
 
-  return 0;
+	return 0;
 }
 
 int ViERTP_RTCPImpl::SetRemoteSSRCType(const int videoChannel,

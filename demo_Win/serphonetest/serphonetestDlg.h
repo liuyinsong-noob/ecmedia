@@ -171,6 +171,8 @@ public:
 	char sipAcount1[20],sipAcount2[20];
 	char sipAcount1Password[20],sipAcount2Password[20];
 	UINT m_videoPT;
+	UINT m_localSSRC;
+	UINT m_remoteSSRC;
 	CString m_videoPayloadeName;
 	CString m_audioPayloadName;
 	CString m_encryptionKey;
@@ -221,4 +223,8 @@ public:
 	afx_msg void OnCbnSelchangeComboVideoMode();
 	afx_msg void OnCbnSelchangeCombo1();
 	afx_msg void OnCbnSelchangeComboEncryptType();
+	afx_msg void OnEnChangeEdit13();
+	afx_msg void OnEnChangeVideoPt();
+	afx_msg void OnEnChangeEdit16();
+	afx_msg void OnBnClickedButton30();
 };

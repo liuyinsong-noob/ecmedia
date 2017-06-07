@@ -172,9 +172,9 @@ int32_t ModuleRtpRtcpImpl::Process() {
   const int64_t now = clock_->TimeInMilliseconds();
   last_process_time_ = now;
 
-  const int64_t kRtpRtcpBitrateProcessTimeMs = 10; //10ms?® ±?˜
+  const int64_t kRtpRtcpBitrateProcessTimeMs = 10; //10ms?® ??
   if (now >= last_bitrate_process_time_ + kRtpRtcpBitrateProcessTimeMs) {
-    rtp_sender_.ProcessBitrate(); //Õ=º??˜÷÷?¢ÀÕbr£?total£¨nack£¨fec£¨video
+    rtp_sender_.ProcessBitrate(); //???˜÷?¢ÀÕbr?total£¨nack£¨fec£¨video
     last_bitrate_process_time_ = now;
   }
     if (now >= last_packet_timeout_process_time_ +

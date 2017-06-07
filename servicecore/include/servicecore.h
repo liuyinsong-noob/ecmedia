@@ -1103,6 +1103,12 @@ public:
     // record local mp4 video.
     int startRecordLocalMedia(const char *fileName, void *localview);
     void stopRecordLocalMedia();
+
+	void setLocalSSRC(unsigned int ssrc);
+	int send_tmmbr_request_video(SerPhoneCall *call, uint32_t ssrc);
+	void cancel_tmmbr_request_video(SerPhoneCall *call);
+	void video_start_receive(SerPhoneCall *call);
+	void video_stop_receive(SerPhoneCall *call);
 	
     //---begin
 	private:
@@ -1113,6 +1119,7 @@ public:
 private:
     bool m_enable_fec;
     int m_opus_packet_loss_rate;
+	unsigned int m_localSSRC;
 };
 
 SerphoneAddress * serphone_address_new(const char *uri);
