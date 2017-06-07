@@ -633,12 +633,12 @@ private:
 
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
 	uint32_t ssrc_all_num_;
-	uint32_t local_ssrc_main_;  //big resolution
-	uint32_t local_ssrc_slave_; //small resolution 
+	uint32_t local_ssrc_main_;  //svc send channel big resolution; trunk;not scv recv channel
+	uint32_t local_ssrc_slave_; //only scv send small resolution 
 	uint32_t remote_ssrc_;
 	UdpTransport *socket_transport_;
 #endif
-
+	bool isSVCChannel_;
 	 ViEFileRecorder file_recorder_;
 public:
 //	int32_t RegisterServiceCoreCallBack(ServiceCoreCallBack *, const char* call_id,int firewall_policy);

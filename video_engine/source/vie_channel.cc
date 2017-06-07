@@ -185,6 +185,7 @@ ViEChannel::ViEChannel(int32_t channel_id,
 	  remote_ssrc_(0),
 	  socket_transport_(NULL),
 #endif
+	 isSVCChannel_(true),
 #ifdef WEBRTC_SRTP
 	_srtpModule(*SrtpModule::CreateSrtpModule(ViEModuleId(engine_id, channel_id))),
 #endif
@@ -339,6 +340,7 @@ ViEChannel::~ViEChannel() {
 
 int32_t ViEChannel::SetUdpTransport(UdpTransport *transport)
 {
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
 	socket_transport_ = transport;
 
 	if (socket_transport_->GetLocalSSrc() != 0){//receive channel
@@ -347,13 +349,17 @@ int32_t ViEChannel::SetUdpTransport(UdpTransport *transport)
 			return -1;
 		}
 	}
-	
+#endif
 	return 0;
 }
 
 UdpTransport *ViEChannel::GetUdpTransport()
 {
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
 	return socket_transport_;
+#else
+	return NULL;
+#endif
 }
 
 void ViEChannel::UpdateHistograms() {
@@ -1059,10 +1065,20 @@ int32_t ViEChannel::GetResolution(ResolutionInst &info) {
 	return 0;
 }
 
+//judge whether trunk or svc through SSRC(0, trunk; other, svc)
 int32_t ViEChannel::SetLocalSendSSRC(const uint32_t SSRC, const StreamType usage) {
-	if (SSRC == 0)
-		return 0;
 
+	//trunk video/content
+	if (SSRC == 0) {
+		isSVCChannel_ = false;
+
+		int idx = 0;
+		GetLocalSSRC(idx, &local_ssrc_main_);
+		socket_transport_->AddRecieveChannel(local_ssrc_main_, this);
+		return 0;
+	}
+
+	//svc video/content
 	int ssrc_num = 2;
 	uint32_t ssrc_slave = 0;
 	uint32_t resolution_index = SSRC & 0x0F;
@@ -1099,7 +1115,8 @@ int32_t ViEChannel::SetLocalSendSSRC(const uint32_t SSRC, const StreamType usage
 		ssrc_all_num_ = 2;
 	}
 
-	socket_transport_->SetLocalSSrc(local_ssrc_main_);
+	socket_transport_->SetSVCVideoFlag();//this is a svc video/content channel
+	socket_transport_->SetLocalSSrc(local_ssrc_main_);//other receive channel need local ssrc
 	socket_transport_->AddRecieveChannel(local_ssrc_main_, this);//receive local rtcp
 	
 	return 0;
@@ -1654,7 +1671,7 @@ bool ViEChannel::Sending() {
 }
 
 int32_t ViEChannel::StartReceive() {
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+
 	if (!external_transport_) {
 		if (!socket_transport_->Receiving()) {
 
@@ -1672,27 +1689,49 @@ int32_t ViEChannel::StartReceive() {
 			}
 		}
 	}
-#endif
+
   if (StartDecodeThread() != 0) {
+
+	  if (!isSVCChannel_)//trunk, one channel ---- one udp transport
+			socket_transport_->StopReceiving();
+
     vie_receiver_.StopReceive();
     return -1;
   }
+
   vie_receiver_.StartReceive();
   module_process_thread_.RegisterModule(receive_statistics_proxy_.get());
 
-  if (remote_ssrc_ != 0)
+  if (remote_ssrc_ != 0)//svc channel, start receive remote video/content
 	  socket_transport_->AddRecieveChannel(remote_ssrc_, this);
+
   return 0;
 }
 
-//must not stop socket_transport_ when many channels
+//must not stop socket_transport_ when svc
 int32_t ViEChannel::StopReceive() {
-	if (remote_ssrc_ != 0)
+	if (remote_ssrc_ != 0)//svc channel, stop receive remote video/content
 		socket_transport_->SubRecieveChannel(remote_ssrc_);
 
 	vie_receiver_.StopReceive();
 	StopDecodeThread();
 	vcm_->ResetDecoder();
+
+	if (!isSVCChannel_) {//trunk, one channel ---- one udp transport
+		if (socket_transport_->Receiving() == false) {
+			// Warning, don't return error
+			WEBRTC_TRACE(kTraceWarning, kTraceVideo,
+				ViEId(engine_id_, channel_id_), "%s: not receiving",
+				__FUNCTION__);
+			return 0;
+		}
+		if (socket_transport_->StopReceiving() != 0) {
+			int32_t socket_error = socket_transport_->LastError();
+			WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+				"%s: Socket error: %d", __FUNCTION__, socket_error);
+			return -1;
+		}
+	}
 
 	return 0;
 }
@@ -2904,14 +2943,16 @@ int32_t ViEChannel::StartSend() {
 	}
 #endif
 	rtp_rtcp_->SetSendingMediaStatus(true);
-#if 0
-	if (rtp_rtcp_->Sending()) {
-		// Already sending.
-		WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
-			"%s: Already sending", __FUNCTION__);
-		return kViEBaseAlreadySending;
+
+	if (!isSVCChannel_) {//if svc, simulcast not call this function
+		if (rtp_rtcp_->Sending()) {
+			// Already sending.
+			WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+				"%s: Already sending", __FUNCTION__);
+			return kViEBaseAlreadySending;
+		}
 	}
-#endif
+
 	if (rtp_rtcp_->SetSendingStatus(true) != 0) {
 		WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 			"%s: Could not start sending RTP", __FUNCTION__);

@@ -1043,13 +1043,10 @@ Channel::~Channel()
 	StopReceiving();
 	// De-register packet callback to ensure we're not in a callback when
 	// deleting channel state, avoids race condition and deadlock.
-	if (_socketTransportModule.InitializeReceiveSockets(NULL, 0, NULL, NULL, 0)
-		!= 0)
-	{
-		WEBRTC_TRACE(kTraceWarning, kTraceVoice,
-			VoEId(_instanceId, _channelId),
-			"~Channel() failed to de-register receive callback");
-	}
+	unsigned int ssrc;
+	GetLocalSSRC(ssrc);
+	_socketTransportModule.SubRecieveChannel(ssrc);
+	
 #endif
     StopPlayout();
 
@@ -4714,6 +4711,9 @@ WebRtc_Word32
 		}
 		return -1;
 	}
+	unsigned int ssrc;
+	GetLocalSSRC(ssrc);
+	_socketTransportModule.AddRecieveChannel(ssrc, this);
 	return 0;
 }
 #endif

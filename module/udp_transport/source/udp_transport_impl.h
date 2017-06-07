@@ -146,7 +146,8 @@ public:
 
     WebRtc_Word32 Id() const {return _id;}
 
-	virtual void SetMediaType(int mediaType);
+	virtual void SetSVCVideoFlag();
+	virtual bool GetSVCVideoFlag();
 
 	virtual bool AddRecieveChannel(unsigned int ssrc, UdpTransportData* recieveChannel);
 	virtual bool SubRecieveChannel(unsigned int ssrc);
@@ -286,10 +287,8 @@ private:
 	SsrcChannelMap _packetCallback;
 	CriticalSectionWrapper* _critChannelRef;
 	int _channel_ref;
-
-	int _mediaType;//0,audio; 1, video
+	bool _isSVCVideo;
 	unsigned int _ssrc;//local ssrc
-	UdpTransportData* _audioPacketCallback;
 };
 } // namespace cloopenwebrtc
 

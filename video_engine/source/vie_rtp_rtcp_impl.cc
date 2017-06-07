@@ -121,12 +121,9 @@ int ViERTP_RTCPImpl::SetLocalSSRC(const int video_channel,
     return -1;
   }
 
-  //judge whether trunk or scv through SSRC(0, trunk; other, svc)
-  if (SSRC != 0) {//trunk, no need to set ssrc
-	  if (vie_channel->SetLocalSendSSRC(SSRC, usage) != 0) {
-		  shared_data_->SetLastError(kViERtpRtcpUnknownError);
-		  return -1;
-	  }
+  if (vie_channel->SetLocalSendSSRC(SSRC, usage) != 0) {
+	shared_data_->SetLastError(kViERtpRtcpUnknownError);
+    return -1;
   }
 
   ViEChannelManager *cm = shared_data_->channel_manager();

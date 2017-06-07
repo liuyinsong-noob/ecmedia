@@ -114,9 +114,8 @@ UdpTransportImpl::UdpTransportImpl(const WebRtc_Word32 id,
       _critPacketCallback(CriticalSectionWrapper::CreateCriticalSection()),
 	  _critChannelRef(CriticalSectionWrapper::CreateCriticalSection()),
 	  _channel_ref(0),
-	  _mediaType(-1),
+	  _isSVCVideo(false),
 	  _ssrc(0),
-      _audioPacketCallback(NULL),
       _mgr(socket_manager),
       _lastError(kNoSocketError),
       _destPort(0),
@@ -180,6 +179,8 @@ UdpTransportImpl::UdpTransportImpl(const WebRtc_Word32 id,
 
 UdpTransportImpl::~UdpTransportImpl()
 {
+	if (_packetCallback.size())
+		_packetCallback.clear();
     CloseSendSockets();
     CloseReceiveSockets();
     delete _crit;
@@ -292,9 +293,14 @@ WebRtc_Word32 UdpTransportImpl::IPAddressCached(const SocketAddress& address,
     return 0;
 }
 
-void UdpTransportImpl::SetMediaType(int mediaType)
+void UdpTransportImpl::SetSVCVideoFlag()
 {
-	_mediaType = mediaType;
+	_isSVCVideo = true;
+}
+
+bool UdpTransportImpl::GetSVCVideoFlag()
+{
+	return _isSVCVideo;
 }
 
 void UdpTransportImpl::SetLocalSSrc(unsigned int ssrc) 
@@ -370,19 +376,6 @@ WebRtc_Word32 UdpTransportImpl::InitializeReceiveSockets(
     const char* multicastIpAddr,
     const WebRtc_UWord16 rtcpPort)
 {
-	if (_mediaType == 0)//audio
-	{
-		CriticalSectionScoped cs(_critPacketCallback);
-		_audioPacketCallback = packetCallback;
-
-		if (packetCallback == NULL)
-		{
-			WEBRTC_TRACE(kTraceStateInfo, kTraceTransport, _id,
-				"Closing down receive sockets");
-			return 0;
-		}
-	}
-
     CriticalSectionScoped cs(_crit);
     CloseReceiveSockets();
 
@@ -2394,11 +2387,7 @@ void UdpTransportImpl::IncomingRTPFunction(const WebRtc_Word8* rtpPacket,
 	CriticalSectionScoped cs(_critPacketCallback);
 
 	UdpTransportData* transportData = NULL;
-	if (_mediaType == 0) { //audio
-		transportData = _audioPacketCallback;
-	}
-	else if (_mediaType == 1) {//video or content
-#if 1
+	if (_isSVCVideo) {//svc video/content
 		unsigned int rtpSsrc = ((unsigned char)rtpPacket[8] << 24)
 			                 | ((unsigned char)rtpPacket[9] << 16)
 			                 | ((unsigned char)rtpPacket[10] << 8)
@@ -2409,9 +2398,9 @@ void UdpTransportImpl::IncomingRTPFunction(const WebRtc_Word8* rtpPacket,
 		if (s_it != _packetCallback.end()) {
 			transportData = s_it->second;
 		}
-#else
+	}
+	else {//audio or trunk's video/content
 		transportData = _packetCallback.begin()->second;
-#endif
 	}
 
 	if (transportData) {
@@ -2474,11 +2463,7 @@ void UdpTransportImpl::IncomingRTCPFunction(const WebRtc_Word8* rtcpPacket,
 	CriticalSectionScoped cs(_critPacketCallback);
 
 	UdpTransportData* transportData = NULL;
-	if (_mediaType == 0) { //audio
-		transportData = _audioPacketCallback;
-	}
-	else if (_mediaType == 1) {//video or content
-#if 1
+	if (_isSVCVideo) {//svc video/content
 		unsigned char payloadType = (unsigned char)rtcpPacket[1];
 		unsigned int rtcpSsrc;
 		switch (payloadType) {
@@ -2508,9 +2493,9 @@ void UdpTransportImpl::IncomingRTCPFunction(const WebRtc_Word8* rtcpPacket,
 		if (s_it != _packetCallback.end()) {
 			transportData = s_it->second;
 		}
-#else
+	}
+	else {
 		transportData = _packetCallback.begin()->second;
-#endif
 	}
 
 	if (transportData) {

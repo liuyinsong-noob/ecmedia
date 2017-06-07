@@ -646,7 +646,6 @@ UdpTransport *ViEChannelManager::CreateUdptransport(int rtp_port, int rtcp_port)
 		uint8_t num_socket_threads = 1;
 		UdpTransport *transport = UdpTransport::Create(ViEModuleId(engine_id_, -1), num_socket_threads);
 		if (transport) {//create socket
-			transport->SetMediaType(1);
 			const char* multicast_ip_address = NULL;
 			if (transport->InitializeReceiveSockets(NULL, rtp_port,
 				NULL,

@@ -382,7 +382,8 @@ public:
     // is interptreted as IPv6.
     static bool IsIpAddressValid(const char* ipaddr, const bool ipV6);
 
-	virtual void SetMediaType(int mediaType)  = 0;
+	virtual void SetSVCVideoFlag()  = 0;
+	virtual bool GetSVCVideoFlag()  = 0;
 
 	virtual bool AddRecieveChannel(unsigned int ssrc, UdpTransportData* recieveChannel) = 0;
 	virtual bool SubRecieveChannel(unsigned int ssrc) = 0;
