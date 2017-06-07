@@ -1141,6 +1141,9 @@ int32_t ViEChannel::SetSSRC(const uint32_t SSRC,
 
 //maybe change remote ssrc but not calling "CancelRemoteSSRC()" and "StopReceive()"
 int32_t ViEChannel::RequestRemoteSSRC(const uint32_t SSRC) {
+	if (!isSVCChannel_)
+		return 0;
+
 	if (0 == SSRC) {
 		LOG(LS_WARNING) << "request ssrc is 0";
 		return 0;
@@ -1162,11 +1165,15 @@ int32_t ViEChannel::RequestRemoteSSRC(const uint32_t SSRC) {
 }
 
 int32_t ViEChannel::CancelRemoteSSRC() {
+	if (!isSVCChannel_)
+		return 0;
+
 	int ret = rtp_rtcp_->SendSingleTMMBR(0, socket_transport_->GetLocalSSrc(), remote_ssrc_);
 	if (ret != 0) {
 		LOG(LS_ERROR) << "SendSingleTMMBR cancel remote failed";
 		return -1;
 	}
+	socket_transport_->SubRecieveChannel(remote_ssrc_);
 	return 0;
 }
 
@@ -1736,9 +1743,19 @@ int32_t ViEChannel::StopReceive() {
 	return 0;
 }
 
+//rtmp
 int32_t ViEChannel::RegisterSendTransport(Transport* transport) {
 
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
+	if (!socket_transport_) {
+		socket_transport_ = UdpTransport::Create(ViEModuleId(engine_id_, channel_id_), num_socket_threads_);
+		if (!socket_transport_) {
+			WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+				"%s:  create socket_transport_ failed", __FUNCTION__);
+			return -1;
+		}
+	}
+
 	if (socket_transport_->SendSocketsInitialized() ||
 		socket_transport_->ReceiveSocketsInitialized()) {
 			WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
@@ -1771,6 +1788,11 @@ int32_t ViEChannel::DeregisterSendTransport() {
   }
   external_transport_ = NULL;
   vie_sender_.DeregisterSendTransport();
+
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
+  UdpTransport::Destroy(socket_transport_);
+  socket_transport_ = NULL;
+#endif
   return 0;
 }
 
