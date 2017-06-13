@@ -70,8 +70,8 @@ typedef unsigned long   ulong;
 
 #endif  // _WINDEF_
 
-
-namespace cloopenwebrtc
+typedef signed char SBOOL;
+namespace cloopensoundtouch
 {
     /// Activate these undef's to overrule the possible sampletype 
     /// setting inherited from some other header file:

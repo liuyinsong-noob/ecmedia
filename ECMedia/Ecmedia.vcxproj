@@ -558,6 +558,9 @@
     <ProjectReference Include="..\third_party\protobuf\vsprojects\libprotobuf-lite.vcxproj">
       <Project>{49ea010d-706f-4be2-a397-77854b72a040}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\third_party\SoundTouch\SoundTouch.vcxproj">
+      <Project>{43ad6dd6-6f28-4430-9e84-2ecca846e216}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\third_party\srtp\srtp.vcxproj">
       <Project>{eef031cb-fed8-451e-a471-91ec8d4f6750}</Project>
       <Private>true</Private>

@@ -5356,3 +5356,15 @@ int ServiceCore::startRecvRtpPacket(int channelNum)
 
 	return 0;
 }
+
+int ServiceCore::serphone_audio_set_magic_sound(SerPhoneCall *call, int pitch, int tempo, int rate)
+{
+	return ECMedia_audio_set_magic_sound(call->m_AudioChannelID, pitch, tempo, rate);
+}
+
+int ServiceCore::serphone_audio_enable_magic_sound(SerPhoneCall *call, bool is_enable)
+{
+	return ECMedia_audio_enable_magic_sound(call->m_AudioChannelID, is_enable);
+}
+
+
