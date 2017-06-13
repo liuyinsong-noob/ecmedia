@@ -763,6 +763,16 @@ int VoEBaseImpl::StopRecord()
     return 0;
 }
 
+int VoEBaseImpl::RegisterSoundCardOnCb(SoundCardOn soundcard_on_cb)
+{
+	WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+		"%s", __FUNCTION__);
+
+	if (!_shared->ext_recording())
+		_shared->audio_device()->RegisterSoundCardOnCallback(soundcard_on_cb);
+	return 0;
+}
+
 
 int VoEBaseImpl::StartSend(int channel)
 {
@@ -1134,6 +1144,26 @@ int32_t VoEBaseImpl::TerminateInternal()
     return _shared->statistics().SetUnInitialized();
 }
 
+#ifdef WIN32_MIC
+bool VoEBaseImpl::CheckHasNoMic(){
+	static int silenceCount = 0;
+	static int num10Ms = 0;
+	num10Ms++;
+	if (num10Ms >= 100) {//1s
+		num10Ms = 0;
+		silenceCount++;
+		if (!_shared->transmit_mixer()->IsSilence()) {
+			silenceCount = 0;
+		}
+		if (silenceCount >= 10) {
+			silenceCount = 0;
+			WEBRTC_TRACE(kTraceError, kTraceAudioDevice, 0, "------------------------------------------------no mic");
+		}
+	}
+	return true;
+}
+#endif
+
 int VoEBaseImpl::ProcessRecordedDataWithAPM(
     const int voe_channels[],
     int number_of_voe_channels,
@@ -1180,13 +1210,7 @@ int VoEBaseImpl::ProcessRecordedDataWithAPM(
       voe_mic_level, key_pressed);
 
 #ifdef WIN32_MIC
-	static int num10Ms = 0;
-	num10Ms++;
-	if (num10Ms >= 100) {//1s
-		num10Ms = 0;
-		bool isSilence = _shared->transmit_mixer()->IsSilence();
-		WEBRTC_TRACE(kTraceError, kTraceAudioDevice, 0, "---------------------------isSilence=%d", isSilence);
-	} 
+  CheckHasNoMic();
 #endif
 
   // Copy the audio frame to each sending channel and perform

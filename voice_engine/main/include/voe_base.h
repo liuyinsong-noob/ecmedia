@@ -39,6 +39,7 @@
 //#include "StunMessageCallBack.h"
 
 namespace cloopenwebrtc {
+typedef int (*SoundCardOn)(int deviceType);//0, playout; 1, record
 typedef int (*onReceivingDtmf)(int channelid, char dtmfch);
 typedef int (*onMediaPacketTimeout)(int channelid);
 typedef int (*onStunPacket)(int channelid, void *data, int len, const char *fromIP, int fromPort, bool isRTCP, bool isVideo);
@@ -267,6 +268,7 @@ public:
 	virtual void* GetChannel(int channel_id) = 0;
     virtual int enableSoundTouch(int channelid, bool is_enable) = 0;
     virtual int setSoundTouch(int channelid, int pitch, int tempo, int rate) = 0;
+	virtual int RegisterSoundCardOnCb(SoundCardOn soundcard_on_cb) = 0;
 protected:
     VoEBase() {}
     virtual ~VoEBase() {}

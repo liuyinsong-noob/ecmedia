@@ -1393,20 +1393,40 @@ void TransmitMixer::GenerateAudioFrame(const int16_t* audio,
                            &resampler_,
                            &_audioFrame);
 #ifdef WIN32_MIC
+  //save 1s data; 16k,1channel,10ms = 320bytes; 
 	static int currentDataLen = 0;
 
-	if (currentDataLen >= 32000)
+	if (currentDataLen >= 32000) 
 		currentDataLen = 0;
 
 	memcpy((char *)_data1S+currentDataLen, (char *)_audioFrame.data_, 320);
 	currentDataLen += 320;
 #endif
 }
+/*zeng guo qing's algorithm*/
+#if 0
+bool TransmitMixer::IsSilence()
+{
+	return silence(_data1S, 16000, (float)-65.0, (float)0.1);
+}
+#endif
 
 #ifdef WIN32_MIC
 bool TransmitMixer::IsSilence()
 {
-	return silence(_data1S, 16000, (float)-65.0, (float)0.1);
+	int sum = 0;
+	for (int i = 0; i < 16000; i++) {
+		if (_data1S[i] >= 0)
+			sum += _data1S[i];
+		else
+			sum -= _data1S[i];
+	}
+
+	float db = 20 * log10(sum/16000.0/32768);
+
+	//WEBRTC_TRACE(kTraceError, kTraceVoice, VoEId(_instanceId, -1), "db = %f", db);
+	int db_int = (int)(db - 0.5);
+	return (db_int<=-67 && db_int>=-69);
 }
 #endif
 
