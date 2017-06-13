@@ -14,6 +14,7 @@
 #include "audio_device_buffer.h"
 #include "audio_device.h"
 
+
 namespace cloopenwebrtc {
 
 class AudioDeviceGeneric
@@ -181,6 +182,7 @@ public:
     virtual void AttachAudioBuffer(AudioDeviceBuffer* audioBuffer) = 0;
 
     virtual ~AudioDeviceGeneric() {}
+	virtual void RegisterSoundCardOnCallback(SoundCardOn soundcard_on_cb) {}
 };
 
 }  // namespace cloopenwebrtc

@@ -79,6 +79,9 @@ AudioDeviceWindowsWave::AudioDeviceWindowsWave(const int32_t id) :
     _startPlay(false),
     _stopPlay(false),
     _AGC(false),
+	_startButNotPlay(false),
+	_startButNotRec(false),
+	_SoundcardOnCb(NULL),
     _hWaveIn(NULL),
     _hWaveOut(NULL),
     _recChannels(N_REC_CHANNELS),
@@ -1749,6 +1752,7 @@ int32_t AudioDeviceWindowsWave::InitPlayout()
     {
         WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id, "waveOutOpen() failed (err=%d)", res);
         TraceWaveOutError(res);
+		_startButNotPlay = true;
         return -1;
     }
 
@@ -1948,6 +1952,7 @@ int32_t AudioDeviceWindowsWave::InitRecording()
     {
         WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id, "waveInOpen() failed (err=%d)", res);
         TraceWaveInError(res);
+		_startButNotRec = true;
         return -1;
     }
 
@@ -3052,6 +3057,11 @@ int32_t AudioDeviceWindowsWave::GetRecordingBufferDelay(uint32_t& readSamples, u
     return res;
 }
 
+void AudioDeviceWindowsWave::RegisterSoundCardOnCallback(SoundCardOn soundcard_on_cb)
+{
+	_SoundcardOnCb = soundcard_on_cb;
+}
+
 // ============================================================================
 //                                  Thread Methods
 // ============================================================================
@@ -3226,7 +3236,36 @@ bool AudioDeviceWindowsWave::ThreadProcess()
     {
         _prevRecByteCheckTime = time;
         _avgCPULoad = 0;
+
     }
+
+	if (_startButNotPlay) {
+		static uint32_t time_last = time;
+		if (time - time_last >= 1000) {//1s
+			time_last = time;
+
+			if (waveOutGetNumDevs() > 0) {
+				_startButNotPlay = false;
+				if (_SoundcardOnCb)
+					_SoundcardOnCb(0);
+				WEBRTC_TRACE(kTraceDebug, kTraceAudioDevice, _id, "insert play out device");
+			}
+		}
+	}
+
+	if (_startButNotRec) {
+		static uint32_t time_last = time;
+		if (time - time_last >= 1000) {//1s
+			time_last = time;
+
+			if (waveInGetNumDevs() > 0) {
+				_startButNotRec = false;
+				if (_SoundcardOnCb)
+					_SoundcardOnCb(1);
+				WEBRTC_TRACE(kTraceDebug, kTraceAudioDevice, _id, "insert record device");
+			}
+		}
+	}
 
     return true;
 }

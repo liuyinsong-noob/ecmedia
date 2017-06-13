@@ -149,7 +149,7 @@ static int m_cameraCount = 0;
 using namespace cloopenwebrtc;
 using namespace std;
 
-#define ECMEDIA_VERSION "2.1.2.24"
+#define ECMEDIA_VERSION "2.1.2.25"
 
 //extern bool g_media_TraceFlag;
 //void PrintConsole(const char * fmt,...){};
@@ -1021,6 +1021,25 @@ int ECMedia_audio_stop_record()
         PrintConsole("[ECMEDIA WARNNING] %s failed to get VoEBase",__FUNCTION__);
         return -99;
     }
+}
+
+int ECMedia_set_soundcard_on_cb(onSoundCardOn soundcard_on_cb)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+
+	VoEBase *base = VoEBase::GetInterface(m_voe);
+	if (base) {
+		int ret = base->RegisterSoundCardOnCb(soundcard_on_cb);
+		base->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, ret);
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] %s failed to get VoEBase", __FUNCTION__);
+		return -99;
+	}
 }
 
 int ECMedia_set_send_telephone_event_payload_type(int channelid, unsigned char type)

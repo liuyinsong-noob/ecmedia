@@ -1645,6 +1645,17 @@ bool AudioDeviceModuleImpl::Recording() const
 }
 
 // ----------------------------------------------------------------------------
+//  RegisterSoundCardOnCallback
+// ----------------------------------------------------------------------------
+
+int32_t AudioDeviceModuleImpl::RegisterSoundCardOnCallback(SoundCardOn soundcard_on_cb)
+{
+	CHECK_INITIALIZED();
+	_ptrAudioDevice->RegisterSoundCardOnCallback(soundcard_on_cb);
+	return 0;
+}
+
+// ----------------------------------------------------------------------------
 //  RegisterEventObserver
 // ----------------------------------------------------------------------------
 
@@ -1669,6 +1680,7 @@ int32_t AudioDeviceModuleImpl::RegisterAudioCallback(AudioTransport* audioCallba
 
     return 0;
 }
+
 
 // ----------------------------------------------------------------------------
 //  StartRawInputFileRecording
