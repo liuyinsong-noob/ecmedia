@@ -1155,7 +1155,7 @@ bool VoEBaseImpl::CheckHasNoMic(){
 		if (!_shared->transmit_mixer()->IsSilence()) {
 			silenceCount = 0;
 		}
-		if (silenceCount >= 3) {
+		if (silenceCount >= 10) {
 			silenceCount = 0;
 			WEBRTC_TRACE(kTraceError, kTraceAudioDevice, 0, "------------------------------------------------no mic");
 		}

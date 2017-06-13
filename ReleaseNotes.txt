@@ -2,6 +2,7 @@ Version 2.1.2.25
 1、接口改变
 2、增加win上检测到音频输入输出设备时的回调函数int ECMedia_set_soundcard_on_cb(onSoundCardOn soundcard_on_cb);
 3、typedef int(*onSoundCardOn)(int deviceType);//deviceType=0表示有音频的输出设备；deviceType=1表示有音频的采集设备
+4、调用ECMedia_audio_stop_playout和ECMedia_audio_start_record后停止检测功能
 
 Version 2.1.2.24 
 1、接口改变

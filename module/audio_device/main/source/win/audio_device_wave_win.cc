@@ -2040,8 +2040,9 @@ int32_t AudioDeviceWindowsWave::StartRecording()
 
 int32_t AudioDeviceWindowsWave::StopRecording()
 {
-
     CriticalSectionScoped lock(&_critSect);
+
+	_startButNotRec = false;
 
     if (!_recIsInitialized)
     {
@@ -2191,8 +2192,9 @@ int32_t AudioDeviceWindowsWave::StartPlayout()
 
 int32_t AudioDeviceWindowsWave::StopPlayout()
 {
-
     CriticalSectionScoped lock(&_critSect);
+
+	_startButNotPlay = false;
 
     if (!_playIsInitialized)
     {
