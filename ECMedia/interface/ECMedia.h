@@ -242,7 +242,7 @@ ECMEDIA_API int ECMedia_reset_audio_device();
 // */
 //ECMEDIA_API int ECMedia_init_srtp(int channelid);
 ///*
-// *¼ÓÃÜ
+// *Âºâ€âˆšâ€¹
 // */
 //ECMEDIA_API int ECMedia_enable_srtp_receive(int channelid, const char *key);
 ///*
@@ -331,13 +331,13 @@ ECMEDIA_API int ECMedia_audio_stop_record();
 ECMEDIA_API int ECMedia_set_soundcard_on_cb(onSoundCardOn soundcard_on_cb);
 
 /*
- *×Ö·û ÓïÒôÍ¨µÀ
+ *â—ŠÃ·âˆ‘Ëš â€Ã”â€œÃ™Ã•Â®ÂµÂ¿
  */
 ECMEDIA_API int ECMedia_send_dtmf(int channelid, const char dtmfch);
 ECMEDIA_API int ECMedia_set_send_telephone_event_payload_type(int channelid, unsigned char type);
 ECMEDIA_API int ECMedia_set_recv_telephone_event_payload_type(int channelid, unsigned char type);
 /*
- *Ã¿´Î²úÉúchannelºó´«½øÀ´
+ *âˆšÃ¸Â¥Å’â‰¤Ë™â€¦Ë™channelâˆ«Ã›Â¥Â´Î©Â¯Â¿Â¥
  */
 ECMEDIA_API int ECMedia_set_dtmf_cb(int channelid, onEcMediaReceivingDtmf dtmf_cb);
 ECMEDIA_API int ECMedia_set_media_packet_timeout_cb(int channelid, onEcMediaPacketTimeout media_timeout_cb);
@@ -476,7 +476,7 @@ ECMEDIA_API int ECMedia_get_window_list(int desktop_captureid, WindowShare **win
 
 
 /*
-//×ÀÃæ¹²Ïíµ÷ÓÃÀı×Ó
+//â—ŠÂ¿âˆšÃŠÏ€â‰¤Å“ÃŒÂµËœâ€âˆšÂ¿Ëâ—Šâ€
 ECMedia_allocate_desktopShare_capture(call->m_desktopShareDeviceId, type);
 getShareScreenInfo(&screenId, call->m_desktopShareDeviceId);
 getShareWindowInfo(&windowInfo, call->m_desktopShareDeviceId);
@@ -550,10 +550,10 @@ ECMEDIA_API int ECMedia_set_receive_codec_video_fec(int channelid, cloopenwebrtc
 ECMEDIA_API int ECMedia_get_receive_codec_video(int channelid, cloopenwebrtc::VideoCodec& videoCodec);
 
 /**
- * description: ÉèÖÃµ×²ãyuvÊÓÆµÖ¡µÄËõ·Å·½Ê½
+ * description: â€¦Ã‹Ã·âˆšÂµâ—Šâ‰¤â€yuvÂ â€âˆ†ÂµÃ·Â°ÂµÆ’Ã€Ä±âˆ‘â‰ˆâˆ‘Î©Â Î©
  * FrameScaleType:
- *   kScaleTypeCropping -> ÒÔ²Ã¼ô·½Ê½Ëõ·ÅÊÓÆµÖ¡
- *   kScaleTypeFilling  -> ÒÔÌî³ä·½Ê½Ëõ·ÅÊÓÆµÖ¡
+ *   kScaleTypeCropping -> â€œâ€˜â‰¤âˆšÂºÃ™âˆ‘Î©Â Î©Ã€Ä±âˆ‘â‰ˆÂ â€âˆ†ÂµÃ·Â°
+ *   kScaleTypeFilling  -> â€œâ€˜ÃƒÃ“â‰¥â€°âˆ‘Î©Â Î©Ã€Ä±âˆ‘â‰ˆÂ â€âˆ†ÂµÃ·Â°
  */
 ECMEDIA_API int ECMedia_set_frame_scale_type(int channelid, cloopenwebrtc::FrameScaleType type);
     
@@ -622,7 +622,7 @@ ECMEDIA_API int ECMedia_set_CaptureDeviceID(int videoCapDevId);
 ECMEDIA_API int ECMedia_Check_Record_Permission(bool &enabled);
 ECMEDIA_API int ECmedia_set_shield_mosaic(int video_channel, bool flag);
 /* LiveSteam
-¹Û¿´Ö±²¥µ÷ÓÃ¹ı³Ì£º
+Ï€â‚¬Ã¸Â¥Ã·Â±â‰¤â€¢ÂµËœâ€âˆšÏ€Ëâ‰¥ÃƒÂ£âˆ«
 void *handle = ECMedia_createLiveStream(0);
 ECMedia_setLiveStreamNetworkCallBack(statusCallback);
 ECMedia_playLiveStream(handle, "http://livestream.com", wndPtr, callback);
@@ -631,7 +631,7 @@ ECMedia_stopLiveStream(handle);
 ECMedia_releaseLiveStream(handle);
 handle = NULL;
 
-Ö±²¥ÍÆÁ÷µ÷ÓÃ¹ı³Ì£º
+Ã·Â±â‰¤â€¢Ã•âˆ†Â¡ËœÂµËœâ€âˆšÏ€Ëâ‰¥ÃƒÂ£âˆ«
 void *handle = ECMedia_createLiveStream(0);
 ECMedia_setVideoProfileLiveStream(handle, cameraIndex, capability, bitrates);
 ECMedia_setLiveStreamNetworkCallBack(statusCallback);
@@ -643,130 +643,139 @@ handle = NULL;
 */
 
 /*
-¹¦ÄÜ     : ´´½¨Ö±²¥Ä£¿é
-²ÎÊı     : [IN]  type	  : ÀàĞÍ£¬±ØĞëÎª0
-·µ»ØÖµ   : ·µ»ØÖµÖ±²¥Ä£¿é¾ä±ú
+Ï€Â¶Æ’â€¹     : Â¥Â¥Î©Â®Ã·Â±â‰¤â€¢Æ’Â£Ã¸Ãˆ
+â‰¤Å’Â Ë     : [IN]  type	  : Â¿â€¡â€“Ã•Â£Â¨Â±Ã¿â€“ÃÅ’â„¢0
+âˆ‘ÂµÂªÃ¿Ã·Âµ   : âˆ‘ÂµÂªÃ¿Ã·ÂµÃ·Â±â‰¤â€¢Æ’Â£Ã¸ÃˆÃ¦â€°Â±Ë™
 */
 ECMEDIA_API void*ECMedia_createLiveStream(int type);
 
 /*
-¹¦ÄÜ     : ¿ªÊ¼¹Û¿´Ö±²¥
-²ÎÊı     : [IN]  handle		£º ¾ä±ú
-			 [IN]  url			 : Ö±²¥µØÖ·
-			 [IN]  renderView	£ºÊÓÆµ´°¿Ú
-			 [IN]  callback		£ºÊÓÆµ¿í¸ß»Øµ÷
-·µ»ØÖµ   : ·µ»ØÖµ 0£º³É¹¦  -1£º³õÊ¼»¯×ÊÔ´Ê§°Ü -2£ºÒÑ¾­ÔÚÖ±²¥»òÍÆÁ÷  -3£ºÁ¬½ÓÊ§°Ü  -4£º½¨Á¢Á÷Ê§°Ü
+Ï€Â¶Æ’â€¹     : Ã¸â„¢Â ÂºÏ€â‚¬Ã¸Â¥Ã·Â±â‰¤â€¢
+â‰¤Å’Â Ë     : [IN]  handle		Â£âˆ« Ã¦â€°Â±Ë™
+			 [IN]  url			 : Ã·Â±â‰¤â€¢ÂµÃ¿Ã·âˆ‘
+			 [IN]  renderView	Â£âˆ«Â â€âˆ†ÂµÂ¥âˆÃ¸â„
+			 [IN]  callback		Â£âˆ«Â â€âˆ†ÂµÃ¸ÃŒâˆï¬‚ÂªÃ¿ÂµËœ
+âˆ‘ÂµÂªÃ¿Ã·Âµ   : âˆ‘ÂµÂªÃ¿Ã·Âµ 0Â£âˆ«â‰¥â€¦Ï€Â¶  -1Â£âˆ«â‰¥Ä±Â ÂºÂªÃ˜â—ŠÂ â€˜Â¥Â ÃŸâˆâ€¹ -2Â£âˆ«â€œâ€”Ã¦â‰ â€˜â„Ã·Â±â‰¤â€¢ÂªÃšÃ•âˆ†Â¡Ëœ  -3Â£âˆ«Â¡Â¨Î©â€Â ÃŸâˆâ€¹  -4Â£âˆ«Î©Â®Â¡Â¢Â¡ËœÂ ÃŸâˆâ€¹
 */
 ECMEDIA_API int  ECMedia_playLiveStream(void *handle, const char * url, void *renderView, onLiveStreamVideoResolution callback);
 
 /*
-¹¦ÄÜ     : ¿ªÊ¼Ö±²¥ÍÆÁ÷
-²ÎÊı     : [IN]  handle		£º ¾ä±ú
-			 [IN]  url			 : ÍÆÁ÷µØÖ·
-			 [IN]  renderView	£º±¾µØÊÓÆµ´°¿Ú
-·µ»ØÖµ   : ·µ»ØÖµ 0£º³É¹¦¡¡-1£º³õÊ¼»¯×ÊÔ´Ê§°Ü -2£ºÒÑ¾­ÔÚÖ±²¥»òÕßÍÆÁ÷  -3£ºÁ¬½ÓÊ§°Ü  -4£º½¨Á¢Á÷Ê§°Ü
+Ï€Â¶Æ’â€¹     : Ã¸â„¢Â ÂºÃ·Â±â‰¤â€¢Ã•âˆ†Â¡Ëœ
+â‰¤Å’Â Ë     : [IN]  handle		Â£âˆ« Ã¦â€°Â±Ë™
+			 [IN]  url			 : Ã•âˆ†Â¡ËœÂµÃ¿Ã·âˆ‘
+			 [IN]  renderView	Â£âˆ«Â±Ã¦ÂµÃ¿Â â€âˆ†ÂµÂ¥âˆÃ¸â„
+âˆ‘ÂµÂªÃ¿Ã·Âµ   : âˆ‘ÂµÂªÃ¿Ã·Âµ 0Â£âˆ«â‰¥â€¦Ï€Â¶Â°Â°-1Â£âˆ«â‰¥Ä±Â ÂºÂªÃ˜â—ŠÂ â€˜Â¥Â ÃŸâˆâ€¹ -2Â£âˆ«â€œâ€”Ã¦â‰ â€˜â„Ã·Â±â‰¤â€¢ÂªÃšâ€™ï¬‚Ã•âˆ†Â¡Ëœ  -3Â£âˆ«Â¡Â¨Î©â€Â ÃŸâˆâ€¹  -4Â£âˆ«Î©Â®Â¡Â¢Â¡ËœÂ ÃŸâˆâ€¹
 */
 ECMEDIA_API int  ECMedia_pushLiveStream(void *handle, const char * url, void *renderView);
 
 /*
-¹¦ÄÜ     : Í£Ö¹¹Û¿´»òÍÆÁ÷
-²ÎÊı     :	  [IN]  handle		£º ¾ä±ú
+Ï€Â¶Æ’â€¹     : Ã•Â£Ã·Ï€Ï€â‚¬Ã¸Â¥ÂªÃšÃ•âˆ†Â¡Ëœ
+â‰¤Å’Â Ë     :	  [IN]  handle		Â£âˆ« Ã¦â€°Â±Ë™
 */
 ECMEDIA_API void ECMedia_stopLiveStream(void *handle);
 
 /*
-¹¦ÄÜ     : ÊÍ·ÅÖ±²¥Ä£¿é
-²ÎÊı     :	  [IN]  handle		£º ¾ä±ú
+Ï€Â¶Æ’â€¹     : Â Ã•âˆ‘â‰ˆÃ·Â±â‰¤â€¢Æ’Â£Ã¸Ãˆ
+â‰¤Å’Â Ë     :	  [IN]  handle		Â£âˆ« Ã¦â€°Â±Ë™
 */
 ECMEDIA_API void ECMedia_releaseLiveStream(void *handle);
 
 /*
-¹¦ÄÜ     : ¿ªÊ¼Ö±²¥Ä£¿éÃÀÑÕ
-²ÎÊı     :	  [IN]  handle		£º ¾ä±ú
+Ï€Â¶Æ’â€¹     : Ã¸â„¢Â ÂºÃ·Â±â‰¤â€¢Æ’Â£Ã¸ÃˆâˆšÂ¿â€”â€™
+â‰¤Å’Â Ë     :	  [IN]  handle		Â£âˆ« Ã¦â€°Â±Ë™
 */
 ECMEDIA_API void ECMedia_enableLiveStreamBeauty(void *handle);
 
 /*
-¹¦ÄÜ     : Í£Ö¹Ö±²¥Ä£¿éÃÀÑÕ
-²ÎÊı     :	  [IN]  handle		£º ¾ä±ú
+Ï€Â¶Æ’â€¹     : Ã•Â£Ã·Ï€Ã·Â±â‰¤â€¢Æ’Â£Ã¸ÃˆâˆšÂ¿â€”â€™
+â‰¤Å’Â Ë     :	  [IN]  handle		Â£âˆ« Ã¦â€°Â±Ë™
 */
 ECMEDIA_API void ECMedia_disableLiveStreamBeauty(void *handle);
 
 
 /*
-¹¦ÄÜ     : ÉèÖÃÍÆÁ÷ÊÓÆµ²ÎÊı
-²ÎÊı     : [IN]  handle		£º ¾ä±ú
-			 [IN]  cameraIndex			 : ÉãÏñÍ·index
-			 [IN]  cam			 : ÊÓÆµÄÜÁ¦
-			 [IN]  bitrates	£ºÊÓÆµÂëÂÊ
-·µ»ØÖµ   : ·µ»ØÖµ 0£º³É¹¦¡¡-1£º²ÎÊı²»ÕıÈ·
+Ï€Â¶Æ’â€¹     : â€¦Ã‹Ã·âˆšÃ•âˆ†Â¡ËœÂ â€âˆ†Âµâ‰¤Å’Â Ë
+â‰¤Å’Â Ë     : [IN]  handle		Â£âˆ« Ã¦â€°Â±Ë™
+			 [IN]  cameraIndex			 : â€¦â€Å“Ã’Ã•âˆ‘index
+			 [IN]  cam			 : Â â€âˆ†ÂµÆ’â€¹Â¡Â¶
+			 [IN]  bitrates	Â£âˆ«Â â€âˆ†ÂµÂ¬ÃÂ¬Â 
+âˆ‘ÂµÂªÃ¿Ã·Âµ   : âˆ‘ÂµÂªÃ¿Ã·Âµ 0Â£âˆ«â‰¥â€¦Ï€Â¶Â°Â°-1Â£âˆ«â‰¤Å’Â Ëâ‰¤Âªâ€™ËÂ»âˆ‘
 */
 ECMEDIA_API int  ECMedia_setVideoProfileLiveStream(void *handle,int cameraIndex, CameraCapability cam, int bitreates);
 
 /*
-¹¦ÄÜ     : ÉèÖÃÖ±²¥ÍøÂç×´Ì¬»Øµ÷
-²ÎÊı     : [IN]  handle		£º ¾ä±ú
-			 [IN]  callback	 : »Øµ÷
+Ï€Â¶Æ’â€¹     : â€¦Ã‹Ã·âˆšÃ·Â±â‰¤â€¢Ã•Â¯Â¬Ãâ—ŠÂ¥ÃƒÂ¨ÂªÃ¿ÂµËœ
+â‰¤Å’Â Ë     : [IN]  handle		Â£âˆ« Ã¦â€°Â±Ë™
+			 [IN]  callback	 : ÂªÃ¿ÂµËœ
 */
 ECMEDIA_API void ECMedia_setLiveStreamNetworkCallBack(void *handle, onLiveStreamNetworkStatusCallBack callback);
 /*
-¹¦ÄÜ     : ÉèÖÃÖ±²¥ÍÆÁ÷µÄÊÓÆµÀ´Ô´
-²ÎÊı     : [IN]   handle	£º ¾ä±ú
-		   [OUT]  windows	£ºwindows Êı×éÖ¸Õë
-		   ·µ»ØÖµ£º ´°¿Ú¸öÊı
+Ï€Â¶Æ’â€¹     : â€¦Ã‹Ã·âˆšÃ·Â±â‰¤â€¢Ã•âˆ†Â¡ËœÂµÆ’Â â€âˆ†ÂµÂ¿Â¥â€˜Â¥
+â‰¤Å’Â Ë     : [IN]   handle	Â£âˆ« Ã¦â€°Â±Ë™
+		   [OUT]  windows	Â£âˆ«windows Â Ëâ—ŠÃˆÃ·âˆâ€™Ã
+		   âˆ‘ÂµÂªÃ¿Ã·ÂµÂ£âˆ« Â¥âˆÃ¸â„âˆË†Â Ë
 */
 ECMEDIA_API int ECMedia_GetShareWindows(void *handle, WindowShare ** windows);
 
 /*
-¹¦ÄÜ     : ÉèÖÃÖ±²¥ÍÆÁ÷µÄÊÓÆµÀ´Ô´
-²ÎÊı     : [IN]  handle	£º ¾ä±ú
-[		   [IN]  type	£º 0 ×ÀÃæ 1 ´°¿Ú
-           [IN]  id		£º ¶ÔÓÚµÄ×ÀÃæ»òÕß´°¿Úid
-·µ»ØÖµ£º ´°¿Ú¸öÊı
+Ï€Â¶Æ’â€¹     : â€¦Ã‹Ã·âˆšÃ·Â±â‰¤â€¢Ã•âˆ†Â¡ËœÂµÆ’Â â€âˆ†ÂµÂ¿Â¥â€˜Â¥
+â‰¤Å’Â Ë     : [IN]  handle	Â£âˆ« Ã¦â€°Â±Ë™
+[		   [IN]  type	Â£âˆ« 0 â—ŠÂ¿âˆšÃŠ 1 Â¥âˆÃ¸â„
+           [IN]  id		Â£âˆ« âˆ‚â€˜â€â„ÂµÆ’â—ŠÂ¿âˆšÃŠÂªÃšâ€™ï¬‚Â¥âˆÃ¸â„id
+âˆ‘ÂµÂªÃ¿Ã·ÂµÂ£âˆ« Â¥âˆÃ¸â„âˆË†Â Ë
 */
 ECMEDIA_API int ECMedia_SelectShareWindow(void *handle, int type , int id);
 
 /*
-¹¦ÄÜ     : ÉèÖÃÖ±²¥ÍÆÁ÷µÄÊÓÆµÀ´Ô´
-²ÎÊı     : [IN]  handle		£º ¾ä±ú
-		   [IN]  video_source			£ºÊÓÆµÀ´Ô´ 0 ÉãÏñÍ· 1 ÊÇ×ÀÃæ
+Ï€Â¶Æ’â€¹     : â€¦Ã‹Ã·âˆšÃ·Â±â‰¤â€¢Ã•âˆ†Â¡ËœÂµÆ’Â â€âˆ†ÂµÂ¿Â¥â€˜Â¥
+â‰¤Å’Â Ë     : [IN]  handle		Â£âˆ« Ã¦â€°Â±Ë™
+		   [IN]  video_source			Â£âˆ«Â â€âˆ†ÂµÂ¿Â¥â€˜Â¥ 0 â€¦â€Å“Ã’Ã•âˆ‘ 1 Â Â«â—ŠÂ¿âˆšÃŠ
 */
 ECMEDIA_API void ECMedia_SetLiveVideoSource(void *handle, int video_source);
 
 /*
- * ¹¦ÄÜ£º Â¼ÖÆÉãÏñÍ·ÊÓÆµ±£´æÎªMP4ÎÄ¼ş
- * ²ÎÊı£º [IN] filename: MP4Ğ¡ÊÓÆµÎÄ¼ş±£´æÂ·¾¶
- *       [IN] localview: ÒªÏà»úÔ¤ÀÀviewµÄ¸¸view
+ * Ï€Â¶Æ’â€¹Â£âˆ« Â¬ÂºÃ·âˆ†â€¦â€Å“Ã’Ã•âˆ‘Â â€âˆ†ÂµÂ±Â£Â¥ÃŠÅ’â„¢MP4Å’Æ’ÂºË›
+ * â‰¤Å’Â ËÂ£âˆ« [IN] filename: MP4â€“Â°Â â€âˆ†ÂµÅ’Æ’ÂºË›Â±Â£Â¥ÃŠÂ¬âˆ‘Ã¦âˆ‚
+ *       [IN] localview: â€œâ„¢Å“â€¡ÂªË™â€˜Â§Â¿Â¿viewÂµÆ’âˆâˆview
  */
 ECMEDIA_API int ECMedia_startRecordLocalMedia(const char *fileName, void *localview);
 /*
- * Í£Ö¹Â¼ÖÆĞ¡ÊÓÆµ
+ * Ã•Â£Ã·Ï€Â¬ÂºÃ·âˆ†â€“Â°Â â€âˆ†Âµ
  */
 ECMEDIA_API void ECMedia_stopRecordLocalMedia();
 
 /*
- * ÉèÖÃRED
+ * â€¦Ã‹Ã·âˆšRED
  */
 ECMEDIA_API int ECMedia_setAudioRed(int channelid, bool enable, int payloadType);
 /*
-*¹¦ÄÜ£ºÉèÖÃÊÓÆµÍ¨Ñ¶ÖĞµ±±¾µØÉãÏñÍ·ÎŞ·¨²É¼¯ÊÓÆµÊ±£¬·µ»Ø¸øÓÃ»§ĞÅÏ¢µÄ»Øµ÷º¯Êı
+*Ï€Â¶Æ’â€¹Â£âˆ«â€¦Ã‹Ã·âˆšÂ â€âˆ†ÂµÃ•Â®â€”âˆ‚Ã·â€“ÂµÂ±Â±Ã¦ÂµÃ¿â€¦â€Å“Ã’Ã•âˆ‘Å’ï¬âˆ‘Â®â‰¤â€¦ÂºÃ˜Â â€âˆ†ÂµÂ Â±Â£Â¨âˆ‘ÂµÂªÃ¿âˆÂ¯â€âˆšÂªÃŸâ€“â‰ˆÅ“Â¢ÂµÆ’ÂªÃ¿ÂµËœâˆ«Ã˜Â Ë
 */
 ECMEDIA_API int ECMedia_set_no_camera_capture_cb(int deviceid, onEcMediaNoCameraCaptureCb no_camera_capture_cb);
 
 /*
-¹¦ÄÜ		£º»ñÈ¡Í³¼Æ±¨¸æ
-²ÎÊı		£º[IN] type: Í³¼Æ±¨¸æÀàĞÍ£¬ÏêÏ¸ĞÅÏ¢»ò¹Ø¼üĞÅÏ¢
-		  [OUT] reports: Í³¼Æ±¨¸æ
-·µ»ØÖµ   : ·µ»ØÖµ 0£º³É¹¦¡¡-1£ºÊ§°Ü
+Ï€Â¶Æ’â€¹		Â£âˆ«ÂªÃ’Â»Â°Ã•â‰¥Âºâˆ†Â±Â®âˆÃŠ
+â‰¤Å’Â Ë		Â£âˆ«[IN] type: Ã•â‰¥Âºâˆ†Â±Â®âˆÃŠÂ¿â€¡â€“Ã•Â£Â¨Å“ÃÅ“âˆâ€“â‰ˆÅ“Â¢ÂªÃšÏ€Ã¿ÂºÂ¸â€“â‰ˆÅ“Â¢
+		  [OUT] reports: Ã•â‰¥Âºâˆ†Â±Â®âˆÃŠ
+âˆ‘ÂµÂªÃ¿Ã·Âµ   : âˆ‘ÂµÂªÃ¿Ã·Âµ 0Â£âˆ«â‰¥â€¦Ï€Â¶Â°Â°-1Â£âˆ«Â ÃŸâˆâ€¹
 */
 ECMEDIA_API int ECMedia_getStatsReports(int type, char* callid, void** pMediaStatisticsDataInnerArray, int *pArraySize);
 ECMEDIA_API void ECMedia_deletePbData(void* mediaStatisticsDataInner);
 
-/*
-ÏÈµ÷ÓÃECMedia_audio_set_magic_sound(channelid, 8, 0, 0)
-ÔÙµ÷ÓÃECMedia_audio_enable_magic_sound()
-*/
+/**
+ * ä½¿èƒ½å˜å£°
+ * channelid: channelid
+ * is_enable: true: å¯ç”¨ï¼Œfalse: ç¦ç”¨
+ */
 ECMEDIA_API int ECMedia_audio_enable_magic_sound(int channelid, bool is_enable);
+
+/*
+ * åŠŸèƒ½ï¼šè®¾ç½®å˜å£°å‚æ•°
+ * channelID: channel id
+ * pitch: å£°è°ƒè°ƒèŠ‚ï¼ˆå˜è°ƒä¸å˜é€Ÿï¼‰ï¼Œå–å€¼[-12, 12]ï¼ˆ0è¡¨ç¤ºæ­£å¸¸ï¼ŒåŸæ¥å£°éŸ³éŸ³è°ƒï¼Œè®¾ç½®ä¸º+8çš„è¯ï¼Œå¯ä»¥å¬åˆ°æ˜æ˜¾çš„å¥³ç”Ÿæ•ˆæœï¼‰
+ * tempo: éŸ³é€Ÿè°ƒèŠ‚ï¼ˆå˜é€Ÿä¸å˜è°ƒï¼‰ï¼Œå–å€¼[-50, 50], 0è¡¨ç¤ºæ­£å¸¸åŸè¯­é€Ÿ
+ * rate:  å˜é€Ÿåˆå˜è°ƒï¼Œå–å€¼[-50, 50], 0è¡¨ç¤ºæ­£å¸¸éŸ³é€Ÿå’ŒéŸ³è°ƒ
+ */
 ECMEDIA_API int ECMedia_audio_set_magic_sound(int channelid, int pitch, int tempo, int rate);
 #ifdef __cplusplus
 }
