@@ -1547,9 +1547,17 @@ int32_t AudioDeviceIOS::InitPlayOrRecord() {
           AVAudioSessionInterruptionType type =
               (AVAudioSessionInterruptionType)[typeNumber unsignedIntegerValue];
           switch (type) {
-            case AVAudioSessionInterruptionTypeBegan:
+              case AVAudioSessionInterruptionTypeBegan:{
+                  
+                  AVAudioSessionCategoryOptions options = session.categoryOptions;
+                  options &= ~AVAudioSessionCategoryOptionMixWithOthers;
+                  [session setCategory:AVAudioSessionCategoryPlayAndRecord
+                           withOptions:options
+                                 error:nil];
+                  
               // At this point our audio session has been deactivated and the
               // audio unit render callbacks no longer occur. Nothing to do.
+              }
               break;
             case AVAudioSessionInterruptionTypeEnded: {
               NSError* error = nil;
@@ -1560,6 +1568,12 @@ int32_t AudioDeviceIOS::InitPlayOrRecord() {
                   WEBRTC_TRACE(kTraceWarning, kTraceAudioDevice, _id,
                                "Error activating audio session");
               }
+                AVAudioSessionCategoryOptions options = session.categoryOptions;
+                options |= AVAudioSessionCategoryOptionMixWithOthers;
+                [session setCategory:AVAudioSessionCategoryPlayAndRecord
+                         withOptions:options
+                               error:nil];
+                
               // Post interruption the audio unit render callbacks don't
               // automatically continue, so we restart the unit manually here.
               AudioOutputUnitStop(_auVoiceProcessing);
