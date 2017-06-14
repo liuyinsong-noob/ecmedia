@@ -37,6 +37,7 @@ typedef int (*onEcMediaVideoConference)(int channelid, int status, int payload);
 typedef int (*onEcMediaRequestKeyFrameCallback)(const int channelid);
 
 typedef int (*onVoeCallbackOnError)(int channelid, int errCode);
+typedef int(*onSoundCardOn)(int deviceType);//0, playout; 1, record
 typedef int(*onEcMediaDesktopCaptureErrCode)(int desktop_capture_id, int errCode);
 typedef int (*onEcMediaShareWindowSizeChange)(int desktop_capture_id, int width, int height);
 
@@ -61,7 +62,7 @@ typedef int(*onLiveStreamVideoResolution)(void *handle, int width, int height);
  */
 ECMEDIA_API int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level, int lenMb);
 ECMEDIA_API int ECMedia_un_trace();
-ECMEDIA_API const char* ECMeida_get_Version();
+ECMEDIA_API const char* ECMedia_get_Version();
 ECMEDIA_API void PrintConsole(const char * fmt,...);
 /*
  *1
@@ -327,12 +328,14 @@ ECMEDIA_API int ECMedia_audio_start_record();
 
 ECMEDIA_API int ECMedia_audio_stop_record();
 
+ECMEDIA_API int ECMedia_set_soundcard_on_cb(onSoundCardOn soundcard_on_cb);
+
 /*
  *字符 语音通道
  */
 ECMEDIA_API int ECMedia_send_dtmf(int channelid, const char dtmfch);
-ECMEDIA_API int ECMeida_set_send_telephone_event_payload_type(int channelid, unsigned char type);
-ECMEDIA_API int ECMeida_set_recv_telephone_event_payload_type(int channelid, unsigned char type);
+ECMEDIA_API int ECMedia_set_send_telephone_event_payload_type(int channelid, unsigned char type);
+ECMEDIA_API int ECMedia_set_recv_telephone_event_payload_type(int channelid, unsigned char type);
 /*
  *每次产生channel后传进来
  */
@@ -345,7 +348,7 @@ ECMEDIA_API int ECMedia_set_voe_cb(int channelid, onVoeCallbackOnError voe_callb
 /*
  * ONLY USE FOR PEER CONNECTION FOR AUDIO
  */
-ECMEDIA_API int ECMedia_sendRaw(int channelid, int8_t *data, uint32_t length, int32_t isRTCP, uint16_t port = 0, const char* ip = NULL);
+ECMEDIA_API int ECMedia_sendRaw(int channelid, int8_t *data, uint32_t length, bool isRTCP, uint16_t port = 0, const char* ip = NULL);
 
 ECMEDIA_API int ECMedia_EnableIPV6(int channel, bool flag);
 ECMEDIA_API int ECMedia_IsIPv6Enabled(int channel);
@@ -758,7 +761,13 @@ ECMEDIA_API int ECMedia_set_no_camera_capture_cb(int deviceid, onEcMediaNoCamera
 */
 ECMEDIA_API int ECMedia_getStatsReports(int type, char* callid, void** pMediaStatisticsDataInnerArray, int *pArraySize);
 ECMEDIA_API void ECMedia_deletePbData(void* mediaStatisticsDataInner);
-    
+
+/*
+先调用ECMedia_audio_set_magic_sound(channelid, 8, 0, 0)
+再调用ECMedia_audio_enable_magic_sound()
+*/
+ECMEDIA_API int ECMedia_audio_enable_magic_sound(int channelid, bool is_enable);
+ECMEDIA_API int ECMedia_audio_set_magic_sound(int channelid, int pitch, int tempo, int rate);
 #ifdef __cplusplus
 }
 #endif

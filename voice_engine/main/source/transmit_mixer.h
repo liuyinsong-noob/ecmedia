@@ -171,13 +171,19 @@ public:
   void EnableStereoChannelSwapping(bool enable);
   bool IsStereoChannelSwappingEnabled();
 
+#ifdef WIN32_MIC
+	bool IsSilence();
+#endif
+
 private:
     TransmitMixer(uint32_t instanceId);
 
     // Gets the maximum sample rate and number of channels over all currently
     // sending codecs.
     void GetSendCodecInfo(int* max_sample_rate, int* max_channels);
-
+#ifdef WIN32_MIC
+	bool silence(const short* data, int sample_length, float thres, float probility);
+#endif
     void GenerateAudioFrame(const int16_t audioSamples[],
                             int nSamples,
                             int nChannels,
@@ -242,6 +248,9 @@ private:
     bool stereo_codec_;
     bool swap_stereo_channels_;
     scoped_ptr<int16_t[]> mono_buffer_;
+#ifdef WIN32_MIC
+	short _data1S[16000];
+#endif
 //---begin
 public:
 	//    Sean add begin 20131119 noise suppression

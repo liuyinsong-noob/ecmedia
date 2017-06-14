@@ -16,6 +16,8 @@
 
 namespace cloopenwebrtc {
 
+typedef int(*SoundCardOn)(int deviceType);//0, playout; 1, record
+
 class AudioDeviceModule : public RefCountedModule {
  public:
   enum ErrorCode {
@@ -201,6 +203,8 @@ class AudioDeviceModule : public RefCountedModule {
   virtual bool BuiltInAECIsEnabled() const { return false; }
 
   virtual int CheckRecordPermission(bool &enabled) { enabled = true; return 0;};
+
+  virtual int RegisterSoundCardOnCallback(SoundCardOn soundcard_on_cb) = 0;
  protected:
   virtual ~AudioDeviceModule() {};
 };

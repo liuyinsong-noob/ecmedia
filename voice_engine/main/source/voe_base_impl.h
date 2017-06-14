@@ -65,6 +65,8 @@ public:
 
     virtual AudioTransport* audio_transport() { return this; }
 
+	virtual int RegisterSoundCardOnCb(SoundCardOn soundcard_on_cb);
+
     // AudioTransport
     virtual int32_t
         RecordedDataIsAvailable(const void* audioSamples,
@@ -159,6 +161,10 @@ private:
 
     int32_t AddVoEVersion(char* str) const;
 
+#ifdef WIN32_MIC
+	bool CheckHasNoMic();
+#endif
+
     // Initialize channel by setting Engine Information then initializing
     // channel.
     int InitializeChannel(voe::ChannelOwner* channel_owner);
@@ -184,11 +190,11 @@ private:
 
 public:
 	virtual WebRtc_Word32 SendRaw(int channel,
-		const WebRtc_Word8* data,
-		WebRtc_UWord32 length,
-		WebRtc_Word32 isRTCP,
-		WebRtc_UWord16 portnr = 0,
-		const char* ip = NULL);
+            const WebRtc_Word8 *data,
+            WebRtc_UWord32 length,
+            bool isRTCP,
+            WebRtc_UWord16 portnr = 0,
+            const char *ip = NULL);
 
 	//    Sean add begin 20131119 noise suppression
 	virtual int NoiseSuppression(const void* audioSamples,
@@ -237,7 +243,8 @@ public:
     virtual int SetFecStatus(int channel, bool enable);
     virtual int SetLoss(int channel, int loss);
 	virtual void* GetChannel(int channelid);
-
+    virtual int enableSoundTouch(int channelid, bool is_enable);
+    virtual int setSoundTouch(int channelid, int pitch, int tempo, int rate);
 //---end
 };
 

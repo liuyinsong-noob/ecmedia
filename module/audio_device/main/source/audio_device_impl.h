@@ -205,6 +205,7 @@ public:
     virtual bool BuiltInAECIsEnabled() const OVERRIDE;
 
     virtual int CheckRecordPermission(bool &enabled);
+	virtual int RegisterSoundCardOnCallback(SoundCardOn soundcard_on_cb) OVERRIDE;
 public:
     int32_t Id() {return _id;}
 

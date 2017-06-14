@@ -3868,3 +3868,38 @@ extern "C" int setScreeShareActivity(char *callid, void *activity)
     }
     return 0;
 }
+
+extern "C"  int setAudioMagicSound(const char *callid, bool is_enable)
+{
+	PrintConsole("[APICall] setAudioMagicSound (callid=%s,is_enable=%d ) \n", callid ? callid : "null", is_enable);
+	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+	if (g_pSerCore) {
+		SerPhoneCall *pCall = NULL;
+		int ret = findCall(callid, &pCall);
+		if (ret != 0) {
+			return -1;
+		}
+		g_pSerCore->serphone_audio_enable_magic_sound(pCall, is_enable);
+	}
+
+	return 0;
+
+}
+
+extern "C"  int setAudioMagicSoundPara(const char *callid, int pitch, int tempo, int rate)
+{
+	PrintConsole("[APICall] setAudioMagicSound (callid=%s,pitch=%d,tempo=%d,rate=%d) \n", callid ? callid : "null", pitch, tempo, rate);
+	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+	if (g_pSerCore) {
+		SerPhoneCall *pCall = NULL;
+		int ret = findCall(callid, &pCall);
+		if (ret != 0) {
+			return -1;
+		}
+		g_pSerCore->serphone_audio_set_magic_sound(pCall, pitch, tempo, rate);
+	}
+
+	return 0;
+
+}
+

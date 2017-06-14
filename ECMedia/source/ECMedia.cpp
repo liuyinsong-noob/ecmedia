@@ -149,7 +149,7 @@ static int m_cameraCount = 0;
 using namespace cloopenwebrtc;
 using namespace std;
 
-#define ECMEDIA_VERSION "2.1.2.21"
+#define ECMEDIA_VERSION "2.1.2.25"
 
 //extern bool g_media_TraceFlag;
 //void PrintConsole(const char * fmt,...){};
@@ -192,7 +192,7 @@ FILE *g_media_interface_fp = NULL;
 //int g_log_line =0;
 #define MAX_LOG_SIZE	104857600//100M bytes
 
-long long  g_max_log_size = MAX_LOG_SIZE;
+long long g_max_log_size = MAX_LOG_SIZE;
 
 typedef void(*PrintConsoleHook_media)(int loglevel, const char *);
 PrintConsoleHook_media gPrintConsoleHook_media = NULL;
@@ -305,7 +305,7 @@ void PrintConsole(const char * fmt, ...)
 	}
 }
 
-const char* ECMeida_get_Version()
+const char* ECMedia_get_Version()
 {
     if( strlen(gVersionString) <= 0 )
     {
@@ -380,7 +380,7 @@ int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level, int le
 
 	media_init_print_log();
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);
-    PrintConsole("[ECMEDIA INFO] ECMedia version:%s", ECMeida_get_Version());
+    PrintConsole("[ECMEDIA INFO] ECMedia version:%s", ECMedia_get_Version());
     Trace::CreateTrace();
     Trace::SetTraceCallback(&g_mediaTraceCallBack);
 
@@ -1023,7 +1023,26 @@ int ECMedia_audio_stop_record()
     }
 }
 
-int ECMeida_set_send_telephone_event_payload_type(int channelid, unsigned char type)
+int ECMedia_set_soundcard_on_cb(onSoundCardOn soundcard_on_cb)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+
+	VoEBase *base = VoEBase::GetInterface(m_voe);
+	if (base) {
+		int ret = base->RegisterSoundCardOnCb(soundcard_on_cb);
+		base->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, ret);
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] %s failed to get VoEBase", __FUNCTION__);
+		return -99;
+	}
+}
+
+int ECMedia_set_send_telephone_event_payload_type(int channelid, unsigned char type)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d type:%d", __FUNCTION__, channelid, type);
 	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
@@ -1042,7 +1061,7 @@ int ECMeida_set_send_telephone_event_payload_type(int channelid, unsigned char t
 	}
 }
 
-int ECMeida_set_recv_telephone_event_payload_type(int channelid, unsigned char type)
+int ECMedia_set_recv_telephone_event_payload_type(int channelid, unsigned char type)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d type:%d", __FUNCTION__, channelid, type);
 	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
@@ -1222,7 +1241,7 @@ int ECMedia_set_voe_cb(int channelid, onVoeCallbackOnError voe_callback_cb)
 
 }
 
-int ECMedia_sendRaw(int channelid, int8_t *data, uint32_t length, int32_t isRTCP, uint16_t port, const char* ip)
+int ECMedia_sendRaw(int channelid, int8_t *data, uint32_t length, bool isRTCP, uint16_t port, const char* ip)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... data:%0x len:%d isRTCP:%d port:%d ip:%s",
 		__FUNCTION__, data, length, isRTCP, port, ip);
@@ -2627,10 +2646,9 @@ int ECMedia_stop_render(int channelid, int deviceid)
     if (render) {
         render->StopRender(channelid);
         render->RemoveRenderer(channelid);
-#if true
+        
 		render->StopRender(deviceid);
 		render->RemoveRenderer(deviceid);
-#endif
         render->Release();
     }
     PrintConsole("[ECMEDIA INFO] %s ends",__FUNCTION__);
@@ -4525,6 +4543,40 @@ ECMEDIA_API int ECMedia_setAudioRed(int channelid, bool enable, int payloadType)
         return -99;
     }
     
+}
+
+ECMEDIA_API int ECMedia_audio_enable_magic_sound(int channelid, bool is_enable)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d",
+                 __FUNCTION__, channelid);
+    VoEBase *base = VoEBase::GetInterface(m_voe);
+    if (base) {
+        int ret = base->enableSoundTouch(channelid, is_enable);
+        base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
+        return ret;
+    }
+    else{
+        PrintConsole("[ECMEDIA WARNNING] %s failed to get VoEBase",__FUNCTION__);
+        return -99;
+    }
+}
+
+ECMEDIA_API int ECMedia_audio_set_magic_sound(int channelid, int pitch, int tempo, int rate)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d",
+                 __FUNCTION__, channelid);
+    VoEBase *base = VoEBase::GetInterface(m_voe);
+    if (base) {
+        int ret = base->setSoundTouch(channelid, pitch, tempo, rate);
+        base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
+        return ret;
+    }
+    else{
+        PrintConsole("[ECMEDIA WARNNING] %s failed to get VoEBase",__FUNCTION__);
+        return -99;
+    }
 }
 
 #endif

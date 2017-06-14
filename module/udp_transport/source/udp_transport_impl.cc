@@ -1896,10 +1896,10 @@ WebRtc_Word32 UdpTransportImpl::sendSocks5Data(UdpSocketWrapper *socket, SocketA
 }
 
     WebRtc_Word32 UdpTransportImpl::SendRaw(const WebRtc_Word8 *data,
-                                        WebRtc_UWord32 length,
-                                        WebRtc_Word32 isRTCP,
-                                        WebRtc_UWord16 portnr,
-                                        const char* ip)
+            WebRtc_UWord32 length,
+            bool isRTCP,
+            WebRtc_UWord16 portnr,
+            const char *ip)
 {
     CriticalSectionScoped cs(_crit);
     if(isRTCP)

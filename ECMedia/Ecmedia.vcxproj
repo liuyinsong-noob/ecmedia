@@ -484,10 +484,6 @@
       <Project>{dce19daf-69ac-46db-b14a-39f0faa5db74}</Project>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>
-    <ProjectReference Include="..\third_party\libvpx\build\x64\vpx_x64.vcxproj">
-      <Project>{34b221e6-b6c6-47af-bde8-dd578fdaed01}</Project>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
-    </ProjectReference>
     <ProjectReference Include="..\third_party\libyuv\libyuv.vcxproj">
       <Project>{1a8364d9-fe77-b61e-ed73-eeb3beb59e8e}</Project>
       <Private>true</Private>
@@ -561,6 +557,9 @@
     </ProjectReference>
     <ProjectReference Include="..\third_party\protobuf\vsprojects\libprotobuf-lite.vcxproj">
       <Project>{49ea010d-706f-4be2-a397-77854b72a040}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\third_party\SoundTouch\SoundTouch.vcxproj">
+      <Project>{43ad6dd6-6f28-4430-9e84-2ecca846e216}</Project>
     </ProjectReference>
     <ProjectReference Include="..\third_party\srtp\srtp.vcxproj">
       <Project>{eef031cb-fed8-451e-a471-91ec8d4f6750}</Project>

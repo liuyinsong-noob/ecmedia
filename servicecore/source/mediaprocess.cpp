@@ -697,7 +697,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 				ECMedia_set_receive_playloadType_audio(call->m_AudioChannelID,codec_params);
 
                 if (!strncmp(codec_params.plname, "red", 3)) {
-                    ECMedia_setAudioRed(call->m_AudioChannelID, true, codec_params.pltype);
+                    ECMedia_setAudioRed(call->m_AudioChannelID, false, codec_params.pltype);
                     //TODO:
                     //base->SetFecStatus(call->m_AudioChannelID, m_enable_fec);
                     //base->SetLoss(call->m_AudioChannelID, m_opus_packet_loss_rate);
@@ -2835,7 +2835,6 @@ int ServiceCore::serphone_core_start_rtp_dump(SerPhoneCall *call, int mediatype,
 	}
 #endif
 	return ret;
-
 #endif
 	return -1;
 }
@@ -5357,3 +5356,15 @@ int ServiceCore::startRecvRtpPacket(int channelNum)
 
 	return 0;
 }
+
+int ServiceCore::serphone_audio_set_magic_sound(SerPhoneCall *call, int pitch, int tempo, int rate)
+{
+	return ECMedia_audio_set_magic_sound(call->m_AudioChannelID, pitch, tempo, rate);
+}
+
+int ServiceCore::serphone_audio_enable_magic_sound(SerPhoneCall *call, bool is_enable)
+{
+	return ECMedia_audio_enable_magic_sound(call->m_AudioChannelID, is_enable);
+}
+
+

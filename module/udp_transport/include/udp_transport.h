@@ -291,11 +291,11 @@ public:
     // with InitializeSendSockets(..) is used if portnr is 0. The same IP
     // address as set with InitializeSendSockets(..) is used if ip is NULL.
     // If isRTCP is true the port used will be the RTCP port.
-    virtual WebRtc_Word32 SendRaw(const WebRtc_Word8* data,
-                                  WebRtc_UWord32 length,
-                                  WebRtc_Word32 isRTCP,
-                                  WebRtc_UWord16 portnr = 0,
-                                  const char* ip = NULL) = 0;
+    virtual WebRtc_Word32 SendRaw(const WebRtc_Word8 *data,
+            WebRtc_UWord32 length,
+            bool isRTCP,
+            WebRtc_UWord16 portnr = 0,
+            const char *ip = NULL) = 0;
 
     // Send RTP data with size length to the address specified by to.
     virtual WebRtc_Word32 SendRTPPacketTo(const WebRtc_Word8* data,

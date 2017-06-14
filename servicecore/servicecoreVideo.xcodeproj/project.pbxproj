@@ -652,6 +652,7 @@
 					../ECMedia/interface,
 					../ECMedia/source,
 					../third_party/protobuf/src,
+					../third_party/SoundTouch/SoundTouch,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -732,6 +733,7 @@
 					../ECMedia/interface,
 					../ECMedia/source,
 					../third_party/protobuf/src,
+					../third_party/SoundTouch/SoundTouch,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (

@@ -512,7 +512,6 @@
     {
         [self displayProgressingView];
         [self.modelEngineVoip connectToCCP:loginIP_textField.text onPort:[loginPort_textField.text integerValue] withAccount:voipID withPsw:loginPsswd_textField.text withAccountSid:subID withAuthToken:subToken];
-
     }
 }
 

@@ -763,6 +763,16 @@ int VoEBaseImpl::StopRecord()
     return 0;
 }
 
+int VoEBaseImpl::RegisterSoundCardOnCb(SoundCardOn soundcard_on_cb)
+{
+	WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+		"%s", __FUNCTION__);
+
+	if (!_shared->ext_recording())
+		_shared->audio_device()->RegisterSoundCardOnCallback(soundcard_on_cb);
+	return 0;
+}
+
 
 int VoEBaseImpl::StartSend(int channel)
 {
@@ -1134,6 +1144,26 @@ int32_t VoEBaseImpl::TerminateInternal()
     return _shared->statistics().SetUnInitialized();
 }
 
+#ifdef WIN32_MIC
+bool VoEBaseImpl::CheckHasNoMic(){
+	static int silenceCount = 0;
+	static int num10Ms = 0;
+	num10Ms++;
+	if (num10Ms >= 100) {//1s
+		num10Ms = 0;
+		silenceCount++;
+		if (!_shared->transmit_mixer()->IsSilence()) {
+			silenceCount = 0;
+		}
+		if (silenceCount >= 10) {
+			silenceCount = 0;
+			WEBRTC_TRACE(kTraceError, kTraceAudioDevice, 0, "------------------------------------------------no mic");
+		}
+	}
+	return true;
+}
+#endif
+
 int VoEBaseImpl::ProcessRecordedDataWithAPM(
     const int voe_channels[],
     int number_of_voe_channels,
@@ -1178,6 +1208,10 @@ int VoEBaseImpl::ProcessRecordedDataWithAPM(
       audio_data, number_of_frames, number_of_channels, sample_rate,
       static_cast<uint16_t>(audio_delay_milliseconds), clock_drift,
       voe_mic_level, key_pressed);
+
+#ifdef WIN32_MIC
+  CheckHasNoMic();
+#endif
 
   // Copy the audio frame to each sending channel and perform
   // channel-dependent operations (file mixing, mute, etc.), encode and
@@ -1313,11 +1347,11 @@ int VoEBaseImpl::SetNetworkType(int channelid, bool isWifi)
 //sean add end 20141224 set network type
 
 WebRtc_Word32 VoEBaseImpl::SendRaw(int channel,
-	const WebRtc_Word8* data,
-	WebRtc_UWord32 length,
-	WebRtc_Word32 isRTCP,
-	WebRtc_UWord16 portnr,
-	const char* ip)
+        const WebRtc_Word8 *data,
+        WebRtc_UWord32 length,
+        bool isRTCP,
+        WebRtc_UWord16 portnr,
+        const char *ip)
 {
 	CriticalSectionScoped cs(_shared->crit_sec());
 
@@ -2126,4 +2160,44 @@ void* VoEBaseImpl::GetChannel(int channelid)
 	}
 	return channelPtr;
 }
+    
+int VoEBaseImpl::enableSoundTouch(int channelid, bool is_enable)
+{
+    CriticalSectionScoped cs(_shared->crit_sec());
+    
+    if (!_shared->statistics().Initialized())
+    {
+        _shared->SetLastError(VE_NOT_INITED, kTraceError);
+        return -1;
+    }
+    voe::ChannelOwner sc = _shared->channel_manager().GetChannel(channelid);
+    voe::Channel* channelPtr = sc.channel();
+    if (channelPtr == NULL)
+    {
+        return -1;
+    }
+    channelPtr->enableSoundTouch(is_enable);
+    return 0;
+}
+
+int VoEBaseImpl::setSoundTouch(int channelid, int pitch, int tempo, int rate) {
+    CriticalSectionScoped cs(_shared->crit_sec());
+    
+    if (!_shared->statistics().Initialized())
+    {
+        _shared->SetLastError(VE_NOT_INITED, kTraceError);
+        return -1;
+    }
+    voe::ChannelOwner sc = _shared->channel_manager().GetChannel(channelid);
+    voe::Channel* channelPtr = sc.channel();
+    if (channelPtr == NULL)
+    {
+        return -1;
+    }
+    channelPtr->setSoundTouch(pitch, tempo, rate);
+    return 0;
+}
+    
+    
+    
 }  // namespace cloopenwebrtc

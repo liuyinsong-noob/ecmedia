@@ -39,6 +39,7 @@
 //#include "StunMessageCallBack.h"
 
 namespace cloopenwebrtc {
+typedef int (*SoundCardOn)(int deviceType);//0, playout; 1, record
 typedef int (*onReceivingDtmf)(int channelid, char dtmfch);
 typedef int (*onMediaPacketTimeout)(int channelid);
 typedef int (*onStunPacket)(int channelid, void *data, int len, const char *fromIP, int fromPort, bool isRTCP, bool isVideo);
@@ -196,11 +197,11 @@ public:
         OnHoldModes& mode) { return -1; }
 //---begin
 	virtual WebRtc_Word32 SendRaw(int channel,
-									const WebRtc_Word8* data,
-									WebRtc_UWord32 length,
-									WebRtc_Word32 isRTCP,
-									WebRtc_UWord16 portnr = 0,
-									const char* ip = NULL) = 0;
+            const WebRtc_Word8 *data,
+            WebRtc_UWord32 length,
+            bool isRTCP,
+            WebRtc_UWord16 portnr = 0,
+            const char *ip = NULL) = 0;
 
 	//    Sean add begin 20131119 noise suppression
 	virtual int NoiseSuppression(const void* audioSamples,
@@ -265,6 +266,9 @@ public:
 //    virtual bool GetSendFlag(int channelid) = 0;
     virtual bool  GetRecordingIsInitialized() = 0;
 	virtual void* GetChannel(int channel_id) = 0;
+    virtual int enableSoundTouch(int channelid, bool is_enable) = 0;
+    virtual int setSoundTouch(int channelid, int pitch, int tempo, int rate) = 0;
+	virtual int RegisterSoundCardOnCb(SoundCardOn soundcard_on_cb) = 0;
 protected:
     VoEBase() {}
     virtual ~VoEBase() {}
