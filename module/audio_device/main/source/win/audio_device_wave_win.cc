@@ -79,6 +79,9 @@ AudioDeviceWindowsWave::AudioDeviceWindowsWave(const int32_t id) :
     _startPlay(false),
     _stopPlay(false),
     _AGC(false),
+	_startButNotPlay(false),
+	_startButNotRec(false),
+	_SoundcardOnCb(NULL),
     _hWaveIn(NULL),
     _hWaveOut(NULL),
     _recChannels(N_REC_CHANNELS),
@@ -1749,6 +1752,7 @@ int32_t AudioDeviceWindowsWave::InitPlayout()
     {
         WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id, "waveOutOpen() failed (err=%d)", res);
         TraceWaveOutError(res);
+		_startButNotPlay = true;
         return -1;
     }
 
@@ -1948,6 +1952,7 @@ int32_t AudioDeviceWindowsWave::InitRecording()
     {
         WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id, "waveInOpen() failed (err=%d)", res);
         TraceWaveInError(res);
+		_startButNotRec = true;
         return -1;
     }
 
@@ -2007,6 +2012,9 @@ int32_t AudioDeviceWindowsWave::StartRecording()
     // set state to ensure that the recording starts from the audio thread
     _startRec = true;
 
+	if (_startButNotRec)
+		return 0;
+
     // the audio thread will signal when recording has stopped
     if (kEventTimeout == _recStartEvent.Wait(10000))
     {
@@ -2035,8 +2043,9 @@ int32_t AudioDeviceWindowsWave::StartRecording()
 
 int32_t AudioDeviceWindowsWave::StopRecording()
 {
-
     CriticalSectionScoped lock(&_critSect);
+
+	_startButNotRec = false;
 
     if (!_recIsInitialized)
     {
@@ -2158,6 +2167,9 @@ int32_t AudioDeviceWindowsWave::StartPlayout()
     // set state to ensure that playout starts from the audio thread
     _startPlay = true;
 
+	if (_startButNotPlay)
+		return 0;
+
     // the audio thread will signal when recording has started
     if (kEventTimeout == _playStartEvent.Wait(10000))
     {
@@ -2186,8 +2198,9 @@ int32_t AudioDeviceWindowsWave::StartPlayout()
 
 int32_t AudioDeviceWindowsWave::StopPlayout()
 {
-
     CriticalSectionScoped lock(&_critSect);
+
+	_startButNotPlay = false;
 
     if (!_playIsInitialized)
     {
@@ -3052,6 +3065,11 @@ int32_t AudioDeviceWindowsWave::GetRecordingBufferDelay(uint32_t& readSamples, u
     return res;
 }
 
+void AudioDeviceWindowsWave::RegisterSoundCardOnCallback(SoundCardOn soundcard_on_cb)
+{
+	_SoundcardOnCb = soundcard_on_cb;
+}
+
 // ============================================================================
 //                                  Thread Methods
 // ============================================================================
@@ -3226,7 +3244,38 @@ bool AudioDeviceWindowsWave::ThreadProcess()
     {
         _prevRecByteCheckTime = time;
         _avgCPULoad = 0;
+
     }
+
+	if (_startButNotPlay) {
+		static uint32_t time_last = time;
+		if (time - time_last >= 1000) {//1s
+			time_last = time;
+
+			if (waveOutGetNumDevs() > 0) {
+				if (_SoundcardOnCb)
+					_SoundcardOnCb(0);
+
+				_startButNotPlay = false;
+				WEBRTC_TRACE(kTraceDebug, kTraceAudioDevice, _id, "insert play out device");
+			}
+		}
+	}
+
+	if (_startButNotRec) {
+		static uint32_t time_last = time;
+		if (time - time_last >= 1000) {//1s
+			time_last = time;
+
+			if (waveInGetNumDevs() > 0) {
+				if (_SoundcardOnCb)
+					_SoundcardOnCb(1);
+
+				_startButNotRec = false;
+				WEBRTC_TRACE(kTraceDebug, kTraceAudioDevice, _id, "insert record device");
+			}
+		}
+	}
 
     return true;
 }

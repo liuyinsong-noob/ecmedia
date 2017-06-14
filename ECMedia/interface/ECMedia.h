@@ -37,6 +37,7 @@ typedef int (*onEcMediaVideoConference)(int channelid, int status, int payload);
 typedef int (*onEcMediaRequestKeyFrameCallback)(const int channelid);
 
 typedef int (*onVoeCallbackOnError)(int channelid, int errCode);
+typedef int(*onSoundCardOn)(int deviceType);//0, playout; 1, record
 typedef int(*onEcMediaDesktopCaptureErrCode)(int desktop_capture_id, int errCode);
 typedef int (*onEcMediaShareWindowSizeChange)(int desktop_capture_id, int width, int height);
 
@@ -332,6 +333,8 @@ ECMEDIA_API int ECMedia_audio_stop_playout(int channelid);
 ECMEDIA_API int ECMedia_audio_start_record();
 
 ECMEDIA_API int ECMedia_audio_stop_record();
+
+ECMEDIA_API int ECMedia_set_soundcard_on_cb(onSoundCardOn soundcard_on_cb);
 
 /*
  *字符 语音通道
@@ -765,6 +768,10 @@ ECMEDIA_API int ECMedia_set_no_camera_capture_cb(int deviceid, onEcMediaNoCamera
 ECMEDIA_API int ECMedia_getStatsReports(int type, char* callid, void** pMediaStatisticsDataInnerArray, int *pArraySize);
 ECMEDIA_API void ECMedia_deletePbData(void* mediaStatisticsDataInner);
 
+/*
+先调用ECMedia_audio_set_magic_sound(channelid, 8, 0, 0)
+再调用ECMedia_audio_enable_magic_sound()
+*/
 ECMEDIA_API int ECMedia_audio_enable_magic_sound(int channelid, bool is_enable);
 ECMEDIA_API int ECMedia_audio_set_magic_sound(int channelid, int pitch, int tempo, int rate);
 #ifdef __cplusplus

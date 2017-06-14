@@ -65,6 +65,8 @@ public:
 
     virtual AudioTransport* audio_transport() { return this; }
 
+	virtual int RegisterSoundCardOnCb(SoundCardOn soundcard_on_cb);
+
     // AudioTransport
     virtual int32_t
         RecordedDataIsAvailable(const void* audioSamples,
@@ -158,6 +160,10 @@ private:
                         int64_t* ntp_time_ms);
 
     int32_t AddVoEVersion(char* str) const;
+
+#ifdef WIN32_MIC
+	bool CheckHasNoMic();
+#endif
 
     // Initialize channel by setting Engine Information then initializing
     // channel.

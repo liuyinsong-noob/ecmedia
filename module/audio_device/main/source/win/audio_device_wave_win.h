@@ -159,6 +159,7 @@ public:
 
 public:
     virtual void AttachAudioBuffer(AudioDeviceBuffer* audioBuffer);
+	void RegisterSoundCardOnCallback(SoundCardOn soundcard_on_cb);
 
 private:
     void Lock() { _critSect.Enter(); };
@@ -270,6 +271,9 @@ private:
     bool                                    _startPlay;
     bool                                    _stopPlay;
     bool                                    _AGC;
+	bool									_startButNotPlay;
+	bool									_startButNotRec;
+	SoundCardOn								_SoundcardOnCb;
 
 private:
     uint32_t                          _prevPlayTime;
