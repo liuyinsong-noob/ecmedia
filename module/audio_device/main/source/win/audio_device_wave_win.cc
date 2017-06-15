@@ -2890,7 +2890,7 @@ int32_t AudioDeviceWindowsWave::GetPlayoutBufferDelay(uint32_t& writtenSamples, 
         if (_useHeader == 1)
         {
             _minPlayBufDelay = 80;
-            _playWarning = 1;   // only warn first time
+            //_playWarning = 1;   // only warn first time
             WEBRTC_TRACE(kTraceInfo, kTraceUtility, -1, "Modification #1: _useHeader = %d, _minPlayBufDelay = %d", _useHeader, _minPlayBufDelay);
         }
         else if (_useHeader == 2)
@@ -2907,7 +2907,7 @@ int32_t AudioDeviceWindowsWave::GetPlayoutBufferDelay(uint32_t& writtenSamples, 
         {
             WEBRTC_TRACE(kTraceWarning, kTraceUtility, _id, "pending playout warning exists");
         }
-        _playWarning = 1;  // triggers callback from module process thread
+        //_playWarning = 1;  // triggers callback from module process thread
         WEBRTC_TRACE(kTraceWarning, kTraceUtility, _id, "kPlayoutWarning message posted: switching to alternative playout delay method");
     }
     _dc_prevtime = time;
