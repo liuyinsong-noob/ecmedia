@@ -116,6 +116,7 @@ public:
         kIpAddressVersion6Length = 64,
         kIpAddressVersion4Length = 16
     };
+    
     enum ErrorCode
     {
         kNoSocketError            = 0,
