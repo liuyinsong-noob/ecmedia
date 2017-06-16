@@ -5,6 +5,8 @@ VoipDemo
 
 #appcode filder
 .idea
+.gradle
+
 #mac
 .DS_Store
 
