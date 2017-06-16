@@ -26,7 +26,7 @@
 
 
 // using openGL draw camera preview.
-//#define USING_OPENGL;
+#define USING_OPENGL;
 
 #ifdef TARGET_OS_IPHONE
 #if DEBUG_CAPTURE_YUV
