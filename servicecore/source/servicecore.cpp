@@ -5148,7 +5148,6 @@ void ServiceCore::serphone_core_iterate()
 		 linphone_core_start_invite() */
 		calls=calls->next;
         serphone_call_background_tasks(call,one_second_elapsed);
-        printf("zhaoyou during %ld, call->state %d\n", curtime-call->start_time, call->state);
 		if (call->state==LinphoneCallOutgoingInit && (curtime-call->start_time>=300)){
             if (call->ice_session != NULL) {
 				PrintConsole("ICE candidates gathering from [%s] has not finished yet, proceed with the call without ICE anyway.\n"
