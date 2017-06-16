@@ -26,10 +26,10 @@
 
 
 // using openGL draw camera preview.
-#define USING_OPENGL;
+//#define USING_OPENGL;
 
 #ifdef TARGET_OS_IPHONE
-#if 0
+#if DEBUG_CAPTURE_YUV
 char *globalFilePathcapture = NULL;
 #endif
 @implementation ECAVCaptureVideoPreviewLayerEx
@@ -250,7 +250,7 @@ char *globalFilePathcapture = NULL;
     
     _pict = (MSPicture *)malloc(sizeof(MSPicture));
     _pict->ptr = NULL;
-#if 0
+#if DEBUG_CAPTURE_YUV
     if (globalFilePathcapture) {
         fout = fopen(globalFilePathcapture, "ab+");
     }
@@ -280,16 +280,14 @@ char *globalFilePathcapture = NULL;
 //            NSLog(@"sean haha plane_width %zu, plane_height %zu", plane_width, CVPixelBufferGetHeightOfPlane(frame, 0));
             
             
-            size_t plane_widthu = CVPixelBufferGetWidthOfPlane(frame, 1);
-
-            
-            
+//            size_t plane_widthu = CVPixelBufferGetWidthOfPlane(frame, 1);
+     
 			size_t plane_height = CVPixelBufferGetHeightOfPlane(frame, 0);
-            size_t plane_heightu = CVPixelBufferGetHeightOfPlane(frame, 1);
+//            size_t plane_heightu = CVPixelBufferGetHeightOfPlane(frame, 1);
 
             
-            size_t plane_count = CVPixelBufferGetPlaneCount(frame);
-  
+//            size_t plane_count = CVPixelBufferGetPlaneCount(frame);
+            
 			uint8_t* y_src= (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(frame, 0);
 			uint8_t* cbcr_src= (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(frame, 1);
 			int rotation=0;            
@@ -318,9 +316,11 @@ char *globalFilePathcapture = NULL;
 
 			/*check if buffer size are compatible with downscaling or rotation*/
 			int factor = mDownScalingRequired?2:1;
-            
             int width = mOutputVideoSize.width;
             int height = mOutputVideoSize.height;
+            if (mDeviceOrientation ==90 || mDeviceOrientation==270) {
+                rotation = 180;
+            }
             
 			switch (rotation) {
 				case 0:
@@ -331,16 +331,27 @@ char *globalFilePathcapture = NULL;
 					break;
 				case 90:
 				case 270:
-                    width = mOutputVideoSize.height;
-                    height = mOutputVideoSize.width;
+
 					if (mOutputVideoSize.width*factor>plane_height || mOutputVideoSize.height*factor>plane_width) {
 						return;
 					}
+                    width = mOutputVideoSize.height;
+                    height = mOutputVideoSize.width;
 					break;
                 default:
                     break;
 			}
             
+            
+            
+//            rotation = 0;
+//            if (mDeviceOrientation ==90 || mDeviceOrientation==270) {
+//                rotation = 180;
+//            }
+//            if (rotation==90 || rotation==270) {
+//                width = mOutputVideoSize.height;
+//                height = mOutputVideoSize.width;
+//            }
             MSPicture *pict = copy_ycbcrbiplanar_to_true_yuv_with_rotation_and_down_scale_by_2(
                                             _pict
                                             , y_src
@@ -362,7 +373,7 @@ char *globalFilePathcapture = NULL;
                 }
             }
             
-#if 0
+#if DEBUG_CAPTURE_YUV
             [self saveYUVtoFile:pict->planes[0] andwrap:pict->strides[0] andxsize:width andysize:height];
             [self saveYUVtoFile:pict->planes[1] andwrap:pict->strides[1] andxsize:width/2 andysize:height/2];
             [self saveYUVtoFile:pict->planes[2] andwrap:pict->strides[2] andxsize:width/2 andysize:height/2];
@@ -464,6 +475,14 @@ char *globalFilePathcapture = NULL;
         free(_pict);
     }
 	pthread_mutex_destroy(&mutex);
+    
+#ifdef DEBUG_CAPTURE_YUV
+    if (fout)
+    {
+        fflush(fout);
+        fclose(fout);
+    }
+#endif
 #if ! __has_feature(objc_arc)
 	[super dealloc];
 #endif
@@ -725,7 +744,7 @@ char *globalFilePathcapture = NULL;
     }
 }
 
-#if 0
+#if DEBUG_CAPTURE_YUV
 - (void)saveYUVtoFile:(unsigned char *)buf andwrap:(int)wrap andxsize:(int)xsize andysize:(int)ysize
 {
     if (!fout) {
