@@ -261,6 +261,22 @@ int ViERenderImpl::StopRender(const int render_id) {
   }
   return 0;
 }
+    
+int ViERenderImpl::AddI420FrameCallback(const int render_id, ECMedia_I420FrameCallBack *callBack) {
+    LOG_F(LS_INFO) << "render_id: " << render_id;
+    ViERenderManagerScoped rs(*(shared_data_->render_manager()));
+    ViERenderer* renderer = rs.Renderer(render_id);
+    if (!renderer) {
+        shared_data_->SetLastError(kViERenderInvalidRenderId);
+        return -1;
+    }
+
+    if (renderer->AddI420FrameCallback(callBack) != 0) {
+        shared_data_->SetLastError(kViERenderUnknownError);
+        return -1;
+    }
+    return 0;
+}
 
 int ViERenderImpl::SetExpectedRenderDelay(int render_id, int render_delay) {
   LOG_F(LS_INFO) << "render_id: " << render_id

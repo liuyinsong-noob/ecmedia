@@ -1060,5 +1060,8 @@ struct RTPHeader {
 // RTCP mode is described by RFC 5506.
 enum RtcpMode { kOff, kCompound, kReducedSize };
 
+// i420 frame callback
+typedef void (*ECMedia_I420FrameCallBack)(char* buffer, int width, int height);
+
 }  // namespace cloopenwebrtc
 #endif  // WEBRTC_COMMON_TYPES_H

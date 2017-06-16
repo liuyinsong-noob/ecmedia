@@ -417,6 +417,13 @@ ECMEDIA_API int ECMedia_video_start_send(int channelid);
  *
  */
 ECMEDIA_API int ECMedia_video_stop_send(int channelid);
+
+/*
+ * 注册摄像头原始视频流数据回调
+ */
+ECMEDIA_API int ECMedia_register_framecallback(int deviceid, ECMedia_I420FrameCallBack* callback);
+   
+    
 /*
  *
  */

@@ -49,6 +49,19 @@ int32_t ViERenderer::StartRender() {
 int32_t ViERenderer::StopRender() {
   return render_module_.StopRender(render_id_);
 }
+    
+int32_t ViERenderer::AddI420FrameCallback(ECMedia_I420FrameCallBack *callback) {
+    if(callback == NULL) {
+        return -1;
+    }
+    
+    if(ec_i420_frame_callback_ == callback) {
+        return 0;
+    }
+    
+    ec_i420_frame_callback_ = callback;
+    return 0;
+}
 
 int32_t ViERenderer::GetLastRenderedFrame(const int32_t renderID,
                                           I420VideoFrame& video_frame) {
@@ -155,6 +168,8 @@ void ViERenderer::DeliverFrame(int id,
   {
 	  extra_render_callback_->RenderFrame(render_id_, *video_frame);
   }
+    
+    //ec_i420_frame_callback_->(video_frame, video_frame->width(), video_frame->height());
 }
 
 void ViERenderer::DelayChanged(int id, int frame_delay) {}

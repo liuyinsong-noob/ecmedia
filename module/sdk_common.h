@@ -272,8 +272,8 @@ struct Stats{
 		:encode_frame_rate(0),
 		media_bitrate_bps(0),
 		suspended(false){}
-	int encode_frame_rate; //·¢ËÍ¶ËÊµ¼ÊµÄ±àÂëÖ¡ÂÊ
-	int media_bitrate_bps; //·¢ËÍ¶ËÊµ¼ÊµÄ·¢ËÍËÙÂÊ
+	int encode_frame_rate; //ï¿½ï¿½ï¿½Í¶ï¿½Êµï¿½ÊµÄ±ï¿½ï¿½ï¿½Ö¡ï¿½ï¿½
+	int media_bitrate_bps; //ï¿½ï¿½ï¿½Í¶ï¿½Êµï¿½ÊµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	bool suspended;       
 };
 

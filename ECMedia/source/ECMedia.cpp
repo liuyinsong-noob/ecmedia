@@ -1776,7 +1776,7 @@ int ECMedia_get_media_statistics(int channelid, bool is_video, MediaStatisticsIn
         }
     }
 #endif
-    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, 0);
     return 0;
 }
 
@@ -2531,6 +2531,13 @@ int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame 
 	}
 }
 
+//
+//int ECMedia_deregister_framecallback(int deviceid, ECMedia_I420FrameCallBack* callback) {
+//    
+//    
+//    return 0;
+//}
+
 int ECMedia_set_local_video_window(int deviceid, void *video_window)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... deviceid:%d video_window:%0x ",__FUNCTION__, deviceid, video_window);
@@ -2656,10 +2663,22 @@ int ECMedia_stop_render(int channelid, int deviceid)
 }
 #endif
 
+int ECMedia_register_framecallback(int channelid, ECMedia_I420FrameCallBack* callback) {
+    
+    PrintConsole("[ECMEDIA INFO] %s begins... channelid=%d,deviceid=%d",__FUNCTION__,channelid);
+    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    ViERender *render = ViERender::GetInterface(m_vie);
+    if (render) {
+        render->AddI420FrameCallback(channelid, callback);
+        render->Release();
+    }
+    PrintConsole("[ECMEDIA INFO] %s ends",__FUNCTION__);
+    return 0;
+}
+
 /*
  * VoECodec ViECodec
  */
-
 int ECMedia_num_of_supported_codecs_audio()
 {
     PrintConsole("[ECMEDIA INFO] %s begins...",__FUNCTION__);

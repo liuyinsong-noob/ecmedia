@@ -15,6 +15,7 @@
 #include "typedefs.h"
 #include "vie_render.h"
 #include "vie_ref_count.h"
+#include "sdk_common.h"
 
 namespace cloopenwebrtc {
 
@@ -38,6 +39,7 @@ class ViERenderImpl
   virtual int RemoveRenderer(const int render_id);
   virtual int StartRender(const int render_id);
   virtual int StopRender(const int render_id);
+  virtual int AddI420FrameCallback(const int render_id, ECMedia_I420FrameCallBack *callBack);
   virtual int SetExpectedRenderDelay(int render_id, int render_delay);
   virtual int ConfigureRender(int render_id, const unsigned int z_order,
                               const float left, const float top,
