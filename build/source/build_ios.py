@@ -18,6 +18,7 @@ class BuildIos(BuildBase):
         if os.path.exists(self.CompilePath):
             os.chdir(self.CompilePath)
             print os.system('xcodebuild -project ECMedia.xcodeproj')
+            print os.system('xcodebuild clean build -sdk iphonesimulator10.3 ONLY_ACTIVE_ARCH=NO VALID_ARCHS="i386 x86_64" -project ECMedia.xcodeproj')			
         else:
             print'%s are not exist!'%self.CompilePath
 
