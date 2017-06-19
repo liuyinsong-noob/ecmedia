@@ -595,6 +595,8 @@ typedef struct _CALLBACKINTERFACE CCallbackInterface;
 	CCPAPI  int cancelTmmbr(char *callid);
 	CCPAPI  int VideoStartReceive(char *callid);
 	CCPAPI  int VideoStopReceive(char *callid);
+    
+    CCPAPI int SetRotateCapturedFrames(char *callid, ECMediaRotateCapturedFrame tr);
 	
 #ifdef __cplusplus
 }

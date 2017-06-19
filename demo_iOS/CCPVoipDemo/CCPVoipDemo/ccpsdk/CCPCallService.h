@@ -262,6 +262,7 @@ typedef enum
 
 //发送本端旋转的角度，如果传递的图像在对端显示是颠倒的则传入负值
 - (void)notifyTo:(NSString *)receiver andVideoRotate:(NSInteger)degree;
+- (int)setCaptureRotate:(NSString *)callid andVideoRotate:(NSInteger)degree;
 /**
  * 获取摄像设备信息
  * @return 摄像设备信息数组

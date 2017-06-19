@@ -156,6 +156,7 @@ extern BOOL globalisVoipView;
         }
         
         [self.modelEngineVoip setVideoBitRates:rates];
+        self.voipNo = @"nconf71103519";
         self.callID = [self.modelEngineVoip makeCall:self.voipNo withPhone:nil withType:EVoipCallType_Video withVoipType:1];
         
         if (self.callID.length <= 0)//获取CallID失败，即拨打失败
@@ -745,6 +746,9 @@ extern BOOL globalisVoipView;
     [self transformRemoteView];
     NSLog(@"[VideoViewController notifyTo sendRotate %d]",deviceRotate*value);
     [self.modelEngineVoip.VoipCallService notifyTo:self.voipNo andVideoRotate:deviceRotate*value];
+    [self.modelEngineVoip.VoipCallService setCaptureRotate:self.callID andVideoRotate:deviceRotate];
+    
+    
 }
 
 - (void)onMessageRemoteVideoRotate:(NSString*)degree

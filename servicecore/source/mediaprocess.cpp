@@ -938,7 +938,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 					//codec_params.startBitrate = (m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps*2*0.07)/1000;
 					/*codec_params.maxBitrate = min((m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps*4*0.07)/1000, kMaxVideoBitrate);
 					codec_params.minBitrate = max((m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps*1*0.07)/1000, kMinVideoBitrate);*/
-
+                    
 					codec_params.startBitrate = m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps *3*0.07/1000;
 					codec_params.maxBitrate = codec_params.startBitrate;
 					codec_params.minBitrate = codec_params.startBitrate/4;
@@ -5385,4 +5385,9 @@ void ServiceCore::video_start_receive(SerPhoneCall *call)
 void ServiceCore::video_stop_receive(SerPhoneCall *call)
 {
 	ECMedia_video_stop_receive(call->m_VideoChannelID);
+}
+    
+int ServiceCore::set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame tr)//int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame tr)
+{
+    return ECMedia_set_rotate_captured_frames(deviceid, tr);
 }

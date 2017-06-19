@@ -1109,7 +1109,7 @@ public:
 	void cancel_tmmbr_request_video(SerPhoneCall *call);
 	void video_start_receive(SerPhoneCall *call);
 	void video_stop_receive(SerPhoneCall *call);
-	
+    int set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame tr);
     //---begin
 	private:
 	//cloopenwebrtc::VideoSendStream::Config CreateVideoSendStreamConfig();

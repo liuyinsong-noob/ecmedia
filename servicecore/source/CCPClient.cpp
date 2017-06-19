@@ -3937,3 +3937,18 @@ extern "C"  int VideoStopReceive(char *callid)
 	return 0;
 }
 
+
+extern "C" int SetRotateCapturedFrames(char *callid, ECMediaRotateCapturedFrame tr)//int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame tr)
+{
+    SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT)
+    PrintConsole("[APICall %s called, callid %s, rotate %d]", __FUNCTION__, callid, tr);
+    if (g_pSerCore)
+    {
+        SerPhoneCall *pCall = NULL;
+        int ret = findCall(callid, &pCall);
+        if (ret != 0) {
+            return -1;
+        }
+        return g_pSerCore->set_rotate_captured_frames(pCall->m_CaptureDeviceId, tr);
+    }
+}
