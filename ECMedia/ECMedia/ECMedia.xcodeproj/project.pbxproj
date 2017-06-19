@@ -1052,7 +1052,7 @@
 		05E86F2C1B3BA16D00BDBCE6 /* codingHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = codingHelper.h; sourceTree = "<group>"; };
 		05E86F2D1B3BA16D00BDBCE6 /* RecordVoip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordVoip.h; sourceTree = "<group>"; };
 		05E86F2F1B3BA16D00BDBCE6 /* StunMessageCallBack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StunMessageCallBack.h; sourceTree = "<group>"; };
-		05E86F331B3BA16D00BDBCE6 /* ECMedia.h */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.c.h; path = ECMedia.h; sourceTree = "<group>"; };
+		05E86F331B3BA16D00BDBCE6 /* ECMedia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECMedia.h; sourceTree = "<group>"; };
 		05E86F371B3BA16D00BDBCE6 /* ECMedia.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ECMedia.cpp; sourceTree = "<group>"; };
 		1AFBD0B41DAE0A59009B8D23 /* ECLiveStream_rtmp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ECLiveStream_rtmp.cpp; sourceTree = "<group>"; };
 		1AFBD0B51DAE0A59009B8D23 /* ECLiveStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ECLiveStream.cpp; sourceTree = "<group>"; };

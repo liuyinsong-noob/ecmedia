@@ -5,27 +5,22 @@
 //  Created by Sean Lee on 15/6/8.
 //
 //
-
 #ifndef __servicecoreVideo__ECMedia__
 #define __servicecoreVideo__ECMedia__
-
 #include <stdio.h>
 #include "sdk_common.h"
 #include "common_types.h"
-
 #ifdef WEBRTC_ANDROID
 #include "jni.h"
 #define ECMEDIA_API JNIEXPORT
 #elif  defined(WIN32)
- #define ECMEDIA_API  _declspec(dllexport)
- #else
+#define ECMEDIA_API  _declspec(dllexport)
+#else
 #define ECMEDIA_API
 #endif
-
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 typedef int (*ReturnVideoWidthHeightM)(int width,int height, int channelid);
 typedef int (*onEcMediaReceivingDtmf)(int channelid, char dtmfch);//dtmf
 typedef int (*onEcMediaPacketTimeout)(int channelid);
@@ -33,30 +28,24 @@ typedef int (*onEcMediaStunPacket)(int channelid, void *data, int len, const cha
 typedef int (*onEcMediaAudioData)(int channelid, const void *data, int inLen, void *outData, int &outLen, bool send);
 typedef int (*onEcMediaVideoDataV)(int channelid, const void *data, int inLen, void *outData, int &outLen, bool send);
 typedef int (*onEcMediaVideoConference)(int channelid, int status, int payload);
-
 typedef int (*onEcMediaRequestKeyFrameCallback)(const int channelid);
-
 typedef int (*onVoeCallbackOnError)(int channelid, int errCode);
 typedef int(*onSoundCardOn)(int deviceType);//0, playout; 1, record
 typedef int(*onEcMediaDesktopCaptureErrCode)(int desktop_capture_id, int errCode);
 typedef int (*onEcMediaShareWindowSizeChange)(int desktop_capture_id, int width, int height);
-
 typedef int(*onEcMediaNoCameraCaptureCb)(const int id, const bool capture);
-
 enum NET_STATUS_CODE {
-	RTMP_STATUS_CONNECTING = 1,
-	RTMP_STATUS_CONNECTED_SUCCESS,
-	RTMP_STATUS_CONNECTED_FAILED,
-	RTMP_STATUS_TIMEOUT,
+    RTMP_STATUS_CONNECTING = 1,
+    RTMP_STATUS_CONNECTED_SUCCESS,
+    RTMP_STATUS_CONNECTED_FAILED,
+    RTMP_STATUS_TIMEOUT,
     RTMP_STSTUS_PUSH_SUCCESS,
     RTMP_STSTUS_PUSH_FAILED,
     RTMP_STSTUS_PLAY_SUCCESS,
     RTMP_STSTUS_PLAY_FAILED
 };
-
 typedef int(*onLiveStreamNetworkStatusCallBack)(void *handle, NET_STATUS_CODE code);
 typedef int(*onLiveStreamVideoResolution)(void *handle, int width, int height);
-
 /*
  * Enable trace.
  */
@@ -76,9 +65,9 @@ ECMEDIA_API int ECMedia_ring_stop(int& channelid);
 /*
  *
  @return: 0: success
-         1: already init
-         -99: 
-         VE_AUDIO_DEVICE_MODULE_ERROR: audio device init failed.
+ 1: already init
+ -99:
+ VE_AUDIO_DEVICE_MODULE_ERROR: audio device init failed.
  */
 ECMEDIA_API int ECMedia_init_audio();
 /*
@@ -105,12 +94,10 @@ ECMEDIA_API int ECMedia_set_local_receiver(int channelid, int rtp_port, int rtcp
  *1
  */
 ECMEDIA_API int ECMedia_audio_set_send_destination(int channelid, int rtp_port, const char *rtp_addr, int source_port, int rtcp_port, const char *rtcp_ipaddr);
-
 /**
  *
  */
 ECMEDIA_API int ECMedia_audio_set_socks5_send_data(int channel_id, unsigned char *data, int length, bool isRTCP);
-
 /*
  *1
  */
@@ -151,9 +138,7 @@ ECMEDIA_API int ECMedia_set_NsStatus(bool ns_enabled, cloopenwebrtc::NsModes ns_
  *
  */
 ECMEDIA_API int ECMedia_set_SetAecmMode(cloopenwebrtc::AecmModes aecm_mode, bool cng_enabled);
-
 ECMEDIA_API int ECMedia_EnableHowlingControl(bool enabled);
-
 ECMEDIA_API int ECMedia_IsHowlingControlEnabled(bool &enabled);
 /*
  *
@@ -179,7 +164,6 @@ ECMEDIA_API int ECMedia_set_MTU(int channelid, int mtu);
  *
  */
 ECMEDIA_API int ECMedia_set_video_rtp_keepalive(int channelid, bool enable, int interval, int payloadType);
-
 ECMEDIA_API int ECMedia_set_audio_rtp_keepalive(int channelid, bool enable, int interval, int payloadType);
 /*
  *
@@ -242,7 +226,7 @@ ECMEDIA_API int ECMedia_reset_audio_device();
 // */
 //ECMEDIA_API int ECMedia_init_srtp(int channelid);
 ///*
-// *¼ÓÃÜ
+// *åŠ å¯†
 // */
 //ECMEDIA_API int ECMedia_enable_srtp_receive(int channelid, const char *key);
 ///*
@@ -262,12 +246,12 @@ ECMEDIA_API int ECMedia_set_speaker_volume(int volumep);
  */
 ECMEDIA_API int ECMedia_get_speaker_volume(unsigned int& volumep);
 /*
-*
-*/
+ *
+ */
 ECMEDIA_API int ECMedia_set_mic_volume(int volumep);
 /*
-*
-*/
+ *
+ */
 ECMEDIA_API int ECMedia_get_mic_volume(unsigned int& volumep);
 /*
  *
@@ -313,7 +297,6 @@ ECMEDIA_API int ECMedia_get_receive_playloadType_audio(int channelid, cloopenweb
  *1
  */
 ECMEDIA_API int ECMedia_set_VAD_status(int channelid, cloopenwebrtc::VadModes mode, bool dtx_enabled);
-
 /*
  *1
  */
@@ -322,22 +305,17 @@ ECMEDIA_API int ECMedia_audio_start_playout(int channelid);
  *1
  */
 ECMEDIA_API int ECMedia_audio_stop_playout(int channelid);
-
-
 ECMEDIA_API int ECMedia_audio_start_record();
-
 ECMEDIA_API int ECMedia_audio_stop_record();
-
 ECMEDIA_API int ECMedia_set_soundcard_on_cb(onSoundCardOn soundcard_on_cb);
-
 /*
- *×Ö·û ÓïÒôÍ¨µÀ
+ *å­—ç¬¦ è¯­éŸ³é€šé“
  */
 ECMEDIA_API int ECMedia_send_dtmf(int channelid, const char dtmfch);
 ECMEDIA_API int ECMedia_set_send_telephone_event_payload_type(int channelid, unsigned char type);
 ECMEDIA_API int ECMedia_set_recv_telephone_event_payload_type(int channelid, unsigned char type);
 /*
- *Ã¿´Î²úÉúchannelºó´«½øÀ´
+ *æ¯æ¬¡äº§ç”Ÿchannelåä¼ è¿›æ¥
  */
 ECMEDIA_API int ECMedia_set_dtmf_cb(int channelid, onEcMediaReceivingDtmf dtmf_cb);
 ECMEDIA_API int ECMedia_set_media_packet_timeout_cb(int channelid, onEcMediaPacketTimeout media_timeout_cb);
@@ -349,10 +327,8 @@ ECMEDIA_API int ECMedia_set_voe_cb(int channelid, onVoeCallbackOnError voe_callb
  * ONLY USE FOR PEER CONNECTION FOR AUDIO
  */
 ECMEDIA_API int ECMedia_sendRaw(int channelid, int8_t *data, uint32_t length, bool isRTCP, uint16_t port = 0, const char* ip = NULL);
-
 ECMEDIA_API int ECMedia_EnableIPV6(int channel, bool flag);
 ECMEDIA_API int ECMedia_IsIPv6Enabled(int channel);
-
 ECMEDIA_API int ECMedia_AmrNBCreateEnc();
 ECMEDIA_API int ECMedia_AmrNBCreateDec();
 ECMEDIA_API int ECMedia_AmrNBFreeEnc();
@@ -361,28 +337,19 @@ ECMEDIA_API int ECMedia_AmrNBEncode(short* input, short len, short*output, short
 ECMEDIA_API int ECMedia_AmrNBEncoderInit(short dtxMode);
 ECMEDIA_API int ECMedia_AmrNBDecode(short* encoded, int len, short* decoded);
 ECMEDIA_API int ECMedia_AmrNBVersion(char *versionStr, short len);
-
-
 //SRTP
 ECMEDIA_API int ECMedia_init_srtp_audio(int channel);
 ECMEDIA_API int ECMedia_shutdown_srtp_audio(int channel);
-
 ECMEDIA_API int ECMedia_enable_srtp_send_audio(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type,	const char* key);
-
 ECMEDIA_API int ECMedia_disable_srtp_send_audio(int channel);
-
 ECMEDIA_API int ECMedia_enable_srtp_recv_audio(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type,	const char* key);
 ECMEDIA_API int ECMedia_disable_srtp_recv_audio(int channel);
-
 ECMEDIA_API int ECMedia_start_record_playout(int channel, char *filename);
 ECMEDIA_API int ECMedia_stop_record_playout(int channel);
-
 ECMEDIA_API int ECMedia_start_record_microphone(char *filename);
 ECMEDIA_API int ECMedia_stop_record_microphone();
-
 ECMEDIA_API int ECMedia_start_record_send_voice(char *filename);
 ECMEDIA_API int ECMedia_stop_record_send_voice();
-
 #ifdef VIDEO_ENABLED
 /*
  *
@@ -430,12 +397,10 @@ ECMEDIA_API int ECMedia_video_set_local_receiver(int channelid, int rtp_port, in
  *
  */
 ECMEDIA_API int ECMedia_video_set_send_destination(int channelid, const char *rtp_addr, int rtp_port, const char *rtcp_addr, int rtcp_port);
-
 /**
  *
  */
 ECMEDIA_API int ECMedia_video_set_socks5_send_data(int channel_id, unsigned char *data, int length, bool isRTCP);
-
 /*
  *
  */
@@ -460,45 +425,35 @@ ECMEDIA_API int ECMedia_set_local_video_window(int deviceid, void *video_window)
  *
  */
 ECMEDIA_API int ECMedia_stop_capture(int captureid);
-
-
 /*
-*/
+ */
 ECMEDIA_API int ECMedia_allocate_desktopShare_capture(int& desktop_captureid, int capture_type);
 /*
-*/
-
+ */
 /*
-*/
+ */
 ECMEDIA_API int ECMedia_get_screen_list(int desktop_captureid, ScreenID **screenList);
 ECMEDIA_API int ECMedia_get_window_list(int desktop_captureid, WindowShare **windowList);
-
-
-
 /*
-//×ÀÃæ¹²Ïíµ÷ÓÃÀı×Ó
-ECMedia_allocate_desktopShare_capture(call->m_desktopShareDeviceId, type);
-getShareScreenInfo(&screenId, call->m_desktopShareDeviceId);
-getShareWindowInfo(&windowInfo, call->m_desktopShareDeviceId);
-ECMedia_select_screen(call->m_desktopShareDeviceId, m_pScreenInfo[0]);
-ECMedia_connect_desktop_captureDevice(call->m_desktopShareDeviceId, call->m_VideoChannelID);
-ECMedia_start_desktop_capture(call->m_desktopShareDeviceId, 15);
-...
-
-ECMedia_disconnect_desktop_captureDevice(call->m_VideoChannelID);
-ECMedia_stop_desktop_capture(call->m_desktopShareDeviceId);
-ECMedia_release_desktop_capture(call->m_desktopShareDeviceId);
-*/
-
+ //æ¡Œé¢å…±äº«è°ƒç”¨ä¾‹å­
+ ECMedia_allocate_desktopShare_capture(call->m_desktopShareDeviceId, type);
+ getShareScreenInfo(&screenId, call->m_desktopShareDeviceId);
+ getShareWindowInfo(&windowInfo, call->m_desktopShareDeviceId);
+ ECMedia_select_screen(call->m_desktopShareDeviceId, m_pScreenInfo[0]);
+ ECMedia_connect_desktop_captureDevice(call->m_desktopShareDeviceId, call->m_VideoChannelID);
+ ECMedia_start_desktop_capture(call->m_desktopShareDeviceId, 15);
+ ...
+ ECMedia_disconnect_desktop_captureDevice(call->m_VideoChannelID);
+ ECMedia_stop_desktop_capture(call->m_desktopShareDeviceId);
+ ECMedia_release_desktop_capture(call->m_desktopShareDeviceId);
+ */
 ECMEDIA_API bool ECMedia_select_screen(int desktop_captureid, ScreenID screeninfo);
 ECMEDIA_API bool ECMedia_select_window(int desktop_captureid, WindowID WindowInfo);
-
 ECMEDIA_API int ECMedia_start_desktop_capture(int desktop_captureid, int fps);
 /*
-* Should not invoke from main UI thread.
-*/
+ * Should not invoke from main UI thread.
+ */
 ECMEDIA_API int ECMedia_stop_desktop_capture(int desktop_captureid);
-
 ECMEDIA_API int ECMedia_release_desktop_capture(int desktop_captureid);
 ECMEDIA_API int ECMedia_connect_desktop_captureDevice(int desktop_captureid, int video_channelId);
 ECMEDIA_API int ECMedia_disconnect_desktop_captureDevice(int video_channelId);
@@ -506,7 +461,6 @@ ECMEDIA_API int ECMedia_set_desktop_share_err_code_cb(int desktop_captureid, int
 ECMEDIA_API int ECMedia_set_desktop_share_window_change_cb(int desktop_captureid, int channelid, onEcMediaShareWindowSizeChange share_window_change_cb);
 ECMEDIA_API int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &height);
 ECMEDIA_API int ECMedia_set_screen_share_activity(int desktop_captureid, void* activity);
-
 /*
  *
  */
@@ -523,7 +477,6 @@ ECMEDIA_API int ECMedia_num_of_supported_codecs_video();
  *
  */
 ECMEDIA_API int ECMedia_get_supported_codecs_video(cloopenwebrtc::VideoCodec codecs[]);
-
 /*
  *
  */
@@ -540,7 +493,6 @@ ECMEDIA_API int ECMedia_get_send_codec_video(int channelid, cloopenwebrtc::Video
  *
  */
 ECMEDIA_API int ECMedia_set_receive_codec_video(int channelid, cloopenwebrtc::VideoCodec& videoCodec);
-
 #ifdef ENABLE_FEC_TEST
 ECMEDIA_API int ECMedia_set_receive_codec_video_fec(int channelid, cloopenwebrtc::VideoCodec& videoCodec);
 #endif
@@ -548,225 +500,204 @@ ECMEDIA_API int ECMedia_set_receive_codec_video_fec(int channelid, cloopenwebrtc
  *
  */
 ECMEDIA_API int ECMedia_get_receive_codec_video(int channelid, cloopenwebrtc::VideoCodec& videoCodec);
-
 /**
- * description: ÉèÖÃµ×²ãyuvÊÓÆµÖ¡µÄËõ·Å·½Ê½
+ * description: è®¾ç½®åº•å±‚yuvè§†é¢‘å¸§çš„ç¼©æ”¾æ–¹å¼
  * FrameScaleType:
- *   kScaleTypeCropping -> ÒÔ²Ã¼ô·½Ê½Ëõ·ÅÊÓÆµÖ¡
- *   kScaleTypeFilling  -> ÒÔÌî³ä·½Ê½Ëõ·ÅÊÓÆµÖ¡
+ *   kScaleTypeCropping -> ä»¥è£å‰ªæ–¹å¼ç¼©æ”¾è§†é¢‘å¸§
+ *   kScaleTypeFilling  -> ä»¥å¡«å……æ–¹å¼ç¼©æ”¾è§†é¢‘å¸§
  */
 ECMEDIA_API int ECMedia_set_frame_scale_type(int channelid, cloopenwebrtc::FrameScaleType type);
-    
+
 ECMEDIA_API int ECMedia_set_video_conf_cb(int channelid, onEcMediaVideoConference video_conf_cb);
 ECMEDIA_API int ECMedia_set_stun_cb_video(int channelid, onEcMediaStunPacket stun_cb);
 /*
-* ONLY USE FOR PEER CONNECTION FOR VIDEO
-*/
+ * ONLY USE FOR PEER CONNECTION FOR VIDEO
+ */
 ECMEDIA_API int ECMedia_sendUDPPacket(const int channelid,const void* data,const unsigned int length,int& transmitted_bytes,bool use_rtcp_socket = false,uint16_t port = 0,const char* ip = NULL);
 ECMEDIA_API int ECMedia_set_NACK_status_video(int channelid, bool enabled);
 ECMEDIA_API int ECMedia_set_RTCP_status_video(int channelid,int mode);
 ECMEDIA_API int ECMedia_setVideoConferenceFlag(int channel,const char *selfSipNo ,const char *sipNo, const char *conferenceNo, const char *confPasswd, int port, const char *ip);
 ECMEDIA_API int ECMedia_send_key_frame(int channel);
-
 ECMEDIA_API int ECMedia_video_EnableIPV6(int channel, bool flag);
 ECMEDIA_API int ECMedia_video_IsIPv6Enabled(int channel);
-
-
 ECMEDIA_API int ECMedia_set_FEC_status_video(const int channelid,
-								const bool enable,
-								const unsigned char payload_typeRED,
-								const unsigned char payload_typeFEC);
+                                             const bool enable,
+                                             const unsigned char payload_typeRED,
+                                             const unsigned char payload_typeFEC);
 ECMEDIA_API int ECMedia_set_HybridNACKFEC_status_video(const int channelid,
-										const bool enable,
-										const unsigned char payload_typeRED,
-										const unsigned char payload_typeFEC);
-
+                                                       const bool enable,
+                                                       const unsigned char payload_typeRED,
+                                                       const unsigned char payload_typeFEC);
 ECMEDIA_API int ECMedia_start_record_screen(int audioChannel, const char* filename, int bitrates, int fps, int screen_index);
 ECMEDIA_API int ECMedia_start_record_screen_ex(int audioChannel, const char* filename, int bitrates, int fps, int screen_index, int left, int top, int width, int height);
 ECMEDIA_API int ECMedia_stop_record_screen(int audioChannel);
-
 ECMEDIA_API int ECMedia_start_record_remote_video(int audioChannel, int videoChannel, const char* filename);
 ECMEDIA_API int ECMedia_stop_record_remote_video(int audioChannel, int videoChannel);
-
 ECMEDIA_API int ECMedia_start_record_local_video(int audioChannel, int videoChannel, const char* filename);
 ECMEDIA_API int ECMedia_stop_record_local_video(int audioChannel, int videoChannel);
-
 //capture device id
 ECMEDIA_API int ECMedia_get_local_video_snapshot(int deviceid, unsigned char **buf, unsigned int *size, unsigned int *width, unsigned int *height);
 ECMEDIA_API int ECMedia_save_local_video_snapshot(int deviceid, const char* filePath);
-
 //video channel id
 ECMEDIA_API int ECMedia_get_remote_video_snapshot(int channelid, unsigned char **buf, unsigned int *size, unsigned int *width, unsigned int *height);
 ECMEDIA_API int ECMedia_save_remote_video_snapshot(int channelid, const char* filePath);
-
 ECMEDIA_API int ECmedia_enable_deflickering(int captureid, bool enable);
 ECMEDIA_API int ECmedia_enable_EnableColorEnhancement(int channelid, bool enable);
 ECMEDIA_API int ECmedia_enable_EnableDenoising(int captureid, bool enable);
 ECMEDIA_API int ECmedia_enable_EnableBrightnessAlarm(int captureid, bool enable);
 ECMEDIA_API int ECmedia_enable_EnableBeautyFilter(int captureid, bool enable);
-
 //SRTP
 ECMEDIA_API int ECMedia_init_srtp_video(int channel);
 ECMEDIA_API int ECMedia_shutdown_srtp_video(int channel);
-
 ECMEDIA_API int ECMedia_enable_srtp_send_video(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key);
 ECMEDIA_API int ECMedia_disable_srtp_send_video(int channel);
-
 ECMEDIA_API int ECMedia_enable_srtp_recv_video(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key);
 ECMEDIA_API int ECMedia_disable_srtp_recv_video(int channel);
-
 #endif
-
 ECMEDIA_API int ECMedia_set_CaptureDeviceID(int videoCapDevId);
-
 ECMEDIA_API int ECMedia_Check_Record_Permission(bool &enabled);
 ECMEDIA_API int ECmedia_set_shield_mosaic(int video_channel, bool flag);
 /* LiveSteam
-¹Û¿´Ö±²¥µ÷ÓÃ¹ı³Ì£º
-void *handle = ECMedia_createLiveStream(0);
-ECMedia_setLiveStreamNetworkCallBack(statusCallback);
-ECMedia_playLiveStream(handle, "http://livestream.com", wndPtr, callback);
-..
-ECMedia_stopLiveStream(handle);
-ECMedia_releaseLiveStream(handle);
-handle = NULL;
-
-Ö±²¥ÍÆÁ÷µ÷ÓÃ¹ı³Ì£º
-void *handle = ECMedia_createLiveStream(0);
-ECMedia_setVideoProfileLiveStream(handle, cameraIndex, capability, bitrates);
-ECMedia_setLiveStreamNetworkCallBack(statusCallback);
-ECMedia_pushLiveStream(handle, "http://livestream.com", wndPtr);
-..
-ECMedia_stopLiveStream(handl);
-ECMedia_releaseLiveStream(handle);
-handle = NULL;
-*/
-
+ è§‚çœ‹ç›´æ’­è°ƒç”¨è¿‡ç¨‹ï¼š
+ void *handle = ECMedia_createLiveStream(0);
+ ECMedia_setLiveStreamNetworkCallBack(statusCallback);
+ ECMedia_playLiveStream(handle, "http://livestream.com", wndPtr, callback);
+ ..
+ ECMedia_stopLiveStream(handle);
+ ECMedia_releaseLiveStream(handle);
+ handle = NULL;
+ ç›´æ’­æ¨æµè°ƒç”¨è¿‡ç¨‹ï¼š
+ void *handle = ECMedia_createLiveStream(0);
+ ECMedia_setVideoProfileLiveStream(handle, cameraIndex, capability, bitrates);
+ ECMedia_setLiveStreamNetworkCallBack(statusCallback);
+ ECMedia_pushLiveStream(handle, "http://livestream.com", wndPtr);
+ ..
+ ECMedia_stopLiveStream(handl);
+ ECMedia_releaseLiveStream(handle);
+ handle = NULL;
+ */
 /*
-¹¦ÄÜ     : ´´½¨Ö±²¥Ä£¿é
-²ÎÊı     : [IN]  type	  : ÀàĞÍ£¬±ØĞëÎª0
-·µ»ØÖµ   : ·µ»ØÖµÖ±²¥Ä£¿é¾ä±ú
-*/
+ åŠŸèƒ½     : åˆ›å»ºç›´æ’­æ¨¡å—
+ å‚æ•°     : [IN]  type	  : ç±»å‹ï¼Œå¿…é¡»ä¸º0
+ è¿”å›å€¼   : è¿”å›å€¼ç›´æ’­æ¨¡å—å¥æŸ„
+ */
 ECMEDIA_API void*ECMedia_createLiveStream(int type);
-
 /*
-¹¦ÄÜ     : ¿ªÊ¼¹Û¿´Ö±²¥
-²ÎÊı     : [IN]  handle		£º ¾ä±ú
-			 [IN]  url			 : Ö±²¥µØÖ·
-			 [IN]  renderView	£ºÊÓÆµ´°¿Ú
-			 [IN]  callback		£ºÊÓÆµ¿í¸ß»Øµ÷
-·µ»ØÖµ   : ·µ»ØÖµ 0£º³É¹¦  -1£º³õÊ¼»¯×ÊÔ´Ê§°Ü -2£ºÒÑ¾­ÔÚÖ±²¥»òÍÆÁ÷  -3£ºÁ¬½ÓÊ§°Ü  -4£º½¨Á¢Á÷Ê§°Ü
-*/
+ åŠŸèƒ½     : å¼€å§‹è§‚çœ‹ç›´æ’­
+ å‚æ•°     : [IN]  handle		ï¼š å¥æŸ„
+ [IN]  url			 : ç›´æ’­åœ°å€
+ [IN]  renderView	ï¼šè§†é¢‘çª—å£
+ [IN]  callback		ï¼šè§†é¢‘å®½é«˜å›è°ƒ
+ è¿”å›å€¼   : è¿”å›å€¼ 0ï¼šæˆåŠŸ  -1ï¼šåˆå§‹åŒ–èµ„æºå¤±è´¥ -2ï¼šå·²ç»åœ¨ç›´æ’­æˆ–æ¨æµ  -3ï¼šè¿æ¥å¤±è´¥  -4ï¼šå»ºç«‹æµå¤±è´¥
+ */
 ECMEDIA_API int  ECMedia_playLiveStream(void *handle, const char * url, void *renderView, onLiveStreamVideoResolution callback);
-
 /*
-¹¦ÄÜ     : ¿ªÊ¼Ö±²¥ÍÆÁ÷
-²ÎÊı     : [IN]  handle		£º ¾ä±ú
-			 [IN]  url			 : ÍÆÁ÷µØÖ·
-			 [IN]  renderView	£º±¾µØÊÓÆµ´°¿Ú
-·µ»ØÖµ   : ·µ»ØÖµ 0£º³É¹¦¡¡-1£º³õÊ¼»¯×ÊÔ´Ê§°Ü -2£ºÒÑ¾­ÔÚÖ±²¥»òÕßÍÆÁ÷  -3£ºÁ¬½ÓÊ§°Ü  -4£º½¨Á¢Á÷Ê§°Ü
-*/
+ åŠŸèƒ½     : å¼€å§‹ç›´æ’­æ¨æµ
+ å‚æ•°     : [IN]  handle		ï¼š å¥æŸ„
+ [IN]  url			 : æ¨æµåœ°å€
+ [IN]  renderView	ï¼šæœ¬åœ°è§†é¢‘çª—å£
+ è¿”å›å€¼   : è¿”å›å€¼ 0ï¼šæˆåŠŸã€€-1ï¼šåˆå§‹åŒ–èµ„æºå¤±è´¥ -2ï¼šå·²ç»åœ¨ç›´æ’­æˆ–è€…æ¨æµ  -3ï¼šè¿æ¥å¤±è´¥  -4ï¼šå»ºç«‹æµå¤±è´¥
+ */
 ECMEDIA_API int  ECMedia_pushLiveStream(void *handle, const char * url, void *renderView);
-
 /*
-¹¦ÄÜ     : Í£Ö¹¹Û¿´»òÍÆÁ÷
-²ÎÊı     :	  [IN]  handle		£º ¾ä±ú
-*/
+ åŠŸèƒ½     : åœæ­¢è§‚çœ‹æˆ–æ¨æµ
+ å‚æ•°     :	  [IN]  handle		ï¼š å¥æŸ„
+ */
 ECMEDIA_API void ECMedia_stopLiveStream(void *handle);
-
 /*
-¹¦ÄÜ     : ÊÍ·ÅÖ±²¥Ä£¿é
-²ÎÊı     :	  [IN]  handle		£º ¾ä±ú
-*/
+ åŠŸèƒ½     : é‡Šæ”¾ç›´æ’­æ¨¡å—
+ å‚æ•°     :	  [IN]  handle		ï¼š å¥æŸ„
+ */
 ECMEDIA_API void ECMedia_releaseLiveStream(void *handle);
-
 /*
-¹¦ÄÜ     : ¿ªÊ¼Ö±²¥Ä£¿éÃÀÑÕ
-²ÎÊı     :	  [IN]  handle		£º ¾ä±ú
-*/
+ åŠŸèƒ½     : å¼€å§‹ç›´æ’­æ¨¡å—ç¾é¢œ
+ å‚æ•°     :	  [IN]  handle		ï¼š å¥æŸ„
+ */
 ECMEDIA_API void ECMedia_enableLiveStreamBeauty(void *handle);
-
 /*
-¹¦ÄÜ     : Í£Ö¹Ö±²¥Ä£¿éÃÀÑÕ
-²ÎÊı     :	  [IN]  handle		£º ¾ä±ú
-*/
+ åŠŸèƒ½     : åœæ­¢ç›´æ’­æ¨¡å—ç¾é¢œ
+ å‚æ•°     :	  [IN]  handle		ï¼š å¥æŸ„
+ */
 ECMEDIA_API void ECMedia_disableLiveStreamBeauty(void *handle);
-
-
 /*
-¹¦ÄÜ     : ÉèÖÃÍÆÁ÷ÊÓÆµ²ÎÊı
-²ÎÊı     : [IN]  handle		£º ¾ä±ú
-			 [IN]  cameraIndex			 : ÉãÏñÍ·index
-			 [IN]  cam			 : ÊÓÆµÄÜÁ¦
-			 [IN]  bitrates	£ºÊÓÆµÂëÂÊ
-·µ»ØÖµ   : ·µ»ØÖµ 0£º³É¹¦¡¡-1£º²ÎÊı²»ÕıÈ·
-*/
+ åŠŸèƒ½     : è®¾ç½®æ¨æµè§†é¢‘å‚æ•°
+ å‚æ•°     : [IN]  handle		ï¼š å¥æŸ„
+ [IN]  cameraIndex			 : æ‘„åƒå¤´index
+ [IN]  cam			 : è§†é¢‘èƒ½åŠ›
+ [IN]  bitrates	ï¼šè§†é¢‘ç ç‡
+ è¿”å›å€¼   : è¿”å›å€¼ 0ï¼šæˆåŠŸã€€-1ï¼šå‚æ•°ä¸æ­£ç¡®
+ */
 ECMEDIA_API int  ECMedia_setVideoProfileLiveStream(void *handle,int cameraIndex, CameraCapability cam, int bitreates);
-
 /*
-¹¦ÄÜ     : ÉèÖÃÖ±²¥ÍøÂç×´Ì¬»Øµ÷
-²ÎÊı     : [IN]  handle		£º ¾ä±ú
-			 [IN]  callback	 : »Øµ÷
-*/
+ åŠŸèƒ½     : è®¾ç½®ç›´æ’­ç½‘ç»œçŠ¶æ€å›è°ƒ
+ å‚æ•°     : [IN]  handle		ï¼š å¥æŸ„
+ [IN]  callback	 : å›è°ƒ
+ */
 ECMEDIA_API void ECMedia_setLiveStreamNetworkCallBack(void *handle, onLiveStreamNetworkStatusCallBack callback);
 /*
-¹¦ÄÜ     : ÉèÖÃÖ±²¥ÍÆÁ÷µÄÊÓÆµÀ´Ô´
-²ÎÊı     : [IN]   handle	£º ¾ä±ú
-		   [OUT]  windows	£ºwindows Êı×éÖ¸Õë
-		   ·µ»ØÖµ£º ´°¿Ú¸öÊı
-*/
+ åŠŸèƒ½     : è®¾ç½®ç›´æ’­æ¨æµçš„è§†é¢‘æ¥æº
+ å‚æ•°     : [IN]   handle	ï¼š å¥æŸ„
+       [OUT]  windows	ï¼šwindows æ•°ç»„æŒ‡é’ˆ
+       è¿”å›å€¼ï¼š çª—å£ä¸ªæ•°
+ */
 ECMEDIA_API int ECMedia_GetShareWindows(void *handle, WindowShare ** windows);
-
 /*
-¹¦ÄÜ     : ÉèÖÃÖ±²¥ÍÆÁ÷µÄÊÓÆµÀ´Ô´
-²ÎÊı     : [IN]  handle	£º ¾ä±ú
-[		   [IN]  type	£º 0 ×ÀÃæ 1 ´°¿Ú
-           [IN]  id		£º ¶ÔÓÚµÄ×ÀÃæ»òÕß´°¿Úid
-·µ»ØÖµ£º ´°¿Ú¸öÊı
-*/
+ åŠŸèƒ½     : è®¾ç½®ç›´æ’­æ¨æµçš„è§†é¢‘æ¥æº
+ å‚æ•°     : [IN]  handle	ï¼š å¥æŸ„
+ [		   [IN]  type	ï¼š 0 æ¡Œé¢ 1 çª—å£
+ [IN]  id		ï¼š å¯¹äºçš„æ¡Œé¢æˆ–è€…çª—å£id
+ è¿”å›å€¼ï¼š çª—å£ä¸ªæ•°
+ */
 ECMEDIA_API int ECMedia_SelectShareWindow(void *handle, int type , int id);
-
 /*
-¹¦ÄÜ     : ÉèÖÃÖ±²¥ÍÆÁ÷µÄÊÓÆµÀ´Ô´
-²ÎÊı     : [IN]  handle		£º ¾ä±ú
-		   [IN]  video_source			£ºÊÓÆµÀ´Ô´ 0 ÉãÏñÍ· 1 ÊÇ×ÀÃæ
-*/
+ åŠŸèƒ½     : è®¾ç½®ç›´æ’­æ¨æµçš„è§†é¢‘æ¥æº
+ å‚æ•°     : [IN]  handle		ï¼š å¥æŸ„
+       [IN]  video_source			ï¼šè§†é¢‘æ¥æº 0 æ‘„åƒå¤´ 1 æ˜¯æ¡Œé¢
+ */
 ECMEDIA_API void ECMedia_SetLiveVideoSource(void *handle, int video_source);
-
 /*
- * ¹¦ÄÜ£º Â¼ÖÆÉãÏñÍ·ÊÓÆµ±£´æÎªMP4ÎÄ¼ş
- * ²ÎÊı£º [IN] filename: MP4Ğ¡ÊÓÆµÎÄ¼ş±£´æÂ·¾¶
- *       [IN] localview: ÒªÏà»úÔ¤ÀÀviewµÄ¸¸view
+ * åŠŸèƒ½ï¼š å½•åˆ¶æ‘„åƒå¤´è§†é¢‘ä¿å­˜ä¸ºMP4æ–‡ä»¶
+ * å‚æ•°ï¼š [IN] filename: MP4å°è§†é¢‘æ–‡ä»¶ä¿å­˜è·¯å¾„
+ *       [IN] localview: è¦ç›¸æœºé¢„è§ˆviewçš„çˆ¶view
  */
 ECMEDIA_API int ECMedia_startRecordLocalMedia(const char *fileName, void *localview);
 /*
- * Í£Ö¹Â¼ÖÆĞ¡ÊÓÆµ
+ * åœæ­¢å½•åˆ¶å°è§†é¢‘
  */
 ECMEDIA_API void ECMedia_stopRecordLocalMedia();
-
 /*
- * ÉèÖÃRED
+ * è®¾ç½®RED
  */
 ECMEDIA_API int ECMedia_setAudioRed(int channelid, bool enable, int payloadType);
 /*
-*¹¦ÄÜ£ºÉèÖÃÊÓÆµÍ¨Ñ¶ÖĞµ±±¾µØÉãÏñÍ·ÎŞ·¨²É¼¯ÊÓÆµÊ±£¬·µ»Ø¸øÓÃ»§ĞÅÏ¢µÄ»Øµ÷º¯Êı
-*/
+ *åŠŸèƒ½ï¼šè®¾ç½®è§†é¢‘é€šè®¯ä¸­å½“æœ¬åœ°æ‘„åƒå¤´æ— æ³•é‡‡é›†è§†é¢‘æ—¶ï¼Œè¿”å›ç»™ç”¨æˆ·ä¿¡æ¯çš„å›è°ƒå‡½æ•°
+ */
 ECMEDIA_API int ECMedia_set_no_camera_capture_cb(int deviceid, onEcMediaNoCameraCaptureCb no_camera_capture_cb);
-
 /*
-¹¦ÄÜ		£º»ñÈ¡Í³¼Æ±¨¸æ
-²ÎÊı		£º[IN] type: Í³¼Æ±¨¸æÀàĞÍ£¬ÏêÏ¸ĞÅÏ¢»ò¹Ø¼üĞÅÏ¢
-		  [OUT] reports: Í³¼Æ±¨¸æ
-·µ»ØÖµ   : ·µ»ØÖµ 0£º³É¹¦¡¡-1£ºÊ§°Ü
-*/
+ åŠŸèƒ½		ï¼šè·å–ç»Ÿè®¡æŠ¥å‘Š
+ å‚æ•°		ï¼š[IN] type: ç»Ÿè®¡æŠ¥å‘Šç±»å‹ï¼Œè¯¦ç»†ä¿¡æ¯æˆ–å…³é”®ä¿¡æ¯
+ [OUT] reports: ç»Ÿè®¡æŠ¥å‘Š
+ è¿”å›å€¼   : è¿”å›å€¼ 0ï¼šæˆåŠŸã€€-1ï¼šå¤±è´¥
+ */
 ECMEDIA_API int ECMedia_getStatsReports(int type, char* callid, void** pMediaStatisticsDataInnerArray, int *pArraySize);
 ECMEDIA_API void ECMedia_deletePbData(void* mediaStatisticsDataInner);
 
 /*
-ÏÈµ÷ÓÃECMedia_audio_set_magic_sound(channelid, 8, 0, 0)
-ÔÙµ÷ÓÃECMedia_audio_enable_magic_sound()
-*/
+ * å…ˆè°ƒç”¨ECMedia_audio_set_magic_sound(channelid, 8, 0, 0)
+ * å†è°ƒç”¨ECMedia_audio_enable_magic_sound()
+ * ä½¿èƒ½å˜å£°
+ * channelid: channelid
+ * is_enable: true: å¯ç”¨ï¼Œfalse: ç¦ç”¨
+ */
 ECMEDIA_API int ECMedia_audio_enable_magic_sound(int channelid, bool is_enable);
+
+/*
+ * åŠŸèƒ½ï¼šè®¾ç½®å˜å£°å‚æ•°
+ * channelID: channel id
+ * pitch: å£°è°ƒè°ƒèŠ‚ï¼ˆå˜è°ƒä¸å˜é€Ÿï¼‰ï¼Œå–å€¼[-12, 12]ï¼ˆ0è¡¨ç¤ºæ­£å¸¸ï¼ŒåŸæ¥å£°éŸ³éŸ³è°ƒï¼Œè®¾ç½®ä¸º+8çš„è¯ï¼Œå¯ä»¥å¬åˆ°æ˜æ˜¾çš„å¥³ç”Ÿæ•ˆæœï¼‰
+ * tempo: éŸ³é€Ÿè°ƒèŠ‚ï¼ˆå˜é€Ÿä¸å˜è°ƒï¼‰ï¼Œå–å€¼[-50, 50], 0è¡¨ç¤ºæ­£å¸¸åŸè¯­é€Ÿ
+ * rate:  å˜é€Ÿåˆå˜è°ƒï¼Œå–å€¼[-50, 50], 0è¡¨ç¤ºæ­£å¸¸éŸ³é€Ÿå’ŒéŸ³è°ƒ
+ */
 ECMEDIA_API int ECMedia_audio_set_magic_sound(int channelid, int pitch, int tempo, int rate);
 #ifdef __cplusplus
 }

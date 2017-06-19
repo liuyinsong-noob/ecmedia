@@ -178,6 +178,6 @@ class BuildBase:
         
     def updateReleaseNote(self):
         print os.system('git commit -a -m ' + '"updste release note for %s"'%(self.getEcmediaVersion()))
-        #print os.system('git push')
+        print os.system('git push')
         
         

@@ -782,14 +782,15 @@ void ServiceCore::sip_config_read()
 	}
 	serphone_core_enable_ipv6(ipv6);
 	memset(&tr,0,sizeof(tr));
-	if (lp_config_get_int(config,"sip","sip_random_port",0)) {
+
+	if (lp_config_get_int(config,"sip","sip_random_port",1)) {
 		tr.udp_port=(0xDFF&+random())+1024;
 	} else {
 		//tr.udp_port=lp_config_get_int(config,"sip","sip_port",DEFAULT_SIP_UDP_PORT);  //5060);deleted by zdm
         tr.udp_port=lp_config_get_int(config,"sip","sip_port",0);
 	}
-//	if (lp_config_get_int(config,"sip","sip_tcp_random_port",0))
-    if (lp_config_get_int(config,"sip","sip_tcp_random_port",1))
+	if (lp_config_get_int(config,"sip","sip_tcp_random_port",0))
+ //   if (lp_config_get_int(config,"sip","sip_tcp_random_port",1))
     {
 		tr.tcp_port=(0xDFF&+random())+1024;
         PrintConsole("Using TCP port %d for SIP\n",tr.tcp_port);
@@ -878,7 +879,7 @@ void ServiceCore::sip_config_read()
 	if( tr.tcp_port !=  0 )
 		sip_conf.keepalive_period=lp_config_get_int(config,"sip","keepalive_period",60000);
 	else
-		sip_conf.keepalive_period=lp_config_get_int(config,"sip","keepalive_period",1000);
+		sip_conf.keepalive_period=lp_config_get_int(config,"sip","keepalive_period",30000);
 
 	sal_set_keepalive_period(this->sal,this->sip_conf.keepalive_period);
 	sal_use_one_matching_codec_policy(this->sal,lp_config_get_int(config,"sip","only_one_codec",1));
@@ -4794,9 +4795,6 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
  	serphone_core_assign_payload_type(&payload_type_g729,18,"annexb=no");
  	serphone_core_assign_payload_type(&payload_type_pcmu8000,0,NULL);
 	serphone_core_assign_payload_type(&ccp_payload_type_telephone_event,106,"0-15");
-    serphone_core_assign_payload_type(&payload_type_red8k, 116, "121/122/124");
-//    serphone_core_assign_payload_type(&payload_type_red16k, 125, NULL);
-//    serphone_core_assign_payload_type(&payload_type_red48k, 126, NULL);
 
 //    serphone_core_assign_payload_type(&payload_type_cn8k,13,NULL);
 //    serphone_core_assign_payload_type(&payload_type_amr, 105, NULL);
@@ -5150,7 +5148,7 @@ void ServiceCore::serphone_core_iterate()
 		 linphone_core_start_invite() */
 		calls=calls->next;
         serphone_call_background_tasks(call,one_second_elapsed);
-		if (call->state==LinphoneCallOutgoingInit && (curtime-call->start_time>=3)){
+		if (call->state==LinphoneCallOutgoingInit && (curtime-call->start_time>=300)){
             if (call->ice_session != NULL) {
 				PrintConsole("ICE candidates gathering from [%s] has not finished yet, proceed with the call without ICE anyway.\n"
                            ,serphone_core_get_stun_server());
@@ -5989,14 +5987,15 @@ void ServiceCore::net_config_read()
 //    sean test for ice
 //    tempstr = "42.121.15.99";
 //    tempstr = "stunserver.org";
+     tempstr = "stunserver.org";
 	serphone_core_set_stun_server(tempstr);
 	tempstr=lp_config_get_string(config,"net","nat_address",NULL);
 	if (tempstr!=NULL && (strlen(tempstr)<1))
 		tempstr=NULL;
 	serphone_core_set_nat_address(tempstr);
 //    sean update begin 20131011 use p2p default
-	net_conf.firewall_policy =lp_config_get_int(config,"net","firewall_policy",0);
-//    net_conf.firewall_policy =lp_config_get_int(config,"net","firewall_policy",LinphonePolicyUseIce);
+	// net_conf.firewall_policy =lp_config_get_int(config,"net","firewall_policy",0);
+    net_conf.firewall_policy =lp_config_get_int(config,"net","firewall_policy",LinphonePolicyUseIce);
 //    sean update end 20131011 use p2p default
 	net_conf.nat_sdp_only=lp_config_get_int(config,"net","nat_sdp_only",0);
 	net_conf.mtu=lp_config_get_int(config,"net","mtu",1);
