@@ -321,6 +321,13 @@ ECMEDIA_API int ECMedia_set_dtmf_cb(int channelid, onEcMediaReceivingDtmf dtmf_c
 ECMEDIA_API int ECMedia_set_media_packet_timeout_cb(int channelid, onEcMediaPacketTimeout media_timeout_cb);
 ECMEDIA_API int ECMedia_set_stun_cb(int channelid, onEcMediaStunPacket stun_cb);
 ECMEDIA_API int ECMedia_set_audio_data_cb(int channelid, onEcMediaAudioData audio_data_cb);
+/**
+ * 设置音频 PCM 数据回调
+ * @param channelid: channel id
+ * @param callback : callback 具体解释见定义处
+ * @return 成功返回0， 失败返回非0
+ */
+ECMEDIA_API int ECMedia_set_pcm_audio_data_cb(int channelid, cloopenwebrtc::ECMedia_PCMDataCallBack callback);
 ECMEDIA_API int ECMedia_set_video_data_cb(int channelid, onEcMediaVideoDataV Video_data_cb);
 ECMEDIA_API int ECMedia_set_voe_cb(int channelid, onVoeCallbackOnError voe_callback_cb);
 /*
@@ -417,6 +424,15 @@ ECMEDIA_API int ECMedia_video_start_send(int channelid);
  *
  */
 ECMEDIA_API int ECMedia_video_stop_send(int channelid);
+
+/**
+ * 设置视频原始数据回调
+ * @param channelid: channel id.
+ * @param callback : 原始视频数据回调函数指针
+ * @return 成功返回0，失败返回非0
+ */
+ECMEDIA_API int ECMedia_set_i420_framecallback(int channelid, cloopenwebrtc::ECMedia_I420FrameCallBack callback);
+
 /*
  *
  */
@@ -428,6 +444,7 @@ ECMEDIA_API int ECMedia_stop_capture(int captureid);
 /*
  */
 ECMEDIA_API int ECMedia_allocate_desktopShare_capture(int& desktop_captureid, int capture_type);
+
 /*
  */
 /*

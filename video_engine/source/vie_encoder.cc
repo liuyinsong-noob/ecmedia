@@ -1118,7 +1118,7 @@ ViEFileRecorder& ViEEncoder::GetOutgoingFileRecorder() {
 
 QMVideoSettingsCallback::QMVideoSettingsCallback(VideoProcessingModule* vpm)
     : vpm_(vpm) ,
-	 stats_proxy_(NULL){
+	 stats_proxy_(NULL) {
 }
 
 QMVideoSettingsCallback::~QMVideoSettingsCallback() {

@@ -617,11 +617,13 @@ private:
     onMediaPacketTimeout _media_timeout_cb;
     onStunPacket _stun_cb;
     onAudioData _audio_data_cb;
+    ECMedia_PCMDataCallBack _audio_pcm_callback;
 public:
     int setDtmfCb(onReceivingDtmf dtmf_cb);
     int setMediaTimeoutCb(onMediaPacketTimeout media_timeout_cb);
     int setStunCb(onStunPacket dtmf_cb);
     int setAudioDataCb(onAudioData dtmf_cb);
+    int SetPCMAudioDataCallBack(ECMedia_PCMDataCallBack callback);
 private:
 //	ServiceCoreCallBack *_serviceCoreCallBack;
 	char call_id[9];

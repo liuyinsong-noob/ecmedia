@@ -49,6 +49,19 @@ int32_t ViERenderer::StartRender() {
 int32_t ViERenderer::StopRender() {
   return render_module_.StopRender(render_id_);
 }
+    
+int32_t ViERenderer::AddI420FrameCallback(ECMedia_I420FrameCallBack callback) {
+    if(callback == NULL) {
+        return -1;
+    }
+    
+    if(ec_i420_frame_callback_ == callback) {
+        return 0;
+    }
+    
+    ec_i420_frame_callback_ = callback;
+    return 0;
+}
 
 int32_t ViERenderer::GetLastRenderedFrame(const int32_t renderID,
                                           I420VideoFrame& video_frame) {
@@ -118,6 +131,7 @@ ViERenderer::ViERenderer(const int32_t render_id,
       render_manager_(render_manager),
       render_callback_(NULL),
       incoming_external_callback_(new ViEExternalRendererImpl()),
+      ec_i420_frame_callback_(NULL),
 	  return_video_width_height(NULL),
 	  extra_render_callback_(NULL) {
 }
@@ -150,13 +164,49 @@ void ViERenderer::DeliverFrame(int id,
 	}
 	/*sean*/
 
+    // 回调yuv数据返回ECMedia层
+    if(ec_i420_frame_callback_) {
+        uint8_t * imagebuffer = I420FrameToYUVBuffer(video_frame);
+        ec_i420_frame_callback_(imagebuffer, video_frame->width(), video_frame->height());
+        free(imagebuffer);
+    }
+    
   render_callback_->RenderFrame(render_id_, *video_frame);
+  
   if (extra_render_callback_)
   {
 	  extra_render_callback_->RenderFrame(render_id_, *video_frame);
   }
+
 }
 
+uint8_t* ViERenderer::I420FrameToYUVBuffer(I420VideoFrame* video_frame) {
+    
+    int w = video_frame->width();
+    int h = video_frame->height();
+    
+    int y_stride = video_frame->stride(kYPlane);
+    int u_stride = video_frame->stride(kUPlane);
+    int v_stride = video_frame->stride(kVPlane);
+    
+    uint8_t *imageBuffer = (uint8_t*)malloc(w*h*3/2);
+    
+    // copy y plane
+    for(int i = 0; i < h; i++) {
+        memcpy(imageBuffer + i*w, video_frame->buffer(kYPlane) + i*y_stride, w);
+    }
+    // copy u plane
+    for(int i = 0; i < h/2; i++) {
+        memcpy(imageBuffer + w*h + i*w/2, video_frame->buffer(kUPlane) + i*u_stride, w/2);
+    }
+    
+    // copy v plane
+    for(int i = 0; i < h/2; i++) {
+        memcpy(imageBuffer + w*h*5/4 + i*w/2, video_frame->buffer(kVPlane) + i*v_stride, w/2);
+    }
+    return imageBuffer;
+}
+    
 void ViERenderer::DelayChanged(int id, int frame_delay) {}
 
 int ViERenderer::GetPreferedFrameSettings(int* width,

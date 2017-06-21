@@ -124,6 +124,7 @@ public:
     virtual int SetMediaTimeoutCb(int channelid, onMediaPacketTimeout media_timeout_cb);
     virtual int SetStunCb(int channelid, onStunPacket stun_cb);
     virtual int SetAudioDataCb(int channelid, onAudioData audio_data_cb);
+    virtual int SetPCMAudioDataCallBack(int channelid, ECMedia_PCMDataCallBack audio_data_cb);
     virtual bool GetRecordingIsInitialized();
 protected:
     VoEBaseImpl(voe::SharedData* shared);
