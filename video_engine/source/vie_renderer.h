@@ -133,7 +133,6 @@ private:
 	int _frame_height;
 	/*sean*/
 	//---end
-    uint8_t * I420FrameToYUVBuffer(I420VideoFrame* video_frame);
 };
 
 }  // namespace webrtc

@@ -1066,7 +1066,7 @@ enum RtcpMode { kOff, kCompound, kReducedSize };
  * with  : 视频宽
  * height: 视频高
  */
-typedef void (*ECMedia_I420FrameCallBack)(uint8_t* buffer, int width, int height);
+typedef void (*ECMedia_I420FrameCallBack)(uint8_t* buffer, int width, int height, int y_stride, int uv_stride);
 
 /**
  * 原始PCM音频数据，回调函数中不能处理长时间任务，函数执行完音频数据被释放，注意是否需要拷贝buffer数据

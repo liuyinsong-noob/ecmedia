@@ -166,9 +166,20 @@ void ViERenderer::DeliverFrame(int id,
 
     // 回调yuv数据返回ECMedia层
     if(ec_i420_frame_callback_) {
-        uint8_t * imagebuffer = I420FrameToYUVBuffer(video_frame);
-        ec_i420_frame_callback_(imagebuffer, video_frame->width(), video_frame->height());
-        free(imagebuffer);
+        int size_y = video_frame->allocated_size(kYPlane);
+        int size_u = video_frame->allocated_size(kUPlane);
+        int size_v = video_frame->allocated_size(kVPlane);
+        uint8_t *imageBuffer = (uint8_t*)malloc(size_y + size_u + size_v);
+
+        // copy y plane
+        memcpy(imageBuffer, video_frame->buffer(kYPlane), size_y);
+        // copy u plane
+        memcpy(imageBuffer + size_y, video_frame->buffer(kUPlane), size_u);
+        // copy v plane
+        memcpy(imageBuffer + size_y + size_u, video_frame->buffer(kVPlane), size_v);
+
+        ec_i420_frame_callback_(imageBuffer, video_frame->width(), video_frame->height(), video_frame->stride(kYPlane), video_frame->stride(kUPlane));
+        free(imageBuffer);
     }
     
   render_callback_->RenderFrame(render_id_, *video_frame);
@@ -178,33 +189,6 @@ void ViERenderer::DeliverFrame(int id,
 	  extra_render_callback_->RenderFrame(render_id_, *video_frame);
   }
 
-}
-
-uint8_t* ViERenderer::I420FrameToYUVBuffer(I420VideoFrame* video_frame) {
-    
-    int w = video_frame->width();
-    int h = video_frame->height();
-    
-    int y_stride = video_frame->stride(kYPlane);
-    int u_stride = video_frame->stride(kUPlane);
-    int v_stride = video_frame->stride(kVPlane);
-    
-    uint8_t *imageBuffer = (uint8_t*)malloc(w*h*3/2);
-    
-    // copy y plane
-    for(int i = 0; i < h; i++) {
-        memcpy(imageBuffer + i*w, video_frame->buffer(kYPlane) + i*y_stride, w);
-    }
-    // copy u plane
-    for(int i = 0; i < h/2; i++) {
-        memcpy(imageBuffer + w*h + i*w/2, video_frame->buffer(kUPlane) + i*u_stride, w/2);
-    }
-    
-    // copy v plane
-    for(int i = 0; i < h/2; i++) {
-        memcpy(imageBuffer + w*h*5/4 + i*w/2, video_frame->buffer(kVPlane) + i*v_stride, w/2);
-    }
-    return imageBuffer;
 }
     
 void ViERenderer::DelayChanged(int id, int frame_delay) {}
