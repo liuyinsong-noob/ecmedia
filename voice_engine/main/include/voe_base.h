@@ -262,6 +262,7 @@ public:
     virtual int SetMediaTimeoutCb(int channelid, onMediaPacketTimeout media_timeout_cb) = 0;
     virtual int SetStunCb(int channelid, onStunPacket stun_cb) = 0;
     virtual int SetAudioDataCb(int channelid, onAudioData audio_data_cb) = 0;
+    virtual int SetPCMAudioDataCallBack(int channelid, ECMedia_PCMDataCallBack audio_data_cb) = 0;
 //    virtual int SetSendFlag(int channelid, bool flag) = 0;
 //    virtual bool GetSendFlag(int channelid) = 0;
     virtual bool  GetRecordingIsInitialized() = 0;

@@ -988,6 +988,7 @@ Channel::Channel(int32_t channelId,
     _media_timeout_cb(NULL),
     _stun_cb(NULL),
     _audio_data_cb(NULL),
+    _audio_pcm_callback(NULL),
     _rtpPacketTimedOut(false),
     _rtpPacketTimeOutIsEnabled(false),
     _rtpTimeOutSeconds(0),
@@ -3845,7 +3846,13 @@ Channel::Demultiplex(const AudioFrame& audioFrame, const AudioFrame& audioFrame2
 //		}
 //
 //		_serviceCoreCallBack->onOriginalAudioData(call_id, _audioFrame2Up.data_, _audioFrame2Up.samples_per_channel_*_audioFrame2Up.num_channels_,_audioFrame2Up.sample_rate_hz_,_audioFrame2Up.num_channels_,true);
-//	}
+	//}
+    
+    
+    if(_audio_pcm_callback) {
+        _audio_pcm_callback(call_id, _audioFrame2Up.data_, _audioFrame2Up.samples_per_channel_*_audioFrame2Up.num_channels_,_audioFrame2Up.sample_rate_hz_,_audioFrame2Up.num_channels_,true);
+    }
+    
 	//    sean add end 20140708 original audio sample
 
     _audioFrame.id_ = _channelId;
@@ -5399,6 +5406,10 @@ int Channel::setAudioDataCb(onAudioData audio_data_cb)
 {
     _audio_data_cb = audio_data_cb;
     return 0;
+}
+
+int Channel::SetPCMAudioDataCallBack(ECMedia_PCMDataCallBack callback) {
+    _audio_pcm_callback = callback;
 }
 
 int Channel::setMediaTimeoutCb(onMediaPacketTimeout media_timeout_cb)

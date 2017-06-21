@@ -97,7 +97,7 @@ class ViERender {
 
   // Stops rendering a render stream.
   virtual int StopRender(const int render_id) = 0;
-  virtual int AddI420FrameCallback(const int render_id, ECMedia_I420FrameCallBack *callBack) = 0;
+  virtual int AddI420FrameCallback(const int render_id, ECMedia_I420FrameCallBack callBack) = 0;
 
   // Set expected render time needed by graphics card or external renderer, i.e.
   // the number of ms a frame will be sent to rendering before the actual render

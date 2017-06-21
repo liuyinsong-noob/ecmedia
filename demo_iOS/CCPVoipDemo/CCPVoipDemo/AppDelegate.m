@@ -16,6 +16,7 @@
 #import "ModelSelectViewController.h"
 #import "ModelEngineVoip.h"
 #import "VoipIncomingViewController.h"
+
 #if 0
 extern char *globalFilePathcapture;
 
@@ -23,6 +24,7 @@ extern char *filename_path;
 extern char *filenameRender_path;
 extern char *file_opus;
 extern char *neteq_debug;
+extern char *filename_path_yuv;
 
 extern char *g_h264file;
 
@@ -76,30 +78,26 @@ extern char *g_opengles_display;
     NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *doc_path = [path objectAtIndex:0];
     
-//    char c1 = 0x0;
-//    char c2 = 0x1;
-//    char c3 = 0xf7;
-//    char c4 = 0x13;
+    size_t len = doc_path.length;
+    
+    NSString* _filename5 = [doc_path stringByAppendingPathComponent:@"debug.pcm"];
+    size_t len5 = _filename5.length;
+
+//    filename_path_yuv = (char *)malloc(len5+1);//new char[len + 1];
+//    memcpy(filename_path_yuv, [_filename5 UTF8String], len5);
+//    filename_path_yuv[len5] = '\0';
 //    
-//    unsigned int  final = (c1<<24)|(c2<<16)| (c3<<8)|c4;
-    
-    short x = 0xa1a1;
-    NSLog(@"%d %u",(x<<1), (x<<1));
-    unsigned int  xx = (x<<1);
-    NSLog(@"xx %u", xx);
-    NSLog(@"haha");
-    
     
 #if 0
     size_t len = doc_path.length;
     
-    filename_path = (char *)malloc(len+1);//new char[len + 1];
-    memcpy(filename_path, [doc_path UTF8String], len);
-    filename_path[len] = '\0';
-    
-    filenameRender_path = (char *)malloc(len+1);
-    memcpy(filenameRender_path, [doc_path UTF8String], len);
-    filenameRender_path[len] = '\0';
+//    filename_path = (char *)malloc(len+1);//new char[len + 1];
+//    memcpy(filename_path, [doc_path UTF8String], len);
+//    filename_path[len] = '\0';
+//    
+//    filenameRender_path = (char *)malloc(len+1);
+//    memcpy(filenameRender_path, [doc_path UTF8String], len);
+//    filenameRender_path[len] = '\0';
     
     
     
@@ -118,10 +116,7 @@ extern char *g_opengles_display;
 //    neteq_debug = (char *)malloc(len5+1);//new char[len + 1];
 //    memcpy(neteq_debug, [_filename5 UTF8String], len5);
 //    neteq_debug[len5] = '\0';
-    
-//    globalFilePathcapture = (char *)malloc(len+1);//new char[len + 1];
-//    memcpy(globalFilePathcapture, [_filename UTF8String], len);
-//    globalFilePathcapture[len] = '\0';
+
 #endif
     
     

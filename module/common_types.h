@@ -1060,8 +1060,24 @@ struct RTPHeader {
 // RTCP mode is described by RFC 5506.
 enum RtcpMode { kOff, kCompound, kReducedSize };
 
-// i420 frame callback
-typedef void (*ECMedia_I420FrameCallBack)(char* buffer, int width, int height);
+/**
+ * 原始I420格式视频回调，回调函数中不应处理较长时间任务，函数执行完buffer即被释放，根据需要注意是否拷贝buffer数据
+ * buffer: 标准一帧 i420 视频数据
+ * with  : 视频宽
+ * height: 视频高
+ */
+typedef void (*ECMedia_I420FrameCallBack)(uint8_t* buffer, int width, int height);
+
+/**
+ * 原始PCM音频数据，回调函数中不能处理长时间任务，函数执行完音频数据被释放，注意是否需要拷贝buffer数据
+ * callid: call id
+ * buffer: 原始PCM音频数据，16位小端格式
+ * samples: buffer 的采样个数
+ * sampleRate: 采样率
+ * numChannels: 声道个数
+ * send: 是否是发送端数据(该值目前一直为true)
+ */
+typedef void (*ECMedia_PCMDataCallBack)(const char *call_id, const void *buffer, int samples, int sampleRate, int numChannels, bool send);
 
 }  // namespace cloopenwebrtc
 #endif  // WEBRTC_COMMON_TYPES_H

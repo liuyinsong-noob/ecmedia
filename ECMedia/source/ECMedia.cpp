@@ -51,6 +51,9 @@
 #include "base64.h"
 #include "MediaStatisticsData.pb.h"
 
+
+// char *filename_path_yuv;
+
 #ifdef ENABLE_LIB_CURL
 #ifdef WIN32
 CurlPost *g_curlpost = nullptr;
@@ -1185,6 +1188,24 @@ int ECMedia_set_audio_data_cb(int channelid, onEcMediaAudioData audio_data_cb)
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
         base->SetAudioDataCb(channelid, audio_data_cb);
+        base->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
+        return 0;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] %s failed to get VoEBase",__FUNCTION__);
+        return -99;
+    }
+}
+
+int ECMedia_set_pcm_audio_data_cb(int channelid, ECMedia_PCMDataCallBack callback) {
+    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    
+    VoEBase *base = VoEBase::GetInterface(m_voe);
+    if (base) {
+        base->SetPCMAudioDataCallBack(channelid, callback);
         base->Release();
         PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
         return 0;
@@ -2531,13 +2552,6 @@ int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame 
 	}
 }
 
-//
-//int ECMedia_deregister_framecallback(int deviceid, ECMedia_I420FrameCallBack* callback) {
-//    
-//    
-//    return 0;
-//}
-
 int ECMedia_set_local_video_window(int deviceid, void *video_window)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... deviceid:%d video_window:%0x ",__FUNCTION__, deviceid, video_window);
@@ -2570,12 +2584,15 @@ int ECMedia_set_local_video_window(int deviceid, void *video_window)
     }
 }
 
+
+
 /*
  * Render
  */
 
 int ECMedia_add_render(int channelid, void *video_window, ReturnVideoWidthHeightM videoResolutionCallback)
 {
+ 
 	PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d video_window:%0x", __FUNCTION__, channelid, video_window);
 
 	//static void *f_video_window = NULL;
@@ -2636,6 +2653,9 @@ int ECMedia_add_render(int channelid, void *video_window, ReturnVideoWidthHeight
         render->StartRender(channelid);
         render->Release();
         PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
+       
+        
+        
         return ret;
     }
     else
@@ -2663,7 +2683,7 @@ int ECMedia_stop_render(int channelid, int deviceid)
 }
 #endif
 
-int ECMedia_register_framecallback(int channelid, ECMedia_I420FrameCallBack* callback) {
+int ECMedia_set_i420_framecallback(int channelid, cloopenwebrtc::ECMedia_I420FrameCallBack callback) {
     
     PrintConsole("[ECMEDIA INFO] %s begins... channelid=%d,deviceid=%d",__FUNCTION__,channelid);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
