@@ -77,7 +77,7 @@ int I420VideoFrame::CopyFrame(const I420VideoFrame& videoFrame) {
                         videoFrame.stride(kVPlane));
   if (ret < 0)
     return ret;
-  timestamp_ = videoFrame.timestamp_;
+  timestamp_ =   videoFrame.timestamp_;
   ntp_time_ms_ = videoFrame.ntp_time_ms_;
   render_time_ms_ = videoFrame.render_time_ms_;
   return 0;
