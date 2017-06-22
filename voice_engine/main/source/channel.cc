@@ -5410,6 +5410,7 @@ int Channel::setAudioDataCb(onAudioData audio_data_cb)
 
 int Channel::SetPCMAudioDataCallBack(ECMedia_PCMDataCallBack callback) {
     _audio_pcm_callback = callback;
+    return 0;
 }
 
 int Channel::setMediaTimeoutCb(onMediaPacketTimeout media_timeout_cb)
