@@ -178,7 +178,7 @@ void ViERenderer::DeliverFrame(int id,
         // copy v plane
         memcpy(imageBuffer + size_y + size_u, video_frame->buffer(kVPlane), size_v);
 
-        ec_i420_frame_callback_(imageBuffer, video_frame->width(), video_frame->height(), video_frame->stride(kYPlane), video_frame->stride(kUPlane));
+        ec_i420_frame_callback_(render_id_, imageBuffer, size_y + size_u + size_v, video_frame->width(), video_frame->height(), video_frame->stride(kYPlane), video_frame->stride(kUPlane));
         free(imageBuffer);
     }
     

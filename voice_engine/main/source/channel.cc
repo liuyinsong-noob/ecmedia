@@ -3850,7 +3850,7 @@ Channel::Demultiplex(const AudioFrame& audioFrame, const AudioFrame& audioFrame2
     
     
     if(_audio_pcm_callback) {
-        _audio_pcm_callback(call_id, _audioFrame2Up.data_, _audioFrame2Up.samples_per_channel_*_audioFrame2Up.num_channels_,_audioFrame2Up.sample_rate_hz_,_audioFrame2Up.num_channels_,true);
+        _audio_pcm_callback(_channelId, (uint8_t *)_audioFrame2Up.data_, _audioFrame2Up.samples_per_channel_*_audioFrame2Up.num_channels_*sizeof(short), _audioFrame2Up.samples_per_channel_*_audioFrame2Up.num_channels_, _audioFrame2Up.sample_rate_hz_,_audioFrame2Up.num_channels_);
     }
     
 	//    sean add end 20140708 original audio sample

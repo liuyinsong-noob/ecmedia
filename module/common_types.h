@@ -1062,22 +1062,26 @@ enum RtcpMode { kOff, kCompound, kReducedSize };
 
 /**
  * 原始I420格式视频回调，回调函数中不应处理较长时间任务，函数执行完buffer即被释放，根据需要注意是否拷贝buffer数据
- * buffer: 标准一帧 i420 视频数据
- * with  : 视频宽
- * height: 视频高
+ * channel_id   : channel id
+ * buffer       : 标准一帧 i420 视频数据
+ * length       : buffer长度
+ * with         : 视频宽
+ * height       : 视频高
+ * y_stride     : y stride
+ * uv_stride    : u,v stride
  */
-typedef void (*ECMedia_I420FrameCallBack)(uint8_t* buffer, int width, int height, int y_stride, int uv_stride);
+typedef void (*ECMedia_I420FrameCallBack)(int32_t channel_id,  uint8_t* buffer, int length, int width, int height, int y_stride, int uv_stride);
 
 /**
  * 原始PCM音频数据，回调函数中不能处理长时间任务，函数执行完音频数据被释放，注意是否需要拷贝buffer数据
- * callid: call id
- * buffer: 原始PCM音频数据，16位小端格式
- * samples: buffer 的采样个数
- * sampleRate: 采样率
- * numChannels: 声道个数
- * send: 是否是发送端数据(该值目前一直为true)
+ * channel_id   : channel id
+ * buffer       : 原始PCM音频数据，16位小端格式
+ * length       : buffer 长度
+ * samples      : buffer 的采样个数
+ * sampleRate   : 采样率
+ * numChannels  : 声道个数
  */
-typedef void (*ECMedia_PCMDataCallBack)(const char *call_id, const void *buffer, int samples, int sampleRate, int numChannels, bool send);
+ typedef void (*ECMedia_PCMDataCallBack)(int32_t channel_id, uint8_t* buffer, int length, int samples, int sampleRate, int numChannels);
 
 }  // namespace cloopenwebrtc
 #endif  // WEBRTC_COMMON_TYPES_H
