@@ -22,6 +22,7 @@
 #include "vie_defines.h"
 #include "vie_manager_base.h"
 #include "vie_remb.h"
+#include "udp_transport.h"
 
 namespace cloopenwebrtc {
 
@@ -38,6 +39,7 @@ typedef std::list<ChannelGroup*> ChannelGroups;
 typedef std::list<ViEChannel*> ChannelList;
 typedef std::map<int, ViEChannel*> ChannelMap;
 typedef std::map<int, ViEEncoder*> EncoderMap;
+typedef std::map<int, UdpTransport*> RtpUdpTransportMap;
 
 class ViEChannelManager: private ViEManagerBase {
   friend class ViEChannelManagerScoped;
@@ -47,11 +49,13 @@ class ViEChannelManager: private ViEManagerBase {
                     const Config& config);
   ~ViEChannelManager();
 
-  void SetModuleProcessThread(ProcessThread* module_process_thread);
+  void SetModuleProcessThread(ProcessThread* module_process_thread, ProcessThread* module_process_thread_pacer);
 
   // Creates a new channel. 'channel_id' will be the id of the created channel.
   int CreateChannel(int* channel_id,
                     const Config* config);
+
+  int AddSsrcToEncoder(int channelid);
 
   // Creates a new channel grouped with |original_channel|. The new channel
   // will get its own |ViEEncoder| if |sender| is set to true. It will be a
@@ -90,6 +94,9 @@ class ViEChannelManager: private ViEManagerBase {
                                  uint32_t* estimated_bandwidth) const;
   bool GetEstimatedReceiveBandwidth(int channel_id,
                                     uint32_t* estimated_bandwidth) const;
+
+  UdpTransport *CreateUdptransport(int rtp_port, int rtcp_port);
+  int DeleteUdptransport(UdpTransport * transport);
 
  private:
   // Creates a channel object connected to |vie_encoder|. Assumed to be called
@@ -144,7 +151,13 @@ class ViEChannelManager: private ViEManagerBase {
 
   VoiceEngine* voice_engine_;
   ProcessThread* module_process_thread_;
+    ProcessThread* module_process_thread_pacer_;
   const Config& engine_config_;
+
+  // Protects udpstransport_map_.
+  CriticalSectionWrapper* udptransport_critsect_;
+  RtpUdpTransportMap rtp_udptransport_map_;
+
 };
 
 class ViEChannelManagerScoped: private ViEManagerScopedBase {

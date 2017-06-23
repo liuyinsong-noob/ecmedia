@@ -31,7 +31,7 @@ class ViECodecImpl
   virtual int GetCodec(const unsigned char list_number,
                        VideoCodec& video_codec) const;
   virtual int SetSendCodec(const int video_channel,
-                           const VideoCodec& video_codec);
+                           VideoCodec& video_codec);
   virtual int GetSendCodec(const int video_channel,
                            VideoCodec& video_codec) const;
   virtual int SetReceiveCodec(const int video_channel,

@@ -146,7 +146,7 @@ int ViECodecImpl::GetCodec(const unsigned char list_number,
 }
 
 int ViECodecImpl::SetSendCodec(const int video_channel,
-                               const VideoCodec& video_codec) {
+                               VideoCodec& video_codec) {
   LOG(LS_INFO) << "SetSendCodec for channel " << video_channel;
   LogCodec(video_codec);
   if (!CodecValid(video_codec)) {
@@ -169,6 +169,7 @@ int ViECodecImpl::SetSendCodec(const int video_channel,
     shared_data_->SetLastError(kViECodecReceiveOnlyChannel);
     return -1;
   }
+
   // Set a max_bitrate if the user hasn't set one.
   VideoCodec video_codec_internal;
   memcpy(&video_codec_internal, &video_codec, sizeof(VideoCodec));
@@ -186,6 +187,44 @@ int ViECodecImpl::SetSendCodec(const int video_channel,
   }
   if (video_codec_internal.startBitrate > video_codec_internal.maxBitrate) {
     video_codec_internal.startBitrate = video_codec_internal.maxBitrate;
+  }
+
+  if (video_codec_internal.numberOfSimulcastStreams == 2) {
+	  if (vie_channel->GetSSRCNum() != 2) {//only one resolution in vie_channel
+		  video_codec_internal.numberOfSimulcastStreams = 0;
+	  }
+	  else//get small resolution
+	  {
+		  unsigned int ssrc_slave = 0;
+		  if (vie_channel->GetLocalSSRC(0, &ssrc_slave) != 0) {//small resolution number is 0
+			  LOG_F(LS_ERROR) << "Could not get ssrc slave.";
+			  return -1;
+		  }
+		  else {
+			  //set simulcast
+			  ResolutionIndex resolution_index = static_cast<ResolutionIndex>(ssrc_slave & 0x0F);
+			  struct ResolutionInst resolution_slave;
+			  resolution_slave.index = resolution_index;
+			  if (vie_channel->GetResolution(resolution_slave) != 0) {
+				  LOG_F(LS_ERROR) << "Can not get resolution of slave ssrc " << ssrc_slave;
+				  return -1;
+			  }
+
+			  resolution_slave.targetBitrate = resolution_slave.width*resolution_slave.height * 3 * 15 * 0.07 / 1000;
+
+			  video_codec_internal.simulcastStream[0].maxBitrate = resolution_slave.targetBitrate*1.5;
+			  video_codec_internal.simulcastStream[0].width = resolution_slave.width;
+			  video_codec_internal.simulcastStream[0].height = resolution_slave.height;
+			  video_codec_internal.simulcastStream[0].numberOfTemporalLayers = 1;
+			  video_codec_internal.simulcastStream[0].targetBitrate = resolution_slave.targetBitrate;
+
+			  video_codec_internal.simulcastStream[1].maxBitrate = video_codec_internal.maxBitrate;
+			  video_codec_internal.simulcastStream[1].width = video_codec_internal.width;
+			  video_codec_internal.simulcastStream[1].height = video_codec_internal.height;
+			  video_codec_internal.simulcastStream[1].numberOfTemporalLayers = 1;
+			  video_codec_internal.simulcastStream[1].targetBitrate = video_codec_internal.startBitrate - resolution_slave.targetBitrate;
+		  }
+	  }
   }
 
   VideoCodec encoder;
@@ -309,6 +348,39 @@ int ViECodecImpl::SetReceiveCodec(const int video_channel,
     shared_data_->SetLastError(kViECodecUnknownError);
     return -1;
   }
+
+  VideoCodec video_codec_second;
+  if (!stricmp(video_codec.plName, "VP8")) {//add h264 codec
+	  memcpy(&video_codec_second, &video_codec, sizeof(VideoCodec));
+	  memset(video_codec_second.plName, 0, cloopenwebrtc::kPayloadNameSize);
+	  memcpy(video_codec_second.plName, "H264", 4);
+	  video_codec_second.plType = 96;
+	  video_codec_second.codecType = cloopenwebrtc::kVideoCodecH264;
+
+	  if (vie_channel->SetReceiveCodec(video_codec_second) != 0) {
+		  shared_data_->SetLastError(kViECodecUnknownError);
+		  return -1;
+	  }
+  }
+  else if (!stricmp(video_codec.plName, "H264")) {//add vp8 codec
+	  memcpy(&video_codec_second, &video_codec, sizeof(VideoCodec));
+	  memset(video_codec_second.plName, 0, cloopenwebrtc::kPayloadNameSize);
+	  memcpy(video_codec_second.plName, "VP8", 3);
+	  video_codec_second.plType = 120;
+	  video_codec_second.codecType = cloopenwebrtc::kVideoCodecVP8;
+
+	  if (vie_channel->SetReceiveCodec(video_codec_second) != 0) {
+		  shared_data_->SetLastError(kViECodecUnknownError);
+		  return -1;
+	  }
+  }
+  else 
+  {
+  }
+
+  LOG(LS_INFO) << "second Codec type " << video_codec_second.codecType
+	  << ", second payload type " << static_cast<int>(video_codec_second.plType);
+
   return 0;
 }
 

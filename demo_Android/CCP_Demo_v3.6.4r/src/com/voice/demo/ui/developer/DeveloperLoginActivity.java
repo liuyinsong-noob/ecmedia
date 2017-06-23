@@ -262,8 +262,7 @@ public class DeveloperLoginActivity extends LoginUIActivity  implements View.OnC
 		mLayoutIdList.setVisibility(View.VISIBLE);
 		
 	}
-	
-	
+
 	@Override
 	protected void startAction() {
 		super.startAction();

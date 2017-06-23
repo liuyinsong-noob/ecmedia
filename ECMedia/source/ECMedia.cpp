@@ -1688,6 +1688,66 @@ int ECMedia_set_video_rtp_keepalive(int channelid, bool enable, int interval, in
         return -99;
     }
 }
+
+int ECMedia_video_set_local_ssrc(int channelid, unsigned int ssrc)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...,channelid:%d, ssrc: %u", __FUNCTION__,channelid, ssrc);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
+	if (rtp_rtcp)
+	{
+		int ret = 0;
+		ret = rtp_rtcp->SetLocalSSRC(channelid, ssrc, kViEStreamTypeNormal, 0);
+		rtp_rtcp->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d vie", __FUNCTION__, ret);
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to set video ssrc, %s", __FUNCTION__);
+		return -99;
+	}
+}
+
+int ECMedia_video_request_remote_ssrc(int channelid, unsigned int ssrc)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...,channelid:%d, ssrc: %u", __FUNCTION__, channelid, ssrc);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
+	if (rtp_rtcp)
+	{
+		int ret = 0;
+		ret = rtp_rtcp->RequestRemoteSSRC(channelid, ssrc);
+		rtp_rtcp->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, ret);
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to request remote ssrc, %s", __FUNCTION__);
+		return -99;
+	}
+}
+
+int ECMedia_video_cancel_remote_ssrc(int channelid)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d ", __FUNCTION__, channelid);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
+	if (rtp_rtcp)
+	{
+		int ret = 0;
+		ret = rtp_rtcp->CancelRemoteSSRC(channelid);
+		rtp_rtcp->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, ret);
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to cancel remote ssrc, %s", __FUNCTION__);
+		return -99;
+	}
+}
 #endif
 
 int ECMedia_set_audio_rtp_keepalive(int channelid, bool enable, int interval, int payloadType)

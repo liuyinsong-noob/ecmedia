@@ -164,6 +164,13 @@ ECMEDIA_API int ECMedia_set_MTU(int channelid, int mtu);
  *
  */
 ECMEDIA_API int ECMedia_set_video_rtp_keepalive(int channelid, bool enable, int interval, int payloadType);
+
+ECMEDIA_API int ECMedia_video_set_local_ssrc(int channelid, unsigned int ssrc);
+
+ECMEDIA_API int ECMedia_video_request_remote_ssrc(int channelid, unsigned int ssrc);
+
+ECMEDIA_API int ECMedia_video_cancel_remote_ssrc(int channelid);
+
 ECMEDIA_API int ECMedia_set_audio_rtp_keepalive(int channelid, bool enable, int interval, int payloadType);
 /*
  *
@@ -307,7 +314,13 @@ ECMEDIA_API int ECMedia_audio_start_playout(int channelid);
 ECMEDIA_API int ECMedia_audio_stop_playout(int channelid);
 ECMEDIA_API int ECMedia_audio_start_record();
 ECMEDIA_API int ECMedia_audio_stop_record();
+<<<<<<< HEAD
 ECMEDIA_API int ECMedia_set_soundcard_on_cb(onSoundCardOn soundcard_on_cb);
+=======
+
+ECMEDIA_API int ECMedia_set_soundcard_on_cb(onSoundCardOn soundcard_on_cb);
+
+>>>>>>> svc_merge
 /*
  *瀛楃 璇煶閫氶亾
  */
@@ -700,12 +713,18 @@ ECMEDIA_API int ECMedia_getStatsReports(int type, char* callid, void** pMediaSta
 ECMEDIA_API void ECMedia_deletePbData(void* mediaStatisticsDataInner);
 
 /*
+<<<<<<< HEAD
  * 鍏堣皟鐢‥CMedia_audio_set_magic_sound(channelid, 8, 0, 0)
  * 鍐嶈皟鐢‥CMedia_audio_enable_magic_sound()
  * 浣胯兘鍙樺０
  * channelid: channelid
  * is_enable: true: 鍚敤锛宖alse: 绂佺敤
  */
+=======
+先调用ECMedia_audio_set_magic_sound(channelid, 8, 0, 0)
+再调用ECMedia_audio_enable_magic_sound()
+*/
+>>>>>>> svc_merge
 ECMEDIA_API int ECMedia_audio_enable_magic_sound(int channelid, bool is_enable);
 
 /*

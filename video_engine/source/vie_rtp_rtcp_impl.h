@@ -30,6 +30,11 @@ class ViERTP_RTCPImpl
                            const unsigned int SSRC,
                            const StreamType usage,
                            const unsigned char simulcast_idx) OVERRIDE;
+
+  virtual int RequestRemoteSSRC(const int video_channel, const unsigned int SSRC) OVERRIDE;
+
+  virtual int CancelRemoteSSRC(const int video_channel) OVERRIDE;
+
   virtual int GetLocalSSRC(const int video_channel,
                            unsigned int& SSRC) const OVERRIDE;  // NOLINT
   virtual int SetRemoteSSRCType(const int video_channel,

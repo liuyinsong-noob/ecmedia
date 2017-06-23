@@ -52,6 +52,7 @@
 #include "trace.h"
 #include "typedefs.h"
 #include "udp_socket_manager_wrapper.h"
+#include "rtcp_utility.h"
 
 #if defined(WEBRTC_LINUX) || defined(WEBRTC_MAC)
 #define GetLastError() errno
@@ -111,6 +112,10 @@ UdpTransportImpl::UdpTransportImpl(const WebRtc_Word32 id,
       _crit(CriticalSectionWrapper::CreateCriticalSection()),
       _critFilter(CriticalSectionWrapper::CreateCriticalSection()),
       _critPacketCallback(CriticalSectionWrapper::CreateCriticalSection()),
+	  _critChannelRef(CriticalSectionWrapper::CreateCriticalSection()),
+	  _channel_ref(0),
+	  _isSVCVideo(false),
+	  _ssrc(0),
       _mgr(socket_manager),
       _lastError(kNoSocketError),
       _destPort(0),
@@ -154,8 +159,7 @@ UdpTransportImpl::UdpTransportImpl(const WebRtc_Word32 id,
       _previousSourcePort(0),
       _filterIPAddress(),
       _rtpFilterPort(0),
-      _rtcpFilterPort(0),
-      _packetCallback(0)
+      _rtcpFilterPort(0)
 {
     memset(&_remoteRTPAddr, 0, sizeof(_remoteRTPAddr));
     memset(&_remoteRTCPAddr, 0, sizeof(_remoteRTCPAddr));
@@ -175,11 +179,14 @@ UdpTransportImpl::UdpTransportImpl(const WebRtc_Word32 id,
 
 UdpTransportImpl::~UdpTransportImpl()
 {
+	if (_packetCallback.size())
+		_packetCallback.clear();
     CloseSendSockets();
     CloseReceiveSockets();
     delete _crit;
     delete _critFilter;
     delete _critPacketCallback;
+	delete _critChannelRef;
     delete _cachLock;
     delete _socket_creator;
     // free socks5 data.
@@ -286,26 +293,89 @@ WebRtc_Word32 UdpTransportImpl::IPAddressCached(const SocketAddress& address,
     return 0;
 }
 
+void UdpTransportImpl::SetSVCVideoFlag()
+{
+	_isSVCVideo = true;
+}
+
+bool UdpTransportImpl::GetSVCVideoFlag()
+{
+	return _isSVCVideo;
+}
+
+void UdpTransportImpl::SetLocalSSrc(unsigned int ssrc) 
+{
+	_ssrc = ssrc;
+}
+
+unsigned int UdpTransportImpl::GetLocalSSrc()
+{
+	return _ssrc;
+}
+
+void UdpTransportImpl::AddRefNum()
+{
+	//CriticalSectionScoped cs(_critChannelRef);
+	_channel_ref++;
+}
+
+void UdpTransportImpl::SubRefNum()
+{
+	//CriticalSectionScoped cs(_critChannelRef);
+	_channel_ref--;
+}
+
+int UdpTransportImpl::GetRefNum()
+{
+	//CriticalSectionScoped cs(_critChannelRef);
+	return _channel_ref;
+}
+
+bool UdpTransportImpl::AddRecieveChannel(unsigned int ssrc, UdpTransportData* recieveChannel)
+{
+	if (!recieveChannel) {
+		WEBRTC_TRACE(kTraceError, kTraceTransport, _id,
+			"add recieve channel failed, the input recieveChannel is NULL");
+		return false;
+	}
+
+	CriticalSectionScoped cs(_critPacketCallback);
+
+	unsigned int ssrc_media = ssrc & SSRC_MEDIA_BITS;
+	SsrcChannelMap::iterator s_it = _packetCallback.find(ssrc_media);
+	if (s_it != _packetCallback.end()) {
+		WEBRTC_TRACE(kTraceWarning, kTraceTransport, _id,
+			"add recieve channel failed, the ssrc %u already exist", ssrc);
+		return false;
+	}
+	_packetCallback[ssrc_media] = recieveChannel;
+
+	return true;
+}
+
+bool UdpTransportImpl::SubRecieveChannel(unsigned int ssrc)
+{
+	CriticalSectionScoped cs(_critPacketCallback);
+
+	unsigned int ssrc_media = ssrc & SSRC_MEDIA_BITS;
+	SsrcChannelMap::iterator s_it = _packetCallback.find(ssrc_media);
+	if (s_it == _packetCallback.end()) {
+		WEBRTC_TRACE(kTraceWarning, kTraceTransport, _id,
+			"sub recieve channel failed, the ssrc %u not exist", ssrc);
+		return false;
+	}
+	_packetCallback.erase(s_it);
+
+	return true;
+}
+
 WebRtc_Word32 UdpTransportImpl::InitializeReceiveSockets(
-    UdpTransportData* const packetCallback,
+	UdpTransportData* const packetCallback,
     const WebRtc_UWord16 portnr,
     const char* ip,
     const char* multicastIpAddr,
     const WebRtc_UWord16 rtcpPort)
 {
-
-    {
-        CriticalSectionScoped cs(_critPacketCallback);
-        _packetCallback = packetCallback;
-
-        if(packetCallback == NULL)
-        {
-            WEBRTC_TRACE(kTraceStateInfo, kTraceTransport, _id,
-                         "Closing down receive sockets");
-            return 0;
-        }
-    }
-
     CriticalSectionScoped cs(_crit);
     CloseReceiveSockets();
 
@@ -1646,6 +1716,7 @@ WebRtc_Word32 UdpTransportImpl::StartReceiving(
 
 bool UdpTransportImpl::Receiving() const
 {
+   CriticalSectionScoped cs(_crit);
    return _receiving;
 }
 
@@ -1679,7 +1750,6 @@ WebRtc_Word32 UdpTransportImpl::StopReceiving()
     return 0;
 }
 
-/*对外接口可以更改 rtcp ip addr 的,仅改了这一个接口, 其他的未动 zhaoyou*/
 WebRtc_Word32 UdpTransportImpl::InitializeSendSockets(
         const char *rtp_ipaddr,
         const WebRtc_UWord16 rtpPort,
@@ -1714,7 +1784,6 @@ WebRtc_Word32 UdpTransportImpl::InitializeSendSockets(
         {
             if (IsIpAddressValid(rtp_ipaddr, IpV6Enabled()) && IsIpAddressValid(rtcp_ipaddr, IpV6Enabled()))
             {
-                //copy rtp ip address
                 strncpy(
                     _destRtpIP,
                     rtp_ipaddr,
@@ -2065,10 +2134,9 @@ WebRtc_Word32 UdpTransportImpl::SendRTPPacketTo(const WebRtc_Word8* data,
     return -1;
 }
 
-int UdpTransportImpl::SendPacket(int /*channel*/, const void* data, size_t length, int sn)
+int UdpTransportImpl::SendPacket(int channel, const void* data, size_t length, int sn)
 {
-    WEBRTC_TRACE(kTraceStream, kTraceTransport, _id, "%s", __FUNCTION__);
-
+    WEBRTC_TRACE(kTraceStream, kTraceTransport, _id, "%s, channelid %d, seq %d", __FUNCTION__, channel, sn);
     CriticalSectionScoped cs(_crit);
 
     if(_destRtpIP[0] == 0)
@@ -2316,14 +2384,31 @@ void UdpTransportImpl::IncomingRTPFunction(const WebRtc_Word8* rtpPacket,
         _fromPort = portNr;
     }
 
-    CriticalSectionScoped cs(_critPacketCallback);
-    if (_packetCallback)
-    {
-        WEBRTC_TRACE(kTraceStream, kTraceTransport, _id,
-            "Incoming RTP packet from ip:%s port:%d len:%d", ipAddress, portNr, rtpPacketLength);
-        _packetCallback->IncomingRTPPacket(rtpPacket, rtpPacketLength,
-                                           ipAddress, portNr);
-    }
+	CriticalSectionScoped cs(_critPacketCallback);
+
+	UdpTransportData* transportData = NULL;
+	if (_isSVCVideo) {//svc video/content
+		unsigned int rtpSsrc = ((unsigned char)rtpPacket[8] << 24)
+			                 | ((unsigned char)rtpPacket[9] << 16)
+			                 | ((unsigned char)rtpPacket[10] << 8)
+			                 | (unsigned char)rtpPacket[11];
+		unsigned int ssrc_media = rtpSsrc & SSRC_MEDIA_BITS;
+
+		SsrcChannelMap::iterator s_it = _packetCallback.find(ssrc_media);
+		if (s_it != _packetCallback.end()) {
+			transportData = s_it->second;
+		}
+	}
+	else {//audio or trunk's video/content
+		transportData = _packetCallback.begin()->second;
+	}
+
+	if (transportData) {
+		WEBRTC_TRACE(kTraceStream, kTraceTransport, _id,
+			"Incoming RTP packet from ip:%s port:%d len:%d", ipAddress, portNr, rtpPacketLength);
+		transportData->IncomingRTPPacket(rtpPacket, rtpPacketLength,
+			ipAddress, portNr);
+	}
 }
 
 void UdpTransportImpl::IncomingRTCPFunction(const WebRtc_Word8* rtcpPacket,
@@ -2375,15 +2460,51 @@ void UdpTransportImpl::IncomingRTCPFunction(const WebRtc_Word8* rtcpPacket,
         _fromPortRTCP = portNr;
     }
 
-    CriticalSectionScoped cs(_critPacketCallback);
-    if (_packetCallback)
-    {
-        WEBRTC_TRACE(kTraceStream, kTraceTransport, _id,
-                     "Incoming RTCP packet from ip:%s port:%d", ipAddress,
-                     portNr);
-        _packetCallback->IncomingRTCPPacket(rtcpPacket, rtcpPacketLength,
-                                            ipAddress, portNr);
-    }
+	CriticalSectionScoped cs(_critPacketCallback);
+
+	UdpTransportData* transportData = NULL;
+	if (_isSVCVideo) {//svc video/content
+		unsigned char payloadType = (unsigned char)rtcpPacket[1];
+		unsigned int rtcpSsrc;
+		switch (payloadType) {
+		case cloopenwebrtc::RTCPUtility::PT_RTPFB:
+			rtcpSsrc = ((unsigned char)rtcpPacket[8] << 24)
+				| ((unsigned char)rtcpPacket[9] << 16)
+				| ((unsigned char)rtcpPacket[10] << 8)
+				| (unsigned char)rtcpPacket[11];
+			break;
+		case cloopenwebrtc::RTCPUtility::PT_PSFB:
+			rtcpSsrc = ((unsigned char)rtcpPacket[12] << 24)
+				| ((unsigned char)rtcpPacket[13] << 16)
+				| ((unsigned char)rtcpPacket[14] << 8)
+				| (unsigned char)rtcpPacket[15];
+			break;
+		default:
+			rtcpSsrc = ((unsigned char)rtcpPacket[4] << 24)
+				| ((unsigned char)rtcpPacket[5] << 16)
+				| ((unsigned char)rtcpPacket[6] << 8)
+				| (unsigned char)rtcpPacket[7];
+			break;
+		}
+        
+		unsigned int ssrc_media = rtcpSsrc & SSRC_MEDIA_BITS;
+
+		SsrcChannelMap::iterator s_it = _packetCallback.find(ssrc_media);
+		if (s_it != _packetCallback.end()) {
+			transportData = s_it->second;
+		}
+	}
+	else {
+		transportData = _packetCallback.begin()->second;
+	}
+
+	if (transportData) {
+		WEBRTC_TRACE(kTraceStream, kTraceTransport, _id,
+			"Incoming RTCP packet from ip:%s port:%d", ipAddress,
+			portNr);
+		transportData->IncomingRTCPPacket(rtcpPacket, rtcpPacketLength,
+			ipAddress, portNr);
+	}
 }
 
 bool UdpTransportImpl::FilterIPAddress(const SocketAddress* fromAddress)

@@ -33,7 +33,9 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../.. \
     $(LOCAL_PATH)/../../.. \
     $(LOCAL_PATH)/../../interface \
-    $(LOCAL_PATH)/../../../system_wrappers/interface 
+    $(LOCAL_PATH)/../../rtp_rtcp/include \
+    $(LOCAL_PATH)/../../rtp_rtcp/source \
+    $(LOCAL_PATH)/../../../system_wrappers/interface
 
 LOCAL_SHARED_LIBRARIES := \
     libcutils \

@@ -385,8 +385,7 @@ int ViENetworkImpl::SetSendDestination(const int video_channel,
 			return -1;
 		}
 		return 0;
-	}
-
+}
 
 int ViENetworkImpl::GetSendDestination(const int video_channel,
 	char* ip_address,
@@ -429,7 +428,7 @@ int ViENetworkImpl::SetLocalReceiver(const int video_channel,
 				shared_data_->instance_id());
 			return -1;
 		}*/
-
+		
 		ViEChannelManagerScoped cs(*(shared_data_->channel_manager()));
 		ViEChannel* vie_channel = cs.Channel(video_channel);
 		if (!vie_channel) {
@@ -441,14 +440,25 @@ int ViENetworkImpl::SetLocalReceiver(const int video_channel,
 			return -1;
 		}
 
-		if (vie_channel->Receiving()) {
-			shared_data_->SetLastError(kViENetworkAlreadyReceiving);
+		//create or find transport.
+		ViEChannelManager *cm = shared_data_->channel_manager();
+		if (!cm) {
+			WEBRTC_TRACE(kTraceError, kTraceVideo,
+				ViEId(shared_data_->instance_id(), video_channel),
+				"ViEChannelManager doesn't exist");
 			return -1;
 		}
-		if (vie_channel->SetLocalReceiver(rtp_port, rtcp_port, ip_address) != 0) {
-			shared_data_->SetLastError(kViENetworkUnknownError);
+
+		UdpTransport *transport = cm->CreateUdptransport(rtp_port, rtcp_port);
+		if (!transport)
+		{
+			WEBRTC_TRACE(kTraceError, kTraceVideo,
+				ViEId(shared_data_->instance_id(), video_channel),
+				"create Udptransport failed");
 			return -1;
 		}
+
+		vie_channel->SetUdpTransport(transport);
 		return 0;
 }
 

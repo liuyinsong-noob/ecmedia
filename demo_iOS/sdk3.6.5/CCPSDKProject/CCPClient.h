@@ -579,6 +579,7 @@ typedef struct _CALLBACKINTERFACE CCallbackInterface;
     //record mp4 file
     CCPAPI int startRecordLocalMedia(const char *fileName, void *localview);
     CCPAPI void stopRecordLocalMedia();
+    CCPAPI int SetRotateCapturedFrames(char *callid, ECMediaRotateCapturedFrame tr);
 #ifdef __cplusplus
 }
 #endif

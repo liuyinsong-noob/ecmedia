@@ -87,6 +87,7 @@ protected:
     int decimateCount;
 
     /// Sample average accumulator for FIFO-like decimation.
+ 
 	cloopensoundtouch::LONG_SAMPLETYPE decimateSum;
 
     /// Decimate sound by this coefficient to reach approx. 500 Hz.
