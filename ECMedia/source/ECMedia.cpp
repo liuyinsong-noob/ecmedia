@@ -2713,9 +2713,6 @@ int ECMedia_add_render(int channelid, void *video_window, ReturnVideoWidthHeight
         render->StartRender(channelid);
         render->Release();
         PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
-       
-        
-        
         return ret;
     }
     else

@@ -156,7 +156,6 @@ extern BOOL globalisVoipView;
         }
         
         [self.modelEngineVoip setVideoBitRates:rates];
-        self.voipNo = @"nconf71103519";
         self.callID = [self.modelEngineVoip makeCall:self.voipNo withPhone:nil withType:EVoipCallType_Video withVoipType:1];
         
         if (self.callID.length <= 0)//获取CallID失败，即拨打失败
