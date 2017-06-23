@@ -116,6 +116,7 @@ public:
         kIpAddressVersion6Length = 64,
         kIpAddressVersion4Length = 16
     };
+    
     enum ErrorCode
     {
         kNoSocketError            = 0,
@@ -157,7 +158,7 @@ public:
     // bind to local IP ANY. Set the local rtcp port to rtcpPort or rtpPort + 1
     // if rtcpPort is 0.
     virtual WebRtc_Word32 InitializeReceiveSockets(
-        UdpTransportData* const packetCallback,
+		UdpTransportData* const packetCallback,
         const WebRtc_UWord16 rtpPort,
         const char* ipAddr = NULL,
         const char* multicastIpAddr = NULL,
@@ -381,6 +382,19 @@ public:
     // If ipV6 is false ipaddr is interpreted as an IPv4 address otherwise it
     // is interptreted as IPv6.
     static bool IsIpAddressValid(const char* ipaddr, const bool ipV6);
+
+	virtual void SetSVCVideoFlag()  = 0;
+	virtual bool GetSVCVideoFlag()  = 0;
+
+	virtual bool AddRecieveChannel(unsigned int ssrc, UdpTransportData* recieveChannel) = 0;
+	virtual bool SubRecieveChannel(unsigned int ssrc) = 0;
+
+	virtual void  AddRefNum() = 0;
+	virtual void  SubRefNum() = 0;
+	virtual int   GetRefNum() = 0;
+
+	virtual void SetLocalSSrc(unsigned int ssrc) = 0;
+	virtual unsigned int GetLocalSSrc() = 0;
 };
 } // namespace cloopenwebrtc
 

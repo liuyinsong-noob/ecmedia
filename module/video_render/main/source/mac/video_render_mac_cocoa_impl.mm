@@ -51,7 +51,7 @@ VideoRenderMacCocoaImpl::Init()
     WEBRTC_TRACE(kTraceInfo, kTraceVideoRenderer, _id, "%s:%d", __FUNCTION__, __LINE__);
 
     // cast ptrWindow from void* to CocoaRenderer. Void* was once NSOpenGLView, and CocoaRenderer is NSOpenGLView.
-    _ptrCocoaRender = new VideoRenderNSOpenGL(_ptrWindow, _fullScreen, _id);
+    _ptrCocoaRender = new VideoRenderNSOpenGL((CocoaRenderView*)_ptrWindow, _fullScreen, _id);
     if (!_ptrWindow)
     {
         WEBRTC_TRACE(kTraceWarning, kTraceVideoRenderer, _id, "Constructor %s:%d", __FUNCTION__, __LINE__);

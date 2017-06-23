@@ -102,7 +102,7 @@ class WEBRTC_DLLEXPORT ViECodec {
 
   // Sets the send codec to use for a specified channel.
   virtual int SetSendCodec(const int video_channel,
-                           const VideoCodec& video_codec) = 0;
+                           VideoCodec& video_codec) = 0;
 
   // Gets the current send codec settings.
   virtual int GetSendCodec(const int video_channel,

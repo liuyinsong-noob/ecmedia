@@ -63,7 +63,7 @@ typedef unsigned long   ulong;
 #ifndef _WINDEF_
     // if these aren't defined already by Windows headers, define now
 
-    typedef signed char SBOOL;
+
 
     #define FALSE   0
     #define TRUE    1

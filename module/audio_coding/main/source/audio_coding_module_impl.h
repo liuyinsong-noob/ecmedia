@@ -23,11 +23,12 @@
 #include "scoped_ptr.h"
 #include "SoundTouch.h"
 
+
+using namespace cloopensoundtouch;
+
 #ifndef u_int8_t
 #define u_int8_t unsigned char
 #endif
-
-using namespace cloopensoundtouch;
 
 namespace cloopenwebrtc {
 

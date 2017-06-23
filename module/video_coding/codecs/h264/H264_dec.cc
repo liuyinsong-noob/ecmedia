@@ -161,6 +161,8 @@ H264Decoder::Decode(const EncodedImage& inputImage,
                     const CodecSpecificInfo* /*codecSpecificInfo*/,
                     WebRtc_Word64 /*renderTimeMs*/)
 {
+    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug,cloopenwebrtc::kTraceVideoCoding,0,"H264Decoder::Decode width %d, height %d, lowseq %u, highseq %u", inputImage._encodedWidth, inputImage._encodedHeight, inputImage._lowSeqNum, inputImage._highSeqNum);
+    
     if (inputImage._buffer == NULL
 		|| inputImage._length <= 0)
     {
@@ -223,11 +225,15 @@ H264Decoder::Decode(const EncodedImage& inputImage,
 			ret = avcodec_decode_video2(_codecContext, pFrame_, &frameFinished, &packet);
 
 			if(frameFinished)//成功解码
-			{            
+			{
+                WEBRTC_TRACE(cloopenwebrtc::kTraceDebug,cloopenwebrtc::kTraceVideoCoding,0,"H264Decoder::Decode succeed width %d, height %d, lowseq %u, highseq %u", inputImage._encodedWidth, inputImage._encodedHeight, inputImage._lowSeqNum, inputImage._highSeqNum);
 				return ReturnFrame(pFrame_, inputImage._timeStamp, inputImage.ntp_time_ms_);
 				
 			}else
+            {
+                WEBRTC_TRACE(cloopenwebrtc::kTraceDebug,cloopenwebrtc::kTraceVideoCoding,0,"H264Decoder::Decode failed width %d, height %d, lowseq %u, highseq %u", inputImage._encodedWidth, inputImage._encodedHeight, inputImage._lowSeqNum, inputImage._highSeqNum);
 				return WEBRTC_VIDEO_CODEC_ERROR;  //
+            }
 			
 		}
 	}

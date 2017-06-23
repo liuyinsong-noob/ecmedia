@@ -716,6 +716,12 @@ class RtpRtcp : public Module {
 //    virtual int32_t SetPacketTimeout(
 //                                           const WebRtc_UWord32 RTPtimeoutMS,
 //                                           const WebRtc_UWord32 RTCPtimeoutMS) = 0;
+    
+    
+    
+    
+    
+    virtual int SendSingleTMMBR(uint32_t bandwidth, uint32_t ssrc, uint32_t remote_ssrc) = 0;
 };
 }  // namespace webrtc
 #endif // WEBRTC_MODULES_RTP_RTCP_INTERFACE_RTP_RTCP_H_

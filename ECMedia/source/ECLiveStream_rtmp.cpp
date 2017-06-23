@@ -175,6 +175,8 @@ namespace cloopenwebrtc {
         
         ViEBase *vbase = ViEBase::GetInterface(vie_);
         vbase->CreateChannel(video_channel_);
+		//ECMedia_video_set_local_receiver(video_channel_, 0, 0);
+		//ECMedia_video_set_local_ssrc(video_channel_, 0);
         vbase->Release();
         
         ViENetwork *vnetwork = ViENetwork::GetInterface(vie_);

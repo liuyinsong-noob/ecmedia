@@ -164,6 +164,13 @@ ECMEDIA_API int ECMedia_set_MTU(int channelid, int mtu);
  *
  */
 ECMEDIA_API int ECMedia_set_video_rtp_keepalive(int channelid, bool enable, int interval, int payloadType);
+
+ECMEDIA_API int ECMedia_video_set_local_ssrc(int channelid, unsigned int ssrc);
+
+ECMEDIA_API int ECMedia_video_request_remote_ssrc(int channelid, unsigned int ssrc);
+
+ECMEDIA_API int ECMedia_video_cancel_remote_ssrc(int channelid);
+
 ECMEDIA_API int ECMedia_set_audio_rtp_keepalive(int channelid, bool enable, int interval, int payloadType);
 /*
  *
@@ -226,7 +233,7 @@ ECMEDIA_API int ECMedia_reset_audio_device();
 // */
 //ECMEDIA_API int ECMedia_init_srtp(int channelid);
 ///*
-// *加密
+// *Âä†ÂØÜ
 // */
 //ECMEDIA_API int ECMedia_enable_srtp_receive(int channelid, const char *key);
 ///*
@@ -309,23 +316,23 @@ ECMEDIA_API int ECMedia_audio_start_record();
 ECMEDIA_API int ECMedia_audio_stop_record();
 ECMEDIA_API int ECMedia_set_soundcard_on_cb(onSoundCardOn soundcard_on_cb);
 /*
- *字符 语音通道
+ *Â≠óÁ¨¶ ËØ≠Èü≥ÈÄöÈÅì
  */
 ECMEDIA_API int ECMedia_send_dtmf(int channelid, const char dtmfch);
 ECMEDIA_API int ECMedia_set_send_telephone_event_payload_type(int channelid, unsigned char type);
 ECMEDIA_API int ECMedia_set_recv_telephone_event_payload_type(int channelid, unsigned char type);
 /*
- *每次产生channel后传进来
+ *ÊØèÊ¨°‰∫ßÁîüchannelÂêé‰º†ËøõÊù•
  */
 ECMEDIA_API int ECMedia_set_dtmf_cb(int channelid, onEcMediaReceivingDtmf dtmf_cb);
 ECMEDIA_API int ECMedia_set_media_packet_timeout_cb(int channelid, onEcMediaPacketTimeout media_timeout_cb);
 ECMEDIA_API int ECMedia_set_stun_cb(int channelid, onEcMediaStunPacket stun_cb);
 ECMEDIA_API int ECMedia_set_audio_data_cb(int channelid, onEcMediaAudioData audio_data_cb);
 /**
- * 设置音频 PCM 数据回调
+ * ËÆæÁΩÆÈü≥È¢ë PCM Êï∞ÊçÆÂõûË∞É
  * @param channelid: channel id
- * @param callback : callback 具体解释见定义处
- * @return 成功返回0， 失败返回非0
+ * @param callback : callback ÂÖ∑‰ΩìËß£ÈáäËßÅÂÆö‰πâÂ§Ñ
+ * @return ÊàêÂäüËøîÂõû0Ôºå Â§±Ë¥•ËøîÂõûÈùû0
  */
 ECMEDIA_API int ECMedia_set_pcm_audio_data_cb(int channelid, cloopenwebrtc::ECMedia_PCMDataCallBack callback);
 ECMEDIA_API int ECMedia_set_video_data_cb(int channelid, onEcMediaVideoDataV Video_data_cb);
@@ -426,10 +433,10 @@ ECMEDIA_API int ECMedia_video_start_send(int channelid);
 ECMEDIA_API int ECMedia_video_stop_send(int channelid);
 
 /**
- * 设置视频原始数据回调
+ * ËÆæÁΩÆËßÜÈ¢ëÂéüÂßãÊï∞ÊçÆÂõûË∞É
  * @param channelid: channel id.
- * @param callback : 原始视频数据回调函数指针
- * @return 成功返回0，失败返回非0
+ * @param callback : ÂéüÂßãËßÜÈ¢ëÊï∞ÊçÆÂõûË∞ÉÂáΩÊï∞ÊåáÈíà
+ * @return ÊàêÂäüËøîÂõû0ÔºåÂ§±Ë¥•ËøîÂõûÈùû0
  */
 ECMEDIA_API int ECMedia_set_i420_framecallback(int channelid, cloopenwebrtc::ECMedia_I420FrameCallBack callback);
 
@@ -452,7 +459,7 @@ ECMEDIA_API int ECMedia_allocate_desktopShare_capture(int& desktop_captureid, in
 ECMEDIA_API int ECMedia_get_screen_list(int desktop_captureid, ScreenID **screenList);
 ECMEDIA_API int ECMedia_get_window_list(int desktop_captureid, WindowShare **windowList);
 /*
- //桌面共享调用例子
+ //Ê°åÈù¢ÂÖ±‰∫´Ë∞ÉÁî®‰æãÂ≠ê
  ECMedia_allocate_desktopShare_capture(call->m_desktopShareDeviceId, type);
  getShareScreenInfo(&screenId, call->m_desktopShareDeviceId);
  getShareWindowInfo(&windowInfo, call->m_desktopShareDeviceId);
@@ -518,10 +525,10 @@ ECMEDIA_API int ECMedia_set_receive_codec_video_fec(int channelid, cloopenwebrtc
  */
 ECMEDIA_API int ECMedia_get_receive_codec_video(int channelid, cloopenwebrtc::VideoCodec& videoCodec);
 /**
- * description: 设置底层yuv视频帧的缩放方式
+ * description: ËÆæÁΩÆÂ∫ïÂ±ÇyuvËßÜÈ¢ëÂ∏ßÁöÑÁº©ÊîæÊñπÂºè
  * FrameScaleType:
- *   kScaleTypeCropping -> 以裁剪方式缩放视频帧
- *   kScaleTypeFilling  -> 以填充方式缩放视频帧
+ *   kScaleTypeCropping -> ‰ª•Ë£ÅÂâ™ÊñπÂºèÁº©ÊîæËßÜÈ¢ëÂ∏ß
+ *   kScaleTypeFilling  -> ‰ª•Â°´ÂÖÖÊñπÂºèÁº©ÊîæËßÜÈ¢ëÂ∏ß
  */
 ECMEDIA_API int ECMedia_set_frame_scale_type(int channelid, cloopenwebrtc::FrameScaleType type);
 
@@ -575,7 +582,7 @@ ECMEDIA_API int ECMedia_set_CaptureDeviceID(int videoCapDevId);
 ECMEDIA_API int ECMedia_Check_Record_Permission(bool &enabled);
 ECMEDIA_API int ECmedia_set_shield_mosaic(int video_channel, bool flag);
 /* LiveSteam
- 观看直播调用过程：
+ ËßÇÁúãÁõ¥Êí≠Ë∞ÉÁî®ËøáÁ®ãÔºö
  void *handle = ECMedia_createLiveStream(0);
  ECMedia_setLiveStreamNetworkCallBack(statusCallback);
  ECMedia_playLiveStream(handle, "http://livestream.com", wndPtr, callback);
@@ -583,7 +590,7 @@ ECMEDIA_API int ECmedia_set_shield_mosaic(int video_channel, bool flag);
  ECMedia_stopLiveStream(handle);
  ECMedia_releaseLiveStream(handle);
  handle = NULL;
- 直播推流调用过程：
+ Áõ¥Êí≠Êé®ÊµÅË∞ÉÁî®ËøáÁ®ãÔºö
  void *handle = ECMedia_createLiveStream(0);
  ECMedia_setVideoProfileLiveStream(handle, cameraIndex, capability, bitrates);
  ECMedia_setLiveStreamNetworkCallBack(statusCallback);
@@ -594,126 +601,128 @@ ECMEDIA_API int ECmedia_set_shield_mosaic(int video_channel, bool flag);
  handle = NULL;
  */
 /*
- 功能     : 创建直播模块
- 参数     : [IN]  type	  : 类型，必须为0
- 返回值   : 返回值直播模块句柄
+ ÂäüËÉΩ     : ÂàõÂª∫Áõ¥Êí≠Ê®°Âùó
+ ÂèÇÊï∞     : [IN]  type	  : Á±ªÂûãÔºåÂøÖÈ°ª‰∏∫0
+ ËøîÂõûÂÄº   : ËøîÂõûÂÄºÁõ¥Êí≠Ê®°ÂùóÂè•ÊüÑ
  */
 ECMEDIA_API void*ECMedia_createLiveStream(int type);
 /*
- 功能     : 开始观看直播
- 参数     : [IN]  handle		： 句柄
- [IN]  url			 : 直播地址
- [IN]  renderView	：视频窗口
- [IN]  callback		：视频宽高回调
- 返回值   : 返回值 0：成功  -1：初始化资源失败 -2：已经在直播或推流  -3：连接失败  -4：建立流失败
+ ÂäüËÉΩ     : ÂºÄÂßãËßÇÁúãÁõ¥Êí≠
+ ÂèÇÊï∞     : [IN]  handle		Ôºö Âè•ÊüÑ
+ [IN]  url			 : Áõ¥Êí≠Âú∞ÂùÄ
+ [IN]  renderView	ÔºöËßÜÈ¢ëÁ™óÂè£
+ [IN]  callback		ÔºöËßÜÈ¢ëÂÆΩÈ´òÂõûË∞É
+ ËøîÂõûÂÄº   : ËøîÂõûÂÄº 0ÔºöÊàêÂäü  -1ÔºöÂàùÂßãÂåñËµÑÊ∫êÂ§±Ë¥• -2ÔºöÂ∑≤ÁªèÂú®Áõ¥Êí≠ÊàñÊé®ÊµÅ  -3ÔºöËøûÊé•Â§±Ë¥•  -4ÔºöÂª∫Á´ãÊµÅÂ§±Ë¥•
  */
 ECMEDIA_API int  ECMedia_playLiveStream(void *handle, const char * url, void *renderView, onLiveStreamVideoResolution callback);
 /*
- 功能     : 开始直播推流
- 参数     : [IN]  handle		： 句柄
- [IN]  url			 : 推流地址
- [IN]  renderView	：本地视频窗口
- 返回值   : 返回值 0：成功　-1：初始化资源失败 -2：已经在直播或者推流  -3：连接失败  -4：建立流失败
+ ÂäüËÉΩ     : ÂºÄÂßãÁõ¥Êí≠Êé®ÊµÅ
+ ÂèÇÊï∞     : [IN]  handle		Ôºö Âè•ÊüÑ
+ [IN]  url			 : Êé®ÊµÅÂú∞ÂùÄ
+ [IN]  renderView	ÔºöÊú¨Âú∞ËßÜÈ¢ëÁ™óÂè£
+ ËøîÂõûÂÄº   : ËøîÂõûÂÄº 0ÔºöÊàêÂäü„ÄÄ-1ÔºöÂàùÂßãÂåñËµÑÊ∫êÂ§±Ë¥• -2ÔºöÂ∑≤ÁªèÂú®Áõ¥Êí≠ÊàñËÄÖÊé®ÊµÅ  -3ÔºöËøûÊé•Â§±Ë¥•  -4ÔºöÂª∫Á´ãÊµÅÂ§±Ë¥•
  */
 ECMEDIA_API int  ECMedia_pushLiveStream(void *handle, const char * url, void *renderView);
 /*
- 功能     : 停止观看或推流
- 参数     :	  [IN]  handle		： 句柄
+ ÂäüËÉΩ     : ÂÅúÊ≠¢ËßÇÁúãÊàñÊé®ÊµÅ
+ ÂèÇÊï∞     :	  [IN]  handle		Ôºö Âè•ÊüÑ
  */
 ECMEDIA_API void ECMedia_stopLiveStream(void *handle);
 /*
- 功能     : 释放直播模块
- 参数     :	  [IN]  handle		： 句柄
+ ÂäüËÉΩ     : ÈáäÊîæÁõ¥Êí≠Ê®°Âùó
+ ÂèÇÊï∞     :	  [IN]  handle		Ôºö Âè•ÊüÑ
  */
 ECMEDIA_API void ECMedia_releaseLiveStream(void *handle);
 /*
- 功能     : 开始直播模块美颜
- 参数     :	  [IN]  handle		： 句柄
+ ÂäüËÉΩ     : ÂºÄÂßãÁõ¥Êí≠Ê®°ÂùóÁæéÈ¢ú
+ ÂèÇÊï∞     :	  [IN]  handle		Ôºö Âè•ÊüÑ
  */
 ECMEDIA_API void ECMedia_enableLiveStreamBeauty(void *handle);
 /*
- 功能     : 停止直播模块美颜
- 参数     :	  [IN]  handle		： 句柄
+ ÂäüËÉΩ     : ÂÅúÊ≠¢Áõ¥Êí≠Ê®°ÂùóÁæéÈ¢ú
+ ÂèÇÊï∞     :	  [IN]  handle		Ôºö Âè•ÊüÑ
  */
 ECMEDIA_API void ECMedia_disableLiveStreamBeauty(void *handle);
 /*
- 功能     : 设置推流视频参数
- 参数     : [IN]  handle		： 句柄
- [IN]  cameraIndex			 : 摄像头index
- [IN]  cam			 : 视频能力
- [IN]  bitrates	：视频码率
- 返回值   : 返回值 0：成功　-1：参数不正确
+ ÂäüËÉΩ     : ËÆæÁΩÆÊé®ÊµÅËßÜÈ¢ëÂèÇÊï∞
+ ÂèÇÊï∞     : [IN]  handle		Ôºö Âè•ÊüÑ
+ [IN]  cameraIndex			 : ÊëÑÂÉèÂ§¥index
+ [IN]  cam			 : ËßÜÈ¢ëËÉΩÂäõ
+ [IN]  bitrates	ÔºöËßÜÈ¢ëÁ†ÅÁéá
+ ËøîÂõûÂÄº   : ËøîÂõûÂÄº 0ÔºöÊàêÂäü„ÄÄ-1ÔºöÂèÇÊï∞‰∏çÊ≠£Á°Æ
  */
 ECMEDIA_API int  ECMedia_setVideoProfileLiveStream(void *handle,int cameraIndex, CameraCapability cam, int bitreates);
 /*
- 功能     : 设置直播网络状态回调
- 参数     : [IN]  handle		： 句柄
- [IN]  callback	 : 回调
+ ÂäüËÉΩ     : ËÆæÁΩÆÁõ¥Êí≠ÁΩëÁªúÁä∂ÊÄÅÂõûË∞É
+ ÂèÇÊï∞     : [IN]  handle		Ôºö Âè•ÊüÑ
+ [IN]  callback	 : ÂõûË∞É
  */
 ECMEDIA_API void ECMedia_setLiveStreamNetworkCallBack(void *handle, onLiveStreamNetworkStatusCallBack callback);
 /*
- 功能     : 设置直播推流的视频来源
- 参数     : [IN]   handle	： 句柄
-       [OUT]  windows	：windows 数组指针
-       返回值： 窗口个数
+ ÂäüËÉΩ     : ËÆæÁΩÆÁõ¥Êí≠Êé®ÊµÅÁöÑËßÜÈ¢ëÊù•Ê∫ê
+ ÂèÇÊï∞     : [IN]   handle	Ôºö Âè•ÊüÑ
+       [OUT]  windows	Ôºöwindows Êï∞ÁªÑÊåáÈíà
+       ËøîÂõûÂÄºÔºö Á™óÂè£‰∏™Êï∞
  */
 ECMEDIA_API int ECMedia_GetShareWindows(void *handle, WindowShare ** windows);
 /*
- 功能     : 设置直播推流的视频来源
- 参数     : [IN]  handle	： 句柄
- [		   [IN]  type	： 0 桌面 1 窗口
- [IN]  id		： 对于的桌面或者窗口id
- 返回值： 窗口个数
+ ÂäüËÉΩ     : ËÆæÁΩÆÁõ¥Êí≠Êé®ÊµÅÁöÑËßÜÈ¢ëÊù•Ê∫ê
+ ÂèÇÊï∞     : [IN]  handle	Ôºö Âè•ÊüÑ
+ [		   [IN]  type	Ôºö 0 Ê°åÈù¢ 1 Á™óÂè£
+ [IN]  id		Ôºö ÂØπ‰∫éÁöÑÊ°åÈù¢ÊàñËÄÖÁ™óÂè£id
+ ËøîÂõûÂÄºÔºö Á™óÂè£‰∏™Êï∞
  */
 ECMEDIA_API int ECMedia_SelectShareWindow(void *handle, int type , int id);
 /*
- 功能     : 设置直播推流的视频来源
- 参数     : [IN]  handle		： 句柄
-       [IN]  video_source			：视频来源 0 摄像头 1 是桌面
+ ÂäüËÉΩ     : ËÆæÁΩÆÁõ¥Êí≠Êé®ÊµÅÁöÑËßÜÈ¢ëÊù•Ê∫ê
+ ÂèÇÊï∞     : [IN]  handle		Ôºö Âè•ÊüÑ
+       [IN]  video_source			ÔºöËßÜÈ¢ëÊù•Ê∫ê 0 ÊëÑÂÉèÂ§¥ 1 ÊòØÊ°åÈù¢
  */
 ECMEDIA_API void ECMedia_SetLiveVideoSource(void *handle, int video_source);
 /*
- * 功能： 录制摄像头视频保存为MP4文件
- * 参数： [IN] filename: MP4小视频文件保存路径
- *       [IN] localview: 要相机预览view的父view
+ * ÂäüËÉΩÔºö ÂΩïÂà∂ÊëÑÂÉèÂ§¥ËßÜÈ¢ë‰øùÂ≠ò‰∏∫MP4Êñá‰ª∂
+ * ÂèÇÊï∞Ôºö [IN] filename: MP4Â∞èËßÜÈ¢ëÊñá‰ª∂‰øùÂ≠òË∑ØÂæÑ
+ *       [IN] localview: Ë¶ÅÁõ∏Êú∫È¢ÑËßàviewÁöÑÁà∂view
  */
 ECMEDIA_API int ECMedia_startRecordLocalMedia(const char *fileName, void *localview);
 /*
- * 停止录制小视频
+ * ÂÅúÊ≠¢ÂΩïÂà∂Â∞èËßÜÈ¢ë
  */
 ECMEDIA_API void ECMedia_stopRecordLocalMedia();
 /*
- * 设置RED
+ * ËÆæÁΩÆRED
  */
 ECMEDIA_API int ECMedia_setAudioRed(int channelid, bool enable, int payloadType);
 /*
- *功能：设置视频通讯中当本地摄像头无法采集视频时，返回给用户信息的回调函数
+ *ÂäüËÉΩÔºöËÆæÁΩÆËßÜÈ¢ëÈÄöËÆØ‰∏≠ÂΩìÊú¨Âú∞ÊëÑÂÉèÂ§¥Êó†Ê≥ïÈááÈõÜËßÜÈ¢ëÊó∂ÔºåËøîÂõûÁªôÁî®Êà∑‰ø°ÊÅØÁöÑÂõûË∞ÉÂáΩÊï∞
  */
 ECMEDIA_API int ECMedia_set_no_camera_capture_cb(int deviceid, onEcMediaNoCameraCaptureCb no_camera_capture_cb);
 /*
- 功能		：获取统计报告
- 参数		：[IN] type: 统计报告类型，详细信息或关键信息
- [OUT] reports: 统计报告
- 返回值   : 返回值 0：成功　-1：失败
+ ÂäüËÉΩ		ÔºöËé∑ÂèñÁªüËÆ°Êä•Âëä
+ ÂèÇÊï∞		Ôºö[IN] type: ÁªüËÆ°Êä•ÂëäÁ±ªÂûãÔºåËØ¶ÁªÜ‰ø°ÊÅØÊàñÂÖ≥ÈîÆ‰ø°ÊÅØ
+ [OUT] reports: ÁªüËÆ°Êä•Âëä
+ ËøîÂõûÂÄº   : ËøîÂõûÂÄº 0ÔºöÊàêÂäü„ÄÄ-1ÔºöÂ§±Ë¥•
  */
 ECMEDIA_API int ECMedia_getStatsReports(int type, char* callid, void** pMediaStatisticsDataInnerArray, int *pArraySize);
 ECMEDIA_API void ECMedia_deletePbData(void* mediaStatisticsDataInner);
 
 /*
- * 先调用ECMedia_audio_set_magic_sound(channelid, 8, 0, 0)
- * 再调用ECMedia_audio_enable_magic_sound()
- * 使能变声
+ * ÂÖàË∞ÉÁî®ECMedia_audio_set_magic_sound(channelid, 8, 0, 0)
+ * ÂÜçË∞ÉÁî®ECMedia_audio_enable_magic_sound()
+ * ‰ΩøËÉΩÂèòÂ£∞
  * channelid: channelid
- * is_enable: true: 启用，false: 禁用
+ * is_enable: true: ÂêØÁî®Ôºåfalse: Á¶ÅÁî®
  */
+
+
 ECMEDIA_API int ECMedia_audio_enable_magic_sound(int channelid, bool is_enable);
 
 /*
- * 功能：设置变声参数
+ * ÂäüËÉΩÔºöËÆæÁΩÆÂèòÂ£∞ÂèÇÊï∞
  * channelID: channel id
- * pitch: 声调调节（变调不变速），取值[-12, 12]（0表示正常，原来声音音调，设置为+8的话，可以听到明显的女生效果）
- * tempo: 音速调节（变速不变调），取值[-50, 50], 0表示正常原语速
- * rate:  变速又变调，取值[-50, 50], 0表示正常音速和音调
+ * pitch: Â£∞Ë∞ÉË∞ÉËäÇÔºàÂèòË∞É‰∏çÂèòÈÄüÔºâÔºåÂèñÂÄº[-12, 12]Ôºà0Ë°®Á§∫Ê≠£Â∏∏ÔºåÂéüÊù•Â£∞Èü≥Èü≥Ë∞ÉÔºåËÆæÁΩÆ‰∏∫+8ÁöÑËØùÔºåÂèØ‰ª•Âê¨Âà∞ÊòéÊòæÁöÑÂ•≥ÁîüÊïàÊûúÔºâ
+ * tempo: Èü≥ÈÄüË∞ÉËäÇÔºàÂèòÈÄü‰∏çÂèòË∞ÉÔºâÔºåÂèñÂÄº[-50, 50], 0Ë°®Á§∫Ê≠£Â∏∏ÂéüËØ≠ÈÄü
+ * rate:  ÂèòÈÄüÂèàÂèòË∞ÉÔºåÂèñÂÄº[-50, 50], 0Ë°®Á§∫Ê≠£Â∏∏Èü≥ÈÄüÂíåÈü≥Ë∞É
  */
 ECMEDIA_API int ECMedia_audio_set_magic_sound(int channelid, int pitch, int tempo, int rate);
 #ifdef __cplusplus

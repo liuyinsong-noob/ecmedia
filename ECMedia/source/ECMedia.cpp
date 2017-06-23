@@ -1688,6 +1688,66 @@ int ECMedia_set_video_rtp_keepalive(int channelid, bool enable, int interval, in
         return -99;
     }
 }
+
+int ECMedia_video_set_local_ssrc(int channelid, unsigned int ssrc)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...,channelid:%d, ssrc: %u", __FUNCTION__,channelid, ssrc);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
+	if (rtp_rtcp)
+	{
+		int ret = 0;
+		ret = rtp_rtcp->SetLocalSSRC(channelid, ssrc, kViEStreamTypeNormal, 0);
+		rtp_rtcp->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d vie", __FUNCTION__, ret);
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to set video ssrc, %s", __FUNCTION__);
+		return -99;
+	}
+}
+
+int ECMedia_video_request_remote_ssrc(int channelid, unsigned int ssrc)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...,channelid:%d, ssrc: %u", __FUNCTION__, channelid, ssrc);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
+	if (rtp_rtcp)
+	{
+		int ret = 0;
+		ret = rtp_rtcp->RequestRemoteSSRC(channelid, ssrc);
+		rtp_rtcp->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, ret);
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to request remote ssrc, %s", __FUNCTION__);
+		return -99;
+	}
+}
+
+int ECMedia_video_cancel_remote_ssrc(int channelid)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d ", __FUNCTION__, channelid);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
+	if (rtp_rtcp)
+	{
+		int ret = 0;
+		ret = rtp_rtcp->CancelRemoteSSRC(channelid);
+		rtp_rtcp->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, ret);
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to cancel remote ssrc, %s", __FUNCTION__);
+		return -99;
+	}
+}
 #endif
 
 int ECMedia_set_audio_rtp_keepalive(int channelid, bool enable, int interval, int payloadType)
@@ -2653,9 +2713,6 @@ int ECMedia_add_render(int channelid, void *video_window, ReturnVideoWidthHeight
         render->StartRender(channelid);
         render->Release();
         PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
-       
-        
-        
         return ret;
     }
     else
@@ -2688,12 +2745,13 @@ int ECMedia_set_i420_framecallback(int channelid, cloopenwebrtc::ECMedia_I420Fra
     PrintConsole("[ECMEDIA INFO] %s begins... channelid=%d,deviceid=%d",__FUNCTION__,channelid);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViERender *render = ViERender::GetInterface(m_vie);
+    int ret = -1;
     if (render) {
-        render->AddI420FrameCallback(channelid, callback);
+        ret = render->AddI420FrameCallback(channelid, callback);
         render->Release();
     }
-    PrintConsole("[ECMEDIA INFO] %s ends",__FUNCTION__);
-    return 0;
+    PrintConsole("[ECMEDIA INFO] %s end with ret: %d",__FUNCTION__, ret);
+    return ret;
 }
 
 /*

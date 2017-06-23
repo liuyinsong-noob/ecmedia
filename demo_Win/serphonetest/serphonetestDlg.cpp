@@ -358,6 +358,8 @@ CserphonetestDlg::CserphonetestDlg(CWnd* pParent /*=NULL*/)
 	m_audioPayloadName = _T("G729");
 	m_videoPT = 97;
 	m_audioPT = 111;
+	m_localSSRC = 0;
+	m_remoteSSRC = 0;
 	m_encryptionKey = _T("");
 	m_bFullScreen = FALSE;
 	m_dlgFullScreen = NULL;
@@ -388,6 +390,8 @@ void CserphonetestDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT11, m_MediaServerIP);
 	DDX_Text(pDX, IDC_EDIT10, m_CameraIdx);
 	DDX_Text(pDX, IDC_EDIT12, m_CameraCapIdx);
+	DDX_Text(pDX, IDC_EDIT13, m_localSSRC);
+	DDX_Text(pDX, IDC_EDIT16, m_remoteSSRC);
 	DDX_Control(pDX, IDC_RICHEDIT21, m_richEdit21);
 	DDX_Control(pDX, IDC_COMBO1, m_sipAccountCtrl);
 	DDX_Control(pDX, IDC_COMBO6, m_enableP2PCtrl);
@@ -501,6 +505,10 @@ ON_CBN_SELCHANGE(IDC_COMBO_VIDEO_CODEC, &CserphonetestDlg::OnCbnSelchangeComboVi
 ON_CBN_SELCHANGE(IDC_COMBO_VIDEO_MODE, &CserphonetestDlg::OnCbnSelchangeComboVideoMode)
 ON_CBN_SELCHANGE(IDC_COMBO1, &CserphonetestDlg::OnCbnSelchangeCombo1)
 ON_CBN_SELCHANGE(IDC_COMBO_ENCRYPT_TYPE, &CserphonetestDlg::OnCbnSelchangeComboEncryptType)
+ON_EN_CHANGE(IDC_EDIT13, &CserphonetestDlg::OnEnChangeEdit13)
+ON_EN_CHANGE(IDC_VIDEO_PT, &CserphonetestDlg::OnEnChangeVideoPt)
+ON_EN_CHANGE(IDC_EDIT16, &CserphonetestDlg::OnEnChangeEdit16)
+ON_BN_CLICKED(IDC_BUTTON30, &CserphonetestDlg::OnBnClickedButton30)
 END_MESSAGE_MAP()
 
 
@@ -880,6 +888,7 @@ void CserphonetestDlg::OnBnClickedButton1()
 	}
 		m_startbutton.EnableWindow(false);
 
+	setLocalSSRC(m_localSSRC);
 //	SetTimer(TIMER_STATISTICS, 1000, 0);
 }
 
@@ -984,8 +993,8 @@ void CserphonetestDlg::OnBnClickedButton7()
 
 	// TODO: 在此添加控件通知处理程序代码
 	//sendDTMF(g_currentCallId,'1');
-	setAudioMagicSoundPara(g_currentCallId, 8, 0, 0);
-	setAudioMagicSound(g_currentCallId, true);
+	//setMute(true);
+	cancelTmmbr(g_currentCallId);
 
 	//SpeakerInfo *speak;
 	//getSpeakerInfo(&speak);
@@ -1028,7 +1037,8 @@ void CserphonetestDlg::OnBnClickedButton8()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	//sendDTMF(g_currentCallId, '2');
-	setAudioMagicSound(g_currentCallId, false);
+	//setMute(false);
+	VideoStartReceive(g_currentCallId);
 	//stopRecordVoice(g_currentCallId);
 	//setMute(false);
 	//stopRecordVoip(g_currentCallId);
@@ -1042,8 +1052,8 @@ _declspec(dllimport) void  _stdcall PrintConsole(const char * fmt, ...);
 void CserphonetestDlg::OnBnClickedButton9()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	sendDTMF(g_currentCallId,'3');
-
+	//sendDTMF(g_currentCallId,'3');
+	VideoStopReceive(g_currentCallId);
 	//startRecordVoice(g_currentCallId, "audio_record.wav");
 	//setSrtpEnabled(false, true, true, 3, "12345678901234567890123456789012345678901234");
 
@@ -1834,4 +1844,46 @@ void CserphonetestDlg::OnCbnSelchangeComboEncryptType()
 	this->UpdateData(true);
 	m_encryptionKey.Empty();
 	this->UpdateData(false);
+}
+
+
+void CserphonetestDlg::OnEnChangeEdit13()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialogEx::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	// TODO:  Add your control notification handler code here
+}
+
+
+void CserphonetestDlg::OnEnChangeVideoPt()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialogEx::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	// TODO:  Add your control notification handler code here
+}
+
+
+void CserphonetestDlg::OnEnChangeEdit16()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialogEx::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	// TODO:  Add your control notification handler code here
+}
+
+
+void CserphonetestDlg::OnBnClickedButton30()
+{
+	// TODO: Add your control notification handler code here
+	USES_CONVERSION;
+	UpdateData(TRUE);
+	sendTmmbr(g_currentCallId, m_remoteSSRC);
 }

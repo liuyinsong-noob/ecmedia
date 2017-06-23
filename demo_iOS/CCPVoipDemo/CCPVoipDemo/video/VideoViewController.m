@@ -745,6 +745,9 @@ extern BOOL globalisVoipView;
     [self transformRemoteView];
     NSLog(@"[VideoViewController notifyTo sendRotate %d]",deviceRotate*value);
     [self.modelEngineVoip.VoipCallService notifyTo:self.voipNo andVideoRotate:deviceRotate*value];
+    [self.modelEngineVoip.VoipCallService setCaptureRotate:self.callID andVideoRotate:deviceRotate];
+    
+    
 }
 
 - (void)onMessageRemoteVideoRotate:(NSString*)degree

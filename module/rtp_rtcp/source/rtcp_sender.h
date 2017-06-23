@@ -173,6 +173,8 @@ public:
 
 	void SetRtcpPacketTypeCountObserver(RtcpPacketTypeCounterObserver *observer);
 
+    
+    int SendSingleTMMBR(uint32_t bandwidth, uint32_t ssrc, uint32_t remote_ssrc);
 private:
  int32_t SendToNetwork(const uint8_t* dataBuffer, size_t length);
 
@@ -269,7 +271,6 @@ private:
                       int& pos,
                       const RtcpReceiveTimeInfo& info)
         EXCLUSIVE_LOCKS_REQUIRED(_criticalSectionRTCPSender);
-
 private:
     const int32_t            _id;
     const bool               _audio;
@@ -355,6 +356,7 @@ private:
 		GUARDED_BY(_criticalSectionRTCPSender);
 
     RTCPUtility::NackStats nack_stats_ GUARDED_BY(_criticalSectionRTCPSender);
+    
 };
 }  // namespace webrtc
 

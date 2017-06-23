@@ -639,6 +639,7 @@ ServiceCore::ServiceCore()
 	m_desktop_frame_rate = 0;
     m_enable_fec = true;
     m_opus_packet_loss_rate = 0;
+	m_localSSRC = 0;
 
 	//pSendStats_ = NULL;
 	//pReceiveStats_ = NULL;

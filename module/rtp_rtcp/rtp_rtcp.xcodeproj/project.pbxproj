@@ -781,6 +781,7 @@
 					../../module/remote_bitrate_estimator/include,
 					../../module/pacing/include,
 					../../system_wrappers/source/,
+					../../module/rtp_rtcp/include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
@@ -865,6 +866,7 @@
 					../../module/remote_bitrate_estimator/include,
 					../../module/pacing/include,
 					../../system_wrappers/source/,
+					../../module/rtp_rtcp/include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
