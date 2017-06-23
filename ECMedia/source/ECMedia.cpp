@@ -2688,12 +2688,13 @@ int ECMedia_set_i420_framecallback(int channelid, cloopenwebrtc::ECMedia_I420Fra
     PrintConsole("[ECMEDIA INFO] %s begins... channelid=%d,deviceid=%d",__FUNCTION__,channelid);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViERender *render = ViERender::GetInterface(m_vie);
+    int ret = -1;
     if (render) {
-        render->AddI420FrameCallback(channelid, callback);
+        ret = render->AddI420FrameCallback(channelid, callback);
         render->Release();
     }
-    PrintConsole("[ECMEDIA INFO] %s ends",__FUNCTION__);
-    return 0;
+    PrintConsole("[ECMEDIA INFO] %s end with ret: %d",__FUNCTION__, ret);
+    return ret;
 }
 
 /*
