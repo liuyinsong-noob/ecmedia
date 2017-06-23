@@ -374,6 +374,8 @@ void StatsCollector::GetStats(StatsContentType type, char* callid, void **pMedia
 		mediaStatsInner = pMediaStatisticsDataInner->add_mediadata();
 		pMediaStatisticsDataInner->set_callid(callid);
 		LoadReportsToPbBuffer(type, mediaStatsInner);
+        *pArraySize = pMediaStatisticsDataInner->ByteSize();
+        *pMediaStatisticsDataInnerArray = malloc(*pArraySize);
 		pMediaStatisticsDataInner->SerializeToArray(*pMediaStatisticsDataInnerArray, *pArraySize);
 		delete pMediaStatisticsDataInner;
 		pStatsPBList.push_back(pMediaStatisticsDataInnerArray);
