@@ -378,7 +378,7 @@ void StatsCollector::GetStats(StatsContentType type, char* callid, void **pMedia
         *pMediaStatisticsDataInnerArray = malloc(*pArraySize);
 		pMediaStatisticsDataInner->SerializeToArray(*pMediaStatisticsDataInnerArray, *pArraySize);
 		delete pMediaStatisticsDataInner;
-		pStatsPBList.push_back(pMediaStatisticsDataInnerArray);
+		pStatsPBList.push_back(*pMediaStatisticsDataInnerArray);
 	}
 }
 
