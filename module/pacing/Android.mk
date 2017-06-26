@@ -10,7 +10,7 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-include $(LOCAL_PATH)/../../../android-webrtc.mk
+include $(LOCAL_PATH)/../../android-webrtc.mk
 
 LOCAL_ARM_MODE := arm
 LOCAL_MODULE_CLASS := STATIC_LIBRARIES
@@ -19,7 +19,8 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_CPP_EXTENSION := .cc
 LOCAL_SRC_FILES := \
     bitrate_prober.cc \
-    paced_sender.cc
+    paced_sender.cc \
+    alr_detector.cc
 
 #android/audio_device_android_opensles.cc \
 #android/audio_device_android_opensles.cc \
@@ -29,7 +30,7 @@ LOCAL_CFLAGS := \
    #'-DWEBRTC_ANDROID_OPENSLES'
 
 LOCAL_C_INCLUDES := \
-		$(LOCAL_PATH)/. \
+		$(LOCAL_PATH)/.. \
     $(LOCAL_PATH)/../include \
     $(LOCAL_PATH)/../.. \
     $(LOCAL_PATH)/../../interface \
