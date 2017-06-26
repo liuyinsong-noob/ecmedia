@@ -18,19 +18,19 @@
 // NOTE(ajm): Path provided by gyp.
 #include "scale.h"  // NOLINT
 
-#include "common.h"
-#include "common_types.h"
+#include "../system_wrappers/include/common.h"
+#include "../module/common_types.h"
 #include "../common_video/source//libyuv/include/webrtc_libyuv.h"
 //#include "experiments.h"
-#include "module_common_types.h"
+#include "../module/interface/module_common_types.h"
 #include "video_codec_interface.h"
 #include "vp8_common_types.h"
 #include "screenshare_layers.h"
 #include "temporal_layers.h"
-#include "tick_util.h"
-#include "trace_event.h"
+#include "../system_wrappers/include/tick_util.h"
+#include "../system_wrappers/include/trace_event.h"
 
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 namespace {

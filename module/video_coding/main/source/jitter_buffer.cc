@@ -21,14 +21,14 @@
 #include "jitter_buffer_common.h"
 #include "jitter_estimator.h"
 #include "packet.h"
-#include "clock.h"
-#include "critical_section_wrapper.h"
-#include "event_wrapper.h"
-#include "logging.h"
-#include "metrics.h"
-#include "trace_event.h"
+#include "../system_wrappers/include/clock.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/event_wrapper.h"
+#include "../system_wrappers/include/logging.h"
+#include "../system_wrappers/include/metrics.h"
+#include "../system_wrappers/include/trace_event.h"
 
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 
@@ -220,7 +220,7 @@ void VCMJitterBuffer::Start() {
   time_first_packet_ms_ = 0;
 
   // Start in a non-signaled state.
-  frame_event_->Reset();
+  //frame_event_->Reset();
   waiting_for_completion_.frame_size = 0;
   waiting_for_completion_.timestamp = 0;
   waiting_for_completion_.latest_packet_time = -1;
@@ -264,7 +264,7 @@ void VCMJitterBuffer::Flush() {
   decodable_frames_.Reset(&free_frames_);
   incomplete_frames_.Reset(&free_frames_);
   last_decoded_state_.Reset();  // TODO(mikhal): sync reset.
-  frame_event_->Reset();
+  //frame_event_->Reset();
   num_consecutive_old_packets_ = 0;
   // Also reset the jitter and delay estimates
   jitter_estimate_.Reset();
@@ -420,7 +420,7 @@ bool VCMJitterBuffer::NextCompleteTimestamp(
     // Inside |crit_sect_|.
   } else {
     // We already have a frame, reset the event.
-    frame_event_->Reset();
+    //frame_event_->Reset();
   }
   if (decodable_frames_.empty() ||
       decodable_frames_.Front()->GetState() != kStateComplete) {
@@ -635,7 +635,7 @@ VCMFrameBufferEnum VCMJitterBuffer::InsertPacket(const VCMPacket& packet,
 
   // Empty packets may bias the jitter estimate (lacking size component),
   // therefore don't let empty packet trigger the following updates:
-  if (packet.frameType != kFrameEmpty) {
+  if (packet.frameType != kEmptyFrame) {
     if (waiting_for_completion_.timestamp == packet.timestamp) {
       // This can get bad if we have a lot of duplicate packets,
       // we will then count some packet multiple times.

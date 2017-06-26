@@ -14,10 +14,10 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include "exp_filter.h"
+#include "../system_wrappers/include/exp_filter.h"
 #include "internal_defines.h"
 #include "qm_select.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

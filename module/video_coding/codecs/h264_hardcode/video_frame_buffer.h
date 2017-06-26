@@ -17,9 +17,9 @@
 
 #include "callback.h"
 #include "refcount.h"
-#include "scoped_refptr.h"
-#include "aligned_malloc.h"
-#include "video_frame.h"
+#include "../base/scoped_ref_ptr.h"
+#include "../system_wrappers/include/aligned_malloc.h"
+#include "../module/video_coding/main/include/video_frame.h"
 
 namespace cloopenwebrtc {
 

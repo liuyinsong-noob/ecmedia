@@ -11,10 +11,10 @@
 #include "video_coding.h"
 #include "generic_decoder.h"
 #include "internal_defines.h"
-#include "clock.h"
-#include "logging.h"
+#include "../system_wrappers/include/clock.h"
+#include "../system_wrappers/include/logging.h"
 
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 

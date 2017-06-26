@@ -21,8 +21,8 @@
 
 //#include "libyuv.h"
 #include "module_common_types.h"
-#include "trace.h"
-#include "tick_util.h"
+#include "../system_wrappers/include/trace.h"
+#include "../system_wrappers/include/tick_util.h"
 #include "bitstream_parser.h"
 
 

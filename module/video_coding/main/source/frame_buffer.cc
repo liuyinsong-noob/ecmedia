@@ -14,7 +14,7 @@
 #include <string.h>
 
 #include "packet.h"
-#include "logging.h"
+#include "../system_wrappers/include/logging.h"
 
 namespace cloopenwebrtc {
 
@@ -97,7 +97,7 @@ VCMFrameBuffer::InsertPacket(const VCMPacket& packet,
         // We only take the ntp timestamp of the first packet of a frame.
         ntp_time_ms_ = packet.ntp_time_ms_;
         _codec = packet.codec;
-        if (packet.frameType != kFrameEmpty) {
+        if (packet.frameType != kEmptyFrame) {
             // first media packet
             SetState(kStateIncomplete);
         }

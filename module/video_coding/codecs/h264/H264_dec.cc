@@ -5,7 +5,7 @@
 //  Created by Lee Sean on 13-1-30.
 
 #include "H264_dec.h"
-#include "Trace.h"
+#include "../system_wrappers/include/Trace.h"
 #include "h264_util.h"
 //#include "h264_record.h"
 

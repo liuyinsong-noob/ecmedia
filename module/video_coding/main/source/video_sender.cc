@@ -12,12 +12,12 @@
 
 #include <algorithm>  // std::max
 
-#include "webrtc_libyuv.h"
+#include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 #include "video_codec_interface.h"
 #include "encoded_frame.h"
 #include "video_coding_impl.h"
-#include "clock.h"
-#include "logging.h"
+#include "../system_wrappers/include/clock.h"
+#include "../system_wrappers/include/logging.h"
 
 namespace cloopenwebrtc {
 namespace vcm {
@@ -356,7 +356,7 @@ int32_t VideoSender::AddVideoFrame(const I420VideoFrame& videoFrame,
   }
   // TODO(holmer): Add support for dropping frames per stream. Currently we
   // only have one frame dropper for all streams.
-  if (_nextFrameTypes[0] == kFrameEmpty) {
+  if (_nextFrameTypes[0] == kEmptyFrame) {
   	LOG(LS_ERROR) << " AddVideoFrame dropping frame.";
     return VCM_OK;
   }

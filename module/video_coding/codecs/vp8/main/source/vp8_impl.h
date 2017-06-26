@@ -30,7 +30,7 @@
 #include "vpx/vp8dx.h"
 #endif
 
-#include "i420_video_frame.h"
+#include "../common_video/include/i420_video_frame.h"
 #include "video_codec_interface.h"
 #include "vp8.h"
 #include "reference_picture_selection.h"

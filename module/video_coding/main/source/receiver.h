@@ -14,7 +14,7 @@
 #include "jitter_buffer.h"
 #include "packet.h"
 #include "timing.h"
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 #include "video_coding.h"
 #include "video_coding_defines.h"
 

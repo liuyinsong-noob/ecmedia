@@ -17,9 +17,9 @@
 #include "video_coding.h"
 #include "media_opt_util.h"
 #include "qm_select.h"
-#include "critical_section_wrapper.h"
-#include "scoped_ptr.h"
-#include "thread_annotations.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/scoped_ptr.h"
+#include "../base/thread_annotations.h"
 
 namespace cloopenwebrtc {
 

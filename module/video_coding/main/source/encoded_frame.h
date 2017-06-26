@@ -14,7 +14,7 @@
 #include <vector>
 
 #include "common_types.h"
-#include "video_image.h"
+#include "../common_video/include/video_image.h"
 #include "module_common_types.h"
 #include "video_codec_interface.h"
 #include "video_coding_defines.h"

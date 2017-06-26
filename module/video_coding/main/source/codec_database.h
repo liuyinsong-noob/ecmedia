@@ -17,7 +17,7 @@
 #include "video_coding.h"
 #include "generic_decoder.h"
 #include "generic_encoder.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
 

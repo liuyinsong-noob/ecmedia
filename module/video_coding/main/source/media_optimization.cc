@@ -13,8 +13,8 @@
 #include "content_metrics_processing.h"
 #include "qm_select.h"
 #include "frame_dropper.h"
-#include "clock.h"
-#include "logging.h"
+#include "../system_wrappers/include/clock.h"
+#include "../system_wrappers/include/logging.h"
 
 namespace cloopenwebrtc {
 namespace media_optimization {

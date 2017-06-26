@@ -2,7 +2,7 @@
 #include <string.h>
 
 #include "h264.h"
-#include "webrtc_libyuv.h"
+#include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 
 #if defined(_WIN32)
 #include <windows.h>
@@ -12,7 +12,7 @@
 #endif
 
 #include "module_common_types.h"
-#include "Trace.h"
+#include "../system_wrappers/include/Trace.h"
 
 
 namespace cloopenwebrtc

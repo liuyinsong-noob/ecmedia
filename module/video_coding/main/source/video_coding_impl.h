@@ -15,7 +15,7 @@
 
 #include <vector>
 
-#include "thread_annotations.h"
+#include "../base/thread_annotations.h"
 #include "codec_database.h"
 #include "frame_buffer.h"
 #include "generic_decoder.h"
@@ -24,8 +24,8 @@
 #include "media_optimization.h"
 #include "receiver.h"
 #include "timing.h"
-#include "clock.h"
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/clock.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 
 //#define DEBUG_DECODER_BIT_STREAM
 

@@ -12,8 +12,8 @@
 #include "encoded_frame.h"
 #include "generic_encoder.h"
 #include "media_optimization.h"
-#include "critical_section_wrapper.h"
-#include "logging.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/logging.h"
 
 namespace cloopenwebrtc {
 namespace {
