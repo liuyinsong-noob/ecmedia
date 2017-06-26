@@ -698,7 +698,7 @@ extern "C" {
 	/************************************************************************/
 
 	CCPAPI int GetStatsData(int type, char* callid, void** pbDataArray, int *pArraySize);
-	CCPAPI int DeleteStatsData(MediaStatisticsDataInner* pb_data);
+	CCPAPI int DeleteStatsData(void* pbDataArray);
 	CCPAPI int GetBandwidthUsage(const char* callid,
 								unsigned int& total_bitrate_sent,
 								unsigned int& video_bitrate_sent,

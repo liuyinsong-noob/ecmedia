@@ -3620,10 +3620,10 @@ extern "C" int GetStatsData(int type, char* callid, void** pbDataArray, int *pAr
 	return g_pSerCore->GetStatsData(type, callid, pbDataArray, pArraySize);
 }
 
-extern "C" int DeleteStatsData(MediaStatisticsDataInner* pb_data)
+extern "C" int DeleteStatsData(void* pbDataArray)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	g_pSerCore->DeleteStatsData(pb_data);
+	g_pSerCore->DeleteStatsData(pbDataArray);
 	return 0;
 }
 extern "C" int GetBandwidthUsage(const char* callid,
