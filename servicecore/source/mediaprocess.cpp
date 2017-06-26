@@ -4185,6 +4185,7 @@ int ServiceCore::PlayVideoFromRtpDump(int localPort, const char *ptName, int plo
 	ECMedia_audio_create_channel(m_VideoChannelIDDump, true);
 	ECMedia_video_set_local_receiver(m_VideoChannelIDDump, localPort, localPort+1);
 	ECMedia_set_MTU(m_VideoChannelIDDump,1450);
+	ECMedia_video_set_local_ssrc(m_VideoChannelIDDump, 0);
 
 
 	if( videoWindow ) {
