@@ -11,7 +11,7 @@
 #ifndef WEBRTC_COMMON_AUDIO_WINDOW_GENERATOR_H_
 #define WEBRTC_COMMON_AUDIO_WINDOW_GENERATOR_H_
 
-#include "constructormagic.h"
+#include "../base/constructormagic.h"
 
 namespace cloopenwebrtc {
 

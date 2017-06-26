@@ -14,7 +14,7 @@
 #include <string.h>
 #include <xmmintrin.h>
 
-#include "aligned_malloc.h"
+#include "../system_wrappers/include/aligned_malloc.h"
 
 namespace cloopenwebrtc {
 

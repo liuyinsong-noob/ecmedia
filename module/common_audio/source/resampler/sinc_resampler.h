@@ -14,9 +14,9 @@
 #ifndef WEBRTC_COMMON_AUDIO_RESAMPLER_SINC_RESAMPLER_H_
 #define WEBRTC_COMMON_AUDIO_RESAMPLER_SINC_RESAMPLER_H_
 
-#include "constructormagic.h"
-#include "aligned_malloc.h"
-#include "scoped_ptr.h"
+#include "../base/constructormagic.h"
+#include "../system_wrappers/include/aligned_malloc.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 //#include "gtest_prod_util.h"
 #include "typedefs.h"
 
