@@ -19,15 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bitrate_controller_impl.h" />
     <ClInclude Include="include\bitrate_controller.h" />
-    <ClInclude Include="source\bitrate_controller_impl.h" />
-    <ClInclude Include="source\remb_suppressor.h" />
-    <ClInclude Include="source\send_side_bandwidth_estimation.h" />
+    <ClInclude Include="remb_suppressor.h" />
+    <ClInclude Include="send_side_bandwidth_estimation.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\bitrate_controller_impl.cc" />
-    <ClCompile Include="source\remb_suppressor.cc" />
-    <ClCompile Include="source\send_side_bandwidth_estimation.cc" />
+    <ClCompile Include="bitrate_controller_impl.cc" />
+    <ClCompile Include="remb_suppressor.cc" />
+    <ClCompile Include="send_side_bandwidth_estimation.cc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2F39A772-E2CA-52F0-2D95-02B22C0B6CD2}</ProjectGuid>
@@ -173,7 +173,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../.;../.;./include;./source;../interface;../../system_wrappers\interface;../rtp_rtcp\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../.;../.;./include;./source;../interface;../rtp_rtcp\include</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

@@ -10,7 +10,7 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-include $(LOCAL_PATH)/../../../android-webrtc.mk
+include $(LOCAL_PATH)/../../android-webrtc.mk
 
 LOCAL_ARM_MODE := arm
 LOCAL_MODULE := libwebrtc_bitrate_controller
@@ -26,9 +26,10 @@ LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) 
 
 LOCAL_C_INCLUDES := \
-		$(LOCAL_PATH)/../include \
-		$(LOCAL_PATH)/../../rtp_rtcp/include \
-		$(LOCAL_PATH)/../../../system_wrappers/interface \
+		$(LOCAL_PATH)/.. \
+		$(LOCAL_PATH)/include \
+		$(LOCAL_PATH)/../rtp_rtcp/include \
+		$(LOCAL_PATH)/../../system_wrappers/include \
 		$(LOCAL_PATH)/../.. \
 		$(LOCAL_PATH)/../../interface
 

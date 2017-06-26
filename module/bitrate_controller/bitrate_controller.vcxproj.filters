@@ -12,24 +12,24 @@
     <ClInclude Include="include\bitrate_controller.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="source\bitrate_controller_impl.h">
+    <ClInclude Include="bitrate_controller_impl.h">
       <Filter>source</Filter>
     </ClInclude>
-    <ClInclude Include="source\send_side_bandwidth_estimation.h">
+    <ClInclude Include="remb_suppressor.h">
       <Filter>source</Filter>
     </ClInclude>
-    <ClInclude Include="source\remb_suppressor.h">
+    <ClInclude Include="send_side_bandwidth_estimation.h">
       <Filter>source</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\bitrate_controller_impl.cc">
+    <ClCompile Include="bitrate_controller_impl.cc">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="source\send_side_bandwidth_estimation.cc">
+    <ClCompile Include="remb_suppressor.cc">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="source\remb_suppressor.cc">
+    <ClCompile Include="send_side_bandwidth_estimation.cc">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

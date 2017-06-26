@@ -16,7 +16,7 @@
 #define THIRD_PARTY_WEBRTC_MODULES_BITRATE_CONTROLLER_REMB_SUPPRESSOR_H_
 
 #include "rtp_rtcp_defines.h"
-#include "clock.h"
+#include "../system_wrappers/include/clock.h"
 
 namespace cloopenwebrtc {
 
