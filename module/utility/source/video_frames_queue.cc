@@ -14,10 +14,10 @@
 
 #include <assert.h>
 
-#include "texture_video_frame.h"
+#include "../common_video/include/texture_video_frame.h"
 #include "module_common_types.h"
-#include "logging.h"
-#include "tick_util.h"
+#include "../system_wrappers/include/logging.h"
+#include "../system_wrappers/include/tick_util.h"
 
 namespace cloopenwebrtc {
 VideoFramesQueue::VideoFramesQueue()

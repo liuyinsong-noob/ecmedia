@@ -18,8 +18,8 @@
 #include "media_file_defines.h"
 #include "file_player.h"
 #include "coder.h"
-#include "critical_section_wrapper.h"
-#include "tick_util.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/tick_util.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

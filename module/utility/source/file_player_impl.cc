@@ -9,12 +9,12 @@
  */
 
 #include "file_player_impl.h"
-#include "logging.h"
+#include "../system_wrappers/include/logging.h"
 
 #ifdef WEBRTC_MODULE_UTILITY_VIDEO
     #include "frame_scaler.h"
     #include "video_coder.h"
-    #include "tick_util.h"
+    #include "../system_wrappers/include/tick_util.h"
 #endif
 
 namespace cloopenwebrtc {

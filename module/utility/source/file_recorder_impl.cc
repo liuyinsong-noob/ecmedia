@@ -8,17 +8,17 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "webrtc_libyuv.h"
+#include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 #include "engine_configurations.h"
 #include "media_file.h"
 #include "file_recorder_impl.h"
-#include "logging.h"
+#include "../system_wrappers/include/logging.h"
 
 #ifdef WEBRTC_MODULE_UTILITY_VIDEO
     #include "frame_scaler.h"
     #include "video_coder.h"
     #include "video_frames_queue.h"
-    #include "critical_section_wrapper.h"
+    #include "../system_wrappers/include/critical_section_wrapper.h"
 #endif
 
 namespace cloopenwebrtc {
@@ -321,7 +321,7 @@ AviRecorder::AviRecorder(uint32_t instanceID, FileFormats fileFormat)
     : FileRecorderImpl(instanceID, fileFormat),
       _videoOnly(false),
       _thread( 0),
-      _timeEvent(*EventWrapper::Create()),
+      _timeEvent(*EventTimerWrapper::Create()),
       _critSec(CriticalSectionWrapper::CreateCriticalSection()),
       _writtenVideoFramesCounter(0),
       _writtenAudioMS(0),
