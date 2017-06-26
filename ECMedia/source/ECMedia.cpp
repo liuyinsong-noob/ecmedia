@@ -4612,12 +4612,12 @@ int ECMedia_getStatsReports(int type, char* callid, void** pMediaStatisticsDataI
 	return -99;
 }
 
-void ECMedia_deletePbData(void* mediaStatisticsDataInner)
+void ECMedia_deletePbData(void* pbDataArray)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
 	if (g_statsCollector)
 	{
-		g_statsCollector->DeletePbData((MediaStatisticsDataInner*)mediaStatisticsDataInner);
+		g_statsCollector->DeletePbData(pbDataArray);
 	}
 }
 

@@ -9,6 +9,9 @@
 #include <stdarg.h>
 #include <sstream>
 
+#include "../third_party/protobuf/src/google/protobuf/io/zero_copy_stream_impl_lite.h"
+#include "../third_party/protobuf/src/google/protobuf/io/coded_stream.h"
+
 extern char* filename_path;
 #define kUpdateIntervalMs 1000
 #define kKiloBits	1000
@@ -368,18 +371,29 @@ void StatsCollector::GetStats(StatsContentType type, char* callid, void **pMedia
 	CriticalSectionScoped lock(stream_crit_.get());
 	MediaStatisticsDataInner *pMediaStatisticsDataInner;
 	MediaStatisticsInner *mediaStatsInner;
-	if (*pArraySize == 0)
+	
+	pMediaStatisticsDataInner = new MediaStatisticsDataInner();
+	mediaStatsInner = pMediaStatisticsDataInner->add_mediadata();
+	pMediaStatisticsDataInner->set_callid(callid);
+	LoadReportsToPbBuffer(type, mediaStatsInner);
+
+	int size = pMediaStatisticsDataInner->ByteSize() + 8;
+	*pMediaStatisticsDataInnerArray = new char[size];
+	memset(*pMediaStatisticsDataInnerArray, 0, size);
+	google::protobuf::io::ArrayOutputStream array_stream(*pMediaStatisticsDataInnerArray, size);
+	google::protobuf::io::CodedOutputStream output_stream(&array_stream);
+	output_stream.WriteVarint32(pMediaStatisticsDataInner->ByteSize());
+	if (pMediaStatisticsDataInner->SerializeToCodedStream(&output_stream))
 	{
-		pMediaStatisticsDataInner = new MediaStatisticsDataInner();
-		mediaStatsInner = pMediaStatisticsDataInner->add_mediadata();
-		pMediaStatisticsDataInner->set_callid(callid);
-		LoadReportsToPbBuffer(type, mediaStatsInner);
-        *pArraySize = pMediaStatisticsDataInner->ByteSize();
-        *pMediaStatisticsDataInnerArray = malloc(*pArraySize);
-		pMediaStatisticsDataInner->SerializeToArray(*pMediaStatisticsDataInnerArray, *pArraySize);
-		delete pMediaStatisticsDataInner;
-		pStatsPBList.push_back(*pMediaStatisticsDataInnerArray);
+		*pArraySize = output_stream.ByteCount();
 	}
+	else
+	{
+		*pArraySize = -1;
+	}
+
+	delete pMediaStatisticsDataInner;
+	pStatsPBList.push_back(*pMediaStatisticsDataInnerArray);
 }
 
 void StatsCollector::DeletePbData(void *pMediaStatisticsDataInnerArray)
