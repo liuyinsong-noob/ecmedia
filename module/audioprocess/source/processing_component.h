@@ -13,7 +13,7 @@
 
 #include <vector>
 
-#include "common.h"
+#include "../system_wrappers/include/common.h"
 
 namespace cloopenwebrtc {
 

@@ -12,7 +12,7 @@
 #define WEBRTC_MODULES_AUDIO_PROCESSING_TRANSIENT_WPD_TREE_H_
 
 #include "wpd_node.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 namespace cloopenwebrtc {
 

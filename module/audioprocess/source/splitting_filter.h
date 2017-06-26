@@ -14,8 +14,8 @@
 #include <string.h>
 
 #include "push_sinc_resampler.h"
-#include "scoped_ptr.h"
-#include "scoped_vector.h"
+#include "../system_wrappers/include/scoped_ptr.h"
+#include "../system_wrappers/include/scoped_vector.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

@@ -23,7 +23,7 @@
 
 #include <math.h>
 
-#include "cpu_features_wrapper.h"
+#include "../system_wrappers/include/cpu_features_wrapper.h"
 #include "typedefs.h"
 
 // These tables used to be computed at run-time. For example, refer to:

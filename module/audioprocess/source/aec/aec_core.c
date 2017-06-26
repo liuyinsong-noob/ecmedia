@@ -30,7 +30,7 @@
 #include "aec_core_internal.h"
 #include "aec_rdft.h"
 #include "delay_estimator_wrapper.h"
-#include "cpu_features_wrapper.h"
+#include "../system_wrappers/include/cpu_features_wrapper.h"
 #include "typedefs.h"
 
 // Buffer size (samples)

@@ -12,7 +12,7 @@
 
 #include <assert.h>
 
-#include "platform_file.h"
+#include "../system_wrappers/source/platform_file.h"
 #include "audio_util.h"
 #include "signal_processing_library.h"
 #include "agc_manager_direct.h"
@@ -31,9 +31,9 @@
 #include "transient_suppressor.h"
 #include "voice_detection_impl.h"
 #include "module_common_types.h"
-#include "critical_section_wrapper.h"
-#include "file_wrapper.h"
-#include "logging.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/file_wrapper.h"
+#include "../system_wrappers/include/logging.h"
 
 #ifdef WEBRTC_AUDIOPROC_DEBUG_DUMP
 // Files generated at build-time by the protobuf compiler.

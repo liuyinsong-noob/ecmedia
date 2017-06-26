@@ -18,8 +18,8 @@
 #include "real_fft.h"
 #include "echo_control_mobile.h"
 #include "delay_estimator_wrapper.h"
-#include "compile_assert_c.h"
-#include "cpu_features_wrapper.h"
+#include "../system_wrappers/include/compile_assert_c.h"
+#include "../system_wrappers/include/cpu_features_wrapper.h"
 #include "typedefs.h"
 
 #ifdef AEC_DEBUG

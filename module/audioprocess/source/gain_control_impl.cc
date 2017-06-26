@@ -14,7 +14,7 @@
 
 #include "audio_buffer.h"
 #include "gain_control.h"
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 
 namespace cloopenwebrtc {
 

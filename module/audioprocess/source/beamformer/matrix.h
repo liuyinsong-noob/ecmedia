@@ -15,10 +15,10 @@
 #include <string>
 #include <vector>
 
-#include "checks.h"
-#include "constructormagic.h"
+#include "../base/checks.h"
+#include "../base/constructormagic.h"
 #include "channel_buffer.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 namespace {
 

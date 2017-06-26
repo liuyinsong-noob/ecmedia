@@ -18,8 +18,8 @@
 #include "audio_processing.h"
 #include "splitting_filter.h"
 #include "module_common_types.h"
-#include "scoped_ptr.h"
-#include "scoped_vector.h"
+#include "../system_wrappers/include/scoped_ptr.h"
+#include "../system_wrappers/include/scoped_vector.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {
