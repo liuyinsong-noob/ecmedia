@@ -20,9 +20,9 @@
 #include "audio_device_android_jni.h"
 #include "audio_device_config.h"
 
-#include "trace.h"
-#include "thread_wrapper.h"
-#include "event_wrapper.h"
+#include "../system_wrappers/include/trace.h"
+#include "../system_wrappers/include/thread_wrapper.h"
+#include "../system_wrappers/include/event_wrapper.h"
 
 // Android logging, uncomment to print trace to logcat instead of
 // trace file/callback
@@ -338,7 +338,7 @@ WebRtc_Word32 AudioDeviceAndroidJni::Terminate()
             // If we close thread anyway, the app will crash
             return -1;
         }
-        _recStartStopEvent.Reset();
+        //_recStartStopEvent.Reset();
         _critSect.Enter();
 
         // Close down rec thread
@@ -385,7 +385,7 @@ WebRtc_Word32 AudioDeviceAndroidJni::Terminate()
             // If we close thread anyway, the app will crash
             return -1;
         }
-        _playStartStopEvent.Reset();
+        //_playStartStopEvent.Reset();
         _critSect.Enter();
 
         // Close down play thread
@@ -1641,7 +1641,7 @@ WebRtc_Word32 AudioDeviceAndroidJni::StartRecording()
         WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id,
                      "  Timeout or error starting");
     }
-    _recStartStopEvent.Reset();
+    //_recStartStopEvent.Reset();
     _critSect.Enter();
 
     // Detach this thread if it was attached
@@ -1834,7 +1834,7 @@ WebRtc_Word32 AudioDeviceAndroidJni::StartPlayout()
         WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id,
                      "  Timeout or error starting");
     }
-    _playStartStopEvent.Reset();
+    //_playStartStopEvent.Reset();
     _critSect.Enter();
 
     // Detach this thread if it was attached
@@ -2720,7 +2720,7 @@ bool AudioDeviceAndroidJni::PlayThreadProcess()
             case kEventSignaled:
                 WEBRTC_TRACE(kTraceDebug, kTraceAudioDevice,
                              _id, "Playout thread event signal");
-                _timeEventPlay.Reset();
+                //_timeEventPlay.Reset();
                 break;
             case kEventError:
                 WEBRTC_TRACE(kTraceWarning, kTraceAudioDevice,
@@ -2866,7 +2866,7 @@ bool AudioDeviceAndroidJni::RecThreadProcess()
             case kEventSignaled:
                 WEBRTC_TRACE(kTraceDebug, kTraceAudioDevice,
                              _id, "Recording thread event signal");
-                _timeEventRec.Reset();
+                //_timeEventRec.Reset();
                 break;
             case kEventError:
                 WEBRTC_TRACE(kTraceWarning, kTraceAudioDevice,

@@ -14,7 +14,6 @@
 #include "audio_device_buffer.h"
 #include "audio_device.h"
 
-
 namespace cloopenwebrtc {
 
 class AudioDeviceGeneric

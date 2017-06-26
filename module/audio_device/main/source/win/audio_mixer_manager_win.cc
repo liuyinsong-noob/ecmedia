@@ -9,7 +9,7 @@
  */
 
 #include "audio_mixer_manager_win.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 
 #include <assert.h>      // assert()
 #include <strsafe.h>    // StringCchCopy(), StringCchCat(), StringCchPrintf()

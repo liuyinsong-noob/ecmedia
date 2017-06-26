@@ -23,9 +23,9 @@
 #include "audio_common.h"
 #include "audio_device_config.h"
 #include "audio_device_utility.h"
-#include "event_wrapper.h"
-#include "thread_wrapper.h"
-#include "trace.h"
+#include "../system_wrappers/include/event_wrapper.h"
+#include "../system_wrappers/include/thread_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 
@@ -222,7 +222,7 @@ int32_t AudioRecordJni::Terminate() {
       // If we close thread anyway, the app will crash
       return -1;
     }
-    _recStartStopEvent.Reset();
+    //_recStartStopEvent.Reset();
     _critSect.Enter();
 
     // Close down rec thread
@@ -532,7 +532,7 @@ int32_t AudioRecordJni::StartRecording() {
     WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id,
                  "  Timeout or error starting");
   }
-  _recStartStopEvent.Reset();
+  //_recStartStopEvent.Reset();
   _critSect.Enter();
 
   // Detach this thread if it was attached
@@ -1218,7 +1218,7 @@ bool AudioRecordJni::RecThreadProcess()
       case kEventSignaled:
         WEBRTC_TRACE(kTraceDebug, kTraceAudioDevice,
                      _id, "Recording thread event signal");
-        _timeEventRec.Reset();
+        //_timeEventRec.Reset();
         break;
       case kEventError:
         WEBRTC_TRACE(kTraceWarning, kTraceAudioDevice,

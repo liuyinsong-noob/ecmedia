@@ -14,8 +14,8 @@
 
 #include "audio_device_utility_android.h"
 
-#include "critical_section_wrapper.h"
-#include "trace.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc
 {

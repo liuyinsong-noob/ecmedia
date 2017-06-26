@@ -24,8 +24,8 @@
 #include <endpointvolume.h>
 #include <mediaobj.h>        // IMediaObject
 
-#include "critical_section_wrapper.h"
-#include "scoped_refptr.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../base/scoped_ref_ptr.h"
 
 // Use Multimedia Class Scheduler Service (MMCSS) to boost the thread priority
 #pragma comment( lib, "avrt.lib" )

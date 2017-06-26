@@ -12,9 +12,9 @@
 #include "audio_device_utility.h"
 #include "audio_device_wave_win.h"
 
-#include "event_wrapper.h"
-#include "thread_wrapper.h"
-#include "trace.h"
+#include "../system_wrappers/include/event_wrapper.h"
+#include "../system_wrappers/include/thread_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 
 #include <windows.h>
 #include <objbase.h>    // CoTaskMemAlloc, CoTaskMemFree
@@ -48,7 +48,7 @@ namespace cloopenwebrtc {
 AudioDeviceWindowsWave::AudioDeviceWindowsWave(const int32_t id) :
     _ptrAudioBuffer(NULL),
     _critSect(*CriticalSectionWrapper::CreateCriticalSection()),
-    _timeEvent(*EventWrapper::Create()),
+    _timeEvent(*EventTimerWrapper::Create()),
     _recStartEvent(*EventWrapper::Create()),
     _playStartEvent(*EventWrapper::Create()),
     _hGetCaptureVolumeThread(NULL),

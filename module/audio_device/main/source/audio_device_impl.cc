@@ -11,7 +11,7 @@
 #include "signal_processing_library.h"
 #include "audio_device_config.h"
 #include "audio_device_impl.h"
-#include "ref_count.h"
+#include "../system_wrappers/include/ref_count.h"
 
 #include <assert.h>
 #include <string.h>
@@ -53,8 +53,8 @@
 #include "audio_device_dummy.h"
 #include "audio_device_utility_dummy.h"
 #include "file_audio_device.h"
-#include "critical_section_wrapper.h"
-#include "trace.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 
 #define CHECK_INITIALIZED()         \
 {                                   \
@@ -1680,7 +1680,6 @@ int32_t AudioDeviceModuleImpl::RegisterAudioCallback(AudioTransport* audioCallba
 
     return 0;
 }
-
 
 // ----------------------------------------------------------------------------
 //  StartRawInputFileRecording

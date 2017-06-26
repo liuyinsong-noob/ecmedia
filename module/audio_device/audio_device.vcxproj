@@ -192,7 +192,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../.;../.;../interface;./main\include;./main\source;./main\source\dummy;./main\source\win;../../system_wrappers\interface;../common_audio/source/resampler/include;../common_audio/source/signal_processing/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../.;../.;../interface;./main\include;./main\source;./main\source\dummy;./main\source\win;../common_audio/source/resampler/include;../common_audio/source/signal_processing/include</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
