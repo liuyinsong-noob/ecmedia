@@ -13,7 +13,7 @@
 #include <assert.h>
 #include <string.h>  // memmove
 
-#include "checks.h"
+#include "../base/checks.h"
 #include "webrtc_cng.h"
 #include "g711_interface.h"
 #ifdef WEBRTC_CODEC_G722

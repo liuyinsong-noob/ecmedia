@@ -311,7 +311,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../.;.\codecs\ilbc\interface;./codecs/ilbc;../common_audio/source/signal_processing/include;./codecs/.;../../system_wrappers/source;../../system_wrappers/interface</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;.\codecs\ilbc\interface;./codecs/ilbc;../common_audio/source/signal_processing/include;./codecs/.</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

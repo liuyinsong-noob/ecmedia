@@ -12,7 +12,7 @@
 
 #include <assert.h>
 
-#include "checks.h"
+#include "../base/checks.h"
 
 namespace cloopenwebrtc {
 

@@ -17,7 +17,7 @@
 #include "g729_interface.h"
 #include "acm_common_defs.h"
 #include "acm_receiver.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 #endif
 
 namespace cloopenwebrtc {

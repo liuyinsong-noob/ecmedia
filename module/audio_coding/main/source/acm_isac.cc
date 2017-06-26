@@ -15,8 +15,8 @@
 #include "audio_coding_module_typedefs.h"
 #include "acm_codec_database.h"
 #include "acm_common_defs.h"
-#include "critical_section_wrapper.h"
-#include "trace.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 
 #ifdef WEBRTC_CODEC_ISAC
 #include "cloopenwebrtc/modules/audio_coding/codecs/isac/main/interface/isac.h"

@@ -11,7 +11,7 @@
 #ifndef WEBRTC_MODULES_AUDIO_CODING_NETEQ_PAYLOAD_SPLITTER_H_
 #define WEBRTC_MODULES_AUDIO_CODING_NETEQ_PAYLOAD_SPLITTER_H_
 
-#include "constructormagic.h"
+#include "../base/constructormagic.h"
 #include "packet.h"
 
 namespace cloopenwebrtc {

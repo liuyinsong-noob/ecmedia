@@ -12,7 +12,7 @@
 
 #include "g711_interface.h"
 #include "acm_common_defs.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 
 // Codec interface.
 

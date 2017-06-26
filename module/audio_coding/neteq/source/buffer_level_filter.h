@@ -11,7 +11,7 @@
 #ifndef WEBRTC_MODULES_AUDIO_CODING_NETEQ_BUFFER_LEVEL_FILTER_H_
 #define WEBRTC_MODULES_AUDIO_CODING_NETEQ_BUFFER_LEVEL_FILTER_H_
 
-#include "constructormagic.h"
+#include "../base/constructormagic.h"
 
 namespace cloopenwebrtc {
 

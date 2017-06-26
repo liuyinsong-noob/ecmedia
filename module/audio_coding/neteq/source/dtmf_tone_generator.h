@@ -12,7 +12,7 @@
 #define WEBRTC_MODULES_AUDIO_CODING_NETEQ_DTMF_TONE_GENERATOR_H_
 
 
-#include "constructormagic.h"
+#include "../base/constructormagic.h"
 #include "audio_multi_vector.h"
 #include "typedefs.h"
 

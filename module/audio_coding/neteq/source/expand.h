@@ -13,9 +13,9 @@
 
 #include <assert.h>
 
-#include "constructormagic.h"
+#include "../base/constructormagic.h"
 #include "audio_multi_vector.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

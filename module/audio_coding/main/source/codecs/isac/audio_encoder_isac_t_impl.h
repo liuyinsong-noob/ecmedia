@@ -14,7 +14,7 @@
 #include "audio_encoder_isac.h"
 
 #include "isac.h"
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 
 namespace cloopenwebrtc{
 

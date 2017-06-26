@@ -14,7 +14,7 @@
 #include <list>
 #include <string>  // size_t
 
-#include "constructormagic.h"
+#include "../base/constructormagic.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

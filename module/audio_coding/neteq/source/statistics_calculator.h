@@ -13,7 +13,7 @@
 
 #include <vector>
 
-#include "constructormagic.h"
+#include "../base/constructormagic.h"
 #include "neteq.h"
 #include "typedefs.h"
 

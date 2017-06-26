@@ -11,13 +11,13 @@
 #ifndef WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_ACM_GENERIC_CODEC_H_
 #define WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_ACM_GENERIC_CODEC_H_
 
-#include "thread_annotations.h"
+#include "../base/thread_annotations.h"
 #include "audio_coding_module_typedefs.h"
 #include "audio_decoder.h"
 #include "acm_common_defs.h"
 #include "neteq.h"
-#include "rw_lock_wrapper.h"
-#include "trace.h"
+#include "../system_wrappers/include/rw_lock_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 
 #define MAX_FRAME_SIZE_10MSEC 6
 

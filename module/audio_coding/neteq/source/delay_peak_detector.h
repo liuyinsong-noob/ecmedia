@@ -15,7 +15,7 @@
 
 #include <list>
 
-#include "constructormagic.h"
+#include "../base/constructormagic.h"
 
 namespace cloopenwebrtc {
 

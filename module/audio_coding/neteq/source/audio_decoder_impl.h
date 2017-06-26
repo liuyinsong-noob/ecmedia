@@ -18,7 +18,7 @@
 // selection is made in the gypi file instead of in engine_configurations.h.
 #include "engine_configurations.h"
 #endif
-#include "constructormagic.h"
+#include "../base/constructormagic.h"
 #include "audio_decoder.h"
 #include "webrtc_cng.h"
 #ifdef WEBRTC_CODEC_G722

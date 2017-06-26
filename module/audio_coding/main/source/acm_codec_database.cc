@@ -20,7 +20,7 @@
 #include <assert.h>
 
 #include "acm_common_defs.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 
 // Includes needed to create the codecs.
 // G711, PCM mu-law and A-law

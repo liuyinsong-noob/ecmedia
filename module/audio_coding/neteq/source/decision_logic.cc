@@ -19,7 +19,7 @@
 #include "expand.h"
 #include "packet_buffer.h"
 #include "sync_buffer.h"
-#include "logging.h"
+#include "../system_wrappers/include/logging.h"
 
 namespace cloopenwebrtc {
 

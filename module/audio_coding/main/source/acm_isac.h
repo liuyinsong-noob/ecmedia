@@ -11,10 +11,10 @@
 #ifndef WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_ACM_ISAC_H_
 #define WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_ACM_ISAC_H_
 
-#include "thread_annotations.h"
+#include "../base/thread_annotations.h"
 #include "audio_decoder.h"
 #include "acm_generic_codec.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 namespace cloopenwebrtc {
 

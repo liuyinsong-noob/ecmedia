@@ -13,11 +13,11 @@
 
 #include <string.h>  // size_t
 
-#include "constructormagic.h"
+#include "../base/constructormagic.h"
 #include "audio_multi_vector.h"
 #include "neteq.h"
-#include "scoped_ptr.h"
-#include "typedefs.h"
+#include "../system_wrappers/include/scoped_ptr.h"
+#include "../module/typedefs.h"
 
 namespace cloopenwebrtc {
 

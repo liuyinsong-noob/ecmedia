@@ -14,15 +14,14 @@
 #include <vector>
 #include <list>
 
-#include "thread_annotations.h"
+#include "../base/thread_annotations.h"
 #include "common_types.h"
 #include "engine_configurations.h"
 #include "acm_codec_database.h"
 #include "acm_receiver.h"
 #include "acm_resampler.h"
-#include "scoped_ptr.h"
 #include "SoundTouch.h"
-
+#include "../system_wrappers/include/scoped_ptr.h"
 
 using namespace cloopensoundtouch;
 

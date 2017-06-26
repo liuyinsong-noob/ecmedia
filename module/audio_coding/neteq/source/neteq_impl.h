@@ -13,8 +13,8 @@
 
 #include <vector>
 
-#include "constructormagic.h"
-#include "thread_annotations.h"
+#include "../base/constructormagic.h"
+#include "../base/thread_annotations.h"
 #include "audio_multi_vector.h"
 #include "defines.h"
 #include "neteq.h"
@@ -22,7 +22,7 @@
 #include "random_vector.h"
 #include "rtcp.h"
 #include "statistics_calculator.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

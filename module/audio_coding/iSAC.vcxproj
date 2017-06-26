@@ -88,7 +88,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;WEBRTC_WIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\main\source\codecs\isac\main\interface;.\main\source\codecs\isac\;.\codecs\;.\codecs\cng\include;../;../common_audio/source/signal_processing/include;..\..\system_wrappers\interface\;..\..\system_wrappers\source\;..\audio_coding\codecs\g729\source</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -120,8 +120,8 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\main\source\codecs\isac\main\interface;.\main\source\codecs\isac\;.\codecs\;.\codecs\cng\include;../;../common_audio/source/signal_processing/include;..\..\system_wrappers\interface\;..\..\system_wrappers\source\</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;WEBRTC_WIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\main\source\codecs\isac\main\interface;.\main\source\codecs\isac\;.\codecs\;.\codecs\cng\include;../;../common_audio/source/signal_processing/include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>

@@ -14,7 +14,7 @@
 #include "pcm16b.h"
 #include "acm_codec_database.h"
 #include "acm_common_defs.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 #endif
 
 namespace cloopenwebrtc {

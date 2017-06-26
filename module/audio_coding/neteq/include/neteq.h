@@ -15,10 +15,10 @@
 
 #include <vector>
 
-#include "constructormagic.h"
-#include "common_types.h"
+#include "../base/constructormagic.h"
+#include "../module/common_types.h"
 #include "audio_decoder_impl.h"
-#include "typedefs.h"
+#include "../module/typedefs.h"
 
 namespace cloopenwebrtc {
 

@@ -13,7 +13,7 @@
 #ifdef WEBRTC_CODEC_AVT
 #include "acm_common_defs.h"
 #include "acm_receiver.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 #endif
 
 namespace cloopenwebrtc {

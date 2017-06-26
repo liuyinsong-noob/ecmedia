@@ -18,7 +18,7 @@
 #include "signal_processing_library.h"
 #include "delay_peak_detector.h"
 #include "module_common_types.h"
-#include "logging.h"
+#include "../system_wrappers/include/logging.h"
 
 namespace cloopenwebrtc {
 

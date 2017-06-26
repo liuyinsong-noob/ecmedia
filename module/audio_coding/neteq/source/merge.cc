@@ -20,7 +20,7 @@
 #include "dsp_helper.h"
 #include "expand.h"
 #include "sync_buffer.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 namespace cloopenwebrtc {
 

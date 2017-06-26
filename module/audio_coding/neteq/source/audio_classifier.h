@@ -21,7 +21,7 @@ extern "C" {
 }
 #endif
 
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

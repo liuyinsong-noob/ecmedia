@@ -15,7 +15,7 @@
 #include "opus_interface.h"
 #include "acm_codec_database.h"
 #include "acm_common_defs.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 #endif
 //#include "ogg/ogg.h"
 #include "include/opus_defines.h"
