@@ -13,7 +13,7 @@
 
 #include <vector>
 
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "desktop_region.h"
 
 namespace cloopenwebrtc {

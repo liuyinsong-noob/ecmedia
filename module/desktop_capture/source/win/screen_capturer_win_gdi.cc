@@ -21,8 +21,8 @@
 #include "cursor.h"
 #include "desktop.h"
 #include "screen_capture_utils.h"
-#include "trace.h"
-#include "tick_util.h"
+#include "../system_wrappers/include/trace.h"
+#include "../system_wrappers/include/tick_util.h"
 
 namespace cloopenwebrtc {
 

@@ -13,7 +13,7 @@
 #include "string.h"
 
 #include "differ_block.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 

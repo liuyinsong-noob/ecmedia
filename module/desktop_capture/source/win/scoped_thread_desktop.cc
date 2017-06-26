@@ -10,7 +10,7 @@
 
 #include "scoped_thread_desktop.h"
 
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 
 #include "desktop.h"
 

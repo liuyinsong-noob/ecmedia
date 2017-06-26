@@ -11,7 +11,7 @@
 #ifndef WEBRTC_MODULES_DESKTOP_CAPTURE_DESKTOP_GEOMETRY_H_
 #define WEBRTC_MODULES_DESKTOP_CAPTURE_DESKTOP_GEOMETRY_H_
 
-#include "constructor_magic.h"
+#include "../base/constructormagic.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

@@ -10,8 +10,8 @@
 
 #include "shared_desktop_frame.h"
 
-#include "scoped_ptr.h"
-#include "atomic32.h"
+#include "../system_wrappers/include/scoped_ptr.h"
+#include "../system_wrappers/include/atomic32.h"
 
 namespace cloopenwebrtc {
 

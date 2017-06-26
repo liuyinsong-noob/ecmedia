@@ -16,7 +16,7 @@
 #include "mouse_cursor.h"
 #include "cursor.h"
 #include "window_capture_utils.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 

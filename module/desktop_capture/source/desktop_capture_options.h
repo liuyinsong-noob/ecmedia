@@ -10,8 +10,8 @@
 #ifndef WEBRTC_MODULES_DESKTOP_CAPTURE_DESKTOP_CAPTURE_OPTIONS_H_
 #define WEBRTC_MODULES_DESKTOP_CAPTURE_DESKTOP_CAPTURE_OPTIONS_H_
 
-#include "constructor_magic.h"
-#include "scoped_refptr.h"
+#include "../base/constructormagic.h"
+#include "../base/scoped_ref_ptr.h"
 
 #if defined(USE_X11)
 #include "cloopenwebrtc/modules/desktop_capture/x11/shared_x_display.h"

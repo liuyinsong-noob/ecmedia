@@ -15,13 +15,13 @@
 #include <magnification.h>
 #include <wincodec.h>
 
-#include "constructor_magic.h"
-#include "scoped_ptr.h"
+#include "../base/constructormagic.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "screen_capture_frame_queue.h"
 #include "screen_capturer.h"
 #include "screen_capturer_helper.h"
 #include "scoped_thread_desktop.h"
-#include "atomic32.h"
+#include "../system_wrappers/include/atomic32.h"
 
 namespace cloopenwebrtc {
 
