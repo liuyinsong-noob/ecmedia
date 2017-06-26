@@ -88,8 +88,8 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./include;./source/test;../;../interface;../../system_wrappers/interface;../rtp_rtcp/source;../rtp_rtcp/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;WEBRTC_WIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>./include;./source/test;../;../interface;../rtp_rtcp/source;../rtp_rtcp/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -120,8 +120,8 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./include;./source/test;../;../interface;../../system_wrappers/interface;../rtp_rtcp/source;../rtp_rtcp/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;WEBRTC_WIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>./include;./source/test;../;../interface;../rtp_rtcp/source;../rtp_rtcp/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -156,26 +156,17 @@
   <ItemGroup>
     <ClInclude Include="include\bwe_defines.h" />
     <ClInclude Include="include\remote_bitrate_estimator.h" />
-    <ClInclude Include="source\aimd_rate_control.h" />
-    <ClInclude Include="source\inter_arrival.h" />
-    <ClInclude Include="source\mimd_rate_control.h" />
-    <ClInclude Include="source\overuse_detector.h" />
-    <ClInclude Include="source\overuse_estimator.h" />
-    <ClInclude Include="source\rate_statistics.h" />
-    <ClInclude Include="source\remote_rate_control.h" />
-    <ClInclude Include="source\test\bwe_test_logging.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\aimd_rate_control.cc" />
-    <ClCompile Include="source\inter_arrival.cc" />
-    <ClCompile Include="source\mimd_rate_control.cc" />
-    <ClCompile Include="source\overuse_detector.cc" />
-    <ClCompile Include="source\overuse_estimator.cc" />
-    <ClCompile Include="source\rate_statistics.cc" />
-    <ClCompile Include="source\remote_bitrate_estimator_abs_send_time.cc" />
-    <ClCompile Include="source\remote_bitrate_estimator_single_stream.cc" />
-    <ClCompile Include="source\remote_rate_control.cc" />
-    <ClCompile Include="source\test\bwe_test_logging.cc" />
+    <ClCompile Include="aimd_rate_control.cc" />
+    <ClCompile Include="bwe_defines.cc" />
+    <ClCompile Include="inter_arrival.cc" />
+    <ClCompile Include="overuse_detector.cc" />
+    <ClCompile Include="overuse_estimator.cc" />
+    <ClCompile Include="remote_bitrate_estimator_abs_send_time.cc" />
+    <ClCompile Include="remote_bitrate_estimator_single_stream.cc" />
+    <ClCompile Include="remote_estimator_proxy.cc" />
+    <ClCompile Include="send_time_history.cc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

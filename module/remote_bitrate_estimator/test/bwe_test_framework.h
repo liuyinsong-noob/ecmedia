@@ -21,13 +21,13 @@
 #include <string>
 #include <vector>
 
-#include "webrtc/modules/interface/module_common_types.h"
-#include "webrtc/modules/pacing/include/paced_sender.h"
-#include "webrtc/modules/remote_bitrate_estimator/test/bwe_test_logging.h"
-#include "webrtc/system_wrappers/interface/clock.h"
-#include "webrtc/system_wrappers/interface/scoped_ptr.h"
+#include "../module/interface/module_common_types.h"
+#include "../module/pacing/paced_sender.h"
+#include "../module/remote_bitrate_estimator/test/bwe_test_logging.h"
+#include "../system_wrappers/include/clock.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
-namespace webrtc {
+namespace cloopenwebrtc {
 namespace testing {
 namespace bwe {
 

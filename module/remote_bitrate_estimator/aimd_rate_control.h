@@ -11,38 +11,44 @@
 #ifndef WEBRTC_MODULES_REMOTE_BITRATE_ESTIMATOR_AIMD_RATE_CONTROL_H_
 #define WEBRTC_MODULES_REMOTE_BITRATE_ESTIMATOR_AIMD_RATE_CONTROL_H_
 
-#include "bwe_defines.h"
-#include "remote_rate_control.h"
+#include "../base/constructormagic.h"
+#include "../module/remote_bitrate_estimator/include/bwe_defines.h"
 
 namespace cloopenwebrtc {
 
-// A RemoteRateControl implementation based on additive increases of
+// A rate control implementation based on additive increases of
 // bitrate when no over-use is detected and multiplicative decreases when
 // over-uses are detected. When we think the available bandwidth has changes or
 // is unknown, we will switch to a "slow-start mode" where we increase
 // multiplicatively.
-class AimdRateControl : public RemoteRateControl {
+class AimdRateControl {
  public:
-  explicit AimdRateControl(uint32_t min_bitrate_bps);
-  virtual ~AimdRateControl() {}
+  AimdRateControl();
+  virtual ~AimdRateControl();
 
-  // Implements RemoteRateControl.
-  virtual bool ValidEstimate() const OVERRIDE;
-  virtual RateControlType GetControlType() const OVERRIDE;
-  virtual uint32_t GetMinBitrate() const OVERRIDE;
-  virtual int64_t GetFeedbackInterval() const OVERRIDE;
+  // Returns true if there is a valid estimate of the incoming bitrate, false
+  // otherwise.
+  bool ValidEstimate() const;
+  void SetStartBitrate(int start_bitrate_bps);
+  void SetMinBitrate(int min_bitrate_bps);
+  int64_t GetFeedbackInterval() const;
   // Returns true if the bitrate estimate hasn't been changed for more than
-  // an RTT, or if the incoming_bitrate is more than 5% above the current
+  // an RTT, or if the incoming_bitrate is less than half of the current
   // estimate. Should be used to decide if we should reduce the rate further
   // when over-using.
-  virtual bool TimeToReduceFurther(
-      int64_t time_now, uint32_t incoming_bitrate_bps) const OVERRIDE;
-  virtual uint32_t LatestEstimate() const OVERRIDE;
-  virtual uint32_t UpdateBandwidthEstimate(int64_t now_ms) OVERRIDE;
-  virtual void SetRtt(int64_t rtt) OVERRIDE;
-  virtual RateControlRegion Update(const RateControlInput* input,
-                                   int64_t now_ms) OVERRIDE;
-  virtual void SetEstimate(int bitrate_bps, int64_t now_ms) OVERRIDE;
+  bool TimeToReduceFurther(int64_t time_now,
+                           uint32_t incoming_bitrate_bps) const;
+  uint32_t LatestEstimate() const;
+  uint32_t UpdateBandwidthEstimate(int64_t now_ms);
+  void SetRtt(int64_t rtt);
+  void Update(const RateControlInput* input, int64_t now_ms);
+  void SetEstimate(int bitrate_bps, int64_t now_ms);
+
+  // Returns the increase rate which is used when used bandwidth is near the
+  // maximal available bandwidth.
+  virtual int GetNearMaxIncreaseRateBps() const;
+
+  virtual cloopenwebrtc::Optional<int> GetLastBitrateDecreaseBps() const;
 
  private:
   // Update the target bitrate according based on, among other things,
@@ -52,13 +58,17 @@ class AimdRateControl : public RemoteRateControl {
   // in the "decrease" state the bitrate will be decreased to slightly below the
   // incoming bitrate. When in the "hold" state the bitrate will be kept
   // constant to allow built up queues to drain.
-  uint32_t ChangeBitrate(uint32_t current_bit_rate,
-                         uint32_t incoming_bit_rate,
+  uint32_t ChangeBitrate(uint32_t current_bitrate,
+                         uint32_t incoming_bitrate,
                          int64_t now_ms);
+  // Clamps new_bitrate_bps to within the configured min bitrate and a linear
+  // function of the incoming bitrate, so that the new bitrate can't grow too
+  // large compared to the bitrate actually being received by the other end.
+  uint32_t ClampBitrate(uint32_t new_bitrate_bps,
+                        uint32_t incoming_bitrate_bps) const;
   uint32_t MultiplicativeRateIncrease(int64_t now_ms, int64_t last_ms,
                                       uint32_t current_bitrate_bps) const;
-  uint32_t AdditiveRateIncrease(int64_t now_ms, int64_t last_ms,
-                                int64_t response_time_ms) const;
+  uint32_t AdditiveRateIncrease(int64_t now_ms, int64_t last_ms) const;
   void UpdateChangePeriod(int64_t now_ms);
   void UpdateMaxBitRateEstimate(float incoming_bit_rate_kbps);
   void ChangeState(const RateControlInput& input, int64_t now_ms);
@@ -68,11 +78,9 @@ class AimdRateControl : public RemoteRateControl {
   uint32_t min_configured_bitrate_bps_;
   uint32_t max_configured_bitrate_bps_;
   uint32_t current_bitrate_bps_;
-  uint32_t max_hold_rate_bps_;
   float avg_max_bitrate_kbps_;
   float var_max_bitrate_kbps_;
   RateControlState rate_control_state_;
-  RateControlState came_from_state_;
   RateControlRegion rate_control_region_;
   int64_t time_last_bitrate_change_;
   RateControlInput current_input_;
@@ -81,10 +89,9 @@ class AimdRateControl : public RemoteRateControl {
   bool bitrate_is_initialized_;
   float beta_;
   int64_t rtt_;
-  int64_t time_of_last_log_;
-
-  DISALLOW_IMPLICIT_CONSTRUCTORS(AimdRateControl);
+  bool in_experiment_;
+  cloopenwebrtc::Optional<int> last_decrease_;
 };
 }  // namespace webrtc
 
-#endif // WEBRTC_MODULES_REMOTE_BITRATE_ESTIMATOR_AIMD_RATE_CONTROL_H_
+#endif  // WEBRTC_MODULES_REMOTE_BITRATE_ESTIMATOR_AIMD_RATE_CONTROL_H_

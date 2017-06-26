@@ -10,7 +10,7 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-include $(LOCAL_PATH)/../../../android-webrtc.mk
+include $(LOCAL_PATH)/../../android-webrtc.mk
 
 LOCAL_ARM_MODE := arm
 LOCAL_MODULE_CLASS := STATIC_LIBRARIES
@@ -20,13 +20,13 @@ LOCAL_CPP_EXTENSION := .cc
 LOCAL_SRC_FILES := \
     aimd_rate_control.cc \
     inter_arrival.cc \
-    mimd_rate_control.cc \
     overuse_detector.cc \
     overuse_estimator.cc \
-    rate_statistics.cc \
+    bwe_defines.cc \
     remote_bitrate_estimator_abs_send_time.cc \
     remote_bitrate_estimator_single_stream.cc \
-    remote_rate_control.cc \
+    remote_estimator_proxy.cc \
+    send_time_history.cc \
     test/bwe_test_logging.cc
     
 # Flags passed to both C and C++ files.
@@ -39,6 +39,7 @@ LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/test \
     $(LOCAL_PATH)/../include \
     $(LOCAL_PATH)/../.. \
+    $(LOCAL_PATH)/.. \
     $(LOCAL_PATH)/../../interface \
     $(LOCAL_PATH)/../../rtp_rtcp/source \
     $(LOCAL_PATH)/../../rtp_rtcp/include \

@@ -14,66 +14,39 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\aimd_rate_control.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="source\inter_arrival.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="source\mimd_rate_control.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="source\overuse_detector.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="source\overuse_estimator.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="source\rate_statistics.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="source\remote_rate_control.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
     <ClInclude Include="include\bwe_defines.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="include\remote_bitrate_estimator.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="source\test\bwe_test_logging.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\aimd_rate_control.cc">
+    <ClCompile Include="aimd_rate_control.cc">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="source\inter_arrival.cc">
+    <ClCompile Include="inter_arrival.cc">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="source\mimd_rate_control.cc">
+    <ClCompile Include="overuse_detector.cc">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="source\overuse_detector.cc">
+    <ClCompile Include="overuse_estimator.cc">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="source\overuse_estimator.cc">
+    <ClCompile Include="remote_bitrate_estimator_abs_send_time.cc">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="source\rate_statistics.cc">
+    <ClCompile Include="remote_bitrate_estimator_single_stream.cc">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="source\remote_bitrate_estimator_abs_send_time.cc">
+    <ClCompile Include="bwe_defines.cc">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="source\remote_bitrate_estimator_single_stream.cc">
+    <ClCompile Include="remote_estimator_proxy.cc">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="source\remote_rate_control.cc">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="source\test\bwe_test_logging.cc">
+    <ClCompile Include="send_time_history.cc">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
