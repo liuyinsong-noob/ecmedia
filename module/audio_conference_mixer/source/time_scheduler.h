@@ -15,7 +15,7 @@
 #ifndef WEBRTC_MODULES_AUDIO_CONFERENCE_MIXER_SOURCE_TIME_SCHEDULER_H_
 #define WEBRTC_MODULES_AUDIO_CONFERENCE_MIXER_SOURCE_TIME_SCHEDULER_H_
 
-#include "tick_util.h"
+#include "../system_wrappers/include/tick_util.h"
 
 namespace cloopenwebrtc {
 class CriticalSectionWrapper;

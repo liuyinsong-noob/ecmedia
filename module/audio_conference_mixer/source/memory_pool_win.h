@@ -14,8 +14,8 @@
 #include <assert.h>
 #include <windows.h>
 
-#include "aligned_malloc.h"
-#include "atomic32.h"
+#include "../system_wrappers/include/aligned_malloc.h"
+#include "../system_wrappers/include/atomic32.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {
