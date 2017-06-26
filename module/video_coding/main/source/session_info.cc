@@ -142,8 +142,7 @@ size_t VCMSessionInfo::InsertBuffer(uint8_t* frame_buffer,
     const uint8_t* nalu_ptr = packet_buffer + kH264NALHeaderLengthInBytes;
     while (nalu_ptr < packet_buffer + packet.sizeBytes) {
       size_t length = BufferToUWord16(nalu_ptr);
-      required_length +=
-          length + (packet.insertStartCode ? kH264StartCodeLengthBytes : 0);
+      required_length += length;
       nalu_ptr += kLengthFieldLength + length;
 	  nalu_count++;
     }
