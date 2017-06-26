@@ -8,11 +8,13 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#ifndef WEBRTC_MODULES_RTP_RTCP_INTERFACE_REMOTE_NTP_TIME_ESTIMATOR_H_
-#define WEBRTC_MODULES_RTP_RTCP_INTERFACE_REMOTE_NTP_TIME_ESTIMATOR_H_
+#ifndef WEBRTC_MODULES_RTP_RTCP_INCLUDE_REMOTE_NTP_TIME_ESTIMATOR_H_
+#define WEBRTC_MODULES_RTP_RTCP_INCLUDE_REMOTE_NTP_TIME_ESTIMATOR_H_
 
-#include "rtp_to_ntp.h"
-#include "scoped_ptr.h"
+#include <memory>
+
+#include "../base/constructormagic.h"
+#include "../system_wrappers/include/rtp_to_ntp_estimator.h"
 
 namespace cloopenwebrtc {
 
@@ -40,12 +42,12 @@ class RemoteNtpTimeEstimator {
 
  private:
   Clock* clock_;
-  scoped_ptr<TimestampExtrapolator> ts_extrapolator_;
-  RtcpList rtcp_list_;
+  std::unique_ptr<TimestampExtrapolator> ts_extrapolator_;
+  RtpToNtpEstimator rtp_to_ntp_;
   int64_t last_timing_log_ms_;
   DISALLOW_COPY_AND_ASSIGN(RemoteNtpTimeEstimator);
 };
 
 }  // namespace webrtc
 
-#endif  // WEBRTC_MODULES_RTP_RTCP_INTERFACE_REMOTE_NTP_TIME_ESTIMATOR_H_
+#endif  // WEBRTC_MODULES_RTP_RTCP_INCLUDE_REMOTE_NTP_TIME_ESTIMATOR_H_

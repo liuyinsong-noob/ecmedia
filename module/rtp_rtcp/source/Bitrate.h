@@ -17,7 +17,7 @@
 
 #include "common_types.h"
 #include "rtp_rtcp_config.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

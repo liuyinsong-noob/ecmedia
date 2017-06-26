@@ -8,11 +8,14 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "rtp_format.h"
+#include "../module/rtp_rtcp/source/rtp_format.h"
 
-#include "rtp_format_h264.h"
-#include "rtp_format_video_generic.h"
-#include "rtp_format_vp8.h"
+#include <utility>
+
+#include "../module/rtp_rtcp/source/rtp_format_h264.h"
+#include "../module/rtp_rtcp/source/rtp_format_video_generic.h"
+#include "../module/rtp_rtcp/source/rtp_format_vp8.h"
+#include "../module/rtp_rtcp/source/rtp_format_vp9.h"
 
 namespace cloopenwebrtc {
 RtpPacketizer* RtpPacketizer::Create(RtpVideoCodecTypes type,
@@ -21,10 +24,15 @@ RtpPacketizer* RtpPacketizer::Create(RtpVideoCodecTypes type,
                                      FrameType frame_type) {
   switch (type) {
     case kRtpVideoH264:
-      return new RtpPacketizerH264(frame_type, max_payload_len);
+      CHECK(rtp_type_header);
+      return new RtpPacketizerH264(max_payload_len,
+                                   rtp_type_header->H264.packetization_mode);
     case kRtpVideoVp8:
-      assert(rtp_type_header != NULL);
+      CHECK(rtp_type_header);
       return new RtpPacketizerVp8(rtp_type_header->VP8, max_payload_len);
+    case kRtpVideoVp9:
+      CHECK(rtp_type_header);
+      return new RtpPacketizerVp9(rtp_type_header->VP9, max_payload_len);
     case kRtpVideoGeneric:
       return new RtpPacketizerGeneric(frame_type, max_payload_len);
     case kRtpVideoNone:
@@ -39,6 +47,8 @@ RtpDepacketizer* RtpDepacketizer::Create(RtpVideoCodecTypes type) {
       return new RtpDepacketizerH264();
     case kRtpVideoVp8:
       return new RtpDepacketizerVp8();
+    case kRtpVideoVp9:
+      return new RtpDepacketizerVp9();
     case kRtpVideoGeneric:
       return new RtpDepacketizerGeneric();
     case kRtpVideoNone:
@@ -46,4 +56,4 @@ RtpDepacketizer* RtpDepacketizer::Create(RtpVideoCodecTypes type) {
   }
   return NULL;
 }
-}  // namespace webrtc
+}  // namespace cloopenwebrtc

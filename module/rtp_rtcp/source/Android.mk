@@ -18,41 +18,77 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_CPP_EXTENSION := .cc
 LOCAL_GENERATED_SOURCES :=
 LOCAL_SRC_FILES := \
-				bitrate.cc \
-        fec_receiver_impl.cc \
+        bitrate.cc \
+        dtmf_queue.cc \
+        flexfec_header_reader_writer.cc \
+        flexfec_receiver.cc \
+        flexfec_sender.cc \
+        forward_error_correction.cc \
+        forward_error_correction_internal.cc \
+        packet_loss_stats.cc \
+        playout_delay_oracle.cc \
         receive_statistics_impl.cc \
         remote_ntp_time_estimator.cc \
-        rtp_header_parser.cc \
-        rtp_rtcp_impl.cc \
+        rtcp_nack_stats.cc \
         rtcp_packet.cc \
         rtcp_receiver.cc \
         rtcp_receiver_help.cc \
         rtcp_sender.cc \
         rtcp_utility.cc \
-        rtp_header_extension.cc \
-        rtp_receiver_impl.cc \
-        rtp_sender.cc \
-        rtp_utility.cc \
-        ssrc_database.cc \
-        tmmbr_help.cc \
-        dtmf_queue.cc \
-        rtp_receiver_audio.cc \
-        rtp_sender_audio.cc \
-        forward_error_correction.cc \
-        forward_error_correction_internal.cc \
-        producer_fec.cc \
-        rtp_packet_history.cc \
-        rtp_payload_registry.cc \
-        rtp_receiver_strategy.cc \
-        rtp_receiver_video.cc \
-        rtp_sender_video.cc \
         rtp_format.cc \
         rtp_format_h264.cc \
-        rtp_format_vp8.cc \
         rtp_format_video_generic.cc \
+        rtp_format_vp8.cc \
+        rtp_format_vp9.cc \
+        rtp_header_extension.cc \
+        rtp_header_extensions.cc \
+        rtp_header_parser.cc \
+        rtp_packet.cc \
+        rtp_packet_history.cc \
+        rtp_payload_registry.cc \
+        rtp_receiver_audio.cc \
+        rtp_receiver_impl.cc \
+        rtp_receiver_strategy.cc \
+        rtp_receiver_video.cc \
+        rtp_rtcp_impl.cc \
+        rtp_sender.cc \
+        rtp_sender_audio.cc \
+        rtp_sender_video.cc \
+        rtp_utility.cc \
+        ssrc_database.cc \
+        time_util.cc \
+        tmmbr_help.cc \
+        ulpfec_generator.cc \
+        ulpfec_header_reader_writer.cc \
+        ulpfec_receiver_impl.cc \
         vp8_partition_aggregator.cc \
-        H264/bitstream_builder.cc \
-        H264/bitstream_parser.cc
+        rtcp_packet/app.cc \
+		rtcp_packet/bye.cc \
+		rtcp_packet/common_header.cc \
+		rtcp_packet/compound_packet.cc \
+		rtcp_packet/dlrr.cc \
+		rtcp_packet/extended_jitter_report.cc \
+		rtcp_packet/extended_reports.cc \
+		rtcp_packet/fir.cc \
+		rtcp_packet/nack.cc \
+		rtcp_packet/pli.cc \
+		rtcp_packet/psfb.cc \
+		rtcp_packet/rapid_resync_request.cc \
+		rtcp_packet/receiver_report.cc \
+		rtcp_packet/remb.cc \
+		rtcp_packet/report_block.cc \
+		rtcp_packet/rpsi.cc \
+		rtcp_packet/rrtr.cc \
+		rtcp_packet/rtpfb.cc \
+		rtcp_packet/sdes.cc \
+		rtcp_packet/sender_report.cc \
+		rtcp_packet/sli.cc \
+		rtcp_packet/target_bitrate.cc \
+		rtcp_packet/tmmb_item.cc \
+		rtcp_packet/tmmbn.cc \
+		rtcp_packet/tmmbr.cc \
+		rtcp_packet/transport_feedback.cc \
+		rtcp_packet/voip_metric.cc
 
 
 # Flags passed to both C and C++ files.

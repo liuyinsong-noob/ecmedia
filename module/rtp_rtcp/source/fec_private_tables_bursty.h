@@ -25,9 +25,10 @@
 // (i.e., more packets/symbols in the code, so larger (k,m), i.e.,  k > 4,
 // m > 3).
 
-#include "typedefs.h"
+#include "../typedefs.h"
 
-namespace {
+namespace cloopenwebrtc {
+namespace fec_private_tables {
 
 const uint8_t kMaskBursty1_1[2] = {
   0x80, 0x00
@@ -756,5 +757,6 @@ const uint8_t** kPacketMaskBurstyTbl[12] = {
   kPacketMaskBursty12
 };
 
-}  // namespace
+}  // namespace fec_private_tables
+}  // namespace cloopenwebrtc
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_FEC_PRIVATE_TABLES_BURSTY_H_

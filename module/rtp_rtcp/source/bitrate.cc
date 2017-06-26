@@ -11,7 +11,7 @@
 #include "bitrate.h"
 
 #include "rtp_utility.h"
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 
 namespace cloopenwebrtc {
 

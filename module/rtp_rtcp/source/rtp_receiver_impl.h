@@ -11,13 +11,14 @@
 #ifndef WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_RECEIVER_IMPL_H_
 #define WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_RECEIVER_IMPL_H_
 
-#include "rtp_receiver.h"
-#include "rtp_rtcp_defines.h"
-#include "rtp_receiver_strategy.h"
-#include "critical_section_wrapper.h"
-#include "scoped_ptr.h"
-#include "typedefs.h"
-#include "clock.h"
+#include <memory>
+
+#include "../base/criticalsection.h"
+#include "../module/rtp_rtcp/include/rtp_receiver.h"
+#include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
+#include "../module/rtp_rtcp/source/rtp_receiver_strategy.h"
+#include "../typedefs.h"
+
 namespace cloopenwebrtc {
 
 class RtpReceiverImpl : public RtpReceiver {
@@ -25,48 +26,36 @@ class RtpReceiverImpl : public RtpReceiver {
   // Callbacks passed in here may not be NULL (use Null Object callbacks if you
   // want callbacks to do nothing). This class takes ownership of the media
   // receiver but nothing else.
-  RtpReceiverImpl(int32_t id,
-                  Clock* clock,
-                  RtpAudioFeedback* incoming_audio_messages_callback,
+  RtpReceiverImpl(int id, Clock* clock,
                   RtpFeedback* incoming_messages_callback,
                   RTPPayloadRegistry* rtp_payload_registry,
                   RTPReceiverStrategy* rtp_media_receiver);
 
   virtual ~RtpReceiverImpl();
 
-  virtual int32_t RegisterReceivePayload(
-      const char payload_name[RTP_PAYLOAD_NAME_SIZE],
-      const int8_t payload_type,
-      const uint32_t frequency,
-      const uint8_t channels,
-      const uint32_t rate) OVERRIDE;
+  int32_t RegisterReceivePayload(const CodecInst& audio_codec) override;
+  int32_t RegisterReceivePayload(const VideoCodec& video_codec) override;
 
-  virtual int32_t DeRegisterReceivePayload(const int8_t payload_type) OVERRIDE;
+  int32_t DeRegisterReceivePayload(const int8_t payload_type) override;
 
-  virtual bool IncomingRtpPacket(
-      const RTPHeader& rtp_header,
-      const uint8_t* payload,
-      size_t payload_length,
-      PayloadUnion payload_specific,
-      bool in_order) OVERRIDE;
-
-  virtual NACKMethod NACK() const OVERRIDE;
-
-  // Turn negative acknowledgement requests on/off.
-  virtual void SetNACKStatus(const NACKMethod method) OVERRIDE;
+  bool IncomingRtpPacket(const RTPHeader& rtp_header,
+                         const uint8_t* payload,
+                         size_t payload_length,
+                         PayloadUnion payload_specific,
+                         bool in_order) override;
 
   // Returns the last received timestamp.
-  virtual bool Timestamp(uint32_t* timestamp) const OVERRIDE;
-  virtual bool LastReceivedTimeMs(int64_t* receive_time_ms) const OVERRIDE;
+  bool Timestamp(uint32_t* timestamp) const override;
+  bool LastReceivedTimeMs(int64_t* receive_time_ms) const override;
 
-  virtual uint32_t SSRC() const OVERRIDE;
+  uint32_t SSRC() const override;
 
-  virtual int32_t CSRCs(uint32_t array_of_csrc[kRtpCsrcSize]) const OVERRIDE;
+  int32_t CSRCs(uint32_t array_of_csrc[kRtpCsrcSize]) const override;
 
-  virtual int32_t Energy(uint8_t array_of_energy[kRtpCsrcSize]) const OVERRIDE;
-  virtual int32_t SetPacketTimeout(const WebRtc_UWord32 timeoutMS) OVERRIDE;
-  virtual void PacketTimeout() OVERRIDE;
-  virtual TelephoneEventHandler* GetTelephoneEventHandler() OVERRIDE;
+  int32_t Energy(uint8_t array_of_energy[kRtpCsrcSize]) const override;
+  int32_t SetPacketTimeout(const WebRtc_UWord32 timeoutMS) override;
+  void PacketTimeout() override;
+  TelephoneEventHandler* GetTelephoneEventHandler() override;
 
  private:
   bool HaveReceivedFrame() const;
@@ -75,19 +64,18 @@ class RtpReceiverImpl : public RtpReceiver {
   void CheckCSRC(const WebRtcRTPHeader& rtp_header);
   int32_t CheckPayloadChanged(const RTPHeader& rtp_header,
                               const int8_t first_payload_byte,
-                              bool& is_red,
-                              PayloadUnion* payload,
-                              bool* should_reset_statistics);
+                              bool* is_red,
+                              PayloadUnion* payload);
 
   Clock* clock_;
   RTPPayloadRegistry* rtp_payload_registry_;
-  scoped_ptr<RTPReceiverStrategy> rtp_media_receiver_;
+  std::unique_ptr<RTPReceiverStrategy> rtp_media_receiver_;
 
   int32_t id_;
 
   RtpFeedback* cb_rtp_feedback_;
 
-  scoped_ptr<CriticalSectionWrapper> critical_section_rtp_receiver_;
+  cloopenwebrtc::CriticalSection critical_section_rtp_receiver_;
   int64_t last_receive_time_;
   size_t last_received_payload_length_;
 
@@ -101,9 +89,6 @@ class RtpReceiverImpl : public RtpReceiver {
   uint16_t last_received_sequence_number_;
   uint32_t            _packetTimeOutMS;
   mutable int64_t    _lastReceiveTime;
-protected:
-    Clock*             _clock;
-  NACKMethod nack_method_;
 };
-}  // namespace webrtc
+}  // namespace cloopenwebrtc
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_RECEIVER_IMPL_H_

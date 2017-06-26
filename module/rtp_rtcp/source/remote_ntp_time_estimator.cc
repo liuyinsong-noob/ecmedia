@@ -8,11 +8,11 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "remote_ntp_time_estimator.h"
+#include "../module/rtp_rtcp/include/remote_ntp_time_estimator.h"
 
-#include "clock.h"
-#include "logging.h"
-#include "timestamp_extrapolator.h"
+#include "../system_wrappers/include/logging.h"
+#include "../system_wrappers/include/clock.h"
+#include "../system_wrappers/include/timestamp_extrapolator.h"
 
 namespace cloopenwebrtc {
 
@@ -33,8 +33,8 @@ bool RemoteNtpTimeEstimator::UpdateRtcpTimestamp(int64_t rtt,
                                                  uint32_t ntp_frac,
                                                  uint32_t rtcp_timestamp) {
   bool new_rtcp_sr = false;
-  if (!UpdateRtcpList(
-      ntp_secs, ntp_frac, rtcp_timestamp, &rtcp_list_, &new_rtcp_sr)) {
+  if (!rtp_to_ntp_.UpdateMeasurements(ntp_secs, ntp_frac, rtcp_timestamp,
+                                      &new_rtcp_sr)) {
     return false;
   }
   if (!new_rtcp_sr) {
@@ -51,12 +51,8 @@ bool RemoteNtpTimeEstimator::UpdateRtcpTimestamp(int64_t rtt,
 }
 
 int64_t RemoteNtpTimeEstimator::Estimate(uint32_t rtp_timestamp) {
-  if (rtcp_list_.size() < 2) {
-    // We need two RTCP SR reports to calculate NTP.
-    return -1;
-  }
   int64_t sender_capture_ntp_ms = 0;
-  if (!RtpToNtpMs(rtp_timestamp, rtcp_list_, &sender_capture_ntp_ms)) {
+  if (!rtp_to_ntp_.Estimate(rtp_timestamp, &sender_capture_ntp_ms)) {
     return -1;
   }
   uint32_t timestamp = sender_capture_ntp_ms * 90;
@@ -68,12 +64,12 @@ int64_t RemoteNtpTimeEstimator::Estimate(uint32_t rtp_timestamp) {
   int64_t now_ms = clock_->TimeInMilliseconds();
   if (now_ms - last_timing_log_ms_ > kTimingLogIntervalMs) {
     LOG(LS_INFO) << "RTP timestamp: " << rtp_timestamp
-                 << " in NTP clock: " << (unsigned long)sender_capture_ntp_ms
-                 << " estimated time in receiver clock: " << (unsigned long)receiver_capture_ms
-                 << " converted to NTP clock: " << (unsigned long)receiver_capture_ntp_ms;
+                 << " in NTP clock: " << sender_capture_ntp_ms
+                 << " estimated time in receiver clock: " << receiver_capture_ms
+                 << " converted to NTP clock: " << receiver_capture_ntp_ms;
     last_timing_log_ms_ = now_ms;
   }
   return receiver_capture_ntp_ms;
 }
 
-}  // namespace webrtc
+}  // namespace cloopenwebrtc
