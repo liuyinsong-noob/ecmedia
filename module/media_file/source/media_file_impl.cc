@@ -10,11 +10,11 @@
 
 #include <assert.h>
 
-#include "critical_section_wrapper.h"
-#include "file_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/file_wrapper.h"
 #include "media_file_impl.h"
-#include "tick_util.h"
-#include "trace.h"
+#include "../system_wrappers/include/tick_util.h"
+#include "../system_wrappers/include/trace.h"
 
 //#if (defined(WIN32) || defined(WINCE))
 //    #define STR_CASE_CMP _stricmp
@@ -450,7 +450,7 @@ WebRtc_Word32 MediaFileImpl::StartPlayingFile(
     bool useStream = (format != kFileFormatAviFile);
     if( useStream)
     {
-        if(inputStream->OpenFile(fileName, true, loop) != 0)
+        if(inputStream->OpenFile(fileName, true) != 0)
         {
             delete inputStream;
             WEBRTC_TRACE(kTraceError, kTraceFile, _id,
