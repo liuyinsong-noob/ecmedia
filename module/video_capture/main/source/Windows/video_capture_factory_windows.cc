@@ -10,7 +10,7 @@
 
 #include "video_capture_ds.h"
 #include "video_capture_mf.h"
-#include "ref_count.h"
+#include "../system_wrappers/include/ref_count.h"
 
 namespace cloopenwebrtc {
 namespace videocapturemodule {

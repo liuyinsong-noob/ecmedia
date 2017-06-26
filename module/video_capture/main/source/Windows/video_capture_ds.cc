@@ -13,8 +13,8 @@
 #include "video_capture_config.h"
 #include "help_functions_ds.h"
 #include "sink_filter_ds.h"
-#include "critical_section_wrapper.h"
-#include "trace.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 
 #include <Dvdmedia.h> // VIDEOINFOHEADER2
 
