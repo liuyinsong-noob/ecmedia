@@ -14,6 +14,8 @@ using namespace videocapturemodule;
 #include "bilteral_filter.h"
 #include "keyframe_detector.h"
 
+//#define DEBUG_CAPTURE_YUV 1
+
 namespace cloopenwebrtc {
     class IVideoRender;
     class VideoRenderCallback;
@@ -51,7 +53,7 @@ namespace cloopenwebrtc {
     // UIView* parentView;
     BilteralFilterCore *bilteralFilter;
     KeyFrameDetectCore *keyframeDector;
-#if 0
+#if DEBUG_CAPTURE_YUV
     FILE *fout;
 #endif
 };

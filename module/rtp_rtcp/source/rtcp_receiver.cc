@@ -1101,10 +1101,13 @@ void
 RTCPReceiver::HandleTMMBN(RTCPUtility::RTCPParserV2& rtcpParser,
                           RTCPPacketInformation& rtcpPacketInformation)
 {
+    //
     const RTCPUtility::RTCPPacket& rtcpPacket = rtcpParser.Packet();
     RTCPReceiveInformation* ptrReceiveInfo = GetReceiveInformation(rtcpPacket.TMMBN.SenderSSRC);
     if (ptrReceiveInfo == NULL)
     {
+        // Even if only receive TMMBN head We also think that received for the reply.
+        rtcpPacketInformation.rtcpPacketTypeFlags |= kRtcpTmmbn;
         // This remote SSRC must be saved before.
         rtcpParser.Iterate();
         return;
@@ -1402,6 +1405,11 @@ void RTCPReceiver::TriggerCallbacksFromRTCPPacket(
       _rtpRtcp.OnReceivedNACK(rtcpPacketInformation.nackSequenceNumbers);
     }
   }
+    // on received tmmbn.
+  if (rtcpPacketInformation.rtcpPacketTypeFlags & kRtcpTmmbn) {
+      _rtpRtcp.OnReceivedTMMBN();
+  }
+    
   {
     CriticalSectionScoped lock(_criticalSectionFeedbacks);
 

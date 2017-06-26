@@ -87,6 +87,7 @@ int NumberOfStreams(const VideoCodec& codec) {
 }
 
 bool ValidSimulcastResolutions(const VideoCodec& codec, int num_streams) {
+	return true;
   if (codec.width != codec.simulcastStream[num_streams - 1].width ||
       codec.height != codec.simulcastStream[num_streams - 1].height) {
     return false;

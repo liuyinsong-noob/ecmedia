@@ -61,6 +61,7 @@ class ViEEncoder
              uint32_t number_of_cores,
              const Config& config,
              ProcessThread& module_process_thread,
+             ProcessThread& module_process_thread_pacer,
              BitrateController* bitrate_controller);
   ~ViEEncoder();
 
@@ -242,6 +243,7 @@ class ViEEncoder
   ViEEncoderObserver* codec_observer_ GUARDED_BY(callback_cs_);
   ViEEffectFilter* effect_filter_ GUARDED_BY(callback_cs_);
   ProcessThread& module_process_thread_;
+    ProcessThread& module_process_thread_pacer_;
 
   bool has_received_sli_ GUARDED_BY(data_cs_);
   uint8_t picture_id_sli_ GUARDED_BY(data_cs_);

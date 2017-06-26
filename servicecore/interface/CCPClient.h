@@ -589,8 +589,15 @@ typedef struct _CALLBACKINTERFACE CCallbackInterface;
     CCPAPI void stopRecordLocalMedia();
     
 	CCPAPI  int setScreeShareActivity(char *callid, void *activity);
-	CCPAPI  int setAudioMagicSoundPara(const char *callid, int pitch, int tempo, int rate);
-	CCPAPI  int setAudioMagicSound(const char *callid, bool is_enable);
+
+	CCPAPI  int sendTmmbr(char *callid, int ssrc);
+	CCPAPI  int setLocalSSRC(unsigned int ssrc);
+	CCPAPI  int cancelTmmbr(char *callid);
+	CCPAPI  int VideoStartReceive(char *callid);
+	CCPAPI  int VideoStopReceive(char *callid);
+    
+    CCPAPI int SetRotateCapturedFrames(char *callid, ECMediaRotateCapturedFrame tr);
+
 #ifdef __cplusplus
 }
 #endif

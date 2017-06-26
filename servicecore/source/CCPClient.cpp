@@ -3620,10 +3620,10 @@ extern "C" int GetStatsData(int type, char* callid, void** pbDataArray, int *pAr
 	return g_pSerCore->GetStatsData(type, callid, pbDataArray, pArraySize);
 }
 
-extern "C" int DeleteStatsData(MediaStatisticsDataInner* pb_data)
+extern "C" int DeleteStatsData(void* pbDataArray)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	g_pSerCore->DeleteStatsData(pb_data);
+	g_pSerCore->DeleteStatsData(pbDataArray);
 	return 0;
 }
 extern "C" int GetBandwidthUsage(const char* callid,
@@ -3869,37 +3869,86 @@ extern "C" int setScreeShareActivity(char *callid, void *activity)
     return 0;
 }
 
-extern "C"  int setAudioMagicSound(const char *callid, bool is_enable)
+extern "C"  int sendTmmbr(char *callid, int ssrc)
 {
-	PrintConsole("[APICall] setAudioMagicSound (callid=%s,is_enable=%d ) \n", callid ? callid : "null", is_enable);
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+	PrintConsole("[APICall sendTmmbr called\n");
 	if (g_pSerCore) {
 		SerPhoneCall *pCall = NULL;
 		int ret = findCall(callid, &pCall);
 		if (ret != 0) {
 			return -1;
 		}
-		g_pSerCore->serphone_audio_enable_magic_sound(pCall, is_enable);
+		g_pSerCore->send_tmmbr_request_video(pCall, ssrc);
 	}
-
 	return 0;
-
 }
 
-extern "C"  int setAudioMagicSoundPara(const char *callid, int pitch, int tempo, int rate)
+extern "C" int setLocalSSRC(unsigned int ssrc)
 {
-	PrintConsole("[APICall] setAudioMagicSound (callid=%s,pitch=%d,tempo=%d,rate=%d) \n", callid ? callid : "null", pitch, tempo, rate);
+	PrintConsole("[APICall] setLocalSSRC (ssrc=%u)\n", ssrc);
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+	g_pSerCore->setLocalSSRC(ssrc);
+}
+
+
+extern "C"  int cancelTmmbr(char *callid)
+{
+	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+	PrintConsole("[APICall sendTmmbr called\n");
 	if (g_pSerCore) {
 		SerPhoneCall *pCall = NULL;
 		int ret = findCall(callid, &pCall);
 		if (ret != 0) {
 			return -1;
 		}
-		g_pSerCore->serphone_audio_set_magic_sound(pCall, pitch, tempo, rate);
+		g_pSerCore->cancel_tmmbr_request_video(pCall);
 	}
-
 	return 0;
-
 }
 
+extern "C"  int VideoStartReceive(char *callid)
+{
+	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+	PrintConsole("[APICall sendTmmbr called\n");
+	if (g_pSerCore) {
+		SerPhoneCall *pCall = NULL;
+		int ret = findCall(callid, &pCall);
+		if (ret != 0) {
+			return -1;
+		}
+		g_pSerCore->video_start_receive(pCall);
+	}
+	return 0;
+}
+
+extern "C"  int VideoStopReceive(char *callid)
+{
+	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+	PrintConsole("[APICall sendTmmbr called\n");
+	if (g_pSerCore) {
+		SerPhoneCall *pCall = NULL;
+		int ret = findCall(callid, &pCall);
+		if (ret != 0) {
+			return -1;
+		}
+		g_pSerCore->video_stop_receive(pCall);
+	}
+	return 0;
+}
+
+
+extern "C" int SetRotateCapturedFrames(char *callid, ECMediaRotateCapturedFrame tr)//int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame tr)
+{
+    SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT)
+    PrintConsole("[APICall %s called, callid %s, rotate %d]", __FUNCTION__, callid, tr);
+    if (g_pSerCore)
+    {
+        SerPhoneCall *pCall = NULL;
+        int ret = findCall(callid, &pCall);
+        if (ret != 0) {
+            return -1;
+        }
+        return g_pSerCore->set_rotate_captured_frames(pCall->m_CaptureDeviceId, tr);
+    }
+}

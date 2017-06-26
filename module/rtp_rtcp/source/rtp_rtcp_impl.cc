@@ -9,10 +9,10 @@
  */
 
 #include "rtp_rtcp_impl.h"
-
+#include "event_wrapper.h"
+#include "thread_wrapper.h"
 #include <assert.h>
 #include <string.h>
-
 #include "common_types.h"
 #include "logging.h"
 #include "trace.h"
@@ -97,7 +97,9 @@ ModuleRtpRtcpImpl::ModuleRtpRtcpImpl(const Configuration& configuration)
       rtt_stats_(configuration.rtt_stats),
       critical_section_rtt_(CriticalSectionWrapper::CreateCriticalSection()),
       rtt_ms_(0),
-      rtp_receiver_(NULL){
+      rtp_receiver_(NULL),
+      isSendingTmmbr(false)
+    {
   send_video_codec_.codecType = kVideoCodecUnknown;
 
   if (default_module_) {
@@ -119,7 +121,7 @@ ModuleRtpRtcpImpl::ModuleRtpRtcpImpl(const Configuration& configuration)
 ModuleRtpRtcpImpl::~ModuleRtpRtcpImpl() {
   // All child modules MUST be deleted before deleting the default.
   assert(child_modules_.empty());
-
+  
   // Deregister for the child modules.
   // Will go in to the default and remove it self.
   if (default_module_) {
@@ -170,9 +172,9 @@ int32_t ModuleRtpRtcpImpl::Process() {
   const int64_t now = clock_->TimeInMilliseconds();
   last_process_time_ = now;
 
-  const int64_t kRtpRtcpBitrateProcessTimeMs = 10; //10ms定时器
+  const int64_t kRtpRtcpBitrateProcessTimeMs = 10; //10ms?疇??
   if (now >= last_bitrate_process_time_ + kRtpRtcpBitrateProcessTimeMs) {
-    rtp_sender_.ProcessBitrate(); //统计各种发送br：total，nack，fec，video
+    rtp_sender_.ProcessBitrate(); //???橑?⒗誦r?total（nack（fec（video
     last_bitrate_process_time_ = now;
   }
     if (now >= last_packet_timeout_process_time_ +
@@ -264,6 +266,13 @@ int32_t ModuleRtpRtcpImpl::Process() {
     }
   }
 
+    // send tmmbr
+    static int time_count = 80;
+    if(isSendingTmmbr && (++time_count  > 100)) {
+        rtcp_sender_.SendSingleTMMBR(tmmbr_bandwidth, tmmbr_ssrc, tmmbr_remote_ssrc);
+        time_count = 0;
+    }
+    
   if (UpdateRTCPReceiveInformationTimers()) {
     // A receiver has timed out
     rtcp_receiver_.UpdateTMMBR();
@@ -1422,6 +1431,23 @@ bool ModuleRtpRtcpImpl::IsDefaultModule() const {
 void ModuleRtpRtcpImpl::SetSendRtcpPacketTypeCountObserver(RtcpPacketTypeCounterObserver *observer)
 {
 	rtcp_sender_.SetRtcpPacketTypeCountObserver(observer);
+}
+
+// send single tmmbr.
+int ModuleRtpRtcpImpl::SendSingleTMMBR(uint32_t bandwidth, uint32_t ssrc, uint32_t remote_ssrc) {
+    
+    LOG_F(LS_WARNING) << "gezhaoyou in function ___ %s ___ begin", __FUNCTION__;
+    tmmbr_bandwidth = bandwidth;
+    tmmbr_ssrc = ssrc;
+    tmmbr_remote_ssrc = remote_ssrc;
+    isSendingTmmbr = true;
+    LOG_F(LS_WARNING) << "gezhaoyou in function ___ %s ___ end", __FUNCTION__;
+    return 0;
+}
+
+// On received TMMBN, stop thread and timer.
+void ModuleRtpRtcpImpl::OnReceivedTMMBN() {
+    isSendingTmmbr = false;
 }
 
 }  // Namespace webrtc

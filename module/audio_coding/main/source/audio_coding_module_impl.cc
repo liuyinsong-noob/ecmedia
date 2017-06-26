@@ -1151,7 +1151,7 @@ int AudioCodingModuleImpl::Add10MsData(
 
   int inputSamples = ptr_frame->samples_per_channel_;
   _soundTouch->putSamples((short *)ptr_audio, inputSamples);
-  short outSamplesBuffer[4096];//96k,stereo,10ms = 3840
+  short outSamplesBuffer[4096];
   int outputSamplesCount = 0;
     
   do {

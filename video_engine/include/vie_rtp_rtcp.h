@@ -91,6 +91,10 @@ class WEBRTC_DLLEXPORT ViERTP_RTCP {
                            const StreamType usage = kViEStreamTypeNormal,
                            const unsigned char simulcast_idx = 0) = 0;
 
+  virtual int RequestRemoteSSRC(const int video_channel, const unsigned int SSRC) = 0;
+
+  virtual int CancelRemoteSSRC(const int video_channel) = 0;
+
   // This function gets the SSRC for the outgoing RTP stream for the specified
   // channel.
   virtual int GetLocalSSRC(const int video_channel,
