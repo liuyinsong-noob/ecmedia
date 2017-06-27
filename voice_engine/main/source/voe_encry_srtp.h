@@ -12,7 +12,7 @@
 
 #include "common_types.h"
 #include "SrtpModule.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 
 //enum ccp_srtp_crypto_suite_t {
 //	CCPAES_128_SHA1_80 = 1,

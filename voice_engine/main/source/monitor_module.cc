@@ -8,8 +8,8 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "critical_section_wrapper.h"
-#include "tick_util.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/tick_util.h"
 #include "monitor_module.h"
 
 namespace cloopenwebrtc  {

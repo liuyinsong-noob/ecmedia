@@ -1,7 +1,7 @@
 #include "audio_receive_stream.h"
 
-#include "timeutils.h"
-#include "trace.h"
+#include "../base/timeutils.h"
+#include "../system_wrappers/include/trace.h"
 #include "voe_codec.h"
 #include "voe_rtp_rtcp.h"
 #include "voe_neteq_stats.h"

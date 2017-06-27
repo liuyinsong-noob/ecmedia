@@ -1,6 +1,6 @@
 #include "audio_send_stream.h"
-#include "trace.h"
-#include "timeutils.h"
+#include "../system_wrappers/include/trace.h"
+#include "../base/timeutils.h"
 
 #include "voe_codec.h"
 #include "voe_rtp_rtcp.h"

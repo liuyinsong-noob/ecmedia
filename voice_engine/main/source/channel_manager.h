@@ -13,10 +13,10 @@
 
 #include <vector>
 
-#include "constructormagic.h"
-#include "atomic32.h"
-#include "critical_section_wrapper.h"
-#include "scoped_ptr.h"
+#include "../base/constructormagic.h"
+#include "../system_wrappers/include/atomic32.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

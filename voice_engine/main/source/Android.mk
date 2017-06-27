@@ -95,6 +95,7 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../../../module/common_audio/source/signal_processing/include \
     $(LOCAL_PATH)/../../../module/audio_device/main/source/android \
     $(LOCAL_PATH)/../../../video_engine/include \
+    $(LOCAL_PATH)/../../../third_party \
 	$(LOCAL_PATH)/../../../third_party/srtp/include \
 	$(LOCAL_PATH)/../../../third_party/srtp/crypto/include \
 	$(LOCAL_PATH)/../../../third_party/srtp \

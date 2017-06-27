@@ -19,7 +19,7 @@
 #endif
 
 #include "audio_coding_module.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 #include "voice_engine_impl.h"
 
 namespace cloopenwebrtc
