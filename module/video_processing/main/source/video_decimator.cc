@@ -10,7 +10,7 @@
 
 #include "video_processing.h"
 #include "video_decimator.h"
-#include "tick_util.h"
+#include "../system_wrappers/include/tick_util.h"
 
 #define VD_MIN(a, b) ((a) < (b)) ? (a) : (b)
 

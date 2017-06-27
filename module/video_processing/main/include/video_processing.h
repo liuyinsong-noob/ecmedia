@@ -18,7 +18,7 @@
 #ifndef WEBRTC_MODULES_INTERFACE_VIDEO_PROCESSING_H
 #define WEBRTC_MODULES_INTERFACE_VIDEO_PROCESSING_H
 
-#include "i420_video_frame.h"
+#include "../common_video/include/i420_video_frame.h"
 #include "module.h"
 #include "module_common_types.h"
 #include "video_processing_defines.h"

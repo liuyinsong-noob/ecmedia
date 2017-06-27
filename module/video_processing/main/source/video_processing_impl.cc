@@ -10,8 +10,8 @@
 
 
 #include "video_processing_impl.h"
-#include "critical_section_wrapper.h"
-#include "logging.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/logging.h"
 
 #include <assert.h>
 

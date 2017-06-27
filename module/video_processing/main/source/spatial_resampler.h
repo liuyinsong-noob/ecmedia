@@ -16,8 +16,8 @@
 #include "module_common_types.h"
 #include "video_processing_defines.h"
 
-#include "scaler.h"
-#include "webrtc_libyuv.h"
+#include "../common_video/source/libyuv/include/scaler.h"
+#include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 
 namespace cloopenwebrtc {
 

@@ -13,7 +13,7 @@
 
 #include <memory>
 
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "module_common_types.h"
 #include "video_processing_defines.h"
 #include "denoiser_filter.h"

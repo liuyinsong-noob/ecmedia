@@ -12,8 +12,8 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include "cpu_features_wrapper.h"
-#include "tick_util.h"
+#include "../system_wrappers/include/cpu_features_wrapper.h"
+#include "../system_wrappers/include/tick_util.h"
 
 namespace cloopenwebrtc {
 
