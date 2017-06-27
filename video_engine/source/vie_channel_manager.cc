@@ -10,12 +10,12 @@
 
 #include "vie_channel_manager.h"
 
-#include "common.h"
+#include "../system_wrappers/include/common.h"
 #include "engine_configurations.h"
 #include "rtp_rtcp.h"
 #include "process_thread.h"
-#include "critical_section_wrapper.h"
-#include "logging.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/logging.h"
 #include "call_stats.h"
 #include "encoder_state_feedback.h"
 #include "vie_channel.h"
@@ -40,7 +40,6 @@ ViEChannelManager::ViEChannelManager(
       voice_sync_interface_(NULL),
       voice_engine_(NULL),
       module_process_thread_(NULL),
-    module_process_thread_pacer_(NULL),
       engine_config_(config),
 	  udptransport_critsect_(CriticalSectionWrapper::CreateCriticalSection()){
   for (int idx = 0; idx < free_channel_ids_size_; idx++) {
@@ -86,16 +85,14 @@ ViEChannelManager::~ViEChannelManager() {
 }
 
 void ViEChannelManager::SetModuleProcessThread(
-    ProcessThread* module_process_thread, ProcessThread* module_process_thread_pacer) {
+    ProcessThread* module_process_thread) {
   assert(!module_process_thread_);
   module_process_thread_ = module_process_thread;
-    assert(!module_process_thread_pacer_);
-    module_process_thread_pacer_ = module_process_thread_pacer;
 }
 
 int ViEChannelManager::CreateChannel(int* channel_id,
-	const Config* channel_group_config) {
-	CriticalSectionScoped cs(channel_id_critsect_);
+                                     const Config* channel_group_config) {
+  CriticalSectionScoped cs(channel_id_critsect_);
 
   // Get a new channel id.
   int new_channel_id = FreeChannelId();
@@ -103,16 +100,15 @@ int ViEChannelManager::CreateChannel(int* channel_id,
     return -1;
   }
 
-	// Create a new channel group and add this channel.
-	ChannelGroup* group = new ChannelGroup(engine_id_, module_process_thread_,
-		channel_group_config);
-	BitrateController* bitrate_controller = group->GetBitrateController();
-	ViEEncoder* vie_encoder = new ViEEncoder(engine_id_, new_channel_id,
-		number_of_cores_,
-		engine_config_,
-		*module_process_thread_,
-        *module_process_thread_pacer_,
-		bitrate_controller);
+  // Create a new channel group and add this channel.
+  ChannelGroup* group = new ChannelGroup(engine_id_, module_process_thread_,
+                                         channel_group_config);
+  BitrateController* bitrate_controller = group->GetBitrateController();
+  ViEEncoder* vie_encoder = new ViEEncoder(engine_id_, new_channel_id,
+                                           number_of_cores_,
+                                           engine_config_,
+                                           *module_process_thread_,
+                                           bitrate_controller);
 
   RtcpBandwidthObserver* bandwidth_observer =
       bitrate_controller->CreateRtcpBandwidthObserver();
@@ -177,9 +173,6 @@ int ViEChannelManager::AddSsrcToEncoder(int channelid)
 	// Register the channel to receive stats updates.
 	group->GetCallStats()->RegisterStatsObserver(
 		channel_map_[channelid]->GetStatsObserver());
-	RemoteBitrateEstimator* remote_bitrate_estimator =
-		group->GetRemoteBitrateEstimator();
-	BitrateController* bitrate_controller = group->GetBitrateController();
 
   //add by ylr
   SendStatisticsProxy *p_sendStats = vie_encoder->GetSendStatisticsProxy();
@@ -188,7 +181,7 @@ int ViEChannelManager::AddSsrcToEncoder(int channelid)
   {
 	  group->GetCallStats()->RegisterStatsObserver(p_sendStats);
 	  p_sendStats->SetRemoteBitrateEstimator(remote_bitrate_estimator);
-	  bitrate_controller->RegisterSendsideBweObserver(p_sendStats);
+	  //bitrate_controller->RegisterSendsideBweObserver(p_sendStats);
   }
   
   
@@ -224,7 +217,6 @@ int ViEChannelManager::CreateChannel(int* channel_id,
     vie_encoder = new ViEEncoder(engine_id_, new_channel_id, number_of_cores_,
                                  engine_config_,
                                  *module_process_thread_,
-                                 *module_process_thread_pacer_,
                                  bitrate_controller);
     if (!(vie_encoder->Init() &&
         CreateChannelObject(
@@ -314,7 +306,7 @@ int ViEChannelManager::DeleteChannel(int channel_id) {
 	{
 		SendStatisticsProxy *p_sendStats = vie_encoder->GetSendStatisticsProxy();
 		group->GetCallStats()->DeregisterStatsObserver(p_sendStats);
-		group->GetBitrateController()->DeregisterSendsideBweObserver();
+		//group->GetBitrateController()->DeregisterSendsideBweObserver();
 	}
 
     // Remove the feedback if we're owning the encoder.
@@ -545,6 +537,8 @@ bool ViEChannelManager::CreateChannelObject(
     delete vie_channel;
     return false;
   }
+
+  vie_encoder->SetTransport(vie_channel->GetVieSender()); //add by ylr.
   // Store the channel, add it to the channel group and save the vie_encoder.
   channel_map_[channel_id] = vie_channel;
   vie_encoder_map_[channel_id] = vie_encoder;

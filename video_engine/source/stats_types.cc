@@ -1,7 +1,7 @@
 #include "stats_types.h"
 
-#include "checks.h"
-#include "stringencode.h"
+#include "../base/checks.h"
+#include "../system_wrappers/source/stringencode.h"
 
 StatsReport::Value::Value(StatsValueName name, int64_t value, Type int_type)
 	:name_(name), type_(int_type)

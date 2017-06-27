@@ -14,8 +14,8 @@
 #include "rtp_sender.h"
 
 #include "rtp_dump.h"
-#include "critical_section_wrapper.h"
-#include "trace.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 
 #include <time.h>
 
@@ -101,7 +101,7 @@ int ViESender::StopRTPDump() {
   return 0;
 }
 
-int ViESender::SendPacket(int vie_id, const void* data, size_t len, int sn) {
+int ViESender::SendRtp(int vie_id, const uint8_t* packet, size_t length, const PacketOptions* options) {
   CriticalSectionScoped cs(critsect_.get());
   if (!transport_) {
     // No transport
@@ -109,9 +109,9 @@ int ViESender::SendPacket(int vie_id, const void* data, size_t len, int sn) {
   }
   assert(ChannelId(vie_id) == channel_id_);
 
-  void* tmp_ptr = const_cast<void*>(data);
+  void* tmp_ptr = (void*)(packet);
   unsigned char* send_packet = static_cast<unsigned char*>(tmp_ptr);
-  int send_packet_length = len;
+  int send_packet_length = length;
 
   if (rtp_dump_) {
     rtp_dump_->DumpPacket(static_cast<const uint8_t*>(send_packet), send_packet_length);
@@ -137,7 +137,7 @@ int ViESender::SendPacket(int vie_id, const void* data, size_t len, int sn) {
         send_packet_length = return_len + 12;
     }
     
-  int bytes_sent = transport_->SendPacket(channel_id_, send_packet, send_packet_length);
+  int bytes_sent = transport_->SendRtp(channel_id_, send_packet, send_packet_length);
 
   if (bytes_sent != send_packet_length) {
 	  WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideo, channel_id_,
@@ -161,7 +161,7 @@ int ViESender::SendPacket(int vie_id, const void* data, size_t len, int sn) {
   return bytes_sent;
 }
 
-int ViESender::SendRTCPPacket(int vie_id, const void* data, size_t len) {
+int ViESender::SendRtcp(int vie_id, const uint8_t* packet, size_t length) {
   CriticalSectionScoped cs(critsect_.get());
   if (!transport_) {
     return -1;
@@ -170,12 +170,12 @@ int ViESender::SendRTCPPacket(int vie_id, const void* data, size_t len) {
 
   // Prepare for possible encryption and sending.
   // TODO(mflodman) Change decrypt to get rid of this cast.
-  void* tmp_ptr = const_cast<void*>(data);
+  void* tmp_ptr = (void*)(packet);
   unsigned char* send_packet = static_cast<unsigned char*>(tmp_ptr);
-  int send_packet_length = len;
+  int send_packet_length = length;
 
   if (rtp_dump_) {
-    rtp_dump_->DumpPacket(static_cast<const uint8_t*>(data), len);
+    rtp_dump_->DumpPacket(packet, length);
   }
 
 //  if (external_encryption_) 
@@ -191,7 +191,7 @@ int ViESender::SendRTCPPacket(int vie_id, const void* data, size_t len) {
 	  send_packet = encryption_buffer_;
   }
 
-  int bytes_sent = transport_->SendRTCPPacket(channel_id_, send_packet, send_packet_length);
+  int bytes_sent = transport_->SendRtcp(channel_id_, send_packet, send_packet_length);
 
   {
 	  CriticalSectionScoped cs(critsect_net_statistic.get());

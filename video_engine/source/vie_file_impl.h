@@ -11,7 +11,7 @@
 #ifndef WEBRTC_VIDEO_ENGINE_VIE_FILE_IMPL_H_
 #define WEBRTC_VIDEO_ENGINE_VIE_FILE_IMPL_H_
 
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 #include "vie_file.h"
 #include "vie_defines.h"

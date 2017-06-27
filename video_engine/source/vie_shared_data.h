@@ -16,7 +16,7 @@
 
 #include <map>
 
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 namespace cloopenwebrtc {
 
@@ -59,7 +59,6 @@ class ViESharedData {
   scoped_ptr<ViEDesktopShareManager> desktop_share_manager_;
 #endif
   ProcessThread* module_process_thread_;
-    ProcessThread* module_process_thread_pacer_;
   mutable int last_error_;
 
   std::map<int, CpuOveruseObserver*> overuse_observers_;

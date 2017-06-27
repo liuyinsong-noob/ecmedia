@@ -13,8 +13,8 @@
 #include <assert.h>
 
 #include "rtp_rtcp_defines.h"
-#include "critical_section_wrapper.h"
-#include "tick_util.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/tick_util.h"
 
 namespace cloopenwebrtc {
 namespace {
@@ -123,7 +123,7 @@ int32_t CallStats::Process() {
   if (max_rtt_ms_ > 0) {
     for (std::list<CallStatsObserver*>::iterator it = observers_.begin();
          it != observers_.end(); ++it) {
-      (*it)->OnRttUpdate(max_rtt_ms_);
+      (*it)->OnRttUpdate(avg_rtt_ms_, max_rtt_ms_);
     }
   }
   return 0;

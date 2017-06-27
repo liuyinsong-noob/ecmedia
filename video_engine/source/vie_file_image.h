@@ -11,7 +11,7 @@
 #ifndef WEBRTC_VIDEO_ENGINE_VIE_FILE_IMAGE_H_
 #define WEBRTC_VIDEO_ENGINE_VIE_FILE_IMAGE_H_
 
-#include "i420_video_frame.h"
+#include "../common_video/include/i420_video_frame.h"
 #include "typedefs.h"
 #include "vie_file.h"
 

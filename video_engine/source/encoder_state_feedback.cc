@@ -13,7 +13,7 @@
 #include <assert.h>
 
 #include "rtp_rtcp_defines.h"
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 #include "vie_encoder.h"
 
 namespace cloopenwebrtc {

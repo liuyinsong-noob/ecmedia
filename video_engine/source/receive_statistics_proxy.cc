@@ -12,10 +12,10 @@
 
 #include <sstream>
 
-#include "clock.h"
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/clock.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 //#include "time.h"
-#include "timeutils.h"
+#include "../base/timeutils.h"
 
 namespace cloopenwebrtc {
 
@@ -159,8 +159,8 @@ void ReceiveStatisticsProxy::DataCountersUpdated(
   post_message(StatsReport::kStatsReportTypeVideoRecv,
   {
 	  StatsReport::Value(StatsReport::kStatsValueNameSsrc, ssrc, StatsReport::Value::kUInt32),
-	  StatsReport::Value(StatsReport::kStatsValueNamePacketsReceived, counters.packets, StatsReport::Value::kUInt32),
-	  StatsReport::Value(StatsReport::kStatsValueNameBytesReceived, counters.bytes, StatsReport::Value::kUInt32),
+	  StatsReport::Value(StatsReport::kStatsValueNamePacketsReceived, counters.transmitted.packets, StatsReport::Value::kUInt32),
+	  StatsReport::Value(StatsReport::kStatsValueNameBytesReceived, counters.transmitted.payload_bytes, StatsReport::Value::kUInt32),
   });
 #endif
 }
@@ -170,7 +170,7 @@ void ReceiveStatisticsProxy::OnDecodedFrame() {
 
   CriticalSectionScoped lock(crit_.get());
   decode_fps_estimator_.Update(1, now);
-  stats_.decoded_framerate = decode_fps_estimator_.Rate(now);
+  //stats_.decoded_framerate = decode_fps_estimator_.Rate(now);
 #ifdef WIN32
   post_message(StatsReport::kStatsReportTypeVideoRecv,
   {
@@ -183,7 +183,7 @@ void ReceiveStatisticsProxy::OnRenderedFrame() {
   uint64_t now = clock_->TimeInMilliseconds();
   CriticalSectionScoped lock(crit_.get());
   renders_fps_estimator_.Update(1, now);
-  stats_.rendered_framerate = renders_fps_estimator_.Rate(now);
+  //stats_.rendered_framerate = renders_fps_estimator_.Rate(now);
 #ifdef WIN32
   post_message(StatsReport::kStatsReportTypeVideoRecv,
   {

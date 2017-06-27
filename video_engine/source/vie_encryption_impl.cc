@@ -10,7 +10,7 @@
 
 #include "vie_encryption_impl.h"
 
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 #include "vie_errors.h"
 #include "vie_channel.h"
 #include "vie_channel_manager.h"

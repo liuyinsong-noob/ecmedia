@@ -13,7 +13,7 @@
 #include "engine_configurations.h"
 #include "video_render.h"
 #include "video_render_defines.h"
-#include "logging.h"
+#include "../system_wrappers/include/logging.h"
 #include "vie_errors.h"
 #include "vie_capturer.h"
 #include "vie_channel.h"
@@ -26,7 +26,7 @@
 #include "vie_renderer.h"
 #include "vie_shared_data.h"
 
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 #ifdef ENABLE_SCREEN_SHARE
 #include "vie_desktop_share_manager.h"
 #endif

@@ -14,28 +14,29 @@
 
 #include <algorithm>
 
-#include "video_image.h"
-#include "webrtc_libyuv.h"
+#include "../common_video/include/video_image.h"
+#include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 #include "frame_callback.h"
-#include "paced_sender.h"
+#include "../pacing/paced_sender.h"
 #include "rtp_rtcp.h"
 #include "process_thread.h"
 #include "video_codec_interface.h"
 #include "video_coding.h"
 #include "video_coding_defines.h"
 #include "encoded_frame.h"
-#include "clock.h"
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/clock.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 #include "logging.h"
-#include "metrics.h"
-#include "tick_util.h"
-#include "trace_event.h"
+#include "../system_wrappers/include/metrics.h"
+#include "../system_wrappers/include/tick_util.h"
+#include "../system_wrappers/include/trace_event.h"
 #include "send_statistics_proxy.h"
 #include "vie_codec.h"
 #include "vie_image_process.h"
 #include "vie_defines.h"
 #include <math.h>
 #include "send_statistics_proxy.h"
+#include "vie_sender.h"
 
 
 namespace cloopenwebrtc {
@@ -114,7 +115,7 @@ class ViEBitrateObserver : public BitrateObserver {
   ViEEncoder* owner_;
 };
 
-class ViEPacedSenderCallback : public PacedSender::Callback {
+class ViEPacedSenderCallback : public PacedSender::PacketSender {
  public:
   explicit ViEPacedSenderCallback(ViEEncoder* owner)
       : owner_(owner) {
@@ -123,11 +124,12 @@ class ViEPacedSenderCallback : public PacedSender::Callback {
   virtual bool TimeToSendPacket(uint32_t ssrc,
                                 uint16_t sequence_number,
                                 int64_t capture_time_ms,
-                                bool retransmission) {
+                                bool retransmission,
+                                const PacedPacketInfo& cluster_info) {
     return owner_->TimeToSendPacket(ssrc, sequence_number, capture_time_ms,
                                     retransmission);
   }
-  virtual size_t TimeToSendPadding(size_t bytes) {
+  virtual size_t TimeToSendPadding(size_t bytes, const PacedPacketInfo& cluster_info) {
     return owner_->TimeToSendPadding(bytes);
   }
 
@@ -143,7 +145,6 @@ ViEEncoder::ViEEncoder(int32_t engine_id,
                        uint32_t number_of_cores,
                        const Config& config,
                        ProcessThread& module_process_thread,
-                       ProcessThread& module_process_thread_pacer,
                        BitrateController* bitrate_controller)
   : engine_id_(engine_id),
     channel_id_(channel_id),
@@ -166,7 +167,6 @@ ViEEncoder::ViEEncoder(int32_t engine_id,
     codec_observer_(NULL),
     effect_filter_(NULL),
     module_process_thread_(module_process_thread),
-    module_process_thread_pacer_(module_process_thread_pacer),
     has_received_sli_(false),
     picture_id_sli_(0),
     has_received_rpsi_(false),
@@ -180,20 +180,16 @@ ViEEncoder::ViEEncoder(int32_t engine_id,
     capture_id_(-1),
 	encoded_packet_observer_(NULL),
 	packet_observer_cs_(CriticalSectionWrapper::CreateCriticalSection()){
+  bitrate_observer_.reset(new ViEBitrateObserver(this));
+  pacing_callback_.reset(new ViEPacedSenderCallback(this));
+  paced_sender_.reset(new PacedSender(Clock::GetRealTimeClock(), pacing_callback_.get()));
+  send_statistics_proxy_.reset(new SendStatisticsProxy(channel_id));
   RtpRtcp::Configuration configuration;
   configuration.id = ViEModuleId(engine_id_, channel_id_);
   configuration.audio = false;  // Video.
+  configuration.paced_sender = paced_sender_.get();
 
   default_rtp_rtcp_.reset(RtpRtcp::CreateRtpRtcp(configuration));
-  bitrate_observer_.reset(new ViEBitrateObserver(this));
-  pacing_callback_.reset(new ViEPacedSenderCallback(this));
-  paced_sender_.reset(new PacedSender(
-      Clock::GetRealTimeClock(),
-      pacing_callback_.get(),
-      kDefaultStartBitrateKbps,
-      PacedSender::kDefaultPaceMultiplier * kDefaultStartBitrateKbps,
-      0));
-  send_statistics_proxy_.reset(new SendStatisticsProxy(channel_id));
 }
 
 bool ViEEncoder::Init() {
@@ -207,7 +203,7 @@ bool ViEEncoder::Init() {
 
   if (module_process_thread_.RegisterModule(&vcm_) != 0 ||
       module_process_thread_.RegisterModule(default_rtp_rtcp_.get()) != 0 ||
-      module_process_thread_pacer_.RegisterModule(paced_sender_.get()) != 0) {
+      module_process_thread_.RegisterModule(paced_sender_.get()) != 0) {
     return false;
   }
 
@@ -237,7 +233,7 @@ bool ViEEncoder::Init() {
     send_padding_ = video_codec.numberOfSimulcastStreams > 1;
   }
   if (vcm_.RegisterSendCodec(&video_codec, number_of_cores_,
-                             default_rtp_rtcp_->MaxDataPayloadLength()) != 0) {
+                             default_rtp_rtcp_->MaxRtpPacketSize()) != 0) {
     return false;
   }
   if (default_rtp_rtcp_->RegisterSendPayload(video_codec) != 0) {
@@ -259,13 +255,13 @@ bool ViEEncoder::Init() {
 ViEEncoder::~ViEEncoder() {
   UpdateHistograms();
   if (bitrate_controller_) {
-    bitrate_controller_->RemoveBitrateObserver(bitrate_observer_.get());
+    //bitrate_controller_->RemoveBitrateObserver(bitrate_observer_.get());
   }
   module_process_thread_.DeRegisterModule(send_statistics_proxy_.get());
   module_process_thread_.DeRegisterModule(&vcm_);
   module_process_thread_.DeRegisterModule(&vpm_);
   module_process_thread_.DeRegisterModule(default_rtp_rtcp_.get());
-  module_process_thread_pacer_.DeRegisterModule(paced_sender_.get());
+  module_process_thread_.DeRegisterModule(paced_sender_.get());  
   VideoCodingModule::Destroy(&vcm_);
   VideoProcessingModule::Destroy(&vpm_);
 
@@ -358,7 +354,7 @@ int32_t ViEEncoder::DeRegisterExternalEncoder(uint8_t pl_type) {
   // encoder.
   if (current_send_codec.plType == pl_type) {
     uint16_t max_data_payload_length =
-        default_rtp_rtcp_->MaxDataPayloadLength();
+        default_rtp_rtcp_->MaxRtpPacketSize();
     {
       CriticalSectionScoped cs(data_cs_.get());
       send_padding_ = current_send_codec.numberOfSimulcastStreams > 1;
@@ -399,10 +395,10 @@ int32_t ViEEncoder::SetEncoder(const cloopenwebrtc::VideoCodec& video_codec) {
       video_codec.startBitrate * 1000,
       video_codec.simulcastStream,
       video_codec.numberOfSimulcastStreams);
-  default_rtp_rtcp_->SetTargetSendBitrate(stream_bitrates);
+  //default_rtp_rtcp_->SetTargetSendBitrate(stream_bitrates);
 
   uint16_t max_data_payload_length =
-      default_rtp_rtcp_->MaxDataPayloadLength();
+      default_rtp_rtcp_->MaxRtpPacketSize();
 
   {
     CriticalSectionScoped cs(data_cs_.get());
@@ -419,22 +415,23 @@ int32_t ViEEncoder::SetEncoder(const cloopenwebrtc::VideoCodec& video_codec) {
     return -1;
   }
 
+#if 0
   bitrate_controller_->SetBitrateObserver(bitrate_observer_.get(),
                                           video_codec.startBitrate * 1000,
                                           video_codec.minBitrate * 1000,
                                           kTransmissionMaxBitrateMultiplier *
                                           video_codec.maxBitrate * 1000);
   bitrate_controller_->SetCodecMode(video_codec.mode);
+#endif
 
   CriticalSectionScoped crit(data_cs_.get());
   int pad_up_to_bitrate_kbps = video_codec.startBitrate;
   if (pad_up_to_bitrate_kbps < min_transmit_bitrate_kbps_)
     pad_up_to_bitrate_kbps = min_transmit_bitrate_kbps_;
 
-  paced_sender_->UpdateBitrate(
-      video_codec.startBitrate,
-      PacedSender::kDefaultPaceMultiplier * video_codec.startBitrate,
-      pad_up_to_bitrate_kbps);
+  paced_sender_->SetEstimatedBitrate(video_codec.startBitrate);
+  paced_sender_->SetSendBitrateLimits(pad_up_to_bitrate_kbps, PacedSender::kDefaultPaceMultiplier * video_codec.startBitrate);
+
   if (send_statistics_proxy_)
   {
 	  send_statistics_proxy_->ConfigEncoderSetting(video_codec);
@@ -484,8 +481,9 @@ bool ViEEncoder::TimeToSendPacket(uint32_t ssrc,
                                   uint16_t sequence_number,
                                   int64_t capture_time_ms,
                                   bool retransmission) {
+  PacedPacketInfo pacedPacketInfo;
   return default_rtp_rtcp_->TimeToSendPacket(ssrc, sequence_number,
-                                             capture_time_ms, retransmission);
+                                             capture_time_ms, retransmission, pacedPacketInfo);
 }
 
 size_t ViEEncoder::TimeToSendPadding(size_t bytes) {
@@ -496,7 +494,8 @@ size_t ViEEncoder::TimeToSendPadding(size_t bytes) {
         send_padding_ || video_suspended_ || min_transmit_bitrate_kbps_ > 0;
   }
   if (send_padding) {
-    return default_rtp_rtcp_->TimeToSendPadding(bytes);
+	PacedPacketInfo pacedPacketInfo;
+    return default_rtp_rtcp_->TimeToSendPadding(bytes, pacedPacketInfo);
   }
   return 0;
 }
@@ -521,11 +520,13 @@ bool ViEEncoder::EncoderPaused() const {
         std::max(static_cast<int>(target_delay_ms_ * kEncoderPausePacerMargin),
                  kMinPacingDelayMs);
   }
+#if 0
   if (paced_sender_->ExpectedQueueTimeMs() >
       PacedSender::kDefaultMaxQueueLengthMs) {
     // Too much data in pacer queue, drop frame.
     return true;
   }
+#endif
   return !network_is_transmitting_;
 }
 
@@ -677,7 +678,7 @@ void ViEEncoder::DeliverFrame(int id,
 }
 
 void ViEEncoder::DelayChanged(int id, int frame_delay) {
-  default_rtp_rtcp_->SetCameraDelay(frame_delay);
+  //default_rtp_rtcp_->SetCameraDelay(frame_delay);
 
   file_recorder_.SetFrameDelay(frame_delay);
 }
@@ -727,6 +728,7 @@ int32_t ViEEncoder::UpdateProtectionMethod(bool enable_nack) {
   uint8_t dummy_ptype_red = 0;
   uint8_t dummy_ptypeFEC = 0;
 
+#if 0
   // Updated protection method to VCM to get correct packetization sizes.
   // FEC has larger overhead than NACK -> set FEC if used.
   int32_t error = default_rtp_rtcp_->GenericFECStatus(fec_enabled,
@@ -735,6 +737,8 @@ int32_t ViEEncoder::UpdateProtectionMethod(bool enable_nack) {
   if (error) {
     return -1;
   }
+#endif
+
   if (fec_enabled_ == fec_enabled && nack_enabled_ == enable_nack) {
     // No change needed, we're already in correct state.
     return 0;
@@ -756,7 +760,7 @@ int32_t ViEEncoder::UpdateProtectionMethod(bool enable_nack) {
     // The send codec must be registered to set correct MTU.
     cloopenwebrtc::VideoCodec codec;
     if (vcm_.SendCodec(&codec) == 0) {
-      uint16_t max_pay_load = default_rtp_rtcp_->MaxDataPayloadLength();
+      uint16_t max_pay_load = default_rtp_rtcp_->MaxRtpPacketSize();
       uint32_t current_bitrate_bps = 0;
       if (vcm_.Bitrate(&current_bitrate_bps) != 0) {
         LOG_F(LS_WARNING) <<
@@ -808,7 +812,7 @@ int32_t ViEEncoder::SendData(
       VCMEncodedFrame::ConvertFrameType(encoded_image._frameType), payload_type,
       encoded_image._timeStamp, encoded_image.capture_time_ms_,
       encoded_image._buffer, encoded_image._length, &fragmentation_header,
-      rtp_video_hdr);
+      rtp_video_hdr, nullptr);
 }
 
 int32_t ViEEncoder::ProtectionRequest(
@@ -825,7 +829,7 @@ int32_t ViEEncoder::ProtectionRequest(
 
 int32_t ViEEncoder::SendStatistics(const uint32_t bit_rate,
                                    const uint32_t frame_rate) {
-  bitrate_controller_->SetBitrateSent(bit_rate);
+  //bitrate_controller_->SetBitrateSent(bit_rate);
   CriticalSectionScoped cs(callback_cs_.get());
   if (codec_observer_) {
     codec_observer_->OutgoingRate(channel_id_, frame_rate, bit_rate);
@@ -1015,11 +1019,10 @@ void ViEEncoder::OnNetworkChanged(uint32_t bitrate_bps,
     if (pad_up_to_bitrate_kbps > bitrate_kbps)
       pad_up_to_bitrate_kbps = bitrate_kbps;
 
-    paced_sender_->UpdateBitrate(
-        bitrate_kbps,
-        PacedSender::kDefaultPaceMultiplier * bitrate_kbps,
-        pad_up_to_bitrate_kbps);
-    default_rtp_rtcp_->SetTargetSendBitrate(stream_bitrates);
+	paced_sender_->SetEstimatedBitrate(bitrate_kbps);
+	paced_sender_->SetSendBitrateLimits(pad_up_to_bitrate_kbps, PacedSender::kDefaultPaceMultiplier * bitrate_kbps);
+
+    //default_rtp_rtcp_->SetTargetSendBitrate(stream_bitrates);
     if (video_suspended_ == video_is_suspended)
       return;
     video_suspended_ = video_is_suspended;
@@ -1061,7 +1064,7 @@ int ViEEncoder::StopDebugRecording() {
 
 void ViEEncoder::SuspendBelowMinBitrate() {
   vcm_.SuspendBelowMinBitrate();
-  bitrate_controller_->EnforceMinBitrate(false);
+  //bitrate_controller_->EnforceMinBitrate(false);
 }
 
 void ViEEncoder::RegisterPreEncodeCallback(
@@ -1118,9 +1121,14 @@ ViEFileRecorder& ViEEncoder::GetOutgoingFileRecorder() {
 	return file_recorder_;
 }
 
+
+void ViEEncoder::SetTransport(ViESender* vie_sender)
+{
+	default_rtp_rtcp_->SetTransport(vie_sender);
+}
 QMVideoSettingsCallback::QMVideoSettingsCallback(VideoProcessingModule* vpm)
     : vpm_(vpm) ,
-	 stats_proxy_(NULL) {
+	 stats_proxy_(NULL){
 }
 
 QMVideoSettingsCallback::~QMVideoSettingsCallback() {

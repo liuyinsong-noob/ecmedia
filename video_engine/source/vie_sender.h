@@ -15,7 +15,7 @@
 
 #include "common_types.h"
 #include "engine_configurations.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 #include "vie_defines.h"
 
@@ -40,8 +40,8 @@ class ViESender: public Transport {
   int StopRTPDump();
 
   // Implements Transport.
-  virtual int SendPacket(int vie_id, const void* data, size_t len, int sn = 0) OVERRIDE;
-  virtual int SendRTCPPacket(int vie_id, const void* data, size_t len) OVERRIDE;
+  int SendRtp(int vie_id, const uint8_t* packet, size_t length, const PacketOptions* options = NULL);
+  int SendRtcp(int vie_id, const uint8_t* packet, size_t length);
 
  private:
   const int32_t channel_id_;

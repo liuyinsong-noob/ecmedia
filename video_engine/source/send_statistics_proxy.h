@@ -17,18 +17,18 @@
 #endif
 #include "module.h"
 
-#include "thread_annotations.h"
+#include "../base/thread_annotations.h"
 #include "common_types.h"
 #include "video_codec_interface.h"
-#include "clock.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/clock.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "vie_capture.h"
 #include "vie_codec.h"
 #include "video_send_stream.h"
 #include "video_coding_defines.h"
 
-#include "event_wrapper.h"
-#include "file_wrapper.h"
+#include "../system_wrappers/include/event_wrapper.h"
+#include "../system_wrappers/include/file_wrapper.h"
 #include "call_stats.h"
 #include "bitrate_controller.h"
 #include "remote_bitrate_estimator.h"
@@ -107,9 +107,9 @@ public:
 
 	// From BitrateStatisticsObserver.
 	//RegisterSendBitrateObserver(int channel, BitrateStatisticsObserver* callback);
-	void Notify(const BitrateStatistics& total_stats,
-		const BitrateStatistics& retransmit_stats,
-		uint32_t ssrc) override;
+	void Notify(uint32_t total_stats,
+		uint32_t retransmit_stats,
+		uint32_t ssrc);
 
 	//From SendSideDelayObserver
 	void SendSideDelayUpdated(int avg_delay_ms,
@@ -151,7 +151,7 @@ public:
 							const uint32_t height);
 
 	//Implement CallStatsObserver
-	virtual void OnRttUpdate(int64_t rtt_ms);
+	virtual void OnRttUpdate(int64_t avg_rtt_ms, int64_t max_rtt_ms);
 
 	//From vie::bucketDelay
 	void OnBucketDelay(int64_t delayInMs);

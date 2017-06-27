@@ -10,7 +10,7 @@
 
 #include <assert.h>
 
-#include "rw_lock_wrapper.h"
+#include "../system_wrappers/include/rw_lock_wrapper.h"
 #include "vie_manager_base.h"
 
 namespace cloopenwebrtc {

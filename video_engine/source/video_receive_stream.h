@@ -13,7 +13,7 @@
 
 #include <string>
 #include "common_types.h"
-#include "config.h"
+#include "../config.h"
 
 namespace cloopenwebrtc {
 
@@ -42,8 +42,8 @@ class VideoReceiveStream {
 		  avg_delay_ms(0) {}
 
     int received_framerate;
-    int decoded_framerate;
-    int rendered_framerate;
+    uint32_t decoded_framerate;
+    uint32_t rendered_framerate;
 	int received_bitrate;
 	int decoder_bitrate;
 

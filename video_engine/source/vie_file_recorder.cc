@@ -12,9 +12,9 @@
 
 #include "file_player.h"
 #include "file_recorder.h"
-#include "critical_section_wrapper.h"
-#include "tick_util.h"
-#include "trace.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/tick_util.h"
+#include "../system_wrappers/include/trace.h"
 #include "vie_defines.h"
 
 namespace cloopenwebrtc {

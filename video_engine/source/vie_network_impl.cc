@@ -25,7 +25,8 @@
 #include "vie_impl.h"
 #include "vie_shared_data.h"
 
-#include "trace.h"
+#include "../system_wrappers/include/logging.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 

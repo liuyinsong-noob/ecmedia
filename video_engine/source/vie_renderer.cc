@@ -10,7 +10,7 @@
 
 #include "vie_renderer.h"
 
-#include "webrtc_libyuv.h"
+#include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 #include "video_render.h"
 #include "video_render_defines.h"
 #include "vie_render_manager.h"

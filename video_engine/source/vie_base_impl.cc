@@ -18,8 +18,8 @@
 #include "video_coding.h"
 #include "video_processing.h"
 #include "video_render.h"
-#include "critical_section_wrapper.h"
-#include "logging.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/logging.h"
 #include "vie_errors.h"
 #include "vie_capturer.h"
 #include "vie_channel.h"
@@ -36,7 +36,7 @@
 #include "video_capture_factory.h"
 #endif
 
-#include "Trace.h"
+#include "../system_wrappers/include/Trace.h"
 
 // Global counter to get an id for each new ViE instance.
 static WebRtc_Word32 g_vie_active_instance_counter = 0;
@@ -227,9 +227,7 @@ int ViEBaseImpl::DeleteChannel(const int video_channel) {
     shared_data_.SetLastError(kViEBaseUnknownError);
     return -1;
   }
-
   LOG(LS_INFO) << "Channel deleted " << video_channel;
-
   return 0;
 }
 

@@ -16,7 +16,7 @@
 
 #include <algorithm>
 
-#include "logging.h"
+#include "../system_wrappers/include/logging.h"
 
 namespace cloopenwebrtc {
 

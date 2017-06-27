@@ -16,7 +16,7 @@
 #include <list>
 
 #include "common_types.h"
-#include "config.h"
+#include "../config.h"
 #include "frame_callback.h"
 #include "video_renderer.h"
 

@@ -14,7 +14,7 @@
 
 #include "engine_configurations.h"
 #include "video_coding.h"
-#include "logging.h"
+#include "../system_wrappers/include/logging.h"
 #include "vie_errors.h"
 #include "vie_capturer.h"
 #include "vie_channel.h"
@@ -146,7 +146,7 @@ int ViECodecImpl::GetCodec(const unsigned char list_number,
 }
 
 int ViECodecImpl::SetSendCodec(const int video_channel,
-                               VideoCodec& video_codec) {
+                               const VideoCodec& video_codec) {
   LOG(LS_INFO) << "SetSendCodec for channel " << video_channel;
   LogCodec(video_codec);
   if (!CodecValid(video_codec)) {
@@ -169,7 +169,6 @@ int ViECodecImpl::SetSendCodec(const int video_channel,
     shared_data_->SetLastError(kViECodecReceiveOnlyChannel);
     return -1;
   }
-
   // Set a max_bitrate if the user hasn't set one.
   VideoCodec video_codec_internal;
   memcpy(&video_codec_internal, &video_codec, sizeof(VideoCodec));

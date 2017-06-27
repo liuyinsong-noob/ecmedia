@@ -14,13 +14,13 @@
 #include <list>
 #include <map>
 
-#include "thread_annotations.h"
+#include "../base/thread_annotations.h"
 #include "common_types.h"
 #include "bitrate_controller.h"
 #include "rtp_rtcp_defines.h"
 #include "video_coding_defines.h"
 #include "video_processing.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 #include "frame_callback.h"
 #include "vie_defines.h"
@@ -45,6 +45,7 @@ class ViEEncoderObserver;
 class VideoCodingModule;
 class ViEPacedSenderCallback;
 class VideoEncoderRateObserver;
+class ViESender;
 
 class ViEEncoder
     : public RtcpIntraFrameObserver,
@@ -61,7 +62,6 @@ class ViEEncoder
              uint32_t number_of_cores,
              const Config& config,
              ProcessThread& module_process_thread,
-             ProcessThread& module_process_thread_pacer,
              BitrateController* bitrate_controller);
   ~ViEEncoder();
 
@@ -193,6 +193,8 @@ class ViEEncoder
 
   int channel_id() const { return channel_id_; }
   void setFrameScaleType(FrameScaleType frame_scale_type);
+
+  void SetTransport(ViESender *vie_sender);
  protected:
   // Called by BitrateObserver.
   void OnNetworkChanged(uint32_t bitrate_bps,
@@ -243,7 +245,6 @@ class ViEEncoder
   ViEEncoderObserver* codec_observer_ GUARDED_BY(callback_cs_);
   ViEEffectFilter* effect_filter_ GUARDED_BY(callback_cs_);
   ProcessThread& module_process_thread_;
-    ProcessThread& module_process_thread_pacer_;
 
   bool has_received_sli_ GUARDED_BY(data_cs_);
   uint8_t picture_id_sli_ GUARDED_BY(data_cs_);

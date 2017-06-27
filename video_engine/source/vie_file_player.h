@@ -16,15 +16,15 @@
 
 #include "common_types.h"
 #include "media_file_defines.h"
-#include "file_wrapper.h"
+#include "../system_wrappers/include/file_wrapper.h"
 #include "typedefs.h"
 #include "vie_frame_provider_base.h"
 
-#include "i420_video_frame.h"
+#include "../common_video/include/i420_video_frame.h"
 
 namespace cloopenwebrtc {
 
-class EventWrapper;
+class EventTimerWrapper;
 class FilePlayer;
 class ThreadWrapper;
 class ViEFileObserver;
@@ -123,7 +123,7 @@ class ViEFilePlayer
 
   // Thread for decoding video (and audio if no audio clients connected).
   ThreadWrapper* decode_thread_;
-  EventWrapper* decode_event_;
+  EventTimerWrapper* decode_event_;
   WebRtc_Word16 decoded_audio_[kMaxDecodedAudioLength];
   int decoded_audio_length_;
 

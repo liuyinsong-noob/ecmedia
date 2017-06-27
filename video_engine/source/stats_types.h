@@ -3,7 +3,7 @@
 #include <map>
 #include <vector>
 #include <list>
-#include "linked_ptr.h"
+#include "../system_wrappers/include/linked_ptr.h"
 
 enum StatsCollectorMode {
 	StatsCollectorModeAll,

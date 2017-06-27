@@ -1,6 +1,6 @@
 
 #include "vie_desktop_share_impl.h" 
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 #include "vie_errors.h"
 #include "vie_capturer.h"
 #include "vie_channel.h"

@@ -22,12 +22,12 @@
 #include "rtp_rtcp.h"
 #include "rtp_dump.h"
 #include "video_coding.h"
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 #include "logging.h"
-#include "metrics.h"
-#include "tick_util.h"
-#include "timestamp_extrapolator.h"
-#include "trace.h"
+#include "../system_wrappers/include/metrics.h"
+#include "../system_wrappers/include/tick_util.h"
+#include "../system_wrappers/include/timestamp_extrapolator.h"
+#include "../system_wrappers/include/trace.h"
 
 
 namespace cloopenwebrtc {
@@ -51,7 +51,7 @@ ViEReceiver::ViEReceiver(const int32_t channel_id,
                                            rtp_feedback,
                                            rtp_payload_registry_.get())),
       rtp_receive_statistics_(ReceiveStatistics::Create(clock_)),
-      fec_receiver_(FecReceiver::Create(this)),
+      //fec_receiver_(FecReceiver::Create(this)),
       rtp_rtcp_(NULL),
       vcm_(module_vcm),
       remote_bitrate_estimator_(remote_bitrate_estimator),
@@ -86,6 +86,9 @@ ViEReceiver::~ViEReceiver() {
 }
 
 void ViEReceiver::UpdateHistograms() {
+  if (fec_receiver_ == NULL)
+    return;
+  
   FecPacketCounter counter = fec_receiver_->GetPacketCounter();
   if (counter.num_packets > 0) {
     RTC_HISTOGRAM_PERCENTAGE("WebRTC.Video.ReceivedFecPacketsInPercent",
@@ -100,11 +103,7 @@ void ViEReceiver::UpdateHistograms() {
 
 bool ViEReceiver::SetReceiveCodec(const VideoCodec& video_codec) {
   int8_t old_pltype = -1;
-  if (rtp_payload_registry_->ReceivePayloadType(video_codec.plName,
-                                                kVideoPayloadTypeFrequency,
-                                                0,
-                                                video_codec.maxBitrate,
-                                                &old_pltype) != -1) {
+  if (rtp_payload_registry_->ReceivePayloadType(video_codec, &old_pltype) != -1) {
     rtp_payload_registry_->DeRegisterReceivePayload(old_pltype);
   }
 
@@ -112,11 +111,7 @@ bool ViEReceiver::SetReceiveCodec(const VideoCodec& video_codec) {
 }
 
 bool ViEReceiver::RegisterPayload(const VideoCodec& video_codec) {
-  return rtp_receiver_->RegisterReceivePayload(video_codec.plName,
-                                               video_codec.plType,
-                                               kVideoPayloadTypeFrequency,
-                                               0,
-                                               video_codec.maxBitrate) == 0;
+  return rtp_receiver_->RegisterReceivePayload(video_codec) == 0;
 }
 
 void ViEReceiver::SetNackStatus(bool enable,
@@ -128,11 +123,11 @@ void ViEReceiver::SetNackStatus(bool enable,
   }
   rtp_receive_statistics_->SetMaxReorderingThreshold(
       max_nack_reordering_threshold);
-  rtp_receiver_->SetNACKStatus(enable ? kNackRtcp : kNackOff);
+  //rtp_receiver_->SetNACKStatus(enable ? kNackRtcp : kNackOff);
 }
 
 void ViEReceiver::SetRtxPayloadType(int payload_type) {
-  rtp_payload_registry_->SetRtxPayloadType(payload_type);
+  //rtp_payload_registry_->SetRtxPayloadType(payload_type);
 }
 
 void ViEReceiver::SetRtxSsrc(uint32_t ssrc) {
@@ -373,7 +368,7 @@ bool ViEReceiver::ParseAndHandleEncapsulatingHeader(const uint8_t* packet,
   if (rtp_payload_registry_->IsRed(header)) {
     int8_t ulpfec_pt = rtp_payload_registry_->ulpfec_payload_type();
     if (packet[header.headerLength] == ulpfec_pt)
-      rtp_receive_statistics_->FecPacketReceived(header.ssrc);
+      //rtp_receive_statistics_->FecPacketReceived(header.ssrc);
     if (fec_receiver_->AddReceivedRedPacket(
             header, packet, packet_length, ulpfec_pt) != 0) {
       return false;
@@ -397,7 +392,7 @@ bool ViEReceiver::ParseAndHandleEncapsulatingHeader(const uint8_t* packet,
     }
     uint8_t* restored_packet_ptr = restored_packet_;
     if (!rtp_payload_registry_->RestoreOriginalPacket(
-        &restored_packet_ptr, packet, &packet_length, rtp_receiver_->SSRC(),
+        restored_packet_ptr, packet, &packet_length, rtp_receiver_->SSRC(),
         header)) {
       LOG(LS_WARNING) << "Incoming RTX packet: Invalid RTP header";
       return false;

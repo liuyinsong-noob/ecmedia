@@ -17,10 +17,10 @@
 #include <list>
 #include <map>
 
-#include "exp_filter.h"
-#include "clock.h"
-#include "critical_section_wrapper.h"
-#include "logging.h"
+#include "../system_wrappers/include/exp_filter.h"
+#include "../system_wrappers/include/clock.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/logging.h"
 
 namespace cloopenwebrtc {
 

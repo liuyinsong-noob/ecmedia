@@ -11,11 +11,11 @@
 #include "vie_file_player.h"
 
 #include "file_player.h"
-#include "critical_section_wrapper.h"
-#include "event_wrapper.h"
-#include "thread_wrapper.h"
-#include "tick_util.h"
-#include "trace.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/event_wrapper.h"
+#include "../system_wrappers/include/thread_wrapper.h"
+#include "../system_wrappers/include/tick_util.h"
+#include "../system_wrappers/include/trace.h"
 #include "vie_file.h"
 #include "vie_input_manager.h"
 #include "voe_base.h"
@@ -91,7 +91,7 @@ int ViEFilePlayer::Init(const char* file_nameUTF8,
     return -1;
   }
 
-  decode_event_ = EventWrapper::Create();
+  decode_event_ = EventTimerWrapper::Create();
   if (!decode_event_) {
     WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, id_),
                  "ViEFilePlayer::StartPlay() failed to allocate event");

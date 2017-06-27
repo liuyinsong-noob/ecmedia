@@ -16,7 +16,7 @@
 //#include "webrtc/engine_configurations.h"
 #include "receive_statistics.h"
 #include "rtp_rtcp_defines.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 #include "vie_network.h"
 #include "vie_defines.h"

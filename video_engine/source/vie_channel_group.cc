@@ -10,15 +10,16 @@
 
 #include "vie_channel_group.h"
 
-#include "thread_annotations.h"
-#include "common.h"
+#include "../base/thread_annotations.h"
+#include "../system_wrappers/include/common.h"
 #include "experiments.h"
 #include "bitrate_controller.h"
 #include "remote_bitrate_estimator.h"
+#include "../module/remote_bitrate_estimator/remote_bitrate_estimator_abs_send_time.h"
 #include "rtp_rtcp.h"
 #include "process_thread.h"
-#include "critical_section_wrapper.h"
-#include "logging.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/logging.h"
 #include "call_stats.h"
 #include "encoder_state_feedback.h"
 #include "vie_channel.h"
@@ -41,11 +42,7 @@ class WrappingBitrateEstimator : public RemoteBitrateEstimator {
         crit_sect_(CriticalSectionWrapper::CreateCriticalSection()),
         engine_id_(engine_id),
         min_bitrate_bps_(config.Get<RemoteBitrateEstimatorMinRate>().min_rate),
-        rate_control_type_(kAimdControl),
-        rbe_(RemoteBitrateEstimatorFactory().Create(observer_,
-                                                    clock_,
-                                                    rate_control_type_,
-                                                    min_bitrate_bps_)),
+        rbe_(new cloopenwebrtc::RemoteBitrateEstimatorAbsSendTime(observer, clock)),
         using_absolute_send_time_(false),
         packets_since_absolute_send_time_(0) {
   }
@@ -70,9 +67,9 @@ class WrappingBitrateEstimator : public RemoteBitrateEstimator {
     return rbe_->TimeUntilNextProcess();
   }
 
-  virtual void OnRttUpdate(int64_t rtt) OVERRIDE {
+  virtual void OnRttUpdate(int64_t avg_rtt, int64_t max_rtt) OVERRIDE {
     CriticalSectionScoped cs(crit_sect_.get());
-    rbe_->OnRttUpdate(rtt);
+    rbe_->OnRttUpdate(avg_rtt, max_rtt);
   }
 
   virtual void RemoveStream(unsigned int ssrc) OVERRIDE {
@@ -86,6 +83,10 @@ class WrappingBitrateEstimator : public RemoteBitrateEstimator {
     return rbe_->LatestEstimate(ssrcs, bitrate_bps);
   }
 
+  virtual void SetMinBitrate(int min_bitrate_bps) OVERRIDE {
+      //min_bitrate_bps_ = min_bitrate_bps;
+  }
+
   virtual bool GetStats(ReceiveBandwidthEstimatorStats* output) const OVERRIDE {
     CriticalSectionScoped cs(crit_sect_.get());
     return rbe_->GetStats(output);
@@ -93,13 +94,6 @@ class WrappingBitrateEstimator : public RemoteBitrateEstimator {
 
   void SetConfig(const cloopenwebrtc::Config& config) {
     CriticalSectionScoped cs(crit_sect_.get());
-    RateControlType new_control_type =
-        config.Get<AimdRemoteRateControl>().enabled ? kAimdControl :
-                                                      kMimdControl;
-    if (new_control_type != rate_control_type_) {
-      rate_control_type_ = new_control_type;
-      PickEstimator();
-    }
   }
 
  private:
@@ -111,7 +105,7 @@ class WrappingBitrateEstimator : public RemoteBitrateEstimator {
         LOG(LS_INFO) <<
             "WrappingBitrateEstimator: Switching to absolute send time RBE.";
         using_absolute_send_time_ = true;
-        PickEstimator();
+        //PickEstimator();
       }
       packets_since_absolute_send_time_ = 0;
     } else {
@@ -122,20 +116,9 @@ class WrappingBitrateEstimator : public RemoteBitrateEstimator {
           LOG(LS_INFO) << "WrappingBitrateEstimator: Switching to transmission "
                        << "time offset RBE.";
           using_absolute_send_time_ = false;
-          PickEstimator();
+          //PickEstimator();
         }
       }
-    }
-  }
-
-  // Instantiate RBE for Time Offset or Absolute Send Time extensions.
-  void PickEstimator() EXCLUSIVE_LOCKS_REQUIRED(crit_sect_.get()) {
-    if (using_absolute_send_time_) {
-      rbe_.reset(AbsoluteSendTimeRemoteBitrateEstimatorFactory().Create(
-          observer_, clock_, rate_control_type_, min_bitrate_bps_));
-    } else {
-      rbe_.reset(RemoteBitrateEstimatorFactory().Create(
-          observer_, clock_, rate_control_type_, min_bitrate_bps_));
     }
   }
 
@@ -144,7 +127,6 @@ class WrappingBitrateEstimator : public RemoteBitrateEstimator {
   scoped_ptr<CriticalSectionWrapper> crit_sect_;
   const int engine_id_;
   const uint32_t min_bitrate_bps_;
-  RateControlType rate_control_type_;
   scoped_ptr<RemoteBitrateEstimator> rbe_;
   bool using_absolute_send_time_;
   uint32_t packets_since_absolute_send_time_;
@@ -159,7 +141,7 @@ ChannelGroup::ChannelGroup(int engine_id,
     : remb_(new VieRemb()),
       bitrate_controller_(
           BitrateController::CreateBitrateController(Clock::GetRealTimeClock(),
-                                                     true)),
+                                                     NULL)),
       call_stats_(new CallStats()),
       encoder_state_feedback_(new EncoderStateFeedback()),
       config_(config),

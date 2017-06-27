@@ -17,17 +17,17 @@
 #endif
 #include "module.h"
 
-#include "thread_annotations.h"
+#include "../base/thread_annotations.h"
 #include "common_types.h"
 #include "frame_callback.h"
-#include "rate_statistics.h"
+#include "../base/rate_statistics.h"
 #include "video_coding_defines.h"
 #include "vie_codec.h"
 #include "vie_rtp_rtcp.h"
 #include "video_receive_stream.h"
 #include "video_renderer.h"
 #include "video_render_defines.h"
-#include "event_wrapper.h"
+#include "../system_wrappers/include/event_wrapper.h"
 //#include "file_wrapper.h"
 #include "stats_types.h"
 

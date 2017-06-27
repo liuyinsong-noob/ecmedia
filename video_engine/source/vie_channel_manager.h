@@ -15,7 +15,7 @@
 #include <map>
 
 #include "engine_configurations.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 #include "vie_rtp_rtcp.h"
 #include "vie_channel_group.h"
@@ -49,7 +49,7 @@ class ViEChannelManager: private ViEManagerBase {
                     const Config& config);
   ~ViEChannelManager();
 
-  void SetModuleProcessThread(ProcessThread* module_process_thread, ProcessThread* module_process_thread_pacer);
+  void SetModuleProcessThread(ProcessThread* module_process_thread);
 
   // Creates a new channel. 'channel_id' will be the id of the created channel.
   int CreateChannel(int* channel_id,
@@ -151,7 +151,6 @@ class ViEChannelManager: private ViEManagerBase {
 
   VoiceEngine* voice_engine_;
   ProcessThread* module_process_thread_;
-    ProcessThread* module_process_thread_pacer_;
   const Config& engine_config_;
 
   // Protects udpstransport_map_.

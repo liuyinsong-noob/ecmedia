@@ -23,7 +23,7 @@ namespace cloopenwebrtc {
 class VideoEngine;
 class VCMFrameStorageCallback;
     
-struct VideoCodec;
+class VideoCodec;
 
 // This structure contains picture data and describes the picture type.
 struct ViEPicture {

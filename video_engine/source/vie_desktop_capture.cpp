@@ -9,11 +9,11 @@
 #include "screen_capturer_win_gdi.h"
 #endif
 #include "desktop_capturer.h"
-#include "webrtc_libyuv.h"
-#include "trace.h"
-#include "event_wrapper.h"
-#include "thread_wrapper.h"
-#include "tick_util.h"
+#include "../common_video/source/libyuv/include/webrtc_libyuv.h"
+#include "../system_wrappers/include/trace.h"
+#include "../system_wrappers/include/event_wrapper.h"
+#include "../system_wrappers/include/thread_wrapper.h"
+#include "../system_wrappers/include/tick_util.h"
 #include "vie_encoder.h"
 #if __APPLE__
 #include "window_capturer_ios.h"
@@ -52,7 +52,7 @@ VieDesktopCapturer::VieDesktopCapturer(int id,int engine_id):
     desktop_capture_thread_(*ThreadWrapper::CreateThread(ViEDesktopCaptureThreadFunction,
     this, kRealtimePriority,
     "ViEDesktopCaptureThread")),
-    desktop_capture_event_(*EventWrapper::Create()),
+    desktop_capture_event_(*EventTimerWrapper::Create()),
     thread_wait_time_ms_(100),
     wait_time_cs_(CriticalSectionWrapper::CreateCriticalSection()),
 	capture_err_code_cb_(NULL), 
@@ -152,7 +152,7 @@ void VieDesktopCapturer::OnCaptureCompleted(DesktopFrame* frame, CaptureErrCode 
 		0, 0,  // No cropping
 		width, height,
 		CalcBufferSize(src_video_type, width, height),
-		kRotateNone,
+		kVideoRotation_0,
 		share_frame_.get());
     
 	if (conversionResult < 0)

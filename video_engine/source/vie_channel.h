@@ -17,9 +17,9 @@
 #include "rtp_rtcp.h"
 #include "rtp_rtcp_defines.h"
 #include "video_coding_defines.h"
-#include "critical_section_wrapper.h"
-#include "scoped_ptr.h"
-#include "tick_util.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/scoped_ptr.h"
+#include "../system_wrappers/include/tick_util.h"
 #include "typedefs.h"
 #include "vie_network.h"
 #include "vie_rtp_rtcp.h"
@@ -29,7 +29,7 @@
 #include "vie_sender.h"
 #include "vie_sync_module.h"
 
-#include "thread_annotations.h"
+#include "../base/thread_annotations.h"
 //#include "StunMessageCallBack.h"
 #include "udp_transport.h"
 #include "vie_file_recorder.h"
@@ -152,8 +152,8 @@ class ViEChannel
   // key frames.
   int32_t SetSignalPacketLossStatus(bool enable, bool only_key_frames);
 
-  void SetRTCPMode(const RTCPMethod rtcp_mode);
-  RTCPMethod GetRTCPMode() const;
+  void SetRTCPMode(const RtcpMode rtcp_mode);
+  RtcpMode GetRTCPMode() const;
   int32_t SetNACKStatus(const bool enable);
   int32_t SetFECStatus(const bool enable,
                        const unsigned char payload_typeRED,
@@ -309,7 +309,7 @@ class ViEChannel
   int32_t GetLocalReceiver(uint16_t& rtp_port,
 						  uint16_t& rtcp_port,
 						  char* ip_address) const;
-	int32_t SetSocks5SendData(unsigned char *data, int length, bool isRTCP);
+  int32_t SetSocks5SendData(unsigned char *data, int length, bool isRTCP);
   int32_t SetSendDestination(const char *rtp_ip_address, const uint16_t rtp_port, const char *rtcp_ip_address, const uint16_t rtcp_port, const uint16_t source_rtp_port, const uint16_t source_rtcp_port);
   /* int32_t GetSendDestination(char* ip_address,
   uint16_t* rtp_port,
@@ -420,7 +420,8 @@ class ViEChannel
   void ReceivedBWEPacket(int64_t arrival_time_ms, size_t payload_size,
                          const RTPHeader& header);
   ViEReceiver *GetReceiver() { return &vie_receiver_ ; }
-
+  ViESender	*GetVieSender() { return &vie_sender_; } //add by ylr;
+  RtpRtcp::Configuration CreateRtpRtcpConfiguration();
   
  protected:
   static bool ChannelDecodeThreadFunction(void* obj);
@@ -480,8 +481,8 @@ class ViEChannel
 
   class RegisterableBitrateStatisticsObserver:
     public RegisterableCallback<BitrateStatisticsObserver> {
-    virtual void Notify(const BitrateStatistics& total_stats,
-                        const BitrateStatistics& retransmit_stats,
+    virtual void Notify(uint32_t total_stats,
+                        uint32_t retransmit_stats,
                         uint32_t ssrc) {
       CriticalSectionScoped cs(critsect_.get());
       if (callback_)
