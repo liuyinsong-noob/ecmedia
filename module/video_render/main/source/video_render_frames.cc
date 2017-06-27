@@ -12,10 +12,10 @@
 
 #include <assert.h>
 
-#include "texture_video_frame.h"
+#include "../common_video/include/texture_video_frame.h"
 #include "module_common_types.h"
-#include "tick_util.h"
-#include "trace.h"
+#include "../system_wrappers/include/tick_util.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 
