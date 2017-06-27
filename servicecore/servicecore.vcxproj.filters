@@ -182,7 +182,7 @@
     <ClCompile Include="..\video_engine\source\stats_types.cc">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\system_wrappers\source\checks.cc">
+    <ClCompile Include="..\base\checks.cc">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

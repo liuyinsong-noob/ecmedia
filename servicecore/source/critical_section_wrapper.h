@@ -14,7 +14,7 @@
 // If the critical section is heavily contended it may be beneficial to use
 // read/write locks instead.
 
-#include "thread_annotations.h"
+#include "../base/thread_annotations.h"
 #include "common_types.h"
 
 namespace cloopenwebrtc {
