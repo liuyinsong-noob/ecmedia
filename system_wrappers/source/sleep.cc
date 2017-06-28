@@ -9,7 +9,7 @@
  */
 // An OS-independent sleep function.
 
-#include "sleep.h"
+#include "../system_wrappers/include/sleep.h"
 
 #ifdef _WIN32
 // For Sleep()
@@ -33,4 +33,4 @@ void SleepMs(int msecs) {
 #endif
 }
 
-}  // namespace webrtc
+}  // namespace cloopenwebrtc

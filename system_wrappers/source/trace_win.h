@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <windows.h>
 
-#include "trace_impl.h"
+#include "../system_wrappers/source/trace_impl.h"
 
 namespace cloopenwebrtc {
 
@@ -31,6 +31,6 @@ class TraceWindows : public TraceImpl {
   volatile mutable uint32_t prev_tick_count_;
 };
 
-}  // namespace webrtc
+}  // namespace cloopenwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_SOURCE_TRACE_WIN_H_

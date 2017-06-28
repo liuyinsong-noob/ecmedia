@@ -22,13 +22,14 @@ LOCAL_SRC_FILES := \
     map.cc \
     sort.cc \
     aligned_malloc.cc \
-    atomic32_posix.cc \
-	  clock.cc\
+    atomic32_non_darwin_unix.cc \
+    clock.cc\
     condition_variable.cc \
     cpu_features.cc \
     cpu_info.cc \
     critical_section.cc \
-    event.cc \
+    event_timer_posix.cc \
+    event_wrapper_impl.cc \
     file_impl.cc \
     list_no_stl.cc \
     rw_lock.cc \
@@ -37,29 +38,55 @@ LOCAL_SRC_FILES := \
     condition_variable_posix.cc \
     cpu_linux.cc \
     critical_section_posix.cc \
-    event_posix.cc \
     thread_posix.cc \
     trace_posix.cc \
     rw_lock_posix.cc \
-    checks.cc \
-		event_tracer.cc \
-		exp_filter.cc \
-		field_trial_default.cc \
-		logging.cc \
-		metrics_default.cc \
-		platform_file.cc \
-		rtp_to_ntp.cc \
-		rw_lock_generic.cc \
-		sleep.cc \
-		data_log_c.cc \
-		cpu.cc \
-		data_log_no_op.cc \
-		timestamp_extrapolator.cc \
-		timeutils.cc
-		
-#		checks.cc \
-#   android/cpu-features.c \
-#    cpu_no_op.cc \
+    field_trial_default.cc \
+    logging.cc \
+    metrics_default.cc \
+    platform_file.cc \
+    rtp_to_ntp_estimator.cc \
+    sleep.cc \
+    data_log_c.cc \
+    cpu.cc \
+    data_log_no_op.cc \
+    timestamp_extrapolator.cc \
+    ../../base/numerics/exp_filter.cc \
+    ../../base/asyncpacketsocket.cc \
+    ../../base/asyncresolverinterface.cc \
+    ../../base/asyncsocket.cc \
+    ../../base/bitbuffer.cc \
+    ../../base/checks.cc \
+    ../../base/copyonwritebuffer.cc\
+    ../../base/criticalsection.cc \
+    ../../base/event.cc \
+    ../../base/event_tracer.cc \
+    ../../base/ipaddress.cc \
+    ../../base/location.cc \
+    ../../base/messagehandler.cc \
+    ../../base/messagequeue.cc \
+    ../../base/nethelpers.cc \
+    ../../base/nullsocketserver.cc \
+    ../../base/platform_thread.cc \
+    ../../base/race_checker.cc \
+    ../../base/random.cc \
+    ../../base/rate_limiter.cc \
+    ../../base/rate_statistics.cc \
+    ../../base/sharedexclusivelock.cc \
+    ../../base/signalthread.cc \
+    ../../base/sigslot.cc \
+    ../../base/socketaddress.cc \
+    ../../base/stringencode.cc \
+    ../../base/stringutils.cc \
+    ../../base/thread_checker_impl.cc \
+    ../../base/threads.cc \
+    ../../base/timeutils.cc \
+    ../../base/ifaddrs-android.cc \
+    ../../base/sequenced_task_checker_impl.cc \
+    ../../base/physicalsocketserver.cc \
+    ../../base/networkmonitor.cc \
+	../../base/task_queue_posix.cc \
+    ../../base/task_queue_libevent.cc
 
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
@@ -67,10 +94,15 @@ LOCAL_CFLAGS := \
 
 LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH) \
-		$(LOCAL_PATH)/../interface \
+		$(LOCAL_PATH)/../include \
 		$(LOCAL_PATH)/../.. \
 		$(LOCAL_PATH)/../../module \
-    $(LOCAL_PATH)/../../module/interface \
+    $(LOCAL_PATH)/../../module/include \
+    $(LOCAL_PATH)/../../third_party \
+    $(LOCAL_PATH)/../../third_party/libevent \
+	$(LOCAL_PATH)/../../third_party/libevent/android \
+	$(LOCAL_PATH)/../../third_party/libevent/include \
+	$(LOCAL_PATH)/android \
     $(LOCAL_PATH)/spreadsortlib
 
 LOCAL_SHARED_LIBRARIES := \

@@ -8,7 +8,7 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "trace_win.h"
+#include "../system_wrappers/source/trace_win.h"
 
 #include <assert.h>
 #include <stdarg.h>
@@ -22,7 +22,6 @@ TraceWindows::TraceWindows()
 }
 
 TraceWindows::~TraceWindows() {
-  StopThread();
 }
 
 int32_t TraceWindows::AddTime(char* trace_message,
@@ -95,4 +94,4 @@ int32_t TraceWindows::AddDateTimeInfo(char* trace_message) const {
   return static_cast<int32_t>(strlen(trace_message) + 1);
 }
 
-}  // namespace webrtc
+}  // namespace cloopenwebrtc

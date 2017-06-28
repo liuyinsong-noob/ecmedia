@@ -8,20 +8,19 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#ifndef WEBRTC_SYSTEM_WRAPPERS_SOURCE_RW_LOCK_POSIX_H_
-#define WEBRTC_SYSTEM_WRAPPERS_SOURCE_RW_LOCK_POSIX_H_
+#ifndef WEBRTC_SYSTEM_WRAPPERS_SOURCE_RW_LOCK_WINXP_WIN_H_
+#define WEBRTC_SYSTEM_WRAPPERS_SOURCE_RW_LOCK_WINXP_WIN_H_
 
 #include "../system_wrappers/include/rw_lock_wrapper.h"
+#include "../system_wrappers/source/condition_variable_event_win.h"
 #include "../module/typedefs.h"
-
-#include <pthread.h>
 
 namespace cloopenwebrtc {
 
-class RWLockPosix : public RWLockWrapper {
+class RWLockWinXP : public RWLockWrapper {
  public:
-  static RWLockPosix* Create();
-  ~RWLockPosix() override;
+  RWLockWinXP();
+  ~RWLockWinXP() override;
 
   void AcquireLockExclusive() override;
   void ReleaseLockExclusive() override;
@@ -30,11 +29,16 @@ class RWLockPosix : public RWLockWrapper {
   void ReleaseLockShared() override;
 
  private:
-  RWLockPosix();
-  bool Init();
+  CRITICAL_SECTION critical_section_;
+  ConditionVariableEventWin read_condition_;
+  ConditionVariableEventWin write_condition_;
 
-  pthread_rwlock_t lock_;
+  int readers_active_ = 0;
+  bool writer_active_ = false;
+  int readers_waiting_ = 0;
+  int writers_waiting_ = 0;
 };
-} // namespace cloopenwebrtc
 
-#endif  // WEBRTC_SYSTEM_WRAPPERS_SOURCE_RW_LOCK_POSIX_H_
+}  // namespace cloopenwebrtc
+
+#endif  // WEBRTC_SYSTEM_WRAPPERS_SOURCE_RW_LOCK_WINXP_WIN_H_

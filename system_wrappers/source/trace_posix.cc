@@ -8,7 +8,7 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "trace_posix.h"
+#include "../system_wrappers/source/trace_posix.h"
 
 #include <assert.h>
 #include <stdarg.h>
@@ -28,7 +28,6 @@ TracePosix::TracePosix()
 
 TracePosix::~TracePosix() {
   delete &crit_sect_;
-  StopThread();
 }
 
 int32_t TracePosix::AddTime(char* trace_message, const TraceLevel level) const {
@@ -88,4 +87,4 @@ int32_t TracePosix::AddDateTimeInfo(char* trace_message) const {
   return len + 1;
 }
 
-}  // namespace webrtc
+}  // namespace cloopenwebrtc

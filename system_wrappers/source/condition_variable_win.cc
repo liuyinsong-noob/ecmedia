@@ -18,10 +18,10 @@
 // TODO (hellner): probably nicer to split up native and generic
 // implementation into two different files
 
-#include "condition_variable_win.h"
+#include "../system_wrappers/source/condition_variable_win.h"
 
-#include "critical_section_win.h"
-#include "trace.h"
+#include "../system_wrappers/source/critical_section_win.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 bool ConditionVariableWindows::_winSupportConditionVariablesPrimitive = false;
