@@ -14,10 +14,10 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include "critical_section_wrapper.h"
-#include "list_wrapper.h"
-#include "map_wrapper.h"
-#include "thread_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/list_wrapper.h"
+#include "../system_wrappers/include/map_wrapper.h"
+#include "../system_wrappers/include/thread_wrapper.h"
 #include "udp_socket_manager_wrapper.h"
 #include "udp_socket_wrapper.h"
 

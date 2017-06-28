@@ -129,8 +129,8 @@ public:
                                            WebRtc_UWord32 length,
                                            WebRtc_UWord16 rtcpPort);
     // Transport functions
-    virtual int SendPacket(int channel, const void* data, size_t length, int sn=0);
-    virtual int SendRTCPPacket(int channel, const void* data, size_t length);
+    virtual int SendRtp(int channelId, const uint8_t* packet, size_t length, const PacketOptions* options = NULL);
+    virtual int SendRtcp(int channelId, const uint8_t* packet, size_t length);
 
     // UdpTransport functions continue.
     virtual WebRtc_Word32 SetSendIP(const char* ipaddr);

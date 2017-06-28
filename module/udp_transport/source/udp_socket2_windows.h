@@ -19,13 +19,13 @@
 #include <Ntddndis.h>
 #include <traffic.h>
 
-#include "atomic32.h"
-#include "condition_variable_wrapper.h"
-#include "critical_section_wrapper.h"
-#include "event_wrapper.h"
-#include "list_wrapper.h"
-#include "rw_lock_wrapper.h"
-#include "trace.h"
+#include "../system_wrappers/include/atomic32.h"
+#include "../system_wrappers/include/condition_variable_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/event_wrapper.h"
+#include "../system_wrappers/include/list_wrapper.h"
+#include "../system_wrappers/include/rw_lock_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 #include "udp_socket_wrapper.h"
 #include "udp_socket2_manager_windows.h"
 
