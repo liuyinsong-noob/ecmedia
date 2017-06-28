@@ -1130,6 +1130,7 @@ void ViEEncoder::DeRegisterEncoderDataObserver()
     
 int32_t ViEEncoder::AddI420FrameCallback(ECMedia_I420FrameCallBack callback) {
     if(callback == NULL) {
+        LOG(LS_WARNING) << "Failed to add i420 callback, ret is -1";
         return -1;
     }
     
