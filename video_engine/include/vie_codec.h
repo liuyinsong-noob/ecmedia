@@ -210,6 +210,7 @@ class WEBRTC_DLLEXPORT ViECodec {
   virtual bool GetSendSideDelay(int video_channel, int* avg_delay_ms,
                                 int* max_delay_ms) const { return false; }
   virtual int SetFrameScaleType(const int video_channel, FrameScaleType frame_scale_type) = 0;
+  virtual int AddI420FrameCallback(const int video_channel, ECMedia_I420FrameCallBack callback) = 0;
  protected:
   ViECodec() {}
   virtual ~ViECodec() {}

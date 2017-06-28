@@ -2113,8 +2113,6 @@ void RTCPSender::SetRtcpPacketTypeCountObserver(RtcpPacketTypeCounterObserver *o
 // send single tmmbr
 int RTCPSender::SendSingleTMMBR(uint32_t bandwidth, uint32_t ssrc, uint32_t remote_ssrc) {
     
-    LOG(LS_WARNING) << "gezhaoyou RTCPSender::SendSingleTMMBR begin-------- bandwidth, ssrc, remote_ssrc is:"
-    << bandwidth << ssrc << remote_ssrc;
     uint8_t rtcpbuffer[100];
     int pos = 0;
     
@@ -2161,7 +2159,6 @@ int RTCPSender::SendSingleTMMBR(uint32_t bandwidth, uint32_t ssrc, uint32_t remo
     
     rtcpbuffer[pos++]=(uint8_t)(_packetOH_Send);
     
-    LOG(LS_WARNING) << "gezhaoyou RTCPSender::SendSingleTMMBR end-------- bandwidth, ssrc, remote_ssrc is:";
     return SendToNetwork(rtcpbuffer, pos);
 }
 }  // namespace webrtc

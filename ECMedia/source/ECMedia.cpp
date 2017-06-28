@@ -2741,17 +2741,20 @@ int ECMedia_stop_render(int channelid, int deviceid)
 #endif
 
 int ECMedia_set_i420_framecallback(int channelid, cloopenwebrtc::ECMedia_I420FrameCallBack callback) {
-    
-    PrintConsole("[ECMEDIA INFO] %s begins... channelid=%d,deviceid=%d",__FUNCTION__,channelid);
-    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-    ViERender *render = ViERender::GetInterface(m_vie);
-    int ret = -1;
-    if (render) {
-        ret = render->AddI420FrameCallback(channelid, callback);
-        render->Release();
+    PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d ", __FUNCTION__, channelid);
+    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    ViECodec *codec = ViECodec::GetInterface(m_vie);
+    if (codec) {
+        int ret = codec->AddI420FrameCallback(channelid, callback);
+        codec->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
+        return ret;
     }
-    PrintConsole("[ECMEDIA INFO] %s end with ret: %d",__FUNCTION__, ret);
-    return ret;
+    else
+    {
+        PrintConsole("[ECMEDIA ERROR] failed to set i420 frame callback, %s",__FUNCTION__);
+        return -99;
+    }
 }
 
 /*
@@ -2932,6 +2935,7 @@ int ECMedia_get_receive_playloadType_audio(int channelid, CodecInst& audioCodec)
         return -99;
     }
 }
+
 #ifdef VIDEO_ENABLED
 int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
 {

@@ -115,7 +115,6 @@ class ViERenderer: public ViEFrameCallback {
   ViERenderManager& render_manager_;
   VideoRenderCallback* render_callback_;
   ViEExternalRendererImpl* incoming_external_callback_;
-  ECMedia_I420FrameCallBack ec_i420_frame_callback_;
 
   //---begin
 public:

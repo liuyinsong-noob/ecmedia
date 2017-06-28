@@ -1435,13 +1435,10 @@ void ModuleRtpRtcpImpl::SetSendRtcpPacketTypeCountObserver(RtcpPacketTypeCounter
 
 // send single tmmbr.
 int ModuleRtpRtcpImpl::SendSingleTMMBR(uint32_t bandwidth, uint32_t ssrc, uint32_t remote_ssrc) {
-    
-    LOG_F(LS_WARNING) << "gezhaoyou in function ___ %s ___ begin", __FUNCTION__;
     tmmbr_bandwidth = bandwidth;
     tmmbr_ssrc = ssrc;
     tmmbr_remote_ssrc = remote_ssrc;
     isSendingTmmbr = true;
-    LOG_F(LS_WARNING) << "gezhaoyou in function ___ %s ___ end", __FUNCTION__;
     return 0;
 }
 
