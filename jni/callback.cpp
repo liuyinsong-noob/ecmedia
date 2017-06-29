@@ -10,6 +10,7 @@
 #include <android/log.h>
 #include <string.h>
 #include <stdio.h>
+#include <malloc.h>
 #include "cJSON.h"
 #include "base64.h"
 
