@@ -866,6 +866,17 @@ namespace cloopenwebrtc {
 		return cameras_.size() != 0;
 	}
 
+    
+    void RTMPLiveSession::pcm_s16le_to_s16be(short *data, int len)
+    {
+        if(data) {
+            for(int i = 0; i< len; i++) {
+                short tmp = ((data[i] & 0xFF00) >> 8) + ((data[i] & 0XFF) << 8);
+                data[i] = tmp;
+            }
+        }
+    }
+    
     #pragma mark - callback of audio data
     /**
      * ECmedia 发送音频的回调，从回调中取出音频数据，进行RTMP封装发送
@@ -887,11 +898,15 @@ namespace cloopenwebrtc {
 		//PrintConsole("[RTMP DEBUG] %s Send voice  data (%d) len(%d)\n", __FUNCTION__,frame_type,payload_len_bytes);
 		uint8_t *pcmdata , *aac_data;
 		int aac_data_len;
+        #ifdef __ANDROID__
+        pcm_s16le_to_s16be((short* )payload_data, payload_len_bytes/2);
+        #endif
 
 		recordbuffer_.PushData(payload_data, payload_len_bytes);
 
 		while (pcmdata = recordbuffer_.ConsumeData(faac_encode_input_samples_*2))
 		{
+         
 			aac_data_len = 0;
 			faac_encode_frame(faac_encode_handle_, pcmdata, &aac_data, &aac_data_len);
 			if (aac_data_len > 0) {

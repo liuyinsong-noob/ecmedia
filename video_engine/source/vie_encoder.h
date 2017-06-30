@@ -193,6 +193,7 @@ class ViEEncoder
 
   int channel_id() const { return channel_id_; }
   void setFrameScaleType(FrameScaleType frame_scale_type);
+  int32_t AddI420FrameCallback(ECMedia_I420FrameCallBack callback);
  protected:
   // Called by BitrateObserver.
   void OnNetworkChanged(uint32_t bitrate_bps,
@@ -267,8 +268,9 @@ class ViEEncoder
   SendStatisticsProxy* GetSendStatisticsProxy();
 
   private:
-	  ViEFileRecorder file_recorder_;
+    ViEFileRecorder file_recorder_;
     ViECapture* capture_;
+    ECMedia_I420FrameCallBack ec_i420_frame_callback_;
     int capture_id_;
   //---end
 };

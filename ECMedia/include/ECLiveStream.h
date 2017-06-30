@@ -180,7 +180,8 @@ namespace cloopenwebrtc {
         void HandleVideoPacket(RTMPPacket *packet);
 		int startCapture();
 		int stopCapture();
-        
+        void pcm_s16le_to_s16be(short *data, int len);
+
 	public:
 		int video_channel_;
 		onLiveStreamVideoResolution remote_video_resoution_callback_;

@@ -49,19 +49,6 @@ int32_t ViERenderer::StartRender() {
 int32_t ViERenderer::StopRender() {
   return render_module_.StopRender(render_id_);
 }
-    
-int32_t ViERenderer::AddI420FrameCallback(ECMedia_I420FrameCallBack callback) {
-    if(callback == NULL) {
-        return -1;
-    }
-    
-    if(ec_i420_frame_callback_ == callback) {
-        return 0;
-    }
-    
-    ec_i420_frame_callback_ = callback;
-    return 0;
-}
 
 int32_t ViERenderer::GetLastRenderedFrame(const int32_t renderID,
                                           I420VideoFrame& video_frame) {
@@ -131,7 +118,6 @@ ViERenderer::ViERenderer(const int32_t render_id,
       render_manager_(render_manager),
       render_callback_(NULL),
       incoming_external_callback_(new ViEExternalRendererImpl()),
-      ec_i420_frame_callback_(NULL),
 	  return_video_width_height(NULL),
 	  extra_render_callback_(NULL) {
 }
@@ -163,25 +149,6 @@ void ViERenderer::DeliverFrame(int id,
 		}
 	}
 	/*sean*/
-
-    // 回调yuv数据返回ECMedia层
-    if(ec_i420_frame_callback_) {
-        int size_y = video_frame->allocated_size(kYPlane);
-        int size_u = video_frame->allocated_size(kUPlane);
-        int size_v = video_frame->allocated_size(kVPlane);
-        uint8_t *imageBuffer = (uint8_t*)malloc(size_y + size_u + size_v);
-
-        // copy y plane
-        memcpy(imageBuffer, video_frame->buffer(kYPlane), size_y);
-        // copy u plane
-        memcpy(imageBuffer + size_y, video_frame->buffer(kUPlane), size_u);
-        // copy v plane
-        memcpy(imageBuffer + size_y + size_u, video_frame->buffer(kVPlane), size_v);
-
-        ec_i420_frame_callback_(render_id_, imageBuffer, size_y + size_u + size_v, video_frame->width(), video_frame->height(), video_frame->stride(kYPlane), video_frame->stride(kUPlane));
-        free(imageBuffer);
-    }
-    
   render_callback_->RenderFrame(render_id_, *video_frame);
   
   if (extra_render_callback_)

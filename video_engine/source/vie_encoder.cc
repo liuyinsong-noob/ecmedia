@@ -177,6 +177,7 @@ ViEEncoder::ViEEncoder(int32_t engine_id,
     start_ms_(Clock::GetRealTimeClock()->TimeInMilliseconds()),
     file_recorder_(channel_id),
     capture_(NULL),
+    ec_i420_frame_callback_(NULL),
     capture_id_(-1),
 	encoded_packet_observer_(NULL),
 	packet_observer_cs_(CriticalSectionWrapper::CreateCriticalSection()){
@@ -568,7 +569,25 @@ void ViEEncoder::DeliverFrame(int id,
     }
     TraceFrameDropEnd();
   }
-
+    
+    // 回调yuv数据返回ECMedia层
+    if(ec_i420_frame_callback_) {
+        int size_y = video_frame->allocated_size(kYPlane);
+        int size_u = video_frame->allocated_size(kUPlane);
+        int size_v = video_frame->allocated_size(kVPlane);
+        uint8_t *imageBuffer = (uint8_t*)malloc(size_y + size_u + size_v);
+        
+        // copy y plane
+        memcpy(imageBuffer, video_frame->buffer(kYPlane), size_y);
+        // copy u plane
+        memcpy(imageBuffer + size_y, video_frame->buffer(kUPlane), size_u);
+        // copy v plane
+        memcpy(imageBuffer + size_y + size_u, video_frame->buffer(kVPlane), size_v);
+        
+        ec_i420_frame_callback_(channel_id_, imageBuffer, size_y + size_u + size_v, video_frame->width(), video_frame->height(), video_frame->stride(kYPlane), video_frame->stride(kUPlane));
+        free(imageBuffer);
+    }
+    
   // Convert render time, in ms, to RTP timestamp.
   const int kMsToRtpTimestamp = 90;
   const uint32_t time_stamp =
@@ -1107,6 +1126,20 @@ void ViEEncoder::DeRegisterEncoderDataObserver()
 {
 	CriticalSectionScoped cs(callback_cs_.get());
 	encoded_packet_observer_ = NULL;
+}
+    
+int32_t ViEEncoder::AddI420FrameCallback(ECMedia_I420FrameCallBack callback) {
+    if(callback == NULL) {
+        LOG(LS_WARNING) << "Failed to add i420 callback, ret is -1";
+        return -1;
+    }
+    
+    if(ec_i420_frame_callback_ == callback) {
+        return 0;
+    }
+    
+    ec_i420_frame_callback_ = callback;
+    return 0;
 }
 
 SendStatisticsProxy* ViEEncoder::GetSendStatisticsProxy()
