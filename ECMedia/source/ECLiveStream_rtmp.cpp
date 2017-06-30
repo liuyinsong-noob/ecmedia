@@ -13,9 +13,9 @@
 #include "librtmp/rtmp.h"
 //#include "rtmp_sys.h"
 #include "librtmp/log.h"
-#include "thread_wrapper.h"
+#include "../system_wrappers/include/thread_wrapper.h"
 #include "voe_base.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 #include "voe_file.h"
 #include "voe_encryption.h"
 #include "voe_network.h"
@@ -23,7 +23,7 @@
 #include "voe_codec.h"
 #include "voe_rtp_rtcp.h"
 #include "voe_hardware.h"
-#include "sleep.h"
+#include "../system_wrappers/include/sleep.h"
 #ifdef WIN32
 #include "codingHelper.h"
 #endif
@@ -35,13 +35,13 @@
 #include "vie_render.h"
 #include "vie_codec.h"
 #include "vie_rtp_rtcp.h"
-#include "webrtc_libyuv.h"
+#include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 #include "vie_file_impl.h"
 #include "vie_desktop_share_impl.h"
 #include "vie_image_process_impl.h"
 #endif
 
-#include "clock.h"
+#include "../system_wrappers/include/clock.h"
 #include "sdk_common.h"
 #include "faaccodec.h"
 
@@ -632,7 +632,7 @@ namespace cloopenwebrtc {
                     rtpHeader.markerBit = false;
                 }
                 
-                video_data_cb_->ReceivePacket((const uint8_t*) payloadData, payloadLen, rtpHeader,true);
+                //video_data_cb_->ReceivePacket((const uint8_t*) payloadData, payloadLen, rtpHeader,true);
             }
         }
     }

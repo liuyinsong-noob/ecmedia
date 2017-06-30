@@ -9,14 +9,14 @@
 #ifdef VIDEO_ENABLED
 #include <winsock2.h>
 #include <windows.h>
-#include "webrtc_libyuv.h"
+#include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 #endif
 #endif //_WIN32
 
 #include "RecordVoip.h"
 #include "utility.h"
 //#include "sometools.h"
-#include "tick_util.h"
+#include "../system_wrappers/include/tick_util.h"
 
 
 #include <stdlib.h>
@@ -883,7 +883,7 @@ WebRtc_Word32 RecordVoip::CapturedScreeImage(unsigned char *imageData, int size,
 		0, 0,  // No cropping
 		width, height,
 		size,
-		kRotateNone,
+		kVideoRotation_0,
 		&capture_frame);
 	if (conversionResult < 0)
 	{

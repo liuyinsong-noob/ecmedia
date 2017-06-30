@@ -137,7 +137,7 @@ void ServiceCore::serphone_core_update_streams_destinations(SerPhoneCall *call, 
 		rtcp_addr = (new_audiodesc->rtcp_addr[0] != '\0') ? new_audiodesc->rtcp_addr : new_md->addr;
 		PrintConsole("Change audio stream destination: RTP=%s:%d RTCP=%s:%d\n", rtp_addr, new_audiodesc->rtp_port, rtcp_addr, new_audiodesc->rtcp_port);
 
-		int change_audio = ECMedia_audio_set_send_destination(call->m_AudioChannelID, new_audiodesc->rtp_port, rtp_addr,-1,new_audiodesc->rtcp_port);
+		int change_audio = ECMedia_audio_set_send_destination(call->m_AudioChannelID, new_audiodesc->rtp_port, rtp_addr, -1, new_audiodesc->rtcp_port, nullptr);;
 //        int change_audio = base->SetSendDestination(call->m_AudioChannelID, 7078, "127.0.0.1",kVoEDefault, 7079);
 
 		if (0 == change_audio && SalStreamSendRecv == new_audiodesc->dir) {
@@ -151,7 +151,7 @@ void ServiceCore::serphone_core_update_streams_destinations(SerPhoneCall *call, 
 		rtcp_addr = (new_videodesc->rtcp_addr[0] != '\0') ? new_videodesc->rtcp_addr : new_md->addr;
 		PrintConsole("Change video stream destination: RTP=%s:%d RTCP=%s:%d\n", rtp_addr, new_videodesc->rtp_port, rtcp_addr, new_videodesc->rtcp_port);
 
-		int change_video = ECMedia_video_set_send_destination(call->m_VideoChannelID, rtp_addr,new_videodesc->rtp_port,new_videodesc->rtcp_port);
+		int change_video = ECMedia_video_set_send_destination(call->m_VideoChannelID, rtp_addr, new_videodesc->rtp_port, "192.168.9.102", new_videodesc->rtcp_port);
 		if (0 == change_video && SalStreamSendRecv == new_videodesc->dir) {
 			serphone_call_set_state(call, LinphoneCallUpdatedVideoDestinationChanged, rtp_addr);
 
@@ -634,7 +634,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 				//	break;
 				//}
 			}
-			ECMedia_audio_set_send_destination(call->m_AudioChannelID, stream->port,stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr);
+			ECMedia_audio_set_send_destination(call->m_AudioChannelID, stream->port, stream->addr[0] != '\0' ? stream->addr : call->resultdesc->addr, 0, 0, "192.168.1.1");
 //            For MOS test
 //			ECMedia_audio_set_send_destination(call->m_AudioChannelID, 7078, "127.0.0.1");
 
@@ -910,7 +910,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 			//network->SetSendDestination(call->m_VideoChannelID,
 			//	stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr,stream->port);
 			ECMedia_video_set_send_destination(call->m_VideoChannelID,
-				stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr, stream->port, stream->rtcp_port);
+				stream->addr[0] != '\0' ? stream->addr : call->resultdesc->addr, stream->port, stream->addr[0] != '\0' ? stream->addr : call->resultdesc->addr, stream->rtcp_port);
 
 			cloopenwebrtc::VideoCodec codec_params;			
 			bool codec_found = false;
@@ -3646,7 +3646,7 @@ int ServiceCore::serphone_set_video_window_and_request_video_accord_sip(const ch
 		//network->setVideoConferenceFlag(temp_video_channel_id, selfSipNo, sipNo, conferenceNo, confPasswd);
 		videoConferenceM.insert(std::pair <int,VideoConferenceDesc *> (temp_video_channel_id, temp));
 		videoConferencePairSipChannel.insert(std::pair<const char *, int>(sipNo,temp_video_channel_id));
-		ECMedia_video_set_send_destination(temp_video_channel_id, videoConferenceIp,port, port+1);
+		ECMedia_video_set_send_destination(temp_video_channel_id, videoConferenceIp, port, videoConferenceIp, port+1);
 		ECMedia_video_set_local_receiver(temp_video_channel_id,temp->local_port);
 		//TODO:
 		//network->RegisterServiceCoreCallBack(temp_video_channel_id, this, NULL, LinphonePolicyNoFirewall);

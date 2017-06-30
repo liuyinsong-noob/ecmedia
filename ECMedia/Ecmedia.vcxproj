@@ -96,8 +96,8 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;DEBUG_PRINT_LOG;ENABLE_LOG;ORTP_STATIC;VIDEO_ENABLED;ENABLE_SCREEN_SHARE;STATS_TO_STRING;ECMEDIA_API_LIVESTREAM</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./source;./include;./source/Http;./source/Utility;./interface;../module\exosip\source;../module\exosip\include;../module\osip\include;$(SolutionDir)\third_party\vld\include;..\third_party\libx264\libx264_win\x86\include;../module/videojpegyuv/include;../module/interface;../voice_engine\main\source;../voice_engine\main\include;../module;..\system_wrappers\interface;../video_engine/source;..\third_party\openssl\inc32;..\third_party;../third_party/oRTP/include;../third_party/oRTP/include/ortp;..\third_party\srtp\crypto\include\win;..\third_party\srtp\crypto\include;../third_party/ffmpeg/ffmpeg_win/x86/include;../module/video_coding/main/include;..\module\video_coding\codecs\h264;..\module\video_coding\codecs\interface;../video_engine\include;..\module\common_audio\source\resampler\include;..\module\common_video\source;..\module\common_video\source\libyuv\include;..\module\common_video\interface;..\module\rtp_rtcp\include;..\module\bitrate_controller\include;..\module\remote_bitrate_estimator\include;..\module\remote_bitrate_estimator\source;..\module\pacing\include;..\module\video_render\main\include;..\module\audio_coding\codecs\opencore-amr\amrnb;..\module\audio_coding\main\source;..\third_party\libfaad\win\include\faad2;..\third_party\librtmp\rtmpdump-2.3\librtmp;..\third_party\librtmp\rtmpdump-2.3\;..\module\audio_coding\main\include;..\third_party\libfaac\include;..\third_party\protobuf\src;..\third_party\activemq-cpp\src\main</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;DEBUG_PRINT_LOG;ENABLE_LOG;ORTP_STATIC;VIDEO_ENABLED;ENABLE_SCREEN_SHARE;STATS_TO_STRING;ECMEDIA_API_LIVESTREAM;WEBRTC_WIN</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>./source;./include;./source/Http;./source/Utility;./interface;../module\exosip\source;../module\exosip\include;../module\osip\include;$(SolutionDir)\third_party\vld\include;..\third_party\libx264\libx264_win\x86\include;../module/videojpegyuv/include;../module/interface;../voice_engine\main\source;../voice_engine\main\include;../module;..\system_wrappers\interface;../video_engine/source;..\third_party\openssl\inc32;..\third_party;../third_party/oRTP/include;../third_party/oRTP/include/ortp;..\third_party\srtp\crypto\include\win;..\third_party\srtp\crypto\include;../third_party/ffmpeg/ffmpeg_win/x86/include;../module/video_coding/main/include;..\module\video_coding\codecs\h264;..\module\video_coding\codecs\interface;../video_engine\include;..\module\common_audio\source\resampler\include;..\module\common_video\source;..\module\common_video\source\libyuv\include;..\module\common_video\interface;..\module\rtp_rtcp\include;..\module\bitrate_controller\include;..\module\remote_bitrate_estimator\include;..\module\remote_bitrate_estimator\source;..\module\pacing\include;..\module\video_render\main\include;..\module\audio_coding\codecs\opencore-amr\amrnb;..\module\audio_coding\main\source;..\third_party\libfaad\win\include\faad2;..\third_party\librtmp\rtmpdump-2.3\librtmp;..\third_party\librtmp\rtmpdump-2.3\;..\module\audio_coding\main\include;..\third_party\libfaac\include;..\third_party\activemq-cpp\src\main;..\third_party\protobuf\src\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -138,7 +138,7 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;DEBUG_PRINT_LOG;VIDEO_ENABLED;ENABLE_LOG;ORTP_STATIC;ENABLE_SCREEN_SHARE;ECMEDIA_API_LIVESTREAM</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;DEBUG_PRINT_LOG;VIDEO_ENABLED;ENABLE_LOG;ORTP_STATIC;ENABLE_SCREEN_SHARE;ECMEDIA_API_LIVESTREAM;WEBRTC_WIN</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>./source;./include;./source/Http;./source/Utility;./interface;../module\exosip\source;../module\exosip\include;../module\osip\include;$(SolutionDir)\third_party\vld\include;..\third_party\libx264\libx264_win\x86\include;../module/videojpegyuv/include;../module/interface;../voice_engine\main\source;../voice_engine\main\include;../module;..\system_wrappers\interface;../video_engine/source;..\third_party\openssl\inc32;..\third_party;../third_party/oRTP/include;../third_party/oRTP/include/ortp;..\third_party\srtp\crypto\include\win;..\third_party\srtp\crypto\include;../third_party/ffmpeg/ffmpeg_win/x86/include;../module/video_coding/main/include;..\module\video_coding\codecs\h264;..\module\video_coding\codecs\interface;../video_engine\include;..\module\common_audio\source\resampler\include;..\module\common_video\source;..\module\common_video\source\libyuv\include;..\module\common_video\interface;..\module\rtp_rtcp\include;..\module\bitrate_controller\include;..\module\remote_bitrate_estimator\include;..\module\remote_bitrate_estimator\source;..\module\pacing\include;..\module\video_render\main\include;..\module\audio_coding\codecs\opencore-amr\amrnb;..\module\audio_coding\main\source;..\third_party\libfaad\win\include\faad2;..\third_party\librtmp\rtmpdump-2.3\librtmp;..\third_party\librtmp\rtmpdump-2.3\;..\module\audio_coding\main\include;..\third_party\libfaac\include;..\third_party\activemq-cpp\src\main;..\third_party\protobuf\src\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
@@ -199,6 +199,8 @@
     <ClInclude Include="source\MediaStatisticsData.pb.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\config.cc" />
+    <ClCompile Include="..\module\common_types.cc" />
     <ClCompile Include="source\base64.c" />
     <ClCompile Include="source\CaptureScreen.cpp" />
     <ClCompile Include="source\curl_post.cc" />
@@ -216,6 +218,9 @@
     <ClCompile Include="source\VoeObserver.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\common_video\common_video.vcxproj">
+      <Project>{a217833b-f19c-4673-8cfe-cf16903dabe5}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\module\audioprocess\audioprocess.vcxproj">
       <Project>{460d34b6-19e2-467f-a3b6-0128810bb9d8}</Project>
       <Private>true</Private>
@@ -344,9 +349,6 @@
       <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
-    <ProjectReference Include="..\module\common_video\common_video.vcxproj">
-      <Project>{a217833b-f19c-4673-8cfe-cf16903dabe5}</Project>
     </ProjectReference>
     <ProjectReference Include="..\module\desktop_capture\desktop_capture.vcxproj">
       <Project>{19fb7379-3d2a-40d4-8aa7-a513891666a4}</Project>

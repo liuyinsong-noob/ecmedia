@@ -102,8 +102,8 @@ class ChannelStatsObserver : public CallStatsObserver {
   virtual ~ChannelStatsObserver() {}
 
   // Implements StatsObserver.
-  virtual void OnRttUpdate(int64_t rtt) {
-    owner_->OnRttUpdate(rtt);
+  virtual void OnRttUpdate(int64_t avg_rtt_ms, int64_t max_rtt_ms) {
+    owner_->OnRttUpdate(avg_rtt_ms);
   }
 
  private:
@@ -223,7 +223,7 @@ int32_t ViEChannel::Init() {
     return -1;
   }
   rtp_rtcp_->SetKeyFrameRequestMethod(kKeyFrameReqFirRtcp);
-  rtp_rtcp_->SetRTCPStatus(kRtcpCompound);
+  rtp_rtcp_->SetRTCPStatus(kCompound);
   if (paced_sender_) {
     rtp_rtcp_->SetStorePacketsStatus(true, nack_history_size_sender_);
   }
@@ -255,7 +255,7 @@ int32_t ViEChannel::Init() {
     }
     vcm_->RegisterReceiveCodec(&video_codec, number_of_cores_);
     vcm_->RegisterSendCodec(&video_codec, number_of_cores_,
-                           rtp_rtcp_->MaxDataPayloadLength());
+                           rtp_rtcp_->MaxRtpPacketSize());
   } else {
     assert(false);
   }
@@ -1152,7 +1152,7 @@ int32_t ViEChannel::RequestRemoteSSRC(const uint32_t SSRC) {
 	}
 
 	uint32_t bandwidth = 1;
-	int ret = rtp_rtcp_->SendSingleTMMBR(bandwidth, socket_transport_->GetLocalSSrc(), SSRC);
+	int ret = 0;// rtp_rtcp_->SendSingleTMMBR(bandwidth, socket_transport_->GetLocalSSrc(), SSRC);
 	if (ret != 0) {
 		LOG(LS_ERROR) << "SendSingleTMMBR request remote failed";
 		return -1;
@@ -1170,7 +1170,7 @@ int32_t ViEChannel::CancelRemoteSSRC() {
 	if (!isSVCChannel_)
 		return 0;
 
-	int ret = rtp_rtcp_->SendSingleTMMBR(0, socket_transport_->GetLocalSSrc(), remote_ssrc_);
+	int ret = 0;// rtp_rtcp_->SendSingleTMMBR(0, socket_transport_->GetLocalSSrc(), remote_ssrc_);
 	if (ret != 0) {
 		LOG(LS_ERROR) << "SendSingleTMMBR cancel remote failed";
 		return -1;
@@ -1845,7 +1845,7 @@ int32_t ViEChannel::SetMTU(uint16_t mtu) {
 }
 
 uint16_t ViEChannel::MaxDataPayloadLength() const {
-  return rtp_rtcp_->MaxDataPayloadLength();
+  return rtp_rtcp_->MaxRtpPacketSize();
 }
 
 int32_t ViEChannel::EnableColorEnhancement(bool enable) {
@@ -2152,13 +2152,13 @@ void ViEChannel::RegisterPreDecodeImageCallback(
 
 int32_t ViEChannel::OnInitializeDecoder(
     const int32_t id,
-    const int8_t payload_type,
-    const char payload_name[RTP_PAYLOAD_NAME_SIZE],
-    const int frequency,
-    const uint8_t channels,
-    const uint32_t rate) {
-  LOG(LS_INFO) << "OnInitializeDecoder " << static_cast<int>(payload_type)
-               << " " << payload_name;
+    int8_t payloadType,
+    const char payloadName[RTP_PAYLOAD_NAME_SIZE],
+    int frequency,
+    size_t channels,
+    uint32_t rate) {
+  LOG(LS_INFO) << "OnInitializeDecoder " << static_cast<int>(payloadType)
+               << " " << payloadName;
   vcm_->ResetDecoder();
 
   CriticalSectionScoped cs(callback_cs_.get());

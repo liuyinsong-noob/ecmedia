@@ -288,11 +288,11 @@ class ViEChannel
   // Implements RtpFeedback.
   virtual int32_t OnInitializeDecoder(
       const int32_t id,
-      const int8_t payload_type,
-      const char payload_name[RTP_PAYLOAD_NAME_SIZE],
-      const int frequency,
-      const uint8_t channels,
-      const uint32_t rate);
+      int8_t payloadType,
+      const char payloadName[RTP_PAYLOAD_NAME_SIZE],
+      int frequency,
+      size_t channels,
+      uint32_t rate);
   virtual void OnIncomingSSRCChanged(const int32_t id,
                                      const uint32_t ssrc);
   virtual void OnIncomingCSRCChanged(const int32_t id,
@@ -434,7 +434,6 @@ class ViEChannel
       EXCLUSIVE_LOCKS_REQUIRED(rtp_rtcp_cs_);
   RtpRtcp* GetRtpRtcpModule(size_t simulcast_idx) const
       EXCLUSIVE_LOCKS_REQUIRED(rtp_rtcp_cs_);
-  RtpRtcp::Configuration CreateRtpRtcpConfiguration();
   RtpRtcp* CreateRtpRtcpModule();
   // Assumed to be protected.
   int32_t StartDecodeThread();

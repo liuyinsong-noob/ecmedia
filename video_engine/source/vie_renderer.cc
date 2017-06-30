@@ -164,7 +164,7 @@ void ViERenderer::DeliverFrame(int id,
 	}
 	/*sean*/
 
-    // 回调yuv数据返回ECMedia层
+    // callback yuv data to ecmedia layer
     if(ec_i420_frame_callback_) {
         int size_y = video_frame->allocated_size(kYPlane);
         int size_u = video_frame->allocated_size(kUPlane);
@@ -179,9 +179,10 @@ void ViERenderer::DeliverFrame(int id,
         memcpy(imageBuffer + size_y + size_u, video_frame->buffer(kVPlane), size_v);
 
         ec_i420_frame_callback_(render_id_, imageBuffer, size_y + size_u + size_v, video_frame->width(), video_frame->height(), video_frame->stride(kYPlane), video_frame->stride(kUPlane));
-        free(imageBuffer);
+		free(imageBuffer);
     }
-    
+
+
   render_callback_->RenderFrame(render_id_, *video_frame);
   
   if (extra_render_callback_)

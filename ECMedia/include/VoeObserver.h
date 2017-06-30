@@ -7,8 +7,8 @@
 #define VOE_OBSERVER_H
 
 #include "voe_base.h"
-#include "event_wrapper.h"
-#include "thread_wrapper.h"
+#include "../system_wrappers/include/event_wrapper.h"
+#include "../system_wrappers/include/thread_wrapper.h"
 #include <stdio.h>
 
 using namespace cloopenwebrtc;

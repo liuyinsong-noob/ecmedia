@@ -180,6 +180,8 @@ int ViEChannelManager::AddSsrcToEncoder(int channelid)
   if (p_sendStats)
   {
 	  group->GetCallStats()->RegisterStatsObserver(p_sendStats);
+      RemoteBitrateEstimator* remote_bitrate_estimator =
+      group->GetRemoteBitrateEstimator();
 	  p_sendStats->SetRemoteBitrateEstimator(remote_bitrate_estimator);
 	  //bitrate_controller->RegisterSendsideBweObserver(p_sendStats);
   }

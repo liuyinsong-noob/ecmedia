@@ -9,10 +9,10 @@
 #ifndef __servicecoreVideo__RecordVoip__
 #define __servicecoreVideo__RecordVoip__
 
-#include "critical_section_wrapper.h"
-#include "event_wrapper.h"
-#include "thread_wrapper.h"
-#include "list_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/event_wrapper.h"
+#include "../system_wrappers/include/thread_wrapper.h"
+#include "../system_wrappers/include/list_wrapper.h"
 #include "voe_external_media.h"
 
 #ifdef _WIN32

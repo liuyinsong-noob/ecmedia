@@ -101,6 +101,12 @@
     <ClCompile Include="source\RecordLocal.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\config.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\module\common_types.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Ecmedia.rc">

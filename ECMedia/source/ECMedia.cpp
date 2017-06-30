@@ -15,7 +15,7 @@
 #include "ECMedia.h"
 #include "voe_base.h"
 #include "voe_volume_control.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 #include "voe_file.h"
 #include "voe_encryption.h"
 #include "voe_network.h"
@@ -43,7 +43,7 @@
 #include "vie_desktop_share.h"
 #include "RecordVoip.h"
 #include "RecordLocal.h"
-#include "webrtc_libyuv.h"
+#include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 #include "vie_image_process.h"
 #include "vie_encryption.h"
 #endif
@@ -59,6 +59,10 @@
 CurlPost *g_curlpost = nullptr;
 #endif
 #endif
+
+#define WEBRTC_TRACE_FILTER \
+cloopenwebrtc::kTraceStateInfo | cloopenwebrtc::kTraceWarning | cloopenwebrtc::kTraceError | cloopenwebrtc::kTraceCritical | \
+cloopenwebrtc::kTraceApiCall
 
 enum {
     ERR_SDK_ALREADY_INIT =-1000,
@@ -165,7 +169,7 @@ using namespace std;
 //#include "friends.h"
 //#include "lpconfig.h"
 //#include "enum.h"
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 
 #ifdef  WIN32      //for locating memory leak under windows platform added by zdm
 #include   <stdlib.h>
@@ -1677,7 +1681,7 @@ int ECMedia_set_video_rtp_keepalive(int channelid, bool enable, int interval, in
     if (rtp_rtcp)
     {
         int ret=0;
-        ret = rtp_rtcp->SetRTPKeepAliveStatus(channelid, enable, payloadType, interval);
+        //ret = rtp_rtcp->SetRTPKeepAliveStatus(channelid, enable, payloadType, interval);
         rtp_rtcp->Release();
         PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
@@ -1759,7 +1763,7 @@ int ECMedia_set_audio_rtp_keepalive(int channelid, bool enable, int interval, in
 	if (rtp_rtcp)
 	{
 		int ret = 0;
-		ret = rtp_rtcp->SetRTPKeepAliveStatus(channelid, enable, payloadType, interval);
+		//ret = rtp_rtcp->SetRTPKeepAliveStatus(channelid, enable, payloadType, interval);
 		rtp_rtcp->Release();
         PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
 		return ret;
