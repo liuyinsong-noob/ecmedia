@@ -170,7 +170,7 @@ aes_icm_context_init(aes_icm_ctx_t *c, const uint8_t *key, int key_len) {
   if (key_len > 16 && key_len < 30) /* Ismacryp */
     base_key_len = 16;
   else if (key_len == 30 || key_len == 38 || key_len == 46)
-    base_key_len = key_len - 14;
+    base_key_len = key_len - 16;
   else
     return err_status_bad_param;
 
