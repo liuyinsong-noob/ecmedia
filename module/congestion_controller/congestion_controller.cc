@@ -28,6 +28,8 @@
 #include "../module/remote_bitrate_estimator/remote_bitrate_estimator_abs_send_time.h"
 #include "../module/remote_bitrate_estimator/remote_bitrate_estimator_single_stream.h"
 
+#include "../system_wrappers/include/trace.h"
+
 namespace cloopenwebrtc {
 namespace {
 
@@ -320,6 +322,8 @@ int64_t CongestionController::TimeUntilNextProcess() {
 }
 
 int32_t CongestionController::Process() {
+  WEBRTC_TRACE(kTraceError, kTraceVideo, -1, "--------------[bwe] cc process");
+
   bitrate_controller_->Process();
   remote_bitrate_estimator_.Process();
   probe_controller_->Process();

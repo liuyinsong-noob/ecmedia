@@ -208,7 +208,7 @@ void RemoteBitrateEstimatorSingleStream::UpdateEstimate(int64_t now_ms) {
 
 	BWE_TEST_LOGGING_PLOT(1, "REMB_kbps#1", now_ms, target_bitrate / 1000);
 	BWE_TEST_LOGGING_PLOT(1, "Incoming_bitrate_kbps#1", now_ms,
-		incoming_bitrate_.Rate(now_ms) == rtc::Optional<uint32_t>() ? 0 : *incoming_bitrate_.Rate(now_ms) / 1000);
+		incoming_bitrate_.Rate(now_ms) == cloopenwebrtc::Optional<uint32_t>() ? 0 : *incoming_bitrate_.Rate(now_ms) / 1000);
 
   }
 }

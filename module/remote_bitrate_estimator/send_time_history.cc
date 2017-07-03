@@ -14,6 +14,8 @@
 #include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
 #include "../system_wrappers/include/clock.h"
 
+#include "../system_wrappers/include/logging.h"
+
 namespace cloopenwebrtc {
 
 SendTimeHistory::SendTimeHistory(Clock* clock, int64_t packet_age_limit_ms)
@@ -42,6 +44,11 @@ void SendTimeHistory::AddAndRemoveOld(uint16_t sequence_number,
   int64_t creation_time_ms = now_ms;
   constexpr int64_t kNoArrivalTimeMs = -1;  // Arrival time is ignored.
   constexpr int64_t kNoSendTimeMs = -1;     // Send time is set by OnSentPacket.
+
+  LOG(LS_ERROR) << "--------------[bwe][Probe][AddAndRemoveOld] "
+	  << "sequence_number = " << sequence_number
+	  << " , pacing_info.probe_cluster_id = " << pacing_info.probe_cluster_id;
+
   history_.insert(std::make_pair(
       unwrapped_seq_num,
       PacketFeedback(creation_time_ms, kNoArrivalTimeMs, kNoSendTimeMs,
@@ -74,6 +81,10 @@ bool SendTimeHistory::GetFeedback(PacketFeedback* packet_feedback,
 
   if (remove)
     history_.erase(it);
+
+  LOG(LS_ERROR) << "--------------[bwe][Probe][GetFeedback] "
+	  << "sequence_number = " << packet_feedback->sequence_number
+	  << " , pacing_info.probe_cluster_id = " << packet_feedback->pacing_info.probe_cluster_id;
   return true;
 }
 

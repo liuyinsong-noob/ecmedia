@@ -31,14 +31,14 @@ RTC_PUSH_IGNORING_WUNDEF()
 #ifdef WEBRTC_ANDROID_PLATFORM_BUILD
 #include "external/webrtc/webrtc/logging/rtc_event_log/rtc_event_log.pb.h"
 #else
-#include "webrtc/logging/rtc_event_log/rtc_event_log.pb.h"
+#include "../logging/rtc_event_log/rtc_event_log.pb.h"
 #endif
 RTC_POP_IGNORING_WUNDEF()
 #endif
 
 #ifdef ENABLE_RTC_EVENT_LOG
 
-namespace webrtc {
+namespace cloopenwebrtc {
 
 class RtcEventLogHelperThread final {
  public:
@@ -101,7 +101,7 @@ class RtcEventLogHelperThread final {
   std::vector<std::unique_ptr<rtclog::Event>> config_history_;
 
   std::unique_ptr<FileWrapper> file_;
-  rtc::PlatformThread thread_;
+  cloopenwebrtc::PlatformThread thread_;
 
   int64_t max_size_bytes_;
   int64_t written_bytes_;
@@ -114,11 +114,11 @@ class RtcEventLogHelperThread final {
   // Temporary space for serializing profobuf data.
   std::string output_string_;
 
-  rtc::Event wake_periodically_;
-  rtc::Event wake_from_hibernation_;
-  rtc::Event file_finished_;
+  cloopenwebrtc::Event wake_periodically_;
+  cloopenwebrtc::Event wake_from_hibernation_;
+  cloopenwebrtc::Event file_finished_;
 
-  RTC_DISALLOW_IMPLICIT_CONSTRUCTORS(RtcEventLogHelperThread);
+  DISALLOW_IMPLICIT_CONSTRUCTORS(RtcEventLogHelperThread);
 };
 
 }  // namespace webrtc

@@ -36,7 +36,8 @@
 
 #include <limits>
 
-namespace cloopen_google {
+
+namespace google {
 namespace protobuf {
 namespace internal {
 
@@ -59,7 +60,25 @@ void InitEmptyString() {
   OnShutdown(&DeleteEmptyString);
 }
 
+const ::std::string& GetEmptyString() {
+  ::google::protobuf::GoogleOnceInit(&empty_string_once_init_, &InitEmptyString);
+  return GetEmptyStringAlreadyInited();
+}
+
+
+int StringSpaceUsedExcludingSelf(const string& str) {
+  const void* start = &str;
+  const void* end = &str + 1;
+  if (start <= str.data() && str.data() < end) {
+    // The string's data is stored inside the string object itself.
+    return 0;
+  } else {
+    return str.capacity();
+  }
+}
+
+
 
 }  // namespace internal
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace google

@@ -37,7 +37,7 @@
 // any changes here, make sure that you're not breaking any platforms.
 //
 //
-// The names choosen here reflect those used in tr1 and the boost::mpl
+// The names chosen here reflect those used in tr1 and the boost::mpl
 // library, there are similar operations used in the Loki library as
 // well.  I prefer the boost names for 2 reasons:
 // 1.  I think that portions of the Boost libraries are more likely to
@@ -50,7 +50,7 @@
 #ifndef GOOGLE_PROTOBUF_TEMPLATE_UTIL_H_
 #define GOOGLE_PROTOBUF_TEMPLATE_UTIL_H_
 
-namespace cloopen_google {
+namespace google {
 namespace protobuf {
 namespace internal {
 
@@ -133,6 +133,6 @@ struct or_ : public integral_constant<bool, (A::value || B::value)> {
 
 }  // namespace internal
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace google
 
 #endif  // GOOGLE_PROTOBUF_TEMPLATE_UTIL_H_

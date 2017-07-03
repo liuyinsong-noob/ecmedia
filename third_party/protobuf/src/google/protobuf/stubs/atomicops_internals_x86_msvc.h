@@ -33,7 +33,7 @@
 #ifndef GOOGLE_PROTOBUF_ATOMICOPS_INTERNALS_X86_MSVC_H_
 #define GOOGLE_PROTOBUF_ATOMICOPS_INTERNALS_X86_MSVC_H_
 
-namespace cloopen_google {
+namespace google {
 namespace protobuf {
 namespace internal {
 
@@ -145,6 +145,6 @@ inline Atomic64 Release_CompareAndSwap(volatile Atomic64* ptr,
 
 }  // namespace internal
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace google
 
 #endif  // GOOGLE_PROTOBUF_ATOMICOPS_INTERNALS_X86_MSVC_H_

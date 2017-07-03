@@ -24,12 +24,21 @@
     <ClInclude Include="rtc_event_log_helper_thread.h">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="rtc_event_log.pb.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="rtc_event_log.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="rtc_event_log.cc">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="rtc_event_log_helper_thread.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="rtc_event_log.pb.cc">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

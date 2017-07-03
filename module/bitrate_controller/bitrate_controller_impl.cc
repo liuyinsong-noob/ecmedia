@@ -19,6 +19,7 @@
 #include "../system_wrappers/include/logging.h"
 #include "../module/remote_bitrate_estimator/test/bwe_test_logging.h"
 #include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 
@@ -118,7 +119,7 @@ BitrateControllerImpl::BitrateControllerImpl(Clock* clock,
   // the user must be ready to accept a bitrate update when it constructs the
   // controller. We do this to avoid having to keep synchronized initial values
   // in both the controller and the allocator.
-  //MaybeTriggerOnNetworkChanged();
+  MaybeTriggerOnNetworkChanged();
 }
 
 RtcpBandwidthObserver* BitrateControllerImpl::CreateRtcpBandwidthObserver() {
@@ -194,7 +195,12 @@ void BitrateControllerImpl::OnDelayBasedBweResult(
     cloopenwebrtc::CritScope cs(&critsect_);
     bandwidth_estimation_.UpdateDelayBasedEstimate(clock_->TimeInMilliseconds(),
                                                    result.target_bitrate_bps);
+
     if (result.probe) {
+	 // WEBRTC_TRACE(kTraceError, kTraceVideo, -1, "--------------[bwe] bitrate_controller = (update_probe)%d", result.target_bitrate_bps);
+		LOG(LS_ERROR) << "--------------[bwe] bitrate_controller = "
+			<< result.target_bitrate_bps
+			<< " (update_probe)";
       bandwidth_estimation_.SetSendBitrate(result.target_bitrate_bps);
     }
   }
@@ -218,6 +224,7 @@ int32_t BitrateControllerImpl::Process() {
   MaybeTriggerOnNetworkChanged();
   last_bitrate_update_ms_ = clock_->TimeInMilliseconds();
 
+  WEBRTC_TRACE(kTraceError, kTraceVideo, -1, "--------------[bwe] BRC process");
   return 0;
 }
 
@@ -243,7 +250,7 @@ void BitrateControllerImpl::MaybeTriggerOnNetworkChanged() {
   int64_t rtt;
 
   if (GetNetworkParameters(&bitrate_bps, &fraction_loss, &rtt))
-    observer_->OnNetworkChanged(bitrate_bps, fraction_loss, rtt);
+	observer_->OnNetworkChanged(bitrate_bps, fraction_loss, rtt);
 }
 
 bool BitrateControllerImpl::GetNetworkParameters(uint32_t* bitrate,
@@ -252,6 +259,11 @@ bool BitrateControllerImpl::GetNetworkParameters(uint32_t* bitrate,
   cloopenwebrtc::CritScope cs(&critsect_);
   int current_bitrate;
   bandwidth_estimation_.CurrentEstimate(&current_bitrate, fraction_loss, rtt);
+
+ // WEBRTC_TRACE(kTraceError, kTraceVideo, -1, "--------------[bwe] bitrate_controller = %d", current_bitrate);
+  LOG(LS_ERROR) << "--------------[bwe] bitrate_controller = "
+	  << current_bitrate;
+
   *bitrate = current_bitrate;
   *bitrate -= std::min(*bitrate, reserved_bitrate_bps_);
   *bitrate =

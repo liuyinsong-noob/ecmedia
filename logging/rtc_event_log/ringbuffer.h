@@ -18,7 +18,7 @@
 #include "../base/checks.h"
 #include "../base/constructormagic.h"
 
-namespace webrtc {
+namespace cloopenwebrtc {
 
 // A RingBuffer works like a fixed size queue which starts discarding
 // the oldest elements when it becomes full.

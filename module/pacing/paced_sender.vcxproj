@@ -154,13 +154,16 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="alr_detector.h" />
     <ClInclude Include="bitrate_prober.h" />
     <ClInclude Include="include\paced_sender.h" />
+    <ClInclude Include="packet_router.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alr_detector.cc" />
     <ClCompile Include="bitrate_prober.cc" />
     <ClCompile Include="paced_sender.cc" />
+    <ClCompile Include="packet_router.cc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

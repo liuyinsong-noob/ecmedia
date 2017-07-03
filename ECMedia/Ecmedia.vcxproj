@@ -221,6 +221,9 @@
     <ProjectReference Include="..\common_video\common_video.vcxproj">
       <Project>{a217833b-f19c-4673-8cfe-cf16903dabe5}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\logging\rtc_event_log\rtc_event_log.vcxproj">
+      <Project>{758de3eb-db59-4881-a222-7c5aad607f4c}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\module\audioprocess\audioprocess.vcxproj">
       <Project>{460d34b6-19e2-467f-a3b6-0128810bb9d8}</Project>
       <Private>true</Private>
@@ -349,6 +352,9 @@
       <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\module\congestion_controller\congestion_controller\congestion_controller.vcxproj">
+      <Project>{ba2bcdbd-aa9c-47aa-a5aa-cfbb4168a56b}</Project>
     </ProjectReference>
     <ProjectReference Include="..\module\desktop_capture\desktop_capture.vcxproj">
       <Project>{19fb7379-3d2a-40d4-8aa7-a513891666a4}</Project>
@@ -557,8 +563,8 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
-    <ProjectReference Include="..\third_party\protobuf\vsprojects\libprotobuf-lite.vcxproj">
-      <Project>{49ea010d-706f-4be2-a397-77854b72a040}</Project>
+    <ProjectReference Include="..\third_party\protobuf\cmake\solution\libprotobuf-lite.vcxproj">
+      <Project>{1ff405c0-00a1-38f7-9fb1-45f385a33b7d}</Project>
     </ProjectReference>
     <ProjectReference Include="..\third_party\SoundTouch\SoundTouch.vcxproj">
       <Project>{43ad6dd6-6f28-4430-9e84-2ecca846e216}</Project>

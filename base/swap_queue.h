@@ -123,7 +123,7 @@ class SwapQueue {
 
     cloopenwebrtc::CritScope cs(&crit_queue_);
 
-    RTC_DCHECK(queue_item_verifier_(*input));
+    DCHECK(queue_item_verifier_(*input));
 
     if (num_elements_ == queue_.size()) {
       return false;

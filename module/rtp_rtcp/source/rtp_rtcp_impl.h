@@ -338,6 +338,7 @@ class ModuleRtpRtcpImpl : public RtpRtcp, public RTCPReceiver::ModuleRtpRtcp {
   void SetVideoBitrateAllocation(const BitrateAllocation& bitrate) override;
 
   void SetTransport(Transport *transport) override;
+  Transport* GetTransport() override;
 
  protected:
   bool UpdateRTCPReceiveInformationTimers();

@@ -20,6 +20,8 @@
 #include "../system_wrappers/include/field_trial.h"
 #include "../system_wrappers/include/metrics.h"
 
+#include "../system_wrappers/include/trace.h"
+
 namespace cloopenwebrtc {
 namespace {
 const int64_t kBweIncreaseIntervalMs = 1000;
@@ -126,6 +128,7 @@ void SendSideBandwidthEstimation::UpdateReceiverEstimate(
     int64_t now_ms, uint32_t bandwidth) {
   bwe_incoming_ = bandwidth;
   bitrate_ = CapBitrateToThresholds(now_ms, bitrate_);
+  WEBRTC_TRACE(kTraceError, kTraceVideo, -1, "--------------[bwe] bitrate_controller = (bwe_incoming_)%d", bwe_incoming_);
 }
 
 void SendSideBandwidthEstimation::UpdateDelayBasedEstimate(
@@ -133,6 +136,10 @@ void SendSideBandwidthEstimation::UpdateDelayBasedEstimate(
     uint32_t bitrate_bps) {
   delay_based_bitrate_bps_ = bitrate_bps;
   bitrate_ = CapBitrateToThresholds(now_ms, bitrate_);
+  //WEBRTC_TRACE(kTraceError, kTraceVideo, -1, "--------------[bwe] bitrate_controller = (delay_based_bitrate_bps_)%d", bitrate_bps);
+  LOG(LS_ERROR) << "--------------[bwe] bitrate_controller = "
+	  << bitrate_bps
+	  << " (delay_based_bitrate_bps_)";
 }
 
 void SendSideBandwidthEstimation::UpdateReceiverBlock(uint8_t fraction_loss,
@@ -217,6 +224,9 @@ void SendSideBandwidthEstimation::UpdateEstimate(int64_t now_ms) {
     if (bitrate_ != prev_bitrate) {
       min_bitrate_history_.clear();
       min_bitrate_history_.push_back(std::make_pair(now_ms, bitrate_));
+	  if (event_log_) //in case audio
+		  event_log_->LogLossBasedBweUpdate(bitrate_, last_fraction_loss_,
+			  expected_packets_since_last_loss_update_);
       return;
     }
   }
@@ -224,6 +234,9 @@ void SendSideBandwidthEstimation::UpdateEstimate(int64_t now_ms) {
   if (last_packet_report_ms_ == -1) {
     // No feedback received.
     bitrate_ = CapBitrateToThresholds(now_ms, bitrate_);
+	if (event_log_) //in case audio
+		event_log_->LogLossBasedBweUpdate(bitrate_, last_fraction_loss_,
+			expected_packets_since_last_loss_update_);
     return;
   }
   int64_t time_since_packet_report_ms = now_ms - last_packet_report_ms_;
@@ -286,11 +299,16 @@ void SendSideBandwidthEstimation::UpdateEstimate(int64_t now_ms) {
       last_fraction_loss_ != last_logged_fraction_loss_ ||
       last_rtc_event_log_ms_ == -1 ||
       now_ms - last_rtc_event_log_ms_ > kRtcEventLogPeriodMs) {
-    //event_log_->LogLossBasedBweUpdate(capped_bitrate, last_fraction_loss_,
-    //                                  expected_packets_since_last_loss_update_);
+	  if(event_log_) //in case audio
+		  event_log_->LogLossBasedBweUpdate(capped_bitrate, last_fraction_loss_,
+                                        expected_packets_since_last_loss_update_);
     last_logged_fraction_loss_ = last_fraction_loss_;
     last_rtc_event_log_ms_ = now_ms;
   }
+
+  if (event_log_) //in case audio
+	  event_log_->LogLossBasedBweUpdate(capped_bitrate, last_fraction_loss_,
+		  expected_packets_since_last_loss_update_);
   bitrate_ = capped_bitrate;
 }
 

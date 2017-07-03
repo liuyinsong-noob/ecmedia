@@ -51,7 +51,7 @@ bool PacketRouter::TimeToSendPacket(uint32_t ssrc,
                                     int64_t capture_timestamp,
                                     bool retransmission,
                                     const PacedPacketInfo& pacing_info) {
-  DCHECK(pacer_thread_checker_.CalledOnValidThread());
+ // DCHECK(pacer_thread_checker_.CalledOnValidThread());
   cloopenwebrtc::CritScope cs(&modules_crit_);
   for (auto* rtp_module : rtp_modules_) {
     if (!rtp_module->SendingMedia())
@@ -67,7 +67,7 @@ bool PacketRouter::TimeToSendPacket(uint32_t ssrc,
 
 size_t PacketRouter::TimeToSendPadding(size_t bytes_to_send,
                                        const PacedPacketInfo& pacing_info) {
-  DCHECK(pacer_thread_checker_.CalledOnValidThread());
+ // DCHECK(pacer_thread_checker_.CalledOnValidThread());
   size_t total_bytes_sent = 0;
   cloopenwebrtc::CritScope cs(&modules_crit_);
   // Rtp modules are ordered by which stream can most benefit from padding.
@@ -88,7 +88,7 @@ void PacketRouter::SetTransportWideSequenceNumber(uint16_t sequence_number) {
 }
 
 uint16_t PacketRouter::AllocateSequenceNumber() {
-  int prev_seq = rtc::AtomicOps::AcquireLoad(&transport_seq_);
+  int prev_seq = cloopenwebrtc::AtomicOps::AcquireLoad(&transport_seq_);
   int desired_prev_seq;
   int new_seq;
   do {
@@ -98,7 +98,7 @@ uint16_t PacketRouter::AllocateSequenceNumber() {
     // time the CAS operation was executed. Thus, if prev_seq is returned, the
     // operation was successful - otherwise we need to retry. Saving the
     // return value saves us a load on retry.
-    prev_seq = rtc::AtomicOps::CompareAndSwap(&transport_seq_, desired_prev_seq,
+    prev_seq = cloopenwebrtc::AtomicOps::CompareAndSwap(&transport_seq_, desired_prev_seq,
                                               new_seq);
   } while (prev_seq != desired_prev_seq);
 

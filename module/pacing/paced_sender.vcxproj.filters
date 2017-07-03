@@ -24,6 +24,12 @@
     <ClInclude Include="bitrate_prober.h">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="packet_router.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="alr_detector.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bitrate_prober.cc">
@@ -33,6 +39,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="alr_detector.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="packet_router.cc">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

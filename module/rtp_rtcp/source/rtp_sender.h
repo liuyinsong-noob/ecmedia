@@ -236,6 +236,7 @@ class RTPSender {
   int32_t  SendRTPKeepalivePacket();
 
   void SetTransport(Transport* transport) { transport_ = transport; } //add by ylr.
+  Transport* GetTransport() { return transport_; }
 private:
   // keepalive
   bool                      _keepAliveIsActive;

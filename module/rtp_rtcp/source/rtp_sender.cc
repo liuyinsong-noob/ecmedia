@@ -32,6 +32,7 @@
 #include "../module/rtp_rtcp/source/rtp_sender_video.h"
 #include "../module/rtp_rtcp/source/time_util.h"
 #include "../system_wrappers/include/field_trial.h"
+#include "../module/congestion_controller/transport_feedback_adapter.h"
 
 namespace cloopenwebrtc {
 
@@ -609,6 +610,7 @@ int32_t RTPSender::ReSendPacket(uint16_t packet_id, int64_t min_resend_time) {
       packet_history_.GetPacketAndSetSendTime(packet_id, min_resend_time, true);
   if (!packet) {
     // Packet not found.
+	LOG(LS_ERROR) << "--------------[bwe][NACK][OnReceivedNack] Packet not found. seq_no = " << packet_id;
     return 0;
   }
 
@@ -641,6 +643,13 @@ bool RTPSender::SendPacketToNetwork(const RtpPacketToSend& packet,
                                     const PacketOptions& options,
                                     const PacedPacketInfo& pacing_info) {
   int bytes_sent = -1;
+  if (transport_feedback_observer_)
+  {
+	  uint16_t transport_sequence_number=0;
+	  bool has_transport_id = packet.GetExtension<TransportSequenceNumber>(&transport_sequence_number);
+	  TransportFeedbackAdapter *transport_feedback_adapter = static_cast<TransportFeedbackAdapter*>(transport_feedback_observer_);
+	  transport_feedback_adapter->OnSentPacket(transport_sequence_number, clock_->TimeInMilliseconds());
+  }
   if (transport_) {
     UpdateRtpOverhead(packet);
     bytes_sent = transport_->SendRtp(0, packet.data(), packet.size(), &options)
@@ -682,6 +691,8 @@ void RTPSender::OnReceivedNack(
                "RTPSender::OnReceivedNACK", "num_seqnum",
                nack_sequence_numbers.size(), "avg_rtt", avg_rtt);
   for (uint16_t seq_no : nack_sequence_numbers) {
+	 
+	LOG(LS_ERROR) << "--------------[bwe][NACK][OnReceivedNack] seq_no = " << seq_no;
     const int32_t bytes_sent = ReSendPacket(seq_no, 5 + avg_rtt);
     if (bytes_sent < 0) {
       // Failed to send one Sequence number. Give up the rest in this nack.

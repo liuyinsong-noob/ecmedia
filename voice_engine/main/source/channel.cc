@@ -955,13 +955,13 @@ Channel::Channel(int32_t channelId,
     _rxAgcIsEnabled(false),
     _rxNsIsEnabled(false),
     restored_packet_in_use_(false),
-    rtcp_bandwidth_observer_(
-        bitrate_controller_->CreateRtcpBandwidthObserver()),
+//     rtcp_bandwidth_observer_(
+//         bitrate_controller_->CreateRtcpBandwidthObserver()),
     send_bitrate_observer_(new VoEBitrateObserver(this)),
     network_predictor_(new NetworkPredictor(Clock::GetRealTimeClock())),
-	bitrate_controller_(
-		BitrateController::CreateBitrateController(Clock::GetRealTimeClock(),
-			/*send_bitrate_observer_.get()*/NULL, NULL)),
+// 	bitrate_controller_(
+// 		BitrateController::CreateBitrateController(Clock::GetRealTimeClock(),
+// 			/*send_bitrate_observer_.get()*/NULL, NULL)),
 	_encrypting(false),
 	_decrypting(false),
 	_encryptionPtr(NULL),

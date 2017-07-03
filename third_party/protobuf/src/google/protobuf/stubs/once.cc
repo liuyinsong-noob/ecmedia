@@ -47,7 +47,7 @@
 
 #include <google/protobuf/stubs/atomicops.h>
 
-namespace cloopen_google {
+namespace google {
 namespace protobuf {
 
 namespace {
@@ -61,6 +61,13 @@ void SchedYield() {
 }
 
 }  // namespace
+
+void GoogleOnceInit(ProtobufOnceType* once, void (*init_func)()) {
+  if (internal::Acquire_Load(once) != ONCE_STATE_DONE) {
+    internal::FunctionClosure0 func(init_func, false);
+    GoogleOnceInitImpl(once, &func);
+  }
+}
 
 void GoogleOnceInitImpl(ProtobufOnceType* once, Closure* closure) {
   internal::AtomicWord state = internal::Acquire_Load(once);
@@ -94,6 +101,6 @@ void GoogleOnceInitImpl(ProtobufOnceType* once, Closure* closure) {
 }
 
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace google
 
 #endif  // GOOGLE_PROTOBUF_NO_THREAD_SAFETY

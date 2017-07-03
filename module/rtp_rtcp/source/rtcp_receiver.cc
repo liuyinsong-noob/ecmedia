@@ -998,7 +998,7 @@ void RTCPReceiver::TriggerCallbacksFromRtcpPacket(
   // report can generate several RTCP packets, based on number relayed/mixed
   // a send report block should go out to all receivers.
   if (rtcp_intra_frame_observer_) {
-    DCHECK(!receiver_only_);
+ //   DCHECK(!receiver_only_);
     if ((packet_information.packet_type_flags & kRtcpPli) ||
         (packet_information.packet_type_flags & kRtcpFir)) {
       if (packet_information.packet_type_flags & kRtcpPli) {
@@ -1019,8 +1019,9 @@ void RTCPReceiver::TriggerCallbacksFromRtcpPacket(
           local_ssrc, packet_information.rpsi_picture_id);
     }
   }
+
   if (rtcp_bandwidth_observer_) {
-    DCHECK(!receiver_only_);
+ //   DCHECK(!receiver_only_);
     if (packet_information.packet_type_flags & kRtcpRemb) {
       LOG(LS_VERBOSE) << "Incoming REMB: "
                       << packet_information.receiver_estimated_max_bitrate_bps;
@@ -1043,8 +1044,12 @@ void RTCPReceiver::TriggerCallbacksFromRtcpPacket(
       (packet_information.packet_type_flags & kRtcpTransportFeedback)) {
     uint32_t media_source_ssrc =
         packet_information.transport_feedback->media_ssrc();
+	//need to fix, why check media_ssrc?--- ylr
+	uint32_t main_ssrc = packet_information.transport_feedback->sender_ssrc();
     if (media_source_ssrc == local_ssrc ||
+		registered_ssrcs.find(main_ssrc) != registered_ssrcs.end() ||
         registered_ssrcs.find(media_source_ssrc) != registered_ssrcs.end()) {
+	//if(true){
       transport_feedback_observer_->OnTransportFeedback(
           *packet_information.transport_feedback);
     }

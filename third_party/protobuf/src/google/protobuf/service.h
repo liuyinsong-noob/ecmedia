@@ -74,12 +74,12 @@
 //
 // To call a remote MyServiceImpl, first you need an RpcChannel connected to it.
 // How to construct a channel depends, again, on your RPC implementation.
-// Here we use a hypothentical "MyRpcChannel" as an example:
+// Here we use a hypothetical "MyRpcChannel" as an example:
 //   MyRpcChannel channel("rpc:hostname:1234/myservice");
 //   MyRpcController controller;
 //   MyServiceImpl::Stub stub(&channel);
 //   FooRequest request;
-//   FooRespnose response;
+//   FooResponse response;
 //
 //   // ... fill in request ...
 //
@@ -102,8 +102,9 @@
 
 #include <string>
 #include <google/protobuf/stubs/common.h>
+#include <google/protobuf/stubs/callback.h>
 
-namespace cloopen_google {
+namespace google {
 namespace protobuf {
 
 // Defined in this file.
@@ -287,5 +288,5 @@ class LIBPROTOBUF_EXPORT RpcChannel {
 
 }  // namespace protobuf
 
-}  // namespace cloopen_google
+}  // namespace google
 #endif  // GOOGLE_PROTOBUF_SERVICE_H__

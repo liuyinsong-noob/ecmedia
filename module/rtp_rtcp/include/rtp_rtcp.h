@@ -53,7 +53,6 @@ class RtpRtcp : public Module {
     // The clock to use to read time. If nullptr then system clock will be used.
     int32_t id;
     Clock* clock = nullptr;
-    RtpRtcp* default_module;
     ReceiveStatistics* receive_statistics;
 
     // Transport object that will be called when packets are ready to be sent
@@ -539,6 +538,7 @@ class RtpRtcp : public Module {
   virtual int32_t DeRegisterRtpReceiver() = 0;
   virtual void SetSendRtcpPacketTypeCountObserver(RtcpPacketTypeCounterObserver *observer)=0;
   virtual void SetTransport(Transport *transport) = 0; //add by ylr
+  virtual Transport* GetTransport() = 0;
 };
 
 }  // namespace cloopenwebrtc

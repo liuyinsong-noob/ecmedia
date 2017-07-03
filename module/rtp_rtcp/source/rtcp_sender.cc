@@ -100,6 +100,8 @@ class PacketContainer : public rtcp::CompoundPacket,
   }
 
   void OnPacketReady(uint8_t* data, size_t length) override {
+	  if (!transport_)
+		  return;
     if (transport_->SendRtcp(0, data, length)) {
       bytes_sent_ += length;
       if (event_log_) {
@@ -1033,6 +1035,10 @@ bool RTCPSender::SendFeedbackPacket(const rtcp::TransportFeedback& packet) {
         : transport_(transport), event_log_(event_log), send_failure_(false) {}
 
     void OnPacketReady(uint8_t* data, size_t length) override {
+		if (!transport_)
+		{
+			return;
+		}
       if (transport_->SendRtcp(0, data, length)) {
         if (event_log_) {
           event_log_->LogRtcpPacket(kOutgoingPacket, MediaType::ANY, data,

@@ -334,6 +334,10 @@ void PacedSender::InsertPacket(RtpPacketSender::Priority priority,
   if (capture_time_ms < 0)
     capture_time_ms = now_ms;
 
+  LOG(LS_ERROR) << "--------------[bwe][PacedSender][InsertPacket] sequence_number = "
+	  << sequence_number
+	  << " , now_ms = " << now_ms;
+
   packets_->Push(paced_sender::Packet(priority, ssrc, sequence_number,
                                       capture_time_ms, now_ms, bytes,
                                       retransmission, packet_counter_++));
@@ -471,16 +475,19 @@ bool PacedSender::SendPacket(const paced_sender::Packet& packet,
   }
 
   critsect_->Leave();
-  /*const*/ bool success = packet_sender_->TimeToSendPacket(
+  const bool success = packet_sender_->TimeToSendPacket(
       packet.ssrc, packet.sequence_number, packet.capture_time_ms,
       packet.retransmission, pacing_info);
   critsect_->Enter();
 
-  success = true; //add by ylr for unittest
-
   if (success) {
     // TODO(holmer): High priority packets should only be accounted for if we
     // are allocating bandwidth for audio.
+
+	  LOG(LS_ERROR) << "--------------[bwe][PacedSender][SendPacket] sequence_number = "
+		  << packet.sequence_number
+		  << " , now_ms = " << clock_->TimeInMilliseconds();
+
     if (packet.priority != kHighPriority) {
       // Update media bytes sent.
       UpdateBudgetWithBytesSent(packet.bytes);

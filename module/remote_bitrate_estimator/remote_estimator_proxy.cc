@@ -55,7 +55,9 @@ void RemoteEstimatorProxy::IncomingPacket(int64_t arrival_time_ms,
   }
   cloopenwebrtc::CritScope cs(&lock_);
   media_ssrc_ = header.ssrc;
-
+  LOG(LS_ERROR) << "--------------[bwe][Probe][RemoteEstimatorProxy][IncomingPacket] "
+	  << "sequence_number = " << header.extension.transportSequenceNumber
+	  << " , arrival_time_ms = " << arrival_time_ms;
   OnPacketArrival(header.extension.transportSequenceNumber, arrival_time_ms);
 }
 
@@ -79,6 +81,8 @@ int32_t RemoteEstimatorProxy::Process() {
   last_process_time_ms_ = clock_->TimeInMilliseconds();
 
   bool more_to_build = true;
+  LOG(LS_ERROR) << "--------------[bwe][Probe][RemoteEstimatorProxy][Process] ";
+
   while (more_to_build) {
     rtcp::TransportFeedback feedback_packet;
     if (BuildFeedbackPacket(&feedback_packet)) {
@@ -120,7 +124,7 @@ void RemoteEstimatorProxy::OnPacketArrival(uint16_t sequence_number,
   // SequenceNumberUnwrapper doesn't do this, so we should replace this with
   // calls to IsNewerSequenceNumber instead.
   int64_t seq = unwrapper_.Unwrap(sequence_number);
-  if (seq > window_start_seq_ + 0xFFFF / 2) {
+  if ((window_start_seq_ != -1) && (seq > window_start_seq_ + 0xFFFF / 2)) {
     LOG(LS_WARNING) << "Skipping this sequence number (" << sequence_number
                     << ") since it likely is reordered, but the unwrapper"
                        "failed to handle it. Feedback window starts at "

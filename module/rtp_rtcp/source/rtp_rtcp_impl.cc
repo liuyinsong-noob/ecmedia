@@ -125,13 +125,17 @@ ModuleRtpRtcpImpl::ModuleRtpRtcpImpl(const Configuration& configuration)
   if (configuration.audio)
   {
 	  int x = rand();
-	  rtp_sender_.SetSSRC(0x12345678 & x);
+	  rtp_sender_.SetSSRC(0x12345678 & (0xffff0000 | x));
+	  rtcp_sender_.SetSSRC(0x12345678 & (0xffff0000 | x));
+	  SetRtcpReceiverSsrcs(0x12345678 & (0xffff0000 | x));
   }
-  else
-  {
-	  int x = rand();
-	  rtp_sender_.SetSSRC(0x87654321 & x);
-  }
+//   else
+//   {
+// 	  int x = rand();
+// 	  rtp_sender_.SetSSRC(0x87654321 & (0xffff0000 | x));
+// 	  rtcp_sender_.SetSSRC(0x87654321 & (0xffff0000 | x));
+// 	  SetRtcpReceiverSsrcs(0x87654321 & (0xffff0000 | x));
+//   }
 }
 
 // Returns the number of milliseconds until the module want a worker thread
@@ -155,7 +159,7 @@ int32_t ModuleRtpRtcpImpl::Process() {
     if (now >= last_packet_timeout_process_time_ +
         kRtpRtcpPacketTimeoutProcessTimeMs) {
         if (rtp_receiver_) {
-            rtp_receiver_->PacketTimeout();
+		//	rtp_receiver_->PacketTimeout();
         }
         
         last_packet_timeout_process_time_ = now;
@@ -1000,6 +1004,10 @@ void ModuleRtpRtcpImpl::SetSendRtcpPacketTypeCountObserver(RtcpPacketTypeCounter
 void ModuleRtpRtcpImpl::SetTransport(Transport *transport) {
 	rtp_sender_.SetTransport(transport);
 	rtcp_sender_.SetTransport(transport);
+}
+
+Transport* ModuleRtpRtcpImpl::GetTransport() {
+	return rtp_sender_.GetTransport();
 }
 
 }  // namespace cloopenwebrtc

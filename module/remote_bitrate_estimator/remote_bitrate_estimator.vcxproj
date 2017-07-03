@@ -120,7 +120,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;WEBRTC_WIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;WEBRTC_WIN;BWE_TEST_LOGGING_COMPILE_TIME_ENABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>./include;./source/test;../;../interface;../rtp_rtcp/source;../rtp_rtcp/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
@@ -154,8 +154,16 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="aimd_rate_control.h" />
     <ClInclude Include="include\bwe_defines.h" />
     <ClInclude Include="include\remote_bitrate_estimator.h" />
+    <ClInclude Include="inter_arrival.h" />
+    <ClInclude Include="overuse_detector.h" />
+    <ClInclude Include="overuse_estimator.h" />
+    <ClInclude Include="remote_bitrate_estimator_abs_send_time.h" />
+    <ClInclude Include="remote_bitrate_estimator_single_stream.h" />
+    <ClInclude Include="remote_estimator_proxy.h" />
+    <ClInclude Include="test\bwe_test_logging.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="aimd_rate_control.cc" />
@@ -167,6 +175,7 @@
     <ClCompile Include="remote_bitrate_estimator_single_stream.cc" />
     <ClCompile Include="remote_estimator_proxy.cc" />
     <ClCompile Include="send_time_history.cc" />
+    <ClCompile Include="test\bwe_test_logging.cc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

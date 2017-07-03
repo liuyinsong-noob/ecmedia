@@ -9,6 +9,9 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="test">
+      <UniqueIdentifier>{648c38f3-f37e-4ff0-b29a-4d77c7a0e025}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -19,6 +22,30 @@
     </ClInclude>
     <ClInclude Include="include\remote_bitrate_estimator.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="aimd_rate_control.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inter_arrival.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="overuse_detector.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="overuse_estimator.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="remote_bitrate_estimator_abs_send_time.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="remote_bitrate_estimator_single_stream.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="remote_estimator_proxy.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="test\bwe_test_logging.h">
+      <Filter>test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -48,6 +75,9 @@
     </ClCompile>
     <ClCompile Include="send_time_history.cc">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="test\bwe_test_logging.cc">
+      <Filter>test</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

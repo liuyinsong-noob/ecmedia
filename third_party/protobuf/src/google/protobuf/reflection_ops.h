@@ -41,7 +41,7 @@
 #include <google/protobuf/stubs/common.h>
 #include <google/protobuf/message.h>
 
-namespace cloopen_google {
+namespace google {
 namespace protobuf {
 namespace internal {
 
@@ -77,5 +77,5 @@ class LIBPROTOBUF_EXPORT ReflectionOps {
 }  // namespace internal
 }  // namespace protobuf
 
-}  // namespace cloopen_google
+}  // namespace google
 #endif  // GOOGLE_PROTOBUF_REFLECTION_OPS_H__

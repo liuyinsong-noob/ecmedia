@@ -7,6 +7,7 @@
 #include <algorithm>
 
 #include <google/protobuf/stubs/common.h>
+#include <google/protobuf/stubs/port.h>
 #include <google/protobuf/stubs/once.h>
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/wire_format_lite_inl.h>
@@ -46,13 +47,13 @@ void protobuf_AddDesc_MediaStatisticsData_2eproto() {
   AudioReceiverStatisticsInner::default_instance_->InitAsDefaultInstance();
   MediaStatisticsInner::default_instance_->InitAsDefaultInstance();
   MediaStatisticsDataInner::default_instance_->InitAsDefaultInstance();
-  ::cloopen_google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_MediaStatisticsData_2eproto);
+  ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_MediaStatisticsData_2eproto);
 }
 
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
 GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AddDesc_MediaStatisticsData_2eproto_once_);
 void protobuf_AddDesc_MediaStatisticsData_2eproto() {
-  ::cloopen_google::protobuf::GoogleOnceInit(&protobuf_AddDesc_MediaStatisticsData_2eproto_once_,
+  ::google::protobuf::GoogleOnceInit(&protobuf_AddDesc_MediaStatisticsData_2eproto_once_,
                  &protobuf_AddDesc_MediaStatisticsData_2eproto_impl);
 }
 #else
@@ -64,9 +65,24 @@ struct StaticDescriptorInitializer_MediaStatisticsData_2eproto {
 } static_descriptor_initializer_MediaStatisticsData_2eproto_;
 #endif
 
+namespace {
+
+static void MergeFromFail(int line) GOOGLE_ATTRIBUTE_COLD;
+GOOGLE_ATTRIBUTE_NOINLINE static void MergeFromFail(int line) {
+  GOOGLE_CHECK(false) << __FILE__ << ":" << line;
+}
+
+}  // namespace
+
+
 // ===================================================================
 
-#ifndef _MSC_VER
+static ::std::string* MutableUnknownFieldsForVideoSenderStatisticsInner(
+    VideoSenderStatisticsInner* ptr) {
+  return ptr->mutable_unknown_fields();
+}
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int VideoSenderStatisticsInner::kKStatsValueNameReportTypeFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameChannelIdFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameTimestampFieldNumber;
@@ -106,10 +122,10 @@ const int VideoSenderStatisticsInner::kKStatsValueNameCodecSettingStartBitrateFi
 const int VideoSenderStatisticsInner::kKStatsValueNameCodecSettingMinBitrateFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameCodecSettingMaxBitrateFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameCodecSettingTargetBitrateFieldNumber;
-#endif  // !_MSC_VER
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 VideoSenderStatisticsInner::VideoSenderStatisticsInner()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
   SharedCtor();
   // @@protoc_insertion_point(constructor:VideoSenderStatisticsInner)
 }
@@ -118,19 +134,22 @@ void VideoSenderStatisticsInner::InitAsDefaultInstance() {
 }
 
 VideoSenderStatisticsInner::VideoSenderStatisticsInner(const VideoSenderStatisticsInner& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::google::protobuf::MessageLite(),
+    _arena_ptr_(NULL) {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:VideoSenderStatisticsInner)
 }
 
 void VideoSenderStatisticsInner::SharedCtor() {
-  ::cloopen_google::protobuf::internal::GetEmptyString();
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
+  _unknown_fields_.UnsafeSetDefault(
+      &::google::protobuf::internal::GetEmptyStringAlreadyInited());
   kstatsvaluenamereporttype_ = 0;
   kstatsvaluenamechannelid_ = 0;
   kstatsvaluenametimestamp_ = GOOGLE_LONGLONG(0);
-  kstatsvaluenamecodecimplementationname_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+  kstatsvaluenamecodecimplementationname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   kstatsvaluenametargetencbitrate_ = 0;
   kstatsvaluenameactualencbitrate_ = 0;
   kstatsvaluenameavailablesendbandwidth_ = 0;
@@ -175,9 +194,9 @@ VideoSenderStatisticsInner::~VideoSenderStatisticsInner() {
 }
 
 void VideoSenderStatisticsInner::SharedDtor() {
-  if (kstatsvaluenamecodecimplementationname_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete kstatsvaluenamecodecimplementationname_;
-  }
+  _unknown_fields_.DestroyNoArena(
+      &::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  kstatsvaluenamecodecimplementationname_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -202,69 +221,80 @@ const VideoSenderStatisticsInner& VideoSenderStatisticsInner::default_instance()
 
 VideoSenderStatisticsInner* VideoSenderStatisticsInner::default_instance_ = NULL;
 
-VideoSenderStatisticsInner* VideoSenderStatisticsInner::New() const {
-  return new VideoSenderStatisticsInner;
+VideoSenderStatisticsInner* VideoSenderStatisticsInner::New(::google::protobuf::Arena* arena) const {
+  VideoSenderStatisticsInner* n = new VideoSenderStatisticsInner;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
 }
 
 void VideoSenderStatisticsInner::Clear() {
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<VideoSenderStatisticsInner*>(16)->f) - \
-   reinterpret_cast<char*>(16))
+// @@protoc_insertion_point(message_clear_start:VideoSenderStatisticsInner)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(VideoSenderStatisticsInner, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<VideoSenderStatisticsInner*>(16)->f)
+#endif
 
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
 
-  if (_has_bits_[0 / 32] & 255) {
+  if (_has_bits_[0 / 32] & 255u) {
     ZR_(kstatsvaluenamereporttype_, kstatsvaluenametimestamp_);
     ZR_(kstatsvaluenametargetencbitrate_, kstatsvaluenameavailablereceivebandwidth_);
     if (has_kstatsvaluenamecodecimplementationname()) {
-      if (kstatsvaluenamecodecimplementationname_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        kstatsvaluenamecodecimplementationname_->clear();
-      }
+      kstatsvaluenamecodecimplementationname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     }
   }
-  if (_has_bits_[8 / 32] & 65280) {
+  if (_has_bits_[8 / 32] & 65280u) {
     ZR_(kstatsvaluenamelossfractioninpercent_, kstatsvaluenamefecbitrate_);
   }
-  if (_has_bits_[16 / 32] & 16711680) {
+  if (_has_bits_[16 / 32] & 16711680u) {
     ZR_(kstatsvaluenametransmitpacketsrate_, kstatsvaluenameavgencodems_);
   }
-  if (_has_bits_[24 / 32] & 4278190080) {
+  if (_has_bits_[24 / 32] & 4278190080u) {
     ZR_(kstatsvaluenameencodeusagepercent_, kstatsvaluenamecodecsettingframewidth_);
   }
-  if (_has_bits_[32 / 32] & 127) {
+  if (_has_bits_[32 / 32] & 127u) {
     ZR_(kstatsvaluenamecodecsettingframeheight_, kstatsvaluenamecodecsettingtargetbitrate_);
   }
 
-#undef OFFSET_OF_FIELD_
+#undef ZR_HELPER_
 #undef ZR_
 
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->clear();
+  _unknown_fields_.ClearToEmptyNoArena(
+      &::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
-      mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
-      &unknown_fields_string);
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  ::google::protobuf::io::LazyStringOutputStream unknown_fields_string(
+      ::google::protobuf::internal::NewPermanentCallback(
+          &MutableUnknownFieldsForVideoSenderStatisticsInner, this));
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string, false);
   // @@protoc_insertion_point(parse_start:VideoSenderStatisticsInner)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(16383);
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(16383);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional int32 kStatsValueNameReportType = 1;
       case 1: {
         if (tag == 8) {
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamereporttype_)));
           set_has_kstatsvaluenamereporttype();
         } else {
@@ -278,8 +308,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 2: {
         if (tag == 16) {
          parse_kStatsValueNameChannelId:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamechannelid_)));
           set_has_kstatsvaluenamechannelid();
         } else {
@@ -293,8 +323,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 3: {
         if (tag == 24) {
          parse_kStatsValueNameTimestamp:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int64, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
                  input, &kstatsvaluenametimestamp_)));
           set_has_kstatsvaluenametimestamp();
         } else {
@@ -308,7 +338,7 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 4: {
         if (tag == 34) {
          parse_kStatsValueNameCodecImplementationName:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_kstatsvaluenamecodecimplementationname()));
         } else {
           goto handle_unusual;
@@ -321,8 +351,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 7: {
         if (tag == 56) {
          parse_kStatsValueNameTargetEncBitrate:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenametargetencbitrate_)));
           set_has_kstatsvaluenametargetencbitrate();
         } else {
@@ -336,8 +366,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 8: {
         if (tag == 64) {
          parse_kStatsValueNameActualEncBitrate:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenameactualencbitrate_)));
           set_has_kstatsvaluenameactualencbitrate();
         } else {
@@ -351,8 +381,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 9: {
         if (tag == 72) {
          parse_kStatsValueNameAvailableSendBandwidth:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenameavailablesendbandwidth_)));
           set_has_kstatsvaluenameavailablesendbandwidth();
         } else {
@@ -366,8 +396,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 10: {
         if (tag == 80) {
          parse_kStatsValueNameAvailableReceiveBandwidth:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenameavailablereceivebandwidth_)));
           set_has_kstatsvaluenameavailablereceivebandwidth();
         } else {
@@ -381,8 +411,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 11: {
         if (tag == 88) {
          parse_kStatsValueNameLossFractionInPercent:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamelossfractioninpercent_)));
           set_has_kstatsvaluenamelossfractioninpercent();
         } else {
@@ -396,8 +426,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 12: {
         if (tag == 96) {
          parse_kStatsValueNameJitterReceived:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamejitterreceived_)));
           set_has_kstatsvaluenamejitterreceived();
         } else {
@@ -411,8 +441,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 13: {
         if (tag == 104) {
          parse_kStatsValueNameRttInMs:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamerttinms_)));
           set_has_kstatsvaluenamerttinms();
         } else {
@@ -426,8 +456,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 14: {
         if (tag == 112) {
          parse_kStatsValueNameBucketDelayInMs:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamebucketdelayinms_)));
           set_has_kstatsvaluenamebucketdelayinms();
         } else {
@@ -441,8 +471,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 15: {
         if (tag == 120) {
          parse_kStatsValueNameSsrc:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamessrc_)));
           set_has_kstatsvaluenamessrc();
         } else {
@@ -456,8 +486,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 16: {
         if (tag == 128) {
          parse_kStatsValueNameTransmitBitrate:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenametransmitbitrate_)));
           set_has_kstatsvaluenametransmitbitrate();
         } else {
@@ -471,8 +501,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 17: {
         if (tag == 136) {
          parse_kStatsValueNameRetransmitBitrate:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenameretransmitbitrate_)));
           set_has_kstatsvaluenameretransmitbitrate();
         } else {
@@ -486,8 +516,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 18: {
         if (tag == 144) {
          parse_kStatsValueNameFecBitrate:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamefecbitrate_)));
           set_has_kstatsvaluenamefecbitrate();
         } else {
@@ -501,8 +531,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 19: {
         if (tag == 152) {
          parse_kStatsValueNameTransmitPacketsRate:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenametransmitpacketsrate_)));
           set_has_kstatsvaluenametransmitpacketsrate();
         } else {
@@ -516,8 +546,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 20: {
         if (tag == 160) {
          parse_kStatsValueNameRetransmitPacketsRate:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenameretransmitpacketsrate_)));
           set_has_kstatsvaluenameretransmitpacketsrate();
         } else {
@@ -531,8 +561,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 21: {
         if (tag == 168) {
          parse_kStatsValueNamePacketsLost:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamepacketslost_)));
           set_has_kstatsvaluenamepacketslost();
         } else {
@@ -546,8 +576,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 22: {
         if (tag == 176) {
          parse_kStatsValueNameFirsReceived:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamefirsreceived_)));
           set_has_kstatsvaluenamefirsreceived();
         } else {
@@ -561,8 +591,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 23: {
         if (tag == 184) {
          parse_kStatsValueNameNacksReceived:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamenacksreceived_)));
           set_has_kstatsvaluenamenacksreceived();
         } else {
@@ -576,8 +606,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 24: {
         if (tag == 192) {
          parse_kStatsValueNameNacksRequestsReceived:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamenacksrequestsreceived_)));
           set_has_kstatsvaluenamenacksrequestsreceived();
         } else {
@@ -591,8 +621,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 25: {
         if (tag == 200) {
          parse_kStatsValueNameNacksUniqueRequestsReceived:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamenacksuniquerequestsreceived_)));
           set_has_kstatsvaluenamenacksuniquerequestsreceived();
         } else {
@@ -606,8 +636,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 26: {
         if (tag == 208) {
          parse_kStatsValueNameAvgEncodeMs:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenameavgencodems_)));
           set_has_kstatsvaluenameavgencodems();
         } else {
@@ -621,8 +651,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 27: {
         if (tag == 216) {
          parse_kStatsValueNameEncodeUsagePercent:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenameencodeusagepercent_)));
           set_has_kstatsvaluenameencodeusagepercent();
         } else {
@@ -636,8 +666,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 28: {
         if (tag == 224) {
          parse_kStatsValueNameCapturedFrameWidth:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamecapturedframewidth_)));
           set_has_kstatsvaluenamecapturedframewidth();
         } else {
@@ -651,8 +681,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 29: {
         if (tag == 232) {
          parse_kStatsValueNameCapturedFrameHeight:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamecapturedframeheight_)));
           set_has_kstatsvaluenamecapturedframeheight();
         } else {
@@ -666,8 +696,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 30: {
         if (tag == 240) {
          parse_kStatsValueNameCapturedFrameRate:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamecapturedframerate_)));
           set_has_kstatsvaluenamecapturedframerate();
         } else {
@@ -681,8 +711,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 31: {
         if (tag == 248) {
          parse_kStatsValueNameQMFrameWidth:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenameqmframewidth_)));
           set_has_kstatsvaluenameqmframewidth();
         } else {
@@ -696,8 +726,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 32: {
         if (tag == 256) {
          parse_kStatsValueNameQMFrameHeight:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenameqmframeheight_)));
           set_has_kstatsvaluenameqmframeheight();
         } else {
@@ -711,8 +741,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 33: {
         if (tag == 264) {
          parse_kStatsValueNameQMFrameRate:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenameqmframerate_)));
           set_has_kstatsvaluenameqmframerate();
         } else {
@@ -726,8 +756,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 34: {
         if (tag == 272) {
          parse_kStatsValueNameCodecSettingFrameWidth:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamecodecsettingframewidth_)));
           set_has_kstatsvaluenamecodecsettingframewidth();
         } else {
@@ -741,8 +771,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 35: {
         if (tag == 280) {
          parse_kStatsValueNameCodecSettingFrameHeight:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamecodecsettingframeheight_)));
           set_has_kstatsvaluenamecodecsettingframeheight();
         } else {
@@ -756,8 +786,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 36: {
         if (tag == 288) {
          parse_kStatsValueNameCodecSettingFrameRate:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamecodecsettingframerate_)));
           set_has_kstatsvaluenamecodecsettingframerate();
         } else {
@@ -771,8 +801,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 37: {
         if (tag == 296) {
          parse_kStatsValueNameCodecSettingSimulcastNum:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamecodecsettingsimulcastnum_)));
           set_has_kstatsvaluenamecodecsettingsimulcastnum();
         } else {
@@ -786,8 +816,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 38: {
         if (tag == 304) {
          parse_kStatsValueNameCodecSettingStartBitrate:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamecodecsettingstartbitrate_)));
           set_has_kstatsvaluenamecodecsettingstartbitrate();
         } else {
@@ -801,8 +831,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 39: {
         if (tag == 312) {
          parse_kStatsValueNameCodecSettingMinBitrate:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamecodecsettingminbitrate_)));
           set_has_kstatsvaluenamecodecsettingminbitrate();
         } else {
@@ -816,8 +846,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 40: {
         if (tag == 320) {
          parse_kStatsValueNameCodecSettingMaxBitrate:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamecodecsettingmaxbitrate_)));
           set_has_kstatsvaluenamecodecsettingmaxbitrate();
         } else {
@@ -831,8 +861,8 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       case 41: {
         if (tag == 328) {
          parse_kStatsValueNameCodecSettingTargetBitrate:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamecodecsettingtargetbitrate_)));
           set_has_kstatsvaluenamecodecsettingtargetbitrate();
         } else {
@@ -845,11 +875,11 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -865,491 +895,492 @@ failure:
 }
 
 void VideoSenderStatisticsInner::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:VideoSenderStatisticsInner)
   // optional int32 kStatsValueNameReportType = 1;
   if (has_kstatsvaluenamereporttype()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(1, this->kstatsvaluenamereporttype(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->kstatsvaluenamereporttype(), output);
   }
 
   // optional int32 kStatsValueNameChannelId = 2;
   if (has_kstatsvaluenamechannelid()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(2, this->kstatsvaluenamechannelid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->kstatsvaluenamechannelid(), output);
   }
 
   // optional int64 kStatsValueNameTimestamp = 3;
   if (has_kstatsvaluenametimestamp()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt64(3, this->kstatsvaluenametimestamp(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->kstatsvaluenametimestamp(), output);
   }
 
   // optional string kStatsValueNameCodecImplementationName = 4;
   if (has_kstatsvaluenamecodecimplementationname()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       4, this->kstatsvaluenamecodecimplementationname(), output);
   }
 
   // optional int32 kStatsValueNameTargetEncBitrate = 7;
   if (has_kstatsvaluenametargetencbitrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(7, this->kstatsvaluenametargetencbitrate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->kstatsvaluenametargetencbitrate(), output);
   }
 
   // optional int32 kStatsValueNameActualEncBitrate = 8;
   if (has_kstatsvaluenameactualencbitrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(8, this->kstatsvaluenameactualencbitrate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->kstatsvaluenameactualencbitrate(), output);
   }
 
   // optional int32 kStatsValueNameAvailableSendBandwidth = 9;
   if (has_kstatsvaluenameavailablesendbandwidth()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(9, this->kstatsvaluenameavailablesendbandwidth(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->kstatsvaluenameavailablesendbandwidth(), output);
   }
 
   // optional int32 kStatsValueNameAvailableReceiveBandwidth = 10;
   if (has_kstatsvaluenameavailablereceivebandwidth()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(10, this->kstatsvaluenameavailablereceivebandwidth(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->kstatsvaluenameavailablereceivebandwidth(), output);
   }
 
   // optional int32 kStatsValueNameLossFractionInPercent = 11;
   if (has_kstatsvaluenamelossfractioninpercent()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(11, this->kstatsvaluenamelossfractioninpercent(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->kstatsvaluenamelossfractioninpercent(), output);
   }
 
   // optional int32 kStatsValueNameJitterReceived = 12;
   if (has_kstatsvaluenamejitterreceived()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(12, this->kstatsvaluenamejitterreceived(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->kstatsvaluenamejitterreceived(), output);
   }
 
   // optional int32 kStatsValueNameRttInMs = 13;
   if (has_kstatsvaluenamerttinms()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(13, this->kstatsvaluenamerttinms(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(13, this->kstatsvaluenamerttinms(), output);
   }
 
   // optional int32 kStatsValueNameBucketDelayInMs = 14;
   if (has_kstatsvaluenamebucketdelayinms()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(14, this->kstatsvaluenamebucketdelayinms(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(14, this->kstatsvaluenamebucketdelayinms(), output);
   }
 
   // optional int32 kStatsValueNameSsrc = 15;
   if (has_kstatsvaluenamessrc()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(15, this->kstatsvaluenamessrc(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(15, this->kstatsvaluenamessrc(), output);
   }
 
   // optional int32 kStatsValueNameTransmitBitrate = 16;
   if (has_kstatsvaluenametransmitbitrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(16, this->kstatsvaluenametransmitbitrate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(16, this->kstatsvaluenametransmitbitrate(), output);
   }
 
   // optional int32 kStatsValueNameRetransmitBitrate = 17;
   if (has_kstatsvaluenameretransmitbitrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(17, this->kstatsvaluenameretransmitbitrate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(17, this->kstatsvaluenameretransmitbitrate(), output);
   }
 
   // optional int32 kStatsValueNameFecBitrate = 18;
   if (has_kstatsvaluenamefecbitrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(18, this->kstatsvaluenamefecbitrate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(18, this->kstatsvaluenamefecbitrate(), output);
   }
 
   // optional int32 kStatsValueNameTransmitPacketsRate = 19;
   if (has_kstatsvaluenametransmitpacketsrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(19, this->kstatsvaluenametransmitpacketsrate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(19, this->kstatsvaluenametransmitpacketsrate(), output);
   }
 
   // optional int32 kStatsValueNameRetransmitPacketsRate = 20;
   if (has_kstatsvaluenameretransmitpacketsrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(20, this->kstatsvaluenameretransmitpacketsrate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(20, this->kstatsvaluenameretransmitpacketsrate(), output);
   }
 
   // optional int32 kStatsValueNamePacketsLost = 21;
   if (has_kstatsvaluenamepacketslost()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(21, this->kstatsvaluenamepacketslost(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(21, this->kstatsvaluenamepacketslost(), output);
   }
 
   // optional int32 kStatsValueNameFirsReceived = 22;
   if (has_kstatsvaluenamefirsreceived()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(22, this->kstatsvaluenamefirsreceived(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(22, this->kstatsvaluenamefirsreceived(), output);
   }
 
   // optional int32 kStatsValueNameNacksReceived = 23;
   if (has_kstatsvaluenamenacksreceived()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(23, this->kstatsvaluenamenacksreceived(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(23, this->kstatsvaluenamenacksreceived(), output);
   }
 
   // optional int32 kStatsValueNameNacksRequestsReceived = 24;
   if (has_kstatsvaluenamenacksrequestsreceived()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(24, this->kstatsvaluenamenacksrequestsreceived(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(24, this->kstatsvaluenamenacksrequestsreceived(), output);
   }
 
   // optional int32 kStatsValueNameNacksUniqueRequestsReceived = 25;
   if (has_kstatsvaluenamenacksuniquerequestsreceived()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(25, this->kstatsvaluenamenacksuniquerequestsreceived(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(25, this->kstatsvaluenamenacksuniquerequestsreceived(), output);
   }
 
   // optional int32 kStatsValueNameAvgEncodeMs = 26;
   if (has_kstatsvaluenameavgencodems()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(26, this->kstatsvaluenameavgencodems(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(26, this->kstatsvaluenameavgencodems(), output);
   }
 
   // optional int32 kStatsValueNameEncodeUsagePercent = 27;
   if (has_kstatsvaluenameencodeusagepercent()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(27, this->kstatsvaluenameencodeusagepercent(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(27, this->kstatsvaluenameencodeusagepercent(), output);
   }
 
   // optional int32 kStatsValueNameCapturedFrameWidth = 28;
   if (has_kstatsvaluenamecapturedframewidth()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(28, this->kstatsvaluenamecapturedframewidth(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(28, this->kstatsvaluenamecapturedframewidth(), output);
   }
 
   // optional int32 kStatsValueNameCapturedFrameHeight = 29;
   if (has_kstatsvaluenamecapturedframeheight()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(29, this->kstatsvaluenamecapturedframeheight(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(29, this->kstatsvaluenamecapturedframeheight(), output);
   }
 
   // optional int32 kStatsValueNameCapturedFrameRate = 30;
   if (has_kstatsvaluenamecapturedframerate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(30, this->kstatsvaluenamecapturedframerate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(30, this->kstatsvaluenamecapturedframerate(), output);
   }
 
   // optional int32 kStatsValueNameQMFrameWidth = 31;
   if (has_kstatsvaluenameqmframewidth()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(31, this->kstatsvaluenameqmframewidth(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(31, this->kstatsvaluenameqmframewidth(), output);
   }
 
   // optional int32 kStatsValueNameQMFrameHeight = 32;
   if (has_kstatsvaluenameqmframeheight()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(32, this->kstatsvaluenameqmframeheight(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(32, this->kstatsvaluenameqmframeheight(), output);
   }
 
   // optional int32 kStatsValueNameQMFrameRate = 33;
   if (has_kstatsvaluenameqmframerate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(33, this->kstatsvaluenameqmframerate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(33, this->kstatsvaluenameqmframerate(), output);
   }
 
   // optional int32 kStatsValueNameCodecSettingFrameWidth = 34;
   if (has_kstatsvaluenamecodecsettingframewidth()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(34, this->kstatsvaluenamecodecsettingframewidth(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(34, this->kstatsvaluenamecodecsettingframewidth(), output);
   }
 
   // optional int32 kStatsValueNameCodecSettingFrameHeight = 35;
   if (has_kstatsvaluenamecodecsettingframeheight()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(35, this->kstatsvaluenamecodecsettingframeheight(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(35, this->kstatsvaluenamecodecsettingframeheight(), output);
   }
 
   // optional int32 kStatsValueNameCodecSettingFrameRate = 36;
   if (has_kstatsvaluenamecodecsettingframerate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(36, this->kstatsvaluenamecodecsettingframerate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(36, this->kstatsvaluenamecodecsettingframerate(), output);
   }
 
   // optional int32 kStatsValueNameCodecSettingSimulcastNum = 37;
   if (has_kstatsvaluenamecodecsettingsimulcastnum()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(37, this->kstatsvaluenamecodecsettingsimulcastnum(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(37, this->kstatsvaluenamecodecsettingsimulcastnum(), output);
   }
 
   // optional int32 kStatsValueNameCodecSettingStartBitrate = 38;
   if (has_kstatsvaluenamecodecsettingstartbitrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(38, this->kstatsvaluenamecodecsettingstartbitrate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(38, this->kstatsvaluenamecodecsettingstartbitrate(), output);
   }
 
   // optional int32 kStatsValueNameCodecSettingMinBitrate = 39;
   if (has_kstatsvaluenamecodecsettingminbitrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(39, this->kstatsvaluenamecodecsettingminbitrate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(39, this->kstatsvaluenamecodecsettingminbitrate(), output);
   }
 
   // optional int32 kStatsValueNameCodecSettingMaxBitrate = 40;
   if (has_kstatsvaluenamecodecsettingmaxbitrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(40, this->kstatsvaluenamecodecsettingmaxbitrate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(40, this->kstatsvaluenamecodecsettingmaxbitrate(), output);
   }
 
   // optional int32 kStatsValueNameCodecSettingTargetBitrate = 41;
   if (has_kstatsvaluenamecodecsettingtargetbitrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(41, this->kstatsvaluenamecodecsettingtargetbitrate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(41, this->kstatsvaluenamecodecsettingtargetbitrate(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
-                   unknown_fields().size());
+                   static_cast<int>(unknown_fields().size()));
   // @@protoc_insertion_point(serialize_end:VideoSenderStatisticsInner)
 }
 
 int VideoSenderStatisticsInner::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:VideoSenderStatisticsInner)
   int total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+  if (_has_bits_[0 / 32] & 255u) {
     // optional int32 kStatsValueNameReportType = 1;
     if (has_kstatsvaluenamereporttype()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamereporttype());
     }
 
     // optional int32 kStatsValueNameChannelId = 2;
     if (has_kstatsvaluenamechannelid()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamechannelid());
     }
 
     // optional int64 kStatsValueNameTimestamp = 3;
     if (has_kstatsvaluenametimestamp()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int64Size(
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
           this->kstatsvaluenametimestamp());
     }
 
     // optional string kStatsValueNameCodecImplementationName = 4;
     if (has_kstatsvaluenamecodecimplementationname()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::StringSize(
           this->kstatsvaluenamecodecimplementationname());
     }
 
     // optional int32 kStatsValueNameTargetEncBitrate = 7;
     if (has_kstatsvaluenametargetencbitrate()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenametargetencbitrate());
     }
 
     // optional int32 kStatsValueNameActualEncBitrate = 8;
     if (has_kstatsvaluenameactualencbitrate()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameactualencbitrate());
     }
 
     // optional int32 kStatsValueNameAvailableSendBandwidth = 9;
     if (has_kstatsvaluenameavailablesendbandwidth()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameavailablesendbandwidth());
     }
 
     // optional int32 kStatsValueNameAvailableReceiveBandwidth = 10;
     if (has_kstatsvaluenameavailablereceivebandwidth()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameavailablereceivebandwidth());
     }
 
   }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+  if (_has_bits_[8 / 32] & 65280u) {
     // optional int32 kStatsValueNameLossFractionInPercent = 11;
     if (has_kstatsvaluenamelossfractioninpercent()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamelossfractioninpercent());
     }
 
     // optional int32 kStatsValueNameJitterReceived = 12;
     if (has_kstatsvaluenamejitterreceived()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamejitterreceived());
     }
 
     // optional int32 kStatsValueNameRttInMs = 13;
     if (has_kstatsvaluenamerttinms()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamerttinms());
     }
 
     // optional int32 kStatsValueNameBucketDelayInMs = 14;
     if (has_kstatsvaluenamebucketdelayinms()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamebucketdelayinms());
     }
 
     // optional int32 kStatsValueNameSsrc = 15;
     if (has_kstatsvaluenamessrc()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamessrc());
     }
 
     // optional int32 kStatsValueNameTransmitBitrate = 16;
     if (has_kstatsvaluenametransmitbitrate()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenametransmitbitrate());
     }
 
     // optional int32 kStatsValueNameRetransmitBitrate = 17;
     if (has_kstatsvaluenameretransmitbitrate()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameretransmitbitrate());
     }
 
     // optional int32 kStatsValueNameFecBitrate = 18;
     if (has_kstatsvaluenamefecbitrate()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamefecbitrate());
     }
 
   }
-  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
+  if (_has_bits_[16 / 32] & 16711680u) {
     // optional int32 kStatsValueNameTransmitPacketsRate = 19;
     if (has_kstatsvaluenametransmitpacketsrate()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenametransmitpacketsrate());
     }
 
     // optional int32 kStatsValueNameRetransmitPacketsRate = 20;
     if (has_kstatsvaluenameretransmitpacketsrate()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameretransmitpacketsrate());
     }
 
     // optional int32 kStatsValueNamePacketsLost = 21;
     if (has_kstatsvaluenamepacketslost()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamepacketslost());
     }
 
     // optional int32 kStatsValueNameFirsReceived = 22;
     if (has_kstatsvaluenamefirsreceived()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamefirsreceived());
     }
 
     // optional int32 kStatsValueNameNacksReceived = 23;
     if (has_kstatsvaluenamenacksreceived()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamenacksreceived());
     }
 
     // optional int32 kStatsValueNameNacksRequestsReceived = 24;
     if (has_kstatsvaluenamenacksrequestsreceived()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamenacksrequestsreceived());
     }
 
     // optional int32 kStatsValueNameNacksUniqueRequestsReceived = 25;
     if (has_kstatsvaluenamenacksuniquerequestsreceived()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamenacksuniquerequestsreceived());
     }
 
     // optional int32 kStatsValueNameAvgEncodeMs = 26;
     if (has_kstatsvaluenameavgencodems()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameavgencodems());
     }
 
   }
-  if (_has_bits_[24 / 32] & (0xffu << (24 % 32))) {
+  if (_has_bits_[24 / 32] & 4278190080u) {
     // optional int32 kStatsValueNameEncodeUsagePercent = 27;
     if (has_kstatsvaluenameencodeusagepercent()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameencodeusagepercent());
     }
 
     // optional int32 kStatsValueNameCapturedFrameWidth = 28;
     if (has_kstatsvaluenamecapturedframewidth()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecapturedframewidth());
     }
 
     // optional int32 kStatsValueNameCapturedFrameHeight = 29;
     if (has_kstatsvaluenamecapturedframeheight()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecapturedframeheight());
     }
 
     // optional int32 kStatsValueNameCapturedFrameRate = 30;
     if (has_kstatsvaluenamecapturedframerate()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecapturedframerate());
     }
 
     // optional int32 kStatsValueNameQMFrameWidth = 31;
     if (has_kstatsvaluenameqmframewidth()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameqmframewidth());
     }
 
     // optional int32 kStatsValueNameQMFrameHeight = 32;
     if (has_kstatsvaluenameqmframeheight()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameqmframeheight());
     }
 
     // optional int32 kStatsValueNameQMFrameRate = 33;
     if (has_kstatsvaluenameqmframerate()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameqmframerate());
     }
 
     // optional int32 kStatsValueNameCodecSettingFrameWidth = 34;
     if (has_kstatsvaluenamecodecsettingframewidth()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingframewidth());
     }
 
   }
-  if (_has_bits_[32 / 32] & (0xffu << (32 % 32))) {
+  if (_has_bits_[32 / 32] & 127u) {
     // optional int32 kStatsValueNameCodecSettingFrameHeight = 35;
     if (has_kstatsvaluenamecodecsettingframeheight()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingframeheight());
     }
 
     // optional int32 kStatsValueNameCodecSettingFrameRate = 36;
     if (has_kstatsvaluenamecodecsettingframerate()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingframerate());
     }
 
     // optional int32 kStatsValueNameCodecSettingSimulcastNum = 37;
     if (has_kstatsvaluenamecodecsettingsimulcastnum()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingsimulcastnum());
     }
 
     // optional int32 kStatsValueNameCodecSettingStartBitrate = 38;
     if (has_kstatsvaluenamecodecsettingstartbitrate()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingstartbitrate());
     }
 
     // optional int32 kStatsValueNameCodecSettingMinBitrate = 39;
     if (has_kstatsvaluenamecodecsettingminbitrate()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingminbitrate());
     }
 
     // optional int32 kStatsValueNameCodecSettingMaxBitrate = 40;
     if (has_kstatsvaluenamecodecsettingmaxbitrate()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingmaxbitrate());
     }
 
     // optional int32 kStatsValueNameCodecSettingTargetBitrate = 41;
     if (has_kstatsvaluenamecodecsettingtargetbitrate()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingtargetbitrate());
     }
 
@@ -1363,12 +1394,13 @@ int VideoSenderStatisticsInner::ByteSize() const {
 }
 
 void VideoSenderStatisticsInner::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const VideoSenderStatisticsInner*>(&from));
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const VideoSenderStatisticsInner*>(&from));
 }
 
 void VideoSenderStatisticsInner::MergeFrom(const VideoSenderStatisticsInner& from) {
-  GOOGLE_CHECK_NE(&from, this);
+// @@protoc_insertion_point(class_specific_merge_from_start:VideoSenderStatisticsInner)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_kstatsvaluenamereporttype()) {
       set_kstatsvaluenamereporttype(from.kstatsvaluenamereporttype());
@@ -1380,7 +1412,8 @@ void VideoSenderStatisticsInner::MergeFrom(const VideoSenderStatisticsInner& fro
       set_kstatsvaluenametimestamp(from.kstatsvaluenametimestamp());
     }
     if (from.has_kstatsvaluenamecodecimplementationname()) {
-      set_kstatsvaluenamecodecimplementationname(from.kstatsvaluenamecodecimplementationname());
+      set_has_kstatsvaluenamecodecimplementationname();
+      kstatsvaluenamecodecimplementationname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.kstatsvaluenamecodecimplementationname_);
     }
     if (from.has_kstatsvaluenametargetencbitrate()) {
       set_kstatsvaluenametargetencbitrate(from.kstatsvaluenametargetencbitrate());
@@ -1496,10 +1529,13 @@ void VideoSenderStatisticsInner::MergeFrom(const VideoSenderStatisticsInner& fro
       set_kstatsvaluenamecodecsettingtargetbitrate(from.kstatsvaluenamecodecsettingtargetbitrate());
     }
   }
-  mutable_unknown_fields()->append(from.unknown_fields());
+  if (!from.unknown_fields().empty()) {
+    mutable_unknown_fields()->append(from.unknown_fields());
+  }
 }
 
 void VideoSenderStatisticsInner::CopyFrom(const VideoSenderStatisticsInner& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:VideoSenderStatisticsInner)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -1511,61 +1547,1038 @@ bool VideoSenderStatisticsInner::IsInitialized() const {
 }
 
 void VideoSenderStatisticsInner::Swap(VideoSenderStatisticsInner* other) {
-  if (other != this) {
-    std::swap(kstatsvaluenamereporttype_, other->kstatsvaluenamereporttype_);
-    std::swap(kstatsvaluenamechannelid_, other->kstatsvaluenamechannelid_);
-    std::swap(kstatsvaluenametimestamp_, other->kstatsvaluenametimestamp_);
-    std::swap(kstatsvaluenamecodecimplementationname_, other->kstatsvaluenamecodecimplementationname_);
-    std::swap(kstatsvaluenametargetencbitrate_, other->kstatsvaluenametargetencbitrate_);
-    std::swap(kstatsvaluenameactualencbitrate_, other->kstatsvaluenameactualencbitrate_);
-    std::swap(kstatsvaluenameavailablesendbandwidth_, other->kstatsvaluenameavailablesendbandwidth_);
-    std::swap(kstatsvaluenameavailablereceivebandwidth_, other->kstatsvaluenameavailablereceivebandwidth_);
-    std::swap(kstatsvaluenamelossfractioninpercent_, other->kstatsvaluenamelossfractioninpercent_);
-    std::swap(kstatsvaluenamejitterreceived_, other->kstatsvaluenamejitterreceived_);
-    std::swap(kstatsvaluenamerttinms_, other->kstatsvaluenamerttinms_);
-    std::swap(kstatsvaluenamebucketdelayinms_, other->kstatsvaluenamebucketdelayinms_);
-    std::swap(kstatsvaluenamessrc_, other->kstatsvaluenamessrc_);
-    std::swap(kstatsvaluenametransmitbitrate_, other->kstatsvaluenametransmitbitrate_);
-    std::swap(kstatsvaluenameretransmitbitrate_, other->kstatsvaluenameretransmitbitrate_);
-    std::swap(kstatsvaluenamefecbitrate_, other->kstatsvaluenamefecbitrate_);
-    std::swap(kstatsvaluenametransmitpacketsrate_, other->kstatsvaluenametransmitpacketsrate_);
-    std::swap(kstatsvaluenameretransmitpacketsrate_, other->kstatsvaluenameretransmitpacketsrate_);
-    std::swap(kstatsvaluenamepacketslost_, other->kstatsvaluenamepacketslost_);
-    std::swap(kstatsvaluenamefirsreceived_, other->kstatsvaluenamefirsreceived_);
-    std::swap(kstatsvaluenamenacksreceived_, other->kstatsvaluenamenacksreceived_);
-    std::swap(kstatsvaluenamenacksrequestsreceived_, other->kstatsvaluenamenacksrequestsreceived_);
-    std::swap(kstatsvaluenamenacksuniquerequestsreceived_, other->kstatsvaluenamenacksuniquerequestsreceived_);
-    std::swap(kstatsvaluenameavgencodems_, other->kstatsvaluenameavgencodems_);
-    std::swap(kstatsvaluenameencodeusagepercent_, other->kstatsvaluenameencodeusagepercent_);
-    std::swap(kstatsvaluenamecapturedframewidth_, other->kstatsvaluenamecapturedframewidth_);
-    std::swap(kstatsvaluenamecapturedframeheight_, other->kstatsvaluenamecapturedframeheight_);
-    std::swap(kstatsvaluenamecapturedframerate_, other->kstatsvaluenamecapturedframerate_);
-    std::swap(kstatsvaluenameqmframewidth_, other->kstatsvaluenameqmframewidth_);
-    std::swap(kstatsvaluenameqmframeheight_, other->kstatsvaluenameqmframeheight_);
-    std::swap(kstatsvaluenameqmframerate_, other->kstatsvaluenameqmframerate_);
-    std::swap(kstatsvaluenamecodecsettingframewidth_, other->kstatsvaluenamecodecsettingframewidth_);
-    std::swap(kstatsvaluenamecodecsettingframeheight_, other->kstatsvaluenamecodecsettingframeheight_);
-    std::swap(kstatsvaluenamecodecsettingframerate_, other->kstatsvaluenamecodecsettingframerate_);
-    std::swap(kstatsvaluenamecodecsettingsimulcastnum_, other->kstatsvaluenamecodecsettingsimulcastnum_);
-    std::swap(kstatsvaluenamecodecsettingstartbitrate_, other->kstatsvaluenamecodecsettingstartbitrate_);
-    std::swap(kstatsvaluenamecodecsettingminbitrate_, other->kstatsvaluenamecodecsettingminbitrate_);
-    std::swap(kstatsvaluenamecodecsettingmaxbitrate_, other->kstatsvaluenamecodecsettingmaxbitrate_);
-    std::swap(kstatsvaluenamecodecsettingtargetbitrate_, other->kstatsvaluenamecodecsettingtargetbitrate_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    std::swap(_has_bits_[1], other->_has_bits_[1]);
-    _unknown_fields_.swap(other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
+  if (other == this) return;
+  InternalSwap(other);
+}
+void VideoSenderStatisticsInner::InternalSwap(VideoSenderStatisticsInner* other) {
+  std::swap(kstatsvaluenamereporttype_, other->kstatsvaluenamereporttype_);
+  std::swap(kstatsvaluenamechannelid_, other->kstatsvaluenamechannelid_);
+  std::swap(kstatsvaluenametimestamp_, other->kstatsvaluenametimestamp_);
+  kstatsvaluenamecodecimplementationname_.Swap(&other->kstatsvaluenamecodecimplementationname_);
+  std::swap(kstatsvaluenametargetencbitrate_, other->kstatsvaluenametargetencbitrate_);
+  std::swap(kstatsvaluenameactualencbitrate_, other->kstatsvaluenameactualencbitrate_);
+  std::swap(kstatsvaluenameavailablesendbandwidth_, other->kstatsvaluenameavailablesendbandwidth_);
+  std::swap(kstatsvaluenameavailablereceivebandwidth_, other->kstatsvaluenameavailablereceivebandwidth_);
+  std::swap(kstatsvaluenamelossfractioninpercent_, other->kstatsvaluenamelossfractioninpercent_);
+  std::swap(kstatsvaluenamejitterreceived_, other->kstatsvaluenamejitterreceived_);
+  std::swap(kstatsvaluenamerttinms_, other->kstatsvaluenamerttinms_);
+  std::swap(kstatsvaluenamebucketdelayinms_, other->kstatsvaluenamebucketdelayinms_);
+  std::swap(kstatsvaluenamessrc_, other->kstatsvaluenamessrc_);
+  std::swap(kstatsvaluenametransmitbitrate_, other->kstatsvaluenametransmitbitrate_);
+  std::swap(kstatsvaluenameretransmitbitrate_, other->kstatsvaluenameretransmitbitrate_);
+  std::swap(kstatsvaluenamefecbitrate_, other->kstatsvaluenamefecbitrate_);
+  std::swap(kstatsvaluenametransmitpacketsrate_, other->kstatsvaluenametransmitpacketsrate_);
+  std::swap(kstatsvaluenameretransmitpacketsrate_, other->kstatsvaluenameretransmitpacketsrate_);
+  std::swap(kstatsvaluenamepacketslost_, other->kstatsvaluenamepacketslost_);
+  std::swap(kstatsvaluenamefirsreceived_, other->kstatsvaluenamefirsreceived_);
+  std::swap(kstatsvaluenamenacksreceived_, other->kstatsvaluenamenacksreceived_);
+  std::swap(kstatsvaluenamenacksrequestsreceived_, other->kstatsvaluenamenacksrequestsreceived_);
+  std::swap(kstatsvaluenamenacksuniquerequestsreceived_, other->kstatsvaluenamenacksuniquerequestsreceived_);
+  std::swap(kstatsvaluenameavgencodems_, other->kstatsvaluenameavgencodems_);
+  std::swap(kstatsvaluenameencodeusagepercent_, other->kstatsvaluenameencodeusagepercent_);
+  std::swap(kstatsvaluenamecapturedframewidth_, other->kstatsvaluenamecapturedframewidth_);
+  std::swap(kstatsvaluenamecapturedframeheight_, other->kstatsvaluenamecapturedframeheight_);
+  std::swap(kstatsvaluenamecapturedframerate_, other->kstatsvaluenamecapturedframerate_);
+  std::swap(kstatsvaluenameqmframewidth_, other->kstatsvaluenameqmframewidth_);
+  std::swap(kstatsvaluenameqmframeheight_, other->kstatsvaluenameqmframeheight_);
+  std::swap(kstatsvaluenameqmframerate_, other->kstatsvaluenameqmframerate_);
+  std::swap(kstatsvaluenamecodecsettingframewidth_, other->kstatsvaluenamecodecsettingframewidth_);
+  std::swap(kstatsvaluenamecodecsettingframeheight_, other->kstatsvaluenamecodecsettingframeheight_);
+  std::swap(kstatsvaluenamecodecsettingframerate_, other->kstatsvaluenamecodecsettingframerate_);
+  std::swap(kstatsvaluenamecodecsettingsimulcastnum_, other->kstatsvaluenamecodecsettingsimulcastnum_);
+  std::swap(kstatsvaluenamecodecsettingstartbitrate_, other->kstatsvaluenamecodecsettingstartbitrate_);
+  std::swap(kstatsvaluenamecodecsettingminbitrate_, other->kstatsvaluenamecodecsettingminbitrate_);
+  std::swap(kstatsvaluenamecodecsettingmaxbitrate_, other->kstatsvaluenamecodecsettingmaxbitrate_);
+  std::swap(kstatsvaluenamecodecsettingtargetbitrate_, other->kstatsvaluenamecodecsettingtargetbitrate_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  std::swap(_has_bits_[1], other->_has_bits_[1]);
+  _unknown_fields_.Swap(&other->_unknown_fields_);
+  std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::std::string VideoSenderStatisticsInner::GetTypeName() const {
   return "VideoSenderStatisticsInner";
 }
 
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// VideoSenderStatisticsInner
+
+// optional int32 kStatsValueNameReportType = 1;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamereporttype() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamereporttype() {
+  _has_bits_[0] |= 0x00000001u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamereporttype() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamereporttype() {
+  kstatsvaluenamereporttype_ = 0;
+  clear_has_kstatsvaluenamereporttype();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamereporttype() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameReportType)
+  return kstatsvaluenamereporttype_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamereporttype(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamereporttype();
+  kstatsvaluenamereporttype_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameReportType)
+}
+
+// optional int32 kStatsValueNameChannelId = 2;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamechannelid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamechannelid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamechannelid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamechannelid() {
+  kstatsvaluenamechannelid_ = 0;
+  clear_has_kstatsvaluenamechannelid();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamechannelid() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameChannelId)
+  return kstatsvaluenamechannelid_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamechannelid(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamechannelid();
+  kstatsvaluenamechannelid_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameChannelId)
+}
+
+// optional int64 kStatsValueNameTimestamp = 3;
+bool VideoSenderStatisticsInner::has_kstatsvaluenametimestamp() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenametimestamp() {
+  _has_bits_[0] |= 0x00000004u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenametimestamp() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenametimestamp() {
+  kstatsvaluenametimestamp_ = GOOGLE_LONGLONG(0);
+  clear_has_kstatsvaluenametimestamp();
+}
+ ::google::protobuf::int64 VideoSenderStatisticsInner::kstatsvaluenametimestamp() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameTimestamp)
+  return kstatsvaluenametimestamp_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenametimestamp(::google::protobuf::int64 value) {
+  set_has_kstatsvaluenametimestamp();
+  kstatsvaluenametimestamp_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameTimestamp)
+}
+
+// optional string kStatsValueNameCodecImplementationName = 4;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamecodecimplementationname() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamecodecimplementationname() {
+  _has_bits_[0] |= 0x00000008u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecodecimplementationname() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecimplementationname() {
+  kstatsvaluenamecodecimplementationname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_kstatsvaluenamecodecimplementationname();
+}
+ const ::std::string& VideoSenderStatisticsInner::kstatsvaluenamecodecimplementationname() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCodecImplementationName)
+  return kstatsvaluenamecodecimplementationname_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamecodecimplementationname(const ::std::string& value) {
+  set_has_kstatsvaluenamecodecimplementationname();
+  kstatsvaluenamecodecimplementationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecImplementationName)
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamecodecimplementationname(const char* value) {
+  set_has_kstatsvaluenamecodecimplementationname();
+  kstatsvaluenamecodecimplementationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:VideoSenderStatisticsInner.kStatsValueNameCodecImplementationName)
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamecodecimplementationname(const char* value, size_t size) {
+  set_has_kstatsvaluenamecodecimplementationname();
+  kstatsvaluenamecodecimplementationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:VideoSenderStatisticsInner.kStatsValueNameCodecImplementationName)
+}
+ ::std::string* VideoSenderStatisticsInner::mutable_kstatsvaluenamecodecimplementationname() {
+  set_has_kstatsvaluenamecodecimplementationname();
+  // @@protoc_insertion_point(field_mutable:VideoSenderStatisticsInner.kStatsValueNameCodecImplementationName)
+  return kstatsvaluenamecodecimplementationname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ ::std::string* VideoSenderStatisticsInner::release_kstatsvaluenamecodecimplementationname() {
+  // @@protoc_insertion_point(field_release:VideoSenderStatisticsInner.kStatsValueNameCodecImplementationName)
+  clear_has_kstatsvaluenamecodecimplementationname();
+  return kstatsvaluenamecodecimplementationname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void VideoSenderStatisticsInner::set_allocated_kstatsvaluenamecodecimplementationname(::std::string* kstatsvaluenamecodecimplementationname) {
+  if (kstatsvaluenamecodecimplementationname != NULL) {
+    set_has_kstatsvaluenamecodecimplementationname();
+  } else {
+    clear_has_kstatsvaluenamecodecimplementationname();
+  }
+  kstatsvaluenamecodecimplementationname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), kstatsvaluenamecodecimplementationname);
+  // @@protoc_insertion_point(field_set_allocated:VideoSenderStatisticsInner.kStatsValueNameCodecImplementationName)
+}
+
+// optional int32 kStatsValueNameTargetEncBitrate = 7;
+bool VideoSenderStatisticsInner::has_kstatsvaluenametargetencbitrate() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenametargetencbitrate() {
+  _has_bits_[0] |= 0x00000010u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenametargetencbitrate() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenametargetencbitrate() {
+  kstatsvaluenametargetencbitrate_ = 0;
+  clear_has_kstatsvaluenametargetencbitrate();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenametargetencbitrate() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameTargetEncBitrate)
+  return kstatsvaluenametargetencbitrate_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenametargetencbitrate(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenametargetencbitrate();
+  kstatsvaluenametargetencbitrate_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameTargetEncBitrate)
+}
+
+// optional int32 kStatsValueNameActualEncBitrate = 8;
+bool VideoSenderStatisticsInner::has_kstatsvaluenameactualencbitrate() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenameactualencbitrate() {
+  _has_bits_[0] |= 0x00000020u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenameactualencbitrate() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenameactualencbitrate() {
+  kstatsvaluenameactualencbitrate_ = 0;
+  clear_has_kstatsvaluenameactualencbitrate();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameactualencbitrate() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameActualEncBitrate)
+  return kstatsvaluenameactualencbitrate_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenameactualencbitrate(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenameactualencbitrate();
+  kstatsvaluenameactualencbitrate_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameActualEncBitrate)
+}
+
+// optional int32 kStatsValueNameAvailableSendBandwidth = 9;
+bool VideoSenderStatisticsInner::has_kstatsvaluenameavailablesendbandwidth() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenameavailablesendbandwidth() {
+  _has_bits_[0] |= 0x00000040u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenameavailablesendbandwidth() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenameavailablesendbandwidth() {
+  kstatsvaluenameavailablesendbandwidth_ = 0;
+  clear_has_kstatsvaluenameavailablesendbandwidth();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameavailablesendbandwidth() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameAvailableSendBandwidth)
+  return kstatsvaluenameavailablesendbandwidth_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenameavailablesendbandwidth(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenameavailablesendbandwidth();
+  kstatsvaluenameavailablesendbandwidth_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameAvailableSendBandwidth)
+}
+
+// optional int32 kStatsValueNameAvailableReceiveBandwidth = 10;
+bool VideoSenderStatisticsInner::has_kstatsvaluenameavailablereceivebandwidth() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenameavailablereceivebandwidth() {
+  _has_bits_[0] |= 0x00000080u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenameavailablereceivebandwidth() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenameavailablereceivebandwidth() {
+  kstatsvaluenameavailablereceivebandwidth_ = 0;
+  clear_has_kstatsvaluenameavailablereceivebandwidth();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameavailablereceivebandwidth() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameAvailableReceiveBandwidth)
+  return kstatsvaluenameavailablereceivebandwidth_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenameavailablereceivebandwidth(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenameavailablereceivebandwidth();
+  kstatsvaluenameavailablereceivebandwidth_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameAvailableReceiveBandwidth)
+}
+
+// optional int32 kStatsValueNameLossFractionInPercent = 11;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamelossfractioninpercent() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamelossfractioninpercent() {
+  _has_bits_[0] |= 0x00000100u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamelossfractioninpercent() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamelossfractioninpercent() {
+  kstatsvaluenamelossfractioninpercent_ = 0;
+  clear_has_kstatsvaluenamelossfractioninpercent();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamelossfractioninpercent() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameLossFractionInPercent)
+  return kstatsvaluenamelossfractioninpercent_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamelossfractioninpercent(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamelossfractioninpercent();
+  kstatsvaluenamelossfractioninpercent_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameLossFractionInPercent)
+}
+
+// optional int32 kStatsValueNameJitterReceived = 12;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamejitterreceived() const {
+  return (_has_bits_[0] & 0x00000200u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamejitterreceived() {
+  _has_bits_[0] |= 0x00000200u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamejitterreceived() {
+  _has_bits_[0] &= ~0x00000200u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamejitterreceived() {
+  kstatsvaluenamejitterreceived_ = 0;
+  clear_has_kstatsvaluenamejitterreceived();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamejitterreceived() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameJitterReceived)
+  return kstatsvaluenamejitterreceived_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamejitterreceived(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamejitterreceived();
+  kstatsvaluenamejitterreceived_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameJitterReceived)
+}
+
+// optional int32 kStatsValueNameRttInMs = 13;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamerttinms() const {
+  return (_has_bits_[0] & 0x00000400u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamerttinms() {
+  _has_bits_[0] |= 0x00000400u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamerttinms() {
+  _has_bits_[0] &= ~0x00000400u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamerttinms() {
+  kstatsvaluenamerttinms_ = 0;
+  clear_has_kstatsvaluenamerttinms();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamerttinms() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameRttInMs)
+  return kstatsvaluenamerttinms_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamerttinms(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamerttinms();
+  kstatsvaluenamerttinms_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameRttInMs)
+}
+
+// optional int32 kStatsValueNameBucketDelayInMs = 14;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamebucketdelayinms() const {
+  return (_has_bits_[0] & 0x00000800u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamebucketdelayinms() {
+  _has_bits_[0] |= 0x00000800u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamebucketdelayinms() {
+  _has_bits_[0] &= ~0x00000800u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamebucketdelayinms() {
+  kstatsvaluenamebucketdelayinms_ = 0;
+  clear_has_kstatsvaluenamebucketdelayinms();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamebucketdelayinms() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameBucketDelayInMs)
+  return kstatsvaluenamebucketdelayinms_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamebucketdelayinms(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamebucketdelayinms();
+  kstatsvaluenamebucketdelayinms_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameBucketDelayInMs)
+}
+
+// optional int32 kStatsValueNameSsrc = 15;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamessrc() const {
+  return (_has_bits_[0] & 0x00001000u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamessrc() {
+  _has_bits_[0] |= 0x00001000u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamessrc() {
+  _has_bits_[0] &= ~0x00001000u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamessrc() {
+  kstatsvaluenamessrc_ = 0;
+  clear_has_kstatsvaluenamessrc();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamessrc() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameSsrc)
+  return kstatsvaluenamessrc_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamessrc(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamessrc();
+  kstatsvaluenamessrc_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameSsrc)
+}
+
+// optional int32 kStatsValueNameTransmitBitrate = 16;
+bool VideoSenderStatisticsInner::has_kstatsvaluenametransmitbitrate() const {
+  return (_has_bits_[0] & 0x00002000u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenametransmitbitrate() {
+  _has_bits_[0] |= 0x00002000u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenametransmitbitrate() {
+  _has_bits_[0] &= ~0x00002000u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenametransmitbitrate() {
+  kstatsvaluenametransmitbitrate_ = 0;
+  clear_has_kstatsvaluenametransmitbitrate();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenametransmitbitrate() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameTransmitBitrate)
+  return kstatsvaluenametransmitbitrate_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenametransmitbitrate(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenametransmitbitrate();
+  kstatsvaluenametransmitbitrate_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameTransmitBitrate)
+}
+
+// optional int32 kStatsValueNameRetransmitBitrate = 17;
+bool VideoSenderStatisticsInner::has_kstatsvaluenameretransmitbitrate() const {
+  return (_has_bits_[0] & 0x00004000u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenameretransmitbitrate() {
+  _has_bits_[0] |= 0x00004000u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenameretransmitbitrate() {
+  _has_bits_[0] &= ~0x00004000u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenameretransmitbitrate() {
+  kstatsvaluenameretransmitbitrate_ = 0;
+  clear_has_kstatsvaluenameretransmitbitrate();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameretransmitbitrate() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameRetransmitBitrate)
+  return kstatsvaluenameretransmitbitrate_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenameretransmitbitrate(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenameretransmitbitrate();
+  kstatsvaluenameretransmitbitrate_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameRetransmitBitrate)
+}
+
+// optional int32 kStatsValueNameFecBitrate = 18;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamefecbitrate() const {
+  return (_has_bits_[0] & 0x00008000u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamefecbitrate() {
+  _has_bits_[0] |= 0x00008000u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamefecbitrate() {
+  _has_bits_[0] &= ~0x00008000u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamefecbitrate() {
+  kstatsvaluenamefecbitrate_ = 0;
+  clear_has_kstatsvaluenamefecbitrate();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamefecbitrate() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameFecBitrate)
+  return kstatsvaluenamefecbitrate_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamefecbitrate(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamefecbitrate();
+  kstatsvaluenamefecbitrate_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameFecBitrate)
+}
+
+// optional int32 kStatsValueNameTransmitPacketsRate = 19;
+bool VideoSenderStatisticsInner::has_kstatsvaluenametransmitpacketsrate() const {
+  return (_has_bits_[0] & 0x00010000u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenametransmitpacketsrate() {
+  _has_bits_[0] |= 0x00010000u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenametransmitpacketsrate() {
+  _has_bits_[0] &= ~0x00010000u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenametransmitpacketsrate() {
+  kstatsvaluenametransmitpacketsrate_ = 0;
+  clear_has_kstatsvaluenametransmitpacketsrate();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenametransmitpacketsrate() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameTransmitPacketsRate)
+  return kstatsvaluenametransmitpacketsrate_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenametransmitpacketsrate(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenametransmitpacketsrate();
+  kstatsvaluenametransmitpacketsrate_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameTransmitPacketsRate)
+}
+
+// optional int32 kStatsValueNameRetransmitPacketsRate = 20;
+bool VideoSenderStatisticsInner::has_kstatsvaluenameretransmitpacketsrate() const {
+  return (_has_bits_[0] & 0x00020000u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenameretransmitpacketsrate() {
+  _has_bits_[0] |= 0x00020000u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenameretransmitpacketsrate() {
+  _has_bits_[0] &= ~0x00020000u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenameretransmitpacketsrate() {
+  kstatsvaluenameretransmitpacketsrate_ = 0;
+  clear_has_kstatsvaluenameretransmitpacketsrate();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameretransmitpacketsrate() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameRetransmitPacketsRate)
+  return kstatsvaluenameretransmitpacketsrate_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenameretransmitpacketsrate(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenameretransmitpacketsrate();
+  kstatsvaluenameretransmitpacketsrate_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameRetransmitPacketsRate)
+}
+
+// optional int32 kStatsValueNamePacketsLost = 21;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamepacketslost() const {
+  return (_has_bits_[0] & 0x00040000u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamepacketslost() {
+  _has_bits_[0] |= 0x00040000u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamepacketslost() {
+  _has_bits_[0] &= ~0x00040000u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamepacketslost() {
+  kstatsvaluenamepacketslost_ = 0;
+  clear_has_kstatsvaluenamepacketslost();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamepacketslost() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNamePacketsLost)
+  return kstatsvaluenamepacketslost_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamepacketslost(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamepacketslost();
+  kstatsvaluenamepacketslost_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNamePacketsLost)
+}
+
+// optional int32 kStatsValueNameFirsReceived = 22;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamefirsreceived() const {
+  return (_has_bits_[0] & 0x00080000u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamefirsreceived() {
+  _has_bits_[0] |= 0x00080000u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamefirsreceived() {
+  _has_bits_[0] &= ~0x00080000u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamefirsreceived() {
+  kstatsvaluenamefirsreceived_ = 0;
+  clear_has_kstatsvaluenamefirsreceived();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamefirsreceived() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameFirsReceived)
+  return kstatsvaluenamefirsreceived_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamefirsreceived(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamefirsreceived();
+  kstatsvaluenamefirsreceived_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameFirsReceived)
+}
+
+// optional int32 kStatsValueNameNacksReceived = 23;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamenacksreceived() const {
+  return (_has_bits_[0] & 0x00100000u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamenacksreceived() {
+  _has_bits_[0] |= 0x00100000u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamenacksreceived() {
+  _has_bits_[0] &= ~0x00100000u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamenacksreceived() {
+  kstatsvaluenamenacksreceived_ = 0;
+  clear_has_kstatsvaluenamenacksreceived();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamenacksreceived() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameNacksReceived)
+  return kstatsvaluenamenacksreceived_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamenacksreceived(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamenacksreceived();
+  kstatsvaluenamenacksreceived_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameNacksReceived)
+}
+
+// optional int32 kStatsValueNameNacksRequestsReceived = 24;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamenacksrequestsreceived() const {
+  return (_has_bits_[0] & 0x00200000u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamenacksrequestsreceived() {
+  _has_bits_[0] |= 0x00200000u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamenacksrequestsreceived() {
+  _has_bits_[0] &= ~0x00200000u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamenacksrequestsreceived() {
+  kstatsvaluenamenacksrequestsreceived_ = 0;
+  clear_has_kstatsvaluenamenacksrequestsreceived();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamenacksrequestsreceived() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameNacksRequestsReceived)
+  return kstatsvaluenamenacksrequestsreceived_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamenacksrequestsreceived(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamenacksrequestsreceived();
+  kstatsvaluenamenacksrequestsreceived_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameNacksRequestsReceived)
+}
+
+// optional int32 kStatsValueNameNacksUniqueRequestsReceived = 25;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamenacksuniquerequestsreceived() const {
+  return (_has_bits_[0] & 0x00400000u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamenacksuniquerequestsreceived() {
+  _has_bits_[0] |= 0x00400000u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamenacksuniquerequestsreceived() {
+  _has_bits_[0] &= ~0x00400000u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamenacksuniquerequestsreceived() {
+  kstatsvaluenamenacksuniquerequestsreceived_ = 0;
+  clear_has_kstatsvaluenamenacksuniquerequestsreceived();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamenacksuniquerequestsreceived() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameNacksUniqueRequestsReceived)
+  return kstatsvaluenamenacksuniquerequestsreceived_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamenacksuniquerequestsreceived(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamenacksuniquerequestsreceived();
+  kstatsvaluenamenacksuniquerequestsreceived_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameNacksUniqueRequestsReceived)
+}
+
+// optional int32 kStatsValueNameAvgEncodeMs = 26;
+bool VideoSenderStatisticsInner::has_kstatsvaluenameavgencodems() const {
+  return (_has_bits_[0] & 0x00800000u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenameavgencodems() {
+  _has_bits_[0] |= 0x00800000u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenameavgencodems() {
+  _has_bits_[0] &= ~0x00800000u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenameavgencodems() {
+  kstatsvaluenameavgencodems_ = 0;
+  clear_has_kstatsvaluenameavgencodems();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameavgencodems() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameAvgEncodeMs)
+  return kstatsvaluenameavgencodems_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenameavgencodems(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenameavgencodems();
+  kstatsvaluenameavgencodems_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameAvgEncodeMs)
+}
+
+// optional int32 kStatsValueNameEncodeUsagePercent = 27;
+bool VideoSenderStatisticsInner::has_kstatsvaluenameencodeusagepercent() const {
+  return (_has_bits_[0] & 0x01000000u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenameencodeusagepercent() {
+  _has_bits_[0] |= 0x01000000u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenameencodeusagepercent() {
+  _has_bits_[0] &= ~0x01000000u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenameencodeusagepercent() {
+  kstatsvaluenameencodeusagepercent_ = 0;
+  clear_has_kstatsvaluenameencodeusagepercent();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameencodeusagepercent() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameEncodeUsagePercent)
+  return kstatsvaluenameencodeusagepercent_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenameencodeusagepercent(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenameencodeusagepercent();
+  kstatsvaluenameencodeusagepercent_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameEncodeUsagePercent)
+}
+
+// optional int32 kStatsValueNameCapturedFrameWidth = 28;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamecapturedframewidth() const {
+  return (_has_bits_[0] & 0x02000000u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamecapturedframewidth() {
+  _has_bits_[0] |= 0x02000000u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecapturedframewidth() {
+  _has_bits_[0] &= ~0x02000000u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamecapturedframewidth() {
+  kstatsvaluenamecapturedframewidth_ = 0;
+  clear_has_kstatsvaluenamecapturedframewidth();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecapturedframewidth() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCapturedFrameWidth)
+  return kstatsvaluenamecapturedframewidth_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamecapturedframewidth(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamecapturedframewidth();
+  kstatsvaluenamecapturedframewidth_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCapturedFrameWidth)
+}
+
+// optional int32 kStatsValueNameCapturedFrameHeight = 29;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamecapturedframeheight() const {
+  return (_has_bits_[0] & 0x04000000u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamecapturedframeheight() {
+  _has_bits_[0] |= 0x04000000u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecapturedframeheight() {
+  _has_bits_[0] &= ~0x04000000u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamecapturedframeheight() {
+  kstatsvaluenamecapturedframeheight_ = 0;
+  clear_has_kstatsvaluenamecapturedframeheight();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecapturedframeheight() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCapturedFrameHeight)
+  return kstatsvaluenamecapturedframeheight_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamecapturedframeheight(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamecapturedframeheight();
+  kstatsvaluenamecapturedframeheight_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCapturedFrameHeight)
+}
+
+// optional int32 kStatsValueNameCapturedFrameRate = 30;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamecapturedframerate() const {
+  return (_has_bits_[0] & 0x08000000u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamecapturedframerate() {
+  _has_bits_[0] |= 0x08000000u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecapturedframerate() {
+  _has_bits_[0] &= ~0x08000000u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamecapturedframerate() {
+  kstatsvaluenamecapturedframerate_ = 0;
+  clear_has_kstatsvaluenamecapturedframerate();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecapturedframerate() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCapturedFrameRate)
+  return kstatsvaluenamecapturedframerate_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamecapturedframerate(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamecapturedframerate();
+  kstatsvaluenamecapturedframerate_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCapturedFrameRate)
+}
+
+// optional int32 kStatsValueNameQMFrameWidth = 31;
+bool VideoSenderStatisticsInner::has_kstatsvaluenameqmframewidth() const {
+  return (_has_bits_[0] & 0x10000000u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenameqmframewidth() {
+  _has_bits_[0] |= 0x10000000u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenameqmframewidth() {
+  _has_bits_[0] &= ~0x10000000u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenameqmframewidth() {
+  kstatsvaluenameqmframewidth_ = 0;
+  clear_has_kstatsvaluenameqmframewidth();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameqmframewidth() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameQMFrameWidth)
+  return kstatsvaluenameqmframewidth_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenameqmframewidth(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenameqmframewidth();
+  kstatsvaluenameqmframewidth_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameQMFrameWidth)
+}
+
+// optional int32 kStatsValueNameQMFrameHeight = 32;
+bool VideoSenderStatisticsInner::has_kstatsvaluenameqmframeheight() const {
+  return (_has_bits_[0] & 0x20000000u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenameqmframeheight() {
+  _has_bits_[0] |= 0x20000000u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenameqmframeheight() {
+  _has_bits_[0] &= ~0x20000000u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenameqmframeheight() {
+  kstatsvaluenameqmframeheight_ = 0;
+  clear_has_kstatsvaluenameqmframeheight();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameqmframeheight() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameQMFrameHeight)
+  return kstatsvaluenameqmframeheight_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenameqmframeheight(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenameqmframeheight();
+  kstatsvaluenameqmframeheight_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameQMFrameHeight)
+}
+
+// optional int32 kStatsValueNameQMFrameRate = 33;
+bool VideoSenderStatisticsInner::has_kstatsvaluenameqmframerate() const {
+  return (_has_bits_[0] & 0x40000000u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenameqmframerate() {
+  _has_bits_[0] |= 0x40000000u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenameqmframerate() {
+  _has_bits_[0] &= ~0x40000000u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenameqmframerate() {
+  kstatsvaluenameqmframerate_ = 0;
+  clear_has_kstatsvaluenameqmframerate();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameqmframerate() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameQMFrameRate)
+  return kstatsvaluenameqmframerate_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenameqmframerate(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenameqmframerate();
+  kstatsvaluenameqmframerate_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameQMFrameRate)
+}
+
+// optional int32 kStatsValueNameCodecSettingFrameWidth = 34;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamecodecsettingframewidth() const {
+  return (_has_bits_[0] & 0x80000000u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamecodecsettingframewidth() {
+  _has_bits_[0] |= 0x80000000u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecodecsettingframewidth() {
+  _has_bits_[0] &= ~0x80000000u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingframewidth() {
+  kstatsvaluenamecodecsettingframewidth_ = 0;
+  clear_has_kstatsvaluenamecodecsettingframewidth();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingframewidth() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCodecSettingFrameWidth)
+  return kstatsvaluenamecodecsettingframewidth_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingframewidth(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamecodecsettingframewidth();
+  kstatsvaluenamecodecsettingframewidth_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingFrameWidth)
+}
+
+// optional int32 kStatsValueNameCodecSettingFrameHeight = 35;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamecodecsettingframeheight() const {
+  return (_has_bits_[1] & 0x00000001u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamecodecsettingframeheight() {
+  _has_bits_[1] |= 0x00000001u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecodecsettingframeheight() {
+  _has_bits_[1] &= ~0x00000001u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingframeheight() {
+  kstatsvaluenamecodecsettingframeheight_ = 0;
+  clear_has_kstatsvaluenamecodecsettingframeheight();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingframeheight() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCodecSettingFrameHeight)
+  return kstatsvaluenamecodecsettingframeheight_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingframeheight(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamecodecsettingframeheight();
+  kstatsvaluenamecodecsettingframeheight_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingFrameHeight)
+}
+
+// optional int32 kStatsValueNameCodecSettingFrameRate = 36;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamecodecsettingframerate() const {
+  return (_has_bits_[1] & 0x00000002u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamecodecsettingframerate() {
+  _has_bits_[1] |= 0x00000002u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecodecsettingframerate() {
+  _has_bits_[1] &= ~0x00000002u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingframerate() {
+  kstatsvaluenamecodecsettingframerate_ = 0;
+  clear_has_kstatsvaluenamecodecsettingframerate();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingframerate() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCodecSettingFrameRate)
+  return kstatsvaluenamecodecsettingframerate_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingframerate(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamecodecsettingframerate();
+  kstatsvaluenamecodecsettingframerate_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingFrameRate)
+}
+
+// optional int32 kStatsValueNameCodecSettingSimulcastNum = 37;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamecodecsettingsimulcastnum() const {
+  return (_has_bits_[1] & 0x00000004u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamecodecsettingsimulcastnum() {
+  _has_bits_[1] |= 0x00000004u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecodecsettingsimulcastnum() {
+  _has_bits_[1] &= ~0x00000004u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingsimulcastnum() {
+  kstatsvaluenamecodecsettingsimulcastnum_ = 0;
+  clear_has_kstatsvaluenamecodecsettingsimulcastnum();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingsimulcastnum() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCodecSettingSimulcastNum)
+  return kstatsvaluenamecodecsettingsimulcastnum_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingsimulcastnum(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamecodecsettingsimulcastnum();
+  kstatsvaluenamecodecsettingsimulcastnum_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingSimulcastNum)
+}
+
+// optional int32 kStatsValueNameCodecSettingStartBitrate = 38;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamecodecsettingstartbitrate() const {
+  return (_has_bits_[1] & 0x00000008u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamecodecsettingstartbitrate() {
+  _has_bits_[1] |= 0x00000008u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecodecsettingstartbitrate() {
+  _has_bits_[1] &= ~0x00000008u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingstartbitrate() {
+  kstatsvaluenamecodecsettingstartbitrate_ = 0;
+  clear_has_kstatsvaluenamecodecsettingstartbitrate();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingstartbitrate() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCodecSettingStartBitrate)
+  return kstatsvaluenamecodecsettingstartbitrate_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingstartbitrate(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamecodecsettingstartbitrate();
+  kstatsvaluenamecodecsettingstartbitrate_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingStartBitrate)
+}
+
+// optional int32 kStatsValueNameCodecSettingMinBitrate = 39;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamecodecsettingminbitrate() const {
+  return (_has_bits_[1] & 0x00000010u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamecodecsettingminbitrate() {
+  _has_bits_[1] |= 0x00000010u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecodecsettingminbitrate() {
+  _has_bits_[1] &= ~0x00000010u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingminbitrate() {
+  kstatsvaluenamecodecsettingminbitrate_ = 0;
+  clear_has_kstatsvaluenamecodecsettingminbitrate();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingminbitrate() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCodecSettingMinBitrate)
+  return kstatsvaluenamecodecsettingminbitrate_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingminbitrate(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamecodecsettingminbitrate();
+  kstatsvaluenamecodecsettingminbitrate_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingMinBitrate)
+}
+
+// optional int32 kStatsValueNameCodecSettingMaxBitrate = 40;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamecodecsettingmaxbitrate() const {
+  return (_has_bits_[1] & 0x00000020u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamecodecsettingmaxbitrate() {
+  _has_bits_[1] |= 0x00000020u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecodecsettingmaxbitrate() {
+  _has_bits_[1] &= ~0x00000020u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingmaxbitrate() {
+  kstatsvaluenamecodecsettingmaxbitrate_ = 0;
+  clear_has_kstatsvaluenamecodecsettingmaxbitrate();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingmaxbitrate() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCodecSettingMaxBitrate)
+  return kstatsvaluenamecodecsettingmaxbitrate_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingmaxbitrate(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamecodecsettingmaxbitrate();
+  kstatsvaluenamecodecsettingmaxbitrate_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingMaxBitrate)
+}
+
+// optional int32 kStatsValueNameCodecSettingTargetBitrate = 41;
+bool VideoSenderStatisticsInner::has_kstatsvaluenamecodecsettingtargetbitrate() const {
+  return (_has_bits_[1] & 0x00000040u) != 0;
+}
+void VideoSenderStatisticsInner::set_has_kstatsvaluenamecodecsettingtargetbitrate() {
+  _has_bits_[1] |= 0x00000040u;
+}
+void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecodecsettingtargetbitrate() {
+  _has_bits_[1] &= ~0x00000040u;
+}
+void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingtargetbitrate() {
+  kstatsvaluenamecodecsettingtargetbitrate_ = 0;
+  clear_has_kstatsvaluenamecodecsettingtargetbitrate();
+}
+ ::google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingtargetbitrate() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCodecSettingTargetBitrate)
+  return kstatsvaluenamecodecsettingtargetbitrate_;
+}
+ void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingtargetbitrate(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamecodecsettingtargetbitrate();
+  kstatsvaluenamecodecsettingtargetbitrate_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingTargetBitrate)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // ===================================================================
 
-#ifndef _MSC_VER
+static ::std::string* MutableUnknownFieldsForVideoReceiverStatisticsInner(
+    VideoReceiverStatisticsInner* ptr) {
+  return ptr->mutable_unknown_fields();
+}
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int VideoReceiverStatisticsInner::kKStatsValueNameReportTypeFieldNumber;
 const int VideoReceiverStatisticsInner::kKStatsValueNameChannelIdFieldNumber;
 const int VideoReceiverStatisticsInner::kKStatsValueNameTimestampFieldNumber;
@@ -1592,10 +2605,10 @@ const int VideoReceiverStatisticsInner::kKStatsValueNameLossModePart1FieldNumber
 const int VideoReceiverStatisticsInner::kKStatsValueNameLossModePart2FieldNumber;
 const int VideoReceiverStatisticsInner::kKStatsValueNameLossModePart3FieldNumber;
 const int VideoReceiverStatisticsInner::kKStatsValueNameLossModePart4FieldNumber;
-#endif  // !_MSC_VER
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 VideoReceiverStatisticsInner::VideoReceiverStatisticsInner()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
   SharedCtor();
   // @@protoc_insertion_point(constructor:VideoReceiverStatisticsInner)
 }
@@ -1604,19 +2617,22 @@ void VideoReceiverStatisticsInner::InitAsDefaultInstance() {
 }
 
 VideoReceiverStatisticsInner::VideoReceiverStatisticsInner(const VideoReceiverStatisticsInner& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::google::protobuf::MessageLite(),
+    _arena_ptr_(NULL) {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:VideoReceiverStatisticsInner)
 }
 
 void VideoReceiverStatisticsInner::SharedCtor() {
-  ::cloopen_google::protobuf::internal::GetEmptyString();
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
+  _unknown_fields_.UnsafeSetDefault(
+      &::google::protobuf::internal::GetEmptyStringAlreadyInited());
   kstatsvaluenamereporttype_ = 0;
   kstatsvaluenamechannelid_ = 0;
   kstatsvaluenametimestamp_ = GOOGLE_LONGLONG(0);
-  kstatsvaluenamecodecimplementationname_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+  kstatsvaluenamecodecimplementationname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   kstatsvaluenameframewidthreceived_ = 0;
   kstatsvaluenameframeheightreceived_ = 0;
   kstatsvaluenamereceivedframerate_ = 0;
@@ -1648,9 +2664,9 @@ VideoReceiverStatisticsInner::~VideoReceiverStatisticsInner() {
 }
 
 void VideoReceiverStatisticsInner::SharedDtor() {
-  if (kstatsvaluenamecodecimplementationname_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete kstatsvaluenamecodecimplementationname_;
-  }
+  _unknown_fields_.DestroyNoArena(
+      &::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  kstatsvaluenamecodecimplementationname_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -1675,64 +2691,75 @@ const VideoReceiverStatisticsInner& VideoReceiverStatisticsInner::default_instan
 
 VideoReceiverStatisticsInner* VideoReceiverStatisticsInner::default_instance_ = NULL;
 
-VideoReceiverStatisticsInner* VideoReceiverStatisticsInner::New() const {
-  return new VideoReceiverStatisticsInner;
+VideoReceiverStatisticsInner* VideoReceiverStatisticsInner::New(::google::protobuf::Arena* arena) const {
+  VideoReceiverStatisticsInner* n = new VideoReceiverStatisticsInner;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
 }
 
 void VideoReceiverStatisticsInner::Clear() {
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<VideoReceiverStatisticsInner*>(16)->f) - \
-   reinterpret_cast<char*>(16))
+// @@protoc_insertion_point(message_clear_start:VideoReceiverStatisticsInner)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(VideoReceiverStatisticsInner, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<VideoReceiverStatisticsInner*>(16)->f)
+#endif
 
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
 
-  if (_has_bits_[0 / 32] & 255) {
+  if (_has_bits_[0 / 32] & 255u) {
     ZR_(kstatsvaluenamereporttype_, kstatsvaluenametimestamp_);
     ZR_(kstatsvaluenameframewidthreceived_, kstatsvaluenamereceivedtotalbitrate_);
     if (has_kstatsvaluenamecodecimplementationname()) {
-      if (kstatsvaluenamecodecimplementationname_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        kstatsvaluenamecodecimplementationname_->clear();
-      }
+      kstatsvaluenamecodecimplementationname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     }
   }
-  if (_has_bits_[8 / 32] & 65280) {
+  if (_has_bits_[8 / 32] & 65280u) {
     ZR_(kstatsvaluenamejitterbufferms_, kstatsvaluenamessrc_);
   }
-  if (_has_bits_[16 / 32] & 16711680) {
+  if (_has_bits_[16 / 32] & 16711680u) {
     ZR_(kstatsvaluenamebytesreceived_, kstatsvaluenamelossmodepart2_);
   }
   ZR_(kstatsvaluenamelossmodepart3_, kstatsvaluenamelossmodepart4_);
 
-#undef OFFSET_OF_FIELD_
+#undef ZR_HELPER_
 #undef ZR_
 
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->clear();
+  _unknown_fields_.ClearToEmptyNoArena(
+      &::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
-      mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
-      &unknown_fields_string);
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  ::google::protobuf::io::LazyStringOutputStream unknown_fields_string(
+      ::google::protobuf::internal::NewPermanentCallback(
+          &MutableUnknownFieldsForVideoReceiverStatisticsInner, this));
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string, false);
   // @@protoc_insertion_point(parse_start:VideoReceiverStatisticsInner)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(16383);
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(16383);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional int32 kStatsValueNameReportType = 1;
       case 1: {
         if (tag == 8) {
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamereporttype_)));
           set_has_kstatsvaluenamereporttype();
         } else {
@@ -1746,8 +2773,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 2: {
         if (tag == 16) {
          parse_kStatsValueNameChannelId:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamechannelid_)));
           set_has_kstatsvaluenamechannelid();
         } else {
@@ -1761,8 +2788,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 3: {
         if (tag == 24) {
          parse_kStatsValueNameTimestamp:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int64, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
                  input, &kstatsvaluenametimestamp_)));
           set_has_kstatsvaluenametimestamp();
         } else {
@@ -1776,7 +2803,7 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 4: {
         if (tag == 34) {
          parse_kStatsValueNameCodecImplementationName:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_kstatsvaluenamecodecimplementationname()));
         } else {
           goto handle_unusual;
@@ -1789,8 +2816,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 5: {
         if (tag == 40) {
          parse_kStatsValueNameFrameWidthReceived:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenameframewidthreceived_)));
           set_has_kstatsvaluenameframewidthreceived();
         } else {
@@ -1804,8 +2831,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 6: {
         if (tag == 48) {
          parse_kStatsValueNameFrameHeightReceived:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenameframeheightreceived_)));
           set_has_kstatsvaluenameframeheightreceived();
         } else {
@@ -1819,8 +2846,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 7: {
         if (tag == 56) {
          parse_kStatsValueNameReceivedFrameRate:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamereceivedframerate_)));
           set_has_kstatsvaluenamereceivedframerate();
         } else {
@@ -1834,8 +2861,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 8: {
         if (tag == 64) {
          parse_kStatsValueNameReceivedTotalBitrate:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamereceivedtotalbitrate_)));
           set_has_kstatsvaluenamereceivedtotalbitrate();
         } else {
@@ -1849,8 +2876,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 9: {
         if (tag == 72) {
          parse_kStatsValueNameJitterBufferMs:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamejitterbufferms_)));
           set_has_kstatsvaluenamejitterbufferms();
         } else {
@@ -1864,8 +2891,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 10: {
         if (tag == 80) {
          parse_kStatsValueNameDecoderFrameRate:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamedecoderframerate_)));
           set_has_kstatsvaluenamedecoderframerate();
         } else {
@@ -1879,8 +2906,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 11: {
         if (tag == 88) {
          parse_kStatsValueNameDecodeMs:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamedecodems_)));
           set_has_kstatsvaluenamedecodems();
         } else {
@@ -1894,8 +2921,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 12: {
         if (tag == 96) {
          parse_kStatsValueNameMaxDecodeMs:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamemaxdecodems_)));
           set_has_kstatsvaluenamemaxdecodems();
         } else {
@@ -1909,8 +2936,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 13: {
         if (tag == 104) {
          parse_kStatsValueNameFrameRateRender:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenameframeraterender_)));
           set_has_kstatsvaluenameframeraterender();
         } else {
@@ -1924,8 +2951,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 14: {
         if (tag == 112) {
          parse_kStatsValueNameCurrentDelayMs:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamecurrentdelayms_)));
           set_has_kstatsvaluenamecurrentdelayms();
         } else {
@@ -1939,8 +2966,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 15: {
         if (tag == 120) {
          parse_kStatsValueNameRenderDelayMs:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamerenderdelayms_)));
           set_has_kstatsvaluenamerenderdelayms();
         } else {
@@ -1954,8 +2981,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 16: {
         if (tag == 128) {
          parse_kStatsValueNameSsrc:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamessrc_)));
           set_has_kstatsvaluenamessrc();
         } else {
@@ -1969,8 +2996,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 17: {
         if (tag == 136) {
          parse_kStatsValueNameBytesReceived:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamebytesreceived_)));
           set_has_kstatsvaluenamebytesreceived();
         } else {
@@ -1984,8 +3011,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 18: {
         if (tag == 144) {
          parse_kStatsValueNamePacketsReceived:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamepacketsreceived_)));
           set_has_kstatsvaluenamepacketsreceived();
         } else {
@@ -1999,8 +3026,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 19: {
         if (tag == 152) {
          parse_kStatsValueNameFirsSent:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamefirssent_)));
           set_has_kstatsvaluenamefirssent();
         } else {
@@ -2014,8 +3041,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 20: {
         if (tag == 160) {
          parse_kStatsValueNameNacksSent:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamenackssent_)));
           set_has_kstatsvaluenamenackssent();
         } else {
@@ -2029,8 +3056,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 21: {
         if (tag == 168) {
          parse_kStatsValueNameNacksRequestsSent:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamenacksrequestssent_)));
           set_has_kstatsvaluenamenacksrequestssent();
         } else {
@@ -2044,8 +3071,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 22: {
         if (tag == 176) {
          parse_kStatsValueNameNacksUniqueRequestsSent:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamenacksuniquerequestssent_)));
           set_has_kstatsvaluenamenacksuniquerequestssent();
         } else {
@@ -2059,8 +3086,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 23: {
         if (tag == 184) {
          parse_kStatsValueNameLossModePart1:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int64, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
                  input, &kstatsvaluenamelossmodepart1_)));
           set_has_kstatsvaluenamelossmodepart1();
         } else {
@@ -2074,8 +3101,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 24: {
         if (tag == 192) {
          parse_kStatsValueNameLossModePart2:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int64, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
                  input, &kstatsvaluenamelossmodepart2_)));
           set_has_kstatsvaluenamelossmodepart2();
         } else {
@@ -2089,8 +3116,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 25: {
         if (tag == 200) {
          parse_kStatsValueNameLossModePart3:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int64, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
                  input, &kstatsvaluenamelossmodepart3_)));
           set_has_kstatsvaluenamelossmodepart3();
         } else {
@@ -2104,8 +3131,8 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       case 26: {
         if (tag == 208) {
          parse_kStatsValueNameLossModePart4:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int64, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
                  input, &kstatsvaluenamelossmodepart4_)));
           set_has_kstatsvaluenamelossmodepart4();
         } else {
@@ -2118,11 +3145,11 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -2138,333 +3165,334 @@ failure:
 }
 
 void VideoReceiverStatisticsInner::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:VideoReceiverStatisticsInner)
   // optional int32 kStatsValueNameReportType = 1;
   if (has_kstatsvaluenamereporttype()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(1, this->kstatsvaluenamereporttype(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->kstatsvaluenamereporttype(), output);
   }
 
   // optional int32 kStatsValueNameChannelId = 2;
   if (has_kstatsvaluenamechannelid()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(2, this->kstatsvaluenamechannelid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->kstatsvaluenamechannelid(), output);
   }
 
   // optional int64 kStatsValueNameTimestamp = 3;
   if (has_kstatsvaluenametimestamp()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt64(3, this->kstatsvaluenametimestamp(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->kstatsvaluenametimestamp(), output);
   }
 
   // optional string kStatsValueNameCodecImplementationName = 4;
   if (has_kstatsvaluenamecodecimplementationname()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       4, this->kstatsvaluenamecodecimplementationname(), output);
   }
 
   // optional int32 kStatsValueNameFrameWidthReceived = 5;
   if (has_kstatsvaluenameframewidthreceived()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(5, this->kstatsvaluenameframewidthreceived(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->kstatsvaluenameframewidthreceived(), output);
   }
 
   // optional int32 kStatsValueNameFrameHeightReceived = 6;
   if (has_kstatsvaluenameframeheightreceived()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(6, this->kstatsvaluenameframeheightreceived(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->kstatsvaluenameframeheightreceived(), output);
   }
 
   // optional int32 kStatsValueNameReceivedFrameRate = 7;
   if (has_kstatsvaluenamereceivedframerate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(7, this->kstatsvaluenamereceivedframerate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->kstatsvaluenamereceivedframerate(), output);
   }
 
   // optional int32 kStatsValueNameReceivedTotalBitrate = 8;
   if (has_kstatsvaluenamereceivedtotalbitrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(8, this->kstatsvaluenamereceivedtotalbitrate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->kstatsvaluenamereceivedtotalbitrate(), output);
   }
 
   // optional int32 kStatsValueNameJitterBufferMs = 9;
   if (has_kstatsvaluenamejitterbufferms()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(9, this->kstatsvaluenamejitterbufferms(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->kstatsvaluenamejitterbufferms(), output);
   }
 
   // optional int32 kStatsValueNameDecoderFrameRate = 10;
   if (has_kstatsvaluenamedecoderframerate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(10, this->kstatsvaluenamedecoderframerate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->kstatsvaluenamedecoderframerate(), output);
   }
 
   // optional int32 kStatsValueNameDecodeMs = 11;
   if (has_kstatsvaluenamedecodems()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(11, this->kstatsvaluenamedecodems(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->kstatsvaluenamedecodems(), output);
   }
 
   // optional int32 kStatsValueNameMaxDecodeMs = 12;
   if (has_kstatsvaluenamemaxdecodems()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(12, this->kstatsvaluenamemaxdecodems(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->kstatsvaluenamemaxdecodems(), output);
   }
 
   // optional int32 kStatsValueNameFrameRateRender = 13;
   if (has_kstatsvaluenameframeraterender()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(13, this->kstatsvaluenameframeraterender(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(13, this->kstatsvaluenameframeraterender(), output);
   }
 
   // optional int32 kStatsValueNameCurrentDelayMs = 14;
   if (has_kstatsvaluenamecurrentdelayms()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(14, this->kstatsvaluenamecurrentdelayms(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(14, this->kstatsvaluenamecurrentdelayms(), output);
   }
 
   // optional int32 kStatsValueNameRenderDelayMs = 15;
   if (has_kstatsvaluenamerenderdelayms()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(15, this->kstatsvaluenamerenderdelayms(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(15, this->kstatsvaluenamerenderdelayms(), output);
   }
 
   // optional int32 kStatsValueNameSsrc = 16;
   if (has_kstatsvaluenamessrc()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(16, this->kstatsvaluenamessrc(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(16, this->kstatsvaluenamessrc(), output);
   }
 
   // optional int32 kStatsValueNameBytesReceived = 17;
   if (has_kstatsvaluenamebytesreceived()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(17, this->kstatsvaluenamebytesreceived(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(17, this->kstatsvaluenamebytesreceived(), output);
   }
 
   // optional int32 kStatsValueNamePacketsReceived = 18;
   if (has_kstatsvaluenamepacketsreceived()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(18, this->kstatsvaluenamepacketsreceived(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(18, this->kstatsvaluenamepacketsreceived(), output);
   }
 
   // optional int32 kStatsValueNameFirsSent = 19;
   if (has_kstatsvaluenamefirssent()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(19, this->kstatsvaluenamefirssent(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(19, this->kstatsvaluenamefirssent(), output);
   }
 
   // optional int32 kStatsValueNameNacksSent = 20;
   if (has_kstatsvaluenamenackssent()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(20, this->kstatsvaluenamenackssent(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(20, this->kstatsvaluenamenackssent(), output);
   }
 
   // optional int32 kStatsValueNameNacksRequestsSent = 21;
   if (has_kstatsvaluenamenacksrequestssent()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(21, this->kstatsvaluenamenacksrequestssent(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(21, this->kstatsvaluenamenacksrequestssent(), output);
   }
 
   // optional int32 kStatsValueNameNacksUniqueRequestsSent = 22;
   if (has_kstatsvaluenamenacksuniquerequestssent()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(22, this->kstatsvaluenamenacksuniquerequestssent(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(22, this->kstatsvaluenamenacksuniquerequestssent(), output);
   }
 
   // optional int64 kStatsValueNameLossModePart1 = 23;
   if (has_kstatsvaluenamelossmodepart1()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt64(23, this->kstatsvaluenamelossmodepart1(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(23, this->kstatsvaluenamelossmodepart1(), output);
   }
 
   // optional int64 kStatsValueNameLossModePart2 = 24;
   if (has_kstatsvaluenamelossmodepart2()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt64(24, this->kstatsvaluenamelossmodepart2(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(24, this->kstatsvaluenamelossmodepart2(), output);
   }
 
   // optional int64 kStatsValueNameLossModePart3 = 25;
   if (has_kstatsvaluenamelossmodepart3()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt64(25, this->kstatsvaluenamelossmodepart3(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(25, this->kstatsvaluenamelossmodepart3(), output);
   }
 
   // optional int64 kStatsValueNameLossModePart4 = 26;
   if (has_kstatsvaluenamelossmodepart4()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt64(26, this->kstatsvaluenamelossmodepart4(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(26, this->kstatsvaluenamelossmodepart4(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
-                   unknown_fields().size());
+                   static_cast<int>(unknown_fields().size()));
   // @@protoc_insertion_point(serialize_end:VideoReceiverStatisticsInner)
 }
 
 int VideoReceiverStatisticsInner::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:VideoReceiverStatisticsInner)
   int total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+  if (_has_bits_[0 / 32] & 255u) {
     // optional int32 kStatsValueNameReportType = 1;
     if (has_kstatsvaluenamereporttype()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamereporttype());
     }
 
     // optional int32 kStatsValueNameChannelId = 2;
     if (has_kstatsvaluenamechannelid()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamechannelid());
     }
 
     // optional int64 kStatsValueNameTimestamp = 3;
     if (has_kstatsvaluenametimestamp()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int64Size(
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
           this->kstatsvaluenametimestamp());
     }
 
     // optional string kStatsValueNameCodecImplementationName = 4;
     if (has_kstatsvaluenamecodecimplementationname()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::StringSize(
           this->kstatsvaluenamecodecimplementationname());
     }
 
     // optional int32 kStatsValueNameFrameWidthReceived = 5;
     if (has_kstatsvaluenameframewidthreceived()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameframewidthreceived());
     }
 
     // optional int32 kStatsValueNameFrameHeightReceived = 6;
     if (has_kstatsvaluenameframeheightreceived()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameframeheightreceived());
     }
 
     // optional int32 kStatsValueNameReceivedFrameRate = 7;
     if (has_kstatsvaluenamereceivedframerate()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamereceivedframerate());
     }
 
     // optional int32 kStatsValueNameReceivedTotalBitrate = 8;
     if (has_kstatsvaluenamereceivedtotalbitrate()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamereceivedtotalbitrate());
     }
 
   }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+  if (_has_bits_[8 / 32] & 65280u) {
     // optional int32 kStatsValueNameJitterBufferMs = 9;
     if (has_kstatsvaluenamejitterbufferms()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamejitterbufferms());
     }
 
     // optional int32 kStatsValueNameDecoderFrameRate = 10;
     if (has_kstatsvaluenamedecoderframerate()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamedecoderframerate());
     }
 
     // optional int32 kStatsValueNameDecodeMs = 11;
     if (has_kstatsvaluenamedecodems()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamedecodems());
     }
 
     // optional int32 kStatsValueNameMaxDecodeMs = 12;
     if (has_kstatsvaluenamemaxdecodems()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamemaxdecodems());
     }
 
     // optional int32 kStatsValueNameFrameRateRender = 13;
     if (has_kstatsvaluenameframeraterender()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameframeraterender());
     }
 
     // optional int32 kStatsValueNameCurrentDelayMs = 14;
     if (has_kstatsvaluenamecurrentdelayms()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecurrentdelayms());
     }
 
     // optional int32 kStatsValueNameRenderDelayMs = 15;
     if (has_kstatsvaluenamerenderdelayms()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamerenderdelayms());
     }
 
     // optional int32 kStatsValueNameSsrc = 16;
     if (has_kstatsvaluenamessrc()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamessrc());
     }
 
   }
-  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
+  if (_has_bits_[16 / 32] & 16711680u) {
     // optional int32 kStatsValueNameBytesReceived = 17;
     if (has_kstatsvaluenamebytesreceived()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamebytesreceived());
     }
 
     // optional int32 kStatsValueNamePacketsReceived = 18;
     if (has_kstatsvaluenamepacketsreceived()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamepacketsreceived());
     }
 
     // optional int32 kStatsValueNameFirsSent = 19;
     if (has_kstatsvaluenamefirssent()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamefirssent());
     }
 
     // optional int32 kStatsValueNameNacksSent = 20;
     if (has_kstatsvaluenamenackssent()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamenackssent());
     }
 
     // optional int32 kStatsValueNameNacksRequestsSent = 21;
     if (has_kstatsvaluenamenacksrequestssent()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamenacksrequestssent());
     }
 
     // optional int32 kStatsValueNameNacksUniqueRequestsSent = 22;
     if (has_kstatsvaluenamenacksuniquerequestssent()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamenacksuniquerequestssent());
     }
 
     // optional int64 kStatsValueNameLossModePart1 = 23;
     if (has_kstatsvaluenamelossmodepart1()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int64Size(
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
           this->kstatsvaluenamelossmodepart1());
     }
 
     // optional int64 kStatsValueNameLossModePart2 = 24;
     if (has_kstatsvaluenamelossmodepart2()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int64Size(
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
           this->kstatsvaluenamelossmodepart2());
     }
 
   }
-  if (_has_bits_[24 / 32] & (0xffu << (24 % 32))) {
+  if (_has_bits_[24 / 32] & 50331648u) {
     // optional int64 kStatsValueNameLossModePart3 = 25;
     if (has_kstatsvaluenamelossmodepart3()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int64Size(
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
           this->kstatsvaluenamelossmodepart3());
     }
 
     // optional int64 kStatsValueNameLossModePart4 = 26;
     if (has_kstatsvaluenamelossmodepart4()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int64Size(
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
           this->kstatsvaluenamelossmodepart4());
     }
 
@@ -2478,12 +3506,13 @@ int VideoReceiverStatisticsInner::ByteSize() const {
 }
 
 void VideoReceiverStatisticsInner::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const VideoReceiverStatisticsInner*>(&from));
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const VideoReceiverStatisticsInner*>(&from));
 }
 
 void VideoReceiverStatisticsInner::MergeFrom(const VideoReceiverStatisticsInner& from) {
-  GOOGLE_CHECK_NE(&from, this);
+// @@protoc_insertion_point(class_specific_merge_from_start:VideoReceiverStatisticsInner)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_kstatsvaluenamereporttype()) {
       set_kstatsvaluenamereporttype(from.kstatsvaluenamereporttype());
@@ -2495,7 +3524,8 @@ void VideoReceiverStatisticsInner::MergeFrom(const VideoReceiverStatisticsInner&
       set_kstatsvaluenametimestamp(from.kstatsvaluenametimestamp());
     }
     if (from.has_kstatsvaluenamecodecimplementationname()) {
-      set_kstatsvaluenamecodecimplementationname(from.kstatsvaluenamecodecimplementationname());
+      set_has_kstatsvaluenamecodecimplementationname();
+      kstatsvaluenamecodecimplementationname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.kstatsvaluenamecodecimplementationname_);
     }
     if (from.has_kstatsvaluenameframewidthreceived()) {
       set_kstatsvaluenameframewidthreceived(from.kstatsvaluenameframewidthreceived());
@@ -2570,10 +3600,13 @@ void VideoReceiverStatisticsInner::MergeFrom(const VideoReceiverStatisticsInner&
       set_kstatsvaluenamelossmodepart4(from.kstatsvaluenamelossmodepart4());
     }
   }
-  mutable_unknown_fields()->append(from.unknown_fields());
+  if (!from.unknown_fields().empty()) {
+    mutable_unknown_fields()->append(from.unknown_fields());
+  }
 }
 
 void VideoReceiverStatisticsInner::CopyFrom(const VideoReceiverStatisticsInner& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:VideoReceiverStatisticsInner)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -2585,47 +3618,712 @@ bool VideoReceiverStatisticsInner::IsInitialized() const {
 }
 
 void VideoReceiverStatisticsInner::Swap(VideoReceiverStatisticsInner* other) {
-  if (other != this) {
-    std::swap(kstatsvaluenamereporttype_, other->kstatsvaluenamereporttype_);
-    std::swap(kstatsvaluenamechannelid_, other->kstatsvaluenamechannelid_);
-    std::swap(kstatsvaluenametimestamp_, other->kstatsvaluenametimestamp_);
-    std::swap(kstatsvaluenamecodecimplementationname_, other->kstatsvaluenamecodecimplementationname_);
-    std::swap(kstatsvaluenameframewidthreceived_, other->kstatsvaluenameframewidthreceived_);
-    std::swap(kstatsvaluenameframeheightreceived_, other->kstatsvaluenameframeheightreceived_);
-    std::swap(kstatsvaluenamereceivedframerate_, other->kstatsvaluenamereceivedframerate_);
-    std::swap(kstatsvaluenamereceivedtotalbitrate_, other->kstatsvaluenamereceivedtotalbitrate_);
-    std::swap(kstatsvaluenamejitterbufferms_, other->kstatsvaluenamejitterbufferms_);
-    std::swap(kstatsvaluenamedecoderframerate_, other->kstatsvaluenamedecoderframerate_);
-    std::swap(kstatsvaluenamedecodems_, other->kstatsvaluenamedecodems_);
-    std::swap(kstatsvaluenamemaxdecodems_, other->kstatsvaluenamemaxdecodems_);
-    std::swap(kstatsvaluenameframeraterender_, other->kstatsvaluenameframeraterender_);
-    std::swap(kstatsvaluenamecurrentdelayms_, other->kstatsvaluenamecurrentdelayms_);
-    std::swap(kstatsvaluenamerenderdelayms_, other->kstatsvaluenamerenderdelayms_);
-    std::swap(kstatsvaluenamessrc_, other->kstatsvaluenamessrc_);
-    std::swap(kstatsvaluenamebytesreceived_, other->kstatsvaluenamebytesreceived_);
-    std::swap(kstatsvaluenamepacketsreceived_, other->kstatsvaluenamepacketsreceived_);
-    std::swap(kstatsvaluenamefirssent_, other->kstatsvaluenamefirssent_);
-    std::swap(kstatsvaluenamenackssent_, other->kstatsvaluenamenackssent_);
-    std::swap(kstatsvaluenamenacksrequestssent_, other->kstatsvaluenamenacksrequestssent_);
-    std::swap(kstatsvaluenamenacksuniquerequestssent_, other->kstatsvaluenamenacksuniquerequestssent_);
-    std::swap(kstatsvaluenamelossmodepart1_, other->kstatsvaluenamelossmodepart1_);
-    std::swap(kstatsvaluenamelossmodepart2_, other->kstatsvaluenamelossmodepart2_);
-    std::swap(kstatsvaluenamelossmodepart3_, other->kstatsvaluenamelossmodepart3_);
-    std::swap(kstatsvaluenamelossmodepart4_, other->kstatsvaluenamelossmodepart4_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.swap(other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
+  if (other == this) return;
+  InternalSwap(other);
+}
+void VideoReceiverStatisticsInner::InternalSwap(VideoReceiverStatisticsInner* other) {
+  std::swap(kstatsvaluenamereporttype_, other->kstatsvaluenamereporttype_);
+  std::swap(kstatsvaluenamechannelid_, other->kstatsvaluenamechannelid_);
+  std::swap(kstatsvaluenametimestamp_, other->kstatsvaluenametimestamp_);
+  kstatsvaluenamecodecimplementationname_.Swap(&other->kstatsvaluenamecodecimplementationname_);
+  std::swap(kstatsvaluenameframewidthreceived_, other->kstatsvaluenameframewidthreceived_);
+  std::swap(kstatsvaluenameframeheightreceived_, other->kstatsvaluenameframeheightreceived_);
+  std::swap(kstatsvaluenamereceivedframerate_, other->kstatsvaluenamereceivedframerate_);
+  std::swap(kstatsvaluenamereceivedtotalbitrate_, other->kstatsvaluenamereceivedtotalbitrate_);
+  std::swap(kstatsvaluenamejitterbufferms_, other->kstatsvaluenamejitterbufferms_);
+  std::swap(kstatsvaluenamedecoderframerate_, other->kstatsvaluenamedecoderframerate_);
+  std::swap(kstatsvaluenamedecodems_, other->kstatsvaluenamedecodems_);
+  std::swap(kstatsvaluenamemaxdecodems_, other->kstatsvaluenamemaxdecodems_);
+  std::swap(kstatsvaluenameframeraterender_, other->kstatsvaluenameframeraterender_);
+  std::swap(kstatsvaluenamecurrentdelayms_, other->kstatsvaluenamecurrentdelayms_);
+  std::swap(kstatsvaluenamerenderdelayms_, other->kstatsvaluenamerenderdelayms_);
+  std::swap(kstatsvaluenamessrc_, other->kstatsvaluenamessrc_);
+  std::swap(kstatsvaluenamebytesreceived_, other->kstatsvaluenamebytesreceived_);
+  std::swap(kstatsvaluenamepacketsreceived_, other->kstatsvaluenamepacketsreceived_);
+  std::swap(kstatsvaluenamefirssent_, other->kstatsvaluenamefirssent_);
+  std::swap(kstatsvaluenamenackssent_, other->kstatsvaluenamenackssent_);
+  std::swap(kstatsvaluenamenacksrequestssent_, other->kstatsvaluenamenacksrequestssent_);
+  std::swap(kstatsvaluenamenacksuniquerequestssent_, other->kstatsvaluenamenacksuniquerequestssent_);
+  std::swap(kstatsvaluenamelossmodepart1_, other->kstatsvaluenamelossmodepart1_);
+  std::swap(kstatsvaluenamelossmodepart2_, other->kstatsvaluenamelossmodepart2_);
+  std::swap(kstatsvaluenamelossmodepart3_, other->kstatsvaluenamelossmodepart3_);
+  std::swap(kstatsvaluenamelossmodepart4_, other->kstatsvaluenamelossmodepart4_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  _unknown_fields_.Swap(&other->_unknown_fields_);
+  std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::std::string VideoReceiverStatisticsInner::GetTypeName() const {
   return "VideoReceiverStatisticsInner";
 }
 
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// VideoReceiverStatisticsInner
+
+// optional int32 kStatsValueNameReportType = 1;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenamereporttype() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenamereporttype() {
+  _has_bits_[0] |= 0x00000001u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamereporttype() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenamereporttype() {
+  kstatsvaluenamereporttype_ = 0;
+  clear_has_kstatsvaluenamereporttype();
+}
+ ::google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamereporttype() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameReportType)
+  return kstatsvaluenamereporttype_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamereporttype(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamereporttype();
+  kstatsvaluenamereporttype_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameReportType)
+}
+
+// optional int32 kStatsValueNameChannelId = 2;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenamechannelid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenamechannelid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamechannelid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenamechannelid() {
+  kstatsvaluenamechannelid_ = 0;
+  clear_has_kstatsvaluenamechannelid();
+}
+ ::google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamechannelid() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameChannelId)
+  return kstatsvaluenamechannelid_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamechannelid(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamechannelid();
+  kstatsvaluenamechannelid_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameChannelId)
+}
+
+// optional int64 kStatsValueNameTimestamp = 3;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenametimestamp() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenametimestamp() {
+  _has_bits_[0] |= 0x00000004u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenametimestamp() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenametimestamp() {
+  kstatsvaluenametimestamp_ = GOOGLE_LONGLONG(0);
+  clear_has_kstatsvaluenametimestamp();
+}
+ ::google::protobuf::int64 VideoReceiverStatisticsInner::kstatsvaluenametimestamp() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameTimestamp)
+  return kstatsvaluenametimestamp_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenametimestamp(::google::protobuf::int64 value) {
+  set_has_kstatsvaluenametimestamp();
+  kstatsvaluenametimestamp_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameTimestamp)
+}
+
+// optional string kStatsValueNameCodecImplementationName = 4;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenamecodecimplementationname() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenamecodecimplementationname() {
+  _has_bits_[0] |= 0x00000008u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamecodecimplementationname() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenamecodecimplementationname() {
+  kstatsvaluenamecodecimplementationname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_kstatsvaluenamecodecimplementationname();
+}
+ const ::std::string& VideoReceiverStatisticsInner::kstatsvaluenamecodecimplementationname() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameCodecImplementationName)
+  return kstatsvaluenamecodecimplementationname_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamecodecimplementationname(const ::std::string& value) {
+  set_has_kstatsvaluenamecodecimplementationname();
+  kstatsvaluenamecodecimplementationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameCodecImplementationName)
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamecodecimplementationname(const char* value) {
+  set_has_kstatsvaluenamecodecimplementationname();
+  kstatsvaluenamecodecimplementationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:VideoReceiverStatisticsInner.kStatsValueNameCodecImplementationName)
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamecodecimplementationname(const char* value, size_t size) {
+  set_has_kstatsvaluenamecodecimplementationname();
+  kstatsvaluenamecodecimplementationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:VideoReceiverStatisticsInner.kStatsValueNameCodecImplementationName)
+}
+ ::std::string* VideoReceiverStatisticsInner::mutable_kstatsvaluenamecodecimplementationname() {
+  set_has_kstatsvaluenamecodecimplementationname();
+  // @@protoc_insertion_point(field_mutable:VideoReceiverStatisticsInner.kStatsValueNameCodecImplementationName)
+  return kstatsvaluenamecodecimplementationname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ ::std::string* VideoReceiverStatisticsInner::release_kstatsvaluenamecodecimplementationname() {
+  // @@protoc_insertion_point(field_release:VideoReceiverStatisticsInner.kStatsValueNameCodecImplementationName)
+  clear_has_kstatsvaluenamecodecimplementationname();
+  return kstatsvaluenamecodecimplementationname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void VideoReceiverStatisticsInner::set_allocated_kstatsvaluenamecodecimplementationname(::std::string* kstatsvaluenamecodecimplementationname) {
+  if (kstatsvaluenamecodecimplementationname != NULL) {
+    set_has_kstatsvaluenamecodecimplementationname();
+  } else {
+    clear_has_kstatsvaluenamecodecimplementationname();
+  }
+  kstatsvaluenamecodecimplementationname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), kstatsvaluenamecodecimplementationname);
+  // @@protoc_insertion_point(field_set_allocated:VideoReceiverStatisticsInner.kStatsValueNameCodecImplementationName)
+}
+
+// optional int32 kStatsValueNameFrameWidthReceived = 5;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenameframewidthreceived() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenameframewidthreceived() {
+  _has_bits_[0] |= 0x00000010u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenameframewidthreceived() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenameframewidthreceived() {
+  kstatsvaluenameframewidthreceived_ = 0;
+  clear_has_kstatsvaluenameframewidthreceived();
+}
+ ::google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenameframewidthreceived() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameFrameWidthReceived)
+  return kstatsvaluenameframewidthreceived_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenameframewidthreceived(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenameframewidthreceived();
+  kstatsvaluenameframewidthreceived_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameFrameWidthReceived)
+}
+
+// optional int32 kStatsValueNameFrameHeightReceived = 6;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenameframeheightreceived() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenameframeheightreceived() {
+  _has_bits_[0] |= 0x00000020u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenameframeheightreceived() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenameframeheightreceived() {
+  kstatsvaluenameframeheightreceived_ = 0;
+  clear_has_kstatsvaluenameframeheightreceived();
+}
+ ::google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenameframeheightreceived() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameFrameHeightReceived)
+  return kstatsvaluenameframeheightreceived_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenameframeheightreceived(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenameframeheightreceived();
+  kstatsvaluenameframeheightreceived_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameFrameHeightReceived)
+}
+
+// optional int32 kStatsValueNameReceivedFrameRate = 7;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenamereceivedframerate() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenamereceivedframerate() {
+  _has_bits_[0] |= 0x00000040u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamereceivedframerate() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenamereceivedframerate() {
+  kstatsvaluenamereceivedframerate_ = 0;
+  clear_has_kstatsvaluenamereceivedframerate();
+}
+ ::google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamereceivedframerate() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameReceivedFrameRate)
+  return kstatsvaluenamereceivedframerate_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamereceivedframerate(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamereceivedframerate();
+  kstatsvaluenamereceivedframerate_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameReceivedFrameRate)
+}
+
+// optional int32 kStatsValueNameReceivedTotalBitrate = 8;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenamereceivedtotalbitrate() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenamereceivedtotalbitrate() {
+  _has_bits_[0] |= 0x00000080u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamereceivedtotalbitrate() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenamereceivedtotalbitrate() {
+  kstatsvaluenamereceivedtotalbitrate_ = 0;
+  clear_has_kstatsvaluenamereceivedtotalbitrate();
+}
+ ::google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamereceivedtotalbitrate() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameReceivedTotalBitrate)
+  return kstatsvaluenamereceivedtotalbitrate_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamereceivedtotalbitrate(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamereceivedtotalbitrate();
+  kstatsvaluenamereceivedtotalbitrate_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameReceivedTotalBitrate)
+}
+
+// optional int32 kStatsValueNameJitterBufferMs = 9;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenamejitterbufferms() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenamejitterbufferms() {
+  _has_bits_[0] |= 0x00000100u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamejitterbufferms() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenamejitterbufferms() {
+  kstatsvaluenamejitterbufferms_ = 0;
+  clear_has_kstatsvaluenamejitterbufferms();
+}
+ ::google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamejitterbufferms() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameJitterBufferMs)
+  return kstatsvaluenamejitterbufferms_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamejitterbufferms(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamejitterbufferms();
+  kstatsvaluenamejitterbufferms_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameJitterBufferMs)
+}
+
+// optional int32 kStatsValueNameDecoderFrameRate = 10;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenamedecoderframerate() const {
+  return (_has_bits_[0] & 0x00000200u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenamedecoderframerate() {
+  _has_bits_[0] |= 0x00000200u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamedecoderframerate() {
+  _has_bits_[0] &= ~0x00000200u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenamedecoderframerate() {
+  kstatsvaluenamedecoderframerate_ = 0;
+  clear_has_kstatsvaluenamedecoderframerate();
+}
+ ::google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamedecoderframerate() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameDecoderFrameRate)
+  return kstatsvaluenamedecoderframerate_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamedecoderframerate(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamedecoderframerate();
+  kstatsvaluenamedecoderframerate_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameDecoderFrameRate)
+}
+
+// optional int32 kStatsValueNameDecodeMs = 11;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenamedecodems() const {
+  return (_has_bits_[0] & 0x00000400u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenamedecodems() {
+  _has_bits_[0] |= 0x00000400u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamedecodems() {
+  _has_bits_[0] &= ~0x00000400u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenamedecodems() {
+  kstatsvaluenamedecodems_ = 0;
+  clear_has_kstatsvaluenamedecodems();
+}
+ ::google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamedecodems() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameDecodeMs)
+  return kstatsvaluenamedecodems_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamedecodems(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamedecodems();
+  kstatsvaluenamedecodems_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameDecodeMs)
+}
+
+// optional int32 kStatsValueNameMaxDecodeMs = 12;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenamemaxdecodems() const {
+  return (_has_bits_[0] & 0x00000800u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenamemaxdecodems() {
+  _has_bits_[0] |= 0x00000800u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamemaxdecodems() {
+  _has_bits_[0] &= ~0x00000800u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenamemaxdecodems() {
+  kstatsvaluenamemaxdecodems_ = 0;
+  clear_has_kstatsvaluenamemaxdecodems();
+}
+ ::google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamemaxdecodems() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameMaxDecodeMs)
+  return kstatsvaluenamemaxdecodems_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamemaxdecodems(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamemaxdecodems();
+  kstatsvaluenamemaxdecodems_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameMaxDecodeMs)
+}
+
+// optional int32 kStatsValueNameFrameRateRender = 13;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenameframeraterender() const {
+  return (_has_bits_[0] & 0x00001000u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenameframeraterender() {
+  _has_bits_[0] |= 0x00001000u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenameframeraterender() {
+  _has_bits_[0] &= ~0x00001000u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenameframeraterender() {
+  kstatsvaluenameframeraterender_ = 0;
+  clear_has_kstatsvaluenameframeraterender();
+}
+ ::google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenameframeraterender() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameFrameRateRender)
+  return kstatsvaluenameframeraterender_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenameframeraterender(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenameframeraterender();
+  kstatsvaluenameframeraterender_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameFrameRateRender)
+}
+
+// optional int32 kStatsValueNameCurrentDelayMs = 14;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenamecurrentdelayms() const {
+  return (_has_bits_[0] & 0x00002000u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenamecurrentdelayms() {
+  _has_bits_[0] |= 0x00002000u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamecurrentdelayms() {
+  _has_bits_[0] &= ~0x00002000u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenamecurrentdelayms() {
+  kstatsvaluenamecurrentdelayms_ = 0;
+  clear_has_kstatsvaluenamecurrentdelayms();
+}
+ ::google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamecurrentdelayms() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameCurrentDelayMs)
+  return kstatsvaluenamecurrentdelayms_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamecurrentdelayms(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamecurrentdelayms();
+  kstatsvaluenamecurrentdelayms_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameCurrentDelayMs)
+}
+
+// optional int32 kStatsValueNameRenderDelayMs = 15;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenamerenderdelayms() const {
+  return (_has_bits_[0] & 0x00004000u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenamerenderdelayms() {
+  _has_bits_[0] |= 0x00004000u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamerenderdelayms() {
+  _has_bits_[0] &= ~0x00004000u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenamerenderdelayms() {
+  kstatsvaluenamerenderdelayms_ = 0;
+  clear_has_kstatsvaluenamerenderdelayms();
+}
+ ::google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamerenderdelayms() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameRenderDelayMs)
+  return kstatsvaluenamerenderdelayms_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamerenderdelayms(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamerenderdelayms();
+  kstatsvaluenamerenderdelayms_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameRenderDelayMs)
+}
+
+// optional int32 kStatsValueNameSsrc = 16;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenamessrc() const {
+  return (_has_bits_[0] & 0x00008000u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenamessrc() {
+  _has_bits_[0] |= 0x00008000u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamessrc() {
+  _has_bits_[0] &= ~0x00008000u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenamessrc() {
+  kstatsvaluenamessrc_ = 0;
+  clear_has_kstatsvaluenamessrc();
+}
+ ::google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamessrc() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameSsrc)
+  return kstatsvaluenamessrc_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamessrc(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamessrc();
+  kstatsvaluenamessrc_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameSsrc)
+}
+
+// optional int32 kStatsValueNameBytesReceived = 17;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenamebytesreceived() const {
+  return (_has_bits_[0] & 0x00010000u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenamebytesreceived() {
+  _has_bits_[0] |= 0x00010000u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamebytesreceived() {
+  _has_bits_[0] &= ~0x00010000u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenamebytesreceived() {
+  kstatsvaluenamebytesreceived_ = 0;
+  clear_has_kstatsvaluenamebytesreceived();
+}
+ ::google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamebytesreceived() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameBytesReceived)
+  return kstatsvaluenamebytesreceived_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamebytesreceived(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamebytesreceived();
+  kstatsvaluenamebytesreceived_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameBytesReceived)
+}
+
+// optional int32 kStatsValueNamePacketsReceived = 18;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenamepacketsreceived() const {
+  return (_has_bits_[0] & 0x00020000u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenamepacketsreceived() {
+  _has_bits_[0] |= 0x00020000u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamepacketsreceived() {
+  _has_bits_[0] &= ~0x00020000u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenamepacketsreceived() {
+  kstatsvaluenamepacketsreceived_ = 0;
+  clear_has_kstatsvaluenamepacketsreceived();
+}
+ ::google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamepacketsreceived() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNamePacketsReceived)
+  return kstatsvaluenamepacketsreceived_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamepacketsreceived(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamepacketsreceived();
+  kstatsvaluenamepacketsreceived_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNamePacketsReceived)
+}
+
+// optional int32 kStatsValueNameFirsSent = 19;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenamefirssent() const {
+  return (_has_bits_[0] & 0x00040000u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenamefirssent() {
+  _has_bits_[0] |= 0x00040000u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamefirssent() {
+  _has_bits_[0] &= ~0x00040000u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenamefirssent() {
+  kstatsvaluenamefirssent_ = 0;
+  clear_has_kstatsvaluenamefirssent();
+}
+ ::google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamefirssent() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameFirsSent)
+  return kstatsvaluenamefirssent_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamefirssent(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamefirssent();
+  kstatsvaluenamefirssent_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameFirsSent)
+}
+
+// optional int32 kStatsValueNameNacksSent = 20;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenamenackssent() const {
+  return (_has_bits_[0] & 0x00080000u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenamenackssent() {
+  _has_bits_[0] |= 0x00080000u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamenackssent() {
+  _has_bits_[0] &= ~0x00080000u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenamenackssent() {
+  kstatsvaluenamenackssent_ = 0;
+  clear_has_kstatsvaluenamenackssent();
+}
+ ::google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamenackssent() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameNacksSent)
+  return kstatsvaluenamenackssent_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamenackssent(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamenackssent();
+  kstatsvaluenamenackssent_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameNacksSent)
+}
+
+// optional int32 kStatsValueNameNacksRequestsSent = 21;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenamenacksrequestssent() const {
+  return (_has_bits_[0] & 0x00100000u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenamenacksrequestssent() {
+  _has_bits_[0] |= 0x00100000u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamenacksrequestssent() {
+  _has_bits_[0] &= ~0x00100000u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenamenacksrequestssent() {
+  kstatsvaluenamenacksrequestssent_ = 0;
+  clear_has_kstatsvaluenamenacksrequestssent();
+}
+ ::google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamenacksrequestssent() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameNacksRequestsSent)
+  return kstatsvaluenamenacksrequestssent_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamenacksrequestssent(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamenacksrequestssent();
+  kstatsvaluenamenacksrequestssent_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameNacksRequestsSent)
+}
+
+// optional int32 kStatsValueNameNacksUniqueRequestsSent = 22;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenamenacksuniquerequestssent() const {
+  return (_has_bits_[0] & 0x00200000u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenamenacksuniquerequestssent() {
+  _has_bits_[0] |= 0x00200000u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamenacksuniquerequestssent() {
+  _has_bits_[0] &= ~0x00200000u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenamenacksuniquerequestssent() {
+  kstatsvaluenamenacksuniquerequestssent_ = 0;
+  clear_has_kstatsvaluenamenacksuniquerequestssent();
+}
+ ::google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamenacksuniquerequestssent() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameNacksUniqueRequestsSent)
+  return kstatsvaluenamenacksuniquerequestssent_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamenacksuniquerequestssent(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamenacksuniquerequestssent();
+  kstatsvaluenamenacksuniquerequestssent_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameNacksUniqueRequestsSent)
+}
+
+// optional int64 kStatsValueNameLossModePart1 = 23;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenamelossmodepart1() const {
+  return (_has_bits_[0] & 0x00400000u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenamelossmodepart1() {
+  _has_bits_[0] |= 0x00400000u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamelossmodepart1() {
+  _has_bits_[0] &= ~0x00400000u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenamelossmodepart1() {
+  kstatsvaluenamelossmodepart1_ = GOOGLE_LONGLONG(0);
+  clear_has_kstatsvaluenamelossmodepart1();
+}
+ ::google::protobuf::int64 VideoReceiverStatisticsInner::kstatsvaluenamelossmodepart1() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameLossModePart1)
+  return kstatsvaluenamelossmodepart1_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamelossmodepart1(::google::protobuf::int64 value) {
+  set_has_kstatsvaluenamelossmodepart1();
+  kstatsvaluenamelossmodepart1_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameLossModePart1)
+}
+
+// optional int64 kStatsValueNameLossModePart2 = 24;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenamelossmodepart2() const {
+  return (_has_bits_[0] & 0x00800000u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenamelossmodepart2() {
+  _has_bits_[0] |= 0x00800000u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamelossmodepart2() {
+  _has_bits_[0] &= ~0x00800000u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenamelossmodepart2() {
+  kstatsvaluenamelossmodepart2_ = GOOGLE_LONGLONG(0);
+  clear_has_kstatsvaluenamelossmodepart2();
+}
+ ::google::protobuf::int64 VideoReceiverStatisticsInner::kstatsvaluenamelossmodepart2() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameLossModePart2)
+  return kstatsvaluenamelossmodepart2_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamelossmodepart2(::google::protobuf::int64 value) {
+  set_has_kstatsvaluenamelossmodepart2();
+  kstatsvaluenamelossmodepart2_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameLossModePart2)
+}
+
+// optional int64 kStatsValueNameLossModePart3 = 25;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenamelossmodepart3() const {
+  return (_has_bits_[0] & 0x01000000u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenamelossmodepart3() {
+  _has_bits_[0] |= 0x01000000u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamelossmodepart3() {
+  _has_bits_[0] &= ~0x01000000u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenamelossmodepart3() {
+  kstatsvaluenamelossmodepart3_ = GOOGLE_LONGLONG(0);
+  clear_has_kstatsvaluenamelossmodepart3();
+}
+ ::google::protobuf::int64 VideoReceiverStatisticsInner::kstatsvaluenamelossmodepart3() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameLossModePart3)
+  return kstatsvaluenamelossmodepart3_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamelossmodepart3(::google::protobuf::int64 value) {
+  set_has_kstatsvaluenamelossmodepart3();
+  kstatsvaluenamelossmodepart3_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameLossModePart3)
+}
+
+// optional int64 kStatsValueNameLossModePart4 = 26;
+bool VideoReceiverStatisticsInner::has_kstatsvaluenamelossmodepart4() const {
+  return (_has_bits_[0] & 0x02000000u) != 0;
+}
+void VideoReceiverStatisticsInner::set_has_kstatsvaluenamelossmodepart4() {
+  _has_bits_[0] |= 0x02000000u;
+}
+void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamelossmodepart4() {
+  _has_bits_[0] &= ~0x02000000u;
+}
+void VideoReceiverStatisticsInner::clear_kstatsvaluenamelossmodepart4() {
+  kstatsvaluenamelossmodepart4_ = GOOGLE_LONGLONG(0);
+  clear_has_kstatsvaluenamelossmodepart4();
+}
+ ::google::protobuf::int64 VideoReceiverStatisticsInner::kstatsvaluenamelossmodepart4() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameLossModePart4)
+  return kstatsvaluenamelossmodepart4_;
+}
+ void VideoReceiverStatisticsInner::set_kstatsvaluenamelossmodepart4(::google::protobuf::int64 value) {
+  set_has_kstatsvaluenamelossmodepart4();
+  kstatsvaluenamelossmodepart4_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameLossModePart4)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // ===================================================================
 
-#ifndef _MSC_VER
+static ::std::string* MutableUnknownFieldsForAudioSenderStatisticsInner(
+    AudioSenderStatisticsInner* ptr) {
+  return ptr->mutable_unknown_fields();
+}
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int AudioSenderStatisticsInner::kKStatsValueNameReportTypeFieldNumber;
 const int AudioSenderStatisticsInner::kKStatsValueNameChannelIdFieldNumber;
 const int AudioSenderStatisticsInner::kKStatsValueNameTimestampFieldNumber;
@@ -2638,10 +4336,10 @@ const int AudioSenderStatisticsInner::kKStatsValueNameEchoDelayMedianFieldNumber
 const int AudioSenderStatisticsInner::kKStatsValueNameEchoDelayStdDevFieldNumber;
 const int AudioSenderStatisticsInner::kKStatsValueNameEchoReturnLossFieldNumber;
 const int AudioSenderStatisticsInner::kKStatsValueNameEchoReturnLossEnhancementFieldNumber;
-#endif  // !_MSC_VER
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 AudioSenderStatisticsInner::AudioSenderStatisticsInner()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
   SharedCtor();
   // @@protoc_insertion_point(constructor:AudioSenderStatisticsInner)
 }
@@ -2650,19 +4348,22 @@ void AudioSenderStatisticsInner::InitAsDefaultInstance() {
 }
 
 AudioSenderStatisticsInner::AudioSenderStatisticsInner(const AudioSenderStatisticsInner& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::google::protobuf::MessageLite(),
+    _arena_ptr_(NULL) {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:AudioSenderStatisticsInner)
 }
 
 void AudioSenderStatisticsInner::SharedCtor() {
-  ::cloopen_google::protobuf::internal::GetEmptyString();
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
+  _unknown_fields_.UnsafeSetDefault(
+      &::google::protobuf::internal::GetEmptyStringAlreadyInited());
   kstatsvaluenamereporttype_ = 0;
   kstatsvaluenamechannelid_ = 0;
   kstatsvaluenametimestamp_ = GOOGLE_LONGLONG(0);
-  kstatsvaluenamecodecimplementationname_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+  kstatsvaluenamecodecimplementationname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   kstatsvaluenameaudioinputlevel_ = 0;
   kstatsvaluenamelossfractioninpercent_ = 0;
   kstatsvaluenamejitterreceived_ = 0;
@@ -2680,9 +4381,9 @@ AudioSenderStatisticsInner::~AudioSenderStatisticsInner() {
 }
 
 void AudioSenderStatisticsInner::SharedDtor() {
-  if (kstatsvaluenamecodecimplementationname_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete kstatsvaluenamecodecimplementationname_;
-  }
+  _unknown_fields_.DestroyNoArena(
+      &::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  kstatsvaluenamecodecimplementationname_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -2707,58 +4408,69 @@ const AudioSenderStatisticsInner& AudioSenderStatisticsInner::default_instance()
 
 AudioSenderStatisticsInner* AudioSenderStatisticsInner::default_instance_ = NULL;
 
-AudioSenderStatisticsInner* AudioSenderStatisticsInner::New() const {
-  return new AudioSenderStatisticsInner;
+AudioSenderStatisticsInner* AudioSenderStatisticsInner::New(::google::protobuf::Arena* arena) const {
+  AudioSenderStatisticsInner* n = new AudioSenderStatisticsInner;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
 }
 
 void AudioSenderStatisticsInner::Clear() {
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<AudioSenderStatisticsInner*>(16)->f) - \
-   reinterpret_cast<char*>(16))
+// @@protoc_insertion_point(message_clear_start:AudioSenderStatisticsInner)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(AudioSenderStatisticsInner, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<AudioSenderStatisticsInner*>(16)->f)
+#endif
 
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
 
-  if (_has_bits_[0 / 32] & 255) {
+  if (_has_bits_[0 / 32] & 255u) {
     ZR_(kstatsvaluenamereporttype_, kstatsvaluenametimestamp_);
     ZR_(kstatsvaluenameaudioinputlevel_, kstatsvaluenamerttinms_);
     if (has_kstatsvaluenamecodecimplementationname()) {
-      if (kstatsvaluenamecodecimplementationname_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        kstatsvaluenamecodecimplementationname_->clear();
-      }
+      kstatsvaluenamecodecimplementationname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     }
   }
   ZR_(kstatsvaluenameechodelaymedian_, kstatsvaluenameechoreturnlossenhancement_);
 
-#undef OFFSET_OF_FIELD_
+#undef ZR_HELPER_
 #undef ZR_
 
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->clear();
+  _unknown_fields_.ClearToEmptyNoArena(
+      &::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
-      mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
-      &unknown_fields_string);
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  ::google::protobuf::io::LazyStringOutputStream unknown_fields_string(
+      ::google::protobuf::internal::NewPermanentCallback(
+          &MutableUnknownFieldsForAudioSenderStatisticsInner, this));
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string, false);
   // @@protoc_insertion_point(parse_start:AudioSenderStatisticsInner)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional int32 kStatsValueNameReportType = 1;
       case 1: {
         if (tag == 8) {
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamereporttype_)));
           set_has_kstatsvaluenamereporttype();
         } else {
@@ -2772,8 +4484,8 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
       case 2: {
         if (tag == 16) {
          parse_kStatsValueNameChannelId:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamechannelid_)));
           set_has_kstatsvaluenamechannelid();
         } else {
@@ -2787,8 +4499,8 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
       case 3: {
         if (tag == 24) {
          parse_kStatsValueNameTimestamp:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int64, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
                  input, &kstatsvaluenametimestamp_)));
           set_has_kstatsvaluenametimestamp();
         } else {
@@ -2802,7 +4514,7 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
       case 4: {
         if (tag == 34) {
          parse_kStatsValueNameCodecImplementationName:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_kstatsvaluenamecodecimplementationname()));
         } else {
           goto handle_unusual;
@@ -2815,8 +4527,8 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
       case 5: {
         if (tag == 40) {
          parse_kStatsValueNameAudioInputLevel:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenameaudioinputlevel_)));
           set_has_kstatsvaluenameaudioinputlevel();
         } else {
@@ -2830,8 +4542,8 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
       case 6: {
         if (tag == 48) {
          parse_kStatsValueNameLossFractionInPercent:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamelossfractioninpercent_)));
           set_has_kstatsvaluenamelossfractioninpercent();
         } else {
@@ -2845,8 +4557,8 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
       case 7: {
         if (tag == 56) {
          parse_kStatsValueNameJitterReceived:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamejitterreceived_)));
           set_has_kstatsvaluenamejitterreceived();
         } else {
@@ -2860,8 +4572,8 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
       case 8: {
         if (tag == 64) {
          parse_kStatsValueNameRttInMs:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamerttinms_)));
           set_has_kstatsvaluenamerttinms();
         } else {
@@ -2875,8 +4587,8 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
       case 9: {
         if (tag == 72) {
          parse_kStatsValueNameEchoDelayMedian:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenameechodelaymedian_)));
           set_has_kstatsvaluenameechodelaymedian();
         } else {
@@ -2890,8 +4602,8 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
       case 10: {
         if (tag == 80) {
          parse_kStatsValueNameEchoDelayStdDev:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenameechodelaystddev_)));
           set_has_kstatsvaluenameechodelaystddev();
         } else {
@@ -2905,8 +4617,8 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
       case 11: {
         if (tag == 88) {
          parse_kStatsValueNameEchoReturnLoss:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenameechoreturnloss_)));
           set_has_kstatsvaluenameechoreturnloss();
         } else {
@@ -2920,8 +4632,8 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
       case 12: {
         if (tag == 96) {
          parse_kStatsValueNameEchoReturnLossEnhancement:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenameechoreturnlossenhancement_)));
           set_has_kstatsvaluenameechoreturnlossenhancement();
         } else {
@@ -2934,11 +4646,11 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -2954,161 +4666,162 @@ failure:
 }
 
 void AudioSenderStatisticsInner::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:AudioSenderStatisticsInner)
   // optional int32 kStatsValueNameReportType = 1;
   if (has_kstatsvaluenamereporttype()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(1, this->kstatsvaluenamereporttype(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->kstatsvaluenamereporttype(), output);
   }
 
   // optional int32 kStatsValueNameChannelId = 2;
   if (has_kstatsvaluenamechannelid()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(2, this->kstatsvaluenamechannelid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->kstatsvaluenamechannelid(), output);
   }
 
   // optional int64 kStatsValueNameTimestamp = 3;
   if (has_kstatsvaluenametimestamp()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt64(3, this->kstatsvaluenametimestamp(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->kstatsvaluenametimestamp(), output);
   }
 
   // optional string kStatsValueNameCodecImplementationName = 4;
   if (has_kstatsvaluenamecodecimplementationname()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       4, this->kstatsvaluenamecodecimplementationname(), output);
   }
 
   // optional int32 kStatsValueNameAudioInputLevel = 5;
   if (has_kstatsvaluenameaudioinputlevel()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(5, this->kstatsvaluenameaudioinputlevel(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->kstatsvaluenameaudioinputlevel(), output);
   }
 
   // optional int32 kStatsValueNameLossFractionInPercent = 6;
   if (has_kstatsvaluenamelossfractioninpercent()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(6, this->kstatsvaluenamelossfractioninpercent(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->kstatsvaluenamelossfractioninpercent(), output);
   }
 
   // optional int32 kStatsValueNameJitterReceived = 7;
   if (has_kstatsvaluenamejitterreceived()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(7, this->kstatsvaluenamejitterreceived(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->kstatsvaluenamejitterreceived(), output);
   }
 
   // optional int32 kStatsValueNameRttInMs = 8;
   if (has_kstatsvaluenamerttinms()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(8, this->kstatsvaluenamerttinms(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->kstatsvaluenamerttinms(), output);
   }
 
   // optional int32 kStatsValueNameEchoDelayMedian = 9;
   if (has_kstatsvaluenameechodelaymedian()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(9, this->kstatsvaluenameechodelaymedian(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->kstatsvaluenameechodelaymedian(), output);
   }
 
   // optional int32 kStatsValueNameEchoDelayStdDev = 10;
   if (has_kstatsvaluenameechodelaystddev()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(10, this->kstatsvaluenameechodelaystddev(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->kstatsvaluenameechodelaystddev(), output);
   }
 
   // optional int32 kStatsValueNameEchoReturnLoss = 11;
   if (has_kstatsvaluenameechoreturnloss()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(11, this->kstatsvaluenameechoreturnloss(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->kstatsvaluenameechoreturnloss(), output);
   }
 
   // optional int32 kStatsValueNameEchoReturnLossEnhancement = 12;
   if (has_kstatsvaluenameechoreturnlossenhancement()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(12, this->kstatsvaluenameechoreturnlossenhancement(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->kstatsvaluenameechoreturnlossenhancement(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
-                   unknown_fields().size());
+                   static_cast<int>(unknown_fields().size()));
   // @@protoc_insertion_point(serialize_end:AudioSenderStatisticsInner)
 }
 
 int AudioSenderStatisticsInner::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:AudioSenderStatisticsInner)
   int total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+  if (_has_bits_[0 / 32] & 255u) {
     // optional int32 kStatsValueNameReportType = 1;
     if (has_kstatsvaluenamereporttype()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamereporttype());
     }
 
     // optional int32 kStatsValueNameChannelId = 2;
     if (has_kstatsvaluenamechannelid()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamechannelid());
     }
 
     // optional int64 kStatsValueNameTimestamp = 3;
     if (has_kstatsvaluenametimestamp()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int64Size(
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
           this->kstatsvaluenametimestamp());
     }
 
     // optional string kStatsValueNameCodecImplementationName = 4;
     if (has_kstatsvaluenamecodecimplementationname()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::StringSize(
           this->kstatsvaluenamecodecimplementationname());
     }
 
     // optional int32 kStatsValueNameAudioInputLevel = 5;
     if (has_kstatsvaluenameaudioinputlevel()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameaudioinputlevel());
     }
 
     // optional int32 kStatsValueNameLossFractionInPercent = 6;
     if (has_kstatsvaluenamelossfractioninpercent()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamelossfractioninpercent());
     }
 
     // optional int32 kStatsValueNameJitterReceived = 7;
     if (has_kstatsvaluenamejitterreceived()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamejitterreceived());
     }
 
     // optional int32 kStatsValueNameRttInMs = 8;
     if (has_kstatsvaluenamerttinms()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamerttinms());
     }
 
   }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+  if (_has_bits_[8 / 32] & 3840u) {
     // optional int32 kStatsValueNameEchoDelayMedian = 9;
     if (has_kstatsvaluenameechodelaymedian()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameechodelaymedian());
     }
 
     // optional int32 kStatsValueNameEchoDelayStdDev = 10;
     if (has_kstatsvaluenameechodelaystddev()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameechodelaystddev());
     }
 
     // optional int32 kStatsValueNameEchoReturnLoss = 11;
     if (has_kstatsvaluenameechoreturnloss()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameechoreturnloss());
     }
 
     // optional int32 kStatsValueNameEchoReturnLossEnhancement = 12;
     if (has_kstatsvaluenameechoreturnlossenhancement()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameechoreturnlossenhancement());
     }
 
@@ -3122,12 +4835,13 @@ int AudioSenderStatisticsInner::ByteSize() const {
 }
 
 void AudioSenderStatisticsInner::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const AudioSenderStatisticsInner*>(&from));
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const AudioSenderStatisticsInner*>(&from));
 }
 
 void AudioSenderStatisticsInner::MergeFrom(const AudioSenderStatisticsInner& from) {
-  GOOGLE_CHECK_NE(&from, this);
+// @@protoc_insertion_point(class_specific_merge_from_start:AudioSenderStatisticsInner)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_kstatsvaluenamereporttype()) {
       set_kstatsvaluenamereporttype(from.kstatsvaluenamereporttype());
@@ -3139,7 +4853,8 @@ void AudioSenderStatisticsInner::MergeFrom(const AudioSenderStatisticsInner& fro
       set_kstatsvaluenametimestamp(from.kstatsvaluenametimestamp());
     }
     if (from.has_kstatsvaluenamecodecimplementationname()) {
-      set_kstatsvaluenamecodecimplementationname(from.kstatsvaluenamecodecimplementationname());
+      set_has_kstatsvaluenamecodecimplementationname();
+      kstatsvaluenamecodecimplementationname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.kstatsvaluenamecodecimplementationname_);
     }
     if (from.has_kstatsvaluenameaudioinputlevel()) {
       set_kstatsvaluenameaudioinputlevel(from.kstatsvaluenameaudioinputlevel());
@@ -3168,10 +4883,13 @@ void AudioSenderStatisticsInner::MergeFrom(const AudioSenderStatisticsInner& fro
       set_kstatsvaluenameechoreturnlossenhancement(from.kstatsvaluenameechoreturnlossenhancement());
     }
   }
-  mutable_unknown_fields()->append(from.unknown_fields());
+  if (!from.unknown_fields().empty()) {
+    mutable_unknown_fields()->append(from.unknown_fields());
+  }
 }
 
 void AudioSenderStatisticsInner::CopyFrom(const AudioSenderStatisticsInner& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:AudioSenderStatisticsInner)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -3183,33 +4901,362 @@ bool AudioSenderStatisticsInner::IsInitialized() const {
 }
 
 void AudioSenderStatisticsInner::Swap(AudioSenderStatisticsInner* other) {
-  if (other != this) {
-    std::swap(kstatsvaluenamereporttype_, other->kstatsvaluenamereporttype_);
-    std::swap(kstatsvaluenamechannelid_, other->kstatsvaluenamechannelid_);
-    std::swap(kstatsvaluenametimestamp_, other->kstatsvaluenametimestamp_);
-    std::swap(kstatsvaluenamecodecimplementationname_, other->kstatsvaluenamecodecimplementationname_);
-    std::swap(kstatsvaluenameaudioinputlevel_, other->kstatsvaluenameaudioinputlevel_);
-    std::swap(kstatsvaluenamelossfractioninpercent_, other->kstatsvaluenamelossfractioninpercent_);
-    std::swap(kstatsvaluenamejitterreceived_, other->kstatsvaluenamejitterreceived_);
-    std::swap(kstatsvaluenamerttinms_, other->kstatsvaluenamerttinms_);
-    std::swap(kstatsvaluenameechodelaymedian_, other->kstatsvaluenameechodelaymedian_);
-    std::swap(kstatsvaluenameechodelaystddev_, other->kstatsvaluenameechodelaystddev_);
-    std::swap(kstatsvaluenameechoreturnloss_, other->kstatsvaluenameechoreturnloss_);
-    std::swap(kstatsvaluenameechoreturnlossenhancement_, other->kstatsvaluenameechoreturnlossenhancement_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.swap(other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
+  if (other == this) return;
+  InternalSwap(other);
+}
+void AudioSenderStatisticsInner::InternalSwap(AudioSenderStatisticsInner* other) {
+  std::swap(kstatsvaluenamereporttype_, other->kstatsvaluenamereporttype_);
+  std::swap(kstatsvaluenamechannelid_, other->kstatsvaluenamechannelid_);
+  std::swap(kstatsvaluenametimestamp_, other->kstatsvaluenametimestamp_);
+  kstatsvaluenamecodecimplementationname_.Swap(&other->kstatsvaluenamecodecimplementationname_);
+  std::swap(kstatsvaluenameaudioinputlevel_, other->kstatsvaluenameaudioinputlevel_);
+  std::swap(kstatsvaluenamelossfractioninpercent_, other->kstatsvaluenamelossfractioninpercent_);
+  std::swap(kstatsvaluenamejitterreceived_, other->kstatsvaluenamejitterreceived_);
+  std::swap(kstatsvaluenamerttinms_, other->kstatsvaluenamerttinms_);
+  std::swap(kstatsvaluenameechodelaymedian_, other->kstatsvaluenameechodelaymedian_);
+  std::swap(kstatsvaluenameechodelaystddev_, other->kstatsvaluenameechodelaystddev_);
+  std::swap(kstatsvaluenameechoreturnloss_, other->kstatsvaluenameechoreturnloss_);
+  std::swap(kstatsvaluenameechoreturnlossenhancement_, other->kstatsvaluenameechoreturnlossenhancement_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  _unknown_fields_.Swap(&other->_unknown_fields_);
+  std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::std::string AudioSenderStatisticsInner::GetTypeName() const {
   return "AudioSenderStatisticsInner";
 }
 
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// AudioSenderStatisticsInner
+
+// optional int32 kStatsValueNameReportType = 1;
+bool AudioSenderStatisticsInner::has_kstatsvaluenamereporttype() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+void AudioSenderStatisticsInner::set_has_kstatsvaluenamereporttype() {
+  _has_bits_[0] |= 0x00000001u;
+}
+void AudioSenderStatisticsInner::clear_has_kstatsvaluenamereporttype() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+void AudioSenderStatisticsInner::clear_kstatsvaluenamereporttype() {
+  kstatsvaluenamereporttype_ = 0;
+  clear_has_kstatsvaluenamereporttype();
+}
+ ::google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenamereporttype() const {
+  // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameReportType)
+  return kstatsvaluenamereporttype_;
+}
+ void AudioSenderStatisticsInner::set_kstatsvaluenamereporttype(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamereporttype();
+  kstatsvaluenamereporttype_ = value;
+  // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameReportType)
+}
+
+// optional int32 kStatsValueNameChannelId = 2;
+bool AudioSenderStatisticsInner::has_kstatsvaluenamechannelid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+void AudioSenderStatisticsInner::set_has_kstatsvaluenamechannelid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+void AudioSenderStatisticsInner::clear_has_kstatsvaluenamechannelid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+void AudioSenderStatisticsInner::clear_kstatsvaluenamechannelid() {
+  kstatsvaluenamechannelid_ = 0;
+  clear_has_kstatsvaluenamechannelid();
+}
+ ::google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenamechannelid() const {
+  // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameChannelId)
+  return kstatsvaluenamechannelid_;
+}
+ void AudioSenderStatisticsInner::set_kstatsvaluenamechannelid(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamechannelid();
+  kstatsvaluenamechannelid_ = value;
+  // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameChannelId)
+}
+
+// optional int64 kStatsValueNameTimestamp = 3;
+bool AudioSenderStatisticsInner::has_kstatsvaluenametimestamp() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+void AudioSenderStatisticsInner::set_has_kstatsvaluenametimestamp() {
+  _has_bits_[0] |= 0x00000004u;
+}
+void AudioSenderStatisticsInner::clear_has_kstatsvaluenametimestamp() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+void AudioSenderStatisticsInner::clear_kstatsvaluenametimestamp() {
+  kstatsvaluenametimestamp_ = GOOGLE_LONGLONG(0);
+  clear_has_kstatsvaluenametimestamp();
+}
+ ::google::protobuf::int64 AudioSenderStatisticsInner::kstatsvaluenametimestamp() const {
+  // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameTimestamp)
+  return kstatsvaluenametimestamp_;
+}
+ void AudioSenderStatisticsInner::set_kstatsvaluenametimestamp(::google::protobuf::int64 value) {
+  set_has_kstatsvaluenametimestamp();
+  kstatsvaluenametimestamp_ = value;
+  // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameTimestamp)
+}
+
+// optional string kStatsValueNameCodecImplementationName = 4;
+bool AudioSenderStatisticsInner::has_kstatsvaluenamecodecimplementationname() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+void AudioSenderStatisticsInner::set_has_kstatsvaluenamecodecimplementationname() {
+  _has_bits_[0] |= 0x00000008u;
+}
+void AudioSenderStatisticsInner::clear_has_kstatsvaluenamecodecimplementationname() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+void AudioSenderStatisticsInner::clear_kstatsvaluenamecodecimplementationname() {
+  kstatsvaluenamecodecimplementationname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_kstatsvaluenamecodecimplementationname();
+}
+ const ::std::string& AudioSenderStatisticsInner::kstatsvaluenamecodecimplementationname() const {
+  // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameCodecImplementationName)
+  return kstatsvaluenamecodecimplementationname_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void AudioSenderStatisticsInner::set_kstatsvaluenamecodecimplementationname(const ::std::string& value) {
+  set_has_kstatsvaluenamecodecimplementationname();
+  kstatsvaluenamecodecimplementationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameCodecImplementationName)
+}
+ void AudioSenderStatisticsInner::set_kstatsvaluenamecodecimplementationname(const char* value) {
+  set_has_kstatsvaluenamecodecimplementationname();
+  kstatsvaluenamecodecimplementationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:AudioSenderStatisticsInner.kStatsValueNameCodecImplementationName)
+}
+ void AudioSenderStatisticsInner::set_kstatsvaluenamecodecimplementationname(const char* value, size_t size) {
+  set_has_kstatsvaluenamecodecimplementationname();
+  kstatsvaluenamecodecimplementationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:AudioSenderStatisticsInner.kStatsValueNameCodecImplementationName)
+}
+ ::std::string* AudioSenderStatisticsInner::mutable_kstatsvaluenamecodecimplementationname() {
+  set_has_kstatsvaluenamecodecimplementationname();
+  // @@protoc_insertion_point(field_mutable:AudioSenderStatisticsInner.kStatsValueNameCodecImplementationName)
+  return kstatsvaluenamecodecimplementationname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ ::std::string* AudioSenderStatisticsInner::release_kstatsvaluenamecodecimplementationname() {
+  // @@protoc_insertion_point(field_release:AudioSenderStatisticsInner.kStatsValueNameCodecImplementationName)
+  clear_has_kstatsvaluenamecodecimplementationname();
+  return kstatsvaluenamecodecimplementationname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void AudioSenderStatisticsInner::set_allocated_kstatsvaluenamecodecimplementationname(::std::string* kstatsvaluenamecodecimplementationname) {
+  if (kstatsvaluenamecodecimplementationname != NULL) {
+    set_has_kstatsvaluenamecodecimplementationname();
+  } else {
+    clear_has_kstatsvaluenamecodecimplementationname();
+  }
+  kstatsvaluenamecodecimplementationname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), kstatsvaluenamecodecimplementationname);
+  // @@protoc_insertion_point(field_set_allocated:AudioSenderStatisticsInner.kStatsValueNameCodecImplementationName)
+}
+
+// optional int32 kStatsValueNameAudioInputLevel = 5;
+bool AudioSenderStatisticsInner::has_kstatsvaluenameaudioinputlevel() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+void AudioSenderStatisticsInner::set_has_kstatsvaluenameaudioinputlevel() {
+  _has_bits_[0] |= 0x00000010u;
+}
+void AudioSenderStatisticsInner::clear_has_kstatsvaluenameaudioinputlevel() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+void AudioSenderStatisticsInner::clear_kstatsvaluenameaudioinputlevel() {
+  kstatsvaluenameaudioinputlevel_ = 0;
+  clear_has_kstatsvaluenameaudioinputlevel();
+}
+ ::google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenameaudioinputlevel() const {
+  // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameAudioInputLevel)
+  return kstatsvaluenameaudioinputlevel_;
+}
+ void AudioSenderStatisticsInner::set_kstatsvaluenameaudioinputlevel(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenameaudioinputlevel();
+  kstatsvaluenameaudioinputlevel_ = value;
+  // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameAudioInputLevel)
+}
+
+// optional int32 kStatsValueNameLossFractionInPercent = 6;
+bool AudioSenderStatisticsInner::has_kstatsvaluenamelossfractioninpercent() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+void AudioSenderStatisticsInner::set_has_kstatsvaluenamelossfractioninpercent() {
+  _has_bits_[0] |= 0x00000020u;
+}
+void AudioSenderStatisticsInner::clear_has_kstatsvaluenamelossfractioninpercent() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+void AudioSenderStatisticsInner::clear_kstatsvaluenamelossfractioninpercent() {
+  kstatsvaluenamelossfractioninpercent_ = 0;
+  clear_has_kstatsvaluenamelossfractioninpercent();
+}
+ ::google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenamelossfractioninpercent() const {
+  // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameLossFractionInPercent)
+  return kstatsvaluenamelossfractioninpercent_;
+}
+ void AudioSenderStatisticsInner::set_kstatsvaluenamelossfractioninpercent(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamelossfractioninpercent();
+  kstatsvaluenamelossfractioninpercent_ = value;
+  // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameLossFractionInPercent)
+}
+
+// optional int32 kStatsValueNameJitterReceived = 7;
+bool AudioSenderStatisticsInner::has_kstatsvaluenamejitterreceived() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+void AudioSenderStatisticsInner::set_has_kstatsvaluenamejitterreceived() {
+  _has_bits_[0] |= 0x00000040u;
+}
+void AudioSenderStatisticsInner::clear_has_kstatsvaluenamejitterreceived() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+void AudioSenderStatisticsInner::clear_kstatsvaluenamejitterreceived() {
+  kstatsvaluenamejitterreceived_ = 0;
+  clear_has_kstatsvaluenamejitterreceived();
+}
+ ::google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenamejitterreceived() const {
+  // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameJitterReceived)
+  return kstatsvaluenamejitterreceived_;
+}
+ void AudioSenderStatisticsInner::set_kstatsvaluenamejitterreceived(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamejitterreceived();
+  kstatsvaluenamejitterreceived_ = value;
+  // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameJitterReceived)
+}
+
+// optional int32 kStatsValueNameRttInMs = 8;
+bool AudioSenderStatisticsInner::has_kstatsvaluenamerttinms() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+void AudioSenderStatisticsInner::set_has_kstatsvaluenamerttinms() {
+  _has_bits_[0] |= 0x00000080u;
+}
+void AudioSenderStatisticsInner::clear_has_kstatsvaluenamerttinms() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+void AudioSenderStatisticsInner::clear_kstatsvaluenamerttinms() {
+  kstatsvaluenamerttinms_ = 0;
+  clear_has_kstatsvaluenamerttinms();
+}
+ ::google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenamerttinms() const {
+  // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameRttInMs)
+  return kstatsvaluenamerttinms_;
+}
+ void AudioSenderStatisticsInner::set_kstatsvaluenamerttinms(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamerttinms();
+  kstatsvaluenamerttinms_ = value;
+  // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameRttInMs)
+}
+
+// optional int32 kStatsValueNameEchoDelayMedian = 9;
+bool AudioSenderStatisticsInner::has_kstatsvaluenameechodelaymedian() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+void AudioSenderStatisticsInner::set_has_kstatsvaluenameechodelaymedian() {
+  _has_bits_[0] |= 0x00000100u;
+}
+void AudioSenderStatisticsInner::clear_has_kstatsvaluenameechodelaymedian() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+void AudioSenderStatisticsInner::clear_kstatsvaluenameechodelaymedian() {
+  kstatsvaluenameechodelaymedian_ = 0;
+  clear_has_kstatsvaluenameechodelaymedian();
+}
+ ::google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenameechodelaymedian() const {
+  // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameEchoDelayMedian)
+  return kstatsvaluenameechodelaymedian_;
+}
+ void AudioSenderStatisticsInner::set_kstatsvaluenameechodelaymedian(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenameechodelaymedian();
+  kstatsvaluenameechodelaymedian_ = value;
+  // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameEchoDelayMedian)
+}
+
+// optional int32 kStatsValueNameEchoDelayStdDev = 10;
+bool AudioSenderStatisticsInner::has_kstatsvaluenameechodelaystddev() const {
+  return (_has_bits_[0] & 0x00000200u) != 0;
+}
+void AudioSenderStatisticsInner::set_has_kstatsvaluenameechodelaystddev() {
+  _has_bits_[0] |= 0x00000200u;
+}
+void AudioSenderStatisticsInner::clear_has_kstatsvaluenameechodelaystddev() {
+  _has_bits_[0] &= ~0x00000200u;
+}
+void AudioSenderStatisticsInner::clear_kstatsvaluenameechodelaystddev() {
+  kstatsvaluenameechodelaystddev_ = 0;
+  clear_has_kstatsvaluenameechodelaystddev();
+}
+ ::google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenameechodelaystddev() const {
+  // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameEchoDelayStdDev)
+  return kstatsvaluenameechodelaystddev_;
+}
+ void AudioSenderStatisticsInner::set_kstatsvaluenameechodelaystddev(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenameechodelaystddev();
+  kstatsvaluenameechodelaystddev_ = value;
+  // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameEchoDelayStdDev)
+}
+
+// optional int32 kStatsValueNameEchoReturnLoss = 11;
+bool AudioSenderStatisticsInner::has_kstatsvaluenameechoreturnloss() const {
+  return (_has_bits_[0] & 0x00000400u) != 0;
+}
+void AudioSenderStatisticsInner::set_has_kstatsvaluenameechoreturnloss() {
+  _has_bits_[0] |= 0x00000400u;
+}
+void AudioSenderStatisticsInner::clear_has_kstatsvaluenameechoreturnloss() {
+  _has_bits_[0] &= ~0x00000400u;
+}
+void AudioSenderStatisticsInner::clear_kstatsvaluenameechoreturnloss() {
+  kstatsvaluenameechoreturnloss_ = 0;
+  clear_has_kstatsvaluenameechoreturnloss();
+}
+ ::google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenameechoreturnloss() const {
+  // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameEchoReturnLoss)
+  return kstatsvaluenameechoreturnloss_;
+}
+ void AudioSenderStatisticsInner::set_kstatsvaluenameechoreturnloss(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenameechoreturnloss();
+  kstatsvaluenameechoreturnloss_ = value;
+  // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameEchoReturnLoss)
+}
+
+// optional int32 kStatsValueNameEchoReturnLossEnhancement = 12;
+bool AudioSenderStatisticsInner::has_kstatsvaluenameechoreturnlossenhancement() const {
+  return (_has_bits_[0] & 0x00000800u) != 0;
+}
+void AudioSenderStatisticsInner::set_has_kstatsvaluenameechoreturnlossenhancement() {
+  _has_bits_[0] |= 0x00000800u;
+}
+void AudioSenderStatisticsInner::clear_has_kstatsvaluenameechoreturnlossenhancement() {
+  _has_bits_[0] &= ~0x00000800u;
+}
+void AudioSenderStatisticsInner::clear_kstatsvaluenameechoreturnlossenhancement() {
+  kstatsvaluenameechoreturnlossenhancement_ = 0;
+  clear_has_kstatsvaluenameechoreturnlossenhancement();
+}
+ ::google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenameechoreturnlossenhancement() const {
+  // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameEchoReturnLossEnhancement)
+  return kstatsvaluenameechoreturnlossenhancement_;
+}
+ void AudioSenderStatisticsInner::set_kstatsvaluenameechoreturnlossenhancement(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenameechoreturnlossenhancement();
+  kstatsvaluenameechoreturnlossenhancement_ = value;
+  // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameEchoReturnLossEnhancement)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // ===================================================================
 
-#ifndef _MSC_VER
+static ::std::string* MutableUnknownFieldsForAudioReceiverStatisticsInner(
+    AudioReceiverStatisticsInner* ptr) {
+  return ptr->mutable_unknown_fields();
+}
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int AudioReceiverStatisticsInner::kKStatsValueNameReportTypeFieldNumber;
 const int AudioReceiverStatisticsInner::kKStatsValueNameChannelIdFieldNumber;
 const int AudioReceiverStatisticsInner::kKStatsValueNameTimestampFieldNumber;
@@ -3224,10 +5271,10 @@ const int AudioReceiverStatisticsInner::kKStatsValueNameDecodingNormalFieldNumbe
 const int AudioReceiverStatisticsInner::kKStatsValueNameDecodingPLCFieldNumber;
 const int AudioReceiverStatisticsInner::kKStatsValueNameDecodingCNGFieldNumber;
 const int AudioReceiverStatisticsInner::kKStatsValueNameDecodingPLCCNGFieldNumber;
-#endif  // !_MSC_VER
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 AudioReceiverStatisticsInner::AudioReceiverStatisticsInner()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
   SharedCtor();
   // @@protoc_insertion_point(constructor:AudioReceiverStatisticsInner)
 }
@@ -3236,19 +5283,22 @@ void AudioReceiverStatisticsInner::InitAsDefaultInstance() {
 }
 
 AudioReceiverStatisticsInner::AudioReceiverStatisticsInner(const AudioReceiverStatisticsInner& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::google::protobuf::MessageLite(),
+    _arena_ptr_(NULL) {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:AudioReceiverStatisticsInner)
 }
 
 void AudioReceiverStatisticsInner::SharedCtor() {
-  ::cloopen_google::protobuf::internal::GetEmptyString();
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
+  _unknown_fields_.UnsafeSetDefault(
+      &::google::protobuf::internal::GetEmptyStringAlreadyInited());
   kstatsvaluenamereporttype_ = 0;
   kstatsvaluenamechannelid_ = 0;
   kstatsvaluenametimestamp_ = GOOGLE_LONGLONG(0);
-  kstatsvaluenamecodecimplementationname_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+  kstatsvaluenamecodecimplementationname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   kstatsvaluenameaudiooutputlevel_ = 0;
   kstatsvaluenamecurrentdelayms_ = 0;
   kstatsvaluenamejitterbufferms_ = 0;
@@ -3268,9 +5318,9 @@ AudioReceiverStatisticsInner::~AudioReceiverStatisticsInner() {
 }
 
 void AudioReceiverStatisticsInner::SharedDtor() {
-  if (kstatsvaluenamecodecimplementationname_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete kstatsvaluenamecodecimplementationname_;
-  }
+  _unknown_fields_.DestroyNoArena(
+      &::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  kstatsvaluenamecodecimplementationname_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -3295,60 +5345,71 @@ const AudioReceiverStatisticsInner& AudioReceiverStatisticsInner::default_instan
 
 AudioReceiverStatisticsInner* AudioReceiverStatisticsInner::default_instance_ = NULL;
 
-AudioReceiverStatisticsInner* AudioReceiverStatisticsInner::New() const {
-  return new AudioReceiverStatisticsInner;
+AudioReceiverStatisticsInner* AudioReceiverStatisticsInner::New(::google::protobuf::Arena* arena) const {
+  AudioReceiverStatisticsInner* n = new AudioReceiverStatisticsInner;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
 }
 
 void AudioReceiverStatisticsInner::Clear() {
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<AudioReceiverStatisticsInner*>(16)->f) - \
-   reinterpret_cast<char*>(16))
+// @@protoc_insertion_point(message_clear_start:AudioReceiverStatisticsInner)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(AudioReceiverStatisticsInner, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<AudioReceiverStatisticsInner*>(16)->f)
+#endif
 
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
 
-  if (_has_bits_[0 / 32] & 255) {
+  if (_has_bits_[0 / 32] & 255u) {
     ZR_(kstatsvaluenamereporttype_, kstatsvaluenametimestamp_);
     ZR_(kstatsvaluenameaudiooutputlevel_, kstatsvaluenameacceleraterate_);
     if (has_kstatsvaluenamecodecimplementationname()) {
-      if (kstatsvaluenamecodecimplementationname_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        kstatsvaluenamecodecimplementationname_->clear();
-      }
+      kstatsvaluenamecodecimplementationname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
     }
   }
-  if (_has_bits_[8 / 32] & 16128) {
+  if (_has_bits_[8 / 32] & 16128u) {
     ZR_(kstatsvaluenameexpandrate_, kstatsvaluenamedecodingplccng_);
   }
 
-#undef OFFSET_OF_FIELD_
+#undef ZR_HELPER_
 #undef ZR_
 
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->clear();
+  _unknown_fields_.ClearToEmptyNoArena(
+      &::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 bool AudioReceiverStatisticsInner::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
-      mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
-      &unknown_fields_string);
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  ::google::protobuf::io::LazyStringOutputStream unknown_fields_string(
+      ::google::protobuf::internal::NewPermanentCallback(
+          &MutableUnknownFieldsForAudioReceiverStatisticsInner, this));
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string, false);
   // @@protoc_insertion_point(parse_start:AudioReceiverStatisticsInner)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional int32 kStatsValueNameReportType = 1;
       case 1: {
         if (tag == 8) {
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamereporttype_)));
           set_has_kstatsvaluenamereporttype();
         } else {
@@ -3362,8 +5423,8 @@ bool AudioReceiverStatisticsInner::MergePartialFromCodedStream(
       case 2: {
         if (tag == 16) {
          parse_kStatsValueNameChannelId:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamechannelid_)));
           set_has_kstatsvaluenamechannelid();
         } else {
@@ -3377,8 +5438,8 @@ bool AudioReceiverStatisticsInner::MergePartialFromCodedStream(
       case 3: {
         if (tag == 24) {
          parse_kStatsValueNameTimestamp:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int64, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
                  input, &kstatsvaluenametimestamp_)));
           set_has_kstatsvaluenametimestamp();
         } else {
@@ -3392,7 +5453,7 @@ bool AudioReceiverStatisticsInner::MergePartialFromCodedStream(
       case 4: {
         if (tag == 34) {
          parse_kStatsValueNameCodecImplementationName:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_kstatsvaluenamecodecimplementationname()));
         } else {
           goto handle_unusual;
@@ -3405,8 +5466,8 @@ bool AudioReceiverStatisticsInner::MergePartialFromCodedStream(
       case 5: {
         if (tag == 40) {
          parse_kStatsValueNameAudioOutputLevel:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenameaudiooutputlevel_)));
           set_has_kstatsvaluenameaudiooutputlevel();
         } else {
@@ -3420,8 +5481,8 @@ bool AudioReceiverStatisticsInner::MergePartialFromCodedStream(
       case 6: {
         if (tag == 48) {
          parse_kStatsValueNameCurrentDelayMs:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamecurrentdelayms_)));
           set_has_kstatsvaluenamecurrentdelayms();
         } else {
@@ -3435,8 +5496,8 @@ bool AudioReceiverStatisticsInner::MergePartialFromCodedStream(
       case 7: {
         if (tag == 56) {
          parse_kStatsValueNameJitterBufferMs:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamejitterbufferms_)));
           set_has_kstatsvaluenamejitterbufferms();
         } else {
@@ -3450,8 +5511,8 @@ bool AudioReceiverStatisticsInner::MergePartialFromCodedStream(
       case 8: {
         if (tag == 69) {
          parse_kStatsValueNameAccelerateRate:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   float, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &kstatsvaluenameacceleraterate_)));
           set_has_kstatsvaluenameacceleraterate();
         } else {
@@ -3465,8 +5526,8 @@ bool AudioReceiverStatisticsInner::MergePartialFromCodedStream(
       case 9: {
         if (tag == 77) {
          parse_kStatsValueNameExpandRate:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   float, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &kstatsvaluenameexpandrate_)));
           set_has_kstatsvaluenameexpandrate();
         } else {
@@ -3480,8 +5541,8 @@ bool AudioReceiverStatisticsInner::MergePartialFromCodedStream(
       case 10: {
         if (tag == 85) {
          parse_kStatsValueNamePreemptiveExpandRate:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   float, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &kstatsvaluenamepreemptiveexpandrate_)));
           set_has_kstatsvaluenamepreemptiveexpandrate();
         } else {
@@ -3495,8 +5556,8 @@ bool AudioReceiverStatisticsInner::MergePartialFromCodedStream(
       case 11: {
         if (tag == 88) {
          parse_kStatsValueNameDecodingNormal:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamedecodingnormal_)));
           set_has_kstatsvaluenamedecodingnormal();
         } else {
@@ -3510,8 +5571,8 @@ bool AudioReceiverStatisticsInner::MergePartialFromCodedStream(
       case 12: {
         if (tag == 96) {
          parse_kStatsValueNameDecodingPLC:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamedecodingplc_)));
           set_has_kstatsvaluenamedecodingplc();
         } else {
@@ -3525,8 +5586,8 @@ bool AudioReceiverStatisticsInner::MergePartialFromCodedStream(
       case 13: {
         if (tag == 104) {
          parse_kStatsValueNameDecodingCNG:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamedecodingcng_)));
           set_has_kstatsvaluenamedecodingcng();
         } else {
@@ -3540,8 +5601,8 @@ bool AudioReceiverStatisticsInner::MergePartialFromCodedStream(
       case 14: {
         if (tag == 112) {
          parse_kStatsValueNameDecodingPLCCNG:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamedecodingplccng_)));
           set_has_kstatsvaluenamedecodingplccng();
         } else {
@@ -3554,11 +5615,11 @@ bool AudioReceiverStatisticsInner::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -3574,134 +5635,135 @@ failure:
 }
 
 void AudioReceiverStatisticsInner::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:AudioReceiverStatisticsInner)
   // optional int32 kStatsValueNameReportType = 1;
   if (has_kstatsvaluenamereporttype()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(1, this->kstatsvaluenamereporttype(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->kstatsvaluenamereporttype(), output);
   }
 
   // optional int32 kStatsValueNameChannelId = 2;
   if (has_kstatsvaluenamechannelid()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(2, this->kstatsvaluenamechannelid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->kstatsvaluenamechannelid(), output);
   }
 
   // optional int64 kStatsValueNameTimestamp = 3;
   if (has_kstatsvaluenametimestamp()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt64(3, this->kstatsvaluenametimestamp(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(3, this->kstatsvaluenametimestamp(), output);
   }
 
   // optional string kStatsValueNameCodecImplementationName = 4;
   if (has_kstatsvaluenamecodecimplementationname()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       4, this->kstatsvaluenamecodecimplementationname(), output);
   }
 
   // optional int32 kStatsValueNameAudioOutputLevel = 5;
   if (has_kstatsvaluenameaudiooutputlevel()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(5, this->kstatsvaluenameaudiooutputlevel(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->kstatsvaluenameaudiooutputlevel(), output);
   }
 
   // optional int32 kStatsValueNameCurrentDelayMs = 6;
   if (has_kstatsvaluenamecurrentdelayms()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(6, this->kstatsvaluenamecurrentdelayms(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->kstatsvaluenamecurrentdelayms(), output);
   }
 
   // optional int32 kStatsValueNameJitterBufferMs = 7;
   if (has_kstatsvaluenamejitterbufferms()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(7, this->kstatsvaluenamejitterbufferms(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->kstatsvaluenamejitterbufferms(), output);
   }
 
   // optional float kStatsValueNameAccelerateRate = 8;
   if (has_kstatsvaluenameacceleraterate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteFloat(8, this->kstatsvaluenameacceleraterate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(8, this->kstatsvaluenameacceleraterate(), output);
   }
 
   // optional float kStatsValueNameExpandRate = 9;
   if (has_kstatsvaluenameexpandrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteFloat(9, this->kstatsvaluenameexpandrate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(9, this->kstatsvaluenameexpandrate(), output);
   }
 
   // optional float kStatsValueNamePreemptiveExpandRate = 10;
   if (has_kstatsvaluenamepreemptiveexpandrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteFloat(10, this->kstatsvaluenamepreemptiveexpandrate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(10, this->kstatsvaluenamepreemptiveexpandrate(), output);
   }
 
   // optional int32 kStatsValueNameDecodingNormal = 11;
   if (has_kstatsvaluenamedecodingnormal()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(11, this->kstatsvaluenamedecodingnormal(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->kstatsvaluenamedecodingnormal(), output);
   }
 
   // optional int32 kStatsValueNameDecodingPLC = 12;
   if (has_kstatsvaluenamedecodingplc()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(12, this->kstatsvaluenamedecodingplc(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->kstatsvaluenamedecodingplc(), output);
   }
 
   // optional int32 kStatsValueNameDecodingCNG = 13;
   if (has_kstatsvaluenamedecodingcng()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(13, this->kstatsvaluenamedecodingcng(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(13, this->kstatsvaluenamedecodingcng(), output);
   }
 
   // optional int32 kStatsValueNameDecodingPLCCNG = 14;
   if (has_kstatsvaluenamedecodingplccng()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(14, this->kstatsvaluenamedecodingplccng(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(14, this->kstatsvaluenamedecodingplccng(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
-                   unknown_fields().size());
+                   static_cast<int>(unknown_fields().size()));
   // @@protoc_insertion_point(serialize_end:AudioReceiverStatisticsInner)
 }
 
 int AudioReceiverStatisticsInner::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:AudioReceiverStatisticsInner)
   int total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+  if (_has_bits_[0 / 32] & 255u) {
     // optional int32 kStatsValueNameReportType = 1;
     if (has_kstatsvaluenamereporttype()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamereporttype());
     }
 
     // optional int32 kStatsValueNameChannelId = 2;
     if (has_kstatsvaluenamechannelid()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamechannelid());
     }
 
     // optional int64 kStatsValueNameTimestamp = 3;
     if (has_kstatsvaluenametimestamp()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int64Size(
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
           this->kstatsvaluenametimestamp());
     }
 
     // optional string kStatsValueNameCodecImplementationName = 4;
     if (has_kstatsvaluenamecodecimplementationname()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::StringSize(
           this->kstatsvaluenamecodecimplementationname());
     }
 
     // optional int32 kStatsValueNameAudioOutputLevel = 5;
     if (has_kstatsvaluenameaudiooutputlevel()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameaudiooutputlevel());
     }
 
     // optional int32 kStatsValueNameCurrentDelayMs = 6;
     if (has_kstatsvaluenamecurrentdelayms()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecurrentdelayms());
     }
 
     // optional int32 kStatsValueNameJitterBufferMs = 7;
     if (has_kstatsvaluenamejitterbufferms()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamejitterbufferms());
     }
 
@@ -3711,7 +5773,7 @@ int AudioReceiverStatisticsInner::ByteSize() const {
     }
 
   }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+  if (_has_bits_[8 / 32] & 16128u) {
     // optional float kStatsValueNameExpandRate = 9;
     if (has_kstatsvaluenameexpandrate()) {
       total_size += 1 + 4;
@@ -3725,28 +5787,28 @@ int AudioReceiverStatisticsInner::ByteSize() const {
     // optional int32 kStatsValueNameDecodingNormal = 11;
     if (has_kstatsvaluenamedecodingnormal()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamedecodingnormal());
     }
 
     // optional int32 kStatsValueNameDecodingPLC = 12;
     if (has_kstatsvaluenamedecodingplc()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamedecodingplc());
     }
 
     // optional int32 kStatsValueNameDecodingCNG = 13;
     if (has_kstatsvaluenamedecodingcng()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamedecodingcng());
     }
 
     // optional int32 kStatsValueNameDecodingPLCCNG = 14;
     if (has_kstatsvaluenamedecodingplccng()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamedecodingplccng());
     }
 
@@ -3760,12 +5822,13 @@ int AudioReceiverStatisticsInner::ByteSize() const {
 }
 
 void AudioReceiverStatisticsInner::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const AudioReceiverStatisticsInner*>(&from));
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const AudioReceiverStatisticsInner*>(&from));
 }
 
 void AudioReceiverStatisticsInner::MergeFrom(const AudioReceiverStatisticsInner& from) {
-  GOOGLE_CHECK_NE(&from, this);
+// @@protoc_insertion_point(class_specific_merge_from_start:AudioReceiverStatisticsInner)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_kstatsvaluenamereporttype()) {
       set_kstatsvaluenamereporttype(from.kstatsvaluenamereporttype());
@@ -3777,7 +5840,8 @@ void AudioReceiverStatisticsInner::MergeFrom(const AudioReceiverStatisticsInner&
       set_kstatsvaluenametimestamp(from.kstatsvaluenametimestamp());
     }
     if (from.has_kstatsvaluenamecodecimplementationname()) {
-      set_kstatsvaluenamecodecimplementationname(from.kstatsvaluenamecodecimplementationname());
+      set_has_kstatsvaluenamecodecimplementationname();
+      kstatsvaluenamecodecimplementationname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.kstatsvaluenamecodecimplementationname_);
     }
     if (from.has_kstatsvaluenameaudiooutputlevel()) {
       set_kstatsvaluenameaudiooutputlevel(from.kstatsvaluenameaudiooutputlevel());
@@ -3812,10 +5876,13 @@ void AudioReceiverStatisticsInner::MergeFrom(const AudioReceiverStatisticsInner&
       set_kstatsvaluenamedecodingplccng(from.kstatsvaluenamedecodingplccng());
     }
   }
-  mutable_unknown_fields()->append(from.unknown_fields());
+  if (!from.unknown_fields().empty()) {
+    mutable_unknown_fields()->append(from.unknown_fields());
+  }
 }
 
 void AudioReceiverStatisticsInner::CopyFrom(const AudioReceiverStatisticsInner& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:AudioReceiverStatisticsInner)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -3827,43 +5894,420 @@ bool AudioReceiverStatisticsInner::IsInitialized() const {
 }
 
 void AudioReceiverStatisticsInner::Swap(AudioReceiverStatisticsInner* other) {
-  if (other != this) {
-    std::swap(kstatsvaluenamereporttype_, other->kstatsvaluenamereporttype_);
-    std::swap(kstatsvaluenamechannelid_, other->kstatsvaluenamechannelid_);
-    std::swap(kstatsvaluenametimestamp_, other->kstatsvaluenametimestamp_);
-    std::swap(kstatsvaluenamecodecimplementationname_, other->kstatsvaluenamecodecimplementationname_);
-    std::swap(kstatsvaluenameaudiooutputlevel_, other->kstatsvaluenameaudiooutputlevel_);
-    std::swap(kstatsvaluenamecurrentdelayms_, other->kstatsvaluenamecurrentdelayms_);
-    std::swap(kstatsvaluenamejitterbufferms_, other->kstatsvaluenamejitterbufferms_);
-    std::swap(kstatsvaluenameacceleraterate_, other->kstatsvaluenameacceleraterate_);
-    std::swap(kstatsvaluenameexpandrate_, other->kstatsvaluenameexpandrate_);
-    std::swap(kstatsvaluenamepreemptiveexpandrate_, other->kstatsvaluenamepreemptiveexpandrate_);
-    std::swap(kstatsvaluenamedecodingnormal_, other->kstatsvaluenamedecodingnormal_);
-    std::swap(kstatsvaluenamedecodingplc_, other->kstatsvaluenamedecodingplc_);
-    std::swap(kstatsvaluenamedecodingcng_, other->kstatsvaluenamedecodingcng_);
-    std::swap(kstatsvaluenamedecodingplccng_, other->kstatsvaluenamedecodingplccng_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.swap(other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
+  if (other == this) return;
+  InternalSwap(other);
+}
+void AudioReceiverStatisticsInner::InternalSwap(AudioReceiverStatisticsInner* other) {
+  std::swap(kstatsvaluenamereporttype_, other->kstatsvaluenamereporttype_);
+  std::swap(kstatsvaluenamechannelid_, other->kstatsvaluenamechannelid_);
+  std::swap(kstatsvaluenametimestamp_, other->kstatsvaluenametimestamp_);
+  kstatsvaluenamecodecimplementationname_.Swap(&other->kstatsvaluenamecodecimplementationname_);
+  std::swap(kstatsvaluenameaudiooutputlevel_, other->kstatsvaluenameaudiooutputlevel_);
+  std::swap(kstatsvaluenamecurrentdelayms_, other->kstatsvaluenamecurrentdelayms_);
+  std::swap(kstatsvaluenamejitterbufferms_, other->kstatsvaluenamejitterbufferms_);
+  std::swap(kstatsvaluenameacceleraterate_, other->kstatsvaluenameacceleraterate_);
+  std::swap(kstatsvaluenameexpandrate_, other->kstatsvaluenameexpandrate_);
+  std::swap(kstatsvaluenamepreemptiveexpandrate_, other->kstatsvaluenamepreemptiveexpandrate_);
+  std::swap(kstatsvaluenamedecodingnormal_, other->kstatsvaluenamedecodingnormal_);
+  std::swap(kstatsvaluenamedecodingplc_, other->kstatsvaluenamedecodingplc_);
+  std::swap(kstatsvaluenamedecodingcng_, other->kstatsvaluenamedecodingcng_);
+  std::swap(kstatsvaluenamedecodingplccng_, other->kstatsvaluenamedecodingplccng_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  _unknown_fields_.Swap(&other->_unknown_fields_);
+  std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::std::string AudioReceiverStatisticsInner::GetTypeName() const {
   return "AudioReceiverStatisticsInner";
 }
 
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// AudioReceiverStatisticsInner
+
+// optional int32 kStatsValueNameReportType = 1;
+bool AudioReceiverStatisticsInner::has_kstatsvaluenamereporttype() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+void AudioReceiverStatisticsInner::set_has_kstatsvaluenamereporttype() {
+  _has_bits_[0] |= 0x00000001u;
+}
+void AudioReceiverStatisticsInner::clear_has_kstatsvaluenamereporttype() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+void AudioReceiverStatisticsInner::clear_kstatsvaluenamereporttype() {
+  kstatsvaluenamereporttype_ = 0;
+  clear_has_kstatsvaluenamereporttype();
+}
+ ::google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamereporttype() const {
+  // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameReportType)
+  return kstatsvaluenamereporttype_;
+}
+ void AudioReceiverStatisticsInner::set_kstatsvaluenamereporttype(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamereporttype();
+  kstatsvaluenamereporttype_ = value;
+  // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameReportType)
+}
+
+// optional int32 kStatsValueNameChannelId = 2;
+bool AudioReceiverStatisticsInner::has_kstatsvaluenamechannelid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+void AudioReceiverStatisticsInner::set_has_kstatsvaluenamechannelid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+void AudioReceiverStatisticsInner::clear_has_kstatsvaluenamechannelid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+void AudioReceiverStatisticsInner::clear_kstatsvaluenamechannelid() {
+  kstatsvaluenamechannelid_ = 0;
+  clear_has_kstatsvaluenamechannelid();
+}
+ ::google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamechannelid() const {
+  // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameChannelId)
+  return kstatsvaluenamechannelid_;
+}
+ void AudioReceiverStatisticsInner::set_kstatsvaluenamechannelid(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamechannelid();
+  kstatsvaluenamechannelid_ = value;
+  // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameChannelId)
+}
+
+// optional int64 kStatsValueNameTimestamp = 3;
+bool AudioReceiverStatisticsInner::has_kstatsvaluenametimestamp() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+void AudioReceiverStatisticsInner::set_has_kstatsvaluenametimestamp() {
+  _has_bits_[0] |= 0x00000004u;
+}
+void AudioReceiverStatisticsInner::clear_has_kstatsvaluenametimestamp() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+void AudioReceiverStatisticsInner::clear_kstatsvaluenametimestamp() {
+  kstatsvaluenametimestamp_ = GOOGLE_LONGLONG(0);
+  clear_has_kstatsvaluenametimestamp();
+}
+ ::google::protobuf::int64 AudioReceiverStatisticsInner::kstatsvaluenametimestamp() const {
+  // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameTimestamp)
+  return kstatsvaluenametimestamp_;
+}
+ void AudioReceiverStatisticsInner::set_kstatsvaluenametimestamp(::google::protobuf::int64 value) {
+  set_has_kstatsvaluenametimestamp();
+  kstatsvaluenametimestamp_ = value;
+  // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameTimestamp)
+}
+
+// optional string kStatsValueNameCodecImplementationName = 4;
+bool AudioReceiverStatisticsInner::has_kstatsvaluenamecodecimplementationname() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+void AudioReceiverStatisticsInner::set_has_kstatsvaluenamecodecimplementationname() {
+  _has_bits_[0] |= 0x00000008u;
+}
+void AudioReceiverStatisticsInner::clear_has_kstatsvaluenamecodecimplementationname() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+void AudioReceiverStatisticsInner::clear_kstatsvaluenamecodecimplementationname() {
+  kstatsvaluenamecodecimplementationname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_kstatsvaluenamecodecimplementationname();
+}
+ const ::std::string& AudioReceiverStatisticsInner::kstatsvaluenamecodecimplementationname() const {
+  // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameCodecImplementationName)
+  return kstatsvaluenamecodecimplementationname_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void AudioReceiverStatisticsInner::set_kstatsvaluenamecodecimplementationname(const ::std::string& value) {
+  set_has_kstatsvaluenamecodecimplementationname();
+  kstatsvaluenamecodecimplementationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameCodecImplementationName)
+}
+ void AudioReceiverStatisticsInner::set_kstatsvaluenamecodecimplementationname(const char* value) {
+  set_has_kstatsvaluenamecodecimplementationname();
+  kstatsvaluenamecodecimplementationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:AudioReceiverStatisticsInner.kStatsValueNameCodecImplementationName)
+}
+ void AudioReceiverStatisticsInner::set_kstatsvaluenamecodecimplementationname(const char* value, size_t size) {
+  set_has_kstatsvaluenamecodecimplementationname();
+  kstatsvaluenamecodecimplementationname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:AudioReceiverStatisticsInner.kStatsValueNameCodecImplementationName)
+}
+ ::std::string* AudioReceiverStatisticsInner::mutable_kstatsvaluenamecodecimplementationname() {
+  set_has_kstatsvaluenamecodecimplementationname();
+  // @@protoc_insertion_point(field_mutable:AudioReceiverStatisticsInner.kStatsValueNameCodecImplementationName)
+  return kstatsvaluenamecodecimplementationname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ ::std::string* AudioReceiverStatisticsInner::release_kstatsvaluenamecodecimplementationname() {
+  // @@protoc_insertion_point(field_release:AudioReceiverStatisticsInner.kStatsValueNameCodecImplementationName)
+  clear_has_kstatsvaluenamecodecimplementationname();
+  return kstatsvaluenamecodecimplementationname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void AudioReceiverStatisticsInner::set_allocated_kstatsvaluenamecodecimplementationname(::std::string* kstatsvaluenamecodecimplementationname) {
+  if (kstatsvaluenamecodecimplementationname != NULL) {
+    set_has_kstatsvaluenamecodecimplementationname();
+  } else {
+    clear_has_kstatsvaluenamecodecimplementationname();
+  }
+  kstatsvaluenamecodecimplementationname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), kstatsvaluenamecodecimplementationname);
+  // @@protoc_insertion_point(field_set_allocated:AudioReceiverStatisticsInner.kStatsValueNameCodecImplementationName)
+}
+
+// optional int32 kStatsValueNameAudioOutputLevel = 5;
+bool AudioReceiverStatisticsInner::has_kstatsvaluenameaudiooutputlevel() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+void AudioReceiverStatisticsInner::set_has_kstatsvaluenameaudiooutputlevel() {
+  _has_bits_[0] |= 0x00000010u;
+}
+void AudioReceiverStatisticsInner::clear_has_kstatsvaluenameaudiooutputlevel() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+void AudioReceiverStatisticsInner::clear_kstatsvaluenameaudiooutputlevel() {
+  kstatsvaluenameaudiooutputlevel_ = 0;
+  clear_has_kstatsvaluenameaudiooutputlevel();
+}
+ ::google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenameaudiooutputlevel() const {
+  // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameAudioOutputLevel)
+  return kstatsvaluenameaudiooutputlevel_;
+}
+ void AudioReceiverStatisticsInner::set_kstatsvaluenameaudiooutputlevel(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenameaudiooutputlevel();
+  kstatsvaluenameaudiooutputlevel_ = value;
+  // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameAudioOutputLevel)
+}
+
+// optional int32 kStatsValueNameCurrentDelayMs = 6;
+bool AudioReceiverStatisticsInner::has_kstatsvaluenamecurrentdelayms() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+void AudioReceiverStatisticsInner::set_has_kstatsvaluenamecurrentdelayms() {
+  _has_bits_[0] |= 0x00000020u;
+}
+void AudioReceiverStatisticsInner::clear_has_kstatsvaluenamecurrentdelayms() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+void AudioReceiverStatisticsInner::clear_kstatsvaluenamecurrentdelayms() {
+  kstatsvaluenamecurrentdelayms_ = 0;
+  clear_has_kstatsvaluenamecurrentdelayms();
+}
+ ::google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamecurrentdelayms() const {
+  // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameCurrentDelayMs)
+  return kstatsvaluenamecurrentdelayms_;
+}
+ void AudioReceiverStatisticsInner::set_kstatsvaluenamecurrentdelayms(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamecurrentdelayms();
+  kstatsvaluenamecurrentdelayms_ = value;
+  // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameCurrentDelayMs)
+}
+
+// optional int32 kStatsValueNameJitterBufferMs = 7;
+bool AudioReceiverStatisticsInner::has_kstatsvaluenamejitterbufferms() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+void AudioReceiverStatisticsInner::set_has_kstatsvaluenamejitterbufferms() {
+  _has_bits_[0] |= 0x00000040u;
+}
+void AudioReceiverStatisticsInner::clear_has_kstatsvaluenamejitterbufferms() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+void AudioReceiverStatisticsInner::clear_kstatsvaluenamejitterbufferms() {
+  kstatsvaluenamejitterbufferms_ = 0;
+  clear_has_kstatsvaluenamejitterbufferms();
+}
+ ::google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamejitterbufferms() const {
+  // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameJitterBufferMs)
+  return kstatsvaluenamejitterbufferms_;
+}
+ void AudioReceiverStatisticsInner::set_kstatsvaluenamejitterbufferms(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamejitterbufferms();
+  kstatsvaluenamejitterbufferms_ = value;
+  // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameJitterBufferMs)
+}
+
+// optional float kStatsValueNameAccelerateRate = 8;
+bool AudioReceiverStatisticsInner::has_kstatsvaluenameacceleraterate() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+void AudioReceiverStatisticsInner::set_has_kstatsvaluenameacceleraterate() {
+  _has_bits_[0] |= 0x00000080u;
+}
+void AudioReceiverStatisticsInner::clear_has_kstatsvaluenameacceleraterate() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+void AudioReceiverStatisticsInner::clear_kstatsvaluenameacceleraterate() {
+  kstatsvaluenameacceleraterate_ = 0;
+  clear_has_kstatsvaluenameacceleraterate();
+}
+ float AudioReceiverStatisticsInner::kstatsvaluenameacceleraterate() const {
+  // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameAccelerateRate)
+  return kstatsvaluenameacceleraterate_;
+}
+ void AudioReceiverStatisticsInner::set_kstatsvaluenameacceleraterate(float value) {
+  set_has_kstatsvaluenameacceleraterate();
+  kstatsvaluenameacceleraterate_ = value;
+  // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameAccelerateRate)
+}
+
+// optional float kStatsValueNameExpandRate = 9;
+bool AudioReceiverStatisticsInner::has_kstatsvaluenameexpandrate() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+void AudioReceiverStatisticsInner::set_has_kstatsvaluenameexpandrate() {
+  _has_bits_[0] |= 0x00000100u;
+}
+void AudioReceiverStatisticsInner::clear_has_kstatsvaluenameexpandrate() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+void AudioReceiverStatisticsInner::clear_kstatsvaluenameexpandrate() {
+  kstatsvaluenameexpandrate_ = 0;
+  clear_has_kstatsvaluenameexpandrate();
+}
+ float AudioReceiverStatisticsInner::kstatsvaluenameexpandrate() const {
+  // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameExpandRate)
+  return kstatsvaluenameexpandrate_;
+}
+ void AudioReceiverStatisticsInner::set_kstatsvaluenameexpandrate(float value) {
+  set_has_kstatsvaluenameexpandrate();
+  kstatsvaluenameexpandrate_ = value;
+  // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameExpandRate)
+}
+
+// optional float kStatsValueNamePreemptiveExpandRate = 10;
+bool AudioReceiverStatisticsInner::has_kstatsvaluenamepreemptiveexpandrate() const {
+  return (_has_bits_[0] & 0x00000200u) != 0;
+}
+void AudioReceiverStatisticsInner::set_has_kstatsvaluenamepreemptiveexpandrate() {
+  _has_bits_[0] |= 0x00000200u;
+}
+void AudioReceiverStatisticsInner::clear_has_kstatsvaluenamepreemptiveexpandrate() {
+  _has_bits_[0] &= ~0x00000200u;
+}
+void AudioReceiverStatisticsInner::clear_kstatsvaluenamepreemptiveexpandrate() {
+  kstatsvaluenamepreemptiveexpandrate_ = 0;
+  clear_has_kstatsvaluenamepreemptiveexpandrate();
+}
+ float AudioReceiverStatisticsInner::kstatsvaluenamepreemptiveexpandrate() const {
+  // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNamePreemptiveExpandRate)
+  return kstatsvaluenamepreemptiveexpandrate_;
+}
+ void AudioReceiverStatisticsInner::set_kstatsvaluenamepreemptiveexpandrate(float value) {
+  set_has_kstatsvaluenamepreemptiveexpandrate();
+  kstatsvaluenamepreemptiveexpandrate_ = value;
+  // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNamePreemptiveExpandRate)
+}
+
+// optional int32 kStatsValueNameDecodingNormal = 11;
+bool AudioReceiverStatisticsInner::has_kstatsvaluenamedecodingnormal() const {
+  return (_has_bits_[0] & 0x00000400u) != 0;
+}
+void AudioReceiverStatisticsInner::set_has_kstatsvaluenamedecodingnormal() {
+  _has_bits_[0] |= 0x00000400u;
+}
+void AudioReceiverStatisticsInner::clear_has_kstatsvaluenamedecodingnormal() {
+  _has_bits_[0] &= ~0x00000400u;
+}
+void AudioReceiverStatisticsInner::clear_kstatsvaluenamedecodingnormal() {
+  kstatsvaluenamedecodingnormal_ = 0;
+  clear_has_kstatsvaluenamedecodingnormal();
+}
+ ::google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamedecodingnormal() const {
+  // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameDecodingNormal)
+  return kstatsvaluenamedecodingnormal_;
+}
+ void AudioReceiverStatisticsInner::set_kstatsvaluenamedecodingnormal(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamedecodingnormal();
+  kstatsvaluenamedecodingnormal_ = value;
+  // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameDecodingNormal)
+}
+
+// optional int32 kStatsValueNameDecodingPLC = 12;
+bool AudioReceiverStatisticsInner::has_kstatsvaluenamedecodingplc() const {
+  return (_has_bits_[0] & 0x00000800u) != 0;
+}
+void AudioReceiverStatisticsInner::set_has_kstatsvaluenamedecodingplc() {
+  _has_bits_[0] |= 0x00000800u;
+}
+void AudioReceiverStatisticsInner::clear_has_kstatsvaluenamedecodingplc() {
+  _has_bits_[0] &= ~0x00000800u;
+}
+void AudioReceiverStatisticsInner::clear_kstatsvaluenamedecodingplc() {
+  kstatsvaluenamedecodingplc_ = 0;
+  clear_has_kstatsvaluenamedecodingplc();
+}
+ ::google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamedecodingplc() const {
+  // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameDecodingPLC)
+  return kstatsvaluenamedecodingplc_;
+}
+ void AudioReceiverStatisticsInner::set_kstatsvaluenamedecodingplc(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamedecodingplc();
+  kstatsvaluenamedecodingplc_ = value;
+  // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameDecodingPLC)
+}
+
+// optional int32 kStatsValueNameDecodingCNG = 13;
+bool AudioReceiverStatisticsInner::has_kstatsvaluenamedecodingcng() const {
+  return (_has_bits_[0] & 0x00001000u) != 0;
+}
+void AudioReceiverStatisticsInner::set_has_kstatsvaluenamedecodingcng() {
+  _has_bits_[0] |= 0x00001000u;
+}
+void AudioReceiverStatisticsInner::clear_has_kstatsvaluenamedecodingcng() {
+  _has_bits_[0] &= ~0x00001000u;
+}
+void AudioReceiverStatisticsInner::clear_kstatsvaluenamedecodingcng() {
+  kstatsvaluenamedecodingcng_ = 0;
+  clear_has_kstatsvaluenamedecodingcng();
+}
+ ::google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamedecodingcng() const {
+  // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameDecodingCNG)
+  return kstatsvaluenamedecodingcng_;
+}
+ void AudioReceiverStatisticsInner::set_kstatsvaluenamedecodingcng(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamedecodingcng();
+  kstatsvaluenamedecodingcng_ = value;
+  // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameDecodingCNG)
+}
+
+// optional int32 kStatsValueNameDecodingPLCCNG = 14;
+bool AudioReceiverStatisticsInner::has_kstatsvaluenamedecodingplccng() const {
+  return (_has_bits_[0] & 0x00002000u) != 0;
+}
+void AudioReceiverStatisticsInner::set_has_kstatsvaluenamedecodingplccng() {
+  _has_bits_[0] |= 0x00002000u;
+}
+void AudioReceiverStatisticsInner::clear_has_kstatsvaluenamedecodingplccng() {
+  _has_bits_[0] &= ~0x00002000u;
+}
+void AudioReceiverStatisticsInner::clear_kstatsvaluenamedecodingplccng() {
+  kstatsvaluenamedecodingplccng_ = 0;
+  clear_has_kstatsvaluenamedecodingplccng();
+}
+ ::google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamedecodingplccng() const {
+  // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameDecodingPLCCNG)
+  return kstatsvaluenamedecodingplccng_;
+}
+ void AudioReceiverStatisticsInner::set_kstatsvaluenamedecodingplccng(::google::protobuf::int32 value) {
+  set_has_kstatsvaluenamedecodingplccng();
+  kstatsvaluenamedecodingplccng_ = value;
+  // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameDecodingPLCCNG)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // ===================================================================
 
-#ifndef _MSC_VER
+static ::std::string* MutableUnknownFieldsForMediaStatisticsInner(
+    MediaStatisticsInner* ptr) {
+  return ptr->mutable_unknown_fields();
+}
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MediaStatisticsInner::kVideoSenderStatsFieldNumber;
 const int MediaStatisticsInner::kVideoReceiverStatsFieldNumber;
 const int MediaStatisticsInner::kAudioSenderStatsFieldNumber;
 const int MediaStatisticsInner::kAudioReceiverStatsFieldNumber;
-#endif  // !_MSC_VER
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 MediaStatisticsInner::MediaStatisticsInner()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
   SharedCtor();
   // @@protoc_insertion_point(constructor:MediaStatisticsInner)
 }
@@ -3872,14 +6316,18 @@ void MediaStatisticsInner::InitAsDefaultInstance() {
 }
 
 MediaStatisticsInner::MediaStatisticsInner(const MediaStatisticsInner& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::google::protobuf::MessageLite(),
+    _arena_ptr_(NULL) {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:MediaStatisticsInner)
 }
 
 void MediaStatisticsInner::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
+  _unknown_fields_.UnsafeSetDefault(
+      &::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -3889,6 +6337,8 @@ MediaStatisticsInner::~MediaStatisticsInner() {
 }
 
 void MediaStatisticsInner::SharedDtor() {
+  _unknown_fields_.DestroyNoArena(
+      &::google::protobuf::internal::GetEmptyStringAlreadyInited());
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -3913,85 +6363,100 @@ const MediaStatisticsInner& MediaStatisticsInner::default_instance() {
 
 MediaStatisticsInner* MediaStatisticsInner::default_instance_ = NULL;
 
-MediaStatisticsInner* MediaStatisticsInner::New() const {
-  return new MediaStatisticsInner;
+MediaStatisticsInner* MediaStatisticsInner::New(::google::protobuf::Arena* arena) const {
+  MediaStatisticsInner* n = new MediaStatisticsInner;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
 }
 
 void MediaStatisticsInner::Clear() {
+// @@protoc_insertion_point(message_clear_start:MediaStatisticsInner)
   videosenderstats_.Clear();
   videoreceiverstats_.Clear();
   audiosenderstats_.Clear();
   audioreceiverstats_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->clear();
+  _unknown_fields_.ClearToEmptyNoArena(
+      &::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 bool MediaStatisticsInner::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
-      mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
-      &unknown_fields_string);
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  ::google::protobuf::io::LazyStringOutputStream unknown_fields_string(
+      ::google::protobuf::internal::NewPermanentCallback(
+          &MutableUnknownFieldsForMediaStatisticsInner, this));
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string, false);
   // @@protoc_insertion_point(parse_start:MediaStatisticsInner)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // repeated .VideoSenderStatisticsInner videoSenderStats = 1;
       case 1: {
         if (tag == 10) {
-         parse_videoSenderStats:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_videoSenderStats:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
                 input, add_videosenderstats()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(10)) goto parse_videoSenderStats;
-        if (input->ExpectTag(18)) goto parse_videoReceiverStats;
+        if (input->ExpectTag(10)) goto parse_loop_videoSenderStats;
+        if (input->ExpectTag(18)) goto parse_loop_videoReceiverStats;
+        input->UnsafeDecrementRecursionDepth();
         break;
       }
 
       // repeated .VideoReceiverStatisticsInner videoReceiverStats = 2;
       case 2: {
         if (tag == 18) {
-         parse_videoReceiverStats:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_videoReceiverStats:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
                 input, add_videoreceiverstats()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_videoReceiverStats;
-        if (input->ExpectTag(26)) goto parse_audioSenderStats;
+        if (input->ExpectTag(18)) goto parse_loop_videoReceiverStats;
+        if (input->ExpectTag(26)) goto parse_loop_audioSenderStats;
+        input->UnsafeDecrementRecursionDepth();
         break;
       }
 
       // repeated .AudioSenderStatisticsInner audioSenderStats = 3;
       case 3: {
         if (tag == 26) {
-         parse_audioSenderStats:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_audioSenderStats:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
                 input, add_audiosenderstats()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_audioSenderStats;
-        if (input->ExpectTag(34)) goto parse_audioReceiverStats;
+        if (input->ExpectTag(26)) goto parse_loop_audioSenderStats;
+        if (input->ExpectTag(34)) goto parse_loop_audioReceiverStats;
+        input->UnsafeDecrementRecursionDepth();
         break;
       }
 
       // repeated .AudioReceiverStatisticsInner audioReceiverStats = 4;
       case 4: {
         if (tag == 34) {
-         parse_audioReceiverStats:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_audioReceiverStats:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
                 input, add_audioreceiverstats()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(34)) goto parse_audioReceiverStats;
+        if (input->ExpectTag(34)) goto parse_loop_audioReceiverStats;
+        input->UnsafeDecrementRecursionDepth();
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -3999,11 +6464,11 @@ bool MediaStatisticsInner::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -4019,45 +6484,46 @@ failure:
 }
 
 void MediaStatisticsInner::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:MediaStatisticsInner)
   // repeated .VideoSenderStatisticsInner videoSenderStats = 1;
-  for (int i = 0; i < this->videosenderstats_size(); i++) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+  for (unsigned int i = 0, n = this->videosenderstats_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       1, this->videosenderstats(i), output);
   }
 
   // repeated .VideoReceiverStatisticsInner videoReceiverStats = 2;
-  for (int i = 0; i < this->videoreceiverstats_size(); i++) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+  for (unsigned int i = 0, n = this->videoreceiverstats_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       2, this->videoreceiverstats(i), output);
   }
 
   // repeated .AudioSenderStatisticsInner audioSenderStats = 3;
-  for (int i = 0; i < this->audiosenderstats_size(); i++) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+  for (unsigned int i = 0, n = this->audiosenderstats_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       3, this->audiosenderstats(i), output);
   }
 
   // repeated .AudioReceiverStatisticsInner audioReceiverStats = 4;
-  for (int i = 0; i < this->audioreceiverstats_size(); i++) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+  for (unsigned int i = 0, n = this->audioreceiverstats_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       4, this->audioreceiverstats(i), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
-                   unknown_fields().size());
+                   static_cast<int>(unknown_fields().size()));
   // @@protoc_insertion_point(serialize_end:MediaStatisticsInner)
 }
 
 int MediaStatisticsInner::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:MediaStatisticsInner)
   int total_size = 0;
 
   // repeated .VideoSenderStatisticsInner videoSenderStats = 1;
   total_size += 1 * this->videosenderstats_size();
   for (int i = 0; i < this->videosenderstats_size(); i++) {
     total_size +=
-      ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         this->videosenderstats(i));
   }
 
@@ -4065,7 +6531,7 @@ int MediaStatisticsInner::ByteSize() const {
   total_size += 1 * this->videoreceiverstats_size();
   for (int i = 0; i < this->videoreceiverstats_size(); i++) {
     total_size +=
-      ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         this->videoreceiverstats(i));
   }
 
@@ -4073,7 +6539,7 @@ int MediaStatisticsInner::ByteSize() const {
   total_size += 1 * this->audiosenderstats_size();
   for (int i = 0; i < this->audiosenderstats_size(); i++) {
     total_size +=
-      ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         this->audiosenderstats(i));
   }
 
@@ -4081,7 +6547,7 @@ int MediaStatisticsInner::ByteSize() const {
   total_size += 1 * this->audioreceiverstats_size();
   for (int i = 0; i < this->audioreceiverstats_size(); i++) {
     total_size +=
-      ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         this->audioreceiverstats(i));
   }
 
@@ -4094,20 +6560,24 @@ int MediaStatisticsInner::ByteSize() const {
 }
 
 void MediaStatisticsInner::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const MediaStatisticsInner*>(&from));
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const MediaStatisticsInner*>(&from));
 }
 
 void MediaStatisticsInner::MergeFrom(const MediaStatisticsInner& from) {
-  GOOGLE_CHECK_NE(&from, this);
+// @@protoc_insertion_point(class_specific_merge_from_start:MediaStatisticsInner)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
   videosenderstats_.MergeFrom(from.videosenderstats_);
   videoreceiverstats_.MergeFrom(from.videoreceiverstats_);
   audiosenderstats_.MergeFrom(from.audiosenderstats_);
   audioreceiverstats_.MergeFrom(from.audioreceiverstats_);
-  mutable_unknown_fields()->append(from.unknown_fields());
+  if (!from.unknown_fields().empty()) {
+    mutable_unknown_fields()->append(from.unknown_fields());
+  }
 }
 
 void MediaStatisticsInner::CopyFrom(const MediaStatisticsInner& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:MediaStatisticsInner)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -4119,31 +6589,162 @@ bool MediaStatisticsInner::IsInitialized() const {
 }
 
 void MediaStatisticsInner::Swap(MediaStatisticsInner* other) {
-  if (other != this) {
-    videosenderstats_.Swap(&other->videosenderstats_);
-    videoreceiverstats_.Swap(&other->videoreceiverstats_);
-    audiosenderstats_.Swap(&other->audiosenderstats_);
-    audioreceiverstats_.Swap(&other->audioreceiverstats_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.swap(other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
+  if (other == this) return;
+  InternalSwap(other);
+}
+void MediaStatisticsInner::InternalSwap(MediaStatisticsInner* other) {
+  videosenderstats_.UnsafeArenaSwap(&other->videosenderstats_);
+  videoreceiverstats_.UnsafeArenaSwap(&other->videoreceiverstats_);
+  audiosenderstats_.UnsafeArenaSwap(&other->audiosenderstats_);
+  audioreceiverstats_.UnsafeArenaSwap(&other->audioreceiverstats_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  _unknown_fields_.Swap(&other->_unknown_fields_);
+  std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::std::string MediaStatisticsInner::GetTypeName() const {
   return "MediaStatisticsInner";
 }
 
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// MediaStatisticsInner
+
+// repeated .VideoSenderStatisticsInner videoSenderStats = 1;
+int MediaStatisticsInner::videosenderstats_size() const {
+  return videosenderstats_.size();
+}
+void MediaStatisticsInner::clear_videosenderstats() {
+  videosenderstats_.Clear();
+}
+const ::VideoSenderStatisticsInner& MediaStatisticsInner::videosenderstats(int index) const {
+  // @@protoc_insertion_point(field_get:MediaStatisticsInner.videoSenderStats)
+  return videosenderstats_.Get(index);
+}
+::VideoSenderStatisticsInner* MediaStatisticsInner::mutable_videosenderstats(int index) {
+  // @@protoc_insertion_point(field_mutable:MediaStatisticsInner.videoSenderStats)
+  return videosenderstats_.Mutable(index);
+}
+::VideoSenderStatisticsInner* MediaStatisticsInner::add_videosenderstats() {
+  // @@protoc_insertion_point(field_add:MediaStatisticsInner.videoSenderStats)
+  return videosenderstats_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::VideoSenderStatisticsInner >*
+MediaStatisticsInner::mutable_videosenderstats() {
+  // @@protoc_insertion_point(field_mutable_list:MediaStatisticsInner.videoSenderStats)
+  return &videosenderstats_;
+}
+const ::google::protobuf::RepeatedPtrField< ::VideoSenderStatisticsInner >&
+MediaStatisticsInner::videosenderstats() const {
+  // @@protoc_insertion_point(field_list:MediaStatisticsInner.videoSenderStats)
+  return videosenderstats_;
+}
+
+// repeated .VideoReceiverStatisticsInner videoReceiverStats = 2;
+int MediaStatisticsInner::videoreceiverstats_size() const {
+  return videoreceiverstats_.size();
+}
+void MediaStatisticsInner::clear_videoreceiverstats() {
+  videoreceiverstats_.Clear();
+}
+const ::VideoReceiverStatisticsInner& MediaStatisticsInner::videoreceiverstats(int index) const {
+  // @@protoc_insertion_point(field_get:MediaStatisticsInner.videoReceiverStats)
+  return videoreceiverstats_.Get(index);
+}
+::VideoReceiverStatisticsInner* MediaStatisticsInner::mutable_videoreceiverstats(int index) {
+  // @@protoc_insertion_point(field_mutable:MediaStatisticsInner.videoReceiverStats)
+  return videoreceiverstats_.Mutable(index);
+}
+::VideoReceiverStatisticsInner* MediaStatisticsInner::add_videoreceiverstats() {
+  // @@protoc_insertion_point(field_add:MediaStatisticsInner.videoReceiverStats)
+  return videoreceiverstats_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::VideoReceiverStatisticsInner >*
+MediaStatisticsInner::mutable_videoreceiverstats() {
+  // @@protoc_insertion_point(field_mutable_list:MediaStatisticsInner.videoReceiverStats)
+  return &videoreceiverstats_;
+}
+const ::google::protobuf::RepeatedPtrField< ::VideoReceiverStatisticsInner >&
+MediaStatisticsInner::videoreceiverstats() const {
+  // @@protoc_insertion_point(field_list:MediaStatisticsInner.videoReceiverStats)
+  return videoreceiverstats_;
+}
+
+// repeated .AudioSenderStatisticsInner audioSenderStats = 3;
+int MediaStatisticsInner::audiosenderstats_size() const {
+  return audiosenderstats_.size();
+}
+void MediaStatisticsInner::clear_audiosenderstats() {
+  audiosenderstats_.Clear();
+}
+const ::AudioSenderStatisticsInner& MediaStatisticsInner::audiosenderstats(int index) const {
+  // @@protoc_insertion_point(field_get:MediaStatisticsInner.audioSenderStats)
+  return audiosenderstats_.Get(index);
+}
+::AudioSenderStatisticsInner* MediaStatisticsInner::mutable_audiosenderstats(int index) {
+  // @@protoc_insertion_point(field_mutable:MediaStatisticsInner.audioSenderStats)
+  return audiosenderstats_.Mutable(index);
+}
+::AudioSenderStatisticsInner* MediaStatisticsInner::add_audiosenderstats() {
+  // @@protoc_insertion_point(field_add:MediaStatisticsInner.audioSenderStats)
+  return audiosenderstats_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::AudioSenderStatisticsInner >*
+MediaStatisticsInner::mutable_audiosenderstats() {
+  // @@protoc_insertion_point(field_mutable_list:MediaStatisticsInner.audioSenderStats)
+  return &audiosenderstats_;
+}
+const ::google::protobuf::RepeatedPtrField< ::AudioSenderStatisticsInner >&
+MediaStatisticsInner::audiosenderstats() const {
+  // @@protoc_insertion_point(field_list:MediaStatisticsInner.audioSenderStats)
+  return audiosenderstats_;
+}
+
+// repeated .AudioReceiverStatisticsInner audioReceiverStats = 4;
+int MediaStatisticsInner::audioreceiverstats_size() const {
+  return audioreceiverstats_.size();
+}
+void MediaStatisticsInner::clear_audioreceiverstats() {
+  audioreceiverstats_.Clear();
+}
+const ::AudioReceiverStatisticsInner& MediaStatisticsInner::audioreceiverstats(int index) const {
+  // @@protoc_insertion_point(field_get:MediaStatisticsInner.audioReceiverStats)
+  return audioreceiverstats_.Get(index);
+}
+::AudioReceiverStatisticsInner* MediaStatisticsInner::mutable_audioreceiverstats(int index) {
+  // @@protoc_insertion_point(field_mutable:MediaStatisticsInner.audioReceiverStats)
+  return audioreceiverstats_.Mutable(index);
+}
+::AudioReceiverStatisticsInner* MediaStatisticsInner::add_audioreceiverstats() {
+  // @@protoc_insertion_point(field_add:MediaStatisticsInner.audioReceiverStats)
+  return audioreceiverstats_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::AudioReceiverStatisticsInner >*
+MediaStatisticsInner::mutable_audioreceiverstats() {
+  // @@protoc_insertion_point(field_mutable_list:MediaStatisticsInner.audioReceiverStats)
+  return &audioreceiverstats_;
+}
+const ::google::protobuf::RepeatedPtrField< ::AudioReceiverStatisticsInner >&
+MediaStatisticsInner::audioreceiverstats() const {
+  // @@protoc_insertion_point(field_list:MediaStatisticsInner.audioReceiverStats)
+  return audioreceiverstats_;
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // ===================================================================
 
-#ifndef _MSC_VER
+static ::std::string* MutableUnknownFieldsForMediaStatisticsDataInner(
+    MediaStatisticsDataInner* ptr) {
+  return ptr->mutable_unknown_fields();
+}
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MediaStatisticsDataInner::kCallidFieldNumber;
 const int MediaStatisticsDataInner::kMediadataFieldNumber;
-#endif  // !_MSC_VER
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 MediaStatisticsDataInner::MediaStatisticsDataInner()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
   SharedCtor();
   // @@protoc_insertion_point(constructor:MediaStatisticsDataInner)
 }
@@ -4152,16 +6753,19 @@ void MediaStatisticsDataInner::InitAsDefaultInstance() {
 }
 
 MediaStatisticsDataInner::MediaStatisticsDataInner(const MediaStatisticsDataInner& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::google::protobuf::MessageLite(),
+    _arena_ptr_(NULL) {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:MediaStatisticsDataInner)
 }
 
 void MediaStatisticsDataInner::SharedCtor() {
-  ::cloopen_google::protobuf::internal::GetEmptyString();
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  callid_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+  _unknown_fields_.UnsafeSetDefault(
+      &::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  callid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -4171,9 +6775,9 @@ MediaStatisticsDataInner::~MediaStatisticsDataInner() {
 }
 
 void MediaStatisticsDataInner::SharedDtor() {
-  if (callid_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete callid_;
-  }
+  _unknown_fields_.DestroyNoArena(
+      &::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  callid_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -4198,39 +6802,44 @@ const MediaStatisticsDataInner& MediaStatisticsDataInner::default_instance() {
 
 MediaStatisticsDataInner* MediaStatisticsDataInner::default_instance_ = NULL;
 
-MediaStatisticsDataInner* MediaStatisticsDataInner::New() const {
-  return new MediaStatisticsDataInner;
+MediaStatisticsDataInner* MediaStatisticsDataInner::New(::google::protobuf::Arena* arena) const {
+  MediaStatisticsDataInner* n = new MediaStatisticsDataInner;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
 }
 
 void MediaStatisticsDataInner::Clear() {
+// @@protoc_insertion_point(message_clear_start:MediaStatisticsDataInner)
   if (has_callid()) {
-    if (callid_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-      callid_->clear();
-    }
+    callid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   mediadata_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->clear();
+  _unknown_fields_.ClearToEmptyNoArena(
+      &::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 bool MediaStatisticsDataInner::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
-      mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
-      &unknown_fields_string);
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  ::google::protobuf::io::LazyStringOutputStream unknown_fields_string(
+      ::google::protobuf::internal::NewPermanentCallback(
+          &MutableUnknownFieldsForMediaStatisticsDataInner, this));
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string, false);
   // @@protoc_insertion_point(parse_start:MediaStatisticsDataInner)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional string callid = 1;
       case 1: {
         if (tag == 10) {
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_callid()));
         } else {
           goto handle_unusual;
@@ -4243,12 +6852,15 @@ bool MediaStatisticsDataInner::MergePartialFromCodedStream(
       case 2: {
         if (tag == 18) {
          parse_mediadata:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_mediadata:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
                 input, add_mediadata()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_mediadata;
+        if (input->ExpectTag(18)) goto parse_loop_mediadata;
+        input->UnsafeDecrementRecursionDepth();
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -4256,11 +6868,11 @@ bool MediaStatisticsDataInner::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -4276,42 +6888,41 @@ failure:
 }
 
 void MediaStatisticsDataInner::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:MediaStatisticsDataInner)
   // optional string callid = 1;
   if (has_callid()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->callid(), output);
   }
 
   // repeated .MediaStatisticsInner mediadata = 2;
-  for (int i = 0; i < this->mediadata_size(); i++) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+  for (unsigned int i = 0, n = this->mediadata_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
       2, this->mediadata(i), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
-                   unknown_fields().size());
+                   static_cast<int>(unknown_fields().size()));
   // @@protoc_insertion_point(serialize_end:MediaStatisticsDataInner)
 }
 
 int MediaStatisticsDataInner::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:MediaStatisticsDataInner)
   int total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional string callid = 1;
-    if (has_callid()) {
-      total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::StringSize(
-          this->callid());
-    }
-
+  // optional string callid = 1;
+  if (has_callid()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->callid());
   }
+
   // repeated .MediaStatisticsInner mediadata = 2;
   total_size += 1 * this->mediadata_size();
   for (int i = 0; i < this->mediadata_size(); i++) {
     total_size +=
-      ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         this->mediadata(i));
   }
 
@@ -4324,22 +6935,27 @@ int MediaStatisticsDataInner::ByteSize() const {
 }
 
 void MediaStatisticsDataInner::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const MediaStatisticsDataInner*>(&from));
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const MediaStatisticsDataInner*>(&from));
 }
 
 void MediaStatisticsDataInner::MergeFrom(const MediaStatisticsDataInner& from) {
-  GOOGLE_CHECK_NE(&from, this);
+// @@protoc_insertion_point(class_specific_merge_from_start:MediaStatisticsDataInner)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
   mediadata_.MergeFrom(from.mediadata_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_callid()) {
-      set_callid(from.callid());
+      set_has_callid();
+      callid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.callid_);
     }
   }
-  mutable_unknown_fields()->append(from.unknown_fields());
+  if (!from.unknown_fields().empty()) {
+    mutable_unknown_fields()->append(from.unknown_fields());
+  }
 }
 
 void MediaStatisticsDataInner::CopyFrom(const MediaStatisticsDataInner& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:MediaStatisticsDataInner)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -4351,19 +6967,109 @@ bool MediaStatisticsDataInner::IsInitialized() const {
 }
 
 void MediaStatisticsDataInner::Swap(MediaStatisticsDataInner* other) {
-  if (other != this) {
-    std::swap(callid_, other->callid_);
-    mediadata_.Swap(&other->mediadata_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.swap(other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
+  if (other == this) return;
+  InternalSwap(other);
+}
+void MediaStatisticsDataInner::InternalSwap(MediaStatisticsDataInner* other) {
+  callid_.Swap(&other->callid_);
+  mediadata_.UnsafeArenaSwap(&other->mediadata_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  _unknown_fields_.Swap(&other->_unknown_fields_);
+  std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::std::string MediaStatisticsDataInner::GetTypeName() const {
   return "MediaStatisticsDataInner";
 }
 
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// MediaStatisticsDataInner
+
+// optional string callid = 1;
+bool MediaStatisticsDataInner::has_callid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+void MediaStatisticsDataInner::set_has_callid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+void MediaStatisticsDataInner::clear_has_callid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+void MediaStatisticsDataInner::clear_callid() {
+  callid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_callid();
+}
+ const ::std::string& MediaStatisticsDataInner::callid() const {
+  // @@protoc_insertion_point(field_get:MediaStatisticsDataInner.callid)
+  return callid_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void MediaStatisticsDataInner::set_callid(const ::std::string& value) {
+  set_has_callid();
+  callid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:MediaStatisticsDataInner.callid)
+}
+ void MediaStatisticsDataInner::set_callid(const char* value) {
+  set_has_callid();
+  callid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:MediaStatisticsDataInner.callid)
+}
+ void MediaStatisticsDataInner::set_callid(const char* value, size_t size) {
+  set_has_callid();
+  callid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:MediaStatisticsDataInner.callid)
+}
+ ::std::string* MediaStatisticsDataInner::mutable_callid() {
+  set_has_callid();
+  // @@protoc_insertion_point(field_mutable:MediaStatisticsDataInner.callid)
+  return callid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ ::std::string* MediaStatisticsDataInner::release_callid() {
+  // @@protoc_insertion_point(field_release:MediaStatisticsDataInner.callid)
+  clear_has_callid();
+  return callid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void MediaStatisticsDataInner::set_allocated_callid(::std::string* callid) {
+  if (callid != NULL) {
+    set_has_callid();
+  } else {
+    clear_has_callid();
+  }
+  callid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), callid);
+  // @@protoc_insertion_point(field_set_allocated:MediaStatisticsDataInner.callid)
+}
+
+// repeated .MediaStatisticsInner mediadata = 2;
+int MediaStatisticsDataInner::mediadata_size() const {
+  return mediadata_.size();
+}
+void MediaStatisticsDataInner::clear_mediadata() {
+  mediadata_.Clear();
+}
+const ::MediaStatisticsInner& MediaStatisticsDataInner::mediadata(int index) const {
+  // @@protoc_insertion_point(field_get:MediaStatisticsDataInner.mediadata)
+  return mediadata_.Get(index);
+}
+::MediaStatisticsInner* MediaStatisticsDataInner::mutable_mediadata(int index) {
+  // @@protoc_insertion_point(field_mutable:MediaStatisticsDataInner.mediadata)
+  return mediadata_.Mutable(index);
+}
+::MediaStatisticsInner* MediaStatisticsDataInner::add_mediadata() {
+  // @@protoc_insertion_point(field_add:MediaStatisticsDataInner.mediadata)
+  return mediadata_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::MediaStatisticsInner >*
+MediaStatisticsDataInner::mutable_mediadata() {
+  // @@protoc_insertion_point(field_mutable_list:MediaStatisticsDataInner.mediadata)
+  return &mediadata_;
+}
+const ::google::protobuf::RepeatedPtrField< ::MediaStatisticsInner >&
+MediaStatisticsDataInner::mediadata() const {
+  // @@protoc_insertion_point(field_list:MediaStatisticsDataInner.mediadata)
+  return mediadata_;
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // @@protoc_insertion_point(namespace_scope)
 

@@ -64,7 +64,13 @@ int ProbeBitrateEstimator::HandleProbeAndEstimateBitrate(
   cluster->num_probes += 1;
 
   if (cluster->num_probes < kMinNumProbesValidCluster)
-    return -1;
+  {
+	  LOG(LS_ERROR) << "--------------[bwe][Probe] "
+		  << "id = " << cluster_id
+		  << " , cluster->num_probes = " << cluster->num_probes;
+	  return -1;
+  }
+    
 
   float send_interval_ms = cluster->last_send_ms - cluster->first_send_ms;
   float receive_interval_ms =

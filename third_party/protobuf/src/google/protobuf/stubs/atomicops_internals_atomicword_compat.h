@@ -46,7 +46,7 @@
 
 #if !defined(GOOGLE_PROTOBUF_ARCH_64_BIT)
 
-namespace cloopen_google {
+namespace google {
 namespace protobuf {
 namespace internal {
 
@@ -115,7 +115,7 @@ inline AtomicWord Release_Load(volatile const AtomicWord* ptr) {
 
 }   // namespace internal
 }   // namespace protobuf
-}   // namespace cloopen_google
+}   // namespace google
 
 #endif  // !defined(GOOGLE_PROTOBUF_ARCH_64_BIT)
 
