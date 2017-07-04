@@ -246,6 +246,11 @@ int ViECodecImpl::SetSendCodec(const int video_channel,
     return -1;
   }
 
+  if (video_codec_internal.numberOfSimulcastStreams > 0)
+  {
+	  vie_channel->SetDefaultSimulcatRtpRtcp(vie_encoder->DefaultSimulcastRtpRtcp());
+  }
+
   // Give the channel(s) the new information.
   ChannelList channels;
   cs.ChannelsUsingViEEncoder(video_channel, &channels);

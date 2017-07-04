@@ -39,6 +39,7 @@
     <ClInclude Include="source\send_statistics_proxy.h" />
     <ClInclude Include="source\stats_types.h" />
     <ClInclude Include="source\stream_synchronization.h" />
+    <ClInclude Include="source\video\encoder_rtcp_feedback.h" />
     <ClInclude Include="source\video_send_stream.h" />
     <ClInclude Include="source\vie_base_impl.h" />
     <ClInclude Include="source\vie_capturer.h" />
@@ -84,6 +85,7 @@
     <ClCompile Include="source\send_statistics_proxy.cc" />
     <ClCompile Include="source\stats_types.cc" />
     <ClCompile Include="source\stream_synchronization.cc" />
+    <ClCompile Include="source\video\encoder_rtcp_feedback.cc" />
     <ClCompile Include="source\video_send_stream.cc" />
     <ClCompile Include="source\vie_base_impl.cc" />
     <ClCompile Include="source\vie_capturer.cc" />

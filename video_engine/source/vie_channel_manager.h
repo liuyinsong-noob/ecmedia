@@ -23,6 +23,7 @@
 #include "vie_manager_base.h"
 #include "vie_remb.h"
 #include "udp_transport.h"
+#include "../module/congestion_controller/include/congestion_controller.h"
 
 namespace cloopenwebrtc {
 
@@ -34,6 +35,7 @@ class ViEChannel;
 class ViEEncoder;
 class VoEVideoSync;
 class VoiceEngine;
+class RtcEventLog;
 
 typedef std::list<ChannelGroup*> ChannelGroups;
 typedef std::list<ViEChannel*> ChannelList;
@@ -41,7 +43,8 @@ typedef std::map<int, ViEChannel*> ChannelMap;
 typedef std::map<int, ViEEncoder*> EncoderMap;
 typedef std::map<int, UdpTransport*> RtpUdpTransportMap;
 
-class ViEChannelManager: private ViEManagerBase {
+class ViEChannelManager: private ViEManagerBase,
+					     public CongestionController::Observer {
   friend class ViEChannelManagerScoped;
  public:
   ViEChannelManager(int engine_id,
@@ -97,6 +100,14 @@ class ViEChannelManager: private ViEManagerBase {
 
   UdpTransport *CreateUdptransport(int rtp_port, int rtcp_port);
   int DeleteUdptransport(UdpTransport * transport);
+  
+  // Implements CongestionController::Observer.
+  void OnNetworkChanged(uint32_t bitrate_bps,
+					  uint8_t fraction_loss,
+					  int64_t rtt_ms,
+					  int64_t probing_interval_ms) override;
+
+  void UpdateNetworkState(int channel_id, bool startSend);
 
  private:
   // Creates a channel object connected to |vie_encoder|. Assumed to be called
@@ -157,6 +168,13 @@ class ViEChannelManager: private ViEManagerBase {
   CriticalSectionWrapper* udptransport_critsect_;
   RtpUdpTransportMap rtp_udptransport_map_;
 
+  std::unique_ptr<RtcEventLog> rtc_event_log_;
+  std::unique_ptr<CongestionController> congestion_controller_;
+  ProcessThread* pacer_thread_;
+  bool use_sendside_bwe_;
+  VieRemb remb_;
+  std::unique_ptr<CallStats> call_stats_;
+  PacketRouter packet_router_;
 };
 
 class ViEChannelManagerScoped: private ViEManagerScopedBase {

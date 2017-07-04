@@ -1027,7 +1027,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 				}
 
 				ECMedia_set_video_rtp_keepalive(call->m_VideoChannelID, true, 10, codec_params.plType);
-#ifdef WIN32 //for ulpfec debug
+#ifndef WIN32 //for ulpfec debug
 				memset(codec_params.plName, 0, cloopenwebrtc::kPayloadNameSize);
 				memcpy(codec_params.plName, "red", 3);
 				codec_params.plType = 116;

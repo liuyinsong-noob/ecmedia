@@ -41,6 +41,8 @@
 
 #include "rtp.h"
 #include "../system_wrappers/include/trace.h"
+#include "../module/congestion_controller/transport_feedback_adapter.h"
+#include "../logging/rtc_event_log/rtc_event_log.h"
 
 #ifdef _WIN32
 #define strncasecmp _strnicmp
@@ -121,7 +123,8 @@ ViEChannel::ViEChannel(int32_t channel_id,
                        RtcpRttStats* rtt_stats,
                        PacedSender* paced_sender,
                        RtpRtcp* default_rtp_rtcp,
-                       bool sender)
+                       bool sender,
+					   TransportFeedbackObserver* transport_feedback_observer)
     : ViEFrameProviderBase(channel_id, engine_id),
       channel_id_(channel_id),
       engine_id_(engine_id),
@@ -196,12 +199,17 @@ ViEChannel::ViEChannel(int32_t channel_id,
     _video_conf_cb(NULL),
     _video_data_cb(NULL),
     _stun_cb(NULL),
-    _key_frame_cb(NULL){
+    _key_frame_cb(NULL),
+	transport_feedback_observer_(transport_feedback_observer){
   RtpRtcp::Configuration configuration = CreateRtpRtcpConfiguration();
   configuration.remote_bitrate_estimator = remote_bitrate_estimator;
   configuration.receive_statistics = vie_receiver_.GetReceiveStatistics();
+  configuration.transport_feedback_callback = transport_feedback_observer_;
+  configuration.receiver_only = true;
   rtp_rtcp_.reset(RtpRtcp::CreateRtpRtcp(configuration));
+  rtp_rtcp_->SetSSRC(1009);
   vie_receiver_.SetRtpRtcpModule(rtp_rtcp_.get());
+  vie_receiver_.SetSendRtpRtcpModule(default_rtp_rtcp_);
   vcm_->SetNackSettings(kMaxNackListSize, max_nack_reordering_threshold_, 0);
 
   receive_statistics_proxy_.reset(new ReceiveStatisticsProxy(channel_id));
@@ -210,6 +218,10 @@ ViEChannel::ViEChannel(int32_t channel_id,
   RegisterCodecObserver(receive_statistics_proxy_.get());
   RegisterReceiveChannelRtpStatisticsCallback(receive_statistics_proxy_.get());
   RegisterReceiveChannelRtcpStatisticsCallback(receive_statistics_proxy_.get());
+
+  default_rtp_rtcp_->SetTransport(&vie_sender_);
+  //need to fix: ylr
+  vie_receiver_.SetReceiveTransportSeqNumStatus(true, 5);
 }
 
 int32_t ViEChannel::Init() {
@@ -279,6 +291,7 @@ int32_t ViEChannel::Init() {
 }
 
 ViEChannel::~ViEChannel() {
+  default_rtp_rtcp_->SetTransport(NULL);
   UpdateHistograms();
   // Make sure we don't get more callbacks from the RTP module.
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
@@ -461,23 +474,14 @@ int32_t ViEChannel::SetSendCodec(const VideoCodec& video_codec,
   if (!sender_) {
     return 0;
   }
-  if (video_codec.codecType == kVideoCodecRED ||
-      video_codec.codecType == kVideoCodecULPFEC) {
-    LOG_F(LS_ERROR) << "Not a valid send codec " << video_codec.codecType;
-    return -1;
-  }
-  if (kMaxSimulcastStreams < video_codec.numberOfSimulcastStreams) {
-    LOG_F(LS_ERROR) << "Incorrect config "
-                    << video_codec.numberOfSimulcastStreams;
-    return -1;
-  }
+  
   // Update the RTP module with the settings.
   // Stop and Start the RTP module -> trigger new SSRC, if an SSRC hasn't been
   // set explicitly.
   bool restart_rtp = false;
-  if (rtp_rtcp_->Sending() && new_stream) {
+  if (default_rtp_rtcp_->Sending() && new_stream) {
     restart_rtp = true;
-    rtp_rtcp_->SetSendingStatus(false);
+	default_rtp_rtcp_->SetSendingStatus(false);
     for (std::list<RtpRtcp*>::iterator it = simulcast_rtp_rtcp_.begin();
          it != simulcast_rtp_rtcp_.end(); ++it) {
       (*it)->SetSendingStatus(false);
@@ -488,7 +492,6 @@ int32_t ViEChannel::SetSendCodec(const VideoCodec& video_codec,
   bool fec_enabled = false;
   uint8_t payload_type_red;
   uint8_t payload_type_fec;
-  //rtp_rtcp_->GenericFECStatus(fec_enabled, payload_type_red, payload_type_fec);
 
   CriticalSectionScoped cs(rtp_rtcp_cs_.get());
 
@@ -528,10 +531,6 @@ int32_t ViEChannel::SetSendCodec(const VideoCodec& video_codec,
         rtp_rtcp->SetStorePacketsStatus(true, nack_history_size_sender_);
       }
 
-      if (fec_enabled) {
-        //rtp_rtcp->SetGenericFECStatus(
-        //    fec_enabled, payload_type_red, payload_type_fec);
-      }
       rtp_rtcp->SetSendingStatus(rtp_rtcp_->Sending());
       rtp_rtcp->SetSendingMediaStatus(rtp_rtcp_->SendingMedia());
       rtp_rtcp->SetRtxSendStatus(rtp_rtcp_->RtxSendStatus());
@@ -555,51 +554,21 @@ int32_t ViEChannel::SetSendCodec(const VideoCodec& video_codec,
       removed_rtp_rtcp_.push_front(rtp_rtcp);
     }
     uint8_t idx = 0;
+	std::list<RtpRtcp*>::iterator default_it = default_simulcast_rtp_rtcp_.begin();
     // Configure all simulcast modules.
     for (std::list<RtpRtcp*>::iterator it = simulcast_rtp_rtcp_.begin();
          it != simulcast_rtp_rtcp_.end();
          it++) {
       idx++;
       RtpRtcp* rtp_rtcp = *it;
-      rtp_rtcp->DeRegisterSendPayload(video_codec.plType);
-      if (rtp_rtcp->RegisterSendPayload(video_codec) != 0) {
-        return -1;
-      }
-      if (mtu_ != 0) {
-        rtp_rtcp->SetMaxTransferUnit(mtu_);
-      }
-      if (restart_rtp) {
-        rtp_rtcp->SetSendingStatus(true);
-        rtp_rtcp->SetSendingMediaStatus(true);
-      }
-      if (send_timestamp_extension_id_ != kInvalidRtpExtensionId) {
-        // Deregister in case the extension was previously enabled.
-        rtp_rtcp->DeregisterSendRtpHeaderExtension(
-            kRtpExtensionTransmissionTimeOffset);
-        if (rtp_rtcp->RegisterSendRtpHeaderExtension(
-            kRtpExtensionTransmissionTimeOffset,
-            send_timestamp_extension_id_) != 0) {
-        }
-      } else {
-        rtp_rtcp->DeregisterSendRtpHeaderExtension(
-            kRtpExtensionTransmissionTimeOffset);
-      }
-      if (absolute_send_time_extension_id_ != kInvalidRtpExtensionId) {
-        // Deregister in case the extension was previously enabled.
-        rtp_rtcp->DeregisterSendRtpHeaderExtension(
-            kRtpExtensionAbsoluteSendTime);
-        if (rtp_rtcp->RegisterSendRtpHeaderExtension(
-            kRtpExtensionAbsoluteSendTime,
-            absolute_send_time_extension_id_) != 0) {
-        }
-      } else {
-        rtp_rtcp->DeregisterSendRtpHeaderExtension(
-            kRtpExtensionAbsoluteSendTime);
-      }
+	  RtpRtcp* default_rtp_rtcp = *default_it;
+
+	  rtp_rtcp->SetSSRC(default_rtp_rtcp->SSRC());
       rtp_rtcp->RegisterRtcpStatisticsCallback(
           rtp_rtcp_->GetRtcpStatisticsCallback());
       rtp_rtcp->RegisterSendChannelRtpStatisticsCallback(
           rtp_rtcp_->GetSendChannelRtpStatisticsCallback());
+	  default_it++;
     }
     // |RegisterSimulcastRtpRtcpModules| resets all old weak pointers and old
     // modules can be deleted after this step.
@@ -616,35 +585,6 @@ int32_t ViEChannel::SetSendCodec(const VideoCodec& video_codec,
       removed_rtp_rtcp_.push_front(rtp_rtcp);
     }
     // Clear any previous modules.
-
-	//add by ylr ---begin
-	if (send_timestamp_extension_id_ != kInvalidRtpExtensionId) {
-		// Deregister in case the extension was previously enabled.
-		rtp_rtcp_->DeregisterSendRtpHeaderExtension(
-			kRtpExtensionTransmissionTimeOffset);
-		if (rtp_rtcp_->RegisterSendRtpHeaderExtension(
-			kRtpExtensionTransmissionTimeOffset,
-			send_timestamp_extension_id_) != 0) {
-		}
-	} else {
-		rtp_rtcp_->DeregisterSendRtpHeaderExtension(
-			kRtpExtensionTransmissionTimeOffset);
-	}
-	if (absolute_send_time_extension_id_ != kInvalidRtpExtensionId) {
-		// Deregister in case the extension was previously enabled.
-		rtp_rtcp_->DeregisterSendRtpHeaderExtension(
-			kRtpExtensionAbsoluteSendTime);
-		if (rtp_rtcp_->RegisterSendRtpHeaderExtension(
-			kRtpExtensionAbsoluteSendTime,
-			absolute_send_time_extension_id_) != 0) {
-		}
-	} else {
-		rtp_rtcp_->DeregisterSendRtpHeaderExtension(
-			kRtpExtensionAbsoluteSendTime);
-	}
-
-	//add by ylr ---end 
-	
     vie_receiver_.RegisterSimulcastRtpRtcpModules(simulcast_rtp_rtcp_);
   }
 
@@ -653,14 +593,6 @@ int32_t ViEChannel::SetSendCodec(const VideoCodec& video_codec,
   rtp_rtcp_->DeRegisterSendPayload(video_codec.plType);
   if (rtp_rtcp_->RegisterSendPayload(video_codec) != 0) {
     return -1;
-  }
-  if (restart_rtp) {
-    rtp_rtcp_->SetSendingStatus(true);
-    for (std::list<RtpRtcp*>::iterator it = simulcast_rtp_rtcp_.begin();
-         it != simulcast_rtp_rtcp_.end(); ++it) {
-      (*it)->SetSendingStatus(true);
-      (*it)->SetSendingMediaStatus(true);
-    }
   }
   return 0;
 }
@@ -1627,52 +1559,29 @@ int32_t ViEChannel::StopRTPDump(RTPDirections direction) {
   }
 }
 
-//int32_t ViEChannel::StartSend() {
-//  CriticalSectionScoped cs(callback_cs_.get());
-//  if (!external_transport_) {
-//    LOG(LS_ERROR) << "No transport set.";
-//    return -1;
-//  }
-//  rtp_rtcp_->SetSendingMediaStatus(true);
-//
-//  if (rtp_rtcp_->Sending()) {
-//    return kViEBaseAlreadySending;
-//  }
-//  if (rtp_rtcp_->SetSendingStatus(true) != 0) {
-//    return -1;
-//  }
-//  CriticalSectionScoped cs_rtp(rtp_rtcp_cs_.get());
-//  for (std::list<RtpRtcp*>::const_iterator it = simulcast_rtp_rtcp_.begin();
-//       it != simulcast_rtp_rtcp_.end();
-//       it++) {
-//    RtpRtcp* rtp_rtcp = *it;
-//    rtp_rtcp->SetSendingMediaStatus(true);
-//    rtp_rtcp->SetSendingStatus(true);
-//  }
-//  return 0;
-//}
-
 int32_t ViEChannel::StopSend() {
   UpdateHistogramsAtStopSend();
   CriticalSectionScoped cs(rtp_rtcp_cs_.get());
-  rtp_rtcp_->SetSendingMediaStatus(false);
-  for (std::list<RtpRtcp*>::iterator it = simulcast_rtp_rtcp_.begin();
-       it != simulcast_rtp_rtcp_.end();
+  default_rtp_rtcp_->SetSendingMediaStatus(false);
+  module_process_thread_.DeRegisterModule(default_rtp_rtcp_);
+  for (std::list<RtpRtcp*>::iterator it = default_simulcast_rtp_rtcp_.begin();
+       it != default_simulcast_rtp_rtcp_.end();
        it++) {
     RtpRtcp* rtp_rtcp = *it;
     rtp_rtcp->SetSendingMediaStatus(false);
+	module_process_thread_.DeRegisterModule(rtp_rtcp);
   }
-  if (!rtp_rtcp_->Sending()) {
+  if (!default_rtp_rtcp_->Sending()) {
     return kViEBaseNotSending;
   }
 
   // Reset.
-  rtp_rtcp_->ResetSendDataCountersRTP();
-  if (rtp_rtcp_->SetSendingStatus(false) != 0) {
+  default_rtp_rtcp_->ResetSendDataCountersRTP();
+  if (default_rtp_rtcp_->SetSendingStatus(false) != 0) {
     return -1;
   }
-  for (std::list<RtpRtcp*>::iterator it = simulcast_rtp_rtcp_.begin();
-       it != simulcast_rtp_rtcp_.end();
+  for (std::list<RtpRtcp*>::iterator it = default_simulcast_rtp_rtcp_.begin();
+       it != default_simulcast_rtp_rtcp_.end();
        it++) {
     RtpRtcp* rtp_rtcp = *it;
     rtp_rtcp->ResetSendDataCountersRTP();
@@ -1682,7 +1591,7 @@ int32_t ViEChannel::StopSend() {
 }
 
 bool ViEChannel::Sending() {
-  return rtp_rtcp_->Sending();
+  return default_rtp_rtcp_->Sending();
 }
 
 int32_t ViEChannel::StartReceive() {
@@ -1830,12 +1739,12 @@ int32_t ViEChannel::ReceivedRTCPPacket(
 }
 
 int32_t ViEChannel::SetMTU(uint16_t mtu) {
-  if (rtp_rtcp_->SetMaxTransferUnit(mtu) != 0) {
+  if (default_rtp_rtcp_->SetMaxTransferUnit(mtu) != 0) {
     return -1;
   }
   CriticalSectionScoped cs(rtp_rtcp_cs_.get());
-  for (std::list<RtpRtcp*>::iterator it = simulcast_rtp_rtcp_.begin();
-       it != simulcast_rtp_rtcp_.end();
+  for (std::list<RtpRtcp*>::iterator it = default_simulcast_rtp_rtcp_.begin();
+       it != default_simulcast_rtp_rtcp_.end();
        it++) {
     RtpRtcp* rtp_rtcp = *it;
     rtp_rtcp->SetMaxTransferUnit(mtu);
@@ -2382,7 +2291,18 @@ void  ViEChannel::IncomingRTPPacket(const int8_t* rtp_packet,
 		}
 	}
 	//sean add end 20140705 video conference
+	if (event_log_)
+		event_log_->LogRtpHeader(kIncomingPacket, 
+								MediaType::VIDEO, 
+								reinterpret_cast<const uint8_t*>(rtp_packet), 
+								rtp_packet_length);
 
+	const uint8_t* rtp_pp = reinterpret_cast<const uint8_t*>(rtp_packet);
+	/*uint16_t*/ seq_num = rtp_pp[2] << 8 | rtp_pp[3];
+	uint16_t transport_seq_num = rtp_pp[17] << 8 | rtp_pp[18];
+	LOG(LS_ERROR) << "--------------[bwe][Probe][Vie_channel][IncomingRTPPacket] "
+		<< "transport_sequence_num = " << transport_seq_num
+		<< " , sequence_num = " << seq_num;
 	vie_receiver_.ReceivedRTPPacket(rtp_packet, rtp_packet_length,cloopenwebrtc::PacketTime());
 }
 
@@ -2454,7 +2374,12 @@ void  ViEChannel::IncomingRTCPPacket(const int8_t* rtcp_packet,
             return;
         }
     }
-    
+	if (event_log_)
+		event_log_->LogRtcpPacket(kIncomingPacket,
+								MediaType::ANY,
+								reinterpret_cast<const uint8_t*>(rtcp_packet),
+								rtcp_packet_length);
+
 	vie_receiver_.ReceivedRTCPPacket(rtcp_packet, rtcp_packet_length);
 }
 
@@ -2970,22 +2895,22 @@ int32_t ViEChannel::StartSend() {
 		}
 	}
 #endif
-	rtp_rtcp_->SetSendingMediaStatus(true);
 
 	if (!isSVCChannel_) {//if svc, simulcast not call this function
-		if (rtp_rtcp_->Sending()) {
+		if (default_rtp_rtcp_->Sending()) {
 			// Already sending.
 			WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 				"%s: Already sending", __FUNCTION__);
 			return kViEBaseAlreadySending;
 		}
 	}
-
-	if (rtp_rtcp_->SetSendingStatus(true) != 0) {
+	if (default_rtp_rtcp_->SetSendingStatus(true) != 0) {
 		WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 			"%s: Could not start sending RTP", __FUNCTION__);
 		return -1;
 	}
+
+	module_process_thread_.RegisterModule(default_rtp_rtcp_);
 	CriticalSectionScoped cs_rtp(rtp_rtcp_cs_.get());
 	for (std::list<RtpRtcp*>::const_iterator it = simulcast_rtp_rtcp_.begin();
 		it != simulcast_rtp_rtcp_.end();
@@ -2993,6 +2918,7 @@ int32_t ViEChannel::StartSend() {
 			RtpRtcp* rtp_rtcp = *it;
 			rtp_rtcp->SetSendingMediaStatus(true);
 			rtp_rtcp->SetSendingStatus(true);
+			module_process_thread_.RegisterModule(rtp_rtcp);
 	}
 	return 0;
 }
@@ -3248,4 +3174,18 @@ ReceiveStatisticsProxy* ViEChannel::GetReceiveStatisticsProxy()
 	return receive_statistics_proxy_.get();
 }
 
+RtpReceiver* ViEChannel::GetRtpReceiver() {
+	return vie_receiver_.GetRtpReceiver();
+}
+
+void ViEChannel::SetRtcEventLog(RtcEventLog *event_log)
+{
+	event_log_ = event_log;
+}
+
+
+void ViEChannel::SetDefaultSimulcatRtpRtcp(std::list<RtpRtcp*> default_simulcast_rtp_rtcp)
+{
+	default_simulcast_rtp_rtcp_ = default_simulcast_rtp_rtcp;
+}
 }  // namespace webrtc

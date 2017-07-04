@@ -168,6 +168,7 @@
     <ClInclude Include="source\stats_types.h" />
     <ClInclude Include="source\video_send_stream.h" />
     <ClInclude Include="source\vie_encryption_impl.h" />
+    <ClInclude Include="source\video\encoder_rtcp_feedback.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\vie_base_impl.cc">
@@ -290,5 +291,6 @@
     <ClCompile Include="source\stats_types.cc" />
     <ClCompile Include="source\video_send_stream.cc" />
     <ClCompile Include="source\vie_encryption_impl.cc" />
+    <ClCompile Include="source\video\encoder_rtcp_feedback.cc" />
   </ItemGroup>
 </Project>

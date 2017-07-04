@@ -25,6 +25,8 @@
 #include "voe_video_sync.h"
 
 #include "send_statistics_proxy.h"
+#include "../module/utility/include/process_thread.h"
+#include "../logging/rtc_event_log/rtc_event_log.h"
 
 namespace cloopenwebrtc {
 
@@ -41,13 +43,22 @@ ViEChannelManager::ViEChannelManager(
       voice_engine_(NULL),
       module_process_thread_(NULL),
       engine_config_(config),
-	  udptransport_critsect_(CriticalSectionWrapper::CreateCriticalSection()){
+	  udptransport_critsect_(CriticalSectionWrapper::CreateCriticalSection()),
+	  rtc_event_log_(RtcEventLog::Create()),
+	  pacer_thread_(ProcessThread::CreateProcessThread()),
+	  use_sendside_bwe_(true),
+	  call_stats_(new CallStats()){
+
   for (int idx = 0; idx < free_channel_ids_size_; idx++) {
     free_channel_ids_[idx] = true;
   }
 }
 
 ViEChannelManager::~ViEChannelManager() {
+	//clean up pacer_thread
+	pacer_thread_->Stop();
+	ProcessThread::DestroyProcessThread(pacer_thread_);
+	module_process_thread_->DeRegisterModule(call_stats_.get());
   while (channel_map_.size() > 0) {
     ChannelMap::iterator it = channel_map_.begin();
     // DeleteChannel will erase this channel from the map and invalidate |it|.
@@ -78,6 +89,7 @@ ViEChannelManager::~ViEChannelManager() {
 	  delete udptransport_critsect_;
 	  udptransport_critsect_ = NULL;
   }
+  rtc_event_log_->StopLogging();
   assert(channel_groups_.empty());
   assert(channel_map_.empty());
   assert(vie_encoder_map_.empty());
@@ -101,19 +113,46 @@ int ViEChannelManager::CreateChannel(int* channel_id,
   }
 
   // Create a new channel group and add this channel.
-  ChannelGroup* group = new ChannelGroup(engine_id_, module_process_thread_,
-                                         channel_group_config);
-  BitrateController* bitrate_controller = group->GetBitrateController();
+  if (!congestion_controller_.get())
+  {
+	  congestion_controller_.reset(new CongestionController(Clock::GetRealTimeClock(),
+									this,
+									&remb_,
+									rtc_event_log_.get(),
+									&packet_router_));
+	  //set bwe config
+	  //congestion_controller_->SignalNetworkState(kNetworkDown);
+	  congestion_controller_->pacer()->SetEstimatedBitrate(300000);
+	  congestion_controller_->SetBweBitrates(30000, 300000, 2000000);
+  }
+
+  BitrateController* bitrate_controller = congestion_controller_->GetBitrateController();
+  PacedSender* paced_sender = congestion_controller_->pacer();
+  RemoteBitrateEstimator* remote_bitrate_estimator =
+	  congestion_controller_->GetRemoteBitrateEstimator(use_sendside_bwe_);
+
+  ChannelGroup* group = new ChannelGroup(engine_id_, 
+										module_process_thread_,
+										channel_group_config,
+										bitrate_controller,
+										remote_bitrate_estimator,
+										&remb_,
+										call_stats_.get());
+
   ViEEncoder* vie_encoder = new ViEEncoder(engine_id_, new_channel_id,
                                            number_of_cores_,
                                            engine_config_,
                                            *module_process_thread_,
-                                           bitrate_controller);
+                                           bitrate_controller,
+										   paced_sender,
+										   &packet_router_,
+											congestion_controller_->GetTransportFeedbackObserver(),
+											congestion_controller_->GetRetransmissionRateLimiter(),
+											rtc_event_log_.get());
 
   RtcpBandwidthObserver* bandwidth_observer =
       bitrate_controller->CreateRtcpBandwidthObserver();
-  RemoteBitrateEstimator* remote_bitrate_estimator =
-      group->GetRemoteBitrateEstimator();
+
   EncoderStateFeedback* encoder_state_feedback =
       group->GetEncoderStateFeedback();
   RtcpRttStats* rtcp_rtt_stats =
@@ -203,11 +242,11 @@ int ViEChannelManager::CreateChannel(int* channel_id,
   if (new_channel_id == -1) {
     return -1;
   }
-  BitrateController* bitrate_controller = channel_group->GetBitrateController();
+  BitrateController* bitrate_controller = congestion_controller_->GetBitrateController();
   RtcpBandwidthObserver* bandwidth_observer =
       bitrate_controller->CreateRtcpBandwidthObserver();
   RemoteBitrateEstimator* remote_bitrate_estimator =
-      channel_group->GetRemoteBitrateEstimator();
+	  congestion_controller_->GetRemoteBitrateEstimator(use_sendside_bwe_);
   EncoderStateFeedback* encoder_state_feedback =
       channel_group->GetEncoderStateFeedback();
     RtcpRttStats* rtcp_rtt_stats =
@@ -219,7 +258,12 @@ int ViEChannelManager::CreateChannel(int* channel_id,
     vie_encoder = new ViEEncoder(engine_id_, new_channel_id, number_of_cores_,
                                  engine_config_,
                                  *module_process_thread_,
-                                 bitrate_controller);
+                                 bitrate_controller,
+								 congestion_controller_->pacer(),
+								 &packet_router_,
+								 congestion_controller_->GetTransportFeedbackObserver(),
+		                         congestion_controller_->GetRetransmissionRateLimiter(),
+								  rtc_event_log_.get());
     if (!(vie_encoder->Init() &&
         CreateChannelObject(
             new_channel_id,
@@ -358,6 +402,12 @@ int ViEChannelManager::DeleteChannel(int channel_id) {
 	  DeleteUdptransport(transport);
   }
   LOG(LS_VERBOSE) << "Channel deleted " << channel_id;
+  
+   if (channel_map_.empty())
+  {
+	  congestion_controller_.reset();
+  }
+
   return 0;
 }
 
@@ -439,7 +489,8 @@ bool ViEChannelManager::SetReservedTransmitBitrate(
     return false;
   }
 
-  BitrateController* bitrate_controller = group->GetBitrateController();
+  //BitrateController* bitrate_controller = group->GetBitrateController();
+  BitrateController* bitrate_controller = congestion_controller_->GetBitrateController();
   bitrate_controller->SetReservedBitrate(reserved_transmit_bitrate_bps);
   return true;
 }
@@ -510,7 +561,7 @@ bool ViEChannelManager::CreateChannelObject(
     RtcpRttStats* rtcp_rtt_stats,
     RtcpIntraFrameObserver* intra_frame_observer,
     bool sender) {
-  PacedSender* paced_sender = vie_encoder->GetPacedSender();
+  PacedSender* paced_sender = congestion_controller_->pacer();
 
   // Register the channel at the encoder.
   RtpRtcp* send_rtp_rtcp_module = vie_encoder->SendRtpRtcpModule();
@@ -525,7 +576,8 @@ bool ViEChannelManager::CreateChannelObject(
                                            rtcp_rtt_stats,
                                            paced_sender,
                                            send_rtp_rtcp_module,
-                                           sender);
+                                           sender,
+										   congestion_controller_->GetTransportFeedbackObserver());
   if (vie_channel->Init() != 0) {
     delete vie_channel;
     return false;
@@ -540,7 +592,8 @@ bool ViEChannelManager::CreateChannelObject(
     return false;
   }
 
-  vie_encoder->SetTransport(vie_channel->GetVieSender()); //add by ylr.
+  vie_encoder->SendRtpRtcpModule()->RegisterRtpReceiver(vie_channel->GetRtpReceiver());
+  vie_channel->SetRtcEventLog(rtc_event_log_.get());
   // Store the channel, add it to the channel group and save the vie_encoder.
   channel_map_[channel_id] = vie_channel;
   vie_encoder_map_[channel_id] = vie_encoder;
@@ -632,6 +685,45 @@ void ViEChannelManager::ChannelsUsingViEEncoder(int channel_id,
       channels->push_back(c_it->second);
     }
   }
+}
+
+void ViEChannelManager::OnNetworkChanged(uint32_t bitrate_bps,
+										uint8_t fraction_loss,
+										int64_t rtt_ms,
+										int64_t probing_interval_ms)
+{
+	//todo : tell vie_encoder, later we can add bitrateAllocator here 
+	;
+	for (EncoderMap::iterator it=vie_encoder_map_.begin(); it!=vie_encoder_map_.end(); it++)
+	{
+		ViEEncoder *vie_encoder = it->second;
+		vie_encoder->OnNetworkChanged(bitrate_bps, fraction_loss, rtt_ms);
+	}
+}
+
+void ViEChannelManager::UpdateNetworkState(int channel_id, bool startSend)
+{
+	//need to fix: multi channel
+	if (startSend)
+	{
+		call_stats_->RegisterStatsObserver(congestion_controller_.get());
+		module_process_thread_->RegisterModule(call_stats_.get());
+		module_process_thread_->RegisterModule(congestion_controller_.get());
+		pacer_thread_->RegisterModule(congestion_controller_->pacer());
+		pacer_thread_->RegisterModule(congestion_controller_->GetRemoteBitrateEstimator(true));
+		pacer_thread_->Start();
+		congestion_controller_->SignalNetworkState(kNetworkUp);
+	}
+	else {
+		//clean up pacer_thread
+		pacer_thread_->Stop();
+		pacer_thread_->DeRegisterModule(congestion_controller_->pacer());
+		pacer_thread_->DeRegisterModule(congestion_controller_->GetRemoteBitrateEstimator(true));
+		module_process_thread_->DeRegisterModule(call_stats_.get());
+		module_process_thread_->DeRegisterModule(congestion_controller_.get());
+		call_stats_->DeregisterStatsObserver(congestion_controller_.get());
+		congestion_controller_->SignalNetworkState(kNetworkDown);
+	}	
 }
 
 UdpTransport *ViEChannelManager::CreateUdptransport(int rtp_port, int rtcp_port) {

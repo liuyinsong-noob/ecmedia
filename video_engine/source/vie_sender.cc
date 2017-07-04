@@ -166,7 +166,7 @@ int ViESender::SendRtcp(int vie_id, const uint8_t* packet, size_t length) {
   if (!transport_) {
     return -1;
   }
-  assert(ChannelId(vie_id) == channel_id_);
+//  assert(ChannelId(vie_id) == channel_id_);
 
   // Prepare for possible encryption and sending.
   // TODO(mflodman) Change decrypt to get rid of this cast.

@@ -37,6 +37,11 @@
 #include <math.h>
 #include "send_statistics_proxy.h"
 #include "vie_sender.h"
+#include "../module/pacing/packet_router.h"
+#include "../module/congestion_controller/transport_feedback_adapter.h"
+#include "../logging/rtc_event_log/rtc_event_log.h"
+#include "../base/rate_limiter.h"
+#include "./video/encoder_rtcp_feedback.h"
 
 
 namespace cloopenwebrtc {
@@ -145,7 +150,12 @@ ViEEncoder::ViEEncoder(int32_t engine_id,
                        uint32_t number_of_cores,
                        const Config& config,
                        ProcessThread& module_process_thread,
-                       BitrateController* bitrate_controller)
+                       BitrateController* bitrate_controller,
+					   PacedSender* paced_sender,
+					   PacketRouter* packet_router,
+					   TransportFeedbackObserver* transport_feedback_observer,
+					   RateLimiter* retransmission_rate_limiter,
+					   RtcEventLog* rtc_event_log)
   : engine_id_(engine_id),
     channel_id_(channel_id),
     number_of_cores_(number_of_cores),
@@ -179,17 +189,55 @@ ViEEncoder::ViEEncoder(int32_t engine_id,
     capture_(NULL),
     capture_id_(-1),
 	encoded_packet_observer_(NULL),
-	packet_observer_cs_(CriticalSectionWrapper::CreateCriticalSection()){
+	packet_observer_cs_(CriticalSectionWrapper::CreateCriticalSection()),
+	paced_sender_(paced_sender),
+	packet_router_(packet_router),
+	transport_feedback_observer_(transport_feedback_observer),
+	retransmission_rate_limiter_(retransmission_rate_limiter),
+	rtc_event_log_(rtc_event_log){ 
   bitrate_observer_.reset(new ViEBitrateObserver(this));
   pacing_callback_.reset(new ViEPacedSenderCallback(this));
-  paced_sender_.reset(new PacedSender(Clock::GetRealTimeClock(), pacing_callback_.get()));
   send_statistics_proxy_.reset(new SendStatisticsProxy(channel_id));
+  encoder_feedback_.reset(new EncoderRtcpFeedback(Clock::GetRealTimeClock(),
+						  std::vector<uint32_t>(), //need to fix: by ylr
+						  this));
   RtpRtcp::Configuration configuration;
   configuration.id = ViEModuleId(engine_id_, channel_id_);
   configuration.audio = false;  // Video.
-  configuration.paced_sender = paced_sender_.get();
+  configuration.paced_sender = paced_sender_;
+  configuration.transport_sequence_number_allocator = packet_router_;
+  configuration.transport_feedback_callback = transport_feedback_observer;
+  configuration.retransmission_rate_limiter = retransmission_rate_limiter;
+  configuration.event_log = rtc_event_log_;
+  configuration.intra_frame_callback = this/*encoder_feedback_.get()*/;
 
   default_rtp_rtcp_.reset(RtpRtcp::CreateRtpRtcp(configuration));
+  //need to fix: ylr
+  default_rtp_rtcp_->SetSendingMediaStatus(true);
+  default_rtp_rtcp_->RegisterSendRtpHeaderExtension(kRtpExtensionTransportSequenceNumber, 5);
+  default_rtp_rtcp_->SetRTCPStatus(kCompound);
+
+  uint32_t ssrc = 1009;
+  default_rtp_rtcp_->SetSSRC(ssrc);
+
+  packet_router_->AddRtpModule(default_rtp_rtcp_.get());
+  std::vector<uint32_t> ssrcs;
+  ssrcs.push_back(ssrc);
+  encoder_feedback_->SetSsrcs(ssrcs); //need to fix: by ylr
+}
+
+RtpRtcp* ViEEncoder::CreateRtpRtcpModule() {
+	RtpRtcp::Configuration configuration;
+	configuration.id = ViEModuleId(engine_id_, channel_id_);
+	configuration.audio = false;  // Video.
+	configuration.paced_sender = paced_sender_;
+	configuration.transport_sequence_number_allocator = packet_router_;
+	configuration.transport_feedback_callback = transport_feedback_observer_;
+	configuration.retransmission_rate_limiter = retransmission_rate_limiter_;
+	configuration.event_log = rtc_event_log_;
+	configuration.intra_frame_callback = this/*encoder_feedback_.get()*/;
+
+	return RtpRtcp::CreateRtpRtcp(configuration);
 }
 
 bool ViEEncoder::Init() {
@@ -202,8 +250,7 @@ bool ViEEncoder::Init() {
   vpm_.EnableContentAnalysis(true);
 
   if (module_process_thread_.RegisterModule(&vcm_) != 0 ||
-      module_process_thread_.RegisterModule(default_rtp_rtcp_.get()) != 0 ||
-      module_process_thread_.RegisterModule(paced_sender_.get()) != 0) {
+      module_process_thread_.RegisterModule(default_rtp_rtcp_.get()) != 0) {
     return false;
   }
 
@@ -253,6 +300,15 @@ bool ViEEncoder::Init() {
 }
 
 ViEEncoder::~ViEEncoder() {
+  packet_router_->RemoveRtpModule(default_rtp_rtcp_.get());
+  while (default_simulcast_rtp_rtcp_.size() > 0)
+  {
+	  packet_router_->RemoveRtpModule(*default_simulcast_rtp_rtcp_.begin());
+	  RtpRtcp* rtp_rtcp = *default_simulcast_rtp_rtcp_.begin();
+	  default_simulcast_rtp_rtcp_.pop_front();
+	  module_process_thread_.DeRegisterModule(rtp_rtcp);
+	  delete rtp_rtcp;
+  }
   UpdateHistograms();
   if (bitrate_controller_) {
     //bitrate_controller_->RemoveBitrateObserver(bitrate_observer_.get());
@@ -261,7 +317,6 @@ ViEEncoder::~ViEEncoder() {
   module_process_thread_.DeRegisterModule(&vcm_);
   module_process_thread_.DeRegisterModule(&vpm_);
   module_process_thread_.DeRegisterModule(default_rtp_rtcp_.get());
-  module_process_thread_.DeRegisterModule(paced_sender_.get());  
   VideoCodingModule::Destroy(&vcm_);
   VideoProcessingModule::Destroy(&vpm_);
 
@@ -376,6 +431,19 @@ int32_t ViEEncoder::DeRegisterExternalEncoder(uint8_t pl_type) {
 }
 
 int32_t ViEEncoder::SetEncoder(const cloopenwebrtc::VideoCodec& video_codec) {
+
+
+	if (video_codec.codecType == kVideoCodecRED ||
+		video_codec.codecType == kVideoCodecULPFEC) {
+		LOG_F(LS_ERROR) << "Not a valid send codec " << video_codec.codecType;
+		return -1;
+	}
+	if (kMaxSimulcastStreams < video_codec.numberOfSimulcastStreams) {
+		LOG_F(LS_ERROR) << "Incorrect config "
+			<< video_codec.numberOfSimulcastStreams;
+		return -1;
+	}
+
   // Setting target width and height for VPM.
   if (vpm_.SetTargetResolution(video_codec.width, video_codec.height,
                                video_codec.maxFramerate) != VPM_OK) {
@@ -390,6 +458,112 @@ int32_t ViEEncoder::SetEncoder(const cloopenwebrtc::VideoCodec& video_codec) {
   if (default_rtp_rtcp_->RegisterSendPayload(video_codec) != 0) {
     return -1;
   }
+  //------simulcast begin
+  //CriticalSectionScoped cs(rtp_rtcp_cs_.get());
+
+  if (video_codec.numberOfSimulcastStreams > 0) {
+	  // Set correct bitrate to base layer.
+	  // Create our simulcast RTP modules.
+	  int num_modules_to_add = video_codec.numberOfSimulcastStreams -
+		  default_simulcast_rtp_rtcp_.size() - 1;
+	  if (num_modules_to_add < 0) {
+		  num_modules_to_add = 0;
+	  }
+
+	  // Add back removed rtp modules. Order is important (allocate from front of
+	  // removed modules) to preserve RTP settings such as SSRCs for simulcast
+	  // streams.
+	  std::list<RtpRtcp*> new_rtp_modules;
+	  for (; default_removed_rtp_rtcp_.size() > 0 && num_modules_to_add > 0;
+		  --num_modules_to_add) {
+		  new_rtp_modules.push_back(default_removed_rtp_rtcp_.front());
+		  default_removed_rtp_rtcp_.pop_front();
+	  }
+
+	  for (int i = 0; i < num_modules_to_add; ++i)
+		  new_rtp_modules.push_back(CreateRtpRtcpModule());
+
+	  // Initialize newly added modules.
+	  for (std::list<RtpRtcp*>::iterator it = new_rtp_modules.begin();
+		  it != new_rtp_modules.end();
+		  ++it) {
+		  RtpRtcp* rtp_rtcp = *it;
+
+		  rtp_rtcp->SetRTCPStatus(default_rtp_rtcp_->RTCP());
+
+		  if (default_rtp_rtcp_->StorePackets()) {
+			  rtp_rtcp->SetStorePacketsStatus(true, kSendSidePacketHistorySize);
+		  }
+		  else if (paced_sender_) {
+			  rtp_rtcp->SetStorePacketsStatus(true, kSendSidePacketHistorySize);
+		  }
+
+		  rtp_rtcp->SetSendingStatus(default_rtp_rtcp_->Sending());
+		  rtp_rtcp->SetSendingMediaStatus(default_rtp_rtcp_->SendingMedia());
+		  rtp_rtcp->SetRtxSendStatus(default_rtp_rtcp_->RtxSendStatus());
+
+		  rtp_rtcp->RegisterSendRtpHeaderExtension(kRtpExtensionTransportSequenceNumber, 5);
+		  rtp_rtcp->SetRTCPStatus(kCompound);
+		  rtp_rtcp->SetTransport(default_rtp_rtcp_->GetTransport());
+		  uint32_t ssrc = 1009;
+		  ssrc += 100;
+		  rtp_rtcp->SetSSRC(ssrc);
+		  packet_router_->AddRtpModule(rtp_rtcp);
+		  std::vector<uint32_t> ssrcs;
+		  ssrcs.push_back(ssrc);
+		  encoder_feedback_->SetSsrcs(ssrcs); //need to fix: by ylr
+
+		  default_simulcast_rtp_rtcp_.push_back(rtp_rtcp);
+		  // Silently ignore error.
+		  module_process_thread_.RegisterModule(rtp_rtcp);
+	  }
+
+	  // Remove last in list if we have too many.
+	  for (int j = default_simulcast_rtp_rtcp_.size();
+		  j > (video_codec.numberOfSimulcastStreams - 1);
+		  j--) {
+		  RtpRtcp* rtp_rtcp = default_simulcast_rtp_rtcp_.back();
+		  module_process_thread_.DeRegisterModule(rtp_rtcp);
+		  rtp_rtcp->SetSendingStatus(false);
+		  rtp_rtcp->SetSendingMediaStatus(false);
+		  rtp_rtcp->RegisterRtcpStatisticsCallback(NULL);
+		  rtp_rtcp->RegisterSendChannelRtpStatisticsCallback(NULL);
+		  default_simulcast_rtp_rtcp_.pop_back();
+		  default_removed_rtp_rtcp_.push_front(rtp_rtcp);
+	  }
+	  uint8_t idx = 0;
+	  // Configure all simulcast modules.
+	  for (std::list<RtpRtcp*>::iterator it = default_simulcast_rtp_rtcp_.begin();
+		  it != default_simulcast_rtp_rtcp_.end();
+		  it++) {
+		  idx++;
+		  RtpRtcp* rtp_rtcp = *it;
+		  rtp_rtcp->DeRegisterSendPayload(video_codec.plType);
+		  if (rtp_rtcp->RegisterSendPayload(video_codec) != 0) {
+			  return -1;
+		  }
+		  
+		  rtp_rtcp->RegisterRtcpStatisticsCallback(
+			  default_rtp_rtcp_->GetRtcpStatisticsCallback());
+		  rtp_rtcp->RegisterSendChannelRtpStatisticsCallback(
+			  default_rtp_rtcp_->GetSendChannelRtpStatisticsCallback());
+	  }
+  }
+  else {
+	  while (!default_simulcast_rtp_rtcp_.empty()) {
+		  RtpRtcp* rtp_rtcp = default_simulcast_rtp_rtcp_.back();
+		  module_process_thread_.DeRegisterModule(rtp_rtcp);
+		  rtp_rtcp->SetSendingStatus(false);
+		  rtp_rtcp->SetSendingMediaStatus(false);
+		  rtp_rtcp->RegisterRtcpStatisticsCallback(NULL);
+		  rtp_rtcp->RegisterSendChannelRtpStatisticsCallback(NULL);
+		  default_simulcast_rtp_rtcp_.pop_back();
+		  default_removed_rtp_rtcp_.push_front(rtp_rtcp);
+	  }
+	  // Clear any previous modules.
+  }
+  //------simulcast end
+
   // Convert from kbps to bps.
   std::vector<uint32_t> stream_bitrates = AllocateStreamBitrates(
       video_codec.startBitrate * 1000,
@@ -409,28 +583,10 @@ int32_t ViEEncoder::SetEncoder(const cloopenwebrtc::VideoCodec& video_codec) {
     return -1;
   }
 
-  // Set this module as sending right away, let the slave module in the channel
-  // start and stop sending.
-  if (default_rtp_rtcp_->SetSendingStatus(true) != 0) {
-    return -1;
-  }
-
-#if 0
-  bitrate_controller_->SetBitrateObserver(bitrate_observer_.get(),
-                                          video_codec.startBitrate * 1000,
-                                          video_codec.minBitrate * 1000,
-                                          kTransmissionMaxBitrateMultiplier *
-                                          video_codec.maxBitrate * 1000);
-  bitrate_controller_->SetCodecMode(video_codec.mode);
-#endif
-
   CriticalSectionScoped crit(data_cs_.get());
   int pad_up_to_bitrate_kbps = video_codec.startBitrate;
   if (pad_up_to_bitrate_kbps < min_transmit_bitrate_kbps_)
     pad_up_to_bitrate_kbps = min_transmit_bitrate_kbps_;
-
-  paced_sender_->SetEstimatedBitrate(video_codec.startBitrate);
-  paced_sender_->SetSendBitrateLimits(pad_up_to_bitrate_kbps, PacedSender::kDefaultPaceMultiplier * video_codec.startBitrate);
 
   if (send_statistics_proxy_)
   {
@@ -808,11 +964,28 @@ int32_t ViEEncoder::SendData(
   }
 
   // New encoded data, hand over to the rtp module.
-  return default_rtp_rtcp_->SendOutgoingData(
-      VCMEncodedFrame::ConvertFrameType(encoded_image._frameType), payload_type,
-      encoded_image._timeStamp, encoded_image.capture_time_ms_,
-      encoded_image._buffer, encoded_image._length, &fragmentation_header,
-      rtp_video_hdr, nullptr);
+  int stream_index = rtp_video_hdr->simulcastIdx;
+
+  if (stream_index == 0){
+	  return default_rtp_rtcp_->SendOutgoingData(
+		  VCMEncodedFrame::ConvertFrameType(encoded_image._frameType), payload_type,
+		  encoded_image._timeStamp, encoded_image.capture_time_ms_,
+		  encoded_image._buffer, encoded_image._length, &fragmentation_header,
+		  rtp_video_hdr, nullptr);
+  }
+  else {
+	  std::list<RtpRtcp*>::iterator it = default_simulcast_rtp_rtcp_.begin();
+	  for (int i = 0; i < stream_index-1; i++) {
+		  it++;
+	  }
+	  RtpRtcp* default_rtp_rtcp = *it;
+	  return default_rtp_rtcp->SendOutgoingData(
+		  VCMEncodedFrame::ConvertFrameType(encoded_image._frameType), payload_type,
+		  encoded_image._timeStamp, encoded_image.capture_time_ms_,
+		  encoded_image._buffer, encoded_image._length, &fragmentation_header,
+		  rtp_video_hdr, nullptr);
+	   
+  }
 }
 
 int32_t ViEEncoder::ProtectionRequest(
@@ -821,8 +994,9 @@ int32_t ViEEncoder::ProtectionRequest(
     uint32_t* sent_video_rate_bps,
     uint32_t* sent_nack_rate_bps,
     uint32_t* sent_fec_rate_bps) {
+	uint32_t not_used;
   default_rtp_rtcp_->SetFecParameters(delta_fec_params, key_fec_params);
-  default_rtp_rtcp_->BitrateSent(NULL, sent_video_rate_bps, sent_fec_rate_bps,
+  default_rtp_rtcp_->BitrateSent(&not_used, sent_video_rate_bps, sent_fec_rate_bps,
                                 sent_nack_rate_bps);
   return 0;
 }
@@ -1019,8 +1193,8 @@ void ViEEncoder::OnNetworkChanged(uint32_t bitrate_bps,
     if (pad_up_to_bitrate_kbps > bitrate_kbps)
       pad_up_to_bitrate_kbps = bitrate_kbps;
 
-	paced_sender_->SetEstimatedBitrate(bitrate_kbps);
-	paced_sender_->SetSendBitrateLimits(pad_up_to_bitrate_kbps, PacedSender::kDefaultPaceMultiplier * bitrate_kbps);
+// 	paced_sender_->SetEstimatedBitrate(bitrate_kbps);
+// 	paced_sender_->SetSendBitrateLimits(pad_up_to_bitrate_kbps, PacedSender::kDefaultPaceMultiplier * bitrate_kbps);
 
     //default_rtp_rtcp_->SetTargetSendBitrate(stream_bitrates);
     if (video_suspended_ == video_is_suspended)
@@ -1041,7 +1215,7 @@ void ViEEncoder::OnNetworkChanged(uint32_t bitrate_bps,
 }
 
 PacedSender* ViEEncoder::GetPacedSender() {
-  return paced_sender_.get();
+  return paced_sender_;
 }
 
 int32_t ViEEncoder::RegisterEffectFilter(ViEEffectFilter* effect_filter) {

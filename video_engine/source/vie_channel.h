@@ -59,6 +59,8 @@ class VideoCodingModule;
 class VideoDecoder;
 class VideoRenderCallback;
 class VoEVideoSync;
+class TransportFeedbackObserver;
+class RtcEventLog;
 
 enum ResolutionIndex
 {
@@ -114,7 +116,8 @@ class ViEChannel
              RtcpRttStats* rtt_stats,
              PacedSender* paced_sender,
              RtpRtcp* default_rtp_rtcp,
-             bool sender);
+             bool sender,
+	         TransportFeedbackObserver* transport_feedback_observer);
   ~ViEChannel();
 
   int32_t Init();
@@ -362,6 +365,9 @@ class ViEChannel
   // Gets the modules used by the channel.
   RtpRtcp* rtp_rtcp();
 
+  //Set simulcast send RtpRtcp modlule
+  void SetDefaultSimulcatRtpRtcp(std::list<RtpRtcp*> default_simulcast_rtp_rtcp);
+
   CallStatsObserver* GetStatsObserver();
 
   // Implements VCMReceiveCallback.
@@ -537,6 +543,7 @@ class ViEChannel
   scoped_ptr<CriticalSectionWrapper> rtp_rtcp_cs_;
 
   RtpRtcp* default_rtp_rtcp_;
+  std::list<RtpRtcp*> default_simulcast_rtp_rtcp_;
 
   // Owned modules/classes.
   scoped_ptr<RtpRtcp> rtp_rtcp_;
@@ -563,6 +570,7 @@ class ViEChannel
   RtcpIntraFrameObserver* intra_frame_observer_;
   RtcpRttStats* rtt_stats_;
   PacedSender* paced_sender_;
+  TransportFeedbackObserver* transport_feedback_observer_;
 
   scoped_ptr<RtcpBandwidthObserver> bandwidth_observer_;
   int send_timestamp_extension_id_;
@@ -589,6 +597,11 @@ class ViEChannel
 
   scoped_ptr<ReportBlockStats> report_block_stats_sender_;
   scoped_ptr<ReportBlockStats> report_block_stats_receiver_;
+
+  RtcEventLog *event_log_;
+
+public:
+	void SetRtcEventLog(RtcEventLog *event_log);
 
 //---begin
 
@@ -714,6 +727,8 @@ public:
     int32_t GetKeepAliveStatus(bool& enable,
                                      int8_t& unknownPayloadType,
                                      uint16_t& deltaTransmitTimeMS);
+
+	RtpReceiver* GetRtpReceiver();
 	private:
 		scoped_ptr<ReceiveStatisticsProxy> receive_statistics_proxy_;
 		onVideoConference _video_conf_cb;

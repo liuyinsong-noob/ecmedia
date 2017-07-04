@@ -192,6 +192,24 @@ bool ViEReceiver::SetReceiveAbsoluteSendTimeStatus(bool enable, int id) {
   }
 }
 
+bool ViEReceiver::SetReceiveTransportSeqNumStatus(bool enable, int id)
+{
+	if (enable) {
+		if (rtp_header_parser_->RegisterRtpHeaderExtension(
+			kRtpExtensionTransportSequenceNumber, id)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	else {
+		receiving_ast_enabled_ = false;
+		return rtp_header_parser_->DeregisterRtpHeaderExtension(
+			kRtpExtensionTransportSequenceNumber);
+	}
+}
+
 int ViEReceiver::ReceivedRTPPacket(const void* rtp_packet,
                                    size_t rtp_packet_length,
                                    const PacketTime& packet_time) {
@@ -201,8 +219,13 @@ int ViEReceiver::ReceivedRTPPacket(const void* rtp_packet,
 
 int ViEReceiver::ReceivedRTCPPacket(const void* rtcp_packet,
                                     size_t rtcp_packet_length) {
-  return InsertRTCPPacket(static_cast<const uint8_t*>(rtcp_packet),
-                          rtcp_packet_length);
+	int rtcpPktType = static_cast<const uint8_t*>(rtcp_packet)[1];
+
+	InsertRTCPPacket(static_cast<const uint8_t*>(rtcp_packet), rtcp_packet_length);
+
+
+	return InsertRtcpPacketToDefaultRtpRtcp(static_cast<const uint8_t*>(rtcp_packet),
+		rtcp_packet_length);
 }
 
 int32_t ViEReceiver::OnReceivedPayloadData(const uint8_t* payload_data,
@@ -587,5 +610,54 @@ int ViEReceiver::SetVideoDataCb(onEcMediaVideoData video_data_cb)
     }
     video_data_cb_ = video_data_cb;
     return 0;
+}
+
+void ViEReceiver::SetSendRtpRtcpModule(RtpRtcp* module)
+{
+	default_rtp_rtcp_ = module;
+}
+
+int ViEReceiver::InsertRtcpPacketToDefaultRtpRtcp(const uint8_t* rtcp_packet,
+	size_t rtcp_packet_length) {
+	CriticalSectionScoped cs(receive_cs_.get());
+	if (!receiving_) {
+		return -1;
+	}
+	// TODO(mflodman) Change decrypt to get rid of this cast.
+	unsigned char* received_packet = (unsigned char*)rtcp_packet;
+	int received_packet_length = rtcp_packet_length;
+	if (rtp_dump_) {
+		rtp_dump_->DumpPacket(received_packet, received_packet_length);
+	}
+
+// 	std::list<RtpRtcp*>::iterator it = rtp_rtcp_simulcast_.begin();
+// 	while (it != rtp_rtcp_simulcast_.end()) {
+// 		RtpRtcp* rtp_rtcp = *it++;
+// 		rtp_rtcp->IncomingRtcpPacket(received_packet, received_packet_length);
+// 	}
+
+	assert(default_rtp_rtcp_);  // Should be set by owner at construction time.
+	int ret = default_rtp_rtcp_->IncomingRtcpPacket(received_packet, received_packet_length);
+	if (ret != 0) {
+		return ret;
+	}
+
+	int64_t rtt = 0;
+	default_rtp_rtcp_->RTT(rtp_receiver_->SSRC(), &rtt, NULL, NULL, NULL);
+	if (rtt == 0) {
+		// Waiting for valid rtt.
+		return 0;
+	}
+	uint32_t ntp_secs = 0;
+	uint32_t ntp_frac = 0;
+	uint32_t rtp_timestamp = 0;
+	if (0 != default_rtp_rtcp_->RemoteNTP(&ntp_secs, &ntp_frac, NULL, NULL,
+		&rtp_timestamp)) {
+		// Waiting for RTCP.
+		return 0;
+	}
+	ntp_estimator_->UpdateRtcpTimestamp(rtt, ntp_secs, ntp_frac, rtp_timestamp);
+
+	return 0;
 }
 }  // namespace webrtc

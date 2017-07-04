@@ -267,6 +267,7 @@ int ViEBaseImpl::DisconnectAudioChannel(const int video_channel) {
 
 int ViEBaseImpl::StartSend(const int video_channel) {
   LOG_F(LS_INFO) << "StartSend: " << video_channel;
+  ViEChannelManager *channel_manager = shared_data_.channel_manager();
   ViEChannelManagerScoped cs(*(shared_data_.channel_manager()));
   ViEChannel* vie_channel = cs.Channel(video_channel);
   if (!vie_channel) {
@@ -296,19 +297,20 @@ int ViEBaseImpl::StartSend(const int video_channel) {
   }
   vie_encoder->SendKeyFrame();
   vie_encoder->Restart();
+  channel_manager->UpdateNetworkState(video_channel, true);
   return 0;
 }
 
 int ViEBaseImpl::StopSend(const int video_channel) {
   LOG_F(LS_INFO) << "StopSend " << video_channel;
-
+  ViEChannelManager *channel_manager = shared_data_.channel_manager();
   ViEChannelManagerScoped cs(*(shared_data_.channel_manager()));
   ViEChannel* vie_channel = cs.Channel(video_channel);
   if (!vie_channel) {
     shared_data_.SetLastError(kViEBaseInvalidChannelId);
     return -1;
   }
-
+  channel_manager->UpdateNetworkState(video_channel, false);
   int32_t error = vie_channel->StopSend();
   if (error != 0) {
     if (error == kViEBaseNotSending) {

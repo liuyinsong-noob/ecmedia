@@ -137,16 +137,19 @@ class WrappingBitrateEstimator : public RemoteBitrateEstimator {
 
 ChannelGroup::ChannelGroup(int engine_id,
                            ProcessThread* process_thread,
-                           const Config* config)
-    : remb_(new VieRemb()),
-      bitrate_controller_(
-          BitrateController::CreateBitrateController(Clock::GetRealTimeClock(),
-                                                     NULL)),
-      call_stats_(new CallStats()),
+                           const Config* config,
+							BitrateController* bitrate_controller,
+							RemoteBitrateEstimator* remote_bitrate_estimator,
+							VieRemb* remb,
+							CallStats* call_stats)
+    : remb_(remb),
+      call_stats_(call_stats),
       encoder_state_feedback_(new EncoderStateFeedback()),
       config_(config),
       own_config_(),
-      process_thread_(process_thread) {
+      process_thread_(process_thread),
+	  bitrate_controller_(bitrate_controller),
+	  remote_bitrate_estimator_(remote_bitrate_estimator){
   if (!config) {
     own_config_.reset(new Config);
     config_ = own_config_.get();
@@ -154,24 +157,11 @@ ChannelGroup::ChannelGroup(int engine_id,
   }
   assert(config_);  // Must have a valid config pointer here.
 
-  remote_bitrate_estimator_.reset(
-      new WrappingBitrateEstimator(engine_id,
-                                   remb_.get(),
-                                   Clock::GetRealTimeClock(),
-                                   *config_));
-
-  call_stats_->RegisterStatsObserver(remote_bitrate_estimator_.get());
-
-  process_thread->RegisterModule(remote_bitrate_estimator_.get());
-  process_thread->RegisterModule(call_stats_.get());
-  process_thread->RegisterModule(bitrate_controller_.get());
+  call_stats_->RegisterStatsObserver(remote_bitrate_estimator_);
 }
 
 ChannelGroup::~ChannelGroup() {
-  process_thread_->DeRegisterModule(bitrate_controller_.get());
-  process_thread_->DeRegisterModule(call_stats_.get());
-  process_thread_->DeRegisterModule(remote_bitrate_estimator_.get());
-  call_stats_->DeregisterStatsObserver(remote_bitrate_estimator_.get());
+  call_stats_->DeregisterStatsObserver(remote_bitrate_estimator_);
   assert(channels_.empty());
   assert(!remb_->InUse());
 }
@@ -194,15 +184,15 @@ bool ChannelGroup::Empty() {
 }
 
 BitrateController* ChannelGroup::GetBitrateController() {
-  return bitrate_controller_.get();
+  return bitrate_controller_;
 }
 
 RemoteBitrateEstimator* ChannelGroup::GetRemoteBitrateEstimator() {
-  return remote_bitrate_estimator_.get();
+  return remote_bitrate_estimator_;
 }
 
 CallStats* ChannelGroup::GetCallStats() {
-  return call_stats_.get();
+  return call_stats_;
 }
 
 EncoderStateFeedback* ChannelGroup::GetEncoderStateFeedback() {
@@ -217,7 +207,7 @@ void ChannelGroup::SetChannelRembStatus(int channel_id,
   channel->EnableRemb(sender || receiver);
   // Update the REMB instance with necessary RTP modules.
   RtpRtcp* rtp_module = channel->rtp_rtcp();
-  if (sender) {
+  if (sender) { //need to fix: use default_rtp_rtcp_. ylr
     remb_->AddRembSender(rtp_module);
   } else {
     remb_->RemoveRembSender(rtp_module);
@@ -231,7 +221,7 @@ void ChannelGroup::SetChannelRembStatus(int channel_id,
 
 void ChannelGroup::SetBandwidthEstimationConfig(const cloopenwebrtc::Config& config) {
   WrappingBitrateEstimator* estimator =
-      static_cast<WrappingBitrateEstimator*>(remote_bitrate_estimator_.get());
+      static_cast<WrappingBitrateEstimator*>(remote_bitrate_estimator_);
   estimator->SetConfig(config);
 }
 }  // namespace webrtc

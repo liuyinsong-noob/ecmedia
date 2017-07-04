@@ -31,8 +31,13 @@ class VieRemb;
 // group are assumed to send/receive data to the same end-point.
 class ChannelGroup {
  public:
-  ChannelGroup(int engine_id, ProcessThread* process_thread,
-               const Config* config);
+  ChannelGroup(int engine_id, 
+			   ProcessThread* process_thread,
+               const Config* config, 
+			   BitrateController* bitrate_controller, 
+			   RemoteBitrateEstimator* remote_bitrate_estimator,
+			   VieRemb* remb,
+			   CallStats* call_stats);
   ~ChannelGroup();
 
   void AddChannel(int channel_id);
@@ -54,10 +59,10 @@ class ChannelGroup {
  private:
   typedef std::set<int> ChannelSet;
 
-  scoped_ptr<VieRemb> remb_;
-  scoped_ptr<BitrateController> bitrate_controller_;
-  scoped_ptr<CallStats> call_stats_;
-  scoped_ptr<RemoteBitrateEstimator> remote_bitrate_estimator_;
+  VieRemb* remb_;
+  BitrateController* bitrate_controller_;
+  CallStats* call_stats_;
+  RemoteBitrateEstimator* remote_bitrate_estimator_;
   scoped_ptr<EncoderStateFeedback> encoder_state_feedback_;
   ChannelSet channels_;
   const Config* config_;

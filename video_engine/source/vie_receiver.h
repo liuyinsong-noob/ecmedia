@@ -55,6 +55,7 @@ class ViEReceiver : public RtpData {
   int GetCsrcs(uint32_t* csrcs) const;
 
   void SetRtpRtcpModule(RtpRtcp* module);
+  void SetSendRtpRtcpModule(RtpRtcp* module);
 
   RtpReceiver* GetRtpReceiver() const;
 
@@ -62,6 +63,7 @@ class ViEReceiver : public RtpData {
 
   bool SetReceiveTimestampOffsetStatus(bool enable, int id);
   bool SetReceiveAbsoluteSendTimeStatus(bool enable, int id);
+  bool SetReceiveTransportSeqNumStatus(bool enable, int id);
 
   void StartReceive();
   void StopReceive();
@@ -101,6 +103,8 @@ class ViEReceiver : public RtpData {
   bool ParseAndHandleEncapsulatingHeader(const uint8_t* packet,
                                          size_t packet_length,
                                          const RTPHeader& header);
+  int InsertRtcpPacketToRtpRtcp(const uint8_t* rtcp_packet, size_t rtcp_packet_length);
+  int InsertRtcpPacketToDefaultRtpRtcp(const uint8_t* rtcp_packet, size_t rtcp_packet_length);
   int InsertRTCPPacket(const uint8_t* rtcp_packet, size_t rtcp_packet_length);
   bool IsPacketInOrder(const RTPHeader& header) const;
   bool IsPacketRetransmitted(const RTPHeader& header, bool in_order) const;
@@ -114,6 +118,7 @@ class ViEReceiver : public RtpData {
   scoped_ptr<ReceiveStatistics> rtp_receive_statistics_;
   scoped_ptr<FecReceiver> fec_receiver_;
   RtpRtcp* rtp_rtcp_;
+  RtpRtcp* default_rtp_rtcp_;
   std::list<RtpRtcp*> rtp_rtcp_simulcast_;
   VideoCodingModule* vcm_;
   RemoteBitrateEstimator* remote_bitrate_estimator_;
