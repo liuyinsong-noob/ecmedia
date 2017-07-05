@@ -570,7 +570,6 @@ void H264VideoToolboxEncoder::OnEncodedFrame(
         delete header;
         delete buffer;
         
-        printTime();printf("seansean h264 hard encode first frame encoded 111111\n");
   if (result != 0) {
     LOG(LS_ERROR) << "Encode callback failed: " << result;
     return;
