@@ -961,11 +961,9 @@
 		82FF39B418D13EDB002531BF /* CustomPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FF39B318D13EDB002531BF /* CustomPersonViewController.m */; };
 		AD01997F1D2370E7003C2BB9 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD01997E1D2370E7003C2BB9 /* VideoToolbox.framework */; };
 		AD194FB91C5B4066003841BB /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AD194FB81C5B4066003841BB /* libc++.tbd */; };
-		AD1EFD081F0C99AD0081C899 /* libbz2.1.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1EFD061F0C99AD0081C899 /* libbz2.1.0.tbd */; };
-		AD1EFD091F0C99AD0081C899 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1EFD071F0C99AD0081C899 /* libbz2.tbd */; };
+		AD1EFD601F0CE1F70081C899 /* libccpapisdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD42CE9E1D2A510A009C2E7A /* libccpapisdk.a */; };
 		ADA18F191C58B521007F0F8B /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA18F181C58B521007F0F8B /* libxml2.tbd */; };
 		ADC50F881D90C86A00A83C04 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC50F871D90C86A00A83C04 /* GLKit.framework */; };
-		ADF261331DB8ACBD008420B0 /* libccpapisdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD42CE9E1D2A510A009C2E7A /* libccpapisdk.a */; };
 		F113E878179640E4007A26FF /* GroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F113E877179640E4007A26FF /* GroupListViewController.m */; };
 		F13AF1CC176F06DC004B1804 /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F13AF1B9176F06DC004B1804 /* MWCaptionView.m */; };
 		F13AF1CD176F06DC004B1804 /* MWPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = F13AF1BB176F06DC004B1804 /* MWPhoto.m */; };
@@ -981,6 +979,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		AD1EFD611F0CE1FC0081C899 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AD42CE771D2A510A009C2E7A /* CCPSDKProject.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 050207EF16FAB900008FBA62;
+			remoteInfo = CCPSDKProject;
+		};
 		AD42CE9D1D2A510A009C2E7A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AD42CE771D2A510A009C2E7A /* CCPSDKProject.xcodeproj */;
@@ -2101,9 +2106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD1EFD081F0C99AD0081C899 /* libbz2.1.0.tbd in Frameworks */,
-				AD1EFD091F0C99AD0081C899 /* libbz2.tbd in Frameworks */,
-				ADF261331DB8ACBD008420B0 /* libccpapisdk.a in Frameworks */,
+				AD1EFD601F0CE1F70081C899 /* libccpapisdk.a in Frameworks */,
 				AD01997F1D2370E7003C2BB9 /* VideoToolbox.framework in Frameworks */,
 				ADC50F881D90C86A00A83C04 /* GLKit.framework in Frameworks */,
 				1AFBD0E51DAE15ED009B8D23 /* libcrypto.a in Frameworks */,
@@ -3621,6 +3624,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				AD1EFD621F0CE1FC0081C899 /* PBXTargetDependency */,
 			);
 			name = CCPVoipDemo;
 			productName = CCPVoipDemo;
@@ -4636,6 +4640,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AD1EFD621F0CE1FC0081C899 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CCPSDKProject;
+			targetProxy = AD1EFD611F0CE1FC0081C899 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		05F43B9016A92CAA00F6D053 /* InfoPlist.strings */ = {
