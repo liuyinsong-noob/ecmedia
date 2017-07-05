@@ -190,7 +190,6 @@ void ServiceCore::serphone_core_update_streams_destinations(SerPhoneCall *call, 
 void ServiceCore::serphone_core_update_streams(SerPhoneCall *call, SalMediaDescription *new_md)
 {
     
-    cloopenwebrtc::printTime();printf("seansean serphone_core_update_streams begins ...\n");
 #if !defined(NO_VOIP_FUNCTION)
 	SalMediaDescription *oldmd=call->resultdesc;
 
@@ -245,18 +244,14 @@ void ServiceCore::serphone_core_update_streams(SerPhoneCall *call, SalMediaDescr
 				return;
 			}
 		}
-        cloopenwebrtc::printTime();printf("seansean serphone_core_update_streams 111111 ...\n");
 		serphone_call_stop_media_streams (call);
-        cloopenwebrtc::printTime();printf("seansean serphone_core_update_streams 111112 ...\n");
 		serphone_call_init_media_streams (call);
-        cloopenwebrtc::printTime();printf("seansean serphone_core_update_streams 111113 ...\n");
 	}
 	if (oldmd)
 		sal_media_description_unref(&oldmd);
 
     SetVideoKeepAlive(call, true, 10);
     SetAudioKeepAlive(call, true, 10);
-    cloopenwebrtc::printTime();printf("seansean serphone_core_update_streams 111114 ...\n");
 	if (new_md) {
 		bool_t all_muted=FALSE;
 		bool_t send_ringbacktone=FALSE;
@@ -265,7 +260,6 @@ void ServiceCore::serphone_core_update_streams(SerPhoneCall *call, SalMediaDescr
 			//this happens after pausing the call locally. The streams is destroyed and then we wait the 200Ok to recreate it
 			serphone_call_init_media_streams (call);
 		}
-        cloopenwebrtc::printTime();printf("seansean serphone_core_update_streams 111115 ...\n");
 		if (call->state==LinphoneCallIncomingEarlyMedia && serphone_core_get_remote_ringback_tone ()!=NULL){
 			send_ringbacktone=TRUE;
 		}
@@ -273,11 +267,9 @@ void ServiceCore::serphone_core_update_streams(SerPhoneCall *call, SalMediaDescr
 			(call->state==LinphoneCallOutgoingEarlyMedia && !call->params.real_early_media)){
 				all_muted=TRUE;
 		}
-        cloopenwebrtc::printTime();printf("seansean serphone_core_update_streams 111116 ...\n");
 		serphone_call_start_media_streams(call,all_muted,send_ringbacktone);
 	}
 #endif
-    cloopenwebrtc::printTime();printf("seansean serphone_core_update_streams ends ...\n");
 }
 
 void ServiceCore::serphone_call_stop_media_streams(SerPhoneCall *call)
@@ -527,12 +519,9 @@ void ServiceCore::serphone_call_start_media_streams(SerPhoneCall *call, bool_t a
 		use_arc=FALSE;
 	}
 #endif
-    cloopenwebrtc::printTime();printf("seansean serphone_call_start_media_streams 111111 ...\n");
 	serphone_call_start_audio_stream(call,cname,all_inputs_muted,send_ringbacktone,use_arc);
-    cloopenwebrtc::printTime();printf("seansean serphone_call_start_media_streams 111112 ...\n");
 	if (call->m_VideoChannelID >=0 ) {
 		serphone_call_start_video_stream(call,cname,all_inputs_muted);
-        cloopenwebrtc::printTime();printf("seansean serphone_call_start_media_streams 111113 ...\n");
 		call->current_params.has_video = true;
 	}
 	else

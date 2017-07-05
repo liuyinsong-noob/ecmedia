@@ -10,38 +10,38 @@
 #include "ECMedia.h"
 extern CCallbackInterface g_cbInterface;
 static void register_failure(SalOp *op, SalError error, SalReason reason, const char *details);
-#ifndef WIN32
-int printTime1();
-int printTime1()
-{
-    struct timeval system_time_high_res;
-    if (gettimeofday(&system_time_high_res, 0) == -1) {
-        return -1;
-    }
-    struct tm buffer;
-    const struct tm* system_time =
-    localtime_r(&system_time_high_res.tv_sec, &buffer);
-    
-    const uint32_t ms_time = system_time_high_res.tv_usec / 1000;
-    uint32_t prev_tickCount = 0;
-    
-    uint32_t dw_delta_time = ms_time - prev_tickCount;
-    if (prev_tickCount == 0) {
-        dw_delta_time = 0;
-    }
-    if (dw_delta_time > 0x0fffffff) {
-        // Either wraparound or data race.
-        dw_delta_time = 0;
-    }
-    if (dw_delta_time > 99999) {
-        dw_delta_time = 99999;
-    }
-    
-    printf("%02u:%02u:%02u:%3u | ", system_time->tm_hour,
-           system_time->tm_min, system_time->tm_sec, ms_time);
-    return 0;
-}
-#endif
+//#ifndef WIN32
+//int printTime1();
+//int printTime1()
+//{
+//    struct timeval system_time_high_res;
+//    if (gettimeofday(&system_time_high_res, 0) == -1) {
+//        return -1;
+//    }
+//    struct tm buffer;
+//    const struct tm* system_time =
+//    localtime_r(&system_time_high_res.tv_sec, &buffer);
+//    
+//    const uint32_t ms_time = system_time_high_res.tv_usec / 1000;
+//    uint32_t prev_tickCount = 0;
+//    
+//    uint32_t dw_delta_time = ms_time - prev_tickCount;
+//    if (prev_tickCount == 0) {
+//        dw_delta_time = 0;
+//    }
+//    if (dw_delta_time > 0x0fffffff) {
+//        // Either wraparound or data race.
+//        dw_delta_time = 0;
+//    }
+//    if (dw_delta_time > 99999) {
+//        dw_delta_time = 99999;
+//    }
+//    
+//    printf("%02u:%02u:%02u:%3u | ", system_time->tm_hour,
+//           system_time->tm_min, system_time->tm_sec, ms_time);
+//    return 0;
+//}
+//#endif
 
 
 
@@ -275,7 +275,7 @@ static void call_ringing(SalOp *h){
 
 static void call_accepted(SalOp *op){
     
-    printTime1();printf("seansean 200ok received\n");
+//    printTime1();printf("seansean 200ok received\n");
     
 	ServiceCore *lc=(ServiceCore *)sal_get_user_pointer(sal_op_get_sal(op));
 	SerPhoneCall *call=(SerPhoneCall*)sal_op_get_user_pointer(op);
