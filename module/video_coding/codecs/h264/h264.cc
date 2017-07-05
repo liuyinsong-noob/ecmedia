@@ -17,6 +17,7 @@
 
 namespace cloopenwebrtc
 {  
+    extern int printTime();
     
 H264Encoder* H264Encoder::Create() {
     return new H264Encoder();
@@ -186,6 +187,10 @@ int H264Encoder::Encode(const I420VideoFrame& input_image,
 	InitializeX264Pic(input_image, xpic, oxpic, frameType);
   
     picture_id_ = (framenum_ + 1) & 0x7FFF;  // prepare next
+    if (framenum_ == 0) {
+        printTime();printf("seansean h264 encode first frame encoded 111111\n");
+    }
+    
     int ret = x264_encoder_encode(encoder_,&xnals,&num_nals,&xpic,&oxpic);
 
 	if (ret > 0)
@@ -199,7 +204,10 @@ int H264Encoder::Encode(const I420VideoFrame& input_image,
 		h264Info->pictureId = framenum_;
 		h264Info->nonReference = bNonReference;
 		encoded_complete_callback_->Encoded(encoded_image_, &codec, &fragment);
-
+        if (framenum_ == 0) {
+            printTime();printf("seansean h264 encode first frame encoded 111112\n");
+        }
+        
 		framenum_++;
 	}
 	else{

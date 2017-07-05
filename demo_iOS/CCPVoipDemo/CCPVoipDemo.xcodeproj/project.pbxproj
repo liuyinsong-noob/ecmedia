@@ -961,7 +961,8 @@
 		82FF39B418D13EDB002531BF /* CustomPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FF39B318D13EDB002531BF /* CustomPersonViewController.m */; };
 		AD01997F1D2370E7003C2BB9 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD01997E1D2370E7003C2BB9 /* VideoToolbox.framework */; };
 		AD194FB91C5B4066003841BB /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AD194FB81C5B4066003841BB /* libc++.tbd */; };
-		ADA18F171C58B518007F0F8B /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA18F161C58B518007F0F8B /* libz.tbd */; };
+		AD1EFD081F0C99AD0081C899 /* libbz2.1.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1EFD061F0C99AD0081C899 /* libbz2.1.0.tbd */; };
+		AD1EFD091F0C99AD0081C899 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1EFD071F0C99AD0081C899 /* libbz2.tbd */; };
 		ADA18F191C58B521007F0F8B /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA18F181C58B521007F0F8B /* libxml2.tbd */; };
 		ADC50F881D90C86A00A83C04 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC50F871D90C86A00A83C04 /* GLKit.framework */; };
 		ADF261331DB8ACBD008420B0 /* libccpapisdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD42CE9E1D2A510A009C2E7A /* libccpapisdk.a */; };
@@ -2059,6 +2060,8 @@
 		82FF39B318D13EDB002531BF /* CustomPersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPersonViewController.m; sourceTree = "<group>"; };
 		AD01997E1D2370E7003C2BB9 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		AD194FB81C5B4066003841BB /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		AD1EFD061F0C99AD0081C899 /* libbz2.1.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.tbd; path = usr/lib/libbz2.1.0.tbd; sourceTree = SDKROOT; };
+		AD1EFD071F0C99AD0081C899 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
 		AD42CD6A1D23D6F9009C2E7A /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../../servicecore/libcrypto.a; sourceTree = "<group>"; };
 		AD42CE771D2A510A009C2E7A /* CCPSDKProject.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CCPSDKProject.xcodeproj; path = ../sdk3.6.5/CCPSDKProject.xcodeproj; sourceTree = "<group>"; };
 		AD4B6A1A1D48C07F00731C5B /* libortp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libortp.a; path = ../../servicecore/libortp.a; sourceTree = "<group>"; };
@@ -2098,6 +2101,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD1EFD081F0C99AD0081C899 /* libbz2.1.0.tbd in Frameworks */,
+				AD1EFD091F0C99AD0081C899 /* libbz2.tbd in Frameworks */,
 				ADF261331DB8ACBD008420B0 /* libccpapisdk.a in Frameworks */,
 				AD01997F1D2370E7003C2BB9 /* VideoToolbox.framework in Frameworks */,
 				ADC50F881D90C86A00A83C04 /* GLKit.framework in Frameworks */,
@@ -2106,7 +2111,6 @@
 				1AFBD0E21DAE13C4009B8D23 /* libssl.a in Frameworks */,
 				AD194FB91C5B4066003841BB /* libc++.tbd in Frameworks */,
 				ADA18F191C58B521007F0F8B /* libxml2.tbd in Frameworks */,
-				ADA18F171C58B518007F0F8B /* libz.tbd in Frameworks */,
 				82E3F64718FD3B9C00AABF62 /* MediaPlayer.framework in Frameworks */,
 				82631D1218C47D8A00BE5A0A /* CoreText.framework in Frameworks */,
 				82631D1018C47C8100BE5A0A /* AddressBookUI.framework in Frameworks */,
@@ -2263,6 +2267,8 @@
 		05F43B8616A92CAA00F6D053 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AD1EFD061F0C99AD0081C899 /* libbz2.1.0.tbd */,
+				AD1EFD071F0C99AD0081C899 /* libbz2.tbd */,
 				ADC50F871D90C86A00A83C04 /* GLKit.framework */,
 				AD4B6A1A1D48C07F00731C5B /* libortp.a */,
 				AD4B6A1B1D48C07F00731C5B /* libsrtp.a */,

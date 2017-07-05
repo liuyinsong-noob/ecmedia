@@ -21,7 +21,7 @@
 #include "acm_receiver.h"
 #include "acm_resampler.h"
 #include "scoped_ptr.h"
-#include "SoundTouch.h"
+#include "third_party/SoundTouch/SoundTouch/SoundTouch.h"
 
 
 using namespace cloopensoundtouch;

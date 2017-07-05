@@ -591,16 +591,16 @@ int32_t AudioCodingModuleImpl::Process() {
 }
 
 void AudioCodingModuleImpl::setupSoundTouch(uint16_t sample_rate, u_int8_t channel_count) {
-    _soundTouch = new SoundTouch();
-    _soundTouch->setSampleRate(sample_rate); //采样率
-    _soundTouch->setChannels(channel_count);       //设置声音的声道
-    
-    _soundTouch->setTempoChange(_sound_touch_tempo);    //这个就是传说中的变速不变调
-    _soundTouch->setPitchSemiTones(_sound_touch_pitch); //设置声音的pitch (集音高变化semi-tones相比原来的音调) //男: -8 女:8
-    _soundTouch->setRateChange(_sound_touch_rate);     //设置声音的速率
-    _soundTouch->setSetting(SETTING_SEQUENCE_MS, 40);
-    _soundTouch->setSetting(SETTING_SEEKWINDOW_MS, 15); //寻找帧长
-    _soundTouch->setSetting(SETTING_OVERLAP_MS, 6);  //重叠帧长
+//    _soundTouch = new SoundTouch();
+//    _soundTouch->setSampleRate(sample_rate); //采样率
+//    _soundTouch->setChannels(channel_count);       //设置声音的声道
+//    
+//    _soundTouch->setTempoChange(_sound_touch_tempo);    //这个就是传说中的变速不变调
+//    _soundTouch->setPitchSemiTones(_sound_touch_pitch); //设置声音的pitch (集音高变化semi-tones相比原来的音调) //男: -8 女:8
+//    _soundTouch->setRateChange(_sound_touch_rate);     //设置声音的速率
+//    _soundTouch->setSetting(SETTING_SEQUENCE_MS, 40);
+//    _soundTouch->setSetting(SETTING_SEEKWINDOW_MS, 15); //寻找帧长
+//    _soundTouch->setSetting(SETTING_OVERLAP_MS, 6);  //重叠帧长
 }
     
     /////////////////////////////////////////
