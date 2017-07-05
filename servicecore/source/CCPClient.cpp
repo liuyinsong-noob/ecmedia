@@ -2488,7 +2488,6 @@ extern "C" void setNetworkType(int networktype,bool connected,bool reconnect)
 }
 extern "C" int selectCamera(int cameraIndex, int capabilityIndex,int fps,int rotate,bool force)
 {
-    capabilityIndex = 4;
 	PrintConsole("[APICall] selectCamera (cameraIndex=%d,capabilityIndex=%d,fps=%d,ratate=%d force=%d )\n",
 		cameraIndex,capabilityIndex,fps,rotate,force);
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
