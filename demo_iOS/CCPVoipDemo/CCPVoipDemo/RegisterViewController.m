@@ -374,22 +374,22 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
-    NSString *deviceStr = [self.modelEngineVoip.VoipCallService getDeviceVersion];
-    int index = 0;
-    if ([deviceStr isEqualToString:@"iPhone 7"]) {
-        index = 6;
-    } else if ([deviceStr isEqualToString:@"iPhone 6s"])
-    {
-        index = 5;
-    }
-//    index = 5;
-    AccountInfo *info = [self.modelEngineVoip.accountArray objectAtIndex:index];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:info.voipId forKey:@"myPhoneNO"];
-    [defaults synchronize];
-    [self displayProgressingView];
-    [self.modelEngineVoip connectToCCP:self.serverip onPort:[self.serverport integerValue] withAccount:info.voipId withPsw:info.password withAccountSid:info.subAccount withAuthToken:info.subToken];
+//    [super viewDidAppear:animated];
+//    NSString *deviceStr = [self.modelEngineVoip.VoipCallService getDeviceVersion];
+//    int index = 0;
+//    if ([deviceStr isEqualToString:@"iPhone 7"]) {
+//        index = 6;
+//    } else if ([deviceStr isEqualToString:@"iPhone 6s"])
+//    {
+//        index = 5;
+//    }
+////    index = 5;
+//    AccountInfo *info = [self.modelEngineVoip.accountArray objectAtIndex:index];
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    [defaults setObject:info.voipId forKey:@"myPhoneNO"];
+//    [defaults synchronize];
+//    [self displayProgressingView];
+//    [self.modelEngineVoip connectToCCP:self.serverip onPort:[self.serverport integerValue] withAccount:info.voipId withPsw:info.password withAccountSid:info.subAccount withAuthToken:info.subToken];
 }
 
 - (void)didReceiveMemoryWarning
