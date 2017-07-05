@@ -604,7 +604,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					./codecs/ilbc/interface,
-					"$(SRCROOT)/../../",
+					"$(SRCROOT)/../../third_party/SoundTouch/SoundTouch/",
 					../,
 					../interface,
 					../../system_wrappers/interface,
@@ -664,7 +664,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					./codecs/ilbc/interface,
-					"$(SRCROOT)/../../",
+					"$(SRCROOT)/../../third_party/SoundTouch/SoundTouch/",
 					../,
 					../interface,
 					../../system_wrappers/interface,
