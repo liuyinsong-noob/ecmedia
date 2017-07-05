@@ -395,11 +395,6 @@ char *globalFilePathcapture = NULL;
 #endif
             if(_owner)
             {
-                static int count = 0;
-                if (count++ == 0) {
-                    NSLog(@"seansean capture first frame 111111");
-                }
-                
                 _owner->IncomingI420VideoFrame(&videoFrame, 0);
             }
             
