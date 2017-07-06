@@ -172,3 +172,9 @@ third_party/protobuf_261/
 third_party/srtp/crypto/include/config.h
 demo_Win/Debug/
 demo_Win/Release/
+third_party/protobuf/cmake/solution/CMakeFiles/3.7.1/CompilerIdC/
+module/congestion_controller/congestion_controller/Debug/
+third_party/protobuf/cmake/solution/CMakeFiles/3.7.1/CompilerIdCXX/CompilerIdCXX.exe
+third_party/protobuf/cmake/solution/Release/
+third_party/protobuf/cmake/solution/libprotobuf-lite.dir/Release/
+third_party/protobuf/src/Android.mk

@@ -124,6 +124,7 @@ int ViEChannelManager::CreateChannel(int* channel_id,
 	  //congestion_controller_->SignalNetworkState(kNetworkDown);
 	  congestion_controller_->pacer()->SetEstimatedBitrate(300000);
 	  congestion_controller_->SetBweBitrates(30000, 300000, 2000000);
+	  congestion_controller_->EnablePeriodicAlrProbing(true);
   }
 
   BitrateController* bitrate_controller = congestion_controller_->GetBitrateController();
