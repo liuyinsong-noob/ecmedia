@@ -569,6 +569,7 @@ void H264VideoToolboxEncoder::OnEncodedFrame(
   int result = callback_->Encoded(frame, &codec_specific_info, header);
         delete header;
         delete buffer;
+        
   if (result != 0) {
     LOG(LS_ERROR) << "Encode callback failed: " << result;
     return;

@@ -394,7 +394,9 @@ char *globalFilePathcapture = NULL;
             }
 #endif
             if(_owner)
+            {
                 _owner->IncomingI420VideoFrame(&videoFrame, 0);
+            }
             
 		} @finally {
 			if (frame) CVPixelBufferUnlockBaseAddress(frame, 0);
@@ -495,10 +497,8 @@ char *globalFilePathcapture = NULL;
 - (int)start {
 	NSAutoreleasePool* myPool = [[NSAutoreleasePool alloc] init];
 	@synchronized(self) {
-        
         CGPoint devicePoint = CGPointMake( 0.5, 0.5 );
         [self focusWithMode:AVCaptureFocusModeContinuousAutoFocus exposeWithMode:AVCaptureExposureModeContinuousAutoExposure atDevicePoint:devicePoint monitorSubjectAreaChange:NO];
-        
 		AVCaptureSession *session = [(AVCaptureVideoPreviewLayer *)self.layer session];
 		if (!session.running) {
 			// Init queue
@@ -508,11 +508,9 @@ char *globalFilePathcapture = NULL;
 			[output setSampleBufferDelegate:self queue:queue];
             //output.alwaysDiscardsLateVideoFrames = false;
 			dispatch_release(queue);
-			
 			[session startRunning]; //warning can take around 1s before returning
 			snprintf(fps_context, sizeof(fps_context), "Captured mean fps=%%f, expected=%f", fps);
 			ms_video_init_average_fps(&averageFps, fps_context);
-			
 			//NSLog(@"ioscapture video device started.");
 		}
 	}

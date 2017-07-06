@@ -18,8 +18,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#ifndef AVFORMAT_VERSION_H
-#define AVFORMAT_VERSION_H
+#ifndef AVFORMAT_VERSION_H_IOS
+#define AVFORMAT_VERSION_H_IOS
 
 /**
  * @file
@@ -27,10 +27,12 @@
  * Libavformat version macros
  */
 
-#include "libavutil/version.h"
+#include "libavutil_ios/version.h"
 
+// Major bumping may affect Ticket5467, 5421, 5451(compatibility with Chromium)
+// Also please add any ticket numbers that you belive might be affected here
 #define LIBAVFORMAT_VERSION_MAJOR  57
-#define LIBAVFORMAT_VERSION_MINOR  25
+#define LIBAVFORMAT_VERSION_MINOR  41
 #define LIBAVFORMAT_VERSION_MICRO 100
 
 #define LIBAVFORMAT_VERSION_INT AV_VERSION_INT(LIBAVFORMAT_VERSION_MAJOR, \
@@ -73,6 +75,9 @@
 #endif
 #ifndef FF_API_OLD_OPEN_CALLBACKS
 #define FF_API_OLD_OPEN_CALLBACKS       (LIBAVFORMAT_VERSION_MAJOR < 58)
+#endif
+#ifndef FF_API_LAVF_AVCTX
+#define FF_API_LAVF_AVCTX               (LIBAVFORMAT_VERSION_MAJOR < 58)
 #endif
 
 #ifndef FF_API_R_FRAME_RATE

@@ -784,13 +784,13 @@ void ServiceCore::sip_config_read()
 	serphone_core_enable_ipv6(ipv6);
 	memset(&tr,0,sizeof(tr));
 
-	if (lp_config_get_int(config,"sip","sip_random_port",1)) {
+	if (lp_config_get_int(config,"sip","sip_random_port",0)) {
 		tr.udp_port=(0xDFF&+random())+1024;
 	} else {
 		//tr.udp_port=lp_config_get_int(config,"sip","sip_port",DEFAULT_SIP_UDP_PORT);  //5060);deleted by zdm
         tr.udp_port=lp_config_get_int(config,"sip","sip_port",0);
 	}
-	if (lp_config_get_int(config,"sip","sip_tcp_random_port",0))
+	if (lp_config_get_int(config,"sip","sip_tcp_random_port",1))
  //   if (lp_config_get_int(config,"sip","sip_tcp_random_port",1))
     {
 		tr.tcp_port=(0xDFF&+random())+1024;

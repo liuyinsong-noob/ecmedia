@@ -22,6 +22,11 @@
 id:local camera device id
 capture: 0, no camera capture; 1,has camera capture
 */
+
+namespace cloopenwebrtc {
+    extern int printTime();
+}
+
 static int NoCameraCaptureCb(const int id, const bool capture)
 {
 	PrintConsole("NoCameraCaptureCb id=%d, capture=%d\n", id, capture);
@@ -184,6 +189,7 @@ void ServiceCore::serphone_core_update_streams_destinations(SerPhoneCall *call, 
 
 void ServiceCore::serphone_core_update_streams(SerPhoneCall *call, SalMediaDescription *new_md)
 {
+    
 #if !defined(NO_VOIP_FUNCTION)
 	SalMediaDescription *oldmd=call->resultdesc;
 
@@ -246,7 +252,6 @@ void ServiceCore::serphone_core_update_streams(SerPhoneCall *call, SalMediaDescr
 
     SetVideoKeepAlive(call, true, 10);
     SetAudioKeepAlive(call, true, 10);
-    
 	if (new_md) {
 		bool_t all_muted=FALSE;
 		bool_t send_ringbacktone=FALSE;
@@ -514,7 +519,7 @@ void ServiceCore::serphone_call_start_media_streams(SerPhoneCall *call, bool_t a
 		use_arc=FALSE;
 	}
 #endif
-	serphone_call_start_audio_stream(call,cname,all_inputs_muted,send_ringbacktone,use_arc); 
+	serphone_call_start_audio_stream(call,cname,all_inputs_muted,send_ringbacktone,use_arc);
 	if (call->m_VideoChannelID >=0 ) {
 		serphone_call_start_video_stream(call,cname,all_inputs_muted);
 		call->current_params.has_video = true;

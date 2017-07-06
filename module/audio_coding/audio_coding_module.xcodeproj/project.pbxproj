@@ -604,6 +604,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					./codecs/ilbc/interface,
+					"$(SRCROOT)/../../third_party/SoundTouch/SoundTouch/",
 					../,
 					../interface,
 					../../system_wrappers/interface,
@@ -629,7 +630,6 @@
 					"../../third_party/libogg-1.3.2/include",
 					../../third_party/opus/src,
 					"\"$(SRCROOT)/codecs/pcm16b/include\"",
-					../../third_party/SoundTouch/SoundTouch,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
@@ -664,6 +664,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					./codecs/ilbc/interface,
+					"$(SRCROOT)/../../third_party/SoundTouch/SoundTouch/",
 					../,
 					../interface,
 					../../system_wrappers/interface,
@@ -689,7 +690,6 @@
 					"../../third_party/libogg-1.3.2/include",
 					../../third_party/opus/src,
 					"\"$(SRCROOT)/codecs/pcm16b/include\"",
-					../../third_party/SoundTouch/SoundTouch,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";

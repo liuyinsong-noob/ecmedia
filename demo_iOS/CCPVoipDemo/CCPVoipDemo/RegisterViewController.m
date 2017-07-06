@@ -374,12 +374,12 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
+//    [super viewDidAppear:animated];
 //    NSString *deviceStr = [self.modelEngineVoip.VoipCallService getDeviceVersion];
 //    int index = 0;
 //    if ([deviceStr isEqualToString:@"iPhone 7"]) {
 //        index = 6;
-//    } else if ([deviceStr isEqualToString:@"iPhone se"])
+//    } else if ([deviceStr isEqualToString:@"iPhone 6s"])
 //    {
 //        index = 5;
 //    }
