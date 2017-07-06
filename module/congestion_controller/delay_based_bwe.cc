@@ -19,7 +19,6 @@
 #include "../system_wrappers/include/logging.h"
 #include "../base/thread_annotations.h"
 #include "../logging/rtc_event_log/rtc_event_log.h"
-//#include "../module/congestion_controller/include/congestion_controller.h"
 #include "../module/pacing/paced_sender.h"
 #include "../module/remote_bitrate_estimator/include/remote_bitrate_estimator.h"
 #include "../module/remote_bitrate_estimator/test/bwe_test_logging.h"
@@ -265,11 +264,6 @@ DelayBasedBwe::Result DelayBasedBwe::IncomingPacketFeedbackVector(
   Result aggregated_result;
   bool delayed_feedback = true;
 
-  if (receiver_incoming_bitrate_.bitrate_bps())
-  {
-	  LOG(LS_ERROR) << "--------------[bwe] encoder_bitrate = " << *receiver_incoming_bitrate_.bitrate_bps()
-		  << " (incoming tf, receiver_br)";
-  }
   for (const auto& packet_feedback : packet_feedback_vector) {
     if (packet_feedback.send_time_ms < 0)
       continue;
@@ -372,8 +366,6 @@ DelayBasedBwe::Result DelayBasedBwe::IncomingPacketFeedback(
   }
 
   int probing_bps = 0;
-  LOG(LS_ERROR) << "--------------[bwe][Probe] "
-	  << "packet_feedback.pacing_info.probe_cluster_id =  " << packet_feedback.pacing_info.probe_cluster_id;
   if (packet_feedback.pacing_info.probe_cluster_id !=
       PacedPacketInfo::kNotAProbe) {
     probing_bps =
@@ -426,16 +418,10 @@ bool DelayBasedBwe::UpdateEstimate(int64_t arrival_time_ms,
                                    uint32_t* target_bitrate_bps) {
   // TODO(terelius): RateControlInput::noise_var is deprecated and will be
   // removed. In the meantime, we set it to zero.
-  LOG(LS_ERROR) << "--------------[bwe][DelayBasedBwe] acked_bitrate_bps = " 
-	            << acked_bitrate_bps.value_or(0);
 
   const RateControlInput input(detector_.State(), acked_bitrate_bps, 0);
   rate_control_.Update(&input, now_ms);
   *target_bitrate_bps = rate_control_.UpdateBandwidthEstimate(now_ms);
-
-  LOG(LS_ERROR) << "--------------[bwe][DelayBasedBwe] target_bitrate_bps = "
-	  << *target_bitrate_bps;
-
   return rate_control_.ValidEstimate();
 }
 

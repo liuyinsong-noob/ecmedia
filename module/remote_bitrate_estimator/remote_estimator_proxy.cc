@@ -55,9 +55,6 @@ void RemoteEstimatorProxy::IncomingPacket(int64_t arrival_time_ms,
   }
   cloopenwebrtc::CritScope cs(&lock_);
   media_ssrc_ = header.ssrc;
-  LOG(LS_ERROR) << "--------------[bwe][Probe][RemoteEstimatorProxy][IncomingPacket] "
-	  << "sequence_number = " << header.extension.transportSequenceNumber
-	  << " , arrival_time_ms = " << arrival_time_ms;
   OnPacketArrival(header.extension.transportSequenceNumber, arrival_time_ms);
 }
 
@@ -81,7 +78,6 @@ int32_t RemoteEstimatorProxy::Process() {
   last_process_time_ms_ = clock_->TimeInMilliseconds();
 
   bool more_to_build = true;
-  LOG(LS_ERROR) << "--------------[bwe][Probe][RemoteEstimatorProxy][Process] ";
 
   while (more_to_build) {
     rtcp::TransportFeedback feedback_packet;

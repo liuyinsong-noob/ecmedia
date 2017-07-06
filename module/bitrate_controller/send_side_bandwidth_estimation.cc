@@ -128,7 +128,6 @@ void SendSideBandwidthEstimation::UpdateReceiverEstimate(
     int64_t now_ms, uint32_t bandwidth) {
   bwe_incoming_ = bandwidth;
   bitrate_ = CapBitrateToThresholds(now_ms, bitrate_);
-  WEBRTC_TRACE(kTraceError, kTraceVideo, -1, "--------------[bwe] bitrate_controller = (bwe_incoming_)%d", bwe_incoming_);
 }
 
 void SendSideBandwidthEstimation::UpdateDelayBasedEstimate(
@@ -136,8 +135,7 @@ void SendSideBandwidthEstimation::UpdateDelayBasedEstimate(
     uint32_t bitrate_bps) {
   delay_based_bitrate_bps_ = bitrate_bps;
   bitrate_ = CapBitrateToThresholds(now_ms, bitrate_);
-  //WEBRTC_TRACE(kTraceError, kTraceVideo, -1, "--------------[bwe] bitrate_controller = (delay_based_bitrate_bps_)%d", bitrate_bps);
-  LOG(LS_ERROR) << "--------------[bwe] bitrate_controller = "
+   LOG(LS_ERROR) << "--------------[bwe] bitrate_controller = "
 	  << bitrate_bps
 	  << " (delay_based_bitrate_bps_)";
 }

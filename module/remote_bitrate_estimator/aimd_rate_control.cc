@@ -178,20 +178,11 @@ uint32_t AimdRateControl::ChangeBitrate(uint32_t new_bitrate_bps,
   const float std_max_bit_rate = sqrt(var_max_bitrate_kbps_ *
                                       avg_max_bitrate_kbps_);
 
-  LOG(LS_ERROR) << "--------------[bwe][AimdRateControl][ChangeBitrate] rate_control_state_ = "
-	  << rate_control_state_;
-
   switch (rate_control_state_) {
     case kRcHold:
       break;
 
-    case kRcIncrease:
-		LOG(LS_ERROR) << "--------------[bwe][AimdRateControl][ChangeBitrate][kRcIncrease] "
-			<< "avg_max_bitrate_kbps_ = " << avg_max_bitrate_kbps_
-			<< " , std_max_bit_rate = " << std_max_bit_rate
-			<< " , incoming_bitrate_kbps = " << incoming_bitrate_kbps
-			<< " , new_bitrate_bps = " << new_bitrate_bps;
-			
+    case kRcIncrease:			
       if (avg_max_bitrate_kbps_ >= 0 &&
           incoming_bitrate_kbps >
               avg_max_bitrate_kbps_ + 3 * std_max_bit_rate) {
@@ -199,21 +190,14 @@ uint32_t AimdRateControl::ChangeBitrate(uint32_t new_bitrate_bps,
         avg_max_bitrate_kbps_ = -1.0;
       }
 
-	  LOG(LS_ERROR) << "--------------[bwe][AimdRateControl][ChangeBitrate][kRcIncrease] "
-		  << "rate_control_region_(kRcNearMax/kRcAboveMax/kRcMaxUnknown)= " << rate_control_region_;
-
       if (rate_control_region_ == kRcNearMax) {
         uint32_t additive_increase_bps =
             AdditiveRateIncrease(now_ms, time_last_bitrate_change_);
         new_bitrate_bps += additive_increase_bps;
-		LOG(LS_ERROR) << "--------------[bwe][AimdRateControl][ChangeBitrate][kRcIncrease] "
-			<< "additive_increase_bps = " << additive_increase_bps;
       } else {
         uint32_t multiplicative_increase_bps = MultiplicativeRateIncrease(
             now_ms, time_last_bitrate_change_, new_bitrate_bps);
         new_bitrate_bps += multiplicative_increase_bps;
-		LOG(LS_ERROR) << "--------------[bwe][AimdRateControl][ChangeBitrate][kRcIncrease] "
-			<< "multiplicative_increase_bps = " << multiplicative_increase_bps;
       }
 
       time_last_bitrate_change_ = now_ms;
@@ -253,8 +237,6 @@ uint32_t AimdRateControl::ChangeBitrate(uint32_t new_bitrate_bps,
     default:
       assert(false);
   }
-  LOG(LS_ERROR) << "--------------[bwe][AimdRateControl][ChangeBitrate] "
-	  << "new_bitrate_bps = " << new_bitrate_bps;
   return ClampBitrate(new_bitrate_bps, incoming_bitrate_bps);
 }
 
@@ -270,13 +252,6 @@ uint32_t AimdRateControl::ClampBitrate(uint32_t new_bitrate_bps,
     new_bitrate_bps = max(current_bitrate_bps_, max_bitrate_bps);
   }
   new_bitrate_bps = max(new_bitrate_bps, min_configured_bitrate_bps_);
-
-  LOG(LS_ERROR) << "--------------[bwe][AimdRateControl][ClampBitrate] "
-	  << "incoming_bitrate_bps = " << incoming_bitrate_bps
-	  << " , max_bitrate_bps = " << max_bitrate_bps
-	  << " , current_bitrate_bps_ = " << current_bitrate_bps_
-	  << " , min_configured_bitrate_bps_ = " << min_configured_bitrate_bps_
-	  << " , new_bitrate_bps = " << new_bitrate_bps;
   return new_bitrate_bps;
 }
 
@@ -325,8 +300,6 @@ void AimdRateControl::UpdateMaxBitRateEstimate(float incoming_bitrate_kbps) {
 
 void AimdRateControl::ChangeState(const RateControlInput& input,
                                   int64_t now_ms) {
-  LOG(LS_ERROR) << "--------------[bwe][AimdRateControl] bw_state(kBwNormal/kBwUnderusing/kBwOverusing) = "
-		<< current_input_.bw_state;
   switch (current_input_.bw_state) {
     case kBwNormal:
       if (rate_control_state_ == kRcHold) {
@@ -353,7 +326,5 @@ void AimdRateControl::ChangeRegion(RateControlRegion region) {
 
 void AimdRateControl::ChangeState(RateControlState new_state) {
   rate_control_state_ = new_state;
-  LOG(LS_ERROR) << "--------------[bwe][AimdRateControl] rate_control_state_(kRcHold/kRcIncrease/kRcDecrease) = "
-	  << rate_control_state_;
 }
 }  // namespace cloopenwebrtc

@@ -322,8 +322,6 @@ int64_t CongestionController::TimeUntilNextProcess() {
 }
 
 int32_t CongestionController::Process() {
-  WEBRTC_TRACE(kTraceError, kTraceVideo, -1, "--------------[bwe] cc process");
-
   bitrate_controller_->Process();
   remote_bitrate_estimator_.Process();
   probe_controller_->Process();

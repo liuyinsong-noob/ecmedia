@@ -197,7 +197,6 @@ void BitrateControllerImpl::OnDelayBasedBweResult(
                                                    result.target_bitrate_bps);
 
     if (result.probe) {
-	 // WEBRTC_TRACE(kTraceError, kTraceVideo, -1, "--------------[bwe] bitrate_controller = (update_probe)%d", result.target_bitrate_bps);
 		LOG(LS_ERROR) << "--------------[bwe] bitrate_controller = "
 			<< result.target_bitrate_bps
 			<< " (update_probe)";
@@ -223,8 +222,6 @@ int32_t BitrateControllerImpl::Process() {
   }
   MaybeTriggerOnNetworkChanged();
   last_bitrate_update_ms_ = clock_->TimeInMilliseconds();
-
-  WEBRTC_TRACE(kTraceError, kTraceVideo, -1, "--------------[bwe] BRC process");
   return 0;
 }
 
@@ -259,10 +256,8 @@ bool BitrateControllerImpl::GetNetworkParameters(uint32_t* bitrate,
   cloopenwebrtc::CritScope cs(&critsect_);
   int current_bitrate;
   bandwidth_estimation_.CurrentEstimate(&current_bitrate, fraction_loss, rtt);
-
- // WEBRTC_TRACE(kTraceError, kTraceVideo, -1, "--------------[bwe] bitrate_controller = %d", current_bitrate);
   LOG(LS_ERROR) << "--------------[bwe] bitrate_controller = "
-	  << current_bitrate;
+	            << current_bitrate;
 
   *bitrate = current_bitrate;
   *bitrate -= std::min(*bitrate, reserved_bitrate_bps_);

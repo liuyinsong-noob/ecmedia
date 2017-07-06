@@ -65,9 +65,6 @@ int ProbeBitrateEstimator::HandleProbeAndEstimateBitrate(
 
   if (cluster->num_probes < kMinNumProbesValidCluster)
   {
-	  LOG(LS_ERROR) << "--------------[bwe][Probe] "
-		  << "id = " << cluster_id
-		  << " , cluster->num_probes = " << cluster->num_probes;
 	  return -1;
   }
     

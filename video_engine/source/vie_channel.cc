@@ -2300,9 +2300,6 @@ void  ViEChannel::IncomingRTPPacket(const int8_t* rtp_packet,
 	const uint8_t* rtp_pp = reinterpret_cast<const uint8_t*>(rtp_packet);
 	/*uint16_t*/ seq_num = rtp_pp[2] << 8 | rtp_pp[3];
 	uint16_t transport_seq_num = rtp_pp[17] << 8 | rtp_pp[18];
-	LOG(LS_ERROR) << "--------------[bwe][Probe][Vie_channel][IncomingRTPPacket] "
-		<< "transport_sequence_num = " << transport_seq_num
-		<< " , sequence_num = " << seq_num;
 	vie_receiver_.ReceivedRTPPacket(rtp_packet, rtp_packet_length,cloopenwebrtc::PacketTime());
 }
 

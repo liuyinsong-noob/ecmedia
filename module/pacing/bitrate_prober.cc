@@ -98,10 +98,11 @@ void BitrateProber::CreateProbeCluster(int bitrate_bps, int64_t now_ms) {
   cluster.pace_info.probe_cluster_id = next_cluster_id_++;
   clusters_.push(cluster);
 
-  LOG(LS_INFO) << "Probe cluster (bitrate:min bytes:min packets): ("
+  LOG(LS_INFO) << "Probe cluster (bitrate:min bytes:min packets:cluster id): ("
                << cluster.pace_info.send_bitrate_bps << ":"
                << cluster.pace_info.probe_cluster_min_bytes << ":"
-               << cluster.pace_info.probe_cluster_min_probes << ")";
+               << cluster.pace_info.probe_cluster_min_probes << ":"
+			   << cluster.pace_info.probe_cluster_id << ")";
   // If we are already probing, continue to do so. Otherwise set it to
   // kInactive and wait for OnIncomingPacket to start the probing.
   if (probing_state_ != ProbingState::kActive)
@@ -190,6 +191,4 @@ int64_t BitrateProber::GetNextProbeTime(const ProbeCluster& cluster) {
       cluster.pace_info.send_bitrate_bps;
   return cluster.time_started_ms + delta_ms;
 }
-
-
 }  // namespace cloopenwebrtc

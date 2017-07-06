@@ -691,8 +691,6 @@ void RTPSender::OnReceivedNack(
                "RTPSender::OnReceivedNACK", "num_seqnum",
                nack_sequence_numbers.size(), "avg_rtt", avg_rtt);
   for (uint16_t seq_no : nack_sequence_numbers) {
-	 
-	LOG(LS_ERROR) << "--------------[bwe][NACK][OnReceivedNack] seq_no = " << seq_no;
     const int32_t bytes_sent = ReSendPacket(seq_no, 5 + avg_rtt);
     if (bytes_sent < 0) {
       // Failed to send one Sequence number. Give up the rest in this nack.

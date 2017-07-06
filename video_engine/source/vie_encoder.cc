@@ -1194,7 +1194,6 @@ void ViEEncoder::OnNetworkChanged(uint32_t bitrate_bps,
       pad_up_to_bitrate_kbps = bitrate_kbps;
 
 // 	paced_sender_->SetEstimatedBitrate(bitrate_kbps);
-// 	paced_sender_->SetSendBitrateLimits(pad_up_to_bitrate_kbps, PacedSender::kDefaultPaceMultiplier * bitrate_kbps);
 
     //default_rtp_rtcp_->SetTargetSendBitrate(stream_bitrates);
     if (video_suspended_ == video_is_suspended)
