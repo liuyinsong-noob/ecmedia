@@ -1895,6 +1895,13 @@ int32_t ViEChannel::FrameToRender(
     }
   }
 
+
+  if (receive_codec_.width != video_frame.width() || receive_codec_.height != video_frame.height())
+  {
+	  receive_codec_.width = video_frame.width();
+	  receive_codec_.height = video_frame.height();
+	  codec_observer_->IncomingCodecChanged(channel_id_, receive_codec_);
+  }
   // Record videoframe.
   file_recorder_.RecordVideoFrame(video_frame);
 
