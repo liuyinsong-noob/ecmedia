@@ -166,6 +166,7 @@ static void* get_networkd_static(void *p)
 void onCallAnswered( const char *callid) 
 {
 	g_dlg->SetDlgItemText(IDC_CALL_STATE,L"通话中...") ;
+	g_dlg->m_dlgFullScreen->ShowWindow(SW_HIDE);
 
 	//const char * filen = "./123.wav";
 	//startRecordVoice(callid, filen);
@@ -185,6 +186,7 @@ void onMakeCallFailed(const char*callid,int reason)
 
 void onCallReleased(const char*callid) 
 {
+	g_dlg->m_dlgFullScreen->ShowWindow(SW_HIDE);
 	g_dlg->SetDlgItemText(IDC_CALL_STATE,L"呼叫结束");
 }
 
@@ -278,6 +280,13 @@ void onRemoteVideoRatioChanged(const char *callid, int width, int height, bool i
 	sprintf(log, "onRemoteVideoRatioChanged callid=%s width=%d height=%d isVideoConference=%d sipNo=%s\n",
 		callid, width, height, isVideoConference, sipNo);
 	onLogInfo(log);
+
+	if (g_dlgFullScreen)
+	{
+		CRect   temprect(0, 0, width, height);
+		g_dlgFullScreen->MoveWindow(&temprect, TRUE);
+		g_dlgFullScreen->ShowWindow(SW_SHOW);
+	}
 }
 
 
@@ -856,7 +865,17 @@ void CserphonetestDlg::OnBnClickedButton1()
 	{
 		rcwnd = m_dlgFullScreen;
 	}
-	setVideoView(rcwnd->GetSafeHwnd(),  lcwnd->GetSafeHwnd()); //得到一个窗口对象（CWnd的派生对象）指针的句柄（HWND）
+
+	if (m_dlgFullScreen == NULL)
+	{
+		CRect   temprect(0, 0, 1440, 900);
+		m_dlgFullScreen = new CDlgFullScreen;
+		m_dlgFullScreen->Create(IDD_DIALOG_FULL_SCREEN, this);
+		m_dlgFullScreen->MoveWindow(&temprect, TRUE);
+	}
+	g_dlgFullScreen = m_dlgFullScreen;
+	setVideoView(g_dlgFullScreen->GetSafeHwnd(), lcwnd->GetSafeHwnd()); //得到一个窗口对象（CWnd的派生对象）指针的句柄（HWND）
+	//setVideoView(rcwnd->GetSafeHwnd(),  lcwnd->GetSafeHwnd()); //得到一个窗口对象（CWnd的派生对象）指针的句柄（HWND）
 	int cameraIdx = _ttoi(m_CameraIdx);
 	int cameraCapIdx = _ttoi(m_CameraCapIdx);
 	int rotate = 0;
@@ -888,7 +907,7 @@ void CserphonetestDlg::OnBnClickedButton1()
 	}
 		m_startbutton.EnableWindow(false);
 
-	setLocalSSRC(m_localSSRC);
+	//setLocalSSRC(m_localSSRC);
 //	SetTimer(TIMER_STATISTICS, 1000, 0);
 }
 
@@ -1038,7 +1057,8 @@ void CserphonetestDlg::OnBnClickedButton8()
 	// TODO: 在此添加控件通知处理程序代码
 	//sendDTMF(g_currentCallId, '2');
 	//setMute(false);
-	VideoStartReceive(g_currentCallId);
+	//VideoStartReceive(g_currentCallId);
+	requestVideo(g_currentCallId, 320, 240);
 	//stopRecordVoice(g_currentCallId);
 	//setMute(false);
 	//stopRecordVoip(g_currentCallId);
@@ -1053,7 +1073,8 @@ void CserphonetestDlg::OnBnClickedButton9()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	//sendDTMF(g_currentCallId,'3');
-	VideoStopReceive(g_currentCallId);
+	//VideoStopReceive(g_currentCallId);
+	requestVideo(g_currentCallId, 640, 480);
 	//startRecordVoice(g_currentCallId, "audio_record.wav");
 	//setSrtpEnabled(false, true, true, 3, "12345678901234567890123456789012345678901234");
 

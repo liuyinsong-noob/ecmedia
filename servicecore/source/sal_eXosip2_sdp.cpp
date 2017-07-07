@@ -599,6 +599,15 @@ int sdp_to_media_description(sdp_message_t *msg, SalMediaDescription *desc, bool
 			}
 		}
 
+		for (j = 0; ((attr = sdp_message_attribute_get(msg, i, j)) != NULL); j++) {
+			if (keywordcmp("ssrc", attr->a_att_field) == 0) {
+				if( strstr(attr->a_att_value, "self=1") )
+					sscanf(attr->a_att_value, "%ld self=1", &stream->ssrc_self);
+				if (strstr(attr->a_att_value, "partner=1"))
+					sscanf(attr->a_att_value, "%ld partner=1", &stream->ssrc_partner);
+			}
+		}
+
 		/* read crypto lines if any */
 		if (stream->proto == SalProtoRtpSavp) {
 			int k, valid_count = 0;
