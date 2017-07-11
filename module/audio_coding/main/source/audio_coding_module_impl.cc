@@ -1183,10 +1183,15 @@ void AudioCodingModuleImpl::enableSoundTouch(bool isEnable) {
      _enableSoundTouch = isEnable;
 }
 
-void AudioCodingModuleImpl::setSoundTouch(int pitch, int tempo, int rate) {
+int AudioCodingModuleImpl::setSoundTouch(int pitch, int tempo, int rate) {
+    if(pitch > 12 || pitch < -12 || tempo > 50 || tempo < -50) {
+        return -2;
+    }
+    
     _sound_touch_pitch = pitch;
     _sound_touch_tempo = tempo;
-    _sound_touch_rate = rate;
+    _sound_touch_rate  = rate;
+    return 0;
 }
 // Perform a resampling and down-mix if required. We down-mix only if
 // encoder is mono and input is stereo. In case of dual-streaming, both

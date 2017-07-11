@@ -4081,8 +4081,8 @@ void Channel::enableSoundTouch(bool is_enable) {
     audio_coding_->enableSoundTouch(is_enable);
 }
     
-void Channel::setSoundTouch(int pitch, int tempo, int rate) {
-    audio_coding_->setSoundTouch(pitch, tempo, rate);
+int Channel::setSoundTouch(int pitch, int tempo, int rate) {
+    return audio_coding_->setSoundTouch(pitch, tempo, rate);
 }
 
 bool Channel::GetDelayEstimate(int* jitter_buffer_delay_ms,
