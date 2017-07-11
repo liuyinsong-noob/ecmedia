@@ -416,6 +416,7 @@ int ViENetworkImpl::GetSendDestination(const int video_channel,
 int ViENetworkImpl::SetLocalReceiver(const int video_channel,
 	const unsigned short rtp_port,
 	const unsigned short rtcp_port,
+    const bool ipv6,
 	const char* ip_address) {
 		WEBRTC_TRACE(kTraceApiCall, kTraceVideo,
 			ViEId(shared_data_->instance_id(), video_channel),
@@ -449,7 +450,7 @@ int ViENetworkImpl::SetLocalReceiver(const int video_channel,
 			return -1;
 		}
 
-		UdpTransport *transport = cm->CreateUdptransport(rtp_port, rtcp_port);
+		UdpTransport *transport = cm->CreateUdptransport(rtp_port, rtcp_port, ipv6);
 		if (!transport)
 		{
 			WEBRTC_TRACE(kTraceError, kTraceVideo,

@@ -1593,13 +1593,13 @@ int ECMedia_get_network_statistic(int channelid_audio, int channelid_video, long
 
 //ViENetwork
 #ifdef VIDEO_ENABLED
-int ECMedia_video_set_local_receiver(int channelid, int rtp_port, int rtcp_port)
+int ECMedia_video_set_local_receiver(int channelid, int rtp_port, int rtcp_port, bool ipv6)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...,channelid:%d, rtp_port:%d rtcp_port:%d",__FUNCTION__, channelid, rtp_port, rtcp_port);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViENetwork *network = ViENetwork::GetInterface(m_vie);
     if (network) {
-        int ret = network->SetLocalReceiver(channelid, rtp_port, rtcp_port);
+        int ret = network->SetLocalReceiver(channelid, rtp_port, rtcp_port, ipv6);
         network->Release();
         PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;

@@ -638,13 +638,16 @@ void ViEChannelManager::ChannelsUsingViEEncoder(int channel_id,
   }
 }
 
-UdpTransport *ViEChannelManager::CreateUdptransport(int rtp_port, int rtcp_port) {
+UdpTransport *ViEChannelManager::CreateUdptransport(int rtp_port, int rtcp_port, bool ipv6flag) {
 	CriticalSectionScoped cs(udptransport_critsect_);
 
 	RtpUdpTransportMap::iterator r_it = rtp_udptransport_map_.find(rtp_port);
 	if (r_it == rtp_udptransport_map_.end()) {// No such rtp_port.
 		uint8_t num_socket_threads = 1;
 		UdpTransport *transport = UdpTransport::Create(ViEModuleId(engine_id_, -1), num_socket_threads);
+        if (ipv6flag) {
+            transport->EnableIpV6();
+        }
 		if (transport) {//create socket
 			const char* multicast_ip_address = NULL;
 			if (transport->InitializeReceiveSockets(NULL, rtp_port,
