@@ -30,7 +30,6 @@
 		AD0798991D001E3200D48138 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0798981D001E3200D48138 /* libswresample.a */; };
 		AD1123011DAF1B7A006CDD38 /* librtmp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD056FBC1DAF1AB70007DB7A /* librtmp.a */; };
 		AD1123271DAF3108006CDD38 /* libopus_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1123261DAF3108006CDD38 /* libopus_Mac.a */; };
-		AD1EFC501F0B61EE0081C899 /* libSoundTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F099E371ED57CC200421B08 /* libSoundTouch.a */; };
 		AD2DE0FC1D6BEA4C00FE3814 /* VoeObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD2DE0FB1D6BEA4C00FE3814 /* VoeObserver.cpp */; };
 		AD3EBA921DE5324E00024454 /* libcommon_video_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA0AD991DA8C54400C4807D /* libcommon_video_Mac.a */; };
 		AD3EBA991DE5326800024454 /* ECLiveStream_rtmp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0B41DAE0A59009B8D23 /* ECLiveStream_rtmp.cpp */; };
@@ -47,6 +46,7 @@
 		AD3EBB161DE5B71200024454 /* libx264_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD3EBB111DE5B71200024454 /* libx264_mac.a */; };
 		AD4B6B9E1D4B4FBD00731C5B /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = AD4B6B9C1D4B4FA800731C5B /* base64.c */; };
 		AD4E8C561CB664F80068C4E9 /* libcommon_audio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4E8C551CB664D00068C4E9 /* libcommon_audio.a */; };
+		AD5A0C711F147F22002E191B /* libSoundTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F099E371ED57CC200421B08 /* libSoundTouch.a */; };
 		AD7E733F1D3CB66A001C0E04 /* statsCollector.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD7E733E1D3CB66A001C0E04 /* statsCollector.cc */; };
 		ADA0AD9D1DA8E00C00C4807D /* libcommon_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA0AD971DA8C54400C4807D /* libcommon_video.a */; };
 		ADB127321E779225003CBF6C /* libavformat_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB127311E779225003CBF6C /* libavformat_mac.a */; };
@@ -1301,7 +1301,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD1EFC501F0B61EE0081C899 /* libSoundTouch.a in Frameworks */,
+				AD5A0C711F147F22002E191B /* libSoundTouch.a in Frameworks */,
 				1FDB3E4C1E839BC30018FA08 /* libsrtp.a in Frameworks */,
 				1FBB44071E72926C007DBD1D /* libprotobuf.a in Frameworks */,
 				1F8EE0551E5D7B8B00C04C10 /* libavformat.a in Frameworks */,

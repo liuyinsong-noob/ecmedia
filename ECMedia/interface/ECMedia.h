@@ -406,7 +406,7 @@ ECMEDIA_API int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCa
  *
  */
 ECMEDIA_API int ECMedia_start_capture(int deviceid, CameraCapability cam);
-ECMEDIA_API int ECMedia_video_set_local_receiver(int channelid, int rtp_port, int rtcp_port = -1);
+ECMEDIA_API int ECMedia_video_set_local_receiver(int channelid, int rtp_port, int rtcp_port = -1, bool ipv6 = false);
 /*
  *
  */

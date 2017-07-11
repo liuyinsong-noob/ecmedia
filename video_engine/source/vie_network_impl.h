@@ -62,6 +62,7 @@ class ViENetworkImpl
   virtual int SetLocalReceiver(const int video_channel,
 	  const unsigned short rtp_port,
 	  const unsigned short rtcp_port,
+      const bool ipv6,
 	  const char* ip_address) OVERRIDE;
   virtual int GetLocalReceiver(const int video_channel,
 	  unsigned short& rtp_port,

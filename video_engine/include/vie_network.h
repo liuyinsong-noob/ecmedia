@@ -134,6 +134,7 @@ class WEBRTC_DLLEXPORT ViENetwork {
   virtual int SetLocalReceiver(const int video_channel,
 	  const unsigned short rtp_port,
 	  const unsigned short rtcp_port = 0,
+      const bool ipv6 = false,
 	  const char* ip_address = NULL) = 0;
 
   // Gets the local receiver ports and address for a specified channel.

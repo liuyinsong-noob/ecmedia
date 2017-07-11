@@ -95,7 +95,7 @@ class ViEChannelManager: private ViEManagerBase {
   bool GetEstimatedReceiveBandwidth(int channel_id,
                                     uint32_t* estimated_bandwidth) const;
 
-  UdpTransport *CreateUdptransport(int rtp_port, int rtcp_port);
+  UdpTransport *CreateUdptransport(int rtp_port, int rtcp_port, bool ipv6flag = false);
   int DeleteUdptransport(UdpTransport * transport);
 
  private:
