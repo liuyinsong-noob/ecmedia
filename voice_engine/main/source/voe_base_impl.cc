@@ -2216,8 +2216,7 @@ int VoEBaseImpl::setSoundTouch(int channelid, int pitch, int tempo, int rate) {
     {
         return -1;
     }
-    channelPtr->setSoundTouch(pitch, tempo, rate);
-    return 0;
+    return channelPtr->setSoundTouch(pitch, tempo, rate);
 }
     
     
