@@ -11,7 +11,8 @@ class BuildIos(BuildBase):
         platform = 'ios'
         projectPath = os.path.join(os.getcwd(), '..', '..')
         self.CompilePath = os.path.join(projectPath, 'ECMedia', 'ECMedia')
-        self.LibFilesPath = os.path.join(projectPath, 'ECMedia', 'ECMedia', 'build', 'Release-iphoneos')
+        self.LibReleaseFilesPath = os.path.join(projectPath, 'ECMedia', 'ECMedia', 'build', 'Release-iphoneos')
+        self.LibSimulatorFilesPath = os.path.join(projectPath, 'ECMedia', 'ECMedia', 'build', 'Release-iphonesimulator')
         BuildBase.__init__(self, buildType, platform, projectPath)
         
     def build(self):
@@ -28,8 +29,10 @@ class BuildIos(BuildBase):
         else:
            os.mkdir(self.RarLibsPath)
 
-        sourceFile = os.path.join(self.LibFilesPath, 'libECMedia.a')
-        print os.system('cp ' + sourceFile + ' ' + self.RarLibsPath)
+        sourceReleaseFile = os.path.join(self.LibReleaseFilesPath, 'libECMedia.a')
+        sourceSimulatorFile = os.path.join(self.LibSimulatorFilesPath, 'libECMedia.a')
+        destinationFile = os.path.join(self.RarLibsPath, 'libECMedia.a')
+        print os.system('lipo -c ' + sourceReleaseFile + ' ' + sourceSimulatorFile + ' -o ' + destinationFile)
         
     def rarFiles(self):
         os.chdir(self.BuildPath)
