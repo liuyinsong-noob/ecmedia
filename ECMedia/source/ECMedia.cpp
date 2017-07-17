@@ -566,7 +566,7 @@ int ECMedia_ring_stop(int& channelid)
 //In this func, channel is created automatically. You should store this channel to use in func ring_stop.
 int ECMedia_ring_start(int& channelid, const char *filename, bool loop)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... filename:%s loop:%s", __FUNCTION__, filename, loop?"true":"false");
+    PrintConsole("[ECMEDIA INFO] %s begins... channelid: %d filename: %s loop: %s", __FUNCTION__, channelid, filename, loop?"true":"false");
     FILE *fp  = fopen(filename,"r") ;
     if( fp == NULL ) {
         PrintConsole("[ECMEDIA ERROR] %s open file failed", __FUNCTION__);
@@ -854,8 +854,8 @@ int ECMedia_set_local_receiver(int channelid, int rtp_port, int rtcp_port)
 
 int ECMedia_audio_set_send_destination(int channelid, int rtp_port, const char *rtp_addr, int source_port, int rtcp_port, const char *rtcp_ipaddr)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d rtp_port:%d rtp_addr:%s source_port:%d rtcp_port:%d",
-		__FUNCTION__, channelid, rtp_port, rtp_addr?"NULL":rtp_addr, source_port,rtcp_port);
+    PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d rtp_port:%d rtp_addr:%s source_port:%d rtcp_port:%d rtcp_ipaddr:%s",
+		__FUNCTION__, channelid, rtp_port, rtp_addr?"NULL":rtp_addr, source_port, rtcp_port, rtcp_ipaddr);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
@@ -892,7 +892,7 @@ int ECMedia_audio_set_socks5_send_data(int channel_id, unsigned char *data, int 
 #ifdef VIDEO_ENABLED
 int ECMedia_video_start_receive(int channelid)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	g_statsCollector->AddVideoRecvStatsProxy(channelid);
     ViEBase *base = ViEBase::GetInterface(m_vie);
@@ -912,7 +912,7 @@ int ECMedia_video_start_receive(int channelid)
 
 int ECMedia_video_stop_receive(int channelid)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     if (g_statsCollector) {
         g_statsCollector->DeleteVideoRecvStatsProxy(channelid);
@@ -934,7 +934,7 @@ int ECMedia_video_stop_receive(int channelid)
 
 int ECMedia_video_start_send(int channelid)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	g_statsCollector->AddVideoSendStatsProxy(channelid);
     ViEBase *base = ViEBase::GetInterface(m_vie);
@@ -954,7 +954,7 @@ int ECMedia_video_start_send(int channelid)
 
 int ECMedia_video_stop_send(int channelid)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     if (g_statsCollector) {
         g_statsCollector->DeleteVideoSendStatsProxy(channelid);
@@ -976,7 +976,7 @@ int ECMedia_video_stop_send(int channelid)
 #endif
 int ECMedia_audio_start_playout(int channelid)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
@@ -995,7 +995,7 @@ int ECMedia_audio_start_playout(int channelid)
 
 int ECMedia_audio_stop_playout(int channelid)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
@@ -1071,7 +1071,7 @@ int ECMedia_set_soundcard_on_cb(onSoundCardOn soundcard_on_cb)
 
 int ECMedia_set_send_telephone_event_payload_type(int channelid, unsigned char type)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d type:%d", __FUNCTION__, channelid, type);
+	PrintConsole("[ECMEDIA INFO] %s begins... channelid: %d type: %d", __FUNCTION__, channelid, type);
 	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	
 	VoEDtmf* dtmf = VoEDtmf::GetInterface(m_voe);
@@ -1091,7 +1091,7 @@ int ECMedia_set_send_telephone_event_payload_type(int channelid, unsigned char t
 
 int ECMedia_set_recv_telephone_event_payload_type(int channelid, unsigned char type)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d type:%d", __FUNCTION__, channelid, type);
+	PrintConsole("[ECMEDIA INFO] %s begins... channelid: %d type: %d", __FUNCTION__, channelid, type);
 	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 
 	VoEDtmf* dtmf = VoEDtmf::GetInterface(m_voe);
@@ -1111,7 +1111,7 @@ int ECMedia_set_recv_telephone_event_payload_type(int channelid, unsigned char t
 
 int ECMedia_send_dtmf(int channelid, const char dtmfch)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d, dtmf:%c", __FUNCTION__, channelid, dtmfch);
+    PrintConsole("[ECMEDIA INFO] %s begins..., channelid: %d, dtmf: %c", __FUNCTION__, channelid, dtmfch);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 
     int playtone;
@@ -1155,7 +1155,7 @@ int ECMedia_send_dtmf(int channelid, const char dtmfch)
 
 int ECMedia_set_dtmf_cb(int channelid, onEcMediaReceivingDtmf dtmf_cb)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d ", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins..., channelid: %d ", __FUNCTION__, channelid);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 
     VoEBase *base = VoEBase::GetInterface(m_voe);
@@ -1174,7 +1174,7 @@ int ECMedia_set_dtmf_cb(int channelid, onEcMediaReceivingDtmf dtmf_cb)
 }
 int ECMedia_set_media_packet_timeout_cb(int channelid, onEcMediaPacketTimeout media_timeout_cb)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
@@ -1193,7 +1193,7 @@ int ECMedia_set_media_packet_timeout_cb(int channelid, onEcMediaPacketTimeout me
 
 int ECMedia_set_stun_cb(int channelid, onEcMediaStunPacket stun_cb)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 
     VoEBase *base = VoEBase::GetInterface(m_voe);
@@ -1213,7 +1213,7 @@ int ECMedia_set_stun_cb(int channelid, onEcMediaStunPacket stun_cb)
 
 int ECMedia_set_audio_data_cb(int channelid, onEcMediaAudioData audio_data_cb)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 
     VoEBase *base = VoEBase::GetInterface(m_voe);
@@ -1232,7 +1232,7 @@ int ECMedia_set_audio_data_cb(int channelid, onEcMediaAudioData audio_data_cb)
 }
 
 int ECMedia_set_pcm_audio_data_cb(int channelid, ECMedia_PCMDataCallBack callback) {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     
     VoEBase *base = VoEBase::GetInterface(m_voe);
@@ -1252,7 +1252,7 @@ int ECMedia_set_pcm_audio_data_cb(int channelid, ECMedia_PCMDataCallBack callbac
 
 int ECMedia_set_video_data_cb(int channelid, onEcMediaVideoDataV video_data_cb)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+	PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
 #ifdef VIDEO_ENABLED
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViENetwork *network = ViENetwork::GetInterface(m_vie);
@@ -1276,7 +1276,7 @@ int ECMedia_set_video_data_cb(int channelid, onEcMediaVideoDataV video_data_cb)
 
 int ECMedia_set_voe_cb(int channelid, onVoeCallbackOnError voe_callback_cb)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
@@ -1320,7 +1320,7 @@ int ECMedia_sendRaw(int channelid, int8_t *data, uint32_t length, bool isRTCP, u
 
 int ECMedia_audio_start_receive(int channelid)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     g_statsCollector->AddAudioRecvStatsProxy(channelid);
     VoEBase *base = VoEBase::GetInterface(m_voe);
@@ -1340,7 +1340,7 @@ int ECMedia_audio_start_receive(int channelid)
 
 int ECMedia_audio_stop_receive(int channelid)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     if (g_statsCollector) {
         g_statsCollector->DeleteAudioRecvStatsProxy(channelid);
@@ -1362,7 +1362,7 @@ int ECMedia_audio_stop_receive(int channelid)
 
 int ECMedia_audio_start_send(int channelid)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	g_statsCollector->AddAudioSendStatsProxy(channelid);
     VoEBase *base = VoEBase::GetInterface(m_voe);
@@ -1382,7 +1382,7 @@ int ECMedia_audio_start_send(int channelid)
 
 int ECMedia_audio_stop_send(int channelid)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     if (g_statsCollector) {
         g_statsCollector->DeleteAudioSendStatsProxy(channelid);
@@ -1432,7 +1432,7 @@ int ECMedia_DeRegister_voice_engine_observer()
  */
 int ECMedia_set_AgcStatus(bool agc_enabled, cloopenwebrtc::AgcModes agc_mode)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... agc_enabled=%d agc_mode=%d", __FUNCTION__, agc_enabled,agc_mode);
+    PrintConsole("[ECMEDIA INFO] %s begins... agc_enabled=%d agc_mode=%d", __FUNCTION__, agc_enabled, agc_mode);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEAudioProcessing *audio = VoEAudioProcessing::GetInterface(m_voe);
     if (audio) {
@@ -1470,7 +1470,7 @@ int ECMedia_set_EcStatus(bool ec_enabled, cloopenwebrtc::EcModes ec_mode)
 
 int ECMedia_set_NsStatus(bool ns_enabled, cloopenwebrtc::NsModes ns_mode)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... ns_enabled=%s ns_mode=%d", __FUNCTION__, ns_enabled?"true":"false",ns_mode);
+    PrintConsole("[ECMEDIA INFO] %s begins... ns_enabled=%s ns_mode=%d", __FUNCTION__, ns_enabled?"true":"false", ns_mode);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEAudioProcessing *audio = VoEAudioProcessing::GetInterface(m_voe);
     if (audio) {
@@ -1550,7 +1550,7 @@ int ECMedia_IsHowlingControlEnabled(bool &enabled)
 //VoENetwork
 int ECMedia_set_packet_timeout_noti(int channel, int timeout)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d, timeout:%d", __FUNCTION__, channel, timeout);
+    PrintConsole("[ECMEDIA INFO] %s begins..., channelid: %d, timeout: %d", __FUNCTION__, channel, timeout);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoENetwork *network = VoENetwork::GetInterface(m_voe);
     if (network) {
@@ -1570,7 +1570,7 @@ int ECMedia_set_packet_timeout_noti(int channel, int timeout)
 
 int ECMedia_get_packet_timeout_noti(int channel, bool& enabled, int& timeout)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channel);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channel);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoENetwork *network = VoENetwork::GetInterface(m_voe);
     if (network) {
@@ -1645,7 +1645,7 @@ int ECMedia_get_network_statistic(int channelid_audio, int channelid_video, long
 #ifdef VIDEO_ENABLED
 int ECMedia_video_set_local_receiver(int channelid, int rtp_port, int rtcp_port, bool ipv6)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins...,channelid:%d, rtp_port:%d rtcp_port:%d", __FUNCTION__, channelid, rtp_port, rtcp_port);
+    PrintConsole("[ECMEDIA INFO] %s begins...,channelid: %d, rtp_port: %d rtcp_port: %d ipv6: %s", __FUNCTION__, channelid, rtp_port, rtcp_port, ipv6?"true":"false");
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViENetwork *network = ViENetwork::GetInterface(m_vie);
     if (network) {
@@ -1664,7 +1664,7 @@ int ECMedia_video_set_local_receiver(int channelid, int rtp_port, int rtcp_port,
 
 int ECMedia_video_set_socks5_send_data(int channel_id, unsigned char *data, int length, bool isRTCP)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins...,channelid:%d ", __FUNCTION__, channel_id);
+    PrintConsole("[ECMEDIA INFO] %s begins...,channelid: %d ", __FUNCTION__, channel_id);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViENetwork *network = ViENetwork::GetInterface(m_vie);
     if (network) {
@@ -1683,7 +1683,7 @@ int ECMedia_video_set_socks5_send_data(int channel_id, unsigned char *data, int 
 
 int ECMedia_video_set_send_destination(int channelid, const char *rtp_addr, int rtp_port, const char *rtcp_addr, int rtcp_port)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins...,channelid:%d, rtp_addr:%s rtp_port:%d rtcp_port:%d", __FUNCTION__, channelid, rtp_addr, rtp_port, rtcp_port);
+    PrintConsole("[ECMEDIA INFO] %s begins...,channelid: %d, rtp_addr: %s rtp_port: %d rtcp_port: %d rtcp_addr: %s", __FUNCTION__, channelid, rtp_addr, rtp_port, rtcp_port, rtcp_addr);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViENetwork *network = ViENetwork::GetInterface(m_vie);
 	if (network) {
@@ -1702,7 +1702,7 @@ int ECMedia_video_set_send_destination(int channelid, const char *rtp_addr, int 
 
 int ECMedia_set_MTU(int channelid, int mtu)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins...,channelid:%d, mtu:%d", __FUNCTION__, channelid, mtu);
+    PrintConsole("[ECMEDIA INFO] %s begins...,channelid: %d, mtu: %d", __FUNCTION__, channelid, mtu);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViENetwork *network = ViENetwork::GetInterface(m_vie);
     if (network) {
@@ -1724,7 +1724,7 @@ int ECMedia_set_MTU(int channelid, int mtu)
  */
 int ECMedia_set_video_rtp_keepalive(int channelid, bool enable, int interval, int payloadType)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d, enable:%s interval:%d payloadType:%d", __FUNCTION__, 
+    PrintConsole("[ECMEDIA INFO] %s begins... channelid: %d, enable: %s interval: %d payloadType: %d", __FUNCTION__, 
 		channelid, enable?"true":"false", interval, payloadType);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
@@ -1746,7 +1746,7 @@ int ECMedia_set_video_rtp_keepalive(int channelid, bool enable, int interval, in
 
 int ECMedia_video_set_local_ssrc(int channelid, unsigned int ssrc)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...,channelid:%d, ssrc: %u", __FUNCTION__, channelid, ssrc);
+	PrintConsole("[ECMEDIA INFO] %s begins...,channelid: %d, ssrc: %u", __FUNCTION__, channelid, ssrc);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
 	if (rtp_rtcp)
@@ -1767,7 +1767,7 @@ int ECMedia_video_set_local_ssrc(int channelid, unsigned int ssrc)
 
 int ECMedia_video_request_remote_ssrc(int channelid, unsigned int ssrc)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...,channelid:%d, ssrc: %u", __FUNCTION__, channelid, ssrc);
+	PrintConsole("[ECMEDIA INFO] %s begins...,channelid: %d, ssrc: %u", __FUNCTION__, channelid, ssrc);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
 	if (rtp_rtcp)
@@ -1788,7 +1788,7 @@ int ECMedia_video_request_remote_ssrc(int channelid, unsigned int ssrc)
 
 int ECMedia_video_cancel_remote_ssrc(int channelid)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d ", __FUNCTION__, channelid);
+	PrintConsole("[ECMEDIA INFO] %s begins..., channelid: %d ", __FUNCTION__, channelid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
 	if (rtp_rtcp)
@@ -1810,7 +1810,7 @@ int ECMedia_video_cancel_remote_ssrc(int channelid)
 
 int ECMedia_set_audio_rtp_keepalive(int channelid, bool enable, int interval, int payloadType)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d enable:%s interval:%d payloadType:%d", __FUNCTION__, 
+	PrintConsole("[ECMEDIA INFO] %s begins... channelid: %d enable: %s interval: %d payloadType: %d", __FUNCTION__, 
 		channelid, enable?"true":"false", interval, payloadType);
 	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	VoERTP_RTCP *rtp_rtcp = VoERTP_RTCP::GetInterface(m_voe);
@@ -1832,7 +1832,7 @@ int ECMedia_set_audio_rtp_keepalive(int channelid, bool enable, int interval, in
 
 int ECMedia_set_NACK_status(int channelid, bool enabled)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d, enabled:%s",__FUNCTION__, channelid, enabled?"true":"false");
+    PrintConsole("[ECMEDIA INFO] %s begins..., channelid: %d, enabled: %s",__FUNCTION__, channelid, enabled?"true":"false");
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoERTP_RTCP *rtp_rtcp = VoERTP_RTCP::GetInterface(m_voe);
     if (rtp_rtcp) {
@@ -1851,7 +1851,7 @@ int ECMedia_set_NACK_status(int channelid, bool enabled)
 
 int ECMedia_set_RTCP_status(int channelid)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoERTP_RTCP *rtp_rtcp = VoERTP_RTCP::GetInterface(m_voe);
     if (rtp_rtcp) {
@@ -1870,7 +1870,7 @@ int ECMedia_set_RTCP_status(int channelid)
 
 int ECMedia_get_media_statistics(int channelid, bool is_video, MediaStatisticsInfo& call_stats)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     if(channelid == -1) {
         PrintConsole("[ECMEDIA ERROR] %s wrong channenl id", __FUNCTION__);
         PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
@@ -1925,7 +1925,7 @@ int ECMedia_get_media_statistics(int channelid, bool is_video, MediaStatisticsIn
 
 int ECMedia_start_rtp_dump(int channelid, bool is_video, const char *file, RTPDirections dir)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d is_video:%s file:%s dir:%d", __FUNCTION__,
+	PrintConsole("[ECMEDIA INFO] %s begins... channelid: %d is_video: %s file: %s dir: %d", __FUNCTION__,
 		channelid, is_video?"true":"false", file, dir);
     if(channelid == -1)
     {
@@ -1961,7 +1961,7 @@ int ECMedia_start_rtp_dump(int channelid, bool is_video, const char *file, RTPDi
 
 int ECMedia_stop_rtp_dump(int channelid, bool is_video, RTPDirections dir)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d is_video:%s dir:%d", __FUNCTION__,
+	PrintConsole("[ECMEDIA INFO] %s begins... channelid: %d is_video: %s dir: %d", __FUNCTION__,
 		channelid, is_video ? "true" : "false", dir);
     if(channelid == -1)
     {
@@ -2022,7 +2022,7 @@ int ECMedia_get_playout_device_num(int& speaker_count)
 //Mem to store device name should be allocated and at least 128 bytes. So does guid.
 int ECMedia_get_specified_playout_device_info(int index, char *name, char *guid)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+    PrintConsole("[ECMEDIA INFO] %s begins... index: %d", __FUNCTION__, index);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEHardware *hardware = VoEHardware::GetInterface(m_voe);
     if(hardware)
@@ -2056,7 +2056,7 @@ int ECMedia_get_specified_playout_device_info(int index, char *name, char *guid)
 
 int ECMedia_select_playout_device(int index)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... index:%d", __FUNCTION__, index);
+    PrintConsole("[ECMEDIA INFO] %s begins... index: %d", __FUNCTION__, index);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEHardware *hardware = VoEHardware::GetInterface(m_voe);
     if(hardware)
@@ -2112,7 +2112,7 @@ int ECMedia_get_record_device_num(int& microphone_count)
 //Mem to store device name should be allocated and at least 128 bytes. So does guid.
 int ECMedia_get_specified_record_device_info(int index, char *name, char *guid)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+    PrintConsole("[ECMEDIA INFO] %s begins... index: %d", __FUNCTION__, index);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEHardware *hardware = VoEHardware::GetInterface(m_voe);
     if(hardware)
@@ -2146,7 +2146,7 @@ int ECMedia_get_specified_record_device_info(int index, char *name, char *guid)
 
 int ECMedia_select_record_device(int index)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... index:%d", __FUNCTION__, index);
+	PrintConsole("[ECMEDIA INFO] %s begins... index: %d", __FUNCTION__, index);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEHardware *hardware = VoEHardware::GetInterface(m_voe);
     if(hardware)
@@ -2180,7 +2180,7 @@ int ECMedia_select_record_device(int index)
 
 int ECMedia_set_loudspeaker_status(bool enabled)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... enabled=%d", __FUNCTION__, enabled?"true":"false");
+    PrintConsole("[ECMEDIA INFO] %s begins... enabled=%s", __FUNCTION__, enabled?"true":"false");
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEHardware *hardware = VoEHardware::GetInterface(m_voe);
     if( hardware)
@@ -2318,7 +2318,7 @@ int ECMedia_reset_audio_device()
  */
 int ECMedia_set_speaker_volume(int volumep)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... volume:%d", __FUNCTION__, volumep);
+    PrintConsole("[ECMEDIA INFO] %s begins... volume: %d", __FUNCTION__, volumep);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEVolumeControl *volume = VoEVolumeControl::GetInterface(m_voe);
     if (volume) {
@@ -2361,7 +2361,7 @@ int ECMedia_get_speaker_volume(unsigned int& volumep)
 */
 int ECMedia_set_mic_volume(int volumep)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... volume:%d", __FUNCTION__, volumep);
+	PrintConsole("[ECMEDIA INFO] %s begins... volume: %d", __FUNCTION__, volumep);
 	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	VoEVolumeControl *volume = VoEVolumeControl::GetInterface(m_voe);
 	if (volume) {
@@ -2403,7 +2403,7 @@ int ECMedia_get_mic_volume(unsigned int& volumep)
 
 int ECMedia_set_mute_status(bool mute)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... mute:%s", __FUNCTION__, mute?"true":"false");
+    PrintConsole("[ECMEDIA INFO] %s begins... mute: %s", __FUNCTION__, mute?"true":"false");
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEVolumeControl *volume = VoEVolumeControl::GetInterface(m_voe);
     if (volume) {
@@ -2441,7 +2441,7 @@ int ECMedia_get_mute_status(bool& mute)
 
 int ECMedia_set_speaker_mute_status(bool mute)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... mute:%s", __FUNCTION__, mute?"true":"false");
+    PrintConsole("[ECMEDIA INFO] %s begins... mute: %s", __FUNCTION__, mute?"true":"false");
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEVolumeControl *volume = VoEVolumeControl::GetInterface(m_voe);
     if (volume) {
@@ -2503,7 +2503,7 @@ int ECMdeia_num_of_capture_devices()
 //buffer for name should allocated and length should be at least 256. So does id.
 int ECMedia_get_capture_device(int index, char *name, int name_len, char *id, int id_len)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+    PrintConsole("[ECMEDIA INFO] %s begins... index: %d", __FUNCTION__, index);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECapture *capture = ViECapture::GetInterface(m_vie);
     if (capture) {
@@ -2585,7 +2585,7 @@ int ECMedia_allocate_capture_device(const char *id, size_t len, int& deviceid)
 
 int ECMedia_connect_capture_device(int deviceid, int channelid)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d deviceid: %d", __FUNCTION__, channelid, deviceid);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECapture *capture = ViECapture::GetInterface(m_vie);
     if (capture) {
@@ -2632,7 +2632,7 @@ int ECMedia_set_no_camera_capture_cb(int deviceid, onEcMediaNoCameraCaptureCb no
 
 int ECMedia_start_capture(int deviceid, CameraCapability cam)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+    PrintConsole("[ECMEDIA INFO] %s begins... deviceid: %d width: %d height: %d maxfps: %d", __FUNCTION__, deviceid, cam.width, cam.height, cam.maxfps);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECapture *capture = ViECapture::GetInterface(m_vie);
     if (capture) {
@@ -2666,7 +2666,7 @@ int ECMedia_start_capture(int deviceid, CameraCapability cam)
 
 int ECMedia_stop_capture(int captureid)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins... captureid: %d", __FUNCTION__, captureid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViECapture *capture = ViECapture::GetInterface(m_vie);
 	if (capture) {
@@ -2694,7 +2694,7 @@ int ECMedia_stop_capture(int captureid)
 //The deviceid is got by func "ECMedia_allocate_capture_device"
 int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame tr)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins... deviceid: %d rotate: %d", __FUNCTION__, deviceid, tr);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViECapture *capture = ViECapture::GetInterface(m_vie);
 	if (capture) {
@@ -2948,7 +2948,7 @@ int ECMedia_get_supported_codecs_video(VideoCodec codecs[])
 
 int ECMedia_set_key_frame_request_cb(int channelid, bool isVideoConf,onEcMediaRequestKeyFrameCallback cb)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECodec *codec = ViECodec::GetInterface(m_vie);
     if (codec) {
@@ -2968,7 +2968,7 @@ int ECMedia_set_key_frame_request_cb(int channelid, bool isVideoConf,onEcMediaRe
 #endif
 int ECMedia_get_send_codec_audio(int channelid, CodecInst& audioCodec)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoECodec *codec = VoECodec::GetInterface(m_voe);
     if (codec) {
@@ -2987,7 +2987,8 @@ int ECMedia_get_send_codec_audio(int channelid, CodecInst& audioCodec)
 
 int ECMedia_set_send_codec_audio(int channelid, CodecInst& audioCodec)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d audioCodec(pltype: %d plname: %s plfreq: %d pacsize: %d channels: %d rate: %d)", __FUNCTION__, channelid, 
+      audioCodec.pltype, audioCodec.plname, audioCodec.plfreq, audioCodec.pacsize, audioCodec.channels, audioCodec.rate);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoECodec *codec = VoECodec::GetInterface(m_voe);
     if (codec) {
@@ -3009,7 +3010,8 @@ int ECMedia_set_send_codec_audio(int channelid, CodecInst& audioCodec)
 
 int ECMedia_set_receive_playloadType_audio(int channelid, CodecInst& audioCodec)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d audioCodec(pltype: %d plname: %s plfreq: %d pacsize: %d channels: %d rate: %d)", __FUNCTION__, channelid, 
+      audioCodec.pltype, audioCodec.plname, audioCodec.plfreq, audioCodec.pacsize, audioCodec.channels, audioCodec.rate);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoECodec *codec = VoECodec::GetInterface(m_voe);
     if (codec) {
@@ -3030,7 +3032,7 @@ int ECMedia_set_receive_playloadType_audio(int channelid, CodecInst& audioCodec)
 
 int ECMedia_get_receive_playloadType_audio(int channelid, CodecInst& audioCodec)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoECodec *codec = VoECodec::GetInterface(m_voe);
     if (codec) {
@@ -3050,7 +3052,7 @@ int ECMedia_get_receive_playloadType_audio(int channelid, CodecInst& audioCodec)
 #ifdef VIDEO_ENABLED
 int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d width:%d height:%d pltype:%d plname:%s",
+    PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d videoCodec(width:%d height:%d pltype:%d plname:%s)",
 		__FUNCTION__, channelid, videoCodec.width,videoCodec.height, videoCodec.plType,videoCodec.plName);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECodec *codec = ViECodec::GetInterface(m_vie);
@@ -3072,7 +3074,7 @@ int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
 
 int ECMedia_get_send_codec_video(int channelid, VideoCodec& videoCodec)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECodec *codec = ViECodec::GetInterface(m_vie);
     if (codec) {
@@ -3092,6 +3094,7 @@ int ECMedia_get_send_codec_video(int channelid, VideoCodec& videoCodec)
 }
 
 int ECMedia_set_frame_scale_type(int channelid, FrameScaleType type) {
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d frameScaleType: %d", __FUNCTION__, channelid, type);
     ViECodec *codec = ViECodec::GetInterface(m_vie);
     if (codec) {
         PrintConsole("[ECMEDIA INFO] %s", __FUNCTION__);
@@ -3110,7 +3113,7 @@ int ECMedia_set_frame_scale_type(int channelid, FrameScaleType type) {
 
 int ECMedia_set_video_conf_cb(int channelid, onEcMediaVideoConference video_conf_cb)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViENetwork *network = ViENetwork::GetInterface(m_vie);
     if (network) {
@@ -3129,7 +3132,7 @@ int ECMedia_set_video_conf_cb(int channelid, onEcMediaVideoConference video_conf
 
 int ECMedia_set_stun_cb_video(int channelid, onEcMediaStunPacket stun_cb)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViENetwork *network = ViENetwork::GetInterface(m_vie);
     if (network) {
@@ -3148,7 +3151,7 @@ int ECMedia_set_stun_cb_video(int channelid, onEcMediaStunPacket stun_cb)
 
 int ECMedia_set_receive_codec_video(int channelid, VideoCodec& videoCodec)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECodec *codec = ViECodec::GetInterface(m_vie);
     if (codec) {
@@ -3167,7 +3170,7 @@ int ECMedia_set_receive_codec_video(int channelid, VideoCodec& videoCodec)
 
 int ECMedia_get_receive_codec_video(int channelid, VideoCodec& videoCodec)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECodec *codec = ViECodec::GetInterface(m_vie);
     if (codec) {
@@ -3191,8 +3194,8 @@ int ECMedia_sendUDPPacket(const int channelid,
                           uint16_t port,
                           const char* ip)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d len:%d use_rtcp_socket:%d port:%d ip:%s", 
-		__FUNCTION__, channelid, length, use_rtcp_socket, port, ip);
+	PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d len:%d use_rtcp_socket:%s port:%d ip:%s", 
+		__FUNCTION__, channelid, length, use_rtcp_socket?"true":"false", port, ip);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViENetwork *network = ViENetwork::GetInterface(m_vie);
     if (network) {
@@ -3210,7 +3213,7 @@ int ECMedia_sendUDPPacket(const int channelid,
 }
 int ECMedia_set_NACK_status_video(int channelid, bool enabled)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
     if (rtp_rtcp) {
@@ -3232,7 +3235,7 @@ int ECMedia_set_FEC_status_video(const int channelid,
 								const unsigned char payload_typeRED,
 								const unsigned char payload_typeFEC)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+	PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
 	if (rtp_rtcp) {
@@ -3255,7 +3258,7 @@ int ECMedia_set_HybridNACKFEC_status_video(const int channelid,
 										const unsigned char payload_typeRED,
 										const unsigned char payload_typeFEC)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+	PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
 	if (rtp_rtcp) {
@@ -3275,7 +3278,7 @@ int ECMedia_set_HybridNACKFEC_status_video(const int channelid,
 
 int ECMedia_set_RTCP_status_video(int channelid, int mode)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
     if (rtp_rtcp) {
@@ -3293,7 +3296,7 @@ int ECMedia_set_RTCP_status_video(int channelid, int mode)
 }
 int ECMedia_setVideoConferenceFlag(int channel,const char *selfSipNo ,const char *sipNo, const char *conferenceNo, const char *confPasswd, int port, const char *ip)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channel);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channel);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViENetwork *network = ViENetwork::GetInterface(m_vie);
     if (network) {
@@ -3311,7 +3314,7 @@ int ECMedia_setVideoConferenceFlag(int channel,const char *selfSipNo ,const char
 }
 int ECMedia_send_key_frame(int channel)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... channel=%d", __FUNCTION__, channel);
+    PrintConsole("[ECMEDIA INFO] %s begins... channelid=%d", __FUNCTION__, channel);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViECodec *tempCodec = ViECodec::GetInterface(m_vie);
 	if(tempCodec)
@@ -3330,7 +3333,7 @@ int ECMedia_send_key_frame(int channel)
 
 int ECMedia_video_EnableIPV6(int channel, bool flag)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channel);
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channel);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViENetwork *network = ViENetwork::GetInterface(m_vie);
     if (network) {
@@ -3349,7 +3352,7 @@ int ECMedia_video_EnableIPV6(int channel, bool flag)
 
 int ECMedia_video_IsIPv6Enabled(int channel)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channel);
+	PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channel);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViENetwork *network = ViENetwork::GetInterface(m_vie);
     if (network) {
@@ -3375,7 +3378,7 @@ int ECMedia_video_IsIPv6Enabled(int channel)
 
 int ECMedia_start_record_screen(int audioChannel, const char* filename, int bitrates, int fps, int screen_index)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel:%d filename:%s bitrates:%d fps:%d screen_index:%d", __FUNCTION__,
+	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel: %d filename: %s bitrates: %d fps: %d screen_index: %d", __FUNCTION__,
 		audioChannel, filename?filename:"NULL", bitrates, fps, screen_index);
 	if(!g_recordVoip) {
 		g_recordVoip = new RecordVoip();
@@ -3407,7 +3410,7 @@ int ECMedia_start_record_screen(int audioChannel, const char* filename, int bitr
 
 int ECMedia_start_record_screen_ex(int audioChannel, const char* filename, int bitrates, int fps, int screen_index, int left, int top, int width, int height)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel:%d filename:%s bitrates:%d fps:%d screen_index:%d left:%d top:%d width:%d height:%d", __FUNCTION__,
+	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel: %d filename: %s bitrates: %d fps: %d screen_index: %d left: %d top: %d width: %d height: %d", __FUNCTION__,
 		audioChannel, filename?filename:"NULL", bitrates, fps, screen_index, left, top, width, height);
 	if(!g_recordVoip) {
 		g_recordVoip = new RecordVoip();
@@ -3438,7 +3441,7 @@ int ECMedia_start_record_screen_ex(int audioChannel, const char* filename, int b
 }
 int ECMedia_stop_record_screen(int audioChannel)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel:%d", __FUNCTION__, audioChannel);
+	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel: %d", __FUNCTION__, audioChannel);
 
 	if(!g_recordVoip)
     {
@@ -3466,7 +3469,7 @@ int ECMedia_stop_record_screen(int audioChannel)
 
 ECMEDIA_API int ECMedia_start_record_remote_video(int audioChannel, int videoChannel, const char* filename)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel:%d videoChannel:%d filename:%s", __FUNCTION__,
+	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel: %d videoChannel: %d filename: %s", __FUNCTION__,
 		audioChannel, videoChannel, filename?filename:"NULL");
 	if (!g_recordVoip) {
 		g_recordVoip = new RecordVoip();
@@ -3512,7 +3515,7 @@ ECMEDIA_API int ECMedia_start_record_remote_video(int audioChannel, int videoCha
 
 ECMEDIA_API int ECMedia_stop_record_remote_video(int audioChannel, int videoChannel)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel:%d videoChannel:%d", __FUNCTION__, audioChannel, videoChannel);
+	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel: %d videoChannel: %d", __FUNCTION__, audioChannel, videoChannel);
 
 	if (!g_recordVoip)
     {
@@ -3549,7 +3552,7 @@ ECMEDIA_API int ECMedia_stop_record_remote_video(int audioChannel, int videoChan
 
 ECMEDIA_API int ECMedia_start_record_local_video(int audioChannel, int videoChannel, const char* filename)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel:%d videoChannel:%d filename:%s", __FUNCTION__,
+	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel: %d videoChannel: %d filename: %s", __FUNCTION__,
 		audioChannel, videoChannel, filename?filename:"NULL");
 	if (!g_recordVoip) {
 		g_recordVoip = new RecordVoip();
@@ -3594,7 +3597,7 @@ ECMEDIA_API int ECMedia_start_record_local_video(int audioChannel, int videoChan
 }
 ECMEDIA_API int ECMedia_stop_record_local_video(int audioChannel, int videoChannel)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel:%d videoChannel:%d", __FUNCTION__, audioChannel, videoChannel);
+	PrintConsole("[ECMEDIA INFO] %s begins... audioChannel: %d videoChannel: %d", __FUNCTION__, audioChannel, videoChannel);
 
     if (!g_recordVoip) {
         PrintConsole("[ECMEDIA ERROR] %s recorder is null", __FUNCTION__);
@@ -3662,7 +3665,7 @@ int ECMedia_get_local_video_snapshot(int deviceid, unsigned char **buf, unsigned
 
 int ECMedia_save_local_video_snapshot(int deviceid, const char* filePath)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins..., deviceid:%d, filePath:%s", __FUNCTION__, deviceid, filePath);
+	PrintConsole("[ECMEDIA INFO] %s begins..., deviceid: %d, filePath: %s", __FUNCTION__, deviceid, filePath);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 
 	ViEFile *file = ViEFile::GetInterface(m_vie);
@@ -3685,7 +3688,7 @@ int ECMedia_save_local_video_snapshot(int deviceid, const char* filePath)
 
 int ECMedia_get_remote_video_snapshot(int channelid, unsigned char **buf, unsigned int *size, unsigned int *width, unsigned int *height)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channelid);
+	PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 
 	ViEFile *file = ViEFile::GetInterface(m_vie);
@@ -3716,7 +3719,7 @@ int ECMedia_get_remote_video_snapshot(int channelid, unsigned char **buf, unsign
 
 int ECMedia_save_remote_video_snapshot(int channelid, const char* filePath)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d, filePath:%s", __FUNCTION__, channelid, filePath);
+	PrintConsole("[ECMEDIA INFO] %s begins..., channelid: %d, filePath: %s", __FUNCTION__, channelid, filePath);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 
 	ViEFile *file = ViEFile::GetInterface(m_vie);
@@ -3739,7 +3742,7 @@ int ECMedia_save_remote_video_snapshot(int channelid, const char* filePath)
 
 int ECmedia_enable_deflickering(int captureid, bool enable)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins..., captureid:%d, enabled:%s", __FUNCTION__, captureid, enable?"true":"false");
+    PrintConsole("[ECMEDIA INFO] %s begins..., captureid: %d, enabled: %s", __FUNCTION__, captureid, enable?"true":"false");
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViEImageProcess *imageProcess = ViEImageProcess::GetInterface(m_vie);
     if (imageProcess) {
@@ -3758,7 +3761,7 @@ int ECmedia_enable_deflickering(int captureid, bool enable)
 
 int ECmedia_enable_EnableColorEnhancement(int channelid, bool enable)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d, enable:%s", __FUNCTION__, channelid, enable?"true":"false");
+    PrintConsole("[ECMEDIA INFO] %s begins..., channelid: %d, enable: %s", __FUNCTION__, channelid, enable?"true":"false");
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViEImageProcess *imageProcess = ViEImageProcess::GetInterface(m_vie);
     if (imageProcess) {
@@ -3777,7 +3780,7 @@ int ECmedia_enable_EnableColorEnhancement(int channelid, bool enable)
 
 int ECmedia_enable_EnableDenoising(int captureid, bool enable)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins..., captureid:%d, enable:%s", __FUNCTION__, captureid, enable?"true":"false");
+    PrintConsole("[ECMEDIA INFO] %s begins..., captureid: %d, enable: %s", __FUNCTION__, captureid, enable?"true":"false");
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViEImageProcess *imageProcess = ViEImageProcess::GetInterface(m_vie);
     if (imageProcess) {
@@ -3796,7 +3799,7 @@ int ECmedia_enable_EnableDenoising(int captureid, bool enable)
 
 int ECmedia_enable_EnableBrightnessAlarm(int captureid, bool enable)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins..., captureid:%d, enable:%s", __FUNCTION__, captureid, enable?"true":"false");
+    PrintConsole("[ECMEDIA INFO] %s begins..., captureid: %d, enable: %s", __FUNCTION__, captureid, enable?"true":"false");
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECapture *capture = ViECapture::GetInterface(m_vie);
     if (capture) {
@@ -3815,7 +3818,7 @@ int ECmedia_enable_EnableBrightnessAlarm(int captureid, bool enable)
 
 int ECmedia_enable_EnableBeautyFilter(int captureid, bool enable)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins..., captureid:%d, enable:%s", __FUNCTION__, captureid, enable ? "true" : "false");
+	PrintConsole("[ECMEDIA INFO] %s begins..., captureid: %d, enable: %s", __FUNCTION__, captureid, enable ? "true" : "false");
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViECapture *capture = ViECapture::GetInterface(m_vie);
 	if (capture) {
@@ -3834,7 +3837,7 @@ int ECmedia_enable_EnableBeautyFilter(int captureid, bool enable)
 
 int ECMedia_init_srtp_video(int channel)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins..., channel:%d", __FUNCTION__, channel);
+	PrintConsole("[ECMEDIA INFO] %s begins..., channelid: %d", __FUNCTION__, channel);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEEncryption *encryt = ViEEncryption::GetInterface(m_vie);
 	if (encryt) {
@@ -3849,7 +3852,7 @@ int ECMedia_init_srtp_video(int channel)
 }
 int ECMedia_shutdown_srtp_video(int channel)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins..., channel:%d", __FUNCTION__, channel);
+	PrintConsole("[ECMEDIA INFO] %s begins..., channelid: %d", __FUNCTION__, channel);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEEncryption *encryt = ViEEncryption::GetInterface(m_vie);
 	if (encryt) {
@@ -3865,7 +3868,7 @@ int ECMedia_shutdown_srtp_video(int channel)
 
 int ECMedia_enable_srtp_send_video(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... channel:%d type:%d key:%s", __FUNCTION__, channel, crypt_type, key);
+	PrintConsole("[ECMEDIA INFO] %s begins... channelid: %d type: %d key: %s", __FUNCTION__, channel, crypt_type, key);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEEncryption *encryt = ViEEncryption::GetInterface(m_vie);
 	if (encryt) {
@@ -3880,7 +3883,7 @@ int ECMedia_enable_srtp_send_video(int channel, cloopenwebrtc::ccp_srtp_crypto_s
 }
 int ECMedia_disable_srtp_send_video(int channel)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins..., channel:%d", __FUNCTION__, channel);
+	PrintConsole("[ECMEDIA INFO] %s begins..., channelid: %d", __FUNCTION__, channel);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEEncryption *encryt = ViEEncryption::GetInterface(m_vie);
 	if (encryt) {
@@ -3896,7 +3899,7 @@ int ECMedia_disable_srtp_send_video(int channel)
 
 int ECMedia_enable_srtp_recv_video(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... channel:%d type:%d key:%s", __FUNCTION__, channel, crypt_type, key);
+	PrintConsole("[ECMEDIA INFO] %s begins... channelid: %d type: %d key: %s", __FUNCTION__, channel, crypt_type, key);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEEncryption *encryt = ViEEncryption::GetInterface(m_vie);
 	if (encryt) {
@@ -3911,7 +3914,7 @@ int ECMedia_enable_srtp_recv_video(int channel, cloopenwebrtc::ccp_srtp_crypto_s
 }
 int ECMedia_disable_srtp_recv_video(int channel)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins..., channel:%d", __FUNCTION__, channel);
+	PrintConsole("[ECMEDIA INFO] %s begins..., channelid: %d", __FUNCTION__, channel);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEEncryption *encryt = ViEEncryption::GetInterface(m_vie);
 	if (encryt) {
@@ -3929,7 +3932,7 @@ int ECMedia_disable_srtp_recv_video(int channel)
 
 int ECMedia_set_VAD_status(int channelid, VadModes mode, bool dtx_enabled)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins...,channelid:%d, mode:%d dtx_enabled:%s", __FUNCTION__, channelid, mode, dtx_enabled?"true":"false");
+    PrintConsole("[ECMEDIA INFO] %s begins...,channelid: %d, mode: %d dtx_enabled: %s", __FUNCTION__, channelid, mode, dtx_enabled?"true":"false");
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoECodec *codec = VoECodec::GetInterface(m_voe);
     if (codec) {
@@ -3950,7 +3953,7 @@ int ECMedia_set_VAD_status(int channelid, VadModes mode, bool dtx_enabled)
 //CAUTION: noNetwork/wifi/other
 int ECMedia_set_network_type(int audio_channelid, int video_channelid, const char *type)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins..., audio_channelid:%d, video_channelid:%d ", __FUNCTION__, audio_channelid, video_channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins..., audio_channelid: %d, video_channelid: %d ", __FUNCTION__, audio_channelid, video_channelid);
     if (!type || strcmp(type, "noNetwork")==0) {
         PrintConsole("[ECMEDIA ERROR] %s invalid network type", __FUNCTION__);
         PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
@@ -3980,7 +3983,7 @@ int ECMedia_set_network_type(int audio_channelid, int video_channelid, const cha
 
 int ECMedia_EnableIPV6(int channel, bool flag)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins..., channel:%d, flag:%s", __FUNCTION__, channel, flag?"true":"false");
+    PrintConsole("[ECMEDIA INFO] %s begins..., channelid: %d, flag: %s", __FUNCTION__, channel, flag?"true":"false");
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoENetwork *network = VoENetwork::GetInterface(m_voe);
     if (network) {
@@ -3999,7 +4002,7 @@ int ECMedia_EnableIPV6(int channel, bool flag)
 
 int ECMedia_IsIPv6Enabled(int channel)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... and Channel ID: %d", __FUNCTION__, channel);
+	PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channel);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoENetwork *network = VoENetwork::GetInterface(m_voe);
     if (network) {
@@ -4058,7 +4061,7 @@ int ECMedia_AmrNBVersion(char *versionStr, short len)
 
 int ECMedia_init_srtp_audio(int channel)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins..., channel:%d", __FUNCTION__, channel);
+	PrintConsole("[ECMEDIA INFO] %s begins..., channelid: %d", __FUNCTION__, channel);
 	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	VoEEncryption *encryt = VoEEncryption::GetInterface(m_voe);
 	if (encryt) {
@@ -4073,7 +4076,7 @@ int ECMedia_init_srtp_audio(int channel)
 }
 int ECMedia_shutdown_srtp_audio(int channel) 
 {
-	PrintConsole("[ECMEDIA INFO] %s begins..., channel:%d", __FUNCTION__, channel);
+	PrintConsole("[ECMEDIA INFO] %s begins..., channelid: %d", __FUNCTION__, channel);
 	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	VoEEncryption *encryt = VoEEncryption::GetInterface(m_voe);
 	if (encryt) {
@@ -4089,7 +4092,7 @@ int ECMedia_shutdown_srtp_audio(int channel)
 
 int ECMedia_enable_srtp_send_audio(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins..., channel:%d", __FUNCTION__, channel);
+	PrintConsole("[ECMEDIA INFO] %s begins..., channelid: %d crypt_type: %d key: %s", __FUNCTION__, channel, crypt_type, key);
 	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 		
 	VoEEncryption *encryt = VoEEncryption::GetInterface(m_voe);
@@ -4105,7 +4108,7 @@ int ECMedia_enable_srtp_send_audio(int channel, cloopenwebrtc::ccp_srtp_crypto_s
 }
 int ECMedia_disable_srtp_send_audio(int channel)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins..., channel:%d", __FUNCTION__, channel);
+	PrintConsole("[ECMEDIA INFO] %s begins..., channelid: %d", __FUNCTION__, channel);
 	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	VoEEncryption *encryt = VoEEncryption::GetInterface(m_voe);
 	if (encryt) {
@@ -4121,7 +4124,7 @@ int ECMedia_disable_srtp_send_audio(int channel)
 
 int ECMedia_enable_srtp_recv_audio(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins..., channel:%d", __FUNCTION__, channel);
+	PrintConsole("[ECMEDIA INFO] %s begins..., channelid: %d crypt_type: %d key: %s", __FUNCTION__, channel, crypt_type, key);
 	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	VoEEncryption *encryt = VoEEncryption::GetInterface(m_voe);
 	if (encryt) {
@@ -4136,7 +4139,7 @@ int ECMedia_enable_srtp_recv_audio(int channel, cloopenwebrtc::ccp_srtp_crypto_s
 }
 int ECMedia_disable_srtp_recv_audio(int channel)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins..., channel:%d", __FUNCTION__, channel);
+	PrintConsole("[ECMEDIA INFO] %s begins..., channelid: %d", __FUNCTION__, channel);
 	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	VoEEncryption *encryt = VoEEncryption::GetInterface(m_voe);
 	if (encryt) {
@@ -4152,7 +4155,7 @@ int ECMedia_disable_srtp_recv_audio(int channel)
 
 int ECMedia_start_record_playout(int channel, char *filename)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins..., channel:%d", __FUNCTION__, channel);
+	PrintConsole("[ECMEDIA INFO] %s begins..., channelid: %d", __FUNCTION__, channel);
 	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	VoEFile *file = VoEFile::GetInterface(m_voe);
 	if (file) {
@@ -4168,7 +4171,7 @@ int ECMedia_start_record_playout(int channel, char *filename)
 
 int ECMedia_stop_record_playout(int channel)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins..., channel:%d", __FUNCTION__, channel);
+	PrintConsole("[ECMEDIA INFO] %s begins..., channelid: %d", __FUNCTION__, channel);
 	AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	VoEFile *file = VoEFile::GetInterface(m_voe);
 	if (file) {
@@ -4248,7 +4251,7 @@ int ECMedia_stop_record_send_voice()
 
 int ECMedia_set_CaptureDeviceID(int videoCapDevId)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins..., videoCapDevId:%d", __FUNCTION__, videoCapDevId);
+    PrintConsole("[ECMEDIA INFO] %s begins..., videoCapDevId: %d", __FUNCTION__, videoCapDevId);
 #ifdef VIDEO_ENABLED
 	g_CaptureDeviceId = videoCapDevId;
 #endif
@@ -4279,7 +4282,7 @@ int ECMedia_Check_Record_Permission(bool &enabled) {
 
 int ECMedia_allocate_desktopShare_capture(int& desktop_captureid, int capture_type)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins..., desktop_captureid:%d, capture_type:%d", __FUNCTION__, desktop_captureid, capture_type);
+	PrintConsole("[ECMEDIA INFO] %s begins..., desktop_captureid: %d, capture_type: %d", __FUNCTION__, desktop_captureid, capture_type);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopshare) {
@@ -4303,7 +4306,7 @@ int ECMedia_allocate_desktopShare_capture(int& desktop_captureid, int capture_ty
 
 int ECMedia_release_desktop_capture(int desktop_captureid)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... desktop_captureid:%d", __FUNCTION__, desktop_captureid);
+	PrintConsole("[ECMEDIA INFO] %s begins... desktop_captureid: %d", __FUNCTION__, desktop_captureid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *vie_desktopShare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopShare)
@@ -4324,7 +4327,7 @@ int ECMedia_release_desktop_capture(int desktop_captureid)
 
 int ECMedia_connect_desktop_captureDevice(int desktop_captureid, int video_channelId)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... desktop_captureid:%d video_channelId:%d", __FUNCTION__, desktop_captureid, video_channelId);
+	PrintConsole("[ECMEDIA INFO] %s begins... desktop_captureid: %d video_channelId: %d", __FUNCTION__, desktop_captureid, video_channelId);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *vie_desktopShare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopShare)
@@ -4344,7 +4347,7 @@ int ECMedia_connect_desktop_captureDevice(int desktop_captureid, int video_chann
 
 int ECMedia_disconnect_desktop_captureDevice(int video_channelId)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... video_channelId:%d", __FUNCTION__, video_channelId);
+	PrintConsole("[ECMEDIA INFO] %s begins... video_channelId: %d", __FUNCTION__, video_channelId);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *vie_desktopShare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopShare)
@@ -4365,7 +4368,7 @@ int ECMedia_disconnect_desktop_captureDevice(int video_channelId)
 
 int ECMedia_get_screen_list(int desktop_captureid, ScreenID **screenList)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins..., desktop_captureid:%d", __FUNCTION__, desktop_captureid);
+	PrintConsole("[ECMEDIA INFO] %s begins..., desktop_captureid: %d", __FUNCTION__, desktop_captureid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	if (!screenList) {
 		PrintConsole("[ECMEDIA ERROR] %s screenList is NULL.", __FUNCTION__);
@@ -4402,7 +4405,7 @@ int ECMedia_get_screen_list(int desktop_captureid, ScreenID **screenList)
 
 int ECMedia_get_window_list(int desktop_captureid, WindowShare **windowList)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins..., desktop_captureid:%d", __FUNCTION__, desktop_captureid);
+	PrintConsole("[ECMEDIA INFO] %s begins..., desktop_captureid: %d", __FUNCTION__, desktop_captureid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	if (!windowList) {
 		PrintConsole("[ECMEDIA ERROR] %s windowList is NULL.", __FUNCTION__);
@@ -4442,7 +4445,7 @@ int ECMedia_get_window_list(int desktop_captureid, WindowShare **windowList)
 
 bool ECMedia_select_screen(int desktop_captureid, ScreenID screeninfo)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... captureid:%d", __FUNCTION__, desktop_captureid);
+	PrintConsole("[ECMEDIA INFO] %s begins... captureid: %d", __FUNCTION__, desktop_captureid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopshare) {
@@ -4461,7 +4464,7 @@ bool ECMedia_select_screen(int desktop_captureid, ScreenID screeninfo)
 
 bool ECMedia_select_window(int desktop_captureid, WindowID windowinfo)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... captureid: %d", __FUNCTION__, desktop_captureid);
+	PrintConsole("[ECMEDIA INFO] %s begins... desktop_captureid: %d", __FUNCTION__, desktop_captureid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopshare) {
@@ -4481,7 +4484,7 @@ bool ECMedia_select_window(int desktop_captureid, WindowID windowinfo)
 
 int ECMedia_start_desktop_capture(int captureId, int fps)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... captureId:%d fps:%d", __FUNCTION__, captureId, fps);
+	PrintConsole("[ECMEDIA INFO] %s begins... captureId: %d fps: %d", __FUNCTION__, captureId, fps);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopshare) {
@@ -4500,7 +4503,7 @@ int ECMedia_start_desktop_capture(int captureId, int fps)
 
 int ECMedia_stop_desktop_capture(int desktop_captureid)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... desktop_captureid:%d", __FUNCTION__, desktop_captureid);
+	PrintConsole("[ECMEDIA INFO] %s begins... desktop_captureid: %d", __FUNCTION__, desktop_captureid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *vie_desktopShare = ViEDesktopShare::GetInterface(m_vie);
 	if (vie_desktopShare)
@@ -4520,7 +4523,7 @@ int ECMedia_stop_desktop_capture(int desktop_captureid)
 
 int ECMedia_set_desktop_share_err_code_cb(int desktop_captureid, int channelid, onEcMediaDesktopCaptureErrCode capture_err_code_cb)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... desktop_captureid:%d channelid:%d", __FUNCTION__, desktop_captureid, channelid);
+	PrintConsole("[ECMEDIA INFO] %s begins... desktop_captureid: %d channelid: %d", __FUNCTION__, desktop_captureid, channelid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *desktop_capture = ViEDesktopShare::GetInterface(m_vie);
 	if (desktop_capture) {
@@ -4539,7 +4542,7 @@ int ECMedia_set_desktop_share_err_code_cb(int desktop_captureid, int channelid, 
 
 int ECMedia_set_desktop_share_window_change_cb(int desktop_captureid, int channelid, onEcMediaShareWindowSizeChange share_window_change_cb)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins... desktop_captureid:%d channelid:%d", __FUNCTION__, desktop_captureid, channelid);
+	PrintConsole("[ECMEDIA INFO] %s begins... desktop_captureid: %d channelid: %d", __FUNCTION__, desktop_captureid, channelid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *desktop_capture = ViEDesktopShare::GetInterface(m_vie);
 	if (desktop_capture) {
@@ -4557,7 +4560,7 @@ int ECMedia_set_desktop_share_window_change_cb(int desktop_captureid, int channe
 }
 int ECmedia_set_shield_mosaic(int video_channel, bool flag)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins..., video_channel:%d", __FUNCTION__, video_channel);
+    PrintConsole("[ECMEDIA INFO] %s begins..., video_channel: %d", __FUNCTION__, video_channel);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViENetwork *network = ViENetwork::GetInterface(m_vie);
     if (network) {
@@ -4577,7 +4580,7 @@ int ECmedia_set_shield_mosaic(int video_channel, bool flag)
 
 int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &height)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins..., desktop_captureid:%d", __FUNCTION__, desktop_captureid);
+	PrintConsole("[ECMEDIA INFO] %s begins..., desktop_captureid: %d", __FUNCTION__, desktop_captureid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEDesktopShare *desktopshare = ViEDesktopShare::GetInterface(m_vie);
 	if (desktopshare) {
@@ -4596,7 +4599,7 @@ int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &hei
 
 int ECMedia_set_screen_share_activity(int desktop_captureid, void* activity)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... desktop_captureid:%d activity:%0x", __FUNCTION__, desktop_captureid, activity);
+    PrintConsole("[ECMEDIA INFO] %s begins... desktop_captureid: %d activity: %0x", __FUNCTION__, desktop_captureid, activity);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViEDesktopShare *desktopshare = ViEDesktopShare::GetInterface(m_vie);
     if (desktopshare) {
@@ -4638,7 +4641,7 @@ int ECMedia_playLiveStream(void *handle, const char * url, void *renderView, onL
 
 void ECMedia_SetLiveVideoSource(void *handle,int video_source)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	p->SetVideoSource((VIDEO_SOURCE)video_source);
@@ -4648,7 +4651,7 @@ void ECMedia_SetLiveVideoSource(void *handle,int video_source)
 
  int ECMedia_pushLiveStream(void *handle, const char *url, void *localView)
  {
-	 PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+	 PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
 	 RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	 int ret =  p->PushStream(url, localView);
@@ -4660,7 +4663,7 @@ void ECMedia_SetLiveVideoSource(void *handle,int video_source)
  }
 void ECMedia_stopLiveStream(void *handle)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
 	RTMPLiveSession *p = (RTMPLiveSession*) handle;
 	p->StopPlay();
@@ -4671,7 +4674,7 @@ void ECMedia_stopLiveStream(void *handle)
 
 void ECMedia_releaseLiveStream(void *handle)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
     return;//Since RTMPLiveSession is singleton, do not need to release.
@@ -4682,7 +4685,7 @@ void ECMedia_releaseLiveStream(void *handle)
 
 void ECMedia_enableLiveStreamBeauty(void *handle)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	p->EnableBeauty();
@@ -4692,7 +4695,7 @@ void ECMedia_enableLiveStreamBeauty(void *handle)
 
 void ECMedia_disableLiveStreamBeauty(void *handle)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	p->DisableBeauty();
@@ -4702,7 +4705,7 @@ void ECMedia_disableLiveStreamBeauty(void *handle)
 
 int ECMedia_setVideoProfileLiveStream(void *handle, int cameraIndex, CameraCapability cam, int bitrRates)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
     int ret = p->setVideoProfile(cameraIndex, cam, bitrRates);
@@ -4718,7 +4721,7 @@ int ECMedia_setVideoProfileLiveStream(void *handle, int cameraIndex, CameraCapab
 
 void ECMedia_setLiveStreamNetworkCallBack(void *handle, onLiveStreamNetworkStatusCallBack callback)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	p->setNetworkStatusCallBack(callback);
@@ -4728,7 +4731,7 @@ void ECMedia_setLiveStreamNetworkCallBack(void *handle, onLiveStreamNetworkStatu
 
 ECMEDIA_API int ECMedia_GetShareWindows(void *handle, WindowShare ** windows)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
     RTMPLiveSession *p = (RTMPLiveSession*)handle;
     std::vector<ShareWindowInfo> list;
     p->GetShareWindowList(list);
@@ -4755,7 +4758,7 @@ ECMEDIA_API int ECMedia_GetShareWindows(void *handle, WindowShare ** windows)
 
 ECMEDIA_API int ECMedia_SelectShareWindow(void *handle, int type, int id)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
     RTMPLiveSession *p = (RTMPLiveSession*)handle;
     p->SelectShareWindow(type,id);
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
@@ -4766,7 +4769,7 @@ ECMEDIA_API int  ECMedia_startRecordLocalMedia(const char *fileName, void *local
 {
 
 #ifdef VIDEO_ENABLED
-    PrintConsole("[ECMEDIA INFO] %s begins... \n", __FUNCTION__);
+    PrintConsole("[ECMEDIA INFO] %s begins... ", __FUNCTION__);
     if (!g_recordLocal) {
         g_recordLocal = new RecordLocal();
         if (!g_recordLocal) {
@@ -4786,7 +4789,7 @@ ECMEDIA_API int  ECMedia_startRecordLocalMedia(const char *fileName, void *local
 ECMEDIA_API void ECMedia_stopRecordLocalMedia()
 {
 #ifdef VIDEO_ENABLED
-    PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
     if (!g_recordLocal) {
         PrintConsole("[ECMEDIA ERROR] %s not start recorder", __FUNCTION__);
         PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
@@ -4804,7 +4807,7 @@ ECMEDIA_API void ECMedia_stopRecordLocalMedia()
 
 int ECMedia_getStatsReports(int type, char* callid, void** pMediaStatisticsDataInnerArray, int *pArraySize)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins..., type:%d, callid:%d\n", __FUNCTION__, type, callid);
+	PrintConsole("[ECMEDIA INFO] %s begins..., type: %d, callid: %d", __FUNCTION__, type, callid);
 	if (g_statsCollector)
 	{
 		g_statsCollector->GetStats((StatsContentType)type, callid, pMediaStatisticsDataInnerArray, pArraySize);
@@ -4818,7 +4821,7 @@ int ECMedia_getStatsReports(int type, char* callid, void** pMediaStatisticsDataI
 
 void ECMedia_deletePbData(void* pbDataArray)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 	if (g_statsCollector)
 	{
 		g_statsCollector->DeletePbData(pbDataArray);
@@ -4829,7 +4832,7 @@ void ECMedia_deletePbData(void* pbDataArray)
 
 ECMEDIA_API int ECMedia_setAudioRed(int channelid, bool enable, int payloadType)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d enable:%s payloadType:%d", __FUNCTION__,
+    PrintConsole("[ECMEDIA INFO] %s begins... channelid: %d enable: %s payloadType: %d", __FUNCTION__,
                  channelid, enable?"true":"false", payloadType);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoERTP_RTCP *rtp_rtcp = VoERTP_RTCP::GetInterface(m_voe);
@@ -4852,7 +4855,7 @@ ECMEDIA_API int ECMedia_setAudioRed(int channelid, bool enable, int payloadType)
 
 ECMEDIA_API int ECMedia_audio_enable_magic_sound(int channelid, bool is_enable)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d",
+    PrintConsole("[ECMEDIA INFO] %s begins... channelid: %d",
                  __FUNCTION__, channelid);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
@@ -4870,8 +4873,8 @@ ECMEDIA_API int ECMedia_audio_enable_magic_sound(int channelid, bool is_enable)
 
 ECMEDIA_API int ECMedia_audio_set_magic_sound(int channelid, int pitch, int tempo, int rate)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d",
-                 __FUNCTION__, channelid);
+    PrintConsole("[ECMEDIA INFO] %s begins... channelid: %d pitch: %d tempo: %d rate: %d",
+                 __FUNCTION__, channelid, pitch, tempo, rate);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
         int ret = base->setSoundTouch(channelid, pitch, tempo, rate);
