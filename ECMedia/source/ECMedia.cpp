@@ -632,6 +632,7 @@ int ECMedia_init_audio()
 		m_voe = NULL;
 
         PrintConsole("[ECMEDIA ERROR] %s Init Voice Engine Error, error code is %d", __FUNCTION__, base->LastError());
+        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
         return base->LastError(); //base init failed
     }
     else {
@@ -686,6 +687,7 @@ int ECMedia_uninit_audio()
     if( !m_voe)
     {
         PrintConsole("[ECMEDIA ERROR] %s audio engine is null", __FUNCTION__);
+        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
         return -99;
     }
     VoEBase* base = VoEBase::GetInterface(m_voe);
@@ -746,6 +748,7 @@ int ECMedia_audio_create_channel(int& channelid, bool is_video)
         else
         {
             PrintConsole("[ECMEDIA ERROR] %s failed to get VoEBase", __FUNCTION__);
+            PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
             channelid = -1;
             return -99;
         }
@@ -1021,7 +1024,8 @@ int ECMedia_audio_start_record()
     }
     else
     {
-        PrintConsole("[ECMEDIA WARNNING] %s failed to get VoEBase",__FUNCTION__);
+        PrintConsole("[ECMEDIA ERROR] %s failed to get VoEBase",__FUNCTION__);
+        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
         return -99;
     }
 }
@@ -1126,6 +1130,7 @@ int ECMedia_send_dtmf(int channelid, const char dtmfch)
     else
     {
         PrintConsole("[ECMEDIA ERROR] %s invalid dtmf char %c", __FUNCTION__, dtmfch);
+        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
         return -100;
     }
 
@@ -1260,6 +1265,7 @@ int ECMedia_set_video_data_cb(int channelid, onEcMediaVideoDataV video_data_cb)
 	else
 	{
 		PrintConsole("[ECMEDIA ERROR] %s failed to get ViENetwork", __FUNCTION__);
+       PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 		return -99;
 	}
 #endif
@@ -2076,7 +2082,7 @@ int ECMedia_select_playout_device(int index)
     }
     else
     {
-        PrintConsole("[ECMEDIA ERROR] failed to get VoEHardware, %s", __FUNCTION__);
+        PrintConsole("[ECMEDIA ERROR] %s failed to get VoEHardware", __FUNCTION__);
         PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
         return -99;
     }
@@ -2206,7 +2212,7 @@ int ECMedia_get_loudpeaker_status(bool& enabled)
     }
     else
     {
-        PrintConsole("[ECMEDIA ERROR] failed to get VoEHardware, %s", __FUNCTION__);
+        PrintConsole("[ECMEDIA ERROR] %s failed to get VoEHardware", __FUNCTION__);
         PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
         return -99;
     }
@@ -2344,7 +2350,7 @@ int ECMedia_get_speaker_volume(unsigned int& volumep)
     }
     else
     {
-        PrintConsole("[ECMEDIA WARNNING] %s failed to get VoEVolumeControl", __FUNCTION__);
+        PrintConsole("[ECMEDIA ERROR] %s failed to get VoEVolumeControl", __FUNCTION__);
         PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
         return -99;
     }
@@ -2847,7 +2853,7 @@ int ECMedia_set_i420_framecallback(int channelid, cloopenwebrtc::ECMedia_I420Fra
     }
     else
     {
-        PrintConsole("[ECMEDIA ERROR] %s failed to set i420 frame callback", __FUNCTION__);
+        PrintConsole("[ECMEDIA ERROR] %s failed to get ViECodec", __FUNCTION__);
         PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
         return -99;
     }
@@ -3058,7 +3064,7 @@ int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
     }
     else
     {
-        PrintConsole("[ECMEDIA ERROR] %s failed to get VoECodec", __FUNCTION__);
+        PrintConsole("[ECMEDIA ERROR] %s failed to get ViECodec", __FUNCTION__);
         PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
         return -99;
     }
@@ -3079,7 +3085,7 @@ int ECMedia_get_send_codec_video(int channelid, VideoCodec& videoCodec)
     }
     else
     {
-        PrintConsole("[ECMEDIA ERROR] %s failed to get VoECodec", __FUNCTION__);
+        PrintConsole("[ECMEDIA ERROR] %s failed to get ViECodec", __FUNCTION__);
         PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
         return -99;
     }
@@ -3096,7 +3102,7 @@ int ECMedia_set_frame_scale_type(int channelid, FrameScaleType type) {
     }
     else
     {
-        PrintConsole("[ECMEDIA ERROR] %s failed to get VoECodec", __FUNCTION__);
+        PrintConsole("[ECMEDIA ERROR] %s failed to get ViECodec", __FUNCTION__);
         PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
         return -99;
     }
@@ -3153,7 +3159,7 @@ int ECMedia_set_receive_codec_video(int channelid, VideoCodec& videoCodec)
     }
     else
     {
-        PrintConsole("[ECMEDIA ERROR] %s failed to get VoECodec", __FUNCTION__);
+        PrintConsole("[ECMEDIA ERROR] %s failed to get ViECodec", __FUNCTION__);
         PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
         return -99;
     }
@@ -3673,6 +3679,7 @@ int ECMedia_save_local_video_snapshot(int deviceid, const char* filePath)
 		return 0;
 	}
 	PrintConsole("[ECMEDIA ERROR] %s  get ViEFile failed", __FUNCTION__);
+    PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 	return -1;
 }
 
@@ -3726,6 +3733,7 @@ int ECMedia_save_remote_video_snapshot(int channelid, const char* filePath)
 		return 0;
 	}
 	PrintConsole("[ECMEDIA Error] %s get ViEFile failed.", __FUNCTION__);
+    PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 	return -1;
 }
 
@@ -3932,7 +3940,7 @@ int ECMedia_set_VAD_status(int channelid, VadModes mode, bool dtx_enabled)
     }
     else
     {
-        PrintConsole("[ECMEDIA ERROR] %s failed to get ViECodec", __FUNCTION__);
+        PrintConsole("[ECMEDIA ERROR] %s failed to get VoECodec", __FUNCTION__);
         PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
         return -99;
     }
@@ -3944,6 +3952,8 @@ int ECMedia_set_network_type(int audio_channelid, int video_channelid, const cha
 {
     PrintConsole("[ECMEDIA INFO] %s begins..., audio_channelid:%d, video_channelid:%d ", __FUNCTION__, audio_channelid, video_channelid);
     if (!type || strcmp(type, "noNetwork")==0) {
+        PrintConsole("[ECMEDIA ERROR] %s invalid network type", __FUNCTION__);
+        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
         return -99;
     }
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
@@ -3981,7 +3991,7 @@ int ECMedia_EnableIPV6(int channel, bool flag)
     }
     else
     {
-        PrintConsole("[ECMEDIA ERROR] %s failed to get ViENetwork", __FUNCTION__);
+        PrintConsole("[ECMEDIA ERROR] %s failed to get VoENetwork", __FUNCTION__);
         PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
         return -99;
     }
@@ -4007,7 +4017,7 @@ int ECMedia_IsIPv6Enabled(int channel)
     }
     else
     {
-        PrintConsole("[ECMEDIA ERROR] %s failed to get ViENetwork", __FUNCTION__);
+        PrintConsole("[ECMEDIA ERROR] %s failed to get VoENetwork", __FUNCTION__);
         PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
         return -99;
     }
@@ -4521,7 +4531,7 @@ int ECMedia_set_desktop_share_err_code_cb(int desktop_captureid, int channelid, 
 	}
 	else
 	{
-		PrintConsole("[ECMEDIA ERROR] %s failed to get ViENetwork", __FUNCTION__);
+		PrintConsole("[ECMEDIA ERROR] %s failed to get ViEDesktopShare", __FUNCTION__);
        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 		return -99;
 	}
@@ -4540,7 +4550,7 @@ int ECMedia_set_desktop_share_window_change_cb(int desktop_captureid, int channe
 	}
 	else
 	{
-		PrintConsole("[ECMEDIA ERROR] %s failed to get ViENetwork", __FUNCTION__);
+		PrintConsole("[ECMEDIA ERROR] %s failed to get ViEDesktopShare", __FUNCTION__);
        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 		return -99;
 	}
@@ -4761,6 +4771,7 @@ ECMEDIA_API int  ECMedia_startRecordLocalMedia(const char *fileName, void *local
         g_recordLocal = new RecordLocal();
         if (!g_recordLocal) {
             PrintConsole("[ECMEDIA ERROR] %s create recorder failed", __FUNCTION__);
+            PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
             return -1;
         }
     }
@@ -4778,6 +4789,7 @@ ECMEDIA_API void ECMedia_stopRecordLocalMedia()
     PrintConsole("[ECMEDIA INFO] %s begins...\n", __FUNCTION__);
     if (!g_recordLocal) {
         PrintConsole("[ECMEDIA ERROR] %s not start recorder", __FUNCTION__);
+        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
         return;
     }
     
