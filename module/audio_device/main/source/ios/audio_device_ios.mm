@@ -760,10 +760,7 @@ int32_t AudioDeviceIOS::SetLoudspeakerStatus(bool enable) {
     AVAudioSession* session = [AVAudioSession sharedInstance];
     NSString* category = session.category;
     AVAudioSessionCategoryOptions options = session.categoryOptions;
-    
-    [session setMode:AVAudioSessionModeVideoChat error:NULL];
-    
-    
+
     // Respect old category options if category is
     // AVAudioSessionCategoryPlayAndRecord. Otherwise reset it since old options
     // might not be valid for this category.
@@ -787,7 +784,7 @@ int32_t AudioDeviceIOS::SetLoudspeakerStatus(bool enable) {
             return 0;
         }
     }
-    
+ 
     options |= AVAudioSessionCategoryOptionMixWithOthers;
 
     NSString *version = [UIDevice currentDevice].systemVersion;
@@ -801,8 +798,7 @@ int32_t AudioDeviceIOS::SetLoudspeakerStatus(bool enable) {
     }
     
     [session setCategory:AVAudioSessionCategoryPlayAndRecord
-                    mode:AVAudioSessionModeVideoChat
-                 options:options
+             withOptions:options
                    error:&error];
     _originalCategory = [AVAudioSessionCategoryPlayAndRecord UTF8String];
     if (error != nil) {
