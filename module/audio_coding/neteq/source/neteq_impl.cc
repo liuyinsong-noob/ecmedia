@@ -41,6 +41,7 @@
 #include "module_common_types.h"
 #include "critical_section_wrapper.h"
 #include "logging.h"
+#include "timeutils.h"
 
 #ifndef WIN32
 #include <time.h>
@@ -1266,6 +1267,13 @@ int NetEqImpl::Decode(PacketList* packet_list, Operations* operation,
     return 0;
   }
 #endif
+
+  static time_t last = 0;
+  int logInterval = 5;
+  if( time(NULL) > last + logInterval ) {
+	   LOG(LS_WARNING) << "Period log per " << logInterval << " seconds: Audio Decode";
+       last = time(NULL);
+  }
 
   *decoded_length = 0;
   // Update codec-internal PLC state.

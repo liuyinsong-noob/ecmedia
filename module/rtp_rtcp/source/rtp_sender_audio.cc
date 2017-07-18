@@ -14,6 +14,8 @@
 #include <string.h> //memcpy
 
 #include "trace_event.h"
+#include "logging.h"
+#include "timeutils.h"
 
 namespace cloopenwebrtc {
 RTPSenderAudio::RTPSenderAudio(const int32_t id, Clock* clock,
@@ -499,6 +501,14 @@ int32_t RTPSenderAudio::SendAudio(
   TRACE_EVENT_ASYNC_END2("cloopenwebrtc", "Audio", captureTimeStamp,
                          "timestamp", _rtpSender->Timestamp(),
                          "seqnum", _rtpSender->SequenceNumber());
+
+    static time_t last = 0;
+    int logInterval = 5;
+	if( time(NULL) > last + logInterval ) {
+		 LOG(LS_WARNING) << "Period log per " << logInterval << " seconds: Audio SendAudio(payloadSize=" << payloadSize << ")";
+        last = time(NULL);
+	}
+  
   return _rtpSender->SendToNetwork(dataBuffer,
                                    payloadSize,
                                    rtpHeaderLength,

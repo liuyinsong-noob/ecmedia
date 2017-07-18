@@ -471,10 +471,10 @@ int ECMedia_init_video()
         return -99;;
     }
     ViEBase* videobase = ViEBase::GetInterface(m_vie);
-    PrintConsole("[ECMEDIA INFO] %s  Init Video Engine...", __FUNCTION__);
+    PrintConsole("[ECMEDIA INFO] %s Init Video Engine...", __FUNCTION__);
     if(videobase->Init()!= 0) {
 		int lastError = videobase->LastError(); //base init failed
-       PrintConsole("[ECMEDIA ERROR] %s  Init Video Engine error, error code is %d", __FUNCTION__, lastError);		
+       PrintConsole("[ECMEDIA ERROR] %s Init Video Engine error, error code is %d", __FUNCTION__, lastError);		
 		videobase->Release();
 		VideoEngine::Delete(m_vie);
 		m_vie = NULL;
@@ -3078,8 +3078,6 @@ int ECMedia_get_send_codec_video(int channelid, VideoCodec& videoCodec)
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECodec *codec = ViECodec::GetInterface(m_vie);
     if (codec) {
-        PrintConsole("[ECMEDIA INFO] %s plType:%d plname:%s", __FUNCTION__, videoCodec.plType,
-        videoCodec.plName);
         int ret = codec->GetSendCodec(channelid, videoCodec);
         codec->Release();
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);

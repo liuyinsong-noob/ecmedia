@@ -5073,6 +5073,16 @@ void
 			"Channel::SendPacket() RTCP dump to input file failed");
 	}
 
+    static time_t last = 0;
+    int logInterval = 5;
+	if( time(NULL) > last + logInterval ) {
+		WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_instanceId,_channelId),
+			"Period log per %d seconds: Audio IncomingRTCPPacket(rtcpPacketLength=%d,"
+			" fromIP=%s, fromPort=%u)",
+			logInterval, rtcpPacketLength, fromIP, fromPort);
+        last = time(NULL);
+	}
+
 	// Deliver RTCP packet to RTP/RTCP module for parsing
 	if (_rtpRtcpModule->IncomingRtcpPacket((const WebRtc_UWord8*)rtcpBufferPtr,
 		(WebRtc_UWord16)rtcpBufferLength) == -1)
@@ -5117,13 +5127,14 @@ void
 		rtpPacketLength, fromIP, fromPort);
 
 	static time_t last = 0;
-	if(time(NULL) > last+5 ) {
+    int logInterval = 5;
+	if( time(NULL) > last + logInterval ) {
 		WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_instanceId,_channelId),
-			"Channel::IncomingRTPPacket(rtpPacketLength=%d,"
+			"Period log per %d seconds: Audio IncomingRTPPacket(rtpPacketLength=%d,"
 			" fromIP=%s, fromPort=%u)",
-			rtpPacketLength, fromIP, fromPort);
+			logInterval, rtpPacketLength, fromIP, fromPort);
+        last = time(NULL);
 	}
-	last =time(NULL);
 
 	// Store playout timestamp for the received RTP packet
 	// to be used for upcoming delay estimations
