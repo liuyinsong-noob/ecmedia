@@ -2383,6 +2383,16 @@ void  ViEChannel::IncomingRTPPacket(const int8_t* rtp_packet,
 	}
 	//sean add end 20140705 video conference
 
+   	static time_t last = 0;
+    int logInterval = 5;
+	if( time(NULL) > last + logInterval ) {
+		WEBRTC_TRACE(kTraceApiCall, kTraceVideo, ViEId(engine_id_, channel_id_),
+			"Period log per %d seconds: Video IncomingRTPPacket(rtpPacketLength=%d,"
+			" fromIP=%s, fromPort=%u)",
+			logInterval, rtp_packet_length, from_ip, from_port);
+        last = time(NULL);
+	}
+
 	vie_receiver_.ReceivedRTPPacket(rtp_packet, rtp_packet_length,cloopenwebrtc::PacketTime());
 }
 
@@ -2455,6 +2465,16 @@ void  ViEChannel::IncomingRTCPPacket(const int8_t* rtcp_packet,
             return;
         }
     }
+
+   	static time_t last = 0;
+    int logInterval = 5;
+	if( time(NULL) > last + logInterval ) {
+		WEBRTC_TRACE(kTraceApiCall, kTraceVideo, ViEId(engine_id_, channel_id_),
+			"Period log per %d seconds: Video IncomingRTCPPacket(rtcpPacketLength=%d,"
+			" fromIP=%s, fromPort=%u)",
+			logInterval, rtcp_packet_length, from_ip, from_port);
+        last = time(NULL);
+	}
     
 	vie_receiver_.ReceivedRTCPPacket(rtcp_packet, rtcp_packet_length);
 }

@@ -22,6 +22,7 @@
 #include "critical_section_wrapper.h"
 #include "logging.h"
 #include "trace_event.h"
+#include "timeutils.h"
 
 #ifdef ENABLE_LIB_CURL
 #include "curl_perform.h"
@@ -190,6 +191,14 @@ int32_t RTPSenderVideo::SendVideoPacket(uint8_t* data_buffer,
                        capture_timestamp,
                        "seqnum",
                        _rtpSender.SequenceNumber());
+  
+    static time_t last = 0;
+    int logInterval = 5;
+	if( time(NULL) > last + logInterval ) {
+		 LOG(LS_WARNING) << "Period log per " << logInterval << " seconds: Video SendVideoPacket(payload_length=" << payload_length << ")";
+        last = time(NULL);
+	}
+  
   int ret = _rtpSender.SendToNetwork(data_buffer,
                                      payload_length,
                                      rtp_header_length,

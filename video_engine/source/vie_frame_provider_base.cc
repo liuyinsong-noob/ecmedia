@@ -17,6 +17,7 @@
 #include "logging.h"
 #include "tick_util.h"
 #include "vie_defines.h"
+#include "timeutils.h"
 
 namespace cloopenwebrtc {
 
@@ -71,6 +72,13 @@ void ViEFrameProviderBase::DeliverFrame(I420VideoFrame* video_frame,
         }
       }
     }
+  }
+
+  static time_t last = 0;
+  int logInterval = 5;
+  if( time(NULL) > last + logInterval ) {
+	   LOG(LS_WARNING) << "Period log per " << logInterval << " seconds: Video DeliverFrame";
+       last = time(NULL);
   }
 #ifdef DEBUG_
   const int process_time =

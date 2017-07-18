@@ -87,6 +87,7 @@ INCS_Release := -I../../.  \
     -I../interface \
     -I../ \
 	-I../../system_wrappers/interface \
+	-I../../system_wrappers/source \
 	-I./main/include \
 	-I./main/source \
 	-I./codecs/interface \

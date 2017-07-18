@@ -24,6 +24,7 @@
 #include "transmit_mixer.h"
 #include "utility.h"
 #include "voice_engine_impl.h"
+#include "timeutils.h"
 
 namespace cloopenwebrtc
 {
@@ -138,6 +139,18 @@ int32_t VoEBaseImpl::RecordedDataIsAvailable(
                      "totalDelayMS=%u, clockDrift=%d, micLevel=%u)",
                  nSamples, nBytesPerSample, nChannels, samplesPerSec,
                  totalDelayMS, clockDrift, micLevel);
+    static time_t last = 0;
+    int logInterval = 5;
+	if( time(NULL) > last + logInterval ) {
+		WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+			"Period log per %d seconds: Audio RecordedDataIsAvailable(nSamples=%u, "
+                     "nBytesPerSample=%u, nChannels=%u, samplesPerSec=%u, "
+                     "totalDelayMS=%u, clockDrift=%d, micLevel=%u)",
+                 logInterval, nSamples, nBytesPerSample, nChannels, samplesPerSec,
+                 totalDelayMS, clockDrift, micLevel);
+        last = time(NULL);
+	}
+    
     newMicLevel = static_cast<uint32_t>(ProcessRecordedDataWithAPM(
         NULL, 0, audioSamples, samplesPerSec, nChannels, nSamples,
         totalDelayMS, clockDrift, micLevel, keyPressed));
