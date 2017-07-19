@@ -424,7 +424,7 @@ int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level, int le
 		}
 	}
     Trace::set_level_filter(nLevel);
-    PrintConsole("[ECMEDIA INFO] %s end.",__FUNCTION__);
+    PrintConsole("[ECMEDIA INFO] %s ends...",__FUNCTION__);
     return 0;
 }
 int ECMedia_un_trace()
@@ -1019,7 +1019,7 @@ int ECMedia_audio_start_record()
     if (base) {
         int ret = base->StartRecord();
         base->Release();
-        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
