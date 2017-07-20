@@ -1121,7 +1121,6 @@ public:
 private:
     bool m_enable_fec;
     int m_opus_packet_loss_rate;
-	unsigned int m_localSSRC;
 };
 
 SerphoneAddress * serphone_address_new(const char *uri);

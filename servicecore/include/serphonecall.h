@@ -181,6 +181,8 @@ typedef struct _SerPhoneCall
 	int   m_CaptureDeviceId;
 	int   m_desktopShareDeviceId;
     
+	int  m_selfSSRC;
+	int  m_partnerSSRC;
 
 	//bool_t audio_nack_enabled;
 	//bool_t video_nack_enabled;

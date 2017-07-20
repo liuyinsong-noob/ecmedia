@@ -175,6 +175,8 @@ typedef struct SalStreamDescription{
 	char ice_pwd[SAL_MEDIA_DESCRIPTION_MAX_ICE_PWD_LEN];
 	bool_t ice_mismatch;
 	bool_t ice_completed;
+	uint32_t ssrc_self;
+	uint32_t ssrc_partner;
 } SalStreamDescription;
 
 #define SAL_MEDIA_DESCRIPTION_MAX_STREAMS 4
