@@ -110,6 +110,8 @@ void onIncomingCallReceived( int type ,const char * callid, const char *caller)
 	strncpy( g_currentCallId,callid,sizeof(g_currentCallId)-1);
 	g_dlg->PostMessageW(UPDATE_DLG,0,0);
 	g_dlg->SetDlgItemText(IDC_CALL_STATE,L"”–∫Ù»Î,«Î”¶¥...") ;
+
+	acceptCallByMediaType(g_currentCallId, 1);
 }
 
 void onConnected()
