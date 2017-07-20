@@ -952,7 +952,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 				//do some test on simulcast video streams
                 //sean vpx simulcast test begin
 //#define NOTDEFINED
-//#ifdef NOTDEFINED
+#ifdef NOTDEFINED
 				{
 					if (m_localSSRC)
 					{
@@ -974,7 +974,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 					codec_params.simulcastStream[1].targetBitrate = 1000;
 #endif
 				}
-//#endif
+#endif
 				//sean vpx simulcast test end
 
 				//if (codec_params.width==160 && codec_params.height==120)
