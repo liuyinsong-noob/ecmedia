@@ -478,9 +478,6 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
-    <ProjectReference Include="..\third_party\activemq-cpp\vs2015-build\activemq-cpp.vcxproj">
-      <Project>{5e5a9e11-9f2f-4819-ae41-cca7d6029197}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\third_party\libjpeg_turbo\libjpeg.vcxproj">
       <Project>{a68e380e-afb4-e4e2-f5ed-0ae20725b7c5}</Project>
     </ProjectReference>
@@ -494,7 +491,7 @@
     <ProjectReference Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Include="..\third_party\libvpx\build\x64\vpx_x64.vcxproj">
       <Project>{34b221e6-b6c6-47af-bde8-dd578fdaed01}</Project>
     </ProjectReference>
-	    <ProjectReference Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Include="..\third_party\libvpx\build\win32\vpx.vcxproj">
+    <ProjectReference Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Include="..\third_party\libvpx\build\win32\vpx.vcxproj">
       <Project>{dce19daf-69ac-46db-b14a-39f0faa5db74}</Project>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>

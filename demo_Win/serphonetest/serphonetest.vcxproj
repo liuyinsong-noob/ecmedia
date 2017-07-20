@@ -208,7 +208,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_UNICODE;UNICODE;NDEBUG;_CRT_SECURE_NO_WARNINGS;ENABLE_REMB_TMMBR_CONFIG</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../../servicecore\include;../../servicecore\interface;../../module;../../system_wrappers/interface</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../servicecore\include;../../servicecore\interface;../../module;../../system_wrappers/interface;..\..\third_party\protobuf\src</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -217,12 +217,13 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalDependencies>uafxcw.lib;msdmo.lib;dmoguids.lib;wmcodecdspuuid.lib</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
-      <AdditionalLibraryDirectories>../third_party/directxsdk/lib/x64</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../third_party/directxsdk/lib/x64;..\..\third_party\platformsdk_win7\files\lib\x64</AdditionalLibraryDirectories>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
