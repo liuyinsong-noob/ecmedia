@@ -218,7 +218,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../.;../.;./include;./source;../../system_wrappers\interface;../interface</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../.;../.;./include;./source;../../system_wrappers\interface;../interface;../../module/rtp_rtcp/source;../../module/rtp_rtcp/include</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
