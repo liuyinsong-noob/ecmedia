@@ -1,3 +1,5 @@
+#if !defined _M_X64
+
 ////////////////////////////////////////////////////////////////////////////////
 ///
 /// MMX optimized routines. All MMX optimized functions have been gathered into 
@@ -316,3 +318,5 @@ uint FIRFilterMMX::evaluateFilterStereo(short *dest, const short *src, uint numS
 }
 
 #endif  // SOUNDTOUCH_ALLOW_MMX
+
+#endif //!defined _M_X64
