@@ -39,6 +39,24 @@
     <ClInclude Include="source\data_manager.h">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="h264\h264_bitstream_parser.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="h264\h264_common.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="h264\pps_parser.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="h264\profile_level_id.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="h264\sps_parser.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="h264\sps_vui_rewriter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\i420_video_frame.cc">

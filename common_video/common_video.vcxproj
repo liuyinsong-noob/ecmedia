@@ -154,6 +154,12 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="h264\h264_bitstream_parser.h" />
+    <ClInclude Include="h264\h264_common.h" />
+    <ClInclude Include="h264\pps_parser.h" />
+    <ClInclude Include="h264\profile_level_id.h" />
+    <ClInclude Include="h264\sps_parser.h" />
+    <ClInclude Include="h264\sps_vui_rewriter.h" />
     <ClInclude Include="interface\i420_video_frame.h" />
     <ClInclude Include="interface\native_handle.h" />
     <ClInclude Include="interface\texture_video_frame.h" />
