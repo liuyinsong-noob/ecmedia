@@ -18,7 +18,7 @@
 #include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
 #include "../module/rtp_rtcp/source/rtp_header_extension.h"
 #include "../module/rtp_rtcp/source/rtp_rtcp_config.h"
-#include "../typedefs.h"
+#include "../module/typedefs.h"
 
 namespace cloopenwebrtc {
 
@@ -27,7 +27,8 @@ const uint8_t kRtpMarkerBitMask = 0x80;
 RtpData* NullObjectRtpData();
 RtpFeedback* NullObjectRtpFeedback();
 ReceiveStatistics* NullObjectReceiveStatistics();
-
+    
+    
 namespace RtpUtility {
 
 struct Payload {

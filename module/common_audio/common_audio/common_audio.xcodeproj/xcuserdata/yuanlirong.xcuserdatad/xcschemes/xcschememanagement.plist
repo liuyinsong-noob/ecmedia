@@ -7,11 +7,21 @@
 		<key>common_audio.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>14</integer>
+			<integer>3</integer>
+		</dict>
+		<key>common_audio_Mac.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>24</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>AD1F0D011D47646600C33F53</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>ADE8C72D1C55FCF5002C707C</key>
 		<dict>
 			<key>primary</key>

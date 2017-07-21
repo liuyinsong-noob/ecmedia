@@ -1013,7 +1013,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DEBUG = "";
 				DSTROOT = /tmp/audioprocess.dst;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1078,7 +1078,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DEBUG = "";
 				DSTROOT = /tmp/audioprocess.dst;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

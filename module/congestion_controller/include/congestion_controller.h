@@ -16,7 +16,7 @@
 
 #include "../base/constructormagic.h"
 #include "../base/criticalsection.h"
-#include "../common_types.h"
+#include "../module/common_types.h"
 #include "../module/congestion_controller/transport_feedback_adapter.h"
 #include "../module/interface/module.h"
 #include "../module/interface/module_common_types.h"

@@ -285,8 +285,8 @@ inline int VoEChannelId(int moduleId)
 // *** WEBRTC_MAC ***
 // including iPhone
 
-#ifdef WEBRTC_MAC
-
+//#ifdef WEBRTC_MAC
+#if defined(WEBRTC_MAC) || defined(WEBRTC_IOS)
 #include <AudioUnit/AudioUnit.h>
 #include <arpa/inet.h>
 #include <errno.h>
@@ -333,6 +333,7 @@ inline int VoEChannelId(int moduleId)
 #define LPSOCKADDR struct sockaddr *
 #define LPCSTR const char*
 #define ULONG unsigned long
+
 
 // Default device for Mac and iPhone
 #define WEBRTC_VOICE_ENGINE_DEFAULT_DEVICE 0

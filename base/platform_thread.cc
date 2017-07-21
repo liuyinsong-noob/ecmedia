@@ -1,4 +1,4 @@
-/*
+ /*
  *  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
  *
  *  Use of this source code is governed by a BSD-style license
@@ -54,7 +54,7 @@ bool IsThreadRefEqual(const PlatformThreadRef& a, const PlatformThreadRef& b) {
 #if defined(WEBRTC_WIN)
   return a == b;
 #elif defined(WEBRTC_POSIX)
-  return pthread_equal(a, b);
+    return pthread_equal(a, b);
 #endif
 }
 
@@ -181,6 +181,7 @@ PlatformThreadRef PlatformThread::GetThreadRef() const {
 }
 
 void PlatformThread::Stop() {
+  thread_checker_.DetachFromThread();
   DCHECK(thread_checker_.CalledOnValidThread());
   if (!IsRunning())
     return;
@@ -245,7 +246,7 @@ void PlatformThread::Run() {
       break;
 #if RTC_DCHECK_IS_ON
     auto id = sequence_nr % kMaxLoopCount;
-    loop_stamps[id] = rtc::TimeMillis();
+    loop_stamps[id] = cloopenwebrtc::TimeMillis();
     if (sequence_nr > kMaxLoopCount) {
       auto compare_id = (id + 1) % kMaxLoopCount;
       auto diff = loop_stamps[id] - loop_stamps[compare_id];
@@ -264,7 +265,7 @@ void PlatformThread::Run() {
     SleepEx(0, true);
   } while (!stop_);
 #else
-#if defined(WEBRTC_MAC)
+#if defined(WEBRTC_MAC) || defined(WEBRTC_IOS)
     sched_yield();
 #else
     static const struct timespec ts_null = {0};

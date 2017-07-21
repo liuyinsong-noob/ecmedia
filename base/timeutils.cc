@@ -12,7 +12,7 @@
 
 #if defined(WEBRTC_POSIX)
 #include <sys/time.h>
-#if defined(WEBRTC_MAC)
+#if defined(WEBRTC_MAC) || defined(WEBRTC_IOS)
 #include <mach/mach_time.h>
 #endif
 #endif
@@ -41,7 +41,7 @@ ClockInterface* SetClockForTesting(ClockInterface* clock) {
 
 int64_t SystemTimeNanos() {
   int64_t ticks;
-#if defined(WEBRTC_MAC)
+#if defined(WEBRTC_MAC) || defined(WEBRTC_IOS)
   static mach_timebase_info_data_t timebase;
   if (timebase.denom == 0) {
     // Get the timebase if this is the first time we run.

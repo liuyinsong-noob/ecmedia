@@ -238,7 +238,7 @@ VCMEncodedFrameCallback::Encoded(
         }
 #endif
 
-        RTPVideoHeader rtpVideoHeader;
+        RTPVideoHeader rtpVideoHeader = RTPVideoHeader();
         RTPVideoHeader* rtpVideoHeaderPtr = &rtpVideoHeader;
         CopyCodecSpecific(codecSpecificInfo, &rtpVideoHeaderPtr);
 

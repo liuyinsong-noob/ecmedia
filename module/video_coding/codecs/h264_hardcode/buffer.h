@@ -16,7 +16,7 @@
 #include <utility>
 
 
-#include "array_view.h"
+#include "../base/array_view.h"
 #include "checks.h"
 #include "constructormagic.h"
 
@@ -198,7 +198,7 @@ class Buffer {
     SetSize(old_size + max_bytes);
     T *base_ptr = data<T>() + old_size;
     size_t written_bytes =
-        setter(rtc::ArrayView<T>(base_ptr, max_bytes));
+        setter(cloopenwebrtc::ArrayView<T>(base_ptr, max_bytes));
 
     CHECK_LE(written_bytes, max_bytes);
     size_ = old_size + written_bytes;

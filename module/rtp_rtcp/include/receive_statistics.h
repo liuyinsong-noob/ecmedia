@@ -15,7 +15,7 @@
 
 #include "../module/interface/module.h"
 #include "../module/interface/module_common_types.h"
-#include "../typedefs.h"
+#include "../module/typedefs.h"
 
 namespace cloopenwebrtc {
 

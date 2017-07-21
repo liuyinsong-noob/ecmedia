@@ -12,7 +12,7 @@
 #define WEBRTC_MODULES_RTP_RTCP_SOURCE_FORWARD_ERROR_CORRECTION_INTERNAL_H_
 
 #include "../module/interface/module_common_types.h"
-#include "../typedefs.h"
+#include "../module/typedefs.h"
 
 namespace cloopenwebrtc {
 

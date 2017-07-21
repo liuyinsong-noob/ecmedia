@@ -30,7 +30,7 @@
 @ r7: Total iteration of LOOP_DIM_SEQ_RESIDUAL
 @ r8, r9, r10, r11, r12: scratch
 
-#include "system_wrappers/interface/asm_defines.h"
+#include "system_wrappers/include/asm_defines.h"
 
 GLOBAL_FUNCTION WebRtcSpl_CrossCorrelationNeon
 .align  2

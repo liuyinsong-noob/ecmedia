@@ -240,7 +240,8 @@
     if(loginPsswd == nil) {
         loginPsswd_textField.text = @"123456";
     } else {
-        loginPsswd_textField.text = loginPsswd;
+    //   loginPsswd_textField.text = loginPsswd;
+    loginPsswd_textField.text = @"123456";
     }
  
     [self.view addSubview:loginPsswd_textField];

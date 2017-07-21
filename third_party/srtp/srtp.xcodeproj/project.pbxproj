@@ -340,6 +340,7 @@
 					crypto/include,
 					include,
 					"../libfaad/faad2-2.7/libfaad",
+					"$(SRCROOT)/../",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -372,6 +373,7 @@
 					crypto/include,
 					include,
 					"../libfaad/faad2-2.7/libfaad",
+					"$(SRCROOT)/../",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

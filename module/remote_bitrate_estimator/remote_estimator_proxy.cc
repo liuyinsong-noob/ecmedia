@@ -88,6 +88,7 @@ int32_t RemoteEstimatorProxy::Process() {
       more_to_build = false;
     }
   }
+    return 0;
 }
 
 void RemoteEstimatorProxy::OnBitrateChanged(int bitrate_bps) {

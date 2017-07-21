@@ -269,7 +269,7 @@ SampleInfo::~SampleInfo() {}
 void Enable() {
   DCHECK(g_rtc_histogram_map == nullptr);
 #if RTC_DCHECK_IS_ON
-  RTC_DCHECK_EQ(0, cloopenwebrtc::AtomicOps::AcquireLoad(&g_rtc_histogram_called));
+  DCHECK_EQ(0, cloopenwebrtc::AtomicOps::AcquireLoad(&g_rtc_histogram_called));
 #endif
   CreateMap();
 }

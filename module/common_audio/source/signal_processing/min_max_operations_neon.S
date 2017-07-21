@@ -16,7 +16,7 @@
 @ The reference C code is in file min_max_operations.c. Code here is basically
 @ a loop unrolling by 8 with Neon instructions. Bit-exact.
 
-#include "system_wrappers/interface/asm_defines.h"
+#include "system_wrappers/include/asm_defines.h"
 
 GLOBAL_FUNCTION WebRtcSpl_MaxAbsValueW16Neon
 GLOBAL_FUNCTION WebRtcSpl_MaxAbsValueW32Neon

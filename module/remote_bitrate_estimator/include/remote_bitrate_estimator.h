@@ -16,11 +16,11 @@
 #include <map>
 #include <vector>
 
-#include "../common_types.h"
+#include "../module/common_types.h"
 #include "../module/interface/module.h"
 #include "../module/interface/module_common_types.h"
 #include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
-#include "../typedefs.h"
+#include "../module/typedefs.h"
 
 namespace cloopenwebrtc {
 

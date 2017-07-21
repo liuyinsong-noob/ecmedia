@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		450D72181F160E3000CD5776 /* h264_bitstream_parser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D720C1F160E3000CD5776 /* h264_bitstream_parser.cc */; };
+		450D72191F160E3000CD5776 /* h264_common.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D720E1F160E3000CD5776 /* h264_common.cc */; };
+		450D721A1F160E3000CD5776 /* pps_parser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72101F160E3000CD5776 /* pps_parser.cc */; };
+		450D721B1F160E3000CD5776 /* profile_level_id.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72121F160E3000CD5776 /* profile_level_id.cc */; };
+		450D721C1F160E3000CD5776 /* sps_parser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72141F160E3000CD5776 /* sps_parser.cc */; };
+		450D721D1F160E3000CD5776 /* sps_vui_rewriter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72161F160E3000CD5776 /* sps_vui_rewriter.cc */; };
 		AD1F0C9C1D47628D00C33F53 /* jpeg.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADE8C7DE1C5617D1002C707C /* jpeg.cc */; };
 		AD1F0C9D1D47628D00C33F53 /* i420_video_frame.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADE8C7DD1C5617D1002C707C /* i420_video_frame.cc */; };
 		AD1F0C9E1D47628D00C33F53 /* plane.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADE8C7E31C5617D1002C707C /* plane.cc */; };
@@ -45,11 +51,20 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		450D720C1F160E3000CD5776 /* h264_bitstream_parser.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = h264_bitstream_parser.cc; path = ../../h264/h264_bitstream_parser.cc; sourceTree = "<group>"; };
+		450D720D1F160E3000CD5776 /* h264_bitstream_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = h264_bitstream_parser.h; path = ../../h264/h264_bitstream_parser.h; sourceTree = "<group>"; };
+		450D720E1F160E3000CD5776 /* h264_common.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = h264_common.cc; path = ../../h264/h264_common.cc; sourceTree = "<group>"; };
+		450D720F1F160E3000CD5776 /* h264_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = h264_common.h; path = ../../h264/h264_common.h; sourceTree = "<group>"; };
+		450D72101F160E3000CD5776 /* pps_parser.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pps_parser.cc; path = ../../h264/pps_parser.cc; sourceTree = "<group>"; };
+		450D72111F160E3000CD5776 /* pps_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pps_parser.h; path = ../../h264/pps_parser.h; sourceTree = "<group>"; };
+		450D72121F160E3000CD5776 /* profile_level_id.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = profile_level_id.cc; path = ../../h264/profile_level_id.cc; sourceTree = "<group>"; };
+		450D72131F160E3000CD5776 /* profile_level_id.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = profile_level_id.h; path = ../../h264/profile_level_id.h; sourceTree = "<group>"; };
+		450D72141F160E3000CD5776 /* sps_parser.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sps_parser.cc; path = ../../h264/sps_parser.cc; sourceTree = "<group>"; };
+		450D72151F160E3000CD5776 /* sps_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sps_parser.h; path = ../../h264/sps_parser.h; sourceTree = "<group>"; };
+		450D72161F160E3000CD5776 /* sps_vui_rewriter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sps_vui_rewriter.cc; path = ../../h264/sps_vui_rewriter.cc; sourceTree = "<group>"; };
+		450D72171F160E3000CD5776 /* sps_vui_rewriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sps_vui_rewriter.h; path = ../../h264/sps_vui_rewriter.h; sourceTree = "<group>"; };
 		AD1F0CA81D47628D00C33F53 /* libcommon_video_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcommon_video_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADE8C7CC1C560F15002C707C /* libcommon_video.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcommon_video.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		ADE8C7D81C5617A6002C707C /* i420_video_frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = i420_video_frame.h; path = ../interface/i420_video_frame.h; sourceTree = SOURCE_ROOT; };
-		ADE8C7D91C5617A6002C707C /* native_handle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = native_handle.h; path = ../interface/native_handle.h; sourceTree = SOURCE_ROOT; };
-		ADE8C7DA1C5617A6002C707C /* texture_video_frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = texture_video_frame.h; path = ../interface/texture_video_frame.h; sourceTree = SOURCE_ROOT; };
 		ADE8C7DB1C5617D1002C707C /* data_manager.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = data_manager.cc; path = ../source/data_manager.cc; sourceTree = SOURCE_ROOT; };
 		ADE8C7DC1C5617D1002C707C /* data_manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = data_manager.h; path = ../source/data_manager.h; sourceTree = SOURCE_ROOT; };
 		ADE8C7DD1C5617D1002C707C /* i420_video_frame.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = i420_video_frame.cc; path = ../source/i420_video_frame.cc; sourceTree = SOURCE_ROOT; };
@@ -101,6 +116,18 @@
 		ADE8C7CE1C560F15002C707C /* common_video */ = {
 			isa = PBXGroup;
 			children = (
+				450D720C1F160E3000CD5776 /* h264_bitstream_parser.cc */,
+				450D720D1F160E3000CD5776 /* h264_bitstream_parser.h */,
+				450D720E1F160E3000CD5776 /* h264_common.cc */,
+				450D720F1F160E3000CD5776 /* h264_common.h */,
+				450D72101F160E3000CD5776 /* pps_parser.cc */,
+				450D72111F160E3000CD5776 /* pps_parser.h */,
+				450D72121F160E3000CD5776 /* profile_level_id.cc */,
+				450D72131F160E3000CD5776 /* profile_level_id.h */,
+				450D72141F160E3000CD5776 /* sps_parser.cc */,
+				450D72151F160E3000CD5776 /* sps_parser.h */,
+				450D72161F160E3000CD5776 /* sps_vui_rewriter.cc */,
+				450D72171F160E3000CD5776 /* sps_vui_rewriter.h */,
 				ADE8C7DB1C5617D1002C707C /* data_manager.cc */,
 				ADE8C7DC1C5617D1002C707C /* data_manager.h */,
 				ADE8C7DD1C5617D1002C707C /* i420_video_frame.cc */,
@@ -112,9 +139,6 @@
 				ADE8C7E31C5617D1002C707C /* plane.cc */,
 				ADE8C7E41C5617D1002C707C /* plane.h */,
 				ADE8C7E51C5617D1002C707C /* texture_video_frame.cc */,
-				ADE8C7D81C5617A6002C707C /* i420_video_frame.h */,
-				ADE8C7D91C5617A6002C707C /* native_handle.h */,
-				ADE8C7DA1C5617A6002C707C /* texture_video_frame.h */,
 			);
 			path = common_video;
 			sourceTree = "<group>";
@@ -207,12 +231,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				450D721A1F160E3000CD5776 /* pps_parser.cc in Sources */,
 				ADE8C7E81C5617D1002C707C /* jpeg.cc in Sources */,
 				ADE8C7E71C5617D1002C707C /* i420_video_frame.cc in Sources */,
 				ADE8C7EB1C5617D1002C707C /* plane.cc in Sources */,
 				ADE8C7E61C5617D1002C707C /* data_manager.cc in Sources */,
+				450D721B1F160E3000CD5776 /* profile_level_id.cc in Sources */,
 				ADE8C7E91C5617D1002C707C /* scaler.cc in Sources */,
+				450D721D1F160E3000CD5776 /* sps_vui_rewriter.cc in Sources */,
+				450D721C1F160E3000CD5776 /* sps_parser.cc in Sources */,
+				450D72191F160E3000CD5776 /* h264_common.cc in Sources */,
 				ADE8C7EC1C5617D1002C707C /* texture_video_frame.cc in Sources */,
+				450D72181F160E3000CD5776 /* h264_bitstream_parser.cc in Sources */,
 				ADE8C7EA1C5617D1002C707C /* webrtc_libyuv.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -348,14 +378,15 @@
 		ADE8C7D61C560F15002C707C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../..,
 					../../video_coding/main/include,
 					../interface,
 					../../../system_wrappers/interface,
-					../../../third_party/libyuv/include,
+					../../third_party/libyuv/include,
+					"$(SRCROOT)/../",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = NO;
@@ -369,14 +400,15 @@
 		ADE8C7D71C560F15002C707C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../..,
 					../../video_coding/main/include,
 					../interface,
 					../../../system_wrappers/interface,
-					../../../third_party/libyuv/include,
+					../../third_party/libyuv/include,
+					"$(SRCROOT)/../",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = "-ObjC";

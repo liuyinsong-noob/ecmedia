@@ -207,7 +207,7 @@ ViEChannel::ViEChannel(int32_t channel_id,
   configuration.transport_feedback_callback = transport_feedback_observer_;
   configuration.receiver_only = true;
   rtp_rtcp_.reset(RtpRtcp::CreateRtpRtcp(configuration));
-  rtp_rtcp_->SetSSRC(1009);
+  rtp_rtcp_->SetSSRC(1010);
   vie_receiver_.SetRtpRtcpModule(rtp_rtcp_.get());
   vie_receiver_.SetSendRtpRtcpModule(default_rtp_rtcp_);
   vcm_->SetNackSettings(kMaxNackListSize, max_nack_reordering_threshold_, 0);
@@ -1001,6 +1001,16 @@ int32_t ViEChannel::GetResolution(ResolutionInst &info) {
 
 //judge whether trunk or svc through SSRC(0, trunk; other, svc)
 int32_t ViEChannel::SetLocalSendSSRC(const uint32_t SSRC, const StreamType usage) {
+    
+    if (SSRC == 1010) {
+        isSVCChannel_ = false;
+        
+        int idx = 0;
+        GetLocalSSRC(idx, &local_ssrc_main_);
+        socket_transport_->AddRecieveChannel(local_ssrc_main_, this);
+        return 0;
+    }
+
 
 	//trunk video/content
 	if (SSRC == 0) {

@@ -217,7 +217,7 @@ ViEEncoder::ViEEncoder(int32_t engine_id,
   default_rtp_rtcp_->RegisterSendRtpHeaderExtension(kRtpExtensionTransportSequenceNumber, 5);
   default_rtp_rtcp_->SetRTCPStatus(kCompound);
 
-  uint32_t ssrc = 1009;
+  uint32_t ssrc = 1010;
   default_rtp_rtcp_->SetSSRC(ssrc);
 
   packet_router_->AddRtpModule(default_rtp_rtcp_.get());
@@ -505,7 +505,7 @@ int32_t ViEEncoder::SetEncoder(const cloopenwebrtc::VideoCodec& video_codec) {
 		  rtp_rtcp->RegisterSendRtpHeaderExtension(kRtpExtensionTransportSequenceNumber, 5);
 		  rtp_rtcp->SetRTCPStatus(kCompound);
 		  rtp_rtcp->SetTransport(default_rtp_rtcp_->GetTransport());
-		  uint32_t ssrc = 1009;
+		  uint32_t ssrc = 1010;
 		  ssrc += 100;
 		  rtp_rtcp->SetSSRC(ssrc);
 		  packet_router_->AddRtpModule(rtp_rtcp);

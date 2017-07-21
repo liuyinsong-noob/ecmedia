@@ -14,7 +14,7 @@
 #include "bind.h"
 #include "callback.h"
 #include "refcount.h"
-#include "scoped_refptr.h"
+//#include "scoped_refptr.h"
 
 namespace cloopenwebrtc {
 

@@ -705,7 +705,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/voice_engine.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
@@ -722,7 +722,6 @@
 					"USE_OPENSSL=1",
 					"ENABLE_EGLIMAGE=1",
 					"USE_SKIA=1",
-					WEBRTC_MAC,
 					WEBRTC_ARCH_ARM,
 					WEBRTC_DETECT_ARM_NEON,
 					WEBRTC_CLOCK_TYPE_REALTIME,
@@ -759,10 +758,12 @@
 					../module/rtp_rtcp/include,
 					../module/udp_transport/include,
 					../module/utility/include,
-					../system_wrappers/interface,
+					../system_wrappers/include,
+					../third_party/,
 					../third_party/srtp/include,
 					../third_party/srtp/crypto/include/,
 					../third_party/srtp,
+					../third_party/oRTP/include/,
 					../third_party/oRTP/include/ortp,
 					../servicecore/include/,
 					../system_wrappers/source,
@@ -802,7 +803,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/voice_engine.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
@@ -855,10 +856,12 @@
 					../module/rtp_rtcp/include,
 					../module/udp_transport/include,
 					../module/utility/include,
-					../system_wrappers/interface,
+					../system_wrappers/include,
+					../third_party/,
 					../third_party/srtp/include,
 					../third_party/srtp/crypto/include/,
 					../third_party/srtp,
+					../third_party/oRTP/include/,
 					../third_party/oRTP/include/ortp,
 					../servicecore/include/,
 					../system_wrappers/source,

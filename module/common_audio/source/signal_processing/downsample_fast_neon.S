@@ -15,7 +15,7 @@
 @
 @ The reference C code is in file downsample_fast.c. Bit-exact.
 
-#include "system_wrappers/interface/asm_defines.h"
+#include "system_wrappers/include/asm_defines.h"
 
 GLOBAL_FUNCTION WebRtcSpl_DownsampleFastNeon
 .align  2

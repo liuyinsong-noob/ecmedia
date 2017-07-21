@@ -41,13 +41,14 @@ namespace cloopenwebrtc
         int VideoCaptureiOSInfo::startCapture()
         {
 
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                [videoCaptureiOSObjc startCapture];
-//            });
-//            return 0;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [videoCaptureiOSObjc startCapture];
+            });
+            return 0;
 
             [videoCaptureiOSObjc performSelectorOnMainThread:@selector(startCapture) withObject:nil waitUntilDone:NO];
-            return 0;//[[videoCaptureiOSObjc startCapture] intValue];
+            return 0;//
+//            [[videoCaptureiOSObjc startCapture] intValue];
 
         }
 #ifdef __APPLE_CC__

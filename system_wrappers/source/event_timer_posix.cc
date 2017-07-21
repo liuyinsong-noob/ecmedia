@@ -78,7 +78,8 @@ EventTypeWrapper EventTimerPosix::Wait(unsigned long timeout_ms) {
   if (!event_set_) {
     if (WEBRTC_EVENT_INFINITE != timeout_ms) {
       timespec end_at;
-#ifndef WEBRTC_MAC
+//#if !defined(WEBRTC_MAC)
+#if !defined(WEBRTC_MAC) && !defined(WEBRTC_IOS)
       clock_gettime(CLOCK_MONOTONIC, &end_at);
 #else
       timeval value;
@@ -171,6 +172,7 @@ bool EventTimerPosix::StartTimer(bool periodic, unsigned long time_ms) {
   }
 
   // Start the timer thread.
+  
   timer_event_.reset(new EventTimerPosix());
   timer_thread_.reset(CreateThread());
   periodic_ = periodic;
@@ -193,8 +195,9 @@ bool EventTimerPosix::Process() {
     return false;
   }
   if (created_at_.tv_sec == 0) {
-#ifndef WEBRTC_MAC
-    CHECK_EQ(0, clock_gettime(CLOCK_MONOTONIC, &created_at_));
+//#ifndef WEBRTC_MAC
+#if !defined(WEBRTC_MAC) && !defined(WEBRTC_IOS)
+      CHECK_EQ(0, clock_gettime(CLOCK_MONOTONIC, &created_at_));
 #else
     timeval value;
     struct timezone time_zone;

@@ -98,6 +98,10 @@ static proxyAddrList *gProxyAddrLst = NULL;
 
 #define CHECK_PROXY_VALID_KEY  "acbef97b9a534203b2ebcf3befb2a240"
 
+
+extern void setSsrcMediaType(int& ssrc, int type);
+extern void setSsrcMediaAttribute(int& ssrc, unsigned short width, unsigned short height, unsigned char maxFramerate);
+
 /////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////
