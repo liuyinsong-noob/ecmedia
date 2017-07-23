@@ -22,6 +22,9 @@
 
 #include "DlgStatistics.h"
 
+static CDlgFullScreen *g_dlgFullScreen = NULL;
+
+
 
 #define TIMER_STATISTICS 2
 
