@@ -115,7 +115,7 @@ void SetVTSessionProperty(VTSessionRef session,
     std::string val_string = CFStringToString(value);
     LOG(LS_ERROR) << "VTSessionSetProperty failed to set: " << key_string
                   << " to " << val_string << ": " << status;
-      printf("VTSessionSetProperty failed to set: %s to %d, error %d\n", key_string.c_str(), value, status);
+    //printf("VTSessionSetProperty failed to set: %s to %d, error %d\n", key_string.c_str(), value, status);
   }
 }
 
