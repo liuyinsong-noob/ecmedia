@@ -41,7 +41,8 @@ constexpr int kInitialRateWindowMs = 500;
 constexpr int kRateWindowMs = 150;
 
 // Parameters for linear least squares fit of regression line to noisy data.
-constexpr size_t kDefaultTrendlineWindowSize = 15;
+//constexpr size_t kDefaultTrendlineWindowSize = 15;
+constexpr size_t kDefaultTrendlineWindowSize = 20;
 constexpr double kDefaultTrendlineSmoothingCoeff = 0.9;
 constexpr double kDefaultTrendlineThresholdGain = 4.0;
 
@@ -56,14 +57,16 @@ const char kBweTrendlineFilterExperiment[] = "WebRTC-BweTrendlineFilter";
 const char kBweMedianSlopeFilterExperiment[] = "WebRTC-BweMedianSlopeFilter";
 
 bool BitrateEstimateExperimentIsEnabled() {
-  return cloopenwebrtc::field_trial::IsEnabled(kBitrateEstimateExperiment);
+    return true;
+    //return cloopenwebrtc::field_trial::IsEnabled(kBitrateEstimateExperiment);
 }
 
 bool TrendlineFilterExperimentIsEnabled() {
   std::string experiment_string =
       cloopenwebrtc::field_trial::FindFullName(kBweTrendlineFilterExperiment);
   // The experiment is enabled iff the field trial string begins with "Enabled".
-  return experiment_string.find("Enabled") == 0;
+  //return experiment_string.find("Enabled") == 0;
+    return true;
 }
 
 bool MedianSlopeFilterExperimentIsEnabled() {
