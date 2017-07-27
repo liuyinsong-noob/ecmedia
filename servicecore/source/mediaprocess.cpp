@@ -953,9 +953,13 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 					/*codec_params.maxBitrate = min((m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps*4*0.07)/1000, kMaxVideoBitrate);
 					codec_params.minBitrate = max((m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps*1*0.07)/1000, kMinVideoBitrate);*/
                     
-					codec_params.startBitrate = m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps *3*0.07/1000;
+					/*codec_params.startBitrate = m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps *3*0.07/1000;
 					codec_params.maxBitrate = codec_params.startBitrate;
-					codec_params.minBitrate = codec_params.startBitrate/4;
+					codec_params.minBitrate = codec_params.startBitrate/4;*/
+
+					codec_params.startBitrate = 300;
+					codec_params.maxBitrate = 2000;
+					codec_params.minBitrate = 30;
 
 				}
 
@@ -3596,7 +3600,6 @@ int ServiceCore::serphone_set_video_conference_addr(const char *ip)
 	ret = 0;
 #endif
 	return ret;
-
 }
 
 int ServiceCore::serphone_set_video_window_and_request_video_accord_sip(const char *sipNo, void *videoWindowC, const char *conferenceNo, const char *confPasswd, int port)
