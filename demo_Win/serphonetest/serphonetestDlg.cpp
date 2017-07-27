@@ -338,8 +338,8 @@ CserphonetestDlg::CserphonetestDlg(CWnd* pParent /*=NULL*/)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 	m_sipID = _T("1003");
-	m_CameraIdx = _T("0");
-	m_CameraCapIdx = _T("0");
+	m_CameraIdx = _T("1");
+	m_CameraCapIdx = _T("4");
 	m_bExpand = FALSE;
 	m_totalSentBr = 0;
 	m_videoSentBr = 0;
@@ -885,6 +885,9 @@ void CserphonetestDlg::OnBnClickedButton1()
 	int cameraCapIdx = _ttoi(m_CameraCapIdx);
 	int rotate = 0;
 	bool force = false;
+
+	CameraInfo* cameraInfo = NULL;
+	getCameraInfo(&cameraInfo);
 	selectCamera(cameraIdx, cameraCapIdx, 15, rotate, force);
 
 	int sipIdx = m_sipAccountCtrl.GetCurSel();
@@ -1388,7 +1391,11 @@ void CserphonetestDlg::OnBnClickedButton25()
 	}
 
 	int index = m_encryptType.GetCurSel();
-	int ret = PlayVideoFromRtpDump(localPort, ptName, payloadType, /*m_dlgFullScreen->GetSafeHwnd()*/lcwnd->GetSafeHwnd(), index, W2A(m_encryptionKey.GetBuffer(0)));
+	//int ret = PlayVideoFromRtpDump(localPort, ptName, payloadType, /*m_dlgFullScreen->GetSafeHwnd()*/lcwnd->GetSafeHwnd(), index, W2A(m_encryptionKey.GetBuffer(0)));
+	//int ret = PlayVideoFromRtpDump(localPort, "VP8", 120, lcwnd->GetSafeHwnd(), index, W2A(m_encryptionKey.GetBuffer(0)));
+	int ret = PlayVideoFromRtpDump(localPort, "VP8", 120, m_dlgFullScreen->GetSafeHwnd(), index, W2A(m_encryptionKey.GetBuffer(0)));
+
+
 }
 
 
