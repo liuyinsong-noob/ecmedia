@@ -1010,4 +1010,8 @@ Transport* ModuleRtpRtcpImpl::GetTransport() {
 	return rtp_sender_.GetTransport();
 }
 
+void ModuleRtpRtcpImpl::SetRtcpRttStats(RtcpRttStats *rtcp_rtt_stats) {
+	rtt_stats_ = rtcp_rtt_stats;
+}
+
 }  // namespace cloopenwebrtc

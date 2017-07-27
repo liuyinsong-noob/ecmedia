@@ -352,6 +352,7 @@ class ModuleRtpRtcpImpl : public RtpRtcp, public RTCPReceiver::ModuleRtpRtcp {
 public:
   int32_t RegisterRtpReceiver(RtpReceiver* rtpRecever) override {rtp_receiver_ = rtpRecever; return 0;};
   int32_t DeRegisterRtpReceiver() override {rtp_receiver_ = NULL; return 0;};
+  void SetRtcpRttStats(RtcpRttStats *rtcp_rtt_stats);
  private:
   //FRIEND_TEST_ALL_PREFIXES(RtpRtcpImplTest, Rtt);
   //FRIEND_TEST_ALL_PREFIXES(RtpRtcpImplTest, RttForReceiverOnly);

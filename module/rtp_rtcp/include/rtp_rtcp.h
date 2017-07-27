@@ -539,6 +539,7 @@ class RtpRtcp : public Module {
   virtual void SetSendRtcpPacketTypeCountObserver(RtcpPacketTypeCounterObserver *observer)=0;
   virtual void SetTransport(Transport *transport) = 0; //add by ylr
   virtual Transport* GetTransport() = 0;
+  virtual void SetRtcpRttStats(RtcpRttStats *rtcp_rtt_stats) = 0;
 };
 
 }  // namespace cloopenwebrtc
