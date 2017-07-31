@@ -2718,8 +2718,7 @@ int ECMedia_set_local_video_window(int deviceid, void *video_window)
     ViECapture *capture = ViECapture::GetInterface(m_vie);
     if (capture) {
         int ret = 0;
-// #ifdef WIN32
-#if true
+#ifdef WIN32
         ViERender* render =  ViERender::GetInterface(m_vie);
         ret = render->AddRenderer(deviceid,video_window,1,0,0,1,1,NULL);
         if (ret) {
@@ -2804,6 +2803,7 @@ int ECMedia_add_render(int channelid, void *video_window, ReturnVideoWidthHeight
 	//	}
 	//}
 	//return 0;
+
 
     PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d video_window:%0x", __FUNCTION__, channelid, video_window);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);

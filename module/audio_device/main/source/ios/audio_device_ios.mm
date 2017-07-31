@@ -760,6 +760,7 @@ int32_t AudioDeviceIOS::SetLoudspeakerStatus(bool enable) {
     AVAudioSession* session = [AVAudioSession sharedInstance];
     NSString* category = session.category;
     AVAudioSessionCategoryOptions options = session.categoryOptions;
+
     // Respect old category options if category is
     // AVAudioSessionCategoryPlayAndRecord. Otherwise reset it since old options
     // might not be valid for this category.
@@ -783,7 +784,7 @@ int32_t AudioDeviceIOS::SetLoudspeakerStatus(bool enable) {
             return 0;
         }
     }
-    
+ 
     options |= AVAudioSessionCategoryOptionMixWithOthers;
 
     NSString *version = [UIDevice currentDevice].systemVersion;
@@ -791,7 +792,7 @@ int32_t AudioDeviceIOS::SetLoudspeakerStatus(bool enable) {
     // enable bluetooth
     if (version.doubleValue >= version_ios_10)  {
         options |= AVAudioSessionCategoryOptionAllowBluetoothA2DP;
-        options |= AVAudioSessionCategoryOptionAllowBluetooth;
+//        options |= AVAudioSessionCategoryOptionAllowBluetooth;
     } else {
         options |= AVAudioSessionCategoryOptionAllowBluetooth;
     }

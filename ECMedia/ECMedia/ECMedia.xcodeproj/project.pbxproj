@@ -15,6 +15,7 @@
 		1AFBD1221DAE564A009B8D23 /* libfaad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1211DAE564A009B8D23 /* libfaad.a */; };
 		1AFBD1241DAE5839009B8D23 /* libfaac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1231DAE5839009B8D23 /* libfaac.a */; };
 		1AFBD1661DAE67D3009B8D23 /* libL16.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1611DAE6592009B8D23 /* libL16.a */; };
+		1F2133051F1CB9E900A8A423 /* libSoundTouch_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F2133041F1CB9E900A8A423 /* libSoundTouch_Mac.a */; };
 		1F8EE0021E5D6EB200C04C10 /* RecordLocal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EE0011E5D6EB200C04C10 /* RecordLocal.cpp */; };
 		1F8EE0551E5D7B8B00C04C10 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F8EE0541E5D7B8B00C04C10 /* libavformat.a */; };
 		1FBB43FA1E728F35007DBD1D /* MediaStatisticsData.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FBB43F91E728F35007DBD1D /* MediaStatisticsData.pb.cc */; };
@@ -141,6 +142,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 1FDC34FB1ED67266003D6155;
 			remoteInfo = SoundTouch;
+		};
+		1F2133031F1CB9E900A8A423 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F099E2D1ED57CC200421B08 /* SoundTouch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1F2133011F1CB9BB00A8A423;
+			remoteInfo = SoundTouch_Mac;
 		};
 		1FBB44031E72925C007DBD1D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1254,6 +1262,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F2133051F1CB9E900A8A423 /* libSoundTouch_Mac.a in Frameworks */,
 				ADB127321E779225003CBF6C /* libavformat_mac.a in Frameworks */,
 				1FBB44081E729283007DBD1D /* libprotobuf_Mac.a in Frameworks */,
 				AD3EBB121DE5B71200024454 /* libvpx_mac.a in Frameworks */,
@@ -1426,6 +1435,7 @@
 			isa = PBXGroup;
 			children = (
 				1F099E371ED57CC200421B08 /* libSoundTouch.a */,
+				1F2133041F1CB9E900A8A423 /* libSoundTouch_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2393,6 +2403,13 @@
 			fileType = archive.ar;
 			path = libSoundTouch.a;
 			remoteRef = 1F099E361ED57CC200421B08 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1F2133041F1CB9E900A8A423 /* libSoundTouch_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSoundTouch_Mac.a;
+			remoteRef = 1F2133031F1CB9E900A8A423 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		1FBB44041E72925C007DBD1D /* libprotobuf.a */ = {
