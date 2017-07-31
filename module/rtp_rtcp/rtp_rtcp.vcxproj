@@ -59,7 +59,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../.;../.;./include;./source;./source/H264;../../system_wrappers\interface;../interface;./mocks;../remote_bitrate_estimator/include;../pacing/include;../..;../common_audio/source;..\..\third_party\libcurl\libcurl-vc14-x86-debug-static-ipv6-sspi-winssl\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../.;../.;./include;./source;./source/H264;../../system_wrappers\source;../../system_wrappers\interface;../interface;./mocks;../remote_bitrate_estimator/include;../pacing/include;../..;../common_audio/source;..\..\third_party\libcurl\libcurl-vc14-x86-debug-static-ipv6-sspi-winssl\include</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 %(AdditionalOptions)</AdditionalOptions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <BufferSecurityCheck>true</BufferSecurityCheck>
@@ -162,7 +162,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../.;../.;./include;./source;./source/H264;../../system_wrappers\interface;../interface;./mocks;../remote_bitrate_estimator/include;../pacing/include;../..;../common_audio/source</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../.;../.;./include;./source;./source/H264;../../system_wrappers/source;../../system_wrappers\interface;../interface;./mocks;../remote_bitrate_estimator/include;../pacing/include;../..;../common_audio/source</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -218,7 +218,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../.;../.;./include;./source;./source/H264;../../system_wrappers\interface;../interface;./mocks;../remote_bitrate_estimator/include;../pacing/include;../..;../common_audio/source</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../.;../.;./include;./source;./source/H264;../../system_wrappers\source;../../system_wrappers\interface;../interface;./mocks;../remote_bitrate_estimator/include;../pacing/include;../..;../common_audio/source</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

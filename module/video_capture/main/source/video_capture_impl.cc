@@ -21,6 +21,7 @@
 #include "ref_count.h"
 #include "tick_util.h"
 #include "trace_event.h"
+#include "timeutils.h"
 
 #include "trace.h"
 
@@ -336,6 +337,14 @@ int32_t VideoCaptureImpl::IncomingFrame(
                         << frameInfo.rawType << "to I420.";
             return -1;
         }
+
+        static time_t last = 0;
+        int logInterval = 5;
+        if( time(NULL) > last + logInterval ) {
+          LOG(LS_WARNING) << "Period log per " << logInterval << " seconds: Video IncomingFrame(width=" << frameInfo.width << ", height=" << frameInfo.height << ")";
+          last = time(NULL);
+        }
+        
         DeliverCapturedFrame(_captureFrame, captureTime);
     }
     else // Encoded format

@@ -27,6 +27,7 @@
 #include "overuse_frame_detector.h"
 #include "vie_defines.h"
 #include "vie_encoder.h"
+#include "timeutils.h"
 
 namespace cloopenwebrtc {
 
@@ -329,6 +330,14 @@ int ViECapturer::IncomingFrame(unsigned char* video_frame,
   capability.width = width;
   capability.height = height;
   capability.rawType = video_type;
+
+   static time_t last = 0;
+   int logInterval = 5;
+	if( time(NULL) > last + logInterval ) {
+        LOG(LS_WARNING) << "Period log per " << logInterval << " seconds: Video IncomingFrame(width=" << width << ", height=" << height << ", raytype=" << video_type << ")";
+        last = time(NULL);
+	}
+  
   return external_capture_module_->IncomingFrame(video_frame,
                                                  video_frame_length,
                                                  capability, capture_time);
