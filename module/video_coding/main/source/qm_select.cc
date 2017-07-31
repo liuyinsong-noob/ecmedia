@@ -194,6 +194,7 @@ void VCMQmResolution::Reset() {
   avg_packet_loss_ = 0.0f;
   encoder_state_ = kStableEncoding;
   num_layers_ = 1;
+  keep_video_clarity_first_ = false;
   ResetRates();
   ResetDownSamplingState();
   ResetQM();
@@ -336,6 +337,12 @@ int VCMQmResolution::SelectResolution(VCMResolutionScale** qm) {
   // Default settings: no action.
   SetDefaultAction(); //reset resolution scaler,reset action
   *qm = qm_;
+  
+  
+  if(keep_video_clarity_first_) {
+      // 淇濊瘉瑙嗛娓呮櫚搴︿紭鍏堬紝鍒欎笉鏍规嵁甯﹀鏀瑰彉锛堥檷浣庢垨鍗囬珮锛夎棰戝垎杈ㄧ巼
+      return VCM_OK;
+  }
 
   // Check for going back up in resolution, if we have had some down-sampling
   // relative to native state in Initialize().
@@ -354,9 +361,13 @@ int VCMQmResolution::SelectResolution(VCMResolutionScale** qm) {
 //      printf("sean haha going down width:%d, height:%d\n",qm_->codec_width,qm_->codec_height);
     return VCM_OK;
   }
-  return VCM_OK;
+  return VCM_OK;    
 }
 
+void VCMQmResolution::KeepVideoClarityFirst(bool enable) {
+    keep_video_clarity_first_ = enable;
+}
+    
 void VCMQmResolution::SetDefaultAction() {
   qm_->codec_width = width_;
   qm_->codec_height = height_;
@@ -838,7 +849,7 @@ void VCMQmResolution::ConstrainAmountOfDownSampling() {
   // Check if the total (spatial-temporal) down-action is above maximum allowed,
   // if so, disallow the current selected down-action.
   if (new_dec_factor_spatial * new_dec_factor_temp > kMaxTotalDown) {
-    if (action_.spatial != kNoChangeSpatial) { //优先使用降低帧率，其次考虑降分辨率
+    if (action_.spatial != kNoChangeSpatial) { //鈥濃増艙禄聽蟺鈥濃垰惟碌碌脮梅掳卢聽拢篓鈭嗏�奥ヅ捗嘎郝┞碘垜梅卤脢卢聽
       action_.spatial = kNoChangeSpatial;
     } else if (action_.temporal != kNoChangeTemporal) {
       action_.temporal = kNoChangeTemporal;
