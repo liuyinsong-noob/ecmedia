@@ -1997,7 +1997,7 @@ int32_t ViEChannel::ResendPackets(const uint16_t* sequence_numbers,
 
 bool ViEChannel::ChannelDecodeThreadFunction(void* obj) {
   int ret = static_cast<ViEChannel*>(obj)->ChannelDecodeProcess();
-  WEBRTC_TRACE(kTraceError, kTraceVideo, 0,
+  WEBRTC_TRACE(kTraceStream, kTraceVideo, 0,
 	  "%s:this channel id is %d, local_ssrc_main_=%u, remote_ssrc_=%u, decode ret=%d", __FUNCTION__, static_cast<ViEChannel*>(obj)->channel_id_, static_cast<ViEChannel*>(obj)->local_ssrc_main_, static_cast<ViEChannel*>(obj)->remote_ssrc_, ret);
   return ret;
 }
@@ -2313,7 +2313,7 @@ void  ViEChannel::IncomingRTPPacket(const int8_t* rtp_packet,
 
 	unsigned short seq_num = ((unsigned char)rtp_packet[2] << 8) | (unsigned char)rtp_packet[3];
 
-	WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+	WEBRTC_TRACE(kTraceStream, kTraceVideo, ViEId(engine_id_, channel_id_),
 		"%s: myself channelid is %d, local_ssrc_main_=%u, remote_ssrc_=%u,  recieve rmote ssrc=%u, seq_num=%u",
 		__FUNCTION__, channel_id_, local_ssrc_main_, remote_ssrc_, r_rtpSsrc, seq_num);
 

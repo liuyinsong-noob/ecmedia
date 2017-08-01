@@ -357,13 +357,13 @@ int32_t VideoSender::AddVideoFrame(const I420VideoFrame& videoFrame,
   // TODO(holmer): Add support for dropping frames per stream. Currently we
   // only have one frame dropper for all streams.
   if (_nextFrameTypes[0] == kFrameEmpty) {
-  	LOG(LS_ERROR) << " AddVideoFrame dropping frame.";
+  	LOG(LS_WARNING) << " AddVideoFrame dropping frame.";
     return VCM_OK;
   }
     
   if (_mediaOpt.DropFrame()) { //运用漏桶原理判断是否丢弃当前的raw frame，保证encoder的输出码率target br
 //	  WEBRTC_TRACE(kTraceError, kTraceVideoCoding, 0, "[Test-1]drop raw video frame before send it to encoder");
-    LOG(LS_ERROR) << " drop raw video frame before send it to encoder.";
+    LOG(LS_WARNING) << " drop raw video frame before send it to encoder.";
     return VCM_OK;
   }
     

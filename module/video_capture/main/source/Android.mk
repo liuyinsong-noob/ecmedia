@@ -43,8 +43,8 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../../../videojpegyuv/include \
     $(LOCAL_PATH)/../../../video_coding/main/include \
     $(LOCAL_PATH)/../../../.. \
-	$(LOCAL_PATH)/../../../../system_wrappers/source \
-    $(LOCAL_PATH)/../../../../system_wrappers/interface 
+    $(LOCAL_PATH)/../../../../system_wrappers/interface \
+    $(LOCAL_PATH)/../../../../system_wrappers/source
 
 LOCAL_SHARED_LIBRARIES := \
     libcutils \
