@@ -360,11 +360,13 @@ int32_t VideoSender::AddVideoFrame(const I420VideoFrame& videoFrame,
   	LOG(LS_WARNING) << " AddVideoFrame dropping frame.";
     return VCM_OK;
   }
+    
   if (_mediaOpt.DropFrame()) { //运用漏桶原理判断是否丢弃当前的raw frame，保证encoder的输出码率target br
 //	  WEBRTC_TRACE(kTraceError, kTraceVideoCoding, 0, "[Test-1]drop raw video frame before send it to encoder");
     LOG(LS_WARNING) << " drop raw video frame before send it to encoder.";
     return VCM_OK;
   }
+    
   _mediaOpt.UpdateContentData(contentMetrics); //contentMetrics包含VPM分析的motion NFD，spatial value
   int32_t ret =
       _encoder->Encode(videoFrame, codecSpecificInfo, _nextFrameTypes);
@@ -373,9 +375,11 @@ int32_t VideoSender::AddVideoFrame(const I420VideoFrame& videoFrame,
     LOG(LS_ERROR) << "Failed to encode frame. Error code: " << ret;
     return ret;
   }
+    
   for (size_t i = 0; i < _nextFrameTypes.size(); ++i) {
     _nextFrameTypes[i] = kVideoFrameDelta;  // Default frame type.
   }
+    
   return VCM_OK;
 }
 
