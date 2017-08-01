@@ -220,7 +220,12 @@ struct LIBPROTOBUF_EXPORT ArenaStringPtr {
     return *ptr_;
   }
 
-  ::std::string* MutableNoArena(const ::std::string* default_value);
+  inline ::std::string* MutableNoArena(const ::std::string* default_value) {
+    if (ptr_ == default_value) {
+      CreateInstanceNoArena(default_value);
+    }
+    return ptr_;
+  }
 
   inline ::std::string* ReleaseNoArena(const ::std::string* default_value) {
     if (ptr_ == default_value) {
@@ -244,7 +249,12 @@ struct LIBPROTOBUF_EXPORT ArenaStringPtr {
     }
   }
 
-  void DestroyNoArena(const ::std::string* default_value);
+  inline void DestroyNoArena(const ::std::string* default_value) {
+    if (ptr_ != default_value) {
+      delete ptr_;
+    }
+    ptr_ = NULL;
+  }
 
   inline void ClearToEmptyNoArena(const ::std::string* default_value) {
     if (ptr_ == default_value) {

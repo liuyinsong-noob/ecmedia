@@ -15,7 +15,8 @@ MY_WEBRTC_COMMON_DEFS := \
     '-DWEBRTC_CLOCK_TYPE_REALTIME' \
     '-DWEBRTC_ANDROID' \
     '-DWEBRTC_POSIX' \
-    '-DWEBRTC_BUILD_LIBEVENT'	
+    '-DWEBRTC_BUILD_LIBEVENT' \
+    '-DGOOGLE_PROTOBUF_NO_RTTI'	
 	
 #    The following macros are used by modules,
 #    we might need to re-organize them

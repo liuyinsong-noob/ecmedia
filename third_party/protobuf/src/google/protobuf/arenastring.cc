@@ -48,23 +48,6 @@ void ArenaStringPtr::AssignWithDefault(const ::std::string* default_value,
   }
 }
 
-::std::string* ArenaStringPtr::MutableNoArena(
-     const ::std::string* default_value) {
-  if (ptr_ == default_value) {
-    CreateInstanceNoArena(default_value);
-  }
-  return ptr_;
-}
-
-
-void ArenaStringPtr::DestroyNoArena(const ::std::string* default_value) {
-  if (ptr_ != default_value) {
-    delete ptr_;
-  }
-  ptr_ = NULL;
-}
-
-
 }  // namespace internal
 }  // namespace protobuf
 }  // namespace google

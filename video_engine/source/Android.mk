@@ -57,7 +57,8 @@ LOCAL_SRC_FILES := \
     vie_shared_data.cc \
 	vie_sync_module.cc \
 	vie_encryption_impl.cc \
-	video_send_stream.cc
+	video_send_stream.cc \
+	video/encoder_rtcp_feedback.cc
 
 	
 	
