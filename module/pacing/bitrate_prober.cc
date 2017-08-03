@@ -19,6 +19,8 @@
 using namespace std;
 
 namespace cloopenwebrtc {
+    
+extern int printTime();
 
 namespace {
 
@@ -103,6 +105,14 @@ void BitrateProber::CreateProbeCluster(int bitrate_bps, int64_t now_ms) {
                << cluster.pace_info.probe_cluster_min_bytes << ":"
                << cluster.pace_info.probe_cluster_min_probes << ":"
 			   << cluster.pace_info.probe_cluster_id << ")";
+#ifndef win32
+    printTime();
+    printf("[Probe] Probe cluster (bitrate:min bytes:min packets:cluster id): (%d:%d:%d:%d)\n",
+           cluster.pace_info.send_bitrate_bps,
+           cluster.pace_info.probe_cluster_min_bytes,
+           cluster.pace_info.probe_cluster_min_probes,
+           cluster.pace_info.probe_cluster_id);
+#endif
   // If we are already probing, continue to do so. Otherwise set it to
   // kInactive and wait for OnIncomingPacket to start the probing.
   if (probing_state_ != ProbingState::kActive)
