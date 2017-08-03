@@ -66,34 +66,18 @@
     #define PROTOBUF_LITTLE_ENDIAN 1
   #endif
 #endif
-
-// The macros defined below are required in order to make protobuf_lite a
-// component on all platforms. See http://crbug.com/172800.
-#if defined(COMPONENT_BUILD) && defined(PROTOBUF_USE_DLLS)
-  #if defined(_MSC_VER)
-    #ifdef LIBPROTOBUF_EXPORTS
-      #define LIBPROTOBUF_EXPORT __declspec(dllexport)
-    #else
-      #define LIBPROTOBUF_EXPORT __declspec(dllimport)
-    #endif
-    #ifdef LIBPROTOC_EXPORTS
-      #define LIBPROTOC_EXPORT   __declspec(dllexport)
-    #else
-      #define LIBPROTOC_EXPORT   __declspec(dllimport)
-    #endif
-  #else  // defined(_MSC_VER)
-    #ifdef LIBPROTOBUF_EXPORTS
-      #define LIBPROTOBUF_EXPORT __attribute__((visibility("default")))
-    #else
-      #define LIBPROTOBUF_EXPORT
-    #endif
-    #ifdef LIBPROTOC_EXPORTS
-      #define LIBPROTOC_EXPORT   __attribute__((visibility("default")))
-    #else
-      #define LIBPROTOC_EXPORT
-    #endif
+#if defined(_MSC_VER) && defined(PROTOBUF_USE_DLLS)
+  #ifdef LIBPROTOBUF_EXPORTS
+    #define LIBPROTOBUF_EXPORT __declspec(dllexport)
+  #else
+    #define LIBPROTOBUF_EXPORT __declspec(dllimport)
   #endif
-#else  // defined(COMPONENT_BUILD) && defined(PROTOBUF_USE_DLLS)
+  #ifdef LIBPROTOC_EXPORTS
+    #define LIBPROTOC_EXPORT   __declspec(dllexport)
+  #else
+    #define LIBPROTOC_EXPORT   __declspec(dllimport)
+  #endif
+#else
   #define LIBPROTOBUF_EXPORT
   #define LIBPROTOC_EXPORT
 #endif
@@ -125,15 +109,15 @@ typedef unsigned __int16 uint16;
 typedef unsigned __int32 uint32;
 typedef unsigned __int64 uint64;
 #else
-typedef int8_t  int8;
-typedef int16_t int16;
-typedef int32_t int32;
-typedef int64_t int64;
+typedef signed char  int8;
+typedef short int16;
+typedef int int32;
+typedef long long int64;
 
-typedef uint8_t  uint8;
-typedef uint16_t uint16;
-typedef uint32_t uint32;
-typedef uint64_t uint64;
+typedef unsigned char  uint8;
+typedef unsigned short uint16;
+typedef unsigned int uint32;
+typedef unsigned long long uint64;
 #endif
 
 // long long macros to be used because gcc and vc++ use different suffixes,
@@ -147,8 +131,8 @@ typedef uint64_t uint64;
 #define GOOGLE_ULONGLONG(x) x##UI64
 #define GOOGLE_LL_FORMAT "I64"  // As in printf("%I64d", ...)
 #else
-#define GOOGLE_LONGLONG(x) INT64_C(x)
-#define GOOGLE_ULONGLONG(x) UINT64_C(x)
+#define GOOGLE_LONGLONG(x) x##LL
+#define GOOGLE_ULONGLONG(x) x##ULL
 #define GOOGLE_LL_FORMAT "ll"  // As in "%lld". Note that "q" is poor form also.
 #endif
 

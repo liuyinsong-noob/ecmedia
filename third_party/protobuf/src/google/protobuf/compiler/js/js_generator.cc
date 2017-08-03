@@ -28,7 +28,7 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include <google/protobuf/compiler/js/js_generator.h>
+#include "google/protobuf/compiler/js/js_generator.h"
 
 #include <assert.h>
 #include <algorithm>
@@ -159,8 +159,16 @@ string GetJSFilename(const string& filename) {
 
 // Given a filename like foo/bar/baz.proto, returns the root directory
 // path ../../
-string GetRootPath(const string& filename) {
-  size_t slashes = std::count(filename.begin(), filename.end(), '/');
+string GetRootPath(const string& from_filename, const string& to_filename) {
+  if (to_filename.find("google/protobuf") == 0) {
+    // Well-known types (.proto files in the google/protobuf directory) are
+    // assumed to come from the 'google-protobuf' npm package.  We may want to
+    // generalize this exception later by letting others put generated code in
+    // their own npm packages.
+    return "google-protobuf/";
+  }
+
+  size_t slashes = std::count(from_filename.begin(), from_filename.end(), '/');
   if (slashes == 0) {
     return "./";
   }
@@ -2837,7 +2845,7 @@ void Generator::GenerateFile(const GeneratorOptions& options,
       printer->Print(
           "var $alias$ = require('$file$');\n",
           "alias", ModuleAlias(name),
-          "file", GetRootPath(file->name()) + GetJSFilename(name));
+          "file", GetRootPath(file->name(), name) + GetJSFilename(name));
     }
   }
 

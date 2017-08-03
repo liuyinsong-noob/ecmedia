@@ -18,6 +18,7 @@
 #include "../system_wrappers/include/metrics.h"
 
 namespace cloopenwebrtc {
+extern int printTime();
 
 namespace {
 // Maximum waiting time from the time of initiating probing to getting
@@ -146,6 +147,12 @@ void ProbeController::SetEstimatedBitrate(int64_t bitrate_bps) {
     LOG(LS_INFO) << "Measured bitrate: " << bitrate_bps
                  << " Minimum to probe further: "
                  << min_bitrate_to_probe_further_bps_;
+      
+#ifndef win32
+      printTime();
+      printf("[Probe] Measured bitrate: %lld, Minimum to probe further: %lld)\n",
+             bitrate_bps, min_bitrate_to_probe_further_bps_);
+#endif
 
     if (min_bitrate_to_probe_further_bps_ != kExponentialProbingDisabled &&
         bitrate_bps > min_bitrate_to_probe_further_bps_) {
@@ -167,6 +174,11 @@ void ProbeController::SetEstimatedBitrate(int64_t bitrate_bps) {
       bitrate_bps < 2 * estimated_bitrate_bps_ / 3 &&
       (now_ms - last_alr_probing_time_) > kAlrProbingIntervalMinMs) {
     LOG(LS_INFO) << "Detected big BW drop in ALR, start probe.";
+#ifndef win32
+      printTime();
+      printf("[Probe] Detected big BW drop in ALR, start probe.(estimated_bitrate_bps_ = %lld)\n",
+             estimated_bitrate_bps_);
+#endif
     // Track how often we probe in response to BW drop in ALR.
     RTC_HISTOGRAM_COUNTS_10000("cloopenwebrtc.BWE.AlrProbingIntervalInS",
                                (now_ms - last_alr_probing_time_) / 1000);
@@ -197,6 +209,10 @@ void ProbeController::Process() {
 
     if (state_ == State::kWaitingForProbingResult) {
       LOG(LS_INFO) << "kWaitingForProbingResult: timeout";
+#ifndef win32
+        printTime();
+        printf("[Probe] kWaitingForProbingResult: timeout\n");
+#endif
       state_ = State::kProbingComplete;
       min_bitrate_to_probe_further_bps_ = kExponentialProbingDisabled;
     }

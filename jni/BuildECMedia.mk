@@ -111,11 +111,11 @@ LOCAL_WHOLE_STATIC_LIBRARIES := \
 	libwebrtc_audio_conference_mixer \
 	libwebrtc_utility \
 	libwebrtc_media_file \
+	libwebrtc_audio_paced_sender \
 	libyuv \
 	libjpeg_turbo \
 	libstlport_static \
 	libcpufeatures \
-	libwebrtc_audio_paced_sender \
 	libwebrtc_audio_codecs \
 	libwebrtc_system_wrappers \
 	libwebrtc_rtc_event_log \

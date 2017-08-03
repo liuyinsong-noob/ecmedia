@@ -22,6 +22,8 @@
 #include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
+    
+    extern int printTime();
 
 class BitrateControllerImpl::RtcpBandwidthObserverImpl
     : public RtcpBandwidthObserver {
@@ -196,6 +198,10 @@ void BitrateControllerImpl::OnDelayBasedBweResult(
     bandwidth_estimation_.UpdateDelayBasedEstimate(clock_->TimeInMilliseconds(),
                                                    result.target_bitrate_bps);
 
+#ifndef win32
+      printTime();
+      printf("[BWE] bitrate_controller = %d (is_probe = %s)\n", result.target_bitrate_bps, result.probe ? "True" : "false");
+#endif
     if (result.probe) {
 		LOG(LS_ERROR) << "--------------[bwe] bitrate_controller = "
 			<< result.target_bitrate_bps
@@ -258,6 +264,11 @@ bool BitrateControllerImpl::GetNetworkParameters(uint32_t* bitrate,
   bandwidth_estimation_.CurrentEstimate(&current_bitrate, fraction_loss, rtt);
   LOG(LS_ERROR) << "--------------[bwe] bitrate_controller = "
 	            << current_bitrate;
+    
+#ifndef win32
+    printTime();
+    printf("[BWE] bitrate_controller = %d\n", current_bitrate);
+#endif
 
   *bitrate = current_bitrate;
   *bitrate -= std::min(*bitrate, reserved_bitrate_bps_);

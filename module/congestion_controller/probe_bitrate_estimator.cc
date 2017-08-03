@@ -15,6 +15,9 @@
 #include "../base/checks.h"
 #include "../system_wrappers/include/logging.h"
 
+namespace cloopenwebrtc {
+    extern int printTime();
+}
 namespace {
 // The minumum number of probes we need for a valid cluster.
 constexpr int kMinNumProbesValidCluster = 4;
@@ -79,6 +82,11 @@ int ProbeBitrateEstimator::HandleProbeAndEstimateBitrate(
                  << " [cluster id: " << cluster_id
                  << "] [send interval: " << send_interval_ms << " ms]"
                  << " [receive interval: " << receive_interval_ms << " ms]";
+      
+#ifndef win32
+      printTime();
+      printf("[Probe] Probing unsuccessful, invalid send/receive interval [cluster id: %d] [send interval: %.0f ms] [receive interval: %.0f ms]\n");
+#endif
     return -1;
   }
   // Since the |send_interval_ms| does not include the time it takes to actually
@@ -108,6 +116,11 @@ int ProbeBitrateEstimator::HandleProbeAndEstimateBitrate(
                  << send_bps / 1000 << " = " << ratio << " > kValidRatio ("
                  << kValidRatio << ")]";
     return -1;
+      
+#ifndef win32
+      printTime();
+      printf("[Probe] Probing unsuccessful, receive/send ratio too high [cluster id: %d] [send: %.0f bytes / %.0f ms = %.0f kb/s] [receive : %.0f bytes / %.0f ms = %.0f kb/s] [ratio: %.0f / %.0f = %d > kValidRatio(%d)]\n", cluster_id, send_size, send_interval_ms, send_bps/1000, receive_size, receive_interval_ms, receive_bps/1000, receive_bps/1000, send_bps/1000,  kValidRatio);
+#endif
   }
   LOG(LS_INFO) << "Probing successful"
                << " [cluster id: " << cluster_id << "] [send: " << send_size
@@ -116,6 +129,11 @@ int ProbeBitrateEstimator::HandleProbeAndEstimateBitrate(
                << " [receive: " << receive_size << " bytes / "
                << receive_interval_ms << " ms = " << receive_bps / 1000
                << " kb/s]";
+    
+#ifndef win32
+    printTime();
+    printf("[Probe] Probing successful, [cluster id: %d] [send: %.0f bytes / %.0f ms = %.0f kb/s] [receive : %.0f bytes / %.0f ms = %.0f kb/s]\n", cluster_id, send_size, send_interval_ms, send_bps/1000, receive_size, receive_interval_ms, receive_bps/1000);
+#endif
   return (std::min)(send_bps, receive_bps);
 }
 
