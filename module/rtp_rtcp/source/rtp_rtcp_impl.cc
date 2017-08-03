@@ -112,7 +112,8 @@ ModuleRtpRtcpImpl::ModuleRtpRtcpImpl(const Configuration& configuration)
       remote_bitrate_(configuration.remote_bitrate_estimator),
       rtt_stats_(configuration.rtt_stats),
       rtt_ms_(0),
-      rtp_receiver_(NULL) {
+      rtp_receiver_(NULL),
+	  isSendingTmmbr(false) {
   // Make sure rtcp sender use same timestamp offset as rtp sender.
   rtcp_sender_.SetTimestampOffset(rtp_sender_.TimestampOffset());
 
@@ -239,6 +240,16 @@ int32_t ModuleRtpRtcpImpl::Process() {
 
   if (rtcp_sender_.TimeToSendRTCPReport())
     rtcp_sender_.SendRTCP(GetFeedbackState(), kRtcpReport);
+
+  // send tmmbr
+  static int time_count = 80;
+  if (isSendingTmmbr && (++time_count > 100)) {
+	 // rtcp_sender_.SendSingleTMMBR(tmmbr_bandwidth, tmmbr_ssrc, tmmbr_remote_ssrc);
+	  rtcp_sender_.SetRemoteSSRC(tmmbr_remote_ssrc);
+	  rtcp_sender_.SetTargetBitrate(tmmbr_bandwidth*1000);
+	  rtcp_sender_.SendRTCP(GetFeedbackState(), kRtcpTmmbr);
+	  time_count = 0;
+  }
 
   if (TMMBR() && rtcp_receiver_.UpdateTmmbrTimers()) {
     rtcp_receiver_.NotifyTmmbrUpdated();
@@ -1014,4 +1025,17 @@ void ModuleRtpRtcpImpl::SetRtcpRttStats(RtcpRttStats *rtcp_rtt_stats) {
 	rtt_stats_ = rtcp_rtt_stats;
 }
 
+// send single tmmbr.
+int ModuleRtpRtcpImpl::SendSingleTMMBR(uint32_t bandwidth, uint32_t ssrc, uint32_t remote_ssrc) {
+	tmmbr_bandwidth = bandwidth;
+	tmmbr_ssrc = ssrc;
+	tmmbr_remote_ssrc = remote_ssrc;
+	isSendingTmmbr = true;
+	return 0;
+}
+
+// On received TMMBN, stop thread and timer.
+void ModuleRtpRtcpImpl::OnReceivedTMMBN() {
+	isSendingTmmbr = false;
+}
 }  // namespace cloopenwebrtc

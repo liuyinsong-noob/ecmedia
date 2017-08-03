@@ -207,7 +207,6 @@ ViEChannel::ViEChannel(int32_t channel_id,
   configuration.transport_feedback_callback = transport_feedback_observer_;
   configuration.receiver_only = true;
   rtp_rtcp_.reset(RtpRtcp::CreateRtpRtcp(configuration));
-  rtp_rtcp_->SetSSRC(1009);
   vie_receiver_.SetRtpRtcpModule(rtp_rtcp_.get());
   vie_receiver_.SetSendRtpRtcpModule(default_rtp_rtcp_);
   vcm_->SetNackSettings(kMaxNackListSize, max_nack_reordering_threshold_, 0);
@@ -222,7 +221,7 @@ ViEChannel::ViEChannel(int32_t channel_id,
   default_rtp_rtcp_->SetTransport(&vie_sender_);
   default_rtp_rtcp_->SetRtcpRttStats(rtt_stats_);
   //need to fix: ylr
-  vie_receiver_.SetReceiveTransportSeqNumStatus(true, 5);
+  //vie_receiver_.SetReceiveTransportSeqNumStatus(true, 5);
 }
 
 int32_t ViEChannel::Init() {
@@ -1002,17 +1001,6 @@ int32_t ViEChannel::GetResolution(ResolutionInst &info) {
 
 //judge whether trunk or svc through SSRC(0, trunk; other, svc)
 int32_t ViEChannel::SetLocalSendSSRC(const uint32_t SSRC, const StreamType usage) {
-    
-    if (SSRC == 1010 || SSRC == 1009) {
-        isSVCChannel_ = false;
-        
-        int idx = 0;
-        GetLocalSSRC(idx, &local_ssrc_main_);
-        socket_transport_->AddRecieveChannel(local_ssrc_main_, this);
-        return 0;
-    }
-
-
 	//trunk video/content
 	if (SSRC == 0) {
 		isSVCChannel_ = false;
@@ -1036,6 +1024,8 @@ int32_t ViEChannel::SetLocalSendSSRC(const uint32_t SSRC, const StreamType usage
 	}else {
 		ssrc_slave = (SSRC & 0xFFFFFFF0) | R_176_144_15;
 	}
+
+	ssrc_num = 1; //by ylr for p2p test.
 
 	if (ssrc_num == 1){//only one ssrc(resolution)
 		if (SetSSRC(SSRC, usage, 0) != 0) {
@@ -1081,6 +1071,7 @@ int32_t ViEChannel::SetSSRC(const uint32_t SSRC,
     rtp_rtcp->SetSSRC(SSRC);
   }
 
+  rtp_rtcp_->SetSSRC(SSRC); //set receiver local ssrc
   return 0;
 }
 
@@ -1095,7 +1086,7 @@ int32_t ViEChannel::RequestRemoteSSRC(const uint32_t SSRC) {
 	}
 
 	uint32_t bandwidth = 1;
-	int ret = 0;// rtp_rtcp_->SendSingleTMMBR(bandwidth, socket_transport_->GetLocalSSrc(), SSRC);
+	int ret = default_rtp_rtcp_->SendSingleTMMBR(bandwidth, socket_transport_->GetLocalSSrc(), SSRC);
 	if (ret != 0) {
 		LOG(LS_ERROR) << "SendSingleTMMBR request remote failed";
 		return -1;
@@ -1113,7 +1104,7 @@ int32_t ViEChannel::CancelRemoteSSRC() {
 	if (!isSVCChannel_)
 		return 0;
 
-	int ret = 0;// rtp_rtcp_->SendSingleTMMBR(0, socket_transport_->GetLocalSSrc(), remote_ssrc_);
+	int ret = rtp_rtcp_->SendSingleTMMBR(0, socket_transport_->GetLocalSSrc(), remote_ssrc_);
 	if (ret != 0) {
 		LOG(LS_ERROR) << "SendSingleTMMBR cancel remote failed";
 		return -1;
@@ -1124,6 +1115,7 @@ int32_t ViEChannel::CancelRemoteSSRC() {
 
 int32_t ViEChannel::SetRemoteSSRCType(const StreamType usage,
                                       const uint32_t SSRC) {
+  rtp_rtcp_->SetSSRC(SSRC);
   vie_receiver_.SetRtxSsrc(SSRC);
   return 0;
 }
@@ -1947,10 +1939,10 @@ void ViEChannel::ReserveRtpRtcpModules(size_t num_modules) {
 }
 
 RtpRtcp* ViEChannel::GetRtpRtcpModule(size_t index) const {
-  if (index == 0)
-    return rtp_rtcp_.get();
+	if (index == 0)
+		return default_rtp_rtcp_;
   if (index <= simulcast_rtp_rtcp_.size()) {
-    std::list<RtpRtcp*>::const_iterator it = simulcast_rtp_rtcp_.begin();
+    std::list<RtpRtcp*>::const_iterator it = default_simulcast_rtp_rtcp_.begin();
     for (size_t i = 1; i < index; ++i) {
       ++it;
     }

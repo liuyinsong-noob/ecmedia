@@ -918,7 +918,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 			int ssrc = stream->ssrc_self;
 			setSsrcMediaType(ssrc, 1);
 			setSsrcMediaAttribute(ssrc, m_sendVideoWidth, m_sendVideoHeight, m_sendVideoFps);
-			//ECMedia_video_set_local_ssrc(call->m_VideoChannelID, ssrc);
+			ECMedia_video_set_local_ssrc(call->m_VideoChannelID, ssrc);
 
 			call->m_selfSSRC = stream->ssrc_self;
 			call->m_partnerSSRC = stream->ssrc_partner;			
@@ -1757,7 +1757,6 @@ void ServiceCore::serphone_call_init_media_streams(SerPhoneCall *call)
 
 			ECMedia_set_network_type(call->m_AudioChannelID, call->m_VideoChannelID, networkType);
 			ECMedia_video_set_local_receiver(call->m_VideoChannelID,call->video_port, call->video_port+1);
-			ECMedia_video_set_local_ssrc(call->m_VideoChannelID, 1010);
 			ECMedia_set_MTU(call->m_VideoChannelID,1450);
 			int err = ECMedia_init_srtp_video(call->m_VideoChannelID);
 			if (err) {

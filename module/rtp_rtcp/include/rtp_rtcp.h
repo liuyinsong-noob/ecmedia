@@ -540,6 +540,8 @@ class RtpRtcp : public Module {
   virtual void SetTransport(Transport *transport) = 0; //add by ylr
   virtual Transport* GetTransport() = 0;
   virtual void SetRtcpRttStats(RtcpRttStats *rtcp_rtt_stats) = 0;
+
+  virtual int SendSingleTMMBR(uint32_t bandwidth, uint32_t ssrc, uint32_t remote_ssrc) = 0;
 };
 
 }  // namespace cloopenwebrtc

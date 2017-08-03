@@ -993,6 +993,11 @@ void RTCPReceiver::TriggerCallbacksFromRtcpPacket(
     }
   }
 
+  // on received tmmbn.
+  if (packet_information.packet_type_flags & kRtcpTmmbn) {
+	  rtp_rtcp_->OnReceivedTMMBN();
+  }
+
   // We need feedback that we have received a report block(s) so that we
   // can generate a new packet in a conference relay scenario, one received
   // report can generate several RTCP packets, based on number relayed/mixed

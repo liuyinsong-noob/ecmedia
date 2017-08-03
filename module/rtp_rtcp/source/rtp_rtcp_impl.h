@@ -340,6 +340,12 @@ class ModuleRtpRtcpImpl : public RtpRtcp, public RTCPReceiver::ModuleRtpRtcp {
   void SetTransport(Transport *transport) override;
   Transport* GetTransport() override;
 
+  int SendSingleTMMBR(uint32_t bandwidth, uint32_t ssrc, uint32_t remote_ssrc) override;
+
+  void OnReceivedTMMBR();
+  // added by zhaoyou.
+  virtual void OnReceivedTMMBN() override;
+
  protected:
   bool UpdateRTCPReceiveInformationTimers();
 
@@ -388,6 +394,12 @@ public:
   // The processed RTT from RtcpRttStats.
   cloopenwebrtc::CriticalSection critical_section_rtt_;
   int64_t rtt_ms_;
+
+  bool isSendingTmmbr;
+
+  uint32_t tmmbr_bandwidth;
+  uint32_t tmmbr_remote_ssrc;
+  uint32_t tmmbr_ssrc;
 };
 
 }  // namespace cloopenwebrtc

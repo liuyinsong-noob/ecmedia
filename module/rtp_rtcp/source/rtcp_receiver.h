@@ -45,6 +45,8 @@ class RTCPReceiver {
     virtual void OnReceivedRtcpReportBlocks(
         const ReportBlockList& report_blocks) = 0;
 
+	virtual void OnReceivedTMMBN() = 0;
+
    protected:
     virtual ~ModuleRtpRtcp() = default;
   };
