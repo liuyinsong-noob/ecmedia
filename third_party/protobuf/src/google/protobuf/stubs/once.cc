@@ -62,13 +62,6 @@ void SchedYield() {
 
 }  // namespace
 
-void GoogleOnceInit(ProtobufOnceType* once, void (*init_func)()) {
-  if (internal::Acquire_Load(once) != ONCE_STATE_DONE) {
-    internal::FunctionClosure0 func(init_func, false);
-    GoogleOnceInitImpl(once, &func);
-  }
-}
-
 void GoogleOnceInitImpl(ProtobufOnceType* once, Closure* closure) {
   internal::AtomicWord state = internal::Acquire_Load(once);
   // Fast path. The provided closure was already executed.

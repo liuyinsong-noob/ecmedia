@@ -20,7 +20,8 @@ LOCAL_CPP_EXTENSION := .cc
 LOCAL_SRC_FILES := \
     bitrate_prober.cc \
     paced_sender.cc \
-    alr_detector.cc
+    alr_detector.cc \
+    packet_router.cc	
 
 #android/audio_device_android_opensles.cc \
 #android/audio_device_android_opensles.cc \
