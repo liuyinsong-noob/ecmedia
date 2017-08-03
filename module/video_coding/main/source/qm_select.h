@@ -186,7 +186,6 @@ class VCMQmMethod {
 };
 
 // Resolution settings class
-
 class VCMQmResolution : public VCMQmMethod {
  public:
   VCMQmResolution();
@@ -229,7 +228,7 @@ class VCMQmResolution : public VCMQmMethod {
   // Inputs: qm: Reference to the quality modes pointer.
   // Output: the spatial and/or temporal scale change.
   int SelectResolution(VCMResolutionScale** qm);
-
+  void SetQmResolutionMode(VCMQmResolutionMode mode);
  private:
   // Set the default resolution action.
   void SetDefaultAction();
@@ -296,8 +295,7 @@ class VCMQmResolution : public VCMQmMethod {
 
   // Select the directional (1x2 or 2x1) spatial down-sampling action.
   void SelectSpatialDirectionMode(float transition_rate);
-  // Set the default resolution action.
-  void KeepVideoClarityFirst(bool enable);
+
   enum { kDownActionHistorySize = 10};
 
   VCMResolutionScale* qm_;
@@ -338,7 +336,8 @@ class VCMQmResolution : public VCMQmMethod {
   // large: i.e., (4/3) ^{kDownActionHistorySize} <= kMaxDownSample.
   ResolutionAction down_action_history_[kDownActionHistorySize];
   int num_layers_;
-  bool keep_video_clarity_first_;
+  VCMQmResolutionMode qm_resolution_mode_;
+  // bool keep_video_clarity_first_;
 };
 
 // Robustness settings class.

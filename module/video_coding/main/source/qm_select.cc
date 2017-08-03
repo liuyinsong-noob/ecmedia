@@ -194,7 +194,7 @@ void VCMQmResolution::Reset() {
   avg_packet_loss_ = 0.0f;
   encoder_state_ = kStableEncoding;
   num_layers_ = 1;
-  keep_video_clarity_first_ = false;
+  qm_resolution_mode_ = kResolutionModeBoth;
   ResetRates();
   ResetDownSamplingState();
   ResetQM();
@@ -337,12 +337,6 @@ int VCMQmResolution::SelectResolution(VCMResolutionScale** qm) {
   // Default settings: no action.
   SetDefaultAction(); //reset resolution scaler,reset action
   *qm = qm_;
-  
-  
-  if(keep_video_clarity_first_) {
-      // 保证视频清晰度优先，则不根据带宽改变（降低或升高）视频分辨率
-      return VCM_OK;
-  }
 
   // Check for going back up in resolution, if we have had some down-sampling
   // relative to native state in Initialize().
@@ -364,10 +358,6 @@ int VCMQmResolution::SelectResolution(VCMResolutionScale** qm) {
   return VCM_OK;    
 }
 
-void VCMQmResolution::KeepVideoClarityFirst(bool enable) {
-    keep_video_clarity_first_ = enable;
-}
-    
 void VCMQmResolution::SetDefaultAction() {
   qm_->codec_width = width_;
   qm_->codec_height = height_;
@@ -471,10 +461,12 @@ bool VCMQmResolution::GoingUpResolution() {
     selected_up_spatial = ConditionForGoingUp(fac_width, fac_height, 1.0f,
                                               kTransRateScaleUpSpatial);
   }
+    
   if (down_action_history_[0].temporal != kNoChangeTemporal) {
     selected_up_temporal = ConditionForGoingUp(1.0f, 1.0f, fac_temp,
                                                kTransRateScaleUpTemp);
   }
+    
   if (selected_up_spatial && !selected_up_temporal) {
     action_.spatial = down_action_history_[0].spatial;
     action_.temporal = kNoChangeTemporal;
@@ -511,6 +503,10 @@ bool VCMQmResolution::ConditionForGoingUp(float fac_width,
   }
 }
 
+void VCMQmResolution::SetQmResolutionMode(VCMQmResolutionMode mode) {
+    qm_resolution_mode_ = mode;
+}
+    
 bool VCMQmResolution::GoingDownResolution() {
   float estimated_transition_rate_down =
       GetTransitionRate(1.0f, 1.0f, 1.0f, 1.0f);
@@ -529,6 +525,27 @@ bool VCMQmResolution::GoingDownResolution() {
         kTemporalAction[content_class_ +
                         9 * RateClass(estimated_transition_rate_down)];
 
+      switch (qm_resolution_mode_) {
+          case kResolutionModeNone:
+              spatial_fact = 1;
+              temp_fact = 1;
+              break;
+          case kResolutionModeOnlySpatial:
+              spatial_fact = spatial_fact;
+              temp_fact = 1;
+              break;
+          case kResolutionModeOnlyTemporal:
+              spatial_fact = 1;
+              temp_fact = temp_fact;
+              break;
+          case kResolutionModeBoth:
+              spatial_fact = spatial_fact;
+              temp_fact = temp_fact;
+              break;
+          default:
+              break;
+      }
+      
     switch (spatial_fact) {
       case 4: {
         action_.spatial = kOneQuarterSpatialUniform;
@@ -546,6 +563,7 @@ bool VCMQmResolution::GoingDownResolution() {
         assert(false);
       }
     }
+      
     switch (temp_fact) {
       case 3: {
         action_.temporal = kTwoThirdsTemporal;
@@ -741,6 +759,7 @@ void VCMQmResolution::ConvertSpatialFractionalToWhole() {
         break;
       }
     }
+      
     if (found) {
        action_.spatial = kOneQuarterSpatialUniform;
        state_dec_factor_spatial_ = state_dec_factor_spatial_ /

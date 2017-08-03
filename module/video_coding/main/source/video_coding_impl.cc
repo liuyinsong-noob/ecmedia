@@ -148,7 +148,7 @@ class VideoCodingModuleImpl : public VideoCodingModule {
                                        int64_t rtt) OVERRIDE {
     return sender_->SetChannelParameters(target_bitrate, lossRate, rtt);
   }
-
+ 
   virtual int32_t RegisterTransportCallback(
       VCMPacketizationCallback* transport) OVERRIDE {
     return sender_->RegisterTransportCallback(transport);
@@ -163,7 +163,11 @@ class VideoCodingModuleImpl : public VideoCodingModule {
       VCMQMSettingsCallback* videoQMSettings) OVERRIDE {
     return sender_->RegisterVideoQMCallback(videoQMSettings);
   }
-
+    
+  virtual void SetVideoQualityMode(int mode) {
+    sender_->SetVideoQualityMode(mode);
+  }
+    
   virtual int32_t RegisterProtectionCallback(
       VCMProtectionCallback* protection) OVERRIDE {
     return sender_->RegisterProtectionCallback(protection);

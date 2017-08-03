@@ -531,7 +531,9 @@ ECMEDIA_API int ECMedia_get_receive_codec_video(int channelid, cloopenwebrtc::Vi
  *   kScaleTypeFilling  -> ‰ª•Â°´ÂÖÖÊñπÂºèÁº©ÊîæËßÜÈ¢ëÂ∏ß
  */
 ECMEDIA_API int ECMedia_set_frame_scale_type(int channelid, cloopenwebrtc::FrameScaleType type);
-
+    
+ECMEDIA_API int ECMedia_set_video_qm_mode(int channelid, cloopenwebrtc::VCMQmResolutionMode mode);
+    
 ECMEDIA_API int ECMedia_set_video_conf_cb(int channelid, onEcMediaVideoConference video_conf_cb);
 ECMEDIA_API int ECMedia_set_stun_cb_video(int channelid, onEcMediaStunPacket stun_cb);
 /*

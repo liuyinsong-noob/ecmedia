@@ -97,7 +97,7 @@ class ViEChannelManager: private ViEManagerBase {
 
   UdpTransport *CreateUdptransport(int rtp_port, int rtcp_port, bool ipv6flag = false);
   int DeleteUdptransport(UdpTransport * transport);
-
+    
  private:
   // Creates a channel object connected to |vie_encoder|. Assumed to be called
   // protected.

@@ -517,6 +517,10 @@ int32_t MediaOptimization::SelectQuality(
   return VCM_OK;
 }
 
+void MediaOptimization::SetQualityMode(int mode) {
+    qm_resolution_->SetQmResolutionMode(VCMQmResolutionMode(mode));
+}
+ 
 void MediaOptimization::PurgeOldFrameSamples(int64_t now_ms) {
   while (!encoded_frame_samples_.empty()) {
     if (now_ms - encoded_frame_samples_.front().time_complete_ms >
