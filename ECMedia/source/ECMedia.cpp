@@ -71,12 +71,14 @@ enum {
 #define AUDIO_ENGINE_UN_INITIAL_ERROR(ret) \
     if(!m_voe) { \
     PrintConsole("[ECMEDIA ERROR] %s m_voe is NULL.",__FUNCTION__); \
+    PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret); \
     return ret;}
 
 #ifdef VIDEO_ENABLED
 #define VIDEO_ENGINE_UN_INITIAL_ERROR(ret) \
     if(!m_vie) { \
     PrintConsole("[ECMEDIA ERROR] %s m_vie is NULL.",__FUNCTION__);\
+    PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret); \
     return ret;}
 #endif
 
@@ -841,6 +843,9 @@ int ECMedia_set_local_receiver(int channelid, int rtp_port, int rtcp_port)
     if (base) {
         int ret = base->SetLocalReceiver(channelid, rtp_port, rtcp_port);
         base->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set local receiver", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -861,6 +866,9 @@ int ECMedia_audio_set_send_destination(int channelid, int rtp_port, const char *
     if (base) {
         int ret = base->SetSendDestination(channelid, rtp_port, rtp_addr, source_port, rtcp_port, rtcp_ipaddr);
         base->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set send destination", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -879,6 +887,9 @@ int ECMedia_audio_set_socks5_send_data(int channel_id, unsigned char *data, int 
 	if (base) {
 		int ret = base->SetSocks5SendData(channel_id, data, length, isRTCP);
 		base->Release();
+		if (ret != 0) {
+			PrintConsole("[ECMEDIA ERROR] %s failed to set socks5 send data", __FUNCTION__);
+		}
 		PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -899,6 +910,9 @@ int ECMedia_video_start_receive(int channelid)
     if (base) {
         int ret = base->StartReceive(channelid);
         base->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to video start receive", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -921,6 +935,9 @@ int ECMedia_video_stop_receive(int channelid)
     if (base) {
         int ret = base->StopReceive(channelid);
         base->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to video stop receive", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -941,6 +958,9 @@ int ECMedia_video_start_send(int channelid)
     if (base) {
         int ret = base->StartSend(channelid);
         base->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to video start send", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -963,6 +983,9 @@ int ECMedia_video_stop_send(int channelid)
     if (base) {
         int ret = base->StopSend(channelid);
         base->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to video stop send", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -980,15 +1003,18 @@ int ECMedia_audio_start_playout(int channelid)
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
-        base->StartPlayout(channelid);
+        int ret = base->StartPlayout(channelid);
         base->Release();
-        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, 0);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to audio start playout", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return 0;
     }
 	else
 	{
 		PrintConsole("[ECMEDIA ERROR] %s failed to get VoEBase", __FUNCTION__);
-       PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+		PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 		return -99;
 	}
 }
@@ -999,9 +1025,12 @@ int ECMedia_audio_stop_playout(int channelid)
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
-        base->StopPlayout(channelid);
+        int ret = base->StopPlayout(channelid);
         base->Release();
-        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, 0);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to audio stop playout", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return 0;
     }
     else
@@ -1019,6 +1048,9 @@ int ECMedia_audio_start_record()
     if (base) {
         int ret = base->StartRecord();
         base->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to audio start record", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ",__FUNCTION__, ret);
         return ret;
     }
@@ -1036,9 +1068,12 @@ int ECMedia_audio_stop_record()
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
-        base->StopRecord();
+        int ret = base->StopRecord();
         base->Release();
-        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to audio stop record", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return 0;
     }
     else
@@ -1058,6 +1093,9 @@ int ECMedia_set_soundcard_on_cb(onSoundCardOn soundcard_on_cb)
 	if (base) {
 		int ret = base->RegisterSoundCardOnCb(soundcard_on_cb);
 		base->Release();
+		if (ret != 0) {
+			PrintConsole("[ECMEDIA ERROR] %s failed to set soundcard on cb", __FUNCTION__);
+		}
 		PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -1076,9 +1114,12 @@ int ECMedia_set_send_telephone_event_payload_type(int channelid, unsigned char t
 	
 	VoEDtmf* dtmf = VoEDtmf::GetInterface(m_voe);
 	if (dtmf) {
-		dtmf->SetSendTelephoneEventPayloadType(channelid, type);
+		int ret = dtmf->SetSendTelephoneEventPayloadType(channelid, type);
 		dtmf->Release();
-		PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+		if (ret != 0) {
+			PrintConsole("[ECMEDIA ERROR] %s failed to set send telephone event payload type", __FUNCTION__);
+		}
+		PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return 0;
 	}
 	else
@@ -1096,9 +1137,12 @@ int ECMedia_set_recv_telephone_event_payload_type(int channelid, unsigned char t
 
 	VoEDtmf* dtmf = VoEDtmf::GetInterface(m_voe);
 	if (dtmf) {
-		dtmf->SetRecvTelephoneEventPayloadType(channelid, type);
+		int ret = dtmf->SetRecvTelephoneEventPayloadType(channelid, type);
 		dtmf->Release();
-		PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+		if (ret != 0) {
+			PrintConsole("[ECMEDIA ERROR] %s failed to set recv telephone event payload type", __FUNCTION__);
+		}
+		PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return 0;
 	}
 	else
@@ -1138,10 +1182,16 @@ int ECMedia_send_dtmf(int channelid, const char dtmfch)
 
     //dtmf->SendTelephoneEvent(call->m_AudioChannelID, playtone,false);
     if(dtmf){
-        dtmf->SendTelephoneEvent(channelid, playtone,true);
-        dtmf->PlayDtmfTone(playtone);
+        int ret = dtmf->SendTelephoneEvent(channelid, playtone, true);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to send telephone event", __FUNCTION__);
+        }
+        ret = dtmf->PlayDtmfTone(playtone);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to play dtmf tone", __FUNCTION__);
+        }
         dtmf->Release();
-        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return 0;
     }
     else
@@ -1160,9 +1210,12 @@ int ECMedia_set_dtmf_cb(int channelid, onEcMediaReceivingDtmf dtmf_cb)
 
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
-        base->SetDtmfCb(channelid, dtmf_cb);
+        int ret = base->SetDtmfCb(channelid, dtmf_cb);
         base->Release();
-        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set dtmf cb", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return 0;
     }
     else
@@ -1178,9 +1231,12 @@ int ECMedia_set_media_packet_timeout_cb(int channelid, onEcMediaPacketTimeout me
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
-        base->SetMediaTimeoutCb(channelid, media_timeout_cb);
+        int ret = base->SetMediaTimeoutCb(channelid, media_timeout_cb);
         base->Release();
-        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set media timeout cb", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return 0;
     }
     else
@@ -1198,9 +1254,12 @@ int ECMedia_set_stun_cb(int channelid, onEcMediaStunPacket stun_cb)
 
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
-        base->SetStunCb(channelid, stun_cb);
+        int ret = base->SetStunCb(channelid, stun_cb);
         base->Release();
-        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set stun cb", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return 0;
     }
     else
@@ -1218,9 +1277,12 @@ int ECMedia_set_audio_data_cb(int channelid, onEcMediaAudioData audio_data_cb)
 
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
-        base->SetAudioDataCb(channelid, audio_data_cb);
+        int ret = base->SetAudioDataCb(channelid, audio_data_cb);
         base->Release();
-        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set audio data cb", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return 0;
     }
     else
@@ -1237,9 +1299,12 @@ int ECMedia_set_pcm_audio_data_cb(int channelid, ECMedia_PCMDataCallBack callbac
     
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
-        base->SetPCMAudioDataCallBack(channelid, callback);
+        int ret = base->SetPCMAudioDataCallBack(channelid, callback);
         base->Release();
-        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set pcm audio data cb", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return 0;
     }
     else
@@ -1257,9 +1322,12 @@ int ECMedia_set_video_data_cb(int channelid, onEcMediaVideoDataV video_data_cb)
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViENetwork *network = ViENetwork::GetInterface(m_vie);
 	if (network) {
-		network->setVideoDataCb(channelid, video_data_cb);
+		int ret = network->setVideoDataCb(channelid, video_data_cb);
 		network->Release();
-        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set video data cb", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return 0;
 	}
 	else
@@ -1284,9 +1352,12 @@ int ECMedia_set_voe_cb(int channelid, onVoeCallbackOnError voe_callback_cb)
             g_VoeObserver = new VoeObserver();
         }
         g_VoeObserver->SetCallback(channelid, voe_callback_cb);
-        base->RegisterVoiceEngineObserver(*g_VoeObserver);
+        int ret = base->RegisterVoiceEngineObserver(*g_VoeObserver);
         base->Release();
-        PrintConsole("[ECMEDIA INFO] %s ends...",__FUNCTION__);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to register voice engine observer", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ",__FUNCTION__, ret);
         return 0;
     }
     else
@@ -1307,6 +1378,9 @@ int ECMedia_sendRaw(int channelid, int8_t *data, uint32_t length, bool isRTCP, u
     if (base) {
         int ret=base->SendRaw(channelid, data, length, isRTCP, port, ip);
         base->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to send raw", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -1325,9 +1399,12 @@ int ECMedia_audio_start_receive(int channelid)
     g_statsCollector->AddAudioRecvStatsProxy(channelid);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
-        base->StartReceive(channelid);
+        int ret = base->StartReceive(channelid);
         base->Release();
-        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to audio start receive", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return 0;
     }
     else
@@ -1347,9 +1424,12 @@ int ECMedia_audio_stop_receive(int channelid)
     }
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
-        base->StopReceive(channelid);
+        int ret = base->StopReceive(channelid);
         base->Release();
-        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to audio stop receive", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return 0;
     }
     else
@@ -1367,9 +1447,12 @@ int ECMedia_audio_start_send(int channelid)
 	g_statsCollector->AddAudioSendStatsProxy(channelid);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
-        base->StartSend(channelid);
+        int ret = base->StartSend(channelid);
         base->Release();
-        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to audio start send", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return 0;
     }
     else
@@ -1389,9 +1472,12 @@ int ECMedia_audio_stop_send(int channelid)
     }
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
-        base->StopSend(channelid);
+        int ret = base->StopSend(channelid);
         base->Release();
-        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to audio stop send", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return 0;
     }
     else
@@ -1414,9 +1500,12 @@ int ECMedia_DeRegister_voice_engine_observer()
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
-        base->DeRegisterVoiceEngineObserver();
+        int ret = base->DeRegisterVoiceEngineObserver();
         base->Release();
-        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to deregister voice engine observer", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return 0;
     }
     else
@@ -1438,6 +1527,9 @@ int ECMedia_set_AgcStatus(bool agc_enabled, cloopenwebrtc::AgcModes agc_mode)
     if (audio) {
         int ret = audio->SetAgcStatus(agc_enabled, agc_mode);
         audio->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set agc status", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -1457,6 +1549,9 @@ int ECMedia_set_EcStatus(bool ec_enabled, cloopenwebrtc::EcModes ec_mode)
     if (audio) {
         int ret = audio->SetEcStatus(ec_enabled, ec_mode);
         audio->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set ec status", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -1476,6 +1571,9 @@ int ECMedia_set_NsStatus(bool ns_enabled, cloopenwebrtc::NsModes ns_mode)
     if (audio) {
         int ret = audio->SetNsStatus(ns_enabled, cloopenwebrtc::kNsVeryHighSuppression);
         audio->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set ns status", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -1495,6 +1593,9 @@ int ECMedia_set_SetAecmMode(cloopenwebrtc::AecmModes aecm_mode, bool cng_enabled
 	if (audio) {
 		int ret = audio->SetAecmMode(aecm_mode,  cng_enabled);
 		audio->Release();
+		if (ret != 0) {
+			PrintConsole("[ECMEDIA ERROR] %s failed to set aecm mode", __FUNCTION__);
+		}
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -1514,6 +1615,9 @@ int ECMedia_EnableHowlingControl(bool enabled)
     if (audio) {
         int ret = audio->EnableHowlingControl(enabled);
         audio->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to enable howling control", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -1557,6 +1661,9 @@ int ECMedia_set_packet_timeout_noti(int channel, int timeout)
         int ret = 0;
         ret = network->SetPacketTimeoutNotification(channel, true, timeout);
         network->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set packet timeout notification", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -1651,6 +1758,9 @@ int ECMedia_video_set_local_receiver(int channelid, int rtp_port, int rtcp_port,
     if (network) {
         int ret = network->SetLocalReceiver(channelid, rtp_port, rtcp_port, ipv6);
         network->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to video set local receiver", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -1670,6 +1780,9 @@ int ECMedia_video_set_socks5_send_data(int channel_id, unsigned char *data, int 
     if (network) {
         int ret = network->SetSocks5SendData(channel_id, data, length, isRTCP);
         network->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set socks5 send data", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -1689,6 +1802,9 @@ int ECMedia_video_set_send_destination(int channelid, const char *rtp_addr, int 
 	if (network) {
 		int ret = network->SetSendDestination(channelid, rtp_addr, rtp_port, rtcp_addr , rtcp_port);
         network->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to video set send destination", __FUNCTION__);
+              }
 		PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -1708,6 +1824,9 @@ int ECMedia_set_MTU(int channelid, int mtu)
     if (network) {
         int ret = network->SetMTU(channelid, mtu);
         network->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set mtu", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -1733,6 +1852,9 @@ int ECMedia_set_video_rtp_keepalive(int channelid, bool enable, int interval, in
         int ret=0;
         ret = rtp_rtcp->SetRTPKeepAliveStatus(channelid, enable, payloadType, interval);
         rtp_rtcp->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set video rtp keepalive", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -1754,7 +1876,10 @@ int ECMedia_video_set_local_ssrc(int channelid, unsigned int ssrc)
 		int ret = 0;
 		ret = rtp_rtcp->SetLocalSSRC(channelid, ssrc, kViEStreamTypeNormal, 0);
 		rtp_rtcp->Release();
-		PrintConsole("[ECMEDIA INFO] %s ends... with code: %d vie", __FUNCTION__, ret);
+		if (ret != 0) {
+			PrintConsole("[ECMEDIA ERROR] %s failed to video set local ssrc", __FUNCTION__);
+		}
+		PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
 	else
@@ -1775,6 +1900,9 @@ int ECMedia_video_request_remote_ssrc(int channelid, unsigned int ssrc)
 		int ret = 0;
 		ret = rtp_rtcp->RequestRemoteSSRC(channelid, ssrc);
 		rtp_rtcp->Release();
+		if (ret != 0) {
+			PrintConsole("[ECMEDIA ERROR] %s failed to video request remote ssrc", __FUNCTION__);
+		}
 		PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -1796,6 +1924,9 @@ int ECMedia_video_cancel_remote_ssrc(int channelid)
 		int ret = 0;
 		ret = rtp_rtcp->CancelRemoteSSRC(channelid);
 		rtp_rtcp->Release();
+		if (ret != 0) {
+			PrintConsole("[ECMEDIA ERROR] %s failed to video cancel remote ssrc", __FUNCTION__);
+		}
 		PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -1819,6 +1950,9 @@ int ECMedia_set_audio_rtp_keepalive(int channelid, bool enable, int interval, in
 		int ret = 0;
 		ret = rtp_rtcp->SetRTPKeepAliveStatus(channelid, enable, payloadType, interval);
 		rtp_rtcp->Release();
+		if (ret != 0) {
+			PrintConsole("[ECMEDIA ERROR] %s failed to set audio rtp keepalive", __FUNCTION__);
+		}
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -1838,6 +1972,9 @@ int ECMedia_set_NACK_status(int channelid, bool enabled)
     if (rtp_rtcp) {
         int ret = rtp_rtcp->SetNACKStatus(channelid, enabled);
         rtp_rtcp->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set nack status", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -1857,6 +1994,9 @@ int ECMedia_set_RTCP_status(int channelid)
     if (rtp_rtcp) {
         int ret = rtp_rtcp->SetRTCPStatus(channelid, true);
         rtp_rtcp->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set rtcp status", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -2008,6 +2148,9 @@ int ECMedia_get_playout_device_num(int& speaker_count)
         int ret = 0;
         ret = hardware->GetNumOfPlayoutDevices(speaker_count);
         hardware->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to get playout device num", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -2043,6 +2186,9 @@ int ECMedia_get_specified_playout_device_info(int index, char *name, char *guid)
         }
         ret = hardware->GetPlayoutDeviceName(index, name, guid);
         hardware->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to get playout device name", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -2077,6 +2223,9 @@ int ECMedia_select_playout_device(int index)
         }
         ret = hardware->SetPlayoutDevice(index);
         hardware->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set playout device", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -2098,6 +2247,9 @@ int ECMedia_get_record_device_num(int& microphone_count)
         int ret = 0;
         ret = hardware->GetNumOfRecordingDevices(microphone_count);
         hardware->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to get recording device num", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -2133,6 +2285,9 @@ int ECMedia_get_specified_record_device_info(int index, char *name, char *guid)
         }
         ret = hardware->GetRecordingDeviceName(index, name, guid);
         hardware->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to get recording device name", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -2167,6 +2322,9 @@ int ECMedia_select_record_device(int index)
         }
         ret = hardware->SetRecordingDevice(index);
         hardware->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set recording device", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -2188,6 +2346,9 @@ int ECMedia_set_loudspeaker_status(bool enabled)
         int ret = 0;
         ret = hardware->SetLoudspeakerStatus(enabled);
         hardware->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set loudspeaker status", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -2207,6 +2368,9 @@ int ECMedia_get_loudpeaker_status(bool& enabled)
     if (hardware) {
         int ret = hardware->GetLoudspeakerStatus(enabled);
         hardware->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to get loudspeaker status", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... enabled=%d", __FUNCTION__, enabled);
         return ret;
     }
@@ -2226,6 +2390,9 @@ int ECMedia_reset_audio_device()
     if (hardware) {
         int ret = hardware->ResetAudioDevice();
         hardware->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to reset audio device", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -2325,6 +2492,9 @@ int ECMedia_set_speaker_volume(int volumep)
         int ret = 0;
         ret = volume->SetSpeakerVolume(volumep);
         volume->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set speaker volume", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -2345,6 +2515,9 @@ int ECMedia_get_speaker_volume(unsigned int& volumep)
         int ret = 0;
         ret = volume->GetSpeakerVolume(volumep);
         volume->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to get speaker volume", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d  volume:%d", __FUNCTION__, ret, volumep);
         return ret;
     }
@@ -2368,6 +2541,9 @@ int ECMedia_set_mic_volume(int volumep)
 		int ret = 0;
 		ret = volume->SetMicVolume(volumep);
 		volume->Release();
+		if (ret != 0) {
+			PrintConsole("[ECMEDIA ERROR] %s failed to set mic volume", __FUNCTION__);
+		}
 		PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -2390,6 +2566,9 @@ int ECMedia_get_mic_volume(unsigned int& volumep)
 		int ret = 0;
 		ret = volume->GetMicVolume(volumep);
 		volume->Release();
+		if (ret != 0) {
+			PrintConsole("[ECMEDIA ERROR] %s failed to get mic volume", __FUNCTION__);
+		}
 		PrintConsole("[ECMEDIA INFO] %s ends... with code: %d volume:%d", __FUNCTION__, ret, volumep);
 		return ret;
 	}
@@ -2409,6 +2588,9 @@ int ECMedia_set_mute_status(bool mute)
     if (volume) {
         int ret = volume->SetSystemInputMute(mute);
         volume->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set mute status", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -2428,6 +2610,9 @@ int ECMedia_get_mute_status(bool& mute)
     if (volume) {
         int ret = volume->GetSystemInputMute(mute);
         volume->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to get system input mute status", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -2447,6 +2632,9 @@ int ECMedia_set_speaker_mute_status(bool mute)
     if (volume) {
         int ret = volume->SetSystemOutputMute(mute);
         volume->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set system output mute status", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -2466,6 +2654,9 @@ int ECMedia_get_speaker_mute_status(bool& mute)
     if (volume) {
         int ret = volume->GetSystemOutputMute(mute);
         volume->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to get system output mute status", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -2509,6 +2700,9 @@ int ECMedia_get_capture_device(int index, char *name, int name_len, char *id, in
     if (capture) {
         int ret = capture->GetCaptureDevice(index, name, name_len, id, id_len);
         capture->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to get capture device", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -2553,6 +2747,9 @@ int ECMedia_get_capture_capability(const char *id, int id_len, int index, Camera
         capabilityp.width = capability.width;
         capabilityp.maxfps = capability.maxFPS;
         caputure->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to get capture capability", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -2572,6 +2769,9 @@ int ECMedia_allocate_capture_device(const char *id, size_t len, int& deviceid)
     if (capture) {
         int ret = capture->AllocateCaptureDevice(id, (unsigned int)len, deviceid);
         capture->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to allocate capture device", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -2591,6 +2791,9 @@ int ECMedia_connect_capture_device(int deviceid, int channelid)
     if (capture) {
         int ret = capture->ConnectCaptureDevice(deviceid, channelid);
         capture->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to connect capture device", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -2613,6 +2816,9 @@ int ECMedia_getOrientation(const char *id, ECMediaRotateCapturedFrame &tr)
         int ret = capture->GetOrientation(id, tmp_tr);
         tr = (ECMediaRotateCapturedFrame)tmp_tr;
         capture->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to get orientation", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -2653,6 +2859,9 @@ int ECMedia_start_capture(int deviceid, CameraCapability cam)
 		//capture->EnableBrightnessAlarm(deviceid, true); //ylr for test 
         int ret = capture->StartCapture(deviceid, cap);
         capture->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to start capture", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -2677,10 +2886,16 @@ int ECMedia_stop_capture(int captureid)
 			}
 		}
 
-		capture->StopCapture(captureid);
-		capture->ReleaseCaptureDevice(captureid);
+		int ret = capture->StopCapture(captureid);
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to stop capture", __FUNCTION__);
+              }
+		ret = capture->ReleaseCaptureDevice(captureid);
 		capture->Release();
-		PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to release capture device", __FUNCTION__);
+              }
+		PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return 0;
 	}
 	else
@@ -2700,6 +2915,9 @@ int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame 
 	if (capture) {
 		int ret = capture->SetRotateCapturedFrames(deviceid, (RotateCapturedFrame)tr);
 		capture->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to set rotate captured frames", __FUNCTION__);
+              }
 		PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -2723,11 +2941,15 @@ int ECMedia_set_local_video_window(int deviceid, void *video_window)
         ret = render->AddRenderer(deviceid,video_window,1,0,0,1,1,NULL);
         if (ret) {
             render->Release();
+            PrintConsole("[ECMEDIA ERROR] %s failed to add renderer", __FUNCTION__);
             PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
             return ret;
         }
         ret = render->StartRender(deviceid);
         render->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to start render", __FUNCTION__);
+        }
 #else
         ret = capture->SetLocalVideoWindow(deviceid, video_window);
         capture->Release();
@@ -2810,7 +3032,13 @@ int ECMedia_add_render(int channelid, void *video_window, ReturnVideoWidthHeight
     ViERender *render = ViERender::GetInterface(m_vie);
     if (render) {
         int ret = render->AddRenderer(channelid, video_window, 2, 0, 0, 1, 1, videoResolutionCallback);
-        render->StartRender(channelid);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to add renderer", __FUNCTION__);
+        }
+        ret = render->StartRender(channelid);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to start render", __FUNCTION__);
+        }
         render->Release();
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
@@ -2829,17 +3057,27 @@ int ECMedia_stop_render(int channelid, int deviceid)
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViERender *render = ViERender::GetInterface(m_vie);
     if (render) {
-        render->StopRender(channelid);
-        render->RemoveRenderer(channelid);
-        
-		render->StopRender(deviceid);
-		render->RemoveRenderer(deviceid);
+        int ret = render->StopRender(channelid);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to stop render for channelid", __FUNCTION__);
+        }
+        ret = render->RemoveRenderer(channelid);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to remove renderer for channelid", __FUNCTION__);
+        }
+        ret = render->StopRender(deviceid);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to stop render for deviceid", __FUNCTION__);
+        }
+        ret = render->RemoveRenderer(deviceid);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to remove renderer for deviceid", __FUNCTION__);
+        }
         render->Release();
     }
     PrintConsole("[ECMEDIA INFO] %s ends...",__FUNCTION__);
     return 0;
 }
-#endif
 
 int ECMedia_set_i420_framecallback(int channelid, cloopenwebrtc::ECMedia_I420FrameCallBack callback) {
     PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d ", __FUNCTION__, channelid);
@@ -2848,6 +3086,9 @@ int ECMedia_set_i420_framecallback(int channelid, cloopenwebrtc::ECMedia_I420Fra
     if (codec) {
         int ret = codec->AddI420FrameCallback(channelid, callback);
         codec->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to add i420 frame callback", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -2858,6 +3099,7 @@ int ECMedia_set_i420_framecallback(int channelid, cloopenwebrtc::ECMedia_I420Fra
         return -99;
     }
 }
+#endif
 
 /*
  * VoECodec ViECodec
@@ -2952,7 +3194,10 @@ int ECMedia_set_key_frame_request_cb(int channelid, bool isVideoConf,onEcMediaRe
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECodec *codec = ViECodec::GetInterface(m_vie);
     if (codec) {
-        codec->SetKeyFrameRequestCb(channelid,isVideoConf,cb);
+        int ret = codec->SetKeyFrameRequestCb(channelid,isVideoConf,cb);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set key frame request cb", __FUNCTION__);
+        }
         codec->Release();
     }
     else
@@ -2974,6 +3219,9 @@ int ECMedia_get_send_codec_audio(int channelid, CodecInst& audioCodec)
     if (codec) {
         int ret = codec->GetSendCodec(channelid, audioCodec);
         codec->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to get audio send codec", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -2996,6 +3244,9 @@ int ECMedia_set_send_codec_audio(int channelid, CodecInst& audioCodec)
         audioCodec.plname);
         int ret = codec->SetSendCodec(channelid, audioCodec);
         codec->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set audio send codec", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -3019,6 +3270,9 @@ int ECMedia_set_receive_playloadType_audio(int channelid, CodecInst& audioCodec)
         audioCodec.plname);
         int ret = codec->SetRecPayloadType(channelid, audioCodec);
         codec->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set audio receive playload type", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -3038,6 +3292,9 @@ int ECMedia_get_receive_playloadType_audio(int channelid, CodecInst& audioCodec)
     if (codec) {
         int ret = codec->GetRecPayloadType(channelid, audioCodec);
         codec->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to get audio receive playload type", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -3054,6 +3311,11 @@ int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
 {
     PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d videoCodec(width:%d height:%d pltype:%d plname:%s)",
 		__FUNCTION__, channelid, videoCodec.width,videoCodec.height, videoCodec.plType,videoCodec.plName);
+    if (videoCodec.width == 0 || videoCodec.height == 0) {
+        PrintConsole("[ECMEDIA ERROR] %s invalid param width or height", __FUNCTION__);
+        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        return ERR_INVALID_PARAM;
+    }
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECodec *codec = ViECodec::GetInterface(m_vie);
     if (codec) {
@@ -3061,6 +3323,9 @@ int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
         videoCodec.plName);
         int ret = codec->SetSendCodec(channelid, videoCodec);
         codec->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set video send codec", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -3080,6 +3345,9 @@ int ECMedia_get_send_codec_video(int channelid, VideoCodec& videoCodec)
     if (codec) {
         int ret = codec->GetSendCodec(channelid, videoCodec);
         codec->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to get video send codec", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -3118,6 +3386,9 @@ int ECMedia_set_frame_scale_type(int channelid, FrameScaleType type) {
         PrintConsole("[ECMEDIA INFO] %s", __FUNCTION__);
         int ret = codec->SetFrameScaleType(channelid, type);
         codec->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set frame scale type", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -3175,6 +3446,9 @@ int ECMedia_set_receive_codec_video(int channelid, VideoCodec& videoCodec)
     if (codec) {
         int ret = codec->SetReceiveCodec(channelid, videoCodec);
         codec->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set video receive codec", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -3194,6 +3468,9 @@ int ECMedia_get_receive_codec_video(int channelid, VideoCodec& videoCodec)
     if (codec) {
         int ret = codec->GetReceiveCodec(channelid, videoCodec);
         codec->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to get video receive codec", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -3219,6 +3496,9 @@ int ECMedia_sendUDPPacket(const int channelid,
     if (network) {
         int ret=network->SendUDPPacket(channelid, data, length, transmitted_bytes, use_rtcp_socket, port, ip);
         network->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to send udp packet", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -3237,6 +3517,9 @@ int ECMedia_set_NACK_status_video(int channelid, bool enabled)
     if (rtp_rtcp) {
         int ret = rtp_rtcp->SetNACKStatus(channelid, enabled);
         rtp_rtcp->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set video nack status", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -3259,6 +3542,9 @@ int ECMedia_set_FEC_status_video(const int channelid,
 	if (rtp_rtcp) {
 		int ret = rtp_rtcp->SetFECStatus(channelid, enable, payload_typeRED, payload_typeFEC);
 		rtp_rtcp->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to set video fec status", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -3282,6 +3568,9 @@ int ECMedia_set_HybridNACKFEC_status_video(const int channelid,
 	if (rtp_rtcp) {
 		int ret = rtp_rtcp->SetHybridNACKFECStatus(channelid, enable, payload_typeRED, payload_typeFEC);
 		rtp_rtcp->Release();
+              if (ret != 0) {
+                   PrintConsole("[ECMEDIA ERROR] %s failed to set video hybrid nack fec status", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -3302,6 +3591,9 @@ int ECMedia_set_RTCP_status_video(int channelid, int mode)
     if (rtp_rtcp) {
         int ret = rtp_rtcp->SetRTCPStatus(channelid, (ViERTCPMode)mode);
         rtp_rtcp->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set video rtcp status", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -3339,6 +3631,9 @@ int ECMedia_send_key_frame(int channel)
 	{
 		int ret = tempCodec->SendKeyFrame(channel);
 		tempCodec->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to send key frame", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}else
@@ -3357,6 +3652,9 @@ int ECMedia_video_EnableIPV6(int channel, bool flag)
     if (network) {
         int ret = network->EnableIPv6(channel);
          network->Release();
+         if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to video enable ipv6", __FUNCTION__);
+         }
          PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		 return ret;
     }
@@ -3753,7 +4051,7 @@ int ECMedia_save_remote_video_snapshot(int channelid, const char* filePath)
        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 		return 0;
 	}
-	PrintConsole("[ECMEDIA Error] %s get ViEFile failed.", __FUNCTION__);
+	PrintConsole("[ECMEDIA ERROR] %s get ViEFile failed.", __FUNCTION__);
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 	return -1;
 }
@@ -3766,6 +4064,9 @@ int ECmedia_enable_deflickering(int captureid, bool enable)
     if (imageProcess) {
         int ret = imageProcess->EnableDeflickering(captureid, enable);
         imageProcess->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to enable deflickering", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -3785,6 +4086,9 @@ int ECmedia_enable_EnableColorEnhancement(int channelid, bool enable)
     if (imageProcess) {
         int ret = imageProcess->EnableColorEnhancement(channelid, enable);
         imageProcess->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to enable color enhancement", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -3804,6 +4108,9 @@ int ECmedia_enable_EnableDenoising(int captureid, bool enable)
     if (imageProcess) {
         int ret = imageProcess->EnableDenoising(captureid, enable);
         imageProcess->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to enable denoising", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -3823,6 +4130,9 @@ int ECmedia_enable_EnableBrightnessAlarm(int captureid, bool enable)
     if (capture) {
         int ret = capture->EnableBrightnessAlarm(captureid, enable);
         capture->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to enable brightness alarm", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -3842,6 +4152,9 @@ int ECmedia_enable_EnableBeautyFilter(int captureid, bool enable)
 	if (capture) {
 		int ret = capture->EnableBeautyFilter(captureid, enable);
 		capture->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to enable beauty filter", __FUNCTION__);
+              }
 		PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -3861,6 +4174,9 @@ int ECMedia_init_srtp_video(int channel)
 	if (encryt) {
 		int ret = encryt->CcpSrtpInit(channel);
 		encryt->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to video init srtp", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -3876,6 +4192,9 @@ int ECMedia_shutdown_srtp_video(int channel)
 	if (encryt) {
 		int ret = encryt->CcpSrtpShutdown(channel);
 		encryt->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to video shutdown srtp", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -3892,6 +4211,9 @@ int ECMedia_enable_srtp_send_video(int channel, cloopenwebrtc::ccp_srtp_crypto_s
 	if (encryt) {
 		int ret = encryt->EnableSRTPSend(channel, crypt_type, key);
 		encryt->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to enable video srtp send", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -3907,6 +4229,9 @@ int ECMedia_disable_srtp_send_video(int channel)
 	if (encryt) {
 		int ret = encryt->DisableSRTPSend(channel);
 		encryt->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to disable video srtp send", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -3923,6 +4248,9 @@ int ECMedia_enable_srtp_recv_video(int channel, cloopenwebrtc::ccp_srtp_crypto_s
 	if (encryt) {
 		int ret = encryt->EnableSRTPReceive(channel, crypt_type, key);
 		encryt->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to enable video srtp recv", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -3938,6 +4266,9 @@ int ECMedia_disable_srtp_recv_video(int channel)
 	if (encryt) {
 		int ret = encryt->DisableSRTPReceive(channel);
 		encryt->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to disable video srtp recv", __FUNCTION__);
+              }
        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -3956,6 +4287,9 @@ int ECMedia_set_VAD_status(int channelid, VadModes mode, bool dtx_enabled)
     if (codec) {
         int ret = codec->SetVADStatus(channelid, false, mode, !dtx_enabled);
         codec->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set vad status", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -4007,6 +4341,9 @@ int ECMedia_EnableIPV6(int channel, bool flag)
     if (network) {
         int ret = network->EnableIPv6(channel);
          network->Release();
+         if (ret != 0) {
+             PrintConsole("[ECMEDIA ERROR] %s failed to enable ipv6", __FUNCTION__);
+         }
          PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		 return ret;
     }
@@ -4085,6 +4422,9 @@ int ECMedia_init_srtp_audio(int channel)
 	if (encryt) {
 		int ret = encryt->CcpSrtpInit(channel);
 		encryt->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to audio init srtp", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -4100,6 +4440,9 @@ int ECMedia_shutdown_srtp_audio(int channel)
 	if (encryt) {
 		int ret = encryt->CcpSrtpShutdown(channel);
 		encryt->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to audio shutdown srtp", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -4117,6 +4460,9 @@ int ECMedia_enable_srtp_send_audio(int channel, cloopenwebrtc::ccp_srtp_crypto_s
 	if (encryt) {
 		int ret = encryt->EnableSRTPSend(channel, crypt_type, key);
 		encryt->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to enable audio srtp send", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ",__FUNCTION__, ret);
 		return ret;
 	}
@@ -4132,6 +4478,9 @@ int ECMedia_disable_srtp_send_audio(int channel)
 	if (encryt) {
 		int ret = encryt->DisableSRTPSend(channel);
 		encryt->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to disable audio srtp send", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ",__FUNCTION__, ret);
 		return ret;
 	}
@@ -4148,6 +4497,9 @@ int ECMedia_enable_srtp_recv_audio(int channel, cloopenwebrtc::ccp_srtp_crypto_s
 	if (encryt) {
 		int ret = encryt->EnableSRTPReceive(channel, crypt_type, key);
 		encryt->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to enable audio srtp recv", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ",__FUNCTION__, ret);
 		return ret;
 	}
@@ -4163,6 +4515,9 @@ int ECMedia_disable_srtp_recv_audio(int channel)
 	if (encryt) {
 		int ret = encryt->DisableSRTPReceive(channel);
 		encryt->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to disable audio srtp recv", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ",__FUNCTION__, ret);
 		return ret;
 	}
@@ -4179,6 +4534,9 @@ int ECMedia_start_record_playout(int channel, char *filename)
 	if (file) {
 		int ret = file->StartRecordingPlayout(channel, filename);
 		file->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to start record playout", __FUNCTION__);
+              }
 		PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -4195,6 +4553,9 @@ int ECMedia_stop_record_playout(int channel)
 	if (file) {
 		int ret = file->StopRecordingPlayout(channel);
 		file->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to stop record playout", __FUNCTION__);
+              }
 		PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -4211,6 +4572,9 @@ int ECMedia_start_record_microphone(char *filename)
 	if (file) {
 		int ret = file->StartRecordingMicrophone(filename);
 		file->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to start record microphone", __FUNCTION__);
+              }
 		PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -4227,6 +4591,9 @@ int ECMedia_stop_record_microphone()
 	if (file) {
 		int ret = file->StopRecordingMicrophone();
 		file->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to stop record microphone", __FUNCTION__);
+              }
 		PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -4243,6 +4610,9 @@ int ECMedia_start_record_send_voice(char *filename)
 	if (file) {
 		int ret = file->StartRecordingCall(filename);
 		file->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to start record send voice", __FUNCTION__);
+              }
 		PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -4259,6 +4629,9 @@ int ECMedia_stop_record_send_voice()
 	if (file) {
 		int ret = file->StopRecordingCall();
 		file->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to stop record send voice", __FUNCTION__);
+              }
 		PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
 		return ret;
 	}
@@ -4284,6 +4657,9 @@ int ECMedia_Check_Record_Permission(bool &enabled) {
     if (hardware) {
         int ret = hardware->CheckRecordPermission(enabled);
         hardware->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to check record permission", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ",__FUNCTION__, ret);
         return ret;
     }
@@ -4352,6 +4728,9 @@ int ECMedia_connect_desktop_captureDevice(int desktop_captureid, int video_chann
 	{
 		int ret = vie_desktopShare->ConnectDesktopCaptureDevice(desktop_captureid, video_channelId);
 		vie_desktopShare->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to connect desktop capture device", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d\n", __FUNCTION__, ret);
 		return ret;
 	}
@@ -4372,6 +4751,9 @@ int ECMedia_disconnect_desktop_captureDevice(int video_channelId)
 	{
 		int ret = vie_desktopShare->DisConnectDesktopCaptureDevice(video_channelId);
 		vie_desktopShare->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to disconnect desktop capture device", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d\n", __FUNCTION__, ret);
 		return ret;
 	}
@@ -4409,6 +4791,9 @@ int ECMedia_get_screen_list(int desktop_captureid, ScreenID **screenList)
 			temp++;
 		}
 		*screenList = m_pScreenlist;
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to get screen list", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d\n", __FUNCTION__, num);
 		return num;
 	}
@@ -4448,6 +4833,9 @@ int ECMedia_get_window_list(int desktop_captureid, WindowShare **windowList)
 			temp++;
 		}
 		*windowList = m_pWindowlist;
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to get window list", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d\n", __FUNCTION__, num);
 		return num;
 	}
@@ -4469,6 +4857,9 @@ bool ECMedia_select_screen(int desktop_captureid, ScreenID screeninfo)
 	if (vie_desktopshare) {
 		bool ret = vie_desktopshare->SelectScreen(desktop_captureid, screeninfo);
 		vie_desktopshare->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to select screen", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d\n", __FUNCTION__, ret);
 		return ret;
 	}
@@ -4488,6 +4879,9 @@ bool ECMedia_select_window(int desktop_captureid, WindowID windowinfo)
 	if (vie_desktopshare) {
 		bool ret = vie_desktopshare->SelectWindow(desktop_captureid, windowinfo);
 		vie_desktopshare->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to select window", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d\n", __FUNCTION__, ret);
 		return ret;
 	}
@@ -4508,6 +4902,9 @@ int ECMedia_start_desktop_capture(int captureId, int fps)
 	if (vie_desktopshare) {
 		int ret = vie_desktopshare->StartDesktopShareCapture(captureId, fps);
 		vie_desktopshare->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to start desktop capture", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d\n", __FUNCTION__, ret);
 		return ret;
 	}
@@ -4528,6 +4925,9 @@ int ECMedia_stop_desktop_capture(int desktop_captureid)
 	{
 		int ret = vie_desktopShare->StopDesktopShareCapture(desktop_captureid);
 		vie_desktopShare->Release();
+              if (ret != 0) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to stop desktop capture", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d\n", __FUNCTION__, ret);
 		return ret;
 	}
@@ -4582,9 +4982,12 @@ int ECmedia_set_shield_mosaic(int video_channel, bool flag)
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViENetwork *network = ViENetwork::GetInterface(m_vie);
     if (network) {
-        network->setShieldMosaic(video_channel, flag);
+        int ret = network->setShieldMosaic(video_channel, flag);
         network->Release();
-        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set shield mosaic", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return 0;
     }
     else
@@ -4604,6 +5007,9 @@ int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &hei
 	if (desktopshare) {
 		bool ret = desktopshare->GetDesktopShareCaptureRect(desktop_captureid, width, height);
 		desktopshare->Release();
+              if (ret == false) {
+                  PrintConsole("[ECMEDIA ERROR] %s failed to get desktop capture size", __FUNCTION__);
+              }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret ? 0 : -99);
 		return ret ? 0 : -99;
 	}
@@ -4623,7 +5029,10 @@ int ECMedia_set_screen_share_activity(int desktop_captureid, void* activity)
     if (desktopshare) {
         int ret = desktopshare->SetScreenShareActivity(desktop_captureid, activity);
         desktopshare->Release();
-        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set screen share activity", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
     else
@@ -4650,6 +5059,9 @@ int ECMedia_playLiveStream(void *handle, const char * url, void *renderView, onL
 #ifdef VIDEO_ENABLED
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
     int ret = p->PlayStream(url, renderView, callback);
+    if (ret != 0) {
+        PrintConsole("[ECMEDIA ERROR] %s failed to play stream", __FUNCTION__);
+    }
     PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
 	return ret;
 #endif
@@ -4673,6 +5085,9 @@ void ECMedia_SetLiveVideoSource(void *handle,int video_source)
 #ifdef VIDEO_ENABLED
 	 RTMPLiveSession *p = (RTMPLiveSession*)handle;
 	 int ret =  p->PushStream(url, localView);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to push stream", __FUNCTION__);
+        }
 	 PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
 	 return ret;
 #endif
@@ -4727,6 +5142,9 @@ int ECMedia_setVideoProfileLiveStream(void *handle, int cameraIndex, CameraCapab
 #ifdef VIDEO_ENABLED
 	RTMPLiveSession *p = (RTMPLiveSession*)handle;
     int ret = p->setVideoProfile(cameraIndex, cam, bitrRates);
+    if (ret != 0) {
+        PrintConsole("[ECMEDIA ERROR] %s failed to set video profile", __FUNCTION__);
+    }
     PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
 	return ret;
 #endif
@@ -4798,6 +5216,9 @@ ECMEDIA_API int  ECMedia_startRecordLocalMedia(const char *fileName, void *local
     }
 
     int ret = g_recordLocal->Start(fileName, localview);
+    if (ret != 0) {
+        PrintConsole("[ECMEDIA ERROR] %s failed to start record local media", __FUNCTION__);
+    }
     PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
     return ret;
 #endif
@@ -4859,7 +5280,10 @@ ECMEDIA_API int ECMedia_setAudioRed(int channelid, bool enable, int payloadType)
         int ret = 0;
         ret = rtp_rtcp->SetREDStatus(channelid, enable, payloadType);
         rtp_rtcp->Release();
-        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set audio red", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
     else
@@ -4879,6 +5303,9 @@ ECMEDIA_API int ECMedia_audio_enable_magic_sound(int channelid, bool is_enable)
     if (base) {
         int ret = base->enableSoundTouch(channelid, is_enable);
         base->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to enable audio magic sound", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -4897,6 +5324,9 @@ ECMEDIA_API int ECMedia_audio_set_magic_sound(int channelid, int pitch, int temp
     if (base) {
         int ret = base->setSoundTouch(channelid, pitch, tempo, rate);
         base->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to audio set magic sound", __FUNCTION__);
+        }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }

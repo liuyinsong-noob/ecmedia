@@ -22,7 +22,6 @@ LOCAL_SRC_FILES := \
     receive_statistics_proxy.cc \
     report_block_stats.cc \
     send_statistics_proxy.cc \
-	stats_types.cc \
     stream_synchronization.cc \
     vie_base_impl.cc \
     vie_capturer.cc \

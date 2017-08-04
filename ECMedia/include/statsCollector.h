@@ -25,19 +25,23 @@ public:
 	~StatsCollector();
 	static bool StatsCollectorThreadRun(void* obj);
 	bool ProcessStatsCollector();
-
+#ifdef VIDEO_ENABLED
 	bool AddVideoSendStatsProxy(int channelid);
 	void DeleteVideoSendStatsProxy(int channelid);
 	bool AddVideoRecvStatsProxy(int channelid);
 	void DeleteVideoRecvStatsProxy(int channelid);
+#endif
 	bool AddAudioSendStatsProxy(int channelid);
 	void DeleteAudioSendStatsProxy(int channelid);
 	bool AddAudioRecvStatsProxy(int channelid);
 	void DeleteAudioRecvStatsProxy(int channelid);
-
+#ifdef VIDEO_ENABLED
 	bool SetVideoEngin(VideoEngine* vie);
+#endif
 	bool SetVoiceEngin(VoiceEngine* voe);
+#ifdef VIDEO_ENABLED
 	void SetVideoCaptureDeviceId(int capDevId) { capDevId_ = capDevId; }
+#endif
 	void Config(char* logFile, int logIntervalMs);
 
 
@@ -49,14 +53,15 @@ private:
 	void DeleteFromReports(StatsReport::StatsReportType type, int channel_id);
 
 	StatsReport* FindReport(bool isFullStats, int reportType, int channel_id);
-
+#ifdef VIDEO_ENABLED
 	void ExtractVideoSenderInfo(bool isFullStats);
 	void ExtractVideoReceiverInfo(bool isFullStats);
+#endif
 	void ExtractAudioSenderInfo(bool isFullStats);
 	void ExtractAudioReceiverInfo(bool isFullStats);
 
 	void Report_AddCommonFiled(StatsReport *report, int64_t ts);
-
+#ifdef VIDEO_ENABLED
 	void VideoSenderInfo_AddEncoderSetting(const VideoSendStream::Stats info,
 											StatsReport *report); //size = 15bytes
 	void VideoSenderInfo_AddQMSetting(const VideoSendStream::Stats info,
@@ -86,7 +91,7 @@ private:
 										StatsReport *report); //size = 16 bytes
 	void VideoReciverInfo_AddLossModeStats(const VideoReceiveStream::Stats info,
 										StatsReport *report); //size = 32 bytes
-
+#endif
 	void AudioSenderInfo_AddBasic(const AudioSendStream::Stats info,
 										StatsReport *report); //size = 9 bytes
 	void AudioSenderInfo_AddEchoStats(const AudioSendStream::Stats info,
@@ -113,12 +118,14 @@ private:
 	void LoadAudioReceiverReportToPbBuffer(StatsContentType type,
 										StatsReport report,
 										AudioReceiverStatisticsInner *statsData);
+#ifdef VIDEO_ENABLED
 	void LoadVideoSenderReportToPbBuffer(StatsContentType type,
 										StatsReport report,
 										VideoSenderStatisticsInner *statsData);
 	void LoadVideoReceiverReportToPbBuffer(StatsContentType type,
 										StatsReport report,
 										VideoReceiverStatisticsInner *statsData);
+#endif
 private:
 	int		capDevId_;
 	ThreadWrapper *thread_;
@@ -132,8 +139,10 @@ private:
 	int64_t		last_time_update_simplifiedStats_;
 
 	scoped_ptr<CriticalSectionWrapper> stream_crit_;
+#ifdef VIDEO_ENABLED
 	std::set<SendStatisticsProxy*> video_send_stats_proxies_;
 	std::set<ReceiveStatisticsProxy*> video_receive_stats_proxies_;
+#endif
 	std::set<AudioSendStream*> audio_send_stats_proxies_;
 	std::set<AudioReceiveStream*> audio_receive_stats_proxies_;
 
