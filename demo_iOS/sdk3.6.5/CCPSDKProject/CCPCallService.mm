@@ -5700,10 +5700,10 @@ char *OSTypeToStr(char *buf, OSType t)
     return [NSString stringWithFormat:@"%@" ,kSDKVersion];
 }
 
--(StatisticsInfo*)getCallStatistics
+-(StatisticsInfo*)getCallStatistics:(int)type
 {
     MediaStatisticsInfo callStatisticsInfo;
-    int ret = getCallStatistics(0,&callStatisticsInfo);
+    int ret = getCallStatistics(type,&callStatisticsInfo);
     if (ret == 0)
     {
         StatisticsInfo* retStatisticsInfo = [[StatisticsInfo alloc] autorelease];

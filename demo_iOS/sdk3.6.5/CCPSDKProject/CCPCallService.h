@@ -366,7 +366,7 @@ typedef enum
  * 统计通话质量
  * @return  返回丢包率等通话质量信息对象
  */
--(StatisticsInfo*)getCallStatistics;
+-(StatisticsInfo*)getCallStatistics:(int)type;
 
 /**
  * 获取通话的网络流量信息
