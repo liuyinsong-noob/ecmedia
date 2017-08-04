@@ -18,7 +18,9 @@
 #include "../system_wrappers/include/metrics.h"
 
 namespace cloopenwebrtc {
-extern int printTime();
+#ifndef WIN32  
+	extern int printTime();
+#endif
 
 namespace {
 // Maximum waiting time from the time of initiating probing to getting
@@ -148,7 +150,7 @@ void ProbeController::SetEstimatedBitrate(int64_t bitrate_bps) {
                  << " Minimum to probe further: "
                  << min_bitrate_to_probe_further_bps_;
       
-#ifndef win32
+#ifndef WIN32
       printTime();
       printf("[Probe] Measured bitrate: %lld, Minimum to probe further: %lld)\n",
              bitrate_bps, min_bitrate_to_probe_further_bps_);
@@ -174,7 +176,7 @@ void ProbeController::SetEstimatedBitrate(int64_t bitrate_bps) {
       bitrate_bps < 2 * estimated_bitrate_bps_ / 3 &&
       (now_ms - last_alr_probing_time_) > kAlrProbingIntervalMinMs) {
     LOG(LS_INFO) << "Detected big BW drop in ALR, start probe.";
-#ifndef win32
+#ifndef WIN32
       printTime();
       printf("[Probe] Detected big BW drop in ALR, start probe.(estimated_bitrate_bps_ = %lld)\n",
              estimated_bitrate_bps_);
@@ -209,7 +211,7 @@ void ProbeController::Process() {
 
     if (state_ == State::kWaitingForProbingResult) {
       LOG(LS_INFO) << "kWaitingForProbingResult: timeout";
-#ifndef win32
+#ifndef WIN32
         printTime();
         printf("[Probe] kWaitingForProbingResult: timeout\n");
 #endif

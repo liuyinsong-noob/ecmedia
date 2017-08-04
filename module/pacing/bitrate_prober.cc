@@ -20,7 +20,9 @@ using namespace std;
 
 namespace cloopenwebrtc {
     
-extern int printTime();
+#ifndef WIN32  
+	extern int printTime();
+#endif
 
 namespace {
 
@@ -105,7 +107,7 @@ void BitrateProber::CreateProbeCluster(int bitrate_bps, int64_t now_ms) {
                << cluster.pace_info.probe_cluster_min_bytes << ":"
                << cluster.pace_info.probe_cluster_min_probes << ":"
 			   << cluster.pace_info.probe_cluster_id << ")";
-#ifndef win32
+#ifndef WIN32
     printTime();
     printf("[Probe] Probe cluster (bitrate:min bytes:min packets:cluster id): (%d:%d:%d:%d)\n",
            cluster.pace_info.send_bitrate_bps,

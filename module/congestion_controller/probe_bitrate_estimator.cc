@@ -83,7 +83,7 @@ int ProbeBitrateEstimator::HandleProbeAndEstimateBitrate(
                  << "] [send interval: " << send_interval_ms << " ms]"
                  << " [receive interval: " << receive_interval_ms << " ms]";
       
-#ifndef win32
+#ifndef WIN32
       printTime();
       printf("[Probe] Probing unsuccessful, invalid send/receive interval [cluster id: %d] [send interval: %.0f ms] [receive interval: %.0f ms]\n");
 #endif
@@ -117,7 +117,7 @@ int ProbeBitrateEstimator::HandleProbeAndEstimateBitrate(
                  << kValidRatio << ")]";
     return -1;
       
-#ifndef win32
+#ifndef WIN32
       printTime();
       printf("[Probe] Probing unsuccessful, receive/send ratio too high [cluster id: %d] [send: %.0f bytes / %.0f ms = %.0f kb/s] [receive : %.0f bytes / %.0f ms = %.0f kb/s] [ratio: %.0f / %.0f = %d > kValidRatio(%d)]\n", cluster_id, send_size, send_interval_ms, send_bps/1000, receive_size, receive_interval_ms, receive_bps/1000, receive_bps/1000, send_bps/1000,  kValidRatio);
 #endif
@@ -130,7 +130,7 @@ int ProbeBitrateEstimator::HandleProbeAndEstimateBitrate(
                << receive_interval_ms << " ms = " << receive_bps / 1000
                << " kb/s]";
     
-#ifndef win32
+#ifndef WIN32
     printTime();
     printf("[Probe] Probing successful, [cluster id: %d] [send: %.0f bytes / %.0f ms = %.0f kb/s] [receive : %.0f bytes / %.0f ms = %.0f kb/s]\n", cluster_id, send_size, send_interval_ms, send_bps/1000, receive_size, receive_interval_ms, receive_bps/1000);
 #endif
