@@ -146,6 +146,7 @@ LOCAL_LDFLAGS += \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libopus.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libssl.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libcrypto.a \
+	./third_party_libs/$(TARGET_ARCH_ABI)/libProtobuf_lite.a \
 
 LOCAL_DISABLE_FATAL_LINKER_WARNINGS := true
 LOCAL_PRELINK_MODULE := false
