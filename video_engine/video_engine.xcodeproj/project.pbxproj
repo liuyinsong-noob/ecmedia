@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1FBB440B1E7292F8007DBD1D /* stats_types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FBB44091E7292F8007DBD1D /* stats_types.cc */; };
-		1FBB440C1E7292F8007DBD1D /* stats_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FBB440A1E7292F8007DBD1D /* stats_types.h */; };
 		1FDC7C041E7A6335002B9F7C /* video_send_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FDC7C031E7A6335002B9F7C /* video_send_stream.cc */; };
 		5519CB8F15C812A700719504 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5519CB8E15C812A700719504 /* Foundation.framework */; };
 		5519CC8C15C8136E00719504 /* vie_base_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC4215C8136E00719504 /* vie_base_impl.cc */; };
@@ -114,15 +112,12 @@
 		AD8D73011C59A39700FB246D /* receive_statistics_proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8D72FB1C59A39700FB246D /* receive_statistics_proxy.h */; };
 		AD8D73021C59A39700FB246D /* send_statistics_proxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72FC1C59A39700FB246D /* send_statistics_proxy.cc */; };
 		AD8D73031C59A39700FB246D /* send_statistics_proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8D72FD1C59A39700FB246D /* send_statistics_proxy.h */; };
-		ADE780361EA730CA00D0E04E /* stats_types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FBB44091E7292F8007DBD1D /* stats_types.cc */; };
 		ADE7803E1EA7321B00D0E04E /* video_send_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FDC7C031E7A6335002B9F7C /* video_send_stream.cc */; };
 		ADE7803F1EA73BFA00D0E04E /* vie_desktop_capture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADE835591D8F795F00CCD20D /* vie_desktop_capture.cpp */; };
 		ADE8355A1D8F795F00CCD20D /* vie_desktop_capture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADE835591D8F795F00CCD20D /* vie_desktop_capture.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1FBB44091E7292F8007DBD1D /* stats_types.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stats_types.cc; sourceTree = "<group>"; };
-		1FBB440A1E7292F8007DBD1D /* stats_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stats_types.h; sourceTree = "<group>"; };
 		1FDC7C031E7A6335002B9F7C /* video_send_stream.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_send_stream.cc; sourceTree = "<group>"; };
 		5519CB8B15C812A700719504 /* libvideo_engine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvideo_engine.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5519CB8E15C812A700719504 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -301,8 +296,6 @@
 			isa = PBXGroup;
 			children = (
 				1FDC7C031E7A6335002B9F7C /* video_send_stream.cc */,
-				1FBB44091E7292F8007DBD1D /* stats_types.cc */,
-				1FBB440A1E7292F8007DBD1D /* stats_types.h */,
 				ADE835591D8F795F00CCD20D /* vie_desktop_capture.cpp */,
 				AD42CD701D23E17A009C2E7A /* shared_memory.cc */,
 				AD194FDF1C5B4572003841BB /* vie_desktop_capture.h */,
@@ -400,7 +393,6 @@
 			files = (
 				AD194FE91C5B4572003841BB /* vie_desktop_share_manager.h in Headers */,
 				AD8D73011C59A39700FB246D /* receive_statistics_proxy.h in Headers */,
-				1FBB440C1E7292F8007DBD1D /* stats_types.h in Headers */,
 				AD8D725D1C58C6D400FB246D /* call_stats.h in Headers */,
 				AD8D72FF1C59A39700FB246D /* overuse_frame_detector.h in Headers */,
 				AD194FE51C5B4572003841BB /* vie_desktop_capture.h in Headers */,
@@ -499,7 +491,6 @@
 			files = (
 				5519CC8C15C8136E00719504 /* vie_base_impl.cc in Sources */,
 				AD2E29F91C58C09F00FD311B /* stream_synchronization.cc in Sources */,
-				1FBB440B1E7292F8007DBD1D /* stats_types.cc in Sources */,
 				5519CC8E15C8136E00719504 /* vie_capture_impl.cc in Sources */,
 				5519CC9015C8136E00719504 /* vie_capturer.cc in Sources */,
 				5519CC9415C8136F00719504 /* vie_channel_group.cc in Sources */,
@@ -550,7 +541,6 @@
 			files = (
 				ADE7803F1EA73BFA00D0E04E /* vie_desktop_capture.cpp in Sources */,
 				ADE7803E1EA7321B00D0E04E /* video_send_stream.cc in Sources */,
-				ADE780361EA730CA00D0E04E /* stats_types.cc in Sources */,
 				AD1F0C0A1D47612200C33F53 /* vie_base_impl.cc in Sources */,
 				AD1F0C0B1D47612200C33F53 /* stream_synchronization.cc in Sources */,
 				AD1F0C0C1D47612200C33F53 /* vie_capture_impl.cc in Sources */,
