@@ -1,6 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="audioRelease|Win32">
+      <Configuration>audioRelease</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="audioRelease|x64">
+      <Configuration>audioRelease</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="audioWin32|Win32">
+      <Configuration>audioWin32</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="audioWin32|x64">
+      <Configuration>audioWin32</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -15,6 +31,14 @@
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VRelease|Win32">
+      <Configuration>VRelease</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="VRelease|x64">
+      <Configuration>VRelease</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
@@ -50,7 +74,52 @@
     <UseOfMfc>false</UseOfMfc>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VRelease|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CLRSupport>false</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='audioRelease|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CLRSupport>false</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='audioWin32|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CLRSupport>false</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CLRSupport>false</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VRelease|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CLRSupport>false</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='audioRelease|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CLRSupport>false</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='audioWin32|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CLRSupport>false</CLRSupport>
@@ -69,7 +138,25 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VRelease|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='audioRelease|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='audioWin32|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='VRelease|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='audioRelease|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='audioWin32|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -95,7 +182,43 @@
     <IntDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
     <TargetName>ccpclient</TargetName>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VRelease|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <TargetName>ccpclient</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='audioRelease|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <TargetName>ccpclient</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='audioWin32|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <TargetName>ccpclient</TargetName>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <TargetName>ccpclient</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VRelease|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <TargetName>ccpclient</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='audioRelease|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <TargetName>ccpclient</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='audioWin32|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
@@ -176,7 +299,145 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Lib>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VRelease|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_UNICODE;UNICODE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;OSIP_MT;VIDEO_ENABLED;ORTP_STATIC;WEBRTC_MODULE_UTILITY_VIDEO;ENABLE_REMB_TMMBR_CONFIG</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories>./source;./include;./source/Http;./source/Utility;./interface;../module\exosip\source;../module\exosip\include;../module\osip\include;$(SolutionDir)\third_party\vld\include;..\third_party\libx264\libx264_win\include;../module/interface;../voice_engine\main\source;../voice_engine\main\include;../video_engine\include;../module;..\system_wrappers\source;..\system_wrappers\interface;../video_engine/source;..\third_party\openssl\inc32;..\third_party;../third_party/oRTP/include;../third_party/oRTP/include/ortp;..\third_party\srtp\crypto\include\win;..\third_party\srtp\crypto\include;../third_party/ffmpeg/ffmpeg_win/include;../module/video_coding/main/include;..\module\video_coding\codecs\h264;..\module\video_coding\codecs\interface;..\module\utility\source;..\;../module/common_video/interface;../module/common_video/source;../module/common_video/source/libyuv/include;../module/common_audio/source/resampler/include;../module/rtp_rtcp/include;../module/remote_bitrate_estimator/source;../module/bitrate_controller/include;../module/remote_bitrate_estimator/include;../module/pacing/include;..\module\video_render\main\include;..\ECMedia\source;..\ECMedia\interface;..\third_party\protobuf\src</AdditionalIncludeDirectories>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <ProgramDataBaseFileName>$(OutDir)\ccpclient.pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>gdi32.lib;Advapi32.lib;wininet.lib;dnsapi.lib;version.lib;msimg32.lib;ws2_32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib;dmoguids.lib;wmcodecdspuuid.lib;amstrmid.lib;msdmo.lib;IPHLPAPI.lib;strmbase.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)/lib/x86;./;../third_party/openssl</AdditionalLibraryDirectories>
+    </Link>
+    <Lib>
+      <OutputFile>$(OutDir)\ccpclient.lib</OutputFile>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/verbose:lib %(AdditionalOptions)</AdditionalOptions>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='audioRelease|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_UNICODE;UNICODE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;OSIP_MT;ORTP_STATIC;WEBRTC_MODULE_UTILITY_VIDEO;ENABLE_REMB_TMMBR_CONFIG</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories>./source;./include;./source/Http;./source/Utility;./interface;../module\exosip\source;../module\exosip\include;../module\osip\include;$(SolutionDir)\third_party\vld\include;..\third_party\libx264\libx264_win\include;../module/interface;../voice_engine\main\source;../voice_engine\main\include;../video_engine\include;../module;..\system_wrappers\source;..\system_wrappers\interface;../video_engine/source;..\third_party\openssl\inc32;..\third_party;../third_party/oRTP/include;../third_party/oRTP/include/ortp;..\third_party\srtp\crypto\include\win;..\third_party\srtp\crypto\include;../third_party/ffmpeg/ffmpeg_win/include;../module/video_coding/main/include;..\module\video_coding\codecs\h264;..\module\video_coding\codecs\interface;..\module\utility\source;..\;../module/common_video/interface;../module/common_video/source;../module/common_video/source/libyuv/include;../module/common_audio/source/resampler/include;../module/rtp_rtcp/include;../module/remote_bitrate_estimator/source;../module/bitrate_controller/include;../module/remote_bitrate_estimator/include;../module/pacing/include;..\module\video_render\main\include;..\ECMedia\source;..\ECMedia\interface;..\third_party\protobuf\src</AdditionalIncludeDirectories>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <ProgramDataBaseFileName>$(OutDir)\ccpclient.pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>gdi32.lib;Advapi32.lib;wininet.lib;dnsapi.lib;version.lib;msimg32.lib;ws2_32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib;dmoguids.lib;wmcodecdspuuid.lib;amstrmid.lib;msdmo.lib;IPHLPAPI.lib;strmbase.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)/lib/x86;./;../third_party/openssl</AdditionalLibraryDirectories>
+    </Link>
+    <Lib>
+      <OutputFile>$(OutDir)\ccpclient.lib</OutputFile>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/verbose:lib %(AdditionalOptions)</AdditionalOptions>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='audioWin32|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_UNICODE;UNICODE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;OSIP_MT;VIDEO_ENABLED;ORTP_STATIC;WEBRTC_MODULE_UTILITY_VIDEO;ENABLE_REMB_TMMBR_CONFIG</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories>./source;./include;./source/Http;./source/Utility;./interface;../module\exosip\source;../module\exosip\include;../module\osip\include;$(SolutionDir)\third_party\vld\include;..\third_party\libx264\libx264_win\include;../module/interface;../voice_engine\main\source;../voice_engine\main\include;../video_engine\include;../module;..\system_wrappers\source;..\system_wrappers\interface;../video_engine/source;..\third_party\openssl\inc32;..\third_party;../third_party/oRTP/include;../third_party/oRTP/include/ortp;..\third_party\srtp\crypto\include\win;..\third_party\srtp\crypto\include;../third_party/ffmpeg/ffmpeg_win/include;../module/video_coding/main/include;..\module\video_coding\codecs\h264;..\module\video_coding\codecs\interface;..\module\utility\source;..\;../module/common_video/interface;../module/common_video/source;../module/common_video/source/libyuv/include;../module/common_audio/source/resampler/include;../module/rtp_rtcp/include;../module/remote_bitrate_estimator/source;../module/bitrate_controller/include;../module/remote_bitrate_estimator/include;../module/pacing/include;..\module\video_render\main\include;..\ECMedia\source;..\ECMedia\interface;..\third_party\protobuf\src</AdditionalIncludeDirectories>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <ProgramDataBaseFileName>$(OutDir)\ccpclient.pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>gdi32.lib;Advapi32.lib;wininet.lib;dnsapi.lib;version.lib;msimg32.lib;ws2_32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib;dmoguids.lib;wmcodecdspuuid.lib;amstrmid.lib;msdmo.lib;IPHLPAPI.lib;strmbase.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)/lib/x86;./;../third_party/openssl</AdditionalLibraryDirectories>
+    </Link>
+    <Lib>
+      <OutputFile>$(OutDir)\ccpclient.lib</OutputFile>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/verbose:lib %(AdditionalOptions)</AdditionalOptions>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Lib>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;OSIP_MT;VIDEO_ENABLED;ORTP_STATIC;WEBRTC_MODULE_UTILITY_VIDEO;ENABLE_REMB_TMMBR_CONFIG</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories>./source;./include;./source/Http;./source/Utility;./interface;../module\exosip\source;../module\exosip\include;../module\osip\include;$(SolutionDir)\third_party\vld\include;..\third_party\libx264\libx264_win\include;../module/interface;../voice_engine\main\source;../voice_engine\main\include;../video_engine\include;../module;..\system_wrappers\source;..\system_wrappers\interface;../video_engine/source;..\third_party\openssl\inc32;..\third_party;../third_party/oRTP/include;../third_party/oRTP/include/ortp;..\third_party\srtp\crypto\include\win;..\third_party\srtp\crypto\include;../third_party/ffmpeg/ffmpeg_win/include;../module/video_coding/main/include;..\module\video_coding\codecs\h264;..\module\video_coding\codecs\interface;..\module\utility\source;..\;../module/common_video/interface;../module/common_video/source;../module/common_video/source/libyuv/include;../module/common_audio/source/resampler/include;../module/rtp_rtcp/include;../module/remote_bitrate_estimator/source;../module/bitrate_controller/include;../module/remote_bitrate_estimator/include;../module/pacing/include;..\module\video_render\main\include;..\ECMedia\source;..\ECMedia\interface;..\third_party\protobuf\src</AdditionalIncludeDirectories>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <ProgramDataBaseFileName>$(OutDir)\ccpclient.pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>gdi32.lib;Advapi32.lib;wininet.lib;dnsapi.lib;version.lib;msimg32.lib;ws2_32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib;dmoguids.lib;wmcodecdspuuid.lib;amstrmid.lib;msdmo.lib;IPHLPAPI.lib;strmbase.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)/LIB/$(Platform);./;../third_party/openssl</AdditionalLibraryDirectories>
+    </Link>
+    <Lib>
+      <OutputFile>$(OutDir)\ccpclient.lib</OutputFile>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Iphlpapi.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VRelease|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;OSIP_MT;VIDEO_ENABLED;ORTP_STATIC;WEBRTC_MODULE_UTILITY_VIDEO;ENABLE_REMB_TMMBR_CONFIG</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories>./source;./include;./source/Http;./source/Utility;./interface;../module\exosip\source;../module\exosip\include;../module\osip\include;$(SolutionDir)\third_party\vld\include;..\third_party\libx264\libx264_win\include;../module/interface;../voice_engine\main\source;../voice_engine\main\include;../video_engine\include;../module;..\system_wrappers\source;..\system_wrappers\interface;../video_engine/source;..\third_party\openssl\inc32;..\third_party;../third_party/oRTP/include;../third_party/oRTP/include/ortp;..\third_party\srtp\crypto\include\win;..\third_party\srtp\crypto\include;../third_party/ffmpeg/ffmpeg_win/include;../module/video_coding/main/include;..\module\video_coding\codecs\h264;..\module\video_coding\codecs\interface;..\module\utility\source;..\;../module/common_video/interface;../module/common_video/source;../module/common_video/source/libyuv/include;../module/common_audio/source/resampler/include;../module/rtp_rtcp/include;../module/remote_bitrate_estimator/source;../module/bitrate_controller/include;../module/remote_bitrate_estimator/include;../module/pacing/include;..\module\video_render\main\include;..\ECMedia\source;..\ECMedia\interface;..\third_party\protobuf\src</AdditionalIncludeDirectories>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <ProgramDataBaseFileName>$(OutDir)\ccpclient.pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>gdi32.lib;Advapi32.lib;wininet.lib;dnsapi.lib;version.lib;msimg32.lib;ws2_32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib;dmoguids.lib;wmcodecdspuuid.lib;amstrmid.lib;msdmo.lib;IPHLPAPI.lib;strmbase.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)/LIB/$(Platform);./;../third_party/openssl</AdditionalLibraryDirectories>
+    </Link>
+    <Lib>
+      <OutputFile>$(OutDir)\ccpclient.lib</OutputFile>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Iphlpapi.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='audioRelease|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;OSIP_MT;VIDEO_ENABLED;ORTP_STATIC;WEBRTC_MODULE_UTILITY_VIDEO;ENABLE_REMB_TMMBR_CONFIG</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories>./source;./include;./source/Http;./source/Utility;./interface;../module\exosip\source;../module\exosip\include;../module\osip\include;$(SolutionDir)\third_party\vld\include;..\third_party\libx264\libx264_win\include;../module/interface;../voice_engine\main\source;../voice_engine\main\include;../video_engine\include;../module;..\system_wrappers\source;..\system_wrappers\interface;../video_engine/source;..\third_party\openssl\inc32;..\third_party;../third_party/oRTP/include;../third_party/oRTP/include/ortp;..\third_party\srtp\crypto\include\win;..\third_party\srtp\crypto\include;../third_party/ffmpeg/ffmpeg_win/include;../module/video_coding/main/include;..\module\video_coding\codecs\h264;..\module\video_coding\codecs\interface;..\module\utility\source;..\;../module/common_video/interface;../module/common_video/source;../module/common_video/source/libyuv/include;../module/common_audio/source/resampler/include;../module/rtp_rtcp/include;../module/remote_bitrate_estimator/source;../module/bitrate_controller/include;../module/remote_bitrate_estimator/include;../module/pacing/include;..\module\video_render\main\include;..\ECMedia\source;..\ECMedia\interface;..\third_party\protobuf\src</AdditionalIncludeDirectories>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <ProgramDataBaseFileName>$(OutDir)\ccpclient.pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>gdi32.lib;Advapi32.lib;wininet.lib;dnsapi.lib;version.lib;msimg32.lib;ws2_32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib;dmoguids.lib;wmcodecdspuuid.lib;amstrmid.lib;msdmo.lib;IPHLPAPI.lib;strmbase.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)/LIB/$(Platform);./;../third_party/openssl</AdditionalLibraryDirectories>
+    </Link>
+    <Lib>
+      <OutputFile>$(OutDir)\ccpclient.lib</OutputFile>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Iphlpapi.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='audioWin32|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;OSIP_MT;VIDEO_ENABLED;ORTP_STATIC;WEBRTC_MODULE_UTILITY_VIDEO;ENABLE_REMB_TMMBR_CONFIG</PreprocessorDefinitions>
@@ -228,7 +489,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\system_wrappers\source\checks.cc" />
-    <ClCompile Include="..\video_engine\source\stats_types.cc" />
     <ClCompile Include="source\address.cpp" />
     <ClCompile Include="source\base64.c" />
     <ClCompile Include="source\callbacks.cpp" />
@@ -265,11 +525,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ECMedia\Ecmedia.vcxproj">
       <Project>{86e50404-d26f-405a-9994-c8fb69eb72dd}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\exosip\exosip.vcxproj">
       <Project>{2f470789-39ef-45b0-87ce-adeac4b0422c}</Project>

@@ -121,6 +121,7 @@ void StatsCollector::Config(char* logFile, int logIntervalMs) {
 	trace_file_->Write(ss.str().c_str(), ss.str().length());
 }
 
+#ifdef VIDEO_ENABLED
 bool StatsCollector::SetVideoEngin(VideoEngine *vie)
 {
 #ifdef VIDEO_ENABLED
@@ -129,7 +130,7 @@ bool StatsCollector::SetVideoEngin(VideoEngine *vie)
 #endif 
 	return false;
 }
-
+#endif
 bool StatsCollector::SetVoiceEngin(VoiceEngine* voe)
 {
 	m_voe = voe;
@@ -154,7 +155,7 @@ void StatsCollector::DeleteFromReports(StatsReport::StatsReportType type, int ch
 	reports_full_.Delete(id);
 	reports_simplifed_.Delete(id);
 }
-
+#ifdef VIDEO_ENABLED
 bool StatsCollector::AddVideoSendStatsProxy(int channelid)
 {
 #ifdef VIDEO_ENABLED
@@ -183,6 +184,7 @@ bool StatsCollector::AddVideoSendStatsProxy(int channelid)
 	}
 	return false;
 #endif
+	return true;
 }
 
 bool StatsCollector::AddVideoRecvStatsProxy(int channelid)
@@ -264,6 +266,8 @@ void StatsCollector::DeleteVideoRecvStatsProxy(int channelid)
 	DeleteFromReports(StatsReport::kStatsReportTypeVideoRecv, channelid);
 	video_receive_stats_proxies_.erase(pStatsProxy);
 }
+#endif
+
 bool StatsCollector::AddAudioSendStatsProxy(int channelid)
 {
 	CriticalSectionScoped lock(stream_crit_.get());
@@ -360,8 +364,10 @@ bool StatsCollector::ProcessStatsCollector()
 
 void StatsCollector::UpdateStats(bool isFullStats)
 {
+#ifdef VIDEO_ENABLED
 	ExtractVideoSenderInfo(isFullStats);
 	ExtractVideoReceiverInfo(isFullStats);
+#endif
 	ExtractAudioSenderInfo(isFullStats);
 	ExtractAudioReceiverInfo(isFullStats);
 }
@@ -424,8 +430,10 @@ void StatsCollector::LoadReportsToPbBuffer(StatsContentType type, MediaStatistic
 		StatsReport report = *r;
 		AudioSenderStatisticsInner *audioSenderStats;
 		AudioReceiverStatisticsInner *audioReceiverStats;
+#ifdef VIDEO_ENABLED
 		VideoSenderStatisticsInner *videoSenderStats;
 		VideoReceiverStatisticsInner *videoReceiverStats;
+#endif
 		switch (report.type())
 		{
 		case StatsReport::kStatsReportTypeAudioSend:
@@ -440,13 +448,17 @@ void StatsCollector::LoadReportsToPbBuffer(StatsContentType type, MediaStatistic
 			break;
 		case StatsReport::kStatsReportTypeVideoSend:
 		case StatsReport::kStatsReportTypeVideoSend_Simplified:
+#ifdef VIDEO_ENABLED
 			videoSenderStats = mediaStatsInner->add_videosenderstats();
 			LoadVideoSenderReportToPbBuffer(type, report, videoSenderStats);
+#endif
 			break;
 		case StatsReport::kStatsReportTypeVideoRecv:
 		case StatsReport::kStatsReportTypeVideoRecv_Simplified:
+#ifdef VIDEO_ENABLED
 			videoReceiverStats = mediaStatsInner->add_videoreceiverstats();
 			LoadVideoReceiverReportToPbBuffer(type, report, videoReceiverStats);
+#endif
 			break;
 		}		
 	}
@@ -454,6 +466,7 @@ void StatsCollector::LoadReportsToPbBuffer(StatsContentType type, MediaStatistic
 
 void StatsCollector::LogToFile(bool isFullStats)
 {
+#ifdef VIDEO_ENABLED
 	//log config to file 
 	for (auto it : video_send_stats_proxies_)
 	{
@@ -469,7 +482,7 @@ void StatsCollector::LogToFile(bool isFullStats)
 			trace_file_->Write(ss.str().c_str(), ss.str().length());
 		}	
 	}
-
+#endif
 	// log all statistics items to file in new style
 	StatsCollection *reports;
 	if (isFullStats)
@@ -494,6 +507,7 @@ void StatsCollector::LogToFile(bool isFullStats)
 	}
 }
 
+#ifdef VIDEO_ENABLED
 void StatsCollector::VideoSenderInfo_AddEncoderSetting(const VideoSendStream::Stats info,
 												StatsReport *report)
 {
@@ -584,6 +598,7 @@ void StatsCollector::VideoSenderInfo_AddRtcpStats(const VideoSendStream::Stats i
 	else { //TODO: simulcast
 	}
 }
+#endif
 
 void StatsCollector::Report_AddCommonFiled(StatsReport *report, int64_t ts)
 {
@@ -593,6 +608,7 @@ void StatsCollector::Report_AddCommonFiled(StatsReport *report, int64_t ts)
 	report->AddUInt64(StatsReport::kStatsValueNameTimestamp, static_cast<uint64_t> (ts));
 }
 
+#ifdef VIDEO_ENABLED
 void StatsCollector::ExtractVideoSenderInfo(bool isFullStats)
 {
 	for (auto it : video_send_stats_proxies_)
@@ -646,6 +662,8 @@ void StatsCollector::ExtractVideoReceiverInfo(bool isFullStats)
 	}
 #endif
 }
+#endif
+
 void StatsCollector::ExtractAudioSenderInfo(bool isFullStats)
 {
 	for (auto it : audio_send_stats_proxies_)
@@ -763,6 +781,7 @@ void StatsCollector::LoadAudioReceiverReportToPbBuffer(StatsContentType type,
 
 }
 
+#ifdef VIDEO_ENABLED
 void StatsCollector::LoadVideoSenderReportToPbBuffer(StatsContentType type,
 													StatsReport report,
 													VideoSenderStatisticsInner *statsData)
@@ -994,6 +1013,8 @@ void StatsCollector::LoadVideoReceiverReportToPbBuffer(StatsContentType type,
 	if (value)
 		statsData->set_kstatsvaluenamelossmodepart4(value->int64_val());
 }
+#endif
+
 void StatsCollector::ExtractAudioReceiverInfo(bool isFullStats)
 {
 	for (auto it : audio_receive_stats_proxies_)
@@ -1014,6 +1035,8 @@ void StatsCollector::ExtractAudioReceiverInfo(bool isFullStats)
 	}
 
 }
+
+#ifdef VIDEO_ENABLED
 void StatsCollector::VideoReciverInfo_AddReceiveBasic(const VideoReceiveStream::Stats info,
 														StatsReport *report)
 {
@@ -1074,6 +1097,7 @@ void StatsCollector::VideoReciverInfo_AddLossModeStats(const VideoReceiveStream:
 	for (const auto& i : int64)
 		report->AddInt64(i.name, i.value);
 }
+#endif
 
 void StatsCollector::AudioSenderInfo_AddBasic(const AudioSendStream::Stats info,
 											StatsReport *report)

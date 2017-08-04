@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="source\base64.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ECMedia.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\MediaStatisticsData.pb.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\RecordVoip.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\statsCollector.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\VoeObserver.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="interface\ECMedia.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="include\base64.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CaptureScreen.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="source\curl_post.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\faaccodec.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RecordVoip.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="resource2.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="resource3.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\statsCollector.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\StunMessageCallBack.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\VoeObserver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="source\MediaStatisticsData.pb.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="interface">
+      <UniqueIdentifier>{621744ee-7184-4f42-b149-aa5bd980e652}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{926cf688-8838-45f1-bb7b-6599d5cd9011}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{ab5cd578-4d66-45a9-b751-d2f08f0931b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{64abac2e-2391-48d2-a287-a864e4b09fae}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Ecmedia.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
