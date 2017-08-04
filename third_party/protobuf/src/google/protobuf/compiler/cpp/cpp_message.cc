@@ -1039,7 +1039,7 @@ GenerateClassDefinition(io::Printer* printer) {
   }
 
   printer->Print(vars,
-    "void Swap($classname$* other);\n"
+    "GOOGLE_ATTRIBUTE_NOINLINE void Swap($classname$* other);\n"
     "\n"
     "// implements Message ----------------------------------------------\n"
     "\n"
@@ -2617,7 +2617,7 @@ GenerateSwap(io::Printer* printer) {
     // ownership situation: swapping across arenas or between an arena and a
     // heap requires copying.
     printer->Print(
-        "void $classname$::Swap($classname$* other) {\n"
+        "GOOGLE_ATTRIBUTE_NOINLINE void $classname$::Swap($classname$* other) {\n"
         "  if (other == this) return;\n"
         "  if (GetArenaNoVirtual() == other->GetArenaNoVirtual()) {\n"
         "    InternalSwap(other);\n"

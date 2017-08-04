@@ -5,12 +5,11 @@
 # dependent projects use the :git notation to refer to the library.
 Pod::Spec.new do |s|
   s.name     = 'Protobuf'
-  s.version  = '3.0.0-beta-3.1'
+  s.version  = '3.0.0-beta-2'
   s.summary  = 'Protocol Buffers v.3 runtime library for Objective-C.'
   s.homepage = 'https://github.com/google/protobuf'
   s.license  = 'New BSD'
   s.authors  = { 'The Protocol Buffers contributors' => 'protobuf@googlegroups.com' }
-  s.cocoapods_version = '>= 1.0'
 
   s.source = { :git => 'https://github.com/google/protobuf.git',
                :tag => "v#{s.version}" }
@@ -33,10 +32,7 @@ Pod::Spec.new do |s|
   # The following would cause duplicate symbol definitions. GPBProtocolBuffers is expected to be
   # left out, as it's an umbrella implementation file.
   s.exclude_files = 'objectivec/GPBProtocolBuffers.m'
-
-  # Set a CPP symbol so the code knows to use framework imports.
-  s.user_target_xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) GPB_USE_PROTOBUF_FRAMEWORK_IMPORTS=1' }
-  s.pod_target_xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) GPB_USE_PROTOBUF_FRAMEWORK_IMPORTS=1' }
+  s.header_mappings_dir = 'objectivec'
 
   s.ios.deployment_target = '7.1'
   s.osx.deployment_target = '10.9'

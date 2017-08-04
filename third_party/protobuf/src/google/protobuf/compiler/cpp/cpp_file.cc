@@ -342,7 +342,7 @@ void FileGenerator::GenerateSource(io::Printer* printer) {
           "namespace {\n"
           "\n"
           "static void MergeFromFail(int line) GOOGLE_ATTRIBUTE_COLD;\n"
-          "static void MergeFromFail(int line) {\n"
+          "GOOGLE_ATTRIBUTE_NOINLINE static void MergeFromFail(int line) {\n"
           "  GOOGLE_CHECK(false) << __FILE__ << \":\" << line;\n"
           "}\n"
           "\n"
