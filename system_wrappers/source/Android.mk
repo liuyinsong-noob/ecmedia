@@ -55,7 +55,8 @@ LOCAL_SRC_FILES := \
 		cpu.cc \
 		data_log_no_op.cc \
 		timestamp_extrapolator.cc \
-		timeutils.cc
+		timeutils.cc \
+		stats_types.cc
 		
 #		checks.cc \
 #   android/cpu-features.c \
