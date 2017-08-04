@@ -1997,8 +1997,8 @@ int32_t ViEChannel::ResendPackets(const uint16_t* sequence_numbers,
 
 bool ViEChannel::ChannelDecodeThreadFunction(void* obj) {
   int ret = static_cast<ViEChannel*>(obj)->ChannelDecodeProcess();
-  WEBRTC_TRACE(kTraceStream, kTraceVideo, 0,
-	  "%s:this channel id is %d, local_ssrc_main_=%u, remote_ssrc_=%u, decode ret=%d", __FUNCTION__, static_cast<ViEChannel*>(obj)->channel_id_, static_cast<ViEChannel*>(obj)->local_ssrc_main_, static_cast<ViEChannel*>(obj)->remote_ssrc_, ret);
+  //WEBRTC_TRACE(kTraceStream, kTraceVideo, 0,
+	  //"%s:this channel id is %d, local_ssrc_main_=%u, remote_ssrc_=%u, decode ret=%d", __FUNCTION__, static_cast<ViEChannel*>(obj)->channel_id_, static_cast<ViEChannel*>(obj)->local_ssrc_main_, static_cast<ViEChannel*>(obj)->remote_ssrc_, ret);
   return ret;
 }
 

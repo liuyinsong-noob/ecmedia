@@ -219,6 +219,9 @@
     <ClInclude Include="stringencode.h">
       <Filter>source</Filter>
     </ClInclude>
+    <ClInclude Include="..\interface\stats_types.h">
+      <Filter>interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="map.cc">
@@ -237,6 +240,9 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="thread_win.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="stats_types.cc">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

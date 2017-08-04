@@ -21,7 +21,6 @@ LOCAL_SRC_FILES := \
     overuse_frame_detector.cc \
     report_block_stats.cc \
     send_statistics_proxy.cc \
-	stats_types.cc \
 	video_send_stream.cc
 	
 # Flags passed to both C and C++ files.
