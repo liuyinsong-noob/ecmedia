@@ -152,8 +152,8 @@ class RTCPSender {
   void GetPacketTypeCounter(RtcpPacketTypeCounter* packet_counter) const;
 
   void SetRtcpPacketTypeCountObserver(RtcpPacketTypeCounterObserver *observer);
-
   void SetTransport(Transport* transport) { transport_ = transport; }
+  int SendSingleTMMBR(const FeedbackState& feedback_state, uint32_t bandwidth, uint32_t remote_ssrc);
  private:
   class RtcpContext;
 

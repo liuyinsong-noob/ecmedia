@@ -1076,4 +1076,28 @@ void RTCPSender::SetRtcpPacketTypeCountObserver(RtcpPacketTypeCounterObserver *o
 	cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
 	packet_type_counter_observer_ = observer;
 }
+ 
+// send single tmmbr
+int RTCPSender::SendSingleTMMBR(const FeedbackState& feedback_state, 
+								uint32_t bandwidth, 
+								uint32_t tmmbr_remote_ssrc)
+{
+	SetRemoteSSRC(tmmbr_remote_ssrc);
+	SetTargetBitrate(bandwidth * 1000);
+	PacketContainer container(transport_, event_log_);
+	size_t max_packet_size = max_packet_size_;
+	RtcpContext context(feedback_state, 0, 0, 0, clock_->CurrentNtpTime());
+
+	auto builder_it = builders_.find(kRtcpTmmbr);
+	DCHECK(builder_it != builders_.end())
+		<< "Could not find builder for packet type " << kRtcpTmmbr;
+
+	BuilderFunc func = builder_it->second;
+	// We need to send our NTP even if we haven't received any reports.
+
+	std::unique_ptr<rtcp::RtcpPacket> packet = (this->*func)(context);
+	container.Append(packet.release());
+	size_t bytes_sent = container.SendPackets(max_packet_size);
+	return bytes_sent == 0 ? -1 : 0;
+}
 }  // namespace cloopenwebrtc
