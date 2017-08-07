@@ -9,6 +9,7 @@
 #include "sal_eXosip2.h"
 #include "ECMedia.h"
 extern CCallbackInterface g_cbInterface;
+extern char g_currentCallId[128];
 
 static void register_failure(SalOp *op, SalError error, SalReason reason, const char *details);
 
@@ -343,11 +344,11 @@ static void call_accepted(SalOp *op){
 			call->callConnected = true;
 			serphone_call_set_state(call, LinphoneCallStreamsRunning, "Streams running");
             
+			requestVideo(g_currentCallId, 320, 240);
             if (lc->serphone_get_isRefering()) {
                 lc->serphone_set_isRefering(false);
                 lc->serphone_core_transfer_call(call, lc->serphone_get_referTo(), 0);
             }
-            
 		}
 	}else{
 		/*send a bye*/
