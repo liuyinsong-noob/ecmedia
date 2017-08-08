@@ -86,7 +86,6 @@ LOCAL_WHOLE_STATIC_LIBRARIES := \
 	libwebrtc_video_coding \
 	libwebrtc_h264 \
 	libwebrtc_vp8 \
-	libwebrtc_yuv \
 	libwebrtc_bitrate_controller \
 	libwebrtc_congestion_controller \
 	libwebrtc_common_video \
@@ -94,7 +93,6 @@ LOCAL_WHOLE_STATIC_LIBRARIES := \
 	libwebrtc_deskop_capture \
 	libwebrtc_audio_coding \
 	libwebrtc_audio_device \
-	libwebrtc_resampler \
 	libwebrtc_apm \
 	libwebrtc_neteq \
 	libwebrtc_iSAC \
@@ -105,7 +103,6 @@ LOCAL_WHOLE_STATIC_LIBRARIES := \
 	libwebrtc_amr_nb \
 	libwebrtc_opus \
 	libwebrtc_common_audio \
-	libwebrtc_spl \
 	libwebrtc_rtp_rtcp \
 	libwebrtc_udp_transport \
 	libwebrtc_audio_conference_mixer \
@@ -114,8 +111,6 @@ LOCAL_WHOLE_STATIC_LIBRARIES := \
 	libwebrtc_audio_paced_sender \
 	libyuv \
 	libjpeg_turbo \
-	libstlport_static \
-	libcpufeatures \
 	libwebrtc_audio_codecs \
 	libwebrtc_system_wrappers \
 	libwebrtc_rtc_event_log \
@@ -146,7 +141,6 @@ LOCAL_LDFLAGS += \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libopus.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libssl.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libcrypto.a \
-	./third_party_libs/$(TARGET_ARCH_ABI)/libProtobuf_lite.a \
 
 LOCAL_DISABLE_FATAL_LINKER_WARNINGS := true
 LOCAL_PRELINK_MODULE := false
