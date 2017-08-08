@@ -227,7 +227,6 @@ VCMEncodedFrameCallback::Encoded(
     const CodecSpecificInfo* codecSpecificInfo,
     const RTPFragmentationHeader* fragmentationHeader)
 {
-    printf("seansean haha width %d, height %d\n", encodedImage._encodedWidth, encodedImage._encodedHeight);
     post_encode_callback_->Encoded(encodedImage);
 
     if (_sendCallback != NULL)
