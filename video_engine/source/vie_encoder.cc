@@ -501,13 +501,14 @@ int32_t ViEEncoder::SetEncoder(const cloopenwebrtc::VideoCodec& video_codec) {
 		  rtp_rtcp->RegisterSendRtpHeaderExtension(kRtpExtensionTransportSequenceNumber, 5);
 		  rtp_rtcp->SetRTCPStatus(kCompound);
 		  rtp_rtcp->SetTransport(default_rtp_rtcp_->GetTransport());
-		  uint32_t ssrc = 1010;
-		  ssrc += 100;
+		  //TODO: need to set slave_ssrc
+
+		  uint32_t ssrc = ssrc_index1;
 		  rtp_rtcp->SetSSRC(ssrc);
 		  packet_router_->AddRtpModule(rtp_rtcp);
 		  std::vector<uint32_t> ssrcs;
 		  ssrcs.push_back(ssrc);
-		  encoder_feedback_->SetSsrcs(ssrcs); //need to fix: by ylr
+		  encoder_feedback_->SetSsrcs(ssrcs); 
 
 		  default_simulcast_rtp_rtcp_.push_back(rtp_rtcp);
 		  // Silently ignore error.
@@ -1295,6 +1296,22 @@ void ViEEncoder::SetTransport(ViESender* vie_sender)
 {
 	default_rtp_rtcp_->SetTransport(vie_sender);
 }
+
+
+void ViEEncoder::SetSimulcastSSRC(int index, uint32_t ssrc) {
+	if (index == 0)
+	{
+		ssrc_index0 = ssrc;
+	}else if (index == 1)
+	{
+		ssrc_index1 = ssrc;
+	}	
+
+	LOG_F(LS_ERROR) << "----------[SetSimulcastSSRC] index = " << index
+		<< " , ssrc = " << ssrc << endl;
+}
+
+
 QMVideoSettingsCallback::QMVideoSettingsCallback(VideoProcessingModule* vpm)
     : vpm_(vpm) ,
 	 stats_proxy_(NULL){

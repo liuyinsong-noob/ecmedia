@@ -1082,8 +1082,6 @@ int RTCPSender::SendSingleTMMBR(const FeedbackState& feedback_state,
 								uint32_t bandwidth, 
 								uint32_t tmmbr_remote_ssrc)
 {
-	SetRemoteSSRC(tmmbr_remote_ssrc);
-	SetTargetBitrate(bandwidth * 1000);
 	PacketContainer container(transport_, event_log_);
 	size_t max_packet_size = max_packet_size_;
 	RtcpContext context(feedback_state, 0, 0, 0, clock_->CurrentNtpTime());

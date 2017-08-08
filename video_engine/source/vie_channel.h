@@ -61,6 +61,7 @@ class VideoRenderCallback;
 class VoEVideoSync;
 class TransportFeedbackObserver;
 class RtcEventLog;
+class SsrcObserver;
 
 enum ResolutionIndex
 {
@@ -736,8 +737,10 @@ public:
 	    onStunPacket _stun_cb;
 	    onEcMediaRequestKeyFrame _key_frame_cb;
 		bool _isVideoConf;
+		SsrcObserver* ssrc_observer_;
 	public:
 		ReceiveStatisticsProxy* GetReceiveStatisticsProxy();
+		void SetSsrcObserver(SsrcObserver* ssrcObserver);
 
 //---end
  

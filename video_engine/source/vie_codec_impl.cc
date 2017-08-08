@@ -241,6 +241,11 @@ int ViECodecImpl::SetSendCodec(const int video_channel,
   // Stop the media flow while reconfiguring.
   vie_encoder->Pause();
 
+  if (video_codec_internal.numberOfSimulcastStreams == 2 && video_codec_internal.codecType==kVideoCodecVP8)
+  {
+	  video_codec_internal.codecSpecific.VP8.automaticResizeOn = false;
+  }
+
   if (vie_encoder->SetEncoder(video_codec_internal) != 0) {
     shared_data_->SetLastError(kViECodecUnknownError);
     return -1;

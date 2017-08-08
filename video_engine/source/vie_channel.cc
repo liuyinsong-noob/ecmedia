@@ -44,6 +44,8 @@
 #include "../module/congestion_controller/transport_feedback_adapter.h"
 #include "../logging/rtc_event_log/rtc_event_log.h"
 
+#include "vie_encoder.h"
+
 #ifdef _WIN32
 #define strncasecmp _strnicmp
 #define strcasecmp _stricmp
@@ -200,7 +202,8 @@ ViEChannel::ViEChannel(int32_t channel_id,
     _video_data_cb(NULL),
     _stun_cb(NULL),
     _key_frame_cb(NULL),
-	transport_feedback_observer_(transport_feedback_observer){
+	transport_feedback_observer_(transport_feedback_observer),
+	ssrc_observer_(NULL){
   RtpRtcp::Configuration configuration = CreateRtpRtcpConfiguration();
   configuration.remote_bitrate_estimator = remote_bitrate_estimator;
   configuration.receive_statistics = vie_receiver_.GetReceiveStatistics();
@@ -1041,12 +1044,20 @@ int32_t ViEChannel::SetLocalSendSSRC(const uint32_t SSRC, const StreamType usage
 			return -1;
 		}
 		local_ssrc_slave_ = ssrc_slave;//small resolution
+		if (ssrc_observer_)
+		{
+			ssrc_observer_->SetSimulcastSSRC(0, ssrc_slave);
+		}
 
 		if (SetSSRC(SSRC, usage, 1) != 0) {
 			LOG(LS_ERROR) << "set local ssrc main failed";
 			return -1;
 		}
 		local_ssrc_main_ = SSRC;//big resolution
+		if (ssrc_observer_)
+		{
+			ssrc_observer_->SetSimulcastSSRC(1, SSRC);
+		}
 		ssrc_all_num_ = 2;
 	}
 
@@ -1071,7 +1082,11 @@ int32_t ViEChannel::SetSSRC(const uint32_t SSRC,
     rtp_rtcp->SetSSRC(SSRC);
   }
 
-  rtp_rtcp_->SetSSRC(SSRC); //set receiver local ssrc
+  if (simulcast_idx == 0)
+  {
+	  rtp_rtcp_->SetSSRC(SSRC); //set receiver local ssrc
+  }
+  
   return 0;
 }
 
@@ -3187,5 +3202,9 @@ void ViEChannel::SetRtcEventLog(RtcEventLog *event_log)
 void ViEChannel::SetDefaultSimulcatRtpRtcp(std::list<RtpRtcp*> default_simulcast_rtp_rtcp)
 {
 	default_simulcast_rtp_rtcp_ = default_simulcast_rtp_rtcp;
+}
+
+void ViEChannel::SetSsrcObserver(SsrcObserver* ssrcObserver) {
+	ssrc_observer_ = ssrcObserver;
 }
 }  // namespace webrtc

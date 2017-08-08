@@ -579,6 +579,7 @@ bool ViEChannelManager::CreateChannelObject(
                                            send_rtp_rtcp_module,
                                            sender,
 										   congestion_controller_->GetTransportFeedbackObserver());
+  
   if (vie_channel->Init() != 0) {
     delete vie_channel;
     return false;
@@ -595,6 +596,7 @@ bool ViEChannelManager::CreateChannelObject(
 
   vie_encoder->SendRtpRtcpModule()->RegisterRtpReceiver(vie_channel->GetRtpReceiver());
   vie_channel->SetRtcEventLog(rtc_event_log_.get());
+  vie_channel->SetSsrcObserver(vie_encoder);
   // Store the channel, add it to the channel group and save the vie_encoder.
   channel_map_[channel_id] = vie_channel;
   vie_encoder_map_[channel_id] = vie_encoder;

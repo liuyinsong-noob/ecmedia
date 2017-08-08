@@ -244,7 +244,6 @@ int32_t ModuleRtpRtcpImpl::Process() {
   // send tmmbr
   static int time_count = 80;
   if (isSendingTmmbr && (++time_count > 100)) {
-	 // rtcp_sender_.SendSingleTMMBR(tmmbr_bandwidth, tmmbr_ssrc, tmmbr_remote_ssrc);
 	  rtcp_sender_.SetRemoteSSRC(tmmbr_remote_ssrc);
 	  rtcp_sender_.SetTargetBitrate(tmmbr_bandwidth*1000);
 	  //rtcp_sender_.SendRTCP(GetFeedbackState(), kRtcpTmmbr);

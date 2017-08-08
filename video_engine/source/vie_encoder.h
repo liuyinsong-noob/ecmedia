@@ -51,12 +51,19 @@ class RtcEventLog;
 class RateLimiter;
 class EncoderRtcpFeedback;
 
+class SsrcObserver {
+public:
+	virtual void SetSimulcastSSRC(int index, uint32_t ssrc) = 0;
+};
+
 class ViEEncoder
     : public RtcpIntraFrameObserver,
       public VCMPacketizationCallback,
       public VCMProtectionCallback,
       public VCMSendStatisticsCallback,
-      public ViEFrameCallback {
+      public ViEFrameCallback,
+	  public SsrcObserver
+{
  public:
   friend class ViEBitrateObserver;
   friend class ViEPacedSenderCallback;
@@ -288,11 +295,15 @@ class ViEEncoder
   // Recording.
   ViEFileRecorder& GetOutgoingFileRecorder();
   SendStatisticsProxy* GetSendStatisticsProxy();
+  //implemente SsrcObserver
+  virtual void SetSimulcastSSRC(int index, uint32_t ssrc) override;
 
   private:
 	  ViEFileRecorder file_recorder_;
     ViECapture* capture_;
     int capture_id_;
+	uint32_t ssrc_index0; //base layer
+	uint32_t ssrc_index1; //higher layer
   //---end
 };
 
