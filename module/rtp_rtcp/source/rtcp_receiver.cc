@@ -897,8 +897,10 @@ void RTCPReceiver::HandleFir(const CommonHeader& rtcp_block,
 
   for (const rtcp::Fir::Request& fir_request : fir.requests()) {
     // Is it our sender that is requested to generate a new keyframe.
-    if (main_ssrc_ != fir_request.ssrc)
-      continue;
+	//if (main_ssrc_ != fir_request.ssrc)
+		
+    if ((main_ssrc_ & 0xffffff00) != (fir_request.ssrc&0xffffff00))
+		 continue;
 
     ++packet_type_counter_.fir_packets;
 

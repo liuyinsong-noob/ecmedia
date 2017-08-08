@@ -115,6 +115,7 @@ void onIncomingCallReceived( int type ,const char * callid, const char *caller)
 	g_dlg->SetDlgItemText(IDC_CALL_STATE,L"”–∫Ù»Î,«Î”¶¥...") ;
 
 	acceptCallByMediaType(g_currentCallId, 1);
+	requestVideo(g_currentCallId, 320, 240);
 }
 
 void onConnected()

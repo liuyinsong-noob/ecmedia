@@ -247,7 +247,9 @@ int32_t ModuleRtpRtcpImpl::Process() {
 	 // rtcp_sender_.SendSingleTMMBR(tmmbr_bandwidth, tmmbr_ssrc, tmmbr_remote_ssrc);
 	  rtcp_sender_.SetRemoteSSRC(tmmbr_remote_ssrc);
 	  rtcp_sender_.SetTargetBitrate(tmmbr_bandwidth*1000);
-	  rtcp_sender_.SendRTCP(GetFeedbackState(), kRtcpTmmbr);
+	  //rtcp_sender_.SendRTCP(GetFeedbackState(), kRtcpTmmbr);
+
+	  rtcp_sender_.SendSingleTMMBR(GetFeedbackState(), tmmbr_bandwidth, tmmbr_remote_ssrc);
 	  time_count = 0;
   }
 
