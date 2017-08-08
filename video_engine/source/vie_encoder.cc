@@ -1163,9 +1163,17 @@ int32_t QMVideoSettingsCallback::SetVideoQMSettings(
 													const uint32_t frame_rate,
 													const uint32_t width,
 													const uint32_t height) {
+    uint32_t widthh = width;
+    uint32_t heightt = height;
+    if (widthh%8) {
+        widthh = (widthh/8+1)*8;
+    }
+    if (heightt%8) {
+        heightt = (heightt/8+1)*8;
+    }
 	if (stats_proxy_)
-		stats_proxy_->OnQMSettingChange(frame_rate, width, height);
-  return vpm_->SetTargetResolution(width, height, frame_rate);
+		stats_proxy_->OnQMSettingChange(frame_rate, widthh, heightt);
+  return vpm_->SetTargetResolution(widthh, heightt, frame_rate);
 }
 
 void QMVideoSettingsCallback::SetSendStatsCallback(SendStatisticsProxy *stats_proxy)
