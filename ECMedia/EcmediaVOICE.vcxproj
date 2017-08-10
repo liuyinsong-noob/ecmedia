@@ -674,9 +674,6 @@
     <ProjectReference Include="..\third_party\libvpx\build\x64\vpx_x64.vcxproj" Condition="'$(Configuration)|$(Platform)'=='VRelease|x64'">
       <Project>{34b221e6-b6c6-47af-bde8-dd578fdaed01}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\third_party\libvpx\build\x64\vpx_x64.vcxproj" Condition="'$(Configuration)|$(Platform)'=='audioRelease|x64'">
-      <Project>{34b221e6-b6c6-47af-bde8-dd578fdaed01}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\third_party\libvpx\build\x64\vpx_x64.vcxproj" Condition="'$(Configuration)|$(Platform)'=='audioWin32|x64'">
       <Project>{34b221e6-b6c6-47af-bde8-dd578fdaed01}</Project>
     </ProjectReference>
