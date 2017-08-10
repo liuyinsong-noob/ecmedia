@@ -759,18 +759,6 @@ int32_t AudioDeviceIOS::SetLoudspeakerStatus(bool enable) {
     }
  
     options |= AVAudioSessionCategoryOptionMixWithOthers;
-//
-//    NSString *version = [UIDevice currentDevice].systemVersion;
-//    double version_ios_10 = 10.0;
-//    // enable bluetooth
-//    if (version.doubleValue >= version_ios_10)  {
-//        // options |= AVAudioSessionCategoryOptionAllowBluetoothA2DP;
-//        options |= AVAudioSessionCategoryOptionAllowBluetooth;
-//    } else {
-//       
-//    }
-    //options |= AVAudioSessionCategoryOptionAllowBluetoothA2DP;
-    options |= AVAudioSessionCategoryOptionAllowBluetooth;
     [session setCategory:AVAudioSessionCategoryPlayAndRecord
              withOptions:options
                    error:&error];

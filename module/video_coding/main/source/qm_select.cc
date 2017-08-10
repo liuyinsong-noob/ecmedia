@@ -531,16 +531,12 @@ bool VCMQmResolution::GoingDownResolution() {
               temp_fact = 1;
               break;
           case kResolutionModeOnlySpatial:
-              spatial_fact = spatial_fact;
               temp_fact = 1;
               break;
           case kResolutionModeOnlyTemporal:
               spatial_fact = 1;
-              temp_fact = temp_fact;
               break;
           case kResolutionModeBoth:
-              spatial_fact = spatial_fact;
-              temp_fact = temp_fact;
               break;
           default:
               break;
