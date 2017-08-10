@@ -240,7 +240,7 @@ extern BOOL globalisVoipView;
     }
     if(ssInt > 0 && ssInt % 4 == 0 )
     {
-        StatisticsInfo * info =[self.modelEngineVoip getCallStatistics];
+        StatisticsInfo * info =[self.modelEngineVoip getCallStatistics:1];
         double lost = info.rlFractionLost / 255.f;
         callStatusLabel.text = [NSString stringWithFormat:@"丢包率%0.2f%%",lost*100];
         
@@ -320,7 +320,7 @@ extern BOOL globalisVoipView;
             if (![timer isValid])
             {
                 timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateRealtimeLabel) userInfo:nil repeats:YES];
-                [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+                [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
                 [timer fire];
             }
             [self.modelEngineVoip enableLoudsSpeaker:YES];

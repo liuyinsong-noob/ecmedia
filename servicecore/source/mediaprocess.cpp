@@ -1747,12 +1747,15 @@ void ServiceCore::serphone_call_init_media_streams(SerPhoneCall *call)
 			ECMedia_video_set_local_receiver(call->m_VideoChannelID,call->video_port, call->video_port+1);
 			ECMedia_video_set_local_ssrc(call->m_VideoChannelID, m_localSSRC);
 			ECMedia_set_MTU(call->m_VideoChannelID,1450);
-			int err = ECMedia_init_srtp_video(call->m_VideoChannelID);
-			if (err) {
-				PrintConsole("Init video SRTP fail code [%d]\n", err);
-			}
+			
+            if (srtp_enable) {
+                int err = ECMedia_init_srtp_video(call->m_VideoChannelID);
+                if (err) {
+                    PrintConsole("Init video SRTP fail code [%d]\n", err);
+                }
+            }
 
-			/*add begin------------------Sean20130722----------for video ice------------*/
+			/*add begin------------------Sean201307322----------for video ice------------*/
 			//            sean update begin 0926 ice bug when no stunserver
 			//            if (serphone_core_get_firewall_policy() == LinphonePolicyUseIce) {
 			//TODO:

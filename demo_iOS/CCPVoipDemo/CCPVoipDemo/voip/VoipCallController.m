@@ -619,7 +619,7 @@ extern char *filename_path;
     }
     if(ssInt > 0 && ssInt % 4 == 0 )
     {
-        StatisticsInfo * info =[self.modelEngineVoip getCallStatistics];
+        StatisticsInfo * info =[self.modelEngineVoip getCallStatistics:0];
         if (info)
         {
             double lost = info.rlFractionLost / 255.f;
@@ -743,7 +743,7 @@ extern char *filename_path;
             if (![timer isValid])
             {
                 timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateRealtimeLabel) userInfo:nil repeats:YES];
-                [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+                [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
                 [timer fire];
             }
             self.handfreeButton.enabled = YES;

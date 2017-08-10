@@ -114,6 +114,7 @@ class VideoSender {
 public:
 	int32_t RegisterEncoderRateObserver(VideoEncoderRateObserver *observer);
   //---end
+    void SetVideoQualityMode(int mode);
 
  private:
   Clock* clock_;

@@ -3307,9 +3307,9 @@ ModelEngineVoip* gModelEngineVoip = nil;
     return [self.VoipCallService getSDKVersion];
 }
 
--(StatisticsInfo*)getCallStatistics
+-(StatisticsInfo*)getCallStatistics:(int)type
 {
-    return [self.VoipCallService getCallStatistics];
+    return [self.VoipCallService getCallStatistics:type];
 }
 
 -(void)deleteFileWithPathArr:(NSArray*) pathArr

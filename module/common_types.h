@@ -1055,6 +1055,15 @@ struct RTPHeader {
 	int payload_type_frequency;
 	RTPHeaderExtension extension;
 };
+    
+    
+// vcm qm 策略调整选项
+enum VCMQmResolutionMode {
+    kResolutionModeNone = 0,     // spatial 和 temporal 都不调整
+    kResolutionModeOnlySpatial,  // 只调整 spatial
+    kResolutionModeOnlyTemporal, // 只调整 temporal
+    kResolutionModeBoth          // 同时调整spatial 和 temporal.
+};
 
 // RTCP mode to use. Compound mode is described by RFC 4585 and reduced-size
 // RTCP mode is described by RFC 5506.

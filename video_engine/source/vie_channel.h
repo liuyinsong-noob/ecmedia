@@ -120,6 +120,7 @@ class ViEChannel
   int32_t Init();
 
   int32_t SetUdpTransport(UdpTransport *transport);
+
   UdpTransport *GetUdpTransport();
 
   // Sets the encoder to use for the channel. |new_stream| indicates the encoder

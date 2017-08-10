@@ -755,11 +755,11 @@ int VP8EncoderImpl::Encode(
   raw_images_[0].stride[VPX_PLANE_U] = input_image.stride(kUPlane);
   raw_images_[0].stride[VPX_PLANE_V] = input_image.stride(kVPlane);
 
-    raw_images_[0].w = input_image.width();
-    raw_images_[0].h = input_image.height();
-    raw_images_[0].d_w = input_image.width();
-    raw_images_[0].d_h = input_image.height();
-    
+  raw_images_[0].w = input_image.width();
+  raw_images_[0].h = input_image.height();
+  raw_images_[0].d_w = input_image.width();
+  raw_images_[0].d_h = input_image.height();
+
   for (size_t i = 1; i < encoders_.size(); ++i) {
     // Scale the image down a number of times by downsampling factor
     libyuv::I420Scale(

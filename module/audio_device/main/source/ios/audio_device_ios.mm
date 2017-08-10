@@ -718,33 +718,6 @@ int32_t
     return -1;
 }
     
-/*
- * enable sdk support bluetooth communication.
- */
-int32_t AudioDeviceIOS::SetBluetoothEnable(bool enable) {
-    WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id,
-                 "AudioDeviceIOS::SetBluetoothEnable(enable=%d)", enable);
-    
-    NSError* error = nil;
-
-    NSString *version = [UIDevice currentDevice].systemVersion;
-    // AVAudioSessionCategoryOptionAllowBluetoothA2DP 为 ios 10 新增蓝牙选项
-    double version_ios_10 = 10.0;
-    if (version.doubleValue >= version_ios_10)  {
-        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker |  AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionAllowBluetooth error:&error];
-    } else {
-        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker |  AVAudioSessionCategoryOptionAllowBluetooth error:&error];
-    }
-    
-    _originalCategory = [AVAudioSessionCategoryPlayAndRecord UTF8String];
-    if (error != nil) {
-        WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id,
-                     "Error Enable the bluetooth.");
-        return -1;
-    }
-    return 0;
-}
-    
 // ----------------------------------------------------------------------------
 //  SetLoudspeakerStatus
 //
@@ -786,17 +759,6 @@ int32_t AudioDeviceIOS::SetLoudspeakerStatus(bool enable) {
     }
  
     options |= AVAudioSessionCategoryOptionMixWithOthers;
-
-    NSString *version = [UIDevice currentDevice].systemVersion;
-    double version_ios_10 = 10.0;
-    // enable bluetooth
-    if (version.doubleValue >= version_ios_10)  {
-        options |= AVAudioSessionCategoryOptionAllowBluetoothA2DP;
-//        options |= AVAudioSessionCategoryOptionAllowBluetooth;
-    } else {
-        options |= AVAudioSessionCategoryOptionAllowBluetooth;
-    }
-    
     [session setCategory:AVAudioSessionCategoryPlayAndRecord
              withOptions:options
                    error:&error];
@@ -806,7 +768,6 @@ int32_t AudioDeviceIOS::SetLoudspeakerStatus(bool enable) {
                    "Error changing default output route ");
       return -1;
     }
-
     return 0;
 }
 
@@ -1308,7 +1269,41 @@ int32_t AudioDeviceIOS::InitPlayOrRecord() {
     
     bool enable = false;
     GetLoudspeakerStatus(enable);
+
     
+    // audio session mode
+     error = nil;
+    [session setMode:AVAudioSessionModeVoiceChat
+               error:&error];
+    if (error != nil) {
+        const char* errorString = [[error localizedDescription] UTF8String];
+        WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id,
+                     "Could not set mode: %s", errorString);
+    }
+    _originalMode = [session.mode UTF8String];
+    
+    // enable bluetooth
+    [session setCategory:AVAudioSessionCategoryPlayAndRecord
+             withOptions:AVAudioSessionCategoryOptionAllowBluetooth
+                   error:&error];
+    _originalCategory = [session.category UTF8String];
+    
+    //repair some types of bluetooth headsets not available
+    //set audio buffer time
+    //@see http://blog.csdn.net/kingshuo7/article/details/42588191
+    NSUInteger processorCount = [NSProcessInfo processInfo].processorCount;
+    // Use best sample rate and buffer duration if the CPU has more than one
+    // core.
+    NSTimeInterval ioBufferDuration;
+    if (processorCount > 1) {
+        ioBufferDuration = 0.01; //HighPerformance
+    } else {
+        ioBufferDuration = 0.06; //LowComplexity
+    }
+    [session setPreferredIOBufferDuration:ioBufferDuration
+                                    error:&error];
+    
+    // set samplerate.
     Float64 preferredSampleRate(44100.0);
     if (_isIphone6s) {
         preferredSampleRate = 48000.0;
@@ -1321,22 +1316,6 @@ int32_t AudioDeviceIOS::InitPlayOrRecord() {
         WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id,
                      "Could not set preferred sample rate: %s", errorString);
     }
-    error = nil;
-    _originalMode = [session.mode UTF8String];
-    [session setMode:AVAudioSessionModeVoiceChat
-               error:&error];
-    if (error != nil) {
-        const char* errorString = [[error localizedDescription] UTF8String];
-        WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id,
-                     "Could not set mode: %s", errorString);
-    }
-    _originalCategory = [session.category UTF8String];
-    
-    SetLoudspeakerStatus(enable);
-    
-//    bool enableBluetooth = true;
-//    SetBluetoothEnable(enableBluetooth);
-
     //////////////////////
     // Setup Voice Processing Audio Unit
 
@@ -1596,7 +1575,19 @@ int32_t AudioDeviceIOS::InitPlayOrRecord() {
         WEBRTC_TRACE(kTraceWarning, kTraceAudioDevice, _id,
                      "Error activating audio session");
     }
-
+    
+    //set input and output channel number.
+    error = nil;
+    [session setPreferredInputNumberOfChannels:1 error:&error];
+    if (error != nil) {
+        WEBRTC_TRACE(kTraceWarning, kTraceAudioDevice, _id,
+                     "Error set audio session input channel number");
+    }
+    [session setPreferredOutputNumberOfChannels:1 error:&error];
+    if (error != nil) {
+        WEBRTC_TRACE(kTraceWarning, kTraceAudioDevice, _id,
+                     "Error set audio session output channel number");
+    }
     return 0;
 }
 

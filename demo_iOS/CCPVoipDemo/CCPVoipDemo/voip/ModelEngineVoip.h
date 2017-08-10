@@ -715,7 +715,7 @@ typedef enum {
  *统计通话质量
  *@ret 通话质量对象
  */
--(StatisticsInfo*)getCallStatistics;
+-(StatisticsInfo*)getCallStatistics:(int)type;
 
 //根据列表删除文件
 -(void)deleteFileWithPathArr:(NSArray*) pathArr;

@@ -84,7 +84,8 @@ class MediaOptimization {
   uint32_t SentFrameRate();
   uint32_t SentBitRate();
   VCMFrameCount SentFrameCount();
-
+    
+  void SetQualityMode(int mode);
  private:
   enum {
     kFrameCountHistorySize = 90
@@ -108,7 +109,7 @@ class MediaOptimization {
   // Computes new Quality Mode.
   int32_t SelectQuality(VCMQMSettingsCallback* qmsettings_callback)
       EXCLUSIVE_LOCKS_REQUIRED(crit_sect_);
-
+    
   // Verifies if QM settings differ from default, i.e. if an update is required.
   // Computes actual values, as will be sent to the encoder.
   bool QMUpdate(VCMResolutionScale* qm,

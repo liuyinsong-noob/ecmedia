@@ -598,6 +598,9 @@ public:
 
 		virtual int32_t RegisterEncoderRateObserver(VideoEncoderRateObserver *observer)=0;
 	//---end
+    
+    // 设置 video sender 发送视频包时，帧率和带宽的调整模式， mode: [0, 3]
+    virtual void SetVideoQualityMode(int mode) = 0;
 
 };
 
