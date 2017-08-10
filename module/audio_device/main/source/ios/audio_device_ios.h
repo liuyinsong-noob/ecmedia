@@ -233,8 +233,6 @@ class AudioDeviceIOS : public AudioDeviceGeneric {
 
   AudioUnit _auVoiceProcessing;
   void* _audioInterruptionObserver;
-  // enable bluetooth headset communication.
-  int32_t SetBluetoothEnable(bool enable);
  private:
   bool _initialized;
   bool _isShutDown;

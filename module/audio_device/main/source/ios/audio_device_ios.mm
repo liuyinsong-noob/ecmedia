@@ -718,33 +718,6 @@ int32_t
     return -1;
 }
     
-/*
- * enable sdk support bluetooth communication.
- */
-int32_t AudioDeviceIOS::SetBluetoothEnable(bool enable) {
-    WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id,
-                 "AudioDeviceIOS::SetBluetoothEnable(enable=%d)", enable);
-    
-    NSError* error = nil;
-
-    NSString *version = [UIDevice currentDevice].systemVersion;
-    // AVAudioSessionCategoryOptionAllowBluetoothA2DP 为 ios 10 新增蓝牙选项
-    double version_ios_10 = 10.0;
-    if (version.doubleValue >= version_ios_10)  {
-        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker |  AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionAllowBluetooth error:&error];
-    } else {
-        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker |  AVAudioSessionCategoryOptionAllowBluetooth error:&error];
-    }
-    
-    _originalCategory = [AVAudioSessionCategoryPlayAndRecord UTF8String];
-    if (error != nil) {
-        WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id,
-                     "Error Enable the bluetooth.");
-        return -1;
-    }
-    return 0;
-}
-    
 // ----------------------------------------------------------------------------
 //  SetLoudspeakerStatus
 //
@@ -787,16 +760,16 @@ int32_t AudioDeviceIOS::SetLoudspeakerStatus(bool enable) {
  
     options |= AVAudioSessionCategoryOptionMixWithOthers;
 
-    NSString *version = [UIDevice currentDevice].systemVersion;
-    double version_ios_10 = 10.0;
-    // enable bluetooth
-    if (version.doubleValue >= version_ios_10)  {
-        options |= AVAudioSessionCategoryOptionAllowBluetoothA2DP;
+//    NSString *version = [UIDevice currentDevice].systemVersion;
+//    double version_ios_10 = 10.0;
+//    // enable bluetooth
+//    if (version.doubleValue >= version_ios_10)  {
+//        // options |= AVAudioSessionCategoryOptionAllowBluetoothA2DP;
 //        options |= AVAudioSessionCategoryOptionAllowBluetooth;
-    } else {
-        options |= AVAudioSessionCategoryOptionAllowBluetooth;
-    }
-    
+//    } else {
+//       
+//    }
+    options |= AVAudioSessionCategoryOptionAllowBluetooth;
     [session setCategory:AVAudioSessionCategoryPlayAndRecord
              withOptions:options
                    error:&error];
@@ -806,7 +779,6 @@ int32_t AudioDeviceIOS::SetLoudspeakerStatus(bool enable) {
                    "Error changing default output route ");
       return -1;
     }
-
     return 0;
 }
 
