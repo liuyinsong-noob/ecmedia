@@ -2400,7 +2400,7 @@ void UdpTransportImpl::IncomingRTPFunction(const WebRtc_Word8* rtpPacket,
 		}
 	}
 	else {//audio or trunk's video/content
-		transportData = _packetCallback.begin()->second;
+        transportData = (_packetCallback.size()==0)?NULL:_packetCallback.begin()->second;
 	}
 
 	if (transportData) {
