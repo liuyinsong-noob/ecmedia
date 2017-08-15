@@ -9,6 +9,8 @@
 MY_WEBRTC_ROOT_PATH := $(call my-dir)/..
 JNI_PATH := $(call my-dir)
 
+APP_ALLOW_MISSING_DEPS := true
+
 # voice
 include $(MY_WEBRTC_ROOT_PATH)/system_wrappers/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/audioprocess/source/Android.mk
