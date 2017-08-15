@@ -21,12 +21,14 @@
 #include "common_types.h"
 #include "frame_callback.h"
 #include "rate_statistics.h"
+#ifdef VIDEO_ENABLED
 #include "video_coding_defines.h"
 #include "vie_codec.h"
 #include "vie_rtp_rtcp.h"
 #include "video_receive_stream.h"
 #include "video_renderer.h"
 #include "video_render_defines.h"
+#endif
 #include "event_wrapper.h"
 //#include "file_wrapper.h"
 #include "stats_types.h"
@@ -39,27 +41,34 @@ class ViECodec;
 class ViEDecoderObserver;
 
 class ReceiveStatisticsProxy : public Module,
+#ifdef VIDEO_ENABLED
 							   public ViEDecoderObserver,
+#endif
 							   public RtcpPacketTypeCounterObserver,
                                public RtcpStatisticsCallback,
-                               public StreamDataCountersCallback,
+                               public StreamDataCountersCallback
+#ifdef VIDEO_ENABLED
+    ,
 							   public I420FrameCallback,
-							   public VideoRenderCallback{
+							   public VideoRenderCallback
+#endif
+    {
  public:
   ReceiveStatisticsProxy(int channel_id);
   virtual ~ReceiveStatisticsProxy();
-
+#ifdef VIDEO_ENABLED
   VideoReceiveStream::Stats GetStats(int64_t &timestamp) const;
 
   void OnDecodedFrame();
   void OnRenderedFrame();
+#endif
 
   //Implement module
   virtual int64_t TimeUntilNextProcess() OVERRIDE;
   virtual int32_t Process() OVERRIDE;
 
   void OnDiscardedPacketsUpdated(int discarded_packets);
-
+#ifdef VIDEO_ENABLED
   // Overrides ViEDecoderObserver.
   virtual void IncomingCodecChanged(const int channel_id,
                                     const VideoCodec& video_codec) OVERRIDE; 
@@ -75,6 +84,7 @@ class ReceiveStatisticsProxy : public Module,
                              int min_playout_delay_ms,
                              int render_delay_ms) OVERRIDE;
   virtual void RequestNewKeyFrame(const int video_channel) OVERRIDE {}
+#endif
 
   //Overrides RtcpPacketTypeCounterObserver
   virtual void RtcpPacketTypesCounterUpdated(uint32_t ssrc,
@@ -89,13 +99,14 @@ class ReceiveStatisticsProxy : public Module,
   // Overrides StreamDataCountersCallback.
   virtual void DataCountersUpdated(const cloopenwebrtc::StreamDataCounters& counters,
                                    uint32_t ssrc) OVERRIDE;
-
+#ifdef VIDEO_ENABLED
   //Overrides I420FrameCallback
   virtual void FrameCallback(I420VideoFrame* video_frame) OVERRIDE;
 
   //Override VideoRenderCallback
   virtual int32_t RenderFrame(const WebRtc_UWord32 streamId,
 								I420VideoFrame& videoFrame) OVERRIDE;
+#endif
 
   int channelId() { return channel_id_; }
 
@@ -108,10 +119,14 @@ private:
   Clock* const clock_;
   scoped_ptr<CriticalSectionWrapper> crit_;
   int64_t             last_process_time_;
+#ifdef VIDEO_ENABLED
   VideoReceiveStream::Stats stats_ GUARDED_BY(crit_);
+#endif
   EventWrapper* updateEvent_;
+#ifdef VIDEO_ENABLED
   RateStatistics decode_fps_estimator_ GUARDED_BY(crit_);
   RateStatistics renders_fps_estimator_ GUARDED_BY(crit_);
+#endif
 };
 
 }  // namespace webrtc

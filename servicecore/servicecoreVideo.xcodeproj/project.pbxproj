@@ -66,7 +66,7 @@
 		AD01998D1D237130003C2BB9 /* libosip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0199851D23710D003C2BB9 /* libosip.a */; };
 		AD0199AD1D239472003C2BB9 /* sometools.h in Headers */ = {isa = PBXBuildFile; fileRef = AD0199AC1D239472003C2BB9 /* sometools.h */; };
 		AD0199AF1D239480003C2BB9 /* sometools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD0199AE1D239480003C2BB9 /* sometools.cpp */; };
-		ADBB91DA1DC05DF0009381DF /* libECMedia.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBB91D51DC05DD7009381DF /* libECMedia.a */; };
+		AD36307D1F429D9600F0C20B /* libECMediaAudio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD36307C1F429D8A00F0C20B /* libECMediaAudio.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,26 +98,19 @@
 			remoteGlobalIDString = 3F96FF2615C9085E004FCC3F;
 			remoteInfo = osip;
 		};
-		ADBB91D41DC05DD7009381DF /* PBXContainerItemProxy */ = {
+		AD36307B1F429D8A00F0C20B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = ADBB91AE1DC05DD6009381DF /* ECMedia.xcodeproj */;
+			containerPortal = AD36305E1F429D8900F0C20B /* ECMediaAudio.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = ADB5192F1B27DFCA0009077D;
-			remoteInfo = ECMedia;
+			remoteInfo = ECMediaAudio;
 		};
-		ADBB91D61DC05DD7009381DF /* PBXContainerItemProxy */ = {
+		AD36307E1F429D9C00F0C20B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = ADBB91AE1DC05DD6009381DF /* ECMedia.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 55D3C73B1B81C8CD00D770BC;
-			remoteInfo = ECMedia_Mac;
-		};
-		ADBB91D81DC05DE1009381DF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADBB91AE1DC05DD6009381DF /* ECMedia.xcodeproj */;
+			containerPortal = AD36305E1F429D8900F0C20B /* ECMediaAudio.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = ADB5192E1B27DFCA0009077D;
-			remoteInfo = ECMedia;
+			remoteInfo = ECMediaAudio;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -185,7 +178,7 @@
 		AD1123281DAF3158006CDD38 /* libECMedia.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libECMedia.a; path = "../../../../../../../../Users/seanlee/Library/Developer/Xcode/DerivedData/CCPVoipDemo-eoxgwrhjyrmuvacahazhkgyeociq/Build/Products/Debug-iphoneos/libECMedia.a"; sourceTree = "<group>"; };
 		AD194FB41C5B3F85003841BB /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		AD194FB61C5B3F90003841BB /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		ADBB91AE1DC05DD6009381DF /* ECMedia.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ECMedia.xcodeproj; path = ../ECMedia/ECMedia/ECMedia.xcodeproj; sourceTree = "<group>"; };
+		AD36305E1F429D8900F0C20B /* ECMediaAudio.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ECMediaAudio.xcodeproj; path = ../ECMedia/ECMedia/ECMediaAudio.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,7 +186,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADBB91DA1DC05DF0009381DF /* libECMedia.a in Frameworks */,
+				AD36307D1F429D9600F0C20B /* libECMediaAudio.a in Frameworks */,
 				AD01998D1D237130003C2BB9 /* libosip.a in Frameworks */,
 				AD01998C1D237128003C2BB9 /* libexosip.a in Frameworks */,
 				55A7511315C8CAB9001B246A /* Foundation.framework in Frameworks */,
@@ -301,7 +294,7 @@
 		55A7510415C8CAB9001B246A = {
 			isa = PBXGroup;
 			children = (
-				ADBB91AE1DC05DD6009381DF /* ECMedia.xcodeproj */,
+				AD36305E1F429D8900F0C20B /* ECMediaAudio.xcodeproj */,
 				AD0199861D23711E003C2BB9 /* exosip.xcodeproj */,
 				AD0199801D23710D003C2BB9 /* osip.xcodeproj */,
 				55A7511415C8CAB9001B246A /* servicecore */,
@@ -355,11 +348,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		ADBB91AF1DC05DD6009381DF /* Products */ = {
+		AD36305F1F429D8900F0C20B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				ADBB91D51DC05DD7009381DF /* libECMedia.a */,
-				ADBB91D71DC05DD7009381DF /* libECMedia_Mac.a */,
+				AD36307C1F429D8A00F0C20B /* libECMediaAudio.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -413,7 +405,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				ADBB91D91DC05DE1009381DF /* PBXTargetDependency */,
+				AD36307F1F429D9C00F0C20B /* PBXTargetDependency */,
 				AD0199B11D2397CF003C2BB9 /* PBXTargetDependency */,
 				AD0199B31D2397CF003C2BB9 /* PBXTargetDependency */,
 			);
@@ -442,8 +434,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = ADBB91AF1DC05DD6009381DF /* Products */;
-					ProjectRef = ADBB91AE1DC05DD6009381DF /* ECMedia.xcodeproj */;
+					ProductGroup = AD36305F1F429D8900F0C20B /* Products */;
+					ProjectRef = AD36305E1F429D8900F0C20B /* ECMediaAudio.xcodeproj */;
 				},
 				{
 					ProductGroup = AD0199871D23711E003C2BB9 /* Products */;
@@ -476,18 +468,11 @@
 			remoteRef = AD01998A1D23711E003C2BB9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		ADBB91D51DC05DD7009381DF /* libECMedia.a */ = {
+		AD36307C1F429D8A00F0C20B /* libECMediaAudio.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libECMedia.a;
-			remoteRef = ADBB91D41DC05DD7009381DF /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ADBB91D71DC05DD7009381DF /* libECMedia_Mac.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libECMedia_Mac.a;
-			remoteRef = ADBB91D61DC05DD7009381DF /* PBXContainerItemProxy */;
+			path = libECMediaAudio.a;
+			remoteRef = AD36307B1F429D8A00F0C20B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -544,10 +529,10 @@
 			name = osip;
 			targetProxy = AD0199B21D2397CF003C2BB9 /* PBXContainerItemProxy */;
 		};
-		ADBB91D91DC05DE1009381DF /* PBXTargetDependency */ = {
+		AD36307F1F429D9C00F0C20B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = ECMedia;
-			targetProxy = ADBB91D81DC05DE1009381DF /* PBXContainerItemProxy */;
+			name = ECMediaAudio;
+			targetProxy = AD36307E1F429D9C00F0C20B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

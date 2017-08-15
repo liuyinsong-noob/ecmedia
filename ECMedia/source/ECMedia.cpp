@@ -5343,6 +5343,3 @@ ECMEDIA_API int ECMedia_audio_set_magic_sound(int channelid, int pitch, int temp
         return -99;
     }
 }
-
-#endif
-

@@ -246,6 +246,118 @@
 			remoteGlobalIDString = 3FAA8A7715C8BC8800561C64;
 			remoteInfo = webrtc_utility;
 		};
+		AD48179E1F2B1AE200B6126D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F7417116FAB747008A2F8D /* amrnb.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ADC548FF1D485C1B00A5C852;
+			remoteInfo = amrnb_Mac;
+		};
+		AD4817A21F2B1AE200B6126D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F7417416FAB747008A2F8D /* audio_coding_module.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ADC549AA1D485C4200A5C852;
+			remoteInfo = audio_coding_module_Mac;
+		};
+		AD4817A61F2B1AE200B6126D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F741C016FAB76F008A2F8D /* audio_conference_mixer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AD1F0DB91D4764D200C33F53;
+			remoteInfo = audio_conference_mixer_mac;
+		};
+		AD4817AA1F2B1AE200B6126D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F741C916FAB773008A2F8D /* audio_device.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AD1F0DD81D47651500C33F53;
+			remoteInfo = audio_device_Mac;
+		};
+		AD4817AE1F2B1AE200B6126D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F741D216FAB779008A2F8D /* audioprocess.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AD1F0E631D47695200C33F53;
+			remoteInfo = audioprocess_Mac;
+		};
+		AD4817B21F2B1AE200B6126D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F741DB16FAB77E008A2F8D /* bitrate_controller.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AD1F0E731D4769A800C33F53;
+			remoteInfo = bitrate_controller_Mac;
+		};
+		AD4817B61F2B1AE200B6126D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F7417716FAB747008A2F8D /* CNG.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ADC549641D485C3800A5C852;
+			remoteInfo = CNG_Mac;
+		};
+		AD4817BE1F2B1AE200B6126D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F7417A16FAB747008A2F8D /* G711.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ADC549571D485C2D00A5C852;
+			remoteInfo = G711_Mac;
+		};
+		AD4817C21F2B1AE200B6126D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F741B716FAB767008A2F8D /* G729.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ADC549CC1D485C5000A5C852;
+			remoteInfo = G729_Mac;
+		};
+		AD4817C71F2B1AE200B6126D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F741ED16FAB789008A2F8D /* media_file.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AD1F0E841D476AA400C33F53;
+			remoteInfo = media_file_Mac;
+		};
+		AD4817CB1F2B1AE200B6126D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F7418016FAB747008A2F8D /* NetEq.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ADC5494A1D485C2400A5C852;
+			remoteInfo = NetEq_Mac;
+		};
+		AD4817D01F2B1AE200B6126D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F7421216FAB7A4008A2F8D /* rtp_rtcp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AD1F0EE01D476ADE00C33F53;
+			remoteInfo = rtp_rtcp_Mac;
+		};
+		AD4817D51F2B1AE200B6126D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F7413F16FAB6C9008A2F8D /* system_wrappers.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AD1F0C071D47605300C33F53;
+			remoteInfo = system_wrappers_Mac;
+		};
+		AD4817D91F2B1AE200B6126D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F7422416FAB7AD008A2F8D /* udp_transport.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AD1F0EF41D476B5500C33F53;
+			remoteInfo = udp_transport_Mac;
+		};
+		AD4817DD1F2B1AE200B6126D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F7416816FAB730008A2F8D /* voice_engine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AD1F0C991D47623700C33F53;
+			remoteInfo = voice_engine_Mac;
+		};
+		AD4817E11F2B1AE200B6126D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55F7422D16FAB7B1008A2F8D /* webrtc_utility.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AD1F0F131D476B9800C33F53;
+			remoteInfo = webrtc_utility_Mac;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -526,6 +638,7 @@
 			isa = PBXGroup;
 			children = (
 				55F7414716FAB6C9008A2F8D /* libsystem_wrappers.a */,
+				AD4817D61F2B1AE200B6126D /* libsystem_wrappers_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -554,6 +667,7 @@
 			isa = PBXGroup;
 			children = (
 				55F7417016FAB730008A2F8D /* libvoice_engine.a */,
+				AD4817DE1F2B1AE200B6126D /* libvoice_engine_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -562,6 +676,7 @@
 			isa = PBXGroup;
 			children = (
 				55F7419716FAB747008A2F8D /* libamrnb.a */,
+				AD48179F1F2B1AE200B6126D /* libamrnb_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -570,6 +685,7 @@
 			isa = PBXGroup;
 			children = (
 				55F7419A16FAB747008A2F8D /* libaudio_coding_module.a */,
+				AD4817A31F2B1AE200B6126D /* libaudio_coding_module_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -578,6 +694,7 @@
 			isa = PBXGroup;
 			children = (
 				55F7419D16FAB747008A2F8D /* libCNG.a */,
+				AD4817B71F2B1AE200B6126D /* libCNG_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -586,6 +703,7 @@
 			isa = PBXGroup;
 			children = (
 				55F741A016FAB747008A2F8D /* libG711.a */,
+				AD4817BF1F2B1AE200B6126D /* libG711_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -602,6 +720,7 @@
 			isa = PBXGroup;
 			children = (
 				55F741A616FAB747008A2F8D /* libNetEq.a */,
+				AD4817CC1F2B1AE200B6126D /* libNetEq_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -625,6 +744,7 @@
 			isa = PBXGroup;
 			children = (
 				55F741BF16FAB767008A2F8D /* libG729.a */,
+				AD4817C31F2B1AE200B6126D /* libG729_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -633,6 +753,7 @@
 			isa = PBXGroup;
 			children = (
 				55F741C816FAB76F008A2F8D /* libaudio_conference_mixer.a */,
+				AD4817A71F2B1AE200B6126D /* libaudio_conference_mixer_mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -641,6 +762,7 @@
 			isa = PBXGroup;
 			children = (
 				55F741D116FAB773008A2F8D /* libaudio_device.a */,
+				AD4817AB1F2B1AE200B6126D /* libaudio_device_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -649,6 +771,7 @@
 			isa = PBXGroup;
 			children = (
 				55F741DA16FAB779008A2F8D /* libaudioprocess.a */,
+				AD4817AF1F2B1AE200B6126D /* libaudioprocess_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -657,6 +780,7 @@
 			isa = PBXGroup;
 			children = (
 				55F741E316FAB77E008A2F8D /* libbitrate_controller.a */,
+				AD4817B31F2B1AE200B6126D /* libbitrate_controller_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -673,6 +797,7 @@
 			isa = PBXGroup;
 			children = (
 				55F741F516FAB789008A2F8D /* libmedia_file.a */,
+				AD4817C81F2B1AE200B6126D /* libmedia_file_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -697,6 +822,7 @@
 			isa = PBXGroup;
 			children = (
 				55F7421A16FAB7A5008A2F8D /* librtp_rtcp.a */,
+				AD4817D11F2B1AE200B6126D /* librtp_rtcp_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -713,6 +839,7 @@
 			isa = PBXGroup;
 			children = (
 				55F7422C16FAB7AD008A2F8D /* libudp_transport.a */,
+				AD4817DA1F2B1AE200B6126D /* libudp_transport_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -721,6 +848,7 @@
 			isa = PBXGroup;
 			children = (
 				55F7423516FAB7B1008A2F8D /* libwebrtc_utility.a */,
+				AD4817E21F2B1AE200B6126D /* libwebrtc_utility_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1046,6 +1174,118 @@
 			fileType = archive.ar;
 			path = libwebrtc_utility.a;
 			remoteRef = 55F7423416FAB7B1008A2F8D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD48179F1F2B1AE200B6126D /* libamrnb_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libamrnb_Mac.a;
+			remoteRef = AD48179E1F2B1AE200B6126D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD4817A31F2B1AE200B6126D /* libaudio_coding_module_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libaudio_coding_module_Mac.a;
+			remoteRef = AD4817A21F2B1AE200B6126D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD4817A71F2B1AE200B6126D /* libaudio_conference_mixer_mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libaudio_conference_mixer_mac.a;
+			remoteRef = AD4817A61F2B1AE200B6126D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD4817AB1F2B1AE200B6126D /* libaudio_device_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libaudio_device_Mac.a;
+			remoteRef = AD4817AA1F2B1AE200B6126D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD4817AF1F2B1AE200B6126D /* libaudioprocess_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libaudioprocess_Mac.a;
+			remoteRef = AD4817AE1F2B1AE200B6126D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD4817B31F2B1AE200B6126D /* libbitrate_controller_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libbitrate_controller_Mac.a;
+			remoteRef = AD4817B21F2B1AE200B6126D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD4817B71F2B1AE200B6126D /* libCNG_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCNG_Mac.a;
+			remoteRef = AD4817B61F2B1AE200B6126D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD4817BF1F2B1AE200B6126D /* libG711_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libG711_Mac.a;
+			remoteRef = AD4817BE1F2B1AE200B6126D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD4817C31F2B1AE200B6126D /* libG729_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libG729_Mac.a;
+			remoteRef = AD4817C21F2B1AE200B6126D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD4817C81F2B1AE200B6126D /* libmedia_file_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libmedia_file_Mac.a;
+			remoteRef = AD4817C71F2B1AE200B6126D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD4817CC1F2B1AE200B6126D /* libNetEq_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libNetEq_Mac.a;
+			remoteRef = AD4817CB1F2B1AE200B6126D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD4817D11F2B1AE200B6126D /* librtp_rtcp_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = librtp_rtcp_Mac.a;
+			remoteRef = AD4817D01F2B1AE200B6126D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD4817D61F2B1AE200B6126D /* libsystem_wrappers_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libsystem_wrappers_Mac.a;
+			remoteRef = AD4817D51F2B1AE200B6126D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD4817DA1F2B1AE200B6126D /* libudp_transport_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libudp_transport_Mac.a;
+			remoteRef = AD4817D91F2B1AE200B6126D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD4817DE1F2B1AE200B6126D /* libvoice_engine_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libvoice_engine_Mac.a;
+			remoteRef = AD4817DD1F2B1AE200B6126D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD4817E21F2B1AE200B6126D /* libwebrtc_utility_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libwebrtc_utility_Mac.a;
+			remoteRef = AD4817E11F2B1AE200B6126D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
