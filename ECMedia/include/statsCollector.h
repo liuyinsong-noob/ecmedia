@@ -30,18 +30,17 @@ public:
 	void DeleteVideoSendStatsProxy(int channelid);
 	bool AddVideoRecvStatsProxy(int channelid);
 	void DeleteVideoRecvStatsProxy(int channelid);
+    bool SetVideoEngin(VideoEngine* vie);
+    void SetVideoCaptureDeviceId(int capDevId) { capDevId_ = capDevId; }
 #endif
 	bool AddAudioSendStatsProxy(int channelid);
 	void DeleteAudioSendStatsProxy(int channelid);
 	bool AddAudioRecvStatsProxy(int channelid);
 	void DeleteAudioRecvStatsProxy(int channelid);
-#ifdef VIDEO_ENABLED
-	bool SetVideoEngin(VideoEngine* vie);
-#endif
+
+
 	bool SetVoiceEngin(VoiceEngine* voe);
-#ifdef VIDEO_ENABLED
-	void SetVideoCaptureDeviceId(int capDevId) { capDevId_ = capDevId; }
-#endif
+	
 	void Config(char* logFile, int logIntervalMs);
 
 
@@ -56,42 +55,49 @@ private:
 #ifdef VIDEO_ENABLED
 	void ExtractVideoSenderInfo(bool isFullStats);
 	void ExtractVideoReceiverInfo(bool isFullStats);
+    void VideoSenderInfo_AddEncoderSetting(const VideoSendStream::Stats info,
+                                           StatsReport *report); //size = 15bytes
+    void VideoSenderInfo_AddQMSetting(const VideoSendStream::Stats info,
+                                      StatsReport *report); //size = 3bytes
+    void VideoSenderInfo_AddCpuMetrics(const VideoSendStream::Stats info,
+                                       StatsReport *report); //size = 2bytes
+    void VideoSenderInfo_AddBweStats(const VideoSendStream::Stats info,
+                                     StatsReport *report); //size = 8bytes
+    void VideoSenderInfo_AddNetworkStats(const VideoSendStream::Stats info,
+                                         StatsReport *report); //size = 7bytes
+    void VideoSenderInfo_AddRtpStats(const VideoSendStream::Stats info,
+                                     StatsReport *report); //size = 10bytes
+    void VideoSenderInfo_AddRtcpStats(const VideoSendStream::Stats info,
+                                      StatsReport *report); //size = 20bytes
+    
+    void VideoReciverInfo_AddReceiveBasic(const VideoReceiveStream::Stats info,
+                                          StatsReport *report); //size = 3 bytes
+    void VideoReciverInfo_AddReceiveStats(const VideoReceiveStream::Stats info,
+                                          StatsReport *report); //size = 5 bytes
+    void VideoReciverInfo_AddDecoderStats(const VideoReceiveStream::Stats info,
+                                          StatsReport *report); //size = 3 bytes
+    void VideoReciverInfo_AddRenderStats(const VideoReceiveStream::Stats info,
+                                         StatsReport *report); //size = 5 bytes
+    void VideoReciverInfo_AddRtpStats(const VideoReceiveStream::Stats info,
+                                      StatsReport *report); //size = 12 bytes
+    void VideoReciverInfo_AddRtcpStats(const VideoReceiveStream::Stats info,
+                                       StatsReport *report); //size = 16 bytes
+    void VideoReciverInfo_AddLossModeStats(const VideoReceiveStream::Stats info,
+                                           StatsReport *report); //size = 32 bytes
+    void LoadVideoSenderReportToPbBuffer(StatsContentType type,
+                                         StatsReport report,
+                                         VideoSenderStatisticsInner *statsData);
+    void LoadVideoReceiverReportToPbBuffer(StatsContentType type,
+                                           StatsReport report,
+                                           VideoReceiverStatisticsInner *statsData);
 #endif
 	void ExtractAudioSenderInfo(bool isFullStats);
 	void ExtractAudioReceiverInfo(bool isFullStats);
 
 	void Report_AddCommonFiled(StatsReport *report, int64_t ts);
-#ifdef VIDEO_ENABLED
-	void VideoSenderInfo_AddEncoderSetting(const VideoSendStream::Stats info,
-											StatsReport *report); //size = 15bytes
-	void VideoSenderInfo_AddQMSetting(const VideoSendStream::Stats info,
-										StatsReport *report); //size = 3bytes
-	void VideoSenderInfo_AddCpuMetrics(const VideoSendStream::Stats info,
-										StatsReport *report); //size = 2bytes
-	void VideoSenderInfo_AddBweStats(const VideoSendStream::Stats info,
-										StatsReport *report); //size = 8bytes
-	void VideoSenderInfo_AddNetworkStats(const VideoSendStream::Stats info,
-										StatsReport *report); //size = 7bytes
-	void VideoSenderInfo_AddRtpStats(const VideoSendStream::Stats info,
-										StatsReport *report); //size = 10bytes
-	void VideoSenderInfo_AddRtcpStats(const VideoSendStream::Stats info,
-										StatsReport *report); //size = 20bytes
 
-	void VideoReciverInfo_AddReceiveBasic(const VideoReceiveStream::Stats info,
-										StatsReport *report); //size = 3 bytes
-	void VideoReciverInfo_AddReceiveStats(const VideoReceiveStream::Stats info,
-										StatsReport *report); //size = 5 bytes
-	void VideoReciverInfo_AddDecoderStats(const VideoReceiveStream::Stats info,
-										StatsReport *report); //size = 3 bytes
-	void VideoReciverInfo_AddRenderStats(const VideoReceiveStream::Stats info,
-										StatsReport *report); //size = 5 bytes
-	void VideoReciverInfo_AddRtpStats(const VideoReceiveStream::Stats info,
-										StatsReport *report); //size = 12 bytes
-	void VideoReciverInfo_AddRtcpStats(const VideoReceiveStream::Stats info,
-										StatsReport *report); //size = 16 bytes
-	void VideoReciverInfo_AddLossModeStats(const VideoReceiveStream::Stats info,
-										StatsReport *report); //size = 32 bytes
-#endif
+	
+
 	void AudioSenderInfo_AddBasic(const AudioSendStream::Stats info,
 										StatsReport *report); //size = 9 bytes
 	void AudioSenderInfo_AddEchoStats(const AudioSendStream::Stats info,
@@ -118,14 +124,7 @@ private:
 	void LoadAudioReceiverReportToPbBuffer(StatsContentType type,
 										StatsReport report,
 										AudioReceiverStatisticsInner *statsData);
-#ifdef VIDEO_ENABLED
-	void LoadVideoSenderReportToPbBuffer(StatsContentType type,
-										StatsReport report,
-										VideoSenderStatisticsInner *statsData);
-	void LoadVideoReceiverReportToPbBuffer(StatsContentType type,
-										StatsReport report,
-										VideoReceiverStatisticsInner *statsData);
-#endif
+	
 private:
 	int		capDevId_;
 	ThreadWrapper *thread_;

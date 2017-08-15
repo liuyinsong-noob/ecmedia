@@ -27,12 +27,13 @@
 #include "statsCollector.h"
 #include "VoeObserver.h"
 #include "amrnb_api.h"
-#include "ECLiveStream.h"
+
 #ifdef WIN32
 #include "codingHelper.h"
 #endif
 
 #ifdef VIDEO_ENABLED
+#include "ECLiveStream.h"
 #include "vie_network.h"
 #include "vie_base.h"
 #include "vie_capture.h"
@@ -81,7 +82,7 @@ enum {
     PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret); \
     return ret;}
 #endif
-
+#ifdef VIDEO_ENABLED
 class ECViECaptureObserver :public ViECaptureObserver
 {
 public:
@@ -101,7 +102,8 @@ private:
 	onEcMediaNoCameraCaptureCb m_callback;
 
 };
-
+#endif
+#ifdef VIDEO_ENABLED
 ECViECaptureObserver::ECViECaptureObserver(onEcMediaNoCameraCaptureCb fp)
 	:m_firstStart(true),
 	m_callback(fp)
@@ -120,13 +122,15 @@ void ECViECaptureObserver::NoPictureAlarm(const int capture_id, const CaptureAla
 		m_callback(capture_id, alarm);
 	}
 }
-
+#endif
 cloopenwebrtc::VoiceEngine* m_voe = NULL;
 static StatsCollector *g_statsCollector = NULL;
 
 static VoeObserver* g_VoeObserver = NULL;
 static onEcMediaNoCameraCaptureCb g_NoCameraCaptureCb = NULL;
+#ifdef VIDEO_ENABLED
 static ECViECaptureObserver* g_ECViECaptureObserver = NULL;
+#endif
 
 
 #ifdef VIDEO_ENABLED
@@ -3078,7 +3082,9 @@ int ECMedia_stop_render(int channelid, int deviceid)
     PrintConsole("[ECMEDIA INFO] %s ends...",__FUNCTION__);
     return 0;
 }
+#endif
 
+#ifdef VIDEO_ENABLED
 int ECMedia_set_i420_framecallback(int channelid, cloopenwebrtc::ECMedia_I420FrameCallBack callback) {
     PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d ", __FUNCTION__, channelid);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
@@ -5243,6 +5249,7 @@ ECMEDIA_API void ECMedia_stopRecordLocalMedia()
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 #endif
 }
+#endif
 
 int ECMedia_getStatsReports(int type, char* callid, void** pMediaStatisticsDataInnerArray, int *pArraySize)
 {
@@ -5336,6 +5343,3 @@ ECMEDIA_API int ECMedia_audio_set_magic_sound(int channelid, int pitch, int temp
         return -99;
     }
 }
-
-#endif
-

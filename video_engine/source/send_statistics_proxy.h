@@ -19,13 +19,16 @@
 
 #include "thread_annotations.h"
 #include "common_types.h"
+#ifdef VIDEO_ENABLED
 #include "video_codec_interface.h"
-#include "clock.h"
-#include "scoped_ptr.h"
 #include "vie_capture.h"
 #include "vie_codec.h"
 #include "video_send_stream.h"
 #include "video_coding_defines.h"
+#endif
+#include "clock.h"
+#include "scoped_ptr.h"
+
 
 #include "event_wrapper.h"
 #include "file_wrapper.h"
@@ -45,15 +48,19 @@ class ViECaptureObserver;
 class CriticalSectionWrapper;
 
 class SendStatisticsProxy : public Module,
+#ifdef VIDEO_ENABLED
 							public ViEEncoderObserver,
 							public VideoEncoderRateObserver,
+#endif
 							public RtcpStatisticsCallback,
 							public RtcpPacketTypeCounterObserver,
 							public FrameCountObserver,
 							public StreamDataCountersCallback,
 							public BitrateStatisticsObserver,
 							public SendSideDelayObserver,
+#ifdef VIDEO_ENABLED
 							public ViECaptureObserver,
+#endif
 							public CpuOveruseObserver,
 							public SendsideBweObserver,
 							public CallStatsObserver{
@@ -64,15 +71,17 @@ class SendStatisticsProxy : public Module,
   //Implement module
   virtual int64_t TimeUntilNextProcess();
   virtual int32_t Process();
-
+#ifdef VIDEO_ENABLED
   VideoSendStream::Stats GetStats(bool isAvg, int64_t& timestamp);
   int NumberOfSimulcastStreams();
+#endif
 
 
 public:
 	static const int kStatsTimeoutMs;
 	// Implements ViEEncoderObserver.
 	//int32_t RegisterEncoderObserver(ViEEncoderObserver* observer);
+#ifdef VIDEO_ENABLED
 	virtual void OutgoingRate(const int video_channel,
 		const unsigned int framerate,
 		const unsigned int bitrate) OVERRIDE;
@@ -82,7 +91,7 @@ public:
 	// Implements VideoEncoderRateObserver.
 	//int32_t RegisterEncoderRateObserver(VideoEncoderRateObserver *observer);
 	virtual void OnSetRates(uint32_t bitrate_bps, int framerate) override;
-
+#endif
 	// From RtcpStatisticsCallback.
 	// virtual int RegisterSendChannelRtcpStatisticsCallback( int channel, RtcpStatisticsCallback* callback);
 	void StatisticsUpdated(const RtcpStatistics& statistics,
@@ -118,6 +127,7 @@ public:
 
 	//Implement ViECaptureObserver
 	// This method is called if a bright or dark captured image is detected.
+#ifdef VIDEO_ENABLED
 	void BrightnessAlarm(const int capture_id,
 		const Brightness brightness) override {}
 
@@ -129,6 +139,7 @@ public:
 	// VideoEngine.
 	void NoPictureAlarm(const int capture_id,
 						const CaptureAlarm alarm) override{}
+#endif
 	//Implement CpuOveruseObserver
 	// Called as soon as an overuse is detected.
 	void OveruseDetected()  override {}
@@ -165,13 +176,17 @@ public:
 	int GetRtt();
 
 	void SetSsrcs(const std::list<unsigned int> &ssrcs);
+#ifdef VIDEO_ENABLED
 	VideoSendStream::StreamStats* GetStatsEntry(bool isAvg, const uint32_t ssrc);
 	void ConfigEncoderSetting(const VideoCodec& video_codec);
 	VideoSendStream::Config GetConfig() const;
+#endif
 	bool newConfig() { return new_config_; }
 	void ResetNewConfig() { new_config_ = false; }
 private:
+#ifdef VIDEO_ENABLED
 	VideoSendStream::StreamStats* GetStreamStats(uint32_t ssrc);
+#endif
 	void GenerateAvgStats();
 
 private:
@@ -253,8 +268,10 @@ private:
 	int64_t             last_process_time_;		
 	EventWrapper*		 updateEvent_;
 	scoped_ptr<CriticalSectionWrapper> crit_;
-	VideoSendStream::Stats		stats_ GUARDED_BY(crit_);  //for now 
+#ifdef VIDEO_ENABLED
+	VideoSendStream::Stats		stats_ GUARDED_BY(crit_);  //for now
 	VideoSendStream::Stats		stats_average_ GUARDED_BY(crit_); // for history
+#endif
 	AverageRateStats		avg_rate_stats_ GUARDED_BY(crit_);
 	RemoteBitrateEstimator*	remote_bitrate_estimator_;  //TODO: remove or set as callback
 	bool					new_config_;

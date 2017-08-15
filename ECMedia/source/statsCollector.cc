@@ -446,20 +446,18 @@ void StatsCollector::LoadReportsToPbBuffer(StatsContentType type, MediaStatistic
 			audioReceiverStats = mediaStatsInner->add_audioreceiverstats();
 			LoadAudioReceiverReportToPbBuffer(type, report, audioReceiverStats);
 			break;
+#ifdef VIDEO_ENABLED
 		case StatsReport::kStatsReportTypeVideoSend:
 		case StatsReport::kStatsReportTypeVideoSend_Simplified:
-#ifdef VIDEO_ENABLED
 			videoSenderStats = mediaStatsInner->add_videosenderstats();
 			LoadVideoSenderReportToPbBuffer(type, report, videoSenderStats);
-#endif
 			break;
 		case StatsReport::kStatsReportTypeVideoRecv:
 		case StatsReport::kStatsReportTypeVideoRecv_Simplified:
-#ifdef VIDEO_ENABLED
 			videoReceiverStats = mediaStatsInner->add_videoreceiverstats();
 			LoadVideoReceiverReportToPbBuffer(type, report, videoReceiverStats);
-#endif
 			break;
+#endif
 		}		
 	}
 }

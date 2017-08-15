@@ -37,20 +37,20 @@
 		82D003C6193DC01200C7E565 /* CAStreamBasicDescription.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82D003BC193DC01200C7E565 /* CAStreamBasicDescription.cpp */; };
 		82D003C7193DC01200C7E565 /* CAXException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 82D003BE193DC01200C7E565 /* CAXException.cpp */; };
 		82E9DDA118B1BA3900DF221E /* CLOPcrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 82E9DD9E18B1BA3900DF221E /* CLOPcrypto.m */; };
-		ADF261341DB8B13E008420B0 /* libccpclient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9136BBAC1A8C9B8300350A26 /* libccpclient.a */; };
+		AD36305B1F429D6B00F0C20B /* libccpclient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD36305A1F429D5E00F0C20B /* libccpclient.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		9136BBAB1A8C9B8300350A26 /* PBXContainerItemProxy */ = {
+		AD3630591F429D5E00F0C20B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 9136BB8A1A8C9B8100350A26 /* servicecoreVideo.xcodeproj */;
+			containerPortal = AD36302E1F429D5D00F0C20B /* servicecoreVideo.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 55A7510F15C8CAB9001B246A;
 			remoteInfo = servicecore;
 		};
-		AD6F2D681C7BE99E004A376D /* PBXContainerItemProxy */ = {
+		AD36305C1F429D7000F0C20B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 9136BB8A1A8C9B8100350A26 /* servicecoreVideo.xcodeproj */;
+			containerPortal = AD36302E1F429D5D00F0C20B /* servicecoreVideo.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 55A7510E15C8CAB9001B246A;
 			remoteInfo = servicecore;
@@ -138,7 +138,7 @@
 		82D003C1193DC01200C7E565 /* interf_enc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interf_enc.h; sourceTree = "<group>"; };
 		82E9DD9D18B1BA3900DF221E /* CLOPcrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLOPcrypto.h; sourceTree = "<group>"; };
 		82E9DD9E18B1BA3900DF221E /* CLOPcrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLOPcrypto.m; sourceTree = "<group>"; };
-		9136BB8A1A8C9B8100350A26 /* servicecoreVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = servicecoreVideo.xcodeproj; path = ../../servicecore/servicecoreVideo.xcodeproj; sourceTree = "<group>"; };
+		AD36302E1F429D5D00F0C20B /* servicecoreVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = servicecoreVideo.xcodeproj; path = ../../servicecore/servicecoreVideo.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,7 +146,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADF261341DB8B13E008420B0 /* libccpclient.a in Frameworks */,
+				AD36305B1F429D6B00F0C20B /* libccpclient.a in Frameworks */,
 				825FBF9B17D7107D00B0943D /* CoreTelephony.framework in Frameworks */,
 				05C42AD616FABC790023A950 /* CoreFoundation.framework in Frameworks */,
 				05C42AD416FABC6B0023A950 /* Foundation.framework in Frameworks */,
@@ -162,7 +162,7 @@
 		050207E516FAB900008FBA62 = {
 			isa = PBXGroup;
 			children = (
-				9136BB8A1A8C9B8100350A26 /* servicecoreVideo.xcodeproj */,
+				AD36302E1F429D5D00F0C20B /* servicecoreVideo.xcodeproj */,
 				050207F516FAB900008FBA62 /* CCPSDKProject */,
 				050207F216FAB900008FBA62 /* Frameworks */,
 				050207F116FAB900008FBA62 /* Products */,
@@ -306,10 +306,10 @@
 			path = audio;
 			sourceTree = "<group>";
 		};
-		9136BB8B1A8C9B8100350A26 /* Products */ = {
+		AD36302F1F429D5D00F0C20B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9136BBAC1A8C9B8300350A26 /* libccpclient.a */,
+				AD36305A1F429D5E00F0C20B /* libccpclient.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -328,7 +328,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				AD6F2D691C7BE99E004A376D /* PBXTargetDependency */,
+				AD36305D1F429D7000F0C20B /* PBXTargetDependency */,
 			);
 			name = CCPSDKProject;
 			productName = CCPSDKProject;
@@ -356,8 +356,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 9136BB8B1A8C9B8100350A26 /* Products */;
-					ProjectRef = 9136BB8A1A8C9B8100350A26 /* servicecoreVideo.xcodeproj */;
+					ProductGroup = AD36302F1F429D5D00F0C20B /* Products */;
+					ProjectRef = AD36302E1F429D5D00F0C20B /* servicecoreVideo.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -368,11 +368,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		9136BBAC1A8C9B8300350A26 /* libccpclient.a */ = {
+		AD36305A1F429D5E00F0C20B /* libccpclient.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libccpclient.a;
-			remoteRef = 9136BBAB1A8C9B8300350A26 /* PBXContainerItemProxy */;
+			remoteRef = AD3630591F429D5E00F0C20B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -412,10 +412,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		AD6F2D691C7BE99E004A376D /* PBXTargetDependency */ = {
+		AD36305D1F429D7000F0C20B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = servicecore;
-			targetProxy = AD6F2D681C7BE99E004A376D /* PBXContainerItemProxy */;
+			targetProxy = AD36305C1F429D7000F0C20B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
