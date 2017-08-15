@@ -194,6 +194,7 @@ void VCMQmResolution::Reset() {
   avg_packet_loss_ = 0.0f;
   encoder_state_ = kStableEncoding;
   num_layers_ = 1;
+  qm_resolution_mode_ = kResolutionModeBoth;
   ResetRates();
   ResetDownSamplingState();
   ResetQM();
@@ -354,7 +355,7 @@ int VCMQmResolution::SelectResolution(VCMResolutionScale** qm) {
 //      printf("sean haha going down width:%d, height:%d\n",qm_->codec_width,qm_->codec_height);
     return VCM_OK;
   }
-  return VCM_OK;
+  return VCM_OK;    
 }
 
 void VCMQmResolution::SetDefaultAction() {
@@ -460,10 +461,12 @@ bool VCMQmResolution::GoingUpResolution() {
     selected_up_spatial = ConditionForGoingUp(fac_width, fac_height, 1.0f,
                                               kTransRateScaleUpSpatial);
   }
+    
   if (down_action_history_[0].temporal != kNoChangeTemporal) {
     selected_up_temporal = ConditionForGoingUp(1.0f, 1.0f, fac_temp,
                                                kTransRateScaleUpTemp);
   }
+    
   if (selected_up_spatial && !selected_up_temporal) {
     action_.spatial = down_action_history_[0].spatial;
     action_.temporal = kNoChangeTemporal;
@@ -500,6 +503,10 @@ bool VCMQmResolution::ConditionForGoingUp(float fac_width,
   }
 }
 
+void VCMQmResolution::SetQmResolutionMode(VCMQmResolutionMode mode) {
+    qm_resolution_mode_ = mode;
+}
+    
 bool VCMQmResolution::GoingDownResolution() {
   float estimated_transition_rate_down =
       GetTransitionRate(1.0f, 1.0f, 1.0f, 1.0f);
@@ -518,6 +525,23 @@ bool VCMQmResolution::GoingDownResolution() {
         kTemporalAction[content_class_ +
                         9 * RateClass(estimated_transition_rate_down)];
 
+      switch (qm_resolution_mode_) {
+          case kResolutionModeNone:
+              spatial_fact = 1;
+              temp_fact = 1;
+              break;
+          case kResolutionModeOnlySpatial:
+              temp_fact = 1;
+              break;
+          case kResolutionModeOnlyTemporal:
+              spatial_fact = 1;
+              break;
+          case kResolutionModeBoth:
+              break;
+          default:
+              break;
+      }
+      
     switch (spatial_fact) {
       case 4: {
         action_.spatial = kOneQuarterSpatialUniform;
@@ -535,6 +559,7 @@ bool VCMQmResolution::GoingDownResolution() {
         assert(false);
       }
     }
+      
     switch (temp_fact) {
       case 3: {
         action_.temporal = kTwoThirdsTemporal;
@@ -730,6 +755,7 @@ void VCMQmResolution::ConvertSpatialFractionalToWhole() {
         break;
       }
     }
+      
     if (found) {
        action_.spatial = kOneQuarterSpatialUniform;
        state_dec_factor_spatial_ = state_dec_factor_spatial_ /

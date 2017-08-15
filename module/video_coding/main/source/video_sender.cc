@@ -269,6 +269,10 @@ int32_t VideoSender::SetChannelParameters(uint32_t target_bitrate,
   return VCM_OK;
 }
 
+void VideoSender::SetVideoQualityMode(int mode) {
+    _mediaOpt.SetQualityMode(mode);
+}
+
 int32_t VideoSender::RegisterTransportCallback(
     VCMPacketizationCallback* transport) {
   CriticalSectionScoped cs(_sendCritSect);

@@ -27,12 +27,13 @@
 #include "statsCollector.h"
 #include "VoeObserver.h"
 #include "amrnb_api.h"
-#include "ECLiveStream.h"
+
 #ifdef WIN32
 #include "codingHelper.h"
 #endif
 
 #ifdef VIDEO_ENABLED
+#include "ECLiveStream.h"
 #include "vie_network.h"
 #include "vie_base.h"
 #include "vie_capture.h"
@@ -81,7 +82,7 @@ enum {
     PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret); \
     return ret;}
 #endif
-
+#ifdef VIDEO_ENABLED
 class ECViECaptureObserver :public ViECaptureObserver
 {
 public:
@@ -101,7 +102,8 @@ private:
 	onEcMediaNoCameraCaptureCb m_callback;
 
 };
-
+#endif
+#ifdef VIDEO_ENABLED
 ECViECaptureObserver::ECViECaptureObserver(onEcMediaNoCameraCaptureCb fp)
 	:m_firstStart(true),
 	m_callback(fp)
@@ -120,13 +122,15 @@ void ECViECaptureObserver::NoPictureAlarm(const int capture_id, const CaptureAla
 		m_callback(capture_id, alarm);
 	}
 }
-
+#endif
 cloopenwebrtc::VoiceEngine* m_voe = NULL;
 static StatsCollector *g_statsCollector = NULL;
 
 static VoeObserver* g_VoeObserver = NULL;
 static onEcMediaNoCameraCaptureCb g_NoCameraCaptureCb = NULL;
+#ifdef VIDEO_ENABLED
 static ECViECaptureObserver* g_ECViECaptureObserver = NULL;
+#endif
 
 
 #ifdef VIDEO_ENABLED
@@ -2931,7 +2935,7 @@ int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame 
 
 int ECMedia_set_local_video_window(int deviceid, void *video_window)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... deviceid:%d video_window:%0x ", __FUNCTION__, deviceid, video_window);
+    PrintConsole("[ECMEDIA INFO] %s begins... deviceid:%d video_window:%p ", __FUNCTION__, deviceid, video_window);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECapture *capture = ViECapture::GetInterface(m_vie);
     if (capture) {
@@ -3020,14 +3024,14 @@ int ECMedia_add_render(int channelid, void *video_window, ReturnVideoWidthHeight
 
 	//		int ret = render->AddRenderer(t_channelid, f_video_window, 2, 0, 0, 1, 1, f_videoResolutionCallback);
 	//		render->StartRender(t_channelid);
-
+ 
 	//		render->Release();
 	//	}
 	//}
 	//return 0;
 
 
-    PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d video_window:%0x", __FUNCTION__, channelid, video_window);
+    PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d video_window:%p", __FUNCTION__, channelid, video_window);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViERender *render = ViERender::GetInterface(m_vie);
     if (render) {
@@ -3078,7 +3082,9 @@ int ECMedia_stop_render(int channelid, int deviceid)
     PrintConsole("[ECMEDIA INFO] %s ends...",__FUNCTION__);
     return 0;
 }
+#endif
 
+#ifdef VIDEO_ENABLED
 int ECMedia_set_i420_framecallback(int channelid, cloopenwebrtc::ECMedia_I420FrameCallBack callback) {
     PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d ", __FUNCTION__, channelid);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
@@ -3348,6 +3354,26 @@ int ECMedia_get_send_codec_video(int channelid, VideoCodec& videoCodec)
         if (ret != 0) {
             PrintConsole("[ECMEDIA ERROR] %s failed to get video send codec", __FUNCTION__);
         }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA ERROR] %s failed to get ViECodec", __FUNCTION__);
+        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        return -99;
+    }
+}
+
+int ECMedia_set_video_qm_mode(int channelid,  cloopenwebrtc::VCMQmResolutionMode mode) {
+    PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d , VCMQmResolutionMode: %d",
+                 __FUNCTION__, channelid, mode);
+    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    ViECodec *codec = ViECodec::GetInterface(m_vie);
+    if (codec) {
+        
+        int ret = codec->SetVideoSendQmMode(channelid, mode);
+        codec->Release();
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -5223,6 +5249,7 @@ ECMEDIA_API void ECMedia_stopRecordLocalMedia()
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 #endif
 }
+#endif
 
 int ECMedia_getStatsReports(int type, char* callid, void** pMediaStatisticsDataInnerArray, int *pArraySize)
 {
