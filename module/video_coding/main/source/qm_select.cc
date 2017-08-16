@@ -864,7 +864,7 @@ void VCMQmResolution::ConstrainAmountOfDownSampling() {
   // Check if the total (spatial-temporal) down-action is above maximum allowed,
   // if so, disallow the current selected down-action.
   if (new_dec_factor_spatial * new_dec_factor_temp > kMaxTotalDown) {
-    if (action_.spatial != kNoChangeSpatial) { //优先使用降低帧率，其次考虑降分辨率
+    if (action_.spatial != kNoChangeSpatial) { //鈥濃増艙禄聽蟺鈥濃垰惟碌碌脮梅掳卢聽拢篓鈭嗏�奥ヅ捗嘎郝┞碘垜梅卤脢卢聽
       action_.spatial = kNoChangeSpatial;
     } else if (action_.temporal != kNoChangeTemporal) {
       action_.temporal = kNoChangeTemporal;

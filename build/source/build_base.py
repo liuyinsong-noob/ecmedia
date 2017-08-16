@@ -21,12 +21,16 @@ class BuildBase:
         self.RarPath = os.path.join(self.ProjectPath, 'build', self.buildType)
         self.RarIncludePath = os.path.join(self.RarPath, 'include')
         self.RarLibsPath = os.path.join(self.RarPath, 'libs')
+        self.RarX32LibsPath = os.path.join(self.RarPath, 'libs', 'x32')
+        self.RarX64LibsPath = os.path.join(self.RarPath, 'libs', 'x64')
         timestamp = time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime(time.time()))
         self.rarFileName = self.buildType + '-' + self.getEcmediaVersion() + '-' + timestamp + '.zip'
     
     def run(self):
         self.build()
         self.collectFiles()
+        self.buildAudioOnly()
+        self.collectAudioOnlyFiles()
         version, timestamp, sha = self.getLastCommitInfo()
         timestamp = str(int(timestamp) + 1)
         if self.buildType == 'release':
@@ -39,7 +43,13 @@ class BuildBase:
     def build():
         pass
     
+    def buildAudioOnly():
+        pass
+    
     def collectLibFiles(self):
+        pass
+    
+    def collectLibAudioOnlyFiles(self):
         pass
       
     def collectHeaderFiles(self):
@@ -59,9 +69,22 @@ class BuildBase:
            pass
         else:
            os.mkdir(self.RarPath)
+           
+        if os.path.exists(self.RarLibsPath):
+           pass
+        else:
+           os.mkdir(self.RarLibsPath)
 
         self.collectLibFiles()
         self.collectHeaderFiles()
+        
+    def collectAudioOnlyFiles(self):
+        if os.path.exists(self.RarPath):
+           pass
+        else:
+           os.mkdir(self.RarPath)
+
+        self.collectLibAudioOnlyFiles()
 
     def rarFiles(self):
         os.chdir(self.BuildPath)

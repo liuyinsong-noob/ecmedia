@@ -307,6 +307,10 @@ void ViEEncoder::SetNetworkTransmissionState(bool is_transmitting) {
   }
 }
 
+void ViEEncoder::SetVideoQualityMode(int mode) {
+    vcm_.SetVideoQualityMode(mode);
+}
+    
 void ViEEncoder::Pause() {
   CriticalSectionScoped cs(data_cs_.get());
   encoder_paused_ = true;

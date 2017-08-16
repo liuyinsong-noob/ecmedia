@@ -301,6 +301,26 @@ int ViECodecImpl::SetSendCodec(const int video_channel,
   return 0;
 }
 
+int ViECodecImpl::SetVideoSendQmMode(int channel_id, int mode) {
+    LOG(LS_INFO) << "SetSendCodec for channel " << channel_id;
+
+    ViEChannelManagerScoped cs(*(shared_data_->channel_manager()));
+    ViEEncoder* vie_encoder = cs.Encoder(channel_id);
+    
+    if(vie_encoder == NULL) {
+        LOG(LS_INFO) << "Error, vie_encoder is null.";
+        return -1;
+    }
+    
+    if (vie_encoder->Owner() != channel_id) {
+        LOG_F(LS_ERROR) << "Receive only channel.";
+        shared_data_->SetLastError(kViECodecReceiveOnlyChannel);
+        return -1;
+    }
+    vie_encoder->SetVideoQualityMode(mode);
+    return 0;
+}
+
 
 int32_t ViECodecImpl::AddI420FrameCallback(const int video_channel, ECMedia_I420FrameCallBack callback) {
     LOG(LS_INFO) << "SetSendCodec for channel " << video_channel;

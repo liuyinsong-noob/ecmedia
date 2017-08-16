@@ -68,7 +68,7 @@ class ViEEncoder
   bool Init();
 
   void SetNetworkTransmissionState(bool is_transmitting);
-
+  void SetVideoQualityMode(int mode) ;
   // Returns the id of the owning channel.
   int Owner() const;
 

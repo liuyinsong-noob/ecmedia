@@ -79,6 +79,8 @@ class ViECodecImpl
   virtual int DeRegisterCaptureObserver(const int video_channel);
   virtual int SetFrameScaleType(const int video_channel, FrameScaleType frame_scale_type);
   virtual int AddI420FrameCallback(const int video_channel, ECMedia_I420FrameCallBack callback);
+  virtual int SetVideoSendQmMode(int channel_id, int mode);
+          
  protected:
   explicit ViECodecImpl(ViESharedData* shared_data);
   virtual ~ViECodecImpl();
