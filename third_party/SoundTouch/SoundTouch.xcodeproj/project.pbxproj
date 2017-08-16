@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F2133701F1CBF9900A8A423 /* SoundTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBA41ED6BC370085E576 /* SoundTouch.cpp */; };
 		1F2133711F1CBF9900A8A423 /* TDStretch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBA51ED6BC370085E576 /* TDStretch.cpp */; };
 		1F2133731F1CBF9900A8A423 /* RateTransposer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBA71ED6BC370085E576 /* RateTransposer.cpp */; };
 		1F2133751F1CBF9900A8A423 /* AAFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBA91ED6BC370085E576 /* AAFilter.cpp */; };
@@ -18,7 +17,6 @@
 		1F2133801F1CBF9900A8A423 /* mmx_optimized.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBB41ED6BC370085E576 /* mmx_optimized.cpp */; };
 		1F2133811F1CBF9900A8A423 /* PeakFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBB51ED6BC370085E576 /* PeakFinder.cpp */; };
 		1F2133831F1CBF9900A8A423 /* sse_optimized.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBB71ED6BC370085E576 /* sse_optimized.cpp */; };
-		1FE1CBB81ED6BC370085E576 /* SoundTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBA41ED6BC370085E576 /* SoundTouch.cpp */; };
 		1FE1CBB91ED6BC370085E576 /* TDStretch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBA51ED6BC370085E576 /* TDStretch.cpp */; };
 		1FE1CBBA1ED6BC370085E576 /* RateTransposer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBA71ED6BC370085E576 /* RateTransposer.cpp */; };
 		1FE1CBBB1ED6BC370085E576 /* AAFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBA91ED6BC370085E576 /* AAFilter.cpp */; };
@@ -29,6 +27,7 @@
 		1FE1CBC01ED6BC370085E576 /* mmx_optimized.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBB41ED6BC370085E576 /* mmx_optimized.cpp */; };
 		1FE1CBC11ED6BC370085E576 /* PeakFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBB51ED6BC370085E576 /* PeakFinder.cpp */; };
 		1FE1CBC21ED6BC370085E576 /* sse_optimized.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBB71ED6BC370085E576 /* sse_optimized.cpp */; };
+		AD36333E1F445BBA00F0C20B /* SoundTouch_media.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD36333D1F445BBA00F0C20B /* SoundTouch_media.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,10 +45,8 @@
 /* Begin PBXFileReference section */
 		1F2133641F1CBEE300A8A423 /* libSoundTouch_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSoundTouch_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FDC34FC1ED67266003D6155 /* libSoundTouch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSoundTouch.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		1FE1CBA11ED6BC2A0085E576 /* SoundTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundTouch.h; sourceTree = "<group>"; };
 		1FE1CBA21ED6BC2A0085E576 /* soundtouch_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soundtouch_config.h; sourceTree = "<group>"; };
 		1FE1CBA31ED6BC370085E576 /* RateTransposer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RateTransposer.h; sourceTree = "<group>"; };
-		1FE1CBA41ED6BC370085E576 /* SoundTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundTouch.cpp; sourceTree = "<group>"; };
 		1FE1CBA51ED6BC370085E576 /* TDStretch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TDStretch.cpp; sourceTree = "<group>"; };
 		1FE1CBA61ED6BC370085E576 /* TDStretch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDStretch.h; sourceTree = "<group>"; };
 		1FE1CBA71ED6BC370085E576 /* RateTransposer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RateTransposer.cpp; sourceTree = "<group>"; };
@@ -69,6 +66,8 @@
 		1FE1CBB51ED6BC370085E576 /* PeakFinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PeakFinder.cpp; sourceTree = "<group>"; };
 		1FE1CBB61ED6BC370085E576 /* PeakFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeakFinder.h; sourceTree = "<group>"; };
 		1FE1CBB71ED6BC370085E576 /* sse_optimized.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sse_optimized.cpp; sourceTree = "<group>"; };
+		AD36333C1F445BB200F0C20B /* SoundTouch_media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundTouch_media.h; sourceTree = "<group>"; };
+		AD36333D1F445BBA00F0C20B /* SoundTouch_media.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundTouch_media.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,7 +117,7 @@
 		1FDC35081ED67295003D6155 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				1FE1CBA11ED6BC2A0085E576 /* SoundTouch.h */,
+				AD36333C1F445BB200F0C20B /* SoundTouch_media.h */,
 				1FE1CBA21ED6BC2A0085E576 /* soundtouch_config.h */,
 			);
 			name = include;
@@ -127,8 +126,8 @@
 		1FDC35091ED672A2003D6155 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				AD36333D1F445BBA00F0C20B /* SoundTouch_media.cpp */,
 				1FE1CBA31ED6BC370085E576 /* RateTransposer.h */,
-				1FE1CBA41ED6BC370085E576 /* SoundTouch.cpp */,
 				1FE1CBA51ED6BC370085E576 /* TDStretch.cpp */,
 				1FE1CBA61ED6BC370085E576 /* TDStretch.h */,
 				1FE1CBA71ED6BC370085E576 /* RateTransposer.cpp */,
@@ -243,7 +242,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F2133701F1CBF9900A8A423 /* SoundTouch.cpp in Sources */,
 				1F2133711F1CBF9900A8A423 /* TDStretch.cpp in Sources */,
 				1F2133731F1CBF9900A8A423 /* RateTransposer.cpp in Sources */,
 				1F2133751F1CBF9900A8A423 /* AAFilter.cpp in Sources */,
@@ -262,11 +260,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FE1CBBD1ED6BC370085E576 /* cpu_detect_x86.cpp in Sources */,
-				1FE1CBB81ED6BC370085E576 /* SoundTouch.cpp in Sources */,
 				1FE1CBC01ED6BC370085E576 /* mmx_optimized.cpp in Sources */,
 				1FE1CBBB1ED6BC370085E576 /* AAFilter.cpp in Sources */,
 				1FE1CBC21ED6BC370085E576 /* sse_optimized.cpp in Sources */,
 				1FE1CBBA1ED6BC370085E576 /* RateTransposer.cpp in Sources */,
+				AD36333E1F445BBA00F0C20B /* SoundTouch_media.cpp in Sources */,
 				1FE1CBBE1ED6BC370085E576 /* FIFOSampleBuffer.cpp in Sources */,
 				1FE1CBBF1ED6BC370085E576 /* FIRFilter.cpp in Sources */,
 				1FE1CBB91ED6BC370085E576 /* TDStretch.cpp in Sources */,
@@ -430,6 +428,7 @@
 				1F21336D1F1CBEE300A8A423 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1FDC34F71ED67266003D6155 /* Build configuration list for PBXProject "SoundTouch" */ = {
 			isa = XCConfigurationList;
