@@ -43,8 +43,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1F2133641F1CBEE300A8A423 /* libSoundTouch_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSoundTouch_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		1FDC34FC1ED67266003D6155 /* libSoundTouch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSoundTouch.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F2133641F1CBEE300A8A423 /* libSoundTouch_Media_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSoundTouch_Media_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FDC34FC1ED67266003D6155 /* libSoundTouch_Media.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSoundTouch_Media.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FE1CBA21ED6BC2A0085E576 /* soundtouch_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soundtouch_config.h; sourceTree = "<group>"; };
 		1FE1CBA31ED6BC370085E576 /* RateTransposer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RateTransposer.h; sourceTree = "<group>"; };
 		1FE1CBA51ED6BC370085E576 /* TDStretch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TDStretch.cpp; sourceTree = "<group>"; };
@@ -99,8 +99,8 @@
 		1FDC34FD1ED67266003D6155 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1FDC34FC1ED67266003D6155 /* libSoundTouch.a */,
-				1F2133641F1CBEE300A8A423 /* libSoundTouch_Mac.a */,
+				1FDC34FC1ED67266003D6155 /* libSoundTouch_Media.a */,
+				1F2133641F1CBEE300A8A423 /* libSoundTouch_Media_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -164,9 +164,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		1F2133631F1CBEE300A8A423 /* SoundTouch_Mac */ = {
+		1F2133631F1CBEE300A8A423 /* SoundTouch_Media_Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1F21336E1F1CBEE300A8A423 /* Build configuration list for PBXNativeTarget "SoundTouch_Mac" */;
+			buildConfigurationList = 1F21336E1F1CBEE300A8A423 /* Build configuration list for PBXNativeTarget "SoundTouch_Media_Mac" */;
 			buildPhases = (
 				1F2133601F1CBEE300A8A423 /* Sources */,
 				1F2133611F1CBEE300A8A423 /* Frameworks */,
@@ -176,14 +176,14 @@
 			);
 			dependencies = (
 			);
-			name = SoundTouch_Mac;
+			name = SoundTouch_Media_Mac;
 			productName = SoundTouch_Mac;
-			productReference = 1F2133641F1CBEE300A8A423 /* libSoundTouch_Mac.a */;
+			productReference = 1F2133641F1CBEE300A8A423 /* libSoundTouch_Media_Mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		1FDC34FB1ED67266003D6155 /* SoundTouch */ = {
+		1FDC34FB1ED67266003D6155 /* SoundTouch_Media */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1FDC35051ED67266003D6155 /* Build configuration list for PBXNativeTarget "SoundTouch" */;
+			buildConfigurationList = 1FDC35051ED67266003D6155 /* Build configuration list for PBXNativeTarget "SoundTouch_Media" */;
 			buildPhases = (
 				1FDC34F81ED67266003D6155 /* Sources */,
 				1FDC34F91ED67266003D6155 /* Frameworks */,
@@ -193,9 +193,9 @@
 			);
 			dependencies = (
 			);
-			name = SoundTouch;
+			name = SoundTouch_Media;
 			productName = SoundTouch;
-			productReference = 1FDC34FC1ED67266003D6155 /* libSoundTouch.a */;
+			productReference = 1FDC34FC1ED67266003D6155 /* libSoundTouch_Media.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -231,8 +231,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1FDC34FB1ED67266003D6155 /* SoundTouch */,
-				1F2133631F1CBEE300A8A423 /* SoundTouch_Mac */,
+				1FDC34FB1ED67266003D6155 /* SoundTouch_Media */,
+				1F2133631F1CBEE300A8A423 /* SoundTouch_Media_Mac */,
 			);
 		};
 /* End PBXProject section */
@@ -421,7 +421,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1F21336E1F1CBEE300A8A423 /* Build configuration list for PBXNativeTarget "SoundTouch_Mac" */ = {
+		1F21336E1F1CBEE300A8A423 /* Build configuration list for PBXNativeTarget "SoundTouch_Media_Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1F21336C1F1CBEE300A8A423 /* Debug */,
@@ -439,7 +439,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1FDC35051ED67266003D6155 /* Build configuration list for PBXNativeTarget "SoundTouch" */ = {
+		1FDC35051ED67266003D6155 /* Build configuration list for PBXNativeTarget "SoundTouch_Media" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1FDC35061ED67266003D6155 /* Debug */,

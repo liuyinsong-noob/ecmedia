@@ -15,7 +15,6 @@
 		1AFBD1221DAE564A009B8D23 /* libfaad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1211DAE564A009B8D23 /* libfaad.a */; };
 		1AFBD1241DAE5839009B8D23 /* libfaac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1231DAE5839009B8D23 /* libfaac.a */; };
 		1AFBD1661DAE67D3009B8D23 /* libL16.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1611DAE6592009B8D23 /* libL16.a */; };
-		1F2133051F1CB9E900A8A423 /* libSoundTouch_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F2133041F1CB9E900A8A423 /* libSoundTouch_Mac.a */; };
 		1F8EE0021E5D6EB200C04C10 /* RecordLocal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EE0011E5D6EB200C04C10 /* RecordLocal.cpp */; };
 		1F8EE0551E5D7B8B00C04C10 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F8EE0541E5D7B8B00C04C10 /* libavformat.a */; };
 		1FBB43FA1E728F35007DBD1D /* MediaStatisticsData.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FBB43F91E728F35007DBD1D /* MediaStatisticsData.pb.cc */; };
@@ -32,6 +31,7 @@
 		AD1123011DAF1B7A006CDD38 /* librtmp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD056FBC1DAF1AB70007DB7A /* librtmp.a */; };
 		AD1123271DAF3108006CDD38 /* libopus_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1123261DAF3108006CDD38 /* libopus_Mac.a */; };
 		AD2DE0FC1D6BEA4C00FE3814 /* VoeObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD2DE0FB1D6BEA4C00FE3814 /* VoeObserver.cpp */; };
+		AD36336D1F44668100F0C20B /* libSoundTouch_Media.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD36336A1F44668100F0C20B /* libSoundTouch_Media.a */; };
 		AD3EBA921DE5324E00024454 /* libcommon_video_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA0AD991DA8C54400C4807D /* libcommon_video_Mac.a */; };
 		AD3EBA991DE5326800024454 /* ECLiveStream_rtmp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0B41DAE0A59009B8D23 /* ECLiveStream_rtmp.cpp */; };
 		AD3EBA9A1DE5326800024454 /* ECLiveStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0B51DAE0A59009B8D23 /* ECLiveStream.cpp */; };
@@ -47,7 +47,6 @@
 		AD3EBB161DE5B71200024454 /* libx264_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD3EBB111DE5B71200024454 /* libx264_mac.a */; };
 		AD4B6B9E1D4B4FBD00731C5B /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = AD4B6B9C1D4B4FA800731C5B /* base64.c */; };
 		AD4E8C561CB664F80068C4E9 /* libcommon_audio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4E8C551CB664D00068C4E9 /* libcommon_audio.a */; };
-		AD5A0C711F147F22002E191B /* libSoundTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F099E371ED57CC200421B08 /* libSoundTouch.a */; };
 		AD7E733F1D3CB66A001C0E04 /* statsCollector.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD7E733E1D3CB66A001C0E04 /* statsCollector.cc */; };
 		ADA0AD9D1DA8E00C00C4807D /* libcommon_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA0AD971DA8C54400C4807D /* libcommon_video.a */; };
 		ADB127321E779225003CBF6C /* libavformat_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB127311E779225003CBF6C /* libavformat_mac.a */; };
@@ -129,26 +128,12 @@
 			remoteGlobalIDString = 1A1EB68E1D9939E300CEEB9E;
 			remoteInfo = L16;
 		};
-		1F099E361ED57CC200421B08 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1F099E2D1ED57CC200421B08 /* SoundTouch.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AD2316FD1BF968D100A662A9;
-			remoteInfo = SoundTouch;
-		};
 		1F099F161ED5AA1000421B08 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1F099E2D1ED57CC200421B08 /* SoundTouch.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 1FDC34FB1ED67266003D6155;
 			remoteInfo = SoundTouch;
-		};
-		1F2133031F1CB9E900A8A423 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1F099E2D1ED57CC200421B08 /* SoundTouch.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 1F2133011F1CB9BB00A8A423;
-			remoteInfo = SoundTouch_Mac;
 		};
 		1FBB44031E72925C007DBD1D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -191,6 +176,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = 1AFBD12E1DAE58F0009B8D23;
 			remoteInfo = rtmp;
+		};
+		AD3633691F44668100F0C20B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F099E2D1ED57CC200421B08 /* SoundTouch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1FDC34FC1ED67266003D6155;
+			remoteInfo = SoundTouch_Media;
+		};
+		AD36336B1F44668100F0C20B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F099E2D1ED57CC200421B08 /* SoundTouch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1F2133641F1CBEE300A8A423;
+			remoteInfo = SoundTouch_Media_Mac;
 		};
 		AD3920BD1EA645780099B83F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1262,7 +1261,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F2133051F1CB9E900A8A423 /* libSoundTouch_Mac.a in Frameworks */,
 				ADB127321E779225003CBF6C /* libavformat_mac.a in Frameworks */,
 				1FBB44081E729283007DBD1D /* libprotobuf_Mac.a in Frameworks */,
 				AD3EBB121DE5B71200024454 /* libvpx_mac.a in Frameworks */,
@@ -1310,7 +1308,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD5A0C711F147F22002E191B /* libSoundTouch.a in Frameworks */,
+				AD36336D1F44668100F0C20B /* libSoundTouch_Media.a in Frameworks */,
 				1FDB3E4C1E839BC30018FA08 /* libsrtp.a in Frameworks */,
 				1FBB44071E72926C007DBD1D /* libprotobuf.a in Frameworks */,
 				1F8EE0551E5D7B8B00C04C10 /* libavformat.a in Frameworks */,
@@ -1434,8 +1432,8 @@
 		1F099E2E1ED57CC200421B08 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1F099E371ED57CC200421B08 /* libSoundTouch.a */,
-				1F2133041F1CB9E900A8A423 /* libSoundTouch_Mac.a */,
+				AD36336A1F44668100F0C20B /* libSoundTouch_Media.a */,
+				AD36336C1F44668100F0C20B /* libSoundTouch_Media_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2398,20 +2396,6 @@
 			remoteRef = 1AFBD1601DAE6592009B8D23 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1F099E371ED57CC200421B08 /* libSoundTouch.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libSoundTouch.a;
-			remoteRef = 1F099E361ED57CC200421B08 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		1F2133041F1CB9E900A8A423 /* libSoundTouch_Mac.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libSoundTouch_Mac.a;
-			remoteRef = 1F2133031F1CB9E900A8A423 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		1FBB44041E72925C007DBD1D /* libprotobuf.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -2452,6 +2436,20 @@
 			fileType = archive.ar;
 			path = librtmp.a;
 			remoteRef = AD056FBB1DAF1AB70007DB7A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD36336A1F44668100F0C20B /* libSoundTouch_Media.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSoundTouch_Media.a;
+			remoteRef = AD3633691F44668100F0C20B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AD36336C1F44668100F0C20B /* libSoundTouch_Media_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSoundTouch_Media_Mac.a;
+			remoteRef = AD36336B1F44668100F0C20B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		AD3EBA951DE5324E00024454 /* libL16_Mac.a */ = {
