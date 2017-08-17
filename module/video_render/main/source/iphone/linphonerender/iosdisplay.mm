@@ -221,6 +221,10 @@ enum TextureType
                                    nil];
     
     [self setAutoresizingMask: UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+//    register notification
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackgroundFun:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
     // view scale
     self.contentScaleFactor = [UIScreen mainScreen].scale;
     _viewScale = [UIScreen mainScreen].scale;
@@ -246,7 +250,7 @@ enum TextureType
     glUniform1i(textureUniformY, 0);
     glUniform1i(textureUniformU, 1);
     glUniform1i(textureUniformV, 2);
-
+    isRendering = YES;
     return YES;
 }
 
@@ -373,6 +377,9 @@ enum TextureType
 {
     // render when view ready
     if (!self.window) {
+        return;
+    }
+    if (!isRendering) {
         return;
     }
     @synchronized(self)
@@ -577,4 +584,21 @@ enum TextureType
     _framebuffer = 0;
     _renderBuffer = 0;
 }
+
+- (void)appWillResignActive:(NSNotification *)noti
+{
+    isRendering = NO;
+    glFinish();
+}
+
+- (void)appDidEnterBackgroundFun:(NSNotification*)noti
+{
+    
+}
+
+- (void)appWillEnterForeground:(NSNotification *)noti
+{
+    isRendering = YES;
+}
+
 @end
