@@ -15,7 +15,7 @@ LOCAL_SRC_FILES := \
 	FIRFilter.cpp \
 	PeakFinder.cpp \
 	RateTransposer.cpp \
-	SoundTouch.cpp \
+	SoundTouch_media.cpp \
 	TDStretch.cpp \
 	cpu_detect_x86.cpp \
 	mmx_optimized.cpp \
