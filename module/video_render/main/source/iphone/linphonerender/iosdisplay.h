@@ -38,6 +38,7 @@
     // UIView* parentView;
     // is opengl rending frame
     BOOL isRunning;
+    BOOL isRendering;
     //
     int deviceRotation;
 
