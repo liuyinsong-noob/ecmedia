@@ -439,25 +439,26 @@ int VideoEngine::SetAndroidObjects(void* javaVM, void* env, void* javaContext) {
 	WEBRTC_TRACE(kTraceApiCall, kTraceVideo, g_vie_active_instance_counter,
 		"SetAndroidObjects()");
 
+int ret = 0;
 #ifdef WEBRTC_ANDROID
 	if (VideoCaptureFactory::SetAndroidObjects(javaVM, env, javaContext) != 0) {
 		WEBRTC_TRACE(kTraceError, kTraceVideo, g_vie_active_instance_counter,
 			"Could not set capture module Android objects");
-		return -1;
+		ret = -1;
 	}
 	if (VideoRender::SetAndroidObjects(javaVM, env, javaContext) != 0) {
 		WEBRTC_TRACE(kTraceError, kTraceVideo, g_vie_active_instance_counter,
 			"Could not set render module Android objects");
-		return -1;
+		ret = -1;
 	}
 #ifdef ENABLE_SCREEN_SHARE
   if (ScreenCapturer::SetAndroidObjects(javaVM, env, javaContext) != 0) {
 		WEBRTC_TRACE(kTraceError, kTraceVideo, g_vie_active_instance_counter,
 			"Could not set ScreenCapture Android objects");
-		return -1;
+		ret = -1;
   }
 #endif
-	return 0;
+	return ret;
 #else
 	WEBRTC_TRACE(kTraceError, kTraceVideo, g_vie_active_instance_counter,
 		"WEBRTC_ANDROID not defined for VideoEngine::SetAndroidObjects");
