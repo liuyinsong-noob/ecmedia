@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include "cJSON.h"
 #include "base64.h"
+#include <malloc.h>
 
 static JavaVM* _javaVM = NULL;
 
