@@ -86,12 +86,6 @@
             android:label="@string/launcher_name"
             android:launchMode="singleTop"
             android:windowSoftInputMode="stateAlwaysHidden" >
-            
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-				<category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
-            </intent-filter>
         </activity>
         
         <activity
@@ -330,6 +324,12 @@
             android:name=".ui.developer.DeveloperLoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
+            </intent-filter>
         </activity>
         
         

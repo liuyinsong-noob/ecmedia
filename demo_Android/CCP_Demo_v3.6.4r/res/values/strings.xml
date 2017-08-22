@@ -600,7 +600,7 @@
     <string name="str_input_testnumbe_hint">固话需加区号</string>
     <string name="str_build_failed" formatted="false">绑定失败(%1$s),请稍候重试</string>
     <!-- The select subaccount label -->
-    <string name="str_select_subaccount_label">请选择子帐号：</string>
+    <string name="str_select_subaccount_label">请输入子帐号：</string>
     <string name="str_subaccount_obtaining">子账号初始化中...</string>
 
     <!-- The login tips -->

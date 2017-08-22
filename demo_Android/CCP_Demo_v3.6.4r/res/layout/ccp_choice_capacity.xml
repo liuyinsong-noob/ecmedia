@@ -7,7 +7,7 @@
 
     <!-- include ccp top item. -->
 
-    <include layout="@layout/ccp_top" />
+    <!-- <include layout="@layout/ccp_top" /> -->
 
     <ScrollView
         android:id="@+id/ccp_body_sv"
