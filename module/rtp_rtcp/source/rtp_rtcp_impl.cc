@@ -172,9 +172,9 @@ int32_t ModuleRtpRtcpImpl::Process() {
   const int64_t now = clock_->TimeInMilliseconds();
   last_process_time_ = now;
 
-  const int64_t kRtpRtcpBitrateProcessTimeMs = 10; //10ms?® ??
+  const int64_t kRtpRtcpBitrateProcessTimeMs = 10; //10ms?Ã†â€ ??
   if (now >= last_bitrate_process_time_ + kRtpRtcpBitrateProcessTimeMs) {
-    rtp_sender_.ProcessBitrate(); //???˜÷?¢ÀÕbr?total£¨nack£¨fec£¨video
+    rtp_sender_.ProcessBitrate(); //???Ã²Ëœ?Â¢Â¿â€™br?totalÂ£Â®nackÂ£Â®fecÂ£Â®video
     last_bitrate_process_time_ = now;
   }
     if (now >= last_packet_timeout_process_time_ +
@@ -1439,12 +1439,20 @@ int ModuleRtpRtcpImpl::SendSingleTMMBR(uint32_t bandwidth, uint32_t ssrc, uint32
     tmmbr_ssrc = ssrc;
     tmmbr_remote_ssrc = remote_ssrc;
     isSendingTmmbr = true;
+    
+    if(tmmbr_bandwidth == 0) {
+        //Ensure tmmbr sending successfully, we send tmmmbr three timesã€‚
+        rtcp_sender_.SendSingleTMMBR(tmmbr_bandwidth, tmmbr_ssrc, tmmbr_remote_ssrc);
+        rtcp_sender_.SendSingleTMMBR(tmmbr_bandwidth, tmmbr_ssrc, tmmbr_remote_ssrc);
+        rtcp_sender_.SendSingleTMMBR(tmmbr_bandwidth, tmmbr_ssrc, tmmbr_remote_ssrc);
+    }
+    
     return 0;
 }
-
-// On received TMMBN, stop thread and timer.
-void ModuleRtpRtcpImpl::OnReceivedTMMBN() {
-    isSendingTmmbr = false;
-}
-
+    
+    // On received TMMBN, stop thread and timer.
+    void ModuleRtpRtcpImpl::OnReceivedTMMBN() {
+        isSendingTmmbr = false;
+    }
+    
 }  // Namespace webrtc
