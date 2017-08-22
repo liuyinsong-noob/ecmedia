@@ -73,6 +73,7 @@ import com.voice.demo.tools.CCPIntentUtils;
 import com.voice.demo.tools.CCPUtil;
 import com.voice.demo.tools.net.ITask;
 import com.voice.demo.tools.net.ThreadPoolManager;
+import com.voice.demo.ui.developer.DeveloperLoginActivity;
 import com.voice.demo.views.CCPLayoutListenerView;
 import com.voice.demo.views.CCPLayoutListenerView.OnCCPViewLayoutListener;
 import com.voice.demo.voip.AudioVideoCallActivity;
@@ -1067,7 +1068,7 @@ public abstract class CCPBaseActivity extends Activity implements ThreadPoolMana
 	 */
 	public void launchCCP() {
 		Intent intent = new Intent();   
-		intent.setClass(CCPBaseActivity.this, LauncherUI.class);  
+		intent.setClass(CCPBaseActivity.this, DeveloperLoginActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  //注意本行的FLAG设置  
 		startActivity(intent);
 	}
