@@ -35,13 +35,13 @@
     <ClCompile Include="SoundTouch\RateTransposer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SoundTouch\SoundTouch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SoundTouch\sse_optimized.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SoundTouch\TDStretch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundTouch\SoundTouch_media.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
