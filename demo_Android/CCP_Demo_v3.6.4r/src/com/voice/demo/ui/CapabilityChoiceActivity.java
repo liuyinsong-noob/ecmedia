@@ -119,11 +119,11 @@ public class CapabilityChoiceActivity extends CCPBaseActivity implements CCPCapa
 				,LinearLayout.LayoutParams.MATCH_PARENT);
 		layout.setLayoutParams(bottomLayoutParams);
 		
-		View attentionView = getLayoutInflater().inflate(R.layout.ccp_attention, null);
-		attentionView.setPadding(0, getResources().getDimensionPixelSize(R.dimen.small_margin_space), 0, 0);
-		TextView findViewById = (TextView) attentionView.findViewById(R.id.attention_tips);
-		findViewById.setText(R.string.str_capacity_attention);
-		layout.addView(attentionView);
+//		View attentionView = getLayoutInflater().inflate(R.layout.ccp_attention, null);
+//		attentionView.setPadding(0, getResources().getDimensionPixelSize(R.dimen.small_margin_space), 0, 0);
+//		TextView findViewById = (TextView) attentionView.findViewById(R.id.attention_tips);
+//		findViewById.setText(R.string.str_capacity_attention);
+//		layout.addView(attentionView);
 		
 		// voice item
 		int[] voiceIconResid = new int[]{
@@ -137,43 +137,43 @@ public class CapabilityChoiceActivity extends CCPBaseActivity implements CCPCapa
 		CCPCapabilityItemView voiceCapacityItemView = getCCPCapacityItemView(R.string.str_voice, voiceIconResid, voiceBgResid);
 		layout.addView(voiceCapacityItemView);
 		
-		// video item
-		int[] videoIconResid = new int[]{
-				R.drawable.ccp_voice_group_chat,
-				R.drawable.ccp_video_conference,
-				R.drawable.ccp_intercom };
-		
-		int[] videoBgResid= new int[]{
-				R.drawable.ccp_capacity_08_selector,
-				R.drawable.ccp_capacity_05_selector,
-				R.drawable.ccp_capacity_04_selector};
-		
-		CCPCapabilityItemView videoCapacityItemView = getCCPCapacityItemView(R.string.str_video, videoIconResid, videoBgResid);
-		layout.addView(videoCapacityItemView);
-		
-		// IVR item
-		int[] ivrIconResid = new int[]{
-				R.drawable.ccp_voice_verification_code,
-				R.drawable.ccp_market_outside_call };
-		
-		int[] ivrBgResid= new int[]{
-				R.drawable.ccp_capacity_01_selector,
-				R.drawable.ccp_capacity_06_selector};
-		
-		CCPCapabilityItemView ivrCapacityItemView = getCCPCapacityItemView(R.string.str_ivr, ivrIconResid, ivrBgResid);
-		layout.addView(ivrCapacityItemView);
+//		// video item
+//		int[] videoIconResid = new int[]{
+//				R.drawable.ccp_voice_group_chat,
+//				R.drawable.ccp_video_conference,
+//				R.drawable.ccp_intercom };
+//
+//		int[] videoBgResid= new int[]{
+//				R.drawable.ccp_capacity_08_selector,
+//				R.drawable.ccp_capacity_05_selector,
+//				R.drawable.ccp_capacity_04_selector};
+//
+//		CCPCapabilityItemView videoCapacityItemView = getCCPCapacityItemView(R.string.str_video, videoIconResid, videoBgResid);
+//		layout.addView(videoCapacityItemView);
+//
+//		// IVR item
+//		int[] ivrIconResid = new int[]{
+//				R.drawable.ccp_voice_verification_code,
+//				R.drawable.ccp_market_outside_call };
+//
+//		int[] ivrBgResid= new int[]{
+//				R.drawable.ccp_capacity_01_selector,
+//				R.drawable.ccp_capacity_06_selector};
+//
+//		CCPCapabilityItemView ivrCapacityItemView = getCCPCapacityItemView(R.string.str_ivr, ivrIconResid, ivrBgResid);
+//		layout.addView(ivrCapacityItemView);
 		
 		// other item
 		int[] moreIconResid = new int[]{
-				R.drawable.ccp_im,
-				R.drawable.ccp_contact,
-				R.drawable.ccp_ex_consultation ,
+//				R.drawable.ccp_im,
+//				R.drawable.ccp_contact,
+//				R.drawable.ccp_ex_consultation ,
 				R.drawable.ccp_setting };
 		
 		int[] moreBgResid= new int[]{
-				R.drawable.ccp_capacity_03_selector ,
-				R.drawable.ccp_capacity_09_selector,
-				R.drawable.ccp_capacity_07_selector ,
+//				R.drawable.ccp_capacity_03_selector ,
+//				R.drawable.ccp_capacity_09_selector,
+//				R.drawable.ccp_capacity_07_selector ,
 				R.drawable.ccp_capacity_02_selector };
 		
 		CCPCapabilityItemView moreCapacityItemView = getCCPCapacityItemView(R.string.str_more, moreIconResid, moreBgResid);
@@ -403,7 +403,7 @@ public class CapabilityChoiceActivity extends CCPBaseActivity implements CCPCapa
 		if(sdkVersion != null) {
 			String tips = getString(R.string.str_sdk_support_tips, Build.SDK_VERSION_NAME,String.valueOf(Build.LIBVERSION.AUDIO_SWITCH)
 					,String.valueOf(Build.LIBVERSION.VIDEO_SWITCH),CCPApplication.getInstance().getVersion());
-			addNotificatoinToView(tips);
+			//addNotificatoinToView(tips);
 			Log4Util.i(CCPHelper.DEMO_TAG, "The current SDK version number :" + sdkVersion.toString());
 		}
 	}

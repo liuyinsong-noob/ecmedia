@@ -47,70 +47,63 @@ public class DeveloperLoginActivity extends LoginUIActivity  implements View.OnC
 
 	CCPTitleViewBase mCcpTitleViewBase;
 	CCPButton mCcpImaButton;
-	
-	private TextView mSidTextView;
-	private TextView mTokenTextView;
+
 	private TextView mSubsidTextView;
-	
+
 	private TextView mVoipToken;
 	private TextView mSubAccount;
 	private TextView mSubToken;
 	private EditText mServerIPEditText;
 	private EditText mPassWDEditText;
 	private EditText mServerPortEditText;
-	
-	private LinearLayout mLayoutIdList;
-	
+
 	private String[] mVoipArray;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//
 		CCPApplication.getInstance().setDeveloperMode(true);
 		initLayoutTitleBar();
-		
+
 		initLoginLayout();
-		
+
 		initViewUI();
-		
+
 		CCPConfig.initProperties(getApplicationContext());
-		
+
 		initConfigInfomation();
 	}
-	
-	
+
+
 	private void initLayoutTitleBar() {
 		mCcpTitleViewBase = new CCPTitleViewBase(this);
 		mCcpTitleViewBase.setCCPTitleBackground(R.drawable.video_title_bg);
 		mCcpTitleViewBase.setCCPTitleViewText(getString(R.string.app_title_developer_login));
-		mCcpTitleViewBase.setCCPBackImageButton(R.drawable.video_back_button_selector , this).setBackgroundDrawable(null);
+		//mCcpTitleViewBase.setCCPBackImageButton(R.drawable.video_back_button_selector , this).setBackgroundDrawable(null);
 	}
-	
-	
-	
+
+
+
 	/**
-	 * 
-	 * @Title: initLoginLayout 
-	 * @Description: TODO 
-	 * @param  
-	 * @return void 
+	 *
+	 * @Title: initLoginLayout
+	 * @Description: TODO
+	 * @param
+	 * @return void
 	 * @throws
 	 */
 	private void initLoginLayout() {
-		mSidTextView = (TextView) findViewById(R.id.sid);
-		mTokenTextView = (TextView) findViewById(R.id.token);
-		
+
 		mSubsidTextView = (TextView) findViewById(R.id.sub_sid);
-		mLayoutIdList = (LinearLayout) findViewById(R.id.sub_info);
-		
+
 		//update subaccount info ..
 		mSubAccount = (TextView) findViewById(R.id.sub_account);
 		mSubToken = (TextView) findViewById(R.id.sub_token);
 		mVoipToken = (TextView) findViewById(R.id.voip_token);
-		
+
 		mCcpImaButton = (CCPButton) findViewById(R.id.login_confrim);
-		mCcpImaButton.setEnabled(false);
+		mCcpImaButton.setEnabled(true);
 		mCcpImaButton.setOnClickListener(this);
 
 		mServerIPEditText = (EditText) findViewById(R.id.voip_server_ip);
@@ -119,42 +112,37 @@ public class DeveloperLoginActivity extends LoginUIActivity  implements View.OnC
 
 
 	}
-	
+
 	/**
-	 * 
-	 * @Title: initViewUI 
-	 * @Description: TODO 
-	 * @param  
-	 * @return void 
+	 *
+	 * @Title: initViewUI
+	 * @Description: TODO
+	 * @param
+	 * @return void
 	 * @throws
 	 */
 	private void initViewUI() {
-		
-		// init drawable left icon 
-		mSidTextView.setCompoundDrawables(CCPDrawableUtils.getDrawables(this, R.drawable.sid), null, null, null);
-		mTokenTextView.setCompoundDrawables(CCPDrawableUtils.getDrawables(this, R.drawable.token), null, null, null);
-		
+
 		// init sid switch icon
 		mSubsidTextView.setCompoundDrawables(null, null, CCPDrawableUtils.getDrawables(this, R.drawable.sid_switch_selector), null);
 		mSubsidTextView.setPadding(CCPUtil.getMetricsDensity(this , 12.0F), 0, CCPUtil.getMetricsDensity(this , 22.0F), 0);
-		
-		mSubsidTextView.setOnClickListener(this);
-		mLayoutIdList.setVisibility(View.INVISIBLE);
-		
+
+//		mSubsidTextView.setOnClickListener(this);
+
 		mCcpImaButton.setImageResource(R.drawable.login);
-		
-		mSubsidTextView.setText("单击选择VoIP帐号");
-		mSubsidTextView.setGravity(Gravity.CENTER);
-		mSubsidTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+
+//		mSubsidTextView.setText("单击选择VoIP帐号");
+//		mSubsidTextView.setGravity(Gravity.CENTER);
+//		mSubsidTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
 	}
-	
+
 
 	@Override
 	public int getTitleLayout() {
 		return R.layout.ccp_title;
 	}
-	
-	
+
+
 	protected int getLayoutId() {
 		return R.layout.developer_login;
 	}
@@ -164,17 +152,23 @@ public class DeveloperLoginActivity extends LoginUIActivity  implements View.OnC
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.sub_sid:
-			
+
 			showSubaccountDialog();
-			    
+
 			break;
 		case R.id.title_btn4:
 			finish();
 			break;
 		case R.id.login_confrim:
-			
+
 			HideSoftKeyboard();
-			
+
+			// server ip address.
+			CCPConfig.REST_SERVER_ADDRESS = mServerIPEditText.getText().toString();
+			// server ip address.
+			CCPConfig.VoIP_PWD = mPassWDEditText.getText().toString();
+			CCPConfig.REST_SERVER_PORT = mServerPortEditText.getText().toString();
+			CCPConfig.VoIP_ID = mSubsidTextView.getText().toString();
 			doSDKRegist();
 			break;
 		default:
@@ -189,7 +183,7 @@ public class DeveloperLoginActivity extends LoginUIActivity  implements View.OnC
 		    builder.setTitle(R.string.str_select_voip_account)
 		           .setItems(mVoipArray, new DialogInterface.OnClickListener() {
 		               public void onClick(DialogInterface dialog, int which) {
-		            	   
+
 		               // The 'which' argument contains the index position
 		               // of the selected item
 		        	   mSubsidTextView.setText(mVoipArray[which]);
@@ -202,20 +196,13 @@ public class DeveloperLoginActivity extends LoginUIActivity  implements View.OnC
 		    });
 		    builder.create().show();
 	}
-	
-	
+
+
 	private void initConfigInfomation() {
-		
-		if(CCPConfig.Main_Account != null ) {
-			mSidTextView.setText(CCPConfig.Main_Account);
-		}
-		if(CCPConfig.Main_Token != null ) {
-			mTokenTextView.setText(CCPConfig.Main_Token);
-		}
-		
+
 		if(CCPConfig.VoIP_ID_LIST != null ) {
 			mVoipArray = CCPConfig.VoIP_ID_LIST.split(",");
-			
+
 			if(mVoipArray == null || mVoipArray.length == 0) {
 				throw new IllegalArgumentException("Load the VOIP account information errors" +
 						", configuration information can not be empty" + mVoipArray);
@@ -224,11 +211,11 @@ public class DeveloperLoginActivity extends LoginUIActivity  implements View.OnC
 	}
 
 	/**
-	 * 
-	 * @Title: fillSubAccountInfo 
-	 * @Description: TODO 
-	 * @param @param index 
-	 * @return void 
+	 *
+	 * @Title: fillSubAccountInfo
+	 * @Description: TODO
+	 * @param @param index
+	 * @return void
 	 * @throws
 	 */
 	void fillSubAccountInfo(int index) {
@@ -259,14 +246,13 @@ public class DeveloperLoginActivity extends LoginUIActivity  implements View.OnC
 		Log4Util.d(CCPHelper.DEMO_TAG, "1");
 		mCcpImaButton.setEnabled(true);
 		Log4Util.d(CCPHelper.DEMO_TAG, "2");
-		mLayoutIdList.setVisibility(View.VISIBLE);
-		
+
 	}
 
 	@Override
 	protected void startAction() {
 		super.startAction();
-		// Confirmation Information,then send to next activity ,.  
+		// Confirmation Information,then send to next activity ,.
 		if (!CCPConfig.check()) {
 			CCPApplication.getInstance().showToast(R.string.config_error_text);
 			return;
