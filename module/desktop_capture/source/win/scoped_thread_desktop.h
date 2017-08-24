@@ -13,8 +13,8 @@
 
 #include <windows.h>
 
-#include "constructor_magic.h"
-#include "scoped_ptr.h"
+#include "../base/constructormagic.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 namespace cloopenwebrtc {
 

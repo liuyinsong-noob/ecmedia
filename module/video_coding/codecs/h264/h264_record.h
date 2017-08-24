@@ -14,8 +14,8 @@ extern "C"
 #endif // endif __APPLE__
 //#include "libswresample/swresample.h"
 }
-#include "critical_section_wrapper.h"
-#include "clock.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/clock.h"
 
 using namespace cloopenwebrtc;
 

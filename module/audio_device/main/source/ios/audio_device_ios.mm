@@ -14,8 +14,8 @@
 #import <sys/utsname.h>
 #include "module/audio_device/main/source/ios/audio_device_ios.h"
 
-#include "system_wrappers/interface/thread_wrapper.h"
-#include "system_wrappers/interface/trace.h"
+#include "system_wrappers/include/thread_wrapper.h"
+#include "system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 AudioDeviceIOS::AudioDeviceIOS(const int32_t id)

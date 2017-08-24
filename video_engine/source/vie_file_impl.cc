@@ -13,10 +13,10 @@
 #include "vie_file_impl.h"
 
 #ifdef WEBRTC_VIDEO_ENGINE_FILE_API
-#include "jpeg.h"
-#include "condition_variable_wrapper.h"
-#include "critical_section_wrapper.h"
-#include "trace.h"
+#include "../common_video/include/jpeg.h"
+#include "../system_wrappers/include/condition_variable_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 #include "vie_errors.h"
 #include "vie_capturer.h"
 #include "vie_channel.h"

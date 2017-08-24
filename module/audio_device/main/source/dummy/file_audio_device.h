@@ -16,9 +16,9 @@
 #include <string>
 
 #include "audio_device_generic.h"
-#include "critical_section_wrapper.h"
-#include "file_wrapper.h"
-#include "clock.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/file_wrapper.h"
+#include "../system_wrappers/include/clock.h"
 
 namespace cloopenwebrtc {
 class EventWrapper;

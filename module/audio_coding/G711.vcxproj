@@ -220,7 +220,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../.;.\codecs\g711\include;.\codecs\g711;.\codecs\.;../../system_wrappers/source</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;.\codecs\g711\include;.\codecs\g711;.\codecs\.</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

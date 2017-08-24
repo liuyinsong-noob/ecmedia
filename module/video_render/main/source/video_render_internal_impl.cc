@@ -15,8 +15,8 @@
 #include "video_render_defines.h"
 #include "incoming_video_stream.h"
 #include "video_render_impl.h"
-#include "critical_section_wrapper.h"
-#include "trace.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 
 #if defined (_WIN32)
 #include "video_render_windows_impl.h"

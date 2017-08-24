@@ -14,14 +14,14 @@
 #include <map>
 
 #include "video_capture.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 #include "vie_capture.h"
 #include "vie_defines.h"
 #include "vie_frame_provider_base.h"
 #include "vie_manager_base.h"
 
-#include "map_wrapper.h"
+#include "../system_wrappers/include/map_wrapper.h"
 #include "vie_file_player.h"
 
 namespace cloopenwebrtc {

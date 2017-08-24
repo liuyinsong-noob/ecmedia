@@ -24,7 +24,8 @@
 #include "vp9.h"
 #endif
 #include "internal_defines.h"
-#include "logging.h"
+#include "../system_wrappers/include/logging.h"
+#include "../module/common_types.h"
 
 #ifdef  VIDEOCODEC_H264
 #include "h264.h"
@@ -50,8 +51,8 @@ VideoCodecVP8 VideoEncoder::GetDefaultVp8Settings() {
   vp8_settings.numberOfTemporalLayers = 1;
   vp8_settings.denoisingOn = true;
   vp8_settings.errorConcealmentOn = false;
-  //vp8_settings.automaticResizeOn = true/*false*/;
-  vp8_settings.automaticResizeOn = true;//open vp8 simulcast
+  vp8_settings.automaticResizeOn = true/*false*/;
+  //vp8_settings.automaticResizeOn = false;//open vp8 simulcast
   vp8_settings.frameDroppingOn = true;
   vp8_settings.keyFrameInterval = 75;
   return vp8_settings;
@@ -75,7 +76,7 @@ VideoCodecH264 VideoEncoder::GetDefaultH264Settings() {
   VideoCodecH264 h264_settings;
   memset(&h264_settings, 0, sizeof(h264_settings));
 
-  h264_settings.profile = kProfileBase;
+  h264_settings.profile = H264::kProfileBaseline;
   h264_settings.frameDroppingOn = true;
   h264_settings.keyFrameInterval = 3000;
   h264_settings.spsData = NULL;

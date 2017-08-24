@@ -15,10 +15,10 @@
 
 #ifdef WEBRTC_MODULE_UTILITY_VIDEO
 
-#include "i420_video_frame.h"
+#include "../common_video/include/i420_video_frame.h"
 #include "engine_configurations.h"
 #include "module_common_types.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 namespace cloopenwebrtc {
 

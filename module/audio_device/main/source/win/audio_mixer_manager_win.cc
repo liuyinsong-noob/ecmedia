@@ -9,7 +9,7 @@
  */
 
 #include "audio_mixer_manager_win.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 
 #include <assert.h>      // assert()
 #include <strsafe.h>    // StringCchCopy(), StringCchCat(), StringCchPrintf()
@@ -651,7 +651,7 @@ int32_t AudioMixerManager::OpenSpeaker(AudioDeviceModule::WindowsDeviceType devi
 
     // The waveform-audio output handle is no longer needed.
     //
-    waveOutClose(hWaveOut);
+    //waveOutClose(hWaveOut);
 
     // Verify that the mixer contains a valid speaker destination line.
     // Avoid opening the mixer if valid control has not been found.

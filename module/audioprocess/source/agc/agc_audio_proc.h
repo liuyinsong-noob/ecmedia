@@ -12,7 +12,7 @@
 #define WEBRTC_MODULES_AUDIO_PROCESSING_AGC_AGC_AUDIO_PROC_H_
 
 #include "agc_common.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

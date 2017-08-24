@@ -47,9 +47,9 @@
 #endif
 
 #include "common_types.h"
-#include "critical_section_wrapper.h"
-#include "rw_lock_wrapper.h"
-#include "trace.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/rw_lock_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 #include "typedefs.h"
 #include "udp_socket_manager_wrapper.h"
 #include "rtcp_utility.h"
@@ -179,8 +179,6 @@ UdpTransportImpl::UdpTransportImpl(const WebRtc_Word32 id,
 
 UdpTransportImpl::~UdpTransportImpl()
 {
-	if (_packetCallback.size())
-		_packetCallback.clear();
     CloseSendSockets();
     CloseReceiveSockets();
     delete _crit;
@@ -2134,9 +2132,10 @@ WebRtc_Word32 UdpTransportImpl::SendRTPPacketTo(const WebRtc_Word8* data,
     return -1;
 }
 
-int UdpTransportImpl::SendPacket(int channel, const void* data, size_t length, int sn)
+int UdpTransportImpl::SendRtp(int channelId, const uint8_t* packet, size_t length, const PacketOptions* options)
 {
-    WEBRTC_TRACE(kTraceStream, kTraceTransport, _id, "%s, channelid %d, seq %d", __FUNCTION__, channel, sn);
+    WEBRTC_TRACE(kTraceStream, kTraceTransport, _id, "%s", __FUNCTION__);
+
     CriticalSectionScoped cs(_crit);
 
     if(_destRtpIP[0] == 0)
@@ -2189,17 +2188,16 @@ int UdpTransportImpl::SendPacket(int channel, const void* data, size_t length, i
 
     if(_ptrSendRtpSocket)
     {
-        return  sendSocks5Data(_ptrSendRtpSocket, _remoteRTPAddr, false, (const WebRtc_Word8*)data, (WebRtc_UWord32)length);
+        return  sendSocks5Data(_ptrSendRtpSocket, _remoteRTPAddr, false, (const WebRtc_Word8*)packet, (WebRtc_UWord32)length);
 
     } else if(_ptrRtpSocket)
     {
-        return sendSocks5Data(_ptrRtpSocket, _remoteRTPAddr, false, (const WebRtc_Word8*)data, (WebRtc_UWord32)length);
+        return sendSocks5Data(_ptrRtpSocket, _remoteRTPAddr, false, (const WebRtc_Word8*)packet, (WebRtc_UWord32)length);
     }
     return -1;
 }
 
-int UdpTransportImpl::SendRTCPPacket(int /*channel*/, const void* data,
-                                     size_t length)
+int UdpTransportImpl::SendRtcp(int channelId, const uint8_t* packet, size_t length)
 {
 
     CriticalSectionScoped cs(_crit);
@@ -2253,10 +2251,10 @@ int UdpTransportImpl::SendRTCPPacket(int /*channel*/, const void* data,
 
     if(_ptrSendRtcpSocket)
     {
-        return sendSocks5Data(_ptrSendRtcpSocket, _remoteRTCPAddr, true, (const WebRtc_Word8*)data, (WebRtc_UWord32)length);
+        return sendSocks5Data(_ptrSendRtcpSocket, _remoteRTCPAddr, true, (const WebRtc_Word8*)packet, (WebRtc_UWord32)length);
     } else if(_ptrRtcpSocket)
     {
-        return sendSocks5Data(_ptrRtcpSocket, _remoteRTCPAddr, true, (const WebRtc_Word8*)data, (WebRtc_UWord32)length);
+        return sendSocks5Data(_ptrRtcpSocket, _remoteRTCPAddr, true, (const WebRtc_Word8*)packet, (WebRtc_UWord32)length);
     }
     return -1;
 }

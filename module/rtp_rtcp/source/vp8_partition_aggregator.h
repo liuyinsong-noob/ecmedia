@@ -13,9 +13,9 @@
 
 #include <vector>
 
-#include "constructormagic.h"
-#include "module_common_types.h"
-#include "typedefs.h"
+#include "../base/constructormagic.h"
+#include "../module/interface/module_common_types.h"
+#include "../typedefs.h"
 
 namespace cloopenwebrtc {
 
@@ -132,6 +132,6 @@ class Vp8PartitionAggregator {
 
   DISALLOW_COPY_AND_ASSIGN(Vp8PartitionAggregator);
 };
-}  // namespace
+}  // namespace cloopenwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_VP8_PARTITION_AGGREGATOR_H_

@@ -12,8 +12,8 @@
 #define WEBRTC_COMMON_AUDIO_FIR_FILTER_SSE_H_
 
 #include "fir_filter.h"
-#include "aligned_malloc.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/aligned_malloc.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 namespace cloopenwebrtc {
 

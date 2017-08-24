@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AD1F0CAB1D4762E400C33F53 /* paced_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72AD1C599F1100FB246D /* paced_sender.cc */; };
-		AD1F0CAC1D4762E400C33F53 /* bitrate_prober.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72AB1C599F1100FB246D /* bitrate_prober.cc */; };
-		AD8D72AE1C599F1100FB246D /* bitrate_prober.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72AB1C599F1100FB246D /* bitrate_prober.cc */; };
-		AD8D72AF1C599F1100FB246D /* paced_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8D72AD1C599F1100FB246D /* paced_sender.cc */; };
+		45619A551F14AC63008B2068 /* alr_detector.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A4D1F14AC63008B2068 /* alr_detector.cc */; };
+		45619A561F14AC63008B2068 /* bitrate_prober.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A4F1F14AC63008B2068 /* bitrate_prober.cc */; };
+		45619A571F14AC63008B2068 /* paced_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A511F14AC63008B2068 /* paced_sender.cc */; };
+		45619A581F14AC63008B2068 /* packet_router.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A531F14AC63008B2068 /* packet_router.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,14 +35,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		45619A4D1F14AC63008B2068 /* alr_detector.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = alr_detector.cc; path = ../../alr_detector.cc; sourceTree = "<group>"; };
+		45619A4E1F14AC63008B2068 /* alr_detector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = alr_detector.h; path = ../../alr_detector.h; sourceTree = "<group>"; };
+		45619A4F1F14AC63008B2068 /* bitrate_prober.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bitrate_prober.cc; path = ../../bitrate_prober.cc; sourceTree = "<group>"; };
+		45619A501F14AC63008B2068 /* bitrate_prober.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bitrate_prober.h; path = ../../bitrate_prober.h; sourceTree = "<group>"; };
+		45619A511F14AC63008B2068 /* paced_sender.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = paced_sender.cc; path = ../../paced_sender.cc; sourceTree = "<group>"; };
+		45619A521F14AC63008B2068 /* paced_sender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = paced_sender.h; path = ../../paced_sender.h; sourceTree = "<group>"; };
+		45619A531F14AC63008B2068 /* packet_router.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = packet_router.cc; path = ../../packet_router.cc; sourceTree = "<group>"; };
+		45619A541F14AC63008B2068 /* packet_router.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = packet_router.h; path = ../../packet_router.h; sourceTree = "<group>"; };
 		AD194FB01C5B3F0A003841BB /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		AD194FB21C5B3F14003841BB /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		AD1F0CB21D4762E400C33F53 /* libpacing_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libpacing_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD8D729E1C599EE400FB246D /* libpacing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libpacing.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		AD8D72AA1C599F0300FB246D /* paced_sender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = paced_sender.h; path = ../include/paced_sender.h; sourceTree = SOURCE_ROOT; };
-		AD8D72AB1C599F1100FB246D /* bitrate_prober.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bitrate_prober.cc; path = ../source/bitrate_prober.cc; sourceTree = SOURCE_ROOT; };
-		AD8D72AC1C599F1100FB246D /* bitrate_prober.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bitrate_prober.h; path = ../source/bitrate_prober.h; sourceTree = SOURCE_ROOT; };
-		AD8D72AD1C599F1100FB246D /* paced_sender.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = paced_sender.cc; path = ../source/paced_sender.cc; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,10 +89,14 @@
 		AD8D72A01C599EE400FB246D /* pacing */ = {
 			isa = PBXGroup;
 			children = (
-				AD8D72AA1C599F0300FB246D /* paced_sender.h */,
-				AD8D72AB1C599F1100FB246D /* bitrate_prober.cc */,
-				AD8D72AC1C599F1100FB246D /* bitrate_prober.h */,
-				AD8D72AD1C599F1100FB246D /* paced_sender.cc */,
+				45619A4D1F14AC63008B2068 /* alr_detector.cc */,
+				45619A4E1F14AC63008B2068 /* alr_detector.h */,
+				45619A4F1F14AC63008B2068 /* bitrate_prober.cc */,
+				45619A501F14AC63008B2068 /* bitrate_prober.h */,
+				45619A511F14AC63008B2068 /* paced_sender.cc */,
+				45619A521F14AC63008B2068 /* paced_sender.h */,
+				45619A531F14AC63008B2068 /* packet_router.cc */,
+				45619A541F14AC63008B2068 /* packet_router.h */,
 			);
 			path = pacing;
 			sourceTree = "<group>";
@@ -167,8 +175,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD1F0CAB1D4762E400C33F53 /* paced_sender.cc in Sources */,
-				AD1F0CAC1D4762E400C33F53 /* bitrate_prober.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,8 +182,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD8D72AF1C599F1100FB246D /* paced_sender.cc in Sources */,
-				AD8D72AE1C599F1100FB246D /* bitrate_prober.cc in Sources */,
+				45619A581F14AC63008B2068 /* packet_router.cc in Sources */,
+				45619A571F14AC63008B2068 /* paced_sender.cc in Sources */,
+				45619A551F14AC63008B2068 /* alr_detector.cc in Sources */,
+				45619A561F14AC63008B2068 /* bitrate_prober.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,7 +318,8 @@
 		AD8D72A81C599EE400FB246D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_PREPROCESSOR_DEFINITIONS = WEBRTC_POSIX;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../../../system_wrappers/interface,
@@ -330,7 +339,8 @@
 		AD8D72A91C599EE400FB246D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_PREPROCESSOR_DEFINITIONS = WEBRTC_POSIX;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../../../system_wrappers/interface,

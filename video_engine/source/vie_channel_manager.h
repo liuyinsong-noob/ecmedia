@@ -15,7 +15,7 @@
 #include <map>
 
 #include "engine_configurations.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 #include "vie_rtp_rtcp.h"
 #include "vie_channel_group.h"
@@ -23,6 +23,7 @@
 #include "vie_manager_base.h"
 #include "vie_remb.h"
 #include "udp_transport.h"
+#include "../module/congestion_controller/include/congestion_controller.h"
 
 namespace cloopenwebrtc {
 
@@ -34,6 +35,7 @@ class ViEChannel;
 class ViEEncoder;
 class VoEVideoSync;
 class VoiceEngine;
+class RtcEventLog;
 
 typedef std::list<ChannelGroup*> ChannelGroups;
 typedef std::list<ViEChannel*> ChannelList;
@@ -41,7 +43,8 @@ typedef std::map<int, ViEChannel*> ChannelMap;
 typedef std::map<int, ViEEncoder*> EncoderMap;
 typedef std::map<int, UdpTransport*> RtpUdpTransportMap;
 
-class ViEChannelManager: private ViEManagerBase {
+class ViEChannelManager: private ViEManagerBase,
+					     public CongestionController::Observer {
   friend class ViEChannelManagerScoped;
  public:
   ViEChannelManager(int engine_id,
@@ -49,7 +52,7 @@ class ViEChannelManager: private ViEManagerBase {
                     const Config& config);
   ~ViEChannelManager();
 
-  void SetModuleProcessThread(ProcessThread* module_process_thread, ProcessThread* module_process_thread_pacer);
+  void SetModuleProcessThread(ProcessThread* module_process_thread);
 
   // Creates a new channel. 'channel_id' will be the id of the created channel.
   int CreateChannel(int* channel_id,
@@ -98,6 +101,14 @@ class ViEChannelManager: private ViEManagerBase {
   UdpTransport *CreateUdptransport(int rtp_port, int rtcp_port, bool ipv6flag = false);
   int DeleteUdptransport(UdpTransport * transport);
     
+  // Implements CongestionController::Observer.
+  void OnNetworkChanged(uint32_t bitrate_bps,
+					  uint8_t fraction_loss,
+					  int64_t rtt_ms,
+					  int64_t probing_interval_ms) override;
+
+  void UpdateNetworkState(int channel_id, bool startSend);
+
  private:
   // Creates a channel object connected to |vie_encoder|. Assumed to be called
   // protected.
@@ -151,13 +162,19 @@ class ViEChannelManager: private ViEManagerBase {
 
   VoiceEngine* voice_engine_;
   ProcessThread* module_process_thread_;
-    ProcessThread* module_process_thread_pacer_;
   const Config& engine_config_;
 
   // Protects udpstransport_map_.
   CriticalSectionWrapper* udptransport_critsect_;
   RtpUdpTransportMap rtp_udptransport_map_;
 
+  std::unique_ptr<RtcEventLog> rtc_event_log_;
+  std::unique_ptr<CongestionController> congestion_controller_;
+  ProcessThread* pacer_thread_;
+  bool use_sendside_bwe_;
+  VieRemb remb_;
+  std::unique_ptr<CallStats> call_stats_;
+  PacketRouter packet_router_;
 };
 
 class ViEChannelManagerScoped: private ViEManagerScopedBase {

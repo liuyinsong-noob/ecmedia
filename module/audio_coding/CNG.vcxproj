@@ -208,7 +208,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../.;.\codecs\cng\include;./codecs/.;.\codecs\cng;../common_audio/source/signal_processing/include;../common_audio/source/vad/include;../../system_wrappers/source;../../system_wrappers/interface</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;.\codecs\cng\include;./codecs/.;.\codecs\cng;../common_audio/source/signal_processing/include;../common_audio/source/vad/include</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

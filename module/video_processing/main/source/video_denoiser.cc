@@ -8,8 +8,8 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "scaler.h"
-#include "webrtc_libyuv.h"
+#include "../common_video/source/libyuv/include/scaler.h"
+#include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 #include "video_denoiser.h"
 
 namespace cloopenwebrtc {

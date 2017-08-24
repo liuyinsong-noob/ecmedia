@@ -8,7 +8,7 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "common.h"
+#include "../system_wrappers/include/common.h"
 #include "channel_manager.h"
 
 #include "channel.h"

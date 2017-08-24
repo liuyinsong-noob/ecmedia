@@ -13,7 +13,7 @@
 #include "webrtc_cng.h"
 #include "acm_codec_database.h"
 #include "acm_common_defs.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 

@@ -11,11 +11,11 @@
 #ifndef WEBRTC_VIDEO_ENGINE_OVERUSE_FRAME_DETECTOR_H_
 #define WEBRTC_VIDEO_ENGINE_OVERUSE_FRAME_DETECTOR_H_
 
-#include "constructormagic.h"
-#include "exp_filter.h"
-#include "thread_annotations.h"
+#include "../base/constructormagic.h"
+#include "../system_wrappers/include/exp_filter.h"
+#include "../base/thread_annotations.h"
 #include "module.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "vie_base.h"
 
 namespace cloopenwebrtc {

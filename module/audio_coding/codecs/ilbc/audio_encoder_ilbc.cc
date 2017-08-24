@@ -12,7 +12,7 @@
 
 #include <cstring>
 #include <limits>
-#include "checks.h"
+#include "../base/checks.h"
 #include "ilbc.h"
 
 namespace cloopenwebrtc {

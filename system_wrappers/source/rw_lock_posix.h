@@ -11,33 +11,30 @@
 #ifndef WEBRTC_SYSTEM_WRAPPERS_SOURCE_RW_LOCK_POSIX_H_
 #define WEBRTC_SYSTEM_WRAPPERS_SOURCE_RW_LOCK_POSIX_H_
 
-#include "rw_lock_wrapper.h"
+#include "../system_wrappers/include/rw_lock_wrapper.h"
+#include "../module/typedefs.h"
 
 #include <pthread.h>
 
 namespace cloopenwebrtc {
-class RWLockPosix : public RWLockWrapper
-{
-public:
-    RWLockPosix();
-    virtual ~RWLockPosix();
 
-    virtual void AcquireLockExclusive();
-    virtual void ReleaseLockExclusive();
+class RWLockPosix : public RWLockWrapper {
+ public:
+  static RWLockPosix* Create();
+  ~RWLockPosix() override;
 
-    virtual void AcquireLockShared();
-    virtual void ReleaseLockShared();
+  void AcquireLockExclusive() override;
+  void ReleaseLockExclusive() override;
 
-protected:
-    virtual int Init();
+  void AcquireLockShared() override;
+  void ReleaseLockShared() override;
 
-private:
-#ifndef ANDROID_UNDER_8
-    pthread_rwlock_t _lock;
-#else
-    pthread_mutex_t _lock;
-#endif
+ private:
+  RWLockPosix();
+  bool Init();
+
+  pthread_rwlock_t lock_;
 };
 } // namespace cloopenwebrtc
 
-#endif // WEBRTC_SYSTEM_WRAPPERS_SOURCE_RW_LOCK_POSIX_H_
+#endif  // WEBRTC_SYSTEM_WRAPPERS_SOURCE_RW_LOCK_POSIX_H_

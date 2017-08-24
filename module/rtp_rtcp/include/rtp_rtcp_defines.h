@@ -8,61 +8,54 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#ifndef WEBRTC_MODULES_RTP_RTCP_INTERFACE_RTP_RTCP_DEFINES_H_
-#define WEBRTC_MODULES_RTP_RTCP_INTERFACE_RTP_RTCP_DEFINES_H_
+#ifndef WEBRTC_MODULES_RTP_RTCP_INCLUDE_RTP_RTCP_DEFINES_H_
+#define WEBRTC_MODULES_RTP_RTCP_INCLUDE_RTP_RTCP_DEFINES_H_
 
 #include <stddef.h>
 #include <list>
+#include <vector>
 
-#include "module_common_types.h"
-#include "clock.h"
-#include "typedefs.h"
-
+#include "../module/common_types.h"
+#include "../module/interface/module_common_types.h"
+#include "../system_wrappers/include/clock.h"
+#include "../module/typedefs.h"
 
 #define RTCP_CNAME_SIZE 256    // RFC 3550 page 44, including null termination
 #define IP_PACKET_SIZE 1500    // we assume ethernet
 #define MAX_NUMBER_OF_PARALLEL_TELEPHONE_EVENTS 10
-#define TIMEOUT_SEI_MESSAGES_MS 30000   // in milliseconds
 
 namespace cloopenwebrtc {
+namespace rtcp {
+class TransportFeedback;
+}
 
 const int kVideoPayloadTypeFrequency = 90000;
+// TODO(solenberg): RTP time stamp rate for RTCP is fixed at 8k, this is legacy
+// and should be fixed.
+// See: https://bugs.chromium.org/p/webrtc/issues/detail?id=6458
+const int kBogusRtpRateForAudioRtcp = 8000;
 
 // Minimum RTP header size in bytes.
 const uint8_t kRtpHeaderSize = 12;
 
-struct AudioPayload
-{
+struct AudioPayload {
     uint32_t    frequency;
-    uint8_t     channels;
+    int            channels;
     uint32_t    rate;
 };
 
-struct VideoPayload
-{
-    RtpVideoCodecTypes   videoCodecType;
-    uint32_t       maxRate;
+struct VideoPayload {
+  RtpVideoCodecTypes videoCodecType;
+  // The H264 profile only matters if videoCodecType == kRtpVideoH264.
+  H264::Profile h264_profile;
 };
 
-union PayloadUnion
-{
+union PayloadUnion {
     AudioPayload Audio;
     VideoPayload Video;
 };
 
-enum RTCPMethod
-{
-    kRtcpOff          = 0,
-    kRtcpCompound     = 1,
-    kRtcpNonCompound = 2
-};
-
-enum RTPAliveType
-{
-    kRtpDead   = 0,
-    kRtpNoRtp = 1,
-    kRtpAlive  = 2
-};
+enum RTPAliveType { kRtpDead = 0, kRtpNoRtp = 1, kRtpAlive = 2 };
 
 enum ProtectionType {
   kUnprotectedPacket,
@@ -75,67 +68,54 @@ enum StorageType {
   kAllowRetransmission
 };
 
-enum RTPExtensionType
-{
-   kRtpExtensionNone,
-   kRtpExtensionTransmissionTimeOffset,
-   kRtpExtensionAudioLevel,
-   kRtpExtensionAbsoluteSendTime,
-   kRtpExtensionLossRate
+enum RTPExtensionType {
+  kRtpExtensionNone,
+  kRtpExtensionTransmissionTimeOffset,
+  kRtpExtensionAudioLevel,
+  kRtpExtensionAbsoluteSendTime,
+  kRtpExtensionVideoRotation,
+  kRtpExtensionTransportSequenceNumber,
+  kRtpExtensionPlayoutDelay,
+  kRtpExtensionNumberOfExtensions,
 };
 
-enum RTCPAppSubTypes
-{
-    kAppSubtypeBwe     = 0x00
+enum RTCPAppSubTypes { kAppSubtypeBwe = 0x00 };
+
+// TODO(sprang): Make this an enum class once rtcp_receiver has been cleaned up.
+enum RTCPPacketType : uint32_t {
+  kRtcpReport = 0x0001,
+  kRtcpSr = 0x0002,
+  kRtcpRr = 0x0004,
+  kRtcpSdes = 0x0008,
+  kRtcpBye = 0x0010,
+  kRtcpPli = 0x0020,
+  kRtcpNack = 0x0040,
+  kRtcpFir = 0x0080,
+  kRtcpTmmbr = 0x0100,
+  kRtcpTmmbn = 0x0200,
+  kRtcpSrReq = 0x0400,
+  kRtcpXrVoipMetric = 0x0800,
+  kRtcpApp = 0x1000,
+  kRtcpSli = 0x4000,
+  kRtcpRpsi = 0x8000,
+  kRtcpRemb = 0x10000,
+  kRtcpTransmissionTimeOffset = 0x20000,
+  kRtcpXrReceiverReferenceTime = 0x40000,
+  kRtcpXrDlrrReportBlock = 0x80000,
+  kRtcpTransportFeedback = 0x100000,
+  kRtcpXrTargetBitrate = 0x200000
 };
 
-enum RTCPPacketType
-{
-    kRtcpReport         = 0x0001,
-    kRtcpSr             = 0x0002,
-    kRtcpRr             = 0x0004,
-    kRtcpBye            = 0x0008,
-    kRtcpPli            = 0x0010,
-    kRtcpNack           = 0x0020,
-    kRtcpFir            = 0x0040,
-    kRtcpTmmbr          = 0x0080,
-    kRtcpTmmbn          = 0x0100,
-    kRtcpSrReq          = 0x0200,
-    kRtcpXrVoipMetric   = 0x0400,
-    kRtcpApp            = 0x0800,
-    kRtcpSli            = 0x4000,
-    kRtcpRpsi           = 0x8000,
-    kRtcpRemb           = 0x10000,
-    kRtcpTransmissionTimeOffset = 0x20000,
-    kRtcpXrReceiverReferenceTime = 0x40000,
-    kRtcpXrDlrrReportBlock = 0x80000
-};
+enum KeyFrameRequestMethod { kKeyFrameReqPliRtcp, kKeyFrameReqFirRtcp };
 
-enum KeyFrameRequestMethod
-{
-    kKeyFrameReqFirRtp    = 1, //new version not support cause this is a very old an deprecated way of sending FIRs which is only actually defined for H.261: https://tools.ietf.org/html/rfc2032
-    kKeyFrameReqPliRtcp   = 2,
-    kKeyFrameReqFirRtcp   = 3
-};
+enum RtpRtcpPacketType { kPacketRtp = 0, kPacketKeepAlive = 1 };
 
-enum RtpRtcpPacketType
-{
-    kPacketRtp        = 0,
-    kPacketKeepAlive = 1
-};
-
-enum NACKMethod
-{
-    kNackOff      = 0,
-    kNackRtcp     = 2
-};
-
-enum RetransmissionMode {
-  kRetransmitOff          = 0x0,
-  kRetransmitFECPackets   = 0x1,
-  kRetransmitBaseLayer    = 0x2,
+enum RetransmissionMode : uint8_t {
+  kRetransmitOff = 0x0,
+  kRetransmitFECPackets = 0x1,
+  kRetransmitBaseLayer = 0x2,
   kRetransmitHigherLayers = 0x4,
-  kRetransmitAllPackets   = 0xFF
+  kRetransmitAllPackets = 0xFF
 };
 
 enum RtxMode {
@@ -147,8 +127,7 @@ enum RtxMode {
 
 const size_t kRtxHeaderSize = 2;
 
-struct RTCPSenderInfo
-{
+struct RTCPSenderInfo {
     uint32_t NTPseconds;
     uint32_t NTPfraction;
     uint32_t RTPtimeStamp;
@@ -190,13 +169,6 @@ struct RTCPReportBlock {
   uint32_t delaySinceLastSR;
 };
 
-struct RtcpReceiveTimeInfo {
-  // Fields as described by RFC 3611 4.5.
-  uint32_t sourceSSRC;
-  uint32_t lastRR;
-  uint32_t delaySinceLastRR;
-};
-
 typedef std::list<RTCPReportBlock> ReportBlockList;
 
 struct RtpState {
@@ -215,77 +187,43 @@ struct RtpState {
   bool media_has_been_sent;
 };
 
-class RtpData
-{
-public:
-    virtual ~RtpData() {}
+class RtpData {
+ public:
+  virtual ~RtpData() {}
 
-    virtual int32_t OnReceivedPayloadData(
-        const uint8_t* payloadData,
-        const size_t payloadSize,
-        const WebRtcRTPHeader* rtpHeader) = 0;
-    
-    virtual bool ReceivePacket(const uint8_t* packet,
+  virtual int32_t OnReceivedPayloadData(const uint8_t* payload_data,
+                                        size_t payload_size,
+                                        const WebRtcRTPHeader* rtp_header) = 0;
+
+  virtual bool ReceivePacket(const uint8_t* packet,
                   size_t packet_length,
                   const RTPHeader& header,
                   bool in_order) = 0;
-    
-    virtual bool OnRecoveredPacket(const uint8_t* packet,
-                                   size_t packet_length) = 0;
+
+  virtual bool OnRecoveredPacket(const uint8_t* packet,
+                                 size_t packet_length) = 0;
 };
 
-class RtcpFeedback
-{
-public:
-	virtual void OnApplicationDataReceived(const WebRtc_Word32 /*id*/,
-		const WebRtc_UWord8 /*subType*/,
-		const WebRtc_UWord32 /*name*/,
-		const WebRtc_UWord16 /*length*/,
-		const WebRtc_UWord8* /*data*/)  {};
+class RtpFeedback {
+ public:
+  virtual ~RtpFeedback() {}
 
-	virtual void OnXRVoIPMetricReceived(
-		const WebRtc_Word32 /*id*/,
-		const RTCPVoIPMetric* /*metric*/)  {};
-
-	virtual void OnRTCPPacketTimeout(const WebRtc_Word32 /*id*/)  {};
-
-	virtual void OnSendReportReceived(const WebRtc_Word32 id,
-		const WebRtc_UWord32 senderSSRC)  {};
-
-	virtual void OnReceiveReportReceived(const WebRtc_Word32 id,
-		const WebRtc_UWord32 senderSSRC)  {};
-
-protected:
-	virtual ~RtcpFeedback() {}
-};
-
-class RtpFeedback
-{
-public:
-    virtual ~RtpFeedback() {}
-
-    // Receiving payload change or SSRC change. (return success!)
-    /*
-    *   channels    - number of channels in codec (1 = mono, 2 = stereo)
-    */
-    virtual int32_t OnInitializeDecoder(
-        const int32_t id,
-        const int8_t payloadType,
-        const char payloadName[RTP_PAYLOAD_NAME_SIZE],
-        const int frequency,
-        const uint8_t channels,
-        const uint32_t rate) = 0;
-
-    virtual void OnIncomingSSRCChanged( const int32_t id,
-                                        const uint32_t ssrc) = 0;
-
-    virtual void OnIncomingCSRCChanged( const int32_t id,
-                                        const uint32_t CSRC,
-                                        const bool added) = 0;
-
-    virtual void ResetStatistics(uint32_t ssrc) = 0;
-    virtual void OnPacketTimeout(const WebRtc_Word32 id) = 0;
-    virtual void OnReceivedPacket(const WebRtc_Word32 id,
+  // Receiving payload change or SSRC change. (return success!)
+  /*
+  *   channels    - number of channels in codec (1 = mono, 2 = stereo)
+  */
+  virtual int32_t OnInitializeDecoder(
+      const int32_t id,
+      int8_t payload_type,
+      const char payload_name[RTP_PAYLOAD_NAME_SIZE],
+      int frequency,
+      size_t channels,
+      uint32_t rate) = 0;
+  virtual void OnIncomingSSRCChanged(const int32_t id, uint32_t ssrc) = 0;
+  virtual void OnIncomingCSRCChanged(const int32_t id, uint32_t csrc, bool added) = 0;
+  virtual void ResetStatistics(uint32_t ssrc) = 0;
+  virtual void OnPacketTimeout(const WebRtc_Word32 id) = 0;
+  virtual void OnReceivedPacket(const WebRtc_Word32 id,
                                   const RtpRtcpPacketType packetType) = 0;
 };
 
@@ -310,8 +248,6 @@ class RtcpIntraFrameObserver {
   virtual void OnReceivedRPSI(uint32_t ssrc,
                               uint64_t picture_id) = 0;
 
-  virtual void OnLocalSsrcChanged(uint32_t old_ssrc, uint32_t new_ssrc) = 0;
-
   virtual ~RtcpIntraFrameObserver() {}
 };
 
@@ -328,13 +264,93 @@ class RtcpBandwidthObserver {
   virtual ~RtcpBandwidthObserver() {}
 };
 
+struct PacketFeedback {
+  PacketFeedback(int64_t arrival_time_ms, uint16_t sequence_number)
+      : PacketFeedback(-1,
+                       arrival_time_ms,
+                       -1,
+                       sequence_number,
+                       0,
+                       PacedPacketInfo()) {}
+
+  PacketFeedback(int64_t arrival_time_ms,
+                 int64_t send_time_ms,
+                 uint16_t sequence_number,
+                 size_t payload_size,
+                 const PacedPacketInfo& pacing_info)
+      : PacketFeedback(-1,
+                       arrival_time_ms,
+                       send_time_ms,
+                       sequence_number,
+                       payload_size,
+                       pacing_info) {}
+
+  PacketFeedback(int64_t creation_time_ms,
+                 int64_t arrival_time_ms,
+                 int64_t send_time_ms,
+                 uint16_t sequence_number,
+                 size_t payload_size,
+                 const PacedPacketInfo& pacing_info)
+      : creation_time_ms(creation_time_ms),
+        arrival_time_ms(arrival_time_ms),
+        send_time_ms(send_time_ms),
+        sequence_number(sequence_number),
+        payload_size(payload_size),
+        pacing_info(pacing_info) {}
+
+  static constexpr int kNotAProbe = -1;
+
+  // NOTE! The variable |creation_time_ms| is not used when testing equality.
+  //       This is due to |creation_time_ms| only being used by SendTimeHistory
+  //       for book-keeping, and is of no interest outside that class.
+  // TODO(philipel): Remove |creation_time_ms| from PacketFeedback when cleaning
+  //                 up SendTimeHistory.
+  bool operator==(const PacketFeedback& rhs) const {
+    return arrival_time_ms == rhs.arrival_time_ms &&
+           send_time_ms == rhs.send_time_ms &&
+           sequence_number == rhs.sequence_number &&
+           payload_size == rhs.payload_size && pacing_info == rhs.pacing_info;
+  }
+
+  // Time corresponding to when this object was created.
+  int64_t creation_time_ms;
+  // Time corresponding to when the packet was received. Timestamped with the
+  // receiver's clock.
+  int64_t arrival_time_ms;
+  // Time corresponding to when the packet was sent, timestamped with the
+  // sender's clock.
+  int64_t send_time_ms;
+  // Packet identifier, incremented with 1 for every packet generated by the
+  // sender.
+  uint16_t sequence_number;
+  // Size of the packet excluding RTP headers.
+  size_t payload_size;
+  // Pacing information about this packet.
+  PacedPacketInfo pacing_info;
+};
+
+class TransportFeedbackObserver {
+ public:
+  TransportFeedbackObserver() {}
+  virtual ~TransportFeedbackObserver() {}
+
+  // Note: Transport-wide sequence number as sequence number.
+  virtual void AddPacket(uint16_t sequence_number,
+                         size_t length,
+                         const PacedPacketInfo& pacing_info) = 0;
+
+  virtual void OnTransportFeedback(const rtcp::TransportFeedback& feedback) = 0;
+
+  virtual std::vector<PacketFeedback> GetTransportFeedbackVector() const = 0;
+};
+
 class RtcpRttStats {
  public:
   virtual void OnRttUpdate(int64_t rtt) = 0;
 
   virtual int64_t LastProcessedRtt() const = 0;
 
-  virtual ~RtcpRttStats() {};
+  virtual ~RtcpRttStats() {}
 };
 
 // Null object version of RtpFeedback.
@@ -342,27 +358,20 @@ class NullRtpFeedback : public RtpFeedback {
  public:
   virtual ~NullRtpFeedback() {}
 
-  virtual int32_t OnInitializeDecoder(
-      const int32_t id,
-      const int8_t payloadType,
-      const char payloadName[RTP_PAYLOAD_NAME_SIZE],
-      const int frequency,
-      const uint8_t channels,
-      const uint32_t rate) OVERRIDE {
+  int32_t OnInitializeDecoder(const int32_t id, int8_t payload_type,
+                              const char payloadName[RTP_PAYLOAD_NAME_SIZE],
+                              int frequency,
+                              size_t channels,
+                              uint32_t rate) {
     return 0;
   }
 
-  virtual void OnIncomingSSRCChanged(const int32_t id,
-                                     const uint32_t ssrc) OVERRIDE {}
-
-  virtual void OnIncomingCSRCChanged(const int32_t id,
-                                     const uint32_t CSRC,
-                                     const bool added) OVERRIDE {}
-
-  virtual void ResetStatistics(uint32_t ssrc) OVERRIDE {}
-  virtual void OnPacketTimeout(const WebRtc_Word32 id) OVERRIDE {};
+  void OnIncomingSSRCChanged(const int32_t id, uint32_t ssrc) {}
+  void OnIncomingCSRCChanged(const int32_t id, uint32_t csrc, bool added) {}
+  virtual void ResetStatistics(uint32_t ssrc) {}
+  virtual void OnPacketTimeout(const WebRtc_Word32 id) {};
   virtual void OnReceivedPacket(const WebRtc_Word32 id,
-                                const RtpRtcpPacketType packetType) OVERRIDE {};
+                                const RtpRtcpPacketType packetType) {};
 };
 
 // Null object version of RtpData.
@@ -370,35 +379,67 @@ class NullRtpData : public RtpData {
  public:
   virtual ~NullRtpData() {}
 
-  virtual int32_t OnReceivedPayloadData(
-      const uint8_t* payloadData,
-      const size_t payloadSize,
-      const WebRtcRTPHeader* rtpHeader) OVERRIDE {
+  int32_t OnReceivedPayloadData(const uint8_t* payload_data,
+                                size_t payload_size,
+                                const WebRtcRTPHeader* rtp_header) override {
     return 0;
   }
-
+  
   virtual bool ReceivePacket(const uint8_t* packet,
                                size_t packet_length,
                                const RTPHeader& header,
                                bool in_order) OVERRIDE {
       return true;
- }
-  virtual bool OnRecoveredPacket(const uint8_t* packet,
-                                 size_t packet_length) OVERRIDE {
+  }
+  
+  bool OnRecoveredPacket(const uint8_t* packet, size_t packet_length) override {
     return true;
   }
 };
 
-// Null object version of RtpAudioFeedback.
-class NullRtpAudioFeedback : public RtpAudioFeedback {
- public:
-  virtual ~NullRtpAudioFeedback() {}
-
-  virtual void OnPlayTelephoneEvent(const int32_t id,
-                                    const uint8_t event,
-                                    const uint16_t lengthMs,
-                                    const uint8_t volume) OVERRIDE {}
+// Statistics about packet loss for a single directional connection. All values
+// are totals since the connection initiated.
+struct RtpPacketLossStats {
+  // The number of packets lost in events where no adjacent packets were also
+  // lost.
+  uint64_t single_packet_loss_count;
+  // The number of events in which more than one adjacent packet was lost.
+  uint64_t multiple_packet_loss_event_count;
+  // The number of packets lost in events where more than one adjacent packet
+  // was lost.
+  uint64_t multiple_packet_loss_packet_count;
 };
 
-}  // namespace webrtc
-#endif // WEBRTC_MODULES_RTP_RTCP_INTERFACE_RTP_RTCP_DEFINES_H_
+class RtpPacketSender {
+ public:
+  RtpPacketSender() {}
+  virtual ~RtpPacketSender() {}
+
+  enum Priority {
+    kHighPriority = 0,    // Pass through; will be sent immediately.
+    kNormalPriority = 2,  // Put in back of the line.
+    kLowPriority = 3,     // Put in back of the low priority line.
+  };
+  // Low priority packets are mixed with the normal priority packets
+  // while we are paused.
+
+  // Returns true if we send the packet now, else it will add the packet
+  // information to the queue and call TimeToSendPacket when it's time to send.
+  virtual void InsertPacket(Priority priority,
+                            uint32_t ssrc,
+                            uint16_t sequence_number,
+                            int64_t capture_time_ms,
+                            size_t bytes,
+                            bool retransmission) = 0;
+};
+
+class TransportSequenceNumberAllocator {
+ public:
+  TransportSequenceNumberAllocator() {}
+  virtual ~TransportSequenceNumberAllocator() {}
+
+  virtual uint16_t AllocateSequenceNumber() = 0;
+};
+
+}  // namespace cloopenwebrtc
+#endif  // WEBRTC_MODULES_RTP_RTCP_INCLUDE_RTP_RTCP_DEFINES_H_

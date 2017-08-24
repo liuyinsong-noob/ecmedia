@@ -11,8 +11,8 @@
 #include "engine_configurations.h"
 #include "video_render_windows_impl.h"
 
-#include "critical_section_wrapper.h"
-#include "trace.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 #ifdef DIRECT3D9_RENDERING
 #include "video_render_direct3d9.h"
 #endif

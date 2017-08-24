@@ -10,7 +10,7 @@
 
 #include "vie_ref_count.h"
 
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 
 namespace cloopenwebrtc {
 

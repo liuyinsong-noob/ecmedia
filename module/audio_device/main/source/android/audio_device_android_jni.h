@@ -16,7 +16,7 @@
 #define WEBRTC_AUDIO_DEVICE_AUDIO_DEVICE_ANDROID_JNI_H
 
 #include "audio_device_generic.h"
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 
 
 #include <jni.h> // For accessing AudioDeviceAndroid java class

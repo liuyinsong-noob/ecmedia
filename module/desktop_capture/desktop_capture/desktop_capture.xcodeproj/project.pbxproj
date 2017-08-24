@@ -234,7 +234,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../source/,
-					../../../system_wrappers/interface,
+					../../../system_wrappers/include,
 					../../../module,
 					./desktop_capture/,
 				);
@@ -252,7 +252,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../source/,
-					../../../system_wrappers/interface,
+					../../../system_wrappers/include,
 					../../../module,
 					./desktop_capture/,
 				);

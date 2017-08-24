@@ -20,7 +20,7 @@
 #include "audio_common.h"
 #include "audio_device_defines.h"
 #include "audio_device.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 namespace cloopenwebrtc {
 

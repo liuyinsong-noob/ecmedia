@@ -18,7 +18,7 @@
 #include "audio_coding_module_typedefs.h"
 #include "neteq.h"
 #include "module.h"
-#include "clock.h"
+#include "../system_wrappers/include/clock.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

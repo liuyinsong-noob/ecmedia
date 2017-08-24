@@ -11,7 +11,7 @@
 #ifndef WEBRTC_MODULES_UDP_TRANSPORT_SOURCE_UDP_SOCKET_MANAGER_WRAPPER_H_
 #define WEBRTC_MODULES_UDP_TRANSPORT_SOURCE_UDP_SOCKET_MANAGER_WRAPPER_H_
 
-#include "system_wrappers/interface/static_instance.h"
+#include "../system_wrappers/include/static_instance.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

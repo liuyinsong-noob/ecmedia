@@ -98,6 +98,10 @@ static proxyAddrList *gProxyAddrLst = NULL;
 
 #define CHECK_PROXY_VALID_KEY  "acbef97b9a534203b2ebcf3befb2a240"
 
+
+extern void setSsrcMediaType(int& ssrc, int type);
+extern void setSsrcMediaAttribute(int& ssrc, unsigned short width, unsigned short height, unsigned char maxFramerate);
+
 /////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////
@@ -3884,12 +3888,26 @@ extern "C"  int sendTmmbr(char *callid, int ssrc)
 	return 0;
 }
 
-extern "C" int setLocalSSRC(unsigned int ssrc)
+extern "C"  int requestVideo(char *callid, int width, int height)
 {
-	PrintConsole("[APICall] setLocalSSRC (ssrc=%u)\n", ssrc);
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	g_pSerCore->setLocalSSRC(ssrc);
+	PrintConsole("[APICall sendTmmbr called\n");
+	if (g_pSerCore) {
+		SerPhoneCall *pCall = NULL;
+		int ret = findCall(callid, &pCall);
+		if (ret != 0) {
+			return -1;
+		}
+
+		int ssrc = pCall->m_partnerSSRC;
+		setSsrcMediaType(ssrc, 1);
+		setSsrcMediaAttribute(ssrc, width, height, 15);
+		g_pSerCore->send_tmmbr_request_video(pCall, ssrc);
+	}
+	return 0;
 }
+
+
 
 
 extern "C"  int cancelTmmbr(char *callid)

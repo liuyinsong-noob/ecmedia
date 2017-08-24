@@ -14,7 +14,7 @@
 #include <string>
 #include <vector>
 
-#include "constructor_magic.h"
+#include "../base/constructormagic.h"
 #include "desktop_capture_types.h"
 #include "desktop_capturer.h"
 #include "typedefs.h"

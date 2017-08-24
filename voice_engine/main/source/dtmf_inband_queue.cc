@@ -8,7 +8,7 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 #include "dtmf_inband_queue.h"
 
 namespace cloopenwebrtc {

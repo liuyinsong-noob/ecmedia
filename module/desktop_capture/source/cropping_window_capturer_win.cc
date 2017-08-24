@@ -10,11 +10,11 @@
 
 #include "cropping_window_capturer.h"
 
-#include "win32.h"
+#include "../system_wrappers/include/win32.h"
 #include "scoped_gdi_object.h"
 #include "screen_capture_utils.h"
 #include "window_capture_utils.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 

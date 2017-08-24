@@ -213,7 +213,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../.;../.;./main/include;./main/source;../interface;./neteq/source;./neteq/include;../../system_wrappers\interface;../../system_wrappers/source;../resampler\include;../signalprocess\include;./codecs;./codecs\g711\include;./codecs\cng\include;./codecs\opencore-amr\amrnb;./codecs/ilbc/interface;./codecs/g729/source;./codecs/g729/interface;.\codecs\pcm16b\include;./codecs/silk;.\codecs\opus\interface;../common_video;../common_audio/source/vad/include;../common_audio/source/resampler/include;../common_audio/source/signal_processing/include;../..\third_party\opus\src/.;../..\third_party\SoundTouch\SoundTouch</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../.;../.;./main/include;./main/source;../interface;./neteq/source;./neteq/include;../resampler\include;../signalprocess\include;./codecs;./codecs\g711\include;./codecs\cng\include;./codecs\opencore-amr\amrnb;./codecs/ilbc/interface;./codecs/g729/source;./codecs/g729/interface;.\codecs\pcm16b\include;./codecs/silk;.\codecs\opus\interface;../common_video;../common_audio/source/vad/include;../common_audio/source/resampler/include;../common_audio/source/signal_processing/include;../..\third_party\opus\src/.;../..\third_party\SoundTouch\SoundTouch</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

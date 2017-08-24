@@ -5,9 +5,9 @@
 #include "receive_statistics_proxy.h"
 #include "audio_send_stream.h"
 #include "audio_receive_stream.h"
-#include "event_wrapper.h"
-#include "file_wrapper.h"
-#include "clock.h"
+#include "../system_wrappers/include/event_wrapper.h"
+#include "../system_wrappers/include/file_wrapper.h"
+#include "../system_wrappers/include/clock.h"
 #include "stats_types.h"
 
 #include "MediaStatisticsData.pb.h"

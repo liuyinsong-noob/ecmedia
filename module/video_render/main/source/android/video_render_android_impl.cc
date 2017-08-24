@@ -11,10 +11,10 @@
 #include "video_render_android_impl.h"
 
 #include "video_render_internal.h"
-#include "critical_section_wrapper.h"
-#include "event_wrapper.h"
-#include "thread_wrapper.h"
-#include "tick_util.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/event_wrapper.h"
+#include "../system_wrappers/include/thread_wrapper.h"
+#include "../system_wrappers/include/tick_util.h"
 
 #ifdef ANDROID
 #include <android/log.h>

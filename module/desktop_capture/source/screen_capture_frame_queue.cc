@@ -15,7 +15,7 @@
 
 #include "desktop_frame.h"
 #include "shared_desktop_frame.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

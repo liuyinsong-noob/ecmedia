@@ -13,9 +13,9 @@
 #include "engine_configurations.h"
 #include "video_render.h"
 #include "video_render_defines.h"
-#include "critical_section_wrapper.h"
-#include "rw_lock_wrapper.h"
-#include "logging.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/rw_lock_wrapper.h"
+#include "../system_wrappers/include/logging.h"
 #include "vie_defines.h"
 #include "vie_renderer.h"
 

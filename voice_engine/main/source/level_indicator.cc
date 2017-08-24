@@ -10,7 +10,7 @@
 
 #include "signal_processing_library.h"
 #include "module_common_types.h"
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 #include "level_indicator.h"
 
 namespace cloopenwebrtc {

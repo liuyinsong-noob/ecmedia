@@ -9,7 +9,7 @@
 #include "vie_defines.h"
 #include "bitrate_controller.h"
 #include "rtp_rtcp_defines.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "video_processing.h"
 #include "desktop_capturer.h"
 #include "screen_capturer.h"
@@ -20,7 +20,7 @@
 namespace cloopenwebrtc {
 
 class CriticalSectionWrapper;
-class EventWrapper;
+class EventTimerWrapper;
 class ThreadWrapper;
 class ViEEncoder;
 class ViEEffectFilter;
@@ -120,7 +120,7 @@ private:
 
     // Capture thread.
     ThreadWrapper&  desktop_capture_thread_;
-    EventWrapper&   desktop_capture_event_;
+    EventTimerWrapper&   desktop_capture_event_;
     scoped_ptr<CriticalSectionWrapper> wait_time_cs_;
     int thread_wait_time_ms_; 
 

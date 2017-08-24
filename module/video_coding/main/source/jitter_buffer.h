@@ -16,8 +16,8 @@
 #include <set>
 #include <vector>
 
-#include "constructormagic.h"
-#include "thread_annotations.h"
+#include "../base/constructormagic.h"
+#include "../base/thread_annotations.h"
 #include "module_common_types.h"
 #include "video_coding.h"
 #include "video_coding_defines.h"
@@ -25,7 +25,7 @@
 #include "inter_frame_delay.h"
 #include "jitter_buffer_common.h"
 #include "jitter_estimator.h"
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

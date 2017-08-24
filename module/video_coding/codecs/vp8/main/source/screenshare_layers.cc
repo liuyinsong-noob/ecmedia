@@ -14,7 +14,7 @@
 #include "vpx/vpx_encoder.h"
 #include "vpx/vp8cx.h"
 #include "video_codec_interface.h"
-#include "field_trial.h"
+#include "../system_wrappers/include/field_trial.h"
 
 namespace cloopenwebrtc {
 

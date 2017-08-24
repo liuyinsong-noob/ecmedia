@@ -13,9 +13,9 @@
 
 #include <stddef.h> // size_t, ptrdiff_t
 
-#include "rtp_rtcp_defines.h"
+#include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
 #include "rtp_rtcp_config.h"
-#include "typedefs.h"
+#include "../module/typedefs.h"
 
 namespace cloopenwebrtc {
 namespace RTCPUtility {

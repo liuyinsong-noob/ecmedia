@@ -14,10 +14,10 @@
 #include <map>
 #include <string>
 
-#include "timeutils.h"
+#include "../base/timeutils.h"
 
-#include "critical_section_wrapper.h"
-#include "trace.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 
 #ifdef ENABLE_LIB_CURL
 #ifdef	WIN32
@@ -397,18 +397,19 @@ void SendStatisticsProxy::DataCountersUpdated(const StreamDataCounters& counters
 	post_message(StatsReport::kStatsReportTypeVideoSend,
 	{
 		StatsReport::Value(StatsReport::kStatsValueNameSsrc, ssrc, StatsReport::Value::kUInt32),
-		StatsReport::Value(StatsReport::kStatsValueNameBytesSent, counters.bytes, StatsReport::Value::kUInt32),
-		StatsReport::Value(StatsReport::kStatsValueNamePacketsSent, counters.packets, StatsReport::Value::kUInt32),
-		StatsReport::Value(StatsReport::kStatsValueNameRetransmittedBytes, counters.retransmitted_bytes, StatsReport::Value::kUInt32),
-		StatsReport::Value(StatsReport::kStatsValueNameRetransmittedPackets, counters.retransmitted_packets, StatsReport::Value::kUInt32),
-		StatsReport::Value(StatsReport::kStatsValueNameFecPackets, counters.fec_packets, StatsReport::Value::kUInt32)
+		StatsReport::Value(StatsReport::kStatsValueNameBytesSent, counters.transmitted.payload_bytes, StatsReport::Value::kUInt32),
+		StatsReport::Value(StatsReport::kStatsValueNamePacketsSent, counters.transmitted.packets, StatsReport::Value::kUInt32),
+		StatsReport::Value(StatsReport::kStatsValueNameRetransmittedBytes, counters.retransmitted.payload_bytes, StatsReport::Value::kUInt32),
+		StatsReport::Value(StatsReport::kStatsValueNameRetransmittedPackets, counters.retransmitted.packets, StatsReport::Value::kUInt32),
+		StatsReport::Value(StatsReport::kStatsValueNameFecPackets, counters.fec.packets, StatsReport::Value::kUInt32)
 	});
 #endif
 }
 
-void SendStatisticsProxy::Notify(const BitrateStatistics& total_stats,
-	const BitrateStatistics& retransmit_stats,
+void SendStatisticsProxy::Notify(uint32_t total_stats,
+	uint32_t retransmit_stats,
 	uint32_t ssrc) {
+#if 0
 	CriticalSectionScoped lock(crit_.get());
 	VideoSendStream::StreamStats *stream = GetStreamStats(ssrc);
 	if (!stream)
@@ -444,6 +445,7 @@ void SendStatisticsProxy::Notify(const BitrateStatistics& total_stats,
 		StatsReport::Value(StatsReport::kStatsValueNameRetransmitPacketsRate, retransmit_stats.packet_rate, StatsReport::Value::kUInt32),
 	});
 #endif
+#endif
 }
 
 void SendStatisticsProxy::SendSideDelayUpdated(int avg_delay_ms,
@@ -459,15 +461,15 @@ void SendStatisticsProxy::SendSideDelayUpdated(int avg_delay_ms,
 	stream->max_delay_ms = max_delay_ms;
 }
 
-void SendStatisticsProxy::OnRttUpdate(int64_t rtt_ms)
+void SendStatisticsProxy::OnRttUpdate(int64_t avg_rtt_ms, int64_t max_rtt_ms)
 {
 	CriticalSectionScoped lock(crit_.get());
-	stats_.call.rtt_ms = rtt_ms;
-	avg_rate_stats_.rtt_ms.AddSample(rtt_ms);
+	stats_.call.rtt_ms = avg_rtt_ms;
+	avg_rate_stats_.rtt_ms.AddSample(avg_rtt_ms);
 #ifdef WIN32
 	post_message(StatsReport::kStatsReportTypeVideoSend,
 	{
-		StatsReport::Value(StatsReport::kStatsValueNameRttInMs, rtt_ms, StatsReport::Value::kUInt64)
+		StatsReport::Value(StatsReport::kStatsValueNameRttInMs, avg_rtt_ms, StatsReport::Value::kUInt64)
 	});
 #endif
 }

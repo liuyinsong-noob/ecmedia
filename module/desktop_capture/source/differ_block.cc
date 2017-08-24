@@ -14,7 +14,7 @@
 
 //#include "build/build_config.h"
 #include "differ_block_sse2.h"
-#include "cpu_features_wrapper.h"
+#include "../system_wrappers/include/cpu_features_wrapper.h"
 
 namespace cloopenwebrtc {
 

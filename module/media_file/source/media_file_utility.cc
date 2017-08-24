@@ -14,10 +14,10 @@
 
 #include "common_types.h"
 #include "engine_configurations.h"
-#include "file_wrapper.h"
+#include "../system_wrappers/include/file_wrapper.h"
 #include "media_file_utility.h"
 #include "module_common_types.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 
 #ifdef WEBRTC_MODULE_UTILITY_VIDEO
     #include "avi_file.h"
@@ -2343,7 +2343,7 @@ WebRtc_Word32 ModuleFileUtility::FileDurationMs(const char* fileName,
                      "failed to create InStream object!");
         return -1;
     }
-    if(inStreamObj->OpenFile(fileName, true) == -1)
+    if(!inStreamObj->OpenFile(fileName, true))
     {
         delete inStreamObj;
         WEBRTC_TRACE(kTraceError, kTraceFile, _id,

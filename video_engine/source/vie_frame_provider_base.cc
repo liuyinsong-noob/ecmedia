@@ -12,10 +12,10 @@
 
 #include <algorithm>
 
-#include "i420_video_frame.h"
-#include "critical_section_wrapper.h"
-#include "logging.h"
-#include "tick_util.h"
+#include "../common_video/include/i420_video_frame.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/logging.h"
+#include "../system_wrappers/include/tick_util.h"
 #include "vie_defines.h"
 #include "timeutils.h"
 

@@ -10,10 +10,10 @@
 
 #include "voe_network_impl.h"
 
-#include "format_macros.h"
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/format_macros.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 #include "logging.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 #include "channel.h"
 #include "voe_errors.h"
 #include "voice_engine_impl.h"
@@ -157,7 +157,7 @@ int VoENetworkImpl::ReceivedRTPPacket(int channel,
     if ((length < 12) || (length > 1292))
     {
         _shared->SetLastError(VE_INVALID_PACKET);
-        LOG(LS_ERROR) << "Invalid packet length: " << length;
+//        LOG(LS_ERROR) << "Invalid packet length: " << length;
         return -1;
     }
     if (NULL == data)

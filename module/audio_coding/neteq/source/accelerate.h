@@ -13,7 +13,7 @@
 
 #include <assert.h>
 
-#include "constructormagic.h"
+#include "../base/constructormagic.h"
 #include "audio_multi_vector.h"
 #include "time_stretch.h"
 #include "typedefs.h"

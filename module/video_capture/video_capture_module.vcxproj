@@ -227,7 +227,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../.;..\..;../utility\include;../interface;../../system_wrappers/source;../../system_wrappers\interface;./main\include;./main\source;./main\source\Windows;../videojpegyuv\include;../../third_party\platformsdk_win7\files\inc;../common_video/source;../common_video/source/libyuv/include;../common_video/interface;../video_coding/main/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;..\..;../utility\include;../interface;./main\include;./main\source;./main\source\Windows;../videojpegyuv\include;../../third_party\platformsdk_win7\files\inc;../common_video/source;../common_video/source/libyuv/include;../common_video/interface;../video_coding/main/include</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -284,7 +284,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VRelease|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../.;..\..;../utility\include;../interface;../../system_wrappers/source;../../system_wrappers\interface;./main\include;./main\source;./main\source\Windows;../videojpegyuv\include;../../third_party\platformsdk_win7\files\inc;../common_video/source;../common_video/source/libyuv/include;../common_video/interface;../video_coding/main/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;..\..;../utility\include;../interface;./main\include;./main\source;./main\source\Windows;../videojpegyuv\include;../../third_party\platformsdk_win7\files\inc;../common_video/source;../common_video/source/libyuv/include;../common_video/interface;../video_coding/main/include</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -340,8 +340,9 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='audioRelease|Win32'">
-    <ClCompile>
-      <AdditionalIncludeDirectories>../.;..\..;../utility\include;../interface;../../system_wrappers/source;../../system_wrappers\interface;./main\include;./main\source;./main\source\Windows;../videojpegyuv\include;../../third_party\platformsdk_win7\files\inc;../common_video/source;../common_video/source/libyuv/include;../common_video/interface;../video_coding/main/include</AdditionalIncludeDirectories>
+  <ClCompile>
+		  
+      <AdditionalIncludeDirectories>../.;..\..;../utility\include;../interface;./main\include;./main\source;./main\source\Windows;../videojpegyuv\include;../../third_party\platformsdk_win7\files\inc;../common_video/source;../common_video/source/libyuv/include;../common_video/interface;../video_coding/main/include</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -398,7 +399,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='audioWin32|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../.;..\..;../utility\include;../interface;../../system_wrappers/source;../../system_wrappers\interface;./main\include;./main\source;./main\source\Windows;../videojpegyuv\include;../../third_party\platformsdk_win7\files\inc;../common_video/source;../common_video/source/libyuv/include;../common_video/interface;../video_coding/main/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;..\..;../utility\include;../interface;./main\include;./main\source;./main\source\Windows;../videojpegyuv\include;../../third_party\platformsdk_win7\files\inc;../common_video/source;../common_video/source/libyuv/include;../common_video/interface;../video_coding/main/include</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -511,7 +512,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VRelease|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../.;..\..;../utility\include;../interface;../../system_wrappers\source;../../system_wrappers\interface;./main\include;./main\source;./main\source\Windows;../videojpegyuv\include;../../third_party\platformsdk_win7\files\inc;../common_video/source;../common_video/source/libyuv/include;../common_video/interface;../video_coding/main/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;..\..;../utility\include;../interface;./main\include;./main\source;./main\source\Windows;../videojpegyuv\include;../../third_party\platformsdk_win7\files\inc;../common_video/source;../common_video/source/libyuv/include;../common_video/interface;../video_coding/main/include</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -567,7 +568,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='audioRelease|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../.;..\..;../utility\include;../interface;../../system_wrappers\source;../../system_wrappers\interface;./main\include;./main\source;./main\source\Windows;../videojpegyuv\include;../../third_party\platformsdk_win7\files\inc;../common_video/source;../common_video/source/libyuv/include;../common_video/interface;../video_coding/main/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;..\..;../utility\include;../interface;./main\include;./main\source;./main\source\Windows;../videojpegyuv\include;../../third_party\platformsdk_win7\files\inc;../common_video/source;../common_video/source/libyuv/include;../common_video/interface;../video_coding/main/include</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -623,7 +624,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='audioWin32|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../.;..\..;../utility\include;../interface;../../system_wrappers\source;../../system_wrappers\interface;./main\include;./main\source;./main\source\Windows;../videojpegyuv\include;../../third_party\platformsdk_win7\files\inc;../common_video/source;../common_video/source/libyuv/include;../common_video/interface;../video_coding/main/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;..\..;../utility\include;../interface;./main\include;./main\source;./main\source\Windows;../videojpegyuv\include;../../third_party\platformsdk_win7\files\inc;../common_video/source;../common_video/source/libyuv/include;../common_video/interface;../video_coding/main/include</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

@@ -9,7 +9,7 @@
  */
 
 #include "time_scheduler.h"
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 
 namespace cloopenwebrtc {
 TimeScheduler::TimeScheduler(const int64_t periodicityInMs)

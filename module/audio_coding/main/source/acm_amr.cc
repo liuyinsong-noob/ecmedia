@@ -16,8 +16,8 @@
 #include "amr_interface.h"
 #include "audio_coding_module_typedefs.h"
 #include "acm_common_defs.h"
-#include "rw_lock_wrapper.h"
-#include "trace.h"
+#include "../system_wrappers/include/rw_lock_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 
 // The API in the header file should match the one below.
 //

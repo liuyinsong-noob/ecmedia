@@ -15,7 +15,7 @@
 #include <map>
 
 #include "audio_coding_module_typedefs.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 //#include "gtest_prod_util.h"
 
 //

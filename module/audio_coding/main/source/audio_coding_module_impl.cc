@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <vector>
 
-#include "checks.h"
+#include "../base/checks.h"
 #include "engine_configurations.h"
 #include "audio_coding_module_typedefs.h"
 #include "acm_codec_database.h"
@@ -22,9 +22,9 @@
 #include "acm_generic_codec.h"
 #include "acm_resampler.h"
 #include "call_statistics.h"
-#include "critical_section_wrapper.h"
-#include "rw_lock_wrapper.h"
-#include "trace.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/rw_lock_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {
@@ -305,8 +305,7 @@ int32_t AudioCodingModuleImpl::Process() {
     status = codecs_[current_send_codec_idx_]->Encode(stream, &length_bytes,
                                                       &rtp_timestamp,
                                                       &encoding_type);
-      
-    int static counter = 0;
+      int static counter = 0;
     if (status < 0) {
       // Encode failed.
       WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
@@ -321,7 +320,7 @@ int32_t AudioCodingModuleImpl::Process() {
       switch (encoding_type) {
         case kNoEncoding: {
           current_payload_type = previous_pltype_;
-          frame_type = kFrameEmpty;
+          frame_type = kEmptyFrame;
           length_bytes = 0;
           break;
         }
@@ -479,6 +478,7 @@ int32_t AudioCodingModuleImpl::Process() {
                             fragmentation_.fragmentationTimestamp[1] = (*it).ts;
                             memcpy(stream+fragmentation_.fragmentationOffset[1], (*it).buf, (*it).len);
                         }
+                        
                     }
                         break;
                     default:
@@ -563,9 +563,8 @@ int32_t AudioCodingModuleImpl::Process() {
   if (has_data_to_send) {
     CriticalSectionScoped lock(callback_crit_sect_);
 
-      if (packetization_callback_ != NULL) {
+    if (packetization_callback_ != NULL) {
       if (red_active) {
-          
         // Callback with payload data, including redundant data (RED).
         packetization_callback_->SendData(frame_type, current_payload_type,
                                           rtp_timestamp, stream, length_bytes,
@@ -576,16 +575,12 @@ int32_t AudioCodingModuleImpl::Process() {
                                           rtp_timestamp, stream, length_bytes,
                                           NULL);
       }
-          
-    
     }
-      
 
     if (vad_callback_ != NULL) {
       // Callback with VAD decision.
       vad_callback_->InFrameType(static_cast<int16_t>(encoding_type));
     }
-      
   }
   return length_bytes;
 }
@@ -1197,7 +1192,7 @@ int AudioCodingModuleImpl::setSoundTouch(int pitch, int tempo, int rate) {
 // encoder is mono and input is stereo. In case of dual-streaming, both
 // encoders has to be mono for down-mix to take place.
 // |*ptr_out| will point to the pre-processed audio-frame. If no pre-processing
-// is required, |*ptr_out| points to | in_frame|.
+// is required, |*ptr_out| points to |in_frame|.
 int AudioCodingModuleImpl::PreprocessToAddData(const AudioFrame& in_frame,
                                                const AudioFrame** ptr_out) {
   bool resample = (in_frame.sample_rate_hz_ != send_codec_inst_.plfreq);
@@ -1233,8 +1228,7 @@ int AudioCodingModuleImpl::PreprocessToAddData(const AudioFrame& in_frame,
   int16_t audio[WEBRTC_10MS_PCM_AUDIO];
   const int16_t* src_ptr_audio = in_frame.data_;
   int16_t* dest_ptr_audio = preprocess_frame_.data_;
-  
-    if (down_mix) {
+  if (down_mix) {
     // If a resampling is required the output of a down-mix is written into a
     // local buffer, otherwise, it will be written to the output frame.
     if (resample)

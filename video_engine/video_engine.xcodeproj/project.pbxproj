@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1FDC7C041E7A6335002B9F7C /* video_send_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FDC7C031E7A6335002B9F7C /* video_send_stream.cc */; };
+		4547E2CF1F15F2F60014FB7E /* encoder_rtcp_feedback.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4547E2CD1F15F2F60014FB7E /* encoder_rtcp_feedback.cc */; };
+		4547E2D01F15F2F60014FB7E /* encoder_rtcp_feedback.h in Headers */ = {isa = PBXBuildFile; fileRef = 4547E2CE1F15F2F60014FB7E /* encoder_rtcp_feedback.h */; };
 		5519CB8F15C812A700719504 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5519CB8E15C812A700719504 /* Foundation.framework */; };
 		5519CC8C15C8136E00719504 /* vie_base_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC4215C8136E00719504 /* vie_base_impl.cc */; };
 		5519CC8E15C8136E00719504 /* vie_capture_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC4415C8136E00719504 /* vie_capture_impl.cc */; };
@@ -26,7 +28,6 @@
 		5519CCAF15C8136F00719504 /* vie_input_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6515C8136E00719504 /* vie_input_manager.cc */; };
 		5519CCB115C8136F00719504 /* vie_manager_base.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6715C8136E00719504 /* vie_manager_base.cc */; };
 		5519CCB315C8136F00719504 /* vie_network_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6915C8136E00719504 /* vie_network_impl.cc */; };
-		5519CCB515C8136F00719504 /* vie_performance_monitor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6B15C8136E00719504 /* vie_performance_monitor.cc */; };
 		5519CCB715C8136F00719504 /* vie_receiver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6D15C8136E00719504 /* vie_receiver.cc */; };
 		5519CCB915C8136F00719504 /* vie_ref_count.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6F15C8136E00719504 /* vie_ref_count.cc */; };
 		5519CCBD15C8136F00719504 /* vie_render_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC7315C8136E00719504 /* vie_render_impl.cc */; };
@@ -70,7 +71,6 @@
 		AD1F0C201D47612200C33F53 /* vie_input_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6515C8136E00719504 /* vie_input_manager.cc */; };
 		AD1F0C211D47612200C33F53 /* vie_manager_base.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6715C8136E00719504 /* vie_manager_base.cc */; };
 		AD1F0C221D47612200C33F53 /* vie_network_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6915C8136E00719504 /* vie_network_impl.cc */; };
-		AD1F0C231D47612200C33F53 /* vie_performance_monitor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6B15C8136E00719504 /* vie_performance_monitor.cc */; };
 		AD1F0C241D47612200C33F53 /* vie_receiver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6D15C8136E00719504 /* vie_receiver.cc */; };
 		AD1F0C251D47612200C33F53 /* vie_ref_count.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC6F15C8136E00719504 /* vie_ref_count.cc */; };
 		AD1F0C261D47612200C33F53 /* vie_render_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5519CC7315C8136E00719504 /* vie_render_impl.cc */; };
@@ -119,6 +119,8 @@
 
 /* Begin PBXFileReference section */
 		1FDC7C031E7A6335002B9F7C /* video_send_stream.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_send_stream.cc; sourceTree = "<group>"; };
+		4547E2CD1F15F2F60014FB7E /* encoder_rtcp_feedback.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = encoder_rtcp_feedback.cc; path = video/encoder_rtcp_feedback.cc; sourceTree = "<group>"; };
+		4547E2CE1F15F2F60014FB7E /* encoder_rtcp_feedback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = encoder_rtcp_feedback.h; path = video/encoder_rtcp_feedback.h; sourceTree = "<group>"; };
 		5519CB8B15C812A700719504 /* libvideo_engine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvideo_engine.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5519CB8E15C812A700719504 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5519CC3615C8136E00719504 /* vie_base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_base.h; sourceTree = "<group>"; };
@@ -167,8 +169,6 @@
 		5519CC6815C8136E00719504 /* vie_manager_base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_manager_base.h; sourceTree = "<group>"; };
 		5519CC6915C8136E00719504 /* vie_network_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_network_impl.cc; sourceTree = "<group>"; };
 		5519CC6A15C8136E00719504 /* vie_network_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_network_impl.h; sourceTree = "<group>"; };
-		5519CC6B15C8136E00719504 /* vie_performance_monitor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_performance_monitor.cc; sourceTree = "<group>"; };
-		5519CC6C15C8136E00719504 /* vie_performance_monitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_performance_monitor.h; sourceTree = "<group>"; };
 		5519CC6D15C8136E00719504 /* vie_receiver.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_receiver.cc; sourceTree = "<group>"; };
 		5519CC6E15C8136E00719504 /* vie_receiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vie_receiver.h; sourceTree = "<group>"; };
 		5519CC6F15C8136E00719504 /* vie_ref_count.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_ref_count.cc; sourceTree = "<group>"; };
@@ -295,6 +295,8 @@
 		5519CC4115C8136E00719504 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				4547E2CD1F15F2F60014FB7E /* encoder_rtcp_feedback.cc */,
+				4547E2CE1F15F2F60014FB7E /* encoder_rtcp_feedback.h */,
 				1FDC7C031E7A6335002B9F7C /* video_send_stream.cc */,
 				ADE835591D8F795F00CCD20D /* vie_desktop_capture.cpp */,
 				AD42CD701D23E17A009C2E7A /* shared_memory.cc */,
@@ -360,8 +362,6 @@
 				5519CC6815C8136E00719504 /* vie_manager_base.h */,
 				5519CC6915C8136E00719504 /* vie_network_impl.cc */,
 				5519CC6A15C8136E00719504 /* vie_network_impl.h */,
-				5519CC6B15C8136E00719504 /* vie_performance_monitor.cc */,
-				5519CC6C15C8136E00719504 /* vie_performance_monitor.h */,
 				5519CC6D15C8136E00719504 /* vie_receiver.cc */,
 				5519CC6E15C8136E00719504 /* vie_receiver.h */,
 				5519CC6F15C8136E00719504 /* vie_ref_count.cc */,
@@ -399,6 +399,7 @@
 				AD2E29F61C58C04900FD311B /* report_block_stats.h in Headers */,
 				AD8D72611C58C9EB00FB246D /* encoder_state_feedback.h in Headers */,
 				AD8D73031C59A39700FB246D /* send_statistics_proxy.h in Headers */,
+				4547E2D01F15F2F60014FB7E /* encoder_rtcp_feedback.h in Headers */,
 				AD194FE71C5B4572003841BB /* vie_desktop_share_impl.h in Headers */,
 				AD2E29FA1C58C09F00FD311B /* stream_synchronization.h in Headers */,
 			);
@@ -489,6 +490,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4547E2CF1F15F2F60014FB7E /* encoder_rtcp_feedback.cc in Sources */,
 				5519CC8C15C8136E00719504 /* vie_base_impl.cc in Sources */,
 				AD2E29F91C58C09F00FD311B /* stream_synchronization.cc in Sources */,
 				5519CC8E15C8136E00719504 /* vie_capture_impl.cc in Sources */,
@@ -514,7 +516,6 @@
 				5519CCAF15C8136F00719504 /* vie_input_manager.cc in Sources */,
 				5519CCB115C8136F00719504 /* vie_manager_base.cc in Sources */,
 				5519CCB315C8136F00719504 /* vie_network_impl.cc in Sources */,
-				5519CCB515C8136F00719504 /* vie_performance_monitor.cc in Sources */,
 				5519CCB715C8136F00719504 /* vie_receiver.cc in Sources */,
 				5519CCB915C8136F00719504 /* vie_ref_count.cc in Sources */,
 				5519CCBD15C8136F00719504 /* vie_render_impl.cc in Sources */,
@@ -566,7 +567,6 @@
 				AD1F0C201D47612200C33F53 /* vie_input_manager.cc in Sources */,
 				AD1F0C211D47612200C33F53 /* vie_manager_base.cc in Sources */,
 				AD1F0C221D47612200C33F53 /* vie_network_impl.cc in Sources */,
-				AD1F0C231D47612200C33F53 /* vie_performance_monitor.cc in Sources */,
 				AD1F0C241D47612200C33F53 /* vie_receiver.cc in Sources */,
 				AD1F0C251D47612200C33F53 /* vie_ref_count.cc in Sources */,
 				AD1F0C261D47612200C33F53 /* vie_render_impl.cc in Sources */,
@@ -633,7 +633,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/video_engine.dst;
 				GCC_CW_ASM_SYNTAX = NO;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -641,41 +641,16 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"\"WEBRTC_SVNREVISION=\\\"Unavailable(issue687)\\\"\"",
-					"\"ENABLE_ONE_CLICK_SIGNIN\"",
-					"\"ENABLE_REMOTING=1\"",
-					"\"ENABLE_WEBRTC=1\"",
-					"\"ENABLE_CONFIGURATION_POLICY\"",
-					"\"ENABLE_INPUT_SPEECH\"",
-					"\"ENABLE_NOTIFICATIONS\"",
-					"\"ENABLE_HIDPI=1\"",
-					"\"ENABLE_GPU=1\"",
-					"\"ENABLE_EGLIMAGE=1\"",
-					"\"USE_SKIA=1\"",
-					"\"ENABLE_TASK_MANAGER=1\"",
-					"\"ENABLE_WEB_INTENTS=1\"",
-					"\"ENABLE_EXTENSIONS=1\"",
-					"\"ENABLE_PLUGIN_INSTALLATION=1\"",
-					"\"ENABLE_PROTECTOR_SERVICE=1\"",
-					"\"ENABLE_SESSION_SERVICE=1\"",
-					"\"ENABLE_THEMES=1\"",
-					"\"ENABLE_BACKGROUND=1\"",
-					"\"ENABLE_PROMO_RESOURCE_SERVICE=1\"",
-					"\"ENABLE_AUTOMATION=1\"",
-					"\"ENABLE_PRINTING=1\"",
-					"\"ENABLE_CAPTIVE_PORTAL_DETECTION=1\"",
-					"\"WEBRTC_THREAD_RR\"",
-					"\"WEBRTC_CLOCK_TYPE_REALTIME\"",
-					"\"WEBRTC_VIDEO_ENGINE_FILE_API\"",
-					"\"__STDC_FORMAT_MACROS\"",
-					"\"DYNAMIC_ANNOTATIONS_ENABLED=1\"",
-					"\"WTF_USE_DYNAMIC_ANNOTATIONS=1\"",
-					VIDEOCODEC_H264,
+					WEBRTC_POSIX,
 					VIDEOCODEC_VP8,
+<<<<<<< HEAD
 					ENABLE_SCREEN_SHARE,
 					WEBRTC_VIDEO_ENGINE_DESKTOP_SHARE_API,
 					WEBRTC_SRTP,
 					VIDEO_ENABLED,
+=======
+					WEBRTC_THREAD_RR,
+>>>>>>> mergewebrtcport
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -700,7 +675,7 @@
 					../module/video_render/main/source/mac,
 					../voice_engine/main/include,
 					../system_wrappers/source,
-					../system_wrappers/interface,
+					../system_wrappers/include,
 					../module/video_processing/main/source/beauty_filter,
 					../servicecore/include,
 					../third_party/oRTP/include/ortp,
@@ -716,6 +691,7 @@
 					../module/desktop_capture/desktop_capture/desktop_capture,
 					../ECMedia/source,
 					../voice_engine/main/source,
+					"$(SRCROOT)/source",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
@@ -737,7 +713,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/video_engine.dst;
 				GCC_CW_ASM_SYNTAX = NO;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -745,42 +721,16 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"\"WEBRTC_SVNREVISION=\\\"Unavailable(issue687)\\\"\"",
-					"\"ENABLE_ONE_CLICK_SIGNIN\"",
-					"\"ENABLE_REMOTING=1\"",
-					"\"ENABLE_WEBRTC=1\"",
-					"\"ENABLE_CONFIGURATION_POLICY\"",
-					"\"ENABLE_INPUT_SPEECH\"",
-					"\"ENABLE_NOTIFICATIONS\"",
-					"\"ENABLE_HIDPI=1\"",
-					"\"ENABLE_GPU=1\"",
-					"\"ENABLE_EGLIMAGE=1\"",
-					"\"USE_SKIA=1\"",
-					"\"ENABLE_TASK_MANAGER=1\"",
-					"\"ENABLE_WEB_INTENTS=1\"",
-					"\"ENABLE_EXTENSIONS=1\"",
-					"\"ENABLE_PLUGIN_INSTALLATION=1\"",
-					"\"ENABLE_PROTECTOR_SERVICE=1\"",
-					"\"ENABLE_SESSION_SERVICE=1\"",
-					"\"ENABLE_THEMES=1\"",
-					"\"ENABLE_BACKGROUND=1\"",
-					"\"ENABLE_PROMO_RESOURCE_SERVICE=1\"",
-					"\"ENABLE_AUTOMATION=1\"",
-					"\"ENABLE_PRINTING=1\"",
-					"\"ENABLE_CAPTIVE_PORTAL_DETECTION=1\"",
-					"\"WEBRTC_THREAD_RR\"",
-					"\"WEBRTC_CLOCK_TYPE_REALTIME\"",
-					"\"WEBRTC_VIDEO_ENGINE_FILE_API\"",
-					"\"__STDC_FORMAT_MACROS\"",
-					"\"NDEBUG\"",
-					"\"NVALGRIND\"",
-					"\"DYNAMIC_ANNOTATIONS_ENABLED=0\"",
-					VIDEOCODEC_H264,
+					WEBRTC_POSIX,
 					VIDEOCODEC_VP8,
+<<<<<<< HEAD
 					ENABLE_SCREEN_SHARE,
 					WEBRTC_VIDEO_ENGINE_DESKTOP_SHARE_API,
 					WEBRTC_SRTP,
 					VIDEO_ENABLED,
+=======
+					WEBRTC_THREAD_RR,
+>>>>>>> mergewebrtcport
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -805,7 +755,7 @@
 					../module/video_render/main/source/mac,
 					../voice_engine/main/include,
 					../system_wrappers/source,
-					../system_wrappers/interface,
+					../system_wrappers/include,
 					../module/video_processing/main/source/beauty_filter,
 					../servicecore/include,
 					../third_party/oRTP/include/ortp,
@@ -821,6 +771,7 @@
 					../module/desktop_capture/desktop_capture/desktop_capture,
 					../ECMedia/source,
 					../voice_engine/main/source,
+					"$(SRCROOT)/source",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";

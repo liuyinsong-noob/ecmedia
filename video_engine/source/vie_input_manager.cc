@@ -16,14 +16,14 @@
 #include "video_capture_factory.h"
 #include "video_coding.h"
 #include "video_coding_defines.h"
-#include "critical_section_wrapper.h"
-#include "logging.h"
-#include "rw_lock_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/logging.h"
+#include "../system_wrappers/include/rw_lock_wrapper.h"
 #include "vie_errors.h"
 #include "vie_capturer.h"
 #include "vie_defines.h"
 
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 #include "vie_file_player.h"
 
 namespace cloopenwebrtc {

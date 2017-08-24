@@ -8,15 +8,16 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "rtp_format_vp8.h"
+#include "../module/rtp_rtcp/source/rtp_format_vp8.h"
 
 #include <assert.h>  // assert
 #include <string.h>  // memcpy
 
 #include <vector>
 
-#include "vp8_partition_aggregator.h"
-#include "logging.h"
+#include "../system_wrappers/include/logging.h"
+#include "../module/rtp_rtcp/source/vp8_partition_aggregator.h"
+#include "../module/rtp_rtcp/source/rtp_packet_to_send.h"
 
 namespace cloopenwebrtc {
 namespace {
@@ -197,9 +198,9 @@ void RtpPacketizerVp8::SetPayloadData(
   }
 }
 
-bool RtpPacketizerVp8::NextPacket(uint8_t* buffer,
-                                  size_t* bytes_to_send,
-                                  bool* last_packet) {
+bool RtpPacketizerVp8::NextPacket(RtpPacketToSend* packet, bool* last_packet) {
+  DCHECK(packet);
+  DCHECK(last_packet);
   if (!packets_calculated_) {
     int ret = 0;
     if (aggr_mode_ == kAggrPartitions && balance_) {
@@ -217,13 +218,14 @@ bool RtpPacketizerVp8::NextPacket(uint8_t* buffer,
   InfoStruct packet_info = packets_.front();
   packets_.pop();
 
+  uint8_t* buffer = packet->AllocatePayload(max_payload_len_);
   int bytes = WriteHeaderAndPayload(packet_info, buffer, max_payload_len_);
   if (bytes < 0) {
     return false;
   }
-  *bytes_to_send = static_cast<size_t>(bytes);
-
+  packet->SetPayloadSize(bytes);
   *last_packet = packets_.empty();
+  packet->SetMarker(*last_packet);
   return true;
 }
 
@@ -236,8 +238,8 @@ ProtectionType RtpPacketizerVp8::GetProtectionType() {
 StorageType RtpPacketizerVp8::GetStorageType(uint32_t retransmission_settings) {
   if (hdr_info_.temporalIdx == 0 &&
       !(retransmission_settings & kRetransmitBaseLayer)) {
-		  return kDontRetransmit;
-	 }
+    return kDontRetransmit;
+  }
   if (hdr_info_.temporalIdx != kNoTemporalIdx &&
              hdr_info_.temporalIdx > 0 &&
              !(retransmission_settings & kRetransmitHigherLayers)) {
@@ -668,6 +670,10 @@ bool RtpDepacketizerVp8::Parse(ParsedPayload* parsed_payload,
                                const uint8_t* payload_data,
                                size_t payload_data_length) {
   assert(parsed_payload != NULL);
+  if (payload_data_length == 0) {
+    LOG(LS_ERROR) << "Empty payload.";
+    return false;
+  }
 
   // Parse mandatory first byte of payload descriptor.
   bool extension = (*payload_data & 0x80) ? true : false;               // X bit
@@ -676,7 +682,7 @@ bool RtpDepacketizerVp8::Parse(ParsedPayload* parsed_payload,
 
   parsed_payload->type.Video.width = 0;
   parsed_payload->type.Video.height = 0;
-  parsed_payload->type.Video.isFirstPacket =
+  parsed_payload->type.Video.is_first_packet_in_frame =
       beginning_of_partition && (partition_id == 0);
   parsed_payload->type.Video.simulcastIdx = 0;
   parsed_payload->type.Video.codec = kRtpVideoVp8;
@@ -736,4 +742,4 @@ bool RtpDepacketizerVp8::Parse(ParsedPayload* parsed_payload,
   parsed_payload->payload_length = payload_data_length;
   return true;
 }
-}  // namespace webrtc
+}  // namespace cloopenwebrtc

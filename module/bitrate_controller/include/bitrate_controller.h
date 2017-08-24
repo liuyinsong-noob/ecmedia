@@ -15,25 +15,30 @@
 #ifndef WEBRTC_MODULES_BITRATE_CONTROLLER_INCLUDE_BITRATE_CONTROLLER_H_
 #define WEBRTC_MODULES_BITRATE_CONTROLLER_INCLUDE_BITRATE_CONTROLLER_H_
 
-#include "module.h"
-#include "rtp_rtcp_defines.h"
+#include <map>
 
-#include "clock.h"
+#include "../module/congestion_controller/delay_based_bwe.h"
+#include "../module/interface/module.h"
+#include "../module/pacing/paced_sender.h"
+#include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
 
 namespace cloopenwebrtc {
 
+class CriticalSectionWrapper;
+class RtcEventLog;
+
+// Deprecated
+// TODO(perkj): Remove BitrateObserver when no implementations use it.
 class BitrateObserver {
- /*
-  * Observer class for the encoders, each encoder should implement this class
-  * to get the target bitrate. It also get the fraction loss and rtt to
-  * optimize its settings for this type of network. |target_bitrate| is the
-  * target media/payload bitrate excluding packet headers, measured in bits
-  * per second.
-  */
+  // Observer class for bitrate changes announced due to change in bandwidth
+  // estimate or due to bitrate allocation changes. Fraction loss and rtt is
+  // also part of this callback to allow the obsevrer to optimize its settings
+  // for different types of network environments. The bitrate does not include
+  // packet headers and is measured in bits per second.
  public:
-  virtual void OnNetworkChanged(uint32_t target_bitrate,
+  virtual void OnNetworkChanged(uint32_t bitrate_bps,
                                 uint8_t fraction_loss,  // 0 - 255.
-                                int64_t rtt) = 0;
+                                int64_t rtt_ms) = 0;
 
   virtual ~BitrateObserver() {}
 };
@@ -54,46 +59,45 @@ class BitrateController : public Module {
  * BitrateObservers.
  */
  public:
-  // The argument |enforce_min_bitrate| controls the behavior when the available
-  // bitrate is lower than the minimum bitrate, or the sum of minimum bitrates.
-  // When true, the bitrate will never be set lower than the minimum bitrate(s).
-  // When false, the bitrate observers will be allocated rates up to their
-  // respective minimum bitrate, satisfying one observer after the other.
+  static const int kDefaultStartBitratebps = 300000;
+
+  // Deprecated:
+  // TODO(perkj): BitrateObserver has been deprecated and is not used in WebRTC.
+  // Remove this method once other other projects does not use it.
   static BitrateController* CreateBitrateController(Clock* clock,
-                                                    bool enforce_min_bitrate);
+                                                    BitrateObserver* observer,
+                                                    RtcEventLog* event_log);
+
+  static BitrateController* CreateBitrateController(Clock* clock,
+                                                    RtcEventLog* event_log);
+
   virtual ~BitrateController() {}
 
   virtual RtcpBandwidthObserver* CreateRtcpBandwidthObserver() = 0;
+
+  // Deprecated
+  virtual void SetStartBitrate(int start_bitrate_bps) = 0;
+  // Deprecated
+  virtual void SetMinMaxBitrate(int min_bitrate_bps, int max_bitrate_bps) = 0;
+  virtual void SetBitrates(int start_bitrate_bps,
+                           int min_bitrate_bps,
+                           int max_bitrate_bps) = 0;
+
+  virtual void ResetBitrates(int bitrate_bps,
+                             int min_bitrate_bps,
+                             int max_bitrate_bps) = 0;
+
+  virtual void OnDelayBasedBweResult(const DelayBasedBwe::Result& result) = 0;
 
   // Gets the available payload bandwidth in bits per second. Note that
   // this bandwidth excludes packet headers.
   virtual bool AvailableBandwidth(uint32_t* bandwidth) const = 0;
 
-  /*
-  *  Set the start and max send bitrate used by the bandwidth management.
-  *
-  *  observer, updates bitrates if already in use.
-  *  min_bitrate_kbit = 0 equals no min bitrate.
-  *  max_bitrate_kit = 0 equals no max bitrate.
-  */
-  virtual void SetBitrateObserver(BitrateObserver* observer,
-                                  uint32_t start_bitrate,
-                                  uint32_t min_bitrate,
-                                  uint32_t max_bitrate) = 0;
-
-  virtual void RemoveBitrateObserver(BitrateObserver* observer) = 0;
-
-  // Changes the mode that was set in the constructor.
-  virtual void EnforceMinBitrate(bool enforce_min_bitrate) = 0;
-
   virtual void SetReservedBitrate(uint32_t reserved_bitrate_bps) = 0;
 
-  virtual void SetBitrateSent(uint32_t bitrate_sent_bps) = 0;
-
-  virtual void SetCodecMode(cloopenwebrtc::VideoCodecMode mode) = 0;
-
-  virtual void RegisterSendsideBweObserver(SendsideBweObserver *observer) = 0;
-  virtual void DeregisterSendsideBweObserver() = 0;
+  virtual bool GetNetworkParameters(uint32_t* bitrate,
+                                    uint8_t* fraction_loss,
+                                    int64_t* rtt) = 0;
 };
-}  // namespace webrtc
+}  // namespace cloopenwebrtc
 #endif  // WEBRTC_MODULES_BITRATE_CONTROLLER_INCLUDE_BITRATE_CONTROLLER_H_

@@ -12,11 +12,12 @@
 #define WEBRTC_AUDIO_RECEIVE_STREAM_H_
 
 #include "voe_base.h"
-#include "thread_wrapper.h"
-#include "event_wrapper.h"
-#include "file_wrapper.h"
-#include "clock.h"
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/thread_wrapper.h"
+#include "../system_wrappers/include/event_wrapper.h"
+#include "../system_wrappers/include/file_wrapper.h"
+#include "../system_wrappers/include/clock.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 namespace cloopenwebrtc {
 

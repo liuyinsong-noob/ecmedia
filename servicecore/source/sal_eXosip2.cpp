@@ -785,10 +785,10 @@ int sal_call(SalOp *h, const char *from, const char *to){
 		if (h->referred_by)
 			osip_message_set_header(invite,"Referred-By",h->referred_by);
 	}
-	if( h->invite_userdata)
-		osip_message_set_header(invite,"P-Call-UserData",h->invite_userdata);
-    if( h->group_id)
-		osip_message_set_header(invite,"P-CallNetWork",h->group_id);
+	if (h->invite_userdata);
+		//osip_message_set_header(invite,"P-Call-UserData",h->invite_userdata);
+	if (h->group_id);
+		//osip_message_set_header(invite,"P-CallNetWork",h->group_id);
 
 //haiyuntong
 #ifdef HAIYUNTONG
@@ -2668,10 +2668,10 @@ int sal_register(SalOp *h, const char *proxy, const char *from, int expires){
 	if (msg){
         ServiceCore *tmp = (ServiceCore*)sal_get_user_pointer(sal_op_get_sal(h));
         if (tmp->serphone_get_groupID()) {
-            osip_message_set_header(msg,"P-CallNetWork",tmp->serphone_get_groupID());
+        //    osip_message_set_header(msg,"P-CallNetWork",tmp->serphone_get_groupID());
         }
         if (tmp->serphone_core_get_temp_auth()) {
-            osip_message_set_header(msg,"P-Call-UserData",tmp->serphone_core_get_registerUserdata());
+    //        osip_message_set_header(msg,"P-Call-UserData",tmp->serphone_core_get_registerUserdata());
         }
 		eXosip_register_send_register(h->rid,msg);
 	}

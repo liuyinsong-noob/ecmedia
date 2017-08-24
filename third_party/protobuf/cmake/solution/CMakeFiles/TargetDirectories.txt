@@ -1,0 +1,7 @@
+C:/Users/yuanlirong/Work/port_cc/ecmedia/third_party/protobuf/cmake/solution/CMakeFiles/protoc.dir
+C:/Users/yuanlirong/Work/port_cc/ecmedia/third_party/protobuf/cmake/solution/CMakeFiles/libprotobuf-lite.dir
+C:/Users/yuanlirong/Work/port_cc/ecmedia/third_party/protobuf/cmake/solution/CMakeFiles/libprotoc.dir
+C:/Users/yuanlirong/Work/port_cc/ecmedia/third_party/protobuf/cmake/solution/CMakeFiles/libprotobuf.dir
+C:/Users/yuanlirong/Work/port_cc/ecmedia/third_party/protobuf/cmake/solution/CMakeFiles/INSTALL.dir
+C:/Users/yuanlirong/Work/port_cc/ecmedia/third_party/protobuf/cmake/solution/CMakeFiles/ALL_BUILD.dir
+C:/Users/yuanlirong/Work/port_cc/ecmedia/third_party/protobuf/cmake/solution/CMakeFiles/ZERO_CHECK.dir

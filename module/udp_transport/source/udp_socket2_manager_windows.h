@@ -17,11 +17,11 @@
 
 #include <winsock2.h>
 
-#include "atomic32.h"
-#include "critical_section_wrapper.h"
-#include "event_wrapper.h"
-#include "list_wrapper.h"
-#include "thread_wrapper.h"
+#include "../system_wrappers/include/atomic32.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/event_wrapper.h"
+#include "../system_wrappers/include/list_wrapper.h"
+#include "../system_wrappers/include/thread_wrapper.h"
 #include "udp_socket2_windows.h"
 #include "udp_socket_manager_wrapper.h"
 

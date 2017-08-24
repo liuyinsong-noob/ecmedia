@@ -13,7 +13,7 @@
 
 #include <cstddef>
 
-#include "exp_filter.h"
+#include "../system_wrappers/include/exp_filter.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc

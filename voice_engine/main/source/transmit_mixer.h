@@ -17,7 +17,7 @@
 #include "module_common_types.h"
 #include "file_player.h"
 #include "file_recorder.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "voe_base.h"
 #include "level_indicator.h"
 #include "monitor_module.h"

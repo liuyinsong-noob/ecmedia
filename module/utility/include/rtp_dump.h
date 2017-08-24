@@ -16,7 +16,7 @@
 #ifndef WEBRTC_MODULES_UTILITY_INTERFACE_RTP_DUMP_H_
 #define WEBRTC_MODULES_UTILITY_INTERFACE_RTP_DUMP_H_
 
-#include "file_wrapper.h"
+#include "../system_wrappers/include/file_wrapper.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

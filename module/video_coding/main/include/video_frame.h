@@ -13,11 +13,12 @@
 
 #include <assert.h>
 
-#include "plane.h"
+#include "../common_video/source/plane.h"
 // TODO(pbos): Remove scoped_refptr include (and AddRef/Release if they're not
 // used).
-#include "scoped_refptr.h"
-#include "typedefs.h"
+#include "../base/scoped_ref_ptr.h"
+#include "../module/typedefs.h"
+#include "../module/common_types.h"
 
 namespace cloopenwebrtc {
 
@@ -206,6 +207,12 @@ class EncodedImage {
         _length(length),
         _size(size),
         _completeFrame(false) {}
+
+  static const size_t kBufferPaddingBytesH264;
+  
+  // Some decoders require encoded image buffers to be padded with a small
+  // number of additional bytes (due to over-reading byte readers).
+  static size_t GetBufferPaddingBytes(VideoCodecType codec_type);
 
   uint32_t _encodedWidth;
   uint32_t _encodedHeight;

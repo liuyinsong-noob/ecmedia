@@ -13,7 +13,13 @@ MY_WEBRTC_COMMON_DEFS := \
     '-DWEBRTC_LINUX' \
     '-DWEBRTC_THREAD_RR' \
     '-DWEBRTC_CLOCK_TYPE_REALTIME' \
-    '-DWEBRTC_ANDROID' 
+    '-DWEBRTC_ANDROID' \
+    '-DWEBRTC_POSIX' \
+    '-DWEBRTC_BUILD_LIBEVENT' \
+    '-DGOOGLE_PROTOBUF_NO_RTTI' \
+    '-DENABLE_REMB_TMMBR_CONFIG'	
+
+APP_ALLOW_MISSING_DEPS=true
 	
 #    The following macros are used by modules,
 #    we might need to re-organize them

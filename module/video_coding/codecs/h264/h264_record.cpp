@@ -1,7 +1,7 @@
 #include "h264_record.h"
-#include "Trace.h"
+#include "../system_wrappers/include/Trace.h"
 #include "h264_util.h"
-#include "clock.h"
+#include "../system_wrappers/include/clock.h"
 using namespace  cloopenwebrtc;
 
 //FILE *file_test = NULL;

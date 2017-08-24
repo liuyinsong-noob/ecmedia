@@ -18,7 +18,7 @@
 #include "module.h"
 #include "remote_bitrate_estimator.h"
 #include "rtp_rtcp_defines.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 namespace cloopenwebrtc {
 

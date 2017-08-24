@@ -13,10 +13,10 @@
 
 #include <vector>
 
-#include "thread_annotations.h"
+#include "../base/thread_annotations.h"
 #include "audio_decoder.h"
 #include "audio_encoder.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 namespace cloopenwebrtc{
 

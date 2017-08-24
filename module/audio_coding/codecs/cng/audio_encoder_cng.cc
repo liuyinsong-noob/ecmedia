@@ -10,6 +10,8 @@
 
 #include "audio_encoder_cng.h"
 
+#include <algorithm>
+#include <memory>
 #include <limits>
 
 namespace cloopenwebrtc {

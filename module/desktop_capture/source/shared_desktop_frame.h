@@ -12,7 +12,7 @@
 #define WEBRTC_MODULES_DESKTOP_CAPTURE_SHARED_DESKTOP_FRAME_H_
 
 #include "desktop_frame.h"
-#include "scoped_refptr.h"
+#include "../base/scoped_ref_ptr.h"
 
 namespace cloopenwebrtc {
 

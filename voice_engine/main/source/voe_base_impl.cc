@@ -10,14 +10,14 @@
 
 #include "voe_base_impl.h"
 
-#include "common.h"
+#include "../system_wrappers/include/common.h"
 #include "signal_processing_library.h"
 #include "audio_coding_module.h"
 #include "audio_device_impl.h"
 #include "audio_processing.h"
-#include "critical_section_wrapper.h"
-#include "file_wrapper.h"
-#include "trace.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/file_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 #include "channel.h"
 #include "voe_errors.h"
 #include "output_mixer.h"
@@ -450,7 +450,7 @@ int VoEBaseImpl::Init(AudioDeviceModule* external_adm,
     if (!audioproc) {
       audioproc = AudioProcessing::Create();
       if (!audioproc) {
-        LOG(LS_ERROR) << "Failed to create AudioProcessing.";
+//        LOG(LS_ERROR) << "Failed to create AudioProcessing.";
         _shared->SetLastError(VE_NO_MEMORY);
         return -1;
       }
@@ -461,7 +461,7 @@ int VoEBaseImpl::Init(AudioDeviceModule* external_adm,
     _shared->SetLastError(VE_APM_ERROR);
     // Configure AudioProcessing components.
     if (audioproc->high_pass_filter()->Enable(true) != 0) {
-      LOG_FERR1(LS_ERROR, high_pass_filter()->Enable, true);
+//      LOG_FERR1(LS_ERROR, high_pass_filter()->Enable, true);
       return -1;
     }
 	//benhur test
@@ -471,25 +471,25 @@ int VoEBaseImpl::Init(AudioDeviceModule* external_adm,
 		return -1;
 	}*/
     if (audioproc->echo_cancellation()->enable_drift_compensation(false) != 0) {
-      LOG_FERR1(LS_ERROR, enable_drift_compensation, false);
+//      LOG_FERR1(LS_ERROR, enable_drift_compensation, false);
       return -1;
     }
     if (audioproc->noise_suppression()->set_level(kDefaultNsMode) != 0) {
-      LOG_FERR1(LS_ERROR, noise_suppression()->set_level, kDefaultNsMode);
+//      LOG_FERR1(LS_ERROR, noise_suppression()->set_level, kDefaultNsMode);
       return -1;
     }
     GainControl* agc = audioproc->gain_control();
     if (agc->set_analog_level_limits(kMinVolumeLevel, kMaxVolumeLevel) != 0) {
-      LOG_FERR2(LS_ERROR, agc->set_analog_level_limits, kMinVolumeLevel,
-                kMaxVolumeLevel);
+//      LOG_FERR2(LS_ERROR, agc->set_analog_level_limits, kMinVolumeLevel,
+//                kMaxVolumeLevel);
       return -1;
     }
     if (agc->set_mode(kDefaultAgcMode) != 0) {
-      LOG_FERR1(LS_ERROR, agc->set_mode, kDefaultAgcMode);
+//      LOG_FERR1(LS_ERROR, agc->set_mode, kDefaultAgcMode);
       return -1;
     }
     if (agc->Enable(kDefaultAgcState) != 0) {
-      LOG_FERR1(LS_ERROR, agc->Enable, kDefaultAgcState);
+//      LOG_FERR1(LS_ERROR, agc->Enable, kDefaultAgcState);
       return -1;
     }
     _shared->SetLastError(0);  // Clear error state.
@@ -498,8 +498,8 @@ int VoEBaseImpl::Init(AudioDeviceModule* external_adm,
     bool agc_enabled = agc->mode() == GainControl::kAdaptiveAnalog &&
                        agc->is_enabled();
     if (_shared->audio_device()->SetAGC(agc_enabled) != 0) {
-      LOG_FERR1(LS_ERROR, audio_device()->SetAGC, agc_enabled);
-      _shared->SetLastError(VE_AUDIO_DEVICE_MODULE_ERROR);
+//      LOG_FERR1(LS_ERROR, audio_device()->SetAGC, agc_enabled);
+ //     _shared->SetLastError(VE_AUDIO_DEVICE_MODULE_ERROR);
       // TODO(ajm): No error return here due to
       // https://code.google.com/p/webrtc/issues/detail?id=1464
     }

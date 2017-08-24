@@ -15,7 +15,7 @@
 #include "signal_processing_library.h"
 #include "background_noise.h"
 #include "dsp_helper.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 namespace cloopenwebrtc {
 

@@ -62,8 +62,8 @@
 #include "incoming_video_stream.h"
 #include "i_video_render.h"
 #include "video_render_impl.h"
-#include "critical_section_wrapper.h"
-#include "trace.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 
 #ifdef WEBRTC_ANDROID
 #include "video_render_android_impl.h"

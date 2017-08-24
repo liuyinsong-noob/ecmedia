@@ -15,9 +15,9 @@
 
 #include "audio_device_config.h"
 #include "audio_device_utility.h"
-#include "critical_section_wrapper.h"
-#include "logging.h"
-#include "trace.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/logging.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 
@@ -53,7 +53,7 @@ AudioDeviceBuffer::AudioDeviceBuffer() :
     _recDelayMS(0),
     _clockDrift(0),
     // Set to the interval in order to log on the first occurrence.
-    high_delay_counter_(kLogHighDelayIntervalFrames){
+    high_delay_counter_(kLogHighDelayIntervalFrames) {
     // valid ID will be set later by SetId, use -1 for now
     WEBRTC_TRACE(kTraceMemory, kTraceAudioDevice, _id, "%s created", __FUNCTION__);
     memset(_recBuffer, 0, kMaxBufferSizeBytes);
@@ -82,7 +82,7 @@ AudioDeviceBuffer::~AudioDeviceBuffer()
     delete &_critSect;
     delete &_critSectCb;
 }
-    
+
 // ----------------------------------------------------------------------------
 //  SetId
 // ----------------------------------------------------------------------------
@@ -321,7 +321,7 @@ int32_t AudioDeviceBuffer::StartInputFileRecording(
     _recFile.Flush();
     _recFile.CloseFile();
 
-    return (_recFile.OpenFile(fileName, false, false, false));
+    return (_recFile.OpenFile(fileName, false));
 }
 
 // ----------------------------------------------------------------------------
@@ -354,7 +354,7 @@ int32_t AudioDeviceBuffer::StartOutputFileRecording(
     _playFile.Flush();
     _playFile.CloseFile();
 
-    return (_playFile.OpenFile(fileName, false, false, false));
+    return (_playFile.OpenFile(fileName, false));
 }
 
 // ----------------------------------------------------------------------------
@@ -393,8 +393,6 @@ int32_t AudioDeviceBuffer::SetRecordedBuffer(const void* audioBuffer,
 {
     CriticalSectionScoped lock(&_critSect);
 
-   
-    
     if (_recBytesPerSample == 0)
     {
         assert(false);
@@ -440,12 +438,13 @@ int32_t AudioDeviceBuffer::SetRecordedBuffer(const void* audioBuffer,
         }
     }
 
+#if 0
     if (_recFile.Open())
     {
         // write to binary file in mono or stereo (interleaved)
         _recFile.Write(&_recBuffer[0], _recSize);
     }
-
+#endif
     return 0;
 }
 
@@ -586,13 +585,13 @@ int32_t AudioDeviceBuffer::GetPlayoutData(void* audioBuffer)
     }
 
     memcpy(audioBuffer, &_playBuffer[0], _playSize);
-
+#if 0
     if (_playFile.Open())
     {
         // write to binary file in mono or stereo (interleaved)
         _playFile.Write(&_playBuffer[0], _playSize);
     }
-
+#endif
     return _playSamples;
 }
 

@@ -15,7 +15,7 @@
 #include <algorithm>  // sort
 #include <vector>
 
-#include "format_macros.h"
+#include "../system_wrappers/include/format_macros.h"
 #include "signal_processing_library.h"
 #include "common_types.h"
 #include "audio_decoder.h"
@@ -24,11 +24,11 @@
 #include "call_statistics.h"
 #include "nack.h"
 #include "neteq.h"
-#include "clock.h"
-#include "critical_section_wrapper.h"
-#include "logging.h"
-#include "tick_util.h"
-#include "trace.h"
+#include "../system_wrappers/include/clock.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/logging.h"
+#include "../system_wrappers/include/tick_util.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 
@@ -159,7 +159,7 @@ AcmReceiver::~AcmReceiver() {
 int AcmReceiver::SetMinimumDelay(int delay_ms) {
   if (neteq_->SetMinimumDelay(delay_ms))
     return 0;
-  LOG_FERR1(LS_ERROR, "AcmReceiver::SetExtraDelay", delay_ms);
+  //LOG_FERR1(LS_ERROR, "AcmReceiver::SetExtraDelay", delay_ms);
   return -1;
 }
 
@@ -202,7 +202,7 @@ int AcmReceiver::SetInitialDelay(int delay_ms) {
 int AcmReceiver::SetMaximumDelay(int delay_ms) {
   if (neteq_->SetMaximumDelay(delay_ms))
     return 0;
-  LOG_FERR1(LS_ERROR, "AcmReceiver::SetExtraDelay", delay_ms);
+  //LOG_FERR1(LS_ERROR, "AcmReceiver::SetExtraDelay", delay_ms);
   return -1;
 }
 
@@ -340,8 +340,8 @@ int AcmReceiver::InsertPacket(const WebRtcRTPHeader& rtp_header,
 
   if (neteq_->InsertPacket(rtp_header, incoming_payload, length_payload,
                            receive_timestamp) < 0) {
-    LOG_FERR1(LS_ERROR, "AcmReceiver::InsertPacket", header->payloadType) <<
-        " Failed to insert packet";
+    //LOG_FERR1(LS_ERROR, "AcmReceiver::InsertPacket", header->payloadType) <<
+    //    " Failed to insert packet";
     return -1;
   }
   return 0;
@@ -384,7 +384,7 @@ int AcmReceiver::GetAudio(int desired_freq_hz, AudioFrame* audio_frame) {
                        &samples_per_channel,
                        &num_channels,
                        &type) != NetEq::kOK) {
-    LOG_FERR0(LS_ERROR, "AcmReceiver::GetAudio") << "NetEq Failed.";
+    //LOG_FERR0(LS_ERROR, "AcmReceiver::GetAudio") << "NetEq Failed.";
     return -1;
   }
 
@@ -416,8 +416,8 @@ int AcmReceiver::GetAudio(int desired_freq_hz, AudioFrame* audio_frame) {
                                   AudioFrame::kMaxDataSizeSamples,
                                   temp_output);
     if (samples_per_channel < 0) {
-      LOG_FERR0(LS_ERROR, "AcmReceiver::GetAudio")
-          << "Resampling last_audio_buffer_ failed.";
+      //LOG_FERR0(LS_ERROR, "AcmReceiver::GetAudio")
+      //    << "Resampling last_audio_buffer_ failed.";
       return -1;
     }
   }
@@ -435,8 +435,8 @@ int AcmReceiver::GetAudio(int desired_freq_hz, AudioFrame* audio_frame) {
                                   AudioFrame::kMaxDataSizeSamples,
                                   audio_frame->data_);
     if (samples_per_channel < 0) {
-      LOG_FERR0(LS_ERROR, "AcmReceiver::GetAudio")
-          << "Resampling audio_buffer_ failed.";
+      //LOG_FERR0(LS_ERROR, "AcmReceiver::GetAudio")
+      //    << "Resampling audio_buffer_ failed.";
       return -1;
     }
     resampled_last_output_frame_ = true;
@@ -519,8 +519,8 @@ int32_t AcmReceiver::AddCodec(int acm_codec_id,
         audio_decoder, neteq_decoder, payload_type);
   }
   if (ret_val != NetEq::kOK) {
-    LOG_FERR4(LS_ERROR, "AcmReceiver::AddCodec", acm_codec_id, payload_type,
-              channels, ret_val);
+    //LOG_FERR4(LS_ERROR, "AcmReceiver::AddCodec", acm_codec_id, payload_type,
+    //          channels, ret_val);
     // Registration failed, delete the allocated space and set the pointer to
     // NULL, for the record.
     decoders_[acm_codec_id].registered = false;
@@ -576,7 +576,7 @@ int AcmReceiver::RemoveCodec(uint8_t payload_type) {
     return 0;
   }
   if (neteq_->RemovePayloadType(payload_type) != NetEq::kOK) {
-    LOG_FERR1(LS_ERROR, "AcmReceiver::RemoveCodec", payload_type);
+    //LOG_FERR1(LS_ERROR, "AcmReceiver::RemoveCodec", payload_type);
     return -1;
   }
   CriticalSectionScoped lock(crit_sect_.get());
@@ -683,7 +683,7 @@ int AcmReceiver::DecoderByPayloadType(uint8_t payload_type,
   CriticalSectionScoped lock(crit_sect_.get());
   int codec_index = PayloadType2CodecIndex(payload_type);
   if (codec_index < 0) {
-    LOG_FERR1(LS_ERROR, "AcmReceiver::DecoderByPayloadType", payload_type);
+    //LOG_FERR1(LS_ERROR, "AcmReceiver::DecoderByPayloadType", payload_type);
     return -1;
   }
   memcpy(codec, &ACMCodecDB::database_[codec_index], sizeof(CodecInst));

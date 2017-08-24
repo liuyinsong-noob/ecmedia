@@ -22,7 +22,7 @@
 #include "rtp_rtcp.h"
 #include "file_player.h"
 #include "file_recorder.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "dtmf_inband.h"
 #include "dtmf_inband_queue.h"
 #include "voe_audio_processing.h"
@@ -387,32 +387,32 @@ public:
                                    size_t packet_length) OVERRIDE;
 
     // From RtpFeedback in the RTP/RTCP module
-    virtual int32_t OnInitializeDecoder(
-        int32_t id,
+    int32_t OnInitializeDecoder(
+        const int32_t id,
         int8_t payloadType,
         const char payloadName[RTP_PAYLOAD_NAME_SIZE],
         int frequency,
-        uint8_t channels,
-        uint32_t rate) OVERRIDE;
-    virtual void OnIncomingSSRCChanged(int32_t id,
-                                       uint32_t ssrc) OVERRIDE;
-    virtual void OnIncomingCSRCChanged(int32_t id,
-                                       uint32_t CSRC, bool added) OVERRIDE;
-    virtual void ResetStatistics(uint32_t ssrc) OVERRIDE;
+        size_t channels,
+        uint32_t rate);
+    void OnIncomingSSRCChanged(int32_t id,
+                                       uint32_t ssrc);
+    void OnIncomingCSRCChanged(int32_t id,
+                                       uint32_t CSRC, bool added);
+    void ResetStatistics(uint32_t ssrc);
 
     // From RtpAudioFeedback in the RTP/RTCP module
-    virtual void OnPlayTelephoneEvent(int32_t id,
+    void OnPlayTelephoneEvent(int32_t id,
                                       uint8_t event,
                                       uint16_t lengthMs,
-                                      uint8_t volume) OVERRIDE;
+                                      uint8_t volume) override;
 
     // From Transport (called by the RTP/RTCP module)
-    virtual int SendPacket(int /*channel*/,
-                           const void *data,
-                           size_t len, int sn) OVERRIDE;
-    virtual int SendRTCPPacket(int /*channel*/,
-                               const void *data,
-                               size_t len) OVERRIDE;
+    virtual int SendRtp(int /*channel*/,
+                           const uint8_t *data,
+                           size_t len, const PacketOptions* options = NULL);
+    virtual int SendRtcp(int /*channel*/,
+                               const uint8_t *data,
+                               size_t len);
 
     // From MixerParticipant
     virtual int32_t GetAudioFrame(int32_t id, AudioFrame& audioFrame) OVERRIDE;
@@ -518,8 +518,8 @@ private:
     TelephoneEventHandler* telephone_event_handler_;
     scoped_ptr<RtpRtcp> _rtpRtcpModule;
     scoped_ptr<AudioCodingModule> audio_coding_;
-    RtpDump& _rtpDumpIn;
-    RtpDump& _rtpDumpOut;
+    //RtpDump& _rtpDumpIn;
+    //RtpDump& _rtpDumpOut;
     AudioLevel _outputAudioLevel;
     bool _externalTransport;
     AudioFrame _audioFrame;

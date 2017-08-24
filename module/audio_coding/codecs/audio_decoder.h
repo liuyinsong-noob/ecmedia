@@ -13,7 +13,7 @@
 
 #include <stdlib.h>  // NULL
 
-#include "../../../system_wrappers/interface/constructormagic.h"
+#include "../base/constructormagic.h"
 #include "webrtc_cng.h"
 #include "typedefs.h"
 

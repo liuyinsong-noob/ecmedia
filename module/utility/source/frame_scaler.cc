@@ -12,7 +12,7 @@
 
 #ifdef WEBRTC_MODULE_UTILITY_VIDEO
 
-#include "scaler.h"
+#include "../common_video/source/libyuv/include/scaler.h"
 
 namespace cloopenwebrtc {
 

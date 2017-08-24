@@ -1,6 +1,6 @@
 #APP_BUILD_SCRIPT := Android.mk
 NDK_TOOLCHAIN_VERSION = 4.9
-APP_PLATFORM := android-19
+APP_PLATFORM := android-21
 APP_STL := gnustl_static #stlport_static #gnustl_static#
 #APP_ABI := armeabi-v7a
 #APP_ABI := armeabi arm64-v8a x86_64

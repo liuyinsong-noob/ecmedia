@@ -11,8 +11,9 @@
 #ifndef WEBRTC_VOICE_ENGINE_NETWORK_PREDICTOR_H_
 #define WEBRTC_VOICE_ENGINE_NETWORK_PREDICTOR_H_
 
-#include "exp_filter.h"
-#include "clock.h"
+#include "../system_wrappers/include/exp_filter.h"
+#include "../system_wrappers/include/clock.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 namespace cloopenwebrtc {
 

@@ -475,7 +475,7 @@
 					../../.,
 					../interface,
 					../,
-					../../system_wrappers/interface,
+					../../system_wrappers/include,
 					./main/source,
 					./main/source/external,
 					./main/source/mac,
@@ -484,12 +484,9 @@
 					../audio_coding/main/include,
 					../videojpegyuv/include,
 					../../servicecore/include/,
-					../common_video/interface,
 					../../module/video_coding/main/include,
-					../../module/common_video/source,
-					../../module/common_video/source/libyuv/include,
 					../../third_party/libyuv/include,
-					../../module/video_render/main/source/iphone,
+					../../common_video/source/libyuv/include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
@@ -543,7 +540,7 @@
 					../../.,
 					../interface,
 					../,
-					../../system_wrappers/interface,
+					../../system_wrappers/include,
 					./main/source,
 					./main/source/external,
 					./main/source/mac,
@@ -552,12 +549,9 @@
 					../audio_coding/main/include,
 					../videojpegyuv/include,
 					../../servicecore/include/,
-					../common_video/interface,
 					../../module/video_coding/main/include,
-					../../module/common_video/source,
-					../../module/common_video/source/libyuv/include,
 					../../third_party/libyuv/include,
-					../../module/video_render/main/source/iphone,
+					../../common_video/source/libyuv/include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";

@@ -12,11 +12,11 @@
 
 #include <assert.h>
 
-#include "scoped_ptr.h"
-#include "win32.h"
+#include "../system_wrappers/include/scoped_ptr.h"
+#include "../system_wrappers/include/win32.h"
 #include "desktop_frame_win.h"
 #include "window_capture_utils.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 //#include <lm.h>  
 //#pragma comment(lib, "netapi32.lib")  
 

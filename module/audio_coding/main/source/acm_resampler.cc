@@ -14,7 +14,7 @@
 #include <string.h>
 
 #include "resampler.h"
-#include "logging.h"
+#include "../system_wrappers/include/logging.h"
 
 namespace cloopenwebrtc {
 namespace acm2 {
@@ -44,20 +44,20 @@ int ACMResampler::Resample10Msec(const int16_t* in_audio,
 
   if (resampler_.InitializeIfNeeded(in_freq_hz, out_freq_hz,
                                     num_audio_channels) != 0) {
-    LOG_FERR3(LS_ERROR, InitializeIfNeeded, in_freq_hz, out_freq_hz,
-              num_audio_channels);
+    //LOG_FERR3(LS_ERROR, InitializeIfNeeded, in_freq_hz, out_freq_hz,
+    //          num_audio_channels);
     return -1;
   }
 
   out_length =
       resampler_.Resample(in_audio, in_length, out_audio, out_capacity_samples);
   if (out_length == -1) {
-    LOG_FERR4(LS_ERROR,
-              Resample,
-              in_audio,
-              in_length,
-              out_audio,
-              out_capacity_samples);
+    //LOG_FERR4(LS_ERROR,
+    //          Resample,
+    //          in_audio,
+    //          in_length,
+    //          out_audio,
+    //          out_capacity_samples);
     return -1;
   }
 

@@ -17,7 +17,7 @@
 #include <windows.h>
 #endif
 
-#include "constructor_magic.h"
+#include "../base/constructormagic.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

@@ -1,0 +1,208 @@
+test-eof.o: test-eof.c ../include/event2/event-config.h \
+ e:\mingw\include\winsock2.h e:\mingw\include\_mingw.h \
+ e:\mingw\include\sdkddkver.h e:\mingw\include\windows.h \
+ e:\mingw\lib\gcc\mingw32\4.8.1\include\stdarg.h \
+ e:\mingw\include\windef.h e:\mingw\include\winnt.h \
+ e:\mingw\include\winerror.h e:\mingw\include\string.h \
+ e:\mingw\lib\gcc\mingw32\4.8.1\include\stddef.h \
+ e:\mingw\include\basetsd.h e:\mingw\include\pshpack4.h \
+ e:\mingw\include\poppack.h e:\mingw\include\wincon.h \
+ e:\mingw\include\winbase.h e:\mingw\include\wingdi.h \
+ e:\mingw\include\winuser.h e:\mingw\include\winnls.h \
+ e:\mingw\include\winver.h e:\mingw\include\winnetwk.h \
+ e:\mingw\include\winreg.h e:\mingw\include\reason.h \
+ e:\mingw\include\winsvc.h e:\mingw\include\cderr.h \
+ e:\mingw\include\dde.h e:\mingw\include\ddeml.h e:\mingw\include\dlgs.h \
+ e:\mingw\include\imm.h e:\mingw\include\lzexpand.h \
+ e:\mingw\include\mmsystem.h e:\mingw\include\nb30.h \
+ e:\mingw\include\rpc.h e:\mingw\include\rpcdce.h \
+ e:\mingw\include\basetyps.h e:\mingw\include\rpcdcep.h \
+ e:\mingw\include\rpcnsi.h e:\mingw\include\rpcnterr.h \
+ e:\mingw\include\shellapi.h e:\mingw\include\pshpack2.h \
+ e:\mingw\include\winperf.h e:\mingw\include\commdlg.h \
+ e:\mingw\include\unknwn.h e:\mingw\include\objfwd.h \
+ e:\mingw\include\wtypes.h e:\mingw\include\rpcndr.h \
+ e:\mingw\include\rpcnsip.h e:\mingw\include\prsht.h \
+ e:\mingw\include\winspool.h e:\mingw\include\winsock.h \
+ e:\mingw\include\ole2.h e:\mingw\include\objbase.h \
+ e:\mingw\include\stdlib.h e:\mingw\include\objidl.h \
+ e:\mingw\include\cguid.h e:\mingw\include\olectlid.h \
+ e:\mingw\include\oleauto.h e:\mingw\include\oaidl.h \
+ e:\mingw\include\oleidl.h e:\mingw\include\sys\types.h \
+ e:\mingw\include\sys\stat.h e:\mingw\include\sys\time.h \
+ e:\mingw\include\time.h e:\mingw\include\fcntl.h e:\mingw\include\io.h \
+ e:\mingw\include\stdio.h e:\mingw\include\errno.h ../event.h \
+ e:\mingw\lib\gcc\mingw32\4.8.1\include\stdint.h \
+ e:\mingw\include\stdint.h ../evutil.h ../include/event2/util.h \
+ ../include/event2/event_struct.h ../include/event2/keyvalq_struct.h \
+ ../include/event2/event.h ../include/event2/event_compat.h \
+ ../include/event2/buffer.h ../include/event2/buffer_compat.h \
+ ../include/event2/bufferevent.h ../include/event2/bufferevent_struct.h \
+ ../include/event2/bufferevent_compat.h ../include/event2/tag.h \
+ ../include/event2/tag_compat.h
+
+../include/event2/event-config.h:
+
+e:\mingw\include\winsock2.h:
+
+e:\mingw\include\_mingw.h:
+
+e:\mingw\include\sdkddkver.h:
+
+e:\mingw\include\windows.h:
+
+e:\mingw\lib\gcc\mingw32\4.8.1\include\stdarg.h:
+
+e:\mingw\include\windef.h:
+
+e:\mingw\include\winnt.h:
+
+e:\mingw\include\winerror.h:
+
+e:\mingw\include\string.h:
+
+e:\mingw\lib\gcc\mingw32\4.8.1\include\stddef.h:
+
+e:\mingw\include\basetsd.h:
+
+e:\mingw\include\pshpack4.h:
+
+e:\mingw\include\poppack.h:
+
+e:\mingw\include\wincon.h:
+
+e:\mingw\include\winbase.h:
+
+e:\mingw\include\wingdi.h:
+
+e:\mingw\include\winuser.h:
+
+e:\mingw\include\winnls.h:
+
+e:\mingw\include\winver.h:
+
+e:\mingw\include\winnetwk.h:
+
+e:\mingw\include\winreg.h:
+
+e:\mingw\include\reason.h:
+
+e:\mingw\include\winsvc.h:
+
+e:\mingw\include\cderr.h:
+
+e:\mingw\include\dde.h:
+
+e:\mingw\include\ddeml.h:
+
+e:\mingw\include\dlgs.h:
+
+e:\mingw\include\imm.h:
+
+e:\mingw\include\lzexpand.h:
+
+e:\mingw\include\mmsystem.h:
+
+e:\mingw\include\nb30.h:
+
+e:\mingw\include\rpc.h:
+
+e:\mingw\include\rpcdce.h:
+
+e:\mingw\include\basetyps.h:
+
+e:\mingw\include\rpcdcep.h:
+
+e:\mingw\include\rpcnsi.h:
+
+e:\mingw\include\rpcnterr.h:
+
+e:\mingw\include\shellapi.h:
+
+e:\mingw\include\pshpack2.h:
+
+e:\mingw\include\winperf.h:
+
+e:\mingw\include\commdlg.h:
+
+e:\mingw\include\unknwn.h:
+
+e:\mingw\include\objfwd.h:
+
+e:\mingw\include\wtypes.h:
+
+e:\mingw\include\rpcndr.h:
+
+e:\mingw\include\rpcnsip.h:
+
+e:\mingw\include\prsht.h:
+
+e:\mingw\include\winspool.h:
+
+e:\mingw\include\winsock.h:
+
+e:\mingw\include\ole2.h:
+
+e:\mingw\include\objbase.h:
+
+e:\mingw\include\stdlib.h:
+
+e:\mingw\include\objidl.h:
+
+e:\mingw\include\cguid.h:
+
+e:\mingw\include\olectlid.h:
+
+e:\mingw\include\oleauto.h:
+
+e:\mingw\include\oaidl.h:
+
+e:\mingw\include\oleidl.h:
+
+e:\mingw\include\sys\types.h:
+
+e:\mingw\include\sys\stat.h:
+
+e:\mingw\include\sys\time.h:
+
+e:\mingw\include\time.h:
+
+e:\mingw\include\fcntl.h:
+
+e:\mingw\include\io.h:
+
+e:\mingw\include\stdio.h:
+
+e:\mingw\include\errno.h:
+
+../event.h:
+
+e:\mingw\lib\gcc\mingw32\4.8.1\include\stdint.h:
+
+e:\mingw\include\stdint.h:
+
+../evutil.h:
+
+../include/event2/util.h:
+
+../include/event2/event_struct.h:
+
+../include/event2/keyvalq_struct.h:
+
+../include/event2/event.h:
+
+../include/event2/event_compat.h:
+
+../include/event2/buffer.h:
+
+../include/event2/buffer_compat.h:
+
+../include/event2/bufferevent.h:
+
+../include/event2/bufferevent_struct.h:
+
+../include/event2/bufferevent_compat.h:
+
+../include/event2/tag.h:
+
+../include/event2/tag_compat.h:

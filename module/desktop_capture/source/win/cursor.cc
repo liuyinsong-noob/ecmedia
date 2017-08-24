@@ -12,12 +12,12 @@
 
 #include <algorithm>
 
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "scoped_gdi_object.h"
 #include "desktop_frame.h"
 #include "desktop_geometry.h"
 #include "mouse_cursor.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

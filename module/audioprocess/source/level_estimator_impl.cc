@@ -13,7 +13,7 @@
 #include "audio_buffer.h"
 #include "audio_processing.h"
 #include "rms_level.h"
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 
 namespace cloopenwebrtc {
 

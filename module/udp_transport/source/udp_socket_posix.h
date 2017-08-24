@@ -16,8 +16,8 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 
-#include "condition_variable_wrapper.h"
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/condition_variable_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 #include "udp_socket_wrapper.h"
 
 #define SOCKET_ERROR -1

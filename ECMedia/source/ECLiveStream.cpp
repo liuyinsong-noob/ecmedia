@@ -19,7 +19,7 @@
 //#include "sometools.h"
 //#include "serphoneinterface.h"
 #include "voe_volume_control.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 #include "voe_file.h"
 #include "voe_encryption.h"
 #include "voe_network.h"
@@ -41,7 +41,7 @@
 #include "vie_codec.h"
 #include "vie_rtp_rtcp.h"
 #include "RecordVoip.h"
-#include "webrtc_libyuv.h"
+#include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 #endif
 
 #include "rtp_rtcp_defines.h"

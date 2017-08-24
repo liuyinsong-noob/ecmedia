@@ -13,7 +13,7 @@
 #ifndef WEBRTC_VIDEO_ENGINE_VIE_REF_COUNT_H_
 #define WEBRTC_VIDEO_ENGINE_VIE_REF_COUNT_H_
 
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 namespace cloopenwebrtc {
 

@@ -1,7 +1,7 @@
 #include "curl_post.h"
 #include <assert.h>
 #include <algorithm>
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 
 #include <cms/ConnectionFactory.h>
 #include <activemq/library/ActiveMQCPP.h>

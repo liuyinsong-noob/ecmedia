@@ -52,8 +52,10 @@
 /* Define to 1 if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1
 
+#ifdef WEBRTC_POSIX
 /* Define to 1 if you have the <netinet/in.h> header file. */
 #define HAVE_NETINET_IN_H 1
+#endif
 
 /* Define to 1 if you have the `sigaction' function. */
 #define HAVE_SIGACTION 1

@@ -12,9 +12,9 @@
 
 #include "audio_processing.h"
 #include "audio_frame_operations.h"
-#include "critical_section_wrapper.h"
-#include "file_wrapper.h"
-#include "trace.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/file_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 #include "voe_external_media.h"
 #include "statistics.h"
 #include "utility.h"

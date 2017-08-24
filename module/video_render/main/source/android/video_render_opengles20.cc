@@ -25,7 +25,7 @@
 #undef WEBRTC_TRACE
 #define WEBRTC_TRACE(a,b,c,...)  __android_log_print(ANDROID_LOG_DEBUG, "*WEBRTCN*", __VA_ARGS__)
 #else
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 #endif
 
 namespace cloopenwebrtc {

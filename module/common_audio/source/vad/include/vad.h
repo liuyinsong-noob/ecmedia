@@ -11,7 +11,7 @@
 #ifndef WEBRTC_COMMON_AUDIO_VAD_INCLUDE_VAD_H_
 #define WEBRTC_COMMON_AUDIO_VAD_INCLUDE_VAD_H_
 
-#include "checks.h"
+#include "../base/checks.h"
 #include "webrtc_vad.h"
 #include "typedefs.h"
 

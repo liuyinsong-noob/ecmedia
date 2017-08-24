@@ -14,13 +14,13 @@
 #include <list>
 #include <map>
 
-#include "thread_annotations.h"
+#include "../base/thread_annotations.h"
 #include "common_types.h"
 #include "bitrate_controller.h"
 #include "rtp_rtcp_defines.h"
 #include "video_coding_defines.h"
 #include "video_processing.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 #include "frame_callback.h"
 #include "vie_defines.h"
@@ -45,13 +45,25 @@ class ViEEncoderObserver;
 class VideoCodingModule;
 class ViEPacedSenderCallback;
 class VideoEncoderRateObserver;
+class ViESender;
+class PacketRouter;
+class RtcEventLog;
+class RateLimiter;
+class EncoderRtcpFeedback;
+
+class SsrcObserver {
+public:
+	virtual void SetSimulcastSSRC(int index, uint32_t ssrc) = 0;
+};
 
 class ViEEncoder
     : public RtcpIntraFrameObserver,
       public VCMPacketizationCallback,
       public VCMProtectionCallback,
       public VCMSendStatisticsCallback,
-      public ViEFrameCallback {
+      public ViEFrameCallback,
+	  public SsrcObserver
+{
  public:
   friend class ViEBitrateObserver;
   friend class ViEPacedSenderCallback;
@@ -61,8 +73,12 @@ class ViEEncoder
              uint32_t number_of_cores,
              const Config& config,
              ProcessThread& module_process_thread,
-             ProcessThread& module_process_thread_pacer,
-             BitrateController* bitrate_controller);
+             BitrateController* bitrate_controller,
+			 PacedSender* paced_sender,
+		     PacketRouter* packet_router,
+			 TransportFeedbackObserver* transport_feedback_observer,
+	         RateLimiter* retransmission_rate_limiter,
+			 RtcEventLog* rtc_event_log);
   ~ViEEncoder();
 
   bool Init();
@@ -193,13 +209,22 @@ class ViEEncoder
 
   int channel_id() const { return channel_id_; }
   void setFrameScaleType(FrameScaleType frame_scale_type);
+<<<<<<< HEAD
   int32_t AddI420FrameCallback(ECMedia_I420FrameCallBack callback);
  protected:
+=======
+
+  void SetTransport(ViESender *vie_sender);
+
+>>>>>>> mergewebrtcport
   // Called by BitrateObserver.
   void OnNetworkChanged(uint32_t bitrate_bps,
                         uint8_t fraction_lost,
                         int64_t round_trip_time_ms);
 
+  std::list<RtpRtcp*> DefaultSimulcastRtpRtcp() { return default_simulcast_rtp_rtcp_; }
+  
+ protected:
   // Called by PacedSender.
   bool TimeToSendPacket(uint32_t ssrc, uint16_t sequence_number,
                         int64_t capture_time_ms, bool retransmission);
@@ -212,6 +237,8 @@ class ViEEncoder
 
   void UpdateHistograms();
 
+  RtpRtcp* CreateRtpRtcpModule();
+
   int32_t engine_id_;
   const int channel_id_;
   const uint32_t number_of_cores_;
@@ -219,14 +246,22 @@ class ViEEncoder
   VideoCodingModule& vcm_;
   VideoProcessingModule& vpm_;
   scoped_ptr<RtpRtcp> default_rtp_rtcp_;
+  std::list<RtpRtcp*> default_simulcast_rtp_rtcp_;
+  std::list<RtpRtcp*> default_removed_rtp_rtcp_;
+
   scoped_ptr<CriticalSectionWrapper> callback_cs_;
   scoped_ptr<CriticalSectionWrapper> data_cs_;
   scoped_ptr<BitrateObserver> bitrate_observer_;
-  scoped_ptr<PacedSender> paced_sender_;
   scoped_ptr<ViEPacedSenderCallback> pacing_callback_;
   scoped_ptr<SendStatisticsProxy> send_statistics_proxy_;
-
+  
+  PacedSender* paced_sender_;
   BitrateController* bitrate_controller_;
+  PacketRouter* packet_router_;
+  TransportFeedbackObserver* transport_feedback_observer_;
+  RtcEventLog* rtc_event_log_;
+  scoped_ptr<EncoderRtcpFeedback> encoder_feedback_;
+  RateLimiter* retransmission_rate_limiter_;
 
   int64_t time_of_last_incoming_frame_ms_ GUARDED_BY(data_cs_);
   bool send_padding_ GUARDED_BY(data_cs_);
@@ -244,7 +279,6 @@ class ViEEncoder
   ViEEncoderObserver* codec_observer_ GUARDED_BY(callback_cs_);
   ViEEffectFilter* effect_filter_ GUARDED_BY(callback_cs_);
   ProcessThread& module_process_thread_;
-    ProcessThread& module_process_thread_pacer_;
 
   bool has_received_sli_ GUARDED_BY(data_cs_);
   uint8_t picture_id_sli_ GUARDED_BY(data_cs_);
@@ -266,12 +300,16 @@ class ViEEncoder
   // Recording.
   ViEFileRecorder& GetOutgoingFileRecorder();
   SendStatisticsProxy* GetSendStatisticsProxy();
+  //implemente SsrcObserver
+  virtual void SetSimulcastSSRC(int index, uint32_t ssrc) override;
 
   private:
     ViEFileRecorder file_recorder_;
     ViECapture* capture_;
     ECMedia_I420FrameCallBack ec_i420_frame_callback_;
     int capture_id_;
+	uint32_t ssrc_index0; //base layer
+	uint32_t ssrc_index1; //higher layer
   //---end
 };
 

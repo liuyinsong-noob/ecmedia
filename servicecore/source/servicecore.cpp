@@ -639,7 +639,6 @@ ServiceCore::ServiceCore()
 	m_desktop_frame_rate = 0;
     m_enable_fec = true;
     m_opus_packet_loss_rate = 0;
-	m_localSSRC = 0;
 
 	//pSendStats_ = NULL;
 	//pReceiveStats_ = NULL;
@@ -4785,15 +4784,15 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
 
 //    //payloadtype 不要修改，和codedatabase.cc里面对应
  //    serphone_core_assign_payload_type(&payload_type_opus, 124, NULL);//48k
-     serphone_core_assign_payload_type(&payload_type_opus8k, 121, NULL);
-     serphone_core_assign_payload_type(&payload_type_opus16k, 122, NULL);
+ //    serphone_core_assign_payload_type(&payload_type_opus8k, 121, NULL);
+  //   serphone_core_assign_payload_type(&payload_type_opus16k, 122, NULL);
 
 //    serphone_core_assign_payload_type(&payload_type_silk_nb,111,NULL);
 //    serphone_core_assign_payload_type(&payload_type_silk_mb,112,NULL);
 //    serphone_core_assign_payload_type(&payload_type_silk_wb,113,NULL);
 //    serphone_core_assign_payload_type(&payload_type_ilbc,97,NULL);
 
- 	serphone_core_assign_payload_type(&payload_type_g729,18,"annexb=no");
+ //	serphone_core_assign_payload_type(&payload_type_g729,18,"annexb=no");
  	serphone_core_assign_payload_type(&payload_type_pcmu8000,0,NULL);
 	serphone_core_assign_payload_type(&ccp_payload_type_telephone_event,106,"0-15");
 
@@ -4814,7 +4813,7 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
 #endif
 
 #ifdef VIDEO_ENABLED
-	serphone_core_assign_payload_type(&payload_type_h264,-1,"profile-level-id=42e01e; packetization-mode=1; max-br=452; max-mbps=11880");
+//	serphone_core_assign_payload_type(&payload_type_h264,-1,"profile-level-id=42e01e; packetization-mode=1; max-br=452; max-mbps=11880");
 	serphone_core_assign_payload_type(&payload_type_vp8,120,NULL);
 
    // serphone_core_assign_payload_type(&payload_type_h264_svc,98, "profile-level-id=428014"); //profile-level-id need to be fixed.

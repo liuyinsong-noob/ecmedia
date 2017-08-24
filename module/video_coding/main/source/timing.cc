@@ -8,13 +8,14 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
+#include <algorithm>
 #include "timing.h"
 
 #include "internal_defines.h"
 #include "jitter_buffer_common.h"
-#include "clock.h"
-#include "metrics.h"
-#include "timestamp_extrapolator.h"
+#include "../system_wrappers/include/clock.h"
+#include "../system_wrappers/include/metrics.h"
+#include "../system_wrappers/include/timestamp_extrapolator.h"
 
 
 namespace cloopenwebrtc {

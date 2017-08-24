@@ -13,10 +13,10 @@
 #include "audio_frame_manipulator.h"
 #include "audio_processing.h"
 #include "audio_frame_operations.h"
-#include "critical_section_wrapper.h"
-#include "trace.h"
-#include "thread_wrapper.h"
-#include "common.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/trace.h"
+#include "../system_wrappers/include/thread_wrapper.h"
+#include "../system_wrappers/include/common.h"
 
 namespace cloopenwebrtc {
 namespace {

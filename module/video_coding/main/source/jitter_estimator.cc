@@ -11,8 +11,8 @@
 #include "internal_defines.h"
 #include "jitter_estimator.h"
 #include "rtt_filter.h"
-#include "clock.h"
-#include "field_trial.h"
+#include "../system_wrappers/include/clock.h"
+#include "../system_wrappers/include/field_trial.h"
 
 #include <assert.h>
 #include <math.h>

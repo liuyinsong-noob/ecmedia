@@ -9,8 +9,8 @@
  */
 
 #include "video_render_android_native_opengl2.h"
-#include "critical_section_wrapper.h"
-#include "tick_util.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/tick_util.h"
 
 #ifdef ANDROID_LOG
 #include <android/log.h>
@@ -19,7 +19,7 @@
 #undef WEBRTC_TRACE
 #define WEBRTC_TRACE(a,b,c,...)  __android_log_print(ANDROID_LOG_DEBUG, "*WEBRTC*", __VA_ARGS__)
 #else
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 #endif
 
 namespace cloopenwebrtc {

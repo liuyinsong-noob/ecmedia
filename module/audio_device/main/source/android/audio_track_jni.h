@@ -13,7 +13,7 @@
 
 #include <jni.h>
 
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 #include "audio_common.h"
 #include "audio_device_defines.h"
 #include "audio_device_generic.h"

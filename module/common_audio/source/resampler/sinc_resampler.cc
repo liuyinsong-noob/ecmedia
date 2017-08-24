@@ -86,7 +86,7 @@
 #define _USE_MATH_DEFINES
 
 #include "sinc_resampler.h"
-#include "cpu_features_wrapper.h"
+#include "../system_wrappers/include/cpu_features_wrapper.h"
 #include "typedefs.h"
 
 #include <assert.h>

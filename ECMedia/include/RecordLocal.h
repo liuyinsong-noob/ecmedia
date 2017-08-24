@@ -1,9 +1,9 @@
 #ifndef __servicecoreVideo__RecordLocal__
 #define __servicecoreVideo__RecordLocal__
 
-#include "event_wrapper.h"
-#include "thread_wrapper.h"
-#include "list_wrapper.h"
+#include "../system_wrappers/include/event_wrapper.h"
+#include "../system_wrappers/include/thread_wrapper.h"
+#include "../system_wrappers/include/list_wrapper.h"
 #include "video_coding_defines.h"
 #include "h264_record.h"
 #include "voe_base.h"
@@ -28,8 +28,8 @@ namespace cloopenwebrtc {
 		static bool RecordAudioThreadRun(void* obj);
 
 	protected:
-		virtual int SendPacket(int channel, const void *data, size_t len, int sn = 0) { return 0; };
-		virtual int SendRTCPPacket(int channel, const void *data, size_t len) { return 0; };
+       virtual int SendRtp(int channelId, const uint8_t* packet, size_t length, const PacketOptions* options = NULL) { return 0; }
+       virtual int SendRtcp(int channelId, const uint8_t* packet, size_t length) { return 0; }
 
 		virtual int32_t SendData(FrameType frame_type,
 			uint8_t payload_type,

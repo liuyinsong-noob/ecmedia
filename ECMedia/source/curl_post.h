@@ -1,9 +1,9 @@
 #pragma once
 
 #include <string>
-#include "shared_queue.h"
-#include "thread_wrapper.h"
-#include "clock.h"
+#include "../system_wrappers/include/shared_queue.h"
+#include "../system_wrappers/include/thread_wrapper.h"
+#include "../system_wrappers/include/clock.h"
 
 #include <memory>
 #include <cms/Connection.h>

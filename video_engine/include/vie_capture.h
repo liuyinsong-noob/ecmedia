@@ -19,7 +19,7 @@
 #define WEBRTC_VIDEO_ENGINE_INCLUDE_VIE_CAPTURE_H_
 
 #include "common_types.h"
-#include "i420_video_frame.h"
+#include "../common_video/include/i420_video_frame.h"
 
 namespace cloopenwebrtc {
 

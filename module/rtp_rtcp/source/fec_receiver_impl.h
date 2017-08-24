@@ -16,7 +16,7 @@
 #include "fec_receiver.h"
 #include "rtp_rtcp_defines.h"
 #include "forward_error_correction.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

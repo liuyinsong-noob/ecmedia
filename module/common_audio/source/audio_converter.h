@@ -12,10 +12,10 @@
 #define WEBRTC_COMMON_AUDIO_AUDIO_CONVERTER_H_
 
 // TODO(ajm): Move channel buffer to common_audio.
-#include "constructormagic.h"
+#include "../base/constructormagic.h"
 #include "channel_buffer.h"
-#include "scoped_ptr.h"
-#include "scoped_vector.h"
+#include "../system_wrappers/include/scoped_ptr.h"
+#include "../system_wrappers/include/scoped_vector.h"
 
 namespace cloopenwebrtc {
 

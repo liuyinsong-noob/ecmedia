@@ -14,7 +14,7 @@
 #include <assert.h>
 #include <string.h>  // memset, size_t
 
-#include "constructormagic.h"
+#include "../base/constructormagic.h"
 #include "audio_multi_vector.h"
 #include "typedefs.h"
 

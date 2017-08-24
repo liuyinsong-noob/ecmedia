@@ -3,7 +3,7 @@
 #include "vie_render.h"
 #endif
 
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 
 #include <time.h>
 #include <stdarg.h>
@@ -386,8 +386,8 @@ void StatsCollector::GetStats(StatsContentType type, char* callid, void **pMedia
 	int size = pMediaStatisticsDataInner->ByteSize() + 8;
 	*pMediaStatisticsDataInnerArray = new char[size];
 	memset(*pMediaStatisticsDataInnerArray, 0, size);
-	cloopen_google::protobuf::io::ArrayOutputStream array_stream(*pMediaStatisticsDataInnerArray, size);
-	cloopen_google::protobuf::io::CodedOutputStream output_stream(&array_stream);
+	google::protobuf::io::ArrayOutputStream array_stream(*pMediaStatisticsDataInnerArray, size);
+	google::protobuf::io::CodedOutputStream output_stream(&array_stream);
 	output_stream.WriteVarint32(pMediaStatisticsDataInner->ByteSize());
 	if (pMediaStatisticsDataInner->SerializeToCodedStream(&output_stream))
 	{
@@ -1060,7 +1060,7 @@ void StatsCollector::VideoReciverInfo_AddDecoderStats(const VideoReceiveStream::
 
 void StatsCollector::VideoReciverInfo_AddRenderStats(const VideoReceiveStream::Stats info, StatsReport *report)
 {
-	report->AddInt32(StatsReport::kStatsValueNameFrameRateRender, info.rendered_framerate);
+	report->AddUInt32(StatsReport::kStatsValueNameFrameRateRender, info.rendered_framerate);
 	report->AddInt32(StatsReport::kStatsValueNameCurrentDelayMs, info.current_delay_ms);
 	report->AddInt32(StatsReport::kStatsValueNameRenderDelayMs, info.render_delay_ms);
 }
@@ -1068,8 +1068,8 @@ void StatsCollector::VideoReciverInfo_AddRenderStats(const VideoReceiveStream::S
 void StatsCollector::VideoReciverInfo_AddRtpStats(const VideoReceiveStream::Stats info, StatsReport *report)
 {
 	report->AddInt32(StatsReport::kStatsValueNameSsrc, info.ssrc);
-	report->AddInt32(StatsReport::kStatsValueNameBytesReceived, info.rtp_stats.bytes);
-	report->AddInt32(StatsReport::kStatsValueNamePacketsReceived, info.rtp_stats.packets);
+	report->AddInt32(StatsReport::kStatsValueNameBytesReceived, info.rtp_stats.transmitted.payload_bytes);
+	report->AddInt32(StatsReport::kStatsValueNamePacketsReceived, info.rtp_stats.transmitted.packets);
 }
 
 void StatsCollector::VideoReciverInfo_AddRtcpStats(const VideoReceiveStream::Stats info, StatsReport *report)

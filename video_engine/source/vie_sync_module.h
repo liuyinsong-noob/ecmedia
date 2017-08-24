@@ -15,8 +15,8 @@
 #define WEBRTC_VIDEO_ENGINE_VIE_SYNC_MODULE_H_
 
 #include "module.h"
-#include "scoped_ptr.h"
-#include "tick_util.h"
+#include "../system_wrappers/include/scoped_ptr.h"
+#include "../system_wrappers/include/tick_util.h"
 #include "stream_synchronization.h"
 #include "voe_video_sync.h"
 

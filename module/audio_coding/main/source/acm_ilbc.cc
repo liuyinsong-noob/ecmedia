@@ -12,7 +12,7 @@
 #ifdef WEBRTC_CODEC_ILBC
 #include "ilbc.h"
 #include "acm_common_defs.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 #endif
 
 namespace cloopenwebrtc {

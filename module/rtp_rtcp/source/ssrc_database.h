@@ -13,7 +13,7 @@
 
 #include <map>
 
-#include "static_instance.h"
+#include "../system_wrappers/include/static_instance.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

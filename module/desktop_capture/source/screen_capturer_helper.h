@@ -11,10 +11,10 @@
 #ifndef WEBRTC_MODULES_DESKTOP_CAPTURE_SCREEN_CAPTURER_HELPER_H_
 #define WEBRTC_MODULES_DESKTOP_CAPTURE_SCREEN_CAPTURER_HELPER_H_
 
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "desktop_geometry.h"
 #include "desktop_region.h"
-#include "rw_lock_wrapper.h"
+#include "../system_wrappers/include/rw_lock_wrapper.h"
 
 namespace cloopenwebrtc {
 

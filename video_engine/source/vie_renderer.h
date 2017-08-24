@@ -12,7 +12,7 @@
 #define WEBRTC_VIDEO_ENGINE_VIE_RENDERER_H_
 
 #include "video_render_defines.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "vie_render.h"
 #include "vie_frame_provider_base.h"
 

@@ -49,6 +49,9 @@ int voe_callback(int channel, int errCode) {
 	return 0;
 }
 
+void setSsrcMediaType(int& ssrc, int type);
+void setSsrcMediaAttribute(int& ssrc, unsigned short width, unsigned short height, unsigned char maxFramerate);
+
 void ServiceCore::ring_stop(int ringmode)
 {
 #if !defined(NO_VOIP_FUNCTION)
@@ -917,6 +920,17 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 			ECMedia_video_set_send_destination(call->m_VideoChannelID,
 				stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr, stream->port, stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr, stream->rtcp_port);
 
+			int ssrc = stream->ssrc_self;
+			setSsrcMediaType(ssrc, 1);
+			setSsrcMediaAttribute(ssrc, m_sendVideoWidth, m_sendVideoHeight, m_sendVideoFps);
+			ECMedia_video_set_local_ssrc(call->m_VideoChannelID, ssrc);
+
+			call->m_selfSSRC = stream->ssrc_self;
+			call->m_partnerSSRC = stream->ssrc_partner;			
+
+			//ECMedia_video_request_remote_ssrc(call->m_VideoChannelID, 128787);
+			//ECMedia_video_request_remote_ssrc(call->m_VideoChannelID, 128919);
+			
 			cloopenwebrtc::VideoCodec codec_params;			
 			bool codec_found = false;
 			int num_codec = ECMedia_num_of_supported_codecs_video();
@@ -944,9 +958,13 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 					/*codec_params.maxBitrate = min((m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps*4*0.07)/1000, kMaxVideoBitrate);
 					codec_params.minBitrate = max((m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps*1*0.07)/1000, kMinVideoBitrate);*/
                     
-					codec_params.startBitrate = m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps *3*0.07/1000;
+					/*codec_params.startBitrate = m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps *3*0.07/1000;
 					codec_params.maxBitrate = codec_params.startBitrate;
-					codec_params.minBitrate = codec_params.startBitrate/4;
+					codec_params.minBitrate = codec_params.startBitrate/4;*/
+
+					codec_params.startBitrate = 300;
+					codec_params.maxBitrate = 2000;
+					codec_params.minBitrate = 30;
 
 				}
 
@@ -957,15 +975,12 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 				//do some test on simulcast video streams
                 //sean vpx simulcast test begin
 //#define NOTDEFINED
-//#ifdef NOTDEFINED
+#ifdef NOTDEFINED
 				{
-					if (m_localSSRC)
-					{
-						codec_params.startBitrate = 1300;
-						codec_params.maxBitrate = 4000;
+					codec_params.startBitrate = 1300;
+					codec_params.maxBitrate = 4000;
 
-						codec_params.numberOfSimulcastStreams = 2;
-					}
+					codec_params.numberOfSimulcastStreams = 2;
 #if 0
 					codec_params.simulcastStream[0].maxBitrate = codec_params.maxBitrate / 4;;
 					codec_params.simulcastStream[0].width = m_sendVideoWidth / 2;
@@ -979,7 +994,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 					codec_params.simulcastStream[1].targetBitrate = 1000;
 #endif
 				}
-//#endif
+#endif
 				//sean vpx simulcast test end
 
 				//if (codec_params.width==160 && codec_params.height==120)
@@ -1104,8 +1119,10 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 			}
 			PrintConsole("ENABLE_REMB_TMMBR_CONFIG: videoNackEnabled=%d  false, \n", videoNackEnabled);
 
-#ifdef ENABLE_REMB_TMMBR_CONFIG
+#ifndef ENABLE_REMB_TMMBR_CONFIG
 			//TODO:
+			ECMedia_video_set_remb(call->m_VideoChannelID, rembEnabled);
+
 			//PrintConsole("ENABLE_REMB_TMMBR_CONFIG: rembEnabled=%d, tmmbrEnabled=%d\n", rembEnabled, tmmbrEnabled);
 			//rtp_rtcp->SetRembStatus(call->m_VideoChannelID, rembEnabled, rembEnabled);
 			//rtp_rtcp->SetTMMBRStatus(call->m_VideoChannelID, tmmbrEnabled);
@@ -1745,7 +1762,6 @@ void ServiceCore::serphone_call_init_media_streams(SerPhoneCall *call)
 
 			ECMedia_set_network_type(call->m_AudioChannelID, call->m_VideoChannelID, networkType);
 			ECMedia_video_set_local_receiver(call->m_VideoChannelID,call->video_port, call->video_port+1);
-			ECMedia_video_set_local_ssrc(call->m_VideoChannelID, m_localSSRC);
 			ECMedia_set_MTU(call->m_VideoChannelID,1450);
 			
             if (srtp_enable) {
@@ -3591,7 +3607,6 @@ int ServiceCore::serphone_set_video_conference_addr(const char *ip)
 	ret = 0;
 #endif
 	return ret;
-
 }
 
 int ServiceCore::serphone_set_video_window_and_request_video_accord_sip(const char *sipNo, void *videoWindowC, const char *conferenceNo, const char *confPasswd, int port)
@@ -3654,7 +3669,7 @@ int ServiceCore::serphone_set_video_window_and_request_video_accord_sip(const ch
 		//network->setVideoConferenceFlag(temp_video_channel_id, selfSipNo, sipNo, conferenceNo, confPasswd);
 		videoConferenceM.insert(std::pair <int,VideoConferenceDesc *> (temp_video_channel_id, temp));
 		videoConferencePairSipChannel.insert(std::pair<const char *, int>(sipNo,temp_video_channel_id));
-		ECMedia_video_set_send_destination(temp_video_channel_id, videoConferenceIp, port, videoConferenceIp,  port+1);
+		ECMedia_video_set_send_destination(temp_video_channel_id, videoConferenceIp, port, videoConferenceIp, port+1);
 		ECMedia_video_set_local_receiver(temp_video_channel_id,temp->local_port);
 		//TODO:
 		//network->RegisterServiceCoreCallBack(temp_video_channel_id, this, NULL, LinphonePolicyNoFirewall);
@@ -5377,11 +5392,6 @@ int ServiceCore::send_tmmbr_request_video(SerPhoneCall *call, uint32_t ssrc)
 	return ECMedia_video_request_remote_ssrc(call->m_VideoChannelID, ssrc);
 }
 
-void ServiceCore::setLocalSSRC(unsigned int ssrc)
-{
-	m_localSSRC = ssrc;
-}
-
 void ServiceCore::cancel_tmmbr_request_video(SerPhoneCall *call)
 {
 	ECMedia_video_cancel_remote_ssrc(call->m_VideoChannelID);
@@ -5400,5 +5410,125 @@ void ServiceCore::video_stop_receive(SerPhoneCall *call)
 int ServiceCore::set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame tr)//int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame tr)
 {
     return ECMedia_set_rotate_captured_frames(deviceid, tr);
+}
+
+
+
+
+void setSsrcMediaType(int& ssrc, int type)
+{
+	//25bits 媒体源ID 1bit 媒体源类型 2bits 媒体类型 4bits 媒体属性
+	//媒体类型： 0：音频 1： 视频 2：屏幕共享 3： 其他  
+	PrintConsole((char*)__FILE__, __LINE__, (char*)__FUNCTION__, 0, "begin ssrc=%u,type=%d", ssrc, type);
+	type = type & 0x00000003;//只取低2位
+	ssrc = ssrc & 0xFFFFFFCF;//2bit置0，
+	ssrc = ssrc | (type << 4);//2bit赋值
+	PrintConsole((char*)__FILE__, __LINE__, (char*)__FUNCTION__, 0, "end ssrc=%u,type=%d", ssrc, type);
+}
+void setSsrcMediaAttribute(int& ssrc, unsigned short width, unsigned short height, unsigned char maxFramerate)
+{
+	//25bits 媒体源ID 1bit 媒体源类型 2bits 媒体类型 4bits 媒体属性
+	//媒体分属性：辨率 帧率 先按宽高处理，在有选择的处理最大帧
+	/*
+	0 128*96 15
+	1 160*120 15
+	2 176*144 15
+	3 320*240 15
+	4 352*288 15
+	5 480*360 15
+	6 640*360 15
+	7 640*480 15
+	8 640*480 30
+	9 848*480 15
+	10 848*480 30
+	11 1280*720 15
+	12 1280*720 30
+	13 1920*1080 15
+	14 1920*1080 30
+	15 2048*1080 30
+	*/
+	PrintConsole((char*)__FILE__, __LINE__, (char*)__FUNCTION__, 0, "begin ssrc=%u,width=%d,height=%d,maxFramerate=%d", ssrc, width, height, maxFramerate);
+	int type = 0;
+	int tmp = width*height;
+	if (tmp <= 12288)
+	{
+		type = 0;
+	}
+	else if (tmp <= 19200)
+	{
+		type = 1;
+	}
+	else if (tmp <= 25344)
+	{
+		type = 2;
+	}
+	else if (tmp <= 76800)
+	{
+		type = 3;
+	}
+	else if (tmp <= 101376)
+	{
+		type = 4;
+	}
+	else if (tmp <= 172800)
+	{
+		type = 5;
+	}
+	else if (tmp <= 230400)
+	{
+		type = 6;
+	}
+	else if (tmp <= 307200)
+	{
+		if (maxFramerate <= 15)
+		{
+			type = 7;
+		}
+		else
+		{
+			type = 8;
+		}
+	}
+	else if (tmp <= 407040)
+	{
+		if (maxFramerate <= 15)
+		{
+			type = 9;
+		}
+		else
+		{
+			type = 10;
+		}
+	}
+	else if (tmp <= 921600)
+	{
+		if (maxFramerate <= 15)
+		{
+			type = 11;
+		}
+		else
+		{
+			type = 12;
+		}
+	}
+	else if (tmp <= 2073600)
+	{
+		if (maxFramerate <= 15)
+		{
+			type = 13;
+		}
+		else
+		{
+			type = 14;
+		}
+	}
+	else
+	{
+		type = 15;
+	}
+
+	ssrc = ssrc & 0xFFFFFFF0;//4bit置0，
+	ssrc = ssrc | type;//4bit赋值
+	PrintConsole((char*)__FILE__, __LINE__, (char*)__FUNCTION__, 0, "end ssrc=%u,type=%d", ssrc, type);
 }
 

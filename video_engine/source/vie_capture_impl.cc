@@ -12,7 +12,7 @@
 
 #include <map>
 
-#include "logging.h"
+#include "../system_wrappers/include/logging.h"
 #include "vie_errors.h"
 #include "vie_capturer.h"
 #include "vie_channel.h"
@@ -23,7 +23,7 @@
 #include "vie_input_manager.h"
 #include "vie_shared_data.h"
 
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 

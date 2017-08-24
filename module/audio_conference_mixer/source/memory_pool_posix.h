@@ -14,7 +14,7 @@
 #include <assert.h>
 #include <list>
 
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

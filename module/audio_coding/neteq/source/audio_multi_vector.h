@@ -15,9 +15,9 @@
 
 #include <vector>
 
-#include "constructormagic.h"
+#include "../base/constructormagic.h"
 #include "audio_vector.h"
-#include "typedefs.h"
+#include "../module/typedefs.h"
 
 namespace cloopenwebrtc {
 

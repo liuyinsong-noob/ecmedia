@@ -1,0 +1,12 @@
+prefix=/Users/yuanlirong/build-protobuf/protobuf
+exec_prefix=/Users/yuanlirong/build-protobuf/protobuf/platform/arm64
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: Protocol Buffers
+Description: Google's Data Interchange Format
+Version: 3.0.0-beta-3
+Libs: -L${libdir} -lprotobuf  
+Libs.private: -lz -lc++ -lc++abi
+Cflags: -I${includedir} 
+Conflicts: protobuf-lite

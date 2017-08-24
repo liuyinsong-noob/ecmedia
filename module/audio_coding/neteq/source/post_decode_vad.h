@@ -13,7 +13,7 @@
 
 #include <string>  // size_t
 
-#include "constructormagic.h"
+#include "../base/constructormagic.h"
 #include "webrtc_vad.h"
 #include "common_types.h"  // NULL
 #include "audio_decoder.h"

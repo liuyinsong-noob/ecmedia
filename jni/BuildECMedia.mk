@@ -35,24 +35,27 @@ include $(MY_WEBRTC_ROOT_PATH)/module/video_processing/main/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/video_coding/main/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/video_coding/codecs/vp8/main/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/video_coding/codecs/h264/Android.mk
-include $(MY_WEBRTC_ROOT_PATH)/module/bitrate_controller/source/Android.mk
+include $(MY_WEBRTC_ROOT_PATH)/module/bitrate_controller/Android.mk
+include $(MY_WEBRTC_ROOT_PATH)/module/congestion_controller/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/media_file/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/common_audio/source/Android.mk
-include $(MY_WEBRTC_ROOT_PATH)/module/common_video/source/Android.mk
+include $(MY_WEBRTC_ROOT_PATH)/common_video/Android.mk
+include $(MY_WEBRTC_ROOT_PATH)/logging/rtc_event_log/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/desktop_capture/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/voice_engine/main/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/video_engine/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/ECMedia/source/Android_video.mk
 include $(MY_WEBRTC_ROOT_PATH)/third_party/libyuv/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/third_party/libjpeg_turbo/Android.mk
-include $(MY_WEBRTC_ROOT_PATH)/module/remote_bitrate_estimator/source/Android.mk
-include $(MY_WEBRTC_ROOT_PATH)/module/pacing/source/Android.mk
+include $(MY_WEBRTC_ROOT_PATH)/module/remote_bitrate_estimator/Android.mk
+include $(MY_WEBRTC_ROOT_PATH)/module/pacing/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/third_party/librtmp/rtmpdump-2.3/librtmp/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/third_party/libfaad/faad2-2.7/libfaad/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/third_party/libfaac/faac-1.28/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/third_party/oRTP/build/android/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/third_party/srtp/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/third_party/zlib/Android.mk
+include $(MY_WEBRTC_ROOT_PATH)/third_party/libevent/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/third_party/protobuf/src/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/third_party/SoundTouch/SoundTouch/Android.mk
 
@@ -68,6 +71,11 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_LDLIBS := -L$(JNI_PATH)
 LOCAL_CFLAGS := $(MY_WEBRTC_COMMON_DEFS)
 
+LOCAL_CPP_EXTENSION := .cc
+LOCAL_SRC_FILES := \
+    ../config.cc \
+    ../module/common_types.cc
+
 LOCAL_STATIC_LIBRARIES := \
 
 LOCAL_WHOLE_STATIC_LIBRARIES := \
@@ -80,14 +88,13 @@ LOCAL_WHOLE_STATIC_LIBRARIES := \
 	libwebrtc_video_coding \
 	libwebrtc_h264 \
 	libwebrtc_vp8 \
-	libwebrtc_yuv \
 	libwebrtc_bitrate_controller \
+	libwebrtc_congestion_controller \
 	libwebrtc_common_video \
 	libwebrtc_remote_bitrate_estimator \
 	libwebrtc_deskop_capture \
 	libwebrtc_audio_coding \
 	libwebrtc_audio_device \
-	libwebrtc_resampler \
 	libwebrtc_apm \
 	libwebrtc_neteq \
 	libwebrtc_iSAC \
@@ -98,25 +105,24 @@ LOCAL_WHOLE_STATIC_LIBRARIES := \
 	libwebrtc_amr_nb \
 	libwebrtc_opus \
 	libwebrtc_common_audio \
-	libwebrtc_spl \
 	libwebrtc_rtp_rtcp \
 	libwebrtc_udp_transport \
 	libwebrtc_audio_conference_mixer \
 	libwebrtc_utility \
 	libwebrtc_media_file \
+	libwebrtc_audio_paced_sender \
 	libyuv \
 	libjpeg_turbo \
-	libstlport_static \
-	libcpufeatures \
-	libwebrtc_audio_paced_sender \
 	libwebrtc_audio_codecs \
 	libwebrtc_system_wrappers \
+	libwebrtc_rtc_event_log \
 	librtmp \
 	libfaad \
 	libEC_zlib \
 	libortp \
 	libfaac \
 	libsrtp \
+	libevent \
 	libProtobuf_lite \
 	libSoundTouch \
 

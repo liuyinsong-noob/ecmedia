@@ -79,9 +79,10 @@
 #define GOOGLE_PROTOBUF_STUBS_ONCE_H__
 
 #include <google/protobuf/stubs/atomicops.h>
+#include <google/protobuf/stubs/callback.h>
 #include <google/protobuf/stubs/common.h>
 
-namespace cloopen_google {
+namespace google {
 namespace protobuf {
 
 #ifdef GOOGLE_PROTOBUF_NO_THREAD_SAFETY
@@ -116,17 +117,13 @@ enum {
 
 typedef internal::AtomicWord ProtobufOnceType;
 
-#define GOOGLE_PROTOBUF_ONCE_INIT ::cloopen_google::protobuf::ONCE_STATE_UNINITIALIZED
+#define GOOGLE_PROTOBUF_ONCE_INIT ::google::protobuf::ONCE_STATE_UNINITIALIZED
 
 LIBPROTOBUF_EXPORT
 void GoogleOnceInitImpl(ProtobufOnceType* once, Closure* closure);
 
-inline void GoogleOnceInit(ProtobufOnceType* once, void (*init_func)()) {
-  if (internal::Acquire_Load(once) != ONCE_STATE_DONE) {
-    internal::FunctionClosure0 func(init_func, false);
-    GoogleOnceInitImpl(once, &func);
-  }
-}
+LIBPROTOBUF_EXPORT
+void GoogleOnceInit(ProtobufOnceType* once, void (*init_func)());
 
 template <typename Arg>
 inline void GoogleOnceInit(ProtobufOnceType* once, void (*init_func)(Arg*),
@@ -158,9 +155,9 @@ class GoogleOnceDynamic {
 };
 
 #define GOOGLE_PROTOBUF_DECLARE_ONCE(NAME) \
-  ::cloopen_google::protobuf::ProtobufOnceType NAME = GOOGLE_PROTOBUF_ONCE_INIT
+  ::google::protobuf::ProtobufOnceType NAME = GOOGLE_PROTOBUF_ONCE_INIT
 
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace google
 
 #endif  // GOOGLE_PROTOBUF_STUBS_ONCE_H__

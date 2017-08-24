@@ -12,12 +12,12 @@
 #define WEBRTC_MODULES_UTILITY_INTERFACE_FILE_RECORDER_H_
 
 #include "common_types.h"
-#include "i420_video_frame.h"
+#include "../common_video/include/i420_video_frame.h"
 #include "engine_configurations.h"
 #include "audio_coding_module_typedefs.h"
 #include "module_common_types.h"
 #include "media_file_defines.h"
-#include "tick_util.h"
+#include "../system_wrappers/include/tick_util.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

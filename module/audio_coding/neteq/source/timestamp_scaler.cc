@@ -12,7 +12,7 @@
 
 #include "decoder_database.h"
 #include "defines.h"
-#include "logging.h"
+#include "../system_wrappers/include/logging.h"
 
 namespace cloopenwebrtc {
 

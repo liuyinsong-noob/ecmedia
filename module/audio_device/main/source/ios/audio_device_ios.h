@@ -14,7 +14,7 @@
 #include <AudioUnit/AudioUnit.h>
 
 #include "module/audio_device/main/source/audio_device_generic.h"
-#include "system_wrappers/interface/critical_section_wrapper.h"
+#include "system_wrappers/include/critical_section_wrapper.h"
 
 namespace cloopenwebrtc {
 class ThreadWrapper;

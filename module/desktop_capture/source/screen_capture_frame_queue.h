@@ -11,7 +11,7 @@
 #ifndef WEBRTC_MODULES_DESKTOP_CAPTURE_SCREEN_CAPTURE_FRAME_QUEUE_H_
 #define WEBRTC_MODULES_DESKTOP_CAPTURE_SCREEN_CAPTURE_FRAME_QUEUE_H_
 
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "shared_desktop_frame.h"
 #include "typedefs.h"
 

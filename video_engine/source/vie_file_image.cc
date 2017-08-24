@@ -17,9 +17,9 @@
 
 #include <stdio.h>  // NOLINT
 
-#include "video_image.h"
-//#include "jpeg.h"
-#include "webrtc_libyuv.h"
+#include "../common_video/include/video_image.h"
+#include "../common_video/include/jpeg.h"
+#include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 
 namespace cloopenwebrtc {
 
@@ -77,7 +77,7 @@ int ViEFileImage::ConvertPictureToI420VideoFrame(int engine_id,
                                 picture.width, half_width, half_width);
   return ConvertToI420(kI420, picture.data, 0, 0,
                        picture.width, picture.height,
-                       0, kRotateNone, video_frame);
+                       0, kVideoRotation_0, video_frame);
 }
 
 }  // namespace webrtc

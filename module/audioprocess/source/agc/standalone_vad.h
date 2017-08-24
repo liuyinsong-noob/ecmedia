@@ -13,7 +13,7 @@
 
 #include "webrtc_vad.h"
 #include "agc_common.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

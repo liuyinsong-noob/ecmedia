@@ -14,7 +14,7 @@
 #include <map>
 #include <vector>
 
-#include "constructor_magic.h"
+#include "../base/constructormagic.h"
 #include "desktop_geometry.h"
 #include "typedefs.h"
 

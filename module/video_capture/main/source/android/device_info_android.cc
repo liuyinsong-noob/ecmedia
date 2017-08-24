@@ -12,8 +12,8 @@
 
 #include <stdio.h>
 
-#include "ref_count.h"
-#include "trace.h"
+#include "../system_wrappers/include/ref_count.h"
+#include "../system_wrappers/include/trace.h"
 #include "video_capture_android.h"
 
 namespace cloopenwebrtc

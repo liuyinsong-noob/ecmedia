@@ -13,7 +13,7 @@
 #include <assert.h>
 #include <algorithm>
 
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 

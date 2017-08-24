@@ -8,16 +8,17 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#ifndef WEBRTC_MODULES_RTP_RTCP_SOURCE_FEC_PRIVATE_TABLES_H_
-#define WEBRTC_MODULES_RTP_RTCP_SOURCE_FEC_PRIVATE_TABLES_H_
+#ifndef WEBRTC_MODULES_RTP_RTCP_SOURCE_FEC_PRIVATE_TABLES_RANDOM_H_
+#define WEBRTC_MODULES_RTP_RTCP_SOURCE_FEC_PRIVATE_TABLES_RANDOM_H_
 
 // This file contains a set of packets masks for the FEC code. The masks in
 // this table are specifically designed to favor recovery to random loss.
 // These packet masks are defined to protect up to maximum of 48 media packets.
 
-#include "typedefs.h"
+#include "../typedefs.h"
 
-namespace {
+namespace cloopenwebrtc {
+namespace fec_private_tables {
 
 const uint8_t kMaskRandom10_1[2] = {
   0xff, 0xc0
@@ -24518,5 +24519,6 @@ const uint8_t** kPacketMaskRandomTbl[48] = {
   kPacketMaskRandom48
 };
 
-}  // namespace
-#endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_FEC_PRIVATE_TABLES_H_
+}  // namespace fec_private_tables
+}  // namespace cloopenwebrtc
+#endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_FEC_PRIVATE_TABLES_RANDOM_H_

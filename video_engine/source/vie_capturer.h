@@ -13,14 +13,14 @@
 
 #include <vector>
 
-#include "thread_annotations.h"
+#include "../base/thread_annotations.h"
 #include "common_types.h"
 #include "engine_configurations.h"
 #include "video_capture.h"
 #include "video_codec_interface.h"
 #include "video_coding.h"
 #include "video_processing.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 #include "vie_base.h"
 #include "vie_capture.h"

@@ -12,12 +12,13 @@
 #define WEBRTC_MODULES_RTP_RTCP_SOURCE_RTCP_RECEIVER_HELP_H_
 
 
-#include "constructormagic.h"
+#include "../base/constructormagic.h"
 #include "rtp_rtcp_defines.h"  // RTCPReportBlock
 #include "rtcp_utility.h"
 #include "tmmbr_help.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
+#include "../module/rtp_rtcp/source/tmmbr_help.h"
 
 namespace cloopenwebrtc {
 namespace RTCPHelp

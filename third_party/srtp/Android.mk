@@ -7,6 +7,7 @@ LOCAL_ARM_MODE := arm
 
 LOCAL_C_INCLUDES :=                     \
         $(LOCAL_PATH)                           \
+        $(LOCAL_PATH)/.. \
         $(LOCAL_PATH)/include           \
         $(LOCAL_PATH)/libfaad           \
         $(LOCAL_PATH)/common/mp4ff      \

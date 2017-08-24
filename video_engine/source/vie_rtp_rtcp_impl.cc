@@ -11,8 +11,8 @@
 #include "vie_rtp_rtcp_impl.h"
 
 #include "engine_configurations.h"
-#include "file_wrapper.h"
-#include "logging.h"
+#include "../system_wrappers/include/file_wrapper.h"
+#include "../system_wrappers/include/logging.h"
 #include "vie_errors.h"
 #include "vie_channel.h"
 #include "vie_channel_manager.h"
@@ -21,36 +21,36 @@
 #include "vie_impl.h"
 #include "vie_shared_data.h"
 
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 
 // Helper methods for converting between module format and ViE API format.
 
-static RTCPMethod ViERTCPModeToRTCPMethod(ViERTCPMode api_mode) {
+static RtcpMode ViERTCPModeToRTCPMethod(ViERTCPMode api_mode) {
   switch (api_mode) {
     case kRtcpNone:
-      return kRtcpOff;
+      return kOff;
 
     case kRtcpCompound_RFC4585:
-      return kRtcpCompound;
+      return kCompound;
 
     case kRtcpNonCompound_RFC5506:
-      return kRtcpNonCompound;
+      return kReducedSize;
   }
   assert(false);
-  return kRtcpOff;
+  return kOff;
 }
 
-static ViERTCPMode RTCPMethodToViERTCPMode(RTCPMethod module_method) {
+static ViERTCPMode RTCPMethodToViERTCPMode(RtcpMode module_method) {
   switch (module_method) {
-    case kRtcpOff:
+    case kOff:
       return kRtcpNone;
 
-    case kRtcpCompound:
+    case kCompound:
       return kRtcpCompound_RFC4585;
 
-    case kRtcpNonCompound:
+    case kReducedSize:
       return kRtcpNonCompound_RFC5506;
   }
   assert(false);
@@ -61,19 +61,19 @@ static KeyFrameRequestMethod APIRequestToModuleRequest(
   ViEKeyFrameRequestMethod api_method) {
   switch (api_method) {
     case kViEKeyFrameRequestNone:
-      return kKeyFrameReqFirRtp;
+      return kKeyFrameReqFirRtcp;
 
     case kViEKeyFrameRequestPliRtcp:
       return kKeyFrameReqPliRtcp;
 
     case kViEKeyFrameRequestFirRtp:
-      return kKeyFrameReqFirRtp;
+      return kKeyFrameReqFirRtcp;
 
     case kViEKeyFrameRequestFirRtcp:
       return kKeyFrameReqFirRtcp;
   }
   assert(false);
-  return kKeyFrameReqFirRtp;
+  return kKeyFrameReqFirRtcp;
 }
 
 ViERTP_RTCP* ViERTP_RTCP::GetInterface(VideoEngine* video_engine) {
@@ -240,9 +240,11 @@ int ViERTP_RTCPImpl::SetRtxSendPayloadType(const int video_channel,
     shared_data_->SetLastError(kViERtpRtcpInvalidChannelId);
     return -1;
   }
+#if 0
   if (vie_channel->SetRtxSendPayloadType(payload_type) != 0) {
     return -1;
   }
+#endif
   return 0;
 }
 
@@ -315,7 +317,7 @@ int ViERTP_RTCPImpl::SetRTCPStatus(const int video_channel,
     return -1;
   }
 
-  RTCPMethod module_mode = ViERTCPModeToRTCPMethod(rtcp_mode);
+  RtcpMode module_mode = ViERTCPModeToRTCPMethod(rtcp_mode);
   vie_channel->SetRTCPMode(module_mode);
   return 0;
 }
@@ -328,7 +330,7 @@ int ViERTP_RTCPImpl::GetRTCPStatus(const int video_channel,
     shared_data_->SetLastError(kViERtpRtcpInvalidChannelId);
     return -1;
   }
-  RTCPMethod module_mode = vie_channel->GetRTCPMode();
+  RtcpMode module_mode = vie_channel->GetRTCPMode();
   rtcp_mode = RTCPMethodToViERTCPMode(module_mode);
   return 0;
 }
@@ -387,8 +389,8 @@ int ViERTP_RTCPImpl::SendApplicationDefinedRTCPPacket(
     shared_data_->SetLastError(kViERtpRtcpNotSending);
     return -1;
   }
-  RTCPMethod method = vie_channel->GetRTCPMode();
-  if (method == kRtcpOff) {
+  RtcpMode method = vie_channel->GetRTCPMode();
+  if (method == kOff) {
     shared_data_->SetLastError(kViERtpRtcpRtcpDisabled);
     return -1;
   }
@@ -765,10 +767,10 @@ int ViERTP_RTCPImpl::GetRtpStatistics(const int video_channel,
     shared_data_->SetLastError(kViERtpRtcpInvalidChannelId);
     return -1;
   }
-  if (vie_channel->GetRtpStatistics(&sent.bytes,
-                                    &sent.packets,
-                                    &received.bytes,
-                                    &received.packets) != 0) {
+  if (vie_channel->GetRtpStatistics(&sent.transmitted.payload_bytes,
+                                    &sent.transmitted.packets,
+                                    &received.transmitted.payload_bytes,
+                                    &received.transmitted.packets) != 0) {
     shared_data_->SetLastError(kViERtpRtcpUnknownError);
     return -1;
   }

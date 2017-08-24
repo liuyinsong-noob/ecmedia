@@ -15,7 +15,7 @@
 
 #include <vector>
 
-#include "constructormagic.h"
+#include "../base/constructormagic.h"
 #include "audio_decoder_impl.h"
 #include "typedefs.h"
 

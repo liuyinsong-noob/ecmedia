@@ -12,7 +12,7 @@
 #define WEBRTC_INTERNAL_BEAMFORMER_BLOCKER_H_
 
 #include "channel_buffer.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 namespace cloopenwebrtc {
 

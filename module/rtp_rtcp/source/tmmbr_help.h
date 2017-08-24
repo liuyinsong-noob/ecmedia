@@ -13,10 +13,12 @@
 
 #include <vector>
 
-#include "critical_section_wrapper.h"
-#include "typedefs.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../module/rtp_rtcp/source/rtcp_packet/tmmb_item.h"
+#include "../typedefs.h"
 
 namespace cloopenwebrtc {
+
 class TMMBRSet
 {
 public:
@@ -81,6 +83,15 @@ public:
     TMMBRHelp();
     virtual ~TMMBRHelp();
 
+    static std::vector<rtcp::TmmbItem> FindBoundingSet(
+      std::vector<rtcp::TmmbItem> candidates);
+
+    static bool IsOwner(const std::vector<rtcp::TmmbItem>& bounding,
+                      uint32_t ssrc);
+
+    static uint64_t CalcMinBitrateBps(
+      const std::vector<rtcp::TmmbItem>& candidates);
+
     TMMBRSet* BoundingSet(); // used for debuging
     TMMBRSet* CandidateSet();
     TMMBRSet* BoundingSetToSend();
@@ -110,6 +121,6 @@ private:
     float*                  _ptrIntersectionBoundingSet;
     float*                  _ptrMaxPRBoundingSet;
 };
-}  // namespace webrtc
+}  // namespace cloopenwebrtc
 
-#endif // WEBRTC_MODULES_RTP_RTCP_SOURCE_TMMBR_HELP_H_
+#endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_TMMBR_HELP_H_

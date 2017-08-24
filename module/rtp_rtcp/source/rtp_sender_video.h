@@ -12,122 +12,133 @@
 #define WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_SENDER_VIDEO_H_
 
 #include <list>
+#include <memory>
+#include <vector>
 
-#include "common_types.h"
-#include "rtp_rtcp_defines.h"
-#include "bitrate.h"
-#include "forward_error_correction.h"
-#include "producer_fec.h"
-#include "rtp_rtcp_config.h"
-#include "rtp_sender.h"
-#include "rtp_utility.h"
-#include "video_codec_information.h"
-#include "typedefs.h"
+#include "../base/criticalsection.h"
+#include "../base/onetimeevent.h"
+#include "../base/optional.h"
+#include "../base/rate_statistics.h"
+#include "../base/sequenced_task_checker.h"
+#include "../base/thread_annotations.h"
+#include "../common_types.h"
+#include "../module/rtp_rtcp/include/flexfec_sender.h"
+#include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
+#include "../module/rtp_rtcp/source/rtp_rtcp_config.h"
+#include "../module/rtp_rtcp/source/rtp_sender.h"
+#include "../module/rtp_rtcp/source/rtp_utility.h"
+#include "../module/rtp_rtcp/source/ulpfec_generator.h"
+#include "../module/rtp_rtcp/source/video_codec_information.h"
+#include "../typedefs.h"
 
 namespace cloopenwebrtc {
-class CriticalSectionWrapper;
-struct RtpPacket;
+class RtpPacketToSend;
 
 class RTPSenderVideo {
  public:
-  RTPSenderVideo(Clock* clock, RTPSenderInterface* rtpSender);
+  RTPSenderVideo(Clock* clock,
+                 RTPSender* rtpSender,
+                 FlexfecSender* flexfec_sender);
   virtual ~RTPSenderVideo();
 
   virtual RtpVideoCodecTypes VideoCodecType() const;
 
-  size_t FECPacketOverhead() const;
+  size_t FecPacketOverhead() const {
+    cloopenwebrtc::CritScope cs(&crit_);
+    return CalculateFecPacketOverhead();
+  }
 
-  int32_t RegisterVideoPayload(const char payloadName[RTP_PAYLOAD_NAME_SIZE],
-                               const int8_t payloadType,
-                               const uint32_t maxBitRate,
-                               RtpUtility::Payload*& payload);
+  static RtpUtility::Payload* CreateVideoPayload(
+      const char payload_name[RTP_PAYLOAD_NAME_SIZE],
+      int8_t payload_type);
 
-  int32_t SendVideo(const RtpVideoCodecTypes videoType,
-                    const FrameType frameType,
-                    const int8_t payloadType,
-                    const uint32_t captureTimeStamp,
-                    int64_t capture_time_ms,
-                    const uint8_t* payloadData,
-                    const size_t payloadSize,
-                    const RTPFragmentationHeader* fragmentation,
-                    VideoCodecInformation* codecInfo,
-                    const RTPVideoTypeHeader* rtpTypeHdr);
-
-  int32_t SendRTPIntraRequest();
+  bool SendVideo(RtpVideoCodecTypes video_type,
+                 FrameType frame_type,
+                 int8_t payload_type,
+                 uint32_t capture_timestamp,
+                 int64_t capture_time_ms,
+                 const uint8_t* payload_data,
+                 size_t payload_size,
+                 const RTPFragmentationHeader* fragmentation,
+                 const RTPVideoHeader* video_header);
 
   void SetVideoCodecType(RtpVideoCodecTypes type);
 
-  VideoCodecInformation* CodecInformationVideo();
+  // ULPFEC.
+  void SetUlpfecConfig(int red_payload_type, int ulpfec_payload_type);
+  void GetUlpfecConfig(int* red_payload_type, int* ulpfec_payload_type) const;
 
-  void SetMaxConfiguredBitrateVideo(const uint32_t maxBitrate);
+  // FlexFEC/ULPFEC.
+  void SetFecParameters(const FecProtectionParams& delta_params,
+                        const FecProtectionParams& key_params);
 
-  uint32_t MaxConfiguredBitrateVideo() const;
-
-  // FEC
-  int32_t SetGenericFECStatus(const bool enable,
-                              const uint8_t payloadTypeRED,
-                              const uint8_t payloadTypeFEC);
-
-  int32_t GenericFECStatus(bool& enable,
-                           uint8_t& payloadTypeRED,
-                           uint8_t& payloadTypeFEC) const;
-
-  int32_t SetFecParameters(const FecProtectionParams* delta_params,
-                           const FecProtectionParams* key_params);
-
-  void ProcessBitrate();
+  // FlexFEC.
+  cloopenwebrtc::Optional<uint32_t> FlexfecSsrc() const;
 
   uint32_t VideoBitrateSent() const;
   uint32_t FecOverheadRate() const;
 
   int SelectiveRetransmissions() const;
-  int SetSelectiveRetransmissions(uint8_t settings);
-
- protected:
-  virtual int32_t SendVideoPacket(uint8_t* dataBuffer,
-                                  const size_t payloadLength,
-                                  const size_t rtpHeaderLength,
-                                  const uint32_t capture_timestamp,
-                                  int64_t capture_time_ms,
-                                  StorageType storage,
-                                  bool protect);
+  void SetSelectiveRetransmissions(uint8_t settings);
 
  private:
-  bool Send(const RtpVideoCodecTypes videoType,
-            const FrameType frameType,
-            const int8_t payloadType,
-            const uint32_t captureTimeStamp,
-            int64_t capture_time_ms,
-            const uint8_t* payloadData,
-            const size_t payloadSize,
-            const RTPFragmentationHeader* fragmentation,
-            const RTPVideoTypeHeader* rtpTypeHdr);
+  size_t CalculateFecPacketOverhead() const EXCLUSIVE_LOCKS_REQUIRED(crit_);
 
- private:
-  RTPSenderInterface& _rtpSender;
+  void SendVideoPacket(std::unique_ptr<RtpPacketToSend> packet,
+                       StorageType storage);
 
-  CriticalSectionWrapper* _sendVideoCritsect;
-  RtpVideoCodecTypes _videoType;
-  VideoCodecInformation* _videoCodecInformation;
-  uint32_t _maxBitrate;
-  int32_t _retransmissionSettings;
+  void SendVideoPacketAsRedMaybeWithUlpfec(
+      std::unique_ptr<RtpPacketToSend> media_packet,
+      StorageType media_packet_storage,
+      bool protect_media_packet);
 
-  // FEC
-  ForwardErrorCorrection _fec;
-  bool _fecEnabled;
-  int8_t _payloadTypeRED;
-  int8_t _payloadTypeFEC;
-  unsigned int _numberFirstPartition;
-  FecProtectionParams delta_fec_params_;
-  FecProtectionParams key_fec_params_;
-  ProducerFec producer_fec_;
+  // TODO(brandtr): Remove the FlexFEC functions when FlexfecSender has been
+  // moved to PacedSender.
+  void SendVideoPacketWithFlexfec(std::unique_ptr<RtpPacketToSend> media_packet,
+                                  StorageType media_packet_storage,
+                                  bool protect_media_packet);
 
+  bool red_enabled() const EXCLUSIVE_LOCKS_REQUIRED(crit_) {
+    return red_payload_type_ >= 0;
+  }
+
+  bool ulpfec_enabled() const EXCLUSIVE_LOCKS_REQUIRED(crit_) {
+    return ulpfec_payload_type_ >= 0;
+  }
+
+  bool flexfec_enabled() const { return flexfec_sender_ != nullptr; }
+
+  RTPSender* const rtp_sender_;
+  Clock* const clock_;
+
+  // Should never be held when calling out of this class.
+  cloopenwebrtc::CriticalSection crit_;
+
+  RtpVideoCodecTypes video_type_;
+  int32_t retransmission_settings_ GUARDED_BY(crit_);
+  VideoRotation last_rotation_ GUARDED_BY(crit_);
+
+  // RED/ULPFEC.
+  int red_payload_type_ GUARDED_BY(crit_);
+  int ulpfec_payload_type_ GUARDED_BY(crit_);
+  UlpfecGenerator ulpfec_generator_ GUARDED_BY(crit_);
+
+  // FlexFEC.
+  FlexfecSender* const flexfec_sender_;
+
+  // FEC parameters, applicable to either ULPFEC or FlexFEC.
+  FecProtectionParams delta_fec_params_ GUARDED_BY(crit_);
+  FecProtectionParams key_fec_params_ GUARDED_BY(crit_);
+
+  cloopenwebrtc::CriticalSection stats_crit_;
   // Bitrate used for FEC payload, RED headers, RTP headers for FEC packets
   // and any padding overhead.
-  Bitrate _fecOverheadRate;
-  // Bitrate used for video payload and RTP headers
-  Bitrate _videoBitrate;
+  RateStatistics fec_bitrate_ GUARDED_BY(stats_crit_);
+  // Bitrate used for video payload and RTP headers.
+  RateStatistics video_bitrate_ GUARDED_BY(stats_crit_);
+  OneTimeEvent first_frame_sent_;
 };
-}  // namespace webrtc
+
+}  // namespace cloopenwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_SENDER_VIDEO_H_

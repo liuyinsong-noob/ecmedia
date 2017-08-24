@@ -17,9 +17,9 @@
 #include "encoded_frame.h"
 #include "internal_defines.h"
 #include "media_opt_util.h"
-#include "clock.h"
-#include "logging.h"
-#include "trace_event.h"
+#include "../system_wrappers/include/clock.h"
+#include "../system_wrappers/include/logging.h"
+#include "../system_wrappers/include/trace_event.h"
 
 namespace cloopenwebrtc {
     
@@ -49,7 +49,7 @@ namespace cloopenwebrtc {
         } else {
             jitter_buffer_.Flush();
         }
-        render_wait_event_->Reset();
+        //render_wait_event_->Reset();
         state_ = kReceiving;
     }
     

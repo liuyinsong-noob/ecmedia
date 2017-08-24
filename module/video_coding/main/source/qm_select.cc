@@ -16,7 +16,7 @@
 #include "video_coding_defines.h"
 #include "internal_defines.h"
 #include "qm_select_data.h"
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 

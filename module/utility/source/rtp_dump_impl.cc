@@ -14,8 +14,8 @@
 #include <stdio.h>
 #include <limits>
 
-#include "critical_section_wrapper.h"
-#include "logging.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/logging.h"
 
 #if defined(_WIN32)
 #include <Windows.h>
@@ -97,7 +97,7 @@ int32_t RtpDumpImpl::Start(const char* fileNameUTF8)
     CriticalSectionScoped lock(_critSect);
     _file.Flush();
     _file.CloseFile();
-    if (_file.OpenFile(fileNameUTF8, false, false, false) == -1)
+    if (!_file.OpenFile(fileNameUTF8, false))
     {
         LOG(LS_ERROR) << "Failed to open file.";
         return -1;
@@ -106,6 +106,7 @@ int32_t RtpDumpImpl::Start(const char* fileNameUTF8)
     // Store start of RTP dump (to be used for offset calculation later).
     _startTime = GetTimeInMS();
 
+#if 0
     // All rtp dump files start with #!rtpplay.
     char magic[16];
     sprintf(magic, "#!rtpplay%s \n", RTPFILE_VERSION);
@@ -114,6 +115,7 @@ int32_t RtpDumpImpl::Start(const char* fileNameUTF8)
         LOG(LS_ERROR) << "Error writing to file.";
         return -1;
     }
+#endif
 
     // The header according to the rtpdump documentation is sizeof(RD_hdr_t)
     // which is 8 + 4 + 2 = 14 bytes for 32-bit architecture (and 22 bytes on
@@ -143,7 +145,8 @@ int32_t RtpDumpImpl::Stop()
 bool RtpDumpImpl::IsActive() const
 {
     CriticalSectionScoped lock(_critSect);
-    return _file.Open();
+    //return _file.Open();
+	return true;
 }
 
 int32_t RtpDumpImpl::DumpPacket(const uint8_t* packet, size_t packetLength)

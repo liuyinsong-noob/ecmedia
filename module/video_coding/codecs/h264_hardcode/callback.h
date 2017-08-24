@@ -63,7 +63,7 @@
 #define WEBRTC_BASE_CALLBACK_H_
 
 #include "refcount.h"
-#include "scoped_refptr.h"
+#include "../base/scoped_ref_ptr.h"
 
 namespace cloopenwebrtc {
 

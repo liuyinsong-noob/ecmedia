@@ -1497,7 +1497,6 @@ srtp_remove_stream(srtp_t session, uint32_t ssrc) {
  *
  */
 
-
 /* 
  * NOTE: cipher_key_len is really key len (128 bits) plus salt len
  *  (112 bits)

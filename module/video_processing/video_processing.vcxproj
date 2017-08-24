@@ -210,7 +210,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../.;..\..;./main\include;./main\source;./main/source/util;../utility\include;../interface;../audio_coding\main\include;../../system_wrappers\source;../../system_wrappers\interface;../common_video/source;../common_video/interface;../common_video/source/libyuv/include;../common_audio/source/signal_processing/include;../video_coding/main/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;..\..;./main\include;./main\source;./main/source/util;../utility\include;../interface;../audio_coding\main\include;../common_video/source;../common_video/interface;../common_video/source/libyuv/include;../common_audio/source/signal_processing/include;../video_coding/main/include</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

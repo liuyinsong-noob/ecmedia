@@ -20,7 +20,7 @@
 #include "memory_pool.h"
 #include "time_scheduler.h"
 #include "module_common_types.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 namespace cloopenwebrtc {
 class AudioProcessing;

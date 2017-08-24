@@ -12,7 +12,7 @@
 #define WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_INITIAL_DELAY_MANAGER_H_
 
 #include "module_common_types.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 namespace cloopenwebrtc {
 

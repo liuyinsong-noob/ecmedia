@@ -11,7 +11,7 @@
 #ifndef WEBRTC_MODULES_VIDEO_CAPTURE_INCLUDE_VIDEO_CAPTURE_DEFINES_H_
 #define WEBRTC_MODULES_VIDEO_CAPTURE_INCLUDE_VIDEO_CAPTURE_DEFINES_H_
 
-#include "i420_video_frame.h"
+#include "../common_video/include/i420_video_frame.h"
 #include "module_common_types.h"
 #include "typedefs.h"
 

@@ -13,8 +13,8 @@
 #include "common_types.h"
 #include "acm_codec_database.h"
 #include "audio_coding_module_impl.h"
-#include "clock.h"
-#include "trace.h"
+#include "../system_wrappers/include/clock.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 namespace cloopenwebrtc {
 

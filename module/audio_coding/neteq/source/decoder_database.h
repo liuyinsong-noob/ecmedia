@@ -13,7 +13,7 @@
 
 #include <map>
 
-#include "constructormagic.h"
+#include "../base/constructormagic.h"
 #include "common_types.h"  // NULL
 #include "audio_decoder_impl.h"
 #include "packet.h"

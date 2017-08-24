@@ -11,7 +11,7 @@
 #ifndef WEBRTC_SYSTEM_WRAPPERS_SOURCE_CRITICAL_SECTION_WINDOWS_H_
 #define WEBRTC_SYSTEM_WRAPPERS_SOURCE_CRITICAL_SECTION_WINDOWS_H_
 
-#include "typedefs.h"
+#include "../module/typedefs.h"
 #include "critical_section_wrapper.h"
 #include <windows.h>
 

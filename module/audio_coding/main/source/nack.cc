@@ -15,7 +15,7 @@
 #include <algorithm>  // For std::max.
 
 #include "module_common_types.h"
-#include "logging.h"
+#include "../system_wrappers/include/logging.h"
 
 namespace cloopenwebrtc {
 

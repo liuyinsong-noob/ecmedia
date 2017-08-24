@@ -8,15 +8,17 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#ifndef WEBRTC_MODULES_RTP_RTCP_INTERFACE_RTP_RECEIVER_H_
-#define WEBRTC_MODULES_RTP_RTCP_INTERFACE_RTP_RECEIVER_H_
+#ifndef WEBRTC_MODULES_RTP_RTCP_INCLUDE_RTP_RECEIVER_H_
+#define WEBRTC_MODULES_RTP_RTCP_INCLUDE_RTP_RECEIVER_H_
 
-#include "rtp_rtcp_defines.h"
-#include "typedefs.h"
+#include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
+#include "../typedefs.h"
 
 namespace cloopenwebrtc {
 
+struct CodecInst;
 class RTPPayloadRegistry;
+class VideoCodec;
 
 class TelephoneEventHandler {
  public:
@@ -45,7 +47,6 @@ class RtpReceiver {
   // Creates an audio-enabled RTP receiver.
   static RtpReceiver* CreateAudioReceiver(
       int id, Clock* clock,
-      RtpAudioFeedback* incoming_audio_feedback,
       RtpData* incoming_payload_callback,
       RtpFeedback* incoming_messages_callback,
       RTPPayloadRegistry* rtp_payload_registry);
@@ -57,12 +58,9 @@ class RtpReceiver {
 
   // Registers a receive payload in the payload registry and notifies the media
   // receiver strategy.
-  virtual int32_t RegisterReceivePayload(
-      const char payload_name[RTP_PAYLOAD_NAME_SIZE],
-      const int8_t payload_type,
-      const uint32_t frequency,
-      const uint8_t channels,
-      const uint32_t rate) = 0;
+  virtual int32_t RegisterReceivePayload(const CodecInst& audio_codec) = 0;
+  // Registers a receive payload in the payload registry.
+  virtual int32_t RegisterReceivePayload(const VideoCodec& video_codec) = 0;
 
   // De-registers |payload_type| from the payload registry.
   virtual int32_t DeRegisterReceivePayload(const int8_t payload_type) = 0;
@@ -75,12 +73,6 @@ class RtpReceiver {
                                  size_t payload_length,
                                  PayloadUnion payload_specific,
                                  bool in_order) = 0;
-
-  // Returns the currently configured NACK method.
-  virtual NACKMethod NACK() const = 0;
-
-  // Turn negative acknowledgement (NACK) requests on/off.
-  virtual void SetNACKStatus(const NACKMethod method) = 0;
 
   // Gets the last received timestamp. Returns true if a packet has been
   // received, false otherwise.
@@ -97,9 +89,10 @@ class RtpReceiver {
 
   // Returns the current energy of the RTP stream received.
   virtual int32_t Energy(uint8_t array_of_energy[kRtpCsrcSize]) const = 0;
+
   virtual int32_t SetPacketTimeout(const WebRtc_UWord32 timeoutMS) = 0;
   virtual void PacketTimeout() = 0;
 };
-}  // namespace webrtc
+}  // namespace cloopenwebrtc
 
-#endif  // WEBRTC_MODULES_RTP_RTCP_INTERFACE_RTP_RECEIVER_H_
+#endif  // WEBRTC_MODULES_RTP_RTCP_INCLUDE_RTP_RECEIVER_H_

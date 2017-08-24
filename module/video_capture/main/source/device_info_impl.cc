@@ -13,7 +13,7 @@
 
 #include "device_info_impl.h"
 #include "video_capture_config.h"
-#include "logging.h"
+#include "../system_wrappers/include/logging.h"
 
 #ifndef abs
 #define abs(a) (a>=0?a:-a)

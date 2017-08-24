@@ -15,7 +15,7 @@
 
 #include <list>
 
-#include "i420_video_frame.h"
+#include "../common_video/include/i420_video_frame.h"
 #include "engine_configurations.h"
 #include "typedefs.h"
 

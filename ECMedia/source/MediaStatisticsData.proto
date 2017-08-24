@@ -1,3 +1,4 @@
+syntax = "proto2";
 option java_package = "com.yuntongxun.connector.core.protobuf";
 option optimize_for = LITE_RUNTIME;
 
@@ -96,7 +97,7 @@ message VideoReceiverStatisticsInner
 	optional int32 kStatsValueNameNacksUniqueRequestsSent = 22;
 
 	//loss mode-reserved
-	optional int64 kStatsValueNameLossModePart1 = 23
+	optional int64 kStatsValueNameLossModePart1 = 23;
 	optional int64 kStatsValueNameLossModePart2 = 24;
 	optional int64 kStatsValueNameLossModePart3 = 25;
 	optional int64 kStatsValueNameLossModePart4 = 26;

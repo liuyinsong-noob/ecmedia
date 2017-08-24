@@ -21,10 +21,10 @@
 #include <windows.h>
 #endif
 
-#include "critical_section_wrapper.h"
-#include "file_wrapper.h"
-#include "list_wrapper.h"
-#include "trace.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/file_wrapper.h"
+#include "../system_wrappers/include/list_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 
 // http://msdn2.microsoft.com/en-us/library/ms779636.aspx
 // A chunk has the following form:

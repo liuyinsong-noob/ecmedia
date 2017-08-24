@@ -16,7 +16,7 @@
 #include "vad.h"
 #include "audio_encoder.h"
 #include "webrtc_cng.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 namespace cloopenwebrtc {
 

@@ -16,8 +16,8 @@
 #include "checks.h"
 #include "blocker.h"
 #include "real_fourier.h"
-#include "aligned_array.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/aligned_array.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 namespace cloopenwebrtc {
 

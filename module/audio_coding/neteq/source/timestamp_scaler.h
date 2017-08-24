@@ -11,7 +11,7 @@
 #ifndef WEBRTC_MODULES_AUDIO_CODING_NETEQ_TIMESTAMP_SCALER_H_
 #define WEBRTC_MODULES_AUDIO_CODING_NETEQ_TIMESTAMP_SCALER_H_
 
-#include "constructormagic.h"
+#include "../base/constructormagic.h"
 #include "packet.h"
 #include "typedefs.h"
 

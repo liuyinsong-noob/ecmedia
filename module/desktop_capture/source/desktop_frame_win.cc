@@ -10,7 +10,7 @@
 
 #include "desktop_frame_win.h"
 
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 

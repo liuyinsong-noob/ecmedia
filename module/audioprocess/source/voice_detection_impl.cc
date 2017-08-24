@@ -14,7 +14,7 @@
 
 #include "webrtc_vad.h"
 #include "audio_buffer.h"
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 
 
 namespace cloopenwebrtc {

@@ -14,11 +14,14 @@
 #include <cstring> // memcpy
 #include <assert.h>
 
-#include "constructormagic.h"
-#include "typedefs.h"
-#include "common_types.h"
+#include "../base/constructormagic.h"
+#include "../base/deprecation.h"
+#include "../module/typedefs.h"
+#include "../module/common_types.h"
 
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../module/video_coding/codecs/vp9/include/vp9_globals.h"
+
 
 #ifdef _WIN32
     #pragma warning(disable:4351)       // remove warning "new behavior: elements of array
@@ -53,10 +56,6 @@ struct RTPAudioHeader
     WebRtc_UWord8  channel;                           // number of channels 2 = stereo
 };
 
-enum {kNoPictureId = -1};
-enum {kNoTl0PicIdx = -1};
-enum {kNoTemporalIdx = -1};
-enum {kNoKeyIdx = -1};
 enum {kNoSimulcastIdx = 0};
 
 struct RTPVideoHeaderVP8
@@ -90,6 +89,36 @@ struct RTPVideoHeaderVP8
     int            frameWidth;     // Exists for key frames.
     int            frameHeight;    // Exists for key frames.
 };
+
+// The packetization types that we support: single, aggregated, and fragmented.
+enum H264PacketizationTypes {
+  kH264SingleNalu,  // This packet contains a single NAL unit.
+  kH264StapA,       // This packet contains STAP-A (single time
+                    // aggregation) packets. If this packet has an
+                    // associated NAL unit type, it'll be for the
+                    // first such aggregated packet.
+  kH264FuA,         // This packet contains a FU-A (fragmentation
+                    // unit) packet, meaning it is a part of a frame
+                    // that was too large to fit into a single packet.
+};
+
+enum H264PacketizationMode {
+  NonInterleaved = 0,  // Mode 1 - STAP-A, FU-A is allowed
+  SingleNalUnit        // Mode 0 - only single NALU allowed
+};
+
+struct NaluInfo {
+  uint8_t type;
+  int sps_id;
+  int pps_id;
+
+  // Offset and size are only valid for non-FuA packets.
+  size_t offset;
+  size_t size;
+};
+
+const size_t kMaxNalusPerPacket = 10;
+
 struct RTPVideoHeaderH264
 {
     void InitRTPVideoHeaderH264()
@@ -105,6 +134,12 @@ struct RTPVideoHeaderH264
 	bool stap_a;
 	bool single_nalu;
 	bool fu_a;
+   size_t nalus_length;
+   uint8_t nalu_type;
+   // The packetization type of this buffer - single, aggregated or fragmented.
+   H264PacketizationTypes packetization_type;
+   NaluInfo nalus[kMaxNalusPerPacket];
+   H264PacketizationMode packetization_mode;
 };
 
 struct RTPVideoHeaderH264SVC
@@ -130,6 +165,7 @@ struct RTPVideoHeaderH264SVC
 union RTPVideoTypeHeader
 {
     RTPVideoHeaderVP8       VP8;
+    RTPVideoHeaderVP9       VP9;
     RTPVideoHeaderH264      H264;
 	RTPVideoHeaderH264SVC   H264SVC;
 };
@@ -149,6 +185,7 @@ enum RtpVideoCodecTypes {
 	kRtpVideoNone,
 	kRtpVideoGeneric,
 	kRtpVideoVp8,
+	kRtpVideoVp9,
 	kRtpVideoH264
 };
 
@@ -156,13 +193,19 @@ struct RTPVideoHeader
 {
     WebRtc_UWord16          width;                  // size
     WebRtc_UWord16          height;
+    VideoRotation rotation;
 
-    bool                    isFirstPacket;   // first packet in frame
+    PlayoutDelay playout_delay;
+    union {
+        bool is_first_packet_in_frame;
+        DEPRECATED bool isFirstPacket;  // first packet in frame
+    };
     WebRtc_UWord8           simulcastIdx;    // Index if the simulcast encoder creating
                                              // this frame, 0 if not using simulcast.
     RtpVideoCodecTypes      codec;
     RTPVideoTypeHeader      codecHeader;
 };
+
 union RTPTypeHeader
 {
     RTPAudioHeader  Audio;
@@ -583,7 +626,7 @@ struct FecProtectionParams {
 // CallStats object using RegisterStatsObserver.
 class CallStatsObserver {
 public:
-	virtual void OnRttUpdate(int64_t rtt_ms) = 0;
+	virtual void OnRttUpdate(int64_t avg_rtt_ms, int64_t max_rtt_ms) = 0;
 
 	virtual ~CallStatsObserver() {}
 };
@@ -1275,6 +1318,72 @@ inline uint16_t LatestSequenceNumber(uint16_t sequence_number1,
 inline uint32_t LatestTimestamp(uint32_t timestamp1, uint32_t timestamp2) {
 	return IsNewerTimestamp(timestamp1, timestamp2) ? timestamp1 : timestamp2;
 }
+
+// Utility class to unwrap a sequence number to a larger type, for easier
+// handling large ranges. Note that sequence numbers will never be unwrapped
+// to a negative value.
+class SequenceNumberUnwrapper {
+ public:
+  SequenceNumberUnwrapper() : last_seq_(-1) {}
+
+  // Get the unwrapped sequence, but don't update the internal state.
+  int64_t UnwrapWithoutUpdate(uint16_t sequence_number) {
+    if (last_seq_ == -1)
+      return sequence_number;
+
+    uint16_t cropped_last = static_cast<uint16_t>(last_seq_);
+    int64_t delta = sequence_number - cropped_last;
+    if (IsNewerSequenceNumber(sequence_number, cropped_last)) {
+      if (delta < 0)
+        delta += (1 << 16);  // Wrap forwards.
+    } else if (delta > 0 && (last_seq_ + delta - (1 << 16)) >= 0) {
+      // If sequence_number is older but delta is positive, this is a backwards
+      // wrap-around. However, don't wrap backwards past 0 (unwrapped).
+      delta -= (1 << 16);
+    }
+
+    return last_seq_ + delta;
+  }
+
+  // Only update the internal state to the specified last (unwrapped) sequence.
+  void UpdateLast(int64_t last_sequence) { last_seq_ = last_sequence; }
+
+  // Unwrap the sequence number and update the internal state.
+  int64_t Unwrap(uint16_t sequence_number) {
+    int64_t unwrapped = UnwrapWithoutUpdate(sequence_number);
+    UpdateLast(unwrapped);
+    return unwrapped;
+  }
+
+ private:
+  int64_t last_seq_;
+};
+
+
+struct PacedPacketInfo {
+  PacedPacketInfo() {}
+  PacedPacketInfo(int probe_cluster_id,
+                  int probe_cluster_min_probes,
+                  int probe_cluster_min_bytes)
+      : probe_cluster_id(probe_cluster_id),
+        probe_cluster_min_probes(probe_cluster_min_probes),
+        probe_cluster_min_bytes(probe_cluster_min_bytes) {}
+
+  bool operator==(const PacedPacketInfo& rhs) const {
+    return send_bitrate_bps == rhs.send_bitrate_bps &&
+           probe_cluster_id == rhs.probe_cluster_id &&
+           probe_cluster_min_probes == rhs.probe_cluster_min_probes &&
+           probe_cluster_min_bytes == rhs.probe_cluster_min_bytes;
+  }
+
+  static constexpr int kNotAProbe = -1;
+  int send_bitrate_bps = -1;
+  int probe_cluster_id = kNotAProbe;
+  int probe_cluster_min_probes = -1;
+  int probe_cluster_min_bytes = -1;
+};
+
+
 } // namespace cloopenwebrtc
 
 #endif // MODULE_COMMON_TYPES_H

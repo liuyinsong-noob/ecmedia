@@ -12,12 +12,12 @@
 #include <TargetConditionals.h>
 #endif
 
-#include "checks.h"
+#include "../base/checks.h"
 #include "denoiser_filter.h"
 #include "denoiser_filter_c.h"
 #include "denoiser_filter_neon.h"
 #include "denoiser_filter_sse2.h"
-#include "cpu_features_wrapper.h"
+#include "../system_wrappers/include/cpu_features_wrapper.h"
 
 namespace cloopenwebrtc {
 

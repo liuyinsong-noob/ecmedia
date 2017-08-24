@@ -15,7 +15,7 @@
 
 #include <windows.h>
 
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "screen_capture_frame_queue.h"
 #include "screen_capturer_helper.h"
 #include "scoped_thread_desktop.h"

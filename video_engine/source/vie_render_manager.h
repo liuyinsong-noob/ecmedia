@@ -14,7 +14,7 @@
 #include <list>
 #include <map>
 
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 #include "vie_manager_base.h"
 

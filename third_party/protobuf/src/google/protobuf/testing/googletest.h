@@ -43,7 +43,7 @@
 #define PROTOBUF_HAS_DEATH_TEST
 #endif
 
-namespace cloopen_google {
+namespace google {
 namespace protobuf {
 
 // When running unittests, get the directory containing the source code.

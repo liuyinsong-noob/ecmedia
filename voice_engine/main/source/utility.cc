@@ -42,8 +42,8 @@ void RemixAndResample(const AudioFrame& src_frame,
   if (resampler->InitializeIfNeeded(src_frame.sample_rate_hz_,
                                     dst_frame->sample_rate_hz_,
                                     audio_ptr_num_channels) == -1) {
-    LOG_FERR3(LS_ERROR, InitializeIfNeeded, src_frame.sample_rate_hz_,
-              dst_frame->sample_rate_hz_, audio_ptr_num_channels);
+//    LOG_FERR3(LS_ERROR, InitializeIfNeeded, src_frame.sample_rate_hz_,
+//              dst_frame->sample_rate_hz_, audio_ptr_num_channels);
     assert(false);
   }
 
@@ -52,7 +52,7 @@ void RemixAndResample(const AudioFrame& src_frame,
   int out_length = resampler->Resample(audio_ptr, src_length, dst_frame->data_,
                                        AudioFrame::kMaxDataSizeSamples);
   if (out_length == -1) {
-    LOG_FERR3(LS_ERROR, Resample, audio_ptr, src_length, dst_frame->data_);
+//    LOG_FERR3(LS_ERROR, Resample, audio_ptr, src_length, dst_frame->data_);
     assert(false);
   }
   dst_frame->samples_per_channel_ = out_length / audio_ptr_num_channels;
@@ -99,11 +99,11 @@ void DownConvertToCodecFormat(const int16_t* src_data,
 
   if (resampler->InitializeIfNeeded(
           sample_rate_hz, destination_rate, num_channels) != 0) {
-    LOG_FERR3(LS_ERROR,
-              InitializeIfNeeded,
-              sample_rate_hz,
-              destination_rate,
-              num_channels);
+//    LOG_FERR3(LS_ERROR,
+//              InitializeIfNeeded,
+ //             sample_rate_hz,
+ //             destination_rate,
+  //            num_channels);
     assert(false);
   }
 
@@ -111,7 +111,7 @@ void DownConvertToCodecFormat(const int16_t* src_data,
   int out_length = resampler->Resample(
       src_data, in_length, dst_af->data_, AudioFrame::kMaxDataSizeSamples);
   if (out_length == -1) {
-    LOG_FERR3(LS_ERROR, Resample, src_data, in_length, dst_af->data_);
+//    LOG_FERR3(LS_ERROR, Resample, src_data, in_length, dst_af->data_);
     assert(false);
   }
 

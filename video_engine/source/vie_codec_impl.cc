@@ -14,7 +14,7 @@
 
 #include "engine_configurations.h"
 #include "video_coding.h"
-#include "logging.h"
+#include "../system_wrappers/include/logging.h"
 #include "vie_errors.h"
 #include "vie_capturer.h"
 #include "vie_channel.h"
@@ -146,7 +146,7 @@ int ViECodecImpl::GetCodec(const unsigned char list_number,
 }
 
 int ViECodecImpl::SetSendCodec(const int video_channel,
-                               VideoCodec& video_codec) {
+                               const VideoCodec& video_codec) {
   LOG(LS_INFO) << "SetSendCodec for channel " << video_channel;
   LogCodec(video_codec);
   if (!CodecValid(video_codec)) {
@@ -169,7 +169,6 @@ int ViECodecImpl::SetSendCodec(const int video_channel,
     shared_data_->SetLastError(kViECodecReceiveOnlyChannel);
     return -1;
   }
-
   // Set a max_bitrate if the user hasn't set one.
   VideoCodec video_codec_internal;
   memcpy(&video_codec_internal, &video_codec, sizeof(VideoCodec));
@@ -242,9 +241,19 @@ int ViECodecImpl::SetSendCodec(const int video_channel,
   // Stop the media flow while reconfiguring.
   vie_encoder->Pause();
 
+  if (video_codec_internal.numberOfSimulcastStreams == 2 && video_codec_internal.codecType==kVideoCodecVP8)
+  {
+	  video_codec_internal.codecSpecific.VP8.automaticResizeOn = false;
+  }
+
   if (vie_encoder->SetEncoder(video_codec_internal) != 0) {
     shared_data_->SetLastError(kViECodecUnknownError);
     return -1;
+  }
+
+  if (video_codec_internal.numberOfSimulcastStreams > 0)
+  {
+	  vie_channel->SetDefaultSimulcatRtpRtcp(vie_encoder->DefaultSimulcastRtpRtcp());
   }
 
   // Give the channel(s) the new information.

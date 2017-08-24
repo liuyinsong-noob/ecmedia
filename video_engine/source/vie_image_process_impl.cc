@@ -10,7 +10,7 @@
 
 #include "vie_image_process_impl.h"
 
-#include "logging.h"
+#include "../system_wrappers/include/logging.h"
 #include "vie_errors.h"
 #include "vie_capturer.h"
 #include "vie_channel.h"

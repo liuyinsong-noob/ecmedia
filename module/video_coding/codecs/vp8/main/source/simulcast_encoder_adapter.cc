@@ -15,7 +15,7 @@
 // NOTE(ajm): Path provided by gyp.
 #include "scale.h"  // NOLINT
 
-#include "common.h"
+#include "../system_wrappers/include/common.h"
 #include "screenshare_layers.h"
 
 namespace {

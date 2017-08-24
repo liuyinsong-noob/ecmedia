@@ -11,22 +11,21 @@
 #ifndef WEBRTC_SYSTEM_WRAPPERS_SOURCE_TRACE_POSIX_H_
 #define WEBRTC_SYSTEM_WRAPPERS_SOURCE_TRACE_POSIX_H_
 
-#include "critical_section_wrapper.h"
-#include "trace_impl.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/source/trace_impl.h"
 
 namespace cloopenwebrtc {
 
 class TracePosix : public TraceImpl {
  public:
   TracePosix();
-  virtual ~TracePosix();
+  ~TracePosix() override;
 
   // This method can be called on several different threads different from
   // the creating thread.
-  virtual int32_t AddTime(char* trace_message, const TraceLevel level) const
-      OVERRIDE;
+  int32_t AddTime(char* trace_message, const TraceLevel level) const override;
 
-  virtual int32_t AddDateTimeInfo(char* trace_message) const OVERRIDE;
+  int32_t AddDateTimeInfo(char* trace_message) const override;
 
  private:
   volatile mutable uint32_t  prev_api_tick_count_;
@@ -35,6 +34,6 @@ class TracePosix : public TraceImpl {
   CriticalSectionWrapper& crit_sect_;
 };
 
-}  // namespace webrtc
+}  // namespace cloopenwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_SOURCE_TRACE_POSIX_H_

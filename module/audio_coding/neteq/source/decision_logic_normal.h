@@ -11,7 +11,7 @@
 #ifndef WEBRTC_MODULES_AUDIO_CODING_NETEQ_DECISION_LOGIC_NORMAL_H_
 #define WEBRTC_MODULES_AUDIO_CODING_NETEQ_DECISION_LOGIC_NORMAL_H_
 
-#include "constructormagic.h"
+#include "../base/constructormagic.h"
 #include "decision_logic.h"
 #include "typedefs.h"
 

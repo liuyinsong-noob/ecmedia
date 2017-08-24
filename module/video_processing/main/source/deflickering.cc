@@ -14,8 +14,8 @@
 #include <stdlib.h>
 
 #include "signal_processing_library.h"
-#include "logging.h"
-#include "sort.h"
+#include "../system_wrappers/include/logging.h"
+#include "../system_wrappers/include/sort.h"
 
 //uint32_t WebRtcSpl_DivU32U16(uint32_t num, uint16_t den)
 //{

@@ -584,7 +584,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer: hongwei LI (M5465XZ27U)";
 				DSTROOT = /tmp/servicecore.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -615,6 +615,7 @@
 					./source,
 					./source/http/,
 					../third_party/srtp/crypto/include,
+					../third_party,
 					../third_party/srtp,
 					../third_party/oRTP/include,
 					../module/udp_transport/source,
@@ -666,7 +667,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer: hongwei LI (M5465XZ27U)";
 				DSTROOT = /tmp/servicecore.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -696,6 +697,7 @@
 					./source,
 					./source/http/,
 					../third_party/srtp/crypto/include,
+					../third_party,
 					../third_party/srtp,
 					../third_party/oRTP/include,
 					../module/udp_transport/source,

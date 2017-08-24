@@ -15,8 +15,8 @@
 
 #include "echo_control_mobile.h"
 #include "audio_buffer.h"
-#include "critical_section_wrapper.h"
-#include "logging.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/logging.h"
 
 namespace cloopenwebrtc {
 

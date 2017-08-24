@@ -15,7 +15,7 @@
 #include "module.h"
 #include "module_common_types.h"
 #include "video_coding_defines.h"
-#include "event_wrapper.h"
+#include "../system_wrappers/include/event_wrapper.h"
 
 namespace cloopenwebrtc
 {

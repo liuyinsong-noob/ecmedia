@@ -46,10 +46,11 @@
 
 #include <google/protobuf/io/zero_copy_stream_impl.h>
 #include <google/protobuf/stubs/common.h>
+#include <google/protobuf/stubs/logging.h>
 #include <google/protobuf/stubs/stl_util.h>
 
 
-namespace cloopen_google {
+namespace google {
 namespace protobuf {
 namespace io {
 
@@ -470,4 +471,4 @@ int64 LimitingInputStream::ByteCount() const {
 
 }  // namespace io
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace google

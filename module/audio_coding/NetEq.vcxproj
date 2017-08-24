@@ -283,7 +283,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../.;../.;./neteq/include;./neteq/source;../interface;./codecs/.;./codecs/g711/include;./codecs\cng\include;.\codecs\opus\interface;../../system_wrappers/interface;../../system_wrappers/source;../../third_party/opus/src/src;../../third_party/opus/src/celt;../../third_party/opus/src/include;../common_audio/source/signal_processing/include;../common_audio/source/vad/include;../../voice_engine/main/source;./codecs/g729/source;.\codecs\g729\interface;.\codecs\pcm16b\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../.;../.;./neteq/include;./neteq/source;../interface;./codecs/.;./codecs/g711/include;./codecs\cng\include;.\codecs\opus\interface;../../third_party/opus/src/src;../../third_party/opus/src/celt;../../third_party/opus/src/include;../common_audio/source/signal_processing/include;../common_audio/source/vad/include;../../voice_engine/main/source;./codecs/g729/source;.\codecs\g729\interface;.\codecs\pcm16b\include</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

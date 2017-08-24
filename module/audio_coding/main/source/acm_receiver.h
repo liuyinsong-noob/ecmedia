@@ -13,7 +13,7 @@
 
 #include <vector>
 
-#include "thread_annotations.h"
+#include "../base/thread_annotations.h"
 //#include "webrtc_vad.h"
 #include "engine_configurations.h"
 #include "audio_coding_module.h"
@@ -23,7 +23,7 @@
 #include "initial_delay_manager.h"
 #include "neteq.h"
 #include "module_common_types.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
 namespace cloopenwebrtc {

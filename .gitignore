@@ -166,3 +166,14 @@ demo_Win/ipch/
 demo_Win/serphonetest/serphonetest.aps
 demo_Win/MyWebRtc.sln
 demo_Win/MyWebRtc.sln
+ECMedia/source/temp
+third_party/protobuf/python/
+third_party/protobuf_261/
+third_party/srtp/crypto/include/config.h
+demo_Win/Debug/
+demo_Win/Release/
+third_party/protobuf/cmake/solution/CMakeFiles/3.7.1/CompilerIdC/
+module/congestion_controller/congestion_controller/Debug/
+third_party/protobuf/cmake/solution/CMakeFiles/3.7.1/CompilerIdCXX/CompilerIdCXX.exe
+third_party/protobuf/cmake/solution/Release/
+third_party/protobuf/cmake/solution/libprotobuf-lite.dir/Release/

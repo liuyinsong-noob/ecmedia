@@ -12,9 +12,9 @@
 
 #include <stdio.h>
 
-#include "critical_section_wrapper.h"
-#include "ref_count.h"
-#include "trace.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/ref_count.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc
 {

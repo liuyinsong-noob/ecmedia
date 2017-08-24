@@ -22,7 +22,7 @@
 namespace cloopenwebrtc {
 
 class VideoEngine;
-struct VideoCodec;
+class VideoCodec;
 typedef int (*onEcMediaRequestKeyFrame)(const int video_channel);
 // This class declares an abstract interface for a user defined observer. It is
 // up to the VideoEngine user to implement a derived class which implements the
@@ -102,7 +102,7 @@ class WEBRTC_DLLEXPORT ViECodec {
 
   // Sets the send codec to use for a specified channel.
   virtual int SetSendCodec(const int video_channel,
-                           VideoCodec& video_codec) = 0;
+                           const VideoCodec& video_codec) = 0;
 
   // Gets the current send codec settings.
   virtual int GetSendCodec(const int video_channel,

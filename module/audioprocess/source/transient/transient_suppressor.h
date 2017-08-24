@@ -14,7 +14,7 @@
 #include <deque>
 #include <set>
 
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 //#include "gtest_prod_util.h"
 #include "typedefs.h"
 

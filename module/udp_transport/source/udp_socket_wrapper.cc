@@ -13,8 +13,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "event_wrapper.h"
-#include "trace.h"
+#include "../system_wrappers/include/event_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 #include "udp_socket_manager_wrapper.h"
 
 #if defined(_WIN32)

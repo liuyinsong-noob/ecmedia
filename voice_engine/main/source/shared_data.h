@@ -14,7 +14,7 @@
 #include "audio_device.h"
 #include "audio_processing.h"
 #include "process_thread.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "channel_manager.h"
 #include "statistics.h"
 #include "voice_engine_defines.h"

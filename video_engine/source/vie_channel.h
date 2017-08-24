@@ -17,9 +17,9 @@
 #include "rtp_rtcp.h"
 #include "rtp_rtcp_defines.h"
 #include "video_coding_defines.h"
-#include "critical_section_wrapper.h"
-#include "scoped_ptr.h"
-#include "tick_util.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/scoped_ptr.h"
+#include "../system_wrappers/include/tick_util.h"
 #include "typedefs.h"
 #include "vie_network.h"
 #include "vie_rtp_rtcp.h"
@@ -29,7 +29,7 @@
 #include "vie_sender.h"
 #include "vie_sync_module.h"
 
-#include "thread_annotations.h"
+#include "../base/thread_annotations.h"
 //#include "StunMessageCallBack.h"
 #include "udp_transport.h"
 #include "vie_file_recorder.h"
@@ -59,6 +59,9 @@ class VideoCodingModule;
 class VideoDecoder;
 class VideoRenderCallback;
 class VoEVideoSync;
+class TransportFeedbackObserver;
+class RtcEventLog;
+class SsrcObserver;
 
 enum ResolutionIndex
 {
@@ -114,7 +117,8 @@ class ViEChannel
              RtcpRttStats* rtt_stats,
              PacedSender* paced_sender,
              RtpRtcp* default_rtp_rtcp,
-             bool sender);
+             bool sender,
+	         TransportFeedbackObserver* transport_feedback_observer);
   ~ViEChannel();
 
   int32_t Init();
@@ -153,8 +157,8 @@ class ViEChannel
   // key frames.
   int32_t SetSignalPacketLossStatus(bool enable, bool only_key_frames);
 
-  void SetRTCPMode(const RTCPMethod rtcp_mode);
-  RTCPMethod GetRTCPMode() const;
+  void SetRTCPMode(const RtcpMode rtcp_mode);
+  RtcpMode GetRTCPMode() const;
   int32_t SetNACKStatus(const bool enable);
   int32_t SetFECStatus(const bool enable,
                        const unsigned char payload_typeRED,
@@ -289,11 +293,11 @@ class ViEChannel
   // Implements RtpFeedback.
   virtual int32_t OnInitializeDecoder(
       const int32_t id,
-      const int8_t payload_type,
-      const char payload_name[RTP_PAYLOAD_NAME_SIZE],
-      const int frequency,
-      const uint8_t channels,
-      const uint32_t rate);
+      int8_t payloadType,
+      const char payloadName[RTP_PAYLOAD_NAME_SIZE],
+      int frequency,
+      size_t channels,
+      uint32_t rate);
   virtual void OnIncomingSSRCChanged(const int32_t id,
                                      const uint32_t ssrc);
   virtual void OnIncomingCSRCChanged(const int32_t id,
@@ -310,7 +314,7 @@ class ViEChannel
   int32_t GetLocalReceiver(uint16_t& rtp_port,
 						  uint16_t& rtcp_port,
 						  char* ip_address) const;
-	int32_t SetSocks5SendData(unsigned char *data, int length, bool isRTCP);
+  int32_t SetSocks5SendData(unsigned char *data, int length, bool isRTCP);
   int32_t SetSendDestination(const char *rtp_ip_address, const uint16_t rtp_port, const char *rtcp_ip_address, const uint16_t rtcp_port, const uint16_t source_rtp_port, const uint16_t source_rtcp_port);
   /* int32_t GetSendDestination(char* ip_address,
   uint16_t* rtp_port,
@@ -362,6 +366,9 @@ class ViEChannel
 
   // Gets the modules used by the channel.
   RtpRtcp* rtp_rtcp();
+
+  //Set simulcast send RtpRtcp modlule
+  void SetDefaultSimulcatRtpRtcp(std::list<RtpRtcp*> default_simulcast_rtp_rtcp);
 
   CallStatsObserver* GetStatsObserver();
 
@@ -421,7 +428,8 @@ class ViEChannel
   void ReceivedBWEPacket(int64_t arrival_time_ms, size_t payload_size,
                          const RTPHeader& header);
   ViEReceiver *GetReceiver() { return &vie_receiver_ ; }
-
+  ViESender	*GetVieSender() { return &vie_sender_; } //add by ylr;
+  RtpRtcp::Configuration CreateRtpRtcpConfiguration();
   
  protected:
   static bool ChannelDecodeThreadFunction(void* obj);
@@ -434,7 +442,6 @@ class ViEChannel
       EXCLUSIVE_LOCKS_REQUIRED(rtp_rtcp_cs_);
   RtpRtcp* GetRtpRtcpModule(size_t simulcast_idx) const
       EXCLUSIVE_LOCKS_REQUIRED(rtp_rtcp_cs_);
-  RtpRtcp::Configuration CreateRtpRtcpConfiguration();
   RtpRtcp* CreateRtpRtcpModule();
   // Assumed to be protected.
   int32_t StartDecodeThread();
@@ -481,8 +488,8 @@ class ViEChannel
 
   class RegisterableBitrateStatisticsObserver:
     public RegisterableCallback<BitrateStatisticsObserver> {
-    virtual void Notify(const BitrateStatistics& total_stats,
-                        const BitrateStatistics& retransmit_stats,
+    virtual void Notify(uint32_t total_stats,
+                        uint32_t retransmit_stats,
                         uint32_t ssrc) {
       CriticalSectionScoped cs(critsect_.get());
       if (callback_)
@@ -538,6 +545,7 @@ class ViEChannel
   scoped_ptr<CriticalSectionWrapper> rtp_rtcp_cs_;
 
   RtpRtcp* default_rtp_rtcp_;
+  std::list<RtpRtcp*> default_simulcast_rtp_rtcp_;
 
   // Owned modules/classes.
   scoped_ptr<RtpRtcp> rtp_rtcp_;
@@ -564,6 +572,7 @@ class ViEChannel
   RtcpIntraFrameObserver* intra_frame_observer_;
   RtcpRttStats* rtt_stats_;
   PacedSender* paced_sender_;
+  TransportFeedbackObserver* transport_feedback_observer_;
 
   scoped_ptr<RtcpBandwidthObserver> bandwidth_observer_;
   int send_timestamp_extension_id_;
@@ -590,6 +599,11 @@ class ViEChannel
 
   scoped_ptr<ReportBlockStats> report_block_stats_sender_;
   scoped_ptr<ReportBlockStats> report_block_stats_receiver_;
+
+  RtcEventLog *event_log_;
+
+public:
+	void SetRtcEventLog(RtcEventLog *event_log);
 
 //---begin
 
@@ -715,6 +729,8 @@ public:
     int32_t GetKeepAliveStatus(bool& enable,
                                      int8_t& unknownPayloadType,
                                      uint16_t& deltaTransmitTimeMS);
+
+	RtpReceiver* GetRtpReceiver();
 	private:
 		scoped_ptr<ReceiveStatisticsProxy> receive_statistics_proxy_;
 		onVideoConference _video_conf_cb;
@@ -722,8 +738,10 @@ public:
 	    onStunPacket _stun_cb;
 	    onEcMediaRequestKeyFrame _key_frame_cb;
 		bool _isVideoConf;
+		SsrcObserver* ssrc_observer_;
 	public:
 		ReceiveStatisticsProxy* GetReceiveStatisticsProxy();
+		void SetSsrcObserver(SsrcObserver* ssrcObserver);
 
 //---end
  

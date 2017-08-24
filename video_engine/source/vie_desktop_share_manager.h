@@ -12,8 +12,8 @@
 #define WEBRTC_VIDEO_ENGINE_VIE_DESKTOP_SHARE_MANAGER_H_
 
 #include "video_capture.h"
-#include "map_wrapper.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/map_wrapper.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 #include "vie_defines.h"
 #include "vie_frame_provider_base.h"

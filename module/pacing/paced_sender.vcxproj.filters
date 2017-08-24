@@ -18,19 +18,31 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\bitrate_prober.cc">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="source\paced_sender.cc">
-      <Filter>源文件</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="source\bitrate_prober.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
     <ClInclude Include="include\paced_sender.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="bitrate_prober.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="packet_router.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="alr_detector.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="bitrate_prober.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="paced_sender.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="alr_detector.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="packet_router.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

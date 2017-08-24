@@ -170,7 +170,7 @@ cloopenwebrtc::FrameType VCMEncodedFrame::ConvertFrameType(VideoFrameType frameT
     case kDeltaFrame:
       return kVideoFrameDelta;
     case kSkipFrame:
-      return kFrameEmpty;
+      return kEmptyFrame;
     default:
       return kVideoFrameDelta;
   }

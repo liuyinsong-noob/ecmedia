@@ -64,7 +64,7 @@
 #ifndef WEBRTC_BASE_BIND_H_
 #define WEBRTC_BASE_BIND_H_
 
-#include "scoped_refptr.h"
+//#include "scoped_refptr.h"
 #include "template_util.h"
 
 #define NONAME

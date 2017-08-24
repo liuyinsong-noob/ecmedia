@@ -12,18 +12,17 @@
 
 #include <stdlib.h>
 
-#include "webrtc_libyuv.h"
+#include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 #include "module_common_types.h"
 #include "video_capture_config.h"
-#include "clock.h"
-#include "critical_section_wrapper.h"
-#include "logging.h"
-#include "ref_count.h"
-#include "tick_util.h"
-#include "trace_event.h"
-#include "timeutils.h"
+#include "../system_wrappers/include/clock.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/logging.h"
+#include "../system_wrappers/include/ref_count.h"
+#include "../system_wrappers/include/tick_util.h"
+#include "../system_wrappers/include/trace_event.h"
 
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc
 {
@@ -178,7 +177,7 @@ VideoCaptureImpl::VideoCaptureImpl(const int32_t id)
       _dataCallBack(NULL),
       _captureCallBack(NULL),
       _lastProcessFrameCount(TickTime::Now()),
-      _rotateFrame(kRotateNone),
+      _rotateFrame(kVideoRotation_0),
       last_capture_time_(0),
       delta_ntp_internal_ms_(
           Clock::GetRealTimeClock()->CurrentNtpInMilliseconds() -
@@ -305,7 +304,7 @@ int32_t VideoCaptureImpl::IncomingFrame(
         int target_width = width;
         int target_height = height;
         // Rotating resolution when for 90/270 degree rotations.
-        if (_rotateFrame == kRotate90 || _rotateFrame == kRotate270)  {
+        if (_rotateFrame == kVideoRotation_90 || _rotateFrame == kVideoRotation_270)  {
           target_width = abs(height);
           target_height = width;
         }
@@ -371,16 +370,16 @@ int32_t VideoCaptureImpl::SetCaptureRotation(VideoCaptureRotation rotation) {
   CriticalSectionScoped cs2(&_callBackCs);
   switch (rotation){
     case kCameraRotate0:
-      _rotateFrame = kRotateNone;
+      _rotateFrame = kVideoRotation_0;
       break;
     case kCameraRotate90:
-      _rotateFrame = kRotate90;
+      _rotateFrame = kVideoRotation_90;
       break;
     case kCameraRotate180:
-      _rotateFrame = kRotate180;
+      _rotateFrame = kVideoRotation_180;
       break;
     case kCameraRotate270:
-      _rotateFrame = kRotate270;
+      _rotateFrame = kVideoRotation_270;
       break;
     default:
       return -1;

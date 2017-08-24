@@ -13,8 +13,8 @@
 
 #include <complex>
 
-#include "aligned_malloc.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/aligned_malloc.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 // Uniform interface class for the real DFT and its inverse, for power-of-2
 // input lengths. Also contains helper functions for buffer allocation, taking

@@ -49,7 +49,12 @@ extern "C" {
 #import <CoreTelephony/CTCallCenter.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import "CLOPcrypto.h"
+
+
+#include "CCPClient.h"
 static CCPCallService *g_CCPCallService;
+
+char g_currentCallId[128] = {0};
 
 @class UIStatusBarForegroundView;
 @class UIStatusBarDataNetworkItemView;
@@ -319,6 +324,8 @@ static void onConnectError(int reason)
 
 static void onIncomingCallReceived(int callType, const char *callid, const char *caller)
 {
+    memcpy(g_currentCallId, callid, sizeof(callid));
+    
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     if(g_CCPCallService)
     {
@@ -1870,7 +1877,7 @@ static CCPCallService * ccpcallserviceSharedInstance;
         voipCallDict = [[NSMutableDictionary alloc] init];
 //        setCodecEnabled(4, 0);
         setDtxEnabled(true);
-//        setTraceFlag(true);
+ //       setTraceFlag(true);
         self.player = nil;
         recorder = new YtxAQRecorder();
         self.playRingName = nil;
@@ -2303,6 +2310,9 @@ static CCPCallService * ccpcallserviceSharedInstance;
             setFirewallPolicy(SerphonePolicyUseIce);
     }
     const char *retCallid = makeCall(callType,[called cStringUsingEncoding:NSUTF8StringEncoding]);
+    
+    memcpy(g_currentCallId, retCallid, sizeof(retCallid));
+//    memcpy(g_currentCallId[sizeof(retCallid)], '\0', 1);
 
     if(retCallid)
     {
@@ -2387,6 +2397,8 @@ static CCPCallService * ccpcallserviceSharedInstance;
             return ECCP_Failed;
 
         runningType = ERunningType_Voip;
+        
+        requestVideo(g_currentCallId, 320, 240);
         return ECCP_Success;
     }
     else

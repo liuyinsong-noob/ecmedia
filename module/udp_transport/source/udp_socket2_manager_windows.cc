@@ -13,7 +13,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-#include "aligned_malloc.h"
+#include "../system_wrappers/include/aligned_malloc.h"
 #include "udp_socket2_windows.h"
 
 namespace cloopenwebrtc {

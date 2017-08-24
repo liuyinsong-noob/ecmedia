@@ -25,9 +25,9 @@
 #include "media_file_defines.h"
 #include "file_recorder.h"
 #include "coder.h"
-#include "event_wrapper.h"
-#include "thread_wrapper.h"
-#include "tick_util.h"
+#include "../system_wrappers/include/event_wrapper.h"
+#include "../system_wrappers/include/thread_wrapper.h"
+#include "../system_wrappers/include/tick_util.h"
 #include "typedefs.h"
 
 #ifdef WEBRTC_MODULE_UTILITY_VIDEO
@@ -182,7 +182,7 @@ private:
     EncodedVideoData _videoEncodedData;
 
     ThreadWrapper* _thread;
-    EventWrapper& _timeEvent;
+    EventTimerWrapper& _timeEvent;
     CriticalSectionWrapper* _critSec;
     int64_t _writtenVideoFramesCounter;
     int64_t _writtenAudioMS;

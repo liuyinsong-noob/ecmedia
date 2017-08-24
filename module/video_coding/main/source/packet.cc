@@ -24,7 +24,7 @@ VCMPacket::VCMPacket()
     dataPtr(NULL),
     sizeBytes(0),
     markerBit(false),
-    frameType(kFrameEmpty),
+    frameType(kEmptyFrame),
     codec(kVideoCodecUnknown),
     isFirstPacket(false),
     completeNALU(kNaluUnset),
@@ -88,7 +88,7 @@ void VCMPacket::Reset() {
   dataPtr = NULL;
   sizeBytes = 0;
   markerBit = false;
-  frameType = kFrameEmpty;
+  frameType = kEmptyFrame;
   codec = kVideoCodecUnknown;
   isFirstPacket = false;
   completeNALU = kNaluUnset;

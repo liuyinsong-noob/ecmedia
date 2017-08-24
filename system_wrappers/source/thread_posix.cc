@@ -60,9 +60,9 @@
 #include <mach/mach.h>
 #endif
 
-#include "system_wrappers/interface/critical_section_wrapper.h"
-#include "system_wrappers/interface/event_wrapper.h"
-#include "system_wrappers/interface/trace.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/event_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 extern "C"
@@ -178,7 +178,7 @@ bool ThreadPosix::Start(unsigned int& /*threadID*/)
 #else
     const int policy = SCHED_FIFO;
 #endif
-    _event->Reset();
+    //_event->Reset();
     result |= pthread_create(&_thread, &_attr, &StartThread, this);
     if (result != 0)
     {
@@ -187,7 +187,7 @@ bool ThreadPosix::Start(unsigned int& /*threadID*/)
 
     // Wait up to 10 seconds for the OS to call the callback function. Prevents
     // race condition if Stop() is called too quickly after start.
-    if (kEventSignaled != _event->Wait(WEBRTC_EVENT_10_SEC))
+    if (kEventSignaled != _event->Wait(10000))
     {
         // Timed out. Something went wrong.
         _runFunction = NULL;

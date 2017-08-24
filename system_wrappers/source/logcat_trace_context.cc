@@ -8,12 +8,12 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "logcat_trace_context.h"
+#include "../system_wrappers/include/logcat_trace_context.h"
 
 #include <android/log.h>
 #include <assert.h>
 
-#include "logging.h"
+#include "../system_wrappers/include/logging.h"
 
 namespace cloopenwebrtc {
 
@@ -60,4 +60,4 @@ void LogcatTraceContext::Print(TraceLevel level,
                       "WEBRTC", "%.*s", length, message);
 }
 
-}  // namespace webrtc
+}  // namespace cloopenwebrtc

@@ -10,8 +10,8 @@
 
 #include "sink_filter_ds.h"
 
+#include "../system_wrappers/include/trace.h"
 #include "help_functions_ds.h"
-#include "trace.h"
 
 #include <Dvdmedia.h> // VIDEOINFOHEADER2
 #include <initguid.h>

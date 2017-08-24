@@ -14,8 +14,8 @@
 
 #include <assert.h>
 
-#include "scoped_ptr.h"
-#include "trace.h"
+#include "../system_wrappers/include/scoped_ptr.h"
+#include "../system_wrappers/include/trace.h"
 
 #include <jni.h>
 #include <Android/bitmap.h>

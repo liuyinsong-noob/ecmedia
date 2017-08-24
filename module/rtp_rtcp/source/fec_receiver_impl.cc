@@ -14,9 +14,9 @@
 
 #include "rtp_receiver_video.h"
 #include "rtp_utility.h"
-#include "critical_section_wrapper.h"
-#include "logging.h"
-#include "scoped_ptr.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/logging.h"
+#include "../system_wrappers/include/scoped_ptr.h"
 
 // RFC 5109
 namespace cloopenwebrtc {

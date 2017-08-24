@@ -9,32 +9,26 @@
 /* Begin PBXBuildFile section */
 		3FAA8B7215C8C61800561C64 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAA8B7115C8C61800561C64 /* Foundation.framework */; };
 		3FAA8B8515C8C64F00561C64 /* bitrate_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8B8415C8C64F00561C64 /* bitrate_controller.h */; };
-		3FAA8B8B15C8C67900561C64 /* bitrate_controller_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8B8715C8C67900561C64 /* bitrate_controller_impl.cc */; };
-		3FAA8B8C15C8C67900561C64 /* bitrate_controller_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8B8815C8C67900561C64 /* bitrate_controller_impl.h */; };
-		3FAA8B8D15C8C67900561C64 /* send_side_bandwidth_estimation.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8B8915C8C67900561C64 /* send_side_bandwidth_estimation.cc */; };
-		3FAA8B8E15C8C67900561C64 /* send_side_bandwidth_estimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8B8A15C8C67900561C64 /* send_side_bandwidth_estimation.h */; };
-		45E055A51B0C8EC000611475 /* remb_suppressor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45E055A31B0C8EC000611475 /* remb_suppressor.cc */; };
-		45E055A61B0C8EC000611475 /* remb_suppressor.h in Headers */ = {isa = PBXBuildFile; fileRef = 45E055A41B0C8EC000611475 /* remb_suppressor.h */; };
-		AD1F0E661D4769A800C33F53 /* bitrate_controller_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8B8715C8C67900561C64 /* bitrate_controller_impl.cc */; };
-		AD1F0E671D4769A800C33F53 /* remb_suppressor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45E055A31B0C8EC000611475 /* remb_suppressor.cc */; };
-		AD1F0E681D4769A800C33F53 /* send_side_bandwidth_estimation.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3FAA8B8915C8C67900561C64 /* send_side_bandwidth_estimation.cc */; };
+		4526C8D81F149F95005949BB /* bitrate_controller_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4526C8D21F149F95005949BB /* bitrate_controller_impl.cc */; };
+		4526C8D91F149F95005949BB /* bitrate_controller_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4526C8D31F149F95005949BB /* bitrate_controller_impl.h */; };
+		4526C8DA1F149F95005949BB /* remb_suppressor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4526C8D41F149F95005949BB /* remb_suppressor.cc */; };
+		4526C8DB1F149F95005949BB /* remb_suppressor.h in Headers */ = {isa = PBXBuildFile; fileRef = 4526C8D51F149F95005949BB /* remb_suppressor.h */; };
+		4526C8DC1F149F95005949BB /* send_side_bandwidth_estimation.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4526C8D61F149F95005949BB /* send_side_bandwidth_estimation.cc */; };
+		4526C8DD1F149F95005949BB /* send_side_bandwidth_estimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4526C8D71F149F95005949BB /* send_side_bandwidth_estimation.h */; };
 		AD1F0E6A1D4769A800C33F53 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAA8B7115C8C61800561C64 /* Foundation.framework */; };
 		AD1F0E6C1D4769A800C33F53 /* bitrate_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8B8415C8C64F00561C64 /* bitrate_controller.h */; };
-		AD1F0E6D1D4769A800C33F53 /* bitrate_controller_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8B8815C8C67900561C64 /* bitrate_controller_impl.h */; };
-		AD1F0E6E1D4769A800C33F53 /* remb_suppressor.h in Headers */ = {isa = PBXBuildFile; fileRef = 45E055A41B0C8EC000611475 /* remb_suppressor.h */; };
-		AD1F0E6F1D4769A800C33F53 /* send_side_bandwidth_estimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8B8A15C8C67900561C64 /* send_side_bandwidth_estimation.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3FAA8B6E15C8C61800561C64 /* libbitrate_controller.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbitrate_controller.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FAA8B7115C8C61800561C64 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3FAA8B8415C8C64F00561C64 /* bitrate_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bitrate_controller.h; path = include/bitrate_controller.h; sourceTree = "<group>"; };
-		3FAA8B8715C8C67900561C64 /* bitrate_controller_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bitrate_controller_impl.cc; path = source/bitrate_controller_impl.cc; sourceTree = "<group>"; };
-		3FAA8B8815C8C67900561C64 /* bitrate_controller_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bitrate_controller_impl.h; path = source/bitrate_controller_impl.h; sourceTree = "<group>"; };
-		3FAA8B8915C8C67900561C64 /* send_side_bandwidth_estimation.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = send_side_bandwidth_estimation.cc; path = source/send_side_bandwidth_estimation.cc; sourceTree = "<group>"; };
-		3FAA8B8A15C8C67900561C64 /* send_side_bandwidth_estimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = send_side_bandwidth_estimation.h; path = source/send_side_bandwidth_estimation.h; sourceTree = "<group>"; };
-		45E055A31B0C8EC000611475 /* remb_suppressor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = remb_suppressor.cc; path = source/remb_suppressor.cc; sourceTree = "<group>"; };
-		45E055A41B0C8EC000611475 /* remb_suppressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = remb_suppressor.h; path = source/remb_suppressor.h; sourceTree = "<group>"; };
+		4526C8D21F149F95005949BB /* bitrate_controller_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bitrate_controller_impl.cc; sourceTree = "<group>"; };
+		4526C8D31F149F95005949BB /* bitrate_controller_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bitrate_controller_impl.h; sourceTree = "<group>"; };
+		4526C8D41F149F95005949BB /* remb_suppressor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = remb_suppressor.cc; sourceTree = "<group>"; };
+		4526C8D51F149F95005949BB /* remb_suppressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = remb_suppressor.h; sourceTree = "<group>"; };
+		4526C8D61F149F95005949BB /* send_side_bandwidth_estimation.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = send_side_bandwidth_estimation.cc; sourceTree = "<group>"; };
+		4526C8D71F149F95005949BB /* send_side_bandwidth_estimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = send_side_bandwidth_estimation.h; sourceTree = "<group>"; };
 		AD1F0E731D4769A800C33F53 /* libbitrate_controller_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbitrate_controller_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -96,12 +90,12 @@
 		3FAA8B8615C8C65B00561C64 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				45E055A41B0C8EC000611475 /* remb_suppressor.h */,
-				45E055A31B0C8EC000611475 /* remb_suppressor.cc */,
-				3FAA8B8715C8C67900561C64 /* bitrate_controller_impl.cc */,
-				3FAA8B8815C8C67900561C64 /* bitrate_controller_impl.h */,
-				3FAA8B8915C8C67900561C64 /* send_side_bandwidth_estimation.cc */,
-				3FAA8B8A15C8C67900561C64 /* send_side_bandwidth_estimation.h */,
+				4526C8D21F149F95005949BB /* bitrate_controller_impl.cc */,
+				4526C8D31F149F95005949BB /* bitrate_controller_impl.h */,
+				4526C8D41F149F95005949BB /* remb_suppressor.cc */,
+				4526C8D51F149F95005949BB /* remb_suppressor.h */,
+				4526C8D61F149F95005949BB /* send_side_bandwidth_estimation.cc */,
+				4526C8D71F149F95005949BB /* send_side_bandwidth_estimation.h */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -113,10 +107,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4526C8DD1F149F95005949BB /* send_side_bandwidth_estimation.h in Headers */,
+				4526C8D91F149F95005949BB /* bitrate_controller_impl.h in Headers */,
+				4526C8DB1F149F95005949BB /* remb_suppressor.h in Headers */,
 				3FAA8B8515C8C64F00561C64 /* bitrate_controller.h in Headers */,
-				3FAA8B8C15C8C67900561C64 /* bitrate_controller_impl.h in Headers */,
-				45E055A61B0C8EC000611475 /* remb_suppressor.h in Headers */,
-				3FAA8B8E15C8C67900561C64 /* send_side_bandwidth_estimation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,9 +119,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD1F0E6C1D4769A800C33F53 /* bitrate_controller.h in Headers */,
-				AD1F0E6D1D4769A800C33F53 /* bitrate_controller_impl.h in Headers */,
-				AD1F0E6E1D4769A800C33F53 /* remb_suppressor.h in Headers */,
-				AD1F0E6F1D4769A800C33F53 /* send_side_bandwidth_estimation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,9 +191,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3FAA8B8B15C8C67900561C64 /* bitrate_controller_impl.cc in Sources */,
-				45E055A51B0C8EC000611475 /* remb_suppressor.cc in Sources */,
-				3FAA8B8D15C8C67900561C64 /* send_side_bandwidth_estimation.cc in Sources */,
+				4526C8D81F149F95005949BB /* bitrate_controller_impl.cc in Sources */,
+				4526C8DA1F149F95005949BB /* remb_suppressor.cc in Sources */,
+				4526C8DC1F149F95005949BB /* send_side_bandwidth_estimation.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,9 +201,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD1F0E661D4769A800C33F53 /* bitrate_controller_impl.cc in Sources */,
-				AD1F0E671D4769A800C33F53 /* remb_suppressor.cc in Sources */,
-				AD1F0E681D4769A800C33F53 /* send_side_bandwidth_estimation.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,10 +262,11 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/bitrate_controller.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = WEBRTC_POSIX;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../interface,
@@ -300,10 +289,11 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/bitrate_controller.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = WEBRTC_POSIX;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../interface,

@@ -11,7 +11,7 @@
 #ifndef WEBRTC_VOICE_ENGINE_DTMF_INBAND_QUEUE_H
 #define WEBRTC_VOICE_ENGINE_DTMF_INBAND_QUEUE_H
 
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 #include "typedefs.h"
 #include "voice_engine_defines.h"
 

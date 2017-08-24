@@ -21,13 +21,13 @@
 #include <sys/time.h>
 #endif
 
-#include "webrtc_libyuv.h"
+#include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 #include "video_render_frames.h"
-#include "critical_section_wrapper.h"
-#include "event_wrapper.h"
-#include "thread_wrapper.h"
-#include "tick_util.h"
-#include "trace.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/event_wrapper.h"
+#include "../system_wrappers/include/thread_wrapper.h"
+#include "../system_wrappers/include/tick_util.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 
@@ -39,7 +39,7 @@ IncomingVideoStream::IncomingVideoStream(const int32_t module_id,
       thread_critsect_(*CriticalSectionWrapper::CreateCriticalSection()),
       buffer_critsect_(*CriticalSectionWrapper::CreateCriticalSection()),
       incoming_render_thread_(),
-      deliver_buffer_event_(*EventWrapper::Create()),
+      deliver_buffer_event_(*EventTimerWrapper::Create()),
       running_(false),
       external_callback_(NULL),
       render_callback_(NULL),

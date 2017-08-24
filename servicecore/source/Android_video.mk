@@ -74,6 +74,7 @@ LOCAL_C_INCLUDES := \
 	  $(LOCAL_PATH)/../../third_party/oRTP/include \
 		$(LOCAL_PATH)/../../third_party/oRTP/include/ortp \
 		$(LOCAL_PATH)/../../module/rtp_rtcp/source/oRTP/include/ortp/ \
+		$(LOCAL_PATH)/../../third_party \
 		$(LOCAL_PATH)/../../third_party/srtp \
 		$(LOCAL_PATH)/../../third_party/srtp/crypto/include \
 		$(LOCAL_PATH)/../../third_party/gsm/inc/ \

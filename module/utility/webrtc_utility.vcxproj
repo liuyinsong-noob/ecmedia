@@ -233,7 +233,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../.;../.;./include;./source;../interface;../../system_wrappers\interface;../audio_coding/main/source;../audio_coding\main\include;../audio_coding/codecs/cng/include;../audio_coding/codecs;../audio_coding/neteq/include;../audio_coding/neteq/source;../media_file\include;..\video_coding\main\include;../video_coding/main/source;../video_coding/codecs/interface;../common_video/interface;../common_video/source;../common_video/source/libyuv/include;../common_audio/source/resampler/include;../audio_coding\codecs\g729\source</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../.;../.;./include;./source;../interface;../audio_coding/main/source;../audio_coding\main\include;../audio_coding/codecs/cng/include;../audio_coding/codecs;../audio_coding/neteq/include;../audio_coding/neteq/source;../media_file\include;..\video_coding\main\include;../video_coding/main/source;../video_coding/codecs/interface;../common_video/interface;../common_video/source;../common_video/source/libyuv/include;../common_audio/source/resampler/include;../audio_coding\codecs\g729\source</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

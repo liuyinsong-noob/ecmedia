@@ -1,89 +1,86 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="interface">
-      <UniqueIdentifier>{D45E0FBD-84A7-45CA-36AC-7A06BD0C9BF7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="source">
       <UniqueIdentifier>{29249c88-bcad-41cb-a6ff-24635f351a46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{D45E0FBD-84A7-45CA-36AC-7A06BD0C9BF7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="system_wrappers.gyp" />
     <ClInclude Include="..\interface\data_log_c.h">
-      <Filter>interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\interface\event_wrapper.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\ref_count.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\atomic32.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\cpu_info.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\file_wrapper.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\scoped_ptr.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\static_instance.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\compile_assert.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\map_wrapper.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\tick_util.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\rw_lock_wrapper.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\cpu_wrapper.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\condition_variable_wrapper.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\data_log_impl.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\cpu_features_wrapper.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\scoped_refptr.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\list_wrapper.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\sort.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\thread_wrapper.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\trace.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\critical_section_wrapper.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\data_log.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\aligned_malloc.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\interface\fix_interlocked_exchange_pointer_win.h">
-      <Filter>interface</Filter>
+      <Filter>include</Filter>
     </ClInclude>
     <ClCompile Include="aligned_malloc.cc">
       <Filter>source</Filter>
@@ -94,40 +91,13 @@
     <ClCompile Include="clock.cc">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="condition_variable.cc">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="cpu_features.cc">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="critical_section.cc">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="critical_section_win.cc">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="condition_variable_win.cc">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="data_log_c.cc">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="event.cc">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="event_tracer.cc">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="event_win.cc">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="file_impl.cc">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="rtp_to_ntp.cc">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="rw_lock_generic.cc">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="rw_lock_win.cc">
@@ -137,9 +107,6 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="sort.cc">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="thread.cc">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="timestamp_extrapolator.cc">
@@ -169,9 +136,6 @@
     <ClCompile Include="rw_lock.cc">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="logging.cc">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="list_no_stl.cc">
       <Filter>source</Filter>
     </ClCompile>
@@ -180,44 +144,78 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="event_win.h">
+    <ClCompile Include="map.cc">
       <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="file_impl.h">
+    </ClCompile>
+    <ClCompile Include="platform_file.cc">
       <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="rw_lock_generic.h">
+    </ClCompile>
+    <ClCompile Include="thread_win.cc">
       <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="rw_lock_win.h">
+    </ClCompile>
+    <ClCompile Include="..\..\base\checks.cc">
       <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="set_thread_name_win.h">
+    </ClCompile>
+    <ClCompile Include="..\..\base\timeutils.cc">
       <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="condition_variable_win.h">
+    </ClCompile>
+    <ClCompile Include="rw_lock_winxp_win.cc">
       <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="thread_win.h">
+    </ClCompile>
+    <ClCompile Include="..\..\base\criticalsection.cc">
       <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="trace_impl.h">
+    </ClCompile>
+    <ClCompile Include="..\..\base\event_tracer.cc">
       <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="trace_win.h">
+    </ClCompile>
+    <ClCompile Include="event_timer_win.cc">
       <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="cpu_win.h">
+    </ClCompile>
+    <ClCompile Include="..\..\base\platform_thread.cc">
       <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="critical_section_win.h">
+    </ClCompile>
+    <ClCompile Include="..\..\base\event.cc">
       <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="checks.h">
+    </ClCompile>
+    <ClCompile Include="event_wrapper_impl.cc">
       <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="stringencode.h">
+    </ClCompile>
+    <ClCompile Include="condition_variable.cc">
       <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="condition_variable_win.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="critical_section.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="critical_section_win.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="condition_variable_event_win.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\numerics\exp_filter.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\asyncpacketsocket.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\asyncresolverinterface.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\bitbuffer.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\copyonwritebuffer.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\ipaddress.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\nethelpers.cc">
+      <Filter>source</Filter>
+<<<<<<< HEAD
     </ClInclude>
     <ClInclude Include="..\interface\stats_types.h">
       <Filter>interface</Filter>
@@ -225,25 +223,85 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="map.cc">
+=======
+    </ClCompile>
+    <ClCompile Include="..\..\base\nullsocketserver.cc">
+>>>>>>> mergewebrtcport
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="timeutils.cc">
+    <ClCompile Include="..\..\base\race_checker.cc">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="platform_file.cc">
+    <ClCompile Include="..\..\base\random.cc">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="checks.cc">
+    <ClCompile Include="..\..\base\rate_limiter.cc">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="exp_filter.cc">
+    <ClCompile Include="..\..\base\rate_statistics.cc">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="thread_win.cc">
+    <ClCompile Include="..\..\base\sequenced_task_checker_impl.cc">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\base\signalthread.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\sigslot.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\socketaddress.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="stats_types.cc">
       <Filter>source</Filter>
     </ClCompile>
+=======
+    <ClCompile Include="..\..\base\stringutils.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\task_queue_win.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\thread_checker_impl.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\win32.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\stringencode.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\messagehandler.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\messagequeue.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\location.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\sharedexclusivelock.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="logging.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base\threads.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="thread.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="rtp_to_ntp_estimator.cc">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\event_wrapper.h">
+      <Filter>include</Filter>
+    </ClInclude>
+>>>>>>> mergewebrtcport
   </ItemGroup>
 </Project>

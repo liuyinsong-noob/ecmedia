@@ -23,9 +23,6 @@
     <ClCompile Include="main\source\Windows\help_functions_ds.cc">
       <Filter>源文件\windows</Filter>
     </ClCompile>
-    <ClCompile Include="main\source\Windows\sink_filter_ds.cc">
-      <Filter>源文件\windows</Filter>
-    </ClCompile>
     <ClCompile Include="main\source\Windows\video_capture_ds.cc">
       <Filter>源文件\windows</Filter>
     </ClCompile>
@@ -33,6 +30,9 @@
       <Filter>源文件\windows</Filter>
     </ClCompile>
     <ClCompile Include="main\source\Windows\video_capture_mf.cc">
+      <Filter>源文件\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="main\source\Windows\sink_filter_ds.cc">
       <Filter>源文件\windows</Filter>
     </ClCompile>
   </ItemGroup>
@@ -46,13 +46,13 @@
     <ClInclude Include="main\source\Windows\help_functions_ds.h">
       <Filter>源文件\windows</Filter>
     </ClInclude>
-    <ClInclude Include="main\source\Windows\sink_filter_ds.h">
-      <Filter>源文件\windows</Filter>
-    </ClInclude>
     <ClInclude Include="main\source\Windows\video_capture_ds.h">
       <Filter>源文件\windows</Filter>
     </ClInclude>
     <ClInclude Include="main\source\Windows\video_capture_mf.h">
+      <Filter>源文件\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="main\source\Windows\sink_filter_ds.h">
       <Filter>源文件\windows</Filter>
     </ClInclude>
   </ItemGroup>

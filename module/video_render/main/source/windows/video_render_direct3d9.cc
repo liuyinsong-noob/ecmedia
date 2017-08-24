@@ -15,11 +15,11 @@
 #include <windows.h>
 
 // WebRtc include files
-#include "webrtc_libyuv.h"
-#include "critical_section_wrapper.h"
-#include "event_wrapper.h"
-#include "thread_wrapper.h"
-#include "trace.h"
+#include "../common_video/source/libyuv/include/webrtc_libyuv.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/event_wrapper.h"
+#include "../system_wrappers/include/thread_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 
@@ -404,7 +404,7 @@ VideoRenderDirect3D9::VideoRenderDirect3D9(Trace* trace,
 {
     _screenUpdateThread = ThreadWrapper::CreateThread(ScreenUpdateThreadProc,
                                                       this, kRealtimePriority);
-    _screenUpdateEvent = EventWrapper::Create();
+    _screenUpdateEvent = EventTimerWrapper::Create();
     SetRect(&_originalHwndRect, 0, 0, 0, 0);
 }
 

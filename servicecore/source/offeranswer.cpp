@@ -220,6 +220,8 @@ static void initiate_outgoing(const SalStreamDescription *local_offer,
 			result->port = 0;
 	}
 	result->nack_support = remote_answer->nack_support;
+	result->ssrc_self = remote_answer->ssrc_self;
+	result->ssrc_partner = remote_answer->ssrc_partner;	
 }
 
 
@@ -252,6 +254,9 @@ static void initiate_incoming(const SalStreamDescription *local_cap,
 		
 	}
 	result->nack_support = remote_offer->nack_support && local_cap->nack_support;
+	result->ssrc_self = remote_offer->ssrc_self;
+	result->ssrc_partner = remote_offer->ssrc_partner;
+	
 
     strcpy(result->ice_pwd, local_cap->ice_pwd);
 	strcpy(result->ice_ufrag, local_cap->ice_ufrag);

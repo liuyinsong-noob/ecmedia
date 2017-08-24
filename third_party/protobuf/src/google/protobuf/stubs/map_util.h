@@ -42,7 +42,7 @@
 
 #include <google/protobuf/stubs/common.h>
 
-namespace cloopen_google {
+namespace google {
 namespace protobuf {
 namespace internal {
 // Local implementation of RemoveConst to avoid including base/type_traits.h.
@@ -353,7 +353,6 @@ template <class Collection>
 void InsertOrDie(Collection* const collection,
                  const typename Collection::value_type::first_type& key,
                  const typename Collection::value_type::second_type& data) {
-  typedef typename Collection::value_type value_type;
   GOOGLE_CHECK(InsertIfNotPresent(collection, key, data))
       << "duplicate key: " << key;
 }
@@ -364,7 +363,6 @@ void InsertOrDieNoPrint(
     Collection* const collection,
     const typename Collection::value_type::first_type& key,
     const typename Collection::value_type::second_type& data) {
-  typedef typename Collection::value_type value_type;
   GOOGLE_CHECK(InsertIfNotPresent(collection, key, data)) << "duplicate key.";
 }
 
@@ -766,6 +764,6 @@ void AppendValuesFromMap(const MapContainer& map_container,
 }
 
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace google
 
 #endif  // GOOGLE_PROTOBUF_STUBS_MAP_UTIL_H__

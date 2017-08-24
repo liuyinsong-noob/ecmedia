@@ -16,7 +16,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "trace.h"
+#include "../system_wrappers/include/trace.h"
 #include "udp_socket_posix.h"
 
 namespace cloopenwebrtc {

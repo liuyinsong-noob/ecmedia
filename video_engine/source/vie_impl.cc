@@ -10,9 +10,9 @@
 
 #include "vie_impl.h"
 
-#include "common.h"
-#include "logging.h"
-#include "trace.h"
+#include "../system_wrappers/include/common.h"
+#include "../system_wrappers/include/logging.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 

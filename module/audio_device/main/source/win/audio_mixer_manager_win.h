@@ -13,7 +13,7 @@
 
 #include "typedefs.h"
 #include "audio_device.h"
-#include "critical_section_wrapper.h"
+#include "../system_wrappers/include/critical_section_wrapper.h"
 #include <Windows.h>
 #include <mmsystem.h>
 

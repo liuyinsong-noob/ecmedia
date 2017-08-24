@@ -11,7 +11,7 @@
 #include "vie_external_codec_impl.h"
 
 #include "engine_configurations.h"
-#include "logging.h"
+#include "../system_wrappers/include/logging.h"
 #include "vie_errors.h"
 #include "vie_channel.h"
 #include "vie_channel_manager.h"

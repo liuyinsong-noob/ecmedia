@@ -62,6 +62,7 @@
     <ClInclude Include="source\report_block_stats.h" />
     <ClInclude Include="source\send_statistics_proxy.h" />
     <ClInclude Include="source\stream_synchronization.h" />
+    <ClInclude Include="source\video\encoder_rtcp_feedback.h" />
     <ClInclude Include="source\video_send_stream.h" />
     <ClInclude Include="source\vie_base_impl.h" />
     <ClInclude Include="source\vie_capturer.h" />
@@ -106,6 +107,7 @@
     <ClCompile Include="source\report_block_stats.cc" />
     <ClCompile Include="source\send_statistics_proxy.cc" />
     <ClCompile Include="source\stream_synchronization.cc" />
+    <ClCompile Include="source\video\encoder_rtcp_feedback.cc" />
     <ClCompile Include="source\video_send_stream.cc" />
     <ClCompile Include="source\vie_base_impl.cc" />
     <ClCompile Include="source\vie_capturer.cc" />
@@ -311,7 +313,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>./include;./source;../servicecore/include;../voice_engine\main\include;../system_wrappers\source;../system_wrappers\interface;../module;../module\interface;../module\media_file\include;../module\rtp_rtcp\include;../module\udp_transport\include;../module\utility\include;../module\video_capture\main\include;../module\video_coding\main\include;../module\video_processing\main\source\beauty_filter;../module\video_processing\main\include;../module\video_render\main\include;../module/rtp_rtcp/source;../module\video_coding\codecs\interface;../module\audio_coding\main\include;../module\bitrate_controller\include;../module/common_video/source;../module/common_video/source/libyuv/include;../module/common_video/interface;../module/video_coding/main/source;../module/pacing/include;../module/remote_bitrate_estimator/include;../module/remote_bitrate_estimator/source;..\module\desktop_capture\source;..\module\desktop_capture\source\win;../third_party/oRTP/include;../third_party/oRTP/include/ortp;../voice_engine\main\source</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include;./source;../servicecore/include;../voice_engine\main\include;../module;../module\interface;../module\media_file\include;../module\rtp_rtcp\include;../module\udp_transport\include;../module\utility\include;../module\video_capture\main\include;../module\video_coding\main\include;../module\video_processing\main\source\beauty_filter;../module\video_processing\main\include;../module\video_render\main\include;../module/rtp_rtcp/source;../module\video_coding\codecs\interface;../module\audio_coding\main\include;../module\bitrate_controller\include;../module/common_video/source;../module/common_video/source/libyuv/include;../module/common_video/interface;../module/video_coding/main/source;../module/pacing/include;../module/remote_bitrate_estimator/include;../module/remote_bitrate_estimator/source;..\module\desktop_capture\source;..\module\desktop_capture\source\win;../third_party/oRTP/include;../third_party/oRTP/include/ortp;../voice_engine\main\source</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

@@ -11,7 +11,7 @@
 #ifndef WEBRTC_MODULES_AUDIO_CODING_NETEQ_PACKET_BUFFER_H_
 #define WEBRTC_MODULES_AUDIO_CODING_NETEQ_PACKET_BUFFER_H_
 
-#include "constructormagic.h"
+#include "../base/constructormagic.h"
 #include "packet.h"
 #include "typedefs.h"
 

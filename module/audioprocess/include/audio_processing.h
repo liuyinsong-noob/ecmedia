@@ -15,8 +15,8 @@
 #include <stdio.h>  // FILE
 #include <vector>
 
-#include "platform_file.h"
-#include "common.h"
+#include "../system_wrappers/source/platform_file.h"
+#include "../system_wrappers/include/common.h"
 #include "typedefs.h"
 
 

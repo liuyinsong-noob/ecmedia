@@ -8,14 +8,14 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#ifndef WEBRTC_MODULES_RTP_RTCP_INTERFACE_RECEIVE_STATISTICS_H_
-#define WEBRTC_MODULES_RTP_RTCP_INTERFACE_RECEIVE_STATISTICS_H_
+#ifndef WEBRTC_MODULES_RTP_RTCP_INCLUDE_RECEIVE_STATISTICS_H_
+#define WEBRTC_MODULES_RTP_RTCP_INCLUDE_RECEIVE_STATISTICS_H_
 
 #include <map>
 
-#include "module.h"
-#include "module_common_types.h"
-#include "typedefs.h"
+#include "../module/interface/module.h"
+#include "../module/interface/module_common_types.h"
+#include "../module/typedefs.h"
 
 namespace cloopenwebrtc {
 
@@ -61,7 +61,8 @@ class ReceiveStatistics : public Module {
                               bool retransmitted) = 0;
 
   // Increment counter for number of FEC packets received.
-  virtual void FecPacketReceived(uint32_t ssrc) = 0;
+  virtual void FecPacketReceived(const RTPHeader& header,
+                                 size_t packet_length) = 0;
 
   // Returns a map of all statisticians which have seen an incoming packet
   // during the last two seconds.
@@ -84,20 +85,21 @@ class ReceiveStatistics : public Module {
 
 class NullReceiveStatistics : public ReceiveStatistics {
  public:
-  virtual void IncomingPacket(const RTPHeader& rtp_header,
-                              size_t packet_length,
-                              bool retransmitted) OVERRIDE;
-  virtual void FecPacketReceived(uint32_t ssrc) OVERRIDE;
-  virtual StatisticianMap GetActiveStatisticians() const OVERRIDE;
-  virtual StreamStatistician* GetStatistician(uint32_t ssrc) const OVERRIDE;
-  virtual int64_t TimeUntilNextProcess() OVERRIDE;
-  virtual int32_t Process() OVERRIDE;
-  virtual void SetMaxReorderingThreshold(int max_reordering_threshold) OVERRIDE;
-  virtual void RegisterRtcpStatisticsCallback(RtcpStatisticsCallback* callback)
-      OVERRIDE;
-  virtual void RegisterRtpStatisticsCallback(
-      StreamDataCountersCallback* callback) OVERRIDE;
+  void IncomingPacket(const RTPHeader& rtp_header,
+                      size_t packet_length,
+                      bool retransmitted) override;
+  void FecPacketReceived(const RTPHeader& header,
+                         size_t packet_length) override;
+  StatisticianMap GetActiveStatisticians() const override;
+  StreamStatistician* GetStatistician(uint32_t ssrc) const override;
+  int64_t TimeUntilNextProcess() override;
+  int32_t Process() override;
+  void SetMaxReorderingThreshold(int max_reordering_threshold) override;
+  void RegisterRtcpStatisticsCallback(
+      RtcpStatisticsCallback* callback) override;
+  void RegisterRtpStatisticsCallback(
+      StreamDataCountersCallback* callback) override;
 };
 
 }  // namespace webrtc
-#endif  // WEBRTC_MODULES_RTP_RTCP_INTERFACE_RECEIVE_STATISTICS_H_
+#endif  // WEBRTC_MODULES_RTP_RTCP_INCLUDE_RECEIVE_STATISTICS_H_

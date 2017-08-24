@@ -51,9 +51,6 @@
     <ClInclude Include="source\byte_io.h">
       <Filter>rtp_rtcp\source</Filter>
     </ClInclude>
-    <ClInclude Include="source\fec_receiver_impl.h">
-      <Filter>rtp_rtcp\source</Filter>
-    </ClInclude>
     <ClInclude Include="source\receive_statistics_impl.h">
       <Filter>rtp_rtcp\source</Filter>
     </ClInclude>
@@ -111,9 +108,6 @@
     <ClInclude Include="source\forward_error_correction_internal.h">
       <Filter>rtp_rtcp\source</Filter>
     </ClInclude>
-    <ClInclude Include="source\producer_fec.h">
-      <Filter>rtp_rtcp\source</Filter>
-    </ClInclude>
     <ClInclude Include="source\rtp_format.h">
       <Filter>rtp_rtcp\source</Filter>
     </ClInclude>
@@ -144,12 +138,36 @@
     <ClInclude Include="source\vp8_partition_aggregator.h">
       <Filter>rtp_rtcp\source</Filter>
     </ClInclude>
+    <ClInclude Include="source\rtcp_packet\app.h" />
+    <ClInclude Include="source\rtcp_packet\bye.h" />
+    <ClInclude Include="source\rtcp_packet\common_header.h" />
+    <ClInclude Include="source\rtcp_packet\compound_packet.h" />
+    <ClInclude Include="source\rtcp_packet\dlrr.h" />
+    <ClInclude Include="source\rtcp_packet\extended_jitter_report.h" />
+    <ClInclude Include="source\rtcp_packet\extended_reports.h" />
+    <ClInclude Include="source\rtcp_packet\fir.h" />
+    <ClInclude Include="source\rtcp_packet\nack.h" />
+    <ClInclude Include="source\rtcp_packet\pli.h" />
+    <ClInclude Include="source\rtcp_packet\psfb.h" />
+    <ClInclude Include="source\rtcp_packet\rapid_resync_request.h" />
+    <ClInclude Include="source\rtcp_packet\receiver_report.h" />
+    <ClInclude Include="source\rtcp_packet\remb.h" />
+    <ClInclude Include="source\rtcp_packet\report_block.h" />
+    <ClInclude Include="source\rtcp_packet\rpsi.h" />
+    <ClInclude Include="source\rtcp_packet\rrtr.h" />
+    <ClInclude Include="source\rtcp_packet\rtpfb.h" />
+    <ClInclude Include="source\rtcp_packet\sdes.h" />
+    <ClInclude Include="source\rtcp_packet\sender_report.h" />
+    <ClInclude Include="source\rtcp_packet\sli.h" />
+    <ClInclude Include="source\rtcp_packet\target_bitrate.h" />
+    <ClInclude Include="source\rtcp_packet\tmmb_item.h" />
+    <ClInclude Include="source\rtcp_packet\tmmbn.h" />
+    <ClInclude Include="source\rtcp_packet\tmmbr.h" />
+    <ClInclude Include="source\rtcp_packet\transport_feedback.h" />
+    <ClInclude Include="source\rtcp_packet\voip_metric.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\bitrate.cc">
-      <Filter>rtp_rtcp\source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\fec_receiver_impl.cc">
       <Filter>rtp_rtcp\source</Filter>
     </ClCompile>
     <ClCompile Include="source\receive_statistics_impl.cc">
@@ -209,9 +227,6 @@
     <ClCompile Include="source\forward_error_correction_internal.cc">
       <Filter>rtp_rtcp\source</Filter>
     </ClCompile>
-    <ClCompile Include="source\producer_fec.cc">
-      <Filter>rtp_rtcp\source</Filter>
-    </ClCompile>
     <ClCompile Include="source\rtp_format.cc">
       <Filter>rtp_rtcp\source</Filter>
     </ClCompile>
@@ -245,5 +260,45 @@
     <ClCompile Include="source\rtp_sender.cc">
       <Filter>rtp_rtcp\source</Filter>
     </ClCompile>
+    <ClCompile Include="source\flexfec_header_reader_writer.cc" />
+    <ClCompile Include="source\flexfec_receiver.cc" />
+    <ClCompile Include="source\flexfec_sender.cc" />
+    <ClCompile Include="source\packet_loss_stats.cc" />
+    <ClCompile Include="source\playout_delay_oracle.cc" />
+    <ClCompile Include="source\rtp_format_vp9.cc" />
+    <ClCompile Include="source\rtp_header_extensions.cc" />
+    <ClCompile Include="source\rtp_packet.cc" />
+    <ClCompile Include="source\time_util.cc" />
+    <ClCompile Include="source\ulpfec_generator.cc" />
+    <ClCompile Include="source\ulpfec_header_reader_writer.cc" />
+    <ClCompile Include="source\ulpfec_receiver_impl.cc" />
+    <ClCompile Include="source\rtcp_nack_stats.cc" />
+    <ClCompile Include="source\rtcp_packet\app.cc" />
+    <ClCompile Include="source\rtcp_packet\bye.cc" />
+    <ClCompile Include="source\rtcp_packet\common_header.cc" />
+    <ClCompile Include="source\rtcp_packet\compound_packet.cc" />
+    <ClCompile Include="source\rtcp_packet\dlrr.cc" />
+    <ClCompile Include="source\rtcp_packet\extended_jitter_report.cc" />
+    <ClCompile Include="source\rtcp_packet\extended_reports.cc" />
+    <ClCompile Include="source\rtcp_packet\fir.cc" />
+    <ClCompile Include="source\rtcp_packet\nack.cc" />
+    <ClCompile Include="source\rtcp_packet\pli.cc" />
+    <ClCompile Include="source\rtcp_packet\psfb.cc" />
+    <ClCompile Include="source\rtcp_packet\rapid_resync_request.cc" />
+    <ClCompile Include="source\rtcp_packet\receiver_report.cc" />
+    <ClCompile Include="source\rtcp_packet\remb.cc" />
+    <ClCompile Include="source\rtcp_packet\report_block.cc" />
+    <ClCompile Include="source\rtcp_packet\rpsi.cc" />
+    <ClCompile Include="source\rtcp_packet\rrtr.cc" />
+    <ClCompile Include="source\rtcp_packet\rtpfb.cc" />
+    <ClCompile Include="source\rtcp_packet\sdes.cc" />
+    <ClCompile Include="source\rtcp_packet\sender_report.cc" />
+    <ClCompile Include="source\rtcp_packet\sli.cc" />
+    <ClCompile Include="source\rtcp_packet\target_bitrate.cc" />
+    <ClCompile Include="source\rtcp_packet\tmmb_item.cc" />
+    <ClCompile Include="source\rtcp_packet\tmmbn.cc" />
+    <ClCompile Include="source\rtcp_packet\tmmbr.cc" />
+    <ClCompile Include="source\rtcp_packet\transport_feedback.cc" />
+    <ClCompile Include="source\rtcp_packet\voip_metric.cc" />
   </ItemGroup>
 </Project>
