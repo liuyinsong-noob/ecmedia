@@ -8,7 +8,7 @@
 #include "../system_wrappers/include/event_wrapper.h"
 #include "../system_wrappers/include/file_wrapper.h"
 #include "../system_wrappers/include/clock.h"
-#include "stats_types.h"
+#include "../system_wrappers/include/stats_types.h"
 
 #include "MediaStatisticsData.pb.h"
 

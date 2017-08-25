@@ -28,8 +28,8 @@
 #include "video_send_stream.h"
 #include "video_coding_defines.h"
 #endif
-#include "clock.h"
-#include "scoped_ptr.h"
+//#include "clock.h"
+//#include "scoped_ptr.h"
 
 
 #include "../system_wrappers/include/event_wrapper.h"
@@ -40,7 +40,7 @@
 #include "rtp_rtcp_defines.h"
 #include "overuse_frame_detector.h"
 //#include "constructormagic.h"
-#include "stats_types.h"
+#include "../system_wrappers/include/stats_types.h"
 
 namespace cloopenwebrtc {
 

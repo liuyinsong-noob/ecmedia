@@ -360,7 +360,7 @@ int32_t VideoSender::AddVideoFrame(const I420VideoFrame& videoFrame,
   }
   // TODO(holmer): Add support for dropping frames per stream. Currently we
   // only have one frame dropper for all streams.
-  if (_nextFrameTypes[0] == kFrameEmpty) {
+  if (_nextFrameTypes[0] == kEmptyFrame) {
   	LOG(LS_WARNING) << " AddVideoFrame dropping frame.";
     return VCM_OK;
   }

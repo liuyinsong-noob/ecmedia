@@ -41,6 +41,7 @@
 #include "module_common_types.h"
 #include "../system_wrappers/include/critical_section_wrapper.h"
 #include "../system_wrappers/include/logging.h"
+#include "../base/timeutils.h"
 
 #ifndef WIN32
 #include <time.h>

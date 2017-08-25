@@ -209,14 +209,9 @@ class ViEEncoder
 
   int channel_id() const { return channel_id_; }
   void setFrameScaleType(FrameScaleType frame_scale_type);
-<<<<<<< HEAD
   int32_t AddI420FrameCallback(ECMedia_I420FrameCallBack callback);
- protected:
-=======
 
   void SetTransport(ViESender *vie_sender);
-
->>>>>>> mergewebrtcport
   // Called by BitrateObserver.
   void OnNetworkChanged(uint32_t bitrate_bps,
                         uint8_t fraction_lost,

@@ -1031,15 +1031,7 @@ int ModuleRtpRtcpImpl::SendSingleTMMBR(uint32_t bandwidth, uint32_t ssrc, uint32
     tmmbr_bandwidth = bandwidth;
     tmmbr_ssrc = ssrc;
     tmmbr_remote_ssrc = remote_ssrc;
-    isSendingTmmbr = true;
-    
-    if(tmmbr_bandwidth == 0) {
-        //Ensure tmmbr sending successfully, we send tmmmbr three times。
-        rtcp_sender_.SendSingleTMMBR(tmmbr_bandwidth, tmmbr_ssrc, tmmbr_remote_ssrc);
-        rtcp_sender_.SendSingleTMMBR(tmmbr_bandwidth, tmmbr_ssrc, tmmbr_remote_ssrc);
-        rtcp_sender_.SendSingleTMMBR(tmmbr_bandwidth, tmmbr_ssrc, tmmbr_remote_ssrc);
-    }
-    
+    isSendingTmmbr = true; 
     return 0;
 }
     

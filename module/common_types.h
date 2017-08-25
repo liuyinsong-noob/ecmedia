@@ -714,6 +714,14 @@ struct RTPHeader {
 };
 
 
+// vcm qm 策略调整选项
+enum VCMQmResolutionMode {
+	kResolutionModeNone = 0,     // spatial 和 temporal 都不调整
+	kResolutionModeOnlySpatial,  // 只调整 spatial
+	kResolutionModeOnlyTemporal, // 只调整 temporal
+	kResolutionModeBoth          // 同时调整spatial 和 temporal.
+};
+
 // VP8 specific
 struct VideoCodecVP8 {
 	bool                 pictureLossIndicationOn;

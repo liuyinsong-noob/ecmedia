@@ -257,7 +257,8 @@ bool RTPSenderAudio::SendAudio(FrameType frame_type,
     static time_t last = 0;
     int logInterval = 5;
 	if( time(NULL) > last + logInterval ) {
-		 LOG(LS_WARNING) << "Period log per " << logInterval << " seconds: Audio SendAudio(payloadSize=" << payloadSize << ")";
+		 LOG(LS_WARNING) << "Period log per " << logInterval << " seconds: Audio SendAudio(payloadSize=" 
+			 << payload_size << ")";
         last = time(NULL);
 	}
 

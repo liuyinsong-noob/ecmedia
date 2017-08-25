@@ -26,7 +26,7 @@ extern CurlPost *g_curlpost;
 #endif
 #endif
 
-#include "stats_types.h"
+#include "../system_wrappers/include/stats_types.h"
 #define REPORT_TYPE "video_send_statistics"
 
 #define kKiloBits 1000

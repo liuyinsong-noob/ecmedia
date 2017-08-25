@@ -154,7 +154,8 @@ void RTPSenderVideo::SendVideoPacketAsRedMaybeWithUlpfec(
     static time_t last = 0;
     int logInterval = 5;
 	if( time(NULL) > last + logInterval ) {
-		 LOG(LS_WARNING) << "Period log per " << logInterval << " seconds: Video SendVideoPacket(payload_length=" << payload_length << ")";
+		 LOG(LS_WARNING) << "Period log per " << logInterval << " seconds: Video SendVideoPacket(payload_length="
+			 << media_packet->payload_size() << ")";
         last = time(NULL);
 	}
   

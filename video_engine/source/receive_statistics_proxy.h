@@ -31,7 +31,7 @@
 #endif
 #include "../system_wrappers/include/event_wrapper.h"
 //#include "file_wrapper.h"
-#include "stats_types.h"
+#include "../system_wrappers/include/stats_types.h"
 
 namespace cloopenwebrtc {
 
