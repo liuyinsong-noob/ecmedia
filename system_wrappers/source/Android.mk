@@ -41,11 +41,7 @@ LOCAL_SRC_FILES := \
     thread_posix.cc \
     trace_posix.cc \
     rw_lock_posix.cc \
-    stats_types.cc
-		
-#		checks.cc \
-#   android/cpu-features.c \
-#    cpu_no_op.cc \
+    stats_types.cc \
     field_trial_default.cc \
     logging.cc \
     metrics_default.cc \
