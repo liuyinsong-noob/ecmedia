@@ -1894,7 +1894,8 @@ Global
 		{618DC875-F876-4263-8D3D-6B6CEA5C402C}.Debug Dll|Win32.ActiveCfg = audioRelease|Win32
 		{618DC875-F876-4263-8D3D-6B6CEA5C402C}.Debug Dll|x64.ActiveCfg = audioRelease|x64
 		{618DC875-F876-4263-8D3D-6B6CEA5C402C}.Debug|Itanium.ActiveCfg = audioRelease|x64
-		{618DC875-F876-4263-8D3D-6B6CEA5C402C}.Debug|Win32.ActiveCfg = audioRelease|Win32
+		{618DC875-F876-4263-8D3D-6B6CEA5C402C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{618DC875-F876-4263-8D3D-6B6CEA5C402C}.Debug|Win32.Build.0 = Debug|Win32
 		{618DC875-F876-4263-8D3D-6B6CEA5C402C}.Debug|x64.ActiveCfg = audioRelease|x64
 		{618DC875-F876-4263-8D3D-6B6CEA5C402C}.DebugDLL|Itanium.ActiveCfg = audioRelease|x64
 		{618DC875-F876-4263-8D3D-6B6CEA5C402C}.DebugDLL|Win32.ActiveCfg = audioRelease|Win32
@@ -1912,7 +1913,8 @@ Global
 		{618DC875-F876-4263-8D3D-6B6CEA5C402C}.Release Dll|Win32.ActiveCfg = audioRelease|Win32
 		{618DC875-F876-4263-8D3D-6B6CEA5C402C}.Release Dll|x64.ActiveCfg = audioRelease|x64
 		{618DC875-F876-4263-8D3D-6B6CEA5C402C}.Release|Itanium.ActiveCfg = audioRelease|x64
-		{618DC875-F876-4263-8D3D-6B6CEA5C402C}.Release|Win32.ActiveCfg = audioRelease|Win32
+		{618DC875-F876-4263-8D3D-6B6CEA5C402C}.Release|Win32.ActiveCfg = Release|Win32
+		{618DC875-F876-4263-8D3D-6B6CEA5C402C}.Release|Win32.Build.0 = Release|Win32
 		{618DC875-F876-4263-8D3D-6B6CEA5C402C}.Release|x64.ActiveCfg = audioRelease|x64
 		{618DC875-F876-4263-8D3D-6B6CEA5C402C}.ReleaseDLL|Itanium.ActiveCfg = audioRelease|x64
 		{618DC875-F876-4263-8D3D-6B6CEA5C402C}.ReleaseDLL|Win32.ActiveCfg = audioRelease|Win32

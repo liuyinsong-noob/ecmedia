@@ -223,7 +223,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libeay32.lib;ssleay32.lib;zlib.lib;libfaad2d.lib;activemq-cppd.lib;libfaac.lib;libprotobuf-lited.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libeay32.lib;ssleay32.lib;zlib.lib;libfaad2d.lib;activemq-cppd.lib;libfaac.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\third_party\openssl;..\third_party\libzip;..\third_party\libfaad\win\lib\x86;..\third_party\libfaac\lib\win\x86;..\third_party\activemq-cpp\bin\x86;..\third_party\protobuf\bin\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Lib>
