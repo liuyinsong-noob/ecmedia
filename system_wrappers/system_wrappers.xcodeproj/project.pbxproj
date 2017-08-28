@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1FF9F2211F345293005D11C5 /* stats_types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9F2201F345293005D11C5 /* stats_types.cc */; };
 		1FF9F2231F34529E005D11C5 /* stats_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FF9F2221F34529E005D11C5 /* stats_types.h */; };
 		450D71E11F15F8CA00CD5776 /* platform_thread_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 450D71DE1F15F8CA00CD5776 /* platform_thread_types.h */; };
 		450D71ED1F15FBEC00CD5776 /* rtp_to_ntp_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D71EC1F15FBEC00CD5776 /* rtp_to_ntp_estimator.cc */; };
@@ -34,6 +33,7 @@
 		450D72991F174EAC00CD5776 /* criticalsection.h in Headers */ = {isa = PBXBuildFile; fileRef = 450D72971F174EAC00CD5776 /* criticalsection.h */; };
 		450D729C1F175D1700CD5776 /* optional.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D729A1F175D1700CD5776 /* optional.cc */; };
 		450D729D1F175D1700CD5776 /* optional.h in Headers */ = {isa = PBXBuildFile; fileRef = 450D729B1F175D1700CD5776 /* optional.h */; };
+		45187B3E1F54260A004A2DBF /* stats_types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9F2201F345293005D11C5 /* stats_types.cc */; };
 		4547E2C11F15EF7E0014FB7E /* timeutils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4547E2BF1F15EF7E0014FB7E /* timeutils.cc */; };
 		4547E2C21F15EF7E0014FB7E /* timeutils.h in Headers */ = {isa = PBXBuildFile; fileRef = 4547E2C01F15EF7E0014FB7E /* timeutils.h */; };
 		4547E2D21F15F4870014FB7E /* event_wrapper_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4547E2D11F15F4870014FB7E /* event_wrapper_impl.cc */; };
@@ -358,7 +358,6 @@
 			isa = PBXGroup;
 			children = (
 				1FF9F2201F345293005D11C5 /* stats_types.cc */,
-				AD194FDC1C5B4477003841BB /* logging.cc */,
 				450D729A1F175D1700CD5776 /* optional.cc */,
 				450D729B1F175D1700CD5776 /* optional.h */,
 				450D72961F174EAC00CD5776 /* criticalsection.cc */,
@@ -597,6 +596,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45187B3E1F54260A004A2DBF /* stats_types.cc in Sources */,
 				55AE065B15C82F8000CE4CF5 /* aligned_malloc.cc in Sources */,
 				450D728E1F173EE100CD5776 /* logging.cc in Sources */,
 				450D72981F174EAC00CD5776 /* criticalsection.cc in Sources */,
@@ -614,7 +614,6 @@
 				ADDC7D851C5A1FC900510E7D /* platform_file.cc in Sources */,
 				450D71ED1F15FBEC00CD5776 /* rtp_to_ntp_estimator.cc in Sources */,
 				AD8D73601C59B4AE00FB246D /* field_trial_default.cc in Sources */,
-				AD8D730A1C59A71900FB246D /* timeutils.cc in Sources */,
 				55AE068415C82F8000CE4CF5 /* file_impl.cc in Sources */,
 				55AE068615C82F8000CE4CF5 /* list_no_stl.cc in Sources */,
 				55AE068E15C82F8000CE4CF5 /* map.cc in Sources */,
