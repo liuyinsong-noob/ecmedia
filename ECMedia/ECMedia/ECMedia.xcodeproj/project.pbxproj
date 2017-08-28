@@ -35,11 +35,8 @@
 		AD1123011DAF1B7A006CDD38 /* librtmp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD056FBC1DAF1AB70007DB7A /* librtmp.a */; };
 		AD1123271DAF3108006CDD38 /* libopus_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1123261DAF3108006CDD38 /* libopus_Mac.a */; };
 		AD2DE0FC1D6BEA4C00FE3814 /* VoeObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD2DE0FB1D6BEA4C00FE3814 /* VoeObserver.cpp */; };
-<<<<<<< HEAD
 		AD36336D1F44668100F0C20B /* libSoundTouch_Media.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD36336A1F44668100F0C20B /* libSoundTouch_Media.a */; };
 		AD3EBA921DE5324E00024454 /* libcommon_video_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA0AD991DA8C54400C4807D /* libcommon_video_Mac.a */; };
-=======
->>>>>>> mergewebrtcport
 		AD3EBA991DE5326800024454 /* ECLiveStream_rtmp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0B41DAE0A59009B8D23 /* ECLiveStream_rtmp.cpp */; };
 		AD3EBA9A1DE5326800024454 /* ECLiveStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0B51DAE0A59009B8D23 /* ECLiveStream.cpp */; };
 		AD3EBA9B1DE5327400024454 /* faaccodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0B61DAE0A59009B8D23 /* faaccodec.cpp */; };
@@ -1337,14 +1334,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-<<<<<<< HEAD
 				AD36336D1F44668100F0C20B /* libSoundTouch_Media.a in Frameworks */,
-=======
 				450D727A1F17200D00CD5776 /* librtc_event_log.a in Frameworks */,
 				450D71E51F15FB0000CD5776 /* libcongestion_controller.a in Frameworks */,
 				4547E2CC1F15F2520014FB7E /* libcommon_video.a in Frameworks */,
-				1F099F111ED5AA0400421B08 /* libSoundTouch.a in Frameworks */,
->>>>>>> mergewebrtcport
 				1FDB3E4C1E839BC30018FA08 /* libsrtp.a in Frameworks */,
 				1F8EE0551E5D7B8B00C04C10 /* libavformat.a in Frameworks */,
 				AD1123011DAF1B7A006CDD38 /* librtmp.a in Frameworks */,
