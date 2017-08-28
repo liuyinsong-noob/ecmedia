@@ -302,8 +302,8 @@ public:
 		const RTPFragmentationHeader* fragmentation) = 0;
 };
 
-// RTP
-enum {kRtpCsrcSize = 15}; // RFC 3550 page 13
+// @see https://tools.ietf.org/html/rfc3550 RFC 3550 page 13, added by zhaoyou
+enum {kRtpCsrcSize = 15};
 
 enum RTPDirections
 {
