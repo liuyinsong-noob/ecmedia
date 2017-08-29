@@ -5255,8 +5255,13 @@ void
 	}
 }
 
-int
-	Channel::setProcessData(bool flag, bool originalFlag)
+int Channel::setConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback* cb) {
+    WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId,_channelId),
+                 "Channel::setConferenceParticipantCallback");
+    return rtp_header_parser_->setECMediaConferenceParticipantCallback(cb);
+}
+    
+int Channel::setProcessData(bool flag, bool originalFlag)
 {
 	WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId,_channelId),
 		"Channel::setProcessData(flag=%d)", flag);
@@ -6286,6 +6291,7 @@ int
 
 	return 0;
 }
+
 
 #endif
 }  // namespace voe

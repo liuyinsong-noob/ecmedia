@@ -730,7 +730,8 @@ public:
 
 	WebRtc_Word32 SendUDPPacket(const void* data, unsigned int length,
 		int& transmittedBytes, bool useRtcpSocket);
-
+    
+    int setConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback* cb);
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
 	WebRtc_Word32 GetSourceInfo(int& rtpPort, int& rtcpPort, char ipAddr[64]);
 	WebRtc_Word32 EnableIPv6();

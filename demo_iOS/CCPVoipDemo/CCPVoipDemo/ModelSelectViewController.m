@@ -77,10 +77,10 @@
     UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 92.0f+value)];
     topView.backgroundColor = [UIColor colorWithRed:34.0f/255.0f green:34.0f/255.0f blue:34.0f/255.0f alpha:1.0f];
     
-    UIImageView *logoImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoDemo.png"]];
-    logoImg.center = CGPointMake(77.0f, 45.0f+value/2);
-    [topView addSubview:logoImg];
-    [logoImg release];
+//    UIImageView *logoImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoDemo.png"]];
+//    logoImg.center = CGPointMake(77.0f, 45.0f+value/2);
+//    [topView addSubview:logoImg];
+//    [logoImg release];
     
     UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(200.0f, 50.0f+value, 109.0f, 20.0f)];
     topLabel.backgroundColor = [UIColor colorWithRed:34.0f/255.0f green:34.0f/255.0f blue:34.0f/255.0f alpha:1.0f];
@@ -243,9 +243,9 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-//    RegisterViewController *view = [[RegisterViewController alloc] init];
-//    [self.navigationController pushViewController:view animated:YES];
-//    [view release];
+    RegisterViewController *view = [[RegisterViewController alloc] init];
+    [self.navigationController pushViewController:view animated:YES];
+    [view release];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

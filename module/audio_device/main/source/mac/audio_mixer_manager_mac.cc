@@ -301,7 +301,6 @@ int32_t AudioMixerManagerMac::SetSpeakerVolume(uint32_t volume)
 
 int32_t AudioMixerManagerMac::SpeakerVolume(uint32_t& volume) const
 {
-
     if (_outputDeviceID == kAudioObjectUnknown)
     {
         WEBRTC_TRACE(kTraceWarning, kTraceAudioDevice, _id,

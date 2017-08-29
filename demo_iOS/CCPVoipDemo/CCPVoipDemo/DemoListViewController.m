@@ -73,10 +73,10 @@
     self.navigationItem.backBarButtonItem = back;
     [back release];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoDemo.png"]];
-    imageView.frame = CGRectMake(11, 21+value, 133, 49);
-    [self.view addSubview:imageView];
-    [imageView release];
+//    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logoDemo.png"]];
+//    imageView.frame = CGRectMake(11, 21+value, 133, 49);
+//    [self.view addSubview:imageView];
+//    [imageView release];
     
     UILabel* lb2 = [[UILabel alloc] initWithFrame:CGRectMake(210 , 53+value, 100, 25)];
     lb2.textAlignment = NSTextAlignmentRight;

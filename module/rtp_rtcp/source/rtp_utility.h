@@ -100,7 +100,7 @@ namespace RtpUtility {
         bool ParseRtcp(RTPHeader* header) const;
         bool Parse(RTPHeader& parsedPacket,
                    RtpHeaderExtensionMap* ptrExtensionMap = NULL) const;
-
+        int setECMedia_ConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback *cb);
     private:
         void ParseOneByteExtensionHeader(
             RTPHeader& parsedPacket,
@@ -114,6 +114,7 @@ namespace RtpUtility {
 
         const uint8_t* const _ptrRTPDataBegin;
         const uint8_t* const _ptrRTPDataEnd;
+
     };
 }  // namespace RtpUtility
 }  // namespace webrtc

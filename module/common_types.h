@@ -302,8 +302,8 @@ public:
 		const RTPFragmentationHeader* fragmentation) = 0;
 };
 
-// RTP
-enum {kRtpCsrcSize = 15}; // RFC 3550 page 13
+// @see https://tools.ietf.org/html/rfc3550 RFC 3550 page 13, added by zhaoyou
+enum {kRtpCsrcSize = 15};
 
 enum RTPDirections
 {
@@ -1060,8 +1060,8 @@ struct RTPHeader {
 // vcm qm 策略调整选项
 enum VCMQmResolutionMode {
     kResolutionModeNone = 0,     // spatial 和 temporal 都不调整
-    kResolutionModeOnlySpatial,  // 只调整 spatial
-    kResolutionModeOnlyTemporal, // 只调整 temporal
+    kResolutionModeOnlySpatial,  // 只调整 spatial (分辨率调整)
+    kResolutionModeOnlyTemporal, // 只调整 temporal(帧率调整)
     kResolutionModeBoth          // 同时调整spatial 和 temporal.
 };
 
@@ -1092,5 +1092,12 @@ typedef void (*ECMedia_I420FrameCallBack)(int32_t channel_id,  uint8_t* buffer, 
  */
  typedef void (*ECMedia_PCMDataCallBack)(int32_t channel_id, uint8_t* buffer, int length, int samples, int sampleRate, int numChannels);
 
+/**
+ * 反馈会议的参与方的CSRC
+ * arrOfCSRCs   : CSRC 数组，保存了会议的参与方，默认第一个CSRC为发言者
+ */
+typedef void (ECMedia_ConferenceParticipantCallback)(uint32_t arrOfCSRCs[], int count);
+
 }  // namespace cloopenwebrtc
+
 #endif  // WEBRTC_COMMON_TYPES_H

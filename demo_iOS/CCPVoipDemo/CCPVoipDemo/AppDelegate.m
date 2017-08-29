@@ -83,6 +83,7 @@ extern char *g_opengles_display;
     NSString* _filename5 = [doc_path stringByAppendingPathComponent:@"debug.pcm"];
     size_t len5 = _filename5.length;
 
+ 
 //    filename_path_yuv = (char *)malloc(len5+1);//new char[len + 1];
 //    memcpy(filename_path_yuv, [_filename5 UTF8String], len5);
 //    filename_path_yuv[len5] = '\0';
@@ -213,4 +214,9 @@ extern char *g_opengles_display;
 {
     NSLog(@"%@",log); //用于xcode日志输出
 }
+
+
+
+
+
 @end

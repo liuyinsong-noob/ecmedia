@@ -554,6 +554,7 @@ uint8_t RtpHeaderParser::ParsePaddingBytes(
   }
   return num_zero_bytes;
 }
+
 }  // namespace RtpUtility
 
 }  // namespace webrtc
