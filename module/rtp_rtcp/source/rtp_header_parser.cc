@@ -29,10 +29,11 @@ class RtpHeaderParserImpl : public RtpHeaderParser {
                                           uint8_t id) OVERRIDE;
 
   virtual bool DeregisterRtpHeaderExtension(RTPExtensionType type) OVERRIDE;
-
+  virtual int setECMediaConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback* cb);
  private:
   scoped_ptr<CriticalSectionWrapper> critical_section_;
   RtpHeaderExtensionMap rtp_header_extension_map_ GUARDED_BY(critical_section_);
+  ECMedia_ConferenceParticipantCallback *_participantCallback;
 };
 
 RtpHeaderParser* RtpHeaderParser::Create() {
@@ -63,6 +64,8 @@ bool RtpHeaderParserImpl::Parse(const uint8_t* packet,
   if (!valid_rtpheader) {
     return false;
   }
+    // ECMedia_ConferenceParticipantCallback
+  _participantCallback(header->arrOfCSRCs, header->numCSRCs);
   return true;
 }
 
@@ -75,5 +78,20 @@ bool RtpHeaderParserImpl::RegisterRtpHeaderExtension(RTPExtensionType type,
 bool RtpHeaderParserImpl::DeregisterRtpHeaderExtension(RTPExtensionType type) {
   CriticalSectionScoped cs(critical_section_.get());
   return rtp_header_extension_map_.Deregister(type) == 0;
+}
+    
+int RtpHeaderParserImpl::setECMediaConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback* cb) {
+    if(cb == nullptr) {
+        // LOG(LS_ERROR) << "ECMedia_ConferenceParticipantCallback is null.";
+        return -1;
+    }
+    
+    if(_participantCallback == cb) {
+        // LOG(LS_WARNING) << "ECMedia_ConferenceParticipantCallback already have been set.";
+        return 0;
+    }
+    
+    _participantCallback = cb;
+    return 0;
 }
 }  // namespace webrtc

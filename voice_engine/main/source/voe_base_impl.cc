@@ -2137,29 +2137,52 @@ int VoEBaseImpl::SetAudioDataCb(int channelid, onAudioData audio_data_cb)
     }
     return channelPtr->setAudioDataCb(audio_data_cb);
 }
-    int VoEBaseImpl::SetPCMAudioDataCallBack(int channelid, ECMedia_PCMDataCallBack audio_data_cb)
+    
+int VoEBaseImpl::SetPCMAudioDataCallBack(int channelid, ECMedia_PCMDataCallBack audio_data_cb)
+{
+    WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+                 "SetDtmfCb(channel=%d)", channelid);
+    
+    CriticalSectionScoped cs(_shared->crit_sec());
+    
+    if (!_shared->statistics().Initialized())
     {
-        WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
-                     "SetDtmfCb(channel=%d)", channelid);
-        
-        CriticalSectionScoped cs(_shared->crit_sec());
-        
-        if (!_shared->statistics().Initialized())
-        {
-            _shared->SetLastError(VE_NOT_INITED, kTraceError);
-            return -1;
-        }
-        voe::ChannelOwner sc = _shared->channel_manager().GetChannel(channelid);
-        voe::Channel* channelPtr = sc.channel();
-        if (channelPtr == NULL)
-        {
-            _shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
-                                  "SetDtmfCb() failed to locate channel");
-            return -1;
-        }
-        return channelPtr->SetPCMAudioDataCallBack(audio_data_cb);
+        _shared->SetLastError(VE_NOT_INITED, kTraceError);
+        return -1;
     }
+    voe::ChannelOwner sc = _shared->channel_manager().GetChannel(channelid);
+    voe::Channel* channelPtr = sc.channel();
+    if (channelPtr == NULL)
+    {
+        _shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
+                              "SetPCMAudioDataCallBack() failed to locate channel");
+        return -1;
+    }
+    return channelPtr->SetPCMAudioDataCallBack(audio_data_cb);
+}
 
+int VoEBaseImpl::setConferenceParticipantCallback(int channelid, ECMedia_ConferenceParticipantCallback* audio_data_cb) {
+    WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+                 "SetDtmfCb(channel=%d)", channelid);
+    
+    CriticalSectionScoped cs(_shared->crit_sec());
+    
+    if (!_shared->statistics().Initialized())
+    {
+        _shared->SetLastError(VE_NOT_INITED, kTraceError);
+        return -1;
+    }
+    voe::ChannelOwner sc = _shared->channel_manager().GetChannel(channelid);
+    voe::Channel* channelPtr = sc.channel();
+    if (channelPtr == NULL)
+    {
+        _shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
+                              "setConferenceParticipantCallback() failed to locate channel");
+        return -1;
+    }
+    return channelPtr->setConferenceParticipantCallback(audio_data_cb);
+}
+    
 bool VoEBaseImpl::GetRecordingIsInitialized()
 {
     WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),

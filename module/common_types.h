@@ -1092,5 +1092,12 @@ typedef void (*ECMedia_I420FrameCallBack)(int32_t channel_id,  uint8_t* buffer, 
  */
  typedef void (*ECMedia_PCMDataCallBack)(int32_t channel_id, uint8_t* buffer, int length, int samples, int sampleRate, int numChannels);
 
+/**
+ * 反馈会议的参与方的CSRC
+ * arrOfCSRCs   : CSRC 数组，保存了会议的参与方，默认第一个CSRC为发言者
+ */
+typedef void (ECMedia_ConferenceParticipantCallback)(uint32_t arrOfCSRCs[], int count);
+
 }  // namespace cloopenwebrtc
+
 #endif  // WEBRTC_COMMON_TYPES_H

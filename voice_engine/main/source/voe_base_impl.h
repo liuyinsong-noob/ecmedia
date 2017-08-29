@@ -125,6 +125,7 @@ public:
     virtual int SetStunCb(int channelid, onStunPacket stun_cb);
     virtual int SetAudioDataCb(int channelid, onAudioData audio_data_cb);
     virtual int SetPCMAudioDataCallBack(int channelid, ECMedia_PCMDataCallBack audio_data_cb);
+    virtual int setConferenceParticipantCallback(int channelid, ECMedia_ConferenceParticipantCallback* audio_data_cb);
     virtual bool GetRecordingIsInitialized();
 protected:
     VoEBaseImpl(voe::SharedData* shared);
