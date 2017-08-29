@@ -337,6 +337,14 @@ ECMEDIA_API int ECMedia_set_audio_data_cb(int channelid, onEcMediaAudioData audi
 ECMEDIA_API int ECMedia_set_pcm_audio_data_cb(int channelid, cloopenwebrtc::ECMedia_PCMDataCallBack callback);
 ECMEDIA_API int ECMedia_set_video_data_cb(int channelid, onEcMediaVideoDataV Video_data_cb);
 ECMEDIA_API int ECMedia_set_voe_cb(int channelid, onVoeCallbackOnError voe_callback_cb);
+
+/** added by zhaoyou
+ * conference csrc callback
+ * @param channelid: channel id
+ * @param callback : callback @see ECMedia_ConferenceParticipantCallback
+ * @return success return 0, eles return -1;
+ */
+ECMEDIA_API int ECMedia_setECMedia_ConferenceParticipantCallback(int channelid, cloopenwebrtc::ECMedia_ConferenceParticipantCallback* callback);
 /*
  * ONLY USE FOR PEER CONNECTION FOR AUDIO
  */

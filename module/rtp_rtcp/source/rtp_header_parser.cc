@@ -33,7 +33,8 @@ class RtpHeaderParserImpl : public RtpHeaderParser {
  private:
   scoped_ptr<CriticalSectionWrapper> critical_section_;
   RtpHeaderExtensionMap rtp_header_extension_map_ GUARDED_BY(critical_section_);
-  ECMedia_ConferenceParticipantCallback *_participantCallback;
+  ECMedia_ConferenceParticipantCallback *_participantCallback; //added by zhaoyou.
+  
 };
 
 RtpHeaderParser* RtpHeaderParser::Create() {
@@ -41,7 +42,8 @@ RtpHeaderParser* RtpHeaderParser::Create() {
 }
 
 RtpHeaderParserImpl::RtpHeaderParserImpl()
-    : critical_section_(CriticalSectionWrapper::CreateCriticalSection()) {}
+    : critical_section_(CriticalSectionWrapper::CreateCriticalSection()),
+    _participantCallback(nullptr) {}
 
 bool RtpHeaderParser::IsRtcp(const uint8_t* packet, size_t length) {
   RtpUtility::RtpHeaderParser rtp_parser(packet, length);
@@ -64,8 +66,35 @@ bool RtpHeaderParserImpl::Parse(const uint8_t* packet,
   if (!valid_rtpheader) {
     return false;
   }
-    // ECMedia_ConferenceParticipantCallback
-  _participantCallback(header->arrOfCSRCs, header->numCSRCs);
+  
+  /****  callback conference csrc array when csrc array changed, added by zhaoyou ******/
+  static uint8_t last_arr_csrc_count_ = 0;
+  static uint32_t last_arrOfCSRCs_[kRtpCsrcSize] = {0};
+  if(_participantCallback) {
+      if(last_arr_csrc_count_ != header->numCSRCs) {
+          // ConferenceParticipantCallback
+          _participantCallback(header->arrOfCSRCs, header->numCSRCs);
+          last_arr_csrc_count_ = header->numCSRCs;
+          for(int i = 0; i< header->numCSRCs; i++) {
+              last_arrOfCSRCs_[i] = header->arrOfCSRCs[i];
+          }
+      } else if(header->numCSRCs != 0){
+          bool need_callback = true;
+          for(int i = 0; i< header->numCSRCs; i++) {
+              // callback only once, when csrc list change
+              if(header->arrOfCSRCs[i] != last_arrOfCSRCs_[i]) {
+                  if(need_callback) {
+                      _participantCallback(header->arrOfCSRCs, header->numCSRCs);
+                      need_callback = false;
+                  }
+              }
+              // copy current csrs arr.
+              last_arrOfCSRCs_[i] = header->arrOfCSRCs[i];
+          }
+          // store last arr count.
+          last_arr_csrc_count_ = header->numCSRCs;
+      }
+  }
   return true;
 }
 
