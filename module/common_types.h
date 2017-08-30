@@ -722,9 +722,9 @@ struct VideoCodec {
 	unsigned short      height;
 
 	unsigned int        startBitrate;  // kilobits/sec.
-	unsigned int        maxBitrate;  // kilobits/sec.
-	unsigned int        minBitrate;  // kilobits/sec.
-	unsigned int        targetBitrate;  // kilobits/sec.
+	unsigned int        maxBitrate;    // kilobits/sec.
+	unsigned int        minBitrate;    // kilobits/sec.
+	unsigned int        targetBitrate; // kilobits/sec.
 
 	unsigned char       maxFramerate;
 
@@ -1095,6 +1095,7 @@ typedef void (*ECMedia_I420FrameCallBack)(int32_t channel_id,  uint8_t* buffer, 
 /**
  * 反馈会议的参与方的CSRC
  * arrOfCSRCs   : CSRC 数组，保存了会议的参与方，默认第一个CSRC为发言者
+ * count        : 会议参与方个数
  */
 typedef void (ECMedia_ConferenceParticipantCallback)(uint32_t arrOfCSRCs[], int count);
 

@@ -338,7 +338,7 @@ ECMEDIA_API int ECMedia_set_pcm_audio_data_cb(int channelid, cloopenwebrtc::ECMe
 ECMEDIA_API int ECMedia_set_video_data_cb(int channelid, onEcMediaVideoDataV Video_data_cb);
 ECMEDIA_API int ECMedia_set_voe_cb(int channelid, onVoeCallbackOnError voe_callback_cb);
 
-/** added by zhaoyou
+/**
  * conference csrc callback
  * @param channelid: channel id
  * @param callback : callback @see ECMedia_ConferenceParticipantCallback

@@ -371,9 +371,10 @@ int32_t RTPSenderAudio::SendAudio(
     // Too large payload buffer.
     return -1;
   }
-  {
-    CriticalSectionScoped cs(_sendAudioCritsect);
-    if (_REDPayloadType >= 0 &&  // Have we configured RED?
+  
+    {
+      CriticalSectionScoped cs(_sendAudioCritsect);
+      if (_REDPayloadType >= 0 &&  // Have we configured RED?
         fragmentation &&
         fragmentation->fragmentationVectorSize > 1 &&
         !markerBit) {
@@ -385,17 +386,25 @@ int32_t RTPSenderAudio::SendAudio(
         {
             maxOffset = fragmentation->fragmentationTimeDiff[1];
         }
-      if (maxOffset <= 0x3fff) {
+          // rtp audio red header format @see https://tools.ietf.org/html/rfc2198 page 4, zhaoyou add
+          
+          /* 0                   1                    2                   3
+           * 0 1 2 3 4 5 6 7 8 9 0 1 2 3  4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+           * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+           * |F|   block PT  |  timestamp offset         |   block length    |
+           * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+           */
+          if (maxOffset <= 0x3fff) {
 //        if(fragmentation->fragmentationVectorSize != 2) {   //sean opus red test
 //          // we only support 2 codecs when using RED
 //          return -1;
 //        }
-        // only 0x80 if we have multiple blocks
+          // only 0x80 if we have multiple blocks
           size_t blockLength = 0;
           uint32_t REDheader = 0;
           if (fragmentation->fragmentationVectorSize == 3) {
               dataBuffer[rtpHeaderLength++] = 0x80 +
-              fragmentation->fragmentationPlType[2];
+              fragmentation->fragmentationPlType[2]; // red block type
               blockLength = fragmentation->fragmentationLength[2];
               
               // sanity blockLength
@@ -403,13 +412,12 @@ int32_t RTPSenderAudio::SendAudio(
                   return -1;
               }
               timestampOffset = fragmentation->fragmentationTimeDiff[2];
-              REDheader = (timestampOffset << 10) + blockLength;
+              REDheader = (timestampOffset << 10) + blockLength; // block length 10 bit
               RtpUtility::AssignUWord24ToBuffer(dataBuffer + rtpHeaderLength,
                                                 REDheader);
               rtpHeaderLength += 3;
           }
-        
-          
+
           dataBuffer[rtpHeaderLength++] = 0x80 + fragmentation->fragmentationPlType[1];
           blockLength = fragmentation->fragmentationLength[1];
           if (blockLength > 0x3ff) {
@@ -419,39 +427,22 @@ int32_t RTPSenderAudio::SendAudio(
           REDheader = (timestampOffset << 10) + blockLength;
           RtpUtility::AssignUWord24ToBuffer(dataBuffer + rtpHeaderLength, REDheader);
           rtpHeaderLength += 3;
-          
 
-        dataBuffer[rtpHeaderLength++] = fragmentation->fragmentationPlType[0];
-        // copy the RED data 2
+          dataBuffer[rtpHeaderLength++] = fragmentation->fragmentationPlType[0];
           
+          // copy the RED data 2
           int fragmentationLength2 = 0;
           if (fragmentation->fragmentationVectorSize == 3) {
               memcpy(dataBuffer+rtpHeaderLength, payloadData + fragmentation->fragmentationOffset[2], fragmentation->fragmentationLength[2]);
               fragmentationLength2 = fragmentation->fragmentationLength[2];
               
           }
-        
-          //sean check data
-//          printf("sean check data RED2\n");
-//          for (int ii=0; ii<fragmentation->fragmentationLength[2]; ii++) {
-//              printf("%02X ", *(payloadData+fragmentation->fragmentationOffset[2]+ii));
-//          }
-//          printf("\nsean check data RED2 end\n");
-          
-          
-          
+           
         // copy the RED data 1
         memcpy(dataBuffer+rtpHeaderLength+fragmentationLength2,
                payloadData + fragmentation->fragmentationOffset[1],
                fragmentation->fragmentationLength[1]);
-//          printf("sean check data RED1\n");
-//          for (int ii=0; ii<fragmentation->fragmentationLength[1]; ii++) {
-//              printf("%02X ", *(payloadData+fragmentation->fragmentationOffset[1]+ii));
-//          }
-//          printf("\nsean check data RED1 end\n");
-          
-          
-          
+ 
         // copy the normal data
         memcpy(dataBuffer+rtpHeaderLength + fragmentationLength2 +
                fragmentation->fragmentationLength[1],
