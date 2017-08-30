@@ -736,6 +736,7 @@ ECMEDIA_API int ECMedia_audio_set_magic_sound(int channelid, int pitch, int temp
 /*
  * 功能：声音播放前进行放大
  * channelID: channel id
+ * gain: 放大的倍数，1.5即将原来的声音放大1.5倍。
  */
 ECMEDIA_API int ECMedia_audio_set_playout_gain(int channelid, float gain);
 #ifdef __cplusplus
