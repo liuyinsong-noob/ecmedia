@@ -27,10 +27,13 @@
 #include "../module/rtp_rtcp/include/rtp_receiver.h"
 
 namespace cloopenwebrtc {
+	class SSRCDatabase;
 
 class ModuleRtpRtcpImpl : public RtpRtcp, public RTCPReceiver::ModuleRtpRtcp {
  public:
   explicit ModuleRtpRtcpImpl(const RtpRtcp::Configuration& configuration);
+
+  ~ModuleRtpRtcpImpl();
 
   // Returns the number of milliseconds until the module want a worker thread to
   // call Process.
@@ -400,6 +403,7 @@ public:
   uint32_t tmmbr_bandwidth;
   uint32_t tmmbr_remote_ssrc;
   uint32_t tmmbr_ssrc;
+  SSRCDatabase *ssrc_db_;
 };
 
 }  // namespace cloopenwebrtc
