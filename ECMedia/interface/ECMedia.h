@@ -733,6 +733,11 @@ ECMEDIA_API int ECMedia_audio_enable_magic_sound(int channelid, bool is_enable);
  * rate:  变速又变调，取值[-50, 50], 0表示正常音速和音调
  */
 ECMEDIA_API int ECMedia_audio_set_magic_sound(int channelid, int pitch, int tempo, int rate);
+/*
+ * 功能：声音播放前进行放大
+ * channelID: channel id
+ */
+ECMEDIA_API int ECMedia_audio_set_playout_gain(int channelid, float gain);
 #ifdef __cplusplus
 }
 #endif

@@ -1281,6 +1281,27 @@ void VoEBaseImpl::GetPlayoutData(int sample_rate, int number_of_channels,
   memcpy(audio_data, _audioFrame.data_,
          sizeof(int16_t) * number_of_frames * number_of_channels);
 
+    //sean add begin 20140422 SetAudioGain
+    if (_enlargeIncomingGainFlag) {
+        WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_shared->instance_id(), -1),
+                     "CloopenVoEBaseImpl::NeedMorePlayData incoming audio gain factor = %f\n",
+                     _enlargeIncomingGainFactor);
+        WebRtc_Word16 *multiplyByFactor = (WebRtc_Word16*)audio_data;
+        int temp=0;
+        for (int i=0; i<_audioFrame.samples_per_channel_
+             * _audioFrame.num_channels_; i++) {
+            temp = multiplyByFactor[i]*_enlargeIncomingGainFactor;
+            if (temp>32767) {
+                multiplyByFactor[i] = 32767;
+            }
+            else if (temp < -32768)
+                multiplyByFactor[i] = -32768;
+            else
+                multiplyByFactor[i] = temp;
+        }
+    }
+    //sean add end 20140422 SetAudioGain
+    
   *elapsed_time_ms = _audioFrame.elapsed_time_ms_;
   *ntp_time_ms = _audioFrame.ntp_time_ms_;
 }

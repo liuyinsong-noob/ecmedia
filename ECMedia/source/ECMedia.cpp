@@ -5365,3 +5365,25 @@ ECMEDIA_API int ECMedia_audio_set_magic_sound(int channelid, int pitch, int temp
         return -99;
     }
 }
+
+ECMEDIA_API int ECMedia_audio_set_playout_gain(int channelid, float gain)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins... channelid: %d gain:%f",
+                 __FUNCTION__, channelid, gain);
+    VoEBase *base = VoEBase::GetInterface(m_voe);
+    if (base) {
+//        For the time being, channelid is useless
+        int ret = base->setEnlargeAudioFlagIncoming(true, gain);
+        base->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to audio set playout gain", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
+        return ret;
+    }
+    else{
+        PrintConsole("[ECMEDIA ERROR] %s failed to get VoEBase", __FUNCTION__);
+        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        return -99;
+    }
+}
