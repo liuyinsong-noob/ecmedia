@@ -16,6 +16,7 @@
 #include "../system_wrappers/include//logging.h"
 #include "../base/safe_conversions.h"
 #include "../system_wrappers/include/metrics.h"
+#include "../system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc {
 #ifndef WIN32  
@@ -149,6 +150,10 @@ void ProbeController::SetEstimatedBitrate(int64_t bitrate_bps) {
     LOG(LS_INFO) << "Measured bitrate: " << bitrate_bps
                  << " Minimum to probe further: "
                  << min_bitrate_to_probe_further_bps_;
+
+	WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, -1,
+		"[Probe] Measured bitrate: %PRId64, Minimum to probe further: %PRId64)\n",
+		bitrate_bps, min_bitrate_to_probe_further_bps_);
       
 #ifndef WIN32
       printTime();
@@ -176,6 +181,8 @@ void ProbeController::SetEstimatedBitrate(int64_t bitrate_bps) {
       bitrate_bps < 2 * estimated_bitrate_bps_ / 3 &&
       (now_ms - last_alr_probing_time_) > kAlrProbingIntervalMinMs) {
     LOG(LS_INFO) << "Detected big BW drop in ALR, start probe.";
+	WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, -1,
+		"[Probe] Detected big BW drop in ALR, start probe. (estimated_bitrate_bps_ = %PRId64)", estimated_bitrate_bps_);
 #ifndef WIN32
       printTime();
       printf("[Probe] Detected big BW drop in ALR, start probe.(estimated_bitrate_bps_ = %lld)\n",
@@ -211,6 +218,9 @@ void ProbeController::Process() {
 
     if (state_ == State::kWaitingForProbingResult) {
       LOG(LS_INFO) << "kWaitingForProbingResult: timeout";
+
+	  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, -1,
+		  "[Probe] kWaitingForProbingResult: timeout");
 #ifndef WIN32
         printTime();
         printf("[Probe] kWaitingForProbingResult: timeout\n");

@@ -207,6 +207,8 @@ void BitrateControllerImpl::OnDelayBasedBweResult(
 		LOG(LS_ERROR) << "--------------[bwe] bitrate_controller = "
 			<< result.target_bitrate_bps
 			<< " (update_probe)";
+		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, -1,
+			"--------------[bwe] bitrate_controller = %u (update_probe)", result.target_bitrate_bps);
       bandwidth_estimation_.SetSendBitrate(result.target_bitrate_bps);
     }
   }
@@ -265,6 +267,10 @@ bool BitrateControllerImpl::GetNetworkParameters(uint32_t* bitrate,
   bandwidth_estimation_.CurrentEstimate(&current_bitrate, fraction_loss, rtt);
   LOG(LS_ERROR) << "--------------[bwe] bitrate_controller = "
 	            << current_bitrate;
+
+  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, -1,
+	  "--------------[bwe] bitrate_controller = %d", current_bitrate);
+
     
 #ifndef WIN32
     printTime();

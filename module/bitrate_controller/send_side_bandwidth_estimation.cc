@@ -138,6 +138,9 @@ void SendSideBandwidthEstimation::UpdateDelayBasedEstimate(
    LOG(LS_ERROR) << "--------------[bwe] bitrate_controller = "
 	  << bitrate_bps
 	  << " (delay_based_bitrate_bps_)";
+
+   WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, -1,
+	   "--------------[bwe] bitrate_controller = %u (delay_based_bitrate_bps_)", bitrate_bps);
 }
 
 void SendSideBandwidthEstimation::UpdateReceiverBlock(uint8_t fraction_loss,
