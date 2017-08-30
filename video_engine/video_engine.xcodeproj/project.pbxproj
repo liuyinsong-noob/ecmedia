@@ -643,14 +643,11 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					WEBRTC_POSIX,
 					VIDEOCODEC_VP8,
-<<<<<<< HEAD
 					ENABLE_SCREEN_SHARE,
 					WEBRTC_VIDEO_ENGINE_DESKTOP_SHARE_API,
 					WEBRTC_SRTP,
 					VIDEO_ENABLED,
-=======
 					WEBRTC_THREAD_RR,
->>>>>>> mergewebrtcport
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -723,14 +720,11 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					WEBRTC_POSIX,
 					VIDEOCODEC_VP8,
-<<<<<<< HEAD
 					ENABLE_SCREEN_SHARE,
 					WEBRTC_VIDEO_ENGINE_DESKTOP_SHARE_API,
 					WEBRTC_SRTP,
 					VIDEO_ENABLED,
-=======
 					WEBRTC_THREAD_RR,
->>>>>>> mergewebrtcport
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
