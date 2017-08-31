@@ -224,7 +224,9 @@ ViEChannel::ViEChannel(int32_t channel_id,
   default_rtp_rtcp_->SetTransport(&vie_sender_);
   default_rtp_rtcp_->SetRtcpRttStats(rtt_stats_);
   //need to fix: ylr
-  //vie_receiver_.SetReceiveTransportSeqNumStatus(true, 5);
+#ifdef ENABLE_GCC
+  vie_receiver_.SetReceiveTransportSeqNumStatus(true, 5);
+#endif
 }
 
 int32_t ViEChannel::Init() {

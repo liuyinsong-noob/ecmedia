@@ -46,9 +46,11 @@ ViEChannelManager::ViEChannelManager(
 	  udptransport_critsect_(CriticalSectionWrapper::CreateCriticalSection()),
 	  rtc_event_log_(RtcEventLog::Create()),
 	  pacer_thread_(ProcessThread::CreateProcessThread()),
-	  use_sendside_bwe_(/*true*/false),
+	  use_sendside_bwe_(false),
 	  call_stats_(new CallStats()){
-
+#ifdef ENABLE_GCC
+	use_sendside_bwe_ = true;
+#endif
   for (int idx = 0; idx < free_channel_ids_size_; idx++) {
     free_channel_ids_[idx] = true;
   }
