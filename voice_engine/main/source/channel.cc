@@ -1023,6 +1023,14 @@ Channel::Channel(int32_t channelId,
 	audioproc_config.Set<DelayCorrection>(new DelayCorrection());
 	audioproc_config.Set<ReportedDelay>(new ReportedDelay());
     rx_audioproc_.reset(AudioProcessing::Create(audioproc_config));
+    
+    // register receiver rtp loss rate extension header, add by zhaoyou
+    rtp_header_parser_->DeregisterRtpHeaderExtension(kRtpExtensionLossRate);
+    rtp_header_parser_->RegisterRtpHeaderExtension(kRtpExtensionLossRate, 10);
+    
+    // register sender rtp loss rate extension header, add by zhaoyou
+    _rtpRtcpModule->DeregisterSendRtpHeaderExtension(kRtpExtensionLossRate);
+    _rtpRtcpModule->RegisterSendRtpHeaderExtension(kRtpExtensionLossRate, 10);
 }
 
 Channel::~Channel()
@@ -3770,7 +3778,7 @@ Channel::StartRTPDump(const char fileNameUTF8[1024],
 int
 Channel::StopRTPDump(RTPDirections direction)
 {
-	return -1;
+//	return -1;
    WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId, _channelId),
                  "Channel::StopRTPDump()");
     if ((direction != kRtpIncoming) && (direction != kRtpOutgoing))
@@ -3842,7 +3850,7 @@ Channel::Demultiplex(const AudioFrame& audioFrame, const AudioFrame& audioFrame2
 //
 //		}
 //
-//		_serviceCoreCallBack->onOriginalAudioData(call_id, _audioFrame2Up.data_, _audioFrame2Up.samples_per_channel_*_audioFrame2Up.num_channels_,_audioFrame2Up.sample_rate_hz_,_audioFrame2Up.num_channels_,true);
+//		_serviceCoreCallBack->onOriginalAudioData(call_id, _audioFrame2Up.data_, _audioFrame2Up.samples_per_channel_*_audioFrame2Up.num_channels_, _audioFrame2Up.sample_rate_hz_,_audioFrame2Up.num_channels_,true);
 	//}
     
     
@@ -5237,7 +5245,20 @@ void
 	}*/
 
 	rtp_header_parser_->Parse(received_packet, rtpBufferLength, &header);
-	header.payload_type_frequency =
+    WEBRTC_TRACE(kTraceStateInfo, kTraceVoice,
+                 VoEId(_instanceId,_channelId),
+                 "seq %u, ssrc %u\n", header.sequenceNumber, header.ssrc);
+    
+    // audio loss rate, added by sean
+    if (header.extension.hasLossRate) {
+        WEBRTC_TRACE(kTraceStateInfo, kTraceVoice,
+                     VoEId(_instanceId,_channelId),
+                     "loss rate from rtp header extension %d\n", header.extension.lossRate);
+        audio_coding_->SetPacketLossRateFromRtpHeaderExt(header.extension.lossRate);
+    }
+    rtp_payload_registry_->SetRtxSsrc(header.ssrc); //Sean: No need to enable audio rtx
+	
+    header.payload_type_frequency =
 		rtp_payload_registry_->GetPayloadTypeFrequency(header.payloadType);
 	if (header.payload_type_frequency < 0)
 		return ;
