@@ -648,6 +648,7 @@
 					WEBRTC_SRTP,
 					VIDEO_ENABLED,
 					WEBRTC_THREAD_RR,
+					ENABLE_GCC,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -725,6 +726,7 @@
 					WEBRTC_SRTP,
 					VIDEO_ENABLED,
 					WEBRTC_THREAD_RR,
+					ENABLE_GCC,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
