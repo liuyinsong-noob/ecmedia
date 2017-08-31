@@ -1214,6 +1214,26 @@ int VoEBaseImpl::ProcessRecordedDataWithAPM(
       max_volume = volume;
     }
   }
+    
+    //sean add begin 20140422 SetAudioGain
+    if (_enlargeOutgoingGainFlag) {
+        WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_shared->instance_id(), -1),
+                     "CloopenVoEBaseImpl::RecordedDataIsAvailable outgoing audio gain factor = %f\n",
+                     _enlargeOutgoingGainFactor);
+        WebRtc_Word16 *multiplyByFactor = (WebRtc_Word16*)audio_data;
+        int temp=0;
+        for (int i=0; i<number_of_frames*number_of_channels; i++) {
+            temp = multiplyByFactor[i]*_enlargeOutgoingGainFactor;
+            if (temp>32767) {
+                multiplyByFactor[i] = 32767;
+            }
+            else if (temp < -32768)
+                multiplyByFactor[i] = -32768;
+            else
+                multiplyByFactor[i] = temp;
+        }
+    }
+    //sean add end 20140422 SetAudioGain
 
   // Perform channel-independent operations
   // (APM, mix with file, record to file, mute, etc.)
