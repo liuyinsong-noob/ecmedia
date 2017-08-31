@@ -470,6 +470,7 @@ int32_t RTPSenderAudio::SendAudio(
 
         payloadSize = fragmentation->fragmentationLength[0];
       } else {
+        // no audio red
         memcpy(dataBuffer+rtpHeaderLength, payloadData, payloadSize);
       }
     }

@@ -363,131 +363,128 @@ int32_t AudioCodingModuleImpl::Process() {
       // one RTP packet and the fragmentation points are set.
       // Only apply RED on speech data.
       if ((red_enabled_) && ((encoding_type == kActiveNormalEncoded) || (encoding_type == kPassiveNormalEncoded))) {
-        // RED is enabled within this scope.
-        //
-        // Note that, a special solution exists for iSAC since it is the only
-        // codec for which GetRedPayload has a non-empty implementation.
-        //
-        // Summary of the RED scheme below (use iSAC as example):
-        //
-        //  1st (is_first_red_ is true) encoded iSAC frame (primary #1) =>
-        //      - call GetRedPayload() and store redundancy for packet #1 in
-        //        second fragment of RED buffer (old data)
-        //      - drop the primary iSAC frame
-        //      - don't call SendData
-        //  2nd (is_first_red_ is false) encoded iSAC frame (primary #2) =>
-        //      - store primary #2 in 1st fragment of RED buffer and send the
-        //        combined packet
-        //      - the transmitted packet contains primary #2 (new) and
-        //        redundancy for packet #1 (old)
-        //      - call GetRed_Payload() and store redundancy for packet #2 in
-        //        second fragment of RED buffer
-        //
-        //  ...
-        //
-        //  Nth encoded iSAC frame (primary #N) =>
-        //      - store primary #N in 1st fragment of RED buffer and send the
-        //        combined packet
-        //      - the transmitted packet contains primary #N (new) and
-        //        reduncancy for packet #(N-1) (old)
-        //      - call GetRedPayload() and store redundancy for packet #N in
-        //        second fragment of RED buffer
-        //
-        //  For all other codecs, GetRedPayload does nothing and returns -1 =>
-        //  redundant data is only a copy.
-        //
-        //  First combined packet contains : #2 (new) and #1 (old)
-        //  Second combined packet contains: #3 (new) and #2 (old)
-        //  Third combined packet contains : #4 (new) and #3 (old)
-        //
-        //  Hence, even if every second packet is dropped, perfect
-        //  reconstruction is possible.
-        red_active = true;
+            // RED is enabled within this scope.
+            //
+            // Note that, a special solution exists for iSAC since it is the only
+            // codec for which GetRedPayload has a non-empty implementation.
+            //
+            // Summary of the RED scheme below (use iSAC as example):
+            //
+            //  1st (is_first_red_ is true) encoded iSAC frame (primary #1) =>
+            //      - call GetRedPayload() and store redundancy for packet #1 in
+            //        second fragment of RED buffer (old data)
+            //      - drop the primary iSAC frame
+            //      - don't call SendData
+            //  2nd (is_first_red_ is false) encoded iSAC frame (primary #2) =>
+            //      - store primary #2 in 1st fragment of RED buffer and send the
+            //        combined packet
+            //      - the transmitted packet contains primary #2 (new) and
+            //        redundancy for packet #1 (old)
+            //      - call GetRed_Payload() and store redundancy for packet #2 in
+            //        second fragment of RED buffer
+            //
+            //  ...
+            //
+            //  Nth encoded iSAC frame (primary #N) =>
+            //      - store primary #N in 1st fragment of RED buffer and send the
+            //        combined packet
+            //      - the transmitted packet contains primary #N (new) and
+            //        reduncancy for packet #(N-1) (old)
+            //      - call GetRedPayload() and store redundancy for packet #N in
+            //        second fragment of RED buffer
+            //
+            //  For all other codecs, GetRedPayload does nothing and returns -1 =>
+            //  redundant data is only a copy.
+            //
+            //  First combined packet contains : #2 (new) and #1 (old)
+            //  Second combined packet contains: #3 (new) and #2 (old)
+            //  Third combined packet contains : #4 (new) and #3 (old)
+            //
+            //  Hence, even if every second packet is dropped, perfect
+            //  reconstruction is possible.
+            red_active = true;
 
-        has_data_to_send = true;
-        // Skip the following part for the first packet in a RED session.
+            has_data_to_send = true;
+            // Skip the following part for the first packet in a RED session.
 
-      //Adjust size according to loss rate 5, 3, 1
-      //keep list size 5
-      unsigned int list_size = 1;
-      if (loss_rate_*5 > 30 && loss_rate_*5 < 45 ) {
-          list_size = 3;
-      }
-      else if (loss_rate_*5 > 45)
-          list_size = 5;
+            //Adjust size according to loss rate 5, 3, 1
+            //keep list size 5
+            unsigned int list_size = 1;
+            if (loss_rate_*5 > 30 && loss_rate_*5 < 45 ) {
+              list_size = 3;
+            }
+            else if (loss_rate_*5 > 45)
+              list_size = 5;
+                  
+
+            if (red_list_.size()>=list_size) {
+              RedBuf earse = red_list_.front();
+              delete [] earse.buf;
+              red_list_.pop_front();
+            }
+                  
+            /*********  audio redundant begin, added by sean********/
+            RedBuf latestBuf;
+            latestBuf.len = length_bytes;
+            latestBuf.buf = new uint8_t[length_bytes];
+            latestBuf.ts = rtp_timestamp;
               
-              
-      list_size = 3;    //sean test audio mixer
-      if (red_list_.size()>=list_size) {
-          RedBuf earse = red_list_.front();
-          delete [] earse.buf;
-          red_list_.pop_front();
-      }
-              
-      /*********  audio redundant begin, added by sean********/
-      // 来了一个包，首先放到list队尾
-      RedBuf latestBuf;
-      latestBuf.len = length_bytes;
-      latestBuf.buf = new uint8_t[length_bytes];
-      latestBuf.ts = rtp_timestamp;
-          
-      memcpy(latestBuf.buf, stream, length_bytes);
-      red_list_.push_back(latestBuf);
-              
-              
-	  RedList::iterator it;
-        if (red_list_.size()>=3) {
-            // 取出第三个包，放到steam中
-            it = red_list_.begin();
-            int count = 1;
-            for (; it!=red_list_.end() && red_list_.size()>=3 && count<=3; it++, count++) {
-                switch (count) {
-                    case 1:
-                    {
-                        if (red_list_.size() == 3) {
-                            fragmentation_.fragmentationLength[1] = (*it).len;
-                            fragmentation_.fragmentationTimestamp[1] = (*it).ts;
-                            memcpy(stream + fragmentation_.fragmentationOffset[1], (*it).buf, (*it).len);
+            memcpy(latestBuf.buf, stream, length_bytes);
+            red_list_.push_back(latestBuf);
+                  
+                  
+            RedList::iterator it;
+            if (red_list_.size()>=3) {
+                // get the third packet, put into steam
+                it = red_list_.begin();
+                int count = 1;
+                for (; it!=red_list_.end() && red_list_.size()>=3 && count<=3; it++, count++) {
+                    switch (count) {
+                        case 1:
+                        {
+                            if (red_list_.size() == 3) {
+                                fragmentation_.fragmentationLength[1] = (*it).len;
+                                fragmentation_.fragmentationTimestamp[1] = (*it).ts;
+                                memcpy(stream + fragmentation_.fragmentationOffset[1], (*it).buf, (*it).len);
+                            }
+                            if (red_list_.size() >= 5) {
+                                fragmentation_.fragmentationLength[2] = (*it).len;
+                                fragmentation_.fragmentationTimestamp[2] = (*it).ts;
+                                memcpy(stream + fragmentation_.fragmentationOffset[2], (*it).buf, (*it).len);
+                            }
                         }
-                        if (red_list_.size() >= 5) {
-                            fragmentation_.fragmentationLength[2] = (*it).len;
-                            fragmentation_.fragmentationTimestamp[2] = (*it).ts;
-                            memcpy(stream + fragmentation_.fragmentationOffset[2], (*it).buf, (*it).len);
+                            break;
+                        case 2:
+                        {
+                            if (red_list_.size() == 4) {
+                                fragmentation_.fragmentationLength[1] = (*it).len;
+                                fragmentation_.fragmentationTimestamp[1] = (*it).ts;
+                                memcpy(stream+fragmentation_.fragmentationOffset[1], (*it).buf, (*it).len);
+                            }
+                            break;
                         }
-                        
+                        case 3:
+                        {
+                            if (red_list_.size()==5) {
+                                fragmentation_.fragmentationLength[1] = (*it).len;
+                                fragmentation_.fragmentationTimestamp[1] = (*it).ts;
+                                memcpy(stream+fragmentation_.fragmentationOffset[1], (*it).buf, (*it).len);
+                            }
+                        }
+                            break;
+                        default:
+                            break;
                     }
-                        break;
-                    case 2:
-                    {
-                        if (red_list_.size() == 4) {
-                            fragmentation_.fragmentationLength[1] = (*it).len;
-                            fragmentation_.fragmentationTimestamp[1] = (*it).ts;
-                            memcpy(stream+fragmentation_.fragmentationOffset[1], (*it).buf, (*it).len);
-                        }
-                        break;
-                    }
-                    case 3:
-                    {
-                        if (red_list_.size()==5) {
-                            fragmentation_.fragmentationLength[1] = (*it).len;
-                            fragmentation_.fragmentationTimestamp[1] = (*it).ts;
-                            memcpy(stream+fragmentation_.fragmentationOffset[1], (*it).buf, (*it).len);
-                        }
-                    }
-                        break;
-                    default:
-                        break;
                 }
-            }
-            
-            // Update fragmentation vectors.
-            if (red_list_.size() == 5) {
-                fragmentation_.fragmentationPlType[2] = fragmentation_.fragmentationPlType[1];
-                fragmentation_.fragmentationTimeDiff[2] = rtp_timestamp - fragmentation_.fragmentationTimestamp[2];
-            }
+                
+                // Update fragmentation vectors.
+                if (red_list_.size() == 5) {
+                    fragmentation_.fragmentationPlType[2] = fragmentation_.fragmentationPlType[1];
+                    fragmentation_.fragmentationTimeDiff[2] = rtp_timestamp - fragmentation_.fragmentationTimestamp[2];
+                }
 
-            fragmentation_.fragmentationPlType[1] = fragmentation_.fragmentationPlType[0];
-            fragmentation_.fragmentationTimeDiff[1] = rtp_timestamp - fragmentation_.fragmentationTimestamp[1];
+                fragmentation_.fragmentationPlType[1] = fragmentation_.fragmentationPlType[0];
+                fragmentation_.fragmentationTimeDiff[1] = rtp_timestamp - fragmentation_.fragmentationTimestamp[1];
         }
 
         has_data_to_send = true;
