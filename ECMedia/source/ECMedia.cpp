@@ -158,7 +158,7 @@ static int m_cameraCount = 0;
 using namespace cloopenwebrtc;
 using namespace std;
 
-#define ECMEDIA_VERSION "2.1.3.5.08310520"
+#define ECMEDIA_VERSION "2.1.3.6.09011003"
 
 //extern bool g_media_TraceFlag;
 //void PrintConsole(const char * fmt,...){};
@@ -5275,7 +5275,7 @@ ECMEDIA_API void ECMedia_stopRecordLocalMedia()
 
 int ECMedia_getStatsReports(int type, char* callid, void** pMediaStatisticsDataInnerArray, int *pArraySize)
 {
-	PrintConsole("[ECMEDIA INFO] %s begins..., type: %d, callid: %d", __FUNCTION__, type, callid);
+	PrintConsole("[ECMEDIA INFO] %s begins..., type: %d, callid: %s", __FUNCTION__, type, callid);
 	if (g_statsCollector)
 	{
 		g_statsCollector->GetStats((StatsContentType)type, callid, pMediaStatisticsDataInnerArray, pArraySize);
