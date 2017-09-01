@@ -272,9 +272,12 @@ int32_t RTPSender::SetAbsoluteSendTime(uint32_t absolute_send_time) {
 }
     
 int32_t RTPSender::SetLossRate(uint32_t loss_rate, uint8_t loss_rate_hd_ext_version) {
-    if (loss_rate > 0x0f) {  // current only support max loss rate 15*5
+    if(loss_rate > 0x14) {
         return -1;
+    } else if (loss_rate > 0x0f) {  // current only support max loss rate 15*5
+        loss_rate = 0x0f;
     }
+    
     CriticalSectionScoped cs(send_critsect_);
     loss_rate_hd_ext_version_ = loss_rate_hd_ext_version;
     loss_rate_ = loss_rate;
@@ -1490,6 +1493,10 @@ uint8_t RTPSender::BuildLossRateExtension(uint8_t* data_buffer) const {
         // Not registered.
         return 0;
     }
+    if(loss_rate_ != 0) {
+        printf("nnnnnnnnnnnnnnn:%d\n", loss_rate_);
+    }
+    
     size_t pos = 0;
     const uint8_t len = 0;
     const uint8_t version = 0;              //currently version 0
