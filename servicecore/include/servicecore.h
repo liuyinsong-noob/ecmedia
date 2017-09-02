@@ -976,6 +976,7 @@ public:
 //sean add begin 20140705 video conference
 public:
 	void *createLiveStream();
+    int configLiveVideoStream(void *handle, LiveVideoStreamConfig config);
 	void setLiveVideoSource(void *handle,int video_source);
 	int playLiveStream(void *handle, const char * url, void *renderView);
 	int pushLiveStream(void *handle, const char * url, void *renderView);
@@ -984,7 +985,7 @@ public:
 	void releaseLiveStream(void *handle);
 	void enableLiveStreamBeauty(void *handle);
 	void disableLiveStreamBeauty(void *handle);
-	int liveStream_SelectCamera(void *handle, int index, int width, int height, int fps);
+	int liveStream_SelectCamera(void *handle, int index);
 
 public:
     virtual void onVideoConference(int channelID, int status, int payload);

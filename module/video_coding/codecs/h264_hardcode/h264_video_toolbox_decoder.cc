@@ -224,7 +224,7 @@ NEED_BITS(iCurBits, pBufPtr, iLeftBits, iAllowedBytes, iReadBytes); \
                                   &kCFTypeDictionaryValueCallBacks);
     }
     
-    enum sliceType{
+    enum sliceType {
         SliceTypeI = 7,
         SliceTypeP = 5,
         sliceTypeB = 6,
@@ -234,14 +234,16 @@ NEED_BITS(iCurBits, pBufPtr, iLeftBits, iAllowedBytes, iReadBytes); \
     // Struct that we pass to the decoder per frame to decode. We receive it again
     // in the decoder callback.
     struct FrameDecodeParams {
-        FrameDecodeParams(DecodedImageCallback* cb, int64_t ts, int64_t ntp_time, uint64_t ptsP, bool isIdr)
-        : callback(cb), timestamp(ts), ntp_time_ms(ntp_time), pts(ptsP) , idr(isIdr){}
-        DecodedImageCallback* callback;
-        int64_t timestamp;
-		int64_t ntp_time_ms;
-        uint64_t pts;
-        bool idr;
+        FrameDecodeParams(DecodedImageCallback* cb, int64_t ts)
+        : callback(cb), timestamp(ts) {}
         
+        FrameDecodeParams() {}
+        
+            DecodedImageCallback* callback;
+            int64_t timestamp;
+            int64_t ntp_time_ms;
+            uint64_t pts;
+            bool idr;
     };
     
     // This is the callback function that VideoToolbox calls when decode is
@@ -276,31 +278,9 @@ NEED_BITS(iCurBits, pBufPtr, iLeftBits, iAllowedBytes, iReadBytes); \
         decoded_frame->set_ntp_time_ms( CMTimeGetSeconds(timestamp) * kMsPerSec);
 		decoded_frame->set_ntp_time_ms(decode_params->ntp_time_ms);
         decoded_frame->pts = decode_params->pts;
-        /*
-         buffer
-         */
-
-        if (decode_params->idr) {
-            decode_params->callback->Decoded(*decoded_frame);
-            delete decoded_frame;
-        }
-        else
-        {
-            H264VideoToolboxDecoder *toolboxDecoder = (H264VideoToolboxDecoder *)decoder;
-            I420VideoFrame *frame = new I420VideoFrame;
-            std::list<I420VideoFrame *>::reverse_iterator rit = std::find_if(toolboxDecoder->decodedList.rbegin(), toolboxDecoder->decodedList.rend(), NewPtsIsLarger(decoded_frame));
-            std::list<I420VideoFrame *>::iterator it = rit.base();
-            std::list<I420VideoFrame *>::iterator itt = toolboxDecoder->decodedList.insert(it, decoded_frame);
-            std::list<I420VideoFrame *>::iterator it_check = toolboxDecoder->decodedList.begin();
-
-            if (toolboxDecoder->decodedList.size() > toolboxDecoder->threshhold) {
-                I420VideoFrame *temp = toolboxDecoder->decodedList.front();
-                decode_params->callback->Decoded(*temp);
-                toolboxDecoder->decodedList.pop_front();
-                delete temp;
-            }
-        }
-
+        
+        decode_params->callback->Decoded(*decoded_frame);
+        delete decoded_frame;
         delete decode_params;
     }
     
@@ -361,65 +341,10 @@ namespace cloopenwebrtc {
                                         const RTPFragmentationHeader* fragmentation,
                                         const CodecSpecificInfo* codec_specific_info,
                                         int64_t render_time_ms) {
-
+        
+        
+        
         DCHECK(input_image._buffer);
-        
-        
-        if ((input_image._buffer[4] & 0x1f) == 7) {
-            int level;
-            int profile;
-            bool interlaced = true;
-            int32_t max_ref_frames;
-            parseh264_sps(input_image._buffer+5, input_image._length-5, &level, &profile, &interlaced, &max_ref_frames);
-            threshhold = max_ref_frames;
-        }
-#if DEBUG_H264
-        if (debug_h264_) {
-            fwrite(input_image._buffer, input_image._length, 1, debug_h264_);
-            fflush(debug_h264_);
-        }
-#endif
-        
-        uint64_t current_poc = 0;
-        if ((input_image._buffer[4] & 0x1f) != 6 && (input_image._buffer[4] & 0x1f) != 7 && (input_image._buffer[4] & 0x1f) != 8 && threshhold > 1) {
-            int sliceType = -1;
-            int poc = -1;
-            
-            SBitStringAux aux;
-            aux.pStartBuf = input_image._buffer+5;
-            aux.pEndBuf = input_image._buffer+9;
-            aux.pCurBuf = input_image._buffer+5;
-            aux.iBits = 32;
-            
-            int32_t iErr = InitReadBits (&aux, 0);
-            //                if (-1 == iErr)
-            //                        printf("init decode bit stream error!\n");
-            aux.uiCurBits = GetValue4Bytes(input_image._buffer+5);
-            PBitStringAux pBitstreambuf = &aux;
-            ParseSliceHeader(pBitstreambuf, sliceType, poc);
-           
-            int pic_order_cnt_lsb = poc;
-            uint64_t PicOrderCntMsb = 0;
-            if ((input_image._buffer[4] & 0x1f) == 5) {
-                poc = 0;
-                PicOrderCntMsb = prevPicOrderCntMsb + MaxPicOrderCntLsb;
-            }
-            else{
-                if( ( pic_order_cnt_lsb < prevPicOrderCntLsb ) &&( ( prevPicOrderCntLsb - pic_order_cnt_lsb ) >= ( MaxPicOrderCntLsb / 2 ) ) )
-                    PicOrderCntMsb = prevPicOrderCntMsb + MaxPicOrderCntLsb;
-                else if( ( pic_order_cnt_lsb > prevPicOrderCntLsb ) &&( ( pic_order_cnt_lsb - prevPicOrderCntLsb ) > ( MaxPicOrderCntLsb / 2 ) ) )
-                    PicOrderCntMsb = prevPicOrderCntMsb - MaxPicOrderCntLsb;
-                else
-                    PicOrderCntMsb = prevPicOrderCntMsb;
-            }
-            
-            
-            prevPicOrderCntMsb = PicOrderCntMsb;
-            prevPicOrderCntLsb = poc;
-            // printf("nal type %d, slice type %d, poc %d, pts %llu\n", input_image._buffer[4]&0x1f, sliceType, poc,PicOrderCntMsb+poc);
-            current_poc = PicOrderCntMsb + poc;
-        }
- 
 #if defined(WEBRTC_IOS)
         if (!RTCIsUIApplicationActive()) {
             // Ignore all decode requests when app isn't active. In this state, the
@@ -464,7 +389,9 @@ namespace cloopenwebrtc {
         VTDecodeFrameFlags decode_flags =
         kVTDecodeFrame_EnableAsynchronousDecompression;
         FrameDecodeParams* frame_decode_params;
-        frame_decode_params = new FrameDecodeParams(callback_, input_image._timeStamp, input_image.ntp_time_ms_, current_poc, ((input_image._buffer[4] & 0x1f) == 5));
+        frame_decode_params = new FrameDecodeParams(callback_, input_image._timeStamp);
+        
+        //do decode image.
         OSStatus status = VTDecompressionSessionDecodeFrame(
                                                             decompression_session_, sample_buffer, decode_flags,
                                                             frame_decode_params, nullptr);
@@ -473,7 +400,7 @@ namespace cloopenwebrtc {
         // active and retry the decode request.
         if (status == kVTInvalidSessionErr &&
             ResetDecompressionSession() == WEBRTC_VIDEO_CODEC_OK) {
-            frame_decode_params = new FrameDecodeParams(callback_, input_image._timeStamp, input_image.ntp_time_ms_, current_poc, ((input_image._buffer[4] & 0x1f) == 5));
+            frame_decode_params = new FrameDecodeParams(callback_, input_image._timeStamp);
             status = VTDecompressionSessionDecodeFrame(
                                                        decompression_session_, sample_buffer, decode_flags,
                                                        frame_decode_params, nullptr);
