@@ -615,7 +615,7 @@ ECMEDIA_API int ECmedia_set_shield_mosaic(int video_channel, bool flag);
  参数     : [IN]  type	  : 类型，必须为0
  返回值   : 返回值直播模块句柄
  */
-ECMEDIA_API void*ECMedia_createLiveStream(int type);
+ECMEDIA_API void *ECMedia_createLiveStream();
 /*
  功能     : 开始观看直播
  参数     : [IN]  handle		： 句柄
@@ -624,7 +624,7 @@ ECMEDIA_API void*ECMedia_createLiveStream(int type);
  [IN]  callback		：视频宽高回调
  返回值   : 返回值 0：成功  -1：初始化资源失败 -2：已经在直播或推流  -3：连接失败  -4：建立流失败
  */
-ECMEDIA_API int  ECMedia_playLiveStream(void *handle, const char * url, void *renderView, onLiveStreamVideoResolution callback);
+ECMEDIA_API int ECMedia_playLiveStream(void *handle, const char * url, cloopenwebrtc::EC_MediaPullCallback* callback);
 /*
  功能     : 开始直播推流
  参数     : [IN]  handle		： 句柄
@@ -632,7 +632,7 @@ ECMEDIA_API int  ECMedia_playLiveStream(void *handle, const char * url, void *re
  [IN]  renderView	：本地视频窗口
  返回值   : 返回值 0：成功　-1：初始化资源失败 -2：已经在直播或者推流  -3：连接失败  -4：建立流失败
  */
-ECMEDIA_API int  ECMedia_pushLiveStream(void *handle, const char * url, void *renderView);
+ECMEDIA_API int ECMedia_pushLiveStream(void *handle, const char *url, cloopenwebrtc::EC_RtmpPublishCallback* callback);
 /*
  功能     : 停止观看或推流
  参数     :	  [IN]  handle		： 句柄
@@ -654,14 +654,22 @@ ECMEDIA_API void ECMedia_enableLiveStreamBeauty(void *handle);
  */
 ECMEDIA_API void ECMedia_disableLiveStreamBeauty(void *handle);
 /*
- 功能     : 设置推流视频参数
- 参数     : [IN]  handle		： 句柄
- [IN]  cameraIndex			 : 摄像头index
- [IN]  cam			 : 视频能力
- [IN]  bitrates	：视频码率
- 返回值   : 返回值 0：成功　-1：参数不正确
+ ÂäüËÉΩ     : ËÆæÁΩÆÊé®ÊµÅËßÜÈ¢ëÂèÇÊï∞
+ ÂèÇÊï∞     : [IN]  handle		Ôºö Âè•ÊüÑ
+ [IN]  cameraIndex			 : ÊëÑÂÉèÂ§¥index
+ [IN]  cam			 : ËßÜÈ¢ëËÉΩÂäõ
+ [IN]  bitrates	ÔºöËßÜÈ¢ëÁ†ÅÁéá
+ ËøîÂõûÂÄº   : ËøîÂõûÂÄº 0ÔºöÊàêÂäü„ÄÄ-1ÔºöÂèÇÊï∞‰∏çÊ≠£Á°Æ
  */
-ECMEDIA_API int  ECMedia_setVideoProfileLiveStream(void *handle,int cameraIndex, CameraCapability cam, int bitreates);
+ECMEDIA_API int ECMedia_ConfigLiveVideoStream(void *handle, LiveVideoStreamConfig config);
+
+/**
+ *
+ * @param camera_index
+ * @return
+ */
+ECMEDIA_API int ECMedia_SwitchLiveCamera(void *handle, int camera_index);
+
 /*
  功能     : 设置直播网络状态回调
  参数     : [IN]  handle		： 句柄
@@ -683,6 +691,9 @@ ECMEDIA_API int ECMedia_GetShareWindows(void *handle, WindowShare ** windows);
  返回值： 窗口个数
  */
 ECMEDIA_API int ECMedia_SelectShareWindow(void *handle, int type , int id);
+
+ECMEDIA_API int ECMedia_setVideoPreviewViewer(void *handle, void *view);
+
 /*
  功能     : 设置直播推流的视频来源
  参数     : [IN]  handle		： 句柄

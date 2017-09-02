@@ -265,8 +265,52 @@ struct Stats{
 	bool suspended;       
 };
 
+/*** rtmp begin ***/
+typedef enum {
+    RTMP_VIDEO_RESOLUTION_720P,
+    RTMP_VIDEO_RESOLUTION_HD,
+    RTMP_VIDEO_RESOLUTION_QHD,
+    RTMP_VIDEO_RESOLUTION_SD,
+    RTMP_VIDEO_RESOLUTION_LOW
+    
+} EC_LiveVideoResolution;
 
+typedef struct {
+    int _fps;
+    int _camera_index;  // camera index
+    bool _auto_bitrate; // is enable auto vdieo bitrate
+    EC_LiveVideoResolution _resolution; // video _resolution
+} LiveVideoStreamConfig;
 
+// live stream publisher callback
+class
+EC_RtmpPublishCallback
+{
+public:
+	EC_RtmpPublishCallback(void){};
+	virtual ~EC_RtmpPublishCallback(void){};
+    // 连接上rtmp服务器
+	virtual void OnRtmpConnected() = 0;
+	// 正在连接rtmp服务器
+    virtual void OnRtmpReconnecting(int times) = 0;
+	// 与rtmp服务器连接断开
+    virtual void OnRtmpDisconnect() = 0;
+	//virtual void OnRtmpStatusEvent(int delayMs, int netBand) = 0;
+};
+
+// live stream puller callback.
+class EC_MediaPullCallback
+{
+public:
+	EC_MediaPullCallback(void){};
+	virtual ~EC_MediaPullCallback(void){};
+
+	virtual void OnLivePullerConnected() = 0;
+	virtual void OnLivePullerFailed() = 0;
+	virtual void OnLivePullerDisconnect() = 0;
+};
+
+/*** rtmp end ***/
 
 #ifdef __cplusplus
 extern "C" {

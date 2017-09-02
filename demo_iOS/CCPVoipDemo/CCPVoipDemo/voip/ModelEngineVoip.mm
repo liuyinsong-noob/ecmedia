@@ -4070,20 +4070,27 @@ ModelEngineVoip* gModelEngineVoip = nil;
 {
     return [self.VoipCallService createLiveStream:type];
 }
+
 -(int) playStream:(void *)handle url:(NSString *) url view:(UIView*)renderView
 {
     return [self.VoipCallService playStream:handle url:url view:renderView];
 }
+
 -(int) pushStream:(void *)handle url:(NSString *) url view:(UIView*)renderView
 {
     return [self.VoipCallService pushStream:handle url:url view:renderView];
 }
+
 -(void) stopLiveStream:(void *)handle {
     return [self.VoipCallService stopLiveStream:handle];
 }
 
--(void) selectLiveCamera:(void *)handle cameraIndex: (int) index width:(int)w height: (int) h fps: (int)fps {
-    [self.VoipCallService selectLiveCamera: handle cameraIndex: index width:w height: h fps: fps];
+- (void)selectLiveCamera:(void *)handle cameraIndex:(int)index {
+    [self.VoipCallService selectLiveCamera:handle cameraIndex:index];
+}
+
+-(int) configLiveVideoStream:(void *)handle camera:(int)index resolution:(int)resolution fps: (int)fps auto_bitrate: (bool)auto_br {
+    return [self.VoipCallService configLiveVideoStream:handle camera:index resolution:resolution fps:fps auto_bitrate:auto_br];
 }
 
 - (int) startRecordLocalMedia:(NSString *)filename withView: (void *)localview

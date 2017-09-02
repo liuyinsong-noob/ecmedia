@@ -762,4 +762,58 @@ public class NativeInterface {
      */
 	public static native int startRecordLocalMedia(String fileName, View view);
 	public static native void stopRecordLocalMedia();
+
+	/** ec live video api **/
+	/**
+	 * create live steam object.
+	 */
+	public static native void createLiveStream();
+
+	/**
+	 *
+	 * @param camera_index 0: back camera, 1: Front camera
+	 * @param fps  video fps.
+	 * @param resolution   0: EC_VIDEO_RESOLUTION_720P,
+	1. EC_VIDEO_RESOLUTION_HD,
+	2. EC_VIDEO_RESOLUTION_QHD,
+	3. EC_VIDEO_RESOLUTION_SD,
+	4. RTMP_VIDEO_RESOLUTION_LOW
+	 * @param enable_auto_bitrate whether enable auto adjust net bandwidth.
+	 * @return
+	 */
+	public static native int configLiveVideoStream(int camera_index, int fps, int resolution, boolean enable_auto_bitrate);
+
+	/**
+	 * switch the device camera.
+	 * @param camera_index 0: back camera, 1: Front camera
+	 * @return
+	 */
+	public static native int selectCameraLiveStream(int camera_index);
+
+	/**
+	 *
+	 * @param url : play stream url, example "rtmp://..."
+	 * @param renderView video preview view
+	 * @return
+	 */
+	public static native int playLiveStream(String url, View renderView);
+
+	/**
+	 *
+	 * @param url play stream url, example "rtmp://..."
+	 * @param renderView video preview view
+	 * @return
+	 */
+	public static native int pushLiveStream(String url, View renderView);
+
+	/**
+	 * stop push or play live stream
+	 * @return
+	 */
+	public static native int stopLiveStream();
+
+	/**
+	 * release live stream when no use it.
+	 */
+	public static native void releaseLiveStream();
 }

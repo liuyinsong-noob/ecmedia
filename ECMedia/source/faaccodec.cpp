@@ -129,7 +129,7 @@ void *faac_encoder_crate(int sample_rate, int channels, unsigned long* inputSamp
 	context->outputBuffer = new unsigned char[context->maxOutputBytes];
 	faacEncConfigurationPtr pConfiguration = faacEncGetCurrentConfiguration(context->handle);
 	pConfiguration->inputFormat = FAAC_INPUT_16BIT;
-	pConfiguration->outputFormat = 0; //	// 0 = Raw; 1 = ADTS  
+	pConfiguration->outputFormat = 1; //	// 0 = Raw; 1 = ADTS
 	pConfiguration->aacObjectType = LOW;
 	pConfiguration->allowMidside = 0;
 	pConfiguration->useLfe = 0;

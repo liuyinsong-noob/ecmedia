@@ -686,10 +686,12 @@ typedef enum
 - (int)setLoss:(int)loss;
 
 -(void*)createLiveStream:(int)type;
+-(int)configLiveVideoStream:(void *)handle camera:(int)index resolution:(int)resolution fps: (int)fps auto_bitrate: (bool)auto_br;
 -(int) playStream:(void *)handle url:(NSString *) url view:(UIView*)renderView;
 -(int) pushStream:(void *)handle url:(NSString *) url view:(UIView*)renderView;
 -(void) stopLiveStream:(void *)handle;
--(void) selectLiveCamera:(void *)handle cameraIndex: (int) index width:(int)w height: (int) h fps: (int)fps ;
+
+- (void)selectLiveCamera:(void *)handle cameraIndex:(int)index;
 
 - (int) startRecordLocalMedia:(NSString *)filename withView: (void *)localview;
 - (void) stopRecordLocalMedia;

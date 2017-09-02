@@ -453,6 +453,8 @@ public:
   uint32_t tmmbr_bandwidth;
   uint32_t tmmbr_remote_ssrc;
   uint32_t tmmbr_ssrc ;
+    
+  ReceiveStatistics* receive_statistics_;
 };
 
 }  // namespace webrtc

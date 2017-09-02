@@ -98,7 +98,8 @@ ModuleRtpRtcpImpl::ModuleRtpRtcpImpl(const Configuration& configuration)
       critical_section_rtt_(CriticalSectionWrapper::CreateCriticalSection()),
       rtt_ms_(0),
       rtp_receiver_(NULL),
-      isSendingTmmbr(false)
+      isSendingTmmbr(false),
+      receive_statistics_(configuration.receive_statistics)
     {
   send_video_codec_.codecType = kVideoCodecUnknown;
 
@@ -583,6 +584,25 @@ int32_t ModuleRtpRtcpImpl::SendOutgoingData(
     if (rtcp_sender_.TimeToSendRTCPReport(kVideoFrameKey == frame_type)) {
       rtcp_sender_.SendRTCP(GetFeedbackState(), kRtcpReport);
     }
+      
+      // set rtp expand head loss rate.
+      StatisticianMap statisticians = receive_statistics_->GetActiveStatisticians();
+      if (!statisticians.empty()) {
+          StatisticianMap::const_iterator it;
+     
+          for (it = statisticians.begin(); it != statisticians.end(); ++it) {
+              StreamStatistician *statistician = it->second;
+              RtcpStatistics stats;
+              if (!statistician->GetStatistics(&stats, true)) {
+                  return false;
+              }
+              if(stats.fraction_lost != 0) {
+                  printf("gggggggggggggg: %d\n", 100*(stats.fraction_lost)/255/5);
+              }
+              rtp_sender_.SetLossRate(100*(stats.fraction_lost)/255/5, 0);
+          }
+      }
+ 
     return rtp_sender_.SendOutgoingData(frame_type,
                                         payload_type,
                                         time_stamp,

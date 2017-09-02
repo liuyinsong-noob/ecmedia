@@ -45,7 +45,7 @@ static int padding = 30;
     
 }
 - (instancetype)initWithFrame:(CGRect)frame{
-    
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES]; // Keep Screen steady
     if(self = [super initWithFrame:frame]){
         self.backgroundColor = [UIColor clearColor];
         
@@ -173,7 +173,7 @@ static int padding = 30;
 -(void) selectCamera:(id)sender {
     static int i = 0;
     [self.modelEngineVoip getCameraInfo];
-    [self.modelEngineVoip selectLiveCamera:self.session cameraIndex: i++%2 width:480 height: 640 fps: 15];
+    [self.modelEngineVoip selectLiveCamera:self.session cameraIndex:i++ % 2];
 }
 #pragma mark ---- <切换摄像头>
 - (UIButton*)cameraButton {
@@ -218,11 +218,16 @@ static int padding = 30;
         [self.startPushLiveButton removeFromSuperview];
         [self.containerView addSubview:self.liveRenderView];
         [self.startPlayLiveButton setTitle:@"结束观看" forState:UIControlStateNormal];
-        [self.modelEngineVoip playStream:self.session url:@"rtmp://192.168.0.44:1935/live/livestream" view:self.liveRenderView];
+        // play rtmp
+//        [self.modelEngineVoip playStream:self.session url:@"rtmp://192.168.0.44:1935/live/livestream" view:self.liveRenderView];
+        // play hls
+        [self.modelEngineVoip playStream:self.session url:@"http://192.168.0.44/live/livestream.m3u8" view:self.liveRenderView];
     } else {
         [self.startPlayLiveButton setTitle:@"观看直播" forState:UIControlStateNormal];
         [self.liveRenderView removeFromSuperview];
         [self.modelEngineVoip stopLiveStream:self.session];
+        [self.containerView addSubview:self.startPushLiveButton];
+      
     }
 }
 - (UIButton*)startPlayLiveButton{
@@ -247,9 +252,11 @@ static int padding = 30;
     if(self.startPushLiveButton.selected){
         
         [self.startPushLiveButton setTitle:@"结束直播" forState:UIControlStateNormal];
-        // [self.startPlayLiveButton removeFromSuperview];
+        [self.startPlayLiveButton removeFromSuperview];
         [self.containerView addSubview:self.liveRenderView];
-        [self.modelEngineVoip selectLiveCamera:self.session cameraIndex: 1 width:480 height: 640 fps: 15];
+        int front_camera = 1;
+        int resolution_QHD = 2;
+        [self.modelEngineVoip configLiveVideoStream:self.session camera:front_camera resolution:resolution_QHD fps: 15 auto_bitrate: false];
         [self.modelEngineVoip pushStream:self.session url:@"rtmp://192.168.0.44:1935/live/livestream" view:self.liveRenderView];
         // [self.containerView addSubview:self.startPushLiveButton];
     
@@ -257,6 +264,7 @@ static int padding = 30;
         [self.liveRenderView removeFromSuperview];
         [self.modelEngineVoip stopLiveStream:self.session];
         [self.startPushLiveButton setTitle:@"开始直播" forState:UIControlStateNormal];
+        [self.containerView addSubview:self.startPlayLiveButton];
     }
 }
 
