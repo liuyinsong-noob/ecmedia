@@ -25,15 +25,43 @@ LOCAL_SRC_FILES := \
 		ECLiveStream_rtmp.cpp \
 		ECLiveStream.cpp \
 		faaccodec.cpp \
-		MediaStatisticsData.pb.cc 
+		MediaStatisticsData.pb.cc \
+		ec_live_engine/ec_aac_codec.cpp \
+		ec_live_engine/ec_play_buffer_cacher.cpp \
+		ec_live_engine/ec_live_engine.cpp \
+		ec_live_engine/ec_live_utility.cpp \
+		ec_live_engine/ec_media_core.cpp \
+		ec_live_engine/ec_rtmp_bitrate_controller.cpp \
+		ec_live_engine/ec_rtmp_publisher.cpp \
+		ec_live_engine/ec_rtmp_puller.cpp \
+		ec_live_engine/ec_hls_puller.cpp \
+		ec_live_engine/srs-librtmp/srs_librtmp.cpp \
+		ec_live_engine/srs-hls-parser/ec_ts_parser.cc \
+		ec_live_engine/srs-hls-loader/htl_app_hls_load.cpp \
+		ec_live_engine/srs-hls-loader/htl_app_http_client.cpp \
+		ec_live_engine/srs-hls-loader/htl_app_m3u8_parser.cpp \
+		ec_live_engine/srs-hls-loader/htl_app_task_base.cpp \
+		ec_live_engine/srs-hls-loader/htl_core_aggregate_ret.cpp \
+		ec_live_engine/srs-hls-loader/htl_core_error.cpp \
+		ec_live_engine/srs-hls-loader/htl_core_log.cpp \
+		ec_live_engine/srs-hls-loader/htl_core_uri.cpp \
+		ec_live_engine/srs-hls-loader/htl_main_utility.cpp \
+		ec_live_engine/srs-hls-loader/htl_os_st.cpp \
+		ec_live_engine/srs-hls-loader/http_parser.c
 
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
-	'-DVIDEO_ENABLED'
+	'-DVIDEO_ENABLED' \
+	'-DWEBRTC_ANDROID' \
+	-std=gnu++11 -frtti -Wno-literal-suffix
 
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/. \
 	$(LOCAL_PATH)/../include \
+	$(LOCAL_PATH)/ec_live_engine \
+	$(LOCAL_PATH)/ec_live_engine/srs-librtmp \
+	$(LOCAL_PATH)/ec_live_engine/srs-hls-loader \
+	$(LOCAL_PATH)/ec_live_engine/srs-hls-parser \
 	$(LOCAL_PATH)/../../system_wrappers/interface \
 	$(LOCAL_PATH)/../../voice_engine/main/include \
 	$(LOCAL_PATH)/../../voice_engine/main/source \
@@ -67,6 +95,7 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../../module/remote_bitrate_estimator/source \
 	$(LOCAL_PATH)/../../module/video_render/main/include \
 	$(LOCAL_PATH)/../../module/audio_coding/codecs/opencore-amr/amrnb \
+	$(LOCAL_PATH)/../../module/audio_coding/main/source \
 	$(LOCAL_PATH)/../../third_party/libfaad/faad2-2.7/include \
 	$(LOCAL_PATH)/../../third_party/libfaac/include \
 	$(LOCAL_PATH)/../../third_party/ffmpeg/ffmpeg-android-bin/include \

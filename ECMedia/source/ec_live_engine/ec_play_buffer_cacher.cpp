@@ -10,6 +10,8 @@
 #include "ec_live_utility.h"
 #include "event_wrapper.h"
 #include "faaccodec.h"
+#include <unistd.h>
+
 
 namespace cloopenwebrtc{
 #define PLY_MIN_TIME	500		// 0.5s
