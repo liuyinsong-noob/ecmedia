@@ -4095,4 +4095,9 @@ ModelEngineVoip* gModelEngineVoip = nil;
 {
     [self.VoipCallService stopRecordLocalMedia];
 }
+
+- (int)setMagicSound:(bool)enable andPitch:(int)pitch andTempo:(int)tempo andRate:(int)rate
+{
+    return [self.VoipCallService setMagicSound:enable andPitch:pitch andTempo:tempo andRate:rate];
+}
 @end

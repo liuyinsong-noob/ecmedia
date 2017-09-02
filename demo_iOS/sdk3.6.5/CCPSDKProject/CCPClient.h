@@ -580,6 +580,7 @@ typedef struct _CALLBACKINTERFACE CCallbackInterface;
     CCPAPI int startRecordLocalMedia(const char *fileName, void *localview);
     CCPAPI void stopRecordLocalMedia();
     CCPAPI int SetRotateCapturedFrames(char *callid, ECMediaRotateCapturedFrame tr);
+    CCPAPI int audioEnableMagicSound(bool enabled, int pitch, int tempo, int rate);
 #ifdef __cplusplus
 }
 #endif

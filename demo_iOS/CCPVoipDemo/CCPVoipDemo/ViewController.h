@@ -21,4 +21,8 @@
 @property (nonatomic,retain) UITextField *tf_Account;
 @property (nonatomic,retain) NSString* voipAccount;
 @property (nonatomic,retain) UIScrollView *scrollView;
+@property (nonatomic,retain) UITextField *pitch;
+@property (nonatomic,retain) UITextField *tempo;
+@property (nonatomic,retain) UITextField *rate;
+@property (nonatomic,retain) UISwitch *magicSwitch;
 @end
