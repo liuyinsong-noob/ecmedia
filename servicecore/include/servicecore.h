@@ -574,6 +574,7 @@ public:
    int setScreeShareActivity(SerPhoneCall *call, void *activity);
     int startRecord();
     int stopRecord();
+    void audio_enable_magic_sound(bool enabled, int pitch, int tempo, int rate);
 protected:
 ///////////////param
 	void serphone_core_init_default_params(SerphoneCallParams *params);
@@ -614,6 +615,7 @@ protected:
 
 	void serphone_call_init_media_streams(SerPhoneCall *call);
 	void serphone_call_start_audio_stream(SerPhoneCall *call, const char *cname, bool_t muted, bool_t send_ringbacktone, bool_t use_arc);
+    
 	void serphone_call_start_video_stream(SerPhoneCall *call, const char *cname,bool_t all_inputs_muted);
 	void serserphone_call_start_desktop_share(SerPhoneCall *call, const char *cname,bool_t all_inputs_muted);
     void media_stream_free(MediaStream *stream);
@@ -621,6 +623,7 @@ protected:
     void audio_stream_stop(int channelID);
     void video_stream_free(VideoStream *stream);
 	void video_stream_stop(int channelID, int captureID);
+    
 
 public:
     //void media_init_audio();
@@ -1123,6 +1126,11 @@ private:
     bool m_enable_fec;
     int m_opus_packet_loss_rate;
 	unsigned int m_localSSRC;
+private:
+    bool enable_magic_sound;
+    int magic_sound_pitch;
+    int magic_sound_tempo;
+    int magic_sound_rate;
 };
 
 SerphoneAddress * serphone_address_new(const char *uri);

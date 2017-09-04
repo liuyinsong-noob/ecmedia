@@ -599,6 +599,7 @@ typedef struct _CALLBACKINTERFACE CCallbackInterface;
 	CCPAPI  int VideoStopReceive(char *callid);
     
     CCPAPI int SetRotateCapturedFrames(char *callid, ECMediaRotateCapturedFrame tr);
+    CCPAPI int audioEnableMagicSound(bool enabled, int pitch, int tempo, int rate);
 
 #ifdef __cplusplus
 }

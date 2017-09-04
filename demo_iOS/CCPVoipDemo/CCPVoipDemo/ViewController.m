@@ -28,6 +28,10 @@
 @synthesize voipAccount;
 @synthesize tf_Account;
 @synthesize scrollView;
+@synthesize pitch;
+@synthesize tempo;
+@synthesize rate;
+@synthesize magicSwitch;
 
 -(id)init
 {
@@ -190,7 +194,7 @@
         [self.modelEngineVoip setOpusFec:FALSE];
     }
     [self.scrollView addSubview:fecSwitch];
-    
+    [fecSwitch release];
     
     UILabel *packetLossTitle = [[UILabel alloc] initWithFrame:CGRectMake(24.0f+10, 270.0f+20+30+30, 1020.0f, 37.0f)];
     packetLossTitle.text = @"Actual Loss Rate:";
@@ -212,6 +216,7 @@
     }
     
     [self.scrollView addSubview:packetLossValue];
+    [packetLossTitle release];
     
     
     
@@ -229,6 +234,91 @@
     [self.scrollView addSubview:lbTips3];
     [lbTips3 release];
     
+    
+    UILabel *magicTitle = [[UILabel alloc]initWithFrame:CGRectMake(24.0f+10, 400, 150.0f, 37.0f)];
+    magicTitle.text = @"Magic Sound Switch";
+    magicTitle.font = [UIFont systemFontOfSize:13.0f];
+    [self.scrollView  addSubview:magicTitle];
+    [magicTitle release];
+    
+    UILabel *pitchTitle = [[UILabel alloc]initWithFrame:CGRectMake(24.0f+10, 430, 35.0f, 37.0f)];
+    pitchTitle.text = @"pitch:";
+    pitchTitle.font = [UIFont systemFontOfSize:13.0f];
+    [self.scrollView  addSubview:pitchTitle];
+    UITextField *pitchValue = [[UITextField alloc] initWithFrame:CGRectMake(24.0f+10+40, 430, 45.0f, 37.0f)];
+    pitchValue.delegate = self;
+    pitchValue.backgroundColor = [UIColor clearColor];
+    pitchValue.placeholder = @"0";
+    pitchValue.keyboardType = UIKeyboardTypeNumberPad;
+    pitchValue.returnKeyType = UIReturnKeyDone;
+    pitchValue.clearButtonMode = UITextFieldViewModeWhileEditing;
+    pitchValue.tag = 1110;
+    NSString *pitchv = [[NSUserDefaults standardUserDefaults] objectForKey:@"MagicPitch"];
+    if (pitchv > 0) {
+        pitchValue.text = pitchv;
+    }
+
+    [self.scrollView addSubview:pitchValue];
+    self.pitch = pitchValue;
+    [pitchValue release];
+    
+    UILabel *tempoTitle = [[UILabel alloc]initWithFrame:CGRectMake(24.0f+10+40+40+5, 430, 45.0f, 37.0f)];
+    tempoTitle.text = @"tempo:";
+    tempoTitle.font = [UIFont systemFontOfSize:13.0f];
+    [self.scrollView  addSubview:tempoTitle];
+    UITextField *tempoValue = [[UITextField alloc] initWithFrame:CGRectMake(24.0f+10+40+40+45+10, 430, 40.0f, 37.0f)];
+    tempoValue.delegate = self;
+    tempoValue.backgroundColor = [UIColor clearColor];
+    tempoValue.placeholder = @"0";
+    tempoValue.keyboardType = UIKeyboardTypeNumberPad;
+    tempoValue.returnKeyType = UIReturnKeyDone;
+    tempoValue.clearButtonMode = UITextFieldViewModeWhileEditing;
+    tempoValue.tag = 1111;
+    NSString * tempov = [[NSUserDefaults standardUserDefaults] objectForKey:@"MagicTempo"];
+    if (tempov > 0) {
+        tempoValue.text = tempov;
+    }
+    [self.scrollView addSubview:tempoValue];
+    self.tempo = tempoValue;
+    [tempoValue release];
+    
+    UILabel *rateTitle = [[UILabel alloc]initWithFrame:CGRectMake(24.0f+10+40+40+40+40+10, 430, 35.0f, 37.0f)];
+    rateTitle.text = @"rate:";
+    rateTitle.font = [UIFont systemFontOfSize:13.0f];
+    [self.scrollView  addSubview:rateTitle];
+    UITextField *rateValue = [[UITextField alloc] initWithFrame:CGRectMake(24.0f+10+40+40+40+40+35+15, 430, 40.0f, 37.0f)];
+    rateValue.delegate = self;
+    rateValue.backgroundColor = [UIColor clearColor];
+    rateValue.placeholder = @"0";
+    rateValue.keyboardType = UIKeyboardTypeNumberPad;
+    rateValue.returnKeyType = UIReturnKeyDone;
+    rateValue.clearButtonMode = UITextFieldViewModeWhileEditing;
+    rateValue.tag = 1112;
+    NSString * ratev = [[NSUserDefaults standardUserDefaults] objectForKey:@"MagicRate"];
+    if (ratev > 0) {
+        tempoValue.text = ratev;
+    }
+    [self.scrollView addSubview:rateValue];
+    self.rate = rateValue;
+    [rateValue release];
+    
+    UISwitch *magicSwitchh = [[UISwitch alloc]initWithFrame:CGRectMake(24.0f+170.0, 400, 100.0f, 37.0f)];
+    [magicSwitchh addTarget:self action:@selector(magicSwitchMethod:) forControlEvents:UIControlEventValueChanged];
+    
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"MagicSet"] isEqualToString:@"on"]) {
+        [magicSwitchh setOn:TRUE];
+        [self.modelEngineVoip setMagicSound:true andPitch:pitchv.intValue andTempo:tempov.intValue andRate:ratev.intValue];
+    }
+    else
+    {
+        [magicSwitch setOn:FALSE];
+        [self.modelEngineVoip setMagicSound:false andPitch:pitchv.intValue andTempo:tempov.intValue andRate:ratev.intValue];
+    }
+    [self.scrollView addSubview:magicSwitchh];
+    self.magicSwitch = magicSwitchh;
+    [magicSwitchh release];
+    
+    
 }
 
 - (void)switchMethod:(id)switchbutton
@@ -245,6 +335,24 @@
     
     return;
 }
+
+- (void)magicSwitchMethod:(id)switchbutton
+{
+    UISwitch *tmp = (UISwitch*)switchbutton;
+    [self.modelEngineVoip setMagicSound:tmp.isOn andPitch:self.pitch.text.intValue andTempo:self.tempo.text.intValue andRate:self.rate.text.intValue];
+    if (tmp.isOn) {
+        [[NSUserDefaults standardUserDefaults] setObject:@"on" forKey:@"MagicSet"];
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:@"off" forKey:@"MagicSet"];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:self.pitch.text forKey:@"MagicPitch"];
+    [[NSUserDefaults standardUserDefaults] setObject:self.tempo.text forKey:@"MagicTempo"];
+    [[NSUserDefaults standardUserDefaults] setObject:self.rate.text forKey:@"MagicRate"];
+    
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];    
@@ -320,6 +428,17 @@
         [self.scrollView setContentOffset:CGPointMake(0, y)];
         [UIView commitAnimations];
     }
+    else if (textField.tag == 1110 || textField.tag == 1111 || textField.tag == 1112)
+    {
+        int height = 480 - 64 -120;
+        int y = 120;
+        self.scrollView.frame =  CGRectMake(0,0,self.view.frame.size.width, height);
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.3];
+        [UIView setAnimationDelegate:self];
+        [self.scrollView setContentOffset:CGPointMake(0, y)];
+        [UIView commitAnimations];
+    }
     return YES;
 }
 
@@ -337,6 +456,33 @@
         
         
     }
+    else if (textField.tag == 1110)
+    {
+        //set Fec packet loss
+        [[NSUserDefaults standardUserDefaults] setValue:textField.text forKey:@"MagicPitch"];
+        [self.modelEngineVoip setMagicSound:self.magicSwitch.isOn andPitch:self.pitch.text.intValue andTempo:self.tempo.text.intValue andRate:self.rate.text.intValue];
+        NSLog(@"magic sound: %s, pitch %d, tempo %d, rate %d", self.magicSwitch.isOn?"TRUE":"FALSE", self.pitch.text.intValue, self.tempo.text.intValue, self.rate.text.intValue);
+        
+        
+    }
+    else if (textField.tag == 1111)
+    {
+        //set Fec packet loss
+        [[NSUserDefaults standardUserDefaults] setValue:textField.text forKey:@"loss"];
+        [self.modelEngineVoip setMagicSound:self.magicSwitch.isOn andPitch:self.pitch.text.intValue andTempo:self.tempo.text.intValue andRate:self.rate.text.intValue];
+        NSLog(@"magic sound: %s, pitch %d, tempo %d, rate %d", self.magicSwitch.isOn?"TRUE":"FALSE", self.pitch.text.intValue, self.tempo.text.intValue, self.rate.text.intValue);
+        
+        
+    }
+    else if (textField.tag == 1112)
+    {
+        //set Fec packet loss
+        [[NSUserDefaults standardUserDefaults] setValue:textField.text forKey:@"loss"];
+        [self.modelEngineVoip setMagicSound:self.magicSwitch.isOn andPitch:self.pitch.text.intValue andTempo:self.tempo.text.intValue andRate:self.rate.text.intValue];
+        NSLog(@"magic sound: %s, pitch %d, tempo %d, rate %d", self.magicSwitch.isOn?"TRUE":"FALSE", self.pitch.text.intValue, self.tempo.text.intValue, self.rate.text.intValue);
+        
+        
+    }
     
 }
 
@@ -350,6 +496,9 @@
 - (void) hideKeyboard
 {
     [self.tf_Account resignFirstResponder];
+    [self.tempo resignFirstResponder];
+    [self.pitch resignFirstResponder];
+    [self.rate resignFirstResponder];
     int height = 480 - 64;
     if (IPHONE5)
     {

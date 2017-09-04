@@ -695,4 +695,5 @@ typedef enum
 
 - (int) startRecordLocalMedia:(NSString *)filename withView: (void *)localview;
 - (void) stopRecordLocalMedia;
+- (int)setMagicSound:(bool)enable andPitch:(int)pitch andTempo:(int)tempo andRate:(int)rate;
 @end

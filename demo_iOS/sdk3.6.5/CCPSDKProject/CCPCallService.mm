@@ -5935,5 +5935,10 @@ char *OSTypeToStr(char *buf, OSType t)
 {
     stopRecordLocalMedia();
 }
+
+- (int)setMagicSound:(bool)enable andPitch:(int)pitch andTempo:(int)tempo andRate:(int)rate
+{
+    return audioEnableMagicSound(enable, pitch, tempo, rate);
+}
 @end
 

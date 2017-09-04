@@ -3958,3 +3958,15 @@ extern "C" int SetRotateCapturedFrames(char *callid, ECMediaRotateCapturedFrame 
         return g_pSerCore->set_rotate_captured_frames(pCall->m_CaptureDeviceId, tr);
     }
 }
+
+
+extern "C" int audioEnableMagicSound(bool enabled, int pitch, int tempo, int rate)
+{
+    SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT)
+    PrintConsole("[APICall called enabled %s, pitch %d, tempo %d, rate %d\n", enabled?"TRUE":"FALSE", pitch, tempo, rate);
+    if (g_pSerCore) {
+        g_pSerCore->audio_enable_magic_sound(enabled, pitch, tempo, rate);
+    }
+    return 0;
+    
+}

@@ -789,6 +789,9 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 			}
 			PrintConsole("cloopen trace %s middle 114\n",__FUNCTION__);
 
+//            sean test magic sound
+            ECMedia_audio_enable_magic_sound(call->m_AudioChannelID, enable_magic_sound);
+            ECMedia_audio_set_magic_sound(call->m_AudioChannelID, magic_sound_pitch, magic_sound_tempo, magic_sound_rate);
 			//TODO:
 			//bool enabled = false;
 			//int timeout = 0;
@@ -5410,5 +5413,13 @@ void ServiceCore::video_stop_receive(SerPhoneCall *call)
 int ServiceCore::set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame tr)//int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame tr)
 {
     return ECMedia_set_rotate_captured_frames(deviceid, tr);
+}
+    
+void ServiceCore::audio_enable_magic_sound(bool enabled, int pitch, int tempo, int rate)
+{
+    enable_magic_sound = enabled;
+    magic_sound_pitch = pitch;
+    magic_sound_tempo = tempo;
+    magic_sound_rate = rate;
 }
 

@@ -694,4 +694,5 @@ typedef enum
 -(int) pushStream:(void *)handle url:(NSString *) url view:(UIView*)renderView;
 -(void) stopLiveStream:(void *)handle;
 - (NSString*)getDeviceVersion;
+- (int)setMagicSound:(bool)enable andPitch:(int)pitch andTempo:(int)tempo andRate:(int)rate;
 @end
