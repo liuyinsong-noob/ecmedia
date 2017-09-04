@@ -55,7 +55,8 @@ LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
     '-DNETEQ_VOICEENGINE_CODECS' \
     '-DWEBRTC_CODEC_OPUS' \
-	'-DWEBRTC_CODEC_G729'
+	'-DWEBRTC_CODEC_G729' \
+	'-DWEBRTC_CODEC_PCM16'
 
 LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../include \
@@ -67,6 +68,7 @@ LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/../../../audio_coding/codecs/opus/interface \
 		$(LOCAL_PATH)/../../../audio_coding/codecs/g729/source \
 		$(LOCAL_PATH)/../../../audio_coding/codecs/g729/interface \
+		$(LOCAL_PATH)/../../../audio_coding/codecs/pcm16b/include \
 		$(LOCAL_PATH)/../../../../system_wrappers/interface \
 		$(LOCAL_PATH)/../../../../system_wrappers/source \
 		$(LOCAL_PATH)/../../.. \

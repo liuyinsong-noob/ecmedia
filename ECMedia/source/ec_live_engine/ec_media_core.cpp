@@ -378,6 +378,7 @@ namespace cloopenwebrtc {
     
     int ECMediaMachine::setVideoPreview(void *view) {
         if(view == NULL) {
+            PrintConsole("[RTMP ERROR] %s video view in null\n", __FUNCTION__);
             return -1;
         }
         local_view_ = view;
@@ -427,18 +428,21 @@ namespace cloopenwebrtc {
     }
 
     int ECMediaMachine::doPreviewRender(int render_id) {
+        PrintConsole("[RTMP INFO] %s : start video preview.\n", __FUNCTION__);
         if(!local_view_) {
             PrintConsole("[RTMP INFO] %s : not set video preview viewer.\n", __FUNCTION__);
             return 0;
         }
         ViERender* render = ViERender::GetInterface(vie_);
+        
         if(!render) {
              PrintConsole("[RTMP ERROR] %s get vierender failed\n", __FUNCTION__);
         }
-    
-        int ret = render->AddRenderer(render_id, local_view_, 1, 0, 0, 1, 1, NULL);
+ 
+        int ret = render->AddRenderer(render_id, local_view_, 2, 0, 0, 1, 1, NULL);
+        
         if (ret != 0) {
-            // todo: log error
+            PrintConsole("[RTMP INFO] %s add renderer error, end with ret:%d\n", __FUNCTION__, ret);
             render->Release();
             return ret;
         }
@@ -884,6 +888,9 @@ namespace cloopenwebrtc {
                 PrintConsole("[ECMEDIA CORE ERROR] %s resample error\n", __FUNCTION__);
                 return;
             }
+#ifdef __ANDROID__
+            EC_Live_Utility::pcm_s16le_to_s16be((short*)temp_output, audio_record_sample_hz_/100*2);
+#endif
             WebRtcRTPHeader rtpHeader;
             rtpHeader.header.sequenceNumber = audio_rtp_seq_++;
             rtpHeader.header.ssrc = 1;
