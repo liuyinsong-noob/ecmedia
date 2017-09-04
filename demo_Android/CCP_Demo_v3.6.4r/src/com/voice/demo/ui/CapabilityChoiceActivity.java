@@ -137,19 +137,21 @@ public class CapabilityChoiceActivity extends CCPBaseActivity implements CCPCapa
 		CCPCapabilityItemView voiceCapacityItemView = getCCPCapacityItemView(R.string.str_voice, voiceIconResid, voiceBgResid);
 		layout.addView(voiceCapacityItemView);
 		
-//		// video item
-//		int[] videoIconResid = new int[]{
-//				R.drawable.ccp_voice_group_chat,
+		// video item
+		int[] videoIconResid = new int[]{
+				R.drawable.ccp_voice_group_chat,
 //				R.drawable.ccp_video_conference,
-//				R.drawable.ccp_intercom };
-//
-//		int[] videoBgResid= new int[]{
-//				R.drawable.ccp_capacity_08_selector,
+//				R.drawable.ccp_intercom
+		};
+
+		int[] videoBgResid= new int[]{
+				R.drawable.ccp_capacity_08_selector,
 //				R.drawable.ccp_capacity_05_selector,
-//				R.drawable.ccp_capacity_04_selector};
-//
-//		CCPCapabilityItemView videoCapacityItemView = getCCPCapacityItemView(R.string.str_video, videoIconResid, videoBgResid);
-//		layout.addView(videoCapacityItemView);
+//				R.drawable.ccp_capacity_04_selector
+		};
+
+		CCPCapabilityItemView videoCapacityItemView = getCCPCapacityItemView(R.string.str_video, videoIconResid, videoBgResid);
+		layout.addView(videoCapacityItemView);
 //
 //		// IVR item
 //		int[] ivrIconResid = new int[]{
