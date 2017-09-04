@@ -146,16 +146,13 @@ int ViERenderImpl::AddRenderer(const int render_id, void* window,
 				shared_data_->SetLastError(kViERenderInvalidRenderId);
 				return -1;
 			}
-            WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(shared_data_->instance_id()),
-                         "%s: hhhhhhhhhhhhhhhhhhhhhh", __FUNCTION__ );
 			ViERenderer* renderer = shared_data_->render_manager()->AddRenderStream(
 				render_id, window, z_order, left, top, right, bottom);
 			if (!renderer) {
 				shared_data_->SetLastError(kViERenderUnknownError);
 				return -1;
 			}
-            WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(shared_data_->instance_id()),
-                         "%s: yyyyyyyyyyyyyyyyyyyyyyyyy", __FUNCTION__ );
+
 			/*sean 20130402*/
 			renderer->SetCallbackForWidthHeight(return_video_width_height);
 			/*sean*/
