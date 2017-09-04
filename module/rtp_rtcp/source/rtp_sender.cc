@@ -1493,10 +1493,6 @@ uint8_t RTPSender::BuildLossRateExtension(uint8_t* data_buffer) const {
         // Not registered.
         return 0;
     }
-    if(loss_rate_ != 0) {
-        printf("nnnnnnnnnnnnnnn:%d\n", loss_rate_);
-    }
-    
     size_t pos = 0;
     const uint8_t len = 0;
     const uint8_t version = 0;              //currently version 0

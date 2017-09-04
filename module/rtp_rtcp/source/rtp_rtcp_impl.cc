@@ -596,9 +596,7 @@ int32_t ModuleRtpRtcpImpl::SendOutgoingData(
               if (!statistician->GetStatistics(&stats, true)) {
                   return false;
               }
-              if(stats.fraction_lost != 0) {
-                  printf("gggggggggggggg: %d\n", 100*(stats.fraction_lost)/255/5);
-              }
+
               rtp_sender_.SetLossRate(100*(stats.fraction_lost)/255/5, 0);
           }
       }
