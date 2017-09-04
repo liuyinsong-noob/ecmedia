@@ -152,6 +152,7 @@ int ViERenderImpl::AddRenderer(const int render_id, void* window,
 				shared_data_->SetLastError(kViERenderUnknownError);
 				return -1;
 			}
+
 			/*sean 20130402*/
 			renderer->SetCallbackForWidthHeight(return_video_width_height);
 			/*sean*/

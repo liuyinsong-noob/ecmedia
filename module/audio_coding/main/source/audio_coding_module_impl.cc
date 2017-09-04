@@ -413,11 +413,11 @@ int32_t AudioCodingModuleImpl::Process() {
             if (loss_rate_*5 > 30 && loss_rate_*5 < 45 ) {
               list_size = 3;
             }
-            else if (loss_rate_*5 > 45)
+            else if (loss_rate_*5 > 45) {
               list_size = 5;
-                  
-
-            if (red_list_.size()>=list_size) {
+            }
+ 
+            while (red_list_.size() >= list_size) {
               RedBuf earse = red_list_.front();
               delete [] earse.buf;
               red_list_.pop_front();
@@ -1340,7 +1340,7 @@ int AudioCodingModuleImpl::SetPacketLossRateFromRtpHeaderExt(int loss_rate)
         if(loss_rate < 0) {
             return -1;
         }
- 
+        
         loss_rate_ = loss_rate;
 		return 0;
     }

@@ -87,14 +87,14 @@ public class ChatroomConversation extends CCPBaseActivity implements View.OnClic
 			case  R.id.netphone_landing_switch_camera:
 				break;
 			case  R.id.netphone_landing_play_video:
-				Thread work = new Thread(new Runnable() {
+				Thread play_pthread = new Thread(new Runnable() {
 					@Override
 					public void run() {
 						 NativeInterface.playLiveStream("rtmp://192.168.0.44/live/livestream", localView);
 
 					}
 				});
-				work.start();
+				play_pthread.start();
 				break;
 			default:
 				break;
