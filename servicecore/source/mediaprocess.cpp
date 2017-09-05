@@ -921,8 +921,12 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 				stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr, stream->port, stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr, stream->rtcp_port);
 
 			int ssrc = stream->ssrc_self;
-			setSsrcMediaType(ssrc, 1);
-			setSsrcMediaAttribute(ssrc, m_sendVideoWidth, m_sendVideoHeight, m_sendVideoFps);
+			if (ssrc != 0) //connect to mas
+			{
+				setSsrcMediaType(ssrc, 1);
+				setSsrcMediaAttribute(ssrc, m_sendVideoWidth, m_sendVideoHeight, m_sendVideoFps);
+			}
+			
 			ECMedia_video_set_local_ssrc(call->m_VideoChannelID, ssrc);
 
 			call->m_selfSSRC = stream->ssrc_self;

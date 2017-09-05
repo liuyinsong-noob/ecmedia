@@ -18,7 +18,7 @@
 #include <sstream>
 
 #include "typedefs.h"
-#include "../base/checks.h"
+#include "checks.h"
 
 #ifdef WEBRTC_EXPORT
     #define WEBRTC_DLLEXPORT _declspec(dllexport)

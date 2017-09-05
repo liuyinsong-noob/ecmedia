@@ -212,7 +212,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;WEBRTC_WIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../.;./include;./main/source;./main/source/windows;./main/source/external;./main/include;../interface;../common_video/interface;../video_coding/main/include;../common_video/source;$(DXSDK_DIR)\Include;../common_video/source/libyuv/include;../../third_party/d3d9/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;./include;./main/source;./main/source/windows;./main/source/external;./main/include;../interface;../common_video/interface;../video_coding/main/include;../common_video/source;$(DXSDK_DIR)\Include;../common_video/source/libyuv/include;../../third_party/d3d9/Include;../../base/</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -244,7 +244,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;WEBRTC_WIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../.;./include;./main/source;./main/source/windows;./main/source/external;./main/include;../interface;../common_video/interface;../video_coding/main/include;../common_video/source;$(DXSDK_DIR)\Include;../common_video/source/libyuv/include;../../third_party/d3d9/Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;./include;./main/source;./main/source/windows;./main/source/external;./main/include;../interface;../common_video/interface;../video_coding/main/include;../common_video/source;$(DXSDK_DIR)\Include;../common_video/source/libyuv/include;../../third_party/d3d9/Include;../../base/</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>

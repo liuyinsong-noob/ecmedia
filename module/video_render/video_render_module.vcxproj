@@ -128,7 +128,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../common_video/interface;../common_video/source/libyuv/include;./main/include;../interface;../.;../video_coding/main/include;../common_video/source;../../system_wrappers/interface;./main/source</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../common_video/interface;../common_video/source/libyuv/include;./main/include;../interface;../.;../video_coding/main/include;../common_video/source;../../system_wrappers/interface;./main/source;../../base/</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 %(AdditionalOptions)</AdditionalOptions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <BufferSecurityCheck>true</BufferSecurityCheck>
@@ -235,7 +235,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../common_video/interface;../common_video/source/libyuv/include;./main/include;../interface;../.;../video_coding/main/include;../common_video/source;./main/source</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../common_video/interface;../common_video/source/libyuv/include;./main/include;../interface;../.;../video_coding/main/include;../common_video/source;./main/source;../../base/</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

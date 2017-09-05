@@ -1030,7 +1030,6 @@ int32_t ViEChannel::SetLocalSendSSRC(const uint32_t SSRC, const StreamType usage
 		ssrc_slave = (SSRC & 0xFFFFFFF0) | R_176_144_15;
 	}
 
-	ssrc_num = 1; //by ylr for p2p test.
 
 	if (ssrc_num == 1){//only one ssrc(resolution)
 		if (SetSSRC(SSRC, usage, 0) != 0) {
