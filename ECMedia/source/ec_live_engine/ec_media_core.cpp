@@ -116,17 +116,17 @@ namespace cloopenwebrtc {
     {
         int ret = -1;
         ret = initAudioEngine();
-        ret = initVideoEngine();
+        //ret = initVideoEngine();
         
         ret = initAudioNetwork();
-        ret = initVideoNetwork();
+        //ret = initVideoNetwork();
 
         return ret;
     }
     
     int ECMediaMachine::initAudioEngine() {
         voe_ = VoiceEngine::Create();
-        if ( NULL == voe_)
+        if (NULL == voe_)
         {
             PrintConsole("media_init Create audio engine fail\n");
             return -1;
@@ -138,13 +138,14 @@ namespace cloopenwebrtc {
             
             PrintConsole("Init Voice Engine Error, error code is %d\n",base->LastError());
             return base->LastError(); //base init failed
-        } else {
-            VoEVolumeControl* volume = VoEVolumeControl::GetInterface(voe_);
-            if(volume){
-                volume->SetMicVolume(255);
-                volume->Release();
-            }
         }
+        
+//        VoEVolumeControl* volume = VoEVolumeControl::GetInterface(voe_);
+//        if(volume){
+//            volume->SetMicVolume(255);
+//            volume->Release();
+//        }
+        
         base->Release();
  
         if (vie_) {
@@ -284,10 +285,10 @@ namespace cloopenwebrtc {
     void ECMediaMachine::UnInit()
     {
         uninitAudioNetwork();
-        uninitVideoNetwork();
+        // uninitVideoNetwork();
         
         uninitAudioEngine();
-        uninitVideoEngine();
+        // uninitVideoEngine();
     }
     
     int ECMediaMachine::uninitAudioNetwork() {
@@ -361,8 +362,8 @@ namespace cloopenwebrtc {
         ret = doAudioPlayout();
         ret = doAudioDataReceive();
 
-        ret = doPreviewRender(video_channel_);
-        ret = doVideoDataReceive();
+        //ret = doPreviewRender(video_channel_);
+        //ret = doVideoDataReceive();
         return ret;
     }
 
@@ -372,9 +373,9 @@ namespace cloopenwebrtc {
         ret = shutdownVideoDataReceive();
         ret = shutdownPreviewRender(video_channel_);
 
-        ret = shutdownAudioDataReceive();
-        PrintConsole("[RTMP ERROR] %s end1 with code:%d\n", __FUNCTION__, ret);
         ret = shutdownAudioPlayout();
+        PrintConsole("[RTMP ERROR] %s end1 with code:%d\n", __FUNCTION__, ret);
+        ret = shutdownAudioDataReceive();
         PrintConsole("[RTMP ERROR] %s end with code:%d\n", __FUNCTION__, ret);
         return ret;
     }

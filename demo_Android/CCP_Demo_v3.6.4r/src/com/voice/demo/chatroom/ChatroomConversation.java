@@ -65,7 +65,7 @@ public class ChatroomConversation extends CCPBaseActivity implements View.OnClic
 
         renderView = new SurfaceView(this);
 		mLoaclVideoView.addView(renderView);
-		 NativeInterface.setAudioContext(getApplicationContext());
+		// NativeInterface.setAudioContext(getApplicationContext());
 		NativeInterface.createLiveStream();
 
 
@@ -126,7 +126,7 @@ public class ChatroomConversation extends CCPBaseActivity implements View.OnClic
                         } else  {
                             running = false;
                             NativeInterface.stopLiveStream();
-                            NativeInterface.releaseLiveStream();
+                            //NativeInterface.releaseLiveStream();
                         }
 
 					}
