@@ -367,12 +367,15 @@ namespace cloopenwebrtc {
     }
 
     int ECMediaMachine::stopPlayout() {
+        PrintConsole("[RTMP ERROR] %s start\n", __FUNCTION__);
         int ret = -1;
         ret = shutdownVideoDataReceive();
         ret = shutdownPreviewRender(video_channel_);
 
         ret = shutdownAudioDataReceive();
+        PrintConsole("[RTMP ERROR] %s end1 with code:%d\n", __FUNCTION__, ret);
         ret = shutdownAudioPlayout();
+        PrintConsole("[RTMP ERROR] %s end with code:%d\n", __FUNCTION__, ret);
         return ret;
     }
     

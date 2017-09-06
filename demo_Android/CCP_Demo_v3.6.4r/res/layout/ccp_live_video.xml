@@ -9,6 +9,14 @@
         android:id="@+id/head"
         layout="@layout/voice_head" />
 
+    <EditText
+        android:id="@+id/ec_live_url_text"
+        style="@style/VoiceAccountTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="rtmp://"
+        android:textColor="@android:color/black" />
+
     <RelativeLayout
         android:id="@+id/cpp_live_video_view"
         android:layout_width="match_parent"
