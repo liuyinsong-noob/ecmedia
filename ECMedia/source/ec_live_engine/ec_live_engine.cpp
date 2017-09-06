@@ -52,13 +52,16 @@ namespace cloopenwebrtc {
 
     // singleton
     ECLiveEngine *ECLiveEngine::getInstance() {
+        PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
         if(!ec_live_engine_) {
+            PrintConsole("[ECLiveEngine Error] %s: create new live engine instance.", __FUNCTION__);
             ec_live_engine_ = new ECLiveEngine();
+            if(ec_live_engine_->init() != 0) {
+                PrintConsole("[ECLiveEngine Error] %s: ec live engine init failed.", __FUNCTION__);
+                return nullptr;
+            }
         }
-        if(ec_live_engine_->init() != 0) {
-            PrintConsole("[ECLiveEngine Error] %s: ec live engine init failed.", __FUNCTION__);
-            return nullptr;
-        }
+        PrintConsole("[ECLiveEngine INFO] %s: end", __FUNCTION__);
         return ec_live_engine_;
     }
     
@@ -74,6 +77,7 @@ namespace cloopenwebrtc {
     // publish rtmp stream
     int ECLiveEngine::startPublish(const char *url, EC_RtmpPublishCallback *callback)
     {
+        PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
         if(!publiser_running_) {
             publiser_running_ = true;
             if(!bitrate_controller_) {
@@ -90,10 +94,12 @@ namespace cloopenwebrtc {
             int ret = ec_media_core_->startCapture();
             return ret;
         }
+        PrintConsole("[ECLiveEngine INFO] %s: end", __FUNCTION__);
         return 0;
     }
 
     int ECLiveEngine::stopPublish() {
+        PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
         if(publiser_running_) {
             int ret = -1;
             ret = ec_media_core_->stopCapture();
@@ -102,11 +108,14 @@ namespace cloopenwebrtc {
             publiser_running_ = false;
             return ret;
         }
+        PrintConsole("[ECLiveEngine INFO] %s: stop", __FUNCTION__);
         return 0;
     }
 
     // play live(rtmp/hls/http-flv) stream
     int ECLiveEngine::startPlay(const char* url, EC_MediaPullCallback* callback) {
+        PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
+        int ret = -1;
         if(!puller_runnig_) {
             puller_runnig_ = true;
 
@@ -116,21 +125,23 @@ namespace cloopenwebrtc {
             }
 
             meida_puller_->start(url);
-            int ret = ec_media_core_->startPlayout();
-            return ret;
+            ret = ec_media_core_->startPlayout();
         }
+        PrintConsole("[ECLiveEngine INFO] %s: end with code: %d", __FUNCTION__, ret);
         return 0;
     }
 
     int ECLiveEngine::stopPlay() {
+        PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
+        int ret = -1;
         if(puller_runnig_) {
             meida_puller_->stop();
-            int ret = ec_media_core_->stopPlayout();
+            ret = ec_media_core_->stopPlayout();
 
             puller_runnig_ = false;
-            return ret;
         }
-        return 0;
+        PrintConsole("[ECLiveEngine INFO] %s: end with code: %d", __FUNCTION__, ret);
+        return ret;
     }
 
     // preview viewer setting.
