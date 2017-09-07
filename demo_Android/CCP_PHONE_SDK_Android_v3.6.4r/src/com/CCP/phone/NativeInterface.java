@@ -796,7 +796,7 @@ public class NativeInterface {
 	 * @param renderView video preview view
 	 * @return
 	 */
-	public static native int playLiveStream(String url, View renderView);
+	public static native int playLiveStream(String url, Object renderView);
 
 	/**
 	 *

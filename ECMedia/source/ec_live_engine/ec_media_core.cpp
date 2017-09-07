@@ -126,7 +126,7 @@ namespace cloopenwebrtc {
     
     int ECMediaMachine::initAudioEngine() {
         voe_ = VoiceEngine::Create();
-        if ( NULL == voe_)
+        if (NULL == voe_)
         {
             PrintConsole("media_init Create audio engine fail\n");
             return -1;
@@ -138,13 +138,14 @@ namespace cloopenwebrtc {
             
             PrintConsole("Init Voice Engine Error, error code is %d\n",base->LastError());
             return base->LastError(); //base init failed
-        } else {
-            VoEVolumeControl* volume = VoEVolumeControl::GetInterface(voe_);
-            if(volume){
-                volume->SetMicVolume(255);
-                volume->Release();
-            }
         }
+        
+        VoEVolumeControl* volume = VoEVolumeControl::GetInterface(voe_);
+        if(volume){
+            volume->SetMicVolume(255);
+            volume->Release();
+        }
+        
         base->Release();
  
         if (vie_) {
@@ -189,7 +190,7 @@ namespace cloopenwebrtc {
         
             ViEBase* videobase = ViEBase::GetInterface(vie_);
             if(videobase->Init()!= 0) {
-                int lastError = videobase->LastError(); //base init failed
+                int lastError = videobase->LastError(); // base init failed
                 PrintConsole("Init Video Engine error, error code is %d\n", lastError);
                 videobase->Release();
                 VideoEngine::Delete(vie_);
@@ -246,7 +247,6 @@ namespace cloopenwebrtc {
     int ECMediaMachine::doVideoDataSend() {
 
         ViEBase *vbase = ViEBase::GetInterface(vie_);
-        // vbase->CreateChannel(video_channel_);
 
         // start send video rtp packet
         int ret = vbase->StartSend(video_channel_);
@@ -356,23 +356,30 @@ namespace cloopenwebrtc {
     }
 
     int ECMediaMachine::startPlayout() {
+        PrintConsole("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
         int ret = -1;
         // start Playout
         ret = doAudioPlayout();
+        if(ret != 0) {
+            PrintConsole("[ECMEDIA CORE INFO] %s doAudioPlayout error: %d\n", __FUNCTION__, ret);
+        }
         ret = doAudioDataReceive();
 
         ret = doPreviewRender(video_channel_);
         ret = doVideoDataReceive();
+        PrintConsole("[ECMEDIA CORE INFO] %s end with code: %d\n", __FUNCTION__, ret);
         return ret;
     }
 
     int ECMediaMachine::stopPlayout() {
+        PrintConsole("[RTMP ERROR] %s start\n", __FUNCTION__);
         int ret = -1;
         ret = shutdownVideoDataReceive();
         ret = shutdownPreviewRender(video_channel_);
 
-        ret = shutdownAudioDataReceive();
         ret = shutdownAudioPlayout();
+        ret = shutdownAudioDataReceive();
+        PrintConsole("[RTMP ERROR] %s end with code:%d\n", __FUNCTION__, ret);
         return ret;
     }
     
@@ -574,6 +581,7 @@ namespace cloopenwebrtc {
      // 视频参数配置属性配置
     int ECMediaMachine::setVideoCaptureInfo(int camera_index, int fps, int bitrate, int width, int height)
     {
+        PrintConsole("[ECMEDIA CORE INFO] %s start, camera_index:%d, fps:%d, bitrate:%d, width:%d, height:%d\n", __FUNCTION__, camera_index, fps, bitrate, width, height);
         if(cameras_.size() <= camera_index) {
             return -1;
         }
@@ -584,10 +592,12 @@ namespace cloopenwebrtc {
         info_video_bitrates_    = bitrate;
         info_video_width_       = width;
         info_video_height_      = height;
+        PrintConsole("[ECMEDIA CORE INFO] %s end with code:%d\n", __FUNCTION__, 0);
         return 0;
     }
 
     int ECMediaMachine::setVideoFrameProperty(int bitrate, int width, int height) {
+        PrintConsole("[ECMEDIA CORE INFO] %s start, bitrate:%d, width:%d, height:%d\n", __FUNCTION__, bitrate, width, height);
         // no change
         if(info_video_bitrates_ == bitrate && info_video_width_ == width && info_video_height_ == height) {
             return 0;
@@ -612,6 +622,7 @@ namespace cloopenwebrtc {
             // restart capturer and render.
             ret = doCameraCapture();
             ret = doPreviewRender(capture_id_);
+            PrintConsole("[ECMEDIA CORE INFO] %s end with code:%d\n", __FUNCTION__, ret);
             return ret;
         }
     }
@@ -625,6 +636,7 @@ namespace cloopenwebrtc {
     }
 
     int ECMediaMachine::switchCamera(int index) {
+        PrintConsole("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
         if(cameras_.size() <= index) {
             // log:无效的 index
             return -1;
@@ -644,6 +656,7 @@ namespace cloopenwebrtc {
         // restart capturer and render.
         ret = doCameraCapture();
         ret = doPreviewRender(capture_id_);
+        PrintConsole("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
         return ret;
     }
     
@@ -653,6 +666,7 @@ namespace cloopenwebrtc {
     
     int ECMediaMachine::initCameraDevice()
     {
+        PrintConsole("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
         if(cameras_.size() != 0) {
             return 0;
         }
@@ -671,6 +685,7 @@ namespace cloopenwebrtc {
             PrintConsole("[RTMP INFO] %s get device camera failed.\n", __FUNCTION__);
             return -1;
         }
+        PrintConsole("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
         return 0;
     }
     
@@ -841,16 +856,21 @@ namespace cloopenwebrtc {
     /***************************   receive  data ******************************/
     void ECMediaMachine::SetRtpData(int channel,void *rtpdata,int type)
     {
-        if( 0 == type )
+        PrintConsole("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
+        if( 0 == type ) {
             audio_data_cb_ = (RtpData*)rtpdata;
+        }
         else
+        {
             video_data_cb_ = (RtpData*)rtpdata;
+        }
     }
 
     void ECMediaMachine::onAvcDataComing(void* nalu_data, int len, uint32_t timestamp) {
         if(!nalu_data) {
             return;
         }
+        PrintConsole("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
         if( video_data_cb_) {
             RTPHeader rtpHeader;
             rtpHeader.sequenceNumber = video_rtp_seq_++;
@@ -862,20 +882,19 @@ namespace cloopenwebrtc {
                 return;
             }
             
-            if (frame_type == 7 || frame_type == 8)
-            {
+            if (frame_type == 7 || frame_type == 8) { //sps or pps
                 rtpHeader.markerBit = false;
-            }
-            else
-            {
+            } else {
                 rtpHeader.markerBit = true;
             }
             video_data_cb_->ReceivePacket((const uint8_t*) nalu_data, len, rtpHeader, true);
         }
+        PrintConsole("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
     }
 
     void ECMediaMachine::onAacDataComing(uint8_t* pData, int nLen, uint32_t ts) {
         if(audio_data_cb_) {
+            PrintConsole("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
             int audio_record_sample_hz_ = 32000;
             int audio_record_channels_ = 2;
             size_t kMaxDataSizeSamples = 3840;
@@ -898,6 +917,7 @@ namespace cloopenwebrtc {
             rtpHeader.header.timestamp = 320 * rtpHeader.header.sequenceNumber;
             audio_data_cb_->OnReceivedPayloadData((const uint8_t*)temp_output, audio_record_sample_hz_/100*audio_record_channels_*2, &rtpHeader);
         }
+        PrintConsole("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
     }
 
     int ECMediaMachine::doDesktopCapture()

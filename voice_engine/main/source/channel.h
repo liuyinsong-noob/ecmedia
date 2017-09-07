@@ -635,7 +635,7 @@ private:
 	void *_receiveData;
 	void *_sendOriginalData;
 	void *_receiveOriginalData;
-
+    bool _haveRegisteredAudioRED;
 	//    sean add begin 20140708 original audio sample
 	AudioFrame _audioFrame2Up;
 	//    sean add end 20140708 original audio sample

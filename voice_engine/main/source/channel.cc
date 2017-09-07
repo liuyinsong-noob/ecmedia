@@ -994,7 +994,8 @@ Channel::Channel(int32_t channelId,
     _rtpTimeOutSeconds(0),
 	_processDataFlag(false),
     _sendData(NULL),
-    _receiveData(NULL)
+    _receiveData(NULL),
+    _haveRegisteredAudioRED(false)
 {
     WEBRTC_TRACE(kTraceMemory, kTraceVoice, VoEId(_instanceId,_channelId),
                  "Channel::Channel() - ctor");
@@ -1023,14 +1024,6 @@ Channel::Channel(int32_t channelId,
 	audioproc_config.Set<DelayCorrection>(new DelayCorrection());
 	audioproc_config.Set<ReportedDelay>(new ReportedDelay());
     rx_audioproc_.reset(AudioProcessing::Create(audioproc_config));
-    
-    // register receiver rtp loss rate extension header, add by zhaoyou
-    rtp_header_parser_->DeregisterRtpHeaderExtension(kRtpExtensionLossRate);
-    rtp_header_parser_->RegisterRtpHeaderExtension(kRtpExtensionLossRate, 10);
-    
-    // register sender rtp loss rate extension header, add by zhaoyou
-    _rtpRtcpModule->DeregisterSendRtpHeaderExtension(kRtpExtensionLossRate);
-    _rtpRtcpModule->RegisterSendRtpHeaderExtension(kRtpExtensionLossRate, 10);
 }
 
 Channel::~Channel()
@@ -5251,6 +5244,17 @@ void
     
     // audio loss rate, added by sean
     if (header.extension.hasLossRate) {
+        if(!_haveRegisteredAudioRED) {
+            _haveRegisteredAudioRED = true;
+            // register receiver rtp loss rate extension header, add by zhaoyou
+            rtp_header_parser_->DeregisterRtpHeaderExtension(kRtpExtensionLossRate);
+            rtp_header_parser_->RegisterRtpHeaderExtension(kRtpExtensionLossRate, 10);
+            
+            // register sender rtp loss rate extension header, add by zhaoyou
+            _rtpRtcpModule->DeregisterSendRtpHeaderExtension(kRtpExtensionLossRate);
+            _rtpRtcpModule->RegisterSendRtpHeaderExtension(kRtpExtensionLossRate, 10);
+        }
+        
         WEBRTC_TRACE(kTraceStateInfo, kTraceVoice,
                      VoEId(_instanceId,_channelId),
                      "loss rate from rtp header extension %d\n", header.extension.lossRate);
