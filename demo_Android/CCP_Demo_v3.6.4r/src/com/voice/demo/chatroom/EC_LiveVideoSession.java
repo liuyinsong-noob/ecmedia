@@ -19,8 +19,10 @@ import android.os.Bundle;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
@@ -28,51 +30,53 @@ import android.widget.RelativeLayout;
 import com.CCP.phone.NativeInterface;
 import com.voice.demo.R;
 import com.voice.demo.ui.CCPBaseActivity;
+import com.yuntongxun.ecsdk.core.voip.ViERenderer;
 
 /**
  * ChatRoom Converstion list ...
  *
  */
-public class ChatroomConversation extends CCPBaseActivity implements View.OnClickListener{
+public class EC_LiveVideoSession extends CCPBaseActivity implements View.OnClickListener{
 	public RelativeLayout mLoaclVideoView;
 	private  boolean running = false;
     private EditText ec_live_url_text;
     private String live_url_string;
     SurfaceView renderView;
+    SurfaceView local_renderView;
     SharedPreferences.Editor live_url_editor;
+
+    Button  netphone_landing_publish_video;
+    Button  netphone_landing_switch_camera;
+    Button  netphone_landing_play_video;
+
+    int camera_index = 0; // camera index, 0: back, 1: front
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		handleTitleDisplay(getString(R.string.btn_title_back)
-				, getString(R.string.app_title_person_info)
+				, getString(R.string.app_title_live_video_show)
 				, null);
 
         SharedPreferences sharedPreferences = getSharedPreferences("ec_live_url_xml", Context.MODE_PRIVATE);
         // 获取Editor对象
         live_url_editor = sharedPreferences.edit();
 
-
-
-        findViewById(R.id.netphone_landing_publish_video).setOnClickListener(this);
-		findViewById(R.id.netphone_landing_switch_camera).setOnClickListener(this);
-		findViewById(R.id.netphone_landing_play_video).setOnClickListener(this);
+        netphone_landing_publish_video = (Button) findViewById(R.id.netphone_landing_publish_video);
+        netphone_landing_publish_video.setOnClickListener(this);
+        netphone_landing_switch_camera = (Button) findViewById(R.id.netphone_landing_switch_camera);
+        netphone_landing_switch_camera.setOnClickListener(this);
+        netphone_landing_play_video = (Button)findViewById(R.id.netphone_landing_play_video);
+        netphone_landing_play_video.setOnClickListener(this);
 
         //live video url
         ec_live_url_text = (EditText) findViewById(R.id.ec_live_url_text);
 		mLoaclVideoView = (RelativeLayout) findViewById(R.id.cpp_live_video_view);
-//		 renderView = ViERenderer.CreateLocalRenderer(this);
+        local_renderView = ViERenderer.CreateLocalRenderer(this);
 
         renderView = new SurfaceView(this);
-		mLoaclVideoView.addView(renderView);
-		// NativeInterface.setAudioContext(getApplicationContext());
 		NativeInterface.createLiveStream();
-
-
-		getDeviceHelper().setVideoView("1007", renderView, null);
-
         live_url_string = sharedPreferences.getString("live_url", "rtmp://");
-
         ec_live_url_text.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -100,6 +104,15 @@ public class ChatroomConversation extends CCPBaseActivity implements View.OnClic
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case  R.id.netphone_landing_publish_video:
+
+			    if(!running) {
+                    netphone_landing_publish_video.setText("停止推流");
+                    mLoaclVideoView.addView(local_renderView);
+                } else {
+                    netphone_landing_publish_video.setText("开始推流");
+                    mLoaclVideoView.removeView(local_renderView);
+                }
+
 				Thread work1 = new Thread(new Runnable() {
 					@Override
 					public void run() {
@@ -115,18 +128,34 @@ public class ChatroomConversation extends CCPBaseActivity implements View.OnClic
 				work1.start();
 				break;
 			case  R.id.netphone_landing_switch_camera:
+
+                NativeInterface.selectCameraLiveStream(camera_index);
+                if(camera_index == 0) {
+                    camera_index = 1;
+                } else {
+                    camera_index = 0;
+                }
 				break;
 			case  R.id.netphone_landing_play_video:
+                if(!running) {
+                    netphone_landing_play_video.setText("停止观看");
+                    mLoaclVideoView.addView(renderView);
+                } else {
+                    netphone_landing_play_video.setText("开始观看");
+                    mLoaclVideoView.removeView(renderView);
+                }
+
 				Thread play_pthread = new Thread(new Runnable() {
 					@Override
 					public void run() {
                         if(!running) {
+
+                            getDeviceHelper().setVideoView("1007", renderView, null);
                             running = true;
                             NativeInterface.playLiveStream(ec_live_url_text.getText().toString(), "1007");
                         } else  {
                             running = false;
                             NativeInterface.stopLiveStream();
-                            //NativeInterface.releaseLiveStream();
                         }
 
 					}
@@ -142,5 +171,13 @@ public class ChatroomConversation extends CCPBaseActivity implements View.OnClic
 	protected int getLayoutId() {
 		return R.layout.ccp_live_video;
 	}
+
+	@Override
+    protected void onDestroy() {
+        super.onDestroy();
+        NativeInterface.stopLiveStream();
+        NativeInterface.releaseLiveStream();
+    }
+
 }
 

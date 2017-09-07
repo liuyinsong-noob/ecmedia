@@ -62,7 +62,7 @@ namespace cloopenwebrtc {
         bool run();
         void CallConnect();
         void CallDisconnect();
-        void DoReadData();
+        void doReadRtmpData();
 
         int GotVideoSample(u_int32_t timestamp, SrsCodecSample *sample);
         int GotAudioSample(u_int32_t timestamp, SrsCodecSample *sample);

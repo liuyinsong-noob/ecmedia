@@ -91,17 +91,17 @@ namespace cloopenwebrtc {
         int count = 0;
         
         if((ret = hls_task_->Initialize(str_url_.c_str(), vod, start, delay, error, count, this)) != ERROR_SUCCESS) {
-            Error("initialize task failed, url=%s, ret=%d", str_url_.c_str(), ret);
+            PrintConsole("initialize task failed, url=%s, ret=%d", str_url_.c_str(), ret);
             return ret;
         }
         
         ret = hls_task_->Process();
         
         if(ret != ERROR_SUCCESS) {
-            Warn("st task terminate with ret=%d", ret);
+            PrintConsole("st task terminate with ret=%d", ret);
         }
         else {
-            Trace("st task terminate with ret=%d", ret);
+            PrintConsole("st task terminate with ret=%d", ret);
         }
         delete hls_task_;
         hls_task_ = nullptr;
@@ -136,14 +136,14 @@ namespace cloopenwebrtc {
     // EC_TS_ParserCallback: avc data callback
     void EC_HLS_Puller::onGotAvcframe(const char* avc_data, int length, int64_t dts, int64_t pts) {
         if(av_packet_cacher) {
-            av_packet_cacher->CacheH264Data((uint8_t*)avc_data, length, pts);
+            av_packet_cacher->onAvcDataComing((uint8_t *) avc_data, length, pts);
         }
     }
     
     // EC_TS_ParserCallback: aac data callback
     void EC_HLS_Puller::onGotAacframe(const char* aac_data, int length, int64_t dts, int64_t pts) {
         if(av_packet_cacher) {
-            av_packet_cacher->CacheAacData((uint8_t*)aac_data, length, pts);
+            av_packet_cacher->onAacDataComing((uint8_t *) aac_data, length, pts);
         }
     }   
     
@@ -155,7 +155,5 @@ namespace cloopenwebrtc {
             list_ts_slices_.erase(iter++);
             delete ts_slice;
         }
-        
-        
     }
 }

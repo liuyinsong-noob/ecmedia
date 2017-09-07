@@ -12,14 +12,15 @@
  */package com.voice.demo.ui.developer;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.TypedValue;
-import android.view.Gravity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hisun.phone.core.voice.util.Log4Util;
@@ -48,7 +49,7 @@ public class DeveloperLoginActivity extends LoginUIActivity  implements View.OnC
 	CCPTitleViewBase mCcpTitleViewBase;
 	CCPButton mCcpImaButton;
 
-	private TextView mSubsidTextView;
+	private EditText mSubsidTextView;
 
 	private TextView mVoipToken;
 	private TextView mSubAccount;
@@ -58,6 +59,8 @@ public class DeveloperLoginActivity extends LoginUIActivity  implements View.OnC
 	private EditText mServerPortEditText;
 
 	private String[] mVoipArray;
+	SharedPreferences.Editor store_editor;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,33 @@ public class DeveloperLoginActivity extends LoginUIActivity  implements View.OnC
 		CCPConfig.initProperties(getApplicationContext());
 
 		initConfigInfomation();
+
+		SharedPreferences sharedPreferences = getSharedPreferences("voip_account_info", Context.MODE_PRIVATE);
+		// 获取Editor对象
+		store_editor = sharedPreferences.edit();
+
+
+
+		mSubsidTextView.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence text, int start, int before, int count) {
+				store_editor.putString("voip_account", mSubsidTextView.getText().toString());
+				store_editor.commit();
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+
+			}
+		});
+
+		String account_str = sharedPreferences.getString("voip_account", "1002");
+		mSubsidTextView.setText(account_str);
 	}
 
 
@@ -95,7 +125,7 @@ public class DeveloperLoginActivity extends LoginUIActivity  implements View.OnC
 	 */
 	private void initLoginLayout() {
 
-		mSubsidTextView = (TextView) findViewById(R.id.sub_sid);
+		mSubsidTextView = (EditText) findViewById(R.id.sub_sid);
 
 		//update subaccount info ..
 		mSubAccount = (TextView) findViewById(R.id.sub_account);

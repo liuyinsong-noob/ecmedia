@@ -44,6 +44,7 @@ enum NET_STATUS_CODE {
     RTMP_STSTUS_PLAY_SUCCESS,
     RTMP_STSTUS_PLAY_FAILED
 };
+extern bool g_media_TraceFlag;
 typedef int(*onLiveStreamNetworkStatusCallBack)(void *handle, NET_STATUS_CODE code);
 typedef int(*onLiveStreamVideoResolution)(void *handle, int width, int height);
 /*

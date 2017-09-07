@@ -51,9 +51,9 @@ namespace cloopenwebrtc{
     public:
         EC_AVCacher();
         ~EC_AVCacher();
-        void CacheH264Data(const uint8_t*pdata, int len, uint32_t ts);
+        void onAvcDataComing(const uint8_t *pdata, int len, uint32_t ts);
         void CachePcmData(const uint8_t*pdata, int len, uint32_t ts);
-        void CacheAacData(const uint8_t*pdata, int len, uint32_t ts);
+        void onAacDataComing(const uint8_t *pdata, int len, uint32_t ts);
         void setReceiverCallback(EC_ReceiverCallback *cb);
         void run();
         void shutdown();
@@ -62,7 +62,7 @@ namespace cloopenwebrtc{
         static bool decodingAudioThreadRun(void *pThis);
 
      protected:
-        bool DoDecode();
+        bool handleVideo();
     private:
         bool handleAudio();
         void clearCacher();
@@ -75,8 +75,7 @@ namespace cloopenwebrtc{
         int                     buf_cache_time_;
         PlyStuts				ply_status_;
         
-        uint32_t				sys_fast_video_time_;	// √Îø™ ±º‰÷·
-        uint32_t				rtmp_fast_video_time_;
+ 
         uint32_t				rtmp_cache_time_;
         uint32_t				play_cur_time_;
         

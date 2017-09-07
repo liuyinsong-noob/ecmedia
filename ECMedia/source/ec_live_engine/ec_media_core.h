@@ -31,9 +31,6 @@ namespace cloopenwebrtc {
     class AVCImageCallback;
     class EC_CapturerCallback;
 
-
- 
-
     class ECMediaMachine
             : public Transport ,
               public AudioPacketizationCallback,

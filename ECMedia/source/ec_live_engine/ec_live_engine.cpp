@@ -54,7 +54,7 @@ namespace cloopenwebrtc {
     ECLiveEngine *ECLiveEngine::getInstance() {
         PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
         if(!ec_live_engine_) {
-            PrintConsole("[ECLiveEngine Error] %s: create new live engine instance.", __FUNCTION__);
+            PrintConsole("[ECLiveEngine INFO] %s: create new live engine instance.", __FUNCTION__);
             ec_live_engine_ = new ECLiveEngine();
             if(ec_live_engine_->init() != 0) {
                 PrintConsole("[ECLiveEngine Error] %s: ec live engine init failed.", __FUNCTION__);
