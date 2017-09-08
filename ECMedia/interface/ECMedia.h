@@ -34,18 +34,7 @@ typedef int(*onSoundCardOn)(int deviceType);//0, playout; 1, record
 typedef int(*onEcMediaDesktopCaptureErrCode)(int desktop_capture_id, int errCode);
 typedef int (*onEcMediaShareWindowSizeChange)(int desktop_capture_id, int width, int height);
 typedef int(*onEcMediaNoCameraCaptureCb)(const int id, const bool capture);
-enum NET_STATUS_CODE {
-    RTMP_STATUS_CONNECTING = 1,
-    RTMP_STATUS_CONNECTED_SUCCESS,
-    RTMP_STATUS_CONNECTED_FAILED,
-    RTMP_STATUS_TIMEOUT,
-    RTMP_STSTUS_PUSH_SUCCESS,
-    RTMP_STSTUS_PUSH_FAILED,
-    RTMP_STSTUS_PLAY_SUCCESS,
-    RTMP_STSTUS_PLAY_FAILED
-};
-typedef int(*onLiveStreamNetworkStatusCallBack)(void *handle, NET_STATUS_CODE code);
-typedef int(*onLiveStreamVideoResolution)(void *handle, int width, int height);
+ 
 /*
  * Enable trace.
  */
@@ -591,25 +580,39 @@ ECMEDIA_API int ECMedia_disable_srtp_recv_video(int channel);
 ECMEDIA_API int ECMedia_set_CaptureDeviceID(int videoCapDevId);
 ECMEDIA_API int ECMedia_Check_Record_Permission(bool &enabled);
 ECMEDIA_API int ECmedia_set_shield_mosaic(int video_channel, bool flag);
-/* LiveSteam
- 观看直播调用过程：
- void *handle = ECMedia_createLiveStream(0);
- ECMedia_setLiveStreamNetworkCallBack(statusCallback);
- ECMedia_playLiveStream(handle, "http://livestream.com", wndPtr, callback);
- ..
- ECMedia_stopLiveStream(handle);
- ECMedia_releaseLiveStream(handle);
- handle = NULL;
- 直播推流调用过程：
- void *handle = ECMedia_createLiveStream(0);
- ECMedia_setVideoProfileLiveStream(handle, cameraIndex, capability, bitrates);
- ECMedia_setLiveStreamNetworkCallBack(statusCallback);
- ECMedia_pushLiveStream(handle, "http://livestream.com", wndPtr);
- ..
- ECMedia_stopLiveStream(handl);
- ECMedia_releaseLiveStream(handle);
- handle = NULL;
- */
+
+/* 
+// 播流接口调用流程
+// 创建 handle
+void *handle = ECMedia_createLiveStream();
+// 设置预览view
+ECMedia_setVideoPreviewViewer(handle, view);
+// 开始播放
+ECMedia_playLiveStream(handle, "http://livestream.com", callback);
+// 停止播放
+ECMedia_stopLiveStream(handle);
+// 释放handle
+ECMedia_releaseLiveStream(handle);
+handle = NULL;
+
+ 
+// 推流接口调用流程
+void *handle = ECMedia_createLiveStream(0);
+// 设置预览view
+ECMedia_setVideoPreviewViewer(handle, view);
+// 设置推流视频参数
+ECMedia_ConfigLiveVideoStream(handle, config);
+// 开始推流
+ECMedia_pushLiveStream(handle, "http://livestream.com", callback);
+// 切换前后置摄像头
+ECMedia_SwitchLiveCamera(handle, camera_index);
+// 停止推流
+ECMedia_stopLiveStream(handle);
+// 释放handle
+ECMedia_releaseLiveStream(handle);
+handle = NULL;
+*/
+    
 /*
  功能     : 创建直播模块
  参数     : [IN]  type	  : 类型，必须为0
@@ -643,25 +646,16 @@ ECMEDIA_API void ECMedia_stopLiveStream(void *handle);
  参数     :	  [IN]  handle		： 句柄
  */
 ECMEDIA_API void ECMedia_releaseLiveStream(void *handle);
+
 /*
- 功能     : 开始直播模块美颜
- 参数     :	  [IN]  handle		： 句柄
- */
-ECMEDIA_API void ECMedia_enableLiveStreamBeauty(void *handle);
-/*
- 功能     : 停止直播模块美颜
- 参数     :	  [IN]  handle		： 句柄
- */
-ECMEDIA_API void ECMedia_disableLiveStreamBeauty(void *handle);
-/*
- ÂäüËÉΩ     : ËÆæÁΩÆÊé®ÊµÅËßÜÈ¢ëÂèÇÊï∞
- ÂèÇÊï∞     : [IN]  handle		Ôºö Âè•ÊüÑ
- [IN]  cameraIndex			 : ÊëÑÂÉèÂ§¥index
- [IN]  cam			 : ËßÜÈ¢ëËÉΩÂäõ
- [IN]  bitrates	ÔºöËßÜÈ¢ëÁ†ÅÁéá
- ËøîÂõûÂÄº   : ËøîÂõûÂÄº 0ÔºöÊàêÂäü„ÄÄ-1ÔºöÂèÇÊï∞‰∏çÊ≠£Á°Æ
+ * 配置推流视频参数
+ * config: 视频参数配置，具体解释见 LiveVideoStreamConfig 定义处
  */
 ECMEDIA_API int ECMedia_ConfigLiveVideoStream(void *handle, LiveVideoStreamConfig config);
+/**
+ * 设置视频预览view
+ */
+ECMEDIA_API int ECMedia_setVideoPreviewViewer(void *handle, void *view);
 
 /**
  *
@@ -670,12 +664,6 @@ ECMEDIA_API int ECMedia_ConfigLiveVideoStream(void *handle, LiveVideoStreamConfi
  */
 ECMEDIA_API int ECMedia_SwitchLiveCamera(void *handle, int camera_index);
 
-/*
- 功能     : 设置直播网络状态回调
- 参数     : [IN]  handle		： 句柄
- [IN]  callback	 : 回调
- */
-ECMEDIA_API void ECMedia_setLiveStreamNetworkCallBack(void *handle, onLiveStreamNetworkStatusCallBack callback);
 /*
  功能     : 设置直播推流的视频来源
  参数     : [IN]   handle	： 句柄
@@ -692,7 +680,6 @@ ECMEDIA_API int ECMedia_GetShareWindows(void *handle, WindowShare ** windows);
  */
 ECMEDIA_API int ECMedia_SelectShareWindow(void *handle, int type , int id);
 
-ECMEDIA_API int ECMedia_setVideoPreviewViewer(void *handle, void *view);
 
 /*
  功能     : 设置直播推流的视频来源
@@ -700,6 +687,18 @@ ECMEDIA_API int ECMedia_setVideoPreviewViewer(void *handle, void *view);
        [IN]  video_source			：视频来源 0 摄像头 1 是桌面
  */
 ECMEDIA_API void ECMedia_SetLiveVideoSource(void *handle, int video_source);
+    
+/*
+ 功能     : 开始直播模块美颜
+ 参数     :	  [IN]  handle		： 句柄
+ */
+ECMEDIA_API void ECMedia_enableLiveStreamBeauty(void *handle);
+/*
+ 功能     : 停止直播模块美颜
+ 参数     :	  [IN]  handle		： 句柄
+ */
+ECMEDIA_API void ECMedia_disableLiveStreamBeauty(void *handle);
+    
 /*
  * 功能： 录制摄像头视频保存为MP4文件
  * 参数： [IN] filename: MP4小视频文件保存路径

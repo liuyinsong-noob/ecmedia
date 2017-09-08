@@ -161,7 +161,7 @@ static int m_cameraCount = 0;
 using namespace cloopenwebrtc;
 using namespace std;
 
-#define ECMEDIA_VERSION "2.1.4.1.09041624"
+#define ECMEDIA_VERSION "2.1.4.3.09081118"
 
 //extern bool g_media_TraceFlag;
 //void PrintConsole(const char * fmt,...){};
@@ -176,7 +176,7 @@ using namespace std;
 //#include "enum.h"
 #include "critical_section_wrapper.h"
 
-#ifdef  WIN32      //for locating memory leak under windows platform added by zdm
+#ifdef  WIN32      // for locating memory leak under windows platform added by zdm
 #include   <stdlib.h>
 #include   <crtdbg.h>
 #endif
@@ -433,6 +433,7 @@ int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level, int le
 		}
 	}
     Trace::set_level_filter(nLevel);
+    PrintConsole("[ECMEDIA INFO] ECmedia version: %s", ECMedia_get_Version());
     PrintConsole("[ECMEDIA INFO] %s ends...",__FUNCTION__);
     return 0;
 }
@@ -5236,16 +5237,6 @@ void ECMedia_disableLiveStreamBeauty(void *handle)
 #ifdef VIDEO_ENABLED
     //	RTMPLiveSession *p = (RTMPLiveSession*)handle;
     //	p->DisableBeauty();
-    PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
-#endif
-}
-
-void ECMedia_setLiveStreamNetworkCallBack(void *handle, onLiveStreamNetworkStatusCallBack callback)
-{
-    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
-#ifdef VIDEO_ENABLED
-    //	RTMPLiveSession *p = (RTMPLiveSession*)handle;
-    //	p->setNetworkStatusCallBack(callback);
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 #endif
 }

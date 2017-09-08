@@ -37,11 +37,6 @@ namespace cloopenwebrtc {
                 kHighPriority,
                 "rtmpPullingThread_");
         av_packet_cacher = NULL;
-//        srs_codec_ = new SrsAvcAacCodec();
-//        audio_payload_ = new DemuxData(1024);
-//        video_payload_ = new DemuxData(384 * 1024);
-        
-      
     }
     
     EC_RtmpPuller::~EC_RtmpPuller() {
@@ -100,7 +95,7 @@ namespace cloopenwebrtc {
                     case RS_PLY_Init:
                     {
                         if (srs_rtmp_handshake(rtmp_) == 0) {
-                            srs_human_trace("SRS: simple handshake ok.");
+                            PrintConsole("SRS: simple handshake ok.");
                             rtmp_status_ = RS_PLY_Handshaked;
                         }
                         else {
@@ -111,7 +106,7 @@ namespace cloopenwebrtc {
                     case RS_PLY_Handshaked:
                     {
                         if (srs_rtmp_connect_app(rtmp_) == 0) {
-                            srs_human_trace("SRS: connect vhost/app ok.");
+                            PrintConsole("SRS: connect vhost/app ok.");
                             rtmp_status_ = RS_PLY_Connected;
                         }
                         else {
@@ -122,7 +117,7 @@ namespace cloopenwebrtc {
                     case RS_PLY_Connected:
                     {
                         if (srs_rtmp_play_stream(rtmp_) == 0) {
-                            srs_human_trace("SRS: play stream ok.");
+                            PrintConsole("SRS: play stream ok.");
                             rtmp_status_ = RS_PLY_Played;
                             CallConnect();
                         }
@@ -133,7 +128,7 @@ namespace cloopenwebrtc {
                         break;
                     case RS_PLY_Played:
                     {
-                        DoReadData();
+                        doReadRtmpData();
                     }
                         break;
                 }
@@ -230,7 +225,7 @@ namespace cloopenwebrtc {
         return true;
     }
     
-    void EC_RtmpPuller::DoReadData() {
+    void EC_RtmpPuller::doReadRtmpData() {
         int size;
         char type;
         char *data;
@@ -247,60 +242,14 @@ namespace cloopenwebrtc {
         } else if (type == SRS_RTMP_TYPE_SCRIPT) {
             if (!srs_rtmp_is_onMetaData(type, data, size)) {
                 // LOG(LS_ERROR) << "No flv";
-                srs_human_trace("drop message type=%#x, size=%dB", type, size);
+                PrintConsole("drop message type=%#x, size=%dB", type, size);
             }
         }
-        
-//            SrsCodecSample sample;
-//            if (srs_codec_->video_avc_demux(data, size, &sample) == ERROR_SUCCESS) {
-//                if (srs_codec_->video_codec_id == SrsCodecVideoAVC) {    // Jus support H264
-//                    //video_payload_->append(data+9, 2);
-//                    GotVideoSample(timestamp, &sample);
-//
-//                } else {
-//                    //LOG(LS_ERROR) << "Don't support video format!";
-//                }
-//            }
-//        } else if (type == SRS_RTMP_TYPE_AUDIO) {
-//            SrsCodecSample sample;
-//            if (srs_codec_->audio_aac_demux(data, size, &sample) != ERROR_SUCCESS) {
-//                if (sample.acodec == SrsCodecAudioMP3 && srs_codec_->audio_mp3_demux(data, size, &sample) != ERROR_SUCCESS) {
-//                    free(data);
-//                    return;
-//                }
-//                free(data);
-//                return;    // Just support AAC.
-//            }
-//
-//            SrsCodecAudio acodec = (SrsCodecAudio) srs_codec_->audio_codec_id;
-//
-//            // ts support audio codec: aac/mp3
-//            if (acodec != SrsCodecAudioAAC && acodec != SrsCodecAudioMP3) {
-//                free(data);
-//                return;
-//            }
-//            // for aac: ignore sequence header
-//            if (acodec == SrsCodecAudioAAC && sample.aac_packet_type == SrsCodecAudioTypeSequenceHeader
-//                    || srs_codec_->aac_object == SrsAacObjectTypeReserved) {
-//                free(data);
-//                return;
-//            }
-//            GotAudioSample(timestamp, &sample);
-//        } else if (type == SRS_RTMP_TYPE_SCRIPT) {
-//            if (!srs_rtmp_is_onMetaData(type, data, size)) {
-//                // LOG(LS_ERROR) << "No flv";
-//                srs_human_trace("drop message type=%#x, size=%dB", type, size);
-//            }
-//        }
-//
-//        //if (srs_human_print_rtmp_packet(type, timestamp, data, size) != 0) {
-//        //}
         free(data);
-       
     }
 
     void EC_RtmpPuller::handleVideoPacket(char* data, int len, u_int32_t timestamp) {
-        
+        PrintConsole("[EC_RtmpPuller INFO] %s begin\n", __FUNCTION__);
         unsigned frameType = ((unsigned char)data[0]) >> 4;
         unsigned codecId = data[0] &0xF;
         RTPHeader rtpHeader;
@@ -318,7 +267,7 @@ namespace cloopenwebrtc {
                     break;
                 case 1:
                     if (!UnPackNAL(data + 5, len - 5, nal)) {
-                        // PrintConsole("[RTMP ERROR] %s unpack nalu error\n", __FUNCTION__);
+                        PrintConsole("[RTMP ERROR] %s unpack nalu error\n", __FUNCTION__);
                         return;
                     }
                     payloadData = &nal[0];
@@ -330,13 +279,14 @@ namespace cloopenwebrtc {
             }
             
             if(av_packet_cacher){
-                av_packet_cacher->CacheH264Data((uint8_t*)payloadData, payloadLen, timestamp);
+                av_packet_cacher->onAvcDataComing((uint8_t *) payloadData, payloadLen, timestamp);
             }
         }
     }
     
     void EC_RtmpPuller::HandleAuidoPacket(char* data, int length, u_int32_t timestamp)
     {
+        PrintConsole("[EC_RtmpPuller] %s begin, data: %p, length:%d, timestamp:%d\n", __FUNCTION__, data, length, timestamp);
         unsigned voiceCodec = ((unsigned char)data[0]) >> 4;
         switch (voiceCodec) {
             case 0:
@@ -344,15 +294,13 @@ namespace cloopenwebrtc {
                 break;
             case 10: //AAC
                 if(av_packet_cacher) {
-                     av_packet_cacher->CacheAacData((uint8_t*)data+2, length - 2, timestamp);
+                    av_packet_cacher->onAacDataComing((uint8_t *) data + 2, length - 2, timestamp);
                 }
                 break;
             default:
                 PrintConsole("[RTMP ERROR] %s codec id %d not support\n", __FUNCTION__,voiceCodec);
                 break;
         }
-        
-        // printf("sample rate is %d KHZ  timestamp %d\n", sampleRate, packet->m_nTimeStamp);
     }
     
     

@@ -27,7 +27,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.hisun.phone.core.voice.Build;
 import com.hisun.phone.core.voice.Device.AudioMode;
@@ -39,7 +38,7 @@ import com.hisun.phone.core.voice.util.VoiceUtil;
 import com.voice.demo.CCPApplication;
 import com.voice.demo.R;
 import com.voice.demo.ExConsultation.ExpertMainActivity;
-import com.voice.demo.chatroom.ChatroomConversation;
+import com.voice.demo.chatroom.EC_LiveVideoSession;
 import com.voice.demo.contacts.ContactListActivity;
 import com.voice.demo.group.GroupMessageListActivity;
 import com.voice.demo.group.model.IMChatMessageDetail;
@@ -220,7 +219,7 @@ public class CapabilityChoiceActivity extends CCPBaseActivity implements CCPCapa
 	public void OnCapacityItemClick(int id , int resid) {
 		switch (resid) {
 		case R.drawable.ccp_voice_group_chat:
-			startActivity(new Intent(CapabilityChoiceActivity.this, ChatroomConversation.class));
+			startActivity(new Intent(CapabilityChoiceActivity.this, EC_LiveVideoSession.class));
 			break;
 		case R.drawable.ccp_voice_verification_code:
 			

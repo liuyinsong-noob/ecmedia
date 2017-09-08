@@ -84,7 +84,6 @@ namespace cloopenwebrtc {
     , video_data_cb_(nullptr)
     , audio_rtp_seq_(0)
     , video_rtp_seq_(0)
-    , faac_decode_handle_(nullptr)
     , faac_encode_handle_(nullptr)
     , capture_id_(-1)
     , desktop_capture_id_(-1)
@@ -109,7 +108,10 @@ namespace cloopenwebrtc {
     
     ECMediaMachine::~ECMediaMachine()
     {
-
+        if (faac_encode_handle_) {
+            faac_encoder_close(faac_encode_handle_);
+            faac_encode_handle_ = nullptr;
+        }
     }
     
     bool ECMediaMachine::Init()
@@ -545,18 +547,18 @@ namespace cloopenwebrtc {
     }
 
     int ECMediaMachine::doAudioPlayout() {
-        // enable audio speaker.
-        VoEHardware *hardware = VoEHardware::GetInterface(voe_);
         int ret = -1;
-        ret = hardware->SetLoudspeakerStatus(true);
-        hardware->Release();
-        if(ret != 0) {
-            return ret;
-        }
-
         VoEBase *base = VoEBase::GetInterface(voe_);
         ret = base->StartPlayout(audio_channel_);
         base->Release();
+        
+        // enable audio speaker.
+        VoEHardware *hardware = VoEHardware::GetInterface(voe_);
+        ret = hardware->SetLoudspeakerStatus(true);
+        hardware->Release();
+        if(ret != 0) {
+            PrintConsole("[ECMEDIA CORE ERROR] %s  set loudspeaker status failed\n", __FUNCTION__);
+        }
         return ret;
     }
 
@@ -877,14 +879,21 @@ namespace cloopenwebrtc {
             rtpHeader.ssrc = 1;
             rtpHeader.payloadType = 98;
             rtpHeader.timestamp = timestamp;
+  
             uint8_t frame_type = *(uint8_t*)nalu_data & 0x1f;
-            if (frame_type == 6) {
+            static bool isSpsPpsHasComing = false;
+      
+            //some sei may come befor sps and pps, picture appare mosaic, so we jump it.
+            uint8_t type_sei = 6;
+            if(!isSpsPpsHasComing && frame_type == type_sei) {
                 return;
             }
             
             if (frame_type == 7 || frame_type == 8) { //sps or pps
+                isSpsPpsHasComing = true;
                 rtpHeader.markerBit = false;
             } else {
+                isSpsPpsHasComing = false;
                 rtpHeader.markerBit = true;
             }
             video_data_cb_->ReceivePacket((const uint8_t*) nalu_data, len, rtpHeader, true);

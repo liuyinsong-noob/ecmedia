@@ -101,6 +101,7 @@
     <!-- input info activity -->
     <string name="input_info_title">输入信息</string>
     <string name="app_title_person_info">个人信息</string>
+    <string name="app_title_live_video_show">直播演示</string>
     <string name="str_voip_regist">注册</string>
     <string name="src_phone_empty">本机号码为空</string>
 
