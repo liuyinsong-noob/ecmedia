@@ -1270,7 +1270,6 @@ int32_t AudioDeviceIOS::InitPlayOrRecord() {
     bool enable = false;
     GetLoudspeakerStatus(enable);
 
-    
     // audio session mode
      error = nil;
     [session setMode:AVAudioSessionModeVoiceChat
@@ -1288,6 +1287,8 @@ int32_t AudioDeviceIOS::InitPlayOrRecord() {
                    error:&error];
     _originalCategory = [session.category UTF8String];
     
+    // reset speaker status, when session category be set.
+    SetLoudspeakerStatus(enable);
     //repair some types of bluetooth headsets not available
     //set audio buffer time
     //@see http://blog.csdn.net/kingshuo7/article/details/42588191
