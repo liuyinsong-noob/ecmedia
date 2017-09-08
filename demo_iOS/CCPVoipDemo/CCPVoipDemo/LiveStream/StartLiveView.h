@@ -2,6 +2,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface StartLiveView : UIView
+@interface StartLiveView : UIView <UITextFieldDelegate, UIActionSheetDelegate>
 
 @end
