@@ -1050,6 +1050,7 @@ bool RTPSender::SendToNetwork(std::unique_ptr<RtpPacketToSend> packet,
     {
       cloopenwebrtc::CritScope lock(&send_critsect_);
       media_has_been_sent_ = true;
+      _lastSent = clock_->TimeInMicroseconds();
     }
     UpdateRtpStats(*packet, false, false);
   }
