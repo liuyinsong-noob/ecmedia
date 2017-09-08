@@ -1,3 +1,25 @@
+Version 2.1.4.1.09041624 1504682739 971b6461f0e91be7bb2d881c6cc613a358d8c67d
+1. 接口不变
+2. bug fix: fix interop with cisco hardware mcu issue
+3. feature: enlarge audio from microphone
+4. feature: enlarge incoming voice
+5. bug fix:record audio to file error
+6. bug fix: android camera permission problem
+7. bug fix: android sdk permission problem
+8. bug fix: robust
+9. bug fix: video resolution deviced by 8; remove files which should not tracked
+10. feature : add audioRelease for only audio version
+11. bug fix : srtp
+12. bug fix: ipv6
+13. bug fix: ffmpeg
+14. bug fix: srtp memory error
+15. bug fix修复获取状态报告，protobuf内存管理逻辑
+16. bug fix 修复windows版本音设置pcm callback无返回值编译错误
+17. feature 提供原始音视频数据回调接口
+18. bug fix: using opengl to render preview
+19. bug fix:ios rotate
+20. bug fix : get rid of playout warning when not inserting earphone on pc
+
 Version 2.1.2.25 1497352672 5a74190e2101fedf5e495d61ef9361f4dc1529b7
 1、接口改变
 2、增加win上检测到音频输入输出设备时的回调函数int ECMedia_set_soundcard_on_cb(onSoundCardOn soundcard_on_cb);
