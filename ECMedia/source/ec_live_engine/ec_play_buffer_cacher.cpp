@@ -47,6 +47,7 @@ namespace cloopenwebrtc{
         faac_decode_handle_ = nullptr;
         a_cache_len_ = 0;
         aac_frame_per10ms_size_ = 0;
+        last_viedo_ts_delay_ = 0;
     }
     
     EC_AVCacher::~EC_AVCacher() {
@@ -178,7 +179,15 @@ namespace cloopenwebrtc{
                 if (lst_video_buffer_.size() > 0) {
                     PrintConsole("[ECMEDIA CORE INFO] %s lst_video_buffer_ size :%d\n", __FUNCTION__, lst_video_buffer_.size());
                     pkt_video = lst_video_buffer_.front();
-                    if (pkt_video->_dts <= play_cur_time_) {
+                    
+//                    uint32_t diff_dts = pkt_video->_dts - last_video_ts_;
+//                    if(diff_dts != 0 && (last_viedo_ts_delay_ == 0 || (diff_dts <= 2*last_viedo_ts_delay_ && diff_dts >-2*last_viedo_ts_delay_))) {
+//                        last_video_ts_ = pkt_video->_dts;
+//                        last_viedo_ts_delay_ = diff_dts;
+//                    }
+//                    
+                    int diff = pkt_video->_dts - play_cur_time_;
+                    if (diff <= 0) {
                         lst_video_buffer_.pop_front();
                     } else {
                         pkt_video = nullptr;

@@ -2137,19 +2137,9 @@ namespace cloopenwebrtc {
         char* last = msg->packet_data + msg->packet_data_size;
         
         if (!msg->is_video()) {
-            // write AAC raw audio.
-//            if (aac_muxer && (ret = aac_muxer->write_audio((char*)msg->packet_data, msg->packet_data_size)) != 0) {
-//                return ret;
-//            }
-            
             // callback aac data.
-            
             callback_->onGotAacframe((char*)msg->packet_data, msg->packet_data_size, (msg->dts == 0)? msg->pts : msg->dts,(msg->dts == 0)? msg->pts : msg->dts);
         } else {
-//            trace("ts+aac+h264+data %s pts:%" PRId64" dts:%" PRId64" size: %d",
-//                  (msg->type == TSPidTypeVideo)? "video":"audio", msg->pts,
-//                  (msg->dts == 0)? msg->pts : msg->dts, msg->packet_data_size);
-            
             // parse H264 video.
             bool first = true;
             while (p < last) {
@@ -2157,10 +2147,7 @@ namespace cloopenwebrtc {
                 if ((ret = h264.parse(msg, last, p)) != 0) {
                     return ret;
                 }
-//                trace("ts+h264 video raw data parsed, size: %d, 0x%02x 0x%02x 0x%02x 0x%02x",
-//                      h264.size, h264.at(0), h264.at(1), h264.at(2), h264.at(3));
-//                
-
+ 
                 if (h264.size == 2) {
                     continue;
                 }

@@ -95,6 +95,9 @@ namespace cloopenwebrtc{
         uint8_t			audio_cache_[8192];
         int				a_cache_len_;
         unsigned int aac_frame_per10ms_size_;
+        
+        uint32_t last_viedo_ts_delay_;
+        uint32_t last_video_ts_;
 
     };
 }

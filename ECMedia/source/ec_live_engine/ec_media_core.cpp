@@ -882,6 +882,7 @@ namespace cloopenwebrtc {
   
             uint8_t frame_type = *(uint8_t*)nalu_data & 0x1f;
             static bool isSpsPpsHasComing = false;
+      
             //some sei may come befor sps and pps, picture appare mosaic, so we jump it.
             uint8_t type_sei = 6;
             if(!isSpsPpsHasComing && frame_type == type_sei) {
@@ -892,6 +893,7 @@ namespace cloopenwebrtc {
                 isSpsPpsHasComing = true;
                 rtpHeader.markerBit = false;
             } else {
+                isSpsPpsHasComing = false;
                 rtpHeader.markerBit = true;
             }
             video_data_cb_->ReceivePacket((const uint8_t*) nalu_data, len, rtpHeader, true);

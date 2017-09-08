@@ -22,8 +22,6 @@ LOCAL_SRC_FILES := \
 		RecordLocal.cpp \
 		statsCollector.cc \
 		VoeObserver.cpp \
-		ECLiveStream_rtmp.cpp \
-		ECLiveStream.cpp \
 		faaccodec.cpp \
 		MediaStatisticsData.pb.cc \
 		ec_live_engine/ec_aac_codec.cpp \
