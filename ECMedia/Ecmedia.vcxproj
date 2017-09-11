@@ -153,9 +153,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)..\UIdemo_new\Export</OutDir>
     <IntDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
     <TargetExt>.dll</TargetExt>
+    <TargetName>$(ProjectName)d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -165,9 +166,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)..\UIdemo_new\Export</OutDir>
     <IntDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
     <TargetExt>.dll</TargetExt>
+    <IgnoreImportLibrary>false</IgnoreImportLibrary>
+    <GenerateManifest>true</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VRelease|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -216,15 +219,15 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;DEBUG_PRINT_LOG;ENABLE_LOG;ORTP_STATIC;VIDEO_ENABLED;ENABLE_SCREEN_SHARE;STATS_TO_STRING;ECMEDIA_API_LIVESTREAM;WEBRTC_WIN</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;DEBUG_PRINT_LOG;ENABLE_LOG;ORTP_STATIC;VIDEO_ENABLED;ENABLE_SCREEN_SHARE;STATS_TO_STRING;ECMEDIA_API_LIVESTREAM;WEBRTC_WIN;WEBRTC_MODULE_UTILITY_VIDEO</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>./source;./include;./source/Http;./source/Utility;./interface;../module\exosip\source;../module\exosip\include;../module\osip\include;$(SolutionDir)\third_party\vld\include;..\third_party\libx264\libx264_win\x86\include;../module/videojpegyuv/include;../module/interface;../voice_engine\main\source;../voice_engine\main\include;../module;..\system_wrappers\interface;../video_engine/source;..\third_party\openssl\inc32;..\third_party;../third_party/oRTP/include;../third_party/oRTP/include/ortp;..\third_party\srtp\crypto\include\win;..\third_party\srtp\crypto\include;../third_party/ffmpeg/ffmpeg_win/x86/include;../module/video_coding/main/include;..\module\video_coding\codecs\h264;..\module\video_coding\codecs\interface;../video_engine\include;..\module\common_audio\source\resampler\include;..\module\common_video\source;..\module\common_video\source\libyuv\include;..\module\common_video\interface;..\module\rtp_rtcp\include;..\module\bitrate_controller\include;..\module\remote_bitrate_estimator\include;..\module\remote_bitrate_estimator\source;..\module\pacing\include;..\module\video_render\main\include;..\module\audio_coding\codecs\opencore-amr\amrnb;..\module\audio_coding\main\source;..\third_party\libfaad\win\include\faad2;..\third_party\librtmp\rtmpdump-2.3\librtmp;..\third_party\librtmp\rtmpdump-2.3\;..\module\audio_coding\main\include;..\third_party\libfaac\include;..\third_party\activemq-cpp\src\main;..\third_party\protobuf\src\;../base/</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libeay32.lib;ssleay32.lib;zlib.lib;libfaad2d.lib;activemq-cppd.lib;libfaac.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\third_party\openssl;..\third_party\libzip;..\third_party\libfaad\win\lib\x86;..\third_party\libfaac\lib\win\x86;..\third_party\activemq-cpp\bin\x86;..\third_party\protobuf\bin\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libeay32.lib;ssleay32.lib;zlib.lib;libfaad2d.lib;activemq-cppd.lib;libfaac.lib;legacy_stdio_definitions.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\third_party\openssl;..\third_party\libzip;..\third_party\libfaad\win\lib\x86;..\third_party\libfaac\lib\win\x86;..\third_party\activemq-cpp\bin\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(OutDir)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -260,18 +263,27 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;DEBUG_PRINT_LOG;VIDEO_ENABLED;ENABLE_LOG;ORTP_STATIC;ENABLE_SCREEN_SHARE;ECMEDIA_API_LIVESTREAM;WEBRTC_MODULE_UTILITY_VIDEO;WEBRTC_WIN</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CRT_SECURE_NO_WARNINGS;DEBUG_PRINT_LOG;VIDEO_ENABLED;ENABLE_LOG;ORTP_STATIC;ENABLE_SCREEN_SHARE;ECMEDIA_API_LIVESTREAM;WEBRTC_MODULE_UTILITY_VIDEO;WEBRTC_WIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>./source;./include;./source/Http;./source/Utility;./interface;../module\exosip\source;../module\exosip\include;../module\osip\include;$(SolutionDir)\third_party\vld\include;..\third_party\libx264\libx264_win\x86\include;../module/videojpegyuv/include;../module/interface;../voice_engine\main\source;../voice_engine\main\include;../module;..\system_wrappers\interface;../video_engine/source;..\third_party\openssl\inc32;..\third_party;../third_party/oRTP/include;../third_party/oRTP/include/ortp;..\third_party\srtp\crypto\include\win;..\third_party\srtp\crypto\include;../third_party/ffmpeg/ffmpeg_win/x86/include;../module/video_coding/main/include;..\module\video_coding\codecs\h264;..\module\video_coding\codecs\interface;../video_engine\include;..\module\common_audio\source\resampler\include;..\module\common_video\source;..\module\common_video\source\libyuv\include;..\module\common_video\interface;..\module\rtp_rtcp\include;..\module\bitrate_controller\include;..\module\remote_bitrate_estimator\include;..\module\remote_bitrate_estimator\source;..\module\pacing\include;..\module\video_render\main\include;..\module\audio_coding\codecs\opencore-amr\amrnb;..\module\audio_coding\main\source;..\third_party\libfaad\win\include\faad2;..\third_party\librtmp\rtmpdump-2.3\librtmp;..\third_party\librtmp\rtmpdump-2.3\;..\module\audio_coding\main\include;..\third_party\libfaac\include;..\third_party\activemq-cpp\src\main;..\third_party\protobuf\src\;../base/</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions />
+      <ShowIncludes>true</ShowIncludes>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;libeay32.lib;ssleay32.lib;zlib.lib;libfaad2d.lib;libfaac.lib;activemq-cpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\third_party\openssl;..\third_party\libzip;..\third_party\libfaad\win\lib\x86;..\third_party\libfaac\lib\win\x86;..\third_party\activemq-cpp\bin\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;libeay32.lib;ssleay32.lib;zlib.lib;libfaad2d.lib;libfaac.lib;activemq-cpp.lib;legacy_stdio_definitions.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\third_party\openssl;..\third_party\libzip;..\third_party\libfaad\win\lib\x86;..\third_party\libfaac\lib\win\x86;..\third_party\activemq-cpp\bin\x86</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalOptions>
+      </AdditionalOptions>
+      <LinkStatus>false</LinkStatus>
+      <ShowProgress>NotSet</ShowProgress>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(OutDir)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -279,6 +291,22 @@
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalDependencies>vpx.lib</AdditionalDependencies>
     </Lib>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <Manifest>
+      <SuppressStartupBanner>false</SuppressStartupBanner>
+    </Manifest>
+    <ResourceCompile>
+      <SuppressStartupBanner>false</SuppressStartupBanner>
+    </ResourceCompile>
+    <Xdcmake>
+      <SuppressStartupBanner>false</SuppressStartupBanner>
+    </Xdcmake>
+    <Bscmake>
+      <SuppressStartupBanner>false</SuppressStartupBanner>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VRelease|Win32'">
     <ClCompile>
@@ -506,35 +534,15 @@
     </ProjectReference>
     <ProjectReference Include="..\module\audioprocess\audioprocess.vcxproj">
       <Project>{460d34b6-19e2-467f-a3b6-0128810bb9d8}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\audio_coding\amrnb.vcxproj">
-      <Project>{5a683c2a-f44f-4109-9a90-5a648d7fc289}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+      <Project>{2045b06f-b784-4a95-82ca-4d13e488e349}</Project>
     </ProjectReference>
     <ProjectReference Include="..\module\audio_coding\audio_coding_module.vcxproj">
       <Project>{63e456e0-f52c-3d6f-49f5-5f921b8af46e}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\audio_coding\CNG.vcxproj">
       <Project>{a99338f7-fe94-87e1-af79-9a8a37716064}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\audio_coding\codecs\audio_decoder_interface.vcxproj">
       <Project>{2734e26a-1062-4f83-a662-613e712baf1a}</Project>
@@ -544,94 +552,39 @@
     </ProjectReference>
     <ProjectReference Include="..\module\audio_coding\codecs\silk\silk_android\src\Silk_FIX.vcxproj">
       <Project>{56b91d01-9150-4bbf-afa1-5b68ab991b76}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\audio_coding\G711.vcxproj">
       <Project>{4a5169c0-5bad-b8d7-b17d-dc5b14754170}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\audio_coding\G729\G729.vcxproj">
       <Project>{988c5e9f-a81d-429a-bd8d-63919ab1efa1}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\audio_coding\iLBC.vcxproj">
       <Project>{4a5169c0-5bed-b8d7-b17d-dc5b14754170}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\audio_coding\iSAC.vcxproj">
       <Project>{6fc5942d-aead-4a90-83bf-d7d4d3641e79}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\audio_coding\L16.vcxproj">
       <Project>{a686b620-e45e-4175-a4f9-9db598b804e8}</Project>
     </ProjectReference>
     <ProjectReference Include="..\module\audio_coding\NetEq.vcxproj">
       <Project>{ab38a723-2493-1391-085b-30e85cc7bdfa}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\audio_coding\webrtc_opus.vcxproj">
       <Project>{bdd424fc-0972-4f20-8653-731d01497f71}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\audio_conference_mixer\audio_conference_mixer.vcxproj">
       <Project>{26226ac6-c496-904a-3335-547b4e777fd6}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\audio_device\audio_device.vcxproj">
       <Project>{f89ebf8c-a7f4-9ca0-3510-cf148dbfc58c}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\bitrate_controller\bitrate_controller.vcxproj">
       <Project>{2f39a772-e2ca-52f0-2d95-02b22c0b6cd2}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\common_audio\common_audio.vcxproj">
       <Project>{9b70613b-d319-4b1f-812b-b292d8ac8a26}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\congestion_controller\congestion_controller\congestion_controller.vcxproj">
       <Project>{ba2bcdbd-aa9c-47aa-a5aa-cfbb4168a56b}</Project>
@@ -639,128 +592,62 @@
     <ProjectReference Include="..\module\desktop_capture\desktop_capture.vcxproj">
       <Project>{19fb7379-3d2a-40d4-8aa7-a513891666a4}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\module\exosip\exosip.vcxproj">
+      <Project>{74f515b9-90ef-43e6-9a5f-15f8e1a5dcdb}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\module\media_file\media_file.vcxproj">
       <Project>{d869d395-18c3-f5cc-b663-5c336682e365}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\module\osip\osip.vcxproj">
+      <Project>{62d4f8d1-edf5-4c27-907c-476a2d2ac3a4}</Project>
     </ProjectReference>
     <ProjectReference Include="..\module\pacing\paced_sender.vcxproj">
       <Project>{19ed1f3f-7402-4020-9dc3-17a6e630f7f1}</Project>
     </ProjectReference>
     <ProjectReference Include="..\module\remote_bitrate_estimator\remote_bitrate_estimator.vcxproj">
       <Project>{ef2de30f-cc25-4747-a027-f3f81c245d1f}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\rtp_rtcp\rtp_rtcp.vcxproj">
       <Project>{78d8aee5-5111-63e1-c3a6-a6c2114e61ae}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\udp_transport\udp_transport.vcxproj">
       <Project>{b9c3d1bf-4a3c-27ec-9885-ba01d9126825}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\utility\webrtc_utility.vcxproj">
       <Project>{b5ceee5d-3ee6-10fd-25c7-3240f28d42a3}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\video_capture\video_capture_module.vcxproj">
       <Project>{8460e89b-8cbd-62e0-4424-1bc409116bda}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\video_capture\video_capture_module_internal_impl.vcxproj">
       <Project>{b9b5aaf3-07ad-41b9-8b11-383e258c1923}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\video_coding\h264.vcxproj">
       <Project>{b1aeaaf7-8a1b-4f29-9874-ab96aa022560}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\video_coding\openH264.vcxproj">
       <Project>{1033f509-959e-4881-9acd-e6cd04f012df}</Project>
-      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>
     <ProjectReference Include="..\module\video_coding\webrtc_video_coding.vcxproj">
       <Project>{8e16f322-1d7d-2c90-49f4-038ebf7cc264}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\video_coding\webrtc_vp8.vcxproj">
       <Project>{b234c1e2-f21f-fa63-8a7c-ddc0ff3fd53a}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\video_processing\video_processing.vcxproj">
       <Project>{2fd1a9fc-1cdf-704b-c2df-68c97d48617d}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\video_render\video_render_internal_impl.vcxproj">
       <Project>{e4ee1379-cc98-46a8-bc24-fc21f2234572}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\video_render\video_render_module.vcxproj">
       <Project>{de3f5c87-febb-bc67-f59c-9f73b905c81c}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\module\video_render\video_render_module_impl.vcxproj">
       <Project>{e58ebdaf-e071-428b-a7c8-a4a43939588a}</Project>
     </ProjectReference>
     <ProjectReference Include="..\system_wrappers\source\system_wrappers.vcxproj">
       <Project>{75f95b97-c0b0-aa5d-4ac8-78cac02dc44e}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\third_party\libjpeg_turbo\libjpeg.vcxproj">
       <Project>{a68e380e-afb4-e4e2-f5ed-0ae20725b7c5}</Project>
@@ -772,12 +659,11 @@
       <Project>{dce19daf-69ac-46db-b14a-39f0faa5db74}</Project>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>
+    <ProjectReference Include="..\third_party\libvpx\build\win32\vpx.vcxproj">
+      <Project>{dce19daf-69ac-46db-b14a-39f0faa5db74}</Project>
+    </ProjectReference>
     <ProjectReference Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Include="..\third_party\libvpx\build\x64\vpx_x64.vcxproj">
       <Project>{34b221e6-b6c6-47af-bde8-dd578fdaed01}</Project>
-    </ProjectReference>
-    <ProjectReference Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Include="..\third_party\libvpx\build\win32\vpx.vcxproj">
-      <Project>{dce19daf-69ac-46db-b14a-39f0faa5db74}</Project>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>
     <ProjectReference Include="..\third_party\libvpx\build\win32\vpx.vcxproj" Condition="'$(Configuration)|$(Platform)'=='VRelease|Win32'">
       <Project>{dce19daf-69ac-46db-b14a-39f0faa5db74}</Project>
@@ -805,11 +691,6 @@
     </ProjectReference>
     <ProjectReference Include="..\third_party\libyuv\libyuv.vcxproj">
       <Project>{1a8364d9-fe77-b61e-ed73-eeb3beb59e8e}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\third_party\openH264\codec\build\win32\dec\WelsDecCore.vcxproj">
       <Project>{01b4ae41-6ad6-4caf-aeb3-c42f7f9121d5}</Project>
@@ -828,51 +709,21 @@
     </ProjectReference>
     <ProjectReference Include="..\third_party\opus\src\win32\VS2010\celt.vcxproj">
       <Project>{245603e3-f580-41a5-9632-b25fe3372cbf}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\third_party\opus\src\win32\VS2010\opus.vcxproj">
       <Project>{219ec965-228a-1824-174d-96449d05f88a}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\third_party\opus\src\win32\VS2010\silk_common.vcxproj">
       <Project>{c303d2fc-ff97-49b8-9ddd-467b4c9a0b16}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\third_party\opus\src\win32\VS2010\silk_fixed.vcxproj">
       <Project>{8484c90d-1561-402f-a91d-2db10f8c5171}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\third_party\opus\src\win32\VS2010\silk_float.vcxproj">
       <Project>{9c4961d2-5ddb-40c7-9be8-ca918dc4e782}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\third_party\oRTP\build\win32native\oRTP.vcxproj">
       <Project>{4a07bb2b-f56e-4f1b-a719-d28b782ac128}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\third_party\protobuf\cmake\solution\libprotobuf-lite.vcxproj">
       <Project>{1ff405c0-00a1-38f7-9fb1-45f385a33b7d}</Project>
@@ -882,27 +733,12 @@
     </ProjectReference>
     <ProjectReference Include="..\third_party\srtp\srtp.vcxproj">
       <Project>{eef031cb-fed8-451e-a471-91ec8d4f6750}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\video_engine\video_engine_core.vcxproj">
       <Project>{c700a37b-d8f2-7f02-030b-8f0fce185d3a}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\voice_engine\voice_engine_core.vcxproj">
       <Project>{ca5a2ec5-2fd1-528f-da51-967660716da2}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

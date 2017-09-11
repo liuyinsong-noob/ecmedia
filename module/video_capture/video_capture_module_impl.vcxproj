@@ -50,6 +50,7 @@
     <ProjectGuid>{EB68C34E-056C-476B-AB1C-7852992E61AE}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>video_capture_module_impl</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

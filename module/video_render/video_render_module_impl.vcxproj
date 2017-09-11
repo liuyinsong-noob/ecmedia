@@ -49,6 +49,7 @@
     <ProjectGuid>{E58EBDAF-E071-428B-A7C8-A4A43939588A}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>video_render_module_impl</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

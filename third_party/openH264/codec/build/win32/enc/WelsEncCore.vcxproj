@@ -45,13 +45,14 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{59208004-1774-4816-AC24-31FF44C324B4}</ProjectGuid>
     <RootNamespace>WelsEncCore</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VRelease|Win32'" Label="Configuration">
@@ -506,7 +507,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\encoder\core\src\au_set.cpp" />
-    <ClCompile Include="..\..\..\common\src\common_tables.cpp" />
     <ClCompile Include="..\..\..\common\src\copy_mb.cpp" />
     <ClCompile Include="..\..\..\common\src\cpu.cpp" />
     <ClCompile Include="..\..\..\common\src\crt_util_safe_x.cpp" />

@@ -55,6 +55,7 @@
     <ProjectGuid>{BDD424FC-0972-4F20-8653-731D01497F71}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>webrtc_opus</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -72,7 +73,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>

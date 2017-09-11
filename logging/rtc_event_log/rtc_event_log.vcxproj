@@ -73,6 +73,9 @@
     <OutDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\lib\</OutDir>
     <IntDir>$(SolutionDir)\build\$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\lib\</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>

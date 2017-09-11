@@ -60,6 +60,7 @@
     <ProjectGuid>{8460E89B-8CBD-62E0-4424-1BC409116BDA}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>video_capture_module</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Label="Configuration">
@@ -74,6 +75,7 @@
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VRelease|Win32'" Label="Configuration">
     <PlatformToolset>v140</PlatformToolset>
