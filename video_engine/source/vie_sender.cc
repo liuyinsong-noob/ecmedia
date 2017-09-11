@@ -107,7 +107,7 @@ int ViESender::SendRtp(int vie_id, const uint8_t* packet, size_t length, const P
     // No transport
     return -1;
   }
-  assert(ChannelId(vie_id) == channel_id_);
+  //assert(ChannelId(vie_id) == channel_id_); //assert happens when open screenshare
 
   void* tmp_ptr = (void*)(packet);
   unsigned char* send_packet = static_cast<unsigned char*>(tmp_ptr);

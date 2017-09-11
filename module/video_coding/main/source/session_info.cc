@@ -135,8 +135,9 @@ size_t VCMSessionInfo::InsertBuffer(uint8_t* frame_buffer,
   // two length bytes between each NAL unit, and potentially add start codes.
   const size_t kH264NALHeaderLengthInBytes = 1;
   const size_t kLengthFieldLength = 2;
-  if (packet.codecSpecificHeader.codec == kRtpVideoH264 &&
-      packet.codecSpecificHeader.codecHeader.H264.stap_a) {
+  if (packet.codecSpecificHeader.codec == kRtpVideoH264 && 
+	  packet.codecSpecificHeader.codecHeader.H264.packetization_type == kH264StapA
+      /*packet.codecSpecificHeader.codecHeader.H264.stap_a*/) {
     size_t required_length = 0;
 	size_t nalu_count = 0;
     const uint8_t* nalu_ptr = packet_buffer + kH264NALHeaderLengthInBytes;
@@ -155,14 +156,17 @@ size_t VCMSessionInfo::InsertBuffer(uint8_t* frame_buffer,
     ShiftSubsequentPackets(packet_it, required_length);
     nalu_ptr = packet_buffer + kH264NALHeaderLengthInBytes;
     uint8_t* frame_buffer_ptr = frame_buffer + offset;
+    required_length = 0;
     while (nalu_ptr < packet_buffer + packet.sizeBytes) {
       size_t length = BufferToUWord16(nalu_ptr);
       nalu_ptr += kLengthFieldLength;
-      frame_buffer_ptr += Insert(nalu_ptr,
+      size_t naluLen = Insert(nalu_ptr,
                                  length,
                                  packet.insertStartCode,
                                  const_cast<uint8_t*>(frame_buffer_ptr));
+      frame_buffer_ptr += naluLen;
       nalu_ptr += length;
+      required_length += naluLen;
     }
     packet.sizeBytes = required_length;
     return packet.sizeBytes;

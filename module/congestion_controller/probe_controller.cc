@@ -152,7 +152,7 @@ void ProbeController::SetEstimatedBitrate(int64_t bitrate_bps) {
                  << min_bitrate_to_probe_further_bps_;
 
 	WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, -1,
-		"[Probe] Measured bitrate: %PRId64, Minimum to probe further: %PRId64)\n",
+		"[Probe] Measured bitrate: %d, Minimum to probe further: %d)\n",
 		bitrate_bps, min_bitrate_to_probe_further_bps_);
       
 #ifndef WIN32
