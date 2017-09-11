@@ -1858,7 +1858,7 @@ int ECMedia_set_video_rtp_keepalive(int channelid, bool enable, int interval, in
     if (rtp_rtcp)
     {
         int ret=0;
-        //ret = rtp_rtcp->SetRTPKeepAliveStatus(channelid, enable, payloadType, interval);
+        ret = rtp_rtcp->SetRTPKeepAliveStatus(channelid, enable, payloadType, interval);
         rtp_rtcp->Release();
         if (ret != 0) {
             PrintConsole("[ECMEDIA ERROR] %s failed to set video rtp keepalive", __FUNCTION__);
@@ -1956,7 +1956,7 @@ int ECMedia_set_audio_rtp_keepalive(int channelid, bool enable, int interval, in
 	if (rtp_rtcp)
 	{
 		int ret = 0;
-		//ret = rtp_rtcp->SetRTPKeepAliveStatus(channelid, enable, payloadType, interval);
+		ret = rtp_rtcp->SetRTPKeepAliveStatus(channelid, enable, payloadType, interval);
 		rtp_rtcp->Release();
 		if (ret != 0) {
 			PrintConsole("[ECMEDIA ERROR] %s failed to set audio rtp keepalive", __FUNCTION__);
