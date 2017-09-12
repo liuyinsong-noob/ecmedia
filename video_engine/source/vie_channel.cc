@@ -3129,15 +3129,18 @@ int32_t ViEChannel::SetKeepAliveStatus(
 {
     WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, ViEId(engine_id_, channel_id_),
                  "%s", __FUNCTION__);
-    
-    if (enable && rtp_rtcp_->RTPKeepalive())
+    if (default_rtp_rtcp_ == nullptr)
+    {
+		return -1;
+    }
+    if (enable && default_rtp_rtcp_->RTPKeepalive())
     {
         WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
                      ViEId(engine_id_, channel_id_),
                      "%s: RTP keepalive already enabled", __FUNCTION__);
         return -1;
     }
-    else if (!enable && !rtp_rtcp_->RTPKeepalive())
+    else if (!enable && !default_rtp_rtcp_->RTPKeepalive())
     {
         WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
                      ViEId(engine_id_, channel_id_),
@@ -3145,40 +3148,40 @@ int32_t ViEChannel::SetKeepAliveStatus(
         return -1;
     }
     
-    if (rtp_rtcp_->SetRTPKeepaliveStatus(enable, unknownPayloadType,
+    if (default_rtp_rtcp_->SetRTPKeepaliveStatus(enable, unknownPayloadType,
                                          deltaTransmitTimeMS) != 0)
     {
         WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
                      ViEId(engine_id_, channel_id_),
                      "%s: Could not set RTP keepalive status %d", __FUNCTION__,
                      enable);
-        //        if (enable == false && !rtp_rtcp_->DefaultModuleRegistered())
-        //        {
-        //            // Not sending media and we try to disable keep alive
-        //            _rtpRtcp.ResetSendDataCountersRTP();
-        //            _rtpRtcp.SetSendingStatus(false);
-        //        }
+               if (enable == false )
+                        {
+                            // Not sending media and we try to disable keep alive
+				   default_rtp_rtcp_->ResetSendDataCountersRTP();
+				   default_rtp_rtcp_->SetSendingStatus(false);
+                        }
         return -1;
     }
     
-    if (enable && !rtp_rtcp_->Sending())
+    if (enable && !default_rtp_rtcp_->Sending())
     {
         // Enable sending to start sending Sender reports instead of receive
         // reports
-        if (rtp_rtcp_->SetSendingStatus(true) != 0)
+        if (default_rtp_rtcp_->SetSendingStatus(true) != 0)
         {
-            rtp_rtcp_->SetRTPKeepaliveStatus(false, 0, 0);
+			default_rtp_rtcp_->SetRTPKeepaliveStatus(false, 0, 0);
             WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
                          ViEId(engine_id_, channel_id_),
                          "%s: Could not start sending", __FUNCTION__);
             return -1;
         }
     }
-    else if (!enable && !rtp_rtcp_->SendingMedia())
+    else if (!enable && !default_rtp_rtcp_->SendingMedia())
     {
         // Not sending media and we're disabling keep alive
-        rtp_rtcp_->ResetSendDataCountersRTP();
-        if (rtp_rtcp_->SetSendingStatus(false) != 0)
+		default_rtp_rtcp_->ResetSendDataCountersRTP();
+        if (default_rtp_rtcp_->SetSendingStatus(false) != 0)
         {
             WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
                          ViEId(engine_id_, channel_id_),
