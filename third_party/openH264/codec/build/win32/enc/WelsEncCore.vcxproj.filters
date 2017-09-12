@@ -21,9 +21,6 @@
     <ClCompile Include="..\..\..\encoder\core\src\au_set.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\common\src\common_tables.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\common\src\copy_mb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

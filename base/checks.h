@@ -11,7 +11,7 @@
 #ifndef WEBRTC_BASE_CHECKS_H_
 #define WEBRTC_BASE_CHECKS_H_
 
-#include "../module/typedefs.h"
+#include "typedefs.h"
 
 // If you for some reson need to know if DCHECKs are on, test the value of
 // RTC_DCHECK_IS_ON. (Test its value, not if it's defined; it'll always be
@@ -36,7 +36,7 @@ NO_RETURN void rtc_FatalMessage(const char* file, int line, const char* msg);
 #include <sstream>
 #include <string>
 
-#include "../base/safe_compare.h"
+#include "safe_compare.h"
 
 // The macros here print a message to stderr and abort under various
 // conditions. All will accept additional stream messages. For example:

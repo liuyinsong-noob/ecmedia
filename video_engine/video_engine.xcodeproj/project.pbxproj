@@ -643,14 +643,12 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					WEBRTC_POSIX,
 					VIDEOCODEC_VP8,
-<<<<<<< HEAD
 					ENABLE_SCREEN_SHARE,
 					WEBRTC_VIDEO_ENGINE_DESKTOP_SHARE_API,
 					WEBRTC_SRTP,
 					VIDEO_ENABLED,
-=======
 					WEBRTC_THREAD_RR,
->>>>>>> mergewebrtcport
+					ENABLE_GCC,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -692,6 +690,7 @@
 					../ECMedia/source,
 					../voice_engine/main/source,
 					"$(SRCROOT)/source",
+					../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
@@ -723,14 +722,12 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					WEBRTC_POSIX,
 					VIDEOCODEC_VP8,
-<<<<<<< HEAD
 					ENABLE_SCREEN_SHARE,
 					WEBRTC_VIDEO_ENGINE_DESKTOP_SHARE_API,
 					WEBRTC_SRTP,
 					VIDEO_ENABLED,
-=======
 					WEBRTC_THREAD_RR,
->>>>>>> mergewebrtcport
+					ENABLE_GCC,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -772,6 +769,7 @@
 					../ECMedia/source,
 					../voice_engine/main/source,
 					"$(SRCROOT)/source",
+					../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";

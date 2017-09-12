@@ -15,6 +15,7 @@
 #include "../base/checks.h"
 #include "../system_wrappers/include//logging.h"
 #include "../module/pacing/paced_sender.h"
+#include "../system_wrappers/include/trace.h"
 
 using namespace std;
 
@@ -107,6 +108,13 @@ void BitrateProber::CreateProbeCluster(int bitrate_bps, int64_t now_ms) {
                << cluster.pace_info.probe_cluster_min_bytes << ":"
                << cluster.pace_info.probe_cluster_min_probes << ":"
 			   << cluster.pace_info.probe_cluster_id << ")";
+
+  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, -1,
+	  "[Probe] Probe cluster(bitrate:min bytes : min packets : cluster id) : (%d:%d : %d : %d)",
+	  cluster.pace_info.send_bitrate_bps,
+	  cluster.pace_info.probe_cluster_min_bytes,
+	  cluster.pace_info.probe_cluster_min_probes,
+	  cluster.pace_info.probe_cluster_id);
 #ifndef WIN32
     printTime();
     printf("[Probe] Probe cluster (bitrate:min bytes:min packets:cluster id): (%d:%d:%d:%d)\n",

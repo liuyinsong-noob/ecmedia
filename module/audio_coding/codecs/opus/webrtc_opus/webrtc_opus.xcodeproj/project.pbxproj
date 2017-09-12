@@ -402,6 +402,7 @@
 					../../../../common_audio/source,
 					../../../../../third_party/opus/src/include,
 					../../../../../system_wrappers/source,
+					../../../../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = NO;
@@ -423,6 +424,7 @@
 					../../../../common_audio/source,
 					../../../../../third_party/opus/src/include,
 					../../../../../system_wrappers/source,
+					../../../../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = "-ObjC";

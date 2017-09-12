@@ -127,7 +127,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../.;..\..;./codecs\vp8\main\interface;./codecs\vp8\main\source;./codecs\interface;../../third_party\libvpx\libvpx;../;../interface;./main/include;./common_video;../../third_party/libyuv/include/libyuv;../common_video/source;../common_video/interface;./common_video/source/libyuv/include;./;../video_coding\main\source\utility;../video_coding\main\source\utility\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;..\..;./codecs\vp8\main\interface;./codecs\vp8\main\source;./codecs\interface;../../third_party\libvpx\libvpx;../;../interface;./main/include;./common_video;../../third_party/libyuv/include/libyuv;../common_video/source;../common_video/interface;./common_video/source/libyuv/include;./;../video_coding\main\source\utility;../video_coding\main\source\utility\include;../../base/</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 %(AdditionalOptions)</AdditionalOptions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <BufferSecurityCheck>true</BufferSecurityCheck>
@@ -231,7 +231,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../.;..\..;./codecs\vp8\main\interface;./codecs\vp8\main\source;./codecs\interface;../../third_party\libvpx\libvpx;../;../interface;./main/include;./common_video;../../third_party/libyuv/include/libyuv;../common_video/source;../common_video/interface;./common_video/source/libyuv/include;./;../video_coding\main\source\utility;../video_coding\main\source\utility\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;..\..;./codecs\vp8\main\interface;./codecs\vp8\main\source;./codecs\interface;../../third_party\libvpx\libvpx;../;../interface;./main/include;./common_video;../../third_party/libyuv/include/libyuv;../common_video/source;../common_video/interface;./common_video/source/libyuv/include;./;../video_coding\main\source\utility;../video_coding\main\source\utility\include;../../base/</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

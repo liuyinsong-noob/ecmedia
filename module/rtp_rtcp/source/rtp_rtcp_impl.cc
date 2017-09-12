@@ -20,6 +20,7 @@
 #include "../common_types.h"
 #include "../config.h"
 #include "../system_wrappers/include/trace.h"
+#include "ssrc_database.h"
 
 #ifdef _WIN32
 // Disable warning C4355: 'this' : used in base member initializer list.
@@ -114,7 +115,8 @@ ModuleRtpRtcpImpl::ModuleRtpRtcpImpl(const Configuration& configuration)
       rtt_ms_(0),
       rtp_receiver_(NULL),
       isSendingTmmbr(false),
-      receive_statistics_(configuration.receive_statistics)
+      receive_statistics_(configuration.receive_statistics),
+      ssrc_db_(SSRCDatabase::GetSSRCDatabase()){
     {
   // Make sure rtcp sender use same timestamp offset as rtp sender.
   rtcp_sender_.SetTimestampOffset(rtp_sender_.TimestampOffset());
@@ -125,20 +127,20 @@ ModuleRtpRtcpImpl::ModuleRtpRtcpImpl(const Configuration& configuration)
   const size_t kTcpOverIpv4HeaderSize = 40;
   SetMaxRtpPacketSize(IP_PACKET_SIZE - kTcpOverIpv4HeaderSize);
 
-  if (configuration.audio)
+  if (ssrc_db_)
   {
-	  int x = rand();
-	  rtp_sender_.SetSSRC(0x12345678 & (0xffff0000 | x));
-	  rtcp_sender_.SetSSRC(0x12345678 & (0xffff0000 | x));
-	  SetRtcpReceiverSsrcs(0x12345678 & (0xffff0000 | x));
+	  uint32_t rand_ssrc = ssrc_db_->CreateSSRC();
+	  rtp_sender_.SetSSRC(rand_ssrc);
+	  rtcp_sender_.SetSSRC(rand_ssrc);
+	  SetRtcpReceiverSsrcs(rand_ssrc);
   }
-//   else
-//   {
-// 	  int x = rand();
-// 	  rtp_sender_.SetSSRC(0x87654321 & (0xffff0000 | x));
-// 	  rtcp_sender_.SetSSRC(0x87654321 & (0xffff0000 | x));
-// 	  SetRtcpReceiverSsrcs(0x87654321 & (0xffff0000 | x));
-//   }
+}
+
+ModuleRtpRtcpImpl::~ModuleRtpRtcpImpl(){
+	if (ssrc_db_)
+	{
+		SSRCDatabase::ReturnSSRCDatabase();
+	}
 }
 
 // Returns the number of milliseconds until the module want a worker thread
@@ -162,7 +164,7 @@ int32_t ModuleRtpRtcpImpl::Process() {
     if (now >= last_packet_timeout_process_time_ +
         kRtpRtcpPacketTimeoutProcessTimeMs) {
         if (rtp_receiver_) {
-		//	rtp_receiver_->PacketTimeout();
+			rtp_receiver_->PacketTimeout();
         }
         
         last_packet_timeout_process_time_ = now;

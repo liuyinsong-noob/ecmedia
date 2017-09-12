@@ -70,7 +70,8 @@ RtpReceiverImpl::RtpReceiverImpl(int32_t id,
       current_remote_csrc_(),
       last_received_timestamp_(0),
       last_received_frame_time_ms_(-1),
-      last_received_sequence_number_(0) {
+      last_received_sequence_number_(0),
+	  _lastReceiveTime(0){
   assert(incoming_messages_callback);
 
   memset(current_remote_csrc_, 0, sizeof(current_remote_csrc_));
@@ -181,7 +182,7 @@ bool RtpReceiverImpl::IncomingRtpPacket(
   bool in_order) {
   // Trigger our callbacks.
   CheckSSRCChanged(rtp_header);
-
+  _lastReceiveTime = clock_->TimeInMilliseconds();
   int8_t first_payload_byte = payload_length > 0 ? payload[0] : 0;
   bool is_red = false;
 

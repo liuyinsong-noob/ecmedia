@@ -639,7 +639,9 @@ int32_t RTPSender::ReSendPacket(uint16_t packet_id, int64_t min_resend_time) {
   if (!packet) {
     // Packet not found.
 	LOG(LS_ERROR) << "--------------[bwe][NACK][OnReceivedNack] Packet not found. seq_no = " << packet_id;
-    return 0;
+	WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, -1,
+		"--------------[bwe][NACK][OnReceivedNack] Packet not found. seq_no = %u", packet_id);
+	return 0;
   }
 
   // Check if we're overusing retransmission bitrate.
@@ -1076,6 +1078,7 @@ bool RTPSender::SendToNetwork(std::unique_ptr<RtpPacketToSend> packet,
     {
       cloopenwebrtc::CritScope lock(&send_critsect_);
       media_has_been_sent_ = true;
+      _lastSent = clock_->TimeInMicroseconds();
     }
     UpdateRtpStats(*packet, false, false);
   }

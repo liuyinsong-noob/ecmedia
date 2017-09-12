@@ -649,6 +649,7 @@
 					../../module/audio_coding/codecs/g729/interface,
 					../../module/audio_coding/codecs/g729/source,
 					../../module/audio_coding/codecs/pcm16b/include,
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
@@ -696,6 +697,7 @@
 					../../module/audio_coding/codecs/g729/interface,
 					../../module/audio_coding/codecs/g729/source,
 					../../module/audio_coding/codecs/pcm16b/include,
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";

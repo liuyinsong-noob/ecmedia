@@ -215,7 +215,9 @@ ViEEncoder::ViEEncoder(int32_t engine_id,
   default_rtp_rtcp_.reset(RtpRtcp::CreateRtpRtcp(configuration));
   //need to fix: ylr
   default_rtp_rtcp_->SetSendingMediaStatus(true);
- // default_rtp_rtcp_->RegisterSendRtpHeaderExtension(kRtpExtensionTransportSequenceNumber, 5);
+#ifdef ENABLE_GCC
+  default_rtp_rtcp_->RegisterSendRtpHeaderExtension(kRtpExtensionTransportSequenceNumber, 5);
+#endif
   default_rtp_rtcp_->SetRTCPStatus(kCompound);
   packet_router_->AddRtpModule(default_rtp_rtcp_.get());
 //   std::vector<uint32_t> ssrcs;

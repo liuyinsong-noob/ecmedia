@@ -387,6 +387,8 @@
 					../../../system_wrappers/interface,
 					../../third_party/libyuv/include,
 					"$(SRCROOT)/../",
+					../../module,
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = NO;
@@ -409,6 +411,8 @@
 					../../../system_wrappers/interface,
 					../../third_party/libyuv/include,
 					"$(SRCROOT)/../",
+					../../module,
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = "-ObjC";

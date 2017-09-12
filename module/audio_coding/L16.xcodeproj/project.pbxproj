@@ -273,6 +273,7 @@
 					"\"$(SRCROOT)/../../../system_wrappers/source\"",
 					"\"$(SRCROOT)/..\"",
 					"\"$(SRCROOT)/codecs/pcm16b/include\"",
+					"\"$(SRCROOT)/../../../base\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = "-ObjC";
@@ -291,6 +292,7 @@
 					"\"$(SRCROOT)/../../../system_wrappers/source\"",
 					"\"$(SRCROOT)/..\"",
 					"\"$(SRCROOT)/codecs/pcm16b/include\"",
+					"\"$(SRCROOT)/../../../base\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = "-ObjC";

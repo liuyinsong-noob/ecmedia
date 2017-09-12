@@ -915,7 +915,7 @@ WebRtc_Word32 MediaFileImpl::StartRecordingFile(
     const bool useStream = ( format != kFileFormatAviFile);
     if( useStream)
     {
-        if(outputStream->OpenFile(fileName, false) != 0)
+        if(outputStream->OpenFile(fileName, false) == false)
         {
             delete outputStream;
             WEBRTC_TRACE(kTraceError, kTraceFile, _id,

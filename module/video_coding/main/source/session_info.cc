@@ -135,8 +135,9 @@ size_t VCMSessionInfo::InsertBuffer(uint8_t* frame_buffer,
   // two length bytes between each NAL unit, and potentially add start codes.
   const size_t kH264NALHeaderLengthInBytes = 1;
   const size_t kLengthFieldLength = 2;
-  if (packet.codecSpecificHeader.codec == kRtpVideoH264 &&
-      packet.codecSpecificHeader.codecHeader.H264.stap_a) {
+  if (packet.codecSpecificHeader.codec == kRtpVideoH264 && 
+	  packet.codecSpecificHeader.codecHeader.H264.packetization_type == kH264StapA
+      /*packet.codecSpecificHeader.codecHeader.H264.stap_a*/) {
     size_t required_length = 0;
 	size_t nalu_count = 0;
     const uint8_t* nalu_ptr = packet_buffer + kH264NALHeaderLengthInBytes;

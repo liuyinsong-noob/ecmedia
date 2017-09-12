@@ -3641,7 +3641,7 @@
 				ORGANIZATIONNAME = hisun;
 				TargetAttributes = {
 					05F43B8216A92CAA00F6D053 = {
-						DevelopmentTeam = 6BXTM4435N;
+						DevelopmentTeam = 2372872F55;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -4729,7 +4729,7 @@
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEPLOYMENT_POSTPROCESSING = NO;
-				DEVELOPMENT_TEAM = 6BXTM4435N;
+				DEVELOPMENT_TEAM = 2372872F55;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CCPVoipDemo/CCPVoipDemo-Prefix.pch";
@@ -4776,7 +4776,7 @@
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEPLOYMENT_POSTPROCESSING = NO;
-				DEVELOPMENT_TEAM = 6BXTM4435N;
+				DEVELOPMENT_TEAM = 2372872F55;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CCPVoipDemo/CCPVoipDemo-Prefix.pch";

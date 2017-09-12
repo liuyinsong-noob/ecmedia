@@ -487,6 +487,7 @@
 					../../module/video_coding/main/include,
 					../../third_party/libyuv/include,
 					../../common_video/source/libyuv/include,
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
@@ -552,6 +553,7 @@
 					../../module/video_coding/main/include,
 					../../third_party/libyuv/include,
 					../../common_video/source/libyuv/include,
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
