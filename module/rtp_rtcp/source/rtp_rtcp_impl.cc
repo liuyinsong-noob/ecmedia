@@ -162,7 +162,7 @@ int32_t ModuleRtpRtcpImpl::Process() {
     if (now >= last_packet_timeout_process_time_ +
         kRtpRtcpPacketTimeoutProcessTimeMs) {
         if (rtp_receiver_) {
-		//	rtp_receiver_->PacketTimeout();
+			rtp_receiver_->PacketTimeout();
         }
         
         last_packet_timeout_process_time_ = now;
