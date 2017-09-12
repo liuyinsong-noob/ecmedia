@@ -217,6 +217,34 @@ bool RTPSender::IsRtpHeaderExtensionRegistered(RTPExtensionType type) const {
   return rtp_header_extension_map_.IsRegistered(type);
 }
 
+  int32_t RTPSender::SetAbsoluteSendTime(uint32_t absolute_send_time) {
+  if (absolute_send_time > 0xffffff) {  // UWord24.
+    return -1;
+  }
+  CriticalSectionScoped cs(send_critsect_);
+  absolute_send_time_ = absolute_send_time;
+  return 0;
+}
+    
+int32_t RTPSender::SetLossRate(uint32_t loss_rate, uint8_t loss_rate_hd_ext_version) {
+    if(loss_rate > 0x14) {
+        return -1;
+    } else if (loss_rate > 0x0f) {  // current only support max loss rate 15*5
+        loss_rate = 0x0f;
+    }
+    
+    CriticalSectionScoped cs(send_critsect_);
+    loss_rate_hd_ext_version_ = loss_rate_hd_ext_version;
+    loss_rate_ = loss_rate;
+    return 0;
+}
+
+int32_t RTPSender::RegisterRtpHeaderExtension(RTPExtensionType type,
+                                              uint8_t id) {
+  CriticalSectionScoped cs(send_critsect_);
+  return rtp_header_extension_map_.Register(type, id);
+}
+
 int32_t RTPSender::DeregisterRtpHeaderExtension(RTPExtensionType type) {
   cloopenwebrtc::CritScope lock(&send_critsect_);
   return rtp_header_extension_map_.Deregister(type);

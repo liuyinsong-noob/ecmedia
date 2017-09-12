@@ -28,16 +28,21 @@ class RtpHeaderParserImpl : public RtpHeaderParser {
 
   bool DeregisterRtpHeaderExtension(RTPExtensionType type) override;
 
+  virtual int setECMediaConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback* cb);
  private:
   cloopenwebrtc::CriticalSection critical_section_;
   RtpHeaderExtensionMap rtp_header_extension_map_ GUARDED_BY(critical_section_);
+  ECMedia_ConferenceParticipantCallback *_participantCallback; //added by zhaoyou.
+  
 };
 
 RtpHeaderParser* RtpHeaderParser::Create() {
   return new RtpHeaderParserImpl;
 }
 
-RtpHeaderParserImpl::RtpHeaderParserImpl() {}
+RtpHeaderParserImpl::RtpHeaderParserImpl()
+    : critical_section_(CriticalSectionWrapper::CreateCriticalSection()),
+    _participantCallback(nullptr) {}
 
 bool RtpHeaderParser::IsRtcp(const uint8_t* packet, size_t length) {
   RtpUtility::RtpHeaderParser rtp_parser(packet, length);
@@ -60,6 +65,35 @@ bool RtpHeaderParserImpl::Parse(const uint8_t* packet,
   if (!valid_rtpheader) {
     return false;
   }
+  
+  /****  callback conference csrc array when csrc array changed, added by zhaoyou ******/
+  static uint8_t last_arr_csrc_count_ = 0;
+  static uint32_t last_arrOfCSRCs_[kRtpCsrcSize] = {0};
+  if(_participantCallback) {
+      if(last_arr_csrc_count_ != header->numCSRCs) {
+          // ConferenceParticipantCallback
+          _participantCallback(header->arrOfCSRCs, header->numCSRCs);
+          last_arr_csrc_count_ = header->numCSRCs;
+          for(int i = 0; i< header->numCSRCs; i++) {
+              last_arrOfCSRCs_[i] = header->arrOfCSRCs[i];
+          }
+      } else if(header->numCSRCs != 0){
+          bool need_callback = true;
+          for(int i = 0; i< header->numCSRCs; i++) {
+              // callback only once, when csrc list change
+              if(header->arrOfCSRCs[i] != last_arrOfCSRCs_[i]) {
+                  if(need_callback) {
+                      _participantCallback(header->arrOfCSRCs, header->numCSRCs);
+                      need_callback = false;
+                  }
+              }
+              // copy current csrs arr.
+              last_arrOfCSRCs_[i] = header->arrOfCSRCs[i];
+          }
+          // store last arr count.
+          last_arr_csrc_count_ = header->numCSRCs;
+      }
+  }
   return true;
 }
 
@@ -73,4 +107,19 @@ bool RtpHeaderParserImpl::DeregisterRtpHeaderExtension(RTPExtensionType type) {
   cloopenwebrtc::CritScope cs(&critical_section_);
   return rtp_header_extension_map_.Deregister(type) == 0;
 }
-}  // namespace cloopenwebrtc
+    
+int RtpHeaderParserImpl::setECMediaConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback* cb) {
+    if(cb == nullptr) {
+        // LOG(LS_ERROR) << "ECMedia_ConferenceParticipantCallback is null.";
+        return -1;
+    }
+    
+    if(_participantCallback == cb) {
+        // LOG(LS_WARNING) << "ECMedia_ConferenceParticipantCallback already have been set.";
+        return 0;
+    }
+    
+    _participantCallback = cb;
+    return 0;
+}
+}  // namespace webrtc

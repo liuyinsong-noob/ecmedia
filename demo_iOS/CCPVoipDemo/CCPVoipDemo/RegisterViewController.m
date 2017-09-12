@@ -29,6 +29,7 @@
 @end
 
 @implementation RegisterViewController {
+    UITextField *loginAccount_textField;
     UITextField *loginIP_textField;
     UITextField *loginPort_textField;
     UITextField *loginPsswd_textField;
@@ -58,7 +59,7 @@
 
 -(void)loadView
 {
-    self.title = @"开发模式登录";
+    self.title = @"登录演示";
     self.view = [[[UIView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame] autorelease];
     self.view.backgroundColor = VIEW_BACKGROUND_COLOR_FIRSTVIEW;
     if ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 5.0)
@@ -75,9 +76,11 @@
     self.navigationController.navigationBar.tintColor = VIEW_BACKGROUND_COLOR_FIRSTVIEW;
     [UIApplication sharedApplication].statusBarStyle =UIStatusBarStyleBlackOpaque;
     
-    UIBarButtonItem *leftBarItem = [[UIBarButtonItem alloc] initWithCustomView:[CommonTools navigationBackItemBtnInitWithTarget:self action:@selector(popToPreView)]];
-    self.navigationItem.leftBarButtonItem = leftBarItem;
-    [leftBarItem release];
+//    UIBarButtonItem *leftBarItem = [[UIBarButtonItem alloc] initWithCustomView:[CommonTools navigationBackItemBtnInitWithTarget:self action:@selector(popToPreView)]];
+//    self.navigationItem.leftBarButtonItem = leftBarItem;
+//    [leftBarItem release];
+    // hide lift bar button, added by zhaoyou
+    self.navigationItem.hidesBackButton = YES;
     
     NSString* fileStr = Nil;
     if (IPHONE5)
@@ -97,75 +100,103 @@
     [bgBtn release];
     
     //主账号信息布局
-    UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(11.0f, 11.0f, 100.0f, 20.0f)];
-    mainLabel.text = @"主账号：";
-    mainLabel.font = [UIFont systemFontOfSize:16.0f];
-    mainLabel.backgroundColor = [UIColor clearColor];
-    mainLabel.textColor = [UIColor whiteColor];
-    [self.view addSubview:mainLabel];
-    [mainLabel release];
+//    UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(11.0f, 11.0f, 100.0f, 20.0f)];
+//    mainLabel.text = @"主账号：";
+//    mainLabel.font = [UIFont systemFontOfSize:16.0f];
+//    mainLabel.backgroundColor = [UIColor clearColor];
+//    mainLabel.textColor = [UIColor whiteColor];
+//    [self.view addSubview:mainLabel];
+//    [mainLabel release];
+//
+//    UIImageView *mainImgViewBG1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"new126.png"]];
+//    mainImgViewBG1.frame = CGRectMake(11.0F, 35.0f, 298, 44);
+//    [self.view addSubview:mainImgViewBG1];
+//    [mainImgViewBG1 release];
+//    
+//    UIImageView *mainImgViewBG2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"new126.png"]];
+//    mainImgViewBG2.frame = CGRectMake(11.0F, 35.0f+1+44, 298, 44);
+//    [self.view addSubview:mainImgViewBG2];
+//    [mainImgViewBG2 release];
+//    
+//    UIImageView *mainImgView1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"new98.png"]];
+//    mainImgView1.frame = CGRectMake(11.0F, 35.0f, 44, 44);
+//    [self.view addSubview:mainImgView1];
+//    [mainImgView1 release];
+//    
+//    UIImageView *mainImgView2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"new100.png"]];
+//    mainImgView2.frame = CGRectMake(11.0F, 35.0f+1+44, 44, 44);
+//    [self.view addSubview:mainImgView2];
+//    [mainImgView2 release];
+//    
+//    
+//    UITextField *mainAccountTextField = [[UITextField alloc] initWithFrame:CGRectMake(61.0f, 38.0f, 265.0f, 39.0f)];
+//    mainAccountTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+//    [self.view addSubview:mainAccountTextField];
+//    mainAccountTextField.placeholder = @"请输入主账号";
+//    mainAccountTextField.delegate = self;
+//    mainAccountTextField.font = [UIFont systemFontOfSize:14];
+//    mainAccountTextField.textColor = [UIColor whiteColor];
+//    mainAccountTextField.tag = TEXTFILED_BASE_TAG;
+//    [mainAccountTextField release];
+//    
+//    UITextField *mainTokenTextField = [[UITextField alloc] initWithFrame:CGRectMake(61.0f, 83, 265.0f, 39.0f)];
+//    mainTokenTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+//    [self.view addSubview:mainTokenTextField];
+//    mainTokenTextField.placeholder = @"请输入主账号令牌";
+//    mainTokenTextField.delegate = self;
+//    mainTokenTextField.font = [UIFont systemFontOfSize:14];
+//    mainTokenTextField.textColor = [UIColor whiteColor];
+//    mainTokenTextField.tag = TEXTFILED_BASE_TAG + 1;
+//    [mainTokenTextField release];
 
-    UIImageView *mainImgViewBG1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"new126.png"]];
-    mainImgViewBG1.frame = CGRectMake(11.0F, 35.0f, 298, 44);
-    [self.view addSubview:mainImgViewBG1];
-    [mainImgViewBG1 release];
-    
-    UIImageView *mainImgViewBG2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"new126.png"]];
-    mainImgViewBG2.frame = CGRectMake(11.0F, 35.0f+1+44, 298, 44);
-    [self.view addSubview:mainImgViewBG2];
-    [mainImgViewBG2 release];
-    
-    UIImageView *mainImgView1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"new98.png"]];
-    mainImgView1.frame = CGRectMake(11.0F, 35.0f, 44, 44);
-    [self.view addSubview:mainImgView1];
-    [mainImgView1 release];
-    
-    UIImageView *mainImgView2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"new100.png"]];
-    mainImgView2.frame = CGRectMake(11.0F, 35.0f+1+44, 44, 44);
-    [self.view addSubview:mainImgView2];
-    [mainImgView2 release];
-    
-    
-    UITextField *mainAccountTextField = [[UITextField alloc] initWithFrame:CGRectMake(61.0f, 38.0f, 265.0f, 39.0f)];
-    mainAccountTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    [self.view addSubview:mainAccountTextField];
-    mainAccountTextField.placeholder = @"请输入主账号";
-    mainAccountTextField.delegate = self;
-    mainAccountTextField.font = [UIFont systemFontOfSize:14];
-    mainAccountTextField.textColor = [UIColor whiteColor];
-    mainAccountTextField.tag = TEXTFILED_BASE_TAG;
-    [mainAccountTextField release];
-    
-    UITextField *mainTokenTextField = [[UITextField alloc] initWithFrame:CGRectMake(61.0f, 83, 265.0f, 39.0f)];
-    mainTokenTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    [self.view addSubview:mainTokenTextField];
-    mainTokenTextField.placeholder = @"请输入主账号令牌";
-    mainTokenTextField.delegate = self;
-    mainTokenTextField.font = [UIFont systemFontOfSize:14];
-    mainTokenTextField.textColor = [UIColor whiteColor];
-    mainTokenTextField.tag = TEXTFILED_BASE_TAG + 1;
-    [mainTokenTextField release];
-    
-    
     //子账号信息布局
     UILabel *subLabel = [[UILabel alloc] initWithFrame:CGRectMake(11.0f, 135.0f, 200.0f, 20.0f)];
-    subLabel.text = @"请选择子账号：";
+    subLabel.text = @"请输入登录账号：";
     subLabel.font = [UIFont systemFontOfSize:16.0f];
     subLabel.backgroundColor = [UIColor clearColor];
     subLabel.textColor = [UIColor whiteColor];
     [self.view addSubview:subLabel];
     [subLabel release];
     
-    UIButton *selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.view addSubview:selectBtn];
-    selectBtn.tag = TEXTFILED_BASE_TAG + 4;
-    selectBtn.frame = CGRectMake(11, 160, 298, 44);
-    [selectBtn addTarget:self action:@selector(selectVoip:) forControlEvents:UIControlEventTouchUpInside];
-    [selectBtn setBackgroundImage:[UIImage imageNamed:@"new126.png"] forState:UIControlStateNormal];
-    [selectBtn setBackgroundImage:[UIImage imageNamed:@"new126_on.png"] forState:UIControlStateSelected];
-    [selectBtn setTitle:@"单击选择VoIP账号" forState:UIControlStateNormal];
-    [selectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    selectBtn.titleLabel.font = [UIFont systemFontOfSize:17.0f];
+//    UIButton *selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [self.view addSubview:selectBtn];
+//    selectBtn.tag = TEXTFILED_BASE_TAG + 4;
+//    selectBtn.frame = CGRectMake(11, 160, 298, 44);
+//    [selectBtn addTarget:self action:@selector(selectVoip:) forControlEvents:UIControlEventTouchUpInside];
+//    [selectBtn setBackgroundImage:[UIImage imageNamed:@"new126.png"] forState:UIControlStateNormal];
+//    [selectBtn setBackgroundImage:[UIImage imageNamed:@"new126_on.png"] forState:UIControlStateSelected];
+//    [selectBtn setTitle:@"单击选择VoIP账号" forState:UIControlStateNormal];
+//    [selectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    selectBtn.titleLabel.font = [UIFont systemFontOfSize:17.0f];
+//    
+//    
+    UIImageView *mainImgViewBG9 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"new126.png"]];
+    mainImgViewBG9.frame = CGRectMake(11, 160, 298, 44);
+    [self.view addSubview:mainImgViewBG9];
+    [mainImgViewBG9 release];
+    
+    // config login account
+    NSUserDefaults* loginDefault = [NSUserDefaults standardUserDefaults];
+    loginAccount_textField = [[UITextField alloc]initWithFrame:CGRectMake(11, 160, 298, 44)];
+    loginAccount_textField.delegate = self;
+    loginAccount_textField.borderStyle = UITextBorderStyleLine;
+    loginAccount_textField.layer.borderColor= [UIColor grayColor].CGColor;
+    loginAccount_textField.layer.borderWidth= 1.0f;
+    loginAccount_textField.textColor = [UIColor whiteColor];
+    loginAccount_textField.font = [UIFont systemFontOfSize:13.0f];
+    
+    loginAccount_textField.textAlignment = NSTextAlignmentCenter;
+    NSString *loginAccount = [loginDefault objectForKey:@"loginAccount"];
+    if(loginAccount == nil) {
+        loginAccount_textField.text = @"1002";
+    } else {
+        loginAccount_textField.text = loginAccount;
+    }
+    [self.view addSubview:loginAccount_textField];
+    [loginAccount_textField release];
+    
+    
+    
     
     
     UIImageView *mainImgViewBG3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"new126.png"]];
@@ -188,7 +219,7 @@
     [selectLabel release];
  
     // config login IP address
-    NSUserDefaults* loginDefault = [NSUserDefaults standardUserDefaults];
+    // NSUserDefaults* loginDefault = [NSUserDefaults standardUserDefaults];
     loginIP_textField = [[UITextField alloc]initWithFrame:CGRectMake(20.0f, 235.0f, 120.0f, 30.0f)];
     loginIP_textField.delegate = self;
     loginIP_textField.borderStyle = UITextBorderStyleLine;
@@ -257,16 +288,16 @@
     [registBtn setBackgroundImage:[UIImage imageNamed:@"new158.png"] forState:UIControlStateNormal];
     [registBtn setBackgroundImage:[UIImage imageNamed:@"new158_on.png"] forState:UIControlStateHighlighted];
     
-    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(20.0f, self.view.frame.size.height - 105, 280, 40)];
-    textLabel.text = @"账号不可直接输入，配置方法请查看开发文档。请选择子账号登陆后即可体验相关能力。";
-    textLabel.backgroundColor = [UIColor clearColor];
-    textLabel.font = [UIFont systemFontOfSize:12.0f];
-    textLabel.textAlignment = NSTextAlignmentLeft;
-    [self.view addSubview:textLabel];
-    textLabel.numberOfLines = 0;
-    textLabel.lineBreakMode = UILineBreakModeCharacterWrap;
-    textLabel.textColor = [UIColor colorWithRed:204./255 green:204./255 blue:204./255 alpha:1.];
-    [textLabel release];
+//    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(20.0f, self.view.frame.size.height - 105, 280, 40)];
+//    textLabel.text = @"账号不可直接输入，配置方法请查看开发文档。请选择子账号登陆后即可体验相关能力。";
+//    textLabel.backgroundColor = [UIColor clearColor];
+//    textLabel.font = [UIFont systemFontOfSize:12.0f];
+//    textLabel.textAlignment = NSTextAlignmentLeft;
+//    [self.view addSubview:textLabel];
+//    textLabel.numberOfLines = 0;
+//    textLabel.lineBreakMode = UILineBreakModeCharacterWrap;
+//    textLabel.textColor = [UIColor colorWithRed:204./255 green:204./255 blue:204./255 alpha:1.];
+//    [textLabel release];
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField {
@@ -277,6 +308,8 @@
         [loginDefault setObject:textField.text forKey:@"loginPort"];
     } else if(textField == loginPsswd_textField) {
         [loginDefault setObject:textField.text forKey:@"loginPssWD"];
+    } else if(textField == loginAccount_textField) {
+        [loginDefault setObject:textField.text forKey:@"loginAccount"];
     } else {
         //todo: something
     }
@@ -514,7 +547,7 @@
     if (self.modelEngineVoip)
     {
         [self displayProgressingView];
-        [self.modelEngineVoip connectToCCP:loginIP_textField.text onPort:[loginPort_textField.text integerValue] withAccount:voipID withPsw:loginPsswd_textField.text withAccountSid:subID withAuthToken:subToken];
+        [self.modelEngineVoip connectToCCP:loginIP_textField.text onPort:[loginPort_textField.text integerValue] withAccount:loginAccount_textField.text withPsw:loginPsswd_textField.text withAccountSid:subID withAuthToken:subToken];
     }
 }
 

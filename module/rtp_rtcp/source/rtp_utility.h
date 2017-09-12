@@ -31,61 +31,86 @@ ReceiveStatistics* NullObjectReceiveStatistics();
     
 namespace RtpUtility {
 
-struct Payload {
-  char name[RTP_PAYLOAD_NAME_SIZE];
-  bool audio;
-  PayloadUnion typeSpecific;
-};
+    // January 1970, in NTP seconds.
+    const uint32_t NTP_JAN_1970 = 2208988800UL;
 
-bool StringCompare(const char* str1, const char* str2, const uint32_t length);
+    // Magic NTP fractional unit.
+    const double NTP_FRAC = 4.294967296E+9;
 
-void AssignUWord32ToBuffer(uint8_t* dataBuffer, uint32_t value);
-void AssignUWord24ToBuffer(uint8_t* dataBuffer, uint32_t value);
-void AssignUWord16ToBuffer(uint8_t* dataBuffer, uint16_t value);
+    typedef std::map<int8_t, Payload*> PayloadTypeMap;
 
-/**
- * Converts a network-ordered two-byte input buffer to a host-ordered value.
- * \param[in] dataBuffer Network-ordered two-byte buffer to convert.
- * \return Host-ordered value.
- */
-uint16_t BufferToUWord16(const uint8_t* dataBuffer);
+    // Return the current RTP timestamp from the NTP timestamp
+    // returned by the specified clock.
+    uint32_t GetCurrentRTP(Clock* clock, uint32_t freq);
 
-/**
- * Converts a network-ordered three-byte input buffer to a host-ordered value.
- * \param[in] dataBuffer Network-ordered three-byte buffer to convert.
- * \return Host-ordered value.
- */
-uint32_t BufferToUWord24(const uint8_t* dataBuffer);
+    // Return the current RTP absolute timestamp.
+    uint32_t ConvertNTPTimeToRTP(uint32_t NTPsec,
+                                 uint32_t NTPfrac,
+                                 uint32_t freq);
 
-/**
- * Converts a network-ordered four-byte input buffer to a host-ordered value.
- * \param[in] dataBuffer Network-ordered four-byte buffer to convert.
- * \return Host-ordered value.
- */
-uint32_t BufferToUWord32(const uint8_t* dataBuffer);
+    uint32_t pow2(uint8_t exp);
 
-// Round up to the nearest size that is a multiple of 4.
-size_t Word32Align(size_t size);
+    // Returns true if |newTimestamp| is older than |existingTimestamp|.
+    // |wrapped| will be set to true if there has been a wraparound between the
+    // two timestamps.
+    bool OldTimestamp(uint32_t newTimestamp,
+                      uint32_t existingTimestamp,
+                      bool* wrapped);
 
-class RtpHeaderParser {
- public:
-  RtpHeaderParser(const uint8_t* rtpData, size_t rtpDataLength);
-  ~RtpHeaderParser();
+    bool StringCompare(const char* str1,
+                       const char* str2,
+                       const uint32_t length);
 
-  bool RTCP() const;
-  bool ParseRtcp(RTPHeader* header) const;
-  bool Parse(RTPHeader* parsedPacket,
-             RtpHeaderExtensionMap* ptrExtensionMap = nullptr) const;
+    void AssignUWord32ToBuffer(uint8_t* dataBuffer, uint32_t value);
+    void AssignUWord24ToBuffer(uint8_t* dataBuffer, uint32_t value);
+    void AssignUWord16ToBuffer(uint8_t* dataBuffer, uint16_t value);
 
- private:
-  void ParseOneByteExtensionHeader(RTPHeader* parsedPacket,
-                                   const RtpHeaderExtensionMap* ptrExtensionMap,
-                                   const uint8_t* ptrRTPDataExtensionEnd,
-                                   const uint8_t* ptr) const;
+    /**
+     * Converts a network-ordered two-byte input buffer to a host-ordered value.
+     * \param[in] dataBuffer Network-ordered two-byte buffer to convert.
+     * \return Host-ordered value.
+     */
+    uint16_t BufferToUWord16(const uint8_t* dataBuffer);
 
-  const uint8_t* const _ptrRTPDataBegin;
-  const uint8_t* const _ptrRTPDataEnd;
-};
+    /**
+     * Converts a network-ordered three-byte input buffer to a host-ordered value.
+     * \param[in] dataBuffer Network-ordered three-byte buffer to convert.
+     * \return Host-ordered value.
+     */
+    uint32_t BufferToUWord24(const uint8_t* dataBuffer);
+
+    /**
+     * Converts a network-ordered four-byte input buffer to a host-ordered value.
+     * \param[in] dataBuffer Network-ordered four-byte buffer to convert.
+     * \return Host-ordered value.
+     */
+    uint32_t BufferToUWord32(const uint8_t* dataBuffer);
+
+    class RtpHeaderParser {
+    public:
+     RtpHeaderParser(const uint8_t* rtpData, size_t rtpDataLength);
+     ~RtpHeaderParser();
+
+        bool RTCP() const;
+        bool ParseRtcp(RTPHeader* header) const;
+        bool Parse(RTPHeader& parsedPacket,
+                   RtpHeaderExtensionMap* ptrExtensionMap = NULL) const;
+        int setECMedia_ConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback *cb);
+    private:
+        void ParseOneByteExtensionHeader(
+            RTPHeader& parsedPacket,
+            const RtpHeaderExtensionMap* ptrExtensionMap,
+            const uint8_t* ptrRTPDataExtensionEnd,
+            const uint8_t* ptr) const;
+
+        uint8_t ParsePaddingBytes(
+            const uint8_t* ptrRTPDataExtensionEnd,
+            const uint8_t* ptr) const;
+
+        const uint8_t* const _ptrRTPDataBegin;
+        const uint8_t* const _ptrRTPDataEnd;
+
+    };
 }  // namespace RtpUtility
 }  // namespace cloopenwebrtc
 

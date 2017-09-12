@@ -194,7 +194,7 @@ void VCMQmResolution::Reset() {
   avg_packet_loss_ = 0.0f;
   encoder_state_ = kStableEncoding;
   num_layers_ = 1;
-  qm_resolution_mode_ = kResolutionModeBoth;
+    qm_resolution_mode_ = kResolutionModeBoth;
   ResetRates();
   ResetDownSamplingState();
   ResetQM();

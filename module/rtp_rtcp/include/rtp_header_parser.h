@@ -39,6 +39,7 @@ class RtpHeaderParser {
 
   // De-registers an RTP header extension.
   virtual bool DeregisterRtpHeaderExtension(RTPExtensionType type) = 0;
+  virtual int setECMediaConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback* cb) = 0;
 };
 }  // namespace webrtc
 #endif  // WEBRTC_MODULES_RTP_RTCP_INCLUDE_RTP_HEADER_PARSER_H_

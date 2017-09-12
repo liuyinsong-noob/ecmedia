@@ -335,8 +335,8 @@ public:
 		const RTPFragmentationHeader* fragmentation) = 0;
 };
 
-// RTP
-enum {kRtpCsrcSize = 15}; // RFC 3550 page 13
+// @see https://tools.ietf.org/html/rfc3550 RFC 3550 page 13, added by zhaoyou
+enum {kRtpCsrcSize = 15};
 
 enum RTPDirections
 {
@@ -907,9 +907,9 @@ public:
 	unsigned short      height;
 
 	unsigned int        startBitrate;  // kilobits/sec.
-	unsigned int        maxBitrate;  // kilobits/sec.
-	unsigned int        minBitrate;  // kilobits/sec.
-	unsigned int        targetBitrate;  // kilobits/sec.
+	unsigned int        maxBitrate;    // kilobits/sec.
+	unsigned int        minBitrate;    // kilobits/sec.
+	unsigned int        targetBitrate; // kilobits/sec.
 
 	unsigned char       maxFramerate;
 
@@ -1256,6 +1256,7 @@ struct OverUseDetectorOptions {
 	double initial_threshold;
 };
 
+
 // RTCP mode to use. Compound mode is described by RFC 4585 and reduced-size
 // RTCP mode is described by RFC 5506.
 enum RtcpMode { kOff, kCompound, kReducedSize };
@@ -1289,5 +1290,13 @@ typedef void (*ECMedia_I420FrameCallBack)(int32_t channel_id,  uint8_t* buffer, 
  */
  typedef void (*ECMedia_PCMDataCallBack)(int32_t channel_id, uint8_t* buffer, int length, int samples, int sampleRate, int numChannels);
 
+/**
+ * 反馈会议的参与方的CSRC
+ * arrOfCSRCs   : CSRC 数组，保存了会议的参与方，默认第一个CSRC为发言者
+ * count        : 会议参与方个数
+ */
+typedef void (ECMedia_ConferenceParticipantCallback)(uint32_t arrOfCSRCs[], int count);
+
 }  // namespace cloopenwebrtc
+
 #endif  // WEBRTC_COMMON_TYPES_H

@@ -337,6 +337,14 @@ ECMEDIA_API int ECMedia_set_audio_data_cb(int channelid, onEcMediaAudioData audi
 ECMEDIA_API int ECMedia_set_pcm_audio_data_cb(int channelid, cloopenwebrtc::ECMedia_PCMDataCallBack callback);
 ECMEDIA_API int ECMedia_set_video_data_cb(int channelid, onEcMediaVideoDataV Video_data_cb);
 ECMEDIA_API int ECMedia_set_voe_cb(int channelid, onVoeCallbackOnError voe_callback_cb);
+
+/**
+ * conference csrc callback
+ * @param channelid: channel id
+ * @param callback : callback @see ECMedia_ConferenceParticipantCallback
+ * @return success return 0, eles return -1;
+ */
+ECMEDIA_API int ECMedia_setECMedia_ConferenceParticipantCallback(int channelid, cloopenwebrtc::ECMedia_ConferenceParticipantCallback* callback);
 /*
  * ONLY USE FOR PEER CONNECTION FOR AUDIO
  */
@@ -607,7 +615,7 @@ ECMEDIA_API int ECmedia_set_shield_mosaic(int video_channel, bool flag);
  参数     : [IN]  type	  : 类型，必须为0
  返回值   : 返回值直播模块句柄
  */
-ECMEDIA_API void*ECMedia_createLiveStream(int type);
+ECMEDIA_API void *ECMedia_createLiveStream();
 /*
  功能     : 开始观看直播
  参数     : [IN]  handle		： 句柄
@@ -616,7 +624,7 @@ ECMEDIA_API void*ECMedia_createLiveStream(int type);
  [IN]  callback		：视频宽高回调
  返回值   : 返回值 0：成功  -1：初始化资源失败 -2：已经在直播或推流  -3：连接失败  -4：建立流失败
  */
-ECMEDIA_API int  ECMedia_playLiveStream(void *handle, const char * url, void *renderView, onLiveStreamVideoResolution callback);
+ECMEDIA_API int ECMedia_playLiveStream(void *handle, const char * url, cloopenwebrtc::EC_MediaPullCallback* callback);
 /*
  功能     : 开始直播推流
  参数     : [IN]  handle		： 句柄
@@ -624,7 +632,7 @@ ECMEDIA_API int  ECMedia_playLiveStream(void *handle, const char * url, void *re
  [IN]  renderView	：本地视频窗口
  返回值   : 返回值 0：成功　-1：初始化资源失败 -2：已经在直播或者推流  -3：连接失败  -4：建立流失败
  */
-ECMEDIA_API int  ECMedia_pushLiveStream(void *handle, const char * url, void *renderView);
+ECMEDIA_API int ECMedia_pushLiveStream(void *handle, const char *url, cloopenwebrtc::EC_RtmpPublishCallback* callback);
 /*
  功能     : 停止观看或推流
  参数     :	  [IN]  handle		： 句柄
@@ -646,14 +654,22 @@ ECMEDIA_API void ECMedia_enableLiveStreamBeauty(void *handle);
  */
 ECMEDIA_API void ECMedia_disableLiveStreamBeauty(void *handle);
 /*
- 功能     : 设置推流视频参数
- 参数     : [IN]  handle		： 句柄
- [IN]  cameraIndex			 : 摄像头index
- [IN]  cam			 : 视频能力
- [IN]  bitrates	：视频码率
- 返回值   : 返回值 0：成功　-1：参数不正确
+ ÂäüËÉΩ     : ËÆæÁΩÆÊé®ÊµÅËßÜÈ¢ëÂèÇÊï∞
+ ÂèÇÊï∞     : [IN]  handle		Ôºö Âè•ÊüÑ
+ [IN]  cameraIndex			 : ÊëÑÂÉèÂ§¥index
+ [IN]  cam			 : ËßÜÈ¢ëËÉΩÂäõ
+ [IN]  bitrates	ÔºöËßÜÈ¢ëÁ†ÅÁéá
+ ËøîÂõûÂÄº   : ËøîÂõûÂÄº 0ÔºöÊàêÂäü„ÄÄ-1ÔºöÂèÇÊï∞‰∏çÊ≠£Á°Æ
  */
-ECMEDIA_API int  ECMedia_setVideoProfileLiveStream(void *handle,int cameraIndex, CameraCapability cam, int bitreates);
+ECMEDIA_API int ECMedia_ConfigLiveVideoStream(void *handle, LiveVideoStreamConfig config);
+
+/**
+ *
+ * @param camera_index
+ * @return
+ */
+ECMEDIA_API int ECMedia_SwitchLiveCamera(void *handle, int camera_index);
+
 /*
  功能     : 设置直播网络状态回调
  参数     : [IN]  handle		： 句柄
@@ -675,6 +691,9 @@ ECMEDIA_API int ECMedia_GetShareWindows(void *handle, WindowShare ** windows);
  返回值： 窗口个数
  */
 ECMEDIA_API int ECMedia_SelectShareWindow(void *handle, int type , int id);
+
+ECMEDIA_API int ECMedia_setVideoPreviewViewer(void *handle, void *view);
+
 /*
  功能     : 设置直播推流的视频来源
  参数     : [IN]  handle		： 句柄
@@ -725,6 +744,18 @@ ECMEDIA_API int ECMedia_audio_enable_magic_sound(int channelid, bool is_enable);
  * rate:  变速又变调，取值[-50, 50], 0表示正常音速和音调
  */
 ECMEDIA_API int ECMedia_audio_set_magic_sound(int channelid, int pitch, int tempo, int rate);
+/*
+ * 功能：声音播放前进行放大
+ * channelID: channel id
+ * gain: 放大的倍数，1.5即将原来的声音放大1.5倍。
+ */
+ECMEDIA_API int ECMedia_audio_set_playout_gain(int channelid, float gain);
+/*
+ * 功能：把microphone采集的声音进行放大
+ * channelID: channel id
+ * gain: 放大的倍数，1.5即将原来的声音放大1.5倍。
+ */
+ECMEDIA_API int ECMedia_audio_set_microphone_gain(int channelid, float gain);
 #ifdef __cplusplus
 }
 #endif

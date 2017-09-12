@@ -871,6 +871,15 @@ JNIEXPORT void JNICALL Java_com_CCP_phone_NativeInterface_stopRecordLocalMedia()
 
 JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_setScreenShareActivity
 (JNIEnv *, jclass, jstring, jobject);
+/**********  ec live video api begin ***************/
+JNIEXPORT void JNICALL Java_com_CCP_phone_NativeInterface_createLiveStream();
+JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_configLiveVideoStream(JNIEnv *, jclass, jint, jint, jint, jboolean);
+JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_selectCameraLiveStream(JNIEnv *, jclass, jint);
+JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_playLiveStream(JNIEnv *, jclass, jstring, jobject);
+JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_pushLiveStream(JNIEnv *, jclass, jstring, jobject);
+JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_stopLiveStream();
+JNIEXPORT void JNICALL Java_com_CCP_phone_NativeInterface_releaseLiveStream();
+/**********  ec live video api end ***************/
 #ifdef __cplusplus
 }
 #endif

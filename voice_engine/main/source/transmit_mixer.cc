@@ -344,7 +344,7 @@ void TransmitMixer::GetSendCodecInfo(int* max_sample_rate, int* max_channels) {
             return -1;
         }
         
-        if (_fileCallRecorderPtr->RecordAudioToFile(_audioFrame2Up) != 0)
+        if (_fileCallRecorderPtr->RecordAudioToFile(_audioFrame) != 0)
         {
             WEBRTC_TRACE(kTraceWarning, kTraceVoice, VoEId(_instanceId, -1),
                          "TransmitMixer::RecordAudioToFileCall() file recording"
@@ -1442,7 +1442,7 @@ int32_t TransmitMixer::RecordAudioToFile(
         return -1;
     }
 
-    if (_fileRecorderPtr->RecordAudioToFile(_audioFrame) != 0)
+    if (_fileRecorderPtr->RecordAudioToFile(_audioFrame2Up) != 0)
     {
         WEBRTC_TRACE(kTraceWarning, kTraceVoice, VoEId(_instanceId, -1),
                      "TransmitMixer::RecordAudioToFile() file recording"

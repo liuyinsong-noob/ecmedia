@@ -113,7 +113,9 @@ ModuleRtpRtcpImpl::ModuleRtpRtcpImpl(const Configuration& configuration)
       rtt_stats_(configuration.rtt_stats),
       rtt_ms_(0),
       rtp_receiver_(NULL),
-	  isSendingTmmbr(false) {
+      isSendingTmmbr(false),
+      receive_statistics_(configuration.receive_statistics)
+    {
   // Make sure rtcp sender use same timestamp offset as rtp sender.
   rtcp_sender_.SetTimestampOffset(rtp_sender_.TimestampOffset());
 
@@ -479,7 +481,25 @@ bool ModuleRtpRtcpImpl::SendOutgoingData(
   // Make sure an RTCP report isn't queued behind a key frame.
   if (rtcp_sender_.TimeToSendRTCPReport(kVideoFrameKey == frame_type)) {
       rtcp_sender_.SendRTCP(GetFeedbackState(), kRtcpReport);
-  }
+    }
+      
+      // set rtp expand head loss rate.
+      StatisticianMap statisticians = receive_statistics_->GetActiveStatisticians();
+      if (!statisticians.empty()) {
+          StatisticianMap::const_iterator it;
+     
+          for (it = statisticians.begin(); it != statisticians.end(); ++it) {
+              StreamStatistician *statistician = it->second;
+              RtcpStatistics stats;
+              if (!statistician->GetStatistics(&stats, true)) {
+                  return false;
+              }
+
+              rtp_sender_.SetLossRate(100*(stats.fraction_lost)/255/5, 0);
+          }
+      }
+ 
+      
   return rtp_sender_.SendOutgoingData(
       frame_type, payload_type, time_stamp, capture_time_ms, payload_data,
       payload_size, fragmentation, rtp_video_header, transport_frame_id_out);

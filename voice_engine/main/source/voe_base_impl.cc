@@ -1214,6 +1214,26 @@ int VoEBaseImpl::ProcessRecordedDataWithAPM(
       max_volume = volume;
     }
   }
+    
+    //sean add begin 20140422 SetAudioGain
+    if (_enlargeOutgoingGainFlag) {
+        WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_shared->instance_id(), -1),
+                     "CloopenVoEBaseImpl::RecordedDataIsAvailable outgoing audio gain factor = %f\n",
+                     _enlargeOutgoingGainFactor);
+        WebRtc_Word16 *multiplyByFactor = (WebRtc_Word16*)audio_data;
+        int temp=0;
+        for (int i=0; i<number_of_frames*number_of_channels; i++) {
+            temp = multiplyByFactor[i]*_enlargeOutgoingGainFactor;
+            if (temp>32767) {
+                multiplyByFactor[i] = 32767;
+            }
+            else if (temp < -32768)
+                multiplyByFactor[i] = -32768;
+            else
+                multiplyByFactor[i] = temp;
+        }
+    }
+    //sean add end 20140422 SetAudioGain
 
   // Perform channel-independent operations
   // (APM, mix with file, record to file, mute, etc.)
@@ -1281,6 +1301,27 @@ void VoEBaseImpl::GetPlayoutData(int sample_rate, int number_of_channels,
   memcpy(audio_data, _audioFrame.data_,
          sizeof(int16_t) * number_of_frames * number_of_channels);
 
+    //sean add begin 20140422 SetAudioGain
+    if (_enlargeIncomingGainFlag) {
+        WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_shared->instance_id(), -1),
+                     "CloopenVoEBaseImpl::NeedMorePlayData incoming audio gain factor = %f\n",
+                     _enlargeIncomingGainFactor);
+        WebRtc_Word16 *multiplyByFactor = (WebRtc_Word16*)audio_data;
+        int temp=0;
+        for (int i=0; i<_audioFrame.samples_per_channel_
+             * _audioFrame.num_channels_; i++) {
+            temp = multiplyByFactor[i]*_enlargeIncomingGainFactor;
+            if (temp>32767) {
+                multiplyByFactor[i] = 32767;
+            }
+            else if (temp < -32768)
+                multiplyByFactor[i] = -32768;
+            else
+                multiplyByFactor[i] = temp;
+        }
+    }
+    //sean add end 20140422 SetAudioGain
+    
   *elapsed_time_ms = _audioFrame.elapsed_time_ms_;
   *ntp_time_ms = _audioFrame.ntp_time_ms_;
 }
@@ -2137,29 +2178,52 @@ int VoEBaseImpl::SetAudioDataCb(int channelid, onAudioData audio_data_cb)
     }
     return channelPtr->setAudioDataCb(audio_data_cb);
 }
-    int VoEBaseImpl::SetPCMAudioDataCallBack(int channelid, ECMedia_PCMDataCallBack audio_data_cb)
+    
+int VoEBaseImpl::SetPCMAudioDataCallBack(int channelid, ECMedia_PCMDataCallBack audio_data_cb)
+{
+    WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+                 "SetDtmfCb(channel=%d)", channelid);
+    
+    CriticalSectionScoped cs(_shared->crit_sec());
+    
+    if (!_shared->statistics().Initialized())
     {
-        WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
-                     "SetDtmfCb(channel=%d)", channelid);
-        
-        CriticalSectionScoped cs(_shared->crit_sec());
-        
-        if (!_shared->statistics().Initialized())
-        {
-            _shared->SetLastError(VE_NOT_INITED, kTraceError);
-            return -1;
-        }
-        voe::ChannelOwner sc = _shared->channel_manager().GetChannel(channelid);
-        voe::Channel* channelPtr = sc.channel();
-        if (channelPtr == NULL)
-        {
-            _shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
-                                  "SetDtmfCb() failed to locate channel");
-            return -1;
-        }
-        return channelPtr->SetPCMAudioDataCallBack(audio_data_cb);
+        _shared->SetLastError(VE_NOT_INITED, kTraceError);
+        return -1;
     }
+    voe::ChannelOwner sc = _shared->channel_manager().GetChannel(channelid);
+    voe::Channel* channelPtr = sc.channel();
+    if (channelPtr == NULL)
+    {
+        _shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
+                              "SetPCMAudioDataCallBack() failed to locate channel");
+        return -1;
+    }
+    return channelPtr->SetPCMAudioDataCallBack(audio_data_cb);
+}
 
+int VoEBaseImpl::setConferenceParticipantCallback(int channelid, ECMedia_ConferenceParticipantCallback* audio_data_cb) {
+    WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+                 "SetDtmfCb(channel=%d)", channelid);
+    
+    CriticalSectionScoped cs(_shared->crit_sec());
+    
+    if (!_shared->statistics().Initialized())
+    {
+        _shared->SetLastError(VE_NOT_INITED, kTraceError);
+        return -1;
+    }
+    voe::ChannelOwner sc = _shared->channel_manager().GetChannel(channelid);
+    voe::Channel* channelPtr = sc.channel();
+    if (channelPtr == NULL)
+    {
+        _shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
+                              "setConferenceParticipantCallback() failed to locate channel");
+        return -1;
+    }
+    return channelPtr->setConferenceParticipantCallback(audio_data_cb);
+}
+    
 bool VoEBaseImpl::GetRecordingIsInitialized()
 {
     WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),

@@ -5911,6 +5911,16 @@ char *OSTypeToStr(char *buf, OSType t)
 {
     return createLiveStream();
 }
+
+-(int)configLiveVideoStream:(void *)handle camera:(int)index resolution:(int)resolution fps: (int)fps auto_bitrate: (bool)auto_br {
+    LiveVideoStreamConfig config;
+    config._auto_bitrate = auto_br;
+    config._camera_index = index;
+    config._fps = fps;
+    config._resolution = EC_LiveVideoResolution(resolution);
+    return configLiveVideoStream(handle, config);
+}
+
 -(int) playStream:(void *)handle url:(NSString *) url view:(UIView*)renderView
 {
     return playLiveStream(handle,[url UTF8String],(void*)renderView);
@@ -5924,8 +5934,8 @@ char *OSTypeToStr(char *buf, OSType t)
     return stopLiveStream(handle);
 }
 
--(void) selectLiveCamera:(void *)handle cameraIndex: (int) index width:(int)w height: (int) h fps: (int)fps {
-    selectCameraLiveStream(handle, index, w, h, fps);
+- (void)selectLiveCamera:(void *)handle cameraIndex:(int)index {
+    selectCameraLiveStream(handle, index);
 }
 
 - (int) startRecordLocalMedia:(NSString *)filename withView: (void *)localview
@@ -5936,6 +5946,11 @@ char *OSTypeToStr(char *buf, OSType t)
 - (void) stopRecordLocalMedia
 {
     stopRecordLocalMedia();
+}
+
+- (int)setMagicSound:(bool)enable andPitch:(int)pitch andTempo:(int)tempo andRate:(int)rate
+{
+    return audioEnableMagicSound(enable, pitch, tempo, rate);
 }
 @end
 

@@ -495,6 +495,8 @@ void AssignUWord16ToBuffer(uint8_t* dataBuffer, uint16_t value) {
 #endif
 }
 
+}  // namespace RtpUtility
+
 uint16_t BufferToUWord16(const uint8_t* dataBuffer) {
 #if defined(WEBRTC_ARCH_LITTLE_ENDIAN)
   return (dataBuffer[0] << 8) + dataBuffer[1];

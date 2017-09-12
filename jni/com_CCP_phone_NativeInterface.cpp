@@ -1892,3 +1892,53 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_setScreenShareActivity
 	env->ReleaseStringUTFChars(callid, ccallid);
     return ret;
 }
+
+/**********  ec live video api begin ***************/
+JNIEXPORT void JNICALL Java_com_CCP_phone_NativeInterface_createLiveStream() {
+  void * handle = createLiveStream();
+}
+
+JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_configLiveVideoStream(JNIEnv *env, jclass, jint camera_index, jint fps, jint resolution, jboolean auto_br) {
+  LiveVideoStreamConfig config;
+  config._auto_bitrate = auto_br;
+  config._camera_index = camera_index;
+  config._fps = fps;
+  config._resolution = EC_LiveVideoResolution(resolution);
+  void * handle = createLiveStream();
+  return configLiveVideoStream(handle, config);
+}
+
+JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_selectCameraLiveStream(JNIEnv *env, jclass, jint camera_index) {
+  void * handle = createLiveStream();
+  return selectCameraLiveStream(handle, camera_index);
+}
+
+JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_playLiveStream(JNIEnv *env, jclass, jstring live_url, jobject renderView) {
+  const char* clive_url = env->GetStringUTFChars(live_url, 0);
+  void * handle = createLiveStream();
+ 
+  const char* userid = env->GetStringUTFChars((jstring)renderView, 0);
+  sprintf(remoteUserID, "%s", userid);
+
+  int ret = playLiveStream(handle, clive_url, (void*)&remoteUserID);
+  env->ReleaseStringUTFChars(live_url, clive_url);
+  return ret;
+}
+
+JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_pushLiveStream(JNIEnv *env, jclass, jstring live_url, jobject renderView) {
+  const char* clive_url = env->GetStringUTFChars(live_url, 0);
+  void * handle = createLiveStream();
+  int ret = pushLiveStream(handle, clive_url, NULL);
+  env->ReleaseStringUTFChars(live_url, clive_url);
+  return ret;
+}
+JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_stopLiveStream() {
+  void * handle = createLiveStream();
+  stopLiveStream(handle);
+}
+
+JNIEXPORT void JNICALL Java_com_CCP_phone_NativeInterface_releaseLiveStream() {
+  void * handle = createLiveStream();
+  releaseLiveStream(handle);
+}
+/**********  ec live video api end ***************/

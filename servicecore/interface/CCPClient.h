@@ -578,10 +578,12 @@ typedef struct _CALLBACKINTERFACE CCallbackInterface;
 	CCPAPI void releaseLiveStream(void *handle);
 	CCPAPI void enableLiveStreamBeauty(void *handle);
 	CCPAPI void disableLiveStreamBeauty(void *handle);
-	CCPAPI int selectCameraLiveStream(void *handle, int index, int width, int height, int fps);
+	CCPAPI int configLiveVideoStream(void *handle, LiveVideoStreamConfig config);
+	CCPAPI int selectCameraLiveStream(void *handle, int index);
 	CCPAPI void selectShareWindow(void *handle, int type, int id);
 	CCPAPI int getShareWindows(void *handle, WindowShare ** windows);
-	CCPAPI int startSendRtpPacket(int &channel, const char *ip, int rtp_port);
+	
+    CCPAPI int startSendRtpPacket(int &channel, const char *ip, int rtp_port);
 	CCPAPI int startRecvRtpPacket(int channelNum);
     
     // record local mp4 video.
@@ -598,6 +600,8 @@ typedef struct _CALLBACKINTERFACE CCallbackInterface;
     
     CCPAPI int SetRotateCapturedFrames(char *callid, ECMediaRotateCapturedFrame tr);
 CCPAPI  int requestVideo(char *callid, int width, int height);
+    CCPAPI int audioEnableMagicSound(bool enabled, int pitch, int tempo, int rate);
+
 #ifdef __cplusplus
 }
 #endif

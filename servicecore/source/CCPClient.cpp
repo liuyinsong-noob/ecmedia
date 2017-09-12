@@ -3793,11 +3793,17 @@ extern "C" void disableLiveStreamBeauty(void *handle)
 	g_pSerCore->disableLiveStreamBeauty(handle);
 }
 
-extern "C" int selectCameraLiveStream(void *handle, int index, int width, int height, int fps)
+extern "C" int configLiveVideoStream(void *handle, LiveVideoStreamConfig config) {
+    if (!g_pSerCore)
+        return -1;
+    return g_pSerCore->configLiveVideoStream(handle, config);
+}
+
+extern "C" int selectCameraLiveStream(void *handle, int index)
 {
 	if (!g_pSerCore)
 		return -1;
-	return g_pSerCore->liveStream_SelectCamera(handle, index, width, height, fps);
+	return g_pSerCore->liveStream_SelectCamera(handle, index);
 }
 
 extern "C" void setLiveVideoSource(void *handle, int video_source)
@@ -3969,4 +3975,16 @@ extern "C" int SetRotateCapturedFrames(char *callid, ECMediaRotateCapturedFrame 
         }
         return g_pSerCore->set_rotate_captured_frames(pCall->m_CaptureDeviceId, tr);
     }
+}
+
+
+extern "C" int audioEnableMagicSound(bool enabled, int pitch, int tempo, int rate)
+{
+    SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT)
+    PrintConsole("[APICall called enabled %s, pitch %d, tempo %d, rate %d\n", enabled?"TRUE":"FALSE", pitch, tempo, rate);
+    if (g_pSerCore) {
+        g_pSerCore->audio_enable_magic_sound(enabled, pitch, tempo, rate);
+    }
+    return 0;
+    
 }

@@ -642,6 +642,11 @@ ServiceCore::ServiceCore()
 
 	//pSendStats_ = NULL;
 	//pReceiveStats_ = NULL;
+    
+    enable_magic_sound = false;
+    magic_sound_pitch = 0;
+    magic_sound_tempo = 0;
+    magic_sound_rate = 0;
 }
 
 ServiceCore::~ServiceCore()
@@ -4783,9 +4788,9 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
 	this->dyn_pt=96;
 
 //    //payloadtype 不要修改，和codedatabase.cc里面对应
- //    serphone_core_assign_payload_type(&payload_type_opus, 124, NULL);//48k
- //    serphone_core_assign_payload_type(&payload_type_opus8k, 121, NULL);
-  //   serphone_core_assign_payload_type(&payload_type_opus16k, 122, NULL);
+     serphone_core_assign_payload_type(&payload_type_opus, 124, NULL);//48k
+     serphone_core_assign_payload_type(&payload_type_opus8k, 121, NULL);
+     serphone_core_assign_payload_type(&payload_type_opus16k, 122, NULL);
 
 //    serphone_core_assign_payload_type(&payload_type_silk_nb,111,NULL);
 //    serphone_core_assign_payload_type(&payload_type_silk_mb,112,NULL);
