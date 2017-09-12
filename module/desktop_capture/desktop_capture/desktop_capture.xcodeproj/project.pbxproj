@@ -237,6 +237,7 @@
 					../../../system_wrappers/include,
 					../../../module,
 					./desktop_capture/,
+					../../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "";
@@ -255,6 +256,7 @@
 					../../../system_wrappers/include,
 					../../../module,
 					./desktop_capture/,
+					../../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "";

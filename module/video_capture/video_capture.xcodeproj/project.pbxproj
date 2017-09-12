@@ -565,6 +565,7 @@
 					../video_render/main/source/iphone,
 					../video_render/main/include,
 					../../system_wrappers/source,
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
@@ -641,6 +642,7 @@
 					../video_render/main/source/iphone,
 					../video_render/main/include,
 					../../system_wrappers/source,
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";

@@ -326,6 +326,7 @@
 					../..,
 					../../interface,
 					../include,
+					../../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = NO;
@@ -347,6 +348,7 @@
 					../..,
 					../../interface,
 					../include,
+					../../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = "-ObjC";

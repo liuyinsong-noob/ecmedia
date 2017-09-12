@@ -478,6 +478,7 @@
 					../../../../../../audio_coding/codecs,
 					../../../../../../audio_coding/codecs/cng/include,
 					../../../../../../../system_wrappers/source,
+					../../../../../../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = NO;
@@ -500,6 +501,7 @@
 					../../../../../../audio_coding/codecs,
 					../../../../../../audio_coding/codecs/cng/include,
 					../../../../../../../system_wrappers/source,
+					../../../../../../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = "-ObjC";

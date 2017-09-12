@@ -879,6 +879,7 @@
 					../../module/pacing/include,
 					../../system_wrappers/source/,
 					"$(SRCROOT)/../../",
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
@@ -944,6 +945,7 @@
 					../../module/pacing/include,
 					../../system_wrappers/source/,
 					"$(SRCROOT)/../../",
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";

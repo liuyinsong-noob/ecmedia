@@ -379,6 +379,7 @@
 					../../module/common_video/source,
 					../../module/common_audio/source,
 					../../module/audio_coding/codecs/g729/source,
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
@@ -441,6 +442,7 @@
 					../../module/common_video/source,
 					../../module/common_audio/source,
 					../../module/audio_coding/codecs/g729/source,
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";

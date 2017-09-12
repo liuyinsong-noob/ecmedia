@@ -738,7 +738,7 @@
 				HEADER_SEARCH_PATHS = (
 					../.,
 					../module/interface,
-					../module/.,
+					../module,
 					./source/spreadsortlib,
 					./include,
 					"$(SRCROOT)/",
@@ -787,7 +787,7 @@
 				HEADER_SEARCH_PATHS = (
 					../.,
 					../module/interface,
-					../module/.,
+					../module,
 					./source/spreadsortlib,
 					./include,
 					"$(SRCROOT)/",

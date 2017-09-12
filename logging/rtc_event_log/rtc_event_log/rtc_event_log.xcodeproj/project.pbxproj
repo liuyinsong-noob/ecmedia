@@ -237,6 +237,8 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../",
 					"$(SRCROOT)/../../../ECMedia/protobuf/include",
+					../../../module,
+					../../../base,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -251,6 +253,8 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../",
 					"$(SRCROOT)/../../../ECMedia/protobuf/include",
+					../../../module,
+					../../../base,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

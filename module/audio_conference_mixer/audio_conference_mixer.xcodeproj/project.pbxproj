@@ -314,6 +314,7 @@
 					../audio_coding/main/include,
 					../../system_wrappers/interface,
 					../../system_wrappers/source,
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
@@ -344,6 +345,7 @@
 					../audio_coding/main/include,
 					../../system_wrappers/interface,
 					../../system_wrappers/source,
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";

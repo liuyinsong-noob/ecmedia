@@ -783,6 +783,7 @@
 					../video_engine/include,
 					../module/audio_coding/codecs/g729/source,
 					../third_party/SoundTouch/SoundTouch,
+					../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
@@ -881,6 +882,7 @@
 					../video_engine/include,
 					../module/audio_coding/codecs/g729/source,
 					../third_party/SoundTouch/SoundTouch,
+					../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";

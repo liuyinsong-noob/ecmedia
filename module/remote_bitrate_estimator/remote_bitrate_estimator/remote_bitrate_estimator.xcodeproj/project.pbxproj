@@ -264,7 +264,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = WEBRTC_POSIX;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../",
+					../../../base,
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -275,7 +278,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = WEBRTC_POSIX;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../",
+					../../../base,
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

@@ -36,7 +36,6 @@
 		AD1123271DAF3108006CDD38 /* libopus_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1123261DAF3108006CDD38 /* libopus_Mac.a */; };
 		AD2DE0FC1D6BEA4C00FE3814 /* VoeObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD2DE0FB1D6BEA4C00FE3814 /* VoeObserver.cpp */; };
 		AD36336D1F44668100F0C20B /* libSoundTouch_Media.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD36336A1F44668100F0C20B /* libSoundTouch_Media.a */; };
-		AD3EBA921DE5324E00024454 /* libcommon_video_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADA0AD991DA8C54400C4807D /* libcommon_video_Mac.a */; };
 		AD3EBA991DE5326800024454 /* ECLiveStream_rtmp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0B41DAE0A59009B8D23 /* ECLiveStream_rtmp.cpp */; };
 		AD3EBA9A1DE5326800024454 /* ECLiveStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0B51DAE0A59009B8D23 /* ECLiveStream.cpp */; };
 		AD3EBA9B1DE5327400024454 /* faaccodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0B61DAE0A59009B8D23 /* faaccodec.cpp */; };
@@ -3575,7 +3574,7 @@
 					../interface,
 					../include,
 					../../video_engine/source,
-					../../module/.,
+					../../module,
 					../../module/interface,
 					../../voice_engine/main/include,
 					../../system_wrappers/include,
@@ -3605,6 +3604,7 @@
 					../../third_party/ffmpeg,
 					../../third_party/protobuf/src,
 					../../third_party/SoundTouch/SoundTouch,
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -3649,7 +3649,7 @@
 					../interface,
 					../include,
 					../../video_engine/source,
-					../../module/.,
+					../../module,
 					../../module/interface,
 					../../voice_engine/main/include,
 					../../system_wrappers/include,
@@ -3679,6 +3679,7 @@
 					../../third_party/ffmpeg,
 					../../third_party/protobuf/src,
 					../../third_party/SoundTouch/SoundTouch,
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (

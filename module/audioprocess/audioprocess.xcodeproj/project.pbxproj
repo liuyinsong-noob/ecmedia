@@ -1061,6 +1061,7 @@
 					../../module/audio_coding/main/source/codecs/isac/main/source,
 					../../module/audio_coding/main/source/codecs/isac/main/interface,
 					../../module/audioprocess/source/beamformer,
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
@@ -1126,6 +1127,7 @@
 					../../module/audio_coding/main/source/codecs/isac/main/source,
 					../../module/audio_coding/main/source/codecs/isac/main/interface,
 					../../module/audioprocess/source/beamformer,
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";

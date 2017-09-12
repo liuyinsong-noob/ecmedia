@@ -690,6 +690,7 @@
 					../ECMedia/source,
 					../voice_engine/main/source,
 					"$(SRCROOT)/source",
+					../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
@@ -768,6 +769,7 @@
 					../ECMedia/source,
 					../voice_engine/main/source,
 					"$(SRCROOT)/source",
+					../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
