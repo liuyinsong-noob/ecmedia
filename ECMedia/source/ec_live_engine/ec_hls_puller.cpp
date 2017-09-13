@@ -21,7 +21,8 @@ using namespace std;
 
 namespace cloopenwebrtc {
 
-    EC_HLS_Puller::EC_HLS_Puller() {
+    EC_HLS_Puller::EC_HLS_Puller(EC_MediaPullCallback* callback) {
+        callback_ = callback;
         running_ = false;
         av_packet_cacher = nullptr;
         ts_parser_ = new EC_TS_Parser();
@@ -92,15 +93,18 @@ namespace cloopenwebrtc {
         
         if((ret = hls_task_->Initialize(str_url_.c_str(), vod, start, delay, error, count, this)) != ERROR_SUCCESS) {
             PrintConsole("initialize task failed, url=%s, ret=%d", str_url_.c_str(), ret);
+            callback_->OnLivePullerFailed();
             return ret;
         }
         
         ret = hls_task_->Process();
         
         if(ret != ERROR_SUCCESS) {
+            callback_->OnLivePullerFailed();
             PrintConsole("st task terminate with ret=%d", ret);
         }
         else {
+            callback_->OnLivePullerDisconnect();
             PrintConsole("st task terminate with ret=%d", ret);
         }
         delete hls_task_;
@@ -148,7 +152,7 @@ namespace cloopenwebrtc {
     }   
     
     void EC_HLS_Puller::clearTSlist() {
-        // clear audio cache buffer.
+        // clear ts slices cache buffer.
         std::list<TS_Video_Slices*>::iterator iter = list_ts_slices_.begin();
         while (iter != list_ts_slices_.end()) {
             TS_Video_Slices* ts_slice = *iter;

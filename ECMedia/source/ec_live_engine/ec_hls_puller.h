@@ -50,7 +50,7 @@ namespace cloopenwebrtc {
                          public EC_TS_ParserCallback {
         
     public:
-        EC_HLS_Puller();
+        EC_HLS_Puller(EC_MediaPullCallback* callback);
         ~EC_HLS_Puller();
         void start(const char* url);
         void stop();
@@ -77,8 +77,9 @@ namespace cloopenwebrtc {
         ThreadWrapper* hls_depacket_thread_;
         EC_TS_Parser *ts_parser_;
         EC_AVCacher* av_packet_cacher;
-        
+
         std::list<TS_Video_Slices*>	list_ts_slices_;
+        EC_MediaPullCallback *callback_;
     };
 }
 

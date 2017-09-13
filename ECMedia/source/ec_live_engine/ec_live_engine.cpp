@@ -121,6 +121,10 @@ namespace cloopenwebrtc {
 
             if(!meida_puller_) {
                 meida_puller_ = createMediaPuller(url, callback);
+                if(!meida_puller_) {
+                    PrintConsole("[ECLiveEngine INFO] %s: create media puller faild.", __FUNCTION__);
+                    return -1;
+                }
                 meida_puller_->setReceiverCallback(ec_media_core_);
             }
 
@@ -135,7 +139,9 @@ namespace cloopenwebrtc {
         PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
         int ret = -1;
         if(puller_runnig_) {
-            meida_puller_->stop();
+            if(meida_puller_) {
+                meida_puller_->stop();
+            }
             ret = ec_media_core_->stopPlayout();
 
             puller_runnig_ = false;
@@ -174,7 +180,7 @@ namespace cloopenwebrtc {
         if(strncmp(url, "rtmp", 4) == 0) {
             return new EC_RtmpPuller(callback);
         } else if(strncmp(url, "http", 4) == 0) {
-            return new EC_HLS_Puller();
+            return new EC_HLS_Puller(callback);
         } else {
             
             // todo: http-flv player
