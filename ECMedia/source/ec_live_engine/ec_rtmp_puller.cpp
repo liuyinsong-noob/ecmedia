@@ -23,10 +23,7 @@ namespace cloopenwebrtc {
     #define ERROR_SUCCESS   0
     #endif
     #define MAX_RETRY_TIME  3
-
-    static u_int8_t fresh_nalu_header[] = { 0x00, 0x00, 0x00, 0x01 };
-    static u_int8_t cont_nalu_header[] =  { 0x00, 0x00, 0x01};
-
+ 
     EC_RtmpPuller::EC_RtmpPuller(EC_MediaPullCallback* callback) {
         retry_ct_ = 0;
         running_ = false;
@@ -130,7 +127,7 @@ namespace cloopenwebrtc {
                     {
                         doReadRtmpData();
                     }
-                        break;
+                    break;
                 }
             }
         }
@@ -158,13 +155,16 @@ namespace cloopenwebrtc {
                 rtmp_ = srs_rtmp_create(str_url_.c_str());
             } else {
                 if(!callback_) {
+                    running_ = false;
                     return;
                 }
                 
                 if(connected_) {
+                    running_ = false;
                     callback_->OnLivePullerDisconnect();
                 }
                 else {
+                    running_ = false;
                     callback_->OnLivePullerFailed();
                 }
             }
@@ -231,8 +231,10 @@ namespace cloopenwebrtc {
         char *data;
         u_int32_t timestamp;
 
+ 
         if (srs_rtmp_read_packet(rtmp_, &type, &timestamp, &data, &size) != 0) {
-            //todo log error
+            CallDisconnect();
+            return;
         }
 
         if (type == SRS_RTMP_TYPE_VIDEO) {

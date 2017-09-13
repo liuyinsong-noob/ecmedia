@@ -2703,7 +2703,6 @@ extern "C" int getAudioConfigEnabled(int type, bool *enabled, int *mode)
     int ret =g_pSerCore->serphone_core_get_audio_config_enabled(type, (bool_t*)enabled, mode);
 
     PrintConsole("[APICall getAgcEnabled type=%d enabled=%d, mode=%d\n", type, enabled, mode);
-
     return ret;
 }
 
