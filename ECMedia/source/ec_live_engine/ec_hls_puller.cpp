@@ -96,7 +96,7 @@ namespace cloopenwebrtc {
             callback_->OnLivePullerFailed();
             return ret;
         }
-        
+        callback_->OnLivePullerConnected();
         ret = hls_task_->Process();
         
         if(ret != ERROR_SUCCESS) {
