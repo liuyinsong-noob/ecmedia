@@ -66,8 +66,10 @@ namespace cloopenwebrtc {
     void EC_HLS_Puller::stop() {
         if(running_) {
             running_ = false;
-            hls_task_->StopProcess();
-            
+            if(hls_task_) {
+                 hls_task_->StopProcess();
+            }
+
             av_packet_cacher->shutdown();
             hls_pulling_thread_->Stop();
         }
@@ -93,18 +95,28 @@ namespace cloopenwebrtc {
         
         if((ret = hls_task_->Initialize(str_url_.c_str(), vod, start, delay, error, count, this)) != ERROR_SUCCESS) {
             PrintConsole("initialize task failed, url=%s, ret=%d", str_url_.c_str(), ret);
-            callback_->OnLivePullerFailed();
+            if(callback_) {
+                 callback_->OnLivePullerFailed();
+            }
             return ret;
         }
-        callback_->OnLivePullerConnected();
+        if(callback_) {
+            callback_->OnLivePullerConnected();
+        }
+        
         ret = hls_task_->Process();
         
         if(ret != ERROR_SUCCESS) {
-            callback_->OnLivePullerFailed();
+            if(callback_) {
+                callback_->OnLivePullerFailed();
+            }
             PrintConsole("st task terminate with ret=%d", ret);
         }
         else {
-            callback_->OnLivePullerDisconnect();
+            if(callback_) {
+                callback_->OnLivePullerDisconnect();
+            }
+            
             PrintConsole("st task terminate with ret=%d", ret);
         }
         delete hls_task_;
