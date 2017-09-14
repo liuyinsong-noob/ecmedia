@@ -31,6 +31,15 @@ class AbsoluteSendTime {
   }
 };
 
+class LossRate {
+public:
+	static constexpr RTPExtensionType kId = kRtpExtensionLossRate;
+	static constexpr uint8_t kValueSizeBytes = 1;
+	static constexpr const char* kUri = "we define lossrate_ext by ourselves";
+	static bool Parse(const uint8_t* data, uint8_t* loss_rate);
+	static bool Write(uint8_t* data, uint8_t loss_rate_hd_ext_version, uint8_t loss_rate);
+};
+
 class AudioLevel {
  public:
   static constexpr RTPExtensionType kId = kRtpExtensionAudioLevel;

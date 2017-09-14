@@ -47,6 +47,8 @@ class RTPSenderAudio {
   // Valid range is [0,100]. Actual value is negative.
   int32_t SetAudioLevel(uint8_t level_dbov);
 
+  int32_t SetLossRate(uint32_t loss_rate, uint8_t loss_rate_hd_ext_version);
+
   // Send a DTMF tone using RFC 2833 (4733)
   int32_t SendTelephoneEvent(uint8_t key, uint16_t time_ms, uint8_t level);
 
@@ -95,6 +97,8 @@ class RTPSenderAudio {
   // Audio level indication.
   // (https://datatracker.ietf.org/doc/draft-lennox-avt-rtp-audio-level-exthdr/)
   uint8_t audio_level_dbov_ GUARDED_BY(send_audio_critsect_) = 0;
+  uint8_t loss_rate_hd_ext_version_ GUARDED_BY(send_audio_critsect_) = 0;
+  uint8_t loss_rate_ GUARDED_BY(send_audio_critsect_) = 0;
   OneTimeEvent first_packet_sent_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(RTPSenderAudio);

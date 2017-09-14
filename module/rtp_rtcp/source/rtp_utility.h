@@ -31,35 +31,13 @@ ReceiveStatistics* NullObjectReceiveStatistics();
     
 namespace RtpUtility {
 
-    // January 1970, in NTP seconds.
-    const uint32_t NTP_JAN_1970 = 2208988800UL;
+	struct Payload {
+		char name[RTP_PAYLOAD_NAME_SIZE];
+		bool audio;
+		PayloadUnion typeSpecific;
+	};
 
-    // Magic NTP fractional unit.
-    const double NTP_FRAC = 4.294967296E+9;
-
-    typedef std::map<int8_t, Payload*> PayloadTypeMap;
-
-    // Return the current RTP timestamp from the NTP timestamp
-    // returned by the specified clock.
-    uint32_t GetCurrentRTP(Clock* clock, uint32_t freq);
-
-    // Return the current RTP absolute timestamp.
-    uint32_t ConvertNTPTimeToRTP(uint32_t NTPsec,
-                                 uint32_t NTPfrac,
-                                 uint32_t freq);
-
-    uint32_t pow2(uint8_t exp);
-
-    // Returns true if |newTimestamp| is older than |existingTimestamp|.
-    // |wrapped| will be set to true if there has been a wraparound between the
-    // two timestamps.
-    bool OldTimestamp(uint32_t newTimestamp,
-                      uint32_t existingTimestamp,
-                      bool* wrapped);
-
-    bool StringCompare(const char* str1,
-                       const char* str2,
-                       const uint32_t length);
+bool StringCompare(const char* str1, const char* str2, const uint32_t length);
 
     void AssignUWord32ToBuffer(uint8_t* dataBuffer, uint32_t value);
     void AssignUWord24ToBuffer(uint8_t* dataBuffer, uint32_t value);
@@ -86,19 +64,22 @@ namespace RtpUtility {
      */
     uint32_t BufferToUWord32(const uint8_t* dataBuffer);
 
-    class RtpHeaderParser {
-    public:
-     RtpHeaderParser(const uint8_t* rtpData, size_t rtpDataLength);
-     ~RtpHeaderParser();
+// Round up to the nearest size that is a multiple of 4.
+size_t Word32Align(size_t size);
+
+class RtpHeaderParser {
+ public:
+  RtpHeaderParser(const uint8_t* rtpData, size_t rtpDataLength);
+  ~RtpHeaderParser();
 
         bool RTCP() const;
         bool ParseRtcp(RTPHeader* header) const;
-        bool Parse(RTPHeader& parsedPacket,
+        bool Parse(RTPHeader* parsedPacket,
                    RtpHeaderExtensionMap* ptrExtensionMap = NULL) const;
         int setECMedia_ConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback *cb);
     private:
         void ParseOneByteExtensionHeader(
-            RTPHeader& parsedPacket,
+            RTPHeader* parsedPacket,
             const RtpHeaderExtensionMap* ptrExtensionMap,
             const uint8_t* ptrRTPDataExtensionEnd,
             const uint8_t* ptr) const;

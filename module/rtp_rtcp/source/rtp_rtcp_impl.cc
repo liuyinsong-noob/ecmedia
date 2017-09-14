@@ -117,7 +117,6 @@ ModuleRtpRtcpImpl::ModuleRtpRtcpImpl(const Configuration& configuration)
       isSendingTmmbr(false),
       receive_statistics_(configuration.receive_statistics),
       ssrc_db_(SSRCDatabase::GetSSRCDatabase()){
-    {
   // Make sure rtcp sender use same timestamp offset as rtp sender.
   rtcp_sender_.SetTimestampOffset(rtp_sender_.TimestampOffset());
 
@@ -136,7 +135,7 @@ ModuleRtpRtcpImpl::ModuleRtpRtcpImpl(const Configuration& configuration)
   }
 }
 
-ModuleRtpRtcpImpl::~ModuleRtpRtcpImpl(){
+	ModuleRtpRtcpImpl::~ModuleRtpRtcpImpl() {
 	if (ssrc_db_)
 	{
 		SSRCDatabase::ReturnSSRCDatabase();

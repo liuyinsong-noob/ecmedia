@@ -45,6 +45,30 @@ bool AbsoluteSendTime::Write(uint8_t* data, int64_t time_ms) {
   return true;
 }
 
+// The form of the audio red loss rate extension block:
+//
+//    0                   1                   2                   3
+//    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+//    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+//    |  ID   | len=0 | V | loss rate |      0x00     |      0x00     |
+//    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+constexpr RTPExtensionType LossRate::kId;
+constexpr uint8_t LossRate::kValueSizeBytes;
+constexpr const char* LossRate::kUri;
+
+bool LossRate::Parse(const uint8_t* data, uint8_t* loss_rate) {
+	*loss_rate = data[0] & 0x7f;
+	return true;
+}
+
+bool LossRate::Write(uint8_t* data, 
+	                 uint8_t loss_rate_hd_ext_version, 
+	                 uint8_t loss_rate) {
+	CHECK_LE(loss_rate, 0x7f);
+	data[0] = (loss_rate_hd_ext_version & 0x80 ) | loss_rate;
+	return true;
+}
+
 // An RTP Header Extension for Client-to-Mixer Audio Level Indication
 //
 // https://datatracker.ietf.org/doc/draft-lennox-avt-rtp-audio-level-exthdr/

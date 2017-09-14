@@ -41,8 +41,7 @@ RtpHeaderParser* RtpHeaderParser::Create() {
 }
 
 RtpHeaderParserImpl::RtpHeaderParserImpl()
-    : critical_section_(CriticalSectionWrapper::CreateCriticalSection()),
-    _participantCallback(nullptr) {}
+    : _participantCallback(nullptr) {}
 
 bool RtpHeaderParser::IsRtcp(const uint8_t* packet, size_t length) {
   RtpUtility::RtpHeaderParser rtp_parser(packet, length);

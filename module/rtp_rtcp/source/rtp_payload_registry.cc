@@ -324,6 +324,7 @@ bool RTPPayloadRegistry::IsRed(const RTPHeader& header) const {
 }
 
 bool RTPPayloadRegistry::IsEncapsulated(const RTPHeader& header) const {
+    return false;               //Sean audio red
   return IsRed(header) || IsRtx(header);
 }
 

@@ -123,6 +123,8 @@ class RTPSender {
   bool IsRtpHeaderExtensionRegistered(RTPExtensionType type) const;
   int32_t DeregisterRtpHeaderExtension(RTPExtensionType type);
 
+  int32_t SetLossRate(uint32_t loss_rate, uint8_t loss_rate_hd_ext_version);
+
   uint16_t BuildRTPHeaderExtension(uint8_t* data_buffer) const;
   bool TimeToSendPacket(uint32_t ssrc,
                         uint16_t sequence_number,

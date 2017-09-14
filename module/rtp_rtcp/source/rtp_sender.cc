@@ -203,6 +203,7 @@ int32_t RTPSender::RegisterRtpHeaderExtension(RTPExtensionType type,
     case kRtpExtensionAbsoluteSendTime:
     case kRtpExtensionAudioLevel:
     case kRtpExtensionTransportSequenceNumber:
+	case kRtpExtensionLossRate:
       return rtp_header_extension_map_.Register(type, id);
     case kRtpExtensionNone:
     case kRtpExtensionNumberOfExtensions:
@@ -217,32 +218,9 @@ bool RTPSender::IsRtpHeaderExtensionRegistered(RTPExtensionType type) const {
   return rtp_header_extension_map_.IsRegistered(type);
 }
 
-  int32_t RTPSender::SetAbsoluteSendTime(uint32_t absolute_send_time) {
-  if (absolute_send_time > 0xffffff) {  // UWord24.
-    return -1;
-  }
-  CriticalSectionScoped cs(send_critsect_);
-  absolute_send_time_ = absolute_send_time;
-  return 0;
-}
     
 int32_t RTPSender::SetLossRate(uint32_t loss_rate, uint8_t loss_rate_hd_ext_version) {
-    if(loss_rate > 0x14) {
-        return -1;
-    } else if (loss_rate > 0x0f) {  // current only support max loss rate 15*5
-        loss_rate = 0x0f;
-    }
-    
-    CriticalSectionScoped cs(send_critsect_);
-    loss_rate_hd_ext_version_ = loss_rate_hd_ext_version;
-    loss_rate_ = loss_rate;
-    return 0;
-}
-
-int32_t RTPSender::RegisterRtpHeaderExtension(RTPExtensionType type,
-                                              uint8_t id) {
-  CriticalSectionScoped cs(send_critsect_);
-  return rtp_header_extension_map_.Register(type, id);
+	return audio_->SetLossRate(loss_rate, loss_rate_hd_ext_version);
 }
 
 int32_t RTPSender::DeregisterRtpHeaderExtension(RTPExtensionType type) {
@@ -388,6 +366,18 @@ int32_t RTPSender::CheckPayloadType(int8_t payload_type,
     LOG(LS_ERROR) << "Invalid payload_type " << payload_type << ".";
     return -1;
   }
+
+  if (audio_configured_) {
+    int8_t red_pl_type = -1;
+    if (audio_->RED(red_pl_type) == 0) {
+    // We have configured RED.
+        if (red_pl_type == payload_type) {
+                // And it's a match...
+            return 0;
+        }
+    }
+  }
+    
   if (payload_type_ == payload_type) {
     if (!audio_configured_) {
       *video_type = video_->VideoCodecType();
@@ -1194,6 +1184,7 @@ std::unique_ptr<RtpPacketToSend> RTPSender::AllocatePacket() const {
     packet->SetExtension<PlayoutDelayLimits>(
         playout_delay_oracle_.playout_delay());
   }
+  packet->ReserveExtension<LossRate>();
   return packet;
 }
 

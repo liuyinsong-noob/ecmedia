@@ -162,6 +162,8 @@ void Packet::GetHeader(RTPHeader* header) const {
           &header->extension.transportSequenceNumber);
   header->extension.hasAudioLevel = GetExtension<AudioLevel>(
       &header->extension.voiceActivity, &header->extension.audioLevel);
+  header->extension.hasLossRate = 
+	  GetExtension<LossRate>(&header->extension.lossRate);
   header->extension.hasVideoRotation =
       GetExtension<VideoOrientation>(&header->extension.videoRotation);
 }
