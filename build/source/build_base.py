@@ -15,6 +15,8 @@ class BuildBase:
         self.CommonTypesHeader = os.path.join(self.ProjectPath, 'module', 'common_types.h')
         self.SdkCommonHeader = os.path.join(self.ProjectPath, 'module', 'sdk_common.h')
         self.TypesDefsHeader = os.path.join(self.ProjectPath, 'module', 'typedefs.h')
+		self.BaseHeader = os.path.join(self.projectPath, 'base', 'checks.h')
+		self.SafeCompareHeader = os.path.join(self.projectPath, 'base', 'safe_compare.h')
         self.ReleaseNoteFile = os.path.join(self.ProjectPath, 'ReleaseNotes.txt')
 
         self.BuildPath = os.path.join(self.ProjectPath, 'build')
@@ -62,7 +64,8 @@ class BuildBase:
         print os.system('cp ' + self.CommonTypesHeader + ' ' + self.RarIncludePath)
         print os.system('cp ' + self.SdkCommonHeader + ' ' + self.RarIncludePath)
         print os.system('cp ' + self.TypesDefsHeader + ' ' + self.RarIncludePath)
-           
+		print os.system('cp ' + self.BaseHeader + ' ' + self.RarIncludePath)
+        print os.system('cp ' + self.SafeCompareHeader + ' ' + self.RarIncludePath)   
         
     def collectFiles(self):
         if os.path.exists(self.RarPath):
