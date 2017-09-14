@@ -37,9 +37,7 @@ namespace cloopenwebrtc {
         // aac data callback
         virtual void onGotAacframe(const char* aac_data, int length, int64_t dts, int64_t pts) = 0;
     };
-    
-    
-    
+
     class EC_TS_Parser {
     public:
         EC_TS_Parser();

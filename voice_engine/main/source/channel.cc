@@ -3747,10 +3747,10 @@ Channel::StartRTPDump(const char fileNameUTF8[1024],
 int
 Channel::StopRTPDump(RTPDirections direction)
 {
-//	return -1;
+   return -1;
    WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId, _channelId),
                  "Channel::StopRTPDump()");
-    if ((direction != kRtpIncoming) && (direction != kRtpOutgoing))
+    /*if ((direction != kRtpIncoming) && (direction != kRtpOutgoing))
     {
         _engineStatisticsPtr->SetLastError(
             VE_INVALID_ARGUMENT, kTraceError,
