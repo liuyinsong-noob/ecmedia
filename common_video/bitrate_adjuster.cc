@@ -103,7 +103,7 @@ uint32_t BitrateAdjuster::GetMaxAdjustedBitrateBps() const {
 
 // Only safe to call this after Update calls have stopped
 void BitrateAdjuster::Reset() {
-  cloopenwebrtc::CritScope cs(&crit_);
+  // cloopenwebrtc::CritScope cs(&crit_);
   target_bitrate_bps_ = 0;
   adjusted_bitrate_bps_ = 0;
   last_adjusted_target_bitrate_bps_ = 0;

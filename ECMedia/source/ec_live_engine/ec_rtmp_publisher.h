@@ -27,7 +27,7 @@ namespace cloopenwebrtc {
         RS_STM_Closed		// Õ∆¡˜πÿ±’
     };
 
-    class EventWrapper;
+    class EventTimerWrapper;
     class ThreadWrapper;
     class CriticalSectionWrapper;
 
@@ -55,7 +55,7 @@ namespace cloopenwebrtc {
     private:
         std::string rtmp_url;
         ThreadWrapper* rtmpPublishThread_;
-        EventWrapper* cacher_update_event_;
+        EventTimerWrapper* cacher_update_event_;
         bool running_;
         void* rtmp_;
 

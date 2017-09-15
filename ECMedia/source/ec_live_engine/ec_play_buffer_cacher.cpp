@@ -31,12 +31,12 @@ namespace cloopenwebrtc{
     , play_cur_time_(0) {
         playnetworkThread_ = ThreadWrapper::CreateThread(EC_AVCacher::decodingThreadRun,
                                                          this,
-                                                         kHighPriority,
+                                                         kNormalPriority,
                                                          "decodingThreadRun");
         
         audioHandleThread_ = ThreadWrapper::CreateThread(EC_AVCacher::decodingAudioThreadRun,
                                                       this,
-                                                      kHighPriority,
+                                                      kNormalPriority,
                                                       "decodingAudioThreadRun");
         got_audio_ = false;
         
@@ -44,7 +44,7 @@ namespace cloopenwebrtc{
         _cs_list_video = CriticalSectionWrapper::CreateCriticalSection();
         running_ = false;
         callback_ = NULL;
-        cacher_update_event_ = EventWrapper::Create();
+        cacher_update_event_ = EventTimerWrapper::Create();
         is_playing_ = false;
         faac_decode_handle_ = nullptr;
         a_cache_len_ = 0;

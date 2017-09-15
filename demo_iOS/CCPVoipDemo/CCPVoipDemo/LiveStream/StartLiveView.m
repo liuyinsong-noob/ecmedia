@@ -219,9 +219,9 @@ static int padding = 30;
         [self.containerView addSubview:self.liveRenderView];
         [self.startPlayLiveButton setTitle:@"结束观看" forState:UIControlStateNormal];
         // play rtmp
-//        [self.modelEngineVoip playStream:self.session url:@"rtmp://192.168.0.44:1935/live/livestream" view:self.liveRenderView];
+        [self.modelEngineVoip playStream:self.session url:@"rtmp://192.168.0.44:1935/live/livestream" view:self.liveRenderView];
         // play hls
-        [self.modelEngineVoip playStream:self.session url:@"http://192.168.0.44/live/livestream.m3u8" view:self.liveRenderView];
+//        [self.modelEngineVoip playStream:self.session url:@"http://192.168.0.44/live/livestream.m3u8" view:self.liveRenderView];
     } else {
         [self.startPlayLiveButton setTitle:@"观看直播" forState:UIControlStateNormal];
         [self.liveRenderView removeFromSuperview];

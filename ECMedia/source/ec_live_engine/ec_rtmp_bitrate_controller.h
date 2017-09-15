@@ -14,7 +14,7 @@
 #include "ec_live_common.h"
 
 namespace cloopenwebrtc {
-    class EventWrapper;
+    class EventTimerWrapper;
     class EC_RTMP_BitrateControllerCallback {
     public:
         EC_RTMP_BitrateControllerCallback(){};
@@ -53,7 +53,7 @@ namespace cloopenwebrtc {
 
         uint32_t base_time_ ;
         EC_RTMP_BitrateControllerCallback *callback_;
-        EventWrapper *timer_event_;
+        EventTimerWrapper *timer_event_;
     private:
         bool runing_;
         bool run();

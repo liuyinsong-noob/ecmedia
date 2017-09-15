@@ -46,7 +46,7 @@ namespace cloopenwebrtc{
         uint32_t _dts;
     } PlyPacket;
     
-    class EventWrapper;
+    class EventTimerWrapper;
     class EC_AVCacher{
     public:
         EC_AVCacher();
@@ -88,7 +88,7 @@ namespace cloopenwebrtc{
         EC_ReceiverCallback * callback_;
         CriticalSectionWrapper* _cs_list_audio;
         CriticalSectionWrapper* _cs_list_video;
-        EventWrapper* cacher_update_event_;
+        EventTimerWrapper* cacher_update_event_;
         bool running_;
         bool is_playing_;
         

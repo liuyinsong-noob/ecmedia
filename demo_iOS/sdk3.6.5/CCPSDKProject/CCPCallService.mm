@@ -2161,35 +2161,12 @@ static CCPCallService * ccpcallserviceSharedInstance;
 
     [self onLogInfo:[NSString stringWithFormat:@"[CCPCallService] connectToCCP restip=%@ restport=%d account=%@ password=%@ accountSid=%@ authToken=%@",proxy_addr,(int)proxy_port,accountStr,passwordStr,accountSid,authToken]];
 
-    if ([passwordStr isEqualToString:@"123456"]) {
-        self.ccp_server_ip = @"192.168.177.186";
-        self.ccp_serverport = 7600;
-    }
-    else
-    {
-        self.ccp_server_ip = proxy_addr;
-        self.ccp_serverport = proxy_port;
-    }
-   
+    self.ccp_server_ip = proxy_addr;
+    self.ccp_serverport = proxy_port;
+ 
     self.account = accountStr;
     self.password = passwordStr;
     connectToCCP([self.ccp_server_ip cStringUsingEncoding:NSUTF8StringEncoding], self.ccp_serverport, [self.account cStringUsingEncoding:NSUTF8StringEncoding], [self.password cStringUsingEncoding:NSUTF8StringEncoding],[self.strCapability cStringUsingEncoding:NSUTF8StringEncoding]);
-    
-//    self.ccp_server_ip = @"114.215.241.17";
-//    self.ccp_serverport = 8880;
-////    self.password = @"123456";
-//    if ([[self getDeviceVersion] isEqualToString:@"iPhone se"])
-//    {
-//        self.account = @"80001700000003";
-//        self.password = @"B05fPfA0";
-//    }
-//    else if ([[self getDeviceVersion] isEqualToString:@"iPhone 7"])
-//    {
-//        self.account =@"80001700000001";
-//        self.password = @"nncfm1v5";
-//    }
-//    connectToCCP([self.ccp_server_ip cStringUsingEncoding:NSUTF8StringEncoding], self.ccp_serverport, [self.account cStringUsingEncoding:NSUTF8StringEncoding], [self.password cStringUsingEncoding:NSUTF8StringEncoding],[self.strCapability cStringUsingEncoding:NSUTF8StringEncoding]);
-//
 
     return ECCP_Success;
 }

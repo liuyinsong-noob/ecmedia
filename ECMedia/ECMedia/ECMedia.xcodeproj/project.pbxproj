@@ -3709,10 +3709,12 @@
 					"\"$(SRCROOT)/../../third_party/libfaad/include\"",
 					"\"$(SRCROOT)/../../third_party/librtmp/include\"",
 					../../module/video_coding/codecs/h264,
+					../../module/audio_coding/main/source,
 					../../third_party/ffmpeg,
 					../../third_party/protobuf/src,
 					../../third_party/SoundTouch/SoundTouch,
 					../../base,
+					"../source/ec_live_engine/srs-librtmp",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -3784,10 +3786,12 @@
 					"\"$(SRCROOT)/../../third_party/libfaad/include\"",
 					"\"$(SRCROOT)/../../third_party/librtmp/include\"",
 					../../module/video_coding/codecs/h264,
+					../../module/audio_coding/main/source,
 					../../third_party/ffmpeg,
 					../../third_party/protobuf/src,
 					../../third_party/SoundTouch/SoundTouch,
 					../../base,
+					"../source/ec_live_engine/srs-librtmp",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
