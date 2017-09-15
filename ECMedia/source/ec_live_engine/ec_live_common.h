@@ -135,7 +135,7 @@ namespace cloopenwebrtc {
         EC_ReceiverCallback(void){};
         virtual ~EC_ReceiverCallback(void){};
         virtual void onAvcDataComing(void* nalu_data, int len, uint32_t timestamp) = 0;
-        virtual void onAacDataComing(uint8_t* pData, int nLen, uint32_t ts) = 0;
+        virtual void onAacDataComing(uint8_t* pData, int nLen, uint32_t ts, uint32_t sample_rate, int audio_channels) = 0;
     };
 
 }

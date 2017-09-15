@@ -901,7 +901,7 @@ namespace cloopenwebrtc {
         PrintConsole("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
     }
 
-    void ECMediaMachine::onAacDataComing(uint8_t* pData, int nLen, uint32_t ts) {
+    void ECMediaMachine::onAacDataComing(uint8_t* pData, int nLen, uint32_t ts, uint32_t sample_rate, int audio_channels) {
         if(audio_data_cb_) {
             PrintConsole("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
             int audio_record_sample_hz_ = 32000;
@@ -910,7 +910,7 @@ namespace cloopenwebrtc {
 
             int16_t temp_output[kMaxDataSizeSamples];
 
-            int len = resampler_record_.Resample10Msec((int16_t*)pData, 44100 * 2, audio_record_sample_hz_*audio_record_channels_, 1,  3840, (int16_t*)temp_output);
+            int len = resampler_record_.Resample10Msec((int16_t*)pData, sample_rate * audio_channels, audio_record_sample_hz_*audio_record_channels_, 1,  3840, (int16_t*)temp_output);
 
             if (len < 0) {
                 PrintConsole("[ECMEDIA CORE ERROR] %s resample error\n", __FUNCTION__);

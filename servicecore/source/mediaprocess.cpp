@@ -1712,7 +1712,7 @@ void ServiceCore::serphone_call_init_media_streams(SerPhoneCall *call)
 
 	//audio->EnableHighPassFilter(true);
 	ECMedia_set_AgcStatus(m_agcEnabled, m_agcMode);
-    ECMedia_set_EcStatus(m_ecEnabled, m_ecMode);
+    // ECMedia_set_EcStatus(m_ecEnabled, m_ecMode);
     ECMedia_set_NsStatus(m_nsEnabled, m_nsMode);
     //ECMedia_EnableHowlingControl(m_hcEnabled);
 
@@ -1961,8 +1961,11 @@ int ServiceCore::serphone_core_set_audio_config_enabled(int type, bool_t enabled
 		return -1;
 	}
 	ECMedia_set_AgcStatus(m_agcEnabled, m_agcMode);
-	ECMedia_set_EcStatus(m_ecEnabled, cloopenwebrtc::kEcAec);
-//	ECMedia_set_SetAecmMode(cloopenwebrtc::kAecmLoudSpeakerphone, false);
+	ECMedia_set_EcStatus(m_ecEnabled, m_ecMode);
+    if(m_ecMode == kEcAecm) {
+        ECMedia_set_SetAecmMode(cloopenwebrtc::kAecmLoudSpeakerphone, false);
+    }
+    
 	ECMedia_set_NsStatus(m_nsEnabled, cloopenwebrtc::kNsVeryHighSuppression);
     ECMedia_EnableHowlingControl(m_hcEnabled);
     return 0;

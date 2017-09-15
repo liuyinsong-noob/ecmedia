@@ -99,6 +99,8 @@ namespace cloopenwebrtc{
         uint32_t last_viedo_ts_delay_;
         uint32_t last_video_ts_;
 
+        unsigned int audio_sampleRate_;
+        unsigned int audio_channels_;
     };
 }
 #endif /* ec_av_cacher_hpp */
