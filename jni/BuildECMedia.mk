@@ -72,10 +72,7 @@ LOCAL_LDLIBS := -L$(JNI_PATH)
 LOCAL_CFLAGS := $(MY_WEBRTC_COMMON_DEFS)
 
 LOCAL_CPP_EXTENSION := .cc
-LOCAL_SRC_FILES := \
-    ../config.cc \
-    ../module/common_types.cc
-
+ 
 LOCAL_STATIC_LIBRARIES := \
 
 LOCAL_WHOLE_STATIC_LIBRARIES := \
@@ -144,6 +141,7 @@ LOCAL_LDFLAGS += \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libssl.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libcrypto.a \
 
+ LOCAL_ALLOW_UNDEFINED_SYMBOLS := true
 LOCAL_DISABLE_FATAL_LINKER_WARNINGS := true
 LOCAL_PRELINK_MODULE := false
 

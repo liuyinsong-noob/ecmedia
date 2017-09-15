@@ -22,8 +22,6 @@ LOCAL_SRC_FILES := \
 		RecordLocal.cpp \
 		statsCollector.cc \
 		VoeObserver.cpp \
-		ECLiveStream_rtmp.cpp \
-		ECLiveStream.cpp \
 		faaccodec.cpp \
 		MediaStatisticsData.pb.cc \
 		ec_live_engine/ec_aac_codec.cpp \
@@ -47,7 +45,10 @@ LOCAL_SRC_FILES := \
 		ec_live_engine/srs-hls-loader/htl_core_uri.cpp \
 		ec_live_engine/srs-hls-loader/htl_main_utility.cpp \
 		ec_live_engine/srs-hls-loader/htl_os_st.cpp \
-		ec_live_engine/srs-hls-loader/http_parser.c
+		ec_live_engine/srs-hls-loader/http_parser.c \
+		../../config.cc \
+        ../../module/common_types.cc
+
 
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
@@ -57,20 +58,22 @@ LOCAL_CFLAGS := \
 
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/. \
+	$(LOCAL_PATH)/../ \
 	$(LOCAL_PATH)/../include \
 	$(LOCAL_PATH)/ec_live_engine \
 	$(LOCAL_PATH)/ec_live_engine/srs-librtmp \
 	$(LOCAL_PATH)/ec_live_engine/srs-hls-loader \
 	$(LOCAL_PATH)/ec_live_engine/srs-hls-parser \
 	$(LOCAL_PATH)/../../system_wrappers/interface \
+	$(LOCAL_PATH)/../../system_wrappers/include \
 	$(LOCAL_PATH)/../../voice_engine/main/include \
 	$(LOCAL_PATH)/../../voice_engine/main/source \
 	$(LOCAL_PATH)/../../video_engine/include \
 	$(LOCAL_PATH)/../../video_engine/source \
 	$(LOCAL_PATH)/../../video_engine/source/video \
 	$(LOCAL_PATH)/../interface \
-	$(LOCAL_PATH)/../.. \
-	$(LOCAL_PATH)/../../module \
+	$(LOCAL_PATH)/../../ \
+	$(LOCAL_PATH)/../../module/ \
 	$(LOCAL_PATH)/../../module/interface \
 	$(LOCAL_PATH)/../../module/videojpegyuv/include \
 	$(LOCAL_PATH)/../../third_party/oRTP/include \
@@ -81,6 +84,7 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../../third_party/gsm/inc/ \
 	$(LOCAL_PATH)/../../third_party/openssl \
 	$(LOCAL_PATH)/../../third_party/librtmp/include \
+	$(LOCAL_PATH)/../../base \
 	$(LOCAL_PATH)/../../module/video_coding/codecs/interface \
 	$(LOCAL_PATH)/../../module/video_coding/codecs/h264 \
 	$(LOCAL_PATH)/../../module/video_coding/main/include \
@@ -100,6 +104,7 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../../third_party/libfaac/include \
 	$(LOCAL_PATH)/../../third_party/ffmpeg/ffmpeg-android-bin/include \
 	$(LOCAL_PATH)/../../third_party/protobuf/src
+
 	
 LOCAL_SHARED_LIBRARIES := \
     libcutils \

@@ -109,7 +109,9 @@ LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/../../common_audio/include \
 		$(LOCAL_PATH)/../../utility/include \
 		$(LOCAL_PATH)/../../audio_coding/main/source/codecs/isac/main/source \
-		$(LOCAL_PATH)/../../audio_coding/main/source/codecs/isac/main/interface
+		$(LOCAL_PATH)/../../audio_coding/main/source/codecs/isac/main/interface \
+		$(LOCAL_PATH)/../../../base \
+		$(LOCAL_PATH)/../../.
 
 LOCAL_SHARED_LIBRARIES := \
     libcutils \

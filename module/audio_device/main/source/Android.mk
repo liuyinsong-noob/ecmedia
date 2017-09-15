@@ -53,6 +53,7 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../../../.. \
     $(LOCAL_PATH)/../../../interface \
     $(LOCAL_PATH)/../../../../system_wrappers/interface \
+    $(LOCAL_PATH)/../../../../base \
     $(LOCAL_PATH)/../../../common_audio/source/signal_processing/include \
     $(LOCAL_PATH)/../../../utility/include
 

@@ -70,7 +70,8 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../../../../system_wrappers/interface \
     $(LOCAL_PATH)/../../../../system_wrappers/source \
 	$(LOCAL_PATH)/../../../../third_party/libx264/libx264_android/include \
-    $(LOCAL_PATH)/../../../../third_party/ffmpeg/ffmpeg-android-bin/include
+    $(LOCAL_PATH)/../../../../third_party/ffmpeg/ffmpeg-android-bin/include \
+    $(LOCAL_PATH)/../../../../base
 	
 	
 LOCAL_SHARED_LIBRARIES := \

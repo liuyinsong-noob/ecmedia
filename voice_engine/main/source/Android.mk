@@ -103,6 +103,7 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../../../third_party/oRTP/include \
 	$(LOCAL_PATH)/../../../servicecore/include/ \
 	$(LOCAL_PATH)/../../../third_party/SoundTouch/SoundTouch \
+	$(LOCAL_PATH)/../../../base \
 
 LOCAL_SHARED_LIBRARIES := \
     libcutils \

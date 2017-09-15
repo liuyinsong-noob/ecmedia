@@ -33,7 +33,11 @@ LOCAL_CFLAGS := \
 
 LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH) \
-		$(LOCAL_PATH)/..
+		$(LOCAL_PATH)/.. \
+		$(LOCAL_PATH)/../../base \
+		$(LOCAL_PATH)/../../system_wrappers/include \
+
+		
 
 LOCAL_SHARED_LIBRARIES := \
     libcutils \

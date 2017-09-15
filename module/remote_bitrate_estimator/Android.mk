@@ -43,6 +43,7 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../../interface \
     $(LOCAL_PATH)/../../rtp_rtcp/source \
     $(LOCAL_PATH)/../../rtp_rtcp/include \
+    $(LOCAL_PATH)/../../base \
     $(LOCAL_PATH)/../../../system_wrappers/interface
     
 

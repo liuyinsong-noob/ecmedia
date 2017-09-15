@@ -31,7 +31,7 @@
 #endif
 
 #include "../base/checks.h"
-#include "../base/logging.h"
+#include "logging.h"
 
 #if defined(_MSC_VER)
 // Warning C4722: destructor never returns, potential memory leak.

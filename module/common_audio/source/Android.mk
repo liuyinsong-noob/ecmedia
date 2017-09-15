@@ -75,6 +75,7 @@ LOCAL_CFLAGS := \
 
 LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/../../../system_wrappers/source \
+		$(LOCAL_PATH)/../../../base \
 		$(LOCAL_PATH)/../../../system_wrappers/interface \
 		$(LOCAL_PATH)/../../audioprocess/source \
 		$(LOCAL_PATH)/../.. \
