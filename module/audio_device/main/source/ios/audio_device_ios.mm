@@ -731,6 +731,56 @@ int32_t AudioDeviceIOS::SetLoudspeakerStatus(bool enable) {
 
     NSError* error = nil;
     AVAudioSession* session = [AVAudioSession sharedInstance];
+    
+//    sean add select microphone begin
+    BOOL result = YES;
+    NSArray *inputs = [session availableInputs];
+    AVAudioSessionPortDescription* builtInMicPort = nil;
+    for (AVAudioSessionPortDescription* port in inputs)
+    {
+        if ([port.portType isEqualToString:AVAudioSessionPortBuiltInMic])
+        {
+            builtInMicPort = port;
+            break;
+        }
+    }
+    AVAudioSessionDataSourceDescription* dataSource = nil;
+    for (AVAudioSessionDataSourceDescription* source in builtInMicPort.dataSources)
+    {
+        NSString *select = enable?AVAudioSessionOrientationFront:AVAudioSessionOrientationBottom;
+        if ([source.orientation isEqual:select])
+        {
+            dataSource = source;
+            break;
+        }
+    } // end data source iteration
+    
+    
+    if (dataSource)
+    {
+        WEBRTC_TRACE(kTraceDebug, kTraceAudioDevice, _id, "Currently selected source is \"%@\" for port \"%@\"", builtInMicPort.selectedDataSource.dataSourceName, builtInMicPort.portName);
+        WEBRTC_TRACE(kTraceDebug, kTraceAudioDevice, _id, "Attempting to select source \"%@\" on port \"%@\"", dataSource, builtInMicPort.portName);
+        
+        error = nil;
+        result = [builtInMicPort setPreferredDataSource:dataSource error:&error];
+        if (!result)
+        {
+            WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id,
+                         "AudioDeviceIOS::SetLoudspeakerStatus(enable=%d), setPreferredDataSource failed", enable);
+            
+        }
+    }
+    
+    error = nil;
+    result = [session setPreferredInput:builtInMicPort error:&error];
+    if (!result)
+    {
+        WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id,
+                     "AudioDeviceIOS::SetLoudspeakerStatus(enable=%d), setPreferredInput failed", enable);
+    }
+    
+//    sean add select microphone end
+    
     NSString* category = session.category;
     AVAudioSessionCategoryOptions options = session.categoryOptions;
 

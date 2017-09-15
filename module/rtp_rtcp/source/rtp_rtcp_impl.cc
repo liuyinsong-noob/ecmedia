@@ -594,7 +594,9 @@ int32_t ModuleRtpRtcpImpl::SendOutgoingData(
               StreamStatistician *statistician = it->second;
               RtcpStatistics stats;
               if (!statistician->GetStatistics(&stats, true)) {
-                  return false;
+                  // here should not return. Warnning instead
+                  // return false;
+                  LOG(LS_WARNING) << "Failed to GetStatistics";
               }
 
               rtp_sender_.SetLossRate(100*(stats.fraction_lost)/255/5, 0);
