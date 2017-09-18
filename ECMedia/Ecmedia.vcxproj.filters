@@ -83,13 +83,7 @@
     <ClCompile Include="source\VoeObserver.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="source\ECLiveStream.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="source\faaccodec.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ECLiveStream_rtmp.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="source\curl_post.cc">
