@@ -792,7 +792,9 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 //            sean test magic sound
             ECMedia_audio_enable_magic_sound(call->m_AudioChannelID, enable_magic_sound);
             ECMedia_audio_set_magic_sound(call->m_AudioChannelID, magic_sound_pitch, magic_sound_tempo, magic_sound_rate);
-			//TODO:
+            //ECMedia_select_magic_sound_mode(call->m_AudioChannelID, cloopenwebrtc::kECMagicSoundNormal); //added by zhaoyou
+			
+            //TODO:
 			//bool enabled = false;
 			//int timeout = 0;
 			/*if(network)

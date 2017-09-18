@@ -5417,6 +5417,28 @@ ECMEDIA_API int ECMedia_audio_set_magic_sound(int channelid, int pitch, int temp
     }
 }
 
+ECMEDIA_API int ECMedia_select_magic_sound_mode(int channelid, ECMagicSoundMode mode)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins... channelid: %d mode:%d",
+                 __FUNCTION__, channelid, (int)mode);
+    VoEBase *base = VoEBase::GetInterface(m_voe);
+    if (base) {
+        int ret = base->selectSoundTouchMode(channelid, mode);
+        base->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to audio set magic sound", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
+        return ret;
+    }
+    else{
+        PrintConsole("[ECMEDIA ERROR] %s failed to get VoEBase", __FUNCTION__);
+        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        return -99;
+    }
+}
+
+
 ECMEDIA_API int ECMedia_audio_set_playout_gain(int channelid, float gain)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... channelid: %d gain:%f",

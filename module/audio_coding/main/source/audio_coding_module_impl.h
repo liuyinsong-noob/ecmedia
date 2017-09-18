@@ -257,6 +257,7 @@ class AudioCodingModuleImpl : public AudioCodingModule {
       AudioDecodingCallStats* stats) const OVERRIDE;
   virtual void enableSoundTouch(bool isEnable);
   virtual int setSoundTouch(double pitch, double tempo, double rate);
+  virtual int selectSoundTouchMode(ECMagicSoundMode mode);
  private:
   int UnregisterReceiveCodecSafe(int payload_type);
 

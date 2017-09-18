@@ -1132,7 +1132,7 @@ int AudioCodingModuleImpl::Add10MsData(
     
   do {
       memset(outSamplesBuffer, 0, inputSamples*sizeof(SAMPLETYPE));
-      //short samples[nSamples];
+      //short samples[nSamples];`
       outputSamplesCount = _soundTouch->receiveSamples(outSamplesBuffer, inputSamples);
 
       if(0 != outputSamplesCount) {
@@ -1167,6 +1167,23 @@ int AudioCodingModuleImpl::setSoundTouch(double pitch, double tempo, double rate
     _sound_touch_pitch = pitch;
     _sound_touch_tempo = tempo;
     _sound_touch_rate  = rate;
+    return 0;
+}
+    
+int AudioCodingModuleImpl::selectSoundTouchMode(ECMagicSoundMode mode) {
+    switch (mode) {
+        case kECMagicSoundLow:
+            //setSoundTouch();
+            break;
+        case kECMagicSoundNormal:
+            setSoundTouch(0, -18.2893, 25.4214);
+            break;
+        case kECMagicSoundHigh:
+            //setSoundTouch();
+            break;
+        default:
+            break;
+    }
     return 0;
 }
 // Perform a resampling and down-mix if required. We down-mix only if

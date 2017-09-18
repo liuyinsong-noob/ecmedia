@@ -744,6 +744,13 @@ ECMEDIA_API int ECMedia_audio_enable_magic_sound(int channelid, bool is_enable);
  */
 ECMEDIA_API int ECMedia_audio_set_magic_sound(int channelid, int pitch, int tempo, int rate);
 /*
+ * 功能：设置变声模式
+ * channelID: channel id
+ * mode: kECMagicSoundNormal, kECMagicSoundHigh, kECMagicSoundLow
+ */
+ECMEDIA_API int ECMedia_select_magic_sound_mode(int channelid, cloopenwebrtc::ECMagicSoundMode mode);
+    
+/*
  * 功能：声音播放前进行放大
  * channelID: channel id
  * gain: 放大的倍数，1.5即将原来的声音放大1.5倍。

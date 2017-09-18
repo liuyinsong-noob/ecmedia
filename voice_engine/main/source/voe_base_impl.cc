@@ -2296,6 +2296,25 @@ int VoEBaseImpl::setSoundTouch(int channelid, int pitch, int tempo, int rate) {
     return channelPtr->setSoundTouch(pitch, tempo, rate);
 }
     
+int VoEBaseImpl::selectSoundTouchMode(int channelid, ECMagicSoundMode mode) {
+    CriticalSectionScoped cs(_shared->crit_sec());
+    
+    if (!_shared->statistics().Initialized())
+    {
+        _shared->SetLastError(VE_NOT_INITED, kTraceError);
+        return -1;
+    }
+    voe::ChannelOwner sc = _shared->channel_manager().GetChannel(channelid);
+    voe::Channel* channelPtr = sc.channel();
+    if (channelPtr == NULL)
+    {
+        return -1;
+    }
+    return channelPtr->selectSoundTouchMode(mode);
+}
+    
+   
+    
     
     
 }  // namespace cloopenwebrtc
