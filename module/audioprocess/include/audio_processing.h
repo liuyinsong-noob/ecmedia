@@ -42,7 +42,11 @@ class HowlingControl;
 //
 // Detailed changes to the algorithm:
 // - The filter length is changed from 48 to 128 ms. This comes with tuning of
-//   several parameters: i) filter adaptation stepsize and error threshold;
+//   several parameters: i) filter adaptation stepsize and 
+
+
+
+threshold;
 //   ii) non-linear processing smoothing and overdrive.
 // - Option to ignore the reported delays on platforms which we deem
 //   sufficiently unreliable. See WEBRTC_UNTRUSTED_DELAY in echo_cancellation.c.
