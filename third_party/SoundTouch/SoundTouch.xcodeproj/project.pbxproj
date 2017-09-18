@@ -27,7 +27,10 @@
 		1FE1CBC01ED6BC370085E576 /* mmx_optimized.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBB41ED6BC370085E576 /* mmx_optimized.cpp */; };
 		1FE1CBC11ED6BC370085E576 /* PeakFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBB51ED6BC370085E576 /* PeakFinder.cpp */; };
 		1FE1CBC21ED6BC370085E576 /* sse_optimized.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBB71ED6BC370085E576 /* sse_optimized.cpp */; };
-		AD36333E1F445BBA00F0C20B /* SoundTouch_media.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD36333D1F445BBA00F0C20B /* SoundTouch_media.cpp */; };
+		AD8DA49B1F5A683D00F0BF1C /* InterpolateCubic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD8DA4941F5A683D00F0BF1C /* InterpolateCubic.cpp */; };
+		AD8DA49C1F5A683D00F0BF1C /* InterpolateLinear.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD8DA4961F5A683D00F0BF1C /* InterpolateLinear.cpp */; };
+		AD8DA49D1F5A683D00F0BF1C /* InterpolateShannon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD8DA4981F5A683D00F0BF1C /* InterpolateShannon.cpp */; };
+		AD8DA4A01F5A686800F0BF1C /* SoundTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD8DA49F1F5A686800F0BF1C /* SoundTouch.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -66,8 +69,14 @@
 		1FE1CBB51ED6BC370085E576 /* PeakFinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PeakFinder.cpp; sourceTree = "<group>"; };
 		1FE1CBB61ED6BC370085E576 /* PeakFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeakFinder.h; sourceTree = "<group>"; };
 		1FE1CBB71ED6BC370085E576 /* sse_optimized.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sse_optimized.cpp; sourceTree = "<group>"; };
-		AD36333C1F445BB200F0C20B /* SoundTouch_media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundTouch_media.h; sourceTree = "<group>"; };
-		AD36333D1F445BBA00F0C20B /* SoundTouch_media.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundTouch_media.cpp; sourceTree = "<group>"; };
+		AD8DA4941F5A683D00F0BF1C /* InterpolateCubic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InterpolateCubic.cpp; sourceTree = "<group>"; };
+		AD8DA4951F5A683D00F0BF1C /* InterpolateCubic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterpolateCubic.h; sourceTree = "<group>"; };
+		AD8DA4961F5A683D00F0BF1C /* InterpolateLinear.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InterpolateLinear.cpp; sourceTree = "<group>"; };
+		AD8DA4971F5A683D00F0BF1C /* InterpolateLinear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterpolateLinear.h; sourceTree = "<group>"; };
+		AD8DA4981F5A683D00F0BF1C /* InterpolateShannon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InterpolateShannon.cpp; sourceTree = "<group>"; };
+		AD8DA4991F5A683D00F0BF1C /* InterpolateShannon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterpolateShannon.h; sourceTree = "<group>"; };
+		AD8DA49F1F5A686800F0BF1C /* SoundTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundTouch.cpp; sourceTree = "<group>"; };
+		AD8DA4A11F5A68B400F0BF1C /* SoundTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundTouch.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,7 +126,7 @@
 		1FDC35081ED67295003D6155 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				AD36333C1F445BB200F0C20B /* SoundTouch_media.h */,
+				AD8DA4A11F5A68B400F0BF1C /* SoundTouch.h */,
 				1FE1CBA21ED6BC2A0085E576 /* soundtouch_config.h */,
 			);
 			name = include;
@@ -126,7 +135,13 @@
 		1FDC35091ED672A2003D6155 /* source */ = {
 			isa = PBXGroup;
 			children = (
-				AD36333D1F445BBA00F0C20B /* SoundTouch_media.cpp */,
+				AD8DA49F1F5A686800F0BF1C /* SoundTouch.cpp */,
+				AD8DA4941F5A683D00F0BF1C /* InterpolateCubic.cpp */,
+				AD8DA4951F5A683D00F0BF1C /* InterpolateCubic.h */,
+				AD8DA4961F5A683D00F0BF1C /* InterpolateLinear.cpp */,
+				AD8DA4971F5A683D00F0BF1C /* InterpolateLinear.h */,
+				AD8DA4981F5A683D00F0BF1C /* InterpolateShannon.cpp */,
+				AD8DA4991F5A683D00F0BF1C /* InterpolateShannon.h */,
 				1FE1CBA31ED6BC370085E576 /* RateTransposer.h */,
 				1FE1CBA51ED6BC370085E576 /* TDStretch.cpp */,
 				1FE1CBA61ED6BC370085E576 /* TDStretch.h */,
@@ -261,10 +276,13 @@
 			files = (
 				1FE1CBBD1ED6BC370085E576 /* cpu_detect_x86.cpp in Sources */,
 				1FE1CBC01ED6BC370085E576 /* mmx_optimized.cpp in Sources */,
+				AD8DA49B1F5A683D00F0BF1C /* InterpolateCubic.cpp in Sources */,
+				AD8DA49D1F5A683D00F0BF1C /* InterpolateShannon.cpp in Sources */,
 				1FE1CBBB1ED6BC370085E576 /* AAFilter.cpp in Sources */,
 				1FE1CBC21ED6BC370085E576 /* sse_optimized.cpp in Sources */,
+				AD8DA4A01F5A686800F0BF1C /* SoundTouch.cpp in Sources */,
+				AD8DA49C1F5A683D00F0BF1C /* InterpolateLinear.cpp in Sources */,
 				1FE1CBBA1ED6BC370085E576 /* RateTransposer.cpp in Sources */,
-				AD36333E1F445BBA00F0C20B /* SoundTouch_media.cpp in Sources */,
 				1FE1CBBE1ED6BC370085E576 /* FIFOSampleBuffer.cpp in Sources */,
 				1FE1CBBF1ED6BC370085E576 /* FIRFilter.cpp in Sources */,
 				1FE1CBB91ED6BC370085E576 /* TDStretch.cpp in Sources */,
@@ -284,7 +302,7 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -298,7 +316,7 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -346,7 +364,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -389,7 +407,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -401,7 +419,6 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = 2372872F55;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -413,7 +430,6 @@
 			buildSettings = {
 				DEVELOPMENT_TEAM = 2372872F55;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

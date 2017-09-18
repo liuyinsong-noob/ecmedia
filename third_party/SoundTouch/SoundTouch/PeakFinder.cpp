@@ -11,10 +11,10 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Last changed  : $Date: 2012-12-28 21:52:47 +0200 (Fri, 28 Dec 2012) $
+// Last changed  : $Date: 2015-05-18 18:22:02 +0300 (ma, 18 touko 2015) $
 // File revision : $Revision: 4 $
 //
-// $Id: PeakFinder.cpp 164 2012-12-28 19:52:47Z oparviai $
+// $Id: PeakFinder.cpp 213 2015-05-18 15:22:02Z oparviai $
 //
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -64,7 +64,7 @@ int PeakFinder::findTop(const float *data, int peakpos) const
 
     refvalue = data[peakpos];
 
-    // seek within ï¿½10 points
+    // seek within ±10 points
     start = peakpos - 10;
     if (start < minPos) start = minPos;
     end = peakpos + 10;
@@ -192,11 +192,21 @@ double PeakFinder::getPeakCenter(const float *data, int peakpos) const
     gp1 = findGround(data, peakpos, -1);
     gp2 = findGround(data, peakpos, 1);
 
-    groundLevel = 0.5f * (data[gp1] + data[gp2]);
     peakLevel = data[peakpos];
 
-    // calculate 70%-level of the peak
-    cutLevel = 0.70f * peakLevel + 0.30f * groundLevel;
+    if (gp1 == gp2) 
+    {
+        // avoid rounding errors when all are equal
+        assert(gp1 == peakpos);
+        cutLevel = groundLevel = peakLevel;
+    } else {
+        // get average of the ground levels
+        groundLevel = 0.5f * (data[gp1] + data[gp2]);
+
+        // calculate 70%-level of the peak
+        cutLevel = 0.70f * peakLevel + 0.30f * groundLevel;
+    }
+
     // find mid-level crossings
     crosspos1 = findCrossingLevel(data, cutLevel, peakpos, -1);
     crosspos2 = findCrossingLevel(data, cutLevel, peakpos, 1);
@@ -255,7 +265,7 @@ double PeakFinder::detectPeak(const float *data, int aminPos, int amaxPos)
 
         // accept harmonic peak if 
         // (a) it is found
-        // (b) is within ï¿½4% of the expected harmonic interval
+        // (b) is within ±4% of the expected harmonic interval
         // (c) has at least half x-corr value of the max. peak
 
         double diff = harmonic * peaktmp / highPeak;
