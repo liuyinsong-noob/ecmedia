@@ -13,9 +13,12 @@ LOCAL_SRC_FILES := \
 	BPMDetect.cpp \
 	FIFOSampleBuffer.cpp \
 	FIRFilter.cpp \
+	InterpolateCubic.cpp \
+	InterpolateLinear.cpp \
+	InterpolateShannon.cpp \
 	PeakFinder.cpp \
 	RateTransposer.cpp \
-	SoundTouch_media.cpp \
+	SoundTouch.cpp \
 	TDStretch.cpp \
 	cpu_detect_x86.cpp \
 	mmx_optimized.cpp \
