@@ -948,7 +948,7 @@ class AudioCodingModule: public Module {
       AudioDecodingCallStats* call_stats) const = 0;
   // enable soundtouch to make magic voice
     virtual void enableSoundTouch(bool isEnable) = 0;
-    virtual int setSoundTouch(int pitch, int tempo, int rate) = 0;
+    virtual int setSoundTouch(double pitch, double tempo, double rate) = 0;
 };
 
 class AudioEncoder;

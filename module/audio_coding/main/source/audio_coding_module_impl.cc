@@ -134,9 +134,9 @@ AudioCodingModuleImpl::AudioCodingModuleImpl(
       _soundTouch(NULL),
       _soundTouchSamples(0),
       _enableSoundTouch(false),
-      _sound_touch_pitch(0),
-      _sound_touch_tempo(0),
-      _sound_touch_rate(0) {
+      _sound_touch_pitch(0.0f),
+      _sound_touch_tempo(0.0f),
+      _sound_touch_rate(0.0f) {
 
   // Nullify send codec memory, set payload type and set codec name to
   // invalid values.
@@ -573,12 +573,13 @@ void AudioCodingModuleImpl::setupSoundTouch(uint16_t sample_rate, u_int8_t chann
     _soundTouch->setTempoChange(_sound_touch_tempo);    //这个就是传说中的变速不变调
     _soundTouch->setPitchSemiTones(_sound_touch_pitch); //设置声音的pitch (集音高变化semi-tones相比原来的音调) //男: -8 女:8
     _soundTouch->setRateChange(_sound_touch_rate);      //设置声音的速率
-    _soundTouch->setSetting(SETTING_SEQUENCE_MS, 40);
-    _soundTouch->setSetting(SETTING_SEEKWINDOW_MS, 15); //寻找帧长
-    _soundTouch->setSetting(SETTING_OVERLAP_MS, 6);     //重叠帧长
+    
+    _soundTouch->setSetting(SETTING_USE_QUICKSEEK, 0);
+    _soundTouch->setSetting(SETTING_USE_AA_FILTER, 1);
+    _soundTouch->setSetting(SETTING_OVERLAP_MS, 0);      //auto mode
 }
     
-    /////////////////////////////////////////
+/////////////////////////////////////////
 //   Sender
 //
 
@@ -1119,23 +1120,23 @@ int AudioCodingModuleImpl::Add10MsData(
         return 0;
     }
     
-  /*** soundtouch 变声  begin ***/
+  /*** soundtouch begin ***/
   if(!_soundTouch) {
       setupSoundTouch(ptr_frame->sample_rate_hz_, ptr_frame->num_channels_);
   }
 
   int inputSamples = ptr_frame->samples_per_channel_;
-  _soundTouch->putSamples((short *)ptr_audio, inputSamples);
-  short outSamplesBuffer[4096];
+  _soundTouch->putSamples((SAMPLETYPE *)ptr_audio, inputSamples);
+  SAMPLETYPE outSamplesBuffer[4096];
   int outputSamplesCount = 0;
     
   do {
-      memset(outSamplesBuffer, 0, inputSamples*sizeof(short));
+      memset(outSamplesBuffer, 0, inputSamples*sizeof(SAMPLETYPE));
       //short samples[nSamples];
       outputSamplesCount = _soundTouch->receiveSamples(outSamplesBuffer, inputSamples);
 
       if(0 != outputSamplesCount) {
-          memcpy(soundTouchBuffer + (_soundTouchSamples)*sizeof(short), outSamplesBuffer, outputSamplesCount*sizeof(short));
+          memcpy(soundTouchBuffer + (_soundTouchSamples)*sizeof(SAMPLETYPE), outSamplesBuffer, outputSamplesCount*sizeof(SAMPLETYPE));
           _soundTouchSamples += outputSamplesCount;
       }
   } while (outputSamplesCount > 0);
@@ -1147,10 +1148,10 @@ int AudioCodingModuleImpl::Add10MsData(
       _soundTouchSamples -= ptr_frame->samples_per_channel_;
 
       char tmpBuffer[4096];
-      memcpy(tmpBuffer, soundTouchBuffer + ptr_frame->samples_per_channel_ * sizeof(short), _soundTouchSamples *2);
+      memcpy(tmpBuffer, soundTouchBuffer + ptr_frame->samples_per_channel_ * sizeof(SAMPLETYPE), _soundTouchSamples *2);
       memcpy(soundTouchBuffer, tmpBuffer, _soundTouchSamples*2);
   }
-  /*** soundtouch 变声  end ***/
+  /*** soundtouch end ***/
   return 0;
 }
 
@@ -1158,10 +1159,10 @@ void AudioCodingModuleImpl::enableSoundTouch(bool isEnable) {
      _enableSoundTouch = isEnable;
 }
 
-int AudioCodingModuleImpl::setSoundTouch(int pitch, int tempo, int rate) {
-    if(pitch > 12 || pitch < -12 || tempo > 50 || tempo < -50) {
-        return -2;
-    }
+int AudioCodingModuleImpl::setSoundTouch(double pitch, double tempo, double rate) {
+//    if(pitch > 12 || pitch < -12 || tempo > 50 || tempo < -50) {
+//        return -2;
+//    }
     
     _sound_touch_pitch = pitch;
     _sound_touch_tempo = tempo;
