@@ -3168,14 +3168,14 @@ int32_t ViEChannel::SetKeepAliveStatus(
     {
         // Enable sending to start sending Sender reports instead of receive
         // reports
-        if (default_rtp_rtcp_->SetSendingStatus(true) != 0)
-        {
-			default_rtp_rtcp_->SetRTPKeepaliveStatus(false, 0, 0);
-            WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
-                         ViEId(engine_id_, channel_id_),
-                         "%s: Could not start sending", __FUNCTION__);
-            return -1;
-        }
+//         if (default_rtp_rtcp_->SetSendingStatus(true) != 0)
+//         {
+// 			default_rtp_rtcp_->SetRTPKeepaliveStatus(false, 0, 0);
+//             WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+//                          ViEId(engine_id_, channel_id_),
+//                          "%s: Could not start sending", __FUNCTION__);
+//             return -1;
+//         }
     }
     else if (!enable && !default_rtp_rtcp_->SendingMedia())
     {

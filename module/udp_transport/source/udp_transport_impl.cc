@@ -2493,6 +2493,10 @@ void UdpTransportImpl::IncomingRTCPFunction(const WebRtc_Word8* rtcpPacket,
 		}
 	}
 	else {
+		if (_packetCallback.size() == 0)
+		{
+			return;
+		}
 		transportData = _packetCallback.begin()->second;
 	}
 
