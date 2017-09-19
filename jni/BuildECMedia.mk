@@ -141,7 +141,7 @@ LOCAL_LDFLAGS += \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libssl.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libcrypto.a \
 
- LOCAL_ALLOW_UNDEFINED_SYMBOLS := true
+ 
 LOCAL_DISABLE_FATAL_LINKER_WARNINGS := true
 LOCAL_PRELINK_MODULE := false
 
