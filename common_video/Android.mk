@@ -40,6 +40,8 @@ LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/.. \
 		$(LOCAL_PATH)/../include \
 		$(LOCAL_PATH)/libyuv/include \
+		$(LOCAL_PATH)/../module \
+		$(LOCAL_PATH)/../base \
 		$(LOCAL_PATH)/../module/video_coding/main/include \
 		$(LOCAL_PATH)/../system_wrappers/interface \
 		$(LOCAL_PATH)/../third_party/libyuv/include \

@@ -125,6 +125,63 @@ class LogMessageVoidify {
 #define LOG_F(sev) LOG(sev) << __FUNCTION__ << ": "
 #endif
 
+#define LOG_CHECK_LEVEL(sev) \
+cloopenwebrtc::LogCheckLevel(cloopenwebrtc::sev)
+#define LOG_CHECK_LEVEL_V(sev) \
+cloopenwebrtc::LogCheckLevel(sev)
+
+    
+#define LOG_E(sev, ctx, err, ...) \
+LOG_SEVERITY_PRECONDITION(cloopenwebrtc::sev) \
+cloopenwebrtc::LogMessage(__FILE__, __LINE__, cloopenwebrtc::sev, \
+cloopenwebrtc::ERRCTX_ ## ctx, err , ##__VA_ARGS__) \
+.stream()
+    
+#define LOG_T(sev) LOG(sev) << this << ": "
+    
+#define LOG_ERRNO_EX(sev, err) \
+LOG_E(sev, ERRNO, err)
+#define LOG_ERRNO(sev) \
+LOG_ERRNO_EX(sev, errno)
+    
+#if defined(WEBRTC_WIN)
+#define LOG_GLE_EX(sev, err) \
+LOG_E(sev, HRESULT, err)
+#define LOG_GLE(sev) \
+LOG_GLE_EX(sev, GetLastError())
+#define LOG_GLEM(sev, mod) \
+LOG_E(sev, HRESULT, GetLastError(), mod)
+#define LOG_ERR_EX(sev, err) \
+LOG_GLE_EX(sev, err)
+#define LOG_ERR(sev) \
+LOG_GLE(sev)
+#define LAST_SYSTEM_ERROR \
+(::GetLastError())
+#elif defined(__native_client__) && __native_client__
+#define LOG_ERR_EX(sev, err) \
+LOG(sev)
+#define LOG_ERR(sev) \
+LOG(sev)
+#define LAST_SYSTEM_ERROR \
+(0)
+#elif defined(WEBRTC_POSIX)
+#define LOG_ERR_EX(sev, err) \
+LOG_ERRNO_EX(sev, err)
+#define LOG_ERR(sev) \
+LOG_ERRNO(sev)
+#define LAST_SYSTEM_ERROR \
+(errno)
+#endif  // WEBRTC_WIN
+    
+#define LOG_TAG(sev, tag)        \
+LOG_SEVERITY_PRECONDITION(sev) \
+cloopenwebrtc::LogMessage(nullptr, 0, sev, tag).stream()
+    
+#define PLOG(sev, err) \
+LOG_ERR_EX(sev, err)
+    
+// TODO(?): Add an "assert" wrapper that logs in the same manner.
+    
 #endif  // LOG
 
 }  // namespace cloopenwebrtc

@@ -13,7 +13,7 @@
 #include <algorithm>
 #include <vector>
 
-#include "../base/logging.h"
+#include "logging.h"
 #include "../module/remote_bitrate_estimator/include/bwe_defines.h"
 #include "../module/remote_bitrate_estimator/test/bwe_test_logging.h"
 

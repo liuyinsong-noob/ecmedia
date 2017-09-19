@@ -86,6 +86,7 @@ LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/../../../../third_party/opus/src \
 		$(LOCAL_PATH)/../../codecs/pcm16b/include \
 		$(LOCAL_PATH)/../../../../third_party/SoundTouch/SoundTouch \
+		$(LOCAL_PATH)/../../../../base
 
 LOCAL_SHARED_LIBRARIES := \
     libcutils \

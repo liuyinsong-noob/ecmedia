@@ -34,7 +34,7 @@
 #include "vie_render.h"
 #include "vie_codec.h"
 #include "vie_rtp_rtcp.h"
-#include "webrtc_libyuv.h"
+//#include "webrtc_libyuv.h"
 #include "vie_file_impl.h"
 #include "vie_desktop_share_impl.h"
 #include "vie_image_process_impl.h"
@@ -63,15 +63,11 @@ namespace cloopenwebrtc {
     
     static ECMediaMachine *g_rtmpLiveSession = NULL;
 
-    
-    // CriticalSectionWrapper *ECMediaMachine::singleProtect_ = CriticalSectionWrapper::CreateCriticalSection();
     ECMediaMachine *ECMediaMachine::getInstance()
     {
-        // singleProtect_->Enter();
         if (!g_rtmpLiveSession) {
             g_rtmpLiveSession = new ECMediaMachine();
         }
-        // singleProtect_->Leave();
         return g_rtmpLiveSession;
     }
     
@@ -274,7 +270,7 @@ namespace cloopenwebrtc {
 
     int ECMediaMachine::doVideoDataReceive() {
         ViEBase *vbase = ViEBase::GetInterface(vie_);
-        // vbase->StopReceive(video_channel_);
+ 
         int ret = -1;
         ret = vbase->StartReceive(video_channel_);
         vbase->Release();

@@ -46,7 +46,8 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../../../../../../third_party/libyuv/include/libyuv \
     $(LOCAL_PATH)/../../../../../../third_party/libyuv/include \
     $(LOCAL_PATH)/../../../../../interface \
-    $(LOCAL_PATH)/../../../../../../system_wrappers/interface
+    $(LOCAL_PATH)/../../../../../../system_wrappers/interface \
+    $(LOCAL_PATH)/../../../../../../base
 
 
     

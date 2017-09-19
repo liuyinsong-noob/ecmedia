@@ -16,6 +16,7 @@
 #include <cstdint>
 #else
 #include <arpa/inet.h>  // ntohl()
+#include <stdlib.h>
 #endif
 
 namespace cloopenwebrtc {
@@ -34,7 +35,7 @@ namespace cloopenwebrtc {
         rtmp_status_ =RS_PLY_Init;
         rtmpPullingThread_ = ThreadWrapper::CreateThread(EC_RtmpPuller::pullingThreadRun,
                 this,
-                kHighPriority,
+                kNormalPriority,
                 "rtmpPullingThread_");
         av_packet_cacher = NULL;
 //        srs_codec_ = new SrsAvcAacCodec();

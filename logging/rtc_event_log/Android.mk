@@ -27,7 +27,9 @@ LOCAL_CFLAGS := \
 
 LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH) \
-		$(LOCAL_PATH)/..
+		$(LOCAL_PATH)/.. \
+		$(LOCAL_PATH)/../../module \
+		$(LOCAL_PATH)/../../base
 
 LOCAL_SHARED_LIBRARIES := \
     libcutils \

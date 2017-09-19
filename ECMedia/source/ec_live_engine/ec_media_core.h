@@ -61,8 +61,8 @@ namespace cloopenwebrtc {
 
     protected:
         // Transport
-        virtual int  SendPacket(int channel, const void *data, size_t len, int sn=0)  { return 0;};
-        virtual int  SendRTCPPacket(int channel, const void *data, size_t len)  { return 0;};
+        virtual int SendRtp(int channelId, const uint8_t* packet, size_t length, const PacketOptions* options = NULL) {return 0;};
+        virtual int SendRtcp(int channelId, const uint8_t* packet, size_t length) {return 0;};
         virtual void SetRtpData(int channel,void *,int type);
 
         // video data callback

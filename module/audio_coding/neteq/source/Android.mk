@@ -76,6 +76,7 @@ LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/../../../../third_party/opus/src/celt \
 		$(LOCAL_PATH)/../../../../third_party/opus/src/include \
 		$(LOCAL_PATH)/../../../../third_party/opus/src/src \
+		$(LOCAL_PATH)/../../../../base \
 		$(LOCAL_PATH)/../../../../voice_engine/main/source
 		
 

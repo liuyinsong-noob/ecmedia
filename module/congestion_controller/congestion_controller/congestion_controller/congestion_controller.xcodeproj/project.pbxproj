@@ -263,6 +263,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../../",
 					../../../../base,
+					../../../../system_wrappers/include,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -277,6 +278,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../../",
 					../../../../base,
+					../../../../system_wrappers/include,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

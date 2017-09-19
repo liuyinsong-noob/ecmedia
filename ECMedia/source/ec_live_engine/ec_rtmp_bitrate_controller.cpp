@@ -31,7 +31,7 @@ namespace cloopenwebrtc{
         last_input_data_total_size_ = 0;
         last_output_data_total_size_ = 0;
         
-        timer_event_ = EventWrapper::Create();
+        timer_event_ = EventTimerWrapper::Create();
         
     }
 

@@ -52,7 +52,8 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../../.. \
     $(LOCAL_PATH)/../../resampler/include \
     $(LOCAL_PATH)/../../../system_wrappers/interface \
-    $(LOCAL_PATH)/../../../voice_engine/main/source
+    $(LOCAL_PATH)/../../../voice_engine/main/source \
+    $(LOCAL_PATH)/../../../base
     
 LOCAL_SHARED_LIBRARIES := \
     libcutils \
