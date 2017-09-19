@@ -45,6 +45,7 @@ include $(MY_WEBRTC_ROOT_PATH)/module/desktop_capture/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/voice_engine/main/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/video_engine/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/ECMedia/source/Android_video.mk
+include $(MY_WEBRTC_ROOT_PATH)/ECMedia/source/ec_live_engine/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/third_party/libyuv/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/third_party/libjpeg_turbo/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/remote_bitrate_estimator/Android.mk
@@ -77,6 +78,7 @@ LOCAL_STATIC_LIBRARIES := \
 
 LOCAL_WHOLE_STATIC_LIBRARIES := \
 	libMedia \
+	libLiveVideo \
 	libwebrtc_voe_core \
 	libwebrtc_vie_core \
 	libwebrtc_video_capture \

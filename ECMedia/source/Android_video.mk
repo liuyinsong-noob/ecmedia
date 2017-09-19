@@ -24,28 +24,6 @@ LOCAL_SRC_FILES := \
 		VoeObserver.cpp \
 		faaccodec.cpp \
 		MediaStatisticsData.pb.cc \
-		ec_live_engine/ec_aac_codec.cpp \
-		ec_live_engine/ec_play_buffer_cacher.cpp \
-		ec_live_engine/ec_live_engine.cpp \
-		ec_live_engine/ec_live_utility.cpp \
-		ec_live_engine/ec_media_core.cpp \
-		ec_live_engine/ec_rtmp_bitrate_controller.cpp \
-		ec_live_engine/ec_rtmp_publisher.cpp \
-		ec_live_engine/ec_rtmp_puller.cpp \
-		ec_live_engine/ec_hls_puller.cpp \
-		ec_live_engine/srs-librtmp/srs_librtmp.cpp \
-		ec_live_engine/srs-hls-parser/ec_ts_parser.cc \
-		ec_live_engine/srs-hls-loader/htl_app_hls_load.cpp \
-		ec_live_engine/srs-hls-loader/htl_app_http_client.cpp \
-		ec_live_engine/srs-hls-loader/htl_app_m3u8_parser.cpp \
-		ec_live_engine/srs-hls-loader/htl_app_task_base.cpp \
-		ec_live_engine/srs-hls-loader/htl_core_aggregate_ret.cpp \
-		ec_live_engine/srs-hls-loader/htl_core_error.cpp \
-		ec_live_engine/srs-hls-loader/htl_core_log.cpp \
-		ec_live_engine/srs-hls-loader/htl_core_uri.cpp \
-		ec_live_engine/srs-hls-loader/htl_main_utility.cpp \
-		ec_live_engine/srs-hls-loader/htl_os_st.cpp \
-		ec_live_engine/srs-hls-loader/http_parser.c \
 		../../config.cc \
         ../../module/common_types.cc
 
@@ -54,7 +32,6 @@ LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
 	'-DVIDEO_ENABLED' \
 	'-DWEBRTC_ANDROID' \
-	-std=gnu++11 -frtti -Wno-literal-suffix
 
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/. \

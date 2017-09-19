@@ -16,6 +16,7 @@
 #include <cstdint>
 #else
 #include <arpa/inet.h>  // ntohl()
+#include <stdlib.h>
 #endif
 
 namespace cloopenwebrtc {
