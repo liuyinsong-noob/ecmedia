@@ -4095,6 +4095,10 @@ int Channel::setSoundTouch(int pitch, int tempo, int rate) {
     return audio_coding_->setSoundTouch(pitch, tempo, rate);
 }
 
+int Channel::selectSoundTouchMode(ECMagicSoundMode mode) {
+    return audio_coding_->selectSoundTouchMode(mode);
+}
+
 bool Channel::GetDelayEstimate(int* jitter_buffer_delay_ms,
                                int* playout_buffer_delay_ms) const {
   if (_average_jitter_buffer_delay_us == 0) {

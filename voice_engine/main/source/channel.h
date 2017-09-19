@@ -288,6 +288,7 @@ public:
     void GetDecodingCallStatistics(AudioDecodingCallStats* stats) const;
     void enableSoundTouch(bool is_enable);
     int setSoundTouch(int pitch, int tempo, int rate);
+    int selectSoundTouchMode(ECMagicSoundMode mode);
     // VoEVideoSync
     bool GetDelayEstimate(int* jitter_buffer_delay_ms,
                           int* playout_buffer_delay_ms) const;

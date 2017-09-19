@@ -1055,7 +1055,12 @@ struct RTPHeader {
 	int payload_type_frequency;
 	RTPHeaderExtension extension;
 };
-    
+ 
+enum ECMagicSoundMode {
+    kECMagicSoundNormal = 0,
+    kECMagicSoundHigh ,
+    kECMagicSoundLow
+};
     
 // vcm qm 策略调整选项
 enum VCMQmResolutionMode {

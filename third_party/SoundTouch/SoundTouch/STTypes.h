@@ -8,10 +8,10 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Last changed  : $Date: 2012-12-28 16:53:56 +0200 (Fri, 28 Dec 2012) $
+// Last changed  : $Date: 2017-07-30 12:28:06 +0300 (su, 30 heinä 2017) $
 // File revision : $Revision: 3 $
 //
-// $Id: STTypes.h 162 2012-12-28 14:53:56Z oparviai $
+// $Id: STTypes.h 252 2017-07-30 09:28:06Z oparviai $
 //
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -60,17 +60,7 @@ typedef unsigned long   ulong;
     #include "soundtouch_config.h"
 #endif
 
-#ifndef _WINDEF_
-    // if these aren't defined already by Windows headers, define now
 
-
-
-    #define FALSE   0
-    #define TRUE    1
-
-#endif  // _WINDEF_
-
-typedef signed char SBOOL;
 namespace cloopensoundtouch
 {
     /// Activate these undef's to overrule the possible sampletype 
@@ -78,7 +68,14 @@ namespace cloopensoundtouch
     //#undef SOUNDTOUCH_INTEGER_SAMPLES
     //#undef SOUNDTOUCH_FLOAT_SAMPLES
 
-    #if (defined(__SOFTFP__))
+    /// If following flag is defined, always uses multichannel processing 
+    /// routines also for mono and stero sound. This is for routine testing 
+    /// purposes; output should be same with either routines, yet disabling 
+    /// the dedicated mono/stereo processing routines will result in slower 
+    /// runtime performance so recommendation is to keep this off.
+    // #define USE_MULTICH_ALWAYS
+
+    #if (defined(__SOFTFP__) && defined(ANDROID))
         // For Android compilation: Force use of Integer samples in case that
         // compilation uses soft-floating point emulation - soft-fp is way too slow
         #undef  SOUNDTOUCH_FLOAT_SAMPLES
@@ -101,13 +98,12 @@ namespace cloopensoundtouch
         ///   However, if you still prefer to select the sample format here 
         ///   also in GNU environment, then please #undef the INTEGER_SAMPLE
         ///   and FLOAT_SAMPLE defines first as in comments above.
-        #define SOUNDTOUCH_INTEGER_SAMPLES     1    //< 16bit integer samples
-        //#define SOUNDTOUCH_FLOAT_SAMPLES       1    //< 32bit float samples
-     
+        #define SOUNDTOUCH_INTEGER_SAMPLES     1    // < 16bit integer samples
+//        #define SOUNDTOUCH_FLOAT_SAMPLES       1    // < 32bit float samples
+    
     #endif
 
-    //#if (_M_IX86 || __i386__ || __x86_64__ || _M_X64)
-	#if (_M_IX86 || __i386__ || __x86_64__)
+    #if (_M_IX86 || __i386__ || __x86_64__ || _M_X64)
         /// Define this to allow X86-specific assembler/intrinsic optimizations. 
         /// Notice that library contains also usual C++ versions of each of these
         /// these routines, so if you're having difficulties getting the optimized 
@@ -147,8 +143,10 @@ namespace cloopensoundtouch
         #endif // SOUNDTOUCH_FLOAT_SAMPLES
 
         #ifdef SOUNDTOUCH_ALLOW_X86_OPTIMIZATIONS
-            // Allow MMX optimizations
-            #define SOUNDTOUCH_ALLOW_MMX   1
+            // Allow MMX optimizations (not available in X64 mode)
+            #if (!_M_X64)
+                #define SOUNDTOUCH_ALLOW_MMX   1
+            #endif
         #endif
 
     #else
@@ -176,6 +174,7 @@ namespace cloopensoundtouch
 #else
     // use c++ standard exceptions
     #include <stdexcept>
+    #include <string>
     #define ST_THROW_RT_ERROR(x)    {throw std::runtime_error(x);}
 #endif
 

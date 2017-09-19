@@ -41,7 +41,16 @@
     <ClCompile Include="SoundTouch\TDStretch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SoundTouch\SoundTouch_media.cpp">
+    <ClCompile Include="SoundTouch\InterpolateCubic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundTouch\InterpolateLinear.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundTouch\InterpolateShannon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundTouch\SoundTouch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -70,9 +79,6 @@
     <ClInclude Include="SoundTouch\RateTransposer.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="SoundTouch\SoundTouch.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="SoundTouch\soundtouch_config.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -80,6 +86,18 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="SoundTouch\TDStretch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundTouch\InterpolateCubic.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundTouch\InterpolateLinear.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundTouch\InterpolateShannon.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundTouch\SoundTouch.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
