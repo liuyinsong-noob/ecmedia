@@ -3749,7 +3749,7 @@ Channel::StopRTPDump(RTPDirections direction)
 {
    WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId, _channelId),
                  "Channel::StopRTPDump()");
-    /*if ((direction != kRtpIncoming) && (direction != kRtpOutgoing))
+    if ((direction != kRtpIncoming) && (direction != kRtpOutgoing))
     {
         _engineStatisticsPtr->SetLastError(
             VE_INVALID_ARGUMENT, kTraceError,
@@ -3767,7 +3767,7 @@ Channel::StopRTPDump(RTPDirections direction)
     {
         return 0;
     }
-    return rtpDumpPtr->Stop();*/
+    return rtpDumpPtr->Stop();
 }
 
 bool
