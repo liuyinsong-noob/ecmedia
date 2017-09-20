@@ -790,9 +790,9 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 			PrintConsole("cloopen trace %s middle 114\n",__FUNCTION__);
 
 //            sean test magic sound
-            ECMedia_audio_enable_magic_sound(call->m_AudioChannelID, enable_magic_sound);
+            ECMedia_audio_enable_magic_sound(call->m_AudioChannelID, true);
             ECMedia_audio_set_magic_sound(call->m_AudioChannelID, magic_sound_pitch, magic_sound_tempo, magic_sound_rate);
-            //ECMedia_select_magic_sound_mode(call->m_AudioChannelID, cloopenwebrtc::kECMagicSoundNormal); //added by zhaoyou
+            ECMedia_select_magic_sound_mode(call->m_AudioChannelID, cloopenwebrtc::kECMagicSoundNormal); //added by zhaoyou
 			
             //TODO:
 			//bool enabled = false;

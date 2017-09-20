@@ -11,11 +11,11 @@
 #include "ec_play_buffer_cacher.h"
 
 #if defined(_WIN32)
-#include <winsock2.h>
-#include <ws2tcpip.h>
+//#include <winsock2.h>
+//#include <ws2tcpip.h>
 #include <cstdint>
-#else
-#include <arpa/inet.h>  // ntohl()
+//#else
+//#include <arpa/inet.h>  // ntohl()
 #endif
 
 namespace cloopenwebrtc {

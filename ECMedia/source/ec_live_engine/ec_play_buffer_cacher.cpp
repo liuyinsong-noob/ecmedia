@@ -10,7 +10,12 @@
 #include "ec_live_utility.h"
 #include "event_wrapper.h"
 #include "faaccodec.h"
+#if defined(_WIN32)
+#include <cstdint>
+#include <windows.h>
+#else
 #include <unistd.h>
+#endif
 
 
 namespace cloopenwebrtc{
@@ -198,7 +203,11 @@ namespace cloopenwebrtc{
                 callback_->onAvcDataComing((uint8_t*)pkt_video->_data, pkt_video->_data_len, pkt_video->_dts);
                 delete pkt_video;
             } else {
-                 usleep(10*1000);
+#if defined(_WIN32)
+				Sleep(10);
+#else
+				usleep(10 * 1000);
+#endif
             }
         }
 

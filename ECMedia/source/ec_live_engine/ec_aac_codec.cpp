@@ -64,7 +64,7 @@ namespace cloopenwebrtc {
         size_t kMaxDataSizeSamples = 3840;
         
         if (audio_record_sample_hz_ != samplesRate || nChannels != audio_record_channels_) {
-            int16_t temp_output[kMaxDataSizeSamples];
+            int16_t temp_output[3840];
             int samples_per_channel_int = resampler_record_.Resample10Msec((int16_t*)audio_data, samplesRate * nChannels,
                                                                            audio_record_sample_hz_ * audio_record_channels_, 1, kMaxDataSizeSamples, temp_output);
 

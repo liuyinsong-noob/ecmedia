@@ -27,10 +27,8 @@
 #include "statsCollector.h"
 #include "VoeObserver.h"
 #include "amrnb_api.h"
-
-#ifndef WIN32
 #include "ec_live_engine.h"
-#endif
+ 
 
 #ifdef WIN32
 #include "codingHelper.h"
@@ -5082,10 +5080,8 @@ void *ECMedia_createLiveStream()
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
-#ifndef WIN32
     ECLiveEngine* engine = ECLiveEngine::getInstance();
     return engine;
-#endif
 #endif
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
     return NULL;
@@ -5108,12 +5104,10 @@ int ECMedia_setVideoPreviewViewer(void *handle, void *viewer) {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
     int ret = -1;
 #ifdef VIDEO_ENABLED
-#ifndef WIN32
     ECLiveEngine *engine = (ECLiveEngine*)handle;
     ret = engine->setVideoPreview(viewer);
     PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
     return ret;
-#endif
 #endif
     return -1;
 }
@@ -5122,7 +5116,6 @@ int ECMedia_ConfigLiveVideoStream(void *handle, LiveVideoStreamConfig config)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
-#ifndef WIN32
     ECLiveEngine *engine = (ECLiveEngine*)handle;
     int ret = engine->configLiveVideoStream(config);
     if (ret != 0) {
@@ -5131,7 +5124,6 @@ int ECMedia_ConfigLiveVideoStream(void *handle, LiveVideoStreamConfig config)
     PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
     return ret;
 #endif
-#endif
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
     return -1;
 }
@@ -5139,7 +5131,6 @@ int ECMedia_ConfigLiveVideoStream(void *handle, LiveVideoStreamConfig config)
 int ECMedia_SwitchLiveCamera(void *handle, int camera_index) {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
-#ifndef WIN32
     ECLiveEngine *engine = (ECLiveEngine*)handle;
     int ret = -1;
     ret = engine->switchCamera(camera_index);
@@ -5148,7 +5139,6 @@ int ECMedia_SwitchLiveCamera(void *handle, int camera_index) {
     }
     PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
     return ret;
-#endif
 #endif
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
     return -1;
@@ -5159,7 +5149,6 @@ int ECMedia_pushLiveStream(void *handle, const char *url, cloopenwebrtc::EC_Rtmp
 {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
-#ifndef WIN32
     ECLiveEngine *engine = (ECLiveEngine*)handle;
     int ret = 0;
     
@@ -5171,7 +5160,6 @@ int ECMedia_pushLiveStream(void *handle, const char *url, cloopenwebrtc::EC_Rtmp
     PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
     return ret;
 #endif
-#endif
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
     return -1;
 }
@@ -5180,7 +5168,6 @@ int ECMedia_playLiveStream(void *handle, const char * url, cloopenwebrtc::EC_Med
 {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
-#ifndef WIN32
     int ret = -1;
     ECLiveEngine *engine = (ECLiveEngine*)handle;
     ret = engine->startPlay(url, callback);
@@ -5190,7 +5177,6 @@ int ECMedia_playLiveStream(void *handle, const char * url, cloopenwebrtc::EC_Med
     PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
     return ret;
 #endif
-#endif
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
     return -1;
 }
@@ -5199,11 +5185,9 @@ void ECMedia_stopLiveStream(void *handle)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
-#ifndef WIN32
     ECLiveEngine *engine = (ECLiveEngine*)handle;
     engine->stopPlay();
     engine->stopPublish();
-#endif
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 #endif
 }
@@ -5211,10 +5195,8 @@ void ECMedia_stopLiveStream(void *handle)
 void ECMedia_releaseLiveStream(void *handle)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
-#ifndef WIN32
 #ifdef VIDEO_ENABLED
     ECLiveEngine::destroy();
-#endif
 #endif
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 }
