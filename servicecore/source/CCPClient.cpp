@@ -2124,6 +2124,13 @@ extern "C"	int	enableLoudsSpeaker(bool enable)
 	PrintConsole("[APICall] enableLoudsSpeaker (enable=%s) \n",enable ? "YES":"NO");
 	return g_pSerCore->serphone_set_louds_speaker_status(enable);
 }
+
+extern "C"	int	enableGlobalAudioInDevice(bool enable)
+{
+	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+	PrintConsole("[APICall] enableGlobalAudioInDevice (enable=%s) \n",enable ? "YES":"NO");
+	return g_pSerCore->serphone_set_global_audio_in_device(enable);
+}
 extern "C" bool getLoudsSpeakerStatus()
 {
 	PrintConsole("[APICall] getLoudsSpeakerStatus \n");

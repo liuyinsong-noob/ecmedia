@@ -417,6 +417,7 @@ public:
     int serphone_get_louds_speaker_status();
 	int serphone_set_mute_status(bool bLouds);
 	int serphone_get_mute_status();
+	int serphone_set_global_audio_in_device(bool bGlobalAudioInDevice);
 
 	int serphone_set_speaker_mute_status(bool bLouds);
 	int serphone_get_speaker_mute_status();

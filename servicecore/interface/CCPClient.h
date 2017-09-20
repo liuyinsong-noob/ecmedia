@@ -384,6 +384,15 @@ typedef struct _CALLBACKINTERFACE CCallbackInterface;
      *******************************************************************************/
     CCPAPI int setRootCAPath(const char * caPath);
     
+	/*! @function
+     ********************************************************************************
+     函数名   : enableGlobalAudioInDevice
+     功能     : 私有云校验接口
+     参数     : [IN]  enable	  : 使用全局麦克风设备.
+     返回值   : 成功 0 失败 -1
+     *******************************************************************************/
+    CCPAPI int	enableGlobalAudioInDevice(bool enable);
+	
     /*! @function
      ********************************************************************************
      函数名   : registerAudioDevice

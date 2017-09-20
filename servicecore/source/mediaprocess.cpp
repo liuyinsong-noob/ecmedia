@@ -1555,6 +1555,15 @@ int ServiceCore::serphone_set_louds_speaker_status(bool bLouds)
 	return 0;
 }
 
+int ServiceCore::serphone_set_global_audio_in_device(bool bGlobalAudioInDevice)
+{
+    cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+#if !defined(NO_VOIP_FUNCTION)
+	return ECMedia_set_global_audio_in_device(bGlobalAudioInDevice);
+#endif
+	return 0;
+}
+
 int ServiceCore::serphone_get_louds_speaker_status()
 {
     cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);

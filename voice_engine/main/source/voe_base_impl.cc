@@ -2313,8 +2313,15 @@ int VoEBaseImpl::selectSoundTouchMode(int channelid, ECMagicSoundMode mode) {
     return channelPtr->selectSoundTouchMode(mode);
 }
     
-   
+bool VoEBaseImpl::GetRecordingIsRecording()
+{
+    WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+                 "GetRecordingIsRecording");
     
+    CriticalSectionScoped cs(_shared->crit_sec());
     
-    
+    assert(_shared->audio_device() != NULL);
+    return _shared->audio_device()->Recording();
+}     
+
 }  // namespace cloopenwebrtc
