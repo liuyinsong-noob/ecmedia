@@ -130,6 +130,10 @@ cloopenwebrtc::VoiceEngine* m_voe = NULL;
 static StatsCollector *g_statsCollector = NULL;
 
 static VoeObserver* g_VoeObserver = NULL;
+
+bool g_bGlobalAudioInDevice = false;
+HWAVEIN g_hWaveIn = NULL;
+
 static onEcMediaNoCameraCaptureCb g_NoCameraCaptureCb = NULL;
 #ifdef VIDEO_ENABLED
 static ECViECaptureObserver* g_ECViECaptureObserver = NULL;
@@ -2430,6 +2434,34 @@ int ECMedia_reset_audio_device()
     {
         PrintConsole("[ECMEDIA ERROR] %s failed to get VoEHardware", __FUNCTION__);
         PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        return -99;
+    }
+}
+
+int ECMedia_set_global_audio_in_device(bool enabled)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins. enabled=%d",__FUNCTION__, enabled?"true":"false");
+    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    VoEBase *base = VoEBase::GetInterface(m_voe);
+    if (base) {
+        bool bAudioRecording = base->GetRecordingIsRecording();
+        base->Release();
+        if (bAudioRecording == true)
+        {
+            PrintConsole("[ECMEDIA WARNNING] audio recording, %s",__FUNCTION__);
+            PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -99);
+        }
+        else
+        {
+            g_bGlobalAudioInDevice = enabled;
+        }
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
+        return 0;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to get voe base, %s",__FUNCTION__);
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -99);
         return -99;
     }
 }

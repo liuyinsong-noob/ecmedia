@@ -127,6 +127,7 @@ public:
     virtual int SetPCMAudioDataCallBack(int channelid, ECMedia_PCMDataCallBack audio_data_cb);
     virtual int setConferenceParticipantCallback(int channelid, ECMedia_ConferenceParticipantCallback* audio_data_cb);
     virtual bool GetRecordingIsInitialized();
+    virtual bool GetRecordingIsRecording();
 protected:
     VoEBaseImpl(voe::SharedData* shared);
     virtual ~VoEBaseImpl();
