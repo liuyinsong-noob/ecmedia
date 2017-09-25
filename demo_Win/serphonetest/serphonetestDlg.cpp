@@ -1649,7 +1649,7 @@ void CserphonetestDlg::OnBnClickedPushStream()
 	this->UpdateData(true);
 	int i = m_video_source.GetCurSel();
 	setLiveVideoSource(g_rtmpLiveStreamHandle, i);
-	selectCameraLiveStream(g_rtmpLiveStreamHandle, 1, 640, 480, 15);
+	//selectCameraLiveStream(g_rtmpLiveStreamHandle, 1, 640, 480, 15);
 	CWnd *rcwnd = g_dlg->GetDlgItem(IDC_RICHEDIT21);
 
 	USES_CONVERSION;
