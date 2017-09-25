@@ -705,9 +705,9 @@ namespace cloopenwebrtc {
         // rtc::CritScope cs(&cs_audio_record_);
         int audio_record_sample_hz_ = AAC_CODEC_SAMPLE_RATE;
         int audio_record_channels_ = 2;
-        size_t kMaxDataSizeSamples = 3840;
+        const size_t kMaxDataSizeSamples = 3840;
             if (audio_record_sample_hz_ != samplesRate || nChannels != audio_record_channels_) {
-                int16_t temp_output[3840];
+                int16_t temp_output[kMaxDataSizeSamples];
                 int samples_per_channel_int = resampler_record_.Resample10Msec((int16_t*)audio_data, samplesRate * nChannels,
                                                                                audio_record_sample_hz_ * audio_record_channels_, 1, kMaxDataSizeSamples, temp_output);
 
