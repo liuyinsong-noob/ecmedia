@@ -75,7 +75,7 @@ namespace cloopenwebrtc {
     }
 
     // publish rtmp stream
-    int ECLiveEngine::startPublish(const char *url, EC_RtmpPublishCallback *callback)
+    int ECLiveEngine::startPublish(const char *url, ECLiveStreamNetworkStatusCallBack callback)
     {
         PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
         if(!publiser_running_) {
@@ -113,7 +113,7 @@ namespace cloopenwebrtc {
     }
 
     // play live(rtmp/hls/http-flv) stream
-    int ECLiveEngine::startPlay(const char* url, EC_MediaPullCallback* callback) {
+    int ECLiveEngine::startPlay(const char* url, ECLiveStreamNetworkStatusCallBack callback) {
         PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
         int ret = -1;
         if(!puller_runnig_) {
@@ -176,7 +176,7 @@ namespace cloopenwebrtc {
     }
 
     // simple live stream puller factory
-    EC_MediaPullerBase* ECLiveEngine::createMediaPuller(const char* url, EC_MediaPullCallback* callback) {
+    EC_MediaPullerBase* ECLiveEngine::createMediaPuller(const char* url, ECLiveStreamNetworkStatusCallBack callback) {
         if(strncmp(url, "rtmp", 4) == 0) {
             return new EC_RtmpPuller(callback);
         } else if(strncmp(url, "http", 4) == 0) {

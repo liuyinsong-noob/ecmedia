@@ -14,8 +14,6 @@ namespace cloopenwebrtc {
     class ECRtmpPublisher;
     class ECMediaMachine;
     class EC_RtmpPuller;
-    class EC_RtmpPublishCallback;
-    class EC_MediaPullCallback;
 
     class ECLiveEngine: public EC_RTMP_BitrateControllerCallback
     {
@@ -23,8 +21,8 @@ namespace cloopenwebrtc {
         static ECLiveEngine *getInstance();
         static void destroy();
 
-        int startPublish(const char *url, EC_RtmpPublishCallback *callback);
-        int startPlay(const char* url, EC_MediaPullCallback* callback);
+        int startPublish(const char *url, ECLiveStreamNetworkStatusCallBack callback);
+        int startPlay(const char* url, ECLiveStreamNetworkStatusCallBack callback);
        
         int stopPublish();
         int stopPlay();
@@ -44,7 +42,7 @@ namespace cloopenwebrtc {
         ECLiveEngine();
         ~ECLiveEngine();
         // simple live stream puller factory, only supporting rtmp now.
-        EC_MediaPullerBase* createMediaPuller(const char* url, EC_MediaPullCallback* callback);
+        EC_MediaPullerBase* createMediaPuller(const char* url, ECLiveStreamNetworkStatusCallBack callback);
         void getVideoStreamInfo(EC_LiveVideoResolution resolution, int &width, int &height, int &bitrate);
 
     private:

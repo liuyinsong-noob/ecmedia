@@ -33,7 +33,7 @@ namespace cloopenwebrtc {
 
     class ECRtmpPublisher : public EC_CapturerCallback {
     public:
-        ECRtmpPublisher(EC_RtmpPublishCallback *callback, EC_RTMP_BitrateController *bc);
+        ECRtmpPublisher(ECLiveStreamNetworkStatusCallBack callback, EC_RTMP_BitrateController *bc);
         ~ECRtmpPublisher();
         void start(const char *url);
         void stop();
@@ -66,7 +66,7 @@ namespace cloopenwebrtc {
         
         
         CriticalSectionWrapper* rtmp_lock_;
-        EC_RtmpPublishCallback *callback_;
+        ECLiveStreamNetworkStatusCallBack callback_;
         EC_RTMP_BitrateController *rtmp_bitrate_ontroller_;
         
         bool need_clear_av_cacher_;

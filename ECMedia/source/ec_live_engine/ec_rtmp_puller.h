@@ -49,7 +49,7 @@ namespace cloopenwebrtc {
     
     class EC_RtmpPuller: public EC_MediaPullerBase {
     public:
-        EC_RtmpPuller(EC_MediaPullCallback* callback);
+        EC_RtmpPuller(ECLiveStreamNetworkStatusCallBack callback);
         ~EC_RtmpPuller();
 
         void start(const char *url);
@@ -82,7 +82,7 @@ namespace cloopenwebrtc {
 
         RTMPLAYER_STATUS rtmp_status_;
         EC_AVCacher* av_packet_cacher;
-        EC_MediaPullCallback* callback_;
+        ECLiveStreamNetworkStatusCallBack callback_;
         
         bool connected_;
         int  retry_ct_;

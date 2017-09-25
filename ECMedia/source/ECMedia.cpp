@@ -5145,7 +5145,7 @@ int ECMedia_SwitchLiveCamera(void *handle, int camera_index) {
 }
 
 // push stream
-int ECMedia_pushLiveStream(void *handle, const char *url, cloopenwebrtc::EC_RtmpPublishCallback* callback)
+int ECMedia_pushLiveStream(void *handle, const char *url, ECLiveStreamNetworkStatusCallBack callback)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
@@ -5164,7 +5164,7 @@ int ECMedia_pushLiveStream(void *handle, const char *url, cloopenwebrtc::EC_Rtmp
     return -1;
 }
 
-int ECMedia_playLiveStream(void *handle, const char * url, cloopenwebrtc::EC_MediaPullCallback* callback)
+int ECMedia_playLiveStream(void *handle, const char * url, ECLiveStreamNetworkStatusCallBack callback)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED

@@ -24,7 +24,7 @@ namespace cloopenwebrtc {
     #endif
     #define MAX_RETRY_TIME  3
  
-    EC_RtmpPuller::EC_RtmpPuller(EC_MediaPullCallback* callback) {
+    EC_RtmpPuller::EC_RtmpPuller(ECLiveStreamNetworkStatusCallBack callback) {
         retry_ct_ = 0;
         running_ = false;
         callback_ = callback;
@@ -139,7 +139,7 @@ namespace cloopenwebrtc {
         retry_ct_ = 0;
         connected_ = true;
         if(callback_) {
-            callback_->OnLivePullerConnected();
+            callback_(EC_LIVE_PLAY_SUCCESS);
         }
     }
 
@@ -163,11 +163,11 @@ namespace cloopenwebrtc {
                 
                 if(connected_) {
                     running_ = false;
-                    callback_->OnLivePullerDisconnect();
+                    callback_(EC_LIVE_DISCONNECTED);
                 }
                 else {
                     running_ = false;
-                    callback_->OnLivePullerFailed();
+                    callback_(EC_LIVE_PLAY_FAILED);
                 }
             }
         }
