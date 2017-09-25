@@ -43,7 +43,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{62D4F8D1-EDF5-4C27-907C-476A2D2AC3A4}</ProjectGuid>
+    <ProjectGuid>{03BE4C06-E66D-4FDF-BD0A-B97460DB336E}</ProjectGuid>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>osip</RootNamespace>

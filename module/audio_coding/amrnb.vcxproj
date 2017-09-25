@@ -199,7 +199,7 @@
     <ClInclude Include="codecs\opencore-amr\amrnb\interf_enc.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{2045B06F-B784-4A95-82CA-4D13E488E349}</ProjectGuid>
+    <ProjectGuid>{5A683C2A-F44F-4109-9A90-5A648D7FC289}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>amrnb</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>

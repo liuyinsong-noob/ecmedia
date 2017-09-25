@@ -43,7 +43,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{74F515B9-90EF-43E6-9A5F-15F8E1A5DCDB}</ProjectGuid>
+    <ProjectGuid>{2F470789-39EF-45B0-87CE-ADEAC4B0422C}</ProjectGuid>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>exosip</RootNamespace>
