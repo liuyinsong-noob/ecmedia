@@ -35,6 +35,9 @@
 
 #define POW2(A) (2 << ((A) - 1))
 
+extern bool g_bGlobalAudioInDevice;
+extern HWAVEIN g_hWaveIn;
+
 namespace cloopenwebrtc {
 
 // ============================================================================
@@ -165,6 +168,18 @@ AudioDeviceWindowsWave::~AudioDeviceWindowsWave()
         CloseHandle(_hSetCaptureVolumeEvent);
         _hSetCaptureVolumeEvent = NULL;
     }
+
+    MMRESULT res(MMSYSERR_ERROR);
+    if (NULL != g_hWaveIn)
+    {
+        res = waveInClose(g_hWaveIn);
+        if (MMSYSERR_NOERROR != res)
+        {
+            WEBRTC_TRACE(kTraceWarning, kTraceAudioDevice, _id, "waveInClose() failed (err=%d)", res);
+            TraceWaveInError(res);
+        }
+    }
+    g_hWaveIn = NULL;
 }
 
 // ============================================================================
@@ -1880,14 +1895,18 @@ int32_t AudioDeviceWindowsWave::InitRecording()
     //
     MMRESULT res(MMSYSERR_ERROR);
 
-    if (_hWaveIn != NULL)
+    if (g_bGlobalAudioInDevice == false)
     {
-        res = waveInClose(_hWaveIn);
-        if (MMSYSERR_NOERROR != res)
+        if (_hWaveIn != NULL)
         {
-            WEBRTC_TRACE(kTraceWarning, kTraceAudioDevice, _id, "waveInClose() failed (err=%d)", res);
-            TraceWaveInError(res);
+            res = waveInClose(_hWaveIn);
+            if (MMSYSERR_NOERROR != res)
+            {
+                WEBRTC_TRACE(kTraceWarning, kTraceAudioDevice, _id, "waveInClose() failed (err=%d)", res);
+                TraceWaveInError(res);
+            }
         }
+        g_hWaveIn = NULL;
     }
 
     // Set the input wave format
@@ -1905,78 +1924,90 @@ int32_t AudioDeviceWindowsWave::InitRecording()
     // Open the given waveform-audio input device for recording
     //
     HWAVEIN hWaveIn(NULL);
-
-    if (IsUsingInputDeviceIndex())
+    
+    if (g_bGlobalAudioInDevice == true)
     {
-        // verify settings first
-        res = waveInOpen(NULL, _inputDeviceIndex, &waveFormat, 0, 0, CALLBACK_NULL | WAVE_FORMAT_QUERY);
-        if (MMSYSERR_NOERROR == res)
-        {
-            // open the given waveform-audio input device for recording
-            res = waveInOpen(&hWaveIn, _inputDeviceIndex, &waveFormat, 0, 0, CALLBACK_NULL);
-            WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id, "opening input device corresponding to device ID %u", _inputDeviceIndex);
-        }
+        hWaveIn = g_hWaveIn;
     }
-    else
+    
+    if (hWaveIn == NULL)
     {
-        if (_inputDevice == AudioDeviceModule::kDefaultCommunicationDevice)
+        if (IsUsingInputDeviceIndex())
         {
-            // check if it is possible to open the default communication device (supported on Windows 7)
-            res = waveInOpen(NULL, WAVE_MAPPER, &waveFormat, 0, 0, CALLBACK_NULL | WAVE_MAPPED_DEFAULT_COMMUNICATION_DEVICE | WAVE_FORMAT_QUERY);
+            // verify settings first
+            res = waveInOpen(NULL, _inputDeviceIndex, &waveFormat, 0, 0, CALLBACK_NULL | WAVE_FORMAT_QUERY);
             if (MMSYSERR_NOERROR == res)
             {
-                // if so, open the default communication device for real
-                res = waveInOpen(&hWaveIn, WAVE_MAPPER, &waveFormat, 0, 0, CALLBACK_NULL | WAVE_MAPPED_DEFAULT_COMMUNICATION_DEVICE);
-                WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id, "opening default communication device");
-            }
-            else
-            {
-                // use default device since default communication device was not avaliable
-                res = waveInOpen(&hWaveIn, WAVE_MAPPER, &waveFormat, 0, 0, CALLBACK_NULL);
-                WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id, "unable to open default communication device => using default instead");
+                // open the given waveform-audio input device for recording
+                res = waveInOpen(&hWaveIn, _inputDeviceIndex, &waveFormat, 0, 0, CALLBACK_NULL);
+                WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id, "opening input device corresponding to device ID %u", _inputDeviceIndex);
             }
         }
-        else if (_inputDevice == AudioDeviceModule::kDefaultDevice)
+        else
         {
-            // open default device since it has been requested
-            res = waveInOpen(NULL, WAVE_MAPPER, &waveFormat, 0, 0, CALLBACK_NULL | WAVE_FORMAT_QUERY);
-            if (MMSYSERR_NOERROR == res)
+            if (_inputDevice == AudioDeviceModule::kDefaultCommunicationDevice)
             {
-                res = waveInOpen(&hWaveIn, WAVE_MAPPER, &waveFormat, 0, 0, CALLBACK_NULL);
-                WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id, "opening default input device");
+                // check if it is possible to open the default communication device (supported on Windows 7)
+                res = waveInOpen(NULL, WAVE_MAPPER, &waveFormat, 0, 0, CALLBACK_NULL | WAVE_MAPPED_DEFAULT_COMMUNICATION_DEVICE | WAVE_FORMAT_QUERY);
+                if (MMSYSERR_NOERROR == res)
+                {
+                    // if so, open the default communication device for real
+                    res = waveInOpen(&hWaveIn, WAVE_MAPPER, &waveFormat, 0, 0, CALLBACK_NULL | WAVE_MAPPED_DEFAULT_COMMUNICATION_DEVICE);
+                    WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id, "opening default communication device");
+                }
+                else
+                {
+                    // use default device since default communication device was not avaliable
+                    res = waveInOpen(&hWaveIn, WAVE_MAPPER, &waveFormat, 0, 0, CALLBACK_NULL);
+                    WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id, "unable to open default communication device => using default instead");
+                }
+            }
+            else if (_inputDevice == AudioDeviceModule::kDefaultDevice)
+            {
+                // open default device since it has been requested
+                res = waveInOpen(NULL, WAVE_MAPPER, &waveFormat, 0, 0, CALLBACK_NULL | WAVE_FORMAT_QUERY);
+                if (MMSYSERR_NOERROR == res)
+                {
+                    res = waveInOpen(&hWaveIn, WAVE_MAPPER, &waveFormat, 0, 0, CALLBACK_NULL);
+                    WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id, "opening default input device");
+                }
             }
         }
+
+        if (MMSYSERR_NOERROR != res)
+        {
+            WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id, "waveInOpen() failed (err=%d)", res);
+            TraceWaveInError(res);
+    		_startButNotRec = true;
+            return -1;
+        }
+
+        // Log information about the aquired input device
+        //
+        WAVEINCAPS caps;
+
+        res = waveInGetDevCaps((UINT_PTR)hWaveIn, &caps, sizeof(WAVEINCAPS));
+        if (res != MMSYSERR_NOERROR)
+        {
+            WEBRTC_TRACE(kTraceWarning, kTraceAudioDevice, _id, "waveInGetDevCaps() failed (err=%d)", res);
+            TraceWaveInError(res);
+        }
+
+        UINT deviceID(0);
+        res = waveInGetID(hWaveIn, &deviceID);
+        if (res != MMSYSERR_NOERROR)
+        {
+            WEBRTC_TRACE(kTraceWarning, kTraceAudioDevice, _id, "waveInGetID() failed (err=%d)", res);
+            TraceWaveInError(res);
+        }
+        WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id, "utilized device ID : %u", deviceID);
+        WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id, "product name       : %s", caps.szPname);
+
+        if (g_bGlobalAudioInDevice == true)
+        {
+            g_hWaveIn = hWaveIn;
+        }
     }
-
-    if (MMSYSERR_NOERROR != res)
-    {
-        WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id, "waveInOpen() failed (err=%d)", res);
-        TraceWaveInError(res);
-		_startButNotRec = true;
-        return -1;
-    }
-
-    // Log information about the aquired input device
-    //
-    WAVEINCAPS caps;
-
-    res = waveInGetDevCaps((UINT_PTR)hWaveIn, &caps, sizeof(WAVEINCAPS));
-    if (res != MMSYSERR_NOERROR)
-    {
-        WEBRTC_TRACE(kTraceWarning, kTraceAudioDevice, _id, "waveInGetDevCaps() failed (err=%d)", res);
-        TraceWaveInError(res);
-    }
-
-    UINT deviceID(0);
-    res = waveInGetID(hWaveIn, &deviceID);
-    if (res != MMSYSERR_NOERROR)
-    {
-        WEBRTC_TRACE(kTraceWarning, kTraceAudioDevice, _id, "waveInGetID() failed (err=%d)", res);
-        TraceWaveInError(res);
-    }
-    WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id, "utilized device ID : %u", deviceID);
-    WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id, "product name       : %s", caps.szPname);
-
     // Store valid handle for the open waveform-audio input device
     _hWaveIn = hWaveIn;
 
@@ -2105,17 +2136,22 @@ int32_t AudioDeviceWindowsWave::StopRecording()
 
     // Close the given waveform-audio input device.
     //
-    res = waveInClose(_hWaveIn);
-    if (MMSYSERR_NOERROR != res)
+    if (g_bGlobalAudioInDevice == false)
     {
-        WEBRTC_TRACE(kTraceWarning, kTraceAudioDevice, _id, "waveInClose() failed (err=%d)", res);
-        TraceWaveInError(res);
-    }
+        // Close the given waveform-audio input device.
+        //
+        res = waveInClose(_hWaveIn);
+        if (MMSYSERR_NOERROR != res)
+        {
+            WEBRTC_TRACE(kTraceWarning, kTraceAudioDevice, _id, "waveInClose() failed (err=%d)", res);
+            TraceWaveInError(res);
+        }
 
-    // Set the wave input handle to NULL
-    //
-    _hWaveIn = NULL;
-    WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id, "_hWaveIn is now set to NULL");
+        // Set the wave input handle to NULL
+        //
+        _hWaveIn = NULL;
+        WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id, "_hWaveIn is now set to NULL");
+    }
 
     return 0;
 }

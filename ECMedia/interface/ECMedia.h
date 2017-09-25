@@ -217,6 +217,10 @@ ECMEDIA_API int ECMedia_get_loudpeaker_status(bool& enabled);
  *
  */
 ECMEDIA_API int ECMedia_reset_audio_device();
+/*
+*
+*/
+ECMEDIA_API int ECMedia_set_global_audio_in_device(bool enabled);
 ///*
 // *
 // */
