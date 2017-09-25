@@ -893,11 +893,9 @@ namespace cloopenwebrtc {
             PrintConsole("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
             int audio_record_sample_hz_ = 32000;
             int audio_record_channels_ = 2;
-            size_t kMaxDataSizeSamples = 3840;
-
-            int16_t temp_output[3840];
-
-            int len = resampler_record_.Resample10Msec((int16_t*)pData, 44100 * 2, audio_record_sample_hz_*audio_record_channels_, 1,  3840, (int16_t*)temp_output);
+            const size_t kMaxDataSizeSamples = 3840;
+            int16_t temp_output[kMaxDataSizeSamples];
+            int len = resampler_record_.Resample10Msec((int16_t*)pData, 44100 * 2, audio_record_sample_hz_*audio_record_channels_, 1, kMaxDataSizeSamples, (int16_t*)temp_output);
 
             if (len < 0) {
                 PrintConsole("[ECMEDIA CORE ERROR] %s resample error\n", __FUNCTION__);
