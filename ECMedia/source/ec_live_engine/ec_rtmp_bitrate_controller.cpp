@@ -7,7 +7,12 @@
 //
 #include <math.h>
 #include <iostream>
+#if defined(_WIN32)
+#include <cstdint>
+#include <windows.h>
+#else
 #include <unistd.h>
+#endif
 #include "ec_rtmp_bitrate_controller.h"
 #include "ec_live_utility.h"
 #include "event_wrapper.h"
@@ -31,7 +36,7 @@ namespace cloopenwebrtc{
         last_input_data_total_size_ = 0;
         last_output_data_total_size_ = 0;
         
-        timer_event_ = EventWrapper::Create();
+        timer_event_ = EventTimerWrapper::Create();
         
     }
 

@@ -10,7 +10,12 @@
 #include "ec_live_utility.h"
 #include "event_wrapper.h"
 #include "faaccodec.h"
+#if defined(_WIN32)
+#include <cstdint>
+#include <windows.h>
+#else
 #include <unistd.h>
+#endif
 
 
 namespace cloopenwebrtc{
@@ -31,12 +36,12 @@ namespace cloopenwebrtc{
     , play_cur_time_(0) {
         playnetworkThread_ = ThreadWrapper::CreateThread(EC_AVCacher::decodingThreadRun,
                                                          this,
-                                                         kHighPriority,
+                                                         kNormalPriority,
                                                          "decodingThreadRun");
         
         audioHandleThread_ = ThreadWrapper::CreateThread(EC_AVCacher::decodingAudioThreadRun,
                                                       this,
-                                                      kHighPriority,
+                                                      kNormalPriority,
                                                       "decodingAudioThreadRun");
         got_audio_ = false;
         
@@ -44,7 +49,7 @@ namespace cloopenwebrtc{
         _cs_list_video = CriticalSectionWrapper::CreateCriticalSection();
         running_ = false;
         callback_ = NULL;
-        cacher_update_event_ = EventWrapper::Create();
+        cacher_update_event_ = EventTimerWrapper::Create();
         is_playing_ = false;
         faac_decode_handle_ = nullptr;
         a_cache_len_ = 0;
@@ -172,7 +177,12 @@ namespace cloopenwebrtc{
                 callback_->onAvcDataComing((uint8_t*)pkt_video->_data, pkt_video->_data_len, pkt_video->_dts);
                 delete pkt_video;
             } else {
-                 usleep(10*1000);
+#if defined(_WIN32)
+				Sleep(10);
+#else
+				usleep(10 * 1000);
+#endif
+                
             }
         }
 

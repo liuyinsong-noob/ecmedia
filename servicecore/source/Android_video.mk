@@ -66,6 +66,7 @@ LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/../interface \
 		$(LOCAL_PATH)/../.. \
 		$(LOCAL_PATH)/../../module \
+		$(LOCAL_PATH)/../../base \
     $(LOCAL_PATH)/../../module/interface \
     $(LOCAL_PATH)/../../module/exosip/include \
     $(LOCAL_PATH)/../../module/exosip/source \

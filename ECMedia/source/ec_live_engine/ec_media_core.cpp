@@ -34,7 +34,7 @@
 #include "vie_render.h"
 #include "vie_codec.h"
 #include "vie_rtp_rtcp.h"
-#include "webrtc_libyuv.h"
+//#include "webrtc_libyuv.h"
 #include "vie_file_impl.h"
 #include "vie_desktop_share_impl.h"
 #include "vie_image_process_impl.h"
@@ -63,15 +63,11 @@ namespace cloopenwebrtc {
     
     static ECMediaMachine *g_rtmpLiveSession = NULL;
 
-    
-    // CriticalSectionWrapper *ECMediaMachine::singleProtect_ = CriticalSectionWrapper::CreateCriticalSection();
     ECMediaMachine *ECMediaMachine::getInstance()
     {
-        // singleProtect_->Enter();
         if (!g_rtmpLiveSession) {
             g_rtmpLiveSession = new ECMediaMachine();
         }
-        // singleProtect_->Leave();
         return g_rtmpLiveSession;
     }
     
@@ -274,7 +270,7 @@ namespace cloopenwebrtc {
 
     int ECMediaMachine::doVideoDataReceive() {
         ViEBase *vbase = ViEBase::GetInterface(vie_);
-        // vbase->StopReceive(video_channel_);
+ 
         int ret = -1;
         ret = vbase->StartReceive(video_channel_);
         vbase->Release();
@@ -709,7 +705,7 @@ namespace cloopenwebrtc {
         // rtc::CritScope cs(&cs_audio_record_);
         int audio_record_sample_hz_ = AAC_CODEC_SAMPLE_RATE;
         int audio_record_channels_ = 2;
-        size_t kMaxDataSizeSamples = 3840;
+        const size_t kMaxDataSizeSamples = 3840;
             if (audio_record_sample_hz_ != samplesRate || nChannels != audio_record_channels_) {
                 int16_t temp_output[kMaxDataSizeSamples];
                 int samples_per_channel_int = resampler_record_.Resample10Msec((int16_t*)audio_data, samplesRate * nChannels,
@@ -897,11 +893,9 @@ namespace cloopenwebrtc {
             PrintConsole("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
             int audio_record_sample_hz_ = 32000;
             int audio_record_channels_ = 2;
-            size_t kMaxDataSizeSamples = 3840;
-
+            const size_t kMaxDataSizeSamples = 3840;
             int16_t temp_output[kMaxDataSizeSamples];
-
-            int len = resampler_record_.Resample10Msec((int16_t*)pData, 44100 * 2, audio_record_sample_hz_*audio_record_channels_, 1,  3840, (int16_t*)temp_output);
+            int len = resampler_record_.Resample10Msec((int16_t*)pData, 44100 * 2, audio_record_sample_hz_*audio_record_channels_, 1, kMaxDataSizeSamples, (int16_t*)temp_output);
 
             if (len < 0) {
                 PrintConsole("[ECMEDIA CORE ERROR] %s resample error\n", __FUNCTION__);

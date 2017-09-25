@@ -77,6 +77,7 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../include \
     $(LOCAL_PATH)/.. \
     $(LOCAL_PATH)/../../module \
+    $(LOCAL_PATH)/../../base \
     $(LOCAL_PATH)/../common_video/interface \
     $(LOCAL_PATH)/../common_video/jpeg/main/interface \
     $(LOCAL_PATH)/../common_video/vplib/main/interface \

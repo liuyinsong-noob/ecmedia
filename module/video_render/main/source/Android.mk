@@ -47,7 +47,8 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../../../common_video/source/libyuv/include \
     $(LOCAL_PATH)/../../../video_render/main/source/external \
     $(LOCAL_PATH)/../../../../common_video/vplib/main/interface \
-    $(LOCAL_PATH)/../../../../system_wrappers/interface 
+    $(LOCAL_PATH)/../../../../system_wrappers/interface \
+    $(LOCAL_PATH)/../../../../base
 		
 LOCAL_SHARED_LIBRARIES := \
     libcutils \

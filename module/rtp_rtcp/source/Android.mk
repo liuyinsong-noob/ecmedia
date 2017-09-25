@@ -103,6 +103,7 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../../../ \
     $(LOCAL_PATH)/../../../system_wrappers/interface \
     $(LOCAL_PATH)/../../../system_wrappers/source \
+    $(LOCAL_PATH)/../../../base \
     $(LOCAL_PATH)/../../remote_bitrate_estimator/include \
     $(LOCAL_PATH)/../../pacing/include
 

@@ -38,9 +38,11 @@ LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/../servicecore/interface \
 		$(LOCAL_PATH)/../system_wrappers/interface \
 		$(LOCAL_PATH)/../module \
+		$(LOCAL_PATH)/../base \
 		$(LOCAL_PATH)/../third_party/ffmpeg \
 		$(LOCAL_PATH)/../ECMedia/interface \
 		$(LOCAL_PATH)/../third_party/protobuf/src \
+		$(LOCAL_PATH)/../third_party/protobuf/src/google/protobuf
 
 LOCAL_STATIC_LIBRARIES := \
 	libserphone_service_core \
@@ -56,6 +58,7 @@ LOCAL_SHARED_LIBRARIES := \
 LOCAL_LDLIBS += -llog -lGLESv2
 
 LOCAL_DISABLE_FATAL_LINKER_WARNINGS := true
+
 
 LOCAL_PRELINK_MODULE := false
 APP_ALLOW_MISSING_DEPS = true

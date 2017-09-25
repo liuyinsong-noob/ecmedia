@@ -33,7 +33,8 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../../interface \
     $(LOCAL_PATH)/../../utility/include \
     $(LOCAL_PATH)/../../audio_coding/main/include \
-    $(LOCAL_PATH)/../../../system_wrappers/interface 
+    $(LOCAL_PATH)/../../../system_wrappers/interface \
+    $(LOCAL_PATH)/../../../base
 
 LOCAL_SHARED_LIBRARIES := \
     libcutils \

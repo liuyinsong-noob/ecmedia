@@ -1620,7 +1620,7 @@ void CserphonetestDlg::OnEnMsgfilterRichedit21(NMHDR *pNMHDR, LRESULT *pResult)
 void CserphonetestDlg::OnBnClickedPlayStream()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	if (!g_rtmpLiveStreamHandle) {
+	/*if (!g_rtmpLiveStreamHandle) {
 		g_rtmpLiveStreamHandle = createLiveStream();
 	}
 	else
@@ -1631,12 +1631,14 @@ void CserphonetestDlg::OnBnClickedPlayStream()
 	USES_CONVERSION;
 	char* url = T2A(m_live_url.GetBuffer(0));
 	playLiveStream(g_rtmpLiveStreamHandle, url, rcwnd->GetSafeHwnd());
+	*/
 }
 
 
 
 void CserphonetestDlg::OnCbnSelchangeVideoSource()
 {
+	/*
 	// TODO: 在此添加控件通知处理程序代码
 	this->UpdateData(true);
 	int i = m_video_source.GetCurSel();
@@ -1656,7 +1658,7 @@ void CserphonetestDlg::OnCbnSelchangeVideoSource()
 	}
 	else if (i == 0) {
 		m_share_windows.ResetContent();
-	}
+	}*/
 }
 
 void CserphonetestDlg::OnBnClickedButton24()
@@ -1701,13 +1703,13 @@ void CserphonetestDlg::OnBnClickedPushStream()
 
 	this->UpdateData(true);
 	int i = m_video_source.GetCurSel();
-	setLiveVideoSource(g_rtmpLiveStreamHandle, i);
-//	selectCameraLiveStream(g_rtmpLiveStreamHandle, 1, 640, 480, 15);
+	//setLiveVideoSource(g_rtmpLiveStreamHandle, i);
+	//selectCameraLiveStream(g_rtmpLiveStreamHandle, 1, 640, 480, 15);
 	CWnd *rcwnd = g_dlg->GetDlgItem(IDC_RICHEDIT21);
 
 	USES_CONVERSION;
 	char* url = T2A(m_live_url.GetBuffer(0));
-	pushLiveStream(g_rtmpLiveStreamHandle, url, rcwnd->GetSafeHwnd());
+	//pushLiveStream(g_rtmpLiveStreamHandle, url, rcwnd->GetSafeHwnd());
 
 #if 0
 	enableLiveStreamBeauty(g_rtmpLiveStreamHandle);
@@ -1724,11 +1726,11 @@ void CserphonetestDlg::OnCbnSelchangeShareWindow()
 
 		WindowShare *windows;
 		int index = m_share_windows.GetCurSel();
-		int num = getShareWindows(g_rtmpLiveStreamHandle, &windows);
+		/*int num = getShareWindows(g_rtmpLiveStreamHandle, &windows);
 		if (index < num) {
 			selectShareWindow(g_rtmpLiveStreamHandle, windows[index].type, windows[index].id);
 			PrintConsole(" select index %d  id %d\n", index, windows[index].id);
-		}
+		}*/
 	}
 }
 

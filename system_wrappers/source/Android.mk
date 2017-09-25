@@ -104,7 +104,8 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../../third_party/libevent/android \
 	$(LOCAL_PATH)/../../third_party/libevent/include \
 	$(LOCAL_PATH)/android \
-    $(LOCAL_PATH)/spreadsortlib
+    $(LOCAL_PATH)/spreadsortlib \
+    $(LOCAL_PATH)/../../base
 
 LOCAL_SHARED_LIBRARIES := \
     libcutils \

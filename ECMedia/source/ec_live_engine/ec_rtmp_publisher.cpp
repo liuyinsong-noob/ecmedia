@@ -25,9 +25,9 @@ namespace cloopenwebrtc {
         rtmp_bitrate_ontroller_ = bc;
         rtmpPublishThread_ = ThreadWrapper::CreateThread(ECRtmpPublisher::publishThreadRun,
                 this,
-                kHighestPriority,
+                kNormalPriority,
                 "rtmpPublishThread_");
-        cacher_update_event_ = EventWrapper::Create();
+        cacher_update_event_ = EventTimerWrapper::Create();
       
     }
     
@@ -56,7 +56,6 @@ namespace cloopenwebrtc {
             rtmp_url = url;
 
             rtmp_ = srs_rtmp_create(url);
-            cacher_update_event_->Reset();
             rtmp_bitrate_ontroller_->start();
             
             unsigned int pthread_id;

@@ -16,6 +16,12 @@
     <Filter Include="interface">
       <UniqueIdentifier>{2aa2995f-2299-45ac-aa0a-cfde7f89de5c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\ec_live_engine">
+      <UniqueIdentifier>{41a0fb46-37a0-4f9c-995e-dbc5d7ee7571}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ec_live_engine\ec_srs_rtmp">
+      <UniqueIdentifier>{613c2e92-11db-4bde-bc90-ff0fa21220e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\base64.h">
@@ -63,6 +69,51 @@
     <ClInclude Include="source\MediaStatisticsData.pb.h">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="source\ec_live_engine\ec_aac_codec.h">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\ec_live_base.h">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\ec_live_common.h">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\ec_live_engine.h">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\ec_live_utility.h">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\ec_media_core.h">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\ec_media_puller_base.h">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\ec_play_buffer_cacher.h">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\ec_rtmp_bitrate_controller.h">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\ec_rtmp_publisher.h">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\ec_rtmp_puller.h">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\srs-librtmp\srs_kernel_codec.h">
+      <Filter>源文件\ec_live_engine\ec_srs_rtmp</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\srs-librtmp\srs_lib_simple_socket.hpp">
+      <Filter>源文件\ec_live_engine\ec_srs_rtmp</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\srs-librtmp\srs_librtmp.h">
+      <Filter>源文件\ec_live_engine\ec_srs_rtmp</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\srs-librtmp\srs_rtmp_io.hpp">
+      <Filter>源文件\ec_live_engine\ec_srs_rtmp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\base64.c">
@@ -106,6 +157,33 @@
     </ClCompile>
     <ClCompile Include="source\MediaStatisticsData.pb.cc">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ec_live_engine\ec_aac_codec.cpp">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ec_live_engine\ec_live_engine.cpp">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ec_live_engine\ec_live_utility.cpp">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ec_live_engine\ec_media_core.cpp">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ec_live_engine\ec_play_buffer_cacher.cpp">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ec_live_engine\ec_rtmp_bitrate_controller.cpp">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ec_live_engine\ec_rtmp_publisher.cpp">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ec_live_engine\ec_rtmp_puller.cpp">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ec_live_engine\srs-librtmp\srs_librtmp.cpp">
+      <Filter>源文件\ec_live_engine\ec_srs_rtmp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
