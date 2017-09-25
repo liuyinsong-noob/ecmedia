@@ -126,7 +126,10 @@ namespace cloopenwebrtc{
     }
     
     void EC_AVCacher::CacheAacData(const uint8_t*pdata, int len, uint32_t ts) {
-        unsigned int audio_sampleRate_ = 0;
+		// 1B aac packet type, 4B AAC Specific, zhaoyou
+		// @see http://billhoo.blog.51cto.com/2337751/1557646
+
+		unsigned int audio_sampleRate_ = 0;
         unsigned int audio_channels_ = 0 ;
 
         if (faac_decode_handle_ == NULL) {
@@ -135,21 +138,25 @@ namespace cloopenwebrtc{
             faad_decoder_init(faac_decode_handle_, (unsigned char *)pdata, len, audio_sampleRate_, audio_channels_);
             aac_frame_per10ms_size_ = (audio_sampleRate_ / 100) * sizeof(int16_t) * audio_channels_;
         }
-        else {
-            unsigned int outlen = 0;
-            if (faad_decode_frame(faac_decode_handle_, (unsigned char*)pdata, len, audio_cache_ + a_cache_len_, &outlen) == 0) {
-                //printf("");
-                a_cache_len_ += outlen;
-                int ct = 0;
-                int fsize = aac_frame_per10ms_size_;
-                while (a_cache_len_ > fsize) {
-                    CachePcmData(audio_cache_ + ct * fsize, fsize, ts);
-                    a_cache_len_ -= fsize;
-                    ct++;
-                }
-                memmove(audio_cache_, audio_cache_ + ct * fsize, a_cache_len_);
+         
+		if (len < 5) {
+			return;
+		}
+
+        unsigned int outlen = 0;
+        if (faad_decode_frame(faac_decode_handle_, (unsigned char*)pdata, len, audio_cache_ + a_cache_len_, &outlen) == 0) {
+            //printf("");
+            a_cache_len_ += outlen;
+            int ct = 0;
+            int fsize = aac_frame_per10ms_size_;
+            while (a_cache_len_ > fsize) {
+                CachePcmData(audio_cache_ + ct * fsize, fsize, ts);
+                a_cache_len_ -= fsize;
+                ct++;
             }
+            memmove(audio_cache_, audio_cache_ + ct * fsize, a_cache_len_);
         }
+        
     }
 
     bool EC_AVCacher::decodingThreadRun(void *pThis) {

@@ -546,9 +546,6 @@ namespace cloopenwebrtc {
         int ret = -1;
         ret = hardware->SetLoudspeakerStatus(true);
         hardware->Release();
-        if(ret != 0) {
-            return ret;
-        }
 
         VoEBase *base = VoEBase::GetInterface(voe_);
         ret = base->StartPlayout(audio_channel_);
