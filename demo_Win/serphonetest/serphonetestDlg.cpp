@@ -1620,7 +1620,7 @@ void CserphonetestDlg::OnEnMsgfilterRichedit21(NMHDR *pNMHDR, LRESULT *pResult)
 void CserphonetestDlg::OnBnClickedPlayStream()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	/*if (!g_rtmpLiveStreamHandle) {
+	if (!g_rtmpLiveStreamHandle) {
 		g_rtmpLiveStreamHandle = createLiveStream();
 	}
 	else
@@ -1631,7 +1631,6 @@ void CserphonetestDlg::OnBnClickedPlayStream()
 	USES_CONVERSION;
 	char* url = T2A(m_live_url.GetBuffer(0));
 	playLiveStream(g_rtmpLiveStreamHandle, url, rcwnd->GetSafeHwnd());
-	*/
 }
 
 
