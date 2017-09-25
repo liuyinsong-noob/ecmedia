@@ -7,7 +7,11 @@
 #include "ec_media_core.h"
 #include "ec_rtmp_publisher.h"
 #include "ec_rtmp_puller.h"
-//#include "ec_hls_puller.h"
+#ifdef WIN32
+#else
+#include "ec_hls_puller.h"
+#endif
+
 
 namespace cloopenwebrtc {
     static ECLiveEngine *ec_live_engine_ = NULL;
@@ -180,7 +184,11 @@ namespace cloopenwebrtc {
         if(strncmp(url, "rtmp", 4) == 0) {
             return new EC_RtmpPuller(callback);
         } else if(strncmp(url, "http", 4) == 0) {
-			return nullptr; //new EC_HLS_Puller(callback);
+#ifdef WIN32
+			return nullptr; // not support win32
+#else
+            return new EC_HLS_Puller(callback);
+#endif
         } else {
             
             // todo: http-flv player

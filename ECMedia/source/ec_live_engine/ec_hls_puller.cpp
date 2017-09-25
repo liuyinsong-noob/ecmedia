@@ -96,19 +96,19 @@ namespace cloopenwebrtc {
         if((ret = hls_task_->Initialize(str_url_.c_str(), vod, start, delay, error, count, this)) != ERROR_SUCCESS) {
             PrintConsole("initialize task failed, url=%s, ret=%d", str_url_.c_str(), ret);
             if(callback_) {
-                 callback_(EC_LIVE_CONNECTED_FAILED);
+                 callback_(EC_LIVE_PLAY_FAILED);
             }
             return ret;
         }
         if(callback_) {
-            callback_(EC_LIVE_CONNECTED_SUCCESS);
+            callback_(EC_LIVE_PLAY_SUCCESS);
         }
         
         ret = hls_task_->Process();
         
         if(ret != ERROR_SUCCESS) {
             if(callback_) {
-                callback_(EC_LIVE_CONNECTED_FAILED);
+                callback_(EC_LIVE_PLAY_FAILED);
             }
             PrintConsole("st task terminate with ret=%d", ret);
         }

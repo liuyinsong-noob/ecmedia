@@ -302,7 +302,7 @@ namespace cloopenwebrtc {
                 }
                 break;
             default:
-                PrintConsole("[RTMP ERROR] %s codec id %d not support\n", __FUNCTION__,voiceCodec);
+                PrintConsole("[RTMP ERROR] %s codec id %d not support\n", __FUNCTION__, voiceCodec);
                 break;
         }
     }
