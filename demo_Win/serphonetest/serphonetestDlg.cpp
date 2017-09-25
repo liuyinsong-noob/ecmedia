@@ -1184,7 +1184,26 @@ void CserphonetestDlg::OnBnClickedButton17()
 void CserphonetestDlg::OnBnClickedButton18()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	sendDTMF(g_currentCallId,'#');
+	//sendDTMF(g_currentCallId,'#');
+	CString str; 
+	GetDlgItem(IDC_BUTTON18)->GetWindowTextW(str);
+	if (str == "#")
+	{
+		GetDlgItem(IDC_BUTTON18)->SetWindowTextW(L"##");
+		startRtpDump(g_currentCallId, 0, "audio_in.dump", 0);
+		startRtpDump(g_currentCallId, 0, "audio_out.dump", 1);
+		startRtpDump(g_currentCallId, 1, "video_in.dump", 0);
+		startRtpDump(g_currentCallId, 1, "video_out.dump", 1);
+	}
+	else
+	{
+		GetDlgItem(IDC_BUTTON18)->SetWindowTextW(L"#");
+		stopRtpDump(g_currentCallId, 0, 0);
+		stopRtpDump(g_currentCallId, 0, 1);
+		stopRtpDump(g_currentCallId, 1, 0);
+		stopRtpDump(g_currentCallId, 1, 1);
+	}
+
 }
 
 
@@ -1683,7 +1702,7 @@ void CserphonetestDlg::OnBnClickedPushStream()
 	this->UpdateData(true);
 	int i = m_video_source.GetCurSel();
 	setLiveVideoSource(g_rtmpLiveStreamHandle, i);
-	selectCameraLiveStream(g_rtmpLiveStreamHandle, 1, 640, 480, 15);
+//	selectCameraLiveStream(g_rtmpLiveStreamHandle, 1, 640, 480, 15);
 	CWnd *rcwnd = g_dlg->GetDlgItem(IDC_RICHEDIT21);
 
 	USES_CONVERSION;
