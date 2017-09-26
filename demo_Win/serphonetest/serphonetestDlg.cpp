@@ -650,7 +650,8 @@ BOOL CserphonetestDlg::OnInitDialog()
 	USES_CONVERSION;
 	m_MediaServerIP = A2W(serverIP);
 	m_outCallAddr = A2W(sipAcount2);
-	m_live_url = "rtmp://live.yuntongxun.com/live/livestream";
+	//m_live_url = "rtmp://live.yuntongxun.com/live/livestream";
+	m_live_url = "rtmp://192.168.177.42/live/livestream";
 	m_sipAccountCtrl.AddString(A2W(sipAcount1));
 	m_sipAccountCtrl.AddString(A2W(sipAcount2));
 	m_sipAccountCtrl.SetCurSel(0);
@@ -1703,12 +1704,12 @@ void CserphonetestDlg::OnBnClickedPushStream()
 	this->UpdateData(true);
 	int i = m_video_source.GetCurSel();
 	//setLiveVideoSource(g_rtmpLiveStreamHandle, i);
-	//selectCameraLiveStream(g_rtmpLiveStreamHandle, 1, 640, 480, 15);
+	//selectCameraLiveStream(g_rtmpLiveStreamHandle, 0);
 	CWnd *rcwnd = g_dlg->GetDlgItem(IDC_RICHEDIT21);
 
 	USES_CONVERSION;
 	char* url = T2A(m_live_url.GetBuffer(0));
-	//pushLiveStream(g_rtmpLiveStreamHandle, url, rcwnd->GetSafeHwnd());
+	pushLiveStream(g_rtmpLiveStreamHandle, url, rcwnd->GetSafeHwnd());
 
 #if 0
 	enableLiveStreamBeauty(g_rtmpLiveStreamHandle);
