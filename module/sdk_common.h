@@ -294,35 +294,16 @@ typedef struct {
 } LiveVideoStreamConfig;
 
 // live stream publisher callback
-namespace cloopenwebrtc {
-    
-    class
-    EC_RtmpPublishCallback
-    {
-    public:
-        EC_RtmpPublishCallback(void){};
-        virtual ~EC_RtmpPublishCallback(void){};
-        // 连接上rtmp服务器
-        virtual void OnRtmpConnected() = 0;
-        // 正在连接rtmp服务器
-        virtual void OnRtmpReconnecting(int times) = 0;
-        // 与rtmp服务器连接断开
-        virtual void OnRtmpDisconnect() = 0;
-        //virtual void OnRtmpStatusEvent(int delayMs, int netBand) = 0;
-    };
-    
-    // live stream puller callback.
-    class EC_MediaPullCallback
-    {
-    public:
-        EC_MediaPullCallback(void){};
-        virtual ~EC_MediaPullCallback(void){};
-        
-        virtual void OnLivePullerConnected() = 0;
-        virtual void OnLivePullerFailed() = 0;
-        virtual void OnLivePullerDisconnect() = 0;
-    };
-}
+enum EC_LIVE_STATUS_CODE {
+    EC_LIVE_CONNECTING = 0,
+    EC_LIVE_TIMEOUT,
+    EC_LIVE_PUSH_SUCCESS,
+    EC_LIVE_PUSH_FAILED,
+    EC_LIVE_PLAY_SUCCESS,
+    EC_LIVE_PLAY_FAILED,
+    EC_LIVE_DISCONNECTED
+};
+typedef int(*ECLiveStreamNetworkStatusCallBack)(EC_LIVE_STATUS_CODE code);
 /*** rtmp end ***/
 
 #ifdef __cplusplus

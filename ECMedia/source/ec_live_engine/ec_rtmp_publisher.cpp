@@ -12,7 +12,7 @@
 namespace cloopenwebrtc {
 #define MAX_RETRY_TIME 3 // max retry connect to rtmp server times.
     
-    ECRtmpPublisher::ECRtmpPublisher(EC_RtmpPublishCallback *callback, EC_RTMP_BitrateController *bc) :
+    ECRtmpPublisher::ECRtmpPublisher(ECLiveStreamNetworkStatusCallBack callback, EC_RTMP_BitrateController *bc) :
             running_(false)
             ,rtmp_status_(RS_STM_Init)
             ,need_keyframe_(false)
@@ -234,7 +234,7 @@ namespace cloopenwebrtc {
                             rtmp_status_ = RS_STM_Published;
                             clearMediaCacher();
                             if(callback_) {
-                                callback_->OnRtmpConnected();
+                                callback_(EC_LIVE_PUSH_SUCCESS);
                             }
                         }
                         else {
@@ -343,12 +343,12 @@ namespace cloopenwebrtc {
                 {
                     rtmp_ = srs_rtmp_create(rtmp_url.c_str());
                     if(callback_) {
-                        callback_->OnRtmpReconnecting(retrys_);
+                        callback_(EC_LIVE_CONNECTING);
                     }
                 } else {
                     stop();
                     if(callback_) {
-                        callback_->OnRtmpDisconnect();
+                        callback_(EC_LIVE_DISCONNECTED);
                     }
                 }
             }
