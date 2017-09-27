@@ -25,9 +25,9 @@
 #include "statsCollector.h"
 #include "VoeObserver.h"
 #include "amrnb_api.h"
-
+#ifndef WIN32
 #include "ec_live_engine.h"
-
+#endif
 #ifdef WIN32
 #include "codingHelper.h"
 #endif
@@ -111,11 +111,10 @@ void ECViECaptureObserver::NoPictureAlarm(const int capture_id, const CaptureAla
 cloopenwebrtc::VoiceEngine* m_voe = NULL;
 static StatsCollector *g_statsCollector = NULL;
 static VoeObserver* g_VoeObserver = NULL;
-bool g_bGlobalAudioInDevice = false;
 #ifdef WIN32
+bool g_bGlobalAudioInDevice = false;
 HWAVEIN g_hWaveIn = NULL;
 #endif
-
 static onEcMediaNoCameraCaptureCb g_NoCameraCaptureCb = NULL;
 #ifdef VIDEO_ENABLED
 static ECViECaptureObserver* g_ECViECaptureObserver = NULL;
@@ -2270,6 +2269,7 @@ int ECMedia_reset_audio_device()
 int ECMedia_set_global_audio_in_device(bool enabled)
 {
     PrintConsole("[ECMEDIA INFO] %s begins. enabled=%d",__FUNCTION__, enabled?"true":"false");
+#ifdef WIN32
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
@@ -2293,6 +2293,9 @@ int ECMedia_set_global_audio_in_device(bool enabled)
         PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -99);
         return -99;
     }
+#endif
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
+    return 0;
 }
 /*
  * ENCRYPTION
