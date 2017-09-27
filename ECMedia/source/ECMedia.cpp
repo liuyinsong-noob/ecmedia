@@ -131,8 +131,10 @@ static StatsCollector *g_statsCollector = NULL;
 
 static VoeObserver* g_VoeObserver = NULL;
 
+#ifdef WIN32
 bool g_bGlobalAudioInDevice = false;
 HWAVEIN g_hWaveIn = NULL;
+#endif
 
 static onEcMediaNoCameraCaptureCb g_NoCameraCaptureCb = NULL;
 #ifdef VIDEO_ENABLED
@@ -2441,6 +2443,7 @@ int ECMedia_reset_audio_device()
 int ECMedia_set_global_audio_in_device(bool enabled)
 {
     PrintConsole("[ECMEDIA INFO] %s begins. enabled=%d",__FUNCTION__, enabled?"true":"false");
+#ifdef WIN32
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
@@ -2464,6 +2467,9 @@ int ECMedia_set_global_audio_in_device(bool enabled)
         PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, -99);
         return -99;
     }
+#endif
+    PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, 0);
+    return 0;
 }
 
 /*
