@@ -479,6 +479,16 @@ enum TextureType
             x = vpx * _parentScreenW;
             y = vpy * _parentScreenH;
         }
+        
+        if (w < _parentScreenW) {
+            double ratio2 = _parentScreenW/(double)w;
+            w = _parentScreenW;
+            h = _parentScreenH *ratio2;
+        } else {
+            double ratio2 = _parentScreenH/(double)h;
+            h = _parentScreenH;
+            w = _parentScreenW * ratio2;
+        }
     } else {
         if (_videoH>0 && _videoW>0) {
             w = _parentScreenW;

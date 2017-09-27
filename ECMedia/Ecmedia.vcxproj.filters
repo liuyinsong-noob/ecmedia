@@ -16,6 +16,18 @@
     <Filter Include="interface">
       <UniqueIdentifier>{2aa2995f-2299-45ac-aa0a-cfde7f89de5c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\ec_live_engine">
+      <UniqueIdentifier>{54984277-a011-4d7d-9bda-f5a31d77a74d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ec_live_engine\ec_srs_rtmp">
+      <UniqueIdentifier>{4b599277-f6db-488b-8588-34404768949f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ec_live_engine\ec_hls_loader">
+      <UniqueIdentifier>{5c15b01b-6437-4e93-b5d6-299774ba2a49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ec_live_engine\ec_hls_parser">
+      <UniqueIdentifier>{9823ce0d-4b2c-473e-b738-9ea0b381f5e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\base64.h">
@@ -63,6 +75,51 @@
     <ClInclude Include="source\MediaStatisticsData.pb.h">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="source\ec_live_engine\ec_aac_codec.h">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\ec_live_base.h">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\ec_live_common.h">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\ec_live_engine.h">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\ec_live_utility.h">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\ec_media_core.h">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\ec_media_puller_base.h">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\ec_play_buffer_cacher.h">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\ec_rtmp_bitrate_controller.h">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\ec_rtmp_publisher.h">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\ec_rtmp_puller.h">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\srs-librtmp\srs_kernel_codec.h">
+      <Filter>源文件\ec_live_engine\ec_srs_rtmp</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\srs-librtmp\srs_lib_simple_socket.hpp">
+      <Filter>源文件\ec_live_engine\ec_srs_rtmp</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\srs-librtmp\srs_librtmp.h">
+      <Filter>源文件\ec_live_engine\ec_srs_rtmp</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ec_live_engine\srs-librtmp\srs_rtmp_io.hpp">
+      <Filter>源文件\ec_live_engine\ec_srs_rtmp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\base64.c">
@@ -94,6 +151,33 @@
     </ClCompile>
     <ClCompile Include="source\RecordLocal.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ec_live_engine\ec_aac_codec.cpp">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ec_live_engine\ec_live_engine.cpp">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ec_live_engine\ec_live_utility.cpp">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ec_live_engine\ec_media_core.cpp">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ec_live_engine\ec_play_buffer_cacher.cpp">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ec_live_engine\ec_rtmp_bitrate_controller.cpp">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ec_live_engine\ec_rtmp_publisher.cpp">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ec_live_engine\ec_rtmp_puller.cpp">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ec_live_engine\srs-librtmp\srs_librtmp.cpp">
+      <Filter>源文件\ec_live_engine\ec_srs_rtmp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

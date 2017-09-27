@@ -711,7 +711,7 @@ namespace cloopenwebrtc {
         // rtc::CritScope cs(&cs_audio_record_);
         int audio_record_sample_hz_ = AAC_CODEC_SAMPLE_RATE;
         int audio_record_channels_ = 2;
-        size_t kMaxDataSizeSamples = 3840;
+        const size_t kMaxDataSizeSamples = 3840;
             if (audio_record_sample_hz_ != samplesRate || nChannels != audio_record_channels_) {
                 int16_t temp_output[kMaxDataSizeSamples];
                 int samples_per_channel_int = resampler_record_.Resample10Msec((int16_t*)audio_data, samplesRate * nChannels,
@@ -906,11 +906,11 @@ namespace cloopenwebrtc {
             PrintConsole("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
             int audio_record_sample_hz_ = 32000;
             int audio_record_channels_ = 2;
-            size_t kMaxDataSizeSamples = 3840;
+            const size_t kMaxDataSizeSamples = 3840;
 
             int16_t temp_output[kMaxDataSizeSamples];
 
-            int len = resampler_record_.Resample10Msec((int16_t*)pData, sample_rate * audio_channels, audio_record_sample_hz_*audio_record_channels_, 1,  3840, (int16_t*)temp_output);
+            int len = resampler_record_.Resample10Msec((int16_t*)pData, sample_rate * audio_channels, audio_record_sample_hz_*audio_record_channels_, 1,  kMaxDataSizeSamples, (int16_t*)temp_output);
 
             if (len < 0) {
                 PrintConsole("[ECMEDIA CORE ERROR] %s resample error\n", __FUNCTION__);

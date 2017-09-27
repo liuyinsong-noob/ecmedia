@@ -631,7 +631,7 @@ ECMEDIA_API void *ECMedia_createLiveStream();
  [IN]  callback		：视频宽高回调
  返回值   : 返回值 0：成功  -1：初始化资源失败 -2：已经在直播或推流  -3：连接失败  -4：建立流失败
  */
-ECMEDIA_API int ECMedia_playLiveStream(void *handle, const char * url, cloopenwebrtc::EC_MediaPullCallback* callback);
+ECMEDIA_API int ECMedia_playLiveStream(void *handle, const char * url, ECLiveStreamNetworkStatusCallBack callback);
 /*
  功能     : 开始直播推流
  参数     : [IN]  handle		： 句柄
@@ -639,7 +639,7 @@ ECMEDIA_API int ECMedia_playLiveStream(void *handle, const char * url, cloopenwe
  [IN]  renderView	：本地视频窗口
  返回值   : 返回值 0：成功　-1：初始化资源失败 -2：已经在直播或者推流  -3：连接失败  -4：建立流失败
  */
-ECMEDIA_API int ECMedia_pushLiveStream(void *handle, const char *url, cloopenwebrtc::EC_RtmpPublishCallback* callback);
+ECMEDIA_API int ECMedia_pushLiveStream(void *handle, const char *url, ECLiveStreamNetworkStatusCallBack callback);
 /*
  功能     : 停止观看或推流
  参数     :	  [IN]  handle		： 句柄

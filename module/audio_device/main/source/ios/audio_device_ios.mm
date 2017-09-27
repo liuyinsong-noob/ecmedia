@@ -1243,8 +1243,7 @@ bool AudioDeviceIOS::RecordingError() const {
 void AudioDeviceIOS::ClearPlayoutWarning() {
     _playWarning = 0;
 }
-
-void AudioDeviceIOS::ClearPlayoutError() {
+ void AudioDeviceIOS::ClearPlayoutError() {
     _playError = 0;
 }
 
@@ -1337,8 +1336,7 @@ int32_t AudioDeviceIOS::InitPlayOrRecord() {
                    error:&error];
     _originalCategory = [session.category UTF8String];
     
-    // reset speaker status, when session category be set.
-    SetLoudspeakerStatus(enable);
+ 
     //repair some types of bluetooth headsets not available
     //set audio buffer time
     //@see http://blog.csdn.net/kingshuo7/article/details/42588191
@@ -1359,6 +1357,7 @@ int32_t AudioDeviceIOS::InitPlayOrRecord() {
     if (_isIphone6s) {
         preferredSampleRate = 48000.0;
     }
+    
     _originalPreferredSampleRate = session.currentHardwareSampleRate;
     [session setPreferredSampleRate:preferredSampleRate
                               error:&error];
@@ -1367,6 +1366,9 @@ int32_t AudioDeviceIOS::InitPlayOrRecord() {
         WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id,
                      "Could not set preferred sample rate: %s", errorString);
     }
+    
+    // reset speaker status, when session category be set.
+    SetLoudspeakerStatus(enable);
     //////////////////////
     // Setup Voice Processing Audio Unit
 

@@ -11,11 +11,11 @@
 #include "ec_play_buffer_cacher.h"
 
 #if defined(_WIN32)
-#include <winsock2.h>
-#include <ws2tcpip.h>
+//#include <winsock2.h>
+//#include <ws2tcpip.h>
 #include <cstdint>
-#else
-#include <arpa/inet.h>  // ntohl()
+//#else
+//#include <arpa/inet.h>  // ntohl()
 #endif
 
 namespace cloopenwebrtc {
@@ -24,7 +24,7 @@ namespace cloopenwebrtc {
     #endif
     #define MAX_RETRY_TIME  3
  
-    EC_RtmpPuller::EC_RtmpPuller(EC_MediaPullCallback* callback) {
+    EC_RtmpPuller::EC_RtmpPuller(ECLiveStreamNetworkStatusCallBack callback) {
         retry_ct_ = 0;
         running_ = false;
         callback_ = callback;
@@ -139,7 +139,7 @@ namespace cloopenwebrtc {
         retry_ct_ = 0;
         connected_ = true;
         if(callback_) {
-            callback_->OnLivePullerConnected();
+            callback_(EC_LIVE_PLAY_SUCCESS);
         }
     }
 
@@ -163,11 +163,11 @@ namespace cloopenwebrtc {
                 
                 if(connected_) {
                     running_ = false;
-                    callback_->OnLivePullerDisconnect();
+                    callback_(EC_LIVE_DISCONNECTED);
                 }
                 else {
                     running_ = false;
-                    callback_->OnLivePullerFailed();
+                    callback_(EC_LIVE_PLAY_FAILED);
                 }
             }
         }
@@ -302,7 +302,7 @@ namespace cloopenwebrtc {
                 }
                 break;
             default:
-                PrintConsole("[RTMP ERROR] %s codec id %d not support\n", __FUNCTION__,voiceCodec);
+                PrintConsole("[RTMP ERROR] %s codec id %d not support\n", __FUNCTION__, voiceCodec);
                 break;
         }
     }
