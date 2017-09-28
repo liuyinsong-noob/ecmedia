@@ -21,7 +21,7 @@ namespace cloopenwebrtc {
         puller_runnig_              = false;
         network_adaptive_enable_    = false;
 
-        meida_puller_               = nullptr;
+        media_puller_               = nullptr;
         rtmp_publisher_             = nullptr;
         bitrate_controller_         = nullptr;
 
@@ -34,9 +34,9 @@ namespace cloopenwebrtc {
             rtmp_publisher_ = NULL;
         }
 
-        if(meida_puller_) {
-            delete meida_puller_;
-            meida_puller_ = NULL;
+        if(media_puller_) {
+            delete media_puller_;
+            media_puller_ = NULL;
         }
 
         if(ec_media_core_) {
@@ -123,16 +123,16 @@ namespace cloopenwebrtc {
         if(!puller_runnig_) {
             puller_runnig_ = true;
 
-            if(!meida_puller_) {
-                meida_puller_ = createMediaPuller(url, callback);
-                if(!meida_puller_) {
+            if(!media_puller_) {
+                media_puller_ = createMediaPuller(url, callback);
+                if(!media_puller_) {
                     PrintConsole("[ECLiveEngine INFO] %s: create media puller faild.", __FUNCTION__);
                     return -1;
                 }
-                meida_puller_->setReceiverCallback(ec_media_core_);
+                media_puller_->setReceiverCallback(ec_media_core_);
             }
 
-            meida_puller_->start(url);
+            media_puller_->start(url);
             ret = ec_media_core_->startPlayout();
         }
         PrintConsole("[ECLiveEngine INFO] %s: end with code: %d", __FUNCTION__, ret);
@@ -143,8 +143,10 @@ namespace cloopenwebrtc {
         PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
         int ret = -1;
         if(puller_runnig_) {
-            if(meida_puller_) {
-                meida_puller_->stop();
+            if(media_puller_) {
+                media_puller_->stop();
+                delete media_puller_;
+                media_puller_ = nullptr;
             }
             ret = ec_media_core_->stopPlayout();
 
