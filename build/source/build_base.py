@@ -64,7 +64,7 @@ class BuildBase:
         print os.system('cp ' + self.CommonTypesHeader + ' ' + self.RarIncludePath)
         print os.system('cp ' + self.SdkCommonHeader + ' ' + self.RarIncludePath)
         print os.system('cp ' + self.TypesDefsHeader + ' ' + self.RarIncludePath)
-		print os.system('cp ' + self.BaseHeader + ' ' + self.RarIncludePath)
+        print os.system('cp ' + self.BaseHeader + ' ' + self.RarIncludePath)
         print os.system('cp ' + self.SafeCompareHeader + ' ' + self.RarIncludePath)   
         
     def collectFiles(self):
