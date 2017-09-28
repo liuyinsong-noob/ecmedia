@@ -160,6 +160,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "third_party", "third_party", "{E50A3439-67AA-4519-9D82-F572C547F44F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ecmedia", "..\ECMedia\Ecmedia.vcxproj", "{86E50404-D26F-405A-9994-C8FB69EB72DD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5A683C2A-F44F-4109-9A90-5A648D7FC289} = {5A683C2A-F44F-4109-9A90-5A648D7FC289}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "L16", "..\module\audio_coding\L16.vcxproj", "{A686B620-E45E-4175-A4F9-9DB598B804E8}"
 EndProject
