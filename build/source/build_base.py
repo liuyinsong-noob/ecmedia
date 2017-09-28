@@ -15,8 +15,8 @@ class BuildBase:
         self.CommonTypesHeader = os.path.join(self.ProjectPath, 'module', 'common_types.h')
         self.SdkCommonHeader = os.path.join(self.ProjectPath, 'module', 'sdk_common.h')
         self.TypesDefsHeader = os.path.join(self.ProjectPath, 'module', 'typedefs.h')
-		self.BaseHeader = os.path.join(self.projectPath, 'base', 'checks.h')
-		self.SafeCompareHeader = os.path.join(self.projectPath, 'base', 'safe_compare.h')
+        self.BaseHeader = os.path.join(self.projectPath, 'base', 'checks.h')
+        self.SafeCompareHeader = os.path.join(self.projectPath, 'base', 'safe_compare.h')
         self.ReleaseNoteFile = os.path.join(self.ProjectPath, 'ReleaseNotes.txt')
 
         self.BuildPath = os.path.join(self.ProjectPath, 'build')
