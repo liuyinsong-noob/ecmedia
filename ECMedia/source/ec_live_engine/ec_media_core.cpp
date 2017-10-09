@@ -575,9 +575,6 @@ namespace cloopenwebrtc {
     int ECMediaMachine::setVideoCaptureInfo(int camera_index, int fps, int bitrate, int width, int height)
     {
         PrintConsole("[ECMEDIA CORE INFO] %s start, camera_index:%d, fps:%d, bitrate:%d, width:%d, height:%d\n", __FUNCTION__, camera_index, fps, bitrate, width, height);
-        if(cameras_.size() <= camera_index) {
-            return -1;
-        }
       
         info_camera_index_      = camera_index;
         info_video_fps_         = fps;
@@ -585,8 +582,9 @@ namespace cloopenwebrtc {
         info_video_bitrates_    = bitrate;
         info_video_width_       = width;
         info_video_height_      = height;
+        
         PrintConsole("[ECMEDIA CORE INFO] %s end with code:%d\n", __FUNCTION__, 0);
-        return 0;
+        return initVideoTransportCodec("H264", 90000);;
     }
 
     int ECMediaMachine::setVideoFrameProperty(int bitrate, int width, int height) {
