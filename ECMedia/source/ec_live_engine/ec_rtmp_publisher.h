@@ -14,8 +14,6 @@
 #include "ec_live_common.h"
 #include "ec_rtmp_bitrate_controller.h"
 
-#endif /* ec_rtmp_publisher_hpp */
-
 namespace cloopenwebrtc {
 
     enum RTMP_STATUS
@@ -73,7 +71,4 @@ namespace cloopenwebrtc {
     };
 }
 
-//int Send_AAC_SPEC();
-//int BuildAndCacheAudioPacket(unsigned char *aac_data, int aac_data_len);
-//int Send_SPS_PPS();
-//int BuildAndCacheVideoPacket(std::vector<uint8_t> &nalus);
+#endif /* ec_rtmp_publisher_hpp */
