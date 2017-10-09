@@ -2262,6 +2262,11 @@ extern "C" void setTraceFlag(bool enable)
 	ServiceCore::serphone_set_traceFlag();
 }
 
+extern "C" void setAudioRecordStatus(const char *path, bool enable)
+{
+    g_pSerCore->serphone_set_audioRecordStatus(path, enable);
+}
+
 extern "C" void setCapabilityToken(const char *token)
 {
 	PrintConsole("[APICall] setCapabilityToken (token=%s) \n",token ? token:"NULL");

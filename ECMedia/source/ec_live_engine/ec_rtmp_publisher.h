@@ -20,11 +20,11 @@ namespace cloopenwebrtc {
 
     enum RTMP_STATUS
     {
-        RS_STM_Init,		// ≥ı ºªØ◊¥Ã¨
-        RS_STM_Handshaked,	// ”Î∑˛ŒÒ∆˜–≠…Ãπ˝≥Ã÷–
-        RS_STM_Connected,	// ”Î∑˛ŒÒ∆˜¡¨Ω”≥…π¶
-        RS_STM_Published,	// ø™ ºÕ∆¡˜
-        RS_STM_Closed		// Õ∆¡˜πÿ±’
+        RS_STM_Init,
+        RS_STM_Handshaked,
+        RS_STM_Connected,
+        RS_STM_Published,
+        RS_STM_Closed
     };
 
     class EventWrapper;
