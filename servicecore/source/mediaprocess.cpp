@@ -1714,6 +1714,30 @@ void ServiceCore::serphone_call_init_media_streams(SerPhoneCall *call)
 #endif
 	ECMedia_audio_create_channel(call->m_AudioChannelID, false);
 
+    if (call->params.bAudioRecord)
+    {
+        std::string pathStr = call->params.audioRecordPath;
+        std::string microphone = "microphone.pcm";
+        std::string playout = "playout.pcm";
+        std::string encoded = "encoded.pcm";
+        if (pathStr.empty() == false) {
+          microphone = pathStr + "/" + microphone;
+          playout = pathStr + "/" + playout;
+          encoded = pathStr + "/" + encoded;
+        }
+        
+        ECMedia_start_record_microphone((char*)(microphone.c_str()));
+        ECMedia_start_record_playout(call->m_AudioChannelID, (char*)playout.c_str());
+        ECMedia_start_record_send_voice((char*)(encoded.c_str()));
+      
+    }
+    else {
+      ECMedia_stop_record_microphone();
+      ECMedia_stop_record_playout(call->m_AudioChannelID);
+      ECMedia_stop_record_send_voice();
+    }
+
+
     //TODO:
 	//base->SetFecStatus(call->m_AudioChannelID, m_enable_fec);
     //base->SetLoss(call->m_AudioChannelID, m_opus_packet_loss_rate);
