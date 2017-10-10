@@ -83,6 +83,8 @@ struct _SerphoneCallParams{
 	bool_t pad;
 	char *invite_userdata;
     char *group_id;
+    std::string audioRecordPath;
+    bool_t bAudioRecord;
 //haiyuntong
 #ifdef HAIYUNTONG
     char *akey;

@@ -867,6 +867,8 @@ public:
 //#ifdef WIN32
 //	ChromaKeyFilter * m_ChromaKeyFilter;
 //#endif
+   std::string m_audioRecordPath;
+   bool_t m_bAudioRecord;
 
 
 public:
@@ -1001,6 +1003,7 @@ public:
     int serphone_set_silk_rate(int rate);
 public:
     static int serphone_set_traceFlag(/*bool flag*/);//Don't user flag for the time being
+    int serphone_set_audioRecordStatus(const char *path, bool enable);
     int serphone_set_remote_sip(char *remote);
 #if 0
 private:

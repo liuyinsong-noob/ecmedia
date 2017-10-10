@@ -71,6 +71,8 @@ extern "C" {
 	CCPAPI int setLogLevel( int level);
 
     CCPAPI void setTraceFlag(bool enable);
+
+    CCPAPI void setAudioRecordStatus(const char *path, bool enable);
 	
 	CCPAPI int	enableGlobalAudioInDevice(bool enable);
 

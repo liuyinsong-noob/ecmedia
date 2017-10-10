@@ -579,8 +579,7 @@ namespace cloopenwebrtc {
         base->Release();
         return ret;
     }
- 
-     // 视频参数配置属性配置
+
     int ECMediaMachine::setVideoCaptureInfo(int camera_index, int fps, int bitrate, int width, int height)
     {
         PrintConsole("[ECMEDIA CORE INFO] %s start, camera_index:%d, fps:%d, bitrate:%d, width:%d, height:%d\n", __FUNCTION__, camera_index, fps, bitrate, width, height);
