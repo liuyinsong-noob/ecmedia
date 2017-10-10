@@ -322,7 +322,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='audioRelease|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../.;../.;./include;./source;./source/H264;../../system_wrappers/source;../../system_wrappers\interface;../interface;./mocks;../remote_bitrate_estimator/include;../pacing/include;../..;../common_audio/source</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../.;../.;./include;./source;./source/H264;../../system_wrappers/source;../../system_wrappers\interface;../interface;./mocks;../remote_bitrate_estimator/include;../pacing/include;../..;../common_audio/source;../../base/</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -434,7 +434,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../.;../.;./include;./source;./source/H264;../../system_wrappers\source;../../system_wrappers\interface;../interface;./mocks;../remote_bitrate_estimator/include;../pacing/include;../..;../common_audio/source</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../.;../.;./include;./source;./source/H264;../../system_wrappers\source;../../system_wrappers\interface;../interface;./mocks;../remote_bitrate_estimator/include;../pacing/include;../..;../common_audio/source;../../base/</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -544,7 +544,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='audioRelease|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../.;../.;./include;./source;./source/H264;../../system_wrappers\source;../../system_wrappers\interface;../interface;./mocks;../remote_bitrate_estimator/include;../pacing/include;../..;../common_audio/source</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../.;../.;./include;./source;./source/H264;../../system_wrappers\source;../../system_wrappers\interface;../interface;./mocks;../remote_bitrate_estimator/include;../pacing/include;../..;../common_audio/source;../../base/</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

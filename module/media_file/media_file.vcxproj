@@ -334,7 +334,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='audioRelease|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../.;../.;./include;./source;../interface;../../system_wrappers\interface</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../.;../.;./include;./source;../interface;../../system_wrappers\interface;../../base/</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -446,7 +446,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../.;../.;./include;./source;../interface;../../system_wrappers\interface</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../.;../.;./include;./source;../interface;../../system_wrappers\interface;../../base/</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -556,7 +556,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='audioRelease|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../.;../.;./include;./source;../interface;../../system_wrappers\interface</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../.;../.;./include;./source;../interface;../../system_wrappers\interface;../../base/</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

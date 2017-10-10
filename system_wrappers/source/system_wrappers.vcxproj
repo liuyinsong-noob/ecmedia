@@ -311,7 +311,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='audioRelease|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../;../include;./spreadsortlib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../;../include;./spreadsortlib;../../base/;../../module/</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -368,7 +368,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\module;..\.;./.;../interface;./spreadsortlib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../;../include;./spreadsortlib;../../base/;../../module/</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -476,7 +476,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='audioRelease|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\module;..\.;./.;../interface;./spreadsortlib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../;../include;./spreadsortlib;../../base/;../../module/</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

@@ -336,9 +336,9 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;WEBRTC_WIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>./codecs\interface;../;../interface;../../system_wrappers/interface;../../third_party/libx264/libx264_win/x64/include;../../third_party/ffmpeg/ffmpeg_win/x64/include;./main/include;../common_video/source;../common_video/source/libyuv/include;../common_video/interface</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./codecs\interface;../;../interface;../../system_wrappers/interface;../../third_party/libx264/libx264_win/x64/include;../../third_party/ffmpeg/ffmpeg_win/x64/include;./main/include;../common_video/source;../common_video/source/libyuv/include;../common_video/interface;../../base/</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
