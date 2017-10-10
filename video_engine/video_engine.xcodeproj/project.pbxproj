@@ -789,7 +789,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/video_engine.dst;
 				GCC_CW_ASM_SYNTAX = NO;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -828,6 +828,9 @@
 					"\"WTF_USE_DYNAMIC_ANNOTATIONS=1\"",
 					VIDEOCODEC_H264,
 					VIDEOCODEC_VP8,
+					WEBRTC_POSIX,
+					ENABLE_GCC,
+					VIDEO_ENABLED,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -865,9 +868,13 @@
 					../module/desktop_capture/source,
 					../module/video_processing/main/source/beauty_filter,
 					../module/desktop_capture/desktop_capture/desktop_capture,
+					../base,
+					../voice_engine/main/source,
+					../ECMedia/source,
+					"$(SRCROOT)/source",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CFLAGS = (
 					"-fno-strict-aliasing",
@@ -888,7 +895,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/video_engine.dst;
 				GCC_CW_ASM_SYNTAX = NO;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -928,6 +935,9 @@
 					"\"DYNAMIC_ANNOTATIONS_ENABLED=0\"",
 					VIDEOCODEC_H264,
 					VIDEOCODEC_VP8,
+					WEBRTC_POSIX,
+					ENABLE_GCC,
+					VIDEO_ENABLED,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -965,9 +975,13 @@
 					../module/desktop_capture/source,
 					../module/video_processing/main/source/beauty_filter,
 					../module/desktop_capture/desktop_capture/desktop_capture,
+					../base,
+					../voice_engine/main/source,
+					../ECMedia/source,
+					"$(SRCROOT)/source",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CFLAGS = "-fno-strict-aliasing";
 				OTHER_LDFLAGS = "";

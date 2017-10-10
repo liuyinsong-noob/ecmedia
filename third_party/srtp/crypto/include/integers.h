@@ -47,7 +47,7 @@
 #ifndef INTEGERS_H
 #define INTEGERS_H
 
-#include "srtp/config.h"	/* configuration file, using autoconf          */
+#include "srtp/config.h"	/* configuration file, using autoconf */
 
 #ifdef SRTP_KERNEL
 

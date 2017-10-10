@@ -39,8 +39,6 @@ namespace cloopenwebrtc {
 //        srs_codec_ = new SrsAvcAacCodec();
 //        audio_payload_ = new DemuxData(1024);
 //        video_payload_ = new DemuxData(384 * 1024);
-        
-      
     }
     
     EC_RtmpPuller::~EC_RtmpPuller() {

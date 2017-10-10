@@ -586,6 +586,7 @@
 					../../../system_wrappers/source,
 					../../../,
 					../../audioprocess/source,
+					../../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
@@ -616,6 +617,7 @@
 					../../../system_wrappers/source,
 					../../../,
 					../../audioprocess/source,
+					../../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
