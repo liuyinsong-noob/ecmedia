@@ -879,6 +879,7 @@
 					"\"WTF_USE_DYNAMIC_ANNOTATIONS=1\"",
 					VIDEOCODEC_H264,
 					VIDEOCODEC_VP8,
+					VIDEO_ENABLED,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -979,6 +980,7 @@
 					"\"DYNAMIC_ANNOTATIONS_ENABLED=0\"",
 					VIDEOCODEC_H264,
 					VIDEOCODEC_VP8,
+					VIDEO_ENABLED,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
