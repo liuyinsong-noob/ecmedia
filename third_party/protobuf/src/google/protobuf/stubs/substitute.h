@@ -38,7 +38,7 @@
 #ifndef GOOGLE_PROTOBUF_STUBS_SUBSTITUTE_H_
 #define GOOGLE_PROTOBUF_STUBS_SUBSTITUTE_H_
 
-namespace google {
+namespace cloopen_google {
 namespace protobuf {
 namespace strings {
 
@@ -165,6 +165,6 @@ LIBPROTOBUF_EXPORT void SubstituteAndAppend(
 
 }  // namespace strings
 }  // namespace protobuf
-}  // namespace google
+}  // namespace cloopen_google
 
 #endif // GOOGLE_PROTOBUF_STUBS_SUBSTITUTE_H_

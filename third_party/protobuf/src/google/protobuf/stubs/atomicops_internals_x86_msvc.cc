@@ -40,7 +40,7 @@
 
 #include <windows.h>
 
-namespace google {
+namespace cloopen_google {
 namespace protobuf {
 namespace internal {
 
@@ -106,7 +106,7 @@ Atomic64 Barrier_AtomicIncrement(volatile Atomic64* ptr,
 
 }  // namespace internal
 }  // namespace protobuf
-}  // namespace google
+}  // namespace cloopen_google
 
 #endif  // GOOGLE_PROTOBUF_ATOMICOPS_INTERNALS_X86_MSVC_H_
 #endif  // GOOGLE_PROTOBUF_NO_THREAD_SAFETY

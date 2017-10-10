@@ -35,7 +35,7 @@
 
 #define ATOMICOPS_COMPILER_BARRIER() __asm__ __volatile__("" : : : "memory")
 
-namespace google {
+namespace cloopen_google {
 namespace protobuf {
 namespace internal {
 
@@ -65,7 +65,7 @@ inline Atomic32 NoBarrier_CompareAndSwap(volatile Atomic32* ptr,
                        "2:\n"
                        ".set pop\n"
                        : "=&r" (prev), "=m" (*ptr), "=&r" (tmp)
-                       : "r" (old_value), "r" (new_value), "m" (*ptr)
+                       : "Ir" (old_value), "r" (new_value), "m" (*ptr)
                        : "memory");
   return prev;
 }
@@ -197,7 +197,7 @@ inline Atomic64 NoBarrier_CompareAndSwap(volatile Atomic64* ptr,
                        "2:\n"
                        ".set pop\n"
                        : "=&r" (prev), "=m" (*ptr), "=&r" (tmp)
-                       : "r" (old_value), "r" (new_value), "m" (*ptr)
+                       : "Ir" (old_value), "r" (new_value), "m" (*ptr)
                        : "memory");
   return prev;
 }
@@ -306,7 +306,7 @@ inline Atomic64 Release_Load(volatile const Atomic64* ptr) {
 
 }  // namespace internal
 }  // namespace protobuf
-}  // namespace google
+}  // namespace cloopen_google
 
 #undef ATOMICOPS_COMPILER_BARRIER
 

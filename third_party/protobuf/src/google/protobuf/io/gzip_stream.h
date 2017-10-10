@@ -43,11 +43,12 @@
 #ifndef GOOGLE_PROTOBUF_IO_GZIP_STREAM_H__
 #define GOOGLE_PROTOBUF_IO_GZIP_STREAM_H__
 
-#include <google/protobuf/stubs/common.h>
-#include <google/protobuf/io/zero_copy_stream.h>
 #include <zlib.h>
 
-namespace google {
+#include <google/protobuf/stubs/common.h>
+#include <google/protobuf/io/zero_copy_stream.h>
+
+namespace cloopen_google {
 namespace protobuf {
 namespace io {
 
@@ -98,7 +99,6 @@ class LIBPROTOBUF_EXPORT GzipInputStream : public ZeroCopyInputStream {
   void* output_buffer_;
   void* output_position_;
   size_t output_buffer_length_;
-  int64 byte_count_;
 
   int Inflate(int flush);
   void DoNextOutput(const void** data, int* size);
@@ -205,5 +205,5 @@ class LIBPROTOBUF_EXPORT GzipOutputStream : public ZeroCopyOutputStream {
 }  // namespace io
 }  // namespace protobuf
 
-}  // namespace google
+}  // namespace cloopen_google
 #endif  // GOOGLE_PROTOBUF_IO_GZIP_STREAM_H__

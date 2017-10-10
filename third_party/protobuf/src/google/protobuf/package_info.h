@@ -36,7 +36,7 @@
 // It is not compiled into anything, but it may be read by an automated
 // documentation generator.
 
-namespace google {
+namespace cloopen_google {
 
 // Core components of the Protocol Buffers runtime library.
 //
@@ -61,4 +61,4 @@ namespace google {
 // the object behind the scenes -- e.g., to cache results -- but in these cases
 // mutex locking is used to make the access thread-safe.
 namespace protobuf {}
-}  // namespace google
+}  // namespace cloopen_google

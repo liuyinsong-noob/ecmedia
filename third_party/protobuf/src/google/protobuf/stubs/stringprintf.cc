@@ -37,8 +37,9 @@
 #include <stdio.h> // MSVC requires this for _vsnprintf
 #include <vector>
 #include <google/protobuf/stubs/common.h>
+#include <google/protobuf/testing/googletest.h>
 
-namespace google {
+namespace cloopen_google {
 namespace protobuf {
 
 #ifdef _MSC_VER
@@ -171,4 +172,4 @@ string StringPrintfVector(const char* format, const vector<string>& v) {
                       cstr[30], cstr[31]);
 }
 }  // namespace protobuf
-}  // namespace google
+}  // namespace cloopen_google
