@@ -8,8 +8,9 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "frame_scaler.h"
 
+#include "frame_scaler.h"
+#ifdef VIDEO_ENABLED
 #ifdef WEBRTC_MODULE_UTILITY_VIDEO
 
 #include "../common_video/source/libyuv/include/scaler.h"
@@ -21,6 +22,7 @@ FrameScaler::FrameScaler()
       scaled_frame_() {}
 
 FrameScaler::~FrameScaler() {}
+
 
 int FrameScaler::ResizeFrameIfNeeded(I420VideoFrame* video_frame,
                                      int out_width,
@@ -49,3 +51,4 @@ int FrameScaler::ResizeFrameIfNeeded(I420VideoFrame* video_frame,
 }  // namespace webrtc
 
 #endif  // WEBRTC_MODULE_UTILITY_VIDEO
+#endif

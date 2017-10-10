@@ -28,13 +28,14 @@
 #include "VoeObserver.h"
 #include "amrnb_api.h"
 
-#include "ec_live_engine.h"
+
 
 #ifdef WIN32
 #include "codingHelper.h"
 #endif
 
 #ifdef VIDEO_ENABLED
+#include "ec_live_engine.h"
 #include "vie_network.h"
 #include "vie_base.h"
 #include "vie_capture.h"

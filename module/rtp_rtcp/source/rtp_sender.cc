@@ -663,6 +663,7 @@ bool RTPSender::SendPacketToNetwork(const RtpPacketToSend& packet,
                                     const PacketOptions& options,
                                     const PacedPacketInfo& pacing_info) {
   int bytes_sent = -1;
+#ifdef VIDEO_ENABLED
   if (transport_feedback_observer_)
   {
 	  uint16_t transport_sequence_number=0;
@@ -670,6 +671,7 @@ bool RTPSender::SendPacketToNetwork(const RtpPacketToSend& packet,
 	  TransportFeedbackAdapter *transport_feedback_adapter = static_cast<TransportFeedbackAdapter*>(transport_feedback_observer_);
 	  transport_feedback_adapter->OnSentPacket(transport_sequence_number, clock_->TimeInMilliseconds());
   }
+#endif
   if (transport_) {
     UpdateRtpOverhead(packet);
     bytes_sent = transport_->SendRtp(0, packet.data(), packet.size(), &options)

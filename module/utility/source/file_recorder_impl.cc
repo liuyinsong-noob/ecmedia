@@ -14,11 +14,13 @@
 #include "file_recorder_impl.h"
 #include "../system_wrappers/include/logging.h"
 
+#ifdef VIDEO_ENABLED
 #ifdef WEBRTC_MODULE_UTILITY_VIDEO
     #include "frame_scaler.h"
     #include "video_coder.h"
     #include "video_frames_queue.h"
     #include "../system_wrappers/include/critical_section_wrapper.h"
+#endif
 #endif
 
 namespace cloopenwebrtc {
@@ -35,8 +37,10 @@ FileRecorder* FileRecorder::CreateFileRecorder(uint32_t instanceID,
     case kFileFormatPcm32kHzFile:
         return new FileRecorderImpl(instanceID, fileFormat);
     case kFileFormatAviFile:
+#ifdef VIDEO_ENABLED
 #ifdef WEBRTC_MODULE_UTILITY_VIDEO
         return new AviRecorder(instanceID, fileFormat);
+#endif
 #else
         assert(false);
         return NULL;
@@ -315,7 +319,7 @@ int32_t FileRecorderImpl::WriteEncodedAudioData(
     return _moduleFile->IncomingAudioData(audioBuffer, bufferLength);
 }
 
-
+#ifdef VIDEO_ENABLED
 #ifdef WEBRTC_MODULE_UTILITY_VIDEO
 AviRecorder::AviRecorder(uint32_t instanceID, FileFormats fileFormat)
     : FileRecorderImpl(instanceID, fileFormat),
@@ -722,4 +726,5 @@ int32_t AviRecorder::WriteEncodedAudioData(
 }
 
 #endif // WEBRTC_MODULE_UTILITY_VIDEO
+#endif
 }  // namespace cloopenwebrtc
