@@ -39,7 +39,7 @@
 #include <stddef.h>
 #include <memory>
 
-namespace google {
+namespace cloopen_google {
 namespace protobuf {
 namespace internal {
 
@@ -465,6 +465,6 @@ void shared_ptr<T>::MaybeSetupWeakThis(enable_shared_from_this<T>* ptr) {
 
 }  // internal
 }  // namespace protobuf
-}  // namespace google
+}  // namespace cloopen_google
 
 #endif  // GOOGLE_PROTOBUF_STUBS_SHARED_PTR_H__

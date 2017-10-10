@@ -37,11 +37,11 @@
 		1F930DD01F6A9DAE00EBDE34 /* ec_rtmp_bitrate_controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F930DC41F6A9DAE00EBDE34 /* ec_rtmp_bitrate_controller.cpp */; };
 		1F930DD11F6A9DAE00EBDE34 /* ec_rtmp_publisher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F930DC61F6A9DAE00EBDE34 /* ec_rtmp_publisher.cpp */; };
 		1F930DD21F6A9DAE00EBDE34 /* ec_rtmp_puller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F930DC81F6A9DAE00EBDE34 /* ec_rtmp_puller.cpp */; };
+		1F9AB0E71F8CB79F0046DF9D /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9AB0DF1F8CB76F0046DF9D /* libprotobuf.a */; };
 		1FBB43FA1E728F35007DBD1D /* MediaStatisticsData.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FBB43F91E728F35007DBD1D /* MediaStatisticsData.pb.cc */; };
 		1FDB3E4C1E839BC30018FA08 /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FDB3DC91E837CD40018FA08 /* libsrtp.a */; };
 		450D71E51F15FB0000CD5776 /* libcongestion_controller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45619C951F14C7FF008B2068 /* libcongestion_controller.a */; };
 		450D72071F1606EB00CD5776 /* common_types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72061F1606EB00CD5776 /* common_types.cc */; };
-		450D72251F171CB400CD5776 /* libprotobuf-lite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 450D72241F171CB300CD5776 /* libprotobuf-lite.a */; };
 		450D727A1F17200D00CD5776 /* librtc_event_log.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 450D726E1F171DC100CD5776 /* librtc_event_log.a */; };
 		4547E2CC1F15F2520014FB7E /* libcommon_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45619CC91F14D906008B2068 /* libcommon_video.a */; };
 		55D3C7101B81C8CD00D770BC /* b64.c in Sources */ = {isa = PBXBuildFile; fileRef = 05B4FEE61B40FA0200274327 /* b64.c */; };
@@ -173,6 +173,27 @@
 			proxyType = 1;
 			remoteGlobalIDString = 3FAF879915C7E82F000D5497;
 			remoteInfo = rtp_rtcp;
+		};
+		1F9AB0DE1F8CB76F0046DF9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F9AB0D71F8CB76E0046DF9D /* protobuf.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0596B6431AAACEC10047B4CA;
+			remoteInfo = protobuf;
+		};
+		1F9AB0E01F8CB76F0046DF9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F9AB0D71F8CB76E0046DF9D /* protobuf.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55D3C8EA1B81D7AE00D770BC;
+			remoteInfo = protobuf_Mac;
+		};
+		1F9AB0E51F8CB78F0046DF9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F9AB0D71F8CB76E0046DF9D /* protobuf.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0596B6421AAACEC10047B4CA;
+			remoteInfo = protobuf;
 		};
 		1FDB3DC81E837CD40018FA08 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1160,11 +1181,11 @@
 		1F930DC71F6A9DAE00EBDE34 /* ec_rtmp_publisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ec_rtmp_publisher.h; path = ec_live_engine/ec_rtmp_publisher.h; sourceTree = "<group>"; };
 		1F930DC81F6A9DAE00EBDE34 /* ec_rtmp_puller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ec_rtmp_puller.cpp; path = ec_live_engine/ec_rtmp_puller.cpp; sourceTree = "<group>"; };
 		1F930DC91F6A9DAE00EBDE34 /* ec_rtmp_puller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ec_rtmp_puller.h; path = ec_live_engine/ec_rtmp_puller.h; sourceTree = "<group>"; };
+		1F9AB0D71F8CB76E0046DF9D /* protobuf.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = protobuf.xcodeproj; path = ../../../third_party/protobuf/protobuf.xcodeproj; sourceTree = "<group>"; };
 		1FBB43F91E728F35007DBD1D /* MediaStatisticsData.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MediaStatisticsData.pb.cc; sourceTree = "<group>"; };
 		1FBB440D1E729473007DBD1D /* MediaStatisticsData.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaStatisticsData.pb.h; path = ../source/MediaStatisticsData.pb.h; sourceTree = "<group>"; };
 		1FDB3DBF1E837CD30018FA08 /* srtp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = srtp.xcodeproj; path = ../../../third_party/srtp/srtp.xcodeproj; sourceTree = "<group>"; };
 		450D72061F1606EB00CD5776 /* common_types.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = common_types.cc; path = ../../module/common_types.cc; sourceTree = "<group>"; };
-		450D72241F171CB300CD5776 /* libprotobuf-lite.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libprotobuf-lite.a"; path = "../../protobuf/platform/arm64/lib/libprotobuf-lite.a"; sourceTree = "<group>"; };
 		450D72661F171DC100CD5776 /* rtc_event_log.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = rtc_event_log.xcodeproj; path = ../../../logging/rtc_event_log/rtc_event_log/rtc_event_log.xcodeproj; sourceTree = "<group>"; };
 		4526C9611F14AA0D005949BB /* remote_bitrate_estimator.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = remote_bitrate_estimator.xcodeproj; path = ../../../module/remote_bitrate_estimator/remote_bitrate_estimator/remote_bitrate_estimator.xcodeproj; sourceTree = "<group>"; };
 		45619C901F14C7FF008B2068 /* congestion_controller.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = congestion_controller.xcodeproj; path = ../../../module/congestion_controller/congestion_controller/congestion_controller/congestion_controller.xcodeproj; sourceTree = "<group>"; };
@@ -1397,6 +1418,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F9AB0E71F8CB79F0046DF9D /* libprotobuf.a in Frameworks */,
 				AD36336D1F44668100F0C20B /* libSoundTouch_Media.a in Frameworks */,
 				450D727A1F17200D00CD5776 /* librtc_event_log.a in Frameworks */,
 				450D71E51F15FB0000CD5776 /* libcongestion_controller.a in Frameworks */,
@@ -1426,7 +1448,6 @@
 				ADB51A4D1B2807B40009077D /* libG711.a in Frameworks */,
 				ADB51A4E1B2807B40009077D /* libG729.a in Frameworks */,
 				ADB51A501B2807B40009077D /* liblibjpeg_turbo.a in Frameworks */,
-				450D72251F171CB400CD5776 /* libprotobuf-lite.a in Frameworks */,
 				ADB51A511B2807B40009077D /* libmedia_file.a in Frameworks */,
 				1AFBD1241DAE5839009B8D23 /* libfaac.a in Frameworks */,
 				ADB51A521B2807B40009077D /* libNetEq.a in Frameworks */,
@@ -1611,6 +1632,15 @@
 			name = ec_srs_librtmp;
 			sourceTree = "<group>";
 		};
+		1F9AB0D81F8CB76E0046DF9D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1F9AB0DF1F8CB76F0046DF9D /* libprotobuf.a */,
+				1F9AB0E11F8CB76F0046DF9D /* libprotobuf_Mac.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		1FDB3DC01E837CD30018FA08 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1664,6 +1694,7 @@
 		55F3F7E01B8B0ABE00A19ED6 /* third_party */ = {
 			isa = PBXGroup;
 			children = (
+				1F9AB0D71F8CB76E0046DF9D /* protobuf.xcodeproj */,
 				1F099E2D1ED57CC200421B08 /* SoundTouch.xcodeproj */,
 				1FDB3DBF1E837CD30018FA08 /* srtp.xcodeproj */,
 				AD056FB71DAF1AB70007DB7A /* rtmp.xcodeproj */,
@@ -1983,7 +2014,6 @@
 		ADB519311B27DFCA0009077D /* ECMedia */ = {
 			isa = PBXGroup;
 			children = (
-				450D72241F171CB300CD5776 /* libprotobuf-lite.a */,
 				1AFBD1211DAE564A009B8D23 /* libfaad.a */,
 				1AFBD1231DAE5839009B8D23 /* libfaac.a */,
 				ADF92D931CB7BBDD0026DF61 /* libavcodec.a */,
@@ -2365,6 +2395,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				1F9AB0E61F8CB78F0046DF9D /* PBXTargetDependency */,
 				4506BEC11F1E12EA00C934C6 /* PBXTargetDependency */,
 				450D71EB1F15FB4A00CD5776 /* PBXTargetDependency */,
 				4547E2C41F15F07A0014FB7E /* PBXTargetDependency */,
@@ -2509,6 +2540,10 @@
 					ProjectRef = ADF92D821CB7B9720026DF61 /* pacing.xcodeproj */;
 				},
 				{
+					ProductGroup = 1F9AB0D81F8CB76E0046DF9D /* Products */;
+					ProjectRef = 1F9AB0D71F8CB76E0046DF9D /* protobuf.xcodeproj */;
+				},
+				{
 					ProductGroup = ADF92D7D1CB7B9630026DF61 /* Products */;
 					ProjectRef = ADF92D7C1CB7B9630026DF61 /* remote_bitrate_estimator.xcodeproj */;
 				},
@@ -2595,6 +2630,20 @@
 			fileType = archive.ar;
 			path = libL16.a;
 			remoteRef = 1AFBD1601DAE6592009B8D23 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1F9AB0DF1F8CB76F0046DF9D /* libprotobuf.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libprotobuf.a;
+			remoteRef = 1F9AB0DE1F8CB76F0046DF9D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1F9AB0E11F8CB76F0046DF9D /* libprotobuf_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libprotobuf_Mac.a;
+			remoteRef = 1F9AB0E01F8CB76F0046DF9D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		1FDB3DC91E837CD40018FA08 /* libsrtp.a */ = {
@@ -3150,6 +3199,11 @@
 			isa = PBXTargetDependency;
 			name = rtp_rtcp;
 			targetProxy = 1F9AB0A51F8C7A970046DF9D /* PBXContainerItemProxy */;
+		};
+		1F9AB0E61F8CB78F0046DF9D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = protobuf;
+			targetProxy = 1F9AB0E51F8CB78F0046DF9D /* PBXContainerItemProxy */;
 		};
 		4506BEC11F1E12EA00C934C6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

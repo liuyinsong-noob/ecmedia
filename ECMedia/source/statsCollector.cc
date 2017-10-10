@@ -386,8 +386,8 @@ void StatsCollector::GetStats(StatsContentType type, char* callid, void **pMedia
 	int size = pMediaStatisticsDataInner->ByteSize() + 8;
 	*pMediaStatisticsDataInnerArray = new char[size];
 	memset(*pMediaStatisticsDataInnerArray, 0, size);
-	google::protobuf::io::ArrayOutputStream array_stream(*pMediaStatisticsDataInnerArray, size);
-	google::protobuf::io::CodedOutputStream output_stream(&array_stream);
+	cloopen_google::protobuf::io::ArrayOutputStream array_stream(*pMediaStatisticsDataInnerArray, size);
+	cloopen_google::protobuf::io::CodedOutputStream output_stream(&array_stream);
 	output_stream.WriteVarint32(pMediaStatisticsDataInner->ByteSize());
 	if (pMediaStatisticsDataInner->SerializeToCodedStream(&output_stream))
 	{

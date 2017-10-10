@@ -42,15 +42,11 @@
 #include <string>
 
 #include <google/protobuf/stubs/once.h>
-#include <google/protobuf/stubs/common.h>
 
-namespace google {
+#include <google/protobuf/stubs/common.h>
+namespace cloopen_google {
 
 namespace protobuf {
-
-class Arena;
-namespace io { class CodedInputStream; }
-
 namespace internal {
 
 
@@ -62,8 +58,6 @@ namespace internal {
 // there.
 #undef DEPRECATED_PROTOBUF_FIELD
 #define PROTOBUF_DEPRECATED
-
-#define PROTOBUF_DEPRECATED_ATTR
 
 
 // Constants for special floating point values.
@@ -86,9 +80,17 @@ LIBPROTOBUF_EXPORT inline const ::std::string& GetEmptyStringAlreadyInited() {
   assert(empty_string_ != NULL);
   return *empty_string_;
 }
+LIBPROTOBUF_EXPORT inline const ::std::string& GetEmptyString() {
+  ::cloopen_google::protobuf::GoogleOnceInit(&empty_string_once_init_, &InitEmptyString);
+  return GetEmptyStringAlreadyInited();
+}
 
-LIBPROTOBUF_EXPORT const ::std::string& GetEmptyString();
-
+// Defined in generated_message_reflection.cc -- not actually part of the lite
+// library.
+//
+// TODO(jasonh): The various callers get this declaration from a variety of
+// places: probably in most cases repeated_field.h. Clean these up so they all
+// get the declaration from this file.
 LIBPROTOBUF_EXPORT int StringSpaceUsedExcludingSelf(const string& str);
 
 
@@ -104,17 +106,8 @@ template <class Type> bool AllAreInitialized(const Type& t) {
   return true;
 }
 
-class ArenaString;
-
-// Read a length (varint32), followed by a string, from *input.  Return a
-// pointer to a copy of the string that resides in *arena.  Requires both
-// args to be non-NULL.  If something goes wrong while reading the data
-// then NULL is returned (e.g., input does not start with a valid varint).
-ArenaString* ReadArenaString(::google::protobuf::io::CodedInputStream* input,
-                             ::google::protobuf::Arena* arena);
-
 }  // namespace internal
 }  // namespace protobuf
 
-}  // namespace google
+}  // namespace cloopen_google
 #endif  // GOOGLE_PROTOBUF_GENERATED_MESSAGE_UTIL_H__

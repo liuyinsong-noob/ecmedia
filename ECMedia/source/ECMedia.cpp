@@ -33,6 +33,7 @@
 #endif
 
 #ifdef VIDEO_ENABLED
+#include "ec_live_engine.h"
 #include "vie_network.h"
 #include "vie_base.h"
 #include "vie_capture.h"

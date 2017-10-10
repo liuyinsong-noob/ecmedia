@@ -11,10 +11,12 @@
 #include "file_player_impl.h"
 #include "../system_wrappers/include/logging.h"
 
+#ifdef VIDEO_ENABLED
 #ifdef WEBRTC_MODULE_UTILITY_VIDEO
     #include "frame_scaler.h"
     #include "video_coder.h"
     #include "../system_wrappers/include/tick_util.h"
+#endif
 #endif
 
 namespace cloopenwebrtc {
@@ -32,11 +34,13 @@ FilePlayer* FilePlayer::CreateFilePlayer(uint32_t instanceID,
         // audio formats
         return new FilePlayerImpl(instanceID, fileFormat);
     case kFileFormatAviFile:
+#ifdef VIDEO_ENABLED
 #ifdef WEBRTC_MODULE_UTILITY_VIDEO
         return new VideoFilePlayerImpl(instanceID, fileFormat);
+#endif
 #else
-        assert(false);
-        return NULL;
+		assert(false);
+		return NULL;
 #endif
     }
     assert(false);
@@ -412,7 +416,7 @@ int32_t FilePlayerImpl::SetUpAudioDecoder()
     _numberOf10MsInDecoder = 0;
     return 0;
 }
-
+#ifdef VIDEO_ENABLED
 #ifdef WEBRTC_MODULE_UTILITY_VIDEO
 VideoFilePlayerImpl::VideoFilePlayerImpl(uint32_t instanceID,
                                          FileFormats fileFormat)
@@ -666,4 +670,5 @@ int32_t VideoFilePlayerImpl::SetUpVideoDecoder()
     return 0;
 }
 #endif // WEBRTC_MODULE_UTILITY_VIDEO
+#endif
 }  // namespace cloopenwebrtc

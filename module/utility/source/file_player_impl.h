@@ -78,7 +78,7 @@ private:
     Resampler _resampler;
     float _scaling;
 };
-
+#ifdef VIDEO_ENABLED
 #ifdef WEBRTC_MODULE_UTILITY_VIDEO
 class VideoFilePlayerImpl: public FilePlayerImpl
 {
@@ -117,6 +117,6 @@ private:
     bool _videoOnly;
 };
 #endif //WEBRTC_MODULE_UTILITY_VIDEO
-
+#endif
 }  // namespace cloopenwebrtc
 #endif // WEBRTC_MODULES_UTILITY_SOURCE_FILE_PLAYER_IMPL_H_

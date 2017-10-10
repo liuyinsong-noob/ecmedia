@@ -99,6 +99,7 @@ void RtpPacketizerH264::SetPayloadData(
     const uint8_t* payload_data,
     size_t payload_size,
     const RTPFragmentationHeader* fragmentation) {
+#ifdef VIDEO_ENABLED
   DCHECK(packets_.empty());
   DCHECK(input_fragments_.empty());
   DCHECK(fragmentation);
@@ -164,6 +165,7 @@ void RtpPacketizerH264::SetPayloadData(
       input_fragments_.push_back(Fragment(buffer, length));
   }
   GeneratePackets();
+#endif
 }
 
 void RtpPacketizerH264::GeneratePackets() {
@@ -392,6 +394,7 @@ bool RtpDepacketizerH264::Parse(ParsedPayload* parsed_payload,
 bool RtpDepacketizerH264::ProcessStapAOrSingleNalu(
     ParsedPayload* parsed_payload,
     const uint8_t* payload_data) {
+#ifdef VIDEO_ENABLED
   parsed_payload->type.Video.width = 0;
   parsed_payload->type.Video.height = 0;
   parsed_payload->type.Video.codec = kRtpVideoH264;
@@ -569,13 +572,14 @@ bool RtpDepacketizerH264::ProcessStapAOrSingleNalu(
       h264->nalus[h264->nalus_length++] = nalu;
     }
   }
-
+#endif
   return true;
 }
 
 bool RtpDepacketizerH264::ParseFuaNalu(
     RtpDepacketizer::ParsedPayload* parsed_payload,
     const uint8_t* payload_data) {
+#ifdef VIDEO_ENABLED
   if (length_ < kFuAHeaderSize) {
     LOG(LS_ERROR) << "FU-A NAL units truncated.";
     return false;
@@ -624,6 +628,7 @@ bool RtpDepacketizerH264::ParseFuaNalu(
     h264->nalus[h264->nalus_length] = nalu;
     h264->nalus_length = 1;
   }
+#endif
   return true;
 }
 

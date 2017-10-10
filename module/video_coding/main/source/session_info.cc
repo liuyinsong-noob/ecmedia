@@ -152,7 +152,7 @@ size_t VCMSessionInfo::InsertBuffer(uint8_t* frame_buffer,
 		LOG(LS_ERROR) << " H264 required len "<< total_len << " is biger than packet len " << packet.sizeBytes;
 		return -1;
 	}
-
+	required_length += nalu_count * (packet.insertStartCode ? kH264StartCodeLengthBytes : 0);
     ShiftSubsequentPackets(packet_it, required_length);
     nalu_ptr = packet_buffer + kH264NALHeaderLengthInBytes;
     uint8_t* frame_buffer_ptr = frame_buffer + offset;

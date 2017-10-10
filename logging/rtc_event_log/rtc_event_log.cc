@@ -206,10 +206,10 @@ bool RtcEventLogImpl::StartLogging(const std::string& file_name,
   RtcEventLogHelperThread::ControlMessage message;
   message.message_type = RtcEventLogHelperThread::ControlMessage::START_FILE;
   message.max_size_bytes = max_size_bytes <= 0
-                               ? std::numeric_limits<int64_t>::max()
+                               ? (std::numeric_limits<int64_t>::max)()
                                : max_size_bytes;
   message.start_time = cloopenwebrtc::TimeMicros();
-  message.stop_time = std::numeric_limits<int64_t>::max();
+  message.stop_time = (std::numeric_limits<int64_t>::max)();
   message.file.reset(FileWrapper::Create());
   if (!message.file->OpenFile(file_name.c_str(), false)) {
     LOG(LS_ERROR) << "Can't open file. WebRTC event log not started.";
@@ -230,10 +230,10 @@ bool RtcEventLogImpl::StartLogging(cloopenwebrtc::PlatformFile platform_file,
   RtcEventLogHelperThread::ControlMessage message;
   message.message_type = RtcEventLogHelperThread::ControlMessage::START_FILE;
   message.max_size_bytes = max_size_bytes <= 0
-                               ? std::numeric_limits<int64_t>::max()
+                               ? (std::numeric_limits<int64_t>::max)()
                                : max_size_bytes;
   message.start_time = cloopenwebrtc::TimeMicros();
-  message.stop_time = std::numeric_limits<int64_t>::max();
+  message.stop_time = (std::numeric_limits<int64_t>::max)();
   message.file.reset(FileWrapper::Create());
   FILE* file_handle = cloopenwebrtc::FdopenPlatformFileForWriting(platform_file);
   if (!file_handle) {

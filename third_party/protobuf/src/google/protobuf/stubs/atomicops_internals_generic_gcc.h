@@ -31,7 +31,7 @@
 #ifndef GOOGLE_PROTOBUF_ATOMICOPS_INTERNALS_GENERIC_GCC_H_
 #define GOOGLE_PROTOBUF_ATOMICOPS_INTERNALS_GENERIC_GCC_H_
 
-namespace google {
+namespace cloopen_google {
 namespace protobuf {
 namespace internal {
 
@@ -61,8 +61,8 @@ inline Atomic32 Barrier_AtomicIncrement(volatile Atomic32* ptr,
 inline Atomic32 Acquire_CompareAndSwap(volatile Atomic32* ptr,
                                        Atomic32 old_value,
                                        Atomic32 new_value) {
-  __atomic_compare_exchange_n(ptr, &old_value, new_value, true,
-                              __ATOMIC_ACQUIRE, __ATOMIC_ACQUIRE);
+  __atomic_compare_exchange(ptr, &old_value, &new_value, true,
+                            __ATOMIC_ACQUIRE, __ATOMIC_ACQUIRE);
   return old_value;
 }
 
@@ -132,6 +132,6 @@ inline Atomic64 NoBarrier_CompareAndSwap(volatile Atomic64* ptr,
 
 }  // namespace internal
 }  // namespace protobuf
-}  // namespace google
+}  // namespace cloopen_google
 
 #endif  // GOOGLE_PROTOBUF_ATOMICOPS_INTERNALS_GENERIC_GCC_H_

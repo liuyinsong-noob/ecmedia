@@ -33,7 +33,7 @@
 #ifndef GOOGLE_PROTOBUF_ATOMICOPS_INTERNALS_ARM64_GCC_H_
 #define GOOGLE_PROTOBUF_ATOMICOPS_INTERNALS_ARM64_GCC_H_
 
-namespace google {
+namespace cloopen_google {
 namespace protobuf {
 namespace internal {
 
@@ -320,6 +320,6 @@ inline Atomic64 Release_Load(volatile const Atomic64* ptr) {
 
 }  // namespace internal
 }  // namespace protobuf
-}  // namespace google
+}  // namespace cloopen_google
 
 #endif  // GOOGLE_PROTOBUF_ATOMICOPS_INTERNALS_ARM64_GCC_H_

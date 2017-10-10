@@ -34,10 +34,9 @@
 
 #include <google/protobuf/io/zero_copy_stream.h>
 
-#include <google/protobuf/stubs/logging.h>
 #include <google/protobuf/stubs/common.h>
 
-namespace google {
+namespace cloopen_google {
 namespace protobuf {
 namespace io {
 
@@ -55,4 +54,4 @@ bool ZeroCopyOutputStream::WriteAliasedRaw(const void* /* data */,
 
 }  // namespace io
 }  // namespace protobuf
-}  // namespace google
+}  // namespace cloopen_google
