@@ -12,7 +12,7 @@
 #define WEBRTC_AUDIO_DEVICE_AUDIO_MIXER_MANAGER_MAC_H
 
 #include "module/audio_device/main/include/audio_device.h"
-#include "system_wrappers/interface/critical_section_wrapper.h"
+#include "system_wrappers/include/critical_section_wrapper.h"
 #include "typedefs.h"
 
 #include <CoreAudio/CoreAudio.h>

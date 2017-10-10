@@ -153,6 +153,27 @@
 			remoteGlobalIDString = 1FDC34FB1ED67266003D6155;
 			remoteInfo = SoundTouch;
 		};
+		1F9AB0A11F8C7A600046DF9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ADB519C11B2806CF0009077D /* bitrate_controller.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3FAA8B6D15C8C61800561C64;
+			remoteInfo = bitrate_controller;
+		};
+		1F9AB0A31F8C7A8E0046DF9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ADF92D821CB7B9720026DF61 /* pacing.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = AD8D729D1C599EE400FB246D;
+			remoteInfo = pacing;
+		};
+		1F9AB0A51F8C7A970046DF9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ADB519AF1B2806A90009077D /* rtp_rtcp.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3FAF879915C7E82F000D5497;
+			remoteInfo = rtp_rtcp;
+		};
 		1FDB3DC81E837CD40018FA08 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1FDB3DBF1E837CD30018FA08 /* srtp.xcodeproj */;
@@ -2297,6 +2318,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				1F9AB0A61F8C7A970046DF9D /* PBXTargetDependency */,
+				1F9AB0A41F8C7A8E0046DF9D /* PBXTargetDependency */,
+				1F9AB0A21F8C7A600046DF9D /* PBXTargetDependency */,
 				ADC54AF61D48847900A5C852 /* PBXTargetDependency */,
 				ADC54AF81D48847900A5C852 /* PBXTargetDependency */,
 				ADC54AFA1D48847900A5C852 /* PBXTargetDependency */,
@@ -3112,6 +3136,21 @@
 			name = SoundTouch;
 			targetProxy = 1F099F161ED5AA1000421B08 /* PBXContainerItemProxy */;
 		};
+		1F9AB0A21F8C7A600046DF9D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = bitrate_controller;
+			targetProxy = 1F9AB0A11F8C7A600046DF9D /* PBXContainerItemProxy */;
+		};
+		1F9AB0A41F8C7A8E0046DF9D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = pacing;
+			targetProxy = 1F9AB0A31F8C7A8E0046DF9D /* PBXContainerItemProxy */;
+		};
+		1F9AB0A61F8C7A970046DF9D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = rtp_rtcp;
+			targetProxy = 1F9AB0A51F8C7A970046DF9D /* PBXContainerItemProxy */;
+		};
 		4506BEC11F1E12EA00C934C6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = rtc_event_log;
@@ -3424,7 +3463,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_BOOL_CONVERSION = NO;
@@ -3438,6 +3477,7 @@
 					_DEBUG,
 					VIDEO_ENABLED,
 					MAC_IPHONE,
+					WEBRTC_POSIX,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
@@ -3450,7 +3490,7 @@
 					../../module/.,
 					../../module/interface,
 					../../voice_engine/main/include,
-					../../system_wrappers/interface,
+					../../system_wrappers/include,
 					../../voice_engine/main/source,
 					../../third_party/oRTP/include,
 					../../third_party/oRTP/include/ortp,
@@ -3474,6 +3514,8 @@
 					"$(SRCROOT)/../../third_party/protobuf/src",
 					"$(SRCROOT)/../../module/video_coding/codecs/h264",
 					"$(SRCROOT)/../../third_party/ffmpeg/",
+					../../base,
+					"../source/ec_live_engine/srs-librtmp",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -3488,7 +3530,7 @@
 					../../third_party/libfaad/lib/osx,
 					../ECMedia/,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-Wno-write-strings";
 				OTHER_LDFLAGS = "-ObjC";
@@ -3505,7 +3547,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_BOOL_CONVERSION = NO;
@@ -3518,6 +3560,7 @@
 					_DEBUG,
 					VIDEO_ENABLED,
 					MAC_IPHONE,
+					WEBRTC_POSIX,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
@@ -3530,7 +3573,7 @@
 					../../module/.,
 					../../module/interface,
 					../../voice_engine/main/include,
-					../../system_wrappers/interface,
+					../../system_wrappers/include,
 					../../voice_engine/main/source,
 					../../third_party/oRTP/include,
 					../../third_party/oRTP/include/ortp,
@@ -3554,6 +3597,8 @@
 					"$(SRCROOT)/../../third_party/protobuf/src",
 					"$(SRCROOT)/../../module/video_coding/codecs/h264",
 					"$(SRCROOT)/../../third_party/ffmpeg/",
+					../../base,
+					"../source/ec_live_engine/srs-librtmp",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -3568,7 +3613,7 @@
 					../../third_party/libfaad/lib/osx,
 					../ECMedia/,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-Wno-write-strings";
 				OTHER_LDFLAGS = "-ObjC";

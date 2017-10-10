@@ -92,13 +92,13 @@ namespace cloopenwebrtc {
     , info_video_width_(960)
     , info_video_height_(540)
     , info_video_fps_(15)
-    , info_camera_index_(1)
+    , info_camera_index_(0)
     , capturer_data_callback_(nullptr)
     {
 #if defined(WEBRTC_ANDROID) || defined(WEBRTC_IOS)
         info_video_height_ = 640;
         info_video_width_  = 360;
-        info_camera_index_ = 1;
+        info_camera_index_ = 0;
 #endif
         g_rtmpLiveSession = this;
     }
@@ -322,16 +322,38 @@ namespace cloopenwebrtc {
     
     int ECMediaMachine::startCapture()
     {
+        PrintConsole("[ECMEDIA CORE INFO] %s begin.\n", __FUNCTION__);
         int ret = -1;
         ret = doAudioDataSend();
+        if(ret < 0) {
+            PrintConsole("[ECMEDIA CORE ERROR] %s do audio data send error.\n", __FUNCTION__);
+            return ret;
+        }
         ret = doVideoDataSend();
+        if(ret < 0) {
+            PrintConsole("[ECMEDIA CORE ERROR] %s do video data send error.\n", __FUNCTION__);
+            return ret;
+        }
 
         if(video_source_ == VIDEO_SOURCE_CAMERA) {
             ret = doCameraCapture();
+            if(ret < 0) {
+                PrintConsole("[ECMEDIA CORE ERROR] %s do camera capture error.\n", __FUNCTION__);
+                return ret;
+            }
             ret = doPreviewRender(capture_id_);
+            if(ret < 0) {
+                PrintConsole("[ECMEDIA CORE ERROR] %s do preview render error.\n", __FUNCTION__);
+                return ret;
+            }
         } else {
             ret = doDesktopCapture();
+            if(ret < 0) {
+                PrintConsole("[ECMEDIA CORE ERROR] %s do desktop capturer error.\n", __FUNCTION__);
+                return ret;
+            }
         }
+        PrintConsole("[ECMEDIA CORE INFO] %s end with code:%d.\n", __FUNCTION__, ret);
         return ret;
     }
     
@@ -390,6 +412,7 @@ namespace cloopenwebrtc {
     
     
     int ECMediaMachine::shutdownCameraCapture() {
+        PrintConsole("[RTMP INFO] %s begin.\n", __FUNCTION__);
         uninitCameraDevice();
         // stop camera capture
         ViECapture *capture = ViECapture::GetInterface(vie_);
@@ -768,6 +791,7 @@ namespace cloopenwebrtc {
                                       const RTPFragmentationHeader& fragmentationHeader,
                                       const RTPVideoHeader* rtpVideoHdr)
     {
+        PrintConsole("[ECMediaMachine INFO] %s: start\n", __FUNCTION__);
         uint8_t *data = encoded_image._buffer;
         std::vector<uint8_t> nalus;
         for (int i = 0; i < fragmentationHeader.fragmentationVectorSize; i++) {
@@ -784,6 +808,7 @@ namespace cloopenwebrtc {
         if(capturer_data_callback_) {
             capturer_data_callback_->OnCapturerAvcDataReady(&nalus[0], nalus.size(), EC_Live_Utility::getTimestamp());
         }
+        PrintConsole("[ECMediaMachine INFO] %s: end\n", __FUNCTION__);
         return 0;
     }
 

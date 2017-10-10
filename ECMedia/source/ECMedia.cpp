@@ -28,8 +28,6 @@
 #include "VoeObserver.h"
 #include "amrnb_api.h"
 
-#include "ec_live_engine.h"
-
 #ifdef WIN32
 #include "codingHelper.h"
 #endif
@@ -48,6 +46,7 @@
 #include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 #include "vie_image_process.h"
 #include "vie_encryption.h"
+#include "ec_live_engine.h"
 #endif
 
 #include "base64.h"

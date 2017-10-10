@@ -1200,7 +1200,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/video_coding.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
@@ -1241,7 +1241,7 @@
 				HEADER_SEARCH_PATHS = (
 					../../,
 					../,
-					../../system_wrappers/interface,
+					../../system_wrappers/include,
 					../../system_wrappers/source,
 					../interface,
 					../videojpegyuv/include,
@@ -1266,10 +1266,11 @@
 					"../../third_party/libyuv-ios/include",
 					../../module/video_coding/codecs/h264_hardcode,
 					../../third_party/ffmpeg/libavcodec_ios,
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1286,7 +1287,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/video_coding.dst;
 				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1327,7 +1328,7 @@
 				HEADER_SEARCH_PATHS = (
 					../../,
 					../,
-					../../system_wrappers/interface,
+					../../system_wrappers/include,
 					../../system_wrappers/source,
 					../interface,
 					../videojpegyuv/include,
@@ -1352,10 +1353,11 @@
 					"../../third_party/libyuv-ios/include",
 					../../module/video_coding/codecs/h264_hardcode,
 					../../third_party/ffmpeg/libavcodec_ios,
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
