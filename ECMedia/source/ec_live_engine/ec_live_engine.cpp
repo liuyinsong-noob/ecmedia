@@ -136,8 +136,10 @@ namespace cloopenwebrtc {
         int ret = -1;
         if(puller_runnig_) {
             meida_puller_->stop();
+            delete meida_puller_;
+            meida_puller_ = nullptr;
+            
             ret = ec_media_core_->stopPlayout();
-
             puller_runnig_ = false;
         }
         PrintConsole("[ECLiveEngine INFO] %s: end with code: %d", __FUNCTION__, ret);
