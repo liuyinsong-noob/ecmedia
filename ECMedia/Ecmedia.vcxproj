@@ -749,8 +749,8 @@
     <ProjectReference Include="..\third_party\oRTP\build\win32native\oRTP.vcxproj">
       <Project>{4a07bb2b-f56e-4f1b-a719-d28b782ac128}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\third_party\protobuf\cmake\solution\libprotobuf-lite.vcxproj">
-      <Project>{1ff405c0-00a1-38f7-9fb1-45f385a33b7d}</Project>
+    <ProjectReference Include="..\third_party\protobuf\vsprojects\libprotobuf-lite.vcxproj">
+      <Project>{49ea010d-706f-4be2-a397-77854b72a040}</Project>
     </ProjectReference>
     <ProjectReference Include="..\third_party\SoundTouch\SoundTouch.vcxproj">
       <Project>{43ad6dd6-6f28-4430-9e84-2ecca846e216}</Project>
