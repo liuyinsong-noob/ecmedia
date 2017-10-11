@@ -103,7 +103,7 @@ WebRtc_Word32 ScreenCapturer::SetAndroidObjects(void* javaVM, void* env, void* j
 	thisEnv->DeleteLocalRef(screenCaptureClassLocal);
 	
 	JNINativeMethod nativeFunctions =
-	    { "ProvideScreeData", "(Ljava/lang/Object;J)V",
+	    { "ProvideScreeData", "(Ljava/lang/Object;[BIIIJ)V", 
 	      (void*) &ScreenCapturerAndroid::ProvideScreeData };
 	if (thisEnv->RegisterNatives(ScreenCapturerAndroid::g_javaScreenCaptureClass, &nativeFunctions, 1) == 0) {
 	  WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, -1,
