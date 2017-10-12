@@ -135,6 +135,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;WEBRTC_WIN;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../;../../../base/;..\..\..\system_wrappers/include</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
