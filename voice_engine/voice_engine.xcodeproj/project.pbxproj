@@ -901,7 +901,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/voice_engine.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
@@ -951,10 +951,12 @@
 					../module/rtp_rtcp/include,
 					../module/udp_transport/include,
 					../module/utility/include,
+					../third_party,
 					../system_wrappers/interface,
 					../third_party/srtp/include,
 					../third_party/srtp/crypto/include/,
 					../third_party/srtp,
+					../third_party/oRTP/include/,
 					../third_party/oRTP/include/ortp,
 					../servicecore/include/,
 					../system_wrappers/source,
@@ -974,9 +976,10 @@
 					../video_engine/include,
 					../module/audio_coding/codecs/g729/source,
 					../third_party/SoundTouch/SoundTouch,
+					../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CFLAGS = (
 					"-fno-strict-aliasing",
@@ -996,7 +999,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/voice_engine.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
@@ -1045,10 +1048,12 @@
 					../module/rtp_rtcp/include,
 					../module/udp_transport/include,
 					../module/utility/include,
+					../third_party,
 					../system_wrappers/interface,
 					../third_party/srtp/include,
 					../third_party/srtp/crypto/include/,
 					../third_party/srtp,
+					../third_party/oRTP/include/,
 					../third_party/oRTP/include/ortp,
 					../servicecore/include/,
 					../system_wrappers/source,
@@ -1068,9 +1073,10 @@
 					../video_engine/include,
 					../module/audio_coding/codecs/g729/source,
 					../third_party/SoundTouch/SoundTouch,
+					../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CFLAGS = "-fno-strict-aliasing";
 				OTHER_LDFLAGS = "-ObjC";

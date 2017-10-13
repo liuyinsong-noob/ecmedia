@@ -33,7 +33,7 @@
 class Trace;
 
 namespace cloopenwebrtc {
-class EventWrapper;
+class EventTimerWrapper;
 class ThreadWrapper;
 class VideoRenderNSOpenGL;
 class CriticalSectionWrapper;
@@ -174,7 +174,7 @@ private: // variables
     int _id;
     CriticalSectionWrapper& _nsglContextCritSec;
     ThreadWrapper* _screenUpdateThread;
-    EventWrapper* _screenUpdateEvent;
+    EventTimerWrapper* _screenUpdateEvent;
     NSOpenGLContext* _nsglContext;
     NSOpenGLContext* _nsglFullScreenContext;
     CocoaFullScreenWindow* _fullScreenWindow;

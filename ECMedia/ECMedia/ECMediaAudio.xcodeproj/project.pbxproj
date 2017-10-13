@@ -22,7 +22,7 @@
 		AD4818C01F2B248500B6126D /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4818BD1F2B247900B6126D /* libprotobuf.a */; };
 		AD4819071F2B259100B6126D /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4819061F2B258400B6126D /* libsrtp.a */; };
 		AD4819161F2B264700B6126D /* libL16.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4819131F2B263C00B6126D /* libL16.a */; };
-		AD48191F1F2B268E00B6126D /* libSoundTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD48191E1F2B268400B6126D /* libSoundTouch.a */; };
+		AD48191F1F2B268E00B6126D /* libSoundTouch_Media.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD48191E1F2B268400B6126D /* libSoundTouch_Media.a */; };
 		AD4819231F2B26D100B6126D /* statsCollector.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD4819221F2B26D100B6126D /* statsCollector.cc */; };
 		ADB51A461B2807B40009077D /* libamrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB519EB1B28071F0009077D /* libamrnb.a */; };
 		ADB51A471B2807B40009077D /* libaudio_coding_module.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB519F11B2807290009077D /* libaudio_coding_module.a */; };
@@ -602,7 +602,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD48191F1F2B268E00B6126D /* libSoundTouch.a in Frameworks */,
+				AD48191F1F2B268E00B6126D /* libSoundTouch_Media.a in Frameworks */,
 				AD4819161F2B264700B6126D /* libL16.a in Frameworks */,
 				AD4819071F2B259100B6126D /* libsrtp.a in Frameworks */,
 				AD4818C01F2B248500B6126D /* libprotobuf.a in Frameworks */,
@@ -755,8 +755,8 @@
 		AD48191A1F2B268400B6126D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AD48191E1F2B268400B6126D /* libSoundTouch.a */,
-				AD3630B11F429EBA00F0C20B /* libSoundTouch_Mac.a */,
+				AD48191E1F2B268400B6126D /* libSoundTouch_Media.a */,
+				AD3630B11F429EBA00F0C20B /* libSoundTouch_Media_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1204,10 +1204,10 @@
 			remoteRef = 0528A52E1CFD437000DF126F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		AD3630B11F429EBA00F0C20B /* libSoundTouch_Mac.a */ = {
+		AD3630B11F429EBA00F0C20B /* libSoundTouch_Media_Mac.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libSoundTouch_Mac.a;
+			path = libSoundTouch_Media_Mac.a;
 			remoteRef = AD3630B01F429EBA00F0C20B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1379,10 +1379,10 @@
 			remoteRef = AD4819141F2B263C00B6126D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		AD48191E1F2B268400B6126D /* libSoundTouch.a */ = {
+		AD48191E1F2B268400B6126D /* libSoundTouch_Media.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libSoundTouch.a;
+			path = libSoundTouch_Media.a;
 			remoteRef = AD48191D1F2B268400B6126D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1722,7 +1722,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_BOOL_CONVERSION = NO;
@@ -1760,6 +1760,7 @@
 					"$(SRCROOT)/../source",
 					"$(SRCROOT)/../../third_party/protobuf/src",
 					"$(SRCROOT)/../../module/audio_coding/codecs/opencore-amr/amrnb",
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -1780,7 +1781,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_BOOL_CONVERSION = NO;
@@ -1817,6 +1818,7 @@
 					"$(SRCROOT)/../source",
 					"$(SRCROOT)/../../third_party/protobuf/src",
 					"$(SRCROOT)/../../module/audio_coding/codecs/opencore-amr/amrnb",
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (

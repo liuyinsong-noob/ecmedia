@@ -733,6 +733,7 @@
 					WEBRTC_IOS,
 					WEBRTC_CLOCK_TYPE_REALTIME,
 					WEBRTC_THREAD_RR,
+					WEBRTC_POSIX,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
@@ -782,6 +783,7 @@
 					WEBRTC_IOS,
 					WEBRTC_CLOCK_TYPE_REALTIME,
 					WEBRTC_THREAD_RR,
+					WEBRTC_POSIX,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
@@ -822,7 +824,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/system_wrappers.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
@@ -861,9 +863,11 @@
 					../module/.,
 					./source/spreadsortlib,
 					./interface,
+					./include,
+					"$(SRCROOT)/",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
@@ -893,7 +897,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/system_wrappers.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
@@ -931,9 +935,11 @@
 					../module/.,
 					./source/spreadsortlib,
 					./interface,
+					./include,
+					"$(SRCROOT)/",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";

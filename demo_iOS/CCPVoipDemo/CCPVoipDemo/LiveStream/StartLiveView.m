@@ -219,7 +219,7 @@ static int padding = 30;
         [self.containerView addSubview:self.liveRenderView];
         [self.startPlayLiveButton setTitle:@"结束观看" forState:UIControlStateNormal];
         // play rtmp
-        [self.modelEngineVoip playStream:self.session url:@"rtmp://192.168.0.44:1935/live/livestream" view:self.liveRenderView];
+        [self.modelEngineVoip playStream:self.session url:@"rtmp://192.168.0.2:1935/live/livestream" view:self.liveRenderView];
         // play hls
 //        [self.modelEngineVoip playStream:self.session url:@"http://192.168.0.44/live/livestream.m3u8" view:self.liveRenderView];
     } else {
@@ -257,7 +257,7 @@ static int padding = 30;
         int front_camera = 1;
         int resolution_QHD = 2;
         [self.modelEngineVoip configLiveVideoStream:self.session camera:front_camera resolution:resolution_QHD fps: 15 auto_bitrate: false];
-        [self.modelEngineVoip pushStream:self.session url:@"rtmp://192.168.0.44:1935/live/livestream" view:self.liveRenderView];
+        [self.modelEngineVoip pushStream:self.session url:@"rtmp://192.168.0.2:1935/live/livestream" view:self.liveRenderView];
         // [self.containerView addSubview:self.startPushLiveButton];
     
     }else{

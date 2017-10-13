@@ -252,7 +252,7 @@ int H264VideoToolboxEncoder::InitEncode(const VideoCodec* codec_settings,
   height_ = codec_settings->height;
   // We can only set average bitrate on the HW encoder.
   target_bitrate_bps_ = codec_settings->startBitrate;
-  bitrate_adjuster_.SetTargetBitrateBps(target_bitrate_bps_);
+  // bitrate_adjuster_.SetTargetBitrateBps(target_bitrate_bps_);
     
   // TODO(tkchin): Try setting payload size via
   // kVTCompressionPropertyKey_MaxH264SliceBytes.
@@ -383,8 +383,8 @@ int H264VideoToolboxEncoder::SetRates(uint32_t new_bitrate_kbit,
                                       uint32_t frame_rate) {
     
 //    printTime();printf("new bit rate %d\n", target_bitrate_bps_);
-  bitrate_adjuster_.SetTargetBitrateBps(target_bitrate_bps_);
-  SetBitrateBps(bitrate_adjuster_.GetAdjustedBitrateBps());
+  //bitrate_adjuster_.SetTargetBitrateBps(target_bitrate_bps_);
+  SetBitrateBps(1000);
 
   return WEBRTC_VIDEO_CODEC_OK;
 }
@@ -574,7 +574,7 @@ void H264VideoToolboxEncoder::OnEncodedFrame(
     LOG(LS_ERROR) << "Encode callback failed: " << result;
     return;
   }
-  bitrate_adjuster_.Update(frame._size);
+  // bitrate_adjuster_.Update(frame._size);
 }
 
 }  // namespace webrtc
