@@ -497,7 +497,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../.;..\..;./main\include;./main\source;../utility\include;../interface;../../system_wrappers\source;../../system_wrappers\interface;./codecs\interface;./codecs\vp8\main\interface;./codecs\h264;../../third_party/libx264/libx264_win/x64/include;../../third_party/ffmpeg/ffmpeg_win/x64/include;.\;.\main\source\utility\include;../common_video;../common_video/source;../common_video/source/libyuv/include;../common_video/interface</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../.;..\..;./main\include;./main\source;../utility\include;../interface;../../system_wrappers\source;../../system_wrappers\interface;./codecs\interface;./codecs\vp8\main\interface;./codecs\h264;../../third_party/libx264/libx264_win/x64/include;../../third_party/ffmpeg/ffmpeg_win/x64/include;.\;.\main\source\utility\include;../common_video;../common_video/source;../common_video/source/libyuv/include;../common_video/interface;../../base/</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

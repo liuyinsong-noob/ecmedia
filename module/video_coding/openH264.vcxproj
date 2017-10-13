@@ -315,8 +315,8 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./codecs/interface;../;.\openH264;../interface;../../system_wrappers/interface;../../third_party/openH264/codec/api/svc;./main/include;../common_video/source;../common_video/source/libyuv/include;../common_video/interface;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;WEBRTC_WIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>./codecs/interface;../;.\openH264;../interface;../../system_wrappers/interface;../../third_party/openH264/codec/api/svc;./main/include;../common_video/source;../common_video/source/libyuv/include;../common_video/interface;../../base/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>

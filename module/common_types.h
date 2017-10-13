@@ -18,7 +18,7 @@
 #include <sstream>
 
 #include "typedefs.h"
-#include "checks.h"
+//#include "checks.h"
 
 #ifdef WEBRTC_EXPORT
     #define WEBRTC_DLLEXPORT _declspec(dllexport)
@@ -960,27 +960,27 @@ public:
   // and a non-const version that returns a pointer, in order
   // to allow modification of the parameters.
   VideoCodecVP8* VP8() {
-  DCHECK_EQ(codecType, kVideoCodecVP8);
+  //DCHECK_EQ(codecType, kVideoCodecVP8);
   return &codecSpecific.VP8;
 }
   const VideoCodecVP8& VP8() const{
-  DCHECK_EQ(codecType, kVideoCodecVP8);
+  //DCHECK_EQ(codecType, kVideoCodecVP8);
   return codecSpecific.VP8;
 }
   VideoCodecVP9* VP9(){
-  DCHECK_EQ(codecType, kVideoCodecVP9);
+  //DCHECK_EQ(codecType, kVideoCodecVP9);
   return &codecSpecific.VP9;
 }
   const VideoCodecVP9& VP9() const{
-  DCHECK_EQ(codecType, kVideoCodecVP9);
+  //DCHECK_EQ(codecType, kVideoCodecVP9);
   return codecSpecific.VP9;
 }
   VideoCodecH264* H264(){
-  DCHECK_EQ(codecType, kVideoCodecH264);
+  //DCHECK_EQ(codecType, kVideoCodecH264);
   return &codecSpecific.H264;
 }
   const VideoCodecH264& H264() const{
-  DCHECK_EQ(codecType, kVideoCodecH264);
+  //DCHECK_EQ(codecType, kVideoCodecH264);
   return codecSpecific.H264;
 }
   
@@ -1073,13 +1073,13 @@ struct RtpPacketCounter {
   }
 
   void Subtract(const RtpPacketCounter& other) {
-    DCHECK_GE(header_bytes, other.header_bytes);
+    //DCHECK_GE(header_bytes, other.header_bytes);
     header_bytes -= other.header_bytes;
-    DCHECK_GE(payload_bytes, other.payload_bytes);
+    //DCHECK_GE(payload_bytes, other.payload_bytes);
     payload_bytes -= other.payload_bytes;
-    DCHECK_GE(padding_bytes, other.padding_bytes);
+    //DCHECK_GE(padding_bytes, other.padding_bytes);
     padding_bytes -= other.padding_bytes;
-    DCHECK_GE(packets, other.packets);
+    //DCHECK_GE(packets, other.packets);
     packets -= other.packets;
   }
 
