@@ -95,7 +95,7 @@ namespace cloopenwebrtc {
     , info_camera_index_(0)
     , capturer_data_callback_(nullptr)
     {
-#if defined(WEBRTC_ANDROID) || defined(WEBRTC_IOS)
+#ifndef WIN32
         info_video_height_ = 640;
         info_video_width_  = 360;
         info_camera_index_ = 0;
@@ -115,7 +115,7 @@ namespace cloopenwebrtc {
         ret = initVideoEngine();
         
         ret = initAudioNetwork();
-        ret = initVideoNetwork();
+//        ret = initVideoNetwork();
 
         return ret;
     }
@@ -280,7 +280,7 @@ namespace cloopenwebrtc {
     void ECMediaMachine::UnInit()
     {
         uninitAudioNetwork();
-        uninitVideoNetwork();
+//        uninitVideoNetwork();
         
         uninitAudioEngine();
         uninitVideoEngine();
@@ -322,6 +322,7 @@ namespace cloopenwebrtc {
     
     int ECMediaMachine::startCapture()
     {
+        initVideoNetwork();
         PrintConsole("[ECMEDIA CORE INFO] %s begin.\n", __FUNCTION__);
         int ret = -1;
         ret = doAudioDataSend();
@@ -370,21 +371,35 @@ namespace cloopenwebrtc {
         // shutdown network
         ret = shutdownVideoDataSend();
         ret = shutdownAudioDataSend();
+        
+        uninitVideoNetwork();
         return ret;
     }
 
     int ECMediaMachine::startPlayout() {
         PrintConsole("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
         int ret = -1;
+         ret = initVideoNetwork();
+        if(ret != 0) {
+            return ret;
+        }
         // start Playout
         ret = doAudioPlayout();
         if(ret != 0) {
             PrintConsole("[ECMEDIA CORE INFO] %s doAudioPlayout error: %d\n", __FUNCTION__, ret);
         }
         ret = doAudioDataReceive();
-
+        if(ret != 0) {
+            return ret;
+        }
         ret = doPreviewRender(video_channel_);
+        if(ret != 0) {
+            return ret;
+        }
         ret = doVideoDataReceive();
+        if(ret != 0) {
+            return ret;
+        }
         PrintConsole("[ECMEDIA CORE INFO] %s end with code: %d\n", __FUNCTION__, ret);
         return ret;
     }
@@ -393,10 +408,25 @@ namespace cloopenwebrtc {
         PrintConsole("[RTMP ERROR] %s start\n", __FUNCTION__);
         int ret = -1;
         ret = shutdownVideoDataReceive();
+        if(ret != 0) {
+            return ret;
+        }
         ret = shutdownPreviewRender(video_channel_);
-
+        if(ret != 0) {
+            return ret;
+        }
         ret = shutdownAudioPlayout();
+        if(ret != 0) {
+            return ret;
+        }
         ret = shutdownAudioDataReceive();
+        if(ret != 0) {
+            return ret;
+        }
+        ret = uninitVideoNetwork();
+        if(ret != 0) {
+            return ret;
+        }
         PrintConsole("[RTMP ERROR] %s end with code:%d\n", __FUNCTION__, ret);
         return ret;
     }
@@ -997,7 +1027,7 @@ namespace cloopenwebrtc {
     
     int ECMediaMachine::shutdownDesktopCapture() {
         ViEDesktopShare *desktopShare = ViEDesktopShare::GetInterface(vie_);
-#ifdef _WIN32
+#ifdef WIN32
         ViERender* render = ViERender::GetInterface(vie_);
         render = ViERender::GetInterface(vie_);
         render->StopRender(desktop_capture_id_);

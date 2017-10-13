@@ -215,7 +215,7 @@ namespace cloopenwebrtc {
     void ECLiveEngine::getVideoStreamInfo(EC_LiveVideoResolution resolution, int &width, int &height, int &bitrate) {
         width = 640;
         height = 360;
-#if defined(WEBRTC_ANDROID) || defined(WEBRTC_IOS)
+#ifndef WIN32
         width = 360; 
         height = 640;
 #endif
@@ -223,7 +223,7 @@ namespace cloopenwebrtc {
             case EC_VIDEO_RESOLUTION_720P:
                 width = 1280;
                 height = 720;
-#if defined(WEBRTC_ANDROID) || defined(WEBRTC_IOS)
+#ifndef WIN32
                 width = 720;
                 height = 1280;
 #endif
@@ -233,7 +233,7 @@ namespace cloopenwebrtc {
             case EC_VIDEO_RESOLUTION_HD:
                 width = 960;
                 height = 540;
-#if defined(WEBRTC_ANDROID) || defined(WEBRTC_IOS)
+#ifndef WIN32
                 width = 540;
                 height = 960;
                 bitrate = 1024;

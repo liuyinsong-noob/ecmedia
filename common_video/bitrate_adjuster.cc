@@ -42,7 +42,7 @@ BitrateAdjuster::BitrateAdjuster(Clock* clock,
 }
 
 void BitrateAdjuster::SetTargetBitrateBps(uint32_t bitrate_bps) {
-  CritScope cs(&crit_);
+  // CritScope cs(&crit_);
   // If the change in target bitrate is large, update the adjusted bitrate
   // immediately since it's likely we have gained or lost a sizeable amount of
   // bandwidth and we'll want to respond quickly.
@@ -66,7 +66,7 @@ uint32_t BitrateAdjuster::GetTargetBitrateBps() const {
 }
 
 uint32_t BitrateAdjuster::GetAdjustedBitrateBps() const {
-  cloopenwebrtc::CritScope cs(&crit_);
+  // cloopenwebrtc::CritScope cs(&crit_);
   return adjusted_bitrate_bps_;
 }
 
@@ -76,7 +76,7 @@ cloopenwebrtc::Optional<uint32_t> BitrateAdjuster::GetEstimatedBitrateBps() {
 }
 
 void BitrateAdjuster::Update(size_t frame_size) {
-  cloopenwebrtc::CritScope cs(&crit_);
+  // cloopenwebrtc::CritScope cs(&crit_);
   uint32_t current_time_ms = clock_->TimeInMilliseconds();
   bitrate_tracker_.Update(frame_size, current_time_ms);
   UpdateBitrate(current_time_ms);

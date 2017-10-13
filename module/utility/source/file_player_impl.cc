@@ -33,9 +33,9 @@ FilePlayer* FilePlayer::CreateFilePlayer(uint32_t instanceID,
     case kFileFormatPcm32kHzFile:
         // audio formats
         return new FilePlayerImpl(instanceID, fileFormat);
-    case kFileFormatAviFile:
 #ifdef VIDEO_ENABLED
 #ifdef WEBRTC_MODULE_UTILITY_VIDEO
+    case kFileFormatAviFile:
         return new VideoFilePlayerImpl(instanceID, fileFormat);
 #endif
 #else
