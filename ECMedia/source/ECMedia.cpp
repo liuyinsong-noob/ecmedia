@@ -166,7 +166,7 @@ static int m_cameraCount = 0;
 using namespace cloopenwebrtc;
 using namespace std;
 
-#define ECMEDIA_VERSION "2.1.4.1.09041624"
+#define ECMEDIA_VERSION "2.2.0.2.1710171740"
 
 //extern bool g_media_TraceFlag;
 //void PrintConsole(const char * fmt,...){};
@@ -5189,7 +5189,7 @@ int ECMedia_pushLiveStream(void *handle, const char *url, ECLiveStreamNetworkSta
     ECLiveEngine *engine = (ECLiveEngine*)handle;
     int ret = 0;
     
-    ret = engine->startPublish(url, nullptr);
+    ret = engine->startPublish(url, callback);
     
     if (ret != 0) {
         PrintConsole("[ECMEDIA ERROR] %s failed to push stream", __FUNCTION__);
