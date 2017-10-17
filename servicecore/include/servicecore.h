@@ -417,6 +417,7 @@ public:
     int serphone_get_louds_speaker_status();
 	int serphone_set_mute_status(bool bLouds);
 	int serphone_get_mute_status();
+	int serphone_set_global_audio_in_device(bool bGlobalAudioInDevice);
 
 	int serphone_set_speaker_mute_status(bool bLouds);
 	int serphone_get_speaker_mute_status();
@@ -866,6 +867,8 @@ public:
 //#ifdef WIN32
 //	ChromaKeyFilter * m_ChromaKeyFilter;
 //#endif
+   std::string m_audioRecordPath;
+   bool_t m_bAudioRecord;
 
 
 public:
@@ -1000,6 +1003,7 @@ public:
     int serphone_set_silk_rate(int rate);
 public:
     static int serphone_set_traceFlag(/*bool flag*/);//Don't user flag for the time being
+    int serphone_set_audioRecordStatus(const char *path, bool enable);
     int serphone_set_remote_sip(char *remote);
 #if 0
 private:

@@ -527,7 +527,6 @@
     <ClCompile Include="source\base64.c" />
     <ClCompile Include="source\CaptureScreen.cpp" />
     <ClCompile Include="source\curl_post.cc" />
-    <ClCompile Include="source\ECLiveStream.cpp" />
     <ClCompile Include="source\ECMedia.cpp" />
     <ClCompile Include="source\ec_live_engine\ec_aac_codec.cpp" />
     <ClCompile Include="source\ec_live_engine\ec_live_engine.cpp" />
@@ -545,7 +544,6 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="source\ECLiveStream_rtmp.cpp" />
     <ClCompile Include="source\statsCollector.cc" />
     <ClCompile Include="source\VoeObserver.cpp" />
   </ItemGroup>

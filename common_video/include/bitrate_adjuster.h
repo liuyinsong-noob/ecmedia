@@ -13,7 +13,8 @@
 
 #include <functional>
 
-#include "../base/criticalsection.h"
+//#include "../base/criticalsection.h"
+#include "../system_wrappers/source/critical_section_posix.h"
 #include "../base/rate_statistics.h"
 
 namespace cloopenwebrtc {
@@ -31,7 +32,10 @@ class BitrateAdjuster {
   BitrateAdjuster(Clock* clock,
                   float min_adjusted_bitrate_pct,
                   float max_adjusted_bitrate_pct);
-  virtual ~BitrateAdjuster() {}
+  virtual ~BitrateAdjuster() {
+      delete crit_;
+      crit_ = nullptr;
+  }
 
   static const uint32_t kBitrateUpdateIntervalMs;
   static const uint32_t kBitrateUpdateFrameInterval;
@@ -66,7 +70,8 @@ class BitrateAdjuster {
   void Reset();
   void UpdateBitrate(uint32_t current_time_ms) EXCLUSIVE_LOCKS_REQUIRED(crit_);
 
-  cloopenwebrtc::CriticalSection crit_;
+//  cloopenwebrtc::CriticalSection crit_;
+    cloopenwebrtc::CriticalSectionWrapper *crit_;
   Clock* const clock_;
   const float min_adjusted_bitrate_pct_;
   const float max_adjusted_bitrate_pct_;

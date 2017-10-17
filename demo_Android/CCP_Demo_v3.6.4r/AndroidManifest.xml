@@ -177,7 +177,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".chatroom.ChatroomConversation"
+            android:name=".chatroom.EC_LiveVideoSession"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>

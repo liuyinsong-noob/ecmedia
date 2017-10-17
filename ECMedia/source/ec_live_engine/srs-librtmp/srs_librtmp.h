@@ -941,14 +941,14 @@ extern const char* srs_human_format_time();
 #ifdef ANDROID
 #include <android/log.h>
 #define TAG "SRS"
-#define ALOGE(...) __android_log_print(ANDROID_LOG_ERROR, TAG, __VA_ARGS__)
-#define srs_human_trace(msg, ...) ALOGE("[%s] ", srs_human_format_time());ALOGE(msg, ##__VA_ARGS__);
-#define srs_human_verbose(msg, ...) ALOGE("[%s] ", srs_human_format_time());ALOGE(msg, ##__VA_ARGS__);
-#define srs_human_raw(msg, ...) ALOGE(msg, ##__VA_ARGS__)
+#define ALOGE(...) //__android_log_print(ANDROID_LOG_ERROR, TAG, __VA_ARGS__)
+#define srs_human_trace(msg, ...) //ALOGE("[%s] ", srs_human_format_time());ALOGE(msg, ##__VA_ARGS__);
+#define srs_human_verbose(msg, ...) //ALOGE("[%s] ", srs_human_format_time());ALOGE(msg, ##__VA_ARGS__);
+#define srs_human_raw(msg, ...) //ALOGE(msg, ##__VA_ARGS__)
 #else
-#define srs_human_trace(msg, ...) printf("[%s] ", srs_human_format_time());printf(msg, ##__VA_ARGS__);printf("\n")
-#define srs_human_verbose(msg, ...) printf("[%s] ", srs_human_format_time());printf(msg, ##__VA_ARGS__);printf("\n")
-#define srs_human_raw(msg, ...) printf(msg, ##__VA_ARGS__)
+#define srs_human_trace(msg, ...) //printf("[%s] ", srs_human_format_time());printf(msg, ##__VA_ARGS__);printf("\n")
+#define srs_human_verbose(msg, ...) //printf("[%s] ", srs_human_format_time());printf(msg, ##__VA_ARGS__);printf("\n")
+#define srs_human_raw(msg, ...) //printf(msg, ##__VA_ARGS__)
 #endif
 #endif
 

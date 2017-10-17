@@ -13,6 +13,7 @@
 #else
 #include <unistd.h>
 #endif
+
 #include "ec_rtmp_bitrate_controller.h"
 #include "ec_live_utility.h"
 #include "event_wrapper.h"
@@ -95,7 +96,7 @@ namespace cloopenwebrtc{
             
             static int statistics_times = 0;
             statistics_times++;
-            // 缓存大于3M
+            // 缓存大于3MB
             if(cacher_data_size_ > 3000000) {
                 if(callback_) {
                     statistics_times = 0;

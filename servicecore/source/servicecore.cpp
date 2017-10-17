@@ -647,6 +647,8 @@ ServiceCore::ServiceCore()
     magic_sound_pitch = 0;
     magic_sound_tempo = 0;
     magic_sound_rate = 0;
+
+    m_bAudioRecord = false;
 }
 
 ServiceCore::~ServiceCore()
@@ -2824,6 +2826,8 @@ void ServiceCore::serphone_core_init_default_params(SerphoneCallParams *params)
 	params->in_conference=FALSE;
 	params->invite_userdata = NULL;
     params->group_id = NULL;
+    params->audioRecordPath = m_audioRecordPath;
+    params->bAudioRecord = m_bAudioRecord;
 //haiyuntong
 #ifdef HAIYUNTONG
     params->akey = NULL;
@@ -6319,6 +6323,14 @@ int ServiceCore::serphone_set_traceFlag(/*bool flag*/) //Don't use flag for the 
 {
 	ECMedia_set_trace(NULL, (void*)CCPClientPrintLog, 25, 100);
 	return 0;
+}
+
+int ServiceCore::serphone_set_audioRecordStatus(const char *path, bool enable)
+{
+    m_audioRecordPath.assign(path);
+    m_bAudioRecord = enable;
+    
+    return 0;
 }
 
 #ifdef HAIYUNTONG

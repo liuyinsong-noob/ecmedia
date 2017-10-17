@@ -7,6 +7,10 @@ VoipDemo
 .idea
 .gradle
 
+#libs
+demo_Android/CCP_Demo_v3.6.4r/libs/armeabi/libserphone.so
+demo_Android/CCP_Demo_v3.6.4r/libs/armeabi/libECMedia.so
+
 #mac
 .DS_Store
 

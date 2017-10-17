@@ -48,7 +48,7 @@ namespace cloopenwebrtc {
     private:
         ECMediaMachine*             ec_media_core_;
         ECRtmpPublisher*            rtmp_publisher_;
-        EC_MediaPullerBase*         meida_puller_;
+        EC_MediaPullerBase*         media_puller_;
         EC_RTMP_BitrateController*  bitrate_controller_;
 
         bool publiser_running_;

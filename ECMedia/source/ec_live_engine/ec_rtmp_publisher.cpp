@@ -212,7 +212,7 @@ namespace cloopenwebrtc {
                     case RS_STM_Init:
                     {
                         if (srs_rtmp_handshake(rtmp_) == 0) {
-                            srs_human_trace("SRS: simple handshake ok.");
+                            PrintConsole("SRS: simple handshake ok.");
                             rtmp_status_ = RS_STM_Handshaked;
                         }
                         else {
@@ -223,7 +223,7 @@ namespace cloopenwebrtc {
                     case RS_STM_Handshaked:
                     {
                         if (srs_rtmp_connect_app(rtmp_) == 0) {
-                            srs_human_trace("SRS: connect vhost/app ok.");
+                            PrintConsole("SRS: connect vhost/app ok.");
                             rtmp_status_ = RS_STM_Connected;
                         }
                         else {
@@ -234,7 +234,7 @@ namespace cloopenwebrtc {
                     case RS_STM_Connected:
                     {
                         if (srs_rtmp_publish_stream(rtmp_) == 0) {
-                            srs_human_trace("SRS: publish stream ok.");
+                            PrintConsole("SRS: publish stream ok.");
                             rtmp_status_ = RS_STM_Published;
                             clearMediaCacher();
                             if(callback_) {

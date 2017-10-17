@@ -80,7 +80,6 @@ namespace cloopenwebrtc {
     , video_data_cb_(nullptr)
     , audio_rtp_seq_(0)
     , video_rtp_seq_(0)
-    , faac_decode_handle_(nullptr)
     , faac_encode_handle_(nullptr)
     , capture_id_(-1)
     , desktop_capture_id_(-1)
@@ -105,7 +104,10 @@ namespace cloopenwebrtc {
     
     ECMediaMachine::~ECMediaMachine()
     {
-
+        if (faac_encode_handle_) {
+            faac_encoder_close(faac_encode_handle_);
+            faac_encode_handle_ = nullptr;
+        }
     }
     
     bool ECMediaMachine::Init()
@@ -379,7 +381,7 @@ namespace cloopenwebrtc {
     int ECMediaMachine::startPlayout() {
         PrintConsole("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
         int ret = -1;
-         ret = initVideoNetwork();
+        ret = initVideoNetwork();
         if(ret != 0) {
             return ret;
         }
@@ -594,15 +596,18 @@ namespace cloopenwebrtc {
     }
 
     int ECMediaMachine::doAudioPlayout() {
-        // enable audio speaker.
-        VoEHardware *hardware = VoEHardware::GetInterface(voe_);
         int ret = -1;
-        ret = hardware->SetLoudspeakerStatus(true);
-        hardware->Release();
-
         VoEBase *base = VoEBase::GetInterface(voe_);
         ret = base->StartPlayout(audio_channel_);
         base->Release();
+        
+        // enable audio speaker.
+        VoEHardware *hardware = VoEHardware::GetInterface(voe_);
+        ret = hardware->SetLoudspeakerStatus(true);
+        hardware->Release();
+        if(ret != 0) {
+            PrintConsole("[ECMEDIA CORE ERROR] %s  set loudspeaker status failed\n", __FUNCTION__);
+        }
         return ret;
     }
 
@@ -623,8 +628,7 @@ namespace cloopenwebrtc {
         base->Release();
         return ret;
     }
- 
-     // 视频参数配置属性配置
+
     int ECMediaMachine::setVideoCaptureInfo(int camera_index, int fps, int bitrate, int width, int height)
     {
         PrintConsole("[ECMEDIA CORE INFO] %s start, camera_index:%d, fps:%d, bitrate:%d, width:%d, height:%d\n", __FUNCTION__, camera_index, fps, bitrate, width, height);
@@ -923,14 +927,21 @@ namespace cloopenwebrtc {
             rtpHeader.ssrc = 1;
             rtpHeader.payloadType = 98;
             rtpHeader.timestamp = timestamp;
+  
             uint8_t frame_type = *(uint8_t*)nalu_data & 0x1f;
-            if (frame_type == 6) {
+            static bool isSpsPpsHasComing = false;
+      
+            //some sei may come befor sps and pps, picture appare mosaic, so we jump it.
+            uint8_t type_sei = 6;
+            if(!isSpsPpsHasComing && frame_type == type_sei) {
                 return;
             }
             
             if (frame_type == 7 || frame_type == 8) { //sps or pps
+                isSpsPpsHasComing = true;
                 rtpHeader.markerBit = false;
             } else {
+                isSpsPpsHasComing = false;
                 rtpHeader.markerBit = true;
             }
             video_data_cb_->ReceivePacket((const uint8_t*) nalu_data, len, rtpHeader, true);
@@ -938,14 +949,14 @@ namespace cloopenwebrtc {
         PrintConsole("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
     }
 
-    void ECMediaMachine::onAacDataComing(uint8_t* pData, int nLen, uint32_t ts) {
+    void ECMediaMachine::onAacDataComing(uint8_t* pData, int nLen, uint32_t ts, uint32_t sample_rate, int audio_channels) {
         if(audio_data_cb_) {
             PrintConsole("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
             int audio_record_sample_hz_ = 32000;
             int audio_record_channels_ = 2;
             const size_t kMaxDataSizeSamples = 3840;
             int16_t temp_output[kMaxDataSizeSamples];
-            int len = resampler_record_.Resample10Msec((int16_t*)pData, 44100 * 2, audio_record_sample_hz_*audio_record_channels_, 1, kMaxDataSizeSamples, (int16_t*)temp_output);
+            int len = resampler_record_.Resample10Msec((int16_t*)pData, sample_rate * audio_channels, audio_record_sample_hz_*audio_record_channels_, 1,  kMaxDataSizeSamples, (int16_t*)temp_output);
 
             if (len < 0) {
                 PrintConsole("[ECMEDIA CORE ERROR] %s resample error\n", __FUNCTION__);

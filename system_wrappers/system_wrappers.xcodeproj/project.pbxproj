@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F1EDA451F95E5F80018BD4C /* criticalsection.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F1EDA431F95E5F80018BD4C /* criticalsection.cc */; };
+		1F1EDA461F95E5F80018BD4C /* criticalsection.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F1EDA441F95E5F80018BD4C /* criticalsection.h */; };
 		1FF9F2231F34529E005D11C5 /* stats_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FF9F2221F34529E005D11C5 /* stats_types.h */; };
 		450D71E11F15F8CA00CD5776 /* platform_thread_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 450D71DE1F15F8CA00CD5776 /* platform_thread_types.h */; };
 		450D71ED1F15FBEC00CD5776 /* rtp_to_ntp_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D71EC1F15FBEC00CD5776 /* rtp_to_ntp_estimator.cc */; };
@@ -29,8 +31,6 @@
 		450D72911F1743A300CD5776 /* platform_thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D728F1F1743A300CD5776 /* platform_thread.cc */; };
 		450D72921F1743A300CD5776 /* platform_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 450D72901F1743A300CD5776 /* platform_thread.h */; };
 		450D72941F17455200CD5776 /* event_tracer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72931F17455200CD5776 /* event_tracer.cc */; };
-		450D72981F174EAC00CD5776 /* criticalsection.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72961F174EAC00CD5776 /* criticalsection.cc */; };
-		450D72991F174EAC00CD5776 /* criticalsection.h in Headers */ = {isa = PBXBuildFile; fileRef = 450D72971F174EAC00CD5776 /* criticalsection.h */; };
 		450D729C1F175D1700CD5776 /* optional.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D729A1F175D1700CD5776 /* optional.cc */; };
 		450D729D1F175D1700CD5776 /* optional.h in Headers */ = {isa = PBXBuildFile; fileRef = 450D729B1F175D1700CD5776 /* optional.h */; };
 		45187B3E1F54260A004A2DBF /* stats_types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9F2201F345293005D11C5 /* stats_types.cc */; };
@@ -166,6 +166,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F1EDA431F95E5F80018BD4C /* criticalsection.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = criticalsection.cc; path = ../base/criticalsection.cc; sourceTree = "<group>"; };
+		1F1EDA441F95E5F80018BD4C /* criticalsection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = criticalsection.h; path = ../base/criticalsection.h; sourceTree = "<group>"; };
 		1FF9F2201F345293005D11C5 /* stats_types.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stats_types.cc; sourceTree = "<group>"; };
 		1FF9F2221F34529E005D11C5 /* stats_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stats_types.h; sourceTree = "<group>"; };
 		450D71DE1F15F8CA00CD5776 /* platform_thread_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = platform_thread_types.h; path = ../../base/platform_thread_types.h; sourceTree = "<group>"; };
@@ -189,8 +191,6 @@
 		450D728F1F1743A300CD5776 /* platform_thread.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = platform_thread.cc; path = ../../base/platform_thread.cc; sourceTree = "<group>"; };
 		450D72901F1743A300CD5776 /* platform_thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = platform_thread.h; path = ../../base/platform_thread.h; sourceTree = "<group>"; };
 		450D72931F17455200CD5776 /* event_tracer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = event_tracer.cc; path = ../../base/event_tracer.cc; sourceTree = "<group>"; };
-		450D72961F174EAC00CD5776 /* criticalsection.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = criticalsection.cc; path = ../../base/criticalsection.cc; sourceTree = "<group>"; };
-		450D72971F174EAC00CD5776 /* criticalsection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = criticalsection.h; path = ../../base/criticalsection.h; sourceTree = "<group>"; };
 		450D729A1F175D1700CD5776 /* optional.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = optional.cc; path = ../../base/optional.cc; sourceTree = "<group>"; };
 		450D729B1F175D1700CD5776 /* optional.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = optional.h; path = ../../base/optional.h; sourceTree = "<group>"; };
 		4547E2BF1F15EF7E0014FB7E /* timeutils.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = timeutils.cc; path = ../../base/timeutils.cc; sourceTree = "<group>"; };
@@ -287,6 +287,8 @@
 		5519D04B15C82C7E00719504 = {
 			isa = PBXGroup;
 			children = (
+				1F1EDA431F95E5F80018BD4C /* criticalsection.cc */,
+				1F1EDA441F95E5F80018BD4C /* criticalsection.h */,
 				5519D09D15C82D0200719504 /* system_wrappers */,
 				5519D05815C82C7E00719504 /* Frameworks */,
 				5519D05715C82C7E00719504 /* Products */,
@@ -360,8 +362,6 @@
 				1FF9F2201F345293005D11C5 /* stats_types.cc */,
 				450D729A1F175D1700CD5776 /* optional.cc */,
 				450D729B1F175D1700CD5776 /* optional.h */,
-				450D72961F174EAC00CD5776 /* criticalsection.cc */,
-				450D72971F174EAC00CD5776 /* criticalsection.h */,
 				450D72931F17455200CD5776 /* event_tracer.cc */,
 				450D728F1F1743A300CD5776 /* platform_thread.cc */,
 				450D72901F1743A300CD5776 /* platform_thread.h */,
@@ -462,7 +462,6 @@
 				5519D12715C82D1800719504 /* scoped_refptr.h in Headers */,
 				450D728A1F1725C300CD5776 /* checks.h in Headers */,
 				5519D12815C82D1800719504 /* sort.h in Headers */,
-				450D72991F174EAC00CD5776 /* criticalsection.h in Headers */,
 				45E0559A1B0C8BEA00611475 /* constructor_magic.h in Headers */,
 				5519D12915C82D1800719504 /* static_instance.h in Headers */,
 				4547E2C21F15EF7E0014FB7E /* timeutils.h in Headers */,
@@ -472,6 +471,7 @@
 				5519D12C15C82D1800719504 /* trace.h in Headers */,
 				55AE066015C82F8000CE4CF5 /* condition_variable_posix.h in Headers */,
 				55AE066A15C82F8000CE4CF5 /* cpu_mac.h in Headers */,
+				1F1EDA461F95E5F80018BD4C /* criticalsection.h in Headers */,
 				55AE068715C82F8000CE4CF5 /* list_no_stl.h in Headers */,
 				55AE069215C82F8000CE4CF5 /* rw_lock_posix.h in Headers */,
 				55AE069915C82F8000CE4CF5 /* thread_posix.h in Headers */,
@@ -599,7 +599,6 @@
 				45187B3E1F54260A004A2DBF /* stats_types.cc in Sources */,
 				55AE065B15C82F8000CE4CF5 /* aligned_malloc.cc in Sources */,
 				450D728E1F173EE100CD5776 /* logging.cc in Sources */,
-				450D72981F174EAC00CD5776 /* criticalsection.cc in Sources */,
 				450D72031F16061900CD5776 /* bitbuffer.cc in Sources */,
 				450D71FC1F16051E00CD5776 /* copyonwritebuffer.cc in Sources */,
 				55AE065F15C82F8000CE4CF5 /* condition_variable_posix.cc in Sources */,
@@ -611,6 +610,7 @@
 				55AE067915C82F8000CE4CF5 /* data_log_c.cc in Sources */,
 				AD2E2A041C58C5AF00FD311B /* metrics_default.cc in Sources */,
 				450D727D1F17212700CD5776 /* rate_statistics.cc in Sources */,
+				1F1EDA451F95E5F80018BD4C /* criticalsection.cc in Sources */,
 				ADDC7D851C5A1FC900510E7D /* platform_file.cc in Sources */,
 				450D71ED1F15FBEC00CD5776 /* rtp_to_ntp_estimator.cc in Sources */,
 				AD8D73601C59B4AE00FB246D /* field_trial_default.cc in Sources */,
@@ -730,10 +730,10 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					MAC_IPHONE,
 					WEBRTC_POSIX,
-					WEBRTC_IOS,
 					WEBRTC_CLOCK_TYPE_REALTIME,
 					WEBRTC_THREAD_RR,
-					WEBRTC_POSIX,
+					MAC_IPHONE,
+					WEBRTC_IOS,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
@@ -780,10 +780,10 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					MAC_IPHONE,
 					WEBRTC_POSIX,
-					WEBRTC_IOS,
 					WEBRTC_CLOCK_TYPE_REALTIME,
 					WEBRTC_THREAD_RR,
-					WEBRTC_POSIX,
+					MAC_IPHONE,
+					WEBRTC_IOS,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (

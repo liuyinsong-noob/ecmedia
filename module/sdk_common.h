@@ -272,8 +272,8 @@ struct Stats{
 		:encode_frame_rate(0),
 		media_bitrate_bps(0),
 		suspended(false){}
-	int encode_frame_rate; //���Ͷ�ʵ�ʵı���֡��
-	int media_bitrate_bps; //���Ͷ�ʵ�ʵķ�������
+	int encode_frame_rate; //
+	int media_bitrate_bps; //
 	bool suspended;       
 };
 
@@ -293,7 +293,7 @@ typedef struct {
     EC_LiveVideoResolution _resolution; // video _resolution
 } LiveVideoStreamConfig;
 
-// live stream publisher callback
+
 enum EC_LIVE_STATUS_CODE {
     EC_LIVE_CONNECTING = 0,
     EC_LIVE_TIMEOUT,
@@ -303,8 +303,10 @@ enum EC_LIVE_STATUS_CODE {
     EC_LIVE_PLAY_FAILED,
     EC_LIVE_DISCONNECTED
 };
+
 typedef int(*ECLiveStreamNetworkStatusCallBack)(EC_LIVE_STATUS_CODE code);
-/*** rtmp end ***/
+typedef int(*ECLiveStreamVideoResolution)(int width, int height);
+
 
 #ifdef __cplusplus
 extern "C" {

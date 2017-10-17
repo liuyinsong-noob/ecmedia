@@ -38,11 +38,11 @@ namespace cloopenwebrtc {
 
     enum RTMPLAYER_STATUS
     {
-        RS_PLY_Init,		// ≥ı ºªØ◊¥Ã¨
-        RS_PLY_Handshaked,	// ”Î∑˛ŒÒ∆˜–≠…Ãπ˝≥Ã÷–
-        RS_PLY_Connected,	// ”Î∑˛ŒÒ∆˜¡¨Ω”≥…π¶
-        RS_PLY_Played,		// ø™ º≤•∑≈
-        RS_PLY_Closed		// ≤•∑≈Õ£÷π
+        RS_PLY_Init,
+        RS_PLY_Handshaked,
+        RS_PLY_Connected,
+        RS_PLY_Played,
+        RS_PLY_Closed
     };
 
     class EC_AVCacher;
@@ -62,7 +62,7 @@ namespace cloopenwebrtc {
         bool run();
         void CallConnect();
         void CallDisconnect();
-        void DoReadData();
+        void doReadRtmpData();
 
         int GotVideoSample(u_int32_t timestamp, SrsCodecSample *sample);
         int GotAudioSample(u_int32_t timestamp, SrsCodecSample *sample);

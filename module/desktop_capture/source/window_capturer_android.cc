@@ -45,9 +45,13 @@ class ScreenCapturerAndroid : public ScreenCapturer {
   
   virtual void SetScreenShareActivity(void * activity);
 
+ 
   static void JNICALL ProvideScreeData(JNIEnv * env,
                                           jobject,
-                                          jobject bitmap,
+                                          jbyteArray image_data, 
+                                          jint data_len,
+                                          jint width,
+                                          jint height,
                                           jlong context);
 public:
   static JavaVM* g_jvm;
@@ -99,7 +103,7 @@ WebRtc_Word32 ScreenCapturer::SetAndroidObjects(void* javaVM, void* env, void* j
 	thisEnv->DeleteLocalRef(screenCaptureClassLocal);
 	
 	JNINativeMethod nativeFunctions =
-	    { "ProvideScreeData", "(Ljava/lang/Object;J)V",
+	    { "ProvideScreeData", "(Ljava/lang/Object;[BIIIJ)V", 
 	      (void*) &ScreenCapturerAndroid::ProvideScreeData };
 	if (thisEnv->RegisterNatives(ScreenCapturerAndroid::g_javaScreenCaptureClass, &nativeFunctions, 1) == 0) {
 	  WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, -1,
@@ -285,44 +289,30 @@ void ScreenCapturerAndroid::SetScreenShareActivity(void * activity)
     activity_ = activity;
 }
 
+//yuv image data
 void JNICALL ScreenCapturerAndroid::ProvideScreeData(JNIEnv * env,
                                           jobject,
-                                          jobject bitmap,
+                                          jbyteArray javaDesktopFrame, 
+                                          jint length,
+                                          jint width,
+                                          jint height,
                                           jlong context)
 {
     ScreenCapturerAndroid* captureModule = reinterpret_cast<ScreenCapturerAndroid*>(context);
-               
+
+
+
+
     if(captureModule && captureModule->callback_) {
-    
-        AndroidBitmapInfo bmpInfo={0};
-        if( AndroidBitmap_getInfo(env,bitmap,&bmpInfo) < 0 ) {
-            captureModule->callback_->OnCaptureCompleted(NULL, kCapture_NoCaptureImage);
-            return ;
-         }
-        unsigned char* dataFromBmp=NULL;
-        if(AndroidBitmap_lockPixels(env,bitmap,(void**)&dataFromBmp) < 0)
-        {   
-            captureModule->callback_->OnCaptureCompleted(NULL, kCapture_NoCaptureImage);
-            return ;
-        }
-        
-        cloopenwebrtc::scoped_ptr<BasicDesktopFrame> frame(new BasicDesktopFrame(DesktopSize(bmpInfo.width, bmpInfo.height)));
+        cloopenwebrtc::scoped_ptr<BasicDesktopFrame> frame(new BasicDesktopFrame(DesktopSize(width, height)));
         if (!frame.get()) {
             captureModule->callback_->OnCaptureCompleted(NULL, kCapture_NoCaptureImage);
             return;
         }
-
-        WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideoCapture,
-                   -1, "%s: IncomingFrame width:%d height:%d format:%d stride:%d.", 
-                   __FUNCTION__, bmpInfo.width, bmpInfo.height, bmpInfo.format, bmpInfo.stride);
-        if(bmpInfo.format == ANDROID_BITMAP_FORMAT_RGB_565)
-            memcpy((frame.get())->data(), dataFromBmp, bmpInfo.width*bmpInfo.height*2);
-        else if(bmpInfo.format == ANDROID_BITMAP_FORMAT_RGBA_8888)
-            memcpy((frame.get())->data(), dataFromBmp, bmpInfo.width*bmpInfo.height*4);
-
+        jbyte* desktopFrame = env->GetByteArrayElements(javaDesktopFrame, NULL);
+        memcpy((frame.get())->data(), desktopFrame, length);
         captureModule->callback_->OnCaptureCompleted(frame.release(), kCapture_Ok, NULL);
-
-        AndroidBitmap_unlockPixels(env,bitmap);
+        env->ReleaseByteArrayElements(javaDesktopFrame, desktopFrame, JNI_ABORT);
     }
 }
 

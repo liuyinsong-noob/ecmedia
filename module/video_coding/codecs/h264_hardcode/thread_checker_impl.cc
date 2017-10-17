@@ -17,6 +17,7 @@
 namespace cloopenwebrtc {
 
 ThreadCheckerImpl::ThreadCheckerImpl() : valid_thread_(CurrentThreadRef()) {
+    printf("gezhaoyou 111 this %p, valid_thread %p\n", this, valid_thread_);
 }
 
 ThreadCheckerImpl::~ThreadCheckerImpl() {
@@ -25,13 +26,18 @@ ThreadCheckerImpl::~ThreadCheckerImpl() {
 bool ThreadCheckerImpl::CalledOnValidThread() const {
   const PlatformThreadRef current_thread = CurrentThreadRef();
   CritScope scoped_lock(&lock_);
-  if (!valid_thread_)  // Set if previously detached.
+    if (!valid_thread_) { // Set if previously detached.
     valid_thread_ = current_thread;
+        printf("gezhaoyou 112 this %p, valid_thread %p, should not be called\n", this, valid_thread_);
+    }
+    
+    printf("gezhaoyou 113 this %p, valid_thread %p\n", this, valid_thread_);
   return IsThreadRefEqual(valid_thread_, current_thread);
 }
 
 void ThreadCheckerImpl::DetachFromThread() {
   CritScope scoped_lock(&lock_);
+    printf("gezhaoyou 114 this %p, valid_thread %p\n", this, valid_thread_);
   valid_thread_ = 0;
 }
 

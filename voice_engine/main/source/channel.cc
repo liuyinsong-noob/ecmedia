@@ -996,8 +996,7 @@ Channel::Channel(int32_t channelId,
     _rtpTimeOutSeconds(0),
 	_processDataFlag(false),
     _sendData(NULL),
-    _receiveData(NULL),
-    _haveRegisteredAudioRED(false)
+    _receiveData(NULL)
 {
     WEBRTC_TRACE(kTraceMemory, kTraceVoice, VoEId(_instanceId,_channelId),
                  "Channel::Channel() - ctor");
@@ -3626,6 +3625,16 @@ int Channel::SetREDStatus(bool enable, int redPayloadtype) {
     }
   }
 
+    if(enable) {
+        // register receiver rtp loss rate extension header, add by zhaoyou
+        rtp_header_parser_->RegisterRtpHeaderExtension(kRtpExtensionLossRate, 10);
+        // register sender rtp loss rate extension header, add by zhaoyou
+        _rtpRtcpModule->RegisterSendRtpHeaderExtension(kRtpExtensionLossRate, 10);
+    } else {
+         rtp_header_parser_->DeregisterRtpHeaderExtension(kRtpExtensionLossRate);
+        _rtpRtcpModule->DeregisterSendRtpHeaderExtension(kRtpExtensionLossRate);
+    }
+    
   if (audio_coding_->SetREDStatus(enable) != 0) {
     _engineStatisticsPtr->SetLastError(
         VE_AUDIO_CODING_MODULE_ERROR, kTraceError,
@@ -4058,6 +4067,10 @@ void Channel::enableSoundTouch(bool is_enable) {
     
 int Channel::setSoundTouch(int pitch, int tempo, int rate) {
     return audio_coding_->setSoundTouch(pitch, tempo, rate);
+}
+
+int Channel::selectSoundTouchMode(ECMagicSoundMode mode) {
+    return audio_coding_->selectSoundTouchMode(mode);
 }
 
 bool Channel::GetDelayEstimate(int* jitter_buffer_delay_ms,
@@ -5213,17 +5226,6 @@ void
     
     // audio loss rate, added by sean
     if (header.extension.hasLossRate) {
-        if(!_haveRegisteredAudioRED) {
-            _haveRegisteredAudioRED = true;
-            // register receiver rtp loss rate extension header, add by zhaoyou
-            rtp_header_parser_->DeregisterRtpHeaderExtension(kRtpExtensionLossRate);
-            rtp_header_parser_->RegisterRtpHeaderExtension(kRtpExtensionLossRate, 10);
-            
-            // register sender rtp loss rate extension header, add by zhaoyou
-            _rtpRtcpModule->DeregisterSendRtpHeaderExtension(kRtpExtensionLossRate);
-            _rtpRtcpModule->RegisterSendRtpHeaderExtension(kRtpExtensionLossRate, 10);
-        }
-        
         WEBRTC_TRACE(kTraceStateInfo, kTraceVoice,
                      VoEId(_instanceId,_channelId),
                      "loss rate from rtp header extension %d\n", header.extension.lossRate);

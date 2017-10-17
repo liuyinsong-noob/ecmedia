@@ -10,11 +10,21 @@
 
 #include "../system_wrappers/include/aligned_malloc.h"
 
+#include <assert.h>
 #include <memory.h>
-#include <stdlib.h>
 
-#ifdef _WIN32
-#include <windows.h>
+#ifdef WEBRTC_ANDROID
+#include <stdlib.h>
+#endif
+
+#if defined(WEBRTC_MAC) || defined(MAC_IPHONE)
+  #include <malloc/malloc.h>
+#else
+  #include <malloc.h>
+#endif
+
+#if _WIN32
+    #include <windows.h>
 #else
 #include <stdint.h>
 #endif

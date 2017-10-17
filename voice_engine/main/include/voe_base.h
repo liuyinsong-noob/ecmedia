@@ -270,7 +270,9 @@ public:
 	virtual void* GetChannel(int channel_id) = 0;
     virtual int enableSoundTouch(int channelid, bool is_enable) = 0;
     virtual int setSoundTouch(int channelid, int pitch, int tempo, int rate) = 0;
+    virtual int selectSoundTouchMode(int channelid, ECMagicSoundMode mode) = 0;
 	virtual int RegisterSoundCardOnCb(SoundCardOn soundcard_on_cb) = 0;
+	virtual bool GetRecordingIsRecording() = 0;
 protected:
     VoEBase() {}
     virtual ~VoEBase() {}

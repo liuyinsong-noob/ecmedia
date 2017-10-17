@@ -20,7 +20,7 @@
 #include "acm_codec_database.h"
 #include "acm_receiver.h"
 #include "acm_resampler.h"
-#include "SoundTouch_media.h"
+#include "SoundTouch.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
 using namespace cloopensoundtouch;
@@ -255,7 +255,8 @@ class AudioCodingModuleImpl : public AudioCodingModule {
   virtual void GetDecodingCallStatistics(
       AudioDecodingCallStats* stats) const OVERRIDE;
   virtual void enableSoundTouch(bool isEnable);
-  virtual int setSoundTouch(int pitch, int tempo, int rate);
+  virtual int setSoundTouch(double pitch, double tempo, double rate);
+  virtual int selectSoundTouchMode(ECMagicSoundMode mode);
  private:
   int UnregisterReceiveCodecSafe(int payload_type);
 
@@ -388,9 +389,9 @@ private:
    uint8_t soundTouchBuffer[4096];
    int16_t _soundTouchSamples;
     
-   uint8_t _sound_touch_rate;
-   uint8_t _sound_touch_pitch;
-   uint8_t _sound_touch_tempo;
+    double _sound_touch_rate;
+    double _sound_touch_pitch;
+    double _sound_touch_tempo;
 };
 
 }  // namespace acm2

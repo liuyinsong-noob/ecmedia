@@ -1256,7 +1256,12 @@ struct OverUseDetectorOptions {
 	double initial_threshold;
 };
 
-
+enum ECMagicSoundMode {
+    kECMagicSoundNormal = 0,
+    kECMagicSoundHigh ,
+    kECMagicSoundLow
+};
+    
 // RTCP mode to use. Compound mode is described by RFC 4585 and reduced-size
 // RTCP mode is described by RFC 5506.
 enum RtcpMode { kOff, kCompound, kReducedSize };

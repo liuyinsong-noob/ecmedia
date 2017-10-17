@@ -2128,6 +2128,13 @@ extern "C"	int	enableLoudsSpeaker(bool enable)
 	PrintConsole("[APICall] enableLoudsSpeaker (enable=%s) \n",enable ? "YES":"NO");
 	return g_pSerCore->serphone_set_louds_speaker_status(enable);
 }
+
+extern "C"	int	enableGlobalAudioInDevice(bool enable)
+{
+	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+	PrintConsole("[APICall] enableGlobalAudioInDevice (enable=%s) \n",enable ? "YES":"NO");
+	return g_pSerCore->serphone_set_global_audio_in_device(enable);
+}
 extern "C" bool getLoudsSpeakerStatus()
 {
 	PrintConsole("[APICall] getLoudsSpeakerStatus \n");
@@ -2257,6 +2264,11 @@ extern "C" void setTraceFlag(bool enable)
 {
 	ECMedia_set_trace(NULL, NULL, 23, 100);
 	ServiceCore::serphone_set_traceFlag();
+}
+
+extern "C" void setAudioRecordStatus(const char *path, bool enable)
+{
+    g_pSerCore->serphone_set_audioRecordStatus(path, enable);
 }
 
 extern "C" void setCapabilityToken(const char *token)
@@ -2707,7 +2719,6 @@ extern "C" int getAudioConfigEnabled(int type, bool *enabled, int *mode)
     int ret =g_pSerCore->serphone_core_get_audio_config_enabled(type, (bool_t*)enabled, mode);
 
     PrintConsole("[APICall getAgcEnabled type=%d enabled=%d, mode=%d\n", type, enabled, mode);
-
     return ret;
 }
 

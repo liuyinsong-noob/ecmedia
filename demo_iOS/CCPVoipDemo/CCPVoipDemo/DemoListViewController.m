@@ -293,9 +293,9 @@
     }
     else if (button.tag == TAG_DEMO_GOTO_LIVE_STREAM)
     {
-        //多路视频会议
-        [button setImage:[UIImage imageNamed:@"new202.png"] forState:(UIControlStateNormal)];
-        [button setImage:[UIImage imageNamed:@"new202_on.png"] forState:(UIControlStateSelected)];
+        //视频直播
+        [button setImage:[UIImage imageNamed:@"new203_on.png"] forState:(UIControlStateNormal)];
+        [button setImage:[UIImage imageNamed:@"new203_on.png"] forState:(UIControlStateSelected)];
     }
     
 }

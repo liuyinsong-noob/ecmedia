@@ -288,6 +288,7 @@ public:
     void GetDecodingCallStatistics(AudioDecodingCallStats* stats) const;
     void enableSoundTouch(bool is_enable);
     int setSoundTouch(int pitch, int tempo, int rate);
+    int selectSoundTouchMode(ECMagicSoundMode mode);
     // VoEVideoSync
     bool GetDelayEstimate(int* jitter_buffer_delay_ms,
                           int* playout_buffer_delay_ms) const;
@@ -635,7 +636,6 @@ private:
 	void *_receiveData;
 	void *_sendOriginalData;
 	void *_receiveOriginalData;
-    bool _haveRegisteredAudioRED;
 	//    sean add begin 20140708 original audio sample
 	AudioFrame _audioFrame2Up;
 	//    sean add end 20140708 original audio sample
