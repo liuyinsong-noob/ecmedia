@@ -11,6 +11,12 @@
 #include "module.h"
 #include "process_thread_impl.h"
 
+//for Sleep()
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
 
 namespace cloopenwebrtc {
 ProcessThread::~ProcessThread()
@@ -167,6 +173,11 @@ bool ProcessThreadImpl::Process()
             }
         }
     }
+#ifndef _WIN32
+    usleep(1000);
+#else
+    Sleep(1);
+#endif
     return true;
 }
 }  // namespace cloopenwebrtc
