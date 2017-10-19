@@ -191,6 +191,7 @@ void SendSideBandwidthEstimation::UpdateUmaStats(int64_t now_ms,
       rampup_uma_stats_updated_[i] = true;
     }
   }
+   
   if (IsInStartPhase(now_ms)) {
     initially_lost_packets_ += lost_packets;
   } else if (uma_update_state_ == kNoUpdate) {

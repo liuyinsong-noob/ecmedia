@@ -344,7 +344,7 @@ namespace cloopenwebrtc {
                 PrintConsole("[ECMEDIA CORE ERROR] %s do camera capture error.\n", __FUNCTION__);
                 return ret;
             }
-            ret = doPreviewRender(capture_id_);
+            ret = doCameraPreviewRender(capture_id_);
             if(ret < 0) {
                 PrintConsole("[ECMEDIA CORE ERROR] %s do preview render error.\n", __FUNCTION__);
                 return ret;
@@ -365,7 +365,7 @@ namespace cloopenwebrtc {
         int ret = -1;
         if(video_source_ == VIDEO_SOURCE_CAMERA) {
             ret = shutdownCameraCapture();
-            ret = shutdownPreviewRender(capture_id_);
+            ret = shutdownCameraPreviewRender(capture_id_);
         } else {
             ret = shutdownDesktopCapture();
         }
@@ -394,7 +394,7 @@ namespace cloopenwebrtc {
         if(ret != 0) {
             return ret;
         }
-        ret = doPreviewRender(video_channel_);
+        ret = doPlayingPreviewRender(video_channel_);
         if(ret != 0) {
             return ret;
         }
@@ -413,7 +413,7 @@ namespace cloopenwebrtc {
         if(ret != 0) {
             return ret;
         }
-        ret = shutdownPreviewRender(video_channel_);
+        ret = doPlayingPreviewRender(video_channel_);
         if(ret != 0) {
             return ret;
         }
@@ -468,37 +468,78 @@ namespace cloopenwebrtc {
         int ret = capture->AllocateCaptureDevice(camera->id, sizeof(camera->id), capture_id_);
         
         // Rotate camere frame
-        RotateCapturedFrame tr;
-        ret = capture->GetOrientation(camera->id, tr);
-        capture->SetRotateCapturedFrames(capture_id_, tr);
+//        RotateCapturedFrame tr = RotateCapturedFrame_0;
+//        // ret = capture->GetOrientation(camera->id, tr);
+        capture->SetRotateCapturedFrames(capture_id_, RotateCapturedFrame_0);
         
         // camera capture infomation
         CaptureCapability cap;
         {
             cap.height      = info_video_height_;
-            cap.width       = info_video_width_;
+            cap.width        = info_video_width_;
             cap.maxFPS      = info_video_fps_;
         }
         ret = capture->StartCapture(capture_id_, cap);
         ret = capture->ConnectCaptureDevice(capture_id_, video_channel_);
         PrintConsole("[RTMP INFO] %s end with ret:%d\n", __FUNCTION__, ret);
+        capture->Release();
         return ret;
     }
 
-    int ECMediaMachine::doPreviewRender(int render_id) {
+    int ECMediaMachine::doCameraPreviewRender(int render_id) {
         PrintConsole("[RTMP INFO] %s : start video preview.\n", __FUNCTION__);
         if(!local_view_) {
             PrintConsole("[RTMP INFO] %s : not set video preview viewer.\n", __FUNCTION__);
             return 0;
         }
+        int ret = -1;
+#ifdef WIN32
         ViERender* render = ViERender::GetInterface(vie_);
-        
         if(!render) {
-             PrintConsole("[RTMP ERROR] %s get vierender failed\n", __FUNCTION__);
+            PrintConsole("[RTMP ERROR] %s get vierender failed\n", __FUNCTION__);
         }
- 
-        int ret = render->AddRenderer(render_id, local_view_, 2, 0, 0, 1, 1, NULL);
         
+        ret = render->AddRenderer(render_id, local_view_, 2, 0, 0, 1, 1, NULL);
+        if (ret != 0) {
+            PrintConsole("[RTMP INFO] %s add renderer error, end with ret:%d\n", __FUNCTION__, ret);
+            render->Release();
+            return ret;
+        }
+        ret = render->StartRender(render_id);
+        render->Release();
+        PrintConsole("[RTMP INFO] %s end with ret:%d\n", __FUNCTION__, ret);
+#else
+        ViECapture *capture = ViECapture::GetInterface(vie_);
+        if (capture) {
+            ret = capture->SetLocalVideoWindow(render_id, local_view_);
+            capture->Release();
+        }
+#endif
+        return ret;
+    }
+    
+    int ECMediaMachine::shutdownCameraPreviewRender(int render_id) {\
+        int ret = -1;
+#ifdef WIN32
+        // stop preview render.
+        ViERender *render = ViERender::GetInterface(vie_);
+        ret = render->StopRender(render_id);
+        ret = render->RemoveRenderer(render_id);
+        render->Release();
+#else
+        ret = 0;
+#endif
+        return ret;
+    }
+    
+    int ECMediaMachine::doPlayingPreviewRender(int render_id) {
+        int ret = -1;
+        ViERender* render = ViERender::GetInterface(vie_);
+        if(!render) {
+            PrintConsole("[RTMP ERROR] %s get vierender failed\n", __FUNCTION__);
+        }
+        
+        ret = render->AddRenderer(render_id, local_view_, 2, 0, 0, 1, 1, NULL);
         if (ret != 0) {
             PrintConsole("[RTMP INFO] %s add renderer error, end with ret:%d\n", __FUNCTION__, ret);
             render->Release();
@@ -510,7 +551,7 @@ namespace cloopenwebrtc {
         return ret;
     }
     
-    int ECMediaMachine::shutdownPreviewRender(int render_id) {
+    int ECMediaMachine::shutdownPlayingPreviewRender(int render_id) {
         // stop preview render.
         ViERender *render = ViERender::GetInterface(vie_);
         render->StopRender(render_id);
@@ -518,6 +559,8 @@ namespace cloopenwebrtc {
         render->Release();
         return 0;
     }
+    
+
     
     int ECMediaMachine::initVideoTransportCodec(const char *plname, int plfreq)
     {
@@ -661,7 +704,7 @@ namespace cloopenwebrtc {
 
             int ret = -1;
             // stop render and capture video.
-            ret = shutdownPreviewRender(capture_id_);
+            ret = shutdownCameraPreviewRender(capture_id_);
             ret = shutdownCameraCapture();
 
             // reset video codec info.
@@ -669,7 +712,7 @@ namespace cloopenwebrtc {
             
             // restart capturer and render.
             ret = doCameraCapture();
-            ret = doPreviewRender(capture_id_);
+            ret = doCameraPreviewRender(capture_id_);
             PrintConsole("[ECMEDIA CORE INFO] %s end with code:%d\n", __FUNCTION__, ret);
             return ret;
         }
@@ -698,12 +741,12 @@ namespace cloopenwebrtc {
 
         int ret = -1;
         // stop render and capture video.
-        ret = shutdownPreviewRender(capture_id_);
+        ret = shutdownCameraPreviewRender(capture_id_);
         ret = shutdownCameraCapture();
 
         // restart capturer and render.
         ret = doCameraCapture();
-        ret = doPreviewRender(capture_id_);
+        ret = doCameraPreviewRender(capture_id_);
         PrintConsole("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
         return ret;
     }

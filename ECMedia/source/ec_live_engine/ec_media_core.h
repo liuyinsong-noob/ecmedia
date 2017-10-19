@@ -88,8 +88,11 @@ namespace cloopenwebrtc {
 
 
         // video data preview render.
-        int doPreviewRender(int render_id);
-        int shutdownPreviewRender(int render_id);
+        int doCameraPreviewRender(int render_id);
+        int shutdownCameraPreviewRender(int render_id);
+                  
+        int doPlayingPreviewRender(int render_id);
+        int shutdownPlayingPreviewRender(int render_id);
 
         // desktop capture.
         int doDesktopCapture();
