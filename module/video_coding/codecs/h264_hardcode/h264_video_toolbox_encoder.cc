@@ -384,7 +384,7 @@ int H264VideoToolboxEncoder::SetRates(uint32_t new_bitrate_kbit,
     
 //    printTime();printf("new bit rate %d\n", target_bitrate_bps_);
   bitrate_adjuster_.SetTargetBitrateBps(target_bitrate_bps_);
-  SetBitrateBps(target_bitrate_bps_);
+  SetBitrateBps(bitrate_adjuster_.GetAdjustedBitrateBps());
 
   return WEBRTC_VIDEO_CODEC_OK;
 }

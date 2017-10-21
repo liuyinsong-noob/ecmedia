@@ -2826,9 +2826,9 @@ void ServiceCore::serphone_core_init_default_params(SerphoneCallParams *params)
 	params->in_conference=FALSE;
 	params->invite_userdata = NULL;
     params->group_id = NULL;
-    params->audioRecordPath = m_audioRecordPath;
-    params->bAudioRecord = m_bAudioRecord;
-//haiyuntong
+//    params->audioRecordPath = m_audioRecordPath;
+//    params->bAudioRecord = m_bAudioRecord;
+//    haiyuntong
 #ifdef HAIYUNTONG
     params->akey = NULL;
     params->bkey = NULL;

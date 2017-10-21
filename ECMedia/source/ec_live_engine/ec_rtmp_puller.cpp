@@ -199,8 +199,9 @@ namespace cloopenwebrtc {
         return true;
     }
     
-    bool EC_RtmpPuller::UnpackSpsPps(const char *data , std::vector<uint8_t> & sps_pps)
+    bool EC_RtmpPuller::UnpackSpsPps(char *data , std::vector<uint8_t> &sps, std::vector<uint8_t> &pps)
     {
+        //sps
         if(data[0]!= 1) {
             // PrintConsole("[RTMP ERROR] %s SPS PPS version not correct\n", __FUNCTION__);
             return false;
@@ -210,19 +211,16 @@ namespace cloopenwebrtc {
         for (int i = 0 ; i < sps_num ; i++ ){
             int sps_len = ntohs(  *(unsigned short*)( data+index) );
             index += 2;
-            sps_pps.insert(sps_pps.end(), data+index,  data+index+sps_len);
+            sps.insert(sps.end(), data+index,  data+index+sps_len);
             index += sps_len;
         }
         
-        sps_pps.push_back(0);
-        sps_pps.push_back(0);
-        sps_pps.push_back(0);
-        sps_pps.push_back(1);
+        //pps
         int pps_num = (unsigned char) ( data[index++] );
         for (int i = 0 ; i < pps_num ; i++ ){
             int pps_len = ntohs(  *(unsigned short*)( data+index) );
             index += 2;
-            sps_pps.insert(sps_pps.end(), data+index,  data+index+pps_len);
+            pps.insert(pps.end(), data+index,  data+index+pps_len);
             index += pps_len;
         }
         return true;
@@ -262,13 +260,22 @@ namespace cloopenwebrtc {
         unsigned int payloadLen = 0;
         
         if(codecId == 7 ) {
-            std::vector<uint8_t> sps_pps;
+            std::vector<uint8_t> sps;
+            std::vector<uint8_t> pps;
             std::vector<uint8_t> nal;
             switch( data[1] ) {
                 case 0:
-                    UnpackSpsPps(data+5, sps_pps);
-                    payloadData = &sps_pps[0];
-                    payloadLen = sps_pps.size();
+                    UnpackSpsPps(data+5, sps, pps);
+                    payloadData = &sps[0];
+                    payloadLen = sps.size();
+                    if(av_packet_cacher){
+                        av_packet_cacher->onAvcDataComing((uint8_t *) payloadData, payloadLen, timestamp);
+                    }
+                    payloadData = &pps[0];
+                    payloadLen = pps.size();
+                    if(av_packet_cacher){
+                        av_packet_cacher->onAvcDataComing((uint8_t *) payloadData, payloadLen, timestamp);
+                    }
                     break;
                 case 1:
                     if (!UnPackNAL(data + 5, len - 5, nal)) {
@@ -277,15 +284,16 @@ namespace cloopenwebrtc {
                     }
                     payloadData = &nal[0];
                     payloadLen = nal.size();
+                    if(av_packet_cacher){
+                        av_packet_cacher->onAvcDataComing((uint8_t *) payloadData, payloadLen, timestamp);
+                    }
                     break;
                 default:
                     PrintConsole("[RTMP ERROR] %s codec %d not supported\n", __FUNCTION__, data[1]);
                     return;
             }
             
-            if(av_packet_cacher){
-                av_packet_cacher->onAvcDataComing((uint8_t *) payloadData, payloadLen, timestamp);
-            }
+       
         }
     }
     

@@ -71,7 +71,7 @@ namespace cloopenwebrtc {
         
         bool  UnPackNAL(const char *data, int data_size, std::vector<uint8_t> & nal);
         
-        bool  UnpackSpsPps(const char *data , std::vector<uint8_t> & sps_pps);
+        bool  UnpackSpsPps(char *data , std::vector<uint8_t> &sps, std::vector<uint8_t> &pps);
         void handleVideoPacket(char* data, int len, u_int32_t timestamp);
         void HandleAuidoPacket(char * data, int length, u_int32_t timestamp);
     private:

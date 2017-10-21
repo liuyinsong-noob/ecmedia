@@ -684,7 +684,7 @@ namespace cloopenwebrtc {
         info_video_height_      = height;
         
         PrintConsole("[ECMEDIA CORE INFO] %s end with code:%d\n", __FUNCTION__, 0);
-        return initVideoTransportCodec("H264", 90000);;
+        return 0; //initVideoTransportCodec("H264", 90000);;
     }
 
     int ECMediaMachine::setVideoFrameProperty(int bitrate, int width, int height) {
