@@ -22,6 +22,8 @@ LOCAL_SRC_FILES := \
 		statsCollector.cc \
 		VoeObserver.cpp \
 		MediaStatisticsData.pb.cc \
+		../../config.cc \
+        ../../module/common_types.cc
 
 
 LOCAL_CFLAGS := \
