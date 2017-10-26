@@ -26,10 +26,10 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Last changed  : $Date: 2012-08-30 22:53:44 +0300 (Thu, 30 Aug 2012) $
+// Last changed  : $Date: 2016-01-12 19:24:46 +0200 (ti, 12 tammi 2016) $
 // File revision : $Revision: 4 $
 //
-// $Id: BPMDetect.h 150 2012-08-30 19:53:44Z oparviai $
+// $Id: BPMDetect.h 239 2016-01-12 17:24:46Z oparviai $
 //
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -77,18 +77,11 @@ protected:
     /// Auto-correlation accumulator bins.
     float *xcorr;
     
-    /// Amplitude envelope sliding average approximation level accumulator
-    double envelopeAccu;
-
-    /// RMS volume sliding average approximation level accumulator
-    double RMSVolumeAccu;
-
     /// Sample average counter.
     int decimateCount;
 
     /// Sample average accumulator for FIFO-like decimation.
- 
-	cloopensoundtouch::LONG_SAMPLETYPE decimateSum;
+    cloopensoundtouch::LONG_SAMPLETYPE decimateSum;
 
     /// Decimate sound by this coefficient to reach approx. 500 Hz.
     int decimateBy;
@@ -107,7 +100,7 @@ protected:
     int windowStart;
  
     /// FIFO-buffer for decimated processing samples.
-	cloopensoundtouch::FIFOSampleBuffer *buffer;
+    cloopensoundtouch::FIFOSampleBuffer *buffer;
 
     /// Updates auto-correlation function for given number of decimated samples that 
     /// are read from the internal 'buffer' pipe (samples aren't removed from the pipe 

@@ -42,7 +42,7 @@ public class ScreenCaptureAndroid {
                             view.getHeight(), Bitmap.Config.ARGB_8888);
                     Canvas canvas = new Canvas(bitmap);
                     view.draw(canvas);
-                    ProvideScreeData(bitmap, captureContext);
+                    // ProvideScreeData(bitmap, captureContext);
                     break;
             }
         }
@@ -96,6 +96,6 @@ public class ScreenCaptureAndroid {
 //        return 1080;//screenHeight;
 //    }
 
-      native void ProvideScreeData(Object obj, long captureObject);
+      native void ProvideScreeData(Object obj, byte[] data, int a, int b, int c, long captureObject);
 }
 

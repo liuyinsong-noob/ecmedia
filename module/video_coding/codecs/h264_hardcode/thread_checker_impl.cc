@@ -25,8 +25,9 @@ ThreadCheckerImpl::~ThreadCheckerImpl() {
 bool ThreadCheckerImpl::CalledOnValidThread() const {
   const PlatformThreadRef current_thread = CurrentThreadRef();
   CritScope scoped_lock(&lock_);
-  if (!valid_thread_)  // Set if previously detached.
-    valid_thread_ = current_thread;
+    if (!valid_thread_) { // Set if previously detached.
+        valid_thread_ = current_thread;
+    }
   return IsThreadRefEqual(valid_thread_, current_thread);
 }
 

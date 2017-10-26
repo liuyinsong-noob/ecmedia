@@ -357,7 +357,10 @@
 				DSTROOT = /tmp/webrtc_utility.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
-				GCC_PREPROCESSOR_DEFINITIONS = WEBRTC_MAC;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					WEBRTC_MAC,
+					VIDEO_ENABLED,
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../resampler/include,
@@ -420,7 +423,10 @@
 				DSTROOT = /tmp/webrtc_utility.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
-				GCC_PREPROCESSOR_DEFINITIONS = WEBRTC_MAC;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					WEBRTC_MAC,
+					VIDEO_ENABLED,
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../resampler/include,
@@ -481,7 +487,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/webrtc_utility.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
@@ -493,7 +499,7 @@
 					../interface,
 					../media_file/include,
 					../,
-					../../system_wrappers/interface,
+					../../system_wrappers/include,
 					../../module/audio_coding/main/source,
 					../../module/audio_coding/main/include,
 					../../module/audio_coding/codecs/,
@@ -507,9 +513,10 @@
 					../../module/common_video/source,
 					../../module/common_audio/source,
 					../../module/audio_coding/codecs/g729/source,
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CPLUSPLUSFLAGS = (
 					"-fno-rtti",
@@ -546,7 +553,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/webrtc_utility.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
@@ -558,7 +565,7 @@
 					../interface,
 					../media_file/include,
 					../,
-					../../system_wrappers/interface,
+					../../system_wrappers/include,
 					../../module/audio_coding/main/source,
 					../../module/audio_coding/main/include,
 					../../module/audio_coding/codecs/,
@@ -572,9 +579,10 @@
 					../../module/common_video/source,
 					../../module/common_audio/source,
 					../../module/audio_coding/codecs/g729/source,
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CPLUSPLUSFLAGS = (
 					"-fno-rtti",

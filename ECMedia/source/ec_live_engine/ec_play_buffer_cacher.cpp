@@ -30,8 +30,6 @@ namespace cloopenwebrtc{
     , cache_delta_(1)
     , buf_cache_time_(0)
     , ply_status_(PS_Fast)
-    , sys_fast_video_time_(0)
-    , rtmp_fast_video_time_(0)
     , rtmp_cache_time_(0)
     , play_cur_time_(0) {
         playnetworkThread_ = ThreadWrapper::CreateThread(EC_AVCacher::decodingThreadRun,
@@ -54,6 +52,9 @@ namespace cloopenwebrtc{
         faac_decode_handle_ = nullptr;
         a_cache_len_ = 0;
         aac_frame_per10ms_size_ = 0;
+        last_viedo_ts_delay_ = 0;
+        audio_sampleRate_ = 0;
+        audio_channels_ = 0;
     }
     
     EC_AVCacher::~EC_AVCacher() {
@@ -63,12 +64,26 @@ namespace cloopenwebrtc{
         if(audioHandleThread_) {
             delete audioHandleThread_;
         }
+        if (faac_decode_handle_) {
+            faad_decoder_close(faac_decode_handle_);
+            faac_decode_handle_ = nullptr;
+        }
+
+    }
+
+    bool EC_AVCacher::decodingThreadRun(void *pThis) {
+        return static_cast<EC_AVCacher *>(pThis)->handleVideo();
+    }
+
+    bool EC_AVCacher::decodingAudioThreadRun(void *pThis) {
+        return static_cast<EC_AVCacher*>(pThis)->handleAudio();
     }
 
     void EC_AVCacher::run() {
+        PrintConsole("[EC_AVCacher INFO] %s begin\n", __FUNCTION__);
         running_ = true;
         clearCacher();
-        cacher_update_event_->StartTimer(true, 10);
+         cacher_update_event_->StartTimer(true, 10);
 
         unsigned int pthread_id;
         playnetworkThread_->Start(pthread_id);
@@ -78,36 +93,38 @@ namespace cloopenwebrtc{
     }
 
     void EC_AVCacher::shutdown() {
+        PrintConsole("[EC_AVCacher INFO] %s begin\n", __FUNCTION__);
         running_ = false;
         cacher_update_event_->Set();
         playnetworkThread_->Stop();
         audioHandleThread_->Stop();
     
-        sys_fast_video_time_ = 0;
-        rtmp_fast_video_time_ = 0;
         play_cur_time_ = 0;
     }
 
     void EC_AVCacher::setReceiverCallback(EC_ReceiverCallback *cb) {
+        PrintConsole("[EC_AVCacher INFO] %s begin\n", __FUNCTION__);
         callback_ = cb;
     }
 
-    void EC_AVCacher::CacheH264Data(const uint8_t*pdata, int len, uint32_t ts)
+    // cache avc data
+    void EC_AVCacher::onAvcDataComing(const uint8_t *pdata, int len, uint32_t ts)
     {
+        if(!running_) {
+            return;
+        }
+        PrintConsole("[EC_AVCacher INFO] %s begin\n", __FUNCTION__);
         PlyPacket* pkt = new PlyPacket(true);
         pkt->SetData(pdata, len, ts);
         pkt->_b_video = true;
-        if (sys_fast_video_time_ == 0)
-        {
-            sys_fast_video_time_ = EC_Live_Utility::time();
-            rtmp_fast_video_time_ = ts;
-        }
         CriticalSectionScoped cs(_cs_list_video);
         lst_video_buffer_.push_back(pkt);
+        PrintConsole("EC_AVCacher INFO] %s end\n", __FUNCTION__);
     }
 
     void EC_AVCacher::CachePcmData(const uint8_t*pdata, int len, uint32_t ts)
     {
+        PrintConsole("[EC_AVCacher INFO] %s begin\n", __FUNCTION__);
         if(len == 0 || pdata == nullptr) {
             return;
         }
@@ -117,35 +134,30 @@ namespace cloopenwebrtc{
         pkt->_b_video = false;
         CriticalSectionScoped cs(_cs_list_audio);
         lst_audio_buffer_.push_back(pkt);
-        if (sys_fast_video_time_ == 0) {
-            PlyPacket* pkt_front = lst_audio_buffer_.front();
-            PlyPacket* pkt_back = lst_audio_buffer_.back();
-            sys_fast_video_time_ = EC_Live_Utility::time();
-            rtmp_fast_video_time_ = ts;
-        }
     }
-    
-    void EC_AVCacher::CacheAacData(const uint8_t*pdata, int len, uint32_t ts) {
-		// 1B aac packet type, 4B AAC Specific, zhaoyou
-		// @see http://billhoo.blog.51cto.com/2337751/1557646
 
-		unsigned int audio_sampleRate_ = 0;
-        unsigned int audio_channels_ = 0 ;
-
+    // decode aac data and cache pcm data
+    void EC_AVCacher::onAacDataComing(const uint8_t *pdata, int len, uint32_t ts) {
+        if(!running_) {
+            return;
+        }
+   
+        PrintConsole("[EC_AVCacher INFO] %s begin\n", __FUNCTION__);
         if (faac_decode_handle_ == NULL) {
+            PrintConsole("[EC_AVCacher INFO] %s create new faac decode handler\n", __FUNCTION__);
             faad_decoder_getinfo((char*)pdata, audio_sampleRate_, audio_channels_);
             faac_decode_handle_ = faad_decoder_create(audio_sampleRate_, audio_channels_, 48000);
             faad_decoder_init(faac_decode_handle_, (unsigned char *)pdata, len, audio_sampleRate_, audio_channels_);
             aac_frame_per10ms_size_ = (audio_sampleRate_ / 100) * sizeof(int16_t) * audio_channels_;
         }
-         
-		if (len < 5) {
-			return;
-		}
-
+        // 1B aac packet type, 4B AAC Specific, zhaoyou
+        // @see http://billhoo.blog.51cto.com/2337751/1557646
+        if(len < 5) {
+            return;
+        }
         unsigned int outlen = 0;
         if (faad_decode_frame(faac_decode_handle_, (unsigned char*)pdata, len, audio_cache_ + a_cache_len_, &outlen) == 0) {
-            //printf("");
+            PrintConsole("[EC_AVCacher INFO] %s faac decode success, data: %p, length:%d, a_cache_len_:%d\n", __FUNCTION__, pdata, len, a_cache_len_);
             a_cache_len_ += outlen;
             int ct = 0;
             int fsize = aac_frame_per10ms_size_;
@@ -155,26 +167,32 @@ namespace cloopenwebrtc{
                 ct++;
             }
             memmove(audio_cache_, audio_cache_ + ct * fsize, a_cache_len_);
+        } else{
+            PrintConsole("[EC_AVCacher ERROR] %s faac decode failed, data: %p, length:%d, a_cache_len_:%d\n", __FUNCTION__, pdata, len, a_cache_len_);
         }
         
     }
 
-    bool EC_AVCacher::decodingThreadRun(void *pThis) {
-        return static_cast<EC_AVCacher*>(pThis)->DoDecode();
-    }
-
-    bool EC_AVCacher::DoDecode()
+    bool EC_AVCacher::handleVideo()
     {
         while(running_) {
             PlyPacket* pkt_video = nullptr;
             {//* Get video
                 CriticalSectionScoped cs(_cs_list_video);
                 if (lst_video_buffer_.size() > 0) {
+                    PrintConsole("[ECMEDIA CORE INFO] %s lst_video_buffer_ size :%d\n", __FUNCTION__, lst_video_buffer_.size());
                     pkt_video = lst_video_buffer_.front();
-                    if (pkt_video->_dts <= play_cur_time_) {
+                    
+//                    uint32_t diff_dts = pkt_video->_dts - last_video_ts_;
+//                    if(diff_dts != 0 && (last_viedo_ts_delay_ == 0 || (diff_dts <= 2*last_viedo_ts_delay_ && diff_dts >-2*last_viedo_ts_delay_))) {
+//                        last_video_ts_ = pkt_video->_dts;
+//                        last_viedo_ts_delay_ = diff_dts;
+//                    }
+//                    
+                    int diff = pkt_video->_dts - play_cur_time_;
+                    if (diff <= 0) {
                         lst_video_buffer_.pop_front();
-                    }
-                    else {
+                    } else {
                         pkt_video = nullptr;
                     }
                 }
@@ -189,32 +207,26 @@ namespace cloopenwebrtc{
 #else
 				usleep(10 * 1000);
 #endif
-                
             }
         }
 
         return false;
     }
 
-    
-    bool EC_AVCacher::decodingAudioThreadRun(void *pThis) {
-        return static_cast<EC_AVCacher*>(pThis)->handleAudio();
-    }
-    
     bool EC_AVCacher::handleAudio() {
         cacher_update_event_->Wait(10); //10ms
  
         PlyPacket* pkt_audio = nullptr;
-
         CriticalSectionScoped cs(_cs_list_audio);
         if (lst_audio_buffer_.size() > 0) {
+            PrintConsole("EC_AVCacher INFO] %s , lst_audio_buffer_ size:%d\n", __FUNCTION__, lst_audio_buffer_.size());
             pkt_audio = lst_audio_buffer_.front();
             play_cur_time_ = pkt_audio->_dts;
             lst_audio_buffer_.pop_front();
         }
        
         if (pkt_audio) {
-            callback_->onAacDataComing((uint8_t*)pkt_audio->_data, pkt_audio->_data_len, pkt_audio->_dts);
+            callback_->onAacDataComing((uint8_t*)pkt_audio->_data, pkt_audio->_data_len, pkt_audio->_dts, audio_sampleRate_, audio_channels_);
             delete  pkt_audio;
         }
 
@@ -223,24 +235,23 @@ namespace cloopenwebrtc{
     
     void EC_AVCacher::clearCacher() {
         // clear audio cache buffer.
-        std::list<PlyPacket*>::iterator iter = lst_video_buffer_.begin();
+        std::list<PlyPacket *>::iterator iter = lst_video_buffer_.begin();
         while (iter != lst_video_buffer_.end()) {
-            PlyPacket* pkt = *iter;
+            PlyPacket *pkt = *iter;
             lst_video_buffer_.erase(iter++);
             delete pkt;
         }
-        
+
         // clear video cache buffer
         iter = lst_audio_buffer_.begin();
         while (iter != lst_audio_buffer_.end()) {
-            PlyPacket* pkt = *iter;
+            PlyPacket *pkt = *iter;
             lst_audio_buffer_.erase(iter++);
             delete pkt;
         }
-        
+
         // clear aac cache
         memset(audio_cache_, 0, 8192);
         a_cache_len_ = 0;
     }
-    
 }

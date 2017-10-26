@@ -795,7 +795,9 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 //            sean test magic sound
             ECMedia_audio_enable_magic_sound(call->m_AudioChannelID, enable_magic_sound);
             ECMedia_audio_set_magic_sound(call->m_AudioChannelID, magic_sound_pitch, magic_sound_tempo, magic_sound_rate);
-			//TODO:
+            //ECMedia_select_magic_sound_mode(call->m_AudioChannelID, cloopenwebrtc::kECMagicSoundNormal); //added by zhaoyou
+			
+            //TODO:
 			//bool enabled = false;
 			//int timeout = 0;
 			/*if(network)
@@ -1574,6 +1576,15 @@ int ServiceCore::serphone_set_louds_speaker_status(bool bLouds)
 	return 0;
 }
 
+int ServiceCore::serphone_set_global_audio_in_device(bool bGlobalAudioInDevice)
+{
+    cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+#if !defined(NO_VOIP_FUNCTION)
+	return ECMedia_set_global_audio_in_device(bGlobalAudioInDevice);
+#endif
+	return 0;
+}
+
 int ServiceCore::serphone_get_louds_speaker_status()
 {
     cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
@@ -1724,6 +1735,30 @@ void ServiceCore::serphone_call_init_media_streams(SerPhoneCall *call)
 #endif
 	ECMedia_audio_create_channel(call->m_AudioChannelID, false);
 
+    if (call->params.bAudioRecord)
+    {
+        std::string pathStr = call->params.audioRecordPath;
+        std::string microphone = "microphone.pcm";
+        std::string playout = "playout.pcm";
+        std::string encoded = "encoded.pcm";
+        if (pathStr.empty() == false) {
+          microphone = pathStr + "/" + microphone;
+          playout = pathStr + "/" + playout;
+          encoded = pathStr + "/" + encoded;
+        }
+        
+        ECMedia_start_record_microphone((char*)(microphone.c_str()));
+        ECMedia_start_record_playout(call->m_AudioChannelID, (char*)playout.c_str());
+        ECMedia_start_record_send_voice((char*)(encoded.c_str()));
+      
+    }
+    else {
+      ECMedia_stop_record_microphone();
+      ECMedia_stop_record_playout(call->m_AudioChannelID);
+      ECMedia_stop_record_send_voice();
+    }
+
+
     //TODO:
 	//base->SetFecStatus(call->m_AudioChannelID, m_enable_fec);
     //base->SetLoss(call->m_AudioChannelID, m_opus_packet_loss_rate);
@@ -1733,7 +1768,7 @@ void ServiceCore::serphone_call_init_media_streams(SerPhoneCall *call)
 
 	//audio->EnableHighPassFilter(true);
 	ECMedia_set_AgcStatus(m_agcEnabled, m_agcMode);
-    ECMedia_set_EcStatus(m_ecEnabled, m_ecMode);
+    // ECMedia_set_EcStatus(m_ecEnabled, m_ecMode);
     ECMedia_set_NsStatus(m_nsEnabled, m_nsMode);
     //ECMedia_EnableHowlingControl(m_hcEnabled);
 
@@ -1981,8 +2016,11 @@ int ServiceCore::serphone_core_set_audio_config_enabled(int type, bool_t enabled
 		return -1;
 	}
 	ECMedia_set_AgcStatus(m_agcEnabled, m_agcMode);
-	ECMedia_set_EcStatus(m_ecEnabled, cloopenwebrtc::kEcAec);
-//	ECMedia_set_SetAecmMode(cloopenwebrtc::kAecmLoudSpeakerphone, false);
+	ECMedia_set_EcStatus(m_ecEnabled, m_ecMode);
+    if(m_ecMode == kEcAecm) {
+        ECMedia_set_SetAecmMode(cloopenwebrtc::kAecmLoudSpeakerphone, false);
+    }
+    
 	ECMedia_set_NsStatus(m_nsEnabled, cloopenwebrtc::kNsVeryHighSuppression);
     ECMedia_EnableHowlingControl(m_hcEnabled);
     return 0;

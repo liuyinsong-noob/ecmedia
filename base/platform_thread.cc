@@ -51,10 +51,13 @@ PlatformThreadRef CurrentThreadRef() {
 }
 
 bool IsThreadRefEqual(const PlatformThreadRef& a, const PlatformThreadRef& b) {
+    bool ret = false;
 #if defined(WEBRTC_WIN)
-  return a == b;
+    ret = a == b;
+    return ret;
 #elif defined(WEBRTC_POSIX)
-    return pthread_equal(a, b);
+    ret =  pthread_equal(a, b);
+    return ret;
 #endif
 }
 

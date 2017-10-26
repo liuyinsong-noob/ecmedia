@@ -89,7 +89,12 @@ int StHlsTask::ProcessTask(){
             if(running_) {
                 ts_wait_event_->Wait(error_seconds * 1000);
             }
-            
+            static int retry_times = 0;
+            retry_times++;
+            if (retry_times > 3) {
+                retry_times = 0;
+                return -1;
+            }
             continue;
         }
         

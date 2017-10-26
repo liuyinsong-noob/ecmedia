@@ -9,8 +9,8 @@
  */
 #ifdef WEBRTC_MAC
 #include "module/audio_device/main/source/mac/audio_device_utility_mac.h"
-#include "system_wrappers/interface/critical_section_wrapper.h"
-#include "system_wrappers/interface/trace.h"
+#include "system_wrappers/include/critical_section_wrapper.h"
+#include "system_wrappers/include/trace.h"
 
 namespace cloopenwebrtc
 {

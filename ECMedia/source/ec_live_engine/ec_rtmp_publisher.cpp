@@ -28,7 +28,6 @@ namespace cloopenwebrtc {
                 kNormalPriority,
                 "rtmpPublishThread_");
         cacher_update_event_ = EventTimerWrapper::Create();
-      
     }
     
     ECRtmpPublisher::~ECRtmpPublisher() {
@@ -50,6 +49,7 @@ namespace cloopenwebrtc {
     }
     
     void ECRtmpPublisher::start(const char *url) {
+        PrintConsole("[ECRtmpPublisher INFO] %s: begin", __FUNCTION__);
         if(!running_) {
             running_ = true;
             // save rtmp url;
@@ -61,9 +61,11 @@ namespace cloopenwebrtc {
             unsigned int pthread_id;
             rtmpPublishThread_->Start(pthread_id);
         }
+        PrintConsole("[ECRtmpPublisher INFO] %s: end.", __FUNCTION__);
     }
     
     void ECRtmpPublisher::stop() {
+        PrintConsole("[ECRtmpPublisher INFO] %s: begin", __FUNCTION__);
         if(running_) {
             running_ = false;
             rtmp_bitrate_ontroller_->shutdown();
@@ -75,6 +77,7 @@ namespace cloopenwebrtc {
             retrys_ = 0;
             rtmp_status_ = RS_STM_Init;
         }
+        PrintConsole("[ECRtmpPublisher INFO] %s: end.", __FUNCTION__);
     }
     
     void ECRtmpPublisher::needClearCacher() {
@@ -201,6 +204,7 @@ namespace cloopenwebrtc {
     }
 
     bool ECRtmpPublisher::run() {
+        PrintConsole("[ECRtmpPublisher INFO] %s: publishing...", __FUNCTION__);
         while(running_) {
             if(rtmp_ != NULL)
             {
@@ -208,7 +212,7 @@ namespace cloopenwebrtc {
                     case RS_STM_Init:
                     {
                         if (srs_rtmp_handshake(rtmp_) == 0) {
-                            srs_human_trace("SRS: simple handshake ok.");
+                            PrintConsole("SRS: simple handshake ok.");
                             rtmp_status_ = RS_STM_Handshaked;
                         }
                         else {
@@ -219,7 +223,7 @@ namespace cloopenwebrtc {
                     case RS_STM_Handshaked:
                     {
                         if (srs_rtmp_connect_app(rtmp_) == 0) {
-                            srs_human_trace("SRS: connect vhost/app ok.");
+                            PrintConsole("SRS: connect vhost/app ok.");
                             rtmp_status_ = RS_STM_Connected;
                         }
                         else {
@@ -230,7 +234,7 @@ namespace cloopenwebrtc {
                     case RS_STM_Connected:
                     {
                         if (srs_rtmp_publish_stream(rtmp_) == 0) {
-                            srs_human_trace("SRS: publish stream ok.");
+                            PrintConsole("SRS: publish stream ok.");
                             rtmp_status_ = RS_STM_Published;
                             clearMediaCacher();
                             if(callback_) {
@@ -250,6 +254,7 @@ namespace cloopenwebrtc {
                 }
             }
         }
+        PrintConsole("[ECRtmpPublisher INFO] %s: ending...", __FUNCTION__);
         return false;
     }
 
@@ -275,7 +280,7 @@ namespace cloopenwebrtc {
 
             if (ret != 0) {
                 if (srs_h264_is_dvbsp_error(ret)) {
-                    srs_human_trace("ignore drop video error, code=%d", ret);
+                    PrintConsole("ignore drop video error, code=%d", ret);
                 }
                 else if (srs_h264_is_duplicated_sps_error(ret)) {
                     //srs_human_trace("ignore duplicated sps, code=%d", ret);
@@ -284,7 +289,7 @@ namespace cloopenwebrtc {
                     //srs_human_trace("ignore duplicated pps, code=%d", ret);
                 }
                 else {
-                    srs_human_trace("send h264 raw data failed. ret=%d", ret);
+                    PrintConsole("send h264 raw data failed. ret=%d", ret);
                     callOnDisconnect();
                     return;
                 }
@@ -295,14 +300,14 @@ namespace cloopenwebrtc {
             if ((ret = srs_audio_write_raw_frame(rtmp_,
                     10, 3, 1, 1,
                     (char*)dataPtr->_data, dataPtr->_dataLen, dataPtr->_dts)) != 0) {
-                srs_human_trace("send audio raw data failed. ret=%d", ret);
+                PrintConsole("send audio raw data failed. ret=%d", ret);
                 callOnDisconnect();
                 return;
             }
         } else if(dataPtr->_type == META_DATA) {
             int ret = srs_rtmp_write_packet(rtmp_, SRS_RTMP_TYPE_SCRIPT, dataPtr->_dts, (char*)dataPtr->_data, dataPtr->_dataLen);
             if (ret != 0) {
-                srs_human_trace("send metadata failed. ret=%d", ret);
+                PrintConsole("send metadata failed. ret=%d", ret);
             }
             return;
         }

@@ -103,11 +103,8 @@ public final class CallControlManager extends AbstractDispatcher {
 		// get softswitch address, just execute subthread
 
 		if (!userAgent.getPassword().isEmpty()) {
-//			NativeInterface.connectToCCP(userAgent.getUa_server(), userAgent.getUa_port(),
-//					userAgent.getSid(), userAgent.getPassword(), "");
-
-			NativeInterface.connectToCCP("192.168.177.186", 7600,
-					"1010", "123456", "");
+			NativeInterface.connectToCCP(userAgent.getUa_server(), userAgent.getUa_port(),
+					userAgent.getSid(), userAgent.getPassword(), "");
 		} else {
 			doQuerySoftSwitchAddress(userAgent.getPrivateCloud(),
 					userAgent.getSid(), userAgent.getSubaccountid(),

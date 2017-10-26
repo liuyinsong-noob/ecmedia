@@ -36,9 +36,9 @@ FileRecorder* FileRecorder::CreateFileRecorder(uint32_t instanceID,
     case kFileFormatPcm8kHzFile:
     case kFileFormatPcm32kHzFile:
         return new FileRecorderImpl(instanceID, fileFormat);
-    case kFileFormatAviFile:
 #ifdef VIDEO_ENABLED
 #ifdef WEBRTC_MODULE_UTILITY_VIDEO
+    case kFileFormatAviFile:
         return new AviRecorder(instanceID, fileFormat);
 #endif
 #else

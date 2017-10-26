@@ -14,7 +14,7 @@
 #include "thread_annotations.h"
 #include "module/audio_device/main/source/audio_device_generic.h"
 #include "module/audio_device/main/source/mac/audio_mixer_manager_mac.h"
-#include "system_wrappers/interface/critical_section_wrapper.h"
+#include "system_wrappers/include/critical_section_wrapper.h"
 
 #include <AudioToolbox/AudioConverter.h>
 #include <CoreAudio/CoreAudio.h>

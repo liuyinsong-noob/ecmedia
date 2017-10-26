@@ -383,7 +383,7 @@ _windowRefSuperView(NULL),
 _windowRefSuperViewFrame(NSMakeRect(0,0,0,0))
 {
     _screenUpdateThread = ThreadWrapper::CreateThread(ScreenUpdateThreadProc, this, kRealtimePriority);
-    _screenUpdateEvent = EventWrapper::Create();
+    _screenUpdateEvent = EventTimerWrapper::Create();
     _windowRef = [[CocoaRenderView alloc] initWithFrame: _parentView.bounds];
 }
 

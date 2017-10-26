@@ -127,6 +127,7 @@ public:
     virtual int SetPCMAudioDataCallBack(int channelid, ECMedia_PCMDataCallBack audio_data_cb);
     virtual int setConferenceParticipantCallback(int channelid, ECMedia_ConferenceParticipantCallback* audio_data_cb);
     virtual bool GetRecordingIsInitialized();
+    virtual bool GetRecordingIsRecording();
 protected:
     VoEBaseImpl(voe::SharedData* shared);
     virtual ~VoEBaseImpl();
@@ -247,6 +248,7 @@ public:
 	virtual void* GetChannel(int channelid);
     virtual int enableSoundTouch(int channelid, bool is_enable);
     virtual int setSoundTouch(int channelid, int pitch, int tempo, int rate);
+    virtual int selectSoundTouchMode(int channelid, ECMagicSoundMode mode);
 //---end
 };
 

@@ -149,7 +149,7 @@ int ViESender::SendRtp(int vie_id, const uint8_t* packet, size_t length, const P
 		  _startNetworkTime = time(NULL);
 	  if (_isWifi) {
 		  _sendDataTotalWifi += bytes_sent;
-		  _sendDataTotalWifi += 42;//14 + 20 + 8;//ethernet+ip+udp header
+		  _sendDataTotalWifi += 42; // 14 + 20 + 8;//ethernet+ip+udp header
 	  }
 	  else
 	  {

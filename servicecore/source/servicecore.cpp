@@ -647,6 +647,8 @@ ServiceCore::ServiceCore()
     magic_sound_pitch = 0;
     magic_sound_tempo = 0;
     magic_sound_rate = 0;
+
+    m_bAudioRecord = false;
 }
 
 ServiceCore::~ServiceCore()
@@ -2824,7 +2826,9 @@ void ServiceCore::serphone_core_init_default_params(SerphoneCallParams *params)
 	params->in_conference=FALSE;
 	params->invite_userdata = NULL;
     params->group_id = NULL;
-//haiyuntong
+//    params->audioRecordPath = m_audioRecordPath;
+//    params->bAudioRecord = m_bAudioRecord;
+//    haiyuntong
 #ifdef HAIYUNTONG
     params->akey = NULL;
     params->bkey = NULL;
@@ -4818,7 +4822,7 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
 #endif
 
 #ifdef VIDEO_ENABLED
-//	serphone_core_assign_payload_type(&payload_type_h264,-1,"profile-level-id=42e01e; packetization-mode=1; max-br=452; max-mbps=11880");
+    serphone_core_assign_payload_type(&payload_type_h264, 96,"profile-level-id=42e01e; packetization-mode=1; max-br=452; max-mbps=11880");
 	serphone_core_assign_payload_type(&payload_type_vp8,120,NULL);
 
    // serphone_core_assign_payload_type(&payload_type_h264_svc,98, "profile-level-id=428014"); //profile-level-id need to be fixed.
@@ -6319,6 +6323,14 @@ int ServiceCore::serphone_set_traceFlag(/*bool flag*/) //Don't use flag for the 
 {
 	ECMedia_set_trace(NULL, (void*)CCPClientPrintLog, 25, 100);
 	return 0;
+}
+
+int ServiceCore::serphone_set_audioRecordStatus(const char *path, bool enable)
+{
+    m_audioRecordPath.assign(path);
+    m_bAudioRecord = enable;
+    
+    return 0;
 }
 
 #ifdef HAIYUNTONG

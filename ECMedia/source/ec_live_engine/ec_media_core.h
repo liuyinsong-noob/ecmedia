@@ -31,9 +31,6 @@ namespace cloopenwebrtc {
     class AVCImageCallback;
     class EC_CapturerCallback;
 
-
- 
-
     class ECMediaMachine
             : public Transport ,
               public AudioPacketizationCallback,
@@ -81,7 +78,7 @@ namespace cloopenwebrtc {
 
         // EC_ReceiverCallback
         void onAvcDataComing(void* nalu_data, int len, uint32_t timestamp);
-        void onAacDataComing(uint8_t* pData, int nLen, uint32_t ts);
+        void onAacDataComing(uint8_t* pData, int nLen, uint32_t ts, uint32_t sample_rate, int audio_channels);
 
 
     private:
@@ -91,8 +88,11 @@ namespace cloopenwebrtc {
 
 
         // video data preview render.
-        int doPreviewRender(int render_id);
-        int shutdownPreviewRender(int render_id);
+        int doCameraPreviewRender(int render_id);
+        int shutdownCameraPreviewRender(int render_id);
+                  
+        int doPlayingPreviewRender(int render_id);
+        int shutdownPlayingPreviewRender(int render_id);
 
         // desktop capture.
         int doDesktopCapture();

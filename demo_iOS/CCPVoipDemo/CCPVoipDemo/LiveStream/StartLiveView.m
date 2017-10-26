@@ -22,6 +22,7 @@
 @property (nonatomic, strong) UIButton *startPushLiveButton;
 @property (nonatomic, strong) UIView *containerView;
 @property (nonatomic, strong) UIView *liveRenderView;
+@property (nonatomic, strong) UITextField *live_url_textView;
 @property (nonatomic,retain) ModelEngineVoip *modelEngineVoip;
 
 
@@ -65,6 +66,14 @@ static int padding = 30;
         [self.containerView addSubview:self.beautyButton];
         [self.containerView addSubview:self.startPlayLiveButton];
         [self.containerView addSubview:self.startPushLiveButton];
+        [self.containerView addSubview:self.live_url_textView];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString* live_url =  [defaults objectForKey:@"ec_live_url"];
+        if(live_url.length == 0) {
+            self.live_url_textView.text = @"rtmp://";
+        } else {
+            self.live_url_textView.text = live_url;
+        }
         
         self.modelEngineVoip = [ModelEngineVoip getInstance];
     }
@@ -145,11 +154,22 @@ static int padding = 30;
 - (UIView*)liveRenderView{
     if(!_liveRenderView){
         _liveRenderView = [UIView new];
-        _liveRenderView.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height - 200);
+        _liveRenderView.frame = CGRectMake(0, 30, self.bounds.size.width, self.bounds.size.height - 250);
         _liveRenderView.backgroundColor = [UIColor clearColor];
         _liveRenderView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     }
     return _liveRenderView;
+}
+
+- (UITextField*)live_url_textView {
+    if(!_live_url_textView){
+        _live_url_textView = [UITextField new];
+        _live_url_textView.delegate = self;
+        _live_url_textView.frame = CGRectMake(0, 0, self.bounds.size.width, 30);
+        _live_url_textView.backgroundColor = [UIColor grayColor];
+        _live_url_textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    }
+    return _live_url_textView;
 }
 
 #pragma mark ---- <关闭界面>
@@ -219,9 +239,9 @@ static int padding = 30;
         [self.containerView addSubview:self.liveRenderView];
         [self.startPlayLiveButton setTitle:@"结束观看" forState:UIControlStateNormal];
         // play rtmp
-        [self.modelEngineVoip playStream:self.session url:@"rtmp://192.168.0.44:1935/live/livestream" view:self.liveRenderView];
+        [self.modelEngineVoip playStream:self.session url:@"rtmp://192.168.0.2:1935/live/livestream" view:self.liveRenderView];
         // play hls
-//        [self.modelEngineVoip playStream:self.session url:@"http://192.168.0.44/live/livestream.m3u8" view:self.liveRenderView];
+        // [self.modelEngineVoip playStream:self.session url:@"http://192.168.0.2/live/livestream.m3u8" view:self.liveRenderView];
     } else {
         [self.startPlayLiveButton setTitle:@"观看直播" forState:UIControlStateNormal];
         [self.liveRenderView removeFromSuperview];
@@ -257,7 +277,7 @@ static int padding = 30;
         int front_camera = 1;
         int resolution_QHD = 2;
         [self.modelEngineVoip configLiveVideoStream:self.session camera:front_camera resolution:resolution_QHD fps: 15 auto_bitrate: false];
-        [self.modelEngineVoip pushStream:self.session url:@"rtmp://192.168.0.44:1935/live/livestream" view:self.liveRenderView];
+        [self.modelEngineVoip pushStream:self.session url:@"rtmp://192.168.0.2:1935/live/livestream" view:self.liveRenderView];
         // [self.containerView addSubview:self.startPushLiveButton];
     
     }else{
@@ -293,5 +313,15 @@ static int padding = 30;
     }
     [super dealloc];
 }
+
+-(void)textFieldDidEndEditing:(UITextField *)textField {
+    NSUserDefaults* loginDefault = [NSUserDefaults standardUserDefaults];
+    if (textField == _live_url_textView) {
+        [loginDefault setObject:textField.text forKey:@"ec_live_url"];
+    } else {
+        //todo: something
+    }
+}
+
 
 @end

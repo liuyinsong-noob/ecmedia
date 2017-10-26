@@ -555,7 +555,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/audio_device.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
@@ -593,7 +593,7 @@
 					../../.,
 					../interface,
 					../.,
-					../../system_wrappers/interface,
+					../../system_wrappers/include,
 					./main/source,
 					./main/include,
 					./main/source/dummy,
@@ -602,9 +602,10 @@
 					../resampler/include,
 					../common_audio/source/signal_processing/include,
 					main/source/mac/,
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -620,7 +621,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/audio_device.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
@@ -657,7 +658,7 @@
 					../../.,
 					../interface,
 					../.,
-					../../system_wrappers/interface,
+					../../system_wrappers/include,
 					./main/source,
 					./main/include,
 					./main/source/dummy,
@@ -666,9 +667,10 @@
 					../resampler/include,
 					../common_audio/source/signal_processing/include,
 					main/source/mac/,
+					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -13,9 +13,9 @@
 #include "module/audio_device/main/source/mac/audio_device_mac.h"
 
 #include "module/audio_device/main/source/mac/portaudio/pa_ringbuffer.h"
-#include "system_wrappers/interface/event_wrapper.h"
-#include "system_wrappers/interface/thread_wrapper.h"
-#include "system_wrappers/interface/trace.h"
+#include "system_wrappers/include/event_wrapper.h"
+#include "system_wrappers/include/thread_wrapper.h"
+#include "system_wrappers/include/trace.h"
 
 #include <ApplicationServices/ApplicationServices.h>
 #include <assert.h>

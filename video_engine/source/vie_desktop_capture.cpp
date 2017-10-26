@@ -143,7 +143,10 @@ void VieDesktopCapturer::OnCaptureCompleted(DesktopFrame* frame, CaptureErrCode 
 #if defined(_WIN32)
     src_video_type = kARGB;
 #elif defined(WEBRTC_ANDROID)
-    src_video_type = kRGB565;
+    /*
+     * Android java 层直接向底层传入I420数据，旧版使用 ARGB565. zhaoyou
+     */
+    src_video_type = kI420;
 #else
     src_video_type = kMJPG;
 #endif

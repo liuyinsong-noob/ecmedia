@@ -7,7 +7,11 @@
 #include "ec_media_core.h"
 #include "ec_rtmp_publisher.h"
 #include "ec_rtmp_puller.h"
-//#include "ec_hls_puller.h"
+
+#ifdef WIN32
+#else
+#include "ec_hls_puller.h"
+#endif
 
 namespace cloopenwebrtc {
     static ECLiveEngine *ec_live_engine_ = NULL;
@@ -17,7 +21,7 @@ namespace cloopenwebrtc {
         puller_runnig_              = false;
         network_adaptive_enable_    = false;
 
-        meida_puller_               = nullptr;
+        media_puller_               = nullptr;
         rtmp_publisher_             = nullptr;
         bitrate_controller_         = nullptr;
 
@@ -30,9 +34,9 @@ namespace cloopenwebrtc {
             rtmp_publisher_ = NULL;
         }
 
-        if(meida_puller_) {
-            delete meida_puller_;
-            meida_puller_ = NULL;
+        if(media_puller_) {
+            delete media_puller_;
+            media_puller_ = NULL;
         }
 
         if(ec_media_core_) {
@@ -54,7 +58,7 @@ namespace cloopenwebrtc {
     ECLiveEngine *ECLiveEngine::getInstance() {
         PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
         if(!ec_live_engine_) {
-            PrintConsole("[ECLiveEngine Error] %s: create new live engine instance.", __FUNCTION__);
+            PrintConsole("[ECLiveEngine INFO] %s: create new live engine instance.", __FUNCTION__);
             ec_live_engine_ = new ECLiveEngine();
             if(ec_live_engine_->init() != 0) {
                 PrintConsole("[ECLiveEngine Error] %s: ec live engine init failed.", __FUNCTION__);
@@ -106,6 +110,7 @@ namespace cloopenwebrtc {
             rtmp_publisher_->stop();
 
             publiser_running_ = false;
+            PrintConsole("[ECLiveEngine INFO] %s: stop with code: %d", __FUNCTION__, ret);
             return ret;
         }
         PrintConsole("[ECLiveEngine INFO] %s: stop", __FUNCTION__);
@@ -119,12 +124,16 @@ namespace cloopenwebrtc {
         if(!puller_runnig_) {
             puller_runnig_ = true;
 
-            if(!meida_puller_) {
-                meida_puller_ = createMediaPuller(url, callback);
-                meida_puller_->setReceiverCallback(ec_media_core_);
+            if(!media_puller_) {
+                media_puller_ = createMediaPuller(url, callback);
+                if(!media_puller_) {
+                    PrintConsole("[ECLiveEngine INFO] %s: create media puller faild.", __FUNCTION__);
+                    return -1;
+                }
+                media_puller_->setReceiverCallback(ec_media_core_);
             }
 
-            meida_puller_->start(url);
+            media_puller_->start(url);
             ret = ec_media_core_->startPlayout();
         }
         PrintConsole("[ECLiveEngine INFO] %s: end with code: %d", __FUNCTION__, ret);
@@ -135,10 +144,11 @@ namespace cloopenwebrtc {
         PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
         int ret = -1;
         if(puller_runnig_) {
-            meida_puller_->stop();
-            delete meida_puller_;
-            meida_puller_ = nullptr;
-            
+            if(media_puller_) {
+                media_puller_->stop();
+                delete media_puller_;
+                media_puller_ = nullptr;
+            }
             ret = ec_media_core_->stopPlayout();
             puller_runnig_ = false;
         }
@@ -176,8 +186,13 @@ namespace cloopenwebrtc {
         if(strncmp(url, "rtmp", 4) == 0) {
             return new EC_RtmpPuller(callback);
         } else if(strncmp(url, "http", 4) == 0) {
-			return nullptr; // new EC_HLS_Puller();
+#ifdef WIN32
+			return nullptr; // not support win32
+#else
+            return new EC_HLS_Puller(callback);
+#endif
         } else {
+            
             // todo: http-flv player
             return nullptr;
         }
@@ -214,7 +229,7 @@ namespace cloopenwebrtc {
     void ECLiveEngine::getVideoStreamInfo(EC_LiveVideoResolution resolution, int &width, int &height, int &bitrate) {
         width = 640;
         height = 360;
-#if defined(WEBRTC_ANDROID) || defined(WEBRTC_IOS)
+#ifndef WIN32
         width = 360; 
         height = 640;
 #endif
@@ -222,7 +237,7 @@ namespace cloopenwebrtc {
             case EC_VIDEO_RESOLUTION_720P:
                 width = 1280;
                 height = 720;
-#if defined(WEBRTC_ANDROID) || defined(WEBRTC_IOS)
+#ifndef WIN32
                 width = 720;
                 height = 1280;
 #endif
@@ -232,7 +247,7 @@ namespace cloopenwebrtc {
             case EC_VIDEO_RESOLUTION_HD:
                 width = 960;
                 height = 540;
-#if defined(WEBRTC_ANDROID) || defined(WEBRTC_IOS)
+#ifndef WIN32
                 width = 540;
                 height = 960;
                 bitrate = 1024;

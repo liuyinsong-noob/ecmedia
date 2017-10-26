@@ -201,7 +201,7 @@ void BitrateControllerImpl::OnDelayBasedBweResult(
 
 #ifndef WIN32
       printTime();
-      printf("[BWE] bitrate_controller = %d (is_probe = %s)\n", result.target_bitrate_bps, result.probe ? "True" : "false");
+      // printf("[BWE] bitrate_controller = %d (is_probe = %s)\n", result.target_bitrate_bps, result.probe ? "True" : "false");
 #endif
     if (result.probe) {
 		LOG(LS_ERROR) << "--------------[bwe] bitrate_controller = "
@@ -274,7 +274,7 @@ bool BitrateControllerImpl::GetNetworkParameters(uint32_t* bitrate,
     
 #ifndef WIN32
     printTime();
-    printf("[BWE] bitrate_controller = %d\n", current_bitrate);
+    // printf("[BWE] bitrate_controller = %d\n", current_bitrate);
 #endif
 
   *bitrate = current_bitrate;

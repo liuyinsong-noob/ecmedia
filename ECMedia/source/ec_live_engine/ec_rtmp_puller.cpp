@@ -22,7 +22,6 @@ namespace cloopenwebrtc {
     #define ERROR_SUCCESS   0
     #endif
     #define MAX_RETRY_TIME  3
-
     static u_int8_t fresh_nalu_header[] = { 0x00, 0x00, 0x00, 0x01 };
     static u_int8_t cont_nalu_header[] =  { 0x00, 0x00, 0x01};
 
@@ -36,11 +35,6 @@ namespace cloopenwebrtc {
                 kNormalPriority,
                 "rtmpPullingThread_");
         av_packet_cacher = NULL;
-//        srs_codec_ = new SrsAvcAacCodec();
-//        audio_payload_ = new DemuxData(1024);
-//        video_payload_ = new DemuxData(384 * 1024);
-        
-      
     }
     
     EC_RtmpPuller::~EC_RtmpPuller() {
@@ -75,6 +69,7 @@ namespace cloopenwebrtc {
             running_ = false;
             rtmpPullingThread_->Stop();
             srs_rtmp_destroy(rtmp_);
+            rtmp_ = nullptr;
             av_packet_cacher->shutdown();
             rtmp_status_ = RS_PLY_Init;
         }
@@ -99,7 +94,7 @@ namespace cloopenwebrtc {
                     case RS_PLY_Init:
                     {
                         if (srs_rtmp_handshake(rtmp_) == 0) {
-                            srs_human_trace("SRS: simple handshake ok.");
+                            PrintConsole("SRS: simple handshake ok.");
                             rtmp_status_ = RS_PLY_Handshaked;
                         }
                         else {
@@ -110,7 +105,7 @@ namespace cloopenwebrtc {
                     case RS_PLY_Handshaked:
                     {
                         if (srs_rtmp_connect_app(rtmp_) == 0) {
-                            srs_human_trace("SRS: connect vhost/app ok.");
+                            PrintConsole("SRS: connect vhost/app ok.");
                             rtmp_status_ = RS_PLY_Connected;
                         }
                         else {
@@ -121,7 +116,7 @@ namespace cloopenwebrtc {
                     case RS_PLY_Connected:
                     {
                         if (srs_rtmp_play_stream(rtmp_) == 0) {
-                            srs_human_trace("SRS: play stream ok.");
+                            PrintConsole("SRS: play stream ok.");
                             rtmp_status_ = RS_PLY_Played;
                             CallConnect();
                         }
@@ -132,9 +127,9 @@ namespace cloopenwebrtc {
                         break;
                     case RS_PLY_Played:
                     {
-                        DoReadData();
+                        doReadRtmpData();
                     }
-                        break;
+                    break;
                 }
             }
         }
@@ -154,6 +149,7 @@ namespace cloopenwebrtc {
             srs_rtmp_destroy(rtmp_);
             rtmp_ = NULL;
         }
+        
         if(rtmp_status_ != RS_PLY_Closed) {
             rtmp_status_ = RS_PLY_Init;
             retry_ct_ ++;
@@ -162,12 +158,16 @@ namespace cloopenwebrtc {
                 rtmp_ = srs_rtmp_create(str_url_.c_str());
             } else {
                 if(!callback_) {
+                    running_ = false;
                     return;
                 }
                 
                 if(connected_) {
+                    running_ = false;
                     callback_(EC_LIVE_DISCONNECTED);
-                } else {
+                }
+                else {
+                    running_ = false;
                     callback_(EC_LIVE_PLAY_FAILED);
                 }
             }
@@ -199,8 +199,9 @@ namespace cloopenwebrtc {
         return true;
     }
     
-    bool EC_RtmpPuller::UnpackSpsPps(const char *data , std::vector<uint8_t> & sps_pps)
+    bool EC_RtmpPuller::UnpackSpsPps(char *data , std::vector<uint8_t> &sps, std::vector<uint8_t> &pps)
     {
+        //sps
         if(data[0]!= 1) {
             // PrintConsole("[RTMP ERROR] %s SPS PPS version not correct\n", __FUNCTION__);
             return false;
@@ -210,32 +211,31 @@ namespace cloopenwebrtc {
         for (int i = 0 ; i < sps_num ; i++ ){
             int sps_len = ntohs(  *(unsigned short*)( data+index) );
             index += 2;
-            sps_pps.insert(sps_pps.end(), data+index,  data+index+sps_len);
+            sps.insert(sps.end(), data+index,  data+index+sps_len);
             index += sps_len;
         }
         
-        sps_pps.push_back(0);
-        sps_pps.push_back(0);
-        sps_pps.push_back(0);
-        sps_pps.push_back(1);
+        //pps
         int pps_num = (unsigned char) ( data[index++] );
         for (int i = 0 ; i < pps_num ; i++ ){
             int pps_len = ntohs(  *(unsigned short*)( data+index) );
             index += 2;
-            sps_pps.insert(sps_pps.end(), data+index,  data+index+pps_len);
+            pps.insert(pps.end(), data+index,  data+index+pps_len);
             index += pps_len;
         }
         return true;
     }
     
-    void EC_RtmpPuller::DoReadData() {
+    void EC_RtmpPuller::doReadRtmpData() {
         int size;
         char type;
         char *data;
         u_int32_t timestamp;
 
+ 
         if (srs_rtmp_read_packet(rtmp_, &type, &timestamp, &data, &size) != 0) {
-            //todo log error
+            CallDisconnect();
+            return;
         }
 
         if (type == SRS_RTMP_TYPE_VIDEO) {
@@ -245,16 +245,14 @@ namespace cloopenwebrtc {
         } else if (type == SRS_RTMP_TYPE_SCRIPT) {
             if (!srs_rtmp_is_onMetaData(type, data, size)) {
                 // LOG(LS_ERROR) << "No flv";
-                srs_human_trace("drop message type=%#x, size=%dB", type, size);
+                PrintConsole("drop message type=%#x, size=%dB", type, size);
             }
         }
- 
         free(data);
-       
     }
 
     void EC_RtmpPuller::handleVideoPacket(char* data, int len, u_int32_t timestamp) {
-        
+        PrintConsole("[EC_RtmpPuller INFO] %s begin\n", __FUNCTION__);
         unsigned frameType = ((unsigned char)data[0]) >> 4;
         unsigned codecId = data[0] &0xF;
         RTPHeader rtpHeader;
@@ -262,35 +260,46 @@ namespace cloopenwebrtc {
         unsigned int payloadLen = 0;
         
         if(codecId == 7 ) {
-            std::vector<uint8_t> sps_pps;
+            std::vector<uint8_t> sps;
+            std::vector<uint8_t> pps;
             std::vector<uint8_t> nal;
             switch( data[1] ) {
                 case 0:
-                    UnpackSpsPps(data+5, sps_pps);
-                    payloadData = &sps_pps[0];
-                    payloadLen = sps_pps.size();
+                    UnpackSpsPps(data+5, sps, pps);
+                    payloadData = &sps[0];
+                    payloadLen = sps.size();
+                    if(av_packet_cacher){
+                        av_packet_cacher->onAvcDataComing((uint8_t *) payloadData, payloadLen, timestamp);
+                    }
+                    payloadData = &pps[0];
+                    payloadLen = pps.size();
+                    if(av_packet_cacher){
+                        av_packet_cacher->onAvcDataComing((uint8_t *) payloadData, payloadLen, timestamp);
+                    }
                     break;
                 case 1:
                     if (!UnPackNAL(data + 5, len - 5, nal)) {
-                        // PrintConsole("[RTMP ERROR] %s unpack nalu error\n", __FUNCTION__);
+                        PrintConsole("[RTMP ERROR] %s unpack nalu error\n", __FUNCTION__);
                         return;
                     }
                     payloadData = &nal[0];
                     payloadLen = nal.size();
+                    if(av_packet_cacher){
+                        av_packet_cacher->onAvcDataComing((uint8_t *) payloadData, payloadLen, timestamp);
+                    }
                     break;
                 default:
                     PrintConsole("[RTMP ERROR] %s codec %d not supported\n", __FUNCTION__, data[1]);
                     return;
             }
             
-            if(av_packet_cacher){
-                av_packet_cacher->CacheH264Data((uint8_t*)payloadData, payloadLen, timestamp);
-            }
+       
         }
     }
     
     void EC_RtmpPuller::HandleAuidoPacket(char* data, int length, u_int32_t timestamp)
     {
+        PrintConsole("[EC_RtmpPuller] %s begin, data: %p, length:%d, timestamp:%d\n", __FUNCTION__, data, length, timestamp);
         unsigned voiceCodec = ((unsigned char)data[0]) >> 4;
         switch (voiceCodec) {
             case 0:
@@ -298,14 +307,12 @@ namespace cloopenwebrtc {
                 break;
             case 10: //AAC
                 if(av_packet_cacher) {
-                     av_packet_cacher->CacheAacData((uint8_t*)data+2, length - 2, timestamp);
+                    av_packet_cacher->onAacDataComing((uint8_t *) data + 2, length - 2, timestamp);
                 }
                 break;
             default:
-                PrintConsole("[RTMP ERROR] %s codec id %d not support\n", __FUNCTION__,voiceCodec);
+                PrintConsole("[RTMP ERROR] %s codec id %d not support\n", __FUNCTION__, voiceCodec);
                 break;
         }
-        
-        // printf("sample rate is %d KHZ  timestamp %d\n", sampleRate, packet->m_nTimeStamp);
     }
 }
