@@ -438,7 +438,14 @@ namespace cloopenwebrtc {
             PrintConsole("[RTMP ERROR] %s video view in null\n", __FUNCTION__);
             return -1;
         }
+#ifdef __ANDROID__
+        unsigned int len = strlen((char *)view);
+        memcpy(render_viewer_id, view, len);
+        render_viewer_id[len] = 0;
+        local_view_ = render_viewer_id; //str;
+#else
         local_view_ = view;
+#endif
         return 0;
     }
     
@@ -493,7 +500,7 @@ namespace cloopenwebrtc {
             return 0;
         }
         int ret = -1;
-#ifdef WIN32
+#ifndef __APPLE__
         ViERender* render = ViERender::GetInterface(vie_);
         if(!render) {
             PrintConsole("[RTMP ERROR] %s get vierender failed\n", __FUNCTION__);
@@ -520,7 +527,7 @@ namespace cloopenwebrtc {
     
     int ECMediaMachine::shutdownCameraPreviewRender(int render_id) {\
         int ret = -1;
-#ifdef WIN32
+#ifndef __APPLE__
         // stop preview render.
         ViERender *render = ViERender::GetInterface(vie_);
         ret = render->StopRender(render_id);
@@ -994,28 +1001,14 @@ namespace cloopenwebrtc {
 
     void ECMediaMachine::onAacDataComing(uint8_t* pData, int nLen, uint32_t ts, uint32_t sample_rate, int audio_channels) {
         if(audio_data_cb_) {
-            PrintConsole("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
-            int audio_record_sample_hz_ = 32000;
-            int audio_record_channels_ = 2;
-            const size_t kMaxDataSizeSamples = 3840;
-            int16_t temp_output[kMaxDataSizeSamples];
-            int len = resampler_record_.Resample10Msec((int16_t*)pData, sample_rate * audio_channels, audio_record_sample_hz_*audio_record_channels_, 1,  kMaxDataSizeSamples, (int16_t*)temp_output);
-
-            if (len < 0) {
-                PrintConsole("[ECMEDIA CORE ERROR] %s resample error\n", __FUNCTION__);
-                return;
+                WebRtcRTPHeader rtpHeader;
+                rtpHeader.header.sequenceNumber = audio_rtp_seq_++;
+                rtpHeader.header.ssrc = 1;
+                rtpHeader.header.payloadType = 113;
+                rtpHeader.header.timestamp = 320 * rtpHeader.header.sequenceNumber;
+                audio_data_cb_->OnReceivedPayloadData((const uint8_t*)pData, 32000/100*audio_channels*2, &rtpHeader);
             }
-#ifdef __ANDROID__
-            EC_Live_Utility::pcm_s16le_to_s16be((short*)temp_output, audio_record_sample_hz_/100*2);
-#endif
-            WebRtcRTPHeader rtpHeader;
-            rtpHeader.header.sequenceNumber = audio_rtp_seq_++;
-            rtpHeader.header.ssrc = 1;
-            rtpHeader.header.payloadType = 113;
-            rtpHeader.header.timestamp = 320 * rtpHeader.header.sequenceNumber;
-            audio_data_cb_->OnReceivedPayloadData((const uint8_t*)temp_output, audio_record_sample_hz_/100*audio_record_channels_*2, &rtpHeader);
-        }
-        PrintConsole("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
+            PrintConsole("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
     }
 
     int ECMediaMachine::doDesktopCapture()

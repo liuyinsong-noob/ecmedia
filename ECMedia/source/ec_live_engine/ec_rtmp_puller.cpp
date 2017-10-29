@@ -67,6 +67,7 @@ namespace cloopenwebrtc {
     void EC_RtmpPuller::stop() {
         if(running_) {
             running_ = false;
+            srs_rtmp_disconnect_server(rtmp_);
             rtmpPullingThread_->Stop();
             srs_rtmp_destroy(rtmp_);
             rtmp_ = nullptr;
@@ -145,11 +146,6 @@ namespace cloopenwebrtc {
     }
 
     void EC_RtmpPuller::CallDisconnect() {
-        if (rtmp_) {
-            srs_rtmp_destroy(rtmp_);
-            rtmp_ = NULL;
-        }
-        
         if(rtmp_status_ != RS_PLY_Closed) {
             rtmp_status_ = RS_PLY_Init;
             retry_ct_ ++;

@@ -9,6 +9,7 @@
 #ifndef ec_av_cacher_hpp
 #define ec_av_cacher_hpp
 #include "ec_live_common.h"
+#include "acm_resampler.h"
 #include <list>
 
 namespace cloopenwebrtc{
@@ -57,36 +58,40 @@ namespace cloopenwebrtc{
         void setReceiverCallback(EC_ReceiverCallback *cb);
         void run();
         void shutdown();
-
+        
         static bool decodingThreadRun(void *pThis);
         static bool decodingAudioThreadRun(void *pThis);
-
-     protected:
+        static bool aacDecodingThreadRun(void *pThis);
+        
+    protected:
         bool handleVideo();
-    private:
         bool handleAudio();
         void clearCacher();
+        bool aacDecode();
     private:
         ThreadWrapper* playnetworkThread_;
         ThreadWrapper* audioHandleThread_;
- 
+        ThreadWrapper* aacDecodeHandleThread_;
+        
         int						cache_time_;
         int						cache_delta_;
         int                     buf_cache_time_;
         PlyStuts				ply_status_;
         
- 
+        
         uint32_t				rtmp_cache_time_;
         uint32_t				play_cur_time_;
         
         std::list<PlyPacket*>	lst_audio_buffer_;
         std::list<PlyPacket*>	lst_video_buffer_;
+        std::list<PlyPacket*>	lst_aac_buffer_;
         
         bool got_audio_;
         
         EC_ReceiverCallback * callback_;
         CriticalSectionWrapper* _cs_list_audio;
         CriticalSectionWrapper* _cs_list_video;
+        CriticalSectionWrapper* _cs_list_aac;
         EventTimerWrapper* cacher_update_event_;
         bool running_;
         bool is_playing_;
@@ -98,9 +103,11 @@ namespace cloopenwebrtc{
         
         uint32_t last_viedo_ts_delay_;
         uint32_t last_video_ts_;
-
+        
         unsigned int audio_sampleRate_;
         unsigned int audio_channels_;
+        
+        acm2::ACMResampler resampler_record_;
     };
 }
 #endif /* ec_av_cacher_hpp */

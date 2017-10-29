@@ -65,8 +65,8 @@ extern "C" {
 /* use double precision */
 /* #define USE_DOUBLE_PRECISION */
 /* use fixed point reals */
-//#define FIXED_POINT
-//#define BIG_IQ_TABLE
+#define FIXED_POINT
+#define BIG_IQ_TABLE
 
 /* Use if target platform has address generators with autoincrement */
 //#define PREFER_POINTERS

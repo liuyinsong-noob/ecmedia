@@ -188,7 +188,9 @@ namespace cloopenwebrtc {
         RingBuffer<uint8_t> recordbuffer_;
 
         acm2::ACMResampler resampler_record_;
-
+#ifdef __ANDROID__
+        char render_viewer_id[128];
+#endif
     private:
         // video capture info
         int info_video_bitrates_;

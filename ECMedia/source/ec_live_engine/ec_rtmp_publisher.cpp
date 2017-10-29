@@ -54,7 +54,7 @@ namespace cloopenwebrtc {
             running_ = true;
             // save rtmp url;
             rtmp_url = url;
-
+            cacher_update_event_->StartTimer(true, 10);
             rtmp_ = srs_rtmp_create(url);
             rtmp_bitrate_ontroller_->start();
             
@@ -69,11 +69,13 @@ namespace cloopenwebrtc {
         if(running_) {
             running_ = false;
             rtmp_bitrate_ontroller_->shutdown();
+            srs_rtmp_disconnect_server(rtmp_);
             rtmpPublishThread_->Stop();
             if (rtmp_) {
                 srs_rtmp_destroy(rtmp_);
                 rtmp_ = nullptr;
             }
+            cacher_update_event_->StopTimer();
             retrys_ = 0;
             rtmp_status_ = RS_STM_Init;
         }
