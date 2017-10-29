@@ -475,9 +475,9 @@ namespace cloopenwebrtc {
         int ret = capture->AllocateCaptureDevice(camera->id, sizeof(camera->id), capture_id_);
         
         // Rotate camere frame
-//        RotateCapturedFrame tr = RotateCapturedFrame_0;
-//        // ret = capture->GetOrientation(camera->id, tr);
-        capture->SetRotateCapturedFrames(capture_id_, RotateCapturedFrame_0);
+        RotateCapturedFrame tr = RotateCapturedFrame_0;
+        ret = capture->GetOrientation(camera->id, tr);
+        capture->SetRotateCapturedFrames(capture_id_, tr);
         
         // camera capture infomation
         CaptureCapability cap;
