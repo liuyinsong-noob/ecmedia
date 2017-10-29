@@ -45,7 +45,7 @@ namespace cloopenwebrtc {
         bool run();
         void clearMediaCacher();
         void callOnDisconnect();
-        void doPushRtmpPacket();
+        int doPushRtmpPacket();
         void GotH264Nal(uint8_t* pData, int nLen, bool isKeyFrame, uint32_t ts);
         
         void OnCapturerAvcDataReady(uint8_t *pData, int nLen, uint32_t ts);
@@ -61,6 +61,7 @@ namespace cloopenwebrtc {
         bool need_keyframe_;
         std::list<EncodedData*>		lst_enc_data_;
         int retrys_;
+        bool hasStreaming_;
         
         
         CriticalSectionWrapper* rtmp_lock_;

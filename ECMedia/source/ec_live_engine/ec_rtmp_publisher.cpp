@@ -213,12 +213,17 @@ namespace cloopenwebrtc {
                 switch (rtmp_status_) {
                     case RS_STM_Init:
                     {
+                        if(callback_){
+                            callback_(EC_LIVE_CONNECTING);
+                        }
                         if (srs_rtmp_handshake(rtmp_) == 0) {
                             PrintConsole("SRS: simple handshake ok.");
                             rtmp_status_ = RS_STM_Handshaked;
                         }
                         else {
-                            callOnDisconnect();
+                            if(callback_) {
+                                callback_(EC_LIVE_CONNECT_FAILED);
+                            }
                         }
                     }
                         break;
@@ -229,7 +234,9 @@ namespace cloopenwebrtc {
                             rtmp_status_ = RS_STM_Connected;
                         }
                         else {
-                            callOnDisconnect();
+                            if(callback_) {
+                                callback_(EC_LIVE_CONNECT_FAILED);
+                            }
                         }
                     }
                         break;
@@ -240,17 +247,32 @@ namespace cloopenwebrtc {
                             rtmp_status_ = RS_STM_Published;
                             clearMediaCacher();
                             if(callback_) {
-                                callback_(EC_LIVE_PUSH_SUCCESS);
+                                callback_(EC_LIVE_CONNECT_SUCCESS);
                             }
                         }
                         else {
-                            callOnDisconnect();
+                            if(callback_) {
+                                callback_(EC_LIVE_CONNECT_FAILED);
+                            }
                         }
                     }
                         break;
                     case RS_STM_Published:
                     {
-                         doPushRtmpPacket();
+                        if(doPushRtmpPacket() == 0) {
+                            if(!hasStreaming_) {
+                                hasStreaming_ = true;
+                                if(callback_) {
+                                    callback_(EC_LIVE_PUSH_SUCCESS);
+                                }
+                            }
+                        } else {
+                            if(callback_) {
+                                callback_(EC_LIVE_PUSH_FAILED);
+                            }
+                            this->stop();
+                            return false;
+                        }
                     }
                         break;
                 }
@@ -260,10 +282,10 @@ namespace cloopenwebrtc {
         return false;
     }
 
-    void ECRtmpPublisher::doPushRtmpPacket() {
+    int ECRtmpPublisher::doPushRtmpPacket() {
         if(lst_enc_data_.size() <= 0) {
             cacher_update_event_->Wait(10);
-            return;
+            return 0;
         }
         
         EncData* dataPtr = nullptr;
@@ -293,7 +315,7 @@ namespace cloopenwebrtc {
                 else {
                     PrintConsole("send h264 raw data failed. ret=%d", ret);
                     callOnDisconnect();
-                    return;
+                    return 0;
                 }
             }
 
@@ -304,19 +326,21 @@ namespace cloopenwebrtc {
                     (char*)dataPtr->_data, dataPtr->_dataLen, dataPtr->_dts)) != 0) {
                 PrintConsole("send audio raw data failed. ret=%d", ret);
                 callOnDisconnect();
-                return;
+                return -1;
             }
         } else if(dataPtr->_type == META_DATA) {
             int ret = srs_rtmp_write_packet(rtmp_, SRS_RTMP_TYPE_SCRIPT, dataPtr->_dts, (char*)dataPtr->_data, dataPtr->_dataLen);
             if (ret != 0) {
                 PrintConsole("send metadata failed. ret=%d", ret);
+                return -1;
             }
-            return;
+            
         }
         rtmp_bitrate_ontroller_->outputDataCount(dataPtr->_dataLen);
         // net_band_ += dataPtr->_dataLen;
         delete[] dataPtr->_data;
         delete dataPtr;
+        return 0;
     }
 
     void ECRtmpPublisher::clearMediaCacher() {

@@ -115,7 +115,9 @@ namespace cloopenwebrtc{
     void EC_AVCacher::shutdown() {
         PrintConsole("[EC_AVCacher INFO] %s begin\n", __FUNCTION__);
         running_ = false;
+       
         cacher_update_event_->Set();
+        cacher_update_event_->StopTimer();
         playnetworkThread_->Stop();
         audioHandleThread_->Stop();
         aacDecodeHandleThread_->Stop();

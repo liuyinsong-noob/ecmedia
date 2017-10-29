@@ -62,7 +62,7 @@ namespace cloopenwebrtc {
         bool run();
         void CallConnect();
         void CallDisconnect();
-        void doReadRtmpData();
+        int doReadRtmpData();
 
         int GotVideoSample(u_int32_t timestamp, SrsCodecSample *sample);
         int GotAudioSample(u_int32_t timestamp, SrsCodecSample *sample);
@@ -85,6 +85,7 @@ namespace cloopenwebrtc {
         ECLiveStreamNetworkStatusCallBack callback_;
         
         bool connected_;
+        bool hasStreaming_;
         int  retry_ct_;
 
 //        SrsAvcAacCodec*		srs_codec_;

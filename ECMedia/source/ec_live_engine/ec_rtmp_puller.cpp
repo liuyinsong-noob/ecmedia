@@ -22,8 +22,6 @@ namespace cloopenwebrtc {
     #define ERROR_SUCCESS   0
     #endif
     #define MAX_RETRY_TIME  3
-    static u_int8_t fresh_nalu_header[] = { 0x00, 0x00, 0x00, 0x01 };
-    static u_int8_t cont_nalu_header[] =  { 0x00, 0x00, 0x01};
 
     EC_RtmpPuller::EC_RtmpPuller(ECLiveStreamNetworkStatusCallBack callback) {
         retry_ct_ = 0;
@@ -35,6 +33,8 @@ namespace cloopenwebrtc {
                 kNormalPriority,
                 "rtmpPullingThread_");
         av_packet_cacher = NULL;
+        hasStreaming_ = false;
+        running_ = false;
     }
     
     EC_RtmpPuller::~EC_RtmpPuller() {
@@ -66,6 +66,7 @@ namespace cloopenwebrtc {
     
     void EC_RtmpPuller::stop() {
         if(running_) {
+            hasStreaming_ = false;
             running_ = false;
             srs_rtmp_disconnect_server(rtmp_);
             rtmpPullingThread_->Stop();
@@ -94,12 +95,18 @@ namespace cloopenwebrtc {
                 switch (rtmp_status_) {
                     case RS_PLY_Init:
                     {
+                        if(callback_){
+                            callback_(EC_LIVE_CONNECTING);
+                        }
+                        
                         if (srs_rtmp_handshake(rtmp_) == 0) {
                             PrintConsole("SRS: simple handshake ok.");
                             rtmp_status_ = RS_PLY_Handshaked;
                         }
                         else {
-                            CallDisconnect();
+                            if(callback_) {
+                                callback_(EC_LIVE_CONNECT_FAILED);
+                            }
                         }
                     }
                         break;
@@ -110,7 +117,9 @@ namespace cloopenwebrtc {
                             rtmp_status_ = RS_PLY_Connected;
                         }
                         else {
-                            CallDisconnect();
+                            if(callback_) {
+                                callback_(EC_LIVE_CONNECT_FAILED);
+                            }
                         }
                     }
                         break;
@@ -119,16 +128,33 @@ namespace cloopenwebrtc {
                         if (srs_rtmp_play_stream(rtmp_) == 0) {
                             PrintConsole("SRS: play stream ok.");
                             rtmp_status_ = RS_PLY_Played;
-                            CallConnect();
+                            if(callback_) {
+                                callback_(EC_LIVE_CONNECT_SUCCESS);
+                            }
                         }
                         else {
-                            CallDisconnect();
+                            if(callback_) {
+                                callback_(EC_LIVE_CONNECT_FAILED);
+                            }
                         }
                     }
                         break;
                     case RS_PLY_Played:
                     {
-                        doReadRtmpData();
+                        if(doReadRtmpData() == 0) {
+                            if(!hasStreaming_) {
+                                hasStreaming_ = true;
+                                if(callback_) {
+                                    callback_(EC_LIVE_PLAY_SUCCESS);
+                                }
+                            }
+                        } else {
+                            if(callback_) {
+                                callback_(EC_LIVE_PLAY_FAILED);
+                            }
+                            this->stop();
+                            return false;
+                        }
                     }
                     break;
                 }
@@ -141,7 +167,7 @@ namespace cloopenwebrtc {
         retry_ct_ = 0;
         connected_ = true;
         if(callback_) {
-            callback_(EC_LIVE_PLAY_SUCCESS);
+            callback_(EC_LIVE_CONNECT_SUCCESS);
         }
     }
 
@@ -222,7 +248,7 @@ namespace cloopenwebrtc {
         return true;
     }
     
-    void EC_RtmpPuller::doReadRtmpData() {
+    int EC_RtmpPuller::doReadRtmpData() {
         int size;
         char type;
         char *data;
@@ -230,21 +256,21 @@ namespace cloopenwebrtc {
 
  
         if (srs_rtmp_read_packet(rtmp_, &type, &timestamp, &data, &size) != 0) {
-            CallDisconnect();
-            return;
+            return -1;
         }
-
+        
         if (type == SRS_RTMP_TYPE_VIDEO) {
              handleVideoPacket(data, size, timestamp);
         } else if (type == SRS_RTMP_TYPE_AUDIO) {
             HandleAuidoPacket(data, size, timestamp);
         } else if (type == SRS_RTMP_TYPE_SCRIPT) {
             if (!srs_rtmp_is_onMetaData(type, data, size)) {
-                // LOG(LS_ERROR) << "No flv";
                 PrintConsole("drop message type=%#x, size=%dB", type, size);
             }
         }
         free(data);
+     
+        return 0;
     }
 
     void EC_RtmpPuller::handleVideoPacket(char* data, int len, u_int32_t timestamp) {
