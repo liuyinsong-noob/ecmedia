@@ -275,7 +275,11 @@ namespace cloopenwebrtc{
             
             delete  pkt_aac;
         } else {
-            usleep(5*1000);
+#if defined(_WIN32)
+	Sleep(5);
+#else
+	usleep(5 * 1000);
+#endif
         }
 
         return true;
@@ -298,7 +302,11 @@ namespace cloopenwebrtc{
             callback_->onAacDataComing((uint8_t*)pkt_audio->_data, pkt_audio->_data_len, pkt_audio->_dts, audio_sampleRate_, audio_channels_);
             delete  pkt_audio;
         } else {
-            usleep(10*1000);
+#if defined(_WIN32)
+			Sleep(5);
+#else
+			usleep(5 * 1000);
+#endif
         }
         
         return true;

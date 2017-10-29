@@ -117,7 +117,7 @@ namespace cloopenwebrtc {
         ret = initVideoEngine();
         
         ret = initAudioNetwork();
-//        ret = initVideoNetwork();
+	    ret = initVideoNetwork();
 
         return ret;
     }
@@ -282,7 +282,7 @@ namespace cloopenwebrtc {
     void ECMediaMachine::UnInit()
     {
         uninitAudioNetwork();
-//        uninitVideoNetwork();
+	    uninitVideoNetwork();
         
         uninitAudioEngine();
         uninitVideoEngine();
@@ -324,7 +324,6 @@ namespace cloopenwebrtc {
     
     int ECMediaMachine::startCapture()
     {
-        initVideoNetwork();
         PrintConsole("[ECMEDIA CORE INFO] %s begin.\n", __FUNCTION__);
         int ret = -1;
         ret = doAudioDataSend();
@@ -373,18 +372,13 @@ namespace cloopenwebrtc {
         // shutdown network
         ret = shutdownVideoDataSend();
         ret = shutdownAudioDataSend();
-        
-        uninitVideoNetwork();
+     
         return ret;
     }
 
     int ECMediaMachine::startPlayout() {
         PrintConsole("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
         int ret = -1;
-        ret = initVideoNetwork();
-        if(ret != 0) {
-            return ret;
-        }
         // start Playout
         ret = doAudioPlayout();
         if(ret != 0) {
@@ -422,10 +416,6 @@ namespace cloopenwebrtc {
             return ret;
         }
         ret = shutdownAudioDataReceive();
-        if(ret != 0) {
-            return ret;
-        }
-        ret = uninitVideoNetwork();
         if(ret != 0) {
             return ret;
         }
