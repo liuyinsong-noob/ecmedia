@@ -166,7 +166,7 @@ static int m_cameraCount = 0;
 using namespace cloopenwebrtc;
 using namespace std;
 
-#define ECMEDIA_VERSION "2.2.0.3.1710230953"
+#define ECMEDIA_VERSION "2.2.0.5.17103001948"
 
 //extern bool g_media_TraceFlag;
 //void PrintConsole(const char * fmt,...){};
