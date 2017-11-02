@@ -703,9 +703,9 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 
 				ECMedia_set_send_codec_audio(call->m_AudioChannelID, codec_params);
 				ECMedia_set_receive_playloadType_audio(call->m_AudioChannelID,codec_params);
-
+                
                 if (!strncmp(codec_params.plname, "red", 3)) {
-                    ECMedia_setAudioRed(call->m_AudioChannelID, false, codec_params.pltype);
+                    ECMedia_setAudioRed(call->m_AudioChannelID, true, codec_params.pltype);
                     //TODO:
                     //base->SetFecStatus(call->m_AudioChannelID, m_enable_fec);
                     //base->SetLoss(call->m_AudioChannelID, m_opus_packet_loss_rate);
@@ -947,12 +947,39 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 			ECMedia_get_supported_codecs_video(codecArray);
 			for (int i = 0; i < num_codec; i++) {
 				codec_params = codecArray[i];
-				if ( strcasecmp( codec_params.plName, p->mime_type) == 0) {
-					codec_found = true;
-					codec_params.plType = used_pt;
-					break;
-				}
+                
+                //profile-level-id 2017-08-08 zhangning added
+                if ( strcasecmp( codec_params.plName, p->mime_type) == 0) {
+                    
+                    if( strcasecmp(p->mime_type, "VP8") == 0  ){
+                        codec_found = true;
+                        codec_params.plType = used_pt;
+                        break;
+                    }
+                    
+                    char value[8]   =   {0};
+                    if (strcasecmp(p->mime_type, "H264") == 0 &&
+                        fmtp_get_value(p->recv_fmtp,"profile-level-id",value,sizeof(value))){
+ 
+                        if ( cloopenwebrtc::kVideoCodecH264 == codec_params.codecType &&
+                            0 == strncmp( value, "42",2) ) {
+                            
+                            codec_found = true;
+                            codec_params.plType = used_pt;
+                            break;
+                        }
+                        if ( cloopenwebrtc::kVideoCodecH264HIGH == codec_params.codecType &&
+                            0 == strncmp( value, "6400", 4 ) ) {
+                            
+                            codec_found = true;
+                            codec_params.plType = used_pt;
+                            break;
+                        }
+                        
+                    }
+                }
 			}
+            
 			delete []codecArray;
 
 			if (!codec_found) {
@@ -967,9 +994,9 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 					/*codec_params.maxBitrate = min((m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps*4*0.07)/1000, kMaxVideoBitrate);
 					codec_params.minBitrate = max((m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps*1*0.07)/1000, kMinVideoBitrate);*/
                     
-					/*codec_params.startBitrate = m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps *3*0.07/1000;
+					codec_params.startBitrate = m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps *3*0.07/1000;
 					codec_params.maxBitrate = codec_params.startBitrate;
-					codec_params.minBitrate = codec_params.startBitrate/4;*/
+					codec_params.minBitrate = codec_params.startBitrate/4;
 
 					codec_params.startBitrate = 300;
 					codec_params.maxBitrate = 2000;
@@ -5426,8 +5453,8 @@ int ServiceCore::startRecvRtpPacket(int channelNum)
 	ECMedia_audio_start_send(0);
 
 	ECMedia_audio_set_send_destination(1, 7080, "192.168.1.103", 0, 0, nullptr);
-	ECMedia_audio_start_send(1);
 
+    
 	ECMedia_audio_set_send_destination(2, 7082, "192.168.1.106", 0, 0, nullptr);
 	ECMedia_audio_start_send(2);
 
@@ -5480,18 +5507,18 @@ void ServiceCore::audio_enable_magic_sound(bool enabled, int pitch, int tempo, i
 
 void setSsrcMediaType(int& ssrc, int type)
 {
-	//25bits √ΩÃÂ‘¥ID 1bit √ΩÃÂ‘¥¿‡–Õ 2bits √ΩÃÂ¿‡–Õ 4bits √ΩÃÂ Ù–‘
-	//√ΩÃÂ¿‡–Õ£∫ 0£∫“Ù∆µ 1£∫  ”∆µ 2£∫∆¡ƒªπ≤œÌ 3£∫ ∆‰À˚  
+	//25bits √Ω??‘¥ID 1bit √Ω??‘¥???? 2bits √Ω?????? 4bits √Ω??????
+	//√Ω?????Õ£? 0????∆µ 1?? ??∆µ 2????ƒª???? 3?? ????  
 	PrintConsole((char*)__FILE__, __LINE__, (char*)__FUNCTION__, 0, "begin ssrc=%u,type=%d", ssrc, type);
-	type = type & 0x00000003;//÷ª»°µÕ2Œª
-	ssrc = ssrc & 0xFFFFFFCF;//2bit÷√0£¨
-	ssrc = ssrc | (type << 4);//2bit∏≥÷µ
+	type = type & 0x00000003;//÷ª»°??2Œª
+	ssrc = ssrc & 0xFFFFFFCF;//2bit??0??
+	ssrc = ssrc | (type << 4);//2bit??÷µ
 	PrintConsole((char*)__FILE__, __LINE__, (char*)__FUNCTION__, 0, "end ssrc=%u,type=%d", ssrc, type);
 }
 void setSsrcMediaAttribute(int& ssrc, unsigned short width, unsigned short height, unsigned char maxFramerate)
 {
-	//25bits √ΩÃÂ‘¥ID 1bit √ΩÃÂ‘¥¿‡–Õ 2bits √ΩÃÂ¿‡–Õ 4bits √ΩÃÂ Ù–‘
-	//√ΩÃÂ∑÷ Ù–‘£∫±Ê¬  ÷°¬  œ»∞¥øÌ∏ﬂ¥¶¿Ì£¨‘⁄”–—°‘Òµƒ¥¶¿Ì◊Ó¥Û÷°
+	//25bits √Ω??‘¥ID 1bit √Ω??‘¥???? 2bits √Ω?????? 4bits √Ω??????
+	//√Ω???????‘£????? ÷°?? ?»∞????ﬂ¥??ÔøΩ????—°???ƒ¥???????÷°
 	/*
 	0 128*96 15
 	1 160*120 15
@@ -5590,8 +5617,8 @@ void setSsrcMediaAttribute(int& ssrc, unsigned short width, unsigned short heigh
 		type = 15;
 	}
 
-	ssrc = ssrc & 0xFFFFFFF0;//4bit÷√0£¨
-	ssrc = ssrc | type;//4bit∏≥÷µ
+	ssrc = ssrc & 0xFFFFFFF0;//4bit??0??
+	ssrc = ssrc | type;//4bit??÷µ
 	PrintConsole((char*)__FILE__, __LINE__, (char*)__FUNCTION__, 0, "end ssrc=%u,type=%d", ssrc, type);
 }
 

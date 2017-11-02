@@ -24,24 +24,40 @@ static PayloadType * find_payload_type_best_match(const MSList *l, const Payload
 		pt=(PayloadType*)elem->data;
 		/* the compare between G729 and G729A is for some stupid uncompliant phone*/
         if (pt && pt->mime_type && refpt->mime_type) {
-            if ( (strcasecmp(pt->mime_type,refpt->mime_type)==0  ||
-                  (strcasecmp(pt->mime_type, "G729") == 0 && strcasecmp(refpt->mime_type, "G729A") == 0 ))
-                && pt->clock_rate==refpt->clock_rate){
-                candidate=pt;
+            
+            if ( pt->clock_rate==refpt->clock_rate &&
+                 ( strcasecmp(pt->mime_type,refpt->mime_type)==0  ||
+                   (strcasecmp(pt->mime_type, "G729") == 0 && strcasecmp(refpt->mime_type, "G729A") == 0) )
+                ) {
+                
+                
                 /*good candidate, check fmtp for H264 */
                 if (strcasecmp(pt->mime_type,"H264")==0){
-                    if (pt->recv_fmtp!=NULL && refpt->recv_fmtp!=NULL){
-                        int mode1=0,mode2=0;
+                    if (pt->recv_fmtp!=NULL && refpt->send_fmtp!=NULL){
+                        int mode1=-1,mode2=-1;
                         if (fmtp_get_value(pt->recv_fmtp,"packetization-mode",value,sizeof(value))){
                             mode1=atoi(value);
                         }
-                        if (fmtp_get_value(refpt->recv_fmtp,"packetization-mode",value,sizeof(value))){
+                        if (fmtp_get_value(refpt->send_fmtp,"packetization-mode",value,sizeof(value))){
                             mode2=atoi(value);
                         }
-                        if (mode1==mode2)
-                            break; /*exact match */
+                        if (mode1==mode2 && -1!=mode1){
+                            char value1[8]={0};
+                            char value2[8]={0};
+                            if (fmtp_get_value(pt->recv_fmtp,"profile-level-id",value1,sizeof(value1)) &&
+                                fmtp_get_value(refpt->send_fmtp,"profile-level-id",value2,sizeof(value2)) ){
+                                
+                                if( value1[0] != '\0' && 0==strcmp(value1,value2) ){
+                                     candidate=pt;
+                                     break; /*exact match */
+                                }
+                            }
+                        }
                     }
-                }else break;
+                }else {
+                    candidate=pt;
+                    break;
+                }
             }
         }
 	}

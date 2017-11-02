@@ -592,8 +592,12 @@ enum VideoCodecComplexity
 
 enum VideoCodecProfile
 {
-    kProfileBase = 0x00,
-    kProfileMain = 0x01
+    kProfileBase    = 0x00,
+    kProfileMain    = 0x01,
+    kProfileHigh    = 0x02,
+    kProfileHigh10  = 0x03,
+    kProfileHigh422 = 0x04,
+    kProfileHigh444 = 0x05
 };
 
 enum VP8ResilienceMode {
@@ -811,6 +815,18 @@ struct VideoCodecH264SVC
 	bool					bEnableFrameSkip;
 };
 
+struct VideoCodecH264High
+{
+    //H264Packetization       packetization;
+    VideoCodecProfile       profile;
+    bool                    frameDroppingOn;
+    int                     keyFrameInterval;
+    // These are NULL/0 if not externally negotiated.
+    const uint8_t* spsData;
+    size_t         spsLen;
+    const uint8_t* ppsData;
+    size_t         ppsLen;
+};
 // Unknown specific
 struct VideoCodecGeneric
 {
@@ -823,7 +839,8 @@ enum VideoCodecType {
 	kVideoCodecVP9,
 	kVideoCodecH264,
 	kVideoCodecH264SVC,
-	kVideoCodecI420,
+	kVideoCodecH264HIGH,
+    kVideoCodecI420,
 	kVideoCodecRED,
 	kVideoCodecULPFEC,
 	kVideoCodecGeneric,
@@ -836,7 +853,9 @@ union VideoCodecUnion
     VideoCodecVP9       VP9;
     VideoCodecGeneric   Generic;
     VideoCodecH264       H264;
-	VideoCodecH264SVC	H264Svc;
+    VideoCodecH264SVC	 H264Svc;
+    VideoCodecH264High   H264High;
+
 };
 
 
@@ -1261,7 +1280,7 @@ enum ECMagicSoundMode {
     kECMagicSoundHigh ,
     kECMagicSoundLow
 };
-    
+ 
 // RTCP mode to use. Compound mode is described by RFC 4585 and reduced-size
 // RTCP mode is described by RFC 5506.
 enum RtcpMode { kOff, kCompound, kReducedSize };

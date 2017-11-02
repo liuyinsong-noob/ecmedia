@@ -4833,7 +4833,7 @@
 				05F43BA616A92CAA00F6D053 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		05F43BA716A92CAA00F6D053 /* Build configuration list for PBXNativeTarget "CCPVoipDemo" */ = {
 			isa = XCConfigurationList;
@@ -4842,7 +4842,7 @@
 				05F43BA916A92CAA00F6D053 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

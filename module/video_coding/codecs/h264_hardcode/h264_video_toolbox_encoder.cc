@@ -245,7 +245,15 @@ int H264VideoToolboxEncoder::InitEncode(const VideoCodec* codec_settings,
                                         int number_of_cores,
                                         size_t max_payload_size) {
   DCHECK(codec_settings);
-  DCHECK_EQ(codec_settings->codecType, kVideoCodecH264);
+  
+  codec_type_ = codec_settings->codecType;
+  if( kVideoCodecH264HIGH == codec_type_){
+    DCHECK_EQ(codec_type_, kVideoCodecH264HIGH);
+
+  }else{
+    DCHECK_EQ(codec_type_, kVideoCodecH264);
+  }
+  
   // TODO(tkchin): We may need to enforce width/height dimension restrictions
   // to match what the encoder supports.
   width_ = codec_settings->width;
@@ -253,6 +261,7 @@ int H264VideoToolboxEncoder::InitEncode(const VideoCodec* codec_settings,
   // We can only set average bitrate on the HW encoder.
   target_bitrate_bps_ = codec_settings->startBitrate;
   bitrate_adjuster_.SetTargetBitrateBps(target_bitrate_bps_);
+  
     
   // TODO(tkchin): Try setting payload size via
   // kVTCompressionPropertyKey_MaxH264SliceBytes.
@@ -460,9 +469,16 @@ void H264VideoToolboxEncoder::ConfigureCompressionSession() {
   DCHECK(compression_session_);
     ::internal::SetVTSessionProperty(compression_session_,
                                  kVTCompressionPropertyKey_RealTime, true);
-    ::internal::SetVTSessionProperty(compression_session_,
-                                 kVTCompressionPropertyKey_ProfileLevel,
-                                 kVTProfileLevel_H264_Baseline_AutoLevel);
+    if( kVideoCodecH264HIGH == codec_type_){
+        ::internal::SetVTSessionProperty(compression_session_,
+                                         kVTCompressionPropertyKey_ProfileLevel,
+                                         kVTProfileLevel_H264_High_AutoLevel);
+        
+    }else{
+        ::internal::SetVTSessionProperty(compression_session_,
+                                         kVTCompressionPropertyKey_ProfileLevel,
+                                         kVTProfileLevel_H264_Baseline_AutoLevel);
+    }
     ::internal::SetVTSessionProperty(compression_session_,
                                  kVTCompressionPropertyKey_AllowFrameReordering,
                                  false);

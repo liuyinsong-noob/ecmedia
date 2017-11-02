@@ -1929,9 +1929,9 @@ int32_t Channel::ReceivedRTPPacket(const int8_t* data, size_t length,
   // Dump the RTP packet to a file (if RTP dump is enabled).
   if (_rtpDumpIn.DumpPacket((const uint8_t*)data,
                             (uint16_t)length) == -1) {
-    WEBRTC_TRACE(kTraceWarning, kTraceVoice,
-                 VoEId(_instanceId,_channelId),
-                 "Channel::SendPacket() RTP dump to input file failed");
+//    WEBRTC_TRACE(kTraceWarning, kTraceVoice,
+//                 VoEId(_instanceId,_channelId),
+//                 "Channel::SendPacket() RTP dump to input file failed");
   }
   const uint8_t* received_packet = reinterpret_cast<const uint8_t*>(data);
   RTPHeader header;
@@ -5205,9 +5205,9 @@ void
 	if (_rtpDumpIn.DumpPacket(rtpBufferPtr,
 		(WebRtc_UWord16)rtpBufferLength) == -1)
 	{
-		WEBRTC_TRACE(kTraceWarning, kTraceVoice,
-			VoEId(_instanceId,_channelId),
-			"Channel::SendPacket() RTP dump to input file failed");
+//		WEBRTC_TRACE(kTraceWarning, kTraceVoice,
+//			VoEId(_instanceId,_channelId),
+//			"Channel::SendPacket() RTP dump to input file failed");
 	}
 
 	//---begin

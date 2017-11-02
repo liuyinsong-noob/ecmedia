@@ -121,7 +121,7 @@ int H264Encoder::InitEncode(const VideoCodec* inst,
         return retVal;
     }
 
-	SetX264EncodeParameters(param_, inst->mode);
+	SetX264EncodeParameters(param_, inst->mode, inst->codecType);
     encoder_ =  x264_encoder_open( &param_);
     if (!encoder_) {
         return WEBRTC_VIDEO_CODEC_ERROR;
@@ -239,7 +239,8 @@ WebRtc_Word32 H264Encoder::CodecConfigParameters(WebRtc_UWord8* /*buffer*/, WebR
 }
 
 
-void H264Encoder::SetX264EncodeParameters(x264_param_t &params, VideoCodecMode mode)
+void H264Encoder::SetX264EncodeParameters(x264_param_t &params, VideoCodecMode mode,
+                                          VideoCodecType type )
 {
 	x264_param_t *p_params = &params;
 	if (mode==kRealtimeVideo || mode == kSaveToFile)
@@ -250,8 +251,12 @@ void H264Encoder::SetX264EncodeParameters(x264_param_t &params, VideoCodecMode m
 	{
 		x264_param_default_preset(p_params,x264_preset_names[2],"stillimage");
 	}
-	x264_param_apply_profile(p_params, x264_profile_names[0]);
-
+    if( kVideoCodecH264HIGH == type ){
+        x264_param_apply_profile(p_params, x264_profile_names[2]);
+    }else{
+        x264_param_apply_profile(p_params, x264_profile_names[0]);
+    }
+    
 	p_params->i_level_idc = 40;  //编码复杂度
 	p_params->i_width=codec_.width;
 	p_params->i_height=codec_.height;

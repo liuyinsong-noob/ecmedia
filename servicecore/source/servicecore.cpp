@@ -4825,6 +4825,10 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
     serphone_core_assign_payload_type(&payload_type_h264, 96,"profile-level-id=42e01e; packetization-mode=1; max-br=452; max-mbps=11880");
 	serphone_core_assign_payload_type(&payload_type_vp8,120,NULL);
 
+    //highprofile  ----zhangning 20170801 add---begin--
+    serphone_core_assign_payload_type(&payload_type_h264,-1,"profile-level-id=64001e; packetization-mode=1");
+    //highprofile  ----zhangning 20170801 add---end--
+    
    // serphone_core_assign_payload_type(&payload_type_h264_svc,98, "profile-level-id=428014"); //profile-level-id need to be fixed.
 	/* due to limited space in SDP, we have to disable this h264 line which is normally no more necessary */
 	/* serphone_core_assign_payload_type(&payload_type_h264,-1,"packetization-mode=1;profile-level-id=428014");*/

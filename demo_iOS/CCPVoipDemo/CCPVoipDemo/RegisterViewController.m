@@ -231,7 +231,7 @@
     loginIP_textField.textAlignment = NSTextAlignmentCenter;
     NSString *loginIP = [loginDefault objectForKey:@"loginIP"];
     if(loginIP == nil) {
-        loginIP_textField.text = @"192.168.177.186";
+        loginIP_textField.text = @"192.168.177.187";
        // loginIP_textField.text = @"114.215.241.17";
     } else {
         loginIP_textField.text = loginIP;
@@ -251,7 +251,7 @@
     loginPort_textField.textAlignment = NSTextAlignmentCenter;
     NSString *loginPort = [loginDefault objectForKey:@"loginPort"];
     if(loginPort == nil) {
-        loginPort_textField.text = @"7600";
+        loginPort_textField.text = @"8600";
         //loginPort_textField.text = @"9800";
     } else {
         loginPort_textField.text = loginPort;

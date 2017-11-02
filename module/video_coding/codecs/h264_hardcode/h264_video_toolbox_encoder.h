@@ -80,6 +80,7 @@ class H264VideoToolboxEncoder : public VideoEncoder {
   uint32_t encoder_bitrate_bps_;
   int32_t width_;
   int32_t height_;
+  uint8_t codec_type_;
 };  // H264VideoToolboxEncoder
 
 }  // namespace webrtc

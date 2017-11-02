@@ -651,6 +651,7 @@
 					ENABLE_GCC,
 					WEBRTC_CLOCK_TYPE_REALTIME,
 					VIDEOCODEC_H264,
+					VIDEOCODEC_H264_HIGH,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -732,6 +733,7 @@
 					ENABLE_GCC,
 					WEBRTC_CLOCK_TYPE_REALTIME,
 					VIDEOCODEC_H264,
+					VIDEOCODEC_H264_HIGH,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;

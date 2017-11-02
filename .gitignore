@@ -2,6 +2,7 @@
 obj
 libs
 VoipDemo
+module/image_filter
 
 #appcode filder
 .idea

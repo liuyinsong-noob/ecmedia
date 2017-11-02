@@ -64,6 +64,7 @@ RtpVideoCodecTypes ConvertToRtpVideoCodecType(VideoCodecType type) {
     case kVideoCodecVP9:
       return kRtpVideoVp9;
     case kVideoCodecH264:
+    case kVideoCodecH264HIGH:
       return kRtpVideoH264;
     case kVideoCodecRED:
     case kVideoCodecULPFEC:
@@ -79,7 +80,7 @@ RtpUtility::Payload CreatePayloadType(const VideoCodec& video_codec) {
   strncpy(payload.name, video_codec.plName, RTP_PAYLOAD_NAME_SIZE - 1);
   payload.typeSpecific.Video.videoCodecType =
       ConvertToRtpVideoCodecType(video_codec.codecType);
-  if (video_codec.codecType == kVideoCodecH264)
+  if (video_codec.codecType == kVideoCodecH264 || video_codec.codecType == kVideoCodecH264)
     payload.typeSpecific.Video.h264_profile = video_codec.H264().profile;
   payload.audio = false;
   return payload;

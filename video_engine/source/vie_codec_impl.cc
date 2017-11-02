@@ -784,7 +784,9 @@ bool ViECodecImpl::CodecValid(const VideoCodec& video_codec) {
              (video_codec.codecType == kVideoCodecI420 &&
               strncmp(video_codec.plName, "I420", 4) == 0) ||
              (video_codec.codecType == kVideoCodecH264 &&
-              strncmp(video_codec.plName, "H264", 4) == 0)) {
+              strncmp(video_codec.plName, "H264", 4) == 0) ||
+             (video_codec.codecType == kVideoCodecH264HIGH &&
+              strncmp(video_codec.plName, "H264", 4) == 0) ) {
     // OK.
   } else if (video_codec.codecType != kVideoCodecGeneric) {
     LOG(LS_ERROR) << "Codec type and name mismatch.";

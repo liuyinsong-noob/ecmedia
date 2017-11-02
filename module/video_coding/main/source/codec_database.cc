@@ -87,6 +87,21 @@ VideoCodecH264 VideoEncoder::GetDefaultH264Settings() {
   return h264_settings;
 }
 
+VideoCodecH264High VideoEncoder::GetH264HighSettings() {
+    VideoCodecH264High h264_high_settings;
+    memset(&h264_high_settings, 0, sizeof(h264_high_settings));
+    
+    h264_high_settings.profile = kProfileHigh;
+    h264_high_settings.frameDroppingOn = true;
+    h264_high_settings.keyFrameInterval = 3000;
+    h264_high_settings.spsData = NULL;
+    h264_high_settings.spsLen = 0;
+    h264_high_settings.ppsData = NULL;
+    h264_high_settings.ppsLen = 0;
+    
+    return h264_high_settings;
+}
+
 VCMDecoderMapItem::VCMDecoderMapItem(VideoCodec* settings,
                                      int number_of_cores,
                                      bool require_key_frame)
@@ -194,6 +209,24 @@ bool VCMCodecDataBase::Codec(int list_id,
       settings->codecSpecific.H264 = VideoEncoder::GetDefaultH264Settings();
       return true;
     }
+#endif
+#ifdef VIDEOCODEC_H264_HIGH
+      case VCM_H264_HIGH_IDX: {
+          strncpy(settings->plName, "H264", 5);
+          settings->codecType = kVideoCodecH264HIGH;
+          // 96 to 127 dynamic payload types for video codecs.
+          settings->plType = VCM_H264_HIGH_PAYLOAD_TYPE;
+          settings->startBitrate = kDefaultStartBitrateKbps;
+          settings->minBitrate = VCM_MIN_BITRATE;
+          settings->maxBitrate = 0;
+          settings->maxFramerate = VCM_DEFAULT_FRAME_RATE;
+          settings->width = VCM_DEFAULT_CODEC_WIDTH;
+          settings->height = VCM_DEFAULT_CODEC_HEIGHT;
+          settings->numberOfSimulcastStreams = 0;
+          settings->qpMax = 56;
+          settings->codecSpecific.H264High = VideoEncoder::GetH264HighSettings();
+          return true;
+      }
 #endif
 #ifdef VIDEOCODEC_I420
     case VCM_I420_IDX: {
@@ -695,6 +728,7 @@ VCMGenericEncoder* VCMCodecDataBase::CreateEncoder(
 #endif
 #ifdef VIDEOCODEC_H264
 	case kVideoCodecH264:
+    case kVideoCodecH264HIGH:
 #ifdef WEBRTC_IOS
           if (!IsH264CodecSupportedObjC())
               return new VCMGenericEncoder(*(H264Encoder::Create()));
@@ -737,6 +771,7 @@ VCMGenericDecoder* VCMCodecDataBase::CreateDecoder(VideoCodecType type) const {
 #endif
 #ifdef VIDEOCODEC_H264
       case kVideoCodecH264:
+      case kVideoCodecH264HIGH:
 #ifdef WEBRTC_IOS
           if (!IsH264CodecSupportedObjC())
               return new VCMGenericDecoder(*(H264Decoder::Create()));
