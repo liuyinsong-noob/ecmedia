@@ -15,7 +15,7 @@
 #include <memory>
 #include <set>
 
-#include "critical_section_posix.h"
+#include "critical_section_wrapper.h"
 #include "../base/deprecation.h"
 #include "../module/rtp_rtcp/source/rtp_receiver_strategy.h"
 #include "../module/rtp_rtcp/source/rtp_utility.h"
