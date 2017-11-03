@@ -411,8 +411,7 @@ int32_t AudioCodingModuleImpl::Process() {
             unsigned int list_size = 1;
             if (loss_rate_*5 > 30 && loss_rate_*5 < 45 ) {
               list_size = 3;
-            }
-            else if (loss_rate_*5 > 45) {
+            } else if (loss_rate_*5 > 45) {
               list_size = 5;
             }
  
@@ -1351,11 +1350,15 @@ int AudioCodingModuleImpl::SetPacketLossRate(int loss_rate) {
     
 int AudioCodingModuleImpl::SetPacketLossRateFromRtpHeaderExt(int loss_rate)
     {
-        if(loss_rate < 0) {
-            return -1;
+        if(loss_rate <= 0) {
+            return 0;
         }
         
         loss_rate_ = loss_rate;
+        // insert loss rate into codec opus.
+        if(codecs_[current_send_codec_idx_]->SetPacketLossRate(loss_rate) < 0) {
+            return -1;
+        }
 		return 0;
     }
 

@@ -86,7 +86,7 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../../../module/audio_coding/neteq/source \
     $(LOCAL_PATH)/../../../module/audioprocess/source \
     $(LOCAL_PATH)/../../../module/bitrate_controller/include \
-    $(LOCAL_PATH)/../../../system_wrappers/interface \
+    $(LOCAL_PATH)/../../../system_wrappers/include \
     $(LOCAL_PATH)/../../../system_wrappers/source \
     $(LOCAL_PATH)/../../../module/common_video/interface \
     $(LOCAL_PATH)/../../../module/video_coding/main/include \

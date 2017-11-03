@@ -546,7 +546,7 @@ int NetEqImpl::InsertPacketInternal(const WebRtcRTPHeader& rtp_header,
     if (payload_splitter_->SplitRed(&packet_list) != PayloadSplitter::kOK) {
       //LOG_FERR1(LS_WARNING, SplitRed, packet_list.size());
 #ifndef WIN32
-        printTime();
+//        printTime();
 #endif
 //        printf("sean haha 113 Del All Packets\n");
       PacketBuffer::DeleteAllPackets(&packet_list);

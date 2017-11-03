@@ -227,15 +227,12 @@ bool RTPSenderAudio::SendAudio(FrameType frame_type,
   packet->SetExtension<AudioLevel>(frame_type == kAudioFrameSpeech,
                                    audio_level_dbov);
   packet->SetExtension<LossRate>(loss_rate_hd_ext_version_, loss_rate_);
-  
 		if (fragmentation) {
 			int rtpHeaderLength = 0;
 			uint16_t allocLen = 0;
 			for (int counter = 0; counter < fragmentation->fragmentationVectorSize; counter++) {
-				printf("seansean %d %zu ", counter, fragmentation->fragmentationLength[counter]);
 				allocLen += fragmentation->fragmentationLength[counter];
 			}
-			printf("total %d\n", allocLen);
 			uint8_t* dataBuffer =
 				packet->AllocatePayload(1 + allocLen);
 			if (!dataBuffer)  // Too large payload buffer.

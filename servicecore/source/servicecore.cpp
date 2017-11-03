@@ -4792,9 +4792,9 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
 	this->dyn_pt=96;
 
 //    //payloadtype 不要修改，和codedatabase.cc里面对应
-     serphone_core_assign_payload_type(&payload_type_opus, 124, NULL);//48k
-     serphone_core_assign_payload_type(&payload_type_opus8k, 121, NULL);
-     serphone_core_assign_payload_type(&payload_type_opus16k, 122, NULL);
+     serphone_core_assign_payload_type(&payload_type_red8k, 116, NULL);//48k
+     //serphone_core_assign_payload_type(&payload_type_opus8k, 121, NULL);
+     //serphone_core_assign_payload_type(&payload_type_opus16k, 122, NULL);
 
 //    serphone_core_assign_payload_type(&payload_type_silk_nb,111,NULL);
 //    serphone_core_assign_payload_type(&payload_type_silk_mb,112,NULL);
@@ -4829,7 +4829,7 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
     serphone_core_assign_payload_type(&payload_type_h264,-1,"profile-level-id=64001e; packetization-mode=1");
     //highprofile  ----zhangning 20170801 add---end--
     
-   // serphone_core_assign_payload_type(&payload_type_h264_svc,98, "profile-level-id=428014"); //profile-level-id need to be fixed.
+    // serphone_core_assign_payload_type(&payload_type_h264_svc,98, "profile-level-id=428014"); //profile-level-id need to be fixed.
 	/* due to limited space in SDP, we have to disable this h264 line which is normally no more necessary */
 	/* serphone_core_assign_payload_type(&payload_type_h264,-1,"packetization-mode=1;profile-level-id=428014");*/
 #endif

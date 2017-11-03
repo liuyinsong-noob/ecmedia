@@ -156,9 +156,9 @@ void ProbeController::SetEstimatedBitrate(int64_t bitrate_bps) {
 		bitrate_bps, min_bitrate_to_probe_further_bps_);
       
 #ifndef WIN32
-      printTime();
-      printf("[Probe] Measured bitrate: %lld, Minimum to probe further: %lld)\n",
-             bitrate_bps, min_bitrate_to_probe_further_bps_);
+//      printTime();
+//      printf("[Probe] Measured bitrate: %lld, Minimum to probe further: %lld)\n",
+//             bitrate_bps, min_bitrate_to_probe_further_bps_);
 #endif
 
     if (min_bitrate_to_probe_further_bps_ != kExponentialProbingDisabled &&
@@ -184,9 +184,9 @@ void ProbeController::SetEstimatedBitrate(int64_t bitrate_bps) {
 	WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, -1,
 		"[Probe] Detected big BW drop in ALR, start probe. (estimated_bitrate_bps_ = %PRId64)", estimated_bitrate_bps_);
 #ifndef WIN32
-      printTime();
-      printf("[Probe] Detected big BW drop in ALR, start probe.(estimated_bitrate_bps_ = %lld)\n",
-             estimated_bitrate_bps_);
+//      printTime();
+//      printf("[Probe] Detected big BW drop in ALR, start probe.(estimated_bitrate_bps_ = %lld)\n",
+//             estimated_bitrate_bps_);
 #endif
     // Track how often we probe in response to BW drop in ALR.
     RTC_HISTOGRAM_COUNTS_10000("cloopenwebrtc.BWE.AlrProbingIntervalInS",
@@ -222,8 +222,8 @@ void ProbeController::Process() {
 	  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, -1,
 		  "[Probe] kWaitingForProbingResult: timeout");
 #ifndef WIN32
-        printTime();
-        printf("[Probe] kWaitingForProbingResult: timeout\n");
+//        printTime();
+//        printf("[Probe] kWaitingForProbingResult: timeout\n");
 #endif
       state_ = State::kProbingComplete;
       min_bitrate_to_probe_further_bps_ = kExponentialProbingDisabled;

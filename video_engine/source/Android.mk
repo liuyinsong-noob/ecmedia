@@ -107,7 +107,7 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../../module/pacing/include \
     $(LOCAL_PATH)/../../module/video_coding/main/source \
     $(LOCAL_PATH)/../../module/desktop_capture/source \
-    $(LOCAL_PATH)/../../system_wrappers/interface \
+    $(LOCAL_PATH)/../../system_wrappers/include \
 	$(LOCAL_PATH)/../../system_wrappers/source \
     $(LOCAL_PATH)/../../voice_engine/main/include \
 	$(LOCAL_PATH)/../../voice_engine/main/source \
