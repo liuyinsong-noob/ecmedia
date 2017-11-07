@@ -235,7 +235,8 @@ namespace cloopenwebrtc {
 H264VideoToolboxEncoder::H264VideoToolboxEncoder()
     : callback_(nullptr),
       compression_session_(nullptr),
-      bitrate_adjuster_(Clock::GetRealTimeClock(), .5, .95) {}
+      bitrate_adjuster_(Clock::GetRealTimeClock(), .5, .95),
+    count(0){}
 
 H264VideoToolboxEncoder::~H264VideoToolboxEncoder() {
   DestroyCompressionSession();
@@ -344,6 +345,12 @@ WebRtc_Word32 H264VideoToolboxEncoder::Encode(
     }
   }
 
+    if (count<5) {
+        if ((count % 2)==0) {
+            is_keyframe_required = true;
+        }
+        count++;
+    }
   CMTime presentation_time_stamp =
       CMTimeMake(input_image.render_time_ms(), 600);
   CFDictionaryRef frame_properties = nullptr;

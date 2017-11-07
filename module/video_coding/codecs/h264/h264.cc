@@ -35,7 +35,8 @@ H264Encoder::H264Encoder()    : encoded_image_(),
     fps(12),
     mode(0),
     generate_keyframe(false),
-	num_of_cores_(0){
+	num_of_cores_(0),
+    count(0){
         memset(&codec_, 0, sizeof(codec_));
 #ifdef HAVE_H264_BITSTREAM
 		_bitStreamBeforeSend = fopen("encoderH264.bit", "wb");
@@ -165,6 +166,12 @@ int H264Encoder::Encode(const I420VideoFrame& input_image,
 		}
 	}
 
+    if (count<5) {
+        if ((count % 2)==0) {
+            frameType = kKeyFrame;
+        }
+        count++;
+    }
 	if(codec_.width != input_image.width() || codec_.height != input_image.height())
 	{
         Release();
