@@ -110,7 +110,7 @@ class ViEChannel
              int32_t engine_id,
              uint32_t number_of_cores,
              const Config& config,
-             ProcessThread& module_process_thread,
+             // ProcessThread& module_process_thread,
              RtcpIntraFrameObserver* intra_frame_observer,
              RtcpBandwidthObserver* bandwidth_observer,
              RemoteBitrateEstimator* remote_bitrate_estimator,

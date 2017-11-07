@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  Copyright (c) 2012 The WebRTC project authors. All Rights Reserved.
  *
  *  Use of this source code is governed by a BSD-style license
@@ -118,7 +118,7 @@ ViEChannel::ViEChannel(int32_t channel_id,
                        int32_t engine_id,
                        uint32_t number_of_cores,
                        const Config& config,
-                       ProcessThread& module_process_thread,
+                       //ProcessThread& module_process_thread,
                        RtcpIntraFrameObserver* intra_frame_observer,
                        RtcpBandwidthObserver* bandwidth_observer,
                        RemoteBitrateEstimator* remote_bitrate_estimator,
@@ -142,7 +142,8 @@ ViEChannel::ViEChannel(int32_t channel_id,
       stats_observer_(new ChannelStatsObserver(this)),
       vcm_receive_stats_callback_(NULL),
 	  //receive_stats_proxy_callback_(NULL),
-      module_process_thread_(module_process_thread),
+      //module_process_thread_(NULL),
+      module_process_thread_(*(ProcessThread::CreateProcessThread())),
       codec_observer_(NULL),
       do_key_frame_callbackRequest_(false),
       rtp_observer_(NULL),
@@ -230,6 +231,7 @@ ViEChannel::ViEChannel(int32_t channel_id,
 }
 
 int32_t ViEChannel::Init() {
+  module_process_thread_.Start();
   if (module_process_thread_.RegisterModule(
       vie_receiver_.GetReceiveStatistics()) != 0) {
     return -1;
@@ -354,6 +356,8 @@ ViEChannel::~ViEChannel() {
   // Release modules.
 
   VideoCodingModule::Destroy(vcm_);
+  module_process_thread_.Stop();
+  ProcessThread::DestroyProcessThread(&module_process_thread_);
 }
 
 int32_t ViEChannel::SetUdpTransport(UdpTransport *transport)

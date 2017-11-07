@@ -117,7 +117,7 @@ namespace cloopenwebrtc {
         ret = initVideoEngine();
         
         ret = initAudioNetwork();
-	    ret = initVideoNetwork();
+        ret = initVideoNetwork();
 
         return ret;
     }
@@ -265,7 +265,6 @@ namespace cloopenwebrtc {
         ViEBase *vbase = ViEBase::GetInterface(vie_);
         int ret = -1;
         ret = vbase->StopReceive(video_channel_);
-        ret = vbase->StartReceive(video_channel_);
         vbase->Release();
         return ret;
     }
@@ -281,15 +280,13 @@ namespace cloopenwebrtc {
     
     void ECMediaMachine::UnInit()
     {
+        uninitVideoNetwork();
         uninitAudioNetwork();
-	    uninitVideoNetwork();
-        
-        uninitAudioEngine();
         uninitVideoEngine();
+        uninitAudioEngine();
     }
     
     int ECMediaMachine::uninitAudioNetwork() {
-
         // stop audio network
         VoENetwork *network = VoENetwork::GetInterface(voe_);
         network->DeRegisterExternalTransport(audio_channel_);
@@ -306,17 +303,14 @@ namespace cloopenwebrtc {
     
     
     int ECMediaMachine::uninitVideoNetwork() {
-        // stop video send
-        ViEBase *vbase = ViEBase::GetInterface(vie_);
-
         //stop video network
         ViENetwork *vnetwork = ViENetwork::GetInterface(vie_);
         int ret =  vnetwork->DeregisterSendTransport(video_channel_);
         ret = vnetwork->Release();
-
+        
+        ViEBase *vbase = ViEBase::GetInterface(vie_);
         ret = vbase->DeleteChannel(video_channel_);
         vbase->Release();
-        
         video_channel_ = -1;
         return ret;
  
@@ -407,7 +401,7 @@ namespace cloopenwebrtc {
         if(ret != 0) {
             return ret;
         }
-        ret = doPlayingPreviewRender(video_channel_);
+        ret = shutdownPlayingPreviewRender(video_channel_);
         if(ret != 0) {
             return ret;
         }

@@ -384,27 +384,30 @@ int ViEChannelManager::DeleteChannel(int channel_id) {
       group = NULL;  // Prevent group from being deleted.
     }
   }
+    LOG(LS_ERROR) << "gezhaoyou 999999 [ECLiveEngine INFO]";
   delete vie_channel;
+    LOG(LS_ERROR) << "gezhaoyou ttttttt [ECLiveEngine INFO]";
   // Leave the write critsect before deleting the objects.
   // Deleting a channel can cause other objects, such as renderers, to be
   // deleted, which might take time.
   // If statment just to show that this object is not always deleted.
   if (vie_encoder) {
-    LOG(LS_VERBOSE) << "ViEEncoder deleted for channel " << channel_id;
+    LOG(LS_ERROR) << "ViEEncoder deleted for channel " << channel_id;
     delete vie_encoder;
   }
+    LOG(LS_ERROR) << "gezhaoyou fffffff [ECLiveEngine INFO]";
   // If statment just to show that this object is not always deleted.
   if (group) {
     // Delete the group if empty last since the encoder holds a pointer to the
     // BitrateController object that the group owns.
-    LOG(LS_VERBOSE) << "Channel group deleted for channel " << channel_id;
+    LOG(LS_ERROR) << "Channel group deleted for channel " << channel_id;
     delete group;
   }
   if (transport) {
-	  LOG(LS_VERBOSE) << "delete udptransport for channel " << channel_id;
+	  LOG(LS_ERROR) << "delete udptransport for channel " << channel_id;
 	  DeleteUdptransport(transport);
   }
-  LOG(LS_VERBOSE) << "Channel deleted " << channel_id;
+  LOG(LS_ERROR) << "Channel deleted " << channel_id;
   
    if (channel_map_.empty())
   {
@@ -572,7 +575,7 @@ bool ViEChannelManager::CreateChannelObject(
   ViEChannel* vie_channel = new ViEChannel(channel_id, engine_id_,
                                            number_of_cores_,
                                            engine_config_,
-                                           *module_process_thread_,
+                                           //*module_process_thread_,
                                            intra_frame_observer,
                                            bandwidth_observer,
                                            remote_bitrate_estimator,
