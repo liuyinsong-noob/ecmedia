@@ -164,7 +164,8 @@ private:
     uint32_t framenum_;
     bool generate_keyframe;    
     x264_t * encoder_;   
-    bool stap_a_allowed; 
+    bool stap_a_allowed;
+    int count;
 #ifdef HAVE_H264_BITSTREAM
 	FILE *_bitStreamBeforeSend;
 #endif
