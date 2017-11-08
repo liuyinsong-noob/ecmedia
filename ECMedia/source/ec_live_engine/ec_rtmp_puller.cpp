@@ -74,6 +74,9 @@ namespace cloopenwebrtc {
             rtmp_ = nullptr;
             av_packet_cacher->shutdown();
             rtmp_status_ = RS_PLY_Init;
+            if(callback_) {
+                callback_(EC_LIVE_FINISHED);
+            }
         }
     }
 

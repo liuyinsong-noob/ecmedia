@@ -81,6 +81,9 @@ namespace cloopenwebrtc {
             cacher_update_event_->StopTimer();
             retrys_ = 0;
             rtmp_status_ = RS_STM_Init;
+            if(callback_) {
+                callback_(EC_LIVE_FINISHED);
+            }
         }
         PrintConsole("[ECRtmpPublisher INFO] %s: end.", __FUNCTION__);
     }
