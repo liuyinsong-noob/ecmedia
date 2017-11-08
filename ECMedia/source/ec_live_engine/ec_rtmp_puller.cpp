@@ -66,8 +66,8 @@ namespace cloopenwebrtc {
     
     void EC_RtmpPuller::stop() {
         if(running_) {
-            hasStreaming_ = false;
             running_ = false;
+            hasStreaming_ = false;
             srs_rtmp_disconnect_server(rtmp_);
             rtmpPullingThread_->Stop();
             srs_rtmp_destroy(rtmp_);
@@ -149,10 +149,11 @@ namespace cloopenwebrtc {
                                 }
                             }
                         } else {
-                            if(callback_) {
-                                callback_(EC_LIVE_PLAY_FAILED);
+                            if(running_) {
+                                if(callback_) {
+                                    callback_(EC_LIVE_PLAY_FAILED);
+                                }
                             }
-                            this->stop();
                             return false;
                         }
                     }

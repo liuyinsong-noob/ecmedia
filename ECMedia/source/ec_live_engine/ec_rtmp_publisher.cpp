@@ -18,6 +18,7 @@ namespace cloopenwebrtc {
             ,need_keyframe_(false)
             ,rtmp_lock_(CriticalSectionWrapper::CreateCriticalSection())
     {
+        packet_sending = false;
         retrys_ = 0;
         need_clear_av_cacher_ = false;
         rtmp_ = nullptr;
@@ -52,6 +53,7 @@ namespace cloopenwebrtc {
         PrintConsole("[ECRtmpPublisher INFO] %s: begin", __FUNCTION__);
         if(!running_) {
             running_ = true;
+            packet_sending = true;
             // save rtmp url;
             rtmp_url = url;
             cacher_update_event_->StartTimer(true, 10);
@@ -67,6 +69,7 @@ namespace cloopenwebrtc {
     void ECRtmpPublisher::stop() {
         PrintConsole("[ECRtmpPublisher INFO] %s: begin", __FUNCTION__);
         if(running_) {
+            packet_sending = false;
             running_ = false;
             rtmp_bitrate_ontroller_->shutdown();
             srs_rtmp_disconnect_server(rtmp_);
@@ -92,6 +95,9 @@ namespace cloopenwebrtc {
     }
 
     void ECRtmpPublisher::OnCapturerAvcDataReady(uint8_t* pData, int nLen, uint32_t ts) {
+        if(!packet_sending) {
+            return;
+        }
         uint8_t *p = pData;
         int nal_type = p[4] & 0x1f;
         if(nal_type == 7)
@@ -183,6 +189,10 @@ namespace cloopenwebrtc {
     }
     
     void ECRtmpPublisher::OnCapturerAacDataReady(uint8_t *pData, int nLen, uint32_t ts) {
+        if(!packet_sending) {
+            return;
+        }
+        
         if(need_keyframe_) {
             return;
         }
@@ -267,10 +277,12 @@ namespace cloopenwebrtc {
                                 }
                             }
                         } else {
-                            if(callback_) {
-                                callback_(EC_LIVE_PUSH_FAILED);
+                            if(running_) {
+                                if(callback_) {
+                                    callback_(EC_LIVE_PUSH_FAILED);
+                                }
                             }
-                            this->stop();
+                            packet_sending = false;
                             return false;
                         }
                     }

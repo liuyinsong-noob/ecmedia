@@ -55,6 +55,7 @@ namespace cloopenwebrtc {
         ThreadWrapper* rtmpPublishThread_;
         EventTimerWrapper* cacher_update_event_;
         bool running_;
+        bool packet_sending;
         void* rtmp_;
 
         RTMP_STATUS rtmp_status_;
