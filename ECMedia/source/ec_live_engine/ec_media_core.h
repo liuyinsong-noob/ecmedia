@@ -78,7 +78,7 @@ namespace cloopenwebrtc {
 
         // EC_ReceiverCallback
         void onAvcDataComing(void* nalu_data, int len, uint32_t timestamp);
-        void onAacDataComing(uint8_t* pData, int nLen, uint32_t ts, uint32_t sample_rate, int audio_channels);
+        void on10MsecPcmDataComing(uint8_t* pData, int nLen, uint32_t ts, uint32_t sample_rate, int audio_channels);
 
 
     private:

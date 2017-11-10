@@ -108,7 +108,8 @@ namespace cloopenwebrtc {
             int ret = -1;
             ret = ec_media_core_->stopCapture();
             rtmp_publisher_->stop();
-
+			delete rtmp_publisher_;
+			rtmp_publisher_ = nullptr;
             publiser_running_ = false;
             PrintConsole("[ECLiveEngine INFO] %s: stop with code: %d", __FUNCTION__, ret);
             return ret;
@@ -150,8 +151,8 @@ namespace cloopenwebrtc {
                 media_puller_ = nullptr;
             }
             ret = ec_media_core_->stopPlayout();
-            puller_runnig_ = false;
         }
+		puller_runnig_ = false;
         PrintConsole("[ECLiveEngine INFO] %s: end with code: %d", __FUNCTION__, ret);
         return ret;
     }

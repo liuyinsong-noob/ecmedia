@@ -93,7 +93,7 @@ namespace cloopenwebrtc{
     }
     
     bool EC_AVCacher::aacDecodingThreadRun(void *pThis) {
-        return static_cast<EC_AVCacher*>(pThis)->aacDecode();
+        return static_cast<EC_AVCacher*>(pThis)->decodingAacPackets();
     }
     
     void EC_AVCacher::run() {
@@ -121,7 +121,6 @@ namespace cloopenwebrtc{
         playnetworkThread_->Stop();
         audioHandleThread_->Stop();
         aacDecodeHandleThread_->Stop();
-        
         play_cur_time_ = 0;
     }
     
@@ -136,23 +135,18 @@ namespace cloopenwebrtc{
         if(!running_) {
             return;
         }
-        PrintConsole("[EC_AVCacher INFO] %s begin\n", __FUNCTION__);
         PlyPacket* pkt = new PlyPacket(true);
         pkt->SetData(pdata, len, ts);
         pkt->_b_video = true;
         _cs_list_video->Enter();
         lst_video_buffer_.push_back(pkt);
         _cs_list_video->Leave();
-        PrintConsole("EC_AVCacher INFO] %s end\n", __FUNCTION__);
     }
     
-    void EC_AVCacher::CachePcmData(const uint8_t*pdata, int len, uint32_t ts)
+    void EC_AVCacher::cache10MsecPcmData(const uint8_t*pdata, int len, uint32_t ts)
     {
-        
-        PrintConsole("[EC_AVCacher INFO] %s start\n", __FUNCTION__);
         int audio_record_sample_hz_ = 32000;
         const size_t kMaxDataSizeSamples = 3840;
-        
         int16_t temp_output[kMaxDataSizeSamples];
         
         int length = resampler_record_.Resample10Msec((int16_t*)pdata, audio_sampleRate_, audio_record_sample_hz_, audio_channels_,  kMaxDataSizeSamples, (int16_t*)temp_output);
@@ -164,9 +158,6 @@ namespace cloopenwebrtc{
 #ifdef __ANDROID__
         EC_Live_Utility::pcm_s16le_to_s16be((short*)temp_output, audio_record_sample_hz_/100*2);
 #endif
-        
-        
-        PrintConsole("[EC_AVCacher INFO] %s begin\n", __FUNCTION__);
         if(len == 0 || pdata == nullptr) {
             return;
         }
@@ -188,7 +179,6 @@ namespace cloopenwebrtc{
             {//* Get video
                 _cs_list_video->Enter();
                 if (lst_video_buffer_.size() > 0) {
-                    PrintConsole("[ECMEDIA CORE INFO] %s lst_video_buffer_ size :%d\n", __FUNCTION__, lst_video_buffer_.size());
                     pkt_video = lst_video_buffer_.front();
                     int diff = pkt_video->_dts - play_cur_time_;
                     if (diff <= 0) {
@@ -220,18 +210,15 @@ namespace cloopenwebrtc{
         if(!running_) {
             return;
         }
-        
-        PrintConsole("[EC_AVCacher INFO] %s begin\n", __FUNCTION__);
         PlyPacket* pkt = new PlyPacket(true);
         pkt->SetData(pdata, len, ts);
         pkt->_b_video = true;
         _cs_list_aac->Enter();
         lst_aac_buffer_.push_back(pkt);
         _cs_list_aac->Leave();
-        PrintConsole("EC_AVCacher INFO] %s end\n", __FUNCTION__);
     }
     
-    bool EC_AVCacher::aacDecode() {
+    bool EC_AVCacher::decodingAacPackets() {
         PlyPacket* pkt_aac = nullptr;
         _cs_list_aac->Enter();
         if (lst_aac_buffer_.size() > 0) {
@@ -244,7 +231,7 @@ namespace cloopenwebrtc{
             uint8_t *pdata = pkt_aac->_data;
             int len = pkt_aac->_data_len;
             uint32_t ts = pkt_aac->_dts;
-            PrintConsole("[EC_AVCacher INFO] %s begin\n", __FUNCTION__);
+//            PrintConsole("[EC_AVCacher INFO] %s begin\n", __FUNCTION__);
             if (faac_decode_handle_ == NULL) {
                 PrintConsole("[EC_AVCacher INFO] %s create new faac decode handler\n", __FUNCTION__);
                 faad_decoder_getinfo((char*)pdata, audio_sampleRate_, audio_channels_);
@@ -260,12 +247,12 @@ namespace cloopenwebrtc{
             }
             unsigned int outlen = 0;
             if (faad_decode_frame(faac_decode_handle_, (unsigned char*)pdata, len, audio_cache_ + a_cache_len_, &outlen) == 0) {
-                PrintConsole("[EC_AVCacher INFO] %s faac decode success, data: %p, length:%d, a_cache_len_:%d\n", __FUNCTION__, pdata, len, a_cache_len_);
+                //PrintConsole("[EC_AVCacher INFO] %s faac decode success, data: %p, length:%d, a_cache_len_:%d\n", __FUNCTION__, pdata, len, a_cache_len_);
                 a_cache_len_ += outlen;
                 int ct = 0;
                 int fsize = aac_frame_per10ms_size_;
                 while (a_cache_len_ > fsize) {
-                    CachePcmData(audio_cache_ + ct * fsize, fsize, ts);
+                    cache10MsecPcmData(audio_cache_ + ct * fsize, fsize, ts);
                     a_cache_len_ -= fsize;
                     ct++;
                 }
@@ -274,7 +261,6 @@ namespace cloopenwebrtc{
             } else{
                 PrintConsole("[EC_AVCacher ERROR] %s faac decode failed, data: %p, length:%d, a_cache_len_:%d\n", __FUNCTION__, pdata, len, a_cache_len_);
             }
-            
             delete  pkt_aac;
         } else {
 #if defined(_WIN32)
@@ -301,7 +287,7 @@ namespace cloopenwebrtc{
         _cs_list_audio->Leave();
         
         if (pkt_audio) {
-            callback_->onAacDataComing((uint8_t*)pkt_audio->_data, pkt_audio->_data_len, pkt_audio->_dts, audio_sampleRate_, audio_channels_);
+            callback_->on10MsecPcmDataComing((uint8_t*)pkt_audio->_data, pkt_audio->_data_len, pkt_audio->_dts, audio_sampleRate_, audio_channels_);
             delete  pkt_audio;
         } else {
 #if defined(_WIN32)

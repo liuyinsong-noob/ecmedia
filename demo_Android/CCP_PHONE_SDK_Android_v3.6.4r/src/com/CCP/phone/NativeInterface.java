@@ -760,7 +760,7 @@ public class NativeInterface {
 	 * @param view : local camera privew view.
      * @return
      */
-	public static native int startRecordLocalMedia(String fileName, View view);
+	public static native int  startRecordLocalMedia(String fileName, View view);
 	public static native void stopRecordLocalMedia();
 
 	/** ec live video api **/

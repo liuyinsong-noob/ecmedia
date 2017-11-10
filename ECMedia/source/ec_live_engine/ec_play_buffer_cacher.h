@@ -53,7 +53,7 @@ namespace cloopenwebrtc{
         EC_AVCacher();
         ~EC_AVCacher();
         void onAvcDataComing(const uint8_t *pdata, int len, uint32_t ts);
-        void CachePcmData(const uint8_t*pdata, int len, uint32_t ts);
+        void cache10MsecPcmData(const uint8_t*pdata, int len, uint32_t ts);
         void onAacDataComing(const uint8_t *pdata, int len, uint32_t ts);
         void setReceiverCallback(EC_ReceiverCallback *cb);
         void run();
@@ -67,7 +67,7 @@ namespace cloopenwebrtc{
         bool handleVideo();
         bool handleAudio();
         void clearCacher();
-        bool aacDecode();
+        bool decodingAacPackets();
     private:
         ThreadWrapper* playnetworkThread_;
         ThreadWrapper* audioHandleThread_;

@@ -19,6 +19,7 @@ namespace cloopenwebrtc {
             ,rtmp_lock_(CriticalSectionWrapper::CreateCriticalSection())
     {
         retrys_ = 0;
+        hasStreaming_ = false;
         need_clear_av_cacher_ = false;
         rtmp_ = nullptr;
         callback_ = callback;
@@ -44,8 +45,6 @@ namespace cloopenwebrtc {
             rtmpPublishThread_->Stop();
             delete rtmpPublishThread_;
         }
-
-        rtmp_status_ = RS_STM_Closed;
     }
     
     void ECRtmpPublisher::start(const char *url) {
@@ -56,6 +55,7 @@ namespace cloopenwebrtc {
             rtmp_url = url;
             cacher_update_event_->StartTimer(true, 10);
             rtmp_ = srs_rtmp_create(url);
+			srs_rtmp_set_timeout(rtmp_, 3000, 3000);
             rtmp_bitrate_ontroller_->start();
             
             unsigned int pthread_id;
@@ -68,19 +68,17 @@ namespace cloopenwebrtc {
         PrintConsole("[ECRtmpPublisher INFO] %s: begin", __FUNCTION__);
         if(running_) {
             running_ = false;
-            rtmp_bitrate_ontroller_->shutdown();
             srs_rtmp_disconnect_server(rtmp_);
             rtmpPublishThread_->Stop();
             if (rtmp_) {
                 srs_rtmp_destroy(rtmp_);
                 rtmp_ = nullptr;
             }
+			rtmp_bitrate_ontroller_->shutdown();
             cacher_update_event_->StopTimer();
             retrys_ = 0;
-            rtmp_status_ = RS_STM_Init;
-            if(callback_) {
-                callback_(EC_LIVE_FINISHED);
-            }
+			hasStreaming_ = false;
+			callbackStateIfNeed();
         }
         PrintConsole("[ECRtmpPublisher INFO] %s: end.", __FUNCTION__);
     }
@@ -170,7 +168,6 @@ namespace cloopenwebrtc {
         pdata->_data = new uint8_t[nLen];
         memcpy(pdata->_data, pData, nLen);
         pdata->_dataLen = nLen;
-        // pdata->_isVideo = true;
         pdata->_type = VIDEO_DATA;
         pdata->_dts = ts;
  
@@ -209,7 +206,6 @@ namespace cloopenwebrtc {
     }
 
     bool ECRtmpPublisher::run() {
-        PrintConsole("[ECRtmpPublisher INFO] %s: publishing...", __FUNCTION__);
         while(running_) {
             if(rtmp_ != NULL)
             {
@@ -220,33 +216,28 @@ namespace cloopenwebrtc {
                             callback_(EC_LIVE_CONNECTING);
                         }
                         if (srs_rtmp_handshake(rtmp_) == 0) {
-                            PrintConsole("SRS: simple handshake ok.");
                             rtmp_status_ = RS_STM_Handshaked;
                         }
                         else {
-                            if(callback_) {
-                                callback_(EC_LIVE_CONNECT_FAILED);
-                            }
+							rtmp_status_ = RS_STM_Connect_Faild;
+                            return false;
                         }
                     }
                         break;
                     case RS_STM_Handshaked:
                     {
                         if (srs_rtmp_connect_app(rtmp_) == 0) {
-                            PrintConsole("SRS: connect vhost/app ok.");
                             rtmp_status_ = RS_STM_Connected;
                         }
                         else {
-                            if(callback_) {
-                                callback_(EC_LIVE_CONNECT_FAILED);
-                            }
+							rtmp_status_ = RS_STM_Connect_Faild;
+                            return false;
                         }
                     }
                         break;
                     case RS_STM_Connected:
                     {
                         if (srs_rtmp_publish_stream(rtmp_) == 0) {
-                            PrintConsole("SRS: publish stream ok.");
                             rtmp_status_ = RS_STM_Published;
                             clearMediaCacher();
                             if(callback_) {
@@ -254,9 +245,8 @@ namespace cloopenwebrtc {
                             }
                         }
                         else {
-                            if(callback_) {
-                                callback_(EC_LIVE_CONNECT_FAILED);
-                            }
+							rtmp_status_ = RS_STM_Connect_Faild;
+                            return false;
                         }
                     }
                         break;
@@ -270,11 +260,7 @@ namespace cloopenwebrtc {
                                 }
                             }
                         } else {
-                            if(running_) {
-                                if(callback_) {
-                                    callback_(EC_LIVE_PUSH_FAILED);
-                                }
-                            }
+							rtmp_status_ = RS_STM_Publish_Faild;
                             return false;
                         }
                     }
@@ -282,7 +268,6 @@ namespace cloopenwebrtc {
                 }
             }
         }
-        PrintConsole("[ECRtmpPublisher INFO] %s: ending...", __FUNCTION__);
         return false;
     }
 
@@ -318,8 +303,7 @@ namespace cloopenwebrtc {
                 }
                 else {
                     PrintConsole("send h264 raw data failed. ret=%d", ret);
-                    callOnDisconnect();
-                    return 0;
+                    return -1;
                 }
             }
 
@@ -329,7 +313,6 @@ namespace cloopenwebrtc {
                     10, 3, 1, 1,
                     (char*)dataPtr->_data, dataPtr->_dataLen, dataPtr->_dts)) != 0) {
                 PrintConsole("send audio raw data failed. ret=%d", ret);
-                callOnDisconnect();
                 return -1;
             }
         } else if(dataPtr->_type == META_DATA) {
@@ -363,31 +346,24 @@ namespace cloopenwebrtc {
         rtmp_lock_->Leave();
     }
 
-    void ECRtmpPublisher::callOnDisconnect()
+    void ECRtmpPublisher::callbackStateIfNeed()
     {
-        need_keyframe_ = true;
-        {
-            if (rtmp_) {
-                srs_rtmp_destroy(rtmp_);
-                rtmp_ = NULL;
-            }
-            if(rtmp_status_ != RS_STM_Closed) {
-                rtmp_status_ = RS_STM_Init;
-                retrys_ ++;
-                if(retrys_ <= MAX_RETRY_TIME)
-                {
-                    rtmp_ = srs_rtmp_create(rtmp_url.c_str());
-                    if(callback_) {
-                        callback_(EC_LIVE_CONNECTING);
-                    }
-                } else {
-                    stop();
-                    if(callback_) {
-                        callback_(EC_LIVE_DISCONNECTED);
-                    }
-                }
-            }
-        }
+		if (rtmp_status_ == RS_STM_Connect_Faild) {
+			if (callback_) {
+				callback_(EC_LIVE_CONNECT_FAILED);
+			}
+		}
+
+		if (rtmp_status_ == RS_STM_Publish_Faild) {
+			if (callback_) {
+				callback_(EC_LIVE_PUSH_FAILED);
+			}
+		}
+        
+		if (callback_) {
+			callback_(EC_LIVE_FINISHED);
+		}
+		rtmp_status_ = RS_STM_Closed;
     }
 }
 

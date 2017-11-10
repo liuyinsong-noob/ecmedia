@@ -144,23 +144,31 @@ public class EC_LiveVideoSession extends CCPBaseActivity implements View.OnClick
                     netphone_landing_play_video.setText("开始观看");
                     mLoaclVideoView.removeView(renderView);
                 }
+                if(!running) {
 
-				Thread play_pthread = new Thread(new Runnable() {
-					@Override
-					public void run() {
-                        if(!running) {
-
-                            getDeviceHelper().setVideoView("1007", renderView, null);
-                            running = true;
-                            NativeInterface.playLiveStream(ec_live_url_text.getText().toString(), "1007");
-                        } else  {
-                            running = false;
-                            NativeInterface.stopLiveStream();
-                        }
-
-					}
-				});
-				play_pthread.start();
+                    getDeviceHelper().setVideoView("1007", renderView, null);
+                    running = true;
+                    NativeInterface.playLiveStream(ec_live_url_text.getText().toString(), "1007");
+                } else  {
+                    running = false;
+                    NativeInterface.stopLiveStream();
+                }
+//				Thread play_pthread = new Thread(new Runnable() {
+//					@Override
+//					public void run() {
+//                        if(!running) {
+//
+//                            getDeviceHelper().setVideoView("1007", renderView, null);
+//                            running = true;
+//                            NativeInterface.playLiveStream(ec_live_url_text.getText().toString(), "1007");
+//                        } else  {
+//                            running = false;
+//                            NativeInterface.stopLiveStream();
+//                        }
+//
+//					}
+//				});
+//				play_pthread.start();
 				break;
 			default:
 				break;

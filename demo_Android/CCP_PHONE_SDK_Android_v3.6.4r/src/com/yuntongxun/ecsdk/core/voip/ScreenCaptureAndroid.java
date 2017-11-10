@@ -96,6 +96,6 @@ public class ScreenCaptureAndroid {
 //        return 1080;//screenHeight;
 //    }
 
-      native void ProvideScreeData(Object obj, byte[] data, int a, int b, int c, long captureObject);
+    native void ProvideScreeData(Object obj, byte[] data, int a, int b, int c, long captureObject);
 }
 

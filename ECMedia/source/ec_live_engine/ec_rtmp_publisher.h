@@ -22,7 +22,9 @@ namespace cloopenwebrtc {
         RS_STM_Handshaked,
         RS_STM_Connected,
         RS_STM_Published,
-        RS_STM_Closed
+        RS_STM_Closed,
+		RS_STM_Connect_Faild,
+		RS_STM_Publish_Faild
     };
 
     class EventTimerWrapper;
@@ -44,7 +46,7 @@ namespace cloopenwebrtc {
         // publish pthread
         bool run();
         void clearMediaCacher();
-        void callOnDisconnect();
+        void callbackStateIfNeed();
         int doPushRtmpPacket();
         void GotH264Nal(uint8_t* pData, int nLen, bool isKeyFrame, uint32_t ts);
         

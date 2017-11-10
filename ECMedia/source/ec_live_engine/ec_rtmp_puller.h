@@ -42,7 +42,9 @@ namespace cloopenwebrtc {
         RS_PLY_Handshaked,
         RS_PLY_Connected,
         RS_PLY_Played,
-        RS_PLY_Closed
+        RS_PLY_Closed,
+		RS_PLY_Connect_Faild,
+		RS_PLY_Read_Faild
     };
 
     class EC_AVCacher;
@@ -61,7 +63,7 @@ namespace cloopenwebrtc {
     private:
         bool run();
         void CallConnect();
-        void CallDisconnect();
+        void callbackStateIfNeed();
         int doReadRtmpData();
 
         int GotVideoSample(u_int32_t timestamp, SrsCodecSample *sample);
@@ -69,11 +71,11 @@ namespace cloopenwebrtc {
         void RescanVideoframe(const char*pdata, int len, uint32_t timestamp);
 
         
-        bool  UnPackNAL(const char *data, int data_size, std::vector<uint8_t> & nal);
+        bool  unPackNAL(const char *data, int data_size, std::vector<uint8_t> & nal);
         
-        bool  UnpackSpsPps(char *data , std::vector<uint8_t> &sps, std::vector<uint8_t> &pps);
+        bool  unpackSpsPps(char *data , std::vector<uint8_t> &sps, std::vector<uint8_t> &pps);
         void handleVideoPacket(char* data, int len, u_int32_t timestamp);
-        void HandleAuidoPacket(char * data, int length, u_int32_t timestamp);
+        void handleAuidoPacket(char * data, int length, u_int32_t timestamp);
     private:
         std::string str_url_;
         ThreadWrapper* rtmpPullingThread_;

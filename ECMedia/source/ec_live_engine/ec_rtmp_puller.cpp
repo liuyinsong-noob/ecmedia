@@ -26,8 +26,8 @@ namespace cloopenwebrtc {
     EC_RtmpPuller::EC_RtmpPuller(ECLiveStreamNetworkStatusCallBack callback) {
         retry_ct_ = 0;
         running_ = false;
-        callback_ = callback;
-        rtmp_status_ =RS_PLY_Init;
+		callback_ = callback;
+        rtmp_status_ = RS_PLY_Init;
         rtmpPullingThread_ = ThreadWrapper::CreateThread(EC_RtmpPuller::pullingThreadRun,
                 this,
                 kNormalPriority,
@@ -45,8 +45,9 @@ namespace cloopenwebrtc {
         if(av_packet_cacher) {
             delete av_packet_cacher;
         }
-
+		
         if(rtmpPullingThread_) {
+            rtmpPullingThread_->SetNotAlive();
             delete rtmpPullingThread_;
         }
     }
@@ -54,9 +55,8 @@ namespace cloopenwebrtc {
     void EC_RtmpPuller::start(const char *url) {
         if(!running_) {
             running_ = true;
-            
             rtmp_ = srs_rtmp_create(url);
-            
+            srs_rtmp_set_timeout(rtmp_, 3000, 3000);
             // start pull rtmp packer.
             unsigned int pthread_id;
             rtmpPullingThread_->Start(pthread_id);
@@ -67,16 +67,13 @@ namespace cloopenwebrtc {
     void EC_RtmpPuller::stop() {
         if(running_) {
             running_ = false;
-            hasStreaming_ = false;
             srs_rtmp_disconnect_server(rtmp_);
             rtmpPullingThread_->Stop();
             srs_rtmp_destroy(rtmp_);
             rtmp_ = nullptr;
             av_packet_cacher->shutdown();
-            rtmp_status_ = RS_PLY_Init;
-            if(callback_) {
-                callback_(EC_LIVE_FINISHED);
-            }
+            hasStreaming_ = false;
+            callbackStateIfNeed();
         }
     }
 
@@ -101,15 +98,13 @@ namespace cloopenwebrtc {
                         if(callback_){
                             callback_(EC_LIVE_CONNECTING);
                         }
-                        
                         if (srs_rtmp_handshake(rtmp_) == 0) {
                             PrintConsole("SRS: simple handshake ok.");
                             rtmp_status_ = RS_PLY_Handshaked;
                         }
                         else {
-                            if(callback_) {
-                                callback_(EC_LIVE_CONNECT_FAILED);
-                            }
+							rtmp_status_ = RS_PLY_Connect_Faild;
+                            return false;
                         }
                     }
                         break;
@@ -120,9 +115,8 @@ namespace cloopenwebrtc {
                             rtmp_status_ = RS_PLY_Connected;
                         }
                         else {
-                            if(callback_) {
-                                callback_(EC_LIVE_CONNECT_FAILED);
-                            }
+							rtmp_status_ = RS_PLY_Connect_Faild;
+							return false;
                         }
                     }
                         break;
@@ -136,15 +130,15 @@ namespace cloopenwebrtc {
                             }
                         }
                         else {
-                            if(callback_) {
-                                callback_(EC_LIVE_CONNECT_FAILED);
-                            }
+							rtmp_status_ = RS_PLY_Connect_Faild; 
+                            return false;
                         }
                     }
                         break;
                     case RS_PLY_Played:
                     {
-                        if(doReadRtmpData() == 0) {
+						int ret = doReadRtmpData();
+                        if(ret == 0) {
                             if(!hasStreaming_) {
                                 hasStreaming_ = true;
                                 if(callback_) {
@@ -153,9 +147,7 @@ namespace cloopenwebrtc {
                             }
                         } else {
                             if(running_) {
-                                if(callback_) {
-                                    callback_(EC_LIVE_PLAY_FAILED);
-                                }
+								rtmp_status_ = RS_PLY_Read_Faild;
                             }
                             return false;
                         }
@@ -175,33 +167,30 @@ namespace cloopenwebrtc {
         }
     }
 
-    void EC_RtmpPuller::CallDisconnect() {
-        if(rtmp_status_ != RS_PLY_Closed) {
-            rtmp_status_ = RS_PLY_Init;
-            retry_ct_ ++;
-            if(retry_ct_ <= MAX_RETRY_TIME)
-            {
-                rtmp_ = srs_rtmp_create(str_url_.c_str());
-            } else {
-                if(!callback_) {
-                    running_ = false;
-                    return;
-                }
-                
-                if(connected_) {
-                    running_ = false;
-                    callback_(EC_LIVE_DISCONNECTED);
-                }
-                else {
-                    running_ = false;
-                    callback_(EC_LIVE_PLAY_FAILED);
-                }
-            }
-        }
+    void EC_RtmpPuller::callbackStateIfNeed() {
+		/*错误状态在子线程中callback,若客户在callback中操作UI，会照成程序崩溃
+		将错误状态直接在stop函数中callback回去，可以避免此问题
+		*/
+		if (rtmp_status_ == RS_PLY_Connect_Faild) {
+			if (callback_) {
+				callback_(EC_LIVE_CONNECT_FAILED);
+			}
+		}
+
+		if (rtmp_status_ == RS_PLY_Read_Faild) {
+			if (callback_) {
+				callback_(EC_LIVE_CONNECT_FAILED);
+			}
+		}
+
+		if (callback_) {
+			callback_(EC_LIVE_FINISHED);
+		}
+		rtmp_status_ = RS_PLY_Init;
     }
     
 
-    bool EC_RtmpPuller::UnPackNAL(const char *data, int data_size, std::vector<uint8_t> & nal)
+    bool EC_RtmpPuller::unPackNAL(const char *data, int data_size, std::vector<uint8_t> & nal)
     {
         int index =0 ;
         int count = 0;
@@ -225,7 +214,7 @@ namespace cloopenwebrtc {
         return true;
     }
     
-    bool EC_RtmpPuller::UnpackSpsPps(char *data , std::vector<uint8_t> &sps, std::vector<uint8_t> &pps)
+    bool EC_RtmpPuller::unpackSpsPps(char *data , std::vector<uint8_t> &sps, std::vector<uint8_t> &pps)
     {
         //sps
         if(data[0]!= 1) {
@@ -266,7 +255,7 @@ namespace cloopenwebrtc {
         if (type == SRS_RTMP_TYPE_VIDEO) {
              handleVideoPacket(data, size, timestamp);
         } else if (type == SRS_RTMP_TYPE_AUDIO) {
-            HandleAuidoPacket(data, size, timestamp);
+            handleAuidoPacket(data, size, timestamp);
         } else if (type == SRS_RTMP_TYPE_SCRIPT) {
             if (!srs_rtmp_is_onMetaData(type, data, size)) {
                 PrintConsole("drop message type=%#x, size=%dB", type, size);
@@ -278,7 +267,6 @@ namespace cloopenwebrtc {
     }
 
     void EC_RtmpPuller::handleVideoPacket(char* data, int len, u_int32_t timestamp) {
-        PrintConsole("[EC_RtmpPuller INFO] %s begin\n", __FUNCTION__);
         unsigned frameType = ((unsigned char)data[0]) >> 4;
         unsigned codecId = data[0] &0xF;
         RTPHeader rtpHeader;
@@ -291,7 +279,7 @@ namespace cloopenwebrtc {
             std::vector<uint8_t> nal;
             switch( data[1] ) {
                 case 0:
-                    UnpackSpsPps(data+5, sps, pps);
+                    unpackSpsPps(data+5, sps, pps);
                     payloadData = &sps[0];
                     payloadLen = sps.size();
                     if(av_packet_cacher){
@@ -304,7 +292,7 @@ namespace cloopenwebrtc {
                     }
                     break;
                 case 1:
-                    if (!UnPackNAL(data + 5, len - 5, nal)) {
+                    if (!unPackNAL(data + 5, len - 5, nal)) {
                         PrintConsole("[RTMP ERROR] %s unpack nalu error\n", __FUNCTION__);
                         return;
                     }
@@ -323,11 +311,10 @@ namespace cloopenwebrtc {
         }
     }
     
-    void EC_RtmpPuller::HandleAuidoPacket(char* data, int length, u_int32_t timestamp)
+    void EC_RtmpPuller::handleAuidoPacket(char* data, int length, u_int32_t timestamp)
     {
-        PrintConsole("[EC_RtmpPuller] %s begin, data: %p, length:%d, timestamp:%d\n", __FUNCTION__, data, length, timestamp);
         unsigned voiceCodec = ((unsigned char)data[0]) >> 4;
-        switch (voiceCodec) {
+        switch (voiceCodec) { 
             case 0:
                 PrintConsole("[RTMP INFO] %s Linear PCM\n", __FUNCTION__);
                 break;

@@ -423,6 +423,7 @@ namespace cloopenwebrtc {
             return -1;
         }
 #ifdef __ANDROID__
+        // todo: need to free rend_viewer_id;
         unsigned int len = strlen((char *)view);
         memcpy(render_viewer_id, view, len);
         render_viewer_id[len] = 0;
@@ -432,8 +433,7 @@ namespace cloopenwebrtc {
 #endif
         return 0;
     }
-    
-    
+
     int ECMediaMachine::shutdownCameraCapture() {
         PrintConsole("[RTMP INFO] %s begin.\n", __FUNCTION__);
         uninitCameraDevice();
@@ -983,7 +983,7 @@ namespace cloopenwebrtc {
         PrintConsole("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
     }
 
-    void ECMediaMachine::onAacDataComing(uint8_t* pData, int nLen, uint32_t ts, uint32_t sample_rate, int audio_channels) {
+    void ECMediaMachine::on10MsecPcmDataComing(uint8_t* pData, int nLen, uint32_t ts, uint32_t sample_rate, int audio_channels) {
         if(audio_data_cb_) {
                 WebRtcRTPHeader rtpHeader;
                 rtpHeader.header.sequenceNumber = audio_rtp_seq_++;
