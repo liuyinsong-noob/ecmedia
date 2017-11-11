@@ -105,7 +105,7 @@ namespace cloopenwebrtc {
         int uninitVideoNetwork();
 
         // init audio and video codec
-        int initAudioTransportCodec(const char *plname, int plfreq, int channels);
+        int initAudioTransportCodec(const char *plname, int channels);
         int  initVideoTransportCodec(const char *plname, int plfreq);
 
         // audio playout

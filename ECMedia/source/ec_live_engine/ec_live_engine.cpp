@@ -21,11 +21,10 @@ namespace cloopenwebrtc {
         puller_runnig_              = false;
         network_adaptive_enable_    = false;
 
+        ec_media_core_              = nullptr;
         media_puller_               = nullptr;
         rtmp_publisher_             = nullptr;
         bitrate_controller_         = nullptr;
-
-        ec_media_core_ =  new ECMediaMachine();
     }
 
     ECLiveEngine::~ECLiveEngine() {
@@ -38,20 +37,18 @@ namespace cloopenwebrtc {
             delete media_puller_;
             media_puller_ = NULL;
         }
-
-        if(ec_media_core_) {
-            ec_media_core_->UnInit();
-            delete ec_media_core_;
-            ec_media_core_ = NULL;
-        }
-
+        
         if(bitrate_controller_) {
             delete bitrate_controller_;
         }
     }
 
-    int ECLiveEngine::init() {
-        return ec_media_core_->Init();
+    int ECLiveEngine::prepare() {
+        if(ec_media_core_ == nullptr) {
+            ec_media_core_ =  new ECMediaMachine();
+            ec_media_core_->Init();
+        }
+        return 0;
     }
 
     // singleton
@@ -60,10 +57,6 @@ namespace cloopenwebrtc {
         if(!ec_live_engine_) {
             PrintConsole("[ECLiveEngine INFO] %s: create new live engine instance.", __FUNCTION__);
             ec_live_engine_ = new ECLiveEngine();
-            if(ec_live_engine_->init() != 0) {
-                PrintConsole("[ECLiveEngine Error] %s: ec live engine init failed.", __FUNCTION__);
-                return nullptr;
-            }
         }
         PrintConsole("[ECLiveEngine INFO] %s: end", __FUNCTION__);
         return ec_live_engine_;
@@ -82,8 +75,9 @@ namespace cloopenwebrtc {
     int ECLiveEngine::startPublish(const char *url, ECLiveStreamNetworkStatusCallBack callback)
     {
         PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
-        if(!publiser_running_) {
+        if(!publiser_running_ && !puller_runnig_) {
             publiser_running_ = true;
+            prepare();
             if(!bitrate_controller_) {
                 bitrate_controller_ = new EC_RTMP_BitrateController();
                 bitrate_controller_->setBitrateControllerCallback(this);
@@ -104,9 +98,13 @@ namespace cloopenwebrtc {
 
     int ECLiveEngine::stopPublish() {
         PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
-        if(publiser_running_) {
+        if(publiser_running_ && !puller_runnig_) {
             int ret = -1;
             ret = ec_media_core_->stopCapture();
+            ec_media_core_->UnInit();
+            delete ec_media_core_;
+            ec_media_core_ = nullptr;
+            
             rtmp_publisher_->stop();
 			delete rtmp_publisher_;
 			rtmp_publisher_ = nullptr;
@@ -122,9 +120,9 @@ namespace cloopenwebrtc {
     int ECLiveEngine::startPlay(const char* url, ECLiveStreamNetworkStatusCallBack callback) {
         PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
         int ret = -1;
-        if(!puller_runnig_) {
+        if(!puller_runnig_ && !publiser_running_) {
             puller_runnig_ = true;
-
+            prepare();
             if(!media_puller_) {
                 media_puller_ = createMediaPuller(url, callback);
                 if(!media_puller_) {
@@ -144,13 +142,16 @@ namespace cloopenwebrtc {
     int ECLiveEngine::stopPlay() {
         PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
         int ret = -1;
-        if(puller_runnig_) {
+        if(puller_runnig_ && !publiser_running_) {
             if(media_puller_) {
                 media_puller_->stop();
                 delete media_puller_;
                 media_puller_ = nullptr;
             }
             ret = ec_media_core_->stopPlayout();
+            ec_media_core_->UnInit();
+            delete ec_media_core_;
+            ec_media_core_ = nullptr;
         }
 		puller_runnig_ = false;
         PrintConsole("[ECLiveEngine INFO] %s: end with code: %d", __FUNCTION__, ret);
@@ -159,6 +160,7 @@ namespace cloopenwebrtc {
 
     // preview viewer setting.
     int ECLiveEngine::setVideoPreview(void * view) {
+        prepare();
         return ec_media_core_->setVideoPreview(view);
     }
 
@@ -168,6 +170,7 @@ namespace cloopenwebrtc {
     }
     
     int ECLiveEngine::configLiveVideoStream(LiveVideoStreamConfig config) {
+        prepare();
         network_adaptive_enable_ = config._auto_bitrate;
         
         int width = 0, height = 0, bitrate = 0;
@@ -176,7 +179,8 @@ namespace cloopenwebrtc {
     }
     
     int ECLiveEngine::switchCamera(int index) {
-        if(publiser_running_) {
+        prepare();
+        if(publiser_running_ && !puller_runnig_) {
             return ec_media_core_->switchCamera(index);
         }
         return 0;

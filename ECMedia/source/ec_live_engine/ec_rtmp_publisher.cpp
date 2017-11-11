@@ -171,13 +171,12 @@ namespace cloopenwebrtc {
         pdata->_type = VIDEO_DATA;
         pdata->_dts = ts;
  
-        rtmp_lock_->Enter();
         if(need_clear_av_cacher_) {
             need_clear_av_cacher_ = false;
             clearMediaCacher();
         }
         rtmp_bitrate_ontroller_->inputDataCount(nLen);
-        
+        rtmp_lock_->Enter();
         lst_enc_data_.push_back(pdata);
         rtmp_lock_->Leave();
     }
@@ -290,7 +289,6 @@ namespace cloopenwebrtc {
             int len = dataPtr->_dataLen;
             int ret = 0;
             ret = srs_h264_write_raw_frames(rtmp_, ptr, len, dataPtr->_dts, dataPtr->_dts);
-
             if (ret != 0) {
                 if (srs_h264_is_dvbsp_error(ret)) {
                     PrintConsole("ignore drop video error, code=%d", ret);

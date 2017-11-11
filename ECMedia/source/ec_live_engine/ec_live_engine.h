@@ -32,11 +32,11 @@ namespace cloopenwebrtc {
         int  configLiveVideoStream(LiveVideoStreamConfig config);
         //
         int switchCamera(int index);
-
+        int prepare();
     protected:
         void onOutputBitrateChanged(int bitrate);
         void onNeedClearBuffer();
-        int init();
+       
 
     private:
         ECLiveEngine();

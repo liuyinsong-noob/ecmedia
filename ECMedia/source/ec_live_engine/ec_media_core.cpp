@@ -220,7 +220,7 @@ namespace cloopenwebrtc {
         // 解码的采样率设置为32k, 使用16k发现播放声音速率不正常
         // rtmp 收到的 aac 44.1k 经过重采样成32k
         int ret  = -1;
-        ret = initAudioTransportCodec(AUDIO_CODEC, 32000, AUDIO_CHANNEL_COUNT);
+        ret = initAudioTransportCodec(AUDIO_CODEC, AUDIO_CHANNEL_COUNT);
         return ret;
     }
     
@@ -581,30 +581,41 @@ namespace cloopenwebrtc {
         return ret;
     }
     
-    int ECMediaMachine::initAudioTransportCodec(const char *plname, int plfreq, int channels) {
+    int ECMediaMachine::initAudioTransportCodec(const char *plname, int channels) {
         VoECodec *codec = VoECodec::GetInterface(voe_);
-        CodecInst audioCodec;
+        CodecInst audioRecvCodec;
+        int plfreq = 32000;
         {
-            strcpy(audioCodec.plname, plname);
-            audioCodec.pltype       = 113;
-            audioCodec.plfreq       = plfreq;
-            audioCodec.channels     = channels;
-            audioCodec.fecEnabled   = false;
-            audioCodec.pacsize      = plfreq /100;
-            audioCodec.rate         = plfreq *16;
+            strcpy(audioRecvCodec.plname, plname);
+            audioRecvCodec.pltype       = 113;
+            audioRecvCodec.plfreq       = plfreq;
+            audioRecvCodec.channels     = channels;
+            audioRecvCodec.fecEnabled   = false;
+            audioRecvCodec.pacsize      = plfreq /100;
+            audioRecvCodec.rate         = plfreq*16;
         }
         
         // receive codec
-        int ret = codec->SetRecPayloadType(audio_channel_, audioCodec);
-        //  send codec
-        ret = codec->SetSendCodec(audio_channel_, audioCodec);
+        int ret = codec->SetRecPayloadType(audio_channel_, audioRecvCodec);
+        
+        CodecInst audioSendCodec;
+        plfreq = 16000;
+        {
+            strcpy(audioSendCodec.plname, plname);
+            audioSendCodec.pltype       = 113;
+            audioSendCodec.plfreq       = plfreq;
+            audioSendCodec.channels     = channels;
+            audioSendCodec.fecEnabled   = false;
+            audioSendCodec.pacsize      = plfreq /100;
+            audioSendCodec.rate         = plfreq*16  ;
+        }
+        
+        ret = codec->SetSendCodec(audio_channel_, audioSendCodec);
         codec->Release();
         return ret;
     }
 
     int ECMediaMachine::doAudioDataSend() {
-        //initAudioTransportCodec(AUDIO_CODEC, 16000, AUDIO_CHANNEL_COUNT);
-
         VoEBase *base = VoEBase::GetInterface(voe_);
         int ret = -1;
         ret = base->StartRecord();
@@ -675,7 +686,7 @@ namespace cloopenwebrtc {
         info_video_height_      = height;
         
         PrintConsole("[ECMEDIA CORE INFO] %s end with code:%d\n", __FUNCTION__, 0);
-        return 0; //initVideoTransportCodec("H264", 90000);;
+        return initVideoTransportCodec("H264", 90000);;
     }
 
     int ECMediaMachine::setVideoFrameProperty(int bitrate, int width, int height) {
@@ -841,7 +852,7 @@ namespace cloopenwebrtc {
 #ifdef __ANDROID__
          EC_Live_Utility::pcm_s16le_to_s16be((short*)payload_data, payload_len_bytes/2);
 #endif
-        resamplePCMData(payload_data, payload_len_bytes / 4, 32000, 2);
+        resamplePCMData(payload_data, payload_len_bytes / 4, 16000, 2);
         return 0;
     }
 

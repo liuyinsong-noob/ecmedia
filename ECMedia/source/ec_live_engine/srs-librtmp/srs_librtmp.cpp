@@ -34587,6 +34587,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     #define SOCKET_RESET(fd) fd = -1; (void)0
     #define SOCKET_CLOSE(fd) \
         if (fd > 0) {\
+            ::shutdown(fd, SHUT_RDWR); \
             ::close(fd); \
             fd = -1; \
         } \

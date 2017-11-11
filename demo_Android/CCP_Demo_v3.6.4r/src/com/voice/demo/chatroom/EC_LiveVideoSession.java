@@ -113,19 +113,27 @@ public class EC_LiveVideoSession extends CCPBaseActivity implements View.OnClick
                     mLoaclVideoView.removeView(local_renderView);
                 }
 
-				Thread work1 = new Thread(new Runnable() {
-					@Override
-					public void run() {
-						if(!running) {
-							running = true;
-							NativeInterface.pushLiveStream(ec_live_url_text.getText().toString(), null);
-						} else {
-							running = false;
-							NativeInterface.stopLiveStream();
-						}
-					}
-				});
-				work1.start();
+                if(!running) {
+                    running = true;
+                    NativeInterface.pushLiveStream(ec_live_url_text.getText().toString(), null);
+                } else {
+                    running = false;
+                    NativeInterface.stopLiveStream();
+                }
+
+//				Thread work1 = new Thread(new Runnable() {
+//					@Override
+//					public void run() {
+//						if(!running) {
+//							running = true;
+//							NativeInterface.pushLiveStream(ec_live_url_text.getText().toString(), null);
+//						} else {
+//							running = false;
+//							NativeInterface.stopLiveStream();
+//						}
+//					}
+//				});
+//				work1.start();
 				break;
 			case  R.id.netphone_landing_switch_camera:
 
