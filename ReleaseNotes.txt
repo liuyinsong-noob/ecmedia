@@ -1,3 +1,14 @@
+Version 2.2.0.6.1711111816 1510395450 4214b34a1e865ee01217925ec62a2551eb1e77c6
+1. 接口不变
+2. bug fix: pc play stream crash
+3. remove some log, and bug fix: ios release version crash
+4. bug fix:android 直播频繁jni调用照成播流卡顿问题
+5. bug fix:windows re publish video ok
+6. bug fix: android opengl 相机预览旋转90
+7. bug fix: android muliti meetings black screen
+8. bug fix: ios视频预览view黑边问题
+9. feature:add global audio in device interface
+
 Version 2.1.4.3.09081118 1505730251 a925099fac83d7fb337df4756e2022874e42e468
 1. 接口不变
 
