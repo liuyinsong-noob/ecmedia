@@ -353,6 +353,7 @@ int ViEChannelManager::DeleteChannel(int channel_id) {
 	//add by ylr
 	if (vie_encoder->channel_id() == channel_id)
 	{
+        vie_encoder->SendRtpRtcpModule()->DeRegisterRtpReceiver();
 		SendStatisticsProxy *p_sendStats = vie_encoder->GetSendStatisticsProxy();
 		group->GetCallStats()->DeregisterStatsObserver(p_sendStats);
 		//group->GetBitrateController()->DeregisterSendsideBweObserver();

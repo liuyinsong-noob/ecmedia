@@ -255,10 +255,14 @@ void PlatformThread::Run() {
       auto diff = loop_stamps[id] - loop_stamps[compare_id];
       DCHECK_GE(diff, 0);
       if (diff < kPeriodToMeasureMs) {
-        NOTREACHED() << "This thread is too busy: " << name_ << " " << diff
-                         << "ms sequence=" << sequence_nr << " "
-                         << loop_stamps[id] << " vs " << loop_stamps[compare_id]
-                         << ", " << id << " vs " << compare_id;
+        /*
+         *此版会检测线程执行的时间间隔，若线程执行过快NOTREACHED会abort程序，实际调试
+         * 发现在debug状态下长时间停在断点处，继续全速运行，此处检测算法检测不准，程序挂掉
+         */
+        //NOTREACHED() << "This thread is too busy: " << name_ << " " << diff
+//                         << "ms sequence=" << sequence_nr << " "
+//                         << loop_stamps[id] << " vs " << loop_stamps[compare_id]
+//                         << ", " << id << " vs " << compare_id;
       }
     }
     ++sequence_nr;

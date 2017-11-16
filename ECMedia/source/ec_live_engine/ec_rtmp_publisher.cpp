@@ -93,6 +93,9 @@ namespace cloopenwebrtc {
     }
 
     void ECRtmpPublisher::OnCapturerAvcDataReady(uint8_t* pData, int nLen, uint32_t ts) {
+        if(!is_rtmp_connected_) {
+            return;
+        }
         uint8_t *p = pData;
         int nal_type = p[4] & 0x1f;
         if(nal_type == 7)
@@ -218,6 +221,7 @@ namespace cloopenwebrtc {
                             rtmp_status_ = RS_STM_Handshaked;
                         }
                         else {
+                            is_rtmp_connected_ = false;
 							rtmp_status_ = RS_STM_Connect_Faild;
                             return false;
                         }
@@ -229,6 +233,7 @@ namespace cloopenwebrtc {
                             rtmp_status_ = RS_STM_Connected;
                         }
                         else {
+                            is_rtmp_connected_ = false;
 							rtmp_status_ = RS_STM_Connect_Faild;
                             return false;
                         }
@@ -238,12 +243,14 @@ namespace cloopenwebrtc {
                     {
                         if (srs_rtmp_publish_stream(rtmp_) == 0) {
                             rtmp_status_ = RS_STM_Published;
+                            is_rtmp_connected_ = true;
                             clearMediaCacher();
                             if(callback_) {
                                 callback_(EC_LIVE_CONNECT_SUCCESS);
                             }
                         }
                         else {
+                            is_rtmp_connected_ = false;
 							rtmp_status_ = RS_STM_Connect_Faild;
                             return false;
                         }
@@ -259,6 +266,7 @@ namespace cloopenwebrtc {
                                 }
                             }
                         } else {
+                            is_rtmp_connected_ = false;
 							rtmp_status_ = RS_STM_Publish_Faild;
                             return false;
                         }

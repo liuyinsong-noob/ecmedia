@@ -64,6 +64,7 @@ namespace cloopenwebrtc {
         std::list<EncodedData*>		lst_enc_data_;
         int retrys_;
         bool hasStreaming_;
+        bool is_rtmp_connected_;
         
         
         CriticalSectionWrapper* rtmp_lock_;
