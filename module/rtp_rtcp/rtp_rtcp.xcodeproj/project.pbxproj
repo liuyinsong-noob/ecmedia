@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F78E9711FC40EB700624741 /* config.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F78E9701FC40EB700624741 /* config.cc */; };
 		3FAF879E15C7E82F000D5497 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAF879D15C7E82F000D5497 /* Foundation.framework */; };
 		3FAF88DC15C7EAC2000D5497 /* rtp_rtcp_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF88D815C7EAC2000D5497 /* rtp_rtcp_defines.h */; };
 		3FAF88DD15C7EAC2000D5497 /* rtp_rtcp.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF88D915C7EAC2000D5497 /* rtp_rtcp.h */; };
@@ -172,6 +173,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F78E9701FC40EB700624741 /* config.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = config.cc; path = ../../config.cc; sourceTree = "<group>"; };
 		3FAF879A15C7E82F000D5497 /* librtp_rtcp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librtp_rtcp.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FAF879D15C7E82F000D5497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3FAF88D815C7EAC2000D5497 /* rtp_rtcp_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rtp_rtcp_defines.h; path = include/rtp_rtcp_defines.h; sourceTree = "<group>"; };
@@ -379,6 +381,7 @@
 		3FAF87AE15C7E899000D5497 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				1F78E9701FC40EB700624741 /* config.cc */,
 				45619B0C1F14B58D008B2068 /* bitrate.cc */,
 				45619B0D1F14B58D008B2068 /* Bitrate.h */,
 				45619B0F1F14B58D008B2068 /* byte_io.h */,
@@ -752,6 +755,7 @@
 				45619C011F14B58D008B2068 /* time_util.cc in Sources */,
 				45619AD61F14B548008B2068 /* app.cc in Sources */,
 				45619AF41F14B548008B2068 /* rpsi.cc in Sources */,
+				1F78E9711FC40EB700624741 /* config.cc in Sources */,
 				45619ADE1F14B548008B2068 /* dlrr.cc in Sources */,
 				45619AD81F14B548008B2068 /* bye.cc in Sources */,
 				45619B041F14B548008B2068 /* tmmbn.cc in Sources */,
