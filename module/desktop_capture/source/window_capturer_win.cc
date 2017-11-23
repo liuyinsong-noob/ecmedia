@@ -128,19 +128,6 @@ WindowCapturerWin::WindowCapturerWin()
   } else {
     is_composition_enabled_func_ = NULL;
   }
-
-  HINSTANCE hUser32 = LoadLibrary(L"user32.dll");
-  if (hUser32)
-  {
-	  typedef BOOL(WINAPI* LPSetProcessDPIAware)(void);
-	  LPSetProcessDPIAware pSetProcessDPIAware = (LPSetProcessDPIAware)GetProcAddress(hUser32, "SetProcessDPIAware");
-	  if (pSetProcessDPIAware)
-	  {
-		  pSetProcessDPIAware();
-	  }
-	  FreeLibrary(hUser32);
-  }
-
 }
 
 WindowCapturerWin::~WindowCapturerWin() {
