@@ -235,7 +235,7 @@ namespace cloopenwebrtc {
         width = 640;
         height = 360;
 #ifndef WIN32
-        width = 360; 
+        width = 480;
         height = 640;
 #endif
         switch (resolution) {

@@ -24,19 +24,11 @@
 #include "i_video_render.h"
 #include "video_render_impl.h"
 
-
-// using openGL draw camera preview.
-// #define USING_OPENGL;
-
 #ifdef TARGET_OS_IPHONE
 #if DEBUG_CAPTURE_YUV
 char *globalFilePathcapture = NULL;
 #endif
-@implementation ECAVCaptureVideoPreviewLayerEx
-- (id)init {
-    return [super initWithSession:[[[AVCaptureSession alloc] init] autorelease]];
-}
-@end
+
 
 @implementation ECIOSCaptureCCP
 
@@ -202,14 +194,6 @@ char *globalFilePathcapture = NULL;
 	return self;
 }
 
-- (id)initWithCoder:(NSCoder *)coder {
-	self = [super initWithCoder:coder];
-	if (self) {
-		[self initIOSCapture];
-	}
-	return self;
-}
-
 - (id)initWithFrame:(CGRect)frame {
 	self = [super initWithFrame:frame];
 	if (self) {
@@ -219,6 +203,10 @@ char *globalFilePathcapture = NULL;
 }
 
 - (void)initIOSCapture {
+    if(_capture_session == nullptr) {
+        _capture_session = [[AVCaptureSession alloc] init];
+    }
+    
 //	msframe = NULL;
     if (output != NULL) {
         return;
@@ -226,17 +214,12 @@ char *globalFilePathcapture = NULL;
     
 	pthread_mutex_init(&mutex, NULL);
 	output = [[AVCaptureVideoDataOutput  alloc] init];
-	
-	[self setOpaque:YES];
-	[self setAutoresizingMask: UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-	
+	[output setAlwaysDiscardsLateVideoFrames:NO];
+    
 	/*
 	 Currently, the only supported key is kCVPixelBufferPixelFormatTypeKey. Supported pixel formats are kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange, kCVPixelFormatType_420YpCbCr8BiPlanarFullRange and kCVPixelFormatType_32BGRA, except on iPhone 3G, where the supported pixel formats are kCVPixelFormatType_422YpCbCr8 and kCVPixelFormatType_32BGRA..
 	 */
-	NSDictionary* dic = [NSDictionary dictionaryWithObjectsAndKeys:
-						 [NSNumber numberWithInteger:kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange],
-                         (id)kCVPixelBufferPixelFormatTypeKey, nil];
-	[output setVideoSettings:dic];
+	[output setVideoSettings:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey]];
     
 	start_time=0;
 	frame_count=-1;
@@ -264,146 +247,158 @@ char *globalFilePathcapture = NULL;
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 	   fromConnection:(AVCaptureConnection *)connection {
-#if !TARGET_IPHONE_SIMULATOR
-	CVImageBufferRef frame = nil;
-	@synchronized(self) { 
-		@try {
-			frame = CMSampleBufferGetImageBuffer(sampleBuffer); 
-			CVReturn status = CVPixelBufferLockBaseAddress(frame, 0);
-			if (kCVReturnSuccess != status) {
-				frame=nil;
-				return;
-			}
-			
-			/*kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange*/
-			size_t plane_width = CVPixelBufferGetWidthOfPlane(frame, 0);
-//            NSLog(@"sean haha plane_width %zu, plane_height %zu", plane_width, CVPixelBufferGetHeightOfPlane(frame, 0));
-            
-            
-//            size_t plane_widthu = CVPixelBufferGetWidthOfPlane(frame, 1);
-     
-			size_t plane_height = CVPixelBufferGetHeightOfPlane(frame, 0);
-//            size_t plane_heightu = CVPixelBufferGetHeightOfPlane(frame, 1);
-
-            
-//            size_t plane_count = CVPixelBufferGetPlaneCount(frame);
-            
-			uint8_t* y_src= (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(frame, 0);
-			uint8_t* cbcr_src= (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(frame, 1);
-			int rotation=0;            
-            if (![connection isVideoOrientationSupported]) {
-				switch (mDeviceOrientation) {
-                    case 90: {
-						if ([(AVCaptureDevice*)input.device position] == AVCaptureDevicePositionBack) {
-							rotation = 270;
-						} else {
-							rotation = 90;
-						}
-						break;
-					}
-					case 270: {
-						if ([(AVCaptureDevice*)input.device position] == AVCaptureDevicePositionBack) {
-							rotation = 90;
-						} else {
-							rotation = 270;
-						}
-						break;
-					}
-					default:
-                        break;
-				}
-			}
-
-			/*check if buffer size are compatible with downscaling or rotation*/
-			int factor = mDownScalingRequired?2:1;
-            int width = mOutputVideoSize.width;
-            int height = mOutputVideoSize.height;
-            if (mDeviceOrientation ==90 || mDeviceOrientation==270) {
-                rotation = 180;
-            }
-            
-			switch (rotation) {
-				case 0:
-				case 180:
-					if (mOutputVideoSize.width*factor>plane_width || mOutputVideoSize.height*factor>plane_height) {
-						return;
-					}
-					break;
-				case 90:
-				case 270:
-
-					if (mOutputVideoSize.width*factor>plane_height || mOutputVideoSize.height*factor>plane_width) {
-						return;
-					}
-                    width = mOutputVideoSize.height;
-                    height = mOutputVideoSize.width;
-					break;
-                default:
-                    break;
-			}
-            
-            
-            
-//            rotation = 0;
+    
+    
+    CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+    CVPixelBufferLockBaseAddress(imageBuffer,0);
+    int bytesPerRow = (int) CVPixelBufferGetBytesPerRow(imageBuffer);
+    // argb image width
+    int width = (int) CVPixelBufferGetWidth(imageBuffer);
+    // argb image height
+    int  height = (int)CVPixelBufferGetHeight(imageBuffer);
+    void *src_buff = CVPixelBufferGetBaseAddress(imageBuffer);
+    CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
+    
+    if(_rawDataInput) {
+        [_rawDataInput processARGBData:src_buff imageSize:CGSizeMake(width, height)];
+    }
+    return;
+//
+//#if !TARGET_IPHONE_SIMULATOR
+//    CVImageBufferRef frame = nil;
+//    @synchronized(self) {
+//        @try {
+//            frame = CMSampleBufferGetImageBuffer(sampleBuffer);
+//            CVReturn status = CVPixelBufferLockBaseAddress(frame, 0);
+//            if (kCVReturnSuccess != status) {
+//                frame=nil;
+//                return;
+//            }
+//
+//            /*kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange*/
+//            size_t plane_width = CVPixelBufferGetWidthOfPlane(frame, 0);
+////            NSLog(@"sean haha plane_width %zu, plane_height %zu", plane_width, CVPixelBufferGetHeightOfPlane(frame, 0));
+//
+//
+////            size_t plane_widthu = CVPixelBufferGetWidthOfPlane(frame, 1);
+//
+//            size_t plane_height = CVPixelBufferGetHeightOfPlane(frame, 0);
+////            size_t plane_heightu = CVPixelBufferGetHeightOfPlane(frame, 1);
+//
+//
+////            size_t plane_count = CVPixelBufferGetPlaneCount(frame);
+//
+//            uint8_t* y_src= (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(frame, 0);
+//            uint8_t* cbcr_src= (uint8_t *)CVPixelBufferGetBaseAddressOfPlane(frame, 1);
+//            int rotation=0;
+//            if (![connection isVideoOrientationSupported]) {
+//                switch (mDeviceOrientation) {
+//                    case 90: {
+//                        if ([(AVCaptureDevice*)input.device position] == AVCaptureDevicePositionBack) {
+//                            rotation = 270;
+//                        } else {
+//                            rotation = 90;
+//                        }
+//                        break;
+//                    }
+//                    case 270: {
+//                        if ([(AVCaptureDevice*)input.device position] == AVCaptureDevicePositionBack) {
+//                            rotation = 90;
+//                        } else {
+//                            rotation = 270;
+//                        }
+//                        break;
+//                    }
+//                    default:
+//                        break;
+//                }
+//            }
+//
+//            /*check if buffer size are compatible with downscaling or rotation*/
+//            int factor = mDownScalingRequired?2:1;
+//            int width = mOutputVideoSize.width;
+//            int height = mOutputVideoSize.height;
 //            if (mDeviceOrientation ==90 || mDeviceOrientation==270) {
 //                rotation = 180;
 //            }
-//            if (rotation==90 || rotation==270) {
-//                width = mOutputVideoSize.height;
-//                height = mOutputVideoSize.width;
+//
+//            switch (rotation) {
+//                case 0:
+//                case 180:
+//                    if (mOutputVideoSize.width*factor>plane_width || mOutputVideoSize.height*factor>plane_height) {
+//                        return;
+//                    }
+//                    break;
+//                case 90:
+//                case 270:
+//
+//                    if (mOutputVideoSize.width*factor>plane_height || mOutputVideoSize.height*factor>plane_width) {
+//                        return;
+//                    }
+//                    width = mOutputVideoSize.height;
+//                    height = mOutputVideoSize.width;
+//                    break;
+//                default:
+//                    break;
 //            }
-            MSPicture *pict = copy_ycbcrbiplanar_to_true_yuv_with_rotation_and_down_scale_by_2(
-                                            _pict
-                                            , y_src
-											, cbcr_src
-											, rotation
-											, width
-											, height
-											, (int)CVPixelBufferGetBytesPerRowOfPlane(frame, 0)
-											, (int)CVPixelBufferGetBytesPerRowOfPlane(frame, 1)
-											, TRUE
-											, mDownScalingRequired);
-            
-            pthread_mutex_lock(&mutex);
-            if (triggered) {
-                BilterFilterProcessCore(bilteralFilter, pict->strides[0], pict->planes[0]);
-                int ret = KeyFrameDetectProcess(keyframeDector, pict->strides[0], pict->planes[0], pict->strides[1], pict->planes[1], pict->strides[2], pict->planes[2]);
-                if (ret != 1) {
-                    return;
-                }
-            }
-            
-#if DEBUG_CAPTURE_YUV
-            [self saveYUVtoFile:pict->planes[0] andwrap:pict->strides[0] andxsize:width andysize:height];
-            [self saveYUVtoFile:pict->planes[1] andwrap:pict->strides[1] andxsize:width/2 andysize:height/2];
-            [self saveYUVtoFile:pict->planes[2] andwrap:pict->strides[2] andxsize:width/2 andysize:height/2];
-#endif
-            I420VideoFrame videoFrame;
-//            int size_y = video_frame.height * video_frame.y_pitch;
-//            int size_u = video_frame.u_pitch * ((video_frame.height + 1) / 2);
-//            int size_v = video_frame.v_pitch * ((video_frame.height + 1) / 2);
-            
-            int size_y = pict->h * pict->strides[0];
-            int size_u = pict->strides[1] * ((pict->h +1) / 2);
-            int size_v = pict->strides[2] * ((pict->h + 1)/2);
-            
-            videoFrame.CreateFrame(size_y, pict->planes[0], size_u, pict->planes[1], size_v, pict->planes[2], pict->w, pict->h, pict->strides[0], pict->strides[1], pict->strides[2]);
-#ifdef USING_OPENGL
-            if (_renderCallback) {
-               // _renderCallback->RenderFrame(0, videoFrame);
-            }
-#endif
-            if(_owner)
-            {
-                _owner->IncomingI420VideoFrame(&videoFrame, 0);
-            }
-            
-		} @finally {
-			if (frame) CVPixelBufferUnlockBaseAddress(frame, 0);
-            pthread_mutex_unlock(&mutex);
-		}
-	}
-#endif
+//
+//
+//
+////            rotation = 0;
+////            if (mDeviceOrientation ==90 || mDeviceOrientation==270) {
+////                rotation = 180;
+////            }
+////            if (rotation==90 || rotation==270) {
+////                width = mOutputVideoSize.height;
+////                height = mOutputVideoSize.width;
+////            }
+//            MSPicture *pict = copy_ycbcrbiplanar_to_true_yuv_with_rotation_and_down_scale_by_2(
+//                                            _pict
+//                                            , y_src
+//                                            , cbcr_src
+//                                            , rotation
+//                                            , width
+//                                            , height
+//                                            , (int)CVPixelBufferGetBytesPerRowOfPlane(frame, 0)
+//                                            , (int)CVPixelBufferGetBytesPerRowOfPlane(frame, 1)
+//                                            , TRUE
+//                                            , mDownScalingRequired);
+//
+//            pthread_mutex_lock(&mutex);
+//            if (triggered) {
+//                BilterFilterProcessCore(bilteralFilter, pict->strides[0], pict->planes[0]);
+//                int ret = KeyFrameDetectProcess(keyframeDector, pict->strides[0], pict->planes[0], pict->strides[1], pict->planes[1], pict->strides[2], pict->planes[2]);
+//                if (ret != 1) {
+//                    return;
+//                }
+//            }
+//
+//#if DEBUG_CAPTURE_YUV
+//            [self saveYUVtoFile:pict->planes[0] andwrap:pict->strides[0] andxsize:width andysize:height];
+//            [self saveYUVtoFile:pict->planes[1] andwrap:pict->strides[1] andxsize:width/2 andysize:height/2];
+//            [self saveYUVtoFile:pict->planes[2] andwrap:pict->strides[2] andxsize:width/2 andysize:height/2];
+//#endif
+//            I420VideoFrame videoFrame;
+////            int size_y = video_frame.height * video_frame.y_pitch;
+////            int size_u = video_frame.u_pitch * ((video_frame.height + 1) / 2);
+////            int size_v = video_frame.v_pitch * ((video_frame.height + 1) / 2);
+//
+//            int size_y = pict->h * pict->strides[0];
+//            int size_u = pict->strides[1] * ((pict->h +1) / 2);
+//            int size_v = pict->strides[2] * ((pict->h + 1)/2);
+//
+//            videoFrame.CreateFrame(size_y, pict->planes[0], size_u, pict->planes[1], size_v, pict->planes[2], pict->w, pict->h, pict->strides[0], pict->strides[1], pict->strides[2]);
+//            if(_owner)
+//            {
+//                _owner->IncomingI420VideoFrame(&videoFrame, 0);
+//            }
+//
+//        } @finally {
+//            if (frame) CVPixelBufferUnlockBaseAddress(frame, 0);
+//            pthread_mutex_unlock(&mutex);
+//        }
+//    }
+//#endif
 }
 
 - (void)openDevice:(const char*) deviceId {
@@ -434,22 +429,20 @@ char *globalFilePathcapture = NULL;
 	input = [AVCaptureDeviceInput deviceInputWithDevice:device
 												  error:&error];
 	[input retain]; // keep reference on an externally allocated object
-        
-	AVCaptureSession *session = [(AVCaptureVideoPreviewLayer *)self.layer session];
-    [session beginConfiguration];
+    
+    [_capture_session beginConfiguration];
     if (input) {
-        [session addInput:input];
+        [_capture_session addInput:input];
     }
-	[session addOutput:output];
-    [session commitConfiguration];
+	[_capture_session addOutput:output];
+    [_capture_session commitConfiguration];
     
     
 }
 
 - (void)dealloc {
-	AVCaptureSession *session = [(AVCaptureVideoPreviewLayer *)self.layer session];
-	[session removeInput:input];
-	[session removeOutput:output];
+	[_capture_session removeInput:input];
+	[_capture_session removeOutput:output];
 	[output release];
     [input release];
     
@@ -458,17 +451,9 @@ char *globalFilePathcapture = NULL;
     
     if(self.parentView)
     {
-        [self removeFromSuperview];
         [parentView release];
         parentView = nil;
     }
-#ifdef USING_OPENGL
-    if (_ptrRenderer) {
-        _ptrRenderer->StopRender();
-        delete _ptrRenderer;
-        _ptrRenderer = NULL;
-    }
-#endif
     
     if(_pict)
     {
@@ -490,17 +475,13 @@ char *globalFilePathcapture = NULL;
 #endif
 }
 
-+ (Class)layerClass {   
-	return [ECAVCaptureVideoPreviewLayerEx class];
-}
-
 - (int)start {
 	NSAutoreleasePool* myPool = [[NSAutoreleasePool alloc] init];
 	@synchronized(self) {
         CGPoint devicePoint = CGPointMake( 0.5, 0.5 );
         [self focusWithMode:AVCaptureFocusModeContinuousAutoFocus exposeWithMode:AVCaptureExposureModeContinuousAutoExposure atDevicePoint:devicePoint monitorSubjectAreaChange:NO];
-		AVCaptureSession *session = [(AVCaptureVideoPreviewLayer *)self.layer session];
-		if (!session.running) {
+		 
+		if (!_capture_session.running) {
 			// Init queue
 			dispatch_queue_t queue = dispatch_queue_create("CaptureQueue", NULL);
 			dispatch_set_context(queue, [self retain]);
@@ -508,7 +489,7 @@ char *globalFilePathcapture = NULL;
 			[output setSampleBufferDelegate:self queue:queue];
             //output.alwaysDiscardsLateVideoFrames = false;
 			dispatch_release(queue);
-			[session startRunning]; //warning can take around 1s before returning
+			[_capture_session startRunning]; //warning can take around 1s before returning
 			snprintf(fps_context, sizeof(fps_context), "Captured mean fps=%%f, expected=%f", fps);
 			ms_video_init_average_fps(&averageFps, fps_context);
 			//NSLog(@"ioscapture video device started.");
@@ -522,14 +503,13 @@ char *globalFilePathcapture = NULL;
     
 	NSAutoreleasePool* myPool = [[NSAutoreleasePool alloc] init];
 	@synchronized(self) {
-		AVCaptureSession *session = [(AVCaptureVideoPreviewLayer *)self.layer session];
-        [session beginConfiguration];
-        for (AVCaptureInput *oldInput in [session inputs]) {
-            [session removeInput:oldInput];
+        [_capture_session beginConfiguration];
+        for (AVCaptureInput *oldInput in [_capture_session inputs]) {
+            [_capture_session removeInput:oldInput];
         }
-        [session commitConfiguration];
-		if (session.running) {
-			[session stopRunning];
+        [_capture_session commitConfiguration];
+		if (_capture_session.running) {
+			[_capture_session stopRunning];
 			
 			// Will free the queue
 			[output setSampleBufferDelegate:nil queue:nil];
@@ -537,57 +517,70 @@ char *globalFilePathcapture = NULL;
 	}
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
 //    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureDeviceSubjectAreaDidChangeNotification object:nil];
+ 
+    if(_ecImageView.superview) {
+        [_ecImageView removeFromSuperview];
+        _ecImageView  = nullptr;
+    }
     
-    [self removeFromSuperview];
-        
+    if(_ecImageFilter) {
+        [_ecImageFilter removeAllTargets];
+    }
+
 	[myPool drain];    
 	return 0;
 }
 
 - (void)setSize:(MSVideoSize) size {
 	@synchronized(self) {
-		AVCaptureSession *session = [(AVCaptureVideoPreviewLayer *)self.layer session];
-		[session beginConfiguration];
-		if (size.width*size.height == MS_VIDEO_SIZE_QVGA_W  * MS_VIDEO_SIZE_QVGA_H)
-        {
-			[session setSessionPreset: AVCaptureSessionPreset640x480];
-			mCameraVideoSize.width=MS_VIDEO_SIZE_VGA_W;
-			mCameraVideoSize.height=MS_VIDEO_SIZE_VGA_H;
-			mOutputVideoSize.width=MS_VIDEO_SIZE_QVGA_W;
-			mOutputVideoSize.height=MS_VIDEO_SIZE_QVGA_H;
-			mDownScalingRequired=true;
-		}
-        else if (size.width*size.height == MS_VIDEO_SIZE_720P_W * MS_VIDEO_SIZE_720P_H)
-        {
-            [session setSessionPreset: AVCaptureSessionPreset1280x720];
-            mCameraVideoSize.width=MS_VIDEO_SIZE_720P_W;
-            mCameraVideoSize.height=MS_VIDEO_SIZE_720P_H;
-            mOutputVideoSize.width=MS_VIDEO_SIZE_720P_W;
-            mOutputVideoSize.height=MS_VIDEO_SIZE_720P_H;
-            mDownScalingRequired=false;
-        }
-        else if (size.width*size.height == MS_VIDEO_SIZE_960_540_W * MS_VIDEO_SIZE_960_540_H)
-        {
-            [session setSessionPreset: AVCaptureSessionPresetiFrame960x540];
-            mCameraVideoSize.width=MS_VIDEO_SIZE_960_540_W;
-            mCameraVideoSize.height=MS_VIDEO_SIZE_960_540_H;
-            mOutputVideoSize.width=MS_VIDEO_SIZE_960_540_W;
-            mOutputVideoSize.height=MS_VIDEO_SIZE_960_540_H;
-            mDownScalingRequired=false;
-        }
-        else if (size.width*size.height == MS_VIDEO_SIZE_VGA_W  * MS_VIDEO_SIZE_VGA_H) {
-			[session setSessionPreset: AVCaptureSessionPreset640x480];
-			mCameraVideoSize.width=MS_VIDEO_SIZE_VGA_W;
-			mCameraVideoSize.height=MS_VIDEO_SIZE_VGA_H;
-			mOutputVideoSize=mCameraVideoSize;
-			mDownScalingRequired=false;
-		} else {
-			[session setSessionPreset: AVCaptureSessionPresetMedium];
-			mCameraVideoSize.width=MS_VIDEO_SIZE_IOS_MEDIUM_W;
-			mCameraVideoSize.height=MS_VIDEO_SIZE_IOS_MEDIUM_H;	
-			mOutputVideoSize=mCameraVideoSize;
-			mDownScalingRequired=false;
-		}
+		[_capture_session beginConfiguration];
+        [_capture_session setSessionPreset: @"AVCaptureSessionPresetiFrame960x540"];
+        mCameraVideoSize.width = MS_VIDEO_SIZE_VGA_W;
+        mCameraVideoSize.height = MS_VIDEO_SIZE_VGA_H;
+        mOutputVideoSize.width = MS_VIDEO_SIZE_QVGA_W;
+        mOutputVideoSize.height = MS_VIDEO_SIZE_QVGA_H;
+        mDownScalingRequired=true;
+//
+//        if (size.width*size.height == MS_VIDEO_SIZE_QVGA_W  * MS_VIDEO_SIZE_QVGA_H)
+//        {
+//            [_capture_session setSessionPreset: AVCaptureSessionPreset640x480];
+//            mCameraVideoSize.width=MS_VIDEO_SIZE_VGA_W;
+//            mCameraVideoSize.height=MS_VIDEO_SIZE_VGA_H;
+//            mOutputVideoSize.width=MS_VIDEO_SIZE_QVGA_W;
+//            mOutputVideoSize.height=MS_VIDEO_SIZE_QVGA_H;
+//            mDownScalingRequired=true;
+//        }
+//        else if (size.width*size.height == MS_VIDEO_SIZE_720P_W * MS_VIDEO_SIZE_720P_H)
+//        {
+//            [_capture_session setSessionPreset: AVCaptureSessionPreset1280x720];
+//            mCameraVideoSize.width=MS_VIDEO_SIZE_720P_W;
+//            mCameraVideoSize.height=MS_VIDEO_SIZE_720P_H;
+//            mOutputVideoSize.width=MS_VIDEO_SIZE_720P_W;
+//            mOutputVideoSize.height=MS_VIDEO_SIZE_720P_H;
+//            mDownScalingRequired=false;
+//        }
+//        else if (size.width*size.height == MS_VIDEO_SIZE_960_540_W * MS_VIDEO_SIZE_960_540_H)
+//        {
+//            [_capture_session setSessionPreset: AVCaptureSessionPresetiFrame960x540];
+//            mCameraVideoSize.width=MS_VIDEO_SIZE_960_540_W;
+//            mCameraVideoSize.height=MS_VIDEO_SIZE_960_540_H;
+//            mOutputVideoSize.width=MS_VIDEO_SIZE_960_540_W;
+//            mOutputVideoSize.height=MS_VIDEO_SIZE_960_540_H;
+//            mDownScalingRequired=false;
+//        }
+//        else if (size.width*size.height == MS_VIDEO_SIZE_VGA_W  * MS_VIDEO_SIZE_VGA_H) {
+//            [_capture_session setSessionPreset: AVCaptureSessionPreset640x480];
+//            mCameraVideoSize.width=MS_VIDEO_SIZE_VGA_W;
+//            mCameraVideoSize.height=MS_VIDEO_SIZE_VGA_H;
+//            mOutputVideoSize=mCameraVideoSize;
+//            mDownScalingRequired=false;
+//        } else {
+//            [_capture_session setSessionPreset: AVCaptureSessionPresetiFrame960x540];
+//            mCameraVideoSize.width=540;
+//            mCameraVideoSize.height=960;
+//            mOutputVideoSize=mCameraVideoSize;
+//            mDownScalingRequired=false;
+//        }
 		
 		NSArray *connections = output.connections;
 		if ([connections count] > 0 && [[connections objectAtIndex:0] isVideoOrientationSupported]) {
@@ -610,12 +603,12 @@ char *globalFilePathcapture = NULL;
         
 		if (mDeviceOrientation == 0 || mDeviceOrientation == 180) {
 			MSVideoSize tmpSize = mOutputVideoSize;
-			mOutputVideoSize.width=tmpSize.height;
-			mOutputVideoSize.height=tmpSize.width;
+			mOutputVideoSize.width = tmpSize.height;
+			mOutputVideoSize.height = tmpSize.width;
 		}
         [self changeSize];
         
-		[session commitConfiguration];
+		[_capture_session commitConfiguration];
         BilterFilterInitCore(bilteralFilter, size.width, size.height, 3, 10);
         KeyFrameDetectInitCore(keyframeDector, size.width, size.height);
 		return;
@@ -648,8 +641,7 @@ char *globalFilePathcapture = NULL;
 
 - (void)setFps:(float) value {
 	@synchronized(self) {
-		AVCaptureSession *session = [(AVCaptureVideoPreviewLayer *)self.layer session];
-		[session beginConfiguration];
+		[_capture_session beginConfiguration];
 		if ([[[UIDevice currentDevice] systemVersion] floatValue] < 5) { 
 			[output setMinFrameDuration:CMTimeMake(1, value)];
 		} else {
@@ -661,54 +653,61 @@ char *globalFilePathcapture = NULL;
 			}
 			
 		}
-		fps=value;
+		fps = value;
 		snprintf(fps_context, sizeof(fps_context), "Captured mean fps=%%f, expected=%f", fps);
 		ms_video_init_average_fps(&averageFps, fps_context);
-		[session commitConfiguration];
+		[_capture_session commitConfiguration];
 	}
 }
 
 - (void)setParentView:(UIView*)aparentView{
-#ifndef USING_OPENGL
     if (parentView == aparentView) {
-		return;
-	}    
-
-	if(parentView != nil) {
-		[self removeFromSuperview];
-		[parentView release];
-		parentView = nil;
-	}
-	parentView = aparentView;
-	
-	if(parentView != nil) {
+        return;
+    }
+    
+    if(parentView != nil && !_ecImageView) {
+        [_ecImageView removeFromSuperview];
+        [parentView release];
+        parentView = nil;
+    }
+    parentView = aparentView;
+    if(parentView != nil) {
         [parentView retain];
-		AVCaptureVideoPreviewLayer *previewLayer = (AVCaptureVideoPreviewLayer *)self.layer;
-		if([parentView contentMode] == UIViewContentModeScaleAspectFit) {
-			previewLayer.videoGravity = AVLayerVideoGravityResizeAspect;
-		} else if([parentView contentMode] == UIViewContentModeScaleAspectFill) {
-			previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-		} else {
-			previewLayer.videoGravity = AVLayerVideoGravityResize;
-		}
-		 [parentView insertSubview:self atIndex:0];
-		 [self setFrame: [parentView bounds]];
-	}
-#else
-    // create render and add renderFrame view
-//    VideoRenderIPhoneImpl* ptrRenderer = new VideoRenderIPhoneImpl(0, kRenderiOS, (void*)aparentView, false);
-//    if (ptrRenderer) {
-//       _ptrRenderer =  reinterpret_cast<cloopenwebrtc::IVideoRender*>(ptrRenderer);
-//    }
-//    
-//    if (_ptrRenderer->Init() == -1) {
-//        NSLog( @"Initialize VideoRenderIPhoneImpl failure\n");
-//    }
-//    
-//    // @see: http://blog.csdn.net/cjj198561/article/details/34196305
-//     _renderCallback = ptrRenderer->AddIncomingRenderStream(0, 0, 0.0, 0.0, 1.0, 1.0);
-//     _ptrRenderer->StartRender();
-#endif
+        _ecImageView = [[ECImageView alloc] initWithFrame:parentView.frame];
+        if([parentView contentMode] == UIViewContentModeScaleAspectFit) {
+            [_ecImageView setFillMode:kECImageFillModePreserveAspectRatio];
+        } else if([parentView contentMode] == UIViewContentModeScaleAspectFill) {
+            [_ecImageView setFillMode:kECImageFillModePreserveAspectRatioAndFill];
+        } else {
+            [_ecImageView setFillMode:kECImageFillModeStretch];
+        }
+        // view horizontal mirror. zhaoyou
+        [_ecImageView setInputRotation:kECImageFlipHorizonal atIndex:0];
+        [_ecImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+        [parentView insertSubview:_ecImageView atIndex:0];
+        
+        
+        if(_rawDataInput == nullptr) {
+            _rawDataInput = [[ECImageRawDataInput alloc] initWithBytes:(GLubyte *)nullptr size:CGSizeMake(0, 0)];
+            _ecImageFilter = [[ECImageBeautyFaceFilter alloc] init];
+            
+            _rawDataOutput = [[ECImageRawDataOutput alloc] initWithImageSize:CGSizeMake(960, 540) resultsInBGRAFormat:YES];
+            [_rawDataOutput setI420FrameAvailableBlock:^(const GLubyte *outputBytes, uint8_t *bytes_y, int stride_y, uint8_t *bytes_u, int stride_u, uint8_t *bytes_v, int stride_v, NSInteger width, int height) {
+                pthread_mutex_lock(&mutex);
+                I420VideoFrame videoFrame;
+                videoFrame.CreateFrame(width*height, bytes_y, width*height/4, bytes_u, width*height/4, bytes_v, width, height, stride_y, stride_u, stride_v);
+                
+                if(_owner)  {
+                    _owner->IncomingI420VideoFrame(&videoFrame, 0);
+                }
+                pthread_mutex_unlock(&mutex);
+            }];
+            
+            [_rawDataInput addTarget:_ecImageFilter];
+            [_ecImageFilter addTarget:_rawDataOutput];
+            [_ecImageFilter addTarget:_ecImageView];
+        }
+    }
 }
 - (void)deviceOrientationNotify {
 #ifdef __APPLE_CC__    

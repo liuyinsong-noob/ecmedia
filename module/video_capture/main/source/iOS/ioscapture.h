@@ -13,6 +13,7 @@ using namespace videocapturemodule;
 #include "msvideo.h"
 #include "bilteral_filter.h"
 #include "keyframe_detector.h"
+#include "ECImage.h"
 
 //#define DEBUG_CAPTURE_YUV 1
 
@@ -21,11 +22,7 @@ namespace cloopenwebrtc {
     class VideoRenderCallback;
 }
 
-// AVCaptureVideoPreviewLayer with AVCaptureSession creation
-@interface ECAVCaptureVideoPreviewLayerEx : AVCaptureVideoPreviewLayer
-@end
-
-@interface ECIOSCaptureCCP : UIView<AVCaptureVideoDataOutputSampleBufferDelegate> {
+@interface ECIOSCaptureCCP : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate> {
 @private
     AVCaptureDeviceInput *input;
     AVCaptureVideoDataOutput * output;
@@ -53,6 +50,7 @@ namespace cloopenwebrtc {
     // UIView* parentView;
     BilteralFilterCore *bilteralFilter;
     KeyFrameDetectCore *keyframeDector;
+    AVCaptureSession *_capture_session;
 #if DEBUG_CAPTURE_YUV
     FILE *fout;
 #endif
@@ -83,6 +81,12 @@ namespace cloopenwebrtc {
 @property (nonatomic, retain, readonly) UIView* parentView;
 @property (nonatomic, assign) bool triggered;
 @property (nonatomic) dispatch_queue_t sessionQueue;
+
+// iamge filter
+@property (nonatomic, retain) ECImageRawDataInput *rawDataInput;
+@property (nonatomic, retain) ECImageRawDataOutput *rawDataOutput;
+@property (nonatomic, retain) ECImageView *ecImageView;
+@property (nonatomic, retain) ECImageOutput<ECImageInput> *ecImageFilter;
 @end
 
 
