@@ -187,7 +187,7 @@ namespace cloopenwebrtc {
     }
 
     int ECLiveEngine::setBeautyFace(bool enable) {
-        return return ec_media_core_->setBeautyFace(enable);
+        return ec_media_core_->setBeautyFace(enable);
     }
     
     // simple live stream puller factory
