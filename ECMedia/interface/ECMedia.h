@@ -585,6 +585,9 @@ ECMEDIA_API int ECMedia_set_CaptureDeviceID(int videoCapDevId);
 ECMEDIA_API int ECMedia_Check_Record_Permission(bool &enabled);
 ECMEDIA_API int ECmedia_set_shield_mosaic(int video_channel, bool flag);
 
+// stream beauty face.
+ECMEDIA_API int ECMedia_setBeautyFace(int deviceid, bool enable);
+    
 /* 
 // 播流接口调用流程
 // 创建 handle
@@ -766,8 +769,7 @@ ECMEDIA_API int ECMedia_audio_set_playout_gain(int channelid, float gain);
  * gain: 放大的倍数，1.5即将原来的声音放大1.5倍。
  */
 ECMEDIA_API int ECMedia_audio_set_microphone_gain(int channelid, float gain);
-// stream beauty face.
-ECMEDIA_API int ECMedia_setBeautyFace(int deviceid, bool enable);
+
 #ifdef __cplusplus
 }
 #endif
