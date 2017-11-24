@@ -549,7 +549,7 @@ int ViECaptureImpl::SetLocalVideoWindow(const int capture_id,
     }
     return 0;
 }
-
+    
 int ViECaptureImpl::UpdateLossRate(const int capture_id, int lossRate)
 {
     ViEInputManagerScoped is(*(shared_data_->input_manager()));
@@ -568,4 +568,23 @@ int ViECaptureImpl::UpdateLossRate(const int capture_id, int lossRate)
     }
     return 0;
 }
+    
+int ViECaptureImpl::setBeautyFace(const int capture_id, bool enable) {
+    LOG(LS_INFO) << "setBeautyFace " << capture_id;
+    
+    ViEInputManagerScoped is(*(shared_data_->input_manager()));
+    ViECapturer* vie_capture = is.Capture(capture_id);
+    if (!vie_capture) {
+        shared_data_->SetLastError(kViECaptureDeviceDoesNotExist);
+        return -1;
+    }
+    if (!vie_capture->Started()) {
+        shared_data_->SetLastError(kViECaptureDeviceAlreadyStarted);
+        return -1;
+    }
+    vie_capture->setBeautyFace(enable);
+    return 0;
+    
+}
+        
 }  // namespace webrtc

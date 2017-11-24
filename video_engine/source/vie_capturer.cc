@@ -755,4 +755,9 @@ int ViECapturer::UpdateLossRate(int lossRate)
 {
     return capture_module_->UpdateLossRate(lossRate);
 }
+    
+void ViECapturer::setBeautyFace(bool enable)
+{
+    return capture_module_->setBeautyFace(enable);
+}
 }  // namespace webrtc

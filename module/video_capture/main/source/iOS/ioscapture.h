@@ -63,7 +63,7 @@ namespace cloopenwebrtc {
 - (MSVideoSize*)getSize;
 - (void)openDevice:(const char*) deviceId;
 - (void)setFps:(float) value;
-+ (Class)layerClass;
+- (void)setBeautyFace:(BOOL)isEnable;
 
 - (NSNumber*)registerOwner:(cloopenwebrtc::videocapturemodule::VideoCaptureiOS*)owner;
 - (NSNumber*)setCaptureDeviceById:(char*)uniqueId;

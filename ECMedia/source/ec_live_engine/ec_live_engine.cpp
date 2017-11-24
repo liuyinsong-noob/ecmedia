@@ -186,6 +186,10 @@ namespace cloopenwebrtc {
         return 0;
     }
 
+    int ECLiveEngine::setBeautyFace(bool enable) {
+        return return ec_media_core_->setBeautyFace(enable);
+    }
+    
     // simple live stream puller factory
     EC_MediaPullerBase* ECLiveEngine::createMediaPuller(const char* url, ECLiveStreamNetworkStatusCallBack callback) {
         if(strncmp(url, "rtmp", 4) == 0) {

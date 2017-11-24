@@ -273,6 +273,7 @@ class WEBRTC_DLLEXPORT ViECapture {
 	  virtual int SetCaptureSettings(const int capture_id, CaptureCapability settings) = 0;   //设置摄像头采集参数
 																							  //---end
     virtual int UpdateLossRate(const int capture_id, int lossRate) = 0;
+    virtual int setBeautyFace(const int capture_id, bool enable) = 0;
 };
 
 }  // namespace webrtc

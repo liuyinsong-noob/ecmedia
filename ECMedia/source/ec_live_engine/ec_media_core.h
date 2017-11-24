@@ -51,6 +51,9 @@ namespace cloopenwebrtc {
         int setBitrate(int bitrate);
         void setCapturerCallback(EC_CapturerCallback *callback);
 
+        // beauty face filter
+        int setBeautyFace(bool enable);
+                  
         // share window
         void SelectShareWindow(int type, int id);
         void SetVideoCaptureSource(VIDEO_SOURCE video_source);

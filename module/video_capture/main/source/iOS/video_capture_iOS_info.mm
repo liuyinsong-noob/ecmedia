@@ -75,5 +75,9 @@ namespace cloopenwebrtc
             [videoCaptureiOSObjc updateLossRate:lossRate];
             return 0;
         }
+        
+        void VideoCaptureiOSInfo::setBeautyFace(bool enable) {
+            [videoCaptureiOSObjc setBeautyFace:enable];
+        }
     }
 }

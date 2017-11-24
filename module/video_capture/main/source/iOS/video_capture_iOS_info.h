@@ -30,6 +30,7 @@ namespace cloopenwebrtc
             int stopCapture();
             int setLocalVieoView(void* view);
             int updateLossRate(int lossRate);
+            void setBeautyFace(bool enable);
         private:
             ECIOSCaptureCCP *videoCaptureiOSObjc;
         };

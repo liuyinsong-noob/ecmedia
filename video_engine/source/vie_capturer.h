@@ -216,6 +216,7 @@ class ViECapturer
 	  int SetCaptureSettings(VideoCaptureCapability settings);
 	  int UpdateLossRate(int lossRate);
 	  int SetSendStatisticsProxy(SendStatisticsProxy* p_sendStats);
+      void setBeautyFace(bool enable);
 	  //---end
 };
 

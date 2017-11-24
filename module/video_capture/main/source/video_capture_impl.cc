@@ -32,8 +32,7 @@ VideoCaptureModule* VideoCaptureImpl::Create(
     const int32_t id,
     VideoCaptureExternal*& externalCapture)
 {
-    RefCountImpl<VideoCaptureImpl>* implementation =
-        new RefCountImpl<VideoCaptureImpl>(id);
+    RefCountImpl<VideoCaptureImpl>* implementation = new RefCountImpl<VideoCaptureImpl>(id);
     externalCapture = implementation;
     return implementation;
 }
@@ -472,5 +471,6 @@ WebRtc_Word32 VideoCaptureImpl::StopSendImage()
 	_startImageFrameIntervall = 0;
 	return 0;
 }
+
 }  // namespace videocapturemodule
 }  // namespace webrtc

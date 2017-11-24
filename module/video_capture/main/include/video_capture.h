@@ -156,6 +156,7 @@ protected:
   virtual WebRtc_Word32 StopSendImage() = 0;
   //---end
     virtual int32_t UpdateLossRate(int lossRate) = 0;
+    virtual void setBeautyFace(bool enable) = 0;
 };
 
 }  // namespace webrtc

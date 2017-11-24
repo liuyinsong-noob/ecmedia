@@ -5238,24 +5238,22 @@ void ECMedia_releaseLiveStream(void *handle)
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 }
 
-// not support yet.
 void ECMedia_enableLiveStreamBeauty(void *handle)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
-    //    RTMPLiveSession *p = (RTMPLiveSession*)handle;
-    //    p->EnableBeauty();
+    ECLiveEngine *engine = (ECLiveEngine*)handle;
+    engine->setBeautyFace(true);
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 #endif
 }
 
-// not support yet.
 void ECMedia_disableLiveStreamBeauty(void *handle)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
-    //    RTMPLiveSession *p = (RTMPLiveSession*)handle;
-    //    p->DisableBeauty();
+    ECLiveEngine *engine = (ECLiveEngine*)handle;
+    engine->setBeautyFace(false);
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 #endif
 }
@@ -5495,6 +5493,28 @@ ECMEDIA_API int ECMedia_audio_set_microphone_gain(int channelid, float gain)
     else{
         PrintConsole("[ECMEDIA ERROR] %s failed to get VoEBase", __FUNCTION__);
         PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        return -99;
+    }
+}
+
+int ECMedia_setBeautyFace(int deviceid, bool enable)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins... ", __FUNCTION__);
+    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    ViECapture *capture = ViECapture::GetInterface(m_vie);
+    if (capture) {
+        //capture->EnableBrightnessAlarm(deviceid, true); //ylr for test
+        int ret = capture->setBeautyFace(deviceid, enable);
+        capture->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set beauty face", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA ERROR] %s failed to get ViECapture", __FUNCTION__);
         return -99;
     }
 }

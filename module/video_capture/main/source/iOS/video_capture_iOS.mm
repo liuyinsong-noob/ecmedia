@@ -33,8 +33,6 @@ namespace cloopenwebrtc
 		        implementation = NULL;
 		    }
 		    return implementation;
-		
-		
 		}
 
 		VideoCaptureModule::DeviceInfo* VideoCaptureImpl::CreateDeviceInfo(
@@ -278,6 +276,10 @@ namespace cloopenwebrtc
             return 0;
         }
 #endif
+        
+        void VideoCaptureiOS::setBeautyFace(bool enable) {
+            _captureDevice->setBeautyFace(enable);
+        }
 
     }  // namespace videocapturemodule
 }

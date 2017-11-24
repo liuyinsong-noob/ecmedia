@@ -32,6 +32,7 @@ namespace cloopenwebrtc {
         int  configLiveVideoStream(LiveVideoStreamConfig config);
         //
         int switchCamera(int index);
+        int setBeautyFace(bool enable);
         int prepare();
     protected:
         void onOutputBitrateChanged(int bitrate);

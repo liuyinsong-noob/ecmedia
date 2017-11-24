@@ -1006,6 +1006,17 @@ namespace cloopenwebrtc {
             PrintConsole("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
     }
 
+    
+    int ECMediaMachine::setBeautyFace(bool enable) {
+        ViECapture *capture = ViECapture::GetInterface(vie_);
+        int ret = -1;
+        if (capture) {
+            ret = capture->setBeautyFace(capture_id_, enable);
+            capture->Release();
+        }
+        return ret;
+    }
+    
     int ECMediaMachine::doDesktopCapture()
     {
         ViEDesktopShare *desktopShare = ViEDesktopShare::GetInterface(vie_);

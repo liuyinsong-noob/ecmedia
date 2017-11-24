@@ -766,6 +766,8 @@ ECMEDIA_API int ECMedia_audio_set_playout_gain(int channelid, float gain);
  * gain: 放大的倍数，1.5即将原来的声音放大1.5倍。
  */
 ECMEDIA_API int ECMedia_audio_set_microphone_gain(int channelid, float gain);
+// stream beauty face.
+ECMEDIA_API int ECMedia_setBeautyFace(int deviceid, bool enable);
 #ifdef __cplusplus
 }
 #endif

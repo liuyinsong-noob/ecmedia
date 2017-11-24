@@ -111,6 +111,7 @@ public:
         return -1;
     }
     virtual int UpdateLossRate(int lossRate) {return 0;}
+    virtual void setBeautyFace(bool enable) {}
 
 protected:
     VideoCaptureImpl(const int32_t id);

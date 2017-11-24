@@ -427,7 +427,7 @@ char *globalFilePathcapture = NULL;
 		device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
 	}
     if ([device lockForConfiguration:&error]) {
-        device.subjectAreaChangeMonitoringEnabled=YES;
+        device.subjectAreaChangeMonitoringEnabled = YES;
         [device unlockForConfiguration];
     }else{
         NSLog(@"enable area change monitor error：%@",error.localizedDescription);
@@ -445,8 +445,6 @@ char *globalFilePathcapture = NULL;
     }
 	[_capture_session addOutput:output];
     [_capture_session commitConfiguration];
-    
-    
 }
 
 - (void)dealloc {
@@ -691,7 +689,7 @@ char *globalFilePathcapture = NULL;
         
         if(_rawDataInput == nullptr) {
             _rawDataInput = [[ECImageRawDataInput alloc] initWithBytes:(GLubyte *)nullptr size:CGSizeMake(0, 0)];
-            _ecImageFilter = [[ECImage1977Filter alloc] init];
+           
             
             _rawDataOutput = [[ECImageRawDataOutput alloc] initWithImageSize:CGSizeMake(mOutputVideoSize.width, mOutputVideoSize.height) resultsInBGRAFormat:YES];
             [_rawDataOutput setI420FrameAvailableBlock:^(const GLubyte *outputBytes, uint8_t *bytes_y, int stride_y, uint8_t *bytes_u, int stride_u, uint8_t *bytes_v, int stride_v, NSInteger width, int height) {
@@ -705,10 +703,27 @@ char *globalFilePathcapture = NULL;
                 pthread_mutex_unlock(&mutex);
             }];
             
-            [_rawDataInput addTarget:_ecImageFilter];
-            [_ecImageFilter addTarget:_rawDataOutput];
-            [_ecImageFilter addTarget:_ecImageView];
+            [_rawDataInput addTarget:_rawDataOutput];
+            [_rawDataInput addTarget:_ecImageView];
         }
+    }
+}
+
+
+-(void)setBeautyFace:(BOOL)isEnable {
+    if(isEnable) {
+        [_rawDataInput removeAllTargets];
+        if(_ecImageFilter == nullptr) {
+            _ecImageFilter = [[ECImageBeautyFaceFilter alloc] init];
+        }
+        
+        [_rawDataInput addTarget:_ecImageFilter];
+        [_ecImageFilter addTarget:_rawDataOutput];
+        [_ecImageFilter addTarget:_ecImageView];
+    } else {
+        [_rawDataInput removeAllTargets];
+        [_rawDataInput addTarget:_rawDataOutput];
+        [_rawDataInput addTarget:_ecImageView];
     }
 }
 
