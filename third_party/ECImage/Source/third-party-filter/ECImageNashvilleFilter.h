@@ -6,7 +6,9 @@
 //  Copyright © 2016年 ForrestWoo co,.ltd. All rights reserved.
 //
 
+#import "ECImageFilterGroup.h"
 #import "ECImageTwoInputFilter.h"
+#import "ECImagePicture.h"
 
 @interface FWFilter1 : ECImageTwoInputFilter
 

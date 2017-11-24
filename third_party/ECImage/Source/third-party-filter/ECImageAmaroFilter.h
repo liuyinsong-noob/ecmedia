@@ -7,6 +7,8 @@
 //
 
 #import "ECImageFourInputFilter.h"
+#import "ECImageFilterGroup.h"
+#import "ECImagePicture.h"
 
 @interface FWFilter3 : ECImageFourInputFilter
 

@@ -691,7 +691,7 @@ char *globalFilePathcapture = NULL;
         
         if(_rawDataInput == nullptr) {
             _rawDataInput = [[ECImageRawDataInput alloc] initWithBytes:(GLubyte *)nullptr size:CGSizeMake(0, 0)];
-            _ecImageFilter = [[ECImageBeautyFaceFilter alloc] init];
+            _ecImageFilter = [[ECImage1977Filter alloc] init];
             
             _rawDataOutput = [[ECImageRawDataOutput alloc] initWithImageSize:CGSizeMake(mOutputVideoSize.width, mOutputVideoSize.height) resultsInBGRAFormat:YES];
             [_rawDataOutput setI420FrameAvailableBlock:^(const GLubyte *outputBytes, uint8_t *bytes_y, int stride_y, uint8_t *bytes_u, int stride_u, uint8_t *bytes_v, int stride_v, NSInteger width, int height) {
@@ -770,7 +770,6 @@ char *globalFilePathcapture = NULL;
         triggered = false;
     return [NSNumber numberWithInt:0];
 }
-
 
 - (void)subjectAreaDidChange:(NSNotification *)notification
 {

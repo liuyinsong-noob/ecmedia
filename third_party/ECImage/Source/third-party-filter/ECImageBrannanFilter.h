@@ -8,6 +8,7 @@
 
 #import "ECImageFilterGroup.h"
 #import "ECImageSixInputFilter.h"
+#import "ECImagePicture.h"
 
 @interface FWFilter16 : ECImageSixInputFilter
 

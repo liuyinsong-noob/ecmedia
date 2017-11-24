@@ -333,10 +333,11 @@ NSString *const kECImageSixInputTextureVertexShaderString = SHADER_STRING
     {
         rotationToCheck = inputRotation5;
     }
-    else if (textureIndex == 5)
+    else
     {
         rotationToCheck = inputRotation6;
     }
+    
     if (ECImageRotationSwapsWidthAndHeight(rotationToCheck))
     {
         rotatedSize.width = sizeToRotate.height;
