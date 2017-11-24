@@ -256,12 +256,21 @@ char *globalFilePathcapture = NULL;
     int width = (int) CVPixelBufferGetWidth(imageBuffer);
     // argb image height
     int  height = (int)CVPixelBufferGetHeight(imageBuffer);
-    void *src_buff = CVPixelBufferGetBaseAddress(imageBuffer);
+    GLubyte *src_buff = (GLubyte*)CVPixelBufferGetBaseAddress(imageBuffer);
     CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
+    int extraBytes = bytesPerRow - width*4;
+
+    
+    GLubyte *image_buffer = (GLubyte*)malloc(width*height*4);
+    for(int i= 0; i< height; i++) {
+        memcpy(image_buffer+i*width*4, src_buff+bytesPerRow*i, width*4);
+    }
+    
     
     if(_rawDataInput) {
-        [_rawDataInput processARGBData:src_buff imageSize:CGSizeMake(width, height)];
+        [_rawDataInput processARGBData:image_buffer imageSize:CGSizeMake(width, height)];
     }
+    free(image_buffer);
     return;
 //
 //#if !TARGET_IPHONE_SIMULATOR
@@ -533,54 +542,47 @@ char *globalFilePathcapture = NULL;
 
 - (void)setSize:(MSVideoSize) size {
 	@synchronized(self) {
-		[_capture_session beginConfiguration];
-        [_capture_session setSessionPreset: @"AVCaptureSessionPresetiFrame960x540"];
-        mCameraVideoSize.width = MS_VIDEO_SIZE_VGA_W;
-        mCameraVideoSize.height = MS_VIDEO_SIZE_VGA_H;
-        mOutputVideoSize.width = MS_VIDEO_SIZE_QVGA_W;
-        mOutputVideoSize.height = MS_VIDEO_SIZE_QVGA_H;
-        mDownScalingRequired=true;
-//
-//        if (size.width*size.height == MS_VIDEO_SIZE_QVGA_W  * MS_VIDEO_SIZE_QVGA_H)
-//        {
-//            [_capture_session setSessionPreset: AVCaptureSessionPreset640x480];
-//            mCameraVideoSize.width=MS_VIDEO_SIZE_VGA_W;
-//            mCameraVideoSize.height=MS_VIDEO_SIZE_VGA_H;
-//            mOutputVideoSize.width=MS_VIDEO_SIZE_QVGA_W;
-//            mOutputVideoSize.height=MS_VIDEO_SIZE_QVGA_H;
-//            mDownScalingRequired=true;
-//        }
-//        else if (size.width*size.height == MS_VIDEO_SIZE_720P_W * MS_VIDEO_SIZE_720P_H)
-//        {
-//            [_capture_session setSessionPreset: AVCaptureSessionPreset1280x720];
-//            mCameraVideoSize.width=MS_VIDEO_SIZE_720P_W;
-//            mCameraVideoSize.height=MS_VIDEO_SIZE_720P_H;
-//            mOutputVideoSize.width=MS_VIDEO_SIZE_720P_W;
-//            mOutputVideoSize.height=MS_VIDEO_SIZE_720P_H;
-//            mDownScalingRequired=false;
-//        }
-//        else if (size.width*size.height == MS_VIDEO_SIZE_960_540_W * MS_VIDEO_SIZE_960_540_H)
-//        {
-//            [_capture_session setSessionPreset: AVCaptureSessionPresetiFrame960x540];
-//            mCameraVideoSize.width=MS_VIDEO_SIZE_960_540_W;
-//            mCameraVideoSize.height=MS_VIDEO_SIZE_960_540_H;
-//            mOutputVideoSize.width=MS_VIDEO_SIZE_960_540_W;
-//            mOutputVideoSize.height=MS_VIDEO_SIZE_960_540_H;
-//            mDownScalingRequired=false;
-//        }
-//        else if (size.width*size.height == MS_VIDEO_SIZE_VGA_W  * MS_VIDEO_SIZE_VGA_H) {
-//            [_capture_session setSessionPreset: AVCaptureSessionPreset640x480];
-//            mCameraVideoSize.width=MS_VIDEO_SIZE_VGA_W;
-//            mCameraVideoSize.height=MS_VIDEO_SIZE_VGA_H;
-//            mOutputVideoSize=mCameraVideoSize;
-//            mDownScalingRequired=false;
-//        } else {
-//            [_capture_session setSessionPreset: AVCaptureSessionPresetiFrame960x540];
-//            mCameraVideoSize.width=540;
-//            mCameraVideoSize.height=960;
-//            mOutputVideoSize=mCameraVideoSize;
-//            mDownScalingRequired=false;
-//        }
+
+        if (size.width*size.height == MS_VIDEO_SIZE_QVGA_W  * MS_VIDEO_SIZE_QVGA_H)
+        {
+            [_capture_session setSessionPreset: AVCaptureSessionPreset640x480];
+            mCameraVideoSize.width=MS_VIDEO_SIZE_VGA_W;
+            mCameraVideoSize.height=MS_VIDEO_SIZE_VGA_H;
+            mOutputVideoSize.width=MS_VIDEO_SIZE_QVGA_W;
+            mOutputVideoSize.height=MS_VIDEO_SIZE_QVGA_H;
+            mDownScalingRequired=true;
+        }
+        else if (size.width*size.height == MS_VIDEO_SIZE_720P_W * MS_VIDEO_SIZE_720P_H)
+        {
+            [_capture_session setSessionPreset: AVCaptureSessionPreset1280x720];
+            mCameraVideoSize.width=MS_VIDEO_SIZE_720P_W;
+            mCameraVideoSize.height=MS_VIDEO_SIZE_720P_H;
+            mOutputVideoSize.width=MS_VIDEO_SIZE_720P_W;
+            mOutputVideoSize.height=MS_VIDEO_SIZE_720P_H;
+            mDownScalingRequired=false;
+        }
+        else if (size.width*size.height == MS_VIDEO_SIZE_960_540_W * MS_VIDEO_SIZE_960_540_H)
+        {
+            [_capture_session setSessionPreset: AVCaptureSessionPresetiFrame960x540];
+            mCameraVideoSize.width=MS_VIDEO_SIZE_960_540_W;
+            mCameraVideoSize.height=MS_VIDEO_SIZE_960_540_H;
+            mOutputVideoSize.width=MS_VIDEO_SIZE_960_540_W;
+            mOutputVideoSize.height=MS_VIDEO_SIZE_960_540_H;
+            mDownScalingRequired=false;
+        }
+        else if (size.width*size.height == MS_VIDEO_SIZE_VGA_W  * MS_VIDEO_SIZE_VGA_H) {
+            [_capture_session setSessionPreset: AVCaptureSessionPreset640x480];
+            mCameraVideoSize.width=MS_VIDEO_SIZE_VGA_W;
+            mCameraVideoSize.height=MS_VIDEO_SIZE_VGA_H;
+            mOutputVideoSize=mCameraVideoSize;
+            mDownScalingRequired=false;
+        } else {
+            [_capture_session setSessionPreset: AVCaptureSessionPresetMedium];
+            mCameraVideoSize.width=MS_VIDEO_SIZE_IOS_MEDIUM_W;
+            mCameraVideoSize.height=MS_VIDEO_SIZE_IOS_MEDIUM_H;
+            mOutputVideoSize=mCameraVideoSize;
+            mDownScalingRequired=false;
+        }
 		
 		NSArray *connections = output.connections;
 		if ([connections count] > 0 && [[connections objectAtIndex:0] isVideoOrientationSupported]) {
@@ -691,7 +693,7 @@ char *globalFilePathcapture = NULL;
             _rawDataInput = [[ECImageRawDataInput alloc] initWithBytes:(GLubyte *)nullptr size:CGSizeMake(0, 0)];
             _ecImageFilter = [[ECImageBeautyFaceFilter alloc] init];
             
-            _rawDataOutput = [[ECImageRawDataOutput alloc] initWithImageSize:CGSizeMake(960, 540) resultsInBGRAFormat:YES];
+            _rawDataOutput = [[ECImageRawDataOutput alloc] initWithImageSize:CGSizeMake(mOutputVideoSize.width, mOutputVideoSize.height) resultsInBGRAFormat:YES];
             [_rawDataOutput setI420FrameAvailableBlock:^(const GLubyte *outputBytes, uint8_t *bytes_y, int stride_y, uint8_t *bytes_u, int stride_u, uint8_t *bytes_v, int stride_v, NSInteger width, int height) {
                 pthread_mutex_lock(&mutex);
                 I420VideoFrame videoFrame;
@@ -709,6 +711,7 @@ char *globalFilePathcapture = NULL;
         }
     }
 }
+
 - (void)deviceOrientationNotify {
 #ifdef __APPLE_CC__    
     BOOL isauto = false;

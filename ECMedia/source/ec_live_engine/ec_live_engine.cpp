@@ -235,10 +235,10 @@ namespace cloopenwebrtc {
         width = 640;
         height = 360;
 #ifndef WIN32
-        width = 480;
+        width = 360;
         height = 640;
 #endif
-        switch (resolution) {
+        switch (0) {
             case EC_VIDEO_RESOLUTION_720P:
                 width = 1280;
                 height = 720;

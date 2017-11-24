@@ -165,3 +165,6 @@
 #import "ECImageThreeInputFilter.h"
 #import "ECImageWeakPixelInclusionFilter.h"
 
+//third-party-filter
+#import "third-party-filter/third-party-filter.h"
+
