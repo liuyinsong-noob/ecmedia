@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1FEDE2011FCE5625008951C8 /* bitrate_controller_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4526C8D21F149F95005949BB /* bitrate_controller_impl.cc */; };
+		1FEDE2021FCE5625008951C8 /* remb_suppressor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4526C8D41F149F95005949BB /* remb_suppressor.cc */; };
+		1FEDE2031FCE5625008951C8 /* send_side_bandwidth_estimation.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4526C8D61F149F95005949BB /* send_side_bandwidth_estimation.cc */; };
 		3FAA8B7215C8C61800561C64 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAA8B7115C8C61800561C64 /* Foundation.framework */; };
 		3FAA8B8515C8C64F00561C64 /* bitrate_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAA8B8415C8C64F00561C64 /* bitrate_controller.h */; };
 		4526C8D81F149F95005949BB /* bitrate_controller_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4526C8D21F149F95005949BB /* bitrate_controller_impl.cc */; };
@@ -201,6 +204,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FEDE2011FCE5625008951C8 /* bitrate_controller_impl.cc in Sources */,
+				1FEDE2021FCE5625008951C8 /* remb_suppressor.cc in Sources */,
+				1FEDE2031FCE5625008951C8 /* send_side_bandwidth_estimation.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,10 +325,11 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/bitrate_controller.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = WEBRTC_POSIX;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../interface,
@@ -331,7 +338,7 @@
 					../rtp_rtcp/include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -347,10 +354,11 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/bitrate_controller.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = WEBRTC_POSIX;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../interface,
@@ -359,7 +367,7 @@
 					../rtp_rtcp/include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

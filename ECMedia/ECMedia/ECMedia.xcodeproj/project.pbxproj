@@ -41,6 +41,8 @@
 		1FA4AA911FC6C1E600936805 /* libECImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA4AA881FC6BB9F00936805 /* libECImage.a */; };
 		1FBB43FA1E728F35007DBD1D /* MediaStatisticsData.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FBB43F91E728F35007DBD1D /* MediaStatisticsData.pb.cc */; };
 		1FDB3E4C1E839BC30018FA08 /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FDB3DC91E837CD40018FA08 /* libsrtp.a */; };
+		1FEDE2DD1FCE583C008951C8 /* libbitrate_controller_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC54A901D48845700A5C852 /* libbitrate_controller_Mac.a */; };
+		1FEDE2DE1FCE5848008951C8 /* libSoundTouch_Media_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD36336C1F44668100F0C20B /* libSoundTouch_Media_Mac.a */; };
 		450D71E51F15FB0000CD5776 /* libcongestion_controller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45619C951F14C7FF008B2068 /* libcongestion_controller.a */; };
 		450D72071F1606EB00CD5776 /* common_types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72061F1606EB00CD5776 /* common_types.cc */; };
 		450D727A1F17200D00CD5776 /* librtc_event_log.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 450D726E1F171DC100CD5776 /* librtc_event_log.a */; };
@@ -60,7 +62,6 @@
 		AD3EBA9C1DE5327E00024454 /* VoeObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD2DE0FB1D6BEA4C00FE3814 /* VoeObserver.cpp */; };
 		AD3EBAA71DE5432F00024454 /* libfaac_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD3EBAA61DE5432F00024454 /* libfaac_osx.a */; };
 		AD3EBAA91DE5433F00024454 /* libfaad_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD3EBAA81DE5433F00024454 /* libfaad_osx.a */; };
-		AD3EBADE1DE5661600024454 /* librtmp_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD3EBA981DE5324E00024454 /* librtmp_Mac.a */; };
 		AD3EBB121DE5B71200024454 /* libvpx_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD3EBB0D1DE5B71200024454 /* libvpx_mac.a */; };
 		AD3EBB131DE5B71200024454 /* libavcodec_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD3EBB0E1DE5B71200024454 /* libavcodec_mac.a */; };
 		AD3EBB141DE5B71200024454 /* libavutil_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD3EBB0F1DE5B71200024454 /* libavutil_mac.a */; };
@@ -95,7 +96,6 @@
 		ADC54AD81D48845700A5C852 /* libaudio_conference_mixer_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC54A871D48845700A5C852 /* libaudio_conference_mixer_mac.a */; };
 		ADC54AD91D48845700A5C852 /* libaudio_device_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC54A8A1D48845700A5C852 /* libaudio_device_Mac.a */; };
 		ADC54ADA1D48845700A5C852 /* libaudioprocess_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC54A8D1D48845700A5C852 /* libaudioprocess_Mac.a */; };
-		ADC54ADB1D48845700A5C852 /* libbitrate_controller_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC54A901D48845700A5C852 /* libbitrate_controller_Mac.a */; };
 		ADC54ADC1D48845700A5C852 /* libCNG_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC54A931D48845700A5C852 /* libCNG_Mac.a */; };
 		ADC54ADD1D48845700A5C852 /* libcommon_audio_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC54A961D48845700A5C852 /* libcommon_audio_Mac.a */; };
 		ADC54ADF1D48845700A5C852 /* libG711_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC54A9C1D48845700A5C852 /* libG711_Mac.a */; };
@@ -1390,13 +1390,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FEDE2DE1FCE5848008951C8 /* libSoundTouch_Media_Mac.a in Frameworks */,
+				1FEDE2DD1FCE583C008951C8 /* libbitrate_controller_Mac.a in Frameworks */,
 				ADB127321E779225003CBF6C /* libavformat_mac.a in Frameworks */,
 				AD3EBB121DE5B71200024454 /* libvpx_mac.a in Frameworks */,
 				AD3EBB131DE5B71200024454 /* libavcodec_mac.a in Frameworks */,
 				AD3EBB141DE5B71200024454 /* libavutil_mac.a in Frameworks */,
 				AD3EBB151DE5B71200024454 /* libswresample_mac.a in Frameworks */,
 				AD3EBB161DE5B71200024454 /* libx264_mac.a in Frameworks */,
-				AD3EBADE1DE5661600024454 /* librtmp_Mac.a in Frameworks */,
 				AD3EBAA91DE5433F00024454 /* libfaad_osx.a in Frameworks */,
 				AD3EBAA71DE5432F00024454 /* libfaac_osx.a in Frameworks */,
 				AD1123271DAF3108006CDD38 /* libopus_Mac.a in Frameworks */,
@@ -1405,7 +1406,6 @@
 				ADC54AD81D48845700A5C852 /* libaudio_conference_mixer_mac.a in Frameworks */,
 				ADC54AD91D48845700A5C852 /* libaudio_device_Mac.a in Frameworks */,
 				ADC54ADA1D48845700A5C852 /* libaudioprocess_Mac.a in Frameworks */,
-				ADC54ADB1D48845700A5C852 /* libbitrate_controller_Mac.a in Frameworks */,
 				ADC54ADC1D48845700A5C852 /* libCNG_Mac.a in Frameworks */,
 				ADC54ADD1D48845700A5C852 /* libcommon_audio_Mac.a in Frameworks */,
 				ADC54ADF1D48845700A5C852 /* libG711_Mac.a in Frameworks */,

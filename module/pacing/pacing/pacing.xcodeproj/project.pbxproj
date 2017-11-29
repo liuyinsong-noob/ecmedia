@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1FEDE1FD1FCE5117008951C8 /* alr_detector.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A4D1F14AC63008B2068 /* alr_detector.cc */; };
+		1FEDE1FE1FCE5117008951C8 /* bitrate_prober.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A4F1F14AC63008B2068 /* bitrate_prober.cc */; };
+		1FEDE1FF1FCE5117008951C8 /* paced_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A511F14AC63008B2068 /* paced_sender.cc */; };
+		1FEDE2001FCE5117008951C8 /* packet_router.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A531F14AC63008B2068 /* packet_router.cc */; };
 		45619A551F14AC63008B2068 /* alr_detector.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A4D1F14AC63008B2068 /* alr_detector.cc */; };
 		45619A561F14AC63008B2068 /* bitrate_prober.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A4F1F14AC63008B2068 /* bitrate_prober.cc */; };
 		45619A571F14AC63008B2068 /* paced_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A511F14AC63008B2068 /* paced_sender.cc */; };
@@ -175,6 +179,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FEDE1FD1FCE5117008951C8 /* alr_detector.cc in Sources */,
+				1FEDE1FE1FCE5117008951C8 /* bitrate_prober.cc in Sources */,
+				1FEDE1FF1FCE5117008951C8 /* paced_sender.cc in Sources */,
+				1FEDE2001FCE5117008951C8 /* packet_router.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,7 +203,13 @@
 		AD1F0CB01D4762E400C33F53 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					WEBRTC_POSIX,
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../../../system_wrappers/interface,
@@ -204,7 +218,7 @@
 					../include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -217,7 +231,9 @@
 		AD1F0CB11D4762E400C33F53 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_PREPROCESSOR_DEFINITIONS = WEBRTC_POSIX;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../../../system_wrappers/interface,
@@ -226,7 +242,7 @@
 					../include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;

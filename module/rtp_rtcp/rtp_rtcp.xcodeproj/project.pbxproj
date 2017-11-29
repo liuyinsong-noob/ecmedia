@@ -8,6 +8,78 @@
 
 /* Begin PBXBuildFile section */
 		1F78E9711FC40EB700624741 /* config.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F78E9701FC40EB700624741 /* config.cc */; };
+		1FEDE2951FCE5737008951C8 /* config.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F78E9701FC40EB700624741 /* config.cc */; };
+		1FEDE2961FCE5737008951C8 /* bitrate.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B0C1F14B58D008B2068 /* bitrate.cc */; };
+		1FEDE2971FCE5737008951C8 /* dtmf_queue.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B101F14B58D008B2068 /* dtmf_queue.cc */; };
+		1FEDE2981FCE5737008951C8 /* flexfec_header_reader_writer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B1A1F14B58D008B2068 /* flexfec_header_reader_writer.cc */; };
+		1FEDE2991FCE5737008951C8 /* flexfec_receiver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B1D1F14B58D008B2068 /* flexfec_receiver.cc */; };
+		1FEDE29A1FCE5737008951C8 /* flexfec_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B1F1F14B58D008B2068 /* flexfec_sender.cc */; };
+		1FEDE29B1FCE5737008951C8 /* forward_error_correction_internal.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B201F14B58D008B2068 /* forward_error_correction_internal.cc */; };
+		1FEDE29C1FCE5737008951C8 /* forward_error_correction.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B221F14B58D008B2068 /* forward_error_correction.cc */; };
+		1FEDE29D1FCE5737008951C8 /* packet_loss_stats.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B261F14B58D008B2068 /* packet_loss_stats.cc */; };
+		1FEDE29E1FCE5737008951C8 /* playout_delay_oracle.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B291F14B58D008B2068 /* playout_delay_oracle.cc */; };
+		1FEDE29F1FCE5738008951C8 /* receive_statistics_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B2E1F14B58D008B2068 /* receive_statistics_impl.cc */; };
+		1FEDE2A01FCE5738008951C8 /* remote_ntp_time_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B321F14B58D008B2068 /* remote_ntp_time_estimator.cc */; };
+		1FEDE2A11FCE5738008951C8 /* rtcp_nack_stats.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B351F14B58D008B2068 /* rtcp_nack_stats.cc */; };
+		1FEDE2A21FCE5738008951C8 /* rtcp_packet.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B381F14B58D008B2068 /* rtcp_packet.cc */; };
+		1FEDE2A31FCE5738008951C8 /* rtcp_receiver_help.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B3A1F14B58D008B2068 /* rtcp_receiver_help.cc */; };
+		1FEDE2A41FCE5738008951C8 /* rtcp_receiver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B3D1F14B58D008B2068 /* rtcp_receiver.cc */; };
+		1FEDE2A51FCE5738008951C8 /* rtcp_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B401F14B58D008B2068 /* rtcp_sender.cc */; };
+		1FEDE2A61FCE5738008951C8 /* rtcp_utility.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B431F14B58D008B2068 /* rtcp_utility.cc */; };
+		1FEDE2A71FCE5738008951C8 /* rtp_format_h264.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B471F14B58D008B2068 /* rtp_format_h264.cc */; };
+		1FEDE2A81FCE5738008951C8 /* rtp_format_video_generic.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B491F14B58D008B2068 /* rtp_format_video_generic.cc */; };
+		1FEDE2A91FCE5738008951C8 /* rtp_format_vp8.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B4E1F14B58D008B2068 /* rtp_format_vp8.cc */; };
+		1FEDE2AA1FCE5738008951C8 /* rtp_format_vp9.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B511F14B58D008B2068 /* rtp_format_vp9.cc */; };
+		1FEDE2AB1FCE5738008951C8 /* rtp_format.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B531F14B58D008B2068 /* rtp_format.cc */; };
+		1FEDE2AC1FCE5738008951C8 /* rtp_header_extension.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B561F14B58D008B2068 /* rtp_header_extension.cc */; };
+		1FEDE2AD1FCE5738008951C8 /* rtp_header_extensions.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B581F14B58D008B2068 /* rtp_header_extensions.cc */; };
+		1FEDE2AE1FCE5738008951C8 /* rtp_header_parser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B5A1F14B58D008B2068 /* rtp_header_parser.cc */; };
+		1FEDE2AF1FCE5738008951C8 /* rtp_packet_history.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B5C1F14B58D008B2068 /* rtp_packet_history.cc */; };
+		1FEDE2B01FCE5738008951C8 /* rtp_packet.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B611F14B58D008B2068 /* rtp_packet.cc */; };
+		1FEDE2B11FCE5738008951C8 /* rtp_payload_registry.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B641F14B58D008B2068 /* rtp_payload_registry.cc */; };
+		1FEDE2B21FCE5738008951C8 /* rtp_receiver_audio.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B651F14B58D008B2068 /* rtp_receiver_audio.cc */; };
+		1FEDE2B31FCE5738008951C8 /* rtp_receiver_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B671F14B58D008B2068 /* rtp_receiver_impl.cc */; };
+		1FEDE2B41FCE5738008951C8 /* rtp_receiver_strategy.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B691F14B58D008B2068 /* rtp_receiver_strategy.cc */; };
+		1FEDE2B51FCE5738008951C8 /* rtp_receiver_video.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B6B1F14B58D008B2068 /* rtp_receiver_video.cc */; };
+		1FEDE2B61FCE5738008951C8 /* rtp_rtcp_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B6F1F14B58D008B2068 /* rtp_rtcp_impl.cc */; };
+		1FEDE2B71FCE5738008951C8 /* rtp_sender_audio.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B711F14B58D008B2068 /* rtp_sender_audio.cc */; };
+		1FEDE2B81FCE5738008951C8 /* rtp_sender_video.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B741F14B58D008B2068 /* rtp_sender_video.cc */; };
+		1FEDE2B91FCE5738008951C8 /* rtp_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B761F14B58D008B2068 /* rtp_sender.cc */; };
+		1FEDE2BA1FCE5738008951C8 /* rtp_utility.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B791F14B58D008B2068 /* rtp_utility.cc */; };
+		1FEDE2BB1FCE5738008951C8 /* ssrc_database.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B7B1F14B58D008B2068 /* ssrc_database.cc */; };
+		1FEDE2BC1FCE5738008951C8 /* time_util.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B7E1F14B58D008B2068 /* time_util.cc */; };
+		1FEDE2BD1FCE5738008951C8 /* tmmbr_help.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B801F14B58D008B2068 /* tmmbr_help.cc */; };
+		1FEDE2BE1FCE5738008951C8 /* ulpfec_generator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B831F14B58D008B2068 /* ulpfec_generator.cc */; };
+		1FEDE2BF1FCE5738008951C8 /* ulpfec_header_reader_writer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B861F14B58D008B2068 /* ulpfec_header_reader_writer.cc */; };
+		1FEDE2C01FCE5738008951C8 /* ulpfec_receiver_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B881F14B58D008B2068 /* ulpfec_receiver_impl.cc */; };
+		1FEDE2C11FCE5738008951C8 /* vp8_partition_aggregator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619B8D1F14B58D008B2068 /* vp8_partition_aggregator.cc */; };
+		1FEDE2C21FCE579A008951C8 /* app.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619AA01F14B548008B2068 /* app.cc */; };
+		1FEDE2C31FCE579A008951C8 /* bye.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619AA21F14B548008B2068 /* bye.cc */; };
+		1FEDE2C41FCE579A008951C8 /* common_header.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619AA41F14B548008B2068 /* common_header.cc */; };
+		1FEDE2C51FCE579A008951C8 /* compound_packet.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619AA61F14B548008B2068 /* compound_packet.cc */; };
+		1FEDE2C61FCE579A008951C8 /* dlrr.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619AA81F14B548008B2068 /* dlrr.cc */; };
+		1FEDE2C71FCE579A008951C8 /* extended_jitter_report.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619AAA1F14B548008B2068 /* extended_jitter_report.cc */; };
+		1FEDE2C81FCE579A008951C8 /* extended_reports.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619AAC1F14B548008B2068 /* extended_reports.cc */; };
+		1FEDE2C91FCE579A008951C8 /* fir.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619AAE1F14B548008B2068 /* fir.cc */; };
+		1FEDE2CA1FCE579A008951C8 /* nack.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619AB01F14B548008B2068 /* nack.cc */; };
+		1FEDE2CB1FCE579A008951C8 /* pli.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619AB21F14B548008B2068 /* pli.cc */; };
+		1FEDE2CC1FCE579A008951C8 /* psfb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619AB41F14B548008B2068 /* psfb.cc */; };
+		1FEDE2CD1FCE579A008951C8 /* rapid_resync_request.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619AB61F14B548008B2068 /* rapid_resync_request.cc */; };
+		1FEDE2CE1FCE579A008951C8 /* receiver_report.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619AB81F14B548008B2068 /* receiver_report.cc */; };
+		1FEDE2CF1FCE579A008951C8 /* remb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619ABA1F14B548008B2068 /* remb.cc */; };
+		1FEDE2D01FCE579A008951C8 /* report_block.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619ABC1F14B548008B2068 /* report_block.cc */; };
+		1FEDE2D11FCE579A008951C8 /* rpsi.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619ABE1F14B548008B2068 /* rpsi.cc */; };
+		1FEDE2D21FCE579B008951C8 /* rrtr.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619AC01F14B548008B2068 /* rrtr.cc */; };
+		1FEDE2D31FCE579B008951C8 /* rtpfb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619AC21F14B548008B2068 /* rtpfb.cc */; };
+		1FEDE2D41FCE579B008951C8 /* sdes.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619AC41F14B548008B2068 /* sdes.cc */; };
+		1FEDE2D51FCE579B008951C8 /* sender_report.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619AC61F14B548008B2068 /* sender_report.cc */; };
+		1FEDE2D61FCE579B008951C8 /* sli.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619AC81F14B548008B2068 /* sli.cc */; };
+		1FEDE2D71FCE579B008951C8 /* target_bitrate.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619ACA1F14B548008B2068 /* target_bitrate.cc */; };
+		1FEDE2D81FCE579B008951C8 /* tmmb_item.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619ACC1F14B548008B2068 /* tmmb_item.cc */; };
+		1FEDE2D91FCE579B008951C8 /* tmmbn.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619ACE1F14B548008B2068 /* tmmbn.cc */; };
+		1FEDE2DA1FCE579B008951C8 /* tmmbr.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619AD01F14B548008B2068 /* tmmbr.cc */; };
+		1FEDE2DB1FCE579B008951C8 /* transport_feedback.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619AD21F14B548008B2068 /* transport_feedback.cc */; };
+		1FEDE2DC1FCE579B008951C8 /* voip_metric.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619AD41F14B548008B2068 /* voip_metric.cc */; };
 		3FAF879E15C7E82F000D5497 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FAF879D15C7E82F000D5497 /* Foundation.framework */; };
 		3FAF88DC15C7EAC2000D5497 /* rtp_rtcp_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF88D815C7EAC2000D5497 /* rtp_rtcp_defines.h */; };
 		3FAF88DD15C7EAC2000D5497 /* rtp_rtcp.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FAF88D915C7EAC2000D5497 /* rtp_rtcp.h */; };
@@ -807,6 +879,78 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FEDE2C21FCE579A008951C8 /* app.cc in Sources */,
+				1FEDE2C31FCE579A008951C8 /* bye.cc in Sources */,
+				1FEDE2C41FCE579A008951C8 /* common_header.cc in Sources */,
+				1FEDE2C51FCE579A008951C8 /* compound_packet.cc in Sources */,
+				1FEDE2C61FCE579A008951C8 /* dlrr.cc in Sources */,
+				1FEDE2C71FCE579A008951C8 /* extended_jitter_report.cc in Sources */,
+				1FEDE2C81FCE579A008951C8 /* extended_reports.cc in Sources */,
+				1FEDE2C91FCE579A008951C8 /* fir.cc in Sources */,
+				1FEDE2CA1FCE579A008951C8 /* nack.cc in Sources */,
+				1FEDE2CB1FCE579A008951C8 /* pli.cc in Sources */,
+				1FEDE2CC1FCE579A008951C8 /* psfb.cc in Sources */,
+				1FEDE2CD1FCE579A008951C8 /* rapid_resync_request.cc in Sources */,
+				1FEDE2CE1FCE579A008951C8 /* receiver_report.cc in Sources */,
+				1FEDE2CF1FCE579A008951C8 /* remb.cc in Sources */,
+				1FEDE2D01FCE579A008951C8 /* report_block.cc in Sources */,
+				1FEDE2D11FCE579A008951C8 /* rpsi.cc in Sources */,
+				1FEDE2D21FCE579B008951C8 /* rrtr.cc in Sources */,
+				1FEDE2D31FCE579B008951C8 /* rtpfb.cc in Sources */,
+				1FEDE2D41FCE579B008951C8 /* sdes.cc in Sources */,
+				1FEDE2D51FCE579B008951C8 /* sender_report.cc in Sources */,
+				1FEDE2D61FCE579B008951C8 /* sli.cc in Sources */,
+				1FEDE2D71FCE579B008951C8 /* target_bitrate.cc in Sources */,
+				1FEDE2D81FCE579B008951C8 /* tmmb_item.cc in Sources */,
+				1FEDE2D91FCE579B008951C8 /* tmmbn.cc in Sources */,
+				1FEDE2DA1FCE579B008951C8 /* tmmbr.cc in Sources */,
+				1FEDE2DB1FCE579B008951C8 /* transport_feedback.cc in Sources */,
+				1FEDE2DC1FCE579B008951C8 /* voip_metric.cc in Sources */,
+				1FEDE2951FCE5737008951C8 /* config.cc in Sources */,
+				1FEDE2961FCE5737008951C8 /* bitrate.cc in Sources */,
+				1FEDE2971FCE5737008951C8 /* dtmf_queue.cc in Sources */,
+				1FEDE2981FCE5737008951C8 /* flexfec_header_reader_writer.cc in Sources */,
+				1FEDE2991FCE5737008951C8 /* flexfec_receiver.cc in Sources */,
+				1FEDE29A1FCE5737008951C8 /* flexfec_sender.cc in Sources */,
+				1FEDE29B1FCE5737008951C8 /* forward_error_correction_internal.cc in Sources */,
+				1FEDE29C1FCE5737008951C8 /* forward_error_correction.cc in Sources */,
+				1FEDE29D1FCE5737008951C8 /* packet_loss_stats.cc in Sources */,
+				1FEDE29E1FCE5737008951C8 /* playout_delay_oracle.cc in Sources */,
+				1FEDE29F1FCE5738008951C8 /* receive_statistics_impl.cc in Sources */,
+				1FEDE2A01FCE5738008951C8 /* remote_ntp_time_estimator.cc in Sources */,
+				1FEDE2A11FCE5738008951C8 /* rtcp_nack_stats.cc in Sources */,
+				1FEDE2A21FCE5738008951C8 /* rtcp_packet.cc in Sources */,
+				1FEDE2A31FCE5738008951C8 /* rtcp_receiver_help.cc in Sources */,
+				1FEDE2A41FCE5738008951C8 /* rtcp_receiver.cc in Sources */,
+				1FEDE2A51FCE5738008951C8 /* rtcp_sender.cc in Sources */,
+				1FEDE2A61FCE5738008951C8 /* rtcp_utility.cc in Sources */,
+				1FEDE2A71FCE5738008951C8 /* rtp_format_h264.cc in Sources */,
+				1FEDE2A81FCE5738008951C8 /* rtp_format_video_generic.cc in Sources */,
+				1FEDE2A91FCE5738008951C8 /* rtp_format_vp8.cc in Sources */,
+				1FEDE2AA1FCE5738008951C8 /* rtp_format_vp9.cc in Sources */,
+				1FEDE2AB1FCE5738008951C8 /* rtp_format.cc in Sources */,
+				1FEDE2AC1FCE5738008951C8 /* rtp_header_extension.cc in Sources */,
+				1FEDE2AD1FCE5738008951C8 /* rtp_header_extensions.cc in Sources */,
+				1FEDE2AE1FCE5738008951C8 /* rtp_header_parser.cc in Sources */,
+				1FEDE2AF1FCE5738008951C8 /* rtp_packet_history.cc in Sources */,
+				1FEDE2B01FCE5738008951C8 /* rtp_packet.cc in Sources */,
+				1FEDE2B11FCE5738008951C8 /* rtp_payload_registry.cc in Sources */,
+				1FEDE2B21FCE5738008951C8 /* rtp_receiver_audio.cc in Sources */,
+				1FEDE2B31FCE5738008951C8 /* rtp_receiver_impl.cc in Sources */,
+				1FEDE2B41FCE5738008951C8 /* rtp_receiver_strategy.cc in Sources */,
+				1FEDE2B51FCE5738008951C8 /* rtp_receiver_video.cc in Sources */,
+				1FEDE2B61FCE5738008951C8 /* rtp_rtcp_impl.cc in Sources */,
+				1FEDE2B71FCE5738008951C8 /* rtp_sender_audio.cc in Sources */,
+				1FEDE2B81FCE5738008951C8 /* rtp_sender_video.cc in Sources */,
+				1FEDE2B91FCE5738008951C8 /* rtp_sender.cc in Sources */,
+				1FEDE2BA1FCE5738008951C8 /* rtp_utility.cc in Sources */,
+				1FEDE2BB1FCE5738008951C8 /* ssrc_database.cc in Sources */,
+				1FEDE2BC1FCE5738008951C8 /* time_util.cc in Sources */,
+				1FEDE2BD1FCE5738008951C8 /* tmmbr_help.cc in Sources */,
+				1FEDE2BE1FCE5738008951C8 /* ulpfec_generator.cc in Sources */,
+				1FEDE2BF1FCE5738008951C8 /* ulpfec_header_reader_writer.cc in Sources */,
+				1FEDE2C01FCE5738008951C8 /* ulpfec_receiver_impl.cc in Sources */,
+				1FEDE2C11FCE5738008951C8 /* vp8_partition_aggregator.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1005,7 +1149,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/rtp_rtcp.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
@@ -1034,6 +1178,7 @@
 					HAVE_SYS_UIO_H,
 					NVALGRIND,
 					"DYNAMIC_ANNOTATIONS_ENABLED=0",
+					WEBRTC_POSIX,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
@@ -1052,7 +1197,7 @@
 					../../system_wrappers/source/,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CPLUSPLUSFLAGS = (
 					"-fno-rtti",
@@ -1091,7 +1236,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				DSTROOT = /tmp/rtp_rtcp.dst;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1120,6 +1265,7 @@
 					HAVE_SYS_UIO_H,
 					NVALGRIND,
 					"DYNAMIC_ANNOTATIONS_ENABLED=0",
+					WEBRTC_POSIX,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
@@ -1138,7 +1284,7 @@
 					../../system_wrappers/source/,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OBJROOT = "$(SYMROOT)/build";
 				OTHER_CPLUSPLUSFLAGS = (
 					"-fno-rtti",
