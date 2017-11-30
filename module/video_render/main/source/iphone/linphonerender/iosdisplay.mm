@@ -222,8 +222,9 @@ enum TextureType
     
     [self setAutoresizingMask: UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 //    register notification
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackgroundFun:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackgroundFun:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
     // view scale
     self.contentScaleFactor = [UIScreen mainScreen].scale;
@@ -608,6 +609,10 @@ enum TextureType
 
 - (void)appWillEnterForeground:(NSNotification *)noti
 {
+    isRendering = YES;
+}
+
+-(void)appWillBecomeActive:(NSNotification *)noti {
     isRendering = YES;
 }
 
