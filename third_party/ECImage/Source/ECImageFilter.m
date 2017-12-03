@@ -73,17 +73,15 @@ NSString *const kECImagePassthroughFragmentShaderString = SHADER_STRING
     imageCaptureSemaphore = dispatch_semaphore_create(0);
     dispatch_semaphore_signal(imageCaptureSemaphore);
 
-    runSynchronouslyOnVideoProcessingQueue(^{
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext useImageProcessingContext];
 
         filterProgram = [[ECImageContext sharedImageProcessingContext] programForVertexShaderString:vertexShaderString fragmentShaderString:fragmentShaderString];
-        
-        if (!filterProgram.initialized)
-        {
+
+        if (!filterProgram.initialized) {
             [self initializeAttributes];
-            
-            if (![filterProgram link])
-            {
+
+            if (![filterProgram link]) {
                 NSString *progLog = [filterProgram programLog];
                 NSLog(@"Program link log: %@", progLog);
                 NSString *fragLog = [filterProgram fragmentShaderLog];
@@ -94,15 +92,15 @@ NSString *const kECImagePassthroughFragmentShaderString = SHADER_STRING
                 NSAssert(NO, @"Filter shader link failed");
             }
         }
-        
+
         filterPositionAttribute = [filterProgram attributeIndex:@"position"];
         filterTextureCoordinateAttribute = [filterProgram attributeIndex:@"inputTextureCoordinate"];
         filterInputTextureUniform = [filterProgram uniformIndex:@"inputImageTexture"]; // This does assume a name of "inputImageTexture" for the fragment shader
-        
+
         [ECImageContext setActiveShaderProgram:filterProgram];
-        
+
         glEnableVertexAttribArray(filterPositionAttribute);
-        glEnableVertexAttribArray(filterTextureCoordinateAttribute);    
+        glEnableVertexAttribArray(filterTextureCoordinateAttribute);
     });
     
     return self;
@@ -434,27 +432,27 @@ NSString *const kECImagePassthroughFragmentShaderString = SHADER_STRING
 
 - (void)setMatrix3f:(GPUMatrix3x3)matrix forUniform:(GLint)uniform program:(ECGLProgram *)shaderProgram;
 {
-    runAsynchronouslyOnVideoProcessingQueue(^{
+    ec_runAsynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext setActiveShaderProgram:shaderProgram];
         [self setAndExecuteUniformStateCallbackAtIndex:uniform forProgram:shaderProgram toBlock:^{
-            glUniformMatrix3fv(uniform, 1, GL_FALSE, (GLfloat *)&matrix);
+            glUniformMatrix3fv(uniform, 1, GL_FALSE, (GLfloat *) &matrix);
         }];
     });
 }
 
 - (void)setMatrix4f:(GPUMatrix4x4)matrix forUniform:(GLint)uniform program:(ECGLProgram *)shaderProgram;
 {
-    runAsynchronouslyOnVideoProcessingQueue(^{
+    ec_runAsynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext setActiveShaderProgram:shaderProgram];
         [self setAndExecuteUniformStateCallbackAtIndex:uniform forProgram:shaderProgram toBlock:^{
-            glUniformMatrix4fv(uniform, 1, GL_FALSE, (GLfloat *)&matrix);
+            glUniformMatrix4fv(uniform, 1, GL_FALSE, (GLfloat *) &matrix);
         }];
     });
 }
 
 - (void)setFloat:(GLfloat)floatValue forUniform:(GLint)uniform program:(ECGLProgram *)shaderProgram;
 {
-    runAsynchronouslyOnVideoProcessingQueue(^{
+    ec_runAsynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext setActiveShaderProgram:shaderProgram];
         [self setAndExecuteUniformStateCallbackAtIndex:uniform forProgram:shaderProgram toBlock:^{
             glUniform1f(uniform, floatValue);
@@ -464,13 +462,13 @@ NSString *const kECImagePassthroughFragmentShaderString = SHADER_STRING
 
 - (void)setPoint:(CGPoint)pointValue forUniform:(GLint)uniform program:(ECGLProgram *)shaderProgram;
 {
-    runAsynchronouslyOnVideoProcessingQueue(^{
+    ec_runAsynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext setActiveShaderProgram:shaderProgram];
         [self setAndExecuteUniformStateCallbackAtIndex:uniform forProgram:shaderProgram toBlock:^{
             GLfloat positionArray[2];
             positionArray[0] = pointValue.x;
             positionArray[1] = pointValue.y;
-            
+
             glUniform2fv(uniform, 1, positionArray);
         }];
     });
@@ -478,14 +476,14 @@ NSString *const kECImagePassthroughFragmentShaderString = SHADER_STRING
 
 - (void)setSize:(CGSize)sizeValue forUniform:(GLint)uniform program:(ECGLProgram *)shaderProgram;
 {
-    runAsynchronouslyOnVideoProcessingQueue(^{
+    ec_runAsynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext setActiveShaderProgram:shaderProgram];
-        
+
         [self setAndExecuteUniformStateCallbackAtIndex:uniform forProgram:shaderProgram toBlock:^{
             GLfloat sizeArray[2];
             sizeArray[0] = sizeValue.width;
             sizeArray[1] = sizeValue.height;
-            
+
             glUniform2fv(uniform, 1, sizeArray);
         }];
     });
@@ -493,22 +491,22 @@ NSString *const kECImagePassthroughFragmentShaderString = SHADER_STRING
 
 - (void)setVec3:(GPUVector3)vectorValue forUniform:(GLint)uniform program:(ECGLProgram *)shaderProgram;
 {
-    runAsynchronouslyOnVideoProcessingQueue(^{
+    ec_runAsynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext setActiveShaderProgram:shaderProgram];
 
         [self setAndExecuteUniformStateCallbackAtIndex:uniform forProgram:shaderProgram toBlock:^{
-            glUniform3fv(uniform, 1, (GLfloat *)&vectorValue);
+            glUniform3fv(uniform, 1, (GLfloat *) &vectorValue);
         }];
     });
 }
 
 - (void)setVec4:(GPUVector4)vectorValue forUniform:(GLint)uniform program:(ECGLProgram *)shaderProgram;
 {
-    runAsynchronouslyOnVideoProcessingQueue(^{
+    ec_runAsynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext setActiveShaderProgram:shaderProgram];
-        
+
         [self setAndExecuteUniformStateCallbackAtIndex:uniform forProgram:shaderProgram toBlock:^{
-            glUniform4fv(uniform, 1, (GLfloat *)&vectorValue);
+            glUniform4fv(uniform, 1, (GLfloat *) &vectorValue);
         }];
     });
 }
@@ -518,9 +516,9 @@ NSString *const kECImagePassthroughFragmentShaderString = SHADER_STRING
     // Make a copy of the data, so it doesn't get overwritten before async call executes
     NSData* arrayData = [NSData dataWithBytes:arrayValue length:arrayLength * sizeof(arrayValue[0])];
 
-    runAsynchronouslyOnVideoProcessingQueue(^{
+    ec_runAsynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext setActiveShaderProgram:shaderProgram];
-        
+
         [self setAndExecuteUniformStateCallbackAtIndex:uniform forProgram:shaderProgram toBlock:^{
             glUniform1fv(uniform, arrayLength, [arrayData bytes]);
         }];
@@ -529,7 +527,7 @@ NSString *const kECImagePassthroughFragmentShaderString = SHADER_STRING
 
 - (void)setInteger:(GLint)intValue forUniform:(GLint)uniform program:(ECGLProgram *)shaderProgram;
 {
-    runAsynchronouslyOnVideoProcessingQueue(^{
+    ec_runAsynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext setActiveShaderProgram:shaderProgram];
 
         [self setAndExecuteUniformStateCallbackAtIndex:uniform forProgram:shaderProgram toBlock:^{

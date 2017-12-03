@@ -51,11 +51,11 @@ NSString *const kECImageLineGeneratorFragmentShaderString = SHADER_STRING
     {
         return nil;
     }
-    
-    runSynchronouslyOnVideoProcessingQueue(^{
+
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         lineWidthUniform = [filterProgram uniformIndex:@"lineWidth"];
         lineColorUniform = [filterProgram uniformIndex:@"lineColor"];
-        
+
         self.lineWidth = 1.0;
         [self setLineColorRed:0.0 green:1.0 blue:0.0];
     });
@@ -115,23 +115,23 @@ NSString *const kECImageLineGeneratorFragmentShaderString = SHADER_STRING
             lineCoordinates[currentVertexIndex++] = slope * 1.0 + intercept;
         }
     }
-    
-    runSynchronouslyOnVideoProcessingQueue(^{
+
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext setActiveShaderProgram:filterProgram];
-        
+
         outputFramebuffer = [[ECImageContext sharedFramebufferCache] fetchFramebufferForSize:[self sizeOfFBO] textureOptions:self.outputTextureOptions onlyTexture:NO];
         [outputFramebuffer activateFramebuffer];
-        
+
         glClearColor(0.0, 0.0, 0.0, 0.0);
         glClear(GL_COLOR_BUFFER_BIT);
-        
+
         glBlendEquation(GL_FUNC_ADD);
         glBlendFunc(GL_ONE, GL_ONE);
         glEnable(GL_BLEND);
-        
+
         glVertexAttribPointer(filterPositionAttribute, 2, GL_FLOAT, 0, 0, lineCoordinates);
-        glDrawArrays(GL_LINES, 0, ((unsigned int)numberOfLines * 2));
-        
+        glDrawArrays(GL_LINES, 0, ((unsigned int) numberOfLines * 2));
+
         glDisable(GL_BLEND);
 
         [self informTargetsAboutNewFrameAtTime:frameTime];

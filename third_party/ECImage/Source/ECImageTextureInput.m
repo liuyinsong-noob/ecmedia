@@ -12,13 +12,13 @@
         return nil;
     }
 
-    runSynchronouslyOnVideoProcessingQueue(^{
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext useImageProcessingContext];
     });
     
     textureSize = newTextureSize;
 
-    runSynchronouslyOnVideoProcessingQueue(^{
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         outputFramebuffer = [[ECImageFramebuffer alloc] initWithSize:newTextureSize overriddenTexture:newInputTexture];
     });
     
@@ -30,12 +30,11 @@
 
 - (void)processTextureWithFrameTime:(CMTime)frameTime;
 {
-    runAsynchronouslyOnVideoProcessingQueue(^{
-        for (id<ECImageInput> currentTarget in targets)
-        {
+    ec_runAsynchronouslyOnVideoProcessingQueue(^{
+        for (id <ECImageInput> currentTarget in targets) {
             NSInteger indexOfObject = [targets indexOfObject:currentTarget];
             NSInteger targetTextureIndex = [[targetTextureIndices objectAtIndex:indexOfObject] integerValue];
-            
+
             [currentTarget setInputSize:textureSize atIndex:targetTextureIndex];
             [currentTarget setInputFramebuffer:outputFramebuffer atIndex:targetTextureIndex];
             [currentTarget newFrameReadyAtTime:frameTime atIndex:targetTextureIndex];

@@ -93,18 +93,16 @@
     eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:NO], kEAGLDrawablePropertyRetainedBacking, kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil];
 
     self.enabled = YES;
-    
-    runSynchronouslyOnVideoProcessingQueue(^{
+
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext useImageProcessingContext];
-        
+
         displayProgram = [[ECImageContext sharedImageProcessingContext] programForVertexShaderString:kECImageVertexShaderString fragmentShaderString:kECImagePassthroughFragmentShaderString];
-        if (!displayProgram.initialized)
-        {
+        if (!displayProgram.initialized) {
             [displayProgram addAttribute:@"position"];
             [displayProgram addAttribute:@"inputTextureCoordinate"];
-            
-            if (![displayProgram link])
-            {
+
+            if (![displayProgram link]) {
                 NSString *progLog = [displayProgram programLog];
                 NSLog(@"Program link log: %@", progLog);
                 NSString *fragLog = [displayProgram fragmentShaderLog];
@@ -115,7 +113,7 @@
                 NSAssert(NO, @"Filter shader link failed");
             }
         }
-        
+
         displayPositionAttribute = [displayProgram attributeIndex:@"position"];
         displayTextureCoordinateAttribute = [displayProgram attributeIndex:@"inputTextureCoordinate"];
         displayInputTextureUniform = [displayProgram uniformIndex:@"inputImageTexture"]; // This does assume a name of "inputTexture" for the fragment shader
@@ -123,7 +121,7 @@
         [ECImageContext setActiveShaderProgram:displayProgram];
         glEnableVertexAttribArray(displayPositionAttribute);
         glEnableVertexAttribArray(displayTextureCoordinateAttribute);
-        
+
         [self setBackgroundColorRed:0.0 green:0.0 blue:0.0 alpha:1.0];
         _fillMode = kECImageFillModePreserveAspectRatio;
         [self createDisplayFramebuffer];
@@ -136,7 +134,7 @@
     // The frame buffer needs to be trashed and re-created when the view size changes.
     if (!CGSizeEqualToSize(self.bounds.size, boundsSizeAtFrameBufferEpoch) &&
         !CGSizeEqualToSize(self.bounds.size, CGSizeZero)) {
-        runSynchronouslyOnVideoProcessingQueue(^{
+        ec_runSynchronouslyOnVideoProcessingQueue(^{
             [self destroyDisplayFramebuffer];
             [self createDisplayFramebuffer];
             [self recalculateViewGeometry];
@@ -146,7 +144,7 @@
 
 - (void)dealloc
 {
-    runSynchronouslyOnVideoProcessingQueue(^{
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         [self destroyDisplayFramebuffer];
     });
 }
@@ -229,36 +227,35 @@
 
 - (void)recalculateViewGeometry;
 {
-    runSynchronouslyOnVideoProcessingQueue(^{
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         CGFloat heightScaling, widthScaling;
-        
+
         CGSize currentViewSize = self.bounds.size;
-        
+
         //    CGFloat imageAspectRatio = inputImageSize.width / inputImageSize.height;
         //    CGFloat viewAspectRatio = currentViewSize.width / currentViewSize.height;
-        
+
         CGRect insetRect = AVMakeRectWithAspectRatioInsideRect(inputImageSize, self.bounds);
-        
-        switch(_fillMode)
-        {
-            case kECImageFillModeStretch:
-            {
+
+        switch (_fillMode) {
+            case kECImageFillModeStretch: {
                 widthScaling = 1.0;
                 heightScaling = 1.0;
-            }; break;
-            case kECImageFillModePreserveAspectRatio:
-            {
+            };
+                break;
+            case kECImageFillModePreserveAspectRatio: {
                 widthScaling = insetRect.size.width / currentViewSize.width;
                 heightScaling = insetRect.size.height / currentViewSize.height;
-            }; break;
-            case kECImageFillModePreserveAspectRatioAndFill:
-            {
+            };
+                break;
+            case kECImageFillModePreserveAspectRatioAndFill: {
                 //            CGFloat widthHolder = insetRect.size.width / currentViewSize.width;
                 widthScaling = currentViewSize.height / insetRect.size.height;
                 heightScaling = currentViewSize.width / insetRect.size.width;
-            }; break;
+            };
+                break;
         }
-        
+
         imageVertices[0] = -widthScaling;
         imageVertices[1] = -heightScaling;
         imageVertices[2] = widthScaling;
@@ -368,22 +365,22 @@
 
 - (void)newFrameReadyAtTime:(CMTime)frameTime atIndex:(NSInteger)textureIndex;
 {
-    runSynchronouslyOnVideoProcessingQueue(^{
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext setActiveShaderProgram:displayProgram];
         [self setDisplayFramebuffer];
-        
+
         glClearColor(backgroundColorRed, backgroundColorGreen, backgroundColorBlue, backgroundColorAlpha);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        
+
         glActiveTexture(GL_TEXTURE4);
         glBindTexture(GL_TEXTURE_2D, [inputFramebufferForDisplay texture]);
         glUniform1i(displayInputTextureUniform, 4);
-        
+
         glVertexAttribPointer(displayPositionAttribute, 2, GL_FLOAT, 0, 0, imageVertices);
         glVertexAttribPointer(displayTextureCoordinateAttribute, 2, GL_FLOAT, 0, 0, [ECImageView textureCoordinatesForRotation:inputRotation]);
-        
+
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-        
+
         [self presentFramebuffer];
         [inputFramebufferForDisplay unlock];
         inputFramebufferForDisplay = nil;
@@ -408,17 +405,15 @@
 
 - (void)setInputSize:(CGSize)newSize atIndex:(NSInteger)textureIndex;
 {
-    runSynchronouslyOnVideoProcessingQueue(^{
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         CGSize rotatedSize = newSize;
-        
-        if (ECImageRotationSwapsWidthAndHeight(inputRotation))
-        {
+
+        if (ECImageRotationSwapsWidthAndHeight(inputRotation)) {
             rotatedSize.width = newSize.height;
             rotatedSize.height = newSize.width;
         }
-        
-        if (!CGSizeEqualToSize(inputImageSize, rotatedSize))
-        {
+
+        if (!CGSizeEqualToSize(inputImageSize, rotatedSize)) {
             inputImageSize = rotatedSize;
             [self recalculateViewGeometry];
         }

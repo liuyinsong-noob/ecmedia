@@ -94,8 +94,8 @@ NSString *const kECImageDirectionalNonmaximumSuppressionFragmentShaderString = S
     {
         _texelWidth = 1.0 / filterFrameSize.width;
         _texelHeight = 1.0 / filterFrameSize.height;
-        
-        runSynchronouslyOnVideoProcessingQueue(^{
+
+        ec_runSynchronouslyOnVideoProcessingQueue(^{
             [ECImageContext setActiveShaderProgram:filterProgram];
             glUniform1f(texelWidthUniform, _texelWidth);
             glUniform1f(texelHeightUniform, _texelHeight);

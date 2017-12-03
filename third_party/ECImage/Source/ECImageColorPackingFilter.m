@@ -99,7 +99,7 @@ NSString *const kECImageColorPackingFragmentShaderString = SHADER_STRING
     texelWidth = 0.5 / inputTextureSize.width;
     texelHeight = 0.5 / inputTextureSize.height;
 
-    runSynchronouslyOnVideoProcessingQueue(^{
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext setActiveShaderProgram:filterProgram];
         glUniform1f(texelWidthUniform, texelWidth);
         glUniform1f(texelHeightUniform, texelHeight);

@@ -58,13 +58,13 @@ NSString *const kGPUSolidColorFragmentShaderString = SHADER_STRING
     {
         return;
     }
-    
-    runSynchronouslyOnVideoProcessingQueue(^{
+
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext setActiveShaderProgram:filterProgram];
-        
+
         outputFramebuffer = [[ECImageContext sharedFramebufferCache] fetchFramebufferForSize:[self sizeOfFBO] textureOptions:self.outputTextureOptions onlyTexture:NO];
         [outputFramebuffer activateFramebuffer];
-        
+
         glClearColor(_color.one, _color.two, _color.three, _color.four);
         glClear(GL_COLOR_BUFFER_BIT);
     });
@@ -108,7 +108,7 @@ NSString *const kGPUSolidColorFragmentShaderString = SHADER_STRING
     _color.four = (GLfloat)alphaComponent;
     
 //    [self setVec4:_color forUniform:colorUniform program:filterProgram];
-    runAsynchronouslyOnVideoProcessingQueue(^{
+    ec_runAsynchronouslyOnVideoProcessingQueue(^{
         [self newFrameReadyAtTime:kCMTimeIndefinite atIndex:0];
     });
 }

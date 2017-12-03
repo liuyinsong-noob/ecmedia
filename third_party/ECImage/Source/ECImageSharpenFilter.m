@@ -117,16 +117,13 @@ NSString *const kECImageSharpenFragmentShaderString = SHADER_STRING
 
 - (void)setupFilterForSize:(CGSize)filterFrameSize;
 {
-    runSynchronouslyOnVideoProcessingQueue(^{
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext setActiveShaderProgram:filterProgram];
-        
-        if (ECImageRotationSwapsWidthAndHeight(inputRotation))
-        {
+
+        if (ECImageRotationSwapsWidthAndHeight(inputRotation)) {
             glUniform1f(imageWidthFactorUniform, 1.0 / filterFrameSize.height);
             glUniform1f(imageHeightFactorUniform, 1.0 / filterFrameSize.width);
-        }
-        else
-        {
+        } else {
             glUniform1f(imageWidthFactorUniform, 1.0 / filterFrameSize.width);
             glUniform1f(imageHeightFactorUniform, 1.0 / filterFrameSize.height);
         }

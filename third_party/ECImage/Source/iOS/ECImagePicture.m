@@ -178,23 +178,21 @@
     //    }
     //
     //    NSLog(@"Debug, average input image red: %f, green: %f, blue: %f, alpha: %f", currentRedTotal / (CGFloat)totalNumberOfPixels, currentGreenTotal / (CGFloat)totalNumberOfPixels, currentBlueTotal / (CGFloat)totalNumberOfPixels, currentAlphaTotal / (CGFloat)totalNumberOfPixels);
-    
-    runSynchronouslyOnVideoProcessingQueue(^{
+
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext useImageProcessingContext];
-        
+
         outputFramebuffer = [[ECImageContext sharedFramebufferCache] fetchFramebufferForSize:pixelSizeToUseForTexture onlyTexture:YES];
         [outputFramebuffer disableReferenceCounting];
 
         glBindTexture(GL_TEXTURE_2D, [outputFramebuffer texture]);
-        if (self.shouldSmoothlyScaleOutput)
-        {
+        if (self.shouldSmoothlyScaleOutput) {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         }
         // no need to use self.outputTextureOptions here since pictures need this texture formats and type
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (int)pixelSizeToUseForTexture.width, (int)pixelSizeToUseForTexture.height, 0, format, GL_UNSIGNED_BYTE, imageData);
-        
-        if (self.shouldSmoothlyScaleOutput)
-        {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (int) pixelSizeToUseForTexture.width, (int) pixelSizeToUseForTexture.height, 0, format, GL_UNSIGNED_BYTE, imageData);
+
+        if (self.shouldSmoothlyScaleOutput) {
             glGenerateMipmap(GL_TEXTURE_2D);
         }
         glBindTexture(GL_TEXTURE_2D, 0);
@@ -253,21 +251,20 @@
     {
         return NO;
     }
-    
-    runAsynchronouslyOnVideoProcessingQueue(^{        
-        for (id<ECImageInput> currentTarget in targets)
-        {
+
+    ec_runAsynchronouslyOnVideoProcessingQueue(^{
+        for (id <ECImageInput> currentTarget in targets) {
             NSInteger indexOfObject = [targets indexOfObject:currentTarget];
             NSInteger textureIndexOfTarget = [[targetTextureIndices objectAtIndex:indexOfObject] integerValue];
-            
+
             [currentTarget setCurrentlyReceivingMonochromeInput:NO];
             [currentTarget setInputSize:pixelSizeOfImage atIndex:textureIndexOfTarget];
             [currentTarget setInputFramebuffer:outputFramebuffer atIndex:textureIndexOfTarget];
             [currentTarget newFrameReadyAtTime:kCMTimeIndefinite atIndex:textureIndexOfTarget];
         }
-        
+
         dispatch_semaphore_signal(imageUpdateSemaphore);
-        
+
         if (completion != nil) {
             completion();
         }

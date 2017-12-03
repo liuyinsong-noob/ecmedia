@@ -18,8 +18,8 @@ typedef NS_ENUM(NSInteger, UIImageOrientation) {
 #endif
 
 void runOnMainQueueWithoutDeadlocking(void (^block)(void));
-void runSynchronouslyOnVideoProcessingQueue(void (^block)(void));
-void runAsynchronouslyOnVideoProcessingQueue(void (^block)(void));
+void ec_runSynchronouslyOnVideoProcessingQueue(void (^block)(void));
+void ec_runAsynchronouslyOnVideoProcessingQueue(void (^block)(void));
 void runSynchronouslyOnContextQueue(ECImageContext *context, void (^block)(void));
 void runAsynchronouslyOnContextQueue(ECImageContext *context, void (^block)(void));
 void reportAvailableMemoryForECImage(NSString *tag);

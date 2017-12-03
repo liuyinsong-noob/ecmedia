@@ -221,11 +221,10 @@ NSString *const kECImageYUVVideoRangeConversionForLAFragmentShaderString = SHADE
     {
         [videoOutput setVideoSettings:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey]];
     }
-    
-    runSynchronouslyOnVideoProcessingQueue(^{
-        
-        if (captureAsYUV)
-        {
+
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
+
+        if (captureAsYUV) {
             [ECImageContext useImageProcessingContext];
             //            if ([ECImageContext deviceSupportsRedTextures])
             //            {
@@ -233,24 +232,19 @@ NSString *const kECImageYUVVideoRangeConversionForLAFragmentShaderString = SHADE
             //            }
             //            else
             //            {
-            if (isFullYUVRange)
-            {
+            if (isFullYUVRange) {
                 yuvConversionProgram = [[ECImageContext sharedImageProcessingContext] programForVertexShaderString:kECImageVertexShaderString fragmentShaderString:kECImageYUVFullRangeConversionForLAFragmentShaderString];
-            }
-            else
-            {
+            } else {
                 yuvConversionProgram = [[ECImageContext sharedImageProcessingContext] programForVertexShaderString:kECImageVertexShaderString fragmentShaderString:kECImageYUVVideoRangeConversionForLAFragmentShaderString];
             }
 
             //            }
-            
-            if (!yuvConversionProgram.initialized)
-            {
+
+            if (!yuvConversionProgram.initialized) {
                 [yuvConversionProgram addAttribute:@"position"];
                 [yuvConversionProgram addAttribute:@"inputTextureCoordinate"];
-                
-                if (![yuvConversionProgram link])
-                {
+
+                if (![yuvConversionProgram link]) {
                     NSString *progLog = [yuvConversionProgram programLog];
                     NSLog(@"Program link log: %@", progLog);
                     NSString *fragLog = [yuvConversionProgram fragmentShaderLog];
@@ -261,15 +255,15 @@ NSString *const kECImageYUVVideoRangeConversionForLAFragmentShaderString = SHADE
                     NSAssert(NO, @"Filter shader link failed");
                 }
             }
-            
+
             yuvConversionPositionAttribute = [yuvConversionProgram attributeIndex:@"position"];
             yuvConversionTextureCoordinateAttribute = [yuvConversionProgram attributeIndex:@"inputTextureCoordinate"];
             yuvConversionLuminanceTextureUniform = [yuvConversionProgram uniformIndex:@"luminanceTexture"];
             yuvConversionChrominanceTextureUniform = [yuvConversionProgram uniformIndex:@"chrominanceTexture"];
             yuvConversionMatrixUniform = [yuvConversionProgram uniformIndex:@"colorConversionMatrix"];
-            
+
             [ECImageContext setActiveShaderProgram:yuvConversionProgram];
-            
+
             glEnableVertexAttribArray(yuvConversionPositionAttribute);
             glEnableVertexAttribArray(yuvConversionTextureCoordinateAttribute);
         }
@@ -952,15 +946,14 @@ NSString *const kECImageYUVVideoRangeConversionForLAFragmentShaderString = SHADE
         }
         
         CFRetain(sampleBuffer);
-        runAsynchronouslyOnVideoProcessingQueue(^{
+        ec_runAsynchronouslyOnVideoProcessingQueue(^{
             //Feature Detection Hook.
-            if (self.delegate)
-            {
+            if (self.delegate) {
                 [self.delegate willOutputSampleBuffer:sampleBuffer];
             }
-            
+
             [self processVideoSampleBuffer:sampleBuffer];
-            
+
             CFRelease(sampleBuffer);
             dispatch_semaphore_signal(frameRenderingSemaphore);
         });
@@ -986,121 +979,163 @@ NSString *const kECImageYUVVideoRangeConversionForLAFragmentShaderString = SHADE
 
 - (void)updateOrientationSendToTargets;
 {
-    runSynchronouslyOnVideoProcessingQueue(^{
-        
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
+
         //    From the iOS 5.0 release notes:
         //    In previous iOS versions, the front-facing camera would always deliver buffers in AVCaptureVideoOrientationLandscapeLeft and the back-facing camera would always deliver buffers in AVCaptureVideoOrientationLandscapeRight.
-        
-        if (captureAsYUV && [ECImageContext supportsFastTextureUpload])
-        {
+
+        if (captureAsYUV && [ECImageContext supportsFastTextureUpload]) {
             outputRotation = kECImageNoRotation;
-            if ([self cameraPosition] == AVCaptureDevicePositionBack)
-            {
-                if (_horizontallyMirrorRearFacingCamera)
-                {
-                    switch(_outputImageOrientation)
-                    {
-                        case UIInterfaceOrientationPortrait:internalRotation = kECImageRotateRightFlipVertical; break;
-                        case UIInterfaceOrientationPortraitUpsideDown:internalRotation = kECImageRotate180; break;
-                        case UIInterfaceOrientationLandscapeLeft:internalRotation = kECImageFlipHorizonal; break;
-                        case UIInterfaceOrientationLandscapeRight:internalRotation = kECImageFlipVertical; break;
-                        default:internalRotation = kECImageNoRotation;
+            if ([self cameraPosition] == AVCaptureDevicePositionBack) {
+                if (_horizontallyMirrorRearFacingCamera) {
+                    switch (_outputImageOrientation) {
+                        case UIInterfaceOrientationPortrait:
+                            internalRotation = kECImageRotateRightFlipVertical;
+                            break;
+                        case UIInterfaceOrientationPortraitUpsideDown:
+                            internalRotation = kECImageRotate180;
+                            break;
+                        case UIInterfaceOrientationLandscapeLeft:
+                            internalRotation = kECImageFlipHorizonal;
+                            break;
+                        case UIInterfaceOrientationLandscapeRight:
+                            internalRotation = kECImageFlipVertical;
+                            break;
+                        default:
+                            internalRotation = kECImageNoRotation;
+                    }
+                } else {
+                    switch (_outputImageOrientation) {
+                        case UIInterfaceOrientationPortrait:
+                            internalRotation = kECImageRotateRight;
+                            break;
+                        case UIInterfaceOrientationPortraitUpsideDown:
+                            internalRotation = kECImageRotateLeft;
+                            break;
+                        case UIInterfaceOrientationLandscapeLeft:
+                            internalRotation = kECImageRotate180;
+                            break;
+                        case UIInterfaceOrientationLandscapeRight:
+                            internalRotation = kECImageNoRotation;
+                            break;
+                        default:
+                            internalRotation = kECImageNoRotation;
                     }
                 }
-                else
-                {
-                    switch(_outputImageOrientation)
-                    {
-                        case UIInterfaceOrientationPortrait:internalRotation = kECImageRotateRight; break;
-                        case UIInterfaceOrientationPortraitUpsideDown:internalRotation = kECImageRotateLeft; break;
-                        case UIInterfaceOrientationLandscapeLeft:internalRotation = kECImageRotate180; break;
-                        case UIInterfaceOrientationLandscapeRight:internalRotation = kECImageNoRotation; break;
-                        default:internalRotation = kECImageNoRotation;
+            } else {
+                if (_horizontallyMirrorFrontFacingCamera) {
+                    switch (_outputImageOrientation) {
+                        case UIInterfaceOrientationPortrait:
+                            internalRotation = kECImageRotateRightFlipVertical;
+                            break;
+                        case UIInterfaceOrientationPortraitUpsideDown:
+                            internalRotation = kECImageRotateRightFlipHorizontal;
+                            break;
+                        case UIInterfaceOrientationLandscapeLeft:
+                            internalRotation = kECImageFlipHorizonal;
+                            break;
+                        case UIInterfaceOrientationLandscapeRight:
+                            internalRotation = kECImageFlipVertical;
+                            break;
+                        default:
+                            internalRotation = kECImageNoRotation;
+                    }
+                } else {
+                    switch (_outputImageOrientation) {
+                        case UIInterfaceOrientationPortrait:
+                            internalRotation = kECImageRotateRight;
+                            break;
+                        case UIInterfaceOrientationPortraitUpsideDown:
+                            internalRotation = kECImageRotateLeft;
+                            break;
+                        case UIInterfaceOrientationLandscapeLeft:
+                            internalRotation = kECImageNoRotation;
+                            break;
+                        case UIInterfaceOrientationLandscapeRight:
+                            internalRotation = kECImageRotate180;
+                            break;
+                        default:
+                            internalRotation = kECImageNoRotation;
                     }
                 }
             }
-            else
-            {
-                if (_horizontallyMirrorFrontFacingCamera)
-                {
-                    switch(_outputImageOrientation)
-                    {
-                        case UIInterfaceOrientationPortrait:internalRotation = kECImageRotateRightFlipVertical; break;
-                        case UIInterfaceOrientationPortraitUpsideDown:internalRotation = kECImageRotateRightFlipHorizontal; break;
-                        case UIInterfaceOrientationLandscapeLeft:internalRotation = kECImageFlipHorizonal; break;
-                        case UIInterfaceOrientationLandscapeRight:internalRotation = kECImageFlipVertical; break;
-                        default:internalRotation = kECImageNoRotation;
-                   }
+        } else {
+            if ([self cameraPosition] == AVCaptureDevicePositionBack) {
+                if (_horizontallyMirrorRearFacingCamera) {
+                    switch (_outputImageOrientation) {
+                        case UIInterfaceOrientationPortrait:
+                            outputRotation = kECImageRotateRightFlipVertical;
+                            break;
+                        case UIInterfaceOrientationPortraitUpsideDown:
+                            outputRotation = kECImageRotate180;
+                            break;
+                        case UIInterfaceOrientationLandscapeLeft:
+                            outputRotation = kECImageFlipHorizonal;
+                            break;
+                        case UIInterfaceOrientationLandscapeRight:
+                            outputRotation = kECImageFlipVertical;
+                            break;
+                        default:
+                            outputRotation = kECImageNoRotation;
+                    }
+                } else {
+                    switch (_outputImageOrientation) {
+                        case UIInterfaceOrientationPortrait:
+                            outputRotation = kECImageRotateRight;
+                            break;
+                        case UIInterfaceOrientationPortraitUpsideDown:
+                            outputRotation = kECImageRotateLeft;
+                            break;
+                        case UIInterfaceOrientationLandscapeLeft:
+                            outputRotation = kECImageRotate180;
+                            break;
+                        case UIInterfaceOrientationLandscapeRight:
+                            outputRotation = kECImageNoRotation;
+                            break;
+                        default:
+                            outputRotation = kECImageNoRotation;
+                    }
                 }
-                else
-                {
-                    switch(_outputImageOrientation)
-                    {
-                        case UIInterfaceOrientationPortrait:internalRotation = kECImageRotateRight; break;
-                        case UIInterfaceOrientationPortraitUpsideDown:internalRotation = kECImageRotateLeft; break;
-                        case UIInterfaceOrientationLandscapeLeft:internalRotation = kECImageNoRotation; break;
-                        case UIInterfaceOrientationLandscapeRight:internalRotation = kECImageRotate180; break;
-                        default:internalRotation = kECImageNoRotation;
+            } else {
+                if (_horizontallyMirrorFrontFacingCamera) {
+                    switch (_outputImageOrientation) {
+                        case UIInterfaceOrientationPortrait:
+                            outputRotation = kECImageRotateRightFlipVertical;
+                            break;
+                        case UIInterfaceOrientationPortraitUpsideDown:
+                            outputRotation = kECImageRotateRightFlipHorizontal;
+                            break;
+                        case UIInterfaceOrientationLandscapeLeft:
+                            outputRotation = kECImageFlipHorizonal;
+                            break;
+                        case UIInterfaceOrientationLandscapeRight:
+                            outputRotation = kECImageFlipVertical;
+                            break;
+                        default:
+                            outputRotation = kECImageNoRotation;
+                    }
+                } else {
+                    switch (_outputImageOrientation) {
+                        case UIInterfaceOrientationPortrait:
+                            outputRotation = kECImageRotateRight;
+                            break;
+                        case UIInterfaceOrientationPortraitUpsideDown:
+                            outputRotation = kECImageRotateLeft;
+                            break;
+                        case UIInterfaceOrientationLandscapeLeft:
+                            outputRotation = kECImageNoRotation;
+                            break;
+                        case UIInterfaceOrientationLandscapeRight:
+                            outputRotation = kECImageRotate180;
+                            break;
+                        default:
+                            outputRotation = kECImageNoRotation;
                     }
                 }
             }
         }
-        else
-        {
-            if ([self cameraPosition] == AVCaptureDevicePositionBack)
-            {
-                if (_horizontallyMirrorRearFacingCamera)
-                {
-                    switch(_outputImageOrientation)
-                    {
-                        case UIInterfaceOrientationPortrait:outputRotation = kECImageRotateRightFlipVertical; break;
-                        case UIInterfaceOrientationPortraitUpsideDown:outputRotation = kECImageRotate180; break;
-                        case UIInterfaceOrientationLandscapeLeft:outputRotation = kECImageFlipHorizonal; break;
-                        case UIInterfaceOrientationLandscapeRight:outputRotation = kECImageFlipVertical; break;
-                        default:outputRotation = kECImageNoRotation;
-                    }
-                }
-                else
-                {
-                    switch(_outputImageOrientation)
-                    {
-                        case UIInterfaceOrientationPortrait:outputRotation = kECImageRotateRight; break;
-                        case UIInterfaceOrientationPortraitUpsideDown:outputRotation = kECImageRotateLeft; break;
-                        case UIInterfaceOrientationLandscapeLeft:outputRotation = kECImageRotate180; break;
-                        case UIInterfaceOrientationLandscapeRight:outputRotation = kECImageNoRotation; break;
-                        default:outputRotation = kECImageNoRotation;
-                    }
-                }
-            }
-            else
-            {
-                if (_horizontallyMirrorFrontFacingCamera)
-                {
-                    switch(_outputImageOrientation)
-                    {
-                        case UIInterfaceOrientationPortrait:outputRotation = kECImageRotateRightFlipVertical; break;
-                        case UIInterfaceOrientationPortraitUpsideDown:outputRotation = kECImageRotateRightFlipHorizontal; break;
-                        case UIInterfaceOrientationLandscapeLeft:outputRotation = kECImageFlipHorizonal; break;
-                        case UIInterfaceOrientationLandscapeRight:outputRotation = kECImageFlipVertical; break;
-                        default:outputRotation = kECImageNoRotation;
-                    }
-                }
-                else
-                {
-                    switch(_outputImageOrientation)
-                    {
-                        case UIInterfaceOrientationPortrait:outputRotation = kECImageRotateRight; break;
-                        case UIInterfaceOrientationPortraitUpsideDown:outputRotation = kECImageRotateLeft; break;
-                        case UIInterfaceOrientationLandscapeLeft:outputRotation = kECImageNoRotation; break;
-                        case UIInterfaceOrientationLandscapeRight:outputRotation = kECImageRotate180; break;
-                        default:outputRotation = kECImageNoRotation;
-                    }
-                }
-            }
-        }
-        
-        for (id<ECImageInput> currentTarget in targets)
-        {
+
+        for (id <ECImageInput> currentTarget in targets) {
             NSInteger indexOfObject = [targets indexOfObject:currentTarget];
             [currentTarget setInputRotation:outputRotation atIndex:[[targetTextureIndices objectAtIndex:indexOfObject] integerValue]];
         }

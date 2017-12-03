@@ -141,19 +141,17 @@ NSString *const kECImageHistogramAccumulationFragmentShaderString = SHADER_STRIN
             {
                 return nil;
             }
-            
-            runSynchronouslyOnVideoProcessingQueue(^{
+
+            ec_runSynchronouslyOnVideoProcessingQueue(^{
                 [ECImageContext useImageProcessingContext];
-                
+
                 secondFilterProgram = [[ECImageContext sharedImageProcessingContext] programForVertexShaderString:kECImageGreenHistogramSamplingVertexShaderString fragmentShaderString:kECImageHistogramAccumulationFragmentShaderString];
                 thirdFilterProgram = [[ECImageContext sharedImageProcessingContext] programForVertexShaderString:kECImageBlueHistogramSamplingVertexShaderString fragmentShaderString:kECImageHistogramAccumulationFragmentShaderString];
-                
-                if (!secondFilterProgram.initialized)
-                {
+
+                if (!secondFilterProgram.initialized) {
                     [self initializeSecondaryAttributes];
-                    
-                    if (![secondFilterProgram link])
-                    {
+
+                    if (![secondFilterProgram link]) {
                         NSString *progLog = [secondFilterProgram programLog];
                         NSLog(@"Program link log: %@", progLog);
                         NSString *fragLog = [secondFilterProgram fragmentShaderLog];
@@ -166,11 +164,10 @@ NSString *const kECImageHistogramAccumulationFragmentShaderString = SHADER_STRIN
                     }
 
                     [ECImageContext setActiveShaderProgram:secondFilterProgram];
-                    
+
                     glEnableVertexAttribArray(secondFilterPositionAttribute);
-                    
-                    if (![thirdFilterProgram link])
-                    {
+
+                    if (![thirdFilterProgram link]) {
                         NSString *progLog = [secondFilterProgram programLog];
                         NSLog(@"Program link log: %@", progLog);
                         NSString *fragLog = [secondFilterProgram fragmentShaderLog];
@@ -181,13 +178,13 @@ NSString *const kECImageHistogramAccumulationFragmentShaderString = SHADER_STRIN
                         NSAssert(NO, @"Filter shader link failed");
                     }
                 }
-                
+
                 secondFilterPositionAttribute = [secondFilterProgram attributeIndex:@"position"];
-                
-                
+
+
                 thirdFilterPositionAttribute = [thirdFilterProgram attributeIndex:@"position"];
                 [ECImageContext setActiveShaderProgram:thirdFilterProgram];
-                
+
                 glEnableVertexAttribArray(thirdFilterPositionAttribute);
             });
         }; break;

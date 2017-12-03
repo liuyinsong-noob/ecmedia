@@ -123,8 +123,8 @@ NSString *const kECImageSobelEdgeDetectionFragmentShaderString = SHADER_STRING
     {
         _texelWidth = 1.0 / filterFrameSize.width;
         _texelHeight = 1.0 / filterFrameSize.height;
-        
-        runSynchronouslyOnVideoProcessingQueue(^{
+
+        ec_runSynchronouslyOnVideoProcessingQueue(^{
             ECGLProgram *previousProgram = [ECImageContext sharedImageProcessingContext].currentShaderProgram;
             [ECImageContext setActiveShaderProgram:secondFilterProgram];
             glUniform1f(texelWidthUniform, _texelWidth);

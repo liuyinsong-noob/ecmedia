@@ -143,19 +143,16 @@ NSString *const kECImageLanczosFragmentShaderString = SHADER_STRING
 
 - (void)setupFilterForSize:(CGSize)filterFrameSize;
 {
-    runSynchronouslyOnVideoProcessingQueue(^{
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         // The first pass through the framebuffer may rotate the inbound image, so need to account for that by changing up the kernel ordering for that pass
-        if (ECImageRotationSwapsWidthAndHeight(inputRotation))
-        {
+        if (ECImageRotationSwapsWidthAndHeight(inputRotation)) {
             verticalPassTexelWidthOffset = 1.0 / _originalImageSize.height;
             verticalPassTexelHeightOffset = 0.0;
-        }
-        else
-        {
+        } else {
             verticalPassTexelWidthOffset = 0.0;
             verticalPassTexelHeightOffset = 1.0 / _originalImageSize.height;
         }
-        
+
         horizontalPassTexelWidthOffset = 1.0 / _originalImageSize.width;
         horizontalPassTexelHeightOffset = 0.0;
     });

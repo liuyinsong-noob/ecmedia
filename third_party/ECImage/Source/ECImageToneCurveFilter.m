@@ -229,11 +229,10 @@ NSString *const kECImageToneCurveFragmentShaderString = SHADER_STRING
 
 - (void)dealloc
 {
-    runSynchronouslyOnVideoProcessingQueue(^{
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext useImageProcessingContext];
 
-        if (toneCurveTexture)
-        {
+        if (toneCurveTexture) {
             glDeleteTextures(1, &toneCurveTexture);
             toneCurveTexture = 0;
             free(toneCurveByteArray);
@@ -485,10 +484,9 @@ NSString *const kECImageToneCurveFragmentShaderString = SHADER_STRING
 
 - (void)updateToneCurveTexture;
 {
-    runSynchronouslyOnVideoProcessingQueue(^{
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext useImageProcessingContext];
-        if (!toneCurveTexture)
-        {
+        if (!toneCurveTexture) {
             glActiveTexture(GL_TEXTURE3);
             glGenTextures(1, &toneCurveTexture);
             glBindTexture(GL_TEXTURE_2D, toneCurveTexture);
@@ -496,19 +494,15 @@ NSString *const kECImageToneCurveFragmentShaderString = SHADER_STRING
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            
+
             toneCurveByteArray = calloc(256 * 4, sizeof(GLubyte));
-        }
-        else
-        {
+        } else {
             glActiveTexture(GL_TEXTURE3);
             glBindTexture(GL_TEXTURE_2D, toneCurveTexture);
         }
-        
-        if ( ([_redCurve count] >= 256) && ([_greenCurve count] >= 256) && ([_blueCurve count] >= 256) && ([_rgbCompositeCurve count] >= 256))
-        {
-            for (unsigned int currentCurveIndex = 0; currentCurveIndex < 256; currentCurveIndex++)
-            {
+
+        if (([_redCurve count] >= 256) && ([_greenCurve count] >= 256) && ([_blueCurve count] >= 256) && ([_rgbCompositeCurve count] >= 256)) {
+            for (unsigned int currentCurveIndex = 0; currentCurveIndex < 256; currentCurveIndex++) {
                 // BGRA for upload to texture
                 GLubyte b = fmin(fmax(currentCurveIndex + [[_blueCurve objectAtIndex:currentCurveIndex] floatValue], 0), 255);
                 toneCurveByteArray[currentCurveIndex * 4] = fmin(fmax(b + [[_rgbCompositeCurve objectAtIndex:b] floatValue], 0), 255);
@@ -518,9 +512,9 @@ NSString *const kECImageToneCurveFragmentShaderString = SHADER_STRING
                 toneCurveByteArray[currentCurveIndex * 4 + 2] = fmin(fmax(r + [[_rgbCompositeCurve objectAtIndex:r] floatValue], 0), 255);
                 toneCurveByteArray[currentCurveIndex * 4 + 3] = 255;
             }
-            
+
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 256 /*width*/, 1 /*height*/, 0, GL_BGRA, GL_UNSIGNED_BYTE, toneCurveByteArray);
-        }        
+        }
     });
 }
 

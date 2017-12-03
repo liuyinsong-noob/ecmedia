@@ -380,17 +380,15 @@
 
 - (void)switchToVertexShader:(NSString *)newVertexShader fragmentShader:(NSString *)newFragmentShader;
 {
-    runSynchronouslyOnVideoProcessingQueue(^{
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext useImageProcessingContext];
 
         filterProgram = [[ECImageContext sharedImageProcessingContext] programForVertexShaderString:newVertexShader fragmentShaderString:newFragmentShader];
-        
-        if (!filterProgram.initialized)
-        {
+
+        if (!filterProgram.initialized) {
             [self initializeAttributes];
-            
-            if (![filterProgram link])
-            {
+
+            if (![filterProgram link]) {
                 NSString *progLog = [filterProgram programLog];
                 NSLog(@"Program link log: %@", progLog);
                 NSString *fragLog = [filterProgram fragmentShaderLog];
@@ -401,7 +399,7 @@
                 NSAssert(NO, @"Filter shader link failed");
             }
         }
-        
+
         filterPositionAttribute = [filterProgram attributeIndex:@"position"];
         filterTextureCoordinateAttribute = [filterProgram attributeIndex:@"inputTextureCoordinate"];
         filterInputTextureUniform = [filterProgram uniformIndex:@"inputImageTexture"]; // This does assume a name of "inputImageTexture" for the fragment shader
@@ -413,13 +411,11 @@
         glEnableVertexAttribArray(filterTextureCoordinateAttribute);
 
         secondFilterProgram = [[ECImageContext sharedImageProcessingContext] programForVertexShaderString:newVertexShader fragmentShaderString:newFragmentShader];
-        
-        if (!secondFilterProgram.initialized)
-        {
+
+        if (!secondFilterProgram.initialized) {
             [self initializeSecondaryAttributes];
-            
-            if (![secondFilterProgram link])
-            {
+
+            if (![secondFilterProgram link]) {
                 NSString *progLog = [secondFilterProgram programLog];
                 NSLog(@"Program link log: %@", progLog);
                 NSString *fragLog = [secondFilterProgram fragmentShaderLog];
@@ -430,7 +426,7 @@
                 NSAssert(NO, @"Filter shader link failed");
             }
         }
-        
+
         secondFilterPositionAttribute = [secondFilterProgram attributeIndex:@"position"];
         secondFilterTextureCoordinateAttribute = [secondFilterProgram attributeIndex:@"inputTextureCoordinate"];
         secondFilterInputTextureUniform = [secondFilterProgram uniformIndex:@"inputImageTexture"]; // This does assume a name of "inputImageTexture" for the fragment shader
@@ -441,7 +437,7 @@
 
         glEnableVertexAttribArray(secondFilterPositionAttribute);
         glEnableVertexAttribArray(secondFilterTextureCoordinateAttribute);
-        
+
         [self setupFilterForSize:[self sizeOfFBO]];
         glFinish();
     });

@@ -53,11 +53,11 @@ NSString *const kECImageTwoInputTextureVertexShaderString = SHADER_STRING
     
     firstFrameTime = kCMTimeInvalid;
     secondFrameTime = kCMTimeInvalid;
-        
-    runSynchronouslyOnVideoProcessingQueue(^{
+
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext useImageProcessingContext];
         filterSecondTextureCoordinateAttribute = [filterProgram attributeIndex:@"inputTextureCoordinate2"];
-        
+
         filterInputTextureUniform2 = [filterProgram uniformIndex:@"inputImageTexture2"]; // This does assume a name of "inputImageTexture2" for second input texture in the fragment shader
         glEnableVertexAttribArray(filterSecondTextureCoordinateAttribute);
     });

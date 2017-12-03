@@ -92,21 +92,20 @@
     {
         return;
     }
-	
-	runAsynchronouslyOnVideoProcessingQueue(^{
+
+	ec_runAsynchronouslyOnVideoProcessingQueue(^{
 
 		CGSize pixelSizeOfImage = [self outputImageSize];
-    
-		for (id<ECImageInput> currentTarget in targets)
-		{
+
+		for (id <ECImageInput> currentTarget in targets) {
 			NSInteger indexOfObject = [targets indexOfObject:currentTarget];
 			NSInteger textureIndexOfTarget = [[targetTextureIndices objectAtIndex:indexOfObject] integerValue];
-        
+
 			[currentTarget setInputSize:pixelSizeOfImage atIndex:textureIndexOfTarget];
-            [currentTarget setInputFramebuffer:outputFramebuffer atIndex:textureIndexOfTarget];
+			[currentTarget setInputFramebuffer:outputFramebuffer atIndex:textureIndexOfTarget];
 			[currentTarget newFrameReadyAtTime:kCMTimeInvalid atIndex:textureIndexOfTarget];
 		}
-	
+
 		dispatch_semaphore_signal(dataUpdateSemaphore);
 	});
 }
@@ -117,20 +116,19 @@
     {
         return;
     }
-	
-	runAsynchronouslyOnVideoProcessingQueue(^{
-        
+
+	ec_runAsynchronouslyOnVideoProcessingQueue(^{
+
 		CGSize pixelSizeOfImage = [self outputImageSize];
-        
-		for (id<ECImageInput> currentTarget in targets)
-		{
+
+		for (id <ECImageInput> currentTarget in targets) {
 			NSInteger indexOfObject = [targets indexOfObject:currentTarget];
 			NSInteger textureIndexOfTarget = [[targetTextureIndices objectAtIndex:indexOfObject] integerValue];
-            
+
 			[currentTarget setInputSize:pixelSizeOfImage atIndex:textureIndexOfTarget];
 			[currentTarget newFrameReadyAtTime:frameTime atIndex:textureIndexOfTarget];
 		}
-        
+
 		dispatch_semaphore_signal(dataUpdateSemaphore);
 	});
 }

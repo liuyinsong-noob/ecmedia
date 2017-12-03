@@ -93,20 +93,18 @@
 {
     if ([ECImageContext supportsFastTextureUpload])
     {
-        runSynchronouslyOnVideoProcessingQueue(^{
+        ec_runSynchronouslyOnVideoProcessingQueue(^{
             [ECImageContext useImageProcessingContext];
 
             _preferredConversion = kColorConversion709;
-            isFullYUVRange       = YES;
+            isFullYUVRange = YES;
             yuvConversionProgram = [[ECImageContext sharedImageProcessingContext] programForVertexShaderString:kECImageVertexShaderString fragmentShaderString:kECImageYUVFullRangeConversionForLAFragmentShaderString];
 
-            if (!yuvConversionProgram.initialized)
-            {
+            if (!yuvConversionProgram.initialized) {
                 [yuvConversionProgram addAttribute:@"position"];
                 [yuvConversionProgram addAttribute:@"inputTextureCoordinate"];
 
-                if (![yuvConversionProgram link])
-                {
+                if (![yuvConversionProgram link]) {
                     NSString *progLog = [yuvConversionProgram programLog];
                     NSLog(@"Program link log: %@", progLog);
                     NSString *fragLog = [yuvConversionProgram fragmentShaderLog];
@@ -296,7 +294,7 @@
 
 - (void)processPlayerItem
 {
-    runSynchronouslyOnVideoProcessingQueue(^{
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLinkCallback:)];
         [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
         [displayLink setPaused:YES];
@@ -304,10 +302,9 @@
         dispatch_queue_t videoProcessingQueue = [ECImageContext sharedContextQueue];
         NSMutableDictionary *pixBuffAttributes = [NSMutableDictionary dictionary];
         if ([ECImageContext supportsFastTextureUpload]) {
-            [pixBuffAttributes setObject:@(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange) forKey:(id)kCVPixelBufferPixelFormatTypeKey];
-        }
-        else {
-            [pixBuffAttributes setObject:@(kCVPixelFormatType_32BGRA) forKey:(id)kCVPixelBufferPixelFormatTypeKey];
+            [pixBuffAttributes setObject:@(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange) forKey:(id) kCVPixelBufferPixelFormatTypeKey];
+        } else {
+            [pixBuffAttributes setObject:@(kCVPixelFormatType_32BGRA) forKey:(id) kCVPixelBufferPixelFormatTypeKey];
         }
         playerItemOutput = [[AVPlayerItemVideoOutput alloc] initWithPixelBufferAttributes:pixBuffAttributes];
         [playerItemOutput setDelegate:self queue:videoProcessingQueue];
@@ -339,7 +336,7 @@
         __unsafe_unretained ECImageMovie *weakSelf = self;
 		CVPixelBufferRef pixelBuffer = [playerItemOutput copyPixelBufferForItemTime:outputItemTime itemTimeForDisplay:NULL];
         if( pixelBuffer )
-            runSynchronouslyOnVideoProcessingQueue(^{
+            ec_runSynchronouslyOnVideoProcessingQueue(^{
                 [weakSelf processMovieFrame:pixelBuffer withSampleTime:outputItemTime];
                 CFRelease(pixelBuffer);
             });
@@ -374,7 +371,7 @@
             }
 
             __unsafe_unretained ECImageMovie *weakSelf = self;
-            runSynchronouslyOnVideoProcessingQueue(^{
+            ec_runSynchronouslyOnVideoProcessingQueue(^{
                 [weakSelf processMovieFrame:sampleBufferRef];
                 CMSampleBufferInvalidate(sampleBufferRef);
                 CFRelease(sampleBufferRef);

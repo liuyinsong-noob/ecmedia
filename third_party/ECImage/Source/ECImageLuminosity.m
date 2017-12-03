@@ -124,17 +124,15 @@ NSString *const kECImageLuminosityFragmentShaderString = SHADER_STRING
         [weakSelf extractLuminosityAtFrameTime:frameTime];
     }];
 
-    runSynchronouslyOnVideoProcessingQueue(^{
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext useImageProcessingContext];
-        
+
         secondFilterProgram = [[ECImageContext sharedImageProcessingContext] programForVertexShaderString:kECImageColorAveragingVertexShaderString fragmentShaderString:kECImageLuminosityFragmentShaderString];
-        
-        if (!secondFilterProgram.initialized)
-        {
+
+        if (!secondFilterProgram.initialized) {
             [self initializeSecondaryAttributes];
-            
-            if (![secondFilterProgram link])
-            {
+
+            if (![secondFilterProgram link]) {
                 NSString *progLog = [secondFilterProgram programLog];
                 NSLog(@"Program link log: %@", progLog);
                 NSString *fragLog = [secondFilterProgram fragmentShaderLog];
@@ -145,17 +143,17 @@ NSString *const kECImageLuminosityFragmentShaderString = SHADER_STRING
                 NSAssert(NO, @"Filter shader link failed");
             }
         }
-        
+
         secondFilterPositionAttribute = [secondFilterProgram attributeIndex:@"position"];
         secondFilterTextureCoordinateAttribute = [secondFilterProgram attributeIndex:@"inputTextureCoordinate"];
         secondFilterInputTextureUniform = [secondFilterProgram uniformIndex:@"inputImageTexture"]; // This does assume a name of "inputImageTexture" for the fragment shader
         secondFilterInputTextureUniform2 = [secondFilterProgram uniformIndex:@"inputImageTexture2"]; // This does assume a name of "inputImageTexture2" for second input texture in the fragment shader
-        
+
         secondFilterTexelWidthUniform = [secondFilterProgram uniformIndex:@"texelWidth"];
         secondFilterTexelHeightUniform = [secondFilterProgram uniformIndex:@"texelHeight"];
 
         [ECImageContext setActiveShaderProgram:secondFilterProgram];
-        
+
         glEnableVertexAttribArray(secondFilterPositionAttribute);
         glEnableVertexAttribArray(secondFilterTextureCoordinateAttribute);
     });
@@ -290,36 +288,33 @@ NSString *const kECImageLuminosityFragmentShaderString = SHADER_STRING
 
 - (void)extractLuminosityAtFrameTime:(CMTime)frameTime;
 {
-    runSynchronouslyOnVideoProcessingQueue(^{
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
 
         // we need a normal color texture for this filter
         NSAssert(self.outputTextureOptions.internalFormat == GL_RGBA, @"The output texture format for this filter must be GL_RGBA.");
         NSAssert(self.outputTextureOptions.type == GL_UNSIGNED_BYTE, @"The type of the output texture of this filter must be GL_UNSIGNED_BYTE.");
-        
+
         NSUInteger totalNumberOfPixels = round(finalStageSize.width * finalStageSize.height);
-        
-        if (rawImagePixels == NULL)
-        {
-            rawImagePixels = (GLubyte *)malloc(totalNumberOfPixels * 4);
+
+        if (rawImagePixels == NULL) {
+            rawImagePixels = (GLubyte *) malloc(totalNumberOfPixels * 4);
         }
-        
+
         [ECImageContext useImageProcessingContext];
         [outputFramebuffer activateFramebuffer];
 
-        glReadPixels(0, 0, (int)finalStageSize.width, (int)finalStageSize.height, GL_RGBA, GL_UNSIGNED_BYTE, rawImagePixels);
-        
+        glReadPixels(0, 0, (int) finalStageSize.width, (int) finalStageSize.height, GL_RGBA, GL_UNSIGNED_BYTE, rawImagePixels);
+
         NSUInteger luminanceTotal = 0;
         NSUInteger byteIndex = 0;
-        for (NSUInteger currentPixel = 0; currentPixel < totalNumberOfPixels; currentPixel++)
-        {
+        for (NSUInteger currentPixel = 0; currentPixel < totalNumberOfPixels; currentPixel++) {
             luminanceTotal += rawImagePixels[byteIndex];
             byteIndex += 4;
         }
-        
-        CGFloat normalizedLuminosityTotal = (CGFloat)luminanceTotal / (CGFloat)totalNumberOfPixels / 255.0;
-        
-        if (_luminosityProcessingFinishedBlock != NULL)
-        {
+
+        CGFloat normalizedLuminosityTotal = (CGFloat) luminanceTotal / (CGFloat) totalNumberOfPixels / 255.0;
+
+        if (_luminosityProcessingFinishedBlock != NULL) {
             _luminosityProcessingFinishedBlock(normalizedLuminosityTotal, frameTime);
         }
     });

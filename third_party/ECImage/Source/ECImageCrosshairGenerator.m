@@ -69,11 +69,11 @@ NSString *const kECImageCrosshairFragmentShaderString = SHADER_STRING
     {
         return nil;
     }
-    
-    runSynchronouslyOnVideoProcessingQueue(^{
+
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         crosshairWidthUniform = [filterProgram uniformIndex:@"crosshairWidth"];
         crosshairColorUniform = [filterProgram uniformIndex:@"crosshairColor"];
-        
+
         self.crosshairWidth = 5.0;
         [self setCrosshairColorRed:0.0 green:1.0 blue:0.0];
     });
@@ -90,26 +90,26 @@ NSString *const kECImageCrosshairFragmentShaderString = SHADER_STRING
     {
         return;
     }
-    
-    runSynchronouslyOnVideoProcessingQueue(^{
+
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext setActiveShaderProgram:filterProgram];
-        
+
 #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
 #else
         glEnable(GL_POINT_SPRITE);
         glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
 #endif
-        
+
         outputFramebuffer = [[ECImageContext sharedFramebufferCache] fetchFramebufferForSize:[self sizeOfFBO] textureOptions:self.outputTextureOptions onlyTexture:NO];
         [outputFramebuffer activateFramebuffer];
-        
+
         glClearColor(0.0, 0.0, 0.0, 0.0);
         glClear(GL_COLOR_BUFFER_BIT);
-        
+
         glVertexAttribPointer(filterPositionAttribute, 2, GL_FLOAT, 0, 0, crosshairCoordinates);
-        
-        glDrawArrays(GL_POINTS, 0, (GLsizei)numberOfCrosshairs);
-        
+
+        glDrawArrays(GL_POINTS, 0, (GLsizei) numberOfCrosshairs);
+
         [self informTargetsAboutNewFrameAtTime:frameTime];
     });
 }

@@ -69,16 +69,13 @@ NSString *const kECImageTwoInputNearbyTexelSamplingVertexShaderString = SHADER_S
     {
         _texelWidth = 1.0 / filterFrameSize.width;
         _texelHeight = 1.0 / filterFrameSize.height;
-        
-        runSynchronouslyOnVideoProcessingQueue(^{
+
+        ec_runSynchronouslyOnVideoProcessingQueue(^{
             [ECImageContext setActiveShaderProgram:filterProgram];
-            if (ECImageRotationSwapsWidthAndHeight(inputRotation))
-            {
+            if (ECImageRotationSwapsWidthAndHeight(inputRotation)) {
                 glUniform1f(texelWidthUniform, _texelHeight);
                 glUniform1f(texelHeightUniform, _texelWidth);
-            }
-            else
-            {
+            } else {
                 glUniform1f(texelWidthUniform, _texelWidth);
                 glUniform1f(texelHeightUniform, _texelHeight);
             }

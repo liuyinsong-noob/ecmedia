@@ -14,13 +14,13 @@
     {
 		return nil;
     }
-    
-    runSynchronouslyOnVideoProcessingQueue(^{
+
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext useImageProcessingContext];
 
         verticalPassTexelWidthOffsetUniform = [filterProgram uniformIndex:@"texelWidthOffset"];
         verticalPassTexelHeightOffsetUniform = [filterProgram uniformIndex:@"texelHeightOffset"];
-        
+
         horizontalPassTexelWidthOffsetUniform = [secondFilterProgram uniformIndex:@"texelWidthOffset"];
         horizontalPassTexelHeightOffsetUniform = [secondFilterProgram uniformIndex:@"texelHeightOffset"];
     });
@@ -49,19 +49,16 @@
 
 - (void)setupFilterForSize:(CGSize)filterFrameSize;
 {
-    runSynchronouslyOnVideoProcessingQueue(^{
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         // The first pass through the framebuffer may rotate the inbound image, so need to account for that by changing up the kernel ordering for that pass
-        if (ECImageRotationSwapsWidthAndHeight(inputRotation))
-        {
+        if (ECImageRotationSwapsWidthAndHeight(inputRotation)) {
             verticalPassTexelWidthOffset = _verticalTexelSpacing / filterFrameSize.height;
             verticalPassTexelHeightOffset = 0.0;
-        }
-        else
-        {
+        } else {
             verticalPassTexelWidthOffset = 0.0;
             verticalPassTexelHeightOffset = _verticalTexelSpacing / filterFrameSize.height;
         }
-        
+
         horizontalPassTexelWidthOffset = _horizontalTexelSpacing / filterFrameSize.width;
         horizontalPassTexelHeightOffset = 0.0;
     });

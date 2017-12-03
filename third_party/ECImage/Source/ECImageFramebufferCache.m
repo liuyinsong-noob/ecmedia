@@ -71,39 +71,33 @@
 {
     __block ECImageFramebuffer *framebufferFromCache = nil;
 //    dispatch_sync(framebufferCacheQueue, ^{
-    runSynchronouslyOnVideoProcessingQueue(^{
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         NSString *lookupHash = [self hashForSize:framebufferSize textureOptions:textureOptions onlyTexture:onlyTexture];
         NSNumber *numberOfMatchingTexturesInCache = [framebufferTypeCounts objectForKey:lookupHash];
         NSInteger numberOfMatchingTextures = [numberOfMatchingTexturesInCache integerValue];
-        
-        if ([numberOfMatchingTexturesInCache integerValue] < 1)
-        {
+
+        if ([numberOfMatchingTexturesInCache integerValue] < 1) {
             // Nothing in the cache, create a new framebuffer to use
             framebufferFromCache = [[ECImageFramebuffer alloc] initWithSize:framebufferSize textureOptions:textureOptions onlyTexture:onlyTexture];
-        }
-        else
-        {
+        } else {
             // Something found, pull the old framebuffer and decrement the count
             NSInteger currentTextureID = (numberOfMatchingTextures - 1);
-            while ((framebufferFromCache == nil) && (currentTextureID >= 0))
-            {
-                NSString *textureHash = [NSString stringWithFormat:@"%@-%ld", lookupHash, (long)currentTextureID];
+            while ((framebufferFromCache == nil) && (currentTextureID >= 0)) {
+                NSString *textureHash = [NSString stringWithFormat:@"%@-%ld", lookupHash, (long) currentTextureID];
                 framebufferFromCache = [framebufferCache objectForKey:textureHash];
                 // Test the values in the cache first, to see if they got invalidated behind our back
-                if (framebufferFromCache != nil)
-                {
+                if (framebufferFromCache != nil) {
                     // Withdraw this from the cache while it's in use
                     [framebufferCache removeObjectForKey:textureHash];
                 }
                 currentTextureID--;
             }
-            
+
             currentTextureID++;
-            
+
             [framebufferTypeCounts setObject:[NSNumber numberWithInteger:currentTextureID] forKey:lookupHash];
-            
-            if (framebufferFromCache == nil)
-            {
+
+            if (framebufferFromCache == nil) {
                 framebufferFromCache = [[ECImageFramebuffer alloc] initWithSize:framebufferSize textureOptions:textureOptions onlyTexture:onlyTexture];
             }
         }
@@ -132,15 +126,15 @@
     [framebuffer clearAllLocks];
     
 //    dispatch_async(framebufferCacheQueue, ^{
-    runAsynchronouslyOnVideoProcessingQueue(^{
+    ec_runAsynchronouslyOnVideoProcessingQueue(^{
         CGSize framebufferSize = framebuffer.size;
         GPUTextureOptions framebufferTextureOptions = framebuffer.textureOptions;
         NSString *lookupHash = [self hashForSize:framebufferSize textureOptions:framebufferTextureOptions onlyTexture:framebuffer.missingFramebuffer];
         NSNumber *numberOfMatchingTexturesInCache = [framebufferTypeCounts objectForKey:lookupHash];
         NSInteger numberOfMatchingTextures = [numberOfMatchingTexturesInCache integerValue];
-        
-        NSString *textureHash = [NSString stringWithFormat:@"%@-%ld", lookupHash, (long)numberOfMatchingTextures];
-        
+
+        NSString *textureHash = [NSString stringWithFormat:@"%@-%ld", lookupHash, (long) numberOfMatchingTextures];
+
 //        [framebufferCache setObject:framebuffer forKey:textureHash cost:round(framebufferSize.width * framebufferSize.height * 4.0)];
         [framebufferCache setObject:framebuffer forKey:textureHash];
         [framebufferTypeCounts setObject:[NSNumber numberWithInteger:(numberOfMatchingTextures + 1)] forKey:lookupHash];
@@ -149,7 +143,7 @@
 
 - (void)purgeAllUnassignedFramebuffers;
 {
-    runAsynchronouslyOnVideoProcessingQueue(^{
+    ec_runAsynchronouslyOnVideoProcessingQueue(^{
 //    dispatch_async(framebufferCacheQueue, ^{
         [framebufferCache removeAllObjects];
         [framebufferTypeCounts removeAllObjects];
@@ -162,7 +156,7 @@
 
 - (void)addFramebufferToActiveImageCaptureList:(ECImageFramebuffer *)framebuffer;
 {
-    runAsynchronouslyOnVideoProcessingQueue(^{
+    ec_runAsynchronouslyOnVideoProcessingQueue(^{
 //    dispatch_async(framebufferCacheQueue, ^{
         [activeImageCaptureList addObject:framebuffer];
     });
@@ -170,7 +164,7 @@
 
 - (void)removeFramebufferFromActiveImageCaptureList:(ECImageFramebuffer *)framebuffer;
 {
-    runAsynchronouslyOnVideoProcessingQueue(^{
+    ec_runAsynchronouslyOnVideoProcessingQueue(^{
 //  dispatch_async(framebufferCacheQueue, ^{
         [activeImageCaptureList removeObject:framebuffer];
     });

@@ -256,24 +256,21 @@
     }
     else
     {
-        runSynchronouslyOnVideoProcessingQueue(^{
+        ec_runSynchronouslyOnVideoProcessingQueue(^{
             // Note: the fast texture caches speed up 640x480 frame reads from 9.6 ms to 3.1 ms on iPhone 4S
-            
+
             [ECImageContext useImageProcessingContext];
             [self renderAtInternalSize];
-            
-            if ([ECImageContext supportsFastTextureUpload])
-            {
+
+            if ([ECImageContext supportsFastTextureUpload]) {
                 glFinish();
                 _rawBytesForImage = [outputFramebuffer byteBuffer];
-            }
-            else
-            {
+            } else {
                 glReadPixels(0, 0, imageSize.width, imageSize.height, GL_RGBA, GL_UNSIGNED_BYTE, _rawBytesForImage);
                 // GL_EXT_read_format_bgra
                 //            glReadPixels(0, 0, imageSize.width, imageSize.height, GL_BGRA_EXT, GL_UNSIGNED_BYTE, _rawBytesForImage);
             }
-          
+
             hasReadFromTheCurrentFrame = YES;
 
         });

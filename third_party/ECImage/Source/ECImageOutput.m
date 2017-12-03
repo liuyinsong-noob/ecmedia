@@ -15,7 +15,7 @@ void runOnMainQueueWithoutDeadlocking(void (^block)(void))
 	}
 }
 
-void runSynchronouslyOnVideoProcessingQueue(void (^block)(void))
+void ec_runSynchronouslyOnVideoProcessingQueue(void (^block)(void))
 {
     dispatch_queue_t videoProcessingQueue = [ECImageContext sharedContextQueue];
 #if !OS_OBJECT_USE_OBJC
@@ -34,7 +34,7 @@ void runSynchronouslyOnVideoProcessingQueue(void (^block)(void))
 	}
 }
 
-void runAsynchronouslyOnVideoProcessingQueue(void (^block)(void))
+void ec_runAsynchronouslyOnVideoProcessingQueue(void (^block)(void))
 {
     dispatch_queue_t videoProcessingQueue = [ECImageContext sharedContextQueue];
     
@@ -212,11 +212,11 @@ void reportAvailableMemoryForECImage(NSString *tag)
     }
     
     cachedMaximumOutputSize = CGSizeZero;
-    runSynchronouslyOnVideoProcessingQueue(^{
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         [self setInputFramebufferForTarget:newTarget atIndex:textureLocation];
         [targets addObject:newTarget];
         [targetTextureIndices addObject:[NSNumber numberWithInteger:textureLocation]];
-        
+
         allTargetsWantMonochromeData = allTargetsWantMonochromeData && [newTarget wantsMonochromeInput];
     });
 }
@@ -238,9 +238,9 @@ void reportAvailableMemoryForECImage(NSString *tag)
     NSInteger indexOfObject = [targets indexOfObject:targetToRemove];
     NSInteger textureIndexOfTarget = [[targetTextureIndices objectAtIndex:indexOfObject] integerValue];
 
-    runSynchronouslyOnVideoProcessingQueue(^{
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
         [targetToRemove setInputSize:CGSizeZero atIndex:textureIndexOfTarget];
-		[targetToRemove setInputRotation:kECImageNoRotation atIndex:textureIndexOfTarget];
+        [targetToRemove setInputRotation:kECImageNoRotation atIndex:textureIndexOfTarget];
 
         [targetTextureIndices removeObjectAtIndex:indexOfObject];
         [targets removeObject:targetToRemove];
@@ -251,18 +251,17 @@ void reportAvailableMemoryForECImage(NSString *tag)
 - (void)removeAllTargets;
 {
     cachedMaximumOutputSize = CGSizeZero;
-    runSynchronouslyOnVideoProcessingQueue(^{
-        for (id<ECImageInput> targetToRemove in targets)
-        {
+    ec_runSynchronouslyOnVideoProcessingQueue(^{
+        for (id <ECImageInput> targetToRemove in targets) {
             NSInteger indexOfObject = [targets indexOfObject:targetToRemove];
             NSInteger textureIndexOfTarget = [[targetTextureIndices objectAtIndex:indexOfObject] integerValue];
-            
+
             [targetToRemove setInputSize:CGSizeZero atIndex:textureIndexOfTarget];
             [targetToRemove setInputRotation:kECImageNoRotation atIndex:textureIndexOfTarget];
         }
         [targets removeAllObjects];
         [targetTextureIndices removeAllObjects];
-        
+
         allTargetsWantMonochromeData = YES;
     });
 }
