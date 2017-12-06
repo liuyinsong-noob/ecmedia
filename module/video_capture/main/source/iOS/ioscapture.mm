@@ -673,7 +673,7 @@ char *globalFilePathcapture = NULL;
     parentView = aparentView;
     if(parentView != nil) {
         [parentView retain];
-        _ecImageView = [[ECImageView alloc] initWithFrame:parentView.frame];
+        _ecImageView = [[ECImageView alloc] initWithFrame:CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height)];
         if([parentView contentMode] == UIViewContentModeScaleAspectFit) {
             [_ecImageView setFillMode:kECImageFillModePreserveAspectRatio];
         } else if([parentView contentMode] == UIViewContentModeScaleAspectFill) {
