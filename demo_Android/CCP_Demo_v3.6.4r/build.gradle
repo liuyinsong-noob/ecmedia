@@ -9,9 +9,9 @@ android {
     compileSdkVersion 19
     buildToolsVersion "25.0.0"
 
-//    defaultConfig {
-//        targetSdkVersion 23
-//    }
+    defaultConfig {
+        minSdkVersion 19
+    }
 
     sourceSets {
         main {

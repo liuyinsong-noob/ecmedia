@@ -17,7 +17,7 @@
     android:versionName="3.6.4"
     android:installLocation="auto" >
 
-    <uses-sdk android:minSdkVersion="22"  android:targetSdkVersion="22"/>
+    <uses-sdk android:minSdkVersion="19"  android:targetSdkVersion="19"/>
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />

@@ -91,13 +91,14 @@ LOCAL_SRC_FILES := \
 
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
+    '-DWEBRTC_ANDROID' \
     '-DWEBRTC_POSIX'
 
 LOCAL_C_INCLUDES := \
-		$(LOCAL_PATH) \
-		$(LOCAL_PATH)/../include \
-		$(LOCAL_PATH)/../.. \
-		$(LOCAL_PATH)/../../module \
+	$(LOCAL_PATH) \
+	$(LOCAL_PATH)/../include \
+	$(LOCAL_PATH)/../.. \
+	$(LOCAL_PATH)/../../module \
     $(LOCAL_PATH)/../../module/include \
     $(LOCAL_PATH)/../../third_party \
     $(LOCAL_PATH)/../../third_party/libevent \
