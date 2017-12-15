@@ -526,7 +526,6 @@ int VoEBaseImpl::CreateChannel() {
   }
 
   voe::ChannelOwner channel_owner = _shared->channel_manager().CreateChannel();
-
   return InitializeChannel(&channel_owner);
 }
 
@@ -809,7 +808,7 @@ int VoEBaseImpl::StartSend(int channel)
     {
         return 0;
     }
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
 	if (!channelPtr->ExternalTransport()
 		&& !channelPtr->SendSocketsInitialized())
 	{
@@ -817,7 +816,7 @@ int VoEBaseImpl::StartSend(int channel)
 			"StartSend() must set send destination first");
 		return -1;
 	}
-#endif
+//#endif
     //if (StartSend() != 0)
     //{
     //    _shared->SetLastError(VE_AUDIO_DEVICE_MODULE_ERROR, kTraceError,
@@ -938,7 +937,7 @@ int VoEBaseImpl::GetVersion(char version[1024])
     accLen += len;
     assert(accLen < kVoiceEngineVersionMaxMessageSize);
 
-#ifdef WEBRTC_EXTERNAL_TRANSPORT
+//#ifdef WEBRTC_EXTERNAL_TRANSPORT
     len = AddExternalTransportBuild(versionPtr);
     if (len == -1)
     {
@@ -947,7 +946,7 @@ int VoEBaseImpl::GetVersion(char version[1024])
     versionPtr += len;
     accLen += len;
     assert(accLen < kVoiceEngineVersionMaxMessageSize);
-#endif
+//#endif
 
     memcpy(version, versionBuf, accLen);
     version[accLen] = '\0';
@@ -985,12 +984,12 @@ int32_t VoEBaseImpl::AddVoEVersion(char* str) const
     return sprintf(str, "VoiceEngine 4.1.0\n");
 }
 
-#ifdef WEBRTC_EXTERNAL_TRANSPORT
+//#ifdef WEBRTC_EXTERNAL_TRANSPORT
 int32_t VoEBaseImpl::AddExternalTransportBuild(char* str) const
 {
     return sprintf(str, "External transport build\n");
 }
-#endif
+//#endif
 
 int VoEBaseImpl::LastError()
 {
@@ -1409,7 +1408,7 @@ WebRtc_Word32 VoEBaseImpl::SendRaw(int channel,
 {
 	CriticalSectionScoped cs(_shared->crit_sec());
 
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
 	if (!_shared->statistics().Initialized())
 	{
 		_shared->SetLastError(VE_NOT_INITED, kTraceError);
@@ -1427,12 +1426,12 @@ WebRtc_Word32 VoEBaseImpl::SendRaw(int channel,
 
 	return channelPtr->GetSocketTransportModule()->SendRaw(data, length, isRTCP,portnr,ip);
 
-#else
-	_shared->SetLastError(VE_EXTERNAL_TRANSPORT_ENABLED,
-		kTraceWarning, "SetLocalReceiver() VoE is built for external "
-		"transport");
-	return -1;
-#endif
+//#else
+//	_shared->SetLastError(VE_EXTERNAL_TRANSPORT_ENABLED,
+//		kTraceWarning, "SetLocalReceiver() VoE is built for external "
+//		"transport");
+//	return -1;
+//#endif
 }
 
 //    Sean add begin 20131119 noise suppression
@@ -1768,7 +1767,7 @@ int VoEBaseImpl::SetSendDestination(int channel, int rtp_port, const char *rtp_i
 		"sourcePort=%d, RTCPport=%d, rtcp_ipaddr=%s)",
 		channel, rtp_port, rtp_ipaddr, sourcePort, rtcp_port, rtcp_ipaddr);
 	CriticalSectionScoped cs(_shared->crit_sec());
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
 	if (!_shared->statistics().Initialized())
 	{
 		_shared->SetLastError(VE_NOT_INITED, kTraceError);
@@ -1819,17 +1818,17 @@ int VoEBaseImpl::SetSendDestination(int channel, int rtp_port, const char *rtp_i
 	}
 
 	return channelPtr->SetSendDestination(rtp_port, rtp_ipaddr, sourcePort, rtcpPortUW16, rtcp_ipaddr);
-#else
-	_shared->SetLastError(VE_EXTERNAL_TRANSPORT_ENABLED, kTraceWarning,
-		"SetSendDestination() VoE is built for external transport");
-	return -1;
-#endif
+//#else
+//	_shared->SetLastError(VE_EXTERNAL_TRANSPORT_ENABLED, kTraceWarning,
+//		"SetSendDestination() VoE is built for external transport");
+//	return -1;
+//#endif
 }
 
 
     int VoEBaseImpl::SetSocks5SendData(int charnnel_id, unsigned char *data, int length, bool isRTCP) {
         CriticalSectionScoped cs(_shared->crit_sec());
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
         if (!_shared->statistics().Initialized())
         {
             _shared->SetLastError(VE_NOT_INITED, kTraceError);
@@ -1844,12 +1843,12 @@ int VoEBaseImpl::SetSendDestination(int channel, int rtp_port, const char *rtp_i
             return -1;
         }
         return channelPtr->SetSocks5SendData(data, length, isRTCP);
-#else
-        return -1
-#endif
+//#else
+//        return -1;
+//#endif
     }
 
-int VoEBaseImpl::SetLocalReceiver(int channel, int port, int RTCPport,
+int VoEBaseImpl::SetLocalReceiver(int channel, int port, int RTCPport, bool ipv6,
 	const char ipAddr[64],
 	const char multiCastAddr[64])
 {
@@ -1893,7 +1892,7 @@ int VoEBaseImpl::SetLocalReceiver(int channel, int port, int RTCPport,
 			"ipAddr=%s, multiCastAddr=%s)", channel, port, RTCPport, ipAddr,
 			multiCastAddr);
 	}
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
 	if (!_shared->statistics().Initialized())
 	{
 		_shared->SetLastError(VE_NOT_INITED, kTraceError);
@@ -1929,14 +1928,38 @@ int VoEBaseImpl::SetLocalReceiver(int channel, int port, int RTCPport,
 		rtcpPortUW16 = static_cast<WebRtc_UWord16> (RTCPport);
 	}
 
-	return channelPtr->SetLocalReceiver(port, rtcpPortUW16, ipAddr,
-		multiCastAddr);
+    WebRtc_UWord8 num_socket_threads = 1;
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
+    UdpTransport *transport = UdpTransport::Create(VoEModuleId(0, channel), num_socket_threads, port, rtcpPortUW16, ipv6);
+    if (!transport)
+    {
+        WEBRTC_TRACE(kTraceError, kTraceVideo,
+                     VoEId(_shared->instance_id(), channel),
+                     "create Udptransport failed");
+        return -1;
+    }
+    channelPtr->SetUdpTransport(transport, port);
 #else
-	_shared->SetLastError(VE_EXTERNAL_TRANSPORT_ENABLED,
-		kTraceWarning, "SetLocalReceiver() VoE is built for external "
-		"transport");
-	return -1;
+    TcpTransport *transport = TcpTransport::Create(VoEModuleId(0, channel), num_socket_threads, port, rtcpPortUW16, ipv6);
+    if (!transport)
+    {
+        WEBRTC_TRACE(kTraceError, kTraceVideo,
+                     VoEId(_shared->instance_id(), channel),
+                     "create Udptransport failed");
+        return -1;
+    }
+    channelPtr->SetTcpTransport(transport, port);
 #endif
+    return 0;
+
+//	return channelPtr->SetLocalReceiver(port, rtcpPortUW16, ipAddr,
+//		multiCastAddr);
+//#else
+//	_shared->SetLastError(VE_EXTERNAL_TRANSPORT_ENABLED,
+//		kTraceWarning, "SetLocalReceiver() VoE is built for external "
+//		"transport");
+//	return -1;
+//#endif
 }
 
 int VoEBaseImpl::GetLocalReceiver(int channel, int& port, int& RTCPport,
@@ -1944,7 +1967,7 @@ int VoEBaseImpl::GetLocalReceiver(int channel, int& port, int& RTCPport,
 {
 	WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
 		"GetLocalReceiver(channel=%d, ipAddr[]=?)", channel);
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
 	if (!_shared->statistics().Initialized())
 	{
 		_shared->SetLastError(VE_NOT_INITED, kTraceError);
@@ -1973,11 +1996,11 @@ int VoEBaseImpl::GetLocalReceiver(int channel, int& port, int& RTCPport,
 			"GetLocalReceiver() => port=%d, RTCPport=%d", port, RTCPport);
 	}
 	return ret;
-#else
-	_shared->SetLastError(VE_EXTERNAL_TRANSPORT_ENABLED, kTraceWarning,
-		"SetLocalReceiver() VoE is built for external transport");
-	return -1;
-#endif
+//#else
+//	_shared->SetLastError(VE_EXTERNAL_TRANSPORT_ENABLED, kTraceWarning,
+//		"SetLocalReceiver() VoE is built for external transport");
+//	return -1;
+//#endif
 }
 
 int VoEBaseImpl::GetSendDestination(int channel, int& port, char ipAddr[64],
@@ -1990,7 +2013,7 @@ int VoEBaseImpl::GetSendDestination(int channel, int& port, char ipAddr[64],
 		"GetSendDestination(channel=%d, ipAddr[]=?, sourcePort=?,"
 		"RTCPport=?)",
 		channel);
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
 	if (!_shared->statistics().Initialized())
 	{
 		_shared->SetLastError(VE_NOT_INITED, kTraceError);
@@ -2027,11 +2050,11 @@ int VoEBaseImpl::GetSendDestination(int channel, int& port, char ipAddr[64],
 			port, RTCPport, sourcePort, RTCPport);
 	}
 	return ret;
-#else
-	_shared->SetLastError(VE_EXTERNAL_TRANSPORT_ENABLED, kTraceWarning,
-		"GetSendDestination() VoE is built for external transport");
-	return -1;
-#endif
+//#else
+//	_shared->SetLastError(VE_EXTERNAL_TRANSPORT_ENABLED, kTraceWarning,
+//		"GetSendDestination() VoE is built for external transport");
+//	return -1;
+//#endif
 }
 
 int VoEBaseImpl::SetFecStatus(int channel, bool enable)

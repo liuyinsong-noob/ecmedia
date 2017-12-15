@@ -306,6 +306,7 @@
 					../rtp_rtcp/source,
 					../rtp_rtcp/include,
 					../../base,
+					../../system_wrappers/include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
@@ -365,6 +366,7 @@
 					../rtp_rtcp/source,
 					../rtp_rtcp/include,
 					../../base,
+					../../system_wrappers/include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";

@@ -119,10 +119,10 @@ inline int ChannelId(const int moduleId) {
   // Include libraries.
   #pragma comment(lib, "winmm.lib")
 
-  #ifndef WEBRTC_EXTERNAL_TRANSPORT
+  //#ifndef WEBRTC_EXTERNAL_TRANSPORT
   #pragma comment(lib, "ws2_32.lib")
   #pragma comment(lib, "Iphlpapi.lib")   // _GetAdaptersAddresses
-  #endif
+  //#endif
 #endif
 
 // Mac specific.

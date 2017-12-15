@@ -470,11 +470,11 @@ bool PacedSender::SendPacket(const paced_sender::Packet& packet,
     return false;
   }
 
-  critsect_->Leave();
+  critsect_->Enter();
   const bool success = packet_sender_->TimeToSendPacket(
       packet.ssrc, packet.sequence_number, packet.capture_time_ms,
       packet.retransmission, pacing_info);
-  critsect_->Enter();
+  critsect_->Leave();
 
   if (success) {
     // TODO(holmer): High priority packets should only be accounted for if we
@@ -490,10 +490,10 @@ bool PacedSender::SendPacket(const paced_sender::Packet& packet,
 
 size_t PacedSender::SendPadding(size_t padding_needed,
                                 const PacedPacketInfo& pacing_info) {
-  critsect_->Leave();
+  critsect_->Enter();
   size_t bytes_sent =
       packet_sender_->TimeToSendPadding(padding_needed, pacing_info);
-  critsect_->Enter();
+  critsect_->Leave();
 
   if (bytes_sent > 0) {
     UpdateBudgetWithBytesSent(bytes_sent);

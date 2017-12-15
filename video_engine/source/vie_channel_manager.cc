@@ -42,8 +42,13 @@ ViEChannelManager::ViEChannelManager(
       voice_sync_interface_(NULL),
       voice_engine_(NULL),
       module_process_thread_(NULL),
+    module_process_thread_pacer_(NULL),
       engine_config_(config),
-	  udptransport_critsect_(CriticalSectionWrapper::CreateCriticalSection()),
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
+    udptransport_critsect_(CriticalSectionWrapper::CreateCriticalSection()),
+#else
+    tcptransport_critsect_(CriticalSectionWrapper::CreateCriticalSection()),
+#endif
 	  rtc_event_log_(RtcEventLog::Create()),
 	  pacer_thread_(ProcessThread::CreateProcessThread()),
 	  use_sendside_bwe_(false),
@@ -80,28 +85,35 @@ ViEChannelManager::~ViEChannelManager() {
     free_channel_ids_size_ = 0;
   }
 
-  while (rtp_udptransport_map_.size() > 0) {
-	  RtpUdpTransportMap::iterator r_it = rtp_udptransport_map_.begin();
-	  r_it->second->StopReceiving();
-	  UdpTransport::Destroy(r_it->second);
-	  rtp_udptransport_map_.erase(r_it);
-  }
-
+//  while (rtp_udptransport_map_.size() > 0) {
+//	  RtpUdpTransportMap::iterator r_it = rtp_udptransport_map_.begin();
+//	  r_it->second->StopReceiving();
+//	  UdpTransport::Destroy(r_it->second);
+//	  rtp_udptransport_map_.erase(r_it);
+//  }
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
   if (udptransport_critsect_) {
 	  delete udptransport_critsect_;
 	  udptransport_critsect_ = NULL;
   }
-  rtc_event_log_->StopLogging();
+#else
+  if (tcptransport_critsect_) {
+	  delete tcptransport_critsect_;
+	  tcptransport_critsect_ = NULL;
+  }
+#endif
   assert(channel_groups_.empty());
   assert(channel_map_.empty());
   assert(vie_encoder_map_.empty());
-  assert(rtp_udptransport_map_.empty());
+//  assert(rtp_udptransport_map_.empty());
 }
 
 void ViEChannelManager::SetModuleProcessThread(
-    ProcessThread* module_process_thread) {
+    ProcessThread* module_process_thread, ProcessThread* module_process_thread_pacer) {
   assert(!module_process_thread_);
   module_process_thread_ = module_process_thread;
+    assert(!module_process_thread_pacer_);
+    module_process_thread_pacer_ = module_process_thread_pacer;
 }
 
 int ViEChannelManager::CreateChannel(int* channel_id,
@@ -146,6 +158,7 @@ int ViEChannelManager::CreateChannel(int* channel_id,
                                            number_of_cores_,
                                            engine_config_,
                                            *module_process_thread_,
+        *module_process_thread_pacer_,
                                            bitrate_controller,
 										   paced_sender,
 										   &packet_router_,
@@ -261,6 +274,7 @@ int ViEChannelManager::CreateChannel(int* channel_id,
     vie_encoder = new ViEEncoder(engine_id_, new_channel_id, number_of_cores_,
                                  engine_config_,
                                  *module_process_thread_,
+                                 *module_process_thread_pacer_,
                                  bitrate_controller,
 								 congestion_controller_->pacer(),
 								 &packet_router_,
@@ -319,7 +333,12 @@ int ViEChannelManager::DeleteChannel(int channel_id) {
   ViEChannel* vie_channel = NULL;
   ViEEncoder* vie_encoder = NULL;
   ChannelGroup* group = NULL;
+
+#ifndef WEBRTC_EXTERNAL_TRANSPORT  
   UdpTransport * transport = NULL;
+#else
+  TcpTransport * transport = NULL; 
+#endif
 
   {
     // Write lock to make sure no one is using the channel.
@@ -338,7 +357,11 @@ int ViEChannelManager::DeleteChannel(int channel_id) {
 
     ReturnChannelId(channel_id);
 
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
 	transport = vie_channel->GetUdpTransport();
+#else
+  transport = vie_channel->GetTcpTransport(); 
+#endif
 
     // Find the encoder object.
     EncoderMap::iterator e_it = vie_encoder_map_.find(channel_id);
@@ -401,10 +424,10 @@ int ViEChannelManager::DeleteChannel(int channel_id) {
     LOG(LS_INFO) << "Channel group deleted for channel " << channel_id;
     delete group;
   }
-  if (transport) {
-	  LOG(LS_INFO) << "delete udptransport for channel " << channel_id;
-	  DeleteUdptransport(transport);
-  }
+//  if (transport) {
+//	  LOG(LS_VERBOSE) << "delete udptransport for channel " << channel_id;
+//	  DeleteUdptransport(transport);
+//  }
   LOG(LS_INFO) << "Channel deleted " << channel_id;
   
    if (channel_map_.empty())
@@ -732,58 +755,35 @@ void ViEChannelManager::UpdateNetworkState(int channel_id, bool startSend)
 	}	
 }
 
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
 UdpTransport *ViEChannelManager::CreateUdptransport(int rtp_port, int rtcp_port, bool ipv6flag) {
 	CriticalSectionScoped cs(udptransport_critsect_);
-
-	RtpUdpTransportMap::iterator r_it = rtp_udptransport_map_.find(rtp_port);
-	if (r_it == rtp_udptransport_map_.end()) {// No such rtp_port.
-		uint8_t num_socket_threads = 1;
-		UdpTransport *transport = UdpTransport::Create(ViEModuleId(engine_id_, -1), num_socket_threads);
-        if (ipv6flag) {
-            transport->EnableIpV6();
-        }
-		if (transport) {//create socket
-			const char* multicast_ip_address = NULL;
-			if (transport->InitializeReceiveSockets(NULL, rtp_port,
-				NULL,
-				multicast_ip_address,
-				rtcp_port) != 0) {
-				LOG(LS_ERROR) << "can not create socket of rtp_port " << rtp_port;
-				UdpTransport::Destroy(transport);
-				return NULL;
-			}
-			rtp_udptransport_map_[rtp_port] = transport;
-			transport->AddRefNum();
-			return transport;
-		}else {
-			return NULL;
-		}
-	}
-
-	//the transport has already int map.
-	r_it->second->AddRefNum();
-	return r_it->second;
+    
+    WebRtc_UWord8 num_socket_threads = 1;
+    return UdpTransport::Create(ViEModuleId(engine_id_, -1), num_socket_threads, rtp_port, rtcp_port, ipv6flag);
 }
 
-int ViEChannelManager::DeleteUdptransport(UdpTransport * transport) {
+int ViEChannelManager::DeleteUdptransport(int rtp_port) {
 	CriticalSectionScoped cs(udptransport_critsect_);
-	if (!transport)
-		return -1;
-
-	transport->SubRefNum();
-	if (transport->GetRefNum() == 0) {
-		RtpUdpTransportMap::iterator r_it = rtp_udptransport_map_.begin();
-		for (; r_it != rtp_udptransport_map_.end(); ++r_it) {
-			if (r_it->second == transport) {
-				rtp_udptransport_map_.erase(r_it);
-				break;
-			}
-		}
-		transport->StopReceiving();
-		UdpTransport::Destroy(transport);
-	}
+    int refNum = UdpTransport::Release(rtp_port);
+    LOG(LS_INFO) << "UdpTransport rtp_port " << rtp_port <<" refNumber "<<refNum;
 	return 0;
 }
+#else  //endif udptransport
+TcpTransport *ViEChannelManager::CreateTcptransport(int rtp_port, int rtcp_port, bool ipv6flag) {
+	CriticalSectionScoped cs(tcptransport_critsect_);
+    
+    WebRtc_UWord8 num_socket_threads = 1;
+    return TcpTransport::Create(ViEModuleId(engine_id_, -1), num_socket_threads, rtp_port, rtcp_port, ipv6flag);
+}
+
+int ViEChannelManager::DeleteTcptransport(int rtp_port) {
+	CriticalSectionScoped cs(tcptransport_critsect_);
+    int refNum = TcpTransport::Release(rtp_port);
+    LOG(LS_INFO) << "TcpTransport rtp_port " << rtp_port <<" refNumber "<<refNum;
+	return 0;
+}
+#endif
 
 ViEChannelManagerScoped::ViEChannelManagerScoped(
     const ViEChannelManager& vie_channel_manager)

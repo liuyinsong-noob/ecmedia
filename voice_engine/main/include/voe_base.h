@@ -239,6 +239,7 @@ public:
 	// |channel| number.
 	virtual int SetLocalReceiver(int channel, int port,
 		int RTCPport = kVoEDefault,
+        bool ipv6 = false,
 		const char ipAddr[64] = NULL,
 		const char multiCastAddr[64] = NULL) = 0;
 

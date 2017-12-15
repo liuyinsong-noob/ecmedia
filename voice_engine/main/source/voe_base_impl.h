@@ -171,9 +171,9 @@ private:
     // Initialize channel by setting Engine Information then initializing
     // channel.
     int InitializeChannel(voe::ChannelOwner* channel_owner);
-#ifdef WEBRTC_EXTERNAL_TRANSPORT
+//#ifdef WEBRTC_EXTERNAL_TRANSPORT
     int32_t AddExternalTransportBuild(char* str) const;
-#endif
+//#endif
     VoiceEngineObserver* _voiceEngineObserverPtr;
     CriticalSectionWrapper& _callbackCritSect;
 
@@ -219,9 +219,10 @@ public:
 
 	virtual int SetLocalReceiver(int channel, int port,
 		int RTCPport = kVoEDefault,
+        bool ipv6 = false,
 		const char ipAddr[64] = NULL,
 		const char multiCastAddr[64] = NULL);
-		virtual int SetSocks5SendData(int charnnel_id, unsigned char *data, int length, bool isRTCP);
+	virtual int SetSocks5SendData(int charnnel_id, unsigned char *data, int length, bool isRTCP);
 	virtual int SetSendDestination(int channel, int rtp_port, const char *rtp_ipaddr, int sourcePort, int rtcp_port, const char *rtcp_ipaddr);
 
 	// Gets the destination port and address for a specified |channel| number.

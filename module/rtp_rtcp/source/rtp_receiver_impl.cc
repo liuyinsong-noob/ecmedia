@@ -113,7 +113,15 @@ int32_t RtpReceiverImpl::DeRegisterReceivePayload(
   cloopenwebrtc::CritScope lock(&critical_section_rtp_receiver_);
   return rtp_payload_registry_->DeRegisterReceivePayload(payload_type);
 }
-
+    
+uint32_t RtpReceiverImpl::SetSSRC(uint32_t ssrc)
+{
+   cloopenwebrtc::CritScope lock(&critical_section_rtp_receiver_);
+    ssrc_ = ssrc;
+    return 0;
+    
+}
+    
 uint32_t RtpReceiverImpl::SSRC() const {
   cloopenwebrtc::CritScope lock(&critical_section_rtp_receiver_);
   return ssrc_;

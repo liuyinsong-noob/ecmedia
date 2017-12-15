@@ -613,6 +613,8 @@ VCMFrameBufferEnum VCMJitterBuffer::InsertPacket(const VCMPacket& packet,
       Flush();
       return kFlushIndicator;
     }
+	LOG(LS_WARNING) << " Drop OldPacket " << packet.seqNum << " decoded time:" << last_decoded_state_.time_stamp() << " packet time:" << packet.timestamp;
+
     return kOldPacket;
   }
 
@@ -664,6 +666,8 @@ VCMFrameBufferEnum VCMJitterBuffer::InsertPacket(const VCMPacket& packet,
                              "timestamp", frame->TimeStamp());
   }
 
+  LOG(LS_WARNING) << " Insert Packet w:" << packet.width << " h:" << packet.height << " seq:" << packet.seqNum << " masSeq:" 
+	  << packet.seqNum << " isFirstPacket:" << packet.isFirstPacket << " missing packet len:" << missing_sequence_numbers_.size();
 
   if (buffer_state > 0) {
     incoming_bit_count_ += packet.sizeBytes << 3;
@@ -686,9 +690,10 @@ VCMFrameBufferEnum VCMJitterBuffer::InsertPacket(const VCMPacket& packet,
 
   // Is the frame already in the decodable list?
   bool continuous = IsContinuous(*frame);
-  //LOG(LS_WARNING) << " insertPacket seq:" << packet.seqNum << " mark:" << packet.markerBit << " time:" << packet.timestamp << " incomplete:" << incomplete_frames_.size() << 
-  //	"  decodeable:" << decodable_frames_.size() << " state:" << buffer_state << " contn:"<< continuous;
 
+  LOG(LS_WARNING) << " insertPacket seq:" << packet.seqNum << " mark:" << packet.markerBit << " time:" << packet.timestamp << " incomplete:" << incomplete_frames_.size() << 
+  	"  decodeable:" << decodable_frames_.size() << " state:" << buffer_state << " continuous:"<< continuous << " t10Id:" << frame->Tl0PicId() << " tid:" << frame->TemporalId() << " picID:" << frame->PictureId();
+   
   switch (buffer_state) {
     case kGeneralError:
     case kTimeStampError:

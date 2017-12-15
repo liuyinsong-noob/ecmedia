@@ -172,6 +172,8 @@ class Channel:
     public RtpFeedback,
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
 	public UdpTransportData, // receiving packet from sockets
+#else
+    public TcpTransportData, // receiving packet from sockets    
 #endif
     public FileCallback, // receiving notification from file player & recorder
     public Transport,
@@ -333,6 +335,7 @@ public:
     // VoERTP_RTCP
     int SetLocalSSRC(unsigned int ssrc);
     int GetLocalSSRC(unsigned int& ssrc);
+    int SetRemoteSSRC(unsigned int ssrc);//for distribute remote audio stream
     int GetRemoteSSRC(unsigned int& ssrc);
     int SetSendAudioLevelIndicationStatus(bool enable, unsigned char id);
     int SetReceiveAudioLevelIndicationStatus(bool enable, unsigned char id);
@@ -478,7 +481,14 @@ public:
     void OnNetworkChanged(const uint32_t bitrate_bps,
                           const uint8_t fraction_lost,  // 0 - 255.
                           const int64_t rtt);
-
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
+    int32_t SetUdpTransport(UdpTransport *transport, int32_t rtp_port);
+    UdpTransport *GetUdpTransport();
+#else
+	int32_t SetTcpTransport(TcpTransport *transport, int32_t rtp_port);
+	TcpTransport *GetTcpTransport();
+#endif
+    
 private:
     bool ReceivePacket(const uint8_t* packet, size_t packet_length,
                        const RTPHeader& header, bool in_order);
@@ -658,7 +668,10 @@ private:
 
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
 	WebRtc_UWord8 _numSocketThreads;
-	UdpTransport& _socketTransportModule;
+	UdpTransport* _socketTransportModule;
+#else
+    WebRtc_UWord8 _numSocketThreads;
+    TcpTransport* _socketTransportModule;    
 #endif
 
 	time_t  _startNetworkTime;
@@ -684,7 +697,7 @@ public:
 	WebRtc_UWord32 pause(bool mute);
 	//Sean add end 20140322 for window XP
 
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
 	WebRtc_Word32 SetLocalReceiver(const WebRtc_UWord16 rtpPort,
 		const WebRtc_UWord16 rtcpPort,
 		const char ipAddr[64],
@@ -694,7 +707,7 @@ public:
 	WebRtc_Word32 SetSendDestination(const WebRtc_UWord16 rtpPort, const char rtp_ipAddr[64], const int sourcePort, const WebRtc_UWord16 rtcpPort, const char rtcp_ipAddr[64]);
 	WebRtc_Word32 GetSendDestination(int& port, char ipAddr[64],
 		int& sourcePort, int& RTCPport);
-#endif
+//#endif
 
 #ifdef WEBRTC_SRTP
 	int CcpSrtpInit();
@@ -709,10 +722,18 @@ public:
 
 	//add by fly
 	bool handleRFC2833(const WebRtc_Word8* packet, const WebRtc_Word32 packetlen);
+
+#ifndef   WEBRTC_EXTERNAL_TRANSPORT
 	UdpTransport* GetSocketTransportModule() const
 	{
-		return &_socketTransportModule;
+		return _socketTransportModule;
 	}
+#else
+    TcpTransport* GetSocketTransportModule() const
+    {
+        return _socketTransportModule;
+    }    
+#endif
 
 	// From UdpTransportData in the Socket Transport module
 	void IncomingRTPPacket(const WebRtc_Word8* incomingRtpPacket,
@@ -732,7 +753,7 @@ public:
 		int& transmittedBytes, bool useRtcpSocket);
     
     int setConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback* cb);
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
 	WebRtc_Word32 GetSourceInfo(int& rtpPort, int& rtcpPort, char ipAddr[64]);
 	WebRtc_Word32 EnableIPv6();
 	bool IPv6IsEnabled() const;
@@ -746,18 +767,18 @@ public:
 	WebRtc_Word32 GetSendGQoS(bool &enabled, int &serviceType,
 		int &overrideDSCP);
 #endif
-#endif
+//#endif
 
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
 	bool SendSocketsInitialized() const
 	{
-		return _socketTransportModule.SendSocketsInitialized();
+		return _socketTransportModule->SendSocketsInitialized();
 	}
 	bool ReceiveSocketsInitialized() const
 	{
-		return _socketTransportModule.ReceiveSocketsInitialized();
+		return _socketTransportModule->ReceiveSocketsInitialized();
 	}
-#endif
+//#endif
 	//---end
 public:
     WebRtc_Word32 SetPacketTimeoutNotification(bool enable, int timeoutSeconds);
@@ -781,6 +802,8 @@ private:
     bool _rtpPacketTimedOut;
     bool _rtpPacketTimeOutIsEnabled;
     WebRtc_UWord32 _rtpTimeOutSeconds;
+    int _rtp_port;
+    unsigned int _remote_ssrc;//for distribute remote audio stream
 };
 
 }  // namespace voe

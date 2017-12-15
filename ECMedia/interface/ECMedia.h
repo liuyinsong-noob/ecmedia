@@ -78,7 +78,7 @@ ECMEDIA_API int ECMedia_delete_channel(int& channelid, bool is_video);
 /*
  *1
  */
-ECMEDIA_API int ECMedia_set_local_receiver(int channelid, int rtp_port, int rtcp_port = -1);
+ECMEDIA_API int ECMedia_set_local_receiver(int channelid, int rtp_port, int rtcp_port = -1, bool ipv6 = false);
 /*
  *1
  */

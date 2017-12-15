@@ -31,7 +31,13 @@
 
 #include "../base/thread_annotations.h"
 //#include "StunMessageCallBack.h"
+
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
 #include "udp_transport.h"
+#else
+#include "tcp_transport.h"
+#endif
+
 #include "vie_file_recorder.h"
 
 #ifdef WEBRTC_SRTP
@@ -101,7 +107,11 @@ class ViEChannel
       public VCMPacketRequestCallback,
 	  public VCMFrameStorageCallback,//add
       public RtpFeedback,
-	  public UdpTransportData, //add
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
+	    public UdpTransportData, //add
+#else
+      public TcpTransportData, //add      
+#endif      
       public ViEFrameProviderBase {
  public:
   friend class ChannelStatsObserver;
@@ -123,9 +133,13 @@ class ViEChannel
 
   int32_t Init();
 
-  int32_t SetUdpTransport(UdpTransport *transport);
-
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
+  int32_t SetUdpTransport(UdpTransport *transport, int32_t rtp_port);
   UdpTransport *GetUdpTransport();
+#else
+   int32_t SetTcpTransport(TcpTransport *transport, int32_t rtp_port);
+  TcpTransport *GetTcpTransport();
+#endif
 
   // Sets the encoder to use for the channel. |new_stream| indicates the encoder
   // type has changed and we should start a new RTP stream.
@@ -652,7 +666,14 @@ private:
 	uint32_t local_ssrc_slave_; //only scv send small resolution 
 	uint32_t remote_ssrc_;
 	UdpTransport *socket_transport_;
+#else
+  uint32_t ssrc_all_num_;
+  uint32_t local_ssrc_main_;  //svc send channel big resolution; trunk;not scv recv channel
+  uint32_t local_ssrc_slave_; //only scv send small resolution 
+  uint32_t remote_ssrc_;
+  TcpTransport *socket_transport_;  
 #endif
+	int32_t _rtp_port;
 	bool isSVCChannel_;
 	 ViEFileRecorder file_recorder_;
 public:

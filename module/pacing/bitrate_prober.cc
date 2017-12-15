@@ -179,8 +179,8 @@ size_t BitrateProber::RecommendedMinProbeSize() const {
 }
 
 void BitrateProber::ProbeSent(int64_t now_ms, size_t bytes) {
-  DCHECK(probing_state_ == ProbingState::kActive);
-  DCHECK_GT(bytes, 0);
+//  DCHECK(probing_state_ == ProbingState::kActive);
+ // DCHECK_GT(bytes, 0);
 
   if (!clusters_.empty()) {
     ProbeCluster* cluster = &clusters_.front();

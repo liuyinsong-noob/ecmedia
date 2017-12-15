@@ -84,14 +84,71 @@ class SocketFactory : public UdpTransportImpl::SocketFactoryInterface {
 // Creates an UdpTransport using the definition of SocketFactory above,
 // and passes (creating if needed) a pointer to the static singleton
 // UdpSocketManager.
+CriticalSectionWrapper * UdpTransport::_critical_sec = CriticalSectionWrapper::CreateCriticalSection();
+RtpUdpTransportMap UdpTransport::_rtp_udptransport_map;
 UdpTransport* UdpTransport::Create(const WebRtc_Word32 id,
-                                   WebRtc_UWord8& numSocketThreads)
+                                   WebRtc_UWord8& numSocketThreads, int rtp_port, int rtcp_port, bool ipv6)
 {
-  return new UdpTransportImpl(id,
-                              new SocketFactory(),
-                              UdpSocketManager::Create(id, numSocketThreads));
+    _critical_sec->Enter();
+    RtpUdpTransportMap::iterator r_it = _rtp_udptransport_map.find(rtp_port);
+    if (r_it == _rtp_udptransport_map.end()) {// No such rtp_port.
+        UdpTransport *transport = new UdpTransportImpl(id,
+                                                       new SocketFactory(),
+                                                       UdpSocketManager::Create(id, numSocketThreads));
+        if (ipv6) {
+            transport->EnableIpV6();
+        }
+        if (rtp_port == rtcp_port) {
+            transport->SetOnePortFlag();
+        }
+        
+        if (transport) {//create socket
+            const char* multicast_ip_address = NULL;
+            if (transport->InitializeReceiveSockets(NULL, rtp_port,
+                                                    NULL,
+                                                    multicast_ip_address,
+                                                    rtcp_port) != 0) {
+                
+                WEBRTC_TRACE(kTraceMemory, kTraceTransport, 0, "can not create socket of rtp_port %d, %s", rtp_port, __FUNCTION__);
+                UdpTransport::Destroy(transport);
+                _critical_sec->Leave();
+                return NULL;
+            }
+            _rtp_udptransport_map[rtp_port] = transport;
+            transport->AddRefNum();
+            _critical_sec->Leave();
+            return transport;
+        }else {
+            _critical_sec->Leave();
+            return NULL;
+        }
+    }
+    r_it->second->AddRefNum();
+    _critical_sec->Leave();
+    return r_it->second;
 }
 
+int UdpTransport::Release(int rtp_port)
+{
+    _critical_sec->Enter();
+    RtpUdpTransportMap::iterator r_it = _rtp_udptransport_map.find(rtp_port);
+    if (r_it == _rtp_udptransport_map.end()) {
+        WEBRTC_TRACE(kTraceWarning, kTraceTransport, 0, "can not find socket of rtp_port %d, %s", rtp_port, __FUNCTION__);
+        _critical_sec->Leave();
+        return -1;
+    }
+    r_it->second->SubRefNum();
+    int refNum = r_it->second->GetRefNum();
+    UdpTransport *tmp = r_it->second;
+    if ( refNum == 0) {
+        _rtp_udptransport_map.erase(r_it);
+        tmp->StopReceiving();
+        UdpTransport::Destroy(tmp);
+    }
+    _critical_sec->Leave();
+    return refNum;
+}
+    
 // Deletes the UdpTransport and decrements the refcount of the
 // static singleton UdpSocketManager, possibly destroying it.
 // Should only be used on UdpTransports that are created using Create.
@@ -159,7 +216,8 @@ UdpTransportImpl::UdpTransportImpl(const WebRtc_Word32 id,
       _previousSourcePort(0),
       _filterIPAddress(),
       _rtpFilterPort(0),
-      _rtcpFilterPort(0)
+      _rtcpFilterPort(0),
+      _onePort(false)
 {
     memset(&_remoteRTPAddr, 0, sizeof(_remoteRTPAddr));
     memset(&_remoteRTCPAddr, 0, sizeof(_remoteRTCPAddr));
@@ -179,6 +237,8 @@ UdpTransportImpl::UdpTransportImpl(const WebRtc_Word32 id,
 
 UdpTransportImpl::~UdpTransportImpl()
 {
+	if (_packetCallback.size())
+		_packetCallback.clear();
     CloseSendSockets();
     CloseReceiveSockets();
     delete _crit;
@@ -301,6 +361,16 @@ bool UdpTransportImpl::GetSVCVideoFlag()
 	return _isSVCVideo;
 }
 
+void UdpTransportImpl::SetOnePortFlag()
+{
+    _onePort = true;
+}
+
+bool UdpTransportImpl::GetOnePortFlag()
+{
+    return _onePort;
+}
+    
 void UdpTransportImpl::SetLocalSSrc(unsigned int ssrc) 
 {
 	_ssrc = ssrc;
@@ -339,13 +409,14 @@ bool UdpTransportImpl::AddRecieveChannel(unsigned int ssrc, UdpTransportData* re
 
 	CriticalSectionScoped cs(_critPacketCallback);
 
-	unsigned int ssrc_media = ssrc & SSRC_MEDIA_BITS;
+    unsigned int ssrc_media = ssrc & SSRC_MEDIA_BITS;
 	SsrcChannelMap::iterator s_it = _packetCallback.find(ssrc_media);
 	if (s_it != _packetCallback.end()) {
 		WEBRTC_TRACE(kTraceWarning, kTraceTransport, _id,
 			"add recieve channel failed, the ssrc %u already exist", ssrc);
 		return false;
 	}
+    WEBRTC_TRACE(kTraceWarning, kTraceTransport, _id, "AddRecieveChannel add recieve channel ssrc %u, port %d\n", ssrc_media, _localPort);
 	_packetCallback[ssrc_media] = recieveChannel;
 
 	return true;
@@ -354,7 +425,6 @@ bool UdpTransportImpl::AddRecieveChannel(unsigned int ssrc, UdpTransportData* re
 bool UdpTransportImpl::SubRecieveChannel(unsigned int ssrc)
 {
 	CriticalSectionScoped cs(_critPacketCallback);
-
 	unsigned int ssrc_media = ssrc & SSRC_MEDIA_BITS;
 	SsrcChannelMap::iterator s_it = _packetCallback.find(ssrc_media);
 	if (s_it == _packetCallback.end()) {
@@ -457,11 +527,12 @@ WebRtc_Word32 UdpTransportImpl::InitializeReceiveSockets(
     _ptrRtpSocket = _socket_creator->CreateSocket(_id, _mgr, this,
                                     IncomingRTPCallback,
                                     IpV6Enabled(), false);
-
-    _ptrRtcpSocket = _socket_creator->CreateSocket(_id, _mgr, this,
-                                     IncomingRTCPCallback,
-                                     IpV6Enabled(), false);
-
+    if (!_onePort) {
+        _ptrRtcpSocket = _socket_creator->CreateSocket(_id, _mgr, this,
+                                                       IncomingRTCPCallback,
+                                                       IpV6Enabled(), false);
+    }
+    
     ErrorCode retVal = BindLocalRTPSocket();
     if(retVal != kNoSocketError)
     {
@@ -471,15 +542,18 @@ WebRtc_Word32 UdpTransportImpl::InitializeReceiveSockets(
         CloseReceiveSockets();
         return -1;
     }
-    retVal = BindLocalRTCPSocket();
-    if(retVal != kNoSocketError)
-    {
-        _lastError = retVal;
-        WEBRTC_TRACE(kTraceError, kTraceTransport, _id,
-                     "InitializeReceiveSockets faild to bind RTCP socket");
-        CloseReceiveSockets();
-        return -1;
+    if (!_onePort) {
+        retVal = BindLocalRTCPSocket();
+        if(retVal != kNoSocketError)
+        {
+            _lastError = retVal;
+            WEBRTC_TRACE(kTraceError, kTraceTransport, _id,
+                         "InitializeReceiveSockets faild to bind RTCP socket");
+            CloseReceiveSockets();
+            return -1;
+        }
     }
+    
     return 0;
 }
 
@@ -491,7 +565,13 @@ WebRtc_Word32 UdpTransportImpl::ReceiveSocketInformation(
 {
     CriticalSectionScoped cs(_crit);
     rtpPort = _localPort;
-    rtcpPort = _localPortRTCP;
+    if (_onePort) {
+        rtcpPort = _localPort;
+    }
+    else
+    {
+        rtcpPort = _localPortRTCP;
+    }
     if (ipAddr)
     {
         strncpy(ipAddr, _localIP, IpV6Enabled() ?
@@ -514,7 +594,13 @@ WebRtc_Word32 UdpTransportImpl::SendSocketInformation(
 {
     CriticalSectionScoped cs(_crit);
     rtpPort = _destPort;
-    rtcpPort = _destPortRTCP;
+    if (!_onePort) {
+        rtcpPort = _destPortRTCP;
+    }
+    else
+    {
+        rtcpPort = _destPort;
+    }
     strncpy(ipAddr, _destRtpIP, IpV6Enabled() ?
             UdpTransport::kIpAddressVersion6Length :
             UdpTransport::kIpAddressVersion4Length);
@@ -632,20 +718,23 @@ WebRtc_Word32 UdpTransportImpl::EnableQoS(WebRtc_Word32 serviceType,
  RTP socket");
         return -1;
     }
-    UdpSocketWrapper* rtcpSock = _ptrSendRtcpSocket ?
-        _ptrSendRtcpSocket :
-        _ptrRtcpSocket;
-    if (!rtcpSock || !rtcpSock->ValidHandle())
+    UdpSocketWrapper* rtcpSock = NULL;
+    if (!_onePort)
     {
-        WEBRTC_TRACE(
-            kTraceError,
-            kTraceTransport,
-            _id,
-            "QOS is enabled but not started since we have not yet created the\
- RTCP socket");
-        return -1;
+       rtcpSock = _ptrSendRtcpSocket ?
+            _ptrSendRtcpSocket :
+            _ptrRtcpSocket;
+        if (!rtcpSock || !rtcpSock->ValidHandle())
+        {
+            WEBRTC_TRACE(
+                kTraceError,
+                kTraceTransport,
+                _id,
+                "QOS is enabled but not started since we have not yet created the\
+     RTCP socket");
+            return -1;
+        }
     }
-
     // Minimum packet size in bytes for which the requested quality of service
     // will be provided. The smallest RTP header is 12 byte.
     const WebRtc_Word32 min_policed_size = 12;
@@ -752,33 +841,36 @@ WebRtc_Word32 UdpTransportImpl::EnableQoS(WebRtc_Word32 serviceType,
 
     // Enable QoS for RTCP sockets.
     // TODO (hellner): shouldn't RTCP be based on 5% of the maximum bandwidth?
-    if(audio)
-    {
-        const WebRtc_Word32 token_rate = 200;
-        const WebRtc_Word32 bucket_size = 200;
-        const WebRtc_Word32 peek_bandwith = 400;
-        if (!rtcpSock->SetQos(serviceType, token_rate, bucket_size,
-                              peek_bandwith, min_policed_size, max_sdu_size,
-                              _remoteRTCPAddr, overrideDSCP))
+    if (!_onePort) {
+        if(audio)
         {
-            WEBRTC_TRACE(kTraceWarning, kTraceTransport, _id,
-                         "QOS failed on the RTCP socket");
-            _lastError = kQosError;
-        }
-    }else
-    {
-        const WebRtc_Word32 token_rate = 5000;
-        const WebRtc_Word32 bucket_size = 100;
-        const WebRtc_Word32 peek_bandwith = 10000;
-        if (!rtcpSock->SetQos(serviceType, token_rate, bucket_size,
-                              peek_bandwith, min_policed_size, max_sdu_size,
-                            _remoteRTCPAddr, _overrideDSCP))
+            const WebRtc_Word32 token_rate = 200;
+            const WebRtc_Word32 bucket_size = 200;
+            const WebRtc_Word32 peek_bandwith = 400;
+            if (!rtcpSock->SetQos(serviceType, token_rate, bucket_size,
+                                  peek_bandwith, min_policed_size, max_sdu_size,
+                                  _remoteRTCPAddr, overrideDSCP))
+            {
+                WEBRTC_TRACE(kTraceWarning, kTraceTransport, _id,
+                             "QOS failed on the RTCP socket");
+                _lastError = kQosError;
+            }
+        }else
         {
-            WEBRTC_TRACE(kTraceWarning, kTraceTransport, _id,
-                         "QOS failed on the RTCP socket");
-            _lastError = kQosError;
+            const WebRtc_Word32 token_rate = 5000;
+            const WebRtc_Word32 bucket_size = 100;
+            const WebRtc_Word32 peek_bandwith = 10000;
+            if (!rtcpSock->SetQos(serviceType, token_rate, bucket_size,
+                                  peek_bandwith, min_policed_size, max_sdu_size,
+                                  _remoteRTCPAddr, _overrideDSCP))
+            {
+                WEBRTC_TRACE(kTraceWarning, kTraceTransport, _id,
+                             "QOS failed on the RTCP socket");
+                _lastError = kQosError;
+            }
         }
     }
+    
     _qos = true;
     _serviceType = serviceType;
     _maxBitrate = maxBitrate;
@@ -806,17 +898,21 @@ WebRtc_Word32 UdpTransportImpl::DisableQoS()
  RTP socket");
         return -1;
     }
-    UdpSocketWrapper* rtcpSock = (_ptrSendRtcpSocket ?
-                                  _ptrSendRtcpSocket : _ptrRtcpSocket);
-    if (!rtcpSock || !rtcpSock->ValidHandle())
+    UdpSocketWrapper* rtcpSock = NULL;
+    if (!_onePort)
     {
-        WEBRTC_TRACE(
-            kTraceError,
-            kTraceTransport,
-            _id,
-            "QOS is enabled but not started since we have not yet created the\
- RTCP socket");
-        return -1;
+        rtcpSock = (_ptrSendRtcpSocket ?
+                    _ptrSendRtcpSocket : _ptrRtcpSocket);
+        if (!rtcpSock || !rtcpSock->ValidHandle())
+        {
+            WEBRTC_TRACE(
+                         kTraceError,
+                         kTraceTransport,
+                         _id,
+                         "QOS is enabled but not started since we have not yet created the\
+                         RTCP socket");
+            return -1;
+        }
     }
 
     const WebRtc_Word32 service_type = 0;   // = SERVICETYPE_NOTRAFFIC
@@ -828,11 +924,14 @@ WebRtc_Word32 UdpTransportImpl::DisableQoS()
         _lastError = kQosError;
         return -1;
     }
-    if (!rtcpSock->SetQos(service_type, not_specified, not_specified,
-                         not_specified, not_specified, not_specified,
-                         _remoteRTCPAddr,_overrideDSCP))
+    if (!_onePort)
     {
-        _lastError = kQosError;
+        if (!rtcpSock->SetQos(service_type, not_specified, not_specified,
+                              not_specified, not_specified, not_specified,
+                              _remoteRTCPAddr,_overrideDSCP))
+        {
+            _lastError = kQosError;
+        }
     }
     _qos = false;
     return 0;
@@ -895,22 +994,25 @@ WebRtc_Word32 UdpTransportImpl::SetToS(WebRtc_Word32 DSCP, bool useSetSockOpt)
         _lastError = kSocketInvalid;
         return -1;
     }
-    if(_ptrSendRtcpSocket)
+    if (!_onePort)
     {
-        rtcpSock = _ptrSendRtcpSocket;
-    }else
-    {
-        rtcpSock = _ptrRtcpSocket;
-    }
-    if (rtcpSock == NULL)
-    {
-        _lastError = kSocketInvalid;
-        return -1;
-    }
-    if(!rtcpSock->ValidHandle())
-    {
-        _lastError = kSocketInvalid;
-        return -1;
+        if(_ptrSendRtcpSocket)
+        {
+            rtcpSock = _ptrSendRtcpSocket;
+        }else
+        {
+            rtcpSock = _ptrRtcpSocket;
+        }
+        if (rtcpSock == NULL)
+        {
+            _lastError = kSocketInvalid;
+            return -1;
+        }
+        if(!rtcpSock->ValidHandle())
+        {
+            _lastError = kSocketInvalid;
+            return -1;
+        }
     }
 
     if (useSetSockOpt)
@@ -937,23 +1039,30 @@ WebRtc_Word32 UdpTransportImpl::SetToS(WebRtc_Word32 DSCP, bool useSetSockOpt)
                         _socket_creator->CreateSocket(_id, _mgr, NULL,
                                         NULL, IpV6Enabled(),
                                         true);
-                    _ptrSendRtcpSocket =
+                    if (!_onePort)
+                    {
+                        _ptrSendRtcpSocket =
                         _socket_creator->CreateSocket(_id, _mgr, NULL,
-                                        NULL, IpV6Enabled(),
-                                        true);
+                                                      NULL, IpV6Enabled(),
+                                                      true);
+                    }
                     rtpSock=_ptrSendRtpSocket;
-                    rtcpSock=_ptrSendRtcpSocket;
+                    if (!_onePort)
+                        rtcpSock=_ptrSendRtcpSocket;
                     ErrorCode retVal = BindRTPSendSocket();
                     if(retVal != kNoSocketError)
                     {
                         _lastError = retVal;
                         return -1;
                     }
-                    retVal = BindRTCPSendSocket();
-                    if(retVal != kNoSocketError)
+                    if(!_onePort)
                     {
-                        _lastError = retVal;
-                        return -1;
+                        retVal = BindRTCPSendSocket();
+                        if(retVal != kNoSocketError)
+                        {
+                            _lastError = retVal;
+                            return -1;
+                        }
                     }
                 }
                 else
@@ -972,22 +1081,29 @@ WebRtc_Word32 UdpTransportImpl::SetToS(WebRtc_Word32 DSCP, bool useSetSockOpt)
                     _ptrRtpSocket = _socket_creator->CreateSocket(
                         _id, _mgr, this, IncomingRTPCallback, IpV6Enabled(),
                         true);
-                    _ptrRtcpSocket = _socket_creator->CreateSocket(
-                        _id, _mgr, this, IncomingRTCPCallback, IpV6Enabled(),
-                        true);
+                    if(!_onePort)
+                    {
+                        _ptrRtcpSocket = _socket_creator->CreateSocket(
+                                                                       _id, _mgr, this, IncomingRTCPCallback, IpV6Enabled(),
+                                                                       true);
+                    }
                     rtpSock=_ptrRtpSocket;
-                    rtcpSock=_ptrRtcpSocket;
+                    if(!_onePort)
+                        rtcpSock=_ptrRtcpSocket;
                     ErrorCode retVal = BindLocalRTPSocket();
                     if(retVal != kNoSocketError)
                     {
                         _lastError = retVal;
                         return -1;
                     }
-                    retVal = BindLocalRTCPSocket();
-                    if(retVal != kNoSocketError)
+                    if(!_onePort)
                     {
-                        _lastError = retVal;
-                        return -1;
+                        retVal = BindLocalRTCPSocket();
+                        if(retVal != kNoSocketError)
+                        {
+                            _lastError = retVal;
+                            return -1;
+                        }
                     }
                     if(receiving)
                     {
@@ -1012,13 +1128,16 @@ WebRtc_Word32 UdpTransportImpl::SetToS(WebRtc_Word32 DSCP, bool useSetSockOpt)
             _lastError = kTosInvalid;
             return -1;
         }
-        if (!rtcpSock->SetSockopt(IPPROTO_IP, IP_TOS,
-                                  (WebRtc_Word8*) &TOSShifted, 4))
+        if(!_onePort)
         {
-            WEBRTC_TRACE(kTraceError, kTraceTransport, _id,
-                         "Could not sSetSockopt tos value on RTCP socket");
-            _lastError = kTosInvalid;
-            return -1;
+            if (!rtcpSock->SetSockopt(IPPROTO_IP, IP_TOS,
+                                      (WebRtc_Word8*) &TOSShifted, 4))
+            {
+                WEBRTC_TRACE(kTraceError, kTraceTransport, _id,
+                             "Could not sSetSockopt tos value on RTCP socket");
+                _lastError = kTosInvalid;
+                return -1;
+            }
         }
     } else
     {
@@ -1031,12 +1150,16 @@ WebRtc_Word32 UdpTransportImpl::SetToS(WebRtc_Word32 DSCP, bool useSetSockOpt)
             _lastError = kTosError;
             return -1;
         }
-        if (rtcpSock->SetTOS(DSCP) != 0)
+
+        if(!_onePort)
         {
-            WEBRTC_TRACE(kTraceError, kTraceTransport, _id,
-                         "Could not set tos value on RTCP socket");
-            _lastError = kTosError;
-            return -1;
+            if (rtcpSock->SetTOS(DSCP) != 0)
+            {
+                WEBRTC_TRACE(kTraceError, kTraceTransport, _id,
+                             "Could not set tos value on RTCP socket");
+                _lastError = kTosError;
+                return -1;
+            }
         }
     }
     _useSetSockOpt = useSetSockOpt;
@@ -1089,22 +1212,25 @@ WebRtc_Word32 UdpTransportImpl::SetPCP(WebRtc_Word32 PCP)
         _lastError = kSocketInvalid;
         return -1;
     }
-    if(_ptrSendRtcpSocket)
+    if(!_onePort)
     {
-        rtcpSock = _ptrSendRtcpSocket;
-    }else
-    {
-        rtcpSock = _ptrRtcpSocket;
-    }
-    if (rtcpSock == NULL)
-    {
-        _lastError = kSocketInvalid;
-        return -1;
-    }
-    if(!rtcpSock->ValidHandle())
-    {
-        _lastError = kSocketInvalid;
-        return -1;
+        if(_ptrSendRtcpSocket)
+        {
+            rtcpSock = _ptrSendRtcpSocket;
+        }else
+        {
+            rtcpSock = _ptrRtcpSocket;
+        }
+        if (rtcpSock == NULL)
+        {
+            _lastError = kSocketInvalid;
+            return -1;
+        }
+        if(!rtcpSock->ValidHandle())
+        {
+            _lastError = kSocketInvalid;
+            return -1;
+        }
     }
 
 #if defined(_WIN32)
@@ -1115,7 +1241,7 @@ WebRtc_Word32 UdpTransportImpl::SetPCP(WebRtc_Word32 PCP)
         _lastError = kPcpError;
         return -1;
     }
-    if (rtcpSock->SetPCP(PCP) != 0)
+    if (!_onePort && rtcpSock->SetPCP(PCP) != 0)
     {
         WEBRTC_TRACE(kTraceError, kTraceTransport, _id,
                      "Could not set PCP value on RTCP socket");
@@ -1132,7 +1258,8 @@ WebRtc_Word32 UdpTransportImpl::SetPCP(WebRtc_Word32 PCP)
         _lastError = kPcpError;
         return -1;
     }
-    if (!rtcpSock->SetSockopt(SOL_SOCKET, SO_PRIORITY, (WebRtc_Word8*) &PCP,
+
+    if (!_onePort && !rtcpSock->SetSockopt(SOL_SOCKET, SO_PRIORITY, (WebRtc_Word8*) &PCP,
                               sizeof(PCP)))
     {
         WEBRTC_TRACE(kTraceError, kTraceTransport, _id,
@@ -1320,6 +1447,9 @@ void UdpTransportImpl::BuildRemoteRTPAddr()
 
 void UdpTransportImpl::BuildRemoteRTCPAddr()
 {
+    if (_onePort) {
+        return;
+    }
     if(_ipV6Enabled)
     {
 #ifdef HAVE_STRUCT_SOCKADDR_SA_LEN
@@ -1404,6 +1534,9 @@ UdpTransportImpl::ErrorCode UdpTransportImpl::BindRTPSendSocket()
 
 UdpTransportImpl::ErrorCode UdpTransportImpl::BindRTCPSendSocket()
 {
+    if (_onePort) {
+        return kNoSocketError;
+    }
     if(!_ptrSendRtcpSocket)
     {
         return kSocketInvalid;
@@ -1529,6 +1662,9 @@ UdpTransportImpl::ErrorCode UdpTransportImpl::BindLocalRTPSocket()
 
 UdpTransportImpl::ErrorCode UdpTransportImpl::BindLocalRTCPSocket()
 {
+    if (_onePort) {
+        return kNoSocketError;
+    }
     if(!_ptrRtcpSocket)
     {
         return kSocketInvalid;
@@ -1597,6 +1733,7 @@ UdpTransportImpl::ErrorCode UdpTransportImpl::BindLocalRTCPSocket()
         }
     }
     return kNoSocketError;
+
 }
 
 WebRtc_Word32 UdpTransportImpl::InitializeSourcePorts(WebRtc_UWord16 rtpPort,
@@ -1634,21 +1771,26 @@ WebRtc_Word32 UdpTransportImpl::InitializeSourcePorts(WebRtc_UWord16 rtpPort,
 
     _ptrSendRtpSocket = _socket_creator->CreateSocket(_id, _mgr, NULL, NULL,
                                         IpV6Enabled(), false);
-    _ptrSendRtcpSocket = _socket_creator->CreateSocket(_id, _mgr, NULL, NULL,
-                                         IpV6Enabled(), false);
-
+    if (!_onePort) {
+        _ptrSendRtcpSocket = _socket_creator->CreateSocket(_id, _mgr, NULL, NULL,
+                                                           IpV6Enabled(), false);
+    }
+    
     ErrorCode retVal = BindRTPSendSocket();
     if(retVal != kNoSocketError)
     {
         _lastError = retVal;
         return -1;
     }
-    retVal = BindRTCPSendSocket();
-    if(retVal != kNoSocketError)
-    {
-        _lastError = retVal;
-        return -1;
+    if (!_onePort) {
+        retVal = BindRTCPSendSocket();
+        if(retVal != kNoSocketError)
+        {
+            _lastError = retVal;
+            return -1;
+        }
     }
+    
     return 0;
 }
 
@@ -1690,7 +1832,8 @@ WebRtc_Word32 UdpTransportImpl::StartReceiving(
             return -1;
         }
     }
-    if(_ptrRtcpSocket)
+
+    if(!_onePort && _ptrRtcpSocket)
     {
         if(!_ptrRtcpSocket->StartReceiving())
         {
@@ -1700,8 +1843,8 @@ WebRtc_Word32 UdpTransportImpl::StartReceiving(
             return -1;
         }
     }
-    if( _ptrRtpSocket == NULL &&
-        _ptrRtcpSocket == NULL)
+
+    if( _ptrRtpSocket == NULL && _ptrRtcpSocket == NULL )
     {
         WEBRTC_TRACE(kTraceError, kTraceTransport, _id,
                      "Failed to StartReceiving, no socket initialized");
@@ -1735,7 +1878,7 @@ WebRtc_Word32 UdpTransportImpl::StopReceiving()
             return -1;
         }
     }
-    if (_ptrRtcpSocket)
+    if (!_onePort && _ptrRtcpSocket)
     {
         if (!_ptrRtcpSocket->StopReceiving())
         {
@@ -1806,7 +1949,8 @@ WebRtc_Word32 UdpTransportImpl::InitializeSendSockets(
             }
         }
         BuildRemoteRTPAddr();
-        BuildRemoteRTCPAddr();
+        if (!_onePort)
+            BuildRemoteRTCPAddr();
     }
 
     if (_ipV6Enabled)
@@ -1838,12 +1982,16 @@ WebRtc_Word32 UdpTransportImpl::InitializeSendSockets(
                 _lastError = kSocketInvalid;
                 return -1;
             }
-            UdpSocketWrapper* rtcpSock = (_ptrSendRtcpSocket ?
-                                          _ptrSendRtcpSocket : _ptrRtcpSocket);
-            if (!rtcpSock || !rtcpSock->ValidHandle())
+            UdpSocketWrapper* rtcpSock = NULL;
+            if (!_onePort)
             {
-                _lastError = kSocketInvalid;
-                return -1;
+                rtcpSock = (_ptrSendRtcpSocket ?
+                            _ptrSendRtcpSocket : _ptrRtcpSocket);
+                if (!rtcpSock || !rtcpSock->ValidHandle())
+                {
+                    _lastError = kSocketInvalid;
+                    return -1;
+                }
             }
 
             // Set Time To Live to same region
@@ -1859,7 +2007,8 @@ WebRtc_Word32 UdpTransportImpl::InitializeSendSockets(
                 _lastError = kMulticastAddressInvalid;
                 return -1;
             }
-            if (!rtcpSock->SetSockopt(IPPROTO_IP, IP_MULTICAST_TTL,
+
+            if (!_onePort && !rtcpSock->SetSockopt(IPPROTO_IP, IP_MULTICAST_TTL,
                                       (WebRtc_Word8*)&iOptVal,
                                       sizeof (WebRtc_Word32)))
             {
@@ -1969,6 +2118,9 @@ WebRtc_Word32 UdpTransportImpl::sendSocks5Data(UdpSocketWrapper *socket, SocketA
             const char *ip)
 {
     CriticalSectionScoped cs(_crit);
+    if (_onePort) {
+        isRTCP = false;
+    }
     if(isRTCP)
     {
         UdpSocketWrapper* rtcpSock = NULL;
@@ -2002,7 +2154,9 @@ WebRtc_Word32 UdpTransportImpl::sendSocks5Data(UdpSocketWrapper *socket, SocketA
             BuildSockaddrIn(portnr, _destRtpIP, remoteAddr);
             return sendSocks5Data(rtcpSock, remoteAddr, isRTCP, data, length);
         }
-    } else {
+    }
+    else
+    {
         UdpSocketWrapper* rtpSock = NULL;
         if(_ptrSendRtpSocket)
         {
@@ -2062,16 +2216,22 @@ WebRtc_Word32 UdpTransportImpl::SendRTCPPacketTo(const WebRtc_Word8* data,
 {
 
     CriticalSectionScoped cs(_crit);
-
-    if(_ptrSendRtcpSocket)
-    {
-        return sendSocks5Data(_ptrSendRtcpSocket, to, true, data, length);
-
-    } else if(_ptrRtcpSocket)
-    {
-        return sendSocks5Data(_ptrRtcpSocket, to, true, data, length);
+    
+    if (_onePort) {
+        return SendRTPPacketTo(data, length, to);
     }
-    return -1;
+    else
+    {
+        if(_ptrSendRtcpSocket)
+        {
+            return sendSocks5Data(_ptrSendRtcpSocket, to, true, data, length);
+            
+        } else if(_ptrRtcpSocket)
+        {
+            return sendSocks5Data(_ptrRtcpSocket, to, true, data, length);
+        }
+        return -1;
+    }
 }
 
 WebRtc_Word32 UdpTransportImpl::SendRTPPacketTo(const WebRtc_Word8* data,
@@ -2106,31 +2266,38 @@ WebRtc_Word32 UdpTransportImpl::SendRTPPacketTo(const WebRtc_Word8* data,
     WebRtc_Word32 UdpTransportImpl::SendRTCPPacketTo(const WebRtc_Word8* data,
                                                  WebRtc_UWord32 length,
                                                  const WebRtc_UWord16 rtcpPort)
-{
-    CriticalSectionScoped cs(_crit);
-
-    // Use the current SocketAdress but update it with rtcpPort.
-    SocketAddress to;
-    memcpy(&to, &_remoteRTCPAddr, sizeof(SocketAddress));
-
-    if(_ipV6Enabled)
     {
-        to._sockaddr_in6.sin6_port = Htons(rtcpPort);
-    } else
-    {
-        to._sockaddr_in.sin_port = Htons(rtcpPort);
+        CriticalSectionScoped cs(_crit);
+        
+        if (_onePort)
+        {
+            return SendRTPPacketTo(data, length, rtcpPort);
+        }
+        else
+        {
+            // Use the current SocketAdress but update it with rtcpPort.
+            SocketAddress to;
+            memcpy(&to, &_remoteRTCPAddr, sizeof(SocketAddress));
+            
+            if(_ipV6Enabled)
+            {
+                to._sockaddr_in6.sin6_port = Htons(rtcpPort);
+            } else
+            {
+                to._sockaddr_in.sin_port = Htons(rtcpPort);
+            }
+            
+            if(_ptrSendRtcpSocket)
+            {
+                return sendSocks5Data(_ptrSendRtcpSocket, to, true, data, length);
+                
+            } else if(_ptrRtcpSocket)
+            {
+                return sendSocks5Data(_ptrRtcpSocket, to, true, data, length);
+            }
+            return -1;
+        }
     }
-
-    if(_ptrSendRtcpSocket)
-    {
-        return sendSocks5Data(_ptrSendRtcpSocket, to, true, data, length);
-
-    } else if(_ptrRtcpSocket)
-    {
-        return sendSocks5Data(_ptrRtcpSocket, to, true, data, length);
-    }
-    return -1;
-}
 
 int UdpTransportImpl::SendRtp(int channelId, const uint8_t* packet, size_t length, const PacketOptions* options)
 {
@@ -2199,7 +2366,11 @@ int UdpTransportImpl::SendRtp(int channelId, const uint8_t* packet, size_t lengt
 
 int UdpTransportImpl::SendRtcp(int channelId, const uint8_t* packet, size_t length)
 {
-
+    if (_onePort) {
+        return SendRtp(9999, packet, length, 0);   //9999 and seq 0 stands for rtcp
+    }
+    else
+    {
     CriticalSectionScoped cs(_crit);
     if(_destRtpIP[0] == 0)
     {
@@ -2257,6 +2428,7 @@ int UdpTransportImpl::SendRtcp(int channelId, const uint8_t* packet, size_t leng
         return sendSocks5Data(_ptrRtcpSocket, _remoteRTCPAddr, true, (const WebRtc_Word8*)packet, (WebRtc_UWord32)length);
     }
     return -1;
+    }
 }
 
 WebRtc_Word32 UdpTransportImpl::SetSendIP(const char* ipaddr)
@@ -2304,6 +2476,7 @@ void UdpTransportImpl::IncomingRTPCallback(CallbackObj obj,
             rtpPacket += 10;
             rtpPacketLength -= 10;
         }
+        
         socketTransport->IncomingRTPFunction(rtpPacket, rtpPacketLength, from);
     }
 }
@@ -2333,6 +2506,15 @@ void UdpTransportImpl::IncomingRTPFunction(const WebRtc_Word8* rtpPacket,
                                            WebRtc_Word32 rtpPacketLength,
                                            const SocketAddress* fromSocket)
 {
+    
+    if (_onePort) {
+        WebRtc_UWord8 *ptr = (WebRtc_UWord8 *)rtpPacket;
+        bool rtcpFlag = isRtcp(ptr, rtpPacketLength);
+        if (rtcpFlag) {
+            return IncomingRTCPFunction(rtpPacket, rtpPacketLength, fromSocket);
+        }
+        
+    }
 	char ipAddress[kIpAddressVersion6Length];
     WebRtc_UWord32 ipAddressLength = kIpAddressVersion6Length;
     WebRtc_UWord16 portNr = 0;
@@ -2385,12 +2567,13 @@ void UdpTransportImpl::IncomingRTPFunction(const WebRtc_Word8* rtpPacket,
 	CriticalSectionScoped cs(_critPacketCallback);
 
 	UdpTransportData* transportData = NULL;
-	if (_isSVCVideo) {//svc video/content
-		unsigned int rtpSsrc = ((unsigned char)rtpPacket[8] << 24)
+    unsigned int rtpSsrc = 0;
+	if (_onePort) {//svc video/content
+		rtpSsrc = ((unsigned char)rtpPacket[8] << 24)
 			                 | ((unsigned char)rtpPacket[9] << 16)
 			                 | ((unsigned char)rtpPacket[10] << 8)
 			                 | (unsigned char)rtpPacket[11];
-		unsigned int ssrc_media = rtpSsrc & SSRC_MEDIA_BITS;
+        unsigned int ssrc_media = rtpSsrc & SSRC_MEDIA_BITS;
 
 		SsrcChannelMap::iterator s_it = _packetCallback.find(ssrc_media);
 		if (s_it != _packetCallback.end()) {
@@ -2403,10 +2586,18 @@ void UdpTransportImpl::IncomingRTPFunction(const WebRtc_Word8* rtpPacket,
 
 	if (transportData) {
 		WEBRTC_TRACE(kTraceStream, kTraceTransport, _id,
-			"Incoming RTP packet from ip:%s port:%d len:%d", ipAddress, portNr, rtpPacketLength);
-		transportData->IncomingRTPPacket(rtpPacket, rtpPacketLength,
+			"Incoming RTP packet from ip:%s port:%d len:%d, ssrc %u, local port %d", ipAddress, portNr, rtpPacketLength, rtpSsrc, _localPort);
+        if (_packetCallback.size() == 0) {
+            return;
+        }
+        transportData->IncomingRTPPacket(rtpPacket, rtpPacketLength,
 			ipAddress, portNr);
 	}
+    else
+    {
+        WEBRTC_TRACE(kTraceWarning, kTraceTransport, _id,
+                     "NOT Found Incoming RTP packet from ip:%s port:%d len:%d, ssrc %u, local port %d", ipAddress, portNr, rtpPacketLength, rtpSsrc, _localPort);
+    }
 }
 
 void UdpTransportImpl::IncomingRTCPFunction(const WebRtc_Word8* rtcpPacket,
@@ -2461,9 +2652,11 @@ void UdpTransportImpl::IncomingRTCPFunction(const WebRtc_Word8* rtcpPacket,
 	CriticalSectionScoped cs(_critPacketCallback);
 
 	UdpTransportData* transportData = NULL;
-	if (_isSVCVideo) {//svc video/content
-		unsigned char payloadType = (unsigned char)rtcpPacket[1];
-		unsigned int rtcpSsrc;
+    unsigned int rtcpSsrc = 0;
+    unsigned char payloadType = 0;
+	if (_onePort) {//svc video/content
+		payloadType = (unsigned char)rtcpPacket[1];
+		rtcpSsrc = 0;
 		switch (payloadType) {
 		case cloopenwebrtc::RTCPUtility::PT_RTPFB:
 			rtcpSsrc = ((unsigned char)rtcpPacket[8] << 24)
@@ -2477,6 +2670,7 @@ void UdpTransportImpl::IncomingRTCPFunction(const WebRtc_Word8* rtcpPacket,
 				| ((unsigned char)rtcpPacket[14] << 8)
 				| (unsigned char)rtcpPacket[15];
 			break;
+        case cloopenwebrtc::RTCPUtility::PT_RR:
 		default:
 			rtcpSsrc = ((unsigned char)rtcpPacket[4] << 24)
 				| ((unsigned char)rtcpPacket[5] << 16)
@@ -2485,28 +2679,40 @@ void UdpTransportImpl::IncomingRTCPFunction(const WebRtc_Word8* rtcpPacket,
 			break;
 		}
         
-		unsigned int ssrc_media = rtcpSsrc & SSRC_MEDIA_BITS;
+        unsigned int ssrc_media = rtcpSsrc & SSRC_MEDIA_BITS;
 
 		SsrcChannelMap::iterator s_it = _packetCallback.find(ssrc_media);
 		if (s_it != _packetCallback.end()) {
 			transportData = s_it->second;
+			WEBRTC_TRACE(kTraceError, kTraceTransport, _id,
+				"Incoming RTCP packet find channel ssrc:%d type:%d.", rtcpSsrc, payloadType);
+		}
+		else {
+			WEBRTC_TRACE(kTraceError, kTraceTransport, _id,
+				"Incoming RTCP packet ssrc:%d can't find channel. type:%d", rtcpSsrc, payloadType);
+
 		}
 	}
 	else {
-		if (_packetCallback.size() == 0)
-		{
-			return;
-		}
-		transportData = _packetCallback.begin()->second;
+		transportData = (_packetCallback.size()==0)?NULL:_packetCallback.begin()->second;
 	}
 
 	if (transportData) {
 		WEBRTC_TRACE(kTraceStream, kTraceTransport, _id,
-			"Incoming RTCP packet from ip:%s port:%d", ipAddress,
-			portNr);
-		transportData->IncomingRTCPPacket(rtcpPacket, rtcpPacketLength,
+                     "Found Incoming RTCP packet from ip:%s port:%d, ssrc %u, rtcp pt %d, onePort %s, local port %d", ipAddress,
+                     portNr, rtcpSsrc, payloadType, _onePort?"YES":"NO", _localPort);
+        if (_packetCallback.size() == 0) {
+            return;
+        }
+        transportData->IncomingRTCPPacket(rtcpPacket, rtcpPacketLength,
 			ipAddress, portNr);
 	}
+    else
+    {
+        WEBRTC_TRACE(kTraceWarning, kTraceTransport, _id,
+                     "NOT Found Incoming RTCP packet from ip:%s port:%d, ssrc %u, rtcp pt %d, onePort %s, local port %d", ipAddress,
+                     portNr, rtcpSsrc, payloadType, _onePort?"YES":"NO", _localPort);
+    }
 }
 
 bool UdpTransportImpl::FilterIPAddress(const SocketAddress* fromAddress)
@@ -3277,5 +3483,42 @@ bool UdpTransport::IsIpAddressValid(const char* ipadr, const bool ipV6)
         }
     }
     return true;
+}
+    
+bool UdpTransportImpl::isRtcp(WebRtc_UWord8 *ptr, WebRtc_Word32 length)
+{
+    WebRtc_Word8 kRtcpMinHeaderLengthlocal = 4;
+    if (length < kRtcpMinHeaderLengthlocal) {
+        return false;
+    }
+    
+    const uint8_t V = ptr[0] >> 6;
+    const uint8_t kRtcpExpectedVersionlocal = 2;
+    if (V != kRtcpExpectedVersionlocal) {
+        return false;
+    }
+    
+    const uint8_t payloadType = ptr[1];
+    switch (payloadType) {
+        case 192:
+            return true;
+        case 193:
+            // not supported
+            // pass through and check for a potential RTP packet
+            return false;
+        case 195:
+        case 200:
+        case 201:
+        case 202:
+        case 203:
+        case 204:
+        case 205:
+        case 206:
+        case 207:
+            return true;
+        default:
+            return false;
+    }
+
 }
 } // namespace cloopenwebrtc

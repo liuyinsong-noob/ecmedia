@@ -90,6 +90,26 @@ int VoERTP_RTCPImpl::GetLocalSSRC(int channel, unsigned int& ssrc)
     return channelPtr->GetLocalSSRC(ssrc);
 }
 
+    
+int VoERTP_RTCPImpl::SetRemoteSSRC(int channel, unsigned int ssrc)
+{
+    WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+                 "SetLocalSSRC(channel=%d, %lu)", channel, ssrc);
+    if (!_shared->statistics().Initialized())
+    {
+        _shared->SetLastError(VE_NOT_INITED, kTraceError);
+        return -1;
+    }
+    voe::ChannelOwner ch = _shared->channel_manager().GetChannel(channel);
+    voe::Channel* channelPtr = ch.channel();
+    if (channelPtr == NULL)
+    {
+        _shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
+                              "SetLocalSSRC() failed to locate channel");
+        return -1;
+    }
+    return channelPtr->SetRemoteSSRC(ssrc);
+}
 int VoERTP_RTCPImpl::GetRemoteSSRC(int channel, unsigned int& ssrc)
 {
     WEBRTC_TRACE(kTraceDebug, kTraceVoice, VoEId(_shared->instance_id(), -1),

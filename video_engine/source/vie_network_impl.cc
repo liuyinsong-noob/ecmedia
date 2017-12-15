@@ -451,6 +451,7 @@ int ViENetworkImpl::SetLocalReceiver(const int video_channel,
 			return -1;
 		}
 
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
 		UdpTransport *transport = cm->CreateUdptransport(rtp_port, rtcp_port, ipv6);
 		if (!transport)
 		{
@@ -460,7 +461,19 @@ int ViENetworkImpl::SetLocalReceiver(const int video_channel,
 			return -1;
 		}
 
-		vie_channel->SetUdpTransport(transport);
+		vie_channel->SetUdpTransport(transport, rtp_port);
+#else
+    TcpTransport *transport = cm->CreateTcptransport(rtp_port, rtcp_port, ipv6);
+    if (!transport)
+    {
+        WEBRTC_TRACE(kTraceError, kTraceVideo,
+                     ViEId(shared_data_->instance_id(), video_channel),
+                     "create Udptransport failed");
+        return -1;
+    }
+    
+    vie_channel->SetTcpTransport(transport, rtp_port);
+#endif
 		return 0;
 }
 

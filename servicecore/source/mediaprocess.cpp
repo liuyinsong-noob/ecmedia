@@ -1826,9 +1826,6 @@ void ServiceCore::serphone_call_init_media_streams(SerPhoneCall *call)
        
 
 		if( call->m_VideoChannelID >= 0 &&  md->nstreams > 1 ) {
-
-
-
 			ECMedia_set_network_type(call->m_AudioChannelID, call->m_VideoChannelID, networkType);
 			ECMedia_video_set_local_receiver(call->m_VideoChannelID,call->video_port, call->video_port+1);
 			ECMedia_set_MTU(call->m_VideoChannelID,1450);

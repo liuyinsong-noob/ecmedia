@@ -81,6 +81,8 @@ class RtpReceiver {
   // Returns true if a packet has been received, false otherwise.
   virtual bool LastReceivedTimeMs(int64_t* receive_time_ms) const = 0;
 
+  // Set remote ssrc
+  virtual uint32_t SetSSRC(uint32_t ssrc) =0;
   // Returns the remote SSRC of the currently received RTP stream.
   virtual uint32_t SSRC() const = 0;
 

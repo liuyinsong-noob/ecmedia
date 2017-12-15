@@ -14,6 +14,8 @@
 #include "common_types.h"
 #include "module.h"
 #include "typedefs.h"
+#include "critical_section_wrapper.h"
+#include <map>
 
 #define SS_MAXSIZE 128
 #define SS_ALIGNSIZE (sizeof (WebRtc_UWord64))
@@ -106,8 +108,8 @@ public:
                                     const char* fromIP,
                                     const WebRtc_UWord16 fromPort) = 0;
 };
-
-
+class UdpTransport;
+typedef std::map<int, UdpTransport*> RtpUdpTransportMap;
 class UdpTransport : public Module, public Transport
 {
 public:
@@ -140,9 +142,16 @@ public:
     };
 
     // Factory method. Constructor disabled.
+    
+    static RtpUdpTransportMap _rtp_udptransport_map;
+    static CriticalSectionWrapper *_critical_sec;
     static UdpTransport* Create(const WebRtc_Word32 id,
-                                WebRtc_UWord8& numSocketThreads);
+                                WebRtc_UWord8& numSocketThreads, int rtp_port = 0, int rtcp_port = 0, bool ipv6 = false);
+private:
     static void Destroy(UdpTransport* module);
+public:
+    
+    static int Release(int rtp_port);
 
     // Prepares the class for sending RTP packets to ipAddr:rtpPort and RTCP
     // packets to ipAddr:rtpPort+1 if rtcpPort is zero. Otherwise to
@@ -385,6 +394,9 @@ public:
 
 	virtual void SetSVCVideoFlag()  = 0;
 	virtual bool GetSVCVideoFlag()  = 0;
+    
+    virtual void SetOnePortFlag() = 0;
+    virtual bool GetOnePortFlag() = 0;
 
 	virtual bool AddRecieveChannel(unsigned int ssrc, UdpTransportData* recieveChannel) = 0;
 	virtual bool SubRecieveChannel(unsigned int ssrc) = 0;

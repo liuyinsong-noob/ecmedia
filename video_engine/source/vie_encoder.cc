@@ -150,6 +150,7 @@ ViEEncoder::ViEEncoder(int32_t engine_id,
                        uint32_t number_of_cores,
                        const Config& config,
                        ProcessThread& module_process_thread,
+                       ProcessThread& module_process_thread_pacer,
                        BitrateController* bitrate_controller,
 					   PacedSender* paced_sender,
 					   PacketRouter* packet_router,
@@ -177,6 +178,7 @@ ViEEncoder::ViEEncoder(int32_t engine_id,
     codec_observer_(NULL),
     effect_filter_(NULL),
     module_process_thread_(module_process_thread),
+    module_process_thread_pacer_(module_process_thread_pacer),
     has_received_sli_(false),
     picture_id_sli_(0),
     has_received_rpsi_(false),
@@ -249,7 +251,8 @@ bool ViEEncoder::Init() {
   vpm_.EnableContentAnalysis(true);
 
   if (module_process_thread_.RegisterModule(&vcm_) != 0 ||
-      module_process_thread_.RegisterModule(default_rtp_rtcp_.get()) != 0) {
+      module_process_thread_.RegisterModule(default_rtp_rtcp_.get()) != 0 ||
+      module_process_thread_pacer_.RegisterModule(paced_sender_) != 0) {
     return false;
   }
 
@@ -316,6 +319,7 @@ ViEEncoder::~ViEEncoder() {
   module_process_thread_.DeRegisterModule(&vcm_);
   module_process_thread_.DeRegisterModule(&vpm_);
   module_process_thread_.DeRegisterModule(default_rtp_rtcp_.get());
+  module_process_thread_pacer_.DeRegisterModule(paced_sender_);
   VideoCodingModule::Destroy(&vcm_);
   VideoProcessingModule::Destroy(&vpm_);
 

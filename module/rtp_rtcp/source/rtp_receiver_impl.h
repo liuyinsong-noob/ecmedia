@@ -47,7 +47,7 @@ class RtpReceiverImpl : public RtpReceiver {
   // Returns the last received timestamp.
   bool Timestamp(uint32_t* timestamp) const override;
   bool LastReceivedTimeMs(int64_t* receive_time_ms) const override;
-
+  virtual uint32_t SetSSRC(uint32_t ssrc) OVERRIDE;
   uint32_t SSRC() const override;
 
   int32_t CSRCs(uint32_t array_of_csrc[kRtpCsrcSize]) const override;

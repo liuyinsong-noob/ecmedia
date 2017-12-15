@@ -158,7 +158,7 @@ ViEChannel::ViEChannel(int32_t channel_id,
       wait_for_key_frame_(false),
       decode_thread_(NULL),
       effect_filter_(NULL),
-      color_enhancement_(true),//sean for test only video
+      color_enhancement_(false),//sean for test only video
       mtu_(0),
       sender_(sender),
       nack_history_size_sender_(kSendSidePacketHistorySize),
@@ -184,13 +184,13 @@ ViEChannel::ViEChannel(int32_t channel_id,
 	  _selfSipNo(NULL),
 	  _confPort(0),
 	  _confIP(NULL),	  
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
 	  ssrc_all_num_(0),
 	  local_ssrc_main_(0),
 	  local_ssrc_slave_(0),
 	  remote_ssrc_(0),
 	  socket_transport_(NULL),
-#endif
+//#endif
 	 isSVCChannel_(true),
 #ifdef WEBRTC_SRTP
 	_srtpModule(*SrtpModule::CreateSrtpModule(ViEModuleId(engine_id, channel_id))),
@@ -301,12 +301,12 @@ ViEChannel::~ViEChannel() {
   default_rtp_rtcp_->SetTransport(NULL);
   UpdateHistograms();
   // Make sure we don't get more callbacks from the RTP module.
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
   if (local_ssrc_main_ != 0)
   socket_transport_->SubRecieveChannel(local_ssrc_main_);
-  if (remote_ssrc_ != 0)
+  if (socket_transport_ && remote_ssrc_ != 0)
 	  socket_transport_->SubRecieveChannel(remote_ssrc_);
-#endif
+//#endif
   module_process_thread_.DeRegisterModule(vie_receiver_.GetReceiveStatistics());
   module_process_thread_.DeRegisterModule(rtp_rtcp_.get());
   module_process_thread_.DeRegisterModule(vcm_);
@@ -354,34 +354,49 @@ ViEChannel::~ViEChannel() {
 	  }
   }
   // Release modules.
-
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
+    UdpTransport::Release(_rtp_port);
+#else
+	TcpTransport::Release(_rtp_port);
+#endif
   VideoCodingModule::Destroy(vcm_);
   module_process_thread_.Stop();
   ProcessThread::DestroyProcessThread(&module_process_thread_);
 }
 
-int32_t ViEChannel::SetUdpTransport(UdpTransport *transport)
-{
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
+int32_t ViEChannel::SetUdpTransport(UdpTransport *transport, int32_t rtp_port)
+#else
+int32_t ViEChannel::SetTcpTransport(TcpTransport *transport, int32_t rtp_port)
+#endif
+{
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
+    if (!transport) {
+        LOG(LS_ERROR) << "SetUdpTransport transport is null rtp_port %d" << rtp_port<<", check create transport with rtp_port "<< rtp_port;
+    }
 	socket_transport_ = transport;
-
+    _rtp_port = rtp_port;
 	if (socket_transport_->GetLocalSSrc() != 0){//receive channel
 		if (SetSSRC(socket_transport_->GetLocalSSrc(), kViEStreamTypeNormal, 0) != 0) {
 			LOG(LS_ERROR) << "set receive channel local ssrc failed";
 			return -1;
 		}
 	}
-#endif
+//#endif
 	return 0;
 }
 
-UdpTransport *ViEChannel::GetUdpTransport()
-{
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
-	return socket_transport_;
+UdpTransport *ViEChannel::GetUdpTransport()
 #else
-	return NULL;
+TcpTransport *ViEChannel::GetTcpTransport()
 #endif
+{
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
+	return socket_transport_;
+//#else
+//	return NULL;
+//#endif
 }
 
 void ViEChannel::UpdateHistograms() {
@@ -1011,6 +1026,11 @@ int32_t ViEChannel::GetResolution(ResolutionInst &info) {
 //judge whether trunk or svc through SSRC(0, trunk; other, svc)
 int32_t ViEChannel::SetLocalSendSSRC(const uint32_t SSRC, const StreamType usage) {
 	//trunk video/content
+    if (!socket_transport_) {
+        LOG(LS_ERROR)<< "ViEChannel::SetLocalSendSSRC socket_transport_ is NULL";
+        return -1;
+    }
+    
 	if (SSRC == 0) {
 		isSVCChannel_ = false;
 
@@ -1066,6 +1086,7 @@ int32_t ViEChannel::SetLocalSendSSRC(const uint32_t SSRC, const StreamType usage
 		ssrc_all_num_ = 2;
 	}
 
+    socket_transport_->SetOnePortFlag();
 	socket_transport_->SetSVCVideoFlag();//this is a svc video/content channel
 	socket_transport_->SetLocalSSrc(local_ssrc_main_);//other receive channel need local ssrc
 	socket_transport_->AddRecieveChannel(local_ssrc_main_, this);//receive local rtcp
@@ -1104,7 +1125,16 @@ int32_t ViEChannel::RequestRemoteSSRC(const uint32_t SSRC) {
 		LOG(LS_WARNING) << "request ssrc is 0";
 		return 0;
 	}
-
+    
+    if ((local_ssrc_main_&0xFFFFFFF0) == (SSRC&0xFFFFFFF0)) {
+        LOG(LS_WARNING) << "request self video";
+        return 0;
+    }
+    
+    if (!socket_transport_) {
+        LOG(LS_ERROR)<<"ViEChannel::RequestRemoteSSRC socket_transport_ is NULL";
+        return -1;
+    }
 	uint32_t bandwidth = 1;
 	int ret = default_rtp_rtcp_->SendSingleTMMBR(bandwidth, socket_transport_->GetLocalSSrc(), SSRC);
 	if (ret != 0) {
@@ -1124,6 +1154,10 @@ int32_t ViEChannel::CancelRemoteSSRC() {
 	if (!isSVCChannel_)
 		return 0;
 
+    if (!socket_transport_) {
+        LOG(LS_ERROR)<<"ViEChannel::CancelRemoteSSRC socket_transport_ is NULL";
+        return -1;
+    }
 	int ret = rtp_rtcp_->SendSingleTMMBR(0, socket_transport_->GetLocalSSrc(), remote_ssrc_);
 	if (ret != 0) {
 		LOG(LS_ERROR) << "SendSingleTMMBR cancel remote failed";
@@ -1619,7 +1653,17 @@ bool ViEChannel::Sending() {
 
 int32_t ViEChannel::StartReceive() {
 
+    if (!external_transport_ && !socket_transport_) {
+        LOG(LS_ERROR)<<"ViEChannel::StartReceive socket_transport_ is NULL";
+        return -1;
+    }
+    
 	if (!external_transport_) {
+        if (!socket_transport_) {
+            LOG(LS_ERROR)<<"ViEChannel::StartReceive socket_transport_ is NULL";
+            return -1;
+        }
+        
 		if (!socket_transport_->Receiving()) {
 
 			if (socket_transport_->ReceiveSocketsInitialized() == false) {
@@ -1639,7 +1683,7 @@ int32_t ViEChannel::StartReceive() {
 
   if (StartDecodeThread() != 0) {
 
-	  if (!isSVCChannel_)//trunk, one channel ---- one udp transport
+	  if (socket_transport_ && !isSVCChannel_)//trunk, one channel ---- one udp transport
 			socket_transport_->StopReceiving();
 
     vie_receiver_.StopReceive();
@@ -1649,7 +1693,7 @@ int32_t ViEChannel::StartReceive() {
   vie_receiver_.StartReceive();
   module_process_thread_.RegisterModule(receive_statistics_proxy_.get());
 
-  if (remote_ssrc_ != 0)//svc channel, start receive remote video/content
+  if (socket_transport_ && remote_ssrc_ != 0)//svc channel, start receive remote video/content
 	  socket_transport_->AddRecieveChannel(remote_ssrc_, this);
 
   return 0;
@@ -1657,8 +1701,20 @@ int32_t ViEChannel::StartReceive() {
 
 //must not stop socket_transport_ when svc
 int32_t ViEChannel::StopReceive() {
+    
+    if (!socket_transport_) {
+        LOG(LS_ERROR)<<"ViEChannel::StopReceive socket_transport_ is NULL";
+        return -1;
+    }
+    
 	if (remote_ssrc_ != 0)//svc channel, stop receive remote video/content
 		socket_transport_->SubRecieveChannel(remote_ssrc_);
+    if (local_ssrc_main_ != 0) {
+        socket_transport_->SubRecieveChannel(local_ssrc_main_);
+    }
+    if (local_ssrc_slave_ != 0) {
+        socket_transport_->SubRecieveChannel(local_ssrc_slave_);
+    }
 
 	vie_receiver_.StopReceive();
 	StopDecodeThread();
@@ -1702,6 +1758,22 @@ int32_t ViEChannel::RegisterSendTransport(Transport* transport) {
 				"%s:  socket transport already initialized", __FUNCTION__);
 			return -1;
 	}
+#else  //endif WEBRTC_EXTERNAL_TRANSPORT udptransport
+  if (!socket_transport_) {
+    socket_transport_ = TcpTransport::Create(ViEModuleId(engine_id_, channel_id_), num_socket_threads_);
+    if (!socket_transport_) {
+      WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+        "%s:  create socket_transport_ failed", __FUNCTION__);
+      return -1;
+    }
+  }
+
+  if (socket_transport_->SendSocketsInitialized() ||
+    socket_transport_->ReceiveSocketsInitialized()) {
+      WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+        "%s:  socket transport already initialized", __FUNCTION__);
+      return -1;
+  } 
 #endif
   if (rtp_rtcp_->Sending()) {
     return -1;
@@ -1730,9 +1802,12 @@ int32_t ViEChannel::DeregisterSendTransport() {
   vie_sender_.DeregisterSendTransport();
 
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
-  UdpTransport::Destroy(socket_transport_);
-  socket_transport_ = NULL;
+	UdpTransport::Release((int)_rtp_port);
+#else
+	TcpTransport::Release((int)_rtp_port);
 #endif
+  socket_transport_ = NULL;
+
   return 0;
 }
 
@@ -2251,12 +2326,40 @@ void  ViEChannel::IncomingRTPPacket(const int8_t* rtp_packet,
 		| (unsigned char)rtp_packet[11];
 
 	unsigned short seq_num = ((unsigned char)rtp_packet[2] << 8) | (unsigned char)rtp_packet[3];
-
-	WEBRTC_TRACE(kTraceStream, kTraceVideo, ViEId(engine_id_, channel_id_),
-		"%s: myself channelid is %d, local_ssrc_main_=%u, remote_ssrc_=%u,  recieve rmote ssrc=%u, seq_num=%u",
-		__FUNCTION__, channel_id_, local_ssrc_main_, remote_ssrc_, r_rtpSsrc, seq_num);
-
-
+    
+     bool RTCP = false;
+    {
+        const uint8_t  payloadType = rtp_packet[1];
+       
+        switch (payloadType) {
+            case 192:
+                RTCP = true;
+                break;
+            case 193:
+                // not supported
+                // pass through and check for a potential RTP packet
+                break;
+            case 195:
+            case 200:
+            case 201:
+            case 202:
+            case 203:
+            case 204:
+            case 205:
+            case 206:
+            case 207:
+                RTCP = true;
+                break;
+        }
+    }
+    
+    
+    if (!RTCP) {
+        WEBRTC_TRACE(kTraceWarning, kTraceVideo, ViEId(engine_id_, channel_id_),
+                     "%s: myself channelid is %d, local_ssrc_main_=%u, remote_ssrc_=%u,  recieve rmote ssrc=%u, seq_num=%u",
+                     __FUNCTION__, channel_id_, local_ssrc_main_, remote_ssrc_, r_rtpSsrc, seq_num);
+    }
+    
 	{
 		CriticalSectionScoped cs(critsect_net_statistic.get());
 		if(_startNetworkTime == 0)
@@ -2680,7 +2783,7 @@ int32_t ViEChannel::SetLocalReceiver(const uint16_t rtp_port,
 		}
 		callback_cs_->Leave();
 
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
 		if (socket_transport_->Receiving()) {
 			WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 				"%s: already receiving", __FUNCTION__);
@@ -2699,11 +2802,11 @@ int32_t ViEChannel::SetLocalReceiver(const uint16_t rtp_port,
 				return -1;
 		}
 		return 0;
-#else
-		WEBRTC_TRACE(kTraceStateInfo, kTraceVideo, ViEId(engine_id_, channel_id_),
-			"%s: not available for external transport", __FUNCTION__);
-		return -1;
-#endif
+//#else
+//		WEBRTC_TRACE(kTraceStateInfo, kTraceVideo, ViEId(engine_id_, channel_id_),
+//			"%s: not available for external transport", __FUNCTION__);
+//		return -1;
+//#endif
 
 #endif
 
@@ -2713,6 +2816,13 @@ int32_t ViEChannel::SetLocalReceiver(const uint16_t rtp_port,
 int32_t ViEChannel::GetLocalReceiver(uint16_t& rtp_port,
 	uint16_t& rtcp_port,
 	char* ip_address) const {
+    
+    if (!socket_transport_) {
+        LOG(LS_ERROR)<<"ViEChannel::GetLocalReceiver socket_transport_ is NULL";
+        return -1;
+    }
+    
+    
 		WEBRTC_TRACE(kTraceInfo, kTraceVideo, ViEId(engine_id_, channel_id_), "%s",
 			__FUNCTION__);
 
@@ -2744,13 +2854,37 @@ int32_t ViEChannel::GetLocalReceiver(uint16_t& rtp_port,
 		}
 		return 0;
 #else
-		WEBRTC_TRACE(kTraceStateInfo, kTraceVideo, ViEId(engine_id_, channel_id_),
+    if (socket_transport_->ReceiveSocketsInitialized() == false) {
+      WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+        "%s: receive sockets not initialized", __FUNCTION__);
+      return -1;
+    }
+
+    char multicast_ip_address[TcpTransport::kIpAddressVersion6Length];
+    if (socket_transport_->ReceiveSocketInformation(ip_address, rtp_port,
+      rtcp_port,
+      multicast_ip_address) != 0) {
+        int32_t socket_error = socket_transport_->LastError();
+        WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+          "%s: could not get receive socket information. Socket error: %d",
+          __FUNCTION__, socket_error);
+        return -1;
+    }
+    return 0;
+
+		/*
+    WEBRTC_TRACE(kTraceStateInfo, kTraceVideo, ViEId(engine_id_, channel_id_),
 			"%s: not available for external transport", __FUNCTION__);
-		return -1;
+		  return -1;*/
 #endif
 }
 
 int32_t ViEChannel::SetSocks5SendData(unsigned char *data, int length, bool isRTCP) {
+    
+    if (!socket_transport_) {
+        LOG(LS_ERROR)<<"ViEChannel::SetSocks5SendData socket_transport_ is NULL";
+        return -1;
+    }
   callback_cs_->Enter();
   if (external_transport_) {
     callback_cs_->Leave();
@@ -2759,9 +2893,9 @@ int32_t ViEChannel::SetSocks5SendData(unsigned char *data, int length, bool isRT
     return -1;
   }
   callback_cs_->Leave();
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
   socket_transport_->SetSocks5SendData(data, length, isRTCP);
-#endif
+//#endif
   return 0;
 };
 
@@ -2784,10 +2918,20 @@ int32_t ViEChannel::SetSendDestination(
 		}
 		callback_cs_->Leave();
 
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+		if (!socket_transport_) 
+		{
+		     LOG(LS_ERROR)<<"ViEChannel::SetSendDestination socket_transport_ is NULL";
+		     return -1;
+		}
 		const bool is_ipv6 = socket_transport_->IpV6Enabled();
-		if (UdpTransport::IsIpAddressValid(rtp_ip_address, is_ipv6) == false || UdpTransport::IsIpAddressValid(rtcp_ip_address, is_ipv6) == false) {
-			WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
+    if (UdpTransport::IsIpAddressValid(rtp_ip_address, is_ipv6) == false ||
+        UdpTransport::IsIpAddressValid(rtcp_ip_address, is_ipv6) == false) {
+#else
+    if (TcpTransport::IsIpAddressValid(rtp_ip_address, is_ipv6) == false ||
+        TcpTransport::IsIpAddressValid(rtcp_ip_address, is_ipv6) == false) {
+#endif
+            WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 				"%s: Not a valid RTP IP address: %s or RTCP IP address: %s", __FUNCTION__, rtp_ip_address, rtcp_ip_address);
 			return -1;
 		}
@@ -2832,11 +2976,19 @@ int32_t ViEChannel::SetSendDestination(
 		// Workaround to avoid SSRC colision detection in loppback tests.
 		if (!is_ipv6) {
 			WebRtc_UWord32 local_host_address = 0;
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
 			const WebRtc_UWord32 current_ip_address =
 				UdpTransport::InetAddrIPV4(rtp_ip_address);
 
 			if ((UdpTransport::LocalHostAddress(local_host_address) == 0 &&
 				local_host_address == current_ip_address) ||
+#else
+                const WebRtc_UWord32 current_ip_address =
+                TcpTransport::InetAddrIPV4(rtp_ip_address);
+                
+                if ((TcpTransport::LocalHostAddress(local_host_address) == 0 &&
+                     local_host_address == current_ip_address) ||
+#endif
 				strncmp("127.0.0.1", rtp_ip_address, 9) == 0) {
 					rtp_rtcp_->SetSSRC(0xFFFFFFFF);
 					WEBRTC_TRACE(kTraceStateInfo, kTraceVideo, ViEId(engine_id_, channel_id_),
@@ -2845,9 +2997,14 @@ int32_t ViEChannel::SetSendDestination(
 		} else {
 			char local_host_address[16];
 			char current_ip_address[16];
-
+            
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
 			int32_t conv_result =
 				UdpTransport::LocalHostAddressIPV6(local_host_address);
+#else
+            int32_t conv_result =
+                TcpTransport::LocalHostAddressIPV6(local_host_address);
+#endif
 			conv_result += socket_transport_->InetPresentationToNumeric(
 				23, rtp_ip_address, current_ip_address);
 			if (conv_result == 0) {
@@ -2879,12 +3036,12 @@ int32_t ViEChannel::SetSendDestination(
 			}
 		}
 		return 0;
-#else
-		WEBRTC_TRACE(kTraceStateInfo, kTraceVideo,
-			ViEId(engine_id_, channel_id_),
-			"%s: not available for external transport", __FUNCTION__);
-		return -1;
-#endif
+//#else
+//		WEBRTC_TRACE(kTraceStateInfo, kTraceVideo,
+//			ViEId(engine_id_, channel_id_),
+//			"%s: not available for external transport", __FUNCTION__);
+//		return -1;
+//#endif
 }
 
 int32_t ViEChannel::GetSendDestination(
@@ -2905,7 +3062,13 @@ int32_t ViEChannel::GetSendDestination(
 		}
 		callback_cs_->Leave();
 
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
+    
+    if (!socket_transport_) {
+        LOG(LS_ERROR)<<"ViEChannel::GetSendDestination socket_transport_ is NULL";
+        return -1;
+    }
+    
 		if (socket_transport_->SendSocketsInitialized() == false) {
 			WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 				"%s: send sockets not initialized", __FUNCTION__);
@@ -2925,11 +3088,11 @@ int32_t ViEChannel::GetSendDestination(
 			socket_transport_->SourcePorts(source_rtp_port, source_rtcp_port);
 		}
 		return 0;
-#else
-		WEBRTC_TRACE(kTraceStateInfo, kTraceVideo, ViEId(engine_id_, channel_id_),
-			"%s: not available for external transport", __FUNCTION__);
-		return -1;
-#endif
+//#else
+//		WEBRTC_TRACE(kTraceStateInfo, kTraceVideo, ViEId(engine_id_, channel_id_),
+//			"%s: not available for external transport", __FUNCTION__);
+//		return -1;
+//#endif
 }
 
 int32_t ViEChannel::StartSend() {
@@ -2937,16 +3100,21 @@ int32_t ViEChannel::StartSend() {
 	WEBRTC_TRACE(kTraceInfo, kTraceVideo, ViEId(engine_id_, channel_id_),
 		"%s", __FUNCTION__);
 
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
 	if (!external_transport_) {
+        if (!socket_transport_) {
+            LOG(LS_ERROR)<<"ViEChannel::StartSend socket_transport_ is NULL";
+            return -1;
+        }
 		if (socket_transport_->SendSocketsInitialized() == false) {
 			WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 				"%s: send sockets not initialized", __FUNCTION__);
 			return -1;
 		}
 	}
-#endif
-    default_rtp_rtcp_->SetSendingMediaStatus(true);
+//#endif
+	rtp_rtcp_->SetSendingMediaStatus(true);
+
 	if (!isSVCChannel_) {//if svc, simulcast not call this function
 		if (default_rtp_rtcp_->Sending()) {
 			// Already sending.
@@ -2975,11 +3143,16 @@ int32_t ViEChannel::StartSend() {
 }
 
 bool ViEChannel::Receiving() {
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
+    if (!socket_transport_) {
+        LOG(LS_ERROR)<<"ViEChannel::Receiving socket_transport_ is NULL";
+        return -1;
+    }
+    
 	return socket_transport_->Receiving();
-#else
-	return false;
-#endif
+//#else
+//	return false;
+//#endif
 }
 
 int32_t ViEChannel::SendUDPPacket(const int8_t* data,
@@ -3002,7 +3175,12 @@ int32_t ViEChannel::SendUDPPacket(const int8_t* data,
 			}
 		}
 
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
+        
+        if (!socket_transport_) {
+            LOG(LS_ERROR)<<"ViEChannel::SendUDPPacket socket_transport_ is NULL";
+            return -1;
+        }
 		transmitted_bytes = socket_transport_->SendRaw(data, length, use_rtcp_socket,portnr,ip);
 		if (transmitted_bytes == -1) {
 			WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_), "%s",
@@ -3013,11 +3191,11 @@ int32_t ViEChannel::SendUDPPacket(const int8_t* data,
 
 
 		return 0;
-#else
-		WEBRTC_TRACE(kTraceStateInfo, kTraceVideo, ViEId(engine_id_, channel_id_),
-			"%s: not available for external transport", __FUNCTION__);
-		return -1;
-#endif
+//#else
+//		WEBRTC_TRACE(kTraceStateInfo, kTraceVideo, ViEId(engine_id_, channel_id_),
+//			"%s: not available for external transport", __FUNCTION__);
+//		return -1;
+//#endif
 }
 
 void ViEChannel::RegisterFrameStorageCallback(VCMFrameStorageCallback* frameStorageCallback)
@@ -3085,7 +3263,12 @@ int32_t ViEChannel::EnableIPv6() {
     }
     callback_cs_->Leave();
     
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
+    if (!socket_transport_) {
+        LOG(LS_ERROR)<<"ViEChannel::EnableIPv6 socket_transport_ is NULL, use ECMedia_video_set_local_receiver which has parameter ipv6 flag or after ECMedia_video_set_local_receiver";
+        return -1;
+    }
+    
     if (socket_transport_->IpV6Enabled()) {
         WEBRTC_TRACE(kTraceWarning, kTraceVideo, ViEId(engine_id_, channel_id_),
                      "%s: IPv6 already enabled", __FUNCTION__);
@@ -3100,11 +3283,11 @@ int32_t ViEChannel::EnableIPv6() {
         return -1;
     }
     return 0;
-#else
-    WEBRTC_TRACE(kTraceStateInfo, kTraceVideo, ViEId(engine_id_, channel_id_),
-                 "%s: not available for external transport", __FUNCTION__);
-    return -1;
-#endif
+//#else
+//    WEBRTC_TRACE(kTraceStateInfo, kTraceVideo, ViEId(engine_id_, channel_id_),
+//                 "%s: not available for external transport", __FUNCTION__);
+//    return -1;
+//#endif
 }
 
 bool ViEChannel::IsIPv6Enabled() {
@@ -3118,13 +3301,18 @@ bool ViEChannel::IsIPv6Enabled() {
             return false;
         }
     }
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
+    if (!socket_transport_) {
+        LOG(LS_ERROR)<<"ViEChannel::IsIPv6Enabled socket_transport_ is NULL";
+        return -1;
+    }
+    
     return socket_transport_->IpV6Enabled();
-#else
-    WEBRTC_TRACE(kTraceStateInfo, kTraceVideo, ViEId(engine_id_, channel_id_),
-                 "%s: not available for external transport", __FUNCTION__);
-    return false;
-#endif
+//#else
+//    WEBRTC_TRACE(kTraceStateInfo, kTraceVideo, ViEId(engine_id_, channel_id_),
+//                 "%s: not available for external transport", __FUNCTION__);
+//    return false;
+//#endif
 }
     
 int32_t ViEChannel::SetKeepAliveStatus(

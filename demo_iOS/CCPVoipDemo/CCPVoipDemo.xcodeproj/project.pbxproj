@@ -4736,6 +4736,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEPLOYMENT_POSTPROCESSING = NO;
 				DEVELOPMENT_TEAM = 2372872F55;
 				ENABLE_BITCODE = NO;
@@ -4783,6 +4784,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEPLOYMENT_POSTPROCESSING = NO;
 				DEVELOPMENT_TEAM = 2372872F55;
 				ENABLE_BITCODE = NO;

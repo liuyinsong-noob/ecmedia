@@ -326,6 +326,15 @@ Channel::SendRtp(int channel, const uint8_t *data, size_t len, const PacketOptio
         bufferLength = backDataLen+12;
     }
     
+    if (!_transportPtr) {
+        std::string transport_name =
+        _externalTransport ? "external transport" : "WebRtc sockets";
+        WEBRTC_TRACE(kTraceError, kTraceVoice,
+                     VoEId(_instanceId,_channelId),
+                     "Channel::SendPacket() RTP transmission using %s failed since no transport(NULL)",
+                     transport_name.c_str());
+        return -1;
+    }
     int n = _transportPtr->SendRtp(channel, bufferToSendPtr,
                                       bufferLength);
     if (n < 0) {
@@ -415,6 +424,15 @@ Channel::SendRtcp(int channel, const uint8_t *data, size_t len)
 			bufferLength = encryptedBufferLength;
 		}
 	}
+    if (!_transportPtr) {
+        std::string transport_name =
+        _externalTransport ? "external transport" : "WebRtc sockets";
+        WEBRTC_TRACE(kTraceInfo, kTraceVoice,
+                     VoEId(_instanceId,_channelId),
+                     "Channel::SendRTCPPacket() transmission using %s failed since no transport(NULL)",
+                     transport_name.c_str());
+        return -1;
+    }
 
     int n = _transportPtr->SendRtcp(channel,
                                           bufferToSendPtr,
@@ -974,7 +992,10 @@ Channel::Channel(int32_t channelId,
 #endif
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
 	_numSocketThreads(KNumSocketThreads),
-	_socketTransportModule(*UdpTransport::Create(VoEModuleId(instanceId, channelId), _numSocketThreads)),
+	_socketTransportModule(UdpTransport::Create(VoEModuleId(instanceId, channelId), _numSocketThreads)),
+#else
+    _numSocketThreads(KNumSocketThreads),
+    _socketTransportModule(TcpTransport::Create(VoEModuleId(instanceId, channelId), _numSocketThreads)),
 #endif
 	critsect_net_statistic(CriticalSectionWrapper::CreateCriticalSection()),
 	_startNetworkTime(0),
@@ -996,7 +1017,8 @@ Channel::Channel(int32_t channelId,
     _rtpTimeOutSeconds(0),
 	_processDataFlag(false),
     _sendData(NULL),
-    _receiveData(NULL)
+    _receiveData(NULL),
+    _rtp_port(0)
 {
     WEBRTC_TRACE(kTraceMemory, kTraceVoice, VoEId(_instanceId,_channelId),
                  "Channel::Channel() - ctor");
@@ -1042,15 +1064,21 @@ Channel::~Channel()
         DeRegisterExternalMediaProcessing(kRecordingPerChannel);
     }
     StopSend();
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
 	StopReceiving();
 	// De-register packet callback to ensure we're not in a callback when
 	// deleting channel state, avoids race condition and deadlock.
-	unsigned int ssrc;
-	GetLocalSSRC(ssrc);
-	_socketTransportModule.SubRecieveChannel(ssrc);
+//    if (_socketTransportModule) {
+//        unsigned int ssrc;
+//        GetLocalSSRC(ssrc);
+//        int refNum = _socketTransportModule->GetRefNum();
+//        if (refNum) {
+//            _socketTransportModule->SubRecieveChannel(ssrc);
+//        }
+//        
+//    }
 	
-#endif
+//#endif
     StopPlayout();
 
     {
@@ -1097,15 +1125,15 @@ Channel::~Channel()
                      " (Audio coding module)");
     }
     // De-register modules in process thread
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
-	if (_moduleProcessThreadPtr->DeRegisterModule(&_socketTransportModule)
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
+	if (_moduleProcessThreadPtr->DeRegisterModule(_socketTransportModule)
 		== -1)
 	{
 		WEBRTC_TRACE(kTraceInfo, kTraceVoice,
 			VoEId(_instanceId,_channelId),
 			"~Channel() failed to deregister socket module");
 	}
-#endif
+//#endif
     if (_moduleProcessThreadPtr->DeRegisterModule(_rtpRtcpModule.get()) == -1)
     {
         WEBRTC_TRACE(kTraceInfo, kTraceVoice,
@@ -1123,9 +1151,27 @@ Channel::~Channel()
 
     // Delete other objects
 
+    
+    //    if (_socketTransportModule) {
+    //        unsigned int ssrc;
+    //        GetLocalSSRC(ssrc);
+    //        int refNum = _socketTransportModule->GetRefNum();
+    //        if (refNum) {
+    //            _socketTransportModule->SubRecieveChannel(ssrc);
+    //        }
+    //        
+    //    }
+    if (_socketTransportModule) {
+        unsigned int ssrc = 0;
+        GetLocalSSRC(ssrc);
+        _socketTransportModule->SubRecieveChannel(ssrc);
+        GetRemoteSSRC(ssrc);
+        _socketTransportModule->SubRecieveChannel(ssrc);
+    }
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
-	UdpTransport::Destroy(
-		&_socketTransportModule);
+    UdpTransport::Release(_rtp_port);
+#else
+	TcpTransport::Release(_rtp_port);
 #endif
 #ifdef WEBRTC_SRTP
 	SrtpModule::DestroySrtpModule(&_srtpModule);
@@ -1292,21 +1338,15 @@ Channel::Init()
 	{
 		// A lock is needed here since users can call
 		// RegisterExternalTransport() at the same time.
-		CriticalSectionScoped cs(&_callbackCritSect);
-		_transportPtr = &_socketTransportModule;
+//		CriticalSectionScoped cs(&_callbackCritSect);
+//		_transportPtr = _socketTransportModule;
 	}
 #endif
 
 	// --- Add modules to process thread (for periodic schedulation)
 		const bool processThreadFail =
 		((_moduleProcessThreadPtr->RegisterModule(_rtpRtcpModule.get()) != 0) ||
-		(_moduleProcessThreadPtr->RegisterModule(audio_coding_.get()) != 0) ||
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
-		(_moduleProcessThreadPtr->RegisterModule(
-			&_socketTransportModule) != 0));
-#else
-		false);
-#endif
+         (_moduleProcessThreadPtr->RegisterModule(audio_coding_.get()) != 0));
 
 	if (processThreadFail)
 	{
@@ -1341,6 +1381,7 @@ Channel::SetEngineInformation(Statistics& engineStatistics,
                               VoiceEngineObserver* voiceEngineObserver,
                               CriticalSectionWrapper* callbackCritSect)
 {
+ 
     WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
                  "Channel::SetEngineInformation()");
     _engineStatisticsPtr = &engineStatistics;
@@ -1486,17 +1527,17 @@ Channel::StartReceiving()
     {
         return 0;
     }
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
 	if (!_externalTransport)
 	{
-		if (!_socketTransportModule.ReceiveSocketsInitialized())
+		if (!_socketTransportModule->ReceiveSocketsInitialized())
 		{
 			_engineStatisticsPtr->SetLastError(
 				VE_SOCKETS_NOT_INITED, kTraceError,
 				"StartReceive() must set local receiver first");
 			return -1;
 		}
-		if (_socketTransportModule.StartReceiving(KNumberOfSocketBuffers) != 0)
+		if (_socketTransportModule->StartReceiving(KNumberOfSocketBuffers) != 0)
 		{
 			_engineStatisticsPtr->SetLastError(
 				VE_SOCKET_TRANSPORT_MODULE_ERROR, kTraceError,
@@ -1504,7 +1545,7 @@ Channel::StartReceiving()
 			return -1;
 		}
 	}
-#endif
+//#endif
     channel_state_.SetReceiving(true);
     _numberOfDiscardedPackets = 0;
     return 0;
@@ -1519,11 +1560,11 @@ Channel::StopReceiving()
     {
         return 0;
     }
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
 	if (!_externalTransport &&
-		_socketTransportModule.ReceiveSocketsInitialized())
+		_socketTransportModule->ReceiveSocketsInitialized())
 	{
-		if (_socketTransportModule.StopReceiving() != 0)
+		if (_socketTransportModule->StopReceiving() != 0)
 		{
 			_engineStatisticsPtr->SetLastError(
 				VE_SOCKET_TRANSPORT_MODULE_ERROR, kTraceError,
@@ -1531,7 +1572,7 @@ Channel::StopReceiving()
 			return -1;
 		}
 	}
-#endif
+//#endif
     channel_state_.SetReceiving(false);
     return 0;
 }
@@ -1839,24 +1880,24 @@ int32_t Channel::RegisterExternalTransport(Transport& transport)
                "Channel::RegisterExternalTransport()");
 
     CriticalSectionScoped cs(&_callbackCritSect);
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
 	// Sanity checks for default (non external transport) to avoid conflict with
 	// WebRtc sockets.
-	if (_socketTransportModule.SendSocketsInitialized())
+	if (_socketTransportModule->SendSocketsInitialized())
 	{
 		_engineStatisticsPtr->SetLastError(VE_SEND_SOCKETS_CONFLICT,
 			kTraceError,
 			"RegisterExternalTransport() send sockets already initialized");
 		return -1;
 	}
-	if (_socketTransportModule.ReceiveSocketsInitialized())
+	if (_socketTransportModule->ReceiveSocketsInitialized())
 	{
 		_engineStatisticsPtr->SetLastError(VE_RECEIVE_SOCKETS_CONFLICT,
 			kTraceError,
 			"RegisterExternalTransport() receive sockets already initialized");
 		return -1;
 	}
-#endif
+//#endif
     if (_externalTransport)
     {
         _engineStatisticsPtr->SetLastError(VE_INVALID_OPERATION,
@@ -1886,15 +1927,15 @@ Channel::DeRegisterExternalTransport()
         return 0;
     }
     _externalTransport = false;
-#ifdef WEBRTC_EXTERNAL_TRANSPORT
-	_transportPtr = NULL;
-	WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
-		"DeRegisterExternalTransport() all transport is disabled");
-#else
-	_transportPtr = &_socketTransportModule;
+//#ifdef WEBRTC_EXTERNAL_TRANSPORT
+//	_transportPtr = NULL;
+//	WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
+//		"DeRegisterExternalTransport() all transport is disabled");
+//#else
+	_transportPtr = _socketTransportModule;
 	WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
 		"DeRegisterExternalTransport() internal Transport is enabled");
-#endif
+//#endif
     //_transportPtr = NULL;
     WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
                  "DeRegisterExternalTransport() all transport is disabled");
@@ -1929,9 +1970,9 @@ int32_t Channel::ReceivedRTPPacket(const int8_t* data, size_t length,
   // Dump the RTP packet to a file (if RTP dump is enabled).
   if (_rtpDumpIn.DumpPacket((const uint8_t*)data,
                             (uint16_t)length) == -1) {
-//    WEBRTC_TRACE(kTraceWarning, kTraceVoice,
-//                 VoEId(_instanceId,_channelId),
-//                 "Channel::SendPacket() RTP dump to input file failed");
+    WEBRTC_TRACE(kTraceWarning, kTraceVoice,
+                 VoEId(_instanceId,_channelId),
+                 "Channel::SendPacket() RTP dump to input file failed");
   }
   const uint8_t* received_packet = reinterpret_cast<const uint8_t*>(data);
   RTPHeader header;
@@ -3191,10 +3232,28 @@ Channel::SetLocalSSRC(unsigned int ssrc)
             "SetLocalSSRC() already sending");
         return -1;
     }
+    if (_socketTransportModule) {
+        _socketTransportModule->AddRecieveChannel(ssrc, this);
+    }
     _rtpRtcpModule->SetSSRC(ssrc);
     return 0;
 }
 
+//for distribute remote audio stream
+int
+Channel::SetRemoteSSRC(unsigned int ssrc)
+{
+    WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId, _channelId),
+                 "Channel::SetRemoteSSRC()");
+    //when remote ssrc changed, should reset remote ssrc
+    if (_socketTransportModule) {
+        _socketTransportModule->AddRecieveChannel(ssrc, this);
+    }
+    rtp_receiver_->SetSSRC(ssrc);
+    _remote_ssrc = ssrc;
+    return 0;
+}
+    
 int
 Channel::GetLocalSSRC(unsigned int& ssrc)
 {
@@ -4630,7 +4689,9 @@ int64_t Channel::GetRTT() const {
   }
   return rtt;
 }
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+
+
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
 WebRtc_Word32
 	Channel::SetLocalReceiver(const WebRtc_UWord16 rtpPort,
 	const WebRtc_UWord16 rtcpPort,
@@ -4663,14 +4724,15 @@ WebRtc_Word32
 		return -1;
 	}
 
-	if (_socketTransportModule.InitializeReceiveSockets(this,
+	if (_socketTransportModule->InitializeReceiveSockets(this,
 		rtpPort,
 		ipAddr,
 		multicastIpAddr,
 		rtcpPort) != 0)
 	{
-		UdpTransport::ErrorCode lastSockError(
-			_socketTransportModule.LastError());
+#ifndef WEBRTC_EXTERNAL_TRANSPORT		
+    UdpTransport::ErrorCode lastSockError(
+			_socketTransportModule->LastError());
 		switch (lastSockError)
 		{
 		case UdpTransport::kIpAddressInvalid:
@@ -4699,16 +4761,48 @@ WebRtc_Word32
 				"SetLocalReceiver() undefined socket error");
 			break;
 		}
+#else
+     TcpTransport::ErrorCode lastSockError(
+      _socketTransportModule->LastError());
+    switch (lastSockError)
+    {
+    case TcpTransport::kIpAddressInvalid:
+      _engineStatisticsPtr->SetLastError(
+        VE_INVALID_IP_ADDRESS, kTraceError,
+        "SetLocalReceiver() invalid IP address");
+      break;
+    case TcpTransport::kSocketInvalid:
+      _engineStatisticsPtr->SetLastError(
+        VE_SOCKET_ERROR, kTraceError,
+        "SetLocalReceiver() invalid socket");
+      break;
+    case TcpTransport::kPortInvalid:
+      _engineStatisticsPtr->SetLastError(
+        VE_INVALID_PORT_NMBR, kTraceError,
+        "SetLocalReceiver() invalid port");
+      break;
+    case TcpTransport::kFailedToBindPort:
+      _engineStatisticsPtr->SetLastError(
+        VE_BINDING_SOCKET_TO_LOCAL_ADDRESS_FAILED, kTraceError,
+        "SetLocalReceiver() binding failed");
+      break;
+    default:
+      _engineStatisticsPtr->SetLastError(
+        VE_SOCKET_ERROR, kTraceError,
+        "SetLocalReceiver() undefined socket error");
+      break;
+    }   
+#endif
 		return -1;
 	}
 	unsigned int ssrc;
 	GetLocalSSRC(ssrc);
-	_socketTransportModule.AddRecieveChannel(ssrc, this);
+	_socketTransportModule->AddRecieveChannel(ssrc, this);
 	return 0;
 }
-#endif
+//#endif
 
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
 WebRtc_Word32
 	Channel::GetLocalReceiver(int& port, int& RTCPport, char ipAddr[64])
 {
@@ -4723,13 +4817,18 @@ WebRtc_Word32
 		return -1;
 	}
 
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
 	char ipAddrTmp[UdpTransport::kIpAddressVersion6Length] = {0};
-	WebRtc_UWord16 rtpPort(0);
-	WebRtc_UWord16 rtcpPort(0);
 	char multicastIpAddr[UdpTransport::kIpAddressVersion6Length] = {0};
+#else
+  char ipAddrTmp[TcpTransport::kIpAddressVersion6Length] = {0};
+  char multicastIpAddr[TcpTransport::kIpAddressVersion6Length] = {0};  
+#endif
 
+  WebRtc_UWord16 rtpPort(0);
+  WebRtc_UWord16 rtcpPort(0);
 	// Acquire socket information from the socket module
-	if (_socketTransportModule.ReceiveSocketInformation(ipAddrTmp,
+	if (_socketTransportModule->ReceiveSocketInformation(ipAddrTmp,
 		rtpPort,
 		rtcpPort,
 		multicastIpAddr) != 0)
@@ -4749,9 +4848,9 @@ WebRtc_Word32
 	}
 	return 0;
 }
-#endif
+//#endif
 
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
 WebRtc_Word32
 Channel::SetSocks5SendData(unsigned char *data, int length, bool isRTCP) {
     WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
@@ -4764,7 +4863,7 @@ Channel::SetSocks5SendData(unsigned char *data, int length, bool isRTCP) {
                 "SetSocks5SendData() conflict with external transport");
         return -1;
     }
-    return _socketTransportModule.SetSocks5SendData(data, length, isRTCP);
+    return _socketTransportModule->SetSocks5SendData(data, length, isRTCP);
 }
 
 WebRtc_Word32
@@ -4797,10 +4896,11 @@ WebRtc_Word32
 	// However, sockets must exist if a multi-cast address is given as input.
 
 	// Build send structures and enable QoS (if enabled and supported)
-	if (_socketTransportModule.InitializeSendSockets(rtp_ipAddr, rtpPort, rtcp_ipAddr, rtcpPort) != UdpTransport::kNoSocketError)
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
+	if (_socketTransportModule->InitializeSendSockets(rtp_ipAddr, rtpPort, rtcp_ipAddr, rtcpPort) != UdpTransport::kNoSocketError)
 	{
 		UdpTransport::ErrorCode lastSockError(
-			_socketTransportModule.LastError());
+			_socketTransportModule->LastError());
 		switch (lastSockError)
 		{
 		case UdpTransport::kIpAddressInvalid:
@@ -4831,6 +4931,42 @@ WebRtc_Word32
 		}
 		return -1;
 	}
+#else
+    if (_socketTransportModule->InitializeSendSockets(rtp_ipAddr, rtpPort, rtcp_ipAddr, rtcpPort) != TcpTransport::kNoSocketError)
+    {
+        TcpTransport::ErrorCode lastSockError(
+          _socketTransportModule->LastError());
+        switch (lastSockError)
+        {
+        case TcpTransport::kIpAddressInvalid:
+          _engineStatisticsPtr->SetLastError(
+            VE_INVALID_IP_ADDRESS, kTraceError,
+            "SetSendDestination() invalid IP address 1");
+          break;
+        case TcpTransport::kSocketInvalid:
+          _engineStatisticsPtr->SetLastError(
+            VE_SOCKET_ERROR, kTraceError,
+            "SetSendDestination() invalid socket 1");
+          break;
+        case TcpTransport::kQosError:
+          _engineStatisticsPtr->SetLastError(
+            VE_GQOS_ERROR, kTraceError,
+            "SetSendDestination() failed to set QoS");
+          break;
+        case TcpTransport::kMulticastAddressInvalid:
+          _engineStatisticsPtr->SetLastError(
+            VE_INVALID_MULTICAST_ADDRESS, kTraceError,
+            "SetSendDestination() invalid multicast address");
+          break;
+        default:
+          _engineStatisticsPtr->SetLastError(
+            VE_SOCKET_ERROR, kTraceError,
+            "SetSendDestination() undefined socket error 1");
+          break;
+        }
+        return -1;
+    }  
+#endif
 
 	// Check if the user has specified a non-default source port different from
 	// the local receive port.
@@ -4840,7 +4976,7 @@ WebRtc_Word32
 	{
 		WebRtc_UWord16 receiverRtpPort(0);
 		WebRtc_UWord16 rtcpNA(0);
-		if (_socketTransportModule.ReceiveSocketInformation(NULL,
+		if (_socketTransportModule->ReceiveSocketInformation(NULL,
 			receiverRtpPort,
 			rtcpNA,
 			NULL) != 0)
@@ -4862,12 +4998,13 @@ WebRtc_Word32
 			// than the local
 			// receiver port. Always use default source for RTCP.
 			// Note that, this calls UdpTransport::CloseSendSockets().
-			if (_socketTransportModule.InitializeSourcePorts(
+			if (_socketTransportModule->InitializeSourcePorts(
 				sourcePortUW16,
 				sourcePortUW16+1) != 0)
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
 			{
 				UdpTransport::ErrorCode lastSockError(
-					_socketTransportModule.LastError());
+					_socketTransportModule->LastError());
 				switch (lastSockError)
 				{
 				case UdpTransport::kIpAddressInvalid:
@@ -4886,6 +5023,29 @@ WebRtc_Word32
 						"SetSendDestination() undefined socket error 2");
 					break;
 				}
+#else
+      {
+        TcpTransport::ErrorCode lastSockError(
+          _socketTransportModule->LastError());
+        switch (lastSockError)
+        {
+        case TcpTransport::kIpAddressInvalid:
+          _engineStatisticsPtr->SetLastError(
+            VE_INVALID_IP_ADDRESS, kTraceError,
+            "SetSendDestination() invalid IP address 2");
+          break;
+        case TcpTransport::kSocketInvalid:
+          _engineStatisticsPtr->SetLastError(
+            VE_SOCKET_ERROR, kTraceError,
+            "SetSendDestination() invalid socket 2");
+          break;
+        default:
+          _engineStatisticsPtr->SetLastError(
+            VE_SOCKET_ERROR, kTraceError,
+            "SetSendDestination() undefined socket error 2");
+          break;
+        }      
+#endif
 				return -1;
 			}
 			WEBRTC_TRACE(kTraceInfo, kTraceVoice,
@@ -4904,9 +5064,9 @@ WebRtc_Word32
 
 	return 0;
 }
-#endif
+//#endif
 
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
 WebRtc_Word32
 	Channel::GetSendDestination(int& port,
 	char ipAddr[64],
@@ -4923,16 +5083,20 @@ WebRtc_Word32
 			"GetSendDestination() conflict with external transport");
 		return -1;
 	}
-
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
 	char ipAddrTmp[UdpTransport::kIpAddressVersion6Length] = {0};
+#else
+  char ipAddrTmp[TcpTransport::kIpAddressVersion6Length] = {0};  
+#endif
+
 	WebRtc_UWord16 rtpPort(0);
 	WebRtc_UWord16 rtcpPort(0);
 	WebRtc_UWord16 rtpSourcePort(0);
 	WebRtc_UWord16 rtcpSourcePort(0);
 
 	// Acquire sending socket information from the socket module
-	_socketTransportModule.SendSocketInformation(ipAddrTmp, rtpPort, rtcpPort);
-	_socketTransportModule.SourcePorts(rtpSourcePort, rtcpSourcePort);
+	_socketTransportModule->SendSocketInformation(ipAddrTmp, rtpPort, rtcpPort);
+	_socketTransportModule->SourcePorts(rtpSourcePort, rtcpSourcePort);
 
 	// Deliver valid results to the user
 	port = static_cast<int> (rtpPort);
@@ -4945,7 +5109,7 @@ WebRtc_Word32
 
 	return 0;
 }
-#endif
+//#endif
 
 void
 	Channel::IncomingRTCPPacket(const WebRtc_Word8* incomingRtcpPacket,
@@ -5496,7 +5660,7 @@ WebRtc_Word32
 	return 0;
 }
 
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
 WebRtc_Word32
 	Channel::GetSourceInfo(int& rtpPort, int& rtcpPort, char ipAddr[64])
 {
@@ -5505,9 +5669,13 @@ WebRtc_Word32
 
 	WebRtc_UWord16 rtpPortModule;
 	WebRtc_UWord16 rtcpPortModule;
+#ifndef WEBRTC_EXTERNAL_TRANSPORT  
 	char ipaddr[UdpTransport::kIpAddressVersion6Length] = {0};
+#else
+  char ipaddr[TcpTransport::kIpAddressVersion6Length] = {0}; 
+#endif
 
-	if (_socketTransportModule.RemoteSocketInformation(ipaddr,
+	if (_socketTransportModule->RemoteSocketInformation(ipaddr,
 		rtpPortModule,
 		rtcpPortModule) != 0)
 	{
@@ -5529,25 +5697,39 @@ WebRtc_Word32
 WebRtc_Word32
 	Channel::EnableIPv6()
 {
+    if (!_socketTransportModule) {
+        WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
+                     "_socketTransportModule is NULL, call ECMedia_set_local_receiver which has parameter ipv6 flag or after ECMedia_set_local_receiver");
+        return -1;
+    }
 	WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
 		"Channel::EnableIPv6()");
-	if (_socketTransportModule.ReceiveSocketsInitialized() ||
-		_socketTransportModule.SendSocketsInitialized())
+	if (_socketTransportModule->ReceiveSocketsInitialized() ||
+		_socketTransportModule->SendSocketsInitialized())
 	{
 		_engineStatisticsPtr->SetLastError(
 			VE_INVALID_OPERATION, kTraceError,
 			"EnableIPv6() socket layer is already initialized");
 		return -1;
 	}
-	if (_socketTransportModule.EnableIpV6() != 0)
+	if (_socketTransportModule->EnableIpV6() != 0)
 	{
 		_engineStatisticsPtr->SetLastError(
 			VE_SOCKET_ERROR, kTraceError,
 			"EnableIPv6() failed to enable IPv6");
+
+#ifndef WEBRTC_EXTERNAL_TRANSPORT 
 		const UdpTransport::ErrorCode lastError =
-			_socketTransportModule.LastError();
-		WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
-			"UdpTransport::LastError() => %d", lastError);
+			_socketTransportModule->LastError();
+    WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
+      "UdpTransport::LastError() => %d", lastError);      
+#else
+    const TcpTransport::ErrorCode lastError =
+      _socketTransportModule->LastError();
+    WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
+      "TcpTransport::LastError() => %d", lastError);          
+#endif
+
 		return -1;
 	}
 	return 0;
@@ -5556,7 +5738,7 @@ WebRtc_Word32
 bool
 	Channel::IPv6IsEnabled() const
 {
-	bool isEnabled = _socketTransportModule.IpV6Enabled();
+	bool isEnabled = _socketTransportModule->IpV6Enabled();
 	WEBRTC_TRACE(kTraceStateInfo, kTraceVoice, VoEId(_instanceId,_channelId),
 		"IPv6IsEnabled() => %d", isEnabled);
 	return isEnabled;
@@ -5567,30 +5749,47 @@ WebRtc_Word32
 {
 	WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
 		"Channel::SetSourceFilter()");
-	if (_socketTransportModule.SetFilterPorts(
+	if (_socketTransportModule->SetFilterPorts(
 		static_cast<WebRtc_UWord16>(rtpPort),
 		static_cast<WebRtc_UWord16>(rtcpPort)) != 0)
 	{
 		_engineStatisticsPtr->SetLastError(
 			VE_SOCKET_TRANSPORT_MODULE_ERROR, kTraceError,
 			"SetSourceFilter() failed to set filter ports");
+
+#ifndef WEBRTC_EXTERNAL_TRANSPORT     
 		const UdpTransport::ErrorCode lastError =
-			_socketTransportModule.LastError();
+			_socketTransportModule->LastError();
 		WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
 			"UdpTransport::LastError() => %d",
 			lastError);
+#else
+    const TcpTransport::ErrorCode lastError =
+      _socketTransportModule->LastError();
+    WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
+      "TcpTransport::LastError() => %d",
+      lastError);    
+#endif
+
 		return -1;
 	}
 	const char* filterIpAddress = ipAddr;
-	if (_socketTransportModule.SetFilterIP(filterIpAddress) != 0)
+	if (_socketTransportModule->SetFilterIP(filterIpAddress) != 0)
 	{
 		_engineStatisticsPtr->SetLastError(
 			VE_INVALID_IP_ADDRESS, kTraceError,
 			"SetSourceFilter() failed to set filter IP address");
+#ifndef WEBRTC_EXTERNAL_TRANSPORT    
 		const UdpTransport::ErrorCode lastError =
-			_socketTransportModule.LastError();
+			_socketTransportModule->LastError();
 		WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
 			"UdpTransport::LastError() => %d", lastError);
+#else
+    const TcpTransport::ErrorCode lastError =
+      _socketTransportModule->LastError();
+    WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
+      "TcpTransport::LastError() => %d", lastError);    
+#endif
 		return -1;
 	}
 	return 0;
@@ -5603,19 +5802,30 @@ WebRtc_Word32
 		"Channel::GetSourceFilter()");
 	WebRtc_UWord16 rtpFilterPort(0);
 	WebRtc_UWord16 rtcpFilterPort(0);
-	if (_socketTransportModule.FilterPorts(rtpFilterPort, rtcpFilterPort) != 0)
+	if (_socketTransportModule->FilterPorts(rtpFilterPort, rtcpFilterPort) != 0)
 	{
 		_engineStatisticsPtr->SetLastError(
 			VE_SOCKET_TRANSPORT_MODULE_ERROR, kTraceWarning,
 			"GetSourceFilter() failed to retrieve filter ports");
 	}
+#ifndef WEBRTC_EXTERNAL_TRANSPORT 
 	char ipAddrTmp[UdpTransport::kIpAddressVersion6Length] = {0};
-	if (_socketTransportModule.FilterIP(ipAddrTmp) != 0)
+	if (_socketTransportModule->FilterIP(ipAddrTmp) != 0)
 	{
 		// no filter has been configured (not seen as an error)
 		memset(ipAddrTmp,
 			0, UdpTransport::kIpAddressVersion6Length);
 	}
+#else
+  char ipAddrTmp[TcpTransport::kIpAddressVersion6Length] = {0};
+  if (_socketTransportModule->FilterIP(ipAddrTmp) != 0)
+  {
+    // no filter has been configured (not seen as an error)
+    memset(ipAddrTmp,
+      0, TcpTransport::kIpAddressVersion6Length);
+  }  
+#endif
+
 	rtpPort = static_cast<int> (rtpFilterPort);
 	rtcpPort = static_cast<int> (rtcpFilterPort);
 	strcpy(ipAddr, ipAddrTmp);
@@ -5633,10 +5843,11 @@ WebRtc_Word32
 		DSCP, (int)useSetSockopt);
 
 	// Set TOS value and possibly try to force usage of setsockopt()
-	if (_socketTransportModule.SetToS(DSCP, useSetSockopt) != 0)
+	if (_socketTransportModule->SetToS(DSCP, useSetSockopt) != 0)
 	{
+#ifndef WEBRTC_EXTERNAL_TRANSPORT 
 		UdpTransport::ErrorCode lastSockError(
-			_socketTransportModule.LastError());
+			_socketTransportModule->LastError());
 		switch (lastSockError)
 		{
 		case UdpTransport::kTosError:
@@ -5666,16 +5877,50 @@ WebRtc_Word32
 		WEBRTC_TRACE(kTraceError, kTraceVoice, VoEId(_instanceId,_channelId),
 			"UdpTransport =>  lastError = %d",
 			lastSockError);
+#else
+    TcpTransport::ErrorCode lastSockError(
+      _socketTransportModule->LastError());
+    switch (lastSockError)
+    {
+    case TcpTransport::kTosError:
+      _engineStatisticsPtr->SetLastError(VE_TOS_ERROR, kTraceError,
+        "SetSendTOS() TOS error");
+      break;
+    case TcpTransport::kQosError:
+      _engineStatisticsPtr->SetLastError(
+        VE_TOS_GQOS_CONFLICT, kTraceError,
+        "SetSendTOS() GQOS error");
+      break;
+    case TcpTransport::kTosInvalid:
+      // can't switch SetSockOpt method without disabling TOS first, or
+      // SetSockopt() call failed
+      _engineStatisticsPtr->SetLastError(VE_TOS_INVALID, kTraceError,
+        "SetSendTOS() invalid TOS");
+      break;
+    case TcpTransport::kSocketInvalid:
+      _engineStatisticsPtr->SetLastError(VE_SOCKET_ERROR, kTraceError,
+        "SetSendTOS() invalid Socket");
+      break;
+    default:
+      _engineStatisticsPtr->SetLastError(VE_TOS_ERROR, kTraceError,
+        "SetSendTOS() TOS error");
+      break;
+    }
+    WEBRTC_TRACE(kTraceError, kTraceVoice, VoEId(_instanceId,_channelId),
+      "TcpTransport =>  lastError = %d",
+      lastSockError);    
+#endif
 		return -1;
 	}
 
 	// Set priority (PCP) value, -1 means don't change
 	if (-1 != priority)
 	{
-		if (_socketTransportModule.SetPCP(priority) != 0)
+		if (_socketTransportModule->SetPCP(priority) != 0)
 		{
+#ifndef WEBRTC_EXTERNAL_TRANSPORT       
 			UdpTransport::ErrorCode lastSockError(
-				_socketTransportModule.LastError());
+				_socketTransportModule->LastError());
 			switch (lastSockError)
 			{
 			case UdpTransport::kPcpError:
@@ -5701,6 +5946,35 @@ WebRtc_Word32
 				VoEId(_instanceId,_channelId),
 				"UdpTransport =>  lastError = %d",
 				lastSockError);
+#else
+      TcpTransport::ErrorCode lastSockError(
+        _socketTransportModule->LastError());
+      switch (lastSockError)
+      {
+      case TcpTransport::kPcpError:
+        _engineStatisticsPtr->SetLastError(VE_TOS_ERROR, kTraceError,
+          "SetSendTOS() PCP error");
+        break;
+      case TcpTransport::kQosError:
+        _engineStatisticsPtr->SetLastError(
+          VE_TOS_GQOS_CONFLICT, kTraceError,
+          "SetSendTOS() GQOS conflict");
+        break;
+      case TcpTransport::kSocketInvalid:
+        _engineStatisticsPtr->SetLastError(
+          VE_SOCKET_ERROR, kTraceError,
+          "SetSendTOS() invalid Socket");
+        break;
+      default:
+        _engineStatisticsPtr->SetLastError(VE_TOS_ERROR, kTraceError,
+          "SetSendTOS() PCP error");
+        break;
+      }
+      WEBRTC_TRACE(kTraceError, kTraceVoice,
+        VoEId(_instanceId,_channelId),
+        "TcpTransport =>  lastError = %d",
+        lastSockError);      
+#endif    
 			return -1;
 		}
 	}
@@ -5715,14 +5989,14 @@ WebRtc_Word32
 		"Channel::GetSendTOS(DSCP=?, useSetSockopt=?)");
 	WebRtc_Word32 dscp(0), prio(0);
 	bool setSockopt(false);
-	if (_socketTransportModule.ToS(dscp, setSockopt) != 0)
+	if (_socketTransportModule->ToS(dscp, setSockopt) != 0)
 	{
 		_engineStatisticsPtr->SetLastError(
 			VE_SOCKET_TRANSPORT_MODULE_ERROR, kTraceError,
 			"GetSendTOS() failed to get TOS info");
 		return -1;
 	}
-	if (_socketTransportModule.PCP(prio) != 0)
+	if (_socketTransportModule->PCP(prio) != 0)
 	{
 		_engineStatisticsPtr->SetLastError(
 			VE_SOCKET_TRANSPORT_MODULE_ERROR, kTraceError,
@@ -5746,14 +6020,14 @@ WebRtc_Word32
 		"Channel::SetSendGQoS(enable=%d, serviceType=%d, "
 		"overrideDSCP=%d)",
 		(int)enable, serviceType, overrideDSCP);
-	if(!_socketTransportModule.ReceiveSocketsInitialized())
+	if(!_socketTransportModule->ReceiveSocketsInitialized())
 	{
 		_engineStatisticsPtr->SetLastError(
 			VE_SOCKETS_NOT_INITED, kTraceError,
 			"SetSendGQoS() GQoS state must be set after sockets are created");
 		return -1;
 	}
-	if(!_socketTransportModule.SendSocketsInitialized())
+	if(!_socketTransportModule->SendSocketsInitialized())
 	{
 		_engineStatisticsPtr->SetLastError(
 			VE_DESTINATION_NOT_INITED, kTraceError,
@@ -5785,7 +6059,7 @@ WebRtc_Word32
 	bool QoS(false);
 	WebRtc_Word32 sType(0);
 	WebRtc_Word32 ovrDSCP(0);
-	if (_socketTransportModule.QoS(QoS, sType, ovrDSCP))
+	if (_socketTransportModule->QoS(QoS, sType, ovrDSCP))
 	{
 		_engineStatisticsPtr->SetLastError(
 			VE_SOCKET_TRANSPORT_MODULE_ERROR, kTraceError,
@@ -5801,14 +6075,16 @@ WebRtc_Word32
 		return -1;
 	}
 	const WebRtc_Word32 maxBitrate(0);
-	if (_socketTransportModule.SetQoS(enable,
+	if (_socketTransportModule->SetQoS(enable,
 		static_cast<WebRtc_Word32>(serviceType),
 		maxBitrate,
 		static_cast<WebRtc_Word32>(overrideDSCP),
 		true))
 	{
+
+#ifndef WEBRTC_EXTERNAL_TRANSPORT 
 		UdpTransport::ErrorCode lastSockError(
-			_socketTransportModule.LastError());
+			_socketTransportModule->LastError());
 		switch (lastSockError)
 		{
 		case UdpTransport::kQosError:
@@ -5823,11 +6099,29 @@ WebRtc_Word32
 		WEBRTC_TRACE(kTraceError, kTraceVoice, VoEId(_instanceId,_channelId),
 			"UdpTransport() => lastError = %d",
 			lastSockError);
+#else
+    TcpTransport::ErrorCode lastSockError(
+      _socketTransportModule->LastError());
+    switch (lastSockError)
+    {
+    case TcpTransport::kQosError:
+      _engineStatisticsPtr->SetLastError(VE_GQOS_ERROR, kTraceError,
+        "SetSendGQoS() QOS error");
+      break;
+    default:
+      _engineStatisticsPtr->SetLastError(VE_SOCKET_ERROR, kTraceError,
+        "SetSendGQoS() Socket error");
+      break;
+    }
+    WEBRTC_TRACE(kTraceError, kTraceVoice, VoEId(_instanceId,_channelId),
+      "TcpTransport() => lastError = %d",
+      lastSockError);   
+#endif
 		return -1;
 	}
 	return 0;
 }
-#endif
+#endif // end defined(_WIN32)
 
 #if defined(_WIN32)
 WebRtc_Word32
@@ -5840,7 +6134,7 @@ WebRtc_Word32
 	bool QoS(false);
 	WebRtc_Word32 serviceTypeModule(0);
 	WebRtc_Word32 overrideDSCPModule(0);
-	_socketTransportModule.QoS(QoS, serviceTypeModule, overrideDSCPModule);
+	_socketTransportModule->QoS(QoS, serviceTypeModule, overrideDSCPModule);
 
 	enabled = QoS;
 	serviceType = static_cast<int> (serviceTypeModule);
@@ -5851,9 +6145,7 @@ WebRtc_Word32
 		(int)enabled, serviceType, overrideDSCP);
 	return 0;
 }
-#endif
-#endif
-
+#endif // end if _WIN32
 
 WebRtc_Word32
 Channel::SetPacketTimeoutNotification(bool enable, int timeoutSeconds)
@@ -5938,8 +6230,7 @@ Channel::OnPacketTimeout(const WebRtc_Word32 id)
     }
 }
 
-void
-Channel::OnReceivedPacket(const WebRtc_Word32 id,
+void Channel::OnReceivedPacket(const WebRtc_Word32 id,
                           const RtpRtcpPacketType packetType)
 {
     WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
@@ -6288,7 +6579,57 @@ int
 	return 0;
 }
 
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
+int32_t Channel::SetUdpTransport(UdpTransport *transport, int32_t rtp_port)
+#else
+int32_t Channel::SetTcpTransport(TcpTransport *transport, int32_t rtp_port)
+#endif
+{
+//#ifndef WEBRTC_EXTERNAL_TRANSPORT
+    CriticalSectionScoped cs(&_callbackCritSect);
 
+	if (!transport) {
+		_engineStatisticsPtr->SetLastError(
+			VE_SRTP_ERROR, kTraceError,
+			"SetUdpTransport failed, transport is NULL");
+		return -1;
+	}
+    _rtp_port = rtp_port;
+    _socketTransportModule = transport;
+    
+    
+    _transportPtr = _socketTransportModule;
+    
+    if (_moduleProcessThreadPtr->RegisterModule(
+                                             _socketTransportModule) != 0)
+    {
+        _engineStatisticsPtr->SetLastError(
+                                           VE_SOCKET_ERROR, kTraceError,
+                                           "Failed to Register voe transport");
+    }
+        
+    
+    if (_socketTransportModule->GetLocalSSrc() != 0){//receive channel
+        _rtpRtcpModule->SetSSRC(_socketTransportModule->GetLocalSSrc());
+        
+    }
+    unsigned int ssrc = 0;
+    GetLocalSSRC(ssrc);
+    _socketTransportModule->AddRecieveChannel(ssrc, this);  //For rtcp
+    GetRemoteSSRC(ssrc);
+    _socketTransportModule->AddRecieveChannel(ssrc, this);
+//#endif
+    return 0;
+}
+
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
+UdpTransport *Channel::GetUdpTransport()
+#else
+TcpTransport *Channel::GetTcpTransport()
+#endif
+{
+    return _socketTransportModule;
+}
 #endif
 }  // namespace voe
 }  // namespace cloopenwebrtc

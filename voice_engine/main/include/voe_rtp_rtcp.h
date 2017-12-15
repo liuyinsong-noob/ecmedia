@@ -119,6 +119,9 @@ public:
 
     // Sets the local RTP synchronization source identifier (SSRC) explicitly.
     virtual int SetLocalSSRC(int channel, unsigned int ssrc) = 0;
+    
+    //Set the remote RTP synchronization source identifier (SSRC) for distribute remote audio stream
+    virtual int SetRemoteSSRC(int channel, unsigned int ssrc) = 0;
 
     // Gets the local RTP SSRC of a specified |channel|.
     virtual int GetLocalSSRC(int channel, unsigned int& ssrc) = 0;

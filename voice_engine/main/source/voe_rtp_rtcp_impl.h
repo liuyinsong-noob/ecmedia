@@ -42,6 +42,7 @@ public:
 
     virtual int GetLocalSSRC(int channel, unsigned int& ssrc);
 
+    virtual int SetRemoteSSRC(int channel, unsigned int ssrc);
     virtual int GetRemoteSSRC(int channel, unsigned int& ssrc);
 
     // RTP Header Extension for Client-to-Mixer Audio Level Indication

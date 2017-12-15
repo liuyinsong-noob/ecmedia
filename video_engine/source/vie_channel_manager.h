@@ -41,10 +41,16 @@ typedef std::list<ChannelGroup*> ChannelGroups;
 typedef std::list<ViEChannel*> ChannelList;
 typedef std::map<int, ViEChannel*> ChannelMap;
 typedef std::map<int, ViEEncoder*> EncoderMap;
+    
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
 typedef std::map<int, UdpTransport*> RtpUdpTransportMap;
-
+#else
+typedef std::map<int, TcpTransport*> RtpTcpTransportMap;
+#endif
+    
+    
 class ViEChannelManager: private ViEManagerBase,
-					     public CongestionController::Observer {
+    public CongestionController::Observer {
   friend class ViEChannelManagerScoped;
  public:
   ViEChannelManager(int engine_id,
@@ -52,7 +58,7 @@ class ViEChannelManager: private ViEManagerBase,
                     const Config& config);
   ~ViEChannelManager();
 
-  void SetModuleProcessThread(ProcessThread* module_process_thread);
+  void SetModuleProcessThread(ProcessThread* module_process_thread, ProcessThread* module_process_thread_pacer);
 
   // Creates a new channel. 'channel_id' will be the id of the created channel.
   int CreateChannel(int* channel_id,
@@ -98,14 +104,19 @@ class ViEChannelManager: private ViEManagerBase,
   bool GetEstimatedReceiveBandwidth(int channel_id,
                                     uint32_t* estimated_bandwidth) const;
 
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
   UdpTransport *CreateUdptransport(int rtp_port, int rtcp_port, bool ipv6flag = false);
-  int DeleteUdptransport(UdpTransport * transport);
+  int DeleteUdptransport(int rtp_port);
+#else
+  TcpTransport *CreateTcptransport(int rtp_port, int rtcp_port, bool ipv6flag = false);
+  int DeleteTcptransport(int rtp_port);
+#endif
     
   // Implements CongestionController::Observer.
   void OnNetworkChanged(uint32_t bitrate_bps,
 					  uint8_t fraction_loss,
 					  int64_t rtt_ms,
-					  int64_t probing_interval_ms) override;
+					  int64_t probing_interval_ms);
 
   void UpdateNetworkState(int channel_id, bool startSend);
 
@@ -162,7 +173,18 @@ class ViEChannelManager: private ViEManagerBase,
 
   VoiceEngine* voice_engine_;
   ProcessThread* module_process_thread_;
+    ProcessThread* module_process_thread_pacer_;
   const Config& engine_config_;
+
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
+  // Protects udpstransport_map_.
+  // CriticalSectionWrapper* udptransport_critsect_;
+  // RtpUdpTransportMap rtp_udptransport_map_;
+#else
+  // Protects tcpstransport_map_.
+  CriticalSectionWrapper* tcptransport_critsect_;
+  //RtpTcpTransportMap rtp_tcptransport_map_;
+#endif
 
   // Protects udpstransport_map_.
   CriticalSectionWrapper* udptransport_critsect_;

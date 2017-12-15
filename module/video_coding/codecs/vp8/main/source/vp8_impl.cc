@@ -368,10 +368,10 @@ int VP8EncoderImpl::InitEncode(const VideoCodec* inst,
       inst->numberOfSimulcastStreams > 1) {
     return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
   }
-  if (inst->codecSpecific.VP8.automaticResizeOn &&
-      inst->numberOfSimulcastStreams > 1) {
-    return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
-  }
+  //if (inst->codecSpecific.VP8.automaticResizeOn &&
+  //    inst->numberOfSimulcastStreams > 1) {
+  //  return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
+  //}
   int retVal = Release();
   if (retVal < 0) {
     return retVal;
@@ -490,8 +490,9 @@ int VP8EncoderImpl::InitEncode(const VideoCodec* inst,
   configurations_[0].rc_resize_allowed = 0;
   // Handle resizing outside of libvpx when doing single-stream.
   if (inst->codecSpecific.VP8.automaticResizeOn && number_of_streams > 1) {
-    configurations_[0].rc_resize_allowed = 1;
+    configurations_[1].rc_resize_allowed = 1;
   }
+    
   configurations_[0].rc_min_quantizer = 2;
   if (inst->qpMax >= configurations_[0].rc_min_quantizer) {
     qp_max_ = inst->qpMax;

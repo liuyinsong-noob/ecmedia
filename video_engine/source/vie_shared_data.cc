@@ -32,11 +32,13 @@ ViESharedData::ViESharedData(const Config& config)
 	  desktop_share_manager_(new ViEDesktopShareManager(0)),
 #endif
       module_process_thread_(ProcessThread::CreateProcessThread()),
+    module_process_thread_pacer_(ProcessThread::CreateProcessThread()),
       last_error_(0) {
   //Trace::CreateTrace();
-  channel_manager_->SetModuleProcessThread(module_process_thread_);
+  channel_manager_->SetModuleProcessThread(module_process_thread_, module_process_thread_pacer_);
   input_manager_->SetModuleProcessThread(module_process_thread_);
   module_process_thread_->Start();
+          module_process_thread_pacer_->Start();
 }
 
 ViESharedData::~ViESharedData() {
@@ -49,6 +51,8 @@ ViESharedData::~ViESharedData() {
 #endif
   module_process_thread_->Stop();
   ProcessThread::DestroyProcessThread(module_process_thread_);
+    module_process_thread_pacer_->Stop();
+    ProcessThread::DestroyProcessThread(module_process_thread_pacer_);
   Trace::ReturnTrace();
 }
 

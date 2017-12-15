@@ -738,7 +738,7 @@ int ECMedia_audio_create_channel(int& channelid, bool is_video)
         if (base) {
             channelid = base->CreateChannel();
             base->Release();
-            PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+            PrintConsole("[ECMEDIA INFO] %s ends with channelid %d just created...", __FUNCTION__, channelid);
             return 0;
         }
         else
@@ -757,12 +757,12 @@ int ECMedia_audio_create_channel(int& channelid, bool is_video)
         if (base) {
             base->CreateChannel(channelid);
             base->Release();
-            PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+            PrintConsole("[ECMEDIA INFO] %s ends with video channelid %d just created...", __FUNCTION__, channelid);
             return 0;
         }
         else
         {
-            PrintConsole("[ECMEDIA ERROR] %s failed to get VoEBase", __FUNCTION__);
+            PrintConsole("[ECMEDIA ERROR] %s failed to get ViEBase", __FUNCTION__);
             PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
             channelid = -1;
             return -99;
@@ -808,7 +808,7 @@ int ECMedia_delete_channel(int& channelid, bool is_video)
                 PrintConsole("[ECMEDIA ERROR] %s failed to delete channel:%d, ret:%d",__FUNCTION__, channelid, ret);
             }
             base->Release();
-            PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
+            PrintConsole("[ECMEDIA INFO] %s ends deleting audio channelid %d... with code: %d", __FUNCTION__, channelid, ret);
             return ret;
         }
         else
@@ -833,7 +833,7 @@ int ECMedia_delete_channel(int& channelid, bool is_video)
                 PrintConsole("[ECMEDIA ERROR] failed to delete channel:%d, ret:%d", __FUNCTION__, channelid, ret);
             }
             base->Release();
-            PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
+            PrintConsole("[ECMEDIA INFO] %s ends deleting video channelid %d... with code: %d", __FUNCTION__, channelid, ret);
             return ret;
         }
         else
@@ -848,24 +848,45 @@ int ECMedia_delete_channel(int& channelid, bool is_video)
     }
 }
 
-int ECMedia_set_local_receiver(int channelid, int rtp_port, int rtcp_port)
+int ECMedia_audio_set_ssrc(int channelid, unsigned int localssrc, unsigned int remotessrc)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d rtp_port:%d rtcp_port:%d", __FUNCTION__, channelid, rtp_port, rtcp_port);
+    PrintConsole("[ECMEDIA INFO] %s begins...,channelid:%d, localssrc: %u, remotessrc %u", __FUNCTION__,channelid, localssrc, remotessrc);
+    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    VoERTP_RTCP *rtp_rtcp = VoERTP_RTCP::GetInterface(m_voe);
+    if (rtp_rtcp)
+    {
+        int localret = 0, remoteret = 0;
+        if (localssrc != 0) {
+            localret = rtp_rtcp->SetLocalSSRC(channelid, localssrc);
+        }
+        if (remotessrc != 0) {
+            remoteret = rtp_rtcp->SetRemoteSSRC(channelid, remotessrc);
+        }
+        
+        rtp_rtcp->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with localssrc set: %d, remotessrc set %d", __FUNCTION__, localret, remoteret);
+        return (localret + remoteret);
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to set video ssrc, %s", __FUNCTION__);
+        return -99;
+    }
+}
+int ECMedia_set_local_receiver(int channelid, int rtp_port, int rtcp_port, bool ipv6)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d rtp_port:%d rtcp_port:%d, ipv6 %s",__FUNCTION__, channelid, rtp_port, rtcp_port, ipv6?"YES":"NO");
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
-        int ret = base->SetLocalReceiver(channelid, rtp_port, rtcp_port);
+        int ret = base->SetLocalReceiver(channelid, rtp_port, rtcp_port, ipv6);
         base->Release();
-        if (ret != 0) {
-            PrintConsole("[ECMEDIA ERROR] %s failed to set local receiver", __FUNCTION__);
-        }
-        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
         return ret;
     }
     else
     {
-        PrintConsole("[ECMEDIA ERROR] %s failed to get VoEBase", __FUNCTION__);
-        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        PrintConsole("[ECMEDIA WARNNING] %s failed to get VoEBase",__FUNCTION__);
         return -99;
     }
 }
@@ -3125,19 +3146,19 @@ int ECMedia_stop_render(int channelid, int deviceid)
     if (render) {
         int ret = render->StopRender(channelid);
         if (ret != 0) {
-            PrintConsole("[ECMEDIA ERROR] %s failed to stop render for channelid", __FUNCTION__);
+            PrintConsole("[ECMEDIA ERROR] %s failed to stop render for channelid %d", __FUNCTION__, channelid);
         }
         ret = render->RemoveRenderer(channelid);
         if (ret != 0) {
-            PrintConsole("[ECMEDIA ERROR] %s failed to remove renderer for channelid", __FUNCTION__);
+            PrintConsole("[ECMEDIA ERROR] %s failed to remove renderer for channelid %d", __FUNCTION__, channelid);
         }
         ret = render->StopRender(deviceid);
         if (ret != 0) {
-            PrintConsole("[ECMEDIA ERROR] %s failed to stop render for deviceid", __FUNCTION__);
+            PrintConsole("[ECMEDIA ERROR] %s failed to stop render for deviceid %d", __FUNCTION__, deviceid);
         }
         ret = render->RemoveRenderer(deviceid);
         if (ret != 0) {
-            PrintConsole("[ECMEDIA ERROR] %s failed to remove renderer for deviceid", __FUNCTION__);
+            PrintConsole("[ECMEDIA ERROR] %s failed to remove renderer for deviceid %d", __FUNCTION__, deviceid);
         }
         render->Release();
     }
@@ -4342,6 +4363,33 @@ int ECMedia_disable_srtp_recv_video(int channel)
     PrintConsole("[ECMEDIA ERROR] %s get ViEEncryption failed", __FUNCTION__);
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
     return -1;
+}
+
+int ECMedia_video_set_remb(int channelid, bool enableRemb)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d, enableRemb:%s", __FUNCTION__,
+                 channelid, enableRemb ? "true" : "false");
+    
+    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
+    if (rtp_rtcp)
+    {
+        int ret = 0;
+        ret = rtp_rtcp->SetRembStatus(channelid, enableRemb, enableRemb);
+        //ret = rtp_rtcp->SetTMMBRStatus(channelid, tmmbrEnabled);
+        if (enableRemb) {
+            rtp_rtcp->SetSendAbsoluteSendTimeStatus(channelid, true, kRtpExtensionAbsoluteSendTime);
+            rtp_rtcp->SetReceiveAbsoluteSendTimeStatus(channelid, true, kRtpExtensionAbsoluteSendTime);
+        }
+        rtp_rtcp->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, ret);
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to get ViERTP_RTCP, %s", __FUNCTION__);
+        return -99;
+    }
 }
 
 #endif

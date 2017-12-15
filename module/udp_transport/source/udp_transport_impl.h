@@ -148,6 +148,9 @@ public:
 
 	virtual void SetSVCVideoFlag();
 	virtual bool GetSVCVideoFlag();
+    
+    virtual void SetOnePortFlag();
+    virtual bool GetOnePortFlag();
 
 	virtual bool AddRecieveChannel(unsigned int ssrc, UdpTransportData* recieveChannel);
 	virtual bool SubRecieveChannel(unsigned int ssrc);
@@ -210,6 +213,8 @@ private:
     void GetCachedAddress(char* ip, WebRtc_UWord32& ipSize,
                           WebRtc_UWord16& sourcePort);
     WebRtc_Word32 sendSocks5Data(UdpSocketWrapper *socket, SocketAddress to, bool isRTCP, const WebRtc_Word8 *data, WebRtc_UWord32 length);
+    
+    bool isRtcp(WebRtc_UWord8 *ptr, WebRtc_Word32 length);
 
     WebRtc_Word32 _id;
     SocketFactoryInterface* _socket_creator;
@@ -289,6 +294,7 @@ private:
 	int _channel_ref;
 	bool _isSVCVideo;
 	unsigned int _ssrc;//local ssrc
+    bool _onePort;
 };
 } // namespace cloopenwebrtc
 
