@@ -17,6 +17,10 @@
 		1F2133801F1CBF9900A8A423 /* mmx_optimized.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBB41ED6BC370085E576 /* mmx_optimized.cpp */; };
 		1F2133811F1CBF9900A8A423 /* PeakFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBB51ED6BC370085E576 /* PeakFinder.cpp */; };
 		1F2133831F1CBF9900A8A423 /* sse_optimized.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBB71ED6BC370085E576 /* sse_optimized.cpp */; };
+		1FE07DD91FE7A1F80018E762 /* SoundTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD8DA49F1F5A686800F0BF1C /* SoundTouch.cpp */; };
+		1FE07DDA1FE7A1F80018E762 /* InterpolateCubic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD8DA4941F5A683D00F0BF1C /* InterpolateCubic.cpp */; };
+		1FE07DDB1FE7A1F80018E762 /* InterpolateLinear.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD8DA4961F5A683D00F0BF1C /* InterpolateLinear.cpp */; };
+		1FE07DDC1FE7A1F80018E762 /* InterpolateShannon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD8DA4981F5A683D00F0BF1C /* InterpolateShannon.cpp */; };
 		1FE1CBB91ED6BC370085E576 /* TDStretch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBA51ED6BC370085E576 /* TDStretch.cpp */; };
 		1FE1CBBA1ED6BC370085E576 /* RateTransposer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBA71ED6BC370085E576 /* RateTransposer.cpp */; };
 		1FE1CBBB1ED6BC370085E576 /* AAFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1CBA91ED6BC370085E576 /* AAFilter.cpp */; };
@@ -257,6 +261,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FE07DD91FE7A1F80018E762 /* SoundTouch.cpp in Sources */,
+				1FE07DDA1FE7A1F80018E762 /* InterpolateCubic.cpp in Sources */,
+				1FE07DDB1FE7A1F80018E762 /* InterpolateLinear.cpp in Sources */,
+				1FE07DDC1FE7A1F80018E762 /* InterpolateShannon.cpp in Sources */,
 				1F2133711F1CBF9900A8A423 /* TDStretch.cpp in Sources */,
 				1F2133731F1CBF9900A8A423 /* RateTransposer.cpp in Sources */,
 				1F2133751F1CBF9900A8A423 /* AAFilter.cpp in Sources */,

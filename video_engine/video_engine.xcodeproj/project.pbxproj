@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1FDC7C041E7A6335002B9F7C /* video_send_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FDC7C031E7A6335002B9F7C /* video_send_stream.cc */; };
+		1FE07DFC1FE7AABE0018E762 /* encoder_rtcp_feedback.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4547E2CD1F15F2F60014FB7E /* encoder_rtcp_feedback.cc */; };
 		4547E2CF1F15F2F60014FB7E /* encoder_rtcp_feedback.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4547E2CD1F15F2F60014FB7E /* encoder_rtcp_feedback.cc */; };
 		4547E2D01F15F2F60014FB7E /* encoder_rtcp_feedback.h in Headers */ = {isa = PBXBuildFile; fileRef = 4547E2CE1F15F2F60014FB7E /* encoder_rtcp_feedback.h */; };
 		5519CB8F15C812A700719504 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5519CB8E15C812A700719504 /* Foundation.framework */; };
@@ -540,6 +541,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FE07DFC1FE7AABE0018E762 /* encoder_rtcp_feedback.cc in Sources */,
 				ADE7803F1EA73BFA00D0E04E /* vie_desktop_capture.cpp in Sources */,
 				ADE7803E1EA7321B00D0E04E /* video_send_stream.cc in Sources */,
 				AD1F0C0A1D47612200C33F53 /* vie_base_impl.cc in Sources */,

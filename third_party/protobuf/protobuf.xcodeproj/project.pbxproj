@@ -73,7 +73,6 @@
 		55D3C8E11B81D7AE00D770BC /* coded_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0596B84D1AAB247A0047B4CA /* coded_stream.cc */; };
 		55D3C8E21B81D7AE00D770BC /* message_lite.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0596B8671AAB247A0047B4CA /* message_lite.cc */; };
 		55D3C8E31B81D7AE00D770BC /* service.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0596B8731AAB247A0047B4CA /* service.cc */; };
-		55D3C8E51B81D7AE00D770BC /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -201,7 +200,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55D3C8E51B81D7AE00D770BC /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -616,7 +614,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -636,7 +634,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

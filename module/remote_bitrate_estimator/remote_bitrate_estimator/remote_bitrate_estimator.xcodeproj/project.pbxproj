@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F7965391FE7B96300A254CA /* inter_arrival.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A851F14AE72008B2068 /* inter_arrival.cc */; };
+		1F79653A1FE7B96300A254CA /* overuse_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A891F14AE72008B2068 /* overuse_estimator.cc */; };
+		1F79653B1FE7B96300A254CA /* send_time_history.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A931F14AE72008B2068 /* send_time_history.cc */; };
+		1F79653C1FE7B96300A254CA /* remote_bitrate_estimator_single_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A8D1F14AE72008B2068 /* remote_bitrate_estimator_single_stream.cc */; };
+		1F79653D1FE7B96300A254CA /* remote_estimator_proxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A911F14AE72008B2068 /* remote_estimator_proxy.cc */; };
+		1F79653E1FE7B96300A254CA /* overuse_detector.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A871F14AE72008B2068 /* overuse_detector.cc */; };
+		1F79653F1FE7B96300A254CA /* aimd_rate_control.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A821F14AE72008B2068 /* aimd_rate_control.cc */; };
+		1F7965401FE7B96300A254CA /* remote_bitrate_estimator_abs_send_time.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A8B1F14AE72008B2068 /* remote_bitrate_estimator_abs_send_time.cc */; };
+		1F7965411FE7B96300A254CA /* bwe_defines.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A841F14AE72008B2068 /* bwe_defines.cc */; };
 		45619A941F14AE72008B2068 /* aimd_rate_control.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A821F14AE72008B2068 /* aimd_rate_control.cc */; };
 		45619A951F14AE72008B2068 /* bwe_defines.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A841F14AE72008B2068 /* bwe_defines.cc */; };
 		45619A961F14AE72008B2068 /* inter_arrival.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A851F14AE72008B2068 /* inter_arrival.cc */; };
@@ -19,6 +28,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		1F7965431FE7B96300A254CA /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4526C9121F14A937005949BB /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -31,6 +49,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1F7965471FE7B96300A254CA /* libremote_bitrate_estimator_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libremote_bitrate_estimator_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4526C9141F14A937005949BB /* libremote_bitrate_estimator.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libremote_bitrate_estimator.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		45619A821F14AE72008B2068 /* aimd_rate_control.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aimd_rate_control.cc; path = ../../aimd_rate_control.cc; sourceTree = "<group>"; };
 		45619A831F14AE72008B2068 /* aimd_rate_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aimd_rate_control.h; path = ../../aimd_rate_control.h; sourceTree = "<group>"; };
@@ -51,6 +70,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1F7965421FE7B96300A254CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4526C9111F14A937005949BB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -73,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				4526C9141F14A937005949BB /* libremote_bitrate_estimator.a */,
+				1F7965471FE7B96300A254CA /* libremote_bitrate_estimator_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -103,6 +130,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1F7965371FE7B96300A254CA /* remote_bitrate_estimator_Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1F7965441FE7B96300A254CA /* Build configuration list for PBXNativeTarget "remote_bitrate_estimator_Mac" */;
+			buildPhases = (
+				1F7965381FE7B96300A254CA /* Sources */,
+				1F7965421FE7B96300A254CA /* Frameworks */,
+				1F7965431FE7B96300A254CA /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = remote_bitrate_estimator_Mac;
+			productName = remote_bitrate_estimator;
+			productReference = 1F7965471FE7B96300A254CA /* libremote_bitrate_estimator_Mac.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		4526C9131F14A937005949BB /* remote_bitrate_estimator */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4526C91D1F14A937005949BB /* Build configuration list for PBXNativeTarget "remote_bitrate_estimator" */;
@@ -148,11 +192,28 @@
 			projectRoot = "";
 			targets = (
 				4526C9131F14A937005949BB /* remote_bitrate_estimator */,
+				1F7965371FE7B96300A254CA /* remote_bitrate_estimator_Mac */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1F7965381FE7B96300A254CA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F7965391FE7B96300A254CA /* inter_arrival.cc in Sources */,
+				1F79653A1FE7B96300A254CA /* overuse_estimator.cc in Sources */,
+				1F79653B1FE7B96300A254CA /* send_time_history.cc in Sources */,
+				1F79653C1FE7B96300A254CA /* remote_bitrate_estimator_single_stream.cc in Sources */,
+				1F79653D1FE7B96300A254CA /* remote_estimator_proxy.cc in Sources */,
+				1F79653E1FE7B96300A254CA /* overuse_detector.cc in Sources */,
+				1F79653F1FE7B96300A254CA /* aimd_rate_control.cc in Sources */,
+				1F7965401FE7B96300A254CA /* remote_bitrate_estimator_abs_send_time.cc in Sources */,
+				1F7965411FE7B96300A254CA /* bwe_defines.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4526C9101F14A937005949BB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -172,6 +233,40 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		1F7965451FE7B96300A254CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = WEBRTC_POSIX;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../",
+					../../../base,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Debug;
+		};
+		1F7965461FE7B96300A254CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = WEBRTC_POSIX;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../",
+					../../../base,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Release;
+		};
 		4526C91B1F14A937005949BB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -291,6 +386,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1F7965441FE7B96300A254CA /* Build configuration list for PBXNativeTarget "remote_bitrate_estimator_Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F7965451FE7B96300A254CA /* Debug */,
+				1F7965461FE7B96300A254CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4526C90F1F14A937005949BB /* Build configuration list for PBXProject "remote_bitrate_estimator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

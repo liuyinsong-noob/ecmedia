@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1FE07E101FE7B0070018E762 /* median_slope_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619C531F14C7CD008B2068 /* median_slope_estimator.cc */; };
+		1FE07E111FE7B0070018E762 /* delay_based_bwe.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619C511F14C7CD008B2068 /* delay_based_bwe.cc */; };
+		1FE07E121FE7B0070018E762 /* transport_feedback_adapter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619C5B1F14C7CD008B2068 /* transport_feedback_adapter.cc */; };
+		1FE07E131FE7B0070018E762 /* probe_controller.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619C571F14C7CD008B2068 /* probe_controller.cc */; };
+		1FE07E141FE7B0070018E762 /* probing_interval_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619C591F14C7CD008B2068 /* probing_interval_estimator.cc */; };
+		1FE07E151FE7B0070018E762 /* congestion_controller.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619C501F14C7CD008B2068 /* congestion_controller.cc */; };
+		1FE07E161FE7B0070018E762 /* trendline_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619C5D1F14C7CD008B2068 /* trendline_estimator.cc */; };
+		1FE07E171FE7B0070018E762 /* probe_bitrate_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619C551F14C7CD008B2068 /* probe_bitrate_estimator.cc */; };
 		45619C5F1F14C7CD008B2068 /* congestion_controller.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619C501F14C7CD008B2068 /* congestion_controller.cc */; };
 		45619C601F14C7CD008B2068 /* delay_based_bwe.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619C511F14C7CD008B2068 /* delay_based_bwe.cc */; };
 		45619C611F14C7CD008B2068 /* median_slope_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619C531F14C7CD008B2068 /* median_slope_estimator.cc */; };
@@ -18,6 +26,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		1FE07E191FE7B0070018E762 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		45619C421F14C784008B2068 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -30,6 +47,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1FE07E1D1FE7B0070018E762 /* libcongestion_controller Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcongestion_controller Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		45619C441F14C784008B2068 /* libcongestion_controller.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcongestion_controller.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		45619C501F14C7CD008B2068 /* congestion_controller.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = congestion_controller.cc; path = ../../../congestion_controller.cc; sourceTree = "<group>"; };
 		45619C511F14C7CD008B2068 /* delay_based_bwe.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = delay_based_bwe.cc; path = ../../../delay_based_bwe.cc; sourceTree = "<group>"; };
@@ -49,6 +67,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1FE07E181FE7B0070018E762 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		45619C411F14C784008B2068 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -71,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				45619C441F14C784008B2068 /* libcongestion_controller.a */,
+				1FE07E1D1FE7B0070018E762 /* libcongestion_controller Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -100,6 +126,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1FE07E0E1FE7B0070018E762 /* congestion_controller Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1FE07E1A1FE7B0070018E762 /* Build configuration list for PBXNativeTarget "congestion_controller Mac" */;
+			buildPhases = (
+				1FE07E0F1FE7B0070018E762 /* Sources */,
+				1FE07E181FE7B0070018E762 /* Frameworks */,
+				1FE07E191FE7B0070018E762 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "congestion_controller Mac";
+			productName = congestion_controller;
+			productReference = 1FE07E1D1FE7B0070018E762 /* libcongestion_controller Mac.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		45619C431F14C784008B2068 /* congestion_controller */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 45619C4D1F14C784008B2068 /* Build configuration list for PBXNativeTarget "congestion_controller" */;
@@ -145,11 +188,27 @@
 			projectRoot = "";
 			targets = (
 				45619C431F14C784008B2068 /* congestion_controller */,
+				1FE07E0E1FE7B0070018E762 /* congestion_controller Mac */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1FE07E0F1FE7B0070018E762 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1FE07E101FE7B0070018E762 /* median_slope_estimator.cc in Sources */,
+				1FE07E111FE7B0070018E762 /* delay_based_bwe.cc in Sources */,
+				1FE07E121FE7B0070018E762 /* transport_feedback_adapter.cc in Sources */,
+				1FE07E131FE7B0070018E762 /* probe_controller.cc in Sources */,
+				1FE07E141FE7B0070018E762 /* probing_interval_estimator.cc in Sources */,
+				1FE07E151FE7B0070018E762 /* congestion_controller.cc in Sources */,
+				1FE07E161FE7B0070018E762 /* trendline_estimator.cc in Sources */,
+				1FE07E171FE7B0070018E762 /* probe_bitrate_estimator.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		45619C401F14C784008B2068 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -168,6 +227,46 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		1FE07E1B1FE7B0070018E762 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = WEBRTC_POSIX;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../",
+					../../../../base,
+					../../../../system_wrappers/include,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				VALID_ARCHS = "i386 x86_64";
+			};
+			name = Debug;
+		};
+		1FE07E1C1FE7B0070018E762 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = WEBRTC_POSIX;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../",
+					../../../../base,
+					../../../../system_wrappers/include,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				VALID_ARCHS = "i386 x86_64";
+			};
+			name = Release;
+		};
 		45619C4B1F14C784008B2068 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -289,6 +388,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1FE07E1A1FE7B0070018E762 /* Build configuration list for PBXNativeTarget "congestion_controller Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FE07E1B1FE7B0070018E762 /* Debug */,
+				1FE07E1C1FE7B0070018E762 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		45619C3F1F14C784008B2068 /* Build configuration list for PBXProject "congestion_controller" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

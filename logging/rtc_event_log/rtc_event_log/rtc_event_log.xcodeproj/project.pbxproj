@@ -7,12 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1FE07DFF1FE7AEBF0018E762 /* rtc_event_log_helper_thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72711F171E1800CD5776 /* rtc_event_log_helper_thread.cc */; };
+		1FE07E001FE7AEBF0018E762 /* rtc_event_log.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72731F171E1800CD5776 /* rtc_event_log.cc */; };
+		1FE07E011FE7AEBF0018E762 /* rtc_event_log.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72751F171E1800CD5776 /* rtc_event_log.pb.cc */; };
 		450D72771F171E1800CD5776 /* rtc_event_log_helper_thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72711F171E1800CD5776 /* rtc_event_log_helper_thread.cc */; };
 		450D72781F171E1800CD5776 /* rtc_event_log.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72731F171E1800CD5776 /* rtc_event_log.cc */; };
 		450D72791F171E1800CD5776 /* rtc_event_log.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72751F171E1800CD5776 /* rtc_event_log.pb.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		1FE07E031FE7AEBF0018E762 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		450D722D1F171D6B00CD5776 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -25,6 +37,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1FE07E071FE7AEBF0018E762 /* librtc_event_log Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "librtc_event_log Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		450D722F1F171D6B00CD5776 /* librtc_event_log.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librtc_event_log.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		450D72701F171E1800CD5776 /* ringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ringbuffer.h; path = ../../ringbuffer.h; sourceTree = "<group>"; };
 		450D72711F171E1800CD5776 /* rtc_event_log_helper_thread.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rtc_event_log_helper_thread.cc; path = ../../rtc_event_log_helper_thread.cc; sourceTree = "<group>"; };
@@ -36,6 +49,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1FE07E021FE7AEBF0018E762 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		450D722C1F171D6B00CD5776 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -58,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				450D722F1F171D6B00CD5776 /* librtc_event_log.a */,
+				1FE07E071FE7AEBF0018E762 /* librtc_event_log Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -79,6 +100,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1FE07DFD1FE7AEBF0018E762 /* rtc_event_log Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1FE07E041FE7AEBF0018E762 /* Build configuration list for PBXNativeTarget "rtc_event_log Mac" */;
+			buildPhases = (
+				1FE07DFE1FE7AEBF0018E762 /* Sources */,
+				1FE07E021FE7AEBF0018E762 /* Frameworks */,
+				1FE07E031FE7AEBF0018E762 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "rtc_event_log Mac";
+			productName = rtc_event_log;
+			productReference = 1FE07E071FE7AEBF0018E762 /* librtc_event_log Mac.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		450D722E1F171D6B00CD5776 /* rtc_event_log */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 450D72381F171D6B00CD5776 /* Build configuration list for PBXNativeTarget "rtc_event_log" */;
@@ -124,11 +162,22 @@
 			projectRoot = "";
 			targets = (
 				450D722E1F171D6B00CD5776 /* rtc_event_log */,
+				1FE07DFD1FE7AEBF0018E762 /* rtc_event_log Mac */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1FE07DFE1FE7AEBF0018E762 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1FE07DFF1FE7AEBF0018E762 /* rtc_event_log_helper_thread.cc in Sources */,
+				1FE07E001FE7AEBF0018E762 /* rtc_event_log.cc in Sources */,
+				1FE07E011FE7AEBF0018E762 /* rtc_event_log.pb.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		450D722B1F171D6B00CD5776 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -142,6 +191,46 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		1FE07E051FE7AEBF0018E762 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_PREPROCESSOR_DEFINITIONS = WEBRTC_POSIX;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../",
+					../../../module,
+					../../../base,
+					../../../third_party/protobuf/src,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Debug;
+		};
+		1FE07E061FE7AEBF0018E762 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_PREPROCESSOR_DEFINITIONS = WEBRTC_POSIX;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../",
+					../../../module,
+					../../../base,
+					../../../third_party/protobuf/src,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Release;
+		};
 		450D72361F171D6B00CD5776 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -267,6 +356,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1FE07E041FE7AEBF0018E762 /* Build configuration list for PBXNativeTarget "rtc_event_log Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FE07E051FE7AEBF0018E762 /* Debug */,
+				1FE07E061FE7AEBF0018E762 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		450D722A1F171D6B00CD5776 /* Build configuration list for PBXProject "rtc_event_log" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
