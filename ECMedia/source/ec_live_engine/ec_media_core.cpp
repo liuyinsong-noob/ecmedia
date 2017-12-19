@@ -207,6 +207,9 @@ namespace cloopenwebrtc {
         // init audio network
         VoEBase *base = VoEBase::GetInterface(voe_);
         audio_channel_ = base->CreateChannel();
+       
+        base->SetLocalReceiver(audio_channel_, 8000);
+        base->SetSendDestination(audio_channel_, 8001, nullptr, 7800, 7801, nullptr);
         base->Release();
 
         VoENetwork *network = VoENetwork::GetInterface(voe_);
@@ -231,6 +234,7 @@ namespace cloopenwebrtc {
         vbase->Release();
         
         ViENetwork *vnetwork = ViENetwork::GetInterface(vie_);
+        ret = vnetwork->SetLocalReceiver(video_channel_, 8010);
         ret = vnetwork->RegisterSendTransport(video_channel_, *this); // data callback
         ret = vnetwork->RegisterExternalPacketization(video_channel_, this); // SetRtpData callback
         vnetwork->Release();

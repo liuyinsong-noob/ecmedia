@@ -65,6 +65,7 @@
         [self commitBlock];
     }
 }
+
 -(ARGBFrameAvailableBlock) argbFrameAvailableBlock {
     return argbFrameAvailableBlock;
 }

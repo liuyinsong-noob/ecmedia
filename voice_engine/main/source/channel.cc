@@ -1890,13 +1890,14 @@ int32_t Channel::RegisterExternalTransport(Transport& transport)
 			"RegisterExternalTransport() send sockets already initialized");
 		return -1;
 	}
-	if (_socketTransportModule->ReceiveSocketsInitialized())
+	
+    /*if (_socketTransportModule->ReceiveSocketsInitialized())
 	{
 		_engineStatisticsPtr->SetLastError(VE_RECEIVE_SOCKETS_CONFLICT,
 			kTraceError,
 			"RegisterExternalTransport() receive sockets already initialized");
 		return -1;
-	}
+	}*/
 //#endif
     if (_externalTransport)
     {

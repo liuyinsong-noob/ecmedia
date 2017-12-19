@@ -1752,12 +1752,13 @@ int32_t ViEChannel::RegisterSendTransport(Transport* transport) {
 		}
 	}
 
+    /*
 	if (socket_transport_->SendSocketsInitialized() ||
 		socket_transport_->ReceiveSocketsInitialized()) {
 			WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
 				"%s:  socket transport already initialized", __FUNCTION__);
 			return -1;
-	}
+	}*/
 #else  //endif WEBRTC_EXTERNAL_TRANSPORT udptransport
   if (!socket_transport_) {
     socket_transport_ = TcpTransport::Create(ViEModuleId(engine_id_, channel_id_), num_socket_threads_);
