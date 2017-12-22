@@ -9,6 +9,25 @@
 /* Begin PBXBuildFile section */
 		1F1EDA451F95E5F80018BD4C /* criticalsection.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F1EDA431F95E5F80018BD4C /* criticalsection.cc */; };
 		1F1EDA461F95E5F80018BD4C /* criticalsection.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F1EDA441F95E5F80018BD4C /* criticalsection.h */; };
+		1FE07DB11FE791550018E762 /* stats_types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9F2201F345293005D11C5 /* stats_types.cc */; };
+		1FE07DB21FE791550018E762 /* event_tracer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72931F17455200CD5776 /* event_tracer.cc */; };
+		1FE07DB31FE791550018E762 /* platform_thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D728F1F1743A300CD5776 /* platform_thread.cc */; };
+		1FE07DB41FE791550018E762 /* logging.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D728D1F173EE100CD5776 /* logging.cc */; };
+		1FE07DB51FE791550018E762 /* checks.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72871F1725C300CD5776 /* checks.cc */; };
+		1FE07DB61FE791550018E762 /* thread_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72851F17255C00CD5776 /* thread_posix.cc */; };
+		1FE07DB71FE791550018E762 /* rate_statistics.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D727B1F17212700CD5776 /* rate_statistics.cc */; };
+		1FE07DB81FE791550018E762 /* bitbuffer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72021F16061900CD5776 /* bitbuffer.cc */; };
+		1FE07DB91FE791550018E762 /* random.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D71FE1F16056800CD5776 /* random.cc */; };
+		1FE07DBA1FE791550018E762 /* copyonwritebuffer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D71FA1F16051E00CD5776 /* copyonwritebuffer.cc */; };
+		1FE07DBB1FE791550018E762 /* condition_variable.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D71F81F15FEBD00CD5776 /* condition_variable.cc */; };
+		1FE07DBC1FE791550018E762 /* rate_limiter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D71F41F15FE2600CD5776 /* rate_limiter.cc */; };
+		1FE07DBD1FE791550018E762 /* atomic32_darwin.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D71EE1F15FCA800CD5776 /* atomic32_darwin.cc */; };
+		1FE07DBE1FE791550018E762 /* rtp_to_ntp_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D71EC1F15FBEC00CD5776 /* rtp_to_ntp_estimator.cc */; };
+		1FE07DBF1FE791550018E762 /* event_timer_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4547E2D31F15F51F0014FB7E /* event_timer_posix.cc */; };
+		1FE07DC01FE791550018E762 /* event_wrapper_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4547E2D11F15F4870014FB7E /* event_wrapper_impl.cc */; };
+		1FE07DC11FE791550018E762 /* timeutils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4547E2BF1F15EF7E0014FB7E /* timeutils.cc */; };
+		1FE07DC21FE791800018E762 /* optional.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D729A1F175D1700CD5776 /* optional.cc */; };
+		1FE07DFA1FE7A9B00018E762 /* criticalsection.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F1EDA431F95E5F80018BD4C /* criticalsection.cc */; };
 		1FF9F2231F34529E005D11C5 /* stats_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FF9F2221F34529E005D11C5 /* stats_types.h */; };
 		450D71E11F15F8CA00CD5776 /* platform_thread_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 450D71DE1F15F8CA00CD5776 /* platform_thread_types.h */; };
 		450D71ED1F15FBEC00CD5776 /* rtp_to_ntp_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D71EC1F15FBEC00CD5776 /* rtp_to_ntp_estimator.cc */; };
@@ -647,6 +666,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FE07DFA1FE7A9B00018E762 /* criticalsection.cc in Sources */,
+				1FE07DC21FE791800018E762 /* optional.cc in Sources */,
+				1FE07DB11FE791550018E762 /* stats_types.cc in Sources */,
+				1FE07DB21FE791550018E762 /* event_tracer.cc in Sources */,
+				1FE07DB31FE791550018E762 /* platform_thread.cc in Sources */,
+				1FE07DB41FE791550018E762 /* logging.cc in Sources */,
+				1FE07DB51FE791550018E762 /* checks.cc in Sources */,
+				1FE07DB61FE791550018E762 /* thread_posix.cc in Sources */,
+				1FE07DB71FE791550018E762 /* rate_statistics.cc in Sources */,
+				1FE07DB81FE791550018E762 /* bitbuffer.cc in Sources */,
+				1FE07DB91FE791550018E762 /* random.cc in Sources */,
+				1FE07DBA1FE791550018E762 /* copyonwritebuffer.cc in Sources */,
+				1FE07DBB1FE791550018E762 /* condition_variable.cc in Sources */,
+				1FE07DBC1FE791550018E762 /* rate_limiter.cc in Sources */,
+				1FE07DBD1FE791550018E762 /* atomic32_darwin.cc in Sources */,
+				1FE07DBE1FE791550018E762 /* rtp_to_ntp_estimator.cc in Sources */,
+				1FE07DBF1FE791550018E762 /* event_timer_posix.cc in Sources */,
+				1FE07DC01FE791550018E762 /* event_wrapper_impl.cc in Sources */,
+				1FE07DC11FE791550018E762 /* timeutils.cc in Sources */,
 				AD1F0BB51D47605300C33F53 /* aligned_malloc.cc in Sources */,
 				AD1F0BB71D47605300C33F53 /* condition_variable_posix.cc in Sources */,
 				AD1F0BB91D47605300C33F53 /* cpu_features.cc in Sources */,

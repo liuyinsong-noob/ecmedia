@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1FE07DC31FE799600018E762 /* h264_bitstream_parser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D720C1F160E3000CD5776 /* h264_bitstream_parser.cc */; };
+		1FE07DC41FE799600018E762 /* h264_common.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D720E1F160E3000CD5776 /* h264_common.cc */; };
+		1FE07DC51FE799600018E762 /* pps_parser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72101F160E3000CD5776 /* pps_parser.cc */; };
+		1FE07DC61FE799600018E762 /* profile_level_id.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72121F160E3000CD5776 /* profile_level_id.cc */; };
+		1FE07DC71FE799600018E762 /* sps_parser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72141F160E3000CD5776 /* sps_parser.cc */; };
+		1FE07DC81FE799600018E762 /* sps_vui_rewriter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72161F160E3000CD5776 /* sps_vui_rewriter.cc */; };
 		450D72181F160E3000CD5776 /* h264_bitstream_parser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D720C1F160E3000CD5776 /* h264_bitstream_parser.cc */; };
 		450D72191F160E3000CD5776 /* h264_common.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D720E1F160E3000CD5776 /* h264_common.cc */; };
 		450D721A1F160E3000CD5776 /* pps_parser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72101F160E3000CD5776 /* pps_parser.cc */; };
@@ -217,6 +223,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FE07DC31FE799600018E762 /* h264_bitstream_parser.cc in Sources */,
+				1FE07DC41FE799600018E762 /* h264_common.cc in Sources */,
+				1FE07DC51FE799600018E762 /* pps_parser.cc in Sources */,
+				1FE07DC61FE799600018E762 /* profile_level_id.cc in Sources */,
+				1FE07DC71FE799600018E762 /* sps_parser.cc in Sources */,
+				1FE07DC81FE799600018E762 /* sps_vui_rewriter.cc in Sources */,
 				AD1F0C9C1D47628D00C33F53 /* jpeg.cc in Sources */,
 				AD1F0C9D1D47628D00C33F53 /* i420_video_frame.cc in Sources */,
 				AD1F0C9E1D47628D00C33F53 /* plane.cc in Sources */,
@@ -253,17 +265,20 @@
 		AD1F0CA61D47628D00C33F53 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../..,
-					../../video_coding/main/include,
 					../interface,
+					../../video_coding/main/include,
 					../../../system_wrappers/interface,
-					../../../third_party/libyuv/include,
+					../../base,
+					../../module,
+					"$(SRCROOT)/../",
+					../../third_party/libyuv/include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -276,17 +291,20 @@
 		AD1F0CA71D47628D00C33F53 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LIBRARY = "libc++";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../..,
-					../../video_coding/main/include,
 					../interface,
+					../../video_coding/main/include,
 					../../../system_wrappers/interface,
-					../../../third_party/libyuv/include,
+					../../base,
+					../../module,
+					"$(SRCROOT)/../",
+					../../third_party/libyuv/include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
