@@ -13,6 +13,10 @@
 #include "TargetConditionals.h"
 #endif
 
+
+extern void setSsrcMediaType(unsigned int& ssrc, int type);
+extern void setSsrcMediaAttribute(unsigned int& ssrc, unsigned short width, unsigned short height, unsigned char maxFramerate);
+
 #define CCP_SDK_VERSION "1.1.23.7"
 #ifdef WIN32
 
@@ -98,9 +102,6 @@ static proxyAddrList *gProxyAddrLst = NULL;
 
 #define CHECK_PROXY_VALID_KEY  "acbef97b9a534203b2ebcf3befb2a240"
 
-
-extern void setSsrcMediaType(int& ssrc, int type);
-extern void setSsrcMediaAttribute(int& ssrc, unsigned short width, unsigned short height, unsigned char maxFramerate);
 
 /////////////////////////////////////////////////////////////////////
 
@@ -3916,7 +3917,7 @@ extern "C"  int requestVideo(char *callid, int width, int height)
 			return -1;
 		}
 
-		int ssrc = pCall->m_partnerSSRC;
+		unsigned int ssrc = pCall->m_partnerSSRC;
 		setSsrcMediaType(ssrc, 1);
 		setSsrcMediaAttribute(ssrc, width, height, 15);
 		g_pSerCore->send_tmmbr_request_video(pCall, ssrc);

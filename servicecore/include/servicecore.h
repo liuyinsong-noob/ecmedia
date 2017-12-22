@@ -1196,4 +1196,6 @@ void serphone_core_set_android_objects(void* javaVM, void* env, void* context);
 int serphone_core_get_unique_id(char *uniqueid, int len);
 
 void serphone_core_set_bind_local_addr(const char* addr);
+
+void serphone_core_get_ssrc(SerPhoneCall *call);
 #endif

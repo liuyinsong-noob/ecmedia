@@ -4765,7 +4765,7 @@
 					"-lz",
 				);
 				OTHER_OSACOMPILEFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rongliantest.audioVideo.Demo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ronglian.audioVideo.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -4813,7 +4813,7 @@
 					"-lz",
 				);
 				OTHER_OSACOMPILEFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rongliantest.audioVideo.Demo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ronglian.audioVideo.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";

@@ -790,13 +790,13 @@ void ServiceCore::sip_config_read()
 	serphone_core_enable_ipv6(ipv6);
 	memset(&tr,0,sizeof(tr));
 
-	if (lp_config_get_int(config,"sip","sip_random_port",1)) {
+	if (lp_config_get_int(config,"sip","sip_random_port",0)) {
 		tr.udp_port=(0xDFF&+random())+1024;
 	} else {
 		//tr.udp_port=lp_config_get_int(config,"sip","sip_port",DEFAULT_SIP_UDP_PORT);  //5060);deleted by zdm
         tr.udp_port=lp_config_get_int(config,"sip","sip_port",0);
 	}
-	if (lp_config_get_int(config,"sip","sip_tcp_random_port",0))
+	if (lp_config_get_int(config,"sip","sip_tcp_random_port",1))
  //   if (lp_config_get_int(config,"sip","sip_tcp_random_port",1))
     {
 		tr.tcp_port=(0xDFF&+random())+1024;
@@ -809,7 +809,6 @@ void ServiceCore::sip_config_read()
 	} else {
 		tr.tls_port=lp_config_get_int(config,"sip","sip_tls_port",0);
 	}
-    tr.tcp_port = 0;
 
 #ifdef __linux
 	sal_set_root_ca(sal, lp_config_get_string(config,"sip","root_ca", "/etc/ssl/certs"));
@@ -4727,9 +4726,8 @@ void ServiceCore::serphone_core_assign_payload_type( PayloadType *const_pt, int 
 	pt=payload_type_clone(const_pt);
 	if (number==-1){
 		/*look for a free number */
-		MSList *elem;
-		int i;
-		for(i=this->dyn_pt;i<=127;++i){
+		MSList *elem = NULL;
+		for(short i=this->dyn_pt; i<=127; ++i){
 			bool_t already_assigned=FALSE;
 			for(elem=this->payload_types;elem!=NULL;elem=elem->next){
 				PayloadType *it=(PayloadType*)elem->data;
@@ -4793,16 +4791,16 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
 	this->dyn_pt=96;
 
 //    //payloadtype 不要修改，和codedatabase.cc里面对应
-     serphone_core_assign_payload_type(&payload_type_red8k, 116, NULL);//48k
-     //serphone_core_assign_payload_type(&payload_type_opus8k, 121, NULL);
-     //serphone_core_assign_payload_type(&payload_type_opus16k, 122, NULL);
+ //    serphone_core_assign_payload_type(&payload_type_opus, 124, NULL);//48k
+     serphone_core_assign_payload_type(&payload_type_opus8k, 121, NULL);
+     serphone_core_assign_payload_type(&payload_type_opus16k, 122, NULL);
 
 //    serphone_core_assign_payload_type(&payload_type_silk_nb,111,NULL);
 //    serphone_core_assign_payload_type(&payload_type_silk_mb,112,NULL);
 //    serphone_core_assign_payload_type(&payload_type_silk_wb,113,NULL);
 //    serphone_core_assign_payload_type(&payload_type_ilbc,97,NULL);
 
- //	serphone_core_assign_payload_type(&payload_type_g729,18,"annexb=no");
+ 	serphone_core_assign_payload_type(&payload_type_g729,18,"annexb=no");
  	serphone_core_assign_payload_type(&payload_type_pcmu8000,0,NULL);
 	serphone_core_assign_payload_type(&ccp_payload_type_telephone_event,106,"0-15");
 
@@ -4823,7 +4821,7 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
 #endif
 
 #ifdef VIDEO_ENABLED
-    serphone_core_assign_payload_type(&payload_type_h264, 96,"profile-level-id=42e01e; packetization-mode=1; max-br=452; max-mbps=11880");
+	serphone_core_assign_payload_type(&payload_type_h264,-1,"profile-level-id=42e01e; packetization-mode=1; max-br=452; max-mbps=11880");
 	serphone_core_assign_payload_type(&payload_type_vp8,120,NULL);
 
     //highprofile  ----zhangning 20170801 add---begin--
@@ -6324,18 +6322,50 @@ void serphone_core_set_bind_local_addr(const char* addr)
 	g_bind_local_addr[sizeof(g_bind_local_addr)-1] = '\0';
 }
 
-int ServiceCore::serphone_set_traceFlag(/*bool flag*/) //Don't use flag for the time being
+void serphone_core_get_ssrc(SerPhoneCall *call)
 {
-	ECMedia_set_trace(NULL, (void*)CCPClientPrintLog, 25, 100);
-	return 0;
+	/* look for savp stream first */
+	const SalStreamDescription *stream = sal_media_description_find_stream(call->resultdesc,
+		SalProtoRtpSavp, SalAudio);
+	const SalStreamDescription *local_stream = sal_media_description_find_stream(call->localdesc,
+		SalProtoRtpSavp, SalAudio);
+
+	/* no savp audio stream, use avp */
+	if (!stream)
+		stream = sal_media_description_find_stream(call->resultdesc, SalProtoRtpAvp, SalAudio);
+	if (!local_stream)
+		local_stream = sal_media_description_find_stream(call->localdesc, SalProtoRtpAvp, SalAudio);
+
+	if (stream) {
+		call->m_selfSSRC = stream->ssrc_self;
+		call->m_partnerSSRC = stream->ssrc_partner;
+	}
+
+	if (call->m_selfSSRC == 0 || call->m_partnerSSRC == 0)
+	{
+		/* look for savp stream first */
+		const SalStreamDescription *stream = sal_media_description_find_stream(call->resultdesc,
+			SalProtoRtpSavp, SalVideo);
+		const SalStreamDescription *local_stream = sal_media_description_find_stream(call->localdesc,
+			SalProtoRtpSavp, SalVideo);
+
+		/* no savp audio stream, use avp */
+		if (!stream)
+			stream = sal_media_description_find_stream(call->resultdesc, SalProtoRtpAvp, SalVideo);
+		if (!local_stream)
+			local_stream = sal_media_description_find_stream(call->localdesc, SalProtoRtpAvp, SalVideo);
+		
+		if (stream) {
+			call->m_selfSSRC = stream->ssrc_self;
+			call->m_partnerSSRC = stream->ssrc_partner;
+		}
+	}
 }
 
-int ServiceCore::serphone_set_audioRecordStatus(const char *path, bool enable)
+int ServiceCore::serphone_set_traceFlag(/*bool flag*/) //Don't use flag for the time being
 {
-    m_audioRecordPath.assign(path);
-    m_bAudioRecord = enable;
-    
-    return 0;
+	ECMedia_set_trace(NULL, (void*)CCPClientPrintLog, 23, 100);
+	return 0;
 }
 
 #ifdef HAIYUNTONG
@@ -6350,6 +6380,16 @@ const char * ServiceCore::serphone_get_proxyAddr()
 {
     return proxyAddr;
 }
+
+int ServiceCore::serphone_set_audioRecordStatus(const char *path, bool enable)
+{
+    m_audioRecordPath.assign(path);
+    m_bAudioRecord = enable;
+    
+    return 0;
+}
+
+
 int ServiceCore::serphone_get_proxyPort()
 {
     return proxyPort;

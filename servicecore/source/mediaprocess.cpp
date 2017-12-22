@@ -49,8 +49,8 @@ int voe_callback(int channel, int errCode) {
 	return 0;
 }
 
-void setSsrcMediaType(int& ssrc, int type);
-void setSsrcMediaAttribute(int& ssrc, unsigned short width, unsigned short height, unsigned char maxFramerate);
+void setSsrcMediaType(unsigned int& ssrc, int type);
+void setSsrcMediaAttribute(unsigned int& ssrc, unsigned short width, unsigned short height, unsigned char maxFramerate);
 
 void ServiceCore::ring_stop(int ringmode)
 {
@@ -516,6 +516,8 @@ void ServiceCore::serphone_call_start_media_streams(SerPhoneCall *call, bool_t a
 	}
 	cname=serphone_address_as_string_uri_only(me);
 
+	serphone_core_get_ssrc(call);
+
 #if defined(VIDEO_ENABLED)
 	if (vstream!=NULL && vstream->dir!=SalStreamInactive && vstream->payloads!=NULL){
 		/*when video is used, do not make adaptive rate control on audio, it is stupid.*/
@@ -642,13 +644,23 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 				//	break;
 				//}
 			}
-			ECMedia_audio_set_send_destination(call->m_AudioChannelID, stream->port, stream->addr[0] != '\0' ? stream->addr : call->resultdesc->addr, 0, stream->port + 1, stream->addr[0] != '\0' ? stream->addr : call->resultdesc->addr);
-//            For MOS test
+			ECMedia_audio_set_send_destination(call->m_AudioChannelID, stream->port, stream->addr[0] != '\0' ? stream->addr : call->resultdesc->addr, 0, stream->port, stream->addr[0] != '\0' ? stream->addr : call->resultdesc->addr);
+		
+//          For MOS test
 //			ECMedia_audio_set_send_destination(call->m_AudioChannelID, 7078, "127.0.0.1");
 
 //			ECMedia_start_record_microphone("./microphone.pcm");
 //			ECMedia_start_record_playout(call->m_AudioChannelID, "./playout.pcm");
 //			ECMedia_start_record_send_voice("./sendvoice.pcm");
+
+			if (call->m_selfSSRC && call->m_partnerSSRC) {
+				unsigned int self_ssrc = call->m_selfSSRC;
+				unsigned int partner_ssrc = call->m_partnerSSRC;
+				setSsrcMediaType(self_ssrc, 0);
+				setSsrcMediaType(partner_ssrc, 0);
+				partner_ssrc = self_ssrc | 0x40;
+				ECMedia_audio_set_ssrc(call->m_AudioChannelID, self_ssrc, partner_ssrc);
+			}
 
 			//add by xzq to trace the stream
 			PrintConsole("Send Stream to Remote [%s:%d]\n",stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr,
@@ -703,9 +715,9 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 
 				ECMedia_set_send_codec_audio(call->m_AudioChannelID, codec_params);
 				ECMedia_set_receive_playloadType_audio(call->m_AudioChannelID,codec_params);
-                
+
                 if (!strncmp(codec_params.plname, "red", 3)) {
-                    ECMedia_setAudioRed(call->m_AudioChannelID, true, codec_params.pltype);
+                    ECMedia_setAudioRed(call->m_AudioChannelID, false, codec_params.pltype);
                     //TODO:
                     //base->SetFecStatus(call->m_AudioChannelID, m_enable_fec);
                     //base->SetLoss(call->m_AudioChannelID, m_opus_packet_loss_rate);
@@ -792,12 +804,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 			}
 			PrintConsole("cloopen trace %s middle 114\n",__FUNCTION__);
 
-//            sean test magic sound
-            ECMedia_audio_enable_magic_sound(call->m_AudioChannelID, enable_magic_sound);
-            ECMedia_audio_set_magic_sound(call->m_AudioChannelID, magic_sound_pitch, magic_sound_tempo, magic_sound_rate);
-            //ECMedia_select_magic_sound_mode(call->m_AudioChannelID, cloopenwebrtc::kECMagicSoundNormal); //added by zhaoyou
-			
-            //TODO:
+			//TODO:
 			//bool enabled = false;
 			//int timeout = 0;
 			/*if(network)
@@ -923,20 +930,27 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 			//network->SetSendDestination(call->m_VideoChannelID,
 			//	stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr,stream->port);
 			ECMedia_video_set_send_destination(call->m_VideoChannelID,
-				stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr, stream->port, stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr, stream->rtcp_port);
+				stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr, stream->port, stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr, stream->port);
 
-			int ssrc = stream->ssrc_self;
-			if (ssrc != 0) //connect to mas
-			{
-				setSsrcMediaType(ssrc, 1);
-				setSsrcMediaAttribute(ssrc, m_sendVideoWidth, m_sendVideoHeight, m_sendVideoFps);
+			if (call->m_selfSSRC) {
+				unsigned int self_ssrc = call->m_selfSSRC;
+				setSsrcMediaType(self_ssrc, 1);
+				setSsrcMediaAttribute(self_ssrc, m_sendVideoWidth, m_sendVideoHeight, m_sendVideoFps);
+				ECMedia_video_set_local_ssrc(call->m_VideoChannelID, self_ssrc);
+
 			}
-			
-			ECMedia_video_set_local_ssrc(call->m_VideoChannelID, ssrc);
+            else
+            {
+                unsigned int self_ssrc = call->m_selfSSRC;
+                setSsrcMediaType(self_ssrc, 1);
+                setSsrcMediaAttribute(self_ssrc, m_sendVideoWidth, m_sendVideoHeight, m_sendVideoFps);
+                ECMedia_video_set_local_ssrc(call->m_VideoChannelID, self_ssrc);
+            }
 
 			call->m_selfSSRC = stream->ssrc_self;
 			call->m_partnerSSRC = stream->ssrc_partner;			
 
+			ECMedia_video_request_remote_ssrc(call->m_VideoChannelID, (call->m_partnerSSRC|0x10));
 			//ECMedia_video_request_remote_ssrc(call->m_VideoChannelID, 128787);
 			//ECMedia_video_request_remote_ssrc(call->m_VideoChannelID, 128919);
 			
@@ -947,37 +961,11 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 			ECMedia_get_supported_codecs_video(codecArray);
 			for (int i = 0; i < num_codec; i++) {
 				codec_params = codecArray[i];
-                
-                //profile-level-id 2017-08-08 zhangning added
-                if ( strcasecmp( codec_params.plName, p->mime_type) == 0) {
-                    
-                    if( strcasecmp(p->mime_type, "VP8") == 0  ){
-                        codec_found = true;
-                        codec_params.plType = used_pt;
-                        break;
-                    }
-                    
-                    char value[8]   =   {0};
-                    if (strcasecmp(p->mime_type, "H264") == 0 &&
-                        fmtp_get_value(p->recv_fmtp,"profile-level-id",value,sizeof(value))){
- 
-                        if ( cloopenwebrtc::kVideoCodecH264 == codec_params.codecType &&
-                            0 == strncmp( value, "42",2) ) {
-                            
-                            codec_found = true;
-                            codec_params.plType = used_pt;
-                            break;
-                        }
-                        if ( cloopenwebrtc::kVideoCodecH264HIGH == codec_params.codecType &&
-                            0 == strncmp( value, "6400", 4 ) ) {
-                            
-                            codec_found = true;
-                            codec_params.plType = used_pt;
-                            break;
-                        }
-                        
-                    }
-                }
+				if ( strcasecmp( codec_params.plName, p->mime_type) == 0) {
+					codec_found = true;
+					codec_params.plType = used_pt;
+					break;
+				}
 			}
             
 			delete []codecArray;
@@ -997,10 +985,6 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 					codec_params.startBitrate = m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps *3*0.07/1000;
 					codec_params.maxBitrate = codec_params.startBitrate;
 					codec_params.minBitrate = codec_params.startBitrate/4;
-
-					codec_params.startBitrate = 300;
-					codec_params.maxBitrate = 2000;
-					codec_params.minBitrate = 30;
 
 				}
 
@@ -5502,7 +5486,7 @@ void ServiceCore::audio_enable_magic_sound(bool enabled, int pitch, int tempo, i
 
 
 
-void setSsrcMediaType(int& ssrc, int type)
+void setSsrcMediaType(unsigned int& ssrc, int type)
 {
 	//25bits ý??ԴID 1bit ý??Դ???? 2bits ý?????? 4bits ý??????
 	//ý?????ͣ? 0????Ƶ 1?? ??Ƶ 2????Ļ???? 3?? ????  
@@ -5512,7 +5496,7 @@ void setSsrcMediaType(int& ssrc, int type)
 	ssrc = ssrc | (type << 4);//2bit??ֵ
 	PrintConsole((char*)__FILE__, __LINE__, (char*)__FUNCTION__, 0, "end ssrc=%u,type=%d", ssrc, type);
 }
-void setSsrcMediaAttribute(int& ssrc, unsigned short width, unsigned short height, unsigned char maxFramerate)
+void setSsrcMediaAttribute(unsigned int& ssrc, unsigned short width, unsigned short height, unsigned char maxFramerate)
 {
 	//25bits ý??ԴID 1bit ý??Դ???? 2bits ý?????? 4bits ý??????
 	//ý???????ԣ????? ֡?? ?Ȱ????ߴ??�????ѡ???Ĵ???????֡

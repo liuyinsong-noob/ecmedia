@@ -128,7 +128,7 @@ int32_t RtpDumpImpl::Start(const char* fileNameUTF8)
     memset(dummyHdr, 0, 16);
     if (!_file.Write(dummyHdr, sizeof(dummyHdr)))
     {
-        LOG(LS_ERROR) << "Error writing to file.";
+        //LOG(LS_ERROR) << "Error writing to file.";
         return -1;
     }
     return 0;

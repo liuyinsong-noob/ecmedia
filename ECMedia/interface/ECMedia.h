@@ -86,6 +86,11 @@ ECMEDIA_API int ECMedia_audio_set_send_destination(int channelid, int rtp_port, 
 /**
  *
  */
+/*
+ *1 set audio ssrc, should be called immediately after audio channel is created
+ */
+ECMEDIA_API int ECMedia_audio_set_ssrc(int channelid, unsigned int localssrc, unsigned int remotessrc);
+
 ECMEDIA_API int ECMedia_audio_set_socks5_send_data(int channel_id, unsigned char *data, int length, bool isRTCP);
 /*
  *1
