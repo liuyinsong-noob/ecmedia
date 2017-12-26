@@ -195,7 +195,7 @@ bool EventTimerPosix::Process() {
     return false;
   }
   if (created_at_.tv_sec == 0) {
-//#ifndef WEBRTC_MAC
+
 #if !defined(WEBRTC_MAC) && !defined(WEBRTC_IOS)
       CHECK_EQ(0, clock_gettime(CLOCK_MONOTONIC, &created_at_));
 #else
