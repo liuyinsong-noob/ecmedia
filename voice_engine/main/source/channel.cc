@@ -6579,7 +6579,8 @@ int
 
 	return 0;
 }
-
+#endif   //webrtc_srtp
+    
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
 int32_t Channel::SetUdpTransport(UdpTransport *transport, int32_t rtp_port)
 #else
@@ -6631,6 +6632,6 @@ TcpTransport *Channel::GetTcpTransport()
 {
     return _socketTransportModule;
 }
-#endif
+
 }  // namespace voe
 }  // namespace cloopenwebrtc
