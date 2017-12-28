@@ -40,6 +40,7 @@
 #define WEBRTC_SYSTEM_WRAPPERS_INCLUDE_LOGGING_H_
 
 #include <sstream>
+#include <errno.h>
 
 namespace cloopenwebrtc {
 

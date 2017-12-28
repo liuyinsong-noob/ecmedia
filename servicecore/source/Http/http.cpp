@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <functional>
 #include <cctype>
+#include <string.h>
 #include <sstream>
 
 

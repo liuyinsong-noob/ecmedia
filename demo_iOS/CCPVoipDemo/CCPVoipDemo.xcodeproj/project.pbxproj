@@ -3648,7 +3648,7 @@
 				TargetAttributes = {
 					05F43B8216A92CAA00F6D053 = {
 						DevelopmentTeam = 2372872F55;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -4736,7 +4736,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEPLOYMENT_POSTPROCESSING = NO;
 				DEVELOPMENT_TEAM = 2372872F55;
 				ENABLE_BITCODE = NO;
@@ -4765,11 +4765,11 @@
 					"-lz",
 				);
 				OTHER_OSACOMPILEFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ronglian.audioVideo.Demo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ronglian.audioVideo.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8f7ec377-8f7f-4ed1-b502-fcbba69c2b61";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = devRonglianCommon;
 				STRIP_STYLE = "non-global";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 arm64";
@@ -4784,7 +4784,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEPLOYMENT_POSTPROCESSING = NO;
 				DEVELOPMENT_TEAM = 2372872F55;
 				ENABLE_BITCODE = NO;
@@ -4813,11 +4813,11 @@
 					"-lz",
 				);
 				OTHER_OSACOMPILEFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ronglian.audioVideo.Demo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ronglian.audioVideo.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8f7ec377-8f7f-4ed1-b502-fcbba69c2b61";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = devRonglianCommon;
 				STRIP_STYLE = "non-global";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 arm64";
