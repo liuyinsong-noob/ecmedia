@@ -273,8 +273,7 @@ bool RTPSenderAudio::SendAudio(FrameType frame_type,
 						}
 						timestampOffset = fragmentation->fragmentationTimeDiff[2];
 						REDheader = (timestampOffset << 10) + blockLength;
-						RtpUtility::AssignUWord24ToBuffer(dataBuffer + rtpHeaderLength,
-							(uint8_t)REDheader);
+						RtpUtility::AssignUWord24ToBuffer(dataBuffer + rtpHeaderLength,REDheader);
 						rtpHeaderLength += 3;
 					}
 
@@ -286,7 +285,7 @@ bool RTPSenderAudio::SendAudio(FrameType frame_type,
 					}
 					timestampOffset = fragmentation->fragmentationTimeDiff[1];
 					REDheader = (timestampOffset << 10) + blockLength;
-					RtpUtility::AssignUWord24ToBuffer(dataBuffer + rtpHeaderLength, (uint8_t)REDheader);
+					RtpUtility::AssignUWord24ToBuffer(dataBuffer + rtpHeaderLength, REDheader);
 					rtpHeaderLength += 3;
 
 
