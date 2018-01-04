@@ -665,7 +665,7 @@ char *globalFilePathcapture = NULL;
         return;
     }
     
-    if(parentView != nil && !_ecImageView) {
+    if(parentView != nil && _ecImageView != nil) {
         [_ecImageView removeFromSuperview];
         [parentView release];
         parentView = nil;
@@ -673,23 +673,25 @@ char *globalFilePathcapture = NULL;
     parentView = aparentView;
     if(parentView != nil) {
         [parentView retain];
-        _ecImageView = [[ECImageView alloc] initWithFrame:CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height)];
-        if([parentView contentMode] == UIViewContentModeScaleAspectFit) {
-            [_ecImageView setFillMode:kECImageFillModePreserveAspectRatio];
-        } else if([parentView contentMode] == UIViewContentModeScaleAspectFill) {
-            [_ecImageView setFillMode:kECImageFillModePreserveAspectRatioAndFill];
-        } else {
-            [_ecImageView setFillMode:kECImageFillModeStretch];
+        if(_ecImageView == nil) {
+            _ecImageView = [[ECImageView alloc] initWithFrame:CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height)];
+            if([parentView contentMode] == UIViewContentModeScaleAspectFit) {
+                [_ecImageView setFillMode:kECImageFillModePreserveAspectRatio];
+            } else if([parentView contentMode] == UIViewContentModeScaleAspectFill) {
+                [_ecImageView setFillMode:kECImageFillModePreserveAspectRatioAndFill];
+            } else {
+                [_ecImageView setFillMode:kECImageFillModeStretch];
+            }
+            // view horizontal mirror. zhaoyou
+            [_ecImageView setInputRotation:kECImageFlipHorizonal atIndex:0];
+            [_ecImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
         }
-        // view horizontal mirror. zhaoyou
-        [_ecImageView setInputRotation:kECImageFlipHorizonal atIndex:0];
-        [_ecImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+        [_ecImageView setFrame:CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height)];
         [parentView insertSubview:_ecImageView atIndex:0];
-        
         
         if(_rawDataInput == nullptr) {
             _rawDataInput = [[ECImageRawDataInput alloc] initWithBytes:(GLubyte *)nullptr size:CGSizeMake(0, 0)];
-           
+            
             
             _rawDataOutput = [[ECImageRawDataOutput alloc] initWithImageSize:CGSizeMake(mOutputVideoSize.width, mOutputVideoSize.height) resultsInBGRAFormat:YES];
             [_rawDataOutput setI420FrameAvailableBlock:^(const GLubyte *outputBytes, uint8_t *bytes_y, int stride_y, uint8_t *bytes_u, int stride_u, uint8_t *bytes_v, int stride_v, NSInteger width, int height) {
@@ -706,6 +708,7 @@ char *globalFilePathcapture = NULL;
             [_rawDataInput addTarget:_rawDataOutput];
             [_rawDataInput addTarget:_ecImageView];
         }
+        
     }
 }
 
