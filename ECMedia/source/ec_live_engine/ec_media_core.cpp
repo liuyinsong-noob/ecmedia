@@ -208,9 +208,15 @@ namespace cloopenwebrtc {
         VoEBase *base = VoEBase::GetInterface(voe_);
         audio_channel_ = base->CreateChannel();
        
-        base->SetLocalReceiver(audio_channel_, 8000);
-        base->SetSendDestination(audio_channel_, 8001, nullptr, 7800, 7801, nullptr);
-        base->Release();
+		int port = 8000;
+		//防止一个机器上启动多个客户端时端口被占
+		while (base->SetLocalReceiver(audio_channel_, port, port + 1) < 0 && port < 8100)
+		{
+			port += 2;
+		}
+		port += 2;
+		base->SetSendDestination(audio_channel_, port, nullptr, port + 1, port + 2, nullptr);
+		base->Release();
 
         VoENetwork *network = VoENetwork::GetInterface(voe_);
         if(!network) {

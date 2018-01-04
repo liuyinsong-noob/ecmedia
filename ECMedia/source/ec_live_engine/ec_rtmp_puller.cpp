@@ -73,7 +73,7 @@ namespace cloopenwebrtc {
             rtmp_ = nullptr;
             av_packet_cacher->shutdown();
             hasStreaming_ = false;
-            callbackStateIfNeed();
+            //callbackStateIfNeed();
         }
     }
 
@@ -104,6 +104,9 @@ namespace cloopenwebrtc {
                         }
                         else {
 							rtmp_status_ = RS_PLY_Connect_Faild;
+							if (callback_) {
+								callback_(EC_LIVE_CONNECT_FAILED);
+							}
                             return false;
                         }
                     }
@@ -116,6 +119,9 @@ namespace cloopenwebrtc {
                         }
                         else {
 							rtmp_status_ = RS_PLY_Connect_Faild;
+							if (callback_) {
+								callback_(EC_LIVE_CONNECT_FAILED);
+							}
 							return false;
                         }
                     }
@@ -131,6 +137,9 @@ namespace cloopenwebrtc {
                         }
                         else {
 							rtmp_status_ = RS_PLY_Connect_Faild; 
+							if (callback_) {
+								callback_(EC_LIVE_CONNECT_FAILED);
+							}
                             return false;
                         }
                     }
@@ -148,6 +157,9 @@ namespace cloopenwebrtc {
                         } else {
                             if(running_) {
 								rtmp_status_ = RS_PLY_Read_Faild;
+								if (callback_) {
+									callback_(EC_LIVE_PLAY_FAILED);
+								}
                             }
                             return false;
                         }

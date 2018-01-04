@@ -3764,15 +3764,15 @@ extern "C" void *createLiveStream()
 	SDK_UN_INITIAL_ERROR(NULL);
 	return g_pSerCore->createLiveStream();
 }
-extern "C" int playLiveStream(void *handle, const char * url, void *renderView)
+extern "C" int playLiveStream(void *handle, const char * url, void *renderView, ECLiveStreamNetworkStatusCallBack callback)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	return g_pSerCore->playLiveStream(handle, url, renderView);
+	return g_pSerCore->playLiveStream(handle, url, renderView, callback);
 }
-extern "C" int pushLiveStream(void *handle, const char * url, void *renderView)
+extern "C" int pushLiveStream(void *handle, const char * url, void *renderView, ECLiveStreamNetworkStatusCallBack callback)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	return g_pSerCore->pushLiveStream(handle, url, renderView);
+	return g_pSerCore->pushLiveStream(handle, url, renderView, callback);
 }
 extern "C" void stopLiveStream(void *handle)
 {

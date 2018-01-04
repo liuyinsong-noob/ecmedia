@@ -78,7 +78,7 @@ namespace cloopenwebrtc {
             cacher_update_event_->StopTimer();
             retrys_ = 0;
 			hasStreaming_ = false;
-			callbackStateIfNeed();
+			//callbackStateIfNeed();
         }
         PrintConsole("[ECRtmpPublisher INFO] %s: end.", __FUNCTION__);
     }
@@ -207,76 +207,89 @@ namespace cloopenwebrtc {
         return static_cast<ECRtmpPublisher*>(pThis)->run();
     }
 
-    bool ECRtmpPublisher::run() {
-        while(running_) {
-            if(rtmp_ != NULL)
-            {
-                switch (rtmp_status_) {
-                    case RS_STM_Init:
-                    {
-                        if(callback_){
-                            callback_(EC_LIVE_CONNECTING);
-                        }
-                        if (srs_rtmp_handshake(rtmp_) == 0) {
-                            rtmp_status_ = RS_STM_Handshaked;
-                        }
-                        else {
-                            is_rtmp_connected_ = false;
-							rtmp_status_ = RS_STM_Connect_Faild;
-                            return false;
-                        }
-                    }
-                        break;
-                    case RS_STM_Handshaked:
-                    {
-                        if (srs_rtmp_connect_app(rtmp_) == 0) {
-                            rtmp_status_ = RS_STM_Connected;
-                        }
-                        else {
-                            is_rtmp_connected_ = false;
-							rtmp_status_ = RS_STM_Connect_Faild;
-                            return false;
-                        }
-                    }
-                        break;
-                    case RS_STM_Connected:
-                    {
-                        if (srs_rtmp_publish_stream(rtmp_) == 0) {
-                            rtmp_status_ = RS_STM_Published;
-                            is_rtmp_connected_ = true;
-                            clearMediaCacher();
-                            if(callback_) {
-                                callback_(EC_LIVE_CONNECT_SUCCESS);
-                            }
-                        }
-                        else {
-                            is_rtmp_connected_ = false;
-							rtmp_status_ = RS_STM_Connect_Faild;
-                            return false;
-                        }
-                    }
-                        break;
-                    case RS_STM_Published:
-                    {
-                        if(doPushRtmpPacket() == 0) {
-                            if(!hasStreaming_) {
-                                hasStreaming_ = true;
-                                if(callback_) {
-                                    callback_(EC_LIVE_PUSH_SUCCESS);
-                                }
-                            }
-                        } else {
-                            is_rtmp_connected_ = false;
-							rtmp_status_ = RS_STM_Publish_Faild;
-                            return false;
-                        }
-                    }
-                        break;
-                }
-            }
-        }
-        return false;
-    }
+	bool ECRtmpPublisher::run() {
+		while (running_) {
+			if (rtmp_ != NULL)
+			{
+				switch (rtmp_status_) {
+				case RS_STM_Init:
+				{
+					if (callback_) {
+						callback_(EC_LIVE_CONNECTING);
+					}
+					if (srs_rtmp_handshake(rtmp_) == 0) {
+						rtmp_status_ = RS_STM_Handshaked;
+					}
+					else {
+						is_rtmp_connected_ = false;
+						rtmp_status_ = RS_STM_Connect_Faild;
+						if (callback_) {
+							callback_(EC_LIVE_CONNECT_FAILED);
+						}
+						return false;
+					}
+				}
+				break;
+				case RS_STM_Handshaked:
+				{
+					if (srs_rtmp_connect_app(rtmp_) == 0) {
+						rtmp_status_ = RS_STM_Connected;
+					}
+					else {
+						is_rtmp_connected_ = false;
+						rtmp_status_ = RS_STM_Connect_Faild;
+						if (callback_) {
+							callback_(EC_LIVE_CONNECT_FAILED);
+						}
+						return false;
+					}
+				}
+				break;
+				case RS_STM_Connected:
+				{
+					if (srs_rtmp_publish_stream(rtmp_) == 0) {
+						rtmp_status_ = RS_STM_Published;
+						is_rtmp_connected_ = true;
+						clearMediaCacher();
+						if (callback_) {
+							callback_(EC_LIVE_CONNECT_SUCCESS);
+						}
+					}
+					else {
+						is_rtmp_connected_ = false;
+						rtmp_status_ = RS_STM_Connect_Faild;
+						if (callback_) {
+							callback_(EC_LIVE_CONNECT_FAILED);
+						}
+						return false;
+					}
+				}
+				break;
+				case RS_STM_Published:
+				{
+					if (doPushRtmpPacket() == 0) {
+						if (!hasStreaming_) {
+							hasStreaming_ = true;
+							if (callback_) {
+								callback_(EC_LIVE_PUSH_SUCCESS);
+							}
+						}
+					}
+					else {
+						is_rtmp_connected_ = false;
+						rtmp_status_ = RS_STM_Publish_Faild;
+						if (callback_) {
+							callback_(EC_LIVE_PUSH_FAILED);
+						}
+						return false;
+					}
+				}
+				break;
+				}
+			}
+		}
+		return false;
+	}
 
     int ECRtmpPublisher::doPushRtmpPacket() {
         if(lst_enc_data_.size() <= 0) {

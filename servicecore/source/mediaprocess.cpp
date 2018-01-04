@@ -5194,18 +5194,18 @@ int ServiceCore::SetAudioKeepAlive(SerPhoneCall *call, bool enable, int interval
 #endif
     }
     
-    int ServiceCore::playLiveStream(void *handle, const char * url, void *renderView)
+    int ServiceCore::playLiveStream(void *handle, const char * url, void *renderView, ECLiveStreamNetworkStatusCallBack callback)
     {
 #ifdef VIDEO_ENABLED
         ECMedia_setVideoPreviewViewer(handle, renderView);
-        return ECMedia_playLiveStream(handle, url, nullptr);
+        return ECMedia_playLiveStream(handle, url, callback);
 #endif
     }
-    int ServiceCore::pushLiveStream(void *handle, const char * url, void *renderView)
+    int ServiceCore::pushLiveStream(void *handle, const char * url, void *renderView, ECLiveStreamNetworkStatusCallBack callback)
     {
 #ifdef VIDEO_ENABLED
         ECMedia_setVideoPreviewViewer(handle, renderView);
-        return ECMedia_pushLiveStream(handle, url, nullptr);
+        return ECMedia_pushLiveStream(handle, url, callback);
 #endif
     }
     
