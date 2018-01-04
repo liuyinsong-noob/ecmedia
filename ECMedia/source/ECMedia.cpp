@@ -851,7 +851,7 @@ int ECMedia_delete_channel(int& channelid, bool is_video)
 int ECMedia_audio_set_ssrc(int channelid, unsigned int localssrc, unsigned int remotessrc)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...,channelid:%d, localssrc: %u, remotessrc %u", __FUNCTION__,channelid, localssrc, remotessrc);
-    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoERTP_RTCP *rtp_rtcp = VoERTP_RTCP::GetInterface(m_voe);
     if (rtp_rtcp)
     {
