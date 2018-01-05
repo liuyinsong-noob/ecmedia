@@ -691,8 +691,6 @@ char *globalFilePathcapture = NULL;
         
         if(_rawDataInput == nullptr) {
             _rawDataInput = [[ECImageRawDataInput alloc] initWithBytes:(GLubyte *)nullptr size:CGSizeMake(0, 0)];
-            
-            
             _rawDataOutput = [[ECImageRawDataOutput alloc] initWithImageSize:CGSizeMake(mOutputVideoSize.width, mOutputVideoSize.height) resultsInBGRAFormat:YES];
             [_rawDataOutput setI420FrameAvailableBlock:^(const GLubyte *outputBytes, uint8_t *bytes_y, int stride_y, uint8_t *bytes_u, int stride_u, uint8_t *bytes_v, int stride_v, NSInteger width, int height) {
                 pthread_mutex_lock(&mutex);
@@ -719,7 +717,8 @@ char *globalFilePathcapture = NULL;
         if(_ecImageFilter == nullptr) {
             _ecImageFilter = [[ECImageBeautyFaceFilter alloc] init];
         }
-        
+        // view horizontal mirror. zhaoyou
+        [_ecImageView setInputRotation:kECImageFlipHorizonal atIndex:0];
         [_rawDataInput addTarget:_ecImageFilter];
         [_ecImageFilter addTarget:_rawDataOutput];
         [_ecImageFilter addTarget:_ecImageView];
