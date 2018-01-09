@@ -984,8 +984,8 @@ public:
 	void *createLiveStream();
     int configLiveVideoStream(void *handle, LiveVideoStreamConfig config);
 	void setLiveVideoSource(void *handle,int video_source);
-	int playLiveStream(void *handle, const char * url, void *renderView);
-	int pushLiveStream(void *handle, const char * url, void *renderView);
+	int playLiveStream(void *handle, const char * url, void *renderView, ECLiveStreamNetworkStatusCallBack callback = nullptr);
+	int pushLiveStream(void *handle, const char * url, void *renderView, ECLiveStreamNetworkStatusCallBack callback = nullptr);
     // int setLiveStreamNetworkCallBack(void *handle, onLiveStreamNetworkStatusCallBack callback);
 	void stopLiveStream(void *handle);
 	void releaseLiveStream(void *handle);

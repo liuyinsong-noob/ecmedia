@@ -8,6 +8,7 @@
 #include <list>
 
 #include "DlgFullScreen.h"
+#include "sdk_common.h"
 
 class ServiceCore;
 struct _SerPhoneCall;
@@ -193,6 +194,7 @@ public:
 
 public: 
 	CDlgFullScreen *m_dlgFullScreen;
+	static CserphonetestDlg* m_pThis;
 
 	long long m_RTTSender;
 	CComboBox m_videoProtectionMode;
@@ -227,4 +229,7 @@ public:
 	afx_msg void OnEnChangeVideoPt();
 	afx_msg void OnEnChangeEdit16();
 	afx_msg void OnBnClickedButton30();
+
+private:
+	static int LiveStreamNetworkStatusCallBack(EC_LIVE_STATUS_CODE code);
 };

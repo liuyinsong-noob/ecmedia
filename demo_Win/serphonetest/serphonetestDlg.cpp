@@ -24,7 +24,7 @@
 
 static CDlgFullScreen *g_dlgFullScreen = NULL;
 
-
+CserphonetestDlg* CserphonetestDlg::m_pThis = nullptr;
 
 #define TIMER_STATISTICS 2
 
@@ -379,6 +379,7 @@ CserphonetestDlg::CserphonetestDlg(CWnd* pParent /*=NULL*/)
 	m_bFullScreen = FALSE;
 	m_dlgFullScreen = NULL;
 	m_RTTSender = 0;
+	m_pThis = this;
 }
 
 CserphonetestDlg::~CserphonetestDlg()
@@ -1631,9 +1632,81 @@ void CserphonetestDlg::OnBnClickedPlayStream()
 	CWnd *rcwnd = g_dlg->GetDlgItem(IDC_RICHEDIT21);
 	USES_CONVERSION;
 	char* url = T2A(m_live_url.GetBuffer(0));
-	playLiveStream(g_rtmpLiveStreamHandle, url, rcwnd->GetSafeHwnd());
+	playLiveStream(g_rtmpLiveStreamHandle, url, rcwnd->GetSafeHwnd(), CserphonetestDlg::LiveStreamNetworkStatusCallBack);
 }
 
+wstring GetErrorDesp(UINT code)
+{
+	wstring strError = L"Not Error!";
+	switch (code)
+	{
+	case EC_LIVE_PUSH_FAILED:
+		strError = L"LIVE PUSH FAILED!";
+		break;
+	case EC_LIVE_CONNECT_FAILED:
+		strError = L"LIVE CONNECT FAILED!";
+		break;
+	case EC_LIVE_PLAY_FAILED:
+		strError = L"LIVE PLAY FAILED!";
+		break;
+	case EC_LIVE_CONNECTING:
+		strError = L"LIVE CONNECTING!";
+		break;
+	case EC_LIVE_CONNECT_SUCCESS:
+		strError = L"LIVE CONNECT SUCCESS!";
+		break;
+	case EC_LIVE_TIMEOUT:
+		strError = L"LIVE TIMEOUT!";
+		break;
+	case EC_LIVE_PUSH_SUCCESS:
+		strError = L"LIVE PUSH SUCCESS!";
+		break;
+	case EC_LIVE_PLAY_SUCCESS:
+		strError = L"LIVE PLAY SUCCESS!";
+		break;
+	case EC_LIVE_DISCONNECTED:
+		strError = L"LIVE DISCONNECTED!";
+		break;
+	case EC_LIVE_FINISHED:
+		strError = L"LIVE FINISHED!";
+		break;
+	default:
+		break;
+	}
+
+	return strError;
+}
+
+int CserphonetestDlg::LiveStreamNetworkStatusCallBack(EC_LIVE_STATUS_CODE code)
+{
+	switch (code)
+	{
+	case EC_LIVE_PUSH_FAILED:
+		//break;
+	case EC_LIVE_CONNECT_FAILED:
+		//break;
+	case EC_LIVE_PLAY_FAILED:
+		::MessageBox(m_pThis->GetSafeHwnd(),GetErrorDesp(code).c_str(),L"LiveVideo", MB_OK);
+		break;
+	case EC_LIVE_CONNECTING:
+		break;
+	case EC_LIVE_CONNECT_SUCCESS:
+		break;
+	case EC_LIVE_TIMEOUT:
+		break;
+	case EC_LIVE_PUSH_SUCCESS:
+		break;
+	case EC_LIVE_PLAY_SUCCESS:
+		break;
+	case EC_LIVE_DISCONNECTED:
+		break;
+	case EC_LIVE_FINISHED:
+		break;
+	default:
+		break;
+	}
+	return code;
+}
 
 
 void CserphonetestDlg::OnCbnSelchangeVideoSource()
@@ -1690,9 +1763,6 @@ void CserphonetestDlg::OnEnChangeLiveUrl()
 	// TODO:  在此添加控件通知处理程序代码
 }
 
-
-
-
 void CserphonetestDlg::OnBnClickedPushStream()
 {
 	if (!g_rtmpLiveStreamHandle) {
@@ -1709,14 +1779,13 @@ void CserphonetestDlg::OnBnClickedPushStream()
 
 	USES_CONVERSION;
 	char* url = T2A(m_live_url.GetBuffer(0));
-	pushLiveStream(g_rtmpLiveStreamHandle, url, rcwnd->GetSafeHwnd());
+	pushLiveStream(g_rtmpLiveStreamHandle, url, rcwnd->GetSafeHwnd(), CserphonetestDlg::LiveStreamNetworkStatusCallBack);
 
 #if 0
 	enableLiveStreamBeauty(g_rtmpLiveStreamHandle);
 #endif
 
 }
-
 
 void CserphonetestDlg::OnCbnSelchangeShareWindow()
 {

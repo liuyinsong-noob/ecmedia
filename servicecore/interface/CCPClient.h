@@ -580,8 +580,8 @@ typedef struct _CALLBACKINTERFACE CCallbackInterface;
 	CCPAPI  int setVideoKeepAlive(char *callid, bool enable, int interval);
 
 	CCPAPI void *createLiveStream();
-	CCPAPI int playLiveStream(void *handle, const char * url, void *renderView);
-	CCPAPI int pushLiveStream(void *handle, const char * url, void *renderView);
+	CCPAPI int playLiveStream(void *handle, const char * url, void *renderView, ECLiveStreamNetworkStatusCallBack callback);
+	CCPAPI int pushLiveStream(void *handle, const char * url, void *renderView, ECLiveStreamNetworkStatusCallBack callback);
 	CCPAPI void setLiveVideoSource(void *handle, int video_source);
 	CCPAPI void stopLiveStream(void *handle);
 	CCPAPI void releaseLiveStream(void *handle);

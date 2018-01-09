@@ -4803,6 +4803,7 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
  	serphone_core_assign_payload_type(&payload_type_g729,18,"annexb=no");
  	serphone_core_assign_payload_type(&payload_type_pcmu8000,0,NULL);
 	serphone_core_assign_payload_type(&ccp_payload_type_telephone_event,106,"0-15");
+	serphone_core_assign_payload_type(&payload_type_red8k, -1, NULL);
 
 //    serphone_core_assign_payload_type(&payload_type_cn8k,13,NULL);
 //    serphone_core_assign_payload_type(&payload_type_amr, 105, NULL);
