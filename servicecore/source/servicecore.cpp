@@ -4792,18 +4792,19 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
 
 //    //payloadtype 不要修改，和codedatabase.cc里面对应
  //    serphone_core_assign_payload_type(&payload_type_opus, 124, NULL);//48k
-     serphone_core_assign_payload_type(&payload_type_opus8k, 121, NULL);
-     serphone_core_assign_payload_type(&payload_type_opus16k, 122, NULL);
+    serphone_core_assign_payload_type(&payload_type_red8k, 116, NULL);  //audio red, pt = 116
+    serphone_core_assign_payload_type(&payload_type_opus8k, 121, NULL);
+    serphone_core_assign_payload_type(&payload_type_opus16k, 122, NULL);
 
-//    serphone_core_assign_payload_type(&payload_type_silk_nb,111,NULL);
-//    serphone_core_assign_payload_type(&payload_type_silk_mb,112,NULL);
-//    serphone_core_assign_payload_type(&payload_type_silk_wb,113,NULL);
-//    serphone_core_assign_payload_type(&payload_type_ilbc,97,NULL);
+    serphone_core_assign_payload_type(&payload_type_silk_nb,111,NULL);
+    serphone_core_assign_payload_type(&payload_type_silk_mb,112,NULL);
+    serphone_core_assign_payload_type(&payload_type_silk_wb,113,NULL);
+    serphone_core_assign_payload_type(&payload_type_ilbc,97,NULL);
 
- 	serphone_core_assign_payload_type(&payload_type_g729,18,"annexb=no");
- 	serphone_core_assign_payload_type(&payload_type_pcmu8000,0,NULL);
-	serphone_core_assign_payload_type(&ccp_payload_type_telephone_event,106,"0-15");
-	serphone_core_assign_payload_type(&payload_type_red8k, -1, NULL);
+    serphone_core_assign_payload_type(&payload_type_g729,18,"annexb=no");
+    serphone_core_assign_payload_type(&payload_type_pcmu8000,0,NULL);
+    serphone_core_assign_payload_type(&ccp_payload_type_telephone_event,106,"0-15");
+
 
 //    serphone_core_assign_payload_type(&payload_type_cn8k,13,NULL);
 //    serphone_core_assign_payload_type(&payload_type_amr, 105, NULL);
