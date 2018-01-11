@@ -16,18 +16,23 @@
 #endif
 
 namespace cloopenwebrtc {
-
+bool isEnableIOSH264HardEncode = true;
 bool IsH264CodecSupportedObjC() {
-#if defined(WEBRTC_OBJC_H264) && \
-    defined(WEBRTC_VIDEO_TOOLBOX_SUPPORTED) && \
-    defined(WEBRTC_IOS)
-  // Supported on iOS8+.
-    return [[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0;
-#else
-  // TODO(tkchin): Support OS/X once we stop mixing libstdc++ and libc++ on
-  // OSX 10.9.
-  return false;
-#endif
+//#if defined(WEBRTC_OBJC_H264) && \
+//    defined(WEBRTC_VIDEO_TOOLBOX_SUPPORTED) && \
+//    defined(WEBRTC_IOS)
+//  // Supported on iOS8+.
+//    return [[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0;
+//#else
+//  // TODO(tkchin): Support OS/X once we stop mixing libstdc++ and libc++ on
+//  // OSX 10.9.
+//  return false;
+//#endif
+    return isEnableIOSH264HardEncode;
+}
+    
+void EnableIOSH264HardEncodeObjc(bool state) {
+    isEnableIOSH264HardEncode = state;
 }
 
 }  // namespace webrtc

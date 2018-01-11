@@ -60,7 +60,9 @@ class VCMCodecDataBase {
 
   // Returns the default settings for the codec with type |codec_type|.
   static bool Codec(VideoCodecType codec_type, VideoCodec* settings);
-
+  // enable ios hard encode.
+  static void EnableIOSH264HardEncode(bool state);
+  
   void ResetSender();
 
   // Sets the sender side codec and initiates the desired codec given the
@@ -147,7 +149,7 @@ class VCMCodecDataBase {
   // that is, it is able to render frames according to the render timestamp of
   // the encoded frames.
   bool SupportsRenderScheduling() const;
-
+    
  private:
   typedef std::map<uint8_t, VCMDecoderMapItem*> DecoderMap;
   typedef std::map<uint8_t, VCMExtDecoderMapItem*> ExternalDecoderMap;
@@ -171,7 +173,7 @@ class VCMCodecDataBase {
 
   const VCMExtDecoderMapItem* FindExternalDecoderItem(
       uint8_t payload_type) const;
-
+  
   int number_of_cores_;
   size_t max_payload_size_;
   bool periodic_key_frames_;
@@ -187,6 +189,8 @@ class VCMCodecDataBase {
   bool current_dec_is_external_;
   DecoderMap dec_map_;
   ExternalDecoderMap dec_external_map_;
+    
+  
 };  // VCMCodecDataBase
 
 }  // namespace webrtc

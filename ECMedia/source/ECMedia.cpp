@@ -3277,6 +3277,27 @@ int ECMedia_get_supported_codecs_video(VideoCodec codecs[])
     return 0;
 }
 
+// enable h264 hard encode, only support ios
+// call it after m_vie have create
+int ECMedia_enable_iOS_h264_hard_encode(bool state)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    ViECodec *codec = ViECodec::GetInterface(m_vie);
+    if (codec) {
+        codec->EnableIOSH264HardEncode(state);
+        codec->Release();
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA ERROR] %s failed to enable ios h264 hard encode.", __FUNCTION__);
+        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        return -99;
+    }
+    PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+    return 0;
+}
+
 int ECMedia_set_key_frame_request_cb(int channelid, bool isVideoConf,onEcMediaRequestKeyFrameCallback cb)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);

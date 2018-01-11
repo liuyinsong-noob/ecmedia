@@ -81,6 +81,9 @@ public:
     //
     // Return value     : Number of supported codecs
     static uint8_t NumberOfCodecs();
+    
+    //
+    static void EnableIOSH264HardEncode(bool state);
 
     // Get supported codec settings with using id
     //

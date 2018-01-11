@@ -42,6 +42,7 @@ const size_t kDefaultPayloadSize = 1440;
 
 namespace cloopenwebrtc {
     extern bool IsH264CodecSupportedObjC();
+    extern void EnableIOSH264HardEncodeObjc(bool state);
 VideoCodecVP8 VideoEncoder::GetDefaultVp8Settings() {
   VideoCodecVP8 vp8_settings;
   memset(&vp8_settings, 0, sizeof(vp8_settings));
@@ -811,5 +812,9 @@ const VCMExtDecoderMapItem* VCMCodecDataBase::FindExternalDecoderItem(
     return (*it).second;
   }
   return NULL;
+}
+
+void VCMCodecDataBase::EnableIOSH264HardEncode(bool state) {
+    EnableIOSH264HardEncodeObjc(state);
 }
 }  // namespace webrtc
