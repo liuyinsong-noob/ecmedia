@@ -987,7 +987,6 @@ int ECMedia_video_start_send(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-    g_statsCollector->AddVideoSendStatsProxy(channelid);
     ViEBase *base = ViEBase::GetInterface(m_vie);
     if (base) {
         int ret = base->StartSend(channelid);
@@ -995,6 +994,8 @@ int ECMedia_video_start_send(int channelid)
         if (ret != 0) {
             PrintConsole("[ECMEDIA ERROR] %s failed to video start send", __FUNCTION__);
         }
+		else
+			g_statsCollector->AddVideoSendStatsProxy(channelid);
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
@@ -1010,9 +1011,7 @@ int ECMedia_video_stop_send(int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-    if (g_statsCollector) {
-        g_statsCollector->DeleteVideoSendStatsProxy(channelid);
-    }
+   
     ViEBase *base = ViEBase::GetInterface(m_vie);
     if (base) {
         int ret = base->StopSend(channelid);
@@ -1020,6 +1019,12 @@ int ECMedia_video_stop_send(int channelid)
         if (ret != 0) {
             PrintConsole("[ECMEDIA ERROR] %s failed to video stop send", __FUNCTION__);
         }
+		else
+		{
+			if (g_statsCollector) {
+				g_statsCollector->DeleteVideoSendStatsProxy(channelid);
+			}
+		}
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;
     }
