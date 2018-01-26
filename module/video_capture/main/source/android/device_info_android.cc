@@ -243,7 +243,7 @@ WebRtc_Word32 DeviceInfoAndroid::CreateCapabilityMap(
     cap.expectedCaptureDelay = _expectedCaptureDelay;
     cap.rawType = kVideoNV21;
     cap.maxFPS = env->GetIntField(capabilityElement, maxFpsField);
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
                  "%s: Cap width %d, height %d, fps %d", __FUNCTION__,
                  cap.width, cap.height, cap.maxFPS);
     _captureCapabilities.push_back(cap);
