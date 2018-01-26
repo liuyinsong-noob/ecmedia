@@ -1158,7 +1158,7 @@ int32_t ViEChannel::CancelRemoteSSRC() {
         LOG(LS_ERROR)<<"ViEChannel::CancelRemoteSSRC socket_transport_ is NULL";
         return -1;
     }
-	int ret = rtp_rtcp_->SendSingleTMMBR(0, socket_transport_->GetLocalSSrc(), remote_ssrc_);
+	int ret = default_rtp_rtcp_->SendSingleTMMBR(0, socket_transport_->GetLocalSSrc(), remote_ssrc_);
 	if (ret != 0) {
 		LOG(LS_ERROR) << "SendSingleTMMBR cancel remote failed";
 		return -1;

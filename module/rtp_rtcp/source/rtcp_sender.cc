@@ -627,9 +627,9 @@ std::unique_ptr<rtcp::RtcpPacket> RTCPSender::BuildTMMBR(
       }
     }
   }
-
-  if (!tmmbr_send_bps_)
-    return nullptr;
+//sean remove since cancel request bandwidth is 0
+//  if (!tmmbr_send_bps_)
+//    return nullptr;
 
   rtcp::Tmmbr* tmmbr = new rtcp::Tmmbr();
   tmmbr->SetSenderSsrc(ssrc_);
