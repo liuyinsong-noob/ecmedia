@@ -109,7 +109,7 @@ void BitrateProber::CreateProbeCluster(int bitrate_bps, int64_t now_ms) {
                << cluster.pace_info.probe_cluster_min_probes << ":"
 			   << cluster.pace_info.probe_cluster_id << ")";
 
-  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, -1,
+  WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, -1,
 	  "[Probe] Probe cluster(bitrate:min bytes : min packets : cluster id) : (%d:%d : %d : %d)",
 	  cluster.pace_info.send_bitrate_bps,
 	  cluster.pace_info.probe_cluster_min_bytes,

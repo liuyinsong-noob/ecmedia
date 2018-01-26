@@ -204,10 +204,10 @@ void BitrateControllerImpl::OnDelayBasedBweResult(
       // printf("[BWE] bitrate_controller = %d (is_probe = %s)\n", result.target_bitrate_bps, result.probe ? "True" : "false");
 #endif
     if (result.probe) {
-		LOG(LS_ERROR) << "--------------[bwe] bitrate_controller = "
+		LOG(LS_INFO) << "--------------[bwe] bitrate_controller = "
 			<< result.target_bitrate_bps
 			<< " (update_probe)";
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, -1,
+		WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, -1,
 			"--------------[bwe] bitrate_controller = %u (update_probe)", result.target_bitrate_bps);
       bandwidth_estimation_.SetSendBitrate(result.target_bitrate_bps);
     }
@@ -265,10 +265,10 @@ bool BitrateControllerImpl::GetNetworkParameters(uint32_t* bitrate,
   cloopenwebrtc::CritScope cs(&critsect_);
   int current_bitrate;
   bandwidth_estimation_.CurrentEstimate(&current_bitrate, fraction_loss, rtt);
-  LOG(LS_ERROR) << "--------------[bwe] bitrate_controller = "
+  LOG(LS_INFO) << "--------------[bwe] bitrate_controller = "
 	            << current_bitrate;
 
-  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, -1,
+  WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, -1,
 	  "--------------[bwe] bitrate_controller = %d", current_bitrate);
 
     

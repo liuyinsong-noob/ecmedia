@@ -84,7 +84,7 @@ int ProbeBitrateEstimator::HandleProbeAndEstimateBitrate(
                  << "] [send interval: " << send_interval_ms << " ms]"
                  << " [receive interval: " << receive_interval_ms << " ms]";
 
-	WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, -1,
+	WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, -1,
 		"[Probe] Probing unsuccessful, invalid send / receive interval[cluster id : %d][send interval : %.0f ms][receive interval : %.0f ms]",
 		cluster_id, send_interval_ms, receive_interval_ms);
       
@@ -120,7 +120,7 @@ int ProbeBitrateEstimator::HandleProbeAndEstimateBitrate(
                  << " [ratio: " << receive_bps / 1000 << " / "
                  << send_bps / 1000 << " = " << ratio << " > kValidRatio ("
                  << kValidRatio << ")]";
-	WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, -1,
+	WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, -1,
 		"[Probe] Probing unsuccessful, receive/send ratio too high [cluster id : %d][send : %.0f bytes / %.0f ms = %.0f kb/s]\
  [receive : %.0f bytes / %.0f ms = %.0f kb/s] [ratio: %.0f / %.0f = %.0f > kValidRatio ( %.0f )]",
 		cluster_id,
