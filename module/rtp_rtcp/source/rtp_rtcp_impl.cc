@@ -245,15 +245,16 @@ int32_t ModuleRtpRtcpImpl::Process() {
     rtcp_sender_.SendRTCP(GetFeedbackState(), kRtcpReport);
 
   // send tmmbr
-  static int time_count = 80;
-  if (isSendingTmmbr && (++time_count > 100)) {
-	  rtcp_sender_.SetRemoteSSRC(tmmbr_remote_ssrc);
-	  rtcp_sender_.SetTargetBitrate(tmmbr_bandwidth*1000);
-	  //rtcp_sender_.SendRTCP(GetFeedbackState(), kRtcpTmmbr);
-
-	  rtcp_sender_.SendSingleTMMBR(GetFeedbackState(), tmmbr_bandwidth, tmmbr_remote_ssrc);
-	  time_count = 0;
-  }
+    if(isSendingTmmbr && (now - lastSendTmmbrTime_)  > 1000) {
+        rtcp_sender_.SetRemoteSSRC(tmmbr_remote_ssrc);
+        rtcp_sender_.SetTargetBitrate(tmmbr_bandwidth*1000);
+        //rtcp_sender_.SendRTCP(GetFeedbackState(), kRtcpTmmbr);
+        
+        rtcp_sender_.SendSingleTMMBR(GetFeedbackState(), tmmbr_bandwidth, tmmbr_remote_ssrc);
+        rtcp_sender_.SendSingleTMMBR(GetFeedbackState(), tmmbr_bandwidth, tmmbr_remote_ssrc);
+        rtcp_sender_.SendSingleTMMBR(GetFeedbackState(), tmmbr_bandwidth, tmmbr_remote_ssrc);
+        lastSendTmmbrTime_ = now;
+    }
 
   if (TMMBR() && rtcp_receiver_.UpdateTmmbrTimers()) {
     rtcp_receiver_.NotifyTmmbrUpdated();
@@ -1054,7 +1055,16 @@ int ModuleRtpRtcpImpl::SendSingleTMMBR(uint32_t bandwidth, uint32_t ssrc, uint32
     tmmbr_bandwidth = bandwidth;
     tmmbr_ssrc = ssrc;
     tmmbr_remote_ssrc = remote_ssrc;
-    isSendingTmmbr = true; 
+    
+    rtcp_sender_.SetRemoteSSRC(tmmbr_remote_ssrc);
+    rtcp_sender_.SetTargetBitrate(tmmbr_bandwidth*1000);
+    //rtcp_sender_.SendRTCP(GetFeedbackState(), kRtcpTmmbr);
+    
+    rtcp_sender_.SendSingleTMMBR(GetFeedbackState(), tmmbr_bandwidth, tmmbr_remote_ssrc);
+    rtcp_sender_.SendSingleTMMBR(GetFeedbackState(), tmmbr_bandwidth, tmmbr_remote_ssrc);
+    rtcp_sender_.SendSingleTMMBR(GetFeedbackState(), tmmbr_bandwidth, tmmbr_remote_ssrc);
+    isSendingTmmbr = true;
+    lastSendTmmbrTime_ = clock_->TimeInMilliseconds();
     return 0;
 }
     
