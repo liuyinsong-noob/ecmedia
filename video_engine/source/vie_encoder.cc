@@ -213,6 +213,7 @@ ViEEncoder::ViEEncoder(int32_t engine_id,
   configuration.retransmission_rate_limiter = retransmission_rate_limiter;
   configuration.event_log = rtc_event_log_;
   configuration.intra_frame_callback = this/*encoder_feedback_.get()*/;
+  configuration.send_bitrate_observer = send_statistics_proxy_.get();
 
   default_rtp_rtcp_.reset(RtpRtcp::CreateRtpRtcp(configuration));
   //need to fix: ylr

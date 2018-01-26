@@ -409,16 +409,20 @@ void SendStatisticsProxy::DataCountersUpdated(const StreamDataCounters& counters
 void SendStatisticsProxy::Notify(uint32_t total_stats,
 	uint32_t retransmit_stats,
 	uint32_t ssrc) {
-#if 0
+#if 1
 	CriticalSectionScoped lock(crit_.get());
 	VideoSendStream::StreamStats *stream = GetStreamStats(ssrc);
 	if (!stream)
 	{
 		return;
 	}
-	stream->total_stats = total_stats;
-	stream->retransmit_stats = retransmit_stats;
+	stream->total_stats.bitrate_bps = total_stats;
+	stream->retransmit_stats.bitrate_bps = retransmit_stats;
 
+	BitrateStatistics total_br_stats;
+	BitrateStatistics retransmit_br_stats;
+	total_br_stats.bitrate_bps = total_stats;
+	retransmit_br_stats.bitrate_bps = retransmit_stats;
 	
 	std::map<uint32_t, BitrateStatsCounter>::iterator it_total =  avg_rate_stats_.total_stats_map.find(ssrc);
 	std::map<uint32_t, BitrateStatsCounter>::iterator it_retransmit = avg_rate_stats_.retransmit_stats_map.find(ssrc);
@@ -426,23 +430,25 @@ void SendStatisticsProxy::Notify(uint32_t total_stats,
 	{
 		BitrateStatsCounter total;
 		BitrateStatsCounter retransmit;
-		total.AddSample(total_stats);
-		retransmit.AddSample(retransmit_stats);
+
+	
+		total.AddSample(total_br_stats);
+		retransmit.AddSample(retransmit_br_stats);
 		avg_rate_stats_.total_stats_map[ssrc] = total;
 		avg_rate_stats_.retransmit_stats_map[ssrc] = retransmit;
 	}
 	else {
-		it_total->second.AddSample(total_stats);
-		it_retransmit->second.AddSample(retransmit_stats);
+		it_total->second.AddSample(total_br_stats);
+		it_retransmit->second.AddSample(retransmit_br_stats);
 	}
 #ifdef WIN32
 	post_message(StatsReport::kStatsReportTypeVideoSend,
 	{
 		StatsReport::Value(StatsReport::kStatsValueNameSsrc,ssrc, StatsReport::Value::kUInt32),
-		StatsReport::Value(StatsReport::kStatsValueNameTransmitBitrate, total_stats.bitrate_bps, StatsReport::Value::kUInt32),
-		StatsReport::Value(StatsReport::kStatsValueNameRetransmitBitrate, retransmit_stats.bitrate_bps, StatsReport::Value::kUInt32),
-		StatsReport::Value(StatsReport::kStatsValueNameTransmitPacketsRate, total_stats.packet_rate, StatsReport::Value::kUInt32),
-		StatsReport::Value(StatsReport::kStatsValueNameRetransmitPacketsRate, retransmit_stats.packet_rate, StatsReport::Value::kUInt32),
+		StatsReport::Value(StatsReport::kStatsValueNameTransmitBitrate, total_stats, StatsReport::Value::kUInt32),
+		StatsReport::Value(StatsReport::kStatsValueNameRetransmitBitrate, retransmit_stats, StatsReport::Value::kUInt32),
+		//StatsReport::Value(StatsReport::kStatsValueNameTransmitPacketsRate, total_stats.packet_rate, StatsReport::Value::kUInt32),
+		//StatsReport::Value(StatsReport::kStatsValueNameRetransmitPacketsRate, retransmit_stats.packet_rate, StatsReport::Value::kUInt32),
 	});
 #endif
 #endif
