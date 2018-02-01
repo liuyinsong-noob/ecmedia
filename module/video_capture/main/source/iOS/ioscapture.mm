@@ -683,7 +683,9 @@ char *globalFilePathcapture = NULL;
                 [_ecImageView setFillMode:kECImageFillModeStretch];
             }
             // view horizontal mirror. zhaoyou
-            [_ecImageView setInputRotation:kECImageFlipHorizonal atIndex:0];
+            if ([(AVCaptureDevice*)input.device position] == AVCaptureDevicePositionFront) {
+                [_ecImageView setInputRotation:kECImageFlipHorizonal atIndex:0];
+            }
             [_ecImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
         }
         [_ecImageView setFrame:CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height)];
