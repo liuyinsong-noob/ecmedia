@@ -1920,7 +1920,7 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_playLiveStream(JNIEnv 
   const char* userid = env->GetStringUTFChars((jstring)renderView, 0);
   sprintf(remoteUserID, "%s", userid);
 
-  int ret = playLiveStream(handle, clive_url, (void*)&remoteUserID);
+  int ret = playLiveStream(handle, clive_url, (void*)&remoteUserID, NULL);
   env->ReleaseStringUTFChars(live_url, clive_url);
   return ret;
 }
@@ -1928,7 +1928,7 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_playLiveStream(JNIEnv 
 JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_pushLiveStream(JNIEnv *env, jclass, jstring live_url, jobject renderView) {
   const char* clive_url = env->GetStringUTFChars(live_url, 0);
   void * handle = createLiveStream();
-  int ret = pushLiveStream(handle, clive_url, NULL);
+  int ret = pushLiveStream(handle, clive_url, NULL, NULL);
   env->ReleaseStringUTFChars(live_url, clive_url);
   return ret;
 }
