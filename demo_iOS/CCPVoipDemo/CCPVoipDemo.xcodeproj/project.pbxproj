@@ -180,7 +180,6 @@
 		05F43B8816A92CAA00F6D053 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F43B8716A92CAA00F6D053 /* UIKit.framework */; };
 		05F43B8A16A92CAA00F6D053 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F43B8916A92CAA00F6D053 /* Foundation.framework */; };
 		05F43B8C16A92CAA00F6D053 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F43B8B16A92CAA00F6D053 /* CoreGraphics.framework */; };
-		05F43B9216A92CAA00F6D053 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 05F43B9016A92CAA00F6D053 /* InfoPlist.strings */; };
 		05F43B9416A92CAA00F6D053 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F43B9316A92CAA00F6D053 /* main.m */; };
 		05F43B9816A92CAA00F6D053 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F43B9716A92CAA00F6D053 /* AppDelegate.m */; };
 		05F43B9A16A92CAA00F6D053 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 05F43B9916A92CAA00F6D053 /* Default.png */; };
@@ -204,6 +203,7 @@
 		1AFBD0F61DAE3586009B8D23 /* CameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AFBD0F21DAE3585009B8D23 /* CameraViewController.xib */; };
 		1AFBD0F71DAE3586009B8D23 /* StartLiveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0F41DAE3585009B8D23 /* StartLiveView.m */; };
 		1F58B9B02029EC7800BE4BF9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F58B9AF2029EC7800BE4BF9 /* Images.xcassets */; };
+		1F924059202A9CF600B28118 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1F924057202A9CF600B28118 /* InfoPlist.strings */; };
 		1F9305311F627B9E00EBDE34 /* new203_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F93052F1F627B9E00EBDE34 /* new203_on.png */; };
 		1F9305321F627B9E00EBDE34 /* new203_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F9305301F627B9E00EBDE34 /* new203_on@2x.png */; };
 		8209EE9218F3F81C00F5FFF4 /* incomingRing.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8209EE9118F3F81C00F5FFF4 /* incomingRing.wav */; };
@@ -1208,7 +1208,6 @@
 		05F43B8916A92CAA00F6D053 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		05F43B8B16A92CAA00F6D053 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		05F43B8F16A92CAA00F6D053 /* CCPVoipDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCPVoipDemo-Info.plist"; sourceTree = "<group>"; };
-		05F43B9116A92CAA00F6D053 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		05F43B9316A92CAA00F6D053 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		05F43B9516A92CAA00F6D053 /* CCPVoipDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCPVoipDemo-Prefix.pch"; sourceTree = "<group>"; };
 		05F43B9616A92CAA00F6D053 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -1244,6 +1243,8 @@
 		1AFBD0F31DAE3585009B8D23 /* StartLiveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartLiveView.h; sourceTree = "<group>"; };
 		1AFBD0F41DAE3585009B8D23 /* StartLiveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartLiveView.m; sourceTree = "<group>"; };
 		1F58B9AF2029EC7800BE4BF9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		1F924058202A9CF600B28118 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1F92405A202A9D3F00B28118 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		1F93052F1F627B9E00EBDE34 /* new203_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = new203_on.png; sourceTree = "<group>"; };
 		1F9305301F627B9E00EBDE34 /* new203_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "new203_on@2x.png"; sourceTree = "<group>"; };
 		8209EE9118F3F81C00F5FFF4 /* incomingRing.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = incomingRing.wav; sourceTree = "<group>"; };
@@ -2353,6 +2354,7 @@
 		05F43B8E16A92CAA00F6D053 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				1F924057202A9CF600B28118 /* InfoPlist.strings */,
 				827B0D6018C8210600AD02C0 /* logo_small.png */,
 				827B0D6118C8210600AD02C0 /* logo_small@2x.png */,
 				827B0D6218C8210600AD02C0 /* logo.png */,
@@ -2360,7 +2362,6 @@
 				827B0D6418C8210600AD02C0 /* logo80.png */,
 				827B0D6518C8210600AD02C0 /* logo120.png */,
 				05F43B8F16A92CAA00F6D053 /* CCPVoipDemo-Info.plist */,
-				05F43B9016A92CAA00F6D053 /* InfoPlist.strings */,
 				05F43B9316A92CAA00F6D053 /* main.m */,
 				05F43B9516A92CAA00F6D053 /* CCPVoipDemo-Prefix.pch */,
 				05F43B9916A92CAA00F6D053 /* Default.png */,
@@ -3651,7 +3652,7 @@
 				TargetAttributes = {
 					05F43B8216A92CAA00F6D053 = {
 						DevelopmentTeam = 2372872F55;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -3661,6 +3662,8 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				en,
+				"zh-Hans",
 			);
 			mainGroup = 05F43B7816A92CAA00F6D053;
 			productRefGroup = 05F43B8416A92CAA00F6D053 /* Products */;
@@ -3696,7 +3699,6 @@
 				82716705181E1678004A5DCF /* videoConf56_on.png in Resources */,
 				82CBFF351847278A007B4BA1 /* new86@2x.png in Resources */,
 				829FCC2A18C727C500D10ACA /* more_button@2x.png in Resources */,
-				05F43B9216A92CAA00F6D053 /* InfoPlist.strings in Resources */,
 				05F43B9A16A92CAA00F6D053 /* Default.png in Resources */,
 				05F43B9C16A92CAA00F6D053 /* Default@2x.png in Resources */,
 				82CBFDCD1846EF36007B4BA1 /* new200_on@2x.png in Resources */,
@@ -4253,6 +4255,7 @@
 				827166E2181E1678004A5DCF /* videoConf15@2x.png in Resources */,
 				82CBFDD41846EF36007B4BA1 /* new59.png in Resources */,
 				825C7190178E4D1E002D0120 /* voip_select_icon.png in Resources */,
+				1F924059202A9CF600B28118 /* InfoPlist.strings in Resources */,
 				825C7191178E4D1E002D0120 /* voip_select_icon@2x.png in Resources */,
 				825C7192178E4D1E002D0120 /* voip_status_icon.png in Resources */,
 				825C7193178E4D1E002D0120 /* voip_status_icon@2x.png in Resources */,
@@ -4662,10 +4665,11 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		05F43B9016A92CAA00F6D053 /* InfoPlist.strings */ = {
+		1F924057202A9CF600B28118 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				05F43B9116A92CAA00F6D053 /* en */,
+				1F924058202A9CF600B28118 /* en */,
+				1F92405A202A9D3F00B28118 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -4678,6 +4682,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -4697,7 +4702,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "${SDK_DIR}/usr/include/libxml2";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PROVISIONING_PROFILE = "89C9C730-2163-401D-8FDE-800EA17381F8";
@@ -4711,6 +4716,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -4723,7 +4729,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "${SDK_DIR}/usr/include/libxml2";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "";
 				PROVISIONING_PROFILE = "89C9C730-2163-401D-8FDE-800EA17381F8";
@@ -4742,9 +4748,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				DEPLOYMENT_POSTPROCESSING = NO;
-				DEVELOPMENT_TEAM = 2372872F55;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CCPVoipDemo/CCPVoipDemo-Prefix.pch";
@@ -4773,9 +4779,9 @@
 				OTHER_OSACOMPILEFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronglian.audioVideo.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8f7ec377-8f7f-4ed1-b502-fcbba69c2b61";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				PROVISIONING_PROFILE_SPECIFIER = devRonglianCommon;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_STYLE = "non-global";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 arm64";
@@ -4792,9 +4798,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				DEPLOYMENT_POSTPROCESSING = NO;
-				DEVELOPMENT_TEAM = 2372872F55;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CCPVoipDemo/CCPVoipDemo-Prefix.pch";
@@ -4823,9 +4829,9 @@
 				OTHER_OSACOMPILEFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronglian.audioVideo.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8f7ec377-8f7f-4ed1-b502-fcbba69c2b61";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				PROVISIONING_PROFILE_SPECIFIER = devRonglianCommon;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_STYLE = "non-global";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 arm64";
