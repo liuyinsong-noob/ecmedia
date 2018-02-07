@@ -16,20 +16,9 @@
 		<string>Icon@2x.png</string>
 	</array>
 	<key>CFBundleIcons</key>
-	<dict>
-		<key>CFBundlePrimaryIcon</key>
-		<dict>
-			<key>CFBundleIconFiles</key>
-			<array>
-				<string>logo80</string>
-				<string>logo_small</string>
-				<string>logo120</string>
-				<string>logo</string>
-				<string>Icon</string>
-				<string>Icon@2x.png</string>
-			</array>
-		</dict>
-	</dict>
+	<dict/>
+	<key>CFBundleIcons~ipad</key>
+	<dict/>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
