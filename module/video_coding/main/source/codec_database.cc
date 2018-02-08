@@ -42,8 +42,9 @@ const size_t kDefaultPayloadSize = 1440;
 
 namespace cloopenwebrtc {
 #ifdef WEBRTC_IOS
-    extern bool IsH264CodecSupportedObjC();
-    extern void EnableIOSH264HardEncodeObjc(bool state);
+    extern bool IsH264DecodeSupportedObjC();
+    extern bool IsH264EncodeSupportedObjC();
+    extern void iOSH264HardCodecSwitch(bool encoder, bool decoder);
 #endif
 VideoCodecVP8 VideoEncoder::GetDefaultVp8Settings() {
   VideoCodecVP8 vp8_settings;
@@ -733,7 +734,7 @@ VCMGenericEncoder* VCMCodecDataBase::CreateEncoder(
 	case kVideoCodecH264:
     case kVideoCodecH264HIGH:
 #ifdef WEBRTC_IOS
-          if (!IsH264CodecSupportedObjC())
+          if (!IsH264EncodeSupportedObjC())
               return new VCMGenericEncoder(*(H264Encoder::Create()));
           else
               return new VCMGenericEncoder(*(H264VideoToolboxEncoder::Create()));
@@ -776,7 +777,7 @@ VCMGenericDecoder* VCMCodecDataBase::CreateDecoder(VideoCodecType type) const {
       case kVideoCodecH264:
       case kVideoCodecH264HIGH:
 #ifdef WEBRTC_IOS
-          if (!IsH264CodecSupportedObjC())
+          if (!IsH264DecodeSupportedObjC())
               return new VCMGenericDecoder(*(H264Decoder::Create()));
           else
               return new VCMGenericDecoder(*(H264VideoToolboxDecoder::Create()));
@@ -816,9 +817,9 @@ const VCMExtDecoderMapItem* VCMCodecDataBase::FindExternalDecoderItem(
   return NULL;
 }
 
-void VCMCodecDataBase::EnableIOSH264HardEncode(bool state) {
+void VCMCodecDataBase::iOSH264HardCodecSwitch(bool encoder, bool decoder) {
 #ifdef WEBRTC_IOS
-    EnableIOSH264HardEncodeObjc(state);
+    iOSH264HardCodecSwitch(encoder, decoder);
 #endif
 }
 }  // namespace webrtc

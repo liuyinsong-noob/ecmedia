@@ -80,7 +80,7 @@ class ViECodecImpl
   virtual int SetFrameScaleType(const int video_channel, FrameScaleType frame_scale_type);
   virtual int AddI420FrameCallback(const int video_channel, ECMedia_I420FrameCallBack callback);
   virtual int SetVideoSendQmMode(int channel_id, int mode);
-  virtual void EnableIOSH264HardEncode(bool state);
+  virtual void iOSH264HardCodecSwitch(bool encoder, bool decoder);
  protected:
   explicit ViECodecImpl(ViESharedData* shared_data);
   virtual ~ViECodecImpl();

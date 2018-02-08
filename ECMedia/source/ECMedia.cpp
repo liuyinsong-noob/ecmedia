@@ -166,7 +166,7 @@ static int m_cameraCount = 0;
 using namespace cloopenwebrtc;
 using namespace std;
 
-#define ECMEDIA_VERSION "2.2.0.8.1801041508"
+#define ECMEDIA_VERSION "ecmedia_version: 2.2.0.8 build 49013a17"
 
 //extern bool g_media_TraceFlag;
 //void PrintConsole(const char * fmt,...){};
@@ -3284,13 +3284,13 @@ int ECMedia_get_supported_codecs_video(VideoCodec codecs[])
 
 // enable h264 hard encode, only support ios
 // call it after m_vie have create
-int ECMedia_enable_iOS_h264_hard_encode(bool state)
+int ECMedia_iOS_h264_hard_codec_switch(bool encoder, bool decoder)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECodec *codec = ViECodec::GetInterface(m_vie);
     if (codec) {
-        codec->EnableIOSH264HardEncode(state);
+        codec->iOSH264HardCodecSwitch(encoder, decoder);
         codec->Release();
     }
     else

@@ -853,8 +853,8 @@ int ViECodecImpl::DeRegisterCaptureObserver(const int video_channel){
   return vie_encoder->DeRegisterCaptureObserver();
 };
       
-void ViECodecImpl::EnableIOSH264HardEncode(bool state) {
-  VideoCodingModule::EnableIOSH264HardEncode(state);
+void ViECodecImpl::iOSH264HardCodecSwitch(bool encoder, bool decoder) {
+  VideoCodingModule::iOSH264HardCodecSwitch(encoder, decoder);
 }
 
 }  // namespace webrtc

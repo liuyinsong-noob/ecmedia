@@ -212,7 +212,7 @@ class WEBRTC_DLLEXPORT ViECodec {
   virtual int SetFrameScaleType(const int video_channel, FrameScaleType frame_scale_type) = 0;
   virtual int AddI420FrameCallback(const int video_channel, ECMedia_I420FrameCallBack callback) = 0;
   virtual int SetVideoSendQmMode(int channel_id, int mode) = 0;
-  virtual void EnableIOSH264HardEncode(bool state) = 0;
+  virtual void iOSH264HardCodecSwitch(bool encoder, bool decoder) = 0;
  protected:
   ViECodec() {}
   virtual ~ViECodec() {}

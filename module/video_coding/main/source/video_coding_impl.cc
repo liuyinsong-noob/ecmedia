@@ -376,8 +376,8 @@ uint8_t VideoCodingModule::NumberOfCodecs() {
   return VCMCodecDataBase::NumberOfCodecs();
 }
     
-void VideoCodingModule::EnableIOSH264HardEncode(bool state) {
-    return VCMCodecDataBase::EnableIOSH264HardEncode(state);
+void VideoCodingModule::iOSH264HardCodecSwitch(bool encoder, bool decoder) {
+    return VCMCodecDataBase::iOSH264HardCodecSwitch(encoder, decoder);
 }
 
 int32_t VideoCodingModule::Codec(uint8_t listId, VideoCodec* codec) {

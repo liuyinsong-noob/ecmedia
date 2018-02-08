@@ -83,7 +83,7 @@ public:
     static uint8_t NumberOfCodecs();
     
     //
-    static void EnableIOSH264HardEncode(bool state);
+    static void iOSH264HardCodecSwitch(bool encoder, bool decoder);
 
     // Get supported codec settings with using id
     //

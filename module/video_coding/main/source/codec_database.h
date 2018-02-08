@@ -61,7 +61,7 @@ class VCMCodecDataBase {
   // Returns the default settings for the codec with type |codec_type|.
   static bool Codec(VideoCodecType codec_type, VideoCodec* settings);
   // enable ios hard encode.
-  static void EnableIOSH264HardEncode(bool state);
+  static void iOSH264HardCodecSwitch(bool encoder, bool decoder);
   
   void ResetSender();
 

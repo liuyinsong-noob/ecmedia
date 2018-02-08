@@ -16,23 +16,45 @@
 #endif
 
 namespace cloopenwebrtc {
-bool isEnableIOSH264HardEncode = true;
-bool IsH264CodecSupportedObjC() {
+bool iOSH264HardEncoder = true;
+bool iOSH264HardDecoder = true;
+
+// Get h264 hard encode state
+bool IsH264EncodeSupportedObjC() {
 #if defined(WEBRTC_OBJC_H264) && \
     defined(WEBRTC_VIDEO_TOOLBOX_SUPPORTED) && \
     defined(WEBRTC_IOS)
   // Supported on iOS8+.
-    return ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0) && isEnableIOSH264HardEncode;
+    return ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0) && iOSH264HardEncoder;
 #else
   // TODO(tkchin): Support OS/X once we stop mixing libstdc++ and libc++ on
   // OSX 10.9.
   return false;
 #endif
-    
 }
     
-void EnableIOSH264HardEncodeObjc(bool state) {
-    isEnableIOSH264HardEncode = state;
+// Get h264 hard decode state
+bool IsH264DecodeSupportedObjC() {
+#if defined(WEBRTC_OBJC_H264) && \
+defined(WEBRTC_VIDEO_TOOLBOX_SUPPORTED) && \
+defined(WEBRTC_IOS)
+        // Supported on iOS8+.
+        return ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0) && iOSH264HardDecoder;
+#else
+        // TODO(tkchin): Support OS/X once we stop mixing libstdc++ and libc++ on
+        // OSX 10.9.
+        return false;
+#endif
+    }
+    
+/* decr: config ios h264 hard decode and encode enable or disable.
+ *
+ * @codec 0: setup h264 hard encoder, else setup h264 decoder
+ * @state true: enable, false: disable
+ */
+void iOSH264HardCodecSwitch(bool encoder, bool decoder) {
+        iOSH264HardEncoder = encoder;
+        iOSH264HardDecoder = decoder;
 }
 
 }  // namespace webrtc

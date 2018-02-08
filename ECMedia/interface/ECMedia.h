@@ -508,11 +508,12 @@ ECMEDIA_API int ECMedia_num_of_supported_codecs_video();
  */
 ECMEDIA_API int ECMedia_get_supported_codecs_video(cloopenwebrtc::VideoCodec codecs[]);
     
-/* enable h264 hard encode, only support ios
- * call it after m_vie have create && befor video channel create.
- * state:  true enable, false disable
+/* switch h264 hard codec, only support ios
+ * must call it after m_vie have create && befor video channel create.
+ * @param encoder  true: enable h264 hard encode, false: disable.
+ * @param decoder  true: enable h264 hard decode, false: disable.
  */
-int ECMedia_enable_iOS_h264_hard_encode(bool state);
+int ECMedia_iOS_h264_hard_codec_switch(bool encoder, bool decoder);
     
 /*
  *
