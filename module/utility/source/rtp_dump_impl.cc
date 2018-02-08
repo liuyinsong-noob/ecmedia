@@ -145,8 +145,8 @@ int32_t RtpDumpImpl::Stop()
 bool RtpDumpImpl::IsActive() const
 {
     CriticalSectionScoped lock(_critSect);
-    //return _file.Open();
-	return true;
+    bool ret = _file.is_open();
+    return ret;
 }
 
 int32_t RtpDumpImpl::DumpPacket(const uint8_t* packet, size_t packetLength)
