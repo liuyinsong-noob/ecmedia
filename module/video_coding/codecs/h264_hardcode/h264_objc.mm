@@ -52,7 +52,7 @@ defined(WEBRTC_IOS)
  * @codec 0: setup h264 hard encoder, else setup h264 decoder
  * @state true: enable, false: disable
  */
-void iOSH264HardCodecSwitch(bool encoder, bool decoder) {
+void iOSH264HardCodecSwitchObjc(bool encoder, bool decoder) {
         iOSH264HardEncoder = encoder;
         iOSH264HardDecoder = decoder;
 }

@@ -44,7 +44,7 @@ namespace cloopenwebrtc {
 #ifdef WEBRTC_IOS
     extern bool IsH264DecodeSupportedObjC();
     extern bool IsH264EncodeSupportedObjC();
-    extern void iOSH264HardCodecSwitch(bool encoder, bool decoder);
+    extern void iOSH264HardCodecSwitchObjc(bool encoder, bool decoder);
 #endif
 VideoCodecVP8 VideoEncoder::GetDefaultVp8Settings() {
   VideoCodecVP8 vp8_settings;
@@ -819,7 +819,7 @@ const VCMExtDecoderMapItem* VCMCodecDataBase::FindExternalDecoderItem(
 
 void VCMCodecDataBase::iOSH264HardCodecSwitch(bool encoder, bool decoder) {
 #ifdef WEBRTC_IOS
-    iOSH264HardCodecSwitch(encoder, decoder);
+    iOSH264HardCodecSwitchObjc(encoder, decoder);
 #endif
 }
 }  // namespace webrtc
