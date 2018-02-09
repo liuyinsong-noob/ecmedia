@@ -100,7 +100,8 @@ int32_t ProcessThreadImpl::RegisterModule(Module* module)
          iter != _modules.end(); ++iter) {
         if(module == *iter)
         {
-            return -1;
+            // todo: just a temporary solution.
+            return 0;
         }
     }
 
