@@ -47,7 +47,7 @@ class BuildIos(BuildBase):
         os.chdir(self.BuildPath)
         targetFile = os.path.join(self.BuildPath, self.rarFileName)
         sourceFile = os.path.join(self.BuildPath, self.buildType)
-        print os.system('zip -r ' + targetFile + ' ' + sourceFile)
+        print os.system('zip -jr ' + targetFile + ' ' + sourceFile)
         
 if __name__=='__main__' :
     buildType = 'release'
