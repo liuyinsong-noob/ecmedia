@@ -232,7 +232,7 @@ bool RTPSenderAudio::SendAudio(FrameType frame_type,
 			uint16_t allocLen = 0;
 			for (int counter = 0; counter < fragmentation->fragmentationVectorSize; counter++) {
 				allocLen += fragmentation->fragmentationLength[counter];
-                allocLen += (counter>0)?4:0;
+        allocLen += (counter>0)?4:0;
 			}
 			uint8_t* dataBuffer =
 				packet->AllocatePayload(1 + allocLen);
