@@ -1510,10 +1510,10 @@ extern "C" int initialize( CCallbackInterface *cbInterface)
 
     if( g_NetworkType == NETWORK_GPRS ) {
          //60ms audio packetsize
-        g_pSerCore->serphone_core_set_audio_pacinterval(60);
+        g_pSerCore->serphone_core_set_audio_pacinterval(20);
     } else {
          //20ms
-        g_pSerCore->serphone_core_set_audio_pacinterval(60);
+        g_pSerCore->serphone_core_set_audio_pacinterval(20);
     }
 
     gProxyAddrLst = new proxyAddrList;
@@ -1769,7 +1769,7 @@ extern "C"  const char* makeCall(int callType, const char *called )
 
 
     if(strncmp(called, "8", 1) == 0 && strlen(called) >= 14 ) {
-        g_pSerCore->serphone_core_set_audio_pacinterval(60);
+        g_pSerCore->serphone_core_set_audio_pacinterval(20);
     }
     else {
         g_pSerCore->serphone_core_set_audio_pacinterval(20);
@@ -2442,9 +2442,9 @@ extern "C" void setNetworkType(int networktype,bool connected,bool reconnect)
         }
 
         if( networktype == NETWORK_GPRS ) {
-            g_pSerCore->serphone_core_set_audio_pacinterval(60);
+            g_pSerCore->serphone_core_set_audio_pacinterval(20);
         } else {
-            g_pSerCore->serphone_core_set_audio_pacinterval(60);
+            g_pSerCore->serphone_core_set_audio_pacinterval(20);
         }
     }
 
