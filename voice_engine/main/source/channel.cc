@@ -213,17 +213,6 @@ Channel::OnRxVadDetected(int vadDecision)
 int
 Channel::SendRtp(int channel, const uint8_t *data, size_t len, const PacketOptions* options)
 {
-    static int count = 0;
-    if (_loss >=1 && count++ != 0) {
-        if (count == 65535) {
-            count = 0;
-        }
-        if (count%_loss == 0) {
-//            printf("sean haha loss sn %d\n",sn);
-            return 0;
-        }
-    }
-//    printf("sean haha send sn %d\n",sn);
     channel = VoEChannelId(channel);
   //  assert(channel == _channelId);
 
