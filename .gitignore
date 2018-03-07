@@ -3,6 +3,7 @@ obj
 libs
 VoipDemo
 module/image_filter
+.vscode/
 
 #appcode filder
 .idea
