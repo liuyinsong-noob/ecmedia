@@ -13,13 +13,17 @@
 
 #include <assert.h>
 #include <string.h>
-
 // NOTE(ajm): Path provided by gyp.
+#ifndef __ANDROID__
 #include "./third_party/libyuv/include/libyuv.h"
+#else
+#include "./third_party/libyuv-android/include/libyuv.h"
+#endif
 
 namespace cloopenwebrtc {
 
 const int k16ByteAlignment = 16;
+bool needFlipI420Frame = false;
 
 VideoType RawVideoTypeToCommonVideoVideoType(RawVideoType type) {
   switch (type) {
@@ -51,6 +55,8 @@ VideoType RawVideoTypeToCommonVideoVideoType(RawVideoType type) {
       return kBGRA;
     case kVideoMJPEG:
       return kMJPG;
+    case kVideoRGBA:
+          return kRGBA;
     default:
       assert(false);
   }
@@ -95,6 +101,7 @@ size_t CalcBufferSize(VideoType type, int width, int height) {
       break;
     case kBGRA:
     case kARGB:
+    case kRGBA:
       buffer_size = width * height * 4;
       break;
     default:
@@ -289,11 +296,19 @@ int ConvertVideoType(VideoType video_type) {
       return libyuv::FOURCC_R444;
     case kARGB1555:
       return libyuv::FOURCC_RGBO;
+#ifdef __ANDROID__
+    case kRGBA:
+      return libyuv::FOURCC_RGBA;
+#endif
   }
   assert(false);
   return libyuv::FOURCC_ANY;
 }
 
+void NeedFlipI420Frame(bool flag) {
+    needFlipI420Frame = flag;
+}
+    
 int ConvertToI420(VideoType src_video_type,
                   const uint8_t* src_frame,
                   int crop_x, int crop_y,
@@ -309,18 +324,57 @@ int ConvertToI420(VideoType src_video_type,
     dst_width = dst_frame->height();
     dst_height =dst_frame->width();
   }
-  return libyuv::ConvertToI420(src_frame, sample_size,
-                               dst_frame->buffer(kYPlane),
-                               dst_frame->stride(kYPlane),
-                               dst_frame->buffer(kUPlane),
-                               dst_frame->stride(kUPlane),
-                               dst_frame->buffer(kVPlane),
-                               dst_frame->stride(kVPlane),
-                               crop_x, crop_y,
-                               src_width, src_height,
-                               dst_width, dst_height,
-                               ConvertRotationMode(rotation),
-                               ConvertVideoType(src_video_type));
+
+#ifdef ANDROID_VIDEO_IMAGE_FILTER
+
+    I420VideoFrame i420_converted_frame;
+    i420_converted_frame.CreateEmptyFrame(src_width, abs(src_height), src_width, (src_width+1)/2, (src_width+1)/2);
+
+    int ret = libyuv::ConvertToI420(src_frame, sample_size,
+    i420_converted_frame.buffer(kYPlane),
+    i420_converted_frame.stride(kYPlane),
+    i420_converted_frame.buffer(kUPlane),
+    i420_converted_frame.stride(kUPlane),
+    i420_converted_frame.buffer(kVPlane),
+    i420_converted_frame.stride(kVPlane),
+    0, 0,
+    src_width, src_height,
+    src_width, src_height,
+    ConvertRotationMode(kVideoRotation_180),
+    ConvertVideoType(src_video_type));
+
+    if(ret < 0) {
+        return ret;
+    }
+
+    // scale i420 frame width -> height, and height -> width
+    ret = I420Scale(i420_converted_frame.buffer(kYPlane), i420_converted_frame.width(),
+    i420_converted_frame.buffer(kUPlane), (i420_converted_frame.width()+1) / 2,
+    i420_converted_frame.buffer(kVPlane), (i420_converted_frame.width()+1) / 2,
+    needFlipI420Frame ? -i420_converted_frame.width() : i420_converted_frame.width(),
+    i420_converted_frame.height(),
+    dst_frame->buffer(kYPlane), dst_frame->width(),
+    dst_frame->buffer(kUPlane), (dst_frame->width()+1)/2,
+    dst_frame->buffer(kVPlane), (dst_frame->width()+1)/2,
+    dst_frame->width(), dst_frame->height(),
+    libyuv::kFilterNone);
+
+    return ret;
+#else
+     return libyuv::ConvertToI420(src_frame, sample_size,
+     dst_frame->buffer(kYPlane),
+     dst_frame->stride(kYPlane),
+     dst_frame->buffer(kUPlane),
+     dst_frame->stride(kUPlane),
+     dst_frame->buffer(kVPlane),
+     dst_frame->stride(kVPlane),
+     crop_x, crop_y,
+     src_width, src_height,
+     dst_width, dst_height,
+     ConvertRotationMode(rotation),
+     ConvertVideoType(src_video_type));
+#endif
+    
 }
 
 int ConvertFromI420(const I420VideoFrame& src_frame,

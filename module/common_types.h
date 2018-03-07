@@ -572,6 +572,7 @@ enum RawVideoType
     kVideoNV12     = 11,
     kVideoNV21     = 12,
     kVideoBGRA     = 13,
+    kVideoRGBA     = 14,
     kVideoUnknown  = 99
 };
 

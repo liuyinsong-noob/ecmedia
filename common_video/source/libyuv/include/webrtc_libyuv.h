@@ -41,6 +41,7 @@ enum VideoType {
   kNV21,
   kNV12,
   kBGRA,
+  kRGBA,
 };
 
 // This is the max PSNR value our algorithms can return.
@@ -107,6 +108,7 @@ int ExtractBufferToI420VideoFrame(const I420VideoFrame& input_frame,
 int ExtractBufferToI420VideoFrame_LeftHalf(const I420VideoFrame& input_frame,
 	size_t size, uint8_t* buffer);
 
+void NeedFlipI420Frame(bool flag);
 // Convert To I420
 // Input:
 //   - src_video_type   : Type of input video.

@@ -34,17 +34,17 @@ LOCAL_SRC_FILES := \
 # Flags passed to both C and C++ files.
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
-    '-DUSE_SYSTEM_LIBJPEG'
+    '-DUSE_SYSTEM_LIBJPEG' \
+	'-DANDROID_VIDEO_IMAGE_FILTER'
 
 LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/.. \
 		$(LOCAL_PATH)/../include \
-		$(LOCAL_PATH)/libyuv/include \
 		$(LOCAL_PATH)/../module \
 		$(LOCAL_PATH)/../base \
 		$(LOCAL_PATH)/../module/video_coding/main/include \
 		$(LOCAL_PATH)/../system_wrappers/interface \
-		$(LOCAL_PATH)/../third_party/libyuv/include \
+		$(LOCAL_PATH)/../third_party/libyuv-android/include \
 		$(LOCAL_PATH)/../third_party/libjpeg_turbo
     
 LOCAL_SHARED_LIBRARIES := \

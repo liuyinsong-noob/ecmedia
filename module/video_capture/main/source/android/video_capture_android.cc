@@ -302,12 +302,17 @@ void JNICALL VideoCaptureAndroid::ProvideCameraFrame(JNIEnv * env,
                                                      jlong context) {
   VideoCaptureAndroid* captureModule =
       reinterpret_cast<VideoCaptureAndroid*>(context);
+  if(captureModule == NULL ) { 
+    return;
+  }
   WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture,
                -1, "%s: IncomingFrame %d", __FUNCTION__,length);
-  jbyte* cameraFrame= env->GetByteArrayElements(javaCameraFrame,NULL);
+  jbyte* cameraFrame = env->GetByteArrayElements(javaCameraFrame,NULL);
+
+ 
   captureModule->IncomingFrame((WebRtc_UWord8*) cameraFrame,
-                               length,captureModule->_frameInfo,0);
-  env->ReleaseByteArrayElements(javaCameraFrame,cameraFrame,JNI_ABORT);
+                               length, captureModule->_frameInfo, 0);
+  env->ReleaseByteArrayElements(javaCameraFrame, cameraFrame,JNI_ABORT);
 }
 
 

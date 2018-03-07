@@ -13,8 +13,11 @@
 #include <algorithm>
 
 // NOTE(ajm): Path provided by gyp.
+#ifndef __ANDROID__
 #include "./third_party/libyuv/include/libyuv.h"
-
+#else
+#include "./third_party/libyuv-android/include/libyuv.h"
+#endif
 namespace cloopenwebrtc {
 
 Scaler::Scaler()

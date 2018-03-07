@@ -24,6 +24,7 @@
 
 #include "../system_wrappers/include/trace.h"
 #include "../base/timeutils.h"
+
 namespace cloopenwebrtc
 {
 namespace videocapturemodule
@@ -306,6 +307,19 @@ int32_t VideoCaptureImpl::IncomingFrame(
         if (_rotateFrame == kVideoRotation_90 || _rotateFrame == kVideoRotation_270)  {
           target_width = abs(height);
           target_height = width;
+#ifdef ANDROID_VIDEO_IMAGE_FILTER
+          stride_y = abs(height);
+            
+          stride_uv = (height + 1) / 2;
+            if(_deviceUniqueId[7] == '0') {
+                // android device front camera, need flip image
+                NeedFlipI420Frame(true);
+            } else {
+                // android device back camera,
+                NeedFlipI420Frame(false);
+            }
+          
+#endif
         }
         // TODO(mikhal): Update correct aligned stride values.
         //Calc16ByteAlignedStride(target_width, &stride_y, &stride_uv);
@@ -322,6 +336,7 @@ int32_t VideoCaptureImpl::IncomingFrame(
                              "happen due to bad parameters.";
             return -1;
         }
+        
         const int conversionResult = ConvertToI420(commonVideoType,
                                                    videoFrame,
                                                    0, 0,  // No cropping

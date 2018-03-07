@@ -46,7 +46,7 @@ include $(MY_WEBRTC_ROOT_PATH)/voice_engine/main/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/video_engine/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/ECMedia/source/Android_video.mk
 include $(MY_WEBRTC_ROOT_PATH)/ECMedia/source/ec_live_engine/Android.mk
-include $(MY_WEBRTC_ROOT_PATH)/third_party/libyuv/source/Android.mk
+include $(MY_WEBRTC_ROOT_PATH)/third_party/libyuv-android/source/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/third_party/libjpeg_turbo/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/remote_bitrate_estimator/Android.mk
 include $(MY_WEBRTC_ROOT_PATH)/module/pacing/Android.mk

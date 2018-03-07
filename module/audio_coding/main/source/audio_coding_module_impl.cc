@@ -1351,7 +1351,7 @@ int AudioCodingModuleImpl::SetPacketLossRate(int loss_rate) {
 int AudioCodingModuleImpl::SetPacketLossRateFromRtpHeaderExt(int loss_rate)
     {
         if(loss_rate < 0) {
-            return -1;
+            return 0;
         }
         
         loss_rate_ = loss_rate;
