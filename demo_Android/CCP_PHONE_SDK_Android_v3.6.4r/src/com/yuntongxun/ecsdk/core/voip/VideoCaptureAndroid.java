@@ -12,6 +12,7 @@ package com.yuntongxun.ecsdk.core.voip;
 
 import android.graphics.ImageFormat;
 import android.graphics.PixelFormat;
+import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.hardware.Camera.PreviewCallback;
 import android.view.SurfaceHolder;
@@ -23,7 +24,7 @@ import com.yuntongxun.ecsdk.core.voip.VideoCaptureDeviceInfoAndroid.AndroidVideo
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class VideoCaptureAndroid implements PreviewCallback, Callback {
+public class VideoCaptureAndroid implements PreviewCallback, Callback, ViEFilterRenderView.ViERendererCallback {
 
     private final static String TAG = "console";
 
@@ -53,6 +54,11 @@ public class VideoCaptureAndroid implements PreviewCallback, Callback {
     private int mCaptureWidth = -1;
     private int mCaptureHeight = -1;
     private int mCaptureFPS = -1;
+
+    //
+    boolean useFiterRenderView = true;
+    private ViEFilterRenderView vieFilterRenderView = null;
+    private SurfaceTexture vieFilterTexture = null;
 
     public static
     void DeleteVideoCaptureAndroid(VideoCaptureAndroid captureAndroid) {
@@ -95,7 +101,11 @@ public class VideoCaptureAndroid implements PreviewCallback, Callback {
         }
 
         try {
-            camera.setPreviewDisplay(surfaceHolder);
+            if(useFiterRenderView) {
+                camera.setPreviewTexture(vieFilterTexture);
+            } else {
+                camera.setPreviewDisplay(surfaceHolder);
+            }
 
             CaptureCapabilityAndroid currentCapability =
                     new CaptureCapabilityAndroid();
@@ -109,6 +119,8 @@ public class VideoCaptureAndroid implements PreviewCallback, Callback {
                     currentCapability.height);
             parameters.setPreviewFormat(PIXEL_FORMAT);
             parameters.setPreviewFrameRate(currentCapability.maxFPS);
+            parameters.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_AUTO);
+            parameters.setSceneMode(Camera.Parameters.SCENE_MODE_AUTO);
             if(ViESurfaceRenderer.DEBUG){
             	Log4Util.i(TAG, ""+"ha");
 
@@ -145,8 +157,11 @@ public class VideoCaptureAndroid implements PreviewCallback, Callback {
             }
             isCaptureRunning = true;
             previewBufferLock.unlock();
-            camera.setPreviewCallbackWithBuffer(this);
-            ownsBuffers = true;
+            if(!useFiterRenderView) {
+                camera.setPreviewCallbackWithBuffer(this);
+                ownsBuffers = true;
+            }
+
             camera.startPreview();
 
         }
@@ -169,17 +184,29 @@ public class VideoCaptureAndroid implements PreviewCallback, Callback {
     				" height " + height +" frame rate " + frameRate);
     	}
         // Get the local preview SurfaceHolder from the static render class
-        localPreview = ViERenderer.GetLocalRenderer();
-        if(ViESurfaceRenderer.DEBUG){
-        	
-        	Log4Util.d(TAG, "start capture :" + localPreview);
-        }
-        if (localPreview != null) {
-        	if(ViERenderer.isHolderReady()){
-        		surfaceHolder = ViERenderer.getLocalHolder();
-        		isSurfaceReady = true;
-        	}else
-        		localPreview.addCallback(this);
+        if(!useFiterRenderView) {
+            localPreview = ViERenderer.GetLocalRenderer();
+            if(ViESurfaceRenderer.DEBUG){
+
+                Log4Util.d(TAG, "start capture :" + localPreview);
+            }
+            if (localPreview != null) {
+                if(ViERenderer.isHolderReady()){
+                    surfaceHolder = ViERenderer.getLocalHolder();
+                    isSurfaceReady = true;
+                }else
+                    localPreview.addCallback(this);
+            }
+        } else {
+    	    vieFilterRenderView = ViEFilterRenderView.getFilterRendererView();
+            vieFilterRenderView.setImageFrameSize(width, height);
+            vieFilterRenderView.setCallback(this);
+            if(vieFilterRenderView != null) {
+                if(vieFilterRenderView.isRenderReady()) {
+                    vieFilterTexture = vieFilterRenderView.getRenderTexture();
+                    isSurfaceReady = true;
+                }
+            }
         }
 
         captureLock.lock();
@@ -215,12 +242,19 @@ public class VideoCaptureAndroid implements PreviewCallback, Callback {
         }
 
         isCaptureStarted = false;
+        if(useFiterRenderView) {
+            // stop之后需要重新创建vieFilterRender.
+            // vieFilterRender.stopRender();
+        }
         return 0;
     }
 
     native void ProvideCameraFrame(byte[] data, int length, long captureObject);
 
     public void onPreviewFrame(byte[] data, Camera camera) {
+        if(useFiterRenderView) {
+            return;
+        }
         previewBufferLock.lock();
         if(ViESurfaceRenderer.DEBUG){
         	
@@ -319,5 +353,41 @@ public class VideoCaptureAndroid implements PreviewCallback, Callback {
     		Log4Util.d(TAG, "VideoCaptureAndroid::surfaceDestroyed");
     	//}
         isSurfaceReady = false;
+    }
+
+    /**
+     * ViEFilterRenderView.ViERendererCallback
+     * Must Open Camera after filterRender ready
+     */
+    @Override
+    public void onFilterRenderReady() {
+        if(isSurfaceReady) {
+            return;
+        }
+        Log4Util.d(TAG, "VideoCaptureAndroid::surfaceChanged");
+
+        captureLock.lock();
+        vieFilterTexture = vieFilterRenderView.getRenderTexture();
+        isSurfaceReady = true;
+
+        tryStartCapture(mCaptureWidth, mCaptureHeight, mCaptureFPS);
+        captureLock.unlock();
+    }
+
+    /**
+     * ViEFilterRenderView.ViERendererCallback, callback rgba image data after video filter
+     * @param data      image data, format: rgba
+     * @param length    image data length
+     * @param width     image width
+     * @param height    image height
+     */
+    @Override
+    public void onIncomingRgbaFrame(byte[] data, int length, int width, int height) {
+        if(!isCaptureStarted){
+            return;
+        }
+        previewBufferLock.lock();
+        ProvideCameraFrame(data, length, context);
+        previewBufferLock.unlock();
     }
 }

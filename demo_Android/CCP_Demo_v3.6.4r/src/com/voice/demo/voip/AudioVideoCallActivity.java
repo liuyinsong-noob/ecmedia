@@ -13,8 +13,8 @@
 
 import java.io.File;
 import java.lang.ref.WeakReference;
-import java.util.Arrays;
 
+import com.yuntongxun.ecsdk.core.voip.ViEFilterRenderView;
 import com.yuntongxun.ecsdk.core.voip.ViERenderer;
 
 import android.app.KeyguardManager;
@@ -110,6 +110,7 @@ public class AudioVideoCallActivity extends CCPBaseActivity implements OnVoIPLis
 	private KeyguardManager mKeyguardManager = null;
 	private PowerManager.WakeLock mWakeLock;
 	protected int scale;
+	private CameraCapbility[] cameraCapbilities;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -213,16 +214,28 @@ public class AudioVideoCallActivity extends CCPBaseActivity implements OnVoIPLis
 	
 	
 	public void DisplayLocalSurfaceView() {
+		boolean use_vie_filter_render = true;
 		if(mCallType == Device.CallType.VIDEO && mLoaclVideoView != null 
 				&& mLoaclVideoView.getVisibility() == View.VISIBLE) {
 			// Create a RelativeLayout container that will hold a SurfaceView,
 	        // and set it as the content of our activity.
-			SurfaceView localView = ViERenderer.CreateLocalRenderer(this);
-			localView.setLayoutParams(layoutParams);
-			localView.setZOrderOnTop(true);
-			mLoaclVideoView.removeAllViews();
-			mLoaclVideoView.setBackgroundColor(getResources().getColor(R.color.white));
-			mLoaclVideoView.addView(localView);
+			if(use_vie_filter_render) {
+				ViEFilterRenderView localView = ViEFilterRenderView.createFilterRenderer(this);
+				CameraCapbility cap = cameraCapbilities[mCameraCapbilityIndex];
+				localView.setImageFrameSize(cap.width, cap.height);
+				localView.setLayoutParams(layoutParams);
+				localView.setZOrderOnTop(true);
+				mLoaclVideoView.removeAllViews();
+				mLoaclVideoView.setBackgroundColor(getResources().getColor(R.color.white));
+				mLoaclVideoView.addView(localView);
+			} else {
+				SurfaceView localView = ViERenderer.CreateLocalRenderer(this);
+				localView.setLayoutParams(layoutParams);
+				localView.setZOrderOnTop(true);
+				mLoaclVideoView.removeAllViews();
+				mLoaclVideoView.setBackgroundColor(getResources().getColor(R.color.white));
+				mLoaclVideoView.addView(localView);
+			}
 		}
 	}
 	
@@ -513,7 +526,7 @@ public class AudioVideoCallActivity extends CCPBaseActivity implements OnVoIPLis
         if(caps == null ) {
             return;
         }
-
+		cameraCapbilities = caps;
         int resolution =  CcpPreferences.getSharedPreferences().
                 getInt(CCPPreferenceSettings.SETTING_VIDEO_CALL_RESOLUTION.getId(),
                         (Integer)CCPPreferenceSettings.SETTING_VIDEO_CALL_RESOLUTION.getDefaultValue());
