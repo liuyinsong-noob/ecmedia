@@ -584,7 +584,23 @@ int ViECaptureImpl::setBeautyFace(const int capture_id, bool enable) {
     }
     vie_capture->setBeautyFace(enable);
     return 0;
+}
     
+int ViECaptureImpl::setVideoFilter(const int capture_id, ECImageFilterType filterType) {
+    LOG(LS_INFO) << "setVideoFilter " << capture_id;
+    
+    ViEInputManagerScoped is(*(shared_data_->input_manager()));
+    ViECapturer* vie_capture = is.Capture(capture_id);
+    if (!vie_capture) {
+        shared_data_->SetLastError(kViECaptureDeviceDoesNotExist);
+        return -1;
+    }
+    if (!vie_capture->Started()) {
+        shared_data_->SetLastError(kViECaptureDeviceAlreadyStarted);
+        return -1;
+    }
+    vie_capture->setVideoFilter(filterType);
+    return 0;
 }
         
 }  // namespace webrtc

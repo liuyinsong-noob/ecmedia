@@ -248,7 +248,7 @@
 		558FF1D816A0104000BEFFED /* reference_picture_selection.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = reference_picture_selection.cc; sourceTree = "<group>"; };
 		558FF1D916A0104000BEFFED /* reference_picture_selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reference_picture_selection.h; sourceTree = "<group>"; };
 		558FF1DC16A0104000BEFFED /* temporal_layers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = temporal_layers.h; sourceTree = "<group>"; };
-		55A1B3C61703E26C0015FEB9 /* h264.cc */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.cpp.cpp; path = h264.cc; sourceTree = "<group>"; };
+		55A1B3C61703E26C0015FEB9 /* h264.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = h264.cc; sourceTree = "<group>"; };
 		55A1B3C71703E26C0015FEB9 /* h264.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = h264.h; sourceTree = "<group>"; };
 		55A1B3C91703E26C0015FEB9 /* H264_dec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H264_dec.h; sourceTree = "<group>"; };
 		55A1B3D61703E3B20015FEB9 /* H264_dec.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = H264_dec.cc; sourceTree = "<group>"; };

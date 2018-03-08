@@ -217,6 +217,7 @@ class ViECapturer
 	  int UpdateLossRate(int lossRate);
 	  int SetSendStatisticsProxy(SendStatisticsProxy* p_sendStats);
       void setBeautyFace(bool enable);
+      void setVideoFilter(ECImageFilterType filterType);
 	  //---end
 };
 

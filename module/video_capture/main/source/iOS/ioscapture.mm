@@ -716,9 +716,10 @@ char *globalFilePathcapture = NULL;
 -(void)setBeautyFace:(BOOL)isEnable {
     if(isEnable) {
         [_rawDataInput removeAllTargets];
-        if(_ecImageFilter == nullptr) {
-            _ecImageFilter = [[ECImageBeautyFaceFilter alloc] init];
+        if(_ecImageFilter != nullptr) {
+           [_ecImageFilter removeOutputFramebuffer];
         }
+         _ecImageFilter = [ECImageFilterFactory createImageFiilterWithType:cloopenwebrtc::ECType_BeautyFaceFilter];
         // view horizontal mirror. zhaoyou
         [_ecImageView setInputRotation:kECImageFlipHorizonal atIndex:0];
         [_rawDataInput addTarget:_ecImageFilter];
@@ -729,6 +730,19 @@ char *globalFilePathcapture = NULL;
         [_rawDataInput addTarget:_rawDataOutput];
         [_rawDataInput addTarget:_ecImageView];
     }
+}
+
+- (void)setVideoFilter:(ECImageFilterType) filter {
+    [_rawDataInput removeAllTargets];
+    if(_ecImageFilter != nullptr) {
+        [_ecImageFilter removeOutputFramebuffer];
+    }
+    _ecImageFilter = [ECImageFilterFactory createImageFiilterWithType:filter];
+    // view horizontal mirror. zhaoyou
+    [_ecImageView setInputRotation:kECImageFlipHorizonal atIndex:0];
+    [_rawDataInput addTarget:_ecImageFilter];
+    [_ecImageFilter addTarget:_rawDataOutput];
+    [_ecImageFilter addTarget:_ecImageView];
 }
 
 - (void)deviceOrientationNotify {

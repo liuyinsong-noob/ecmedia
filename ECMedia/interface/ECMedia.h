@@ -600,7 +600,13 @@ ECMEDIA_API int ECmedia_set_shield_mosaic(int video_channel, bool flag);
 
 // stream beauty face.
 ECMEDIA_API int ECMedia_setBeautyFace(int deviceid, bool enable);
-    
+
+/**
+ * set video filter for iOS
+ * @param deviceid    device id
+ * @param filter      video filter type for choosing.
+ */
+ECMEDIA_API int ECMedia_iOS_SetVideoFilter(int deviceid, cloopenwebrtc::ECImageFilterType filter);
 /* 
 // 播流接口调用流程
 // 创建 handle

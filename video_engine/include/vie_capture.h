@@ -274,6 +274,7 @@ class WEBRTC_DLLEXPORT ViECapture {
 																							  //---end
     virtual int UpdateLossRate(const int capture_id, int lossRate) = 0;
     virtual int setBeautyFace(const int capture_id, bool enable) = 0;
+    virtual int setVideoFilter(const int capture_id, ECImageFilterType filterType) = 0;
 };
 
 }  // namespace webrtc

@@ -23,6 +23,8 @@
 /* Begin PBXBuildFile section */
 		0DF3FA2B14FA00C9006AF7D9 /* ECImageVignetteFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0DF3FA2914FA00C9006AF7D9 /* ECImageVignetteFilter.h */; };
 		0DF3FA2C14FA00C9006AF7D9 /* ECImageVignetteFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF3FA2A14FA00C9006AF7D9 /* ECImageVignetteFilter.m */; };
+		1F504546204FE83200B4CE29 /* ECImageGreyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F504544204FE83200B4CE29 /* ECImageGreyFilter.m */; };
+		1F504547204FE83200B4CE29 /* ECImageGreyFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F504545204FE83200B4CE29 /* ECImageGreyFilter.h */; };
 		1F9D335C1FC2CA0A006045C5 /* ECImageRawDataOutput+Plus.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F9D335A1FC2CA0A006045C5 /* ECImageRawDataOutput+Plus.h */; };
 		1F9D335D1FC2CA0A006045C5 /* ECImageRawDataOutput+Plus.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F9D335B1FC2CA0A006045C5 /* ECImageRawDataOutput+Plus.mm */; };
 		1F9D33601FC2CB55006045C5 /* ECImageRawDataInput+Plus.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F9D335E1FC2CB55006045C5 /* ECImageRawDataInput+Plus.h */; };
@@ -707,6 +709,8 @@
 		0D9D91AE15011CA200A5BC83 /* ECImageGaussianSelectiveBlurFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ECImageGaussianSelectiveBlurFilter.m; path = Source/ECImageGaussianSelectiveBlurFilter.m; sourceTree = SOURCE_ROOT; };
 		0DF3FA2914FA00C9006AF7D9 /* ECImageVignetteFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ECImageVignetteFilter.h; path = Source/ECImageVignetteFilter.h; sourceTree = SOURCE_ROOT; };
 		0DF3FA2A14FA00C9006AF7D9 /* ECImageVignetteFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ECImageVignetteFilter.m; path = Source/ECImageVignetteFilter.m; sourceTree = SOURCE_ROOT; };
+		1F504544204FE83200B4CE29 /* ECImageGreyFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ECImageGreyFilter.m; path = "Source/third-party-filter/ECImageGreyFilter.m"; sourceTree = SOURCE_ROOT; };
+		1F504545204FE83200B4CE29 /* ECImageGreyFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ECImageGreyFilter.h; path = "Source/third-party-filter/ECImageGreyFilter.h"; sourceTree = SOURCE_ROOT; };
 		1F9D335A1FC2CA0A006045C5 /* ECImageRawDataOutput+Plus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ECImageRawDataOutput+Plus.h"; path = "Source/ECImageRawDataOutput+Plus.h"; sourceTree = SOURCE_ROOT; };
 		1F9D335B1FC2CA0A006045C5 /* ECImageRawDataOutput+Plus.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "ECImageRawDataOutput+Plus.mm"; path = "Source/ECImageRawDataOutput+Plus.mm"; sourceTree = SOURCE_ROOT; };
 		1F9D335E1FC2CB55006045C5 /* ECImageRawDataInput+Plus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ECImageRawDataInput+Plus.h"; path = "Source/ECImageRawDataInput+Plus.h"; sourceTree = SOURCE_ROOT; };
@@ -1093,6 +1097,8 @@
 		1FA4AAC41FC7F5C200936805 /* Third-party-filter */ = {
 			isa = PBXGroup;
 			children = (
+				1F504545204FE83200B4CE29 /* ECImageGreyFilter.h */,
+				1F504544204FE83200B4CE29 /* ECImageGreyFilter.m */,
 			);
 			name = "Third-party-filter";
 			sourceTree = "<group>";
@@ -1805,6 +1811,7 @@
 				BC114898155AF65400F107AF /* ECImageTwoInputFilter.h in Headers */,
 				BEBE83B5155C092A00EEF8C3 /* ECImageRGBFilter.h in Headers */,
 				BC01E82D155CA3F1004C75C3 /* ECImageMedianFilter.h in Headers */,
+				1F504547204FE83200B4CE29 /* ECImageGreyFilter.h in Headers */,
 				BC01E832155CA5E2004C75C3 /* ECImage3x3TextureSamplingFilter.h in Headers */,
 				BC7CC63515605A3500468085 /* ECImageBilateralFilter.h in Headers */,
 				BC7CC69C1562C4BB00468085 /* ECImageCrosshairGenerator.h in Headers */,
@@ -2238,6 +2245,7 @@
 				BCC11D73154B44DC0044F5A0 /* ECImageHistogramGenerator.m in Sources */,
 				BCAD0979154F39CA00278521 /* ECImagePrewittEdgeDetectionFilter.m in Sources */,
 				BCAD097E154F3CB000278521 /* ECImageXYDerivativeFilter.m in Sources */,
+				1F504546204FE83200B4CE29 /* ECImageGreyFilter.m in Sources */,
 				BCAD0982154F7B2800278521 /* ECImageHarrisCornerDetectionFilter.m in Sources */,
 				BCAD0986154F931C00278521 /* ECImageAlphaBlendFilter.m in Sources */,
 				BCAD09A015506F6F00278521 /* ECImageNonMaximumSuppressionFilter.m in Sources */,

@@ -112,6 +112,7 @@ public:
     }
     virtual int UpdateLossRate(int lossRate) {return 0;}
     virtual void setBeautyFace(bool enable) {}
+    virtual void setVideoFilter(ECImageFilterType filterType) {};
 
 protected:
     VideoCaptureImpl(const int32_t id);

@@ -31,6 +31,7 @@ namespace cloopenwebrtc
             int setLocalVieoView(void* view);
             int updateLossRate(int lossRate);
             void setBeautyFace(bool enable);
+            void setVideoFilter(ECImageFilterType filterType);
         private:
             ECIOSCaptureCCP *videoCaptureiOSObjc;
         };

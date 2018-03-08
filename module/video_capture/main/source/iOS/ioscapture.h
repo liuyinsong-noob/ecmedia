@@ -13,7 +13,7 @@ using namespace videocapturemodule;
 #include "msvideo.h"
 #include "bilteral_filter.h"
 #include "keyframe_detector.h"
-#include "ECImage.h"
+#include "image_filter_factory.h"
 
 //#define DEBUG_CAPTURE_YUV 1
 
@@ -64,6 +64,7 @@ namespace cloopenwebrtc {
 - (void)openDevice:(const char*) deviceId;
 - (void)setFps:(float) value;
 - (void)setBeautyFace:(BOOL)isEnable;
+- (void)setVideoFilter:(ECImageFilterType) filter;
 
 - (NSNumber*)registerOwner:(cloopenwebrtc::videocapturemodule::VideoCaptureiOS*)owner;
 - (NSNumber*)setCaptureDeviceById:(char*)uniqueId;

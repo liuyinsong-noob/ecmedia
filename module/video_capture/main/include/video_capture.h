@@ -157,6 +157,7 @@ protected:
   //---end
     virtual int32_t UpdateLossRate(int lossRate) = 0;
     virtual void setBeautyFace(bool enable) = 0;
+    virtual void setVideoFilter(ECImageFilterType filterType) = 0;
 };
 
 }  // namespace webrtc

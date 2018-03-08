@@ -66,6 +66,7 @@ namespace cloopenwebrtc
             
             virtual WebRtc_Word32 UpdateLossRate(int lossRate);
             virtual void setBeautyFace(bool enable);
+            virtual void setVideoFilter(ECImageFilterType filterType);
         protected:
             // Help functions
             WebRtc_Word32 SetCameraOutput();

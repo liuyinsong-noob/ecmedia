@@ -79,5 +79,9 @@ namespace cloopenwebrtc
         void VideoCaptureiOSInfo::setBeautyFace(bool enable) {
             [videoCaptureiOSObjc setBeautyFace:enable];
         }
+        
+        void VideoCaptureiOSInfo::setVideoFilter(ECImageFilterType filterType) {
+            [videoCaptureiOSObjc setVideoFilter:filterType];
+        }
     }
 }

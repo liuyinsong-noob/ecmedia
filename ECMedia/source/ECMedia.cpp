@@ -3423,8 +3423,8 @@ int ECMedia_get_receive_playloadType_audio(int channelid, CodecInst& audioCodec)
 #ifdef VIDEO_ENABLED
 int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d videoCodec(width:%d height:%d pltype:%d plname:%s)",
-                 __FUNCTION__, channelid, videoCodec.width,videoCodec.height, videoCodec.plType,videoCodec.plName);
+    PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d videoCodec(width:%d height:%d pltype:%d plname:%s, startBitrate:%s, maxBitrate:%s, minBitrate:%s)",
+                 __FUNCTION__, channelid, videoCodec.width,videoCodec.height, videoCodec.plType,videoCodec.plName, videoCodec.startBitrate,videoCodec.maxBitrate, videoCodec.minBitrate);
     if (videoCodec.width == 0 || videoCodec.height == 0) {
         PrintConsole("[ECMEDIA ERROR] %s invalid param width or height", __FUNCTION__);
         PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
@@ -4831,6 +4831,27 @@ ECMEDIA_API int ECMedia_setBeautyFace(int deviceid, bool enable)
         return -99;
     }
 }
+
+ECMEDIA_API int ECMedia_iOS_SetVideoFilter(int deviceid, ECImageFilterType filterType)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins, deviceid:%d, image filter type:%d ", __FUNCTION__, deviceid, filterType);
+    ViECapture *capture = ViECapture::GetInterface(m_vie);
+    if (capture) {
+        int ret = capture->setVideoFilter(deviceid, filterType);
+        capture->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set video filter", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA ERROR] %s failed to get ViECapture", __FUNCTION__);
+        return -99;
+    }
+}
+
 
 
 int ECMedia_allocate_desktopShare_capture(int& desktop_captureid, int capture_type)

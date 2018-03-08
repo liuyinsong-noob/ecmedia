@@ -166,5 +166,6 @@
 #import "ECImageWeakPixelInclusionFilter.h"
 
 //third-party-filter
-//#import "third-party-filter/third-party-filter.h"
+#import "third-party-filter/ECImageGreyFilter.h" //create by zhaoyou
+
 

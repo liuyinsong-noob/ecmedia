@@ -916,6 +916,12 @@ enum FrameScaleType {
     kScaleTypeFilling,
 };
 
+    
+typedef enum {
+    ECType_BeautyFaceFilter = 0,
+    ECType_GreyFilter,
+} ECImageFilterType;
+    
 // Common video codec properties
 class VideoCodec {
 public:

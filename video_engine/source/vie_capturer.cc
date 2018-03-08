@@ -760,4 +760,7 @@ void ViECapturer::setBeautyFace(bool enable)
 {
     return capture_module_->setBeautyFace(enable);
 }
+void ViECapturer::setVideoFilter(ECImageFilterType filterType) {
+    return capture_module_->setVideoFilter(filterType);
+}
 }  // namespace webrtc

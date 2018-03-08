@@ -90,6 +90,7 @@ public:
 	//---end
     virtual int UpdateLossRate(const int capture_id, int lossRate);
     virtual int setBeautyFace(const int capture_id, bool enable);
+    virtual int setVideoFilter(const int capture_id, ECImageFilterType filterType);
 };
 
 }  // namespace webrtc

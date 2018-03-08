@@ -280,6 +280,10 @@ namespace cloopenwebrtc
         void VideoCaptureiOS::setBeautyFace(bool enable) {
             _captureDevice->setBeautyFace(enable);
         }
+        
+        void VideoCaptureiOS::setVideoFilter(ECImageFilterType filterType) {
+            _captureDevice->setVideoFilter(filterType);
+        }
 
     }  // namespace videocapturemodule
 }
