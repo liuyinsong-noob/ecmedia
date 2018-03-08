@@ -88,6 +88,11 @@ public class ViEFilterRenderView extends GLSurfaceView {
         setRenderMode(RENDERMODE_WHEN_DIRTY);
     }
 
+    /**
+     *
+     * @param width
+     * @param height
+     */
     public void setImageFrameSize(int width, int height) {
         imageWidth  =  width;
         imageHeight =  height;
