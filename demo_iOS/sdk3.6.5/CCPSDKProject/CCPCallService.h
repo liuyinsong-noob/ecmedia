@@ -279,6 +279,8 @@ typedef enum
  */
 - (NSInteger)selectCamera:(NSInteger)cameraIndex capability:(NSInteger)capabilityIndex fps:(NSInteger)fps rotate:(Rotate)rotate;
 
+-(void)switchVideoFilter:(NSInteger) index;
+
 /**
  * 设置支持的编解码方式，默认全部都支持
  * @param codec 编解码类型

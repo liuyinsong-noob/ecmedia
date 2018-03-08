@@ -2846,7 +2846,9 @@ static CCPCallService * ccpcallserviceSharedInstance;
     }
 }
 
-
+-(void)switchVideoFilter:(NSInteger) index {
+    switchVideoFilter(index);
+}
 
 // -(NSInteger)selectCameraLiveStream
 

@@ -443,6 +443,7 @@ public:
 
 
 	int selectCamera(int cameraIndex, int capabilityIndex,int fps,int rotate,bool force);
+    void switchVideoFilter(int index);
 	int getCameraInfo(CameraInfo **);
 	int getShareScreenInfo(ScreenID **screenId, int captureId);
 	int getShareWindowInfo(WindowShare **windowInfo, int captureId);

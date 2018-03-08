@@ -605,6 +605,13 @@ extern BOOL globalisVoipView;
         [switchMediaTypeBtn setTitle:@"切换音视频" forState:(UIControlStateNormal)];
         [self.bgView addSubview:switchMediaTypeBtn];
         [switchMediaTypeBtn addTarget:self action:@selector(switchMediaType:) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIButton *filterSwitchBtn = [[UIButton alloc] initWithFrame:CGRectMake(240, 410, 65, 25)];
+        [filterSwitchBtn setTitle:@"滤镜" forState:(UIControlStateNormal)];
+        [filterSwitchBtn setBackgroundColor:[UIColor colorWithRed:57.0f/255.0f green:64.0f/255.0f blue:70.0f/255.0f alpha:0.5]];
+        [filterSwitchBtn.layer setCornerRadius:5.0];
+        [self.bgView addSubview:filterSwitchBtn];
+        [filterSwitchBtn addTarget:self action:@selector(show_video_filter_list) forControlEvents:UIControlEventTouchUpInside];
     }
     else
     {
@@ -746,8 +753,6 @@ extern BOOL globalisVoipView;
     NSLog(@"[VideoViewController notifyTo sendRotate %d]",deviceRotate*value);
     [self.modelEngineVoip.VoipCallService notifyTo:self.voipNo andVideoRotate:deviceRotate*value];
     [self.modelEngineVoip.VoipCallService setCaptureRotate:self.callID andVideoRotate:deviceRotate];
-    
-    
 }
 
 - (void)onMessageRemoteVideoRotate:(NSString*)degree
@@ -835,5 +840,21 @@ extern BOOL globalisVoipView;
         }
     }
     displayView.frame = CGRectMake(0.0f, 0.0f, 320.0f, 494.0f);
+}
+
+// show video filter list
+-(void) show_video_filter_list {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"滤镜选择" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"美颜", @"灰度", nil];
+    [actionSheet showInView:self.view];
+}
+// 接听 or 拒接电话
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [self switchVideoFilter:buttonIndex];
+}
+
+-(void)switchVideoFilter:(NSInteger) index
+{
+    [self.modelEngineVoip switchVideoFilter:index];
 }
 @end

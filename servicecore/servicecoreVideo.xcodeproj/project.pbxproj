@@ -120,8 +120,8 @@
 		55209C98181116C60079F4D6 /* base64_2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = base64_2.cpp; path = source/Utility/base64_2.cpp; sourceTree = SOURCE_ROOT; };
 		55209C99181116C60079F4D6 /* base64_2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = base64_2.h; path = source/Utility/base64_2.h; sourceTree = SOURCE_ROOT; };
 		554AD69E16FAB0EB0084F686 /* CCPClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPClient.cpp; sourceTree = "<group>"; };
-		554AD6A016FAB0F20084F686 /* CCPClient.h */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.c.h; path = CCPClient.h; sourceTree = "<group>"; };
-		5550177015C8CF480023C226 /* servicecore.cpp */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.cpp.cpp; path = servicecore.cpp; sourceTree = "<group>"; };
+		554AD6A016FAB0F20084F686 /* CCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPClient.h; sourceTree = "<group>"; };
+		5550177015C8CF480023C226 /* servicecore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = servicecore.cpp; sourceTree = "<group>"; };
 		5555DF011829E76700993F3B /* videoframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = videoframe.h; sourceTree = "<group>"; };
 		556B7426160EAFB9005574FD /* tinyxml2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml2.cpp; sourceTree = "<group>"; };
 		556F876E15C8CBFC00904840 /* enum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = enum.h; sourceTree = "<group>"; };
@@ -133,7 +133,7 @@
 		556F877415C8CBFC00904840 /* salpr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = salpr.h; sourceTree = "<group>"; };
 		556F877515C8CBFC00904840 /* serphonecall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = serphonecall.h; sourceTree = "<group>"; };
 		556F877615C8CBFC00904840 /* serprivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = serprivate.h; sourceTree = "<group>"; };
-		556F877715C8CBFC00904840 /* servicecore.h */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.c.h; path = servicecore.h; sourceTree = "<group>"; };
+		556F877715C8CBFC00904840 /* servicecore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = servicecore.h; sourceTree = "<group>"; };
 		556F877815C8CBFC00904840 /* sipsetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sipsetup.h; sourceTree = "<group>"; };
 		556F877B15C8CBFC00904840 /* serphoneinterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = serphoneinterface.h; sourceTree = "<group>"; };
 		556F877D15C8CBFC00904840 /* address.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = address.cpp; sourceTree = "<group>"; };

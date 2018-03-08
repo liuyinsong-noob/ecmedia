@@ -1378,6 +1378,11 @@ int ServiceCore::startVideoDesktopCapture(SerPhoneCall *call)
 #else
 #endif
 }
+void ServiceCore::switchVideoFilter(int index) {
+    SerPhoneCall *call = serphone_core_get_current_call();
+    ECMedia_iOS_SetVideoFilter(call->m_CaptureDeviceId, cloopenwebrtc::ECImageFilterType(index));
+}
+
 int ServiceCore::selectCamera(int cameraIndex, int capabilityIndex,int fps,int rotate, bool force)
 {
 #ifdef VIDEO_ENABLED

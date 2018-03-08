@@ -480,6 +480,8 @@ typedef enum {
 - (NSArray*)getCameraInfo;
 //选取摄像头
 - (NSInteger)selectCamera:(NSInteger)cameraIndex;
+// 滤镜选择
+-(void) switchVideoFilter:(NSInteger) index;
 //设置用户手机号
 - (void)setVoipUserPhone:(NSString *)phone;
 //延时呼叫，处理多路打来排队进入

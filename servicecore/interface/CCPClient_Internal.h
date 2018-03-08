@@ -116,7 +116,7 @@ extern "C" {
 	CCPAPI void sendKeepAlive();
 
 	CCPAPI int selectCamera(int cameraIndex, int capabilityIndex,int fps,int rotate,bool force);
-
+    CCPAPI void switchVideoFilter(int index);
 	CCPAPI int getCameraInfo(CameraInfo **);
 
     /*! @function

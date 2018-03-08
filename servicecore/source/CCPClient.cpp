@@ -2511,6 +2511,10 @@ extern "C" int selectCamera(int cameraIndex, int capabilityIndex,int fps,int rot
 	return g_pSerCore->selectCamera(cameraIndex,capabilityIndex,fps,rotate,force);
 }
 
+extern "C" void switchVideoFilter(int index) {
+    g_pSerCore->switchVideoFilter(index);
+}
+
 extern "C" 	int getCameraInfo(CameraInfo **ci)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);

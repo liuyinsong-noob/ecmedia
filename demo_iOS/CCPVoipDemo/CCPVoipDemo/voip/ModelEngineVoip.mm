@@ -434,6 +434,10 @@ ModelEngineVoip* gModelEngineVoip = nil;
     
     return [self.VoipCallService selectCamera:cameraIndex capability:capabilityIndex fps:fps rotate:Rotate_Auto];
 }
+
+-(void) switchVideoFilter:(NSInteger) index {
+    [self.VoipCallService switchVideoFilter:index];
+}
 //设置用户名字
 - (void)setVoipUserName:(NSString *)username
 {

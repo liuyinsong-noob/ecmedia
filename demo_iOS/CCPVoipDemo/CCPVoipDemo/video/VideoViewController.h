@@ -13,7 +13,7 @@
 
 #import "UIBaseViewController.h"
 
-@interface VideoViewController : UIBaseViewController
+@interface VideoViewController : UIBaseViewController <UIActionSheetDelegate>
 {
     int hhInt;
     int mmInt;
