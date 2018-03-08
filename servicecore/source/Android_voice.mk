@@ -66,14 +66,15 @@ LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/../interface \
 		$(LOCAL_PATH)/../.. \
 		$(LOCAL_PATH)/../../module \
-    $(LOCAL_PATH)/../../module/interface \
-    $(LOCAL_PATH)/../../module/exosip/include \
-    $(LOCAL_PATH)/../../module/exosip/source \
-    $(LOCAL_PATH)/../../module/osip/include \
-    $(LOCAL_PATH)/../../module/videojpegyuv/include \
-	  $(LOCAL_PATH)/../../third_party/oRTP/include \
+    	$(LOCAL_PATH)/../../module/interface \
+    	$(LOCAL_PATH)/../../module/exosip/include \
+    	$(LOCAL_PATH)/../../module/exosip/source \
+    	$(LOCAL_PATH)/../../module/osip/include \
+    	$(LOCAL_PATH)/../../module/videojpegyuv/include \
+	  	$(LOCAL_PATH)/../../third_party/oRTP/include \
 		$(LOCAL_PATH)/../../third_party/oRTP/include/ortp \
 		$(LOCAL_PATH)/../../module/rtp_rtcp/source/oRTP/include/ortp/ \
+		$(LOCAL_PATH)/../../third_party \
 		$(LOCAL_PATH)/../../third_party/srtp \
 		$(LOCAL_PATH)/../../third_party/srtp/crypto/include \
 		$(LOCAL_PATH)/../../third_party/gsm/inc/ \
@@ -82,18 +83,18 @@ LOCAL_C_INCLUDES := \
 		$(LOCAL_PATH)/../../module/video_coding/codecs/h264 \
 		$(LOCAL_PATH)/../../module/common_video/interface \
 		$(LOCAL_PATH)/../../module/video_coding/main/include \
-	  $(LOCAL_PATH)/../../module/common_video/source \
-	  $(LOCAL_PATH)/../../module/rtp_rtcp/include \
-	  $(LOCAL_PATH)/../../module/common_video/source/libyuv/include \
-	  $(LOCAL_PATH)/../../module/common_audio/source/resampler/include \
-	  $(LOCAL_PATH)/../../module/bitrate_controller/include \
-	  $(LOCAL_PATH)/../../module/remote_bitrate_estimator/include \
-	  $(LOCAL_PATH)/../../module/pacing/include \
-	  $(LOCAL_PATH)/../../module/remote_bitrate_estimator/source \
-	  $(LOCAL_PATH)/../../module/video_render/main/include \
-      $(LOCAL_PATH)/../../ECMedia/interface \
-      $(LOCAL_PATH)/../../ECMedia/source \
-      $(LOCAL_PATH)/../../third_party/protobuf/src
+		$(LOCAL_PATH)/../../module/common_video/source \
+		$(LOCAL_PATH)/../../module/rtp_rtcp/include \
+		$(LOCAL_PATH)/../../module/common_video/source/libyuv/include \
+		$(LOCAL_PATH)/../../module/common_audio/source/resampler/include \
+		$(LOCAL_PATH)/../../module/bitrate_controller/include \
+		$(LOCAL_PATH)/../../module/remote_bitrate_estimator/include \
+		$(LOCAL_PATH)/../../module/pacing/include \
+		$(LOCAL_PATH)/../../module/remote_bitrate_estimator/source \
+		$(LOCAL_PATH)/../../module/video_render/main/include \
+		$(LOCAL_PATH)/../../ECMedia/interface \
+		$(LOCAL_PATH)/../../ECMedia/source \
+		$(LOCAL_PATH)/../../third_party/protobuf/src
 
 LOCAL_SHARED_LIBRARIES := \
     libcutils \

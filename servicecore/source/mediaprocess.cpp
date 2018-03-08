@@ -1379,8 +1379,10 @@ int ServiceCore::startVideoDesktopCapture(SerPhoneCall *call)
 #endif
 }
 void ServiceCore::switchVideoFilter(int index) {
+#ifdef VIDEO_ENABLED
     SerPhoneCall *call = serphone_core_get_current_call();
     ECMedia_iOS_SetVideoFilter(call->m_CaptureDeviceId, cloopenwebrtc::ECImageFilterType(index));
+#endif
 }
 
 int ServiceCore::selectCamera(int cameraIndex, int capabilityIndex,int fps,int rotate, bool force)
@@ -5457,27 +5459,37 @@ int ServiceCore::startRecvRtpPacket(int channelNum)
 
 int ServiceCore::send_tmmbr_request_video(SerPhoneCall *call, uint32_t ssrc)
 {
+#ifdef VIDEO_ENABLED
 	return ECMedia_video_request_remote_ssrc(call->m_VideoChannelID, ssrc);
+#endif
 }
 
 void ServiceCore::cancel_tmmbr_request_video(SerPhoneCall *call)
 {
+#ifdef VIDEO_ENABLED
 	ECMedia_video_cancel_remote_ssrc(call->m_VideoChannelID);
+#endif
 }
 
 void ServiceCore::video_start_receive(SerPhoneCall *call)
 {
+#ifdef VIDEO_ENABLED
 	ECMedia_video_start_receive(call->m_VideoChannelID);
+#endif
 }
 
 void ServiceCore::video_stop_receive(SerPhoneCall *call)
 {
+#ifdef VIDEO_ENABLED
 	ECMedia_video_stop_receive(call->m_VideoChannelID);
+#endif
 }
     
 int ServiceCore::set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame tr)//int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame tr)
 {
+#ifdef VIDEO_ENABLED
     return ECMedia_set_rotate_captured_frames(deviceid, tr);
+#endif
 }
     
 void ServiceCore::audio_enable_magic_sound(bool enabled, int pitch, int tempo, int rate)
