@@ -1735,6 +1735,7 @@
 					WEBRTC_MAC,
 					_DEBUG,
 					MAC_IPHONE,
+					WEBRTC_POSIX,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1793,6 +1794,7 @@
 					WEBRTC_MAC,
 					_DEBUG,
 					MAC_IPHONE,
+					WEBRTC_POSIX,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
