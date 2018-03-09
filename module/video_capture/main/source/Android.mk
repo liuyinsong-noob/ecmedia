@@ -27,7 +27,8 @@ LOCAL_SRC_FILES := \
 # Flags passed to both C and C++ files.
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
-    '-DANDROID_VIDEO_IMAGE_FILTER'
+    
+    # '-DANDROID_VIDEO_IMAGE_FILTER'
 
 LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/android \
