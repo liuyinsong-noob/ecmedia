@@ -962,7 +962,7 @@ void StatsCollector::LoadVideoReceiverReportToPbBuffer(StatsContentType type,
 			
 	value = report.FindValue(StatsReport::kStatsValueNameFrameRateRender);
 	if (value)
-		statsData->set_kstatsvaluenameframeraterender(value->int32_val());
+		statsData->set_kstatsvaluenameframeraterender(value->uint32_val());
 	if (type == kStatsContentFull)
 	{
 		value = report.FindValue(StatsReport::kStatsValueNameCurrentDelayMs);
