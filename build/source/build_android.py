@@ -18,9 +18,9 @@ class BuildAndroid(BuildBase):
     def build(self):
         if os.path.exists(self.CompilePath):
             os.chdir(self.CompilePath)
-            print os.system('ndk-build clean')
-            print os.system('copy ' + "BuildECMedia.mk " + "Android.mk")
-            print os.system('ndk-build')
+            # print os.system('ndk-build clean')
+            print os.system('cp -r ' + "BuildECMedia.mk " + "Android.mk")
+            print os.system('ndk-build -j 4')
         else:
             print'%s are not exist!'%self.CompilePath
             
@@ -28,8 +28,8 @@ class BuildAndroid(BuildBase):
         if os.path.exists(self.CompilePath):
             os.chdir(self.CompilePath)
             print os.system('ndk-build clean')
-            print os.system('copy ' + "BuildECMedia_Voice.mk " + "Android.mk")
-            print os.system('ndk-build')
+            print os.system('cp -r ' + "BuildECMedia_Voice.mk " + "Android.mk")
+            print os.system('ndk-build -j 4')
         else:
             print'%s are not exist!'%self.CompilePath
 
@@ -46,11 +46,11 @@ class BuildAndroid(BuildBase):
 
         sourceFile = os.path.join(self.Lib32FilesPath, 'libECMedia.so')
         destFile = os.path.join(self.RarX32LibsPath, 'libECMedia.so')
-        print os.system('copy ' + sourceFile + ' ' + destFile)
+        print os.system('cp -r ' + sourceFile + ' ' + destFile)
         
         sourceFile = os.path.join(self.Lib64FilesPath, 'libECMedia.so')
         destFile = os.path.join(self.RarX64LibsPath, 'libECMedia.so')
-        print os.system('copy ' + sourceFile + ' ' + destFile)
+        print os.system('cp -r ' + sourceFile + ' ' + destFile)
         
     def collectLibAudioOnlyFiles(self):
         if os.path.exists(self.RarX32LibsPath):
@@ -65,11 +65,11 @@ class BuildAndroid(BuildBase):
 
         sourceFile = os.path.join(self.Lib32FilesPath, 'libECMedia_Voice.so')
         destFile = os.path.join(self.RarX32LibsPath, 'libECMedia_Voice.so')
-        print os.system('copy ' + sourceFile + ' ' + destFile)
+        print os.system('cp -r ' + sourceFile + ' ' + destFile)
         
         sourceFile = os.path.join(self.Lib64FilesPath, 'libECMedia_Voice.so')
         destFile = os.path.join(self.RarX64LibsPath, 'libECMedia_Voice.so')
-        print os.system('copy ' + sourceFile + ' ' + destFile)
+        print os.system('cp -r ' + sourceFile + ' ' + destFile)
     
     def collectHeaderFiles(self):
         if os.path.exists(self.RarIncludePath):
@@ -77,10 +77,10 @@ class BuildAndroid(BuildBase):
         else:
            os.mkdir(self.RarIncludePath)
 
-        print os.system('copy ' + self.EcmediaHeader + ' ' + self.RarIncludePath)
-        print os.system('copy ' + self.CommonTypesHeader + ' ' + self.RarIncludePath)
-        print os.system('copy ' + self.SdkCommonHeader + ' ' + self.RarIncludePath)
-        print os.system('copy ' + self.TypesDefsHeader + ' ' + self.RarIncludePath)
+        print os.system('cp -r ' + self.EcmediaHeader + ' ' + self.RarIncludePath)
+        print os.system('cp -r ' + self.CommonTypesHeader + ' ' + self.RarIncludePath)
+        print os.system('cp -r ' + self.SdkCommonHeader + ' ' + self.RarIncludePath)
+        print os.system('cp -r ' + self.TypesDefsHeader + ' ' + self.RarIncludePath)
     
 if __name__=='__main__' :
     buildType = 'release'
