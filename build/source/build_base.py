@@ -3,6 +3,7 @@
 import os
 import sys
 import time
+import logging
 
 class BuildBase:
     def __init__(self, buildType, platform, projectPath):
@@ -36,7 +37,7 @@ class BuildBase:
         if self.buildType == 'release':
             if self.getEcmediaVersion() != version:
                 self.writeReleaseNote(timestamp, sha)
-                self.updateReleaseNote()
+                #self.updateReleaseNote()
         self.rarFiles()
         self.copyToRemote(self.platform)
 
@@ -83,13 +84,13 @@ class BuildBase:
         else:
            os.mkdir(self.RarPath)
 
-        self.collectLibAudioOnlyFiles()
+        # self.collectLibAudioOnlyFiles()
 
     def rarFiles(self):
         os.chdir(self.BuildPath)
         targetFile = os.path.join(self.BuildPath, self.rarFileName)
-        sourceFile = os.path.join(self.BuildPath, self.buildType)
-        print os.system('7z a -tzip ' + targetFile + ' ' + sourceFile)
+        sourceFile = self.buildType
+        print os.system('zip -r ' + targetFile + ' ' + sourceFile)
 
     def getEcmediaVersion(self):
         fd = open(self.EcmediaCpp)
