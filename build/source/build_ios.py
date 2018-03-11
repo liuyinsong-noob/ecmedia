@@ -7,8 +7,10 @@ from build_base import BuildBase
 from build_base import *
     
 class BuildIos(BuildBase):
-    def __init__(self, buildType):
+    def __init__(self, buildType, onlyAudio, needClean):
         platform = 'ios'
+        self.onlyAudio = onlyAudio
+        self.needClean = needClean
         projectPath = os.path.join(os.getcwd(), '..', '..')
         self.CompilePath = os.path.join(projectPath, 'ECMedia', 'ECMedia')
         self.LibReleaseFilesPath = os.path.join(projectPath, 'ECMedia', 'ECMedia', 'build', 'Release-iphoneos')
@@ -18,8 +20,10 @@ class BuildIos(BuildBase):
     def build(self):
         if os.path.exists(self.CompilePath):
             os.chdir(self.CompilePath)
+            if self.onlyAudio :
+                return 0
             print os.system('xcodebuild -project ECMedia.xcodeproj')
-            print os.system('xcodebuild clean build -sdk iphonesimulator10.3 ONLY_ACTIVE_ARCH=NO VALID_ARCHS="i386 x86_64" -project ECMedia.xcodeproj')         
+            print os.system('xcodebuild clean build -sdk iphonesimulator10.3 ONLY_ACTIVE_ARCH=NO VALID_ARCHS="i386 x86_64" -project ECMedia.xcodeproj')
         else:
             print'%s are not exist!'%self.CompilePath
     
@@ -27,7 +31,7 @@ class BuildIos(BuildBase):
         if os.path.exists(self.CompilePath):
             os.chdir(self.CompilePath)
             print os.system('xcodebuild -project ECMediaAudio.xcodeproj')
-            print os.system('xcodebuild clean build -sdk iphonesimulator10.3 ONLY_ACTIVE_ARCH=NO VALID_ARCHS="i386 x86_64" -project ECMediaAudio.xcodeproj')            
+            print os.system('xcodebuild clean build -sdk iphonesimulator10.3 ONLY_ACTIVE_ARCH=NO VALID_ARCHS="i386 x86_64" -project ECMediaAudio.xcodeproj')
         else:
             print'%s are not exist!'%self.CompilePath
 
@@ -51,8 +55,33 @@ class BuildIos(BuildBase):
         
 if __name__=='__main__' :
     buildType = 'release'
-    if len(sys.argv) != 1:
-        buildType = sys.argv[1]
+    onlyAudio = False
+    needClean = False
+    argvLen =  sys.argv.__len__();
+    if argvLen != 1:
+        args = sys.argv[1: argvLen]
+        for item in  args:
+            if item.startswith('--') :
+                pass
+            else :
+                print('bad input commond argument, please check again! argument is: %s' %(item))
+                quit()
+
+            if item == '--release' :
+                print('[build info]: build type: release !')
+                buildType = item
+
+            if item == '--audio' :
+                onlyAudio = True
+
+            if item == '--clean' :
+                print('[build info]: need clean build targets!')
+                needClean = True
+
+        if onlyAudio :
+            print('[build info]: only build ecmedia audio libs!')
+        else :
+            print('[build info]: build full ecmedia libs!')
         
-    buildIos = BuildIos(buildType)
+    buildIos = BuildIos(buildType, onlyAudio, needClean)
     buildIos.run()

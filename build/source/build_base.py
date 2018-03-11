@@ -4,6 +4,7 @@ import os
 import sys
 import time
 import logging
+import pickle
 
 class BuildBase:
     def __init__(self, buildType, platform, projectPath):
@@ -28,12 +29,23 @@ class BuildBase:
         self.rarFileName = self.buildType + '-' + self.getEcmediaVersion() + '-' + timestamp + '.zip'
     
     def run(self):
-        self.build()
-        self.collectFiles()
-        self.buildAudioOnly()
-        self.collectAudioOnlyFiles()
+        ret = self.build()
+        if ret == 0:
+            self.collectFiles()
+        else:
+            return -1
+
+        if self.buildAudioOnly() == 0:
+            self.collectAudioOnlyFiles()
+        else :
+            return -1
         version, timestamp, sha = self.getLastCommitInfo()
         timestamp = str(int(timestamp) + 1)
+        self.rarFiles()
+        if self.copyToRemote(self.platform) == 0:
+            os.chdir(self.BuildPath)
+            print os.system('rm -rf ' + self.buildType + '*')
+
         if self.buildType == 'release':
             if self.getEcmediaVersion() != version:
                 self.writeReleaseNote(timestamp, sha)
@@ -202,5 +214,3 @@ class BuildBase:
     def updateReleaseNote(self):
         print os.system('git commit -a -m ' + '"docs: updste release note for %s"'%(self.getEcmediaVersion()))
         print os.system('git push')
-        
-        
