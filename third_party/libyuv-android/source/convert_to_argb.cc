@@ -278,11 +278,11 @@ int ConvertToARGB(const uint8* sample, size_t sample_size,
       break;
     }
 #ifdef HAVE_JPEG
-//    case FOURCC_MJPG:
-//      r = MJPGToARGB(sample, sample_size,
-//                     crop_argb, argb_stride,
-//                     src_width, abs_src_height, crop_width, inv_crop_height);
-//      break;
+    case FOURCC_MJPG:
+      r = MJPGToARGB(sample, sample_size,
+                     crop_argb, argb_stride,
+                     src_width, abs_src_height, crop_width, inv_crop_height);
+      break;
 #endif
     default:
       r = -1;  // unknown fourcc - return failure code.

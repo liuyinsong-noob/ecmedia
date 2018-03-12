@@ -9,7 +9,6 @@
  */
 
 #include "libyuv/row.h"
-#include "libyuv/rotate_row.h"
 
 #include "libyuv/basic_types.h"
 
@@ -35,6 +34,7 @@ void TransposeWx8_NEON(const uint8* src, int src_stride,
     "sub         %5, #8                        \n"
 
     // handle 8x8 blocks. this should be the majority of the plane
+    ".p2align  2                               \n"
     "1:                                        \n"
       "mov         %0, %1                      \n"
 
@@ -255,6 +255,7 @@ void TransposeUVWx8_NEON(const uint8* src, int src_stride,
     "sub         %7, #8                        \n"
 
     // handle 8x8 blocks. this should be the majority of the plane
+    ".p2align  2                               \n"
     "1:                                        \n"
       "mov         %0, %1                      \n"
 

@@ -7,7 +7,7 @@ import time
 class BuildBase:
     def __init__(self):
         self.libsPath = os.path.join(os.getcwd(), '..', 'libs/armeabi')
-        self.appLibPath = os.path.join(os.getcwd(), '..', 'demo_Android/CCP_Demo_v3.6.4r/libs/armeabi')
+        self.appLibPath = os.path.join(os.getcwd(), '..', 'demo_Android/CCP_Demo_v3.6.4r/libs/')
         print self.libsPath
         print self.appLibPath
 

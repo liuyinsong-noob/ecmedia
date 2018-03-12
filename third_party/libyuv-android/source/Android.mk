@@ -27,15 +27,15 @@ LOCAL_SRC_FILES := \
     convert_from_argb.cc \
     convert_to_argb.cc   \
     convert_to_i420.cc   \
+    convert_jpeg.cc      \
+    mjpeg_decoder.cc     \
+    mjpeg_validate.cc    \
     cpu_id.cc            \
     planar_functions.cc  \
     rotate.cc            \
-    rotate_any.cc        \
     rotate_argb.cc       \
-    rotate_common.cc     \
     rotate_mips.cc       \
     rotate_neon64.cc     \
-    rotate_gcc.cc        \
     row_any.cc           \
     row_common.cc        \
     row_mips.cc          \

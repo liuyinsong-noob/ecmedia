@@ -13,7 +13,6 @@
 #include "libyuv/convert.h"
 
 #include "libyuv/video_common.h"
-#include "../include/libyuv.h"
 
 #ifdef __cplusplus
 namespace libyuv {
@@ -83,7 +82,6 @@ int ConvertToI420(const uint8* sample,
     u_stride = v_stride = ((crop_width + 1) / 2);
   }
 
-format = FOURCC_RGBA;
   switch (format) {
     // Single plane formats
     case FOURCC_YUY2:
@@ -307,13 +305,13 @@ format = FOURCC_RGBA;
       break;
     }
 #ifdef HAVE_JPEG
-//    case FOURCC_MJPG:
-//      r = MJPGToI420(sample, sample_size,
-//                     y, y_stride,
-//                     u, u_stride,
-//                     v, v_stride,
-//                     src_width, abs_src_height, crop_width, inv_crop_height);
-//      break;
+    case FOURCC_MJPG:
+      r = MJPGToI420(sample, sample_size,
+                     y, y_stride,
+                     u, u_stride,
+                     v, v_stride,
+                     src_width, abs_src_height, crop_width, inv_crop_height);
+      break;
 #endif
     default:
       r = -1;  // unknown fourcc - return failure code.

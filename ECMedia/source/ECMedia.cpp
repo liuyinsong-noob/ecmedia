@@ -3423,7 +3423,7 @@ int ECMedia_get_receive_playloadType_audio(int channelid, CodecInst& audioCodec)
 #ifdef VIDEO_ENABLED
 int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
 {
-    PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d videoCodec(width:%d height:%d pltype:%d plname:%s, startBitrate:%s, maxBitrate:%s, minBitrate:%s)",
+    PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d videoCodec(width:%d height:%d pltype:%d plname:%s, startBitrate:%d, maxBitrate:%d, minBitrate:%d)",
                  __FUNCTION__, channelid, videoCodec.width,videoCodec.height, videoCodec.plType,videoCodec.plName, videoCodec.startBitrate,videoCodec.maxBitrate, videoCodec.minBitrate);
     if (videoCodec.width == 0 || videoCodec.height == 0) {
         PrintConsole("[ECMEDIA ERROR] %s invalid param width or height", __FUNCTION__);
