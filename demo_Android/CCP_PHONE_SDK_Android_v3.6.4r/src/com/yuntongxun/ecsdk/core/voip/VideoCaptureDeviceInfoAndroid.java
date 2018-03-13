@@ -53,11 +53,15 @@ public class VideoCaptureDeviceInfoAndroid {
     }
 
     public enum FrontFacingCameraType {
-        None, // This is not a front facing camera
+                None, // This is not a front facing camera
                 GalaxyS, // Galaxy S front facing camera.
                 HTCEvo, // HTC Evo front facing camera
                 Android23, // Android 2.3 front facing camera.
                 }
+
+    public static final int RAW_FORMAT_NV21 = 0;
+    public static final int RAW_FORMAT_RGBA = 1;
+    boolean useImageFilter = true;
 
     String currentDeviceUniqueId;
     int id;
@@ -115,8 +119,7 @@ public class VideoCaptureDeviceInfoAndroid {
                         newDevice.deviceUniqueName =
                                 "Camera " + i +", Facing front, Orientation "+ info.orientation;
                         newDevice.frontCameraType = FrontFacingCameraType.Android23;
-                        if(ViESurfaceRenderer.DEBUG){
-                        	
+                        if(ViESurfaceRenderer.DEBUG) {
                         	Log4Util.d(TAG, "Camera " + i +", Facing front, Orientation "+ info.orientation);
                         }
                     }
@@ -159,9 +162,15 @@ public class VideoCaptureDeviceInfoAndroid {
         for(int i = 0; i < sizes.size(); ++i) {
             Size s = sizes.get(i);
             newDevice.captureCapabilies[i] = new CaptureCapabilityAndroid();
-            newDevice.captureCapabilies[i].height = s.height;
-            newDevice.captureCapabilies[i].width = s.width;
-            newDevice.captureCapabilies[i].maxFPS = maxFPS;
+            newDevice.captureCapabilies[i].height   = s.height;
+            newDevice.captureCapabilies[i].width    = s.width;
+            newDevice.captureCapabilies[i].maxFPS   = maxFPS;
+            if(!useImageFilter) {
+                newDevice.captureCapabilies[i].rawType  = RAW_FORMAT_NV21;
+            } else {
+                newDevice.captureCapabilies[i].rawType  = RAW_FORMAT_RGBA;
+            }
+
             if(ViESurfaceRenderer.DEBUG){
             	
             	Log4Util.v(TAG,

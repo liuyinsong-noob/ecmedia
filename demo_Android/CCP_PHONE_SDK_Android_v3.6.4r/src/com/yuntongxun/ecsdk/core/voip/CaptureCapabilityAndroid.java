@@ -11,7 +11,8 @@
 package com.yuntongxun.ecsdk.core.voip;
 
 public class CaptureCapabilityAndroid {
-    public int width  = 0;
-    public int height = 0;
-    public int maxFPS = 0;
+    public int width   = 0;
+    public int height  = 0;
+    public int maxFPS  = 0;
+    public int rawType = 0;
 }

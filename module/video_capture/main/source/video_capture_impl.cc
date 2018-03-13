@@ -305,20 +305,21 @@ int32_t VideoCaptureImpl::IncomingFrame(
         int target_height = height;
         // Rotating resolution when for 90/270 degree rotations.
         if (_rotateFrame == kVideoRotation_90 || _rotateFrame == kVideoRotation_270)  {
-          target_width = abs(height);
-          target_height = width;
-#ifdef ANDROID_VIDEO_IMAGE_FILTER
-          stride_y = abs(height);
-            
-          stride_uv = (height + 1) / 2;
-            if(_deviceUniqueId[7] == '0') {
-                // android device front camera, need flip image
-                NeedFlipI420Frame(true);
-            } else {
-                // android device back camera,
-                NeedFlipI420Frame(false);
+            target_width = abs(height);
+            target_height = width;
+#ifdef __ANDROID__
+            bool useAndroidVideoFilter = frameInfo.rawType == kVideoRGBA; // rawType == kVideoRGBA mean: use android video filter
+            if(useAndroidVideoFilter) {
+                stride_y = abs(height);
+                stride_uv = (height + 1) / 2;
+                if(_deviceUniqueId[7] == '0') {
+                    // android device front camera, need flip image
+                    NeedFlipI420Frame(true);
+                } else {
+                    // android device back camera,
+                    NeedFlipI420Frame(false);
+                }
             }
-          
 #endif
         }
         // TODO(mikhal): Update correct aligned stride values.

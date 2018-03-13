@@ -143,7 +143,7 @@ public class ViEFilterRenderView extends GLSurfaceView {
         private void initImageFilter() {
             // create and init image filter.
             if(imageFilter == null) {
-                imageFilter = MagicFilterFactory.initFilters(MagicFilterType.NONE);
+                imageFilter = MagicFilterFactory.initFilters(MagicFilterType.COOL);
             }
             imageFilter.init(mContext);
 

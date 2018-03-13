@@ -222,6 +222,7 @@ WebRtc_Word32 DeviceInfoAndroid::CreateCapabilityMap(
     jfieldID widthField = env->GetFieldID(VideoCaptureAndroid::g_javaCapClass, "width", "I");
   jfieldID heigtField = env->GetFieldID(VideoCaptureAndroid::g_javaCapClass, "height", "I");
   jfieldID maxFpsField = env->GetFieldID(VideoCaptureAndroid::g_javaCapClass, "maxFPS", "I");
+  jfieldID rawTypeField = env->GetFieldID(VideoCaptureAndroid::g_javaCapClass, "rawType", "I");
   if (widthField == NULL || heigtField == NULL || maxFpsField == NULL) {
     VideoCaptureAndroid::ReleaseAndroidDeviceInfoObjects(attached);
     WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
@@ -241,12 +242,17 @@ WebRtc_Word32 DeviceInfoAndroid::CreateCapabilityMap(
     cap.width = env->GetIntField(capabilityElement, widthField);
     cap.height = env->GetIntField(capabilityElement, heigtField);
     cap.expectedCaptureDelay = _expectedCaptureDelay;
-  #ifdef ANDROID_VIDEO_IMAGE_FILTER
-	  cap.rawType = kVideoRGBA;
-  #else 
-	  cap.rawType = kVideoNV21;
-  #endif
-    
+    int rawType = env->GetIntField(capabilityElement, rawTypeField);  
+   
+    if(rawType == 0) {
+       WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+                 "%s: rawType is:%d, kVideoNV21.", __FUNCTION__, rawType);
+      cap.rawType = kVideoNV21;
+    } else if(rawType == 1) {
+       WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+                 "%s: rawType is:%d, kVideoRGBA.", __FUNCTION__, rawType);
+      cap.rawType = kVideoRGBA;
+    }
     cap.maxFPS = env->GetIntField(capabilityElement, maxFpsField);
     WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
                  "%s: Cap width %d, height %d, fps %d", __FUNCTION__,

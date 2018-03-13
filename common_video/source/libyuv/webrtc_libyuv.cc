@@ -325,56 +325,55 @@ int ConvertToI420(VideoType src_video_type,
     dst_height =dst_frame->width();
   }
 
-#ifdef ANDROID_VIDEO_IMAGE_FILTER
-
-    I420VideoFrame i420_converted_frame;
-    i420_converted_frame.CreateEmptyFrame(src_width, abs(src_height), src_width, (src_width+1)/2, (src_width+1)/2);
-
-    int ret = libyuv::ConvertToI420(src_frame, sample_size,
-    i420_converted_frame.buffer(kYPlane),
-    i420_converted_frame.stride(kYPlane),
-    i420_converted_frame.buffer(kUPlane),
-    i420_converted_frame.stride(kUPlane),
-    i420_converted_frame.buffer(kVPlane),
-    i420_converted_frame.stride(kVPlane),
-    0, 0,
-    src_width, src_height,
-    src_width, src_height,
-    ConvertRotationMode(kVideoRotation_180),
-    ConvertVideoType(src_video_type));
-
-    if(ret < 0) {
-        return ret;
-    }
-
-    // scale i420 frame width -> height, and height -> width
-    ret = I420Scale(i420_converted_frame.buffer(kYPlane), i420_converted_frame.width(),
-    i420_converted_frame.buffer(kUPlane), (i420_converted_frame.width()+1) / 2,
-    i420_converted_frame.buffer(kVPlane), (i420_converted_frame.width()+1) / 2,
-    needFlipI420Frame ? -i420_converted_frame.width() : i420_converted_frame.width(),
-    i420_converted_frame.height(),
-    dst_frame->buffer(kYPlane), dst_frame->width(),
-    dst_frame->buffer(kUPlane), (dst_frame->width()+1)/2,
-    dst_frame->buffer(kVPlane), (dst_frame->width()+1)/2,
-    dst_frame->width(), dst_frame->height(),
-    libyuv::kFilterNone);
-
-    return ret;
-#else
-     return libyuv::ConvertToI420(src_frame, sample_size,
-     dst_frame->buffer(kYPlane),
-     dst_frame->stride(kYPlane),
-     dst_frame->buffer(kUPlane),
-     dst_frame->stride(kUPlane),
-     dst_frame->buffer(kVPlane),
-     dst_frame->stride(kVPlane),
-     crop_x, crop_y,
-     src_width, src_height,
-     dst_width, dst_height,
-     ConvertRotationMode(rotation),
-     ConvertVideoType(src_video_type));
+#ifdef __ANDROID__
+    bool enable_video_filter = src_video_type == kRGBA;
+    if(true) {
+        I420VideoFrame i420_converted_frame;
+        i420_converted_frame.CreateEmptyFrame(src_width, abs(src_height), src_width, (src_width+1)/2, (src_width+1)/2);
+        
+        int ret = libyuv::ConvertToI420(src_frame, sample_size,
+                                        i420_converted_frame.buffer(kYPlane),
+                                        i420_converted_frame.stride(kYPlane),
+                                        i420_converted_frame.buffer(kUPlane),
+                                        i420_converted_frame.stride(kUPlane),
+                                        i420_converted_frame.buffer(kVPlane),
+                                        i420_converted_frame.stride(kVPlane),
+                                        0, 0,
+                                        src_width, src_height,
+                                        src_width, src_height,
+                                        ConvertRotationMode(kVideoRotation_180), //this android frame after version gpuimage must rotation 180
+                                        ConvertVideoType(src_video_type));
+        if(ret < 0) {
+            return ret;
+        }
+        
+        // scale i420 frame width -> height, and height -> width
+        return I420Scale(i420_converted_frame.buffer(kYPlane), i420_converted_frame.width(),
+                        i420_converted_frame.buffer(kUPlane), (i420_converted_frame.width()+1) / 2,
+                        i420_converted_frame.buffer(kVPlane), (i420_converted_frame.width()+1) / 2,
+                        needFlipI420Frame ? -i420_converted_frame.width() : i420_converted_frame.width(),
+                        i420_converted_frame.height(),
+                        dst_frame->buffer(kYPlane), dst_frame->width(),
+                        dst_frame->buffer(kUPlane), (dst_frame->width()+1)/2,
+                        dst_frame->buffer(kVPlane), (dst_frame->width()+1)/2,
+                        dst_frame->width(), dst_frame->height(),
+                        libyuv::kFilterNone);
+    } else
 #endif
-    
+    {
+        return libyuv::ConvertToI420(src_frame, sample_size,
+                                     dst_frame->buffer(kYPlane),
+                                     dst_frame->stride(kYPlane),
+                                     dst_frame->buffer(kUPlane),
+                                     dst_frame->stride(kUPlane),
+                                     dst_frame->buffer(kVPlane),
+                                     dst_frame->stride(kVPlane),
+                                     crop_x, crop_y,
+                                     src_width, src_height,
+                                     dst_width, dst_height,
+                                     ConvertRotationMode(rotation),
+                                     ConvertVideoType(src_video_type));
+    }
 }
 
 int ConvertFromI420(const I420VideoFrame& src_frame,
