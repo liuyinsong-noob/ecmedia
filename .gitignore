@@ -8,6 +8,7 @@ module/image_filter
 #appcode filder
 .idea
 .gradle
+.vscode
 
 #libs
 demo_Android/CCP_Demo_v3.6.4r/libs/armeabi/libserphone.so
