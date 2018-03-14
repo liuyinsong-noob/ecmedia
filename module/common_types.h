@@ -918,7 +918,8 @@ enum FrameScaleType {
 
     
 typedef enum {
-    ECType_BeautyFaceFilter = 0,
+    ECType_Filter_None      = 0,
+    ECType_BeautyFaceFilter,
     ECType_GreyFilter,
 } ECImageFilterType;
     
