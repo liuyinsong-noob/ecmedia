@@ -15,7 +15,7 @@
             case cloopenwebrtc::ECType_BeautyFaceFilter:
                 imageFilter = [[ECImageBeautyFaceFilter alloc] init];
                 break;
-            case cloopenwebrtc::ECType_GreyFilter:
+            case cloopenwebrtc::ECType_GrayFilter:
                 imageFilter = [[ECImageGreyFilter alloc] init];
                 break;
             default:

@@ -920,7 +920,7 @@ enum FrameScaleType {
 typedef enum {
     ECType_Filter_None      = 0,
     ECType_BeautyFaceFilter,
-    ECType_GreyFilter,
+    ECType_GrayFilter,
 } ECImageFilterType;
     
 // Common video codec properties
