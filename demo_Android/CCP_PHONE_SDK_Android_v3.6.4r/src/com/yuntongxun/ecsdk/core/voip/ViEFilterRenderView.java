@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 
 import com.seu.magicfilter.base.gpuimage.GPUImageFilter;
 import com.seu.magicfilter.utils.MagicFilterFactory;
-import com.seu.magicfilter.utils.MagicFilterType;
+import com.seu.magicfilter.utils.ViEImageFilterType;
 import com.seu.magicfilter.utils.OpenGLUtils;
 
 import java.nio.ByteBuffer;
@@ -106,7 +106,7 @@ public class ViEFilterRenderView extends GLSurfaceView {
         viERendererCallback = callback;
     }
 
-    public boolean setFilter(final MagicFilterType type) {
+    public boolean setFilter(final ViEImageFilterType type) {
         if (!isRenderReady) {
             return false;
         }
@@ -143,7 +143,7 @@ public class ViEFilterRenderView extends GLSurfaceView {
         private void initImageFilter() {
             // create and init image filter.
             if(imageFilter == null) {
-                imageFilter = MagicFilterFactory.initFilters(MagicFilterType.COOL);
+                imageFilter = MagicFilterFactory.initFilters(ViEImageFilterType.COOL);
             }
             imageFilter.init(mContext);
 

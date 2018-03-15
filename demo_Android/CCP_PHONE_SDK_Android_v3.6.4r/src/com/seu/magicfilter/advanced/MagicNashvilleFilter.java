@@ -2,7 +2,7 @@ package com.seu.magicfilter.advanced;
 
 import android.opengl.GLES20;
 
-import com.seu.magicfilter.utils.MagicFilterType;
+import com.seu.magicfilter.utils.ViEImageFilterType;
 import com.hisun.R;
 
 import com.seu.magicfilter.base.gpuimage.GPUImageFilter;
@@ -14,7 +14,7 @@ public class MagicNashvilleFilter extends GPUImageFilter{
     private int mGLStrengthLocation;
 
     public MagicNashvilleFilter(){
-        super(MagicFilterType.NASHVILLE, R.raw.nashville);
+        super(ViEImageFilterType.NASHVILLE, R.raw.nashville);
     }
 
     @Override

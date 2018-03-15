@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 
 import android.opengl.GLES20;
 
-import com.seu.magicfilter.utils.MagicFilterType;
+import com.seu.magicfilter.utils.ViEImageFilterType;
 import com.hisun.R;
 
 import com.seu.magicfilter.base.gpuimage.GPUImageFilter;
@@ -20,7 +20,7 @@ public class MagicHealthyFilter extends GPUImageFilter{
     private int mTexelWidthUniformLocation;
 
     public MagicHealthyFilter(){
-        super(MagicFilterType.HEALTHY, R.raw.healthy);
+        super(ViEImageFilterType.HEALTHY, R.raw.healthy);
     }
 
     @Override

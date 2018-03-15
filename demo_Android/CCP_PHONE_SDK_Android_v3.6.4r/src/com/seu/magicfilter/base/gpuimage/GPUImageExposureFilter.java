@@ -18,7 +18,7 @@ package com.seu.magicfilter.base.gpuimage;
 
 import android.opengl.GLES20;
 
-import com.seu.magicfilter.utils.MagicFilterType;
+import com.seu.magicfilter.utils.ViEImageFilterType;
 
 import com.hisun.R;
 
@@ -47,7 +47,7 @@ public class GPUImageExposureFilter extends GPUImageFilter {
     }
 
     public GPUImageExposureFilter(final float exposure) {
-        super(MagicFilterType.EXPOSURE, R.raw.exposure);
+        super(ViEImageFilterType.EXPOSURE, R.raw.exposure);
         mExposure = exposure;
     }
 

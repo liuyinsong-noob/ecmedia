@@ -18,7 +18,7 @@ package com.seu.magicfilter.base.gpuimage;
 
 import android.opengl.GLES20;
 
-import com.seu.magicfilter.utils.MagicFilterType;
+import com.seu.magicfilter.utils.ViEImageFilterType;
 
 import com.hisun.R;
 
@@ -32,7 +32,7 @@ public class GPUImageHueFilter extends GPUImageFilter {
     }
 
     public GPUImageHueFilter(final float hue) {
-        super(MagicFilterType.HUE, R.raw.hue);
+        super(ViEImageFilterType.HUE, R.raw.hue);
         mHue = hue;
     }
 

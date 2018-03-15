@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 
 import android.opengl.GLES20;
 
-import com.seu.magicfilter.utils.MagicFilterType;
+import com.seu.magicfilter.utils.ViEImageFilterType;
 import com.hisun.R;
 
 import com.seu.magicfilter.base.gpuimage.GPUImageFilter;
@@ -17,7 +17,7 @@ public class MagicTenderFilter extends GPUImageFilter{
     private int mMaskGrey1UniformLocation;
     
     public MagicTenderFilter(){
-        super(MagicFilterType.TENDER, R.raw.tender);
+        super(ViEImageFilterType.TENDER, R.raw.tender);
     }
 
     @Override

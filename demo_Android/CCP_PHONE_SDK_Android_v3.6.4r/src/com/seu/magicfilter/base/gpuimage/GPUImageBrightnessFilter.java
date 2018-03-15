@@ -18,7 +18,7 @@ package com.seu.magicfilter.base.gpuimage;
 
 import android.opengl.GLES20;
 
-import com.seu.magicfilter.utils.MagicFilterType;
+import com.seu.magicfilter.utils.ViEImageFilterType;
 import com.hisun.R;
 
 /**
@@ -34,7 +34,7 @@ public class GPUImageBrightnessFilter extends GPUImageFilter {
     }
 
     public GPUImageBrightnessFilter(final float brightness) {
-        super(MagicFilterType.BRIGHTNESS, R.raw.brightness);
+        super(ViEImageFilterType.BRIGHTNESS, R.raw.brightness);
         mBrightness = brightness;
     }
 

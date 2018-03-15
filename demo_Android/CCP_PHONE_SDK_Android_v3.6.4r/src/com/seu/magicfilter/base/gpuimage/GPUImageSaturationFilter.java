@@ -18,7 +18,7 @@ package com.seu.magicfilter.base.gpuimage;
 
 import android.opengl.GLES20;
 
-import com.seu.magicfilter.utils.MagicFilterType;
+import com.seu.magicfilter.utils.ViEImageFilterType;
 
 import com.hisun.R;
 
@@ -35,7 +35,7 @@ public class GPUImageSaturationFilter extends GPUImageFilter {
     }
 
     public GPUImageSaturationFilter(final float saturation) {
-        super(MagicFilterType.SATURATION, R.raw.saturation);
+        super(ViEImageFilterType.SATURATION, R.raw.saturation);
         mSaturation = saturation;
     }
 

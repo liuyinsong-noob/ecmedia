@@ -2,7 +2,7 @@ package com.seu.magicfilter.advanced;
 
 import android.opengl.GLES20;
 
-import com.seu.magicfilter.utils.MagicFilterType;
+import com.seu.magicfilter.utils.ViEImageFilterType;
 import com.hisun.R;
 
 import com.seu.magicfilter.base.gpuimage.GPUImageFilter;
@@ -14,7 +14,7 @@ public class MagicToasterFilter extends GPUImageFilter{
     private int mGLStrengthLocation;
 
     public MagicToasterFilter(){
-        super(MagicFilterType.TOASTER2, R.raw.toaster2_filter_shader);
+        super(ViEImageFilterType.TOASTER2, R.raw.toaster2_filter_shader);
     }
 
     @Override

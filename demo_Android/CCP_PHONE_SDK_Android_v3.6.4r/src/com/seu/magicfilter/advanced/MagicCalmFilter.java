@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 
 import android.opengl.GLES20;
 
-import com.seu.magicfilter.utils.MagicFilterType;
+import com.seu.magicfilter.utils.ViEImageFilterType;
 import com.hisun.R;
 
 import com.seu.magicfilter.base.gpuimage.GPUImageFilter;
@@ -19,7 +19,7 @@ public class MagicCalmFilter extends GPUImageFilter{
     private int mMaskGrey2UniformLocation;
     
     public MagicCalmFilter(){
-        super(MagicFilterType.CALM, R.raw.calm);
+        super(ViEImageFilterType.CALM, R.raw.calm);
     }
 
     @Override

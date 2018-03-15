@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 
 import android.opengl.GLES20;
 
-import com.seu.magicfilter.utils.MagicFilterType;
+import com.seu.magicfilter.utils.ViEImageFilterType;
 import com.hisun.R;
 
 import com.seu.magicfilter.base.gpuimage.GPUImageFilter;
@@ -21,7 +21,7 @@ public class MagicSunriseFilter extends GPUImageFilter{
     private int mToneCurveTextureUniformLocation;
     
     public MagicSunriseFilter(){
-        super(MagicFilterType.SUNRISE, R.raw.sunrise);
+        super(ViEImageFilterType.SUNRISE, R.raw.sunrise);
     }
 
     @Override

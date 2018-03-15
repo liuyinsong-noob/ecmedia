@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 
 import android.opengl.GLES20;
 
-import com.seu.magicfilter.utils.MagicFilterType;
+import com.seu.magicfilter.utils.ViEImageFilterType;
 import com.hisun.R;
 
 import com.seu.magicfilter.base.gpuimage.GPUImageFilter;
@@ -15,7 +15,7 @@ public class MagicBlackCatFilter extends GPUImageFilter{
     private int mToneCurveTextureUniformLocation;
 
     public MagicBlackCatFilter(){
-        super(MagicFilterType.BLACKCAT, R.raw.blackcat);
+        super(ViEImageFilterType.BLACKCAT, R.raw.blackcat);
     }
 
     @Override

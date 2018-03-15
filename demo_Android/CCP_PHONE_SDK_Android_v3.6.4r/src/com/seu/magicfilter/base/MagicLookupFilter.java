@@ -3,8 +3,7 @@ package com.seu.magicfilter.base;
 import android.opengl.GLES20;
 
 import com.seu.magicfilter.base.gpuimage.GPUImageFilter;
-import com.seu.magicfilter.utils.MagicFilterFactory;
-import com.seu.magicfilter.utils.MagicFilterType;
+import com.seu.magicfilter.utils.ViEImageFilterType;
 import com.seu.magicfilter.utils.OpenGLUtils;
 
 
@@ -15,7 +14,7 @@ public class MagicLookupFilter extends GPUImageFilter {
     protected String table;
 
     public MagicLookupFilter(String table) {
-        super(MagicFilterType.LOCKUP, R.raw.lookup);
+        super(ViEImageFilterType.LOCKUP, R.raw.lookup);
         this.table = table;
     }
 

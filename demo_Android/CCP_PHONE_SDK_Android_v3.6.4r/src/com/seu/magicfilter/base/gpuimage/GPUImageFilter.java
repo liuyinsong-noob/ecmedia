@@ -22,7 +22,7 @@ import android.opengl.GLES11Ext;
 import android.opengl.GLES20;
 
 import com.hisun.R;
-import com.seu.magicfilter.utils.MagicFilterType;
+import com.seu.magicfilter.utils.ViEImageFilterType;
 import com.seu.magicfilter.utils.OpenGLUtils;
 
 
@@ -37,7 +37,7 @@ public class GPUImageFilter {
 
     private boolean mIsInitialized;
     private Context mContext;
-    private MagicFilterType mType = MagicFilterType.NONE;
+    private ViEImageFilterType mType = ViEImageFilterType.NONE;
     private final LinkedList<Runnable> mRunOnDraw;
     private final int mVertexShaderId;
     private final int mFragmentShaderId;
@@ -64,18 +64,18 @@ public class GPUImageFilter {
     private IntBuffer mGLFboBuffer;
 
     public GPUImageFilter() {
-        this(MagicFilterType.NONE);
+        this(ViEImageFilterType.NONE);
     }
 
-    public GPUImageFilter(MagicFilterType type) {
+    public GPUImageFilter(ViEImageFilterType type) {
         this(type, R.raw.vertex, R.raw.fragment);
     }
 
-    public GPUImageFilter(MagicFilterType type, int fragmentShaderId) {
+    public GPUImageFilter(ViEImageFilterType type, int fragmentShaderId) {
         this(type, R.raw.vertex, fragmentShaderId);
     }
 
-    public GPUImageFilter(MagicFilterType type, int vertexShaderId, int fragmentShaderId) {
+    public GPUImageFilter(ViEImageFilterType type, int vertexShaderId, int fragmentShaderId) {
         mType = type;
         mRunOnDraw = new LinkedList<Runnable>();
         mVertexShaderId = vertexShaderId;
@@ -311,7 +311,7 @@ public class GPUImageFilter {
         return mContext;
     }
 
-    protected MagicFilterType getFilterType() {
+    protected ViEImageFilterType getFilterType() {
         return mType;
     }
     

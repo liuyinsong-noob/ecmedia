@@ -2,7 +2,7 @@ package com.seu.magicfilter.advanced;
 
 import android.opengl.GLES20;
 
-import com.seu.magicfilter.utils.MagicFilterType;
+import com.seu.magicfilter.utils.ViEImageFilterType;
 import com.hisun.R;
 
 import com.seu.magicfilter.base.gpuimage.GPUImageFilter;
@@ -14,7 +14,7 @@ public class MagicN1977Filter extends GPUImageFilter{
     private int mGLStrengthLocation;
 
     public MagicN1977Filter(){
-        super(MagicFilterType.N1977, R.raw.n1977);
+        super(ViEImageFilterType.N1977, R.raw.n1977);
     }
 
     @Override

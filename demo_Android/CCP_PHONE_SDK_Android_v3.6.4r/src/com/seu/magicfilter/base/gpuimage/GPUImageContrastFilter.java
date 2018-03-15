@@ -18,7 +18,7 @@ package com.seu.magicfilter.base.gpuimage;
 
 import android.opengl.GLES20;
 
-import com.seu.magicfilter.utils.MagicFilterType;
+import com.seu.magicfilter.utils.ViEImageFilterType;
 
 import com.hisun.R;
 
@@ -37,7 +37,7 @@ public class GPUImageContrastFilter extends GPUImageFilter {
     }
     
     public GPUImageContrastFilter(float contrast) {
-        super(MagicFilterType.CONTRAST, R.raw.constrast);
+        super(ViEImageFilterType.CONTRAST, R.raw.constrast);
         mContrast = contrast;
     }
 

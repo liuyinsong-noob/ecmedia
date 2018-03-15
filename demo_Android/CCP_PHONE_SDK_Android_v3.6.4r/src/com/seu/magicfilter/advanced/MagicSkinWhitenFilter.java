@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 
 import android.opengl.GLES20;
 
-import com.seu.magicfilter.utils.MagicFilterType;
+import com.seu.magicfilter.utils.ViEImageFilterType;
 import com.hisun.R;
 
 import com.seu.magicfilter.base.gpuimage.GPUImageFilter;
@@ -16,7 +16,7 @@ public class MagicSkinWhitenFilter extends GPUImageFilter {
     private int[] mToneCurveTexture = new int[] {-1};
     
     public MagicSkinWhitenFilter() {
-        super(MagicFilterType.SKINWHITEN, R.raw.skinwhiten);
+        super(ViEImageFilterType.SKINWHITEN, R.raw.skinwhiten);
     }
 
     @Override

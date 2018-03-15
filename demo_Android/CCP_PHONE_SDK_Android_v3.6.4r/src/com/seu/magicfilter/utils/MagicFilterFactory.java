@@ -53,7 +53,7 @@ import com.seu.magicfilter.base.gpuimage.GPUImageSharpenFilter;
 
 public class MagicFilterFactory {
 
-    public static GPUImageFilter initFilters(MagicFilterType type) {
+    public static GPUImageFilter initFilters(ViEImageFilterType type) {
         switch (type) {
             case NONE:
                 return new GPUImageFilter();

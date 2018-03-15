@@ -18,7 +18,7 @@ package com.seu.magicfilter.base.gpuimage;
 
 import android.opengl.GLES20;
 
-import com.seu.magicfilter.utils.MagicFilterType;
+import com.seu.magicfilter.utils.ViEImageFilterType;
 
 import com.hisun.R;
 
@@ -39,7 +39,7 @@ public class GPUImageSharpenFilter extends GPUImageFilter {
     }
     
     public GPUImageSharpenFilter(final float sharpness) {
-        super(MagicFilterType.SHARPEN, R.raw.vertex_sharpen, R.raw.sharpen);
+        super(ViEImageFilterType.SHARPEN, R.raw.vertex_sharpen, R.raw.sharpen);
         mSharpness = sharpness;
     }
 

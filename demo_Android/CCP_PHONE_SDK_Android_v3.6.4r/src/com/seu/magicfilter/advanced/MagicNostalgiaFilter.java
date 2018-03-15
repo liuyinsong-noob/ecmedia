@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 
 import android.opengl.GLES20;
 
-import com.seu.magicfilter.utils.MagicFilterType;
+import com.seu.magicfilter.utils.ViEImageFilterType;
 import com.hisun.R;
 
 import com.seu.magicfilter.base.gpuimage.GPUImageFilter;
@@ -19,7 +19,7 @@ public class MagicNostalgiaFilter extends GPUImageFilter{
     private int mToneCurveTextureUniformLocation2;
       
     public MagicNostalgiaFilter(){
-        super(MagicFilterType.NOSTALGIA, R.raw.nostalgia);
+        super(ViEImageFilterType.NOSTALGIA, R.raw.nostalgia);
     }
 
     @Override

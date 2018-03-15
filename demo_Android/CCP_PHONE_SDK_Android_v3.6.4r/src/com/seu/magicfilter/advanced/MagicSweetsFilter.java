@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 
 import android.opengl.GLES20;
 
-import com.seu.magicfilter.utils.MagicFilterType;
+import com.seu.magicfilter.utils.ViEImageFilterType;
 import com.hisun.R;
 
 import com.seu.magicfilter.base.gpuimage.GPUImageFilter;
@@ -18,7 +18,7 @@ public class MagicSweetsFilter extends GPUImageFilter{
     private int mLowPerformanceUniformLocation;
     
     public MagicSweetsFilter(){
-        super(MagicFilterType.SWEETS, R.raw.sweets);
+        super(ViEImageFilterType.SWEETS, R.raw.sweets);
     }
 
     @Override

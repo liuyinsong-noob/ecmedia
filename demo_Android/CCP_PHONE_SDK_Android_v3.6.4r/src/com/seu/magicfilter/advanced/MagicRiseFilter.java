@@ -2,7 +2,7 @@ package com.seu.magicfilter.advanced;
 
 import android.opengl.GLES20;
 
-import com.seu.magicfilter.utils.MagicFilterType;
+import com.seu.magicfilter.utils.ViEImageFilterType;
 import com.hisun.R;
 
 import com.seu.magicfilter.base.gpuimage.GPUImageFilter;
@@ -13,7 +13,7 @@ public class MagicRiseFilter extends GPUImageFilter{
     private int[] inputTextureUniformLocations = {-1,-1,-1};
     
     public MagicRiseFilter(){
-        super(MagicFilterType.RISE, R.raw.rise);
+        super(ViEImageFilterType.RISE, R.raw.rise);
     }
 
     @Override
