@@ -1,4 +1,4 @@
-package com.yuntongxun.ecsdk.core.voip;
+package com.yuntongxun.ccpvideofilter;
 
 import android.content.Context;
 import android.graphics.SurfaceTexture;
@@ -6,6 +6,7 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import com.seu.magicfilter.base.gpuimage.GPUImageFilter;
 import com.seu.magicfilter.utils.MagicFilterFactory;
@@ -37,7 +38,9 @@ public class ViEFilterRenderView extends GLSurfaceView {
     private static ViEFilterRenderView filterRender;
 
     public static ViEFilterRenderView createFilterRenderer(Context context) {
-        filterRender = new ViEFilterRenderView(context);
+        if(filterRender == null) {
+            filterRender = new ViEFilterRenderView(context);
+        }
         return filterRender;
     }
 
@@ -144,7 +147,7 @@ public class ViEFilterRenderView extends GLSurfaceView {
         private void initImageFilter() {
             // create and init image filter.
             if(imageFilter == null) {
-                imageFilter = MagicFilterFactory.initFilters(ViEImageFilterType.COOL);
+                imageFilter = MagicFilterFactory.initFilters(ViEImageFilterType.NONE);
             }
             imageFilter.init(mContext);
 

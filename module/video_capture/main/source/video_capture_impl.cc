@@ -282,6 +282,11 @@ int32_t VideoCaptureImpl::IncomingFrame(
 
     const int32_t width = frameInfo.width;
     const int32_t height = frameInfo.height;
+    RawVideoType rawFrameType = frameInfo.rawType;
+#ifdef __ANDROID__
+    //use video frame fist bit for indicating, android raw video type.
+    rawFrameType = ((videoFrame[0] & 0x01) == 0x00) ? kVideoNV21 : kVideoRGBA;
+#endif
 
     TRACE_EVENT1("cloopenwebrtc", "VC::IncomingFrame", "capture_time", captureTime);
 
@@ -289,9 +294,9 @@ int32_t VideoCaptureImpl::IncomingFrame(
     {
         // Not encoded, convert to I420.
         const VideoType commonVideoType =
-                  RawVideoTypeToCommonVideoVideoType(frameInfo.rawType);
+                  RawVideoTypeToCommonVideoVideoType(rawFrameType);
 
-        if (frameInfo.rawType != kVideoMJPEG &&
+        if (rawFrameType != kVideoMJPEG &&
             CalcBufferSize(commonVideoType, width,
                            abs(height)) != videoFrameLength)
         {
@@ -308,7 +313,8 @@ int32_t VideoCaptureImpl::IncomingFrame(
             target_width = abs(height);
             target_height = width;
 #ifdef __ANDROID__
-            bool useAndroidVideoFilter = frameInfo.rawType == kVideoRGBA; // rawType == kVideoRGBA mean: use android video filter
+            // rawType == kVideoRGBA mean: use android video filter
+            bool useAndroidVideoFilter = (rawFrameType == kVideoRGBA);
             if(useAndroidVideoFilter) {
                 stride_y = abs(height);
                 stride_uv = (height + 1) / 2;
@@ -348,7 +354,7 @@ int32_t VideoCaptureImpl::IncomingFrame(
         if (conversionResult < 0)
         {
           LOG(LS_ERROR) << "Failed to convert capture frame from type "
-                        << frameInfo.rawType << "to I420.";
+                        << rawFrameType << "to I420.";
             return -1;
         }
 

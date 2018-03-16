@@ -165,11 +165,11 @@ public class VideoCaptureDeviceInfoAndroid {
             newDevice.captureCapabilies[i].height   = s.height;
             newDevice.captureCapabilies[i].width    = s.width;
             newDevice.captureCapabilies[i].maxFPS   = maxFPS;
-            if(!useImageFilter) {
-                newDevice.captureCapabilies[i].rawType  = RAW_FORMAT_NV21;
-            } else {
-                newDevice.captureCapabilies[i].rawType  = RAW_FORMAT_RGBA;
-            }
+//            if(!useImageFilter) {
+//                newDevice.captureCapabilies[i].rawType  = RAW_FORMAT_NV21;
+//            } else {
+//                newDevice.captureCapabilies[i].rawType  = RAW_FORMAT_RGBA;
+//            }
 
             if(ViESurfaceRenderer.DEBUG){
             	

@@ -326,8 +326,11 @@ int ConvertToI420(VideoType src_video_type,
   }
 
 #ifdef __ANDROID__
-    bool enable_video_filter = src_video_type == kRGBA;
-    if(true) {
+    // kRGBA: 0x01, kNV21: 0x00;
+    // if the frame type is rgba, mean that use video filter.
+    int VIDEO_FILTER =  0x01;
+    bool enable_video_filter = ((src_frame[0] & 0x01) == VIDEO_FILTER);
+    if(enable_video_filter) {
         I420VideoFrame i420_converted_frame;
         i420_converted_frame.CreateEmptyFrame(src_width, abs(src_height), src_width, (src_width+1)/2, (src_width+1)/2);
         
