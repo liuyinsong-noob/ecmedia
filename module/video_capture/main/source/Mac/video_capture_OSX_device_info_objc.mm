@@ -124,7 +124,7 @@ using namespace cloopenwebrtc;
             }
             else if (2 == flag)
             {
-                AVFrameRateRange *maxFps = rangearr[rangearr.count-1];
+                AVFrameRateRange *maxFps = rangearr[rangearr.count/2];
                 ret = maxFps.minFrameRate;
             }
             else

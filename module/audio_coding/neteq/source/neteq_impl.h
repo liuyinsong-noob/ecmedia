@@ -402,6 +402,7 @@ class NetEqImpl : public cloopenwebrtc::NetEq {
   DISALLOW_COPY_AND_ASSIGN(NetEqImpl);
   FILE *debug_file_;
   bool bAlreadyPlay;
+  uint16_t last_decode_seq_;
 };
 
 }  // namespace cloopenwebrtc

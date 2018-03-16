@@ -66,6 +66,13 @@ char *globalFilePathcapture = NULL;
     MSVideoSize size;
     size.height = height;
     size.width = width;
+    if(frameRate > 30) {
+        NSLog(@"Waring! frame rate muset >= 15 andd =< 30, your frame rate is:%d, and have been corrected to 30", frameRate);
+        frameRate = 30;
+    } else if(frameRate < 15) {
+        NSLog(@"Waring! frame rate muset >= 15 andd =< 30, your frame rate is:%d, and have been corrected to 15", frameRate);
+        frameRate = 15;
+    }
     [self setSize:size];
     [self setFps:frameRate];
     return [NSNumber numberWithInt:0];

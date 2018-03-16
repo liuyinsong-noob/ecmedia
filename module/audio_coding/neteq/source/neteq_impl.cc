@@ -133,7 +133,8 @@ NetEqImpl::NetEqImpl(const NetEq::Config& config,
       decoded_packet_sequence_number_(-1),
       decoded_packet_timestamp_(0),
       debug_file_(NULL),
-      bAlreadyPlay(false){
+      bAlreadyPlay(false),
+      last_decode_seq_(-1){
   int fs = config.sample_rate_hz;
   if (fs != 8000 && fs != 16000 && fs != 32000 && fs != 48000) {
     LOG(LS_ERROR) << "Sample rate " << fs << " Hz not supported. " <<
@@ -607,7 +608,7 @@ int NetEqImpl::InsertPacketInternal(const WebRtcRTPHeader& rtp_header,
   }
 
   // Check for FEC in packets, and separate payloads into several packets.
-  int ret = payload_splitter_->SplitFec(&packet_list, decoder_database_.get());
+  int ret = payload_splitter_->SplitFec(&packet_list, decoder_database_.get(), last_decode_seq_);
   if (ret != PayloadSplitter::kOK) {
     //LOG_FERR1(LS_WARNING, SplitFec, packet_list.size());
     PacketBuffer::DeleteAllPackets(&packet_list);
@@ -1332,6 +1333,7 @@ int NetEqImpl::DecodeLoop(PacketList* packet_list, Operations* operation,
     assert(*operation == kNormal || *operation == kAccelerate ||
            *operation == kMerge || *operation == kPreemptiveExpand);
     packet_list->pop_front();
+    size_t payload_length = packet->payload_length;
     int16_t decode_length;
     if (packet->sync_packet) {
       // Decode to silence with the same frame size as the last decode.
@@ -1372,7 +1374,8 @@ int NetEqImpl::DecodeLoop(PacketList* packet_list, Operations* operation,
           ", pt=" << static_cast<int>(packet->header.payloadType) <<
           ", ssrc=" << packet->header.ssrc <<
           ", len=" << packet->payload_length;
-//        printf("        sean haha decode normal sn %d\n",packet->header.sequenceNumber);
+        last_decode_seq_ = packet->header.sequenceNumber;
+//        printf("        seansean haha decode normal sn %d\n",packet->header.sequenceNumber);
 //        for (int ii = 0; ii <= 10; ii++) {
 //            printf("%02x ",*(packet->payload + ii));
 //        }

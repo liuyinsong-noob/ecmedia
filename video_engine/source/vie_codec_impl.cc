@@ -188,7 +188,7 @@ int ViECodecImpl::SetSendCodec(const int video_channel,
     video_codec_internal.startBitrate = video_codec_internal.maxBitrate;
   }
 
-  if (video_codec_internal.numberOfSimulcastStreams == 2) {
+  if (video_codec_internal.numberOfSimulcastStreams == 2 && video_codec_internal.automode) {
 	  if (vie_channel->GetSSRCNum() != 2) {//only one resolution in vie_channel
 		  video_codec_internal.numberOfSimulcastStreams = 0;
 	  }
@@ -216,6 +216,7 @@ int ViECodecImpl::SetSendCodec(const int video_channel,
 			  video_codec_internal.simulcastStream[0].height = resolution_slave.height;
 			  video_codec_internal.simulcastStream[0].numberOfTemporalLayers = 1;
 			  video_codec_internal.simulcastStream[0].targetBitrate = resolution_slave.targetBitrate;
+              video_codec_internal.simulcastStream[0].minBitrate = resolution_slave.targetBitrate*2/3;
 
 			  video_codec_internal.simulcastStream[1].maxBitrate = video_codec_internal.maxBitrate;
 			  video_codec_internal.simulcastStream[1].width = video_codec_internal.width;

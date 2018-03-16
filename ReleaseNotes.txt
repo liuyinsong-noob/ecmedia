@@ -1,3 +1,8 @@
+Version v2.3.0.2 1521170689 f22bc99f22616bb34dc5a9696b097c2ef295ea0f
+1. 接口不变
+2. bug fix: video stats collector crash because of value type not correct
+3. bug fix: win platform build error
+
 Version 2.3.0.0 1519612517 b35f5207509cd0d1587cb4b6f453cf74ecc3a952
 1. 接口不变
 2. feature: ios hard decode and encode both can be setup
