@@ -212,7 +212,7 @@ ViEChannel::ViEChannel(int32_t channel_id,
   configuration.receiver_only = true;
   rtp_rtcp_.reset(RtpRtcp::CreateRtpRtcp(configuration));
   vie_receiver_.SetRtpRtcpModule(rtp_rtcp_.get());
-  vie_receiver_.SetSendRtpRtcpModule(default_rtp_rtcp_);
+  vie_receiver_.SetSendRtpRtcpModule(default_rtp_rtcp_);//for nack, resend packet
   vcm_->SetNackSettings(kMaxNackListSize, max_nack_reordering_threshold_, 0);
 
   receive_statistics_proxy_.reset(new ReceiveStatisticsProxy(channel_id));
@@ -597,6 +597,7 @@ int32_t ViEChannel::SetSendCodec(const VideoCodec& video_codec,
     // |RegisterSimulcastRtpRtcpModules| resets all old weak pointers and old
     // modules can be deleted after this step.
     vie_receiver_.RegisterSimulcastRtpRtcpModules(simulcast_rtp_rtcp_);
+      vie_receiver_.RegisterDefaultSimulcastRtpRtcpModules(default_simulcast_rtp_rtcp_);//for nack, resend packet
   } else {
     while (!simulcast_rtp_rtcp_.empty()) {
       RtpRtcp* rtp_rtcp = simulcast_rtp_rtcp_.back();

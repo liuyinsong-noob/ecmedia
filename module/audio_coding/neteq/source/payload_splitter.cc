@@ -48,6 +48,7 @@ int PayloadSplitter::SplitRed(PacketList* packet_list) {
     bool last_block = false;
     size_t sum_length = 0;
     uint16_t seq_delta = 4;
+    int counter = 0;
     while (!last_block) {
       Packet* new_packet = new Packet;
       new_packet->header = red_packet->header;
@@ -75,7 +76,7 @@ int PayloadSplitter::SplitRed(PacketList* packet_list) {
           new_packet->primary = true;   //sean opus red tes
           new_packet->red = true;
         payload_ptr += 4;  // Advance to next RED header.
-          if ((*payload_ptr & 0x80) == 0) { //if the packet only has one red packet, revise the sequence
+          if ((*payload_ptr & 0x80) == 0 && counter == 0) { //if the packet only has one red packet, revise the sequence
               new_packet->header.sequenceNumber += 2;
           }
       }
@@ -83,6 +84,7 @@ int PayloadSplitter::SplitRed(PacketList* packet_list) {
       sum_length += 4;  // Account for RED header size of 4 bytes.
       // Store in new list of packets.
       new_packets.push_back(new_packet);
+      counter++;
       
     }
 
@@ -124,11 +126,30 @@ int PayloadSplitter::SplitRed(PacketList* packet_list) {
     // increment it manually.
     it = packet_list->erase(it);
   }
+    packet_list->reverse();
+//    printf("seansean checkred begin ");
+//    PacketList::iterator checkred = packet_list->begin();
+//    while (checkred != packet_list->end()) {
+//        printf("%u ", (*checkred)->header.sequenceNumber);
+//        checkred++;
+//    }
+//    printf("\ncheckred end\n");
   return ret;
 }
 
 int PayloadSplitter::SplitFec(PacketList* packet_list,
-                              DecoderDatabase* decoder_database) {
+                              DecoderDatabase* decoder_database, WebRtc_UWord8 last_decode_seq) {
+    //sean red begin
+//    printf("seansean\nseansean\nseansean\nseansean\n");
+//    printf("seansean begin\n");
+//    PacketList::iterator itt = packet_list->begin();
+//    printf("seansean ");
+//    while (itt != packet_list->end()) {
+//        printf("%u ", (*itt)->header.sequenceNumber);
+//        itt++;
+//    }
+//    printf("\n");
+    //sean red end
     bool insert_flag = false;
   PacketList::iterator it = packet_list->begin();
     int cur_sn = 0;
@@ -162,7 +183,8 @@ int PayloadSplitter::SplitFec(PacketList* packet_list,
       if (!decoder || !(info->codec_type == kDecoderOpus || info->codec_type == kDecoderOpus8K || info->codec_type == kDecoderOpus16K || info->codec_type == kDecoderOpus_2ch) ) {          ++it;
           continue;
       }
-      insert_flag = (last_sn + 1 == cur_sn)?false:true;
+      last_sn = (last_sn<last_decode_seq)?last_decode_seq:last_sn;
+      insert_flag = (cur_sn-last_sn>1)?true:false;
       if (!insert_flag) {
           ++it;
           last_sn = packet->header.sequenceNumber;

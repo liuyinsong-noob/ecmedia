@@ -166,6 +166,18 @@ void ViEReceiver::RegisterSimulcastRtpRtcpModules(
   }
 }
 
+void ViEReceiver::RegisterDefaultSimulcastRtpRtcpModules(
+                                                  const std::list<RtpRtcp*>& rtp_modules) {
+    CriticalSectionScoped cs(receive_cs_.get());
+    default_rtp_rtcp_simulcast_.clear();
+    
+    if (!rtp_modules.empty()) {
+        default_rtp_rtcp_simulcast_.insert(default_rtp_rtcp_simulcast_.begin(),
+                                   rtp_modules.begin(),
+                                   rtp_modules.end());
+    }
+}
+    
 bool ViEReceiver::SetReceiveTimestampOffsetStatus(bool enable, int id) {
   if (enable) {
     return rtp_header_parser_->RegisterRtpHeaderExtension(
@@ -221,10 +233,10 @@ int ViEReceiver::ReceivedRTCPPacket(const void* rtcp_packet,
                                     size_t rtcp_packet_length) {
 	int rtcpPktType = static_cast<const uint8_t*>(rtcp_packet)[1];
 
-	InsertRTCPPacket(static_cast<const uint8_t*>(rtcp_packet), rtcp_packet_length);
+	InsertRTCPPacket(static_cast<const uint8_t*>(rtcp_packet), rtcp_packet_length);//throw packets to simulcast RtpRtcp
 
 
-	return InsertRtcpPacketToDefaultRtpRtcp(static_cast<const uint8_t*>(rtcp_packet),
+	return InsertRtcpPacketToDefaultRtpRtcp(static_cast<const uint8_t*>(rtcp_packet),//throw packets to default RtpRtcp
 		rtcp_packet_length);
 }
 
@@ -432,6 +444,7 @@ int ViEReceiver::InsertRTCPPacket(const uint8_t* rtcp_packet,
                                   size_t rtcp_packet_length) {
     CriticalSectionScoped cs(receive_cs_.get());
     if (!receiving_) {
+      LOG(LS_ERROR)<<"InsertRTCPPacket simulcast is not in receiving status, return -1";
       return -1;
     }
 	// TODO(mflodman) Change decrypt to get rid of this cast.
@@ -474,12 +487,16 @@ int ViEReceiver::InsertRTCPPacket(const uint8_t* rtcp_packet,
     std::list<RtpRtcp*>::iterator it = rtp_rtcp_simulcast_.begin();
     while (it != rtp_rtcp_simulcast_.end()) {
       RtpRtcp* rtp_rtcp = *it++;
-      rtp_rtcp->IncomingRtcpPacket(received_packet, received_packet_length);
+      int ret =  rtp_rtcp->IncomingRtcpPacket(received_packet, received_packet_length);
+        if (ret != 0) {
+            LOG(LS_ERROR)<<"InsertRTCPPacket simulcast rtp_rtcp abnormal " <<ret;
+        }
     }
 
   assert(rtp_rtcp_);  // Should be set by owner at construction time.
   int ret = rtp_rtcp_->IncomingRtcpPacket(received_packet, received_packet_length);
   if (ret != 0) {
+    LOG(LS_ERROR)<<"InsertRTCPPacket rtp_rtcp abnormal "<<ret;
     return ret;
   }
 
@@ -621,7 +638,8 @@ int ViEReceiver::InsertRtcpPacketToDefaultRtpRtcp(const uint8_t* rtcp_packet,
 	size_t rtcp_packet_length) {
 	CriticalSectionScoped cs(receive_cs_.get());
 	if (!receiving_) {
-		return -1;
+        LOG(LS_ERROR)<<"InsertRtcpPacketToDefaultRtpRtcp is not in receiving status, return -1";
+        return -1;
 	}
 	// TODO(mflodman) Change decrypt to get rid of this cast.
 	unsigned char* received_packet = (unsigned char*)rtcp_packet;
@@ -630,15 +648,19 @@ int ViEReceiver::InsertRtcpPacketToDefaultRtpRtcp(const uint8_t* rtcp_packet,
 		rtp_dump_->DumpPacket(received_packet, received_packet_length);
 	}
 
-// 	std::list<RtpRtcp*>::iterator it = rtp_rtcp_simulcast_.begin();
-// 	while (it != rtp_rtcp_simulcast_.end()) {
-// 		RtpRtcp* rtp_rtcp = *it++;
-// 		rtp_rtcp->IncomingRtcpPacket(received_packet, received_packet_length);
-// 	}
-
+    std::list<RtpRtcp*>::iterator it_default = default_rtp_rtcp_simulcast_.begin();
+    while (it_default != default_rtp_rtcp_simulcast_.end()) {
+        RtpRtcp* rtp_rtcp = *it_default++;
+        int rett =  rtp_rtcp->IncomingRtcpPacket(received_packet, received_packet_length);
+        if (rett != 0) {
+            LOG(LS_ERROR)<<"Default simulcast InsertRTCPPacket rtp_rtcp abnormal " <<rett;
+        }
+    }
+    
 	assert(default_rtp_rtcp_);  // Should be set by owner at construction time.
 	int ret = default_rtp_rtcp_->IncomingRtcpPacket(received_packet, received_packet_length);
 	if (ret != 0) {
+        LOG(LS_ERROR)<<"Default_rtp_rtcp_ InsertRTCPPacket ret abnormal "<<ret;
 		return ret;
 	}
 

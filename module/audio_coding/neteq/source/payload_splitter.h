@@ -52,7 +52,7 @@ class PayloadSplitter {
   // FEC as new packet for redundant decoding. The decoder database is needed to
   // get information about which payload type each packet contains.
   virtual int SplitFec(PacketList* packet_list,
-                       DecoderDatabase* decoder_database);
+                       DecoderDatabase* decoder_database, WebRtc_UWord8 last_decode_seq);
 
   // Checks all packets in |packet_list|. Packets that are DTMF events or
   // comfort noise payloads are kept. Except that, only one single payload type
