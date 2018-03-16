@@ -921,7 +921,7 @@ public:
 	VideoCodecType      codecType;
 	char                plName[kPayloadNameSize];
 	unsigned char       plType;
-
+    bool                automode;
 	unsigned short      width;
 	unsigned short      height;
 
@@ -946,10 +946,14 @@ public:
     
     unsigned int        numberOfLayer; //number of vp8 temporal layer
 
+    VideoCodec() {
+        automode = true;
+    }
 	bool operator==(const VideoCodec& other) const {
 		bool ret = codecType == other.codecType &&
 			(STR_CASE_CMP(plName, other.plName) == 0) &&
 			plType == other.plType &&
+            automode == other.automode &&
 			width == other.width &&
 			height == other.height &&
 			startBitrate == other.startBitrate &&
