@@ -136,8 +136,8 @@ int ViEChannelManager::CreateChannel(int* channel_id,
 									&packet_router_));
 	  //set bwe config
 	  //congestion_controller_->SignalNetworkState(kNetworkDown);
-	  congestion_controller_->pacer()->SetEstimatedBitrate(300000);
-	  congestion_controller_->SetBweBitrates(30000, 300000, 2000000);
+	  congestion_controller_->pacer()->SetEstimatedBitrate(600000);
+	  congestion_controller_->SetBweBitrates(100000, 600000, 2000000);
 	  congestion_controller_->EnablePeriodicAlrProbing(true);
   }
 
