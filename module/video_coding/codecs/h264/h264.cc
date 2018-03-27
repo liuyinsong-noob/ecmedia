@@ -82,6 +82,10 @@ int H264Encoder::SetRates(uint32_t new_bitrate_kbit, uint32_t new_framerate) {
         new_bitrate_kbit = codec_.maxBitrate;
     }
     
+	if (codec_.minBitrate > 0 && new_bitrate_kbit < codec_.minBitrate) {
+		new_bitrate_kbit = codec_.minBitrate;
+	}
+
 	if (codec_.maxFramerate >0 && new_framerate > codec_.maxFramerate){
 		new_framerate = codec_.maxFramerate;
 	}
