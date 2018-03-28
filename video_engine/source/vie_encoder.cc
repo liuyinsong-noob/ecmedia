@@ -737,19 +737,32 @@ void ViEEncoder::DeliverFrame(int id,
     
     // 回调yuv数据返回ECMedia层
     if(ec_i420_frame_callback_) {
-        int size_y = video_frame->allocated_size(kYPlane);
-        int size_u = video_frame->allocated_size(kUPlane);
-        int size_v = video_frame->allocated_size(kVPlane);
-        uint8_t *imageBuffer = (uint8_t*)malloc(size_y + size_u + size_v);
-        
-        // copy y plane
-        memcpy(imageBuffer, video_frame->buffer(kYPlane), size_y);
-        // copy u plane
-        memcpy(imageBuffer + size_y, video_frame->buffer(kUPlane), size_u);
-        // copy v plane
-        memcpy(imageBuffer + size_y + size_u, video_frame->buffer(kVPlane), size_v);
-        
-        ec_i420_frame_callback_(channel_id_, imageBuffer, size_y + size_u + size_v, video_frame->width(), video_frame->height(), video_frame->stride(kYPlane), video_frame->stride(kUPlane));
+        //int size_y = video_frame->allocated_size(kYPlane);
+        //int size_u = video_frame->allocated_size(kUPlane);
+        //int size_v = video_frame->allocated_size(kVPlane);
+        //uint8_t *imageBuffer = (uint8_t*)malloc(size_y + size_u + size_v);
+        //
+        //// copy y plane
+        //memcpy(imageBuffer, video_frame->buffer(kYPlane), size_y);
+        //// copy u plane
+        //memcpy(imageBuffer + size_y, video_frame->buffer(kUPlane), size_u);
+        //// copy v plane
+        //memcpy(imageBuffer + size_y + size_u, video_frame->buffer(kVPlane), size_v);
+        //
+        //ec_i420_frame_callback_(channel_id_, imageBuffer, size_y + size_u + size_v, video_frame->width(), video_frame->height(), video_frame->stride(kYPlane), video_frame->stride(kUPlane));
+		int width = video_frame->width();
+		int height = video_frame->height();
+		int halfwidth = (width + 1) >> 1;
+		int halfheight = (height + 1) >> 1;
+		int y_stride = width * height;
+		int uv_stride = halfwidth * halfheight;
+		int sizeFrame = y_stride + (2 * uv_stride);
+
+		uint8_t *imageBuffer = (uint8_t*)malloc(sizeFrame);
+		ConvertFromI420(*video_frame, kI420, sizeFrame, imageBuffer);
+
+		ec_i420_frame_callback_(channel_id_, imageBuffer, sizeFrame, width, height, y_stride, uv_stride);
+
         free(imageBuffer);
     }
     

@@ -755,6 +755,18 @@ void ViEChannelManager::UpdateNetworkState(int channel_id, bool startSend)
 	}	
 }
 
+//add by dingxf
+int ViEChannelManager::AddRemoteI420FrameCallback(const int video_channel, ECMedia_I420FrameCallBack callback)
+{
+	ViEChannel* pViEChannel = ViEChannelPtr(video_channel);
+	if (pViEChannel != nullptr)
+	{
+		pViEChannel->AddRemoteI420FrameCallback(callback);
+		return 0;
+	}
+	return -1;
+}
+
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
 UdpTransport *ViEChannelManager::CreateUdptransport(int rtp_port, int rtcp_port, bool ipv6flag) {
 	CriticalSectionScoped cs(udptransport_critsect_);

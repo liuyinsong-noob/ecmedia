@@ -119,6 +119,8 @@ class ViEChannelManager: private ViEManagerBase,
 					  int64_t probing_interval_ms);
 
   void UpdateNetworkState(int channel_id, bool startSend);
+  //add by dingxf
+  int AddRemoteI420FrameCallback(const int video_channel, ECMedia_I420FrameCallBack callback);
 
  private:
   // Creates a channel object connected to |vie_encoder|. Assumed to be called

@@ -444,7 +444,9 @@ class ViEChannel
   ViEReceiver *GetReceiver() { return &vie_receiver_ ; }
   ViESender	*GetVieSender() { return &vie_sender_; } //add by ylr;
   RtpRtcp::Configuration CreateRtpRtcpConfiguration();
-  
+  //add by dingxf
+  void AddRemoteI420FrameCallback(ECMedia_I420FrameCallBack callback);
+
  protected:
   static bool ChannelDecodeThreadFunction(void* obj);
   bool ChannelDecodeProcess();
@@ -615,6 +617,8 @@ class ViEChannel
   scoped_ptr<ReportBlockStats> report_block_stats_receiver_;
 
   RtcEventLog *event_log_;
+  //add by dingxf
+  ECMedia_I420FrameCallBack remote_frame_callback_;
 
 public:
 	void SetRtcEventLog(RtcEventLog *event_log);

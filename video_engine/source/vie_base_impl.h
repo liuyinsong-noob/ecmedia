@@ -61,6 +61,8 @@ class ViEBaseImpl
   virtual int StopReceive(const int video_channel);
   virtual int GetVersion(char version[1024]);
   virtual int LastError();
+  //add by dingxf
+  virtual int AddRemoteI420FrameCallback(const int video_channel, ECMedia_I420FrameCallBack callback);
 
  protected:
   explicit ViEBaseImpl(const Config& config);

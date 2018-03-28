@@ -435,6 +435,16 @@ ReceiveStatisticsProxy* ViEBaseImpl::GetReceiveStatisticsProxy(const int video_c
 	return p_receiveStats;
 }
 
+//Add by dingxf
+int ViEBaseImpl::AddRemoteI420FrameCallback(const int video_channel, ECMedia_I420FrameCallBack callback)
+{
+	if (shared_data_.channel_manager())
+	{
+		return shared_data_.channel_manager()->AddRemoteI420FrameCallback(video_channel, callback);
+	}
+	return -1;
+}
+
 int VideoEngine::SetAndroidObjects(void* javaVM, void* env, void* javaContext) {
 	WEBRTC_TRACE(kTraceApiCall, kTraceVideo, g_vie_active_instance_counter,
 		"SetAndroidObjects()");

@@ -203,6 +203,7 @@ ViEChannel::ViEChannel(int32_t channel_id,
     _video_data_cb(NULL),
     _stun_cb(NULL),
     _key_frame_cb(NULL),
+	remote_frame_callback_(nullptr),//add by dingxf
 	transport_feedback_observer_(transport_feedback_observer),
 	ssrc_observer_(NULL){
   RtpRtcp::Configuration configuration = CreateRtpRtcpConfiguration();
@@ -1891,6 +1892,25 @@ int32_t ViEChannel::FrameToRender(
     }
     decoder_reset_ = false;
   }
+
+  //add by dingxf
+  if (remote_frame_callback_)  {
+
+	  int width		 = video_frame.width();
+	  int height	 = video_frame.height();
+	  int halfwidth  = (width + 1) >> 1;
+	  int halfheight = (height + 1) >> 1;
+	  int y_stride	 = width * height;
+	  int uv_stride  = halfwidth * halfheight;
+	  int sizeFrame  = y_stride + (2 * uv_stride);
+
+	  uint8_t *imageBuffer = (uint8_t*)malloc(sizeFrame);
+	  ConvertFromI420(video_frame, kI420, sizeFrame, imageBuffer);
+
+	  remote_frame_callback_(channel_id_, imageBuffer, sizeFrame, width, height, y_stride, uv_stride);
+	  free(imageBuffer);
+  }
+
   // Post processing is not supported if the frame is backed by a texture.
   if (video_frame.native_handle() == NULL) {
     if (pre_render_callback_ != NULL)
@@ -3435,5 +3455,11 @@ void ViEChannel::SetDefaultSimulcatRtpRtcp(std::list<RtpRtcp*> default_simulcast
 
 void ViEChannel::SetSsrcObserver(SsrcObserver* ssrcObserver) {
 	ssrc_observer_ = ssrcObserver;
+}
+
+//add by dingxf
+void ViEChannel::AddRemoteI420FrameCallback(ECMedia_I420FrameCallBack callback)
+{
+	remote_frame_callback_ = callback;
 }
 }  // namespace webrtc

@@ -272,6 +272,10 @@ class WEBRTC_DLLEXPORT ViEBase {
 
   virtual SendStatisticsProxy* GetSendStatisticsProxy(const int video_channel)=0;
   virtual ReceiveStatisticsProxy* GetReceiveStatisticsProxy(const int video_channel)=0;
+
+  //add by dingxf
+  virtual int AddRemoteI420FrameCallback(const int video_channel, ECMedia_I420FrameCallBack callback) = 0;
+
  protected:
   ViEBase() {}
   virtual ~ViEBase() {}
