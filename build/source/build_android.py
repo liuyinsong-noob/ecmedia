@@ -8,10 +8,8 @@ from build_base import BuildBase
 from build_base import *
     
 class BuildAndroid(BuildBase):
-    def __init__(self, buildType, onlyAudio, needClean):
+    def __init__(self, buildType):
         platform = 'android'
-        self.onlyAudio = onlyAudio
-        self.needClean = needClean
         projectPath = os.path.join(os.getcwd(), '..', '..')
         self.CompilePath = os.path.join(projectPath, 'jni')
         self.Lib32FilesPath = os.path.join(projectPath, 'libs', 'armeabi')
@@ -20,12 +18,11 @@ class BuildAndroid(BuildBase):
         
     def build(self):
         if os.path.exists(self.CompilePath):
-            if self.onlyAudio :
-                return 0
             os.chdir(self.CompilePath)
-            # print os.system('ndk-build clean')
             print os.system('cp -r ' + "BuildECMedia.mk " + "Android.mk")
-            print os.system('ndk-build -j 4')
+            if self.build_config.get('build_state', 'video_libs_state') == 'rebuild' :
+                print os.system('ndk-build clean')
+            return os.system('ndk-build -j 4')
         else:
             print'%s are not exist!'%self.CompilePath
             return -1
@@ -33,9 +30,10 @@ class BuildAndroid(BuildBase):
     def buildAudioOnly(self):
         if os.path.exists(self.CompilePath):
             os.chdir(self.CompilePath)
-            print os.system('ndk-build clean')
+            if self.build_config.get('build_state', 'audio_libs_state') == 'rebuild' :
+                print os.system('ndk-build clean')
             print os.system('cp -r ' + "BuildECMedia_Voice.mk " + "Android.mk")
-            print os.system('ndk-build -j 4')
+            return os.system('ndk-build -j 4')
         else:
             print'%s are not exist!'%self.CompilePath
             return -1
@@ -90,34 +88,7 @@ class BuildAndroid(BuildBase):
         print os.system('cp -r ' + self.TypesDefsHeader + ' ' + self.RarIncludePath)
     
 if __name__=='__main__' :
-    buildType = 'release'
-    onlyAudio = False
-    needClean = False
-    argvLen =  sys.argv.__len__();
-    if argvLen != 1:
-        args = sys.argv[1: argvLen]
-        for item in  args:
-            if item.startswith('--') :
-                pass
-            else :
-                print('bad input commond argument, please check again! argument is: %s' %(item))
-                quit()
+    buildType = 'android_target_libs'
 
-            if item == '--release' :
-                print('[build info]: build type: release !')
-                buildType = item
-
-            if item == '--audio' :
-                onlyAudio = True
-
-            if item == '--clean' :
-                print('[build info]: need clean build targets!')
-                needClean = True
-
-        if onlyAudio :
-            print('[build info]: only build ecmedia audio libs!')
-        else :
-            print('[build info]: build full ecmedia libs!')
-
-    buildAndroid = BuildAndroid(buildType, onlyAudio, needClean)
+    buildAndroid = BuildAndroid(buildType)
     buildAndroid.run()

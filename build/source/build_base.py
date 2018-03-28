@@ -4,7 +4,7 @@ import os
 import sys
 import time
 import logging
-import pickle
+import ConfigParser
 
 class BuildBase:
     def __init__(self, buildType, platform, projectPath):
@@ -26,32 +26,47 @@ class BuildBase:
         self.RarX32LibsPath = os.path.join(self.RarPath, 'libs', 'x32')
         self.RarX64LibsPath = os.path.join(self.RarPath, 'libs', 'x64')
         timestamp = time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime(time.time()))
-        self.rarFileName = self.buildType + '-' + self.getEcmediaVersion() + '-' + timestamp + '.zip'
-    
-    def run(self):
-        ret = self.build()
-        if ret == 0:
-            self.collectFiles()
-        else:
-            return -1
+        self.rarFileName = self.platform + '_' + self.getEcmediaVersion() + '.zip'
+        
+        # build config reading
+        self.build_config = ConfigParser.ConfigParser()
+        self.build_config_path = os.path.join(os.getcwd(), 'build.config')
+        self.build_config.read(self.build_config_path)
 
-        if self.buildAudioOnly() == 0:
-            self.collectAudioOnlyFiles()
-        else :
-            return -1
+
+    def run(self):
+        if self.build_config.get('build_state', 'video_libs_state') != 'success' :
+            if self.build() == 0:
+                self.collectFiles()
+                self.build_config.set('build_state', 'video_libs_state', 'success')
+            else:
+                self.build_config.set('build_state', 'video_libs_state', 'error')
+                self.build_config.write(open(self.build_config_path, "w"))
+                return -1
+
+        if self.build_config.get('build_state', 'audio_libs_state') != 'success' :
+            if self.buildAudioOnly() == 0:
+                self.build_config.set('build_state', 'audio_libs_state', 'success')
+                self.collectAudioOnlyFiles()
+            else :
+                self.build_config.set('build_state', 'audio_libs_state', 'error')
+                self.build_config.write(open(self.build_config_path, "w"))
+                return -1
+        
+        # audio and video both build success
+        self.build_config.set('build_state', 'video_libs_state', 'rebuild')
+        self.build_config.set('build_state', 'audio_libs_state', 'rebuild')
+        self.build_config.write(open(self.build_config_path, "w"))
+
         version, timestamp, sha = self.getLastCommitInfo()
         timestamp = str(int(timestamp) + 1)
+        if self.getEcmediaVersion() != version:
+            self.writeReleaseNote(timestamp, sha)
+
         self.rarFiles()
         if self.copyToRemote(self.platform) == 0:
-            os.chdir(self.BuildPath)
-            print os.system('rm -rf ' + self.buildType + '*')
+            pass
 
-        if self.buildType == 'release':
-            if self.getEcmediaVersion() != version:
-                self.writeReleaseNote(timestamp, sha)
-                #self.updateReleaseNote()
-        self.rarFiles()
-        self.copyToRemote(self.platform)
 
     def build():
         pass
@@ -95,14 +110,13 @@ class BuildBase:
            pass
         else:
            os.mkdir(self.RarPath)
-
-        # self.collectLibAudioOnlyFiles()
+        self.collectLibAudioOnlyFiles()
 
     def rarFiles(self):
         os.chdir(self.BuildPath)
         targetFile = os.path.join(self.BuildPath, self.rarFileName)
         sourceFile = self.buildType
-        print os.system('zip -r ' + targetFile + ' ' + sourceFile)
+        print os.system('zip -r -m ' + targetFile + ' ' + sourceFile)
 
     def getEcmediaVersion(self):
         fd = open(self.EcmediaCpp)
