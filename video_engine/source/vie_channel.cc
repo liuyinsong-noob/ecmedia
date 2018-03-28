@@ -3116,7 +3116,7 @@ int32_t ViEChannel::StartSend() {
 	}
 //#endif
 	rtp_rtcp_->SetSendingMediaStatus(true);
-
+    default_rtp_rtcp_->SetSendingMediaStatus(true);
 	if (!isSVCChannel_) {//if svc, simulcast not call this function
 		if (default_rtp_rtcp_->Sending()) {
 			// Already sending.
