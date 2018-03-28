@@ -446,6 +446,15 @@ ECMEDIA_API int ECMedia_video_stop_send(int channelid);
  */
 ECMEDIA_API int ECMedia_set_i420_framecallback(int channelid, cloopenwebrtc::ECMedia_I420FrameCallBack callback);
 
+//add by dingxf
+/**
+* 设置远程视频原始数据回调
+* @param channelid: channel id.
+* @param callback : 远程视频数据回调函数指针
+* @return 成功返回0，失败返回非0
+*/
+ECMEDIA_API int ECMedia_set_remote_i420_framecallback(int channelid, cloopenwebrtc::ECMedia_I420FrameCallBack callback);
+
 /*
  *
  */
