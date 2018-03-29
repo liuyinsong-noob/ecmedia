@@ -16,9 +16,11 @@ class BuildIos(BuildBase):
         BuildBase.__init__(self, buildType, platform, projectPath)
         
     def build(self):
+        if self.build_config.get('build_setting', self.platform + '_libs_type') == 'audio_only' :
+            return 0
         if os.path.exists(self.CompilePath):
             os.chdir(self.CompilePath)
-            video_need_rebuild =  self.build_config.get('build_state', 'video_libs_state') == 'rebuild' :
+            video_need_rebuild =  self.build_config.get('build_state', self.platform + '_video_state') == 'rebuild'
             if video_need_rebuild :
                 os.system('xcodebuild clean -project ECMedia.xcodeproj')
             ret =  os.system('xcodebuild -project ECMedia.xcodeproj')
@@ -33,9 +35,11 @@ class BuildIos(BuildBase):
             return -1
     
     def buildAudioOnly(self):
+        if self.build_config.get('build_setting', self.platform + '_libs_type') == 'video_only' :
+            return 0
         if os.path.exists(self.CompilePath):
             os.chdir(self.CompilePath)
-            audio_need_rebuild =  self.build_config.get('build_state', 'audio_libs_state') == 'rebuild' :
+            audio_need_rebuild =  self.build_config.get('build_state', self.platform + '_audio_state') == 'rebuild' 
             if audio_need_rebuild :
                 os.system('xcodebuild clean -project ECMediaAudio.xcodeproj')
             ret =  os.system('xcodebuild -project ECMediaAudio.xcodeproj')
@@ -64,7 +68,7 @@ class BuildIos(BuildBase):
     def rarFiles(self):
         os.chdir(self.BuildPath)
         targetFile = os.path.join(self.BuildPath, self.rarFileName)
-        sourceFile = self.buildType
+        sourceFile = self.target_lib_path
         print os.system('zip -r -m ' + targetFile + ' ' + sourceFile)
         
 if __name__=='__main__' :

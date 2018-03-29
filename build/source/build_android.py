@@ -17,10 +17,12 @@ class BuildAndroid(BuildBase):
         BuildBase.__init__(self, buildType, platform, projectPath)
         
     def build(self):
+        if self.build_config.get('build_setting', self.platform + '_libs_type') == 'audio_only' :
+            return 0
         if os.path.exists(self.CompilePath):
             os.chdir(self.CompilePath)
             print os.system('cp -r ' + "BuildECMedia.mk " + "Android.mk")
-            if self.build_config.get('build_state', 'video_libs_state') == 'rebuild' :
+            if self.build_config.get('build_state', self.platform + '_video_state') == 'rebuild' :
                 print os.system('ndk-build clean')
             return os.system('ndk-build -j 4')
         else:
@@ -28,9 +30,11 @@ class BuildAndroid(BuildBase):
             return -1
             
     def buildAudioOnly(self):
+        if self.build_config.get('build_setting', self.platform + '_libs_type') == 'video_only' :
+            return 0
         if os.path.exists(self.CompilePath):
             os.chdir(self.CompilePath)
-            if self.build_config.get('build_state', 'audio_libs_state') == 'rebuild' :
+            if self.build_config.get('build_state', self.platform + '_audio_state') == 'rebuild' :
                 print os.system('ndk-build clean')
             print os.system('cp -r ' + "BuildECMedia_Voice.mk " + "Android.mk")
             return os.system('ndk-build -j 4')

@@ -5612,6 +5612,7 @@ ECMEDIA_API int ECMedia_audio_set_microphone_gain(int channelid, float gain)
 
 //add by dingxf
 int ECMedia_set_remote_i420_framecallback(int channelid, cloopenwebrtc::ECMedia_I420FrameCallBack callback) {
+#ifdef VIDEO_ENABLED
 	PrintConsole("[ECMEDIA INFO] %s begins... channelid: %d", __FUNCTION__, channelid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViEBase *base = ViEBase::GetInterface(m_vie);
@@ -5628,5 +5629,6 @@ int ECMedia_set_remote_i420_framecallback(int channelid, cloopenwebrtc::ECMedia_
 		return -99;
 	}
 	PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
-	return -1;
+#endif
+    return -1;
 }

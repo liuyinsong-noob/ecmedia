@@ -8,7 +8,6 @@ import ConfigParser
 
 class BuildBase:
     def __init__(self, buildType, platform, projectPath):
-        self.buildType = buildType
         self.platform = platform
         
         self.ProjectPath = projectPath
@@ -18,16 +17,21 @@ class BuildBase:
         self.SdkCommonHeader = os.path.join(self.ProjectPath, 'module', 'sdk_common.h')
         self.TypesDefsHeader = os.path.join(self.ProjectPath, 'module', 'typedefs.h')
         self.ReleaseNoteFile = os.path.join(self.ProjectPath, 'ReleaseNotes.txt')
-
+        
         self.BuildPath = os.path.join(self.ProjectPath, 'build')
-        self.RarPath = os.path.join(self.ProjectPath, 'build', self.buildType)
+        self.target_lib_path = platform + '_' + self.getEcmediaVersion()
+        self.RarPath = os.path.join(self.ProjectPath, 'build', self.target_lib_path)
         self.RarIncludePath = os.path.join(self.RarPath, 'include')
         self.RarLibsPath = os.path.join(self.RarPath, 'libs')
-        self.RarX32LibsPath = os.path.join(self.RarPath, 'libs', 'x32')
-        self.RarX64LibsPath = os.path.join(self.RarPath, 'libs', 'x64')
+        if platform == 'android':
+            self.RarX32LibsPath = os.path.join(self.RarPath, 'libs', 'armeabi')
+            self.RarX64LibsPath = os.path.join(self.RarPath, 'libs', 'arm64-v8a')
+        else :    
+            self.RarX32LibsPath = os.path.join(self.RarPath, 'libs', 'x32')
+            self.RarX64LibsPath = os.path.join(self.RarPath, 'libs', 'x64')
         timestamp = time.strftime('%Y-%m-%d-%H-%M-%S',time.localtime(time.time()))
-        self.rarFileName = self.platform + '_' + self.getEcmediaVersion() + '.zip'
         
+        self.rarFileName = self.platform + '_' + self.getEcmediaVersion() + '.zip'
         # build config reading
         self.build_config = ConfigParser.ConfigParser()
         self.build_config_path = os.path.join(os.getcwd(), 'build.config')
@@ -35,27 +39,27 @@ class BuildBase:
 
 
     def run(self):
-        if self.build_config.get('build_state', 'video_libs_state') != 'success' :
+        if self.build_config.get('build_state', self.platform +'_video_state') != 'success' :
             if self.build() == 0:
                 self.collectFiles()
-                self.build_config.set('build_state', 'video_libs_state', 'success')
+                self.build_config.set('build_state', self.platform + '_video_state', 'success')
             else:
-                self.build_config.set('build_state', 'video_libs_state', 'error')
+                self.build_config.set('build_state', self.platform + '_video_state', 'error')
                 self.build_config.write(open(self.build_config_path, "w"))
                 return -1
 
-        if self.build_config.get('build_state', 'audio_libs_state') != 'success' :
+        if self.build_config.get('build_state', self.platform + '_audio_state') != 'success' :
             if self.buildAudioOnly() == 0:
-                self.build_config.set('build_state', 'audio_libs_state', 'success')
+                self.build_config.set('build_state', self.platform + '_audio_state', 'success')
                 self.collectAudioOnlyFiles()
             else :
-                self.build_config.set('build_state', 'audio_libs_state', 'error')
+                self.build_config.set('build_state', self.platform + '_audio_state', 'error')
                 self.build_config.write(open(self.build_config_path, "w"))
                 return -1
         
         # audio and video both build success
-        self.build_config.set('build_state', 'video_libs_state', 'rebuild')
-        self.build_config.set('build_state', 'audio_libs_state', 'rebuild')
+        self.build_config.set('build_state', self.platform + '_video_state', 'rebuild')
+        self.build_config.set('build_state', self.platform + '_audio_state', 'rebuild')
         self.build_config.write(open(self.build_config_path, "w"))
 
         version, timestamp, sha = self.getLastCommitInfo()
@@ -93,29 +97,29 @@ class BuildBase:
         
     def collectFiles(self):
         if os.path.exists(self.RarPath):
-           pass
+            pass
         else:
-           os.mkdir(self.RarPath)
+            os.mkdir(self.RarPath)
            
         if os.path.exists(self.RarLibsPath):
-           pass
+            pass
         else:
-           os.mkdir(self.RarLibsPath)
+            os.mkdir(self.RarLibsPath)
 
         self.collectLibFiles()
         self.collectHeaderFiles()
         
     def collectAudioOnlyFiles(self):
         if os.path.exists(self.RarPath):
-           pass
+            pass
         else:
-           os.mkdir(self.RarPath)
+            os.mkdir(self.RarPath)
         self.collectLibAudioOnlyFiles()
 
     def rarFiles(self):
         os.chdir(self.BuildPath)
         targetFile = os.path.join(self.BuildPath, self.rarFileName)
-        sourceFile = self.buildType
+        sourceFile = self.target_lib_path
         print os.system('zip -r -m ' + targetFile + ' ' + sourceFile)
 
     def getEcmediaVersion(self):
@@ -179,7 +183,7 @@ class BuildBase:
                     sha = line.split(' ')[3]
                     return (version, timestamp, sha)
                 else:
-                    return (None, None, None)
+                    return (' ', ' ', ' ')
         
     def writeReleaseNote(self, timestamp, sha):
         fdOrig = open(os.path.join(self.ProjectPath, 'ReleaseNotes.txt'), 'r')
@@ -223,8 +227,7 @@ class BuildBase:
     
     def copyToRemote(self, platform):
         os.chdir(self.BuildPath)
-        print os.system('scp -i id_rsa.jenkins ' + self.rarFileName + ' jenkins@192.168.179.129:/app/userhome/jenkins/' + self.buildType + '/ecmedia/' + platform)
-        
+        print os.system('scp -i id_rsa.jenkins ' + self.rarFileName + ' jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/' + platform + '/' + self.getEcmediaVersion()[0:4] + '.x')
     def updateReleaseNote(self):
         print os.system('git commit -a -m ' + '"docs: updste release note for %s"'%(self.getEcmediaVersion()))
         print os.system('git push')

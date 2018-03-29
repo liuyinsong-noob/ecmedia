@@ -18,16 +18,20 @@ class BuildWindows(BuildBase):
         BuildBase.__init__(self, buildType, platform, projectPath)
         
     def build(self):
+        if self.build_config.get('build_setting', self.platform + '_libs_type') == 'audio_only' :
+            return 0
         if os.path.exists(self.CompilePath):
             os.chdir(self.CompilePath)
             ret = -1
-            if self.build_config.get('build_state', 'video_libs_state') == 'rebuild' :
+            if self.build_config.get('build_state', self.platform + '_video_state') == 'rebuild' :
                 ret =  os.system('devenv.com MyWebRtc.sln /rebuild "Release|Win32" /Project ECMedia')
             else :
                 ret =  os.system('devenv.com MyWebRtc.sln /build "Release|Win32" /Project ECMedia')
             if ret != 0:
                 return ret
-            if self.build_config.get('build_state', 'video_libs_state') == 'rebuild' :
+            if self.build_config.get('build_setting', 'windows_arch') == 'x32_only' :
+                return 0
+            if self.build_config.get('build_state', self.platform + '_video_state') == 'rebuild' :
                 return os.system('devenv.com MyWebRtc.sln /rebuild "Release|x64" /Project ECMedia')
             else :
                 return os.system('devenv.com MyWebRtc.sln /build "Release|x64" /Project ECMedia')
@@ -36,20 +40,19 @@ class BuildWindows(BuildBase):
             return -1
             
     def buildAudioOnly(self):
-        # windows platform not build audio only now
-        return 0
-        
+        if self.build_config.get('build_setting', self.platform + '_libs_type') == 'video_only' :
+            return 0
         if os.path.exists(self.CompilePath):
             os.chdir(self.CompilePath)
-            ret = -1;
-            if self.build_config.get('build_state', 'audio_libs_state') == 'rebuild' :
+            ret = -1
+            if self.build_config.get('build_state', self.platform + '_audio_state') == 'rebuild' :
                 ret = os.system('devenv.com MyWebRtc.sln /rebuild "audioRelease|Win32" /Project ECMediaVOICE')
             else :
                 ret = os.system('devenv.com MyWebRtc.sln /build "audioRelease|Win32" /Project ECMediaVOICE')
             if ret != 0:
                 return ret
 
-            if self.build_config.get('build_state', 'audio_libs_state') == 'rebuild' :
+            if self.build_config.get('build_state', self.platform + '_audio_state') == 'rebuild' :
                 return os.system('devenv.com MyWebRtc.sln /rebuild "audioRelease|x64" /Project ECMediaVOICE')
             else :
                 return os.system('devenv.com MyWebRtc.sln /build "audioRelease|x64" /Project ECMediaVOICE')
@@ -79,6 +82,7 @@ class BuildWindows(BuildBase):
         print os.system('copy ' + x264TargetFile + ' ' + self.RarX64LibsPath)
         
     def collectLibAudioOnlyFiles(self):
+        return 0
         if os.path.exists(self.RarX32LibsPath):
            pass
         else:
