@@ -47,8 +47,8 @@ namespace cloopenwebrtc {
 
         // device camera
         int switchCamera(int index);
-        void setCaptureFrameDegree(RotateCapturedFrame degree);
-        int setVideoCaptureInfo(int camera_index, int fps, int bitrate, int width, int height);
+        int setCaptureFrameDegree(RotateCapturedFrame degree);
+        int setVideoCaptureInfo(int camera_index, RotateCapturedFrame degree, int fps, int bitrate, int width, int height);
         int setVideoFrameProperty(int bitrate, int width, int height);
         int setBitrate(int bitrate);
         void setCapturerCallback(EC_CapturerCallback *callback);

@@ -5278,6 +5278,20 @@ int ECMedia_ConfigLiveVideoStream(void *handle, LiveVideoStreamConfig config)
     return -1;
 }
 
+int ECMedia_setLiveVideoFrameDegree(void *handle, ECLiveFrameDegree degree) {
+    PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+#ifdef VIDEO_ENABLED
+    ECLiveEngine *engine = (ECLiveEngine*)handle;
+    int ret = -1;
+    ret = engine->setCaptureFrameDegree(degree);
+    if (ret != 0) {
+        PrintConsole("[ECMEDIA ERROR] %s failed to set live video frame degree.", __FUNCTION__);
+    }
+    PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
+    return ret;
+#endif
+}
+
 int ECMedia_SwitchLiveCamera(void *handle, int camera_index) {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED

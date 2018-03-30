@@ -29,7 +29,8 @@ namespace cloopenwebrtc {
         
         int setVideoPreview(void * view);
         void setAutoBitrate(bool isEnable);
-        int  configLiveVideoStream(LiveVideoStreamConfig config);
+        int configLiveVideoStream(LiveVideoStreamConfig config);
+        int setCaptureFrameDegree(ECLiveFrameDegree degree);
         //
         int switchCamera(int index);
         int setBeautyFace(bool enable);

@@ -683,10 +683,23 @@ namespace cloopenwebrtc {
         return ret;
     }
 
-    void ECMediaMachine::setCaptureFrameDegree(RotateCapturedFrame degree) {
+    int ECMediaMachine::setCaptureFrameDegree(RotateCapturedFrame degree) {
         capture_frame_degree_ = degree;
+        PrintConsole("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
+
+        int ret = -1;
+        // stop render and capture video.
+        ret = shutdownCameraPreviewRender(capture_id_);
+        ret = shutdownCameraCapture();
+        
+        // restart capturer and render.
+        ret = doCameraCapture();
+        ret = doCameraPreviewRender(capture_id_);
+        PrintConsole("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
+        return ret;
     }
-    int ECMediaMachine::setVideoCaptureInfo(int camera_index, int fps, int bitrate, int width, int height)
+    
+    int ECMediaMachine::setVideoCaptureInfo(int camera_index, RotateCapturedFrame degree, int fps, int bitrate, int width, int height)
     {
         PrintConsole("[ECMEDIA CORE INFO] %s start, camera_index:%d, fps:%d, bitrate:%d, width:%d, height:%d\n", __FUNCTION__, camera_index, fps, bitrate, width, height);
       
@@ -696,6 +709,7 @@ namespace cloopenwebrtc {
         info_video_bitrates_    = bitrate;
         info_video_width_       = width;
         info_video_height_      = height;
+        capture_frame_degree_   = degree;
         
         PrintConsole("[ECMEDIA CORE INFO] %s end with code:%d\n", __FUNCTION__, 0);
         return initVideoTransportCodec("H264", 90000);;

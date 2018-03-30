@@ -687,6 +687,13 @@ ECMEDIA_API void ECMedia_releaseLiveStream(void *handle);
  * config: 视频参数配置，具体解释见 LiveVideoStreamConfig 定义处
  */
 ECMEDIA_API int ECMedia_ConfigLiveVideoStream(void *handle, LiveVideoStreamConfig config);
+
+/**
+ * 旋转推流画面角度
+ * degree: 旋转角度
+ */
+ECMEDIA_API int ECMedia_setLiveVideoFrameDegree(void *handle, ECLiveFrameDegree degree);
+    
 /**
  * 设置视频预览view
  */

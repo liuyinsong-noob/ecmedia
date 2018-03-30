@@ -175,8 +175,13 @@ namespace cloopenwebrtc {
         
         int width = 0, height = 0, bitrate = 0;
         getVideoStreamInfo(config._resolution, width, height, bitrate);
-        ec_media_core_->setCaptureFrameDegree(RotateCapturedFrame(config._frmae_degree));
-        return ec_media_core_->setVideoCaptureInfo(config._camera_index, config._fps, bitrate, width, height);
+        return ec_media_core_->setVideoCaptureInfo(config._camera_index, RotateCapturedFrame(config._frmae_degree) ,config._fps, bitrate, width, height);
+    }
+    int ECLiveEngine::setCaptureFrameDegree(ECLiveFrameDegree degree) {
+        if(publiser_running_) {
+            return ec_media_core_->setCaptureFrameDegree(RotateCapturedFrame(degree));
+        }
+        return -1;
     }
     
     int ECLiveEngine::switchCamera(int index) {
