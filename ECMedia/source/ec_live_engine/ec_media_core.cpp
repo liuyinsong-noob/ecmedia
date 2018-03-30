@@ -469,9 +469,8 @@ namespace cloopenwebrtc {
         int ret = capture->AllocateCaptureDevice(camera->id, sizeof(camera->id), capture_id_);
         
         // Rotate camere frame
-        RotateCapturedFrame tr = RotateCapturedFrame_0;
-        ret = capture->GetOrientation(camera->id, tr);
-        capture->SetRotateCapturedFrames(capture_id_, tr);
+//        ret = capture->GetOrientation(camera->id, tr);
+        capture->SetRotateCapturedFrames(capture_id_, capture_frame_degree_);
         
         // camera capture infomation
         CaptureCapability cap;
@@ -684,6 +683,9 @@ namespace cloopenwebrtc {
         return ret;
     }
 
+    void ECMediaMachine::setCaptureFrameDegree(RotateCapturedFrame degree) {
+        capture_frame_degree_ = degree;
+    }
     int ECMediaMachine::setVideoCaptureInfo(int camera_index, int fps, int bitrate, int width, int height)
     {
         PrintConsole("[ECMEDIA CORE INFO] %s start, camera_index:%d, fps:%d, bitrate:%d, width:%d, height:%d\n", __FUNCTION__, camera_index, fps, bitrate, width, height);

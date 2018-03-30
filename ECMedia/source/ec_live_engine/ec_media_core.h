@@ -16,6 +16,7 @@
 #include "video_encoder.h"
 #include "video_coding_defines.h"
 #include "vie_desktop_share.h"
+#include "vie_capture.h"
 #include "ec_live_common.h"
 #include "acm_resampler.h"
 #include "sdk_common.h"
@@ -46,6 +47,7 @@ namespace cloopenwebrtc {
 
         // device camera
         int switchCamera(int index);
+        void setCaptureFrameDegree(RotateCapturedFrame degree);
         int setVideoCaptureInfo(int camera_index, int fps, int bitrate, int width, int height);
         int setVideoFrameProperty(int bitrate, int width, int height);
         int setBitrate(int bitrate);
@@ -201,6 +203,7 @@ namespace cloopenwebrtc {
         int info_video_height_;
         int info_video_fps_;
         int info_camera_index_;
+        RotateCapturedFrame capture_frame_degree_;
 
         EC_CapturerCallback *capturer_data_callback_;
     };

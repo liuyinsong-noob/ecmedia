@@ -277,7 +277,7 @@ struct Stats{
 	bool suspended;       
 };
 
-/*** rtmp begin ***/
+/*** rtmp code begin ***/
 typedef enum {
     EC_VIDEO_RESOLUTION_720P,
     EC_VIDEO_RESOLUTION_HD,
@@ -286,10 +286,18 @@ typedef enum {
     EC_VIDEO_RESOLUTION_LOW
 } EC_LiveVideoResolution;
 
+enum ECLiveFrameDegree {
+    ECLiveFrameDegree_0 = 0,
+    ECLiveFrameDegree_90 = 90,
+    ECLiveFrameDegree_180 = 180,
+    ECLiveFrameDegree_270 = 270,
+};
+
 typedef struct {
     int _fps;
     int _camera_index;  // camera index
     bool _auto_bitrate; // is enable auto vdieo bitrate
+    ECLiveFrameDegree _frmae_degree;
     EC_LiveVideoResolution _resolution; // video _resolution
 } LiveVideoStreamConfig;
 
