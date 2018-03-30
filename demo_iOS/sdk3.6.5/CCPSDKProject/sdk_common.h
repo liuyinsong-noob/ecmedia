@@ -1,6 +1,9 @@
 #ifndef _SDK_COMMON_H_
 #define _SDK_COMMON_H_
 #include <time.h>
+#ifdef __APPLE__
+#include <stdint.h>
+#endif
 
 #if defined WEBRTC_ANDROID || defined __APPLE__ 
 typedef long long __int64;
@@ -24,7 +27,15 @@ typedef struct{
 	CameraCapability *capability;
 }  CameraInfo ;
 
-typedef long long ScreenInfo;
+#define  kTitleLength 32
+typedef intptr_t ScreenID;
+typedef intptr_t WindowID;
+struct WindowShare {
+	WindowID id;
+	// Title of the window in UTF-8 encoding.
+	int type;
+	char title[kTitleLength];
+};
 
 typedef struct{
 	int index;
@@ -86,7 +97,8 @@ enum
 {
     AUDIO_AGC,
     AUDIO_EC,
-    AUDIO_NS
+    AUDIO_NS,
+    AUDIO_HC
 };
 
 enum NsMode    // type of Noise Suppression
@@ -260,57 +272,52 @@ struct Stats{
 		:encode_frame_rate(0),
 		media_bitrate_bps(0),
 		suspended(false){}
-	int encode_frame_rate; //发送端实际的编码帧率
-	int media_bitrate_bps; //发送端实际的发送速率
+	int encode_frame_rate; //
+	int media_bitrate_bps; //
 	bool suspended;       
 };
 
 /*** rtmp begin ***/
 typedef enum {
-    RTMP_VIDEO_RESOLUTION_720P,
-    RTMP_VIDEO_RESOLUTION_HD,
-    RTMP_VIDEO_RESOLUTION_QHD,
-    RTMP_VIDEO_RESOLUTION_SD,
-    RTMP_VIDEO_RESOLUTION_LOW
-    
+    EC_VIDEO_RESOLUTION_720P,
+    EC_VIDEO_RESOLUTION_HD,
+    EC_VIDEO_RESOLUTION_QHD,
+    EC_VIDEO_RESOLUTION_SD,
+    EC_VIDEO_RESOLUTION_LOW
 } EC_LiveVideoResolution;
+
+enum ECLiveFrameDegree {
+    ECLiveFrameDegree_0 = 0,
+    ECLiveFrameDegree_90 = 90,
+    ECLiveFrameDegree_180 = 180,
+    ECLiveFrameDegree_270 = 270,
+};
 
 typedef struct {
     int _fps;
     int _camera_index;  // camera index
     bool _auto_bitrate; // is enable auto vdieo bitrate
+    ECLiveFrameDegree _frmae_degree;
     EC_LiveVideoResolution _resolution; // video _resolution
 } LiveVideoStreamConfig;
 
-// live stream publisher callback
-class
-EC_RtmpPublishCallback
-{
-public:
-	EC_RtmpPublishCallback(void){};
-	virtual ~EC_RtmpPublishCallback(void){};
-    // 连接上rtmp服务器
-	virtual void OnRtmpConnected() = 0;
-	// 正在连接rtmp服务器
-    virtual void OnRtmpReconnecting(int times) = 0;
-	// 与rtmp服务器连接断开
-    virtual void OnRtmpDisconnect() = 0;
-	//virtual void OnRtmpStatusEvent(int delayMs, int netBand) = 0;
+
+enum EC_LIVE_STATUS_CODE {
+    EC_LIVE_CONNECTING = 0,
+    EC_LIVE_CONNECT_SUCCESS,
+    EC_LIVE_CONNECT_FAILED,
+    EC_LIVE_TIMEOUT,
+    EC_LIVE_PUSH_SUCCESS,
+    EC_LIVE_PUSH_FAILED,
+    EC_LIVE_PLAY_SUCCESS,
+    EC_LIVE_PLAY_FAILED,
+    EC_LIVE_DISCONNECTED,
+    EC_LIVE_FINISHED
 };
 
-// live stream puller callback.
-class EC_MediaPullCallback
-{
-public:
-	EC_MediaPullCallback(void){};
-	virtual ~EC_MediaPullCallback(void){};
+typedef int(*ECLiveStreamNetworkStatusCallBack)(EC_LIVE_STATUS_CODE code);
+typedef int(*ECLiveStreamVideoResolution)(int width, int height);
 
-	virtual void OnLivePullerConnected() = 0;
-	virtual void OnLivePullerFailed() = 0;
-	virtual void OnLivePullerDisconnect() = 0;
-};
-
-/*** rtmp end ***/
 
 #ifdef __cplusplus
 extern "C" {

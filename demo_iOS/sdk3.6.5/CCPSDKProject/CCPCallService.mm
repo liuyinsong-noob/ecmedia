@@ -5897,6 +5897,7 @@ char *OSTypeToStr(char *buf, OSType t)
     config._camera_index = index;
     config._fps = fps;
     config._resolution = EC_LiveVideoResolution(resolution);
+    config._frmae_degree = ECLiveFrameDegree_90;
     return configLiveVideoStream(handle, config);
 }
 

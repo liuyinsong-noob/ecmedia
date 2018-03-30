@@ -3776,7 +3776,7 @@ extern "C" int playLiveStream(void *handle, const char * url, void *renderView, 
 extern "C" int pushLiveStream(void *handle, const char * url, void *renderView, ECLiveStreamNetworkStatusCallBack callback)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	return g_pSerCore->pushLiveStream(handle, url, renderView, callback);
+	return g_pSerCore->pushLiveStream(handle, url, renderView, nullptr);
 }
 extern "C" void stopLiveStream(void *handle)
 {
