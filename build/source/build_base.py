@@ -9,7 +9,7 @@ import ConfigParser
 class BuildBase:
     def __init__(self, buildType, platform, projectPath):
         self.platform = platform
-        
+        print os.system('chmod 600 ../id_rsa.jenkins')
         self.ProjectPath = projectPath
         self.EcmediaCpp = os.path.join(self.ProjectPath, 'ECMedia', 'source', 'ECMedia.cpp')
         self.EcmediaHeader = os.path.join(self.ProjectPath, 'ECMedia', 'interface', 'ECMedia.h')
