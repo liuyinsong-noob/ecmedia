@@ -4,6 +4,8 @@ libs
 VoipDemo
 module/image_filter
 .vscode/
+demo_Win/build/
+logging/rtc_event_log/Release/
 
 #appcode filder
 .idea
