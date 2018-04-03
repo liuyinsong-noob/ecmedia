@@ -339,9 +339,9 @@ namespace cloopenwebrtc {
         }
         
         int ACMOpus::SetPacketLossRate(int loss_rate) {
-//            return 0;//sean test audio mixer
+            // return 0;//sean test audio mixer
             if (loss_rate < 5) {
-                return 0;
+                loss_rate = 5;
             }
 //            printf("sean haha loss_rate:%d\n",loss_rate);
 //            loss_rate = 72;

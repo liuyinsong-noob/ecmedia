@@ -56,7 +56,7 @@ class ACMOpus : public ACMGenericCodec {
   int channels_;
 
   int packet_loss_rate_;
-    FILE *file_;
+  FILE *file_;
 };
 
 }  // namespace acm2
