@@ -351,7 +351,10 @@ namespace cloopenwebrtc {
             // hardware decoder has been invalidated by the OS.
             // Reset video format so that we won't process frames until the next
             // keyframe.
-            SetVideoFormat(nullptr);
+            
+            /*** when return to front, if video not resend sps and pps, decoder cannot get video_format_, so, we can't set video format null. ***/
+            /*** added by zhaoyou ***/
+            // SetVideoFormat(nullptr);
             return WEBRTC_VIDEO_CODEC_NO_OUTPUT;
         }
 #endif

@@ -582,6 +582,10 @@ namespace cloopenwebrtc {
             videoCodec.mode             = kRealtimeVideo;
         }
         int ret = -1;
+#ifdef __APPLE__
+        vcodec->iOSH264HardCodecSwitch(true, false);
+#endif
+        
         // receive codec setting
         ret = vcodec->SetReceiveCodec(video_channel_, videoCodec);
         // send codec setting
