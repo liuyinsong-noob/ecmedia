@@ -214,7 +214,7 @@ public class AudioVideoCallActivity extends CCPBaseActivity implements OnVoIPLis
 	
 	
 	public void DisplayLocalSurfaceView() {
-		boolean use_vie_filter_render = true;
+		boolean use_vie_filter_render = false;
 		if(mCallType == Device.CallType.VIDEO && mLoaclVideoView != null 
 				&& mLoaclVideoView.getVisibility() == View.VISIBLE) {
 			// Create a RelativeLayout container that will hold a SurfaceView,

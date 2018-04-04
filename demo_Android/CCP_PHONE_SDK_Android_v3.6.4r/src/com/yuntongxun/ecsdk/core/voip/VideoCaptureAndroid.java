@@ -56,7 +56,7 @@ public class VideoCaptureAndroid implements PreviewCallback, Callback, ViEFilter
     private int mCaptureFPS = -1;
 
     //
-    boolean useFiterRenderView = true;
+    boolean useFiterRenderView = false;
     private ViEFilterRenderView vieFilterRenderView = null;
     private SurfaceTexture vieFilterTexture = null;
 

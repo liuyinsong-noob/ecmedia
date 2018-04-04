@@ -16,7 +16,7 @@ class BuildBase:
         self.copyLibsToApp()
 
     def build(self):
-        print os.system('ndk-build -j 4')
+        print os.system('ndk-build APP_ABI="armeabi" -j 4')
     
     def copyLibsToApp(self):
         print self.libsPath
