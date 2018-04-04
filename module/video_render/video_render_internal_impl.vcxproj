@@ -45,11 +45,13 @@
   <ItemGroup>
     <ClCompile Include="main\source\video_render_internal_impl.cc" />
     <ClCompile Include="main\source\windows\video_render_direct3d9.cc" />
+    <ClCompile Include="main\source\windows\video_render_gdi.cc" />
     <ClCompile Include="main\source\windows\video_render_windows_impl.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main\source\windows\i_video_render_win.h" />
     <ClInclude Include="main\source\windows\video_render_direct3d9.h" />
+    <ClInclude Include="main\source\windows\video_render_gdi.h" />
     <ClInclude Include="main\source\windows\video_render_windows_impl.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

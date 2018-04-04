@@ -24,6 +24,7 @@ class CriticalSectionWrapper;
 
 enum VideoRenderWinMethod {
   kVideoRenderWinD3D9 = 0,
+  kVideoRenderWinGDI = 1,//add by dingxf
 };
 
 // Class definitions
@@ -123,6 +124,9 @@ public:
                               const void* colorKey,
                               const float left, const float top,
                               const float right, const float bottom);
+	//add by dingxf
+private:
+	bool IsSupportDirect3D9();
 
 private:
     int32_t _id;

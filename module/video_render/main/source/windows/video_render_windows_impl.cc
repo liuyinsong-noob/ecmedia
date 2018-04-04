@@ -16,6 +16,7 @@
 #ifdef DIRECT3D9_RENDERING
 #include "video_render_direct3d9.h"
 #endif
+#include "video_render_gdi.h"
 
 #include <tchar.h>
 
@@ -29,6 +30,11 @@ VideoRenderWindowsImpl::VideoRenderWindowsImpl(const int32_t id,
       _fullscreen(fullscreen),
       _renderMethod(kVideoRenderWinD3D9),
       _ptrRendererWin(NULL) {
+	//add by dingxf
+	if (!IsSupportDirect3D9())
+	{
+		_renderMethod = kVideoRenderWinGDI;
+	}
 }
 
 VideoRenderWindowsImpl::~VideoRenderWindowsImpl()
@@ -44,32 +50,61 @@ VideoRenderWindowsImpl::~VideoRenderWindowsImpl()
 int32_t VideoRenderWindowsImpl::Init()
 {
     // Create the win renderer
-    switch (_renderMethod)
-    {
-        case kVideoRenderWinD3D9:
-        {
+	switch (_renderMethod)
+	{
+	case kVideoRenderWinD3D9:
+	{
 #ifdef DIRECT3D9_RENDERING
-            VideoRenderDirect3D9* ptrRenderer;
-            ptrRenderer = new VideoRenderDirect3D9(NULL, (HWND) _prtWindow, _fullscreen);
-            if (ptrRenderer == NULL)
-            {
-                break;
-            }
-            _ptrRendererWin = reinterpret_cast<IVideoRenderWin*>(ptrRenderer);
+		VideoRenderDirect3D9* ptrRenderer;
+		ptrRenderer = new VideoRenderDirect3D9(NULL, (HWND)_prtWindow, _fullscreen);
+		if (ptrRenderer == NULL)
+		{
+			break;
+		}
+		_ptrRendererWin = reinterpret_cast<IVideoRenderWin*>(ptrRenderer);
 #else
-            return NULL;
+		return NULL;
 #endif  //DIRECT3D9_RENDERING
-        }
-            break;
-        default:
-            break;
-    }
+	}
+	break;
+	//add by dingxf
+	case kVideoRenderWinGDI:
+		VideoRenderGDI *ptrRenderer;
+		ptrRenderer = new VideoRenderGDI(NULL, (HWND)_prtWindow, _fullscreen);
+
+		if (ptrRenderer == NULL)
+		{
+			break;
+		}
+		_ptrRendererWin = reinterpret_cast<IVideoRenderWin*>(ptrRenderer);
+		break;
+	default:
+		break;
+	}
 
     //Init renderer
     if (_ptrRendererWin)
         return _ptrRendererWin->Init();
     else
         return -1;
+}
+
+//add by dingxf
+bool VideoRenderWindowsImpl::IsSupportDirect3D9()
+{
+	bool bSupport = false;
+	LPDIRECT3D9 pD3D = Direct3DCreate9(D3D_SDK_VERSION);
+	if (pD3D != NULL)
+	{
+		D3DCAPS9 caps;
+		if (SUCCEEDED(pD3D->GetDeviceCaps(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, &caps)))
+		{
+			bSupport = true;
+		}
+
+		pD3D->Release();
+	}
+	return bSupport;
 }
 
 int32_t VideoRenderWindowsImpl::ChangeUniqueId(const int32_t id)
