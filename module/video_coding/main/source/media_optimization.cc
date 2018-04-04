@@ -502,6 +502,9 @@ int32_t MediaOptimization::SelectQuality(
     return ret;
   }
 
+    if(qm->frame_rate < 5 ) {
+        qm->frame_rate = 5;
+    }
   // Check for updates to spatial/temporal modes.
   QMUpdate(qm, video_qmsettings_callback);
 

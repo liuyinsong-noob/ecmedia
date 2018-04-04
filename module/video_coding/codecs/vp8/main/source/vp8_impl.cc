@@ -181,12 +181,19 @@ int VP8EncoderImpl::SetRates(uint32_t new_bitrate_kbit,
   if (codec_.maxBitrate > 0 && new_bitrate_kbit > codec_.maxBitrate) {
     new_bitrate_kbit = codec_.maxBitrate;
   }
-  if (new_bitrate_kbit < codec_.minBitrate) {
+    
+  if (codec_.minBitrate > 0 && new_bitrate_kbit < codec_.minBitrate) {
     new_bitrate_kbit = codec_.minBitrate;
   }
+  
+    if(new_framerate < 5) {
+        new_framerate = 5;
+    }
+    
+    uint32_t max_minBitrate = (codec_.simulcastStream[0].minBitrate>codec_.simulcastStream[1].minBitrate)?codec_.simulcastStream[0].minBitrate:codec_.simulcastStream[1].minBitrate;
   if (codec_.numberOfSimulcastStreams > 0 &&
-      new_bitrate_kbit < codec_.simulcastStream[0].minBitrate) {
-    new_bitrate_kbit = codec_.simulcastStream[0].minBitrate;
+      new_bitrate_kbit < max_minBitrate) {
+    new_bitrate_kbit = max_minBitrate;
   }
   codec_.maxFramerate = new_framerate;
 
@@ -302,8 +309,17 @@ int VP8EncoderImpl::GetStreamBitrate(int stream_idx,
     // Not enough bitrate for this stream.
     // Return our max bitrate of |stream_idx| - 1, but we don't send it. We need
     // to keep this resolution coding in order for the multi-encoder to work.
-    *send_stream = false;
-    return 0;
+//      always stream_idx == 1
+      *send_stream = true;
+      if (new_bitrate_kbit > 200) {
+          return (new_bitrate_kbit - 100)>codec_.simulcastStream[stream_idx].minBitrate?(new_bitrate_kbit-100):codec_.simulcastStream[stream_idx].minBitrate; //simulcast: guarantee big resolution
+          
+      }
+      else
+      {
+//          should return minbitrate
+          return codec_.simulcastStream[stream_idx].minBitrate;
+      }
   }
 }
 
@@ -385,7 +401,7 @@ int VP8EncoderImpl::InitEncode(const VideoCodec* inst,
   }
 
   int num_temporal_layers = doing_simulcast ?
-      inst->simulcastStream[0].numberOfTemporalLayers :
+      inst->simulcastStream[1].numberOfTemporalLayers :             //stream 1 is main stream
       inst->codecSpecific.VP8.numberOfTemporalLayers;
 
   // TODO(andresp): crash if num temporal layers is bananas.
@@ -479,7 +495,8 @@ int VP8EncoderImpl::InitEncode(const VideoCodec* inst,
   // rate control settings
   configurations_[0].rc_dropframe_thresh =
       inst->codecSpecific.VP8.frameDroppingOn ? 30 : 0;
-  configurations_[0].rc_end_usage = VPX_CBR;
+//  configurations_[0].rc_end_usage = VPX_CBR;
+  configurations_[0].rc_end_usage = VPX_VBR;
   configurations_[0].g_pass = VPX_RC_ONE_PASS;
   // TODO(hellner): investigate why the following two lines produce
   // automaticResizeOn value of 3 when running
@@ -514,6 +531,9 @@ int VP8EncoderImpl::InitEncode(const VideoCodec* inst,
   } else if (inst->codecSpecific.VP8.keyFrameInterval > 0) {
     configurations_[0].kf_mode = VPX_KF_AUTO;
     configurations_[0].kf_max_dist = inst->codecSpecific.VP8.keyFrameInterval;
+    configurations_[1].kf_mode = VPX_KF_AUTO;
+    configurations_[1].kf_max_dist = inst->codecSpecific.VP8.keyFrameInterval;
+      
   } else {
     configurations_[0].kf_mode = VPX_KF_DISABLED;
   }

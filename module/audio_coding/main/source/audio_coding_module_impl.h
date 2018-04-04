@@ -381,7 +381,8 @@ private:
       GUARDED_BY(callback_crit_sect_);
   ACMVADCallback* vad_callback_ GUARDED_BY(callback_crit_sect_);
     
-    uint8_t loss_rate_ GUARDED_BY(acm_crit_sect_);
+  uint8_t loss_rate_ GUARDED_BY(acm_crit_sect_);
+  uint8_t update_counter_ GUARDED_BY(acm_crit_sect_);
     
    /****  about soundtouch ****/
    SoundTouch *_soundTouch;

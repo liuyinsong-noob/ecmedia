@@ -82,14 +82,17 @@ int H264Encoder::SetRates(uint32_t new_bitrate_kbit, uint32_t new_framerate) {
         new_bitrate_kbit = codec_.maxBitrate;
     }
     
-	if (codec_.minBitrate > 0 && new_bitrate_kbit < codec_.minBitrate) {
-		new_bitrate_kbit = codec_.minBitrate;
-	}
-
 	if (codec_.maxFramerate >0 && new_framerate > codec_.maxFramerate){
 		new_framerate = codec_.maxFramerate;
 	}
     
+    if (codec_.minBitrate > 0 && new_bitrate_kbit < codec_.minBitrate) {
+        new_bitrate_kbit = codec_.minBitrate;
+    }
+    
+    if(new_framerate < 5) {
+        new_framerate = 5;
+    }
 
 	if(encoder_) {
 		x264_param_t curparms;
@@ -170,12 +173,6 @@ int H264Encoder::Encode(const I420VideoFrame& input_image,
 		}
 	}
 
-    if (count<5) {
-        if ((count % 2)==0) {
-            frameType = kKeyFrame;
-        }
-        count++;
-    }
 	if(codec_.width != input_image.width() || codec_.height != input_image.height())
 	{
         Release();

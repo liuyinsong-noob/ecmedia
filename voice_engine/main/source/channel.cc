@@ -6622,5 +6622,16 @@ TcpTransport *Channel::GetTcpTransport()
     return _socketTransportModule;
 }
 
-}  // namespace voe
+//should be invoked after setLocalReceiver
+int8_t Channel::SetMixMediaStream(bool enable, char *mixture, unsigned char version)
+{
+    WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId,_channelId),
+                 "Channel::SetMixMediaStream()");      //confuse string not recommended to print
+    if (!_socketTransportModule) {
+        WEBRTC_TRACE(kTraceError, kTraceVoice, VoEId(_instanceId,_channelId),
+                     "Channel::SetMixMediaStream() socket transport is NULL");
+    }
+    return _socketTransportModule->SetMixMediaStream(enable, mixture, version);
+}
+}// namespace voe
 }  // namespace cloopenwebrtc

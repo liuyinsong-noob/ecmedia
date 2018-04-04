@@ -3457,6 +3457,18 @@ void ViEChannel::SetSsrcObserver(SsrcObserver* ssrcObserver) {
 	ssrc_observer_ = ssrcObserver;
 }
 
+   //should be invoked after setLocalReceiver
+int8_t ViEChannel::SetMixMediaStream(bool enable, char *mixture, unsigned char version)
+{
+    WEBRTC_TRACE(kTraceInfo, kTraceVideo, ViEId(engine_id_, channel_id_),
+                 "Channel::SetMixMediaStream()");      //confuse string not recommended to print
+    if (!socket_transport_) {
+        WEBRTC_TRACE(kTraceError, kTraceVideo, ViEId(engine_id_, channel_id_),
+                     "Channel::SetMixMediaStream() socket transport is NULL");
+    }
+    return socket_transport_->SetMixMediaStream(enable, mixture, version);
+}
+
 //add by dingxf
 void ViEChannel::AddRemoteI420FrameCallback(ECMedia_I420FrameCallBack callback)
 {

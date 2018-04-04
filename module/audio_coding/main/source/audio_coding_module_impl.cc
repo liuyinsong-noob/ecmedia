@@ -131,6 +131,7 @@ AudioCodingModuleImpl::AudioCodingModuleImpl(
       vad_callback_(NULL),
       red2_length_(0),
       loss_rate_(0),
+      update_counter_(0),
       _soundTouch(NULL),
       _soundTouchSamples(0),
       _enableSoundTouch(false),
@@ -1353,10 +1354,16 @@ int AudioCodingModuleImpl::SetPacketLossRateFromRtpHeaderExt(int loss_rate)
         if(loss_rate < 0) {
             return 0;
         }
-        
+        // todo: timer (n)ms trigger setting lossrate
+        if ((loss_rate_>6&&loss_rate<5&&update_counter_<3) || (loss_rate_>9&&loss_rate<8&&update_counter_<5)) {
+            //when random loss and when last loss rate is bigger than 25, adjust loss rate downstairs after 3 try; last loss_rate >8 and current loss_rate_<6, after 5 try
+            update_counter_++;
+            return 0;
+        }
+        update_counter_ = 0;
         loss_rate_ = loss_rate;
         // insert loss rate into codec opus.
-        if(codecs_[current_send_codec_idx_]->SetPacketLossRate(loss_rate) < 0) {
+        if(codecs_[current_send_codec_idx_]->SetPacketLossRate(loss_rate*5) < 0) {
             return -1;
         }
 		return 0;

@@ -298,8 +298,7 @@ void PacedSender::SetEstimatedBitrate(uint32_t bitrate_bps) {
     LOG(LS_ERROR) << "PacedSender is not designed to handle 0 bitrate.";
   CriticalSectionScoped cs(critsect_.get());
   estimated_bitrate_bps_ = bitrate_bps;
-  padding_budget_->set_target_rate_kbps(
-      min(estimated_bitrate_bps_ / 1000, max_padding_bitrate_kbps_));
+  padding_budget_->set_target_rate_kbps(0);
   pacing_bitrate_kbps_ =
       max(min_send_bitrate_kbps_, estimated_bitrate_bps_ / 1000) *
       kDefaultPaceMultiplier;
@@ -309,13 +308,13 @@ void PacedSender::SetEstimatedBitrate(uint32_t bitrate_bps) {
 void PacedSender::SetSendBitrateLimits(int min_send_bitrate_bps,
                                        int padding_bitrate) {
   CriticalSectionScoped cs(critsect_.get());
+    padding_bitrate = 0;
   min_send_bitrate_kbps_ = min_send_bitrate_bps / 1000;
   pacing_bitrate_kbps_ =
       max(min_send_bitrate_kbps_, estimated_bitrate_bps_ / 1000) *
       kDefaultPaceMultiplier;
   max_padding_bitrate_kbps_ = padding_bitrate / 1000;
-  padding_budget_->set_target_rate_kbps(
-      min(estimated_bitrate_bps_ / 1000, max_padding_bitrate_kbps_));
+  padding_budget_->set_target_rate_kbps(0);
 }
 
 void PacedSender::InsertPacket(RtpPacketSender::Priority priority,
@@ -443,12 +442,11 @@ int32_t PacedSender::Process() {
     // We can not send padding unless a normal packet has first been sent. If we
     // do, timestamps get messed up.
     if (packet_counter_ > 0) {
-      int padding_needed =
-          static_cast<int>(is_probing ? (recommended_probe_size - bytes_sent)
-                                      : padding_budget_->bytes_remaining());
+      int padding_needed = static_cast<int>(is_probing ? (recommended_probe_size - bytes_sent) : padding_budget_->bytes_remaining());
 
-      if (padding_needed > 0)
-        bytes_sent += SendPadding(padding_needed, pacing_info);
+//        if (padding_needed > 0) {
+//          bytes_sent += SendPadding(padding_needed, pacing_info);
+//        }
     }
   }
   if (is_probing) {

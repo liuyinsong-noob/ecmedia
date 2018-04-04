@@ -797,6 +797,7 @@ public:
 	int32_t GetKeepAliveStatus(bool& enable,
 		int8_t& unknownPayloadType,
 		uint16_t& deltaTransmitTimeMS);
+    int8_t SetMixMediaStream(bool enable, char *mixture, unsigned char version);
 
 private:
     bool _rtpPacketTimedOut;

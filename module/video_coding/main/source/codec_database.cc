@@ -58,7 +58,7 @@ VideoCodecVP8 VideoEncoder::GetDefaultVp8Settings() {
   vp8_settings.automaticResizeOn = true/*false*/;
   //vp8_settings.automaticResizeOn = false;//open vp8 simulcast
   vp8_settings.frameDroppingOn = true;
-  vp8_settings.keyFrameInterval = 75;
+  vp8_settings.keyFrameInterval = 200;
   return vp8_settings;
 }
 
@@ -159,6 +159,7 @@ bool VCMCodecDataBase::Codec(int list_id,
     return false;
   }
   memset(settings, 0, sizeof(VideoCodec));
+  settings->automode = true;
   switch (list_id) {
 #ifdef VIDEOCODEC_VP8
     case VCM_VP8_IDX: {
@@ -728,7 +729,7 @@ VCMGenericEncoder* VCMCodecDataBase::CreateEncoder(
   switch (type) {
 #ifdef VIDEOCODEC_VP8
     case kVideoCodecVP8:
-      return new VCMGenericEncoder(*(VP8Encoder::Create()), true);
+      return new VCMGenericEncoder(*(VP8Encoder::Create()));
 #endif
 #ifdef VIDEOCODEC_H264
 	case kVideoCodecH264:

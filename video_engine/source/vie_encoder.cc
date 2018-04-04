@@ -658,6 +658,8 @@ size_t ViEEncoder::TimeToSendPadding(size_t bytes) {
     send_padding =
         send_padding_ || video_suspended_ || min_transmit_bitrate_kbps_ > 0;
   }
+  // added by seanlee
+  send_padding = false;
   if (send_padding) {
 	PacedPacketInfo pacedPacketInfo;
     return default_rtp_rtcp_->TimeToSendPadding(bytes, pacedPacketInfo);

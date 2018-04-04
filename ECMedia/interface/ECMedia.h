@@ -805,6 +805,10 @@ ECMEDIA_API int ECMedia_audio_set_playout_gain(int channelid, float gain);
  */
 ECMEDIA_API int ECMedia_audio_set_microphone_gain(int channelid, float gain);
 
+ECMEDIA_API int ECMedia_audio_set_mix_mediastream(int channel, bool enable, char *mixture, unsigned char version);
+
+ECMEDIA_API int ECMedia_video_set_mix_mediastream(int channel, bool enable, char *mixture, unsigned char version);
+
 #ifdef __cplusplus
 }
 #endif

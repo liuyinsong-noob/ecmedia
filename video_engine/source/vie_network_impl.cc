@@ -619,6 +619,23 @@ bool ViENetworkImpl::IsIPv6Enabled(int video_channel) {
     return vie_channel->IsIPv6Enabled();
 }
 
+int ViENetworkImpl::SetMixMediaStream(int channel, bool enable, char *mixture, unsigned char version) {
+    ViEChannelManagerScoped cs(*(shared_data_->channel_manager()));
+    ViEChannel* vie_channel = cs.Channel(channel);
+    if (!vie_channel) {
+        WEBRTC_TRACE(kTraceError, kTraceVideo,
+                     ViEId(shared_data_->instance_id(), channel),
+                     "%s Channel doesn't exist", __FUNCTION__);
+        shared_data_->SetLastError(kViENetworkInvalidChannelId);
+        return -1;
+    }
+    
+    if (vie_channel->SetMixMediaStream(enable, mixture, version) != 0) {
+        shared_data_->SetLastError(kViENetworkUnknownError);
+        return -1;
+    }
+    return 0;
+}
 
     
 }  // namespace webrtc

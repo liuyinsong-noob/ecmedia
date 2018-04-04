@@ -162,6 +162,8 @@ public:
                                                 const WebRtc_UWord16 rtcpPort) = 0;
     // set socket5 send data.
     virtual WebRtc_Word32 SetSocks5SendData(unsigned char *data, int length, bool isRTCP) = 0;
+    
+    virtual int8_t SetMixMediaStream(bool enable, char *mixture, unsigned char version) = 0;
     // Register packetCallback for receiving incoming packets. Set the local
     // RTP port to rtpPort. Bind local IP address to ipAddr. If ipAddr is NULL
     // bind to local IP ANY. Set the local rtcp port to rtcpPort or rtpPort + 1

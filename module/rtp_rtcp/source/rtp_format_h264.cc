@@ -612,7 +612,8 @@ bool RtpDepacketizerH264::ParseFuaNalu(
     length_ -= kFuAHeaderSize;
   }
 
-  if (original_nal_type == H264::NaluType::kIdr) {
+  
+  if (original_nal_type == H264::NaluType::kIdr || original_nal_type == H264::NaluType::kSps || original_nal_type == H264::NaluType::kPps) {
     parsed_payload->frame_type = kVideoFrameKey;
   } else {
     parsed_payload->frame_type = kVideoFrameDelta;

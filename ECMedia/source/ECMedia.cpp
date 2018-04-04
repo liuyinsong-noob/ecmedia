@@ -5624,6 +5624,26 @@ ECMEDIA_API int ECMedia_audio_set_microphone_gain(int channelid, float gain)
     }
 }
 
+int ECMedia_video_set_mix_mediastream(int channel, bool enable, char *mixture, unsigned char version)
+{
+#ifdef VIDEO_ENABLED
+    PrintConsole("[ECMEDIA INFO] %s begins...,channelid:%d ", __FUNCTION__, channel);
+    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    ViENetwork *network = ViENetwork::GetInterface(m_vie);
+    if (network) {
+        int ret = network->SetMixMediaStream(channel, enable, mixture, version);
+        network->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ",__FUNCTION__, ret);
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to get ViENetwork, %s", __FUNCTION__);
+        return -99;
+    }
+#endif
+}
+
 //add by dingxf
 int ECMedia_set_remote_i420_framecallback(int channelid, cloopenwebrtc::ECMedia_I420FrameCallBack callback) {
 #ifdef VIDEO_ENABLED

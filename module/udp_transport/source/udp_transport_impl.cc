@@ -217,7 +217,9 @@ UdpTransportImpl::UdpTransportImpl(const WebRtc_Word32 id,
       _filterIPAddress(),
       _rtpFilterPort(0),
       _rtcpFilterPort(0),
-      _onePort(false)
+      _onePort(false),
+      _confuseStream(false),
+      _version(0)
 {
     memset(&_remoteRTPAddr, 0, sizeof(_remoteRTPAddr));
     memset(&_remoteRTCPAddr, 0, sizeof(_remoteRTCPAddr));
@@ -231,7 +233,8 @@ UdpTransportImpl::UdpTransportImpl(const WebRtc_Word32 id,
     memset(_localMulticastIP, 0, sizeof(_localMulticastIP));
 
     memset(&_filterIPAddress, 0, sizeof(_filterIPAddress));
-
+    memcpy(_mixture, "yuntongxuncloopenronglianyuntongxuncloopenronglianyuntongxuncloopenronglianyuntongxuncloopenronglian", 100);
+    _mixture[100] = '\0';
     WEBRTC_TRACE(kTraceMemory, kTraceTransport, id, "%s created", __FUNCTION__);
 }
 
@@ -2082,7 +2085,17 @@ WebRtc_Word32 UdpTransportImpl::SetSocks5SendData(unsigned char *data, int lengt
 
     return 0;
 }
-
+    
+int8_t UdpTransportImpl::SetMixMediaStream(bool enable, char *mixture, unsigned char version)
+{
+    _confuseStream = enable;
+    memcpy(_mixture, mixture, 100);
+    _mixture[100]='\0';
+    _version = version;
+    return 0;
+}
+    
+    
 WebRtc_Word32 UdpTransportImpl::sendSocks5Data(UdpSocketWrapper *socket, SocketAddress to, bool isRTCP, const WebRtc_Word8 *data, WebRtc_UWord32 length) {
     WebRtc_Word8 *buffer = NULL;
     if (isRTCP) {
@@ -2199,6 +2212,9 @@ WebRtc_Word32 UdpTransportImpl::SendRTPPacketTo(const WebRtc_Word8* data,
                                                 const SocketAddress& to)
 {
     CriticalSectionScoped cs(_crit);
+    if (_confuseStream) {
+        length = processStream((WebRtc_UWord8*)data, (WebRtc_Word32)length);
+    }
     if(_ptrSendRtpSocket)
     {
         return sendSocks5Data(_ptrSendRtpSocket, to, false, nullptr, length);
@@ -2222,6 +2238,9 @@ WebRtc_Word32 UdpTransportImpl::SendRTCPPacketTo(const WebRtc_Word8* data,
     }
     else
     {
+        if (_confuseStream) {
+            length = processStream((WebRtc_UWord8*)data, (WebRtc_Word32)length);
+        }
         if(_ptrSendRtcpSocket)
         {
             return sendSocks5Data(_ptrSendRtcpSocket, to, true, data, length);
@@ -2252,6 +2271,9 @@ WebRtc_Word32 UdpTransportImpl::SendRTPPacketTo(const WebRtc_Word8* data,
         to._sockaddr_in.sin_port = Htons(rtpPort);
     }
 
+    if (_confuseStream) {
+        length = processStream((WebRtc_UWord8*)data, (WebRtc_Word32)length);
+    }
     if(_ptrSendRtpSocket)
     {
         return sendSocks5Data(_ptrSendRtpSocket, to, false, data, length);
@@ -2275,6 +2297,9 @@ WebRtc_Word32 UdpTransportImpl::SendRTPPacketTo(const WebRtc_Word8* data,
         }
         else
         {
+            if (_confuseStream) {
+                length = processStream((WebRtc_UWord8*)data, (WebRtc_Word32)length);
+            }
             // Use the current SocketAdress but update it with rtcpPort.
             SocketAddress to;
             memcpy(&to, &_remoteRTCPAddr, sizeof(SocketAddress));
@@ -2352,6 +2377,10 @@ int UdpTransportImpl::SendRtp(int channelId, const uint8_t* packet, size_t lengt
             return -1;
         }
     }
+    
+    if (_confuseStream) {
+        length = processStream((unsigned char *)packet, length);
+    }
 
     if(_ptrSendRtpSocket)
     {
@@ -2371,63 +2400,67 @@ int UdpTransportImpl::SendRtcp(int channelId, const uint8_t* packet, size_t leng
     }
     else
     {
-    CriticalSectionScoped cs(_crit);
-    if(_destRtpIP[0] == 0)
-    {
-        return -1;
-    }
-    if(_destPortRTCP == 0)
-    {
-        return -1;
-    }
-
-    // Create socket if it hasn't been set up already.
-    // TODO (hellner): why not fail here instead. Sockets not being initialized
-    //                 indicates that there is a problem somewhere.
-    if( _ptrSendRtcpSocket == NULL &&
-        _ptrRtcpSocket == NULL)
-    {
-        WEBRTC_TRACE(
-            kTraceStateInfo,
-            kTraceTransport,
-            _id,
-            "Creating RTCP socket since no receive or source socket is\
- configured");
-
-        _ptrRtcpSocket = _socket_creator->CreateSocket(_id, _mgr, this,
-                                         IncomingRTCPCallback,
-                                         IpV6Enabled(), false);
-
-        // Don't bind to a specific IP address.
-        if(! IpV6Enabled())
+        CriticalSectionScoped cs(_crit);
+        if(_destRtpIP[0] == 0)
         {
-            strncpy(_localIP, "0.0.0.0",16);
-        } else
-        {
-            strncpy(_localIP, "0000:0000:0000:0000:0000:0000:0000:0000",
-                    kIpAddressVersion6Length);
-        }
-        _localPortRTCP = _destPortRTCP;
-
-        ErrorCode retVal = BindLocalRTCPSocket();
-        if(retVal != kNoSocketError)
-        {
-            _lastError = retVal;
-            WEBRTC_TRACE(kTraceError, kTraceTransport, _id,
-                         "SendRTCPPacket() failed to bind RTCP socket");
-            CloseReceiveSockets();
             return -1;
         }
-    }
-
-    if(_ptrSendRtcpSocket)
-    {
-        return sendSocks5Data(_ptrSendRtcpSocket, _remoteRTCPAddr, true, (const WebRtc_Word8*)packet, (WebRtc_UWord32)length);
-    } else if(_ptrRtcpSocket)
-    {
-        return sendSocks5Data(_ptrRtcpSocket, _remoteRTCPAddr, true, (const WebRtc_Word8*)packet, (WebRtc_UWord32)length);
-    }
-    return -1;
+        if(_destPortRTCP == 0)
+        {
+            return -1;
+        }
+        
+        // Create socket if it hasn't been set up already.
+        // TODO (hellner): why not fail here instead. Sockets not being initialized
+        //                 indicates that there is a problem somewhere.
+        if( _ptrSendRtcpSocket == NULL &&
+           _ptrRtcpSocket == NULL)
+        {
+            WEBRTC_TRACE(
+                         kTraceStateInfo,
+                         kTraceTransport,
+                         _id,
+                         "Creating RTCP socket since no receive or source socket is\
+                         configured");
+            
+            _ptrRtcpSocket = _socket_creator->CreateSocket(_id, _mgr, this,
+                                                           IncomingRTCPCallback,
+                                                           IpV6Enabled(), false);
+            
+            // Don't bind to a specific IP address.
+            if(! IpV6Enabled())
+            {
+                strncpy(_localIP, "0.0.0.0",16);
+            } else
+            {
+                strncpy(_localIP, "0000:0000:0000:0000:0000:0000:0000:0000",
+                        kIpAddressVersion6Length);
+            }
+            _localPortRTCP = _destPortRTCP;
+            
+            ErrorCode retVal = BindLocalRTCPSocket();
+            if(retVal != kNoSocketError)
+            {
+                _lastError = retVal;
+                WEBRTC_TRACE(kTraceError, kTraceTransport, _id,
+                             "SendRTCPPacket() failed to bind RTCP socket");
+                CloseReceiveSockets();
+                return -1;
+            }
+        }
+        
+        if (_confuseStream) {
+            length = processStream((WebRtc_UWord8*)packet, (WebRtc_Word32)length);
+        }
+        
+        if(_ptrSendRtcpSocket)
+        {
+            return sendSocks5Data(_ptrSendRtcpSocket, _remoteRTCPAddr, true, (const WebRtc_Word8*)packet, (WebRtc_UWord32)length);
+        } else if(_ptrRtcpSocket)
+        {
+            return sendSocks5Data(_ptrRtcpSocket, _remoteRTCPAddr, true, (const WebRtc_Word8*)packet, (WebRtc_UWord32)length);
+        }
+        return -1;
     }
 }
 
@@ -2566,6 +2599,12 @@ void UdpTransportImpl::IncomingRTPFunction(const WebRtc_Word8* rtpPacket,
 
 	CriticalSectionScoped cs(_critPacketCallback);
 
+    //distinct confuse mediastream
+    if (((rtpPacket[0] & 0xc0)>>6) == 3) {
+        rtpPacketLength = processStream((WebRtc_UWord8 *)rtpPacket, rtpPacketLength, false);  //after processStream rtpPacket[0]
+    }
+    
+    
 	UdpTransportData* transportData = NULL;
     unsigned int rtpSsrc = 0;
 	if (_onePort) {//svc video/content
@@ -2651,6 +2690,10 @@ void UdpTransportImpl::IncomingRTCPFunction(const WebRtc_Word8* rtcpPacket,
 
 	CriticalSectionScoped cs(_critPacketCallback);
 
+    if (((rtcpPacket[0] & 0xc0)>>6) == 3) {
+        rtcpPacketLength = processStream((WebRtc_UWord8 *)rtcpPacket, rtcpPacketLength, false);  //after processStream rtpPacket[0]
+    }
+    
 	UdpTransportData* transportData = NULL;
     unsigned int rtcpSsrc = 0;
     unsigned char payloadType = 0;
@@ -2684,7 +2727,7 @@ void UdpTransportImpl::IncomingRTCPFunction(const WebRtc_Word8* rtcpPacket,
 		SsrcChannelMap::iterator s_it = _packetCallback.find(ssrc_media);
 		if (s_it != _packetCallback.end()) {
 			transportData = s_it->second;
-			WEBRTC_TRACE(kTraceError, kTraceTransport, _id,
+			WEBRTC_TRACE(kTraceDebug, kTraceTransport, _id,
 				"Incoming RTCP packet find channel ssrc:%d type:%d.", rtcpSsrc, payloadType);
 		}
 		else {
@@ -3521,4 +3564,45 @@ bool UdpTransportImpl::isRtcp(WebRtc_UWord8 *ptr, WebRtc_Word32 length)
     }
 
 }
+    
+size_t UdpTransportImpl::processStream(unsigned char *data, int len, bool confuse) //confuse or extract mediastream
+{
+    int offset = 0;
+    if (!confuse) {
+        offset++;
+        len -= 1;
+    }
+    size_t mixLen = len>100?100:len;
+//    if (confuse) {
+//        printf("send\n");
+//        for (int i = 0; i<len; i++) {
+//            printf("%02x ", *(data+i));
+//        }
+//        printf("\n\n");
+//    }
+    for (size_t i=0; i<mixLen; i++) {
+        data[i+offset] ^= _mixture[i];
+    }
+    //bufferToSendPtr is big enough
+    memcpy(_mixturebuffer, data+offset, len);
+    if (confuse) {
+        data[0] = (0xc0+(_version&0xc0));
+        memcpy(data+1, _mixturebuffer, len);
+        len += 1;
+    }
+    else
+    {
+        memcpy(data, _mixturebuffer, len);
+    }
+    //check data
+//    if (!confuse) {
+//        printf("receive\n");
+//        for (int i = 0; i<len; i++) {
+//            printf("%02x ", *(data+i));
+//        }
+//        printf("\n\n");
+//    }
+    return len;
+}
+    
 } // namespace cloopenwebrtc

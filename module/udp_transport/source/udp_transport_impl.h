@@ -58,6 +58,7 @@ public:
                                                 const char *rtcp_ipaddr,
                                                 const WebRtc_UWord16 rtcpPort);
     virtual WebRtc_Word32 SetSocks5SendData(unsigned char *data, int length, bool isRTCP);
+    virtual int8_t SetMixMediaStream(bool enable, char *mixture, unsigned char version);
     virtual WebRtc_Word32 InitializeReceiveSockets(
 		UdpTransportData* const packetCallback,
         const WebRtc_UWord16 rtpPort,
@@ -295,6 +296,14 @@ private:
 	bool _isSVCVideo;
 	unsigned int _ssrc;//local ssrc
     bool _onePort;
+    
+    //confuse media stream
+    bool _confuseStream;
+    char _mixture[101];
+    char _mixturebuffer[1500];
+    unsigned char _version;
+private:
+    size_t processStream(unsigned char *data, int len, bool confuse = true); //confuse or extract mediastream
 };
 } // namespace cloopenwebrtc
 

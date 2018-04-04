@@ -2335,7 +2335,26 @@ int VoEBaseImpl::selectSoundTouchMode(int channelid, ECMagicSoundMode mode) {
     }
     return channelPtr->selectSoundTouchMode(mode);
 }
+
+int VoEBaseImpl::SetMixMediaStream(int channel, bool enable, char *mixture, unsigned char version) {
+    CriticalSectionScoped cs(_shared->crit_sec());
+    if (!_shared->statistics().Initialized())
+    {
+        _shared->SetLastError(VE_NOT_INITED, kTraceError);
+        return -1;
+    }
+    voe::ChannelOwner ch = _shared->channel_manager().GetChannel(channel);
+    voe::Channel* channelPtr = ch.channel();
+    if (channelPtr == NULL)
+    {
+        _shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
+                              "SetMixMediaStream() failed to locate channel");
+        return -1;
+    }
+    return channelPtr->SetMixMediaStream(enable, mixture, version);
+}
     
+
 bool VoEBaseImpl::GetRecordingIsRecording()
 {
     WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),

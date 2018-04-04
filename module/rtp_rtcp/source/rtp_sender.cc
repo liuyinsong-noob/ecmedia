@@ -640,6 +640,7 @@ int32_t RTPSender::ReSendPacket(uint16_t packet_id, int64_t min_resend_time) {
   if (!retransmission_rate_limiter_->TryUseRate(packet->size()))
     return -1;
 
+  /*** // nack no waiting, seanlee
   if (paced_sender_) {
     // Convert from TickTime to Clock since capture_time_ms is based on
     // TickTime.
@@ -652,6 +653,7 @@ int32_t RTPSender::ReSendPacket(uint16_t packet_id, int64_t min_resend_time) {
 
     return packet->size();
   }
+  */
   bool rtx = (RtxStatus() & kRtxRetransmitted) > 0;
   int32_t packet_size = static_cast<int32_t>(packet->size());
   if (!PrepareAndSendPacket(std::move(packet), rtx, true, PacedPacketInfo()))

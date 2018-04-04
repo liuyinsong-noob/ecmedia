@@ -249,7 +249,7 @@ namespace cloopenwebrtc {
                 return ret;
             }
             
-            ret = WebRtcOpus_SetPacketLossRate(encoder_inst_ptr_, 40);//sean test audio mixer, original 5
+            ret = WebRtcOpus_SetPacketLossRate(encoder_inst_ptr_, 5);//sean test audio mixer, original 5
             if (ret < 0) {
                 WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
                              "Setting initial playback loss rate failed for Opus");
@@ -262,11 +262,11 @@ namespace cloopenwebrtc {
                              "Setting initial Fec failed for Opus");
             }
             
-            //    ret = WebRtcOpus_EnableDtx(encoder_inst_ptr_);
-            //    if (ret < 0) {
-            //        WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceAudioCoding, unique_id_,
-            //                     "Setting initial Dtx failed for Opus");
-            //    }
+                ret = WebRtcOpus_EnableDtx(encoder_inst_ptr_);
+                if (ret < 0) {
+                    WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+                                 "Setting initial Dtx failed for Opus");
+                }
             
             // Store bitrate.
             bitrate_ = codec_params->codec_inst.rate;
