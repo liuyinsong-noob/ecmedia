@@ -5642,6 +5642,7 @@ int ECMedia_video_set_mix_mediastream(int channel, bool enable, char *mixture, u
         return -99;
     }
 #endif
+    return 0;
 }
 
 //add by dingxf
