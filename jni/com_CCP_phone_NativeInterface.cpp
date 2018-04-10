@@ -1904,6 +1904,7 @@ JNIEXPORT jint JNICALL Java_com_CCP_phone_NativeInterface_configLiveVideoStream(
   config._camera_index = camera_index;
   config._fps = fps;
   config._resolution = EC_LiveVideoResolution(resolution);
+  config._frmae_degree = ECLiveFrameDegree_90;
   void * handle = createLiveStream();
   return configLiveVideoStream(handle, config);
 }

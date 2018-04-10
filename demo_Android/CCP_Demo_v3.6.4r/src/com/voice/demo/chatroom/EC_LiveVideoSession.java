@@ -115,6 +115,7 @@ public class EC_LiveVideoSession extends CCPBaseActivity implements View.OnClick
 
                 if(!running) {
                     running = true;
+                    NativeInterface.configLiveVideoStream(0, 15, 1, false);
                     NativeInterface.pushLiveStream(ec_live_url_text.getText().toString(), null);
                 } else {
                     running = false;
