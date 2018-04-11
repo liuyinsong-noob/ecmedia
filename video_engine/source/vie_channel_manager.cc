@@ -796,6 +796,17 @@ void ViEChannelManager::UpdateGCCBitrateConfig(int min_bitrate_bps,
         congestion_controller_->SetBweBitrates(min_bitrate_bps, start_bitrate_bps, max_bitrate_bps);
     }
 }
+    
+    
+    void ViEChannelManager::UpdateGCCBitrateConfig(int min_bitrate_bps,
+                                                   int start_bitrate_bps,
+                                                   int max_bitrate_bps)
+    {
+        if(congestion_controller_.get())
+        {
+            congestion_controller_->SetBweBitrates(min_bitrate_bps, start_bitrate_bps, max_bitrate_bps);
+        }
+    }
 
 //add by dingxf
 int ViEChannelManager::AddRemoteI420FrameCallback(const int video_channel, ECMedia_I420FrameCallBack callback)
