@@ -223,7 +223,9 @@ int ViECodecImpl::SetSendCodec(const int video_channel,
 			  video_codec_internal.simulcastStream[1].height = video_codec_internal.height;
 			  video_codec_internal.simulcastStream[1].numberOfTemporalLayers = 1;
 			  video_codec_internal.simulcastStream[1].targetBitrate = video_codec_internal.startBitrate - resolution_slave.targetBitrate;
-		  }
+              
+              
+            }
 	  }
   }
 
@@ -271,6 +273,19 @@ int ViECodecImpl::SetSendCodec(const int video_channel,
       return -1;
     }
   }
+    
+    
+    if (video_codec_internal.numberOfSimulcastStreams > 0) {
+        int sum_min_br_bps = (video_codec_internal.simulcastStream[0].minBitrate+video_codec_internal.simulcastStream[1].minBitrate)*1000;
+        int sum_max_br_bps = (video_codec_internal.simulcastStream[0].maxBitrate+video_codec_internal.simulcastStream[1].maxBitrate)*1000;
+        int sum_start_br_bps = (video_codec_internal.simulcastStream[0].targetBitrate+video_codec_internal.simulcastStream[1].targetBitrate)*1000;
+        shared_data_->channel_manager()->UpdateGCCBitrateConfig(sum_min_br_bps, sum_start_br_bps, sum_max_br_bps);
+    }else{
+        int min_br_bps = video_codec_internal.minBitrate * 1000;
+        int max_br_bps = video_codec_internal.maxBitrate * 1000;
+        int start_br_bps = video_codec_internal.startBitrate * 1000;
+        shared_data_->channel_manager()->UpdateGCCBitrateConfig(min_br_bps, start_br_bps, max_br_bps);
+    }
 
   // TODO(mflodman) Break out this part in GetLocalSsrcList().
   // Update all SSRCs to ViEEncoder.
