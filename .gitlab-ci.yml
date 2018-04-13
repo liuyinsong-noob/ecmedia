@@ -1,0 +1,107 @@
+stages:
+  - build
+  - test
+  - deploy
+
+before_script: 
+  - "cd build/source"
+  - "chmod 600 ../id_rsa.jenkins"
+ 
+### ---------------- job for master branch ------------------ ### 
+build_master_android:
+    stage: build
+    script: "python build_android.py"
+    only:
+      - master
+      - develop
+      - vp8_test
+    tags:
+      - mac_mini_178_218
+
+build_master_ios:
+    stage: build
+    script: "python build_ios.py"
+    only:
+      - master
+      - develop
+      - vp8_test
+    tags:
+      - mac_mini_178_218
+    artifacts:
+      expire_in: 1 week
+      paths:
+        - build/*.zip
+
+build_master_win:
+    stage: build
+    script: "python build_win.py"
+    only:
+      - master
+      - develop
+      - vp8_test
+    tags:
+      - win_pc
+    artifacts:
+      expire_in: 1 week
+      paths:
+        - build/*.zip
+
+test_master_android:
+    stage: test
+    script: "echo 'test android ok'"
+    only:
+      - master
+      - develop
+      - vp8_test
+    tags:
+      - mac_mini_178_218
+
+test_master_ios:
+    stage: test
+    script: "echo 'test ios ok'"
+    only:
+      - master
+      - develop
+      - vp8_test
+    tags:
+      - mac_mini_178_218
+
+test_master_win:
+    stage: test
+    script: "echo 'test windows ok'"
+    only:
+      - master
+      - develop
+      - vp8_test
+    tags:
+      - win_pc
+
+deploy_master_android:
+    stage: deploy
+    script: "echo 'deploy android ok'"
+    only:
+      - master
+      - develop
+      - vp8_test
+    tags:
+      - mac_mini_178_218
+
+deploy_master_ios:
+    stage: deploy
+    script: "echo 'deploy ios ok'"
+    only:
+      - master
+      - develop
+      - vp8_test
+    tags:
+      - mac_mini_178_218
+
+deploy_master_win:
+    stage: deploy
+    script: "echo 'deploy windows ok'"
+    only:
+      - master
+      - develop
+      - vp8_test
+    tags:
+      - win_pc

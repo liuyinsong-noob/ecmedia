@@ -9,7 +9,6 @@ import ConfigParser
 class BuildBase:
     def __init__(self, buildType, platform, projectPath):
         self.platform = platform
-        print os.system('chmod 600 ../id_rsa.jenkins')
         self.ProjectPath = projectPath
         self.EcmediaCpp = os.path.join(self.ProjectPath, 'ECMedia', 'source', 'ECMedia.cpp')
         self.EcmediaHeader = os.path.join(self.ProjectPath, 'ECMedia', 'interface', 'ECMedia.h')
@@ -227,7 +226,8 @@ class BuildBase:
     
     def copyToRemote(self, platform):
         os.chdir(self.BuildPath)
-        print os.system('scp -i id_rsa.jenkins ' + self.rarFileName + ' jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/' + platform + '/' + self.getEcmediaVersion()[0:4] + '.x')
+        print os.system('scp ' + self.rarFileName + ' jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/' + platform + '/' + self.getEcmediaVersion()[0:4] + '.x')
+    
     def updateReleaseNote(self):
         print os.system('git commit -a -m ' + '"docs: updste release note for %s"'%(self.getEcmediaVersion()))
         print os.system('git push')

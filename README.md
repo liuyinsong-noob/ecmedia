@@ -1,11 +1,30 @@
+##  ECMedia  
 
-```
-    ______________  ___         ___
-   / ____/ ____/  |/  /__  ____/ (_)___ _
-  / __/ / /   / /|_/ / _ \/ __  / / __ `/
- / /___/ /___/ /  / /  __/ /_/ / / /_/ /
-/_____/\____/_/  /_/\___/\__,_/_/\__,_/ 
+[![build status](http://192.168.178.8/media-sdk/ecmedia/badges/master/build.svg)](http://192.168.178.8/media-sdk/ecmedia/commits/master)
 
-```
 
-### 1. ECMedia 简介 
+
+Audio Video R&D Team
+
+[http://yuntongxun.com](http://yuntongxun.com) 
+
+[@seanlee](liqiang@yuntongxun.com)   [@zhaoyou](gezy@yuntongxun.com) 
+
+### Overview 
+
+
+
+
+
+### Usage
+
+
+
+
+
+### Wiki
+
+@see http://192.168.178.8/media-sdk/ecmedia/wikis/home
+
+
+
