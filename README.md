@@ -23,5 +23,3 @@ Audio Video R&D Team
 
 
 ### Wiki
-
-@see http://192.168.178.8/media-sdk/ecmedia/wikis/home
