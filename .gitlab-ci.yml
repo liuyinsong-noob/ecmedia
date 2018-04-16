@@ -5,7 +5,6 @@ stages:
 
 before_script: 
   - "cd build/source"
-  - "chmod 600 ../id_rsa.jenkins"
  
 ### ---------------- job for master & vp8_test branch ------------------ ### 
 ## -------> build
@@ -77,7 +76,7 @@ test_master_win:
 ## -----------> deploy
 deploy_master_android:
     stage: deploy
-    script: "scp build/android_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/android/v2.3.x/"
+    script: "scp ../android_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/android/v2.3.x/"
     only:
       - master
     tags:
@@ -85,7 +84,7 @@ deploy_master_android:
 
 deploy_master_ios:
     stage: deploy
-    script: "scp build/ios_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/ios/v2.3.x/"
+    script: "scp ../ios_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/ios/v2.3.x/"
     only:
       - master
     tags:
@@ -93,7 +92,7 @@ deploy_master_ios:
 
 deploy_master_win:
     stage: deploy
-    script: "scp build/windows_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/windows/v2.3.x/"
+    script: "scp ../windows_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/windows/v2.3.x/"
     only:
       - master
     tags:
@@ -146,7 +145,7 @@ deploy_br_dev_android:
     tags:
       - mac_mini_178_218
     when: manual
-    script: "scp build/android_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/android/v2.1.x/"
+    script: "scp ../android_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/android/v2.1.x/"
 
 deploy_br_dev_ios:
     stage: deploy
@@ -156,16 +155,16 @@ deploy_br_dev_ios:
     tags:
       - mac_mini_178_218
     when: manual
-    script: "scp build/ios_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/ios/v2.1.x/"
+    script: "scp ../ios_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/ios/v2.1.x/"
 
 deploy_br_dev_win:
     stage: deploy
-    script: "echo 'deploy windows ok'"
+    script: "echo '.. windows ok'"
     only:
       - vp8_test
     tags:
       - win_pc
     when: manual
-    script: "scp build/windows_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/windows/v2.1.x/"
+    script: "scp ../windows_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/windows/v2.1.x/"
 
 
