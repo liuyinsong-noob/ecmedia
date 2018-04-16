@@ -7,21 +7,25 @@ before_script:
   - "cd build/source"
   - "chmod 600 ../id_rsa.jenkins"
  
-### ---------------- job for master branch ------------------ ### 
+### ---------------- job for master & vp8_test branch ------------------ ### 
 ## -------> build
 build_master_android:
     stage: build
     script: "python build_android.py"
+    allow_failure: true
     only:
       - master
+      - vp8_test
     tags:
       - mac_mini_178_218
 
 build_master_ios:
     stage: build
     script: "python build_ios.py"
+    allow_failure: true
     only:
       - master
+      - vp8_test   
     tags:
       - mac_mini_178_218
     artifacts:
@@ -32,8 +36,10 @@ build_master_ios:
 build_master_win:
     stage: build
     script: "python build_win.py"
+    allow_failure: true
     only:
       - master
+      - vp8_test
     tags:
       - win_pc
     artifacts:
@@ -102,10 +108,8 @@ build_br_dev_android:
     script: "python build_android.py"
     only:
       - develop
-      - vp8_test
     tags:
       - mac_mini_178_218
-    allow_failure: true
     artifacts:
       expire_in: 1 week
       paths:
@@ -116,10 +120,8 @@ build_br_dev_ios:
     script: "python build_ios.py"
     only:
       - develop
-      - vp8_test
     tags:
       - mac_mini_178_218
-    allow_failure: true
 
 
 build_br_dev_win:
@@ -127,10 +129,8 @@ build_br_dev_win:
     script: "python build_win.py"
     only:
       - develop
-      - vp8_test
     tags:
       - win_pc
-    allow_failure: true
     artifacts:
       expire_in: 1 week
       paths:
