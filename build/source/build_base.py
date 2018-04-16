@@ -67,8 +67,8 @@ class BuildBase:
             self.writeReleaseNote(timestamp, sha)
 
         self.rarFiles()
-        if self.copyToRemote(self.platform) == 0:
-            pass
+        # if self.copyToRemote(self.platform) == 0:
+        #     pass
 
 
     def build():

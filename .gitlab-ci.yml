@@ -8,13 +8,12 @@ before_script:
   - "chmod 600 ../id_rsa.jenkins"
  
 ### ---------------- job for master branch ------------------ ### 
+## -------> build
 build_master_android:
     stage: build
     script: "python build_android.py"
     only:
       - master
-      - develop
-      - vp8_test
     tags:
       - mac_mini_178_218
 
@@ -23,8 +22,6 @@ build_master_ios:
     script: "python build_ios.py"
     only:
       - master
-      - develop
-      - vp8_test
     tags:
       - mac_mini_178_218
     artifacts:
@@ -37,8 +34,6 @@ build_master_win:
     script: "python build_win.py"
     only:
       - master
-      - develop
-      - vp8_test
     tags:
       - win_pc
     artifacts:
@@ -46,13 +41,13 @@ build_master_win:
       paths:
         - build/*.zip
 
+
+## --------> test
 test_master_android:
     stage: test
     script: "echo 'test android ok'"
     only:
       - master
-      - develop
-      - vp8_test
     tags:
       - mac_mini_178_218
 
@@ -61,8 +56,6 @@ test_master_ios:
     script: "echo 'test ios ok'"
     only:
       - master
-      - develop
-      - vp8_test
     tags:
       - mac_mini_178_218
 
@@ -71,37 +64,108 @@ test_master_win:
     script: "echo 'test windows ok'"
     only:
       - master
-      - develop
-      - vp8_test
     tags:
       - win_pc
 
+
+## -----------> deploy
 deploy_master_android:
     stage: deploy
-    script: "echo 'deploy android ok'"
+    script: "scp build/android_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/android/v2.3.x/"
     only:
       - master
-      - develop
-      - vp8_test
     tags:
       - mac_mini_178_218
 
 deploy_master_ios:
     stage: deploy
-    script: "echo 'deploy ios ok'"
+    script: "scp build/ios_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/ios/v2.3.x/"
     only:
       - master
-      - develop
-      - vp8_test
     tags:
       - mac_mini_178_218
 
 deploy_master_win:
     stage: deploy
-    script: "echo 'deploy windows ok'"
+    script: "scp build/windows_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/windows/v2.3.x/"
     only:
       - master
+    tags:
+      - win_pc
+
+
+### ---------------- job for branch except master ------------------ ### \
+
+## ------> build
+build_br_dev_android:
+    stage: build
+    script: "python build_android.py"
+    only:
+      - develop
+      - vp8_test
+    tags:
+      - mac_mini_178_218
+    allow_failure: true
+    artifacts:
+      expire_in: 1 week
+      paths:
+        - build/*.zip
+
+build_br_dev_ios:
+    stage: build
+    script: "python build_ios.py"
+    only:
+      - develop
+      - vp8_test
+    tags:
+      - mac_mini_178_218
+    allow_failure: true
+
+
+build_br_dev_win:
+    stage: build
+    script: "python build_win.py"
+    only:
       - develop
       - vp8_test
     tags:
       - win_pc
+    allow_failure: true
+    artifacts:
+      expire_in: 1 week
+      paths:
+        - build/*.zip
+
+
+## -------> deploy
+deploy_master_android:
+    stage: deploy
+    script: "echo 'deploy android ok'"
+    only:
+      - vp8_test
+    tags:
+      - mac_mini_178_218
+    when: manual
+    script: "scp build/android_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/android/v2.1.x/"
+
+deploy_master_ios:
+    stage: deploy
+    script: "echo 'deploy ios ok'"
+    only:
+      - vp8_test
+    tags:
+      - mac_mini_178_218
+    when: manual
+    script: "scp build/ios_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/ios/v2.1.x/"
+
+deploy_master_win:
+    stage: deploy
+    script: "echo 'deploy windows ok'"
+    only:
+      - vp8_test
+    tags:
+      - win_pc
+    when: manual
+    script: "scp build/windows_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/windows/v2.1.x/"
+
+
