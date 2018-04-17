@@ -1,8 +1,9 @@
 apply plugin: 'android'
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':CCP_PHONE_SDK_Android_v3.6.4r')
+    implementation project(':NDK_ECMedia')
 }
 
 android {

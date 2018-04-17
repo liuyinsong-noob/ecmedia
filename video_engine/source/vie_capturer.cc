@@ -63,8 +63,10 @@ ViECapturer::ViECapturer(int capture_id,
       brightness_frame_stats_(NULL),
       current_brightness_level_(Normal),
       reported_brightness_level_(Normal),
+#if defined(WEBRTC_WIN)
 	  beauty_filter_inst_(NULL),
 	  beauty_filter_cs_(CriticalSectionWrapper::CreateCriticalSection()),
+#endif
       observer_cs_(CriticalSectionWrapper::CreateCriticalSection()),
       observer_(NULL),
       overuse_detector_(new OveruseFrameDetector(Clock::GetRealTimeClock())){
@@ -112,13 +114,14 @@ ViECapturer::~ViECapturer() {
     deflicker_frame_stats_ = NULL;
   }
   delete brightness_frame_stats_;
-
+#if defined(WEBRTC_WIN)
   beauty_filter_cs_->Enter();
   if (beauty_filter_inst_) {
 	  Free_Beauty_Filter(beauty_filter_inst_);
 	  beauty_filter_inst_ = NULL;
   }
   beauty_filter_cs_->Leave();
+#endif
 }
 
 ViECapturer* ViECapturer::CreateViECapture(
@@ -509,6 +512,7 @@ int32_t ViECapturer::EnableBrightnessAlarm(bool enable) {
 }
 
 int32_t ViECapturer::EnableBeautyFilter(bool enable) {
+#if defined(WEBRTC_WIN)
 	CriticalSectionScoped cs(beauty_filter_cs_.get());
 	if (enable) {
 		if (!beauty_filter_inst_) {
@@ -522,6 +526,7 @@ int32_t ViECapturer::EnableBeautyFilter(bool enable) {
 			beauty_filter_inst_ = NULL;
 		}
 	}
+#endif
 	return 0;
 }
 
@@ -612,6 +617,7 @@ void ViECapturer::DeliverI420Frame(I420VideoFrame* video_frame) {
                               video_frame->height());
   }
 
+#if defined(WEBRTC_WIN)
 	{
 		CriticalSectionScoped cs(beauty_filter_cs_.get());
 
@@ -661,7 +667,7 @@ void ViECapturer::DeliverI420Frame(I420VideoFrame* video_frame) {
 			//LOG_F(LS_ERROR) << "dTime = "<<dwFinish - dwStart;
 		}
 	}
-
+#endif
 
   // Deliver the captured frame to all observers (channels, renderer or file).
   ViEFrameProviderBase::DeliverFrame(video_frame, std::vector<uint32_t>(), water_mark_);

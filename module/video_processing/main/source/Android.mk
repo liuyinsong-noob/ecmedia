@@ -16,7 +16,7 @@ LOCAL_ARM_MODE := arm
 LOCAL_MODULE_CLASS := STATIC_LIBRARIES
 LOCAL_MODULE := libwebrtc_video_processing
 LOCAL_MODULE_TAGS := optional
-LOCAL_CPP_EXTENSION := .cc .c
+LOCAL_CPP_EXTENSION := .cc 
 LOCAL_SRC_FILES := \
     brighten.cc \
     brightness_detection.cc \
@@ -33,9 +33,6 @@ LOCAL_SRC_FILES := \
 	./util/denoiser_filter_c.cc \
 	./util/noise_estimation.cc \
 	./util/skin_detection.cc \
-	./beauty_filter/beauty_filter_core.c \
-	./beauty_filter/ipl_color.c \
-	./beauty_filter/ipl_sharpen.c
 
 ifeq ($(TARGET_ARCH),x86)
 LOCAL_SRC_FILES += \

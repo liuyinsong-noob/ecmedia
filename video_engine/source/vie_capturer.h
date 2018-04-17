@@ -197,10 +197,12 @@ class ViECapturer
   VideoProcessingModule::FrameStats* brightness_frame_stats_;
   Brightness current_brightness_level_;
   Brightness reported_brightness_level_;
-
+          
+#if defined(WEBRTC_WIN)
   //beauty_filter
   void *beauty_filter_inst_;
   scoped_ptr<CriticalSectionWrapper> beauty_filter_cs_;
+#endif
 
   // Statistics observer.
   scoped_ptr<CriticalSectionWrapper> observer_cs_;
