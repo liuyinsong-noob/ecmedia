@@ -1,6 +1,5 @@
 stages:
   - build
-  - test
   - deploy
 
 before_script: 
@@ -35,32 +34,6 @@ build_master_win:
     only:
       - master
       - vp8_test
-    tags:
-      - win_pc
-
-
-## --------> test
-test_master_android:
-    stage: test
-    script: "echo 'test android ok'"
-    only:
-      - master
-    tags:
-      - mac_mini_178_218
-
-test_master_ios:
-    stage: test
-    script: "echo 'test ios ok'"
-    only:
-      - master
-    tags:
-      - mac_mini_178_218
-
-test_master_win:
-    stage: test
-    script: "echo 'test windows ok'"
-    only:
-      - master
     tags:
       - win_pc
 
