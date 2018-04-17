@@ -57,8 +57,8 @@ class BuildBase:
                 return -1
         
         # audio and video both build success
-        self.build_config.set('build_state', self.platform + '_video_state', 'rebuild')
-        self.build_config.set('build_state', self.platform + '_audio_state', 'rebuild')
+        # self.build_config.set('build_state', self.platform + '_video_state', 'rebuild')
+        # self.build_config.set('build_state', self.platform + '_audio_state', 'rebuild')
         self.build_config.write(open(self.build_config_path, "w"))
 
         version, timestamp, sha = self.getLastCommitInfo()

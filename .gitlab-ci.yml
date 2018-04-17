@@ -27,10 +27,6 @@ build_master_ios:
       - vp8_test   
     tags:
       - mac_mini_178_218
-    artifacts:
-      expire_in: 1 week
-      paths:
-        - build/*.zip
 
 build_master_win:
     stage: build
@@ -41,10 +37,6 @@ build_master_win:
       - vp8_test
     tags:
       - win_pc
-    artifacts:
-      expire_in: 1 week
-      paths:
-        - build/*.zip
 
 
 ## --------> test
@@ -76,33 +68,36 @@ test_master_win:
 ## -----------> deploy
 deploy_master_android:
     stage: deploy
-    script: "scp ../android_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/android/v2.3.x/"
+    script: "cp ../android_*.zip ~/.ecmedia_libs_archives/all_libs/android/v2.3.x/"
     only:
       - master
     variables:
       GIT_STRATEGY: none
     tags:
       - mac_mini_178_218
+    allow_failure: true
 
 deploy_master_ios:
     stage: deploy
-    script: "scp ../ios_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/ios/v2.3.x/"
+    script: "cp ../ios_*.zip ~/.ecmedia_libs_archives/all_libs/ios/v2.3.x/"
     only:
       - master
     variables:
       GIT_STRATEGY: none
     tags:
       - mac_mini_178_218
+    allow_failure: true
 
 deploy_master_win:
     stage: deploy
-    script: "scp ../windows_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/windows/v2.3.x/"
+    script: "scp ../windows_*.zip seanlee@192.168.178.218:~/.ecmedia_libs_archives/all_libs/windows/v2.3.x/"
     only:
       - master
     variables:
       GIT_STRATEGY: none
     tags:
       - win_pc
+    allow_failure: true
 
 
 ### ---------------- job for branch except master ------------------ ### \
@@ -115,10 +110,6 @@ build_br_dev_android:
       - develop
     tags:
       - mac_mini_178_218
-    artifacts:
-      expire_in: 1 week
-      paths:
-        - build/*.zip
 
 build_br_dev_ios:
     stage: build
@@ -136,16 +127,12 @@ build_br_dev_win:
       - develop
     tags:
       - win_pc
-    artifacts:
-      expire_in: 1 week
-      paths:
-        - build/*.zip
 
 
 ## -------> deploy
 deploy_br_other_android:
     stage: deploy
-    script: "scp ../android_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/android/v2.1.x/"
+    script: "cp ../android_*.zip ~/.ecmedia_libs_archives/all_libs/android/v2.1.x/"
     only:
       - vp8_test
     tags:
@@ -157,7 +144,7 @@ deploy_br_other_android:
 
 deploy_br_other_ios:
     stage: deploy
-    script: "scp ../ios_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/ios/v2.1.x/"
+    script: "cp ../ios_*.zip ~/.ecmedia_libs_archives/all_libs/ios/v2.1.x/"
     only:
       - vp8_test
     tags:
@@ -169,7 +156,7 @@ deploy_br_other_ios:
 
 deploy_br_other_win:
     stage: deploy
-    script: "scp ../windows_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/windows/v2.1.x/"
+    script: "scp ../windows_*.zip seanlee@192.168.178.218:~/.ecmedia_libs_archives/all_libs/windows/v2.1.x/"
     only:
       - vp8_test
     tags:
@@ -177,6 +164,3 @@ deploy_br_other_win:
     when: manual
     variables:
       GIT_STRATEGY: none
-    
-
-
