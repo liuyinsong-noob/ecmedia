@@ -23,6 +23,6 @@
 #define AVFILTER_AVFILTERGRAPH_H
 
 #include "avfilter.h"
-#include "libavutil/log.h"
+#include "libavutil_ios/log.h"
 
 #endif /* AVFILTER_AVFILTERGRAPH_H */
