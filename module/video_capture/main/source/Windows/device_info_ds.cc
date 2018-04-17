@@ -78,7 +78,8 @@ DeviceInfoDS::DeviceInfoDS(const int32_t id)
 
     ///CoInitializeEx(NULL, COINIT_APARTMENTTHREADED ); //| COINIT_SPEED_OVER_MEMORY
     HRESULT hr = CoInitializeEx(NULL, COINIT_MULTITHREADED); // Use COINIT_MULTITHREADED since Voice Engine uses COINIT_MULTITHREADED
-    if (FAILED(hr))
+    //if (FAILED(hr))
+	if (hr != S_OK)
     {
         // Avoid calling CoUninitialize() since CoInitializeEx() failed.
         _CoUninitializeIsRequired = FALSE;

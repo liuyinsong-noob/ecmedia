@@ -61,7 +61,8 @@ class ScopedCOMInitializer {
   }
 
   ScopedCOMInitializer::~ScopedCOMInitializer() {
-    if (SUCCEEDED(hr_))
+    //if (SUCCEEDED(hr_))
+	if (hr_ == S_OK)
       CoUninitialize();
   }
 
