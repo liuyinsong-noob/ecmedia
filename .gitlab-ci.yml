@@ -79,6 +79,8 @@ deploy_master_android:
     script: "scp ../android_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/android/v2.3.x/"
     only:
       - master
+    variables:
+      GIT_STRATEGY: none
     tags:
       - mac_mini_178_218
 
@@ -87,6 +89,8 @@ deploy_master_ios:
     script: "scp ../ios_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/ios/v2.3.x/"
     only:
       - master
+    variables:
+      GIT_STRATEGY: none
     tags:
       - mac_mini_178_218
 
@@ -95,6 +99,8 @@ deploy_master_win:
     script: "scp ../windows_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/windows/v2.3.x/"
     only:
       - master
+    variables:
+      GIT_STRATEGY: none
     tags:
       - win_pc
 
@@ -137,34 +143,40 @@ build_br_dev_win:
 
 
 ## -------> deploy
-deploy_br_dev_android:
+deploy_br_other_android:
     stage: deploy
-    script: "echo 'deploy android ok'"
-    only:
-      - vp8_test
-    tags:
-      - mac_mini_178_218
-    when: manual
     script: "scp ../android_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/android/v2.1.x/"
-
-deploy_br_dev_ios:
-    stage: deploy
-    script: "echo 'deploy ios ok'"
     only:
       - vp8_test
     tags:
       - mac_mini_178_218
     when: manual
-    script: "scp ../ios_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/ios/v2.1.x/"
+    variables:
+      GIT_STRATEGY: none
+    
 
-deploy_br_dev_win:
+deploy_br_other_ios:
     stage: deploy
-    script: "echo '.. windows ok'"
+    script: "scp ../ios_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/ios/v2.1.x/"
+    only:
+      - vp8_test
+    tags:
+      - mac_mini_178_218
+    when: manual
+    variables:
+      GIT_STRATEGY: none
+    
+
+deploy_br_other_win:
+    stage: deploy
+    script: "scp ../windows_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/windows/v2.1.x/"
     only:
       - vp8_test
     tags:
       - win_pc
     when: manual
-    script: "scp ../windows_*.zip jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/windows/v2.1.x/"
+    variables:
+      GIT_STRATEGY: none
+    
 
 
