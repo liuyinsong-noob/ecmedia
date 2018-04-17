@@ -284,8 +284,10 @@ int32_t VideoCaptureImpl::IncomingFrame(
     const int32_t height = frameInfo.height;
     RawVideoType rawFrameType = frameInfo.rawType;
 #ifdef __ANDROID__
-    //use video frame fist bit for indicating, android raw video type.
-    rawFrameType = ((videoFrame[0] & 0x01) == 0x00) ? kVideoNV21 : kVideoRGBA;
+    //use video frame fist bit for indicating android raw video type.
+    // rawFrameType = ((videoFrame[0] & 0x01) == 0x00) ? kVideoNV21 : kVideoRGBA;
+    // todo: now force to close android video filter, needing support it someday.
+    rawFrameType = kVideoNV21;
 #endif
 
     TRACE_EVENT1("cloopenwebrtc", "VC::IncomingFrame", "capture_time", captureTime);
