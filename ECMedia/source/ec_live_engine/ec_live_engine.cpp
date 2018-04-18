@@ -243,9 +243,9 @@ namespace cloopenwebrtc {
 
     void ECLiveEngine::getVideoStreamInfo(EC_LiveVideoResolution resolution, int &width, int &height, int &bitrate) {
         width = 640;
-        height = 360;
+        height = 480;
 #ifndef WIN32
-        width = 360;
+        width = 480;
         height = 640;
 #endif
         switch (resolution) {
@@ -260,11 +260,11 @@ namespace cloopenwebrtc {
                 
                 break;
             case EC_VIDEO_RESOLUTION_HD:
-                width = 960;
-                height = 540;
+                width = 640;
+                height = 480;
 #ifndef WIN32
-                width = 540;
-                height = 960;
+                width = 480;
+                height = 640;
                 bitrate = 1024;
 #endif
                 break;
