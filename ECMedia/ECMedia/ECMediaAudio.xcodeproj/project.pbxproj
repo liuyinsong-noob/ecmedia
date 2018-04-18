@@ -17,6 +17,10 @@
 		05E86F3C1B3BA16D00BDBCE6 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 05E86F351B3BA16D00BDBCE6 /* base64.c */; };
 		05E86F3E1B3BA16D00BDBCE6 /* ECMedia.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05E86F371B3BA16D00BDBCE6 /* ECMedia.cpp */; };
 		05F53FF81C5B0CE50003213A /* libNetEq.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB51A091B2807470009077D /* libNetEq.a */; };
+		1F1EDF0620871C12003FEAD0 /* librtp_rtcp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1EDF0120871BDC003FEAD0 /* librtp_rtcp.a */; };
+		1F1EDF1220871CC3003FEAD0 /* libwebrtc_utility.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1EDF0D20871C9F003FEAD0 /* libwebrtc_utility.a */; };
+		1F1EDF1420871D8D003FEAD0 /* common_types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F1EDF1320871D8D003FEAD0 /* common_types.cc */; };
+		1F1EDF2220871F2E003FEAD0 /* librtc_event_log.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1EDF1D20871F1B003FEAD0 /* librtc_event_log.a */; };
 		AD48182E1F2B1B7C00B6126D /* VoeObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD48182D1F2B1B7C00B6126D /* VoeObserver.cpp */; };
 		AD4818911F2B243100B6126D /* MediaStatisticsData.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD48188F1F2B243100B6126D /* MediaStatisticsData.pb.cc */; };
 		AD4818C01F2B248500B6126D /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD4818BD1F2B247900B6126D /* libprotobuf.a */; };
@@ -34,9 +38,7 @@
 		ADB51A4E1B2807B40009077D /* libG729.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB519E51B2807170009077D /* libG729.a */; };
 		ADB51A501B2807B40009077D /* liblibjpeg_turbo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB51A0F1B2807780009077D /* liblibjpeg_turbo.a */; };
 		ADB51A511B2807B40009077D /* libmedia_file.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB519C01B2806C60009077D /* libmedia_file.a */; };
-		ADB51A541B2807B40009077D /* librtp_rtcp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB519B41B2806A90009077D /* librtp_rtcp.a */; };
 		ADB51A581B2807B40009077D /* libudp_transport.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB519A81B28069D0009077D /* libudp_transport.a */; };
-		ADB51A601B2807B40009077D /* libwebrtc_utility.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB519A21B2806950009077D /* libwebrtc_utility.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +104,69 @@
 			proxyType = 1;
 			remoteGlobalIDString = 55AD134A15C89A52008A2BDA;
 			remoteInfo = audioprocess;
+		};
+		1F1EDF0020871BDC003FEAD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F1EDEFB20871BDC003FEAD0 /* rtp_rtcp_audio.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3FAF879A15C7E82F000D5497;
+			remoteInfo = rtp_rtcp;
+		};
+		1F1EDF0220871BDC003FEAD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F1EDEFB20871BDC003FEAD0 /* rtp_rtcp_audio.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AD1F0EE01D476ADE00C33F53;
+			remoteInfo = rtp_rtcp_Mac;
+		};
+		1F1EDF0420871C0B003FEAD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F1EDEFB20871BDC003FEAD0 /* rtp_rtcp_audio.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3FAF879915C7E82F000D5497;
+			remoteInfo = rtp_rtcp;
+		};
+		1F1EDF0C20871C9F003FEAD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F1EDF0720871C9F003FEAD0 /* webrtc_utility_audio.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3FAA8A7715C8BC8800561C64;
+			remoteInfo = webrtc_utility;
+		};
+		1F1EDF0E20871C9F003FEAD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F1EDF0720871C9F003FEAD0 /* webrtc_utility_audio.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AD1F0F131D476B9800C33F53;
+			remoteInfo = webrtc_utility_Mac;
+		};
+		1F1EDF1020871CBD003FEAD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F1EDF0720871C9F003FEAD0 /* webrtc_utility_audio.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3FAA8A7615C8BC8800561C64;
+			remoteInfo = webrtc_utility;
+		};
+		1F1EDF1C20871F1B003FEAD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F1EDF1720871F1A003FEAD0 /* rtc_event_log.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 450D722F1F171D6B00CD5776;
+			remoteInfo = rtc_event_log;
+		};
+		1F1EDF1E20871F1B003FEAD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F1EDF1720871F1A003FEAD0 /* rtc_event_log.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1FE07E071FE7AEBF0018E762;
+			remoteInfo = "rtc_event_log Mac";
+		};
+		1F1EDF2020871F27003FEAD0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F1EDF1720871F1A003FEAD0 /* rtc_event_log.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 450D722E1F171D6B00CD5776;
+			remoteInfo = rtc_event_log;
 		};
 		AD3630B01F429EBA00F0C20B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -201,13 +266,6 @@
 			remoteGlobalIDString = ADC5494A1D485C2400A5C852;
 			remoteInfo = NetEq_Mac;
 		};
-		AD4818191F2B1B7200B6126D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADB519AF1B2806A90009077D /* rtp_rtcp.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AD1F0EE01D476ADE00C33F53;
-			remoteInfo = rtp_rtcp_Mac;
-		};
 		AD48181C1F2B1B7200B6126D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ADB519781B2806460009077D /* system_wrappers.xcodeproj */;
@@ -235,13 +293,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = ADC5483B1D485C1100A5C852;
 			remoteInfo = webrtc_opus_Mac;
-		};
-		AD48182B1F2B1B7200B6126D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADB5199D1B2806950009077D /* webrtc_utility.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AD1F0F131D476B9800C33F53;
-			remoteInfo = webrtc_utility_Mac;
 		};
 		AD4818BC1F2B247900B6126D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -299,26 +350,12 @@
 			remoteGlobalIDString = 55AD155B15C8A221008A2BDA;
 			remoteInfo = media_file;
 		};
-		AD4818CD1F2B249F00B6126D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADB519AF1B2806A90009077D /* rtp_rtcp.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 3FAF879915C7E82F000D5497;
-			remoteInfo = rtp_rtcp;
-		};
 		AD4818CF1F2B249F00B6126D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ADB519A31B28069D0009077D /* udp_transport.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 3FAA0E3715C8930A00C33657;
 			remoteInfo = udp_transport;
-		};
-		AD4818D11F2B249F00B6126D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADB5199D1B2806950009077D /* webrtc_utility.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 3FAA8A7615C8BC8800561C64;
-			remoteInfo = webrtc_utility;
 		};
 		AD4818D31F2B249F00B6126D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -432,26 +469,12 @@
 			remoteGlobalIDString = 5519D05615C82C7E00719504;
 			remoteInfo = system_wrappers;
 		};
-		ADB519A11B2806950009077D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADB5199D1B2806950009077D /* webrtc_utility.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3FAA8A7715C8BC8800561C64;
-			remoteInfo = webrtc_utility;
-		};
 		ADB519A71B28069D0009077D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ADB519A31B28069D0009077D /* udp_transport.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 3FAA0E3815C8930A00C33657;
 			remoteInfo = udp_transport;
-		};
-		ADB519B31B2806A90009077D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ADB519AF1B2806A90009077D /* rtp_rtcp.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3FAF879A15C7E82F000D5497;
-			remoteInfo = rtp_rtcp;
 		};
 		ADB519BF1B2806C60009077D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -568,6 +591,10 @@
 		05E86F351B3BA16D00BDBCE6 /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base64.c; sourceTree = "<group>"; };
 		05E86F371B3BA16D00BDBCE6 /* ECMedia.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ECMedia.cpp; sourceTree = "<group>"; };
 		05E86F381B3BA16D00BDBCE6 /* RecordVoip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = RecordVoip.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		1F1EDEFB20871BDC003FEAD0 /* rtp_rtcp_audio.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = rtp_rtcp_audio.xcodeproj; path = ../../../module/rtp_rtcp/rtp_rtcp_audio.xcodeproj; sourceTree = "<group>"; };
+		1F1EDF0720871C9F003FEAD0 /* webrtc_utility_audio.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_utility_audio.xcodeproj; path = ../../../module/utility/webrtc_utility_audio.xcodeproj; sourceTree = "<group>"; };
+		1F1EDF1320871D8D003FEAD0 /* common_types.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = common_types.cc; path = ../../module/common_types.cc; sourceTree = "<group>"; };
+		1F1EDF1720871F1A003FEAD0 /* rtc_event_log.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = rtc_event_log.xcodeproj; path = ../../../logging/rtc_event_log/rtc_event_log/rtc_event_log.xcodeproj; sourceTree = "<group>"; };
 		AD48182D1F2B1B7C00B6126D /* VoeObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoeObserver.cpp; sourceTree = "<group>"; };
 		AD48188F1F2B243100B6126D /* MediaStatisticsData.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MediaStatisticsData.pb.cc; sourceTree = "<group>"; };
 		AD4818901F2B243100B6126D /* MediaStatisticsData.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaStatisticsData.pb.h; sourceTree = "<group>"; };
@@ -580,9 +607,7 @@
 		ADB5192F1B27DFCA0009077D /* libECMediaAudio.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libECMediaAudio.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADB519401B27DFCA0009077D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADB519781B2806460009077D /* system_wrappers.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = system_wrappers.xcodeproj; path = ../../../system_wrappers/system_wrappers.xcodeproj; sourceTree = "<group>"; };
-		ADB5199D1B2806950009077D /* webrtc_utility.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_utility.xcodeproj; path = ../../../module/utility/webrtc_utility.xcodeproj; sourceTree = "<group>"; };
 		ADB519A31B28069D0009077D /* udp_transport.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = udp_transport.xcodeproj; path = ../../../module/udp_transport/udp_transport.xcodeproj; sourceTree = "<group>"; };
-		ADB519AF1B2806A90009077D /* rtp_rtcp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = rtp_rtcp.xcodeproj; path = ../../../module/rtp_rtcp/rtp_rtcp.xcodeproj; sourceTree = "<group>"; };
 		ADB519BB1B2806C60009077D /* media_file.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = media_file.xcodeproj; path = ../../../module/media_file/media_file.xcodeproj; sourceTree = "<group>"; };
 		ADB519C11B2806CF0009077D /* bitrate_controller.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = bitrate_controller.xcodeproj; path = ../../../module/bitrate_controller/bitrate_controller.xcodeproj; sourceTree = "<group>"; };
 		ADB519C71B2806D50009077D /* audioprocess.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = audioprocess.xcodeproj; path = ../../../module/audioprocess/audioprocess.xcodeproj; sourceTree = "<group>"; };
@@ -602,6 +627,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F1EDF2220871F2E003FEAD0 /* librtc_event_log.a in Frameworks */,
+				1F1EDF1220871CC3003FEAD0 /* libwebrtc_utility.a in Frameworks */,
+				1F1EDF0620871C12003FEAD0 /* librtp_rtcp.a in Frameworks */,
 				AD48191F1F2B268E00B6126D /* libSoundTouch_Media.a in Frameworks */,
 				AD4819161F2B264700B6126D /* libL16.a in Frameworks */,
 				AD4819071F2B259100B6126D /* libsrtp.a in Frameworks */,
@@ -623,9 +651,7 @@
 				ADB51A4E1B2807B40009077D /* libG729.a in Frameworks */,
 				ADB51A501B2807B40009077D /* liblibjpeg_turbo.a in Frameworks */,
 				ADB51A511B2807B40009077D /* libmedia_file.a in Frameworks */,
-				ADB51A541B2807B40009077D /* librtp_rtcp.a in Frameworks */,
 				ADB51A581B2807B40009077D /* libudp_transport.a in Frameworks */,
-				ADB51A601B2807B40009077D /* libwebrtc_utility.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -695,6 +721,7 @@
 		05E86F341B3BA16D00BDBCE6 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				1F1EDF1320871D8D003FEAD0 /* common_types.cc */,
 				AD4819221F2B26D100B6126D /* statsCollector.cc */,
 				AD48188F1F2B243100B6126D /* MediaStatisticsData.pb.cc */,
 				AD4818901F2B243100B6126D /* MediaStatisticsData.pb.h */,
@@ -706,6 +733,33 @@
 			);
 			name = source;
 			path = ../../source;
+			sourceTree = "<group>";
+		};
+		1F1EDEFC20871BDC003FEAD0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1F1EDF0120871BDC003FEAD0 /* librtp_rtcp.a */,
+				1F1EDF0320871BDC003FEAD0 /* librtp_rtcp_Mac.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1F1EDF0820871C9F003FEAD0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1F1EDF0D20871C9F003FEAD0 /* libwebrtc_utility.a */,
+				1F1EDF0F20871C9F003FEAD0 /* libwebrtc_utility_Mac.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1F1EDF1820871F1A003FEAD0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1F1EDF1D20871F1B003FEAD0 /* librtc_event_log.a */,
+				1F1EDF1F20871F1B003FEAD0 /* librtc_event_log Mac.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		AD4818B61F2B245E00B6126D /* third_party */ = {
@@ -809,10 +863,10 @@
 		ADB5196B1B27E8920009077D /* libraries */ = {
 			isa = PBXGroup;
 			children = (
-				AD4818B61F2B245E00B6126D /* third_party */,
 				ADB519781B2806460009077D /* system_wrappers.xcodeproj */,
 				0528A52A1CFD436F00DF126F /* voice_engine.xcodeproj */,
 				ADB5197E1B2806660009077D /* module */,
+				AD4818B61F2B245E00B6126D /* third_party */,
 			);
 			name = libraries;
 			sourceTree = "<group>";
@@ -829,6 +883,9 @@
 		ADB5197E1B2806660009077D /* module */ = {
 			isa = PBXGroup;
 			children = (
+				1F1EDF1720871F1A003FEAD0 /* rtc_event_log.xcodeproj */,
+				1F1EDF0720871C9F003FEAD0 /* webrtc_utility_audio.xcodeproj */,
+				1F1EDEFB20871BDC003FEAD0 /* rtp_rtcp_audio.xcodeproj */,
 				0528A51F1CFD418300DF126F /* common_audio.xcodeproj */,
 				ADB51A0A1B2807780009077D /* libjpeg_turbo.xcodeproj */,
 				ADB519D31B2806E40009077D /* audio_conference_mixer.xcodeproj */,
@@ -836,21 +893,10 @@
 				ADB519C71B2806D50009077D /* audioprocess.xcodeproj */,
 				ADB519C11B2806CF0009077D /* bitrate_controller.xcodeproj */,
 				ADB519BB1B2806C60009077D /* media_file.xcodeproj */,
-				ADB519AF1B2806A90009077D /* rtp_rtcp.xcodeproj */,
 				ADB519A31B28069D0009077D /* udp_transport.xcodeproj */,
-				ADB5199D1B2806950009077D /* webrtc_utility.xcodeproj */,
 				ADB519D91B2806EF0009077D /* audio_coding */,
 			);
 			name = module;
-			sourceTree = "<group>";
-		};
-		ADB5199E1B2806950009077D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				ADB519A21B2806950009077D /* libwebrtc_utility.a */,
-				AD48182C1F2B1B7200B6126D /* libwebrtc_utility_Mac.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		ADB519A41B28069D0009077D /* Products */ = {
@@ -858,15 +904,6 @@
 			children = (
 				ADB519A81B28069D0009077D /* libudp_transport.a */,
 				AD4818211F2B1B7200B6126D /* libudp_transport_Mac.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		ADB519B01B2806A90009077D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				ADB519B41B2806A90009077D /* librtp_rtcp.a */,
-				AD48181A1F2B1B7200B6126D /* librtp_rtcp_Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1009,6 +1046,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				1F1EDF2120871F27003FEAD0 /* PBXTargetDependency */,
+				1F1EDF1120871CBD003FEAD0 /* PBXTargetDependency */,
+				1F1EDF0520871C0B003FEAD0 /* PBXTargetDependency */,
 				AD4819211F2B269700B6126D /* PBXTargetDependency */,
 				AD4819181F2B265000B6126D /* PBXTargetDependency */,
 				AD4819091F2B259600B6126D /* PBXTargetDependency */,
@@ -1018,9 +1058,7 @@
 				AD4818C81F2B249F00B6126D /* PBXTargetDependency */,
 				AD4818CA1F2B249F00B6126D /* PBXTargetDependency */,
 				AD4818CC1F2B249F00B6126D /* PBXTargetDependency */,
-				AD4818CE1F2B249F00B6126D /* PBXTargetDependency */,
 				AD4818D01F2B249F00B6126D /* PBXTargetDependency */,
-				AD4818D21F2B249F00B6126D /* PBXTargetDependency */,
 				AD4818D41F2B249F00B6126D /* PBXTargetDependency */,
 				AD4818D61F2B249F00B6126D /* PBXTargetDependency */,
 				AD4818D81F2B249F00B6126D /* PBXTargetDependency */,
@@ -1129,8 +1167,12 @@
 					ProjectRef = AD4818B71F2B247900B6126D /* protobuf.xcodeproj */;
 				},
 				{
-					ProductGroup = ADB519B01B2806A90009077D /* Products */;
-					ProjectRef = ADB519AF1B2806A90009077D /* rtp_rtcp.xcodeproj */;
+					ProductGroup = 1F1EDF1820871F1A003FEAD0 /* Products */;
+					ProjectRef = 1F1EDF1720871F1A003FEAD0 /* rtc_event_log.xcodeproj */;
+				},
+				{
+					ProductGroup = 1F1EDEFC20871BDC003FEAD0 /* Products */;
+					ProjectRef = 1F1EDEFB20871BDC003FEAD0 /* rtp_rtcp_audio.xcodeproj */;
 				},
 				{
 					ProductGroup = AD48191A1F2B268400B6126D /* Products */;
@@ -1157,8 +1199,8 @@
 					ProjectRef = 0528A43D1CFD3A7800DF126F /* webrtc_opus.xcodeproj */;
 				},
 				{
-					ProductGroup = ADB5199E1B2806950009077D /* Products */;
-					ProjectRef = ADB5199D1B2806950009077D /* webrtc_utility.xcodeproj */;
+					ProductGroup = 1F1EDF0820871C9F003FEAD0 /* Products */;
+					ProjectRef = 1F1EDF0720871C9F003FEAD0 /* webrtc_utility_audio.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1202,6 +1244,48 @@
 			fileType = archive.ar;
 			path = libvoice_engine.a;
 			remoteRef = 0528A52E1CFD437000DF126F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1F1EDF0120871BDC003FEAD0 /* librtp_rtcp.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = librtp_rtcp.a;
+			remoteRef = 1F1EDF0020871BDC003FEAD0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1F1EDF0320871BDC003FEAD0 /* librtp_rtcp_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = librtp_rtcp_Mac.a;
+			remoteRef = 1F1EDF0220871BDC003FEAD0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1F1EDF0D20871C9F003FEAD0 /* libwebrtc_utility.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libwebrtc_utility.a;
+			remoteRef = 1F1EDF0C20871C9F003FEAD0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1F1EDF0F20871C9F003FEAD0 /* libwebrtc_utility_Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libwebrtc_utility_Mac.a;
+			remoteRef = 1F1EDF0E20871C9F003FEAD0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1F1EDF1D20871F1B003FEAD0 /* librtc_event_log.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = librtc_event_log.a;
+			remoteRef = 1F1EDF1C20871F1B003FEAD0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		1F1EDF1F20871F1B003FEAD0 /* librtc_event_log Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "librtc_event_log Mac.a";
+			remoteRef = 1F1EDF1E20871F1B003FEAD0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		AD3630B11F429EBA00F0C20B /* libSoundTouch_Media_Mac.a */ = {
@@ -1302,13 +1386,6 @@
 			remoteRef = AD4818151F2B1B7200B6126D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		AD48181A1F2B1B7200B6126D /* librtp_rtcp_Mac.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = librtp_rtcp_Mac.a;
-			remoteRef = AD4818191F2B1B7200B6126D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		AD48181D1F2B1B7200B6126D /* libsystem_wrappers_Mac.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1335,13 +1412,6 @@
 			fileType = archive.ar;
 			path = libwebrtc_opus_Mac.a;
 			remoteRef = AD4818271F2B1B7200B6126D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AD48182C1F2B1B7200B6126D /* libwebrtc_utility_Mac.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libwebrtc_utility_Mac.a;
-			remoteRef = AD48182B1F2B1B7200B6126D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		AD4818BD1F2B247900B6126D /* libprotobuf.a */ = {
@@ -1393,25 +1463,11 @@
 			remoteRef = ADB5197C1B2806460009077D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		ADB519A21B2806950009077D /* libwebrtc_utility.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libwebrtc_utility.a;
-			remoteRef = ADB519A11B2806950009077D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		ADB519A81B28069D0009077D /* libudp_transport.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libudp_transport.a;
 			remoteRef = ADB519A71B28069D0009077D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ADB519B41B2806A90009077D /* librtp_rtcp.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = librtp_rtcp.a;
-			remoteRef = ADB519B31B2806A90009077D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		ADB519C01B2806C60009077D /* libmedia_file.a */ = {
@@ -1509,6 +1565,7 @@
 				05E86F3E1B3BA16D00BDBCE6 /* ECMedia.cpp in Sources */,
 				AD48182E1F2B1B7C00B6126D /* VoeObserver.cpp in Sources */,
 				05E86F3C1B3BA16D00BDBCE6 /* base64.c in Sources */,
+				1F1EDF1420871D8D003FEAD0 /* common_types.cc in Sources */,
 				AD4818911F2B243100B6126D /* MediaStatisticsData.pb.cc in Sources */,
 				AD4819231F2B26D100B6126D /* statsCollector.cc in Sources */,
 			);
@@ -1536,6 +1593,21 @@
 			isa = PBXTargetDependency;
 			name = audioprocess;
 			targetProxy = 052991501CFD5AEB00B1A092 /* PBXContainerItemProxy */;
+		};
+		1F1EDF0520871C0B003FEAD0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = rtp_rtcp;
+			targetProxy = 1F1EDF0420871C0B003FEAD0 /* PBXContainerItemProxy */;
+		};
+		1F1EDF1120871CBD003FEAD0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = webrtc_utility;
+			targetProxy = 1F1EDF1020871CBD003FEAD0 /* PBXContainerItemProxy */;
+		};
+		1F1EDF2120871F27003FEAD0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = rtc_event_log;
+			targetProxy = 1F1EDF2020871F27003FEAD0 /* PBXContainerItemProxy */;
 		};
 		AD4818C21F2B249F00B6126D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1567,20 +1639,10 @@
 			name = media_file;
 			targetProxy = AD4818CB1F2B249F00B6126D /* PBXContainerItemProxy */;
 		};
-		AD4818CE1F2B249F00B6126D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = rtp_rtcp;
-			targetProxy = AD4818CD1F2B249F00B6126D /* PBXContainerItemProxy */;
-		};
 		AD4818D01F2B249F00B6126D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = udp_transport;
 			targetProxy = AD4818CF1F2B249F00B6126D /* PBXContainerItemProxy */;
-		};
-		AD4818D21F2B249F00B6126D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = webrtc_utility;
-			targetProxy = AD4818D11F2B249F00B6126D /* PBXContainerItemProxy */;
 		};
 		AD4818D41F2B249F00B6126D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

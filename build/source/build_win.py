@@ -82,7 +82,6 @@ class BuildWindows(BuildBase):
         print os.system('copy ' + x264TargetFile + ' ' + self.RarX64LibsPath)
         
     def collectLibAudioOnlyFiles(self):
-        return 0
         if os.path.exists(self.RarX32LibsPath):
            pass
         else:

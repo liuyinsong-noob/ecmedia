@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1F1EDA451F95E5F80018BD4C /* criticalsection.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F1EDA431F95E5F80018BD4C /* criticalsection.cc */; };
 		1F1EDA461F95E5F80018BD4C /* criticalsection.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F1EDA441F95E5F80018BD4C /* criticalsection.h */; };
+		1FD1D5152087291000749ACB /* event.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1D5142087290F00749ACB /* event.cc */; };
 		1FE07DB11FE791550018E762 /* stats_types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9F2201F345293005D11C5 /* stats_types.cc */; };
 		1FE07DB21FE791550018E762 /* event_tracer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72931F17455200CD5776 /* event_tracer.cc */; };
 		1FE07DB31FE791550018E762 /* platform_thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D728F1F1743A300CD5776 /* platform_thread.cc */; };
@@ -187,6 +188,7 @@
 /* Begin PBXFileReference section */
 		1F1EDA431F95E5F80018BD4C /* criticalsection.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = criticalsection.cc; path = ../base/criticalsection.cc; sourceTree = "<group>"; };
 		1F1EDA441F95E5F80018BD4C /* criticalsection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = criticalsection.h; path = ../base/criticalsection.h; sourceTree = "<group>"; };
+		1FD1D5142087290F00749ACB /* event.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = event.cc; path = ../../base/event.cc; sourceTree = "<group>"; };
 		1FF9F2201F345293005D11C5 /* stats_types.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stats_types.cc; sourceTree = "<group>"; };
 		1FF9F2221F34529E005D11C5 /* stats_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stats_types.h; sourceTree = "<group>"; };
 		450D71DE1F15F8CA00CD5776 /* platform_thread_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = platform_thread_types.h; path = ../../base/platform_thread_types.h; sourceTree = "<group>"; };
@@ -378,6 +380,7 @@
 		5519D0BA15C82D1700719504 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				1FD1D5142087290F00749ACB /* event.cc */,
 				1FF9F2201F345293005D11C5 /* stats_types.cc */,
 				450D729A1F175D1700CD5776 /* optional.cc */,
 				450D729B1F175D1700CD5776 /* optional.h */,
@@ -641,6 +644,7 @@
 				55AE069115C82F8000CE4CF5 /* rw_lock_posix.cc in Sources */,
 				55AE069515C82F8000CE4CF5 /* rw_lock.cc in Sources */,
 				55AE069715C82F8000CE4CF5 /* sort.cc in Sources */,
+				1FD1D5152087291000749ACB /* event.cc in Sources */,
 				55AE069D15C82F8000CE4CF5 /* thread.cc in Sources */,
 				55AE069F15C82F8000CE4CF5 /* trace_impl.cc in Sources */,
 				4547E2C11F15EF7E0014FB7E /* timeutils.cc in Sources */,

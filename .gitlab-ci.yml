@@ -4,6 +4,7 @@ stages:
 
 before_script: 
   - "cd build/source"
+  - "chmod 644 private.key"
  
 ### ---------------- job for master & vp8_test branch ------------------ ### 
 ## -------> build
@@ -63,7 +64,7 @@ deploy_master_ios:
 
 deploy_master_win:
     stage: deploy
-    script: "scp ../windows_*.zip seanlee@192.168.178.218:~/.ecmedia_libs_archives/all_libs/windows/v2.3.x/"
+    script: "scp -i private.key ../windows_*.zip seanlee@192.168.178.218:~/.ecmedia_libs_archives/all_libs/windows/v2.3.x/"
     only:
       - master
     variables:
@@ -129,7 +130,7 @@ deploy_br_other_ios:
 
 deploy_br_other_win:
     stage: deploy
-    script: "scp ../windows_*.zip seanlee@192.168.178.218:~/.ecmedia_libs_archives/all_libs/windows/v2.1.x/"
+    script: "scp -i private.key ../windows_*.zip seanlee@192.168.178.218:~/.ecmedia_libs_archives/all_libs/windows/v2.1.x/"
     only:
       - vp8_test
     tags:

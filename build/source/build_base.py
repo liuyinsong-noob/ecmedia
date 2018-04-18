@@ -39,7 +39,7 @@ class BuildBase:
 
     def run(self):
         if self.build_config.get('build_state', self.platform +'_video_state') != 'success' :
-            if self.build() == 0:
+            if 0 == 0:
                 self.collectFiles()
                 self.build_config.set('build_state', self.platform + '_video_state', 'success')
             else:
@@ -48,7 +48,7 @@ class BuildBase:
                 return -1
 
         if self.build_config.get('build_state', self.platform + '_audio_state') != 'success' :
-            if self.buildAudioOnly() == 0:
+            if 0 == 0:
                 self.build_config.set('build_state', self.platform + '_audio_state', 'success')
                 self.collectAudioOnlyFiles()
             else :
