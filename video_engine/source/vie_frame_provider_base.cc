@@ -18,6 +18,8 @@
 #include "../system_wrappers/include/tick_util.h"
 #include "vie_defines.h"
 #include "../base/timeutils.h"
+#include  "vie_watermark.h"
+#include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 
 namespace cloopenwebrtc {
 
@@ -45,17 +47,37 @@ int ViEFrameProviderBase::Id() {
   return id_;
 }
 
+void ViEFrameProviderBase::GetFilterData(I420VideoFrame* video_frame, VIEWaterMark *watermark) {
+	int w = video_frame->width();
+	int h = video_frame->height();
+	size_t length = cloopenwebrtc::CalcBufferSize(kI420, w, h);
+	scoped_ptr<uint8_t[]> yuv_buf(new uint8_t[length]);
+	ExtractBuffer(*video_frame, length, yuv_buf.get());
+	unsigned char* buf = yuv_buf.get();
+	watermark->FilterBufferSinkAndCopyYUV(buf, w, h);
+	ExtractBufferToI420VideoFrame(*video_frame, length, buf);
+}
+
+
 void ViEFrameProviderBase::DeliverFrame(I420VideoFrame* video_frame,
-                                        const std::vector<uint32_t>& csrcs) {
+                                        const std::vector<uint32_t>& csrcs, VIEWaterMark *watermark) {
 #ifdef DEBUG_
   const TickTime start_process_time = TickTime::Now();
 #endif
   CriticalSectionScoped cs(provider_cs_.get());
 
+  if (!extra_frame_render_.get()) {
+	  extra_frame_render_.reset(new I420VideoFrame());
+  }
+  extra_frame_render_->CopyFrame(*video_frame);
+
   // Deliver the frame to all registered callbacks.
   if (frame_callbacks_.size() > 0) {
     if (frame_callbacks_.size() == 1) {
       // We don't have to copy the frame.
+		if (watermark) {
+			GetFilterData(video_frame, watermark);
+		}
       frame_callbacks_.front()->DeliverFrame(id_, video_frame, csrcs);
     } else {
       for (FrameCallbacks::iterator it = frame_callbacks_.begin();
@@ -67,8 +89,17 @@ void ViEFrameProviderBase::DeliverFrame(I420VideoFrame* video_frame,
           if (!extra_frame_.get()) {
             extra_frame_.reset(new I420VideoFrame());
           }
-          extra_frame_->CopyFrame(*video_frame);
-          (*it)->DeliverFrame(id_, extra_frame_.get(), csrcs);
+		  int callback_type = (*it)->GetClassNameType();
+		  // callback_type 0 render 1 encoder
+		  if (watermark && callback_type == 1) {
+			  GetFilterData(video_frame, watermark);
+		  }
+		  else if (watermark && callback_type == 0){
+			  (*it)->DeliverFrame(id_, extra_frame_render_.get(), csrcs);
+			  continue;
+		  }
+		  extra_frame_->CopyFrame(*video_frame);
+		  (*it)->DeliverFrame(id_, extra_frame_.get(), csrcs);
         }
       }
     }

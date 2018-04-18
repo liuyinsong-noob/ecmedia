@@ -260,6 +260,9 @@ class WEBRTC_DLLEXPORT ViECapture {
   // Removes an already registered instance of ViECaptureObserver.
   virtual int DeregisterObserver(const int capture_id) = 0;
 
+  //add by chwd
+  virtual int AllocateWaterMark(int capture_id, WaterMark watermark, int width, int height) = 0;
+
  protected:
   ViECapture() {}
   virtual ~ViECapture() {}

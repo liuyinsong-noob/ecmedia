@@ -31,6 +31,9 @@ class ViECaptureSnapshot : public ViEFrameCallback {
   ViECaptureSnapshot();
   ~ViECaptureSnapshot();
 
+
+  virtual int GetClassNameType();
+
   bool GetSnapshot(I420VideoFrame& video_frame, unsigned int max_wait_time);
 
   // Implements ViEFrameCallback.

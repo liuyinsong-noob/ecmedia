@@ -84,6 +84,8 @@ class ViEEncoder
 
   bool Init();
 
+  virtual int GetClassNameType();
+
   void SetNetworkTransmissionState(bool is_transmitting);
   void SetVideoQualityMode(int mode) ;
   // Returns the id of the owning channel.

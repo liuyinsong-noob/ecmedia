@@ -43,6 +43,7 @@
     <ClCompile Include="source\vie_sender.cc" />
     <ClCompile Include="source\vie_shared_data.cc" />
     <ClCompile Include="source\vie_sync_module.cc" />
+    <ClCompile Include="source\vie_watermark.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\vie_base.h" />
@@ -100,5 +101,6 @@
     <ClInclude Include="source\vie_sender.h" />
     <ClInclude Include="source\vie_shared_data.h" />
     <ClInclude Include="source\vie_sync_module.h" />
+    <ClInclude Include="source\vie_watermark.h" />
   </ItemGroup>
 </Project>

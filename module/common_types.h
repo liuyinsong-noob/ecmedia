@@ -1292,7 +1292,22 @@ enum ECMagicSoundMode {
     kECMagicSoundHigh ,
     kECMagicSoundLow
 };
- 
+
+//watermark
+struct WaterMark
+{
+	char fontfile[100];        //(only text)  fontfile absolute path,windows. eg. 'c\\\\:/usr/wryh.ttf'; android '/sdcard/wryh.ttf'
+	char fontcolor[6];         //(only text)  font clolor RGB value eg. '00ff00'
+	int  fontsize;             //(only text)  font size  eg. 0~100 
+	char text[100];            //(only text)  text   eg. 'hello watermark'
+	int  x;                    //(both)  watermark x positon 
+	int  y;                    //(both)  watermark y positon
+	char imagepath[1024];      //(only image)  image path  eg. '/usr/test.png'
+	char startposition[10];    //(only image)   base positon  eg. 'topleft','bottomleft','bottomright','topright'
+	int  flag;                 //(both)  '0': image '1': text
+};
+
+
 // RTCP mode to use. Compound mode is described by RFC 4585 and reduced-size
 // RTCP mode is described by RFC 5506.
 enum RtcpMode { kOff, kCompound, kReducedSize };

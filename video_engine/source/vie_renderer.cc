@@ -42,6 +42,10 @@ ViERenderer::~ViERenderer(void) {
   if (incoming_external_callback_)
     delete incoming_external_callback_;
 }
+//add by chwd
+int ViERenderer::GetClassNameType() {
+	return 0;
+}
 
 int32_t ViERenderer::StartRender() {
   return render_module_.StartRender(render_id_);

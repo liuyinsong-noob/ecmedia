@@ -699,6 +699,18 @@ ECMEDIA_API int ECMedia_setLiveVideoFrameDegree(void *handle, ECLiveFrameDegree 
  */
 ECMEDIA_API int ECMedia_setVideoPreviewViewer(void *handle, void *view);
 
+
+/**
+* 设置水印，图片或者文本
+* @param deviceid deviceid
+* @param watermark 构造水印参数
+* @param width height capture的图像高和宽
+* @return  uccess 0, errno -99;
+*/
+//add by chwd
+ECMEDIA_API int ECMedia_set_watermark(int deviceid, cloopenwebrtc::WaterMark watermark, int width, int height);
+
+
 /**
  *
  * @param camera_index

@@ -20,7 +20,7 @@
 #include "vie_defines.h"
 #include "vie_frame_provider_base.h"
 #include "vie_manager_base.h"
-
+#include "../common_types.h"
 #include "../system_wrappers/include/map_wrapper.h"
 #include "vie_file_player.h"
 
@@ -85,6 +85,9 @@ class ViEInputManager : private ViEManagerBase {
   int CreateExternalCaptureDevice(ViEExternalCapture*& external_capture,
                                   int& capture_id);
   int DestroyCaptureDevice(int capture_id);
+
+  //add by chwd
+  int CreateWaterMark(int capture_id, WaterMark watermark, int width, int height);
 
  private:
   // Gets and allocates a free capture device id. Assumed protected by caller.

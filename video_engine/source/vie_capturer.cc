@@ -28,7 +28,13 @@
 #include "vie_defines.h"
 #include "vie_encoder.h"
 #include "../base/timeutils.h"
-
+extern "C"
+{
+#include "libavcodec/avcodec.h"
+#include "libavformat/avformat.h"
+#include "libavutil/avutil.h"
+};
+#include "vie_watermark.h"
 namespace cloopenwebrtc {
 
 const int kThreadWaitTimeMs = 100;
@@ -67,6 +73,7 @@ ViECapturer::ViECapturer(int capture_id,
     assert(false);
   }
   module_process_thread_.RegisterModule(overuse_detector_.get());
+  water_mark_ = NULL;
 
 }
 
@@ -164,7 +171,7 @@ int32_t ViECapturer::Init(const char* device_unique_idUTF8,
 		assert(capture_module_ == NULL);
 		if (device_unique_idUTF8 == NULL) {
 			capture_module_  = VideoCaptureFactory::Create(
-				ViEModuleId(engine_id_, capture_id_), external_capture_module_);//·µ»ØVideoCapureModule*
+				ViEModuleId(engine_id_, capture_id_), external_capture_module_);//è¿”å›žVideoCapureModule*
 		} else {
 			VideoCaptureCapability *video_settings = new VideoCaptureCapability();
 			if (video_settings && settings)
@@ -382,6 +389,14 @@ void ViECapturer::SwapFrame(I420VideoFrame* frame) {
   frame->set_render_time_ms(0);
 }
 
+
+//add by chwd
+int ViECapturer::SetFrameWaterMark(VIEWaterMark * watermark)
+{
+	this->water_mark_ = watermark;
+	return 0;
+}
+
 void ViECapturer::OnIncomingCapturedFrame(const int32_t capture_id,
                                           I420VideoFrame& video_frame) {
   CriticalSectionScoped cs(capture_cs_.get());
@@ -550,7 +565,7 @@ bool ViECapturer::ViECaptureProcess() {
 
 void ViECapturer::DeliverI420Frame(I420VideoFrame* video_frame) {
   if (video_frame->native_handle() != NULL) {
-    ViEFrameProviderBase::DeliverFrame(video_frame, std::vector<uint32_t>());
+    ViEFrameProviderBase::DeliverFrame(video_frame, std::vector<uint32_t>(),NULL);
     return;
   }
 
@@ -649,7 +664,7 @@ void ViECapturer::DeliverI420Frame(I420VideoFrame* video_frame) {
 
 
   // Deliver the captured frame to all observers (channels, renderer or file).
-  ViEFrameProviderBase::DeliverFrame(video_frame, std::vector<uint32_t>());
+  ViEFrameProviderBase::DeliverFrame(video_frame, std::vector<uint32_t>(), water_mark_);
 }
 
 int ViECapturer::DeregisterFrameCallback(

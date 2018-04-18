@@ -578,7 +578,7 @@ void VieDesktopCapturer::DeliverFrame()
         //    //image_proc_module_->Denoising(frame); //new version not support
         //}
     }
-    ViEFrameProviderBase::DeliverFrame(&frame, std::vector<uint32_t>());
+    ViEFrameProviderBase::DeliverFrame(&frame, std::vector<uint32_t>(),NULL);
 }
 
 int VieDesktopCapturer::EnableDenoising(const bool enable )

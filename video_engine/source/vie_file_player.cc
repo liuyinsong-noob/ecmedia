@@ -231,7 +231,7 @@ bool ViEFilePlayer::FilePlayDecodeProcess() {
       }
 
 	  std::vector<uint32_t> csrcs;
-      DeliverFrame(&decoded_video_, csrcs);
+      DeliverFrame(&decoded_video_, csrcs,NULL);
       //decoded_video_.SetLength(0);
     }
   }

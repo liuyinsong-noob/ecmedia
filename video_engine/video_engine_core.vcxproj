@@ -98,6 +98,7 @@
     <ClInclude Include="source\vie_sender.h" />
     <ClInclude Include="source\vie_shared_data.h" />
     <ClInclude Include="source\vie_sync_module.h" />
+    <ClInclude Include="source\vie_watermark.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\call_stats.cc" />
@@ -142,6 +143,7 @@
     <ClCompile Include="source\vie_sender.cc" />
     <ClCompile Include="source\vie_shared_data.cc" />
     <ClCompile Include="source\vie_sync_module.cc" />
+    <ClCompile Include="source\vie_watermark.cc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C700A37B-D8F2-7F02-030B-8F0FCE185D3A}</ProjectGuid>
@@ -313,7 +315,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../system_wrappers\include;./include;./source;../servicecore/include;../voice_engine\main\include;../module;../module\interface;../module\media_file\include;../module\rtp_rtcp\include;../module\udp_transport\include;../module\utility\include;../module\video_capture\main\include;../module\video_coding\main\include;../module\video_processing\main\source\beauty_filter;../module\video_processing\main\include;../module\video_render\main\include;../module/rtp_rtcp/source;../module\video_coding\codecs\interface;../module\audio_coding\main\include;../module\bitrate_controller\include;../module/common_video/source;../module/common_video/source/libyuv/include;../module/common_video/interface;../module/video_coding/main/source;../module/pacing/include;../module/remote_bitrate_estimator/include;../module/remote_bitrate_estimator/source;..\module\desktop_capture\source;..\module\desktop_capture\source\win;../third_party/oRTP/include;../third_party/oRTP/include/ortp;../voice_engine\main\source;../base/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../system_wrappers\include;./include;./source;../servicecore/include;../voice_engine\main\include;../module;../module\interface;../module\media_file\include;../module\rtp_rtcp\include;../module\udp_transport\include;../module\utility\include;../module\video_capture\main\include;../module\video_coding\main\include;../module\video_processing\main\source\beauty_filter;../module\video_processing\main\include;../module\video_render\main\include;../module/rtp_rtcp/source;../module\video_coding\codecs\interface;../module\audio_coding\main\include;../module\bitrate_controller\include;../module/common_video/source;../module/common_video/source/libyuv/include;../module/common_video/interface;../module/video_coding/main/source;../module/pacing/include;../module/remote_bitrate_estimator/include;../module/remote_bitrate_estimator/source;..\module\desktop_capture\source;..\module\desktop_capture\source\win;../third_party/oRTP/include;../third_party/oRTP/include/ortp;../voice_engine\main\source;../base/;../third_party/ffmpeg/ffmpeg_win/x86/include</AdditionalIncludeDirectories>
       <AdditionalOptions>/MP /we4389 /Oy- %(AdditionalOptions)</AdditionalOptions>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -332,11 +334,11 @@
       <WarningLevel>Level4</WarningLevel>
     </ClCompile>
     <Lib>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../third_party/ffmpeg/ffmpeg_win/x86/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>/ignore:4221 %(AdditionalOptions)</AdditionalOptions>
       <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalDependencies>libavfilter.lib;libavutil.lib;libswscale.lib;libswresample.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <Link>
       <AdditionalDependencies>wininet.lib;dnsapi.lib;version.lib;msimg32.lib;ws2_32.lib;usp10.lib;psapi.lib;dbghelp.lib;winmm.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
