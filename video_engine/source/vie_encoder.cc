@@ -1259,6 +1259,11 @@ PacedSender* ViEEncoder::GetPacedSender() {
   return paced_sender_;
 }
 
+//add by chwd
+int ViEEncoder::GetClassNameType() {
+	return 1;
+}
+
 int32_t ViEEncoder::RegisterEffectFilter(ViEEffectFilter* effect_filter) {
   CriticalSectionScoped cs(callback_cs_.get());
   if (effect_filter != NULL && effect_filter_ != NULL) {

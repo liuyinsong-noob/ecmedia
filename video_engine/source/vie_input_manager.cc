@@ -25,6 +25,7 @@
 
 #include "../system_wrappers/include/trace.h"
 #include "vie_file_player.h"
+#include "vie_watermark.h"
 
 namespace cloopenwebrtc {
 
@@ -305,6 +306,26 @@ int ViEInputManager::DestroyCaptureDevice(const int capture_id) {
   delete vie_capture;
   vie_capture = NULL;
   return 0;
+}
+
+//add by chwd
+int ViEInputManager::CreateWaterMark(int capture_id, WaterMark watermark, int width, int height)
+{
+	CriticalSectionScoped cs(map_cs_.get());
+
+	VIEWaterMark* vie_watermark = VIEWaterMark::CreateWatermark(watermark, width, height);
+	if (!vie_watermark) {
+		LOG(LS_ERROR) << "Create vie_water_mark error:" << capture_id << " width:"<<width <<" height:"<<height;
+		return -1;
+	}
+
+	ViECapturer* vie_capture = ViECapturePtr(capture_id);
+	if (!vie_capture) {
+		LOG(LS_ERROR) << "No such capture device id: " << capture_id;
+		return -1;
+	}
+
+	return vie_capture->SetFrameWaterMark(vie_watermark);
 }
 
 int ViEInputManager::CreateExternalCaptureDevice(

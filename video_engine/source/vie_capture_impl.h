@@ -15,7 +15,7 @@
 #include "vie_capture.h"
 #include "vie_defines.h"
 #include "vie_ref_count.h"
-
+#include "../common_types.h"
 #include "video_capture_defines.h"
 
 namespace cloopenwebrtc {
@@ -72,6 +72,9 @@ class ViECaptureImpl
                                ViECaptureObserver& observer);
   virtual int DeregisterObserver(const int capture_id);
   virtual int SetLocalVideoWindow(const int capture_id,void* widow);
+  //add by chwd
+  virtual int AllocateWaterMark(int capture_id, WaterMark watermark, int width, int height);
+
  protected:
   explicit ViECaptureImpl(ViESharedData* shared_data);
   virtual ~ViECaptureImpl();

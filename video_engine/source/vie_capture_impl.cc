@@ -549,6 +549,26 @@ int ViECaptureImpl::SetLocalVideoWindow(const int capture_id,
     }
     return 0;
 }
+
+//add by chwd
+int ViECaptureImpl::AllocateWaterMark(int capture_id, WaterMark watermark, int width, int height)
+{
+	LOG(LS_INFO) << "AllocateWaterMark width:" << width << "and height:" <<height;
+	int width_r,height_r;
+#if defined(WEBRTC_ANDROID)
+	width_r = height;
+	height_r = width;
+#else
+	width_r = width;
+	height_r = height;
+#endif
+	const int32_t result = shared_data_->input_manager()->CreateWaterMark(capture_id, watermark, width_r, height_r);
+	if (result != 0) {
+		shared_data_->SetLastError(result);
+		return -1;
+	}
+	return 0;
+}
     
 int ViECaptureImpl::UpdateLossRate(const int capture_id, int lossRate)
 {

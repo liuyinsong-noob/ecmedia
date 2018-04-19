@@ -44,11 +44,14 @@ class ViEFrameCallback {
   // must not be any more calls to the frame provider after this.
   virtual void ProviderDestroyed(int id) = 0;
 
+  virtual int GetClassNameType() = 0;
+
   virtual ~ViEFrameCallback() {}
 };
 
 // ViEFrameProviderBase is a base class that will deliver frames to all
 // registered ViEFrameCallbacks.
+class VIEWaterMark;
 class ViEFrameProviderBase {
  public:
   ViEFrameProviderBase(int Id, int engine_id);
@@ -56,6 +59,9 @@ class ViEFrameProviderBase {
 
   // Returns the frame provider id.
   int Id();
+
+  //Get filter data add by chwd
+  void GetFilterData(I420VideoFrame* video_frame, VIEWaterMark *watermark);
 
   // Register frame callbacks, i.e. a receiver of the captured frame.
   virtual int RegisterFrameCallback(int observer_id,
@@ -75,7 +81,7 @@ class ViEFrameProviderBase {
 
  protected:
   void DeliverFrame(I420VideoFrame* video_frame,
-                    const std::vector<uint32_t>& csrcs);
+                    const std::vector<uint32_t>& csrcs, VIEWaterMark *VIEWaterMark);
   void SetFrameDelay(int frame_delay);
   int FrameDelay();
   int GetBestFormat(int* best_width,
@@ -92,6 +98,7 @@ class ViEFrameProviderBase {
 
  private:
   scoped_ptr<I420VideoFrame> extra_frame_;
+  scoped_ptr<I420VideoFrame> extra_frame_render_;
   int frame_delay_;
 };
 

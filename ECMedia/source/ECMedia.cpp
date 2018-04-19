@@ -5278,6 +5278,37 @@ int ECMedia_ConfigLiveVideoStream(void *handle, LiveVideoStreamConfig config)
     return -1;
 }
 
+//add by chwd
+/*
+@deviceid : Device Id
+@water : see define in common_types.h
+@width height : the size of capture data,not watermark size
+*/
+int ECMedia_set_watermark(int deviceid, WaterMark watermark,int width,int height)
+{
+	    PrintConsole("[ECMEDIA INFO] %s begins...,args fontfile: %s,fontcolor: %s,\
+			fontsize: %d,text: %s, x: %d,y: %d,imagepath: %s,startposition :%s,flag: %d,width: %d,height: %d",
+		__FUNCTION__,watermark.fontfile,watermark.fontcolor,watermark.fontsize,watermark.text,watermark.x,watermark.y,
+		watermark.imagepath,watermark.startposition,watermark.flag,width,height);
+#ifdef VIDEO_ENABLED
+	ViECapture *capture = ViECapture::GetInterface(m_vie);
+	if (capture) {
+		int ret = capture->AllocateWaterMark(deviceid, watermark,width,height);
+		capture->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, ret);
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViECapture, %s", __FUNCTION__);
+		return -99;
+	}
+#endif
+	PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+	return -99;
+
+}
+
 int ECMedia_setLiveVideoFrameDegree(void *handle, ECLiveFrameDegree degree) {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED

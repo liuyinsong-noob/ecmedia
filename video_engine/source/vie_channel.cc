@@ -1949,7 +1949,7 @@ int32_t ViEChannel::FrameToRender(
     no_of_csrcs = 1;
   }
   std::vector<uint32_t> csrcs(arr_ofCSRC, arr_ofCSRC + no_of_csrcs);
-  DeliverFrame(&video_frame, csrcs);
+  DeliverFrame(&video_frame, csrcs,NULL);
 
   return 0;
 }

@@ -1077,6 +1077,11 @@ ViECaptureSnapshot::~ViECaptureSnapshot() {
   }
 }
 
+int ViECaptureSnapshot::GetClassNameType() {
+	return 2;
+}
+
+
 bool ViECaptureSnapshot::GetSnapshot(I420VideoFrame& video_frame,
                                      unsigned int max_wait_time) {
   crit_->Enter();

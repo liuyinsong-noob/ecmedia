@@ -133,9 +133,14 @@ LOCAL_SHARED_LIBRARIES := \
 LOCAL_LDLIBS += -llog -lGLESv2 -ljnigraphics
 
 LOCAL_LDFLAGS += \
+	./third_party_libs/$(TARGET_ARCH_ABI)/libavfilter.a \
+	./third_party_libs/$(TARGET_ARCH_ABI)/libfreetype.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libavformat.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libavcodec.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libavutil.a \
+	./third_party_libs/$(TARGET_ARCH_ABI)/libswscale.a \
+	./third_party_libs/$(TARGET_ARCH_ABI)/libswresample.a \
+	./third_party_libs/$(TARGET_ARCH_ABI)/libavdevice.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libvpx.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libcpufeatures.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libx264.a \

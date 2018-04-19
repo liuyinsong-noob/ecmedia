@@ -44,6 +44,7 @@ class ProcessThread;
 class ThreadWrapper;
 class ViEEffectFilter;
 class ViEEncoder;
+class VIEWaterMark;
 struct ViEPicture;
 
 class ViECapturer
@@ -86,6 +87,9 @@ class ViECapturer
                                 unsigned long long capture_time = 0);  // NOLINT
 
   virtual void SwapFrame(I420VideoFrame* frame) /*OVERRIDE*/;
+
+  //add by chwd
+  virtual int SetFrameWaterMark(VIEWaterMark* watermark);
 
   // Start/Stop.
   int32_t Start(
@@ -205,6 +209,10 @@ class ViECapturer
   CaptureCapability requested_capability_;
 
   scoped_ptr<OveruseFrameDetector> overuse_detector_;
+
+
+  //add by chwd 
+  VIEWaterMark *water_mark_;
 
   //---begin
   public:
