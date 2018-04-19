@@ -501,7 +501,7 @@ namespace cloopenwebrtc {
     
     void H264VideoToolboxDecoder::DestroyDecompressionSession() {
         if (decompression_session_) {
-            VTDecompressionSessionInvalidate(decompression_session_);
+            VTDecompressionSessionWaitForAsynchronousFrames(decompression_session_);
             CFRelease(decompression_session_);
             decompression_session_ = nullptr;
         }
