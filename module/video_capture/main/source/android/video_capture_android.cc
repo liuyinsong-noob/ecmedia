@@ -519,6 +519,7 @@ WebRtc_Word32 VideoCaptureAndroid::StartCapture(
                  __FUNCTION__, capability.width, capability.height);
     return -1;
   }
+
   if (capability.maxFPS < _frameInfo.maxFPS)
   {
      _frameInfo.maxFPS = capability.maxFPS;
@@ -538,8 +539,8 @@ WebRtc_Word32 VideoCaptureAndroid::StartCapture(
     WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, -1,
                  "%s: Call StartCapture", __FUNCTION__);
     // Close the camera by calling the static destruct function.
-    result = env->CallIntMethod(_javaCaptureObj, cid, capability.height,
-                                capability.width, capability.maxFPS);
+    result = env->CallIntMethod(_javaCaptureObj, cid, _frameInfo.width,
+                                _frameInfo.height, _frameInfo.maxFPS);
   }
   else {
     WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,

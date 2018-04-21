@@ -574,8 +574,13 @@ namespace cloopenwebrtc {
             
             videoCodec.plType           = 98;
             videoCodec.codecType        = kVideoCodecH264;
+#ifdef WIN32
             videoCodec.width            = info_video_width_;
             videoCodec.height           = info_video_height_;
+#else
+            videoCodec.width            = info_video_height_;
+            videoCodec.height           = info_video_width_;
+#endif
             videoCodec.startBitrate     = info_video_bitrates_;
             videoCodec.maxBitrate       = info_video_bitrates_*2;
             videoCodec.minBitrate       = info_video_bitrates_/2;
