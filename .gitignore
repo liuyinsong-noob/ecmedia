@@ -7,10 +7,12 @@ module/image_filter
 demo_Win/build/
 logging/rtc_event_log/Release/
 
-#appcode filder
+#appcode filder or file
 .idea
 .gradle
 .vscode
+.tags
+.tags_sorted_by_file
 
 #libs
 demo_Android/CCP_Demo_v3.6.4r/libs/armeabi/libserphone.so
