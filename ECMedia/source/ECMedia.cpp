@@ -2875,6 +2875,48 @@ int ECMedia_allocate_capture_device(const char *id, size_t len, int& deviceid)
     }
 }
 
+//add by dingxf
+int ECMedia_get_file_capture_capability(int capture_id, CameraCapability& capabilityp)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViECapture *caputure = ViECapture::GetInterface(m_vie);
+	if (caputure) {
+		CaptureCapability capability;
+		int ret = caputure->GetCaptureCapability(capture_id, capability);
+		capabilityp.height = capability.height;
+		capabilityp.width = capability.width;
+		capabilityp.maxfps = capability.maxFPS;
+		caputure->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, ret);
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViECapture, %s", __FUNCTION__);
+		return -99;
+	}
+}
+
+//add by dingxf
+int ECMedia_allocate_capture_file(int& deviceid, const char *fileUTF8, const char *filesSplit)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViECapture *capture = ViECapture::GetInterface(m_vie);
+	if (capture) {
+		int ret = capture->AllocateCaptureFile(deviceid, fileUTF8, filesSplit);
+		capture->Release();
+		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, ret);
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA WARNNING] failed to get ViECapture, %s", __FUNCTION__);
+		return -99;
+	}
+}
+
 int ECMedia_connect_capture_device(int deviceid, int channelid)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d deviceid: %d", __FUNCTION__, channelid, deviceid);

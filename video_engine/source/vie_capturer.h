@@ -68,10 +68,10 @@ class ViECapturer
 	  ProcessThread& module_process_thread,
 	  CaptureCapability *settings = NULL);
 
-  ~ViECapturer();
+  virtual ~ViECapturer();
 
   // Implements ViEFrameProviderBase.
-  int FrameCallbackChanged();
+  virtual int FrameCallbackChanged();
   virtual int DeregisterFrameCallback(const ViEFrameCallback* callbackObject);
   bool IsFrameCallbackRegistered(const ViEFrameCallback* callbackObject);
 
@@ -92,17 +92,17 @@ class ViECapturer
   virtual int SetFrameWaterMark(VIEWaterMark* watermark);
 
   // Start/Stop.
-  int32_t Start(
+  virtual int32_t Start(
       const CaptureCapability& capture_capability = CaptureCapability());
-  int32_t Stop();
-  bool Started();
+  virtual int32_t Stop();
+  virtual bool Started();//modify by dingxf
 
   // Overrides the capture delay.
-  int32_t SetCaptureDelay(int32_t delay_ms);
-  WebRtc_Word32 SetLocalVieoWindow(void* window);
+  virtual int32_t SetCaptureDelay(int32_t delay_ms);
+  virtual WebRtc_Word32 SetLocalVieoWindow(void* window);
 
   // Sets rotation of the incoming captured frame.
-  int32_t SetRotateCapturedFrames(const RotateCapturedFrame rotation);
+  virtual int32_t SetRotateCapturedFrames(const RotateCapturedFrame rotation);
 
   // Effect filter.
   int32_t RegisterEffectFilter(ViEEffectFilter* effect_filter);
@@ -113,16 +113,19 @@ class ViECapturer
   int32_t EnableBeautyFilter(bool enable);
 
   // Statistics observer.
-  int32_t RegisterObserver(ViECaptureObserver* observer);
-  int32_t DeRegisterObserver();
+  virtual int32_t RegisterObserver(ViECaptureObserver* observer);
+  virtual int32_t DeRegisterObserver();
   bool IsObserverRegistered();
 
   // Information.
-  const char* CurrentDeviceName() const;
+  virtual const char* CurrentDeviceName() const;
 
   void RegisterCpuOveruseObserver(CpuOveruseObserver* observer);
   void SetCpuOveruseOptions(const CpuOveruseOptions& options);
   void GetCpuOveruseMetrics(CpuOveruseMetrics* metrics) const;
+
+  //add by dingxf
+  int GetCaptureCapability(CaptureCapability& capability);
 
  protected:
   ViECapturer(int capture_id,
@@ -161,12 +164,14 @@ class ViECapturer
 
   // Thread functions for deliver captured frames to receivers.
   static bool ViECaptureThreadFunction(void* obj);
-  bool ViECaptureProcess();
+  virtual bool ViECaptureProcess();
 
   void DeliverI420Frame(I420VideoFrame* video_frame);
   void DeliverCodedFrame(VideoFrame* video_frame);
 
- private:
+  //modify by dingxf
+ //private:
+protected:
   bool SwapCapturedAndDeliverFrameIfAvailable();
 
   // Never take capture_cs_ before deliver_cs_!
@@ -221,10 +226,10 @@ class ViECapturer
 	  virtual int RegisterFrameCallback(int capture_id, ViEFrameCallback* callbackObject);
 
 	  // Set device image.
-	  WebRtc_Word32 SetCaptureDeviceImage(const I420VideoFrame& capture_device_image);
+	  virtual WebRtc_Word32 SetCaptureDeviceImage(const I420VideoFrame& capture_device_image);
 
-	  int SetCaptureSettings(VideoCaptureCapability settings);
-	  int UpdateLossRate(int lossRate);
+	  virtual int SetCaptureSettings(VideoCaptureCapability settings);
+	  virtual int UpdateLossRate(int lossRate);
 	  int SetSendStatisticsProxy(SendStatisticsProxy* p_sendStats);
       void setBeautyFace(bool enable);
       void setVideoFilter(ECImageFilterType filterType);

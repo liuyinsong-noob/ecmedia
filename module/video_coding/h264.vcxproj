@@ -228,7 +228,7 @@
       </AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>libx264.dll.lib;libavcodec.a;libavutil.a;libavformat.a;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libx264.dll.lib;libavcodec.lib;libavformat.lib;libavutil.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\third_party\libx264\libx264_win\x86\lib;..\..\third_party\ffmpeg\ffmpeg_win\x86\lib</AdditionalLibraryDirectories>
       <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
       <IgnoreSpecificDefaultLibraries>

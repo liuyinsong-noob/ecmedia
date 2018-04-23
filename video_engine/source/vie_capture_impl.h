@@ -74,7 +74,10 @@ class ViECaptureImpl
   virtual int SetLocalVideoWindow(const int capture_id,void* widow);
   //add by chwd
   virtual int AllocateWaterMark(int capture_id, WaterMark watermark, int width, int height);
-
+//add by dingxf
+  virtual int AllocateCaptureFile(int& capture_id, const char *fileUTF8, const char *filesSplit);
+  virtual int GetCaptureCapability(int capture_id, CaptureCapability& capability);
+  
  protected:
   explicit ViECaptureImpl(ViESharedData* shared_data);
   virtual ~ViECaptureImpl();

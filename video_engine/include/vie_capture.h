@@ -262,7 +262,10 @@ class WEBRTC_DLLEXPORT ViECapture {
 
   //add by chwd
   virtual int AllocateWaterMark(int capture_id, WaterMark watermark, int width, int height) = 0;
-
+//add by dingxf
+  virtual int AllocateCaptureFile(int& capture_id, const char *fileUTF8, const char *filesSplit) = 0;
+  virtual int GetCaptureCapability(int capture_id, CaptureCapability& capability) = 0;
+  
  protected:
   ViECapture() {}
   virtual ~ViECapture() {}

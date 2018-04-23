@@ -397,6 +397,14 @@ ECMEDIA_API int ECMedia_get_capture_capability(const char *id, int id_len, int i
  */
 ECMEDIA_API int ECMedia_allocate_capture_device(const char *id, size_t len, int& deviceid);
 /*
+*
+*/
+ECMEDIA_API int ECMedia_get_file_capture_capability(int capture_id, CameraCapability& capabilityp);
+/*
+*
+*/
+ECMEDIA_API int ECMedia_allocate_capture_file(int& deviceid, const char *fileUTF8, const char *filesSplit = nullptr);
+/*
  *
  */
 ECMEDIA_API int ECMedia_connect_capture_device(int deviceid, int channelid);
