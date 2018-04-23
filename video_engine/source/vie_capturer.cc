@@ -148,12 +148,16 @@ ViECapturer* ViECapturer::CreateViECapture(
 int32_t ViECapturer::Init(VideoCaptureModule* capture_module) {
   assert(capture_module_ == NULL);
   capture_module_ = capture_module;
-  capture_module_->RegisterCaptureDataCallback(*this);
-  capture_module_->AddRef();
-  if (module_process_thread_.RegisterModule(capture_module_) != 0) {
-    return -1;
+
+  if (capture_module_) {
+	  capture_module_->RegisterCaptureDataCallback(*this);
+	  capture_module_->AddRef();
+	  if (module_process_thread_.RegisterModule(capture_module_) != 0) {
+		return -1;
+	  }
+	  return 0;
   }
-  return 0;
+  return -1;
 }
 
 ViECapturer* ViECapturer::CreateViECapture(
@@ -222,7 +226,10 @@ int ViECapturer::FrameCallbackChanged() {
     int best_height;
     int best_frame_rate;
     VideoCaptureCapability capture_settings;
-    capture_module_->CaptureSettings(capture_settings);
+
+	if (capture_module_) {
+		capture_module_->CaptureSettings(capture_settings);
+	}
     GetBestFormat(&best_width, &best_height, &best_frame_rate);
     if (best_width != 0 && best_height != 0 && best_frame_rate != 0) {
       if (best_width != capture_settings.width ||
@@ -270,20 +277,36 @@ int32_t ViECapturer::Start(const CaptureCapability& capture_capability) {
     capability.rawType = requested_capability_.rawType;
     capability.interlaced = requested_capability_.interlaced;
   }
-  return capture_module_->StartCapture(capability);
+
+  if (capture_module_) {
+	  return capture_module_->StartCapture(capability);
+  }
+  return -1;
 }
 
 int32_t ViECapturer::Stop() {
-  requested_capability_ = CaptureCapability();
-  return capture_module_->StopCapture();
+
+	if (capture_module_) {
+		requested_capability_ = CaptureCapability();
+		return capture_module_->StopCapture();
+	}
+	return -1;
 }
 
 bool ViECapturer::Started() {
-  return capture_module_->CaptureStarted();
+
+	if (capture_module_) {
+		return capture_module_->CaptureStarted();
+	}
+	return -1;
 }
 
 const char* ViECapturer::CurrentDeviceName() const {
-  return capture_module_->CurrentDeviceName();
+
+	if (capture_module_) {
+		return capture_module_->CurrentDeviceName();
+	}
+	return nullptr;
 }
 
 void ViECapturer::RegisterCpuOveruseObserver(CpuOveruseObserver* observer) {
@@ -299,12 +322,19 @@ void ViECapturer::GetCpuOveruseMetrics(CpuOveruseMetrics* metrics) const {
 }
 
 int32_t ViECapturer::SetCaptureDelay(int32_t delay_ms) {
-  capture_module_->SetCaptureDelay(delay_ms);
-  return 0;
+
+	if (capture_module_) {
+		capture_module_->SetCaptureDelay(delay_ms);
+	}
+	return 0;
 }
     
 WebRtc_Word32 ViECapturer::SetLocalVieoWindow(void* window) {
-    return capture_module_->SetPreviewWindow(window);
+
+	if (capture_module_) {
+		return capture_module_->SetPreviewWindow(window);
+	}
+	return -1;
 }
 
 int32_t ViECapturer::SetRotateCapturedFrames(
@@ -330,7 +360,11 @@ int32_t ViECapturer::SetRotateCapturedFrames(
         break;
 #endif
   }
-  return capture_module_->SetCaptureRotation(converted_rotation);
+
+  if (capture_module_) {
+	  return capture_module_->SetCaptureRotation(converted_rotation);
+  }
+  return -1;
 }
 
 int ViECapturer::IncomingFrame(unsigned char* video_frame,
@@ -391,11 +425,13 @@ int ViECapturer::IncomingFrameI420(const ViEVideoFrameI420& video_frame,
 }
 
 void ViECapturer::SwapFrame(I420VideoFrame* frame) {
-  external_capture_module_->IncomingI420VideoFrame(frame,
-                                                   frame->render_time_ms());
-  frame->set_timestamp(0);
-  frame->set_ntp_time_ms(0);
-  frame->set_render_time_ms(0);
+	if (external_capture_module_ && frame) {
+		external_capture_module_->IncomingI420VideoFrame(frame,
+			frame->render_time_ms());
+		frame->set_timestamp(0);
+		frame->set_ntp_time_ms(0);
+		frame->set_render_time_ms(0);
+	}
 }
 
 
@@ -705,16 +741,22 @@ int32_t ViECapturer::RegisterObserver(ViECaptureObserver* observer) {
     }
     observer_ = observer;
   }
-  capture_module_->RegisterCaptureCallback(*this);
-  capture_module_->EnableFrameRateCallback(true);
-  capture_module_->EnableNoPictureAlarm(true);
+  if (capture_module_)
+  {
+	  capture_module_->RegisterCaptureCallback(*this);
+	  capture_module_->EnableFrameRateCallback(true);
+	  capture_module_->EnableNoPictureAlarm(true);
+  }
   return 0;
 }
 
 int32_t ViECapturer::DeRegisterObserver() {
-  capture_module_->EnableFrameRateCallback(false);
-  capture_module_->EnableNoPictureAlarm(false);
-  capture_module_->DeRegisterCaptureCallback();
+	if (capture_module_)
+	{
+		capture_module_->EnableFrameRateCallback(false);
+		capture_module_->EnableNoPictureAlarm(false);
+		capture_module_->DeRegisterCaptureCallback();
+	}
 
   CriticalSectionScoped cs(observer_cs_.get());
   observer_ = NULL;
@@ -770,24 +812,46 @@ int ViECapturer::RegisterFrameCallback(int observer_id, ViEFrameCallback* callba
 
 WebRtc_Word32 ViECapturer::SetCaptureDeviceImage(
 	const I420VideoFrame& capture_device_image) {
+
+	if (capture_module_) {
 		return capture_module_->StartSendImage(capture_device_image, 10);
+	}
+	return -1;
 }
 
 int ViECapturer::SetCaptureSettings(VideoCaptureCapability settings)
 {
-	return capture_module_->SetCaptureSettings(settings);
+	if (capture_module_) {
+		return capture_module_->SetCaptureSettings(settings);
+	}
+	return -1;
 }
 
 int ViECapturer::UpdateLossRate(int lossRate)
 {
-    return capture_module_->UpdateLossRate(lossRate);
+	if (capture_module_) {
+		return capture_module_->UpdateLossRate(lossRate);
+	}
+	return -1;
 }
     
 void ViECapturer::setBeautyFace(bool enable)
 {
-    return capture_module_->setBeautyFace(enable);
+	if (capture_module_) {
+		return capture_module_->setBeautyFace(enable);
+	}
 }
 void ViECapturer::setVideoFilter(ECImageFilterType filterType) {
-    return capture_module_->setVideoFilter(filterType);
+
+	if (capture_module_) {
+		return capture_module_->setVideoFilter(filterType);
+	}
+}
+
+//add by dingxf
+int ViECapturer::GetCaptureCapability(CaptureCapability& capability)
+{
+	capability = requested_capability_;
+	return CaptureCapabilityFixed() ? 0 : -1;
 }
 }  // namespace webrtc

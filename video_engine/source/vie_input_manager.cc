@@ -26,6 +26,8 @@
 #include "../system_wrappers/include/trace.h"
 #include "vie_file_player.h"
 #include "vie_watermark.h"
+ //add by dingxf
+#include "vie_file_capturer.h"
 
 namespace cloopenwebrtc {
 
@@ -131,6 +133,37 @@ int ViEInputManager::GetCaptureCapability(
   capability.codecType = module_capability.codecType;
   capability.maxFPS = module_capability.maxFPS;
   return result;
+}
+
+//add by dingxf
+int ViEInputManager::CreateCaptureFile(int& capture_id, const char *fileUTF8, const char *filesSplit) {
+	CriticalSectionScoped cs(map_cs_.get());
+
+	int newcapture_id = 0;
+	if (!GetFreeCaptureId(&newcapture_id)) {
+		LOG(LS_ERROR) << "All capture devices already allocated.";
+		return kViECaptureDeviceMaxNoDevicesAllocated;
+	}
+	ViEFileCapturer* vie_capture = ViEFileCapturer::CreateViEFileCapturer(
+		newcapture_id, engine_id_, config_, fileUTF8, filesSplit, *module_process_thread_);
+	if (!vie_capture) {
+		ReturnCaptureId(newcapture_id);
+		return kViECaptureDeviceUnknownError;
+	}
+
+	vie_frame_provider_map_[newcapture_id] = vie_capture;
+	capture_id = newcapture_id;
+	return 0;
+}
+
+//add by dingxf
+int ViEInputManager::GetCaptureCapability(int capture_id, CaptureCapability& capability) {
+	ViECapturer* vie_capture = ViECapturePtr(capture_id);
+	if (!vie_capture) {
+		LOG(LS_ERROR) << "No such capture device id: " << capture_id;
+		return -1;
+	}
+	return vie_capture->GetCaptureCapability(capability);
 }
 
 int ViEInputManager::GetOrientation(const char* device_unique_idUTF8,

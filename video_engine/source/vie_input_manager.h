@@ -33,6 +33,8 @@ class RWLockWrapper;
 class ViECapturer;
 class ViEExternalCapture;
 class VoiceEngine;
+//add by dingxf
+class ViEFileCapturer;
 
 class ViEInputManager : private ViEManagerBase {
   friend class ViEInputManagerScoped;
@@ -88,7 +90,10 @@ class ViEInputManager : private ViEManagerBase {
 
   //add by chwd
   int CreateWaterMark(int capture_id, WaterMark watermark, int width, int height);
-
+  //add by dingxf
+  int CreateCaptureFile(int& capture_id, const char *fileUTF8, const char *filesSplit);
+  int GetCaptureCapability(int capture_id, CaptureCapability& capability);
+  
  private:
   // Gets and allocates a free capture device id. Assumed protected by caller.
   bool GetFreeCaptureId(int* freecapture_id);

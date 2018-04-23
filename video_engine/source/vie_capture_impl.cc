@@ -622,5 +622,25 @@ int ViECaptureImpl::setVideoFilter(const int capture_id, ECImageFilterType filte
     vie_capture->setVideoFilter(filterType);
     return 0;
 }
+
+//add by dingxf
+int ViECaptureImpl::AllocateCaptureFile(int& capture_id, const char *fileUTF8, const char *filesSplit) {
+	LOG(LS_INFO) << "AllocateCaptureFile " << fileUTF8;
+	const int32_t result = shared_data_->input_manager()->CreateCaptureFile(capture_id, fileUTF8, filesSplit);
+	if (result != 0) {
+		shared_data_->SetLastError(result);
+		return -1;
+	}
+	return 0;
+}
+
+//add by dingxf
+int ViECaptureImpl::GetCaptureCapability(int capture_id, CaptureCapability& capability) {
+	if (shared_data_->input_manager()->GetCaptureCapability(capture_id, capability) != 0) {
+		shared_data_->SetLastError(kViECaptureDeviceUnknownError);
+		return -1;
+	}
+	return 0;
+}
         
 }  // namespace webrtc
