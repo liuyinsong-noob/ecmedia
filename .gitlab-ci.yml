@@ -11,7 +11,6 @@ before_script:
 build_master_android:
     stage: build
     script: "python build_android.py"
-    allow_failure: true
     only:
       - master
       - vp8_test
@@ -21,7 +20,6 @@ build_master_android:
 build_master_ios:
     stage: build
     script: "python build_ios.py"
-    allow_failure: true
     only:
       - master
       - vp8_test   
@@ -31,7 +29,6 @@ build_master_ios:
 build_master_win:
     stage: build
     script: "python build_win.py"
-    allow_failure: true
     only:
       - master
       - vp8_test
@@ -49,7 +46,6 @@ deploy_master_android:
       GIT_STRATEGY: none
     tags:
       - mac_mini_178_218
-    allow_failure: true
 
 deploy_master_ios:
     stage: deploy
@@ -60,7 +56,6 @@ deploy_master_ios:
       GIT_STRATEGY: none
     tags:
       - mac_mini_178_218
-    allow_failure: true
 
 deploy_master_win:
     stage: deploy
@@ -71,7 +66,6 @@ deploy_master_win:
       GIT_STRATEGY: none
     tags:
       - win_pc
-    allow_failure: true
 
 
 ### ---------------- job for branch except master ------------------ ### \

@@ -51,7 +51,8 @@ class BuildWindows(BuildBase):
                 ret = os.system('devenv.com MyWebRtc.sln /build "audioRelease|Win32" /Project ECMediaVOICE')
             if ret != 0:
                 return ret
-
+            if self.build_config.get('build_setting', 'windows_arch') == 'x32_only' :
+                return 0
             if self.build_config.get('build_state', self.platform + '_audio_state') == 'rebuild' :
                 return os.system('devenv.com MyWebRtc.sln /rebuild "audioRelease|x64" /Project ECMediaVOICE')
             else :
