@@ -8,11 +8,20 @@ Auth chwd 2018.4.10
 #include "../common_types.h"
 extern "C"
 {
-#include "libavfilter/avfiltergraph.h"
-#include "libavfilter/buffersink.h"
-#include "libavfilter/buffersrc.h"
-#include "libavutil/avutil.h"
-#include "libavutil/imgutils.h"
+#ifdef __APPLE__
+ #include "libavfilter_ios/avfiltergraph.h"
+ #include "libavfilter_ios/buffersink.h"
+ #include "libavfilter_ios/buffersrc.h"
+ #include "libavutil_ios/avutil.h"
+ #include "libavutil_ios/imgutils.h"
+#else
+ #include "libavfilter/avfiltergraph.h"
+ #include "libavfilter/buffersink.h"
+ #include "libavfilter/buffersrc.h"
+ #include "libavutil/avutil.h"
+ #include "libavutil/imgutils.h"
+#endif
+
 };
 
 

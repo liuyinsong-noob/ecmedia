@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F59114A208DB32A004D2053 /* vie_watermark.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F591149208DB329004D2053 /* vie_watermark.cc */; };
 		1FDC7C041E7A6335002B9F7C /* video_send_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FDC7C031E7A6335002B9F7C /* video_send_stream.cc */; };
 		1FE07DFC1FE7AABE0018E762 /* encoder_rtcp_feedback.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4547E2CD1F15F2F60014FB7E /* encoder_rtcp_feedback.cc */; };
 		4547E2CF1F15F2F60014FB7E /* encoder_rtcp_feedback.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4547E2CD1F15F2F60014FB7E /* encoder_rtcp_feedback.cc */; };
@@ -119,6 +120,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F591149208DB329004D2053 /* vie_watermark.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_watermark.cc; sourceTree = "<group>"; };
 		1FDC7C031E7A6335002B9F7C /* video_send_stream.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_send_stream.cc; sourceTree = "<group>"; };
 		4547E2CD1F15F2F60014FB7E /* encoder_rtcp_feedback.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = encoder_rtcp_feedback.cc; path = video/encoder_rtcp_feedback.cc; sourceTree = "<group>"; };
 		4547E2CE1F15F2F60014FB7E /* encoder_rtcp_feedback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = encoder_rtcp_feedback.h; path = video/encoder_rtcp_feedback.h; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 		5519CC4115C8136E00719504 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				1F591149208DB329004D2053 /* vie_watermark.cc */,
 				4547E2CD1F15F2F60014FB7E /* encoder_rtcp_feedback.cc */,
 				4547E2CE1F15F2F60014FB7E /* encoder_rtcp_feedback.h */,
 				1FDC7C031E7A6335002B9F7C /* video_send_stream.cc */,
@@ -496,6 +499,7 @@
 				AD2E29F91C58C09F00FD311B /* stream_synchronization.cc in Sources */,
 				5519CC8E15C8136E00719504 /* vie_capture_impl.cc in Sources */,
 				5519CC9015C8136E00719504 /* vie_capturer.cc in Sources */,
+				1F59114A208DB32A004D2053 /* vie_watermark.cc in Sources */,
 				5519CC9415C8136F00719504 /* vie_channel_group.cc in Sources */,
 				5519CC9615C8136F00719504 /* vie_channel_manager.cc in Sources */,
 				5519CC9815C8136F00719504 /* vie_codec_impl.cc in Sources */,
@@ -690,6 +694,7 @@
 					../module/pacing/include,
 					../module/video_coding/main/source,
 					../module/desktop_capture/source,
+					../third_party/ffmpeg/,
 					"../third_party/libyuv-ios/include",
 					../module/desktop_capture/desktop_capture/desktop_capture,
 					../ECMedia/source,
@@ -772,6 +777,7 @@
 					../module/pacing/include,
 					../module/video_coding/main/source,
 					../module/desktop_capture/source,
+					../third_party/ffmpeg/,
 					"../third_party/libyuv-ios/include",
 					../module/desktop_capture/desktop_capture/desktop_capture,
 					../ECMedia/source,

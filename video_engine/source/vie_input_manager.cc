@@ -309,8 +309,7 @@ int ViEInputManager::DestroyCaptureDevice(const int capture_id) {
 }
 
 //add by chwd
-int ViEInputManager::CreateWaterMark(int capture_id, WaterMark watermark, int width, int height)
-{
+int ViEInputManager::CreateWaterMark(int capture_id, WaterMark watermark, int width, int height) {
 	CriticalSectionScoped cs(map_cs_.get());
 
 	VIEWaterMark* vie_watermark = VIEWaterMark::CreateWatermark(watermark, width, height);

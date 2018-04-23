@@ -13,6 +13,10 @@
 		1AFBD1221DAE564A009B8D23 /* libfaad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1211DAE564A009B8D23 /* libfaad.a */; };
 		1AFBD1241DAE5839009B8D23 /* libfaac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1231DAE5839009B8D23 /* libfaac.a */; };
 		1AFBD1661DAE67D3009B8D23 /* libL16.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1611DAE6592009B8D23 /* libL16.a */; };
+		1F591153208DB475004D2053 /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59114B208DB474004D2053 /* libavdevice.a */; };
+		1F591154208DB475004D2053 /* libpostproc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F591150208DB474004D2053 /* libpostproc.a */; };
+		1F591155208DB475004D2053 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F591151208DB475004D2053 /* libswscale.a */; };
+		1F591156208DB475004D2053 /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F591152208DB475004D2053 /* libavfilter.a */; };
 		1F79652F1FE7B95100A254CA /* libremote_bitrate_estimator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45619A4B1F14ABE6008B2068 /* libremote_bitrate_estimator.a */; };
 		1F79654B1FE7BA8800A254CA /* libremote_bitrate_estimator_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F79654A1FE7BA8800A254CA /* libremote_bitrate_estimator_Mac.a */; };
 		1F8EE0021E5D6EB200C04C10 /* RecordLocal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EE0011E5D6EB200C04C10 /* RecordLocal.cpp */; };
@@ -1227,6 +1231,10 @@
 		1AFBD1231DAE5839009B8D23 /* libfaac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaac.a; path = ../../../third_party/libfaac/lib/ios/libfaac.a; sourceTree = "<group>"; };
 		1AFBD15C1DAE6592009B8D23 /* L16.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = L16.xcodeproj; path = ../../../module/audio_coding/L16.xcodeproj; sourceTree = "<group>"; };
 		1F099E2D1ED57CC200421B08 /* SoundTouch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoundTouch.xcodeproj; path = ../../../third_party/SoundTouch/SoundTouch.xcodeproj; sourceTree = "<group>"; };
+		1F59114B208DB474004D2053 /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = ../../libavdevice.a; sourceTree = "<group>"; };
+		1F591150208DB474004D2053 /* libpostproc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpostproc.a; path = ../../libpostproc.a; sourceTree = "<group>"; };
+		1F591151208DB475004D2053 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../../libswscale.a; sourceTree = "<group>"; };
+		1F591152208DB475004D2053 /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = ../../libavfilter.a; sourceTree = "<group>"; };
 		1F8EE0011E5D6EB200C04C10 /* RecordLocal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecordLocal.cpp; sourceTree = "<group>"; };
 		1F8EE0061E5D6EBC00C04C10 /* RecordLocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordLocal.h; sourceTree = "<group>"; };
 		1F8EE0541E5D7B8B00C04C10 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ../libavformat.a; sourceTree = "<group>"; };
@@ -1537,16 +1545,20 @@
 				1AFBD1661DAE67D3009B8D23 /* libL16.a in Frameworks */,
 				ADC50F521D8FC69700A83C04 /* libdesktop_capture.a in Frameworks */,
 				1AFBD1221DAE564A009B8D23 /* libfaad.a in Frameworks */,
+				1F591154208DB475004D2053 /* libpostproc.a in Frameworks */,
 				AD01997D1D236579003C2BB9 /* libyuv.a in Frameworks */,
+				1F591155208DB475004D2053 /* libswscale.a in Frameworks */,
 				ADF92D921CB7BB230026DF61 /* libiSAC.a in Frameworks */,
 				ADF92D9E1CB7BBDE0026DF61 /* libx264.a in Frameworks */,
 				ADF92D881CB7B9830026DF61 /* libpacing.a in Frameworks */,
 				ADF92D891CB7B9830026DF61 /* libwebrtc_opus.a in Frameworks */,
 				AD4E8C561CB664F80068C4E9 /* libcommon_audio.a in Frameworks */,
+				1F591153208DB475004D2053 /* libavdevice.a in Frameworks */,
 				ADF92D9D1CB7BBDE0026DF61 /* libvpx.a in Frameworks */,
 				55F5735C1C1FB2DE0014FB06 /* libamrnb.a in Frameworks */,
 				55F5735D1C1FB2DE0014FB06 /* libaudioprocess.a in Frameworks */,
 				55F573601C1FB2DE0014FB06 /* libsystem_wrappers.a in Frameworks */,
+				1F591156208DB475004D2053 /* libavfilter.a in Frameworks */,
 				ADB51A471B2807B40009077D /* libaudio_coding_module.a in Frameworks */,
 				ADB51A481B2807B40009077D /* libaudio_conference_mixer.a in Frameworks */,
 				ADB51A491B2807B40009077D /* libaudio_device.a in Frameworks */,
@@ -2135,6 +2147,10 @@
 		ADB519311B27DFCA0009077D /* ECMedia */ = {
 			isa = PBXGroup;
 			children = (
+				1F59114B208DB474004D2053 /* libavdevice.a */,
+				1F591152208DB475004D2053 /* libavfilter.a */,
+				1F591150208DB474004D2053 /* libpostproc.a */,
+				1F591151208DB475004D2053 /* libswscale.a */,
 				1AFBD1211DAE564A009B8D23 /* libfaad.a */,
 				1AFBD1231DAE5839009B8D23 /* libfaac.a */,
 				ADF92D931CB7BBDD0026DF61 /* libavcodec.a */,

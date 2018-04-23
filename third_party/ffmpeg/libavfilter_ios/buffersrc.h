@@ -25,7 +25,7 @@
  * Memory buffer source API.
  */
 
-#include "libavcodec/avcodec.h"
+#include "libavcodec_ios/avcodec.h"
 #include "avfilter.h"
 
 /**

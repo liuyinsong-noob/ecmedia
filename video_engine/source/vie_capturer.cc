@@ -30,9 +30,15 @@
 #include "../base/timeutils.h"
 extern "C"
 {
+#ifdef __APPLE__
+#include "libavcodec_ios/avcodec.h"
+#include "libavformat_ios/avformat.h"
+#include "libavutil_ios/avutil.h"
+#else
 #include "libavcodec/avcodec.h"
 #include "libavformat/avformat.h"
 #include "libavutil/avutil.h"
+#endif
 };
 #include "vie_watermark.h"
 namespace cloopenwebrtc {
