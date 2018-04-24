@@ -193,7 +193,7 @@ bool ViEFileCapturer::ViECaptureProcess() {
 				video_frame_->set_timestamp(clock_->TimeInMilliseconds());
 				video_frame_->set_render_time_ms(clock_->TimeInMilliseconds());
 
-				LOG_F(LS_ERROR) << "ViEFileCapturer::ViECaptureProcess() interval times.";
+				//LOG_F(LS_INFO) << "ViEFileCapturer::ViECaptureProcess() interval times.";
 
 				lastSent_ = clock_->TimeInMicroseconds();
 				DeliverI420Frame(video_frame_);
