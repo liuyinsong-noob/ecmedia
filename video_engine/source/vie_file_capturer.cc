@@ -51,6 +51,9 @@ ViEFileCapturer::ViEFileCapturer(int capture_id,
 	, captureStarted_(true)
 	, bInitialized_(false)
 	, video_frame_(nullptr)
+	, lastSent_(0)
+	, sendFileFrameMaxFps_(30)
+	, avgTimePerFrame_(1000000.0 / sendFileFrameMaxFps_)
 	, clock_(Clock::GetRealTimeClock())
     , fileCapture_cs_(CriticalSectionWrapper::CreateCriticalSection())
 {
@@ -110,6 +113,7 @@ int32_t ViEFileCapturer::Init(const char* fileUTF8, const char* filesSplit) {
 		} 
 	}
 	bInitialized_ = (ret == 0);
+	lastSent_ = clock_->TimeInMicroseconds();
 	return ret;
 }
 
@@ -184,11 +188,14 @@ bool ViEFileCapturer::ViECaptureProcess() {
 		if (bInitialized_)
 		{
 			CriticalSectionScoped cs(fileCapture_cs_.get());
-			if (video_frame_ != NULL)
+			if (video_frame_ != NULL && TimeToSendFileFrame())
 			{
 				video_frame_->set_timestamp(clock_->TimeInMilliseconds());
 				video_frame_->set_render_time_ms(clock_->TimeInMilliseconds());
 
+				LOG_F(LS_ERROR) << "ViEFileCapturer::ViECaptureProcess() interval times.";
+
+				lastSent_ = clock_->TimeInMicroseconds();
 				DeliverI420Frame(video_frame_);
 			}
 		}
@@ -339,11 +346,11 @@ int ViEFileCapturer::ConvertBMPToVideoFrame(const char* fileUTF8, I420VideoFrame
 		{
 			int half_width = (width + 1) / 2;
 			(*video_frame)->CreateEmptyFrame(width, height, width, half_width, half_width);
-			ret = ConvertToI420(kARGB, (const uint8_t*)pBuffer, 0, 0, width, -height, 0, kVideoRotation_0, *video_frame);
+			ret = ConvertToI420(kARGB, (const uint8_t*)pBuffer, 0, 0, width, -height, 0, kRotateNone, (*video_frame));
 
 			requested_capability_.width = width;
 			requested_capability_.height = height;
-			requested_capability_.maxFPS = 15;
+			requested_capability_.maxFPS = 30;
 			(*video_frame)->set_timestamp(clock_->TimeInMilliseconds());
 			(*video_frame)->set_render_time_ms(clock_->TimeInMilliseconds());
 
@@ -404,11 +411,11 @@ int ViEFileCapturer::ConvertJPEGToVideoFrame(const char* fileUTF8, I420VideoFram
 		int half_width = (width + 1) / 2;
 		(*video_frame)->CreateEmptyFrame(width, height, width, half_width, half_width);
 
-		ret = ConvertToI420(kMJPG, image_buffer._buffer, 0, 0, width, height, buffer_size, kVideoRotation_0, *video_frame);
+		ret = ConvertToI420(kMJPG, image_buffer._buffer, 0, 0, width, height, buffer_size, kRotateNone, (*video_frame));
 
 		requested_capability_.width = width;
 		requested_capability_.height = height;
-		requested_capability_.maxFPS = 15;
+		requested_capability_.maxFPS = sendFileFrameMaxFps_;
 		(*video_frame)->set_timestamp(clock_->TimeInMilliseconds());
 		(*video_frame)->set_render_time_ms(clock_->TimeInMilliseconds());
 	}
@@ -445,4 +452,17 @@ FileExtType ViEFileCapturer::GetFileExtType(const string& fname)
 	}
 	return ExtType_Unknown;
 }
+
+bool ViEFileCapturer::TimeToSendFileFrame() const
+{
+	bool timeToSend(false);
+
+	WebRtc_Word64 diff = clock_->TimeInMicroseconds() - lastSent_;
+	if (diff > avgTimePerFrame_)
+	{
+		timeToSend = true;
+	}
+	return timeToSend;
+}
+
 }  // namespace webrtc
