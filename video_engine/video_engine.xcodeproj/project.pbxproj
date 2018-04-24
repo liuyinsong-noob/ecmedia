@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1F59114A208DB32A004D2053 /* vie_watermark.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F591149208DB329004D2053 /* vie_watermark.cc */; };
+		1F591321208F39A6004D2053 /* vie_file_capturer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F591320208F39A5004D2053 /* vie_file_capturer.cc */; };
 		1FDC7C041E7A6335002B9F7C /* video_send_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FDC7C031E7A6335002B9F7C /* video_send_stream.cc */; };
 		1FE07DFC1FE7AABE0018E762 /* encoder_rtcp_feedback.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4547E2CD1F15F2F60014FB7E /* encoder_rtcp_feedback.cc */; };
 		4547E2CF1F15F2F60014FB7E /* encoder_rtcp_feedback.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4547E2CD1F15F2F60014FB7E /* encoder_rtcp_feedback.cc */; };
@@ -121,6 +122,7 @@
 
 /* Begin PBXFileReference section */
 		1F591149208DB329004D2053 /* vie_watermark.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_watermark.cc; sourceTree = "<group>"; };
+		1F591320208F39A5004D2053 /* vie_file_capturer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vie_file_capturer.cc; sourceTree = "<group>"; };
 		1FDC7C031E7A6335002B9F7C /* video_send_stream.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_send_stream.cc; sourceTree = "<group>"; };
 		4547E2CD1F15F2F60014FB7E /* encoder_rtcp_feedback.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = encoder_rtcp_feedback.cc; path = video/encoder_rtcp_feedback.cc; sourceTree = "<group>"; };
 		4547E2CE1F15F2F60014FB7E /* encoder_rtcp_feedback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = encoder_rtcp_feedback.h; path = video/encoder_rtcp_feedback.h; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 		5519CC4115C8136E00719504 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				1F591320208F39A5004D2053 /* vie_file_capturer.cc */,
 				1F591149208DB329004D2053 /* vie_watermark.cc */,
 				4547E2CD1F15F2F60014FB7E /* encoder_rtcp_feedback.cc */,
 				4547E2CE1F15F2F60014FB7E /* encoder_rtcp_feedback.h */,
@@ -518,6 +521,7 @@
 				AD8D73021C59A39700FB246D /* send_statistics_proxy.cc in Sources */,
 				AD8D72FE1C59A39700FB246D /* overuse_frame_detector.cc in Sources */,
 				AD8D73001C59A39700FB246D /* receive_statistics_proxy.cc in Sources */,
+				1F591321208F39A6004D2053 /* vie_file_capturer.cc in Sources */,
 				5519CCAF15C8136F00719504 /* vie_input_manager.cc in Sources */,
 				5519CCB115C8136F00719504 /* vie_manager_base.cc in Sources */,
 				5519CCB315C8136F00719504 /* vie_network_impl.cc in Sources */,
@@ -658,6 +662,7 @@
 					WEBRTC_CLOCK_TYPE_REALTIME,
 					VIDEOCODEC_H264,
 					VIDEOCODEC_H264_HIGH,
+					WEBRTC_IOS,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -686,10 +691,10 @@
 					../module/video_processing/main/source/beauty_filter,
 					../servicecore/include,
 					../third_party/oRTP/include/ortp,
-					../module/common_video/interface,
+					../common_video/include,
 					../module/common_video/source,
 					../module/remote_bitrate_estimator/source,
-					../module/common_video/source/libyuv/include,
+					../common_video/source/libyuv/include,
 					../module/remote_bitrate_estimator/include,
 					../module/pacing/include,
 					../module/video_coding/main/source,
@@ -741,6 +746,7 @@
 					WEBRTC_CLOCK_TYPE_REALTIME,
 					VIDEOCODEC_H264,
 					VIDEOCODEC_H264_HIGH,
+					WEBRTC_IOS,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -769,10 +775,10 @@
 					../module/video_processing/main/source/beauty_filter,
 					../servicecore/include,
 					../third_party/oRTP/include/ortp,
-					../module/common_video/interface,
+					../common_video/include,
 					../module/common_video/source,
 					../module/remote_bitrate_estimator/source,
-					../module/common_video/source/libyuv/include,
+					../common_video/source/libyuv/include,
 					../module/remote_bitrate_estimator/include,
 					../module/pacing/include,
 					../module/video_coding/main/source,

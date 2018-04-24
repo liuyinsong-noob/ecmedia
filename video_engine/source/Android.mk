@@ -58,7 +58,9 @@ LOCAL_SRC_FILES := \
 	vie_encryption_impl.cc \
 	video_send_stream.cc \
 	video/encoder_rtcp_feedback.cc \
-    	vie_watermark.cc
+    vie_watermark.cc \
+    vie_file_capturer.cc  
+
 
 	
 	
@@ -81,6 +83,7 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../../module \
     $(LOCAL_PATH)/../../base \
     $(LOCAL_PATH)/../common_video/interface \
+    $(LOCAL_PATH)/../../common_video/include \
     $(LOCAL_PATH)/../common_video/jpeg/main/interface \
     $(LOCAL_PATH)/../common_video/vplib/main/interface \
     $(LOCAL_PATH)/../../module/interface \
@@ -105,7 +108,7 @@ LOCAL_C_INCLUDES := \
     $(LOCAL_PATH)/../../module/common_video/interface \
     $(LOCAL_PATH)/../../module/remote_bitrate_estimator/source \
     $(LOCAL_PATH)/../../module/remote_bitrate_estimator/include \
-    $(LOCAL_PATH)/../../module/common_video/source/libyuv/include \
+    $(LOCAL_PATH)/../../common_video/source/libyuv/include \
     $(LOCAL_PATH)/../../module/pacing/include \
     $(LOCAL_PATH)/../../module/video_coding/main/source \
     $(LOCAL_PATH)/../../module/desktop_capture/source \
@@ -116,7 +119,9 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../../servicecore/include \
 	$(LOCAL_PATH)/../../third_party/oRTP/include/ortp \
 	$(LOCAL_PATH)/../../third_party/oRTP/include \
+    $(LOCAL_PATH)/../../third_party/libyuv-android/include \
     $(LOCAL_PATH)/../../third_party/ffmpeg/ffmpeg-android-bin/include \
+    
 LOCAL_SHARED_LIBRARIES := \
     libcutils \
     libdl \
