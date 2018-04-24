@@ -495,7 +495,7 @@ namespace cloopenwebrtc {
             return 0;
         }
         int ret = -1;
-#ifndef __APPLE__
+#ifdef WIN32
         ViERender* render = ViERender::GetInterface(vie_);
         if(!render) {
             PrintConsole("[RTMP ERROR] %s get vierender failed\n", __FUNCTION__);
