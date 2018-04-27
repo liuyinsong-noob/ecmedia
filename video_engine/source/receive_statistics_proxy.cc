@@ -14,6 +14,7 @@
 
 #include "../system_wrappers/include/clock.h"
 #include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/trace.h"
 //#include "time.h"
 #include "../base/timeutils.h"
 

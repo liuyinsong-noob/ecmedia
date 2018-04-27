@@ -703,12 +703,7 @@ void StatsCollector::LoadAudioSenderReportToPbBuffer(StatsContentType type,
 	value = report.FindValue(StatsReport::kStatsValueNameAudioInputLevel);
 	if (value)
 		statsData->set_kstatsvaluenameaudioinputlevel(value->int32_val());
-	value = report.FindValue(StatsReport::kStatsValueNameLossFractionInPercent);
-	if (value)
-		statsData->set_kstatsvaluenamelossfractioninpercent(value->int32_val());
-	value = report.FindValue(StatsReport::kStatsValueNameJitterReceived);
-	if (value)
-		statsData->set_kstatsvaluenamejitterreceived(value->int32_val());
+
 	value = report.FindValue(StatsReport::kStatsValueNameRttInMs);
 	if (value)
 		statsData->set_kstatsvaluenamerttinms(value->int32_val());
@@ -777,6 +772,15 @@ void StatsCollector::LoadAudioReceiverReportToPbBuffer(StatsContentType type,
 	if (value)
 		statsData->set_kstatsvaluenamedecodingplccng(value->int32_val());
 
+	value = report.FindValue(StatsReport::kStatsValueNameLossFractionInPercent);
+	if (value)
+		statsData->set_kstatsvaluenamelossfractioninpercent(value->int32_val());
+	value = report.FindValue(StatsReport::kStatsValueNamePacketsLost);
+	if (value)
+		statsData->set_kstatsvaluenamepacketslost(value->int32_val());
+	value = report.FindValue(StatsReport::kStatsValueNameJitterReceived);
+	if (value)
+		statsData->set_kstatsvaluenamejitterreceived(value->int32_val());
 }
 
 #ifdef VIDEO_ENABLED
@@ -811,13 +815,6 @@ void StatsCollector::LoadVideoSenderReportToPbBuffer(StatsContentType type,
 	value = report.FindValue(StatsReport::kStatsValueNameAvailableReceiveBandwidth);
 	if (value)
 		statsData->set_kstatsvaluenameavailablereceivebandwidth(value->int32_val());
-	
-	value = report.FindValue(StatsReport::kStatsValueNameLossFractionInPercent);
-	if (value)
-		statsData->set_kstatsvaluenamelossfractioninpercent(value->int32_val());
-	value = report.FindValue(StatsReport::kStatsValueNameJitterReceived);
-	if (value)
-		statsData->set_kstatsvaluenamejitterreceived(value->int32_val());
 	value = report.FindValue(StatsReport::kStatsValueNameRttInMs);
 	if (value)
 		statsData->set_kstatsvaluenamerttinms(value->int32_val());
@@ -855,9 +852,6 @@ void StatsCollector::LoadVideoSenderReportToPbBuffer(StatsContentType type,
 		value = report.FindValue(StatsReport::kStatsValueNameSsrc);
 		if (value)
 			statsData->set_kstatsvaluenamessrc(value->int32_val());
-		value = report.FindValue(StatsReport::kStatsValueNamePacketsLost);
-		if (value)
-			statsData->set_kstatsvaluenamepacketslost(value->int32_val());
 		value = report.FindValue(StatsReport::kStatsValueNameFirsReceived);
 		if (value)
 			statsData->set_kstatsvaluenamefirsreceived(value->int32_val());
@@ -1010,6 +1004,16 @@ void StatsCollector::LoadVideoReceiverReportToPbBuffer(StatsContentType type,
 	value = report.FindValue(StatsReport::kStatsValueNameLossModePart4);
 	if (value)
 		statsData->set_kstatsvaluenamelossmodepart4(value->int64_val());
+
+	value = report.FindValue(StatsReport::kStatsValueNameLossFractionInPercent);
+	if (value)
+		statsData->set_kstatsvaluenamelossfractioninpercent(value->int32_val());
+	value = report.FindValue(StatsReport::kStatsValueNamePacketsLost);
+	if (value)
+		statsData->set_kstatsvaluenamepacketslost(value->int32_val());
+	value = report.FindValue(StatsReport::kStatsValueNameJitterReceived);
+	if (value)
+		statsData->set_kstatsvaluenamejitterreceived(value->int32_val());	
 }
 #endif
 
@@ -1079,6 +1083,9 @@ void StatsCollector::VideoReciverInfo_AddRtcpStats(const VideoReceiveStream::Sta
 		{ StatsReport::kStatsValueNameNacksRequestsSent, info.rtcp_packet_type_counts.nack_requests },
 		{ StatsReport::kStatsValueNameNacksUniqueRequestsSent, info.rtcp_packet_type_counts.unique_nack_requests },
 		{ StatsReport::kStatsValueNameFirsSent, info.rtcp_packet_type_counts.fir_packets },
+		{ StatsReport::kStatsValueNameLossFractionInPercent, info.rtcp_stats.fraction_lost*100/255},
+		{ StatsReport::kStatsValueNamePacketsLost, info.rtcp_stats.cumulative_lost },
+		{ StatsReport::kStatsValueNameJitterReceived, info.rtcp_stats.jitter },
 	};
 	for (const auto& i : uint32)
 		report->AddInt32(i.name, i.value);
@@ -1145,6 +1152,10 @@ void StatsCollector::AudioReceiverInfo_AddNetworkStats(const AudioReceiveStream:
 	report->AddFloat(StatsReport::kStatsValueNameAccelerateRate, info.accelerate_rate);
 	report->AddFloat(StatsReport::kStatsValueNameExpandRate, info.expand_rate);
 	report->AddFloat(StatsReport::kStatsValueNamePreemptiveExpandRate, info.preemptive_expand_rate);
+
+	report->AddInt32(StatsReport::kStatsValueNameLossFractionInPercent, info.fraction_lost);
+	report->AddInt32(StatsReport::kStatsValueNamePacketsLost, info.packets_lost);
+	report->AddInt32(StatsReport::kStatsValueNameJitterReceived, info.jitter_ms);
 }
 
 StatsReport* StatsCollector::FindReport(bool isFullStats, int reportType, int channel_id)
