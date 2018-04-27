@@ -67,10 +67,10 @@ class AudioDeviceAndroid {
     @SuppressWarnings("unused")
     private int InitRecording(int audioSource, int sampleRate) {
         // get the minimum buffer size that can be used
-        int minRecBufSize = 320;
-                        //AudioRecord.getMinBufferSize(sampleRate,
-//                           //             AudioFormat.CHANNEL_CONFIGURATION_MONO,
-                            //            AudioFormat.ENCODING_PCM_16BIT);
+        int minRecBufSize =
+                        AudioRecord.getMinBufferSize(sampleRate,
+                                        AudioFormat.CHANNEL_CONFIGURATION_MONO,
+                                        AudioFormat.ENCODING_PCM_16BIT);
 
         // DoLog("min rec buf size is " + minRecBufSize);
 
@@ -85,24 +85,24 @@ class AudioDeviceAndroid {
             _audioRecord = null;
         }
 
-//        try {
-//            _audioRecord = new AudioRecord(
-//                            audioSource,
-//                            sampleRate,
-//                            AudioFormat.CHANNEL_CONFIGURATION_MONO,
-//                            AudioFormat.ENCODING_PCM_16BIT,
-//                            recBufSize);
-//
-//        } catch (Exception e) {
-//            DoLog(e.getMessage());
-//            return -1;
-//        }
-//
-//        // check that the audioRecord is ready to be used
-//        if (_audioRecord.getState() != AudioRecord.STATE_INITIALIZED) {
-//            // DoLog("rec not initialized " + sampleRate);
-//            return -1;
-//        }
+        try {
+            _audioRecord = new AudioRecord(
+                            audioSource,
+                            sampleRate,
+                            AudioFormat.CHANNEL_CONFIGURATION_MONO,
+                            AudioFormat.ENCODING_PCM_16BIT,
+                            recBufSize);
+
+        } catch (Exception e) {
+            DoLog(e.getMessage());
+            return -1;
+        }
+
+        // check that the audioRecord is ready to be used
+        if (_audioRecord.getState() != AudioRecord.STATE_INITIALIZED) {
+            // DoLog("rec not initialized " + sampleRate);
+            return -1;
+        }
 
         // DoLog("rec sample rate set to " + sampleRate);
         _freqSample = sampleRate;
@@ -120,7 +120,7 @@ class AudioDeviceAndroid {
 
         // start recording
         try {
-            // _audioRecord.startRecording();
+            _audioRecord.startRecording();
 
         } catch (IllegalStateException e) {
             e.printStackTrace();
@@ -141,17 +141,17 @@ class AudioDeviceAndroid {
 
         // start recording
         try {
-            //_audioRecord.startRecording();
+            _audioRecord.startRecording();
         } catch (IllegalStateException e) {
             e.printStackTrace();
             return false;
         }
 
-//        int recordingState = _audioRecord.getRecordingState();
-//        if (recordingState == AudioRecord.RECORDSTATE_STOPPED) {
-//            DoLogErr("CheckRecordPermission RecordingState " + recordingState);
-//            return false;
-//        }
+        int recordingState = _audioRecord.getRecordingState();
+        if (recordingState == AudioRecord.RECORDSTATE_STOPPED) {
+            DoLogErr("CheckRecordPermission RecordingState " + recordingState);
+            return false;
+        }
 
         _isRecording = true;
 
@@ -160,7 +160,7 @@ class AudioDeviceAndroid {
         for(; times<10; times++) {
             if(RecordAudio(recordLen) < 0) {
                 try {
-                    //_audioRecord.stop();
+                    _audioRecord.stop();
                 } catch (IllegalStateException e) {
                     e.printStackTrace();
                     return false;
@@ -256,20 +256,20 @@ class AudioDeviceAndroid {
         _recLock.lock();
         try {
             // only stop if we are recording
-//            if (_audioRecord.getRecordingState() ==
-//              AudioRecord.RECORDSTATE_RECORDING) {
-//                // stop recording
-//                try {
-//                    _audioRecord.stop();
-//                } catch (IllegalStateException e) {
-//                    e.printStackTrace();
-//                    return -1;
-//                }
-//            }
-//
-//            // release the object
-//            _audioRecord.release();
-//            _audioRecord = null;
+            if (_audioRecord.getRecordingState() ==
+              AudioRecord.RECORDSTATE_RECORDING) {
+                // stop recording
+                try {
+                    _audioRecord.stop();
+                } catch (IllegalStateException e) {
+                    e.printStackTrace();
+                    return -1;
+                }
+            }
+
+            // release the object
+            _audioRecord.release();
+            _audioRecord = null;
 
         } finally {
             // Ensure we always unlock, both for success, exception or error
@@ -388,10 +388,10 @@ class AudioDeviceAndroid {
         _recLock.lock();
 
         try {
-//            if (_audioRecord == null) {
-//                return -2; // We have probably closed down while waiting for rec
-//                           // lock
-//            }
+            if (_audioRecord == null) {
+                return -2; // We have probably closed down while waiting for rec
+                           // lock
+            }
 
             // Set priority, only do once
             if (_doRecInit == true) {
@@ -406,7 +406,7 @@ class AudioDeviceAndroid {
 
             int readBytes = 0;
             _recBuffer.rewind(); // Reset the position to start of buffer
-            //readBytes = _audioRecord.read(_tempBufRec, 0, lengthInBytes);
+            readBytes = _audioRecord.read(_tempBufRec, 0, lengthInBytes);
             // DoLog("read " + readBytes + "from SC");
             _recBuffer.put(_tempBufRec);
 

@@ -13,6 +13,8 @@
 		1AFBD1221DAE564A009B8D23 /* libfaad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1211DAE564A009B8D23 /* libfaad.a */; };
 		1AFBD1241DAE5839009B8D23 /* libfaac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1231DAE5839009B8D23 /* libfaac.a */; };
 		1AFBD1661DAE67D3009B8D23 /* libL16.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1611DAE6592009B8D23 /* libL16.a */; };
+		1F45C2502092BBF9008EEF78 /* aacencode.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F45C24B2092BBF8008EEF78 /* aacencode.cc */; };
+		1F45C35420932968008EEF78 /* aacdecode.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F45C34F20932968008EEF78 /* aacdecode.cc */; };
 		1F591153208DB475004D2053 /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59114B208DB474004D2053 /* libavdevice.a */; };
 		1F591154208DB475004D2053 /* libpostproc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F591150208DB474004D2053 /* libpostproc.a */; };
 		1F591155208DB475004D2053 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F591151208DB475004D2053 /* libswscale.a */; };
@@ -1231,6 +1233,8 @@
 		1AFBD1231DAE5839009B8D23 /* libfaac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaac.a; path = ../../../third_party/libfaac/lib/ios/libfaac.a; sourceTree = "<group>"; };
 		1AFBD15C1DAE6592009B8D23 /* L16.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = L16.xcodeproj; path = ../../../module/audio_coding/L16.xcodeproj; sourceTree = "<group>"; };
 		1F099E2D1ED57CC200421B08 /* SoundTouch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoundTouch.xcodeproj; path = ../../../third_party/SoundTouch/SoundTouch.xcodeproj; sourceTree = "<group>"; };
+		1F45C24B2092BBF8008EEF78 /* aacencode.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aacencode.cc; path = ec_live_engine/aacencode.cc; sourceTree = "<group>"; };
+		1F45C34F20932968008EEF78 /* aacdecode.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aacdecode.cc; path = ec_live_engine/aacdecode.cc; sourceTree = "<group>"; };
 		1F59114B208DB474004D2053 /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = ../../libavdevice.a; sourceTree = "<group>"; };
 		1F591150208DB474004D2053 /* libpostproc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpostproc.a; path = ../../libpostproc.a; sourceTree = "<group>"; };
 		1F591151208DB475004D2053 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../../libswscale.a; sourceTree = "<group>"; };
@@ -1676,8 +1680,9 @@
 				1F930D891F6A9D6500EBDE34 /* ec_srs_librtmp */,
 				1F930D881F6A9D5600EBDE34 /* ec_hls_parser */,
 				1F930D871F6A9D4D00EBDE34 /* ec_hls_loader */,
-				1F930DB51F6A9DAE00EBDE34 /* ec_aac_codec.cpp */,
+				1F45C34F20932968008EEF78 /* aacdecode.cc */,
 				1F930DB61F6A9DAE00EBDE34 /* ec_aac_codec.h */,
+				1F45C24B2092BBF8008EEF78 /* aacencode.cc */,
 				1F930DB71F6A9DAE00EBDE34 /* ec_hls_puller.cpp */,
 				1F930DB81F6A9DAE00EBDE34 /* ec_hls_puller.h */,
 				1F930DB91F6A9DAE00EBDE34 /* ec_live_base.h */,
@@ -1734,6 +1739,7 @@
 		1F930D881F6A9D5600EBDE34 /* ec_hls_parser */ = {
 			isa = PBXGroup;
 			children = (
+				1F930DB51F6A9DAE00EBDE34 /* ec_aac_codec.cpp */,
 				1F930D901F6A9D8F00EBDE34 /* ec_ts_parser.cc */,
 				1F930D911F6A9D8F00EBDE34 /* ec_ts_parser.h */,
 			);
@@ -3343,6 +3349,7 @@
 				1F930DB01F6A9D9A00EBDE34 /* htl_core_log.cpp in Sources */,
 				1F930DCF1F6A9DAE00EBDE34 /* ec_play_buffer_cacher.cpp in Sources */,
 				1F930DCB1F6A9DAE00EBDE34 /* ec_hls_puller.cpp in Sources */,
+				1F45C2502092BBF9008EEF78 /* aacencode.cc in Sources */,
 				1F930DD01F6A9DAE00EBDE34 /* ec_rtmp_bitrate_controller.cpp in Sources */,
 				1F930DAE1F6A9D9A00EBDE34 /* htl_core_aggregate_ret.cpp in Sources */,
 				1F930DCC1F6A9DAE00EBDE34 /* ec_live_engine.cpp in Sources */,
@@ -3355,6 +3362,7 @@
 				1F930DD11F6A9DAE00EBDE34 /* ec_rtmp_publisher.cpp in Sources */,
 				1F930DCA1F6A9DAE00EBDE34 /* ec_aac_codec.cpp in Sources */,
 				1AFBD0B91DAE0A59009B8D23 /* faaccodec.cpp in Sources */,
+				1F45C35420932968008EEF78 /* aacdecode.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4031,6 +4039,7 @@
 					../../third_party/protobuf/src,
 					../../third_party/SoundTouch/SoundTouch,
 					../../base,
+					../../module/audio_device/main/include,
 					"../source/ec_live_engine/srs-librtmp",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -4108,6 +4117,7 @@
 					../../third_party/protobuf/src,
 					../../third_party/SoundTouch/SoundTouch,
 					../../base,
+					../../module/audio_device/main/include,
 					"../source/ec_live_engine/srs-librtmp",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

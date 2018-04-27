@@ -138,7 +138,8 @@ public:
     // TODO(ajm): Remove default NULLs.
     virtual int Init(AudioDeviceModule* external_adm = NULL,
                      AudioProcessing* audioproc = NULL) = 0;
-
+    virtual int InitForLiveVideo(AudioDeviceModule* external_adm = NULL,
+                                 AudioProcessing* audioproc = NULL, AudioTransport* audio_callback = NULL) = 0;
     // Returns NULL before Init() is called.
     virtual AudioProcessing* audio_processing() = 0;
 

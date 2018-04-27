@@ -508,6 +508,201 @@ int VoEBaseImpl::Init(AudioDeviceModule* external_adm,
     return _shared->statistics().SetInitialized();
 }
 
+    
+int VoEBaseImpl::InitForLiveVideo(AudioDeviceModule* external_adm,
+                      AudioProcessing* audioproc, AudioTransport* audio_callback)
+{
+    WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+                 "Init(external_adm=0x%p)", external_adm);
+    CriticalSectionScoped cs(_shared->crit_sec());
+    
+    WebRtcSpl_Init();
+    
+    if (_shared->statistics().Initialized())
+    {
+        return 0;
+    }
+    
+    if (_shared->process_thread())
+    {
+        if (_shared->process_thread()->Start() != 0)
+        {
+            _shared->SetLastError(VE_THREAD_ERROR, kTraceError,
+                                  "Init() failed to start module process thread");
+            return -1;
+        }
+    }
+    
+    // Create an internal ADM if the user has not added an external
+    // ADM implementation as input to Init().
+    if (external_adm == NULL)
+    {
+        // Create the internal ADM implementation.
+        _shared->set_audio_device(AudioDeviceModuleImpl::Create(
+                                                                VoEId(_shared->instance_id(), -1), _shared->audio_device_layer()));
+        
+        if (_shared->audio_device() == NULL)
+        {
+            _shared->SetLastError(VE_NO_MEMORY, kTraceCritical,
+                                  "Init() failed to create the ADM");
+            return -1;
+        }
+    }
+    else
+    {
+        // Use the already existing external ADM implementation.
+        _shared->set_audio_device(external_adm);
+        WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_shared->instance_id(), -1),
+                     "An external ADM implementation will be used in VoiceEngine");
+    }
+    
+    // Register the ADM to the process thread, which will drive the error
+    // callback mechanism
+    if (_shared->process_thread() &&
+        _shared->process_thread()->RegisterModule(_shared->audio_device()) != 0)
+    {
+        _shared->SetLastError(VE_AUDIO_DEVICE_MODULE_ERROR, kTraceError,
+                              "Init() failed to register the ADM");
+        return -1;
+    }
+    
+    bool available(false);
+    
+    // --------------------
+    // Reinitialize the ADM
+    
+    // Register the AudioObserver implementation
+    if (_shared->audio_device()->RegisterEventObserver(this) != 0) {
+        _shared->SetLastError(VE_AUDIO_DEVICE_MODULE_ERROR, kTraceWarning,
+                              "Init() failed to register event observer for the ADM");
+    }
+    
+    // Register the AudioTransport implementation
+    if (_shared->audio_device()->RegisterAudioCallback(audio_callback) != 0) {
+        _shared->SetLastError(VE_AUDIO_DEVICE_MODULE_ERROR, kTraceWarning,
+                              "Init() failed to register audio callback for the ADM");
+    }
+    
+    // ADM initialization
+    if (_shared->audio_device()->Init() != 0)
+    {
+        _shared->SetLastError(VE_AUDIO_DEVICE_MODULE_ERROR, kTraceError,
+                              "Init() failed to initialize the ADM");
+        return -1;
+    }
+    
+    // Initialize the default speaker
+    if (_shared->audio_device()->SetPlayoutDevice(
+                                                  WEBRTC_VOICE_ENGINE_DEFAULT_DEVICE) != 0)
+    {
+        _shared->SetLastError(VE_AUDIO_DEVICE_MODULE_ERROR, kTraceInfo,
+                              "Init() failed to set the default output device");
+    }
+    if (_shared->audio_device()->InitSpeaker() != 0)
+    {
+        _shared->SetLastError(VE_CANNOT_ACCESS_SPEAKER_VOL, kTraceInfo,
+                              "Init() failed to initialize the speaker");
+    }
+    
+    // Initialize the default microphone
+    if (_shared->audio_device()->SetRecordingDevice(
+                                                    WEBRTC_VOICE_ENGINE_DEFAULT_DEVICE) != 0)
+    {
+        _shared->SetLastError(VE_SOUNDCARD_ERROR, kTraceInfo,
+                              "Init() failed to set the default input device");
+    }
+    if (_shared->audio_device()->InitMicrophone() != 0)
+    {
+        _shared->SetLastError(VE_CANNOT_ACCESS_MIC_VOL, kTraceInfo,
+                              "Init() failed to initialize the microphone");
+    }
+    
+    // Set number of channels
+    if (_shared->audio_device()->StereoPlayoutIsAvailable(&available) != 0) {
+        _shared->SetLastError(VE_SOUNDCARD_ERROR, kTraceWarning,
+                              "Init() failed to query stereo playout mode");
+    }
+    if (_shared->audio_device()->SetStereoPlayout(available) != 0)
+    {
+        _shared->SetLastError(VE_SOUNDCARD_ERROR, kTraceWarning,
+                              "Init() failed to set mono/stereo playout mode");
+    }
+    
+    // TODO(andrew): These functions don't tell us whether stereo recording
+    // is truly available. We simply set the AudioProcessing input to stereo
+    // here, because we have to wait until receiving the first frame to
+    // determine the actual number of channels anyway.
+    //
+    // These functions may be changed; tracked here:
+    // http://code.google.com/p/webrtc/issues/detail?id=204
+    _shared->audio_device()->StereoRecordingIsAvailable(&available);
+    if (_shared->audio_device()->SetStereoRecording(available) != 0)
+    {
+        _shared->SetLastError(VE_SOUNDCARD_ERROR, kTraceWarning,
+                              "Init() failed to set mono/stereo recording mode");
+    }
+    
+    if (!audioproc) {
+        audioproc = AudioProcessing::Create();
+        if (!audioproc) {
+            //        LOG(LS_ERROR) << "Failed to create AudioProcessing.";
+            _shared->SetLastError(VE_NO_MEMORY);
+            return -1;
+        }
+    }
+    _shared->set_audio_processing(audioproc);
+    
+    // Set the error state for any failures in this block.
+    _shared->SetLastError(VE_APM_ERROR);
+    // Configure AudioProcessing components.
+    if (audioproc->high_pass_filter()->Enable(true) != 0) {
+        //      LOG_FERR1(LS_ERROR, high_pass_filter()->Enable, true);
+        return -1;
+    }
+    //benhur test
+    /*if (audioproc->howling_control()->Enable(false) != 0)
+     {
+     LOG_FERR1(LS_ERROR, howling_control()->Enable, true);
+     return -1;
+     }*/
+    if (audioproc->echo_cancellation()->enable_drift_compensation(false) != 0) {
+        //      LOG_FERR1(LS_ERROR, enable_drift_compensation, false);
+        return -1;
+    }
+    if (audioproc->noise_suppression()->set_level(kDefaultNsMode) != 0) {
+        //      LOG_FERR1(LS_ERROR, noise_suppression()->set_level, kDefaultNsMode);
+        return -1;
+    }
+    GainControl* agc = audioproc->gain_control();
+    if (agc->set_analog_level_limits(kMinVolumeLevel, kMaxVolumeLevel) != 0) {
+        //      LOG_FERR2(LS_ERROR, agc->set_analog_level_limits, kMinVolumeLevel,
+        //                kMaxVolumeLevel);
+        return -1;
+    }
+    if (agc->set_mode(kDefaultAgcMode) != 0) {
+        //      LOG_FERR1(LS_ERROR, agc->set_mode, kDefaultAgcMode);
+        return -1;
+    }
+    if (agc->Enable(kDefaultAgcState) != 0) {
+        //      LOG_FERR1(LS_ERROR, agc->Enable, kDefaultAgcState);
+        return -1;
+    }
+    _shared->SetLastError(0);  // Clear error state.
+    
+#ifdef WEBRTC_VOICE_ENGINE_AGC
+    bool agc_enabled = agc->mode() == GainControl::kAdaptiveAnalog &&
+    agc->is_enabled();
+    if (_shared->audio_device()->SetAGC(agc_enabled) != 0) {
+        //      LOG_FERR1(LS_ERROR, audio_device()->SetAGC, agc_enabled);
+        //     _shared->SetLastError(VE_AUDIO_DEVICE_MODULE_ERROR);
+        // TODO(ajm): No error return here due to
+        // https://code.google.com/p/webrtc/issues/detail?id=1464
+    }
+#endif
+    
+    return _shared->statistics().SetInitialized();
+}
+    
 int VoEBaseImpl::Terminate()
 {
     WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),

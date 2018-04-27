@@ -17,6 +17,8 @@ LOCAL_MODULE := libLiveVideo
 LOCAL_MODULE_TAGS := optional
 LOCAL_SRC_FILES := \
 		ec_aac_codec.cpp \
+		aacencode.cc \
+		aacdecode.cc \
 		ec_play_buffer_cacher.cpp \
 		ec_live_engine.cpp \
 		ec_live_utility.cpp \
@@ -89,6 +91,7 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/../../../module/remote_bitrate_estimator/source \
 	$(LOCAL_PATH)/../../../module/video_render/main/include \
 	$(LOCAL_PATH)/../../../module/audio_coding/codecs/opencore-amr/amrnb \
+	$(LOCAL_PATH)/../../../module/audio_device/main/include \
 	$(LOCAL_PATH)/../../../module/audio_coding/main/source \
 	$(LOCAL_PATH)/../../../third_party/libfaad/faad2-2.7/include \
 	$(LOCAL_PATH)/../../../third_party/libfaac/include \

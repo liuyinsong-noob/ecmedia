@@ -5265,6 +5265,36 @@ int ECMedia_set_screen_share_activity(int desktop_captureid, void* activity)
     }
 }
 
+//add by chwd
+/*
+ @deviceid : Device Id
+ @water : see define in common_types.h
+ @width height : the size of capture data,not watermark size
+ */
+int ECMedia_set_watermark(int deviceid, WaterMark watermark,int width,int height)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins...,args fontfile: %s,fontcolor: %s,\
+                 fontsize: %d,text: %s, x: %d,y: %d,imagepath: %s,startposition :%s,flag: %d,width: %d,height: %d",
+                 __FUNCTION__,watermark.fontfile,watermark.fontcolor,watermark.fontsize,watermark.text,watermark.x,watermark.y,
+                 watermark.imagepath,watermark.startposition,watermark.flag,width,height);
+#ifdef VIDEO_ENABLED
+    ViECapture *capture = ViECapture::GetInterface(m_vie);
+    if (capture) {
+        int ret = capture->AllocateWaterMark(deviceid, watermark,width,height);
+        capture->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, ret);
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to get ViECapture, %s", __FUNCTION__);
+        return -99;
+    }
+#endif
+    PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+    return -99;
+}
+
 /********************* ec live stream api begin ****************/
 // create live stream object.
 void *ECMedia_createLiveStream()
@@ -5296,10 +5326,12 @@ int ECMedia_setVideoPreviewViewer(void *handle, void *viewer) {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
     int ret = -1;
 #ifdef VIDEO_ENABLED
-    ECLiveEngine *engine = (ECLiveEngine*)handle;
-    ret = engine->setVideoPreview(viewer);
-    PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
-    return ret;
+    if(handle) {
+        ECLiveEngine *engine = (ECLiveEngine*)handle;
+        ret = engine->setVideoPreview(viewer);
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
+        return ret;
+    }
 #endif
     return -1;
 }
@@ -5308,74 +5340,50 @@ int ECMedia_ConfigLiveVideoStream(void *handle, LiveVideoStreamConfig config)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
-    ECLiveEngine *engine = (ECLiveEngine*)handle;
-    int ret = engine->configLiveVideoStream(config);
-    if (ret != 0) {
-        PrintConsole("[ECMEDIA ERROR] %s failed to set video profile", __FUNCTION__);
+    if(handle) {
+        ECLiveEngine *engine = (ECLiveEngine*)handle;
+        int ret = engine->configLiveVideoStream(config);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set video profile", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
+        return ret;
     }
-    PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
-    return ret;
 #endif
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
     return -1;
 }
 
-//add by chwd
-/*
-@deviceid : Device Id
-@water : see define in common_types.h
-@width height : the size of capture data,not watermark size
-*/
-int ECMedia_set_watermark(int deviceid, WaterMark watermark,int width,int height)
-{
-	    PrintConsole("[ECMEDIA INFO] %s begins...,args fontfile: %s,fontcolor: %s,\
-			fontsize: %d,text: %s, x: %d,y: %d,imagepath: %s,startposition :%s,flag: %d,width: %d,height: %d",
-		__FUNCTION__,watermark.fontfile,watermark.fontcolor,watermark.fontsize,watermark.text,watermark.x,watermark.y,
-		watermark.imagepath,watermark.startposition,watermark.flag,width,height);
-#ifdef VIDEO_ENABLED
-	ViECapture *capture = ViECapture::GetInterface(m_vie);
-	if (capture) {
-		int ret = capture->AllocateWaterMark(deviceid, watermark,width,height);
-		capture->Release();
-		PrintConsole("[ECMEDIA INFO] %s end with code: %d ", __FUNCTION__, ret);
-		return ret;
-	}
-	else
-	{
-		PrintConsole("[ECMEDIA WARNNING] failed to get ViECapture, %s", __FUNCTION__);
-		return -99;
-	}
-#endif
-	PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
-	return -99;
-
-}
-
 int ECMedia_setLiveVideoFrameDegree(void *handle, ECLiveFrameDegree degree) {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
-    ECLiveEngine *engine = (ECLiveEngine*)handle;
-    int ret = -1;
-    ret = engine->setCaptureFrameDegree(degree);
-    if (ret != 0) {
-        PrintConsole("[ECMEDIA ERROR] %s failed to set live video frame degree.", __FUNCTION__);
+    if(handle) {
+        ECLiveEngine *engine = (ECLiveEngine*)handle;
+        int ret = -1;
+        ret = engine->setCaptureFrameDegree(degree);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set live video frame degree.", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
+        return ret;
     }
-    PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
-    return ret;
+    return -1;
 #endif
 }
 
 int ECMedia_SwitchLiveCamera(void *handle, int camera_index) {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
-    ECLiveEngine *engine = (ECLiveEngine*)handle;
-    int ret = -1;
-    ret = engine->switchCamera(camera_index);
-    if (ret != 0) {
-        PrintConsole("[ECMEDIA ERROR] %s failed to switch live video stream.", __FUNCTION__);
+    if(handle) {
+        ECLiveEngine *engine = (ECLiveEngine*)handle;
+        int ret = -1;
+        ret = engine->switchCamera(camera_index);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to switch live video stream.", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
+        return ret;
     }
-    PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
-    return ret;
 #endif
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
     return -1;
@@ -5386,16 +5394,18 @@ int ECMedia_pushLiveStream(void *handle, const char *url, ECLiveStreamNetworkSta
 {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
-    ECLiveEngine *engine = (ECLiveEngine*)handle;
-    int ret = 0;
-    
-    ret = engine->startPublish(url, callback);
-    
-    if (ret != 0) {
-        PrintConsole("[ECMEDIA ERROR] %s failed to push stream", __FUNCTION__);
+    if(handle) {
+        ECLiveEngine *engine = (ECLiveEngine*)handle;
+        int ret = 0;
+        
+        ret = engine->startPublish(url, callback);
+        
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to push stream", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
+        return ret;
     }
-    PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
-    return ret;
 #endif
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
     return -1;
@@ -5406,13 +5416,15 @@ int ECMedia_playLiveStream(void *handle, const char * url, ECLiveStreamNetworkSt
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
     int ret = -1;
-    ECLiveEngine *engine = (ECLiveEngine*)handle;
-    ret = engine->startPlay(url, callback);
-    if (ret != 0) {
-        PrintConsole("[ECMEDIA ERROR] %s failed to play stream", __FUNCTION__);
+    if(handle) {
+        ECLiveEngine *engine = (ECLiveEngine*)handle;
+        ret = engine->startPlay(url, callback);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to play stream", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
+        return ret;
     }
-    PrintConsole("[ECMEDIA INFO] %s ends... with code: %d", __FUNCTION__, ret);
-    return ret;
 #endif
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
     return -1;
@@ -5422,18 +5434,23 @@ void ECMedia_stopLiveStream(void *handle)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
-    ECLiveEngine *engine = (ECLiveEngine*)handle;
-    engine->stopPlay();
-    engine->stopPublish();
+    if(handle) {
+        ECLiveEngine *engine = (ECLiveEngine*)handle;
+        engine->stopPlay();
+        engine->stopPublish();
+    }
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 #endif
 }
 
 void ECMedia_releaseLiveStream(void *handle)
 {
+
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
-    ECLiveEngine::destroy();
+    if(handle) {
+            ECLiveEngine::destroy();
+    }
 #endif
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 }
@@ -5442,8 +5459,10 @@ void ECMedia_enableLiveStreamBeauty(void *handle)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
-    ECLiveEngine *engine = (ECLiveEngine*)handle;
-    engine->setBeautyFace(true);
+    if(handle) {
+        ECLiveEngine *engine = (ECLiveEngine*)handle;
+        engine->setBeautyFace(true);
+    }
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 #endif
 }
@@ -5452,8 +5471,10 @@ void ECMedia_disableLiveStreamBeauty(void *handle)
 {
     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #ifdef VIDEO_ENABLED
-    ECLiveEngine *engine = (ECLiveEngine*)handle;
-    engine->setBeautyFace(false);
+    if(handle) {
+        ECLiveEngine *engine = (ECLiveEngine*)handle;
+        engine->setBeautyFace(false);
+    }
     PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 #endif
 }

@@ -35,6 +35,9 @@ namespace cloopenwebrtc {
         av_packet_cacher = NULL;
         hasStreaming_ = false;
         running_ = false;
+        srs_codec_ = new SrsAvcAacCodec();
+        audio_payload_ = new DemuxData(1024);
+        av_packet_cacher = new EC_AVCacher();
     }
     
     EC_RtmpPuller::~EC_RtmpPuller() {
@@ -44,6 +47,16 @@ namespace cloopenwebrtc {
         }
         if(av_packet_cacher) {
             delete av_packet_cacher;
+        }
+        
+        if (srs_codec_) {
+            delete srs_codec_;
+            srs_codec_ = NULL;
+        }
+        
+        if (audio_payload_) {
+            delete audio_payload_;
+            audio_payload_ = NULL;
         }
 		
         if(rtmpPullingThread_) {
@@ -76,12 +89,18 @@ namespace cloopenwebrtc {
             //callbackStateIfNeed();
         }
     }
+    
+    
 
     void EC_RtmpPuller::setReceiverCallback(EC_ReceiverCallback *cb) {
         if(!av_packet_cacher) {
             av_packet_cacher = new EC_AVCacher();
         }
         av_packet_cacher->setReceiverCallback(cb);
+    }
+    
+    EC_AVCacher * EC_RtmpPuller::getMediaPacketBuffer() {
+        return av_packet_cacher;
     }
 
     bool EC_RtmpPuller::pullingThreadRun(void* pThis) {
@@ -323,21 +342,94 @@ namespace cloopenwebrtc {
         }
     }
     
-    void EC_RtmpPuller::handleAuidoPacket(char* data, int length, u_int32_t timestamp)
+    void EC_RtmpPuller::handleAuidoPacket(char* data, int size, u_int32_t timestamp)
     {
-        unsigned voiceCodec = ((unsigned char)data[0]) >> 4;
-        switch (voiceCodec) { 
-            case 0:
-                PrintConsole("[RTMP INFO] %s Linear PCM\n", __FUNCTION__);
-                break;
-            case 10: //AAC
-                if(av_packet_cacher) {
-                    av_packet_cacher->onAacDataComing((uint8_t *) data + 2, length - 2, timestamp);
-                }
-                break;
-            default:
-                PrintConsole("[RTMP ERROR] %s codec id %d not support\n", __FUNCTION__, voiceCodec);
-                break;
+        SrsCodecSample sample;
+        if (srs_codec_->audio_aac_demux(data, size, &sample) != ERROR_SUCCESS) {
+            if (sample.acodec == SrsCodecAudioMP3 && srs_codec_->audio_mp3_demux(data, size, &sample) != ERROR_SUCCESS) {
+                return;
+            }
+            return;    // Just support AAC.
         }
+        SrsCodecAudio acodec = (SrsCodecAudio)srs_codec_->audio_codec_id;
+        
+        // ts support audio codec: aac/mp3
+        if (acodec != SrsCodecAudioAAC && acodec != SrsCodecAudioMP3) {
+            return;
+        }
+        // for aac: ignore sequence header
+        if ((acodec == SrsCodecAudioAAC && sample.aac_packet_type == SrsCodecAudioTypeSequenceHeader)
+            || srs_codec_->aac_object == SrsAacObjectTypeReserved) {
+            return;
+        }
+        GotAudioSample(timestamp, &sample);
+    }
+    
+    int EC_RtmpPuller::GotAudioSample(u_int32_t timestamp, SrsCodecSample *sample)
+    {
+        int ret = ERROR_SUCCESS;
+        for (int i = 0; i < sample->nb_sample_units; i++) {
+            SrsCodecSampleUnit* sample_unit = &sample->sample_units[i];
+            int32_t size = sample_unit->size;
+            
+            if (!sample_unit->bytes || size <= 0 || size > 0x1fff) {
+                ret = -1;
+                return ret;
+            }
+            
+            // the frame length is the AAC raw data plus the adts header size.
+            int32_t frame_length = size + 7;
+            
+            // AAC-ADTS
+            // 6.2 Audio Data Transport Stream, ADTS
+            // in aac-iso-13818-7.pdf, page 26.
+            // fixed 7bytes header
+            u_int8_t adts_header[7] = { 0xff, 0xf9, 0x00, 0x00, 0x00, 0x0f, 0xfc };
+            /*
+             // adts_fixed_header
+             // 2B, 16bits
+             int16_t syncword; //12bits, '1111 1111 1111'
+             int8_t ID; //1bit, '1'
+             int8_t layer; //2bits, '00'
+             int8_t protection_absent; //1bit, can be '1'
+             // 12bits
+             int8_t profile; //2bit, 7.1 Profiles, page 40
+             TSAacSampleFrequency sampling_frequency_index; //4bits, Table 35, page 46
+             int8_t private_bit; //1bit, can be '0'
+             int8_t channel_configuration; //3bits, Table 8
+             int8_t original_or_copy; //1bit, can be '0'
+             int8_t home; //1bit, can be '0'
+             
+             // adts_variable_header
+             // 28bits
+             int8_t copyright_identification_bit; //1bit, can be '0'
+             int8_t copyright_identification_start; //1bit, can be '0'
+             int16_t frame_length; //13bits
+             int16_t adts_buffer_fullness; //11bits, 7FF signals that the bitstream is a variable rate bitstream.
+             int8_t number_of_raw_data_blocks_in_frame; //2bits, 0 indicating 1 raw_data_block()
+             */
+            // profile, 2bits
+            SrsAacProfile aac_profile = srs_codec_aac_rtmp2ts(srs_codec_->aac_object);
+            adts_header[2] = (aac_profile << 6) & 0xc0;
+            // sampling_frequency_index 4bits
+            adts_header[2] |= (srs_codec_->aac_sample_rate << 2) & 0x3c;
+            // channel_configuration 3bits
+            adts_header[2] |= (srs_codec_->aac_channels >> 2) & 0x01;
+            adts_header[3] = (srs_codec_->aac_channels << 6) & 0xc0;
+            // frame_length 13bits
+            adts_header[3] |= (frame_length >> 11) & 0x03;
+            adts_header[4] = (frame_length >> 3) & 0xff;
+            adts_header[5] = ((frame_length << 5) & 0xe0);
+            // adts_buffer_fullness; //11bits
+            adts_header[5] |= 0x1f;
+            
+            // copy to audio buffer
+            audio_payload_->append((const char*)adts_header, sizeof(adts_header));
+            audio_payload_->append(sample_unit->bytes, sample_unit->size);
+            av_packet_cacher->onAacDataComing((uint8_t*)audio_payload_->_data, audio_payload_->_data_len, timestamp);
+            audio_payload_->reset();
+        }
+        
+        return ret;
     }
 }
