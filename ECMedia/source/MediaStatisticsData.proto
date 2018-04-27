@@ -1,4 +1,3 @@
-syntax = "proto2";
 option java_package = "com.yuntongxun.connector.core.protobuf";
 option optimize_for = LITE_RUNTIME;
 
@@ -11,55 +10,52 @@ message VideoSenderStatisticsInner
 	optional string kStatsValueNameCodecImplementationName = 4;
 
 	//BWE
-	optional int32 kStatsValueNameTargetEncBitrate = 7;
-	optional int32 kStatsValueNameActualEncBitrate = 8;
-	optional int32 kStatsValueNameAvailableSendBandwidth = 9;
-	optional int32 kStatsValueNameAvailableReceiveBandwidth = 10;
+	optional int32 kStatsValueNameTargetEncBitrate = 5;
+	optional int32 kStatsValueNameActualEncBitrate = 6;
+	optional int32 kStatsValueNameAvailableSendBandwidth = 7;
+	optional int32 kStatsValueNameAvailableReceiveBandwidth = 8;
 
 	//Network
-	optional int32 kStatsValueNameLossFractionInPercent = 11;
-	optional int32 kStatsValueNameJitterReceived = 12;
-	optional int32 kStatsValueNameRttInMs = 13;
-	optional int32 kStatsValueNameBucketDelayInMs = 14;
+	optional int32 kStatsValueNameRttInMs = 9;
+	optional int32 kStatsValueNameBucketDelayInMs = 10;
 
 	//RTP & RTCP
-	optional int32 kStatsValueNameSsrc = 15;
-	optional int32 kStatsValueNameTransmitBitrate = 16;
-	optional int32 kStatsValueNameRetransmitBitrate = 17;
-	optional int32 kStatsValueNameFecBitrate = 18; //reserved
+	optional int32 kStatsValueNameSsrc = 11;
+	optional int32 kStatsValueNameTransmitBitrate = 12;
+	optional int32 kStatsValueNameRetransmitBitrate = 13;
+	optional int32 kStatsValueNameFecBitrate = 14; //reserved
 
-	optional int32 kStatsValueNameTransmitPacketsRate = 19;
-	optional int32 kStatsValueNameRetransmitPacketsRate = 20;
+	optional int32 kStatsValueNameTransmitPacketsRate = 15;
+	optional int32 kStatsValueNameRetransmitPacketsRate = 16;
 
-	optional int32 kStatsValueNamePacketsLost = 21;
-	optional int32 kStatsValueNameFirsReceived = 22;
-	optional int32 kStatsValueNameNacksReceived = 23;
-	optional int32 kStatsValueNameNacksRequestsReceived = 24;
-	optional int32 kStatsValueNameNacksUniqueRequestsReceived = 25;
+	optional int32 kStatsValueNameFirsReceived = 17;
+	optional int32 kStatsValueNameNacksReceived = 18;
+	optional int32 kStatsValueNameNacksRequestsReceived = 19;
+	optional int32 kStatsValueNameNacksUniqueRequestsReceived = 20;
 
 	//CPU Metrics
-	optional int32 kStatsValueNameAvgEncodeMs = 26;
-	optional int32 kStatsValueNameEncodeUsagePercent = 27;
+	optional int32 kStatsValueNameAvgEncodeMs = 21;
+	optional int32 kStatsValueNameEncodeUsagePercent = 22;
 
 	//capture
-	optional int32 kStatsValueNameCapturedFrameWidth = 28;
-	optional int32 kStatsValueNameCapturedFrameHeight = 29;
-	optional int32 kStatsValueNameCapturedFrameRate = 30;
+	optional int32 kStatsValueNameCapturedFrameWidth = 23;
+	optional int32 kStatsValueNameCapturedFrameHeight = 24;
+	optional int32 kStatsValueNameCapturedFrameRate = 25;
 
 	//QMSetting
-	optional int32 kStatsValueNameQMFrameWidth = 31;
-	optional int32 kStatsValueNameQMFrameHeight = 32;
-	optional int32 kStatsValueNameQMFrameRate = 33;
+	optional int32 kStatsValueNameQMFrameWidth = 26;
+	optional int32 kStatsValueNameQMFrameHeight = 27;
+	optional int32 kStatsValueNameQMFrameRate = 28;
 
 	//CodecSetting
-	optional int32 kStatsValueNameCodecSettingFrameWidth = 34;
-	optional int32 kStatsValueNameCodecSettingFrameHeight = 35;
-	optional int32 kStatsValueNameCodecSettingFrameRate = 36;
-	optional int32 kStatsValueNameCodecSettingSimulcastNum = 37;
-	optional int32 kStatsValueNameCodecSettingStartBitrate = 38;
-	optional int32 kStatsValueNameCodecSettingMinBitrate = 39;
-	optional int32 kStatsValueNameCodecSettingMaxBitrate = 40;
-	optional int32 kStatsValueNameCodecSettingTargetBitrate = 41;
+	optional int32 kStatsValueNameCodecSettingFrameWidth = 29;
+	optional int32 kStatsValueNameCodecSettingFrameHeight = 30;
+	optional int32 kStatsValueNameCodecSettingFrameRate = 31;
+	optional int32 kStatsValueNameCodecSettingSimulcastNum = 32;
+	optional int32 kStatsValueNameCodecSettingStartBitrate = 33;
+	optional int32 kStatsValueNameCodecSettingMinBitrate = 34;
+	optional int32 kStatsValueNameCodecSettingMaxBitrate = 35;
+	optional int32 kStatsValueNameCodecSettingTargetBitrate = 36;
 }
 
 message VideoReceiverStatisticsInner
@@ -101,6 +97,11 @@ message VideoReceiverStatisticsInner
 	optional int64 kStatsValueNameLossModePart2 = 24;
 	optional int64 kStatsValueNameLossModePart3 = 25;
 	optional int64 kStatsValueNameLossModePart4 = 26;
+	
+	//Network
+	optional int32 kStatsValueNameLossFractionInPercent = 27;
+	optional int32 kStatsValueNamePacketsLost = 28;
+	optional int32 kStatsValueNameJitterReceived = 29;
 }
 
 message AudioSenderStatisticsInner
@@ -115,15 +116,13 @@ message AudioSenderStatisticsInner
 	optional int32 kStatsValueNameAudioInputLevel = 5;
 
 	//network
-	optional int32 kStatsValueNameLossFractionInPercent = 6;
-	optional int32 kStatsValueNameJitterReceived = 7;
-	optional int32 kStatsValueNameRttInMs = 8;
+	optional int32 kStatsValueNameRttInMs = 6;
 
 	//echo cancellation
-	optional int32 kStatsValueNameEchoDelayMedian = 9;
-	optional int32 kStatsValueNameEchoDelayStdDev = 10;
-	optional int32 kStatsValueNameEchoReturnLoss = 11;
-	optional int32 kStatsValueNameEchoReturnLossEnhancement = 12;
+	optional int32 kStatsValueNameEchoDelayMedian = 7;
+	optional int32 kStatsValueNameEchoDelayStdDev = 8;
+	optional int32 kStatsValueNameEchoReturnLoss = 9;
+	optional int32 kStatsValueNameEchoReturnLossEnhancement = 10;
 }
 
 message AudioReceiverStatisticsInner
@@ -137,7 +136,7 @@ message AudioReceiverStatisticsInner
 	//basic
 	optional int32 kStatsValueNameAudioOutputLevel = 5;
 
-	//network
+	//audio network
 	optional int32 kStatsValueNameCurrentDelayMs = 6;
 	optional int32 kStatsValueNameJitterBufferMs = 7;
 	optional float kStatsValueNameAccelerateRate = 8;
@@ -149,7 +148,11 @@ message AudioReceiverStatisticsInner
 	optional int32 kStatsValueNameDecodingPLC = 12;
 	optional int32 kStatsValueNameDecodingCNG = 13;
 	optional int32 kStatsValueNameDecodingPLCCNG = 14;
-
+	
+	//Network
+	optional int32 kStatsValueNameLossFractionInPercent = 15;
+	optional int32 kStatsValueNamePacketsLost = 16;
+	optional int32 kStatsValueNameJitterReceived = 17;
 }
 message MediaStatisticsInner
 {

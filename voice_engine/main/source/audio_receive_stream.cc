@@ -119,7 +119,7 @@ void AudioReceiveStream::UpdateStats()
 		audioRecvStats_.bytes_rcvd = callstats.bytesReceived;
 		audioRecvStats_.packets_rcvd = callstats.packetsReceived;
 		audioRecvStats_.packets_lost = callstats.cumulativeLost;
-		audioRecvStats_.fraction_lost = Q8ToFloat(callstats.fractionLost);
+		audioRecvStats_.fraction_lost = callstats.fractionLost;
 		audioRecvStats_.capture_start_ntp_time_ms = callstats.capture_start_ntp_time_ms_;
 		audioRecvStats_.ext_seqnum = callstats.extendedMax;
 
