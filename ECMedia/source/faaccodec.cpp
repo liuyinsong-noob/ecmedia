@@ -140,13 +140,13 @@ void *faac_encoder_crate(int sample_rate, int channels, unsigned long* inputSamp
 	return context;
 }
 
-int faac_encode_frame(void* handle, unsigned char *pPCM,unsigned char **outbuf,  int *outLen)
+int faac_encode_frame(void* handle, unsigned char *pPCM, unsigned char **outbuf,  int *outLen)
 {
 	if (!handle)
 		return -1;
 	FAACContext *context = (FAACContext *)handle;
-	int len  = faacEncEncode(context->handle , (int32_t *) pPCM,context->inputSamples,
-		context->outputBuffer,context->maxOutputBytes);
+	int len  = faacEncEncode(context->handle , (int32_t *) pPCM,  context->inputSamples,
+		context->outputBuffer, context->maxOutputBytes);
 
 	*outbuf = context->outputBuffer;
 	*outLen = len;

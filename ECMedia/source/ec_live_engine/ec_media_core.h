@@ -20,6 +20,8 @@
 #include "ec_live_common.h"
 #include "acm_resampler.h"
 #include "sdk_common.h"
+#include "pluginaac.h"
+#include "audio_device.h"
 
 typedef int(*ReturnVideoWidthHeightM)(int width, int height, int channelid);
 
@@ -42,7 +44,7 @@ namespace cloopenwebrtc {
         ECMediaMachine();
         virtual ~ECMediaMachine();
         // init
-        bool Init();
+        bool Init(AudioTransport* transport = NULL);
         void UnInit();
 
         // device camera
@@ -60,7 +62,7 @@ namespace cloopenwebrtc {
         void SelectShareWindow(int type, int id);
         void SetVideoCaptureSource(VIDEO_SOURCE video_source);
         void GetShareWindowList(std::vector<ShareWindowInfo> & list);
-
+        void setAudioTransport(AudioTransport* transport);
     protected:
         // Transport
         virtual int SendRtp(int channelId, const uint8_t* packet, size_t length, const PacketOptions* options = NULL) {return 0;};
@@ -84,7 +86,6 @@ namespace cloopenwebrtc {
         // EC_ReceiverCallback
         void onAvcDataComing(void* nalu_data, int len, uint32_t timestamp);
         void on10MsecPcmDataComing(uint8_t* pData, int nLen, uint32_t ts, uint32_t sample_rate, int audio_channels);
-
 
     private:
         // camera capture
@@ -130,7 +131,7 @@ namespace cloopenwebrtc {
         int shutdownAudioDataReceive();
 
         // audio engine init
-        int initAudioEngine();
+        int initAudioEngine(AudioTransport* transport);
         int initVideoEngine();
 
         // video engine init
@@ -142,7 +143,7 @@ namespace cloopenwebrtc {
         void uninitCameraDevice();
 
         // resample pcm data
-        int32_t resamplePCMData(const void *audio_data, const size_t nSamples, const uint32_t samplesRate, const size_t nChannels);
+        int32_t resamplePCMData(const void *audio_data, const size_t nSamples, uint32_t samplesRate, const size_t nChannels);
 
     public:
         // capture start and stop
@@ -190,7 +191,7 @@ namespace cloopenwebrtc {
         unsigned int audio_channels_ ;
 
         RingBuffer<uint8_t> playbuffer_;
-        RingBuffer<uint8_t> recordbuffer_;
+        RingBuffer<uint8_t > recordbuffer_;
 
         acm2::ACMResampler resampler_record_;
 #ifdef __ANDROID__
@@ -206,6 +207,8 @@ namespace cloopenwebrtc {
         RotateCapturedFrame capture_frame_degree_;
 
         EC_CapturerCallback *capturer_data_callback_;
+                  
+        aac_enc_t aac_encoder_;
     };
 }
 

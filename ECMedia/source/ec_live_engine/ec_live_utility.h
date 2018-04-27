@@ -18,7 +18,7 @@ namespace cloopenwebrtc {
         EC_Live_Utility();
         ~EC_Live_Utility();
         static uint32_t getTimestamp();
-        static uint32_t time();
+        static uint32_t Time();
         static void pcm_s16le_to_s16be(short *data, int len);
     private:
   

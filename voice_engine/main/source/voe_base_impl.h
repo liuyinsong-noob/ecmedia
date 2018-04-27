@@ -32,6 +32,8 @@ public:
 
     virtual int Init(AudioDeviceModule* external_adm = NULL,
                      AudioProcessing* audioproc = NULL);
+    virtual int InitForLiveVideo(AudioDeviceModule* external_adm = NULL,
+                                 AudioProcessing* audioproc = NULL, AudioTransport* audio_callback = NULL);
     virtual AudioProcessing* audio_processing() {
       return _shared->audio_processing();
     }

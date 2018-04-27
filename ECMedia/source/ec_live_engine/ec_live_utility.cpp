@@ -32,7 +32,7 @@ namespace cloopenwebrtc {
     }
 
     // get current time
-    uint32_t EC_Live_Utility:: time() {
+    uint32_t EC_Live_Utility:: Time() {
         if(!clock_) {
             clock_ = Clock::GetRealTimeClock();
         }

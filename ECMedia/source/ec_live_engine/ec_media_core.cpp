@@ -40,6 +40,9 @@
 #include "vie_image_process_impl.h"
 #endif
 
+#include "faad.h"
+#include "faac.h"
+
 
 // #include "ec_aac_codec.h"
 
@@ -93,6 +96,7 @@ namespace cloopenwebrtc {
     , info_video_fps_(15)
     , info_camera_index_(0)
     , capturer_data_callback_(nullptr)
+    ,aac_encoder_(nullptr)
     {
 #ifndef WIN32
         info_video_height_ = 640;
@@ -104,16 +108,18 @@ namespace cloopenwebrtc {
     
     ECMediaMachine::~ECMediaMachine()
     {
-        if (faac_encode_handle_) {
-            faac_encoder_close(faac_encode_handle_);
-            faac_encode_handle_ = nullptr;
+        if (NULL != aac_encoder_)
+        {
+            /*Close FAAC engine*/
+            aac_encoder_close(aac_encoder_);
+            aac_encoder_ = NULL;
         }
     }
     
-    bool ECMediaMachine::Init()
+    bool ECMediaMachine::Init(AudioTransport* transport)
     {
         int ret = -1;
-        ret = initAudioEngine();
+        ret = initAudioEngine(transport);
         ret = initVideoEngine();
         
         ret = initAudioNetwork();
@@ -122,7 +128,7 @@ namespace cloopenwebrtc {
         return ret;
     }
     
-    int ECMediaMachine::initAudioEngine() {
+    int ECMediaMachine::initAudioEngine(AudioTransport* transport) {
         voe_ = VoiceEngine::Create();
         if (NULL == voe_)
         {
@@ -130,13 +136,24 @@ namespace cloopenwebrtc {
             return -1;
         }
         VoEBase* base = VoEBase::GetInterface(voe_);
-        if( base->Init() != 0) {
-            VoiceEngine::Delete(voe_);
-            voe_ = NULL;
-            
-            PrintConsole("Init Voice Engine Error, error code is %d\n",base->LastError());
-            return base->LastError(); //base init failed
+        if(transport == nullptr) {
+            if( base->Init() != 0) {
+                VoiceEngine::Delete(voe_);
+                voe_ = NULL;
+                
+                PrintConsole("Init Voice Engine Error, error code is %d\n",base->LastError());
+                return base->LastError(); //base init failed
+            }
+        } else {
+            if( base->InitForLiveVideo(nullptr, nullptr, transport) != 0) {
+                VoiceEngine::Delete(voe_);
+                voe_ = NULL;
+                
+                PrintConsole("Init Voice Engine Error, error code is %d\n",base->LastError());
+                return base->LastError(); //base init failed
+            }
         }
+       
         
         VoEVolumeControl* volume = VoEVolumeControl::GetInterface(voe_);
         if(volume){
@@ -590,7 +607,7 @@ namespace cloopenwebrtc {
         }
         int ret = -1;
 #ifdef __APPLE__
-        vcodec->iOSH264HardCodecSwitch(true, false);
+//        vcodec->iOSH264HardCodecSwitch(true, false);
 #endif
         
         // receive codec setting
@@ -723,7 +740,7 @@ namespace cloopenwebrtc {
         capture_frame_degree_   = degree;
         
         PrintConsole("[ECMEDIA CORE INFO] %s end with code:%d\n", __FUNCTION__, 0);
-        return initVideoTransportCodec("H264", 90000);;
+        return 0; //initVideoTransportCodec("H264", 90000);;
     }
 
     int ECMediaMachine::setVideoFrameProperty(int bitrate, int width, int height) {
@@ -832,36 +849,27 @@ namespace cloopenwebrtc {
             cameras_.clear();
         }
     }
-
+    FILE * pcm_ffff = NULL;
     // if pcm not is 44.1khz then resample pcm data.
-    int32_t ECMediaMachine::resamplePCMData(const void *audio_data, const size_t nSamples, const uint32_t samplesRate, const size_t nChannels)
+    int32_t ECMediaMachine::resamplePCMData(const void *audio_data, const size_t nSamples, uint32_t samplesRate, const size_t nChannels)
     {
-        // rtc::CritScope cs(&cs_audio_record_);
         int audio_record_sample_hz_ = AAC_CODEC_SAMPLE_RATE;
-        int audio_record_channels_ = 2;
+        int audio_record_channels_ = 1;
         const size_t kMaxDataSizeSamples = 3840;
             if (audio_record_sample_hz_ != samplesRate || nChannels != audio_record_channels_) {
                 int16_t temp_output[kMaxDataSizeSamples];
                 int samples_per_channel_int = resampler_record_.Resample10Msec((int16_t*)audio_data, samplesRate * nChannels,
                                                                                audio_record_sample_hz_ * audio_record_channels_, 1, kMaxDataSizeSamples, temp_output);
-
-                if(!faac_encode_handle_) {
-                    faac_encode_input_samples_ = 0;
-                    faac_encode_handle_ = faac_encoder_crate(AAC_CODEC_SAMPLE_RATE, 2, &faac_encode_input_samples_);
+                if(aac_encoder_ == nullptr) {
+                    aac_encoder_ = aac_encoder_open(nChannels, audio_record_sample_hz_, sizeof(uint16_t)*8, false);
                 }
-                
-                uint8_t *pcmdata , *aac_data;
-                int aac_data_len = 0;
-                
-                recordbuffer_.PushData((unsigned char *)temp_output, 2*2*audio_record_sample_hz_/100);
-                while (pcmdata = recordbuffer_.ConsumeData(faac_encode_input_samples_*2))
-                {
-                    aac_data_len = 0;
-                    faac_encode_frame(faac_encode_handle_, pcmdata, &aac_data, &aac_data_len);
-                    if (aac_data_len > 0) {
-                        if(capturer_data_callback_) {
-                            capturer_data_callback_->OnCapturerAacDataReady(aac_data, aac_data_len, EC_Live_Utility::getTimestamp());
-                        }
+ 
+                uint8_t encoded[1024];
+                unsigned int outlen = 0;
+                aac_encoder_encode_frame(aac_encoder_, (uint8_t*)temp_output, audio_record_sample_hz_/100 * sizeof(uint16_t), encoded, &outlen);
+                if (outlen > 0) {
+                    if(capturer_data_callback_) {
+                        capturer_data_callback_->OnCapturerAacDataReady(encoded, outlen, EC_Live_Utility::getTimestamp());
                     }
                 }
             }
@@ -887,9 +895,9 @@ namespace cloopenwebrtc {
                                       const RTPFragmentationHeader* fragmentation)
     {
 #ifdef __ANDROID__
-         EC_Live_Utility::pcm_s16le_to_s16be((short*)payload_data, payload_len_bytes/2);
+        EC_Live_Utility::pcm_s16le_to_s16be((short*)payload_data, payload_len_bytes/2);
 #endif
-        resamplePCMData(payload_data, payload_len_bytes / 4, 16000, 2);
+        resamplePCMData(payload_data, payload_len_bytes/2, 32000, 1);
         return 0;
     }
 
@@ -1043,6 +1051,9 @@ namespace cloopenwebrtc {
             PrintConsole("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
     }
 
+    void ECMediaMachine::setAudioTransport(AudioTransport* transport) {
+        
+    }
     
     int ECMediaMachine::setBeautyFace(bool enable) {
         ViECapture *capture = ViECapture::GetInterface(vie_);

@@ -14,6 +14,7 @@ namespace cloopenwebrtc {
     class ECRtmpPublisher;
     class ECMediaMachine;
     class EC_RtmpPuller;
+    class AudioTransport;
 
     class ECLiveEngine: public EC_RTMP_BitrateControllerCallback
     {
@@ -38,7 +39,6 @@ namespace cloopenwebrtc {
     protected:
         void onOutputBitrateChanged(int bitrate);
         void onNeedClearBuffer();
-       
 
     private:
         ECLiveEngine();

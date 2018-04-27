@@ -59,6 +59,7 @@ namespace cloopenwebrtc {
 
         void setReceiverCallback(EC_ReceiverCallback* callback);
         static bool pullingThreadRun(void* pThis);
+        EC_AVCacher* getMediaPacketBuffer();
 
     private:
         bool run();
@@ -75,7 +76,7 @@ namespace cloopenwebrtc {
         
         bool  unpackSpsPps(char *data , std::vector<uint8_t> &sps, std::vector<uint8_t> &pps);
         void handleVideoPacket(char* data, int len, u_int32_t timestamp);
-        void handleAuidoPacket(char * data, int length, u_int32_t timestamp);
+        void handleAuidoPacket(char * data, int size, u_int32_t timestamp);
     private:
         std::string str_url_;
         ThreadWrapper* rtmpPullingThread_;
@@ -90,8 +91,8 @@ namespace cloopenwebrtc {
         bool hasStreaming_;
         int  retry_ct_;
 
-//        SrsAvcAacCodec*		srs_codec_;
-//        DemuxData*			audio_payload_;
+        SrsAvcAacCodec*        srs_codec_;
+        DemuxData*            audio_payload_;
 //        DemuxData*			video_payload_;
     };
 }

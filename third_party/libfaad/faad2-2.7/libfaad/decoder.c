@@ -31,6 +31,8 @@
 #include "common.h"
 #include "structs.h"
 
+#include <android/log.h>
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -155,7 +157,7 @@ NeAACDecHandle NEAACDECAPI NeAACDecOpen(void)
 #endif
 
     hDecoder->drc = drc_init(REAL_CONST(1.0), REAL_CONST(1.0));
-
+    __android_log_print(ANDROID_LOG_ERROR, "gezhaoyou", "gezhaoyou ppp:%p", hDecoder);
     return hDecoder;
 }
 
@@ -239,13 +241,12 @@ long NEAACDECAPI NeAACDecInit(NeAACDecHandle hpDecoder,
                               unsigned char *buffer,
                               unsigned long buffer_size,
                               unsigned long *samplerate,
-                              unsigned char *channels)
-{
+                              unsigned char *channels) {
     uint32_t bits = 0;
     bitfile ld;
     adif_header adif;
     adts_header adts;
-    NeAACDecStruct* hDecoder = (NeAACDecStruct*)hpDecoder;
+    NeAACDecStruct *hDecoder = (NeAACDecStruct *) hpDecoder;
 
 
     if ((hDecoder == NULL) || (samplerate == NULL) || (channels == NULL))
@@ -256,15 +257,14 @@ long NEAACDECAPI NeAACDecInit(NeAACDecHandle hpDecoder,
     *samplerate = get_sample_rate(hDecoder->sf_index);
     *channels = 1;
 
-    if (buffer != NULL)
-    {
+    if (buffer != NULL) {
 #if 0
         int is_latm;
         latm_header *l = &hDecoder->latm_config;
 #endif
 
         faad_initbits(&ld, buffer, buffer_size);
- 
+
 #if 0
         memset(l, 0, sizeof(latm_header));
         is_latm = latmCheck(l, &ld);
@@ -283,8 +283,7 @@ long NEAACDECAPI NeAACDecInit(NeAACDecHandle hpDecoder,
 #endif
         /* Check if an ADIF header is present */
         if ((buffer[0] == 'A') && (buffer[1] == 'D') &&
-			(buffer[2] == 'I') && (buffer[3] == 'F'))
-		{
+            (buffer[2] == 'I') && (buffer[3] == 'F')) {
             hDecoder->adif_header_present = 1;
 
             get_adif_header(&adif, &ld);
@@ -300,9 +299,11 @@ long NEAACDECAPI NeAACDecInit(NeAACDecHandle hpDecoder,
             hDecoder->pce_set = 1;
 
             bits = bit2byte(faad_get_processed_bits(&ld));
+            __android_log_print(ANDROID_LOG_ERROR, "sdfsdf", "gezhaoyou 44444:%d", ld.error);
 
-        /* Check if an ADTS header is present */
+            /* Check if an ADTS header is present */
         } else if (faad_showbits(&ld, 12) == 0xfff) {
+            __android_log_print(ANDROID_LOG_ERROR, "sdfsdf", "gezhaoyou 111:%d", ld.error);
             hDecoder->adts_header_present = 1;
 
             adts.old_format = hDecoder->config.useOldADTSFormat;
@@ -313,11 +314,12 @@ long NEAACDECAPI NeAACDecInit(NeAACDecHandle hpDecoder,
 
             *samplerate = get_sample_rate(hDecoder->sf_index);
             *channels = (adts.channel_configuration > 6) ?
-                2 : adts.channel_configuration;
+                        2 : adts.channel_configuration;
         }
 
-        if (ld.error)
-        {
+
+        if (ld.error) {
+            __android_log_print(ANDROID_LOG_ERROR, "sdfsdf", "gezhaoyou 3333:%d", ld.error);
             faad_endbits(&ld);
             return -1;
         }
@@ -326,8 +328,7 @@ long NEAACDECAPI NeAACDecInit(NeAACDecHandle hpDecoder,
 
 #if (defined(PS_DEC) || defined(DRM_PS))
     /* check if we have a mono file */
-    if (*channels == 1)
-    {
+    if (*channels == 1) {
         /* upMatrix to 2 channels for implicit signalling of PS */
         *channels = 2;
     }
@@ -337,8 +338,7 @@ long NEAACDECAPI NeAACDecInit(NeAACDecHandle hpDecoder,
 
 #ifdef SBR_DEC
     /* implicit signalling */
-    if (*samplerate <= 24000 && (hDecoder->config.dontUpSampleImplicitSBR == 0))
-    {
+    if (*samplerate <= 24000 && (hDecoder->config.dontUpSampleImplicitSBR == 0)) {
         *samplerate *= 2;
         hDecoder->forceUpSampling = 1;
     } else if (*samplerate > 24000 && (hDecoder->config.dontUpSampleImplicitSBR == 0)) {
@@ -352,15 +352,17 @@ long NEAACDECAPI NeAACDecInit(NeAACDecHandle hpDecoder,
         hDecoder->fb = ssr_filter_bank_init(hDecoder->frameLength/SSR_BANDS);
     else
 #endif
-        hDecoder->fb = filter_bank_init(hDecoder->frameLength);
+    hDecoder->fb = filter_bank_init(hDecoder->frameLength);
 
 #ifdef LD_DEC
     if (hDecoder->object_type == LD)
         hDecoder->frameLength >>= 1;
 #endif
 
-    if (can_decode_ot(hDecoder->object_type) < 0)
+    if (can_decode_ot(hDecoder->object_type) < 0) {
+        __android_log_print(ANDROID_LOG_ERROR, "sdfsdf", "gezhaoyou type 88888:%d", hDecoder->object_type);
         return -1;
+    }
 
     return bits;
 }

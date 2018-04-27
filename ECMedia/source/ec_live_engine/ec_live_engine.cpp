@@ -7,6 +7,7 @@
 #include "ec_media_core.h"
 #include "ec_rtmp_publisher.h"
 #include "ec_rtmp_puller.h"
+#include "ec_play_buffer_cacher.h"
 
 #ifdef WIN32
 #else
@@ -43,14 +44,6 @@ namespace cloopenwebrtc {
         }
     }
 
-    int ECLiveEngine::prepare() {
-        if(ec_media_core_ == nullptr) {
-            ec_media_core_ =  new ECMediaMachine();
-            ec_media_core_->Init();
-        }
-        return 0;
-    }
-
     // singleton
     ECLiveEngine *ECLiveEngine::getInstance() {
         PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
@@ -77,7 +70,10 @@ namespace cloopenwebrtc {
         PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
         if(!publiser_running_ && !puller_runnig_) {
             publiser_running_ = true;
-            prepare();
+            if(ec_media_core_ == nullptr) {
+                ec_media_core_ =  new ECMediaMachine();
+            }
+            ec_media_core_->Init();
             if(!bitrate_controller_) {
                 bitrate_controller_ = new EC_RTMP_BitrateController();
                 bitrate_controller_->setBitrateControllerCallback(this);
@@ -122,7 +118,9 @@ namespace cloopenwebrtc {
         int ret = -1;
         if(!puller_runnig_ && !publiser_running_) {
             puller_runnig_ = true;
-            prepare();
+            if(ec_media_core_ == nullptr) {
+                ec_media_core_ =  new ECMediaMachine();
+            }
             if(!media_puller_) {
                 media_puller_ = createMediaPuller(url, callback);
                 if(!media_puller_) {
@@ -130,6 +128,7 @@ namespace cloopenwebrtc {
                     return -1;
                 }
                 media_puller_->setReceiverCallback(ec_media_core_);
+                ec_media_core_->Init(reinterpret_cast<AudioTransport *>(media_puller_->getMediaPacketBuffer()));
             }
 
             media_puller_->start(url);
@@ -143,15 +142,17 @@ namespace cloopenwebrtc {
         PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
         int ret = -1;
         if(puller_runnig_ && !publiser_running_) {
+           
+            ret = ec_media_core_->stopPlayout();
+            ec_media_core_->UnInit();
+            delete ec_media_core_;
+            ec_media_core_ = nullptr;
+            
             if(media_puller_) {
                 media_puller_->stop();
                 delete media_puller_;
                 media_puller_ = nullptr;
             }
-            ret = ec_media_core_->stopPlayout();
-            ec_media_core_->UnInit();
-            delete ec_media_core_;
-            ec_media_core_ = nullptr;
         }
 		puller_runnig_ = false;
         PrintConsole("[ECLiveEngine INFO] %s: end with code: %d", __FUNCTION__, ret);
@@ -160,7 +161,10 @@ namespace cloopenwebrtc {
 
     // preview viewer setting.
     int ECLiveEngine::setVideoPreview(void * view) {
-        prepare();
+        if(ec_media_core_ == nullptr) {
+            ec_media_core_ =  new ECMediaMachine();
+        }
+        
         return ec_media_core_->setVideoPreview(view);
     }
 
@@ -170,7 +174,9 @@ namespace cloopenwebrtc {
     }
     
     int ECLiveEngine::configLiveVideoStream(LiveVideoStreamConfig config) {
-        prepare();
+        if(ec_media_core_ == nullptr) {
+            ec_media_core_ =  new ECMediaMachine();
+        }
         network_adaptive_enable_ = config._auto_bitrate;
         
         int width = 0, height = 0, bitrate = 0;
@@ -185,7 +191,9 @@ namespace cloopenwebrtc {
     }
     
     int ECLiveEngine::switchCamera(int index) {
-        prepare();
+        if(!ec_media_core_) {
+            return -1;
+        }
         if(publiser_running_ && !puller_runnig_) {
             return ec_media_core_->switchCamera(index);
         }
@@ -193,6 +201,9 @@ namespace cloopenwebrtc {
     }
 
     int ECLiveEngine::setBeautyFace(bool enable) {
+        if(!ec_media_core_) {
+            return -1;
+        }
         return ec_media_core_->setBeautyFace(enable);
     }
     
@@ -204,7 +215,7 @@ namespace cloopenwebrtc {
 #ifdef WIN32
 			return nullptr; // not support win32
 #else
-            return new EC_HLS_Puller(callback);
+            return nullptr; //new EC_HLS_Puller(callback);
 #endif
         } else {
             

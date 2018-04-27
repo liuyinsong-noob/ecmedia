@@ -329,7 +329,7 @@ namespace cloopenwebrtc {
         } else if(dataPtr->_type == AUDIO_DATA){
             int ret = 0;
             if ((ret = srs_audio_write_raw_frame(rtmp_,
-                    10, 3, 1, 1,
+                    10, 3, 1, 0,
                     (char*)dataPtr->_data, dataPtr->_dataLen, dataPtr->_dts)) != 0) {
                 PrintConsole("send audio raw data failed. ret=%d", ret);
                 return -1;

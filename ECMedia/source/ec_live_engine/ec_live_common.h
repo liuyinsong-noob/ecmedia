@@ -137,7 +137,6 @@ namespace cloopenwebrtc {
         virtual void onAvcDataComing(void* nalu_data, int len, uint32_t timestamp) = 0;
         virtual void on10MsecPcmDataComing(uint8_t* pData, int nLen, uint32_t ts, uint32_t sample_rate, int audio_channels) = 0;
     };
-
 }
 
 

@@ -7,7 +7,7 @@
 #define ECMEDIA_MEDIA_PULLER_H
 
 namespace cloopenwebrtc {
-
+    class EC_AVCacher;
     class EC_MediaPullerBase {
     public:
         EC_MediaPullerBase() {};
@@ -15,6 +15,7 @@ namespace cloopenwebrtc {
         virtual void start(const char* url) = 0;
         virtual void stop() = 0;
         virtual void setReceiverCallback(EC_ReceiverCallback* callback) = 0;
+        virtual EC_AVCacher* getMediaPacketBuffer() = 0;
     };
 }
 
