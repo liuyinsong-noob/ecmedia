@@ -75,8 +75,6 @@ const int VideoSenderStatisticsInner::kKStatsValueNameTargetEncBitrateFieldNumbe
 const int VideoSenderStatisticsInner::kKStatsValueNameActualEncBitrateFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameAvailableSendBandwidthFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameAvailableReceiveBandwidthFieldNumber;
-const int VideoSenderStatisticsInner::kKStatsValueNameLossFractionInPercentFieldNumber;
-const int VideoSenderStatisticsInner::kKStatsValueNameJitterReceivedFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameRttInMsFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameBucketDelayInMsFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameSsrcFieldNumber;
@@ -85,7 +83,6 @@ const int VideoSenderStatisticsInner::kKStatsValueNameRetransmitBitrateFieldNumb
 const int VideoSenderStatisticsInner::kKStatsValueNameFecBitrateFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameTransmitPacketsRateFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameRetransmitPacketsRateFieldNumber;
-const int VideoSenderStatisticsInner::kKStatsValueNamePacketsLostFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameFirsReceivedFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameNacksReceivedFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameNacksRequestsReceivedFieldNumber;
@@ -135,8 +132,6 @@ void VideoSenderStatisticsInner::SharedCtor() {
   kstatsvaluenameactualencbitrate_ = 0;
   kstatsvaluenameavailablesendbandwidth_ = 0;
   kstatsvaluenameavailablereceivebandwidth_ = 0;
-  kstatsvaluenamelossfractioninpercent_ = 0;
-  kstatsvaluenamejitterreceived_ = 0;
   kstatsvaluenamerttinms_ = 0;
   kstatsvaluenamebucketdelayinms_ = 0;
   kstatsvaluenamessrc_ = 0;
@@ -145,7 +140,6 @@ void VideoSenderStatisticsInner::SharedCtor() {
   kstatsvaluenamefecbitrate_ = 0;
   kstatsvaluenametransmitpacketsrate_ = 0;
   kstatsvaluenameretransmitpacketsrate_ = 0;
-  kstatsvaluenamepacketslost_ = 0;
   kstatsvaluenamefirsreceived_ = 0;
   kstatsvaluenamenacksreceived_ = 0;
   kstatsvaluenamenacksrequestsreceived_ = 0;
@@ -227,17 +221,15 @@ void VideoSenderStatisticsInner::Clear() {
     }
   }
   if (_has_bits_[8 / 32] & 65280) {
-    ZR_(kstatsvaluenamelossfractioninpercent_, kstatsvaluenamefecbitrate_);
+    ZR_(kstatsvaluenamerttinms_, kstatsvaluenameretransmitpacketsrate_);
   }
   if (_has_bits_[16 / 32] & 16711680) {
-    ZR_(kstatsvaluenametransmitpacketsrate_, kstatsvaluenameavgencodems_);
+    ZR_(kstatsvaluenamefirsreceived_, kstatsvaluenamecapturedframeheight_);
   }
   if (_has_bits_[24 / 32] & 4278190080) {
-    ZR_(kstatsvaluenameencodeusagepercent_, kstatsvaluenamecodecsettingframewidth_);
+    ZR_(kstatsvaluenamecapturedframerate_, kstatsvaluenamecodecsettingsimulcastnum_);
   }
-  if (_has_bits_[32 / 32] & 127) {
-    ZR_(kstatsvaluenamecodecsettingframeheight_, kstatsvaluenamecodecsettingtargetbitrate_);
-  }
+  ZR_(kstatsvaluenamecodecsettingstartbitrate_, kstatsvaluenamecodecsettingtargetbitrate_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -313,13 +305,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(56)) goto parse_kStatsValueNameTargetEncBitrate;
+        if (input->ExpectTag(40)) goto parse_kStatsValueNameTargetEncBitrate;
         break;
       }
 
-      // optional int32 kStatsValueNameTargetEncBitrate = 7;
-      case 7: {
-        if (tag == 56) {
+      // optional int32 kStatsValueNameTargetEncBitrate = 5;
+      case 5: {
+        if (tag == 40) {
          parse_kStatsValueNameTargetEncBitrate:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -328,13 +320,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(64)) goto parse_kStatsValueNameActualEncBitrate;
+        if (input->ExpectTag(48)) goto parse_kStatsValueNameActualEncBitrate;
         break;
       }
 
-      // optional int32 kStatsValueNameActualEncBitrate = 8;
-      case 8: {
-        if (tag == 64) {
+      // optional int32 kStatsValueNameActualEncBitrate = 6;
+      case 6: {
+        if (tag == 48) {
          parse_kStatsValueNameActualEncBitrate:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -343,13 +335,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(72)) goto parse_kStatsValueNameAvailableSendBandwidth;
+        if (input->ExpectTag(56)) goto parse_kStatsValueNameAvailableSendBandwidth;
         break;
       }
 
-      // optional int32 kStatsValueNameAvailableSendBandwidth = 9;
-      case 9: {
-        if (tag == 72) {
+      // optional int32 kStatsValueNameAvailableSendBandwidth = 7;
+      case 7: {
+        if (tag == 56) {
          parse_kStatsValueNameAvailableSendBandwidth:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -358,13 +350,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(80)) goto parse_kStatsValueNameAvailableReceiveBandwidth;
+        if (input->ExpectTag(64)) goto parse_kStatsValueNameAvailableReceiveBandwidth;
         break;
       }
 
-      // optional int32 kStatsValueNameAvailableReceiveBandwidth = 10;
-      case 10: {
-        if (tag == 80) {
+      // optional int32 kStatsValueNameAvailableReceiveBandwidth = 8;
+      case 8: {
+        if (tag == 64) {
          parse_kStatsValueNameAvailableReceiveBandwidth:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -373,43 +365,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(88)) goto parse_kStatsValueNameLossFractionInPercent;
+        if (input->ExpectTag(72)) goto parse_kStatsValueNameRttInMs;
         break;
       }
 
-      // optional int32 kStatsValueNameLossFractionInPercent = 11;
-      case 11: {
-        if (tag == 88) {
-         parse_kStatsValueNameLossFractionInPercent:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &kstatsvaluenamelossfractioninpercent_)));
-          set_has_kstatsvaluenamelossfractioninpercent();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(96)) goto parse_kStatsValueNameJitterReceived;
-        break;
-      }
-
-      // optional int32 kStatsValueNameJitterReceived = 12;
-      case 12: {
-        if (tag == 96) {
-         parse_kStatsValueNameJitterReceived:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &kstatsvaluenamejitterreceived_)));
-          set_has_kstatsvaluenamejitterreceived();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(104)) goto parse_kStatsValueNameRttInMs;
-        break;
-      }
-
-      // optional int32 kStatsValueNameRttInMs = 13;
-      case 13: {
-        if (tag == 104) {
+      // optional int32 kStatsValueNameRttInMs = 9;
+      case 9: {
+        if (tag == 72) {
          parse_kStatsValueNameRttInMs:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -418,13 +380,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(112)) goto parse_kStatsValueNameBucketDelayInMs;
+        if (input->ExpectTag(80)) goto parse_kStatsValueNameBucketDelayInMs;
         break;
       }
 
-      // optional int32 kStatsValueNameBucketDelayInMs = 14;
-      case 14: {
-        if (tag == 112) {
+      // optional int32 kStatsValueNameBucketDelayInMs = 10;
+      case 10: {
+        if (tag == 80) {
          parse_kStatsValueNameBucketDelayInMs:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -433,13 +395,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(120)) goto parse_kStatsValueNameSsrc;
+        if (input->ExpectTag(88)) goto parse_kStatsValueNameSsrc;
         break;
       }
 
-      // optional int32 kStatsValueNameSsrc = 15;
-      case 15: {
-        if (tag == 120) {
+      // optional int32 kStatsValueNameSsrc = 11;
+      case 11: {
+        if (tag == 88) {
          parse_kStatsValueNameSsrc:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -448,13 +410,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(128)) goto parse_kStatsValueNameTransmitBitrate;
+        if (input->ExpectTag(96)) goto parse_kStatsValueNameTransmitBitrate;
         break;
       }
 
-      // optional int32 kStatsValueNameTransmitBitrate = 16;
-      case 16: {
-        if (tag == 128) {
+      // optional int32 kStatsValueNameTransmitBitrate = 12;
+      case 12: {
+        if (tag == 96) {
          parse_kStatsValueNameTransmitBitrate:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -463,13 +425,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(136)) goto parse_kStatsValueNameRetransmitBitrate;
+        if (input->ExpectTag(104)) goto parse_kStatsValueNameRetransmitBitrate;
         break;
       }
 
-      // optional int32 kStatsValueNameRetransmitBitrate = 17;
-      case 17: {
-        if (tag == 136) {
+      // optional int32 kStatsValueNameRetransmitBitrate = 13;
+      case 13: {
+        if (tag == 104) {
          parse_kStatsValueNameRetransmitBitrate:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -478,13 +440,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(144)) goto parse_kStatsValueNameFecBitrate;
+        if (input->ExpectTag(112)) goto parse_kStatsValueNameFecBitrate;
         break;
       }
 
-      // optional int32 kStatsValueNameFecBitrate = 18;
-      case 18: {
-        if (tag == 144) {
+      // optional int32 kStatsValueNameFecBitrate = 14;
+      case 14: {
+        if (tag == 112) {
          parse_kStatsValueNameFecBitrate:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -493,13 +455,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(152)) goto parse_kStatsValueNameTransmitPacketsRate;
+        if (input->ExpectTag(120)) goto parse_kStatsValueNameTransmitPacketsRate;
         break;
       }
 
-      // optional int32 kStatsValueNameTransmitPacketsRate = 19;
-      case 19: {
-        if (tag == 152) {
+      // optional int32 kStatsValueNameTransmitPacketsRate = 15;
+      case 15: {
+        if (tag == 120) {
          parse_kStatsValueNameTransmitPacketsRate:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -508,13 +470,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(160)) goto parse_kStatsValueNameRetransmitPacketsRate;
+        if (input->ExpectTag(128)) goto parse_kStatsValueNameRetransmitPacketsRate;
         break;
       }
 
-      // optional int32 kStatsValueNameRetransmitPacketsRate = 20;
-      case 20: {
-        if (tag == 160) {
+      // optional int32 kStatsValueNameRetransmitPacketsRate = 16;
+      case 16: {
+        if (tag == 128) {
          parse_kStatsValueNameRetransmitPacketsRate:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -523,28 +485,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(168)) goto parse_kStatsValueNamePacketsLost;
+        if (input->ExpectTag(136)) goto parse_kStatsValueNameFirsReceived;
         break;
       }
 
-      // optional int32 kStatsValueNamePacketsLost = 21;
-      case 21: {
-        if (tag == 168) {
-         parse_kStatsValueNamePacketsLost:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &kstatsvaluenamepacketslost_)));
-          set_has_kstatsvaluenamepacketslost();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(176)) goto parse_kStatsValueNameFirsReceived;
-        break;
-      }
-
-      // optional int32 kStatsValueNameFirsReceived = 22;
-      case 22: {
-        if (tag == 176) {
+      // optional int32 kStatsValueNameFirsReceived = 17;
+      case 17: {
+        if (tag == 136) {
          parse_kStatsValueNameFirsReceived:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -553,13 +500,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(184)) goto parse_kStatsValueNameNacksReceived;
+        if (input->ExpectTag(144)) goto parse_kStatsValueNameNacksReceived;
         break;
       }
 
-      // optional int32 kStatsValueNameNacksReceived = 23;
-      case 23: {
-        if (tag == 184) {
+      // optional int32 kStatsValueNameNacksReceived = 18;
+      case 18: {
+        if (tag == 144) {
          parse_kStatsValueNameNacksReceived:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -568,13 +515,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(192)) goto parse_kStatsValueNameNacksRequestsReceived;
+        if (input->ExpectTag(152)) goto parse_kStatsValueNameNacksRequestsReceived;
         break;
       }
 
-      // optional int32 kStatsValueNameNacksRequestsReceived = 24;
-      case 24: {
-        if (tag == 192) {
+      // optional int32 kStatsValueNameNacksRequestsReceived = 19;
+      case 19: {
+        if (tag == 152) {
          parse_kStatsValueNameNacksRequestsReceived:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -583,13 +530,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(200)) goto parse_kStatsValueNameNacksUniqueRequestsReceived;
+        if (input->ExpectTag(160)) goto parse_kStatsValueNameNacksUniqueRequestsReceived;
         break;
       }
 
-      // optional int32 kStatsValueNameNacksUniqueRequestsReceived = 25;
-      case 25: {
-        if (tag == 200) {
+      // optional int32 kStatsValueNameNacksUniqueRequestsReceived = 20;
+      case 20: {
+        if (tag == 160) {
          parse_kStatsValueNameNacksUniqueRequestsReceived:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -598,13 +545,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(208)) goto parse_kStatsValueNameAvgEncodeMs;
+        if (input->ExpectTag(168)) goto parse_kStatsValueNameAvgEncodeMs;
         break;
       }
 
-      // optional int32 kStatsValueNameAvgEncodeMs = 26;
-      case 26: {
-        if (tag == 208) {
+      // optional int32 kStatsValueNameAvgEncodeMs = 21;
+      case 21: {
+        if (tag == 168) {
          parse_kStatsValueNameAvgEncodeMs:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -613,13 +560,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(216)) goto parse_kStatsValueNameEncodeUsagePercent;
+        if (input->ExpectTag(176)) goto parse_kStatsValueNameEncodeUsagePercent;
         break;
       }
 
-      // optional int32 kStatsValueNameEncodeUsagePercent = 27;
-      case 27: {
-        if (tag == 216) {
+      // optional int32 kStatsValueNameEncodeUsagePercent = 22;
+      case 22: {
+        if (tag == 176) {
          parse_kStatsValueNameEncodeUsagePercent:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -628,13 +575,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(224)) goto parse_kStatsValueNameCapturedFrameWidth;
+        if (input->ExpectTag(184)) goto parse_kStatsValueNameCapturedFrameWidth;
         break;
       }
 
-      // optional int32 kStatsValueNameCapturedFrameWidth = 28;
-      case 28: {
-        if (tag == 224) {
+      // optional int32 kStatsValueNameCapturedFrameWidth = 23;
+      case 23: {
+        if (tag == 184) {
          parse_kStatsValueNameCapturedFrameWidth:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -643,13 +590,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(232)) goto parse_kStatsValueNameCapturedFrameHeight;
+        if (input->ExpectTag(192)) goto parse_kStatsValueNameCapturedFrameHeight;
         break;
       }
 
-      // optional int32 kStatsValueNameCapturedFrameHeight = 29;
-      case 29: {
-        if (tag == 232) {
+      // optional int32 kStatsValueNameCapturedFrameHeight = 24;
+      case 24: {
+        if (tag == 192) {
          parse_kStatsValueNameCapturedFrameHeight:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -658,13 +605,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(240)) goto parse_kStatsValueNameCapturedFrameRate;
+        if (input->ExpectTag(200)) goto parse_kStatsValueNameCapturedFrameRate;
         break;
       }
 
-      // optional int32 kStatsValueNameCapturedFrameRate = 30;
-      case 30: {
-        if (tag == 240) {
+      // optional int32 kStatsValueNameCapturedFrameRate = 25;
+      case 25: {
+        if (tag == 200) {
          parse_kStatsValueNameCapturedFrameRate:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -673,13 +620,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(248)) goto parse_kStatsValueNameQMFrameWidth;
+        if (input->ExpectTag(208)) goto parse_kStatsValueNameQMFrameWidth;
         break;
       }
 
-      // optional int32 kStatsValueNameQMFrameWidth = 31;
-      case 31: {
-        if (tag == 248) {
+      // optional int32 kStatsValueNameQMFrameWidth = 26;
+      case 26: {
+        if (tag == 208) {
          parse_kStatsValueNameQMFrameWidth:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -688,13 +635,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(256)) goto parse_kStatsValueNameQMFrameHeight;
+        if (input->ExpectTag(216)) goto parse_kStatsValueNameQMFrameHeight;
         break;
       }
 
-      // optional int32 kStatsValueNameQMFrameHeight = 32;
-      case 32: {
-        if (tag == 256) {
+      // optional int32 kStatsValueNameQMFrameHeight = 27;
+      case 27: {
+        if (tag == 216) {
          parse_kStatsValueNameQMFrameHeight:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -703,13 +650,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(264)) goto parse_kStatsValueNameQMFrameRate;
+        if (input->ExpectTag(224)) goto parse_kStatsValueNameQMFrameRate;
         break;
       }
 
-      // optional int32 kStatsValueNameQMFrameRate = 33;
-      case 33: {
-        if (tag == 264) {
+      // optional int32 kStatsValueNameQMFrameRate = 28;
+      case 28: {
+        if (tag == 224) {
          parse_kStatsValueNameQMFrameRate:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -718,13 +665,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(272)) goto parse_kStatsValueNameCodecSettingFrameWidth;
+        if (input->ExpectTag(232)) goto parse_kStatsValueNameCodecSettingFrameWidth;
         break;
       }
 
-      // optional int32 kStatsValueNameCodecSettingFrameWidth = 34;
-      case 34: {
-        if (tag == 272) {
+      // optional int32 kStatsValueNameCodecSettingFrameWidth = 29;
+      case 29: {
+        if (tag == 232) {
          parse_kStatsValueNameCodecSettingFrameWidth:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -733,13 +680,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(280)) goto parse_kStatsValueNameCodecSettingFrameHeight;
+        if (input->ExpectTag(240)) goto parse_kStatsValueNameCodecSettingFrameHeight;
         break;
       }
 
-      // optional int32 kStatsValueNameCodecSettingFrameHeight = 35;
-      case 35: {
-        if (tag == 280) {
+      // optional int32 kStatsValueNameCodecSettingFrameHeight = 30;
+      case 30: {
+        if (tag == 240) {
          parse_kStatsValueNameCodecSettingFrameHeight:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -748,13 +695,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(288)) goto parse_kStatsValueNameCodecSettingFrameRate;
+        if (input->ExpectTag(248)) goto parse_kStatsValueNameCodecSettingFrameRate;
         break;
       }
 
-      // optional int32 kStatsValueNameCodecSettingFrameRate = 36;
-      case 36: {
-        if (tag == 288) {
+      // optional int32 kStatsValueNameCodecSettingFrameRate = 31;
+      case 31: {
+        if (tag == 248) {
          parse_kStatsValueNameCodecSettingFrameRate:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -763,13 +710,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(296)) goto parse_kStatsValueNameCodecSettingSimulcastNum;
+        if (input->ExpectTag(256)) goto parse_kStatsValueNameCodecSettingSimulcastNum;
         break;
       }
 
-      // optional int32 kStatsValueNameCodecSettingSimulcastNum = 37;
-      case 37: {
-        if (tag == 296) {
+      // optional int32 kStatsValueNameCodecSettingSimulcastNum = 32;
+      case 32: {
+        if (tag == 256) {
          parse_kStatsValueNameCodecSettingSimulcastNum:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -778,13 +725,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(304)) goto parse_kStatsValueNameCodecSettingStartBitrate;
+        if (input->ExpectTag(264)) goto parse_kStatsValueNameCodecSettingStartBitrate;
         break;
       }
 
-      // optional int32 kStatsValueNameCodecSettingStartBitrate = 38;
-      case 38: {
-        if (tag == 304) {
+      // optional int32 kStatsValueNameCodecSettingStartBitrate = 33;
+      case 33: {
+        if (tag == 264) {
          parse_kStatsValueNameCodecSettingStartBitrate:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -793,13 +740,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(312)) goto parse_kStatsValueNameCodecSettingMinBitrate;
+        if (input->ExpectTag(272)) goto parse_kStatsValueNameCodecSettingMinBitrate;
         break;
       }
 
-      // optional int32 kStatsValueNameCodecSettingMinBitrate = 39;
-      case 39: {
-        if (tag == 312) {
+      // optional int32 kStatsValueNameCodecSettingMinBitrate = 34;
+      case 34: {
+        if (tag == 272) {
          parse_kStatsValueNameCodecSettingMinBitrate:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -808,13 +755,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(320)) goto parse_kStatsValueNameCodecSettingMaxBitrate;
+        if (input->ExpectTag(280)) goto parse_kStatsValueNameCodecSettingMaxBitrate;
         break;
       }
 
-      // optional int32 kStatsValueNameCodecSettingMaxBitrate = 40;
-      case 40: {
-        if (tag == 320) {
+      // optional int32 kStatsValueNameCodecSettingMaxBitrate = 35;
+      case 35: {
+        if (tag == 280) {
          parse_kStatsValueNameCodecSettingMaxBitrate:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -823,13 +770,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(328)) goto parse_kStatsValueNameCodecSettingTargetBitrate;
+        if (input->ExpectTag(288)) goto parse_kStatsValueNameCodecSettingTargetBitrate;
         break;
       }
 
-      // optional int32 kStatsValueNameCodecSettingTargetBitrate = 41;
-      case 41: {
-        if (tag == 328) {
+      // optional int32 kStatsValueNameCodecSettingTargetBitrate = 36;
+      case 36: {
+        if (tag == 288) {
          parse_kStatsValueNameCodecSettingTargetBitrate:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -888,179 +835,164 @@ void VideoSenderStatisticsInner::SerializeWithCachedSizes(
       4, this->kstatsvaluenamecodecimplementationname(), output);
   }
 
-  // optional int32 kStatsValueNameTargetEncBitrate = 7;
+  // optional int32 kStatsValueNameTargetEncBitrate = 5;
   if (has_kstatsvaluenametargetencbitrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(7, this->kstatsvaluenametargetencbitrate(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(5, this->kstatsvaluenametargetencbitrate(), output);
   }
 
-  // optional int32 kStatsValueNameActualEncBitrate = 8;
+  // optional int32 kStatsValueNameActualEncBitrate = 6;
   if (has_kstatsvaluenameactualencbitrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(8, this->kstatsvaluenameactualencbitrate(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(6, this->kstatsvaluenameactualencbitrate(), output);
   }
 
-  // optional int32 kStatsValueNameAvailableSendBandwidth = 9;
+  // optional int32 kStatsValueNameAvailableSendBandwidth = 7;
   if (has_kstatsvaluenameavailablesendbandwidth()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(9, this->kstatsvaluenameavailablesendbandwidth(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(7, this->kstatsvaluenameavailablesendbandwidth(), output);
   }
 
-  // optional int32 kStatsValueNameAvailableReceiveBandwidth = 10;
+  // optional int32 kStatsValueNameAvailableReceiveBandwidth = 8;
   if (has_kstatsvaluenameavailablereceivebandwidth()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(10, this->kstatsvaluenameavailablereceivebandwidth(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(8, this->kstatsvaluenameavailablereceivebandwidth(), output);
   }
 
-  // optional int32 kStatsValueNameLossFractionInPercent = 11;
-  if (has_kstatsvaluenamelossfractioninpercent()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(11, this->kstatsvaluenamelossfractioninpercent(), output);
-  }
-
-  // optional int32 kStatsValueNameJitterReceived = 12;
-  if (has_kstatsvaluenamejitterreceived()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(12, this->kstatsvaluenamejitterreceived(), output);
-  }
-
-  // optional int32 kStatsValueNameRttInMs = 13;
+  // optional int32 kStatsValueNameRttInMs = 9;
   if (has_kstatsvaluenamerttinms()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(13, this->kstatsvaluenamerttinms(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(9, this->kstatsvaluenamerttinms(), output);
   }
 
-  // optional int32 kStatsValueNameBucketDelayInMs = 14;
+  // optional int32 kStatsValueNameBucketDelayInMs = 10;
   if (has_kstatsvaluenamebucketdelayinms()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(14, this->kstatsvaluenamebucketdelayinms(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(10, this->kstatsvaluenamebucketdelayinms(), output);
   }
 
-  // optional int32 kStatsValueNameSsrc = 15;
+  // optional int32 kStatsValueNameSsrc = 11;
   if (has_kstatsvaluenamessrc()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(15, this->kstatsvaluenamessrc(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(11, this->kstatsvaluenamessrc(), output);
   }
 
-  // optional int32 kStatsValueNameTransmitBitrate = 16;
+  // optional int32 kStatsValueNameTransmitBitrate = 12;
   if (has_kstatsvaluenametransmitbitrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(16, this->kstatsvaluenametransmitbitrate(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(12, this->kstatsvaluenametransmitbitrate(), output);
   }
 
-  // optional int32 kStatsValueNameRetransmitBitrate = 17;
+  // optional int32 kStatsValueNameRetransmitBitrate = 13;
   if (has_kstatsvaluenameretransmitbitrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(17, this->kstatsvaluenameretransmitbitrate(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(13, this->kstatsvaluenameretransmitbitrate(), output);
   }
 
-  // optional int32 kStatsValueNameFecBitrate = 18;
+  // optional int32 kStatsValueNameFecBitrate = 14;
   if (has_kstatsvaluenamefecbitrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(18, this->kstatsvaluenamefecbitrate(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(14, this->kstatsvaluenamefecbitrate(), output);
   }
 
-  // optional int32 kStatsValueNameTransmitPacketsRate = 19;
+  // optional int32 kStatsValueNameTransmitPacketsRate = 15;
   if (has_kstatsvaluenametransmitpacketsrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(19, this->kstatsvaluenametransmitpacketsrate(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(15, this->kstatsvaluenametransmitpacketsrate(), output);
   }
 
-  // optional int32 kStatsValueNameRetransmitPacketsRate = 20;
+  // optional int32 kStatsValueNameRetransmitPacketsRate = 16;
   if (has_kstatsvaluenameretransmitpacketsrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(20, this->kstatsvaluenameretransmitpacketsrate(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(16, this->kstatsvaluenameretransmitpacketsrate(), output);
   }
 
-  // optional int32 kStatsValueNamePacketsLost = 21;
-  if (has_kstatsvaluenamepacketslost()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(21, this->kstatsvaluenamepacketslost(), output);
-  }
-
-  // optional int32 kStatsValueNameFirsReceived = 22;
+  // optional int32 kStatsValueNameFirsReceived = 17;
   if (has_kstatsvaluenamefirsreceived()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(22, this->kstatsvaluenamefirsreceived(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(17, this->kstatsvaluenamefirsreceived(), output);
   }
 
-  // optional int32 kStatsValueNameNacksReceived = 23;
+  // optional int32 kStatsValueNameNacksReceived = 18;
   if (has_kstatsvaluenamenacksreceived()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(23, this->kstatsvaluenamenacksreceived(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(18, this->kstatsvaluenamenacksreceived(), output);
   }
 
-  // optional int32 kStatsValueNameNacksRequestsReceived = 24;
+  // optional int32 kStatsValueNameNacksRequestsReceived = 19;
   if (has_kstatsvaluenamenacksrequestsreceived()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(24, this->kstatsvaluenamenacksrequestsreceived(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(19, this->kstatsvaluenamenacksrequestsreceived(), output);
   }
 
-  // optional int32 kStatsValueNameNacksUniqueRequestsReceived = 25;
+  // optional int32 kStatsValueNameNacksUniqueRequestsReceived = 20;
   if (has_kstatsvaluenamenacksuniquerequestsreceived()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(25, this->kstatsvaluenamenacksuniquerequestsreceived(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(20, this->kstatsvaluenamenacksuniquerequestsreceived(), output);
   }
 
-  // optional int32 kStatsValueNameAvgEncodeMs = 26;
+  // optional int32 kStatsValueNameAvgEncodeMs = 21;
   if (has_kstatsvaluenameavgencodems()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(26, this->kstatsvaluenameavgencodems(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(21, this->kstatsvaluenameavgencodems(), output);
   }
 
-  // optional int32 kStatsValueNameEncodeUsagePercent = 27;
+  // optional int32 kStatsValueNameEncodeUsagePercent = 22;
   if (has_kstatsvaluenameencodeusagepercent()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(27, this->kstatsvaluenameencodeusagepercent(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(22, this->kstatsvaluenameencodeusagepercent(), output);
   }
 
-  // optional int32 kStatsValueNameCapturedFrameWidth = 28;
+  // optional int32 kStatsValueNameCapturedFrameWidth = 23;
   if (has_kstatsvaluenamecapturedframewidth()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(28, this->kstatsvaluenamecapturedframewidth(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(23, this->kstatsvaluenamecapturedframewidth(), output);
   }
 
-  // optional int32 kStatsValueNameCapturedFrameHeight = 29;
+  // optional int32 kStatsValueNameCapturedFrameHeight = 24;
   if (has_kstatsvaluenamecapturedframeheight()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(29, this->kstatsvaluenamecapturedframeheight(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(24, this->kstatsvaluenamecapturedframeheight(), output);
   }
 
-  // optional int32 kStatsValueNameCapturedFrameRate = 30;
+  // optional int32 kStatsValueNameCapturedFrameRate = 25;
   if (has_kstatsvaluenamecapturedframerate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(30, this->kstatsvaluenamecapturedframerate(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(25, this->kstatsvaluenamecapturedframerate(), output);
   }
 
-  // optional int32 kStatsValueNameQMFrameWidth = 31;
+  // optional int32 kStatsValueNameQMFrameWidth = 26;
   if (has_kstatsvaluenameqmframewidth()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(31, this->kstatsvaluenameqmframewidth(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(26, this->kstatsvaluenameqmframewidth(), output);
   }
 
-  // optional int32 kStatsValueNameQMFrameHeight = 32;
+  // optional int32 kStatsValueNameQMFrameHeight = 27;
   if (has_kstatsvaluenameqmframeheight()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(32, this->kstatsvaluenameqmframeheight(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(27, this->kstatsvaluenameqmframeheight(), output);
   }
 
-  // optional int32 kStatsValueNameQMFrameRate = 33;
+  // optional int32 kStatsValueNameQMFrameRate = 28;
   if (has_kstatsvaluenameqmframerate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(33, this->kstatsvaluenameqmframerate(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(28, this->kstatsvaluenameqmframerate(), output);
   }
 
-  // optional int32 kStatsValueNameCodecSettingFrameWidth = 34;
+  // optional int32 kStatsValueNameCodecSettingFrameWidth = 29;
   if (has_kstatsvaluenamecodecsettingframewidth()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(34, this->kstatsvaluenamecodecsettingframewidth(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(29, this->kstatsvaluenamecodecsettingframewidth(), output);
   }
 
-  // optional int32 kStatsValueNameCodecSettingFrameHeight = 35;
+  // optional int32 kStatsValueNameCodecSettingFrameHeight = 30;
   if (has_kstatsvaluenamecodecsettingframeheight()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(35, this->kstatsvaluenamecodecsettingframeheight(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(30, this->kstatsvaluenamecodecsettingframeheight(), output);
   }
 
-  // optional int32 kStatsValueNameCodecSettingFrameRate = 36;
+  // optional int32 kStatsValueNameCodecSettingFrameRate = 31;
   if (has_kstatsvaluenamecodecsettingframerate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(36, this->kstatsvaluenamecodecsettingframerate(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(31, this->kstatsvaluenamecodecsettingframerate(), output);
   }
 
-  // optional int32 kStatsValueNameCodecSettingSimulcastNum = 37;
+  // optional int32 kStatsValueNameCodecSettingSimulcastNum = 32;
   if (has_kstatsvaluenamecodecsettingsimulcastnum()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(37, this->kstatsvaluenamecodecsettingsimulcastnum(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(32, this->kstatsvaluenamecodecsettingsimulcastnum(), output);
   }
 
-  // optional int32 kStatsValueNameCodecSettingStartBitrate = 38;
+  // optional int32 kStatsValueNameCodecSettingStartBitrate = 33;
   if (has_kstatsvaluenamecodecsettingstartbitrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(38, this->kstatsvaluenamecodecsettingstartbitrate(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(33, this->kstatsvaluenamecodecsettingstartbitrate(), output);
   }
 
-  // optional int32 kStatsValueNameCodecSettingMinBitrate = 39;
+  // optional int32 kStatsValueNameCodecSettingMinBitrate = 34;
   if (has_kstatsvaluenamecodecsettingminbitrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(39, this->kstatsvaluenamecodecsettingminbitrate(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(34, this->kstatsvaluenamecodecsettingminbitrate(), output);
   }
 
-  // optional int32 kStatsValueNameCodecSettingMaxBitrate = 40;
+  // optional int32 kStatsValueNameCodecSettingMaxBitrate = 35;
   if (has_kstatsvaluenamecodecsettingmaxbitrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(40, this->kstatsvaluenamecodecsettingmaxbitrate(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(35, this->kstatsvaluenamecodecsettingmaxbitrate(), output);
   }
 
-  // optional int32 kStatsValueNameCodecSettingTargetBitrate = 41;
+  // optional int32 kStatsValueNameCodecSettingTargetBitrate = 36;
   if (has_kstatsvaluenamecodecsettingtargetbitrate()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(41, this->kstatsvaluenamecodecsettingtargetbitrate(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(36, this->kstatsvaluenamecodecsettingtargetbitrate(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -1100,28 +1032,28 @@ int VideoSenderStatisticsInner::ByteSize() const {
           this->kstatsvaluenamecodecimplementationname());
     }
 
-    // optional int32 kStatsValueNameTargetEncBitrate = 7;
+    // optional int32 kStatsValueNameTargetEncBitrate = 5;
     if (has_kstatsvaluenametargetencbitrate()) {
       total_size += 1 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenametargetencbitrate());
     }
 
-    // optional int32 kStatsValueNameActualEncBitrate = 8;
+    // optional int32 kStatsValueNameActualEncBitrate = 6;
     if (has_kstatsvaluenameactualencbitrate()) {
       total_size += 1 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameactualencbitrate());
     }
 
-    // optional int32 kStatsValueNameAvailableSendBandwidth = 9;
+    // optional int32 kStatsValueNameAvailableSendBandwidth = 7;
     if (has_kstatsvaluenameavailablesendbandwidth()) {
       total_size += 1 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameavailablesendbandwidth());
     }
 
-    // optional int32 kStatsValueNameAvailableReceiveBandwidth = 10;
+    // optional int32 kStatsValueNameAvailableReceiveBandwidth = 8;
     if (has_kstatsvaluenameavailablereceivebandwidth()) {
       total_size += 1 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
@@ -1130,223 +1062,202 @@ int VideoSenderStatisticsInner::ByteSize() const {
 
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional int32 kStatsValueNameLossFractionInPercent = 11;
-    if (has_kstatsvaluenamelossfractioninpercent()) {
-      total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
-          this->kstatsvaluenamelossfractioninpercent());
-    }
-
-    // optional int32 kStatsValueNameJitterReceived = 12;
-    if (has_kstatsvaluenamejitterreceived()) {
-      total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
-          this->kstatsvaluenamejitterreceived());
-    }
-
-    // optional int32 kStatsValueNameRttInMs = 13;
+    // optional int32 kStatsValueNameRttInMs = 9;
     if (has_kstatsvaluenamerttinms()) {
       total_size += 1 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamerttinms());
     }
 
-    // optional int32 kStatsValueNameBucketDelayInMs = 14;
+    // optional int32 kStatsValueNameBucketDelayInMs = 10;
     if (has_kstatsvaluenamebucketdelayinms()) {
       total_size += 1 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamebucketdelayinms());
     }
 
-    // optional int32 kStatsValueNameSsrc = 15;
+    // optional int32 kStatsValueNameSsrc = 11;
     if (has_kstatsvaluenamessrc()) {
       total_size += 1 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamessrc());
     }
 
-    // optional int32 kStatsValueNameTransmitBitrate = 16;
+    // optional int32 kStatsValueNameTransmitBitrate = 12;
     if (has_kstatsvaluenametransmitbitrate()) {
-      total_size += 2 +
+      total_size += 1 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenametransmitbitrate());
     }
 
-    // optional int32 kStatsValueNameRetransmitBitrate = 17;
+    // optional int32 kStatsValueNameRetransmitBitrate = 13;
     if (has_kstatsvaluenameretransmitbitrate()) {
-      total_size += 2 +
+      total_size += 1 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameretransmitbitrate());
     }
 
-    // optional int32 kStatsValueNameFecBitrate = 18;
+    // optional int32 kStatsValueNameFecBitrate = 14;
     if (has_kstatsvaluenamefecbitrate()) {
-      total_size += 2 +
+      total_size += 1 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamefecbitrate());
     }
 
-  }
-  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
-    // optional int32 kStatsValueNameTransmitPacketsRate = 19;
+    // optional int32 kStatsValueNameTransmitPacketsRate = 15;
     if (has_kstatsvaluenametransmitpacketsrate()) {
-      total_size += 2 +
+      total_size += 1 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenametransmitpacketsrate());
     }
 
-    // optional int32 kStatsValueNameRetransmitPacketsRate = 20;
+    // optional int32 kStatsValueNameRetransmitPacketsRate = 16;
     if (has_kstatsvaluenameretransmitpacketsrate()) {
       total_size += 2 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameretransmitpacketsrate());
     }
 
-    // optional int32 kStatsValueNamePacketsLost = 21;
-    if (has_kstatsvaluenamepacketslost()) {
-      total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
-          this->kstatsvaluenamepacketslost());
-    }
-
-    // optional int32 kStatsValueNameFirsReceived = 22;
+  }
+  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
+    // optional int32 kStatsValueNameFirsReceived = 17;
     if (has_kstatsvaluenamefirsreceived()) {
       total_size += 2 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamefirsreceived());
     }
 
-    // optional int32 kStatsValueNameNacksReceived = 23;
+    // optional int32 kStatsValueNameNacksReceived = 18;
     if (has_kstatsvaluenamenacksreceived()) {
       total_size += 2 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamenacksreceived());
     }
 
-    // optional int32 kStatsValueNameNacksRequestsReceived = 24;
+    // optional int32 kStatsValueNameNacksRequestsReceived = 19;
     if (has_kstatsvaluenamenacksrequestsreceived()) {
       total_size += 2 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamenacksrequestsreceived());
     }
 
-    // optional int32 kStatsValueNameNacksUniqueRequestsReceived = 25;
+    // optional int32 kStatsValueNameNacksUniqueRequestsReceived = 20;
     if (has_kstatsvaluenamenacksuniquerequestsreceived()) {
       total_size += 2 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamenacksuniquerequestsreceived());
     }
 
-    // optional int32 kStatsValueNameAvgEncodeMs = 26;
+    // optional int32 kStatsValueNameAvgEncodeMs = 21;
     if (has_kstatsvaluenameavgencodems()) {
       total_size += 2 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameavgencodems());
     }
 
-  }
-  if (_has_bits_[24 / 32] & (0xffu << (24 % 32))) {
-    // optional int32 kStatsValueNameEncodeUsagePercent = 27;
+    // optional int32 kStatsValueNameEncodeUsagePercent = 22;
     if (has_kstatsvaluenameencodeusagepercent()) {
       total_size += 2 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameencodeusagepercent());
     }
 
-    // optional int32 kStatsValueNameCapturedFrameWidth = 28;
+    // optional int32 kStatsValueNameCapturedFrameWidth = 23;
     if (has_kstatsvaluenamecapturedframewidth()) {
       total_size += 2 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecapturedframewidth());
     }
 
-    // optional int32 kStatsValueNameCapturedFrameHeight = 29;
+    // optional int32 kStatsValueNameCapturedFrameHeight = 24;
     if (has_kstatsvaluenamecapturedframeheight()) {
       total_size += 2 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecapturedframeheight());
     }
 
-    // optional int32 kStatsValueNameCapturedFrameRate = 30;
+  }
+  if (_has_bits_[24 / 32] & (0xffu << (24 % 32))) {
+    // optional int32 kStatsValueNameCapturedFrameRate = 25;
     if (has_kstatsvaluenamecapturedframerate()) {
       total_size += 2 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecapturedframerate());
     }
 
-    // optional int32 kStatsValueNameQMFrameWidth = 31;
+    // optional int32 kStatsValueNameQMFrameWidth = 26;
     if (has_kstatsvaluenameqmframewidth()) {
       total_size += 2 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameqmframewidth());
     }
 
-    // optional int32 kStatsValueNameQMFrameHeight = 32;
+    // optional int32 kStatsValueNameQMFrameHeight = 27;
     if (has_kstatsvaluenameqmframeheight()) {
       total_size += 2 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameqmframeheight());
     }
 
-    // optional int32 kStatsValueNameQMFrameRate = 33;
+    // optional int32 kStatsValueNameQMFrameRate = 28;
     if (has_kstatsvaluenameqmframerate()) {
       total_size += 2 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameqmframerate());
     }
 
-    // optional int32 kStatsValueNameCodecSettingFrameWidth = 34;
+    // optional int32 kStatsValueNameCodecSettingFrameWidth = 29;
     if (has_kstatsvaluenamecodecsettingframewidth()) {
       total_size += 2 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingframewidth());
     }
 
-  }
-  if (_has_bits_[32 / 32] & (0xffu << (32 % 32))) {
-    // optional int32 kStatsValueNameCodecSettingFrameHeight = 35;
+    // optional int32 kStatsValueNameCodecSettingFrameHeight = 30;
     if (has_kstatsvaluenamecodecsettingframeheight()) {
       total_size += 2 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingframeheight());
     }
 
-    // optional int32 kStatsValueNameCodecSettingFrameRate = 36;
+    // optional int32 kStatsValueNameCodecSettingFrameRate = 31;
     if (has_kstatsvaluenamecodecsettingframerate()) {
       total_size += 2 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingframerate());
     }
 
-    // optional int32 kStatsValueNameCodecSettingSimulcastNum = 37;
+    // optional int32 kStatsValueNameCodecSettingSimulcastNum = 32;
     if (has_kstatsvaluenamecodecsettingsimulcastnum()) {
       total_size += 2 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingsimulcastnum());
     }
 
-    // optional int32 kStatsValueNameCodecSettingStartBitrate = 38;
+  }
+  if (_has_bits_[32 / 32] & (0xffu << (32 % 32))) {
+    // optional int32 kStatsValueNameCodecSettingStartBitrate = 33;
     if (has_kstatsvaluenamecodecsettingstartbitrate()) {
       total_size += 2 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingstartbitrate());
     }
 
-    // optional int32 kStatsValueNameCodecSettingMinBitrate = 39;
+    // optional int32 kStatsValueNameCodecSettingMinBitrate = 34;
     if (has_kstatsvaluenamecodecsettingminbitrate()) {
       total_size += 2 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingminbitrate());
     }
 
-    // optional int32 kStatsValueNameCodecSettingMaxBitrate = 40;
+    // optional int32 kStatsValueNameCodecSettingMaxBitrate = 35;
     if (has_kstatsvaluenamecodecsettingmaxbitrate()) {
       total_size += 2 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingmaxbitrate());
     }
 
-    // optional int32 kStatsValueNameCodecSettingTargetBitrate = 41;
+    // optional int32 kStatsValueNameCodecSettingTargetBitrate = 36;
     if (has_kstatsvaluenamecodecsettingtargetbitrate()) {
       total_size += 2 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
@@ -1396,12 +1307,6 @@ void VideoSenderStatisticsInner::MergeFrom(const VideoSenderStatisticsInner& fro
     }
   }
   if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    if (from.has_kstatsvaluenamelossfractioninpercent()) {
-      set_kstatsvaluenamelossfractioninpercent(from.kstatsvaluenamelossfractioninpercent());
-    }
-    if (from.has_kstatsvaluenamejitterreceived()) {
-      set_kstatsvaluenamejitterreceived(from.kstatsvaluenamejitterreceived());
-    }
     if (from.has_kstatsvaluenamerttinms()) {
       set_kstatsvaluenamerttinms(from.kstatsvaluenamerttinms());
     }
@@ -1420,17 +1325,14 @@ void VideoSenderStatisticsInner::MergeFrom(const VideoSenderStatisticsInner& fro
     if (from.has_kstatsvaluenamefecbitrate()) {
       set_kstatsvaluenamefecbitrate(from.kstatsvaluenamefecbitrate());
     }
-  }
-  if (from._has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     if (from.has_kstatsvaluenametransmitpacketsrate()) {
       set_kstatsvaluenametransmitpacketsrate(from.kstatsvaluenametransmitpacketsrate());
     }
     if (from.has_kstatsvaluenameretransmitpacketsrate()) {
       set_kstatsvaluenameretransmitpacketsrate(from.kstatsvaluenameretransmitpacketsrate());
     }
-    if (from.has_kstatsvaluenamepacketslost()) {
-      set_kstatsvaluenamepacketslost(from.kstatsvaluenamepacketslost());
-    }
+  }
+  if (from._has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     if (from.has_kstatsvaluenamefirsreceived()) {
       set_kstatsvaluenamefirsreceived(from.kstatsvaluenamefirsreceived());
     }
@@ -1446,8 +1348,6 @@ void VideoSenderStatisticsInner::MergeFrom(const VideoSenderStatisticsInner& fro
     if (from.has_kstatsvaluenameavgencodems()) {
       set_kstatsvaluenameavgencodems(from.kstatsvaluenameavgencodems());
     }
-  }
-  if (from._has_bits_[24 / 32] & (0xffu << (24 % 32))) {
     if (from.has_kstatsvaluenameencodeusagepercent()) {
       set_kstatsvaluenameencodeusagepercent(from.kstatsvaluenameencodeusagepercent());
     }
@@ -1457,6 +1357,8 @@ void VideoSenderStatisticsInner::MergeFrom(const VideoSenderStatisticsInner& fro
     if (from.has_kstatsvaluenamecapturedframeheight()) {
       set_kstatsvaluenamecapturedframeheight(from.kstatsvaluenamecapturedframeheight());
     }
+  }
+  if (from._has_bits_[24 / 32] & (0xffu << (24 % 32))) {
     if (from.has_kstatsvaluenamecapturedframerate()) {
       set_kstatsvaluenamecapturedframerate(from.kstatsvaluenamecapturedframerate());
     }
@@ -1472,8 +1374,6 @@ void VideoSenderStatisticsInner::MergeFrom(const VideoSenderStatisticsInner& fro
     if (from.has_kstatsvaluenamecodecsettingframewidth()) {
       set_kstatsvaluenamecodecsettingframewidth(from.kstatsvaluenamecodecsettingframewidth());
     }
-  }
-  if (from._has_bits_[32 / 32] & (0xffu << (32 % 32))) {
     if (from.has_kstatsvaluenamecodecsettingframeheight()) {
       set_kstatsvaluenamecodecsettingframeheight(from.kstatsvaluenamecodecsettingframeheight());
     }
@@ -1483,6 +1383,8 @@ void VideoSenderStatisticsInner::MergeFrom(const VideoSenderStatisticsInner& fro
     if (from.has_kstatsvaluenamecodecsettingsimulcastnum()) {
       set_kstatsvaluenamecodecsettingsimulcastnum(from.kstatsvaluenamecodecsettingsimulcastnum());
     }
+  }
+  if (from._has_bits_[32 / 32] & (0xffu << (32 % 32))) {
     if (from.has_kstatsvaluenamecodecsettingstartbitrate()) {
       set_kstatsvaluenamecodecsettingstartbitrate(from.kstatsvaluenamecodecsettingstartbitrate());
     }
@@ -1520,8 +1422,6 @@ void VideoSenderStatisticsInner::Swap(VideoSenderStatisticsInner* other) {
     std::swap(kstatsvaluenameactualencbitrate_, other->kstatsvaluenameactualencbitrate_);
     std::swap(kstatsvaluenameavailablesendbandwidth_, other->kstatsvaluenameavailablesendbandwidth_);
     std::swap(kstatsvaluenameavailablereceivebandwidth_, other->kstatsvaluenameavailablereceivebandwidth_);
-    std::swap(kstatsvaluenamelossfractioninpercent_, other->kstatsvaluenamelossfractioninpercent_);
-    std::swap(kstatsvaluenamejitterreceived_, other->kstatsvaluenamejitterreceived_);
     std::swap(kstatsvaluenamerttinms_, other->kstatsvaluenamerttinms_);
     std::swap(kstatsvaluenamebucketdelayinms_, other->kstatsvaluenamebucketdelayinms_);
     std::swap(kstatsvaluenamessrc_, other->kstatsvaluenamessrc_);
@@ -1530,7 +1430,6 @@ void VideoSenderStatisticsInner::Swap(VideoSenderStatisticsInner* other) {
     std::swap(kstatsvaluenamefecbitrate_, other->kstatsvaluenamefecbitrate_);
     std::swap(kstatsvaluenametransmitpacketsrate_, other->kstatsvaluenametransmitpacketsrate_);
     std::swap(kstatsvaluenameretransmitpacketsrate_, other->kstatsvaluenameretransmitpacketsrate_);
-    std::swap(kstatsvaluenamepacketslost_, other->kstatsvaluenamepacketslost_);
     std::swap(kstatsvaluenamefirsreceived_, other->kstatsvaluenamefirsreceived_);
     std::swap(kstatsvaluenamenacksreceived_, other->kstatsvaluenamenacksreceived_);
     std::swap(kstatsvaluenamenacksrequestsreceived_, other->kstatsvaluenamenacksrequestsreceived_);
@@ -1592,6 +1491,9 @@ const int VideoReceiverStatisticsInner::kKStatsValueNameLossModePart1FieldNumber
 const int VideoReceiverStatisticsInner::kKStatsValueNameLossModePart2FieldNumber;
 const int VideoReceiverStatisticsInner::kKStatsValueNameLossModePart3FieldNumber;
 const int VideoReceiverStatisticsInner::kKStatsValueNameLossModePart4FieldNumber;
+const int VideoReceiverStatisticsInner::kKStatsValueNameLossFractionInPercentFieldNumber;
+const int VideoReceiverStatisticsInner::kKStatsValueNamePacketsLostFieldNumber;
+const int VideoReceiverStatisticsInner::kKStatsValueNameJitterReceivedFieldNumber;
 #endif  // !_MSC_VER
 
 VideoReceiverStatisticsInner::VideoReceiverStatisticsInner()
@@ -1639,6 +1541,9 @@ void VideoReceiverStatisticsInner::SharedCtor() {
   kstatsvaluenamelossmodepart2_ = GOOGLE_LONGLONG(0);
   kstatsvaluenamelossmodepart3_ = GOOGLE_LONGLONG(0);
   kstatsvaluenamelossmodepart4_ = GOOGLE_LONGLONG(0);
+  kstatsvaluenamelossfractioninpercent_ = 0;
+  kstatsvaluenamepacketslost_ = 0;
+  kstatsvaluenamejitterreceived_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1705,7 +1610,9 @@ void VideoReceiverStatisticsInner::Clear() {
   if (_has_bits_[16 / 32] & 16711680) {
     ZR_(kstatsvaluenamebytesreceived_, kstatsvaluenamelossmodepart2_);
   }
-  ZR_(kstatsvaluenamelossmodepart3_, kstatsvaluenamelossmodepart4_);
+  if (_has_bits_[24 / 32] & 520093696) {
+    ZR_(kstatsvaluenamelossmodepart3_, kstatsvaluenamejitterreceived_);
+  }
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -2111,6 +2018,51 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(216)) goto parse_kStatsValueNameLossFractionInPercent;
+        break;
+      }
+
+      // optional int32 kStatsValueNameLossFractionInPercent = 27;
+      case 27: {
+        if (tag == 216) {
+         parse_kStatsValueNameLossFractionInPercent:
+          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &kstatsvaluenamelossfractioninpercent_)));
+          set_has_kstatsvaluenamelossfractioninpercent();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(224)) goto parse_kStatsValueNamePacketsLost;
+        break;
+      }
+
+      // optional int32 kStatsValueNamePacketsLost = 28;
+      case 28: {
+        if (tag == 224) {
+         parse_kStatsValueNamePacketsLost:
+          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &kstatsvaluenamepacketslost_)));
+          set_has_kstatsvaluenamepacketslost();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(232)) goto parse_kStatsValueNameJitterReceived;
+        break;
+      }
+
+      // optional int32 kStatsValueNameJitterReceived = 29;
+      case 29: {
+        if (tag == 232) {
+         parse_kStatsValueNameJitterReceived:
+          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &kstatsvaluenamejitterreceived_)));
+          set_has_kstatsvaluenamejitterreceived();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -2269,6 +2221,21 @@ void VideoReceiverStatisticsInner::SerializeWithCachedSizes(
   // optional int64 kStatsValueNameLossModePart4 = 26;
   if (has_kstatsvaluenamelossmodepart4()) {
     ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt64(26, this->kstatsvaluenamelossmodepart4(), output);
+  }
+
+  // optional int32 kStatsValueNameLossFractionInPercent = 27;
+  if (has_kstatsvaluenamelossfractioninpercent()) {
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(27, this->kstatsvaluenamelossfractioninpercent(), output);
+  }
+
+  // optional int32 kStatsValueNamePacketsLost = 28;
+  if (has_kstatsvaluenamepacketslost()) {
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(28, this->kstatsvaluenamepacketslost(), output);
+  }
+
+  // optional int32 kStatsValueNameJitterReceived = 29;
+  if (has_kstatsvaluenamejitterreceived()) {
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(29, this->kstatsvaluenamejitterreceived(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -2468,6 +2435,27 @@ int VideoReceiverStatisticsInner::ByteSize() const {
           this->kstatsvaluenamelossmodepart4());
     }
 
+    // optional int32 kStatsValueNameLossFractionInPercent = 27;
+    if (has_kstatsvaluenamelossfractioninpercent()) {
+      total_size += 2 +
+        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->kstatsvaluenamelossfractioninpercent());
+    }
+
+    // optional int32 kStatsValueNamePacketsLost = 28;
+    if (has_kstatsvaluenamepacketslost()) {
+      total_size += 2 +
+        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->kstatsvaluenamepacketslost());
+    }
+
+    // optional int32 kStatsValueNameJitterReceived = 29;
+    if (has_kstatsvaluenamejitterreceived()) {
+      total_size += 2 +
+        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->kstatsvaluenamejitterreceived());
+    }
+
   }
   total_size += unknown_fields().size();
 
@@ -2569,6 +2557,15 @@ void VideoReceiverStatisticsInner::MergeFrom(const VideoReceiverStatisticsInner&
     if (from.has_kstatsvaluenamelossmodepart4()) {
       set_kstatsvaluenamelossmodepart4(from.kstatsvaluenamelossmodepart4());
     }
+    if (from.has_kstatsvaluenamelossfractioninpercent()) {
+      set_kstatsvaluenamelossfractioninpercent(from.kstatsvaluenamelossfractioninpercent());
+    }
+    if (from.has_kstatsvaluenamepacketslost()) {
+      set_kstatsvaluenamepacketslost(from.kstatsvaluenamepacketslost());
+    }
+    if (from.has_kstatsvaluenamejitterreceived()) {
+      set_kstatsvaluenamejitterreceived(from.kstatsvaluenamejitterreceived());
+    }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
@@ -2612,6 +2609,9 @@ void VideoReceiverStatisticsInner::Swap(VideoReceiverStatisticsInner* other) {
     std::swap(kstatsvaluenamelossmodepart2_, other->kstatsvaluenamelossmodepart2_);
     std::swap(kstatsvaluenamelossmodepart3_, other->kstatsvaluenamelossmodepart3_);
     std::swap(kstatsvaluenamelossmodepart4_, other->kstatsvaluenamelossmodepart4_);
+    std::swap(kstatsvaluenamelossfractioninpercent_, other->kstatsvaluenamelossfractioninpercent_);
+    std::swap(kstatsvaluenamepacketslost_, other->kstatsvaluenamepacketslost_);
+    std::swap(kstatsvaluenamejitterreceived_, other->kstatsvaluenamejitterreceived_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -2631,8 +2631,6 @@ const int AudioSenderStatisticsInner::kKStatsValueNameChannelIdFieldNumber;
 const int AudioSenderStatisticsInner::kKStatsValueNameTimestampFieldNumber;
 const int AudioSenderStatisticsInner::kKStatsValueNameCodecImplementationNameFieldNumber;
 const int AudioSenderStatisticsInner::kKStatsValueNameAudioInputLevelFieldNumber;
-const int AudioSenderStatisticsInner::kKStatsValueNameLossFractionInPercentFieldNumber;
-const int AudioSenderStatisticsInner::kKStatsValueNameJitterReceivedFieldNumber;
 const int AudioSenderStatisticsInner::kKStatsValueNameRttInMsFieldNumber;
 const int AudioSenderStatisticsInner::kKStatsValueNameEchoDelayMedianFieldNumber;
 const int AudioSenderStatisticsInner::kKStatsValueNameEchoDelayStdDevFieldNumber;
@@ -2664,8 +2662,6 @@ void AudioSenderStatisticsInner::SharedCtor() {
   kstatsvaluenametimestamp_ = GOOGLE_LONGLONG(0);
   kstatsvaluenamecodecimplementationname_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
   kstatsvaluenameaudioinputlevel_ = 0;
-  kstatsvaluenamelossfractioninpercent_ = 0;
-  kstatsvaluenamejitterreceived_ = 0;
   kstatsvaluenamerttinms_ = 0;
   kstatsvaluenameechodelaymedian_ = 0;
   kstatsvaluenameechodelaystddev_ = 0;
@@ -2724,14 +2720,14 @@ void AudioSenderStatisticsInner::Clear() {
 
   if (_has_bits_[0 / 32] & 255) {
     ZR_(kstatsvaluenamereporttype_, kstatsvaluenametimestamp_);
-    ZR_(kstatsvaluenameaudioinputlevel_, kstatsvaluenamerttinms_);
+    ZR_(kstatsvaluenameaudioinputlevel_, kstatsvaluenameechodelaystddev_);
     if (has_kstatsvaluenamecodecimplementationname()) {
       if (kstatsvaluenamecodecimplementationname_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         kstatsvaluenamecodecimplementationname_->clear();
       }
     }
   }
-  ZR_(kstatsvaluenameechodelaymedian_, kstatsvaluenameechoreturnlossenhancement_);
+  ZR_(kstatsvaluenameechoreturnloss_, kstatsvaluenameechoreturnlossenhancement_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -2822,43 +2818,13 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(48)) goto parse_kStatsValueNameLossFractionInPercent;
+        if (input->ExpectTag(48)) goto parse_kStatsValueNameRttInMs;
         break;
       }
 
-      // optional int32 kStatsValueNameLossFractionInPercent = 6;
+      // optional int32 kStatsValueNameRttInMs = 6;
       case 6: {
         if (tag == 48) {
-         parse_kStatsValueNameLossFractionInPercent:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &kstatsvaluenamelossfractioninpercent_)));
-          set_has_kstatsvaluenamelossfractioninpercent();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(56)) goto parse_kStatsValueNameJitterReceived;
-        break;
-      }
-
-      // optional int32 kStatsValueNameJitterReceived = 7;
-      case 7: {
-        if (tag == 56) {
-         parse_kStatsValueNameJitterReceived:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &kstatsvaluenamejitterreceived_)));
-          set_has_kstatsvaluenamejitterreceived();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(64)) goto parse_kStatsValueNameRttInMs;
-        break;
-      }
-
-      // optional int32 kStatsValueNameRttInMs = 8;
-      case 8: {
-        if (tag == 64) {
          parse_kStatsValueNameRttInMs:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -2867,13 +2833,13 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(72)) goto parse_kStatsValueNameEchoDelayMedian;
+        if (input->ExpectTag(56)) goto parse_kStatsValueNameEchoDelayMedian;
         break;
       }
 
-      // optional int32 kStatsValueNameEchoDelayMedian = 9;
-      case 9: {
-        if (tag == 72) {
+      // optional int32 kStatsValueNameEchoDelayMedian = 7;
+      case 7: {
+        if (tag == 56) {
          parse_kStatsValueNameEchoDelayMedian:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -2882,13 +2848,13 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(80)) goto parse_kStatsValueNameEchoDelayStdDev;
+        if (input->ExpectTag(64)) goto parse_kStatsValueNameEchoDelayStdDev;
         break;
       }
 
-      // optional int32 kStatsValueNameEchoDelayStdDev = 10;
-      case 10: {
-        if (tag == 80) {
+      // optional int32 kStatsValueNameEchoDelayStdDev = 8;
+      case 8: {
+        if (tag == 64) {
          parse_kStatsValueNameEchoDelayStdDev:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -2897,13 +2863,13 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(88)) goto parse_kStatsValueNameEchoReturnLoss;
+        if (input->ExpectTag(72)) goto parse_kStatsValueNameEchoReturnLoss;
         break;
       }
 
-      // optional int32 kStatsValueNameEchoReturnLoss = 11;
-      case 11: {
-        if (tag == 88) {
+      // optional int32 kStatsValueNameEchoReturnLoss = 9;
+      case 9: {
+        if (tag == 72) {
          parse_kStatsValueNameEchoReturnLoss:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -2912,13 +2878,13 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(96)) goto parse_kStatsValueNameEchoReturnLossEnhancement;
+        if (input->ExpectTag(80)) goto parse_kStatsValueNameEchoReturnLossEnhancement;
         break;
       }
 
-      // optional int32 kStatsValueNameEchoReturnLossEnhancement = 12;
-      case 12: {
-        if (tag == 96) {
+      // optional int32 kStatsValueNameEchoReturnLossEnhancement = 10;
+      case 10: {
+        if (tag == 80) {
          parse_kStatsValueNameEchoReturnLossEnhancement:
           DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -2982,39 +2948,29 @@ void AudioSenderStatisticsInner::SerializeWithCachedSizes(
     ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(5, this->kstatsvaluenameaudioinputlevel(), output);
   }
 
-  // optional int32 kStatsValueNameLossFractionInPercent = 6;
-  if (has_kstatsvaluenamelossfractioninpercent()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(6, this->kstatsvaluenamelossfractioninpercent(), output);
-  }
-
-  // optional int32 kStatsValueNameJitterReceived = 7;
-  if (has_kstatsvaluenamejitterreceived()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(7, this->kstatsvaluenamejitterreceived(), output);
-  }
-
-  // optional int32 kStatsValueNameRttInMs = 8;
+  // optional int32 kStatsValueNameRttInMs = 6;
   if (has_kstatsvaluenamerttinms()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(8, this->kstatsvaluenamerttinms(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(6, this->kstatsvaluenamerttinms(), output);
   }
 
-  // optional int32 kStatsValueNameEchoDelayMedian = 9;
+  // optional int32 kStatsValueNameEchoDelayMedian = 7;
   if (has_kstatsvaluenameechodelaymedian()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(9, this->kstatsvaluenameechodelaymedian(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(7, this->kstatsvaluenameechodelaymedian(), output);
   }
 
-  // optional int32 kStatsValueNameEchoDelayStdDev = 10;
+  // optional int32 kStatsValueNameEchoDelayStdDev = 8;
   if (has_kstatsvaluenameechodelaystddev()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(10, this->kstatsvaluenameechodelaystddev(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(8, this->kstatsvaluenameechodelaystddev(), output);
   }
 
-  // optional int32 kStatsValueNameEchoReturnLoss = 11;
+  // optional int32 kStatsValueNameEchoReturnLoss = 9;
   if (has_kstatsvaluenameechoreturnloss()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(11, this->kstatsvaluenameechoreturnloss(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(9, this->kstatsvaluenameechoreturnloss(), output);
   }
 
-  // optional int32 kStatsValueNameEchoReturnLossEnhancement = 12;
+  // optional int32 kStatsValueNameEchoReturnLossEnhancement = 10;
   if (has_kstatsvaluenameechoreturnlossenhancement()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(12, this->kstatsvaluenameechoreturnlossenhancement(), output);
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(10, this->kstatsvaluenameechoreturnlossenhancement(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -3061,51 +3017,37 @@ int AudioSenderStatisticsInner::ByteSize() const {
           this->kstatsvaluenameaudioinputlevel());
     }
 
-    // optional int32 kStatsValueNameLossFractionInPercent = 6;
-    if (has_kstatsvaluenamelossfractioninpercent()) {
-      total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
-          this->kstatsvaluenamelossfractioninpercent());
-    }
-
-    // optional int32 kStatsValueNameJitterReceived = 7;
-    if (has_kstatsvaluenamejitterreceived()) {
-      total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
-          this->kstatsvaluenamejitterreceived());
-    }
-
-    // optional int32 kStatsValueNameRttInMs = 8;
+    // optional int32 kStatsValueNameRttInMs = 6;
     if (has_kstatsvaluenamerttinms()) {
       total_size += 1 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamerttinms());
     }
 
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional int32 kStatsValueNameEchoDelayMedian = 9;
+    // optional int32 kStatsValueNameEchoDelayMedian = 7;
     if (has_kstatsvaluenameechodelaymedian()) {
       total_size += 1 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameechodelaymedian());
     }
 
-    // optional int32 kStatsValueNameEchoDelayStdDev = 10;
+    // optional int32 kStatsValueNameEchoDelayStdDev = 8;
     if (has_kstatsvaluenameechodelaystddev()) {
       total_size += 1 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameechodelaystddev());
     }
 
-    // optional int32 kStatsValueNameEchoReturnLoss = 11;
+  }
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    // optional int32 kStatsValueNameEchoReturnLoss = 9;
     if (has_kstatsvaluenameechoreturnloss()) {
       total_size += 1 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameechoreturnloss());
     }
 
-    // optional int32 kStatsValueNameEchoReturnLossEnhancement = 12;
+    // optional int32 kStatsValueNameEchoReturnLossEnhancement = 10;
     if (has_kstatsvaluenameechoreturnlossenhancement()) {
       total_size += 1 +
         ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
@@ -3144,23 +3086,17 @@ void AudioSenderStatisticsInner::MergeFrom(const AudioSenderStatisticsInner& fro
     if (from.has_kstatsvaluenameaudioinputlevel()) {
       set_kstatsvaluenameaudioinputlevel(from.kstatsvaluenameaudioinputlevel());
     }
-    if (from.has_kstatsvaluenamelossfractioninpercent()) {
-      set_kstatsvaluenamelossfractioninpercent(from.kstatsvaluenamelossfractioninpercent());
-    }
-    if (from.has_kstatsvaluenamejitterreceived()) {
-      set_kstatsvaluenamejitterreceived(from.kstatsvaluenamejitterreceived());
-    }
     if (from.has_kstatsvaluenamerttinms()) {
       set_kstatsvaluenamerttinms(from.kstatsvaluenamerttinms());
     }
-  }
-  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from.has_kstatsvaluenameechodelaymedian()) {
       set_kstatsvaluenameechodelaymedian(from.kstatsvaluenameechodelaymedian());
     }
     if (from.has_kstatsvaluenameechodelaystddev()) {
       set_kstatsvaluenameechodelaystddev(from.kstatsvaluenameechodelaystddev());
     }
+  }
+  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from.has_kstatsvaluenameechoreturnloss()) {
       set_kstatsvaluenameechoreturnloss(from.kstatsvaluenameechoreturnloss());
     }
@@ -3189,8 +3125,6 @@ void AudioSenderStatisticsInner::Swap(AudioSenderStatisticsInner* other) {
     std::swap(kstatsvaluenametimestamp_, other->kstatsvaluenametimestamp_);
     std::swap(kstatsvaluenamecodecimplementationname_, other->kstatsvaluenamecodecimplementationname_);
     std::swap(kstatsvaluenameaudioinputlevel_, other->kstatsvaluenameaudioinputlevel_);
-    std::swap(kstatsvaluenamelossfractioninpercent_, other->kstatsvaluenamelossfractioninpercent_);
-    std::swap(kstatsvaluenamejitterreceived_, other->kstatsvaluenamejitterreceived_);
     std::swap(kstatsvaluenamerttinms_, other->kstatsvaluenamerttinms_);
     std::swap(kstatsvaluenameechodelaymedian_, other->kstatsvaluenameechodelaymedian_);
     std::swap(kstatsvaluenameechodelaystddev_, other->kstatsvaluenameechodelaystddev_);
@@ -3224,6 +3158,9 @@ const int AudioReceiverStatisticsInner::kKStatsValueNameDecodingNormalFieldNumbe
 const int AudioReceiverStatisticsInner::kKStatsValueNameDecodingPLCFieldNumber;
 const int AudioReceiverStatisticsInner::kKStatsValueNameDecodingCNGFieldNumber;
 const int AudioReceiverStatisticsInner::kKStatsValueNameDecodingPLCCNGFieldNumber;
+const int AudioReceiverStatisticsInner::kKStatsValueNameLossFractionInPercentFieldNumber;
+const int AudioReceiverStatisticsInner::kKStatsValueNamePacketsLostFieldNumber;
+const int AudioReceiverStatisticsInner::kKStatsValueNameJitterReceivedFieldNumber;
 #endif  // !_MSC_VER
 
 AudioReceiverStatisticsInner::AudioReceiverStatisticsInner()
@@ -3259,6 +3196,9 @@ void AudioReceiverStatisticsInner::SharedCtor() {
   kstatsvaluenamedecodingplc_ = 0;
   kstatsvaluenamedecodingcng_ = 0;
   kstatsvaluenamedecodingplccng_ = 0;
+  kstatsvaluenamelossfractioninpercent_ = 0;
+  kstatsvaluenamepacketslost_ = 0;
+  kstatsvaluenamejitterreceived_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -3319,9 +3259,10 @@ void AudioReceiverStatisticsInner::Clear() {
       }
     }
   }
-  if (_has_bits_[8 / 32] & 16128) {
-    ZR_(kstatsvaluenameexpandrate_, kstatsvaluenamedecodingplccng_);
+  if (_has_bits_[8 / 32] & 65280) {
+    ZR_(kstatsvaluenameexpandrate_, kstatsvaluenamepacketslost_);
   }
+  kstatsvaluenamejitterreceived_ = 0;
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -3340,7 +3281,7 @@ bool AudioReceiverStatisticsInner::MergePartialFromCodedStream(
       &unknown_fields_string);
   // @@protoc_insertion_point(parse_start:AudioReceiverStatisticsInner)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(16383);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
@@ -3547,6 +3488,51 @@ bool AudioReceiverStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(120)) goto parse_kStatsValueNameLossFractionInPercent;
+        break;
+      }
+
+      // optional int32 kStatsValueNameLossFractionInPercent = 15;
+      case 15: {
+        if (tag == 120) {
+         parse_kStatsValueNameLossFractionInPercent:
+          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &kstatsvaluenamelossfractioninpercent_)));
+          set_has_kstatsvaluenamelossfractioninpercent();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(128)) goto parse_kStatsValueNamePacketsLost;
+        break;
+      }
+
+      // optional int32 kStatsValueNamePacketsLost = 16;
+      case 16: {
+        if (tag == 128) {
+         parse_kStatsValueNamePacketsLost:
+          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &kstatsvaluenamepacketslost_)));
+          set_has_kstatsvaluenamepacketslost();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(136)) goto parse_kStatsValueNameJitterReceived;
+        break;
+      }
+
+      // optional int32 kStatsValueNameJitterReceived = 17;
+      case 17: {
+        if (tag == 136) {
+         parse_kStatsValueNameJitterReceived:
+          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &kstatsvaluenamejitterreceived_)));
+          set_has_kstatsvaluenamejitterreceived();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -3645,6 +3631,21 @@ void AudioReceiverStatisticsInner::SerializeWithCachedSizes(
   // optional int32 kStatsValueNameDecodingPLCCNG = 14;
   if (has_kstatsvaluenamedecodingplccng()) {
     ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(14, this->kstatsvaluenamedecodingplccng(), output);
+  }
+
+  // optional int32 kStatsValueNameLossFractionInPercent = 15;
+  if (has_kstatsvaluenamelossfractioninpercent()) {
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(15, this->kstatsvaluenamelossfractioninpercent(), output);
+  }
+
+  // optional int32 kStatsValueNamePacketsLost = 16;
+  if (has_kstatsvaluenamepacketslost()) {
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(16, this->kstatsvaluenamepacketslost(), output);
+  }
+
+  // optional int32 kStatsValueNameJitterReceived = 17;
+  if (has_kstatsvaluenamejitterreceived()) {
+    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(17, this->kstatsvaluenamejitterreceived(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -3750,6 +3751,29 @@ int AudioReceiverStatisticsInner::ByteSize() const {
           this->kstatsvaluenamedecodingplccng());
     }
 
+    // optional int32 kStatsValueNameLossFractionInPercent = 15;
+    if (has_kstatsvaluenamelossfractioninpercent()) {
+      total_size += 1 +
+        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->kstatsvaluenamelossfractioninpercent());
+    }
+
+    // optional int32 kStatsValueNamePacketsLost = 16;
+    if (has_kstatsvaluenamepacketslost()) {
+      total_size += 2 +
+        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->kstatsvaluenamepacketslost());
+    }
+
+  }
+  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
+    // optional int32 kStatsValueNameJitterReceived = 17;
+    if (has_kstatsvaluenamejitterreceived()) {
+      total_size += 2 +
+        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->kstatsvaluenamejitterreceived());
+    }
+
   }
   total_size += unknown_fields().size();
 
@@ -3811,6 +3835,17 @@ void AudioReceiverStatisticsInner::MergeFrom(const AudioReceiverStatisticsInner&
     if (from.has_kstatsvaluenamedecodingplccng()) {
       set_kstatsvaluenamedecodingplccng(from.kstatsvaluenamedecodingplccng());
     }
+    if (from.has_kstatsvaluenamelossfractioninpercent()) {
+      set_kstatsvaluenamelossfractioninpercent(from.kstatsvaluenamelossfractioninpercent());
+    }
+    if (from.has_kstatsvaluenamepacketslost()) {
+      set_kstatsvaluenamepacketslost(from.kstatsvaluenamepacketslost());
+    }
+  }
+  if (from._has_bits_[16 / 32] & (0xffu << (16 % 32))) {
+    if (from.has_kstatsvaluenamejitterreceived()) {
+      set_kstatsvaluenamejitterreceived(from.kstatsvaluenamejitterreceived());
+    }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
@@ -3842,6 +3877,9 @@ void AudioReceiverStatisticsInner::Swap(AudioReceiverStatisticsInner* other) {
     std::swap(kstatsvaluenamedecodingplc_, other->kstatsvaluenamedecodingplc_);
     std::swap(kstatsvaluenamedecodingcng_, other->kstatsvaluenamedecodingcng_);
     std::swap(kstatsvaluenamedecodingplccng_, other->kstatsvaluenamedecodingplccng_);
+    std::swap(kstatsvaluenamelossfractioninpercent_, other->kstatsvaluenamelossfractioninpercent_);
+    std::swap(kstatsvaluenamepacketslost_, other->kstatsvaluenamepacketslost_);
+    std::swap(kstatsvaluenamejitterreceived_, other->kstatsvaluenamejitterreceived_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

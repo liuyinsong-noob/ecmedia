@@ -405,8 +405,8 @@ void ViEBaseImpl::RegisterSendStatisticsProxy(
   vie_channel->RegisterSendSideDelayObserver(send_statistics_proxy);
   //rtp/rtcp
   vie_channel->RegisterSendChannelRtpStatisticsCallback(send_statistics_proxy);
-  vie_channel->RegisterSendChannelRtcpStatisticsCallback(send_statistics_proxy);
-  //vie_channel->RegisterSendBitrateObserver(send_statistics_proxy);
+ // vie_channel->RegisterSendChannelRtcpStatisticsCallback(send_statistics_proxy);
+  vie_channel->RegisterSendBitrateObserver(send_statistics_proxy);
 }
 
 SendStatisticsProxy* ViEBaseImpl::GetSendStatisticsProxy(const int video_channel)
