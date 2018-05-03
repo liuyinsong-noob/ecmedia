@@ -30,7 +30,8 @@ class ViERenderImpl
   virtual int RegisterVideoRenderModule(VideoRender& render_module);  // NOLINT
   virtual int DeRegisterVideoRenderModule(
       VideoRender& render_module);  // NOLINT
-  virtual int AddRenderer(const int render_id, void* window,
+
+ virtual int AddRenderer(const int render_id, void* window,
 						  const unsigned int z_order, const float left,
 						  const float top, const float right,
 						  const float bottom,
@@ -39,6 +40,7 @@ class ViERenderImpl
   virtual int RemoveRenderer(const int render_id);
   virtual int StartRender(const int render_id);
   virtual int StopRender(const int render_id);
+  virtual int ChangeWindow(int channelid, void *video_window);
   virtual int SetExpectedRenderDelay(int render_id, int render_delay);
   virtual int ConfigureRender(int render_id, const unsigned int z_order,
                               const float left, const float top,

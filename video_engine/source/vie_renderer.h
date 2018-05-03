@@ -61,8 +61,10 @@ class ViERenderer: public ViEFrameCallback {
 //add by chwd
   virtual int GetClassNameType();
 
+  
   int32_t StartRender();
   int32_t StopRender();
+  int32_t ChangeWindow(void *video_window);
   int32_t AddI420FrameCallback(ECMedia_I420FrameCallBack callback);
   int32_t GetLastRenderedFrame(const int32_t renderID,
                                I420VideoFrame& video_frame);

@@ -3212,6 +3212,29 @@ int ECMedia_stop_render(int channelid, int deviceid)
     PrintConsole("[ECMEDIA INFO] %s ends...",__FUNCTION__);
     return 0;
 }
+
+int ECMedia_reset_remote_view(int channelid, void *video_window) {
+    PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d video_window:%p", __FUNCTION__, channelid, video_window);
+    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    ViERender *render = ViERender::GetInterface(m_vie);
+    if (render) {
+        int ret = render->ChangeWindow(channelid, video_window);
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to add renderer", __FUNCTION__);
+        }
+        render->Release();
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA ERROR] %s failed to get ViERender", __FUNCTION__);
+        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        return -99;
+    }
+    
+    return 0;
+}
 #endif
 
 #ifdef VIDEO_ENABLED

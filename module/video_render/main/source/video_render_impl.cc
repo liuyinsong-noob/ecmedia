@@ -239,7 +239,15 @@ ModuleVideoRenderImpl::Window()
 
 int32_t ModuleVideoRenderImpl::ChangeWindow(void* window)
 {
-    return -1;
+    CriticalSectionScoped cs(&_moduleCrit);
+    
+    if (!_ptrRenderer)
+    {
+        WEBRTC_TRACE(kTraceError, kTraceVideoRenderer, _id,
+                     "%s: No renderer", __FUNCTION__);
+        return false;
+    }
+    return _ptrRenderer->ChangeWindow(window);
 }
 
 int32_t ModuleVideoRenderImpl::Id()
@@ -421,7 +429,7 @@ int32_t ModuleVideoRenderImpl::RegisterRawFrameCallback(
     VideoRenderCallback* callbackObj) {
   return -1;
 }
-
+    
 int32_t ModuleVideoRenderImpl::StartRender(const uint32_t streamId)
 {
     CriticalSectionScoped cs(&_moduleCrit);
@@ -540,8 +548,7 @@ int32_t ModuleVideoRenderImpl::GetScreenResolution(
     return _ptrRenderer->GetScreenResolution(screenWidth, screenHeight);
 }
 
-uint32_t ModuleVideoRenderImpl::RenderFrameRate(
-                                                      const uint32_t streamId)
+uint32_t ModuleVideoRenderImpl::RenderFrameRate(const uint32_t streamId)
 {
     CriticalSectionScoped cs(&_moduleCrit);
 
