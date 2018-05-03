@@ -1333,7 +1333,7 @@ int NetEqImpl::DecodeLoop(PacketList* packet_list, Operations* operation,
     assert(*operation == kNormal || *operation == kAccelerate ||
            *operation == kMerge || *operation == kPreemptiveExpand);
     packet_list->pop_front();
-    size_t payload_length = packet->payload_length;
+    //size_t payload_length = packet->payload_length;
     int16_t decode_length;
     if (packet->sync_packet) {
       // Decode to silence with the same frame size as the last decode.

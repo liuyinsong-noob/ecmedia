@@ -346,7 +346,7 @@ int ViEFileCapturer::ConvertBMPToVideoFrame(const char* fileUTF8, I420VideoFrame
 		{
 			int half_width = (width + 1) / 2;
 			(*video_frame)->CreateEmptyFrame(width, height, width, half_width, half_width);
-			ret = ConvertToI420(kARGB, (const uint8_t*)pBuffer, 0, 0, width, -height, 0, kRotateNone, (*video_frame));
+			ret = ConvertToI420(kARGB, (const uint8_t*)pBuffer, 0, 0, width, -height, 0, kVideoRotation_0, (*video_frame));
 
 			requested_capability_.width = width;
 			requested_capability_.height = height;
@@ -411,7 +411,7 @@ int ViEFileCapturer::ConvertJPEGToVideoFrame(const char* fileUTF8, I420VideoFram
 		int half_width = (width + 1) / 2;
 		(*video_frame)->CreateEmptyFrame(width, height, width, half_width, half_width);
 
-		ret = ConvertToI420(kMJPG, image_buffer._buffer, 0, 0, width, height, buffer_size, kRotateNone, (*video_frame));
+		ret = ConvertToI420(kMJPG, image_buffer._buffer, 0, 0, width, height, buffer_size, kVideoRotation_0, (*video_frame));
 
 		requested_capability_.width = width;
 		requested_capability_.height = height;
