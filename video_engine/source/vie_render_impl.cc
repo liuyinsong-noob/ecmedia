@@ -87,6 +87,7 @@ int ViERenderImpl::DeRegisterVideoRenderModule(
   return 0;
 }
 
+
 int ViERenderImpl::AddRenderer(const int render_id, void* window,
 	const unsigned int z_order, const float left,
 	const float top, const float right,
@@ -146,6 +147,7 @@ int ViERenderImpl::AddRenderer(const int render_id, void* window,
 				shared_data_->SetLastError(kViERenderInvalidRenderId);
 				return -1;
 			}
+            
 			ViERenderer* renderer = shared_data_->render_manager()->AddRenderStream(
 				render_id, window, z_order, left, top, right, bottom);
 			if (!renderer) {
@@ -168,6 +170,7 @@ int ViERenderImpl::AddRenderer(const int render_id, void* window,
 				shared_data_->SetLastError(kViERenderInvalidRenderId);
 				return -1;
 			}
+            
 			ViERenderer* renderer = shared_data_->render_manager()->AddRenderStream(
 				render_id, window, z_order, left, top, right, bottom);
 			if (!renderer) {
@@ -232,7 +235,7 @@ int ViERenderImpl::RemoveRenderer(const int render_id) {
   }
   return 0;
 }
-
+ 
 int ViERenderImpl::StartRender(const int render_id) {
   LOG_F(LS_INFO) << "render_id: " << render_id;
   ViERenderManagerScoped rs(*(shared_data_->render_manager()));
@@ -262,7 +265,22 @@ int ViERenderImpl::StopRender(const int render_id) {
   }
   return 0;
 }
-
+    
+int ViERenderImpl::ChangeWindow(int render_id, void *video_window) {
+    LOG_F(LS_INFO) << "render_id: " << render_id;
+    ViERenderManagerScoped rs(*(shared_data_->render_manager()));
+    ViERenderer* renderer = rs.Renderer(render_id);
+    if (!renderer) {
+        shared_data_->SetLastError(kViERenderInvalidRenderId);
+        return -1;
+    }
+    if (renderer->ChangeWindow(video_window) != 0) {
+        shared_data_->SetLastError(kViERenderUnknownError);
+        return -1;
+    }
+    return 0;
+}
+    
 int ViERenderImpl::SetExpectedRenderDelay(int render_id, int render_delay) {
   LOG_F(LS_INFO) << "render_id: " << render_id
                  << " render_delay: " << render_delay;

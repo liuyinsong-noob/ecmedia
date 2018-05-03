@@ -77,7 +77,8 @@ class ViERender {
 
   // Deregisters render module.
   virtual int DeRegisterVideoRenderModule(VideoRender& render_module) = 0;
-
+  virtual int ChangeWindow(int channelid, void *video_window) = 0;
+    
   // Sets the render destination for a given render ID.
   virtual int AddRenderer(const int render_id,
                           void* window,

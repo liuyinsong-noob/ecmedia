@@ -512,10 +512,16 @@ ECMEDIA_API int ECMedia_set_screen_share_activity(int desktop_captureid, void* a
  *
  */
 ECMEDIA_API int ECMedia_add_render(int channelid, void *video_window, ReturnVideoWidthHeightM videoResolutionCallback);
+    
 /*
  *
  */
 ECMEDIA_API int ECMedia_stop_render(int channelid, int deviceid);
+
+/**
+ * reset remote view
+ */
+ECMEDIA_API int ECMedia_reset_remote_view(int channelid, void *video_window);
 /*
  *
  */
