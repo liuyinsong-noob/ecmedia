@@ -179,6 +179,12 @@
     <ClCompile Include="source\ec_live_engine\srs-librtmp\srs_librtmp.cpp">
       <Filter>源文件\ec_live_engine\ec_srs_rtmp</Filter>
     </ClCompile>
+    <ClCompile Include="source\ec_live_engine\aacdecode.cc">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ec_live_engine\aacencode.cc">
+      <Filter>源文件\ec_live_engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Ecmedia.rc">

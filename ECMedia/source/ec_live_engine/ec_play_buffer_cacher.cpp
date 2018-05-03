@@ -178,8 +178,12 @@ namespace cloopenwebrtc{
     
     bool EC_AVCacher::handleVideo()
     {
-        
-        usleep(10*1000);
+#if defined(_WIN32)
+        Sleep(10);
+#else
+		usleep(10*1000);
+#endif // 
+
         uint32_t curTime = EC_Live_Utility::Time();
         if (sys_fast_video_time_ == 0)
             return true;

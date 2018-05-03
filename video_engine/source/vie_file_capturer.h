@@ -74,6 +74,8 @@ namespace cloopenwebrtc {
 		int ConvertBMPToVideoFrame(const char* fileUTF8, I420VideoFrame** video_frame);
 		char* GetBmpFileInfo(const char* pFileName, int & nWidth, int & nHeight, int* nImageDataSize = nullptr);
 #endif
+		bool TimeToSendFileFrame() const;
+
 	protected:
 		Clock* clock_;
 		I420VideoFrame* video_frame_;
@@ -82,6 +84,10 @@ namespace cloopenwebrtc {
 		bool bInitialized_;
 		ThreadWrapper* fileCapture_thread_;
 		scoped_ptr<CriticalSectionWrapper> fileCapture_cs_;
+
+		const int sendFileFrameMaxFps_;
+		const int64_t avgTimePerFrame_;
+		int64_t lastSent_;
 	};
 
 }  // namespace webrtc
