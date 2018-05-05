@@ -117,23 +117,19 @@ namespace cloopenwebrtc{
         bool running_;
         bool is_playing_;
 
-        uint8_t			audio_cache_[8192];
-        int				a_cache_len_;
-        unsigned int aac_frame_per10ms_size_;
+        uint8_t			        audio_cache_[8192];
+        int				        a_cache_len_;
+        unsigned int            aac_frame_per10ms_size_;
 
-        uint32_t audio_sampleRate_;
-        uint8_t audio_channels_;
+        uint32_t                audio_sampleRate_;
+        uint8_t                 audio_channels_;
         
-        acm2::ACMResampler resampler_record_;
-        aac_dec_t        aac_decoder_;
+        acm2::ACMResampler      resampler_record_;
+        aac_dec_t               aac_decoder_;
 
         
         uint32_t                sys_fast_video_time_;
         uint32_t                rtmp_fast_video_time_;
-        
-        
-        
-       
     };
 }
 #endif /* ec_av_cacher_hpp */

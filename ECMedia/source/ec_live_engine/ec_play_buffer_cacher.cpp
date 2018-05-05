@@ -137,27 +137,11 @@ namespace cloopenwebrtc{
     
     void EC_AVCacher::cache10MsecPcmData(const uint8_t*pdata, int len, uint32_t ts)
     {
-#ifdef __ANDROID__
-        int audio_record_sample_hz_ = 16000;
-#else
-        int audio_record_sample_hz_ = 48000;
-#endif
-        const size_t kMaxDataSizeSamples = 3840;
-        int16_t temp_output[kMaxDataSizeSamples];
-        
-        int length = resampler_record_.Resample10Msec((int16_t*)pdata, audio_sampleRate_*audio_channels_, audio_record_sample_hz_, 1,  kMaxDataSizeSamples, (int16_t*)temp_output);
-
-        if (len < 0) {
-            PrintConsole("[ECMEDIA CORE ERROR] %s resample error\n", __FUNCTION__);
-            return;
-        }
-
         if(len == 0 || pdata == nullptr) {
             return;
         }
-        
         PlyPacket* pkt = new PlyPacket(false);
-        pkt->SetData((uint8_t*)temp_output, audio_record_sample_hz_/100*audio_channels_*2, ts);
+        pkt->SetData(pdata, len, ts);
         pkt->_b_video = false;
         _cs_list_audio->Enter();
         lst_audio_buffer_.push_back(pkt);
@@ -173,8 +157,6 @@ namespace cloopenwebrtc{
         }
         _cs_list_audio->Leave();
     }
-    
-    
     
     bool EC_AVCacher::handleVideo()
     {
@@ -366,7 +348,7 @@ namespace cloopenwebrtc{
 #if defined(_WIN32)
 	Sleep(5);
 #else
-	usleep(5 * 1000);
+	usleep(8 * 1000);
 #endif
         }
         return true;
@@ -394,7 +376,6 @@ namespace cloopenwebrtc{
                                              uint32_t& nSamplesOut,
                                              int64_t* elapsed_time_ms,
                                              int64_t* ntp_time_ms) {
-        
         if(!is_playing_) {
             int samples_per_channel_int = samplesPerSec / 100;
             if (samples_per_channel_int > 0) {
@@ -422,8 +403,15 @@ namespace cloopenwebrtc{
         if (pkt_audio) {
             *elapsed_time_ms = 0;
             *ntp_time_ms = 0;
-            memcpy(audioSamples, (uint8_t*)pkt_audio->_data, pkt_audio->_data_len);
-            nSamplesOut = pkt_audio->_data_len/2;
+            
+            const size_t kMaxDataSizeSamples = 3840;
+            int16_t temp_output[kMaxDataSizeSamples];
+            
+            int samples_out = resampler_record_.Resample10Msec((int16_t*)pkt_audio->_data, audio_sampleRate_*audio_channels_, samplesPerSec, 1,  kMaxDataSizeSamples, (int16_t*)temp_output);
+            
+
+            memcpy(audioSamples, (uint8_t*)temp_output, samples_out*sizeof(uint16_t));
+            nSamplesOut = samples_out;
             delete  pkt_audio;
         } else {
             int samples_per_channel_int = samplesPerSec / 100;

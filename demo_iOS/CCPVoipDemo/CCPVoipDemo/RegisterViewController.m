@@ -194,11 +194,7 @@
     }
     [self.view addSubview:loginAccount_textField];
     [loginAccount_textField release];
-    
-    
-    
-    
-    
+
     UIImageView *mainImgViewBG3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"new126.png"]];
     mainImgViewBG3.frame = CGRectMake(11.0F, 160+1+44, 298, 44);
     [self.view addSubview:mainImgViewBG3];
@@ -462,6 +458,9 @@
 
 - (void)registerVoip:(id)sender
 {
+    
+    [self responseVoipRegister:ERegisterSuccess data:@"df"];
+    return;
     NSString *str = loginIP_textField.text;
     [self keyboardHide];
     NSString *mainID = @"";
@@ -616,7 +615,7 @@
 #pragma mark - 由setModalEngineDelegate设置返回的登录消息
 - (void)responseVoipRegister:(ERegisterResult)event data:(NSString *)data
 {
-    if (event == ERegisterSuccess)
+    if (ERegisterSuccess == ERegisterSuccess)
     {
         // 登录成功
         [self dismissProgressingView];
