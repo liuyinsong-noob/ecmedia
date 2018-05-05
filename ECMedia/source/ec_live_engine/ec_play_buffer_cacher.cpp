@@ -8,7 +8,6 @@
 
 #include "ec_play_buffer_cacher.h"
 #include "ec_live_utility.h"
-#include "event_wrapper.h"
 
 #if defined(_WIN32)
 #include <cstdint>
@@ -40,17 +39,11 @@ namespace cloopenwebrtc{
                                                          this,
                                                          kNormalPriority,
                                                          "playnetworkThread_");
-        
-        aacDecodeHandleThread_ = ThreadWrapper::CreateThread(EC_AVCacher::aacDecodingThreadRun,
-                                                             this,
-                                                             kNormalPriority,
-                                                             "aacDecodingThreadRun");
 
         
         _cs_list_audio = CriticalSectionWrapper::CreateCriticalSection();
         _cs_list_video = CriticalSectionWrapper::CreateCriticalSection();
         _cs_list_aac = CriticalSectionWrapper::CreateCriticalSection();
-        cacher_update_event_ = EventTimerWrapper::Create();
         callback_ = nullptr;
         
         running_ = false;
@@ -83,31 +76,21 @@ namespace cloopenwebrtc{
         return static_cast<EC_AVCacher *>(pThis)->handleVideo();
     }
     
-    bool EC_AVCacher::aacDecodingThreadRun(void *pThis) {
-        return static_cast<EC_AVCacher*>(pThis)->decodingAacPackets();
-    }
-    
     void EC_AVCacher::run() {
         PrintConsole("[EC_AVCacher INFO] %s begin\n", __FUNCTION__);
         running_ = true;
         clearCacher();
-        cacher_update_event_->StartTimer(true, 10);
-        
+
         unsigned int pthread_id;
         playnetworkThread_->Start(pthread_id);
-            
-        unsigned int aac_decoding_pthread_id;
-        aacDecodeHandleThread_->Start(aac_decoding_pthread_id);
+        
     }
     
     void EC_AVCacher::shutdown() {
         PrintConsole("[EC_AVCacher INFO] %s begin\n", __FUNCTION__);
         running_ = false;
        
-        cacher_update_event_->Set();
-        cacher_update_event_->StopTimer();
         playnetworkThread_->Stop();
-        aacDecodeHandleThread_->Stop();
         play_cur_time_ = 0;
     }
     
@@ -237,7 +220,9 @@ namespace cloopenwebrtc{
                 _cs_list_video->Leave();
             }
             if (pkt_video) {
-                callback_->onAvcDataComing((uint8_t*)pkt_video->_data, pkt_video->_data_len, pkt_video->_dts);
+                if(callback_) {
+                    callback_->onAvcDataComing((uint8_t*)pkt_video->_data, pkt_video->_data_len, pkt_video->_dts);
+                }
                 delete pkt_video;
             }
             
@@ -298,62 +283,30 @@ namespace cloopenwebrtc{
         if(!running_) {
             return;
         }
-        PlyPacket* pkt = new PlyPacket(true);
-        pkt->SetData(pdata, len, ts);
-        pkt->_b_video = true;
-        _cs_list_aac->Enter();
-        lst_aac_buffer_.push_back(pkt);
-        _cs_list_aac->Leave();
-    }
-    
-    bool EC_AVCacher::decodingAacPackets() {
-        PlyPacket* pkt_aac = nullptr;
-        _cs_list_aac->Enter();
-        if (lst_aac_buffer_.size() > 0) {
-            pkt_aac = lst_aac_buffer_.front();
-            lst_aac_buffer_.pop_front();
-        }
-        _cs_list_aac->Leave();
-        
-        if (pkt_aac) {
-            uint8_t *pdata = pkt_aac->_data;
-            int len = pkt_aac->_data_len;
-            uint32_t ts = pkt_aac->_dts;
-            unsigned int outlen = 0;
-            
-            if (aac_decoder_ == NULL) {
-                PrintConsole("[EC_AVCacher INFO] %s create new faac decode handler\n", __FUNCTION__);
-                aac_decoder_ = aac_decoder_open((unsigned char*)pdata, len, &audio_channels_, &audio_sampleRate_);
-                if (audio_channels_ == 0)
-                    audio_channels_ = 1;
-                aac_frame_per10ms_size_ = (audio_sampleRate_ / 100) * sizeof(int16_t) * audio_channels_;
-            } else {
-                if (aac_decoder_decode_frame(aac_decoder_, (unsigned char*)pdata, len, audio_cache_ + a_cache_len_, &outlen) > 0) {
-                    a_cache_len_ += outlen;
-                    int ct = 0;
-                    int fsize = aac_frame_per10ms_size_;
-                    while (a_cache_len_ > fsize) {
-                        cache10MsecPcmData(audio_cache_ + ct * fsize, fsize, ts);
-                        a_cache_len_ -= fsize;
-                        ct++;
-                    }
-                    
-                    memmove(audio_cache_, audio_cache_ + ct * fsize, a_cache_len_);
-                } else{
-                    PrintConsole("[EC_AVCacher ERROR] %s faac decode failed, data: %p, length:%d, a_cache_len_:%d\n", __FUNCTION__, pdata, len, a_cache_len_);
-                }
-            }
-            delete  pkt_aac;
+
+        unsigned int outlen = 0;
+        if (aac_decoder_ == NULL) {
+            PrintConsole("[EC_AVCacher INFO] %s create new faac decode handler\n", __FUNCTION__);
+            aac_decoder_ = aac_decoder_open((unsigned char*)pdata, len, &audio_channels_, &audio_sampleRate_);
+            if (audio_channels_ == 0)
+                audio_channels_ = 1;
+            aac_frame_per10ms_size_ = (audio_sampleRate_ / 100) * sizeof(int16_t) * audio_channels_;
         } else {
-#if defined(_WIN32)
-	Sleep(5);
-#else
-	usleep(8 * 1000);
-#endif
+            if (aac_decoder_decode_frame(aac_decoder_, (unsigned char*)pdata, len, audio_cache_ + a_cache_len_, &outlen) > 0) {
+                a_cache_len_ += outlen;
+                int ct = 0;
+                int fsize = aac_frame_per10ms_size_;
+                while (a_cache_len_ > fsize) {
+                    cache10MsecPcmData(audio_cache_ + ct * fsize, fsize, ts);
+                    a_cache_len_ -= fsize;
+                    ct++;
+                }
+                memmove(audio_cache_, audio_cache_ + ct * fsize, a_cache_len_);
+            } else{
+                PrintConsole("[EC_AVCacher ERROR] %s faac decode failed, data: %p, length:%d, a_cache_len_:%d\n", __FUNCTION__, pdata, len, a_cache_len_);
+            }
         }
-        return true;
     }
-    
     
     int32_t EC_AVCacher::RecordedDataIsAvailable(const void* audioSamples,
                                                     const uint32_t nSamples,

@@ -56,7 +56,6 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/srs-librtmp \
 	$(LOCAL_PATH)/srs-hls-loader \
 	$(LOCAL_PATH)/srs-hls-parser \
-	$(LOCAL_PATH)/../../../system_wrappers/interface \
 	$(LOCAL_PATH)/../../../system_wrappers/include \
 	$(LOCAL_PATH)/../../../voice_engine/main/include \
 	$(LOCAL_PATH)/../../../voice_engine/main/source \

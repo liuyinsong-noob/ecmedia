@@ -458,8 +458,6 @@
 
 - (void)registerVoip:(id)sender
 {
-//    [self responseVoipRegister:ERegisterSuccess data:@"wituout register"];
-//    return;
     NSString *str = loginIP_textField.text;
     [self keyboardHide];
     NSString *mainID = @"";

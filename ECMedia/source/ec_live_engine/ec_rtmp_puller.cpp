@@ -32,12 +32,12 @@ namespace cloopenwebrtc {
                 this,
                 kNormalPriority,
                 "rtmpPullingThread_");
-        av_packet_cacher = NULL;
-        hasStreaming_ = false;
-        running_ = false;
-        srs_codec_ = new SrsAvcAacCodec();
-        audio_payload_ = new DemuxData(1024);
-        av_packet_cacher = new EC_AVCacher();
+        av_packet_cacher    = NULL;
+        hasStreaming_       = false;
+        running_            = false;
+        srs_codec_          = new SrsAvcAacCodec();
+        audio_payload_      = new DemuxData(1024);
+        av_packet_cacher    = new EC_AVCacher();
     }
     
     EC_RtmpPuller::~EC_RtmpPuller() {
@@ -86,7 +86,6 @@ namespace cloopenwebrtc {
             rtmp_ = nullptr;
             av_packet_cacher->shutdown();
             hasStreaming_ = false;
-            //callbackStateIfNeed();
         }
     }
     
@@ -109,6 +108,7 @@ namespace cloopenwebrtc {
 
     bool EC_RtmpPuller::run() {
         while(running_) {
+            usleep(10*1000);
             if (rtmp_ != NULL)
             {
                 switch (rtmp_status_) {
@@ -426,7 +426,9 @@ namespace cloopenwebrtc {
             // copy to audio buffer
             audio_payload_->append((const char*)adts_header, sizeof(adts_header));
             audio_payload_->append(sample_unit->bytes, sample_unit->size);
-            av_packet_cacher->onAacDataComing((uint8_t*)audio_payload_->_data, audio_payload_->_data_len, timestamp);
+            if(av_packet_cacher) {
+                av_packet_cacher->onAacDataComing((uint8_t*)audio_payload_->_data, audio_payload_->_data_len, timestamp);
+            }
             audio_payload_->reset();
         }
         

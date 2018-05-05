@@ -311,8 +311,8 @@ bool IncomingVideoStream::IncomingVideoStreamProcess() {
     if (wait_time > KEventMaxWaitTimeMs) {
       wait_time = KEventMaxWaitTimeMs;
     }
-    deliver_buffer_event_.StartTimer(false, wait_time);
 
+    deliver_buffer_event_.StartTimer(false, wait_time);
     if (!frame_to_render) {
       if (render_callback_) {
         if (last_rendered_frame_.render_time_ms() == 0 &&
