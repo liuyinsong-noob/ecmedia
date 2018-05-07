@@ -13,7 +13,7 @@ build_master_android:
     allow_failure: true
     only:
       - master
-      - develop
+      - vp8_test
     tags:
       - mac_osx
 
