@@ -16,7 +16,7 @@ build_master_android:
       - master
       - vp8_test
     tags:
-      - mac_mini_178_218
+      - mac_osx
 
 build_master_ios:
     stage: build
@@ -26,7 +26,7 @@ build_master_ios:
       - master
       - vp8_test   
     tags:
-      - mac_mini_178_218
+      - mac_osx
 
 build_master_win:
     stage: build
@@ -36,41 +36,41 @@ build_master_win:
       - master
       - vp8_test
     tags:
-      - win_pc
+      - windows_server
 
 
 ## -----------> deploy
 deploy_master_android:
     stage: deploy
-    script: "cp ../android_*.zip ~/.ecmedia_libs_archives/all_libs/android/v2.3.x/"
+    script: "cp ../android_*.zip ~/.platform_libs_archives/ecmedia_layer_libs/android/v2.3.x/"
     only:
       - master
     variables:
       GIT_STRATEGY: none
     tags:
-      - mac_mini_178_218
+      - mac_osx
     allow_failure: true
 
 deploy_master_ios:
     stage: deploy
-    script: "cp ../ios_*.zip ~/.ecmedia_libs_archives/all_libs/ios/v2.3.x/"
+    script: "cp ../ios_*.zip ~/.platform_libs_archives/ecmedia_layer_libs/ios/v2.3.x/"
     only:
       - master
     variables:
       GIT_STRATEGY: none
     tags:
-      - mac_mini_178_218
+      - mac_osx
     allow_failure: true
 
 deploy_master_win:
     stage: deploy
-    script: "scp -i private.key ../windows_*.zip seanlee@192.168.178.218:~/.ecmedia_libs_archives/all_libs/windows/v2.3.x/"
+    script: "scp -i private.key ../windows_*.zip seanlee@192.168.178.218:~/.platform_libs_archives/ecmedia_layer_libs/windows/v2.3.x/"
     only:
       - master
     variables:
       GIT_STRATEGY: none
     tags:
-      - win_pc
+      - windows_server
     allow_failure: true
 
 
@@ -83,7 +83,7 @@ build_br_dev_android:
     only:
       - develop
     tags:
-      - mac_mini_178_218
+      - mac_osx
 
 build_br_dev_ios:
     stage: build
@@ -91,7 +91,7 @@ build_br_dev_ios:
     only:
       - develop
     tags:
-      - mac_mini_178_218
+      - mac_osx
 
 
 build_br_dev_win:
@@ -100,17 +100,17 @@ build_br_dev_win:
     only:
       - develop
     tags:
-      - win_pc
+      - windows_server
 
 
 ## -------> deploy
 deploy_br_other_android:
     stage: deploy
-    script: "cp ../android_*.zip ~/.ecmedia_libs_archives/all_libs/android/v2.1.x/"
+    script: "cp ../android_*.zip ~/.platform_libs_archives/ecmedia_layer_libs/android/v2.1.x/"
     only:
       - vp8_test
     tags:
-      - mac_mini_178_218
+      - mac_osx
     when: manual
     variables:
       GIT_STRATEGY: none
@@ -118,11 +118,11 @@ deploy_br_other_android:
 
 deploy_br_other_ios:
     stage: deploy
-    script: "cp ../ios_*.zip ~/.ecmedia_libs_archives/all_libs/ios/v2.1.x/"
+    script: "cp ../ios_*.zip ~/.platform_libs_archives/ecmedia_layer_libs/ios/v2.1.x/"
     only:
       - vp8_test
     tags:
-      - mac_mini_178_218
+      - mac_osx
     when: manual
     variables:
       GIT_STRATEGY: none
@@ -130,11 +130,11 @@ deploy_br_other_ios:
 
 deploy_br_other_win:
     stage: deploy
-    script: "scp -i private.key ../windows_*.zip seanlee@192.168.178.218:~/.ecmedia_libs_archives/all_libs/windows/v2.1.x/"
+    script: "scp -i private.key ../windows_*.zip seanlee@192.168.178.218:~/.platform_libs_archives/ecmedia_layer_libs/windows/v2.1.x/"
     only:
       - vp8_test
     tags:
-      - win_pc
+      - windows_server
     when: manual
     variables:
       GIT_STRATEGY: none
