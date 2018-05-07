@@ -5,8 +5,7 @@ stages:
 before_script: 
   - "cd build/source"
   - "chmod 644 private.key"
- 
-### ---------------- job for master & vp8_test branch ------------------ ### 
+
 ## -------> build
 build_master_android:
     stage: build
@@ -14,7 +13,7 @@ build_master_android:
     allow_failure: true
     only:
       - master
-      - vp8_test
+      - develop
     tags:
       - mac_osx
 
@@ -36,7 +35,7 @@ build_master_win:
       - master
       - vp8_test
     tags:
-      - windows_server
+      - windows
 
 
 ## -----------> deploy
@@ -70,7 +69,7 @@ deploy_master_win:
     variables:
       GIT_STRATEGY: none
     tags:
-      - windows_server
+      - windows
     allow_failure: true
 
 
@@ -100,7 +99,7 @@ build_br_dev_win:
     only:
       - develop
     tags:
-      - windows_server
+      - windows
 
 
 ## -------> deploy
@@ -134,7 +133,7 @@ deploy_br_other_win:
     only:
       - vp8_test
     tags:
-      - windows_server
+      - windows
     when: manual
     variables:
       GIT_STRATEGY: none
