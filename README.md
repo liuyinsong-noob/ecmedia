@@ -1,6 +1,6 @@
 ##  ECMedia  
 
-[![build status](http://git.yuntongxun.com/platform_sdk/ecmedia/badges/master/build.svg)](http://git.yuntongxun.com//media-sdk/ecmedia/commits/master)
+[![build status](http://git.yuntongxun.com/platform_sdk/ecmedia/badges/master/build.svg)](http://git.yuntongxun.com/platform-sdk/ecmedia/commits/master)
 
 
 
