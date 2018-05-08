@@ -450,7 +450,7 @@ WebRtc_Word32 MediaFileImpl::StartPlayingFile(
     bool useStream = (format != kFileFormatAviFile);
     if( useStream)
     {
-        if(inputStream->OpenFile(fileName, true) != 0)
+        if(inputStream->OpenFile(fileName, true) == 0)
         {
             delete inputStream;
             WEBRTC_TRACE(kTraceError, kTraceFile, _id,
