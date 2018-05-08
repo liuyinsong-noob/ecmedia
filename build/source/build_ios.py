@@ -23,13 +23,13 @@ class BuildIos(BuildBase):
             video_need_rebuild =  self.build_config.get('build_state', self.platform + '_video_state') == 'rebuild'
             if video_need_rebuild :
                 os.system('xcodebuild clean -project ECMedia.xcodeproj')
-            ret =  os.system('xcodebuild -project ECMedia.xcodeproj')
+            ret =  os.system('xcodebuild -project ECMedia.xcodeproj > build_ios.log')
             if ret != 0:
                 return ret
             if video_need_rebuild :
-                return os.system('xcodebuild clean build -sdk iphonesimulator10.3 ONLY_ACTIVE_ARCH=NO VALID_ARCHS="i386 x86_64" -project ECMedia.xcodeproj')
+                return os.system('xcodebuild clean build -sdk iphonesimulator10.3 ONLY_ACTIVE_ARCH=NO VALID_ARCHS="i386 x86_64" -project ECMedia.xcodeproj > build_ios.log')
             else :
-                return os.system('xcodebuild build -sdk iphonesimulator10.3 ONLY_ACTIVE_ARCH=NO VALID_ARCHS="i386 x86_64" -project ECMedia.xcodeproj')
+                return os.system('xcodebuild build -sdk iphonesimulator10.3 ONLY_ACTIVE_ARCH=NO VALID_ARCHS="i386 x86_64" -project ECMedia.xcodeproj > build_ios.log')
         else:
             print'%s are not exist!'%self.CompilePath
             return -1
@@ -42,13 +42,13 @@ class BuildIos(BuildBase):
             audio_need_rebuild =  self.build_config.get('build_state', self.platform + '_audio_state') == 'rebuild' 
             if audio_need_rebuild :
                 os.system('xcodebuild clean -project ECMediaAudio.xcodeproj')
-            ret =  os.system('xcodebuild -project ECMediaAudio.xcodeproj')
+            ret =  os.system('xcodebuild -project ECMediaAudio.xcodeproj > build_ios.log')
             if ret != 0:
                 return ret
             if audio_need_rebuild:
-                return os.system('xcodebuild clean build -sdk iphonesimulator10.3 ONLY_ACTIVE_ARCH=NO VALID_ARCHS="i386 x86_64" -project ECMediaAudio.xcodeproj')
+                return os.system('xcodebuild clean build -sdk iphonesimulator10.3 ONLY_ACTIVE_ARCH=NO VALID_ARCHS="i386 x86_64" -project ECMediaAudio.xcodeproj > build_ios.log')
             else: 
-                return os.system('xcodebuild build -sdk iphonesimulator10.3 ONLY_ACTIVE_ARCH=NO VALID_ARCHS="i386 x86_64" -project ECMediaAudio.xcodeproj')
+                return os.system('xcodebuild build -sdk iphonesimulator10.3 ONLY_ACTIVE_ARCH=NO VALID_ARCHS="i386 x86_64" -project ECMediaAudio.xcodeproj > build_ios.log')
         else:
             print'%s are not exist!'%self.CompilePath
             return -1
