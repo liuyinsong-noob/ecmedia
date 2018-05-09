@@ -206,6 +206,8 @@ class ViEChannelManager: private ViEManagerBase,
   VieRemb remb_;
   std::unique_ptr<CallStats> call_stats_;
   PacketRouter packet_router_;
+  int refcount_;
+  std::map<int, bool> network_stat_;
 };
 
 class ViEChannelManagerScoped: private ViEManagerScopedBase {

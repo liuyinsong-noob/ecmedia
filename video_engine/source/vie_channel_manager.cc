@@ -52,7 +52,8 @@ ViEChannelManager::ViEChannelManager(
 	  rtc_event_log_(RtcEventLog::Create()),
 	  pacer_thread_(ProcessThread::CreateProcessThread()),
 	  use_sendside_bwe_(false),
-	  call_stats_(new CallStats()){
+	  call_stats_(new CallStats()),
+      refcount_(0){
 #ifdef ENABLE_GCC
 	use_sendside_bwe_ = true;
 #endif
@@ -732,9 +733,15 @@ void ViEChannelManager::OnNetworkChanged(uint32_t bitrate_bps,
 
 void ViEChannelManager::UpdateNetworkState(int channel_id, bool startSend)
 {
+    if (channel_id < 0 || network_stat_.size() == 0) {
+        return;
+    }
 	//need to fix: multi channel
 	if (startSend)
 	{
+        LOG(LS_INFO)<<"UpdateNetworkState startSend, channel:"<<channel_id;
+        network_stat_[channel_id] = startSend;
+        refcount_++;
 		call_stats_->RegisterStatsObserver(congestion_controller_.get());
 		module_process_thread_->RegisterModule(call_stats_.get());
 		module_process_thread_->RegisterModule(congestion_controller_.get());
@@ -744,27 +751,51 @@ void ViEChannelManager::UpdateNetworkState(int channel_id, bool startSend)
 		congestion_controller_->SignalNetworkState(kNetworkUp);
 	}
 	else {
-		//clean up pacer_thread
-		pacer_thread_->Stop();
-		pacer_thread_->DeRegisterModule(congestion_controller_->pacer());
-		pacer_thread_->DeRegisterModule(congestion_controller_->GetRemoteBitrateEstimator(true));
-		module_process_thread_->DeRegisterModule(call_stats_.get());
-		module_process_thread_->DeRegisterModule(congestion_controller_.get());
-		call_stats_->DeregisterStatsObserver(congestion_controller_.get());
-		congestion_controller_->SignalNetworkState(kNetworkDown);
-	}	
+        //stop double check
+        //first check channel map
+        std::map<int, bool>::iterator s_it = network_stat_.find(channel_id);
+        if (s_it != network_stat_.end()) {
+            LOG(LS_WARNING)<<"UpdateNetworkState failed, cannot find this channel:"<<channel_id;
+            return;
+        }
+        else
+        {
+            LOG(LS_INFO)<<"UpdateNetworkState stopSend, channel:"<<channel_id;
+            network_stat_.erase(channel_id);
+        }
+        //second check refcount_
+        if (refcount_ > 0) {
+             refcount_--;
+        }
+        else
+        {
+            return;
+        }
+        
+        if(refcount_ == 0)
+        {
+            //clean up pacer_thread
+            pacer_thread_->Stop();
+            pacer_thread_->DeRegisterModule(congestion_controller_->pacer());
+            pacer_thread_->DeRegisterModule(congestion_controller_->GetRemoteBitrateEstimator(true));
+            module_process_thread_->DeRegisterModule(call_stats_.get());
+            module_process_thread_->DeRegisterModule(congestion_controller_.get());
+            call_stats_->DeregisterStatsObserver(congestion_controller_.get());
+            congestion_controller_->SignalNetworkState(kNetworkDown);
+        }
+	}
 }
     
     
-    void ViEChannelManager::UpdateGCCBitrateConfig(int min_bitrate_bps,
-                                                   int start_bitrate_bps,
-                                                   int max_bitrate_bps)
+void ViEChannelManager::UpdateGCCBitrateConfig(int min_bitrate_bps,
+                                               int start_bitrate_bps,
+                                               int max_bitrate_bps)
+{
+    if(congestion_controller_.get())
     {
-        if(congestion_controller_.get())
-        {
-            congestion_controller_->SetBweBitrates(min_bitrate_bps, start_bitrate_bps, max_bitrate_bps);
-        }
+        congestion_controller_->SetBweBitrates(min_bitrate_bps, start_bitrate_bps, max_bitrate_bps);
     }
+}
 
 //add by dingxf
 int ViEChannelManager::AddRemoteI420FrameCallback(const int video_channel, ECMedia_I420FrameCallBack callback)
