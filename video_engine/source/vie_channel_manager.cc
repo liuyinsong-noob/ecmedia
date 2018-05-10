@@ -28,10 +28,6 @@
 #include "../module/utility/include/process_thread.h"
 #include "../logging/rtc_event_log/rtc_event_log.h"
 
-#ifdef WEBRTC_ANDROID
-#include <android/log.h>
-#endif
-
 namespace cloopenwebrtc {
 
 ViEChannelManager::ViEChannelManager(
