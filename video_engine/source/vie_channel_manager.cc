@@ -28,6 +28,10 @@
 #include "../module/utility/include/process_thread.h"
 #include "../logging/rtc_event_log/rtc_event_log.h"
 
+#ifdef WEBRTC_ANDROID
+#include <android/log.h>
+#endif
+
 namespace cloopenwebrtc {
 
 ViEChannelManager::ViEChannelManager(
@@ -733,15 +737,17 @@ void ViEChannelManager::OnNetworkChanged(uint32_t bitrate_bps,
 
 void ViEChannelManager::UpdateNetworkState(int channel_id, bool startSend)
 {
-    if (channel_id < 0 || network_stat_.size() == 0) {
+
+    if (channel_id < 0) {
         return;
     }
 	//need to fix: multi channel
 	if (startSend)
 	{
         LOG(LS_INFO)<<"UpdateNetworkState startSend, channel:"<<channel_id;
-        network_stat_[channel_id] = startSend;
+//        network_stat_[channel_id] = startSend;
         refcount_++;
+
 		call_stats_->RegisterStatsObserver(congestion_controller_.get());
 		module_process_thread_->RegisterModule(call_stats_.get());
 		module_process_thread_->RegisterModule(congestion_controller_.get());
@@ -751,19 +757,8 @@ void ViEChannelManager::UpdateNetworkState(int channel_id, bool startSend)
 		congestion_controller_->SignalNetworkState(kNetworkUp);
 	}
 	else {
-        //stop double check
-        //first check channel map
-        std::map<int, bool>::iterator s_it = network_stat_.find(channel_id);
-        if (s_it != network_stat_.end()) {
-            LOG(LS_WARNING)<<"UpdateNetworkState failed, cannot find this channel:"<<channel_id;
-            return;
-        }
-        else
-        {
-            LOG(LS_INFO)<<"UpdateNetworkState stopSend, channel:"<<channel_id;
-            network_stat_.erase(channel_id);
-        }
-        //second check refcount_
+        //stop check
+
         if (refcount_ > 0) {
              refcount_--;
         }
@@ -774,6 +769,7 @@ void ViEChannelManager::UpdateNetworkState(int channel_id, bool startSend)
         
         if(refcount_ == 0)
         {
+
             //clean up pacer_thread
             pacer_thread_->Stop();
             pacer_thread_->DeRegisterModule(congestion_controller_->pacer());
@@ -796,17 +792,6 @@ void ViEChannelManager::UpdateGCCBitrateConfig(int min_bitrate_bps,
         congestion_controller_->SetBweBitrates(min_bitrate_bps, start_bitrate_bps, max_bitrate_bps);
     }
 }
-    
-    
-    void ViEChannelManager::UpdateGCCBitrateConfig(int min_bitrate_bps,
-                                                   int start_bitrate_bps,
-                                                   int max_bitrate_bps)
-    {
-        if(congestion_controller_.get())
-        {
-            congestion_controller_->SetBweBitrates(min_bitrate_bps, start_bitrate_bps, max_bitrate_bps);
-        }
-    }
 
 //add by dingxf
 int ViEChannelManager::AddRemoteI420FrameCallback(const int video_channel, ECMedia_I420FrameCallBack callback)
