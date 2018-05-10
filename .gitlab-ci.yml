@@ -4,7 +4,7 @@ stages:
 
 before_script: 
   - "cd build/source"
-  - "chmod 644 .ssh/private.key"
+  - "chmod 644 private.key"
 
 ## -------> build
 build_master_android:
@@ -63,7 +63,7 @@ deploy_master_ios:
 
 deploy_master_win:
     stage: deploy
-    script: "scp -o UserKnownHostsFile=.ssh/known_hosts -i .ssh/private.key ../windows_*.zip seanlee@192.168.178.218:~/.platform_libs_archives/ecmedia_layer_libs/windows/v2.3.x/"
+    script: "scp -i private.key ../windows_*.zip seanlee@192.168.178.218:~/.platform_libs_archives/ecmedia_layer_libs/windows/v2.3.x/"
     only:
       - master
     variables:
@@ -129,7 +129,7 @@ deploy_br_other_ios:
 
 deploy_br_other_win:
     stage: deploy
-    script: "scp -o UserKnownHostsFile=.ssh/known_hosts -i .ssh/private.key ../windows_*.zip seanlee@192.168.178.218:~/.platform_libs_archives/ecmedia_layer_libs/windows/v2.1.x/"
+    script: "scp -i private.key ../windows_*.zip seanlee@192.168.178.218:~/.platform_libs_archives/ecmedia_layer_libs/windows/v2.1.x/"
     only:
       - vp8_test
     tags:
