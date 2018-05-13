@@ -57,8 +57,8 @@ class BuildBase:
                 return -1
         
         # audio and video both build success
-        # self.build_config.set('build_state', self.platform + '_video_state', 'rebuild')
-        # self.build_config.set('build_state', self.platform + '_audio_state', 'rebuild')
+        self.build_config.set('build_state', self.platform + '_video_state', 'rebuild')
+        self.build_config.set('build_state', self.platform + '_audio_state', 'rebuild')
         self.build_config.write(open(self.build_config_path, "w"))
 
         version, timestamp, sha = self.getLastCommitInfo()
@@ -119,7 +119,7 @@ class BuildBase:
         os.chdir(self.BuildPath)
         targetFile = os.path.join(self.BuildPath, self.rarFileName)
         sourceFile = self.target_lib_path
-        print os.system('zip -r -m ' + targetFile + ' ' + sourceFile)
+        print os.system('zip -r ' + targetFile + ' ' + sourceFile)
 
     def getEcmediaVersion(self):
         fd = open(self.EcmediaCpp)
