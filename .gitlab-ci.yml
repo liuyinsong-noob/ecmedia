@@ -10,6 +10,7 @@ before_script:
 build_master_android:
     stage: build
     script: "python build_android.py"
+    allow_failure: true
     only:
       - master
       - vp8_test
@@ -19,6 +20,7 @@ build_master_android:
 build_master_ios:
     stage: build
     script: "python build_ios.py"
+    allow_failure: true
     artifacts:
       name: build_ios.log
       expire_in: 1 week
@@ -30,6 +32,7 @@ build_master_ios:
 
 build_master_win:
     stage: build
+    allow_failure: true
     script: "python build_win.py"
     only:
       - master
@@ -41,6 +44,7 @@ build_master_win:
 ## -----------> deploy
 deploy_master_android:
     stage: deploy
+    allow_failure: true
     script: "cp ../android_*.zip ~/.platform_libs_archives/ecmedia_layer_libs/android/v2.3.x/"
     only:
       - master
@@ -52,6 +56,7 @@ deploy_master_android:
 
 deploy_master_ios:
     stage: deploy
+    allow_failure: true
     script: "cp ../ios_*.zip ~/.platform_libs_archives/ecmedia_layer_libs/ios/v2.3.x/"
     only:
       - master
@@ -63,6 +68,7 @@ deploy_master_ios:
 
 deploy_master_win:
     stage: deploy
+    allow_failure: true
     script: "scp -i private.key ../windows_*.zip seanlee@192.168.178.218:~/.platform_libs_archives/ecmedia_layer_libs/windows/v2.3.x/"
     only:
       - master
@@ -78,6 +84,7 @@ deploy_master_win:
 ## ------> build
 build_br_dev_android:
     stage: build
+    allow_failure: true
     script: "python build_android.py"
     only:
       - develop
@@ -86,6 +93,7 @@ build_br_dev_android:
 
 build_br_dev_ios:
     stage: build
+    allow_failure: true
     script: "python build_ios.py"
     only:
       - develop
@@ -95,6 +103,7 @@ build_br_dev_ios:
 
 build_br_dev_win:
     stage: build
+    allow_failure: true
     script: "python build_win.py"
     only:
       - develop
