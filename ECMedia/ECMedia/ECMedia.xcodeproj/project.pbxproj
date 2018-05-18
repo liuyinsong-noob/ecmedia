@@ -4051,7 +4051,7 @@
 					"\"$(SRCROOT)/../../third_party/libfaac/lib/ios\"",
 					"$(PROJECT_DIR)/ECMedia/protobuf/platform/arm64/lib",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-Wno-write-strings";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4129,7 +4129,7 @@
 					"\"$(SRCROOT)/../../third_party/libfaac/lib/ios\"",
 					"$(PROJECT_DIR)/ECMedia/protobuf/platform/arm64/lib",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-Wno-write-strings";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
