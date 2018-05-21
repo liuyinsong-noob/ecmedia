@@ -1042,6 +1042,7 @@ int32_t ViEChannel::SetLocalSendSSRC(const uint32_t SSRC, const StreamType usage
 		return 0;
 	}
 
+    isSVCChannel_ = true;
 	//svc video/content
 	int ssrc_num = 2;
 	uint32_t ssrc_slave = 0;
