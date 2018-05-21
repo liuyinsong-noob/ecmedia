@@ -722,9 +722,21 @@ char *globalFilePathcapture = NULL;
          _ecImageFilter = [ECImageFilterFactory createImageFiilterWithType:cloopenwebrtc::ECType_BeautyFaceFilter];
         // view horizontal mirror. zhaoyou
         [_ecImageView setInputRotation:kECImageFlipHorizonal atIndex:0];
-        [_rawDataInput addTarget:_ecImageFilter];
-        [_ecImageFilter addTarget:_rawDataOutput];
-        [_ecImageFilter addTarget:_ecImageView];
+        if (_ecImageFilter) {
+            [_rawDataInput addTarget:_ecImageFilter];
+        }
+        else
+            NSLog(@"[CAPTURE ERROR]: setBeautyFace _ecImageFilter is nil");
+        if (_rawDataOutput) {
+            [_ecImageFilter addTarget:_rawDataOutput];
+        }
+        else
+            NSLog(@"[CAPTURE ERROR]: setBeautyFace _rawDataOutput is nil");
+        if (_ecImageView) {
+            [_ecImageFilter addTarget:_ecImageView];
+        }
+        else
+            NSLog(@"[CAPTURE ERROR]: setBeautyFace _ecImageView is nil");
     } else {
         [_rawDataInput removeAllTargets];
         [_rawDataInput addTarget:_rawDataOutput];
@@ -740,9 +752,22 @@ char *globalFilePathcapture = NULL;
     _ecImageFilter = [ECImageFilterFactory createImageFiilterWithType:filter];
     // view horizontal mirror. zhaoyou
     [_ecImageView setInputRotation:kECImageFlipHorizonal atIndex:0];
-    [_rawDataInput addTarget:_ecImageFilter];
-    [_ecImageFilter addTarget:_rawDataOutput];
-    [_ecImageFilter addTarget:_ecImageView];
+    if (_ecImageFilter) {
+        [_rawDataInput addTarget:_ecImageFilter];
+    }
+    else
+        NSLog(@"[CAPTURE ERROR]: setVideoFilter _ecImageFilter is nil");
+    if (_rawDataOutput) {
+        [_ecImageFilter addTarget:_rawDataOutput];
+    }
+    else
+        NSLog(@"[CAPTURE ERROR]: setVideoFilter _rawDataOutput is nil");
+    if (_ecImageView) {
+        [_ecImageFilter addTarget:_ecImageView];
+    }
+    else
+        NSLog(@"[CAPTURE ERROR]: setVideoFilter _ecImageView is nil");
+    
 }
 
 - (void)deviceOrientationNotify {

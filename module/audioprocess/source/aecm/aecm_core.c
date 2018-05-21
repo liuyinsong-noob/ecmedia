@@ -209,6 +209,7 @@ ResetAdaptiveChannel WebRtcAecm_ResetAdaptiveChannel;
 
 int WebRtcAecm_CreateCore(AecmCore** aecmInst) {
     AecmCore* aecm = malloc(sizeof(AecmCore));
+    memset(aecm, 0, sizeof(AecmCore));
     *aecmInst = aecm;
     if (aecm == NULL)
     {
