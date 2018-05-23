@@ -251,7 +251,12 @@ enum TextureType
     glUniform1i(textureUniformY, 0);
     glUniform1i(textureUniformU, 1);
     glUniform1i(textureUniformV, 2);
-    isRendering = YES;
+    if (UIApplicationStateActive == [UIApplication sharedApplication].applicationState) {
+        isRendering = YES;
+    }
+    else
+        isRendering = NO;
+    
     return YES;
 }
 
@@ -604,7 +609,8 @@ enum TextureType
 
 - (void)appDidEnterBackgroundFun:(NSNotification*)noti
 {
-    
+    isRendering = NO;
+    glFinish();
 }
 
 - (void)appWillEnterForeground:(NSNotification *)noti
