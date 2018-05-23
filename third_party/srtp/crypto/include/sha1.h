@@ -65,7 +65,7 @@ typedef struct {
  */
 
 void
-sha1(const uint8_t *message,  int octets_in_msg, uint32_t output[5]);
+sha1_cloopen(const uint8_t *message,  int octets_in_msg, uint32_t output[5]);
 
 /*
  * sha1_init(&ctx) initializes the SHA1 context ctx

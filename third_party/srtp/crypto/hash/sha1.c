@@ -74,7 +74,7 @@ uint32_t SHA_K2 = 0x8F1BBCDC;   /* Kt for 40 <= t <= 59 */
 uint32_t SHA_K3 = 0xCA62C1D6;   /* Kt for 60 <= t <= 79 */
 
 void
-sha1(const uint8_t *msg,  int octets_in_msg, uint32_t hash_value[5]) {
+sha1_cloopen(const uint8_t *msg,  int octets_in_msg, uint32_t hash_value[5]) {
   sha1_ctx_t ctx;
 
   sha1_init(&ctx);
