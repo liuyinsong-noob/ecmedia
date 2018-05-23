@@ -45,7 +45,7 @@ build_master_win:
 deploy_master_android:
     stage: deploy
     allow_failure: true
-    script: "cp ../android_*.zip ~/.platform_libs_archives/ecmedia_layer_libs/android/v2.3.x/"
+    script: "cp ../android_*.zip ~/.platform_build/platform_sdk/ecmedia_layer_libs/android/v2.3.x/"
     only:
       - master
     variables:
@@ -57,7 +57,7 @@ deploy_master_android:
 deploy_master_ios:
     stage: deploy
     allow_failure: true
-    script: "cp ../ios_*.zip ~/.platform_libs_archives/ecmedia_layer_libs/ios/v2.3.x/"
+    script: "cp ../ios_*.zip ~/.platform_build/platform_sdk/ecmedia_layer_libs/ios/v2.3.x/"
     only:
       - master
     variables:
@@ -69,7 +69,7 @@ deploy_master_ios:
 deploy_master_win:
     stage: deploy
     allow_failure: true
-    script: "scp -i private.key ../windows_*.zip seanlee@192.168.178.218:~/.platform_libs_archives/ecmedia_layer_libs/windows/v2.3.x/"
+    script: "scp -i private.key ../windows_*.zip seanlee@192.168.178.218:~/.platform_build/platform_sdk/ecmedia_layer_libs/windows/v2.3.x/"
     only:
       - master
     variables:
@@ -114,7 +114,7 @@ build_br_dev_win:
 ## -------> deploy
 deploy_br_other_android:
     stage: deploy
-    script: "cp ../android_*.zip ~/.platform_libs_archives/ecmedia_layer_libs/android/v2.1.x/"
+    script: "cp ../android_*.zip ~/.platform_build/platform_sdk/ecmedia_layer_libs/android/v2.1.x/"
     only:
       - vp8_test
     tags:
@@ -126,7 +126,7 @@ deploy_br_other_android:
 
 deploy_br_other_ios:
     stage: deploy
-    script: "cp ../ios_*.zip ~/.platform_libs_archives/ecmedia_layer_libs/ios/v2.1.x/"
+    script: "cp ../ios_*.zip ~/.platform_build/platform_sdk/ecmedia_layer_libs/ios/v2.1.x/"
     only:
       - vp8_test
     tags:
@@ -138,7 +138,7 @@ deploy_br_other_ios:
 
 deploy_br_other_win:
     stage: deploy
-    script: "scp -i private.key ../windows_*.zip seanlee@192.168.178.218:~/.platform_libs_archives/ecmedia_layer_libs/windows/v2.1.x/"
+    script: "scp -i private.key ../windows_*.zip seanlee@192.168.178.218:~/.platform_build/platform_sdk/ecmedia_layer_libs/windows/v2.1.x/"
     only:
       - vp8_test
     tags:
