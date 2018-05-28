@@ -12,8 +12,8 @@ build_master_android:
     script: "python build_android.py"
     allow_failure: true
     only:
-      - master
-      - vp8_test
+      - master@platform_sdk/ecmedia
+      - vp8_test@platform_sdk/ecmedia
     tags:
       - mac_osx
 
@@ -25,8 +25,8 @@ build_master_ios:
       name: build_ios.log
       expire_in: 1 week
     only:
-      - master
-      - vp8_test   
+      - master@platform_sdk/ecmedia
+      - vp8_test@platform_sdk/ecmedia   
     tags:
       - mac_osx
 
@@ -35,8 +35,8 @@ build_master_win:
     allow_failure: true
     script: "python build_win.py"
     only:
-      - master
-      - vp8_test
+      - master@platform_sdk/ecmedia
+      - vp8_test@platform_sdk/ecmedia
     tags:
       - windows
 
@@ -47,7 +47,7 @@ deploy_master_android:
     allow_failure: true
     script: "cp ../android_*.zip ~/.platform_build/platform_sdk/ecmedia_layer_libs/android/v2.3.x/"
     only:
-      - master
+      - master@platform_sdk/ecmedia
     variables:
       GIT_STRATEGY: none
     tags:
@@ -59,7 +59,7 @@ deploy_master_ios:
     allow_failure: true
     script: "cp ../ios_*.zip ~/.platform_build/platform_sdk/ecmedia_layer_libs/ios/v2.3.x/"
     only:
-      - master
+      - master@platform_sdk/ecmedia
     variables:
       GIT_STRATEGY: none
     tags:
@@ -71,7 +71,7 @@ deploy_master_win:
     allow_failure: true
     script: "scp -i private.key ../windows_*.zip seanlee@192.168.178.218:~/.platform_build/platform_sdk/ecmedia_layer_libs/windows/v2.3.x/"
     only:
-      - master
+      - master@platform_sdk/ecmedia
     variables:
       GIT_STRATEGY: none
     tags:
@@ -87,7 +87,7 @@ build_br_dev_android:
     allow_failure: true
     script: "python build_android.py"
     only:
-      - develop
+      - develop@platform_sdk/ecmedia
     tags:
       - mac_osx
 
@@ -96,7 +96,7 @@ build_br_dev_ios:
     allow_failure: true
     script: "python build_ios.py"
     only:
-      - develop
+      - develop@platform_sdk/ecmedia
     tags:
       - mac_osx
 
@@ -106,7 +106,7 @@ build_br_dev_win:
     allow_failure: true
     script: "python build_win.py"
     only:
-      - develop
+      - develop@platform_sdk/ecmedia
     tags:
       - windows
 
@@ -116,7 +116,7 @@ deploy_br_other_android:
     stage: deploy
     script: "cp ../android_*.zip ~/.platform_build/platform_sdk/ecmedia_layer_libs/android/v2.1.x/"
     only:
-      - vp8_test
+      - vp8_test@platform_sdk/ecmedia
     tags:
       - mac_osx
     when: manual
@@ -128,7 +128,7 @@ deploy_br_other_ios:
     stage: deploy
     script: "cp ../ios_*.zip ~/.platform_build/platform_sdk/ecmedia_layer_libs/ios/v2.1.x/"
     only:
-      - vp8_test
+      - vp8_test@platform_sdk/ecmedia
     tags:
       - mac_osx
     when: manual
@@ -140,7 +140,7 @@ deploy_br_other_win:
     stage: deploy
     script: "scp -i private.key ../windows_*.zip seanlee@192.168.178.218:~/.platform_build/platform_sdk/ecmedia_layer_libs/windows/v2.1.x/"
     only:
-      - vp8_test
+      - vp8_test@platform_sdk/ecmedia
     tags:
       - windows
     when: manual
