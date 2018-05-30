@@ -91,7 +91,6 @@ namespace cloopenwebrtc{
 
     private:
         ThreadWrapper* playnetworkThread_;
-        ThreadWrapper* aacDecodeHandleThread_;
         
         int						cache_time_;
         int						cache_delta_;

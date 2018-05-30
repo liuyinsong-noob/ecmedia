@@ -81,10 +81,10 @@ namespace cloopenwebrtc {
         if(running_) {
             running_ = false;
             srs_rtmp_disconnect_server(rtmp_);
+            av_packet_cacher->shutdown();
             rtmpPullingThread_->Stop();
             srs_rtmp_destroy(rtmp_);
             rtmp_ = nullptr;
-            av_packet_cacher->shutdown();
             hasStreaming_ = false;
         }
     }

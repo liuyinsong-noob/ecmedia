@@ -142,17 +142,20 @@ namespace cloopenwebrtc {
         PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
         int ret = -1;
         if(puller_runnig_ && !publiser_running_) {
-           
+            if(media_puller_) {
+                media_puller_->stop();
+            }
+            
             ret = ec_media_core_->stopPlayout();
             ec_media_core_->UnInit();
+            
             delete ec_media_core_;
             ec_media_core_ = nullptr;
             
-            if(media_puller_) {
-                media_puller_->stop();
-                delete media_puller_;
-                media_puller_ = nullptr;
-            }
+            // media puller  must delete after ecmedia core, otherwise ecmedia core will crash.
+            delete media_puller_;
+            media_puller_ = nullptr;
+            
         }
 		puller_runnig_ = false;
         PrintConsole("[ECLiveEngine INFO] %s: end with code: %d", __FUNCTION__, ret);

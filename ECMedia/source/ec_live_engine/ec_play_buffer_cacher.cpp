@@ -47,7 +47,7 @@ namespace cloopenwebrtc{
         callback_ = nullptr;
         
         running_ = false;
-        got_audio_ = true;
+        got_audio_ = false;
         is_playing_ = false;
 
         a_cache_len_ = 0;
@@ -60,9 +60,6 @@ namespace cloopenwebrtc{
     EC_AVCacher::~EC_AVCacher() {
         if(playnetworkThread_) {
             delete playnetworkThread_;
-        }
-        if(aacDecodeHandleThread_) {
-            delete aacDecodeHandleThread_;
         }
         
         if (aac_decoder_) {
@@ -283,7 +280,7 @@ namespace cloopenwebrtc{
         if(!running_) {
             return;
         }
-
+        got_audio_ = true;
         unsigned int outlen = 0;
         if (aac_decoder_ == NULL) {
             PrintConsole("[EC_AVCacher INFO] %s create new faac decode handler\n", __FUNCTION__);
