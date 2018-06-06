@@ -471,7 +471,6 @@ enum TextureType
             
         }
     } else if (UIViewContentModeScaleAspectFill == self.contentMode) {
-        
         if (_parentScreenW <= _parentScreenH) {
             float ratio = _videoW / (float)_videoH;
             h = _parentScreenH * vph;
@@ -484,16 +483,6 @@ enum TextureType
             h = w * ratio;
             x = vpx * _parentScreenW;
             y = vpy * _parentScreenH;
-        }
-        
-        if (w < _parentScreenW) {
-            double ratio2 = _parentScreenW/(double)w;
-            w = _parentScreenW;
-            h = _parentScreenH *ratio2;
-        } else {
-            double ratio2 = _parentScreenH/(double)h;
-            h = _parentScreenH;
-            w = _parentScreenW * ratio2;
         }
     } else {
         if (_videoH>0 && _videoW>0) {
