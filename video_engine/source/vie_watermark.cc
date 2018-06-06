@@ -154,16 +154,16 @@ bool cloopenwebrtc::VIEWaterMark::InitFilterDescr(WaterMark watermark)
 
 	if (0 == watermark.flag) {
 
-		if (strcmp("topleft", watermark.startposition)) {
+		if (strcmp("topleft", watermark.startposition)==0) {
 			sprintf(filter_descr_, "movie=%s[wm];[in][wm]overlay=%d:%d[out]", watermark.imagepath, watermark.x, watermark.y);
 		}
-		if (strcmp("bottomleft", watermark.startposition)) {
+		if (strcmp("bottomleft", watermark.startposition) == 0) {
 			sprintf(filter_descr_, "movie=%s[wm];[in][wm]overlay=%d:main_h-overlay_h-%d[out]", watermark.imagepath, watermark.x, watermark.y);
 		}
-		if (strcmp("bottomright", watermark.startposition)) {
+		if (strcmp("bottomright", watermark.startposition)==0) {
 			sprintf(filter_descr_, "movie=%s[wm];[in][wm]overlay=main_w-overlay_w-%d:%d[out]", watermark.imagepath, watermark.x, watermark.y);
 		}
-		if (strcmp("topright", watermark.startposition)) {
+		if (strcmp("topright", watermark.startposition)==0) {
 			sprintf(filter_descr_, "movie=%s[wm];[in][wm]overlay=main_w-overlay_w-%d:main_h-overlay_h-%d[out]", watermark.imagepath, watermark.x, watermark.y);
 		}
 		return true;
@@ -195,15 +195,12 @@ bool cloopenwebrtc::VIEWaterMark::FilterBufferSinkAndCopyYUV(unsigned char *yuvd
 	if (av_buffersink_get_frame(buffersink_ctx_, frame_out_) < 0)
 		return false;
 
-	//output Y,U,V
-	if (frame_out_->linesize[0] == frame_out_->width) {
-
+	if ((frame_out_->linesize[0] == frame_out_->width) && (frame_out_->linesize[1] == width/2) && (frame_out_->linesize[2] == width/2)) {
 		memcpy(yuvdata, frame_out_->data[0], width*height);
-		memcpy(yuvdata + width * height, frame_out_->data[1], width*height/ 4);
-		memcpy(yuvdata + width * height * 5 / 4, frame_out_->data[2], width*height / 4);
+        memcpy(yuvdata + width * height, frame_out_->data[1], width*height/ 4);
+        memcpy(yuvdata + width * height * 5 / 4, frame_out_->data[2], width*height / 4);
 	}
 	else{
-
 		CopyFilterData(frame_out_, yuvdata);
 	}
 

@@ -1296,7 +1296,7 @@ enum ECMagicSoundMode {
 //watermark
 struct WaterMark
 {
-	char fontfile[100];        //(only text)  fontfile absolute path,windows. eg. 'c\\\\:/usr/wryh.ttf'; android '/sdcard/wryh.ttf'
+	char fontfile[1024];        //(only text)  fontfile absolute path,windows. eg. 'c\\\\:/usr/wryh.ttf'; android '/sdcard/wryh.ttf'
 	char fontcolor[10];         //(only text)  font clolor RGB value eg. '00ff00'
 	int  fontsize;             //(only text)  font size  eg. 0~100 
 	char text[100];            //(only text)  text   eg. 'hello watermark'

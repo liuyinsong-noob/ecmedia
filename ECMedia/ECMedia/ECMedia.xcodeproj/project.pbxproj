@@ -19,6 +19,7 @@
 		1F591154208DB475004D2053 /* libpostproc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F591150208DB474004D2053 /* libpostproc.a */; };
 		1F591155208DB475004D2053 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F591151208DB475004D2053 /* libswscale.a */; };
 		1F591156208DB475004D2053 /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F591152208DB475004D2053 /* libavfilter.a */; };
+		1F5BD1A020C7CBB300943F52 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F5BD19B20C7CBB300943F52 /* libfreetype.a */; };
 		1F79652F1FE7B95100A254CA /* libremote_bitrate_estimator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45619A4B1F14ABE6008B2068 /* libremote_bitrate_estimator.a */; };
 		1F79654B1FE7BA8800A254CA /* libremote_bitrate_estimator_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F79654A1FE7BA8800A254CA /* libremote_bitrate_estimator_Mac.a */; };
 		1F8EE0021E5D6EB200C04C10 /* RecordLocal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EE0011E5D6EB200C04C10 /* RecordLocal.cpp */; };
@@ -1239,6 +1240,9 @@
 		1F591150208DB474004D2053 /* libpostproc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpostproc.a; path = ../../libpostproc.a; sourceTree = "<group>"; };
 		1F591151208DB475004D2053 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../../libswscale.a; sourceTree = "<group>"; };
 		1F591152208DB475004D2053 /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = ../../libavfilter.a; sourceTree = "<group>"; };
+		1F5BD19B20C7CBB300943F52 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../../libfreetype.a; sourceTree = "<group>"; };
+		1F5BD1A120C7CBFD00943F52 /* libbz2.1.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.tbd; path = usr/lib/libbz2.1.0.tbd; sourceTree = SDKROOT; };
+		1F5BD1A320C7CC3500943F52 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
 		1F8EE0011E5D6EB200C04C10 /* RecordLocal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecordLocal.cpp; sourceTree = "<group>"; };
 		1F8EE0061E5D6EBC00C04C10 /* RecordLocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordLocal.h; sourceTree = "<group>"; };
 		1F8EE0541E5D7B8B00C04C10 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ../libavformat.a; sourceTree = "<group>"; };
@@ -1538,6 +1542,7 @@
 			files = (
 				1F79652F1FE7B95100A254CA /* libremote_bitrate_estimator.a in Frameworks */,
 				1FA4AA911FC6C1E600936805 /* libECImage.a in Frameworks */,
+				1F5BD1A020C7CBB300943F52 /* libfreetype.a in Frameworks */,
 				1F9AB0E71F8CB79F0046DF9D /* libprotobuf.a in Frameworks */,
 				AD36336D1F44668100F0C20B /* libSoundTouch_Media.a in Frameworks */,
 				450D727A1F17200D00CD5776 /* librtc_event_log.a in Frameworks */,
@@ -1637,6 +1642,8 @@
 		1AFBD11E1DAE560E009B8D23 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1F5BD1A320C7CC3500943F52 /* libbz2.tbd */,
+				1F5BD1A120C7CBFD00943F52 /* libbz2.1.0.tbd */,
 				1FE07DD51FE7A0110018E762 /* libSoundTouch_Mac.a */,
 				AD2D376D1EADA050000170DB /* AudioUnit.framework */,
 				ADB127311E779225003CBF6C /* libavformat_mac.a */,
@@ -2153,6 +2160,7 @@
 		ADB519311B27DFCA0009077D /* ECMedia */ = {
 			isa = PBXGroup;
 			children = (
+				1F5BD19B20C7CBB300943F52 /* libfreetype.a */,
 				1F59114B208DB474004D2053 /* libavdevice.a */,
 				1F591152208DB475004D2053 /* libavfilter.a */,
 				1F591150208DB474004D2053 /* libpostproc.a */,

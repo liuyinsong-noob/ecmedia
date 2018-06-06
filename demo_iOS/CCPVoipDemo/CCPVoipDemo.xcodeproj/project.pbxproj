@@ -203,6 +203,7 @@
 		1AFBD0F61DAE3586009B8D23 /* CameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AFBD0F21DAE3585009B8D23 /* CameraViewController.xib */; };
 		1AFBD0F71DAE3586009B8D23 /* StartLiveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0F41DAE3585009B8D23 /* StartLiveView.m */; };
 		1F58B9B02029EC7800BE4BF9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F58B9AF2029EC7800BE4BF9 /* Images.xcassets */; };
+		1F5BD1A520C7CC6D00943F52 /* libbz2.1.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1EFD061F0C99AD0081C899 /* libbz2.1.0.tbd */; };
 		1F924059202A9CF600B28118 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1F924057202A9CF600B28118 /* InfoPlist.strings */; };
 		1F9305311F627B9E00EBDE34 /* new203_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F93052F1F627B9E00EBDE34 /* new203_on.png */; };
 		1F9305321F627B9E00EBDE34 /* new203_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F9305301F627B9E00EBDE34 /* new203_on@2x.png */; };
@@ -2113,6 +2114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F5BD1A520C7CC6D00943F52 /* libbz2.1.0.tbd in Frameworks */,
 				AD1EFD601F0CE1F70081C899 /* libccpapisdk.a in Frameworks */,
 				AD01997F1D2370E7003C2BB9 /* VideoToolbox.framework in Frameworks */,
 				ADC50F881D90C86A00A83C04 /* GLKit.framework in Frameworks */,
