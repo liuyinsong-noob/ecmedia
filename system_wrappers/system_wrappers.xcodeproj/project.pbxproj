@@ -115,6 +115,7 @@
 		55AE06A015C82F8000CE4CF5 /* trace_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AE065515C82F8000CE4CF5 /* trace_impl.h */; };
 		55AE06A115C82F8000CE4CF5 /* trace_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE065615C82F8000CE4CF5 /* trace_posix.cc */; };
 		55AE06A215C82F8000CE4CF5 /* trace_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AE065715C82F8000CE4CF5 /* trace_posix.h */; };
+		75E13BE020C91975006625A1 /* event.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1D5142087290F00749ACB /* event.cc */; };
 		AD1F0BB51D47605300C33F53 /* aligned_malloc.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE061015C82F8000CE4CF5 /* aligned_malloc.cc */; };
 		AD1F0BB71D47605300C33F53 /* condition_variable_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE061415C82F8000CE4CF5 /* condition_variable_posix.cc */; };
 		AD1F0BB91D47605300C33F53 /* cpu_features.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE061A15C82F8000CE4CF5 /* cpu_features.cc */; };
@@ -671,7 +672,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F886D0020CA50330073669C /* event.cc in Sources */,
+				75E13BE020C91975006625A1 /* event.cc in Sources */,
 				1FE07DFA1FE7A9B00018E762 /* criticalsection.cc in Sources */,
 				1FE07DC21FE791800018E762 /* optional.cc in Sources */,
 				1FE07DB11FE791550018E762 /* stats_types.cc in Sources */,

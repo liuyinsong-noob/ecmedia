@@ -101,6 +101,8 @@
 		55F5735C1C1FB2DE0014FB06 /* libamrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 559586391BABE68000125BC8 /* libamrnb.a */; };
 		55F5735D1C1FB2DE0014FB06 /* libaudioprocess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB519CC1B2806D50009077D /* libaudioprocess.a */; };
 		55F573601C1FB2DE0014FB06 /* libsystem_wrappers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB5197D1B2806460009077D /* libsystem_wrappers.a */; };
+		759C3EEF20C7BEE900BFAA6F /* aacdecode.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F45C34F20932968008EEF78 /* aacdecode.cc */; };
+		759C3EF020C7BEFE00BFAA6F /* aacencode.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F45C24B2092BBF8008EEF78 /* aacencode.cc */; };
 		AD01997D1D236579003C2BB9 /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD01997C1D23655A003C2BB9 /* libyuv.a */; };
 		AD1123011DAF1B7A006CDD38 /* librtmp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD056FBC1DAF1AB70007DB7A /* librtmp.a */; };
 		AD1123271DAF3108006CDD38 /* libopus_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1123261DAF3108006CDD38 /* libopus_Mac.a */; };
@@ -3335,8 +3337,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F5BD28B20C9380500943F52 /* aacdecode.cc in Sources */,
-				1F5BD28C20C9380500943F52 /* aacencode.cc in Sources */,
+				759C3EF020C7BEFE00BFAA6F /* aacencode.cc in Sources */,
+				759C3EEF20C7BEE900BFAA6F /* aacdecode.cc in Sources */,
 				1FE07DFB1FE7AA700018E762 /* common_types.cc in Sources */,
 				1FE07DE01FE7A6680018E762 /* srs_librtmp.cpp in Sources */,
 				1FE07DE11FE7A6680018E762 /* srs_rtmp_io.hpp in Sources */,
@@ -4100,7 +4102,6 @@
 					"\"$(SRCROOT)/../../third_party/libfaac/lib/ios\"",
 					"$(PROJECT_DIR)/ECMedia/protobuf/platform/arm64/lib",
 				);
-				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-Wno-write-strings";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4178,7 +4179,6 @@
 					"\"$(SRCROOT)/../../third_party/libfaac/lib/ios\"",
 					"$(PROJECT_DIR)/ECMedia/protobuf/platform/arm64/lib",
 				);
-				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-Wno-write-strings";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

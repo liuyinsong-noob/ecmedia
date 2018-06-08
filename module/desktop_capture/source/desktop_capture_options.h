@@ -18,8 +18,9 @@
 #endif
 
 #if defined(WEBRTC_MAC) && !defined(WEBRTC_IOS)
-#include "webrtc/modules/desktop_capture/mac/desktop_configuration_monitor.h"
-#include "cloopenwebrtc/modules/desktop_capture/mac/full_screen_chrome_window_detector.h"
+#include "../module/desktop_capture/source/mac/desktop_configuration_monitor.h"
+#include "../module/desktop_capture/source/mac/full_screen_chrome_window_detector.h"
+using namespace webrtc;
 #endif
 
 namespace cloopenwebrtc {
