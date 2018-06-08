@@ -10,18 +10,27 @@
 		05B4FEE71B40FA0200274327 /* b64.c in Sources */ = {isa = PBXBuildFile; fileRef = 05B4FEE61B40FA0200274327 /* b64.c */; };
 		05E86F3E1B3BA16D00BDBCE6 /* ECMedia.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05E86F371B3BA16D00BDBCE6 /* ECMedia.cpp */; };
 		1AFBD0B91DAE0A59009B8D23 /* faaccodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0B61DAE0A59009B8D23 /* faaccodec.cpp */; };
-		1AFBD1221DAE564A009B8D23 /* libfaad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1211DAE564A009B8D23 /* libfaad.a */; };
-		1AFBD1241DAE5839009B8D23 /* libfaac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1231DAE5839009B8D23 /* libfaac.a */; };
 		1AFBD1661DAE67D3009B8D23 /* libL16.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1611DAE6592009B8D23 /* libL16.a */; };
 		1F45C2502092BBF9008EEF78 /* aacencode.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F45C24B2092BBF8008EEF78 /* aacencode.cc */; };
 		1F45C35420932968008EEF78 /* aacdecode.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F45C34F20932968008EEF78 /* aacdecode.cc */; };
-		1F591153208DB475004D2053 /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F59114B208DB474004D2053 /* libavdevice.a */; };
-		1F591154208DB475004D2053 /* libpostproc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F591150208DB474004D2053 /* libpostproc.a */; };
-		1F591155208DB475004D2053 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F591151208DB475004D2053 /* libswscale.a */; };
-		1F591156208DB475004D2053 /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F591152208DB475004D2053 /* libavfilter.a */; };
-		1F5BD1A020C7CBB300943F52 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F5BD19B20C7CBB300943F52 /* libfreetype.a */; };
+		1F5BD28B20C9380500943F52 /* aacdecode.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F45C34F20932968008EEF78 /* aacdecode.cc */; };
+		1F5BD28C20C9380500943F52 /* aacencode.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F45C24B2092BBF8008EEF78 /* aacencode.cc */; };
+		1F5BD28F20CA31A100943F52 /* libavfilter_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F5BD28E20CA31A000943F52 /* libavfilter_mac.a */; };
+		1F5BD29120CA31F100943F52 /* libfreetype_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F5BD29020CA31F100943F52 /* libfreetype_mac.a */; };
+		1F5BD2A120CA3AC900943F52 /* libpng_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F5BD2A020CA3AC800943F52 /* libpng_mac.a */; };
 		1F79652F1FE7B95100A254CA /* libremote_bitrate_estimator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45619A4B1F14ABE6008B2068 /* libremote_bitrate_estimator.a */; };
 		1F79654B1FE7BA8800A254CA /* libremote_bitrate_estimator_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F79654A1FE7BA8800A254CA /* libremote_bitrate_estimator_Mac.a */; };
+		1F886CF720CA426D0073669C /* libharfbuzz_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886CF220CA426D0073669C /* libharfbuzz_mac.a */; };
+		1F886D3B20CA5D250073669C /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3320CA5D240073669C /* libfreetype.a */; };
+		1F886D3C20CA5D250073669C /* libpostproc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3420CA5D240073669C /* libpostproc.a */; };
+		1F886D3D20CA5D250073669C /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3520CA5D240073669C /* libavcodec.a */; };
+		1F886D3E20CA5D250073669C /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3620CA5D240073669C /* libavfilter.a */; };
+		1F886D3F20CA5D250073669C /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3720CA5D240073669C /* libavdevice.a */; };
+		1F886D4020CA5D250073669C /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3820CA5D240073669C /* libavutil.a */; };
+		1F886D4120CA5D250073669C /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3920CA5D240073669C /* libswscale.a */; };
+		1F886D4220CA5D250073669C /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3A20CA5D250073669C /* libswresample.a */; };
+		1F886D4420CA5D6B0073669C /* libx264.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D4320CA5D6A0073669C /* libx264.a */; };
+		1F886D4620CA5D860073669C /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D4520CA5D860073669C /* libvpx.a */; };
 		1F8EE0021E5D6EB200C04C10 /* RecordLocal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EE0011E5D6EB200C04C10 /* RecordLocal.cpp */; };
 		1F8EE0551E5D7B8B00C04C10 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F8EE0541E5D7B8B00C04C10 /* libavformat.a */; };
 		1F930D8F1F6A9D7A00EBDE34 /* srs_librtmp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F930D8C1F6A9D7A00EBDE34 /* srs_librtmp.cpp */; };
@@ -78,6 +87,9 @@
 		1FE07DFB1FE7AA700018E762 /* common_types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72061F1606EB00CD5776 /* common_types.cc */; };
 		1FE07E0B1FE7AFC60018E762 /* librtc_event_log Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE07E0A1FE7AFC60018E762 /* librtc_event_log Mac.a */; };
 		1FE07E211FE7B0750018E762 /* libcongestion_controller Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE07E201FE7B0750018E762 /* libcongestion_controller Mac.a */; };
+		1FE95AD520CA5F1900ABC454 /* libswscale_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE95AD420CA5F1900ABC454 /* libswscale_mac.a */; };
+		1FE95B5620CA619900ABC454 /* libfaad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE95B5520CA618100ABC454 /* libfaad.a */; };
+		1FE95B5820CA61AA00ABC454 /* libfaac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE95B5720CA61AA00ABC454 /* libfaac.a */; };
 		1FEDE2DD1FCE583C008951C8 /* libbitrate_controller_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC54A901D48845700A5C852 /* libbitrate_controller_Mac.a */; };
 		1FEDE2DE1FCE5848008951C8 /* libSoundTouch_Media_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD36336C1F44668100F0C20B /* libSoundTouch_Media_Mac.a */; };
 		450D71E51F15FB0000CD5776 /* libcongestion_controller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45619C951F14C7FF008B2068 /* libcongestion_controller.a */; };
@@ -90,7 +102,6 @@
 		55F5735D1C1FB2DE0014FB06 /* libaudioprocess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB519CC1B2806D50009077D /* libaudioprocess.a */; };
 		55F573601C1FB2DE0014FB06 /* libsystem_wrappers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB5197D1B2806460009077D /* libsystem_wrappers.a */; };
 		AD01997D1D236579003C2BB9 /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD01997C1D23655A003C2BB9 /* libyuv.a */; };
-		AD0798991D001E3200D48138 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0798981D001E3200D48138 /* libswresample.a */; };
 		AD1123011DAF1B7A006CDD38 /* librtmp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD056FBC1DAF1AB70007DB7A /* librtmp.a */; };
 		AD1123271DAF3108006CDD38 /* libopus_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1123261DAF3108006CDD38 /* libopus_Mac.a */; };
 		AD2DE0FC1D6BEA4C00FE3814 /* VoeObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD2DE0FB1D6BEA4C00FE3814 /* VoeObserver.cpp */; };
@@ -162,10 +173,6 @@
 		ADF92D881CB7B9830026DF61 /* libpacing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADF92D871CB7B9730026DF61 /* libpacing.a */; };
 		ADF92D891CB7B9830026DF61 /* libwebrtc_opus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADF92D7A1CB7B9260026DF61 /* libwebrtc_opus.a */; };
 		ADF92D921CB7BB230026DF61 /* libiSAC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADF92D911CB7BB1A0026DF61 /* libiSAC.a */; };
-		ADF92D9A1CB7BBDE0026DF61 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADF92D931CB7BBDD0026DF61 /* libavcodec.a */; };
-		ADF92D9B1CB7BBDE0026DF61 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADF92D941CB7BBDD0026DF61 /* libavutil.a */; };
-		ADF92D9D1CB7BBDE0026DF61 /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADF92D961CB7BBDE0026DF61 /* libvpx.a */; };
-		ADF92D9E1CB7BBDE0026DF61 /* libx264.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADF92D971CB7BBDE0026DF61 /* libx264.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1230,19 +1237,29 @@
 		05E86F371B3BA16D00BDBCE6 /* ECMedia.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ECMedia.cpp; sourceTree = "<group>"; };
 		1AFBD0B61DAE0A59009B8D23 /* faaccodec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = faaccodec.cpp; sourceTree = "<group>"; };
 		1AFBD11F1DAE560F009B8D23 /* libfaad.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaad.a; path = ../../third_party/libfaad/lib/ios/libfaad.a; sourceTree = "<group>"; };
-		1AFBD1211DAE564A009B8D23 /* libfaad.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaad.a; path = ../../../third_party/libfaad/lib/ios/libfaad.a; sourceTree = "<group>"; };
-		1AFBD1231DAE5839009B8D23 /* libfaac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaac.a; path = ../../../third_party/libfaac/lib/ios/libfaac.a; sourceTree = "<group>"; };
 		1AFBD15C1DAE6592009B8D23 /* L16.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = L16.xcodeproj; path = ../../../module/audio_coding/L16.xcodeproj; sourceTree = "<group>"; };
 		1F099E2D1ED57CC200421B08 /* SoundTouch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoundTouch.xcodeproj; path = ../../../third_party/SoundTouch/SoundTouch.xcodeproj; sourceTree = "<group>"; };
 		1F45C24B2092BBF8008EEF78 /* aacencode.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aacencode.cc; path = ec_live_engine/aacencode.cc; sourceTree = "<group>"; };
 		1F45C34F20932968008EEF78 /* aacdecode.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aacdecode.cc; path = ec_live_engine/aacdecode.cc; sourceTree = "<group>"; };
-		1F59114B208DB474004D2053 /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = ../../libavdevice.a; sourceTree = "<group>"; };
-		1F591150208DB474004D2053 /* libpostproc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpostproc.a; path = ../../libpostproc.a; sourceTree = "<group>"; };
-		1F591151208DB475004D2053 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../../libswscale.a; sourceTree = "<group>"; };
-		1F591152208DB475004D2053 /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = ../../libavfilter.a; sourceTree = "<group>"; };
-		1F5BD19B20C7CBB300943F52 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../../libfreetype.a; sourceTree = "<group>"; };
 		1F5BD1A120C7CBFD00943F52 /* libbz2.1.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.tbd; path = usr/lib/libbz2.1.0.tbd; sourceTree = SDKROOT; };
 		1F5BD1A320C7CC3500943F52 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
+		1F5BD28E20CA31A000943F52 /* libavfilter_mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter_mac.a; path = ../libavfilter_mac.a; sourceTree = "<group>"; };
+		1F5BD29020CA31F100943F52 /* libfreetype_mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype_mac.a; path = ../libfreetype_mac.a; sourceTree = "<group>"; };
+		1F5BD2A020CA3AC800943F52 /* libpng_mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng_mac.a; path = ../libpng_mac.a; sourceTree = "<group>"; };
+		1F886CF220CA426D0073669C /* libharfbuzz_mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libharfbuzz_mac.a; path = ../libharfbuzz_mac.a; sourceTree = "<group>"; };
+		1F886CFB20CA42EF0073669C /* libbz2.1.0.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.5.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/lib/libbz2.1.0.5.tbd; sourceTree = DEVELOPER_DIR; };
+		1F886D3320CA5D240073669C /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../libfreetype.a; sourceTree = "<group>"; };
+		1F886D3420CA5D240073669C /* libpostproc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpostproc.a; path = ../libpostproc.a; sourceTree = "<group>"; };
+		1F886D3520CA5D240073669C /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = ../libavcodec.a; sourceTree = "<group>"; };
+		1F886D3620CA5D240073669C /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = ../libavfilter.a; sourceTree = "<group>"; };
+		1F886D3720CA5D240073669C /* libavdevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavdevice.a; path = ../libavdevice.a; sourceTree = "<group>"; };
+		1F886D3820CA5D240073669C /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = ../libavutil.a; sourceTree = "<group>"; };
+		1F886D3920CA5D240073669C /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../libswscale.a; sourceTree = "<group>"; };
+		1F886D3A20CA5D250073669C /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = ../libswresample.a; sourceTree = "<group>"; };
+		1F886D4320CA5D6A0073669C /* libx264.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libx264.a; path = ../libx264.a; sourceTree = "<group>"; };
+		1F886D4520CA5D860073669C /* libvpx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvpx.a; path = ../libvpx.a; sourceTree = "<group>"; };
+		1F886D4720CA5E8C0073669C /* libfaac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaac.a; path = ../libfaac.a; sourceTree = "<group>"; };
+		1F886D4820CA5E8C0073669C /* libfaad.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaad.a; path = ../libfaad.a; sourceTree = "<group>"; };
 		1F8EE0011E5D6EB200C04C10 /* RecordLocal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecordLocal.cpp; sourceTree = "<group>"; };
 		1F8EE0061E5D6EBC00C04C10 /* RecordLocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordLocal.h; sourceTree = "<group>"; };
 		1F8EE0541E5D7B8B00C04C10 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ../libavformat.a; sourceTree = "<group>"; };
@@ -1303,6 +1320,9 @@
 		1FBB440D1E729473007DBD1D /* MediaStatisticsData.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaStatisticsData.pb.h; path = ../source/MediaStatisticsData.pb.h; sourceTree = "<group>"; };
 		1FDB3DBF1E837CD30018FA08 /* srtp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = srtp.xcodeproj; path = ../../../third_party/srtp/srtp.xcodeproj; sourceTree = "<group>"; };
 		1FE07DD51FE7A0110018E762 /* libSoundTouch_Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSoundTouch_Mac.a; path = "../../../../Library/Developer/Xcode/DerivedData/ECMacDemo_OC-fgxckyjqwlylmuckelwyhrfnqaqo/Build/Products/Debug/libSoundTouch_Mac.a"; sourceTree = "<group>"; };
+		1FE95AD420CA5F1900ABC454 /* libswscale_mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale_mac.a; path = ../libswscale_mac.a; sourceTree = "<group>"; };
+		1FE95B5520CA618100ABC454 /* libfaad.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfaad.a; sourceTree = "<group>"; };
+		1FE95B5720CA61AA00ABC454 /* libfaac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfaac.a; path = ../../third_party/libfaac/lib/ios/libfaac.a; sourceTree = "<group>"; };
 		450D72061F1606EB00CD5776 /* common_types.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = common_types.cc; path = ../../module/common_types.cc; sourceTree = "<group>"; };
 		450D72661F171DC100CD5776 /* rtc_event_log.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = rtc_event_log.xcodeproj; path = ../../../logging/rtc_event_log/rtc_event_log/rtc_event_log.xcodeproj; sourceTree = "<group>"; };
 		4526C9611F14AA0D005949BB /* remote_bitrate_estimator.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = remote_bitrate_estimator.xcodeproj; path = ../../../module/remote_bitrate_estimator/remote_bitrate_estimator/remote_bitrate_estimator.xcodeproj; sourceTree = "<group>"; };
@@ -1434,7 +1454,6 @@
 		55F3F8C11B8B135C00A19ED6 /* xfm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xfm.h; sourceTree = "<group>"; };
 		AD0199771D23655A003C2BB9 /* yuv.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = yuv.xcodeproj; path = "../../../third_party/libyuv-ios/yuv.xcodeproj"; sourceTree = "<group>"; };
 		AD056FB71DAF1AB70007DB7A /* rtmp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = rtmp.xcodeproj; path = "../../../third_party/librtmp/rtmpdump-2.3/librtmp/rtmp.xcodeproj"; sourceTree = "<group>"; };
-		AD0798981D001E3200D48138 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswresample.a; path = ../../libswresample.a; sourceTree = "<group>"; };
 		AD1123261DAF3108006CDD38 /* libopus_Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libopus_Mac.a; path = ../../third_party/opus/opus/build/Debug/libopus_Mac.a; sourceTree = "<group>"; };
 		AD2D376D1EADA050000170DB /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		AD2DE0FB1D6BEA4C00FE3814 /* VoeObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoeObserver.cpp; sourceTree = "<group>"; };
@@ -1480,10 +1499,6 @@
 		ADF92D5D1CB7B9260026DF61 /* webrtc_opus.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_opus.xcodeproj; path = ../../../module/audio_coding/codecs/opus/webrtc_opus/webrtc_opus.xcodeproj; sourceTree = "<group>"; };
 		ADF92D821CB7B9720026DF61 /* pacing.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = pacing.xcodeproj; path = ../../../module/pacing/pacing/pacing.xcodeproj; sourceTree = "<group>"; };
 		ADF92D8C1CB7BB1A0026DF61 /* iSAC.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iSAC.xcodeproj; path = ../../../module/audio_coding/main/source/codecs/isac/iSAC/iSAC.xcodeproj; sourceTree = "<group>"; };
-		ADF92D931CB7BBDD0026DF61 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = ../../libavcodec.a; sourceTree = "<group>"; };
-		ADF92D941CB7BBDD0026DF61 /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = ../../libavutil.a; sourceTree = "<group>"; };
-		ADF92D961CB7BBDE0026DF61 /* libvpx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvpx.a; path = ../../libvpx.a; sourceTree = "<group>"; };
-		ADF92D971CB7BBDE0026DF61 /* libx264.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libx264.a; path = ../../libx264.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1491,6 +1506,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FE95AD520CA5F1900ABC454 /* libswscale_mac.a in Frameworks */,
+				1F886CF720CA426D0073669C /* libharfbuzz_mac.a in Frameworks */,
+				1F5BD2A120CA3AC900943F52 /* libpng_mac.a in Frameworks */,
+				1F5BD29120CA31F100943F52 /* libfreetype_mac.a in Frameworks */,
+				1F5BD28F20CA31A100943F52 /* libavfilter_mac.a in Frameworks */,
 				1F79654B1FE7BA8800A254CA /* libremote_bitrate_estimator_Mac.a in Frameworks */,
 				1FE07E211FE7B0750018E762 /* libcongestion_controller Mac.a in Frameworks */,
 				1FE07E0B1FE7AFC60018E762 /* librtc_event_log Mac.a in Frameworks */,
@@ -1540,34 +1560,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FE95B5820CA61AA00ABC454 /* libfaac.a in Frameworks */,
+				1FE95B5620CA619900ABC454 /* libfaad.a in Frameworks */,
+				1F886D4620CA5D860073669C /* libvpx.a in Frameworks */,
+				1F886D4420CA5D6B0073669C /* libx264.a in Frameworks */,
+				1F886D3B20CA5D250073669C /* libfreetype.a in Frameworks */,
+				1F886D3C20CA5D250073669C /* libpostproc.a in Frameworks */,
+				1F886D3D20CA5D250073669C /* libavcodec.a in Frameworks */,
+				1F886D3E20CA5D250073669C /* libavfilter.a in Frameworks */,
+				1F886D3F20CA5D250073669C /* libavdevice.a in Frameworks */,
+				1F886D4020CA5D250073669C /* libavutil.a in Frameworks */,
+				1F886D4120CA5D250073669C /* libswscale.a in Frameworks */,
+				1F886D4220CA5D250073669C /* libswresample.a in Frameworks */,
+				1F8EE0551E5D7B8B00C04C10 /* libavformat.a in Frameworks */,
 				1F79652F1FE7B95100A254CA /* libremote_bitrate_estimator.a in Frameworks */,
 				1FA4AA911FC6C1E600936805 /* libECImage.a in Frameworks */,
-				1F5BD1A020C7CBB300943F52 /* libfreetype.a in Frameworks */,
 				1F9AB0E71F8CB79F0046DF9D /* libprotobuf.a in Frameworks */,
 				AD36336D1F44668100F0C20B /* libSoundTouch_Media.a in Frameworks */,
 				450D727A1F17200D00CD5776 /* librtc_event_log.a in Frameworks */,
 				450D71E51F15FB0000CD5776 /* libcongestion_controller.a in Frameworks */,
 				4547E2CC1F15F2520014FB7E /* libcommon_video.a in Frameworks */,
 				1FDB3E4C1E839BC30018FA08 /* libsrtp.a in Frameworks */,
-				1F8EE0551E5D7B8B00C04C10 /* libavformat.a in Frameworks */,
 				AD1123011DAF1B7A006CDD38 /* librtmp.a in Frameworks */,
 				1AFBD1661DAE67D3009B8D23 /* libL16.a in Frameworks */,
 				ADC50F521D8FC69700A83C04 /* libdesktop_capture.a in Frameworks */,
-				1AFBD1221DAE564A009B8D23 /* libfaad.a in Frameworks */,
-				1F591154208DB475004D2053 /* libpostproc.a in Frameworks */,
 				AD01997D1D236579003C2BB9 /* libyuv.a in Frameworks */,
-				1F591155208DB475004D2053 /* libswscale.a in Frameworks */,
 				ADF92D921CB7BB230026DF61 /* libiSAC.a in Frameworks */,
-				ADF92D9E1CB7BBDE0026DF61 /* libx264.a in Frameworks */,
 				ADF92D881CB7B9830026DF61 /* libpacing.a in Frameworks */,
 				ADF92D891CB7B9830026DF61 /* libwebrtc_opus.a in Frameworks */,
 				AD4E8C561CB664F80068C4E9 /* libcommon_audio.a in Frameworks */,
-				1F591153208DB475004D2053 /* libavdevice.a in Frameworks */,
-				ADF92D9D1CB7BBDE0026DF61 /* libvpx.a in Frameworks */,
 				55F5735C1C1FB2DE0014FB06 /* libamrnb.a in Frameworks */,
 				55F5735D1C1FB2DE0014FB06 /* libaudioprocess.a in Frameworks */,
 				55F573601C1FB2DE0014FB06 /* libsystem_wrappers.a in Frameworks */,
-				1F591156208DB475004D2053 /* libavfilter.a in Frameworks */,
 				ADB51A471B2807B40009077D /* libaudio_coding_module.a in Frameworks */,
 				ADB51A481B2807B40009077D /* libaudio_conference_mixer.a in Frameworks */,
 				ADB51A491B2807B40009077D /* libaudio_device.a in Frameworks */,
@@ -1577,13 +1601,9 @@
 				ADB51A4E1B2807B40009077D /* libG729.a in Frameworks */,
 				ADB51A501B2807B40009077D /* liblibjpeg_turbo.a in Frameworks */,
 				ADB51A511B2807B40009077D /* libmedia_file.a in Frameworks */,
-				1AFBD1241DAE5839009B8D23 /* libfaac.a in Frameworks */,
 				ADB51A521B2807B40009077D /* libNetEq.a in Frameworks */,
 				ADB51A541B2807B40009077D /* librtp_rtcp.a in Frameworks */,
-				ADF92D9B1CB7BBDE0026DF61 /* libavutil.a in Frameworks */,
-				ADF92D9A1CB7BBDE0026DF61 /* libavcodec.a in Frameworks */,
 				ADB51A581B2807B40009077D /* libudp_transport.a in Frameworks */,
-				AD0798991D001E3200D48138 /* libswresample.a in Frameworks */,
 				ADB51A591B2807B40009077D /* libvideo_capture.a in Frameworks */,
 				ADB51A5A1B2807B40009077D /* libvideo_coding.a in Frameworks */,
 				ADB51A5B1B2807B40009077D /* libvideo_engine.a in Frameworks */,
@@ -1642,6 +1662,26 @@
 		1AFBD11E1DAE560E009B8D23 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1FE95B5720CA61AA00ABC454 /* libfaac.a */,
+				1FE95B5420CA618100ABC454 /* ios */,
+				1FE95AD420CA5F1900ABC454 /* libswscale_mac.a */,
+				1F886D4720CA5E8C0073669C /* libfaac.a */,
+				1F886D4820CA5E8C0073669C /* libfaad.a */,
+				1F886D4520CA5D860073669C /* libvpx.a */,
+				1F886D4320CA5D6A0073669C /* libx264.a */,
+				1F886D3520CA5D240073669C /* libavcodec.a */,
+				1F886D3720CA5D240073669C /* libavdevice.a */,
+				1F886D3620CA5D240073669C /* libavfilter.a */,
+				1F886D3820CA5D240073669C /* libavutil.a */,
+				1F886D3320CA5D240073669C /* libfreetype.a */,
+				1F886D3420CA5D240073669C /* libpostproc.a */,
+				1F886D3A20CA5D250073669C /* libswresample.a */,
+				1F886D3920CA5D240073669C /* libswscale.a */,
+				1F886CFB20CA42EF0073669C /* libbz2.1.0.5.tbd */,
+				1F886CF220CA426D0073669C /* libharfbuzz_mac.a */,
+				1F5BD2A020CA3AC800943F52 /* libpng_mac.a */,
+				1F5BD29020CA31F100943F52 /* libfreetype_mac.a */,
+				1F5BD28E20CA31A000943F52 /* libavfilter_mac.a */,
 				1F5BD1A320C7CC3500943F52 /* libbz2.tbd */,
 				1F5BD1A120C7CBFD00943F52 /* libbz2.1.0.tbd */,
 				1FE07DD51FE7A0110018E762 /* libSoundTouch_Mac.a */,
@@ -1789,6 +1829,15 @@
 				1FDB3DC91E837CD40018FA08 /* libsrtp.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		1FE95B5420CA618100ABC454 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				1FE95B5520CA618100ABC454 /* libfaad.a */,
+			);
+			name = ios;
+			path = ../../third_party/libfaad/lib/ios;
 			sourceTree = "<group>";
 		};
 		450D72671F171DC100CD5776 /* Products */ = {
@@ -2160,18 +2209,6 @@
 		ADB519311B27DFCA0009077D /* ECMedia */ = {
 			isa = PBXGroup;
 			children = (
-				1F5BD19B20C7CBB300943F52 /* libfreetype.a */,
-				1F59114B208DB474004D2053 /* libavdevice.a */,
-				1F591152208DB475004D2053 /* libavfilter.a */,
-				1F591150208DB474004D2053 /* libpostproc.a */,
-				1F591151208DB475004D2053 /* libswscale.a */,
-				1AFBD1211DAE564A009B8D23 /* libfaad.a */,
-				1AFBD1231DAE5839009B8D23 /* libfaac.a */,
-				ADF92D931CB7BBDD0026DF61 /* libavcodec.a */,
-				AD0798981D001E3200D48138 /* libswresample.a */,
-				ADF92D941CB7BBDD0026DF61 /* libavutil.a */,
-				ADF92D961CB7BBDE0026DF61 /* libvpx.a */,
-				ADF92D971CB7BBDE0026DF61 /* libx264.a */,
 				05E86F291B3BA16C00BDBCE6 /* include */,
 				05E86F321B3BA16D00BDBCE6 /* interface */,
 				05E86F341B3BA16D00BDBCE6 /* source */,
@@ -3298,6 +3335,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F5BD28B20C9380500943F52 /* aacdecode.cc in Sources */,
+				1F5BD28C20C9380500943F52 /* aacencode.cc in Sources */,
 				1FE07DFB1FE7AA700018E762 /* common_types.cc in Sources */,
 				1FE07DE01FE7A6680018E762 /* srs_librtmp.cpp in Sources */,
 				1FE07DE11FE7A6680018E762 /* srs_rtmp_io.hpp in Sources */,
@@ -3803,6 +3842,7 @@
 					../../base,
 					"../source/ec_live_engine/srs-librtmp",
 					../../module/audio_coding/main/source,
+					../../module/audio_device/main/include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -3887,6 +3927,7 @@
 					../../base,
 					"../source/ec_live_engine/srs-librtmp",
 					../../module/audio_coding/main/source,
+					../../module/audio_device/main/include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (

@@ -34,7 +34,7 @@
 #include <windows.h>
 #endif
 
-#if defined(WEBRTC_IOS) || defined(WEBRTC_MAC)
+#if defined(WEBRTC_IOS) || defined(WEBRTC_MAC) || defined(WEBRTC_POSIX)
 using namespace cloopenlibyuv;
 #else
 using namespace libyuv;

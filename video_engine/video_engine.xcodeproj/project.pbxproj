@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1F59114A208DB32A004D2053 /* vie_watermark.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F591149208DB329004D2053 /* vie_watermark.cc */; };
 		1F591321208F39A6004D2053 /* vie_file_capturer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F591320208F39A5004D2053 /* vie_file_capturer.cc */; };
+		1F5BD28D20C9383800943F52 /* vie_watermark.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F591149208DB329004D2053 /* vie_watermark.cc */; };
+		1F886D0220CA534D0073669C /* vie_file_capturer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F591320208F39A5004D2053 /* vie_file_capturer.cc */; };
 		1FDC7C041E7A6335002B9F7C /* video_send_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FDC7C031E7A6335002B9F7C /* video_send_stream.cc */; };
 		1FE07DFC1FE7AABE0018E762 /* encoder_rtcp_feedback.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4547E2CD1F15F2F60014FB7E /* encoder_rtcp_feedback.cc */; };
 		4547E2CF1F15F2F60014FB7E /* encoder_rtcp_feedback.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4547E2CD1F15F2F60014FB7E /* encoder_rtcp_feedback.cc */; };
@@ -549,6 +551,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F886D0220CA534D0073669C /* vie_file_capturer.cc in Sources */,
+				1F5BD28D20C9383800943F52 /* vie_watermark.cc in Sources */,
 				1FE07DFC1FE7AABE0018E762 /* encoder_rtcp_feedback.cc in Sources */,
 				ADE7803F1EA73BFA00D0E04E /* vie_desktop_capture.cpp in Sources */,
 				ADE7803E1EA7321B00D0E04E /* video_send_stream.cc in Sources */,
@@ -893,6 +897,10 @@
 					../voice_engine/main/source,
 					../ECMedia/source,
 					"$(SRCROOT)/source",
+					../third_party/ffmpeg/,
+					../common_video/include,
+					"../third_party/libyuv-ios/include",
+					../common_video/source/libyuv/include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
@@ -1001,6 +1009,10 @@
 					../voice_engine/main/source,
 					../ECMedia/source,
 					"$(SRCROOT)/source",
+					../third_party/ffmpeg/,
+					../common_video/include,
+					"../third_party/libyuv-ios/include",
+					../common_video/source/libyuv/include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;

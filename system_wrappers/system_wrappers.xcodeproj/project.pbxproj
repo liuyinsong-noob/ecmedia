@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1F1EDA451F95E5F80018BD4C /* criticalsection.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F1EDA431F95E5F80018BD4C /* criticalsection.cc */; };
 		1F1EDA461F95E5F80018BD4C /* criticalsection.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F1EDA441F95E5F80018BD4C /* criticalsection.h */; };
+		1F886D0020CA50330073669C /* event.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1D5142087290F00749ACB /* event.cc */; };
 		1FD1D5152087291000749ACB /* event.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1D5142087290F00749ACB /* event.cc */; };
 		1FE07DB11FE791550018E762 /* stats_types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9F2201F345293005D11C5 /* stats_types.cc */; };
 		1FE07DB21FE791550018E762 /* event_tracer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72931F17455200CD5776 /* event_tracer.cc */; };
@@ -670,6 +671,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F886D0020CA50330073669C /* event.cc in Sources */,
 				1FE07DFA1FE7A9B00018E762 /* criticalsection.cc in Sources */,
 				1FE07DC21FE791800018E762 /* optional.cc in Sources */,
 				1FE07DB11FE791550018E762 /* stats_types.cc in Sources */,
