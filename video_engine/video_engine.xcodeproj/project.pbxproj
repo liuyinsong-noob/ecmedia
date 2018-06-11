@@ -971,6 +971,7 @@
 					WEBRTC_POSIX,
 					ENABLE_GCC,
 					VIDEO_ENABLED,
+					WEBRTC_IOS,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
