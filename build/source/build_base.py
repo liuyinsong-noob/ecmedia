@@ -201,6 +201,10 @@ class BuildBase:
             insertContent = insertContent + '\n'
             index = index + 1
         for commitLog in commitLogs:
+            if '[version]' in commitLog:
+                lastCheckInVersion = commitLog.split(':')[1].strip(' ')
+                if lastCheckInVersion == self.getLastCommitInfo():
+                    break
             if '[bugfix]' in commitLog or '[feature]' in commitLog:
                 insertContent = insertContent + str(index) + '. ' + commitLog.encode('gbk')
                 insertContent = insertContent + '\n'
