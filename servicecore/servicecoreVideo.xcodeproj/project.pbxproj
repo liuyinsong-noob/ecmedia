@@ -70,7 +70,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1F5AAB2620DB7BA60081129B /* PBXContainerItemProxy */ = {
+		1FB140AC20D291770028C05D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1FB814391F4584CC00CCBB91 /* ECMedia.xcodeproj */;
 			proxyType = 1;
@@ -413,7 +413,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				1F5AAB2720DB7BA60081129B /* PBXTargetDependency */,
+				1FB140AD20D291770028C05D /* PBXTargetDependency */,
 				AD0199B11D2397CF003C2BB9 /* PBXTargetDependency */,
 				AD0199B31D2397CF003C2BB9 /* PBXTargetDependency */,
 			);
@@ -534,10 +534,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		1F5AAB2720DB7BA60081129B /* PBXTargetDependency */ = {
+		1FB140AD20D291770028C05D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ECMedia;
-			targetProxy = 1F5AAB2620DB7BA60081129B /* PBXContainerItemProxy */;
+			targetProxy = 1FB140AC20D291770028C05D /* PBXContainerItemProxy */;
 		};
 		AD0199B11D2397CF003C2BB9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

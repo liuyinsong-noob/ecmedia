@@ -13,8 +13,7 @@
 		1AFBD1661DAE67D3009B8D23 /* libL16.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1611DAE6592009B8D23 /* libL16.a */; };
 		1F45C2502092BBF9008EEF78 /* aacencode.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F45C24B2092BBF8008EEF78 /* aacencode.cc */; };
 		1F45C35420932968008EEF78 /* aacdecode.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F45C34F20932968008EEF78 /* aacdecode.cc */; };
-		1F5BD28B20C9380500943F52 /* aacdecode.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F45C34F20932968008EEF78 /* aacdecode.cc */; };
-		1F5BD28C20C9380500943F52 /* aacencode.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F45C24B2092BBF8008EEF78 /* aacencode.cc */; };
+		1F4E14A820E0BAF1006E756B /* IJKMediaFramework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F4E14A720E0BAF1006E756B /* IJKMediaFramework */; };
 		1F5BD28F20CA31A100943F52 /* libavfilter_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F5BD28E20CA31A000943F52 /* libavfilter_mac.a */; };
 		1F5BD29120CA31F100943F52 /* libfreetype_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F5BD29020CA31F100943F52 /* libfreetype_mac.a */; };
 		1F5BD2A120CA3AC900943F52 /* libpng_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F5BD2A020CA3AC800943F52 /* libpng_mac.a */; };
@@ -1243,6 +1242,9 @@
 		1F099E2D1ED57CC200421B08 /* SoundTouch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoundTouch.xcodeproj; path = ../../../third_party/SoundTouch/SoundTouch.xcodeproj; sourceTree = "<group>"; };
 		1F45C24B2092BBF8008EEF78 /* aacencode.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aacencode.cc; path = ec_live_engine/aacencode.cc; sourceTree = "<group>"; };
 		1F45C34F20932968008EEF78 /* aacdecode.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aacdecode.cc; path = ec_live_engine/aacdecode.cc; sourceTree = "<group>"; };
+		1F4E145120E0A91F006E756B /* IJKMediaFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IJKMediaFramework.framework; path = ../IJKMediaFramework.framework; sourceTree = "<group>"; };
+		1F4E14A320E0ABA0006E756B /* IJKMediaFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = IJKMediaFramework.framework; path = ../IJKMediaFramework.framework/IJKMediaFramework.framework; sourceTree = "<group>"; };
+		1F4E14A720E0BAF1006E756B /* IJKMediaFramework */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = IJKMediaFramework; path = ../IJKMediaFramework.framework/IJKMediaFramework; sourceTree = "<group>"; };
 		1F5BD1A120C7CBFD00943F52 /* libbz2.1.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.tbd; path = usr/lib/libbz2.1.0.tbd; sourceTree = SDKROOT; };
 		1F5BD1A320C7CC3500943F52 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
 		1F5BD28E20CA31A000943F52 /* libavfilter_mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter_mac.a; path = ../libavfilter_mac.a; sourceTree = "<group>"; };
@@ -1562,6 +1564,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F4E14A820E0BAF1006E756B /* IJKMediaFramework in Frameworks */,
 				1FE95B5820CA61AA00ABC454 /* libfaac.a in Frameworks */,
 				1FE95B5620CA619900ABC454 /* libfaad.a in Frameworks */,
 				1F886D4620CA5D860073669C /* libvpx.a in Frameworks */,
@@ -1664,6 +1667,9 @@
 		1AFBD11E1DAE560E009B8D23 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1F4E14A720E0BAF1006E756B /* IJKMediaFramework */,
+				1F4E145120E0A91F006E756B /* IJKMediaFramework.framework */,
+				1F4E14A320E0ABA0006E756B /* IJKMediaFramework.framework */,
 				1FE95B5720CA61AA00ABC454 /* libfaac.a */,
 				1FE95B5420CA618100ABC454 /* ios */,
 				1FE95AD420CA5F1900ABC454 /* libswscale_mac.a */,

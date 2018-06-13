@@ -416,6 +416,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0596B93E1AAB247A0047B4CA /* wire_format_lite.cc in Sources */,
 				0596B9261AAB247A0047B4CA /* common.cc in Sources */,
 				0596B9161AAB247A0047B4CA /* zero_copy_stream.cc in Sources */,
 				0596B9021AAB247A0047B4CA /* descriptor.pb.cc in Sources */,
@@ -423,7 +424,6 @@
 				0596B9141AAB247A0047B4CA /* tokenizer.cc in Sources */,
 				0596B93B1AAB247A0047B4CA /* unknown_field_set.cc in Sources */,
 				0596B9061AAB247A0047B4CA /* dynamic_message.cc in Sources */,
-				0596B93E1AAB247A0047B4CA /* wire_format_lite.cc in Sources */,
 				0596B9391AAB247A0047B4CA /* text_format.cc in Sources */,
 				0596B90D1AAB247A0047B4CA /* generated_message_util.cc in Sources */,
 				0596B92E1AAB247A0047B4CA /* strutil.cc in Sources */,
