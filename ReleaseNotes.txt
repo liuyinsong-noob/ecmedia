@@ -1,9 +1,44 @@
-Version v2.3.0.2 1521170689 f22bc99f22616bb34dc5a9696b097c2ef295ea0f
+Version v2.3.1.15
+1. 接口不变
+2. [feature]: Compile mac sdk and support mac desktop screen share
+3. [feature]: ecmedia support mac os, building success
+4. [bugfix]: ios remote view support UIViewContentModeScaleAspectFill mode
+5. [feature]: ios ffmpeg libs support watermark(text&png image)
+6. [bugfix]: stop opengl when app in background
+7. [bugfix]: resolve symbol conflict
+8. [bugfix] ios can't build i386 libs
+9. [bugfix]: android pacer stop when stop capture
+10. [bugfix]:ECMedia_ring_start can't play sound
+11. [bugfix]:ECMedia_ring_start can't play sound
+12. [feature]: add reset remote view api
+13. [feature]: modify windows project file
+14. [feature]: modify video static picture preview framerate to 30
+15. [feature]: modify video static picture preview framerate to 30
+16. [bugfix]: android &ios live video play fine, but android cpu still high, need refine
+17. [bugfix]: add lossfraction/losspackets/jitter stats items to receiver side.
+18. [feature]: modify the error for compiling develop x64 library
+19. [feature]: add reset remote view api
+20. [feature]: modify windows project file
+21. [feature]: modify video static picture preview framerate to 30
+22. [feature]: modify video static picture preview framerate to 30
+23. [bugfix]: android &ios live video play fine, but android cpu still high, need refine
+24. [bugfix]: add lossfraction/losspackets/jitter stats items to receiver side.
+25. [feature]: modify the error for compiling develop x64 library
+26. [feature]: ios suppore setting static picture for video preview
+27. [bugfix]: fix android live video preview view flicker
+28. [feature]: android support setting static picture as video preview
+29. [feature]: replace ios ffmpeg libs for supporting video watermark
+30. [bugfix]: live video can't match best width and heigth in some android moblie
+31. [bugfix]: ios11 can not play some h264 video, because of 'VTDecompressionSessionInvalidate' not avilable in ios 11
+32. [feature]: add watermark
+33. [bugfix]: ios audio only libs link error
+
+Version v2.3.0.2
 1. 接口不变
 2. bug fix: video stats collector crash because of value type not correct
 3. bug fix: win platform build error
 
-Version 2.3.0.0 1519612517 b35f5207509cd0d1587cb4b6f453cf74ecc3a952
+Version 2.3.0.0
 1. 接口不变
 2. feature: ios hard decode and encode both can be setup
 3. bug fix: ios project deployment target chang to 8.0
@@ -17,10 +52,10 @@ Version 2.3.0.0 1519612517 b35f5207509cd0d1587cb4b6f453cf74ecc3a952
 11. bug fix: ios build error, android project support ndk r16
 12. bug fix: ios become active opengl not draw
 
-Version 2.2.0.7.1711211528 1511424415 4c5f84625623e77b1b0ae9e49a30047db70b4dc1
+Version 2.2.0.7.1711211528
 1. 接口不变
 
-Version 2.2.0.6.1711111816 1510395450 4214b34a1e865ee01217925ec62a2551eb1e77c6
+Version 2.2.0.6.1711111816
 1. 接口不变
 2. bug fix: pc play stream crash
 3. remove some log, and bug fix: ios release version crash
@@ -31,10 +66,10 @@ Version 2.2.0.6.1711111816 1510395450 4214b34a1e865ee01217925ec62a2551eb1e77c6
 8. bug fix: ios视频预览view黑边问题
 9. feature:add global audio in device interface
 
-Version 2.1.4.3.09081118 1505730251 a925099fac83d7fb337df4756e2022874e42e468
+Version 2.1.4.3.09081118
 1. 接口不变
 
-Version 2.1.4.1.09041624 1504682739 971b6461f0e91be7bb2d881c6cc613a358d8c67d
+Version 2.1.4.1.09041624
 1. 接口不变
 2. bug fix: fix interop with cisco hardware mcu issue
 3. feature: enlarge audio from microphone
@@ -56,21 +91,21 @@ Version 2.1.4.1.09041624 1504682739 971b6461f0e91be7bb2d881c6cc613a358d8c67d
 19. bug fix:ios rotate
 20. bug fix : get rid of playout warning when not inserting earphone on pc
 
-Version 2.1.2.25 1497352672 5a74190e2101fedf5e495d61ef9361f4dc1529b7
+Version 2.1.2.25
 1、接口改变
 2、增加win上检测到音频输入输出设备时的回调函数int ECMedia_set_soundcard_on_cb(onSoundCardOn soundcard_on_cb);
 3、typedef int(*onSoundCardOn)(int deviceType);//deviceType=0表示有音频的输出设备；deviceType=1表示有音频的采集设备
 4、调用ECMedia_audio_stop_playout和ECMedia_audio_start_record后停止检测功能
 
-Version 2.1.2.24 1497336070 570618c93fd7a9f03ef24c953a4b636e6bb5ea09
+Version 2.1.2.24
 1、接口改变
 2、增加变音功能的api
 
-Version 2.1.2.23 1495075977 3738fb41ed5d958e725f97f57b6f90a1daa08eb8
+Version 2.1.2.23
 1. 接口不变
 2. test
 
-Version 2.1.2.23 1495075590 c06b5f961d95eb0fde7dfb252719674d2b2b1052
+Version 2.1.2.23
 1. 接口不变
 2. refactor ci
 3. fix run error
@@ -86,7 +121,7 @@ Version 2.1.2.23 1495075590 c06b5f961d95eb0fde7dfb252719674d2b2b1052
 13. add ci windows file
 14. remove vpx x64 lib reference
 
-Version 2.1.2.23 1494832096 ced04833fb3fe4b6cf38a9085c162d978a200a1b
+Version 2.1.2.23
 1. 接口未变
 2. 修复桌面共享可能照成的内存泄露
 3. 修复几个写错的ECmedia接口

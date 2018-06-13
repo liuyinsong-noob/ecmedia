@@ -7,7 +7,7 @@ from build_base import BuildBase
 from build_base import *
     
 class BuildWindows(BuildBase):
-    def __init__(self, buildType):
+    def __init__(self, version):
         platform = 'windows'
         projectPath = os.path.join(os.getcwd(), '..', '..')
         self.CompilePath= os.path.join(projectPath, 'demo_Win')
@@ -15,7 +15,7 @@ class BuildWindows(BuildBase):
         self.Libx64FilesPath = os.path.join(projectPath, 'demo_Win', 'build', 'x64', 'Release')
         self.LibAudioFilesFilesPath = os.path.join(projectPath, 'demo_Win', 'build', 'Win32', 'audioRelease')
         self.Libx64AudioFilesFilesPath = os.path.join(projectPath, 'demo_Win', 'build', 'x64', 'audioRelease')
-        BuildBase.__init__(self, buildType, platform, projectPath)
+        BuildBase.__init__(self, version, platform, projectPath)
         
     def build(self):
         if self.build_config.get('build_setting', self.platform + '_libs_type') == 'audio_only' :
@@ -112,8 +112,8 @@ class BuildWindows(BuildBase):
 
      
 if __name__=='__main__' :
-    buildType = 'win_target_libs'
-    if len(sys.argv) != 1:
-        buildType = sys.argv[1]
-    buildWindows = BuildWindows(buildType)
+    newVersion = ''
+    if len(sys.argv) == 2:
+        newVersion = sys.argv[1]
+    buildWindows = BuildWindows(newVersion)
     buildWindows.run()

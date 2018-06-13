@@ -7,13 +7,13 @@ from build_base import BuildBase
 from build_base import *
     
 class BuildIos(BuildBase):
-    def __init__(self, buildType):
+    def __init__(self, version):
         platform = 'ios'
         projectPath = os.path.join(os.getcwd(), '..', '..')
         self.CompilePath = os.path.join(projectPath, 'ECMedia', 'ECMedia')
         self.LibReleaseFilesPath = os.path.join(projectPath, 'ECMedia', 'ECMedia', 'build', 'Release-iphoneos')
         self.LibSimulatorFilesPath = os.path.join(projectPath, 'ECMedia', 'ECMedia', 'build', 'Release-iphonesimulator')
-        BuildBase.__init__(self, buildType, platform, projectPath)
+        BuildBase.__init__(self, version, platform, projectPath)
         
     def build(self):
         if self.build_config.get('build_setting', self.platform + '_libs_type') == 'audio_only' :
@@ -72,7 +72,9 @@ class BuildIos(BuildBase):
         print os.system('zip -r -m ' + targetFile + ' ' + sourceFile)
         
 if __name__=='__main__' :
-    buildType = 'ios_target_libs'
+    newVersion = ''
+    if len(sys.argv) == 2:
+        newVersion = sys.argv[1]
 
-    buildIos = BuildIos(buildType)
+    buildIos = BuildIos(newVersion)
     buildIos.run()

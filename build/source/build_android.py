@@ -8,13 +8,13 @@ from build_base import BuildBase
 from build_base import *
     
 class BuildAndroid(BuildBase):
-    def __init__(self, buildType):
+    def __init__(self, version):
         platform = 'android'
         projectPath = os.path.join(os.getcwd(), '..', '..')
         self.CompilePath = os.path.join(projectPath, 'jni')
         self.Lib32FilesPath = os.path.join(projectPath, 'libs', 'armeabi')
         self.Lib64FilesPath = os.path.join(projectPath, 'libs', 'arm64-v8a')
-        BuildBase.__init__(self, buildType, platform, projectPath)
+        BuildBase.__init__(self, version, platform, projectPath)
         
     def build(self):
         if self.build_config.get('build_setting', self.platform + '_libs_type') == 'audio_only' :
@@ -92,7 +92,9 @@ class BuildAndroid(BuildBase):
         print os.system('cp -r ' + self.TypesDefsHeader + ' ' + self.RarIncludePath)
     
 if __name__=='__main__' :
-    buildType = 'android_target_libs'
+    newVersion = ''
+    if len(sys.argv) == 2:
+        newVersion = sys.argv[1]
 
-    buildAndroid = BuildAndroid(buildType)
+    buildAndroid = BuildAndroid(newVersion)
     buildAndroid.run()
