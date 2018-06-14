@@ -24,7 +24,9 @@ class BuildAndroid(BuildBase):
             print os.system('cp -r ' + "BuildECMedia.mk " + "Android.mk")
             if self.build_config.get('build_state', self.platform + '_video_state') == 'rebuild' :
                 print os.system('ndk-build clean')
-            return os.system('ndk-build -j 4')
+            ret = os.system('ndk-build -j 4')
+            print os.system('cp -r ../obj/local/armeabi ../build')
+            return ret
         else:
             print'%s are not exist!'%self.CompilePath
             return -1

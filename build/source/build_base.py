@@ -123,6 +123,8 @@ class BuildBase:
         targetFile = os.path.join(self.BuildPath, self.rarFileName)
         sourceFile = self.target_lib_path
         print os.system('zip -r ' + targetFile + ' ' + sourceFile)
+        if platform == 'android'
+            print os.system('zip -r obj_android_' + self.getEcmediaVersion() + '.zip' + ' armeabi')
 
     def getEcmediaVersion(self):
         fd = open(self.EcmediaCpp)

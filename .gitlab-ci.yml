@@ -46,6 +46,7 @@ deploy_master_android:
     stage: deploy
     allow_failure: true
     script: "cp ../android_*.zip ~/.platform_build/platform_sdk/ecmedia_layer_libs/android/v2.3.x/"
+    script: "cp ../obj_*.zip  ~/.platform_build/platform_sdk/ecmedia_layer_libs/android_obj"
     only:
       - master@platform_sdk/ecmedia
     variables:
