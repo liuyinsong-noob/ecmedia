@@ -1,3 +1,38 @@
+Version v2.3.1.16
+1. 接口不变
+2. [feature]: Compile mac sdk and support mac desktop screen share
+3. [feature]: ecmedia support mac os, building success
+4. [bugfix]: ios remote view support UIViewContentModeScaleAspectFill mode
+5. [feature]: ios ffmpeg libs support watermark(text&png image)
+6. [bugfix]: stop opengl when app in background
+7. [bugfix]: resolve symbol conflict
+8. [bugfix] ios can't build i386 libs
+9. [bugfix]: android pacer stop when stop capture
+10. [bugfix]:ECMedia_ring_start can't play sound
+11. [bugfix]:ECMedia_ring_start can't play sound
+12. [feature]: add reset remote view api
+13. [feature]: modify windows project file
+14. [feature]: modify video static picture preview framerate to 30
+15. [feature]: modify video static picture preview framerate to 30
+16. [bugfix]: android &ios live video play fine, but android cpu still high, need refine
+17. [bugfix]: add lossfraction/losspackets/jitter stats items to receiver side.
+18. [feature]: modify the error for compiling develop x64 library
+19. [feature]: add reset remote view api
+20. [feature]: modify windows project file
+21. [feature]: modify video static picture preview framerate to 30
+22. [feature]: modify video static picture preview framerate to 30
+23. [bugfix]: android &ios live video play fine, but android cpu still high, need refine
+24. [bugfix]: add lossfraction/losspackets/jitter stats items to receiver side.
+25. [feature]: modify the error for compiling develop x64 library
+26. [feature]: ios suppore setting static picture for video preview
+27. [bugfix]: fix android live video preview view flicker
+28. [feature]: android support setting static picture as video preview
+29. [feature]: replace ios ffmpeg libs for supporting video watermark
+30. [bugfix]: live video can't match best width and heigth in some android moblie
+31. [bugfix]: ios11 can not play some h264 video, because of 'VTDecompressionSessionInvalidate' not avilable in ios 11
+32. [feature]: add watermark
+33. [bugfix]: ios audio only libs link error
+
 Version v2.3.1.15
 1. 接口不变
 2. [feature]: Compile mac sdk and support mac desktop screen share

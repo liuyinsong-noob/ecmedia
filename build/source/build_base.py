@@ -123,7 +123,7 @@ class BuildBase:
         targetFile = os.path.join(self.BuildPath, self.rarFileName)
         sourceFile = self.target_lib_path
         print os.system('zip -r ' + targetFile + ' ' + sourceFile)
-        if platform == 'android'
+        if self.platform == 'android' :
             print os.system('zip -r obj_android_' + self.getEcmediaVersion() + '.zip' + ' armeabi')
 
     def getEcmediaVersion(self):
@@ -204,7 +204,7 @@ class BuildBase:
             index = index + 1
         for commitLog in commitLogs:
             if '[version]' in commitLog:
-                lastCheckInVersion = commitLog.split(':')[1].strip(' ')
+                lastCheckInVersion = commitLog.split(' ')[1].strip(' ')
                 if lastCheckInVersion == self.getLastCommitInfo():
                     break
             if '[bugfix]' in commitLog or '[feature]' in commitLog:
