@@ -182,6 +182,62 @@ cloopenwebrtc::LogMessage(nullptr, 0, sev, tag).stream()
 LOG_ERR_EX(sev, err)
     
 // TODO(?): Add an "assert" wrapper that logs in the same manner.
+
+
+//optimize printing log infomation
+#define LOG_VALNAME_DECL(type,name,suffix) \
+type name##suffix
+
+#define LOG_VALNAME_INCREASEMENT(name,suffix) \
+name##suffix ++
+
+#define LOG_VALNAME_SET(name,suffix,val) \
+name##suffix = val
+
+#define LOG_VALNAME_SET_VALNAME(name,suffix,valName) \
+name##suffix = valName##suffix
+
+#define LOG_VALNAME_OPT_VALNAME(name,suffix,opt,valName) \
+name##suffix = name##suffix opt valName##suffix
+
+#define IF_VALNAME_CHECK(name,suffix,opt,cv) \
+if (name##suffix opt cv)
+
+#define LOG_BY_COUNT(sev,suffix,times)\
+	LOG_VALNAME_DECL(static int64_t,count,suffix);\
+	LOG_VALNAME_DECL(bool,writelog,suffix);\
+	LOG_VALNAME_SET(writelog,suffix,false);\
+	LOG_VALNAME_INCREASEMENT(count,suffix);\
+	IF_VALNAME_CHECK(count,suffix,>,times) \
+	{\
+		LOG_VALNAME_SET(count,suffix,0);\
+		LOG_VALNAME_SET(writelog,suffix,true);\
+	}\
+	IF_VALNAME_CHECK(writelog,suffix,==,true)\
+		LOG(sev) << __FUNCTION__ << ": "
+
+#define LOG_BY_TIME(sev,suffix,timelong)\
+	LOG_VALNAME_DECL(static int64_t,lastSent,suffix);\
+	LOG_VALNAME_DECL(bool,writelog,suffix);\
+	LOG_VALNAME_SET(writelog,suffix,false);\
+	LOG_VALNAME_DECL(int64_t,diff,suffix);\
+	LOG_VALNAME_SET(diff,suffix,Clock::GetRealTimeClock()->TimeInMicroseconds());\
+	LOG_VALNAME_OPT_VALNAME(diff,suffix,-,lastSent);\
+	IF_VALNAME_CHECK(diff,suffix,>,timelong*1000)\
+	{\
+		LOG_VALNAME_SET(lastSent,suffix,Clock::GetRealTimeClock()->TimeInMicroseconds());\
+		LOG_VALNAME_SET(writelog,suffix,true);\
+	}\
+	IF_VALNAME_CHECK(writelog,suffix,==,true)\
+		LOG(sev) << __FUNCTION__ << ": "
+
+//timelong is how long (unit is in milliseconds)
+#define LOG_TIME(sev,timelong)\
+	LOG_BY_TIME(sev,__LINE__,timelong)
+
+//times is the times of looping
+#define LOG_COUNT(sev,times)\
+	LOG_BY_COUNT(sev,__LINE__,times)
     
 #endif  // LOG
 
