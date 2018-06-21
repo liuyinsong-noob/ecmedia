@@ -128,6 +128,7 @@ RTPSender::RTPSender(
       retransmission_rate_limiter_(retransmission_rate_limiter),
       overhead_observer_(overhead_observer),
 	  _keepAliveIsActive(false),
+      _lastSent(0),
       send_side_bwe_with_overhead_(
 		  cloopenwebrtc::field_trial::IsEnabled("WebRTC-SendSideBwe-WithOverhead")) {
   // This random initialization is not intended to be cryptographic strong.
@@ -918,15 +919,18 @@ RTPSender::DisableRTPKeepalive()
 bool
 RTPSender::TimeToSendRTPKeepalive() const
 {
+   
     cloopenwebrtc::CritScope cs(&statistics_crit_);
     
     bool timeToSend(false);
     
     WebRtc_Word64 dT = clock_->TimeInMicroseconds() - _lastSent;
-    
-    if (dT > _keepAliveDeltaTimeSend)
+    //sent 3 times alive packet continuously at the beginning
+    static int num_send_times = 0;
+    if (num_send_times < 3 || dT > _keepAliveDeltaTimeSend)
     {
         timeToSend = true;
+        num_send_times++;
     }
     return timeToSend;
 }
