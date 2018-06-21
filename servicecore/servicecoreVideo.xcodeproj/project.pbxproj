@@ -70,6 +70,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1F5AAB2620DB7BA60081129B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FB814391F4584CC00CCBB91 /* ECMedia.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = ADB5192E1B27DFCA0009077D;
+			remoteInfo = ECMedia;
+		};
 		1FB814621F4584CF00CCBB91 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1FB814391F4584CC00CCBB91 /* ECMedia.xcodeproj */;
@@ -406,6 +413,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				1F5AAB2720DB7BA60081129B /* PBXTargetDependency */,
 				AD0199B11D2397CF003C2BB9 /* PBXTargetDependency */,
 				AD0199B31D2397CF003C2BB9 /* PBXTargetDependency */,
 			);
@@ -526,6 +534,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1F5AAB2720DB7BA60081129B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ECMedia;
+			targetProxy = 1F5AAB2620DB7BA60081129B /* PBXContainerItemProxy */;
+		};
 		AD0199B11D2397CF003C2BB9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = exosip;
