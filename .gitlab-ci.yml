@@ -115,9 +115,10 @@ build_br_dev_win:
 ## -------> deploy
 deploy_br_other_android:
     stage: deploy
-    script: "cp ../android_*.zip ~/.platform_build/platform_sdk/ecmedia_layer_libs/android/v2.1.x/"
+    script: "cp ../android_*.zip ~/.platform_build/platform_sdk/ecmedia_layer_libs/android/v2.3.x/"
     only:
       - vp8_test@platform_sdk/ecmedia
+      - develop@platform_sdk/ecmedia
     tags:
       - mac_osx
     when: manual
@@ -127,9 +128,10 @@ deploy_br_other_android:
 
 deploy_br_other_ios:
     stage: deploy
-    script: "cp ../ios_*.zip ~/.platform_build/platform_sdk/ecmedia_layer_libs/ios/v2.1.x/"
+    script: "cp ../ios_*.zip ~/.platform_build/platform_sdk/ecmedia_layer_libs/ios/v2.3.x/"
     only:
       - vp8_test@platform_sdk/ecmedia
+      - develop@platform_sdk/ecmedia
     tags:
       - mac_osx
     when: manual
@@ -139,9 +141,10 @@ deploy_br_other_ios:
 
 deploy_br_other_win:
     stage: deploy
-    script: "scp -i private.key ../windows_*.zip seanlee@192.168.178.218:~/.platform_build/platform_sdk/ecmedia_layer_libs/windows/v2.1.x/"
+    script: "scp -i private.key ../windows_*.zip seanlee@192.168.178.218:~/.platform_build/platform_sdk/ecmedia_layer_libs/windows/v2.3.x/"
     only:
       - vp8_test@platform_sdk/ecmedia
+      - develop@platform_sdk/ecmedia
     tags:
       - windows
     when: manual
