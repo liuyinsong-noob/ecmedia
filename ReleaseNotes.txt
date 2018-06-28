@@ -1,3 +1,30 @@
+Version v2.3.1.18
+1. 接口不变
+2. [bugfix]: android not send rtp keepalive packet, can't see pc desktop share
+3. [feature]: optimize logging
+4. [feature]: Compile mac sdk and support mac desktop screen share
+5. [feature]: ecmedia support mac os, building success
+6. [bugfix]: ios remote view support UIViewContentModeScaleAspectFill mode
+7. [feature]: ios ffmpeg libs support watermark(text&png image)
+8. [bugfix]: stop opengl when app in background
+9. [bugfix]: resolve symbol conflict
+10. [bugfix] ios can't build i386 libs
+11. [bugfix]: android pacer stop when stop capture
+12. [bugfix]:ECMedia_ring_start can't play sound
+13. [bugfix]:ECMedia_ring_start can't play sound
+14. [feature]: add reset remote view api
+15. [feature]: modify windows project file
+16. [feature]: modify video static picture preview framerate to 30
+17. [feature]: modify video static picture preview framerate to 30
+18. [bugfix]: android &ios live video play fine, but android cpu still high, need refine
+19. [bugfix]: add lossfraction/losspackets/jitter stats items to receiver side.
+20. [feature]: modify the error for compiling develop x64 library
+21. [feature]: add reset remote view api
+22. [feature]: modify windows project file
+23. [feature]: modify video static picture preview framerate to 30
+24. [feature]: modify video static picture preview framerate to 30
+25. [bugfix]: android &ios live video play fine, but android cpu still high, need refine
+
 Version v2.3.1.16
 1. 接口不变
 2. [feature]: Compile mac sdk and support mac desktop screen share
