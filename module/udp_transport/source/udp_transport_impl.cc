@@ -2395,12 +2395,12 @@ int UdpTransportImpl::SendRtp(int channelId, const uint8_t* packet, size_t lengt
 
 int UdpTransportImpl::SendRtcp(int channelId, const uint8_t* packet, size_t length)
 {
+    CriticalSectionScoped cs(_crit);
     if (_onePort) {
         return SendRtp(9999, packet, length, 0);   //9999 and seq 0 stands for rtcp
     }
     else
     {
-        CriticalSectionScoped cs(_crit);
         if(_destRtpIP[0] == 0)
         {
             return -1;

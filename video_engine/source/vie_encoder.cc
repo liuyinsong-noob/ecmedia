@@ -303,6 +303,7 @@ bool ViEEncoder::Init() {
 }
 
 ViEEncoder::~ViEEncoder() {
+  LOG(LS_INFO) << "deleting ViEEncoder, instance: "<< this ;
   packet_router_->RemoveRtpModule(default_rtp_rtcp_.get());
   while (default_simulcast_rtp_rtcp_.size() > 0)
   {
@@ -310,7 +311,8 @@ ViEEncoder::~ViEEncoder() {
 	  RtpRtcp* rtp_rtcp = *default_simulcast_rtp_rtcp_.begin();
 	  default_simulcast_rtp_rtcp_.pop_front();
 	  module_process_thread_.DeRegisterModule(rtp_rtcp);
-	  delete rtp_rtcp;
+      delete rtp_rtcp;
+      LOG(LS_INFO) << "deleted rtp_rtcp obj of ViEEncoder, instance: "<< this;
   }
   UpdateHistograms();
   if (bitrate_controller_) {
@@ -322,9 +324,11 @@ ViEEncoder::~ViEEncoder() {
   module_process_thread_.DeRegisterModule(default_rtp_rtcp_.get());
   module_process_thread_pacer_.DeRegisterModule(paced_sender_);
   VideoCodingModule::Destroy(&vcm_);
+  LOG(LS_INFO) << "Destroy vcm OK of ViEEncoder, instance: "<< this;
   VideoProcessingModule::Destroy(&vpm_);
-
+  LOG(LS_INFO) << "Destroy vpm_ OK of ViEEncoder, instance: "<< this;
   delete qm_callback_;
+  LOG(LS_INFO) << "outing of ViEEncoder, instance: "<< this;
 }
 
 void ViEEncoder::UpdateHistograms() {
