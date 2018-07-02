@@ -1885,8 +1885,11 @@ int NetEqImpl::ExtractPackets(int required_samples, PacketList* packet_list) {
     header = NULL;
     if (!packet) {
       //LOG_FERR1(LS_ERROR, GetNextPacket, discard_count) <<
-          "Should always be able to extract a packet here";
-      assert(false);  // Should always be able to extract a packet here.
+//          "Should always be able to extract a packet here";
+        LOG(LS_ERROR) << "GetDecoder seq:" << packet->header.sequenceNumber <<" ts:" << packet->header.timestamp <<
+        "Should always be able to extract a packet here.";
+        continue; // continue or not, this is a question, this is a corner case which rarely happen, but error happens. Need test  //sean 20180702
+//      assert(false);  // Should always be able to extract a packet here.
       return -1;
     }
     stats_.PacketsDiscarded(discard_count);
@@ -1917,9 +1920,12 @@ int NetEqImpl::ExtractPackets(int required_samples, PacketList* packet_list) {
                                              packet->payload_length);
       }
     } else {
-      //LOG_FERR1(LS_WARNING, GetDecoder, packet->header.payloadType) <<
+//      LOG_FERR1(LS_WARNING, GetDecoder, packet->header.payloadType) <<
+        LOG(LS_ERROR) << "GetDecoder seq:" << packet->header.sequenceNumber <<" ts:" << packet->header.timestamp <<
           "Could not find a decoder for a packet about to be extracted.";
-      assert(false);
+        
+        continue; // continue or not, this is a question, this is a corner case which rarely happen, but error happens. Need test  //sean 20180702
+//      assert(false);
     }
     if (packet_duration <= 0) {
       // Decoder did not return a packet duration. Assume that the packet
