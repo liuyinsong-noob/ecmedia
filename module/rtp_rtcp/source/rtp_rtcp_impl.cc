@@ -319,7 +319,7 @@ int8_t ModuleRtpRtcpImpl::SendPayloadType() const {
 bool
 ModuleRtpRtcpImpl::RTPKeepalive() const
 {
-    LOG(LS_INFO) << "RTPKeepalive()";
+    LOG_COUNT_CONTENT(LS_INFO,10) << "RTPKeepalive()";
     
     return rtp_sender_.RTPKeepalive();
 }
@@ -329,7 +329,7 @@ ModuleRtpRtcpImpl::RTPKeepaliveStatus(bool* enable,
                                       WebRtc_Word8* unknownPayloadType,
                                       WebRtc_UWord16* deltaTransmitTimeMS) const
 {
-    LOG(LS_INFO) << "RTPKeepaliveStatus()";
+	LOG_COUNT_CONTENT(LS_INFO, 10) << "RTPKeepaliveStatus()";
     return rtp_sender_.RTPKeepaliveStatus(enable, unknownPayloadType, deltaTransmitTimeMS);
 }
 

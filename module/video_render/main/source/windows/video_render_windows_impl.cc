@@ -13,6 +13,8 @@
 
 #include "../system_wrappers/include/critical_section_wrapper.h"
 #include "../system_wrappers/include/trace.h"
+#include "../system_wrappers/include/logging.h"
+
 #ifdef DIRECT3D9_RENDERING
 #include "video_render_direct3d9.h"
 #endif
@@ -34,6 +36,7 @@ VideoRenderWindowsImpl::VideoRenderWindowsImpl(const int32_t id,
 	if (!IsSupportDirect3D9())
 	{
 		_renderMethod = kVideoRenderWinGDI;
+		LOG_F(LS_WARNING) << "Not support 3D9";
 	}
 }
 

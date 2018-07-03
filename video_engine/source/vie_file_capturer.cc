@@ -193,8 +193,6 @@ bool ViEFileCapturer::ViECaptureProcess() {
 				video_frame_->set_timestamp(clock_->TimeInMilliseconds());
 				video_frame_->set_render_time_ms(clock_->TimeInMilliseconds());
 
-				//LOG_F(LS_INFO) << "ViEFileCapturer::ViECaptureProcess() interval times.";
-
 				lastSent_ = clock_->TimeInMicroseconds();
 				DeliverI420Frame(video_frame_);
 			}
@@ -357,6 +355,7 @@ int ViEFileCapturer::ConvertBMPToVideoFrame(const char* fileUTF8, I420VideoFrame
 			delete[] pBuffer;
 		}
 	}
+	LOG_F(LS_INFO) << ret;
 	return ret;
 }
 #endif
@@ -422,6 +421,8 @@ int ViEFileCapturer::ConvertJPEGToVideoFrame(const char* fileUTF8, I420VideoFram
 
 	delete[] image_buffer._buffer;
 	image_buffer._buffer = NULL;
+
+	LOG_F(LS_INFO) << fileUTF8;
 	return ret;
 }
 
