@@ -20,6 +20,8 @@
 namespace cloopenwebrtc {
 namespace {
 
+	static const std::string SPLIT_TOKEN = "\t";
+
 TraceLevel WebRtcSeverity(LoggingSeverity sev) {
   switch (sev) {
     // TODO(ajm): SENSITIVE doesn't have a corresponding webrtc level.
@@ -57,6 +59,24 @@ bool LogMessage::Loggable(LoggingSeverity sev) {
 LogMessage::~LogMessage() {
   const std::string& str = print_stream_.str();
   Trace::Add(WebRtcSeverity(severity_), kTraceUndefined, 0, "%s", str.c_str());
+}
+
+LogMessageEx::LogMessageEx(const char* file, int line, LoggingSeverity sev, std::string& strLast, bool bForeWriteLog)
+	: severity_(sev)
+	, bForeWriteLog_(bForeWriteLog)
+	, strLast_(strLast) {
+	print_stream_ << "(" << FilenameFromPath(file) << ":" << line << "): " << SPLIT_TOKEN.c_str();
+}
+
+LogMessageEx::~LogMessageEx() {
+	const std::string& str = print_stream_.str();
+	std::string::size_type pos = str.find_first_of(SPLIT_TOKEN);
+	std::string strsub = str.substr(pos + SPLIT_TOKEN.length(), str.length() - pos - SPLIT_TOKEN.length());
+	if (bForeWriteLog_ || strsub.compare(strLast_))
+	{
+		Trace::Add(WebRtcSeverity(severity_), kTraceUndefined, 0, "%s", str.c_str());
+	}
+	strLast_ = strsub;
 }
 
 }  // namespace cloopenwebrtc

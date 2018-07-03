@@ -41,6 +41,7 @@
 
 #include <sstream>
 #include <errno.h>
+#include "clock.h"
 
 namespace cloopenwebrtc {
 
@@ -74,6 +75,24 @@ class LogMessage {
 
   // The severity level of this message
   LoggingSeverity severity_;
+};
+
+class LogMessageEx {
+public:
+	LogMessageEx(const char* file, int line, LoggingSeverity sev, std::string& strLast, bool bForeWriteLog = false);
+	~LogMessageEx();
+
+	std::ostream& stream() { return print_stream_; }
+
+private:
+	// The ostream that buffers the formatted message before output
+	std::ostringstream print_stream_;
+
+	// The severity level of this message
+	LoggingSeverity severity_;
+
+	std::string& strLast_;
+	bool bForeWriteLog_;
 };
 
 //////////////////////////////////////////////////////////////////////
@@ -186,58 +205,136 @@ LOG_ERR_EX(sev, err)
 
 //optimize printing log infomation
 #define LOG_VALNAME_DECL(type,name,suffix) \
-type name##suffix
+	type name##suffix
+
+#define LOG_VALNAME_DECL_DEFAULT(type,name,suffix,init) \
+	type name##suffix = init
 
 #define LOG_VALNAME_INCREASEMENT(name,suffix) \
-name##suffix ++
+	name##suffix ++
 
 #define LOG_VALNAME_SET(name,suffix,val) \
-name##suffix = val
+	name##suffix = val
 
 #define LOG_VALNAME_SET_VALNAME(name,suffix,valName) \
-name##suffix = valName##suffix
+	name##suffix = valName##suffix
 
 #define LOG_VALNAME_OPT_VALNAME(name,suffix,opt,valName) \
-name##suffix = name##suffix opt valName##suffix
+	name##suffix = name##suffix opt valName##suffix
 
 #define IF_VALNAME_CHECK(name,suffix,opt,cv) \
-if (name##suffix opt cv)
+	if (name##suffix opt cv)
 
 #define LOG_BY_COUNT(sev,suffix,times)\
-	LOG_VALNAME_DECL(static int64_t,count,suffix);\
-	LOG_VALNAME_DECL(bool,writelog,suffix);\
-	LOG_VALNAME_SET(writelog,suffix,false);\
+	LOG_VALNAME_DECL_DEFAULT(static int64_t,count,suffix,times);\
+	LOG_VALNAME_DECL_DEFAULT(bool,writelog,suffix,false);\
 	LOG_VALNAME_INCREASEMENT(count,suffix);\
-	IF_VALNAME_CHECK(count,suffix,>,times) \
+	IF_VALNAME_CHECK(count,suffix,>=,times) \
 	{\
 		LOG_VALNAME_SET(count,suffix,0);\
 		LOG_VALNAME_SET(writelog,suffix,true);\
 	}\
 	IF_VALNAME_CHECK(writelog,suffix,==,true)\
-		LOG(sev) << __FUNCTION__ << ": "
+		LOG(sev)
+
+
+#define LOG_SUB_COMMON_DIFF_MSG(sev,last,forewrite) \
+	LOG_SEVERITY_PRECONDITION(sev) \
+	LogMessageEx(__FILE__, __LINE__, sev, last, forewrite).stream()
+
+#define LOG_SUB_COMMON_DIFF(sev,name,suffix,writelog) \
+	LOG_SUB_COMMON_DIFF_MSG(sev,name##suffix,writelog##suffix)
 
 #define LOG_BY_TIME(sev,suffix,timelong)\
-	LOG_VALNAME_DECL(static int64_t,lastSent,suffix);\
-	LOG_VALNAME_DECL(bool,writelog,suffix);\
-	LOG_VALNAME_SET(writelog,suffix,false);\
+	LOG_VALNAME_DECL(static int64_t,lastTime,suffix);\
+	LOG_VALNAME_DECL_DEFAULT(bool,writelog,suffix,false);\
 	LOG_VALNAME_DECL(int64_t,diff,suffix);\
 	LOG_VALNAME_SET(diff,suffix,Clock::GetRealTimeClock()->TimeInMicroseconds());\
-	LOG_VALNAME_OPT_VALNAME(diff,suffix,-,lastSent);\
-	IF_VALNAME_CHECK(diff,suffix,>,timelong*1000)\
+	LOG_VALNAME_OPT_VALNAME(diff,suffix,-,lastTime);\
+	IF_VALNAME_CHECK(diff,suffix,>=,timelong*1000)\
 	{\
-		LOG_VALNAME_SET(lastSent,suffix,Clock::GetRealTimeClock()->TimeInMicroseconds());\
+		LOG_VALNAME_SET(lastTime,suffix,Clock::GetRealTimeClock()->TimeInMicroseconds());\
 		LOG_VALNAME_SET(writelog,suffix,true);\
 	}\
 	IF_VALNAME_CHECK(writelog,suffix,==,true)\
-		LOG(sev) << __FUNCTION__ << ": "
+		LOG(sev)
+
+#define LOG_BY_COUNT_CONTENT_DIFF(sev,suffix,times)\
+	LOG_VALNAME_DECL(static std::string, lastStr, suffix); \
+	LOG_VALNAME_DECL(static int64_t,count,suffix);\
+	LOG_VALNAME_DECL_DEFAULT(bool,writelog,suffix,false);\
+	LOG_VALNAME_INCREASEMENT(count,suffix);\
+	IF_VALNAME_CHECK(count,suffix,>=,times) \
+	{\
+		LOG_VALNAME_SET(count,suffix,0);\
+		LOG_VALNAME_SET(writelog,suffix,true);\
+	}\
+	LOG_SUB_COMMON_DIFF(sev, lastStr, suffix, writelog)
+
+
+#define LOG_BY_TIME_CONTENT_DIFF(sev,suffix,timelong)\
+	LOG_VALNAME_DECL(static std::string, lastStr, suffix); \
+	LOG_VALNAME_DECL(static int64_t,lastTime,suffix);\
+	LOG_VALNAME_DECL_DEFAULT(bool,writelog,suffix,false);\
+	LOG_VALNAME_DECL(int64_t,diff,suffix);\
+	LOG_VALNAME_SET(diff,suffix,Clock::GetRealTimeClock()->TimeInMicroseconds());\
+	LOG_VALNAME_OPT_VALNAME(diff,suffix,-,lastTime);\
+	IF_VALNAME_CHECK(diff,suffix,>=,timelong*1000)\
+	{\
+		LOG_VALNAME_SET(lastTime,suffix,Clock::GetRealTimeClock()->TimeInMicroseconds());\
+		LOG_VALNAME_SET(writelog,suffix,true);\
+	}\
+	LOG_SUB_COMMON_DIFF(sev, lastStr, suffix, writelog)
+
+
+#define LOG_SUB_DIFF_MSG(sev,last) \
+	LOG_SEVERITY_PRECONDITION(sev) \
+	LogMessageEx(__FILE__, __LINE__, sev, last).stream()
+
+#define LOG_SUB_DIFF(sev,name,suffix) \
+	LOG_SUB_DIFF_MSG(sev,name##suffix)
+
+#define LOG_BY_DIFF(sev,suffix) \
+	LOG_VALNAME_DECL(static std::string, lastStr, suffix); \
+	LOG_SUB_DIFF(sev,lastStr,suffix)
+
+
 
 //timelong is how long (unit is in milliseconds)
 #define LOG_TIME(sev,timelong)\
 	LOG_BY_TIME(sev,__LINE__,timelong)
 
+#define LOG_TIME_F(sev,timelong)\
+	LOG_TIME(sev,timelong) << __FUNCTION__ << ": "
+
 //times is the times of looping
 #define LOG_COUNT(sev,times)\
 	LOG_BY_COUNT(sev,__LINE__,times)
+
+#define LOG_COUNT_F(sev,times)\
+	LOG_COUNT(sev,times) << __FUNCTION__ << ": "
+
+//the string that with same previous, not write logging
+#define LOG_DIFF(sev)\
+	LOG_BY_DIFF(sev,__LINE__)
+
+#define LOG_DIFF_F(sev)\
+	LOG_DIFF(sev) << __FUNCTION__ << ": "
+
+//the content of string is same with the previous and little the times, not write logging
+#define LOG_COUNT_CONTENT(sev,times)\
+	LOG_BY_COUNT_CONTENT_DIFF(sev,__LINE__,times)
+
+#define LOG_COUNT_CONTENT_F(sev,times)\
+	LOG_COUNT_CONTENT(sev,times) << __FUNCTION__ << ": "
+
+//timelong is how long (unit is in milliseconds). the content is same and short the time long, not  write logging.
+#define LOG_TIME_CONTENT(sev,timelong)\
+	LOG_BY_TIME_CONTENT_DIFF(sev,__LINE__,timelong)
+
+#define LOG_TIME_CONTENT_F(sev,timelong)\
+	LOG_TIME_CONTENT(sev,timelong) << __FUNCTION__ << ": "
+
     
 #endif  // LOG
 
