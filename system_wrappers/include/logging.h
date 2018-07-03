@@ -302,35 +302,35 @@ LOG_ERR_EX(sev, err)
 
 //timelong is how long (unit is in milliseconds)
 #define LOG_TIME(sev,timelong)\
-	LOG_BY_TIME(sev,__LINE__,timelong)
+	LOG_BY_TIME(sev,__LINE__,timelong) << " (" << timelong << ": msecend) "
 
 #define LOG_TIME_F(sev,timelong)\
 	LOG_TIME(sev,timelong) << __FUNCTION__ << ": "
 
 //times is the times of looping
 #define LOG_COUNT(sev,times)\
-	LOG_BY_COUNT(sev,__LINE__,times)
+	LOG_BY_COUNT(sev,__LINE__,times) << " (" << times << ": times) "
 
 #define LOG_COUNT_F(sev,times)\
 	LOG_COUNT(sev,times) << __FUNCTION__ << ": "
 
 //the string that with same previous, not write logging
 #define LOG_DIFF(sev)\
-	LOG_BY_DIFF(sev,__LINE__)
+	LOG_BY_DIFF(sev,__LINE__) << " (only one times) "
 
 #define LOG_DIFF_F(sev)\
 	LOG_DIFF(sev) << __FUNCTION__ << ": "
 
 //the content of string is same with the previous and little the times, not write logging
 #define LOG_COUNT_CONTENT(sev,times)\
-	LOG_BY_COUNT_CONTENT_DIFF(sev,__LINE__,times)
+	LOG_BY_COUNT_CONTENT_DIFF(sev,__LINE__,times) << " (" << times << ": times) "
 
 #define LOG_COUNT_CONTENT_F(sev,times)\
 	LOG_COUNT_CONTENT(sev,times) << __FUNCTION__ << ": "
 
 //timelong is how long (unit is in milliseconds). the content is same and short the time long, not  write logging.
 #define LOG_TIME_CONTENT(sev,timelong)\
-	LOG_BY_TIME_CONTENT_DIFF(sev,__LINE__,timelong)
+	LOG_BY_TIME_CONTENT_DIFF(sev,__LINE__,timelong) << " (" << timelong << ": msecend) "
 
 #define LOG_TIME_CONTENT_F(sev,timelong)\
 	LOG_TIME_CONTENT(sev,timelong) << __FUNCTION__ << ": "
