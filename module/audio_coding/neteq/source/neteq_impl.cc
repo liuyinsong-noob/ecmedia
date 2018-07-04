@@ -1895,7 +1895,12 @@ int NetEqImpl::ExtractPackets(int required_samples, PacketList* packet_list) {
     stats_.PacketsDiscarded(discard_count);
     // Store waiting time in ms; packets->waiting_time is in "output blocks".
     stats_.StoreWaitingTime(packet->waiting_time * kOutputSizeMs);
-    assert(packet->payload_length > 0);
+//    assert(packet->payload_length > 0);
+      if (packet->payload_length <= 0 ) {
+          LOG(LS_ERROR) << "GetDecoder packet->payload_length error seq:" << packet->header.sequenceNumber <<" ts:" << packet->header.timestamp <<
+          "packet->payload_length " <<packet->payload_length;
+          continue; // continue or not, this is a question, this is a corner case which rarely happen, but error happens. Need test  //sean 20180704
+      }
     packet_list->push_back(packet);  // Store packet in list.
 
     if (first_packet) {
