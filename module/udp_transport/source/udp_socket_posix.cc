@@ -66,6 +66,9 @@ UdpSocketPosix::UdpSocketPosix(const WebRtc_Word32 id, UdpSocketManager* mgr,
         WEBRTC_TRACE(kTraceWarning, kTraceTransport, id,
                      "Failed to set FD_CLOEXEC for socket");
     }
+    
+    int value = 1;
+    setsockopt(_socket, SOL_SOCKET, SO_NOSIGPIPE, &value, sizeof(value));
 }
 
 UdpSocketPosix::~UdpSocketPosix()

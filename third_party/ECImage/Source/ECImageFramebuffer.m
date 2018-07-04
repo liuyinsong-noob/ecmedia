@@ -189,7 +189,10 @@ void ec_dataProviderUnlockCallback(void *info, const void *data, size_t size);
 
 #ifndef NS_BLOCK_ASSERTIONS
         GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-        NSAssert(status == GL_FRAMEBUFFER_COMPLETE, @"Incomplete filter FBO: %d", status);
+        if (status == GL_FRAMEBUFFER_COMPLETE) {
+            return ;
+        }
+//        NSAssert(status == GL_FRAMEBUFFER_COMPLETE, @"Incomplete filter FBO: %d", status);
 #endif
 
         glBindTexture(GL_TEXTURE_2D, 0);
