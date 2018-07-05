@@ -181,8 +181,8 @@ bool RemoteEstimatorProxy::BuildFeedbackPacket(
             static_cast<uint16_t>(it->first & 0xFFFF), it->second * 1000)) {
       // If we can't even add the first seq to the feedback packet, we won't be
       // able to build it at all.
-      CHECK_NE(first_sequence, it->first);
-
+//      CHECK_NE(first_sequence, it->first);        //sean TODO, check need it or not
+        LOG(LS_ERROR)<<"BuildFeedbackPacket error happens"<<"first_sequence "<<first_sequence<<" should not equal to "<<"it->first "<<it->first;
       // Could not add timestamp, feedback packet might be full. Return and
       // try again with a fresh packet.
       break;

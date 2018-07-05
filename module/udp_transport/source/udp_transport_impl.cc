@@ -240,27 +240,30 @@ UdpTransportImpl::UdpTransportImpl(const WebRtc_Word32 id,
 
 UdpTransportImpl::~UdpTransportImpl()
 {
-	if (_packetCallback.size())
-		_packetCallback.clear();
-    CloseSendSockets();
-    CloseReceiveSockets();
+    {
+        CriticalSectionScoped cs(_crit);
+        
+        if (_packetCallback.size())
+            _packetCallback.clear();
+        CloseSendSockets();
+        CloseReceiveSockets();
+        delete _critFilter;
+        delete _critPacketCallback;
+        delete _critChannelRef;
+        delete _cachLock;
+        delete _socket_creator;
+        // free socks5 data.
+        if(_socks5_rtp_data) {
+            free(_socks5_rtp_data);
+            _socks5_rtp_data = NULL;
+        }
+        
+        if(_socks5_rtcp_data) {
+            free(_socks5_rtcp_data);
+            _socks5_rtcp_data = NULL;
+        }
+    }
     delete _crit;
-    delete _critFilter;
-    delete _critPacketCallback;
-	delete _critChannelRef;
-    delete _cachLock;
-    delete _socket_creator;
-    // free socks5 data.
-    if(_socks5_rtp_data) {
-        free(_socks5_rtp_data);
-        _socks5_rtp_data = NULL;
-    }
-    
-    if(_socks5_rtcp_data) {
-        free(_socks5_rtcp_data);
-        _socks5_rtcp_data = NULL;
-    }
-
     WEBRTC_TRACE(kTraceMemory, kTraceTransport, _id, "%s deleted",
                  __FUNCTION__);
 }
