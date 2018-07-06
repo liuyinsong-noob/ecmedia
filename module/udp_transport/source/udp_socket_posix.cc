@@ -68,7 +68,11 @@ UdpSocketPosix::UdpSocketPosix(const WebRtc_Word32 id, UdpSocketManager* mgr,
     }
     
     int value = 1;
+#ifdef __ANDROID__
+    setsockopt(_socket, SOL_SOCKET, MSG_NOSIGNAL, &value, sizeof(value));
+#else
     setsockopt(_socket, SOL_SOCKET, SO_NOSIGPIPE, &value, sizeof(value));
+#endif
 }
 
 UdpSocketPosix::~UdpSocketPosix()
