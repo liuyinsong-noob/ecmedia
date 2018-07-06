@@ -13,6 +13,7 @@ typedef enum {
 @interface ECImageView : UIView <ECImageInput>
 {
     ECImageRotationMode inputRotation;
+    BOOL isRendering;
 }
 
 /** The fill mode dictates how images are fit in the view, with the default being kECImageFillModePreserveAspectRatio

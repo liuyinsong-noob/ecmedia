@@ -93,7 +93,9 @@
     eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:NO], kEAGLDrawablePropertyRetainedBacking, kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil];
 
     self.enabled = YES;
-
+    [self configRenderState];
+    [self registerAppStateNotification];
+    
     ec_runSynchronouslyOnVideoProcessingQueue(^{
         [ECImageContext useImageProcessingContext];
 
@@ -126,6 +128,26 @@
         _fillMode = kECImageFillModePreserveAspectRatio;
         [self createDisplayFramebuffer];
     });
+}
+
+#pragma mark -
+#pragma mark configRenderState
+-(void)configRenderState {
+    if (UIApplicationStateActive == [UIApplication sharedApplication].applicationState) {
+        isRendering = YES;
+    }
+    else
+        isRendering = NO;
+}
+
+#pragma mark -
+#pragma mark register app notification
+-(void)registerAppStateNotification {
+    //   register notification
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackgroundFun:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 - (void)layoutSubviews {
@@ -218,6 +240,9 @@
 
 - (void)presentFramebuffer;
 {
+    if(!isRendering) {
+        return;
+    }
     glBindRenderbuffer(GL_RENDERBUFFER, displayRenderbuffer);
     [[ECImageContext sharedImageProcessingContext] presentBufferForDisplay];
 }
@@ -473,4 +498,26 @@
     [self recalculateViewGeometry];
 }
 
+#pragma mark -
+#pragma mark app notification call back
+- (void)appWillResignActive:(NSNotification *)noti
+{
+    isRendering = NO;
+    glFinish();
+}
+
+- (void)appDidEnterBackgroundFun:(NSNotification*)noti
+{
+    isRendering = NO;
+    glFinish();
+}
+
+- (void)appWillEnterForeground:(NSNotification *)noti
+{
+    isRendering = YES;
+}
+
+-(void)appWillBecomeActive:(NSNotification *)noti {
+    isRendering = YES;
+}
 @end
