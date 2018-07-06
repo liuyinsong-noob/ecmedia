@@ -769,6 +769,8 @@ public:
 		ReceiveStatisticsProxy* GetReceiveStatisticsProxy();
 		void SetSsrcObserver(SsrcObserver* ssrcObserver);
 
+      private:
+          bool _local_create_transport;
 //---end
  
 };

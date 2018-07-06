@@ -227,7 +227,7 @@ int ViEBaseImpl::DeleteChannel(const int video_channel) {
     shared_data_.SetLastError(kViEBaseUnknownError);
     return -1;
   }
-  LOG(LS_INFO) << "Channel deleted " << video_channel;
+  LOG(LS_INFO) << "ViEBaseImpl::DeleteChannel Channel deleted " << video_channel;
   return 0;
 }
 

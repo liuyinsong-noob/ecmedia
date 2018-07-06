@@ -429,7 +429,7 @@ int ViEChannelManager::DeleteChannel(int channel_id) {
 //	  LOG(LS_VERBOSE) << "delete udptransport for channel " << channel_id;
 //	  DeleteUdptransport(transport);
 //  }
-  LOG(LS_INFO) << "Channel deleted " << channel_id;
+  LOG(LS_INFO) << "ViEChannelManager::DeleteChannel Channel deleted " << channel_id;
   
    if (channel_map_.empty())
   {

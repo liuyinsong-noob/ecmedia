@@ -205,7 +205,8 @@ ViEChannel::ViEChannel(int32_t channel_id,
     _key_frame_cb(NULL),
 	remote_frame_callback_(nullptr),//add by dingxf
 	transport_feedback_observer_(transport_feedback_observer),
-	ssrc_observer_(NULL){
+	ssrc_observer_(NULL),
+    _local_create_transport(false){
   RtpRtcp::Configuration configuration = CreateRtpRtcpConfiguration();
   configuration.remote_bitrate_estimator = remote_bitrate_estimator;
   configuration.receive_statistics = vie_receiver_.GetReceiveStatistics();
@@ -299,6 +300,7 @@ int32_t ViEChannel::Init() {
 }
 
 ViEChannel::~ViEChannel() {
+    
   default_rtp_rtcp_->SetTransport(NULL);
   UpdateHistograms();
   // Make sure we don't get more callbacks from the RTP module.
@@ -376,6 +378,7 @@ int32_t ViEChannel::SetTcpTransport(TcpTransport *transport, int32_t rtp_port)
         LOG(LS_ERROR) << "SetUdpTransport transport is null rtp_port %d" << rtp_port<<", check create transport with rtp_port "<< rtp_port;
     }
 	socket_transport_ = transport;
+    socket_transport_->AddRefNum();
     _rtp_port = rtp_port;
 	if (socket_transport_->GetLocalSSrc() != 0){//receive channel
 		if (SetSSRC(socket_transport_->GetLocalSSrc(), kViEStreamTypeNormal, 0) != 0) {
@@ -1622,6 +1625,7 @@ int32_t ViEChannel::StopRTPDump(RTPDirections direction) {
 int32_t ViEChannel::StopSend() {
   UpdateHistogramsAtStopSend();
   CriticalSectionScoped cs(rtp_rtcp_cs_.get());
+  vie_sender_.DeregisterSendTransport();
   default_rtp_rtcp_->SetSendingMediaStatus(false);
   module_process_thread_.DeRegisterModule(default_rtp_rtcp_);
   for (std::list<RtpRtcp*>::iterator it = default_simulcast_rtp_rtcp_.begin();
@@ -1753,6 +1757,7 @@ int32_t ViEChannel::RegisterSendTransport(Transport* transport) {
 				"%s:  create socket_transport_ failed", __FUNCTION__);
 			return -1;
 		}
+        _local_create_transport = true;
 	}
 
     /*
@@ -1805,12 +1810,16 @@ int32_t ViEChannel::DeregisterSendTransport() {
   external_transport_ = NULL;
   vie_sender_.DeregisterSendTransport();
 
+    if (_local_create_transport) {
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
-	UdpTransport::Release((int)_rtp_port);
+        UdpTransport::Release((int)_rtp_port);
 #else
-	TcpTransport::Release((int)_rtp_port);
+        TcpTransport::Release((int)_rtp_port);
 #endif
-  socket_transport_ = NULL;
+        socket_transport_ = NULL;
+        _local_create_transport = false;
+    }
+
 
   return 0;
 }
