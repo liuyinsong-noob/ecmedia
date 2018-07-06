@@ -1,3 +1,24 @@
+Version v2.3.1.23
+1. 接口不变
+2. [feature]: add log token
+3. [feature]: optimize logging
+4. [feature]: add log token
+5. [feature]: optimize logging
+6. [feature]: add log token
+7. [feature]: optimize logging
+8. [bugfix]: android not send rtp keepalive packet, can't see pc desktop share
+9. [feature]: optimize logging
+10. [feature]: Compile mac sdk and support mac desktop screen share
+11. [feature]: ecmedia support mac os, building success
+12. [bugfix]: ios remote view support UIViewContentModeScaleAspectFill mode
+13. [feature]: ios ffmpeg libs support watermark(text&png image)
+14. [bugfix]: stop opengl when app in background
+15. [bugfix]: resolve symbol conflict
+16. [bugfix] ios can't build i386 libs
+17. [bugfix]: android pacer stop when stop capture
+18. [bugfix]:ECMedia_ring_start can't play sound
+19. [bugfix]:ECMedia_ring_start can't play sound
+
 Version v2.3.1.18
 1. 接口不变
 2. [bugfix]: android not send rtp keepalive packet, can't see pc desktop share
