@@ -591,6 +591,9 @@ void _SerphoneProxyConfig::serphone_proxy_config_edit()
 **/
 int _SerphoneProxyConfig::serphone_proxy_config_done()
 {
+    if (!lc) {
+        return -1;
+    }
 	if (!lc->serphone_proxy_config_check(this)) return -1;
 	commit=TRUE;
 	//lc->serphone_proxy_config_write_all_to_config_file();
