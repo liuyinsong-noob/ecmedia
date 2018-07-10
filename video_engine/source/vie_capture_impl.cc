@@ -313,6 +313,7 @@ int ViECaptureImpl::NumberOfCapabilities(
     const char* unique_idUTF8,
     const unsigned int unique_idUTF8Length) {
 
+/**
 #if defined(WEBRTC_MAC)
   // TODO(mflodman) Move to capture module!
   // QTKit framework handles all capabilities and capture settings
@@ -322,6 +323,7 @@ int ViECaptureImpl::NumberOfCapabilities(
   LOG_F(LS_ERROR) << "API not supported on Mac OS X.";
   return -1;
 #endif
+ **/
   return shared_data_->input_manager()->NumberOfCaptureCapabilities(
       unique_idUTF8);
 }
@@ -337,9 +339,9 @@ int ViECaptureImpl::GetCaptureCapability(const char* unique_idUTF8,
   // QTKit framework handles all capabilities and capture settings
   // automatically (mandatory).
   // Thus this function cannot be supported on the Mac platform.
-  LOG_F(LS_ERROR) << "API not supported on Mac OS X.";
-  shared_data_->SetLastError(kViECaptureDeviceMacQtkitNotSupported);
-  return -1;
+//  LOG_F(LS_ERROR) << "API not supported on Mac OS X.";
+//  shared_data_->SetLastError(kViECaptureDeviceMacQtkitNotSupported);
+//  return -1;
 #endif
   if (shared_data_->input_manager()->GetCaptureCapability(
           unique_idUTF8, capability_number, capability) != 0) {
@@ -356,6 +358,7 @@ int ViECaptureImpl::ShowCaptureSettingsDialogBox(
     void* parent_window,
     const unsigned int x,
     const unsigned int y) {
+/**
 #if defined(WEBRTC_MAC)
   // TODO(mflodman) Move to capture module
   // QTKit framework handles all capabilities and capture settings
@@ -365,6 +368,7 @@ int ViECaptureImpl::ShowCaptureSettingsDialogBox(
   LOG_F(LS_ERROR) << "API not supported on Mac OS X.";
   return -1;
 #endif
+  **/
   return shared_data_->input_manager()->DisplayCaptureSettingsDialogBox(
            unique_idUTF8, dialog_title,
            parent_window, x, y);
