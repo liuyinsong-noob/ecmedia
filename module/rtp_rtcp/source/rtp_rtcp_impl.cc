@@ -117,6 +117,8 @@ ModuleRtpRtcpImpl::ModuleRtpRtcpImpl(const Configuration& configuration)
       isSendingTmmbr(false),
       receive_statistics_(configuration.receive_statistics),
       ssrc_db_(SSRCDatabase::GetSSRCDatabase()){
+          
+//          printf("seansean333 id %d\n", configuration.id);
   // Make sure rtcp sender use same timestamp offset as rtp sender.
   rtcp_sender_.SetTimestampOffset(rtp_sender_.TimestampOffset());
 
@@ -852,6 +854,15 @@ void ModuleRtpRtcpImpl::RegisterRtcpStatisticsCallback(
 
 RtcpStatisticsCallback* ModuleRtpRtcpImpl::GetRtcpStatisticsCallback() {
   return rtcp_receiver_.GetRtcpStatisticsCallback();
+}
+    
+void ModuleRtpRtcpImpl::RegisterRtcpPacketTypeCounterObserverCallback(cloopenwebrtc::RtcpPacketTypeCounterObserver *observer)
+{
+    rtcp_receiver_.RegisterReceiveRtcpPacketTypeCounterObserver(observer);
+}
+RtcpPacketTypeCounterObserver* ModuleRtpRtcpImpl::GetRtcpPacketTypeCounterObserver()
+{
+    return rtcp_receiver_.GetReceiveRtcpPacketTypeCounterObserver();
 }
 
 bool ModuleRtpRtcpImpl::SendFeedbackPacket(

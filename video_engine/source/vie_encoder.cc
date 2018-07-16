@@ -558,9 +558,9 @@ int32_t ViEEncoder::SetEncoder(const cloopenwebrtc::VideoCodec& video_codec) {
 		  }
 		  
 		  rtp_rtcp->RegisterRtcpStatisticsCallback(
-			  default_rtp_rtcp_->GetRtcpStatisticsCallback());
+			  rtp_rtcp->GetRtcpStatisticsCallback());
 		  rtp_rtcp->RegisterSendChannelRtpStatisticsCallback(
-			  default_rtp_rtcp_->GetSendChannelRtpStatisticsCallback());
+			  rtp_rtcp->GetSendChannelRtpStatisticsCallback());
 	  }
   }
   else {

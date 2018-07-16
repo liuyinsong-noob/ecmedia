@@ -671,6 +671,9 @@ int ECMedia_init_audio()
         g_statsCollector = new StatsCollector();
     }
     g_statsCollector->SetVoiceEngin(m_voe);
+    if (m_vie) {
+        g_statsCollector->SetVideoEngin(m_vie);
+    }
     
 #ifdef ENABLE_LIB_CURL
 #ifdef    WIN32

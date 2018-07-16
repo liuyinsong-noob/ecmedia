@@ -259,6 +259,9 @@ class ModuleRtpRtcpImpl : public RtpRtcp, public RTCPReceiver::ModuleRtpRtcp {
       RtcpStatisticsCallback* callback) override;
   RtcpStatisticsCallback* GetRtcpStatisticsCallback() override;
 
+    
+  void RegisterRtcpPacketTypeCounterObserverCallback(cloopenwebrtc::RtcpPacketTypeCounterObserver *observer) override;
+  RtcpPacketTypeCounterObserver* GetRtcpPacketTypeCounterObserver() override;
   bool SendFeedbackPacket(const rtcp::TransportFeedback& packet) override;
   // (APP) Application specific data.
   int32_t SetRTCPApplicationSpecificData(uint8_t sub_type,

@@ -63,9 +63,12 @@ class StatisticsProxy : public RtcpStatisticsCallback {
 
   virtual void StatisticsUpdated(const RtcpStatistics& statistics,
                                  uint32_t ssrc) OVERRIDE {
+      
     if (ssrc != ssrc_)
-      return;
-
+    {
+//        printf("seansean ssrc:%u, ssrc_:%u\n", ssrc, ssrc_);
+//      return;
+    }
     CriticalSectionScoped cs(stats_lock_.get());
     stats_.rtcp = statistics;
     if (statistics.jitter > stats_.max_jitter) {

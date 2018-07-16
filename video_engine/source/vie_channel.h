@@ -260,6 +260,8 @@ class ViEChannel
   // Called on generation of RTCP stats
   void RegisterReceiveChannelRtcpStatisticsCallback(
       RtcpStatisticsCallback* callback);
+          
+  void RegisterReceiveChannelRtcpPacketTypeCounterObserverCallback(RtcpPacketTypeCounterObserver *observer);
 
   // Gets sent/received packets statistics.
   int32_t GetRtpStatistics(size_t* bytes_sent,

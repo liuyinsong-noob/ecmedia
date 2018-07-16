@@ -125,6 +125,7 @@ void StatsCollector::Config(char* logFile, int logIntervalMs) {
 bool StatsCollector::SetVideoEngin(VideoEngine *vie)
 {
 #ifdef VIDEO_ENABLED
+//    printf("seansean StatsCollector:%p, vie:%p\n", this, vie);
 	m_vie = vie;
 	return true;
 #endif 
@@ -159,6 +160,7 @@ void StatsCollector::DeleteFromReports(StatsReport::StatsReportType type, int ch
 bool StatsCollector::AddVideoSendStatsProxy(int channelid)
 {
 #ifdef VIDEO_ENABLED
+//    printf("seansean AddVideoSendStatsProxy:%p, channelid:%d, m_vie:%p\n", this, channelid, m_vie);
 	if (!m_vie)
 	{
 		return false;
@@ -1007,7 +1009,10 @@ void StatsCollector::LoadVideoReceiverReportToPbBuffer(StatsContentType type,
 
 	value = report.FindValue(StatsReport::kStatsValueNameLossFractionInPercent);
 	if (value)
+    {
+//        printf("seansean fraction lost:%d\n", value->int32_val());
 		statsData->set_kstatsvaluenamelossfractioninpercent(value->int32_val());
+    }
 	value = report.FindValue(StatsReport::kStatsValueNamePacketsLost);
 	if (value)
 		statsData->set_kstatsvaluenamepacketslost(value->int32_val());
@@ -1050,6 +1055,7 @@ void StatsCollector::VideoReciverInfo_AddReceiveBasic(const VideoReceiveStream::
 void StatsCollector::VideoReciverInfo_AddReceiveStats(const VideoReceiveStream::Stats info,
 													StatsReport *report)
 {
+//    printf("seansean info.received_framerate:%d, info.total_bitrate_bps:%d, info.jitter_buffer_ms:%d\n", info.received_framerate, info.total_bitrate_bps, info.jitter_buffer_ms);
 	report->AddInt32(StatsReport::kStatsValueNameReceivedFrameRate, info.received_framerate);
 	report->AddInt32(StatsReport::kStatsValueNameReceivedTotalBitrate, info.total_bitrate_bps);
 	report->AddInt32(StatsReport::kStatsValueNameJitterBufferMs, info.jitter_buffer_ms);
@@ -1078,6 +1084,7 @@ void StatsCollector::VideoReciverInfo_AddRtpStats(const VideoReceiveStream::Stat
 
 void StatsCollector::VideoReciverInfo_AddRtcpStats(const VideoReceiveStream::Stats info, StatsReport *report)
 {
+//    printf("seansean nack_packets:%u, nack_requests:%u, unique_nack_requests:%u, fir_packets:%u, fraction_lost:%u, cumulative_lost:%u, jitter:%u\n", info.rtcp_packet_type_counts.nack_packets,info.rtcp_packet_type_counts.nack_requests, info.rtcp_packet_type_counts.unique_nack_requests, info.rtcp_packet_type_counts.fir_packets, info.rtcp_stats.fraction_lost, info.rtcp_stats.cumulative_lost, info.rtcp_stats.jitter);
 	const Int32ForAdd uint32[] = {
 		{ StatsReport::kStatsValueNameNacksSent, info.rtcp_packet_type_counts.nack_packets },
 		{ StatsReport::kStatsValueNameNacksRequestsSent, info.rtcp_packet_type_counts.nack_requests },

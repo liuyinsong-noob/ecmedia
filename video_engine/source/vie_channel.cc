@@ -223,6 +223,7 @@ ViEChannel::ViEChannel(int32_t channel_id,
   RegisterCodecObserver(receive_statistics_proxy_.get());
   RegisterReceiveChannelRtpStatisticsCallback(receive_statistics_proxy_.get());
   RegisterReceiveChannelRtcpStatisticsCallback(receive_statistics_proxy_.get());
+  
 
   default_rtp_rtcp_->SetTransport(&vie_sender_);
   default_rtp_rtcp_->SetRtcpRttStats(rtt_stats_);
@@ -300,7 +301,6 @@ int32_t ViEChannel::Init() {
 }
 
 ViEChannel::~ViEChannel() {
-    
   default_rtp_rtcp_->SetTransport(NULL);
   UpdateHistograms();
   // Make sure we don't get more callbacks from the RTP module.
@@ -572,7 +572,7 @@ int32_t ViEChannel::SetSendCodec(const VideoCodec& video_codec,
     }
 
     // Remove last in list if we have too many.
-    for (int j = simulcast_rtp_rtcp_.size();
+    for (size_t j = simulcast_rtp_rtcp_.size();
          j > (video_codec.numberOfSimulcastStreams - 1);
          j--) {
       RtpRtcp* rtp_rtcp = simulcast_rtp_rtcp_.back();
@@ -1416,6 +1416,11 @@ void ViEChannel::RegisterReceiveChannelRtcpStatisticsCallback(
   rtp_rtcp_->RegisterRtcpStatisticsCallback(callback);
 }
 
+void ViEChannel::RegisterReceiveChannelRtcpPacketTypeCounterObserverCallback(cloopenwebrtc::RtcpPacketTypeCounterObserver *observer)
+    {
+        rtp_rtcp_->RegisterRtcpPacketTypeCounterObserverCallback(observer);
+    }
+    
 int32_t ViEChannel::GetRtpStatistics(size_t* bytes_sent,
                                      uint32_t* packets_sent,
                                      size_t* bytes_received,
@@ -1511,7 +1516,7 @@ void ViEChannel::RegisterReceiveChannelRtpStatisticsCallback(
     StreamDataCountersCallback* callback) {
   vie_receiver_.GetReceiveStatistics()->RegisterRtpStatisticsCallback(callback);
 }
-
+    
 void ViEChannel::GetRtcpPacketTypeCounters(
     RtcpPacketTypeCounter* packets_sent,
     RtcpPacketTypeCounter* packets_received) const {
@@ -1656,6 +1661,14 @@ int32_t ViEChannel::StopSend() {
     rtp_rtcp->ResetSendDataCountersRTP();
     rtp_rtcp->SetSendingStatus(false);
   }
+
+    for (std::list<RtpRtcp*>::iterator it = simulcast_rtp_rtcp_.begin();
+         it != simulcast_rtp_rtcp_.end();
+         it++) {
+        RtpRtcp* rtp_rtcp = *it;
+        rtp_rtcp->ResetSendDataCountersRTP();
+        rtp_rtcp->SetSendingStatus(false);
+    }
   return 0;
 }
 
@@ -2113,7 +2126,7 @@ RtpRtcp::Configuration ViEChannel::CreateRtpRtcpConfiguration() {
   configuration.paced_sender = paced_sender_;
   configuration.send_bitrate_observer = &send_bitrate_observer_;
   configuration.send_frame_count_observer = &send_frame_count_observer_;
-  configuration.receive_rtcp_packettype_count_observer = &receive_rtcp_packettype_count_observer_;
+  configuration.receive_rtcp_packettype_count_observer = &receive_rtcp_packettype_count_observer_;//current
   configuration.send_side_delay_observer = &send_side_delay_observer_;
 
   return configuration;
@@ -2253,7 +2266,22 @@ void ViEChannel::RegisterSendFrameCountObserver(
 }
 
 void ViEChannel::RegisterReceiveRtcpPacketTypeCounterObserver(RtcpPacketTypeCounterObserver* observer){
-		receive_rtcp_packettype_count_observer_.Set(observer);
+    receive_rtcp_packettype_count_observer_.Set(observer);
+    default_rtp_rtcp_->RegisterRtcpPacketTypeCounterObserverCallback(observer);
+    std::list<RtpRtcp*>::iterator it = default_simulcast_rtp_rtcp_.begin();
+    while(it != default_simulcast_rtp_rtcp_.end())
+    {
+        (*it)->RegisterRtcpPacketTypeCounterObserverCallback(observer);
+        it++;
+    }
+    rtp_rtcp_->RegisterRtcpPacketTypeCounterObserverCallback(observer);
+    std::list<RtpRtcp*>::iterator itt = simulcast_rtp_rtcp_.begin();
+    while (itt != simulcast_rtp_rtcp_.end()) {
+        (*itt)->RegisterRtcpPacketTypeCounterObserverCallback(observer);
+        itt++;
+    }
+    
+    
 }
 
 void ViEChannel::RegisterSendRtcpPacketTypeCountObserver(RtcpPacketTypeCounterObserver* observer)
@@ -2570,7 +2598,7 @@ void  ViEChannel::IncomingRTCPPacket(const int8_t* rtcp_packet,
 					  MediaType::ANY,
 					  reinterpret_cast<const uint8_t*>(rtcp_packet),
 					  rtcp_packet_length);
-
+//     printf("seansean111 vie_receiver_.ReceivedRTCPPacket chanlelid:%d\n", channel_id_);
 	vie_receiver_.ReceivedRTCPPacket(rtcp_packet, rtcp_packet_length);
 }
 
@@ -3466,6 +3494,17 @@ void ViEChannel::SetRtcEventLog(RtcEventLog *event_log)
 void ViEChannel::SetDefaultSimulcatRtpRtcp(std::list<RtpRtcp*> default_simulcast_rtp_rtcp)
 {
 	default_simulcast_rtp_rtcp_ = default_simulcast_rtp_rtcp;
+    std::list<RtpRtcp*>::iterator it = default_simulcast_rtp_rtcp_.begin();
+    while(it != default_simulcast_rtp_rtcp_.end())
+    {
+        (*it)->RegisterRtcpStatisticsCallback(receive_statistics_proxy_.get());
+//        (*it)->RegisterRtcpPacketTypeCounterObserverCallback(receive_frame_count_observer_.get());
+        
+        it++;
+    }
+    default_rtp_rtcp_->RegisterRtcpStatisticsCallback(receive_statistics_proxy_.get());
+//    default_rtp_rtcp_->RegisterRtcpPacketTypeCounterObserverCallback(receive_frame_count_observer_.get());
+    
 }
 
 void ViEChannel::SetSsrcObserver(SsrcObserver* ssrcObserver) {

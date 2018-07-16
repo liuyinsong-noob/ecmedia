@@ -134,6 +134,7 @@ RTCPReceiver::RTCPReceiver(
       last_skipped_packets_warning_ms_(clock->TimeInMilliseconds()) {
   DCHECK(owner);
   memset(&remote_sender_info_, 0, sizeof(remote_sender_info_));
+//          printf("seansean333 this:%p\n", this);
 }
 
 RTCPReceiver::~RTCPReceiver() {}
@@ -222,6 +223,8 @@ bool RTCPReceiver::GetAndResetXrRrRtt(int64_t* rtt_ms) {
   if (xr_rr_rtt_ms_ == 0) {
     return false;
   }
+    
+//    printf("seansean333 channelid:%p, rtt_ms:%lld\n", this, *rtt_ms);
   *rtt_ms = xr_rr_rtt_ms_;
   xr_rr_rtt_ms_ = 0;
   return true;
@@ -959,6 +962,7 @@ void RTCPReceiver::NotifyTmmbrUpdated() {
 void RTCPReceiver::RegisterRtcpStatisticsCallback(
     RtcpStatisticsCallback* callback) {
   cloopenwebrtc::CritScope cs(&feedbacks_lock_);
+//    printf("seansean111 registerRtcpStatisticsCallback this:%p, callback:%p\n", this, callback);
   stats_callback_ = callback;
 }
 
@@ -1068,6 +1072,7 @@ void RTCPReceiver::TriggerCallbacksFromRtcpPacket(
         *packet_information.target_bitrate_allocation);
   }
 
+//    printf("seansean111 this:%p, callback:%p\n", this, stats_callback_);
   if (!receiver_only_) {
     cloopenwebrtc::CritScope cs(&feedbacks_lock_);
     if (stats_callback_) {
@@ -1083,6 +1088,7 @@ void RTCPReceiver::TriggerCallbacksFromRtcpPacket(
     }
   }
 
+//    printf("seansean111 TriggerCallbacksFromRtcpPacket this:%p, observer:%p\n", this, receive_frame_count_observer_);
   if (receive_frame_count_observer_)
   {
     receive_frame_count_observer_->RtcpPacketTypesCounterUpdated(main_ssrc_, packet_type_counter_);
@@ -1124,5 +1130,17 @@ std::vector<rtcp::TmmbItem> RTCPReceiver::TmmbrReceived() {
   }
   return candidates;
 }
+    
+void RTCPReceiver::RegisterReceiveRtcpPacketTypeCounterObserver(RtcpPacketTypeCounterObserver* callback)
+    {//receive_frame_count_observer_
+//        printf("seansean111 RegisterReceiveRtcpPacketTypeCounterObserver this:%p, callback:%p\n", this, callback);
+        cloopenwebrtc::CritScope lock(&feedbacks_lock_);
+        receive_frame_count_observer_ = callback;
+    }
+RtcpPacketTypeCounterObserver* RTCPReceiver::GetReceiveRtcpPacketTypeCounterObserver()
+    {
+        cloopenwebrtc::CritScope lock(&feedbacks_lock_);
+        return receive_frame_count_observer_;
+    }
 
 }  // namespace cloopenwebrtc

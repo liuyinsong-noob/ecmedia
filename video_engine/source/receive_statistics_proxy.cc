@@ -114,6 +114,7 @@ void ReceiveStatisticsProxy::RtcpPacketTypesCounterUpdated(uint32_t ssrc,
 {
 	CriticalSectionScoped lock(crit_.get());
 	stats_.rtcp_packet_type_counts = packet_counter;
+//    printf("seansean nack_packets:%u, nack_requests:%u\n", packet_counter.nack_packets, packet_counter.nack_requests);
 #ifdef WIN32
 	post_message(StatsReport::kStatsReportTypeVideoRecv,
 	{

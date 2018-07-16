@@ -455,6 +455,9 @@ class RtpRtcp : public Module {
   virtual void RegisterRtcpStatisticsCallback(
       RtcpStatisticsCallback* callback) = 0;
   virtual RtcpStatisticsCallback* GetRtcpStatisticsCallback() = 0;
+    
+    virtual void RegisterRtcpPacketTypeCounterObserverCallback(cloopenwebrtc::RtcpPacketTypeCounterObserver *observer) = 0;
+    virtual RtcpPacketTypeCounterObserver* GetRtcpPacketTypeCounterObserver() = 0;
   // BWE feedback packets.
   virtual bool SendFeedbackPacket(const rtcp::TransportFeedback& packet) = 0;
 

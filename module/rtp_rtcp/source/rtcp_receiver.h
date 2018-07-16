@@ -119,6 +119,7 @@ class RTCPReceiver {
   
   public:
 	void RegisterReceiveRtcpPacketTypeCounterObserver(RtcpPacketTypeCounterObserver* callback);
+    RtcpPacketTypeCounterObserver* GetReceiveRtcpPacketTypeCounterObserver();
   private:
 		RtcpPacketTypeCounterObserver* receive_frame_count_observer_;
 
