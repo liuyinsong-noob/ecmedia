@@ -5932,5 +5932,16 @@ char *OSTypeToStr(char *buf, OSType t)
 {
     return audioEnableMagicSound(enable, pitch, tempo, rate);
 }
+
+- (NSString*)getStatsReports {
+    char *reportsJsonOut;
+    int ret = getStatsReports((const char **)&reportsJsonOut);
+    NSLog(@"seansean reportsJsonOut:%s", reportsJsonOut);
+    if (ret == 0) {
+        NSString* retCallid = [NSString stringWithCString:reportsJsonOut encoding:NSUTF8StringEncoding];
+        return [[retCallid copy] autorelease];
+    }
+    return nil;
+}
 @end
 

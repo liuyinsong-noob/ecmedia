@@ -8,10 +8,13 @@
 #include "ice.h"
 #include "RESTClient.h"
 #include "ECMedia.h"
+#include "ProtobufCoder.h"
+#include "cJSON.h"
 
 #ifdef __APPLE_CC__
 #include "TargetConditionals.h"
 #endif
+
 
 
 extern void setSsrcMediaType(unsigned int& ssrc, int type);
@@ -101,7 +104,20 @@ typedef struct proxyAddr {
 static proxyAddrList *gProxyAddrLst = NULL;
 
 #define CHECK_PROXY_VALID_KEY  "acbef97b9a534203b2ebcf3befb2a240"
-
+enum {
+    LOG_LEVEL_ERR    =10 ,//10以前预留给中间层日志
+    LOG_LEVEL_WARNING=11,
+    LOG_LEVEL_INFO=12,
+    LOG_LEVEL_DEBUG=13,
+    LOG_LEVEL_DEBUG_WBSS=14,//白板日志开启级别
+    LOG_LEVEL_MEDIA_ERR=20,//媒体库日志,打印ECmedia调用日志和媒体库Error日志；
+    LOG_LEVEL_MEDIA_WARNING=21,//添加严重错误的日志；
+    LOG_LEVEL_MEDIA_INFO=22,//添加警告日志；
+    LOG_LEVEL_MEDIA_DEFAULT=23,//媒体库默认日志，一般打开这个；
+    LOG_LEVEL_MEDIA_DEBUG=24,//添加调试信息；
+    LOG_LEVEL_MEDIA_ALL=25,//大于24： 所有日志都打开，级别最好，把媒体流的信息都打印出来
+    LOG_LEVEL_END=99
+};
 
 /////////////////////////////////////////////////////////////////////
 
@@ -3638,6 +3654,7 @@ extern "C" int GetStatsData(int type, char* callid, void** pbDataArray, int *pAr
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	return g_pSerCore->GetStatsData(type, callid, pbDataArray, pArraySize);
+    
 }
 
 extern "C" int DeleteStatsData(void* pbDataArray)
@@ -4003,4 +4020,124 @@ extern "C" int audioEnableMagicSound(bool enabled, int pitch, int tempo, int rat
     }
     return 0;
     
+}
+
+//int ServiceCore::GetStatsData(int type, char* callid, void** pbDataArray, int *pArraySize)
+extern "C" int getStatsReports(const char ** reportsJsonOut)
+{
+    SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
+    int ret = 0;
+    if (g_pSerCore) {
+        int ret=0,size=0;
+        static std::string sJson;//如果静态数组，不知道分配多大合适
+        void * report=NULL;
+        sJson="";
+//        EnterCriticalSection(&m_media_layer_Section);
+        ret= g_pSerCore->GetStatsData(0,"", (void**)&report,&size);
+//        LeaveCriticalSection(&m_media_layer_Section);
+        if(0==ret)
+        {
+            CcpClientYTX::TProtobufCoder decoder;
+            MediaStatisticsDataInner* pML=new MediaStatisticsDataInner();
+            if(PROTOBUF_CODER_OK!=decoder.DecodeMessage(pML,(char*)report,size))
+            {
+                PrintConsole("ERROR: encode or decode error");
+                ret = 171132;
+            }
+            else
+            {
+                if (pML->mediadata_size()>0)
+                {
+                    cJSON * pJsonRoot = cJSON_CreateObject();
+                    MediaStatisticsInner MediaStatistics= pML->mediadata(0);//mediadata只会有一个
+                    if(MediaStatistics.videosenderstats_size()>0)
+                    {
+                        cJSON * arrayJson = cJSON_CreateArray();
+                        for (int index=0; index<MediaStatistics.videosenderstats_size(); index++)
+                        {
+                            VideoSenderStatisticsInner VideoSenderStatistics = MediaStatistics.videosenderstats(index);
+                            cJSON * item = cJSON_CreateObject();
+                            if (VideoSenderStatistics.has_kstatsvaluenamechannelid()) {
+                                cJSON_AddNumberToObject(item,"channelId",VideoSenderStatistics.kstatsvaluenamechannelid());
+                            }
+                            if (VideoSenderStatistics.has_kstatsvaluenamecodecimplementationname()) {
+                                cJSON_AddStringToObject(item,"codecName",VideoSenderStatistics.kstatsvaluenamecodecimplementationname().c_str());
+                            }
+                            if (VideoSenderStatistics.has_kstatsvaluenametransmitbitrate()) {
+                                cJSON_AddNumberToObject(item,"transmitBitrate",VideoSenderStatistics.kstatsvaluenametransmitbitrate());
+                            }
+                            if (VideoSenderStatistics.has_kstatsvaluenameqmframewidth()) {
+                                cJSON_AddNumberToObject(item,"width",VideoSenderStatistics.kstatsvaluenameqmframewidth());
+                            }
+                            if (VideoSenderStatistics.has_kstatsvaluenameqmframeheight()) {
+                                cJSON_AddNumberToObject(item,"height",VideoSenderStatistics.kstatsvaluenameqmframeheight());
+                            }
+                            if (VideoSenderStatistics.has_kstatsvaluenameqmframerate()) {
+                                cJSON_AddNumberToObject(item,"frameRate",VideoSenderStatistics.kstatsvaluenameqmframerate());
+                            }
+                            
+                            if (VideoSenderStatistics.has_kstatsvaluenamerttinms()) {
+                                cJSON_AddNumberToObject(item,"rttMs",VideoSenderStatistics.kstatsvaluenamerttinms());
+                            }
+                            if (VideoSenderStatistics.has_kstatsvaluenamessrc()) {
+                                cJSON_AddNumberToObject(item, "ssrc", VideoSenderStatistics.kstatsvaluenamessrc());
+                            }
+                            cJSON_AddItemToArray(arrayJson, item);
+                        }//end for
+                        
+                        cJSON_AddItemToObject(pJsonRoot, "VideoSenderStatistics", arrayJson);
+                    }
+                    if(MediaStatistics.videoreceiverstats_size()>0)
+                    {
+                        cJSON * arrayJson = cJSON_CreateArray();
+                        for (int index=0; index<MediaStatistics.videoreceiverstats_size(); index++)
+                        {
+                            VideoReceiverStatisticsInner VideoReceiverStatistics = MediaStatistics.videoreceiverstats(index);
+                           cJSON * item = cJSON_CreateObject();
+                            if (VideoReceiverStatistics.has_kstatsvaluenamechannelid()) {
+                                cJSON_AddNumberToObject(item,"channelId",VideoReceiverStatistics.kstatsvaluenamechannelid());
+                            }
+                            if (VideoReceiverStatistics.has_kstatsvaluenamecodecimplementationname()) {
+                                cJSON_AddStringToObject(item,"codecName",VideoReceiverStatistics.kstatsvaluenamecodecimplementationname().c_str());
+                            }
+                            if (VideoReceiverStatistics.has_kstatsvaluenamereceivedtotalbitrate()) {
+                                cJSON_AddNumberToObject(item,"transmitBitrate",VideoReceiverStatistics.kstatsvaluenamereceivedtotalbitrate());
+                            }
+                            if (VideoReceiverStatistics.has_kstatsvaluenameframewidthreceived()) {
+                                cJSON_AddNumberToObject(item,"width",VideoReceiverStatistics.kstatsvaluenameframewidthreceived());
+                            }
+                            if (VideoReceiverStatistics.has_kstatsvaluenameframeheightreceived()) {
+                                cJSON_AddNumberToObject(item,"height",VideoReceiverStatistics.kstatsvaluenameframeheightreceived());
+                            }
+                            
+                            if (VideoReceiverStatistics.has_kstatsvaluenamelossfractioninpercent()) {
+                                cJSON_AddNumberToObject(item,"lossPercent",VideoReceiverStatistics.kstatsvaluenamelossfractioninpercent());
+                            }
+                            if (VideoReceiverStatistics.has_kstatsvaluenamereceivedframerate()) {
+                                cJSON_AddNumberToObject(item,"frameRate",VideoReceiverStatistics.kstatsvaluenamereceivedframerate());
+                            }
+                            if (VideoReceiverStatistics.has_kstatsvaluenamessrc()) {
+                                cJSON_AddNumberToObject(item, "ssrc", VideoReceiverStatistics.kstatsvaluenamessrc());
+                            }
+                            cJSON_AddItemToArray(arrayJson, item);
+                        }//end for
+                        
+                        cJSON_AddItemToObject(pJsonRoot, "VideoReceiverStatistics", arrayJson);
+                    }
+                    sJson = cJSON_Print(pJsonRoot);
+                    cJSON_Delete(pJsonRoot);
+                }
+            }
+            delete pML;
+            pML=NULL;
+        }
+        g_pSerCore->DeleteStatsData(report);
+        report=NULL;
+        size=0;
+        *reportsJsonOut=sJson.c_str();
+        PrintConsole((char*)__FILE__, __LINE__,(char*)__FUNCTION__,LOG_LEVEL_INFO,"ret=%d,sJson=%s",ret,sJson.c_str());
+        return ret;
+    }
+    PrintConsole((char*)__FILE__, __LINE__, (char*)__FUNCTION__, (0 == ret || 200 == ret) ? LOG_LEVEL_INFO : LOG_LEVEL_ERR, "ret=%d,reportsJsonOut=%p\n", ret, reportsJsonOut);
+    return ret;
 }

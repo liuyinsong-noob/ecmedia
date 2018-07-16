@@ -4111,4 +4111,10 @@ ModelEngineVoip* gModelEngineVoip = nil;
 {
     return [self.VoipCallService setMagicSound:enable andPitch:pitch andTempo:tempo andRate:rate];
 }
+
+- (NSString*)getStatsReports
+{
+    return [self.VoipCallService getStatsReports];
+}
+
 @end

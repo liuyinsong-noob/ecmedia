@@ -695,4 +695,5 @@ typedef enum
 -(void) stopLiveStream:(void *)handle;
 - (NSString*)getDeviceVersion;
 - (int)setMagicSound:(bool)enable andPitch:(int)pitch andTempo:(int)tempo andRate:(int)rate;
+- (NSString*)getStatsReports;
 @end

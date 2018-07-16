@@ -67,6 +67,14 @@
 		AD01998D1D237130003C2BB9 /* libosip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0199851D23710D003C2BB9 /* libosip.a */; };
 		AD0199AD1D239472003C2BB9 /* sometools.h in Headers */ = {isa = PBXBuildFile; fileRef = AD0199AC1D239472003C2BB9 /* sometools.h */; };
 		AD0199AF1D239480003C2BB9 /* sometools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD0199AE1D239480003C2BB9 /* sometools.cpp */; };
+		AD8CF85A20F5AB730055FB32 /* ProtobufCoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD8CF85820F5AB720055FB32 /* ProtobufCoder.cpp */; };
+		AD8CF85C20F5AB840055FB32 /* ProtobufCoder.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8CF85B20F5AB840055FB32 /* ProtobufCoder.h */; };
+		AD8CF85E20F5ACD00055FB32 /* cJSON.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD8CF85D20F5ACCF0055FB32 /* cJSON.cpp */; };
+		AD8CF86020F5ACE00055FB32 /* cJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8CF85F20F5ACDF0055FB32 /* cJSON.h */; };
+		AD8CF86320F5B2C50055FB32 /* SyncMsgResp.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8CF86120F5B2C40055FB32 /* SyncMsgResp.pb.cc */; };
+		AD8CF86420F5B2C50055FB32 /* SyncMsgResp.pb.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8CF86220F5B2C40055FB32 /* SyncMsgResp.pb.h */; };
+		AD8CF86720F5B6340055FB32 /* MediaStatisticsData.pb.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8CF86520F5B6340055FB32 /* MediaStatisticsData.pb.h */; };
+		AD8CF86820F5B6340055FB32 /* MediaStatisticsData.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8CF86620F5B6340055FB32 /* MediaStatisticsData.pb.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,6 +194,14 @@
 		AD1123281DAF3158006CDD38 /* libECMedia.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libECMedia.a; path = "../../../../../../../../Users/seanlee/Library/Developer/Xcode/DerivedData/CCPVoipDemo-eoxgwrhjyrmuvacahazhkgyeociq/Build/Products/Debug-iphoneos/libECMedia.a"; sourceTree = "<group>"; };
 		AD194FB41C5B3F85003841BB /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		AD194FB61C5B3F90003841BB /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		AD8CF85820F5AB720055FB32 /* ProtobufCoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProtobufCoder.cpp; sourceTree = "<group>"; };
+		AD8CF85B20F5AB840055FB32 /* ProtobufCoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProtobufCoder.h; sourceTree = "<group>"; };
+		AD8CF85D20F5ACCF0055FB32 /* cJSON.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cJSON.cpp; sourceTree = "<group>"; };
+		AD8CF85F20F5ACDF0055FB32 /* cJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cJSON.h; path = source/cJSON.h; sourceTree = SOURCE_ROOT; };
+		AD8CF86120F5B2C40055FB32 /* SyncMsgResp.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SyncMsgResp.pb.cc; sourceTree = "<group>"; };
+		AD8CF86220F5B2C40055FB32 /* SyncMsgResp.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncMsgResp.pb.h; sourceTree = "<group>"; };
+		AD8CF86520F5B6340055FB32 /* MediaStatisticsData.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaStatisticsData.pb.h; sourceTree = "<group>"; };
+		AD8CF86620F5B6340055FB32 /* MediaStatisticsData.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MediaStatisticsData.pb.cc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,6 +231,8 @@
 		556F876D15C8CBFC00904840 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				AD8CF85F20F5ACDF0055FB32 /* cJSON.h */,
+				AD8CF85B20F5AB840055FB32 /* ProtobufCoder.h */,
 				AD0199AC1D239472003C2BB9 /* sometools.h */,
 				55A26569180F93DF00EA5714 /* base64.h */,
 				55A2656A180F93DF00EA5714 /* ice.h */,
@@ -248,10 +266,16 @@
 		556F877C15C8CBFC00904840 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				AD8CF86120F5B2C40055FB32 /* SyncMsgResp.pb.cc */,
+				AD8CF86220F5B2C40055FB32 /* SyncMsgResp.pb.h */,
+				AD8CF85D20F5ACCF0055FB32 /* cJSON.cpp */,
+				AD8CF85820F5AB720055FB32 /* ProtobufCoder.cpp */,
 				55A2652E180F799A00EA5714 /* Utility */,
 				55A2650F180F798C00EA5714 /* Http */,
 				55EA5E3A17D8589100885688 /* ice.cc */,
 				AD0199AE1D239480003C2BB9 /* sometools.cpp */,
+				AD8CF86620F5B6340055FB32 /* MediaStatisticsData.pb.cc */,
+				AD8CF86520F5B6340055FB32 /* MediaStatisticsData.pb.h */,
 				550FCC121797E86400D21A07 /* base64.c */,
 				554AD69E16FAB0EB0084F686 /* CCPClient.cpp */,
 				556B7426160EAFB9005574FD /* tinyxml2.cpp */,
@@ -379,7 +403,10 @@
 				556F879615C8CBFC00904840 /* sal_eXosip2.h in Headers */,
 				556F879715C8CBFC00904840 /* salpr.h in Headers */,
 				556F879815C8CBFC00904840 /* serphonecall.h in Headers */,
+				AD8CF86420F5B2C50055FB32 /* SyncMsgResp.pb.h in Headers */,
 				556F879915C8CBFC00904840 /* serprivate.h in Headers */,
+				AD8CF86720F5B6340055FB32 /* MediaStatisticsData.pb.h in Headers */,
+				AD8CF86020F5ACE00055FB32 /* cJSON.h in Headers */,
 				AD0199AD1D239472003C2BB9 /* sometools.h in Headers */,
 				556F879A15C8CBFC00904840 /* servicecore.h in Headers */,
 				556F879B15C8CBFC00904840 /* sipsetup.h in Headers */,
@@ -394,6 +421,7 @@
 				55A26546180F79F500EA5714 /* md5.h in Headers */,
 				5555DF031829E76700993F3B /* videoframe.h in Headers */,
 				55A2656B180F93DF00EA5714 /* base64.h in Headers */,
+				AD8CF85C20F5AB840055FB32 /* ProtobufCoder.h in Headers */,
 				55A2656C180F93DF00EA5714 /* ice.h in Headers */,
 				55209C9B181116C60079F4D6 /* base64_2.h in Headers */,
 			);
@@ -497,6 +525,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD8CF85A20F5AB730055FB32 /* ProtobufCoder.cpp in Sources */,
+				AD8CF86320F5B2C50055FB32 /* SyncMsgResp.pb.cc in Sources */,
 				55AAF3F116FAC66600BCCBD5 /* CCPClient.cpp in Sources */,
 				556F879E15C8CBFC00904840 /* address.cpp in Sources */,
 				556F879F15C8CBFC00904840 /* callbacks.cpp in Sources */,
@@ -506,6 +536,7 @@
 				556F87A315C8CBFC00904840 /* lpconfig.cpp in Sources */,
 				556F87A415C8CBFC00904840 /* mediaprocess.cpp in Sources */,
 				556F87A515C8CBFC00904840 /* offeranswer.cpp in Sources */,
+				AD8CF85E20F5ACD00055FB32 /* cJSON.cpp in Sources */,
 				556F87A615C8CBFC00904840 /* prensence.cpp in Sources */,
 				556F87A715C8CBFC00904840 /* proxy.cpp in Sources */,
 				556F87A815C8CBFC00904840 /* sal_eXosip2.cpp in Sources */,
@@ -513,6 +544,7 @@
 				556F87AA15C8CBFC00904840 /* sal_eXosip2_sdp.cpp in Sources */,
 				556F87AB15C8CBFC00904840 /* salpr.cpp in Sources */,
 				556F87AC15C8CBFC00904840 /* serphonecall.cpp in Sources */,
+				AD8CF86820F5B6340055FB32 /* MediaStatisticsData.pb.cc in Sources */,
 				55B00876183DB104009D26EA /* cJSON.c in Sources */,
 				556F87AD15C8CBFC00904840 /* serphoneinterface.cpp in Sources */,
 				556F87AF15C8CBFC00904840 /* siplogin.cpp in Sources */,

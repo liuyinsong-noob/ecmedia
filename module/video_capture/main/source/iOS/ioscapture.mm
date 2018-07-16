@@ -186,6 +186,7 @@ char *globalFilePathcapture = NULL;
 }
 
 - (id)init {
+//    signal(SIGPIPE, SIG_IGN); 
 	self = [super init];
 	if (self) {
 		[self initIOSCapture];

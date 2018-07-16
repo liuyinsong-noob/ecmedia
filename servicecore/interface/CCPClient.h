@@ -33,11 +33,11 @@ extern "C" {
 		ERR_NOT_SUPPORT,
 		ERR_GET_SOFTSWITCH_ADDRESS,
 	};
-	enum {
-		LOG_LEVEL_NONE	= 0,
-		LOG_LEVEL_DEBUG	,
-		LOG_LEVEL_END
-	};
+//    enum {
+//        LOG_LEVEL_NONE    = 0,
+//        LOG_LEVEL_DEBUG    ,
+//        LOG_LEVEL_END
+//    };
 
     
 #ifdef OLDERRORCODE
@@ -610,6 +610,7 @@ typedef struct _CALLBACKINTERFACE CCallbackInterface;
     CCPAPI int SetRotateCapturedFrames(char *callid, ECMediaRotateCapturedFrame tr);
 CCPAPI  int requestVideo(char *callid, int width, int height);
     CCPAPI int audioEnableMagicSound(bool enabled, int pitch, int tempo, int rate);
+    CCPAPI int getStatsReports(const char ** reportsJsonOut);
 
 #ifdef __cplusplus
 }
