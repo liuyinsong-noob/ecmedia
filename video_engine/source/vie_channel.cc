@@ -310,6 +310,7 @@ ViEChannel::~ViEChannel() {
   if (socket_transport_ && remote_ssrc_ != 0)
 	  socket_transport_->SubRecieveChannel(remote_ssrc_);
 //#endif
+    vie_sender_.DeregisterSendTransport();
   module_process_thread_.DeRegisterModule(vie_receiver_.GetReceiveStatistics());
   module_process_thread_.DeRegisterModule(rtp_rtcp_.get());
   module_process_thread_.DeRegisterModule(vcm_);
@@ -323,6 +324,7 @@ ViEChannel::~ViEChannel() {
     delete rtp_rtcp;
     simulcast_rtp_rtcp_.erase(it);
   }
+    
   while (removed_rtp_rtcp_.size() > 0) {
     std::list<RtpRtcp*>::iterator it = removed_rtp_rtcp_.begin();
     delete *it;
@@ -356,15 +358,16 @@ ViEChannel::~ViEChannel() {
 		  _confIP = NULL;
 	  }
   }
-  // Release modules.
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
-    UdpTransport::Release(_rtp_port);
-#else
-	TcpTransport::Release(_rtp_port);
-#endif
+
   VideoCodingModule::Destroy(vcm_);
   module_process_thread_.Stop();
   ProcessThread::DestroyProcessThread(&module_process_thread_);
+    // Release modules.
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
+    UdpTransport::Release(_rtp_port);
+#else
+    TcpTransport::Release(_rtp_port);
+#endif
 }
 
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
@@ -378,7 +381,7 @@ int32_t ViEChannel::SetTcpTransport(TcpTransport *transport, int32_t rtp_port)
         LOG(LS_ERROR) << "SetUdpTransport transport is null rtp_port %d" << rtp_port<<", check create transport with rtp_port "<< rtp_port;
     }
 	socket_transport_ = transport;
-    socket_transport_->AddRefNum();
+//    socket_transport_->AddRefNum();
     _rtp_port = rtp_port;
 	if (socket_transport_->GetLocalSSrc() != 0){//receive channel
 		if (SetSSRC(socket_transport_->GetLocalSSrc(), kViEStreamTypeNormal, 0) != 0) {
@@ -1627,12 +1630,14 @@ int32_t ViEChannel::StopSend() {
   CriticalSectionScoped cs(rtp_rtcp_cs_.get());
   vie_sender_.DeregisterSendTransport();
   default_rtp_rtcp_->SetSendingMediaStatus(false);
+    default_rtp_rtcp_->SetRTPKeepaliveStatus(false,0, 0);
   module_process_thread_.DeRegisterModule(default_rtp_rtcp_);
   for (std::list<RtpRtcp*>::iterator it = default_simulcast_rtp_rtcp_.begin();
        it != default_simulcast_rtp_rtcp_.end();
        it++) {
     RtpRtcp* rtp_rtcp = *it;
     rtp_rtcp->SetSendingMediaStatus(false);
+      rtp_rtcp->SetRTPKeepaliveStatus(false, 0, 0);
 	module_process_thread_.DeRegisterModule(rtp_rtcp);
   }
   if (!default_rtp_rtcp_->Sending()) {

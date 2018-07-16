@@ -231,7 +231,7 @@ int32_t ModuleRtpRtcpImpl::Process() {
     }
   }
 
-  if(rtp_sender_.RTPKeepalive())
+  if(rtp_sender_.RTPKeepalive()&&rtp_sender_.SendingMedia())
   {
     // check time to send RTP keep alive
     if( rtp_sender_.TimeToSendRTPKeepalive())
