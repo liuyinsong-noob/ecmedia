@@ -207,7 +207,7 @@ class BuildBase:
                 lastCheckInVersion = commitLog.split(' ')[1].strip(' ')
                 if lastCheckInVersion == self.getLastCommitInfo():
                     break
-            if '[bugfix]' in commitLog or '[feature]' in commitLog:
+            if '[bugfix]' in commitLog or '[feature]' in commitLog or '[bug fix]' in commitLog or '[bug-fix]' in commitLog or '[bug_fix]' in commitLog:
                 insertContent = insertContent + str(index) + '. ' + commitLog.encode('gbk')
                 insertContent = insertContent + '\n'
                 index = index + 1
