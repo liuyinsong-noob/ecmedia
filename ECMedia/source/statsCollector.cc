@@ -411,7 +411,7 @@ void StatsCollector::DeletePbData(void *pMediaStatisticsDataInnerArray)
 												pMediaStatisticsDataInnerArray);
 	if (it == pStatsPBList.end())
 		return;
-	delete pMediaStatisticsDataInnerArray;
+	delete [] (char *)pMediaStatisticsDataInnerArray;
 	pStatsPBList.erase(it);
 }
 
