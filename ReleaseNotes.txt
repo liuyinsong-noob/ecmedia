@@ -1,3 +1,31 @@
+Version v2.3.1.28
+1. 接口不变
+2. [bug fix]: audio project compile error
+3. [feature]: demo media statistics
+4. [bug fix]: Partially resolve media statistics, with send channel tts problem
+5. [bug fix]: ios donot send video stream
+6. [bugfix]: mac libs h264 not sending
+7. [bug fix]: ios ecimage support not preview when app in background
+8. [bug fix]: crash, deregister send rtcp when deleting channel
+9. [bug fix]: android compile error
+10. [bug fix]: send rtcp crash when end phone
+11. [feature]: add log token
+12. [feature]: optimize logging
+13. [feature]: add log token
+14. [feature]: optimize logging
+15. [feature]: add log token
+16. [feature]: optimize logging
+17. [bugfix]: android not send rtp keepalive packet, can't see pc desktop share
+18. [feature]: optimize logging
+19. [feature]: Compile mac sdk and support mac desktop screen share
+20. [feature]: ecmedia support mac os, building success
+21. [bugfix]: ios remote view support UIViewContentModeScaleAspectFill mode
+22. [feature]: ios ffmpeg libs support watermark(text&png image)
+23. [bugfix]: stop opengl when app in background
+24. [bugfix]: resolve symbol conflict
+25. [bug fix]:1. crash; 2. allow to update local ssrc after preset local ssrc to 0
+26. [bug fix]: check nil before add to gpu image filter
+
 Version v2.3.1.27
 1. 接口不变
 2. [feature]: demo media statistics
