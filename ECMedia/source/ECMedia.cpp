@@ -158,11 +158,11 @@ WindowShare *m_pWindowlist=NULL;
 char g_accountId[128]={'\0'};
 #endif
 
-static CameraInfo *m_cameraInfo = NULL;
+//static CameraInfo *m_cameraInfo = NULL;
 
 static char gVersionString[256]={'\0'};
 
-static int m_cameraCount = 0;
+//static int m_cameraCount = 0;
 using namespace cloopenwebrtc;
 using namespace std;
 

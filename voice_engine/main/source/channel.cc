@@ -2884,11 +2884,11 @@ Channel::SetRecvTelephoneEventPayloadType(unsigned char type)
 {
 	WEBRTC_TRACE(kTraceInfo, kTraceVoice, VoEId(_instanceId, _channelId),
 		"Channel::SetRecvTelephoneEventPayloadType() type:%d", type);
-	if (type > 127)
+	if (type > 127 || type < 96)
 	{
 		_engineStatisticsPtr->SetLastError(
 			VE_INVALID_ARGUMENT, kTraceError,
-			"SetSendTelephoneEventPayloadType() invalid type");
+                                           "SetSendTelephoneEventPayloadType() invalid type:%d", type);
 		return -1;
 	}
 	_recvTelephoneEventPayloadType = type;
