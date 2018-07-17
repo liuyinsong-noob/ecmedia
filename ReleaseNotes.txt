@@ -1,3 +1,23 @@
+Version v2.3.1.27
+1. 接口不变
+2. [feature]: demo media statistics
+3. [bugfix]: mac libs h264 not sending
+4. [feature]: add log token
+5. [feature]: optimize logging
+6. [feature]: add log token
+7. [feature]: optimize logging
+8. [feature]: add log token
+9. [feature]: optimize logging
+10. [bugfix]: android not send rtp keepalive packet, can't see pc desktop share
+11. [feature]: optimize logging
+12. [feature]: Compile mac sdk and support mac desktop screen share
+13. [feature]: ecmedia support mac os, building success
+14. [bugfix]: ios remote view support UIViewContentModeScaleAspectFill mode
+15. [feature]: ios ffmpeg libs support watermark(text&png image)
+16. [bugfix]: stop opengl when app in background
+17. [bugfix]: resolve symbol conflict
+18. [bugfix] ios can't build i386 libs
+
 Version v2.3.1.26
 1. 接口不变
 2. [bugfix]: mac libs h264 not sending
