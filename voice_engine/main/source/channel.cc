@@ -5416,6 +5416,13 @@ int Channel::setConferenceParticipantCallback(ECMedia_ConferenceParticipantCallb
     return rtp_header_parser_->setECMediaConferenceParticipantCallback(cb);
 }
     
+int Channel::setConferenceParticipantCallbackTimeInterVal(int timeInterVal) {
+    WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId,_channelId),
+                 "Channel::setConferenceParticipantCallback");
+    rtp_header_parser_->setECMediaConferenceParticipantCallbackTimeInterVal(timeInterVal);
+    return 0;
+}
+    
 int Channel::setProcessData(bool flag, bool originalFlag)
 {
 	WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId,_channelId),

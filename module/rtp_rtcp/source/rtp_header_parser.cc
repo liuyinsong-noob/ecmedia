@@ -12,6 +12,7 @@
 #include "../base/criticalsection.h"
 #include "../module/rtp_rtcp/source/rtp_header_extension.h"
 #include "../module/rtp_rtcp/source/rtp_utility.h"
+#include "../system_wrappers/include/clock.h"
 
 namespace cloopenwebrtc {
 
@@ -29,11 +30,13 @@ class RtpHeaderParserImpl : public RtpHeaderParser {
   bool DeregisterRtpHeaderExtension(RTPExtensionType type) override;
 
   virtual int setECMediaConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback* cb);
+  virtual void setECMediaConferenceParticipantCallbackTimeInterVal(int timeInterVal);
+
  private:
   cloopenwebrtc::CriticalSection critical_section_;
   RtpHeaderExtensionMap rtp_header_extension_map_ GUARDED_BY(critical_section_);
   ECMedia_ConferenceParticipantCallback *_participantCallback; //added by zhaoyou.
-  
+  int callConferenceParticipantCallbacktimeInterVal_;
 };
 
 RtpHeaderParser* RtpHeaderParser::Create() {
@@ -41,7 +44,8 @@ RtpHeaderParser* RtpHeaderParser::Create() {
 }
 
 RtpHeaderParserImpl::RtpHeaderParserImpl()
-    : _participantCallback(nullptr) {}
+    : _participantCallback(nullptr),
+    callConferenceParticipantCallbacktimeInterVal_(0) {}
 
 bool RtpHeaderParser::IsRtcp(const uint8_t* packet, size_t length) {
   RtpUtility::RtpHeaderParser rtp_parser(packet, length);
@@ -68,7 +72,16 @@ bool RtpHeaderParserImpl::Parse(const uint8_t* packet,
   /****  callback conference csrc array when csrc array changed, added by zhaoyou ******/
   static uint8_t last_arr_csrc_count_ = 0;
   static uint32_t last_arrOfCSRCs_[kRtpCsrcSize] = {0};
-  if(_participantCallback) {
+  static int64_t base_time = 0;
+  bool should_send = false;
+  {
+      int64_t current_time = Clock::GetRealTimeClock()->TimeInMilliseconds();
+      should_send = (current_time - base_time) >= callConferenceParticipantCallbacktimeInterVal_ * 1000;
+      if(should_send) {
+          base_time = Clock::GetRealTimeClock()->TimeInMilliseconds();
+      }
+  }
+    if(_participantCallback && should_send) {
       if(last_arr_csrc_count_ != header->numCSRCs) {
           // ConferenceParticipantCallback
           _participantCallback(header->arrOfCSRCs, header->numCSRCs);
@@ -121,4 +134,14 @@ int RtpHeaderParserImpl::setECMediaConferenceParticipantCallback(ECMedia_Confere
     _participantCallback = cb;
     return 0;
 }
-}  // namespace webrtc
+    
+void RtpHeaderParserImpl::setECMediaConferenceParticipantCallbackTimeInterVal(int timeInterVal) {
+    if(timeInterVal < 0 ) {
+        // LOG(LS_ERROR) << "setECMediaConferenceParticipantCallbackTimeInterVal is null.";
+        timeInterVal = 0;
+    }
+    
+    callConferenceParticipantCallbacktimeInterVal_ = timeInterVal;
+ }
+
+} // namespace webrtc

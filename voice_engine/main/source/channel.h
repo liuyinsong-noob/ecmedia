@@ -753,6 +753,7 @@ public:
 		int& transmittedBytes, bool useRtcpSocket);
     
     int setConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback* cb);
+    int setConferenceParticipantCallbackTimeInterVal(int timeInterVal);
 //#ifndef WEBRTC_EXTERNAL_TRANSPORT
 	WebRtc_Word32 GetSourceInfo(int& rtpPort, int& rtcpPort, char ipAddr[64]);
 	WebRtc_Word32 EnableIPv6();

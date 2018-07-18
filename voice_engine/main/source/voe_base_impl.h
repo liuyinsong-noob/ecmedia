@@ -128,6 +128,7 @@ public:
     virtual int SetAudioDataCb(int channelid, onAudioData audio_data_cb);
     virtual int SetPCMAudioDataCallBack(int channelid, ECMedia_PCMDataCallBack audio_data_cb);
     virtual int setConferenceParticipantCallback(int channelid, ECMedia_ConferenceParticipantCallback* audio_data_cb);
+    virtual int setConferenceParticipantCallbackTimeInterVal(int channelid, int timeInterVal);
     virtual bool GetRecordingIsInitialized();
     virtual bool GetRecordingIsRecording();
 

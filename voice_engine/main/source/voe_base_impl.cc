@@ -2442,6 +2442,29 @@ int VoEBaseImpl::setConferenceParticipantCallback(int channelid, ECMedia_Confere
     return channelPtr->setConferenceParticipantCallback(audio_data_cb);
 }
     
+int VoEBaseImpl::setConferenceParticipantCallbackTimeInterVal(int channelid, int timeInterVal) {
+    WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+                 "SetDtmfCb(channel=%d)", channelid);
+    
+    CriticalSectionScoped cs(_shared->crit_sec());
+    
+    if (!_shared->statistics().Initialized())
+    {
+        _shared->SetLastError(VE_NOT_INITED, kTraceError);
+        return -1;
+    }
+    voe::ChannelOwner sc = _shared->channel_manager().GetChannel(channelid);
+    voe::Channel* channelPtr = sc.channel();
+    if (channelPtr == NULL)
+    {
+        _shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
+                              "setConferenceParticipantCallback() failed to locate channel");
+        return -1;
+    }
+    return channelPtr->setConferenceParticipantCallbackTimeInterVal(timeInterVal);
+}
+    
+    
 bool VoEBaseImpl::GetRecordingIsInitialized()
 {
     WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),

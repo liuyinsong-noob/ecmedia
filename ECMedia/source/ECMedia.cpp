@@ -1381,6 +1381,27 @@ int ECMedia_setECMedia_ConferenceParticipantCallback(int channelid, ECMedia_Conf
     }
 }
 
+int ECMedia_setECMedia_ConferenceParticipantCallbackTimeInterVal(int channelid, int timeInterVal) {
+    PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d, timeInterVal: %d", __FUNCTION__, channelid, timeInterVal);
+    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    
+    VoEBase *base = VoEBase::GetInterface(m_voe);
+    if (base) {
+        int ret = base->setConferenceParticipantCallbackTimeInterVal(channelid, timeInterVal);
+        base->Release();
+        if (ret != 0) {
+            PrintConsole("[ECMEDIA ERROR] %s failed to set conference participant timeInterVal", __FUNCTION__);
+        }
+        PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
+        return 0;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA ERROR] %s failed to get VoEBase", __FUNCTION__);
+        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        return -99;
+    }
+}
 int ECMedia_set_video_data_cb(int channelid, onEcMediaVideoDataV video_data_cb)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
