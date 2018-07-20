@@ -358,11 +358,14 @@ char *globalFilePathcapture = NULL;
 	
 	if(parentView != nil) {
         [parentView retain];
-		AVCaptureVideoPreviewLayer *previewLayer = (AVCaptureVideoPreviewLayer *)self.layer;
-		{
-			previewLayer.videoGravity = AVLayerVideoGravityResize;
-		}
-        
+        AVCaptureVideoPreviewLayer *previewLayer = (AVCaptureVideoPreviewLayer *)self.layer;
+        if([parentView.layer.contentsGravity isEqualToString:kCAGravityResize]){
+            previewLayer.videoGravity = AVLayerVideoGravityResize;
+         }else if ([parentView.layer.contentsGravity isEqualToString:kCAGravityResizeAspectFill]){
+             previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+        }else{
+            previewLayer.videoGravity = AVLayerVideoGravityResizeAspect;
+        }
         [self setFrame: [parentView bounds]];
         [parentView addSubview:self];
 	}
