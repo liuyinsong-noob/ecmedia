@@ -176,6 +176,7 @@ enum TextureType
     [_glContext release];
     [parentView release];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self removeObserver:self forKeyPath:@"frame" context:nil];
 #if ! __has_feature(objc_arc)
     [super dealloc];
 #endif
@@ -204,9 +205,19 @@ enum TextureType
         {
             self = nil;
         }
+        [self addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
     }
     return self;
 }
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    if ([keyPath isEqualToString:@"frame"]) {
+        _parentScreenW = self.parentView.bounds.size.width;
+        _parentScreenH = self.parentView.bounds.size.height;
+        [self updatePreview];
+    }
+}
+
 
 - (BOOL)initOpengGL
 {

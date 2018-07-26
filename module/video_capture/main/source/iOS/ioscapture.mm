@@ -608,7 +608,8 @@ char *globalFilePathcapture = NULL;
 			mOutputVideoSize.height = tmpSize.width;
 		}
         [self changeSize];
-        
+        if(self.rawDataInput)
+           [self.rawDataOutput setImageSize:CGSizeMake(mOutputVideoSize.width, mOutputVideoSize.height)];
 		[_capture_session commitConfiguration];
         BilterFilterInitCore(bilteralFilter, size.width, size.height, 3, 10);
         KeyFrameDetectInitCore(keyframeDector, size.width, size.height);
