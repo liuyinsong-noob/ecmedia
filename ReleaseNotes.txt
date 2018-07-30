@@ -1,3 +1,32 @@
+Version v2.3.2.1
+1. 接口不变
+2. [bugfix]: update ijkplayer , because maybe link error with app
+3. [bugfix]: ijkplayer rtmp can't setting tcp rw timeout
+4. [bugfix]:the video distortion when mac SDK view self
+5. [feature]: add api for setting conference participant callback time InterVal
+6. [bug fix]:compile error
+7. [bug fix]: audio project compile error
+8. [feature]: demo media statistics
+9. [bug fix]: Partially resolve media statistics, with send channel tts problem
+10. [bug fix]: ios donot send video stream
+11. [bugfix]: mac libs h264 not sending
+12. [bug fix]: ios ecimage support not preview when app in background
+13. [bug fix]: crash, deregister send rtcp when deleting channel
+14. [bug fix]: android compile error
+15. [bug fix]: send rtcp crash when end phone
+16. [feature]: add log token
+17. [feature]: optimize logging
+18. [feature]: add log token
+19. [feature]: optimize logging
+20. [feature]: add log token
+21. [feature]: optimize logging
+22. [bugfix]: android not send rtp keepalive packet, can't see pc desktop share
+23. [feature]: optimize logging
+24. [feature]: Compile mac sdk and support mac desktop screen share
+25. [feature]: ecmedia support mac os, building success
+26. [bugfix]: ios remote view support UIViewContentModeScaleAspectFill mode
+27. [feature]: ios ffmpeg libs support watermark(text&png image)
+
 Version v2.3.2.0
 1. 接口不变
 2. [feature]: add api for setting conference participant callback time InterVal
