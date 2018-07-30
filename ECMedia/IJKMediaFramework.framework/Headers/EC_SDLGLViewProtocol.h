@@ -26,8 +26,8 @@
 
 #import <UIKit/UIKit.h>
 
-typedef struct IJKOverlay IJKOverlay;
-struct IJKOverlay {
+typedef struct EC_Overlay IJKOverlay;
+struct EC_Overlay {
     int w;
     int h;
     UInt32 format;

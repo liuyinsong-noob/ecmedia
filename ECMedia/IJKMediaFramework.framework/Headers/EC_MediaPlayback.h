@@ -194,7 +194,7 @@ typedef NS_ENUM(NSInteger, IJKMediaEvent) {
 #define IJKMediaEventAttrKey_file_size      @"file_size"
 
 // event of IJKMediaUrlOpenEvent_xxx
-@interface IJKMediaUrlOpenData: NSObject
+@interface EC_MediaUrlOpenData: NSObject
 
 - (id)initWithUrl:(NSString *)url
             event:(IJKMediaEvent)event
@@ -216,7 +216,7 @@ typedef NS_ENUM(NSInteger, IJKMediaEvent) {
 
 @protocol IJKMediaUrlOpenDelegate <NSObject>
 
-- (void)willOpenUrl:(IJKMediaUrlOpenData*) urlOpenData;
+- (void)willOpenUrl:(EC_MediaUrlOpenData*) urlOpenData;
 
 @end
 

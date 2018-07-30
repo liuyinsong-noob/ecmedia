@@ -144,12 +144,12 @@ typedef enum EC_LogLevel {
 @end
 
 #define IJK_FF_IO_TYPE_READ (1)
-void IJKFFIOStatDebugCallback(const char *url, int type, int bytes);
-void IJKFFIOStatRegister(void (*cb)(const char *url, int type, int bytes));
+void EC_FFIOStatDebugCallback(const char *url, int type, int bytes);
+void EC_FFIOStatRegister(void (*cb)(const char *url, int type, int bytes));
 
-void IJKFFIOStatCompleteDebugCallback(const char *url,
+void EC_FFIOStatCompleteDebugCallback(const char *url,
                                       int64_t read_bytes, int64_t total_size,
                                       int64_t elpased_time, int64_t total_duration);
-void IJKFFIOStatCompleteRegister(void (*cb)(const char *url,
+void EC_FFIOStatCompleteRegister(void (*cb)(const char *url,
                                             int64_t read_bytes, int64_t total_size,
                                             int64_t elpased_time, int64_t total_duration));
