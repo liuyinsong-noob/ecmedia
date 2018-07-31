@@ -45,30 +45,27 @@ class BuildBase:
 
     def run(self):
         if self.NewVersion == self.getEcmediaVersion():
-            if self.build_config.get('build_state', self.platform +'_video_state') != 'success' :
-                if self.build() == 0:
-                    self.collectFiles()
-                    self.build_config.set('build_state', self.platform + '_video_state', 'success')
-                else:
-                    self.build_config.set('build_state', self.platform + '_video_state', 'error')
-                    self.build_config.write(open(self.build_config_path, "w"))
-                    return -1
+            # if self.build_config.get('build_state', self.platform +'_video_state') != 'success' :
+            #     if self.build() == 0:
+            #         self.collectFiles()
+            #         self.build_config.set('build_state', self.platform + '_video_state', 'success')
+            #     else:
+            #         self.build_config.set('build_state', self.platform + '_video_state', 'error')
+            #         self.build_config.write(open(self.build_config_path, "w"))
+            #         return -1
 
-            if self.build_config.get('build_state', self.platform + '_audio_state') != 'success' :
-                if self.buildAudioOnly() == 0:
-                    self.build_config.set('build_state', self.platform + '_audio_state', 'success')
-                    self.collectAudioOnlyFiles()
-                else :
-                    self.build_config.set('build_state', self.platform + '_audio_state', 'error')
-                    self.build_config.write(open(self.build_config_path, "w"))
-                    return -1
-        
-            # audio and video both build success
-            self.build_config.set('build_state', self.platform + '_video_state', 'rebuild')
-            self.build_config.set('build_state', self.platform + '_audio_state', 'rebuild')
-            self.build_config.write(open(self.build_config_path, "w"))
+            # if self.build_config.get('build_state', self.platform + '_audio_state') != 'success' :
+            #     if self.buildAudioOnly() == 0:
+            #         self.build_config.set('build_state', self.platform + '_audio_state', 'success')
+            #         self.collectAudioOnlyFiles()
+            #     else :
+            #         self.build_config.set('build_state', self.platform + '_audio_state', 'error')
+            #         self.build_config.write(open(self.build_config_path, "w"))
+            #         return -1
 
-            self.rarFiles()
+            # if self.rarFiles() != 0 :
+            #     return -1;
+            return self.copyToRemote(self.platform)
         else:
             version = self.getLastCommitInfo()
             self.updateReleaseVersion(self.NewVersion)
@@ -122,9 +119,10 @@ class BuildBase:
         os.chdir(self.BuildPath)
         targetFile = os.path.join(self.BuildPath, self.rarFileName)
         sourceFile = self.target_lib_path
-        print os.system('zip -r ' + targetFile + ' ' + sourceFile)
+        ret =  os.system('zip -r ' + targetFile + ' ' + sourceFile)
         if self.platform == 'android' :
             print os.system('zip -r obj_android_' + self.getEcmediaVersion() + '.zip' + ' armeabi')
+        return ret
 
     def getEcmediaVersion(self):
         fd = open(self.EcmediaCpp)
@@ -219,4 +217,5 @@ class BuildBase:
     
     def copyToRemote(self, platform):
         os.chdir(self.BuildPath)
-        print os.system('scp ' + self.rarFileName + ' jenkins@192.168.179.129:/app/userhome/jenkins/release/ecmedia/' + platform + '/' + self.getEcmediaVersion()[0:4] + '.x')
+        return os.system('scp -i ./source/private.key ' + self.rarFileName + ' seanlee@192.168.178.218:~/.platform_build/platform_sdk/ecmedia_layer_libs/' + platform + '/' + self.getEcmediaVersion()[0:4] + '.x')
+ 
