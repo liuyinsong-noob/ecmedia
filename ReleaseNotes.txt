@@ -1,3 +1,34 @@
+Version v2.3.2.2
+1. 接口不变
+2. [bugfix]: video stretching when iOS in landscape mode
+3. [bugfix]: update ijkplayer , because maybe link error with app
+4. [bugfix]: ijkplayer rtmp can't setting tcp rw timeout
+5. [bugfix]: video stretching when iOS in landscape mode
+6. [bugfix]:the video distortion when mac SDK view self
+7. [feature]: add api for setting conference participant callback time InterVal
+8. [bug fix]:compile error
+9. [bug fix]: audio project compile error
+10. [feature]: demo media statistics
+11. [bug fix]: Partially resolve media statistics, with send channel tts problem
+12. [bug fix]: ios donot send video stream
+13. [bugfix]: mac libs h264 not sending
+14. [bug fix]: ios ecimage support not preview when app in background
+15. [bug fix]: crash, deregister send rtcp when deleting channel
+16. [bug fix]: android compile error
+17. [bug fix]: send rtcp crash when end phone
+18. [feature]: add log token
+19. [feature]: optimize logging
+20. [feature]: add log token
+21. [feature]: optimize logging
+22. [feature]: add log token
+23. [feature]: optimize logging
+24. [bugfix]: android not send rtp keepalive packet, can't see pc desktop share
+25. [feature]: optimize logging
+26. [feature]: Compile mac sdk and support mac desktop screen share
+27. [feature]: ecmedia support mac os, building success
+28. [bugfix]: ios remote view support UIViewContentModeScaleAspectFill mode
+29. [feature]: ios ffmpeg libs support watermark(text&png image)
+
 Version v2.3.2.1
 1. 接口不变
 2. [bugfix]: update ijkplayer , because maybe link error with app
