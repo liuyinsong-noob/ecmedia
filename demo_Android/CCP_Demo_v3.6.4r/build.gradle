@@ -1,14 +1,14 @@
 apply plugin: 'android'
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(':CCP_PHONE_SDK_Android_v3.6.4r')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':CCP_PHONE_SDK_Android_v3.6.4r')
     implementation project(':NDK_ECMedia')
 }
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "25.0.0"
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 19

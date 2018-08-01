@@ -3,7 +3,7 @@ NDK_TOOLCHAIN_VERSION = 4.9
 APP_PLATFORM := android-19
 APP_STL := gnustl_static #stlport_static #gnustl_static#
 #APP_ABI := armeabi
-APP_ABI := armeabi arm64-v8a
+APP_ABI := armeabi #arm64-v8a
 #APP_ABI := armeabi arm64-v8a x86 x86_64
 APP_CPPFLAGS :=  -std=c++11 -fexceptions
 APP_CFLAGS :=-Wno-psabi \

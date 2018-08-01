@@ -45,16 +45,20 @@ LOCAL_SRC_FILES := \
 		./Http/RESTClient.cpp \
 		./Utility/md5.cpp \
 		./Utility/base64_2.cpp \
-		./Utility/cJSON.c \
+		./cJSON.cpp \
 		./Utility/tinyxml2.cpp \
 		critical_section_posix.cc \
-		critical_section.cc
+		critical_section.cc \
+		MediaStatisticsData.pb.cc \
+		ProtobufCoder.cpp \
+		SyncMsgResp.pb.cc
 	
 LOCAL_CFLAGS := \
     $(MY_WEBRTC_COMMON_DEFS) \
     '-DVIDEO_ENABLED'
 
 LOCAL_C_INCLUDES := \
+		$(LOCAL_PATH) \
 		$(LOCAL_PATH)/../include \
 		$(LOCAL_PATH)/Http \
 		$(LOCAL_PATH)/Utility \
@@ -100,7 +104,12 @@ LOCAL_C_INCLUDES := \
 LOCAL_SHARED_LIBRARIES := \
     libcutils \
     libdl \
-    libstlport
+    libstlport \
+    
+
+LOCAL_STATIC_LIBRARIES := \
+	libProtobuf_lite
+ 
 
 ifndef NDK_ROOT
 include external/stlport/libstlport.mk
