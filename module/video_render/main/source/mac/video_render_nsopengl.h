@@ -100,6 +100,8 @@ private:
     GLenum _pixelFormat;
     GLenum _pixelDataType;
     unsigned int _texture;
+    float _windowW;
+    float _windowH;
 };
 
 class VideoRenderNSOpenGL
@@ -153,7 +155,7 @@ public: // methods
     int configureNSOpenGLView();
     int setRenderTargetWindow();
     int setRenderTargetFullScreen();
-
+    CocoaRenderView* _windowRef;
 protected: // methods
     static bool ScreenUpdateThreadProc(void* obj);
     bool ScreenUpdateProcess();
@@ -168,7 +170,7 @@ private: // methods
 private: // variables
 
 
-    CocoaRenderView* _windowRef;
+//    CocoaRenderView* _windowRef;
     NSView *_parentView;
     bool _fullScreen;
     int _id;

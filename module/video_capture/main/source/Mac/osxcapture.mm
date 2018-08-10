@@ -174,14 +174,47 @@ char *globalFilePathcapture = NULL;
                 // TODO(wu) : Update actual type and not hard-coded value.
                 tempCaptureCapability.rawType = kVideoBGRA;
         
+                if (self.parentView) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        CGFloat frameRatio = frameWidth*1.0 / frameHeight;
+                        CGSize windowSize = self.parentView.bounds.size;
+                        CGFloat windowRatio = windowSize.width / windowSize.height;
+                        CGFloat w = windowSize.width, h = windowSize.height;
+                        // 不变形，填充显示，超出部分不显示
+                        if ([self.parentView.layer.contentsGravity isEqualToString:@"resizeAspectFill"]) {
+                            if (frameRatio < windowRatio) {
+                                h = w / frameRatio;
+                                self.frame = CGRectMake(0, (windowSize.height - h)*0.5, w, h);
+                            }else if(frameRatio > windowRatio){
+                                w = h * frameRatio;
+                                self.frame = CGRectMake((windowSize.width - w)*0.5, 0, w, h);
+                            }else{
+                                self.frame = self.parentView.bounds;
+                            }
+                            // 不变形，全部显示，留黑边
+                        }else if ([self.parentView.layer.contentsGravity isEqualToString:@"resizeAspect"]){
+                            if (frameRatio < windowRatio) {
+                                w = h * frameRatio;
+                                self.frame = CGRectMake((windowSize.width - w)*0.5, 0, w, h);
+                            }else if(frameRatio > windowRatio){
+                                h = w / frameRatio;
+                                self.frame = CGRectMake(0, (windowSize.height - h)*0.5, w, h);
+                            }else{
+                                self.frame = self.parentView.bounds;
+                            }
+                        }else{ // 变形，填充显示
+                            self.frame = self.parentView.bounds;
+                        }
+                    });
+                }
                 _owner->IncomingFrame((unsigned char*)baseAddress,
                                       frameSize,
                                       tempCaptureCapability,
                                       0);
-        
                 CVBufferRelease(frame);
             }
             
+
 		} @finally {
 			if (frame) CVPixelBufferUnlockBaseAddress(frame, 0);
             pthread_mutex_unlock(&mutex);

@@ -60,6 +60,8 @@ VideoChannelNSOpenGL::~VideoChannelNSOpenGL()
         glDeleteTextures(1, (const GLuint*) &_texture);
         _texture = 0;
     }
+    [_owner->_windowRef removeFromSuperview];
+    [_owner->_windowRef release];
 }
 
 int VideoChannelNSOpenGL::ChangeContext(NSOpenGLContext *nsglContext)
@@ -220,7 +222,43 @@ int VideoChannelNSOpenGL::DeliverFrame(const I420VideoFrame& videoFrame) {
     _owner->UnlockAGLCntx();
     return -1;
   }
-
+//    dispatch_async(dispatch_get_main_queue(), ^{
+        CGSize windowSize = _owner->_windowRef.superview.bounds.size;
+        if (windowSize.width != _windowW || windowSize.height != _windowH) {
+            _windowW = windowSize.width;
+            _windowH = windowSize.height;
+            CGFloat frameRatio = videoFrame.width()*1.0 / videoFrame.height();
+            CGFloat windowRatio = _windowW / _windowH;
+            CGFloat w = _windowW, h = _windowH;
+            // 不变形，填充显示，超出部分不显示
+            if ([_owner->_windowRef.superview.layer.contentsGravity isEqualToString:@"resizeAspectFill"]) {
+                if (frameRatio < windowRatio) {
+                    h = w / frameRatio;
+                    _owner->_windowRef.frame = CGRectMake(0, (_windowH - h)*0.5, w, h);
+                }else if(frameRatio > windowRatio){
+                    w = h * frameRatio;
+                    _owner->_windowRef.frame = CGRectMake((_windowW - w)*0.5, 0, w, h);
+                }else{
+                    _owner->_windowRef.frame = CGRectMake(0, 0, _windowW, _windowH);
+                }
+                
+                // 不变形，全部显示，留黑边
+            }else if ([_owner->_windowRef.superview.layer.contentsGravity isEqualToString:@"resizeAspect"]){
+                if (frameRatio < windowRatio) {
+                    w = h * frameRatio;
+                    _owner->_windowRef.frame = CGRectMake((_windowW - w)*0.5, (_windowH - h)*0.5, w, h);
+                }else if(frameRatio > windowRatio){
+                    h = w / frameRatio;
+                    _owner->_windowRef.frame = CGRectMake((_windowW - w)*0.5, (_windowH - h)*0.5, w, h);
+                }
+                else{
+                    _owner->_windowRef.frame = CGRectMake(0, 0, _windowW, _windowH);
+                }
+            }else{
+                _owner->_windowRef.frame = CGRectMake(0, 0, _windowW, _windowH);
+            }
+        }
+//    });
   // Using the I420VideoFrame for YV12: YV12 is YVU; I420 assumes
   // YUV.
   // TODO(mikhal) : Use appropriate functionality.
@@ -572,9 +610,11 @@ int VideoRenderNSOpenGL::setRenderTargetWindow()
      *@see http://blog.csdn.net/libaineu2004/article/details/45368427
      */
     dispatch_async(dispatch_get_main_queue(), ^{
-        [_parentView addSubview:_windowRef];
+//        [_parentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+//        [_parentView addSubview:_windowRef];
+        [_parentView addSubview:_windowRef positioned:NSWindowBelow relativeTo:_parentView];
     });
-    DisplayBuffers();
+//    DisplayBuffers();
 
     UnlockAGLCntx();
     return 0;
@@ -655,7 +695,6 @@ VideoRenderNSOpenGL::~VideoRenderNSOpenGL()
 
         }
     }
-
     // Signal event to exit thread, then delete it
     ThreadWrapper* tmpPtr = _screenUpdateThread;
     _screenUpdateThread = NULL;
