@@ -29,7 +29,7 @@
 // the information in the VideoToolbox header files, a talk from WWDC 2014 and
 // experimentation.
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class H264VideoToolboxEncoder : public VideoEncoder {
  public:

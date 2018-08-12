@@ -39,7 +39,7 @@
 #define DEBUG_PRINTP(expr,p) ((void)0)
 #endif  // defined(_DEBUG) && defined(_WIN32)
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 const char RTPFILE_VERSION[] = "1.0";
 const uint32_t MAX_UWORD32 = 0xffffffff;
 
@@ -262,4 +262,4 @@ inline uint16_t RtpDumpImpl::RtpDumpHtons(uint16_t x) const
     return (x >> 8) + ((x & 0xFF) << 8);
 #endif
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

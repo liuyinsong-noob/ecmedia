@@ -10,7 +10,7 @@
 
 #include "../base/sharedexclusivelock.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 SharedExclusiveLock::SharedExclusiveLock()
     : shared_count_is_zero_(true, true),
@@ -41,4 +41,4 @@ void SharedExclusiveLock::UnlockShared() {
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

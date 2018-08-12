@@ -33,7 +33,7 @@
 #include "../module/rtp_rtcp/source/rtp_rtcp_config.h"
 #include "../module/rtp_rtcp/source/rtp_utility.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class OverheadObserver;
 class RateLimiter;
@@ -173,7 +173,7 @@ class RTPSender {
 
   uint32_t SSRC() const;
 
-  cloopenwebrtc::Optional<uint32_t> FlexfecSsrc() const;
+  yuntongxunwebrtc::Optional<uint32_t> FlexfecSsrc() const;
 
   bool SendToNetwork(std::unique_ptr<RtpPacketToSend> packet,
                      StorageType storage,
@@ -307,7 +307,7 @@ private:
   TransportSequenceNumberAllocator* const transport_sequence_number_allocator_;
   TransportFeedbackObserver* const transport_feedback_observer_;
   int64_t last_capture_time_ms_sent_;
-  cloopenwebrtc::CriticalSection send_critsect_;
+  yuntongxunwebrtc::CriticalSection send_critsect_;
 
   Transport* transport_;
   bool sending_media_ GUARDED_BY(send_critsect_);
@@ -330,7 +330,7 @@ private:
   RtpPacketHistory flexfec_packet_history_;
 
   // Statistics
-  cloopenwebrtc::CriticalSection statistics_crit_;
+  yuntongxunwebrtc::CriticalSection statistics_crit_;
   SendDelayMap send_delays_ GUARDED_BY(statistics_crit_);
   FrameCounts frame_counts_ GUARDED_BY(statistics_crit_);
   StreamDataCounters rtp_stats_ GUARDED_BY(statistics_crit_);
@@ -353,7 +353,7 @@ private:
   uint16_t sequence_number_rtx_ GUARDED_BY(send_critsect_);
   // Must be explicitly set by the application, use of rtc::Optional
   // only to keep track of correct use.
-  cloopenwebrtc::Optional<uint32_t> ssrc_ GUARDED_BY(send_critsect_);
+  yuntongxunwebrtc::Optional<uint32_t> ssrc_ GUARDED_BY(send_critsect_);
   uint32_t last_rtp_timestamp_ GUARDED_BY(send_critsect_);
   uint32_t timestamp_ GUARDED_BY(send_critsect_);
   int64_t capture_time_ms_ GUARDED_BY(send_critsect_);
@@ -362,7 +362,7 @@ private:
   bool last_packet_marker_bit_ GUARDED_BY(send_critsect_);
   std::vector<uint32_t> csrcs_ GUARDED_BY(send_critsect_);
   int rtx_ GUARDED_BY(send_critsect_);
-  cloopenwebrtc::Optional<uint32_t> ssrc_rtx_ GUARDED_BY(send_critsect_);
+  yuntongxunwebrtc::Optional<uint32_t> ssrc_rtx_ GUARDED_BY(send_critsect_);
   // Mapping rtx_payload_type_map_[associated] = rtx.
   std::map<int8_t, int8_t> rtx_payload_type_map_ GUARDED_BY(send_critsect_);
   size_t rtp_overhead_bytes_per_packet_ GUARDED_BY(send_critsect_);
@@ -375,6 +375,6 @@ private:
   DISALLOW_IMPLICIT_CONSTRUCTORS(RTPSender);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_SENDER_H_

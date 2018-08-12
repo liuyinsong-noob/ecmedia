@@ -20,7 +20,7 @@
 #include "../system_wrappers/include/file_wrapper.h"
 #include "../system_wrappers/include/clock.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class EventWrapper;
 class ThreadWrapper;
 
@@ -197,6 +197,6 @@ class FileAudioDevice : public AudioDeviceGeneric {
   Clock* _clock;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_AUDIO_DEVICE_FILE_AUDIO_DEVICE_H

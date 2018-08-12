@@ -36,7 +36,7 @@
 
 #include <google/protobuf/stubs/common.h>
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 namespace io {
 
@@ -110,4 +110,4 @@ double NoLocaleStrtod(const char* text, char** original_endptr) {
 
 }  // namespace io
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google

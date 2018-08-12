@@ -29,7 +29,7 @@
 #include "../module/remote_bitrate_estimator/overuse_detector.h"
 #include "../module/remote_bitrate_estimator/overuse_estimator.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class RtcEventLog;
 
@@ -68,7 +68,7 @@ class DelayBasedBwe {
    public:
     BitrateEstimator();
     void Update(int64_t now_ms, int bytes);
-    cloopenwebrtc::Optional<uint32_t> bitrate_bps() const;
+    yuntongxunwebrtc::Optional<uint32_t> bitrate_bps() const;
 
    private:
     float UpdateWindow(int64_t now_ms, int bytes, int rate_window_ms);
@@ -87,12 +87,12 @@ class DelayBasedBwe {
   // estimate exists.
   bool UpdateEstimate(int64_t packet_arrival_time_ms,
                       int64_t now_ms,
-	                  cloopenwebrtc::Optional<uint32_t> acked_bitrate_bps,
+	                  yuntongxunwebrtc::Optional<uint32_t> acked_bitrate_bps,
                       uint32_t* target_bitrate_bps);
   const bool in_trendline_experiment_;
   const bool in_median_slope_experiment_;
 
-  cloopenwebrtc::ThreadChecker network_thread_;
+  yuntongxunwebrtc::ThreadChecker network_thread_;
   RtcEventLog* const event_log_;
   Clock* const clock_;
   std::unique_ptr<InterArrival> inter_arrival_;
@@ -119,6 +119,6 @@ class DelayBasedBwe {
   DISALLOW_IMPLICIT_CONSTRUCTORS(DelayBasedBwe);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_CONGESTION_CONTROLLER_DELAY_BASED_BWE_H_

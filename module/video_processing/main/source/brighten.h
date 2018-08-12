@@ -14,7 +14,7 @@
 #include "video_processing.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace VideoProcessing {
 
 int32_t Brighten(I420VideoFrame* frame, int delta);

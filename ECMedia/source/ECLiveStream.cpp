@@ -47,11 +47,11 @@
 #include "rtp_rtcp_defines.h"
 #include "sdk_common.h"
 //#include "base64.h"
-using namespace cloopenwebrtc;
-extern cloopenwebrtc::VoiceEngine* m_voe;
+using namespace yuntongxunwebrtc;
+extern yuntongxunwebrtc::VoiceEngine* m_voe;
 
 #ifdef VIDEO_ENABLED
-extern cloopenwebrtc::VideoEngine* m_vie;
+extern yuntongxunwebrtc::VideoEngine* m_vie;
 #endif
 
 
@@ -75,7 +75,7 @@ FILE* __cdecl __iob_func(unsigned i) {
 
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     
     
     ECMedia_LiveStream::ECMedia_LiveStream()

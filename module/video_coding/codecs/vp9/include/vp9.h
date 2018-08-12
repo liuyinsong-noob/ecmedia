@@ -14,7 +14,7 @@
 
 #include "../module/video_coding/include/video_codec_interface.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VP9Encoder : public VideoEncoder {
  public:
@@ -31,6 +31,6 @@ class VP9Decoder : public VideoDecoder {
 
   virtual ~VP9Decoder() {}
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_VIDEO_CODING_CODECS_VP9_INCLUDE_VP9_H_

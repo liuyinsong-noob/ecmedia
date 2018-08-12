@@ -15,7 +15,7 @@
 #include "../module/rtp_rtcp/source/rtp_format_video_generic.h"
 #include "../module/rtp_rtcp/source/rtp_packet_to_send.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const size_t kGenericHeaderLength = 1;
 
@@ -115,4 +115,4 @@ bool RtpDepacketizerGeneric::Parse(ParsedPayload* parsed_payload,
   parsed_payload->payload_length = payload_data_length;
   return true;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

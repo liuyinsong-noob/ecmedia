@@ -15,7 +15,7 @@
 
 #include "shared_data.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 class VoECodecImpl: public VoECodec

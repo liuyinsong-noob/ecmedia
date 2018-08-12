@@ -22,7 +22,7 @@
 #include <stdio.h>
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class OpenH264EncoderImpl : public OpenH264Encoder{
  public:

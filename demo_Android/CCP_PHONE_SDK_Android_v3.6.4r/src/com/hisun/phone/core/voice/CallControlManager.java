@@ -114,8 +114,8 @@ public final class CallControlManager extends AbstractDispatcher {
 
 //		if (userAgent.getPassword().compareTo("1234") == 0) {
 //			NativeInterface.connectToCCP("114.215.241.49", 8600,
-//					userAgent.getSid(), "cloopen_pass3wd", "");
-//		} else if (userAgent.getPassword().compareTo("cloopen_pass3wd") == 0) {
+//					userAgent.getSid(), "yuntongxun_pass3wd", "");
+//		} else if (userAgent.getPassword().compareTo("yuntongxun_pass3wd") == 0) {
 //            NativeInterface.connectToCCP("118.194.243.237", 7600,
 //                    userAgent.getSid(), userAgent.getPassword(), "");
 //        }else {

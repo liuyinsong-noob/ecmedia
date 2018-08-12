@@ -15,7 +15,7 @@
 #include "../system_wrappers/include/trace.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -63,8 +63,8 @@ int16_t ACMILBC::InternalEncode(uint8_t* bitstream,
       encoder_inst_ptr_, &in_audio_[in_audio_ix_read_], frame_len_smpl_,
       bitstream);
   if (*bitstream_len_byte < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-                 cloopenwebrtc::kTraceAudioCoding,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+                 yuntongxunwebrtc::kTraceAudioCoding,
                  unique_id_,
                  "InternalEncode: error in encode for ILBC");
     return -1;
@@ -86,7 +86,7 @@ int16_t ACMILBC::InternalInitEncoder(WebRtcACMCodecParams* codec_params) {
     // processing block of 30ms
     return WebRtcIlbcfix_EncoderInit(encoder_inst_ptr_, 30);
   } else {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                  "InternalInitEncoder: invalid processing block");
     return -1;
   }
@@ -96,8 +96,8 @@ ACMGenericCodec* ACMILBC::CreateInstance(void) { return NULL; }
 
 int16_t ACMILBC::InternalCreateEncoder() {
   if (WebRtcIlbcfix_EncoderCreate(&encoder_inst_ptr_) < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-                 cloopenwebrtc::kTraceAudioCoding,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+                 yuntongxunwebrtc::kTraceAudioCoding,
                  unique_id_,
                  "InternalCreateEncoder: cannot create instance for ILBC "
                  "encoder");
@@ -133,4 +133,4 @@ int16_t ACMILBC::SetBitRateSafe(const int32_t rate) {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

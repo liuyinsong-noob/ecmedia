@@ -16,7 +16,7 @@
 #include "differ_block_sse2.h"
 #include "../system_wrappers/include/cpu_features_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 int BlockDifference_C(const uint8_t* image1,
                       const uint8_t* image2,
@@ -56,4 +56,4 @@ int BlockDifference(const uint8_t* image1, const uint8_t* image2, int stride) {
   return diff_proc(image1, image2, stride);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -17,7 +17,7 @@
 #include "../system_wrappers/include/critical_section_wrapper.h"
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 typedef VadInst Handle;
 
@@ -181,4 +181,4 @@ int VoiceDetectionImpl::GetHandleError(void* handle) const {
   assert(handle != NULL);
   return apm_->kUnspecifiedError;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

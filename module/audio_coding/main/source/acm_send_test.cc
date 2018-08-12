@@ -20,7 +20,7 @@
 #include "input_audio_file.h"
 #include "packet.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace test {
 
 AcmSendTest::AcmSendTest(InputAudioFile* audio_source,
@@ -36,10 +36,10 @@ AcmSendTest::AcmSendTest(InputAudioFile* audio_source,
       payload_type_(0),
       timestamp_(0),
       sequence_number_(0) {
-  cloopenwebrtc::AudioCoding::Config config;
+  yuntongxunwebrtc::AudioCoding::Config config;
   config.clock = &clock_;
   config.transport = this;
-  acm_.reset(cloopenwebrtc::AudioCoding::Create(config));
+  acm_.reset(yuntongxunwebrtc::AudioCoding::Create(config));
   input_frame_.sample_rate_hz_ = source_rate_hz_;
   input_frame_.num_channels_ = 1;
   input_frame_.samples_per_channel_ = input_block_size_samples_;
@@ -138,4 +138,4 @@ Packet* AcmSendTest::CreatePacket() {
 }
 
 }  // namespace test
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

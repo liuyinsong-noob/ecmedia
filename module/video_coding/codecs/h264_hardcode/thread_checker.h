@@ -30,7 +30,7 @@
 
 #include "thread_checker_impl.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Do nothing implementation, for use in release mode.
 //

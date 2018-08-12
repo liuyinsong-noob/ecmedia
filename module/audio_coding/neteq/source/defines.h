@@ -11,7 +11,7 @@
 #ifndef WEBRTC_MODULES_AUDIO_CODING_NETEQ_DEFINES_H_
 #define WEBRTC_MODULES_AUDIO_CODING_NETEQ_DEFINES_H_
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 enum Operations {
   kNormal = 0,
@@ -47,5 +47,5 @@ enum Modes {
   kModeUndefined = -1
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_DEFINES_H_

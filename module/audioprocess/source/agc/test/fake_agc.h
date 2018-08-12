@@ -13,7 +13,7 @@
 
 #include "cloopenwebrtc/modules/audio_processing/agc/agc.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class FakeAgc : public Agc {
  public:

@@ -2,7 +2,7 @@
 #include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 
 	GDIChannel::GDIChannel(HWND hWnd, Trace* trace):

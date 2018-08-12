@@ -57,7 +57,7 @@ DEFINE_int32(num_channels, 1, "Number of channels.");
 static const bool num_channels_dummy =
     google::RegisterFlagValidator(&FLAGS_num_channels, &ValidatePositiveInt);
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const char kUsage[] =
     "\nDetects and suppresses transients from file.\n\n"
@@ -243,8 +243,8 @@ void void_main() {
 }  // namespace webrtc
 
 int main(int argc, char* argv[]) {
-  google::SetUsageMessage(cloopenwebrtc::kUsage);
+  google::SetUsageMessage(yuntongxunwebrtc::kUsage);
   google::ParseCommandLineFlags(&argc, &argv, true);
-  cloopenwebrtc::void_main();
+  yuntongxunwebrtc::void_main();
   return 0;
 }

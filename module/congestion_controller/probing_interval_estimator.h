@@ -15,7 +15,7 @@
 #include "../base/optional.h"
 #include "../module/remote_bitrate_estimator/aimd_rate_control.h"
 
-namespace cloopenwebrtc{
+namespace yuntongxunwebrtc{
 
 class ProbingIntervalEstimator {
  public:
@@ -35,5 +35,5 @@ class ProbingIntervalEstimator {
   DISALLOW_COPY_AND_ASSIGN(ProbingIntervalEstimator);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_CONGESTION_CONTROLLER_PROBING_INTERVAL_ESTIMATOR_H_

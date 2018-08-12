@@ -98,51 +98,51 @@ bool TRESTClient::CreateSubAccount(std::string name ,std::string& subAccount,
 		m_errorMsg = "response error: status code : "+response.GetStatusCode();
 		return false;
 	}
-	cloopenwebrtc::tinyxml2::XMLDocument doc;
+	yuntongxunwebrtc::tinyxml2::XMLDocument doc;
 	if( doc.Parse( response.GetContentData().c_str() )!= 0) {
 		m_errorMsg = doc.GetErrorStr1();
 		return false;
 	}
-	cloopenwebrtc::tinyxml2::XMLElement* responseElemenet 	= doc.FirstChildElement();
+	yuntongxunwebrtc::tinyxml2::XMLElement* responseElemenet 	= doc.FirstChildElement();
 	if( !responseElemenet || stricmp(responseElemenet->Name(),"Response")) {
 		m_errorMsg="no Response child element in response";
 		return false;
 	}
-	cloopenwebrtc::tinyxml2::XMLElement*  subAccountElement = responseElemenet->FirstChildElement("SubAccount");
+	yuntongxunwebrtc::tinyxml2::XMLElement*  subAccountElement = responseElemenet->FirstChildElement("SubAccount");
 	if( !subAccountElement) {
-		cloopenwebrtc::tinyxml2::XMLElement *message = responseElemenet->FirstChildElement("Message");
+		yuntongxunwebrtc::tinyxml2::XMLElement *message = responseElemenet->FirstChildElement("Message");
 		if(!message) {
 			m_errorMsg="no message child element in response";
 			return false;
 		}
-		cloopenwebrtc::tinyxml2::XMLElement *code = message->FirstChildElement("code");
-		cloopenwebrtc::tinyxml2::XMLElement *msg = message->FirstChildElement("msg");
+		yuntongxunwebrtc::tinyxml2::XMLElement *code = message->FirstChildElement("code");
+		yuntongxunwebrtc::tinyxml2::XMLElement *msg = message->FirstChildElement("msg");
 		if( code && msg) {
 			m_errorMsg = Utf8ToLocal(msg->GetText());
 		}
 		return false;
 	}
-	cloopenwebrtc::tinyxml2::XMLElement *accountSid = subAccountElement->FirstChildElement("accountSid");
+	yuntongxunwebrtc::tinyxml2::XMLElement *accountSid = subAccountElement->FirstChildElement("accountSid");
 	if( !accountSid)
 	{
 		m_errorMsg ="can not get accountSid in repsonse";
 		return false;
 	}
 	subAccount = accountSid->GetText();
-	cloopenwebrtc::tinyxml2::XMLElement *sipCode = subAccountElement->FirstChildElement("sipCode");
+	yuntongxunwebrtc::tinyxml2::XMLElement *sipCode = subAccountElement->FirstChildElement("sipCode");
 	if( !sipCode) 
 	{
 		m_errorMsg ="can not get sipCode in repsonse";
 		return false;
 	}
 	sipAccount = sipCode->GetText();
-	cloopenwebrtc::tinyxml2::XMLElement *password = subAccountElement->FirstChildElement("sipPwd");
+	yuntongxunwebrtc::tinyxml2::XMLElement *password = subAccountElement->FirstChildElement("sipPwd");
 	if( !password) {
 		m_errorMsg ="can not get sipPwd in repsonse";
 		return false;
 	}
 	sipPassword=password->GetText();
-	cloopenwebrtc::tinyxml2::XMLElement *authen_token= subAccountElement->FirstChildElement("authToken");
+	yuntongxunwebrtc::tinyxml2::XMLElement *authen_token= subAccountElement->FirstChildElement("authToken");
 	if( !authen_token) {
 		m_errorMsg ="can not get authen_token in repsonse";
 		return false;
@@ -197,24 +197,24 @@ bool TRESTClient::CallBackRequest(const std::string& caller, const std::string& 
 		m_errorMsg = "response error: status code : "+response.GetStatusCode();
 		return false;
 	}
-	cloopenwebrtc::tinyxml2::XMLDocument doc;
+	yuntongxunwebrtc::tinyxml2::XMLDocument doc;
 	if( doc.Parse( response.GetContentData().c_str())!= 0) {
 		m_errorMsg = doc.GetErrorStr1();
 		return false;
 	}
-	cloopenwebrtc::tinyxml2::XMLElement* responseElement 	= doc.FirstChildElement();
+	yuntongxunwebrtc::tinyxml2::XMLElement* responseElement 	= doc.FirstChildElement();
 	if( !responseElement || stricmp(responseElement->Name(),"Response")) {
 		m_errorMsg="no Response child element in response";
 		return false;
 	}
-	cloopenwebrtc::tinyxml2::XMLElement*  callElement = responseElement->FirstChildElement("CallBack");
+	yuntongxunwebrtc::tinyxml2::XMLElement*  callElement = responseElement->FirstChildElement("CallBack");
 	if( !callElement) {
-		cloopenwebrtc::tinyxml2::XMLElement *messageElement = responseElement->FirstChildElement("Message");
+		yuntongxunwebrtc::tinyxml2::XMLElement *messageElement = responseElement->FirstChildElement("Message");
 		if(!messageElement) { 
 			m_errorMsg="no callback element in response";
 			return false;
 		}
-		cloopenwebrtc::tinyxml2::XMLElement* code  = messageElement->FirstChildElement("code");
+		yuntongxunwebrtc::tinyxml2::XMLElement* code  = messageElement->FirstChildElement("code");
 		if( !code|| !strcmp(code->GetText(),""))	{
 			status = 7654;
 		}
@@ -222,7 +222,7 @@ bool TRESTClient::CallBackRequest(const std::string& caller, const std::string& 
 			status = atoi(code->GetText());
 
 	}
-	cloopenwebrtc::tinyxml2::XMLElement *statusElement = callElement->FirstChildElement("status");
+	yuntongxunwebrtc::tinyxml2::XMLElement *statusElement = callElement->FirstChildElement("status");
 	if( !statusElement) 
 	{
 		m_errorMsg ="can not status in repsonse";
@@ -269,27 +269,27 @@ bool TRESTClient::GetLoginServer(const std::string& subaccount,const std::string
 		m_errorMsg = "response error: status code : "+response.GetStatusCode();
 		return false;
 	}
-	cloopenwebrtc::tinyxml2::XMLDocument doc;
+	yuntongxunwebrtc::tinyxml2::XMLDocument doc;
 	if( doc.Parse( response.GetContentData().c_str())!= 0) {
 		m_errorMsg = doc.GetErrorStr1();
 		return false;
 	}
-	cloopenwebrtc::tinyxml2::XMLElement* responseElement 	= doc.FirstChildElement();
+	yuntongxunwebrtc::tinyxml2::XMLElement* responseElement 	= doc.FirstChildElement();
 	if( !responseElement || stricmp(responseElement->Name(),"Response")) {
 		m_errorMsg="no Response child element in response";
 		return false;
 	}
-	cloopenwebrtc::tinyxml2::XMLElement*  switchElement = responseElement->FirstChildElement("Switch");
+	yuntongxunwebrtc::tinyxml2::XMLElement*  switchElement = responseElement->FirstChildElement("Switch");
 	if( !switchElement) {
-		cloopenwebrtc::tinyxml2::XMLElement *messageElement = responseElement->FirstChildElement("Message");
+		yuntongxunwebrtc::tinyxml2::XMLElement *messageElement = responseElement->FirstChildElement("Message");
 		if(!messageElement) { 
 			m_errorMsg="no callback element in response";
 			return false;
 		}
-		cloopenwebrtc::tinyxml2::XMLElement* code  = messageElement->FirstChildElement("code");
+		yuntongxunwebrtc::tinyxml2::XMLElement* code  = messageElement->FirstChildElement("code");
 
 	}
-	cloopenwebrtc::tinyxml2::XMLElement *ipElement = switchElement->FirstChildElement("ip");
+	yuntongxunwebrtc::tinyxml2::XMLElement *ipElement = switchElement->FirstChildElement("ip");
 	if( !ipElement) 
 	{
 		m_errorMsg ="can not ip in repsonse";
@@ -297,7 +297,7 @@ bool TRESTClient::GetLoginServer(const std::string& subaccount,const std::string
 	}
 	softswitch_addr = ipElement->GetText();
 
-	cloopenwebrtc::tinyxml2::XMLElement *portElement = switchElement->FirstChildElement("port");
+	yuntongxunwebrtc::tinyxml2::XMLElement *portElement = switchElement->FirstChildElement("port");
 	if( !ipElement) 
 	{
 		m_errorMsg ="can not port in repsonse";
@@ -361,17 +361,17 @@ bool TRESTClient::CheckProxyValid(const std::string& proxy, const std::string& s
 		m_errorMsg = "response error: status code : "+ response.GetStatusCode();
 		return false;
 	}
-	cloopenwebrtc::tinyxml2::XMLDocument doc;
+	yuntongxunwebrtc::tinyxml2::XMLDocument doc;
 	if( doc.Parse( response.GetContentData().c_str())!= 0) {
 		m_errorMsg = doc.GetErrorStr1();
 		return false;
 	}
-	cloopenwebrtc::tinyxml2::XMLElement* responseElement 	= doc.FirstChildElement();
+	yuntongxunwebrtc::tinyxml2::XMLElement* responseElement 	= doc.FirstChildElement();
 	if( !responseElement || stricmp(responseElement->Name(),"Response")) {
 		m_errorMsg="no Response child element in response";
 		return false;
 	}
-	cloopenwebrtc::tinyxml2::XMLElement*  statusCodeElement = responseElement->FirstChildElement("statusCode");
+	yuntongxunwebrtc::tinyxml2::XMLElement*  statusCodeElement = responseElement->FirstChildElement("statusCode");
 	if( !statusCodeElement) {
         m_errorMsg="no statusCode element in response";
         return false;
@@ -449,23 +449,23 @@ bool TRESTClient::CheckPrivateProxyValid(const std::string& companyID, const std
 		m_errorMsg = "response error: status code : "+ response.GetStatusCode();
 		return false;
 	}
-	cloopenwebrtc::tinyxml2::XMLDocument doc;
+	yuntongxunwebrtc::tinyxml2::XMLDocument doc;
 	if( doc.Parse( response.GetContentData().c_str())!= 0) {
 		m_errorMsg = doc.GetErrorStr1();
 		return false;
 	}
-	cloopenwebrtc::tinyxml2::XMLElement* responseElement 	= doc.FirstChildElement();
+	yuntongxunwebrtc::tinyxml2::XMLElement* responseElement 	= doc.FirstChildElement();
 	if( !responseElement || stricmp(responseElement->Name(),"Response")) {
 		m_errorMsg="no Response child element in response";
 		return false;
 	}
-	cloopenwebrtc::tinyxml2::XMLElement*  statusCodeElement = responseElement->FirstChildElement("statusCode");
+	yuntongxunwebrtc::tinyxml2::XMLElement*  statusCodeElement = responseElement->FirstChildElement("statusCode");
 	if( !statusCodeElement) {
         m_errorMsg="no statusCode element in response";
         return false;
 	}
 	status = atoi(statusCodeElement->GetText());
-    cloopenwebrtc::tinyxml2::XMLElement*  licenseElement = responseElement->FirstChildElement("license");
+    yuntongxunwebrtc::tinyxml2::XMLElement*  licenseElement = responseElement->FirstChildElement("license");
 	if( !licenseElement) {
         m_errorMsg="no license element in response";
         return false;

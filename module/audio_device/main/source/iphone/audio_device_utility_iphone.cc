@@ -13,7 +13,7 @@
 #include "critical_section_wrapper.h"
 #include "trace.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 AudioDeviceUtilityIPhone::AudioDeviceUtilityIPhone(const WebRtc_Word32 id) :

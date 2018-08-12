@@ -15,7 +15,7 @@
 #include "signal_processing_library.h"
 #include "channel_buffer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 SplittingFilter::SplittingFilter(int channels)
     : channels_(channels),
@@ -193,4 +193,4 @@ void SplittingFilterSynthesis(const WebRtc_Word16* low_band,
 	WebRtcSpl_SynthesisQMF(low_band, high_band, data_length, out_data, filt_state1, filt_state2);
 }
 //---end
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

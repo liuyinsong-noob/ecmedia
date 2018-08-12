@@ -12,7 +12,7 @@
 
 #include "desktop_capture_options.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ScreenCapturer* ScreenCapturer::Create() {
   return Create(DesktopCaptureOptions::CreateDefault());
@@ -33,4 +33,4 @@ ScreenCapturer* ScreenCapturer::CreateWithDisableAero(bool disable_effects) {
 }
 #endif
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

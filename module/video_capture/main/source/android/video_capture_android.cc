@@ -16,7 +16,7 @@
 #include "../system_wrappers/include/ref_count.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 namespace videocapturemodule
 {
@@ -64,11 +64,11 @@ WebRtc_Word32 VideoCaptureAndroid::SetAndroidObjects(void* javaVM, void* env,
 	JNIEnv* thisEnv = (JNIEnv*)env;
 
 	// get java capture class type (note path to class packet)
-	  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
 	               "%s: could not get Java environment,class name :%s", __FUNCTION__,AndroidJavaCaptureClass);
 	jclass javaCmClassLocal = thisEnv->FindClass(AndroidJavaCaptureClass);
 	if (!javaCmClassLocal) {
-	  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
 	               "%s: could not find java class", __FUNCTION__);
 	  return -1;
 	}
@@ -78,7 +78,7 @@ WebRtc_Word32 VideoCaptureAndroid::SetAndroidObjects(void* javaVM, void* env,
 	g_javaCmClass = static_cast<jclass>
 	    (thisEnv->NewGlobalRef(javaCmClassLocal));
 	if (!g_javaCmClass) {
-	  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
 	               "%s: InitVideoEngineJava(): could not create"
 	               " Java Camera class reference",
 	               __FUNCTION__);
@@ -90,11 +90,11 @@ WebRtc_Word32 VideoCaptureAndroid::SetAndroidObjects(void* javaVM, void* env,
 	    { "ProvideCameraFrame", "([BIJ)V",
 	      (void*) &VideoCaptureAndroid::ProvideCameraFrame };
 	if (thisEnv->RegisterNatives(g_javaCmClass, &nativeFunctions, 1) == 0) {
-	  WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, -1,
+	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, -1,
 	               "%s: Registered native functions", __FUNCTION__);
 	}
 	else {
-	  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
 	               "%s: Failed to register native functions",
 	               __FUNCTION__);
 	  return -1;
@@ -104,7 +104,7 @@ WebRtc_Word32 VideoCaptureAndroid::SetAndroidObjects(void* javaVM, void* env,
 	jclass javaCmDevInfoClassLocal = thisEnv->FindClass(
 	    AndroidJavaCaptureDeviceInfoClass);
 	if (!javaCmDevInfoClassLocal) {
-	  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
 	               "%s: could not find java class", __FUNCTION__);
 	  return -1;
 	}
@@ -115,7 +115,7 @@ WebRtc_Word32 VideoCaptureAndroid::SetAndroidObjects(void* javaVM, void* env,
 	g_javaCmDevInfoClass = static_cast<jclass>
 	    (thisEnv->NewGlobalRef(javaCmDevInfoClassLocal));
 	if (!g_javaCmDevInfoClass) {
-	  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
 	               "%s: InitVideoEngineJava(): could not create Java "
 	               "Camera Device info class reference",
 	               __FUNCTION__);
@@ -124,12 +124,12 @@ WebRtc_Word32 VideoCaptureAndroid::SetAndroidObjects(void* javaVM, void* env,
 	// Delete local class ref, we only use the global ref
 	thisEnv->DeleteLocalRef(javaCmDevInfoClassLocal);
 
-	WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, -1,
+	WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, -1,
 	             "VideoCaptureDeviceInfoAndroid get method id");
 
        jclass javaCapClassLocal = thisEnv->FindClass(AndroidJavaCaptureCapabilityClass);
 	  if (javaCapClassLocal == NULL) {
-	      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+	      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
 	                   "%s: Can't find java class VideoCaptureCapabilityAndroid.",
 	                   __FUNCTION__);
 	      return -1;
@@ -137,7 +137,7 @@ WebRtc_Word32 VideoCaptureAndroid::SetAndroidObjects(void* javaVM, void* env,
 	  g_javaCapClass = static_cast<jclass>
 	  (thisEnv->NewGlobalRef(javaCapClassLocal));
 	  if (!g_javaCapClass) {
-	      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+	      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
 	                   "%s: InitVideoEngineJava(): could not create Java "
 	                   "Cap class reference",
 	                   __FUNCTION__);
@@ -153,14 +153,14 @@ WebRtc_Word32 VideoCaptureAndroid::SetAndroidObjects(void* javaVM, void* env,
         	    "(ILandroid/content/Context;)"
         	    "Lcom/yuntongxun/ecsdk/core/voip/VideoCaptureDeviceInfoAndroid;");
         	if (cid == NULL) {
-        	  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+        	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
         	               "%s: could not get java"
         	               "VideoCaptureDeviceInfoAndroid constructor ID",
         	               __FUNCTION__);
         	  return -1;
         	}
 
-        	WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, -1,
+        	WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, -1,
         	             "%s: construct static java device object", __FUNCTION__);
 
         	// construct the object by calling the static constructor object
@@ -169,7 +169,7 @@ WebRtc_Word32 VideoCaptureAndroid::SetAndroidObjects(void* javaVM, void* env,
         	                                cid, (int) -1,
         	                                g_javaContext);
         	if (!javaCameraDeviceInfoObjLocal) {
-        	  WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideoCapture, -1,
+        	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture, -1,
         	               "%s: could not create Java Capture Device info object",
         	               __FUNCTION__);
         	  return -1;
@@ -178,8 +178,8 @@ WebRtc_Word32 VideoCaptureAndroid::SetAndroidObjects(void* javaVM, void* env,
         	// we are referencing it after this function has returned)
         	g_javaCmDevInfoObject = thisEnv->NewGlobalRef(javaCameraDeviceInfoObjLocal);
         	if (!g_javaCmDevInfoObject) {
-        	  WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-        	               cloopenwebrtc::kTraceAudioDevice,
+        	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+        	               yuntongxunwebrtc::kTraceAudioDevice,
         	               -1,
         	               "%s: could not create Java"
         	               "cameradevinceinfo object reference",
@@ -200,7 +200,7 @@ WebRtc_Word32 VideoCaptureAndroid::AttachAndUseAndroidDeviceInfoObjects(
     bool& attached) {
   // get the JNI env for this thread
   if (!g_jvm) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
                  "%s: SetAndroidObjects not called with a valid JVM.",
                  __FUNCTION__);
     return -1;
@@ -211,7 +211,7 @@ WebRtc_Word32 VideoCaptureAndroid::AttachAndUseAndroidDeviceInfoObjects(
     // Attach this thread to JVM
     jint res = g_jvm->AttachCurrentThread(&env, NULL);
     if ((res < 0) || !env) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
                    "%s: Could not attach thread to JVM (%d, %p)",
                    __FUNCTION__, res, env);
       return -1;
@@ -228,14 +228,14 @@ WebRtc_Word32 VideoCaptureAndroid::AttachAndUseAndroidDeviceInfoObjects(
         	    "(ILandroid/content/Context;)"
         	    "Lcom/yuntongxun/ecsdk/core/voip/VideoCaptureDeviceInfoAndroid;");
         	if (cid == NULL) {
-        	  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+        	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
         	               "%s: could not get java"
         	               "VideoCaptureDeviceInfoAndroid constructor ID",
         	               __FUNCTION__);
         	  return -1;
         	}
 
-        	WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, -1,
+        	WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, -1,
         	             "%s: construct static java device object", __FUNCTION__);
 
         	// construct the object by calling the static constructor object
@@ -244,7 +244,7 @@ WebRtc_Word32 VideoCaptureAndroid::AttachAndUseAndroidDeviceInfoObjects(
         	                                cid, (int) -1,
         	                                g_javaContext);
         	if (!javaCameraDeviceInfoObjLocal) {
-        	  WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideoCapture, -1,
+        	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture, -1,
         	               "%s: could not create Java Capture Device info object",
         	               __FUNCTION__);
         	  return -1;
@@ -253,8 +253,8 @@ WebRtc_Word32 VideoCaptureAndroid::AttachAndUseAndroidDeviceInfoObjects(
         	// we are referencing it after this function has returned)
         	g_javaCmDevInfoObject = env->NewGlobalRef(javaCameraDeviceInfoObjLocal);
         	if (!g_javaCmDevInfoObject) {
-        	  WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-        	               cloopenwebrtc::kTraceAudioDevice,
+        	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+        	               yuntongxunwebrtc::kTraceAudioDevice,
         	               -1,
         	               "%s: could not create Java"
         	               "cameradevinceinfo object reference",
@@ -267,7 +267,7 @@ WebRtc_Word32 VideoCaptureAndroid::AttachAndUseAndroidDeviceInfoObjects(
 
 
   if(!g_javaCmDevInfoClass  || !g_javaCmDevInfoObject) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
                    "%s: g_javaCmDevInfoClass or g_javaCmDevInfoObject is NULL",
                    __FUNCTION__);
       return -1;
@@ -281,7 +281,7 @@ WebRtc_Word32 VideoCaptureAndroid::AttachAndUseAndroidDeviceInfoObjects(
 WebRtc_Word32 VideoCaptureAndroid::ReleaseAndroidDeviceInfoObjects(
     bool attached) {
   if (attached && g_jvm->DetachCurrentThread() < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideoCapture, -1,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture, -1,
                  "%s: Could not detach thread from JVM", __FUNCTION__);
     return -1;
   }
@@ -305,7 +305,7 @@ void JNICALL VideoCaptureAndroid::ProvideCameraFrame(JNIEnv * env,
   if(captureModule == NULL ) { 
     return;
   }
-  WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture,
                -1, "%s: IncomingFrame %d", __FUNCTION__,length);
   jbyte* cameraFrame = env->GetByteArrayElements(javaCameraFrame,NULL);
 
@@ -320,7 +320,7 @@ void JNICALL VideoCaptureAndroid::ProvideCameraFrame(JNIEnv * env,
 VideoCaptureAndroid::VideoCaptureAndroid(const WebRtc_Word32 id)
     : VideoCaptureImpl(id), _capInfo(id), _javaCaptureObj(NULL),
       _captureStarted(false) {
-  WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, -1,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, -1,
                "%s: context %x", __FUNCTION__, (unsigned long) this);
 }
 
@@ -342,19 +342,19 @@ WebRtc_Word32 VideoCaptureAndroid::Init(const WebRtc_Word32 id,
   memcpy(_deviceUniqueId, deviceUniqueIdUTF8, nameLength + 1);
 
   if (_capInfo.Init() != 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-                 cloopenwebrtc::kTraceVideoCapture,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+                 yuntongxunwebrtc::kTraceVideoCapture,
                  _id,
                  "%s: Failed to initialize CaptureDeviceInfo",
                  __FUNCTION__);
     return -1;
   }
 
-  WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, -1, "%s:",
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, -1, "%s:",
                __FUNCTION__);
   // use the jvm that has been set
   if (!g_jvm) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s: Not a valid Java VM pointer", __FUNCTION__);
     return -1;
   }
@@ -368,7 +368,7 @@ WebRtc_Word32 VideoCaptureAndroid::Init(const WebRtc_Word32 id,
     // Attach this thread to JVM
     jint res = g_jvm->AttachCurrentThread(&env, NULL);
     if ((res < 0) || !env) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                    "%s: Could not attach thread to JVM (%d, %p)",
                    __FUNCTION__, res, env);
       return -1;
@@ -376,7 +376,7 @@ WebRtc_Word32 VideoCaptureAndroid::Init(const WebRtc_Word32 id,
     isAttached = true;
   }
 
-  WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, _id,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, _id,
                "get method id");
 
   // get the method ID for the Android Java
@@ -387,7 +387,7 @@ WebRtc_Word32 VideoCaptureAndroid::Init(const WebRtc_Word32 id,
   jmethodID cid = env->GetMethodID(g_javaCmDevInfoClass, "AllocateCamera",
                                    signature);
   if (cid == NULL) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s: could not get constructor ID", __FUNCTION__);
     return -1; /* exception thrown */
   }
@@ -399,7 +399,7 @@ WebRtc_Word32 VideoCaptureAndroid::Init(const WebRtc_Word32 id,
                                                      (jlong) this,
                                                      capureIdString);
   if (!javaCameraObjLocal) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s: could not create Java Capture object", __FUNCTION__);
     return -1;
   }
@@ -408,7 +408,7 @@ WebRtc_Word32 VideoCaptureAndroid::Init(const WebRtc_Word32 id,
   // after this function has returned)
   _javaCaptureObj = env->NewGlobalRef(javaCameraObjLocal);
   if (!_javaCaptureObj) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioDevice, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioDevice, _id,
                  "%s: could not create Java camera object reference",
                  __FUNCTION__);
     return -1;
@@ -420,7 +420,7 @@ WebRtc_Word32 VideoCaptureAndroid::Init(const WebRtc_Word32 id,
   // Detach this thread if it was attached
   if (isAttached) {
     if (g_jvm->DetachCurrentThread() < 0) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceAudioDevice, _id,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceAudioDevice, _id,
                    "%s: Could not detach thread from JVM", __FUNCTION__);
     }
   }
@@ -429,10 +429,10 @@ WebRtc_Word32 VideoCaptureAndroid::Init(const WebRtc_Word32 id,
 }
 
 VideoCaptureAndroid::~VideoCaptureAndroid() {
-  WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, -1, "%s:",
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, -1, "%s:",
                __FUNCTION__);
   if (_javaCaptureObj == NULL || g_jvm == NULL) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
                  "%s: Nothing to clean", __FUNCTION__);
   }
   else {
@@ -444,7 +444,7 @@ VideoCaptureAndroid::~VideoCaptureAndroid() {
       // Attach this thread to JVM
       jint res = g_jvm->AttachCurrentThread(&env, NULL);
       if ((res < 0) || !env) {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture,
                      _id,
                      "%s: Could not attach thread to JVM (%d, %p)",
                      __FUNCTION__, res, env);
@@ -462,7 +462,7 @@ VideoCaptureAndroid::~VideoCaptureAndroid() {
         "DeleteVideoCaptureAndroid",
         "(Lcom/yuntongxun/ecsdk/core/voip/VideoCaptureAndroid;)V");
     if (cid != NULL) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, -1,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, -1,
                    "%s: Call DeleteVideoCaptureAndroid", __FUNCTION__);
       // Close the camera by calling the static destruct function.
       env->CallStaticVoidMethod(g_javaCmClass, cid, _javaCaptureObj);
@@ -472,7 +472,7 @@ VideoCaptureAndroid::~VideoCaptureAndroid() {
       _javaCaptureObj = NULL;
     }
     else {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
                    "%s: Failed to find DeleteVideoCaptureAndroid id",
                    __FUNCTION__);
     }
@@ -480,7 +480,7 @@ VideoCaptureAndroid::~VideoCaptureAndroid() {
     // Detach this thread if it was attached
     if (isAttached) {
       if (g_jvm->DetachCurrentThread() < 0) {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceAudioDevice,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceAudioDevice,
                      _id, "%s: Could not detach thread from JVM",
                      __FUNCTION__);
       }
@@ -491,7 +491,7 @@ VideoCaptureAndroid::~VideoCaptureAndroid() {
 WebRtc_Word32 VideoCaptureAndroid::StartCapture(
     const VideoCaptureCapability& capability) {
   CriticalSectionScoped cs(&_apiCs);
-  WEBRTC_TRACE(cloopenwebrtc::kTraceStateInfo, cloopenwebrtc::kTraceVideoCapture, -1,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceStateInfo, yuntongxunwebrtc::kTraceVideoCapture, -1,
                "%s: ", __FUNCTION__);
 
   bool isAttached = false;
@@ -503,7 +503,7 @@ WebRtc_Word32 VideoCaptureAndroid::StartCapture(
     // Attach this thread to JVM
     jint res = g_jvm->AttachCurrentThread(&env, NULL);
     if ((res < 0) || !env) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                    "%s: Could not attach thread to JVM (%d, %p)",
                    __FUNCTION__, res, env);
     }
@@ -514,7 +514,7 @@ WebRtc_Word32 VideoCaptureAndroid::StartCapture(
 
   if (_capInfo.GetBestMatchedCapability(_deviceUniqueId, capability,
                                         _frameInfo) < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
                  "%s: GetBestMatchedCapability failed. Req cap w%d h%d",
                  __FUNCTION__, capability.width, capability.height);
     return -1;
@@ -528,7 +528,7 @@ WebRtc_Word32 VideoCaptureAndroid::StartCapture(
   // Store the new expected capture delay
   _captureDelay = _frameInfo.expectedCaptureDelay;
 
-  WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, -1,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, -1,
                "%s: _frameInfo w%d h%d", __FUNCTION__, _frameInfo.width,
                _frameInfo.height);
 
@@ -536,21 +536,21 @@ WebRtc_Word32 VideoCaptureAndroid::StartCapture(
   // CaptureClass static StartCapture  method.
   jmethodID cid = env->GetMethodID(g_javaCmClass, "StartCapture", "(III)I");
   if (cid != NULL) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, -1,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, -1,
                  "%s: Call StartCapture", __FUNCTION__);
     // Close the camera by calling the static destruct function.
     result = env->CallIntMethod(_javaCaptureObj, cid, _frameInfo.width,
                                 _frameInfo.height, _frameInfo.maxFPS);
   }
   else {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
                  "%s: Failed to find StartCapture id", __FUNCTION__);
   }
 
   // Detach this thread if it was attached
   if (isAttached) {
     if (g_jvm->DetachCurrentThread() < 0) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceAudioDevice, _id,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceAudioDevice, _id,
                    "%s: Could not detach thread from JVM", __FUNCTION__);
     }
   }
@@ -558,14 +558,14 @@ WebRtc_Word32 VideoCaptureAndroid::StartCapture(
     _requestedCapability = capability;
     _captureStarted = true;
   }
-  WEBRTC_TRACE(cloopenwebrtc::kTraceStateInfo, cloopenwebrtc::kTraceVideoCapture, -1,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceStateInfo, yuntongxunwebrtc::kTraceVideoCapture, -1,
                "%s: result %d", __FUNCTION__, result);
   return result;
 }
 
 WebRtc_Word32 VideoCaptureAndroid::StopCapture() {
   //CriticalSectionScoped cs(&_apiCs);
-  WEBRTC_TRACE(cloopenwebrtc::kTraceStateInfo, cloopenwebrtc::kTraceVideoCapture, -1,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceStateInfo, yuntongxunwebrtc::kTraceVideoCapture, -1,
                "%s: ", __FUNCTION__);
 
   bool isAttached = false;
@@ -577,7 +577,7 @@ WebRtc_Word32 VideoCaptureAndroid::StopCapture() {
     // Attach this thread to JVM
     jint res = g_jvm->AttachCurrentThread(&env, NULL);
     if ((res < 0) || !env) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                    "%s: Could not attach thread to JVM (%d, %p)",
                    __FUNCTION__, res, env);
     }
@@ -592,33 +592,33 @@ WebRtc_Word32 VideoCaptureAndroid::StopCapture() {
   // get the method ID for the Android Java CaptureClass StopCapture  method.
   jmethodID cid = env->GetMethodID(g_javaCmClass, "StopCapture", "()I");
   if (cid != NULL) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, -1,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, -1,
                  "%s: Call StopCapture", __FUNCTION__);
     // Close the camera by calling the static destruct function.
     result = env->CallIntMethod(_javaCaptureObj, cid);
   }
   else {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
                  "%s: Failed to find StopCapture id", __FUNCTION__);
   }
 
   // Detach this thread if it was attached
   if (isAttached) {
     if (g_jvm->DetachCurrentThread() < 0) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceAudioDevice, _id,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceAudioDevice, _id,
                    "%s: Could not detach thread from JVM", __FUNCTION__);
     }
   }
   _captureStarted = false;
 
-  WEBRTC_TRACE(cloopenwebrtc::kTraceStateInfo, cloopenwebrtc::kTraceVideoCapture, -1,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceStateInfo, yuntongxunwebrtc::kTraceVideoCapture, -1,
                "%s: result %d", __FUNCTION__, result);
   return result;
 }
 
 bool VideoCaptureAndroid::CaptureStarted() {
   CriticalSectionScoped cs(&_apiCs);
-  WEBRTC_TRACE(cloopenwebrtc::kTraceStateInfo, cloopenwebrtc::kTraceVideoCapture, -1,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceStateInfo, yuntongxunwebrtc::kTraceVideoCapture, -1,
                "%s: ", __FUNCTION__);
   return _captureStarted;
 }
@@ -626,7 +626,7 @@ bool VideoCaptureAndroid::CaptureStarted() {
 WebRtc_Word32 VideoCaptureAndroid::CaptureSettings(
     VideoCaptureCapability& settings) {
   CriticalSectionScoped cs(&_apiCs);
-  WEBRTC_TRACE(cloopenwebrtc::kTraceStateInfo, cloopenwebrtc::kTraceVideoCapture, -1,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceStateInfo, yuntongxunwebrtc::kTraceVideoCapture, -1,
                "%s: ", __FUNCTION__);
   settings = _requestedCapability;
   return 0;
@@ -649,7 +649,7 @@ WebRtc_Word32 VideoCaptureAndroid::SetCaptureRotation(
       // Attach this thread to JVM
       jint res = g_jvm->AttachCurrentThread(&env, NULL);
       if ((res < 0) || !env) {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture,
                      _id,
                      "%s: Could not attach thread to JVM (%d, %p)",
                      __FUNCTION__, res, env);
@@ -661,7 +661,7 @@ WebRtc_Word32 VideoCaptureAndroid::SetCaptureRotation(
     jmethodID cid = env->GetMethodID(g_javaCmClass, "SetPreviewRotation",
                                      "(I)V");
     if (cid == NULL) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
                    "%s: could not get java SetPreviewRotation ID",
                    __FUNCTION__);
       return -1;
@@ -686,7 +686,7 @@ WebRtc_Word32 VideoCaptureAndroid::SetCaptureRotation(
     // Detach this thread if it was attached
     if (isAttached) {
       if (g_jvm->DetachCurrentThread() < 0) {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceAudioDevice,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceAudioDevice,
                      _id, "%s: Could not detach thread from JVM",
                      __FUNCTION__);
       }
@@ -697,4 +697,4 @@ WebRtc_Word32 VideoCaptureAndroid::SetCaptureRotation(
 }
 
 }  // namespace videocapturemodule
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

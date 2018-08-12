@@ -13,7 +13,7 @@
 
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class PoleZeroFilter {
  public:
@@ -45,6 +45,6 @@ class PoleZeroFilter {
   int highest_order_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_AGC_POLE_ZERO_FILTER_H_

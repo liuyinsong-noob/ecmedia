@@ -13,7 +13,7 @@
 
 #include "typedefs.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 #define MASK_32_BITS(x) (0xFFFFFFFF & (x))

@@ -15,7 +15,7 @@
 #include "jitter_buffer_common.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VCMPacket {
 public:
@@ -41,7 +41,7 @@ public:
     bool                    markerBit;
 
     FrameType               frameType;
-    cloopenwebrtc::VideoCodecType  codec;
+    yuntongxunwebrtc::VideoCodecType  codec;
 
     bool isFirstPacket;                 // Is this first packet in a frame.
     VCMNaluCompleteness completeNALU;   // Default is kNaluIncomplete.

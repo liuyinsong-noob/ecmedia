@@ -42,7 +42,7 @@
 #include <vector>
 #include "common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class ViENetwork;
 class VoiceEngine;

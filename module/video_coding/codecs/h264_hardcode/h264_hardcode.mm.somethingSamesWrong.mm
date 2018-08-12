@@ -10,7 +10,7 @@
 #include "video_error_codes.h"
 #include "webrtc_libyuv.h"
 #include <CoreVideo/CVPixelBuffer.h>
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     
     CFArrayRef ArrayWithIntegers(const int* v, size_t size) {
         std::vector<CFNumberRef> numbers;
@@ -97,7 +97,7 @@ namespace cloopenwebrtc {
         }
         ConfigureCompressionSession();
         
-        encoded_image_._size =  CalcBufferSize(cloopenwebrtc::kI420, inst->width, inst->height);
+        encoded_image_._size =  CalcBufferSize(yuntongxunwebrtc::kI420, inst->width, inst->height);
         encoded_image_._buffer = new uint8_t[encoded_image_._size];
         encoded_image_._length = 0;
         encoded_image_._completeFrame = false;
@@ -329,8 +329,8 @@ namespace cloopenwebrtc {
 //            framenum_++;
 //        }
 //        else{
-//            WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-//                         cloopenwebrtc::kTraceVideoCoding,
+//            WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+//                         yuntongxunwebrtc::kTraceVideoCoding,
 //                         0,
 //                         "x264_encoder_encode() error=%d.", ret);
 //        }

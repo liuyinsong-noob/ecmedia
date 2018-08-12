@@ -16,7 +16,7 @@
 #define RTP_FIXED_HEADER_SIZE 12
 #define SRTP_PAD_BYTES (SRTP_MAX_TRAILER_LEN + 4)
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     
     int VoeEncrySrtp::srtp_init_done = 0;
     

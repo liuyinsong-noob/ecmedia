@@ -19,7 +19,7 @@
 #include "../config.h"
 #include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class RtpHeaderExtensionMap {
  public:
@@ -27,7 +27,7 @@ class RtpHeaderExtensionMap {
   static constexpr uint8_t kInvalidId = 0;
 
   RtpHeaderExtensionMap();
-  explicit RtpHeaderExtensionMap(cloopenwebrtc::ArrayView<const RtpExtension> extensions);
+  explicit RtpHeaderExtensionMap(yuntongxunwebrtc::ArrayView<const RtpExtension> extensions);
 
   template <typename Extension>
   bool Register(uint8_t id) {
@@ -74,7 +74,7 @@ class RtpHeaderExtensionMap {
   uint8_t ids_[kRtpExtensionNumberOfExtensions];
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_HEADER_EXTENSION_H_
 

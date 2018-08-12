@@ -16,7 +16,7 @@
 #include "module_common_types.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Struct for holding RTP packets.
 struct Packet {
@@ -97,5 +97,5 @@ struct Packet {
 // A list of packets.
 typedef std::list<Packet*> PacketList;
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_PACKET_H_

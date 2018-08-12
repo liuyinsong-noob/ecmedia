@@ -17,7 +17,7 @@
 #include "typedefs.h"
 #include "video_frame.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class RTPFragmentationHeader;
 // TODO(pbos): Expose these through a public (root) header or change these APIs.

@@ -21,7 +21,7 @@
 #include "../system_wrappers/include/scoped_ptr.h"
 #include "../base/thread_annotations.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Forward declarations.
 class Clock;

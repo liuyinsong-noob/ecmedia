@@ -70,7 +70,7 @@
     };                              \
 }
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 AudioDeviceModule* CreateAudioDeviceModule(
@@ -2062,4 +2062,4 @@ int AudioDeviceModuleImpl::CheckRecordPermission(bool &enabled)
              "CheckRecordPermission 0000000000");
     return _ptrAudioDevice->CheckRecordPermission(enabled);
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

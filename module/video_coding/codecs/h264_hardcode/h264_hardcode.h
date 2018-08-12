@@ -16,7 +16,7 @@
 #include "video_encoder.h"
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
         
         // VideoToolbox implementation of the media::cast::VideoEncoder interface.
         // VideoToolbox makes no guarantees that it is thread safe, so this object is
@@ -132,6 +132,6 @@ namespace cloopenwebrtc {
             DISALLOW_COPY_AND_ASSIGN(H264VideoToolboxEncoder);
         };
     
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif /* h264_hardcode_hpp */

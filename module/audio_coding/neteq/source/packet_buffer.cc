@@ -19,7 +19,7 @@
 #include "audio_decoder.h"
 #include "decoder_database.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 extern int printTime();
 // Predicate used when inserting packets in the buffer list.
 // Operator() returns true when |packet| goes before |new_packet|.
@@ -304,4 +304,4 @@ void PacketBuffer::BufferStat(int* num_packets, int* max_num_packets) const {
   *max_num_packets = static_cast<int>(max_number_of_packets_);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -13,7 +13,7 @@
 #include <google/protobuf/io/zero_copy_stream_impl_lite.h>
 // @@protoc_insertion_point(includes)
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace rtclog {
 
 void protobuf_ShutdownFile_rtc_5fevent_5flog_2eproto() {
@@ -88,13 +88,13 @@ void protobuf_AddDesc_rtc_5fevent_5flog_2eproto() {
   AudioNetworkAdaptation::default_instance_->InitAsDefaultInstance();
   BweProbeCluster::default_instance_->InitAsDefaultInstance();
   BweProbeResult::default_instance_->InitAsDefaultInstance();
-  ::cloopen_google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_rtc_5fevent_5flog_2eproto);
+  ::yuntongxun_google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_rtc_5fevent_5flog_2eproto);
 }
 
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
 GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AddDesc_rtc_5fevent_5flog_2eproto_once_);
 void protobuf_AddDesc_rtc_5fevent_5flog_2eproto() {
-  ::cloopen_google::protobuf::GoogleOnceInit(&protobuf_AddDesc_rtc_5fevent_5flog_2eproto_once_,
+  ::yuntongxun_google::protobuf::GoogleOnceInit(&protobuf_AddDesc_rtc_5fevent_5flog_2eproto_once_,
                  &protobuf_AddDesc_rtc_5fevent_5flog_2eproto_impl);
 }
 #else
@@ -125,7 +125,7 @@ const int EventStream::kStreamFieldNumber;
 #endif  // !_MSC_VER
 
 EventStream::EventStream()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:webrtc.rtclog.EventStream)
 }
@@ -134,7 +134,7 @@ void EventStream::InitAsDefaultInstance() {
 }
 
 EventStream::EventStream(const EventStream& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:webrtc.rtclog.EventStream)
@@ -186,24 +186,24 @@ void EventStream::Clear() {
 }
 
 bool EventStream::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
+    ::yuntongxun_google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
+  ::yuntongxun_google::protobuf::uint32 tag;
+  ::yuntongxun_google::protobuf::io::StringOutputStream unknown_fields_string(
       mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
+  ::yuntongxun_google::protobuf::io::CodedOutputStream unknown_fields_stream(
       &unknown_fields_string);
   // @@protoc_insertion_point(parse_start:webrtc.rtclog.EventStream)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::yuntongxun_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // repeated .webrtc.rtclog.Event stream = 1;
       case 1: {
         if (tag == 10) {
          parse_stream:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_stream()));
         } else {
           goto handle_unusual;
@@ -216,11 +216,11 @@ bool EventStream::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -236,11 +236,11 @@ failure:
 }
 
 void EventStream::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:webrtc.rtclog.EventStream)
   // repeated .webrtc.rtclog.Event stream = 1;
   for (int i = 0; i < this->stream_size(); i++) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteMessage(
       1, this->stream(i), output);
   }
 
@@ -256,7 +256,7 @@ int EventStream::ByteSize() const {
   total_size += 1 * this->stream_size();
   for (int i = 0; i < this->stream_size(); i++) {
     total_size +=
-      ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+      ::yuntongxun_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         this->stream(i));
   }
 
@@ -269,8 +269,8 @@ int EventStream::ByteSize() const {
 }
 
 void EventStream::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const EventStream*>(&from));
+    const ::yuntongxun_google::protobuf::MessageLite& from) {
+  MergeFrom(*::yuntongxun_google::protobuf::down_cast<const EventStream*>(&from));
 }
 
 void EventStream::MergeFrom(const EventStream& from) {
@@ -367,88 +367,88 @@ const int Event::kProbeResultFieldNumber;
 #endif  // !_MSC_VER
 
 Event::Event()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:webrtc.rtclog.Event)
 }
 
 void Event::InitAsDefaultInstance() {
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  rtp_packet_ = const_cast< ::cloopenwebrtc::rtclog::RtpPacket*>(
-      ::cloopenwebrtc::rtclog::RtpPacket::internal_default_instance());
+  rtp_packet_ = const_cast< ::yuntongxunwebrtc::rtclog::RtpPacket*>(
+      ::yuntongxunwebrtc::rtclog::RtpPacket::internal_default_instance());
 #else
-  rtp_packet_ = const_cast< ::cloopenwebrtc::rtclog::RtpPacket*>(&::cloopenwebrtc::rtclog::RtpPacket::default_instance());
+  rtp_packet_ = const_cast< ::yuntongxunwebrtc::rtclog::RtpPacket*>(&::yuntongxunwebrtc::rtclog::RtpPacket::default_instance());
 #endif
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  rtcp_packet_ = const_cast< ::cloopenwebrtc::rtclog::RtcpPacket*>(
-      ::cloopenwebrtc::rtclog::RtcpPacket::internal_default_instance());
+  rtcp_packet_ = const_cast< ::yuntongxunwebrtc::rtclog::RtcpPacket*>(
+      ::yuntongxunwebrtc::rtclog::RtcpPacket::internal_default_instance());
 #else
-  rtcp_packet_ = const_cast< ::cloopenwebrtc::rtclog::RtcpPacket*>(&::cloopenwebrtc::rtclog::RtcpPacket::default_instance());
+  rtcp_packet_ = const_cast< ::yuntongxunwebrtc::rtclog::RtcpPacket*>(&::yuntongxunwebrtc::rtclog::RtcpPacket::default_instance());
 #endif
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  audio_playout_event_ = const_cast< ::cloopenwebrtc::rtclog::AudioPlayoutEvent*>(
-      ::cloopenwebrtc::rtclog::AudioPlayoutEvent::internal_default_instance());
+  audio_playout_event_ = const_cast< ::yuntongxunwebrtc::rtclog::AudioPlayoutEvent*>(
+      ::yuntongxunwebrtc::rtclog::AudioPlayoutEvent::internal_default_instance());
 #else
-  audio_playout_event_ = const_cast< ::cloopenwebrtc::rtclog::AudioPlayoutEvent*>(&::cloopenwebrtc::rtclog::AudioPlayoutEvent::default_instance());
+  audio_playout_event_ = const_cast< ::yuntongxunwebrtc::rtclog::AudioPlayoutEvent*>(&::yuntongxunwebrtc::rtclog::AudioPlayoutEvent::default_instance());
 #endif
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  loss_based_bwe_update_ = const_cast< ::cloopenwebrtc::rtclog::LossBasedBweUpdate*>(
-      ::cloopenwebrtc::rtclog::LossBasedBweUpdate::internal_default_instance());
+  loss_based_bwe_update_ = const_cast< ::yuntongxunwebrtc::rtclog::LossBasedBweUpdate*>(
+      ::yuntongxunwebrtc::rtclog::LossBasedBweUpdate::internal_default_instance());
 #else
-  loss_based_bwe_update_ = const_cast< ::cloopenwebrtc::rtclog::LossBasedBweUpdate*>(&::cloopenwebrtc::rtclog::LossBasedBweUpdate::default_instance());
+  loss_based_bwe_update_ = const_cast< ::yuntongxunwebrtc::rtclog::LossBasedBweUpdate*>(&::yuntongxunwebrtc::rtclog::LossBasedBweUpdate::default_instance());
 #endif
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  delay_based_bwe_update_ = const_cast< ::cloopenwebrtc::rtclog::DelayBasedBweUpdate*>(
-      ::cloopenwebrtc::rtclog::DelayBasedBweUpdate::internal_default_instance());
+  delay_based_bwe_update_ = const_cast< ::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate*>(
+      ::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate::internal_default_instance());
 #else
-  delay_based_bwe_update_ = const_cast< ::cloopenwebrtc::rtclog::DelayBasedBweUpdate*>(&::cloopenwebrtc::rtclog::DelayBasedBweUpdate::default_instance());
+  delay_based_bwe_update_ = const_cast< ::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate*>(&::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate::default_instance());
 #endif
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  video_receiver_config_ = const_cast< ::cloopenwebrtc::rtclog::VideoReceiveConfig*>(
-      ::cloopenwebrtc::rtclog::VideoReceiveConfig::internal_default_instance());
+  video_receiver_config_ = const_cast< ::yuntongxunwebrtc::rtclog::VideoReceiveConfig*>(
+      ::yuntongxunwebrtc::rtclog::VideoReceiveConfig::internal_default_instance());
 #else
-  video_receiver_config_ = const_cast< ::cloopenwebrtc::rtclog::VideoReceiveConfig*>(&::cloopenwebrtc::rtclog::VideoReceiveConfig::default_instance());
+  video_receiver_config_ = const_cast< ::yuntongxunwebrtc::rtclog::VideoReceiveConfig*>(&::yuntongxunwebrtc::rtclog::VideoReceiveConfig::default_instance());
 #endif
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  video_sender_config_ = const_cast< ::cloopenwebrtc::rtclog::VideoSendConfig*>(
-      ::cloopenwebrtc::rtclog::VideoSendConfig::internal_default_instance());
+  video_sender_config_ = const_cast< ::yuntongxunwebrtc::rtclog::VideoSendConfig*>(
+      ::yuntongxunwebrtc::rtclog::VideoSendConfig::internal_default_instance());
 #else
-  video_sender_config_ = const_cast< ::cloopenwebrtc::rtclog::VideoSendConfig*>(&::cloopenwebrtc::rtclog::VideoSendConfig::default_instance());
+  video_sender_config_ = const_cast< ::yuntongxunwebrtc::rtclog::VideoSendConfig*>(&::yuntongxunwebrtc::rtclog::VideoSendConfig::default_instance());
 #endif
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  audio_receiver_config_ = const_cast< ::cloopenwebrtc::rtclog::AudioReceiveConfig*>(
-      ::cloopenwebrtc::rtclog::AudioReceiveConfig::internal_default_instance());
+  audio_receiver_config_ = const_cast< ::yuntongxunwebrtc::rtclog::AudioReceiveConfig*>(
+      ::yuntongxunwebrtc::rtclog::AudioReceiveConfig::internal_default_instance());
 #else
-  audio_receiver_config_ = const_cast< ::cloopenwebrtc::rtclog::AudioReceiveConfig*>(&::cloopenwebrtc::rtclog::AudioReceiveConfig::default_instance());
+  audio_receiver_config_ = const_cast< ::yuntongxunwebrtc::rtclog::AudioReceiveConfig*>(&::yuntongxunwebrtc::rtclog::AudioReceiveConfig::default_instance());
 #endif
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  audio_sender_config_ = const_cast< ::cloopenwebrtc::rtclog::AudioSendConfig*>(
-      ::cloopenwebrtc::rtclog::AudioSendConfig::internal_default_instance());
+  audio_sender_config_ = const_cast< ::yuntongxunwebrtc::rtclog::AudioSendConfig*>(
+      ::yuntongxunwebrtc::rtclog::AudioSendConfig::internal_default_instance());
 #else
-  audio_sender_config_ = const_cast< ::cloopenwebrtc::rtclog::AudioSendConfig*>(&::cloopenwebrtc::rtclog::AudioSendConfig::default_instance());
+  audio_sender_config_ = const_cast< ::yuntongxunwebrtc::rtclog::AudioSendConfig*>(&::yuntongxunwebrtc::rtclog::AudioSendConfig::default_instance());
 #endif
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  audio_network_adaptation_ = const_cast< ::cloopenwebrtc::rtclog::AudioNetworkAdaptation*>(
-      ::cloopenwebrtc::rtclog::AudioNetworkAdaptation::internal_default_instance());
+  audio_network_adaptation_ = const_cast< ::yuntongxunwebrtc::rtclog::AudioNetworkAdaptation*>(
+      ::yuntongxunwebrtc::rtclog::AudioNetworkAdaptation::internal_default_instance());
 #else
-  audio_network_adaptation_ = const_cast< ::cloopenwebrtc::rtclog::AudioNetworkAdaptation*>(&::cloopenwebrtc::rtclog::AudioNetworkAdaptation::default_instance());
+  audio_network_adaptation_ = const_cast< ::yuntongxunwebrtc::rtclog::AudioNetworkAdaptation*>(&::yuntongxunwebrtc::rtclog::AudioNetworkAdaptation::default_instance());
 #endif
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  probe_cluster_ = const_cast< ::cloopenwebrtc::rtclog::BweProbeCluster*>(
-      ::cloopenwebrtc::rtclog::BweProbeCluster::internal_default_instance());
+  probe_cluster_ = const_cast< ::yuntongxunwebrtc::rtclog::BweProbeCluster*>(
+      ::yuntongxunwebrtc::rtclog::BweProbeCluster::internal_default_instance());
 #else
-  probe_cluster_ = const_cast< ::cloopenwebrtc::rtclog::BweProbeCluster*>(&::cloopenwebrtc::rtclog::BweProbeCluster::default_instance());
+  probe_cluster_ = const_cast< ::yuntongxunwebrtc::rtclog::BweProbeCluster*>(&::yuntongxunwebrtc::rtclog::BweProbeCluster::default_instance());
 #endif
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  probe_result_ = const_cast< ::cloopenwebrtc::rtclog::BweProbeResult*>(
-      ::cloopenwebrtc::rtclog::BweProbeResult::internal_default_instance());
+  probe_result_ = const_cast< ::yuntongxunwebrtc::rtclog::BweProbeResult*>(
+      ::yuntongxunwebrtc::rtclog::BweProbeResult::internal_default_instance());
 #else
-  probe_result_ = const_cast< ::cloopenwebrtc::rtclog::BweProbeResult*>(&::cloopenwebrtc::rtclog::BweProbeResult::default_instance());
+  probe_result_ = const_cast< ::yuntongxunwebrtc::rtclog::BweProbeResult*>(&::yuntongxunwebrtc::rtclog::BweProbeResult::default_instance());
 #endif
 }
 
 Event::Event(const Event& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:webrtc.rtclog.Event)
@@ -524,42 +524,42 @@ void Event::Clear() {
     timestamp_us_ = GOOGLE_LONGLONG(0);
     type_ = 0;
     if (has_rtp_packet()) {
-      if (rtp_packet_ != NULL) rtp_packet_->::cloopenwebrtc::rtclog::RtpPacket::Clear();
+      if (rtp_packet_ != NULL) rtp_packet_->::yuntongxunwebrtc::rtclog::RtpPacket::Clear();
     }
     if (has_rtcp_packet()) {
-      if (rtcp_packet_ != NULL) rtcp_packet_->::cloopenwebrtc::rtclog::RtcpPacket::Clear();
+      if (rtcp_packet_ != NULL) rtcp_packet_->::yuntongxunwebrtc::rtclog::RtcpPacket::Clear();
     }
     if (has_audio_playout_event()) {
-      if (audio_playout_event_ != NULL) audio_playout_event_->::cloopenwebrtc::rtclog::AudioPlayoutEvent::Clear();
+      if (audio_playout_event_ != NULL) audio_playout_event_->::yuntongxunwebrtc::rtclog::AudioPlayoutEvent::Clear();
     }
     if (has_loss_based_bwe_update()) {
-      if (loss_based_bwe_update_ != NULL) loss_based_bwe_update_->::cloopenwebrtc::rtclog::LossBasedBweUpdate::Clear();
+      if (loss_based_bwe_update_ != NULL) loss_based_bwe_update_->::yuntongxunwebrtc::rtclog::LossBasedBweUpdate::Clear();
     }
     if (has_delay_based_bwe_update()) {
-      if (delay_based_bwe_update_ != NULL) delay_based_bwe_update_->::cloopenwebrtc::rtclog::DelayBasedBweUpdate::Clear();
+      if (delay_based_bwe_update_ != NULL) delay_based_bwe_update_->::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate::Clear();
     }
     if (has_video_receiver_config()) {
-      if (video_receiver_config_ != NULL) video_receiver_config_->::cloopenwebrtc::rtclog::VideoReceiveConfig::Clear();
+      if (video_receiver_config_ != NULL) video_receiver_config_->::yuntongxunwebrtc::rtclog::VideoReceiveConfig::Clear();
     }
   }
   if (_has_bits_[8 / 32] & 16128) {
     if (has_video_sender_config()) {
-      if (video_sender_config_ != NULL) video_sender_config_->::cloopenwebrtc::rtclog::VideoSendConfig::Clear();
+      if (video_sender_config_ != NULL) video_sender_config_->::yuntongxunwebrtc::rtclog::VideoSendConfig::Clear();
     }
     if (has_audio_receiver_config()) {
-      if (audio_receiver_config_ != NULL) audio_receiver_config_->::cloopenwebrtc::rtclog::AudioReceiveConfig::Clear();
+      if (audio_receiver_config_ != NULL) audio_receiver_config_->::yuntongxunwebrtc::rtclog::AudioReceiveConfig::Clear();
     }
     if (has_audio_sender_config()) {
-      if (audio_sender_config_ != NULL) audio_sender_config_->::cloopenwebrtc::rtclog::AudioSendConfig::Clear();
+      if (audio_sender_config_ != NULL) audio_sender_config_->::yuntongxunwebrtc::rtclog::AudioSendConfig::Clear();
     }
     if (has_audio_network_adaptation()) {
-      if (audio_network_adaptation_ != NULL) audio_network_adaptation_->::cloopenwebrtc::rtclog::AudioNetworkAdaptation::Clear();
+      if (audio_network_adaptation_ != NULL) audio_network_adaptation_->::yuntongxunwebrtc::rtclog::AudioNetworkAdaptation::Clear();
     }
     if (has_probe_cluster()) {
-      if (probe_cluster_ != NULL) probe_cluster_->::cloopenwebrtc::rtclog::BweProbeCluster::Clear();
+      if (probe_cluster_ != NULL) probe_cluster_->::yuntongxunwebrtc::rtclog::BweProbeCluster::Clear();
     }
     if (has_probe_result()) {
-      if (probe_result_ != NULL) probe_result_->::cloopenwebrtc::rtclog::BweProbeResult::Clear();
+      if (probe_result_ != NULL) probe_result_->::yuntongxunwebrtc::rtclog::BweProbeResult::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -567,24 +567,24 @@ void Event::Clear() {
 }
 
 bool Event::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
+    ::yuntongxun_google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
+  ::yuntongxun_google::protobuf::uint32 tag;
+  ::yuntongxun_google::protobuf::io::StringOutputStream unknown_fields_string(
       mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
+  ::yuntongxun_google::protobuf::io::CodedOutputStream unknown_fields_stream(
       &unknown_fields_string);
   // @@protoc_insertion_point(parse_start:webrtc.rtclog.Event)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(16383);
+    ::std::pair< ::yuntongxun_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(16383);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional int64 timestamp_us = 1;
       case 1: {
         if (tag == 8) {
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int64, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int64, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT64>(
                  input, &timestamp_us_)));
           set_has_timestamp_us();
         } else {
@@ -599,11 +599,11 @@ bool Event::MergePartialFromCodedStream(
         if (tag == 16) {
          parse_type:
           int value;
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   int, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          if (::cloopenwebrtc::rtclog::Event_EventType_IsValid(value)) {
-            set_type(static_cast< ::cloopenwebrtc::rtclog::Event_EventType >(value));
+          if (::yuntongxunwebrtc::rtclog::Event_EventType_IsValid(value)) {
+            set_type(static_cast< ::yuntongxunwebrtc::rtclog::Event_EventType >(value));
           } else {
             unknown_fields_stream.WriteVarint32(tag);
             unknown_fields_stream.WriteVarint32(value);
@@ -619,7 +619,7 @@ bool Event::MergePartialFromCodedStream(
       case 3: {
         if (tag == 26) {
          parse_rtp_packet:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_rtp_packet()));
         } else {
           goto handle_unusual;
@@ -632,7 +632,7 @@ bool Event::MergePartialFromCodedStream(
       case 4: {
         if (tag == 34) {
          parse_rtcp_packet:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_rtcp_packet()));
         } else {
           goto handle_unusual;
@@ -645,7 +645,7 @@ bool Event::MergePartialFromCodedStream(
       case 5: {
         if (tag == 42) {
          parse_audio_playout_event:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_audio_playout_event()));
         } else {
           goto handle_unusual;
@@ -658,7 +658,7 @@ bool Event::MergePartialFromCodedStream(
       case 6: {
         if (tag == 50) {
          parse_loss_based_bwe_update:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_loss_based_bwe_update()));
         } else {
           goto handle_unusual;
@@ -671,7 +671,7 @@ bool Event::MergePartialFromCodedStream(
       case 7: {
         if (tag == 58) {
          parse_delay_based_bwe_update:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_delay_based_bwe_update()));
         } else {
           goto handle_unusual;
@@ -684,7 +684,7 @@ bool Event::MergePartialFromCodedStream(
       case 8: {
         if (tag == 66) {
          parse_video_receiver_config:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_video_receiver_config()));
         } else {
           goto handle_unusual;
@@ -697,7 +697,7 @@ bool Event::MergePartialFromCodedStream(
       case 9: {
         if (tag == 74) {
          parse_video_sender_config:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_video_sender_config()));
         } else {
           goto handle_unusual;
@@ -710,7 +710,7 @@ bool Event::MergePartialFromCodedStream(
       case 10: {
         if (tag == 82) {
          parse_audio_receiver_config:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_audio_receiver_config()));
         } else {
           goto handle_unusual;
@@ -723,7 +723,7 @@ bool Event::MergePartialFromCodedStream(
       case 11: {
         if (tag == 90) {
          parse_audio_sender_config:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_audio_sender_config()));
         } else {
           goto handle_unusual;
@@ -736,7 +736,7 @@ bool Event::MergePartialFromCodedStream(
       case 16: {
         if (tag == 130) {
          parse_audio_network_adaptation:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_audio_network_adaptation()));
         } else {
           goto handle_unusual;
@@ -749,7 +749,7 @@ bool Event::MergePartialFromCodedStream(
       case 17: {
         if (tag == 138) {
          parse_probe_cluster:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_probe_cluster()));
         } else {
           goto handle_unusual;
@@ -762,7 +762,7 @@ bool Event::MergePartialFromCodedStream(
       case 18: {
         if (tag == 146) {
          parse_probe_result:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_probe_result()));
         } else {
           goto handle_unusual;
@@ -774,11 +774,11 @@ bool Event::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -794,88 +794,88 @@ failure:
 }
 
 void Event::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:webrtc.rtclog.Event)
   // optional int64 timestamp_us = 1;
   if (has_timestamp_us()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt64(1, this->timestamp_us(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt64(1, this->timestamp_us(), output);
   }
 
   // optional .webrtc.rtclog.Event.EventType type = 2;
   if (has_type()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteEnum(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteEnum(
       2, this->type(), output);
   }
 
   // optional .webrtc.rtclog.RtpPacket rtp_packet = 3;
   if (has_rtp_packet()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteMessage(
       3, this->rtp_packet(), output);
   }
 
   // optional .webrtc.rtclog.RtcpPacket rtcp_packet = 4;
   if (has_rtcp_packet()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteMessage(
       4, this->rtcp_packet(), output);
   }
 
   // optional .webrtc.rtclog.AudioPlayoutEvent audio_playout_event = 5;
   if (has_audio_playout_event()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteMessage(
       5, this->audio_playout_event(), output);
   }
 
   // optional .webrtc.rtclog.LossBasedBweUpdate loss_based_bwe_update = 6;
   if (has_loss_based_bwe_update()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteMessage(
       6, this->loss_based_bwe_update(), output);
   }
 
   // optional .webrtc.rtclog.DelayBasedBweUpdate delay_based_bwe_update = 7;
   if (has_delay_based_bwe_update()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteMessage(
       7, this->delay_based_bwe_update(), output);
   }
 
   // optional .webrtc.rtclog.VideoReceiveConfig video_receiver_config = 8;
   if (has_video_receiver_config()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteMessage(
       8, this->video_receiver_config(), output);
   }
 
   // optional .webrtc.rtclog.VideoSendConfig video_sender_config = 9;
   if (has_video_sender_config()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteMessage(
       9, this->video_sender_config(), output);
   }
 
   // optional .webrtc.rtclog.AudioReceiveConfig audio_receiver_config = 10;
   if (has_audio_receiver_config()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteMessage(
       10, this->audio_receiver_config(), output);
   }
 
   // optional .webrtc.rtclog.AudioSendConfig audio_sender_config = 11;
   if (has_audio_sender_config()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteMessage(
       11, this->audio_sender_config(), output);
   }
 
   // optional .webrtc.rtclog.AudioNetworkAdaptation audio_network_adaptation = 16;
   if (has_audio_network_adaptation()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteMessage(
       16, this->audio_network_adaptation(), output);
   }
 
   // optional .webrtc.rtclog.BweProbeCluster probe_cluster = 17;
   if (has_probe_cluster()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteMessage(
       17, this->probe_cluster(), output);
   }
 
   // optional .webrtc.rtclog.BweProbeResult probe_result = 18;
   if (has_probe_result()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteMessage(
       18, this->probe_result(), output);
   }
 
@@ -891,55 +891,55 @@ int Event::ByteSize() const {
     // optional int64 timestamp_us = 1;
     if (has_timestamp_us()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int64Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int64Size(
           this->timestamp_us());
     }
 
     // optional .webrtc.rtclog.Event.EventType type = 2;
     if (has_type()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::EnumSize(this->type());
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::EnumSize(this->type());
     }
 
     // optional .webrtc.rtclog.RtpPacket rtp_packet = 3;
     if (has_rtp_packet()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->rtp_packet());
     }
 
     // optional .webrtc.rtclog.RtcpPacket rtcp_packet = 4;
     if (has_rtcp_packet()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->rtcp_packet());
     }
 
     // optional .webrtc.rtclog.AudioPlayoutEvent audio_playout_event = 5;
     if (has_audio_playout_event()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->audio_playout_event());
     }
 
     // optional .webrtc.rtclog.LossBasedBweUpdate loss_based_bwe_update = 6;
     if (has_loss_based_bwe_update()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->loss_based_bwe_update());
     }
 
     // optional .webrtc.rtclog.DelayBasedBweUpdate delay_based_bwe_update = 7;
     if (has_delay_based_bwe_update()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->delay_based_bwe_update());
     }
 
     // optional .webrtc.rtclog.VideoReceiveConfig video_receiver_config = 8;
     if (has_video_receiver_config()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->video_receiver_config());
     }
 
@@ -948,42 +948,42 @@ int Event::ByteSize() const {
     // optional .webrtc.rtclog.VideoSendConfig video_sender_config = 9;
     if (has_video_sender_config()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->video_sender_config());
     }
 
     // optional .webrtc.rtclog.AudioReceiveConfig audio_receiver_config = 10;
     if (has_audio_receiver_config()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->audio_receiver_config());
     }
 
     // optional .webrtc.rtclog.AudioSendConfig audio_sender_config = 11;
     if (has_audio_sender_config()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->audio_sender_config());
     }
 
     // optional .webrtc.rtclog.AudioNetworkAdaptation audio_network_adaptation = 16;
     if (has_audio_network_adaptation()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->audio_network_adaptation());
     }
 
     // optional .webrtc.rtclog.BweProbeCluster probe_cluster = 17;
     if (has_probe_cluster()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->probe_cluster());
     }
 
     // optional .webrtc.rtclog.BweProbeResult probe_result = 18;
     if (has_probe_result()) {
       total_size += 2 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->probe_result());
     }
 
@@ -997,8 +997,8 @@ int Event::ByteSize() const {
 }
 
 void Event::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const Event*>(&from));
+    const ::yuntongxun_google::protobuf::MessageLite& from) {
+  MergeFrom(*::yuntongxun_google::protobuf::down_cast<const Event*>(&from));
 }
 
 void Event::MergeFrom(const Event& from) {
@@ -1011,42 +1011,42 @@ void Event::MergeFrom(const Event& from) {
       set_type(from.type());
     }
     if (from.has_rtp_packet()) {
-      mutable_rtp_packet()->::cloopenwebrtc::rtclog::RtpPacket::MergeFrom(from.rtp_packet());
+      mutable_rtp_packet()->::yuntongxunwebrtc::rtclog::RtpPacket::MergeFrom(from.rtp_packet());
     }
     if (from.has_rtcp_packet()) {
-      mutable_rtcp_packet()->::cloopenwebrtc::rtclog::RtcpPacket::MergeFrom(from.rtcp_packet());
+      mutable_rtcp_packet()->::yuntongxunwebrtc::rtclog::RtcpPacket::MergeFrom(from.rtcp_packet());
     }
     if (from.has_audio_playout_event()) {
-      mutable_audio_playout_event()->::cloopenwebrtc::rtclog::AudioPlayoutEvent::MergeFrom(from.audio_playout_event());
+      mutable_audio_playout_event()->::yuntongxunwebrtc::rtclog::AudioPlayoutEvent::MergeFrom(from.audio_playout_event());
     }
     if (from.has_loss_based_bwe_update()) {
-      mutable_loss_based_bwe_update()->::cloopenwebrtc::rtclog::LossBasedBweUpdate::MergeFrom(from.loss_based_bwe_update());
+      mutable_loss_based_bwe_update()->::yuntongxunwebrtc::rtclog::LossBasedBweUpdate::MergeFrom(from.loss_based_bwe_update());
     }
     if (from.has_delay_based_bwe_update()) {
-      mutable_delay_based_bwe_update()->::cloopenwebrtc::rtclog::DelayBasedBweUpdate::MergeFrom(from.delay_based_bwe_update());
+      mutable_delay_based_bwe_update()->::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate::MergeFrom(from.delay_based_bwe_update());
     }
     if (from.has_video_receiver_config()) {
-      mutable_video_receiver_config()->::cloopenwebrtc::rtclog::VideoReceiveConfig::MergeFrom(from.video_receiver_config());
+      mutable_video_receiver_config()->::yuntongxunwebrtc::rtclog::VideoReceiveConfig::MergeFrom(from.video_receiver_config());
     }
   }
   if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from.has_video_sender_config()) {
-      mutable_video_sender_config()->::cloopenwebrtc::rtclog::VideoSendConfig::MergeFrom(from.video_sender_config());
+      mutable_video_sender_config()->::yuntongxunwebrtc::rtclog::VideoSendConfig::MergeFrom(from.video_sender_config());
     }
     if (from.has_audio_receiver_config()) {
-      mutable_audio_receiver_config()->::cloopenwebrtc::rtclog::AudioReceiveConfig::MergeFrom(from.audio_receiver_config());
+      mutable_audio_receiver_config()->::yuntongxunwebrtc::rtclog::AudioReceiveConfig::MergeFrom(from.audio_receiver_config());
     }
     if (from.has_audio_sender_config()) {
-      mutable_audio_sender_config()->::cloopenwebrtc::rtclog::AudioSendConfig::MergeFrom(from.audio_sender_config());
+      mutable_audio_sender_config()->::yuntongxunwebrtc::rtclog::AudioSendConfig::MergeFrom(from.audio_sender_config());
     }
     if (from.has_audio_network_adaptation()) {
-      mutable_audio_network_adaptation()->::cloopenwebrtc::rtclog::AudioNetworkAdaptation::MergeFrom(from.audio_network_adaptation());
+      mutable_audio_network_adaptation()->::yuntongxunwebrtc::rtclog::AudioNetworkAdaptation::MergeFrom(from.audio_network_adaptation());
     }
     if (from.has_probe_cluster()) {
-      mutable_probe_cluster()->::cloopenwebrtc::rtclog::BweProbeCluster::MergeFrom(from.probe_cluster());
+      mutable_probe_cluster()->::yuntongxunwebrtc::rtclog::BweProbeCluster::MergeFrom(from.probe_cluster());
     }
     if (from.has_probe_result()) {
-      mutable_probe_result()->::cloopenwebrtc::rtclog::BweProbeResult::MergeFrom(from.probe_result());
+      mutable_probe_result()->::yuntongxunwebrtc::rtclog::BweProbeResult::MergeFrom(from.probe_result());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -1101,7 +1101,7 @@ const int RtpPacket::kProbeClusterIdFieldNumber;
 #endif  // !_MSC_VER
 
 RtpPacket::RtpPacket()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:webrtc.rtclog.RtpPacket)
 }
@@ -1110,19 +1110,19 @@ void RtpPacket::InitAsDefaultInstance() {
 }
 
 RtpPacket::RtpPacket(const RtpPacket& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:webrtc.rtclog.RtpPacket)
 }
 
 void RtpPacket::SharedCtor() {
-  ::cloopen_google::protobuf::internal::GetEmptyString();
+  ::yuntongxun_google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   incoming_ = false;
   type_ = 0;
   packet_length_ = 0u;
-  header_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+  header_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   probe_cluster_id_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -1133,7 +1133,7 @@ RtpPacket::~RtpPacket() {
 }
 
 void RtpPacket::SharedDtor() {
-  if (header_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (header_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete header_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -1179,7 +1179,7 @@ void RtpPacket::Clear() {
     ZR_(incoming_, type_);
     ZR_(packet_length_, probe_cluster_id_);
     if (has_header()) {
-      if (header_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+      if (header_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         header_->clear();
       }
     }
@@ -1193,24 +1193,24 @@ void RtpPacket::Clear() {
 }
 
 bool RtpPacket::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
+    ::yuntongxun_google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
+  ::yuntongxun_google::protobuf::uint32 tag;
+  ::yuntongxun_google::protobuf::io::StringOutputStream unknown_fields_string(
       mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
+  ::yuntongxun_google::protobuf::io::CodedOutputStream unknown_fields_stream(
       &unknown_fields_string);
   // @@protoc_insertion_point(parse_start:webrtc.rtclog.RtpPacket)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::yuntongxun_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional bool incoming = 1;
       case 1: {
         if (tag == 8) {
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &incoming_)));
           set_has_incoming();
         } else {
@@ -1225,11 +1225,11 @@ bool RtpPacket::MergePartialFromCodedStream(
         if (tag == 16) {
          parse_type:
           int value;
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   int, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          if (::cloopenwebrtc::rtclog::MediaType_IsValid(value)) {
-            set_type(static_cast< ::cloopenwebrtc::rtclog::MediaType >(value));
+          if (::yuntongxunwebrtc::rtclog::MediaType_IsValid(value)) {
+            set_type(static_cast< ::yuntongxunwebrtc::rtclog::MediaType >(value));
           } else {
             unknown_fields_stream.WriteVarint32(tag);
             unknown_fields_stream.WriteVarint32(value);
@@ -1245,8 +1245,8 @@ bool RtpPacket::MergePartialFromCodedStream(
       case 3: {
         if (tag == 24) {
          parse_packet_length:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::uint32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::uint32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &packet_length_)));
           set_has_packet_length();
         } else {
@@ -1260,7 +1260,7 @@ bool RtpPacket::MergePartialFromCodedStream(
       case 4: {
         if (tag == 34) {
          parse_header:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadBytes(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_header()));
         } else {
           goto handle_unusual;
@@ -1273,8 +1273,8 @@ bool RtpPacket::MergePartialFromCodedStream(
       case 5: {
         if (tag == 40) {
          parse_probe_cluster_id:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::uint32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::uint32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &probe_cluster_id_)));
           set_has_probe_cluster_id();
         } else {
@@ -1287,11 +1287,11 @@ bool RtpPacket::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -1307,33 +1307,33 @@ failure:
 }
 
 void RtpPacket::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:webrtc.rtclog.RtpPacket)
   // optional bool incoming = 1;
   if (has_incoming()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteBool(1, this->incoming(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteBool(1, this->incoming(), output);
   }
 
   // optional .webrtc.rtclog.MediaType type = 2;
   if (has_type()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteEnum(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteEnum(
       2, this->type(), output);
   }
 
   // optional uint32 packet_length = 3;
   if (has_packet_length()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->packet_length(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->packet_length(), output);
   }
 
   // optional bytes header = 4;
   if (has_header()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
       4, this->header(), output);
   }
 
   // optional uint32 probe_cluster_id = 5;
   if (has_probe_cluster_id()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->probe_cluster_id(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->probe_cluster_id(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -1353,27 +1353,27 @@ int RtpPacket::ByteSize() const {
     // optional .webrtc.rtclog.MediaType type = 2;
     if (has_type()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::EnumSize(this->type());
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::EnumSize(this->type());
     }
 
     // optional uint32 packet_length = 3;
     if (has_packet_length()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::UInt32Size(
           this->packet_length());
     }
 
     // optional bytes header = 4;
     if (has_header()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::BytesSize(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::BytesSize(
           this->header());
     }
 
     // optional uint32 probe_cluster_id = 5;
     if (has_probe_cluster_id()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::UInt32Size(
           this->probe_cluster_id());
     }
 
@@ -1387,8 +1387,8 @@ int RtpPacket::ByteSize() const {
 }
 
 void RtpPacket::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const RtpPacket*>(&from));
+    const ::yuntongxun_google::protobuf::MessageLite& from) {
+  MergeFrom(*::yuntongxun_google::protobuf::down_cast<const RtpPacket*>(&from));
 }
 
 void RtpPacket::MergeFrom(const RtpPacket& from) {
@@ -1451,7 +1451,7 @@ const int RtcpPacket::kPacketDataFieldNumber;
 #endif  // !_MSC_VER
 
 RtcpPacket::RtcpPacket()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:webrtc.rtclog.RtcpPacket)
 }
@@ -1460,18 +1460,18 @@ void RtcpPacket::InitAsDefaultInstance() {
 }
 
 RtcpPacket::RtcpPacket(const RtcpPacket& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:webrtc.rtclog.RtcpPacket)
 }
 
 void RtcpPacket::SharedCtor() {
-  ::cloopen_google::protobuf::internal::GetEmptyString();
+  ::yuntongxun_google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   incoming_ = false;
   type_ = 0;
-  packet_data_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+  packet_data_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1481,7 +1481,7 @@ RtcpPacket::~RtcpPacket() {
 }
 
 void RtcpPacket::SharedDtor() {
-  if (packet_data_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (packet_data_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete packet_data_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -1526,7 +1526,7 @@ void RtcpPacket::Clear() {
   if (_has_bits_[0 / 32] & 7) {
     ZR_(incoming_, type_);
     if (has_packet_data()) {
-      if (packet_data_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+      if (packet_data_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         packet_data_->clear();
       }
     }
@@ -1540,24 +1540,24 @@ void RtcpPacket::Clear() {
 }
 
 bool RtcpPacket::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
+    ::yuntongxun_google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
+  ::yuntongxun_google::protobuf::uint32 tag;
+  ::yuntongxun_google::protobuf::io::StringOutputStream unknown_fields_string(
       mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
+  ::yuntongxun_google::protobuf::io::CodedOutputStream unknown_fields_stream(
       &unknown_fields_string);
   // @@protoc_insertion_point(parse_start:webrtc.rtclog.RtcpPacket)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::yuntongxun_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional bool incoming = 1;
       case 1: {
         if (tag == 8) {
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &incoming_)));
           set_has_incoming();
         } else {
@@ -1572,11 +1572,11 @@ bool RtcpPacket::MergePartialFromCodedStream(
         if (tag == 16) {
          parse_type:
           int value;
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   int, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          if (::cloopenwebrtc::rtclog::MediaType_IsValid(value)) {
-            set_type(static_cast< ::cloopenwebrtc::rtclog::MediaType >(value));
+          if (::yuntongxunwebrtc::rtclog::MediaType_IsValid(value)) {
+            set_type(static_cast< ::yuntongxunwebrtc::rtclog::MediaType >(value));
           } else {
             unknown_fields_stream.WriteVarint32(tag);
             unknown_fields_stream.WriteVarint32(value);
@@ -1592,7 +1592,7 @@ bool RtcpPacket::MergePartialFromCodedStream(
       case 3: {
         if (tag == 26) {
          parse_packet_data:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadBytes(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_packet_data()));
         } else {
           goto handle_unusual;
@@ -1604,11 +1604,11 @@ bool RtcpPacket::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -1624,22 +1624,22 @@ failure:
 }
 
 void RtcpPacket::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:webrtc.rtclog.RtcpPacket)
   // optional bool incoming = 1;
   if (has_incoming()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteBool(1, this->incoming(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteBool(1, this->incoming(), output);
   }
 
   // optional .webrtc.rtclog.MediaType type = 2;
   if (has_type()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteEnum(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteEnum(
       2, this->type(), output);
   }
 
   // optional bytes packet_data = 3;
   if (has_packet_data()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
       3, this->packet_data(), output);
   }
 
@@ -1660,13 +1660,13 @@ int RtcpPacket::ByteSize() const {
     // optional .webrtc.rtclog.MediaType type = 2;
     if (has_type()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::EnumSize(this->type());
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::EnumSize(this->type());
     }
 
     // optional bytes packet_data = 3;
     if (has_packet_data()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::BytesSize(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::BytesSize(
           this->packet_data());
     }
 
@@ -1680,8 +1680,8 @@ int RtcpPacket::ByteSize() const {
 }
 
 void RtcpPacket::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const RtcpPacket*>(&from));
+    const ::yuntongxun_google::protobuf::MessageLite& from) {
+  MergeFrom(*::yuntongxun_google::protobuf::down_cast<const RtcpPacket*>(&from));
 }
 
 void RtcpPacket::MergeFrom(const RtcpPacket& from) {
@@ -1734,7 +1734,7 @@ const int AudioPlayoutEvent::kLocalSsrcFieldNumber;
 #endif  // !_MSC_VER
 
 AudioPlayoutEvent::AudioPlayoutEvent()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:webrtc.rtclog.AudioPlayoutEvent)
 }
@@ -1743,7 +1743,7 @@ void AudioPlayoutEvent::InitAsDefaultInstance() {
 }
 
 AudioPlayoutEvent::AudioPlayoutEvent(const AudioPlayoutEvent& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:webrtc.rtclog.AudioPlayoutEvent)
@@ -1796,24 +1796,24 @@ void AudioPlayoutEvent::Clear() {
 }
 
 bool AudioPlayoutEvent::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
+    ::yuntongxun_google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
+  ::yuntongxun_google::protobuf::uint32 tag;
+  ::yuntongxun_google::protobuf::io::StringOutputStream unknown_fields_string(
       mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
+  ::yuntongxun_google::protobuf::io::CodedOutputStream unknown_fields_stream(
       &unknown_fields_string);
   // @@protoc_insertion_point(parse_start:webrtc.rtclog.AudioPlayoutEvent)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::yuntongxun_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional uint32 local_ssrc = 2;
       case 2: {
         if (tag == 16) {
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::uint32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::uint32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &local_ssrc_)));
           set_has_local_ssrc();
         } else {
@@ -1826,11 +1826,11 @@ bool AudioPlayoutEvent::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -1846,11 +1846,11 @@ failure:
 }
 
 void AudioPlayoutEvent::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:webrtc.rtclog.AudioPlayoutEvent)
   // optional uint32 local_ssrc = 2;
   if (has_local_ssrc()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->local_ssrc(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->local_ssrc(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -1865,7 +1865,7 @@ int AudioPlayoutEvent::ByteSize() const {
     // optional uint32 local_ssrc = 2;
     if (has_local_ssrc()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::UInt32Size(
           this->local_ssrc());
     }
 
@@ -1879,8 +1879,8 @@ int AudioPlayoutEvent::ByteSize() const {
 }
 
 void AudioPlayoutEvent::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const AudioPlayoutEvent*>(&from));
+    const ::yuntongxun_google::protobuf::MessageLite& from) {
+  MergeFrom(*::yuntongxun_google::protobuf::down_cast<const AudioPlayoutEvent*>(&from));
 }
 
 void AudioPlayoutEvent::MergeFrom(const AudioPlayoutEvent& from) {
@@ -1927,7 +1927,7 @@ const int LossBasedBweUpdate::kTotalPacketsFieldNumber;
 #endif  // !_MSC_VER
 
 LossBasedBweUpdate::LossBasedBweUpdate()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:webrtc.rtclog.LossBasedBweUpdate)
 }
@@ -1936,7 +1936,7 @@ void LossBasedBweUpdate::InitAsDefaultInstance() {
 }
 
 LossBasedBweUpdate::LossBasedBweUpdate(const LossBasedBweUpdate& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:webrtc.rtclog.LossBasedBweUpdate)
@@ -2005,24 +2005,24 @@ void LossBasedBweUpdate::Clear() {
 }
 
 bool LossBasedBweUpdate::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
+    ::yuntongxun_google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
+  ::yuntongxun_google::protobuf::uint32 tag;
+  ::yuntongxun_google::protobuf::io::StringOutputStream unknown_fields_string(
       mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
+  ::yuntongxun_google::protobuf::io::CodedOutputStream unknown_fields_stream(
       &unknown_fields_string);
   // @@protoc_insertion_point(parse_start:webrtc.rtclog.LossBasedBweUpdate)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::yuntongxun_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional int32 bitrate_bps = 1;
       case 1: {
         if (tag == 8) {
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &bitrate_bps_)));
           set_has_bitrate_bps();
         } else {
@@ -2036,8 +2036,8 @@ bool LossBasedBweUpdate::MergePartialFromCodedStream(
       case 2: {
         if (tag == 16) {
          parse_fraction_loss:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::uint32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::uint32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &fraction_loss_)));
           set_has_fraction_loss();
         } else {
@@ -2051,8 +2051,8 @@ bool LossBasedBweUpdate::MergePartialFromCodedStream(
       case 3: {
         if (tag == 24) {
          parse_total_packets:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &total_packets_)));
           set_has_total_packets();
         } else {
@@ -2065,11 +2065,11 @@ bool LossBasedBweUpdate::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -2085,21 +2085,21 @@ failure:
 }
 
 void LossBasedBweUpdate::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:webrtc.rtclog.LossBasedBweUpdate)
   // optional int32 bitrate_bps = 1;
   if (has_bitrate_bps()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(1, this->bitrate_bps(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(1, this->bitrate_bps(), output);
   }
 
   // optional uint32 fraction_loss = 2;
   if (has_fraction_loss()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->fraction_loss(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->fraction_loss(), output);
   }
 
   // optional int32 total_packets = 3;
   if (has_total_packets()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(3, this->total_packets(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(3, this->total_packets(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -2114,21 +2114,21 @@ int LossBasedBweUpdate::ByteSize() const {
     // optional int32 bitrate_bps = 1;
     if (has_bitrate_bps()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->bitrate_bps());
     }
 
     // optional uint32 fraction_loss = 2;
     if (has_fraction_loss()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::UInt32Size(
           this->fraction_loss());
     }
 
     // optional int32 total_packets = 3;
     if (has_total_packets()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->total_packets());
     }
 
@@ -2142,8 +2142,8 @@ int LossBasedBweUpdate::ByteSize() const {
 }
 
 void LossBasedBweUpdate::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const LossBasedBweUpdate*>(&from));
+    const ::yuntongxun_google::protobuf::MessageLite& from) {
+  MergeFrom(*::yuntongxun_google::protobuf::down_cast<const LossBasedBweUpdate*>(&from));
 }
 
 void LossBasedBweUpdate::MergeFrom(const LossBasedBweUpdate& from) {
@@ -2216,7 +2216,7 @@ const int DelayBasedBweUpdate::kDetectorStateFieldNumber;
 #endif  // !_MSC_VER
 
 DelayBasedBweUpdate::DelayBasedBweUpdate()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:webrtc.rtclog.DelayBasedBweUpdate)
 }
@@ -2225,7 +2225,7 @@ void DelayBasedBweUpdate::InitAsDefaultInstance() {
 }
 
 DelayBasedBweUpdate::DelayBasedBweUpdate(const DelayBasedBweUpdate& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:webrtc.rtclog.DelayBasedBweUpdate)
@@ -2293,24 +2293,24 @@ void DelayBasedBweUpdate::Clear() {
 }
 
 bool DelayBasedBweUpdate::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
+    ::yuntongxun_google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
+  ::yuntongxun_google::protobuf::uint32 tag;
+  ::yuntongxun_google::protobuf::io::StringOutputStream unknown_fields_string(
       mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
+  ::yuntongxun_google::protobuf::io::CodedOutputStream unknown_fields_stream(
       &unknown_fields_string);
   // @@protoc_insertion_point(parse_start:webrtc.rtclog.DelayBasedBweUpdate)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::yuntongxun_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional int32 bitrate_bps = 1;
       case 1: {
         if (tag == 8) {
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &bitrate_bps_)));
           set_has_bitrate_bps();
         } else {
@@ -2325,11 +2325,11 @@ bool DelayBasedBweUpdate::MergePartialFromCodedStream(
         if (tag == 16) {
          parse_detector_state:
           int value;
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   int, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          if (::cloopenwebrtc::rtclog::DelayBasedBweUpdate_DetectorState_IsValid(value)) {
-            set_detector_state(static_cast< ::cloopenwebrtc::rtclog::DelayBasedBweUpdate_DetectorState >(value));
+          if (::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate_DetectorState_IsValid(value)) {
+            set_detector_state(static_cast< ::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate_DetectorState >(value));
           } else {
             unknown_fields_stream.WriteVarint32(tag);
             unknown_fields_stream.WriteVarint32(value);
@@ -2344,11 +2344,11 @@ bool DelayBasedBweUpdate::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -2364,16 +2364,16 @@ failure:
 }
 
 void DelayBasedBweUpdate::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:webrtc.rtclog.DelayBasedBweUpdate)
   // optional int32 bitrate_bps = 1;
   if (has_bitrate_bps()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(1, this->bitrate_bps(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(1, this->bitrate_bps(), output);
   }
 
   // optional .webrtc.rtclog.DelayBasedBweUpdate.DetectorState detector_state = 2;
   if (has_detector_state()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteEnum(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteEnum(
       2, this->detector_state(), output);
   }
 
@@ -2389,14 +2389,14 @@ int DelayBasedBweUpdate::ByteSize() const {
     // optional int32 bitrate_bps = 1;
     if (has_bitrate_bps()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->bitrate_bps());
     }
 
     // optional .webrtc.rtclog.DelayBasedBweUpdate.DetectorState detector_state = 2;
     if (has_detector_state()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::EnumSize(this->detector_state());
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::EnumSize(this->detector_state());
     }
 
   }
@@ -2409,8 +2409,8 @@ int DelayBasedBweUpdate::ByteSize() const {
 }
 
 void DelayBasedBweUpdate::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const DelayBasedBweUpdate*>(&from));
+    const ::yuntongxun_google::protobuf::MessageLite& from) {
+  MergeFrom(*::yuntongxun_google::protobuf::down_cast<const DelayBasedBweUpdate*>(&from));
 }
 
 void DelayBasedBweUpdate::MergeFrom(const DelayBasedBweUpdate& from) {
@@ -2482,7 +2482,7 @@ const int VideoReceiveConfig::kDecodersFieldNumber;
 #endif  // !_MSC_VER
 
 VideoReceiveConfig::VideoReceiveConfig()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:webrtc.rtclog.VideoReceiveConfig)
 }
@@ -2491,7 +2491,7 @@ void VideoReceiveConfig::InitAsDefaultInstance() {
 }
 
 VideoReceiveConfig::VideoReceiveConfig(const VideoReceiveConfig& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:webrtc.rtclog.VideoReceiveConfig)
@@ -2568,24 +2568,24 @@ void VideoReceiveConfig::Clear() {
 }
 
 bool VideoReceiveConfig::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
+    ::yuntongxun_google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
+  ::yuntongxun_google::protobuf::uint32 tag;
+  ::yuntongxun_google::protobuf::io::StringOutputStream unknown_fields_string(
       mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
+  ::yuntongxun_google::protobuf::io::CodedOutputStream unknown_fields_stream(
       &unknown_fields_string);
   // @@protoc_insertion_point(parse_start:webrtc.rtclog.VideoReceiveConfig)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::yuntongxun_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional uint32 remote_ssrc = 1;
       case 1: {
         if (tag == 8) {
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::uint32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::uint32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &remote_ssrc_)));
           set_has_remote_ssrc();
         } else {
@@ -2599,8 +2599,8 @@ bool VideoReceiveConfig::MergePartialFromCodedStream(
       case 2: {
         if (tag == 16) {
          parse_local_ssrc:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::uint32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::uint32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &local_ssrc_)));
           set_has_local_ssrc();
         } else {
@@ -2615,11 +2615,11 @@ bool VideoReceiveConfig::MergePartialFromCodedStream(
         if (tag == 24) {
          parse_rtcp_mode:
           int value;
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   int, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          if (::cloopenwebrtc::rtclog::VideoReceiveConfig_RtcpMode_IsValid(value)) {
-            set_rtcp_mode(static_cast< ::cloopenwebrtc::rtclog::VideoReceiveConfig_RtcpMode >(value));
+          if (::yuntongxunwebrtc::rtclog::VideoReceiveConfig_RtcpMode_IsValid(value)) {
+            set_rtcp_mode(static_cast< ::yuntongxunwebrtc::rtclog::VideoReceiveConfig_RtcpMode >(value));
           } else {
             unknown_fields_stream.WriteVarint32(tag);
             unknown_fields_stream.WriteVarint32(value);
@@ -2635,8 +2635,8 @@ bool VideoReceiveConfig::MergePartialFromCodedStream(
       case 4: {
         if (tag == 32) {
          parse_remb:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &remb_)));
           set_has_remb();
         } else {
@@ -2650,7 +2650,7 @@ bool VideoReceiveConfig::MergePartialFromCodedStream(
       case 5: {
         if (tag == 42) {
          parse_rtx_map:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_rtx_map()));
         } else {
           goto handle_unusual;
@@ -2664,7 +2664,7 @@ bool VideoReceiveConfig::MergePartialFromCodedStream(
       case 6: {
         if (tag == 50) {
          parse_header_extensions:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_header_extensions()));
         } else {
           goto handle_unusual;
@@ -2678,7 +2678,7 @@ bool VideoReceiveConfig::MergePartialFromCodedStream(
       case 7: {
         if (tag == 58) {
          parse_decoders:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_decoders()));
         } else {
           goto handle_unusual;
@@ -2691,11 +2691,11 @@ bool VideoReceiveConfig::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -2711,44 +2711,44 @@ failure:
 }
 
 void VideoReceiveConfig::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:webrtc.rtclog.VideoReceiveConfig)
   // optional uint32 remote_ssrc = 1;
   if (has_remote_ssrc()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->remote_ssrc(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->remote_ssrc(), output);
   }
 
   // optional uint32 local_ssrc = 2;
   if (has_local_ssrc()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->local_ssrc(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->local_ssrc(), output);
   }
 
   // optional .webrtc.rtclog.VideoReceiveConfig.RtcpMode rtcp_mode = 3;
   if (has_rtcp_mode()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteEnum(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteEnum(
       3, this->rtcp_mode(), output);
   }
 
   // optional bool remb = 4;
   if (has_remb()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteBool(4, this->remb(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteBool(4, this->remb(), output);
   }
 
   // repeated .webrtc.rtclog.RtxMap rtx_map = 5;
   for (int i = 0; i < this->rtx_map_size(); i++) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteMessage(
       5, this->rtx_map(i), output);
   }
 
   // repeated .webrtc.rtclog.RtpHeaderExtension header_extensions = 6;
   for (int i = 0; i < this->header_extensions_size(); i++) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteMessage(
       6, this->header_extensions(i), output);
   }
 
   // repeated .webrtc.rtclog.DecoderConfig decoders = 7;
   for (int i = 0; i < this->decoders_size(); i++) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteMessage(
       7, this->decoders(i), output);
   }
 
@@ -2764,21 +2764,21 @@ int VideoReceiveConfig::ByteSize() const {
     // optional uint32 remote_ssrc = 1;
     if (has_remote_ssrc()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::UInt32Size(
           this->remote_ssrc());
     }
 
     // optional uint32 local_ssrc = 2;
     if (has_local_ssrc()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::UInt32Size(
           this->local_ssrc());
     }
 
     // optional .webrtc.rtclog.VideoReceiveConfig.RtcpMode rtcp_mode = 3;
     if (has_rtcp_mode()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::EnumSize(this->rtcp_mode());
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::EnumSize(this->rtcp_mode());
     }
 
     // optional bool remb = 4;
@@ -2791,7 +2791,7 @@ int VideoReceiveConfig::ByteSize() const {
   total_size += 1 * this->rtx_map_size();
   for (int i = 0; i < this->rtx_map_size(); i++) {
     total_size +=
-      ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+      ::yuntongxun_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         this->rtx_map(i));
   }
 
@@ -2799,7 +2799,7 @@ int VideoReceiveConfig::ByteSize() const {
   total_size += 1 * this->header_extensions_size();
   for (int i = 0; i < this->header_extensions_size(); i++) {
     total_size +=
-      ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+      ::yuntongxun_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         this->header_extensions(i));
   }
 
@@ -2807,7 +2807,7 @@ int VideoReceiveConfig::ByteSize() const {
   total_size += 1 * this->decoders_size();
   for (int i = 0; i < this->decoders_size(); i++) {
     total_size +=
-      ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+      ::yuntongxun_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         this->decoders(i));
   }
 
@@ -2820,8 +2820,8 @@ int VideoReceiveConfig::ByteSize() const {
 }
 
 void VideoReceiveConfig::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const VideoReceiveConfig*>(&from));
+    const ::yuntongxun_google::protobuf::MessageLite& from) {
+  MergeFrom(*::yuntongxun_google::protobuf::down_cast<const VideoReceiveConfig*>(&from));
 }
 
 void VideoReceiveConfig::MergeFrom(const VideoReceiveConfig& from) {
@@ -2885,7 +2885,7 @@ const int DecoderConfig::kPayloadTypeFieldNumber;
 #endif  // !_MSC_VER
 
 DecoderConfig::DecoderConfig()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:webrtc.rtclog.DecoderConfig)
 }
@@ -2894,16 +2894,16 @@ void DecoderConfig::InitAsDefaultInstance() {
 }
 
 DecoderConfig::DecoderConfig(const DecoderConfig& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:webrtc.rtclog.DecoderConfig)
 }
 
 void DecoderConfig::SharedCtor() {
-  ::cloopen_google::protobuf::internal::GetEmptyString();
+  ::yuntongxun_google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  name_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+  name_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   payload_type_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -2914,7 +2914,7 @@ DecoderConfig::~DecoderConfig() {
 }
 
 void DecoderConfig::SharedDtor() {
-  if (name_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete name_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -2948,7 +2948,7 @@ DecoderConfig* DecoderConfig::New() const {
 void DecoderConfig::Clear() {
   if (_has_bits_[0 / 32] & 3) {
     if (has_name()) {
-      if (name_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+      if (name_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         name_->clear();
       }
     }
@@ -2959,23 +2959,23 @@ void DecoderConfig::Clear() {
 }
 
 bool DecoderConfig::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
+    ::yuntongxun_google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
+  ::yuntongxun_google::protobuf::uint32 tag;
+  ::yuntongxun_google::protobuf::io::StringOutputStream unknown_fields_string(
       mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
+  ::yuntongxun_google::protobuf::io::CodedOutputStream unknown_fields_stream(
       &unknown_fields_string);
   // @@protoc_insertion_point(parse_start:webrtc.rtclog.DecoderConfig)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::yuntongxun_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional string name = 1;
       case 1: {
         if (tag == 10) {
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
         } else {
           goto handle_unusual;
@@ -2988,8 +2988,8 @@ bool DecoderConfig::MergePartialFromCodedStream(
       case 2: {
         if (tag == 16) {
          parse_payload_type:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &payload_type_)));
           set_has_payload_type();
         } else {
@@ -3002,11 +3002,11 @@ bool DecoderConfig::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -3022,17 +3022,17 @@ failure:
 }
 
 void DecoderConfig::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:webrtc.rtclog.DecoderConfig)
   // optional string name = 1;
   if (has_name()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->name(), output);
   }
 
   // optional int32 payload_type = 2;
   if (has_payload_type()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(2, this->payload_type(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(2, this->payload_type(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -3047,14 +3047,14 @@ int DecoderConfig::ByteSize() const {
     // optional string name = 1;
     if (has_name()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::StringSize(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::StringSize(
           this->name());
     }
 
     // optional int32 payload_type = 2;
     if (has_payload_type()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->payload_type());
     }
 
@@ -3068,8 +3068,8 @@ int DecoderConfig::ByteSize() const {
 }
 
 void DecoderConfig::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const DecoderConfig*>(&from));
+    const ::yuntongxun_google::protobuf::MessageLite& from) {
+  MergeFrom(*::yuntongxun_google::protobuf::down_cast<const DecoderConfig*>(&from));
 }
 
 void DecoderConfig::MergeFrom(const DecoderConfig& from) {
@@ -3119,7 +3119,7 @@ const int RtpHeaderExtension::kIdFieldNumber;
 #endif  // !_MSC_VER
 
 RtpHeaderExtension::RtpHeaderExtension()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:webrtc.rtclog.RtpHeaderExtension)
 }
@@ -3128,16 +3128,16 @@ void RtpHeaderExtension::InitAsDefaultInstance() {
 }
 
 RtpHeaderExtension::RtpHeaderExtension(const RtpHeaderExtension& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:webrtc.rtclog.RtpHeaderExtension)
 }
 
 void RtpHeaderExtension::SharedCtor() {
-  ::cloopen_google::protobuf::internal::GetEmptyString();
+  ::yuntongxun_google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  name_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+  name_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   id_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -3148,7 +3148,7 @@ RtpHeaderExtension::~RtpHeaderExtension() {
 }
 
 void RtpHeaderExtension::SharedDtor() {
-  if (name_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete name_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -3182,7 +3182,7 @@ RtpHeaderExtension* RtpHeaderExtension::New() const {
 void RtpHeaderExtension::Clear() {
   if (_has_bits_[0 / 32] & 3) {
     if (has_name()) {
-      if (name_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+      if (name_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         name_->clear();
       }
     }
@@ -3193,23 +3193,23 @@ void RtpHeaderExtension::Clear() {
 }
 
 bool RtpHeaderExtension::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
+    ::yuntongxun_google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
+  ::yuntongxun_google::protobuf::uint32 tag;
+  ::yuntongxun_google::protobuf::io::StringOutputStream unknown_fields_string(
       mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
+  ::yuntongxun_google::protobuf::io::CodedOutputStream unknown_fields_stream(
       &unknown_fields_string);
   // @@protoc_insertion_point(parse_start:webrtc.rtclog.RtpHeaderExtension)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::yuntongxun_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional string name = 1;
       case 1: {
         if (tag == 10) {
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
         } else {
           goto handle_unusual;
@@ -3222,8 +3222,8 @@ bool RtpHeaderExtension::MergePartialFromCodedStream(
       case 2: {
         if (tag == 16) {
          parse_id:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &id_)));
           set_has_id();
         } else {
@@ -3236,11 +3236,11 @@ bool RtpHeaderExtension::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -3256,17 +3256,17 @@ failure:
 }
 
 void RtpHeaderExtension::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:webrtc.rtclog.RtpHeaderExtension)
   // optional string name = 1;
   if (has_name()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->name(), output);
   }
 
   // optional int32 id = 2;
   if (has_id()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(2, this->id(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(2, this->id(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -3281,14 +3281,14 @@ int RtpHeaderExtension::ByteSize() const {
     // optional string name = 1;
     if (has_name()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::StringSize(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::StringSize(
           this->name());
     }
 
     // optional int32 id = 2;
     if (has_id()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->id());
     }
 
@@ -3302,8 +3302,8 @@ int RtpHeaderExtension::ByteSize() const {
 }
 
 void RtpHeaderExtension::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const RtpHeaderExtension*>(&from));
+    const ::yuntongxun_google::protobuf::MessageLite& from) {
+  MergeFrom(*::yuntongxun_google::protobuf::down_cast<const RtpHeaderExtension*>(&from));
 }
 
 void RtpHeaderExtension::MergeFrom(const RtpHeaderExtension& from) {
@@ -3353,7 +3353,7 @@ const int RtxConfig::kRtxPayloadTypeFieldNumber;
 #endif  // !_MSC_VER
 
 RtxConfig::RtxConfig()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:webrtc.rtclog.RtxConfig)
 }
@@ -3362,7 +3362,7 @@ void RtxConfig::InitAsDefaultInstance() {
 }
 
 RtxConfig::RtxConfig(const RtxConfig& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:webrtc.rtclog.RtxConfig)
@@ -3430,24 +3430,24 @@ void RtxConfig::Clear() {
 }
 
 bool RtxConfig::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
+    ::yuntongxun_google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
+  ::yuntongxun_google::protobuf::uint32 tag;
+  ::yuntongxun_google::protobuf::io::StringOutputStream unknown_fields_string(
       mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
+  ::yuntongxun_google::protobuf::io::CodedOutputStream unknown_fields_stream(
       &unknown_fields_string);
   // @@protoc_insertion_point(parse_start:webrtc.rtclog.RtxConfig)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::yuntongxun_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional uint32 rtx_ssrc = 1;
       case 1: {
         if (tag == 8) {
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::uint32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::uint32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &rtx_ssrc_)));
           set_has_rtx_ssrc();
         } else {
@@ -3461,8 +3461,8 @@ bool RtxConfig::MergePartialFromCodedStream(
       case 2: {
         if (tag == 16) {
          parse_rtx_payload_type:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &rtx_payload_type_)));
           set_has_rtx_payload_type();
         } else {
@@ -3475,11 +3475,11 @@ bool RtxConfig::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -3495,16 +3495,16 @@ failure:
 }
 
 void RtxConfig::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:webrtc.rtclog.RtxConfig)
   // optional uint32 rtx_ssrc = 1;
   if (has_rtx_ssrc()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->rtx_ssrc(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->rtx_ssrc(), output);
   }
 
   // optional int32 rtx_payload_type = 2;
   if (has_rtx_payload_type()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(2, this->rtx_payload_type(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(2, this->rtx_payload_type(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -3519,14 +3519,14 @@ int RtxConfig::ByteSize() const {
     // optional uint32 rtx_ssrc = 1;
     if (has_rtx_ssrc()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::UInt32Size(
           this->rtx_ssrc());
     }
 
     // optional int32 rtx_payload_type = 2;
     if (has_rtx_payload_type()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->rtx_payload_type());
     }
 
@@ -3540,8 +3540,8 @@ int RtxConfig::ByteSize() const {
 }
 
 void RtxConfig::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const RtxConfig*>(&from));
+    const ::yuntongxun_google::protobuf::MessageLite& from) {
+  MergeFrom(*::yuntongxun_google::protobuf::down_cast<const RtxConfig*>(&from));
 }
 
 void RtxConfig::MergeFrom(const RtxConfig& from) {
@@ -3591,22 +3591,22 @@ const int RtxMap::kConfigFieldNumber;
 #endif  // !_MSC_VER
 
 RtxMap::RtxMap()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:webrtc.rtclog.RtxMap)
 }
 
 void RtxMap::InitAsDefaultInstance() {
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  config_ = const_cast< ::cloopenwebrtc::rtclog::RtxConfig*>(
-      ::cloopenwebrtc::rtclog::RtxConfig::internal_default_instance());
+  config_ = const_cast< ::yuntongxunwebrtc::rtclog::RtxConfig*>(
+      ::yuntongxunwebrtc::rtclog::RtxConfig::internal_default_instance());
 #else
-  config_ = const_cast< ::cloopenwebrtc::rtclog::RtxConfig*>(&::cloopenwebrtc::rtclog::RtxConfig::default_instance());
+  config_ = const_cast< ::yuntongxunwebrtc::rtclog::RtxConfig*>(&::yuntongxunwebrtc::rtclog::RtxConfig::default_instance());
 #endif
 }
 
 RtxMap::RtxMap(const RtxMap& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:webrtc.rtclog.RtxMap)
@@ -3658,7 +3658,7 @@ void RtxMap::Clear() {
   if (_has_bits_[0 / 32] & 3) {
     payload_type_ = 0;
     if (has_config()) {
-      if (config_ != NULL) config_->::cloopenwebrtc::rtclog::RtxConfig::Clear();
+      if (config_ != NULL) config_->::yuntongxunwebrtc::rtclog::RtxConfig::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -3666,24 +3666,24 @@ void RtxMap::Clear() {
 }
 
 bool RtxMap::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
+    ::yuntongxun_google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
+  ::yuntongxun_google::protobuf::uint32 tag;
+  ::yuntongxun_google::protobuf::io::StringOutputStream unknown_fields_string(
       mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
+  ::yuntongxun_google::protobuf::io::CodedOutputStream unknown_fields_stream(
       &unknown_fields_string);
   // @@protoc_insertion_point(parse_start:webrtc.rtclog.RtxMap)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::yuntongxun_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional int32 payload_type = 1;
       case 1: {
         if (tag == 8) {
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &payload_type_)));
           set_has_payload_type();
         } else {
@@ -3697,7 +3697,7 @@ bool RtxMap::MergePartialFromCodedStream(
       case 2: {
         if (tag == 18) {
          parse_config:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_config()));
         } else {
           goto handle_unusual;
@@ -3709,11 +3709,11 @@ bool RtxMap::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -3729,16 +3729,16 @@ failure:
 }
 
 void RtxMap::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:webrtc.rtclog.RtxMap)
   // optional int32 payload_type = 1;
   if (has_payload_type()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(1, this->payload_type(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(1, this->payload_type(), output);
   }
 
   // optional .webrtc.rtclog.RtxConfig config = 2;
   if (has_config()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteMessage(
       2, this->config(), output);
   }
 
@@ -3754,14 +3754,14 @@ int RtxMap::ByteSize() const {
     // optional int32 payload_type = 1;
     if (has_payload_type()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->payload_type());
     }
 
     // optional .webrtc.rtclog.RtxConfig config = 2;
     if (has_config()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->config());
     }
 
@@ -3775,8 +3775,8 @@ int RtxMap::ByteSize() const {
 }
 
 void RtxMap::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const RtxMap*>(&from));
+    const ::yuntongxun_google::protobuf::MessageLite& from) {
+  MergeFrom(*::yuntongxun_google::protobuf::down_cast<const RtxMap*>(&from));
 }
 
 void RtxMap::MergeFrom(const RtxMap& from) {
@@ -3786,7 +3786,7 @@ void RtxMap::MergeFrom(const RtxMap& from) {
       set_payload_type(from.payload_type());
     }
     if (from.has_config()) {
-      mutable_config()->::cloopenwebrtc::rtclog::RtxConfig::MergeFrom(from.config());
+      mutable_config()->::yuntongxunwebrtc::rtclog::RtxConfig::MergeFrom(from.config());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -3829,22 +3829,22 @@ const int VideoSendConfig::kEncoderFieldNumber;
 #endif  // !_MSC_VER
 
 VideoSendConfig::VideoSendConfig()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:webrtc.rtclog.VideoSendConfig)
 }
 
 void VideoSendConfig::InitAsDefaultInstance() {
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  encoder_ = const_cast< ::cloopenwebrtc::rtclog::EncoderConfig*>(
-      ::cloopenwebrtc::rtclog::EncoderConfig::internal_default_instance());
+  encoder_ = const_cast< ::yuntongxunwebrtc::rtclog::EncoderConfig*>(
+      ::yuntongxunwebrtc::rtclog::EncoderConfig::internal_default_instance());
 #else
-  encoder_ = const_cast< ::cloopenwebrtc::rtclog::EncoderConfig*>(&::cloopenwebrtc::rtclog::EncoderConfig::default_instance());
+  encoder_ = const_cast< ::yuntongxunwebrtc::rtclog::EncoderConfig*>(&::yuntongxunwebrtc::rtclog::EncoderConfig::default_instance());
 #endif
 }
 
 VideoSendConfig::VideoSendConfig(const VideoSendConfig& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:webrtc.rtclog.VideoSendConfig)
@@ -3896,7 +3896,7 @@ void VideoSendConfig::Clear() {
   if (_has_bits_[0 / 32] & 24) {
     rtx_payload_type_ = 0;
     if (has_encoder()) {
-      if (encoder_ != NULL) encoder_->::cloopenwebrtc::rtclog::EncoderConfig::Clear();
+      if (encoder_ != NULL) encoder_->::yuntongxunwebrtc::rtclog::EncoderConfig::Clear();
     }
   }
   ssrcs_.Clear();
@@ -3907,29 +3907,29 @@ void VideoSendConfig::Clear() {
 }
 
 bool VideoSendConfig::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
+    ::yuntongxun_google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
+  ::yuntongxun_google::protobuf::uint32 tag;
+  ::yuntongxun_google::protobuf::io::StringOutputStream unknown_fields_string(
       mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
+  ::yuntongxun_google::protobuf::io::CodedOutputStream unknown_fields_stream(
       &unknown_fields_string);
   // @@protoc_insertion_point(parse_start:webrtc.rtclog.VideoSendConfig)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::yuntongxun_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // repeated uint32 ssrcs = 1;
       case 1: {
         if (tag == 8) {
          parse_ssrcs:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
-                   ::cloopen_google::protobuf::uint32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
+                   ::yuntongxun_google::protobuf::uint32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  1, 8, input, this->mutable_ssrcs())));
         } else if (tag == 10) {
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
-                   ::cloopen_google::protobuf::uint32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
+                   ::yuntongxun_google::protobuf::uint32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, this->mutable_ssrcs())));
         } else {
           goto handle_unusual;
@@ -3943,7 +3943,7 @@ bool VideoSendConfig::MergePartialFromCodedStream(
       case 2: {
         if (tag == 18) {
          parse_header_extensions:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_header_extensions()));
         } else {
           goto handle_unusual;
@@ -3957,12 +3957,12 @@ bool VideoSendConfig::MergePartialFromCodedStream(
       case 3: {
         if (tag == 24) {
          parse_rtx_ssrcs:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
-                   ::cloopen_google::protobuf::uint32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
+                   ::yuntongxun_google::protobuf::uint32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  1, 24, input, this->mutable_rtx_ssrcs())));
         } else if (tag == 26) {
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
-                   ::cloopen_google::protobuf::uint32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
+                   ::yuntongxun_google::protobuf::uint32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, this->mutable_rtx_ssrcs())));
         } else {
           goto handle_unusual;
@@ -3976,8 +3976,8 @@ bool VideoSendConfig::MergePartialFromCodedStream(
       case 4: {
         if (tag == 32) {
          parse_rtx_payload_type:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &rtx_payload_type_)));
           set_has_rtx_payload_type();
         } else {
@@ -3991,7 +3991,7 @@ bool VideoSendConfig::MergePartialFromCodedStream(
       case 5: {
         if (tag == 42) {
          parse_encoder:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_encoder()));
         } else {
           goto handle_unusual;
@@ -4003,11 +4003,11 @@ bool VideoSendConfig::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -4023,34 +4023,34 @@ failure:
 }
 
 void VideoSendConfig::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:webrtc.rtclog.VideoSendConfig)
   // repeated uint32 ssrcs = 1;
   for (int i = 0; i < this->ssrcs_size(); i++) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteUInt32(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteUInt32(
       1, this->ssrcs(i), output);
   }
 
   // repeated .webrtc.rtclog.RtpHeaderExtension header_extensions = 2;
   for (int i = 0; i < this->header_extensions_size(); i++) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteMessage(
       2, this->header_extensions(i), output);
   }
 
   // repeated uint32 rtx_ssrcs = 3;
   for (int i = 0; i < this->rtx_ssrcs_size(); i++) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteUInt32(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteUInt32(
       3, this->rtx_ssrcs(i), output);
   }
 
   // optional int32 rtx_payload_type = 4;
   if (has_rtx_payload_type()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(4, this->rtx_payload_type(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(4, this->rtx_payload_type(), output);
   }
 
   // optional .webrtc.rtclog.EncoderConfig encoder = 5;
   if (has_encoder()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteMessage(
       5, this->encoder(), output);
   }
 
@@ -4066,14 +4066,14 @@ int VideoSendConfig::ByteSize() const {
     // optional int32 rtx_payload_type = 4;
     if (has_rtx_payload_type()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->rtx_payload_type());
     }
 
     // optional .webrtc.rtclog.EncoderConfig encoder = 5;
     if (has_encoder()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->encoder());
     }
 
@@ -4082,7 +4082,7 @@ int VideoSendConfig::ByteSize() const {
   {
     int data_size = 0;
     for (int i = 0; i < this->ssrcs_size(); i++) {
-      data_size += ::cloopen_google::protobuf::internal::WireFormatLite::
+      data_size += ::yuntongxun_google::protobuf::internal::WireFormatLite::
         UInt32Size(this->ssrcs(i));
     }
     total_size += 1 * this->ssrcs_size() + data_size;
@@ -4092,7 +4092,7 @@ int VideoSendConfig::ByteSize() const {
   total_size += 1 * this->header_extensions_size();
   for (int i = 0; i < this->header_extensions_size(); i++) {
     total_size +=
-      ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+      ::yuntongxun_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         this->header_extensions(i));
   }
 
@@ -4100,7 +4100,7 @@ int VideoSendConfig::ByteSize() const {
   {
     int data_size = 0;
     for (int i = 0; i < this->rtx_ssrcs_size(); i++) {
-      data_size += ::cloopen_google::protobuf::internal::WireFormatLite::
+      data_size += ::yuntongxun_google::protobuf::internal::WireFormatLite::
         UInt32Size(this->rtx_ssrcs(i));
     }
     total_size += 1 * this->rtx_ssrcs_size() + data_size;
@@ -4115,8 +4115,8 @@ int VideoSendConfig::ByteSize() const {
 }
 
 void VideoSendConfig::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const VideoSendConfig*>(&from));
+    const ::yuntongxun_google::protobuf::MessageLite& from) {
+  MergeFrom(*::yuntongxun_google::protobuf::down_cast<const VideoSendConfig*>(&from));
 }
 
 void VideoSendConfig::MergeFrom(const VideoSendConfig& from) {
@@ -4129,7 +4129,7 @@ void VideoSendConfig::MergeFrom(const VideoSendConfig& from) {
       set_rtx_payload_type(from.rtx_payload_type());
     }
     if (from.has_encoder()) {
-      mutable_encoder()->::cloopenwebrtc::rtclog::EncoderConfig::MergeFrom(from.encoder());
+      mutable_encoder()->::yuntongxunwebrtc::rtclog::EncoderConfig::MergeFrom(from.encoder());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -4172,7 +4172,7 @@ const int EncoderConfig::kPayloadTypeFieldNumber;
 #endif  // !_MSC_VER
 
 EncoderConfig::EncoderConfig()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:webrtc.rtclog.EncoderConfig)
 }
@@ -4181,16 +4181,16 @@ void EncoderConfig::InitAsDefaultInstance() {
 }
 
 EncoderConfig::EncoderConfig(const EncoderConfig& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:webrtc.rtclog.EncoderConfig)
 }
 
 void EncoderConfig::SharedCtor() {
-  ::cloopen_google::protobuf::internal::GetEmptyString();
+  ::yuntongxun_google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  name_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+  name_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   payload_type_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -4201,7 +4201,7 @@ EncoderConfig::~EncoderConfig() {
 }
 
 void EncoderConfig::SharedDtor() {
-  if (name_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete name_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -4235,7 +4235,7 @@ EncoderConfig* EncoderConfig::New() const {
 void EncoderConfig::Clear() {
   if (_has_bits_[0 / 32] & 3) {
     if (has_name()) {
-      if (name_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+      if (name_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         name_->clear();
       }
     }
@@ -4246,23 +4246,23 @@ void EncoderConfig::Clear() {
 }
 
 bool EncoderConfig::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
+    ::yuntongxun_google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
+  ::yuntongxun_google::protobuf::uint32 tag;
+  ::yuntongxun_google::protobuf::io::StringOutputStream unknown_fields_string(
       mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
+  ::yuntongxun_google::protobuf::io::CodedOutputStream unknown_fields_stream(
       &unknown_fields_string);
   // @@protoc_insertion_point(parse_start:webrtc.rtclog.EncoderConfig)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::yuntongxun_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional string name = 1;
       case 1: {
         if (tag == 10) {
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
         } else {
           goto handle_unusual;
@@ -4275,8 +4275,8 @@ bool EncoderConfig::MergePartialFromCodedStream(
       case 2: {
         if (tag == 16) {
          parse_payload_type:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &payload_type_)));
           set_has_payload_type();
         } else {
@@ -4289,11 +4289,11 @@ bool EncoderConfig::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -4309,17 +4309,17 @@ failure:
 }
 
 void EncoderConfig::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:webrtc.rtclog.EncoderConfig)
   // optional string name = 1;
   if (has_name()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->name(), output);
   }
 
   // optional int32 payload_type = 2;
   if (has_payload_type()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(2, this->payload_type(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(2, this->payload_type(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -4334,14 +4334,14 @@ int EncoderConfig::ByteSize() const {
     // optional string name = 1;
     if (has_name()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::StringSize(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::StringSize(
           this->name());
     }
 
     // optional int32 payload_type = 2;
     if (has_payload_type()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->payload_type());
     }
 
@@ -4355,8 +4355,8 @@ int EncoderConfig::ByteSize() const {
 }
 
 void EncoderConfig::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const EncoderConfig*>(&from));
+    const ::yuntongxun_google::protobuf::MessageLite& from) {
+  MergeFrom(*::yuntongxun_google::protobuf::down_cast<const EncoderConfig*>(&from));
 }
 
 void EncoderConfig::MergeFrom(const EncoderConfig& from) {
@@ -4407,7 +4407,7 @@ const int AudioReceiveConfig::kHeaderExtensionsFieldNumber;
 #endif  // !_MSC_VER
 
 AudioReceiveConfig::AudioReceiveConfig()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:webrtc.rtclog.AudioReceiveConfig)
 }
@@ -4416,7 +4416,7 @@ void AudioReceiveConfig::InitAsDefaultInstance() {
 }
 
 AudioReceiveConfig::AudioReceiveConfig(const AudioReceiveConfig& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:webrtc.rtclog.AudioReceiveConfig)
@@ -4485,24 +4485,24 @@ void AudioReceiveConfig::Clear() {
 }
 
 bool AudioReceiveConfig::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
+    ::yuntongxun_google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
+  ::yuntongxun_google::protobuf::uint32 tag;
+  ::yuntongxun_google::protobuf::io::StringOutputStream unknown_fields_string(
       mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
+  ::yuntongxun_google::protobuf::io::CodedOutputStream unknown_fields_stream(
       &unknown_fields_string);
   // @@protoc_insertion_point(parse_start:webrtc.rtclog.AudioReceiveConfig)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::yuntongxun_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional uint32 remote_ssrc = 1;
       case 1: {
         if (tag == 8) {
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::uint32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::uint32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &remote_ssrc_)));
           set_has_remote_ssrc();
         } else {
@@ -4516,8 +4516,8 @@ bool AudioReceiveConfig::MergePartialFromCodedStream(
       case 2: {
         if (tag == 16) {
          parse_local_ssrc:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::uint32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::uint32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &local_ssrc_)));
           set_has_local_ssrc();
         } else {
@@ -4531,7 +4531,7 @@ bool AudioReceiveConfig::MergePartialFromCodedStream(
       case 3: {
         if (tag == 26) {
          parse_header_extensions:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_header_extensions()));
         } else {
           goto handle_unusual;
@@ -4544,11 +4544,11 @@ bool AudioReceiveConfig::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -4564,21 +4564,21 @@ failure:
 }
 
 void AudioReceiveConfig::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:webrtc.rtclog.AudioReceiveConfig)
   // optional uint32 remote_ssrc = 1;
   if (has_remote_ssrc()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->remote_ssrc(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->remote_ssrc(), output);
   }
 
   // optional uint32 local_ssrc = 2;
   if (has_local_ssrc()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->local_ssrc(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->local_ssrc(), output);
   }
 
   // repeated .webrtc.rtclog.RtpHeaderExtension header_extensions = 3;
   for (int i = 0; i < this->header_extensions_size(); i++) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteMessage(
       3, this->header_extensions(i), output);
   }
 
@@ -4594,14 +4594,14 @@ int AudioReceiveConfig::ByteSize() const {
     // optional uint32 remote_ssrc = 1;
     if (has_remote_ssrc()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::UInt32Size(
           this->remote_ssrc());
     }
 
     // optional uint32 local_ssrc = 2;
     if (has_local_ssrc()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::UInt32Size(
           this->local_ssrc());
     }
 
@@ -4610,7 +4610,7 @@ int AudioReceiveConfig::ByteSize() const {
   total_size += 1 * this->header_extensions_size();
   for (int i = 0; i < this->header_extensions_size(); i++) {
     total_size +=
-      ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+      ::yuntongxun_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         this->header_extensions(i));
   }
 
@@ -4623,8 +4623,8 @@ int AudioReceiveConfig::ByteSize() const {
 }
 
 void AudioReceiveConfig::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const AudioReceiveConfig*>(&from));
+    const ::yuntongxun_google::protobuf::MessageLite& from) {
+  MergeFrom(*::yuntongxun_google::protobuf::down_cast<const AudioReceiveConfig*>(&from));
 }
 
 void AudioReceiveConfig::MergeFrom(const AudioReceiveConfig& from) {
@@ -4676,7 +4676,7 @@ const int AudioSendConfig::kHeaderExtensionsFieldNumber;
 #endif  // !_MSC_VER
 
 AudioSendConfig::AudioSendConfig()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:webrtc.rtclog.AudioSendConfig)
 }
@@ -4685,7 +4685,7 @@ void AudioSendConfig::InitAsDefaultInstance() {
 }
 
 AudioSendConfig::AudioSendConfig(const AudioSendConfig& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:webrtc.rtclog.AudioSendConfig)
@@ -4739,24 +4739,24 @@ void AudioSendConfig::Clear() {
 }
 
 bool AudioSendConfig::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
+    ::yuntongxun_google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
+  ::yuntongxun_google::protobuf::uint32 tag;
+  ::yuntongxun_google::protobuf::io::StringOutputStream unknown_fields_string(
       mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
+  ::yuntongxun_google::protobuf::io::CodedOutputStream unknown_fields_stream(
       &unknown_fields_string);
   // @@protoc_insertion_point(parse_start:webrtc.rtclog.AudioSendConfig)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::yuntongxun_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional uint32 ssrc = 1;
       case 1: {
         if (tag == 8) {
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::uint32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::uint32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &ssrc_)));
           set_has_ssrc();
         } else {
@@ -4770,7 +4770,7 @@ bool AudioSendConfig::MergePartialFromCodedStream(
       case 2: {
         if (tag == 18) {
          parse_header_extensions:
-          DO_(::cloopen_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+          DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_header_extensions()));
         } else {
           goto handle_unusual;
@@ -4783,11 +4783,11 @@ bool AudioSendConfig::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -4803,16 +4803,16 @@ failure:
 }
 
 void AudioSendConfig::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:webrtc.rtclog.AudioSendConfig)
   // optional uint32 ssrc = 1;
   if (has_ssrc()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->ssrc(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->ssrc(), output);
   }
 
   // repeated .webrtc.rtclog.RtpHeaderExtension header_extensions = 2;
   for (int i = 0; i < this->header_extensions_size(); i++) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteMessage(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteMessage(
       2, this->header_extensions(i), output);
   }
 
@@ -4828,7 +4828,7 @@ int AudioSendConfig::ByteSize() const {
     // optional uint32 ssrc = 1;
     if (has_ssrc()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::UInt32Size(
           this->ssrc());
     }
 
@@ -4837,7 +4837,7 @@ int AudioSendConfig::ByteSize() const {
   total_size += 1 * this->header_extensions_size();
   for (int i = 0; i < this->header_extensions_size(); i++) {
     total_size +=
-      ::cloopen_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+      ::yuntongxun_google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         this->header_extensions(i));
   }
 
@@ -4850,8 +4850,8 @@ int AudioSendConfig::ByteSize() const {
 }
 
 void AudioSendConfig::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const AudioSendConfig*>(&from));
+    const ::yuntongxun_google::protobuf::MessageLite& from) {
+  MergeFrom(*::yuntongxun_google::protobuf::down_cast<const AudioSendConfig*>(&from));
 }
 
 void AudioSendConfig::MergeFrom(const AudioSendConfig& from) {
@@ -4903,7 +4903,7 @@ const int AudioNetworkAdaptation::kNumChannelsFieldNumber;
 #endif  // !_MSC_VER
 
 AudioNetworkAdaptation::AudioNetworkAdaptation()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:webrtc.rtclog.AudioNetworkAdaptation)
 }
@@ -4912,7 +4912,7 @@ void AudioNetworkAdaptation::InitAsDefaultInstance() {
 }
 
 AudioNetworkAdaptation::AudioNetworkAdaptation(const AudioNetworkAdaptation& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:webrtc.rtclog.AudioNetworkAdaptation)
@@ -4986,24 +4986,24 @@ void AudioNetworkAdaptation::Clear() {
 }
 
 bool AudioNetworkAdaptation::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
+    ::yuntongxun_google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
+  ::yuntongxun_google::protobuf::uint32 tag;
+  ::yuntongxun_google::protobuf::io::StringOutputStream unknown_fields_string(
       mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
+  ::yuntongxun_google::protobuf::io::CodedOutputStream unknown_fields_stream(
       &unknown_fields_string);
   // @@protoc_insertion_point(parse_start:webrtc.rtclog.AudioNetworkAdaptation)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::yuntongxun_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional int32 bitrate_bps = 1;
       case 1: {
         if (tag == 8) {
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &bitrate_bps_)));
           set_has_bitrate_bps();
         } else {
@@ -5017,8 +5017,8 @@ bool AudioNetworkAdaptation::MergePartialFromCodedStream(
       case 2: {
         if (tag == 16) {
          parse_frame_length_ms:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::int32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &frame_length_ms_)));
           set_has_frame_length_ms();
         } else {
@@ -5032,8 +5032,8 @@ bool AudioNetworkAdaptation::MergePartialFromCodedStream(
       case 3: {
         if (tag == 29) {
          parse_uplink_packet_loss_fraction:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   float, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &uplink_packet_loss_fraction_)));
           set_has_uplink_packet_loss_fraction();
         } else {
@@ -5047,8 +5047,8 @@ bool AudioNetworkAdaptation::MergePartialFromCodedStream(
       case 4: {
         if (tag == 32) {
          parse_enable_fec:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &enable_fec_)));
           set_has_enable_fec();
         } else {
@@ -5062,8 +5062,8 @@ bool AudioNetworkAdaptation::MergePartialFromCodedStream(
       case 5: {
         if (tag == 40) {
          parse_enable_dtx:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &enable_dtx_)));
           set_has_enable_dtx();
         } else {
@@ -5077,8 +5077,8 @@ bool AudioNetworkAdaptation::MergePartialFromCodedStream(
       case 6: {
         if (tag == 48) {
          parse_num_channels:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::uint32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::uint32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &num_channels_)));
           set_has_num_channels();
         } else {
@@ -5091,11 +5091,11 @@ bool AudioNetworkAdaptation::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -5111,36 +5111,36 @@ failure:
 }
 
 void AudioNetworkAdaptation::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:webrtc.rtclog.AudioNetworkAdaptation)
   // optional int32 bitrate_bps = 1;
   if (has_bitrate_bps()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(1, this->bitrate_bps(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(1, this->bitrate_bps(), output);
   }
 
   // optional int32 frame_length_ms = 2;
   if (has_frame_length_ms()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteInt32(2, this->frame_length_ms(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(2, this->frame_length_ms(), output);
   }
 
   // optional float uplink_packet_loss_fraction = 3;
   if (has_uplink_packet_loss_fraction()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteFloat(3, this->uplink_packet_loss_fraction(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteFloat(3, this->uplink_packet_loss_fraction(), output);
   }
 
   // optional bool enable_fec = 4;
   if (has_enable_fec()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteBool(4, this->enable_fec(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteBool(4, this->enable_fec(), output);
   }
 
   // optional bool enable_dtx = 5;
   if (has_enable_dtx()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteBool(5, this->enable_dtx(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteBool(5, this->enable_dtx(), output);
   }
 
   // optional uint32 num_channels = 6;
   if (has_num_channels()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->num_channels(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->num_channels(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -5155,14 +5155,14 @@ int AudioNetworkAdaptation::ByteSize() const {
     // optional int32 bitrate_bps = 1;
     if (has_bitrate_bps()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->bitrate_bps());
     }
 
     // optional int32 frame_length_ms = 2;
     if (has_frame_length_ms()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::Int32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->frame_length_ms());
     }
 
@@ -5184,7 +5184,7 @@ int AudioNetworkAdaptation::ByteSize() const {
     // optional uint32 num_channels = 6;
     if (has_num_channels()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::UInt32Size(
           this->num_channels());
     }
 
@@ -5198,8 +5198,8 @@ int AudioNetworkAdaptation::ByteSize() const {
 }
 
 void AudioNetworkAdaptation::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const AudioNetworkAdaptation*>(&from));
+    const ::yuntongxun_google::protobuf::MessageLite& from) {
+  MergeFrom(*::yuntongxun_google::protobuf::down_cast<const AudioNetworkAdaptation*>(&from));
 }
 
 void AudioNetworkAdaptation::MergeFrom(const AudioNetworkAdaptation& from) {
@@ -5267,7 +5267,7 @@ const int BweProbeCluster::kMinBytesFieldNumber;
 #endif  // !_MSC_VER
 
 BweProbeCluster::BweProbeCluster()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:webrtc.rtclog.BweProbeCluster)
 }
@@ -5276,7 +5276,7 @@ void BweProbeCluster::InitAsDefaultInstance() {
 }
 
 BweProbeCluster::BweProbeCluster(const BweProbeCluster& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:webrtc.rtclog.BweProbeCluster)
@@ -5346,24 +5346,24 @@ void BweProbeCluster::Clear() {
 }
 
 bool BweProbeCluster::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
+    ::yuntongxun_google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
+  ::yuntongxun_google::protobuf::uint32 tag;
+  ::yuntongxun_google::protobuf::io::StringOutputStream unknown_fields_string(
       mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
+  ::yuntongxun_google::protobuf::io::CodedOutputStream unknown_fields_stream(
       &unknown_fields_string);
   // @@protoc_insertion_point(parse_start:webrtc.rtclog.BweProbeCluster)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::yuntongxun_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional uint32 id = 1;
       case 1: {
         if (tag == 8) {
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::uint32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::uint32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &id_)));
           set_has_id();
         } else {
@@ -5377,8 +5377,8 @@ bool BweProbeCluster::MergePartialFromCodedStream(
       case 2: {
         if (tag == 16) {
          parse_bitrate_bps:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::uint64, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::uint64, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &bitrate_bps_)));
           set_has_bitrate_bps();
         } else {
@@ -5392,8 +5392,8 @@ bool BweProbeCluster::MergePartialFromCodedStream(
       case 3: {
         if (tag == 24) {
          parse_min_packets:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::uint32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::uint32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &min_packets_)));
           set_has_min_packets();
         } else {
@@ -5407,8 +5407,8 @@ bool BweProbeCluster::MergePartialFromCodedStream(
       case 4: {
         if (tag == 32) {
          parse_min_bytes:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::uint32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::uint32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &min_bytes_)));
           set_has_min_bytes();
         } else {
@@ -5421,11 +5421,11 @@ bool BweProbeCluster::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -5441,26 +5441,26 @@ failure:
 }
 
 void BweProbeCluster::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:webrtc.rtclog.BweProbeCluster)
   // optional uint32 id = 1;
   if (has_id()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->id(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->id(), output);
   }
 
   // optional uint64 bitrate_bps = 2;
   if (has_bitrate_bps()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->bitrate_bps(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->bitrate_bps(), output);
   }
 
   // optional uint32 min_packets = 3;
   if (has_min_packets()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->min_packets(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->min_packets(), output);
   }
 
   // optional uint32 min_bytes = 4;
   if (has_min_bytes()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->min_bytes(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->min_bytes(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -5475,28 +5475,28 @@ int BweProbeCluster::ByteSize() const {
     // optional uint32 id = 1;
     if (has_id()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::UInt32Size(
           this->id());
     }
 
     // optional uint64 bitrate_bps = 2;
     if (has_bitrate_bps()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::UInt64Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::UInt64Size(
           this->bitrate_bps());
     }
 
     // optional uint32 min_packets = 3;
     if (has_min_packets()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::UInt32Size(
           this->min_packets());
     }
 
     // optional uint32 min_bytes = 4;
     if (has_min_bytes()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::UInt32Size(
           this->min_bytes());
     }
 
@@ -5510,8 +5510,8 @@ int BweProbeCluster::ByteSize() const {
 }
 
 void BweProbeCluster::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const BweProbeCluster*>(&from));
+    const ::yuntongxun_google::protobuf::MessageLite& from) {
+  MergeFrom(*::yuntongxun_google::protobuf::down_cast<const BweProbeCluster*>(&from));
 }
 
 void BweProbeCluster::MergeFrom(const BweProbeCluster& from) {
@@ -5591,7 +5591,7 @@ const int BweProbeResult::kBitrateBpsFieldNumber;
 #endif  // !_MSC_VER
 
 BweProbeResult::BweProbeResult()
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   // @@protoc_insertion_point(constructor:webrtc.rtclog.BweProbeResult)
 }
@@ -5600,7 +5600,7 @@ void BweProbeResult::InitAsDefaultInstance() {
 }
 
 BweProbeResult::BweProbeResult(const BweProbeResult& from)
-  : ::cloopen_google::protobuf::MessageLite() {
+  : ::yuntongxun_google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
   // @@protoc_insertion_point(copy_constructor:webrtc.rtclog.BweProbeResult)
@@ -5669,24 +5669,24 @@ void BweProbeResult::Clear() {
 }
 
 bool BweProbeResult::MergePartialFromCodedStream(
-    ::cloopen_google::protobuf::io::CodedInputStream* input) {
+    ::yuntongxun_google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::cloopen_google::protobuf::uint32 tag;
-  ::cloopen_google::protobuf::io::StringOutputStream unknown_fields_string(
+  ::yuntongxun_google::protobuf::uint32 tag;
+  ::yuntongxun_google::protobuf::io::StringOutputStream unknown_fields_string(
       mutable_unknown_fields());
-  ::cloopen_google::protobuf::io::CodedOutputStream unknown_fields_stream(
+  ::yuntongxun_google::protobuf::io::CodedOutputStream unknown_fields_stream(
       &unknown_fields_string);
   // @@protoc_insertion_point(parse_start:webrtc.rtclog.BweProbeResult)
   for (;;) {
-    ::std::pair< ::cloopen_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::yuntongxun_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::cloopen_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+    switch (::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional uint32 id = 1;
       case 1: {
         if (tag == 8) {
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::uint32, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::uint32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &id_)));
           set_has_id();
         } else {
@@ -5701,11 +5701,11 @@ bool BweProbeResult::MergePartialFromCodedStream(
         if (tag == 16) {
          parse_result:
           int value;
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   int, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          if (::cloopenwebrtc::rtclog::BweProbeResult_ResultType_IsValid(value)) {
-            set_result(static_cast< ::cloopenwebrtc::rtclog::BweProbeResult_ResultType >(value));
+          if (::yuntongxunwebrtc::rtclog::BweProbeResult_ResultType_IsValid(value)) {
+            set_result(static_cast< ::yuntongxunwebrtc::rtclog::BweProbeResult_ResultType >(value));
           } else {
             unknown_fields_stream.WriteVarint32(tag);
             unknown_fields_stream.WriteVarint32(value);
@@ -5721,8 +5721,8 @@ bool BweProbeResult::MergePartialFromCodedStream(
       case 3: {
         if (tag == 24) {
          parse_bitrate_bps:
-          DO_((::cloopen_google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::cloopen_google::protobuf::uint64, ::cloopen_google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::uint64, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &bitrate_bps_)));
           set_has_bitrate_bps();
         } else {
@@ -5735,11 +5735,11 @@ bool BweProbeResult::MergePartialFromCodedStream(
       default: {
       handle_unusual:
         if (tag == 0 ||
-            ::cloopen_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::cloopen_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::yuntongxun_google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
           goto success;
         }
-        DO_(::cloopen_google::protobuf::internal::WireFormatLite::SkipField(
+        DO_(::yuntongxun_google::protobuf::internal::WireFormatLite::SkipField(
             input, tag, &unknown_fields_stream));
         break;
       }
@@ -5755,22 +5755,22 @@ failure:
 }
 
 void BweProbeResult::SerializeWithCachedSizes(
-    ::cloopen_google::protobuf::io::CodedOutputStream* output) const {
+    ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:webrtc.rtclog.BweProbeResult)
   // optional uint32 id = 1;
   if (has_id()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->id(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->id(), output);
   }
 
   // optional .webrtc.rtclog.BweProbeResult.ResultType result = 2;
   if (has_result()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteEnum(
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteEnum(
       2, this->result(), output);
   }
 
   // optional uint64 bitrate_bps = 3;
   if (has_bitrate_bps()) {
-    ::cloopen_google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->bitrate_bps(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->bitrate_bps(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -5785,20 +5785,20 @@ int BweProbeResult::ByteSize() const {
     // optional uint32 id = 1;
     if (has_id()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::UInt32Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::UInt32Size(
           this->id());
     }
 
     // optional .webrtc.rtclog.BweProbeResult.ResultType result = 2;
     if (has_result()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::EnumSize(this->result());
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::EnumSize(this->result());
     }
 
     // optional uint64 bitrate_bps = 3;
     if (has_bitrate_bps()) {
       total_size += 1 +
-        ::cloopen_google::protobuf::internal::WireFormatLite::UInt64Size(
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::UInt64Size(
           this->bitrate_bps());
     }
 
@@ -5812,8 +5812,8 @@ int BweProbeResult::ByteSize() const {
 }
 
 void BweProbeResult::CheckTypeAndMergeFrom(
-    const ::cloopen_google::protobuf::MessageLite& from) {
-  MergeFrom(*::cloopen_google::protobuf::down_cast<const BweProbeResult*>(&from));
+    const ::yuntongxun_google::protobuf::MessageLite& from) {
+  MergeFrom(*::yuntongxun_google::protobuf::down_cast<const BweProbeResult*>(&from));
 }
 
 void BweProbeResult::MergeFrom(const BweProbeResult& from) {

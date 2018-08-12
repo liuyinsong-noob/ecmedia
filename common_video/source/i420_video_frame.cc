@@ -14,7 +14,7 @@
 
 #include <algorithm>  // swap
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 I420VideoFrame::I420VideoFrame()
     : width_(0),

@@ -18,7 +18,7 @@
 #include <unistd.h>
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 ProcessThread::~ProcessThread()
 {
 }
@@ -181,4 +181,4 @@ bool ProcessThreadImpl::Process()
 #endif
     return true;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -14,7 +14,7 @@
 #include "../base/sigslot.h"
 #include "../base/socketaddress.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // This interface defines the methods to resolve the address asynchronously.
 class AsyncResolverInterface {
@@ -42,6 +42,6 @@ class AsyncResolverInterface {
   sigslot::signal1<AsyncResolverInterface*> SignalDone;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif

@@ -21,7 +21,7 @@
 #include "../module/remote_bitrate_estimator/include/remote_bitrate_estimator.h"
 #include "../system_wrappers/include/clock.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace testing {
 
 class TestBitrateObserver : public RemoteBitrateObserver {
@@ -215,6 +215,6 @@ class RemoteBitrateEstimatorTest : public ::testing::Test {
 
   RTC_DISALLOW_COPY_AND_ASSIGN(RemoteBitrateEstimatorTest);
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_REMOTE_BITRATE_ESTIMATOR_REMOTE_BITRATE_ESTIMATOR_UNITTEST_HELPER_H_

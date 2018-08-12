@@ -22,7 +22,7 @@
 #include "celt_interface.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 #ifndef WEBRTC_CODEC_CELT
 
@@ -142,7 +142,7 @@ int16_t ACMCELT::InternalEncode(uint8_t* bitStream, int16_t* bitStreamLenByte) {
 
   if (*bitStreamLenByte < 0) {
     // Error reported from the encoder.
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, _uniqueID,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, _uniqueID,
                  "InternalEncode: Encode error for Celt");
     *bitStreamLenByte = 0;
     return -1;
@@ -199,12 +199,12 @@ int16_t ACMCELT::InternalInitDecoder(WebRtcACMCodecParams* codecParams) {
 
   // Initiate decoder, both master and slave parts.
   if (WebRtcCelt_DecoderInit(dec_inst_ptr_) < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, _uniqueID,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, _uniqueID,
                  "InternalInitDecoder: init decoder failed for Celt.");
     return -1;
   }
   if (WebRtcCelt_DecoderInitSlave(dec_inst_ptr_) < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, _uniqueID,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, _uniqueID,
                  "InternalInitDecoder: init decoder failed for Celt.");
     return -1;
   }
@@ -214,7 +214,7 @@ int16_t ACMCELT::InternalInitDecoder(WebRtcACMCodecParams* codecParams) {
 int32_t ACMCELT::CodecDef(WebRtcNetEQ_CodecDef& codecDef,
                           const CodecInst& codecInst) {
   if (!_decoderInitialized) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, _uniqueID,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, _uniqueID,
                  "CodecDef: Decoder uninitialized for Celt");
     return -1;
   }
@@ -247,7 +247,7 @@ ACMGenericCodec* ACMCELT::CreateInstance(void) {
 
 int16_t ACMCELT::InternalCreateEncoder() {
   if (WebRtcCelt_CreateEnc(&enc_inst_ptr_, _noChannels) < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, _uniqueID,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, _uniqueID,
                  "InternalCreateEncoder: create encoder failed for Celt");
     return -1;
   }
@@ -266,7 +266,7 @@ void ACMCELT::DestructEncoderSafe() {
 
 int16_t ACMCELT::InternalCreateDecoder() {
   if (WebRtcCelt_CreateDec(&dec_inst_ptr_, dec_channels_) < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, _uniqueID,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, _uniqueID,
                  "InternalCreateDecoder: create decoder failed for Celt");
     return -1;
   }
@@ -304,13 +304,13 @@ int16_t ACMCELT::SetBitRateSafe(const int32_t rate) {
     if (WebRtcCelt_EncoderInit(enc_inst_ptr_, channels_, bitrate_) >= 0) {
       return 0;
     } else {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, _uniqueID,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, _uniqueID,
                    "SetBitRateSafe: Failed to initiate Celt with rate %d",
                    rate);
       return -1;
     }
   } else {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, _uniqueID,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, _uniqueID,
                  "SetBitRateSafe: Invalid rate Celt, %d", rate);
     return -1;
   }
@@ -331,4 +331,4 @@ void ACMCELT::SplitStereoPacket(uint8_t* payload, int32_t* payload_length) {
 
 #endif
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

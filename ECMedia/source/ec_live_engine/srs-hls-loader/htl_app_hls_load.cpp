@@ -47,7 +47,7 @@ StHlsTask::StHlsTask(){
     target_duration = DEFAULT_TS_DURATION;
     callback_ = nullptr;
     running_ = false;
-    ts_wait_event_ = cloopenwebrtc::EventWrapper::Create();
+    ts_wait_event_ = yuntongxunwebrtc::EventWrapper::Create();
 }
 
 StHlsTask::~StHlsTask(){

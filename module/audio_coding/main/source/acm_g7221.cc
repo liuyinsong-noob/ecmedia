@@ -78,7 +78,7 @@
 //                                 int16_t nr_lost_frames);
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -220,7 +220,7 @@ int16_t ACMG722_1::InternalEncode(uint8_t* bitstream,
       break;
     }
     default: {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                    "InternalInitEncode: Wrong rate for G722_1.");
       return -1;
     }
@@ -260,7 +260,7 @@ int16_t ACMG722_1::InternalInitEncoder(WebRtcACMCodecParams* codec_params) {
       return WebRtcG7221_EncoderInit32(encoder_inst32_ptr_);
     }
     default: {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding,
                    unique_id_, "InternalInitEncoder: Wrong rate for G722_1.");
       return -1;
     }
@@ -290,7 +290,7 @@ int16_t ACMG722_1::InternalCreateEncoder() {
       break;
     }
     default: {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                    "InternalCreateEncoder: Wrong rate for G722_1.");
       return -1;
     }
@@ -318,4 +318,4 @@ void ACMG722_1::DestructEncoderSafe() {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

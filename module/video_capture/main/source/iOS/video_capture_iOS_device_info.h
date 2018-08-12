@@ -17,7 +17,7 @@
 
 //@class VideoCaptureiOSDeviceInfoObjC;
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
     namespace videocapturemodule
     {
@@ -87,6 +87,6 @@ namespace cloopenwebrtc
             ECVideoCaptureiOSDeviceInfoObjC*    _captureInfo;
         };
     }  // namespace videocapturemodule
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif

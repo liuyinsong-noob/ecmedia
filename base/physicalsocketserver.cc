@@ -65,7 +65,7 @@ int64_t GetSocketRecvTimestamp(int socket) {
   if (ret != 0)
     return -1;
   int64_t timestamp =
-      cloopenwebrtc::kNumMicrosecsPerSec * static_cast<int64_t>(tv_ioctl.tv_sec) +
+      yuntongxunwebrtc::kNumMicrosecsPerSec * static_cast<int64_t>(tv_ioctl.tv_sec) +
       static_cast<int64_t>(tv_ioctl.tv_usec);
   return timestamp;
 }
@@ -81,13 +81,13 @@ int64_t GetSocketRecvTimestamp(int socket) {
 typedef char* SockOptArg;
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 std::unique_ptr<SocketServer> SocketServer::CreateDefault() {
 #if defined(__native_client__)
-  return std::unique_ptr<SocketServer>(new cloopenwebrtc::NullSocketServer);
+  return std::unique_ptr<SocketServer>(new yuntongxunwebrtc::NullSocketServer);
 #else
-  return std::unique_ptr<SocketServer>(new cloopenwebrtc::PhysicalSocketServer);
+  return std::unique_ptr<SocketServer>(new yuntongxunwebrtc::PhysicalSocketServer);
 #endif
 }
 
@@ -1643,4 +1643,4 @@ bool PhysicalSocketServer::Wait(int cmsWait, bool process_io) {
 }
 #endif  // WEBRTC_WIN
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

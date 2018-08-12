@@ -12,7 +12,7 @@
 
 #include "trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 MapItem::MapItem(int id, void* item) : item_id_(id), item_pointer_(item)
 {
 }
@@ -163,4 +163,4 @@ int MapWrapper::Erase(const int id)
     }
     return -1;
 }
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

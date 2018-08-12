@@ -16,7 +16,7 @@
 
 #include "../module/common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 Atomic32::Atomic32(int32_t initial_value)
     : value_(initial_value) {
@@ -46,4 +46,4 @@ bool Atomic32::CompareExchange(int32_t new_value, int32_t compare_value) {
   return OSAtomicCompareAndSwap32Barrier(compare_value, new_value, &value_);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

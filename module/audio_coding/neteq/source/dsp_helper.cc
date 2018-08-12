@@ -17,7 +17,7 @@
 
 #include "signal_processing_library.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Table of constants used in method DspHelper::ParabolicFit().
 const int16_t DspHelper::kParabolaCoefficients[17][3] = {
@@ -350,4 +350,4 @@ int DspHelper::DownsampleTo4kHz(const int16_t* input, size_t input_length,
       filter_length, factor, filter_delay);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

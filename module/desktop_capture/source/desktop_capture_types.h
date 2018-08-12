@@ -16,7 +16,7 @@
 #include "desktop_geometry.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Type used to identify windows on the desktop. Values are platform-specific:
 //   - On Windows: HWND cast to intptr_t.
@@ -37,7 +37,7 @@ const ScreenId kFullDesktopScreenId = -1;
 
 const ScreenId kInvalidScreenId = -2;
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_DESKTOP_CAPTURE_TYPES_H_
 

@@ -17,7 +17,7 @@
 #include "../base/constructormagic.h"
 #include "../base/checks.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Random {
  public:
@@ -88,6 +88,6 @@ double Random::Rand<double>();
 template <>
 bool Random::Rand<bool>();
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_RANDOM_H_

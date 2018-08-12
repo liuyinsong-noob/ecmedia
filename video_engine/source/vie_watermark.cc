@@ -4,10 +4,10 @@ Auth chwd 2018.4.10
 
 #include "vie_watermark.h"
 #include "../system_wrappers/include/logging.h"
-using namespace cloopenwebrtc;
+using namespace yuntongxunwebrtc;
 
 //create and init filter obj
-VIEWaterMark* cloopenwebrtc::VIEWaterMark::CreateWatermark(WaterMark watermark, int width, int height)
+VIEWaterMark* yuntongxunwebrtc::VIEWaterMark::CreateWatermark(WaterMark watermark, int width, int height)
 {
 	VIEWaterMark* water_mark = new VIEWaterMark();
 	if (!water_mark || !water_mark->InitFilterDescr(watermark) || !water_mark->InitFilter(width, height)) {
@@ -17,7 +17,7 @@ VIEWaterMark* cloopenwebrtc::VIEWaterMark::CreateWatermark(WaterMark watermark, 
 	return water_mark;
 }
 
-cloopenwebrtc::VIEWaterMark::~VIEWaterMark()
+yuntongxunwebrtc::VIEWaterMark::~VIEWaterMark()
 {
 	if (filter_descr_) {
 		delete filter_descr_;
@@ -42,7 +42,7 @@ cloopenwebrtc::VIEWaterMark::~VIEWaterMark()
 	
 }
 
-cloopenwebrtc::VIEWaterMark::VIEWaterMark()
+yuntongxunwebrtc::VIEWaterMark::VIEWaterMark()
 {
 	video_stream_index_ = -1;
 	frame_buffer_in_ = NULL;
@@ -57,7 +57,7 @@ cloopenwebrtc::VIEWaterMark::VIEWaterMark()
 }
 
 
-bool cloopenwebrtc::VIEWaterMark::InitFilter(int width, int height)
+bool yuntongxunwebrtc::VIEWaterMark::InitFilter(int width, int height)
 {
 	avfilter_register_all();
 	
@@ -132,7 +132,7 @@ bool cloopenwebrtc::VIEWaterMark::InitFilter(int width, int height)
 	return true;
 }
 
-bool cloopenwebrtc::VIEWaterMark::CopyFilterData(AVFrame *frame_out, unsigned char * yuvDest)
+bool yuntongxunwebrtc::VIEWaterMark::CopyFilterData(AVFrame *frame_out, unsigned char * yuvDest)
 {
 	int width = frame_out->width;
 	int height = frame_out->height;
@@ -149,7 +149,7 @@ bool cloopenwebrtc::VIEWaterMark::CopyFilterData(AVFrame *frame_out, unsigned ch
 	return true;
 }
 
-bool cloopenwebrtc::VIEWaterMark::InitFilterDescr(WaterMark watermark)
+bool yuntongxunwebrtc::VIEWaterMark::InitFilterDescr(WaterMark watermark)
 {	
 
 	if (0 == watermark.flag) {
@@ -177,7 +177,7 @@ bool cloopenwebrtc::VIEWaterMark::InitFilterDescr(WaterMark watermark)
 	}
 }
 
-bool cloopenwebrtc::VIEWaterMark::FilterBufferSinkAndCopyYUV(unsigned char *yuvdata, int width, int height)
+bool yuntongxunwebrtc::VIEWaterMark::FilterBufferSinkAndCopyYUV(unsigned char *yuvdata, int width, int height)
 {
 	//copy yuv data
 	memcpy(frame_buffer_in_, yuvdata, width*height * 3 / 2);

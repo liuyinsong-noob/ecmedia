@@ -17,7 +17,7 @@
 #include "../system_wrappers/source/critical_section_posix.h"
 #include "../base/rate_statistics.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Clock;
 
@@ -51,7 +51,7 @@ class BitrateAdjuster {
   uint32_t GetAdjustedBitrateBps() const;
 
   // Returns what we think the current bitrate is.
-  cloopenwebrtc::Optional<uint32_t> GetEstimatedBitrateBps();
+  yuntongxunwebrtc::Optional<uint32_t> GetEstimatedBitrateBps();
 
   // This should be called after each frame is encoded. The timestamp at which
   // it is called is used to estimate the output bitrate of the encoder.
@@ -70,8 +70,8 @@ class BitrateAdjuster {
   void Reset();
   void UpdateBitrate(uint32_t current_time_ms) EXCLUSIVE_LOCKS_REQUIRED(crit_);
 
-//  cloopenwebrtc::CriticalSection crit_;
-    cloopenwebrtc::CriticalSectionWrapper *crit_;
+//  yuntongxunwebrtc::CriticalSection crit_;
+    yuntongxunwebrtc::CriticalSectionWrapper *crit_;
   Clock* const clock_;
   const float min_adjusted_bitrate_pct_;
   const float max_adjusted_bitrate_pct_;
@@ -89,6 +89,6 @@ class BitrateAdjuster {
   uint32_t frames_since_last_update_ GUARDED_BY(crit_);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_COMMON_VIDEO_INCLUDE_BITRATE_ADJUSTER_H_

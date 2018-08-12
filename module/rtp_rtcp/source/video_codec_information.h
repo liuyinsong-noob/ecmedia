@@ -14,7 +14,7 @@
 #include "../module/rtp_rtcp/source/rtp_rtcp_config.h"
 #include "../module/rtp_rtcp/source/rtp_utility.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class VideoCodecInformation {
  public:
   virtual void Reset() = 0;
@@ -22,6 +22,6 @@ class VideoCodecInformation {
   virtual RtpVideoCodecTypes Type() = 0;
   virtual ~VideoCodecInformation() {}
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_VIDEO_CODEC_INFORMATION_H_

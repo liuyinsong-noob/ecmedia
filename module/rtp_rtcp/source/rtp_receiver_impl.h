@@ -19,7 +19,7 @@
 #include "../module/rtp_rtcp/source/rtp_receiver_strategy.h"
 #include "../typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class RtpReceiverImpl : public RtpReceiver {
  public:
@@ -75,7 +75,7 @@ class RtpReceiverImpl : public RtpReceiver {
 
   RtpFeedback* cb_rtp_feedback_;
 
-  cloopenwebrtc::CriticalSection critical_section_rtp_receiver_;
+  yuntongxunwebrtc::CriticalSection critical_section_rtp_receiver_;
   int64_t last_receive_time_;
   size_t last_received_payload_length_;
 
@@ -90,5 +90,5 @@ class RtpReceiverImpl : public RtpReceiver {
   uint32_t            _packetTimeOutMS;
   mutable int64_t    _lastReceiveTime;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_RECEIVER_IMPL_H_

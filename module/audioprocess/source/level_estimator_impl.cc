@@ -15,7 +15,7 @@
 #include "rms_level.h"
 #include "../system_wrappers/include/critical_section_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 LevelEstimatorImpl::LevelEstimatorImpl(const AudioProcessing* apm,
                                        CriticalSectionWrapper* crit)
@@ -83,4 +83,4 @@ int LevelEstimatorImpl::GetHandleError(void* /*handle*/) const {
   return AudioProcessing::kUnspecifiedError;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

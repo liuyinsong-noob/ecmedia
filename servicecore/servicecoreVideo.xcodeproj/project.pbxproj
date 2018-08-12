@@ -74,7 +74,6 @@
 		AD8CF86320F5B2C50055FB32 /* SyncMsgResp.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8CF86120F5B2C40055FB32 /* SyncMsgResp.pb.cc */; };
 		AD8CF86420F5B2C50055FB32 /* SyncMsgResp.pb.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8CF86220F5B2C40055FB32 /* SyncMsgResp.pb.h */; };
 		AD8CF86720F5B6340055FB32 /* MediaStatisticsData.pb.h in Headers */ = {isa = PBXBuildFile; fileRef = AD8CF86520F5B6340055FB32 /* MediaStatisticsData.pb.h */; };
-		AD8CF86820F5B6340055FB32 /* MediaStatisticsData.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD8CF86620F5B6340055FB32 /* MediaStatisticsData.pb.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -201,7 +200,6 @@
 		AD8CF86120F5B2C40055FB32 /* SyncMsgResp.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SyncMsgResp.pb.cc; sourceTree = "<group>"; };
 		AD8CF86220F5B2C40055FB32 /* SyncMsgResp.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncMsgResp.pb.h; sourceTree = "<group>"; };
 		AD8CF86520F5B6340055FB32 /* MediaStatisticsData.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaStatisticsData.pb.h; sourceTree = "<group>"; };
-		AD8CF86620F5B6340055FB32 /* MediaStatisticsData.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MediaStatisticsData.pb.cc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -274,7 +272,6 @@
 				55A2650F180F798C00EA5714 /* Http */,
 				55EA5E3A17D8589100885688 /* ice.cc */,
 				AD0199AE1D239480003C2BB9 /* sometools.cpp */,
-				AD8CF86620F5B6340055FB32 /* MediaStatisticsData.pb.cc */,
 				AD8CF86520F5B6340055FB32 /* MediaStatisticsData.pb.h */,
 				550FCC121797E86400D21A07 /* base64.c */,
 				554AD69E16FAB0EB0084F686 /* CCPClient.cpp */,
@@ -544,7 +541,6 @@
 				556F87AA15C8CBFC00904840 /* sal_eXosip2_sdp.cpp in Sources */,
 				556F87AB15C8CBFC00904840 /* salpr.cpp in Sources */,
 				556F87AC15C8CBFC00904840 /* serphonecall.cpp in Sources */,
-				AD8CF86820F5B6340055FB32 /* MediaStatisticsData.pb.cc in Sources */,
 				55B00876183DB104009D26EA /* cJSON.c in Sources */,
 				556F87AD15C8CBFC00904840 /* serphoneinterface.cpp in Sources */,
 				556F87AF15C8CBFC00904840 /* siplogin.cpp in Sources */,

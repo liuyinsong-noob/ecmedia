@@ -22,7 +22,7 @@
 #include "fec_tables_xor.h"
 #include "nack_fec_tables.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace media_optimization {
 
 VCMProtectionMethod::VCMProtectionMethod():

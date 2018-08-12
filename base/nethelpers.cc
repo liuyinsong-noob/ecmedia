@@ -30,7 +30,7 @@
 #include "../system_wrappers/include/logging.h"
 #include "../base/signalthread.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 int ResolveHostname(const std::string& hostname, int family,
                     std::vector<IPAddress>* addresses) {
@@ -196,4 +196,4 @@ bool HasIPv6Enabled() {
   return true;
 #endif
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -16,11 +16,11 @@
 #include "../base/optional.h"
 #include "../common_video/h264/sps_parser.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class BitBuffer;
 }
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // A class that can parse an SPS block of a NAL unit and if necessary
 // creates a copy with updated settings to allow for faster decoding for streams
@@ -45,10 +45,10 @@ class SpsVuiRewriter : private SpsParser {
   // decoding has been performed.
   static ParseResult ParseAndRewriteSps(const uint8_t* buffer,
                                         size_t length,
-                                        cloopenwebrtc::Optional<SpsParser::SpsState>* sps,
-                                        cloopenwebrtc::Buffer* destination);
+                                        yuntongxunwebrtc::Optional<SpsParser::SpsState>* sps,
+                                        yuntongxunwebrtc::Buffer* destination);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_COMMON_VIDEO_H264_SPS_VUI_REWRITER_H_

@@ -28,7 +28,7 @@ import android.text.TextUtils;
 *    @see AudioManager#STREAM_MUSIC
 *    @see AudioManager#STREAM_VOICE_CALL
 * <p>Copyright: Copyright (c) 2007</p>
-* <p>Company: http://www.cloopen.com</p>
+* <p>Company: http://www.yuntongxun.com</p>
 * @author Jorstin Chan
 * @date 2013-10-9
 * @version 3.4.1.1

@@ -17,7 +17,7 @@
 #include "audio_multi_vector.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // This class contains various signal processing functions, all implemented as
 // static methods.
@@ -132,5 +132,5 @@ class DspHelper {
   DISALLOW_COPY_AND_ASSIGN(DspHelper);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_DSP_HELPER_H_

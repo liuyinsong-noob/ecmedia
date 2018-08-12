@@ -22,7 +22,7 @@
 #include "vpx/vpx_decoder.h"
 #include "vpx/vpx_encoder.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class ScreenshareLayersVP9;
 
@@ -165,6 +165,6 @@ class VP9DecoderImpl : public VP9Decoder {
   VideoCodec codec_;
   bool key_frame_required_;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_VIDEO_CODING_CODECS_VP9_VP9_IMPL_H_

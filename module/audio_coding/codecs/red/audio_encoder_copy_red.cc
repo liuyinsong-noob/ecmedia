@@ -12,7 +12,7 @@
 
 #include <string.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 AudioEncoderCopyRed::AudioEncoderCopyRed(const Config& config)
     : speech_encoder_(config.speech_encoder),

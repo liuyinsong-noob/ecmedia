@@ -20,7 +20,7 @@
 #include "cloopenwebrtc/system_wrappers/interface/scoped_ptr.h"
 #include "cloopenwebrtc/test/testsupport/fileutils.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(WPDTreeTest, Construction) {
   const size_t kTestBufferSize = 100;

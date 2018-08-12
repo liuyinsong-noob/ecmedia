@@ -14,7 +14,7 @@
 
 #include "../base/checks.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 int AudioDecoder::DecodeRedundant(const uint8_t* encoded,
                                   size_t encoded_len,
@@ -69,4 +69,4 @@ AudioDecoder::SpeechType AudioDecoder::ConvertSpeechType(int16_t type) {
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

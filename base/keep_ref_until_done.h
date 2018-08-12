@@ -16,7 +16,7 @@
 #include "../base/refcount.h"
 #include "../base/scoped_ref_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace impl {
 template <class T>
@@ -28,16 +28,16 @@ static inline void DoNothing(const scoped_refptr<T>& object) {}
 // reference will be released when the last callback goes out of scope.
 template <class ObjectT>
 static inline Callback0<void> KeepRefUntilDone(ObjectT* object) {
-  return cloopenwebrtc::Bind(&impl::DoNothing<ObjectT>, scoped_refptr<ObjectT>(object));
+  return yuntongxunwebrtc::Bind(&impl::DoNothing<ObjectT>, scoped_refptr<ObjectT>(object));
 }
 
 template <class ObjectT>
 static inline Callback0<void> KeepRefUntilDone(
     const scoped_refptr<ObjectT>& object) {
-  return cloopenwebrtc::Bind(&impl::DoNothing<ObjectT>, object);
+  return yuntongxunwebrtc::Bind(&impl::DoNothing<ObjectT>, object);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 
 #endif  // WEBRTC_BASE_KEEP_REF_UNTIL_DONE_H_

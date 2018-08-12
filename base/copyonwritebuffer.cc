@@ -10,7 +10,7 @@
 
 #include "../base/copyonwritebuffer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 CopyOnWriteBuffer::CopyOnWriteBuffer() {
   DCHECK(IsConsistent());

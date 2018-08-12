@@ -24,7 +24,7 @@
 extern NSView *globalLocalVideo;
 
 
-using namespace cloopenwebrtc;
+using namespace yuntongxunwebrtc;
 using namespace videocapturemodule;
 
 static void capture_queue_cleanup(void* p) {
@@ -85,7 +85,7 @@ static void capture_queue_cleanup(void* p) {
 
 #pragma mark - public methods
 
-- (NSNumber *)registerOwner:(cloopenwebrtc::videocapturemodule::VideoCaptureOSX *)owner
+- (NSNumber *)registerOwner:(yuntongxunwebrtc::videocapturemodule::VideoCaptureOSX *)owner
 {
     if (!owner) {
         return [NSNumber numberWithInt:-1];

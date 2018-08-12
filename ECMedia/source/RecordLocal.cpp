@@ -11,13 +11,13 @@
 #include "vie_codec.h"
 #include "ECMedia.h"
 
-using namespace cloopenwebrtc;
+using namespace yuntongxunwebrtc;
 
-extern cloopenwebrtc::VoiceEngine* m_voe;
-extern cloopenwebrtc::VideoEngine* m_vie;
+extern yuntongxunwebrtc::VoiceEngine* m_voe;
+extern yuntongxunwebrtc::VideoEngine* m_vie;
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 	RecordLocal::RecordLocal()
 		:local_view_(NULL),

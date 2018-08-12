@@ -119,19 +119,19 @@ ECMEDIA_API int ECMedia_DeRegister_voice_engine_observer();
 /*
  *
  */
-ECMEDIA_API int ECMedia_set_AgcStatus(bool agc_enabled, cloopenwebrtc::AgcModes agc_mode);
+ECMEDIA_API int ECMedia_set_AgcStatus(bool agc_enabled, yuntongxunwebrtc::AgcModes agc_mode);
 /*
  *
  */
-ECMEDIA_API int ECMedia_set_EcStatus(bool ec_enabled, cloopenwebrtc::EcModes ec_mode);
+ECMEDIA_API int ECMedia_set_EcStatus(bool ec_enabled, yuntongxunwebrtc::EcModes ec_mode);
 /*
  *
  */
-ECMEDIA_API int ECMedia_set_NsStatus(bool ns_enabled, cloopenwebrtc::NsModes ns_mode);
+ECMEDIA_API int ECMedia_set_NsStatus(bool ns_enabled, yuntongxunwebrtc::NsModes ns_mode);
 /*
  *
  */
-ECMEDIA_API int ECMedia_set_SetAecmMode(cloopenwebrtc::AecmModes aecm_mode, bool cng_enabled);
+ECMEDIA_API int ECMedia_set_SetAecmMode(yuntongxunwebrtc::AecmModes aecm_mode, bool cng_enabled);
 ECMEDIA_API int ECMedia_EnableHowlingControl(bool enabled);
 ECMEDIA_API int ECMedia_IsHowlingControlEnabled(bool &enabled);
 /*
@@ -181,11 +181,11 @@ ECMEDIA_API int ECMedia_get_media_statistics(int channelid, bool is_video, Media
 /*
  *
  */
-ECMEDIA_API int ECMedia_start_rtp_dump(int channelid, bool is_video, const char *file, cloopenwebrtc::RTPDirections dir);
+ECMEDIA_API int ECMedia_start_rtp_dump(int channelid, bool is_video, const char *file, yuntongxunwebrtc::RTPDirections dir);
 /*
  *
  */
-ECMEDIA_API int ECMedia_stop_rtp_dump(int channelid, bool is_video, cloopenwebrtc::RTPDirections dir);
+ECMEDIA_API int ECMedia_stop_rtp_dump(int channelid, bool is_video, yuntongxunwebrtc::RTPDirections dir);
 /*
  *
  */
@@ -281,27 +281,27 @@ ECMEDIA_API int ECMedia_num_of_supported_codecs_audio();
 /*
  *
  */
-ECMEDIA_API int ECMedia_get_supported_codecs_audio(cloopenwebrtc::CodecInst codecs[]);
+ECMEDIA_API int ECMedia_get_supported_codecs_audio(yuntongxunwebrtc::CodecInst codecs[]);
 /*
  *1
  */
-ECMEDIA_API int ECMedia_get_send_codec_audio(int channelid, cloopenwebrtc::CodecInst& audioCodec);
+ECMEDIA_API int ECMedia_get_send_codec_audio(int channelid, yuntongxunwebrtc::CodecInst& audioCodec);
 /*
  *1
  */
-ECMEDIA_API int ECMedia_set_send_codec_audio(int channelid, cloopenwebrtc::CodecInst& audioCodec);
+ECMEDIA_API int ECMedia_set_send_codec_audio(int channelid, yuntongxunwebrtc::CodecInst& audioCodec);
 /*
  *1
  */
-ECMEDIA_API int ECMedia_set_receive_playloadType_audio(int channelid, cloopenwebrtc::CodecInst& audioCodec);
+ECMEDIA_API int ECMedia_set_receive_playloadType_audio(int channelid, yuntongxunwebrtc::CodecInst& audioCodec);
 /*
  *1
  */
-ECMEDIA_API int ECMedia_get_receive_playloadType_audio(int channelid, cloopenwebrtc::CodecInst& audioCodec);
+ECMEDIA_API int ECMedia_get_receive_playloadType_audio(int channelid, yuntongxunwebrtc::CodecInst& audioCodec);
 /*
  *1
  */
-ECMEDIA_API int ECMedia_set_VAD_status(int channelid, cloopenwebrtc::VadModes mode, bool dtx_enabled);
+ECMEDIA_API int ECMedia_set_VAD_status(int channelid, yuntongxunwebrtc::VadModes mode, bool dtx_enabled);
 /*
  *1
  */
@@ -332,7 +332,7 @@ ECMEDIA_API int ECMedia_set_audio_data_cb(int channelid, onEcMediaAudioData audi
  * @param callback : callback 具体解释见定义处
  * @return 成功返回0， 失败返回非0
  */
-ECMEDIA_API int ECMedia_set_pcm_audio_data_cb(int channelid, cloopenwebrtc::ECMedia_PCMDataCallBack callback);
+ECMEDIA_API int ECMedia_set_pcm_audio_data_cb(int channelid, yuntongxunwebrtc::ECMedia_PCMDataCallBack callback);
 ECMEDIA_API int ECMedia_set_video_data_cb(int channelid, onEcMediaVideoDataV Video_data_cb);
 ECMEDIA_API int ECMedia_set_voe_cb(int channelid, onVoeCallbackOnError voe_callback_cb);
 
@@ -342,7 +342,7 @@ ECMEDIA_API int ECMedia_set_voe_cb(int channelid, onVoeCallbackOnError voe_callb
  * @param callback : callback @see ECMedia_ConferenceParticipantCallback
  * @return success return 0, eles return -1;
  */
-ECMEDIA_API int ECMedia_setECMedia_ConferenceParticipantCallback(int channelid, cloopenwebrtc::ECMedia_ConferenceParticipantCallback* callback);
+ECMEDIA_API int ECMedia_setECMedia_ConferenceParticipantCallback(int channelid, yuntongxunwebrtc::ECMedia_ConferenceParticipantCallback* callback);
 /*
  * ONLY USE FOR PEER CONNECTION FOR AUDIO
  */
@@ -360,9 +360,9 @@ ECMEDIA_API int ECMedia_AmrNBVersion(char *versionStr, short len);
 //SRTP
 ECMEDIA_API int ECMedia_init_srtp_audio(int channel);
 ECMEDIA_API int ECMedia_shutdown_srtp_audio(int channel);
-ECMEDIA_API int ECMedia_enable_srtp_send_audio(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type,	const char* key);
+ECMEDIA_API int ECMedia_enable_srtp_send_audio(int channel, yuntongxunwebrtc::ccp_srtp_crypto_suite_t crypt_type,	const char* key);
 ECMEDIA_API int ECMedia_disable_srtp_send_audio(int channel);
-ECMEDIA_API int ECMedia_enable_srtp_recv_audio(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type,	const char* key);
+ECMEDIA_API int ECMedia_enable_srtp_recv_audio(int channel, yuntongxunwebrtc::ccp_srtp_crypto_suite_t crypt_type,	const char* key);
 ECMEDIA_API int ECMedia_disable_srtp_recv_audio(int channel);
 ECMEDIA_API int ECMedia_start_record_playout(int channel, char *filename);
 ECMEDIA_API int ECMedia_stop_record_playout(int channel);
@@ -444,7 +444,7 @@ ECMEDIA_API int ECMedia_video_stop_send(int channelid);
  * @param callback : 原始视频数据回调函数指针
  * @return 成功返回0，失败返回非0
  */
-ECMEDIA_API int ECMedia_set_i420_framecallback(int channelid, cloopenwebrtc::ECMedia_I420FrameCallBack callback);
+ECMEDIA_API int ECMedia_set_i420_framecallback(int channelid, yuntongxunwebrtc::ECMedia_I420FrameCallBack callback);
 
 /*
  *
@@ -506,7 +506,7 @@ ECMEDIA_API int ECMedia_num_of_supported_codecs_video();
 /*
  *
  */
-ECMEDIA_API int ECMedia_get_supported_codecs_video(cloopenwebrtc::VideoCodec codecs[]);
+ECMEDIA_API int ECMedia_get_supported_codecs_video(yuntongxunwebrtc::VideoCodec codecs[]);
 /*
  *
  */
@@ -514,31 +514,31 @@ ECMEDIA_API int ECMedia_set_key_frame_request_cb(int channelid, bool isVideoConf
 /*
  *
  */
-ECMEDIA_API int ECMedia_set_send_codec_video(int channelid, cloopenwebrtc::VideoCodec& videoCodec);
+ECMEDIA_API int ECMedia_set_send_codec_video(int channelid, yuntongxunwebrtc::VideoCodec& videoCodec);
 /*
  *
  */
-ECMEDIA_API int ECMedia_get_send_codec_video(int channelid, cloopenwebrtc::VideoCodec& videoCodec);
+ECMEDIA_API int ECMedia_get_send_codec_video(int channelid, yuntongxunwebrtc::VideoCodec& videoCodec);
 /*
  *
  */
-ECMEDIA_API int ECMedia_set_receive_codec_video(int channelid, cloopenwebrtc::VideoCodec& videoCodec);
+ECMEDIA_API int ECMedia_set_receive_codec_video(int channelid, yuntongxunwebrtc::VideoCodec& videoCodec);
 #ifdef ENABLE_FEC_TEST
-ECMEDIA_API int ECMedia_set_receive_codec_video_fec(int channelid, cloopenwebrtc::VideoCodec& videoCodec);
+ECMEDIA_API int ECMedia_set_receive_codec_video_fec(int channelid, yuntongxunwebrtc::VideoCodec& videoCodec);
 #endif
 /*
  *
  */
-ECMEDIA_API int ECMedia_get_receive_codec_video(int channelid, cloopenwebrtc::VideoCodec& videoCodec);
+ECMEDIA_API int ECMedia_get_receive_codec_video(int channelid, yuntongxunwebrtc::VideoCodec& videoCodec);
 /**
  * description: 设置底层yuv视频帧的缩放方式
  * FrameScaleType:
  *   kScaleTypeCropping -> 以裁剪方式缩放视频帧
  *   kScaleTypeFilling  -> 以填充方式缩放视频帧
  */
-ECMEDIA_API int ECMedia_set_frame_scale_type(int channelid, cloopenwebrtc::FrameScaleType type);
+ECMEDIA_API int ECMedia_set_frame_scale_type(int channelid, yuntongxunwebrtc::FrameScaleType type);
     
-ECMEDIA_API int ECMedia_set_video_qm_mode(int channelid, cloopenwebrtc::VCMQmResolutionMode mode);
+ECMEDIA_API int ECMedia_set_video_qm_mode(int channelid, yuntongxunwebrtc::VCMQmResolutionMode mode);
     
 ECMEDIA_API int ECMedia_set_video_conf_cb(int channelid, onEcMediaVideoConference video_conf_cb);
 ECMEDIA_API int ECMedia_set_stun_cb_video(int channelid, onEcMediaStunPacket stun_cb);
@@ -581,9 +581,9 @@ ECMEDIA_API int ECmedia_enable_EnableBeautyFilter(int captureid, bool enable);
 //SRTP
 ECMEDIA_API int ECMedia_init_srtp_video(int channel);
 ECMEDIA_API int ECMedia_shutdown_srtp_video(int channel);
-ECMEDIA_API int ECMedia_enable_srtp_send_video(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key);
+ECMEDIA_API int ECMedia_enable_srtp_send_video(int channel, yuntongxunwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key);
 ECMEDIA_API int ECMedia_disable_srtp_send_video(int channel);
-ECMEDIA_API int ECMedia_enable_srtp_recv_video(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key);
+ECMEDIA_API int ECMedia_enable_srtp_recv_video(int channel, yuntongxunwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key);
 ECMEDIA_API int ECMedia_disable_srtp_recv_video(int channel);
 #endif
 ECMEDIA_API int ECMedia_set_CaptureDeviceID(int videoCapDevId);
@@ -760,7 +760,7 @@ ECMEDIA_API int ECMedia_audio_set_magic_sound(int channelid, int pitch, int temp
  * channelID: channel id
  * mode: kECMagicSoundNormal, kECMagicSoundHigh, kECMagicSoundLow
  */
-ECMEDIA_API int ECMedia_select_magic_sound_mode(int channelid, cloopenwebrtc::ECMagicSoundMode mode);
+ECMEDIA_API int ECMedia_select_magic_sound_mode(int channelid, yuntongxunwebrtc::ECMagicSoundMode mode);
     
 /*
  * 功能：声音播放前进行放大

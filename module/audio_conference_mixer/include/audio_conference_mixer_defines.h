@@ -14,7 +14,7 @@
 #include "module_common_types.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class MixHistory;
 
 // A callback class that all mixer participants must inherit from/implement.
@@ -86,6 +86,6 @@ protected:
     AudioMixerOutputReceiver() {}
     virtual ~AudioMixerOutputReceiver() {}
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_MODULES_AUDIO_CONFERENCE_MIXER_INTERFACE_AUDIO_CONFERENCE_MIXER_DEFINES_H_

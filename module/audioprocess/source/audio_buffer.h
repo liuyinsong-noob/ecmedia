@@ -22,7 +22,7 @@
 #include "../system_wrappers/include/scoped_vector.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class PushSincResampler;
 class IFChannelBuffer;
@@ -157,6 +157,6 @@ class AudioBuffer {
   //---end
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_AUDIO_BUFFER_H_

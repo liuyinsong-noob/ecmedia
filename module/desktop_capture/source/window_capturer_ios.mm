@@ -20,7 +20,7 @@
 #include "trace.h"
 
 #include "window_capturer_ios.h"
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ScreenCapturerIos::ScreenCapturerIos()
     : callback_(NULL){
@@ -113,7 +113,7 @@ void ScreenCapturerIos::Capture(const DesktopRegion& region) {
     int width = [UIScreen mainScreen].bounds.size.width * [UIScreen mainScreen].scale;
     int height = [UIScreen mainScreen].bounds.size.height * [UIScreen mainScreen].scale;
     
-    cloopenwebrtc::scoped_ptr<BasicDesktopFrame> frame(new BasicDesktopFrame(DesktopSize(width, height)));
+    yuntongxunwebrtc::scoped_ptr<BasicDesktopFrame> frame(new BasicDesktopFrame(DesktopSize(width, height)));
     if (!frame.get()) {
         callback_->OnCaptureCompleted(NULL, kCapture_NoCaptureImage);
         return;
@@ -133,5 +133,5 @@ ScreenCapturer* ScreenCapturer::Create(const DesktopCaptureOptions& options) {
 ScreenCapturer* ScreenCapturer::Create() {
     return new ScreenCapturerIos();
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 

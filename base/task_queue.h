@@ -34,7 +34,7 @@ struct event_base;
 struct event;
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Base interface for asynchronously executed tasks.
 // The interface basically consists of a single function, Run(), that executes
@@ -263,7 +263,7 @@ class LOCKABLE TaskQueue {
   event_base* event_base_;
   std::unique_ptr<event> wakeup_event_;
   PlatformThread thread_;
-  cloopenwebrtc::CriticalSection pending_lock_;
+  yuntongxunwebrtc::CriticalSection pending_lock_;
   std::list<std::unique_ptr<QueuedTask>> pending_ GUARDED_BY(pending_lock_);
   std::list<scoped_refptr<ReplyTaskOwnerRef>> pending_replies_
       GUARDED_BY(pending_lock_);
@@ -301,6 +301,6 @@ class LOCKABLE TaskQueue {
   DISALLOW_COPY_AND_ASSIGN(TaskQueue);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_TASK_QUEUE_H_

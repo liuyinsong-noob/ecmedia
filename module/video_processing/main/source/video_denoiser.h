@@ -17,7 +17,7 @@
 #include "noise_estimation.h"
 #include "skin_detection.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VideoDenoiser {
  public:

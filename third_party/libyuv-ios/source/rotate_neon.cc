@@ -14,7 +14,7 @@
 #include "libyuv/basic_types.h"
 
 #ifdef __cplusplus
-namespace cloopenlibyuv {
+namespace yuntongxunlibyuv {
 extern "C" {
 #endif
 

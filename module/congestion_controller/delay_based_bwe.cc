@@ -58,12 +58,12 @@ const char kBweMedianSlopeFilterExperiment[] = "WebRTC-BweMedianSlopeFilter";
 
 bool BitrateEstimateExperimentIsEnabled() {
     return true;
-    //return cloopenwebrtc::field_trial::IsEnabled(kBitrateEstimateExperiment);
+    //return yuntongxunwebrtc::field_trial::IsEnabled(kBitrateEstimateExperiment);
 }
 
 bool TrendlineFilterExperimentIsEnabled() {
   std::string experiment_string =
-      cloopenwebrtc::field_trial::FindFullName(kBweTrendlineFilterExperiment);
+      yuntongxunwebrtc::field_trial::FindFullName(kBweTrendlineFilterExperiment);
   // The experiment is enabled iff the field trial string begins with "Enabled".
   //return experiment_string.find("Enabled") == 0;
     return true;
@@ -71,7 +71,7 @@ bool TrendlineFilterExperimentIsEnabled() {
 
 bool MedianSlopeFilterExperimentIsEnabled() {
   std::string experiment_string =
-      cloopenwebrtc::field_trial::FindFullName(kBweMedianSlopeFilterExperiment);
+      yuntongxunwebrtc::field_trial::FindFullName(kBweMedianSlopeFilterExperiment);
   // The experiment is enabled iff the field trial string begins with "Enabled".
   return experiment_string.find("Enabled") == 0;
 }
@@ -85,7 +85,7 @@ bool ReadTrendlineFilterExperimentParameters(size_t* window_size,
   DCHECK(smoothing_coef != nullptr);
   DCHECK(threshold_gain != nullptr);
   std::string experiment_string =
-      cloopenwebrtc::field_trial::FindFullName(kBweTrendlineFilterExperiment);
+      yuntongxunwebrtc::field_trial::FindFullName(kBweTrendlineFilterExperiment);
   int parsed_values = sscanf(experiment_string.c_str(), "Enabled-%zu,%lf,%lf",
                              window_size, smoothing_coef, threshold_gain);
   if (parsed_values == 3) {
@@ -110,7 +110,7 @@ bool ReadMedianSlopeFilterExperimentParameters(size_t* window_size,
   DCHECK(window_size != nullptr);
   DCHECK(threshold_gain != nullptr);
   std::string experiment_string =
-      cloopenwebrtc::field_trial::FindFullName(kBweMedianSlopeFilterExperiment);
+      yuntongxunwebrtc::field_trial::FindFullName(kBweMedianSlopeFilterExperiment);
   int parsed_values = sscanf(experiment_string.c_str(), "Enabled-%zu,%lf",
                              window_size, threshold_gain);
   if (parsed_values == 2) {
@@ -126,7 +126,7 @@ bool ReadMedianSlopeFilterExperimentParameters(size_t* window_size,
 }
 }  // namespace
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 DelayBasedBwe::BitrateEstimator::BitrateEstimator()
     : sum_(0),
@@ -140,7 +140,7 @@ DelayBasedBwe::BitrateEstimator::BitrateEstimator()
 void DelayBasedBwe::BitrateEstimator::Update(int64_t now_ms, int bytes) {
   if (!in_experiment_) {
     old_estimator_.Update(bytes, now_ms);
-    cloopenwebrtc::Optional<uint32_t> rate = old_estimator_.Rate(now_ms);
+    yuntongxunwebrtc::Optional<uint32_t> rate = old_estimator_.Rate(now_ms);
     bitrate_estimate_ = -1.0f;
     if (rate)
       bitrate_estimate_ = *rate / 1000.0f;
@@ -204,10 +204,10 @@ float DelayBasedBwe::BitrateEstimator::UpdateWindow(int64_t now_ms,
   return bitrate_sample;
 }
 
-cloopenwebrtc::Optional<uint32_t> DelayBasedBwe::BitrateEstimator::bitrate_bps() const {
+yuntongxunwebrtc::Optional<uint32_t> DelayBasedBwe::BitrateEstimator::bitrate_bps() const {
   if (bitrate_estimate_ < 0.f)
-    return cloopenwebrtc::Optional<uint32_t>();
-  return cloopenwebrtc::Optional<uint32_t>(bitrate_estimate_ * 1000);
+    return yuntongxunwebrtc::Optional<uint32_t>();
+  return yuntongxunwebrtc::Optional<uint32_t>(bitrate_estimate_ * 1000);
 }
 
 DelayBasedBwe::DelayBasedBwe(RtcEventLog* event_log, Clock* clock)
@@ -374,7 +374,7 @@ DelayBasedBwe::Result DelayBasedBwe::IncomingPacketFeedback(
     probing_bps =
         probe_bitrate_estimator_.HandleProbeAndEstimateBitrate(packet_feedback);
   }
-  cloopenwebrtc::Optional<uint32_t> acked_bitrate_bps =
+  yuntongxunwebrtc::Optional<uint32_t> acked_bitrate_bps =
       receiver_incoming_bitrate_.bitrate_bps();
   // Currently overusing the bandwidth.
   if (detector_.State() == kBwOverusing) {
@@ -417,7 +417,7 @@ DelayBasedBwe::Result DelayBasedBwe::IncomingPacketFeedback(
 
 bool DelayBasedBwe::UpdateEstimate(int64_t arrival_time_ms,
                                    int64_t now_ms,
-                                   cloopenwebrtc::Optional<uint32_t> acked_bitrate_bps,
+                                   yuntongxunwebrtc::Optional<uint32_t> acked_bitrate_bps,
                                    uint32_t* target_bitrate_bps) {
   // TODO(terelius): RateControlInput::noise_var is deprecated and will be
   // removed. In the meantime, we set it to zero.

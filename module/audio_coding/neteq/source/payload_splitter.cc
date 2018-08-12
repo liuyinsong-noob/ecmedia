@@ -14,7 +14,7 @@
 
 #include "decoder_database.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // The method loops through a list of packets {A, B, C, ...}. Each packet is
 // split into its corresponding RED payloads, {A1, A2, ...}, which is
@@ -487,4 +487,4 @@ int PayloadSplitter::SplitByFrames(const Packet* packet,
   return kOK;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

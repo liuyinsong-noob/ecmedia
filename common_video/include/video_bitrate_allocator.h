@@ -13,7 +13,7 @@
 
 #include "../common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VideoBitrateAllocator {
  public:
@@ -34,6 +34,6 @@ class VideoBitrateAllocationObserver {
       const BitrateAllocation& allocation) = 0;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_COMMON_VIDEO_INCLUDE_VIDEO_BITRATE_ALLOCATOR_H_

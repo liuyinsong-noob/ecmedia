@@ -14,7 +14,7 @@
 #include "module_common_types.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class TypingDetection {
  public:
@@ -88,6 +88,6 @@ class TypingDetection {
   int report_detection_update_period_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // #ifndef WEBRTC_MODULES_AUDIO_PROCESSING_TYPING_DETECTION_H_

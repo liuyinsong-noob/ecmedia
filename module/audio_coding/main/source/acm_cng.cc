@@ -15,7 +15,7 @@
 #include "acm_common_defs.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -73,4 +73,4 @@ void ACMCNG::DestructEncoderSafe() {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

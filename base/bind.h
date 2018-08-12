@@ -69,7 +69,7 @@
 
 #define NONAME
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace detail {
 // This is needed because the template parameters in Bind can't be resolved
 // if they're used both as parameters of the function pointer type and as
@@ -277,7 +277,7 @@ Functor<FP_T(NONAME), R, Args...> Bind(
 
 #undef FP_T
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #undef NONAME
 

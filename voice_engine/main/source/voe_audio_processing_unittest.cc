@@ -13,7 +13,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "voe_base.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace voe {
 namespace {
 
@@ -64,4 +64,4 @@ TEST_F(VoEAudioProcessingTest, DISABLED_DriftCompensationIsEnabledIfSupported) {
 
 }  // namespace
 }  // namespace voe
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -11,7 +11,7 @@
 #ifndef WEBRTC_VIDEO_ENGINE_NEW_INCLUDE_VIDEO_RENDERER_H_
 #define WEBRTC_VIDEO_ENGINE_NEW_INCLUDE_VIDEO_RENDERER_H_
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class I420VideoFrame;
 

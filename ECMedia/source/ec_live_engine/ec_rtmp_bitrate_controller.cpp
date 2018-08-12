@@ -19,7 +19,7 @@
 #include "event_wrapper.h"
 
 
-namespace cloopenwebrtc{
+namespace yuntongxunwebrtc{
     EC_RTMP_BitrateController::EC_RTMP_BitrateController() {
         bit_rate_controller_pthread_ = ThreadWrapper::CreateThread(EC_RTMP_BitrateController::controllerThreadRun,
                 this,

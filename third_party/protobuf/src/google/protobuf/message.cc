@@ -51,7 +51,7 @@
 #include <google/protobuf/stubs/map_util.h>
 #include <google/protobuf/stubs/stl_util.h>
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 
 using internal::WireFormat;
@@ -269,7 +269,7 @@ GeneratedMessageFactory::GeneratedMessageFactory() {}
 GeneratedMessageFactory::~GeneratedMessageFactory() {}
 
 GeneratedMessageFactory* GeneratedMessageFactory::singleton() {
-  ::cloopen_google::protobuf::GoogleOnceInit(&generated_message_factory_once_init_,
+  ::yuntongxun_google::protobuf::GoogleOnceInit(&generated_message_factory_once_init_,
                  &InitGeneratedMessageFactory);
   return generated_message_factory_;
 }
@@ -355,4 +355,4 @@ void MessageFactory::InternalRegisterGeneratedMessage(
 
 
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google

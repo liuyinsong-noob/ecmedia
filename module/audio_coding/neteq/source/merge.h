@@ -17,7 +17,7 @@
 #include "audio_multi_vector.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Forward declarations.
 class Expand;
@@ -106,5 +106,5 @@ class Merge {
   DISALLOW_COPY_AND_ASSIGN(Merge);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_MERGE_H_

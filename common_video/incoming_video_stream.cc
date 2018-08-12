@@ -18,7 +18,7 @@
 #include "../system_wrappers/include/critical_section_wrapper.h"
 #include "../system_wrappers/include/event_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 const char kIncomingQueueName[] = "IncomingVideoStream";
 }
@@ -50,7 +50,7 @@ class IncomingVideoStream::NewFrameTask : public rtc::QueuedTask {
 
 IncomingVideoStream::IncomingVideoStream(
     int32_t delay_ms,
-    cloopenwebrtc::VideoSinkInterface<VideoFrame>* callback)
+    yuntongxunwebrtc::VideoSinkInterface<VideoFrame>* callback)
     : render_buffers_(delay_ms),
       callback_(callback),
       incoming_render_queue_(kIncomingQueueName,
@@ -71,7 +71,7 @@ void IncomingVideoStream::OnFrame(const VideoFrame& video_frame) {
 void IncomingVideoStream::Dequeue() {
   TRACE_EVENT0("webrtc", "IncomingVideoStream::Dequeue");
   DCHECK(incoming_render_queue_.IsCurrent());
-  cloopenwebrtc::Optional<VideoFrame> frame_to_render = render_buffers_.FrameToRender();
+  yuntongxunwebrtc::Optional<VideoFrame> frame_to_render = render_buffers_.FrameToRender();
   if (frame_to_render)
     callback_->OnFrame(*frame_to_render);
 
@@ -81,4 +81,4 @@ void IncomingVideoStream::Dequeue() {
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

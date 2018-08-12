@@ -24,7 +24,7 @@ protected:
 };
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class CriticalSectionWrapper;
 
 namespace voe {

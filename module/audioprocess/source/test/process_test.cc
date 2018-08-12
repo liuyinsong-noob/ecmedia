@@ -34,12 +34,12 @@
 #include "cloopenwebrtc/audio_processing/debug.pb.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
-using cloopenwebrtc::audioproc::Event;
-using cloopenwebrtc::audioproc::Init;
-using cloopenwebrtc::audioproc::ReverseStream;
-using cloopenwebrtc::audioproc::Stream;
+using yuntongxunwebrtc::audioproc::Event;
+using yuntongxunwebrtc::audioproc::Init;
+using yuntongxunwebrtc::audioproc::ReverseStream;
+using yuntongxunwebrtc::audioproc::Stream;
 
 namespace {
 
@@ -252,7 +252,7 @@ void void_main(int argc, char* argv[]) {
       ASSERT_EQ(1, sscanf(argv[i], "%d", &suppression_level));
       ASSERT_EQ(apm->kNoError,
                 apm->echo_cancellation()->set_suppression_level(
-                    static_cast<cloopenwebrtc::EchoCancellation::SuppressionLevel>(
+                    static_cast<yuntongxunwebrtc::EchoCancellation::SuppressionLevel>(
                         suppression_level)));
 
     } else if (strcmp(argv[i], "--extended_filter") == 0) {
@@ -289,7 +289,7 @@ void void_main(int argc, char* argv[]) {
       ASSERT_EQ(1, sscanf(argv[i], "%d", &routing_mode));
       ASSERT_EQ(apm->kNoError,
                 apm->echo_control_mobile()->set_routing_mode(
-                    static_cast<cloopenwebrtc::EchoControlMobile::RoutingMode>(
+                    static_cast<yuntongxunwebrtc::EchoControlMobile::RoutingMode>(
                         routing_mode)));
 
     } else if (strcmp(argv[i], "-agc") == 0) {
@@ -452,7 +452,7 @@ void void_main(int argc, char* argv[]) {
     printf("Reverse channels: %d \n", num_render_channels);
   }
 
-  const std::string out_path = cloopenwebrtc::test::OutputPath();
+  const std::string out_path = yuntongxunwebrtc::test::OutputPath();
   const char far_file_default[] = "apm_far.pcm";
   const char near_file_default[] = "apm_near.pcm";
   const char event_filename[] = "apm_event.dat";
@@ -1119,7 +1119,7 @@ void void_main(int argc, char* argv[]) {
           (max_time_us + max_time_reverse_us) / 1000.0,
           (min_time_us + min_time_reverse_us) / 1000.0);
       // Record the results with Perf test tools.
-      cloopenwebrtc::test::PrintResult("audioproc", "", "time_per_10ms_frame",
+      yuntongxunwebrtc::test::PrintResult("audioproc", "", "time_per_10ms_frame",
           (exec_time * 1000) / primary_count, "us", false);
     } else {
       printf("Warning: no capture frames\n");
@@ -1132,7 +1132,7 @@ void void_main(int argc, char* argv[]) {
 
 int main(int argc, char* argv[])
 {
-  cloopenwebrtc::void_main(argc, argv);
+  yuntongxunwebrtc::void_main(argc, argv);
 
   // Optional, but removes memory leak noise from Valgrind.
   google::protobuf::ShutdownProtobufLibrary();

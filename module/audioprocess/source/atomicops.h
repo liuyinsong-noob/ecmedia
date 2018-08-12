@@ -20,7 +20,7 @@
 #include <windows.h>
 #endif  // defined(WEBRTC_WIN)
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class AtomicOps {
  public:
 #if defined(WEBRTC_WIN)

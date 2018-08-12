@@ -15,7 +15,7 @@
 #include "../system_wrappers/include/critical_section_wrapper.h"
 #include "../system_wrappers/include/logging.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 // Map information from info into rtp. If no relevant information is found
 // in info, rtp is set to NULL.

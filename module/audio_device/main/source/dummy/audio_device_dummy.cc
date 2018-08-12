@@ -10,7 +10,7 @@
 
 #include "audio_device_dummy.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 int32_t AudioDeviceDummy::ActiveAudioLayer(
     AudioDeviceModule::AudioLayer& audioLayer) const {
@@ -212,4 +212,4 @@ void AudioDeviceDummy::ClearRecordingWarning() {}
 void AudioDeviceDummy::ClearRecordingError() {}
 
 void AudioDeviceDummy::AttachAudioBuffer(AudioDeviceBuffer* audioBuffer) {}
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -13,7 +13,7 @@
 #include "../system_wrappers/include/critical_section_wrapper.h"
 #include "level_indicator.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace voe {
 

@@ -20,7 +20,7 @@
 #include "../system_wrappers/include/trace.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace media_optimization {
 
 // Number of time periods used for (max) window filter for packet loss
@@ -374,11 +374,11 @@ private:
     int64_t _lastPrUpdateT;
     int64_t _lastPacketPerFrameUpdateT;
     int64_t _lastPacketPerFrameUpdateTKey;
-    cloopenwebrtc::ExpFilter _lossPr255;
+    yuntongxunwebrtc::ExpFilter _lossPr255;
     VCMLossProbabilitySample _lossPrHistory[kLossPrHistorySize];
     uint8_t _shortMaxLossPr255;
-    cloopenwebrtc::ExpFilter _packetsPerFrame;
-    cloopenwebrtc::ExpFilter _packetsPerFrameKey;
+    yuntongxunwebrtc::ExpFilter _packetsPerFrame;
+    yuntongxunwebrtc::ExpFilter _packetsPerFrameKey;
     float _residualPacketLossFec;
     uint16_t _codecWidth;
     uint16_t _codecHeight;

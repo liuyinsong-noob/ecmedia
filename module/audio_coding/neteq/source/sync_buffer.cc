@@ -14,7 +14,7 @@
 
 #include "sync_buffer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 // Returns the number of samples yet to play out form the buffer.
 size_t SyncBuffer::FutureLength() const {
   return Size() - next_index_;
@@ -124,4 +124,4 @@ void SyncBuffer::set_dtmf_index(size_t value) {
   dtmf_index_ = std::min(value, Size());
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

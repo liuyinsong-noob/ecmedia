@@ -14,7 +14,7 @@
 
 #include "platform_thread.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ThreadCheckerImpl::ThreadCheckerImpl() : valid_thread_(CurrentThreadRef()) {
 }

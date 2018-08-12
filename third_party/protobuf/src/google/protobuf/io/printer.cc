@@ -36,7 +36,7 @@
 #include <google/protobuf/io/zero_copy_stream.h>
 #include <google/protobuf/stubs/common.h>
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 namespace io {
 
@@ -195,4 +195,4 @@ void Printer::WriteRaw(const char* data, int size) {
 
 }  // namespace io
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google

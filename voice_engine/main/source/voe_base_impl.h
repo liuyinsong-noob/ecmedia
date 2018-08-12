@@ -16,7 +16,7 @@
 #include "module_common_types.h"
 #include "shared_data.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 class ProcessThread;

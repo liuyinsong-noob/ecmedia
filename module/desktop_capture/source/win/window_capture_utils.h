@@ -12,7 +12,7 @@
 
 #include "desktop_geometry.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Output the window rect, with the left/right/bottom frame border cropped if
 // the window is maximized. |cropped_rect| is the cropped rect relative to the
@@ -22,4 +22,4 @@ bool GetCroppedWindowRect(HWND window,
                           DesktopRect* cropped_rect,
                           DesktopRect* original_rect);
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

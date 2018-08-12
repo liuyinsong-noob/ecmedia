@@ -16,7 +16,7 @@
 
 #include "critical_section_posix.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 CriticalSectionPosix::CriticalSectionPosix()
 {
@@ -43,4 +43,4 @@ CriticalSectionPosix::Leave()
     (void) pthread_mutex_unlock(&_mutex);
 }
 
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

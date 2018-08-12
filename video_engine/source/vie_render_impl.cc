@@ -31,7 +31,7 @@
 #include "vie_desktop_share_manager.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ViERender* ViERender::GetInterface(VideoEngine* video_engine) {
 #ifdef WEBRTC_VIDEO_ENGINE_RENDER_API

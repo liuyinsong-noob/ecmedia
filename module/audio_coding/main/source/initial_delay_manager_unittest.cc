@@ -13,7 +13,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "initial_delay_manager.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -374,4 +374,4 @@ TEST_F(InitialDelayManagerTest, BufferingAudio) {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

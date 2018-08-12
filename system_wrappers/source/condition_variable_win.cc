@@ -23,7 +23,7 @@
 #include "../system_wrappers/source/critical_section_win.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 bool ConditionVariableWindows::_winSupportConditionVariablesPrimitive = false;
 static HMODULE library = NULL;
 

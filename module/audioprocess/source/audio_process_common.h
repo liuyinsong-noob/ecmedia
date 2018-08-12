@@ -15,7 +15,7 @@
 
 #include "audio_processing.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static inline int ChannelsFromLayout(AudioProcessing::ChannelLayout layout) {
   switch (layout) {
@@ -30,6 +30,6 @@ static inline int ChannelsFromLayout(AudioProcessing::ChannelLayout layout) {
   return -1;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_COMMON_H_

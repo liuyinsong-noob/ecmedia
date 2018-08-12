@@ -19,7 +19,7 @@
 #include "cloopenwebrtc/system_wrappers/interface/tick_util.h"
 #include "cloopenwebrtc/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 typedef std::tr1::tuple<int, int, double, double> PushSincResamplerTestData;
 class PushSincResamplerTest

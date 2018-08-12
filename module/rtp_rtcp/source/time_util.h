@@ -15,7 +15,7 @@
 
 #include "../system_wrappers/include/ntp_time.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Converts NTP timestamp to RTP timestamp.
 inline uint32_t NtpToRtp(NtpTime ntp, uint32_t freq) {
@@ -39,5 +39,5 @@ inline uint32_t CompactNtp(NtpTime ntp) {
 // Values close to 2^16 seconds consider negative and result in minimum rtt = 1.
 int64_t CompactNtpRttToMs(uint32_t compact_ntp_interval);
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_TIME_UTIL_H_

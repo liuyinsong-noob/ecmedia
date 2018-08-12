@@ -17,7 +17,7 @@
 #include "../base/constructormagic.h"
 #include "../module/interface/module_common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class Clock;
 struct PacketFeedback;
 
@@ -51,5 +51,5 @@ class SendTimeHistory {
   DISALLOW_IMPLICIT_CONSTRUCTORS(SendTimeHistory);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_REMOTE_BITRATE_ESTIMATOR_INCLUDE_SEND_TIME_HISTORY_H_

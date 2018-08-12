@@ -15,7 +15,7 @@
 
 #include "../base/constructormagic.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class MapItem
 {
 friend class MapWrapper;
@@ -70,6 +70,6 @@ public:
 private:
     std::map<int, MapItem*>    map_;
 };
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_INTERFACE_MAP_WRAPPER_H_

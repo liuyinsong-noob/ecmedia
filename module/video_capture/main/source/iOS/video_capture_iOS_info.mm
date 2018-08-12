@@ -9,7 +9,7 @@
 #import "video_capture_iOS_ObjC.h"
 #import "ioscapture.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
     namespace videocapturemodule
     {
@@ -23,7 +23,7 @@ namespace cloopenwebrtc
             videoCaptureiOSObjc = nil;
         }
         //int                    registerOwner(VideoCaptureiOS* owner);
-        int VideoCaptureiOSInfo::registerOwner(cloopenwebrtc::videocapturemodule::VideoCaptureiOS *owner)
+        int VideoCaptureiOSInfo::registerOwner(yuntongxunwebrtc::videocapturemodule::VideoCaptureiOS *owner)
         {
             return [[videoCaptureiOSObjc registerOwner:owner] intValue];
         }

@@ -24,7 +24,7 @@
 #define IP_PACKET_SIZE 1500    // we assume ethernet
 #define MAX_NUMBER_OF_PARALLEL_TELEPHONE_EVENTS 10
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace rtcp {
 class TransportFeedback;
 }
@@ -442,5 +442,5 @@ class TransportSequenceNumberAllocator {
   virtual uint16_t AllocateSequenceNumber() = 0;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_RTP_RTCP_INCLUDE_RTP_RTCP_DEFINES_H_

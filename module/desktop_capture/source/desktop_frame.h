@@ -17,7 +17,7 @@
 #include "shared_memory.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // DesktopFrame represents a video frame captured from the screen.
 class DesktopFrame {
@@ -120,7 +120,7 @@ class SharedMemoryDesktopFrame : public DesktopFrame {
   DISALLOW_COPY_AND_ASSIGN(SharedMemoryDesktopFrame);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_DESKTOP_FRAME_H_
 

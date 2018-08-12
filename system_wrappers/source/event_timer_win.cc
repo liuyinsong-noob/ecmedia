@@ -12,7 +12,7 @@
 
 #include "Mmsystem.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // static
 EventTimerWrapper* EventTimerWrapper::Create() {
@@ -75,4 +75,4 @@ bool EventTimerWin::StopTimer() {
   return true;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

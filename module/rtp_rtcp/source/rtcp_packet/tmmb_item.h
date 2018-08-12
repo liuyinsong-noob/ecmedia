@@ -13,7 +13,7 @@
 
 #include "../base/basictypes.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace rtcp {
 // RFC5104, Section 3.5.4
 // Temporary Maximum Media Stream Bitrate Request/Notification.

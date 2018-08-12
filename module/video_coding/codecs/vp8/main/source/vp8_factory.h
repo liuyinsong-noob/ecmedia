@@ -12,7 +12,7 @@
 #ifndef WEBRTC_MODULES_VIDEO_CODING_CODECS_VP8_VP8_FACTORY_H_
 #define WEBRTC_MODULES_VIDEO_CODING_CODECS_VP8_VP8_FACTORY_H_
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // VP8EncoderFactoryConfig is the interface to control the VP8Encoder::Create
 // to create VP8EncoderImpl or SimulcastEncoderAdapter+VP8EncoderImpl.

@@ -20,7 +20,7 @@ struct jpeg_common_struct;
 struct jpeg_decompress_struct;
 struct jpeg_source_mgr;
 
-namespace cloopenlibyuv {
+namespace yuntongxunlibyuv {
 
 #ifdef __cplusplus
 extern "C" {

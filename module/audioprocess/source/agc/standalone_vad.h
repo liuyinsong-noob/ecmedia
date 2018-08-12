@@ -16,7 +16,7 @@
 #include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioFrame;
 
@@ -65,6 +65,6 @@ class StandaloneVad {
   int mode_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_AGC_STANDALONE_VAD_H_

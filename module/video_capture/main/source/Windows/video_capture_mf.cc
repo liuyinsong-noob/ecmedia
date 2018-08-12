@@ -10,7 +10,7 @@
 
 #include "video_capture_mf.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace videocapturemodule {
 
 VideoCaptureMF::VideoCaptureMF(const int32_t id) : VideoCaptureImpl(id) {}

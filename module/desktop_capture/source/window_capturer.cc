@@ -12,11 +12,11 @@
 
 #include "desktop_capture_options.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // static
 WindowCapturer* WindowCapturer::Create() {
   return Create(DesktopCaptureOptions::CreateDefault());
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

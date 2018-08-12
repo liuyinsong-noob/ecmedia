@@ -21,7 +21,7 @@
 #include "memory_pool_posix.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 template<class MemoryType>
 class MemoryPool
@@ -117,6 +117,6 @@ int32_t MemoryPool<MemoryType>::PushMemory(MemoryType*& memory)
     }
     return _ptrImpl->PushMemory(memory);
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_MODULES_AUDIO_CONFERENCE_MIXER_SOURCE_MEMORY_POOL_H_

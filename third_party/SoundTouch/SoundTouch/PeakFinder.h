@@ -40,7 +40,7 @@
 #ifndef _PeakFinder_H_
 #define _PeakFinder_H_
 
-namespace cloopensoundtouch
+namespace yuntongxunsoundtouch
 {
 
 class PeakFinder

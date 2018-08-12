@@ -18,7 +18,7 @@
 #include "../base/sequenced_task_checker.h"
 #include "../base/task_queue.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 SequencedTaskCheckerImpl::SequencedTaskCheckerImpl()
     : attached_(true), valid_queue_(TaskQueue::Current()) {}
@@ -60,4 +60,4 @@ SequencedTaskCheckerScope::SequencedTaskCheckerScope(
 SequencedTaskCheckerScope::~SequencedTaskCheckerScope() {}
 
 }  // namespace internal
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -15,7 +15,7 @@
 #include "../module/remote_bitrate_estimator/test/bwe_test.h"
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace testing {
 namespace bwe {
 
@@ -486,5 +486,5 @@ TEST_P(BweSimulation, GccComparisonChoke) {
 
 }  // namespace bwe
 }  // namespace testing
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 

@@ -55,7 +55,7 @@
 //
 // TODO(andresp): find out how to get bots to run tests with trials enabled.
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace field_trial {
 
 // Returns the group name chosen for the named trial, or the empty string
@@ -72,6 +72,6 @@ inline bool IsEnabled(const char* name) {
 }
 
 }  // namespace field_trial
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_INCLUDE_FIELD_TRIAL_H_

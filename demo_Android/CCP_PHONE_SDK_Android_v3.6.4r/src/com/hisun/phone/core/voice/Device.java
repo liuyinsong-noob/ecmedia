@@ -60,7 +60,7 @@ public abstract class Device implements Parcelable {
 	public static final String SELFPHONE = "com.ccp.phone.selfphone";
 	public static final String DESTPHONE = "com.ccp.phone.destphone";
 	public static final String CBSTATE = "com.ccp.phone.cbstate";
-	public static final String CLOOPEN_REASON = "com.ccp.phone.cloopenreason";
+	public static final String yuntongxun_REASON = "com.ccp.phone.cloopenreason";
 	public static final String MEDIA_MESSAGE = "com.ccp.phone.mediamsg";
 	public static final String VOICE_AMPLITUDE = "com.ccp.phone.amplitude";
 	

@@ -13,7 +13,7 @@
 
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Computes the root mean square (RMS) level in dBFs (decibels from digital
 // full-scale) of audio data. The computation follows RFC 6465:
@@ -51,7 +51,7 @@ class RMSLevel {
   int sample_count_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_RMS_LEVEL_H_
 

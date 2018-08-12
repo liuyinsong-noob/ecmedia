@@ -20,7 +20,7 @@
 #include "transmit_mixer.h"
 #include "voice_engine_impl.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VoEFile* VoEFile::GetInterface(VoiceEngine* voiceEngine)
 {
@@ -663,4 +663,4 @@ int VoEFileImpl::StopRecordingCall()
 
 #endif  // #ifdef WEBRTC_VOICE_ENGINE_FILE_API
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

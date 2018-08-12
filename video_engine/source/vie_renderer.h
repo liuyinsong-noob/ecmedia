@@ -16,7 +16,7 @@
 #include "vie_render.h"
 #include "vie_frame_provider_base.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VideoRender;
 class VideoRenderCallback;

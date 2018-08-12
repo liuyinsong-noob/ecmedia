@@ -15,7 +15,7 @@
 
 // TODO(tommi): Split this file up to per-platform implementation files.
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 CriticalSection::CriticalSection() {
 #if defined(WEBRTC_WIN)

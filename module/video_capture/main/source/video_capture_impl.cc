@@ -25,7 +25,7 @@
 #include "../system_wrappers/include/trace.h"
 #include "../base/timeutils.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 namespace videocapturemodule
 {
@@ -478,7 +478,7 @@ WebRtc_Word32 VideoCaptureImpl::StartSendImage(const I420VideoFrame& videoFrame,
 	CriticalSectionScoped cs2(&_callBackCs);
 	if (frameRate < 1 || frameRate > kMaxFrameRate)
 	{
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
 			"StartSendImage Invalid parameter. frameRate %d", (int) frameRate);
 		return -1;;
 	}

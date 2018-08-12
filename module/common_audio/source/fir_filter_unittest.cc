@@ -15,7 +15,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "cloopenwebrtc/system_wrappers/interface/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const float kCoefficients[] = {0.2f, 0.3f, 0.5f, 0.7f, 0.11f};
 static const size_t kCoefficientsLength = sizeof(kCoefficients) /

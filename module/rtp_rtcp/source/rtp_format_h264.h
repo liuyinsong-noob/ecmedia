@@ -21,7 +21,7 @@
 #include "../module/rtp_rtcp/source/rtp_format.h"
 #include "../module/rtp_rtcp/source/rtp_packet_to_send.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class RtpPacketizerH264 : public RtpPacketizer {
  public:
@@ -57,7 +57,7 @@ class RtpPacketizerH264 : public RtpPacketizer {
     explicit Fragment(const Fragment& fragment);
     const uint8_t* buffer = nullptr;
     size_t length = 0;
-    std::unique_ptr<cloopenwebrtc::Buffer> tmp_buffer;
+    std::unique_ptr<yuntongxunwebrtc::Buffer> tmp_buffer;
   };
 
   // A packet unit (H264 packet), to be put into an RTP packet:
@@ -118,7 +118,7 @@ class RtpDepacketizerH264 : public RtpDepacketizer {
 
   size_t offset_;
   size_t length_;
-  std::unique_ptr<cloopenwebrtc::Buffer> modified_buffer_;
+  std::unique_ptr<yuntongxunwebrtc::Buffer> modified_buffer_;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_FORMAT_H264_H_

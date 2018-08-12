@@ -18,7 +18,7 @@
 #include "webrtc_cng.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Vad;
 
@@ -85,5 +85,5 @@ class AudioEncoderCng : public AudioEncoder {
   scoped_ptr<CNG_enc_inst, CngInstDeleter> cng_inst_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_CODECS_CNG_INCLUDE_AUDIO_ENCODER_CNG_H_

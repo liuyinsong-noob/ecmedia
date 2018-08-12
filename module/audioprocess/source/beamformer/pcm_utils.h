@@ -18,7 +18,7 @@
 // Assumes a bit depth of 16 and little-endian. Note that in these functions,
 // length refers to the number of samples to read from/write to the file,
 // such that length / num_channels is the number of frames.
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Reads audio from a pcm into a 2D array: buffer[channel_index][frame_index].
 // Returns the number of frames written. If this is less than |length|, it's
@@ -45,6 +45,6 @@ void PcmWriteFromFloat(FILE* file,
                        int num_channels,
                        const float* const* buffer);
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_BEAMFORMER_PCM_UTILS_H_

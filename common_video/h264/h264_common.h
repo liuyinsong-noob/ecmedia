@@ -16,7 +16,7 @@
 
 #include "./base/buffer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace H264 {
 // The size of a full NALU start sequence {0 0 0 1}, used for the first NALU
@@ -81,8 +81,8 @@ std::vector<uint8_t> ParseRbsp(const uint8_t* data, size_t length);
 // Write the given data to the destination buffer, inserting and emulation
 // bytes in order to escape any data the could be interpreted as a start
 // sequence.
-void WriteRbsp(const uint8_t* bytes, size_t length, cloopenwebrtc::Buffer* destination);
+void WriteRbsp(const uint8_t* bytes, size_t length, yuntongxunwebrtc::Buffer* destination);
 }  // namespace H264
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_COMMON_VIDEO_H264_H264_COMMON_H_

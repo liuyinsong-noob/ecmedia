@@ -13,7 +13,7 @@
 #include <assert.h>
 #include <string.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const int kDefaultSampleRateHz = 48000;
 static const int kDefaultFrameRateHz = 50;
@@ -68,4 +68,4 @@ bool AudioClassifier::Analysis(const int16_t* input,
   return is_music_;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

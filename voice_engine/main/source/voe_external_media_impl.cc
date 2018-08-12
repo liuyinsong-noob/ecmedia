@@ -18,7 +18,7 @@
 #include "transmit_mixer.h"
 #include "voice_engine_impl.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VoEExternalMedia* VoEExternalMedia::GetInterface(VoiceEngine* voiceEngine)
 {
@@ -205,4 +205,4 @@ int VoEExternalMediaImpl::SetExternalMixing(int channel, bool enable) {
 
 #endif  // WEBRTC_VOICE_ENGINE_EXTERNAL_MEDIA_API
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

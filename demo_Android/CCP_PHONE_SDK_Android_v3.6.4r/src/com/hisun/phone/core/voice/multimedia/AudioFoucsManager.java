@@ -10,7 +10,7 @@ import android.media.AudioManager;
 * <p>Title: AudioFoucsManager.java</p>
 * <p>Description: </p>
 * <p>Copyright: Copyright (c) 2007</p>
-* <p>Company: http://www.cloopen.com</p>
+* <p>Company: http://www.yuntongxun.com</p>
 * @author Jorstin Chan
 * @date 2013-10-9
 * @version 1.0
@@ -62,7 +62,7 @@ public class AudioFoucsManager implements AudioFocusLinstener{
 	* <p>Title: AudioFoucsManager.java</p>
 	* <p>Description: </p>
 	* <p>Copyright: Copyright (c) 2007</p>
-	* <p>Company: http://www.cloopen.com</p>
+	* <p>Company: http://www.yuntongxun.com</p>
 	* @author zhanjichun
 	* @date 2013-10-9
 	* @version 1.0

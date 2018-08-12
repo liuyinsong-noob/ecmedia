@@ -20,7 +20,7 @@
 
 #include "critical_section_posix.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 ConditionVariableWrapper* ConditionVariablePosix::Create()
 {
     ConditionVariablePosix* ptr = new ConditionVariablePosix;
@@ -148,4 +148,4 @@ void ConditionVariablePosix::WakeAll()
 {
     pthread_cond_broadcast(&_cond);
 }
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

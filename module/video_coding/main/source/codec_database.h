@@ -22,7 +22,7 @@
 
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 struct VCMDecoderMapItem {
  public:

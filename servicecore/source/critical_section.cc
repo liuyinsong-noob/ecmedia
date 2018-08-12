@@ -15,7 +15,7 @@
     #include "critical_section_posix.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 CriticalSectionWrapper* CriticalSectionWrapper::CreateCriticalSection()
 {
 #ifdef _WIN32
@@ -24,4 +24,4 @@ CriticalSectionWrapper* CriticalSectionWrapper::CreateCriticalSection()
     return new CriticalSectionPosix();
 #endif
 }
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

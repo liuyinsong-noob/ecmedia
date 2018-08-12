@@ -15,7 +15,7 @@
 
 #include "testing/gmock/include/gmock/gmock.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class MockProcessThread : public ProcessThread {
  public:

@@ -46,7 +46,7 @@ DEFINE_string(audio_content, "", "name of a file where audio content is written"
 DEFINE_double(activity_threshold, kDefaultActivityThreshold,
               "Activity threshold");
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // TODO(turajs) A new CL will be committed soon where ExtractFeatures will
 // notify the caller of "silence" input, instead of bailing out. We would not
@@ -164,7 +164,7 @@ class AgcStat {
 
 
 void void_main(int argc, char* argv[]) {
-  cloopenwebrtc::AgcStat agc_stat;
+  yuntongxunwebrtc::AgcStat agc_stat;
 
   FILE* pcm_fid = fopen(argv[1], "rb");
   ASSERT_TRUE(pcm_fid != NULL) << "Cannot open PCM file " << argv[1];
@@ -223,7 +223,7 @@ void void_main(int argc, char* argv[]) {
     agc_stat.set_audio_content_file(audio_content_fid);
   }
 
-  cloopenwebrtc::AudioFrame frame;
+  yuntongxunwebrtc::AudioFrame frame;
   frame.num_channels_ = 1;
   frame.sample_rate_hz_ = 16000;
   frame.samples_per_channel_ = frame.sample_rate_hz_ / 100;
@@ -379,6 +379,6 @@ int main(int argc, char* argv[]) {
       "format.\n\n";
   google::SetUsageMessage(kUsage);
   google::ParseCommandLineFlags(&argc, &argv, true);
-  cloopenwebrtc::void_main(argc, argv);
+  yuntongxunwebrtc::void_main(argc, argv);
   return 0;
 }

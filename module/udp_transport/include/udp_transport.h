@@ -24,7 +24,7 @@
                                     SS_ALIGNSIZE))
 
 // BSD requires use of HAVE_STRUCT_SOCKADDR_SA_LEN
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 struct SocketAddressIn
 {
     // sin_family should be either AF_INET (IPv4) or AF_INET6 (IPv6)
@@ -410,6 +410,6 @@ public:
 	virtual void SetLocalSSrc(unsigned int ssrc) = 0;
 	virtual unsigned int GetLocalSSrc() = 0;
 };
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_MODULES_UDP_TRANSPORT_INTERFACE_UDP_TRANSPORT_H_

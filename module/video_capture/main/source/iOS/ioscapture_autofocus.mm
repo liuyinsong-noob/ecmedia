@@ -35,7 +35,7 @@ char *globalFilePathcapture = NULL;
 
 #pragma mark - public methods
 
-- (NSNumber *)registerOwner:(cloopenwebrtc::videocapturemodule::VideoCaptureiOS *)owner
+- (NSNumber *)registerOwner:(yuntongxunwebrtc::videocapturemodule::VideoCaptureiOS *)owner
 {
 //    if (!owner) {
 //        return [NSNumber numberWithInt:-1];

@@ -17,7 +17,7 @@
 #endif
 
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 	VideoCaptureModule* VideoCaptureFactory::Create(const int32_t id,

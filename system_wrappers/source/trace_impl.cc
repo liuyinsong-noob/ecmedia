@@ -29,7 +29,7 @@
 #pragma warning(disable:4355)
 #endif  // _WIN32
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const int Trace::kBoilerplateLength = 71;
 const int Trace::kTimestampPosition = 13;
@@ -76,7 +76,7 @@ TraceImpl::~TraceImpl() {
 }
 
 int32_t TraceImpl::AddThreadId(char* trace_message) const {
-  uint32_t thread_id = cloopenwebrtc::CurrentThreadId();
+  uint32_t thread_id = yuntongxunwebrtc::CurrentThreadId();
   // Messages is 12 characters.
   return sprintf(trace_message, "%10u; ", thread_id);
 }
@@ -284,7 +284,7 @@ int32_t TraceImpl::AddModuleAndId(char* trace_message,
 
 int32_t TraceImpl::SetTraceFileImpl(const char* file_name_utf8,
                                     const bool add_file_counter) {
-  cloopenwebrtc::CritScope lock(&crit_);
+  yuntongxunwebrtc::CritScope lock(&crit_);
 
   trace_file_->CloseFile();
   trace_file_path_.clear();
@@ -313,7 +313,7 @@ int32_t TraceImpl::SetTraceFileImpl(const char* file_name_utf8,
 }
 
 int32_t TraceImpl::SetTraceCallbackImpl(TraceCallback* callback) {
-  cloopenwebrtc::CritScope lock(&crit_);
+  yuntongxunwebrtc::CritScope lock(&crit_);
   callback_ = callback;
   return 0;
 }
@@ -353,7 +353,7 @@ void TraceImpl::AddMessageToList(
     const char trace_message[WEBRTC_TRACE_MAX_MESSAGE_SIZE],
     const uint16_t length,
     const TraceLevel level) {
-  cloopenwebrtc::CritScope lock(&crit_);
+  yuntongxunwebrtc::CritScope lock(&crit_);
   if (callback_)
     callback_->Print(level, trace_message, length);
   WriteToFile(trace_message, length);
@@ -526,12 +526,12 @@ void Trace::ReturnTrace() {
 
 // static
 void Trace::set_level_filter(int filter) {
-  cloopenwebrtc::AtomicOps::ReleaseStore(&level_filter_, filter);
+  yuntongxunwebrtc::AtomicOps::ReleaseStore(&level_filter_, filter);
 }
 
 // static
 int Trace::level_filter() {
-  return cloopenwebrtc::AtomicOps::AcquireLoad(&level_filter_);
+  return yuntongxunwebrtc::AtomicOps::AcquireLoad(&level_filter_);
 }
 
 // static
@@ -580,4 +580,4 @@ void Trace::Add(const TraceLevel level, const TraceModule module,
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

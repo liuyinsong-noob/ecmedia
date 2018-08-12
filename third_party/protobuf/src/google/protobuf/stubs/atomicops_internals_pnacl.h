@@ -33,7 +33,7 @@
 #ifndef GOOGLE_PROTOBUF_ATOMICOPS_INTERNALS_PNACL_H_
 #define GOOGLE_PROTOBUF_ATOMICOPS_INTERNALS_PNACL_H_
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 namespace internal {
 
@@ -68,6 +68,6 @@ inline Atomic32 Acquire_Load(volatile const Atomic32* ptr) {
 
 }  // namespace internal
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 
 #endif  // GOOGLE_PROTOBUF_ATOMICOPS_INTERNALS_PNACL_H_

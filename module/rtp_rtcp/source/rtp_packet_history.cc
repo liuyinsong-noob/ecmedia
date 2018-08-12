@@ -18,7 +18,7 @@
 #include "../module/rtp_rtcp/source/rtp_packet_to_send.h"
 #include "../system_wrappers/include/clock.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 constexpr size_t kMinPacketRequestBytes = 50;
 }  // namespace
@@ -31,7 +31,7 @@ RtpPacketHistory::~RtpPacketHistory() {}
 
 void RtpPacketHistory::SetStorePacketsStatus(bool enable,
                                              uint16_t number_to_store) {
-  cloopenwebrtc::CritScope cs(&critsect_);
+  yuntongxunwebrtc::CritScope cs(&critsect_);
   if (enable) {
     if (store_) {
       LOG(LS_WARNING) << "Purging packet history in order to re-set status.";
@@ -63,7 +63,7 @@ void RtpPacketHistory::Free() {
 }
 
 bool RtpPacketHistory::StorePackets() const {
-  cloopenwebrtc::CritScope cs(&critsect_);
+  yuntongxunwebrtc::CritScope cs(&critsect_);
   return store_;
 }
 
@@ -71,7 +71,7 @@ void RtpPacketHistory::PutRtpPacket(std::unique_ptr<RtpPacketToSend> packet,
                                     StorageType type,
                                     bool sent) {
   DCHECK(packet);
-  cloopenwebrtc::CritScope cs(&critsect_);
+  yuntongxunwebrtc::CritScope cs(&critsect_);
   if (!store_) {
     return;
   }
@@ -109,7 +109,7 @@ void RtpPacketHistory::PutRtpPacket(std::unique_ptr<RtpPacketToSend> packet,
 }
 
 bool RtpPacketHistory::HasRtpPacket(uint16_t sequence_number) const {
-  cloopenwebrtc::CritScope cs(&critsect_);
+  yuntongxunwebrtc::CritScope cs(&critsect_);
   if (!store_) {
     return false;
   }
@@ -122,7 +122,7 @@ std::unique_ptr<RtpPacketToSend> RtpPacketHistory::GetPacketAndSetSendTime(
     uint16_t sequence_number,
     int64_t min_elapsed_time_ms,
     bool retransmit) {
-  cloopenwebrtc::CritScope cs(&critsect_);
+  yuntongxunwebrtc::CritScope cs(&critsect_);
   if (!store_) {
     return nullptr;
   }
@@ -162,7 +162,7 @@ std::unique_ptr<RtpPacketToSend> RtpPacketHistory::GetPacket(int index) const {
 
 std::unique_ptr<RtpPacketToSend> RtpPacketHistory::GetBestFittingPacket(
     size_t packet_length) const {
-  cloopenwebrtc::CritScope cs(&critsect_);
+  yuntongxunwebrtc::CritScope cs(&critsect_);
   if (!store_)
     return nullptr;
   int index = FindBestFittingPacket(packet_length);
@@ -218,4 +218,4 @@ int RtpPacketHistory::FindBestFittingPacket(size_t size) const {
   return best_index;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

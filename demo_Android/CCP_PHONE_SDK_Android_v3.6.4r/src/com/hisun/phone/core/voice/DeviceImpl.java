@@ -2888,7 +2888,7 @@ public final class DeviceImpl extends Device implements CCPCallEvent {
 	 */
 	Bundle getCloopenReasonBundle(CloopenReason reason) {
 		Bundle bundle = new Bundle();
-		bundle.putSerializable(Device.CLOOPEN_REASON, reason);
+		bundle.putSerializable(Device.yuntongxun_REASON, reason);
 		return bundle;
 	}
 

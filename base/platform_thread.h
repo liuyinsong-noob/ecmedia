@@ -18,7 +18,7 @@
 #include "../base/platform_thread_types.h"
 #include "../base/thread_checker.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 PlatformThreadId CurrentThreadId();
 PlatformThreadRef CurrentThreadRef();
@@ -100,8 +100,8 @@ class PlatformThread {
   // TODO(pbos): Make sure call sites use string literals and update to a const
   // char* instead of a std::string.
   const std::string name_;
-  cloopenwebrtc::ThreadChecker thread_checker_;
-  cloopenwebrtc::ThreadChecker spawned_thread_checker_;
+  yuntongxunwebrtc::ThreadChecker thread_checker_;
+  yuntongxunwebrtc::ThreadChecker spawned_thread_checker_;
 #if defined(WEBRTC_WIN)
   static DWORD WINAPI StartThread(void* param);
 
@@ -119,6 +119,6 @@ class PlatformThread {
   DISALLOW_COPY_AND_ASSIGN(PlatformThread);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_PLATFORM_THREAD_H_

@@ -24,7 +24,7 @@
 using ::testing::Return;
 using ::testing::ReturnNull;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const int kRedPayloadType = 100;
 static const size_t kPayloadLength = 10;
@@ -774,4 +774,4 @@ TEST(FecPayloadSplitter, MixedPayload) {
   delete packet;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

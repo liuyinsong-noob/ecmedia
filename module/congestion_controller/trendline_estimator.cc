@@ -16,10 +16,10 @@
 #include "../base/optional.h"
 #include "../module/remote_bitrate_estimator/test/bwe_test_logging.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
-cloopenwebrtc::Optional<double> LinearFitSlope(
+yuntongxunwebrtc::Optional<double> LinearFitSlope(
     const std::deque<std::pair<double, double>>& points) {
   DCHECK(points.size() >= 2);
   // Compute the "center of mass".
@@ -39,8 +39,8 @@ cloopenwebrtc::Optional<double> LinearFitSlope(
     denominator += (point.first - x_avg) * (point.first - x_avg);
   }
   if (denominator == 0)
-    return cloopenwebrtc::Optional<double>();
-  return cloopenwebrtc::Optional<double>(numerator / denominator);
+    return yuntongxunwebrtc::Optional<double>();
+  return yuntongxunwebrtc::Optional<double>(numerator / denominator);
 }
 }  // namespace
 
@@ -94,4 +94,4 @@ void TrendlineEstimator::Update(double recv_delta_ms,
   BWE_TEST_LOGGING_PLOT(1, "trendline_slope", arrival_time_ms, trendline_);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

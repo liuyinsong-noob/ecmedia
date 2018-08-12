@@ -20,7 +20,7 @@
 #include "../base/checks.h"
 #include "../system_wrappers/include/logging.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Helper function declarations for inet_ntop/inet_pton.
 static const char* inet_ntop_v4(const void* src, char* dst, socklen_t size);
@@ -70,7 +70,7 @@ const char* inet_ntop_v4(const void* src, char* dst, socklen_t size) {
   }
   const struct in_addr* as_in_addr =
       reinterpret_cast<const struct in_addr*>(src);
-  cloopenwebrtc::sprintfn(dst, size, "%d.%d.%d.%d",
+  yuntongxunwebrtc::sprintfn(dst, size, "%d.%d.%d.%d",
                       as_in_addr->S_un.S_un_b.s_b1,
                       as_in_addr->S_un.S_un_b.s_b2,
                       as_in_addr->S_un.S_un_b.s_b3,
@@ -127,7 +127,7 @@ const char* inet_ntop_v6(const void* src, char* dst, socklen_t size) {
     *cursor++ = ':';
     *cursor++ = ':';
     if (maxpos == 4) {
-      cursor += cloopenwebrtc::sprintfn(cursor, INET6_ADDRSTRLEN - 2, "ffff:");
+      cursor += yuntongxunwebrtc::sprintfn(cursor, INET6_ADDRSTRLEN - 2, "ffff:");
     }
     const struct in_addr* as_v4 =
         reinterpret_cast<const struct in_addr*>(&(as_shorts[6]));
@@ -136,7 +136,7 @@ const char* inet_ntop_v6(const void* src, char* dst, socklen_t size) {
   } else {
     for (int i = 0; i < run_array_size; ++i) {
       if (runpos[i] == -1) {
-        cursor += cloopenwebrtc::sprintfn(cursor,
+        cursor += yuntongxunwebrtc::sprintfn(cursor,
                                       INET6_ADDRSTRLEN - (cursor - dst),
                                       "%x", NetworkToHost16(as_shorts[i]));
         if (i != 7 && runpos[i + 1] != 1) {
@@ -225,8 +225,8 @@ int inet_pton_v6(const char* src, void* dst) {
       *(readcursor + 2) != 0) {
     // Check for periods, which we'll take as a sign of v4 addresses.
     const char* addrstart = readcursor + 2;
-    if (cloopenwebrtc::strchr(addrstart, ".")) {
-      const char* colon = cloopenwebrtc::strchr(addrstart, "::");
+    if (yuntongxunwebrtc::strchr(addrstart, ".")) {
+      const char* colon = yuntongxunwebrtc::strchr(addrstart, "::");
       if (colon) {
         uint16_t a_short;
         int bytesread = 0;
@@ -453,4 +453,4 @@ bool GetCurrentProcessIntegrityLevel(int* level) {
   return ret;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

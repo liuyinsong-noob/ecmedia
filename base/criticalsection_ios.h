@@ -46,7 +46,7 @@
 #define CS_DEBUG_CODE(x)
 #endif  // !CS_DEBUG_CHECKS
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Locking methods (Enter, TryEnter, Leave)are const to permit protecting
 // members inside a const context without requiring mutable CriticalSections
@@ -146,6 +146,6 @@ class SCOPED_LOCKABLE GlobalLockScope {
   DISALLOW_COPY_AND_ASSIGN(GlobalLockScope);
 };
 
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_BASE_CRITICALSECTION_H_

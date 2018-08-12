@@ -15,7 +15,7 @@
 #endif
 
 // TODO(grunell): Either put inside webrtc namespace or use webrtc:: instead.
-using namespace cloopenwebrtc;
+using namespace yuntongxunwebrtc;
 
 namespace webrtc_adm_linux {
 

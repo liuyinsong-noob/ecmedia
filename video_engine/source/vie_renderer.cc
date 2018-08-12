@@ -15,7 +15,7 @@
 #include "video_render_defines.h"
 #include "vie_render_manager.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ViERenderer* ViERenderer::CreateViERenderer(const int32_t render_id,
                                             const int32_t engine_id,
@@ -221,7 +221,7 @@ int32_t ViEExternalRendererImpl::RenderFrame(
   // Convert to requested format.
   VideoType type =
       RawVideoTypeToCommonVideoVideoType(external_renderer_format_);
-  size_t buffer_size = cloopenwebrtc::CalcBufferSize(type, video_frame.width(),
+  size_t buffer_size = yuntongxunwebrtc::CalcBufferSize(type, video_frame.width(),
                                       video_frame.height());
   if (buffer_size == 0) {
     // Unsupported video format.

@@ -60,7 +60,7 @@
 
 #if defined(cpuid)        // initialize the struct only on x86
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 namespace internal {
 
@@ -130,7 +130,7 @@ AtomicOpsx86Initializer g_initer;
 
 }  // namespace internal
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 
 #endif  // __i386__
 

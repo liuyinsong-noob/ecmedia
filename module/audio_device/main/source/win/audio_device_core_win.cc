@@ -61,7 +61,7 @@ typedef struct tagTHREADNAME_INFO
    DWORD dwFlags;       // reserved for future use, must be zero
 } THREADNAME_INFO;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 
 enum { COM_THREADING_MODEL = COINIT_MULTITHREADED };
@@ -5125,6 +5125,6 @@ bool AudioDeviceWindowsCore::KeyPressed() const{
   }
   return (key_down > 0);
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_WINDOWS_CORE_AUDIO_BUILD

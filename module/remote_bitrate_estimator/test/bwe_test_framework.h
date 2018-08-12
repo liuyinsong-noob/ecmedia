@@ -27,7 +27,7 @@
 #include "../system_wrappers/include/clock.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace testing {
 namespace bwe {
 

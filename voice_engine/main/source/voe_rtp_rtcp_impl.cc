@@ -19,7 +19,7 @@
 #include "channel.h"
 #include "transmit_mixer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VoERTP_RTCP* VoERTP_RTCP::GetInterface(VoiceEngine* voiceEngine)
 {
@@ -595,7 +595,7 @@ int VoERTP_RTCPImpl::SetVideoEngineBWETarget(int channel,
 		const int channel, bool enable, const char unknownPayloadType,
 		const unsigned int deltaTransmitTimeSeconds)
 	{
-		WEBRTC_TRACE(cloopenwebrtc::kTraceApiCall, cloopenwebrtc::kTraceVideo,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceApiCall, yuntongxunwebrtc::kTraceVideo,
 			VoEId(_shared->instance_id(), channel),
 			"%s(channel: %d, enable: %d, unknownPayloadType: %d, "
 			"deltaTransmitTimeMS: %ul)",
@@ -624,7 +624,7 @@ int VoERTP_RTCPImpl::SetVideoEngineBWETarget(int channel,
 	int VoERTP_RTCPImpl::GetRTPKeepAliveStatus(const int channel, bool& enabled, char& unknownPayloadType,
 		unsigned int& deltaTransmitTimeSeconds)
 	{
-		WEBRTC_TRACE(cloopenwebrtc::kTraceApiCall, cloopenwebrtc::kTraceVideo,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceApiCall, yuntongxunwebrtc::kTraceVideo,
 			VoEId(_shared->instance_id(), channel), "%s(channel: %d)",
 			__FUNCTION__, channel);
 
@@ -652,4 +652,4 @@ int VoERTP_RTCPImpl::SetVideoEngineBWETarget(int channel,
 
 	#endif  // #ifdef WEBRTC_VOICE_ENGINE_RTP_RTCP_API
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

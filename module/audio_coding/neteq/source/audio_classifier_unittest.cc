@@ -19,7 +19,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "fileutils.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const size_t kFrameSize = 960;
 
@@ -72,4 +72,4 @@ TEST(AudioClassifierTest, DoAnalysisStereo) {
                   2);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

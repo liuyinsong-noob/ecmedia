@@ -16,7 +16,7 @@
 
 #include "../system_wrappers/include/logging.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 SendTimeHistory::SendTimeHistory(Clock* clock, int64_t packet_age_limit_ms)
     : clock_(clock), packet_age_limit_ms_(packet_age_limit_ms) {}
@@ -81,4 +81,4 @@ bool SendTimeHistory::GetFeedback(PacketFeedback* packet_feedback,
   return true;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

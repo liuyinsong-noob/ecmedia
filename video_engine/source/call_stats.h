@@ -17,7 +17,7 @@
 #include "module.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class CallStatsObserver;
 class CriticalSectionWrapper;

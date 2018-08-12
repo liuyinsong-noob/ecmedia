@@ -21,7 +21,7 @@
 #include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
 #include "../module/rtp_rtcp/source/rtp_receiver_strategy.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 using RtpUtility::Payload;
 
@@ -86,7 +86,7 @@ RtpReceiverImpl::~RtpReceiverImpl() {
 }
 
 int32_t RtpReceiverImpl::RegisterReceivePayload(const CodecInst& audio_codec) {
-  cloopenwebrtc::CritScope lock(&critical_section_rtp_receiver_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtp_receiver_);
 
   // TODO(phoglund): Try to streamline handling of the RED codec and some other
   // cases which makes it necessary to keep track of whether we created a
@@ -105,32 +105,32 @@ int32_t RtpReceiverImpl::RegisterReceivePayload(const CodecInst& audio_codec) {
 }
 
 int32_t RtpReceiverImpl::RegisterReceivePayload(const VideoCodec& video_codec) {
-  cloopenwebrtc::CritScope lock(&critical_section_rtp_receiver_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtp_receiver_);
   return rtp_payload_registry_->RegisterReceivePayload(video_codec);
 }
 
 int32_t RtpReceiverImpl::DeRegisterReceivePayload(
     const int8_t payload_type) {
-  cloopenwebrtc::CritScope lock(&critical_section_rtp_receiver_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtp_receiver_);
   return rtp_payload_registry_->DeRegisterReceivePayload(payload_type);
 }
     
 uint32_t RtpReceiverImpl::SetSSRC(uint32_t ssrc)
 {
-   cloopenwebrtc::CritScope lock(&critical_section_rtp_receiver_);
+   yuntongxunwebrtc::CritScope lock(&critical_section_rtp_receiver_);
     ssrc_ = ssrc;
     return 0;
     
 }
     
 uint32_t RtpReceiverImpl::SSRC() const {
-  cloopenwebrtc::CritScope lock(&critical_section_rtp_receiver_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtp_receiver_);
   return ssrc_;
 }
 
 // Get remote CSRC.
 int32_t RtpReceiverImpl::CSRCs(uint32_t array_of_csrcs[kRtpCsrcSize]) const {
-  cloopenwebrtc::CritScope lock(&critical_section_rtp_receiver_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtp_receiver_);
 
   assert(num_csrcs_ <= kRtpCsrcSize);
 
@@ -147,7 +147,7 @@ int32_t RtpReceiverImpl::Energy(
 
 int32_t RtpReceiverImpl::SetPacketTimeout(const WebRtc_UWord32 timeoutMS)
 {
-    cloopenwebrtc::CritScope lock(&critical_section_rtp_receiver_);
+    yuntongxunwebrtc::CritScope lock(&critical_section_rtp_receiver_);
     _packetTimeOutMS = timeoutMS;
     return 0;
 }
@@ -156,7 +156,7 @@ void RtpReceiverImpl::PacketTimeout()
 {
     bool packetTimeOut = false;
     {
-        cloopenwebrtc::CritScope lock(&critical_section_rtp_receiver_);
+        yuntongxunwebrtc::CritScope lock(&critical_section_rtp_receiver_);
         if(_packetTimeOutMS == 0)
         {
             // not configured
@@ -176,7 +176,7 @@ void RtpReceiverImpl::PacketTimeout()
             _lastReceiveTime = 0;  // only one callback
         }
     }
-    cloopenwebrtc::CritScope lock(&critical_section_rtp_receiver_);
+    yuntongxunwebrtc::CritScope lock(&critical_section_rtp_receiver_);
     if(packetTimeOut && cb_rtp_feedback_)
     {
         cb_rtp_feedback_->OnPacketTimeout(id_);
@@ -214,7 +214,7 @@ bool RtpReceiverImpl::IncomingRtpPacket(
 
   bool is_first_packet_in_frame = false;
   {
-    cloopenwebrtc::CritScope lock(&critical_section_rtp_receiver_);
+    yuntongxunwebrtc::CritScope lock(&critical_section_rtp_receiver_);
     if (HaveReceivedFrame()) {
       is_first_packet_in_frame =
           last_received_sequence_number_ + 1 == rtp_header.sequenceNumber &&
@@ -233,7 +233,7 @@ bool RtpReceiverImpl::IncomingRtpPacket(
   }
 
   {
-    cloopenwebrtc::CritScope lock(&critical_section_rtp_receiver_);
+    yuntongxunwebrtc::CritScope lock(&critical_section_rtp_receiver_);
 
     last_receive_time_ = clock_->TimeInMilliseconds();
     last_received_payload_length_ = payload_data_length;
@@ -254,7 +254,7 @@ TelephoneEventHandler* RtpReceiverImpl::GetTelephoneEventHandler() {
 }
 
 bool RtpReceiverImpl::Timestamp(uint32_t* timestamp) const {
-  cloopenwebrtc::CritScope lock(&critical_section_rtp_receiver_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtp_receiver_);
   if (!HaveReceivedFrame())
     return false;
   *timestamp = last_received_timestamp_;
@@ -262,7 +262,7 @@ bool RtpReceiverImpl::Timestamp(uint32_t* timestamp) const {
 }
 
 bool RtpReceiverImpl::LastReceivedTimeMs(int64_t* receive_time_ms) const {
-  cloopenwebrtc::CritScope lock(&critical_section_rtp_receiver_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtp_receiver_);
   if (!HaveReceivedFrame())
     return false;
   *receive_time_ms = last_received_frame_time_ms_;
@@ -282,7 +282,7 @@ void RtpReceiverImpl::CheckSSRCChanged(const RTPHeader& rtp_header) {
   uint32_t rate = 0;
 
   {
-    cloopenwebrtc::CritScope lock(&critical_section_rtp_receiver_);
+    yuntongxunwebrtc::CritScope lock(&critical_section_rtp_receiver_);
 
     int8_t last_received_payload_type =
         rtp_payload_registry_->last_received_payload_type();
@@ -353,7 +353,7 @@ int32_t RtpReceiverImpl::CheckPayloadChanged(const RTPHeader& rtp_header,
   int8_t payload_type = rtp_header.payloadType;
 
   {
-    cloopenwebrtc::CritScope lock(&critical_section_rtp_receiver_);
+    yuntongxunwebrtc::CritScope lock(&critical_section_rtp_receiver_);
 
     int8_t last_received_payload_type =
         rtp_payload_registry_->last_received_payload_type();
@@ -436,7 +436,7 @@ void RtpReceiverImpl::CheckCSRC(const WebRtcRTPHeader& rtp_header) {
   uint8_t old_num_csrcs = 0;
 
   {
-    cloopenwebrtc::CritScope lock(&critical_section_rtp_receiver_);
+    yuntongxunwebrtc::CritScope lock(&critical_section_rtp_receiver_);
 
     if (!rtp_media_receiver_->ShouldReportCsrcChanges(
         rtp_header.header.payloadType)) {
@@ -511,4 +511,4 @@ void RtpReceiverImpl::CheckCSRC(const WebRtcRTPHeader& rtp_header) {
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -50,7 +50,7 @@ char g_bind_local_addr[64] = {'\0'};
 
 extern void CCPClientPrintLog(int loglevel, const char *loginfo);
 
-//namespace cloopenwebrtc {
+//namespace yuntongxunwebrtc {
 //class SerphoneTraceCallBack : public TraceCallback {
 //public:
 //	virtual void Print(const TraceLevel level,
@@ -61,7 +61,7 @@ extern void CCPClientPrintLog(int loglevel, const char *loginfo);
 //		}
 //};
 //}
-//cloopenwebrtc::SerphoneTraceCallBack g_serphoneTraceCallBack;
+//yuntongxunwebrtc::SerphoneTraceCallBack g_serphoneTraceCallBack;
 std::map<int,VideoConferenceDesc*> ServiceCore::videoConferenceM;
 SerphoneCoreVTable ServiceCore::vtable;
 const char *Serphone_reason_to_string(SerphoneReason err)
@@ -466,7 +466,7 @@ ServiceCore::ServiceCore()
 	videoProtectionMode = -1;
 	presence_mode = LinphoneStatusOffline;
 	srandom((unsigned int) time(NULL));
-	m_criticalSection = cloopenwebrtc::CriticalSectionWrapper::CreateCriticalSection();
+	m_criticalSection = yuntongxunwebrtc::CriticalSectionWrapper::CreateCriticalSection();
 
 	max_calls = MAX_SERVICE_CALL;
 	memset(&net_conf,0,sizeof(net_conf));
@@ -501,13 +501,13 @@ ServiceCore::ServiceCore()
     m_hcEnabled = false;
 
 #ifdef _WIN32
-	m_agcMode = cloopenwebrtc::kAgcAdaptiveAnalog;
-	m_ecMode = cloopenwebrtc::kEcAec;
-	m_nsMode = cloopenwebrtc::kNsModerateSuppression;
+	m_agcMode = yuntongxunwebrtc::kAgcAdaptiveAnalog;
+	m_ecMode = yuntongxunwebrtc::kEcAec;
+	m_nsMode = yuntongxunwebrtc::kNsModerateSuppression;
 #else
-    m_agcMode = cloopenwebrtc::kAgcAdaptiveDigital;
-    m_ecMode = cloopenwebrtc::kEcAecm;
-    m_nsMode = cloopenwebrtc::kNsModerateSuppression;
+    m_agcMode = yuntongxunwebrtc::kAgcAdaptiveDigital;
+    m_ecMode = yuntongxunwebrtc::kEcAecm;
+    m_nsMode = yuntongxunwebrtc::kNsModerateSuppression;
 #endif
 
     m_dtxEnabled = false;
@@ -515,7 +515,7 @@ ServiceCore::ServiceCore()
     tls_enable = false;
     srtp_enable = false;
     user_mode = false;
-    encryptType = (cloopenwebrtc::ccp_srtp_crypto_suite_t)-1;
+    encryptType = (yuntongxunwebrtc::ccp_srtp_crypto_suite_t)-1;
 	m_SrtpKey = NULL;
 	m_SrtpKey = (char *)malloc(SRTP_KEY_SZ);//currently 100
     memset(m_SrtpKey, 0, SRTP_KEY_SZ);
@@ -973,7 +973,7 @@ bool_t ServiceCore::already_a_call_with_remote_address(const SerphoneAddress *re
 
 SerPhoneCall* ServiceCore::serphone_core_find_call_by_cid( int cid)
 {
-//	cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+//	yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 	MSList *elem;
 	for(elem=calls;elem!=NULL;elem=elem->next){
 		SerPhoneCall *call=(SerPhoneCall*)elem->data;
@@ -987,7 +987,7 @@ SerPhoneCall* ServiceCore::serphone_core_find_call_by_cid( int cid)
 
 SerPhoneCall* ServiceCore::serphone_core_find_call_by_user_cid(const char* cid)
 {
-    //	cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+    //	yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 	MSList *elem;
 	for(elem=calls;elem!=NULL;elem=elem->next){
 		SerPhoneCall *call=(SerPhoneCall*)elem->data;
@@ -2107,7 +2107,7 @@ const char *ServiceCore::serphone_core_find_best_identity(const SerphoneAddress 
 void ServiceCore::serphone_set_reg_info(const char *proxy_addr, int proxy_port,
 		const char *account, const char *password, const char *displayname, const char *capability_token, const char *gTokenp)
 {
-	cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+	yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 
 	SerphoneProxyConfig *cfg;
 	MSList *elem = NULL;
@@ -2783,7 +2783,7 @@ void ServiceCore::serphone_proxy_remove(const char *proxyAddr)
 
 void ServiceCore::serphone_set_reg_displayname(const char *displayName)
 {
-	cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+	yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 	SerphoneProxyConfig *cfg = NULL;
 	serphone_core_get_default_proxy( &cfg);
 
@@ -2996,18 +2996,18 @@ SalMediaDescription *ServiceCore::_create_local_media_description( SerPhoneCall 
 	for(int i=0; i<md->nstreams; i++) {
 		if (md->streams[i].proto == SalProtoRtpSavp) {
 			md->streams[i].crypto[0].tag = 1;
-			md->streams[i].crypto[0].algo = cloopenwebrtc::CCPAES_256_SHA1_80;
+			md->streams[i].crypto[0].algo = yuntongxunwebrtc::CCPAES_256_SHA1_80;
 			if (!generate_b64_crypto_key(46, md->streams[i].crypto[0].master_key, (const char *)m_SrtpKey)) {
-				md->streams[i].crypto[0].algo = (cloopenwebrtc::ccp_srtp_crypto_suite_t)0;
+				md->streams[i].crypto[0].algo = (yuntongxunwebrtc::ccp_srtp_crypto_suite_t)0;
 			}
 
 			md->streams[i].crypto[1].tag = 2;
-			md->streams[i].crypto[1].algo = cloopenwebrtc::CCPAES_256_SHA1_32;
+			md->streams[i].crypto[1].algo = yuntongxunwebrtc::CCPAES_256_SHA1_32;
 			if (!generate_b64_crypto_key(46, md->streams[i].crypto[1].master_key, (const char *)m_SrtpKey)) {
-				md->streams[i].crypto[1].algo = (cloopenwebrtc::ccp_srtp_crypto_suite_t)0;
+				md->streams[i].crypto[1].algo = (yuntongxunwebrtc::ccp_srtp_crypto_suite_t)0;
 			}
 
-			md->streams[i].crypto[2].algo = (cloopenwebrtc::ccp_srtp_crypto_suite_t)0;
+			md->streams[i].crypto[2].algo = (yuntongxunwebrtc::ccp_srtp_crypto_suite_t)0;
 		}
 	}
 
@@ -3090,7 +3090,7 @@ int ServiceCore::serphone_core_get_upload_bandwidth()
 SerPhoneCall * ServiceCore::serphone_call_new_incoming(SerphoneAddress *from, SerphoneAddress *to, SalOp *op)
 {
     /*add begin------------------Sean20130812----------for video ice------------*/
-    cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+    yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
     /*add end--------------------Sean20130812----------for video ice------------*/
 //	SerPhoneCall *call=ms_new0(SerPhoneCall,1);   //ms_new0
 	SerPhoneCall *call=(SerPhoneCall *)malloc(sizeof(SerPhoneCall)*1);   //ms_new0
@@ -3371,7 +3371,7 @@ void ServiceCore::discover_mtu(const char *remote)
 **/
 int ServiceCore::serphone_core_accept_call(SerPhoneCall *call)
 {
-    cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+    yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 	return serphone_core_accept_call_with_params(call,NULL);
 }
 
@@ -3390,7 +3390,7 @@ int ServiceCore::serphone_core_accept_call(SerPhoneCall *call)
 **/
 int ServiceCore::serphone_core_accept_call_with_params(SerPhoneCall *call, const SerphoneCallParams *params)
 {
-    cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+    yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 	SerphoneProxyConfig *cfg=NULL,*dest_proxy=NULL;
 	const char *contact=NULL;
 	SalOp *replaced;
@@ -3547,7 +3547,7 @@ void ServiceCore::terminate_call(SerPhoneCall *call)
 **/
 int ServiceCore::serphone_core_terminate_call(SerPhoneCall *the_call)
 {
-    cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+    yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 	SerPhoneCall *call;
 	if (the_call == NULL){
 		call = serphone_core_get_current_call();
@@ -3593,7 +3593,7 @@ int ServiceCore::serphone_core_terminate_call(SerPhoneCall *the_call)
  **/
 int ServiceCore::serphone_core_terminate_all_calls()
 {
-    cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+    yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 	MSList *lp_calls=calls;
 	while(calls) {
 		SerPhoneCall *c=(SerPhoneCall*)lp_calls->data;
@@ -3693,7 +3693,7 @@ SerphoneAddress * ServiceCore::serphone_core_interpret_url(const char *url)
 **/
 SerPhoneCall * ServiceCore::serphone_core_invite( const char *url ,char* userdata)
 {
-    cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+    yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 	SerPhoneCall *call;
 
 	SerphoneCallParams *p=serphone_core_create_default_call_parameters ();
@@ -3825,7 +3825,7 @@ SerPhoneCall * ServiceCore::serphone_core_invite_address_with_params(const Serph
 	const SerphoneCallParams *params)
 {
     /*add begin------------------Sean20130812----------for video ice------------*/
-    cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+    yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
     /*add end--------------------Sean20130812----------for video ice------------*/
 	const char *route=NULL;
 	const char *from=NULL;
@@ -3919,7 +3919,7 @@ SerPhoneCall * ServiceCore::serphone_core_invite_address_with_params(const Serph
 **/
 int ServiceCore::serphone_core_transfer_call( SerPhoneCall *call, const char *url, int type)
 {
-     cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+     yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 	char *real_url=NULL;
 	SerphoneAddress *real_parsed_url=serphone_core_interpret_url(referTo);
 
@@ -4248,7 +4248,7 @@ int ServiceCore::serphone_core_abort_call(SerPhoneCall *call, const char *error)
 **/
 int ServiceCore::serphone_core_accept_call_update(SerPhoneCall *call, const SerphoneCallParams *params)
 {
-    cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+    yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
     SalMediaDescription *remote_desc;
 	bool_t keep_sdp_version;
 #ifdef VIDEO_ENABLED
@@ -4355,7 +4355,7 @@ int ServiceCore::serphone_core_accept_call_update(SerPhoneCall *call, const Serp
 **/
 int ServiceCore::serphone_core_pause_call(SerPhoneCall *call)
 {
-    cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+    yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 	const char *subject=NULL;
 
 	if (call->state!=LinphoneCallStreamsRunning && call->state!=LinphoneCallPausedByRemote){
@@ -4415,7 +4415,7 @@ int ServiceCore::serphone_core_pause_all_calls()
 **/
 int ServiceCore::serphone_core_resume_call(SerPhoneCall *the_call)
 {
-    cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+    yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 	char temp[255]={0};
 	SerPhoneCall *call = the_call;
 	const char *subject="Call resuming";
@@ -4940,7 +4940,7 @@ void ServiceCore::serphone_core_uninit()
 #endif
 
 	//PrintConsole("Release Trace... \n");
- //   cloopenwebrtc::Trace::ReturnTrace();
+ //   yuntongxunwebrtc::Trace::ReturnTrace();
 	//PrintConsole("Release Finish \n");
 }
 
@@ -5121,7 +5121,7 @@ void ServiceCore::serphone_core_preempt_sound_resources()
 **/
 void ServiceCore::serphone_core_iterate()
 {
-    cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+    yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 	MSList *calls;
 	SerPhoneCall *call;
 	time_t curtime=time(NULL);
@@ -5582,7 +5582,7 @@ void ServiceCore::serphone_core_enable_srtp(bool tls, bool srtp, bool userMode, 
 	tls_enable = tls;
 	srtp_enable = srtp;
 	user_mode = userMode;
-	encryptType = (cloopenwebrtc::ccp_srtp_crypto_suite_t)cryptType;
+	encryptType = (yuntongxunwebrtc::ccp_srtp_crypto_suite_t)cryptType;
 	memcpy(m_SrtpKey, pkey, strlen(pkey));
 	m_SrtpKey[strlen(pkey)] = '\0';
 
@@ -5599,7 +5599,7 @@ void ServiceCore::serphone_core_enable_srtp(bool tls, bool srtp, int cryptType, 
             memcpy(m_SrtpKey, pkey, 46);
 			m_SrtpKey[46] ='\0';
         }
-        encryptType = (cloopenwebrtc::ccp_srtp_crypto_suite_t)cryptType;
+        encryptType = (yuntongxunwebrtc::ccp_srtp_crypto_suite_t)cryptType;
     }
 }
 
@@ -6125,7 +6125,7 @@ bool_t ServiceCore::serphone_core_set_process_audio_data_flag_internel(SerPhoneC
 {
 #if !defined(NO_VOIP_FUNCTION)
 	//TODO:
-    //cloopenwebrtc::VoEBase *tempVoEBase = cloopenwebrtc::VoEBase::GetInterface(m_voe);
+    //yuntongxunwebrtc::VoEBase *tempVoEBase = yuntongxunwebrtc::VoEBase::GetInterface(m_voe);
     //tempVoEBase->setProcessData(call->m_AudioChannelID, processAudioData, processOriginalAudioData);
     //tempVoEBase->Release();
     return true;
@@ -6514,9 +6514,9 @@ void ServiceCore::stopRecordLocalMedia() {
 #endif
 }
 
-//cloopenwebrtc::VideoSendStream::Config ServiceCore::CreateVideoSendStreamConfig()
+//yuntongxunwebrtc::VideoSendStream::Config ServiceCore::CreateVideoSendStreamConfig()
 //{
-//	cloopenwebrtc::VideoSendStream::Config config;
+//	yuntongxunwebrtc::VideoSendStream::Config config;
 //	config.encoder_settings.payload_name = "libvpx";
 //	config.encoder_settings.payload_type = 97;
 //	config.encoder_settings.internal_source = true;

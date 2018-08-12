@@ -20,7 +20,7 @@
 #include <sys/syscall.h>
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 PlatformThreadId CurrentThreadId() {
   PlatformThreadId ret;
@@ -220,7 +220,7 @@ void PlatformThread::Stop() {
 void PlatformThread::Run() {
   // Attach the worker thread checker to this thread.
   DCHECK(spawned_thread_checker_.CalledOnValidThread());
-  cloopenwebrtc::SetCurrentThreadName(name_.c_str());
+  yuntongxunwebrtc::SetCurrentThreadName(name_.c_str());
 
   if (run_function_) {
     SetPriority(priority_);
@@ -250,7 +250,7 @@ void PlatformThread::Run() {
       break;
 #if RTC_DCHECK_IS_ON
     auto id = sequence_nr % kMaxLoopCount;
-    loop_stamps[id] = cloopenwebrtc::TimeMillis();
+    loop_stamps[id] = yuntongxunwebrtc::TimeMillis();
     if (sequence_nr > kMaxLoopCount) {
       auto compare_id = (id + 1) % kMaxLoopCount;
       auto diff = loop_stamps[id] - loop_stamps[compare_id];
@@ -357,4 +357,4 @@ bool PlatformThread::QueueAPC(PAPCFUNC function, ULONG_PTR data) {
 }
 #endif
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

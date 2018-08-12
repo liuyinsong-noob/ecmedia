@@ -21,7 +21,7 @@
 #include "../base/thread_annotations.h"
 #include "../base/sequenced_task_checker_impl.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Do nothing implementation, for use in release mode.
 //
@@ -70,9 +70,9 @@ class SCOPED_LOCKABLE SequencedTaskCheckerScope {
 }  // namespace internal
 
 #define RTC_DCHECK_CALLED_SEQUENTIALLY(x) \
-  cloopenwebrtc::internal::SequencedTaskCheckerScope checker(x)
+  yuntongxunwebrtc::internal::SequencedTaskCheckerScope checker(x)
 
 #undef ENABLE_SEQUENCED_TASK_CHECKER
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_BASE_SEQUENCED_TASK_CHECKER_H_

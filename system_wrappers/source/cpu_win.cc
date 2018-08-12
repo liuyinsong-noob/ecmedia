@@ -23,7 +23,7 @@
 #include "event_wrapper.h"
 #include "thread_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 WebRtc_Word32 CpuWindows::CpuUsage()
 {
     if (!has_initialized_)

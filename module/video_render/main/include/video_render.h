@@ -23,7 +23,7 @@
 #include "module.h"
 #include "video_render_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Class definitions
 class VideoRender: public Module

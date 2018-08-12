@@ -24,7 +24,7 @@
 #include "utility.h"
 #include "module_common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 
 const int kDefaultLevelDbfs = -18;
@@ -157,4 +157,4 @@ void Agc::EnableStandaloneVad(bool enable) {
   standalone_vad_enabled_ = enable;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

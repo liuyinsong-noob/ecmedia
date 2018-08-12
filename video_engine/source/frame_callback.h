@@ -15,7 +15,7 @@
 
 #include "common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class I420VideoFrame;
 

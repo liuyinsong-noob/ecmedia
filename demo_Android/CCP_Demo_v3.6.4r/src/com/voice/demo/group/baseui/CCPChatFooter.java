@@ -4,7 +4,7 @@
  *  Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
  *  that can be found in the LICENSE file in the root of the web site.
  *
- *   http://www.cloopen.com
+ *   http://www.yuntongxun.com
  *
  *  An additional intellectual property rights grant can be found
  *  in the file PATENTS.  All contributing project authors may
@@ -44,7 +44,7 @@ import android.widget.Toast;
 /**
  * <p>Title: CCPChatFooter</p>
  * <p>Description: </p>
- * <p>Company: http://www.cloopen.com/</p>
+ * <p>Company: http://www.yuntongxun.com/</p>
  * @author  Jorstin Chan
  * @version 3.6
  * @date 2013-12-26
@@ -523,7 +523,7 @@ public class CCPChatFooter extends LinearLayout implements View.OnTouchListener
 	/**
 	* <p>Title: OnRecordingLinstener</p>
 	* <p>Description: </p>
-	* <p>Company: http://www.cloopen.com/</p>
+	* <p>Company: http://www.yuntongxun.com/</p>
 	* @author  Jorstin Chan
 	* @version 3.6
 	* @date 2013-12-26

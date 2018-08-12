@@ -20,7 +20,7 @@
 #include "audio_decoder_impl.h"
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Forward declarations.
 struct WebRtcRTPHeader;
@@ -274,5 +274,5 @@ class NetEq {
   DISALLOW_COPY_AND_ASSIGN(NetEq);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_INTERFACE_NETEQ_H_

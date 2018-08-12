@@ -19,7 +19,7 @@
 #include "../base/checks.h"
 #include "../system_wrappers/include/logging.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 #define WM_RUN_TASK WM_USER + 1
 #define WM_QUEUE_DELAYED_TASK WM_USER + 2
@@ -392,4 +392,4 @@ bool TaskQueue::ProcessQueuedMessages(DelayedTasks* delayed_tasks,
   return msg.message != WM_QUIT;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

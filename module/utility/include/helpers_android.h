@@ -13,7 +13,7 @@
 
 #include <jni.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Attach thread to JVM if necessary and detach at scope end if originally
 // attached.
@@ -29,6 +29,6 @@ class AttachThreadScoped {
   JNIEnv* env_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_UTILITY_INTERFACE_HELPERS_ANDROID_H_

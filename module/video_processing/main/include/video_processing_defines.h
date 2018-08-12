@@ -18,7 +18,7 @@
 
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Error codes
 #define VPM_OK                   0

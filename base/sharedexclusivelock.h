@@ -15,7 +15,7 @@
 #include "../base/criticalsection.h"
 #include "../base/event.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // This class provides shared-exclusive lock. It can be used in cases like
 // multiple-readers/single-writer model.
@@ -31,9 +31,9 @@ class LOCKABLE SharedExclusiveLock {
   void UnlockShared();
 
  private:
-  cloopenwebrtc::CriticalSection cs_exclusive_;
-  cloopenwebrtc::CriticalSection cs_shared_;
-  cloopenwebrtc::Event shared_count_is_zero_;
+  yuntongxunwebrtc::CriticalSection cs_exclusive_;
+  yuntongxunwebrtc::CriticalSection cs_shared_;
+  yuntongxunwebrtc::Event shared_count_is_zero_;
   int shared_count_;
 
   DISALLOW_COPY_AND_ASSIGN(SharedExclusiveLock);
@@ -70,6 +70,6 @@ class SCOPED_LOCKABLE ExclusiveScope {
   DISALLOW_COPY_AND_ASSIGN(ExclusiveScope);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_SHAREDEXCLUSIVELOCK_H_

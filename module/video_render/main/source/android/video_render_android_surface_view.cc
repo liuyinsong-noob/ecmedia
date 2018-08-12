@@ -23,7 +23,7 @@
 #include "../system_wrappers/include/trace.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 AndroidSurfaceViewRenderer::AndroidSurfaceViewRenderer(
     const int32_t id,

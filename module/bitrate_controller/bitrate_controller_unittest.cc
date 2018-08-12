@@ -16,9 +16,9 @@
 #include "cloopenwebrtc/modules/bitrate_controller/include/bitrate_controller.h"
 #include "cloopenwebrtc/modules/rtp_rtcp/interface/rtp_rtcp_defines.h"
 
-using cloopenwebrtc::RtcpBandwidthObserver;
-using cloopenwebrtc::BitrateObserver;
-using cloopenwebrtc::BitrateController;
+using yuntongxunwebrtc::RtcpBandwidthObserver;
+using yuntongxunwebrtc::BitrateObserver;
+using yuntongxunwebrtc::BitrateController;
 
 uint8_t WeightedLoss(int num_packets1, uint8_t fraction_loss1,
                      int num_packets2, uint8_t fraction_loss2) {
@@ -28,10 +28,10 @@ uint8_t WeightedLoss(int num_packets1, uint8_t fraction_loss1,
   return (weighted_sum + total_num_packets / 2) / total_num_packets;
 }
 
-cloopenwebrtc::RTCPReportBlock CreateReportBlock(
+yuntongxunwebrtc::RTCPReportBlock CreateReportBlock(
     uint32_t remote_ssrc, uint32_t source_ssrc,
     uint8_t fraction_lost, uint32_t extended_high_sequence_number) {
-  return cloopenwebrtc::RTCPReportBlock(remote_ssrc, source_ssrc, fraction_lost, 0,
+  return yuntongxunwebrtc::RTCPReportBlock(remote_ssrc, source_ssrc, fraction_lost, 0,
                                  extended_high_sequence_number, 0, 0, 0);
 }
 
@@ -71,7 +71,7 @@ class BitrateControllerTest : public ::testing::Test {
     delete controller_;
   }
 
-  cloopenwebrtc::SimulatedClock clock_;
+  yuntongxunwebrtc::SimulatedClock clock_;
   bool enforce_min_bitrate_;
   BitrateController* controller_;
   RtcpBandwidthObserver* bandwidth_observer_;
@@ -107,7 +107,7 @@ TEST_F(BitrateControllerTest, OneBitrateObserverOneRtcpObserver) {
 
   // First REMB applies immediately.
   int64_t time_ms = 1001;
-  cloopenwebrtc::ReportBlockList report_blocks;
+  yuntongxunwebrtc::ReportBlockList report_blocks;
   report_blocks.push_back(CreateReportBlock(1, 2, 0, 1));
   bandwidth_observer_->OnReceivedEstimatedBitrate(200000);
   EXPECT_EQ(200000u, bitrate_observer.last_bitrate_);
@@ -183,7 +183,7 @@ TEST_F(BitrateControllerTest, OneBitrateObserverTwoRtcpObservers) {
 
   // REMBs during the first 2 seconds apply immediately.
   int64_t time_ms = 1;
-  cloopenwebrtc::ReportBlockList report_blocks;
+  yuntongxunwebrtc::ReportBlockList report_blocks;
   report_blocks.push_back(CreateReportBlock(1, 2, 0, 1));
   bandwidth_observer_->OnReceivedRtcpReceiverReport(report_blocks, 50, time_ms);
   report_blocks.clear();
@@ -288,7 +288,7 @@ TEST_F(BitrateControllerTest, OneBitrateObserverMultipleReportBlocks) {
 
   // REMBs during the first 2 seconds apply immediately.
   int64_t time_ms = 1001;
-  cloopenwebrtc::ReportBlockList report_blocks;
+  yuntongxunwebrtc::ReportBlockList report_blocks;
   report_blocks.push_back(CreateReportBlock(1, 2, 0, sequence_number[0]));
   bandwidth_observer_->OnReceivedEstimatedBitrate(kStartBitrate);
   bandwidth_observer_->OnReceivedRtcpReceiverReport(report_blocks, 50, time_ms);
@@ -364,7 +364,7 @@ TEST_F(BitrateControllerTest, TwoBitrateObserversOneRtcpObserver) {
 
   // REMBs during the first 2 seconds apply immediately.
   int64_t time_ms = 1001;
-  cloopenwebrtc::ReportBlockList report_blocks;
+  yuntongxunwebrtc::ReportBlockList report_blocks;
   report_blocks.push_back(CreateReportBlock(1, 2, 0, 1));
   bandwidth_observer_->OnReceivedEstimatedBitrate(200000);
   EXPECT_EQ(100000u, bitrate_observer_1.last_bitrate_);

@@ -14,7 +14,7 @@
 
 #include "file_audio_device.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 char FileAudioDeviceFactory::_inputAudioFilename[MAX_FILENAME_LEN] = "";
 char FileAudioDeviceFactory::_outputAudioFilename[MAX_FILENAME_LEN] = "";
@@ -47,4 +47,4 @@ void FileAudioDeviceFactory::SetFilenamesToUse(
 #endif
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

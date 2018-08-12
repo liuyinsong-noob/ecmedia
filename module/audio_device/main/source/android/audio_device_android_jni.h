@@ -22,7 +22,7 @@
 #include <jni.h> // For accessing AudioDeviceAndroid java class
 
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 class EventWrapper;
 
@@ -267,6 +267,6 @@ private:
     jmethodID _javaMidRecAudio; // Method ID of rec in AudioDeviceAndroid
 };
 
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_AUDIO_DEVICE_AUDIO_DEVICE_ANDROID_JNI_H

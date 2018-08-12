@@ -17,7 +17,7 @@
 #include "constructormagic.h"
 #include "sinc_resampler.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Fake audio source for testing the resampler.  Generates a sinusoidal linear
 // chirp (http://en.wikipedia.org/wiki/Chirp) which can be tuned to stress the

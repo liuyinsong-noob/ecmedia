@@ -12,7 +12,7 @@
 
 #include <stdint.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class NtpTime {
  public:
@@ -54,5 +54,5 @@ inline bool operator!=(const NtpTime& n1, const NtpTime& n2) {
   return !(n1 == n2);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_SYSTEM_WRAPPERS_INCLUDE_NTP_TIME_H_

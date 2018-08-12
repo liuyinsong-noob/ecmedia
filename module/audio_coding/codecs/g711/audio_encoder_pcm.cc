@@ -14,7 +14,7 @@
 
 #include "g711_interface.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 int16_t NumSamplesPerFrame(int num_channels,
@@ -102,4 +102,4 @@ int16_t AudioEncoderPcmU::EncodeCall(const int16_t* audio,
                             reinterpret_cast<int16_t*>(encoded));
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

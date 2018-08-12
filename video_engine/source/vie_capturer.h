@@ -33,7 +33,7 @@
 #include "video_beauty_filter.h"
 #include "ipl_color.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Config;
 class CriticalSectionWrapper;

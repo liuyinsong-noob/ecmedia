@@ -14,7 +14,7 @@
 
 #include "testing/gtest/include/gtest/gtest.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(BackgroundNoise, CreateAndDestroy) {
   size_t channels = 1;
@@ -23,4 +23,4 @@ TEST(BackgroundNoise, CreateAndDestroy) {
 
 // TODO(hlundin): Write more tests.
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

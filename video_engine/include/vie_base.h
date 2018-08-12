@@ -21,7 +21,7 @@
 
 #include "common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Config;
 class VoiceEngine;

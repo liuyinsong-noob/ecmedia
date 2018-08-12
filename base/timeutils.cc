@@ -29,7 +29,7 @@
 #include "../base/checks.h"
 #include "../base/timeutils.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ClockInterface* g_clock = nullptr;
 
@@ -191,16 +191,16 @@ int64_t TimeUTCMicros() {
   struct timeval time;
   gettimeofday(&time, nullptr);
   // Convert from second (1.0) and microsecond (1e-6).
-  return (static_cast<int64_t>(time.tv_sec) * cloopenwebrtc::kNumMicrosecsPerSec +
+  return (static_cast<int64_t>(time.tv_sec) * yuntongxunwebrtc::kNumMicrosecsPerSec +
           time.tv_usec);
 
 #elif defined(WEBRTC_WIN)
   struct _timeb time;
   _ftime(&time);
   // Convert from second (1.0) and milliseconds (1e-3).
-  return (static_cast<int64_t>(time.time) * cloopenwebrtc::kNumMicrosecsPerSec +
-          static_cast<int64_t>(time.millitm) * cloopenwebrtc::kNumMicrosecsPerMillisec);
+  return (static_cast<int64_t>(time.time) * yuntongxunwebrtc::kNumMicrosecsPerSec +
+          static_cast<int64_t>(time.millitm) * yuntongxunwebrtc::kNumMicrosecsPerMillisec);
 #endif
 }
 
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

@@ -18,7 +18,7 @@
 #include "../system_wrappers/include/scoped_ptr.h"
 #include "vie_base.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Clock;
 class CpuOveruseObserver;
@@ -44,8 +44,8 @@ class Statistics {
   float sum_;
   uint64_t count_;
   CpuOveruseOptions options_;
-  scoped_ptr<cloopenwebrtc::ExpFilter> filtered_samples_;
-  scoped_ptr<cloopenwebrtc::ExpFilter> filtered_variance_;
+  scoped_ptr<yuntongxunwebrtc::ExpFilter> filtered_samples_;
+  scoped_ptr<yuntongxunwebrtc::ExpFilter> filtered_variance_;
 };
 
 // Use to detect system overuse based on jitter in incoming frames.

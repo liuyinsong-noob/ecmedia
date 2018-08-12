@@ -20,7 +20,7 @@
 #include "../system_wrappers/include/logging.h"
 #include "../base/task_queue_posix.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 
 using Priority = TaskQueue::Priority;
@@ -183,4 +183,4 @@ void TaskQueue::PostTaskAndReply(std::unique_ptr<QueuedTask> task,
   return PostTaskAndReply(std::move(task), std::move(reply), Current());
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

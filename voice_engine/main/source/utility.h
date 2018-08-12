@@ -18,7 +18,7 @@
 #include "push_resampler.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioFrame;
 

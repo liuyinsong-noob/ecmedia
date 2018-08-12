@@ -14,7 +14,7 @@
 
 #include <algorithm>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 DesktopRegion::RowSpan::RowSpan(int32_t left, int32_t right)
     : left(left), right(right) {
@@ -564,4 +564,4 @@ void DesktopRegion::Iterator::UpdateCurrentRect() {
                                 row_span_->right, bottom);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

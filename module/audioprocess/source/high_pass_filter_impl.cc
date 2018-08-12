@@ -18,7 +18,7 @@
 #include "typedefs.h"
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 const int16_t kFilterCoefficients8kHz[5] =
     {3798, -7596, 3798, 7807, -3733};
@@ -165,4 +165,4 @@ int HighPassFilterImpl::GetHandleError(void* handle) const {
   assert(handle != NULL);
   return apm_->kUnspecifiedError;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

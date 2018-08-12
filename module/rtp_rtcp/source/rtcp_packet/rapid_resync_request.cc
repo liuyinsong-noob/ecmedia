@@ -14,7 +14,7 @@
 #include "../system_wrappers/include/logging.h"
 #include "common_header.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace rtcp {
 constexpr uint8_t RapidResyncRequest::kFeedbackMessageType;
 // RFC 4585: Feedback format.

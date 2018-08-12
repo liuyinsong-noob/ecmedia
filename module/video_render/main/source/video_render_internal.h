@@ -14,13 +14,13 @@
 #ifdef ANDROID
 #include <jni.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // In order to be able to use the internal webrtc video render
 // for android, the jvm objects must be set via this method.
 int32_t SetRenderAndroidVM(JavaVM* javaVM);
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // ANDROID
 

@@ -15,7 +15,7 @@
 #include "i_video_render.h"
 #include "../system_wrappers/include/critical_section_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Class definitions
 class VideoRenderExternalImpl: IVideoRender, public VideoRenderCallback

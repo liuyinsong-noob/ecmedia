@@ -14,7 +14,7 @@
 
 #include "testing/gtest/include/gtest/gtest.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(DelayPeakDetector, CreateAndDestroy) {
   DelayPeakDetector* detector = new DelayPeakDetector();
@@ -118,4 +118,4 @@ TEST(DelayPeakDetector, DoNotTriggerPeakMode) {
     time += 10;  // Increase time 10 ms.
   }
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

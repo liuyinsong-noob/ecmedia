@@ -22,7 +22,7 @@
 // #include "webrtc/video_receive_stream.h"
 // #include "webrtc/video_send_stream.h"
 
-namespace cloopenwebrtc{
+namespace yuntongxunwebrtc{
 
 // Forward declaration of storage class that is automatically generated from
 // the protobuf file.
@@ -68,7 +68,7 @@ class RtcEventLog {
 
   // Same as above. The RtcEventLog takes ownership of the file if the call
   // is successful, i.e. if it returns true.
-  virtual bool StartLogging(cloopenwebrtc::PlatformFile platform_file,
+  virtual bool StartLogging(yuntongxunwebrtc::PlatformFile platform_file,
                             int64_t max_size_bytes) = 0;
 
   // Deprecated. Pass an explicit file size limit.
@@ -77,7 +77,7 @@ class RtcEventLog {
   }
 
   // Deprecated. Pass an explicit file size limit.
-  bool StartLogging(cloopenwebrtc::PlatformFile platform_file) {
+  bool StartLogging(yuntongxunwebrtc::PlatformFile platform_file) {
     return StartLogging(platform_file, 10000000);
   }
 
@@ -168,7 +168,7 @@ class RtcEventLogNullImpl final : public RtcEventLog {
                     int64_t max_size_bytes) override {
     return false;
   }
-  bool StartLogging(cloopenwebrtc::PlatformFile platform_file,
+  bool StartLogging(yuntongxunwebrtc::PlatformFile platform_file,
                     int64_t max_size_bytes) override;
   void StopLogging() override {}
 //   void LogVideoReceiveStreamConfig(

@@ -19,7 +19,7 @@
 #include "trace.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -104,7 +104,7 @@ int16_t ACMG729_1::InternalEncode(uint8_t* bitstream,
     // sanity check
     if (*bitstream_len_byte < 0) {
       // error has happened
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                    "InternalEncode: Encode error for G729_1");
       *bitstream_len_byte = 0;
       return -1;
@@ -115,7 +115,7 @@ int16_t ACMG729_1::InternalEncode(uint8_t* bitstream,
 
   // This criteria will change if we have Annex C.
   if (*bitstream_len_byte != byte_length_frame) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                  "InternalEncode: Encode error for G729_1");
     *bitstream_len_byte = 0;
     return -1;
@@ -139,8 +139,8 @@ ACMGenericCodec* ACMG729_1::CreateInstance(void) { return NULL; }
 
 int16_t ACMG729_1::InternalCreateEncoder() {
   if (WebRtcG7291_Create(&encoder_inst_ptr_) < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-                 cloopenwebrtc::kTraceAudioCoding,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+                 yuntongxunwebrtc::kTraceAudioCoding,
                  unique_id_,
                  "InternalCreateEncoder: create encoder failed for G729_1");
     return -1;
@@ -212,7 +212,7 @@ int16_t ACMG729_1::SetBitRateSafe(const int32_t rate) {
       break;
     }
     default: {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                    "SetBitRateSafe: Invalid rate G729_1");
       return -1;
     }
@@ -232,4 +232,4 @@ int16_t ACMG729_1::SetBitRateSafe(const int32_t rate) {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

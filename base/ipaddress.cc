@@ -33,7 +33,7 @@
 #include "../base/stringutils.h"
 #include "../base/win32.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Prefixes used for categorizing IPv6 addresses.
 static const in6_addr kV4MappedPrefix = {{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -137,7 +137,7 @@ std::string IPAddress::ToString() const {
   if (family_ == AF_INET6) {
     src = &u_.ip6;
   }
-  if (!cloopenwebrtc::inet_ntop(family_, src, buf, sizeof(buf))) {
+  if (!yuntongxunwebrtc::inet_ntop(family_, src, buf, sizeof(buf))) {
     return std::string();
   }
   return std::string(buf);
@@ -163,7 +163,7 @@ std::string IPAddress::ToSensitiveString() const {
       result.resize(INET6_ADDRSTRLEN);
       in6_addr addr = ipv6_address();
       size_t len =
-		  cloopenwebrtc::sprintfn(&(result[0]), result.size(), "%x:%x:%x:x:x:x:x:x",
+		  yuntongxunwebrtc::sprintfn(&(result[0]), result.size(), "%x:%x:%x:x:x:x:x:x",
                         (addr.s6_addr[0] << 8) + addr.s6_addr[1],
                         (addr.s6_addr[2] << 8) + addr.s6_addr[3],
                         (addr.s6_addr[4] << 8) + addr.s6_addr[5]);
@@ -255,9 +255,9 @@ bool IPFromString(const std::string& str, IPAddress* out) {
     return false;
   }
   in_addr addr;
-  if (cloopenwebrtc::inet_pton(AF_INET, str.c_str(), &addr) == 0) {
+  if (yuntongxunwebrtc::inet_pton(AF_INET, str.c_str(), &addr) == 0) {
     in6_addr addr6;
-    if (cloopenwebrtc::inet_pton(AF_INET6, str.c_str(), &addr6) == 0) {
+    if (yuntongxunwebrtc::inet_pton(AF_INET6, str.c_str(), &addr6) == 0) {
       *out = IPAddress();
       return false;
     }
@@ -506,22 +506,22 @@ int IPAddressPrecedence(const IPAddress& ip) {
 
 IPAddress GetLoopbackIP(int family) {
   if (family == AF_INET) {
-    return cloopenwebrtc::IPAddress(INADDR_LOOPBACK);
+    return yuntongxunwebrtc::IPAddress(INADDR_LOOPBACK);
   }
   if (family == AF_INET6) {
-    return cloopenwebrtc::IPAddress(in6addr_loopback);
+    return yuntongxunwebrtc::IPAddress(in6addr_loopback);
   }
-  return cloopenwebrtc::IPAddress();
+  return yuntongxunwebrtc::IPAddress();
 }
 
 IPAddress GetAnyIP(int family) {
   if (family == AF_INET) {
-    return cloopenwebrtc::IPAddress(INADDR_ANY);
+    return yuntongxunwebrtc::IPAddress(INADDR_ANY);
   }
   if (family == AF_INET6) {
-    return cloopenwebrtc::IPAddress(in6addr_any);
+    return yuntongxunwebrtc::IPAddress(in6addr_any);
   }
-  return cloopenwebrtc::IPAddress();
+  return yuntongxunwebrtc::IPAddress();
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

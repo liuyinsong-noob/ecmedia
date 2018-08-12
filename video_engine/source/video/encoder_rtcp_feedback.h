@@ -17,7 +17,7 @@
 #include "../system_wrappers/include/clock.h"
 #include "../typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class ViEEncoder;
 

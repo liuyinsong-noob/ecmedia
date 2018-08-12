@@ -27,7 +27,7 @@
 #include "scoped_ptr.h"
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class CriticalSectionWrapper;
 class EventWrapper;
@@ -141,7 +141,7 @@ class DataLogImpl {
 
   // Collection of tables indexed by the table name as std::string.
   typedef std::map<std::string, LogTable*> TableMap;
-  typedef cloopenwebrtc::scoped_ptr<CriticalSectionWrapper> CritSectScopedPtr;
+  typedef yuntongxunwebrtc::scoped_ptr<CriticalSectionWrapper> CritSectScopedPtr;
 
   static CritSectScopedPtr  crit_sect_;
   static DataLogImpl*       instance_;
@@ -152,6 +152,6 @@ class DataLogImpl {
   RWLockWrapper*            tables_lock_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_INTERFACE_DATA_LOG_IMPL_H_

@@ -17,7 +17,7 @@
 #include "../system_wrappers/include/trace.h"
 #include "vie_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ViEFileRecorder::ViEFileRecorder(int instanceID)
     : recorder_cs_(CriticalSectionWrapper::CreateCriticalSection()),
@@ -236,4 +236,4 @@ int ViEFileRecorder::Rewind() {
   return -1;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

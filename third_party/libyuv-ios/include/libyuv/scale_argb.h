@@ -15,7 +15,7 @@
 #include "libyuv/scale.h"  // For FilterMode
 
 #ifdef __cplusplus
-namespace cloopenlibyuv {
+namespace yuntongxunlibyuv {
 extern "C" {
 #endif
 

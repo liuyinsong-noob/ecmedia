@@ -22,7 +22,7 @@
 #include "../system_wrappers/include/trace.h"
 #include "voice_engine_impl.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 // Counter to be ensure that we can add a correct ID in all static trace
@@ -187,4 +187,4 @@ int VoiceEngine::SetAndroidObjects(void* javaVM, void* env, void* context)
 //#endif
 //}
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -17,11 +17,11 @@
 #include "../common_video/h264/pps_parser.h"
 #include "../common_video/h264/sps_parser.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class BitBufferWriter;
 }
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Stateful H264 bitstream parser (due to SPS/PPS). Used to parse out QP values
 // from the bitstream.
@@ -53,13 +53,13 @@ class H264BitstreamParser {
                                   uint8_t nalu_type);
 
   // SPS/PPS state, updated when parsing new SPS/PPS, used to parse slices.
-  cloopenwebrtc::Optional<SpsParser::SpsState> sps_;
-  cloopenwebrtc::Optional<PpsParser::PpsState> pps_;
+  yuntongxunwebrtc::Optional<SpsParser::SpsState> sps_;
+  yuntongxunwebrtc::Optional<PpsParser::PpsState> pps_;
 
   // Last parsed slice QP.
-  cloopenwebrtc::Optional<int32_t> last_slice_qp_delta_;
+  yuntongxunwebrtc::Optional<int32_t> last_slice_qp_delta_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_COMMON_VIDEO_H264_H264_BITSTREAM_PARSER_H_

@@ -17,7 +17,7 @@
 struct AMRWB_encinst_t_;
 struct AMRWB_decinst_t_;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -63,6 +63,6 @@ class ACMAMRwb : public ACMGenericCodec {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_ACM_AMRWB_H_

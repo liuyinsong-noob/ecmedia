@@ -15,7 +15,7 @@
 
 #include <stddef.h>  // For size_t.
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Template definitions from tr1.
 
@@ -122,6 +122,6 @@ struct is_class
                             sizeof(internal::YesType)> {
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_TEMPLATE_UTIL_H_

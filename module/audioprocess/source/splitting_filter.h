@@ -18,7 +18,7 @@
 #include "../system_wrappers/include/scoped_vector.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class IFChannelBuffer;
 
@@ -137,6 +137,6 @@ void SplittingFilterSynthesis(const WebRtc_Word16* low_band,
                               WebRtc_Word32* filt_state2);
 //---end
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_SPLITTING_FILTER_H_

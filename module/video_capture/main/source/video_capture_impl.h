@@ -21,7 +21,7 @@
 #include "video_capture_config.h"
 #include "../system_wrappers/include/tick_util.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 class CriticalSectionWrapper;
 

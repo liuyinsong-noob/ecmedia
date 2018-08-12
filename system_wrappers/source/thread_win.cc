@@ -23,7 +23,7 @@
 #pragma warning(disable:4351)
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 ThreadWindows::ThreadWindows(ThreadRunFunction func, ThreadObj obj,
                              ThreadPriority prio, const char* threadName)
     : ThreadWrapper(),

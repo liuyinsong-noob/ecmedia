@@ -16,7 +16,7 @@
 #include "engine_configurations.h"
 #include "video_render.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class CriticalSectionWrapper;
 class IncomingVideoStream;
 class IVideoRender;

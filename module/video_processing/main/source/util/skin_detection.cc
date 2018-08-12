@@ -13,7 +13,7 @@
 
 #include "skin_detection.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Fixed-point skin color model parameters.
 static const int skin_mean[5][2] = {

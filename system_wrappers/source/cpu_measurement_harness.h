@@ -13,7 +13,7 @@
 
 #include "system_wrappers/interface/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class CpuWrapper;
 class EventWrapper;

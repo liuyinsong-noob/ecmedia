@@ -13,7 +13,7 @@
 #include "srs-librtmp/srs_kernel_codec.h"
 #include "ec_media_puller_base.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     typedef struct DemuxData
     {
         DemuxData(int size) : _data(NULL), _data_len(0), _data_size(size){

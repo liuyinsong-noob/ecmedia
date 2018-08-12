@@ -14,7 +14,7 @@
 #include "module.h"
 #include "video_capture_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VideoCaptureModule: public RefCountedModule {
  public:

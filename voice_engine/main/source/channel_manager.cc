@@ -13,7 +13,7 @@
 
 #include "channel.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace voe {
 
 ChannelOwner::ChannelOwner(class Channel* channel)

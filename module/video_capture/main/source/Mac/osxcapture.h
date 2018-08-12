@@ -6,7 +6,7 @@
 #import "video_capture_OSX_ObjC.h"
 #import <stdint.h>
 
-using namespace cloopenwebrtc;
+using namespace yuntongxunwebrtc;
 using namespace videocapturemodule;
 
 #if !TARGET_IPHONE_SIMULATOR
@@ -39,7 +39,7 @@ using namespace videocapturemodule;
     MSAverageFPS averageFps;
     char fps_context[64];
 //    MSPicture *_pict;
-    cloopenwebrtc::videocapturemodule::VideoCaptureOSX* _owner;
+    yuntongxunwebrtc::videocapturemodule::VideoCaptureOSX* _owner;
     //    UIView* parentView;
     BilteralFilterCore *bilteralFilter;
     KeyFrameDetectCore *keyframeDector;
@@ -57,7 +57,7 @@ using namespace videocapturemodule;
 - (void)setFps:(float) value;
 + (Class)layerClass;
 
-- (NSNumber*)registerOwner:(cloopenwebrtc::videocapturemodule::VideoCaptureOSX*)owner;
+- (NSNumber*)registerOwner:(yuntongxunwebrtc::videocapturemodule::VideoCaptureOSX*)owner;
 - (NSNumber*)setCaptureDeviceById:(char*)uniqueId;
 - (NSNumber*)setCaptureHeight:(int)height AndWidth:(int)width AndFrameRate:(int)frameRate;
 - (NSNumber*)startCapture;

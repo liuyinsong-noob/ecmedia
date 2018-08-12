@@ -13,7 +13,7 @@
 
 #include "constructor_magic.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class CriticalSectionWrapper;
 
 class MapNoStlItem

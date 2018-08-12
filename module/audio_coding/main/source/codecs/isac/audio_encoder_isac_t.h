@@ -18,7 +18,7 @@
 #include "audio_encoder.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc{
+namespace yuntongxunwebrtc{
 
 class CriticalSectionWrapper;
 

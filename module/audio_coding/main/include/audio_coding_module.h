@@ -21,7 +21,7 @@
 #include "../system_wrappers/include/clock.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // forward declarations
 struct CodecInst;
@@ -1132,6 +1132,6 @@ class AudioCoding {
       AudioDecodingCallStats* call_stats) const = 0;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_INTERFACE_AUDIO_CODING_MODULE_H_

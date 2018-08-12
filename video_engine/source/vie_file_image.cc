@@ -21,7 +21,7 @@
 #include "../common_video/include/jpeg.h"
 #include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 int ViEFileImage::ConvertJPEGToVideoFrame(int engine_id,
                                           const char* file_nameUTF8,

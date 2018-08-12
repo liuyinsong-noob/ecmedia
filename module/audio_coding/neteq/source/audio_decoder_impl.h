@@ -37,7 +37,7 @@
 
 #include "wavfile.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioDecoderPcmU : public AudioDecoder {
  public:
@@ -288,5 +288,5 @@ int CodecSampleRateHz(NetEqDecoder codec_type);
 // (e.g., for RED and DTMF/AVT types).
 AudioDecoder* CreateAudioDecoder(NetEqDecoder codec_type);
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_AUDIO_DECODER_IMPL_H_

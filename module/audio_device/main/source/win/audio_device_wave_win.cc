@@ -38,7 +38,7 @@
 extern bool g_bGlobalAudioInDevice;
 extern HWAVEIN g_hWaveIn;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // ============================================================================
 //                            Construction & Destruction
@@ -3875,4 +3875,4 @@ bool AudioDeviceWindowsWave::KeyPressed() const{
   }
   return (key_down > 0);
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

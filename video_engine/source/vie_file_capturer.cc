@@ -35,12 +35,12 @@
 #endif
 
 #if defined(WEBRTC_IOS) || defined(WEBRTC_MAC) 
-using namespace cloopenlibyuv;
+using namespace yuntongxunlibyuv;
 #else
 using namespace libyuv;
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 
 ViEFileCapturer::ViEFileCapturer(int capture_id,

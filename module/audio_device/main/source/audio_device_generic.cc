@@ -11,7 +11,7 @@
 #include "audio_device_generic.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 int32_t AudioDeviceGeneric::SetRecordingSampleRate(
     const uint32_t samplesPerSec)
@@ -85,4 +85,4 @@ int32_t AudioDeviceGeneric::CheckRecordPermission(bool& enabled)
     return 0;
 }
     
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -16,7 +16,7 @@
 #include "module_common_types.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ///////////////////////////////////////////////////////////////////////////
 // enum AudioPlayoutMode
@@ -200,6 +200,6 @@ enum ACMBackgroundNoiseMode {
   Off
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_INTERFACE_AUDIO_CODING_MODULE_TYPEDEFS_H_

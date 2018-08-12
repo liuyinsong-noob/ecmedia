@@ -30,7 +30,7 @@
 #include "../system_wrappers/include/trace.h"
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const int kPacketLogIntervalMs = 10000;
 

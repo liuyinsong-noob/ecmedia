@@ -16,7 +16,7 @@
 
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 	VCMDecodedFrameCallback::VCMDecodedFrameCallback(VCMTiming& timing,
 		Clock* clock)

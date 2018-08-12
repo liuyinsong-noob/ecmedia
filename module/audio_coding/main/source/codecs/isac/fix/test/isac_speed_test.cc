@@ -14,7 +14,7 @@
 
 using ::std::string;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const int kIsacBlockDurationMs = 30;
 static const int kIsacInputSamplingKhz = 16;

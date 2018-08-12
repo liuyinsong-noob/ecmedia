@@ -19,11 +19,11 @@
 #include "udp_socket_manager_posix.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 UdpSocketManager* UdpSocketManager::CreateInstance()
 {
 #if defined(_WIN32)
-  return static_cast<UdpSocketManager*>(new cloopenwebrtc::UdpSocket2ManagerWindows());
+  return static_cast<UdpSocketManager*>(new yuntongxunwebrtc::UdpSocket2ManagerWindows());
 #else
     return new UdpSocketManagerPosix();
 #endif
@@ -66,4 +66,4 @@ WebRtc_UWord8 UdpSocketManager::WorkThreads() const
 {
     return _numOfWorkThreads;
 }
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

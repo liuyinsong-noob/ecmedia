@@ -18,7 +18,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioVectorTest : public ::testing::Test {
  protected:
@@ -391,4 +391,4 @@ TEST_F(AudioVectorTest, CrossFade) {
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

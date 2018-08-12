@@ -11,7 +11,7 @@
 #include "common_types.h"
 
 
-namespace cloopenwebrtc{
+namespace yuntongxunwebrtc{
 
 class OpenH264DecoderImpl : public OpenH264Decoder {
 public:
@@ -98,6 +98,6 @@ private:
 	unsigned long long uiTimeStamp;
 };  // end of H264Decoder classclass H264DecoderImpl : public H264Decoder {
  
-}//namespace cloopenwebrtc
+}//namespace yuntongxunwebrtc
 
 #endif

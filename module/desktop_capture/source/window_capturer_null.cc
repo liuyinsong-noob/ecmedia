@@ -14,7 +14,7 @@
 
 #include "cloopenwebrtc/modules/desktop_capture/desktop_frame.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 

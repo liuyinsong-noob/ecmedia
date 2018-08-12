@@ -18,7 +18,7 @@
 #include "desktop_capturer.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class DesktopCaptureOptions;
 
@@ -94,6 +94,6 @@ class ScreenCapturer : public DesktopCapturer {
 
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_SCREEN_CAPTURER_H_

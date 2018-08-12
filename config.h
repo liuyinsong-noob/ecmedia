@@ -23,7 +23,7 @@
 #include "../module/common_types.h"
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 struct SsrcStats {
   SsrcStats()
@@ -158,7 +158,7 @@ class VideoEncoderConfig {
   // kept alive until all encoder_specific_settings go out of scope.
   // TODO(kthelgason): Consider removing the need for copying VideoEncoderConfig
   // and use rtc::Optional for encoder_specific_settings instead.
-  class EncoderSpecificSettings : public cloopenwebrtc::RefCountInterface {
+  class EncoderSpecificSettings : public yuntongxunwebrtc::RefCountInterface {
    public:
     // TODO(pbos): Remove FillEncoderSpecificSettings as soon as VideoCodec is
     // not in use and encoder implementations ask for codec-specific structs
@@ -205,7 +205,7 @@ class VideoEncoderConfig {
     kScreen,
   };
 
-  class VideoStreamFactoryInterface : public cloopenwebrtc::RefCountInterface {
+  class VideoStreamFactoryInterface : public yuntongxunwebrtc::RefCountInterface {
    public:
     // An implementation should return a std::vector<VideoStream> with the
     // wanted VideoStream settings for the given video resolution.
@@ -231,10 +231,10 @@ class VideoEncoderConfig {
   ~VideoEncoderConfig();
   std::string ToString() const;
 
-  cloopenwebrtc::scoped_refptr<VideoStreamFactoryInterface> video_stream_factory;
+  yuntongxunwebrtc::scoped_refptr<VideoStreamFactoryInterface> video_stream_factory;
   std::vector<SpatialLayer> spatial_layers;
   ContentType content_type;
-  cloopenwebrtc::scoped_refptr<const EncoderSpecificSettings> encoder_specific_settings;
+  yuntongxunwebrtc::scoped_refptr<const EncoderSpecificSettings> encoder_specific_settings;
 
   // Padding will be used up to this bitrate regardless of the bitrate produced
   // by the encoder. Padding above what's actually produced by the encoder helps
@@ -252,6 +252,6 @@ class VideoEncoderConfig {
   VideoEncoderConfig(const VideoEncoderConfig&);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_CONFIG_H_

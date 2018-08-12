@@ -47,7 +47,7 @@
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/message.h>
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 
 namespace io {
@@ -469,5 +469,5 @@ inline TextFormat::ParseInfoTree* TextFormat::CreateNested(
 
 }  // namespace protobuf
 
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 #endif  // GOOGLE_PROTOBUF_TEXT_FORMAT_H__

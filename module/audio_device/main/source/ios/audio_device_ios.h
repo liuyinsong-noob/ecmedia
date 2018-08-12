@@ -16,7 +16,7 @@
 #include "module/audio_device/main/source/audio_device_generic.h"
 #include "system_wrappers/include/critical_section_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class ThreadWrapper;
 
 const WebRtc_UWord32 N_REC_SAMPLES_PER_SEC = 48000;

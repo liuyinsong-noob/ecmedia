@@ -18,7 +18,7 @@
 #include "video_codec_interface.h"
 #include "Trace.h"
 char *h264_file = nullptr;
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     
     CFArrayRef ArrayWithIntegers(const int* v, size_t size) {
         std::vector<CFNumberRef> numbers;
@@ -198,8 +198,8 @@ namespace cloopenwebrtc {
             OSStatus ret = VTSessionSetProperty((VTCompressionSessionRef)compression_session_, kVTCompressionPropertyKey_AverageBitRate, ref);
             
             if(ret != noErr) {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-                             cloopenwebrtc::kTraceVideoCoding,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+                             yuntongxunwebrtc::kTraceVideoCoding,
                              0,
                              "H264VideoToolboxEncoder::SetBitrate Error setting bitrate! %d.", ret);
             }
@@ -249,7 +249,7 @@ namespace cloopenwebrtc {
         }
         ConfigureCompressionSession(inst->width, inst->height);
         
-        encoded_image_._size =  CalcBufferSize(cloopenwebrtc::kI420, inst->width, inst->height);
+        encoded_image_._size =  CalcBufferSize(yuntongxunwebrtc::kI420, inst->width, inst->height);
         encoded_image_._buffer = new uint8_t[encoded_image_._size];
         encoded_image_._length = 0;
         encoded_image_._completeFrame = false;

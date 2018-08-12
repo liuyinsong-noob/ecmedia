@@ -13,7 +13,7 @@
 
 #include "audio_encoder_pcm.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioEncoderPcm16B : public AudioEncoderPcm {
  public:

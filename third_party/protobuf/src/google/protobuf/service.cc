@@ -34,7 +34,7 @@
 
 #include <google/protobuf/service.h>
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 
 Service::~Service() {}
@@ -43,4 +43,4 @@ RpcController::~RpcController() {}
 
 }  // namespace protobuf
 
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google

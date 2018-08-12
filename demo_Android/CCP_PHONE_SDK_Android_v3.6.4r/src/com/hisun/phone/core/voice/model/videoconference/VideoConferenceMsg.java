@@ -7,7 +7,7 @@ import com.hisun.phone.core.voice.model.Response;
 * <p>Title: VideoConferenceMsg.java</p>
 * <p>Description: Inform the client receives a new video conference information</p>
 * <p>Copyright: Copyright (c) 2012</p>
-* <p>Company: http://www.cloopen.com</p>
+* <p>Company: http://www.yuntongxun.com</p>
 * @author Jorstin Chan
 * @date 2013-10-25
 * @version 3.5

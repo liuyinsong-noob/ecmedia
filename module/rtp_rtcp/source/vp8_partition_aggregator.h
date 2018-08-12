@@ -17,7 +17,7 @@
 #include "../module/interface/module_common_types.h"
 #include "../typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Class used to solve the VP8 aggregation problem.
 class PartitionTreeNode {
@@ -132,6 +132,6 @@ class Vp8PartitionAggregator {
 
   DISALLOW_COPY_AND_ASSIGN(Vp8PartitionAggregator);
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_VP8_PARTITION_AGGREGATOR_H_

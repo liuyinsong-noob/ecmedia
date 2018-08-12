@@ -40,7 +40,7 @@ const int64_t kMaxIntervalTimeMs = 30;
 // TODO(sprang): Move at least PacketQueue and MediaBudget out to separate
 // files, so that we can more easily test them.
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace paced_sender {
 struct Packet {
   Packet(RtpPacketSender::Priority priority,
@@ -345,7 +345,7 @@ int64_t PacedSender::ExpectedQueueTimeMs() const {
                               pacing_bitrate_kbps_);
 }
 
-cloopenwebrtc::Optional<int64_t> PacedSender::GetApplicationLimitedRegionStartTime()
+yuntongxunwebrtc::Optional<int64_t> PacedSender::GetApplicationLimitedRegionStartTime()
     const {
   CriticalSectionScoped cs(critsect_.get());
   return alr_detector_->GetApplicationLimitedRegionStartTime();
@@ -508,4 +508,4 @@ void PacedSender::UpdateBudgetWithBytesSent(size_t bytes_sent) {
   media_budget_->UseBudget(bytes_sent);
   padding_budget_->UseBudget(bytes_sent);
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -15,7 +15,7 @@
 
 #include <stddef.h>  // For size_t.
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Template definitions from tr1.
 

@@ -79,7 +79,7 @@
     while(0)
 #endif
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 #ifdef NO_STL
     struct SortKey
@@ -547,4 +547,4 @@ namespace cloopenwebrtc
         return -1;
 #endif
     }
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

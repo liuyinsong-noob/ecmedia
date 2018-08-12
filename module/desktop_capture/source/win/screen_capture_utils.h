@@ -13,7 +13,7 @@
 
 #include "screen_capturer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Output the list of active screens into |screens|. Returns true if succeeded,
 // or false if it fails to enumerate the display devices.
@@ -30,6 +30,6 @@ bool IsScreenValid(ScreenId screen, std::string& device_key);
 // the screen does not exist, or any error happens, an empty rect is returned.
 DesktopRect GetScreenRect(ScreenId screen, const std::string& device_key);
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_WIN_SCREEN_CAPTURE_UTILS_H_

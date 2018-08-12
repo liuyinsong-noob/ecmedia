@@ -23,7 +23,7 @@
 
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Helper methods for converting between module format and ViE API format.
 
@@ -1089,7 +1089,7 @@ int ViERTP_RTCPImpl::SetRTPKeepAliveStatus(
                                       const int videoChannel, bool enable, const char unknownPayloadType,
                                       const unsigned int deltaTransmitTimeSeconds)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceApiCall, cloopenwebrtc::kTraceVideo,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceApiCall, yuntongxunwebrtc::kTraceVideo,
                      ViEId(shared_data_->instance_id(), videoChannel),
                      "%s(channel: %d, enable: %d, unknownPayloadType: %d, "
                      "deltaTransmitTimeMS: %ul)",
@@ -1120,7 +1120,7 @@ int ViERTP_RTCPImpl::SetRTPKeepAliveStatus(
 int ViERTP_RTCPImpl::GetRTPKeepAliveStatus(const int videoChannel, bool& enabled, char& unknownPayloadType,
                                       unsigned int& deltaTransmitTimeSeconds)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceApiCall, cloopenwebrtc::kTraceVideo,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceApiCall, yuntongxunwebrtc::kTraceVideo,
                      ViEId(shared_data_->instance_id(), videoChannel), "%s(channel: %d)",
                      __FUNCTION__, videoChannel);
         

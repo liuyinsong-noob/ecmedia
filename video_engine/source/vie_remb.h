@@ -20,7 +20,7 @@
 #include "rtp_rtcp_defines.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class CriticalSectionWrapper;
 class ProcessThread;

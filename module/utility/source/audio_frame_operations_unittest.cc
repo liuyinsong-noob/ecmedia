@@ -13,7 +13,7 @@
 #include "module_common_types.h"
 #include "audio_frame_operations.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 
 class AudioFrameOperationsTest : public ::testing::Test {
@@ -222,4 +222,4 @@ TEST_F(AudioFrameOperationsTest, ScaleWithSatSucceeds) {
 }
 
 }  // namespace
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

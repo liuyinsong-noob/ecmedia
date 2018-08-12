@@ -25,7 +25,7 @@
 using namespace std;
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const int64_t kDefaultRttMs = 200;
 static const int64_t kMaxFeedbackIntervalMs = 1000;
@@ -39,7 +39,7 @@ AimdRateControl::AimdRateControl()
       rate_control_state_(kRcHold),
       rate_control_region_(kRcMaxUnknown),
       time_last_bitrate_change_(-1),
-      current_input_(kBwNormal, cloopenwebrtc::Optional<uint32_t>(), 1.0),
+      current_input_(kBwNormal, yuntongxunwebrtc::Optional<uint32_t>(), 1.0),
       updated_(false),
       time_first_incoming_estimate_(-1),
       bitrate_is_initialized_(false),
@@ -154,7 +154,7 @@ int AimdRateControl::GetNearMaxIncreaseRateBps() const {
       kMinIncreaseRateBps, (avg_packet_size_bits * 1000) / response_time));
 }
 
-cloopenwebrtc::Optional<int> AimdRateControl::GetLastBitrateDecreaseBps() const {
+yuntongxunwebrtc::Optional<int> AimdRateControl::GetLastBitrateDecreaseBps() const {
   return last_decrease_;
 }
 
@@ -221,7 +221,7 @@ uint32_t AimdRateControl::ChangeBitrate(uint32_t new_bitrate_bps,
 
       if (incoming_bitrate_bps < current_bitrate_bps_) {
         last_decrease_ =
-            cloopenwebrtc::Optional<int>(current_bitrate_bps_ - new_bitrate_bps);
+            yuntongxunwebrtc::Optional<int>(current_bitrate_bps_ - new_bitrate_bps);
       }
       if (incoming_bitrate_kbps <
           avg_max_bitrate_kbps_ - 3 * std_max_bit_rate) {
@@ -327,4 +327,4 @@ void AimdRateControl::ChangeRegion(RateControlRegion region) {
 void AimdRateControl::ChangeState(RateControlState new_state) {
   rate_control_state_ = new_state;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -14,7 +14,7 @@
 #include "../system_wrappers/include/static_instance.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class UdpSocketWrapper;
 
@@ -66,6 +66,6 @@ private:
         WebRtc_UWord8& numOfWorkThreads);
 };
 
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_MODULES_UDP_TRANSPORT_SOURCE_UDP_SOCKET_MANAGER_WRAPPER_H_

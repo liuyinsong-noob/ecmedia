@@ -24,7 +24,7 @@
 #endif
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 bool UdpSocketWrapper::_initiated = false;
 
 // Temporary Android hack. The value 1024 is taken from
@@ -91,7 +91,7 @@ UdpSocketWrapper* UdpSocketWrapper::CreateSocket(const WebRtc_Word32 id,
         _initiated = true;
     }
 
-    s = new cloopenwebrtc::UdpSocket2Windows(id, mgr, ipV6Enable, disableGQOS);
+    s = new yuntongxunwebrtc::UdpSocket2Windows(id, mgr, ipV6Enable, disableGQOS);
 
 #else
     if (!_initiated)
@@ -144,4 +144,4 @@ bool UdpSocketWrapper::StopReceiving()
     _wantsIncoming = false;
     return true;
 }
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

@@ -13,7 +13,7 @@
 
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Forward declarations
 class VCMFrameBuffer;

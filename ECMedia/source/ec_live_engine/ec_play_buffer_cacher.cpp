@@ -18,7 +18,7 @@
 
 #include "ec_live_utility.h"
 
-namespace cloopenwebrtc{
+namespace yuntongxunwebrtc{
 #define PLY_MIN_TIME	500		// 0.5s
 #define PLY_MAX_TIME	600000	// 10minute
 #define PLY_RED_TIME	250		// redundancy time

@@ -28,7 +28,7 @@
 
 using testing::_;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const double kSampleRateRatio = 192000.0 / 44100.0;
 static const double kKernelInterpolationFactor = 0.5;

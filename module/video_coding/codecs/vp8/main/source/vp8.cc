@@ -28,7 +28,7 @@
 
 enum { kVp8ErrorPropagationTh = 30 };
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 VP8Encoder* VP8Encoder::Create() {
@@ -1023,4 +1023,4 @@ int VP8Decoder::CopyReference(VP8Decoder* copyTo) {
   return 0;
 }
 
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

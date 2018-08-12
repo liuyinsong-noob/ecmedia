@@ -19,7 +19,7 @@
 #include "trace.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -81,7 +81,7 @@ ACMSPEEX::ACMSPEEX(int16_t codec_id) : encoder_inst_ptr_(NULL) {
     samples_in_20ms_audio_ = 320;
     encoding_rate_ = 22000;
   } else {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                  "Wrong codec id for Speex.");
 
     sampling_frequency_ = -1;
@@ -121,7 +121,7 @@ int16_t ACMSPEEX::InternalEncode(uint8_t* bitstream,
     num_encoded_samples += samples_in_20ms_audio_;
 
     if (status < 0) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                    "Error in Speex encoder");
       return status;
     }
@@ -153,7 +153,7 @@ int16_t ACMSPEEX::EnableDTX() {
     // enable DTX
     if (WebRtcSpeex_EncoderInit(encoder_inst_ptr_, vbr_enabled_ ? 1 : 0,
                                 compl_mode_, 1) < 0) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                    "Cannot enable DTX for Speex");
       return -1;
     }
@@ -173,7 +173,7 @@ int16_t ACMSPEEX::DisableDTX() {
     // disable DTX
     if (WebRtcSpeex_EncoderInit(encoder_inst_ptr_, (vbr_enabled_ ? 1 : 0),
                                 compl_mode_, 0) < 0) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                    "Cannot disable DTX for Speex");
       return -1;
     }
@@ -190,8 +190,8 @@ int16_t ACMSPEEX::DisableDTX() {
 int16_t ACMSPEEX::InternalInitEncoder(WebRtcACMCodecParams* codec_params) {
   // sanity check
   if (encoder_inst_ptr_ == NULL) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-                 cloopenwebrtc::kTraceAudioCoding,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+                 yuntongxunwebrtc::kTraceAudioCoding,
                  unique_id_,
                  "Cannot initialize Speex encoder, instance does not exist");
     return -1;
@@ -208,7 +208,7 @@ int16_t ACMSPEEX::InternalInitEncoder(WebRtcACMCodecParams* codec_params) {
   if (status >= 0) {
     return 0;
   } else {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                  "Error in initialization of Speex encoder");
     return -1;
   }
@@ -239,7 +239,7 @@ int16_t ACMSPEEX::SetBitRateSafe(const int32_t rate) {
     encoding_rate_ = rate;
     encoder_params_.codecInstant.rate = rate;
   } else {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                  "Unsupported encoding rate for Speex");
 
     return -1;
@@ -259,7 +259,7 @@ int16_t ACMSPEEX::EnableVBR() {
     // enable Variable Bit Rate (VBR)
     if (WebRtcSpeex_EncoderInit(encoder_inst_ptr_, 1, compl_mode_,
                                 (dtx_enabled_ ? 1 : 0)) < 0) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                    "Cannot enable VBR mode for Speex");
 
       return -1;
@@ -280,7 +280,7 @@ int16_t ACMSPEEX::DisableVBR() {
     // disable DTX
     if (WebRtcSpeex_EncoderInit(encoder_inst_ptr_, 0, compl_mode_,
                                 (dtx_enabled_ ? 1 : 0)) < 0) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                    "Cannot disable DTX for Speex");
 
       return -1;
@@ -303,7 +303,7 @@ int16_t ACMSPEEX::SetComplMode(int16_t mode) {
     // Set new mode
     if (WebRtcSpeex_EncoderInit(encoder_inst_ptr_, 0, mode,
                                 (dtx_enabled_ ? 1 : 0)) < 0) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                    "Error in complexity mode for Speex");
       return -1;
     }
@@ -321,4 +321,4 @@ int16_t ACMSPEEX::SetComplMode(int16_t mode) {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -24,7 +24,7 @@
 #include <stdarg.h>
 #include "ECMedia.h"
 
-using namespace cloopenwebrtc;
+using namespace yuntongxunwebrtc;
 
 //#define  TEST_RECORD_H264_
 
@@ -899,7 +899,7 @@ WebRtc_Word32 RecordVoip::CapturedScreeImage(unsigned char *imageData, int size,
 	}
 	
 	if(!_h264Encoder) {
-		_h264Encoder = cloopenwebrtc::H264Encoder::Create();
+		_h264Encoder = yuntongxunwebrtc::H264Encoder::Create();
 		if(!_h264Encoder) {
 			return -1;
 		}

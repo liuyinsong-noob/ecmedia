@@ -13,7 +13,7 @@
 
 #include <pthread.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class TaskQueue;
 
@@ -31,6 +31,6 @@ class AutoSetCurrentQueuePtr {
 pthread_key_t GetQueuePtrTls();
 
 }  // namespace internal
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_TASK_QUEUE_POSIX_H_

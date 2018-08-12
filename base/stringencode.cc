@@ -16,7 +16,7 @@
 #include "../base/checks.h"
 #include "../base/stringutils.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 /////////////////////////////////////////////////////////////////////////////
 // String Encoding Utilities

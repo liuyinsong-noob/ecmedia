@@ -19,7 +19,7 @@
 #include "audio_util.h"
 #include "wav_header.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // We write 16-bit PCM WAV files.
 static const WavFormat kWavFormat = kWavFormatPcm;
@@ -60,14 +60,14 @@ size_t WavReader::ReadSamples(size_t num_samples, int16_t* samples) {
 #error "Need to convert samples to big-endian when reading from WAV file"
 #endif
   // There could be metadata after the audio; ensure we don't read it.
-  num_samples = std::min(cloopenwebrtc::checked_cast<uint32_t>(num_samples),
+  num_samples = std::min(yuntongxunwebrtc::checked_cast<uint32_t>(num_samples),
                          num_samples_remaining_);
   const size_t read =
       fread(samples, sizeof(*samples), num_samples, file_handle_);
   // If we didn't read what was requested, ensure we've reached the EOF.
   CHECK(read == num_samples || feof(file_handle_));
   CHECK_LE(read, num_samples_remaining_);
-  num_samples_remaining_ -= cloopenwebrtc::checked_cast<uint32_t>(read);
+  num_samples_remaining_ -= yuntongxunwebrtc::checked_cast<uint32_t>(read);
   return read;
 }
 
@@ -156,27 +156,27 @@ rtc_WavWriter* rtc_WavOpen(const char* filename,
                            int sample_rate,
                            int num_channels) {
   return reinterpret_cast<rtc_WavWriter*>(
-      new cloopenwebrtc::WavWriter(filename, sample_rate, num_channels));
+      new yuntongxunwebrtc::WavWriter(filename, sample_rate, num_channels));
 }
 
 void rtc_WavClose(rtc_WavWriter* wf) {
-  delete reinterpret_cast<cloopenwebrtc::WavWriter*>(wf);
+  delete reinterpret_cast<yuntongxunwebrtc::WavWriter*>(wf);
 }
 
 void rtc_WavWriteSamples(rtc_WavWriter* wf,
                          const float* samples,
                          size_t num_samples) {
-  reinterpret_cast<cloopenwebrtc::WavWriter*>(wf)->WriteSamples(samples, num_samples);
+  reinterpret_cast<yuntongxunwebrtc::WavWriter*>(wf)->WriteSamples(samples, num_samples);
 }
 
 int rtc_WavSampleRate(const rtc_WavWriter* wf) {
-  return reinterpret_cast<const cloopenwebrtc::WavWriter*>(wf)->sample_rate();
+  return reinterpret_cast<const yuntongxunwebrtc::WavWriter*>(wf)->sample_rate();
 }
 
 int rtc_WavNumChannels(const rtc_WavWriter* wf) {
-  return reinterpret_cast<const cloopenwebrtc::WavWriter*>(wf)->num_channels();
+  return reinterpret_cast<const yuntongxunwebrtc::WavWriter*>(wf)->num_channels();
 }
 
 uint32_t rtc_WavNumSamples(const rtc_WavWriter* wf) {
-  return reinterpret_cast<const cloopenwebrtc::WavWriter*>(wf)->num_samples();
+  return reinterpret_cast<const yuntongxunwebrtc::WavWriter*>(wf)->num_samples();
 }

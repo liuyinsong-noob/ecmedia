@@ -14,7 +14,7 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "audio_device_buffer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class MockAudioDeviceBuffer : public AudioDeviceBuffer {
  public:
@@ -25,6 +25,6 @@ class MockAudioDeviceBuffer : public AudioDeviceBuffer {
   MOCK_METHOD1(GetPlayoutData, int32_t(void* audioBuffer));
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_DEVICE_MOCK_AUDIO_DEVICE_BUFFER_H_

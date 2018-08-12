@@ -36,7 +36,7 @@ DEFINE_bool(full, false,
             "Unpack the full set of files (normally not needed).");
 DEFINE_bool(raw, false, "Write raw data instead of a WAV file.");
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 using audioproc::Event;
 using audioproc::ReverseStream;
@@ -254,5 +254,5 @@ int do_main(int argc, char* argv[]) {
 }  // namespace webrtc
 
 int main(int argc, char* argv[]) {
-  return cloopenwebrtc::do_main(argc, argv);
+  return yuntongxunwebrtc::do_main(argc, argv);
 }

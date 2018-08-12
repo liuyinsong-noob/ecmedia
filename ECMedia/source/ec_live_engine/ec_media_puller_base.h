@@ -6,7 +6,7 @@
 #ifndef ECMEDIA_MEDIA_PULLER_H
 #define ECMEDIA_MEDIA_PULLER_H
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     class EC_AVCacher;
     class EC_MediaPullerBase {
     public:

@@ -17,7 +17,7 @@
 struct AMR_encinst_t_;
 struct AMR_decinst_t_;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 enum ACMAMRPackingFormat;
 
@@ -62,6 +62,6 @@ class ACMAMR : public ACMGenericCodec {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_ACM_AMR_H_

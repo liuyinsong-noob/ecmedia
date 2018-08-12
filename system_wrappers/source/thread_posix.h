@@ -14,7 +14,7 @@
 #include "thread_wrapper.h"
 #include <pthread.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class CriticalSectionWrapper;
 class EventWrapper;
@@ -66,6 +66,6 @@ private:
     pthread_attr_t          _attr;
     pthread_t               _thread;
 };
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_SYSTEM_WRAPPERS_SOURCE_THREAD_POSIX_H_

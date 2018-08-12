@@ -25,7 +25,7 @@
 #define  WAVE_MAPPED_kDefaultCommunicationDevice   0x0010
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // ============================================================================
 //                             CONSTRUCTION/DESTRUCTION
@@ -2718,4 +2718,4 @@ char* AudioMixerManager::WideToUTF8(const TCHAR* src) const {
 #endif
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

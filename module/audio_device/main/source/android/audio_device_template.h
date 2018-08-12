@@ -15,7 +15,7 @@
 
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // InputType/OutputType can be any class that implements the capturing/rendering
 // part of the AudioDeviceGeneric API.

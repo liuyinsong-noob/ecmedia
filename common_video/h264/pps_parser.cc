@@ -19,7 +19,7 @@
 
 #define RETURN_EMPTY_ON_FAIL(x)                  \
   if (!(x)) {                                    \
-    return cloopenwebrtc::Optional<PpsParser::PpsState>(); \
+    return yuntongxunwebrtc::Optional<PpsParser::PpsState>(); \
   }
 
 namespace {
@@ -27,19 +27,19 @@ const int kMaxPicInitQpDeltaValue = 25;
 const int kMinPicInitQpDeltaValue = -26;
 }
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // General note: this is based off the 02/2014 version of the H.264 standard.
 // You can find it on this page:
 // http://www.itu.int/rec/T-REC-H.264
 
-cloopenwebrtc::Optional<PpsParser::PpsState> PpsParser::ParsePps(const uint8_t* data,
+yuntongxunwebrtc::Optional<PpsParser::PpsState> PpsParser::ParsePps(const uint8_t* data,
                                                        size_t length) {
   // First, parse out rbsp, which is basically the source buffer minus emulation
   // bytes (the last byte of a 0x00 0x00 0x03 sequence). RBSP is defined in
   // section 7.3.1 of the H.264 standard.
   std::vector<uint8_t> unpacked_buffer = H264::ParseRbsp(data, length);
-  cloopenwebrtc::BitBuffer bit_buffer(unpacked_buffer.data(), unpacked_buffer.size());
+  yuntongxunwebrtc::BitBuffer bit_buffer(unpacked_buffer.data(), unpacked_buffer.size());
   return ParseInternal(&bit_buffer);
 }
 
@@ -53,31 +53,31 @@ bool PpsParser::ParsePpsIds(const uint8_t* data,
   // bytes (the last byte of a 0x00 0x00 0x03 sequence). RBSP is defined in
   // section 7.3.1 of the H.264 standard.
   std::vector<uint8_t> unpacked_buffer = H264::ParseRbsp(data, length);
-  cloopenwebrtc::BitBuffer bit_buffer(unpacked_buffer.data(), unpacked_buffer.size());
+  yuntongxunwebrtc::BitBuffer bit_buffer(unpacked_buffer.data(), unpacked_buffer.size());
   return ParsePpsIdsInternal(&bit_buffer, pps_id, sps_id);
 }
 
-cloopenwebrtc::Optional<uint32_t> PpsParser::ParsePpsIdFromSlice(const uint8_t* data,
+yuntongxunwebrtc::Optional<uint32_t> PpsParser::ParsePpsIdFromSlice(const uint8_t* data,
                                                        size_t length) {
   std::vector<uint8_t> unpacked_buffer = H264::ParseRbsp(data, length);
-  cloopenwebrtc::BitBuffer slice_reader(unpacked_buffer.data(), unpacked_buffer.size());
+  yuntongxunwebrtc::BitBuffer slice_reader(unpacked_buffer.data(), unpacked_buffer.size());
 
   uint32_t golomb_tmp;
   // first_mb_in_slice: ue(v)
   if (!slice_reader.ReadExponentialGolomb(&golomb_tmp))
-    return cloopenwebrtc::Optional<uint32_t>();
+    return yuntongxunwebrtc::Optional<uint32_t>();
   // slice_type: ue(v)
   if (!slice_reader.ReadExponentialGolomb(&golomb_tmp))
-    return cloopenwebrtc::Optional<uint32_t>();
+    return yuntongxunwebrtc::Optional<uint32_t>();
   // pic_parameter_set_id: ue(v)
   uint32_t slice_pps_id;
   if (!slice_reader.ReadExponentialGolomb(&slice_pps_id))
-    return cloopenwebrtc::Optional<uint32_t>();
-  return cloopenwebrtc::Optional<uint32_t>(slice_pps_id);
+    return yuntongxunwebrtc::Optional<uint32_t>();
+  return yuntongxunwebrtc::Optional<uint32_t>(slice_pps_id);
 }
 
-cloopenwebrtc::Optional<PpsParser::PpsState> PpsParser::ParseInternal(
-    cloopenwebrtc::BitBuffer* bit_buffer) {
+yuntongxunwebrtc::Optional<PpsParser::PpsState> PpsParser::ParseInternal(
+    yuntongxunwebrtc::BitBuffer* bit_buffer) {
   PpsState pps;
 
   RETURN_EMPTY_ON_FAIL(ParsePpsIdsInternal(bit_buffer, &pps.id, &pps.sps_id));
@@ -183,10 +183,10 @@ cloopenwebrtc::Optional<PpsParser::PpsState> PpsParser::ParseInternal(
   RETURN_EMPTY_ON_FAIL(
       bit_buffer->ReadBits(&pps.redundant_pic_cnt_present_flag, 1));
 
-  return cloopenwebrtc::Optional<PpsParser::PpsState>(pps);
+  return yuntongxunwebrtc::Optional<PpsParser::PpsState>(pps);
 }
 
-bool PpsParser::ParsePpsIdsInternal(cloopenwebrtc::BitBuffer* bit_buffer,
+bool PpsParser::ParsePpsIdsInternal(yuntongxunwebrtc::BitBuffer* bit_buffer,
                                     uint32_t* pps_id,
                                     uint32_t* sps_id) {
   // pic_parameter_set_id: ue(v)
@@ -198,4 +198,4 @@ bool PpsParser::ParsePpsIdsInternal(cloopenwebrtc::BitBuffer* bit_buffer,
   return true;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

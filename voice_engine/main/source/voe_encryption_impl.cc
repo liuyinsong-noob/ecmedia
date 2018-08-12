@@ -17,7 +17,7 @@
 #include "voe_errors.h"
 #include "voice_engine_impl.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VoEEncryption* VoEEncryption::GetInterface(VoiceEngine* voiceEngine)
 {
@@ -259,4 +259,4 @@ int VoEEncryptionImpl::DeRegisterExternalEncryption(int channel)
 #endif  // #ifdef WEBRTC_VOICE_ENGINE_ENCRYPTION_API
 
 // EOF
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

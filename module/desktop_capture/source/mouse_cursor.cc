@@ -14,7 +14,7 @@
 
 #include "desktop_frame.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 MouseCursor::MouseCursor() {}
 
@@ -35,4 +35,4 @@ MouseCursor* MouseCursor::CopyOf(const MouseCursor& cursor) {
              : new MouseCursor();
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -27,7 +27,7 @@
 
 #include "resampler.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioProcessing;
 class ProcessThread;
@@ -232,7 +232,7 @@ private:
     CriticalSectionWrapper& _callbackCritSect;
 
 #ifdef WEBRTC_VOICE_ENGINE_TYPING_DETECTION
-    cloopenwebrtc::TypingDetection _typingDetection;
+    yuntongxunwebrtc::TypingDetection _typingDetection;
     bool _typingNoiseWarningPending;
     bool _typingNoiseDetected;
 #endif
@@ -281,6 +281,6 @@ private:
 
 }  // namespace voe
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_VOICE_ENGINE_TRANSMIT_MIXER_H

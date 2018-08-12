@@ -14,7 +14,7 @@
 #include "audio_processing.h"
 #include "processing_component.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioBuffer;
 class CriticalSectionWrapper;
@@ -59,6 +59,6 @@ class VoiceDetectionImpl : public VoiceDetection,
   int frame_size_ms_;
   int frame_size_samples_;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_VOICE_DETECTION_IMPL_H_

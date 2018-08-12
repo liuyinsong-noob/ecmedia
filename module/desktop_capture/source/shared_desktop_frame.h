@@ -14,7 +14,7 @@
 #include "desktop_frame.h"
 #include "../base/scoped_ref_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // SharedDesktopFrame is a DesktopFrame that may have multiple instances all
 // sharing the same buffer.
@@ -37,13 +37,13 @@ class SharedDesktopFrame : public DesktopFrame {
  private:
   class Core;
 
-  SharedDesktopFrame(cloopenwebrtc::scoped_refptr<Core> core);
+  SharedDesktopFrame(yuntongxunwebrtc::scoped_refptr<Core> core);
 
-  cloopenwebrtc::scoped_refptr<Core> core_;
+  yuntongxunwebrtc::scoped_refptr<Core> core_;
 
   DISALLOW_COPY_AND_ASSIGN(SharedDesktopFrame);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_SHARED_DESKTOP_FRAME_H_

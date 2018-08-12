@@ -10,7 +10,7 @@
 
 #include "shared_memory.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 #if defined(WEBRTC_WIN)
 const SharedMemory::Handle SharedMemory::kInvalidHandle = NULL;
@@ -25,4 +25,4 @@ SharedMemory::SharedMemory(void* data, size_t size, Handle handle, int id)
     id_(id) {
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

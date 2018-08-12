@@ -15,7 +15,7 @@
 
 #include <assert.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 void  SetSubSampling(VideoProcessingModule::FrameStats* stats,

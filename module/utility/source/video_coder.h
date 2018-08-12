@@ -16,7 +16,7 @@
 #include "engine_configurations.h"
 #include "video_coding.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class VideoCoder : public VCMPacketizationCallback, public VCMReceiveCallback
 {
 public:
@@ -57,6 +57,6 @@ private:
     I420VideoFrame* _decodedVideo;
     EncodedVideoData* _videoEncodedData;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif // WEBRTC_MODULE_UTILITY_VIDEO
 #endif // WEBRTC_MODULES_UTILITY_SOURCE_VIDEO_CODER_H_

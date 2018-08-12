@@ -46,7 +46,7 @@ static const char kLibjingle[] = "libjingle";
 #include "../base/stringutils.h"
 #include "../base/timeutils.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 
 // Return the filename portion of the string (that following the last slash).

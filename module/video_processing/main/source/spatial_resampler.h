@@ -19,7 +19,7 @@
 #include "../common_video/source/libyuv/include/scaler.h"
 #include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VPMSpatialResampler {
  public:

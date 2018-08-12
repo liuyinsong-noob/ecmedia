@@ -12,7 +12,7 @@
 
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 const float kDefaultKeyFrameSizeAvgKBits = 0.9f;

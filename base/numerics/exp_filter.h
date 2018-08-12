@@ -11,7 +11,7 @@
 #ifndef WEBRTC_BASE_NUMERICS_EXP_FILTER_H_
 #define WEBRTC_BASE_NUMERICS_EXP_FILTER_H_
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // This class can be used, for example, for smoothing the result of bandwidth
 // estimation and packet loss estimation.
@@ -43,6 +43,6 @@ class ExpFilter {
   float filtered_;  // Current filter output.
   const float max_;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_NUMERICS_EXP_FILTER_H_

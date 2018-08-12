@@ -19,7 +19,7 @@ char *globalFilePath2 = NULL;
 #endif
 int reinitDecoderFlag = 0;
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
     void H264Decoder::pgm_save(FILE *f,unsigned char *buf,int wrap, int xsize,int ysize)
     {
@@ -85,15 +85,15 @@ H264Decoder::InitDecode(const VideoCodec* codecSettings, WebRtc_Word32 numberOfC
 	int ret = 0;
 #if 0
     fout = fopen(globalFilePath, "ab+");
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError,cloopenwebrtc::kTraceVideoCoding,0,"sean globalFilePath:%s!!!",globalFilePath);
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,yuntongxunwebrtc::kTraceVideoCoding,0,"sean globalFilePath:%s!!!",globalFilePath);
     if (globalFilePath)
         fout = fopen(globalFilePath, "ab+");
     if (!fout)
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError,cloopenwebrtc::kTraceVideoCoding,0,"sean openfile failed!!!");
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,yuntongxunwebrtc::kTraceVideoCoding,0,"sean openfile failed!!!");
     if (globalFilePath2)
         fout2 = fopen(globalFilePath2, "ab+");
     if (!fout2)
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError,cloopenwebrtc::kTraceVideoCoding,0,"sean openfile2 failed!!!");
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,yuntongxunwebrtc::kTraceVideoCoding,0,"sean openfile2 failed!!!");
 #endif
     if (codecSettings == NULL
 		|| (codecSettings->width < 1)
@@ -113,13 +113,13 @@ H264Decoder::InitDecode(const VideoCodec* codecSettings, WebRtc_Word32 numberOfC
     AVCodec *decoder = avcodec_find_decoder(AV_CODEC_ID_H264);
     if (!decoder)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError,cloopenwebrtc::kTraceVideoCoding,0,"CODEC NOT FOUND!!!");
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,yuntongxunwebrtc::kTraceVideoCoding,0,"CODEC NOT FOUND!!!");
         return -1;
     }
     _codecContext = avcodec_alloc_context3(decoder);
 
     if (NULL == _codecContext) {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError,cloopenwebrtc::kTraceVideoCoding,0,"CANNOT ALLOC CONTEXT!");
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,yuntongxunwebrtc::kTraceVideoCoding,0,"CANNOT ALLOC CONTEXT!");
         return -1;
     }
     ret = avcodec_open2(_codecContext, decoder, NULL);
@@ -127,7 +127,7 @@ H264Decoder::InitDecode(const VideoCodec* codecSettings, WebRtc_Word32 numberOfC
         pFrame_ = av_frame_alloc();// Allocate video frame
     else
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError,cloopenwebrtc::kTraceVideoCoding,0,"CANNOT OPEN CODEC %d!",ret);
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,yuntongxunwebrtc::kTraceVideoCoding,0,"CANNOT OPEN CODEC %d!",ret);
         return WEBRTC_VIDEO_CODEC_ERROR;
     }
 
@@ -145,12 +145,12 @@ void H264Decoder::reInitDec()
     }  
     videoCodec=avcodec_find_decoder(AV_CODEC_ID_H264);
     if (videoCodec==NULL)
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError,cloopenwebrtc::kTraceVideoCoding,0,"Could not find H264 decoder in ffmpeg.");
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,yuntongxunwebrtc::kTraceVideoCoding,0,"Could not find H264 decoder in ffmpeg.");
 
     avcodec_get_context_defaults3(_codecContext,videoCodec);
     error = avcodec_open2(_codecContext, videoCodec, NULL);
     if (error!=0){
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError,cloopenwebrtc::kTraceVideoCoding,0,"avcodec_open() failed.");
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,yuntongxunwebrtc::kTraceVideoCoding,0,"avcodec_open() failed.");
     }
 }
     
@@ -161,7 +161,7 @@ H264Decoder::Decode(const EncodedImage& inputImage,
                     const CodecSpecificInfo* /*codecSpecificInfo*/,
                     WebRtc_Word64 /*renderTimeMs*/)
 {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug,cloopenwebrtc::kTraceVideoCoding,0,"H264Decoder::Decode width %d, height %d, lowseq %u, highseq %u", inputImage._encodedWidth, inputImage._encodedHeight, inputImage._lowSeqNum, inputImage._highSeqNum);
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug,yuntongxunwebrtc::kTraceVideoCoding,0,"H264Decoder::Decode width %d, height %d, lowseq %u, highseq %u", inputImage._encodedWidth, inputImage._encodedHeight, inputImage._lowSeqNum, inputImage._highSeqNum);
     
     if (inputImage._buffer == NULL
 		|| inputImage._length <= 0)
@@ -176,7 +176,7 @@ H264Decoder::Decode(const EncodedImage& inputImage,
  
         
     if (1 == reinitDecoderFlag) {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError,cloopenwebrtc::kTraceVideoCoding,0,"H264Decoder:: sean reinit decoder called");
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,yuntongxunwebrtc::kTraceVideoCoding,0,"H264Decoder:: sean reinit decoder called");
         reInitDec();
         reinitDecoderFlag = 0;
     }
@@ -226,12 +226,12 @@ H264Decoder::Decode(const EncodedImage& inputImage,
 
 			if(frameFinished)//成功解码
 			{
-                WEBRTC_TRACE(cloopenwebrtc::kTraceDebug,cloopenwebrtc::kTraceVideoCoding,0,"H264Decoder::Decode succeed width %d, height %d, lowseq %u, highseq %u", inputImage._encodedWidth, inputImage._encodedHeight, inputImage._lowSeqNum, inputImage._highSeqNum);
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug,yuntongxunwebrtc::kTraceVideoCoding,0,"H264Decoder::Decode succeed width %d, height %d, lowseq %u, highseq %u", inputImage._encodedWidth, inputImage._encodedHeight, inputImage._lowSeqNum, inputImage._highSeqNum);
 				return ReturnFrame(pFrame_, inputImage._timeStamp, inputImage.ntp_time_ms_);
 				
 			}else
             {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceDebug,cloopenwebrtc::kTraceVideoCoding,0,"H264Decoder::Decode failed width %d, height %d, lowseq %u, highseq %u", inputImage._encodedWidth, inputImage._encodedHeight, inputImage._lowSeqNum, inputImage._highSeqNum);
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug,yuntongxunwebrtc::kTraceVideoCoding,0,"H264Decoder::Decode failed width %d, height %d, lowseq %u, highseq %u", inputImage._encodedWidth, inputImage._encodedHeight, inputImage._lowSeqNum, inputImage._highSeqNum);
 				return WEBRTC_VIDEO_CODEC_ERROR;  //
             }
 			
@@ -241,7 +241,7 @@ H264Decoder::Decode(const EncodedImage& inputImage,
     int ret = avcodec_decode_video2(_codecContext, pFrame_, &frameFinished, &packet);
     if(ret < 0)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError,cloopenwebrtc::kTraceVideoCoding,0,"H264Decoder::Decode Failed ret=%d", ret);
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,yuntongxunwebrtc::kTraceVideoCoding,0,"H264Decoder::Decode Failed ret=%d", ret);
         return ret;
     }
 #endif
@@ -300,8 +300,8 @@ int H264Decoder::getVopType( const void *p, int len )
 	unsigned char *b = (unsigned char*)p;
 
 	//int aaaaaaaaaa = *b;
-	//WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-	//	cloopenwebrtc::kTraceVideoCoding,
+	//WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+	//	yuntongxunwebrtc::kTraceVideoCoding,
 	//	0,
 	//	"getVopType aaaaaaaaaa=%0x %0x %0x %0x %0x %0x %0x", *b, *(b+1), *(b+2), *(b+3), *(b+4), *(b+5),*(b+6));
 
@@ -336,8 +336,8 @@ int H264Decoder::getVopType( const void *p, int len )
 	default:
 		{
 			//int aaaaaaaaaa = *b;
-			//WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-			//	cloopenwebrtc::kTraceVideoCoding,
+			//WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+			//	yuntongxunwebrtc::kTraceVideoCoding,
 			//	0,
 			//	"getVopType aaaaaaaaaa=%0x", aaaaaaaaaa);
 		}

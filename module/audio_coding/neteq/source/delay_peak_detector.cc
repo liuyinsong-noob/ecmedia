@@ -12,7 +12,7 @@
 
 #include <algorithm>  // max
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // The DelayPeakDetector keeps track of severe inter-arrival times, called
 // delay peaks. When a peak is observed, the "height" (the time elapsed since
@@ -107,4 +107,4 @@ bool DelayPeakDetector::CheckPeakConditions() {
   }
   return peak_found_;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

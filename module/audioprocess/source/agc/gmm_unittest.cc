@@ -16,7 +16,7 @@
 #include "cloopenwebrtc/modules/audio_processing/agc/noise_gmm_tables.h"
 #include "cloopenwebrtc/modules/audio_processing/agc/voice_gmm_tables.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(GmmTest, EvaluateGmm) {
   GmmParameters noise_gmm;

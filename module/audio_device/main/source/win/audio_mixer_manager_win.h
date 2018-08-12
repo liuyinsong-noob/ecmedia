@@ -17,7 +17,7 @@
 #include <Windows.h>
 #include <mmsystem.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioMixerManager
 {
@@ -134,6 +134,6 @@ private:
     mutable char            _str[MAXERRORLENGTH];
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_AUDIO_DEVICE_AUDIO_MIXER_MANAGER_H

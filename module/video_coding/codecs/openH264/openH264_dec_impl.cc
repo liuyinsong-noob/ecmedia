@@ -48,7 +48,7 @@
 #define WELS_MAX(x, y) ((x) > (y) ? (x) : (y))
 #define WELS_ROUND(x) ((int32_t)(0.5+(x)))
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 OpenH264Decoder* OpenH264Decoder::Create() {
   return new OpenH264DecoderImpl();
@@ -138,7 +138,7 @@ int OpenH264DecoderImpl::InitDecode(const VideoCodec* inst, int number_of_cores)
   inited_ = true;
 
   // Always start with a complete key frame.
-   WEBRTC_TRACE(cloopenwebrtc::kTraceApiCall, cloopenwebrtc::kTraceVideoCoding, -1,
+   WEBRTC_TRACE(yuntongxunwebrtc::kTraceApiCall, yuntongxunwebrtc::kTraceVideoCoding, -1,
                "OpenH264DecoderImpl::InitDecode(width:%d, height:%d, framerate:%d, start_bitrate:%d, max_bitrate:%d)",
                inst->width, inst->height, inst->maxFramerate, inst->startBitrate, inst->maxBitrate);
   return WEBRTC_VIDEO_CODEC_OK;
@@ -157,29 +157,29 @@ int OpenH264DecoderImpl::Decode(const EncodedImage& input_image,
 	return -1;
 #if 0
 	if (!inited_) {
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCoding, -1,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCoding, -1,
 			"H264DecoderImpl::Decode, decoder is not initialized");
 		return WEBRTC_VIDEO_CODEC_UNINITIALIZED;
 	}
 
 	if (decode_complete_callback_ == NULL) {
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCoding, -1,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCoding, -1,
 			"H264DecoderImpl::Decode, decode complete call back is not set");
 		return WEBRTC_VIDEO_CODEC_UNINITIALIZED;
 	}
 
 	if (input_image._buffer == NULL) {
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCoding, -1,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCoding, -1,
 			"H264DecoderImpl::Decode, null buffer");
 		return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
 	}
 	if (!codec_specific_info) {
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCoding, -1,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCoding, -1,
 			"H264EncoderImpl::Decode, no codec info");
 		return WEBRTC_VIDEO_CODEC_ERROR;
 	}
 	if (codec_specific_info->codecType != kVideoCodecH264) {
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCoding, -1,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCoding, -1,
 			"H264EncoderImpl::Decode, non h264 codec %d", codec_specific_info->codecType);
 		return WEBRTC_VIDEO_CODEC_ERROR;
 	}

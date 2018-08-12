@@ -31,7 +31,7 @@ extern CurlPost *g_curlpost;
 
 #define kKiloBits 1000
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const int SendStatisticsProxy::kStatsTimeoutMs = 5000;
 
@@ -69,7 +69,7 @@ uint32_t SendStatisticsProxy::RateCounter::AvgRate()
 
 void SendStatisticsProxy::RateCounter::PurgeOldStats()
 {
-	int64_t old_stats_ms = cloopenwebrtc::Time() - kStatsTimeoutMs;
+	int64_t old_stats_ms = yuntongxunwebrtc::Time() - kStatsTimeoutMs;
 	std::list<Sample>::iterator it = sample_list_.begin();
 	while(it!= sample_list_.end())
 	{
@@ -97,7 +97,7 @@ void SendStatisticsProxy::RtcpBlocksCounter::AddSample(const RtcpStatistics& rtc
 
 void SendStatisticsProxy::RtcpBlocksCounter::PurgeOldStats()
 {
-	int64_t old_stats_ms = cloopenwebrtc::Time() - kStatsTimeoutMs;
+	int64_t old_stats_ms = yuntongxunwebrtc::Time() - kStatsTimeoutMs;
 	std::list<RtcpSample>::iterator it = sample_list_.begin();
 	while(it != sample_list_.end())
 	{
@@ -151,7 +151,7 @@ void SendStatisticsProxy::BitrateStatsCounter::AddSample(const BitrateStatistics
 
 void SendStatisticsProxy::BitrateStatsCounter::PurgeOldStats()
 {
-	int64_t old_stats_ms = cloopenwebrtc::Time() - kStatsTimeoutMs;
+	int64_t old_stats_ms = yuntongxunwebrtc::Time() - kStatsTimeoutMs;
 	std::list<BitrateSample>::iterator it = sample_list_.begin();
 	while(it != sample_list_.end())
 	{
@@ -246,7 +246,7 @@ void SendStatisticsProxy::SuspendChange(int video_channel, bool is_suspended) {
 
 VideoSendStream::Stats SendStatisticsProxy::GetStats(bool isAvg, int64_t& timestamp) {
 	CriticalSectionScoped lock(crit_.get());
-	timestamp = cloopenwebrtc::Time();
+	timestamp = yuntongxunwebrtc::Time();
 	if (isAvg)
 	{
 		//TODO: first copy stats_, then copy stats_avg

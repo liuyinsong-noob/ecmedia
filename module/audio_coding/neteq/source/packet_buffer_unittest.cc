@@ -20,7 +20,7 @@
 using ::testing::Return;
 using ::testing::_;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Helper class to generate packets. Packets must be deleted by the user.
 class PacketGenerator {
@@ -570,4 +570,4 @@ TEST(PacketBuffer, IsObsoleteTimestamp) {
   TestIsObsoleteTimestamp(0x80000001);  // 2^31 + 1.
   TestIsObsoleteTimestamp(0x7FFFFFFF);  // 2^31 - 1.
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

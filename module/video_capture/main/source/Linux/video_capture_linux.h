@@ -14,7 +14,7 @@
 #include "common_types.h"
 #include "../video_capture_impl.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 class CriticalSectionWrapper;
 class ThreadWrapper;

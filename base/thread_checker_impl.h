@@ -16,7 +16,7 @@
 #include "../base/criticalsection.h"
 #include "../base/platform_thread_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Real implementation of ThreadChecker, for use in debug mode, or
 // for temporary use in release mode (e.g. to RTC_CHECK on a threading issue
@@ -43,6 +43,6 @@ class ThreadCheckerImpl {
   mutable PlatformThreadRef valid_thread_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_THREAD_CHECKER_IMPL_H_

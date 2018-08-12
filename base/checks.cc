@@ -39,7 +39,7 @@
 #pragma warning(disable:4722)
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 void VPrintError(const char* format, va_list args) {
 #if defined(WEBRTC_ANDROID)
@@ -133,9 +133,9 @@ template std::string* MakeCheckOpString<std::string, std::string>(
     const std::string&, const std::string&, const char* name);
 #endif
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 // Function to call from the C version of the RTC_CHECK and RTC_DCHECK macros.
 NO_RETURN void rtc_FatalMessage(const char* file, int line, const char* msg) {
-  cloopenwebrtc::FatalMessage(file, line).stream() << msg;
+  yuntongxunwebrtc::FatalMessage(file, line).stream() << msg;
 }

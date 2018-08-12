@@ -18,7 +18,7 @@
 #include "../system_wrappers/include/trace.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ScreenCaptureFrameQueue::ScreenCaptureFrameQueue() : current_(0) {}
 
@@ -41,4 +41,4 @@ void ScreenCaptureFrameQueue::Reset() {
     frames_[i].reset();
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

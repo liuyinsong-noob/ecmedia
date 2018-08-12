@@ -10,7 +10,7 @@
 
 #include "desktop_capture_options.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 DesktopCaptureOptions::DesktopCaptureOptions()
     : use_update_notifications_(true),
@@ -41,4 +41,4 @@ DesktopCaptureOptions DesktopCaptureOptions::CreateDefault() {
   return result;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

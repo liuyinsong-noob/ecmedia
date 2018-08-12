@@ -18,7 +18,7 @@
 #include "../base/checks.h"
 #include "../system_wrappers/include/logging.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 uint8_t* Vp9FrameBufferPool::Vp9FrameBuffer::GetData() {
   return data_.data<uint8_t>();
@@ -136,4 +136,4 @@ int32_t Vp9FrameBufferPool::VpxReleaseFrameBuffer(void* user_priv,
   return 0;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

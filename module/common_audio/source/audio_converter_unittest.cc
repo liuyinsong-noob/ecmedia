@@ -18,7 +18,7 @@
 #include "cloopenwebrtc/modules/audio_processing/channel_buffer.h"
 #include "cloopenwebrtc/system_wrappers/interface/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 typedef scoped_ptr<ChannelBuffer<float>> ScopedBuffer;
 

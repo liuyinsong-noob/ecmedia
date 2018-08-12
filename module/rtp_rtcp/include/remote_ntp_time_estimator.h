@@ -16,7 +16,7 @@
 #include "../base/constructormagic.h"
 #include "../system_wrappers/include/rtp_to_ntp_estimator.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Clock;
 class TimestampExtrapolator;

@@ -14,7 +14,7 @@
 
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 TrafficControlWindows* TrafficControlWindows::instance = NULL;
 WebRtc_UWord32 TrafficControlWindows::refCounter = 0;
 

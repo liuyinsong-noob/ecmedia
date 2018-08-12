@@ -78,7 +78,7 @@
 //                                  int16_t nr_lost_frames);
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -133,7 +133,7 @@ ACMG722_1C::ACMG722_1C(int16_t codec_id)
   } else if (codec_id_ == ACMCodecDB::kG722_1C_48) {
     operational_rate_ = 48000;
   } else {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                  "Wrong codec id for G722_1c.");
     operational_rate_ = -1;
   }
@@ -167,7 +167,7 @@ ACMG722_1C::~ACMG722_1C() {
       break;
     }
     default: {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                    "Wrong rate for G722_1c.");
       break;
     }
@@ -224,7 +224,7 @@ int16_t ACMG722_1C::InternalEncode(uint8_t* bitstream,
       break;
     }
     default: {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                    "InternalEncode: Wrong rate for G722_1c.");
       return -1;
     }
@@ -266,7 +266,7 @@ int16_t ACMG722_1C::InternalInitEncoder(WebRtcACMCodecParams* codec_params) {
       return WebRtcG7221C_EncoderInit48(encoder_inst48_ptr_);
     }
     default: {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                    "InternalInitEncode: Wrong rate for G722_1c.");
       return -1;
     }
@@ -296,7 +296,7 @@ int16_t ACMG722_1C::InternalCreateEncoder() {
       break;
     }
     default: {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                    "InternalCreateEncoder: Wrong rate for G722_1c.");
       return -1;
     }
@@ -324,4 +324,4 @@ void ACMG722_1C::DestructEncoderSafe() {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

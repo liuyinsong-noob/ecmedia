@@ -18,7 +18,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // This is a value-parameterized test. The test cases are instantiated with
 // different values for the test parameter, which is used to determine the
@@ -330,4 +330,4 @@ INSTANTIATE_TEST_CASE_P(TestNumChannels,
                         ::testing::Values(static_cast<size_t>(1),
                                           static_cast<size_t>(2),
                                           static_cast<size_t>(5)));
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

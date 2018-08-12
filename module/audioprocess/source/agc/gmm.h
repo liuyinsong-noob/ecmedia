@@ -11,7 +11,7 @@
 #ifndef WEBRTC_MODULES_AUDIO_PROCESSING_AGC_GMM_H_
 #define WEBRTC_MODULES_AUDIO_PROCESSING_AGC_GMM_H_
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // A structure that specifies a GMM.
 // A GMM is formulated as
@@ -41,5 +41,5 @@ struct GmmParameters {
 // acceptable dimension by the following function -1 is returned.
 double EvaluateGmm(const double* x, const GmmParameters& gmm_parameters);
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_AGC_GMM_H_

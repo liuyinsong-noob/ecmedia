@@ -22,7 +22,7 @@
 
 #include "../common_video/include/i420_video_frame.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class EventTimerWrapper;
 class FilePlayer;
@@ -80,7 +80,7 @@ class ViEFilePlayer
   bool FilePlayDecodeProcess();
   bool NeedsAudioFromFile(void* buf);
 
-  // Implements cloopenwebrtc::InStream.
+  // Implements yuntongxunwebrtc::InStream.
   virtual int Read(void* buf, size_t len);
   virtual int Rewind() {
     return 0;
@@ -138,6 +138,6 @@ class ViEFilePlayer
   I420VideoFrame decoded_video_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_VIDEO_ENGINE_VIE_FILE_PLAYER_H_

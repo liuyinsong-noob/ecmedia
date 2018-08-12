@@ -17,7 +17,7 @@
 #include <sys/time.h>
 #include <time.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TracePosix::TracePosix()
     : crit_sect_(*CriticalSectionWrapper::CreateCriticalSection()) {
@@ -87,4 +87,4 @@ int32_t TracePosix::AddDateTimeInfo(char* trace_message) const {
   return len + 1;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

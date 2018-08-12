@@ -11,7 +11,7 @@
 #include "audio_encoder_pcm16b.h"
 #include "pcm16b.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 int16_t AudioEncoderPcm16B::EncodeCall(const int16_t* audio,
                                        size_t input_len,

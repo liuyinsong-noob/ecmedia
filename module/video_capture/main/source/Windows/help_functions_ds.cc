@@ -16,7 +16,7 @@
 
 #include <cguid.h>
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 namespace videocapturemodule
 {

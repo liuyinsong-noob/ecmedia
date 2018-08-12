@@ -18,7 +18,7 @@
 #include "../module/interface/module_common_types.h"
 #include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // This class tracks the application requests to limit minimum and maximum
 // playout delay and makes a decision on whether the current RTP frame
@@ -39,13 +39,13 @@ class PlayoutDelayOracle {
   // Returns true if the current frame should include the playout delay
   // extension
   bool send_playout_delay() const {
-	  cloopenwebrtc::CritScope lock(&crit_sect_);
+	  yuntongxunwebrtc::CritScope lock(&crit_sect_);
     return send_playout_delay_;
   }
 
   // Returns current playout delay.
   PlayoutDelay playout_delay() const {
-	  cloopenwebrtc::CritScope lock(&crit_sect_);
+	  yuntongxunwebrtc::CritScope lock(&crit_sect_);
     return playout_delay_;
   }
 
@@ -61,7 +61,7 @@ class PlayoutDelayOracle {
   // The playout delay information is updated from the encoder thread(s).
   // The sequence number feedback is updated from the worker thread.
   // Guards access to data across multiple threads.
-	 cloopenwebrtc::CriticalSection crit_sect_;
+	 yuntongxunwebrtc::CriticalSection crit_sect_;
   // The current highest sequence number on which playout delay has been sent.
   int64_t high_sequence_number_ GUARDED_BY(crit_sect_);
   // Indicates whether the playout delay should go on the next frame.
@@ -76,6 +76,6 @@ class PlayoutDelayOracle {
   DISALLOW_COPY_AND_ASSIGN(PlayoutDelayOracle);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_PLAYOUT_DELAY_ORACLE_H_

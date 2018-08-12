@@ -17,7 +17,7 @@
 #include "video_processing.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace VideoProcessing {
 
 int32_t ColorEnhancement(I420VideoFrame* frame);

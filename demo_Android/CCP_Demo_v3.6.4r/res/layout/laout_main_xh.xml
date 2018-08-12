@@ -5,7 +5,7 @@
    Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
    that can be found in the LICENSE file in the root of the web site.
  
-    				http://www.cloopen.com
+    				http://www.yuntongxun.com
  
    An additional intellectual property rights grant can be found
    in the file PATENTS.  All contributing project authors may
@@ -35,7 +35,7 @@
         android:layout_height="fill_parent"
         android:layout_below="@id/xh_main_banner"
         android:layout_centerInParent="true"
-        android:text="暂无数据"
+        android:text="暂无数杮"
         android:gravity="center"
         android:textAppearance="?android:textAppearanceMedium"
         android:textColor="#ff0061a9"

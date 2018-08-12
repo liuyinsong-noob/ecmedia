@@ -15,7 +15,7 @@
 #include "common_types.h"
 #include "../config.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VideoReceiveStream {
  public:

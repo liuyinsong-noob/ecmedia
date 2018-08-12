@@ -25,7 +25,7 @@
 #include "udp_transport.h"
 #include "../module/congestion_controller/include/congestion_controller.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Config;
 class CriticalSectionWrapper;
@@ -97,7 +97,7 @@ class ViEChannelManager: private ViEManagerBase,
 
   // Sets bandwidth estimation related configurations.
   bool SetBandwidthEstimationConfig(int channel_id,
-                                    const cloopenwebrtc::Config& config);
+                                    const yuntongxunwebrtc::Config& config);
 
   bool GetEstimatedSendBandwidth(int channel_id,
                                  uint32_t* estimated_bandwidth) const;

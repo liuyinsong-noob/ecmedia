@@ -23,7 +23,7 @@
 #include "../module/rtp_rtcp/include/flexfec_sender.h"
 #include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 // Forward declarations.
 class OverheadObserver;
 class RateLimiter;
@@ -227,7 +227,7 @@ class RtpRtcp : public Module {
                                      int associated_payload_type) = 0;
 
   // Returns the FlexFEC SSRC, if there is one.
-  virtual cloopenwebrtc::Optional<uint32_t> FlexfecSsrc() const = 0;
+  virtual yuntongxunwebrtc::Optional<uint32_t> FlexfecSsrc() const = 0;
 
   // Sets sending status. Sends kRtcpByeCode when going from true to false.
   // Returns -1 on failure else 0.
@@ -456,7 +456,7 @@ class RtpRtcp : public Module {
       RtcpStatisticsCallback* callback) = 0;
   virtual RtcpStatisticsCallback* GetRtcpStatisticsCallback() = 0;
     
-    virtual void RegisterRtcpPacketTypeCounterObserverCallback(cloopenwebrtc::RtcpPacketTypeCounterObserver *observer) = 0;
+    virtual void RegisterRtcpPacketTypeCounterObserverCallback(yuntongxunwebrtc::RtcpPacketTypeCounterObserver *observer) = 0;
     virtual RtcpPacketTypeCounterObserver* GetRtcpPacketTypeCounterObserver() = 0;
   // BWE feedback packets.
   virtual bool SendFeedbackPacket(const rtcp::TransportFeedback& packet) = 0;
@@ -547,6 +547,6 @@ class RtpRtcp : public Module {
   virtual int SendSingleTMMBR(uint32_t bandwidth, uint32_t ssrc, uint32_t remote_ssrc) = 0;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_INCLUDE_RTP_RTCP_H_

@@ -10,7 +10,7 @@
 #include "qp_parser.h"
 #include "common_types.h"
 #include "vp8_header_parser.h"
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 bool QpParser::GetQp(const VCMEncodedFrame& frame, int* qp) {
   switch (frame.CodecSpecific()->codecType) {
     case kVideoCodecVP8:

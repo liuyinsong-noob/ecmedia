@@ -16,7 +16,7 @@
 #include "file_wrapper.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // This is a copy of the cast included in the Chromium codebase here:
 // http://cs.chromium.org/src/third_party/cld/base/casts.h
@@ -113,6 +113,6 @@ size_t WriteDoubleBufferToFile(FileWrapper* file,
                                size_t length,
                                const double* buffer);
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_TRANSIENT_FILE_UTILS_H_

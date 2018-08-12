@@ -42,7 +42,7 @@
 #include "InterpolateShannon.h"
 #include "STTypes.h"
 
-using namespace cloopensoundtouch;
+using namespace yuntongxunsoundtouch;
 
 
 /// Kaiser window with beta = 2.0

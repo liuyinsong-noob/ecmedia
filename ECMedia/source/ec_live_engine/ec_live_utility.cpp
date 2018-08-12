@@ -7,7 +7,7 @@
 //
 
 #include "ec_live_utility.h"
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     static uint32_t base_time_ = 0;
     static Clock*	clock_ = NULL;
     EC_Live_Utility::EC_Live_Utility() {

@@ -14,7 +14,7 @@
 #include "../base/criticalsection.h"
 #include "../typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 // Provides a simple way to perform an operation (such as logging) one
 // time in a certain scope.
 // Example:
@@ -27,7 +27,7 @@ class OneTimeEvent {
  public:
   OneTimeEvent() {}
   bool operator()() {
-    cloopenwebrtc::CritScope cs(&critsect_);
+    yuntongxunwebrtc::CritScope cs(&critsect_);
     if (happened_) {
       return false;
     }
@@ -37,7 +37,7 @@ class OneTimeEvent {
 
  private:
   bool happened_ = false;
-  cloopenwebrtc::CriticalSection critsect_;
+  yuntongxunwebrtc::CriticalSection critsect_;
 };
 
 // A non-thread-safe, ligher-weight version of the OneTimeEvent class.
@@ -56,6 +56,6 @@ class ThreadUnsafeOneTimeEvent {
   bool happened_ = false;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_ONETIMEEVENT_H_

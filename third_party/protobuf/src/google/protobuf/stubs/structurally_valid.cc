@@ -3,7 +3,7 @@
 
 #include <google/protobuf/stubs/common.h>
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 namespace internal {
 
@@ -533,4 +533,4 @@ bool IsStructurallyValidUTF8(const char* buf, int len) {
 
 }  // namespace internal
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google

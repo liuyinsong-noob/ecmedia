@@ -12,7 +12,7 @@
 
 #include "../base/win32.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Please don't remove this function.
 void EnsureWinsockInit() {
@@ -43,4 +43,4 @@ class WinsockInitializer {
 WinsockInitializer g_winsockinit;
 #endif
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -95,7 +95,7 @@
 
 #include <limits>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static double SincScaleFactor(double io_ratio) {
   // |sinc_scale_factor| is basically the normalized cutoff frequency of the

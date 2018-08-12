@@ -16,7 +16,7 @@
 
 #include "./base/arraysize.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace H264 {
 
 namespace {
@@ -97,39 +97,39 @@ bool IsLevelAsymmetryAllowed(const CodecParameterMap& params) {
 struct LevelConstraint {
   const int max_macroblocks_per_second;
   const int max_macroblock_frame_size;
-  const cloopenwebrtc::H264::Level level;
+  const yuntongxunwebrtc::H264::Level level;
 };
 
 // This is from ITU-T H.264 (02/2016) Table A-1 – Level limits.
 static constexpr LevelConstraint kLevelConstraints[] = {
-    {1485, 99, cloopenwebrtc::H264::kLevel1},
-    {1485, 99, cloopenwebrtc::H264::kLevel1_b},
-    {3000, 396, cloopenwebrtc::H264::kLevel1_1},
-    {6000, 396, cloopenwebrtc::H264::kLevel1_2},
-    {11880, 396, cloopenwebrtc::H264::kLevel1_3},
-    {11880, 396, cloopenwebrtc::H264::kLevel2},
-    {19800, 792, cloopenwebrtc::H264::kLevel2_1},
-    {20250, 1620, cloopenwebrtc::H264::kLevel2_2},
-    {40500, 1620, cloopenwebrtc::H264::kLevel3},
-    {108000, 3600, cloopenwebrtc::H264::kLevel3_1},
-    {216000, 5120, cloopenwebrtc::H264::kLevel3_2},
-    {245760, 8192, cloopenwebrtc::H264::kLevel4},
-    {245760, 8192, cloopenwebrtc::H264::kLevel4_1},
-    {522240, 8704, cloopenwebrtc::H264::kLevel4_2},
-    {589824, 22080, cloopenwebrtc::H264::kLevel5},
-    {983040, 3684, cloopenwebrtc::H264::kLevel5_1},
-    {2073600, 3684, cloopenwebrtc::H264::kLevel5_2},
+    {1485, 99, yuntongxunwebrtc::H264::kLevel1},
+    {1485, 99, yuntongxunwebrtc::H264::kLevel1_b},
+    {3000, 396, yuntongxunwebrtc::H264::kLevel1_1},
+    {6000, 396, yuntongxunwebrtc::H264::kLevel1_2},
+    {11880, 396, yuntongxunwebrtc::H264::kLevel1_3},
+    {11880, 396, yuntongxunwebrtc::H264::kLevel2},
+    {19800, 792, yuntongxunwebrtc::H264::kLevel2_1},
+    {20250, 1620, yuntongxunwebrtc::H264::kLevel2_2},
+    {40500, 1620, yuntongxunwebrtc::H264::kLevel3},
+    {108000, 3600, yuntongxunwebrtc::H264::kLevel3_1},
+    {216000, 5120, yuntongxunwebrtc::H264::kLevel3_2},
+    {245760, 8192, yuntongxunwebrtc::H264::kLevel4},
+    {245760, 8192, yuntongxunwebrtc::H264::kLevel4_1},
+    {522240, 8704, yuntongxunwebrtc::H264::kLevel4_2},
+    {589824, 22080, yuntongxunwebrtc::H264::kLevel5},
+    {983040, 3684, yuntongxunwebrtc::H264::kLevel5_1},
+    {2073600, 3684, yuntongxunwebrtc::H264::kLevel5_2},
 };
 
 }  // anonymous namespace
 
-cloopenwebrtc::Optional<ProfileLevelId> ParseProfileLevelId(const char* str) {
+yuntongxunwebrtc::Optional<ProfileLevelId> ParseProfileLevelId(const char* str) {
   // The string should consist of 3 bytes in hexadecimal format.
   if (strlen(str) != 6u)
-    return cloopenwebrtc::Optional<ProfileLevelId>();
+    return yuntongxunwebrtc::Optional<ProfileLevelId>();
   const uint32_t profile_level_id_numeric = strtol(str, nullptr, 16);
   if (profile_level_id_numeric == 0)
-    return cloopenwebrtc::Optional<ProfileLevelId>();
+    return yuntongxunwebrtc::Optional<ProfileLevelId>();
 
   // Separate into three bytes.
   const uint8_t level_idc =
@@ -164,22 +164,22 @@ cloopenwebrtc::Optional<ProfileLevelId> ParseProfileLevelId(const char* str) {
       break;
     default:
       // Unrecognized level_idc.
-      return cloopenwebrtc::Optional<ProfileLevelId>();
+      return yuntongxunwebrtc::Optional<ProfileLevelId>();
   }
 
   // Parse profile_idc/profile_iop into a Profile enum.
   for (const ProfilePattern& pattern : kProfilePatterns) {
     if (profile_idc == pattern.profile_idc &&
         pattern.profile_iop.IsMatch(profile_iop)) {
-      return cloopenwebrtc::Optional<ProfileLevelId>({pattern.profile, level});
+      return yuntongxunwebrtc::Optional<ProfileLevelId>({pattern.profile, level});
     }
   }
 
   // Unrecognized profile_idc/profile_iop combination.
-  return cloopenwebrtc::Optional<ProfileLevelId>();
+  return yuntongxunwebrtc::Optional<ProfileLevelId>();
 }
 
-cloopenwebrtc::Optional<Level> SupportedLevel(int max_frame_pixel_count, float max_fps) {
+yuntongxunwebrtc::Optional<Level> SupportedLevel(int max_frame_pixel_count, float max_fps) {
   static const int kPixelsPerMacroblock = 16 * 16;
 
   for (int i = arraysize(kLevelConstraints) - 1; i >= 0; --i) {
@@ -188,15 +188,15 @@ cloopenwebrtc::Optional<Level> SupportedLevel(int max_frame_pixel_count, float m
             max_frame_pixel_count &&
         level_constraint.max_macroblocks_per_second <=
             max_fps * level_constraint.max_macroblock_frame_size) {
-      return cloopenwebrtc::Optional<Level>(level_constraint.level);
+      return yuntongxunwebrtc::Optional<Level>(level_constraint.level);
     }
   }
 
   // No level supported.
-  return cloopenwebrtc::Optional<Level>();
+  return yuntongxunwebrtc::Optional<Level>();
 }
 
-cloopenwebrtc::Optional<ProfileLevelId> ParseSdpProfileLevelId(
+yuntongxunwebrtc::Optional<ProfileLevelId> ParseSdpProfileLevelId(
     const CodecParameterMap& params) {
   // TODO(magjed): The default should really be kProfileBaseline and kLevel1
   // according to the spec: https://tools.ietf.org/html/rfc6184#section-8.1. In
@@ -210,24 +210,24 @@ cloopenwebrtc::Optional<ProfileLevelId> ParseSdpProfileLevelId(
 
   const auto profile_level_id_it = params.find(kProfileLevelId);
   return (profile_level_id_it == params.end())
-             ? cloopenwebrtc::Optional<ProfileLevelId>(kDefaultProfileLevelId)
+             ? yuntongxunwebrtc::Optional<ProfileLevelId>(kDefaultProfileLevelId)
              : ParseProfileLevelId(profile_level_id_it->second.c_str());
 }
 
-cloopenwebrtc::Optional<std::string> ProfileLevelIdToString(
+yuntongxunwebrtc::Optional<std::string> ProfileLevelIdToString(
     const ProfileLevelId& profile_level_id) {
   // Handle special case level == 1b.
   if (profile_level_id.level == kLevel1_b) {
     switch (profile_level_id.profile) {
       case kProfileConstrainedBaseline:
-        return cloopenwebrtc::Optional<std::string>("42f00b");
+        return yuntongxunwebrtc::Optional<std::string>("42f00b");
       case kProfileBaseline:
-        return cloopenwebrtc::Optional<std::string>("42100b");
+        return yuntongxunwebrtc::Optional<std::string>("42100b");
       case kProfileMain:
-        return cloopenwebrtc::Optional<std::string>("4d100b");
+        return yuntongxunwebrtc::Optional<std::string>("4d100b");
       // Level 1b is not allowed for other profiles.
       default:
-        return cloopenwebrtc::Optional<std::string>();
+        return yuntongxunwebrtc::Optional<std::string>();
     }
   }
 
@@ -250,12 +250,12 @@ cloopenwebrtc::Optional<std::string> ProfileLevelIdToString(
       break;
     // Unrecognized profile.
     default:
-      return cloopenwebrtc::Optional<std::string>();
+      return yuntongxunwebrtc::Optional<std::string>();
   }
 
   char str[7];
   snprintf(str, 7u, "%s%02x", profile_idc_iop_string, profile_level_id.level);
-  return cloopenwebrtc::Optional<std::string>(str);
+  return yuntongxunwebrtc::Optional<std::string>(str);
 }
 
 // Set level according to https://tools.ietf.org/html/rfc6184#section-8.2.2.
@@ -272,9 +272,9 @@ void GenerateProfileLevelIdForAnswer(
   }
 
   // Parse profile-level-ids.
-  const cloopenwebrtc::Optional<ProfileLevelId> local_profile_level_id =
+  const yuntongxunwebrtc::Optional<ProfileLevelId> local_profile_level_id =
       ParseSdpProfileLevelId(local_supported_params);
-  const cloopenwebrtc::Optional<ProfileLevelId> remote_profile_level_id =
+  const yuntongxunwebrtc::Optional<ProfileLevelId> remote_profile_level_id =
       ParseSdpProfileLevelId(remote_offered_params);
   // The local and remote codec must have valid and equal H264 Profiles.
   DCHECK(local_profile_level_id);
@@ -301,4 +301,4 @@ void GenerateProfileLevelIdForAnswer(
 }
 
 }  // namespace H264
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

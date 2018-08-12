@@ -16,7 +16,7 @@
 #include "resampler.h"
 #include "../system_wrappers/include/logging.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace acm2 {
 
 ACMResampler::ACMResampler() {
@@ -65,4 +65,4 @@ int ACMResampler::Resample10Msec(const int16_t* in_audio,
 }
 
 }  // namespace acm2
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

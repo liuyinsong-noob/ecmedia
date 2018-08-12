@@ -17,7 +17,7 @@
 struct WebRtcCngEncInst;
 struct WebRtcCngDecInst;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -54,6 +54,6 @@ class ACMCNG: public ACMGenericCodec {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_ACM_CNG_H_

@@ -18,7 +18,7 @@
 #include "matrix.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 using std::complex;
 
@@ -93,6 +93,6 @@ class ComplexMatrix : public Matrix<complex<T> > {
   }
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_BEAMFORMER_COMPLEX_MATRIX_H_

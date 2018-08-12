@@ -19,7 +19,7 @@
 #include "silk_interface.h"
 #endif
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 namespace acm2{
 #ifndef WEBRTC_CODEC_SILK
@@ -170,7 +170,7 @@ namespace acm2{
         
         if (*bitStreamLenByte < 0)
         {
-            WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, _uniqueID,
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, _uniqueID,
                          "InternalEncode: error in encode for SILK %d", *bitStreamLenByte);
             return -1;
         }
@@ -203,14 +203,14 @@ namespace acm2{
                                                 codecParams->codecInstant.rate,
                                                 codecParams->enableDTX);
         
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, _uniqueID,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, _uniqueID,
                      "InternalInitEncoder: Silk InitEncoder freq=%d pacsize=%d rate=%d",
                      codecParams->codecInstant.plfreq,
                      codecParams->codecInstant.pacsize,
                      codecParams->codecInstant.rate);
         if(ret < 0)
         {
-            WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, _uniqueID,
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, _uniqueID,
                          "InternalInitEncoder: Silk InitEncoder error!");
             return ret;
         }
@@ -223,14 +223,14 @@ namespace acm2{
                                  WebRtcACMCodecParams* codecParams)
     {
         
-        WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceAudioCoding, _uniqueID,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceAudioCoding, _uniqueID,
                      "InternalInitDecoder: Silk InitDecoder freq=%d",
                      codecParams->codecInstant.plfreq);
         WebRtcSetDecSampleRate((silk_dec_struct*)_decoderInstPtr, codecParams->codecInstant.plfreq);
         /* Reset decoder */
         WebRtc_Word16 ret = WebRtcSilk_DecoderInit((silk_dec_struct*)_decoderInstPtr);
         if( ret ) {
-            WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, _uniqueID,
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, _uniqueID,
                          "InternalInitDecoder: Silk InitDecoder error!");
             return -1;
         }
@@ -245,7 +245,7 @@ namespace acm2{
     {
         if (!_decoderInitialized)
         {
-            WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, _uniqueID,
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, _uniqueID,
                          "CodeDef: decoder not initialized for SILK");
             return -1;
         }
@@ -284,7 +284,7 @@ namespace acm2{
     {
         WebRtc_Word16 ret = WebRtcSilk_EncoderCreate((silk_enc_struct **)&_encoderInstPtr);
         if(ret < 0){
-            WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, _uniqueID,
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, _uniqueID,
                          "InternalCreateEncoder: cannot create instance for SILK encoder");
             return -1;
         }
@@ -310,7 +310,7 @@ namespace acm2{
     {
         WebRtc_Word16 ret = WebRtcSilk_DecoderCreate((silk_dec_struct **)&_decoderInstPtr);
         if(ret < 0){
-            WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, _uniqueID,
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, _uniqueID,
                          "InternalCreateDecoder: cannot create instance for SILK decoder");
             return -1;
         }
@@ -347,11 +347,11 @@ namespace acm2{
         WebRtc_Word16 retRate = WebRtcSetEncRate((silk_enc_struct*)_encoderInstPtr, rate);
                 
         if(retRate != rate){
-            WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, _uniqueID,
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, _uniqueID,
                          "Silk enc unsupported codec bitrate [%i], normalizing",rate);
         }
         
-        WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceAudioCoding, _uniqueID,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceAudioCoding, _uniqueID,
                      "MSSilkEnc: Setting silk codec birate to [%i]",retRate);
         _encoderParams.codecInstant.rate = retRate;
         return 0;
@@ -359,4 +359,4 @@ namespace acm2{
     
 #endif
    } //acm2 
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

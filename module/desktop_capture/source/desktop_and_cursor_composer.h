@@ -15,7 +15,7 @@
 #include "desktop_capturer.h"
 #include "mouse_cursor_monitor.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // A wrapper for DesktopCapturer that also captures mouse using specified
 // MouseCursorMonitor and renders it on the generated streams.
@@ -50,18 +50,18 @@ class DesktopAndCursorComposer : public DesktopCapturer,
   void OnMouseCursorPosition(MouseCursorMonitor::CursorState state,
                              const DesktopVector& position) ;
 
-  cloopenwebrtc::scoped_ptr<DesktopCapturer> desktop_capturer_;
-  cloopenwebrtc::scoped_ptr<MouseCursorMonitor> mouse_monitor_;
+  yuntongxunwebrtc::scoped_ptr<DesktopCapturer> desktop_capturer_;
+  yuntongxunwebrtc::scoped_ptr<MouseCursorMonitor> mouse_monitor_;
 
   DesktopCapturer::Callback* callback_;
 
-  cloopenwebrtc::scoped_ptr<MouseCursor> cursor_;
+  yuntongxunwebrtc::scoped_ptr<MouseCursor> cursor_;
   MouseCursorMonitor::CursorState cursor_state_;
   DesktopVector cursor_position_;
 
   DISALLOW_COPY_AND_ASSIGN(DesktopAndCursorComposer);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_DESKTOP_AND_CURSOR_COMPOSER_H_

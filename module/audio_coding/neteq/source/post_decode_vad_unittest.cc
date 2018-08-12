@@ -14,7 +14,7 @@
 
 #include "testing/gtest/include/gtest/gtest.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(PostDecodeVad, CreateAndDestroy) {
   PostDecodeVad vad;
@@ -22,4 +22,4 @@ TEST(PostDecodeVad, CreateAndDestroy) {
 
 // TODO(hlundin): Write more tests.
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -17,7 +17,7 @@
 #include "voe_errors.h"
 #include "voice_engine_impl.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 VoEHardware* VoEHardware::GetInterface(VoiceEngine* voiceEngine)
@@ -621,4 +621,4 @@ int VoEHardwareImpl::CheckRecordPermission(bool& enabled)
 }
 #endif  // WEBRTC_VOICE_ENGINE_HARDWARE_API
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

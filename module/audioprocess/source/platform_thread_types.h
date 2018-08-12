@@ -19,7 +19,7 @@
 #include <unistd.h>
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 #if defined(WEBRTC_WIN)
 typedef DWORD PlatformThreadId;
 typedef DWORD PlatformThreadRef;

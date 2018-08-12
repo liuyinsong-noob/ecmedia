@@ -15,7 +15,7 @@
 #include "typedefs.h"
 #include "vie_file.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class ViEFileImage {
  public:

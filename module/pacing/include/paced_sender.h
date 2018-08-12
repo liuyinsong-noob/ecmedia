@@ -19,7 +19,7 @@
 #include "scoped_ptr.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class BitrateProber;
 class Clock;
 class CriticalSectionWrapper;

@@ -58,12 +58,12 @@
 #include <google/protobuf/generated_message_util.h>
 #include <google/protobuf/message_lite.h>
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 
 namespace upb {
-namespace cloopen_google_opensource {
+namespace yuntongxun_google_opensource {
 class GMR_Handlers;
-}  // namespace cloopen_google_opensource
+}  // namespace yuntongxun_google_opensource
 }  // namespace upb
 
 namespace protobuf {
@@ -263,7 +263,7 @@ class LIBPROTOBUF_EXPORT RepeatedPtrFieldBase {
 
   // To parse directly into a proto2 generated class, the upb class GMR_Handlers
   // needs to be able to modify a RepeatedPtrFieldBase directly.
-  friend class LIBPROTOBUF_EXPORT upb::cloopen_google_opensource::GMR_Handlers;
+  friend class LIBPROTOBUF_EXPORT upb::yuntongxun_google_opensource::GMR_Handlers;
 
   RepeatedPtrFieldBase();
 
@@ -410,7 +410,7 @@ class LIBPROTOBUF_EXPORT StringTypeHandlerBase {
   static void Clear(string* value) { value->clear(); }
   static void Merge(const string& from, string* to) { *to = from; }
   static const Type& default_instance() {
-    return ::cloopen_google::protobuf::internal::GetEmptyString();
+    return ::yuntongxun_google::protobuf::internal::GetEmptyString();
   }
 };
 
@@ -807,7 +807,7 @@ void RepeatedField<Element>::Reserve(int new_size) {
   if (total_size_ >= new_size) return;
 
   Element* old_elements = elements_;
-  total_size_ = max(cloopen_google::protobuf::internal::kMinRepeatedFieldAllocationSize,
+  total_size_ = max(yuntongxun_google::protobuf::internal::kMinRepeatedFieldAllocationSize,
                     max(total_size_ * 2, new_size));
   elements_ = new Element[total_size_];
   if (old_elements != NULL) {
@@ -1599,5 +1599,5 @@ AllocatedRepeatedPtrFieldBackInserter(
 
 }  // namespace protobuf
 
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 #endif  // GOOGLE_PROTOBUF_REPEATED_FIELD_H__

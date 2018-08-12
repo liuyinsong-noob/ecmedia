@@ -38,7 +38,7 @@
 #include <stdio.h>
 char *globalFilePathcapture;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // PCMu
 int AudioDecoderPcmU::Decode(const uint8_t* encoded, size_t encoded_len,
@@ -606,4 +606,4 @@ AudioDecoder* CreateAudioDecoder(NetEqDecoder codec_type) {
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

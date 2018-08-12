@@ -17,7 +17,7 @@
 #include "../module/rtp_rtcp/source/rtcp_packet/tmmb_item.h"
 #include "../typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class TMMBRSet
 {
@@ -121,6 +121,6 @@ private:
     float*                  _ptrIntersectionBoundingSet;
     float*                  _ptrMaxPRBoundingSet;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_TMMBR_HELP_H_

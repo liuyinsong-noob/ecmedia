@@ -14,7 +14,7 @@
 #include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioFrame;
 class AgcAudioProc;
@@ -64,6 +64,6 @@ class Agc {
   scoped_ptr<Resampler> resampler_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_AGC_AGC_H_

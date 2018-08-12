@@ -40,7 +40,7 @@
 
 #include <google/protobuf/stubs/common.h>
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 namespace io {
 
@@ -321,6 +321,6 @@ bool GzipOutputStream::Close() {
 
 }  // namespace io
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 
 #endif  // HAVE_ZLIB

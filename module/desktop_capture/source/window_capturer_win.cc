@@ -21,7 +21,7 @@
 //#pragma comment(lib, "netapi32.lib")  
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 
@@ -58,7 +58,7 @@ BOOL CALLBACK WindowsEnumerationHandler(HWND hwnd, LPARAM param) {
   WCHAR window_title[kTitleLength];
   // Truncate the title if it's longer than kTitleLength.
   GetWindowText(hwnd, window_title, kTitleLength);
-  window.title = cloopenwebrtc::ToUtf8(window_title);
+  window.title = yuntongxunwebrtc::ToUtf8(window_title);
 
   // Skip windows when we failed to convert the title or it is empty.
   if (window.title.empty())
@@ -266,7 +266,7 @@ void WindowCapturerWin::Capture(const DesktopRegion& region) {
     return;
   }
 
-  cloopenwebrtc::scoped_ptr<DesktopFrameWin> frame(
+  yuntongxunwebrtc::scoped_ptr<DesktopFrameWin> frame(
       DesktopFrameWin::Create(cropped_rect.size(), NULL, window_dc));
   if (!frame.get()) {
     ReleaseDC(window_, window_dc);
@@ -335,5 +335,5 @@ WindowCapturer* WindowCapturer::Create(const DesktopCaptureOptions& options) {
   return new WindowCapturerWin();
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 

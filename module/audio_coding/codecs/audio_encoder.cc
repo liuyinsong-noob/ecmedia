@@ -10,7 +10,7 @@
 
 #include "audio_encoder.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 AudioEncoder::EncodedInfo::EncodedInfo() : EncodedInfoLeaf() {
 }
@@ -18,4 +18,4 @@ AudioEncoder::EncodedInfo::EncodedInfo() : EncodedInfoLeaf() {
 AudioEncoder::EncodedInfo::~EncodedInfo() {
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

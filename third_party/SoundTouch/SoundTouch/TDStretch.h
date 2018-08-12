@@ -49,7 +49,7 @@
 #include "RateTransposer.h"
 #include "FIFOSamplePipe.h"
 
-namespace cloopensoundtouch
+namespace yuntongxunsoundtouch
 {
 
 /// Default values for sound processing parameters:

@@ -13,7 +13,7 @@
 #include "../base/checks.h"
 #include "../base/task_queue.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace internal {
 pthread_key_t g_queue_ptr_tls = 0;
 
@@ -37,4 +37,4 @@ AutoSetCurrentQueuePtr::~AutoSetCurrentQueuePtr() {
 }
 
 }  // namespace internal
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

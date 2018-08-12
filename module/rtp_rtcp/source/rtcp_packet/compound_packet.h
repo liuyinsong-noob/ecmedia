@@ -18,7 +18,7 @@
 #include "../base/constructormagic.h"
 #include "rtcp_packet.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace rtcp {
 
 class CompoundPacket : public RtcpPacket {

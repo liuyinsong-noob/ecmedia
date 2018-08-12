@@ -17,7 +17,7 @@
 #include "module_common_types.h"
 #include "media_file_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class MediaFile : public Module
 {
 public:
@@ -223,5 +223,5 @@ protected:
     MediaFile() {}
     virtual ~MediaFile() {}
 };
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 #endif // WEBRTC_MODULES_MEDIA_FILE_INTERFACE_MEDIA_FILE_H_

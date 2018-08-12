@@ -21,7 +21,7 @@
 #include "buffer.h"
 #include "module_common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Converts a sample buffer emitted from the VideoToolbox encoder into a buffer
 // suitable for RTP. The sample buffer is in avcc format whereas the rtp buffer

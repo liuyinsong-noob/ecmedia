@@ -18,7 +18,7 @@
 /* Quality Modes: Resolution and Robustness settings  */
 /******************************************************/
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 struct VideoContentMetrics;
 
 struct VCMResolutionScale {

@@ -15,7 +15,7 @@
 
 #include "video_capture_defines.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 namespace videocapturemodule
 {

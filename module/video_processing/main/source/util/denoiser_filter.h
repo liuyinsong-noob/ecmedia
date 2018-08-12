@@ -17,7 +17,7 @@
 #include "module_common_types.h"
 #include "video_processing_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 extern const int kMotionMagnitudeThreshold;
 extern const int kSumDiffThreshold;

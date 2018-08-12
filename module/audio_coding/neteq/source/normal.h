@@ -20,7 +20,7 @@
 #include "defines.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Forward declarations.
 class BackgroundNoise;
@@ -64,5 +64,5 @@ class Normal {
   DISALLOW_COPY_AND_ASSIGN(Normal);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_NORMAL_H_

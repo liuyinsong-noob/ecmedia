@@ -41,7 +41,7 @@
 //                                 int format);
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -270,7 +270,7 @@ int16_t ACMAMR::SetAMREncoderPackingFormat(ACMAMRPackingFormat packing_format) {
   if ((packing_format != AMRBandwidthEfficient) &&
       (packing_format != AMROctetAlligned) &&
       (packing_format != AMRFileStorage)) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                  "Invalid AMR Encoder packing-format.");
     return -1;
   } else {
@@ -301,4 +301,4 @@ ACMAMRPackingFormat ACMAMR::AMRDecoderPackingFormat() const {
 #endif
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -14,7 +14,7 @@
 #include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
 #include "../typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 struct FecPacketCounter {
   FecPacketCounter()
@@ -52,5 +52,5 @@ class UlpfecReceiver {
   // Returns a counter describing the added and recovered packets.
   virtual FecPacketCounter GetPacketCounter() const = 0;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_RTP_RTCP_INCLUDE_ULPFEC_RECEIVER_H_

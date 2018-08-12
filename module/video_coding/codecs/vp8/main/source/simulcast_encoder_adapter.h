@@ -17,7 +17,7 @@
 #include "vp8.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VideoEncoderFactory {
  public:
@@ -86,10 +86,10 @@ class SimulcastEncoderAdapter : public VP8Encoder,
                             bool* send_stream) const;
 
   // Populate the codec settings for each stream.
-  void PopulateStreamCodec(const cloopenwebrtc::VideoCodec* inst,
+  void PopulateStreamCodec(const yuntongxunwebrtc::VideoCodec* inst,
                            int stream_index,
                            bool highest_resolution_stream,
-                           cloopenwebrtc::VideoCodec* stream_codec,
+                           yuntongxunwebrtc::VideoCodec* stream_codec,
                            bool* send_stream);
 
   // Get the stream index according to |encodedImage|.

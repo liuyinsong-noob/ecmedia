@@ -10,7 +10,7 @@
 
 #include "frame_preprocessor.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VPMFramePreprocessor::VPMFramePreprocessor()
     : id_(0),

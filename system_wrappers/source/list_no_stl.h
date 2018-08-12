@@ -13,7 +13,7 @@
 
 #include "constructor_magic.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class CriticalSectionWrapper;
 
 class ListNoStlItem
@@ -74,6 +74,6 @@ private:
     unsigned int size_;
     DISALLOW_COPY_AND_ASSIGN(ListNoStl);
 };
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_SYSTEM_WRAPPERS_SOURCE_LIST_NO_STL_H_

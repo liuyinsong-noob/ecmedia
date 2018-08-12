@@ -18,7 +18,7 @@
 #include "dsp_helper.h"
 #include "sync_buffer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 void ComfortNoise::Reset() {
   first_call_ = true;
@@ -132,4 +132,4 @@ int ComfortNoise::Generate(size_t requested_length,
   return kOK;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

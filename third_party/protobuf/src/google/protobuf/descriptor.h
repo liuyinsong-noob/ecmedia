@@ -60,7 +60,7 @@
 #include <google/protobuf/stubs/common.h>
 
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 
 // Defined in this file.
@@ -1688,5 +1688,5 @@ inline const FieldDescriptor* OneofDescriptor::field(int index) const {
 
 }  // namespace protobuf
 
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 #endif  // GOOGLE_PROTOBUF_DESCRIPTOR_H__

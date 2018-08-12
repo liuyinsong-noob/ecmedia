@@ -6,7 +6,7 @@ package com.hisun.phone.core.voice.exception;
 /**
  * <p>Title: CCPRecordException</p>
  * <p>Description: This exception is thrown to Recording error. </p>
- * <p>Company: http://www.cloopen.com/</p>
+ * <p>Company: http://www.yuntongxun.com/</p>
  * @author  Jorstin Chan
  * @version 3.6
  * @date 2013-12-25

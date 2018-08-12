@@ -15,7 +15,7 @@
 #include "webrtc_vad.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // This is a C++ wrapper class for WebRtcVad.
 class Vad {

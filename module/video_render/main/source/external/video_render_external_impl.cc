@@ -10,7 +10,7 @@
 
 #include "video_render_external_impl.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VideoRenderExternalImpl::VideoRenderExternalImpl(
                                                  const int32_t id,

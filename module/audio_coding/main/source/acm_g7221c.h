@@ -22,7 +22,7 @@ struct G722_1C_48_encinst_t_;
 struct G722_1C_48_decinst_t_;
 struct G722_1_Inst_t_;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -59,6 +59,6 @@ class ACMG722_1C : public ACMGenericCodec {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_ACM_G7221C_H_

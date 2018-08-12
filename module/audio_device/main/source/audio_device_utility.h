@@ -13,7 +13,7 @@
 
 #include "typedefs.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 class AudioDeviceUtility
@@ -29,6 +29,6 @@ class AudioDeviceUtility
   virtual ~AudioDeviceUtility() {}
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_AUDIO_DEVICE_AUDIO_DEVICE_UTILITY_H

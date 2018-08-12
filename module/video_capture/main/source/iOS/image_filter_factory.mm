@@ -9,13 +9,13 @@
 #import "image_filter_factory.h"
 
 @implementation ECImageFilterFactory
-    +(ECImageOutput<ECImageInput>*)createImageFiilterWithType:(cloopenwebrtc::ECImageFilterType) type {
+    +(ECImageOutput<ECImageInput>*)createImageFiilterWithType:(yuntongxunwebrtc::ECImageFilterType) type {
         ECImageOutput<ECImageInput> *imageFilter = nullptr;
         switch (type) {
-            case cloopenwebrtc::ECType_BeautyFaceFilter:
+            case yuntongxunwebrtc::ECType_BeautyFaceFilter:
                 imageFilter = [[ECImageBeautyFaceFilter alloc] init];
                 break;
-            case cloopenwebrtc::ECType_GrayFilter:
+            case yuntongxunwebrtc::ECType_GrayFilter:
                 imageFilter = [[ECImageGreyFilter alloc] init];
                 break;
             default:

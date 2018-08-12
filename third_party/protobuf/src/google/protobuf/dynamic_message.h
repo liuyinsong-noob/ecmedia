@@ -43,7 +43,7 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/stubs/common.h>
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 
 // Defined in other files.
@@ -144,5 +144,5 @@ class LIBPROTOBUF_EXPORT DynamicMessageFactory : public MessageFactory {
 
 }  // namespace protobuf
 
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 #endif  // GOOGLE_PROTOBUF_DYNAMIC_MESSAGE_H__

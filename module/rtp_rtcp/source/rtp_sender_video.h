@@ -31,7 +31,7 @@
 #include "../module/rtp_rtcp/source/video_codec_information.h"
 #include "../typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class RtpPacketToSend;
 
 class RTPSenderVideo {
@@ -44,7 +44,7 @@ class RTPSenderVideo {
   virtual RtpVideoCodecTypes VideoCodecType() const;
 
   size_t FecPacketOverhead() const {
-    cloopenwebrtc::CritScope cs(&crit_);
+    yuntongxunwebrtc::CritScope cs(&crit_);
     return CalculateFecPacketOverhead();
   }
 
@@ -73,7 +73,7 @@ class RTPSenderVideo {
                         const FecProtectionParams& key_params);
 
   // FlexFEC.
-  cloopenwebrtc::Optional<uint32_t> FlexfecSsrc() const;
+  yuntongxunwebrtc::Optional<uint32_t> FlexfecSsrc() const;
 
   uint32_t VideoBitrateSent() const;
   uint32_t FecOverheadRate() const;
@@ -112,7 +112,7 @@ class RTPSenderVideo {
   Clock* const clock_;
 
   // Should never be held when calling out of this class.
-  cloopenwebrtc::CriticalSection crit_;
+  yuntongxunwebrtc::CriticalSection crit_;
 
   RtpVideoCodecTypes video_type_;
   int32_t retransmission_settings_ GUARDED_BY(crit_);
@@ -130,7 +130,7 @@ class RTPSenderVideo {
   FecProtectionParams delta_fec_params_ GUARDED_BY(crit_);
   FecProtectionParams key_fec_params_ GUARDED_BY(crit_);
 
-  cloopenwebrtc::CriticalSection stats_crit_;
+  yuntongxunwebrtc::CriticalSection stats_crit_;
   // Bitrate used for FEC payload, RED headers, RTP headers for FEC packets
   // and any padding overhead.
   RateStatistics fec_bitrate_ GUARDED_BY(stats_crit_);
@@ -139,6 +139,6 @@ class RTPSenderVideo {
   OneTimeEvent first_frame_sent_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_SENDER_VIDEO_H_

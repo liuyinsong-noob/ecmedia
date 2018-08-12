@@ -18,7 +18,7 @@
 #include "logging.h"
 #include "voice_engine_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace voe {
 
 // TODO(ajm): There is significant overlap between RemixAndResample and

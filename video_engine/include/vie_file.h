@@ -18,7 +18,7 @@
 
 #include "common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VideoEngine;
 class VCMFrameStorageCallback;
@@ -220,6 +220,6 @@ class WEBRTC_DLLEXPORT ViEFile {
   virtual ~ViEFile() {}
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_VIDEO_ENGINE_INCLUDE_VIE_FILE_H_

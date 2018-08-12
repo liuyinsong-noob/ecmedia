@@ -23,7 +23,7 @@
 
 #define MAX_NUMBER_OF_SOCKET_MANAGERS_LINUX 8
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class ConditionVariableWrapper;
 class UdpSocketManagerPosixImpl;
@@ -80,6 +80,6 @@ private:
     ListWrapper _addList;
     ListWrapper _removeList;
 };
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_MODULES_UDP_TRANSPORT_SOURCE_UDP_SOCKET_MANAGER_POSIX_H_

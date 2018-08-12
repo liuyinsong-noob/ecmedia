@@ -34,7 +34,7 @@ const char *g_opengles_display = NULL;
 FILE *g_file_opengles_display = NULL;
 #endif
 
-using namespace cloopenwebrtc;
+using namespace yuntongxunwebrtc;
 
 enum ImageType {
     REMOTE_IMAGE = 0,

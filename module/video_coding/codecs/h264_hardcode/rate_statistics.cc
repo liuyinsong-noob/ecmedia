@@ -14,7 +14,7 @@
 
 #include "checks.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 RateStatistics::RateStatistics(uint32_t window_size_ms, float scale)
     : num_buckets_(window_size_ms + 1),  // N ms in (N+1) buckets.

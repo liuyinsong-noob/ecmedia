@@ -29,7 +29,7 @@
 #include "vie_file_recorder.h"
 #include "vie_capturer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Config;
 class CriticalSectionWrapper;

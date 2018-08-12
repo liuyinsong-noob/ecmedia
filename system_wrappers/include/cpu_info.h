@@ -13,7 +13,7 @@
 
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class CpuInfo {
  public:
@@ -23,6 +23,6 @@ class CpuInfo {
   CpuInfo() {}
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_SYSTEM_WRAPPERS_INCLUDE_CPU_INFO_H_

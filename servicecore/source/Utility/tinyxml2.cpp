@@ -30,7 +30,7 @@ distribution.
 	#include <cstddef>
 #endif
 
-using namespace cloopenwebrtc::tinyxml2;
+using namespace yuntongxunwebrtc::tinyxml2;
 
 static const char LINE_FEED				= (char)0x0a;			// all line endings are normalized to LF
 static const char LF = LINE_FEED;

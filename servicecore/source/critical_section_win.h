@@ -15,7 +15,7 @@
 #include "critical_section_wrapper.h"
 #include <windows.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class CriticalSectionWindows : public CriticalSectionWrapper
 {
 public:

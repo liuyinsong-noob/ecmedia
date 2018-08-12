@@ -17,7 +17,7 @@
 #include "voe_errors.h"
 #include "voice_engine_impl.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 VoECodec* VoECodec::GetInterface(VoiceEngine* voiceEngine)
@@ -516,4 +516,4 @@ void VoECodecImpl::ExternalToACMCodecRepresentation(CodecInst& toInst,
 
 #endif  // WEBRTC_VOICE_ENGINE_CODEC_API
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

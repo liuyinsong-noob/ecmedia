@@ -34,7 +34,7 @@
 namespace std { using ::ptrdiff_t; };
 #endif // _WIN32
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 template <typename T>
 class scoped_ptr {
@@ -253,6 +253,6 @@ void swap(scoped_ptr_malloc<T,FF>& a, scoped_ptr_malloc<T,FF>& b) {
   a.swap(b);
 }
 
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif  // #ifndef WEBRTC_SYSTEM_WRAPPERS_INTERFACE_SCOPED_PTR_H_

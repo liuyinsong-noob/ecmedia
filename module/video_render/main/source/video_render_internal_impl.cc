@@ -56,7 +56,7 @@
 #define STANDARD_RENDERING kRenderExternal
 #endif  // STANDARD_RENDERING
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VideoRender*
 VideoRender::CreateVideoRender(const int32_t id,

@@ -15,7 +15,7 @@
 
 #include "../base/atomicops.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Reference count interface.
 class RefCountInterface {

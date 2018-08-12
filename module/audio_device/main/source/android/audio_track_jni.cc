@@ -27,7 +27,7 @@
 #include "../system_wrappers/include/thread_wrapper.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 JavaVM* AudioTrackJni::globalJvm = NULL;
 JNIEnv* AudioTrackJni::globalJNIEnv = NULL;

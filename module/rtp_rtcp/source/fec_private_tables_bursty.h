@@ -27,7 +27,7 @@
 
 #include "../typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace fec_private_tables {
 
 const uint8_t kMaskBursty1_1[2] = {
@@ -758,5 +758,5 @@ const uint8_t** kPacketMaskBurstyTbl[12] = {
 };
 
 }  // namespace fec_private_tables
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_FEC_PRIVATE_TABLES_BURSTY_H_

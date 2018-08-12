@@ -14,7 +14,7 @@
 
 #include "video_capture.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 namespace videocapturemodule
 {
@@ -68,7 +68,7 @@ WebRtc_Word32 VideoCaptureMacQTKitInfo::NumberOfCapabilities(
 //    // Not implemented. Mac doesn't use discrete steps in capabilities, rather
 //    // "analog". QTKit will do it's best to convert frames to what ever format
 //    // you ask for.
-//    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+//    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
 //                 "NumberOfCapabilities is not supported on the Mac platform.");
 //    return -1;
 }
@@ -124,7 +124,7 @@ WebRtc_Word32 VideoCaptureMacQTKitInfo::GetCapability(
 //    // Not implemented. Mac doesn't use discrete steps in capabilities, rather
 //    // "analog". QTKit will do it's best to convert frames to what ever format
 //    // you ask for.
-//    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+//    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
 //                 "NumberOfCapabilities is not supported on the Mac platform.");
 //    return -1;
 }
@@ -137,7 +137,7 @@ WebRtc_Word32 VideoCaptureMacQTKitInfo::GetBestMatchedCapability(
     // Not implemented. Mac doesn't use discrete steps in capabilities, rather
     // "analog". QTKit will do it's best to convert frames to what ever format
     // you ask for.
-    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "NumberOfCapabilities is not supported on the Mac platform.");
     return -1;
 }
@@ -161,7 +161,7 @@ WebRtc_Word32 VideoCaptureMacQTKitInfo::CreateCapabilityMap(
     // Not implemented. Mac doesn't use discrete steps in capabilities, rather
     // "analog". QTKit will do it's best to convert frames to what ever format
     // you ask for.
-    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "NumberOfCapabilities is not supported on the Mac platform.");
      return -1;
 }

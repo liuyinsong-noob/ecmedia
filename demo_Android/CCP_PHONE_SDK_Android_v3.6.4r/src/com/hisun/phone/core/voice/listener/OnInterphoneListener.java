@@ -17,7 +17,7 @@ import com.hisun.phone.core.voice.model.interphone.InterphoneReleaseMicMsg;
 * <p>Title: InterphoneListener.java</p>
 * <p>Description: </p>
 * <p>Copyright: Copyright (c) 2012</p>
-* <p>Company: http://www.cloopen.com</p>
+* <p>Company: http://www.yuntongxun.com</p>
 * @author Jorstin Chan
 * @date 2013-10-22
 * @version 3.5

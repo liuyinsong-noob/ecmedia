@@ -14,7 +14,7 @@
 
 #include "common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace test {
 
 struct RtpPacket {

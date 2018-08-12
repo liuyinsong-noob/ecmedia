@@ -13,13 +13,13 @@
 
 #include "desktop_frame.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Always takes ownership of |frame|. Returns NULL if |rect| is not contained
 // by the bounds of |frame|.
 DesktopFrame* CreateCroppedDesktopFrame(DesktopFrame* frame,
                                         const DesktopRect& rect);
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_CROPPED_DESKTOP_FRAME_H_
 

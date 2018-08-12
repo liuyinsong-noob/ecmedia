@@ -5,7 +5,7 @@ package com.hisun.phone.core.voice.model.videoconference;
 * <p>Title: VideoConferenceRemoveMemberMsg.java</p>
 * <p>Description: Notice the client had been removed from the video conference</p>
 * <p>Copyright: Copyright (c) 2012</p>
-* <p>Company: http://www.cloopen.com</p>
+* <p>Company: http://www.yuntongxun.com</p>
 * @author Jorstin Chan
 * @date 2013-10-25
 * @version 3.5

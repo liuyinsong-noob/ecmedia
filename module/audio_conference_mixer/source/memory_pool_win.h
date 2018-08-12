@@ -18,7 +18,7 @@
 #include "../system_wrappers/include/atomic32.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 template<class MemoryType> struct MemoryPoolItem;
 
 template<class MemoryType>
@@ -194,6 +194,6 @@ MemoryPoolItem<MemoryType>* MemoryPoolImpl<MemoryType>::CreateMemory()
     ++_createdMemory;
     return returnValue;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_MODULES_AUDIO_CONFERENCE_MIXER_SOURCE_MEMORY_POOL_WINDOWS_H_

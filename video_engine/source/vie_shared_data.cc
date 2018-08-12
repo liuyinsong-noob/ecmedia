@@ -21,7 +21,7 @@
 #include "vie_shared_data.h"
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ViESharedData::ViESharedData(const Config& config)
     : number_cores_(CpuInfo::DetectNumberOfCores()),

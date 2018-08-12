@@ -17,7 +17,7 @@
 
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class EventTimerWin : public EventTimerWrapper {
  public:
@@ -35,6 +35,6 @@ class EventTimerWin : public EventTimerWrapper {
   uint32_t timerID_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_SOURCE_EVENT_WIN_H_

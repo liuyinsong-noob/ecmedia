@@ -18,7 +18,7 @@
 #include "video_render_defines.h"
 //#include <stdio.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class CriticalSectionWrapper;
 

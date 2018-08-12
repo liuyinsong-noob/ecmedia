@@ -22,7 +22,7 @@
 
 #define SOCKET_ERROR -1
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class UdpSocketPosix : public UdpSocketWrapper
 {
 public:
@@ -86,6 +86,6 @@ private:
 
     CriticalSectionWrapper* _cs;
 };
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_MODULES_UDP_TRANSPORT_SOURCE_UDP_SOCKET_POSIX_H_

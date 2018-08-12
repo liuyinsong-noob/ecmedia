@@ -12,7 +12,7 @@
 
 #include <cstdlib>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 WebRtc_UWord32 LatestTimestamp(WebRtc_UWord32 timestamp1,
                                WebRtc_UWord32 timestamp2,
@@ -57,4 +57,4 @@ WebRtc_Word32 LatestSequenceNumber(WebRtc_Word32 seq_num1,
     return seq_num1;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

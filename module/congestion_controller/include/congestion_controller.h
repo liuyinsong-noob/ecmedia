@@ -24,11 +24,11 @@
 #include "../module/pacing/paced_sender.h"
 #include "../module/remote_bitrate_estimator/remote_estimator_proxy.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 struct SentPacket;
 }
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class BitrateController;
 class Clock;
@@ -108,7 +108,7 @@ class CongestionController : public CallStatsObserver, public Module {
   void SetAllocatedSendBitrateLimits(int min_send_bitrate_bps,
                                      int max_padding_bitrate_bps);
 
-  virtual void OnSentPacket(const cloopenwebrtc::SentPacket& sent_packet);
+  virtual void OnSentPacket(const yuntongxunwebrtc::SentPacket& sent_packet);
 
   // Implements CallStatsObserver.
   void OnRttUpdate(int64_t avg_rtt_ms, int64_t max_rtt_ms) override;
@@ -147,7 +147,7 @@ class CongestionController : public CallStatsObserver, public Module {
     void PickEstimator() EXCLUSIVE_LOCKS_REQUIRED(crit_sect_);
     RemoteBitrateObserver* observer_;
     Clock* const clock_;
-    cloopenwebrtc::CriticalSection crit_sect_;
+    yuntongxunwebrtc::CriticalSection crit_sect_;
     std::unique_ptr<RemoteBitrateEstimator> rbe_;
     bool using_absolute_send_time_;
     uint32_t packets_since_absolute_send_time_;
@@ -175,7 +175,7 @@ class CongestionController : public CallStatsObserver, public Module {
   TransportFeedbackAdapter transport_feedback_adapter_;
   int min_bitrate_bps_;
   int max_bitrate_bps_;
-  cloopenwebrtc::CriticalSection critsect_;
+  yuntongxunwebrtc::CriticalSection critsect_;
   uint32_t last_reported_bitrate_bps_ GUARDED_BY(critsect_);
   uint8_t last_reported_fraction_loss_ GUARDED_BY(critsect_);
   int64_t last_reported_rtt_ GUARDED_BY(critsect_);
@@ -184,6 +184,6 @@ class CongestionController : public CallStatsObserver, public Module {
   DISALLOW_IMPLICIT_CONSTRUCTORS(CongestionController);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // cloopenwebrtc_MODULES_CONGESTION_CONTROLLER_INCLUDE_CONGESTION_CONTROLLER_H_

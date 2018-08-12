@@ -19,7 +19,7 @@
 #include "packet.h"
 #include "packet_source.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace test {
 
 namespace {
@@ -106,7 +106,7 @@ AcmReceiveTestOldApi::AcmReceiveTestOldApi(
     int output_freq_hz,
     NumOutputChannels exptected_output_channels)
     : clock_(0),
-      acm_(cloopenwebrtc::AudioCodingModule::Create(0, &clock_)),
+      acm_(yuntongxunwebrtc::AudioCodingModule::Create(0, &clock_)),
       packet_source_(packet_source),
       audio_sink_(audio_sink),
       output_freq_hz_(output_freq_hz),
@@ -154,7 +154,7 @@ void AcmReceiveTestOldApi::Run() {
       const int samples_per_block = output_freq_hz_ * 10 / 1000;
       EXPECT_EQ(samples_per_block, output_frame.samples_per_channel_);
       if (exptected_output_channels_ != kArbitraryChannels) {
-        if (output_frame.speech_type_ == cloopenwebrtc::AudioFrame::kPLC) {
+        if (output_frame.speech_type_ == yuntongxunwebrtc::AudioFrame::kPLC) {
           // Don't check number of channels for PLC output, since each test run
           // usually starts with a short period of mono PLC before decoding the
           // first packet.
@@ -211,4 +211,4 @@ void AcmReceiveTestToggleOutputFreqOldApi::AfterGetAudio() {
 }
 
 }  // namespace test
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

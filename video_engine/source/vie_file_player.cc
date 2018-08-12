@@ -22,7 +22,7 @@
 #include "voe_file.h"
 #include "voe_video_sync.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const int kThreadWaitTimeMs = 100;
 
@@ -509,4 +509,4 @@ int ViEFilePlayer::GetFileInformation(int engine_id,
   return 0;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

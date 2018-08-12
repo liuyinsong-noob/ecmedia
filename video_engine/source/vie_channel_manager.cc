@@ -28,7 +28,7 @@
 #include "../module/utility/include/process_thread.h"
 #include "../logging/rtc_event_log/rtc_event_log.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ViEChannelManager::ViEChannelManager(
     int engine_id,
@@ -545,7 +545,7 @@ void ViEChannelManager::UpdateSsrcs(int channel_id,
 }
 
 bool ViEChannelManager::SetBandwidthEstimationConfig(
-    int channel_id, const cloopenwebrtc::Config& config) {
+    int channel_id, const yuntongxunwebrtc::Config& config) {
   CriticalSectionScoped cs(channel_id_critsect_);
   ChannelGroup* group = FindGroup(channel_id);
   if (!group) {

@@ -17,7 +17,7 @@
 #include "cloopenwebrtc/system_wrappers/interface/scoped_ptr.h"
 #include "cloopenwebrtc/test/testsupport/fileutils.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(StandaloneVadTest, Api) {
   scoped_ptr<StandaloneVad> vad(StandaloneVad::Create());

@@ -30,7 +30,7 @@
 #include "../system_wrappers/include/tick_util.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -731,7 +731,7 @@ std::vector<uint16_t> AcmReceiver::GetNackList(
     int64_t round_trip_time_ms) const {
   CriticalSectionScoped lock(crit_sect_.get());
   if (round_trip_time_ms < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "GetNackList: round trip time cannot be negative."
                  " round_trip_time_ms=%" PRId64, round_trip_time_ms);
   }
@@ -850,4 +850,4 @@ void AcmReceiver::GetDecodingCallStatistics(
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

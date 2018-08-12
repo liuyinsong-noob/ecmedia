@@ -44,7 +44,7 @@
 #include "SrtpModule.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 typedef int (*onEcMediaRequestKeyFrame)(const int channelid);
 class CallStatsObserver;
 class ChannelStatsObserver;

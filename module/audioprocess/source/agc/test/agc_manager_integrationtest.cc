@@ -28,7 +28,7 @@ using ::testing::AtLeast;
 using ::testing::Mock;
 using ::testing::Return;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AgcManagerTest : public ::testing::Test {
  protected:

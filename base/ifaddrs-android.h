@@ -29,11 +29,11 @@ struct ifaddrs {
   // We don't need them (yet?).
 };
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 int getifaddrs(struct ifaddrs** result);
 void freeifaddrs(struct ifaddrs* addrs);
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_IFADDRS_ANDROID_H_

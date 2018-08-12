@@ -17,7 +17,7 @@
 
 #include <windows.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class ThreadWindows : public ThreadWrapper
 {

@@ -4,7 +4,7 @@
  *  Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
  *  that can be found in the LICENSE file in the root of the web site.
  *
- *   http://www.cloopen.com
+ *   http://www.yuntongxun.com
  *
  *  An additional intellectual property rights grant can be found
  *  in the file PATENTS.  All contributing project authors may
@@ -31,7 +31,7 @@ import android.widget.Scroller;
 /**
  * <p>Title: CCPFlipper</p>
  * <p>Description: </p>
- * <p>Company: http://www.cloopen.com/</p>
+ * <p>Company: http://www.yuntongxun.com/</p>
  * @author  Jorstin Chan
  * @version 3.6
  * @date 2013-12-24
@@ -468,7 +468,7 @@ public class CCPFlipper extends ViewGroup {
 	 * 
 	* <p>Title: FlipperInterpolator</p>
 	* <p>Description: An interpolator where the change dot then Slide the spring back effect. </p>
-	* <p>Company: http://www.cloopen.com/</p>
+	* <p>Company: http://www.yuntongxun.com/</p>
 	* @author  Jorstin Chan
 	* @version 3.6
 	* @date 2013-12-24
@@ -493,7 +493,7 @@ public class CCPFlipper extends ViewGroup {
     * measured height. This method is invoked by {@link #measure(int, int)} and
     * should be overriden by subclasses to provide accurate and efficient
     * measurement of their contents.</p>
-	* <p>Company: http://www.cloopen.com/</p>
+	* <p>Company: http://www.yuntongxun.com/</p>
 	* @author  Jorstin Chan
 	* @version 3.6
 	* @date 2013-12-24
@@ -514,7 +514,7 @@ public class CCPFlipper extends ViewGroup {
 	/**
 	* <p>Title: OnFlipperPageListener</p>
 	* <p>Description: </p>
-	* <p>Company: http://www.cloopen.com/</p>
+	* <p>Company: http://www.yuntongxun.com/</p>
 	* @author  Jorstin Chan
 	* @version 3.6
 	* @date 2013-12-24

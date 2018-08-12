@@ -38,7 +38,7 @@
 
 #define STACK_ARRAY(TYPE, LEN) static_cast<TYPE*>(::alloca((LEN)*sizeof(TYPE)))
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Complement to memset.  Verifies memory consists of count bytes of value c.
 bool memory_check(const void* memory, int c, size_t count);
@@ -120,7 +120,7 @@ inline int _strnicmp(const char* s1, const char* s2, size_t n) {
 // Traits simplifies porting string functions to be CTYPE-agnostic
 ///////////////////////////////////////////////////////////////////////////////
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const size_t SIZE_UNKNOWN = static_cast<size_t>(-1);
 
@@ -311,6 +311,6 @@ bool ends_with(const char *s1, const char *s2);
 // Remove leading and trailing whitespaces.
 std::string string_trim(const std::string& s);
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_BASE_STRINGUTILS_H__

@@ -34,7 +34,7 @@
 #include "../module/rtp_rtcp/source/rtp_format.h"
 #include "../typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 enum VP8PacketizerMode {
   kStrict = 0,  // Split partitions if too large;
@@ -216,5 +216,5 @@ class RtpDepacketizerVp8 : public RtpDepacketizer {
              const uint8_t* payload_data,
              size_t payload_data_length) override;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_FORMAT_VP8_H_

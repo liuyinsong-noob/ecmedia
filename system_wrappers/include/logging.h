@@ -43,7 +43,7 @@
 #include <errno.h>
 #include "clock.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 //////////////////////////////////////////////////////////////////////
 
@@ -118,25 +118,25 @@ class LogMessageVoidify {
 #if defined(WEBRTC_RESTRICT_LOGGING)
 // This should compile away logs matching the following condition.
 #define RESTRICT_LOGGING_PRECONDITION(sev)  \
-  sev < cloopenwebrtc::LS_INFO ? (void) 0 :
+  sev < yuntongxunwebrtc::LS_INFO ? (void) 0 :
 #else
 #define RESTRICT_LOGGING_PRECONDITION(sev)
 #endif
 
 #define LOG_SEVERITY_PRECONDITION(sev) \
-  RESTRICT_LOGGING_PRECONDITION(sev) !(cloopenwebrtc::LogMessage::Loggable(sev)) \
+  RESTRICT_LOGGING_PRECONDITION(sev) !(yuntongxunwebrtc::LogMessage::Loggable(sev)) \
     ? (void) 0 \
-    : cloopenwebrtc::LogMessageVoidify() &
+    : yuntongxunwebrtc::LogMessageVoidify() &
 
 #define LOG(sev) \
-  LOG_SEVERITY_PRECONDITION(cloopenwebrtc::sev) \
-    cloopenwebrtc::LogMessage(__FILE__, __LINE__, cloopenwebrtc::sev).stream()
+  LOG_SEVERITY_PRECONDITION(yuntongxunwebrtc::sev) \
+    yuntongxunwebrtc::LogMessage(__FILE__, __LINE__, yuntongxunwebrtc::sev).stream()
 
 // The _V version is for when a variable is passed in.  It doesn't do the
 // namespace concatination.
 #define LOG_V(sev) \
   LOG_SEVERITY_PRECONDITION(sev) \
-    cloopenwebrtc::LogMessage(__FILE__, __LINE__, sev).stream()
+    yuntongxunwebrtc::LogMessage(__FILE__, __LINE__, sev).stream()
 
 // The _F version prefixes the message with the current function name.
 #if (defined(__GNUC__) && !defined(NDEBUG)) || defined(WANT_PRETTY_LOG_F)
@@ -146,15 +146,15 @@ class LogMessageVoidify {
 #endif
 
 #define LOG_CHECK_LEVEL(sev) \
-cloopenwebrtc::LogCheckLevel(cloopenwebrtc::sev)
+yuntongxunwebrtc::LogCheckLevel(yuntongxunwebrtc::sev)
 #define LOG_CHECK_LEVEL_V(sev) \
-cloopenwebrtc::LogCheckLevel(sev)
+yuntongxunwebrtc::LogCheckLevel(sev)
 
     
 #define LOG_E(sev, ctx, err, ...) \
-LOG_SEVERITY_PRECONDITION(cloopenwebrtc::sev) \
-cloopenwebrtc::LogMessage(__FILE__, __LINE__, cloopenwebrtc::sev, \
-cloopenwebrtc::ERRCTX_ ## ctx, err , ##__VA_ARGS__) \
+LOG_SEVERITY_PRECONDITION(yuntongxunwebrtc::sev) \
+yuntongxunwebrtc::LogMessage(__FILE__, __LINE__, yuntongxunwebrtc::sev, \
+yuntongxunwebrtc::ERRCTX_ ## ctx, err , ##__VA_ARGS__) \
 .stream()
     
 #define LOG_T(sev) LOG(sev) << this << ": "
@@ -195,7 +195,7 @@ LOG_ERRNO(sev)
     
 #define LOG_TAG(sev, tag)        \
 LOG_SEVERITY_PRECONDITION(sev) \
-cloopenwebrtc::LogMessage(nullptr, 0, sev, tag).stream()
+yuntongxunwebrtc::LogMessage(nullptr, 0, sev, tag).stream()
     
 #define PLOG(sev, err) \
 LOG_ERR_EX(sev, err)
@@ -338,6 +338,6 @@ LOG_ERR_EX(sev, err)
     
 #endif  // LOG
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_INCLUDE_LOGGING_H_

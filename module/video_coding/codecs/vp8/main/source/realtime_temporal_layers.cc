@@ -19,7 +19,7 @@
 // This file implements logic to adapt the number of temporal layers based on
 // input frame rate in order to avoid having the base layer being relaying at
 // a below acceptable framerate.
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 enum {
   kTemporalUpdateLast = VP8_EFLAG_NO_UPD_GF | VP8_EFLAG_NO_UPD_ARF |

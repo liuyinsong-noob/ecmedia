@@ -18,7 +18,7 @@
 #include "video_coding.h"
 #include "video_coding_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Clock;
 class VCMEncodedFrame;

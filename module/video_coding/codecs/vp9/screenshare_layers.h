@@ -12,7 +12,7 @@
 
 #include "../module/video_coding/codecs/vp9/vp9_impl.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class ScreenshareLayersVP9 {
  public:
@@ -61,6 +61,6 @@ class ScreenshareLayersVP9 {
   bool timestamp_initialized_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_VIDEO_CODING_CODECS_VP9_SCREENSHARE_LAYERS_H_

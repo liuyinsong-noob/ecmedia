@@ -15,7 +15,7 @@
 
 #include <Windows.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class RWLockWin : public RWLockWrapper {
  public:
@@ -35,6 +35,6 @@ class RWLockWin : public RWLockWrapper {
   SRWLOCK lock_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_SOURCE_RW_LOCK_WIN_H_

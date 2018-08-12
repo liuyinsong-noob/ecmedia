@@ -17,7 +17,7 @@
 #include "../base/checks.h"
 #include "../module/rtp_rtcp/source/rtp_rtcp_config.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 std::vector<rtcp::TmmbItem> TMMBRHelp::FindBoundingSet(
     std::vector<rtcp::TmmbItem> candidates) {
   // Filter out candidates with 0 bitrate.
@@ -642,4 +642,4 @@ bool TMMBRHelp::CalcMinBitRate( uint32_t* minBitrateKbit) const {
   }
   return true;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

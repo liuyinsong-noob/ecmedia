@@ -11,7 +11,7 @@
 #include <emmintrin.h>
 #include "denoiser_filter_sse2.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static void Get8x8varSse2(const uint8_t* src,
                           int src_stride,

@@ -17,7 +17,7 @@
 #include "webrtc_cng.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // This is the interface class for decoders in NetEQ. Each codec type will have
 // and implementation of this class.
@@ -97,5 +97,5 @@ class AudioDecoder {
   DISALLOW_COPY_AND_ASSIGN(AudioDecoder);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_INTERFACE_AUDIO_DECODER_H_

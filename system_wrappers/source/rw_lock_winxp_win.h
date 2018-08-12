@@ -15,7 +15,7 @@
 #include "../system_wrappers/source/condition_variable_event_win.h"
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class RWLockWinXP : public RWLockWrapper {
  public:
@@ -39,6 +39,6 @@ class RWLockWinXP : public RWLockWrapper {
   int writers_waiting_ = 0;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_SOURCE_RW_LOCK_WINXP_WIN_H_

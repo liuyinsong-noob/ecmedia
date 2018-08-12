@@ -18,7 +18,7 @@
 #include "vie_impl.h"
 #include "vie_shared_data.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ViEEncryption* ViEEncryption::GetInterface(VideoEngine* video_engine) {
 #ifdef WEBRTC_VIDEO_ENGINE_ENCRYPTION_API
@@ -238,4 +238,4 @@ int ViEEncryptionImpl::DisableSRTPReceive(int video_channel)
 }
 #endif
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

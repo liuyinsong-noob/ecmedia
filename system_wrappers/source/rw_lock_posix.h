@@ -16,7 +16,7 @@
 
 #include <pthread.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class RWLockPosix : public RWLockWrapper {
  public:
@@ -35,6 +35,6 @@ class RWLockPosix : public RWLockWrapper {
 
   pthread_rwlock_t lock_;
 };
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_SOURCE_RW_LOCK_POSIX_H_

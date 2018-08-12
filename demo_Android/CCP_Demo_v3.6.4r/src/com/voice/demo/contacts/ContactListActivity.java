@@ -39,7 +39,7 @@ import com.voice.demo.tools.CCPUtil;
 * <p>Title: ContactListActivity.java</p>
 * <p>Description: </p>
 * <p>Copyright: Copyright (c) 2014</p>
-* <p>Company: http://www.cloopen.com</p>
+* <p>Company: http://www.yuntongxun.com</p>
 * @author Trevor Pan
 * @date 2014-3-11
 * @version x.x

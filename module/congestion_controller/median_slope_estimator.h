@@ -19,7 +19,7 @@
 #include "../base/constructormagic.h"
 #include "../base/numerics/percentile_filter.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class MedianSlopeEstimator {
  public:
@@ -69,6 +69,6 @@ class MedianSlopeEstimator {
 
   DISALLOW_COPY_AND_ASSIGN(MedianSlopeEstimator);
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_CONGESTION_CONTROLLER_MEDIAN_SLOPE_ESTIMATOR_H_

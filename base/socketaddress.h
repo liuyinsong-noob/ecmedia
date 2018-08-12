@@ -23,7 +23,7 @@
 struct sockaddr_in;
 struct sockaddr_storage;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Records an IP address and port.
 class SocketAddress {
@@ -193,6 +193,6 @@ bool SocketAddressFromSockAddrStorage(const sockaddr_storage& saddr,
                                       SocketAddress* out);
 SocketAddress EmptySocketAddressWithFamily(int family);
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_SOCKETADDRESS_H_

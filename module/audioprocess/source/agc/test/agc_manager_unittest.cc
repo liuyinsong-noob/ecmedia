@@ -28,7 +28,7 @@ using ::testing::Return;
 using ::testing::SetArgPointee;
 using ::testing::SetArgReferee;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 
 const int kSampleRateHz = 32000;

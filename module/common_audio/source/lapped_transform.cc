@@ -16,7 +16,7 @@
 #include "checks.h"
 #include "real_fourier.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 void LappedTransform::BlockThunk::ProcessBlock(const float* const* input,
                                                int num_frames,

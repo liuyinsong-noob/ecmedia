@@ -35,7 +35,7 @@ class InstantMessage;
 
 // ===================================================================
 
-class SyncMsgRespInner : public ::cloopen_google::protobuf::MessageLite {
+class SyncMsgRespInner : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   SyncMsgRespInner();
   virtual ~SyncMsgRespInner();
@@ -72,7 +72,7 @@ class SyncMsgRespInner : public ::cloopen_google::protobuf::MessageLite {
   // implements Message ----------------------------------------------
 
   SyncMsgRespInner* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const SyncMsgRespInner& from);
   void MergeFrom(const SyncMsgRespInner& from);
   void Clear();
@@ -80,9 +80,9 @@ class SyncMsgRespInner : public ::cloopen_google::protobuf::MessageLite {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -103,9 +103,9 @@ class SyncMsgRespInner : public ::cloopen_google::protobuf::MessageLite {
   inline const ::InstantMessage& syncmessages(int index) const;
   inline ::InstantMessage* mutable_syncmessages(int index);
   inline ::InstantMessage* add_syncmessages();
-  inline const ::cloopen_google::protobuf::RepeatedPtrField< ::InstantMessage >&
+  inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::InstantMessage >&
       syncmessages() const;
-  inline ::cloopen_google::protobuf::RepeatedPtrField< ::InstantMessage >*
+  inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::InstantMessage >*
       mutable_syncmessages();
 
   // @@protoc_insertion_point(class_scope:SyncMsgRespInner)
@@ -113,9 +113,9 @@ class SyncMsgRespInner : public ::cloopen_google::protobuf::MessageLite {
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::cloopen_google::protobuf::RepeatedPtrField< ::InstantMessage > syncmessages_;
+  ::yuntongxun_google::protobuf::RepeatedPtrField< ::InstantMessage > syncmessages_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_SyncMsgResp_2eproto_impl();
   #else
@@ -129,7 +129,7 @@ class SyncMsgRespInner : public ::cloopen_google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class InstantMessage : public ::cloopen_google::protobuf::MessageLite {
+class InstantMessage : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   InstantMessage();
   virtual ~InstantMessage();
@@ -166,7 +166,7 @@ class InstantMessage : public ::cloopen_google::protobuf::MessageLite {
   // implements Message ----------------------------------------------
 
   InstantMessage* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const InstantMessage& from);
   void MergeFrom(const InstantMessage& from);
   void Clear();
@@ -174,9 +174,9 @@ class InstantMessage : public ::cloopen_google::protobuf::MessageLite {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -194,15 +194,15 @@ class InstantMessage : public ::cloopen_google::protobuf::MessageLite {
   inline bool has_version() const;
   inline void clear_version();
   static const int kVersionFieldNumber = 1;
-  inline ::cloopen_google::protobuf::uint64 version() const;
-  inline void set_version(::cloopen_google::protobuf::uint64 value);
+  inline ::yuntongxun_google::protobuf::uint64 version() const;
+  inline void set_version(::yuntongxun_google::protobuf::uint64 value);
 
   // optional uint32 msgType = 2;
   inline bool has_msgtype() const;
   inline void clear_msgtype();
   static const int kMsgTypeFieldNumber = 2;
-  inline ::cloopen_google::protobuf::uint32 msgtype() const;
-  inline void set_msgtype(::cloopen_google::protobuf::uint32 value);
+  inline ::yuntongxun_google::protobuf::uint32 msgtype() const;
+  inline void set_msgtype(::yuntongxun_google::protobuf::uint32 value);
 
   // optional string msgId = 3;
   inline bool has_msgid() const;
@@ -304,8 +304,8 @@ class InstantMessage : public ::cloopen_google::protobuf::MessageLite {
   inline bool has_msgcompresslen() const;
   inline void clear_msgcompresslen();
   static const int kMsgCompressLenFieldNumber = 11;
-  inline ::cloopen_google::protobuf::uint32 msgcompresslen() const;
-  inline void set_msgcompresslen(::cloopen_google::protobuf::uint32 value);
+  inline ::yuntongxun_google::protobuf::uint32 msgcompresslen() const;
+  inline void set_msgcompresslen(::yuntongxun_google::protobuf::uint32 value);
 
   // optional bytes msgData = 12;
   inline bool has_msgdata() const;
@@ -323,8 +323,8 @@ class InstantMessage : public ::cloopen_google::protobuf::MessageLite {
   inline bool has_mcmevent() const;
   inline void clear_mcmevent();
   static const int kMcmEventFieldNumber = 13;
-  inline ::cloopen_google::protobuf::uint32 mcmevent() const;
-  inline void set_mcmevent(::cloopen_google::protobuf::uint32 value);
+  inline ::yuntongxun_google::protobuf::uint32 mcmevent() const;
+  inline void set_mcmevent(::yuntongxun_google::protobuf::uint32 value);
 
   // optional string msgFileSize = 14;
   inline bool has_msgfilesize() const;
@@ -399,15 +399,15 @@ class InstantMessage : public ::cloopen_google::protobuf::MessageLite {
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::cloopen_google::protobuf::uint64 version_;
+  ::yuntongxun_google::protobuf::uint64 version_;
   ::std::string* msgid_;
   ::std::string* msgcontent_;
   ::std::string* msgsender_;
   ::std::string* msgreceiver_;
-  ::cloopen_google::protobuf::uint32 msgtype_;
-  ::cloopen_google::protobuf::uint32 msgcompresslen_;
+  ::yuntongxun_google::protobuf::uint32 msgtype_;
+  ::yuntongxun_google::protobuf::uint32 msgcompresslen_;
   ::std::string* msgdomain_;
   ::std::string* msgfilename_;
   ::std::string* msgfileurl_;
@@ -416,7 +416,7 @@ class InstantMessage : public ::cloopen_google::protobuf::MessageLite {
   ::std::string* msgfilesize_;
   ::std::string* extopts_;
   ::std::string* sendernickname_;
-  ::cloopen_google::protobuf::uint32 mcmevent_;
+  ::yuntongxun_google::protobuf::uint32 mcmevent_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_SyncMsgResp_2eproto_impl();
   #else
@@ -454,12 +454,12 @@ inline ::InstantMessage* SyncMsgRespInner::add_syncmessages() {
   // @@protoc_insertion_point(field_add:SyncMsgRespInner.syncMessages)
   return syncmessages_.Add();
 }
-inline const ::cloopen_google::protobuf::RepeatedPtrField< ::InstantMessage >&
+inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::InstantMessage >&
 SyncMsgRespInner::syncmessages() const {
   // @@protoc_insertion_point(field_list:SyncMsgRespInner.syncMessages)
   return syncmessages_;
 }
-inline ::cloopen_google::protobuf::RepeatedPtrField< ::InstantMessage >*
+inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::InstantMessage >*
 SyncMsgRespInner::mutable_syncmessages() {
   // @@protoc_insertion_point(field_mutable_list:SyncMsgRespInner.syncMessages)
   return &syncmessages_;
@@ -483,11 +483,11 @@ inline void InstantMessage::clear_version() {
   version_ = GOOGLE_ULONGLONG(0);
   clear_has_version();
 }
-inline ::cloopen_google::protobuf::uint64 InstantMessage::version() const {
+inline ::yuntongxun_google::protobuf::uint64 InstantMessage::version() const {
   // @@protoc_insertion_point(field_get:InstantMessage.version)
   return version_;
 }
-inline void InstantMessage::set_version(::cloopen_google::protobuf::uint64 value) {
+inline void InstantMessage::set_version(::yuntongxun_google::protobuf::uint64 value) {
   set_has_version();
   version_ = value;
   // @@protoc_insertion_point(field_set:InstantMessage.version)
@@ -507,11 +507,11 @@ inline void InstantMessage::clear_msgtype() {
   msgtype_ = 0u;
   clear_has_msgtype();
 }
-inline ::cloopen_google::protobuf::uint32 InstantMessage::msgtype() const {
+inline ::yuntongxun_google::protobuf::uint32 InstantMessage::msgtype() const {
   // @@protoc_insertion_point(field_get:InstantMessage.msgType)
   return msgtype_;
 }
-inline void InstantMessage::set_msgtype(::cloopen_google::protobuf::uint32 value) {
+inline void InstantMessage::set_msgtype(::yuntongxun_google::protobuf::uint32 value) {
   set_has_msgtype();
   msgtype_ = value;
   // @@protoc_insertion_point(field_set:InstantMessage.msgType)
@@ -528,7 +528,7 @@ inline void InstantMessage::clear_has_msgid() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void InstantMessage::clear_msgid() {
-  if (msgid_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgid_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgid_->clear();
   }
   clear_has_msgid();
@@ -539,7 +539,7 @@ inline const ::std::string& InstantMessage::msgid() const {
 }
 inline void InstantMessage::set_msgid(const ::std::string& value) {
   set_has_msgid();
-  if (msgid_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgid_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgid_ = new ::std::string;
   }
   msgid_->assign(value);
@@ -547,7 +547,7 @@ inline void InstantMessage::set_msgid(const ::std::string& value) {
 }
 inline void InstantMessage::set_msgid(const char* value) {
   set_has_msgid();
-  if (msgid_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgid_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgid_ = new ::std::string;
   }
   msgid_->assign(value);
@@ -555,7 +555,7 @@ inline void InstantMessage::set_msgid(const char* value) {
 }
 inline void InstantMessage::set_msgid(const char* value, size_t size) {
   set_has_msgid();
-  if (msgid_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgid_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgid_ = new ::std::string;
   }
   msgid_->assign(reinterpret_cast<const char*>(value), size);
@@ -563,7 +563,7 @@ inline void InstantMessage::set_msgid(const char* value, size_t size) {
 }
 inline ::std::string* InstantMessage::mutable_msgid() {
   set_has_msgid();
-  if (msgid_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgid_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgid_ = new ::std::string;
   }
   // @@protoc_insertion_point(field_mutable:InstantMessage.msgId)
@@ -571,16 +571,16 @@ inline ::std::string* InstantMessage::mutable_msgid() {
 }
 inline ::std::string* InstantMessage::release_msgid() {
   clear_has_msgid();
-  if (msgid_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgid_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
     ::std::string* temp = msgid_;
-    msgid_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    msgid_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
 inline void InstantMessage::set_allocated_msgid(::std::string* msgid) {
-  if (msgid_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgid_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete msgid_;
   }
   if (msgid) {
@@ -588,7 +588,7 @@ inline void InstantMessage::set_allocated_msgid(::std::string* msgid) {
     msgid_ = msgid;
   } else {
     clear_has_msgid();
-    msgid_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    msgid_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:InstantMessage.msgId)
 }
@@ -604,7 +604,7 @@ inline void InstantMessage::clear_has_msgcontent() {
   _has_bits_[0] &= ~0x00000008u;
 }
 inline void InstantMessage::clear_msgcontent() {
-  if (msgcontent_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgcontent_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgcontent_->clear();
   }
   clear_has_msgcontent();
@@ -615,7 +615,7 @@ inline const ::std::string& InstantMessage::msgcontent() const {
 }
 inline void InstantMessage::set_msgcontent(const ::std::string& value) {
   set_has_msgcontent();
-  if (msgcontent_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgcontent_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgcontent_ = new ::std::string;
   }
   msgcontent_->assign(value);
@@ -623,7 +623,7 @@ inline void InstantMessage::set_msgcontent(const ::std::string& value) {
 }
 inline void InstantMessage::set_msgcontent(const char* value) {
   set_has_msgcontent();
-  if (msgcontent_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgcontent_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgcontent_ = new ::std::string;
   }
   msgcontent_->assign(value);
@@ -631,7 +631,7 @@ inline void InstantMessage::set_msgcontent(const char* value) {
 }
 inline void InstantMessage::set_msgcontent(const void* value, size_t size) {
   set_has_msgcontent();
-  if (msgcontent_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgcontent_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgcontent_ = new ::std::string;
   }
   msgcontent_->assign(reinterpret_cast<const char*>(value), size);
@@ -639,7 +639,7 @@ inline void InstantMessage::set_msgcontent(const void* value, size_t size) {
 }
 inline ::std::string* InstantMessage::mutable_msgcontent() {
   set_has_msgcontent();
-  if (msgcontent_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgcontent_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgcontent_ = new ::std::string;
   }
   // @@protoc_insertion_point(field_mutable:InstantMessage.msgContent)
@@ -647,16 +647,16 @@ inline ::std::string* InstantMessage::mutable_msgcontent() {
 }
 inline ::std::string* InstantMessage::release_msgcontent() {
   clear_has_msgcontent();
-  if (msgcontent_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgcontent_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
     ::std::string* temp = msgcontent_;
-    msgcontent_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    msgcontent_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
 inline void InstantMessage::set_allocated_msgcontent(::std::string* msgcontent) {
-  if (msgcontent_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgcontent_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete msgcontent_;
   }
   if (msgcontent) {
@@ -664,7 +664,7 @@ inline void InstantMessage::set_allocated_msgcontent(::std::string* msgcontent) 
     msgcontent_ = msgcontent;
   } else {
     clear_has_msgcontent();
-    msgcontent_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    msgcontent_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:InstantMessage.msgContent)
 }
@@ -680,7 +680,7 @@ inline void InstantMessage::clear_has_msgsender() {
   _has_bits_[0] &= ~0x00000010u;
 }
 inline void InstantMessage::clear_msgsender() {
-  if (msgsender_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgsender_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgsender_->clear();
   }
   clear_has_msgsender();
@@ -691,7 +691,7 @@ inline const ::std::string& InstantMessage::msgsender() const {
 }
 inline void InstantMessage::set_msgsender(const ::std::string& value) {
   set_has_msgsender();
-  if (msgsender_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgsender_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgsender_ = new ::std::string;
   }
   msgsender_->assign(value);
@@ -699,7 +699,7 @@ inline void InstantMessage::set_msgsender(const ::std::string& value) {
 }
 inline void InstantMessage::set_msgsender(const char* value) {
   set_has_msgsender();
-  if (msgsender_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgsender_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgsender_ = new ::std::string;
   }
   msgsender_->assign(value);
@@ -707,7 +707,7 @@ inline void InstantMessage::set_msgsender(const char* value) {
 }
 inline void InstantMessage::set_msgsender(const char* value, size_t size) {
   set_has_msgsender();
-  if (msgsender_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgsender_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgsender_ = new ::std::string;
   }
   msgsender_->assign(reinterpret_cast<const char*>(value), size);
@@ -715,7 +715,7 @@ inline void InstantMessage::set_msgsender(const char* value, size_t size) {
 }
 inline ::std::string* InstantMessage::mutable_msgsender() {
   set_has_msgsender();
-  if (msgsender_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgsender_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgsender_ = new ::std::string;
   }
   // @@protoc_insertion_point(field_mutable:InstantMessage.msgSender)
@@ -723,16 +723,16 @@ inline ::std::string* InstantMessage::mutable_msgsender() {
 }
 inline ::std::string* InstantMessage::release_msgsender() {
   clear_has_msgsender();
-  if (msgsender_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgsender_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
     ::std::string* temp = msgsender_;
-    msgsender_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    msgsender_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
 inline void InstantMessage::set_allocated_msgsender(::std::string* msgsender) {
-  if (msgsender_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgsender_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete msgsender_;
   }
   if (msgsender) {
@@ -740,7 +740,7 @@ inline void InstantMessage::set_allocated_msgsender(::std::string* msgsender) {
     msgsender_ = msgsender;
   } else {
     clear_has_msgsender();
-    msgsender_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    msgsender_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:InstantMessage.msgSender)
 }
@@ -756,7 +756,7 @@ inline void InstantMessage::clear_has_msgreceiver() {
   _has_bits_[0] &= ~0x00000020u;
 }
 inline void InstantMessage::clear_msgreceiver() {
-  if (msgreceiver_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgreceiver_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgreceiver_->clear();
   }
   clear_has_msgreceiver();
@@ -767,7 +767,7 @@ inline const ::std::string& InstantMessage::msgreceiver() const {
 }
 inline void InstantMessage::set_msgreceiver(const ::std::string& value) {
   set_has_msgreceiver();
-  if (msgreceiver_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgreceiver_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgreceiver_ = new ::std::string;
   }
   msgreceiver_->assign(value);
@@ -775,7 +775,7 @@ inline void InstantMessage::set_msgreceiver(const ::std::string& value) {
 }
 inline void InstantMessage::set_msgreceiver(const char* value) {
   set_has_msgreceiver();
-  if (msgreceiver_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgreceiver_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgreceiver_ = new ::std::string;
   }
   msgreceiver_->assign(value);
@@ -783,7 +783,7 @@ inline void InstantMessage::set_msgreceiver(const char* value) {
 }
 inline void InstantMessage::set_msgreceiver(const char* value, size_t size) {
   set_has_msgreceiver();
-  if (msgreceiver_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgreceiver_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgreceiver_ = new ::std::string;
   }
   msgreceiver_->assign(reinterpret_cast<const char*>(value), size);
@@ -791,7 +791,7 @@ inline void InstantMessage::set_msgreceiver(const char* value, size_t size) {
 }
 inline ::std::string* InstantMessage::mutable_msgreceiver() {
   set_has_msgreceiver();
-  if (msgreceiver_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgreceiver_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgreceiver_ = new ::std::string;
   }
   // @@protoc_insertion_point(field_mutable:InstantMessage.msgReceiver)
@@ -799,16 +799,16 @@ inline ::std::string* InstantMessage::mutable_msgreceiver() {
 }
 inline ::std::string* InstantMessage::release_msgreceiver() {
   clear_has_msgreceiver();
-  if (msgreceiver_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgreceiver_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
     ::std::string* temp = msgreceiver_;
-    msgreceiver_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    msgreceiver_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
 inline void InstantMessage::set_allocated_msgreceiver(::std::string* msgreceiver) {
-  if (msgreceiver_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgreceiver_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete msgreceiver_;
   }
   if (msgreceiver) {
@@ -816,7 +816,7 @@ inline void InstantMessage::set_allocated_msgreceiver(::std::string* msgreceiver
     msgreceiver_ = msgreceiver;
   } else {
     clear_has_msgreceiver();
-    msgreceiver_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    msgreceiver_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:InstantMessage.msgReceiver)
 }
@@ -832,7 +832,7 @@ inline void InstantMessage::clear_has_msgdomain() {
   _has_bits_[0] &= ~0x00000040u;
 }
 inline void InstantMessage::clear_msgdomain() {
-  if (msgdomain_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgdomain_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgdomain_->clear();
   }
   clear_has_msgdomain();
@@ -843,7 +843,7 @@ inline const ::std::string& InstantMessage::msgdomain() const {
 }
 inline void InstantMessage::set_msgdomain(const ::std::string& value) {
   set_has_msgdomain();
-  if (msgdomain_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgdomain_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgdomain_ = new ::std::string;
   }
   msgdomain_->assign(value);
@@ -851,7 +851,7 @@ inline void InstantMessage::set_msgdomain(const ::std::string& value) {
 }
 inline void InstantMessage::set_msgdomain(const char* value) {
   set_has_msgdomain();
-  if (msgdomain_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgdomain_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgdomain_ = new ::std::string;
   }
   msgdomain_->assign(value);
@@ -859,7 +859,7 @@ inline void InstantMessage::set_msgdomain(const char* value) {
 }
 inline void InstantMessage::set_msgdomain(const char* value, size_t size) {
   set_has_msgdomain();
-  if (msgdomain_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgdomain_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgdomain_ = new ::std::string;
   }
   msgdomain_->assign(reinterpret_cast<const char*>(value), size);
@@ -867,7 +867,7 @@ inline void InstantMessage::set_msgdomain(const char* value, size_t size) {
 }
 inline ::std::string* InstantMessage::mutable_msgdomain() {
   set_has_msgdomain();
-  if (msgdomain_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgdomain_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgdomain_ = new ::std::string;
   }
   // @@protoc_insertion_point(field_mutable:InstantMessage.msgDomain)
@@ -875,16 +875,16 @@ inline ::std::string* InstantMessage::mutable_msgdomain() {
 }
 inline ::std::string* InstantMessage::release_msgdomain() {
   clear_has_msgdomain();
-  if (msgdomain_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgdomain_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
     ::std::string* temp = msgdomain_;
-    msgdomain_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    msgdomain_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
 inline void InstantMessage::set_allocated_msgdomain(::std::string* msgdomain) {
-  if (msgdomain_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgdomain_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete msgdomain_;
   }
   if (msgdomain) {
@@ -892,7 +892,7 @@ inline void InstantMessage::set_allocated_msgdomain(::std::string* msgdomain) {
     msgdomain_ = msgdomain;
   } else {
     clear_has_msgdomain();
-    msgdomain_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    msgdomain_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:InstantMessage.msgDomain)
 }
@@ -908,7 +908,7 @@ inline void InstantMessage::clear_has_msgfilename() {
   _has_bits_[0] &= ~0x00000080u;
 }
 inline void InstantMessage::clear_msgfilename() {
-  if (msgfilename_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgfilename_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgfilename_->clear();
   }
   clear_has_msgfilename();
@@ -919,7 +919,7 @@ inline const ::std::string& InstantMessage::msgfilename() const {
 }
 inline void InstantMessage::set_msgfilename(const ::std::string& value) {
   set_has_msgfilename();
-  if (msgfilename_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgfilename_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgfilename_ = new ::std::string;
   }
   msgfilename_->assign(value);
@@ -927,7 +927,7 @@ inline void InstantMessage::set_msgfilename(const ::std::string& value) {
 }
 inline void InstantMessage::set_msgfilename(const char* value) {
   set_has_msgfilename();
-  if (msgfilename_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgfilename_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgfilename_ = new ::std::string;
   }
   msgfilename_->assign(value);
@@ -935,7 +935,7 @@ inline void InstantMessage::set_msgfilename(const char* value) {
 }
 inline void InstantMessage::set_msgfilename(const char* value, size_t size) {
   set_has_msgfilename();
-  if (msgfilename_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgfilename_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgfilename_ = new ::std::string;
   }
   msgfilename_->assign(reinterpret_cast<const char*>(value), size);
@@ -943,7 +943,7 @@ inline void InstantMessage::set_msgfilename(const char* value, size_t size) {
 }
 inline ::std::string* InstantMessage::mutable_msgfilename() {
   set_has_msgfilename();
-  if (msgfilename_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgfilename_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgfilename_ = new ::std::string;
   }
   // @@protoc_insertion_point(field_mutable:InstantMessage.msgFileName)
@@ -951,16 +951,16 @@ inline ::std::string* InstantMessage::mutable_msgfilename() {
 }
 inline ::std::string* InstantMessage::release_msgfilename() {
   clear_has_msgfilename();
-  if (msgfilename_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgfilename_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
     ::std::string* temp = msgfilename_;
-    msgfilename_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    msgfilename_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
 inline void InstantMessage::set_allocated_msgfilename(::std::string* msgfilename) {
-  if (msgfilename_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgfilename_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete msgfilename_;
   }
   if (msgfilename) {
@@ -968,7 +968,7 @@ inline void InstantMessage::set_allocated_msgfilename(::std::string* msgfilename
     msgfilename_ = msgfilename;
   } else {
     clear_has_msgfilename();
-    msgfilename_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    msgfilename_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:InstantMessage.msgFileName)
 }
@@ -984,7 +984,7 @@ inline void InstantMessage::clear_has_msgfileurl() {
   _has_bits_[0] &= ~0x00000100u;
 }
 inline void InstantMessage::clear_msgfileurl() {
-  if (msgfileurl_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgfileurl_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgfileurl_->clear();
   }
   clear_has_msgfileurl();
@@ -995,7 +995,7 @@ inline const ::std::string& InstantMessage::msgfileurl() const {
 }
 inline void InstantMessage::set_msgfileurl(const ::std::string& value) {
   set_has_msgfileurl();
-  if (msgfileurl_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgfileurl_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgfileurl_ = new ::std::string;
   }
   msgfileurl_->assign(value);
@@ -1003,7 +1003,7 @@ inline void InstantMessage::set_msgfileurl(const ::std::string& value) {
 }
 inline void InstantMessage::set_msgfileurl(const char* value) {
   set_has_msgfileurl();
-  if (msgfileurl_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgfileurl_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgfileurl_ = new ::std::string;
   }
   msgfileurl_->assign(value);
@@ -1011,7 +1011,7 @@ inline void InstantMessage::set_msgfileurl(const char* value) {
 }
 inline void InstantMessage::set_msgfileurl(const char* value, size_t size) {
   set_has_msgfileurl();
-  if (msgfileurl_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgfileurl_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgfileurl_ = new ::std::string;
   }
   msgfileurl_->assign(reinterpret_cast<const char*>(value), size);
@@ -1019,7 +1019,7 @@ inline void InstantMessage::set_msgfileurl(const char* value, size_t size) {
 }
 inline ::std::string* InstantMessage::mutable_msgfileurl() {
   set_has_msgfileurl();
-  if (msgfileurl_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgfileurl_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgfileurl_ = new ::std::string;
   }
   // @@protoc_insertion_point(field_mutable:InstantMessage.msgFileUrl)
@@ -1027,16 +1027,16 @@ inline ::std::string* InstantMessage::mutable_msgfileurl() {
 }
 inline ::std::string* InstantMessage::release_msgfileurl() {
   clear_has_msgfileurl();
-  if (msgfileurl_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgfileurl_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
     ::std::string* temp = msgfileurl_;
-    msgfileurl_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    msgfileurl_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
 inline void InstantMessage::set_allocated_msgfileurl(::std::string* msgfileurl) {
-  if (msgfileurl_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgfileurl_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete msgfileurl_;
   }
   if (msgfileurl) {
@@ -1044,7 +1044,7 @@ inline void InstantMessage::set_allocated_msgfileurl(::std::string* msgfileurl) 
     msgfileurl_ = msgfileurl;
   } else {
     clear_has_msgfileurl();
-    msgfileurl_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    msgfileurl_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:InstantMessage.msgFileUrl)
 }
@@ -1060,7 +1060,7 @@ inline void InstantMessage::clear_has_msgdatecreated() {
   _has_bits_[0] &= ~0x00000200u;
 }
 inline void InstantMessage::clear_msgdatecreated() {
-  if (msgdatecreated_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgdatecreated_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgdatecreated_->clear();
   }
   clear_has_msgdatecreated();
@@ -1071,7 +1071,7 @@ inline const ::std::string& InstantMessage::msgdatecreated() const {
 }
 inline void InstantMessage::set_msgdatecreated(const ::std::string& value) {
   set_has_msgdatecreated();
-  if (msgdatecreated_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgdatecreated_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgdatecreated_ = new ::std::string;
   }
   msgdatecreated_->assign(value);
@@ -1079,7 +1079,7 @@ inline void InstantMessage::set_msgdatecreated(const ::std::string& value) {
 }
 inline void InstantMessage::set_msgdatecreated(const char* value) {
   set_has_msgdatecreated();
-  if (msgdatecreated_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgdatecreated_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgdatecreated_ = new ::std::string;
   }
   msgdatecreated_->assign(value);
@@ -1087,7 +1087,7 @@ inline void InstantMessage::set_msgdatecreated(const char* value) {
 }
 inline void InstantMessage::set_msgdatecreated(const char* value, size_t size) {
   set_has_msgdatecreated();
-  if (msgdatecreated_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgdatecreated_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgdatecreated_ = new ::std::string;
   }
   msgdatecreated_->assign(reinterpret_cast<const char*>(value), size);
@@ -1095,7 +1095,7 @@ inline void InstantMessage::set_msgdatecreated(const char* value, size_t size) {
 }
 inline ::std::string* InstantMessage::mutable_msgdatecreated() {
   set_has_msgdatecreated();
-  if (msgdatecreated_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgdatecreated_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgdatecreated_ = new ::std::string;
   }
   // @@protoc_insertion_point(field_mutable:InstantMessage.msgDateCreated)
@@ -1103,16 +1103,16 @@ inline ::std::string* InstantMessage::mutable_msgdatecreated() {
 }
 inline ::std::string* InstantMessage::release_msgdatecreated() {
   clear_has_msgdatecreated();
-  if (msgdatecreated_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgdatecreated_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
     ::std::string* temp = msgdatecreated_;
-    msgdatecreated_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    msgdatecreated_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
 inline void InstantMessage::set_allocated_msgdatecreated(::std::string* msgdatecreated) {
-  if (msgdatecreated_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgdatecreated_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete msgdatecreated_;
   }
   if (msgdatecreated) {
@@ -1120,7 +1120,7 @@ inline void InstantMessage::set_allocated_msgdatecreated(::std::string* msgdatec
     msgdatecreated_ = msgdatecreated;
   } else {
     clear_has_msgdatecreated();
-    msgdatecreated_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    msgdatecreated_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:InstantMessage.msgDateCreated)
 }
@@ -1139,11 +1139,11 @@ inline void InstantMessage::clear_msgcompresslen() {
   msgcompresslen_ = 0u;
   clear_has_msgcompresslen();
 }
-inline ::cloopen_google::protobuf::uint32 InstantMessage::msgcompresslen() const {
+inline ::yuntongxun_google::protobuf::uint32 InstantMessage::msgcompresslen() const {
   // @@protoc_insertion_point(field_get:InstantMessage.msgCompressLen)
   return msgcompresslen_;
 }
-inline void InstantMessage::set_msgcompresslen(::cloopen_google::protobuf::uint32 value) {
+inline void InstantMessage::set_msgcompresslen(::yuntongxun_google::protobuf::uint32 value) {
   set_has_msgcompresslen();
   msgcompresslen_ = value;
   // @@protoc_insertion_point(field_set:InstantMessage.msgCompressLen)
@@ -1160,7 +1160,7 @@ inline void InstantMessage::clear_has_msgdata() {
   _has_bits_[0] &= ~0x00000800u;
 }
 inline void InstantMessage::clear_msgdata() {
-  if (msgdata_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgdata_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgdata_->clear();
   }
   clear_has_msgdata();
@@ -1171,7 +1171,7 @@ inline const ::std::string& InstantMessage::msgdata() const {
 }
 inline void InstantMessage::set_msgdata(const ::std::string& value) {
   set_has_msgdata();
-  if (msgdata_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgdata_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgdata_ = new ::std::string;
   }
   msgdata_->assign(value);
@@ -1179,7 +1179,7 @@ inline void InstantMessage::set_msgdata(const ::std::string& value) {
 }
 inline void InstantMessage::set_msgdata(const char* value) {
   set_has_msgdata();
-  if (msgdata_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgdata_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgdata_ = new ::std::string;
   }
   msgdata_->assign(value);
@@ -1187,7 +1187,7 @@ inline void InstantMessage::set_msgdata(const char* value) {
 }
 inline void InstantMessage::set_msgdata(const void* value, size_t size) {
   set_has_msgdata();
-  if (msgdata_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgdata_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgdata_ = new ::std::string;
   }
   msgdata_->assign(reinterpret_cast<const char*>(value), size);
@@ -1195,7 +1195,7 @@ inline void InstantMessage::set_msgdata(const void* value, size_t size) {
 }
 inline ::std::string* InstantMessage::mutable_msgdata() {
   set_has_msgdata();
-  if (msgdata_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgdata_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgdata_ = new ::std::string;
   }
   // @@protoc_insertion_point(field_mutable:InstantMessage.msgData)
@@ -1203,16 +1203,16 @@ inline ::std::string* InstantMessage::mutable_msgdata() {
 }
 inline ::std::string* InstantMessage::release_msgdata() {
   clear_has_msgdata();
-  if (msgdata_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgdata_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
     ::std::string* temp = msgdata_;
-    msgdata_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    msgdata_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
 inline void InstantMessage::set_allocated_msgdata(::std::string* msgdata) {
-  if (msgdata_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgdata_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete msgdata_;
   }
   if (msgdata) {
@@ -1220,7 +1220,7 @@ inline void InstantMessage::set_allocated_msgdata(::std::string* msgdata) {
     msgdata_ = msgdata;
   } else {
     clear_has_msgdata();
-    msgdata_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    msgdata_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:InstantMessage.msgData)
 }
@@ -1239,11 +1239,11 @@ inline void InstantMessage::clear_mcmevent() {
   mcmevent_ = 0u;
   clear_has_mcmevent();
 }
-inline ::cloopen_google::protobuf::uint32 InstantMessage::mcmevent() const {
+inline ::yuntongxun_google::protobuf::uint32 InstantMessage::mcmevent() const {
   // @@protoc_insertion_point(field_get:InstantMessage.mcmEvent)
   return mcmevent_;
 }
-inline void InstantMessage::set_mcmevent(::cloopen_google::protobuf::uint32 value) {
+inline void InstantMessage::set_mcmevent(::yuntongxun_google::protobuf::uint32 value) {
   set_has_mcmevent();
   mcmevent_ = value;
   // @@protoc_insertion_point(field_set:InstantMessage.mcmEvent)
@@ -1260,7 +1260,7 @@ inline void InstantMessage::clear_has_msgfilesize() {
   _has_bits_[0] &= ~0x00002000u;
 }
 inline void InstantMessage::clear_msgfilesize() {
-  if (msgfilesize_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgfilesize_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgfilesize_->clear();
   }
   clear_has_msgfilesize();
@@ -1271,7 +1271,7 @@ inline const ::std::string& InstantMessage::msgfilesize() const {
 }
 inline void InstantMessage::set_msgfilesize(const ::std::string& value) {
   set_has_msgfilesize();
-  if (msgfilesize_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgfilesize_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgfilesize_ = new ::std::string;
   }
   msgfilesize_->assign(value);
@@ -1279,7 +1279,7 @@ inline void InstantMessage::set_msgfilesize(const ::std::string& value) {
 }
 inline void InstantMessage::set_msgfilesize(const char* value) {
   set_has_msgfilesize();
-  if (msgfilesize_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgfilesize_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgfilesize_ = new ::std::string;
   }
   msgfilesize_->assign(value);
@@ -1287,7 +1287,7 @@ inline void InstantMessage::set_msgfilesize(const char* value) {
 }
 inline void InstantMessage::set_msgfilesize(const char* value, size_t size) {
   set_has_msgfilesize();
-  if (msgfilesize_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgfilesize_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgfilesize_ = new ::std::string;
   }
   msgfilesize_->assign(reinterpret_cast<const char*>(value), size);
@@ -1295,7 +1295,7 @@ inline void InstantMessage::set_msgfilesize(const char* value, size_t size) {
 }
 inline ::std::string* InstantMessage::mutable_msgfilesize() {
   set_has_msgfilesize();
-  if (msgfilesize_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgfilesize_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     msgfilesize_ = new ::std::string;
   }
   // @@protoc_insertion_point(field_mutable:InstantMessage.msgFileSize)
@@ -1303,16 +1303,16 @@ inline ::std::string* InstantMessage::mutable_msgfilesize() {
 }
 inline ::std::string* InstantMessage::release_msgfilesize() {
   clear_has_msgfilesize();
-  if (msgfilesize_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgfilesize_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
     ::std::string* temp = msgfilesize_;
-    msgfilesize_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    msgfilesize_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
 inline void InstantMessage::set_allocated_msgfilesize(::std::string* msgfilesize) {
-  if (msgfilesize_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (msgfilesize_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete msgfilesize_;
   }
   if (msgfilesize) {
@@ -1320,7 +1320,7 @@ inline void InstantMessage::set_allocated_msgfilesize(::std::string* msgfilesize
     msgfilesize_ = msgfilesize;
   } else {
     clear_has_msgfilesize();
-    msgfilesize_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    msgfilesize_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:InstantMessage.msgFileSize)
 }
@@ -1336,7 +1336,7 @@ inline void InstantMessage::clear_has_extopts() {
   _has_bits_[0] &= ~0x00004000u;
 }
 inline void InstantMessage::clear_extopts() {
-  if (extopts_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (extopts_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     extopts_->clear();
   }
   clear_has_extopts();
@@ -1347,7 +1347,7 @@ inline const ::std::string& InstantMessage::extopts() const {
 }
 inline void InstantMessage::set_extopts(const ::std::string& value) {
   set_has_extopts();
-  if (extopts_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (extopts_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     extopts_ = new ::std::string;
   }
   extopts_->assign(value);
@@ -1355,7 +1355,7 @@ inline void InstantMessage::set_extopts(const ::std::string& value) {
 }
 inline void InstantMessage::set_extopts(const char* value) {
   set_has_extopts();
-  if (extopts_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (extopts_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     extopts_ = new ::std::string;
   }
   extopts_->assign(value);
@@ -1363,7 +1363,7 @@ inline void InstantMessage::set_extopts(const char* value) {
 }
 inline void InstantMessage::set_extopts(const char* value, size_t size) {
   set_has_extopts();
-  if (extopts_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (extopts_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     extopts_ = new ::std::string;
   }
   extopts_->assign(reinterpret_cast<const char*>(value), size);
@@ -1371,7 +1371,7 @@ inline void InstantMessage::set_extopts(const char* value, size_t size) {
 }
 inline ::std::string* InstantMessage::mutable_extopts() {
   set_has_extopts();
-  if (extopts_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (extopts_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     extopts_ = new ::std::string;
   }
   // @@protoc_insertion_point(field_mutable:InstantMessage.extOpts)
@@ -1379,16 +1379,16 @@ inline ::std::string* InstantMessage::mutable_extopts() {
 }
 inline ::std::string* InstantMessage::release_extopts() {
   clear_has_extopts();
-  if (extopts_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (extopts_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
     ::std::string* temp = extopts_;
-    extopts_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    extopts_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
 inline void InstantMessage::set_allocated_extopts(::std::string* extopts) {
-  if (extopts_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (extopts_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete extopts_;
   }
   if (extopts) {
@@ -1396,7 +1396,7 @@ inline void InstantMessage::set_allocated_extopts(::std::string* extopts) {
     extopts_ = extopts;
   } else {
     clear_has_extopts();
-    extopts_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    extopts_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:InstantMessage.extOpts)
 }
@@ -1412,7 +1412,7 @@ inline void InstantMessage::clear_has_sendernickname() {
   _has_bits_[0] &= ~0x00008000u;
 }
 inline void InstantMessage::clear_sendernickname() {
-  if (sendernickname_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (sendernickname_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     sendernickname_->clear();
   }
   clear_has_sendernickname();
@@ -1423,7 +1423,7 @@ inline const ::std::string& InstantMessage::sendernickname() const {
 }
 inline void InstantMessage::set_sendernickname(const ::std::string& value) {
   set_has_sendernickname();
-  if (sendernickname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (sendernickname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     sendernickname_ = new ::std::string;
   }
   sendernickname_->assign(value);
@@ -1431,7 +1431,7 @@ inline void InstantMessage::set_sendernickname(const ::std::string& value) {
 }
 inline void InstantMessage::set_sendernickname(const char* value) {
   set_has_sendernickname();
-  if (sendernickname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (sendernickname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     sendernickname_ = new ::std::string;
   }
   sendernickname_->assign(value);
@@ -1439,7 +1439,7 @@ inline void InstantMessage::set_sendernickname(const char* value) {
 }
 inline void InstantMessage::set_sendernickname(const char* value, size_t size) {
   set_has_sendernickname();
-  if (sendernickname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (sendernickname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     sendernickname_ = new ::std::string;
   }
   sendernickname_->assign(reinterpret_cast<const char*>(value), size);
@@ -1447,7 +1447,7 @@ inline void InstantMessage::set_sendernickname(const char* value, size_t size) {
 }
 inline ::std::string* InstantMessage::mutable_sendernickname() {
   set_has_sendernickname();
-  if (sendernickname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (sendernickname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     sendernickname_ = new ::std::string;
   }
   // @@protoc_insertion_point(field_mutable:InstantMessage.senderNickName)
@@ -1455,16 +1455,16 @@ inline ::std::string* InstantMessage::mutable_sendernickname() {
 }
 inline ::std::string* InstantMessage::release_sendernickname() {
   clear_has_sendernickname();
-  if (sendernickname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (sendernickname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
     ::std::string* temp = sendernickname_;
-    sendernickname_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    sendernickname_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
 inline void InstantMessage::set_allocated_sendernickname(::std::string* sendernickname) {
-  if (sendernickname_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (sendernickname_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete sendernickname_;
   }
   if (sendernickname) {
@@ -1472,7 +1472,7 @@ inline void InstantMessage::set_allocated_sendernickname(::std::string* senderni
     sendernickname_ = sendernickname;
   } else {
     clear_has_sendernickname();
-    sendernickname_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    sendernickname_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:InstantMessage.senderNickName)
 }

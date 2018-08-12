@@ -14,7 +14,7 @@
 #include "vie_shared_data.h"
 #include "engine_configurations.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ViEDesktopShare* ViEDesktopShare::GetInterface(VideoEngine* video_engine) 
 {

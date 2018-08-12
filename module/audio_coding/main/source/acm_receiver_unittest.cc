@@ -23,7 +23,7 @@
 #include "fileutils.h"
 #include "gtest_disable.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 namespace {
@@ -357,4 +357,4 @@ TEST_F(AcmReceiverTest, DISABLED_ON_ANDROID(LastAudioCodec)) {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

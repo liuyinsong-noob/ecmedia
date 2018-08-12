@@ -15,7 +15,7 @@
 
 #include "../system_wrappers/include/stringize_macros.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Location provides basic info where of an object was constructed, or was
 // significantly brought to life.
@@ -50,8 +50,8 @@ class Location {
 #define RTC_FROM_HERE RTC_FROM_HERE_WITH_FUNCTION(__FUNCTION__)
 
 #define RTC_FROM_HERE_WITH_FUNCTION(function_name) \
-  ::cloopenwebrtc::Location(function_name, __FILE__ ":" STRINGIZE(__LINE__))
+  ::yuntongxunwebrtc::Location(function_name, __FILE__ ":" STRINGIZE(__LINE__))
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_LOCATION_H_

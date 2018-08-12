@@ -19,7 +19,7 @@
 // NOTE(ajm): Path provided by gn.
 #include "./third_party/libyuv/include/libyuv.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VideoType RawVideoTypeToCommonVideoVideoType(RawVideoType type) {
   switch (type) {
@@ -133,7 +133,7 @@ int PrintVideoFrame(const VideoFrame& frame, FILE* file) {
   return PrintVideoFrame(*frame.video_frame_buffer(), file);
 }
 
-int ExtractBuffer(const cloopenwebrtc::scoped_refptr<VideoFrameBuffer>& input_frame,
+int ExtractBuffer(const yuntongxunwebrtc::scoped_refptr<VideoFrameBuffer>& input_frame,
                   size_t size,
                   uint8_t* buffer) {
   DCHECK(buffer);
@@ -295,7 +295,7 @@ double I420PSNR(const VideoFrameBuffer& ref_buffer,
   DCHECK_GE(ref_buffer.height(), test_buffer.height());
   if ((ref_buffer.width() != test_buffer.width()) ||
       (ref_buffer.height() != test_buffer.height())) {
-	  cloopenwebrtc::scoped_refptr<I420Buffer> scaled_buffer =
+	  yuntongxunwebrtc::scoped_refptr<I420Buffer> scaled_buffer =
         I420Buffer::Create(ref_buffer.width(), ref_buffer.height());
     scaled_buffer->ScaleFrom(test_buffer);
     return I420PSNR(ref_buffer, *scaled_buffer);
@@ -326,7 +326,7 @@ double I420SSIM(const VideoFrameBuffer& ref_buffer,
   DCHECK_GE(ref_buffer.height(), test_buffer.height());
   if ((ref_buffer.width() != test_buffer.width()) ||
       (ref_buffer.height() != test_buffer.height())) {
-	  cloopenwebrtc::scoped_refptr<I420Buffer> scaled_buffer =
+	  yuntongxunwebrtc::scoped_refptr<I420Buffer> scaled_buffer =
         I420Buffer::Create(ref_buffer.width(), ref_buffer.height());
     scaled_buffer->ScaleFrom(test_buffer);
     return I420SSIM(ref_buffer, *scaled_buffer);
@@ -452,4 +452,4 @@ void NV12ToI420Scaler::NV12ToI420Scale(
                     libyuv::kFilterBox);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

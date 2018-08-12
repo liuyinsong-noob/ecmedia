@@ -21,7 +21,7 @@
 #include "../common_video/include/i420_video_frame.h"
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Supported video types.
 enum VideoType {

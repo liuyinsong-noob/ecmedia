@@ -21,7 +21,7 @@
 // Implementation of an InStream and OutStream that can read (exclusive) or
 // write from/to a file.
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // TODO(tommi): Remove the base classes, rename to rtc::File and move to base.
 class FileWrapper : public InStream, public OutStream {
@@ -72,7 +72,7 @@ class FileWrapper : public InStream, public OutStream {
   int FlushImpl();
 
   // TODO(tommi): Remove the lock.
-  cloopenwebrtc::CriticalSection lock_;
+  yuntongxunwebrtc::CriticalSection lock_;
 
   FILE* file_ = nullptr;
   size_t position_ = 0;
@@ -83,6 +83,6 @@ class FileWrapper : public InStream, public OutStream {
   FileWrapper& operator=(const FileWrapper&) = delete;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_INCLUDE_FILE_WRAPPER_H_

@@ -15,7 +15,7 @@
 #include "audio_multi_vector.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class SyncBuffer : public AudioMultiVector {
  public:
@@ -97,5 +97,5 @@ class SyncBuffer : public AudioMultiVector {
   DISALLOW_COPY_AND_ASSIGN(SyncBuffer);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_SYNC_BUFFER_H_

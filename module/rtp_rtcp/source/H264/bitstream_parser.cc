@@ -10,7 +10,7 @@
 
 #include "bitstream_parser.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 BitstreamParser::BitstreamParser(const WebRtc_UWord8* data, const WebRtc_UWord32 dataLength) :
     _data(data),
     _dataLength(dataLength),
@@ -214,4 +214,4 @@ BitstreamParser::GetUE()
     }
     return retVal;
 }
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

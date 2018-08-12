@@ -15,7 +15,7 @@
 #include "third_party/openmax_dl/dl/sp/api/omxSP.h"
 #include "cloopenwebrtc/base/checks.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 using std::complex;
 

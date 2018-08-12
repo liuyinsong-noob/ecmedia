@@ -13,7 +13,7 @@
 
 #include "event_wrapper.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 //#define EVENT_DEBUG
@@ -58,6 +58,6 @@ private:
     EventWrapper&      _event;
 };
 
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_MODULES_VIDEO_CODING_EVENT_H_

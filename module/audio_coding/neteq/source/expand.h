@@ -18,7 +18,7 @@
 #include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Forward declarations.
 class BackgroundNoise;
@@ -183,5 +183,5 @@ struct ExpandFactory {
                          size_t num_channels) const;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_EXPAND_H_

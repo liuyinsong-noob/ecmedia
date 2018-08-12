@@ -12,7 +12,7 @@
 
 #include <stddef.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 MouseCursorMonitor* MouseCursorMonitor::CreateForWindow(
     const DesktopCaptureOptions& options,

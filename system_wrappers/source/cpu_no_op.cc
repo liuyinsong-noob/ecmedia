@@ -12,7 +12,7 @@
 
 #include "cpu_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 CpuWrapper* CpuWrapper::CreateCpu()
 {

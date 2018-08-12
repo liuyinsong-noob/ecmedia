@@ -25,7 +25,7 @@
 
 #pragma comment(lib, "d3d9.lib")       // located in DirectX SDK
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class CriticalSectionWrapper;
 class EventTimerWrapper;
 class Trace;

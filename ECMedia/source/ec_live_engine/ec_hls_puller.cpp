@@ -19,7 +19,7 @@ using namespace std;
 #define DefaultHttpUrl "http://127.0.0.1:3080/hls/hls.m3u8"
 #define DefaultVod false
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
     EC_HLS_Puller::EC_HLS_Puller(ECLiveStreamNetworkStatusCallBack callback) {
         callback_ = callback;

@@ -22,7 +22,7 @@
 #include "./common_video/h264/h264_common.h"
 #include "./common_video/h264/sps_parser.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // The maximum expected growth from adding a VUI to the SPS. It's actually
 // closer to 24 or so, but better safe than sorry.
@@ -58,26 +58,26 @@ const size_t kMaxVuiSpsIncrease = 64;
 typedef const SpsParser::SpsState& Sps;
 
 bool CopyAndRewriteVui(Sps sps,
-                       cloopenwebrtc::BitBuffer* source,
-                       cloopenwebrtc::BitBufferWriter* destination,
+                       yuntongxunwebrtc::BitBuffer* source,
+                       yuntongxunwebrtc::BitBufferWriter* destination,
                        SpsVuiRewriter::ParseResult* out_vui_rewritten);
-bool CopyHrdParameters(cloopenwebrtc::BitBuffer* source,
-                       cloopenwebrtc::BitBufferWriter* destination);
-bool AddBitstreamRestriction(cloopenwebrtc::BitBufferWriter* destination,
+bool CopyHrdParameters(yuntongxunwebrtc::BitBuffer* source,
+                       yuntongxunwebrtc::BitBufferWriter* destination);
+bool AddBitstreamRestriction(yuntongxunwebrtc::BitBufferWriter* destination,
                              uint32_t max_num_ref_frames);
-bool CopyRemainingBits(cloopenwebrtc::BitBuffer* source,
-                       cloopenwebrtc::BitBufferWriter* destination);
+bool CopyRemainingBits(yuntongxunwebrtc::BitBuffer* source,
+                       yuntongxunwebrtc::BitBufferWriter* destination);
 
 SpsVuiRewriter::ParseResult SpsVuiRewriter::ParseAndRewriteSps(
     const uint8_t* buffer,
     size_t length,
-    cloopenwebrtc::Optional<SpsParser::SpsState>* sps,
-    cloopenwebrtc::Buffer* destination) {
+    yuntongxunwebrtc::Optional<SpsParser::SpsState>* sps,
+    yuntongxunwebrtc::Buffer* destination) {
   // Create temporary RBSP decoded buffer of the payload (exlcuding the
   // leading nalu type header byte (the SpsParser uses only the payload).
   std::vector<uint8_t> rbsp_buffer = H264::ParseRbsp(buffer, length);
-  cloopenwebrtc::BitBuffer source_buffer(rbsp_buffer.data(), rbsp_buffer.size());
-  cloopenwebrtc::Optional<SpsParser::SpsState> sps_state =
+  yuntongxunwebrtc::BitBuffer source_buffer(rbsp_buffer.data(), rbsp_buffer.size());
+  yuntongxunwebrtc::Optional<SpsParser::SpsState> sps_state =
       SpsParser::ParseSpsUpToVui(&source_buffer);
   if (!sps_state)
     return ParseResult::kFailure;
@@ -91,8 +91,8 @@ SpsVuiRewriter::ParseResult SpsVuiRewriter::ParseAndRewriteSps(
 
   // We're going to completely muck up alignment, so we need a BitBuffer to
   // write with.
-  cloopenwebrtc::Buffer out_buffer(length + kMaxVuiSpsIncrease);
-  cloopenwebrtc::BitBufferWriter sps_writer(out_buffer.data(), out_buffer.size());
+  yuntongxunwebrtc::Buffer out_buffer(length + kMaxVuiSpsIncrease);
+  yuntongxunwebrtc::BitBufferWriter sps_writer(out_buffer.data(), out_buffer.size());
 
   // Check how far the SpsParser has read, and copy that data in bulk.
   size_t byte_offset;
@@ -148,8 +148,8 @@ SpsVuiRewriter::ParseResult SpsVuiRewriter::ParseAndRewriteSps(
 }
 
 bool CopyAndRewriteVui(Sps sps,
-                       cloopenwebrtc::BitBuffer* source,
-                       cloopenwebrtc::BitBufferWriter* destination,
+                       yuntongxunwebrtc::BitBuffer* source,
+                       yuntongxunwebrtc::BitBufferWriter* destination,
                        SpsVuiRewriter::ParseResult* out_vui_rewritten) {
   uint32_t golomb_tmp;
   uint32_t bits_tmp;
@@ -284,8 +284,8 @@ bool CopyAndRewriteVui(Sps sps,
 }
 
 // Copies a VUI HRD parameters segment.
-bool CopyHrdParameters(cloopenwebrtc::BitBuffer* source,
-                       cloopenwebrtc::BitBufferWriter* destination) {
+bool CopyHrdParameters(yuntongxunwebrtc::BitBuffer* source,
+                       yuntongxunwebrtc::BitBufferWriter* destination) {
   uint32_t golomb_tmp;
   uint32_t bits_tmp;
 
@@ -317,7 +317,7 @@ bool CopyHrdParameters(cloopenwebrtc::BitBuffer* source,
 // http://www.itu.int/rec/T-REC-H.264
 
 // Adds a bitstream restriction VUI segment.
-bool AddBitstreamRestriction(cloopenwebrtc::BitBufferWriter* destination,
+bool AddBitstreamRestriction(yuntongxunwebrtc::BitBufferWriter* destination,
                              uint32_t max_num_ref_frames) {
   // motion_vectors_over_pic_boundaries_flag: u(1)
   // Default is 1 when not present.
@@ -342,8 +342,8 @@ bool AddBitstreamRestriction(cloopenwebrtc::BitBufferWriter* destination,
   return true;
 }
 
-bool CopyRemainingBits(cloopenwebrtc::BitBuffer* source,
-                       cloopenwebrtc::BitBufferWriter* destination) {
+bool CopyRemainingBits(yuntongxunwebrtc::BitBuffer* source,
+                       yuntongxunwebrtc::BitBufferWriter* destination) {
   uint32_t bits_tmp;
   // Try to get at least the destination aligned.
   if (source->RemainingBitCount() > 0 && source->RemainingBitCount() % 8 != 0) {
@@ -360,4 +360,4 @@ bool CopyRemainingBits(cloopenwebrtc::BitBuffer* source,
   return true;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

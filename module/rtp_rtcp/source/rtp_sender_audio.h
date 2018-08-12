@@ -21,7 +21,7 @@
 #include "../module/rtp_rtcp/source/rtp_utility.h"
 #include "../typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class RTPSenderAudio {
  public:
@@ -71,7 +71,7 @@ class RTPSenderAudio {
   Clock* const clock_ = nullptr;
   RTPSender* const rtp_sender_ = nullptr;
 
-  cloopenwebrtc::CriticalSection send_audio_critsect_;
+  yuntongxunwebrtc::CriticalSection send_audio_critsect_;
 
   // DTMF.
   bool dtmf_event_is_on_ = false;
@@ -104,6 +104,6 @@ class RTPSenderAudio {
   DISALLOW_IMPLICIT_CONSTRUCTORS(RTPSenderAudio);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_SENDER_AUDIO_H_

@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace VideoProcessing {
 
 int32_t Brighten(I420VideoFrame* frame, int delta) {

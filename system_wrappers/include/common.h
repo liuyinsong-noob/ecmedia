@@ -22,7 +22,7 @@
 #endif
 
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 	// Class Config is designed to ease passing a set of options across webrtc code.
 	// Options are identified by typename in order to avoid incorrect casts.
@@ -164,7 +164,7 @@ inline void RtcUnused(const void*) {}
 // NOMINMAX must be defined where we include <windows.h>.
 #define stdmax(x, y) std::max(x, y)
 #else
-#define stdmax(x, y) cloopenwebrtc::_max(x, y)
+#define stdmax(x, y) yuntongxunwebrtc::_max(x, y)
 #endif
 
 #define ARRAY_SIZE(x) (static_cast<int>(sizeof(x) / sizeof(x[0])))
@@ -181,7 +181,7 @@ inline void RtcUnused(const void*) {}
 // macro is provided, this can still be used for explicit runtime asserts
 // and allow applications to override the assert behavior.
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 
 // If a debugger is attached, triggers a debugger breakpoint. If a debugger is
@@ -214,7 +214,7 @@ bool IsEven(int n);
 
 #if ENABLE_DEBUG
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 inline bool Assert(bool result, const char* function, const char* file,
                    int line, const char* expression) {
@@ -246,27 +246,27 @@ inline bool AssertNoBreak(bool result, const char* function, const char* file,
 // benefit of breaking exactly where the failing expression is and not two
 // calls up the stack.
 #define ASSERT(x) \
-    (cloopenwebrtc::AssertNoBreak((x), __FUNCTION__, __FILE__, __LINE__, #x) ? \
+    (yuntongxunwebrtc::AssertNoBreak((x), __FUNCTION__, __FILE__, __LINE__, #x) ? \
      (void)(1) : __debugbreak())
 #else
 #define ASSERT(x) \
-    (void)cloopenwebrtc::Assert((x), __FUNCTION__, __FILE__, __LINE__, #x)
+    (void)yuntongxunwebrtc::Assert((x), __FUNCTION__, __FILE__, __LINE__, #x)
 #endif
 #endif
 
 #ifndef VERIFY
 #if defined(WIN32)
 #define VERIFY(x) \
-    (cloopenwebrtc::AssertNoBreak((x), __FUNCTION__, __FILE__, __LINE__, #x) ? \
+    (yuntongxunwebrtc::AssertNoBreak((x), __FUNCTION__, __FILE__, __LINE__, #x) ? \
      true : (__debugbreak(), false))
 #else
-#define VERIFY(x) cloopenwebrtc::Assert((x), __FUNCTION__, __FILE__, __LINE__, #x)
+#define VERIFY(x) yuntongxunwebrtc::Assert((x), __FUNCTION__, __FILE__, __LINE__, #x)
 #endif
 #endif
 
 #else  // !ENABLE_DEBUG
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 inline bool ImplicitCastToBool(bool result) { return result; }
 
@@ -277,7 +277,7 @@ inline bool ImplicitCastToBool(bool result) { return result; }
 #endif
 
 #ifndef VERIFY
-#define VERIFY(x) cloopenwebrtc::ImplicitCastToBool(x)
+#define VERIFY(x) yuntongxunwebrtc::ImplicitCastToBool(x)
 #endif
 
 #endif  // !ENABLE_DEBUG

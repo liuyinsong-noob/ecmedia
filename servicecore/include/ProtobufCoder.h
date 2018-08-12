@@ -75,8 +75,8 @@ public:
     TProtobufCoder();
     ~TProtobufCoder();
     
-	int   EncodeMessage(cloopen_google::protobuf::MessageLite* pmLite);
-    int   DecodeMessage(cloopen_google::protobuf::MessageLite* pmLite,char* inputData,int length);
+	int   EncodeMessage(yuntongxun_google::protobuf::MessageLite* pmLite);
+    int   DecodeMessage(yuntongxun_google::protobuf::MessageLite* pmLite,char* inputData,int length);
     /*
     int   DecodeSyncMutilMessage(std::vector<MessageContent*> *messages, char* inputData,int length);
     void  MemcpyStringToChar(std::string string, char** chString);

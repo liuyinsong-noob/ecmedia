@@ -20,7 +20,7 @@
 #ifndef WEBRTC_BASE_LINKED_PTR_H__
 #define WEBRTC_BASE_LINKED_PTR_H__
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 /* For ANSI-challenged compilers, you may want to #define
  * NO_MEMBER_TEMPLATES, explicit or mutable */

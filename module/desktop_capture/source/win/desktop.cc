@@ -14,7 +14,7 @@
 
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 Desktop::Desktop(HDESK desktop, bool own) : desktop_(desktop), own_(own) {
 }
@@ -109,4 +109,4 @@ Desktop* Desktop::GetThreadDesktop() {
   return new Desktop(desktop, false);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

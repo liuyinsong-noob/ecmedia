@@ -39,7 +39,7 @@ class MediaStatisticsDataInner;
 
 // ===================================================================
 
-class VideoSenderStatisticsInner : public ::cloopen_google::protobuf::MessageLite {
+class VideoSenderStatisticsInner : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   VideoSenderStatisticsInner();
   virtual ~VideoSenderStatisticsInner();
@@ -76,7 +76,7 @@ class VideoSenderStatisticsInner : public ::cloopen_google::protobuf::MessageLit
   // implements Message ----------------------------------------------
 
   VideoSenderStatisticsInner* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const VideoSenderStatisticsInner& from);
   void MergeFrom(const VideoSenderStatisticsInner& from);
   void Clear();
@@ -84,9 +84,9 @@ class VideoSenderStatisticsInner : public ::cloopen_google::protobuf::MessageLit
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -104,22 +104,22 @@ class VideoSenderStatisticsInner : public ::cloopen_google::protobuf::MessageLit
   inline bool has_kstatsvaluenamereporttype() const;
   inline void clear_kstatsvaluenamereporttype();
   static const int kKStatsValueNameReportTypeFieldNumber = 1;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamereporttype() const;
-  inline void set_kstatsvaluenamereporttype(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamereporttype() const;
+  inline void set_kstatsvaluenamereporttype(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameChannelId = 2;
   inline bool has_kstatsvaluenamechannelid() const;
   inline void clear_kstatsvaluenamechannelid();
   static const int kKStatsValueNameChannelIdFieldNumber = 2;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamechannelid() const;
-  inline void set_kstatsvaluenamechannelid(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamechannelid() const;
+  inline void set_kstatsvaluenamechannelid(::yuntongxun_google::protobuf::int32 value);
 
   // optional int64 kStatsValueNameTimestamp = 3;
   inline bool has_kstatsvaluenametimestamp() const;
   inline void clear_kstatsvaluenametimestamp();
   static const int kKStatsValueNameTimestampFieldNumber = 3;
-  inline ::cloopen_google::protobuf::int64 kstatsvaluenametimestamp() const;
-  inline void set_kstatsvaluenametimestamp(::cloopen_google::protobuf::int64 value);
+  inline ::yuntongxun_google::protobuf::int64 kstatsvaluenametimestamp() const;
+  inline void set_kstatsvaluenametimestamp(::yuntongxun_google::protobuf::int64 value);
 
   // optional string kStatsValueNameCodecImplementationName = 4;
   inline bool has_kstatsvaluenamecodecimplementationname() const;
@@ -137,225 +137,225 @@ class VideoSenderStatisticsInner : public ::cloopen_google::protobuf::MessageLit
   inline bool has_kstatsvaluenametargetencbitrate() const;
   inline void clear_kstatsvaluenametargetencbitrate();
   static const int kKStatsValueNameTargetEncBitrateFieldNumber = 5;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenametargetencbitrate() const;
-  inline void set_kstatsvaluenametargetencbitrate(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenametargetencbitrate() const;
+  inline void set_kstatsvaluenametargetencbitrate(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameActualEncBitrate = 6;
   inline bool has_kstatsvaluenameactualencbitrate() const;
   inline void clear_kstatsvaluenameactualencbitrate();
   static const int kKStatsValueNameActualEncBitrateFieldNumber = 6;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenameactualencbitrate() const;
-  inline void set_kstatsvaluenameactualencbitrate(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameactualencbitrate() const;
+  inline void set_kstatsvaluenameactualencbitrate(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameAvailableSendBandwidth = 7;
   inline bool has_kstatsvaluenameavailablesendbandwidth() const;
   inline void clear_kstatsvaluenameavailablesendbandwidth();
   static const int kKStatsValueNameAvailableSendBandwidthFieldNumber = 7;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenameavailablesendbandwidth() const;
-  inline void set_kstatsvaluenameavailablesendbandwidth(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameavailablesendbandwidth() const;
+  inline void set_kstatsvaluenameavailablesendbandwidth(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameAvailableReceiveBandwidth = 8;
   inline bool has_kstatsvaluenameavailablereceivebandwidth() const;
   inline void clear_kstatsvaluenameavailablereceivebandwidth();
   static const int kKStatsValueNameAvailableReceiveBandwidthFieldNumber = 8;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenameavailablereceivebandwidth() const;
-  inline void set_kstatsvaluenameavailablereceivebandwidth(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameavailablereceivebandwidth() const;
+  inline void set_kstatsvaluenameavailablereceivebandwidth(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameRttInMs = 9;
   inline bool has_kstatsvaluenamerttinms() const;
   inline void clear_kstatsvaluenamerttinms();
   static const int kKStatsValueNameRttInMsFieldNumber = 9;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamerttinms() const;
-  inline void set_kstatsvaluenamerttinms(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamerttinms() const;
+  inline void set_kstatsvaluenamerttinms(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameBucketDelayInMs = 10;
   inline bool has_kstatsvaluenamebucketdelayinms() const;
   inline void clear_kstatsvaluenamebucketdelayinms();
   static const int kKStatsValueNameBucketDelayInMsFieldNumber = 10;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamebucketdelayinms() const;
-  inline void set_kstatsvaluenamebucketdelayinms(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamebucketdelayinms() const;
+  inline void set_kstatsvaluenamebucketdelayinms(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameSsrc = 11;
   inline bool has_kstatsvaluenamessrc() const;
   inline void clear_kstatsvaluenamessrc();
   static const int kKStatsValueNameSsrcFieldNumber = 11;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamessrc() const;
-  inline void set_kstatsvaluenamessrc(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamessrc() const;
+  inline void set_kstatsvaluenamessrc(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameTransmitBitrate = 12;
   inline bool has_kstatsvaluenametransmitbitrate() const;
   inline void clear_kstatsvaluenametransmitbitrate();
   static const int kKStatsValueNameTransmitBitrateFieldNumber = 12;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenametransmitbitrate() const;
-  inline void set_kstatsvaluenametransmitbitrate(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenametransmitbitrate() const;
+  inline void set_kstatsvaluenametransmitbitrate(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameRetransmitBitrate = 13;
   inline bool has_kstatsvaluenameretransmitbitrate() const;
   inline void clear_kstatsvaluenameretransmitbitrate();
   static const int kKStatsValueNameRetransmitBitrateFieldNumber = 13;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenameretransmitbitrate() const;
-  inline void set_kstatsvaluenameretransmitbitrate(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameretransmitbitrate() const;
+  inline void set_kstatsvaluenameretransmitbitrate(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameFecBitrate = 14;
   inline bool has_kstatsvaluenamefecbitrate() const;
   inline void clear_kstatsvaluenamefecbitrate();
   static const int kKStatsValueNameFecBitrateFieldNumber = 14;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamefecbitrate() const;
-  inline void set_kstatsvaluenamefecbitrate(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamefecbitrate() const;
+  inline void set_kstatsvaluenamefecbitrate(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameTransmitPacketsRate = 15;
   inline bool has_kstatsvaluenametransmitpacketsrate() const;
   inline void clear_kstatsvaluenametransmitpacketsrate();
   static const int kKStatsValueNameTransmitPacketsRateFieldNumber = 15;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenametransmitpacketsrate() const;
-  inline void set_kstatsvaluenametransmitpacketsrate(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenametransmitpacketsrate() const;
+  inline void set_kstatsvaluenametransmitpacketsrate(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameRetransmitPacketsRate = 16;
   inline bool has_kstatsvaluenameretransmitpacketsrate() const;
   inline void clear_kstatsvaluenameretransmitpacketsrate();
   static const int kKStatsValueNameRetransmitPacketsRateFieldNumber = 16;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenameretransmitpacketsrate() const;
-  inline void set_kstatsvaluenameretransmitpacketsrate(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameretransmitpacketsrate() const;
+  inline void set_kstatsvaluenameretransmitpacketsrate(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameFirsReceived = 17;
   inline bool has_kstatsvaluenamefirsreceived() const;
   inline void clear_kstatsvaluenamefirsreceived();
   static const int kKStatsValueNameFirsReceivedFieldNumber = 17;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamefirsreceived() const;
-  inline void set_kstatsvaluenamefirsreceived(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamefirsreceived() const;
+  inline void set_kstatsvaluenamefirsreceived(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameNacksReceived = 18;
   inline bool has_kstatsvaluenamenacksreceived() const;
   inline void clear_kstatsvaluenamenacksreceived();
   static const int kKStatsValueNameNacksReceivedFieldNumber = 18;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamenacksreceived() const;
-  inline void set_kstatsvaluenamenacksreceived(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamenacksreceived() const;
+  inline void set_kstatsvaluenamenacksreceived(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameNacksRequestsReceived = 19;
   inline bool has_kstatsvaluenamenacksrequestsreceived() const;
   inline void clear_kstatsvaluenamenacksrequestsreceived();
   static const int kKStatsValueNameNacksRequestsReceivedFieldNumber = 19;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamenacksrequestsreceived() const;
-  inline void set_kstatsvaluenamenacksrequestsreceived(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamenacksrequestsreceived() const;
+  inline void set_kstatsvaluenamenacksrequestsreceived(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameNacksUniqueRequestsReceived = 20;
   inline bool has_kstatsvaluenamenacksuniquerequestsreceived() const;
   inline void clear_kstatsvaluenamenacksuniquerequestsreceived();
   static const int kKStatsValueNameNacksUniqueRequestsReceivedFieldNumber = 20;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamenacksuniquerequestsreceived() const;
-  inline void set_kstatsvaluenamenacksuniquerequestsreceived(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamenacksuniquerequestsreceived() const;
+  inline void set_kstatsvaluenamenacksuniquerequestsreceived(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameAvgEncodeMs = 21;
   inline bool has_kstatsvaluenameavgencodems() const;
   inline void clear_kstatsvaluenameavgencodems();
   static const int kKStatsValueNameAvgEncodeMsFieldNumber = 21;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenameavgencodems() const;
-  inline void set_kstatsvaluenameavgencodems(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameavgencodems() const;
+  inline void set_kstatsvaluenameavgencodems(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameEncodeUsagePercent = 22;
   inline bool has_kstatsvaluenameencodeusagepercent() const;
   inline void clear_kstatsvaluenameencodeusagepercent();
   static const int kKStatsValueNameEncodeUsagePercentFieldNumber = 22;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenameencodeusagepercent() const;
-  inline void set_kstatsvaluenameencodeusagepercent(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameencodeusagepercent() const;
+  inline void set_kstatsvaluenameencodeusagepercent(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameCapturedFrameWidth = 23;
   inline bool has_kstatsvaluenamecapturedframewidth() const;
   inline void clear_kstatsvaluenamecapturedframewidth();
   static const int kKStatsValueNameCapturedFrameWidthFieldNumber = 23;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamecapturedframewidth() const;
-  inline void set_kstatsvaluenamecapturedframewidth(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecapturedframewidth() const;
+  inline void set_kstatsvaluenamecapturedframewidth(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameCapturedFrameHeight = 24;
   inline bool has_kstatsvaluenamecapturedframeheight() const;
   inline void clear_kstatsvaluenamecapturedframeheight();
   static const int kKStatsValueNameCapturedFrameHeightFieldNumber = 24;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamecapturedframeheight() const;
-  inline void set_kstatsvaluenamecapturedframeheight(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecapturedframeheight() const;
+  inline void set_kstatsvaluenamecapturedframeheight(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameCapturedFrameRate = 25;
   inline bool has_kstatsvaluenamecapturedframerate() const;
   inline void clear_kstatsvaluenamecapturedframerate();
   static const int kKStatsValueNameCapturedFrameRateFieldNumber = 25;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamecapturedframerate() const;
-  inline void set_kstatsvaluenamecapturedframerate(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecapturedframerate() const;
+  inline void set_kstatsvaluenamecapturedframerate(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameQMFrameWidth = 26;
   inline bool has_kstatsvaluenameqmframewidth() const;
   inline void clear_kstatsvaluenameqmframewidth();
   static const int kKStatsValueNameQMFrameWidthFieldNumber = 26;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenameqmframewidth() const;
-  inline void set_kstatsvaluenameqmframewidth(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameqmframewidth() const;
+  inline void set_kstatsvaluenameqmframewidth(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameQMFrameHeight = 27;
   inline bool has_kstatsvaluenameqmframeheight() const;
   inline void clear_kstatsvaluenameqmframeheight();
   static const int kKStatsValueNameQMFrameHeightFieldNumber = 27;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenameqmframeheight() const;
-  inline void set_kstatsvaluenameqmframeheight(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameqmframeheight() const;
+  inline void set_kstatsvaluenameqmframeheight(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameQMFrameRate = 28;
   inline bool has_kstatsvaluenameqmframerate() const;
   inline void clear_kstatsvaluenameqmframerate();
   static const int kKStatsValueNameQMFrameRateFieldNumber = 28;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenameqmframerate() const;
-  inline void set_kstatsvaluenameqmframerate(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameqmframerate() const;
+  inline void set_kstatsvaluenameqmframerate(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameCodecSettingFrameWidth = 29;
   inline bool has_kstatsvaluenamecodecsettingframewidth() const;
   inline void clear_kstatsvaluenamecodecsettingframewidth();
   static const int kKStatsValueNameCodecSettingFrameWidthFieldNumber = 29;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamecodecsettingframewidth() const;
-  inline void set_kstatsvaluenamecodecsettingframewidth(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingframewidth() const;
+  inline void set_kstatsvaluenamecodecsettingframewidth(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameCodecSettingFrameHeight = 30;
   inline bool has_kstatsvaluenamecodecsettingframeheight() const;
   inline void clear_kstatsvaluenamecodecsettingframeheight();
   static const int kKStatsValueNameCodecSettingFrameHeightFieldNumber = 30;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamecodecsettingframeheight() const;
-  inline void set_kstatsvaluenamecodecsettingframeheight(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingframeheight() const;
+  inline void set_kstatsvaluenamecodecsettingframeheight(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameCodecSettingFrameRate = 31;
   inline bool has_kstatsvaluenamecodecsettingframerate() const;
   inline void clear_kstatsvaluenamecodecsettingframerate();
   static const int kKStatsValueNameCodecSettingFrameRateFieldNumber = 31;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamecodecsettingframerate() const;
-  inline void set_kstatsvaluenamecodecsettingframerate(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingframerate() const;
+  inline void set_kstatsvaluenamecodecsettingframerate(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameCodecSettingSimulcastNum = 32;
   inline bool has_kstatsvaluenamecodecsettingsimulcastnum() const;
   inline void clear_kstatsvaluenamecodecsettingsimulcastnum();
   static const int kKStatsValueNameCodecSettingSimulcastNumFieldNumber = 32;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamecodecsettingsimulcastnum() const;
-  inline void set_kstatsvaluenamecodecsettingsimulcastnum(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingsimulcastnum() const;
+  inline void set_kstatsvaluenamecodecsettingsimulcastnum(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameCodecSettingStartBitrate = 33;
   inline bool has_kstatsvaluenamecodecsettingstartbitrate() const;
   inline void clear_kstatsvaluenamecodecsettingstartbitrate();
   static const int kKStatsValueNameCodecSettingStartBitrateFieldNumber = 33;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamecodecsettingstartbitrate() const;
-  inline void set_kstatsvaluenamecodecsettingstartbitrate(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingstartbitrate() const;
+  inline void set_kstatsvaluenamecodecsettingstartbitrate(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameCodecSettingMinBitrate = 34;
   inline bool has_kstatsvaluenamecodecsettingminbitrate() const;
   inline void clear_kstatsvaluenamecodecsettingminbitrate();
   static const int kKStatsValueNameCodecSettingMinBitrateFieldNumber = 34;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamecodecsettingminbitrate() const;
-  inline void set_kstatsvaluenamecodecsettingminbitrate(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingminbitrate() const;
+  inline void set_kstatsvaluenamecodecsettingminbitrate(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameCodecSettingMaxBitrate = 35;
   inline bool has_kstatsvaluenamecodecsettingmaxbitrate() const;
   inline void clear_kstatsvaluenamecodecsettingmaxbitrate();
   static const int kKStatsValueNameCodecSettingMaxBitrateFieldNumber = 35;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamecodecsettingmaxbitrate() const;
-  inline void set_kstatsvaluenamecodecsettingmaxbitrate(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingmaxbitrate() const;
+  inline void set_kstatsvaluenamecodecsettingmaxbitrate(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameCodecSettingTargetBitrate = 36;
   inline bool has_kstatsvaluenamecodecsettingtargetbitrate() const;
   inline void clear_kstatsvaluenamecodecsettingtargetbitrate();
   static const int kKStatsValueNameCodecSettingTargetBitrateFieldNumber = 36;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamecodecsettingtargetbitrate() const;
-  inline void set_kstatsvaluenamecodecsettingtargetbitrate(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingtargetbitrate() const;
+  inline void set_kstatsvaluenamecodecsettingtargetbitrate(::yuntongxun_google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:VideoSenderStatisticsInner)
  private:
@@ -434,43 +434,43 @@ class VideoSenderStatisticsInner : public ::cloopen_google::protobuf::MessageLit
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[2];
-  ::cloopen_google::protobuf::int32 kstatsvaluenamereporttype_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamechannelid_;
-  ::cloopen_google::protobuf::int64 kstatsvaluenametimestamp_;
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[2];
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamereporttype_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamechannelid_;
+  ::yuntongxun_google::protobuf::int64 kstatsvaluenametimestamp_;
   ::std::string* kstatsvaluenamecodecimplementationname_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenametargetencbitrate_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenameactualencbitrate_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenameavailablesendbandwidth_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenameavailablereceivebandwidth_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamerttinms_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamebucketdelayinms_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamessrc_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenametransmitbitrate_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenameretransmitbitrate_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamefecbitrate_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenametransmitpacketsrate_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenameretransmitpacketsrate_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamefirsreceived_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamenacksreceived_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamenacksrequestsreceived_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamenacksuniquerequestsreceived_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenameavgencodems_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenameencodeusagepercent_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamecapturedframewidth_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamecapturedframeheight_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamecapturedframerate_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenameqmframewidth_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenameqmframeheight_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenameqmframerate_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamecodecsettingframewidth_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamecodecsettingframeheight_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamecodecsettingframerate_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamecodecsettingsimulcastnum_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamecodecsettingstartbitrate_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamecodecsettingminbitrate_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamecodecsettingmaxbitrate_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamecodecsettingtargetbitrate_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenametargetencbitrate_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenameactualencbitrate_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenameavailablesendbandwidth_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenameavailablereceivebandwidth_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamerttinms_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamebucketdelayinms_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamessrc_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenametransmitbitrate_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenameretransmitbitrate_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamefecbitrate_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenametransmitpacketsrate_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenameretransmitpacketsrate_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamefirsreceived_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamenacksreceived_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamenacksrequestsreceived_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamenacksuniquerequestsreceived_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenameavgencodems_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenameencodeusagepercent_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamecapturedframewidth_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamecapturedframeheight_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamecapturedframerate_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenameqmframewidth_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenameqmframeheight_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenameqmframerate_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingframewidth_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingframeheight_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingframerate_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingsimulcastnum_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingstartbitrate_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingminbitrate_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingmaxbitrate_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingtargetbitrate_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_MediaStatisticsData_2eproto_impl();
@@ -485,7 +485,7 @@ class VideoSenderStatisticsInner : public ::cloopen_google::protobuf::MessageLit
 };
 // -------------------------------------------------------------------
 
-class VideoReceiverStatisticsInner : public ::cloopen_google::protobuf::MessageLite {
+class VideoReceiverStatisticsInner : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   VideoReceiverStatisticsInner();
   virtual ~VideoReceiverStatisticsInner();
@@ -522,7 +522,7 @@ class VideoReceiverStatisticsInner : public ::cloopen_google::protobuf::MessageL
   // implements Message ----------------------------------------------
 
   VideoReceiverStatisticsInner* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const VideoReceiverStatisticsInner& from);
   void MergeFrom(const VideoReceiverStatisticsInner& from);
   void Clear();
@@ -530,9 +530,9 @@ class VideoReceiverStatisticsInner : public ::cloopen_google::protobuf::MessageL
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -550,22 +550,22 @@ class VideoReceiverStatisticsInner : public ::cloopen_google::protobuf::MessageL
   inline bool has_kstatsvaluenamereporttype() const;
   inline void clear_kstatsvaluenamereporttype();
   static const int kKStatsValueNameReportTypeFieldNumber = 1;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamereporttype() const;
-  inline void set_kstatsvaluenamereporttype(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamereporttype() const;
+  inline void set_kstatsvaluenamereporttype(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameChannelId = 2;
   inline bool has_kstatsvaluenamechannelid() const;
   inline void clear_kstatsvaluenamechannelid();
   static const int kKStatsValueNameChannelIdFieldNumber = 2;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamechannelid() const;
-  inline void set_kstatsvaluenamechannelid(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamechannelid() const;
+  inline void set_kstatsvaluenamechannelid(::yuntongxun_google::protobuf::int32 value);
 
   // optional int64 kStatsValueNameTimestamp = 3;
   inline bool has_kstatsvaluenametimestamp() const;
   inline void clear_kstatsvaluenametimestamp();
   static const int kKStatsValueNameTimestampFieldNumber = 3;
-  inline ::cloopen_google::protobuf::int64 kstatsvaluenametimestamp() const;
-  inline void set_kstatsvaluenametimestamp(::cloopen_google::protobuf::int64 value);
+  inline ::yuntongxun_google::protobuf::int64 kstatsvaluenametimestamp() const;
+  inline void set_kstatsvaluenametimestamp(::yuntongxun_google::protobuf::int64 value);
 
   // optional string kStatsValueNameCodecImplementationName = 4;
   inline bool has_kstatsvaluenamecodecimplementationname() const;
@@ -583,176 +583,176 @@ class VideoReceiverStatisticsInner : public ::cloopen_google::protobuf::MessageL
   inline bool has_kstatsvaluenameframewidthreceived() const;
   inline void clear_kstatsvaluenameframewidthreceived();
   static const int kKStatsValueNameFrameWidthReceivedFieldNumber = 5;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenameframewidthreceived() const;
-  inline void set_kstatsvaluenameframewidthreceived(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameframewidthreceived() const;
+  inline void set_kstatsvaluenameframewidthreceived(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameFrameHeightReceived = 6;
   inline bool has_kstatsvaluenameframeheightreceived() const;
   inline void clear_kstatsvaluenameframeheightreceived();
   static const int kKStatsValueNameFrameHeightReceivedFieldNumber = 6;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenameframeheightreceived() const;
-  inline void set_kstatsvaluenameframeheightreceived(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameframeheightreceived() const;
+  inline void set_kstatsvaluenameframeheightreceived(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameReceivedFrameRate = 7;
   inline bool has_kstatsvaluenamereceivedframerate() const;
   inline void clear_kstatsvaluenamereceivedframerate();
   static const int kKStatsValueNameReceivedFrameRateFieldNumber = 7;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamereceivedframerate() const;
-  inline void set_kstatsvaluenamereceivedframerate(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamereceivedframerate() const;
+  inline void set_kstatsvaluenamereceivedframerate(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameReceivedTotalBitrate = 8;
   inline bool has_kstatsvaluenamereceivedtotalbitrate() const;
   inline void clear_kstatsvaluenamereceivedtotalbitrate();
   static const int kKStatsValueNameReceivedTotalBitrateFieldNumber = 8;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamereceivedtotalbitrate() const;
-  inline void set_kstatsvaluenamereceivedtotalbitrate(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamereceivedtotalbitrate() const;
+  inline void set_kstatsvaluenamereceivedtotalbitrate(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameJitterBufferMs = 9;
   inline bool has_kstatsvaluenamejitterbufferms() const;
   inline void clear_kstatsvaluenamejitterbufferms();
   static const int kKStatsValueNameJitterBufferMsFieldNumber = 9;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamejitterbufferms() const;
-  inline void set_kstatsvaluenamejitterbufferms(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamejitterbufferms() const;
+  inline void set_kstatsvaluenamejitterbufferms(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameDecoderFrameRate = 10;
   inline bool has_kstatsvaluenamedecoderframerate() const;
   inline void clear_kstatsvaluenamedecoderframerate();
   static const int kKStatsValueNameDecoderFrameRateFieldNumber = 10;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamedecoderframerate() const;
-  inline void set_kstatsvaluenamedecoderframerate(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamedecoderframerate() const;
+  inline void set_kstatsvaluenamedecoderframerate(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameDecodeMs = 11;
   inline bool has_kstatsvaluenamedecodems() const;
   inline void clear_kstatsvaluenamedecodems();
   static const int kKStatsValueNameDecodeMsFieldNumber = 11;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamedecodems() const;
-  inline void set_kstatsvaluenamedecodems(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamedecodems() const;
+  inline void set_kstatsvaluenamedecodems(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameMaxDecodeMs = 12;
   inline bool has_kstatsvaluenamemaxdecodems() const;
   inline void clear_kstatsvaluenamemaxdecodems();
   static const int kKStatsValueNameMaxDecodeMsFieldNumber = 12;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamemaxdecodems() const;
-  inline void set_kstatsvaluenamemaxdecodems(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamemaxdecodems() const;
+  inline void set_kstatsvaluenamemaxdecodems(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameFrameRateRender = 13;
   inline bool has_kstatsvaluenameframeraterender() const;
   inline void clear_kstatsvaluenameframeraterender();
   static const int kKStatsValueNameFrameRateRenderFieldNumber = 13;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenameframeraterender() const;
-  inline void set_kstatsvaluenameframeraterender(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameframeraterender() const;
+  inline void set_kstatsvaluenameframeraterender(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameCurrentDelayMs = 14;
   inline bool has_kstatsvaluenamecurrentdelayms() const;
   inline void clear_kstatsvaluenamecurrentdelayms();
   static const int kKStatsValueNameCurrentDelayMsFieldNumber = 14;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamecurrentdelayms() const;
-  inline void set_kstatsvaluenamecurrentdelayms(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecurrentdelayms() const;
+  inline void set_kstatsvaluenamecurrentdelayms(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameRenderDelayMs = 15;
   inline bool has_kstatsvaluenamerenderdelayms() const;
   inline void clear_kstatsvaluenamerenderdelayms();
   static const int kKStatsValueNameRenderDelayMsFieldNumber = 15;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamerenderdelayms() const;
-  inline void set_kstatsvaluenamerenderdelayms(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamerenderdelayms() const;
+  inline void set_kstatsvaluenamerenderdelayms(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameSsrc = 16;
   inline bool has_kstatsvaluenamessrc() const;
   inline void clear_kstatsvaluenamessrc();
   static const int kKStatsValueNameSsrcFieldNumber = 16;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamessrc() const;
-  inline void set_kstatsvaluenamessrc(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamessrc() const;
+  inline void set_kstatsvaluenamessrc(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameBytesReceived = 17;
   inline bool has_kstatsvaluenamebytesreceived() const;
   inline void clear_kstatsvaluenamebytesreceived();
   static const int kKStatsValueNameBytesReceivedFieldNumber = 17;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamebytesreceived() const;
-  inline void set_kstatsvaluenamebytesreceived(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamebytesreceived() const;
+  inline void set_kstatsvaluenamebytesreceived(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNamePacketsReceived = 18;
   inline bool has_kstatsvaluenamepacketsreceived() const;
   inline void clear_kstatsvaluenamepacketsreceived();
   static const int kKStatsValueNamePacketsReceivedFieldNumber = 18;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamepacketsreceived() const;
-  inline void set_kstatsvaluenamepacketsreceived(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamepacketsreceived() const;
+  inline void set_kstatsvaluenamepacketsreceived(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameFirsSent = 19;
   inline bool has_kstatsvaluenamefirssent() const;
   inline void clear_kstatsvaluenamefirssent();
   static const int kKStatsValueNameFirsSentFieldNumber = 19;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamefirssent() const;
-  inline void set_kstatsvaluenamefirssent(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamefirssent() const;
+  inline void set_kstatsvaluenamefirssent(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameNacksSent = 20;
   inline bool has_kstatsvaluenamenackssent() const;
   inline void clear_kstatsvaluenamenackssent();
   static const int kKStatsValueNameNacksSentFieldNumber = 20;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamenackssent() const;
-  inline void set_kstatsvaluenamenackssent(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamenackssent() const;
+  inline void set_kstatsvaluenamenackssent(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameNacksRequestsSent = 21;
   inline bool has_kstatsvaluenamenacksrequestssent() const;
   inline void clear_kstatsvaluenamenacksrequestssent();
   static const int kKStatsValueNameNacksRequestsSentFieldNumber = 21;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamenacksrequestssent() const;
-  inline void set_kstatsvaluenamenacksrequestssent(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamenacksrequestssent() const;
+  inline void set_kstatsvaluenamenacksrequestssent(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameNacksUniqueRequestsSent = 22;
   inline bool has_kstatsvaluenamenacksuniquerequestssent() const;
   inline void clear_kstatsvaluenamenacksuniquerequestssent();
   static const int kKStatsValueNameNacksUniqueRequestsSentFieldNumber = 22;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamenacksuniquerequestssent() const;
-  inline void set_kstatsvaluenamenacksuniquerequestssent(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamenacksuniquerequestssent() const;
+  inline void set_kstatsvaluenamenacksuniquerequestssent(::yuntongxun_google::protobuf::int32 value);
 
   // optional int64 kStatsValueNameLossModePart1 = 23;
   inline bool has_kstatsvaluenamelossmodepart1() const;
   inline void clear_kstatsvaluenamelossmodepart1();
   static const int kKStatsValueNameLossModePart1FieldNumber = 23;
-  inline ::cloopen_google::protobuf::int64 kstatsvaluenamelossmodepart1() const;
-  inline void set_kstatsvaluenamelossmodepart1(::cloopen_google::protobuf::int64 value);
+  inline ::yuntongxun_google::protobuf::int64 kstatsvaluenamelossmodepart1() const;
+  inline void set_kstatsvaluenamelossmodepart1(::yuntongxun_google::protobuf::int64 value);
 
   // optional int64 kStatsValueNameLossModePart2 = 24;
   inline bool has_kstatsvaluenamelossmodepart2() const;
   inline void clear_kstatsvaluenamelossmodepart2();
   static const int kKStatsValueNameLossModePart2FieldNumber = 24;
-  inline ::cloopen_google::protobuf::int64 kstatsvaluenamelossmodepart2() const;
-  inline void set_kstatsvaluenamelossmodepart2(::cloopen_google::protobuf::int64 value);
+  inline ::yuntongxun_google::protobuf::int64 kstatsvaluenamelossmodepart2() const;
+  inline void set_kstatsvaluenamelossmodepart2(::yuntongxun_google::protobuf::int64 value);
 
   // optional int64 kStatsValueNameLossModePart3 = 25;
   inline bool has_kstatsvaluenamelossmodepart3() const;
   inline void clear_kstatsvaluenamelossmodepart3();
   static const int kKStatsValueNameLossModePart3FieldNumber = 25;
-  inline ::cloopen_google::protobuf::int64 kstatsvaluenamelossmodepart3() const;
-  inline void set_kstatsvaluenamelossmodepart3(::cloopen_google::protobuf::int64 value);
+  inline ::yuntongxun_google::protobuf::int64 kstatsvaluenamelossmodepart3() const;
+  inline void set_kstatsvaluenamelossmodepart3(::yuntongxun_google::protobuf::int64 value);
 
   // optional int64 kStatsValueNameLossModePart4 = 26;
   inline bool has_kstatsvaluenamelossmodepart4() const;
   inline void clear_kstatsvaluenamelossmodepart4();
   static const int kKStatsValueNameLossModePart4FieldNumber = 26;
-  inline ::cloopen_google::protobuf::int64 kstatsvaluenamelossmodepart4() const;
-  inline void set_kstatsvaluenamelossmodepart4(::cloopen_google::protobuf::int64 value);
+  inline ::yuntongxun_google::protobuf::int64 kstatsvaluenamelossmodepart4() const;
+  inline void set_kstatsvaluenamelossmodepart4(::yuntongxun_google::protobuf::int64 value);
 
   // optional int32 kStatsValueNameLossFractionInPercent = 27;
   inline bool has_kstatsvaluenamelossfractioninpercent() const;
   inline void clear_kstatsvaluenamelossfractioninpercent();
   static const int kKStatsValueNameLossFractionInPercentFieldNumber = 27;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamelossfractioninpercent() const;
-  inline void set_kstatsvaluenamelossfractioninpercent(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamelossfractioninpercent() const;
+  inline void set_kstatsvaluenamelossfractioninpercent(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNamePacketsLost = 28;
   inline bool has_kstatsvaluenamepacketslost() const;
   inline void clear_kstatsvaluenamepacketslost();
   static const int kKStatsValueNamePacketsLostFieldNumber = 28;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamepacketslost() const;
-  inline void set_kstatsvaluenamepacketslost(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamepacketslost() const;
+  inline void set_kstatsvaluenamepacketslost(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameJitterReceived = 29;
   inline bool has_kstatsvaluenamejitterreceived() const;
   inline void clear_kstatsvaluenamejitterreceived();
   static const int kKStatsValueNameJitterReceivedFieldNumber = 29;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamejitterreceived() const;
-  inline void set_kstatsvaluenamejitterreceived(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamejitterreceived() const;
+  inline void set_kstatsvaluenamejitterreceived(::yuntongxun_google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:VideoReceiverStatisticsInner)
  private:
@@ -817,37 +817,37 @@ class VideoReceiverStatisticsInner : public ::cloopen_google::protobuf::MessageL
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamereporttype_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamechannelid_;
-  ::cloopen_google::protobuf::int64 kstatsvaluenametimestamp_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamereporttype_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamechannelid_;
+  ::yuntongxun_google::protobuf::int64 kstatsvaluenametimestamp_;
   ::std::string* kstatsvaluenamecodecimplementationname_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenameframewidthreceived_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenameframeheightreceived_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamereceivedframerate_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamereceivedtotalbitrate_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamejitterbufferms_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamedecoderframerate_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamedecodems_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamemaxdecodems_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenameframeraterender_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamecurrentdelayms_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamerenderdelayms_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamessrc_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamebytesreceived_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamepacketsreceived_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamefirssent_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamenackssent_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamenacksrequestssent_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamenacksuniquerequestssent_;
-  ::cloopen_google::protobuf::int64 kstatsvaluenamelossmodepart1_;
-  ::cloopen_google::protobuf::int64 kstatsvaluenamelossmodepart2_;
-  ::cloopen_google::protobuf::int64 kstatsvaluenamelossmodepart3_;
-  ::cloopen_google::protobuf::int64 kstatsvaluenamelossmodepart4_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamelossfractioninpercent_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamepacketslost_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamejitterreceived_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenameframewidthreceived_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenameframeheightreceived_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamereceivedframerate_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamereceivedtotalbitrate_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamejitterbufferms_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamedecoderframerate_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamedecodems_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamemaxdecodems_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenameframeraterender_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamecurrentdelayms_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamerenderdelayms_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamessrc_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamebytesreceived_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamepacketsreceived_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamefirssent_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamenackssent_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamenacksrequestssent_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamenacksuniquerequestssent_;
+  ::yuntongxun_google::protobuf::int64 kstatsvaluenamelossmodepart1_;
+  ::yuntongxun_google::protobuf::int64 kstatsvaluenamelossmodepart2_;
+  ::yuntongxun_google::protobuf::int64 kstatsvaluenamelossmodepart3_;
+  ::yuntongxun_google::protobuf::int64 kstatsvaluenamelossmodepart4_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamelossfractioninpercent_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamepacketslost_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamejitterreceived_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_MediaStatisticsData_2eproto_impl();
   #else
@@ -861,7 +861,7 @@ class VideoReceiverStatisticsInner : public ::cloopen_google::protobuf::MessageL
 };
 // -------------------------------------------------------------------
 
-class AudioSenderStatisticsInner : public ::cloopen_google::protobuf::MessageLite {
+class AudioSenderStatisticsInner : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   AudioSenderStatisticsInner();
   virtual ~AudioSenderStatisticsInner();
@@ -898,7 +898,7 @@ class AudioSenderStatisticsInner : public ::cloopen_google::protobuf::MessageLit
   // implements Message ----------------------------------------------
 
   AudioSenderStatisticsInner* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const AudioSenderStatisticsInner& from);
   void MergeFrom(const AudioSenderStatisticsInner& from);
   void Clear();
@@ -906,9 +906,9 @@ class AudioSenderStatisticsInner : public ::cloopen_google::protobuf::MessageLit
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -926,22 +926,22 @@ class AudioSenderStatisticsInner : public ::cloopen_google::protobuf::MessageLit
   inline bool has_kstatsvaluenamereporttype() const;
   inline void clear_kstatsvaluenamereporttype();
   static const int kKStatsValueNameReportTypeFieldNumber = 1;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamereporttype() const;
-  inline void set_kstatsvaluenamereporttype(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamereporttype() const;
+  inline void set_kstatsvaluenamereporttype(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameChannelId = 2;
   inline bool has_kstatsvaluenamechannelid() const;
   inline void clear_kstatsvaluenamechannelid();
   static const int kKStatsValueNameChannelIdFieldNumber = 2;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamechannelid() const;
-  inline void set_kstatsvaluenamechannelid(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamechannelid() const;
+  inline void set_kstatsvaluenamechannelid(::yuntongxun_google::protobuf::int32 value);
 
   // optional int64 kStatsValueNameTimestamp = 3;
   inline bool has_kstatsvaluenametimestamp() const;
   inline void clear_kstatsvaluenametimestamp();
   static const int kKStatsValueNameTimestampFieldNumber = 3;
-  inline ::cloopen_google::protobuf::int64 kstatsvaluenametimestamp() const;
-  inline void set_kstatsvaluenametimestamp(::cloopen_google::protobuf::int64 value);
+  inline ::yuntongxun_google::protobuf::int64 kstatsvaluenametimestamp() const;
+  inline void set_kstatsvaluenametimestamp(::yuntongxun_google::protobuf::int64 value);
 
   // optional string kStatsValueNameCodecImplementationName = 4;
   inline bool has_kstatsvaluenamecodecimplementationname() const;
@@ -959,43 +959,43 @@ class AudioSenderStatisticsInner : public ::cloopen_google::protobuf::MessageLit
   inline bool has_kstatsvaluenameaudioinputlevel() const;
   inline void clear_kstatsvaluenameaudioinputlevel();
   static const int kKStatsValueNameAudioInputLevelFieldNumber = 5;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenameaudioinputlevel() const;
-  inline void set_kstatsvaluenameaudioinputlevel(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameaudioinputlevel() const;
+  inline void set_kstatsvaluenameaudioinputlevel(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameRttInMs = 6;
   inline bool has_kstatsvaluenamerttinms() const;
   inline void clear_kstatsvaluenamerttinms();
   static const int kKStatsValueNameRttInMsFieldNumber = 6;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamerttinms() const;
-  inline void set_kstatsvaluenamerttinms(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamerttinms() const;
+  inline void set_kstatsvaluenamerttinms(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameEchoDelayMedian = 7;
   inline bool has_kstatsvaluenameechodelaymedian() const;
   inline void clear_kstatsvaluenameechodelaymedian();
   static const int kKStatsValueNameEchoDelayMedianFieldNumber = 7;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenameechodelaymedian() const;
-  inline void set_kstatsvaluenameechodelaymedian(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameechodelaymedian() const;
+  inline void set_kstatsvaluenameechodelaymedian(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameEchoDelayStdDev = 8;
   inline bool has_kstatsvaluenameechodelaystddev() const;
   inline void clear_kstatsvaluenameechodelaystddev();
   static const int kKStatsValueNameEchoDelayStdDevFieldNumber = 8;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenameechodelaystddev() const;
-  inline void set_kstatsvaluenameechodelaystddev(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameechodelaystddev() const;
+  inline void set_kstatsvaluenameechodelaystddev(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameEchoReturnLoss = 9;
   inline bool has_kstatsvaluenameechoreturnloss() const;
   inline void clear_kstatsvaluenameechoreturnloss();
   static const int kKStatsValueNameEchoReturnLossFieldNumber = 9;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenameechoreturnloss() const;
-  inline void set_kstatsvaluenameechoreturnloss(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameechoreturnloss() const;
+  inline void set_kstatsvaluenameechoreturnloss(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameEchoReturnLossEnhancement = 10;
   inline bool has_kstatsvaluenameechoreturnlossenhancement() const;
   inline void clear_kstatsvaluenameechoreturnlossenhancement();
   static const int kKStatsValueNameEchoReturnLossEnhancementFieldNumber = 10;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenameechoreturnlossenhancement() const;
-  inline void set_kstatsvaluenameechoreturnlossenhancement(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameechoreturnlossenhancement() const;
+  inline void set_kstatsvaluenameechoreturnlossenhancement(::yuntongxun_google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:AudioSenderStatisticsInner)
  private:
@@ -1022,18 +1022,18 @@ class AudioSenderStatisticsInner : public ::cloopen_google::protobuf::MessageLit
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamereporttype_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamechannelid_;
-  ::cloopen_google::protobuf::int64 kstatsvaluenametimestamp_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamereporttype_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamechannelid_;
+  ::yuntongxun_google::protobuf::int64 kstatsvaluenametimestamp_;
   ::std::string* kstatsvaluenamecodecimplementationname_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenameaudioinputlevel_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamerttinms_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenameechodelaymedian_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenameechodelaystddev_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenameechoreturnloss_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenameechoreturnlossenhancement_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenameaudioinputlevel_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamerttinms_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenameechodelaymedian_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenameechodelaystddev_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenameechoreturnloss_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenameechoreturnlossenhancement_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_MediaStatisticsData_2eproto_impl();
   #else
@@ -1047,7 +1047,7 @@ class AudioSenderStatisticsInner : public ::cloopen_google::protobuf::MessageLit
 };
 // -------------------------------------------------------------------
 
-class AudioReceiverStatisticsInner : public ::cloopen_google::protobuf::MessageLite {
+class AudioReceiverStatisticsInner : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   AudioReceiverStatisticsInner();
   virtual ~AudioReceiverStatisticsInner();
@@ -1084,7 +1084,7 @@ class AudioReceiverStatisticsInner : public ::cloopen_google::protobuf::MessageL
   // implements Message ----------------------------------------------
 
   AudioReceiverStatisticsInner* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const AudioReceiverStatisticsInner& from);
   void MergeFrom(const AudioReceiverStatisticsInner& from);
   void Clear();
@@ -1092,9 +1092,9 @@ class AudioReceiverStatisticsInner : public ::cloopen_google::protobuf::MessageL
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -1112,22 +1112,22 @@ class AudioReceiverStatisticsInner : public ::cloopen_google::protobuf::MessageL
   inline bool has_kstatsvaluenamereporttype() const;
   inline void clear_kstatsvaluenamereporttype();
   static const int kKStatsValueNameReportTypeFieldNumber = 1;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamereporttype() const;
-  inline void set_kstatsvaluenamereporttype(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamereporttype() const;
+  inline void set_kstatsvaluenamereporttype(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameChannelId = 2;
   inline bool has_kstatsvaluenamechannelid() const;
   inline void clear_kstatsvaluenamechannelid();
   static const int kKStatsValueNameChannelIdFieldNumber = 2;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamechannelid() const;
-  inline void set_kstatsvaluenamechannelid(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamechannelid() const;
+  inline void set_kstatsvaluenamechannelid(::yuntongxun_google::protobuf::int32 value);
 
   // optional int64 kStatsValueNameTimestamp = 3;
   inline bool has_kstatsvaluenametimestamp() const;
   inline void clear_kstatsvaluenametimestamp();
   static const int kKStatsValueNameTimestampFieldNumber = 3;
-  inline ::cloopen_google::protobuf::int64 kstatsvaluenametimestamp() const;
-  inline void set_kstatsvaluenametimestamp(::cloopen_google::protobuf::int64 value);
+  inline ::yuntongxun_google::protobuf::int64 kstatsvaluenametimestamp() const;
+  inline void set_kstatsvaluenametimestamp(::yuntongxun_google::protobuf::int64 value);
 
   // optional string kStatsValueNameCodecImplementationName = 4;
   inline bool has_kstatsvaluenamecodecimplementationname() const;
@@ -1145,22 +1145,22 @@ class AudioReceiverStatisticsInner : public ::cloopen_google::protobuf::MessageL
   inline bool has_kstatsvaluenameaudiooutputlevel() const;
   inline void clear_kstatsvaluenameaudiooutputlevel();
   static const int kKStatsValueNameAudioOutputLevelFieldNumber = 5;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenameaudiooutputlevel() const;
-  inline void set_kstatsvaluenameaudiooutputlevel(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameaudiooutputlevel() const;
+  inline void set_kstatsvaluenameaudiooutputlevel(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameCurrentDelayMs = 6;
   inline bool has_kstatsvaluenamecurrentdelayms() const;
   inline void clear_kstatsvaluenamecurrentdelayms();
   static const int kKStatsValueNameCurrentDelayMsFieldNumber = 6;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamecurrentdelayms() const;
-  inline void set_kstatsvaluenamecurrentdelayms(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecurrentdelayms() const;
+  inline void set_kstatsvaluenamecurrentdelayms(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameJitterBufferMs = 7;
   inline bool has_kstatsvaluenamejitterbufferms() const;
   inline void clear_kstatsvaluenamejitterbufferms();
   static const int kKStatsValueNameJitterBufferMsFieldNumber = 7;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamejitterbufferms() const;
-  inline void set_kstatsvaluenamejitterbufferms(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamejitterbufferms() const;
+  inline void set_kstatsvaluenamejitterbufferms(::yuntongxun_google::protobuf::int32 value);
 
   // optional float kStatsValueNameAccelerateRate = 8;
   inline bool has_kstatsvaluenameacceleraterate() const;
@@ -1187,50 +1187,50 @@ class AudioReceiverStatisticsInner : public ::cloopen_google::protobuf::MessageL
   inline bool has_kstatsvaluenamedecodingnormal() const;
   inline void clear_kstatsvaluenamedecodingnormal();
   static const int kKStatsValueNameDecodingNormalFieldNumber = 11;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamedecodingnormal() const;
-  inline void set_kstatsvaluenamedecodingnormal(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamedecodingnormal() const;
+  inline void set_kstatsvaluenamedecodingnormal(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameDecodingPLC = 12;
   inline bool has_kstatsvaluenamedecodingplc() const;
   inline void clear_kstatsvaluenamedecodingplc();
   static const int kKStatsValueNameDecodingPLCFieldNumber = 12;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamedecodingplc() const;
-  inline void set_kstatsvaluenamedecodingplc(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamedecodingplc() const;
+  inline void set_kstatsvaluenamedecodingplc(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameDecodingCNG = 13;
   inline bool has_kstatsvaluenamedecodingcng() const;
   inline void clear_kstatsvaluenamedecodingcng();
   static const int kKStatsValueNameDecodingCNGFieldNumber = 13;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamedecodingcng() const;
-  inline void set_kstatsvaluenamedecodingcng(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamedecodingcng() const;
+  inline void set_kstatsvaluenamedecodingcng(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameDecodingPLCCNG = 14;
   inline bool has_kstatsvaluenamedecodingplccng() const;
   inline void clear_kstatsvaluenamedecodingplccng();
   static const int kKStatsValueNameDecodingPLCCNGFieldNumber = 14;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamedecodingplccng() const;
-  inline void set_kstatsvaluenamedecodingplccng(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamedecodingplccng() const;
+  inline void set_kstatsvaluenamedecodingplccng(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameLossFractionInPercent = 15;
   inline bool has_kstatsvaluenamelossfractioninpercent() const;
   inline void clear_kstatsvaluenamelossfractioninpercent();
   static const int kKStatsValueNameLossFractionInPercentFieldNumber = 15;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamelossfractioninpercent() const;
-  inline void set_kstatsvaluenamelossfractioninpercent(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamelossfractioninpercent() const;
+  inline void set_kstatsvaluenamelossfractioninpercent(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNamePacketsLost = 16;
   inline bool has_kstatsvaluenamepacketslost() const;
   inline void clear_kstatsvaluenamepacketslost();
   static const int kKStatsValueNamePacketsLostFieldNumber = 16;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamepacketslost() const;
-  inline void set_kstatsvaluenamepacketslost(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamepacketslost() const;
+  inline void set_kstatsvaluenamepacketslost(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 kStatsValueNameJitterReceived = 17;
   inline bool has_kstatsvaluenamejitterreceived() const;
   inline void clear_kstatsvaluenamejitterreceived();
   static const int kKStatsValueNameJitterReceivedFieldNumber = 17;
-  inline ::cloopen_google::protobuf::int32 kstatsvaluenamejitterreceived() const;
-  inline void set_kstatsvaluenamejitterreceived(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamejitterreceived() const;
+  inline void set_kstatsvaluenamejitterreceived(::yuntongxun_google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:AudioReceiverStatisticsInner)
  private:
@@ -1271,25 +1271,25 @@ class AudioReceiverStatisticsInner : public ::cloopen_google::protobuf::MessageL
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamereporttype_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamechannelid_;
-  ::cloopen_google::protobuf::int64 kstatsvaluenametimestamp_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamereporttype_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamechannelid_;
+  ::yuntongxun_google::protobuf::int64 kstatsvaluenametimestamp_;
   ::std::string* kstatsvaluenamecodecimplementationname_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenameaudiooutputlevel_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamecurrentdelayms_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamejitterbufferms_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenameaudiooutputlevel_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamecurrentdelayms_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamejitterbufferms_;
   float kstatsvaluenameacceleraterate_;
   float kstatsvaluenameexpandrate_;
   float kstatsvaluenamepreemptiveexpandrate_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamedecodingnormal_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamedecodingplc_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamedecodingcng_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamedecodingplccng_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamelossfractioninpercent_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamepacketslost_;
-  ::cloopen_google::protobuf::int32 kstatsvaluenamejitterreceived_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamedecodingnormal_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamedecodingplc_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamedecodingcng_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamedecodingplccng_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamelossfractioninpercent_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamepacketslost_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamejitterreceived_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_MediaStatisticsData_2eproto_impl();
   #else
@@ -1303,7 +1303,7 @@ class AudioReceiverStatisticsInner : public ::cloopen_google::protobuf::MessageL
 };
 // -------------------------------------------------------------------
 
-class MediaStatisticsInner : public ::cloopen_google::protobuf::MessageLite {
+class MediaStatisticsInner : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   MediaStatisticsInner();
   virtual ~MediaStatisticsInner();
@@ -1340,7 +1340,7 @@ class MediaStatisticsInner : public ::cloopen_google::protobuf::MessageLite {
   // implements Message ----------------------------------------------
 
   MediaStatisticsInner* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const MediaStatisticsInner& from);
   void MergeFrom(const MediaStatisticsInner& from);
   void Clear();
@@ -1348,9 +1348,9 @@ class MediaStatisticsInner : public ::cloopen_google::protobuf::MessageLite {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -1371,9 +1371,9 @@ class MediaStatisticsInner : public ::cloopen_google::protobuf::MessageLite {
   inline const ::VideoSenderStatisticsInner& videosenderstats(int index) const;
   inline ::VideoSenderStatisticsInner* mutable_videosenderstats(int index);
   inline ::VideoSenderStatisticsInner* add_videosenderstats();
-  inline const ::cloopen_google::protobuf::RepeatedPtrField< ::VideoSenderStatisticsInner >&
+  inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::VideoSenderStatisticsInner >&
       videosenderstats() const;
-  inline ::cloopen_google::protobuf::RepeatedPtrField< ::VideoSenderStatisticsInner >*
+  inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::VideoSenderStatisticsInner >*
       mutable_videosenderstats();
 
   // repeated .VideoReceiverStatisticsInner videoReceiverStats = 2;
@@ -1383,9 +1383,9 @@ class MediaStatisticsInner : public ::cloopen_google::protobuf::MessageLite {
   inline const ::VideoReceiverStatisticsInner& videoreceiverstats(int index) const;
   inline ::VideoReceiverStatisticsInner* mutable_videoreceiverstats(int index);
   inline ::VideoReceiverStatisticsInner* add_videoreceiverstats();
-  inline const ::cloopen_google::protobuf::RepeatedPtrField< ::VideoReceiverStatisticsInner >&
+  inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::VideoReceiverStatisticsInner >&
       videoreceiverstats() const;
-  inline ::cloopen_google::protobuf::RepeatedPtrField< ::VideoReceiverStatisticsInner >*
+  inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::VideoReceiverStatisticsInner >*
       mutable_videoreceiverstats();
 
   // repeated .AudioSenderStatisticsInner audioSenderStats = 3;
@@ -1395,9 +1395,9 @@ class MediaStatisticsInner : public ::cloopen_google::protobuf::MessageLite {
   inline const ::AudioSenderStatisticsInner& audiosenderstats(int index) const;
   inline ::AudioSenderStatisticsInner* mutable_audiosenderstats(int index);
   inline ::AudioSenderStatisticsInner* add_audiosenderstats();
-  inline const ::cloopen_google::protobuf::RepeatedPtrField< ::AudioSenderStatisticsInner >&
+  inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::AudioSenderStatisticsInner >&
       audiosenderstats() const;
-  inline ::cloopen_google::protobuf::RepeatedPtrField< ::AudioSenderStatisticsInner >*
+  inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::AudioSenderStatisticsInner >*
       mutable_audiosenderstats();
 
   // repeated .AudioReceiverStatisticsInner audioReceiverStats = 4;
@@ -1407,9 +1407,9 @@ class MediaStatisticsInner : public ::cloopen_google::protobuf::MessageLite {
   inline const ::AudioReceiverStatisticsInner& audioreceiverstats(int index) const;
   inline ::AudioReceiverStatisticsInner* mutable_audioreceiverstats(int index);
   inline ::AudioReceiverStatisticsInner* add_audioreceiverstats();
-  inline const ::cloopen_google::protobuf::RepeatedPtrField< ::AudioReceiverStatisticsInner >&
+  inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::AudioReceiverStatisticsInner >&
       audioreceiverstats() const;
-  inline ::cloopen_google::protobuf::RepeatedPtrField< ::AudioReceiverStatisticsInner >*
+  inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::AudioReceiverStatisticsInner >*
       mutable_audioreceiverstats();
 
   // @@protoc_insertion_point(class_scope:MediaStatisticsInner)
@@ -1417,12 +1417,12 @@ class MediaStatisticsInner : public ::cloopen_google::protobuf::MessageLite {
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::cloopen_google::protobuf::RepeatedPtrField< ::VideoSenderStatisticsInner > videosenderstats_;
-  ::cloopen_google::protobuf::RepeatedPtrField< ::VideoReceiverStatisticsInner > videoreceiverstats_;
-  ::cloopen_google::protobuf::RepeatedPtrField< ::AudioSenderStatisticsInner > audiosenderstats_;
-  ::cloopen_google::protobuf::RepeatedPtrField< ::AudioReceiverStatisticsInner > audioreceiverstats_;
+  ::yuntongxun_google::protobuf::RepeatedPtrField< ::VideoSenderStatisticsInner > videosenderstats_;
+  ::yuntongxun_google::protobuf::RepeatedPtrField< ::VideoReceiverStatisticsInner > videoreceiverstats_;
+  ::yuntongxun_google::protobuf::RepeatedPtrField< ::AudioSenderStatisticsInner > audiosenderstats_;
+  ::yuntongxun_google::protobuf::RepeatedPtrField< ::AudioReceiverStatisticsInner > audioreceiverstats_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_MediaStatisticsData_2eproto_impl();
   #else
@@ -1436,7 +1436,7 @@ class MediaStatisticsInner : public ::cloopen_google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class MediaStatisticsDataInner : public ::cloopen_google::protobuf::MessageLite {
+class MediaStatisticsDataInner : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   MediaStatisticsDataInner();
   virtual ~MediaStatisticsDataInner();
@@ -1473,7 +1473,7 @@ class MediaStatisticsDataInner : public ::cloopen_google::protobuf::MessageLite 
   // implements Message ----------------------------------------------
 
   MediaStatisticsDataInner* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const MediaStatisticsDataInner& from);
   void MergeFrom(const MediaStatisticsDataInner& from);
   void Clear();
@@ -1481,9 +1481,9 @@ class MediaStatisticsDataInner : public ::cloopen_google::protobuf::MessageLite 
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -1516,9 +1516,9 @@ class MediaStatisticsDataInner : public ::cloopen_google::protobuf::MessageLite 
   inline const ::MediaStatisticsInner& mediadata(int index) const;
   inline ::MediaStatisticsInner* mutable_mediadata(int index);
   inline ::MediaStatisticsInner* add_mediadata();
-  inline const ::cloopen_google::protobuf::RepeatedPtrField< ::MediaStatisticsInner >&
+  inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::MediaStatisticsInner >&
       mediadata() const;
-  inline ::cloopen_google::protobuf::RepeatedPtrField< ::MediaStatisticsInner >*
+  inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::MediaStatisticsInner >*
       mutable_mediadata();
 
   // @@protoc_insertion_point(class_scope:MediaStatisticsDataInner)
@@ -1528,10 +1528,10 @@ class MediaStatisticsDataInner : public ::cloopen_google::protobuf::MessageLite 
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   ::std::string* callid_;
-  ::cloopen_google::protobuf::RepeatedPtrField< ::MediaStatisticsInner > mediadata_;
+  ::yuntongxun_google::protobuf::RepeatedPtrField< ::MediaStatisticsInner > mediadata_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_MediaStatisticsData_2eproto_impl();
   #else
@@ -1564,11 +1564,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenamereporttype() {
   kstatsvaluenamereporttype_ = 0;
   clear_has_kstatsvaluenamereporttype();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamereporttype() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamereporttype() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameReportType)
   return kstatsvaluenamereporttype_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenamereporttype(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenamereporttype(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamereporttype();
   kstatsvaluenamereporttype_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameReportType)
@@ -1588,11 +1588,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenamechannelid() {
   kstatsvaluenamechannelid_ = 0;
   clear_has_kstatsvaluenamechannelid();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamechannelid() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamechannelid() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameChannelId)
   return kstatsvaluenamechannelid_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenamechannelid(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenamechannelid(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamechannelid();
   kstatsvaluenamechannelid_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameChannelId)
@@ -1612,11 +1612,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenametimestamp() {
   kstatsvaluenametimestamp_ = GOOGLE_LONGLONG(0);
   clear_has_kstatsvaluenametimestamp();
 }
-inline ::cloopen_google::protobuf::int64 VideoSenderStatisticsInner::kstatsvaluenametimestamp() const {
+inline ::yuntongxun_google::protobuf::int64 VideoSenderStatisticsInner::kstatsvaluenametimestamp() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameTimestamp)
   return kstatsvaluenametimestamp_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenametimestamp(::cloopen_google::protobuf::int64 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenametimestamp(::yuntongxun_google::protobuf::int64 value) {
   set_has_kstatsvaluenametimestamp();
   kstatsvaluenametimestamp_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameTimestamp)
@@ -1633,7 +1633,7 @@ inline void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecodecimplementa
   _has_bits_[0] &= ~0x00000008u;
 }
 inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecimplementationname() {
-  if (kstatsvaluenamecodecimplementationname_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     kstatsvaluenamecodecimplementationname_->clear();
   }
   clear_has_kstatsvaluenamecodecimplementationname();
@@ -1644,7 +1644,7 @@ inline const ::std::string& VideoSenderStatisticsInner::kstatsvaluenamecodecimpl
 }
 inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecimplementationname(const ::std::string& value) {
   set_has_kstatsvaluenamecodecimplementationname();
-  if (kstatsvaluenamecodecimplementationname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     kstatsvaluenamecodecimplementationname_ = new ::std::string;
   }
   kstatsvaluenamecodecimplementationname_->assign(value);
@@ -1652,7 +1652,7 @@ inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecimplementationna
 }
 inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecimplementationname(const char* value) {
   set_has_kstatsvaluenamecodecimplementationname();
-  if (kstatsvaluenamecodecimplementationname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     kstatsvaluenamecodecimplementationname_ = new ::std::string;
   }
   kstatsvaluenamecodecimplementationname_->assign(value);
@@ -1660,7 +1660,7 @@ inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecimplementationna
 }
 inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecimplementationname(const char* value, size_t size) {
   set_has_kstatsvaluenamecodecimplementationname();
-  if (kstatsvaluenamecodecimplementationname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     kstatsvaluenamecodecimplementationname_ = new ::std::string;
   }
   kstatsvaluenamecodecimplementationname_->assign(reinterpret_cast<const char*>(value), size);
@@ -1668,7 +1668,7 @@ inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecimplementationna
 }
 inline ::std::string* VideoSenderStatisticsInner::mutable_kstatsvaluenamecodecimplementationname() {
   set_has_kstatsvaluenamecodecimplementationname();
-  if (kstatsvaluenamecodecimplementationname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     kstatsvaluenamecodecimplementationname_ = new ::std::string;
   }
   // @@protoc_insertion_point(field_mutable:VideoSenderStatisticsInner.kStatsValueNameCodecImplementationName)
@@ -1676,16 +1676,16 @@ inline ::std::string* VideoSenderStatisticsInner::mutable_kstatsvaluenamecodecim
 }
 inline ::std::string* VideoSenderStatisticsInner::release_kstatsvaluenamecodecimplementationname() {
   clear_has_kstatsvaluenamecodecimplementationname();
-  if (kstatsvaluenamecodecimplementationname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
     ::std::string* temp = kstatsvaluenamecodecimplementationname_;
-    kstatsvaluenamecodecimplementationname_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    kstatsvaluenamecodecimplementationname_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
 inline void VideoSenderStatisticsInner::set_allocated_kstatsvaluenamecodecimplementationname(::std::string* kstatsvaluenamecodecimplementationname) {
-  if (kstatsvaluenamecodecimplementationname_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete kstatsvaluenamecodecimplementationname_;
   }
   if (kstatsvaluenamecodecimplementationname) {
@@ -1693,7 +1693,7 @@ inline void VideoSenderStatisticsInner::set_allocated_kstatsvaluenamecodecimplem
     kstatsvaluenamecodecimplementationname_ = kstatsvaluenamecodecimplementationname;
   } else {
     clear_has_kstatsvaluenamecodecimplementationname();
-    kstatsvaluenamecodecimplementationname_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    kstatsvaluenamecodecimplementationname_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:VideoSenderStatisticsInner.kStatsValueNameCodecImplementationName)
 }
@@ -1712,11 +1712,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenametargetencbitrate() 
   kstatsvaluenametargetencbitrate_ = 0;
   clear_has_kstatsvaluenametargetencbitrate();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenametargetencbitrate() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenametargetencbitrate() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameTargetEncBitrate)
   return kstatsvaluenametargetencbitrate_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenametargetencbitrate(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenametargetencbitrate(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenametargetencbitrate();
   kstatsvaluenametargetencbitrate_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameTargetEncBitrate)
@@ -1736,11 +1736,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenameactualencbitrate() 
   kstatsvaluenameactualencbitrate_ = 0;
   clear_has_kstatsvaluenameactualencbitrate();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameactualencbitrate() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameactualencbitrate() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameActualEncBitrate)
   return kstatsvaluenameactualencbitrate_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenameactualencbitrate(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenameactualencbitrate(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenameactualencbitrate();
   kstatsvaluenameactualencbitrate_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameActualEncBitrate)
@@ -1760,11 +1760,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenameavailablesendbandwi
   kstatsvaluenameavailablesendbandwidth_ = 0;
   clear_has_kstatsvaluenameavailablesendbandwidth();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameavailablesendbandwidth() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameavailablesendbandwidth() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameAvailableSendBandwidth)
   return kstatsvaluenameavailablesendbandwidth_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenameavailablesendbandwidth(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenameavailablesendbandwidth(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenameavailablesendbandwidth();
   kstatsvaluenameavailablesendbandwidth_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameAvailableSendBandwidth)
@@ -1784,11 +1784,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenameavailablereceiveban
   kstatsvaluenameavailablereceivebandwidth_ = 0;
   clear_has_kstatsvaluenameavailablereceivebandwidth();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameavailablereceivebandwidth() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameavailablereceivebandwidth() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameAvailableReceiveBandwidth)
   return kstatsvaluenameavailablereceivebandwidth_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenameavailablereceivebandwidth(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenameavailablereceivebandwidth(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenameavailablereceivebandwidth();
   kstatsvaluenameavailablereceivebandwidth_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameAvailableReceiveBandwidth)
@@ -1808,11 +1808,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenamerttinms() {
   kstatsvaluenamerttinms_ = 0;
   clear_has_kstatsvaluenamerttinms();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamerttinms() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamerttinms() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameRttInMs)
   return kstatsvaluenamerttinms_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenamerttinms(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenamerttinms(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamerttinms();
   kstatsvaluenamerttinms_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameRttInMs)
@@ -1832,11 +1832,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenamebucketdelayinms() {
   kstatsvaluenamebucketdelayinms_ = 0;
   clear_has_kstatsvaluenamebucketdelayinms();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamebucketdelayinms() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamebucketdelayinms() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameBucketDelayInMs)
   return kstatsvaluenamebucketdelayinms_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenamebucketdelayinms(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenamebucketdelayinms(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamebucketdelayinms();
   kstatsvaluenamebucketdelayinms_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameBucketDelayInMs)
@@ -1856,11 +1856,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenamessrc() {
   kstatsvaluenamessrc_ = 0;
   clear_has_kstatsvaluenamessrc();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamessrc() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamessrc() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameSsrc)
   return kstatsvaluenamessrc_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenamessrc(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenamessrc(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamessrc();
   kstatsvaluenamessrc_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameSsrc)
@@ -1880,11 +1880,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenametransmitbitrate() {
   kstatsvaluenametransmitbitrate_ = 0;
   clear_has_kstatsvaluenametransmitbitrate();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenametransmitbitrate() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenametransmitbitrate() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameTransmitBitrate)
   return kstatsvaluenametransmitbitrate_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenametransmitbitrate(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenametransmitbitrate(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenametransmitbitrate();
   kstatsvaluenametransmitbitrate_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameTransmitBitrate)
@@ -1904,11 +1904,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenameretransmitbitrate()
   kstatsvaluenameretransmitbitrate_ = 0;
   clear_has_kstatsvaluenameretransmitbitrate();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameretransmitbitrate() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameretransmitbitrate() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameRetransmitBitrate)
   return kstatsvaluenameretransmitbitrate_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenameretransmitbitrate(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenameretransmitbitrate(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenameretransmitbitrate();
   kstatsvaluenameretransmitbitrate_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameRetransmitBitrate)
@@ -1928,11 +1928,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenamefecbitrate() {
   kstatsvaluenamefecbitrate_ = 0;
   clear_has_kstatsvaluenamefecbitrate();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamefecbitrate() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamefecbitrate() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameFecBitrate)
   return kstatsvaluenamefecbitrate_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenamefecbitrate(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenamefecbitrate(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamefecbitrate();
   kstatsvaluenamefecbitrate_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameFecBitrate)
@@ -1952,11 +1952,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenametransmitpacketsrate
   kstatsvaluenametransmitpacketsrate_ = 0;
   clear_has_kstatsvaluenametransmitpacketsrate();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenametransmitpacketsrate() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenametransmitpacketsrate() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameTransmitPacketsRate)
   return kstatsvaluenametransmitpacketsrate_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenametransmitpacketsrate(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenametransmitpacketsrate(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenametransmitpacketsrate();
   kstatsvaluenametransmitpacketsrate_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameTransmitPacketsRate)
@@ -1976,11 +1976,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenameretransmitpacketsra
   kstatsvaluenameretransmitpacketsrate_ = 0;
   clear_has_kstatsvaluenameretransmitpacketsrate();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameretransmitpacketsrate() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameretransmitpacketsrate() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameRetransmitPacketsRate)
   return kstatsvaluenameretransmitpacketsrate_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenameretransmitpacketsrate(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenameretransmitpacketsrate(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenameretransmitpacketsrate();
   kstatsvaluenameretransmitpacketsrate_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameRetransmitPacketsRate)
@@ -2000,11 +2000,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenamefirsreceived() {
   kstatsvaluenamefirsreceived_ = 0;
   clear_has_kstatsvaluenamefirsreceived();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamefirsreceived() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamefirsreceived() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameFirsReceived)
   return kstatsvaluenamefirsreceived_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenamefirsreceived(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenamefirsreceived(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamefirsreceived();
   kstatsvaluenamefirsreceived_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameFirsReceived)
@@ -2024,11 +2024,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenamenacksreceived() {
   kstatsvaluenamenacksreceived_ = 0;
   clear_has_kstatsvaluenamenacksreceived();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamenacksreceived() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamenacksreceived() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameNacksReceived)
   return kstatsvaluenamenacksreceived_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenamenacksreceived(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenamenacksreceived(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamenacksreceived();
   kstatsvaluenamenacksreceived_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameNacksReceived)
@@ -2048,11 +2048,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenamenacksrequestsreceiv
   kstatsvaluenamenacksrequestsreceived_ = 0;
   clear_has_kstatsvaluenamenacksrequestsreceived();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamenacksrequestsreceived() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamenacksrequestsreceived() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameNacksRequestsReceived)
   return kstatsvaluenamenacksrequestsreceived_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenamenacksrequestsreceived(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenamenacksrequestsreceived(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamenacksrequestsreceived();
   kstatsvaluenamenacksrequestsreceived_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameNacksRequestsReceived)
@@ -2072,11 +2072,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenamenacksuniquerequests
   kstatsvaluenamenacksuniquerequestsreceived_ = 0;
   clear_has_kstatsvaluenamenacksuniquerequestsreceived();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamenacksuniquerequestsreceived() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamenacksuniquerequestsreceived() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameNacksUniqueRequestsReceived)
   return kstatsvaluenamenacksuniquerequestsreceived_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenamenacksuniquerequestsreceived(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenamenacksuniquerequestsreceived(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamenacksuniquerequestsreceived();
   kstatsvaluenamenacksuniquerequestsreceived_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameNacksUniqueRequestsReceived)
@@ -2096,11 +2096,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenameavgencodems() {
   kstatsvaluenameavgencodems_ = 0;
   clear_has_kstatsvaluenameavgencodems();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameavgencodems() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameavgencodems() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameAvgEncodeMs)
   return kstatsvaluenameavgencodems_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenameavgencodems(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenameavgencodems(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenameavgencodems();
   kstatsvaluenameavgencodems_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameAvgEncodeMs)
@@ -2120,11 +2120,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenameencodeusagepercent(
   kstatsvaluenameencodeusagepercent_ = 0;
   clear_has_kstatsvaluenameencodeusagepercent();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameencodeusagepercent() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameencodeusagepercent() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameEncodeUsagePercent)
   return kstatsvaluenameencodeusagepercent_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenameencodeusagepercent(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenameencodeusagepercent(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenameencodeusagepercent();
   kstatsvaluenameencodeusagepercent_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameEncodeUsagePercent)
@@ -2144,11 +2144,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecapturedframewidth(
   kstatsvaluenamecapturedframewidth_ = 0;
   clear_has_kstatsvaluenamecapturedframewidth();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecapturedframewidth() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecapturedframewidth() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCapturedFrameWidth)
   return kstatsvaluenamecapturedframewidth_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenamecapturedframewidth(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenamecapturedframewidth(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamecapturedframewidth();
   kstatsvaluenamecapturedframewidth_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCapturedFrameWidth)
@@ -2168,11 +2168,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecapturedframeheight
   kstatsvaluenamecapturedframeheight_ = 0;
   clear_has_kstatsvaluenamecapturedframeheight();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecapturedframeheight() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecapturedframeheight() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCapturedFrameHeight)
   return kstatsvaluenamecapturedframeheight_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenamecapturedframeheight(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenamecapturedframeheight(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamecapturedframeheight();
   kstatsvaluenamecapturedframeheight_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCapturedFrameHeight)
@@ -2192,11 +2192,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecapturedframerate()
   kstatsvaluenamecapturedframerate_ = 0;
   clear_has_kstatsvaluenamecapturedframerate();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecapturedframerate() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecapturedframerate() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCapturedFrameRate)
   return kstatsvaluenamecapturedframerate_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenamecapturedframerate(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenamecapturedframerate(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamecapturedframerate();
   kstatsvaluenamecapturedframerate_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCapturedFrameRate)
@@ -2216,11 +2216,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenameqmframewidth() {
   kstatsvaluenameqmframewidth_ = 0;
   clear_has_kstatsvaluenameqmframewidth();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameqmframewidth() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameqmframewidth() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameQMFrameWidth)
   return kstatsvaluenameqmframewidth_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenameqmframewidth(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenameqmframewidth(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenameqmframewidth();
   kstatsvaluenameqmframewidth_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameQMFrameWidth)
@@ -2240,11 +2240,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenameqmframeheight() {
   kstatsvaluenameqmframeheight_ = 0;
   clear_has_kstatsvaluenameqmframeheight();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameqmframeheight() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameqmframeheight() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameQMFrameHeight)
   return kstatsvaluenameqmframeheight_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenameqmframeheight(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenameqmframeheight(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenameqmframeheight();
   kstatsvaluenameqmframeheight_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameQMFrameHeight)
@@ -2264,11 +2264,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenameqmframerate() {
   kstatsvaluenameqmframerate_ = 0;
   clear_has_kstatsvaluenameqmframerate();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameqmframerate() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameqmframerate() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameQMFrameRate)
   return kstatsvaluenameqmframerate_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenameqmframerate(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenameqmframerate(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenameqmframerate();
   kstatsvaluenameqmframerate_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameQMFrameRate)
@@ -2288,11 +2288,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingframewi
   kstatsvaluenamecodecsettingframewidth_ = 0;
   clear_has_kstatsvaluenamecodecsettingframewidth();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingframewidth() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingframewidth() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCodecSettingFrameWidth)
   return kstatsvaluenamecodecsettingframewidth_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingframewidth(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingframewidth(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamecodecsettingframewidth();
   kstatsvaluenamecodecsettingframewidth_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingFrameWidth)
@@ -2312,11 +2312,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingframehe
   kstatsvaluenamecodecsettingframeheight_ = 0;
   clear_has_kstatsvaluenamecodecsettingframeheight();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingframeheight() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingframeheight() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCodecSettingFrameHeight)
   return kstatsvaluenamecodecsettingframeheight_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingframeheight(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingframeheight(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamecodecsettingframeheight();
   kstatsvaluenamecodecsettingframeheight_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingFrameHeight)
@@ -2336,11 +2336,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingframera
   kstatsvaluenamecodecsettingframerate_ = 0;
   clear_has_kstatsvaluenamecodecsettingframerate();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingframerate() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingframerate() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCodecSettingFrameRate)
   return kstatsvaluenamecodecsettingframerate_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingframerate(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingframerate(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamecodecsettingframerate();
   kstatsvaluenamecodecsettingframerate_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingFrameRate)
@@ -2360,11 +2360,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingsimulca
   kstatsvaluenamecodecsettingsimulcastnum_ = 0;
   clear_has_kstatsvaluenamecodecsettingsimulcastnum();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingsimulcastnum() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingsimulcastnum() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCodecSettingSimulcastNum)
   return kstatsvaluenamecodecsettingsimulcastnum_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingsimulcastnum(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingsimulcastnum(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamecodecsettingsimulcastnum();
   kstatsvaluenamecodecsettingsimulcastnum_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingSimulcastNum)
@@ -2384,11 +2384,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingstartbi
   kstatsvaluenamecodecsettingstartbitrate_ = 0;
   clear_has_kstatsvaluenamecodecsettingstartbitrate();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingstartbitrate() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingstartbitrate() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCodecSettingStartBitrate)
   return kstatsvaluenamecodecsettingstartbitrate_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingstartbitrate(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingstartbitrate(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamecodecsettingstartbitrate();
   kstatsvaluenamecodecsettingstartbitrate_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingStartBitrate)
@@ -2408,11 +2408,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingminbitr
   kstatsvaluenamecodecsettingminbitrate_ = 0;
   clear_has_kstatsvaluenamecodecsettingminbitrate();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingminbitrate() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingminbitrate() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCodecSettingMinBitrate)
   return kstatsvaluenamecodecsettingminbitrate_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingminbitrate(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingminbitrate(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamecodecsettingminbitrate();
   kstatsvaluenamecodecsettingminbitrate_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingMinBitrate)
@@ -2432,11 +2432,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingmaxbitr
   kstatsvaluenamecodecsettingmaxbitrate_ = 0;
   clear_has_kstatsvaluenamecodecsettingmaxbitrate();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingmaxbitrate() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingmaxbitrate() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCodecSettingMaxBitrate)
   return kstatsvaluenamecodecsettingmaxbitrate_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingmaxbitrate(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingmaxbitrate(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamecodecsettingmaxbitrate();
   kstatsvaluenamecodecsettingmaxbitrate_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingMaxBitrate)
@@ -2456,11 +2456,11 @@ inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingtargetb
   kstatsvaluenamecodecsettingtargetbitrate_ = 0;
   clear_has_kstatsvaluenamecodecsettingtargetbitrate();
 }
-inline ::cloopen_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingtargetbitrate() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamecodecsettingtargetbitrate() const {
   // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameCodecSettingTargetBitrate)
   return kstatsvaluenamecodecsettingtargetbitrate_;
 }
-inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingtargetbitrate(::cloopen_google::protobuf::int32 value) {
+inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingtargetbitrate(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamecodecsettingtargetbitrate();
   kstatsvaluenamecodecsettingtargetbitrate_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingTargetBitrate)
@@ -2484,11 +2484,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamereporttype() {
   kstatsvaluenamereporttype_ = 0;
   clear_has_kstatsvaluenamereporttype();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamereporttype() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamereporttype() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameReportType)
   return kstatsvaluenamereporttype_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamereporttype(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamereporttype(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamereporttype();
   kstatsvaluenamereporttype_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameReportType)
@@ -2508,11 +2508,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamechannelid() {
   kstatsvaluenamechannelid_ = 0;
   clear_has_kstatsvaluenamechannelid();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamechannelid() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamechannelid() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameChannelId)
   return kstatsvaluenamechannelid_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamechannelid(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamechannelid(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamechannelid();
   kstatsvaluenamechannelid_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameChannelId)
@@ -2532,11 +2532,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenametimestamp() {
   kstatsvaluenametimestamp_ = GOOGLE_LONGLONG(0);
   clear_has_kstatsvaluenametimestamp();
 }
-inline ::cloopen_google::protobuf::int64 VideoReceiverStatisticsInner::kstatsvaluenametimestamp() const {
+inline ::yuntongxun_google::protobuf::int64 VideoReceiverStatisticsInner::kstatsvaluenametimestamp() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameTimestamp)
   return kstatsvaluenametimestamp_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenametimestamp(::cloopen_google::protobuf::int64 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenametimestamp(::yuntongxun_google::protobuf::int64 value) {
   set_has_kstatsvaluenametimestamp();
   kstatsvaluenametimestamp_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameTimestamp)
@@ -2553,7 +2553,7 @@ inline void VideoReceiverStatisticsInner::clear_has_kstatsvaluenamecodecimplemen
   _has_bits_[0] &= ~0x00000008u;
 }
 inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamecodecimplementationname() {
-  if (kstatsvaluenamecodecimplementationname_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     kstatsvaluenamecodecimplementationname_->clear();
   }
   clear_has_kstatsvaluenamecodecimplementationname();
@@ -2564,7 +2564,7 @@ inline const ::std::string& VideoReceiverStatisticsInner::kstatsvaluenamecodecim
 }
 inline void VideoReceiverStatisticsInner::set_kstatsvaluenamecodecimplementationname(const ::std::string& value) {
   set_has_kstatsvaluenamecodecimplementationname();
-  if (kstatsvaluenamecodecimplementationname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     kstatsvaluenamecodecimplementationname_ = new ::std::string;
   }
   kstatsvaluenamecodecimplementationname_->assign(value);
@@ -2572,7 +2572,7 @@ inline void VideoReceiverStatisticsInner::set_kstatsvaluenamecodecimplementation
 }
 inline void VideoReceiverStatisticsInner::set_kstatsvaluenamecodecimplementationname(const char* value) {
   set_has_kstatsvaluenamecodecimplementationname();
-  if (kstatsvaluenamecodecimplementationname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     kstatsvaluenamecodecimplementationname_ = new ::std::string;
   }
   kstatsvaluenamecodecimplementationname_->assign(value);
@@ -2580,7 +2580,7 @@ inline void VideoReceiverStatisticsInner::set_kstatsvaluenamecodecimplementation
 }
 inline void VideoReceiverStatisticsInner::set_kstatsvaluenamecodecimplementationname(const char* value, size_t size) {
   set_has_kstatsvaluenamecodecimplementationname();
-  if (kstatsvaluenamecodecimplementationname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     kstatsvaluenamecodecimplementationname_ = new ::std::string;
   }
   kstatsvaluenamecodecimplementationname_->assign(reinterpret_cast<const char*>(value), size);
@@ -2588,7 +2588,7 @@ inline void VideoReceiverStatisticsInner::set_kstatsvaluenamecodecimplementation
 }
 inline ::std::string* VideoReceiverStatisticsInner::mutable_kstatsvaluenamecodecimplementationname() {
   set_has_kstatsvaluenamecodecimplementationname();
-  if (kstatsvaluenamecodecimplementationname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     kstatsvaluenamecodecimplementationname_ = new ::std::string;
   }
   // @@protoc_insertion_point(field_mutable:VideoReceiverStatisticsInner.kStatsValueNameCodecImplementationName)
@@ -2596,16 +2596,16 @@ inline ::std::string* VideoReceiverStatisticsInner::mutable_kstatsvaluenamecodec
 }
 inline ::std::string* VideoReceiverStatisticsInner::release_kstatsvaluenamecodecimplementationname() {
   clear_has_kstatsvaluenamecodecimplementationname();
-  if (kstatsvaluenamecodecimplementationname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
     ::std::string* temp = kstatsvaluenamecodecimplementationname_;
-    kstatsvaluenamecodecimplementationname_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    kstatsvaluenamecodecimplementationname_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
 inline void VideoReceiverStatisticsInner::set_allocated_kstatsvaluenamecodecimplementationname(::std::string* kstatsvaluenamecodecimplementationname) {
-  if (kstatsvaluenamecodecimplementationname_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete kstatsvaluenamecodecimplementationname_;
   }
   if (kstatsvaluenamecodecimplementationname) {
@@ -2613,7 +2613,7 @@ inline void VideoReceiverStatisticsInner::set_allocated_kstatsvaluenamecodecimpl
     kstatsvaluenamecodecimplementationname_ = kstatsvaluenamecodecimplementationname;
   } else {
     clear_has_kstatsvaluenamecodecimplementationname();
-    kstatsvaluenamecodecimplementationname_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    kstatsvaluenamecodecimplementationname_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:VideoReceiverStatisticsInner.kStatsValueNameCodecImplementationName)
 }
@@ -2632,11 +2632,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenameframewidthreceive
   kstatsvaluenameframewidthreceived_ = 0;
   clear_has_kstatsvaluenameframewidthreceived();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenameframewidthreceived() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenameframewidthreceived() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameFrameWidthReceived)
   return kstatsvaluenameframewidthreceived_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenameframewidthreceived(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenameframewidthreceived(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenameframewidthreceived();
   kstatsvaluenameframewidthreceived_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameFrameWidthReceived)
@@ -2656,11 +2656,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenameframeheightreceiv
   kstatsvaluenameframeheightreceived_ = 0;
   clear_has_kstatsvaluenameframeheightreceived();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenameframeheightreceived() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenameframeheightreceived() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameFrameHeightReceived)
   return kstatsvaluenameframeheightreceived_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenameframeheightreceived(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenameframeheightreceived(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenameframeheightreceived();
   kstatsvaluenameframeheightreceived_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameFrameHeightReceived)
@@ -2680,11 +2680,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamereceivedframerate
   kstatsvaluenamereceivedframerate_ = 0;
   clear_has_kstatsvaluenamereceivedframerate();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamereceivedframerate() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamereceivedframerate() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameReceivedFrameRate)
   return kstatsvaluenamereceivedframerate_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamereceivedframerate(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamereceivedframerate(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamereceivedframerate();
   kstatsvaluenamereceivedframerate_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameReceivedFrameRate)
@@ -2704,11 +2704,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamereceivedtotalbitr
   kstatsvaluenamereceivedtotalbitrate_ = 0;
   clear_has_kstatsvaluenamereceivedtotalbitrate();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamereceivedtotalbitrate() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamereceivedtotalbitrate() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameReceivedTotalBitrate)
   return kstatsvaluenamereceivedtotalbitrate_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamereceivedtotalbitrate(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamereceivedtotalbitrate(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamereceivedtotalbitrate();
   kstatsvaluenamereceivedtotalbitrate_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameReceivedTotalBitrate)
@@ -2728,11 +2728,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamejitterbufferms() 
   kstatsvaluenamejitterbufferms_ = 0;
   clear_has_kstatsvaluenamejitterbufferms();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamejitterbufferms() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamejitterbufferms() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameJitterBufferMs)
   return kstatsvaluenamejitterbufferms_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamejitterbufferms(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamejitterbufferms(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamejitterbufferms();
   kstatsvaluenamejitterbufferms_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameJitterBufferMs)
@@ -2752,11 +2752,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamedecoderframerate(
   kstatsvaluenamedecoderframerate_ = 0;
   clear_has_kstatsvaluenamedecoderframerate();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamedecoderframerate() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamedecoderframerate() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameDecoderFrameRate)
   return kstatsvaluenamedecoderframerate_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamedecoderframerate(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamedecoderframerate(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamedecoderframerate();
   kstatsvaluenamedecoderframerate_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameDecoderFrameRate)
@@ -2776,11 +2776,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamedecodems() {
   kstatsvaluenamedecodems_ = 0;
   clear_has_kstatsvaluenamedecodems();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamedecodems() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamedecodems() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameDecodeMs)
   return kstatsvaluenamedecodems_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamedecodems(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamedecodems(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamedecodems();
   kstatsvaluenamedecodems_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameDecodeMs)
@@ -2800,11 +2800,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamemaxdecodems() {
   kstatsvaluenamemaxdecodems_ = 0;
   clear_has_kstatsvaluenamemaxdecodems();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamemaxdecodems() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamemaxdecodems() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameMaxDecodeMs)
   return kstatsvaluenamemaxdecodems_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamemaxdecodems(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamemaxdecodems(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamemaxdecodems();
   kstatsvaluenamemaxdecodems_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameMaxDecodeMs)
@@ -2824,11 +2824,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenameframeraterender()
   kstatsvaluenameframeraterender_ = 0;
   clear_has_kstatsvaluenameframeraterender();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenameframeraterender() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenameframeraterender() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameFrameRateRender)
   return kstatsvaluenameframeraterender_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenameframeraterender(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenameframeraterender(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenameframeraterender();
   kstatsvaluenameframeraterender_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameFrameRateRender)
@@ -2848,11 +2848,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamecurrentdelayms() 
   kstatsvaluenamecurrentdelayms_ = 0;
   clear_has_kstatsvaluenamecurrentdelayms();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamecurrentdelayms() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamecurrentdelayms() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameCurrentDelayMs)
   return kstatsvaluenamecurrentdelayms_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamecurrentdelayms(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamecurrentdelayms(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamecurrentdelayms();
   kstatsvaluenamecurrentdelayms_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameCurrentDelayMs)
@@ -2872,11 +2872,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamerenderdelayms() {
   kstatsvaluenamerenderdelayms_ = 0;
   clear_has_kstatsvaluenamerenderdelayms();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamerenderdelayms() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamerenderdelayms() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameRenderDelayMs)
   return kstatsvaluenamerenderdelayms_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamerenderdelayms(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamerenderdelayms(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamerenderdelayms();
   kstatsvaluenamerenderdelayms_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameRenderDelayMs)
@@ -2896,11 +2896,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamessrc() {
   kstatsvaluenamessrc_ = 0;
   clear_has_kstatsvaluenamessrc();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamessrc() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamessrc() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameSsrc)
   return kstatsvaluenamessrc_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamessrc(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamessrc(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamessrc();
   kstatsvaluenamessrc_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameSsrc)
@@ -2920,11 +2920,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamebytesreceived() {
   kstatsvaluenamebytesreceived_ = 0;
   clear_has_kstatsvaluenamebytesreceived();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamebytesreceived() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamebytesreceived() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameBytesReceived)
   return kstatsvaluenamebytesreceived_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamebytesreceived(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamebytesreceived(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamebytesreceived();
   kstatsvaluenamebytesreceived_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameBytesReceived)
@@ -2944,11 +2944,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamepacketsreceived()
   kstatsvaluenamepacketsreceived_ = 0;
   clear_has_kstatsvaluenamepacketsreceived();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamepacketsreceived() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamepacketsreceived() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNamePacketsReceived)
   return kstatsvaluenamepacketsreceived_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamepacketsreceived(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamepacketsreceived(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamepacketsreceived();
   kstatsvaluenamepacketsreceived_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNamePacketsReceived)
@@ -2968,11 +2968,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamefirssent() {
   kstatsvaluenamefirssent_ = 0;
   clear_has_kstatsvaluenamefirssent();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamefirssent() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamefirssent() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameFirsSent)
   return kstatsvaluenamefirssent_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamefirssent(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamefirssent(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamefirssent();
   kstatsvaluenamefirssent_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameFirsSent)
@@ -2992,11 +2992,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamenackssent() {
   kstatsvaluenamenackssent_ = 0;
   clear_has_kstatsvaluenamenackssent();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamenackssent() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamenackssent() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameNacksSent)
   return kstatsvaluenamenackssent_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamenackssent(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamenackssent(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamenackssent();
   kstatsvaluenamenackssent_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameNacksSent)
@@ -3016,11 +3016,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamenacksrequestssent
   kstatsvaluenamenacksrequestssent_ = 0;
   clear_has_kstatsvaluenamenacksrequestssent();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamenacksrequestssent() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamenacksrequestssent() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameNacksRequestsSent)
   return kstatsvaluenamenacksrequestssent_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamenacksrequestssent(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamenacksrequestssent(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamenacksrequestssent();
   kstatsvaluenamenacksrequestssent_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameNacksRequestsSent)
@@ -3040,11 +3040,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamenacksuniquereques
   kstatsvaluenamenacksuniquerequestssent_ = 0;
   clear_has_kstatsvaluenamenacksuniquerequestssent();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamenacksuniquerequestssent() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamenacksuniquerequestssent() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameNacksUniqueRequestsSent)
   return kstatsvaluenamenacksuniquerequestssent_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamenacksuniquerequestssent(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamenacksuniquerequestssent(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamenacksuniquerequestssent();
   kstatsvaluenamenacksuniquerequestssent_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameNacksUniqueRequestsSent)
@@ -3064,11 +3064,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamelossmodepart1() {
   kstatsvaluenamelossmodepart1_ = GOOGLE_LONGLONG(0);
   clear_has_kstatsvaluenamelossmodepart1();
 }
-inline ::cloopen_google::protobuf::int64 VideoReceiverStatisticsInner::kstatsvaluenamelossmodepart1() const {
+inline ::yuntongxun_google::protobuf::int64 VideoReceiverStatisticsInner::kstatsvaluenamelossmodepart1() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameLossModePart1)
   return kstatsvaluenamelossmodepart1_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamelossmodepart1(::cloopen_google::protobuf::int64 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamelossmodepart1(::yuntongxun_google::protobuf::int64 value) {
   set_has_kstatsvaluenamelossmodepart1();
   kstatsvaluenamelossmodepart1_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameLossModePart1)
@@ -3088,11 +3088,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamelossmodepart2() {
   kstatsvaluenamelossmodepart2_ = GOOGLE_LONGLONG(0);
   clear_has_kstatsvaluenamelossmodepart2();
 }
-inline ::cloopen_google::protobuf::int64 VideoReceiverStatisticsInner::kstatsvaluenamelossmodepart2() const {
+inline ::yuntongxun_google::protobuf::int64 VideoReceiverStatisticsInner::kstatsvaluenamelossmodepart2() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameLossModePart2)
   return kstatsvaluenamelossmodepart2_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamelossmodepart2(::cloopen_google::protobuf::int64 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamelossmodepart2(::yuntongxun_google::protobuf::int64 value) {
   set_has_kstatsvaluenamelossmodepart2();
   kstatsvaluenamelossmodepart2_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameLossModePart2)
@@ -3112,11 +3112,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamelossmodepart3() {
   kstatsvaluenamelossmodepart3_ = GOOGLE_LONGLONG(0);
   clear_has_kstatsvaluenamelossmodepart3();
 }
-inline ::cloopen_google::protobuf::int64 VideoReceiverStatisticsInner::kstatsvaluenamelossmodepart3() const {
+inline ::yuntongxun_google::protobuf::int64 VideoReceiverStatisticsInner::kstatsvaluenamelossmodepart3() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameLossModePart3)
   return kstatsvaluenamelossmodepart3_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamelossmodepart3(::cloopen_google::protobuf::int64 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamelossmodepart3(::yuntongxun_google::protobuf::int64 value) {
   set_has_kstatsvaluenamelossmodepart3();
   kstatsvaluenamelossmodepart3_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameLossModePart3)
@@ -3136,11 +3136,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamelossmodepart4() {
   kstatsvaluenamelossmodepart4_ = GOOGLE_LONGLONG(0);
   clear_has_kstatsvaluenamelossmodepart4();
 }
-inline ::cloopen_google::protobuf::int64 VideoReceiverStatisticsInner::kstatsvaluenamelossmodepart4() const {
+inline ::yuntongxun_google::protobuf::int64 VideoReceiverStatisticsInner::kstatsvaluenamelossmodepart4() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameLossModePart4)
   return kstatsvaluenamelossmodepart4_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamelossmodepart4(::cloopen_google::protobuf::int64 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamelossmodepart4(::yuntongxun_google::protobuf::int64 value) {
   set_has_kstatsvaluenamelossmodepart4();
   kstatsvaluenamelossmodepart4_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameLossModePart4)
@@ -3160,11 +3160,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamelossfractioninper
   kstatsvaluenamelossfractioninpercent_ = 0;
   clear_has_kstatsvaluenamelossfractioninpercent();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamelossfractioninpercent() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamelossfractioninpercent() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameLossFractionInPercent)
   return kstatsvaluenamelossfractioninpercent_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamelossfractioninpercent(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamelossfractioninpercent(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamelossfractioninpercent();
   kstatsvaluenamelossfractioninpercent_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameLossFractionInPercent)
@@ -3184,11 +3184,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamepacketslost() {
   kstatsvaluenamepacketslost_ = 0;
   clear_has_kstatsvaluenamepacketslost();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamepacketslost() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamepacketslost() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNamePacketsLost)
   return kstatsvaluenamepacketslost_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamepacketslost(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamepacketslost(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamepacketslost();
   kstatsvaluenamepacketslost_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNamePacketsLost)
@@ -3208,11 +3208,11 @@ inline void VideoReceiverStatisticsInner::clear_kstatsvaluenamejitterreceived() 
   kstatsvaluenamejitterreceived_ = 0;
   clear_has_kstatsvaluenamejitterreceived();
 }
-inline ::cloopen_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamejitterreceived() const {
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::kstatsvaluenamejitterreceived() const {
   // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.kStatsValueNameJitterReceived)
   return kstatsvaluenamejitterreceived_;
 }
-inline void VideoReceiverStatisticsInner::set_kstatsvaluenamejitterreceived(::cloopen_google::protobuf::int32 value) {
+inline void VideoReceiverStatisticsInner::set_kstatsvaluenamejitterreceived(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamejitterreceived();
   kstatsvaluenamejitterreceived_ = value;
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameJitterReceived)
@@ -3236,11 +3236,11 @@ inline void AudioSenderStatisticsInner::clear_kstatsvaluenamereporttype() {
   kstatsvaluenamereporttype_ = 0;
   clear_has_kstatsvaluenamereporttype();
 }
-inline ::cloopen_google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenamereporttype() const {
+inline ::yuntongxun_google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenamereporttype() const {
   // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameReportType)
   return kstatsvaluenamereporttype_;
 }
-inline void AudioSenderStatisticsInner::set_kstatsvaluenamereporttype(::cloopen_google::protobuf::int32 value) {
+inline void AudioSenderStatisticsInner::set_kstatsvaluenamereporttype(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamereporttype();
   kstatsvaluenamereporttype_ = value;
   // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameReportType)
@@ -3260,11 +3260,11 @@ inline void AudioSenderStatisticsInner::clear_kstatsvaluenamechannelid() {
   kstatsvaluenamechannelid_ = 0;
   clear_has_kstatsvaluenamechannelid();
 }
-inline ::cloopen_google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenamechannelid() const {
+inline ::yuntongxun_google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenamechannelid() const {
   // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameChannelId)
   return kstatsvaluenamechannelid_;
 }
-inline void AudioSenderStatisticsInner::set_kstatsvaluenamechannelid(::cloopen_google::protobuf::int32 value) {
+inline void AudioSenderStatisticsInner::set_kstatsvaluenamechannelid(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamechannelid();
   kstatsvaluenamechannelid_ = value;
   // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameChannelId)
@@ -3284,11 +3284,11 @@ inline void AudioSenderStatisticsInner::clear_kstatsvaluenametimestamp() {
   kstatsvaluenametimestamp_ = GOOGLE_LONGLONG(0);
   clear_has_kstatsvaluenametimestamp();
 }
-inline ::cloopen_google::protobuf::int64 AudioSenderStatisticsInner::kstatsvaluenametimestamp() const {
+inline ::yuntongxun_google::protobuf::int64 AudioSenderStatisticsInner::kstatsvaluenametimestamp() const {
   // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameTimestamp)
   return kstatsvaluenametimestamp_;
 }
-inline void AudioSenderStatisticsInner::set_kstatsvaluenametimestamp(::cloopen_google::protobuf::int64 value) {
+inline void AudioSenderStatisticsInner::set_kstatsvaluenametimestamp(::yuntongxun_google::protobuf::int64 value) {
   set_has_kstatsvaluenametimestamp();
   kstatsvaluenametimestamp_ = value;
   // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameTimestamp)
@@ -3305,7 +3305,7 @@ inline void AudioSenderStatisticsInner::clear_has_kstatsvaluenamecodecimplementa
   _has_bits_[0] &= ~0x00000008u;
 }
 inline void AudioSenderStatisticsInner::clear_kstatsvaluenamecodecimplementationname() {
-  if (kstatsvaluenamecodecimplementationname_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     kstatsvaluenamecodecimplementationname_->clear();
   }
   clear_has_kstatsvaluenamecodecimplementationname();
@@ -3316,7 +3316,7 @@ inline const ::std::string& AudioSenderStatisticsInner::kstatsvaluenamecodecimpl
 }
 inline void AudioSenderStatisticsInner::set_kstatsvaluenamecodecimplementationname(const ::std::string& value) {
   set_has_kstatsvaluenamecodecimplementationname();
-  if (kstatsvaluenamecodecimplementationname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     kstatsvaluenamecodecimplementationname_ = new ::std::string;
   }
   kstatsvaluenamecodecimplementationname_->assign(value);
@@ -3324,7 +3324,7 @@ inline void AudioSenderStatisticsInner::set_kstatsvaluenamecodecimplementationna
 }
 inline void AudioSenderStatisticsInner::set_kstatsvaluenamecodecimplementationname(const char* value) {
   set_has_kstatsvaluenamecodecimplementationname();
-  if (kstatsvaluenamecodecimplementationname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     kstatsvaluenamecodecimplementationname_ = new ::std::string;
   }
   kstatsvaluenamecodecimplementationname_->assign(value);
@@ -3332,7 +3332,7 @@ inline void AudioSenderStatisticsInner::set_kstatsvaluenamecodecimplementationna
 }
 inline void AudioSenderStatisticsInner::set_kstatsvaluenamecodecimplementationname(const char* value, size_t size) {
   set_has_kstatsvaluenamecodecimplementationname();
-  if (kstatsvaluenamecodecimplementationname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     kstatsvaluenamecodecimplementationname_ = new ::std::string;
   }
   kstatsvaluenamecodecimplementationname_->assign(reinterpret_cast<const char*>(value), size);
@@ -3340,7 +3340,7 @@ inline void AudioSenderStatisticsInner::set_kstatsvaluenamecodecimplementationna
 }
 inline ::std::string* AudioSenderStatisticsInner::mutable_kstatsvaluenamecodecimplementationname() {
   set_has_kstatsvaluenamecodecimplementationname();
-  if (kstatsvaluenamecodecimplementationname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     kstatsvaluenamecodecimplementationname_ = new ::std::string;
   }
   // @@protoc_insertion_point(field_mutable:AudioSenderStatisticsInner.kStatsValueNameCodecImplementationName)
@@ -3348,16 +3348,16 @@ inline ::std::string* AudioSenderStatisticsInner::mutable_kstatsvaluenamecodecim
 }
 inline ::std::string* AudioSenderStatisticsInner::release_kstatsvaluenamecodecimplementationname() {
   clear_has_kstatsvaluenamecodecimplementationname();
-  if (kstatsvaluenamecodecimplementationname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
     ::std::string* temp = kstatsvaluenamecodecimplementationname_;
-    kstatsvaluenamecodecimplementationname_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    kstatsvaluenamecodecimplementationname_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
 inline void AudioSenderStatisticsInner::set_allocated_kstatsvaluenamecodecimplementationname(::std::string* kstatsvaluenamecodecimplementationname) {
-  if (kstatsvaluenamecodecimplementationname_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete kstatsvaluenamecodecimplementationname_;
   }
   if (kstatsvaluenamecodecimplementationname) {
@@ -3365,7 +3365,7 @@ inline void AudioSenderStatisticsInner::set_allocated_kstatsvaluenamecodecimplem
     kstatsvaluenamecodecimplementationname_ = kstatsvaluenamecodecimplementationname;
   } else {
     clear_has_kstatsvaluenamecodecimplementationname();
-    kstatsvaluenamecodecimplementationname_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    kstatsvaluenamecodecimplementationname_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:AudioSenderStatisticsInner.kStatsValueNameCodecImplementationName)
 }
@@ -3384,11 +3384,11 @@ inline void AudioSenderStatisticsInner::clear_kstatsvaluenameaudioinputlevel() {
   kstatsvaluenameaudioinputlevel_ = 0;
   clear_has_kstatsvaluenameaudioinputlevel();
 }
-inline ::cloopen_google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenameaudioinputlevel() const {
+inline ::yuntongxun_google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenameaudioinputlevel() const {
   // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameAudioInputLevel)
   return kstatsvaluenameaudioinputlevel_;
 }
-inline void AudioSenderStatisticsInner::set_kstatsvaluenameaudioinputlevel(::cloopen_google::protobuf::int32 value) {
+inline void AudioSenderStatisticsInner::set_kstatsvaluenameaudioinputlevel(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenameaudioinputlevel();
   kstatsvaluenameaudioinputlevel_ = value;
   // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameAudioInputLevel)
@@ -3408,11 +3408,11 @@ inline void AudioSenderStatisticsInner::clear_kstatsvaluenamerttinms() {
   kstatsvaluenamerttinms_ = 0;
   clear_has_kstatsvaluenamerttinms();
 }
-inline ::cloopen_google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenamerttinms() const {
+inline ::yuntongxun_google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenamerttinms() const {
   // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameRttInMs)
   return kstatsvaluenamerttinms_;
 }
-inline void AudioSenderStatisticsInner::set_kstatsvaluenamerttinms(::cloopen_google::protobuf::int32 value) {
+inline void AudioSenderStatisticsInner::set_kstatsvaluenamerttinms(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamerttinms();
   kstatsvaluenamerttinms_ = value;
   // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameRttInMs)
@@ -3432,11 +3432,11 @@ inline void AudioSenderStatisticsInner::clear_kstatsvaluenameechodelaymedian() {
   kstatsvaluenameechodelaymedian_ = 0;
   clear_has_kstatsvaluenameechodelaymedian();
 }
-inline ::cloopen_google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenameechodelaymedian() const {
+inline ::yuntongxun_google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenameechodelaymedian() const {
   // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameEchoDelayMedian)
   return kstatsvaluenameechodelaymedian_;
 }
-inline void AudioSenderStatisticsInner::set_kstatsvaluenameechodelaymedian(::cloopen_google::protobuf::int32 value) {
+inline void AudioSenderStatisticsInner::set_kstatsvaluenameechodelaymedian(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenameechodelaymedian();
   kstatsvaluenameechodelaymedian_ = value;
   // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameEchoDelayMedian)
@@ -3456,11 +3456,11 @@ inline void AudioSenderStatisticsInner::clear_kstatsvaluenameechodelaystddev() {
   kstatsvaluenameechodelaystddev_ = 0;
   clear_has_kstatsvaluenameechodelaystddev();
 }
-inline ::cloopen_google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenameechodelaystddev() const {
+inline ::yuntongxun_google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenameechodelaystddev() const {
   // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameEchoDelayStdDev)
   return kstatsvaluenameechodelaystddev_;
 }
-inline void AudioSenderStatisticsInner::set_kstatsvaluenameechodelaystddev(::cloopen_google::protobuf::int32 value) {
+inline void AudioSenderStatisticsInner::set_kstatsvaluenameechodelaystddev(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenameechodelaystddev();
   kstatsvaluenameechodelaystddev_ = value;
   // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameEchoDelayStdDev)
@@ -3480,11 +3480,11 @@ inline void AudioSenderStatisticsInner::clear_kstatsvaluenameechoreturnloss() {
   kstatsvaluenameechoreturnloss_ = 0;
   clear_has_kstatsvaluenameechoreturnloss();
 }
-inline ::cloopen_google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenameechoreturnloss() const {
+inline ::yuntongxun_google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenameechoreturnloss() const {
   // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameEchoReturnLoss)
   return kstatsvaluenameechoreturnloss_;
 }
-inline void AudioSenderStatisticsInner::set_kstatsvaluenameechoreturnloss(::cloopen_google::protobuf::int32 value) {
+inline void AudioSenderStatisticsInner::set_kstatsvaluenameechoreturnloss(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenameechoreturnloss();
   kstatsvaluenameechoreturnloss_ = value;
   // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameEchoReturnLoss)
@@ -3504,11 +3504,11 @@ inline void AudioSenderStatisticsInner::clear_kstatsvaluenameechoreturnlossenhan
   kstatsvaluenameechoreturnlossenhancement_ = 0;
   clear_has_kstatsvaluenameechoreturnlossenhancement();
 }
-inline ::cloopen_google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenameechoreturnlossenhancement() const {
+inline ::yuntongxun_google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenameechoreturnlossenhancement() const {
   // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameEchoReturnLossEnhancement)
   return kstatsvaluenameechoreturnlossenhancement_;
 }
-inline void AudioSenderStatisticsInner::set_kstatsvaluenameechoreturnlossenhancement(::cloopen_google::protobuf::int32 value) {
+inline void AudioSenderStatisticsInner::set_kstatsvaluenameechoreturnlossenhancement(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenameechoreturnlossenhancement();
   kstatsvaluenameechoreturnlossenhancement_ = value;
   // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameEchoReturnLossEnhancement)
@@ -3532,11 +3532,11 @@ inline void AudioReceiverStatisticsInner::clear_kstatsvaluenamereporttype() {
   kstatsvaluenamereporttype_ = 0;
   clear_has_kstatsvaluenamereporttype();
 }
-inline ::cloopen_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamereporttype() const {
+inline ::yuntongxun_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamereporttype() const {
   // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameReportType)
   return kstatsvaluenamereporttype_;
 }
-inline void AudioReceiverStatisticsInner::set_kstatsvaluenamereporttype(::cloopen_google::protobuf::int32 value) {
+inline void AudioReceiverStatisticsInner::set_kstatsvaluenamereporttype(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamereporttype();
   kstatsvaluenamereporttype_ = value;
   // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameReportType)
@@ -3556,11 +3556,11 @@ inline void AudioReceiverStatisticsInner::clear_kstatsvaluenamechannelid() {
   kstatsvaluenamechannelid_ = 0;
   clear_has_kstatsvaluenamechannelid();
 }
-inline ::cloopen_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamechannelid() const {
+inline ::yuntongxun_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamechannelid() const {
   // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameChannelId)
   return kstatsvaluenamechannelid_;
 }
-inline void AudioReceiverStatisticsInner::set_kstatsvaluenamechannelid(::cloopen_google::protobuf::int32 value) {
+inline void AudioReceiverStatisticsInner::set_kstatsvaluenamechannelid(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamechannelid();
   kstatsvaluenamechannelid_ = value;
   // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameChannelId)
@@ -3580,11 +3580,11 @@ inline void AudioReceiverStatisticsInner::clear_kstatsvaluenametimestamp() {
   kstatsvaluenametimestamp_ = GOOGLE_LONGLONG(0);
   clear_has_kstatsvaluenametimestamp();
 }
-inline ::cloopen_google::protobuf::int64 AudioReceiverStatisticsInner::kstatsvaluenametimestamp() const {
+inline ::yuntongxun_google::protobuf::int64 AudioReceiverStatisticsInner::kstatsvaluenametimestamp() const {
   // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameTimestamp)
   return kstatsvaluenametimestamp_;
 }
-inline void AudioReceiverStatisticsInner::set_kstatsvaluenametimestamp(::cloopen_google::protobuf::int64 value) {
+inline void AudioReceiverStatisticsInner::set_kstatsvaluenametimestamp(::yuntongxun_google::protobuf::int64 value) {
   set_has_kstatsvaluenametimestamp();
   kstatsvaluenametimestamp_ = value;
   // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameTimestamp)
@@ -3601,7 +3601,7 @@ inline void AudioReceiverStatisticsInner::clear_has_kstatsvaluenamecodecimplemen
   _has_bits_[0] &= ~0x00000008u;
 }
 inline void AudioReceiverStatisticsInner::clear_kstatsvaluenamecodecimplementationname() {
-  if (kstatsvaluenamecodecimplementationname_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     kstatsvaluenamecodecimplementationname_->clear();
   }
   clear_has_kstatsvaluenamecodecimplementationname();
@@ -3612,7 +3612,7 @@ inline const ::std::string& AudioReceiverStatisticsInner::kstatsvaluenamecodecim
 }
 inline void AudioReceiverStatisticsInner::set_kstatsvaluenamecodecimplementationname(const ::std::string& value) {
   set_has_kstatsvaluenamecodecimplementationname();
-  if (kstatsvaluenamecodecimplementationname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     kstatsvaluenamecodecimplementationname_ = new ::std::string;
   }
   kstatsvaluenamecodecimplementationname_->assign(value);
@@ -3620,7 +3620,7 @@ inline void AudioReceiverStatisticsInner::set_kstatsvaluenamecodecimplementation
 }
 inline void AudioReceiverStatisticsInner::set_kstatsvaluenamecodecimplementationname(const char* value) {
   set_has_kstatsvaluenamecodecimplementationname();
-  if (kstatsvaluenamecodecimplementationname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     kstatsvaluenamecodecimplementationname_ = new ::std::string;
   }
   kstatsvaluenamecodecimplementationname_->assign(value);
@@ -3628,7 +3628,7 @@ inline void AudioReceiverStatisticsInner::set_kstatsvaluenamecodecimplementation
 }
 inline void AudioReceiverStatisticsInner::set_kstatsvaluenamecodecimplementationname(const char* value, size_t size) {
   set_has_kstatsvaluenamecodecimplementationname();
-  if (kstatsvaluenamecodecimplementationname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     kstatsvaluenamecodecimplementationname_ = new ::std::string;
   }
   kstatsvaluenamecodecimplementationname_->assign(reinterpret_cast<const char*>(value), size);
@@ -3636,7 +3636,7 @@ inline void AudioReceiverStatisticsInner::set_kstatsvaluenamecodecimplementation
 }
 inline ::std::string* AudioReceiverStatisticsInner::mutable_kstatsvaluenamecodecimplementationname() {
   set_has_kstatsvaluenamecodecimplementationname();
-  if (kstatsvaluenamecodecimplementationname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     kstatsvaluenamecodecimplementationname_ = new ::std::string;
   }
   // @@protoc_insertion_point(field_mutable:AudioReceiverStatisticsInner.kStatsValueNameCodecImplementationName)
@@ -3644,16 +3644,16 @@ inline ::std::string* AudioReceiverStatisticsInner::mutable_kstatsvaluenamecodec
 }
 inline ::std::string* AudioReceiverStatisticsInner::release_kstatsvaluenamecodecimplementationname() {
   clear_has_kstatsvaluenamecodecimplementationname();
-  if (kstatsvaluenamecodecimplementationname_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
     ::std::string* temp = kstatsvaluenamecodecimplementationname_;
-    kstatsvaluenamecodecimplementationname_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    kstatsvaluenamecodecimplementationname_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
 inline void AudioReceiverStatisticsInner::set_allocated_kstatsvaluenamecodecimplementationname(::std::string* kstatsvaluenamecodecimplementationname) {
-  if (kstatsvaluenamecodecimplementationname_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (kstatsvaluenamecodecimplementationname_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete kstatsvaluenamecodecimplementationname_;
   }
   if (kstatsvaluenamecodecimplementationname) {
@@ -3661,7 +3661,7 @@ inline void AudioReceiverStatisticsInner::set_allocated_kstatsvaluenamecodecimpl
     kstatsvaluenamecodecimplementationname_ = kstatsvaluenamecodecimplementationname;
   } else {
     clear_has_kstatsvaluenamecodecimplementationname();
-    kstatsvaluenamecodecimplementationname_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    kstatsvaluenamecodecimplementationname_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:AudioReceiverStatisticsInner.kStatsValueNameCodecImplementationName)
 }
@@ -3680,11 +3680,11 @@ inline void AudioReceiverStatisticsInner::clear_kstatsvaluenameaudiooutputlevel(
   kstatsvaluenameaudiooutputlevel_ = 0;
   clear_has_kstatsvaluenameaudiooutputlevel();
 }
-inline ::cloopen_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenameaudiooutputlevel() const {
+inline ::yuntongxun_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenameaudiooutputlevel() const {
   // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameAudioOutputLevel)
   return kstatsvaluenameaudiooutputlevel_;
 }
-inline void AudioReceiverStatisticsInner::set_kstatsvaluenameaudiooutputlevel(::cloopen_google::protobuf::int32 value) {
+inline void AudioReceiverStatisticsInner::set_kstatsvaluenameaudiooutputlevel(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenameaudiooutputlevel();
   kstatsvaluenameaudiooutputlevel_ = value;
   // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameAudioOutputLevel)
@@ -3704,11 +3704,11 @@ inline void AudioReceiverStatisticsInner::clear_kstatsvaluenamecurrentdelayms() 
   kstatsvaluenamecurrentdelayms_ = 0;
   clear_has_kstatsvaluenamecurrentdelayms();
 }
-inline ::cloopen_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamecurrentdelayms() const {
+inline ::yuntongxun_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamecurrentdelayms() const {
   // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameCurrentDelayMs)
   return kstatsvaluenamecurrentdelayms_;
 }
-inline void AudioReceiverStatisticsInner::set_kstatsvaluenamecurrentdelayms(::cloopen_google::protobuf::int32 value) {
+inline void AudioReceiverStatisticsInner::set_kstatsvaluenamecurrentdelayms(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamecurrentdelayms();
   kstatsvaluenamecurrentdelayms_ = value;
   // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameCurrentDelayMs)
@@ -3728,11 +3728,11 @@ inline void AudioReceiverStatisticsInner::clear_kstatsvaluenamejitterbufferms() 
   kstatsvaluenamejitterbufferms_ = 0;
   clear_has_kstatsvaluenamejitterbufferms();
 }
-inline ::cloopen_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamejitterbufferms() const {
+inline ::yuntongxun_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamejitterbufferms() const {
   // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameJitterBufferMs)
   return kstatsvaluenamejitterbufferms_;
 }
-inline void AudioReceiverStatisticsInner::set_kstatsvaluenamejitterbufferms(::cloopen_google::protobuf::int32 value) {
+inline void AudioReceiverStatisticsInner::set_kstatsvaluenamejitterbufferms(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamejitterbufferms();
   kstatsvaluenamejitterbufferms_ = value;
   // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameJitterBufferMs)
@@ -3824,11 +3824,11 @@ inline void AudioReceiverStatisticsInner::clear_kstatsvaluenamedecodingnormal() 
   kstatsvaluenamedecodingnormal_ = 0;
   clear_has_kstatsvaluenamedecodingnormal();
 }
-inline ::cloopen_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamedecodingnormal() const {
+inline ::yuntongxun_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamedecodingnormal() const {
   // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameDecodingNormal)
   return kstatsvaluenamedecodingnormal_;
 }
-inline void AudioReceiverStatisticsInner::set_kstatsvaluenamedecodingnormal(::cloopen_google::protobuf::int32 value) {
+inline void AudioReceiverStatisticsInner::set_kstatsvaluenamedecodingnormal(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamedecodingnormal();
   kstatsvaluenamedecodingnormal_ = value;
   // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameDecodingNormal)
@@ -3848,11 +3848,11 @@ inline void AudioReceiverStatisticsInner::clear_kstatsvaluenamedecodingplc() {
   kstatsvaluenamedecodingplc_ = 0;
   clear_has_kstatsvaluenamedecodingplc();
 }
-inline ::cloopen_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamedecodingplc() const {
+inline ::yuntongxun_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamedecodingplc() const {
   // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameDecodingPLC)
   return kstatsvaluenamedecodingplc_;
 }
-inline void AudioReceiverStatisticsInner::set_kstatsvaluenamedecodingplc(::cloopen_google::protobuf::int32 value) {
+inline void AudioReceiverStatisticsInner::set_kstatsvaluenamedecodingplc(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamedecodingplc();
   kstatsvaluenamedecodingplc_ = value;
   // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameDecodingPLC)
@@ -3872,11 +3872,11 @@ inline void AudioReceiverStatisticsInner::clear_kstatsvaluenamedecodingcng() {
   kstatsvaluenamedecodingcng_ = 0;
   clear_has_kstatsvaluenamedecodingcng();
 }
-inline ::cloopen_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamedecodingcng() const {
+inline ::yuntongxun_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamedecodingcng() const {
   // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameDecodingCNG)
   return kstatsvaluenamedecodingcng_;
 }
-inline void AudioReceiverStatisticsInner::set_kstatsvaluenamedecodingcng(::cloopen_google::protobuf::int32 value) {
+inline void AudioReceiverStatisticsInner::set_kstatsvaluenamedecodingcng(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamedecodingcng();
   kstatsvaluenamedecodingcng_ = value;
   // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameDecodingCNG)
@@ -3896,11 +3896,11 @@ inline void AudioReceiverStatisticsInner::clear_kstatsvaluenamedecodingplccng() 
   kstatsvaluenamedecodingplccng_ = 0;
   clear_has_kstatsvaluenamedecodingplccng();
 }
-inline ::cloopen_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamedecodingplccng() const {
+inline ::yuntongxun_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamedecodingplccng() const {
   // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameDecodingPLCCNG)
   return kstatsvaluenamedecodingplccng_;
 }
-inline void AudioReceiverStatisticsInner::set_kstatsvaluenamedecodingplccng(::cloopen_google::protobuf::int32 value) {
+inline void AudioReceiverStatisticsInner::set_kstatsvaluenamedecodingplccng(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamedecodingplccng();
   kstatsvaluenamedecodingplccng_ = value;
   // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameDecodingPLCCNG)
@@ -3920,11 +3920,11 @@ inline void AudioReceiverStatisticsInner::clear_kstatsvaluenamelossfractioninper
   kstatsvaluenamelossfractioninpercent_ = 0;
   clear_has_kstatsvaluenamelossfractioninpercent();
 }
-inline ::cloopen_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamelossfractioninpercent() const {
+inline ::yuntongxun_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamelossfractioninpercent() const {
   // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameLossFractionInPercent)
   return kstatsvaluenamelossfractioninpercent_;
 }
-inline void AudioReceiverStatisticsInner::set_kstatsvaluenamelossfractioninpercent(::cloopen_google::protobuf::int32 value) {
+inline void AudioReceiverStatisticsInner::set_kstatsvaluenamelossfractioninpercent(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamelossfractioninpercent();
   kstatsvaluenamelossfractioninpercent_ = value;
   // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameLossFractionInPercent)
@@ -3944,11 +3944,11 @@ inline void AudioReceiverStatisticsInner::clear_kstatsvaluenamepacketslost() {
   kstatsvaluenamepacketslost_ = 0;
   clear_has_kstatsvaluenamepacketslost();
 }
-inline ::cloopen_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamepacketslost() const {
+inline ::yuntongxun_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamepacketslost() const {
   // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNamePacketsLost)
   return kstatsvaluenamepacketslost_;
 }
-inline void AudioReceiverStatisticsInner::set_kstatsvaluenamepacketslost(::cloopen_google::protobuf::int32 value) {
+inline void AudioReceiverStatisticsInner::set_kstatsvaluenamepacketslost(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamepacketslost();
   kstatsvaluenamepacketslost_ = value;
   // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNamePacketsLost)
@@ -3968,11 +3968,11 @@ inline void AudioReceiverStatisticsInner::clear_kstatsvaluenamejitterreceived() 
   kstatsvaluenamejitterreceived_ = 0;
   clear_has_kstatsvaluenamejitterreceived();
 }
-inline ::cloopen_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamejitterreceived() const {
+inline ::yuntongxun_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenamejitterreceived() const {
   // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameJitterReceived)
   return kstatsvaluenamejitterreceived_;
 }
-inline void AudioReceiverStatisticsInner::set_kstatsvaluenamejitterreceived(::cloopen_google::protobuf::int32 value) {
+inline void AudioReceiverStatisticsInner::set_kstatsvaluenamejitterreceived(::yuntongxun_google::protobuf::int32 value) {
   set_has_kstatsvaluenamejitterreceived();
   kstatsvaluenamejitterreceived_ = value;
   // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameJitterReceived)
@@ -4001,12 +4001,12 @@ inline ::VideoSenderStatisticsInner* MediaStatisticsInner::add_videosenderstats(
   // @@protoc_insertion_point(field_add:MediaStatisticsInner.videoSenderStats)
   return videosenderstats_.Add();
 }
-inline const ::cloopen_google::protobuf::RepeatedPtrField< ::VideoSenderStatisticsInner >&
+inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::VideoSenderStatisticsInner >&
 MediaStatisticsInner::videosenderstats() const {
   // @@protoc_insertion_point(field_list:MediaStatisticsInner.videoSenderStats)
   return videosenderstats_;
 }
-inline ::cloopen_google::protobuf::RepeatedPtrField< ::VideoSenderStatisticsInner >*
+inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::VideoSenderStatisticsInner >*
 MediaStatisticsInner::mutable_videosenderstats() {
   // @@protoc_insertion_point(field_mutable_list:MediaStatisticsInner.videoSenderStats)
   return &videosenderstats_;
@@ -4031,12 +4031,12 @@ inline ::VideoReceiverStatisticsInner* MediaStatisticsInner::add_videoreceiverst
   // @@protoc_insertion_point(field_add:MediaStatisticsInner.videoReceiverStats)
   return videoreceiverstats_.Add();
 }
-inline const ::cloopen_google::protobuf::RepeatedPtrField< ::VideoReceiverStatisticsInner >&
+inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::VideoReceiverStatisticsInner >&
 MediaStatisticsInner::videoreceiverstats() const {
   // @@protoc_insertion_point(field_list:MediaStatisticsInner.videoReceiverStats)
   return videoreceiverstats_;
 }
-inline ::cloopen_google::protobuf::RepeatedPtrField< ::VideoReceiverStatisticsInner >*
+inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::VideoReceiverStatisticsInner >*
 MediaStatisticsInner::mutable_videoreceiverstats() {
   // @@protoc_insertion_point(field_mutable_list:MediaStatisticsInner.videoReceiverStats)
   return &videoreceiverstats_;
@@ -4061,12 +4061,12 @@ inline ::AudioSenderStatisticsInner* MediaStatisticsInner::add_audiosenderstats(
   // @@protoc_insertion_point(field_add:MediaStatisticsInner.audioSenderStats)
   return audiosenderstats_.Add();
 }
-inline const ::cloopen_google::protobuf::RepeatedPtrField< ::AudioSenderStatisticsInner >&
+inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::AudioSenderStatisticsInner >&
 MediaStatisticsInner::audiosenderstats() const {
   // @@protoc_insertion_point(field_list:MediaStatisticsInner.audioSenderStats)
   return audiosenderstats_;
 }
-inline ::cloopen_google::protobuf::RepeatedPtrField< ::AudioSenderStatisticsInner >*
+inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::AudioSenderStatisticsInner >*
 MediaStatisticsInner::mutable_audiosenderstats() {
   // @@protoc_insertion_point(field_mutable_list:MediaStatisticsInner.audioSenderStats)
   return &audiosenderstats_;
@@ -4091,12 +4091,12 @@ inline ::AudioReceiverStatisticsInner* MediaStatisticsInner::add_audioreceiverst
   // @@protoc_insertion_point(field_add:MediaStatisticsInner.audioReceiverStats)
   return audioreceiverstats_.Add();
 }
-inline const ::cloopen_google::protobuf::RepeatedPtrField< ::AudioReceiverStatisticsInner >&
+inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::AudioReceiverStatisticsInner >&
 MediaStatisticsInner::audioreceiverstats() const {
   // @@protoc_insertion_point(field_list:MediaStatisticsInner.audioReceiverStats)
   return audioreceiverstats_;
 }
-inline ::cloopen_google::protobuf::RepeatedPtrField< ::AudioReceiverStatisticsInner >*
+inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::AudioReceiverStatisticsInner >*
 MediaStatisticsInner::mutable_audioreceiverstats() {
   // @@protoc_insertion_point(field_mutable_list:MediaStatisticsInner.audioReceiverStats)
   return &audioreceiverstats_;
@@ -4117,7 +4117,7 @@ inline void MediaStatisticsDataInner::clear_has_callid() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void MediaStatisticsDataInner::clear_callid() {
-  if (callid_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (callid_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     callid_->clear();
   }
   clear_has_callid();
@@ -4128,7 +4128,7 @@ inline const ::std::string& MediaStatisticsDataInner::callid() const {
 }
 inline void MediaStatisticsDataInner::set_callid(const ::std::string& value) {
   set_has_callid();
-  if (callid_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (callid_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     callid_ = new ::std::string;
   }
   callid_->assign(value);
@@ -4136,7 +4136,7 @@ inline void MediaStatisticsDataInner::set_callid(const ::std::string& value) {
 }
 inline void MediaStatisticsDataInner::set_callid(const char* value) {
   set_has_callid();
-  if (callid_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (callid_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     callid_ = new ::std::string;
   }
   callid_->assign(value);
@@ -4144,7 +4144,7 @@ inline void MediaStatisticsDataInner::set_callid(const char* value) {
 }
 inline void MediaStatisticsDataInner::set_callid(const char* value, size_t size) {
   set_has_callid();
-  if (callid_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (callid_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     callid_ = new ::std::string;
   }
   callid_->assign(reinterpret_cast<const char*>(value), size);
@@ -4152,7 +4152,7 @@ inline void MediaStatisticsDataInner::set_callid(const char* value, size_t size)
 }
 inline ::std::string* MediaStatisticsDataInner::mutable_callid() {
   set_has_callid();
-  if (callid_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (callid_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     callid_ = new ::std::string;
   }
   // @@protoc_insertion_point(field_mutable:MediaStatisticsDataInner.callid)
@@ -4160,16 +4160,16 @@ inline ::std::string* MediaStatisticsDataInner::mutable_callid() {
 }
 inline ::std::string* MediaStatisticsDataInner::release_callid() {
   clear_has_callid();
-  if (callid_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (callid_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
     ::std::string* temp = callid_;
-    callid_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    callid_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
 inline void MediaStatisticsDataInner::set_allocated_callid(::std::string* callid) {
-  if (callid_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (callid_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete callid_;
   }
   if (callid) {
@@ -4177,7 +4177,7 @@ inline void MediaStatisticsDataInner::set_allocated_callid(::std::string* callid
     callid_ = callid;
   } else {
     clear_has_callid();
-    callid_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    callid_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:MediaStatisticsDataInner.callid)
 }
@@ -4201,12 +4201,12 @@ inline ::MediaStatisticsInner* MediaStatisticsDataInner::add_mediadata() {
   // @@protoc_insertion_point(field_add:MediaStatisticsDataInner.mediadata)
   return mediadata_.Add();
 }
-inline const ::cloopen_google::protobuf::RepeatedPtrField< ::MediaStatisticsInner >&
+inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::MediaStatisticsInner >&
 MediaStatisticsDataInner::mediadata() const {
   // @@protoc_insertion_point(field_list:MediaStatisticsDataInner.mediadata)
   return mediadata_;
 }
-inline ::cloopen_google::protobuf::RepeatedPtrField< ::MediaStatisticsInner >*
+inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::MediaStatisticsInner >*
 MediaStatisticsDataInner::mutable_mediadata() {
   // @@protoc_insertion_point(field_mutable_list:MediaStatisticsDataInner.mediadata)
   return &mediadata_;

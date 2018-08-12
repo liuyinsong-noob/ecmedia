@@ -22,7 +22,7 @@
 #include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Clock;
 
@@ -76,6 +76,6 @@ class RemoteBitrateEstimator : public CallStatsObserver, public Module {
   static const int64_t kStreamTimeOutMs = 2000;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_REMOTE_BITRATE_ESTIMATOR_INCLUDE_REMOTE_BITRATE_ESTIMATOR_H_

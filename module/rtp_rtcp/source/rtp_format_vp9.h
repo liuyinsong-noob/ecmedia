@@ -29,7 +29,7 @@
 #include "../module/rtp_rtcp/source/rtp_format.h"
 #include "../typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class RtpPacketizerVp9 : public RtpPacketizer {
  public:
@@ -99,5 +99,5 @@ class RtpDepacketizerVp9 : public RtpDepacketizer {
              size_t payload_length) override;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_FORMAT_VP9_H_

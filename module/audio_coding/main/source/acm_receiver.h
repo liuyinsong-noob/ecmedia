@@ -26,7 +26,7 @@
 #include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 struct CodecInst;
 class CriticalSectionWrapper;
@@ -361,6 +361,6 @@ class AcmReceiver {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_ACM_RECEIVER_H_

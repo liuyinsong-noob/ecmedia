@@ -18,7 +18,7 @@
 
 #ifdef ENABLE_RTC_EVENT_LOG
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 const int kEventsInHistory = 10000;
@@ -60,7 +60,7 @@ RtcEventLogHelperThread::RtcEventLogHelperThread(
 RtcEventLogHelperThread::~RtcEventLogHelperThread() {
   ControlMessage message;
   message.message_type = ControlMessage::TERMINATE_THREAD;
-  message.stop_time = cloopenwebrtc::TimeMicros();
+  message.stop_time = yuntongxunwebrtc::TimeMicros();
   while (!message_queue_->Insert(&message)) {
     // We can't destroy the event log until we have stopped the thread,
     // so clear the message queue and try again. Note that if we clear
@@ -78,7 +78,7 @@ RtcEventLogHelperThread::~RtcEventLogHelperThread() {
 void RtcEventLogHelperThread::WaitForFileFinished() {
   wake_from_hibernation_.Set();
   wake_periodically_.Set();
-  file_finished_.Wait(cloopenwebrtc::Event::kForever);
+  file_finished_.Wait(yuntongxunwebrtc::Event::kForever);
 }
 
 void RtcEventLogHelperThread::SignalNewEvent() {
@@ -110,7 +110,7 @@ bool RtcEventLogHelperThread::LogToMemory() {
 
   // Process each event earlier than the current time and append it to the
   // appropriate history_.
-  int64_t current_time = cloopenwebrtc::TimeMicros();
+  int64_t current_time = yuntongxunwebrtc::TimeMicros();
   if (!has_recent_event_) {
     has_recent_event_ = event_queue_->Remove(&most_recent_event_);
   }
@@ -178,7 +178,7 @@ bool RtcEventLogHelperThread::LogToFile() {
 
   // Append each event older than both the current time and the stop time
   // to the output_string_.
-  int64_t current_time = cloopenwebrtc::TimeMicros();
+  int64_t current_time = yuntongxunwebrtc::TimeMicros();
   int64_t time_limit = std::min(current_time, stop_time_);
   if (!has_recent_event_) {
     has_recent_event_ = event_queue_->Remove(&most_recent_event_);
@@ -226,7 +226,7 @@ void RtcEventLogHelperThread::StopLogFile() {
   // or because we have reached the log file size limit. Therefore, use the
   // current time if we have not reached the time limit.
   end_event.set_timestamp_us(
-      std::min(stop_time_, cloopenwebrtc::TimeMicros()));
+      std::min(stop_time_, yuntongxunwebrtc::TimeMicros()));
   end_event.set_type(rtclog::Event::LOG_END);
   AppendEventToString(&end_event);
 
@@ -302,7 +302,7 @@ void RtcEventLogHelperThread::ProcessEvents() {
     if (message_received) {
       wake_periodically_.Wait(100);
     } else {
-      wake_from_hibernation_.Wait(cloopenwebrtc::Event::kForever);
+      wake_from_hibernation_.Wait(yuntongxunwebrtc::Event::kForever);
     }
   }
 }

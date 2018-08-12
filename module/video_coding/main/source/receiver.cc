@@ -21,7 +21,7 @@
 #include "../system_wrappers/include/logging.h"
 #include "../system_wrappers/include/trace_event.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     
     enum { kMaxReceiverDelayMs = 10000 };
     

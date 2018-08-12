@@ -47,12 +47,12 @@
 #include "voe_dtmf.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class TimestampWrapAroundHandler;
 }
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 typedef int (*onReceivingDtmf)(int channelid, char dtmfch);
 typedef int (*onMediaPacketTimeout)(int channelid);

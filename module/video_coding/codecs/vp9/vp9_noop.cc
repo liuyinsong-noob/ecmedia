@@ -16,7 +16,7 @@
 #include "../base/checks.h"
 #include "../module/video_coding/codecs/vp9/include/vp9.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 bool VP9Encoder::IsSupported() {
   return false;
@@ -36,4 +36,4 @@ VP9Decoder* VP9Decoder::Create() {
   return nullptr;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -28,7 +28,7 @@
 #include <time.h>  // NOLINT
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // General
 enum { kViEMinKeyRequestIntervalMs = 300 };

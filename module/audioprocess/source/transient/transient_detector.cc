@@ -20,7 +20,7 @@
 #include "moving_moments.h"
 #include "wpd_tree.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const int kTransientLengthMs = 30;
 static const int kChunksAtStartupLeftToDelete =
@@ -170,4 +170,4 @@ float TransientDetector::ReferenceDetectionValue(const float* data,
   return result;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

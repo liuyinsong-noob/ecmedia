@@ -13,7 +13,7 @@
 
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class Module;
 
 class ProcessThread
@@ -30,5 +30,5 @@ public:
 protected:
     virtual ~ProcessThread();
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif // WEBRTC_MODULES_UTILITY_INTERFACE_PROCESS_THREAD_H_

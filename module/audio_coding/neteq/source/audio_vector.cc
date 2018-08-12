@@ -16,7 +16,7 @@
 
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 void AudioVector::Clear() {
   first_free_ix_ = 0;
@@ -162,4 +162,4 @@ void AudioVector::Reserve(size_t n) {
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

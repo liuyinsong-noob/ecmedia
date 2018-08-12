@@ -18,7 +18,7 @@
 #include "audio_device_utility.h"
 #include "audio_device.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 class CriticalSectionWrapper;
 
@@ -35,6 +35,6 @@ private:
     int32_t _id;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_AUDIO_DEVICE_AUDIO_DEVICE_UTILITY_ANDROID_H

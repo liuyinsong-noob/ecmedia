@@ -26,7 +26,7 @@
 
 #include "../module/remote_bitrate_estimator/test/bwe_test_logging.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 enum { kTimestampGroupLengthMs = 5 };
 static const double kTimestampToMs = 1.0 / 90.0;
@@ -103,7 +103,7 @@ void RemoteBitrateEstimatorSingleStream::IncomingPacket(
   estimator->last_packet_time_ms = now_ms;
 
   // Check if incoming bitrate estimate is valid, and if it needs to be reset.
-  cloopenwebrtc::Optional<uint32_t> incoming_bitrate = incoming_bitrate_.Rate(now_ms);
+  yuntongxunwebrtc::Optional<uint32_t> incoming_bitrate = incoming_bitrate_.Rate(now_ms);
   if (incoming_bitrate) {
     last_valid_incoming_bitrate_ = *incoming_bitrate;
   } else if (last_valid_incoming_bitrate_ > 0) {
@@ -130,7 +130,7 @@ void RemoteBitrateEstimatorSingleStream::IncomingPacket(
                                estimator->estimator.num_of_deltas(), now_ms);
   }
   if (estimator->detector.State() == kBwOverusing) {
-	  cloopenwebrtc::Optional<uint32_t> incoming_bitrate_bps =
+	  yuntongxunwebrtc::Optional<uint32_t> incoming_bitrate_bps =
         incoming_bitrate_.Rate(now_ms);
     if (incoming_bitrate_bps &&
         (prior_state != kBwOverusing ||
@@ -208,7 +208,7 @@ void RemoteBitrateEstimatorSingleStream::UpdateEstimate(int64_t now_ms) {
 
 	BWE_TEST_LOGGING_PLOT(1, "REMB_kbps#1", now_ms, target_bitrate / 1000);
 	BWE_TEST_LOGGING_PLOT(1, "Incoming_bitrate_kbps#1", now_ms,
-		incoming_bitrate_.Rate(now_ms) == cloopenwebrtc::Optional<uint32_t>() ? 0 : *incoming_bitrate_.Rate(now_ms) / 1000);
+		incoming_bitrate_.Rate(now_ms) == yuntongxunwebrtc::Optional<uint32_t>() ? 0 : *incoming_bitrate_.Rate(now_ms) / 1000);
 
   }
 }
@@ -266,4 +266,4 @@ void RemoteBitrateEstimatorSingleStream::SetMinBitrate(int min_bitrate_bps) {
   remote_rate_->SetMinBitrate(min_bitrate_bps);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

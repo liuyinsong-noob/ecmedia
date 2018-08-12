@@ -28,7 +28,7 @@
 
 class Trace;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class EventWrapper;
 class ThreadWrapper;
 class VideoRenderNSOpenGL;
@@ -191,7 +191,7 @@ private: // variables   //TODO
 //    bool _renderingIsPaused;
 };
 
-} //namespace cloopenwebrtc
+} //namespace yuntongxunwebrtc
 
 #endif   // WEBRTC_MODULES_VIDEO_RENDER_MAIN_SOURCE_MAC_VIDEO_RENDER_NSOPENGL_H_
 #endif	 // IPHONE_GLES_RENDERING

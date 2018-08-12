@@ -35,7 +35,7 @@
 #include "fileutils.h"
 #include "gtest_disable.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const int kSampleRateHz = 16000;
 const int kNumSamples10ms = kSampleRateHz / 100;
@@ -444,7 +444,7 @@ class AcmIsacMtTestOldApi : public AudioCodingModuleMtTestOldApi {
     // Set up input audio source to read from specified file, loop after 5
     // seconds, and deliver blocks of 10 ms.
     const std::string input_file_name =
-        cloopenwebrtc::test::ResourcePath("audio_coding/speech_mono_16kHz", "pcm");
+        yuntongxunwebrtc::test::ResourcePath("audio_coding/speech_mono_16kHz", "pcm");
     audio_loop_.Init(input_file_name, 5 * kSampleRateHz, kNumSamples10ms);
 
     // Generate one packet to have something to insert.
@@ -538,7 +538,7 @@ class AcmReceiverBitExactnessOldApi : public ::testing::Test {
  protected:
   void Run(int output_freq_hz, const std::string& checksum_ref) {
     const std::string input_file_name =
-        cloopenwebrtc::test::ResourcePath("audio_coding/neteq_universal_new", "rtp");
+        yuntongxunwebrtc::test::ResourcePath("audio_coding/neteq_universal_new", "rtp");
     scoped_ptr<test::RtpFileSource> packet_source(
         test::RtpFileSource::Create(input_file_name));
 #ifdef WEBRTC_ANDROID
@@ -549,7 +549,7 @@ class AcmReceiverBitExactnessOldApi : public ::testing::Test {
 
     test::AudioChecksum checksum;
     const std::string output_file_name =
-        cloopenwebrtc::test::OutputPath() +
+        yuntongxunwebrtc::test::OutputPath() +
         ::testing::UnitTest::GetInstance()
             ->current_test_info()
             ->test_case_name() +
@@ -627,7 +627,7 @@ class AcmSenderBitExactnessOldApi : public ::testing::Test,
   // false.
   bool SetUpSender() {
     const std::string input_file_name =
-        cloopenwebrtc::test::ResourcePath("audio_coding/testfile32kHz", "pcm");
+        yuntongxunwebrtc::test::ResourcePath("audio_coding/testfile32kHz", "pcm");
     // Note that |audio_source_| will loop forever. The test duration is set
     // explicitly by |kTestDurationMs|.
     audio_source_.reset(new test::InputAudioFile(input_file_name));
@@ -664,7 +664,7 @@ class AcmSenderBitExactnessOldApi : public ::testing::Test,
     // output.
     test::AudioChecksum audio_checksum;
     const std::string output_file_name =
-        cloopenwebrtc::test::OutputPath() +
+        yuntongxunwebrtc::test::OutputPath() +
         ::testing::UnitTest::GetInstance()
             ->current_test_info()
             ->test_case_name() +
@@ -686,9 +686,9 @@ class AcmSenderBitExactnessOldApi : public ::testing::Test,
     EXPECT_EQ(audio_checksum_ref, checksum_string);
 
     // Extract and verify the payload checksum.
-    char checksum_result[cloopenwebrtc::Md5Digest::kSize];
-    payload_checksum_.Finish(checksum_result, cloopenwebrtc::Md5Digest::kSize);
-    checksum_string = cloopenwebrtc::hex_encode(checksum_result, cloopenwebrtc::Md5Digest::kSize);
+    char checksum_result[yuntongxunwebrtc::Md5Digest::kSize];
+    payload_checksum_.Finish(checksum_result, yuntongxunwebrtc::Md5Digest::kSize);
+    checksum_string = yuntongxunwebrtc::hex_encode(checksum_result, yuntongxunwebrtc::Md5Digest::kSize);
     EXPECT_EQ(payload_checksum_ref, checksum_string);
 
     // Verify number of packets produced.
@@ -754,7 +754,7 @@ class AcmSenderBitExactnessOldApi : public ::testing::Test,
   uint8_t payload_type_;
   uint16_t last_sequence_number_;
   uint32_t last_timestamp_;
-  cloopenwebrtc::Md5Digest payload_checksum_;
+  yuntongxunwebrtc::Md5Digest payload_checksum_;
 };
 
 TEST_F(AcmSenderBitExactnessOldApi, IsacWb30ms) {
@@ -964,7 +964,7 @@ class AcmSwitchingOutputFrequencyOldApi : public ::testing::Test,
     // Set up the receiver used to decode the packets and verify the decoded
     // output.
     const std::string output_file_name =
-        cloopenwebrtc::test::OutputPath() +
+        yuntongxunwebrtc::test::OutputPath() +
         ::testing::UnitTest::GetInstance()
             ->current_test_info()
             ->test_case_name() +
@@ -1048,4 +1048,4 @@ TEST_F(AcmSwitchingOutputFrequencyOldApi, Toggle16KhzTo8Khz) {
 TEST_F(AcmSwitchingOutputFrequencyOldApi, Toggle8KhzTo16Khz) {
   Run(8000, 16000, 1000);
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

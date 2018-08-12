@@ -27,7 +27,7 @@
 #pragma warning(disable : 4355)
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 RTPExtensionType StringToRtpExtensionType(const std::string& extension) {
   if (extension == RtpExtension::kTimestampOffsetUri)
@@ -282,7 +282,7 @@ void ModuleRtpRtcpImpl::SetRtxSendPayloadType(int payload_type,
   rtp_sender_.SetRtxPayloadType(payload_type, associated_payload_type);
 }
 
-cloopenwebrtc::Optional<uint32_t> ModuleRtpRtcpImpl::FlexfecSsrc() const {
+yuntongxunwebrtc::Optional<uint32_t> ModuleRtpRtcpImpl::FlexfecSsrc() const {
   return rtp_sender_.FlexfecSsrc();
 }
 
@@ -856,7 +856,7 @@ RtcpStatisticsCallback* ModuleRtpRtcpImpl::GetRtcpStatisticsCallback() {
   return rtcp_receiver_.GetRtcpStatisticsCallback();
 }
     
-void ModuleRtpRtcpImpl::RegisterRtcpPacketTypeCounterObserverCallback(cloopenwebrtc::RtcpPacketTypeCounterObserver *observer)
+void ModuleRtpRtcpImpl::RegisterRtcpPacketTypeCounterObserverCallback(yuntongxunwebrtc::RtcpPacketTypeCounterObserver *observer)
 {
     rtcp_receiver_.RegisterReceiveRtcpPacketTypeCounterObserver(observer);
 }
@@ -1019,12 +1019,12 @@ void ModuleRtpRtcpImpl::SetRtcpReceiverSsrcs(uint32_t main_ssrc) {
 }
 
 void ModuleRtpRtcpImpl::set_rtt_ms(int64_t rtt_ms) {
-  cloopenwebrtc::CritScope cs(&critical_section_rtt_);
+  yuntongxunwebrtc::CritScope cs(&critical_section_rtt_);
   rtt_ms_ = rtt_ms;
 }
 
 int64_t ModuleRtpRtcpImpl::rtt_ms() const {
-  cloopenwebrtc::CritScope cs(&critical_section_rtt_);
+  yuntongxunwebrtc::CritScope cs(&critical_section_rtt_);
   return rtt_ms_;
 }
 

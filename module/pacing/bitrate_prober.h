@@ -17,7 +17,7 @@
 #include "../module/interface/module_common_types.h"
 #include "../typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Note that this class isn't thread-safe by itself and therefore relies
 // on being protected by the caller.
@@ -102,6 +102,6 @@ class BitrateProber {
   int next_cluster_id_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_PACING_BITRATE_PROBER_H_

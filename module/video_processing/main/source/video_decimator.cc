@@ -14,7 +14,7 @@
 
 #define VD_MIN(a, b) ((a) < (b)) ? (a) : (b)
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VPMVideoDecimator::VPMVideoDecimator() {
   Reset();

@@ -20,7 +20,7 @@
 #include "../module/rtp_rtcp/source/rtp_rtcp_config.h"
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const uint8_t kRtpMarkerBitMask = 0x80;
 
@@ -93,6 +93,6 @@ class RtpHeaderParser {
 
     };
 }  // namespace RtpUtility
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_UTILITY_H_

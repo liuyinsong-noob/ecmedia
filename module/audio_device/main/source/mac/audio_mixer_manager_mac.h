@@ -17,7 +17,7 @@
 
 #include <CoreAudio/CoreAudio.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioMixerManagerMac
 {

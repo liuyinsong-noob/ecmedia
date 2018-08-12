@@ -17,7 +17,7 @@
 #include "output_mixer.h"
 #include "transmit_mixer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace voe {
 

@@ -14,7 +14,7 @@
 #include "defines.h"
 #include "../system_wrappers/include/logging.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 void TimestampScaler::ToInternal(Packet* packet) {
   if (!packet) {
@@ -106,4 +106,4 @@ uint32_t TimestampScaler::ToExternal(uint32_t internal_timestamp) const {
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

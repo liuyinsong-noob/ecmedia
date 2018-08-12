@@ -51,7 +51,7 @@
 #include <google/protobuf/stubs/stl_util.h>
 
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 namespace io {
 
@@ -350,5 +350,5 @@ inline char* mutable_string_data(string* s) {
 }  // namespace io
 }  // namespace protobuf
 
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 #endif  // GOOGLE_PROTOBUF_IO_ZERO_COPY_STREAM_IMPL_LITE_H__

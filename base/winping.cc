@@ -21,7 +21,7 @@
 #include "../base/nethelpers.h"
 #include "../base/socketaddress.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 //////////////////////////////////////////////////////////////////////
 // Found in IPExport.h
@@ -354,4 +354,4 @@ WinPing::PingResult WinPing::Ping(IPAddress ip,
 //
 //////////////////////////////////////////////////////////////////////
 
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

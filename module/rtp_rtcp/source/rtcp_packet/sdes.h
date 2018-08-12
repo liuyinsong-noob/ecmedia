@@ -17,7 +17,7 @@
 #include "../base/basictypes.h"
 #include "../module/rtp_rtcp/source/rtcp_packet.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace rtcp {
 class CommonHeader;
 // Source Description (SDES) (RFC 3550).

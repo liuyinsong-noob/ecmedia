@@ -12,7 +12,7 @@
 #include "critical_section_wrapper.h"
 #include "ECMedia.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     template <class T> class RingBuffer {
     public:
         RingBuffer(uint32_t size=8192);

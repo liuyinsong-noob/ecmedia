@@ -14,7 +14,7 @@
 
 #include "audio_processing.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ProcessingComponent::ProcessingComponent()
   : initialized_(false),
@@ -108,4 +108,4 @@ int ProcessingComponent::Configure() {
 
   return AudioProcessing::kNoError;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

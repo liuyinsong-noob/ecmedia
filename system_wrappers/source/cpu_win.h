@@ -19,7 +19,7 @@
 
 #include <Wbemidl.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class ConditionVariableWrapper;
 class CriticalSectionWrapper;
 class EventWrapper;

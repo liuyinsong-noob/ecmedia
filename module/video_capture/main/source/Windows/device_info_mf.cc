@@ -10,7 +10,7 @@
 
 #include "device_info_mf.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace videocapturemodule {
 
 DeviceInfoMF::DeviceInfoMF(const int32_t id) : DeviceInfoImpl(id) {

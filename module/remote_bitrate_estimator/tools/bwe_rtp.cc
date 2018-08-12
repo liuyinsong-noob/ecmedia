@@ -22,23 +22,23 @@ const int kMinBitrateBps = 30000;
 
 bool ParseArgsAndSetupEstimator(int argc,
                                 char** argv,
-                                cloopenwebrtc::Clock* clock,
-                                cloopenwebrtc::RemoteBitrateObserver* observer,
-                                cloopenwebrtc::test::RtpFileReader** rtp_reader,
-                                cloopenwebrtc::RtpHeaderParser** parser,
-                                cloopenwebrtc::RemoteBitrateEstimator** estimator,
+                                yuntongxunwebrtc::Clock* clock,
+                                yuntongxunwebrtc::RemoteBitrateObserver* observer,
+                                yuntongxunwebrtc::test::RtpFileReader** rtp_reader,
+                                yuntongxunwebrtc::RtpHeaderParser** parser,
+                                yuntongxunwebrtc::RemoteBitrateEstimator** estimator,
                                 std::string* estimator_used) {
-  *rtp_reader = cloopenwebrtc::test::RtpFileReader::Create(
-      cloopenwebrtc::test::RtpFileReader::kRtpDump, argv[3]);
+  *rtp_reader = yuntongxunwebrtc::test::RtpFileReader::Create(
+      yuntongxunwebrtc::test::RtpFileReader::kRtpDump, argv[3]);
   if (!*rtp_reader) {
     fprintf(stderr, "Cannot open input file %s\n", argv[3]);
     return false;
   }
   fprintf(stderr, "Input file: %s\n\n", argv[3]);
-  cloopenwebrtc::RTPExtensionType extension = cloopenwebrtc::kRtpExtensionAbsoluteSendTime;
+  yuntongxunwebrtc::RTPExtensionType extension = yuntongxunwebrtc::kRtpExtensionAbsoluteSendTime;
 
   if (strncmp("tsoffset", argv[1], 8) == 0) {
-    extension = cloopenwebrtc::kRtpExtensionTransmissionTimeOffset;
+    extension = yuntongxunwebrtc::kRtpExtensionTransmissionTimeOffset;
     fprintf(stderr, "Extension: toffset\n");
   } else {
     fprintf(stderr, "Extension: abs\n");
@@ -46,20 +46,20 @@ bool ParseArgsAndSetupEstimator(int argc,
   int id = atoi(argv[2]);
 
   // Setup the RTP header parser and the bitrate estimator.
-  *parser = cloopenwebrtc::RtpHeaderParser::Create();
+  *parser = yuntongxunwebrtc::RtpHeaderParser::Create();
   (*parser)->RegisterRtpHeaderExtension(extension, id);
   if (estimator) {
     switch (extension) {
-      case cloopenwebrtc::kRtpExtensionAbsoluteSendTime: {
-          cloopenwebrtc::AbsoluteSendTimeRemoteBitrateEstimatorFactory factory;
-          *estimator = factory.Create(observer, clock, cloopenwebrtc::kAimdControl,
+      case yuntongxunwebrtc::kRtpExtensionAbsoluteSendTime: {
+          yuntongxunwebrtc::AbsoluteSendTimeRemoteBitrateEstimatorFactory factory;
+          *estimator = factory.Create(observer, clock, yuntongxunwebrtc::kAimdControl,
                                       kMinBitrateBps);
           *estimator_used = "AbsoluteSendTimeRemoteBitrateEstimator";
           break;
         }
-      case cloopenwebrtc::kRtpExtensionTransmissionTimeOffset: {
-          cloopenwebrtc::RemoteBitrateEstimatorFactory factory;
-          *estimator = factory.Create(observer, clock, cloopenwebrtc::kAimdControl,
+      case yuntongxunwebrtc::kRtpExtensionTransmissionTimeOffset: {
+          yuntongxunwebrtc::RemoteBitrateEstimatorFactory factory;
+          *estimator = factory.Create(observer, clock, yuntongxunwebrtc::kAimdControl,
                                       kMinBitrateBps);
           *estimator_used = "RemoteBitrateEstimator";
           break;

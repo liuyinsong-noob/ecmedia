@@ -24,7 +24,7 @@
 #include "../base/checks.h"
 #include "../base/sanitizer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace optional_internal {
 
@@ -279,13 +279,13 @@ class Optional final {
  private:
   // Tell sanitizers that value_ shouldn't be touched.
   void PoisonValue() {
-    cloopenwebrtc::AsanPoison(cloopenwebrtc::MakeArrayView(&value_, 1));
-	cloopenwebrtc::MsanMarkUninitialized(cloopenwebrtc::MakeArrayView(&value_, 1));
+    yuntongxunwebrtc::AsanPoison(yuntongxunwebrtc::MakeArrayView(&value_, 1));
+	yuntongxunwebrtc::MsanMarkUninitialized(yuntongxunwebrtc::MakeArrayView(&value_, 1));
   }
 
   // Tell sanitizers that value_ is OK to touch again.
   void UnpoisonValue() {
-	cloopenwebrtc::AsanUnpoison(cloopenwebrtc::MakeArrayView(&value_, 1));
+	yuntongxunwebrtc::AsanUnpoison(yuntongxunwebrtc::MakeArrayView(&value_, 1));
   }
 
   bool has_value_;  // True iff value_ contains a live value.
@@ -395,6 +395,6 @@ void PrintTo(const rtc::Optional<T>& opt, std::ostream* os) {
 
 #endif  // UNIT_TEST
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_OPTIONAL_H_

@@ -13,7 +13,7 @@
 
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace VideoProcessing {
 
 // Table created with Matlab script createTable.m

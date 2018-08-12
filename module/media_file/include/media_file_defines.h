@@ -15,7 +15,7 @@
 #include "module_common_types.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 // Callback class for the MediaFile class.
 class FileCallback
 {
@@ -47,5 +47,5 @@ public:
 protected:
     FileCallback() {}
 };
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 #endif // WEBRTC_MODULES_MEDIA_FILE_INTERFACE_MEDIA_FILE_DEFINES_H_

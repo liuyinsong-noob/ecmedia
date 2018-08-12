@@ -36,7 +36,7 @@
 
 #include "../module/common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VoiceEngine;
 class AudioPacketizationCallback;

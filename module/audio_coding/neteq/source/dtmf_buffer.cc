@@ -18,7 +18,7 @@
 // enables).
 #define LEGACY_BITEXACT
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // The ParseEvent method parses 4 bytes from |payload| according to this format
 // from RFC 4733:
@@ -223,4 +223,4 @@ bool DtmfBuffer::CompareEvents(const DtmfEvent& a, const DtmfEvent& b) {
   // Take wrap-around into account.
   return (static_cast<uint32_t>(b.timestamp - a.timestamp) < 0xFFFFFFFF / 2);
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

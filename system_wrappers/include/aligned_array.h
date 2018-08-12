@@ -14,7 +14,7 @@
 #include "../base/checks.h"
 #include "../system_wrappers/include/aligned_malloc.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Wrapper class for aligned arrays. Every row (and the first dimension) are
 // aligned to the given byte alignment.
@@ -81,6 +81,6 @@ template<typename T> class AlignedArray {
   T** head_row_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_INCLUDE_ALIGNED_ARRAY_

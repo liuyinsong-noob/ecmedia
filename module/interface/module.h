@@ -15,7 +15,7 @@
 
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Module {
  public:
@@ -61,6 +61,6 @@ class RefCountedModule : public Module {
   virtual ~RefCountedModule() {}
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // MODULES_INTERFACE_MODULE_H_

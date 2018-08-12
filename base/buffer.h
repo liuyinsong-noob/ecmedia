@@ -23,7 +23,7 @@
 
 using namespace std;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace internal {
 
@@ -277,7 +277,7 @@ class BufferT {
     const size_t old_size = size_;
     SetSize(old_size + max_elements);
     U* base_ptr = data<U>() + old_size;
-    size_t written_elements = setter(cloopenwebrtc::ArrayView<U>(base_ptr, max_elements));
+    size_t written_elements = setter(yuntongxunwebrtc::ArrayView<U>(base_ptr, max_elements));
 
     CHECK_LE(written_elements, max_elements);
     size_ = old_size + written_elements;
@@ -371,6 +371,6 @@ class BufferT {
 // By far the most common sort of buffer.
 using Buffer = BufferT<uint8_t>;
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_BUFFER_H_

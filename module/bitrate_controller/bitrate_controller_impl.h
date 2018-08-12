@@ -25,7 +25,7 @@
 #include "../base/criticalsection.h"
 #include "../module/bitrate_controller/send_side_bandwidth_estimation.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class BitrateControllerImpl : public BitrateController {
  public:
@@ -90,7 +90,7 @@ class BitrateControllerImpl : public BitrateController {
   int64_t last_bitrate_update_ms_;
   RtcEventLog* const event_log_;
 
-  cloopenwebrtc::CriticalSection critsect_;
+  yuntongxunwebrtc::CriticalSection critsect_;
   SendSideBandwidthEstimation bandwidth_estimation_ GUARDED_BY(critsect_);
   uint32_t reserved_bitrate_bps_ GUARDED_BY(critsect_);
 
@@ -101,5 +101,5 @@ class BitrateControllerImpl : public BitrateController {
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(BitrateControllerImpl);
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_BITRATE_CONTROLLER_BITRATE_CONTROLLER_IMPL_H_

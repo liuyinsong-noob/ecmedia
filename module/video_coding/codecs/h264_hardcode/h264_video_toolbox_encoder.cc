@@ -27,7 +27,7 @@
 #include "clock.h"
 #include "libyuv.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {extern int printTime();}
 
 namespace internal {
@@ -122,13 +122,13 @@ void SetVTSessionProperty(VTSessionRef session,
 // Struct that we pass to the encoder per frame to encode. We receive it again
 // in the encoder callback.
 struct FrameEncodeParams {
-    FrameEncodeParams(cloopenwebrtc::H264VideoToolboxEncoder* e,
-                      const cloopenwebrtc::CodecSpecificInfo* csi,
+    FrameEncodeParams(yuntongxunwebrtc::H264VideoToolboxEncoder* e,
+                      const yuntongxunwebrtc::CodecSpecificInfo* csi,
                     int32_t w,
                     int32_t h,
                     int64_t rtms,
                     uint32_t ts/*,
-                    cloopenwebrtc::VideoRotation r*/)
+                    yuntongxunwebrtc::VideoRotation r*/)
       : encoder(e),
         width(w),
         height(h),
@@ -138,23 +138,23 @@ struct FrameEncodeParams {
     if (csi) {
       codec_specific_info = *csi;
     } else {
-      codec_specific_info.codecType = cloopenwebrtc::kVideoCodecH264;
+      codec_specific_info.codecType = yuntongxunwebrtc::kVideoCodecH264;
     }
   }
 
-  cloopenwebrtc::H264VideoToolboxEncoder* encoder;
-  cloopenwebrtc::CodecSpecificInfo codec_specific_info;
+  yuntongxunwebrtc::H264VideoToolboxEncoder* encoder;
+  yuntongxunwebrtc::CodecSpecificInfo codec_specific_info;
   int32_t width;
   int32_t height;
   int64_t render_time_ms;
   uint32_t timestamp;
-//  cloopenwebrtc::VideoRotation rotation;
+//  yuntongxunwebrtc::VideoRotation rotation;
 };
 
 // We receive I420Frames as input, but we need to feed CVPixelBuffers into the
 // encoder. This performs the copy and format conversion.
 // TODO(tkchin): See if encoder will accept i420 frames and compare performance.
-bool CopyVideoFrameToPixelBuffer(const cloopenwebrtc::I420VideoFrame& frame,
+bool CopyVideoFrameToPixelBuffer(const yuntongxunwebrtc::I420VideoFrame& frame,
                                  CVPixelBufferRef pixel_buffer) {
   DCHECK(pixel_buffer);
   DCHECK(CVPixelBufferGetPixelFormatType(pixel_buffer) ==
@@ -176,10 +176,10 @@ bool CopyVideoFrameToPixelBuffer(const cloopenwebrtc::I420VideoFrame& frame,
       CVPixelBufferGetBaseAddressOfPlane(pixel_buffer, 1));
   size_t dst_stride_uv = CVPixelBufferGetBytesPerRowOfPlane(pixel_buffer, 1);
   // Convert I420 to NV12.
-    int ret = cloopenlibyuv::I420ToNV12(
-      frame.buffer(cloopenwebrtc::kYPlane), frame.stride(cloopenwebrtc::kYPlane),
-      frame.buffer(cloopenwebrtc::kUPlane), frame.stride(cloopenwebrtc::kUPlane),
-      frame.buffer(cloopenwebrtc::kVPlane), frame.stride(cloopenwebrtc::kVPlane), dst_y,
+    int ret = yuntongxunlibyuv::I420ToNV12(
+      frame.buffer(yuntongxunwebrtc::kYPlane), frame.stride(yuntongxunwebrtc::kYPlane),
+      frame.buffer(yuntongxunwebrtc::kUPlane), frame.stride(yuntongxunwebrtc::kUPlane),
+      frame.buffer(yuntongxunwebrtc::kVPlane), frame.stride(yuntongxunwebrtc::kVPlane), dst_y,
       (int)dst_stride_y, dst_uv, (int)dst_stride_uv, frame.width(), frame.height());
   CVPixelBufferUnlockBaseAddress(pixel_buffer, 0);
   if (ret) {
@@ -202,7 +202,7 @@ void VTCompressionOutputCallback(void* encoder,
 //    static int total = 0;
 //    total += frame_size;
 //    if (count++ == 15) {
-//        cloopenwebrtc::printTime(); printf("%d\n",total);
+//        yuntongxunwebrtc::printTime(); printf("%d\n",total);
 //        count = 0;
 //        total = 0;
 //    }
@@ -219,7 +219,7 @@ void VTCompressionOutputCallback(void* encoder,
 
 }  // namespace internal
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
     H264VideoToolboxEncoder* H264VideoToolboxEncoder::Create() {
         return new H264VideoToolboxEncoder();

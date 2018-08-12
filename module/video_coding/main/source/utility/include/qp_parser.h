@@ -10,7 +10,7 @@
 #ifndef WEBRTC_MODULES_VIDEO_CODING_UTILITY_QP_PARSER_H_
 #define WEBRTC_MODULES_VIDEO_CODING_UTILITY_QP_PARSER_H_
 #include "encoded_frame.h"
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class QpParser {
  public:
   QpParser() {}

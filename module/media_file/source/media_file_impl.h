@@ -17,7 +17,7 @@
 #include "media_file_utility.h"
 #include "module_common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class MediaFileImpl : public MediaFile
 {
 
@@ -241,6 +241,6 @@ private:
 
     FileCallback* _ptrCallback;
 };
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_MODULES_MEDIA_FILE_SOURCE_MEDIA_FILE_IMPL_H_

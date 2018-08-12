@@ -18,7 +18,7 @@
 #include "desktop_geometry.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // DesktopRegion represents a region of the screen or window.
 //
@@ -160,7 +160,7 @@ class DesktopRegion {
   Rows rows_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_DESKTOP_REGION_H_
 

@@ -13,7 +13,7 @@
 #include <assert.h>
 #include <stddef.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 AttachThreadScoped::AttachThreadScoped(JavaVM* jvm)
     : attached_(false), jvm_(jvm), env_(NULL) {
@@ -34,4 +34,4 @@ AttachThreadScoped::~AttachThreadScoped() {
 
 JNIEnv* AttachThreadScoped::env() { return env_; }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

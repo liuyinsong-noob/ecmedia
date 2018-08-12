@@ -19,7 +19,7 @@
 #include "cloopenwebrtc/test/testsupport/fileutils.h"
 #include "cloopenwebrtc/modules/audio_processing/agc/utility.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 struct InputOutput {
   double rms;

@@ -22,7 +22,7 @@
 #include "module_common_types.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class AudioProcessing;
 class CriticalSectionWrapper;
 
@@ -211,6 +211,6 @@ private:
     // Used for inhibiting saturation in mixing.
     scoped_ptr<AudioProcessing> _limiter;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_MODULES_AUDIO_CONFERENCE_MIXER_SOURCE_AUDIO_CONFERENCE_MIXER_IMPL_H_

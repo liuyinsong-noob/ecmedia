@@ -15,7 +15,7 @@
 
 #include "desktop_capture_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class DesktopFrame;
 class DesktopRegion;
@@ -77,7 +77,7 @@ class DesktopCapturer {
   virtual void ResetScreenDC() {}
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_DESKTOP_CAPTURER_H_
 

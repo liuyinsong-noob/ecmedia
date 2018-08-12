@@ -11,10 +11,10 @@
 #ifndef WEBRTC_BASE_WIN32SOCKETINIT_H_
 #define WEBRTC_BASE_WIN32SOCKETINIT_H_
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 void EnsureWinsockInit();
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_WIN32SOCKETINIT_H_

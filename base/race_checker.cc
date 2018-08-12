@@ -10,7 +10,7 @@
 
 #include "../base/race_checker.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 RaceChecker::RaceChecker() {}
 
@@ -51,4 +51,4 @@ RaceCheckerScope::~RaceCheckerScope() {
 }
 
 }  // namespace internal
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

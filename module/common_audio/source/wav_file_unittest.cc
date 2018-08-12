@@ -19,7 +19,7 @@
 #include "cloopenwebrtc/common_audio/wav_file.h"
 #include "cloopenwebrtc/test/testsupport/fileutils.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const float kSamples[] = {0.0, 10.0, 4e4, -1e9};
 

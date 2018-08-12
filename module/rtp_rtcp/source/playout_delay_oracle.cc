@@ -15,7 +15,7 @@
 #include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
 #include "../module/rtp_rtcp/source/rtp_header_extensions.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 PlayoutDelayOracle::PlayoutDelayOracle()
     : high_sequence_number_(0),
@@ -28,7 +28,7 @@ PlayoutDelayOracle::~PlayoutDelayOracle() {}
 void PlayoutDelayOracle::UpdateRequest(uint32_t ssrc,
                                        PlayoutDelay playout_delay,
                                        uint16_t seq_num) {
-  cloopenwebrtc::CritScope lock(&crit_sect_);
+  yuntongxunwebrtc::CritScope lock(&crit_sect_);
   DCHECK_LE(playout_delay.min_ms, PlayoutDelayLimits::kMaxMs);
   DCHECK_LE(playout_delay.max_ms, PlayoutDelayLimits::kMaxMs);
   DCHECK_LE(playout_delay.min_ms, playout_delay.max_ms);
@@ -53,7 +53,7 @@ void PlayoutDelayOracle::UpdateRequest(uint32_t ssrc,
 // we stop sending the extension on future packets.
 void PlayoutDelayOracle::OnReceivedRtcpReportBlocks(
     const ReportBlockList& report_blocks) {
-	cloopenwebrtc::CritScope lock(&crit_sect_);
+	yuntongxunwebrtc::CritScope lock(&crit_sect_);
   for (const RTCPReportBlock& report_block : report_blocks) {
     if ((ssrc_ == report_block.sourceSSRC) && send_playout_delay_ &&
         (report_block.extendedHighSeqNum > high_sequence_number_)) {
@@ -62,4 +62,4 @@ void PlayoutDelayOracle::OnReceivedRtcpReportBlocks(
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

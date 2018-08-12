@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 enum { kStartupDelaySamples = 30 };
 enum { kFsAccuStartupSamples = 5 };
@@ -456,7 +456,7 @@ int VCMJitterEstimator::GetJitterEstimate(double rttMultiplier) {
 bool VCMJitterEstimator::LowRateExperimentEnabled() {
   if (low_rate_experiment_ == kInit) {
     std::string group =
-        cloopenwebrtc::field_trial::FindFullName("WebRTC-ReducedJitterDelay");
+        yuntongxunwebrtc::field_trial::FindFullName("WebRTC-ReducedJitterDelay");
     if (group == "Disabled") {
       low_rate_experiment_ = kDisabled;
     } else {

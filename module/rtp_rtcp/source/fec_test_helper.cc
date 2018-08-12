@@ -18,7 +18,7 @@
 #include "../module/rtp_rtcp/source/byte_io.h"
 #include "../module/rtp_rtcp/source/rtp_utility.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace test {
 namespace fec {
 
@@ -214,4 +214,4 @@ void UlpfecPacketGenerator::SetRedHeader(uint8_t payload_type,
 
 }  // namespace fec
 }  // namespace test
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

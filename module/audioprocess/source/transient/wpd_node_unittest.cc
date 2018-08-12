@@ -15,7 +15,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "cloopenwebrtc/system_wrappers/interface/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const size_t kDataLength = 5;
 static const float kTolerance = 0.0001f;

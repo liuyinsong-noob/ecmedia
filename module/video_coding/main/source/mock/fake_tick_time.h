@@ -17,7 +17,7 @@
 
 #include "modules/video_coding/main/source/tick_time_base.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Provides a fake implementation of TickTimeBase, intended for offline
 // testing. This implementation does not query the system clock, but returns a

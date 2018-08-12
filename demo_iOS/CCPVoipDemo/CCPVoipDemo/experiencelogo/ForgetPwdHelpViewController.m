@@ -57,7 +57,7 @@
     [leftBarItem release];
     
     NSArray *imgArr = [[NSArray alloc] initWithObjects:@"new42.png", @"new46.png", @"new52.png", @"new48.png", nil];
-    NSArray *textArr = [[NSArray alloc] initWithObjects:@"登录cloopen.com点击登录", @"点击右侧\"忘记密码\"", @"输入注册邮箱并按提示操作", @"重置密码成，使用新密码登录", nil];
+    NSArray *textArr = [[NSArray alloc] initWithObjects:@"登录yuntongxun.com点击登录", @"点击右侧\"忘记密码\"", @"输入注册邮箱并按提示操作", @"重置密码成，使用新密码登录", nil];
     
     CGFloat frame_y = 50.0f;
     for (NSInteger i = 0; i<imgArr.count; i++)

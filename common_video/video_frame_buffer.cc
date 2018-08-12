@@ -19,7 +19,7 @@
 #include "libyuv/planar_functions.h"
 #include "libyuv/scale.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 NativeHandleBuffer::NativeHandleBuffer(void* native_handle,
                                        int width,
@@ -76,7 +76,7 @@ WrappedI420Buffer::WrappedI420Buffer(int width,
                                      int u_stride,
                                      const uint8_t* v_plane,
                                      int v_stride,
-                                     const cloopenwebrtc::Callback0<void>& no_longer_used)
+                                     const yuntongxunwebrtc::Callback0<void>& no_longer_used)
     : width_(width),
       height_(height),
       y_plane_(y_plane),
@@ -124,9 +124,9 @@ void* WrappedI420Buffer::native_handle() const {
   return nullptr;
 }
 
-cloopenwebrtc::scoped_refptr<VideoFrameBuffer> WrappedI420Buffer::NativeToI420Buffer() {
+yuntongxunwebrtc::scoped_refptr<VideoFrameBuffer> WrappedI420Buffer::NativeToI420Buffer() {
   NOTREACHED();
   return nullptr;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

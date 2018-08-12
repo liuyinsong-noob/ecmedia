@@ -17,7 +17,7 @@
 struct SPEEX_encinst_t_;
 struct SPEEX_decinst_t_;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -62,6 +62,6 @@ class ACMSPEEX : public ACMGenericCodec {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_ACM_SPEEX_H_

@@ -15,11 +15,11 @@
 #include "shared_desktop_frame.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class DesktopFrame;
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Represents a queue of reusable video frames. Provides access to the 'current'
 // frame - the frame that the caller is working with at the moment, and to the
@@ -64,11 +64,11 @@ class ScreenCaptureFrameQueue {
   int current_;
 
   static const int kQueueLength = 2;
-  cloopenwebrtc::scoped_ptr<SharedDesktopFrame> frames_[kQueueLength];
+  yuntongxunwebrtc::scoped_ptr<SharedDesktopFrame> frames_[kQueueLength];
 
   DISALLOW_COPY_AND_ASSIGN(ScreenCaptureFrameQueue);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_SCREEN_CAPTURE_FRAME_QUEUE_H_

@@ -20,7 +20,7 @@
 #include "../module/rtp_rtcp/source/rtcp_packet/transport_feedback.h"
 #include "../module/rtp_rtcp/include/rtp_rtcp.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // TODO(sprang): Tune these!
 const int RemoteEstimatorProxy::kBackWindowMs = 500;
@@ -53,7 +53,7 @@ void RemoteEstimatorProxy::IncomingPacket(int64_t arrival_time_ms,
                        "is missing the transport sequence number extension!";
     return;
   }
-  cloopenwebrtc::CritScope cs(&lock_);
+  yuntongxunwebrtc::CritScope cs(&lock_);
   media_ssrc_ = header.ssrc;
   OnPacketArrival(header.extension.transportSequenceNumber, arrival_time_ms);
 }
@@ -66,7 +66,7 @@ bool RemoteEstimatorProxy::LatestEstimate(std::vector<unsigned int>* ssrcs,
 int64_t RemoteEstimatorProxy::TimeUntilNextProcess() {
   int64_t time_until_next = 0;
   if (last_process_time_ms_ != -1) {
-    cloopenwebrtc::CritScope cs(&lock_);
+    yuntongxunwebrtc::CritScope cs(&lock_);
     int64_t now = clock_->TimeInMilliseconds();
     if (now - last_process_time_ms_ < send_interval_ms_)
       time_until_next = (last_process_time_ms_ + send_interval_ms_ - now);
@@ -104,7 +104,7 @@ void RemoteEstimatorProxy::OnBitrateChanged(int bitrate_bps) {
       kTwccReportSize * 8.0 * 1000.0 / kMinSendIntervalMs;
 
   // Let TWCC reports occupy 5% of total bandwidth.
-  cloopenwebrtc::CritScope cs(&lock_);
+  yuntongxunwebrtc::CritScope cs(&lock_);
   send_interval_ms_ = static_cast<int>(0.5 + kTwccReportSize * 8.0 * 1000.0 /
       (max(min(0.05 * bitrate_bps, kMaxTwccRate), kMinTwccRate)));
 }
@@ -159,7 +159,7 @@ bool RemoteEstimatorProxy::BuildFeedbackPacket(
   // window_start_seq_ is the first sequence number to include in the current
   // feedback packet. Some older may still be in the map, in case a reordering
   // happens and we need to retransmit them.
-  cloopenwebrtc::CritScope cs(&lock_);
+  yuntongxunwebrtc::CritScope cs(&lock_);
   auto it = packet_arrival_times_.lower_bound(window_start_seq_);
   if (it == packet_arrival_times_.end()) {
     // Feedback for all packets already sent.
@@ -197,4 +197,4 @@ bool RemoteEstimatorProxy::BuildFeedbackPacket(
   return true;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

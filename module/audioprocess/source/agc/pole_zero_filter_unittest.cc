@@ -18,7 +18,7 @@
 #include "cloopenwebrtc/system_wrappers/interface/scoped_ptr.h"
 #include "cloopenwebrtc/test/testsupport/fileutils.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const int kInputSamples = 50;
 

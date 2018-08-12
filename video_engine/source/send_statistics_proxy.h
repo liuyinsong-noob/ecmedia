@@ -42,7 +42,7 @@
 //#include "constructormagic.h"
 #include "../system_wrappers/include/stats_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class ViEEncoderObserver;
 class VideoEncoderRateObserver;

@@ -12,7 +12,7 @@
 
 #include <assert.h>
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 // The first kIgnoredSampleCount samples will be ignored.

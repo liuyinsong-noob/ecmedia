@@ -24,7 +24,7 @@
 @class VideoCaptureMacQTKitObjC;
 @class VideoCaptureMacQTKitInfoObjC;
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 namespace videocapturemodule
 {

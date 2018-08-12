@@ -13,7 +13,7 @@
 #include <emmintrin.h>
 #include <math.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 int32_t VPMContentAnalysis::TemporalDiffMetric_SSE2() {
   uint32_t num_pixels = 0;       // counter for # of pixels

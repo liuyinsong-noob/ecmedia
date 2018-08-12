@@ -21,7 +21,7 @@
 #include "sync_buffer.h"
 #include "../system_wrappers/include/logging.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 DecisionLogic* DecisionLogic::Create(int fs_hz,
                                      int output_size_samples,
@@ -183,4 +183,4 @@ void DecisionLogic::FilterBufferLevel(int buffer_size_samples,
   timescale_hold_off_ = std::max(timescale_hold_off_ - 1, 0);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

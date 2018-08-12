@@ -4,7 +4,7 @@
  *  Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
  *  that can be found in the LICENSE file in the root of the web site.
  *
- *   http://www.cloopen.com
+ *   http://www.yuntongxun.com
  *
  *  An additional intellectual property rights grant can be found
  *  in the file PATENTS.  All contributing project authors may
@@ -119,7 +119,7 @@ public final class CCPConfig {
 	/**
 	 *  Demo rest server address info
 	 */
-	public static String REST_SERVER_ADDRESS = "sandboxapp.cloopen.com";
+	public static String REST_SERVER_ADDRESS = "sandboxapp.yuntongxun.com";
 
 	/**
 	 *  Demo rest server port info

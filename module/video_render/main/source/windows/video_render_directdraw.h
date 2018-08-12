@@ -24,7 +24,7 @@
 
 #pragma comment(lib, "ddraw.lib")       // located in DirectX SDK
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class CriticalSectionWrapper;
 class EventWrapper;
 class ThreadWrapper;

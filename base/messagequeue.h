@@ -32,7 +32,7 @@
 #include "../base/timeutils.h"
 #include "../base/thread_annotations.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 struct Message;
 class MessageQueue;
@@ -325,6 +325,6 @@ class MessageQueue {
   DISALLOW_IMPLICIT_CONSTRUCTORS(MessageQueue);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_MESSAGEQUEUE_H_

@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     #ifndef _WIN32
     #define ERROR_SUCCESS   0
     #endif

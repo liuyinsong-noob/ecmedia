@@ -26,7 +26,7 @@
 #include "cloopenwebrtc/system_wrappers/interface/trace.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
     JavaVM* VideoRenderAndroid::g_jvm = NULL;
     jclass VideoRenderAndroid::g_renderGLClass = NULL;

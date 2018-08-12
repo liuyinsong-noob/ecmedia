@@ -17,7 +17,7 @@
 #include "modules/rtp_rtcp/interface/rtp_rtcp.h"
 #include "modules/rtp_rtcp/interface/rtp_rtcp_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class MockRtpRtcp : public RtpRtcp {
  public:

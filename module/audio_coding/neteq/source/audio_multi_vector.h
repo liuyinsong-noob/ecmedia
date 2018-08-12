@@ -19,7 +19,7 @@
 #include "audio_vector.h"
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioMultiVector {
  public:
@@ -135,5 +135,5 @@ class AudioMultiVector {
   DISALLOW_COPY_AND_ASSIGN(AudioMultiVector);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_AUDIO_MULTI_VECTOR_H_

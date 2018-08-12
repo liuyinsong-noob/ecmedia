@@ -12,7 +12,7 @@
 #include "video_capture_mf.h"
 #include "../system_wrappers/include/ref_count.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace videocapturemodule {
 
 // static

@@ -16,7 +16,7 @@ static int UpdatePos(int pos, int capacity) {
   return (pos + 1) % capacity;
 }
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace subtle {
 

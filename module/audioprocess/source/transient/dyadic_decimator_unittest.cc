@@ -12,7 +12,7 @@
 
 #include "testing/gtest/include/gtest/gtest.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const size_t kEvenBufferLength = 6;
 static const size_t kOddBufferLength = 5;

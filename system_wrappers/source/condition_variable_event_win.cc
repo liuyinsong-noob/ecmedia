@@ -87,7 +87,7 @@ Vanderbilt University to appear in their names.
 
 #include "../system_wrappers/include/critical_section_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ConditionVariableEventWin::ConditionVariableEventWin() : eventID_(WAKEALL_0) {
   memset(&num_waiters_[0], 0, sizeof(num_waiters_));
@@ -191,4 +191,4 @@ void ConditionVariableEventWin::WakeAll() {
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -25,7 +25,7 @@
 #include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Forward declarations.
 class Accelerate;
@@ -54,7 +54,7 @@ struct DtmfEvent;
 struct ExpandFactory;
 struct PreemptiveExpandFactory;
 
-class NetEqImpl : public cloopenwebrtc::NetEq {
+class NetEqImpl : public yuntongxunwebrtc::NetEq {
  public:
   // Creates a new NetEqImpl object. The object will assume ownership of all
   // injected dependencies, and will delete them when done.
@@ -405,5 +405,5 @@ class NetEqImpl : public cloopenwebrtc::NetEq {
   uint16_t last_decode_seq_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_NETEQ_IMPL_H_

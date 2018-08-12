@@ -21,7 +21,7 @@
 // TODO(fbarchard): Some of these functions lack parameter setting.
 
 #ifdef __cplusplus
-namespace cloopenlibyuv {
+namespace yuntongxunlibyuv {
 extern "C" {
 #endif
 

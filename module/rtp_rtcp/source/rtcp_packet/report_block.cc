@@ -14,7 +14,7 @@
 #include "../system_wrappers/include/logging.h"
 #include "byte_io.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace rtcp {
 
 // From RFC 3550, RTP: A Transport Protocol for Real-Time Applications.

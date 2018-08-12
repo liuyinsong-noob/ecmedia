@@ -16,7 +16,7 @@
 
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 AudioMultiVector::AudioMultiVector(size_t N) {
   assert(N > 0);
@@ -216,4 +216,4 @@ AudioVector& AudioMultiVector::operator[](size_t index) {
   return *(channels_[index]);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

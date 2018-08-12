@@ -23,7 +23,7 @@
 struct vpx_codec_ctx;
 struct vpx_codec_frame_buffer;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // This memory pool is used to serve buffers to libvpx for decoding purposes in
 // VP9, which is set up in InitializeVPXUsePool. After the initialization any
@@ -119,6 +119,6 @@ class Vp9FrameBufferPool {
   static const size_t max_num_buffers_ = 68;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_VIDEO_CODING_CODECS_VP9_VP9_FRAME_BUFFER_POOL_H_

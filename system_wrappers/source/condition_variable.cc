@@ -22,7 +22,7 @@
    #include "condition_variable_posix.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 ConditionVariableWrapper*
 ConditionVariableWrapper::CreateConditionVariable()
 {
@@ -34,4 +34,4 @@ ConditionVariableWrapper::CreateConditionVariable()
     return NULL;
 #endif
 }
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

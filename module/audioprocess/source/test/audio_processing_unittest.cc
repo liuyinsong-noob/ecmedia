@@ -36,7 +36,7 @@
 #include "cloopenwebrtc/audio_processing/unittest.pb.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 
 // TODO(bjornv): This is not feasible until the functionality has been
@@ -1204,9 +1204,9 @@ TEST_F(ApmTest, AgcOnlyAdaptsWhenTargetSignalIsPresent) {
   const int kNumChunks = 700;
   const float kScaleFactor = 0.25f;
   Config config;
-  std::vector<cloopenwebrtc::Point> geometry;
-  geometry.push_back(cloopenwebrtc::Point(0.f, 0.f, 0.f));
-  geometry.push_back(cloopenwebrtc::Point(0.05f, 0.f, 0.f));
+  std::vector<yuntongxunwebrtc::Point> geometry;
+  geometry.push_back(yuntongxunwebrtc::Point(0.f, 0.f, 0.f));
+  geometry.push_back(yuntongxunwebrtc::Point(0.05f, 0.f, 0.f));
   config.Set<Beamforming>(new Beamforming(true, geometry));
   testing::NiceMock<MockBeamformer>* beamformer =
       new testing::NiceMock<MockBeamformer>(geometry);

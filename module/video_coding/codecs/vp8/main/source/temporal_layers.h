@@ -17,7 +17,7 @@
 #include "../common_video/include/video_image.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 struct CodecSpecificInfoVP8;
 

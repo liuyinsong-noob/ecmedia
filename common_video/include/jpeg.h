@@ -18,7 +18,7 @@
 struct jpeg_compress_struct;
 struct jpeg_decompress_struct;
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 class JpegEncoder

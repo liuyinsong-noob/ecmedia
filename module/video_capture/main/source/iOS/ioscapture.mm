@@ -38,7 +38,7 @@ char *globalFilePathcapture = NULL;
 
 #pragma mark - public methods
 
-- (NSNumber *)registerOwner:(cloopenwebrtc::videocapturemodule::VideoCaptureiOS *)owner
+- (NSNumber *)registerOwner:(yuntongxunwebrtc::videocapturemodule::VideoCaptureiOS *)owner
 {
 //    if (!owner) {
 //        return [NSNumber numberWithInt:-1];
@@ -721,7 +721,7 @@ char *globalFilePathcapture = NULL;
         if(_ecImageFilter != nullptr) {
            [_ecImageFilter removeOutputFramebuffer];
         }
-         _ecImageFilter = [ECImageFilterFactory createImageFiilterWithType:cloopenwebrtc::ECType_BeautyFaceFilter];
+         _ecImageFilter = [ECImageFilterFactory createImageFiilterWithType:yuntongxunwebrtc::ECType_BeautyFaceFilter];
         // view horizontal mirror. zhaoyou
         [_ecImageView setInputRotation:kECImageFlipHorizonal atIndex:0];
         if (_ecImageFilter) {

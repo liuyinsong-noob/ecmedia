@@ -12,13 +12,13 @@
 #ifndef WEBRTC_SYSTEM_WRAPPERS_INCLUDE_SLEEP_H_
 #define WEBRTC_SYSTEM_WRAPPERS_INCLUDE_SLEEP_H_
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // This function sleeps for the specified number of milliseconds.
 // It may return early if the thread is woken by some other event,
 // such as the delivery of a signal on Unix.
 void SleepMs(int msecs);
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_INCLUDE_SLEEP_H_

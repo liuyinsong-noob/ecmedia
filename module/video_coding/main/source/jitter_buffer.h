@@ -28,7 +28,7 @@
 #include "../system_wrappers/include/critical_section_wrapper.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 enum VCMNackMode {
   kNack,

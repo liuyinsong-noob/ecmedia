@@ -13,7 +13,7 @@
 
 #include "common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class FileAudioDevice;
 
@@ -36,6 +36,6 @@ class FileAudioDeviceFactory {
   static char _outputAudioFilename[MAX_FILENAME_LEN];
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_AUDIO_DEVICE_FILE_AUDIO_DEVICE_FACTORY_H

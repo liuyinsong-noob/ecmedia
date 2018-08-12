@@ -53,7 +53,7 @@ static int DetectNumberOfCores() {
 }
 }
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 uint32_t CpuInfo::DetectNumberOfCores() {
   // Statically cache the number of system cores available since if the process
@@ -66,4 +66,4 @@ uint32_t CpuInfo::DetectNumberOfCores() {
   return logical_cpus;
 }
 
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

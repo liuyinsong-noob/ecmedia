@@ -22,7 +22,7 @@
 #include "../system_wrappers/include/trace.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 AndroidNativeOpenGl2Renderer::AndroidNativeOpenGl2Renderer(
     const int32_t id,

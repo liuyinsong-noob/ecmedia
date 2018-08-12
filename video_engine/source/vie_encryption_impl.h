@@ -15,7 +15,7 @@
 #include "vie_encryption.h"
 #include "vie_ref_count.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class ViESharedData;
 
@@ -53,6 +53,6 @@ public:
           CriticalSectionWrapper *vie_encryption_sect_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_VIDEO_ENGINE_VIE_ENCRYPTION_IMPL_H_

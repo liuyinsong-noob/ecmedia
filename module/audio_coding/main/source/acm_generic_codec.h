@@ -25,7 +25,7 @@
 struct WebRtcVadInst;
 struct WebRtcCngEncInst;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 struct WebRtcACMCodecParams;
 struct CodecInst;
@@ -951,6 +951,6 @@ class ACMGenericCodec {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_ACM_GENERIC_CODEC_H_

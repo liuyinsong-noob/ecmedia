@@ -18,7 +18,7 @@
 #include "window_generator.h"
 #include "covariance_matrix_generator.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 
 // Alpha for the Kaiser Bessel Derived window.
@@ -501,4 +501,4 @@ void Beamformer::EstimateTargetPresence(float* mask, int length) {
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

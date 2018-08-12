@@ -22,7 +22,7 @@ using ::testing::_;
 using ::testing::InSequence;
 using ::testing::Return;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // The fake audio data is 0,1,..SCHAR_MAX-1,0,1,... This is to make it easy
 // to detect errors. This function verifies that the buffers contain such data.

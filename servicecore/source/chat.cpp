@@ -80,7 +80,7 @@ void ServiceCore::serphone_core_text_received(const char *from, const char *to, 
 
 const char *ServiceCore::serphone_core_send_text(const char*to, const char*msg)
 {
-	cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+	yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 	MSList *elem;
 	SerphoneChatRoom *cr=NULL;
 	SerphoneAddress *addr;

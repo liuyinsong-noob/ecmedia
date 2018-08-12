@@ -15,7 +15,7 @@
 #include "clock.h"
 #include "scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class AudioCodingModule;
 struct CodecInst;
 
@@ -84,5 +84,5 @@ class AcmReceiveTestToggleOutputFreqOldApi : public AcmReceiveTestOldApi {
 };
 
 }  // namespace test
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_ACM_RECEIVE_TEST_H_

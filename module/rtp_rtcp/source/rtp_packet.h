@@ -17,7 +17,7 @@
 #include "../base/copyonwritebuffer.h"
 #include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 struct RTPHeader;
 class RtpHeaderExtensionMap;
 class Random;
@@ -31,10 +31,10 @@ class Packet {
 
   // Parse and copy given buffer into Packet.
   bool Parse(const uint8_t* buffer, size_t size);
-  bool Parse(cloopenwebrtc::ArrayView<const uint8_t> packet);
+  bool Parse(yuntongxunwebrtc::ArrayView<const uint8_t> packet);
 
   // Parse and move given buffer into Packet.
-  bool Parse(cloopenwebrtc::CopyOnWriteBuffer packet);
+  bool Parse(yuntongxunwebrtc::CopyOnWriteBuffer packet);
 
   // Maps extensions id to their types.
   void IdentifyExtensions(const ExtensionManager& extensions);
@@ -56,10 +56,10 @@ class Packet {
   // Payload.
   size_t payload_size() const;
   size_t padding_size() const;
-  cloopenwebrtc::ArrayView<const uint8_t> payload() const;
+  yuntongxunwebrtc::ArrayView<const uint8_t> payload() const;
 
   // Buffer.
-  cloopenwebrtc::CopyOnWriteBuffer Buffer() const;
+  yuntongxunwebrtc::CopyOnWriteBuffer Buffer() const;
   size_t capacity() const;
   size_t size() const;
   const uint8_t* data() const;
@@ -156,7 +156,7 @@ class Packet {
 
   ExtensionInfo extension_entries_[kMaxExtensionHeaders];
   uint16_t extensions_size_ = 0;  // Unaligned.
-  cloopenwebrtc::CopyOnWriteBuffer buffer_;
+  yuntongxunwebrtc::CopyOnWriteBuffer buffer_;
 };
 
 template <typename Extension>
@@ -190,6 +190,6 @@ bool Packet::ReserveExtension() {
   return true;
 }
 }  // namespace rtp
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_PACKET_H_

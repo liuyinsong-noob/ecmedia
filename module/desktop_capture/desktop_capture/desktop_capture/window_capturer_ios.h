@@ -8,7 +8,7 @@
 
 #ifndef window_capturer_ios_h
 #define window_capturer_ios_h
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     class ScreenCapturerIos : public ScreenCapturer {
     public:
         ScreenCapturerIos();

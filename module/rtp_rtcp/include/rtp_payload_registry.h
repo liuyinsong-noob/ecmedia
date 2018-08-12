@@ -20,7 +20,7 @@
 #include "../module/rtp_rtcp/source/rtp_receiver_strategy.h"
 #include "../module/rtp_rtcp/source/rtp_utility.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 struct CodecInst;
 class VideoCodec;
@@ -83,7 +83,7 @@ class RTPPayloadRegistry {
   const RtpUtility::Payload* PayloadTypeToPayload(uint8_t payload_type) const;
 
   void ResetLastReceivedPayloadTypes() {
-    //cloopenwebrtc::CritScope cs(&crit_sect_);
+    //yuntongxunwebrtc::CritScope cs(&crit_sect_);
     last_received_payload_type_ = -1;
     last_received_media_payload_type_ = -1;
   }
@@ -101,16 +101,16 @@ class RTPPayloadRegistry {
     return GetPayloadTypeWithName("ulpfec");
   }
   int8_t last_received_payload_type() const {
-    //cloopenwebrtc::CritScope cs(&crit_sect_);
+    //yuntongxunwebrtc::CritScope cs(&crit_sect_);
     return last_received_payload_type_;
   }
   void set_last_received_payload_type(int8_t last_received_payload_type) {
-    //cloopenwebrtc::CritScope cs(&crit_sect_);
+    //yuntongxunwebrtc::CritScope cs(&crit_sect_);
     last_received_payload_type_ = last_received_payload_type;
   }
 
   int8_t last_received_media_payload_type() const {
-    //cloopenwebrtc::CritScope cs(&crit_sect_);
+    //yuntongxunwebrtc::CritScope cs(&crit_sect_);
     return last_received_media_payload_type_;
   }
 
@@ -126,7 +126,7 @@ class RTPPayloadRegistry {
   // no such payload is registered.
   int8_t GetPayloadTypeWithName(const char* payload_name) const;
 
-  cloopenwebrtc::CriticalSectionWrapper* crit_sect_;
+  yuntongxunwebrtc::CriticalSectionWrapper* crit_sect_;
   
   std::map<int, RtpUtility::Payload> payload_type_map_;
   int8_t incoming_payload_type_;
@@ -141,6 +141,6 @@ class RTPPayloadRegistry {
   std::set<int> payload_types_with_suppressed_warnings_ ;//GUARDED_BY(crit_sect_);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_INCLUDE_RTP_PAYLOAD_REGISTRY_H_

@@ -9,7 +9,7 @@
 @class VideoCaptureiOSObjC;
 @class ECIOSCaptureCCP;
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
     namespace videocapturemodule
     {
@@ -19,7 +19,7 @@ namespace cloopenwebrtc
         public:
             VideoCaptureiOSInfo();
             ~VideoCaptureiOSInfo();
-            int registerOwner(cloopenwebrtc::videocapturemodule::VideoCaptureiOS* owner);
+            int registerOwner(yuntongxunwebrtc::videocapturemodule::VideoCaptureiOS* owner);
             int registerOwner(int i);
             int setCaptureDeviceById(char* uniqueId);
             int setCaptureHeightAndWidthAndFrameRate(int height,int width,int frameRate);

@@ -15,7 +15,7 @@
 #include "../system_wrappers/include/scoped_ptr.h"
 #include "desktop_geometry.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class DesktopFrame;
 
@@ -37,12 +37,12 @@ class MouseCursor {
   const DesktopVector& hotspot() const { return hotspot_; }
 
  private:
-  cloopenwebrtc::scoped_ptr<DesktopFrame> image_;
+  yuntongxunwebrtc::scoped_ptr<DesktopFrame> image_;
   DesktopVector hotspot_;
 
   DISALLOW_COPY_AND_ASSIGN(MouseCursor);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_MOUSE_CURSOR_H_

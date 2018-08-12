@@ -118,7 +118,7 @@
 #define closesocket(s) close(s)
 #endif  // WEBRTC_POSIX
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 inline bool IsBlockingError(int e) {
   return (e == EWOULDBLOCK) || (e == EAGAIN) || (e == EINPROGRESS);
@@ -197,6 +197,6 @@ class Socket {
   DISALLOW_COPY_AND_ASSIGN(Socket);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_SOCKET_H__

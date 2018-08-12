@@ -12,11 +12,11 @@
 
 #include <vector>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 MockBeamformer::MockBeamformer(const std::vector<Point>& array_geometry)
     : Beamformer(array_geometry) {}
 
 MockBeamformer::~MockBeamformer() {}
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

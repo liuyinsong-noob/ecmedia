@@ -103,7 +103,7 @@
 #include <string>
 #include <google/protobuf/stubs/common.h>
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 
 // Defined in this file.
@@ -287,5 +287,5 @@ class LIBPROTOBUF_EXPORT RpcChannel {
 
 }  // namespace protobuf
 
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 #endif  // GOOGLE_PROTOBUF_SERVICE_H__

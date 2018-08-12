@@ -18,7 +18,7 @@
 #include "../module/interface/module_common_types.h"
 #include "../module/remote_bitrate_estimator/include/remote_bitrate_estimator.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Clock;
 class PacketRouter;
@@ -61,7 +61,7 @@ class RemoteEstimatorProxy : public RemoteBitrateEstimator {
   PacketRouter* const packet_router_;
   int64_t last_process_time_ms_;
 
-  cloopenwebrtc::CriticalSection lock_;
+  yuntongxunwebrtc::CriticalSection lock_;
 
   uint32_t media_ssrc_ GUARDED_BY(&lock_);
   uint8_t feedback_sequence_ GUARDED_BY(&lock_);
@@ -72,6 +72,6 @@ class RemoteEstimatorProxy : public RemoteBitrateEstimator {
   int64_t send_interval_ms_ GUARDED_BY(&lock_);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  //  WEBRTC_MODULES_REMOTE_BITRATE_ESTIMATOR_REMOTE_ESTIMATOR_PROXY_H_

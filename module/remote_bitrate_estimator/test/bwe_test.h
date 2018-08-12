@@ -15,7 +15,7 @@
 #include "../module/remote_bitrate_estimator/include/remote_bitrate_estimator.h"
 #include "../module/remote_bitrate_estimator/test/bwe_test_framework.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 struct RemoteBitrateEstimatorFactory;
 

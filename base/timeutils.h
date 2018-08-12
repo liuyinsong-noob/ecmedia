@@ -18,7 +18,7 @@
 
 #include "../system_wrappers/include/basictypes.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const int64_t kNumMillisecsPerSec = INT64_C(1000);
 static const int64_t kNumMicrosecsPerSec = INT64_C(1000000);
@@ -123,6 +123,6 @@ int64_t TmToSeconds(const std::tm& tm);
 // measuring time intervals and timeouts.
 int64_t TimeUTCMicros();
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_TIMEUTILS_H_

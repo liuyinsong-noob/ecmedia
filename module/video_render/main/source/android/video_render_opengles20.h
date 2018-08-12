@@ -16,7 +16,7 @@
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 class VideoRenderOpenGles20 {

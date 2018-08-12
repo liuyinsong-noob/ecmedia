@@ -122,7 +122,7 @@
 
 #define GOOGLE_PROTOBUF_HAS_ONEOF
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 
 // Defined in this file.
@@ -285,7 +285,7 @@ class LIBPROTOBUF_EXPORT Message : public MessageLite {
   // Introspection ---------------------------------------------------
 
   // Typedef for backwards-compatibility.
-  typedef cloopen_google::protobuf::Reflection Reflection;
+  typedef yuntongxun_google::protobuf::Reflection Reflection;
 
   // Get a Descriptor for this message's type.  This describes what
   // fields the message contains, the types of those fields, etc.
@@ -862,5 +862,5 @@ inline RepeatedPtrField<PB>* Reflection::MutableRepeatedPtrField(
 
 }  // namespace protobuf
 
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 #endif  // GOOGLE_PROTOBUF_MESSAGE_H__

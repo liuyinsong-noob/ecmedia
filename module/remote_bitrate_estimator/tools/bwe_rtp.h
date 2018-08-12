@@ -13,7 +13,7 @@
 
 #include <string>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class Clock;
 class RemoteBitrateEstimator;
 class RemoteBitrateObserver;
@@ -26,11 +26,11 @@ class RtpFileReader;
 bool ParseArgsAndSetupEstimator(
     int argc,
     char** argv,
-    cloopenwebrtc::Clock* clock,
-    cloopenwebrtc::RemoteBitrateObserver* observer,
-    cloopenwebrtc::test::RtpFileReader** rtp_reader,
-    cloopenwebrtc::RtpHeaderParser** parser,
-    cloopenwebrtc::RemoteBitrateEstimator** estimator,
+    yuntongxunwebrtc::Clock* clock,
+    yuntongxunwebrtc::RemoteBitrateObserver* observer,
+    yuntongxunwebrtc::test::RtpFileReader** rtp_reader,
+    yuntongxunwebrtc::RtpHeaderParser** parser,
+    yuntongxunwebrtc::RemoteBitrateEstimator** estimator,
     std::string* estimator_used);
 
 #endif  // WEBRTC_MODULES_REMOTE_BITRATE_ESTIMATOR_TOOLS_BWE_RTP_H_

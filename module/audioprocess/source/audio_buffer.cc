@@ -15,7 +15,7 @@
 #include "channel_buffer.h"
 #include "audio_process_common.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 
 bool HasKeyboardChannel(AudioProcessing::ChannelLayout layout) {
@@ -538,4 +538,4 @@ int16_t* AudioBuffer::low_pass_split_data(int channel) const {
 	return NULL; //need fix; ylr
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -46,7 +46,7 @@
 
 #include <google/protobuf/stubs/common.h>
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 
 // Return a C++ string
@@ -71,6 +71,6 @@ LIBPROTOBUF_EXPORT extern const int kStringPrintfVectorMaxArgs;
 LIBPROTOBUF_EXPORT extern string StringPrintfVector(const char* format, const vector<string>& v);
 
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 
 #endif  // GOOGLE_PROTOBUF_STUBS_STRINGPRINTF_H

@@ -22,7 +22,7 @@
 #include "cloopenwebrtc/modules/interface/module_common_types.h"
 #include "cloopenwebrtc/test/testsupport/fileutils.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(AudioProcessingTest, DISABLED_ComputingFirstSpectralPeak) {
   AgcAudioProc audioproc;

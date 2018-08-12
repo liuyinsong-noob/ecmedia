@@ -12,7 +12,7 @@
 
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 void FloatToS16(const float* src, size_t size, int16_t* dest) {
   for (size_t i = 0; i < size; ++i)

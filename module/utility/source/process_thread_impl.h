@@ -19,7 +19,7 @@
 #include "../system_wrappers/include/thread_wrapper.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class ProcessThreadImpl : public ProcessThread
 {
 public:
@@ -44,6 +44,6 @@ private:
     ModuleList              _modules;
     ThreadWrapper*          _thread;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_MODULES_UTILITY_SOURCE_PROCESS_THREAD_IMPL_H_

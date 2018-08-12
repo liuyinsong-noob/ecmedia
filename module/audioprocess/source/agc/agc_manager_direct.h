@@ -14,7 +14,7 @@
 #include "agc.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioFrame;
 class DebugFile;
@@ -93,6 +93,6 @@ class AgcManagerDirect {
   scoped_ptr<DebugFile> file_postproc_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_AGC_AGC_MANAGER_DIRECT_H_

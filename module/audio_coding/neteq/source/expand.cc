@@ -22,7 +22,7 @@
 #include "random_vector.h"
 #include "sync_buffer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 void Expand::Reset() {
   first_expand_ = true;
@@ -904,4 +904,4 @@ void Expand::GenerateRandomVector(int seed_increment,
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

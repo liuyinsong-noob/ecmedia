@@ -14,7 +14,7 @@
 #include "audio_device_defines.h"
 #include "module.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 typedef int(*SoundCardOn)(int deviceType);//0, playout; 1, record
 

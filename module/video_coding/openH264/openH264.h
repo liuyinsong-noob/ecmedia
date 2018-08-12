@@ -3,7 +3,7 @@
 
 #include "video_codec_interface.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class OpenH264Encoder : public VideoEncoder {
  public:

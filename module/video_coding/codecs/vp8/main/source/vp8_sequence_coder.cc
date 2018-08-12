@@ -20,20 +20,20 @@
 //#include "webrtc/test/testsupport/metrics/video_metrics.h"
 //#include "webrtc/tools/simple_command_line_parser.h"
 
-class Vp8SequenceCoderEncodeCallback : public cloopenwebrtc::EncodedImageCallback {
+class Vp8SequenceCoderEncodeCallback : public yuntongxunwebrtc::EncodedImageCallback {
  public:
   explicit Vp8SequenceCoderEncodeCallback(FILE* encoded_file)
       : encoded_file_(encoded_file),
         encoded_bytes_(0) {}
   ~Vp8SequenceCoderEncodeCallback();
-  int Encoded(const cloopenwebrtc::EncodedImage& encoded_image,
-              const cloopenwebrtc::CodecSpecificInfo* codecSpecificInfo,
-              const cloopenwebrtc::RTPFragmentationHeader*);
+  int Encoded(const yuntongxunwebrtc::EncodedImage& encoded_image,
+              const yuntongxunwebrtc::CodecSpecificInfo* codecSpecificInfo,
+              const yuntongxunwebrtc::RTPFragmentationHeader*);
   // Returns the encoded image.
-  cloopenwebrtc::EncodedImage encoded_image() { return encoded_image_; }
+  yuntongxunwebrtc::EncodedImage encoded_image() { return encoded_image_; }
   size_t encoded_bytes() { return encoded_bytes_; }
  private:
-  cloopenwebrtc::EncodedImage encoded_image_;
+  yuntongxunwebrtc::EncodedImage encoded_image_;
   FILE* encoded_file_;
   size_t encoded_bytes_;
 };
@@ -43,9 +43,9 @@ Vp8SequenceCoderEncodeCallback::~Vp8SequenceCoderEncodeCallback() {
   encoded_image_._buffer = NULL;
 }
 int Vp8SequenceCoderEncodeCallback::Encoded(
-    const cloopenwebrtc::EncodedImage& encoded_image,
-    const cloopenwebrtc::CodecSpecificInfo* codecSpecificInfo,
-    const cloopenwebrtc::RTPFragmentationHeader* fragmentation) {
+    const yuntongxunwebrtc::EncodedImage& encoded_image,
+    const yuntongxunwebrtc::CodecSpecificInfo* codecSpecificInfo,
+    const yuntongxunwebrtc::RTPFragmentationHeader* fragmentation) {
   if (encoded_image_._size < encoded_image._size) {
     delete [] encoded_image_._buffer;
     encoded_image_._buffer = NULL;
@@ -65,23 +65,23 @@ int Vp8SequenceCoderEncodeCallback::Encoded(
 }
 
 // TODO(mikhal): Add support for varying the frame size.
-class Vp8SequenceCoderDecodeCallback : public cloopenwebrtc::DecodedImageCallback {
+class Vp8SequenceCoderDecodeCallback : public yuntongxunwebrtc::DecodedImageCallback {
  public:
   explicit Vp8SequenceCoderDecodeCallback(FILE* decoded_file)
       : decoded_file_(decoded_file) {}
-  int Decoded(cloopenwebrtc::I420VideoFrame& frame);
+  int Decoded(yuntongxunwebrtc::I420VideoFrame& frame);
   bool DecodeComplete();
 
  private:
   FILE* decoded_file_;
 };
 
-int Vp8SequenceCoderDecodeCallback::Decoded(cloopenwebrtc::I420VideoFrame& image) {
-  EXPECT_EQ(0, cloopenwebrtc::PrintI420VideoFrame(image, decoded_file_));
+int Vp8SequenceCoderDecodeCallback::Decoded(yuntongxunwebrtc::I420VideoFrame& image) {
+  EXPECT_EQ(0, yuntongxunwebrtc::PrintI420VideoFrame(image, decoded_file_));
   return 0;
 }
 
-int SequenceCoder(cloopenwebrtc::test::CommandLineParser& parser) {
+int SequenceCoder(yuntongxunwebrtc::test::CommandLineParser& parser) {
   int width = strtol((parser.GetFlag("w")).c_str(), NULL, 10);
   int height = strtol((parser.GetFlag("h")).c_str(), NULL, 10);
   int framerate = strtol((parser.GetFlag("f")).c_str(), NULL, 10);
@@ -123,11 +123,11 @@ int SequenceCoder(cloopenwebrtc::test::CommandLineParser& parser) {
   int num_frames = strtol((parser.GetFlag("num_frames")).c_str(), NULL, 10);
 
   // Codec SetUp.
-  cloopenwebrtc::VideoCodec inst;
+  yuntongxunwebrtc::VideoCodec inst;
   memset(&inst, 0, sizeof(inst));
-  cloopenwebrtc::VP8Encoder* encoder = cloopenwebrtc::VP8Encoder::Create();
-  cloopenwebrtc::VP8Decoder* decoder = cloopenwebrtc::VP8Decoder::Create();
-  inst.codecType = cloopenwebrtc::kVideoCodecVP8;
+  yuntongxunwebrtc::VP8Encoder* encoder = yuntongxunwebrtc::VP8Encoder::Create();
+  yuntongxunwebrtc::VP8Decoder* decoder = yuntongxunwebrtc::VP8Decoder::Create();
+  inst.codecType = yuntongxunwebrtc::kVideoCodecVP8;
   inst.codecSpecific.VP8.feedbackModeOn = false;
   inst.codecSpecific.VP8.denoisingOn = true;
   inst.maxFramerate = framerate;
@@ -141,9 +141,9 @@ int SequenceCoder(cloopenwebrtc::test::CommandLineParser& parser) {
     return -1;
   }
   EXPECT_EQ(0, decoder->InitDecode(&inst, 1));
-  cloopenwebrtc::I420VideoFrame input_frame;
-  size_t length = cloopenwebrtc::CalcBufferSize(cloopenwebrtc::kI420, width, height);
-  cloopenwebrtc::scoped_ptr<uint8_t[]> frame_buffer(new uint8_t[length]);
+  yuntongxunwebrtc::I420VideoFrame input_frame;
+  size_t length = yuntongxunwebrtc::CalcBufferSize(yuntongxunwebrtc::kI420, width, height);
+  yuntongxunwebrtc::scoped_ptr<uint8_t[]> frame_buffer(new uint8_t[length]);
 
   int half_width = (width + 1) / 2;
   // Set and register callbacks.
@@ -153,7 +153,7 @@ int SequenceCoder(cloopenwebrtc::test::CommandLineParser& parser) {
   decoder->RegisterDecodeCompleteCallback(&decoder_callback);
   // Read->Encode->Decode sequence.
   // num_frames = -1 implies unlimited encoding (entire sequence).
-  int64_t starttime = cloopenwebrtc::TickTime::MillisecondTimestamp();
+  int64_t starttime = yuntongxunwebrtc::TickTime::MillisecondTimestamp();
   int frame_cnt = 1;
   int frames_processed = 0;
   input_frame.CreateEmptyFrame(width, height, width, half_width, half_width);
@@ -162,8 +162,8 @@ int SequenceCoder(cloopenwebrtc::test::CommandLineParser& parser) {
      if (fread(frame_buffer.get(), 1, length, input_file) != length)
       continue;
     if (frame_cnt >= start_frame) {
-      cloopenwebrtc::ConvertToI420(cloopenwebrtc::kI420, frame_buffer.get(), 0, 0,
-                            width, height, 0, cloopenwebrtc::kRotateNone,
+      yuntongxunwebrtc::ConvertToI420(yuntongxunwebrtc::kI420, frame_buffer.get(), 0, 0,
+                            width, height, 0, yuntongxunwebrtc::kRotateNone,
                             &input_frame);
       encoder->Encode(input_frame, NULL, NULL);
       decoder->Decode(encoder_callback.encoded_image(), false, NULL);
@@ -172,15 +172,15 @@ int SequenceCoder(cloopenwebrtc::test::CommandLineParser& parser) {
     ++frame_cnt;
   }
   printf("\nProcessed %d frames\n", frames_processed);
-  int64_t endtime = cloopenwebrtc::TickTime::MillisecondTimestamp();
+  int64_t endtime = yuntongxunwebrtc::TickTime::MillisecondTimestamp();
   int64_t totalExecutionTime = endtime - starttime;
   printf("Total execution time: %.2lf ms\n",
          static_cast<double>(totalExecutionTime));
   double actual_bit_rate =
       8.0 * encoder_callback.encoded_bytes() / (frame_cnt / inst.maxFramerate);
   printf("Actual bitrate: %f kbps\n", actual_bit_rate / 1000);
-  cloopenwebrtc::test::QualityMetricsResult psnr_result, ssim_result;
-  EXPECT_EQ(0, cloopenwebrtc::test::I420MetricsFromFiles(
+  yuntongxunwebrtc::test::QualityMetricsResult psnr_result, ssim_result;
+  EXPECT_EQ(0, yuntongxunwebrtc::test::I420MetricsFromFiles(
       input_file_name.c_str(), output_file_name.c_str(),
       inst.width, inst.height,
       &psnr_result, &ssim_result));
@@ -209,7 +209,7 @@ int main(int argc, char** argv) {
   "  - num_frames - Number of frames to be processed. "
   "      Default: -1 (entire sequence).";
 
-  cloopenwebrtc::test::CommandLineParser parser;
+  yuntongxunwebrtc::test::CommandLineParser parser;
 
   // Init the parser and set the usage message.
   parser.Init(argc, argv);
@@ -221,10 +221,10 @@ int main(int argc, char** argv) {
   parser.SetFlag("b", "500");
   parser.SetFlag("start_frame", "0");
   parser.SetFlag("num_frames", "-1");
-  parser.SetFlag("output_file", cloopenwebrtc::test::OutputPath() + "vp8_decoded.yuv");
+  parser.SetFlag("output_file", yuntongxunwebrtc::test::OutputPath() + "vp8_decoded.yuv");
   parser.SetFlag("encoded_file",
-                 cloopenwebrtc::test::OutputPath() + "vp8_encoded.vp8");
-  parser.SetFlag("input_file", cloopenwebrtc::test::ResourcePath("foreman_cif",
+                 yuntongxunwebrtc::test::OutputPath() + "vp8_encoded.vp8");
+  parser.SetFlag("input_file", yuntongxunwebrtc::test::ResourcePath("foreman_cif",
                                                           "yuv"));
 
   parser.ProcessFlags();

@@ -15,7 +15,7 @@
 namespace {
 
 // Callback Function to add 3 to every sample in the signal.
-class PlusThreeBlockerCallback : public cloopenwebrtc::BlockerCallback {
+class PlusThreeBlockerCallback : public yuntongxunwebrtc::BlockerCallback {
  public:
   virtual void ProcessBlock(const float* const* input,
                             int num_frames,
@@ -31,7 +31,7 @@ class PlusThreeBlockerCallback : public cloopenwebrtc::BlockerCallback {
 };
 
 // No-op Callback Function.
-class CopyBlockerCallback : public cloopenwebrtc::BlockerCallback {
+class CopyBlockerCallback : public yuntongxunwebrtc::BlockerCallback {
  public:
   virtual void ProcessBlock(const float* const* input,
                             int num_frames,
@@ -48,7 +48,7 @@ class CopyBlockerCallback : public cloopenwebrtc::BlockerCallback {
 
 }  // namespace
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Tests blocking with a window that multiplies the signal by 2, a callback
 // that adds 3 to each sample in the signal, and different combinations of chunk

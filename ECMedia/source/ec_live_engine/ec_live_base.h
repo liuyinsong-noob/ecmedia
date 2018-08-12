@@ -10,7 +10,7 @@
 #define ec_rtmp_base_h
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     class ECLiveBase {
     public:
         // create live stream instance

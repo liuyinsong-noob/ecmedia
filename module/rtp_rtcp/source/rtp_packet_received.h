@@ -14,7 +14,7 @@
 #include "../module/rtp_rtcp/source/rtp_packet.h"
 #include "../system_wrappers/include/ntp_time.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 // Class to hold rtp packet with metadata for receiver side.
 class RtpPacketReceived : public rtp::Packet {
  public:
@@ -52,5 +52,5 @@ class RtpPacketReceived : public rtp::Packet {
   bool retransmit_ = false;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_PACKET_RECEIVED_H_

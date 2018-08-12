@@ -27,7 +27,7 @@
 static const size_t kEventLoggerArgsStrBufferInitialSize = 256;
 static const size_t kTraceArgBufferLength = 32;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 
@@ -76,7 +76,7 @@ void EventTracer::AddTraceEvent(char phase,
 
 }  // namespace webrtc
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace tracing {
 namespace {
 
@@ -105,7 +105,7 @@ class EventLogger final {
                      const unsigned long long* arg_values,
                      uint64_t timestamp,
                      int pid,
-                     cloopenwebrtc::PlatformThreadId thread_id) {
+                     yuntongxunwebrtc::PlatformThreadId thread_id) {
     std::vector<TraceArg> args(num_args);
     for (int i = 0; i < num_args; ++i) {
       TraceArg& arg = args[i];
@@ -122,7 +122,7 @@ class EventLogger final {
         arg.value.as_string = str_copy;
       }
     }
-	cloopenwebrtc::CritScope lock(&crit_);
+	yuntongxunwebrtc::CritScope lock(&crit_);
     trace_events_.push_back(
         {name, category_enabled, phase, args, timestamp, 1, thread_id});
   }
@@ -138,7 +138,7 @@ class EventLogger final {
       bool shutting_down = shutdown_event_.Wait(kLoggingIntervalMs);
       std::vector<TraceEvent> events;
       {
-		cloopenwebrtc::CritScope lock(&crit_);
+		yuntongxunwebrtc::CritScope lock(&crit_);
         trace_events_.swap(events);
       }
       std::string args_str;
@@ -200,7 +200,7 @@ class EventLogger final {
     output_file_ = file;
     output_file_owned_ = owned;
     {
-	  cloopenwebrtc::CritScope lock(&crit_);
+	  yuntongxunwebrtc::CritScope lock(&crit_);
       // Since the atomic fast-path for adding events to the queue can be
       // bypassed while the logging thread is shutting down there may be some
       // stale events in the queue, hence the vector needs to be cleared to not
@@ -210,7 +210,7 @@ class EventLogger final {
     // Enable event logging (fast-path). This should be disabled since starting
     // shouldn't be done twice.
     CHECK_EQ(0,
-		cloopenwebrtc::AtomicOps::CompareAndSwap(&g_event_logging_active, 0, 1));
+		yuntongxunwebrtc::AtomicOps::CompareAndSwap(&g_event_logging_active, 0, 1));
 
     // Finally start, everything should be set up now.
     logging_thread_.Start();
@@ -221,7 +221,7 @@ class EventLogger final {
     DCHECK(thread_checker_.CalledOnValidThread());
     TRACE_EVENT_INSTANT0("webrtc", "EventLogger::Stop");
     // Try to stop. Abort if we're not currently logging.
-    if (cloopenwebrtc::AtomicOps::CompareAndSwap(&g_event_logging_active, 1, 0) == 0)
+    if (yuntongxunwebrtc::AtomicOps::CompareAndSwap(&g_event_logging_active, 1, 0) == 0)
       return;
 
     // Wake up logging thread to finish writing.
@@ -258,7 +258,7 @@ class EventLogger final {
     std::vector<TraceArg> args;
     uint64_t timestamp;
     int pid;
-	cloopenwebrtc::PlatformThreadId tid;
+	yuntongxunwebrtc::PlatformThreadId tid;
   };
 
   static std::string TraceArgValueAsString(TraceArg arg) {
@@ -321,11 +321,11 @@ class EventLogger final {
     return output;
   }
 
-  cloopenwebrtc::CriticalSection crit_;
+  yuntongxunwebrtc::CriticalSection crit_;
   std::vector<TraceEvent> trace_events_ GUARDED_BY(crit_);
-  cloopenwebrtc::PlatformThread logging_thread_;
-  cloopenwebrtc::Event shutdown_event_;
-  cloopenwebrtc::ThreadChecker thread_checker_;
+  yuntongxunwebrtc::PlatformThread logging_thread_;
+  yuntongxunwebrtc::Event shutdown_event_;
+  yuntongxunwebrtc::ThreadChecker thread_checker_;
   FILE* output_file_ = nullptr;
   bool output_file_owned_ = false;
 };
@@ -358,21 +358,21 @@ void InternalAddTraceEvent(char phase,
                            const unsigned long long* arg_values,
                            unsigned char flags) {
   // Fast path for when event tracing is inactive.
-  if (cloopenwebrtc::AtomicOps::AcquireLoad(&g_event_logging_active) == 0)
+  if (yuntongxunwebrtc::AtomicOps::AcquireLoad(&g_event_logging_active) == 0)
     return;
 
   g_event_logger->AddTraceEvent(name, category_enabled, phase, num_args,
                                 arg_names, arg_types, arg_values,
-	  cloopenwebrtc::TimeMicros(), 1, cloopenwebrtc::CurrentThreadId());
+	  yuntongxunwebrtc::TimeMicros(), 1, yuntongxunwebrtc::CurrentThreadId());
 }
 
 }  // namespace
 
 void SetupInternalTracer() {
-  CHECK(cloopenwebrtc::AtomicOps::CompareAndSwapPtr(
+  CHECK(yuntongxunwebrtc::AtomicOps::CompareAndSwapPtr(
                 &g_event_logger, static_cast<EventLogger*>(nullptr),
                 new EventLogger()) == nullptr);
-  cloopenwebrtc::SetupEventTracer(InternalGetCategoryEnabled, InternalAddTraceEvent);
+  yuntongxunwebrtc::SetupEventTracer(InternalGetCategoryEnabled, InternalAddTraceEvent);
 }
 
 void StartInternalCaptureToFile(FILE* file) {
@@ -396,14 +396,14 @@ void StopInternalCapture() {
 
 void ShutdownInternalTracer() {
   StopInternalCapture();
-  EventLogger* old_logger = cloopenwebrtc::AtomicOps::AcquireLoadPtr(&g_event_logger);
+  EventLogger* old_logger = yuntongxunwebrtc::AtomicOps::AcquireLoadPtr(&g_event_logger);
   DCHECK(old_logger);
-  CHECK(cloopenwebrtc::AtomicOps::CompareAndSwapPtr(
+  CHECK(yuntongxunwebrtc::AtomicOps::CompareAndSwapPtr(
                 &g_event_logger, old_logger,
                 static_cast<EventLogger*>(nullptr)) == old_logger);
   delete old_logger;
-  cloopenwebrtc::SetupEventTracer(nullptr, nullptr);
+  yuntongxunwebrtc::SetupEventTracer(nullptr, nullptr);
 }
 
 }  // namespace tracing
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

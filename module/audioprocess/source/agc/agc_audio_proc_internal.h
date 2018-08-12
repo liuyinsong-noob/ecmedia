@@ -11,7 +11,7 @@
 #ifndef WEBRTC_MODULES_AUDIO_PROCESSING_AGC_AGC_AUDIO_PROC_INTERNAL_H_
 #define WEBRTC_MODULES_AUDIO_PROCESSING_AGC_AGC_AUDIO_PROC_INTERNAL_H_
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // These values should match MATLAB counterparts for unit-tests to pass.
 static const double kCorrWeight[] = {
@@ -76,6 +76,6 @@ static_assert(kFilterOrder + 1 ==
                   sizeof(kCoeffDenominator) / sizeof(kCoeffDenominator[0]),
               "denominator coefficients incorrect size");
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_AGC_AUDIO_PROCESSING_H_

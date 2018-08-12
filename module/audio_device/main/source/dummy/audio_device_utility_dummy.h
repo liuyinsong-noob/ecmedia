@@ -14,7 +14,7 @@
 #include "audio_device_utility.h"
 #include "audio_device.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 class CriticalSectionWrapper;
 
@@ -26,6 +26,6 @@ public:
 
     virtual int32_t Init() OVERRIDE;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // MODULES_AUDIO_DEVICE_MAIN_SOURCE_LINUX_AUDIO_DEVICE_UTILITY_DUMMY_H_

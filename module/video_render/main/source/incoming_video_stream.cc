@@ -29,7 +29,7 @@
 #include "../system_wrappers/include/tick_util.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 IncomingVideoStream::IncomingVideoStream(const int32_t module_id,
                                          const uint32_t stream_id)

@@ -23,13 +23,13 @@
 #include "SoundTouch.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-using namespace cloopensoundtouch;
+using namespace yuntongxunsoundtouch;
 
 #ifndef u_int8_t
 #define u_int8_t unsigned char
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class CriticalSectionWrapper;
 
@@ -485,6 +485,6 @@ class AudioCodingImpl : public AudioCoding {
   CodecInst current_send_codec_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_AUDIO_CODING_MODULE_IMPL_H_

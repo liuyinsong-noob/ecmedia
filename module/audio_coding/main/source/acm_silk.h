@@ -11,7 +11,7 @@
 
 #include "acm_generic_codec.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
  namespace acm2{   
     class ACMSILK : public ACMGenericCodec
@@ -64,7 +64,7 @@ namespace cloopenwebrtc
         void *_decoderInstPtr;
     };
  } //namespace acm2  
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 
 #endif

@@ -14,7 +14,7 @@
 #include "module_common_types.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 // MAX_HISTORY_SIZE * SHORT_FILTER_MS defines the window size in milliseconds

@@ -25,7 +25,7 @@
            ANDROID_LOG_DEBUG, "WebRTC ADM OpenSLES", __VA_ARGS__)
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // ============================================================================
 //                            Construction & Destruction

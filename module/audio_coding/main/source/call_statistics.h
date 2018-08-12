@@ -27,7 +27,7 @@
 // if different APIs are called from different threads.
 //
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -58,6 +58,6 @@ class CallStatistics {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_CALL_STATISTICS_H_

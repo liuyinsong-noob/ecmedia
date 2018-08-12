@@ -25,7 +25,7 @@ extern "C" {
 }
 #include "module_common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // The following structures are declared anonymous in iSAC's structs.h. To
 // forward declare them, we use this derived class trick.
@@ -266,4 +266,4 @@ void AgcAudioProc::Rms(double* rms, int length_rms) {
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -16,7 +16,7 @@
     #include "thread_posix.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 ThreadWrapper* ThreadWrapper::CreateThread(ThreadRunFunction func,
                                            ThreadObj obj, ThreadPriority prio,
                                            const char* threadName)
@@ -27,4 +27,4 @@ ThreadWrapper* ThreadWrapper::CreateThread(ThreadRunFunction func,
     return ThreadPosix::Create(func, obj, prio, threadName);
 #endif
 }
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

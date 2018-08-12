@@ -17,7 +17,7 @@
 #include "./module/interface/module_common_types.h"
 #include "./system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 // Don't render frames with timestamp older than 500ms from now.
 const int kOldRenderTimestampMS = 500;
@@ -40,7 +40,7 @@ VideoRenderFrames::VideoRenderFrames(uint32_t render_delay_ms)
     : render_delay_ms_(EnsureValidRenderDelay(render_delay_ms)) {}
 
 int32_t VideoRenderFrames::AddFrame(VideoFrame&& new_frame) {
-  const int64_t time_now = cloopenwebrtc::TimeMillis();
+  const int64_t time_now = yuntongxunwebrtc::TimeMillis();
 
   // Drop old frames only when there are other frames in the queue, otherwise, a
   // really slow system never renders any frames.
@@ -80,12 +80,12 @@ int32_t VideoRenderFrames::AddFrame(VideoFrame&& new_frame) {
   return static_cast<int32_t>(incoming_frames_.size());
 }
 
-cloopenwebrtc::Optional<VideoFrame> VideoRenderFrames::FrameToRender() {
-  cloopenwebrtc::Optional<VideoFrame> render_frame;
+yuntongxunwebrtc::Optional<VideoFrame> VideoRenderFrames::FrameToRender() {
+  yuntongxunwebrtc::Optional<VideoFrame> render_frame;
   // Get the newest frame that can be released for rendering.
   while (!incoming_frames_.empty() && TimeToNextFrameRelease() <= 0) {
     render_frame =
-		cloopenwebrtc::Optional<VideoFrame>(std::move(incoming_frames_.front()));
+		yuntongxunwebrtc::Optional<VideoFrame>(std::move(incoming_frames_.front()));
     incoming_frames_.pop_front();
   }
   return render_frame;
@@ -97,7 +97,7 @@ uint32_t VideoRenderFrames::TimeToNextFrameRelease() {
   }
   const int64_t time_to_release = incoming_frames_.front().render_time_ms() -
                                   render_delay_ms_ -
-                                  cloopenwebrtc::TimeMillis();
+                                  yuntongxunwebrtc::TimeMillis();
   return time_to_release < 0 ? 0u : static_cast<uint32_t>(time_to_release);
 }
 
@@ -105,4 +105,4 @@ bool VideoRenderFrames::HasPendingFrames() const {
   return !incoming_frames_.empty();
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

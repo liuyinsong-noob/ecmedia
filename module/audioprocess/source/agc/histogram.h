@@ -16,7 +16,7 @@
 #include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // This class implements the histogram of loudness with circular buffers so that
 // the histogram tracks the last T seconds of the loudness.
@@ -86,6 +86,6 @@ class Histogram {
   int len_high_activity_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_AGC_HISTOGRAM_H_

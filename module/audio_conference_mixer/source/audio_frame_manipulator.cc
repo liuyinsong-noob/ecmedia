@@ -38,7 +38,7 @@ const float rampArray[] = {0.0000f, 0.0127f, 0.0253f, 0.0380f,
 const int rampSize = sizeof(rampArray)/sizeof(rampArray[0]);
 }  // namespace
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 void CalculateEnergy(AudioFrame& audioFrame)
 {
     audioFrame.energy_ = 0;
@@ -74,4 +74,4 @@ void RampOut(AudioFrame& audioFrame)
            (audioFrame.samples_per_channel_ - rampSize) *
            sizeof(audioFrame.data_[0]));
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -12,7 +12,7 @@
 
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 DesktopFrameWin::DesktopFrameWin(DesktopSize size,
                                  int stride,
@@ -61,4 +61,4 @@ DesktopFrameWin* DesktopFrameWin::Create(DesktopSize size,
                              shared_memory, bitmap);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

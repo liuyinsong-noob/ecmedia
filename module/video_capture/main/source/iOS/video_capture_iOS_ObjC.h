@@ -34,7 +34,7 @@ class CriticalSectionWrapper;
     BOOL                            _captureInitialized;
         
     //WebRTC Custom classes
-    cloopenwebrtc::videocapturemodule::VideoCaptureiOS* _owner;
+    yuntongxunwebrtc::videocapturemodule::VideoCaptureiOS* _owner;
 //    VideoCaptureRecursiveLock*            _rLock;
     
     //iOS variables
@@ -77,7 +77,7 @@ class CriticalSectionWrapper;
 
 //@property (nonatomic, retain) UIView *localVideoWindow;
 
-- (NSNumber*)registerOwner:(cloopenwebrtc::videocapturemodule::VideoCaptureiOS*)owner;
+- (NSNumber*)registerOwner:(yuntongxunwebrtc::videocapturemodule::VideoCaptureiOS*)owner;
 - (NSNumber*)setCaptureDeviceById:(char*)uniqueId;
 - (NSNumber*)setCaptureHeight:(int)height AndWidth:(int)width AndFrameRate:(int)frameRate;
 - (NSNumber*)startCapture;

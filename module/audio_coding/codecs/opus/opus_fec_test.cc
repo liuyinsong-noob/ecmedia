@@ -18,7 +18,7 @@ using ::std::tr1::tuple;
 using ::std::tr1::get;
 using ::testing::TestWithParam;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Define coding parameter as <channels, bit_rate, filename, extension>.
 typedef tuple<int, int, string, string> coding_param;

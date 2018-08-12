@@ -34,7 +34,7 @@ typedef BOOL (WINAPI *PAvRevertMmThreadCharacteristics)(HANDLE);
 typedef HANDLE (WINAPI *PAvSetMmThreadCharacteristicsA)(LPCSTR, LPDWORD);
 typedef BOOL (WINAPI *PAvSetMmThreadPriority)(HANDLE, AVRT_PRIORITY);
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const float MAX_CORE_SPEAKER_VOLUME = 255.0f;
 const float MIN_CORE_SPEAKER_VOLUME = 0.0f;
@@ -376,6 +376,6 @@ private:
 
 #endif    // #if (_MSC_VER >= 1400)
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_AUDIO_DEVICE_AUDIO_DEVICE_CORE_WIN_H_

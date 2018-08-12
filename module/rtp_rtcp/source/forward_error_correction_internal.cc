@@ -20,8 +20,8 @@
 #include "../module/rtp_rtcp/source/fec_private_tables_random.h"
 
 namespace {
-using cloopenwebrtc::fec_private_tables::kPacketMaskBurstyTbl;
-using cloopenwebrtc::fec_private_tables::kPacketMaskRandomTbl;
+using yuntongxunwebrtc::fec_private_tables::kPacketMaskBurstyTbl;
+using yuntongxunwebrtc::fec_private_tables::kPacketMaskRandomTbl;
 
 // Allow for different modes of protection for packets in UEP case.
 enum ProtectionMode {
@@ -142,7 +142,7 @@ void ShiftFitSubMask(int num_mask_bytes,
 }
 }  // namespace
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace internal {
 
 PacketMaskTable::PacketMaskTable(FecMaskType fec_mask_type,
@@ -429,4 +429,4 @@ void CopyColumn(uint8_t* new_mask,
 }
 
 }  // namespace internal
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

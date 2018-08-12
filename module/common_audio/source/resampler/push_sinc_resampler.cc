@@ -15,7 +15,7 @@
 
 #include "push_sinc_resampler.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 PushSincResampler::PushSincResampler(int source_frames, int destination_frames)
     : resampler_(new SincResampler(source_frames * 1.0 / destination_frames,

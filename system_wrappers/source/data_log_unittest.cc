@@ -16,7 +16,7 @@
 #include "system_wrappers/source/data_log_c_helpers_unittest.h"
 #include "gtest/gtest.h"
 
-using ::cloopenwebrtc::DataLog;
+using ::yuntongxunwebrtc::DataLog;
 
 // A class for storing the values expected from a log table column when
 // verifying a log table file.

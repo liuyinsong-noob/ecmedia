@@ -12,8 +12,8 @@
 
 #include "map_wrapper.h"
 
-using ::cloopenwebrtc::MapWrapper;
-using ::cloopenwebrtc::MapItem;
+using ::yuntongxunwebrtc::MapWrapper;
+using ::yuntongxunwebrtc::MapItem;
 
 const int kNumberOfElements = 10;
 

@@ -16,9 +16,9 @@
 #include "../common_video/video_render_frames.h"
 #include "../media/base/videosinkinterface.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
-class IncomingVideoStream : public cloopenwebrtc::VideoSinkInterface<VideoFrame> {
+class IncomingVideoStream : public yuntongxunwebrtc::VideoSinkInterface<VideoFrame> {
  public:
   IncomingVideoStream(int32_t delay_ms,
                       rtc::VideoSinkInterface<VideoFrame>* callback);
@@ -31,14 +31,14 @@ class IncomingVideoStream : public cloopenwebrtc::VideoSinkInterface<VideoFrame>
   // Fwd decl of a QueuedTask implementation for carrying frames over to the TQ.
   class NewFrameTask;
 
-  cloopenwebrtc::ThreadChecker main_thread_checker_;
-  cloopenwebrtc::RaceChecker decoder_race_checker_;
+  yuntongxunwebrtc::ThreadChecker main_thread_checker_;
+  yuntongxunwebrtc::RaceChecker decoder_race_checker_;
 
   VideoRenderFrames render_buffers_;  // Only touched on the TaskQueue.
-  cloopenwebrtc::VideoSinkInterface<VideoFrame>* const callback_;
-  cloopenwebrtc::TaskQueue incoming_render_queue_;
+  yuntongxunwebrtc::VideoSinkInterface<VideoFrame>* const callback_;
+  yuntongxunwebrtc::TaskQueue incoming_render_queue_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_COMMON_VIDEO_INCLUDE_INCOMING_VIDEO_STREAM_H_

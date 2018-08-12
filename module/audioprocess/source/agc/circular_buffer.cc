@@ -13,7 +13,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 AgcCircularBuffer::AgcCircularBuffer(int buffer_size)
     : buffer_(new double[buffer_size]),
@@ -133,4 +133,4 @@ int AgcCircularBuffer::RemoveTransient(int width_threshold,
   return 0;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

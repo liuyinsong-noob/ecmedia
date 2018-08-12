@@ -15,7 +15,7 @@
 #if __arm__
 #include <arm_neon.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 float SincResampler::Convolve_NEON(const float* input_ptr, const float* k1,
                                    const float* k2,

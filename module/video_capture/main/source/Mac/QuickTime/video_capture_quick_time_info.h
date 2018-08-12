@@ -25,7 +25,7 @@
 
 class VideoRenderCallback;
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 class CriticalSectionWrapper;
 class EventWrapper;
@@ -142,9 +142,9 @@ private:
     WebRtc_Word32 _id;
     bool _terminated;
     CriticalSectionWrapper* _grabberCritsect;
-    cloopenwebrtc::Trace* _trace;
-    cloopenwebrtc::ThreadWrapper* _grabberUpdateThread;
-    cloopenwebrtc::EventWrapper* _grabberUpdateEvent;
+    yuntongxunwebrtc::Trace* _trace;
+    yuntongxunwebrtc::ThreadWrapper* _grabberUpdateThread;
+    yuntongxunwebrtc::EventWrapper* _grabberUpdateEvent;
     SeqGrabComponent _captureGrabber;
     Component _captureDevice;
     char _captureDeviceDisplayName[64];

@@ -14,7 +14,7 @@
 #include "../base/sigslot.h"
 #include "../base/socket.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // TODO: Remove Socket and rename AsyncSocket to Socket.
 
@@ -79,6 +79,6 @@ class AsyncSocketAdapter : public AsyncSocket, public sigslot::has_slots<> {
   AsyncSocket* socket_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_ASYNCSOCKET_H_

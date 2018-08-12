@@ -23,7 +23,7 @@ id:local camera device id
 capture: 0, no camera capture; 1,has camera capture
 */
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     extern int printTime();
 }
 
@@ -163,7 +163,7 @@ void ServiceCore::serphone_core_update_streams_destinations(SerPhoneCall *call, 
 		if (0 == change_video && SalStreamSendRecv == new_videodesc->dir) {
 			serphone_call_set_state(call, LinphoneCallUpdatedVideoDestinationChanged, rtp_addr);
 
-			cloopenwebrtc::VideoCodec tempVideoCodec;
+			yuntongxunwebrtc::VideoCodec tempVideoCodec;
 			ECMedia_get_send_codec_video(call->m_VideoChannelID, tempVideoCodec);
 			ECMedia_set_send_codec_video(call->m_VideoChannelID, tempVideoCodec);
 			ECMedia_set_receive_codec_video(call->m_VideoChannelID,tempVideoCodec);
@@ -399,7 +399,7 @@ void ServiceCore::video_stream_free(VideoStream *stream) {
 void ServiceCore::video_stream_stop(int channelID,int captureID)
 {
 #ifdef VIDEO_ENABLED
-	cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+	yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 	{
 #ifdef	ENABLE_RECORD_RAW_VIDEO
 		/*ViEFile *file_record = ViEFile::GetInterface(m_vie);
@@ -471,7 +471,7 @@ int ServiceCore::return_video_width_height(int width,int height,int videoChannel
 #ifdef VIDEO_ENABLED
 
 	////update receive codec.
-	//cloopenwebrtc::VideoCodec codec_params;
+	//yuntongxunwebrtc::VideoCodec codec_params;
 	//ECMedia_get_receive_codec_video(videoChannelID, codec_params);
 	//codec_params.width = width;
 	//codec_params.height = height;
@@ -596,11 +596,11 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 				char master_key[65];
 				memset(master_key, 0, sizeof(master_key));
 				if (user_mode) {
-					if (encryptType == cloopenwebrtc::CCPAES_128_SHA1_32
-						|| encryptType == cloopenwebrtc::CCPAES_128_SHA1_80
-						|| encryptType == cloopenwebrtc::CCPAES_128_NO_AUTH)
+					if (encryptType == yuntongxunwebrtc::CCPAES_128_SHA1_32
+						|| encryptType == yuntongxunwebrtc::CCPAES_128_SHA1_80
+						|| encryptType == yuntongxunwebrtc::CCPAES_128_NO_AUTH)
 						generate_b64_crypto_key(30, master_key, m_SrtpKey);
-					else if (encryptType == cloopenwebrtc::CCPNO_CIPHER_SHA1_80)
+					else if (encryptType == yuntongxunwebrtc::CCPNO_CIPHER_SHA1_80)
 						master_key[0] = '\0';
 					else
 						generate_b64_crypto_key(46, master_key, m_SrtpKey);
@@ -615,7 +615,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 					user_mode,master_key,stream->crypto[0].master_key);
 
 				//for test
-				//encryptType = cloopenwebrtc::CCPAES_256_SHA1_80;
+				//encryptType = yuntongxunwebrtc::CCPAES_256_SHA1_80;
 				//end
 
 				ECMedia_enable_srtp_recv_audio(call->m_AudioChannelID, encryptType, master_key);
@@ -665,10 +665,10 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 			//add by xzq to trace the stream
 			PrintConsole("Send Stream to Remote [%s:%d]\n",stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr,
 				stream->port);
-			cloopenwebrtc::CodecInst codec_params = {0};
+			yuntongxunwebrtc::CodecInst codec_params = {0};
 			bool codec_found = false;
 			int codec_num = ECMedia_num_of_supported_codecs_audio();
-			cloopenwebrtc::CodecInst *codecArray = new cloopenwebrtc::CodecInst[codec_num];
+			yuntongxunwebrtc::CodecInst *codecArray = new yuntongxunwebrtc::CodecInst[codec_num];
 			ECMedia_get_supported_codecs_audio(codecArray);
 
 			for (int i = 0; i < codec_num; i++) {
@@ -723,7 +723,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
                     //base->SetLoss(call->m_AudioChannelID, m_opus_packet_loss_rate);
                     
                     ////for fec test.
-                    cloopenwebrtc::CodecInst actualCodec = codec_params;
+                    yuntongxunwebrtc::CodecInst actualCodec = codec_params;
                     memset(actualCodec.plname, 0, RTP_PAYLOAD_NAME_SIZE);
                     //                if (codec_params.plfreq == 8000) {
                     memcpy(actualCodec.plname, "opus", 4);
@@ -747,7 +747,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
                 }
                 
 
-				//cloopenwebrtc::CodecInst fecCodec = codec_params;
+				//yuntongxunwebrtc::CodecInst fecCodec = codec_params;
 				//memset(fecCodec.plname, 0, RTP_PAYLOAD_NAME_SIZE);
 				//memcpy(fecCodec.plname, "ulpfec", 6);
 				//fecCodec.pltype = 117;
@@ -755,7 +755,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 				////TODO:
 				//rtp_rtcp->SetFECStatus(call->m_AudioChannelID, true, 116, 117);
 
-				ECMedia_set_VAD_status(call->m_AudioChannelID, cloopenwebrtc::kVadAggressiveHigh, !m_dtxEnabled);
+				ECMedia_set_VAD_status(call->m_AudioChannelID, yuntongxunwebrtc::kVadAggressiveHigh, !m_dtxEnabled);
 			}
 			else {
 				PrintConsole("Can't find codec,mime(%s),clock(%d)\n",p->mime_type,p->clock_rate);
@@ -871,11 +871,11 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 				char master_key[65];
 				memset(master_key, 0, sizeof(master_key));
 				if (user_mode) {
-					if (encryptType == cloopenwebrtc::CCPAES_128_SHA1_32
-						|| encryptType == cloopenwebrtc::CCPAES_128_SHA1_80
-						|| encryptType == cloopenwebrtc::CCPAES_128_NO_AUTH)
+					if (encryptType == yuntongxunwebrtc::CCPAES_128_SHA1_32
+						|| encryptType == yuntongxunwebrtc::CCPAES_128_SHA1_80
+						|| encryptType == yuntongxunwebrtc::CCPAES_128_NO_AUTH)
 						generate_b64_crypto_key(30, master_key, m_SrtpKey);
-					else if (encryptType == cloopenwebrtc::CCPNO_CIPHER_SHA1_80)
+					else if (encryptType == yuntongxunwebrtc::CCPNO_CIPHER_SHA1_80)
 						master_key[0] = '\0';
 					else
 						generate_b64_crypto_key(46, master_key, m_SrtpKey);
@@ -954,10 +954,10 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 			//ECMedia_video_request_remote_ssrc(call->m_VideoChannelID, 128787);
 			//ECMedia_video_request_remote_ssrc(call->m_VideoChannelID, 128919);
 			
-			cloopenwebrtc::VideoCodec codec_params;			
+			yuntongxunwebrtc::VideoCodec codec_params;			
 			bool codec_found = false;
 			int num_codec = ECMedia_num_of_supported_codecs_video();
-			cloopenwebrtc::VideoCodec *codecArray = new cloopenwebrtc::VideoCodec[num_codec];
+			yuntongxunwebrtc::VideoCodec *codecArray = new yuntongxunwebrtc::VideoCodec[num_codec];
 			ECMedia_get_supported_codecs_video(codecArray);
 			for (int i = 0; i < num_codec; i++) {
 				codec_params = codecArray[i];
@@ -1048,7 +1048,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 
 				if (m_videoModeChoose == 1)
 				{
-					codec_params.mode = cloopenwebrtc::kScreensharing;
+					codec_params.mode = yuntongxunwebrtc::kScreensharing;
 					if(m_desktop_bit_rate)
 						codec_params.startBitrate = m_desktop_bit_rate;
 				}
@@ -1068,18 +1068,18 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 
 				ECMedia_set_video_rtp_keepalive(call->m_VideoChannelID, true, 10, codec_params.plType);
 #ifndef WIN32 //for ulpfec debug
-				memset(codec_params.plName, 0, cloopenwebrtc::kPayloadNameSize);
+				memset(codec_params.plName, 0, yuntongxunwebrtc::kPayloadNameSize);
 				memcpy(codec_params.plName, "red", 3);
 				codec_params.plType = 116;
-				codec_params.codecType = cloopenwebrtc::kVideoCodecRED;
+				codec_params.codecType = yuntongxunwebrtc::kVideoCodecRED;
 				if (ECMedia_set_receive_codec_video(call->m_VideoChannelID,codec_params) < 0)
 				{
 					PrintConsole("Error: ECMedia_set_receive_codec_video() fail!");
 				}
-				memset(codec_params.plName, 0, cloopenwebrtc::kPayloadNameSize);
+				memset(codec_params.plName, 0, yuntongxunwebrtc::kPayloadNameSize);
 				memcpy(codec_params.plName, "ulpfec", 6);
 				codec_params.plType = 117;
-				codec_params.codecType = cloopenwebrtc::kVideoCodecULPFEC;
+				codec_params.codecType = yuntongxunwebrtc::kVideoCodecULPFEC;
 				if (ECMedia_set_receive_codec_video(call->m_VideoChannelID,codec_params) < 0)
 				{
 					PrintConsole("Error: ECMedia_set_receive_codec_video() fail!");
@@ -1202,7 +1202,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 int ServiceCore::startVideoCapture(SerPhoneCall *call) 
 {
 #ifdef VIDEO_ENABLED
-	cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+	yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 
 	if(!call) {
 		PrintConsole("startVideoCapture failed. call=%0x\n", call);
@@ -1312,7 +1312,7 @@ int ServiceCore::startVideoCapture(SerPhoneCall *call)
 int ServiceCore::startVideoDesktopCapture(SerPhoneCall *call)
 {
 #ifdef VIDEO_ENABLED
-	cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+	yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 
     PrintConsole("startVideoDesktopCapture . \n");
 
@@ -1381,7 +1381,7 @@ int ServiceCore::startVideoDesktopCapture(SerPhoneCall *call)
 void ServiceCore::switchVideoFilter(int index) {
 #ifdef VIDEO_ENABLED
     SerPhoneCall *call = serphone_core_get_current_call();
-    ECMedia_iOS_SetVideoFilter(call->m_CaptureDeviceId, cloopenwebrtc::ECImageFilterType(index));
+    ECMedia_iOS_SetVideoFilter(call->m_CaptureDeviceId, yuntongxunwebrtc::ECImageFilterType(index));
 #endif
 }
 
@@ -1484,7 +1484,7 @@ int ServiceCore::selectCamera(int cameraIndex, int capabilityIndex,int fps,int r
 				PrintConsole("Use No %d camera:%s,height:%d,width:%d,framerate:%d,rotate=%d \n",
 					m_usedCameraIndex,name,cap.height,cap.width,cap.maxfps,tr);
 
-				cloopenwebrtc::VideoCodec tempVideoCodec;
+				yuntongxunwebrtc::VideoCodec tempVideoCodec;
 				ECMedia_get_send_codec_video(call->m_VideoChannelID, tempVideoCodec);
 				tempVideoCodec.width = m_sendVideoWidth;
 				tempVideoCodec.height = m_sendVideoHeight;
@@ -1558,7 +1558,7 @@ int ServiceCore::getCameraInfo(CameraInfo **info)
 
 int ServiceCore::getCallStatistics(int type,MediaStatisticsInfo *callStats)
 {
-//	cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+//	yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 #if !defined(NO_VOIP_FUNCTION)
 	if( type == 0)
 	{
@@ -1587,7 +1587,7 @@ int ServiceCore::getCallStatistics(int type,MediaStatisticsInfo *callStats)
 
 int ServiceCore::serphone_set_louds_speaker_status(bool bLouds)
 {
-    cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+    yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 #if !defined(NO_VOIP_FUNCTION)
 	return ECMedia_set_loudspeaker_status(bLouds);
 #endif
@@ -1596,7 +1596,7 @@ int ServiceCore::serphone_set_louds_speaker_status(bool bLouds)
 
 int ServiceCore::serphone_set_global_audio_in_device(bool bGlobalAudioInDevice)
 {
-    cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+    yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 #if !defined(NO_VOIP_FUNCTION)
 	return ECMedia_set_global_audio_in_device(bGlobalAudioInDevice);
 #endif
@@ -1605,7 +1605,7 @@ int ServiceCore::serphone_set_global_audio_in_device(bool bGlobalAudioInDevice)
 
 int ServiceCore::serphone_get_louds_speaker_status()
 {
-    cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+    yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 #if !defined(NO_VOIP_FUNCTION)
 	bool bLouds = false;
 	ECMedia_get_loudpeaker_status(bLouds);
@@ -1941,7 +1941,7 @@ void ServiceCore::audio_stream_play(SerPhoneCall *call, const char *name)
 
 void ServiceCore::serphone_core_send_dtmf(char dtmfch)
 {
-	cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+	yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 
     ////hubintest
     //if(dtmfch == '1') {
@@ -2012,18 +2012,18 @@ int ServiceCore::serphone_core_set_audio_config_enabled(int type, bool_t enabled
 	switch (type) {
 	case AUDIO_AGC:
 		m_agcEnabled = enabled;
-		if(mode != cloopenwebrtc::kAgcUnchanged)
-			m_agcMode = (cloopenwebrtc::AgcModes)mode;
+		if(mode != yuntongxunwebrtc::kAgcUnchanged)
+			m_agcMode = (yuntongxunwebrtc::AgcModes)mode;
 		break;
 	case AUDIO_EC:
 		m_ecEnabled = enabled;
-		if(mode != cloopenwebrtc::kEcUnchanged)
-			m_ecMode = (cloopenwebrtc::EcModes)mode;
+		if(mode != yuntongxunwebrtc::kEcUnchanged)
+			m_ecMode = (yuntongxunwebrtc::EcModes)mode;
 		break;
 	case AUDIO_NS:
 		m_nsEnabled = enabled;
-		if(mode != cloopenwebrtc::kNsUnchanged)
-			m_nsMode = (cloopenwebrtc::NsModes)mode;
+		if(mode != yuntongxunwebrtc::kNsUnchanged)
+			m_nsMode = (yuntongxunwebrtc::NsModes)mode;
 		break;
     case AUDIO_HC:
         m_hcEnabled = enabled;
@@ -2033,10 +2033,10 @@ int ServiceCore::serphone_core_set_audio_config_enabled(int type, bool_t enabled
 	ECMedia_set_AgcStatus(m_agcEnabled, m_agcMode);
 	ECMedia_set_EcStatus(m_ecEnabled, m_ecMode);
     if(m_ecMode == kEcAecm) {
-        ECMedia_set_SetAecmMode(cloopenwebrtc::kAecmLoudSpeakerphone, false);
+        ECMedia_set_SetAecmMode(yuntongxunwebrtc::kAecmLoudSpeakerphone, false);
     }
     
-	ECMedia_set_NsStatus(m_nsEnabled, cloopenwebrtc::kNsVeryHighSuppression);
+	ECMedia_set_NsStatus(m_nsEnabled, yuntongxunwebrtc::kNsVeryHighSuppression);
     ECMedia_EnableHowlingControl(m_hcEnabled);
     return 0;
 #endif
@@ -2751,7 +2751,7 @@ void ServiceCore::handle_ice_events(SerPhoneCall *call, OrtpEvent *ev, void *dat
 
 void ServiceCore::serphone_call_background_tasks(SerPhoneCall *call, bool_t one_second_elapsed)
 {
-	cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+	yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 	//    ServiceCore* lc = call->core;
 	//    int disconnect_timeout = serphone_core_get_nortp_timeout();
 	//	bool_t disconnected=FALSE;
@@ -2906,7 +2906,7 @@ void ServiceCore::serphone_core_set_dtx_enabled(bool_t enabled)
 	m_dtxEnabled = enabled;
 }
 
-int ServiceCore::serphone_core_start_rtp_dump(SerPhoneCall *call, int mediatype, const char* file, cloopenwebrtc::RTPDirections direction)
+int ServiceCore::serphone_core_start_rtp_dump(SerPhoneCall *call, int mediatype, const char* file, yuntongxunwebrtc::RTPDirections direction)
 {
 #if !defined(NO_VOIP_FUNCTION)
 	if(!call)
@@ -2928,7 +2928,7 @@ int ServiceCore::serphone_core_start_rtp_dump(SerPhoneCall *call, int mediatype,
 	return -1;
 }
 
-int ServiceCore::serphone_core_stop_rtp_dump(SerPhoneCall *call, int mediatype, cloopenwebrtc::RTPDirections direction)
+int ServiceCore::serphone_core_stop_rtp_dump(SerPhoneCall *call, int mediatype, yuntongxunwebrtc::RTPDirections direction)
 {
 #if !defined(NO_VOIP_FUNCTION)
 	if(!call)
@@ -3674,7 +3674,7 @@ int ServiceCore::serphone_set_video_window_and_request_video_accord_sip(const ch
 	int ret = -1;
 	PrintConsole("[WARNING] %s called\n",__FUNCTION__);
 #ifdef VIDEO_ENABLED
-	cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+	yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 	if (!sipNo) {
 		PrintConsole("[ERROR] request video failed, sip no is null, check it!\n");
 		return -1;
@@ -3836,7 +3836,7 @@ int ServiceCore::serphone_stop_conference_video_accord_sip(const char *sipNo, co
 	PrintConsole("[WARNING] %s called\n",__FUNCTION__);
 	int ret = -1;
 #ifdef VIDEO_ENABLED
-	cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+	yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 	if (!sipNo) {
 		PrintConsole("[ERROR] request video failed, sip no is null, check it!\n");
 		return -1;
@@ -3984,10 +3984,10 @@ void ServiceCore::onVideoConference(int channelID, int status, int payload)
 		switch (status) {
 		case Video_Conference_status_OK:
 			{
-				cloopenwebrtc::VideoCodec codec_params;
+				yuntongxunwebrtc::VideoCodec codec_params;
 				bool codec_found = false;
 				int num_codec = ECMedia_num_of_supported_codecs_video();
-				cloopenwebrtc::VideoCodec *codecArray = new cloopenwebrtc::VideoCodec[num_codec];
+				yuntongxunwebrtc::VideoCodec *codecArray = new yuntongxunwebrtc::VideoCodec[num_codec];
 				for (int i = 0; i < num_codec; i++) {
 					codec_params = codecArray[i];
 					if ( strcasecmp( codec_params.plName,"H264" ) == 0) {
@@ -4081,7 +4081,7 @@ int ServiceCore::serphone_set_video_conference_released()
 {
 	PrintConsole("[DEBUG] %s called\n",__FUNCTION__);
 #ifdef VIDEO_ENABLED
-	cloopenwebrtc::CriticalSectionScoped lock(m_criticalSection);
+	yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 	VideoConferenceDesc *tempVideoConfDesc = NULL;
 	std::map<std::string, int>::iterator it1 = videoConferencePairSipChannel.begin();
 	while (it1 != videoConferencePairSipChannel.end()) {
@@ -4206,7 +4206,7 @@ int ServiceCore::serphone_set_silk_rate(int rate)
 //sean add end 20140705 video conference
 
 int ServiceCore::PlayAudioFromRtpDump(int localPort, const char *ptName, int ploadType, 
-	cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
+	yuntongxunwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
 {
 #if !defined(NO_VOIP_FUNCTION)
 #ifndef WIN32
@@ -4222,11 +4222,11 @@ int ServiceCore::PlayAudioFromRtpDump(int localPort, const char *ptName, int plo
 		ECMedia_enable_srtp_recv_audio(m_AudioChannelIDDump, crypt_type, key);
 	}
 	
-	cloopenwebrtc::CodecInst codec_params = {0};
+	yuntongxunwebrtc::CodecInst codec_params = {0};
 	bool codec_found = false;
 
 	int codec_num = ECMedia_num_of_supported_codecs_audio();
-	cloopenwebrtc::CodecInst *codecArray = new cloopenwebrtc::CodecInst[codec_num];
+	yuntongxunwebrtc::CodecInst *codecArray = new yuntongxunwebrtc::CodecInst[codec_num];
 	ECMedia_get_supported_codecs_audio(codecArray);
 	for (int i = 0; i < codec_num; i++) {
 		codec_params = codecArray[i];
@@ -4265,7 +4265,7 @@ int ServiceCore::StopPlayAudioFromRtpDump()
 }
 
 int ServiceCore::PlayVideoFromRtpDump(int localPort, const char *ptName, int ploadType, void *videoWindow, 
-	cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
+	yuntongxunwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
 {
 #if !defined(NO_VOIP_FUNCTION)
 #ifdef VIDEO_ENABLED
@@ -4294,10 +4294,10 @@ int ServiceCore::PlayVideoFromRtpDump(int localPort, const char *ptName, int plo
 		ECMedia_enable_srtp_recv_video(m_VideoChannelIDDump, crypt_type, key);
 	}
 
-	cloopenwebrtc::VideoCodec codec_params;
+	yuntongxunwebrtc::VideoCodec codec_params;
 	bool codec_found = false;
 	int codec_num = ECMedia_num_of_supported_codecs_video();
-	cloopenwebrtc::VideoCodec *codecArray = new cloopenwebrtc::VideoCodec[codec_num];
+	yuntongxunwebrtc::VideoCodec *codecArray = new yuntongxunwebrtc::VideoCodec[codec_num];
 	ECMedia_get_supported_codecs_video(codecArray);
 	for (int i = 0; i < codec_num; i++) {
 		codec_params = codecArray[i];
@@ -4558,7 +4558,7 @@ void ServiceCore::serphone_core_restart_nack(SerPhoneCall *call)
 }
 
 #ifdef VIDEO_ENABLED
-//void ServiceCore::BrightnessAlarm(const int capture_id, const cloopenwebrtc::Brightness brightness)
+//void ServiceCore::BrightnessAlarm(const int capture_id, const yuntongxunwebrtc::Brightness brightness)
 //{
 //	//PrintConsole("BrightnessAlarm capture_id=%d, brightness=%d\n", capture_id, brightness);
 //}
@@ -4566,7 +4566,7 @@ void ServiceCore::serphone_core_restart_nack(SerPhoneCall *call)
 //{
 //	//PrintConsole("CapturedFrameRate capture_id=%d, frame_rate=%d\n", capture_id, frame_rate);
 //}
-//void ServiceCore::NoPictureAlarm(const int capture_id, const cloopenwebrtc::CaptureAlarm alarm)
+//void ServiceCore::NoPictureAlarm(const int capture_id, const yuntongxunwebrtc::CaptureAlarm alarm)
 //{
 //	PrintConsole("NoPictureAlarm capture_id=%d, alarm=%d\n", capture_id, alarm);
 //	if(this->current_call && this->current_call->m_CaptureDeviceId == capture_id) {
@@ -4583,7 +4583,7 @@ void ServiceCore::serphone_core_restart_nack(SerPhoneCall *call)
 //
 //}
 //// This method is called once if a packet timeout occurred.
-//void ServiceCore::PacketTimeout(const int video_channel, const cloopenwebrtc::ViEPacketTimeout type)
+//void ServiceCore::PacketTimeout(const int video_channel, const yuntongxunwebrtc::ViEPacketTimeout type)
 //{
 //	if(vtable.video_packet_timeout) {
 //		vtable.video_packet_timeout(this, this->current_call, type);
@@ -4815,7 +4815,7 @@ int ServiceCore::GetReceiveChannelRtcpStatistics(const char* callid,
 	//	return -1;
 	//}
 
-	//cloopenwebrtc::RtcpStatistics stats;
+	//yuntongxunwebrtc::RtcpStatistics stats;
 	//rtp_rtcp->GetReceiveChannelRtcpStatistics(call->m_VideoChannelID, stats, rtt_ms);
 
 	//basic_stats.cumulative_lost = stats.cumulative_lost;
@@ -4845,7 +4845,7 @@ int ServiceCore::GetSendChannelRtcpStatistics(const char* callid,
 	//	return -1;
 	//}
 
-	//cloopenwebrtc::RtcpStatistics stats;
+	//yuntongxunwebrtc::RtcpStatistics stats;
 	//rtp_rtcp->GetSendChannelRtcpStatistics(call->m_VideoChannelID, stats, rtt_ms);
 
 	//basic_stats.cumulative_lost = stats.cumulative_lost;
@@ -4875,8 +4875,8 @@ int ServiceCore::GetRtpStatistics(const char* callid,
 	//	return -1;
 	//}
 
-	//cloopenwebrtc::StreamDataCounters sent_;
-	//cloopenwebrtc::StreamDataCounters received_;
+	//yuntongxunwebrtc::StreamDataCounters sent_;
+	//yuntongxunwebrtc::StreamDataCounters received_;
 	//rtp_rtcp->GetRtpStatistics(call->m_VideoChannelID, sent_, received_);
 
 	//sent.first_packet_time_ms = sent_.first_packet_time_ms;
@@ -5170,7 +5170,7 @@ int ServiceCore::SetVideoKeepAlive(SerPhoneCall *call, bool enable, int interval
 	if (!call)
 		return -1;
 
-	cloopenwebrtc::VideoCodec codec;
+	yuntongxunwebrtc::VideoCodec codec;
 	ECMedia_get_send_codec_video(call->m_VideoChannelID, codec);
 	return ECMedia_set_video_rtp_keepalive(call->m_VideoChannelID, enable, interval, codec.plType);
 #endif
@@ -5181,7 +5181,7 @@ int ServiceCore::SetAudioKeepAlive(SerPhoneCall *call, bool enable, int interval
 #if !defined(NO_VOIP_FUNCTION)
 	if (!call)
 		return -1;
-	cloopenwebrtc::CodecInst codec;
+	yuntongxunwebrtc::CodecInst codec;
 	ECMedia_get_send_codec_audio(call->m_AudioChannelID, codec);
 	return ECMedia_set_audio_rtp_keepalive(call->m_AudioChannelID, enable, interval, codec.pltype);
 #endif
@@ -5349,7 +5349,7 @@ int ServiceCore::startSendRtpPacket(int &channel, const char *ip, int rtp_port)
 	//creatChannel
 	ECMedia_audio_create_channel(channel, false);
 	//setCodec
-	cloopenwebrtc::CodecInst codec_params = { 0 };
+	yuntongxunwebrtc::CodecInst codec_params = { 0 };
 	bool codec_found = false;
 
 	const char *ptName = "opus";
@@ -5361,7 +5361,7 @@ int ServiceCore::startSendRtpPacket(int &channel, const char *ip, int rtp_port)
 	}
 
 	int codec_num = ECMedia_num_of_supported_codecs_audio();
-	cloopenwebrtc::CodecInst *codecArray = new cloopenwebrtc::CodecInst[codec_num];
+	yuntongxunwebrtc::CodecInst *codecArray = new yuntongxunwebrtc::CodecInst[codec_num];
 	ECMedia_get_supported_codecs_audio(codecArray);
 	for (int i = 0; i < codec_num; i++) {
 		codec_params = codecArray[i];
@@ -5399,7 +5399,7 @@ int ServiceCore::startRecvRtpPacket(int channelNum)
 	for (int i = 0; i < channelNum; i++) {
 		ECMedia_audio_create_channel(channel[i], false);
 		//setCodec
-		cloopenwebrtc::CodecInst codec_params = { 0 };
+		yuntongxunwebrtc::CodecInst codec_params = { 0 };
 		bool codec_found = false;
 		const char *ptName = "opus";
 		int ploadType = 121;
@@ -5408,7 +5408,7 @@ int ServiceCore::startRecvRtpPacket(int channelNum)
 			ploadType = 18;
 		}
 		int codec_num = ECMedia_num_of_supported_codecs_audio();
-		cloopenwebrtc::CodecInst *codecArray = new cloopenwebrtc::CodecInst[codec_num];
+		yuntongxunwebrtc::CodecInst *codecArray = new yuntongxunwebrtc::CodecInst[codec_num];
 		ECMedia_get_supported_codecs_audio(codecArray);
 		for (int i = 0; i < codec_num; i++) {
 			codec_params = codecArray[i];

@@ -18,7 +18,7 @@
 #include "thread_wrapper.h"
 #include "trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VideoChannelNSOpenGL::VideoChannelNSOpenGL(NSOpenGLContext *nsglContext, int iId, VideoRenderNSOpenGL* owner) :
 _nsglContext( nsglContext),

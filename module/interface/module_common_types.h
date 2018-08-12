@@ -28,7 +28,7 @@
                                         // 'array' will be default initialized"
 #endif
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 //struct RTPHeader
 //{
@@ -869,7 +869,7 @@ private:
     WebRtc_Word64           _renderTimeMs;
     
     //Sean add begin 20140227 windows8 crash
-    cloopenwebrtc::CriticalSectionWrapper*    _criticalSectionVideoFrame;
+    yuntongxunwebrtc::CriticalSectionWrapper*    _criticalSectionVideoFrame;
     //Sean add end 20140227 windows8 crash
 }; // end of VideoFrame class declaration
 
@@ -1384,6 +1384,6 @@ struct PacedPacketInfo {
 };
 
 
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif // MODULE_COMMON_TYPES_H

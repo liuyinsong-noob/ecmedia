@@ -41,7 +41,7 @@
 #include <Qos.h>
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace voe {
 
 // Extend the default RTCP statistics struct with max_jitter, defined as the
@@ -604,7 +604,7 @@ bool Channel::OnRecoveredPacket(const uint8_t* rtp_packet,
                                 size_t rtp_packet_length) {
   RTPHeader header;
   if (!rtp_header_parser_->Parse(rtp_packet, rtp_packet_length, &header)) {
-    WEBRTC_TRACE(kTraceDebug, cloopenwebrtc::kTraceVoice, _channelId,
+    WEBRTC_TRACE(kTraceDebug, yuntongxunwebrtc::kTraceVoice, _channelId,
                  "IncomingPacket invalid RTP header");
     return false;
   }
@@ -1970,7 +1970,7 @@ int32_t Channel::ReceivedRTPPacket(const int8_t* data, size_t length,
   const uint8_t* received_packet = reinterpret_cast<const uint8_t*>(data);
   RTPHeader header;
   if (!rtp_header_parser_->Parse(received_packet, length, &header)) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVoice, _channelId,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVoice, _channelId,
                  "Incoming packet: invalid RTP header");
     return -1;
   }
@@ -2033,7 +2033,7 @@ bool Channel::HandleEncapsulation(const uint8_t* packet,
   if (packet_length > kVoiceEngineMaxIpPacketSizeBytes)
     return false;
   if (restored_packet_in_use_) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVoice, _channelId,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVoice, _channelId,
                  "Multiple RTX headers detected, dropping packet");
     return false;
   }
@@ -2041,7 +2041,7 @@ bool Channel::HandleEncapsulation(const uint8_t* packet,
   if (!rtp_payload_registry_->RestoreOriginalPacket(
       restored_packet_ptr, packet, &packet_length, rtp_receiver_->SSRC(),
       header)) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVoice, _channelId,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVoice, _channelId,
                  "Incoming RTX packet: invalid RTP header");
     return false;
   }
@@ -5373,7 +5373,7 @@ void
 	const uint8_t* received_packet = reinterpret_cast<const uint8_t*>(rtpBufferPtr);
 	RTPHeader header;
 	/*if (!rtp_header_parser_->Parse(received_packet, rtpPacketLength, &header)) {
-		WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVoice, _channelId,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVoice, _channelId,
 			"Incoming packet: invalid RTP header");
 		return -1;
 	}*/
@@ -6267,19 +6267,19 @@ int32_t Channel::SetKeepAliveStatus(
 	const bool enable, const int8_t unknownPayloadType,
 	const uint16_t deltaTransmitTimeMS)
 {
-	WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, VoEId(_instanceId, _channelId),
+	WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, VoEId(_instanceId, _channelId),
 		"%s", __FUNCTION__);
 
 	if (enable && _rtpRtcpModule->RTPKeepalive())
 	{
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
 			VoEId(_instanceId, _channelId),
 			"%s: RTP keepalive already enabled", __FUNCTION__);
 		return -1;
 	}
 	else if (!enable && !_rtpRtcpModule->RTPKeepalive())
 	{
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
 			VoEId(_instanceId, _channelId),
 			"%s: RTP keepalive already disabled", __FUNCTION__);
 		return -1;
@@ -6288,7 +6288,7 @@ int32_t Channel::SetKeepAliveStatus(
 	if (_rtpRtcpModule->SetRTPKeepaliveStatus(enable, unknownPayloadType,
 		deltaTransmitTimeMS) != 0)
 	{
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
 			VoEId(_instanceId, _channelId),
 			"%s: Could not set RTP keepalive status %d", __FUNCTION__,
 			enable);
@@ -6308,7 +6308,7 @@ int32_t Channel::SetKeepAliveStatus(
 		if (_rtpRtcpModule->SetSendingStatus(true) != 0)
 		{
 			_rtpRtcpModule->SetRTPKeepaliveStatus(false, 0, 0);
-			WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+			WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
 				VoEId(_instanceId, _channelId),
 				"%s: Could not start sending", __FUNCTION__);
 			return -1;
@@ -6320,7 +6320,7 @@ int32_t Channel::SetKeepAliveStatus(
 		_rtpRtcpModule->ResetSendDataCountersRTP();
 		if (_rtpRtcpModule->SetSendingStatus(false) != 0)
 		{
-			WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+			WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
 				VoEId(_instanceId, _channelId),
 				"%s: Could not stop sending", __FUNCTION__);
 			return -1;
@@ -6337,18 +6337,18 @@ int32_t Channel::GetKeepAliveStatus(
 	bool& enabled, int8_t& unknownPayloadType,
 	uint16_t& deltaTransmitTimeMs)
 {
-	WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, VoEId(_instanceId, _channelId),
+	WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, VoEId(_instanceId, _channelId),
 		"%s", __FUNCTION__);
 	if (_rtpRtcpModule->RTPKeepaliveStatus(&enabled, &unknownPayloadType,
 		&deltaTransmitTimeMs) != 0)
 	{
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
 			VoEId(_instanceId, _channelId),
 			"%s: Could not get RTP keepalive status", __FUNCTION__);
 		return -1;
 	}
 	WEBRTC_TRACE(
-		cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, VoEId(_instanceId, _channelId),
+		yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, VoEId(_instanceId, _channelId),
 		"%s: enabled = %d, unknownPayloadType = %d, deltaTransmitTimeMs = %ul",
 		__FUNCTION__, enabled, (int32_t)unknownPayloadType,
 		deltaTransmitTimeMs);
@@ -6646,4 +6646,4 @@ int8_t Channel::SetMixMediaStream(bool enable, char *mixture, unsigned char vers
     return _socketTransportModule->SetMixMediaStream(enable, mixture, version);
 }
 }// namespace voe
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

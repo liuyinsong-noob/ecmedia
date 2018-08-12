@@ -20,7 +20,7 @@
 #include <string>
 #include <vector>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Clears internal memory of an STL object.
 // STL clear()/reserve(0) does not always free internal memory allocated

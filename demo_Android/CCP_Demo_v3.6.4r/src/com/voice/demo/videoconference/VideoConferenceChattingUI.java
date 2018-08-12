@@ -4,7 +4,7 @@
  *  Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
  *  that can be found in the LICENSE file in the root of the web site.
  *
- *   http://www.cloopen.com
+ *   http://www.yuntongxun.com
  *
  *  An additional intellectual property rights grant can be found
  *  in the file PATENTS.  All contributing project authors may
@@ -82,7 +82,7 @@ import android.widget.Toast;
 * 	will cancel the compulsory primary video, becomes automatic switching mode.
 * So you can also use this method to achieve the "abolition of compulsory primary video" function.</p>
 * <p>Copyright: Copyright (c) 2012</p>
-* <p>Company: http://www.cloopen.com</p>
+* <p>Company: http://www.yuntongxun.com</p>
 * @author Jorstin Chan
 * @date 2013-11-1
 * @version 3.5
@@ -1709,7 +1709,7 @@ public class VideoConferenceChattingUI extends VideoconferenceBaseActivity imple
 	* <p>Title: VideoConferenceChattingUI.java</p>
 	* <p>Description: </p>
 	* <p>Copyright: Copyright (c) 2007</p>
-	* <p>Company: http://www.cloopen.com</p>
+	* <p>Company: http://www.yuntongxun.com</p>
 	* @author zhanjichun
 	* @date 2013-11-7
 	* @version 1.0

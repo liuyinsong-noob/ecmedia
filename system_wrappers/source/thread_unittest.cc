@@ -13,7 +13,7 @@
 #include "gtest/gtest.h"
 #include "system_wrappers/interface/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const int kLogTrace = 0;
 
@@ -46,7 +46,7 @@ class ThreadTest : public ::testing::Test {
   void StartTrace() {
     if (kLogTrace) {
       Trace::CreateTrace();
-      Trace::SetLevelFilter(cloopenwebrtc::kTraceAll);
+      Trace::SetLevelFilter(yuntongxunwebrtc::kTraceAll);
       Trace::SetTraceCallback(&trace_);
     }
   }

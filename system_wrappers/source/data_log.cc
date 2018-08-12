@@ -21,7 +21,7 @@
 #include "rw_lock_wrapper.h"
 #include "thread_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 DataLogImpl::CritSectScopedPtr DataLogImpl::crit_sect_(
   CriticalSectionWrapper::CreateCriticalSection());
@@ -452,4 +452,4 @@ void DataLogImpl::StopThread() {
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

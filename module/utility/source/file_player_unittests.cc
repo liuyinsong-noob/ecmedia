@@ -23,7 +23,7 @@
 
 DEFINE_bool(file_player_output, false, "Generate reference files.");
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class FilePlayerTest : public ::testing::Test {
  protected:
@@ -38,7 +38,7 @@ class FilePlayerTest : public ::testing::Test {
   virtual void SetUp() OVERRIDE {
     if (FLAGS_file_player_output) {
       std::string output_file =
-          cloopenwebrtc::test::OutputPath() + "file_player_unittest_out.pcm";
+          yuntongxunwebrtc::test::OutputPath() + "file_player_unittest_out.pcm";
       output_file_ = fopen(output_file.c_str(), "wb");
       ASSERT_TRUE(output_file_ != NULL);
     }
@@ -58,7 +58,7 @@ class FilePlayerTest : public ::testing::Test {
     ASSERT_EQ(0,
               player_->StartPlayingFile(
                   input_file.c_str(), false, 0, kScaling, 0, 0, NULL));
-    cloopenwebrtc::Md5Digest checksum;
+    yuntongxunwebrtc::Md5Digest checksum;
     for (int i = 0; i < output_length_ms / 10; ++i) {
       int16_t out[10 * kSampleRateHz / 1000] = {0};
       int num_samples;
@@ -70,11 +70,11 @@ class FilePlayerTest : public ::testing::Test {
                   fwrite(out, sizeof(out[0]), num_samples, output_file_));
       }
     }
-    char checksum_result[cloopenwebrtc::Md5Digest::kSize];
-    EXPECT_EQ(cloopenwebrtc::Md5Digest::kSize,
-              checksum.Finish(checksum_result, cloopenwebrtc::Md5Digest::kSize));
+    char checksum_result[yuntongxunwebrtc::Md5Digest::kSize];
+    EXPECT_EQ(yuntongxunwebrtc::Md5Digest::kSize,
+              checksum.Finish(checksum_result, yuntongxunwebrtc::Md5Digest::kSize));
     EXPECT_EQ(ref_checksum,
-              cloopenwebrtc::hex_encode(checksum_result, sizeof(checksum_result)));
+              yuntongxunwebrtc::hex_encode(checksum_result, sizeof(checksum_result)));
   }
 
   FilePlayer* player_;
@@ -103,4 +103,4 @@ TEST_F(FilePlayerTest, PlayWavPcm16File) {
   PlayFileAndCheck(kFileName, kRefChecksum, kOutputLengthMs);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

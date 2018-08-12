@@ -28,7 +28,7 @@
 
 #include "../module/common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 typedef const unsigned char* (*GetCategoryEnabledPtr)(const char* name);
 typedef void (*AddTraceEventPtr)(char phase,

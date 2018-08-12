@@ -18,7 +18,7 @@
 #include "map_wrapper.h"
 
 // forward declarations
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 namespace videocapturemodule
 {

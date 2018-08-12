@@ -13,7 +13,7 @@
 
 #include <assert.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VCMPacket::VCMPacket()
   :

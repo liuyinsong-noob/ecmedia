@@ -15,7 +15,7 @@
 #include <string.h>
 #include <unistd.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 CpuLinux::CpuLinux()
     : m_oldBusyTime(0),
       m_oldIdleTime(0),

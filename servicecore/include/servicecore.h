@@ -188,16 +188,16 @@ typedef struct _SerphoneVTable{
 	ReceiverCodecChanged  receiver_codec_changed;
 } SerphoneCoreVTable;
 
-namespace cloopenwebrtc{
+namespace yuntongxunwebrtc{
 class VoiceEngine;
 class VideoEngine;
 class SendStatisticsProxy;
 }
 
-class ServiceCore : public cloopenwebrtc::ServiceCoreCallBack
+class ServiceCore : public yuntongxunwebrtc::ServiceCoreCallBack
 #ifdef VIDEO_ENABLED
-//	, public cloopenwebrtc::ViECaptureObserver
-//	, public cloopenwebrtc::ViENetworkObserver
+//	, public yuntongxunwebrtc::ViECaptureObserver
+//	, public yuntongxunwebrtc::ViENetworkObserver
 #endif
 {
 public:
@@ -462,8 +462,8 @@ public:
     int serphone_core_reset_audio_device();
     void serphone_core_set_dtx_enabled(bool_t enabled);
 
-    int serphone_core_start_rtp_dump(SerPhoneCall *call, int mediatype, const char* file, cloopenwebrtc::RTPDirections direction);
-    int serphone_core_stop_rtp_dump(SerPhoneCall *call, int mediatype, cloopenwebrtc::RTPDirections direction);
+    int serphone_core_start_rtp_dump(SerPhoneCall *call, int mediatype, const char* file, yuntongxunwebrtc::RTPDirections direction);
+    int serphone_core_stop_rtp_dump(SerPhoneCall *call, int mediatype, yuntongxunwebrtc::RTPDirections direction);
 	int serphone_core_set_speaker_volume(unsigned int volume);
 	unsigned int serphone_core_get_speaker_volume();
 
@@ -556,11 +556,11 @@ public:
 	int startVideoDesktopCapture(SerPhoneCall *call);
 
 	int PlayAudioFromRtpDump(int localPort, const char *ptName, int ploadType,
-		cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key);
+		yuntongxunwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key);
 	int StopPlayAudioFromRtpDump();
 
 	int PlayVideoFromRtpDump(int localPort, const char *ptName, int ploadType, void *videoWindow,
-		cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key);
+		yuntongxunwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key);
 	int StopPlayVideoFromRtpDump();
 	void SetNackEnabled(bool audioEnabled, bool videoEnabled);
 	void SetVideoProtectionMode(int mode);
@@ -717,15 +717,15 @@ private:
 
 public:
 #ifdef VIDEO_ENABLED
-	//void BrightnessAlarm(const int capture_id, const cloopenwebrtc::Brightness brightness);
+	//void BrightnessAlarm(const int capture_id, const yuntongxunwebrtc::Brightness brightness);
 	//void CapturedFrameRate(const int capture_id, const unsigned char frame_rate);
-	//void NoPictureAlarm(const int capture_id, const cloopenwebrtc::CaptureAlarm alarm);
+	//void NoPictureAlarm(const int capture_id, const yuntongxunwebrtc::CaptureAlarm alarm);
 
 	// This method will be called periodically delivering a dead‐or‐alive
 	// decision for a specified channel.
 	//virtual void OnPeriodicDeadOrAlive(const int video_channel, const bool alive);
 	// This method is called once if a packet timeout occurred.
-	//virtual void PacketTimeout(const int video_channel, const cloopenwebrtc::ViEPacketTimeout type);
+	//virtual void PacketTimeout(const int video_channel, const yuntongxunwebrtc::ViEPacketTimeout type);
 #endif
 
 	int FixedCameraInfo(const char *cameraName, const char *cameraId, int width, int height);
@@ -778,9 +778,9 @@ public:
 	bool_t ringstream_autorelease;
 	int max_calls;
 //////the following code added fromwebrtc
- //   cloopenwebrtc::VoiceEngine* m_voe;
-	//static cloopenwebrtc::VideoEngine* m_vie;
-    cloopenwebrtc::CriticalSectionWrapper *m_criticalSection;
+ //   yuntongxunwebrtc::VoiceEngine* m_voe;
+	//static yuntongxunwebrtc::VideoEngine* m_vie;
+    yuntongxunwebrtc::CriticalSectionWrapper *m_criticalSection;
 	bool_t m_ringplay_flag;
 	time_t dmfs_playing_start_time;
 	int    local_playfile_channelID;
@@ -819,9 +819,9 @@ public:
     bool_t m_ecEnabled;
     bool_t m_nsEnabled;
     bool_t m_hcEnabled;
-    cloopenwebrtc::AgcModes m_agcMode;
-    cloopenwebrtc::EcModes m_ecMode;
-    cloopenwebrtc::NsModes m_nsMode;
+    yuntongxunwebrtc::AgcModes m_agcMode;
+    yuntongxunwebrtc::EcModes m_ecMode;
+    yuntongxunwebrtc::NsModes m_nsMode;
     bool_t m_dtxEnabled;
     int m_videoBitRates;
 
@@ -831,7 +831,7 @@ public:
     bool tls_enable;
     bool srtp_enable;
     bool user_mode;
-    cloopenwebrtc::ccp_srtp_crypto_suite_t encryptType;
+    yuntongxunwebrtc::ccp_srtp_crypto_suite_t encryptType;
     char *m_SrtpKey; //秘钥
 
     char local_addr[64];
@@ -1076,8 +1076,8 @@ public:
     int serphone_certExisted(const char *sip, long sipLen);
 #endif
 private:
-		//cloopenwebrtc::SendStatisticsProxy *pSendStats_;
-		//cloopenwebrtc::ReceiveStatisticsProxy *pReceiveStats_;
+		//yuntongxunwebrtc::SendStatisticsProxy *pSendStats_;
+		//yuntongxunwebrtc::ReceiveStatisticsProxy *pReceiveStats_;
 public:
 	//add by ylr
 	virtual void onReceiverStats(const char *callid, const int framerate, const int bitrate);
@@ -1107,7 +1107,7 @@ public:
 
 	int GetStatsData(int type, char* callid, void** pbDataArray, int *pArraySize);
 	void DeleteStatsData(void *pb_data);
-	//int GetSendStats(const char* callid, cloopenwebrtc::VideoSendStream::Stats &sendStats);
+	//int GetSendStats(const char* callid, yuntongxunwebrtc::VideoSendStream::Stats &sendStats);
     int Serphone_enable_opus_FEC(bool enable);
     int Serphone_set_opus_packet_loss_rate(int rate);
     
@@ -1123,9 +1123,9 @@ public:
     int set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame tr);
     //---begin
 	private:
-	//cloopenwebrtc::VideoSendStream::Config CreateVideoSendStreamConfig();
-	//cloopenwebrtc::SendStatisticsProxy* Serphone_set_video_send_statistics_proxy(int video_channel);
-	//cloopenwebrtc::ReceiveStatisticsProxy* Serphone_set_video_receive_statistics_porxy(int video_channel);
+	//yuntongxunwebrtc::VideoSendStream::Config CreateVideoSendStreamConfig();
+	//yuntongxunwebrtc::SendStatisticsProxy* Serphone_set_video_send_statistics_proxy(int video_channel);
+	//yuntongxunwebrtc::ReceiveStatisticsProxy* Serphone_set_video_receive_statistics_porxy(int video_channel);
 	//---end
 private:
     bool m_enable_fec;

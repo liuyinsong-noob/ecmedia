@@ -22,7 +22,7 @@
 #include "../system_wrappers/include/tick_util.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class VideoCoder;
 class FrameScaler;
 
@@ -118,5 +118,5 @@ private:
 };
 #endif //WEBRTC_MODULE_UTILITY_VIDEO
 #endif
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif // WEBRTC_MODULES_UTILITY_SOURCE_FILE_PLAYER_IMPL_H_

@@ -84,7 +84,7 @@ const int32_t WEBRTC_PA_NO_LATENCY_REQUIREMENTS = -1;
 // Set this const to 1 to account for peeked and used data in latency calculation
 const uint32_t WEBRTC_PA_CAPTURE_BUFFER_LATENCY_ADJUSTMENT = 0;
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 class EventWrapper;
 class ThreadWrapper;

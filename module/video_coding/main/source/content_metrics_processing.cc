@@ -15,7 +15,7 @@
 #include "module_common_types.h"
 #include "video_coding_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 //////////////////////////////////
 /// VCMContentMetricsProcessing //
 //////////////////////////////////

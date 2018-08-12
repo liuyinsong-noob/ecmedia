@@ -210,7 +210,7 @@ public:
 	};
 
 	explicit StatsReport(const int64_t& id);
-	typedef cloopenwebrtc::linked_ptr<Value> ValuePtr;
+	typedef yuntongxunwebrtc::linked_ptr<Value> ValuePtr;
 	typedef std::map<StatsValueName, ValuePtr> Values;
 	const Value* FindValue(StatsValueName name) const;
 	void AddString(StatsValueName name, const std::string& value);

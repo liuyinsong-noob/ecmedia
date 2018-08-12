@@ -28,7 +28,7 @@ constexpr int kAlrEndUsagePercent = 70;
 
 }  // namespace
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 AlrDetector::AlrDetector()
     : rate_(kMeasurementPeriodMs, RateStatistics::kBpsScale) {}
@@ -39,15 +39,15 @@ void AlrDetector::OnBytesSent(size_t bytes_sent, int64_t now_ms) {
   DCHECK(estimated_bitrate_bps_);
 
   rate_.Update(bytes_sent, now_ms);
-  cloopenwebrtc::Optional<uint32_t> rate = rate_.Rate(now_ms);
+  yuntongxunwebrtc::Optional<uint32_t> rate = rate_.Rate(now_ms);
   if (!rate)
     return;
 
   int percentage = static_cast<int>(*rate) * 100 / estimated_bitrate_bps_;
   if (percentage < kAlrStartUsagePercent && !alr_started_time_ms_) {
-    alr_started_time_ms_ = cloopenwebrtc::Optional<int64_t>(now_ms);
+    alr_started_time_ms_ = yuntongxunwebrtc::Optional<int64_t>(now_ms);
   } else if (percentage > kAlrEndUsagePercent && alr_started_time_ms_) {
-    alr_started_time_ms_ = cloopenwebrtc::Optional<int64_t>();
+    alr_started_time_ms_ = yuntongxunwebrtc::Optional<int64_t>();
   }
 }
 
@@ -56,9 +56,9 @@ void AlrDetector::SetEstimatedBitrate(int bitrate_bps) {
   estimated_bitrate_bps_ = bitrate_bps;
 }
 
-cloopenwebrtc::Optional<int64_t> AlrDetector::GetApplicationLimitedRegionStartTime()
+yuntongxunwebrtc::Optional<int64_t> AlrDetector::GetApplicationLimitedRegionStartTime()
     const {
   return alr_started_time_ms_;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

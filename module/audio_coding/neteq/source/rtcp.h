@@ -15,7 +15,7 @@
 #include "neteq.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Forward declaration.
 struct RTPHeader;
@@ -54,5 +54,5 @@ class Rtcp {
   DISALLOW_COPY_AND_ASSIGN(Rtcp);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_RTCP_H_

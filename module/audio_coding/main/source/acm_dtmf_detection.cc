@@ -11,7 +11,7 @@
 #include "acm_dtmf_detection.h"
 #include "audio_coding_module_typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ACMDTMFDetection::ACMDTMFDetection()
     : _init(0) {}
@@ -42,4 +42,4 @@ WebRtc_Word16 ACMDTMFDetection::GetVersion(
   return -1;
 }
 
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

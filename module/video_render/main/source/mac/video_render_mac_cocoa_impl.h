@@ -17,7 +17,7 @@
 
 #include "i_video_render.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class CriticalSectionWrapper;
 class VideoRenderNSOpenGL;
 

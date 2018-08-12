@@ -13,7 +13,7 @@
 
 #include "modules/rtp_rtcp/source/rtp_receiver_video.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class MockRTPReceiverVideo : public RTPReceiverVideo {
  public:
@@ -42,6 +42,6 @@ class MockRTPReceiverVideo : public RTPReceiverVideo {
       WebRtc_Word8());
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  //WEBRTC_MODULES_RTP_RTCP_SOURCE_MOCK_MOCK_RTP_RECEIVER_VIDEO_H_

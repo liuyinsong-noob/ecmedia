@@ -44,7 +44,7 @@
 #include <google/protobuf/stubs/once.h>
 
 #include <google/protobuf/stubs/common.h>
-namespace cloopen_google {
+namespace yuntongxun_google {
 
 namespace protobuf {
 namespace internal {
@@ -81,7 +81,7 @@ LIBPROTOBUF_EXPORT inline const ::std::string& GetEmptyStringAlreadyInited() {
   return *empty_string_;
 }
 LIBPROTOBUF_EXPORT inline const ::std::string& GetEmptyString() {
-  ::cloopen_google::protobuf::GoogleOnceInit(&empty_string_once_init_, &InitEmptyString);
+  ::yuntongxun_google::protobuf::GoogleOnceInit(&empty_string_once_init_, &InitEmptyString);
   return GetEmptyStringAlreadyInited();
 }
 
@@ -109,5 +109,5 @@ template <class Type> bool AllAreInitialized(const Type& t) {
 }  // namespace internal
 }  // namespace protobuf
 
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 #endif  // GOOGLE_PROTOBUF_GENERATED_MESSAGE_UTIL_H__

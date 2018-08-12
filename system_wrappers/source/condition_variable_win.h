@@ -15,7 +15,7 @@
 
 #include <windows.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 #if !defined CONDITION_VARIABLE_INIT
     typedef struct _RTL_CONDITION_VARIABLE
     {

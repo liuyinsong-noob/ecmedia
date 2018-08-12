@@ -2,7 +2,7 @@
 #include "../system_wrappers/include/Trace.h"
 #include "h264_util.h"
 #include "../system_wrappers/include/clock.h"
-using namespace  cloopenwebrtc;
+using namespace yuntongxunwebrtc;
 
 //FILE *file_test = NULL;
 
@@ -10,8 +10,8 @@ static AVStream *add_video_stream(AVFormatContext *oc,  enum AVCodecID codec_id,
 {
 	AVStream *formatSt = avformat_new_stream(oc, NULL);
 	if (!formatSt) {
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-			cloopenwebrtc::kTraceVideoCoding,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+			yuntongxunwebrtc::kTraceVideoCoding,
 			0,
 			"Could not allocate stream\n");
 		return NULL;
@@ -60,8 +60,8 @@ static AVStream *add_audio_stream(AVFormatContext *oc, enum AVCodecID codec_id, 
 
 	AVCodec *audio_codec = avcodec_find_encoder(codec_id);
     if (!audio_codec) {
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-			cloopenwebrtc::kTraceVideoCoding,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+			yuntongxunwebrtc::kTraceVideoCoding,
 			0,
 			"Could not find encoder for '%s'\n",
 			avcodec_get_name(codec_id));
@@ -70,8 +70,8 @@ static AVStream *add_audio_stream(AVFormatContext *oc, enum AVCodecID codec_id, 
 	
     AVStream *formatSt = avformat_new_stream(oc, audio_codec);
     if (!formatSt) {
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-			cloopenwebrtc::kTraceVideoCoding,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+			yuntongxunwebrtc::kTraceVideoCoding,
 			0,
 			"Could not allocate stream\n");
 		return NULL;
@@ -99,8 +99,8 @@ static AVStream *add_audio_stream(AVFormatContext *oc, enum AVCodecID codec_id, 
 	if (ret < 0) {
 		char buf[128];
 		av_strerror(ret, buf, 128);
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-			cloopenwebrtc::kTraceVideoCoding,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+			yuntongxunwebrtc::kTraceVideoCoding,
 			0,
 			"Could not open audio codec error=%s", buf);
 		return NULL;
@@ -152,8 +152,8 @@ int h264_record::wirte_video_data(unsigned char *data, int len, uint32_t timesta
 	int iRet = 0;
 	if (!formatCtxt_  && audioFreq_ != 0) {
 		iRet = create(data, len);
-		WEBRTC_TRACE(cloopenwebrtc::kTraceApiCall,
-			cloopenwebrtc::kTraceVideoCoding,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceApiCall,
+			yuntongxunwebrtc::kTraceVideoCoding,
 			0,
 			"wirte_video_data create file.\n");
 	}
@@ -203,8 +203,8 @@ void h264_record::write_video_frame(const void *p, int len, uint32_t timestamp)
 
 	float seconds= (float)(timestamp - baseH264TimeStamp_)/90000;
 	if (seconds < 0) {
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-			cloopenwebrtc::kTraceVideoCoding,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+			yuntongxunwebrtc::kTraceVideoCoding,
 			0,
 			"timestamp:%d baseH264TimeStamp_:%d seconds:%f\n",
 			timestamp, baseH264TimeStamp_, seconds);
@@ -227,8 +227,8 @@ void h264_record::write_video_frame(const void *p, int len, uint32_t timestamp)
 #endif
 	lastVideoFrameNum_ = frame_count;
 
-	WEBRTC_TRACE(cloopenwebrtc::kTraceInfo,
-		cloopenwebrtc::kTraceVideoCoding,
+	WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo,
+		yuntongxunwebrtc::kTraceVideoCoding,
 		0,
 		"timestamp=%u baseH264TimeStamp_=%u diff=%u seconds=%f timebase=%f frame_count=%d pkt.pts=%lld\n",
 		timestamp, baseH264TimeStamp_, (timestamp - baseH264TimeStamp_), seconds, timebase, frame_count, pkt.pts);
@@ -236,8 +236,8 @@ void h264_record::write_video_frame(const void *p, int len, uint32_t timestamp)
 
 	int ret = av_interleaved_write_frame( formatCtxt_, &pkt );
 	if(ret != 0) {
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-			cloopenwebrtc::kTraceVideoCoding,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+			yuntongxunwebrtc::kTraceVideoCoding,
 			0,
 			"av_interleaved_write_frame failed. frme=%d timestamp=%lld ret=%d\n",
 			frame_count,  timestamp, ret);
@@ -306,8 +306,8 @@ int h264_record::write_audio_data(short *data, int len, int freq)
 		if(ret < 0) {
 			char buf[123];
 			av_strerror(ret, buf, 123);
-			WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-					cloopenwebrtc::kTraceVideoCoding,
+			WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+					yuntongxunwebrtc::kTraceVideoCoding,
 					0,
 					"Error avcodec_fill_audio_frame error=%s\n", buf);
 			//av_destruct_packet(&pkt);
@@ -319,8 +319,8 @@ int h264_record::write_audio_data(short *data, int len, int freq)
 		if (ret < 0) {
 			char buf[123];
 			av_strerror(ret, buf, 123);
-			WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-					cloopenwebrtc::kTraceVideoCoding,
+			WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+					yuntongxunwebrtc::kTraceVideoCoding,
 					0,
 					"Error encoding audio frame error=%s\n", buf);
 			//av_destruct_packet(&pkt);
@@ -362,8 +362,8 @@ int h264_record::write_audio_data(short *data, int len, int freq)
 		if (ret != 0) {
 			char buf[123];
 			av_strerror(ret, buf, 123);
-			WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-					cloopenwebrtc::kTraceVideoCoding,
+			WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+					yuntongxunwebrtc::kTraceVideoCoding,
 					0,
 					"Error while writing audio frame error=%s\n", buf);
 			return -1;
@@ -415,8 +415,8 @@ int h264_record::create( void *p, int len )
 	if ( 0x07 != get_nal_type( p, len ) )
 		return -1;
 		
-	WEBRTC_TRACE(cloopenwebrtc::kTraceInfo,
-		cloopenwebrtc::kTraceVideoCoding,
+	WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo,
+		yuntongxunwebrtc::kTraceVideoCoding,
 		0,
 		"h264_record::create  fileName=%s", recordFileName_);
 
@@ -429,8 +429,8 @@ int h264_record::create( void *p, int len )
 
 	//alloc AVFormatContext
 	if(avformat_alloc_output_context2(&formatCtxt_, NULL, NULL, recordFileName_) < 0) {
-			WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-				cloopenwebrtc::kTraceVideoCoding,
+			WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+				yuntongxunwebrtc::kTraceVideoCoding,
 				0,
 				"Could not find create context fileLen=%s", recordFileName_);
 			return -1;
@@ -450,8 +450,8 @@ int h264_record::create( void *p, int len )
 		audioStream = add_audio_stream(formatCtxt_, fmt->audio_codec, audioFreq_);
 	}
 	if(!videoStream || !audioStream) {
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-			cloopenwebrtc::kTraceVideoCoding,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+			yuntongxunwebrtc::kTraceVideoCoding,
 			0,
 			"Could not create stream video=%0x audio=%0x", videoStream, audioStream);
 		if(videoStream) {
@@ -495,8 +495,8 @@ int h264_record::create( void *p, int len )
 		avformat_free_context( formatCtxt_ );
 		formatCtxt_ = 0;
 
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-			cloopenwebrtc::kTraceVideoCoding,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+			yuntongxunwebrtc::kTraceVideoCoding,
 			0,
 			"h264_record::create avio_open Failed");
 		return -1;
@@ -522,8 +522,8 @@ int h264_record::getVopType( const void *p, int len )
     unsigned char *b = (unsigned char*)p;
     
     //int aaaaaaaaaa = *b;
-    //WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-    //	cloopenwebrtc::kTraceVideoCoding,
+    //WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+    //	yuntongxunwebrtc::kTraceVideoCoding,
     //	0,
     //	"getVopType aaaaaaaaaa=%0x %0x %0x %0x %0x %0x %0x", *b, *(b+1), *(b+2), *(b+3), *(b+4), *(b+5),*(b+6));
     
@@ -557,8 +557,8 @@ int h264_record::getVopType( const void *p, int len )
         {
 			// TODO:  Nothing to do.
             //int aaaaaaaaaa = *b;
-            //WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-            //	cloopenwebrtc::kTraceVideoCoding,
+            //WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+            //	yuntongxunwebrtc::kTraceVideoCoding,
             //	0,
             //	"getVopType aaaaaaaaaa=%0x", aaaaaaaaaa);
         }

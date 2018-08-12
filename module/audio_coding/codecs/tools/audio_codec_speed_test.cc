@@ -15,7 +15,7 @@
 
 using ::std::tr1::get;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 AudioCodecSpeedTest::AudioCodecSpeedTest(int block_duration_ms,
                                          int input_sampling_khz,

@@ -24,7 +24,7 @@
 #include "../system_wrappers/include/trace.h"
 #include "../system_wrappers/include/tick_util.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 
@@ -137,7 +137,7 @@ void ScreenCapturerWinGdi::Capture(const DesktopRegion& region) {
 }
 
 bool ScreenCapturerWinGdi::GetScreenList(ScreenList* screens) {
-  return cloopenwebrtc::GetScreenList(screens);
+  return yuntongxunwebrtc::GetScreenList(screens);
 }
 
 bool ScreenCapturerWinGdi::SelectScreen(ScreenId id) {
@@ -171,7 +171,7 @@ void ScreenCapturerWinGdi::Start(Callback* callback) {
 void ScreenCapturerWinGdi::PrepareCaptureResources() {
   // Switch to the desktop receiving user input if different from the current
   // one.
-  cloopenwebrtc::scoped_ptr<Desktop> input_desktop(Desktop::GetInputDesktop());
+  yuntongxunwebrtc::scoped_ptr<Desktop> input_desktop(Desktop::GetInputDesktop());
   if (input_desktop.get() != NULL && !desktop_.IsSame(*input_desktop)) {
     // Release GDI resources otherwise SetThreadDesktop will fail.
     if (desktop_dc_) {
@@ -253,7 +253,7 @@ bool ScreenCapturerWinGdi::CaptureImage() {
         DesktopFrame::kBytesPerPixel;
     SharedMemory* shared_memory = callback_->CreateSharedMemory(buffer_size);
 
-    cloopenwebrtc::scoped_ptr<DesktopFrame> buffer;
+    yuntongxunwebrtc::scoped_ptr<DesktopFrame> buffer;
     buffer.reset(
         DesktopFrameWin::Create(size, shared_memory, desktop_dc_));
     queue_.ReplaceCurrentFrame(buffer.release());
@@ -290,4 +290,4 @@ void ScreenCapturerWinGdi::ResetScreenDC()
 }
 
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

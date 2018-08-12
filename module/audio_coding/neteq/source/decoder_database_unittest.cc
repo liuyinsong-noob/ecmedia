@@ -21,7 +21,7 @@
 #include "mock_audio_decoder.h"
 #include "gtest_disable.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(DecoderDatabase, CreateAndDestroy) {
   DecoderDatabase db;
@@ -221,4 +221,4 @@ TEST(DecoderDatabase, ActiveDecoders) {
   EXPECT_EQ(DecoderDatabase::kDecoderNotFound,
             db.SetActiveCngDecoder(17));
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

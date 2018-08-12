@@ -17,7 +17,7 @@
 
 #define AndroidJavaCaptureClass "com/yuntongxun/ecsdk/core/voip/VideoCaptureAndroid"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace videocapturemodule {
 
 class VideoCaptureAndroid : public VideoCaptureImpl {

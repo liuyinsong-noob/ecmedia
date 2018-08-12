@@ -21,7 +21,7 @@
 #include "packet.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class PostDecodeVad {
  public:
@@ -68,5 +68,5 @@ class PostDecodeVad {
   DISALLOW_COPY_AND_ASSIGN(PostDecodeVad);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_POST_DECODE_VAD_H_

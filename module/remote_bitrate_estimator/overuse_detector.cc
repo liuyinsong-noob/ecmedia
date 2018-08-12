@@ -27,7 +27,7 @@
 
 using namespace std;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const char kAdaptiveThresholdExperiment[] = "WebRTC-AdaptiveBweThreshold";
 const char kEnabledPrefix[] = "Enabled";
@@ -41,7 +41,7 @@ const int kMinNumDeltas = 60;
 
 bool AdaptiveThresholdExperimentIsDisabled() {
   std::string experiment_string =
-	  cloopenwebrtc::field_trial::FindFullName(kAdaptiveThresholdExperiment);
+	  yuntongxunwebrtc::field_trial::FindFullName(kAdaptiveThresholdExperiment);
   const size_t kMinExperimentLength = kDisabledPrefixLength;
   if (experiment_string.length() < kMinExperimentLength)
     return false;
@@ -52,7 +52,7 @@ bool AdaptiveThresholdExperimentIsDisabled() {
 // "WebRTC-AdaptiveBweThreshold/Enabled-0.5,0.002/".
 bool ReadExperimentConstants(double* k_up, double* k_down) {
   std::string experiment_string =
-	  cloopenwebrtc::field_trial::FindFullName(kAdaptiveThresholdExperiment);
+	  yuntongxunwebrtc::field_trial::FindFullName(kAdaptiveThresholdExperiment);
   const size_t kMinExperimentLength = kEnabledPrefixLength + 3;
   if (experiment_string.length() < kMinExperimentLength ||
       experiment_string.substr(0, kEnabledPrefixLength) != kEnabledPrefix)
@@ -165,4 +165,4 @@ void OveruseDetector::InitializeExperiment() {
     k_down_ = k_down;
   }
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

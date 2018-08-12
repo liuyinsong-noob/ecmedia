@@ -19,7 +19,7 @@
 #include "tick_util.h"
 #include "vie_encoder.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VieDesktopCapturer::VieDesktopCapturer(int id,int engine_id):
     ViEFrameProviderBase(id, engine_id),
@@ -33,7 +33,7 @@ VieDesktopCapturer::VieDesktopCapturer(int id,int engine_id):
     share_capture_type_(ShareNone),
     screen_capturer_(NULL),
     screen_mouse_cursor_(MouseCursorMonitor::CreateForScreen(DesktopCaptureOptions::CreateDefault(),
-    cloopenwebrtc::kFullDesktopScreenId)),
+    yuntongxunwebrtc::kFullDesktopScreenId)),
     windows_capture_(NULL),
     screen_mouse_blender_(),
     window_mouse_blender_(),
@@ -158,7 +158,7 @@ void VieDesktopCapturer::OnCaptureCompleted( DesktopFrame* frame, CaptureErrCode
 		stride_uv, stride_uv);
 	if (ret < 0)
 	{
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
 			-1, "Failed to create empty frame, this should only happen due to bad parameters.");
 		return ;
 	}
@@ -173,7 +173,7 @@ void VieDesktopCapturer::OnCaptureCompleted( DesktopFrame* frame, CaptureErrCode
 		share_frame_.get());
 	if (conversionResult < 0)
 	{
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
 			-1,"Failed to convert capture frame from type kARGB to I420.");
 		return ;
 	}
@@ -220,7 +220,7 @@ bool VieDesktopCapturer::GetScreenList( ScreenList& screens )
 #ifndef __APPLE__
     if(screen_capturer_ == NULL )
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
             -1, "%s: screen_capturer_ not exist ", __FUNCTION__);
         return false;
     }
@@ -239,7 +239,7 @@ bool VieDesktopCapturer::SelectScreen( ScreenId id )
 #ifndef __APPLE__
     if(screen_capturer_ == NULL )
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
             -1, "SelectScreen failed, screen_capturer not exist ");
         return false;
     }
@@ -253,7 +253,7 @@ bool VieDesktopCapturer::GetWindowList( WindowList& windows )
 #ifndef __APPLE__
     if(windows_capture_ == NULL)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
             -1, "%s: windows_capture_ not exist ", __FUNCTION__);
         return false;
     }
@@ -271,19 +271,19 @@ bool VieDesktopCapturer::SelectWindow( WindowId id )
 #ifndef __APPLE__
 	if(windows_capture_ == NULL)
 	{
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
 			-1,"SelectWindow failed, screen_capturer not exist ");
 		return false;
 	}
 	if(!windows_capture_->SelectWindow(id))
 	{
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
 			-1,"SelectWindow err ");
 		return false;
 	}
 	if(!windows_capture_->BringSelectedWindowToFront())
 	{
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
 			-1,"BringSelectedWindowToFront err ");
 		return false;
 	}
@@ -309,7 +309,7 @@ bool VieDesktopCapturer::GetDesktopShareCaptureRect( int &width, int &height )
 }
 
 
-int VieDesktopCapturer::CaptrueShareFrame( cloopenwebrtc::I420VideoFrame& video_frame )
+int VieDesktopCapturer::CaptrueShareFrame( yuntongxunwebrtc::I420VideoFrame& video_frame )
 {
 #ifndef __APPLE__
     switch(share_capture_type_)
@@ -358,14 +358,14 @@ int VieDesktopCapturer::CaptrueShareFrame( cloopenwebrtc::I420VideoFrame& video_
 //    videoFrame.CreateFrame(size_y, pict->planes[0], size_u, pict->planes[1], size_v, pict->planes[2], pict->w, pict->h, pict->strides[0], pict->strides[1], pict->strides[2]);
     
     
-    int ret = cloopenlibyuv::ConvertToI420((const uint8 *)data.bytes, data.length,
+    int ret = yuntongxunlibyuv::ConvertToI420((const uint8 *)data.bytes, data.length,
                                            dst_y_, strides[0],
                                            dst_u_, strides[1],
                                            dst_v_, strides[2],
                                            0, 0,
                                            src_width_, src_height_,
                                            src_width_, src_height_,
-                                           cloopenlibyuv::kRotate0, cloopenlibyuv::FOURCC_MJPG);
+                                           yuntongxunlibyuv::kRotate0, yuntongxunlibyuv::FOURCC_MJPG);
     
     NSLog(@"convert ret = %d", ret);
     
@@ -387,7 +387,7 @@ int VieDesktopCapturer::StartDesktopShareCapture(const int fps)
         CriticalSectionScoped cs(shared_capture_cs_.get());
         if(shared_capture_enable_)
         {
-            WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
                 -1,"share capture already enable ");
             return -1;
         }
@@ -413,7 +413,7 @@ int VieDesktopCapturer::StopDesktopShareCapture()
     CriticalSectionScoped cs(shared_capture_cs_.get());
     if(!shared_capture_enable_)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
             -1,"share capture already stop ");
         return -1;
     }
@@ -427,14 +427,14 @@ VieDesktopCapturer* VieDesktopCapturer::CreateCapture( int capture_id, const Des
     VieDesktopCapturer* capture = new VieDesktopCapturer(capture_id,engine_id);
     if (capture == NULL)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
             -1,"CreateCapture err ");
         return NULL;
     }
 #ifndef __APPLE__
     if(capture->SelectCapture(desktop_share_type) != 0)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
             -1,"CreateCaSelectCapturepture err ");
         return NULL;
     }
@@ -447,21 +447,21 @@ int VieDesktopCapturer::CreateDesktopCapture()
 #ifndef __APPLE__
     if(screen_mouse_cursor_ == NULL)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
             -1,"CreateWindowCapture  get screen_mouse_cursor_  ERR ");
         return -1;
     }
     screen_capturer_ = ScreenCapturer::Create();
     if(screen_capturer_ == NULL)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
             -1,"ScreenCapturer::Create() ERR ");
         return -1;
     }
     screen_mouse_blender_.reset(new DesktopAndCursorComposer(screen_capturer_,screen_mouse_cursor_));
     if (screen_mouse_blender_.get() == NULL)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
             -1,"CreateDesktopCapture get  screen_mouse_blender_ ERR ");
         return -1;
     }
@@ -477,21 +477,21 @@ int VieDesktopCapturer::CreateWindowCapture()
 #ifndef __APPLE__
     if(screen_mouse_cursor_ == NULL)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
             -1,"CreateWindowCapture  get screen_mouse_cursor_  ERR ");
         return -1;
     }
     windows_capture_ = CroppingWindowCapturer::Create(DesktopCaptureOptions::CreateDefault());
     if ( windows_capture_ == NULL)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
             -1,"CroppingWindowCapturer::Create ERR ");
         return -1;
     }
     window_mouse_blender_.reset(new DesktopAndCursorComposer(windows_capture_,screen_mouse_cursor_));
     if (window_mouse_blender_.get() == NULL )
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
             -1,"CreateDesktopCapture get  window_mouse_blender_  ERR ");
         return -1;
     }
@@ -581,7 +581,7 @@ void VieDesktopCapturer::DeliverFrame()
     CriticalSectionScoped cs(shared_capture_cs_.get());
     if(!shared_capture_enable_)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
             -1,"don't send desktop frame ");
         return ;
     }

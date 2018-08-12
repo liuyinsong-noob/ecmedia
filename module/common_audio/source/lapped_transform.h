@@ -19,7 +19,7 @@
 #include "../system_wrappers/include/aligned_array.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Helper class for audio processing modules which operate on frequency domain
 // input derived from the windowed time domain audio stream.

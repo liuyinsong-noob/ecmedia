@@ -54,7 +54,7 @@ class DesktopConfigurationMonitor {
   void DisplaysReconfigured(CGDirectDisplayID display,
                             CGDisplayChangeSummaryFlags flags);
 
-    cloopenwebrtc::Atomic32 ref_count_;
+    yuntongxunwebrtc::Atomic32 ref_count_;
   std::set<CGDirectDisplayID> reconfiguring_displays_;
   MacDesktopConfiguration desktop_configuration_;
   std::unique_ptr<EventWrapper> display_configuration_capture_event_;

@@ -28,7 +28,7 @@
 #include "../system_wrappers/include/logging.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ViENetwork* ViENetwork::GetInterface(VideoEngine* video_engine) {
   if (!video_engine) {
@@ -230,7 +230,7 @@ int ViENetworkImpl::ReceivedBWEPacket(const int video_channel,
 }
 
 bool ViENetworkImpl::SetBandwidthEstimationConfig(
-    int video_channel, const cloopenwebrtc::Config& config) {
+    int video_channel, const yuntongxunwebrtc::Config& config) {
   LOG_F(LS_INFO) << "channel: " << video_channel;
   return shared_data_->channel_manager()->SetBandwidthEstimationConfig(
       video_channel, config);

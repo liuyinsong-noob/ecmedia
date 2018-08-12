@@ -16,7 +16,7 @@
 #include "../system_wrappers/include/trace.h"
 #include "video_capture_android.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 namespace videocapturemodule
@@ -56,7 +56,7 @@ WebRtc_UWord32 DeviceInfoAndroid::NumberOfDevices() {
           attached) != 0)
     return 0;
 
-  WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, _id,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, _id,
                "%s GetMethodId", __FUNCTION__);
   // get the method ID for the Android Java GetDeviceUniqueName name.
   jmethodID cid = env->GetMethodID(javaCmDevInfoClass,
@@ -65,7 +65,7 @@ WebRtc_UWord32 DeviceInfoAndroid::NumberOfDevices() {
 
   jint numberOfDevices = 0;
   if (cid != NULL) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s Calling Number of devices", __FUNCTION__);
     numberOfDevices = env->CallIntMethod(javaCmDevInfoObject, cid);
   }
@@ -104,7 +104,7 @@ WebRtc_Word32 DeviceInfoAndroid::GetDeviceName(
     jobject javaDeviceNameObj = env->CallObjectMethod(javaCmDevInfoObject,
                                                       cid, deviceNumber);
     if (javaDeviceNameObj == NULL) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                    "%s: Failed to get device name for device %d.",
                    __FUNCTION__, (int) deviceNumber);
       result = -1;
@@ -122,7 +122,7 @@ WebRtc_Word32 DeviceInfoAndroid::GetDeviceName(
                javaDeviceNameCharLength + 1);
       }
       else {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture,
                      _id, "%s: deviceUniqueIdUTF8 to short.",
                      __FUNCTION__);
         result = -1;
@@ -138,7 +138,7 @@ WebRtc_Word32 DeviceInfoAndroid::GetDeviceName(
 
   }
   else {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
                  "%s: Failed to find GetDeviceUniqueName function id",
                  __FUNCTION__);
     result = -1;
@@ -146,7 +146,7 @@ WebRtc_Word32 DeviceInfoAndroid::GetDeviceName(
 
   VideoCaptureAndroid::ReleaseAndroidDeviceInfoObjects(attached);
 
-  WEBRTC_TRACE(cloopenwebrtc::kTraceStateInfo, cloopenwebrtc::kTraceVideoCapture, -1,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceStateInfo, yuntongxunwebrtc::kTraceVideoCapture, -1,
                "%s: result %d", __FUNCTION__, (int) result);
   return result;
 
@@ -178,7 +178,7 @@ WebRtc_Word32 DeviceInfoAndroid::CreateCapabilityMap(
 //  jclass javaCapClassLocal = env->FindClass(AndroidJavaCaptureCapabilityClass);
 //  if (javaCapClassLocal == NULL) {
 //    VideoCaptureAndroid::ReleaseAndroidDeviceInfoObjects(attached);
-//    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+//    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
 //                 "%s: Can't find java class VideoCaptureCapabilityAndroid.",
 //                 __FUNCTION__);
 //    return -1;
@@ -194,7 +194,7 @@ WebRtc_Word32 DeviceInfoAndroid::CreateCapabilityMap(
                                    signature);
   if (cid == NULL) {
     VideoCaptureAndroid::ReleaseAndroidDeviceInfoObjects(attached);
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s: Can't find method GetCapabilityArray.", __FUNCTION__);
     return -1;
   }
@@ -203,7 +203,7 @@ WebRtc_Word32 DeviceInfoAndroid::CreateCapabilityMap(
 
   if (capureIdString == NULL) {
     VideoCaptureAndroid::ReleaseAndroidDeviceInfoObjects(attached);
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s: Can't create string for  method GetCapabilityArray.",
                  __FUNCTION__);
     return -1;
@@ -213,7 +213,7 @@ WebRtc_Word32 DeviceInfoAndroid::CreateCapabilityMap(
                                                       cid, capureIdString);
   if (!javaCapabilitiesObj) {
     VideoCaptureAndroid::ReleaseAndroidDeviceInfoObjects(attached);
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s: Failed to call java GetCapabilityArray.",
                  __FUNCTION__);
     return -1;
@@ -225,7 +225,7 @@ WebRtc_Word32 DeviceInfoAndroid::CreateCapabilityMap(
  
   if (widthField == NULL || heigtField == NULL || maxFpsField == NULL) {
     VideoCaptureAndroid::ReleaseAndroidDeviceInfoObjects(attached);
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s: Failed to get field Id.", __FUNCTION__);
     return -1;
   }
@@ -244,7 +244,7 @@ WebRtc_Word32 DeviceInfoAndroid::CreateCapabilityMap(
     cap.expectedCaptureDelay = _expectedCaptureDelay;
 
     cap.maxFPS = env->GetIntField(capabilityElement, maxFpsField);
-    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s: Cap width %d, height %d, fps %d", __FUNCTION__,
                  cap.width, cap.height, cap.maxFPS);
     _captureCapabilities.push_back(cap);
@@ -258,7 +258,7 @@ WebRtc_Word32 DeviceInfoAndroid::CreateCapabilityMap(
          _lastUsedDeviceNameLength + 1);
 
   VideoCaptureAndroid::ReleaseAndroidDeviceInfoObjects(attached);
-  WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                "CreateCapabilityMap %d", _captureCapabilities.size());
 
   return _captureCapabilities.size();
@@ -283,7 +283,7 @@ WebRtc_Word32 DeviceInfoAndroid::GetOrientation(
                                    "(Ljava/lang/String;)I");
   if (cid == NULL) {
     VideoCaptureAndroid::ReleaseAndroidDeviceInfoObjects(attached);
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s: Can't find method GetOrientation.", __FUNCTION__);
     return -1;
   }
@@ -291,7 +291,7 @@ WebRtc_Word32 DeviceInfoAndroid::GetOrientation(
   jstring capureIdString = env->NewStringUTF((char*) deviceUniqueIdUTF8);
   if (capureIdString == NULL) {
     VideoCaptureAndroid::ReleaseAndroidDeviceInfoObjects(attached);
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s: Can't create string for  method GetCapabilityArray.",
                  __FUNCTION__);
     return -1;
@@ -327,4 +327,4 @@ WebRtc_Word32 DeviceInfoAndroid::GetOrientation(
 }
 
 }  // namespace videocapturemodule
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

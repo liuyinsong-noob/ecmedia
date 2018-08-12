@@ -14,7 +14,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const size_t kWavHeaderSize = 44;
 

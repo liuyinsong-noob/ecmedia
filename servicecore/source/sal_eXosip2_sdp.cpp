@@ -319,34 +319,34 @@ static void add_line(sdp_message_t *msg, int lineno, const SalStreamDescription 
 		for(i=0; i<SAL_CRYPTO_ALGO_MAX; i++) {
 			char buffer[1024];
 			switch (desc->crypto[i].algo) {
-				case cloopenwebrtc::CCPAES_128_SHA1_80:
+				case yuntongxunwebrtc::CCPAES_128_SHA1_80:
 					snprintf(buffer, 1024, "%d %s inline:%s",
                              desc->crypto[i].tag, "AES_CM_128_HMAC_SHA1_80", !usermode? desc->crypto[i].master_key:"000000000000000000000");
 					sdp_message_a_attribute_add(msg, lineno, osip_strdup("crypto"),
                                                 osip_strdup(buffer));
 					break;
-				case cloopenwebrtc::CCPAES_128_SHA1_32:
+				case yuntongxunwebrtc::CCPAES_128_SHA1_32:
 					snprintf(buffer, 1024, "%d %s inline:%s",
                              desc->crypto[i].tag, "AES_CM_128_HMAC_SHA1_32", !usermode? desc->crypto[i].master_key:"000000000000000000000");
 					sdp_message_a_attribute_add(msg, lineno, osip_strdup("crypto"),
                                                 osip_strdup(buffer));
 					break;
-                case cloopenwebrtc::CCPAES_256_SHA1_80:
+                case yuntongxunwebrtc::CCPAES_256_SHA1_80:
                     snprintf(buffer, 1024, "%d %s inline:%s",
                              desc->crypto[i].tag, "AES_CM_256_HMAC_SHA1_80", !usermode? desc->crypto[i].master_key:"000000000000000000000");
 					sdp_message_a_attribute_add(msg, lineno, osip_strdup("crypto"),
                                                 osip_strdup(buffer));
 					break;
-                case cloopenwebrtc::CCPAES_256_SHA1_32:
+                case yuntongxunwebrtc::CCPAES_256_SHA1_32:
                     snprintf(buffer, 1024, "%d %s inline:%s",
                              desc->crypto[i].tag, "AES_CM_256_HMAC_SHA1_32", !usermode? desc->crypto[i].master_key:"000000000000000000000");
 					sdp_message_a_attribute_add(msg, lineno, osip_strdup("crypto"),
                                                 osip_strdup(buffer));
 					break;
-				case cloopenwebrtc::CCPAES_128_NO_AUTH:
+				case yuntongxunwebrtc::CCPAES_128_NO_AUTH:
 					PrintConsole("Unsupported crypto suite: AES_128_NO_AUTH\n");
 					break;
-				case cloopenwebrtc::CCPNO_CIPHER_SHA1_80:
+				case yuntongxunwebrtc::CCPNO_CIPHER_SHA1_80:
 					PrintConsole("Unsupported crypto suite: NO_CIPHER_SHA1_80\n");
 					break; 
 				default:
@@ -626,16 +626,16 @@ int sdp_to_media_description(sdp_message_t *msg, SalMediaDescription *desc, bool
 								tmp2);
 					if (nb == 3) {
 						if (strcmp(tmp, "AES_CM_128_HMAC_SHA1_80") == 0)
-							stream->crypto[valid_count].algo = cloopenwebrtc::CCPAES_128_SHA1_80;
+							stream->crypto[valid_count].algo = yuntongxunwebrtc::CCPAES_128_SHA1_80;
 						else if (strcmp(tmp, "AES_CM_128_HMAC_SHA1_32") == 0)
-							stream->crypto[valid_count].algo = cloopenwebrtc::CCPAES_128_SHA1_32;
+							stream->crypto[valid_count].algo = yuntongxunwebrtc::CCPAES_128_SHA1_32;
                         else if (strcmp(tmp, "AES_CM_256_HMAC_SHA1_80") == 0)
-                            stream->crypto[valid_count].algo = cloopenwebrtc::CCPAES_256_SHA1_80;
+                            stream->crypto[valid_count].algo = yuntongxunwebrtc::CCPAES_256_SHA1_80;
                         else if (strcmp(tmp, "AES_CM_256_HMAC_SHA1_32") ==  0)
-                            stream->crypto[valid_count].algo = cloopenwebrtc::CCPAES_256_SHA1_32;
+                            stream->crypto[valid_count].algo = yuntongxunwebrtc::CCPAES_256_SHA1_32;
 						else {
 							PrintConsole("Failed to parse crypto-algo: '%s'\n", tmp);
-							stream->crypto[valid_count].algo = (cloopenwebrtc::ccp_srtp_crypto_suite_t)0;
+							stream->crypto[valid_count].algo = (yuntongxunwebrtc::ccp_srtp_crypto_suite_t)0;
 						}
 						if (stream->crypto[valid_count].algo) {
 //							strncpy(stream->crypto[valid_count].master_key, tmp2, 41);

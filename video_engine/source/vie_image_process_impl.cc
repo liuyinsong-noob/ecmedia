@@ -21,7 +21,7 @@
 #include "vie_input_manager.h"
 #include "vie_shared_data.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ViEImageProcess* ViEImageProcess::GetInterface(VideoEngine* video_engine) {
 #ifdef WEBRTC_VIDEO_ENGINE_IMAGE_PROCESS_API

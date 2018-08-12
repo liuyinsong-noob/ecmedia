@@ -22,7 +22,7 @@
 //@class VideoCaptureiOSObjC;
 //@class VideoCaptureiOSDeviceInfoObjC;
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
     namespace videocapturemodule
     {
@@ -84,7 +84,7 @@ namespace cloopenwebrtc
             WebRtc_Word32            _frameCount;
         };
     }  // namespace videocapturemodule
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif
 #endif

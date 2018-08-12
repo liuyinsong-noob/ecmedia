@@ -10,7 +10,7 @@
 #include "ec_media_puller_base.h"
 #include "ec_rtmp_bitrate_controller.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     class ECRtmpPublisher;
     class ECMediaMachine;
     class EC_RtmpPuller;

@@ -37,7 +37,7 @@
 #include "frame_dropper.h"
 #include "quality_scaler.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class TemporalLayers;
 

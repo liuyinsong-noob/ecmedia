@@ -19,7 +19,7 @@
 #include "audio_decoder_impl.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Forward declaration.
 class DelayPeakDetector;
@@ -160,5 +160,5 @@ class DelayManager {
   DISALLOW_COPY_AND_ASSIGN(DelayManager);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_DELAY_MANAGER_H_

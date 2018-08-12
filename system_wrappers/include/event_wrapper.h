@@ -11,7 +11,7 @@
 #ifndef WEBRTC_SYSTEM_WRAPPERS_INCLUDE_EVENT_WRAPPER_H_
 #define WEBRTC_SYSTEM_WRAPPERS_INCLUDE_EVENT_WRAPPER_H_
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 enum EventTypeWrapper {
   kEventSignaled = 1,
   kEventError = 2,
@@ -66,6 +66,6 @@ class EventTimerWrapper : public EventWrapper {
   virtual bool StopTimer() = 0;
 
 };
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_INCLUDE_EVENT_WRAPPER_H_

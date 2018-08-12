@@ -13,7 +13,7 @@
 #include "voe_encryption.h"
 //#include "voice_engine_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     class SrtpModule : public Module , public Encryption //, public VoEEncryption
     {
     public:

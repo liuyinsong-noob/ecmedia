@@ -17,7 +17,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "audio_multi_vector.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class DtmfToneGeneratorTest : public ::testing::Test {
  protected:
@@ -178,4 +178,4 @@ TEST(DtmfToneGenerator, TestErrors) {
             tone_gen.Generate(kNumSamples, NULL));
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

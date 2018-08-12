@@ -19,7 +19,7 @@
 #include "packet.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class DecoderDatabase {
  public:
@@ -151,5 +151,5 @@ class DecoderDatabase {
   DISALLOW_COPY_AND_ASSIGN(DecoderDatabase);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_DECODER_DATABASE_H_

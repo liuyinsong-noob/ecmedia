@@ -18,7 +18,7 @@
 #include "video_processing_defines.h"
 #include "denoiser_filter.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 #define DISPLAY 0      // Rectangle diagnostics
 #define DISPLAYNEON 0  // Rectangle diagnostics on NEON

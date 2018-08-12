@@ -4,7 +4,7 @@
  *  Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
  *  that can be found in the LICENSE file in the root of the web site.
  *
- *   http://www.cloopen.com
+ *   http://www.yuntongxun.com
  *
  *  An additional intellectual property rights grant can be found
  *  in the file PATENTS.  All contributing project authors may
@@ -23,7 +23,7 @@ import android.graphics.Bitmap;
 * <p>Description: BitmapFactory.decodeByteArray(byte[] data, int offset, int length)，
 * The byte[] is aimed at the picture data integrity, not including the file header</p>
 * <p>Copyright: Copyright (c) 2012</p>
-* <p>Company: http://www.cloopen.com</p>
+* <p>Company: http://www.yuntongxun.com</p>
 * @author Jorstin Chan
 * @date 2013-11-7
 * @version  3.5

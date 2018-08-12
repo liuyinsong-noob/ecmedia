@@ -16,7 +16,7 @@
 #include "window_capture_utils.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 
@@ -122,7 +122,7 @@ class CroppingWindowCapturerWin : public CroppingWindowCapturer {
 };
 
 bool CroppingWindowCapturerWin::ShouldUseScreenCapturer() {
-  if (!cloopenwebrtc::IsWindows8OrLater())
+  if (!yuntongxunwebrtc::IsWindows8OrLater())
     return false;
 
   // Check if the window is a translucent layered window.
@@ -214,4 +214,4 @@ CroppingWindowCapturer::Create(const DesktopCaptureOptions& options) {
   return new CroppingWindowCapturerWin(options);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

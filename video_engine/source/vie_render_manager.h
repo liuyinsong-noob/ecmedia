@@ -18,7 +18,7 @@
 #include "typedefs.h"
 #include "vie_manager_base.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class CriticalSectionWrapper;
 class RWLockWrapper;

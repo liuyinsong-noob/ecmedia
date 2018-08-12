@@ -21,7 +21,7 @@
 #include  "vie_watermark.h"
 #include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ViEFrameProviderBase::ViEFrameProviderBase(int Id, int engine_id)
     : id_(Id),
@@ -50,7 +50,7 @@ int ViEFrameProviderBase::Id() {
 void ViEFrameProviderBase::GetFilterData(I420VideoFrame* video_frame, VIEWaterMark *watermark) {
 	int w = video_frame->width();
 	int h = video_frame->height();
-	size_t length = cloopenwebrtc::CalcBufferSize(kI420, w, h);
+	size_t length = yuntongxunwebrtc::CalcBufferSize(kI420, w, h);
 	scoped_ptr<uint8_t[]> yuv_buf(new uint8_t[length]);
 	ExtractBuffer(*video_frame, length, yuv_buf.get());
 	unsigned char* buf = yuv_buf.get();

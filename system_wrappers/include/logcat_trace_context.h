@@ -17,11 +17,11 @@
 #error This file only makes sense to include on Android!
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Scoped helper class for directing Traces to Android's logcat facility.  While
 // this object lives, Trace output will be sent to logcat.
-class LogcatTraceContext : public cloopenwebrtc::TraceCallback {
+class LogcatTraceContext : public yuntongxunwebrtc::TraceCallback {
  public:
   LogcatTraceContext();
   ~LogcatTraceContext() override;

@@ -21,7 +21,7 @@
 #include "vie_network.h"
 #include "vie_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 typedef int (*onEcMediaVideoData)(int channelid, const void *data, int inLen, void *outData, int &outLen, bool send);
 class CriticalSectionWrapper;
 class FecReceiver;

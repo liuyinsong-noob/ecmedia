@@ -21,7 +21,7 @@
 #include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
 #include "../typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class AlrDetector;
 class BitrateProber;
 class Clock;
@@ -126,7 +126,7 @@ class PacedSender : public Module, public RtpPacketSender {
   // Application Limited Region (ALR) refers to operating in a state where the
   // traffic on network is limited due to application not having enough
   // traffic to meet the current channel capacity.
-  virtual cloopenwebrtc::Optional<int64_t> GetApplicationLimitedRegionStartTime() const;
+  virtual yuntongxunwebrtc::Optional<int64_t> GetApplicationLimitedRegionStartTime() const;
 
   // Returns the average time since being enqueued, in milliseconds, for all
   // packets currently in the pacer queue, or 0 if queue is empty.
@@ -182,5 +182,5 @@ class PacedSender : public Module, public RtpPacketSender {
   std::unique_ptr<paced_sender::PacketQueue> packets_ GUARDED_BY(critsect_);
   uint64_t packet_counter_;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_PACING_PACED_SENDER_H_

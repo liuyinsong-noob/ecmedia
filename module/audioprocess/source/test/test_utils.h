@@ -19,7 +19,7 @@
 #include "cloopenwebrtc/modules/interface/module_common_types.h"
 #include "cloopenwebrtc/system_wrappers/interface/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const AudioProcessing::Error kNoErr = AudioProcessing::kNoError;
 #define EXPECT_NOERR(expr) EXPECT_EQ(kNoErr, (expr))

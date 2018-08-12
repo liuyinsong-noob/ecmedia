@@ -16,7 +16,7 @@
 #include "cloopenwebrtc/modules/audio_coding/codecs/audio_encoder.h"
 #include "cloopenwebrtc/system_wrappers/interface/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // This class implements redundant audio coding. The class object will have an
 // underlying AudioEncoder object that performs the actual encodings. The

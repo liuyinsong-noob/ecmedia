@@ -27,7 +27,7 @@ extern "C" {
 }
 
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 // Error handler
@@ -565,7 +565,7 @@ JpegDecoder::Decode(const EncodedImage& inputImage,
 
          for (WebRtc_UWord32 p = 0; p < 3; p++)
          {
-			 dstFramePtr = outputImage.buffer((cloopenwebrtc::PlaneType)p);
+			 dstFramePtr = outputImage.buffer((yuntongxunwebrtc::PlaneType)p);
 
              const WebRtc_UWord32 h = (p == 0) ? height : height >> 1;
              const WebRtc_UWord32 h16 = (p == 0) ? height16 : height16 >> 1;

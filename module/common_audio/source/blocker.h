@@ -14,7 +14,7 @@
 #include "channel_buffer.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // The callback function to process audio in the time domain. Input has already
 // been windowed, and output will be windowed. The number of input channels

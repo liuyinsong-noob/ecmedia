@@ -19,7 +19,7 @@
 #include "../system_wrappers/include/scoped_ptr.h"
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Forward declarations.
 class PostDecodeVad;
@@ -133,5 +133,5 @@ class BackgroundNoise {
   DISALLOW_COPY_AND_ASSIGN(BackgroundNoise);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_BACKGROUND_NOISE_H_

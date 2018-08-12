@@ -13,7 +13,7 @@
 
 #include "../base/checks.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 Random::Random(uint64_t seed) {
   DCHECK(seed != 0x0ull);
@@ -83,4 +83,4 @@ double Random::Exponential(double lambda) {
   return -log(uniform) / lambda;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -22,7 +22,7 @@
 #include "typedefs.h"
 #include "video_denoiser.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VPMFramePreprocessor {
  public:

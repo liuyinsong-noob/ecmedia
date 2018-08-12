@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 RTPReceiverStrategy::RTPReceiverStrategy(RtpData* data_callback)
     : data_callback_(data_callback) {
@@ -21,13 +21,13 @@ RTPReceiverStrategy::RTPReceiverStrategy(RtpData* data_callback)
 
 void RTPReceiverStrategy::GetLastMediaSpecificPayload(
     PayloadUnion* payload) const {
-  cloopenwebrtc::CritScope cs(&crit_sect_);
+  yuntongxunwebrtc::CritScope cs(&crit_sect_);
   memcpy(payload, &last_payload_, sizeof(*payload));
 }
 
 void RTPReceiverStrategy::SetLastMediaSpecificPayload(
     const PayloadUnion& payload) {
-  cloopenwebrtc::CritScope cs(&crit_sect_);
+  yuntongxunwebrtc::CritScope cs(&crit_sect_);
   memcpy(&last_payload_, &payload, sizeof(last_payload_));
 }
 
@@ -42,4 +42,4 @@ int RTPReceiverStrategy::Energy(uint8_t array_of_energy[kRtpCsrcSize]) const {
   return -1;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

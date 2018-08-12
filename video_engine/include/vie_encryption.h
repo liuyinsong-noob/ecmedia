@@ -16,7 +16,7 @@
 
 #include "common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class VideoEngine;
 
 class WEBRTC_DLLEXPORT ViEEncryption {
@@ -58,6 +58,6 @@ public:
   virtual ~ViEEncryption() {}
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_VIDEO_ENGINE_INCLUDE_VIE_ENCRYPTION_H_

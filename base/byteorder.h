@@ -21,7 +21,7 @@
 
 #include "../base/basictypes.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Reading and writing of little and big-endian numbers from memory
 // TODO: Optimized versions, with direct read/writes of
@@ -161,6 +161,6 @@ inline uint64_t NetworkToHost64(uint64_t n) {
   return GetBE64(&n);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_BYTEORDER_H_

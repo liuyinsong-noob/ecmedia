@@ -67,7 +67,7 @@ const int StatsCollector::kSimplifiedStatsUpdateIntervalMs = 1000;
 StatsCollector::StatsCollector()
 	  : thread_(ThreadWrapper::CreateThread(StatsCollector::StatsCollectorThreadRun, this ,kNormalPriority, "StatsCollectorThread")),
 	  	file_name_(nullptr),	
-		trace_file_(cloopenwebrtc::FileWrapper::Create()),
+		trace_file_(yuntongxunwebrtc::FileWrapper::Create()),
 		clock_(Clock::GetRealTimeClock()),
 		updateIntervalMs_(kUpdateIntervalMs),
 		last_time_update_simplifiedStats_(clock_->TimeInMilliseconds()),
@@ -277,7 +277,7 @@ bool StatsCollector::AddAudioSendStatsProxy(int channelid)
 	{
 		return false;
 	}
-	AudioSendStream* pStatsProxy = new cloopenwebrtc::AudioSendStream(m_voe, channelid);
+	AudioSendStream* pStatsProxy = new yuntongxunwebrtc::AudioSendStream(m_voe, channelid);
 	audio_send_stats_proxies_.insert(pStatsProxy);
 	AddToReports(StatsReport::kStatsReportTypeAudioSend, channelid);
 	return true;
@@ -290,7 +290,7 @@ bool StatsCollector::AddAudioRecvStatsProxy(int channelid)
 	{
 		return false;
 	}
-	AudioReceiveStream* pStatsProxy = new cloopenwebrtc::AudioReceiveStream(m_voe, channelid);
+	AudioReceiveStream* pStatsProxy = new yuntongxunwebrtc::AudioReceiveStream(m_voe, channelid);
 	audio_receive_stats_proxies_.insert(pStatsProxy);
 	AddToReports(StatsReport::kStatsReportTypeAudioRecv, channelid);
 	return true;
@@ -388,8 +388,8 @@ void StatsCollector::GetStats(StatsContentType type, char* callid, void **pMedia
 	int size = pMediaStatisticsDataInner->ByteSize() + 8;
 	*pMediaStatisticsDataInnerArray = new char[size];
 	memset(*pMediaStatisticsDataInnerArray, 0, size);
-	cloopen_google::protobuf::io::ArrayOutputStream array_stream(*pMediaStatisticsDataInnerArray, size);
-	cloopen_google::protobuf::io::CodedOutputStream output_stream(&array_stream);
+	yuntongxun_google::protobuf::io::ArrayOutputStream array_stream(*pMediaStatisticsDataInnerArray, size);
+	yuntongxun_google::protobuf::io::CodedOutputStream output_stream(&array_stream);
 	output_stream.WriteVarint32(pMediaStatisticsDataInner->ByteSize());
 	if (pMediaStatisticsDataInner->SerializeToCodedStream(&output_stream))
 	{

@@ -13,7 +13,7 @@
 #include "../system_wrappers/include/scoped_ptr.h"
 #include "../system_wrappers/include/atomic32.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class SharedDesktopFrame::Core {
  public:
@@ -39,7 +39,7 @@ class SharedDesktopFrame::Core {
   virtual ~Core() {}
 
   Atomic32 ref_count_;
-  cloopenwebrtc::scoped_ptr<DesktopFrame> frame_;
+  yuntongxunwebrtc::scoped_ptr<DesktopFrame> frame_;
 
   DISALLOW_COPY_AND_ASSIGN(Core);
 };
@@ -75,4 +75,4 @@ SharedDesktopFrame::SharedDesktopFrame(scoped_refptr<Core> core)
       core_(core) {
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -66,7 +66,7 @@
 
 #endif // defined(WEBRTC_LINUX) || defined(WEBRTC_MAC)
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class SocketFactory : public UdpTransportImpl::SocketFactoryInterface {
  public:
@@ -2704,19 +2704,19 @@ void UdpTransportImpl::IncomingRTCPFunction(const WebRtc_Word8* rtcpPacket,
 		payloadType = (unsigned char)rtcpPacket[1];
 		rtcpSsrc = 0;
 		switch (payloadType) {
-		case cloopenwebrtc::RTCPUtility::PT_RTPFB:
+		case yuntongxunwebrtc::RTCPUtility::PT_RTPFB:
 			rtcpSsrc = ((unsigned char)rtcpPacket[8] << 24)
 				| ((unsigned char)rtcpPacket[9] << 16)
 				| ((unsigned char)rtcpPacket[10] << 8)
 				| (unsigned char)rtcpPacket[11];
 			break;
-		case cloopenwebrtc::RTCPUtility::PT_PSFB:
+		case yuntongxunwebrtc::RTCPUtility::PT_PSFB:
 			rtcpSsrc = ((unsigned char)rtcpPacket[12] << 24)
 				| ((unsigned char)rtcpPacket[13] << 16)
 				| ((unsigned char)rtcpPacket[14] << 8)
 				| (unsigned char)rtcpPacket[15];
 			break;
-        case cloopenwebrtc::RTCPUtility::PT_RR:
+        case yuntongxunwebrtc::RTCPUtility::PT_RR:
 		default:
 			rtcpSsrc = ((unsigned char)rtcpPacket[4] << 24)
 				| ((unsigned char)rtcpPacket[5] << 16)
@@ -3608,4 +3608,4 @@ size_t UdpTransportImpl::processStream(unsigned char *data, int len, bool confus
     return len;
 }
     
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

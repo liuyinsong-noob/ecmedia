@@ -16,7 +16,7 @@
 #include "screen_capturer.h"
 #include "window_capturer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // WindowCapturer implementation that uses a screen capturer to capture the
 // whole screen and crops the video frame to the window area when the captured
@@ -63,13 +63,13 @@ class CroppingWindowCapturer : public WindowCapturer,
  private:
   DesktopCaptureOptions options_;
   DesktopCapturer::Callback* callback_;
-  cloopenwebrtc::scoped_ptr<WindowCapturer> window_capturer_;
-  cloopenwebrtc::scoped_ptr<ScreenCapturer> screen_capturer_;
+  yuntongxunwebrtc::scoped_ptr<WindowCapturer> window_capturer_;
+  yuntongxunwebrtc::scoped_ptr<ScreenCapturer> screen_capturer_;
   WindowId selected_window_;
   WindowId excluded_window_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_CROPPING_WINDOW_CAPTURER_H_
 

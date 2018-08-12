@@ -15,7 +15,7 @@
 
 #include "../common_video/source/libyuv/include/scaler.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 FrameScaler::FrameScaler()
     : scaler_(new Scaler()),

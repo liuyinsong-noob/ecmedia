@@ -25,7 +25,7 @@
 #include "../module/common_types.h"  // RawVideoTypes.
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class I420Buffer;
 
@@ -83,7 +83,7 @@ int PrintVideoFrame(const VideoFrameBuffer& frame, FILE* file);
 //                   insufficient, an error will be returned.
 //   - buffer      : Pointer to buffer
 // Return value: length of buffer if OK, < 0 otherwise.
-int ExtractBuffer(const cloopenwebrtc::scoped_refptr<VideoFrameBuffer>& input_frame,
+int ExtractBuffer(const yuntongxunwebrtc::scoped_refptr<VideoFrameBuffer>& input_frame,
                   size_t size,
                   uint8_t* buffer);
 int ExtractBuffer(const VideoFrame& input_frame, size_t size, uint8_t* buffer);
@@ -164,6 +164,6 @@ class NV12ToI420Scaler {
   std::vector<uint8_t> tmp_uv_planes_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_COMMON_VIDEO_LIBYUV_INCLUDE_WEBRTC_LIBYUV_H_

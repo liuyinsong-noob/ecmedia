@@ -17,7 +17,7 @@
 #include "../typedefs.h"
 #include "../module/desktop_capture/source/desktop_geometry.h"
 
-using namespace cloopenwebrtc;
+using namespace yuntongxunwebrtc;
 
 namespace webrtc {
 

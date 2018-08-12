@@ -15,7 +15,7 @@
 #import <QTKit/QTKit.h>
 #include "trace.h"
 
-using namespace cloopenwebrtc;
+using namespace yuntongxunwebrtc;
 
 #pragma mark **** hidden class interface
 

@@ -19,7 +19,7 @@
 #include "acm_common_defs.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -129,11 +129,11 @@ int32_t ACMGenericCodec::Add10MsDataSafe(const uint32_t timestamp,
 
       in_timestamp_ix_write_--;
       assert(in_audio_ix_write_ >= 0);
-      WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                    "Adding 10ms with previous timestamp, overwriting the "
                    "previous 10ms");
     } else {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                    "Adding 10ms with previous timestamp, this will sound bad");
     }
   }
@@ -229,7 +229,7 @@ int16_t ACMGenericCodec::Encode(uint8_t* bitstream,
     *timestamp = 0;
     *bitstream_len_byte = 0;
     *encoding_type = kNoEncoding;
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                  "EncodeSafe: error, basic coding sample block is negative");
     return -1;
   }
@@ -269,7 +269,7 @@ int16_t ACMGenericCodec::Encode(uint8_t* bitstream,
         *encoding_type = kPassiveDTXFB;
       } else {
         status = -1;
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                      "EncodeSafe: Wrong sampling frequency for DTX.");
       }
 
@@ -293,7 +293,7 @@ int16_t ACMGenericCodec::Encode(uint8_t* bitstream,
         if (status < 0) {
           // TODO(tlegrand): Maybe reseting the encoder to be fresh for the next
           // frame.
-          WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding,
+          WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding,
                        unique_id_, "EncodeSafe: error in internal_encode");
           *bitstream_len_byte = 0;
           *encoding_type = kNoEncoding;
@@ -320,7 +320,7 @@ int16_t ACMGenericCodec::Encode(uint8_t* bitstream,
             *encoding_type = kNoEncoding;
             // We might have come here because of the second condition.
             status = -1;
-            WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding,
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding,
                          unique_id_, "EncodeSafe: error in InternalEncode");
             // break from the loop
             break;
@@ -390,7 +390,7 @@ int16_t ACMGenericCodec::EncoderParamsSafe(WebRtcACMCodecParams* enc_params) {
     enc_params->codec_inst.pltype = -1;
     enc_params->codec_inst.pacsize = 0;
     enc_params->codec_inst.rate = 0;
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                  "EncoderParamsSafe: error, encoder not initialized");
     return -1;
   }
@@ -421,7 +421,7 @@ int16_t ACMGenericCodec::ResetEncoderSafe() {
 
   // Reset the encoder.
   if (InternalResetEncoder() < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                  "ResetEncoderSafe: error in reset encoder");
     return -1;
   }
@@ -461,7 +461,7 @@ int16_t ACMGenericCodec::InitEncoderSafe(WebRtcACMCodecParams* codec_params,
   if ((codec_id_ >= 0) && (codec_id_ != codec_number) &&
       (codec_id_ != mirrorID)) {
     // The current codec is not the same as the one given by codec_params.
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                  "InitEncoderSafe: current codec is not the same as the one "
                  "given by codec_params, codec_id_ %d, codec_number %d, mirrorID %d",codec_id_,codec_number,mirrorID);
     return -1;
@@ -478,7 +478,7 @@ int16_t ACMGenericCodec::InitEncoderSafe(WebRtcACMCodecParams* codec_params,
     encoder_initialized_ = false;
     status = CreateEncoder();
     if (status < 0) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                    "InitEncoderSafe: cannot create encoder");
       return -1;
     } else {
@@ -489,7 +489,7 @@ int16_t ACMGenericCodec::InitEncoderSafe(WebRtcACMCodecParams* codec_params,
   num_channels_ = codec_params->codec_inst.channels;
   status = InternalInitEncoder(codec_params);
   if (status < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                  "InitEncoderSafe: error in init encoder");
     encoder_initialized_ = false;
     return -1;
@@ -564,12 +564,12 @@ int16_t ACMGenericCodec::SetBitRateSafe(const int32_t bitrate_bps) {
   // Otherwise the only acceptable value is the one that is in the database.
   CodecInst codec_params;
   if (ACMCodecDB::Codec(codec_id_, &codec_params) < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                  "SetBitRateSafe: error in ACMCodecDB::Codec");
     return -1;
   }
   if (codec_params.rate != bitrate_bps) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                  "SetBitRateSafe: rate value is not acceptable");
     return -1;
   } else {
@@ -619,7 +619,7 @@ int16_t ACMGenericCodec::CreateEncoder() {
     encoder_initialized_ = false;
   }
   if (status < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                  "CreateEncoder: error in internal create encoder");
     encoder_exist_ = false;
   } else {
@@ -659,7 +659,7 @@ int16_t ACMGenericCodec::SetVADSafe(bool* enable_dtx,
     if (!STR_CASE_CMP(encoder_params_.codec_inst.plname, "G729")
         && !has_internal_dtx_) {
       if (ACMGenericCodec::EnableDTX() < 0) {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                      "SetVADSafe: error in enable DTX");
         *enable_dtx = false;
         *enable_vad = vad_enabled_;
@@ -667,7 +667,7 @@ int16_t ACMGenericCodec::SetVADSafe(bool* enable_dtx,
       }
     } else {
       if (EnableDTX() < 0) {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                      "SetVADSafe: error in enable DTX");
         *enable_dtx = false;
         *enable_vad = vad_enabled_;
@@ -698,7 +698,7 @@ int16_t ACMGenericCodec::SetVADSafe(bool* enable_dtx,
   int16_t status = (*enable_vad) ? EnableVAD(*mode) : DisableVAD();
   if (status < 0) {
     // Failed to set VAD, disable DTX.
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
     "SetVADSafe: error in enable VAD");
     DisableDTX();
     *enable_dtx = false;
@@ -748,7 +748,7 @@ int16_t ACMGenericCodec::DisableDTX() {
 
 int16_t ACMGenericCodec::EnableVAD(ACMVADMode mode) {
   if ((mode < VADNormal) || (mode > VADVeryAggr)) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                  "EnableVAD: error in VAD mode range");
     return -1;
   }
@@ -756,14 +756,14 @@ int16_t ACMGenericCodec::EnableVAD(ACMVADMode mode) {
   if (!vad_enabled_) {
     if (WebRtcVad_Create(&ptr_vad_inst_) < 0) {
       ptr_vad_inst_ = NULL;
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                    "EnableVAD: error in create VAD");
       return -1;
     }
     if (WebRtcVad_Init(ptr_vad_inst_) < 0) {
       WebRtcVad_Free(ptr_vad_inst_);
       ptr_vad_inst_ = NULL;
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                    "EnableVAD: error in init VAD");
       return -1;
     }
@@ -780,7 +780,7 @@ int16_t ACMGenericCodec::EnableVAD(ACMVADMode mode) {
       WebRtcVad_Free(ptr_vad_inst_);
       ptr_vad_inst_ = NULL;
     }
-    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                  "EnableVAD: failed to set the VAD mode");
     return -1;
   }
@@ -948,7 +948,7 @@ int16_t ACMGenericCodec::EncoderSampFreq(uint16_t* samp_freq_hz) {
   int32_t f;
   f = ACMCodecDB::CodecFreq(codec_id_);
   if (f < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                  "EncoderSampFreq: codec frequency is negative");
     return -1;
   } else {
@@ -961,7 +961,7 @@ int32_t ACMGenericCodec::ConfigISACBandwidthEstimator(
     const uint8_t /* init_frame_size_msec */,
     const uint16_t /* init_rate_bit_per_sec */,
     const bool /* enforce_frame_size  */) {
-  WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                "The send-codec is not iSAC, failed to config iSAC bandwidth "
                "estimator.");
   return -1;
@@ -969,14 +969,14 @@ int32_t ACMGenericCodec::ConfigISACBandwidthEstimator(
 
 int32_t ACMGenericCodec::SetISACMaxRate(
     const uint32_t /* max_rate_bit_per_sec */) {
-  WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                "The send-codec is not iSAC, failed to set iSAC max rate.");
   return -1;
 }
 
 int32_t ACMGenericCodec::SetISACMaxPayloadSize(
     const uint16_t /* max_payload_len_bytes */) {
-  WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                "The send-codec is not iSAC, failed to set iSAC max "
                "payload-size.");
   return -1;
@@ -984,7 +984,7 @@ int32_t ACMGenericCodec::SetISACMaxPayloadSize(
 
 int16_t ACMGenericCodec::UpdateEncoderSampFreq(
     uint16_t /* samp_freq_hz */) {
-  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                "It is asked for a change in smapling frequency while the "
                "current  send-codec supports only one sampling rate.");
   return -1;
@@ -994,17 +994,17 @@ int16_t ACMGenericCodec::REDPayloadISAC(const int32_t /* isac_rate */,
                                         const int16_t /* isac_bw_estimate */,
                                         uint8_t* /* payload */,
                                         int16_t* /* payload_len_bytes */) {
-  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                "Error: REDPayloadISAC is an iSAC specific function");
   return -1;
 }
 
 int ACMGenericCodec::SetOpusMaxPlaybackRate(int /* frequency_hz */) {
-  WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
       "The send-codec is not Opus, failed to set maximum playback rate.");
   return -1;
 }
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

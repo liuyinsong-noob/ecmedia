@@ -43,7 +43,7 @@
 #include <google/protobuf/wire_format.h>
 #include <google/protobuf/wire_format_lite_inl.h>
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 
 namespace protobuf {
 namespace internal {
@@ -731,4 +731,4 @@ int ExtensionSet::MessageSetByteSize() const {
 
 }  // namespace internal
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google

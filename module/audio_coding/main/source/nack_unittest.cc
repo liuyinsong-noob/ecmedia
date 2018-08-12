@@ -19,7 +19,7 @@
 #include "audio_coding_module_typedefs.h"
 #include "scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -483,4 +483,4 @@ TEST(NackTest, RoudTripTimeIsApplied) {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

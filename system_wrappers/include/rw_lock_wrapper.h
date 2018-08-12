@@ -17,7 +17,7 @@
 // these OSs regular critical sections have been used to approximate RW lock
 // functionality and will therefore have worse performance.
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class LOCKABLE RWLockWrapper {
  public:
@@ -62,6 +62,6 @@ class SCOPED_LOCKABLE WriteLockScoped {
  private:
   RWLockWrapper& rw_lock_;
 };
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_INCLUDE_RW_LOCK_WRAPPER_H_

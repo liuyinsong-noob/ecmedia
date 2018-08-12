@@ -17,11 +17,11 @@
 #include "system_wrappers/interface/trace.h"
 #include "testsupport/fileutils.h"
 
-using cloopenwebrtc::CpuInfo;
-using cloopenwebrtc::CpuWrapper;
-using cloopenwebrtc::EventWrapper;
-using cloopenwebrtc::scoped_ptr;
-using cloopenwebrtc::Trace;
+using yuntongxunwebrtc::CpuInfo;
+using yuntongxunwebrtc::CpuWrapper;
+using yuntongxunwebrtc::EventWrapper;
+using yuntongxunwebrtc::scoped_ptr;
+using yuntongxunwebrtc::Trace;
 
 // This test is flaky on Windows/Release.
 // http://code.google.com/p/webrtc/issues/detail?id=290
@@ -32,10 +32,10 @@ using cloopenwebrtc::Trace;
 #endif
 TEST(CpuWrapperTest, MAYBE_Usage) {
   Trace::CreateTrace();
-  std::string trace_file = cloopenwebrtc::test::OutputPath() +
+  std::string trace_file = yuntongxunwebrtc::test::OutputPath() +
       "cpu_wrapper_unittest.txt";
   Trace::SetTraceFile(trace_file.c_str());
-  Trace::SetLevelFilter(cloopenwebrtc::kTraceAll);
+  Trace::SetLevelFilter(yuntongxunwebrtc::kTraceAll);
   printf("Number of cores detected:%u\n", CpuInfo::DetectNumberOfCores());
   scoped_ptr<CpuWrapper> cpu(CpuWrapper::CreateCpu());
   ASSERT_TRUE(cpu.get() != NULL);

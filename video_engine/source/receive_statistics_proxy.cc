@@ -18,7 +18,7 @@
 //#include "time.h"
 #include "../base/timeutils.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ReceiveStatisticsProxy::ReceiveStatisticsProxy(int channel_id)
     : channel_id_(channel_id),
@@ -129,7 +129,7 @@ void ReceiveStatisticsProxy::RtcpPacketTypesCounterUpdated(uint32_t ssrc,
 }
 
 void ReceiveStatisticsProxy::StatisticsUpdated(
-    const cloopenwebrtc::RtcpStatistics& statistics,
+    const yuntongxunwebrtc::RtcpStatistics& statistics,
     uint32_t ssrc) {
   CriticalSectionScoped lock(crit_.get());
   stats_.rtcp_stats = statistics; 
@@ -152,7 +152,7 @@ void ReceiveStatisticsProxy::CNameChanged(const char* cname, uint32_t ssrc) {
 }
 
 void ReceiveStatisticsProxy::DataCountersUpdated(
-    const cloopenwebrtc::StreamDataCounters& counters,
+    const yuntongxunwebrtc::StreamDataCounters& counters,
     uint32_t ssrc) {
   CriticalSectionScoped lock(crit_.get());
   stats_.rtp_stats = counters;

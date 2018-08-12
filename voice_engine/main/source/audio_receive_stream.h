@@ -19,7 +19,7 @@
 #include "../system_wrappers/include/critical_section_wrapper.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioReceiveStream{
  public:

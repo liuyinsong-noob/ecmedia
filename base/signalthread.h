@@ -19,7 +19,7 @@
 #include "../base/sigslot.h"
 #include "../base/thread.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ///////////////////////////////////////////////////////////////////////////////
 // SignalThread - Base class for worker threads.  The main thread should call
@@ -156,6 +156,6 @@ class SignalThread
 
 ///////////////////////////////////////////////////////////////////////////////
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_SIGNALTHREAD_H_

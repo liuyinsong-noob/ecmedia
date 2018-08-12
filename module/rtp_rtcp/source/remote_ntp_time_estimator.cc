@@ -14,7 +14,7 @@
 #include "../system_wrappers/include/clock.h"
 #include "../system_wrappers/include/timestamp_extrapolator.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const int kTimingLogIntervalMs = 10000;
 
@@ -72,4 +72,4 @@ int64_t RemoteNtpTimeEstimator::Estimate(uint32_t rtp_timestamp) {
   return receiver_capture_ntp_ms;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

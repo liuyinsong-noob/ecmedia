@@ -22,7 +22,7 @@
 #include "../module/pacing/paced_sender.h"
 #include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class CriticalSectionWrapper;
 class RtcEventLog;
@@ -99,5 +99,5 @@ class BitrateController : public Module {
                                     uint8_t* fraction_loss,
                                     int64_t* rtt) = 0;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_BITRATE_CONTROLLER_INCLUDE_BITRATE_CONTROLLER_H_

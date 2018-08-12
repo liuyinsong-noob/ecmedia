@@ -14,7 +14,7 @@
 #include <cstddef>
 #include <type_traits>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Determines if the given class has zero-argument .data() and .size() methods
 // whose return values are convertible to T* and size_t, respectively.
@@ -72,6 +72,6 @@ class Test4 {
 
 }  // namespace test_has_data_and_size
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_TYPE_TRAITS_H_

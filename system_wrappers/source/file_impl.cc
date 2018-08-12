@@ -19,7 +19,7 @@
 
 #include "../base/checks.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 FILE* FileOpen(const char* file_name_utf8, bool read_only) {
 #if defined(_WIN32)
@@ -66,12 +66,12 @@ FileWrapper& FileWrapper::operator=(FileWrapper&& other) {
 }
 
 void FileWrapper::CloseFile() {
-  cloopenwebrtc::CritScope lock(&lock_);
+  yuntongxunwebrtc::CritScope lock(&lock_);
   CloseFileImpl();
 }
 
 int FileWrapper::Rewind() {
-  cloopenwebrtc::CritScope lock(&lock_);
+  yuntongxunwebrtc::CritScope lock(&lock_);
   if (file_ != nullptr) {
     position_ = 0;
     return fseek(file_, 0, SEEK_SET);
@@ -80,12 +80,12 @@ int FileWrapper::Rewind() {
 }
 
 void FileWrapper::SetMaxFileSize(size_t bytes) {
-  cloopenwebrtc::CritScope lock(&lock_);
+  yuntongxunwebrtc::CritScope lock(&lock_);
   max_size_in_bytes_ = bytes;
 }
 
 int FileWrapper::Flush() {
-  cloopenwebrtc::CritScope lock(&lock_);
+  yuntongxunwebrtc::CritScope lock(&lock_);
   return FlushImpl();
 }
 
@@ -94,7 +94,7 @@ bool FileWrapper::OpenFile(const char* file_name_utf8, bool read_only) {
   if (length > kMaxFileNameSize - 1)
     return false;
 
-  cloopenwebrtc::CritScope lock(&lock_);
+  yuntongxunwebrtc::CritScope lock(&lock_);
   if (file_ != nullptr)
     return false;
 
@@ -105,14 +105,14 @@ bool FileWrapper::OpenFile(const char* file_name_utf8, bool read_only) {
 bool FileWrapper::OpenFromFileHandle(FILE* handle) {
   if (!handle)
     return false;
-  cloopenwebrtc::CritScope lock(&lock_);
+  yuntongxunwebrtc::CritScope lock(&lock_);
   CloseFileImpl();
   file_ = handle;
   return true;
 }
 
 int FileWrapper::Read(void* buf, size_t length) {
-  cloopenwebrtc::CritScope lock(&lock_);
+  yuntongxunwebrtc::CritScope lock(&lock_);
   if (file_ == nullptr)
     return -1;
 
@@ -124,7 +124,7 @@ bool FileWrapper::Write(const void* buf, size_t length) {
   if (buf == nullptr)
     return false;
 
-  cloopenwebrtc::CritScope lock(&lock_);
+  yuntongxunwebrtc::CritScope lock(&lock_);
 
   if (file_ == nullptr)
     return false;
@@ -149,4 +149,4 @@ int FileWrapper::FlushImpl() {
   return (file_ != nullptr) ? fflush(file_) : -1;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

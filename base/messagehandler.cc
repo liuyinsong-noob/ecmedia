@@ -11,10 +11,10 @@
 #include "../base/messagehandler.h"
 #include "../base/messagequeue.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 MessageHandler::~MessageHandler() {
   MessageQueueManager::Clear(this);
 }
 
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

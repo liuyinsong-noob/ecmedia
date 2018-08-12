@@ -11,7 +11,7 @@
 #include "video_capture_impl.h"
 #include "../system_wrappers/include/ref_count.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace videocapturemodule {
 

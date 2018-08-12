@@ -14,7 +14,7 @@
 #include "trace.h"
 
 
-using namespace cloopenwebrtc;
+using namespace yuntongxunwebrtc;
 
 @interface ECVideoCaptureiOSDeviceInfoObjC (Private)
 - (NSNumber*)getCaptureDevices;

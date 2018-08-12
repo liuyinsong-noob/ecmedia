@@ -30,7 +30,7 @@
 #include "acm_isac_macros.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -383,7 +383,7 @@ int16_t ACMISAC::InternalEncode(uint8_t* bitstream,
   while ((*bitstream_len_byte == 0) && (in_audio_ix_read_ < frame_len_smpl_)) {
     if (in_audio_ix_read_ > in_audio_ix_write_) {
       // something is wrong.
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                    "The actual frame-size of iSAC appears to be larger that "
                    "expected. All audio pushed in but no bit-stream is "
                    "generated.");
@@ -398,7 +398,7 @@ int16_t ACMISAC::InternalEncode(uint8_t* bitstream,
     in_audio_ix_read_ += samples_in_10ms_audio_;
   }
   if (*bitstream_len_byte == 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                  "ISAC Has encoded the whole frame but no bit-stream is "
                  "generated.");
   }
@@ -723,7 +723,7 @@ int32_t ACMISAC::ConfigISACBandwidthEstimator(
     }
   }
   if (status < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                  "Couldn't config iSAC BWE.");
     return -1;
   }
@@ -870,4 +870,4 @@ AudioDecoder* ACMISAC::Decoder(int codec_id) {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

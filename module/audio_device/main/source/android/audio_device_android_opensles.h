@@ -22,7 +22,7 @@
 #include <SLES/OpenSLES_Android.h>
 #include <SLES/OpenSLES_AndroidConfiguration.h>
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 class EventWrapper;
 

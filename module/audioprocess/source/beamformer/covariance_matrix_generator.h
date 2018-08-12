@@ -13,7 +13,7 @@
 
 #include "complex_matrix.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Helper class for Beamformer in charge of generating covariance matrices. For
 // each function, the passed-in ComplexMatrix is expected to be of size
@@ -67,6 +67,6 @@ class CovarianceMatrixGenerator {
                                   ComplexMatrix<float>* mat);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_BEAMFORMER_BF_HELPERS_H_

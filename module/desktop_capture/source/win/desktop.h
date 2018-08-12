@@ -17,7 +17,7 @@
 #include "../base/constructormagic.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Desktop {
  public:
@@ -59,6 +59,6 @@ class Desktop {
   DISALLOW_COPY_AND_ASSIGN(Desktop);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_WIN_DESKTOP_H_

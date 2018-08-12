@@ -13,7 +13,7 @@
 #include "color_enhancement.h"
 #include "color_enhancement_private.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace VideoProcessing {
 
 int32_t ColorEnhancement(I420VideoFrame* frame) {

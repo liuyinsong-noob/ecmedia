@@ -10,7 +10,7 @@
 
 #include "random_vector.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const int16_t RandomVector::kRandomTable[RandomVector::kRandomTableSize] = {
     2680, 5532, 441, 5520, 16170, -5146, -1024, -8733, 3115, 9598, -10380,
@@ -54,4 +54,4 @@ void RandomVector::IncreaseSeedIncrement(int16_t increase_by) {
   seed_increment_+= increase_by;
   seed_increment_ &= kRandomTableSize - 1;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

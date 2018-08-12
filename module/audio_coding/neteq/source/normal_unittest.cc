@@ -27,7 +27,7 @@
 
 using ::testing::_;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(Normal, CreateAndDestroy) {
   MockDecoderDatabase db;
@@ -117,4 +117,4 @@ TEST(Normal, InputLengthAndChannelsDoNotMatch) {
 
 // TODO(hlundin): Write more tests.
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

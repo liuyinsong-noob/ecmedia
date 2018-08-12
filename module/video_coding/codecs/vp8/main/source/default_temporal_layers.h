@@ -14,7 +14,7 @@
 
 #include "temporal_layers.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class DefaultTemporalLayers : public TemporalLayers {
  public:

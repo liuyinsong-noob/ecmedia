@@ -11,7 +11,7 @@
 #include "../module/video_coding/codecs/vp9/screenshare_layers.h"
 #include "../base/checks.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ScreenshareLayersVP9::ScreenshareLayersVP9(uint8_t num_layers)
     : num_layers_(num_layers),
@@ -90,4 +90,4 @@ ScreenshareLayersVP9::GetSuperFrameSettings(uint32_t timestamp,
   return settings;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

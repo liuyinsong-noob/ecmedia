@@ -126,7 +126,7 @@
     leftLabel3.lineBreakMode = NSLineBreakByWordWrapping;
     leftLabel3.backgroundColor = [UIColor clearColor];
     leftLabel3.font = [UIFont systemFontOfSize:13.0f];
-    leftLabel3.text = @"请按cloopen.com开发文档说明完善配置文件，并导入SD卡或描述文件来使用";
+    leftLabel3.text = @"请按yuntongxun.com开发文档说明完善配置文件，并导入SD卡或描述文件来使用";
     leftLabel3.textColor = [UIColor whiteColor];
     CGSize size = [leftLabel3.text sizeWithFont:leftLabel3.font constrainedToSize:CGSizeMake(138.0f, 200.0f) lineBreakMode:NSLineBreakByWordWrapping];
     leftLabel3.frame = CGRectMake(11, leftView.frame.size.height - size.height - 11, size.width, size.height);
@@ -195,7 +195,7 @@
         infoLabel1.textColor = [UIColor whiteColor];
         infoLabel1.backgroundColor = [UIColor clearColor];
         infoLabel1.lineBreakMode = NSLineBreakByWordWrapping;
-        infoLabel1.text = @"如果您是开发者\n并已查阅cloopen.com中的\n相关文档，\n左侧属于您";
+        infoLabel1.text = @"如果您是开发者\n并已查阅yuntongxun.com中的\n相关文档，\n左侧属于您";
         infoLabel1.font = [UIFont systemFontOfSize:15.0f];
         size = [infoLabel1.text sizeWithFont:infoLabel1.font constrainedToSize:CGSizeMake(200.0f, 100.0f) lineBreakMode:NSLineBreakByWordWrapping];
         infoLabel1.frame = CGRectMake(24.0f, leftView.frame.origin.y+(leftimage.frame.origin.y-17.0f-11.0f-9.0f-size.height), size.width, size.height);
@@ -277,7 +277,7 @@
     self.modelEngineVoip.developerUserPasswd = userPwd.length>0?__TEXT(userPwd):nil;
     if ([self.modelEngineVoip.developerUserName length]>0 && [self.modelEngineVoip.developerUserPasswd length]> 0)
     {
-        self.modelEngineVoip.serverIP = @"sandboxapp.cloopen.com";
+        self.modelEngineVoip.serverIP = @"sandboxapp.yuntongxun.com";
         self.modelEngineVoip.serverPort = 8883;
         [self.modelEngineVoip getDemoAccountsWithUserName:self.modelEngineVoip.developerUserName andUserPwd:self.modelEngineVoip.developerUserPasswd];
     }

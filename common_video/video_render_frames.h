@@ -19,7 +19,7 @@
 #include "./module/video_coding/main/include/video_frame.h"
 #include "./base/optional.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Class definitions
 class VideoRenderFrames {
@@ -31,7 +31,7 @@ class VideoRenderFrames {
   int32_t AddFrame(VideoFrame&& new_frame);
 
   // Get a frame for rendering, or false if it's not time to render.
-  cloopenwebrtc::Optional<VideoFrame> FrameToRender();
+  yuntongxunwebrtc::Optional<VideoFrame> FrameToRender();
 
   // Returns the number of ms to next frame to render
   uint32_t TimeToNextFrameRelease();
@@ -48,6 +48,6 @@ class VideoRenderFrames {
   int64_t last_render_time_ms_ = 0;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_COMMON_VIDEO_VIDEO_RENDER_FRAMES_H_

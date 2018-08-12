@@ -42,7 +42,7 @@
 // http://msdn.microsoft.com/en-us/library/dd183375.aspx
 // http://msdn.microsoft.com/en-us/library/dd183376.aspx
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 static const WebRtc_UWord32 kAvifHasindex       = 0x00000010;
 static const WebRtc_UWord32 kAvifMustuseindex   = 0x00000020;
@@ -1770,4 +1770,4 @@ void AviFile::WriteIndex()
     }
     PutLE32LengthFromCurrent(static_cast<long>(idxChunkSize));
 }
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

@@ -18,7 +18,7 @@
 #include "typedefs.h"
 #include "vie_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class CriticalSectionWrapper;
 class CpuWrapper;
@@ -51,6 +51,6 @@ class ViEPerformanceMonitor {
   ViEBaseObserver* vie_base_observer_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_VIDEO_ENGINE_VIE_PERFORMANCE_MONITOR_H_

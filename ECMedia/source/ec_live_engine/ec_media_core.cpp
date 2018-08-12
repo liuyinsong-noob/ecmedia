@@ -55,7 +55,7 @@
 
 #include <iostream>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     
 #define VIDEO_CODEC "H264"
 #define VIDEO_SAMPLE_RATE 90000
@@ -1142,4 +1142,4 @@ namespace cloopenwebrtc {
         share_window_id_ = -1;
         return 0;
     }
-} // end of namespace cloopenwebrtc
+} // end of namespace yuntongxunwebrtc

@@ -20,7 +20,7 @@
 #include "../module/common_types.h"
 #include "../base/constructormagic.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // 32 bit atomic variable.  Note that this class relies on the compiler to
 // align the 32 bit value correctly (on a 32 bit boundary), so as long as you're
@@ -60,6 +60,6 @@ private:
 
   int32_t value_;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_INCLUDE_ATOMIC32_H_

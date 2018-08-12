@@ -40,7 +40,7 @@ namespace {
 const size_t kDefaultPayloadSize = 1440;
 }
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 #ifdef WEBRTC_IOS
     extern bool IsH264DecodeSupportedObjC();
     extern bool IsH264EncodeSupportedObjC();

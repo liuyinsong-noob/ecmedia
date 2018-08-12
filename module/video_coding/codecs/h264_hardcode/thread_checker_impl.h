@@ -16,7 +16,7 @@
 #include "criticalsection.h"
 #include "platform_thread_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Real implementation of ThreadChecker, for use in debug mode, or
 // for temporary use in release mode (e.g. to RTC_CHECK on a threading issue

@@ -11,7 +11,7 @@
 #ifndef WEBRTC_MODULES_AUDIO_DEVICE_ANDROID_AUDIO_COMMON_H_
 #define WEBRTC_MODULES_AUDIO_DEVICE_ANDROID_AUDIO_COMMON_H_
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 enum {
   kDefaultSampleRate = 44100,

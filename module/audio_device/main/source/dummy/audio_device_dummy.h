@@ -15,7 +15,7 @@
 
 #include "audio_device_generic.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioDeviceDummy : public AudioDeviceGeneric {
  public:
@@ -143,6 +143,6 @@ class AudioDeviceDummy : public AudioDeviceGeneric {
   virtual void AttachAudioBuffer(AudioDeviceBuffer* audioBuffer) OVERRIDE;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_AUDIO_DEVICE_AUDIO_DEVICE_DUMMY_H

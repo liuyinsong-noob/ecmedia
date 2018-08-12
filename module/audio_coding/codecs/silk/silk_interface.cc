@@ -143,7 +143,7 @@ WebRtc_Word16 WebRtcSilk_Encode(silk_enc_struct *silk_encinst,
     WebRtc_Word16 outlen = 7680*2;
     
     
-//    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, 0,
+//    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, 0,
 //                 "InternalEncode: error in encode for SILK %d", silk_encinst->control.packetLossPercentage );
     
     SKP_int ret = SKP_Silk_SDK_Encode(silk_encinst->psEnc,

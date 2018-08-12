@@ -13,7 +13,7 @@
 #include "vie_frame_provider_base.h"
 #include "serphonecall.h"
 
-class VideoFrameDeliver :public cloopenwebrtc::ViEFrameCallback {
+class VideoFrameDeliver :public yuntongxunwebrtc::ViEFrameCallback {
     
 public:
     VideoFrameDeliver(SerPhoneCall *call);
@@ -21,7 +21,7 @@ public:
 public:
     // Implementing ViEFrameCallback.
     void DeliverFrame(int id,
-                      cloopenwebrtc::I420VideoFrame* video_frame,
+                      yuntongxunwebrtc::I420VideoFrame* video_frame,
  /*                     int num_csrcs = 0,*/
                       const std::vector<uint32_t>& csrcs);
     

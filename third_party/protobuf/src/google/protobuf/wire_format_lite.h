@@ -45,7 +45,7 @@
 #include <google/protobuf/message_lite.h>
 #include <google/protobuf/io/coded_stream.h>  // for CodedOutputStream::Varint32Size
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 
 namespace protobuf {
   template <typename T> class RepeatedField;  // repeated_field.h
@@ -185,7 +185,7 @@ class LIBPROTOBUF_EXPORT WireFormatLite {
 // type-safe, though, so prefer it if possible.
 #define GOOGLE_PROTOBUF_WIRE_FORMAT_MAKE_TAG(FIELD_NUMBER, TYPE)                  \
   static_cast<uint32>(                                                   \
-    ((FIELD_NUMBER) << ::cloopen_google::protobuf::internal::WireFormatLite::kTagTypeBits) \
+    ((FIELD_NUMBER) << ::yuntongxun_google::protobuf::internal::WireFormatLite::kTagTypeBits) \
       | (TYPE))
 
   // These are the tags for the old MessageSet format, which was defined as:
@@ -502,13 +502,13 @@ class LIBPROTOBUF_EXPORT WireFormatLite {
   static inline bool ReadRepeatedFixedSizePrimitive(
       int tag_size,
       uint32 tag,
-      cloopen_google::protobuf::io::CodedInputStream* input,
+      yuntongxun_google::protobuf::io::CodedInputStream* input,
       RepeatedField<CType>* value) GOOGLE_ATTRIBUTE_ALWAYS_INLINE;
 
   // Like ReadRepeatedFixedSizePrimitive but for packed primitive fields.
   template <typename CType, enum FieldType DeclaredType>
   static inline bool ReadPackedFixedSizePrimitive(
-      cloopen_google::protobuf::io::CodedInputStream* input,
+      yuntongxun_google::protobuf::io::CodedInputStream* input,
       RepeatedField<CType>* value) GOOGLE_ATTRIBUTE_ALWAYS_INLINE;
 
   static const CppType kFieldTypeToCppTypeMap[];
@@ -657,5 +657,5 @@ inline int64 WireFormatLite::ZigZagDecode64(uint64 n) {
 }  // namespace internal
 }  // namespace protobuf
 
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 #endif  // GOOGLE_PROTOBUF_WIRE_FORMAT_LITE_H__

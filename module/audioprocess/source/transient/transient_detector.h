@@ -17,7 +17,7 @@
 #include "wpd_tree.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // This is an implementation of the transient detector described in "Causal
 // Wavelet based transient detector".
@@ -82,6 +82,6 @@ class TransientDetector {
   bool using_reference_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_TRANSIENT_TRANSIENT_DETECTOR_H_

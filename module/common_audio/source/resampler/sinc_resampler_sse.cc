@@ -15,7 +15,7 @@
 
 #include <xmmintrin.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 float SincResampler::Convolve_SSE(const float* input_ptr, const float* k1,
                                   const float* k2,

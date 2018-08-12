@@ -50,7 +50,7 @@
 #include "voe_volume_control_impl.h"
 #endif
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 class VoiceEngineImpl : public voe::SharedData,  // Must be the first base class

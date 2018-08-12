@@ -24,7 +24,7 @@
 #include "preemptive_expand.h"
 #include "timestamp_scaler.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Creates all classes needed and inject them into a new NetEqImpl object.
 // Return the new object.
@@ -59,4 +59,4 @@ NetEq* NetEq::Create(const NetEq::Config& config) {
                        preemptive_expand_factory);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

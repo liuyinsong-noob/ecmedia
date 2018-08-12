@@ -17,7 +17,7 @@
 #include "voe_errors.h"
 #include "voice_engine_impl.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VoENetEqStats* VoENetEqStats::GetInterface(VoiceEngine* voiceEngine)
 {
@@ -93,4 +93,4 @@ int VoENetEqStatsImpl::GetDecodingCallStatistics(
 
 #endif  // #ifdef WEBRTC_VOICE_ENGINE_NETEQ_STATS_API
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

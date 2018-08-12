@@ -47,7 +47,7 @@
 
 #include <google/protobuf/stubs/atomicops.h>
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 
 namespace {
@@ -94,6 +94,6 @@ void GoogleOnceInitImpl(ProtobufOnceType* once, Closure* closure) {
 }
 
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 
 #endif  // GOOGLE_PROTOBUF_NO_THREAD_SAFETY

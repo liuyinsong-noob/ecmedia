@@ -377,13 +377,13 @@ std::string StatsReport::Value::ToString() const
 	switch (type_)
 	{
 	case kUInt8:
-		return cloopenwebrtc::ToString(value_.uint8_);
+		return yuntongxunwebrtc::ToString(value_.uint8_);
 	case kUInt16:
-		return cloopenwebrtc::ToString(value_.uint16_);
+		return yuntongxunwebrtc::ToString(value_.uint16_);
 	case kUInt32:
-		return cloopenwebrtc::ToString(value_.uint32_);
+		return yuntongxunwebrtc::ToString(value_.uint32_);
 	case kUInt64:
-		return cloopenwebrtc::ToString(value_.uint64_);
+		return yuntongxunwebrtc::ToString(value_.uint64_);
 	case kString:
 		return *value_.string_;
 	case kStaticString:

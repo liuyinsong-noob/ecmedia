@@ -11,7 +11,7 @@
 #ifndef WEBRTC_MODULES_VIDEO_PROCESSING_UTIL_SKIN_DETECTION_H_
 #define WEBRTC_MODULES_VIDEO_PROCESSING_UTIL_SKIN_DETECTION_H_
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 #define MODEL_MODE 0
 

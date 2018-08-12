@@ -19,7 +19,7 @@
 #include "../module/rtp_rtcp/source/forward_error_correction.h"
 #include "../typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class UlpfecReceiverImpl : public UlpfecReceiver {
  public:
@@ -36,7 +36,7 @@ class UlpfecReceiverImpl : public UlpfecReceiver {
   FecPacketCounter GetPacketCounter() const override;
 
  private:
-  cloopenwebrtc::CriticalSection crit_sect_;
+  yuntongxunwebrtc::CriticalSection crit_sect_;
   RtpData* recovered_packet_callback_;
   std::unique_ptr<ForwardErrorCorrection> fec_;
   // TODO(holmer): In the current version |received_packets_| is never more
@@ -47,6 +47,6 @@ class UlpfecReceiverImpl : public UlpfecReceiver {
   FecPacketCounter packet_counter_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_ULPFEC_RECEIVER_IMPL_H_

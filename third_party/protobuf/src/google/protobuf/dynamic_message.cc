@@ -77,7 +77,7 @@
 #include <google/protobuf/extension_set.h>
 #include <google/protobuf/wire_format.h>
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 
 using internal::WireFormat;
@@ -761,4 +761,4 @@ void DynamicMessageFactory::DeleteDefaultOneofInstance(
 }
 
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google

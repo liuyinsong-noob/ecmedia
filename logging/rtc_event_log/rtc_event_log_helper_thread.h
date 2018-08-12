@@ -38,7 +38,7 @@ RTC_POP_IGNORING_WUNDEF()
 
 #ifdef ENABLE_RTC_EVENT_LOG
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class RtcEventLogHelperThread final {
  public:
@@ -101,7 +101,7 @@ class RtcEventLogHelperThread final {
   std::vector<std::unique_ptr<rtclog::Event>> config_history_;
 
   std::unique_ptr<FileWrapper> file_;
-  cloopenwebrtc::PlatformThread thread_;
+  yuntongxunwebrtc::PlatformThread thread_;
 
   int64_t max_size_bytes_;
   int64_t written_bytes_;
@@ -114,9 +114,9 @@ class RtcEventLogHelperThread final {
   // Temporary space for serializing profobuf data.
   std::string output_string_;
 
-  cloopenwebrtc::Event wake_periodically_;
-  cloopenwebrtc::Event wake_from_hibernation_;
-  cloopenwebrtc::Event file_finished_;
+  yuntongxunwebrtc::Event wake_periodically_;
+  yuntongxunwebrtc::Event wake_from_hibernation_;
+  yuntongxunwebrtc::Event file_finished_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(RtcEventLogHelperThread);
 };

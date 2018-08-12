@@ -14,7 +14,7 @@
 #include "cloopenwebrtc/modules/audio_coding/codecs/isac/main/interface/audio_encoder_isac.h"
 #include "scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Simply check that AudioEncoderDecoderIsacRed produces more encoded bytes
 // than AudioEncoderDecoderIsac. Also check that the redundancy information is

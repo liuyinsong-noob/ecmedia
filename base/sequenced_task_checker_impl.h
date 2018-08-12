@@ -13,7 +13,7 @@
 
 #include "../base/thread_checker.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class TaskQueue;
 // Real implementation of SequencedTaskChecker, for use in debug mode, or
@@ -41,5 +41,5 @@ class SequencedTaskCheckerImpl {
   mutable QueueId valid_queue_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_BASE_SEQUENCED_TASK_CHECKER_IMPL_H_

@@ -13,7 +13,7 @@
 
 #include "../video_capture_delay.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 namespace videocapturemodule
 {

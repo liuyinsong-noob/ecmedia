@@ -19,7 +19,7 @@
 #include "video_capture_qtkit_utility.h"
 #include "trace.h"
 
-using namespace cloopenwebrtc;
+using namespace yuntongxunwebrtc;
 using namespace videocapturemodule;
 
 @implementation VideoCaptureMacQTKitObjC

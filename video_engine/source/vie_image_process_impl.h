@@ -17,7 +17,7 @@
 
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class ViESharedData;
 

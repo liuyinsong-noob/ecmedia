@@ -13,7 +13,7 @@
 
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // A class to store an opaque handle of the underlying video frame. This is used
 // when the frame is backed by a texture. WebRTC carries the handle in

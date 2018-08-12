@@ -14,7 +14,7 @@
 #include "voe_file.h"
 #include "shared_data.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VoEFileImpl : public VoEFile
 {

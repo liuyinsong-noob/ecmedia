@@ -12,7 +12,7 @@
 
 #include "../base/checks.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 Vad::Vad(enum Aggressiveness mode) {
   CHECK_EQ(WebRtcVad_Create(&handle_), 0);

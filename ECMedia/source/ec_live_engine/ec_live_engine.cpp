@@ -14,7 +14,7 @@
 #include "ec_hls_puller.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     static ECLiveEngine *ec_live_engine_ = NULL;
     ECLiveEngine::ECLiveEngine()
     {

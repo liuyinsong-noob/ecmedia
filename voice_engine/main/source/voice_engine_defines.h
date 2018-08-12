@@ -25,7 +25,7 @@
 //  Enumerators
 // ----------------------------------------------------------------------------
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Internal buffer size required for mono audio, based on the highest sample
 // rate voice engine supports (10 ms of audio at 192 kHz).
@@ -173,7 +173,7 @@ enum { kVoiceEngineMaxRtpExtensionId = 14 };
 //  Inline functions
 // ----------------------------------------------------------------------------
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 inline int VoEId(int veId, int chId)

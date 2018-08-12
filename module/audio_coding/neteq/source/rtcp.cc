@@ -17,7 +17,7 @@
 #include "signal_processing_library.h"
 #include "module_common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 void Rtcp::Init(uint16_t start_sequence_number) {
   cycles_ = 0;
@@ -93,4 +93,4 @@ void Rtcp::GetStatistics(bool no_reset, RtcpStatistics* stats) {
   stats->jitter = jitter_ >> 4;  // Scaling from Q4.
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

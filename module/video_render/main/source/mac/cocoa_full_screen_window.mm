@@ -11,7 +11,7 @@
 #include "cocoa_full_screen_window.h"
 #include "trace.h"
 
-using namespace cloopenwebrtc;
+using namespace yuntongxunwebrtc;
 
 @implementation CocoaFullScreenWindow
 

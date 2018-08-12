@@ -16,7 +16,7 @@
 #include "desktop_region.h"
 #include "../system_wrappers/include/rw_lock_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // ScreenCapturerHelper is intended to be used by an implementation of the
 // ScreenCapturer interface. It maintains a thread-safe invalid region, and
@@ -70,7 +70,7 @@ class ScreenCapturerHelper {
   DesktopRegion invalid_region_;
 
   // A lock protecting |invalid_region_| across threads.
-  cloopenwebrtc::scoped_ptr<RWLockWrapper> invalid_region_lock_;
+  yuntongxunwebrtc::scoped_ptr<RWLockWrapper> invalid_region_lock_;
 
   // The size of the most recently captured screen.
   DesktopSize size_most_recent_;
@@ -83,6 +83,6 @@ class ScreenCapturerHelper {
   DISALLOW_COPY_AND_ASSIGN(ScreenCapturerHelper);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_SCREEN_CAPTURER_HELPER_H_

@@ -12,7 +12,7 @@
 
 #include "../base/stringutils.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 Location::Location(const char* function_name, const char* file_and_line)
     : function_name_(function_name), file_and_line_(file_and_line) {}
@@ -35,4 +35,4 @@ std::string Location::ToString() const {
   return buf;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

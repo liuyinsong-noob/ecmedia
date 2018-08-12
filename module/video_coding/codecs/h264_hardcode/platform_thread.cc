@@ -17,7 +17,7 @@
 #include <sys/syscall.h>
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 PlatformThreadId CurrentThreadId() {
   PlatformThreadId ret;

@@ -15,7 +15,7 @@
 #include "module_common_types.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Error codes
 #define VCM_FRAME_NOT_READY      3

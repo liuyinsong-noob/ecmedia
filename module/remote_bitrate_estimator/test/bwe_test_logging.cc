@@ -23,7 +23,7 @@
 #include "../base/platform_thread.h"
 #include "../system_wrappers/include/critical_section_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 	namespace testing {
 		namespace bwe {
 
@@ -59,27 +59,27 @@ namespace cloopenwebrtc {
 
 			void Logging::SetGlobalContext(uint32_t name) {
 				CriticalSectionScoped cs(crit_sect_.get());
-				thread_map_[cloopenwebrtc::CurrentThreadId()].global_state.tag = ToString(name);
+				thread_map_[yuntongxunwebrtc::CurrentThreadId()].global_state.tag = ToString(name);
 			}
 
 			void Logging::SetGlobalContext(const std::string& name) {
 				CriticalSectionScoped cs(crit_sect_.get());
-				thread_map_[cloopenwebrtc::CurrentThreadId()].global_state.tag = name;
+				thread_map_[yuntongxunwebrtc::CurrentThreadId()].global_state.tag = name;
 			}
 
 			void Logging::SetGlobalContext(const char* name) {
 				CriticalSectionScoped cs(crit_sect_.get());
-				thread_map_[cloopenwebrtc::CurrentThreadId()].global_state.tag = name;
+				thread_map_[yuntongxunwebrtc::CurrentThreadId()].global_state.tag = name;
 			}
 
 			void Logging::SetGlobalEnable(bool enabled) {
 				CriticalSectionScoped cs(crit_sect_.get());
-				thread_map_[cloopenwebrtc::CurrentThreadId()].global_state.enabled = enabled;
+				thread_map_[yuntongxunwebrtc::CurrentThreadId()].global_state.enabled = enabled;
 			}
 
 			void Logging::Log(const char format[], ...) {
 				CriticalSectionScoped cs(crit_sect_.get());
-				ThreadMap::iterator it = thread_map_.find(cloopenwebrtc::CurrentThreadId());
+				ThreadMap::iterator it = thread_map_.find(yuntongxunwebrtc::CurrentThreadId());
 				DCHECK(it != thread_map_.end());
 				const State& state = it->second.stack.top();
 				if (state.enabled) {
@@ -116,7 +116,7 @@ namespace cloopenwebrtc {
 				uint32_t ssrc,
 				const std::string& alg_name) {
 				CriticalSectionScoped cs(crit_sect_.get());
-				ThreadMap::iterator it = thread_map_.find(cloopenwebrtc::CurrentThreadId());
+				ThreadMap::iterator it = thread_map_.find(yuntongxunwebrtc::CurrentThreadId());
 				DCHECK(it != thread_map_.end());
 				const State& state = it->second.stack.top();
 				if (state.enabled) {
@@ -133,7 +133,7 @@ namespace cloopenwebrtc {
 				double value,
 				int flow_id) {
 				CriticalSectionScoped cs(crit_sect_.get());
-				ThreadMap::iterator it = thread_map_.find(cloopenwebrtc::CurrentThreadId());
+				ThreadMap::iterator it = thread_map_.find(yuntongxunwebrtc::CurrentThreadId());
 				DCHECK(it != thread_map_.end());
 				const State& state = it->second.stack.top();
 				if (state.enabled) {
@@ -146,7 +146,7 @@ namespace cloopenwebrtc {
 				double value,
 				int flow_id) {
 				CriticalSectionScoped cs(crit_sect_.get());
-				ThreadMap::iterator it = thread_map_.find(cloopenwebrtc::CurrentThreadId());
+				ThreadMap::iterator it = thread_map_.find(yuntongxunwebrtc::CurrentThreadId());
 				DCHECK(it != thread_map_.end());
 				const State& state = it->second.stack.top();
 				if (state.enabled) {
@@ -162,7 +162,7 @@ namespace cloopenwebrtc {
 				const std::string& error_title,
 				int flow_id) {
 				CriticalSectionScoped cs(crit_sect_.get());
-				ThreadMap::iterator it = thread_map_.find(cloopenwebrtc::CurrentThreadId());
+				ThreadMap::iterator it = thread_map_.find(yuntongxunwebrtc::CurrentThreadId());
 				DCHECK(it != thread_map_.end());
 				const State& state = it->second.stack.top();
 				if (state.enabled) {
@@ -181,7 +181,7 @@ namespace cloopenwebrtc {
 				const std::string& limit_title,
 				int flow_id) {
 				CriticalSectionScoped cs(crit_sect_.get());
-				ThreadMap::iterator it = thread_map_.find(cloopenwebrtc::CurrentThreadId());
+				ThreadMap::iterator it = thread_map_.find(yuntongxunwebrtc::CurrentThreadId());
 				DCHECK(it != thread_map_.end());
 				const State& state = it->second.stack.top();
 				if (state.enabled) {
@@ -196,7 +196,7 @@ namespace cloopenwebrtc {
 				const std::string& y_label,
 				int num_flows) {
 				CriticalSectionScoped cs(crit_sect_.get());
-				ThreadMap::iterator it = thread_map_.find(cloopenwebrtc::CurrentThreadId());
+				ThreadMap::iterator it = thread_map_.find(yuntongxunwebrtc::CurrentThreadId());
 				DCHECK(it != thread_map_.end());
 				const State& state = it->second.stack.top();
 				if (state.enabled) {
@@ -234,7 +234,7 @@ namespace cloopenwebrtc {
 				bool enabled) {
 				CriticalSectionScoped cs(crit_sect_.get());
 				State new_state(append_to_tag, timestamp_ms, enabled);
-				ThreadState* thread_state = &thread_map_[cloopenwebrtc::CurrentThreadId()];
+				ThreadState* thread_state = &thread_map_[yuntongxunwebrtc::CurrentThreadId()];
 				std::stack<State>* stack = &thread_state->stack;
 				if (stack->empty()) {
 					new_state.MergePrevious(thread_state->global_state);
@@ -247,7 +247,7 @@ namespace cloopenwebrtc {
 
 			void Logging::PopState() {
 				CriticalSectionScoped cs(crit_sect_.get());
-				ThreadMap::iterator it = thread_map_.find(cloopenwebrtc::CurrentThreadId());
+				ThreadMap::iterator it = thread_map_.find(yuntongxunwebrtc::CurrentThreadId());
 				DCHECK(it != thread_map_.end());
 				std::stack<State>* stack = &it->second.stack;
 				int64_t newest_timestamp_ms = stack->top().timestamp_ms;

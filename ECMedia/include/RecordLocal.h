@@ -10,9 +10,9 @@
 #include "vie_base.h"
 #include "sdk_common.h"
 
-using namespace cloopenwebrtc;
+using namespace yuntongxunwebrtc;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 	class RecordLocal : public Transport, 
 		public AudioPacketizationCallback,

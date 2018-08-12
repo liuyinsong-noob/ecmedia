@@ -12,7 +12,7 @@
 
 #include "audio_encoder_isac_t_impl.h"
 
-namespace cloopenwebrtc{
+namespace yuntongxunwebrtc{
 
 // Explicit instantiation of AudioEncoderDecoderIsacT<IsacFloat>, a.k.a.
 // AudioEncoderDecoderIsac.

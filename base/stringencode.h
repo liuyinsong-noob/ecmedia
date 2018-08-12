@@ -17,7 +17,7 @@
 
 #include "../base/checks.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 //////////////////////////////////////////////////////////////////////
 // String Encoding Utilities
@@ -219,6 +219,6 @@ char make_char_safe_for_filename(char c);
 
 //////////////////////////////////////////////////////////////////////
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_STRINGENCODE_H__

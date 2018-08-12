@@ -14,7 +14,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "cloopenwebrtc/modules/bitrate_controller/send_side_bandwidth_estimation.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class TestBandwidthEstimation : public SendSideBandwidthEstimation {
  public:

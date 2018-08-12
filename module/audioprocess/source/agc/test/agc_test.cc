@@ -49,7 +49,7 @@ using ::testing::Return;
 using ::testing::SaveArg;
 using ::testing::SetArgReferee;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 
 const char kUsage[] = "\nProcess an audio file to simulate an analog agc.";
@@ -148,8 +148,8 @@ void RunAgc() {
 }  // namespace webrtc
 
 int main(int argc, char* argv[]) {
-  google::SetUsageMessage(cloopenwebrtc::kUsage);
+  google::SetUsageMessage(yuntongxunwebrtc::kUsage);
   google::ParseCommandLineFlags(&argc, &argv, true);
-  cloopenwebrtc::RunAgc();
+  yuntongxunwebrtc::RunAgc();
   return 0;
 }

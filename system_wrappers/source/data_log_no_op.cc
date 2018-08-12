@@ -12,7 +12,7 @@
 
 #include <string>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 int DataLog::CreateLog() {
   return 0;

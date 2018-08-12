@@ -16,7 +16,7 @@
 #include "gain_control.h"
 #include "../system_wrappers/include/critical_section_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 typedef void Handle;
 
@@ -346,4 +346,4 @@ int GainControlImpl::GetHandleError(void* handle) const {
   assert(handle != NULL);
   return apm_->kUnspecifiedError;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

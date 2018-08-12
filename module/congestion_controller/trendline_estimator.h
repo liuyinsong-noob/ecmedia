@@ -18,7 +18,7 @@
 
 #include "../base/constructormagic.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class TrendlineEstimator {
  public:
@@ -66,6 +66,6 @@ class TrendlineEstimator {
 
   DISALLOW_COPY_AND_ASSIGN(TrendlineEstimator);
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_CONGESTION_CONTROLLER_TRENDLINE_ESTIMATOR_H_

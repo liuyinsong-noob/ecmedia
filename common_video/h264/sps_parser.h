@@ -13,11 +13,11 @@
 
 #include "./base/optional.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class BitBuffer;
 }
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // A class for parsing out sequence parameter set (SPS) data from an H264 NALU.
 class SpsParser {
@@ -41,13 +41,13 @@ class SpsParser {
   };
 
   // Unpack RBSP and parse SPS state from the supplied buffer.
-  static cloopenwebrtc::Optional<SpsState> ParseSps(const uint8_t* data, size_t length);
+  static yuntongxunwebrtc::Optional<SpsState> ParseSps(const uint8_t* data, size_t length);
 
  protected:
   // Parse the SPS state, up till the VUI part, for a bit buffer where RBSP
   // decoding has already been performed.
-  static cloopenwebrtc::Optional<SpsState> ParseSpsUpToVui(cloopenwebrtc::BitBuffer* buffer);
+  static yuntongxunwebrtc::Optional<SpsState> ParseSpsUpToVui(yuntongxunwebrtc::BitBuffer* buffer);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_COMMON_VIDEO_H264_SPS_PARSER_H_

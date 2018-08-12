@@ -16,7 +16,7 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "beamformer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class MockBeamformer : public Beamformer {
  public:
@@ -33,6 +33,6 @@ class MockBeamformer : public Beamformer {
   MOCK_METHOD0(is_target_present, bool());
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_BEAMFORMER_MOCK_BEAMFORMER_H_

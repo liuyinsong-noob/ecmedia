@@ -10,7 +10,7 @@
 
 #include "channel_buffer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 IFChannelBuffer::IFChannelBuffer(int samples_per_channel, int num_channels)
     : ivalid_(true),
@@ -60,4 +60,4 @@ void IFChannelBuffer::RefreshI() const {
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

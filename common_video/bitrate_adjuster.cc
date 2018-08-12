@@ -17,7 +17,7 @@
 #include "../system_wrappers/include/logging.h"
 #include "../system_wrappers/include/clock.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Update bitrate at most once every second.
 const uint32_t BitrateAdjuster::kBitrateUpdateIntervalMs = 1000;
@@ -62,22 +62,22 @@ void BitrateAdjuster::SetTargetBitrateBps(uint32_t bitrate_bps) {
 }
 
 uint32_t BitrateAdjuster::GetTargetBitrateBps() const {
-  cloopenwebrtc::CriticalSectionScoped cs(crit_);
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_);
   return target_bitrate_bps_;
 }
 
 uint32_t BitrateAdjuster::GetAdjustedBitrateBps() const {
-  cloopenwebrtc::CriticalSectionScoped cs(crit_);
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_);
   return adjusted_bitrate_bps_;
 }
 
-cloopenwebrtc::Optional<uint32_t> BitrateAdjuster::GetEstimatedBitrateBps() {
-  cloopenwebrtc::CriticalSectionScoped cs(crit_);
+yuntongxunwebrtc::Optional<uint32_t> BitrateAdjuster::GetEstimatedBitrateBps() {
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_);
   return bitrate_tracker_.Rate(clock_->TimeInMilliseconds());
 }
 
 void BitrateAdjuster::Update(size_t frame_size) {
-  cloopenwebrtc::CriticalSectionScoped cs(crit_);
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_);
   uint32_t current_time_ms = clock_->TimeInMilliseconds();
   bitrate_tracker_.Update(frame_size, current_time_ms);
   UpdateBitrate(current_time_ms);
@@ -104,7 +104,7 @@ uint32_t BitrateAdjuster::GetMaxAdjustedBitrateBps() const {
 
 // Only safe to call this after Update calls have stopped
 void BitrateAdjuster::Reset() {
-  cloopenwebrtc::CriticalSectionScoped cs(crit_);
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_);
   target_bitrate_bps_ = 0;
   adjusted_bitrate_bps_ = 0;
   last_adjusted_target_bitrate_bps_ = 0;

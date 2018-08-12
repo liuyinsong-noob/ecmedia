@@ -20,7 +20,7 @@
 #include "vie_channel.h"
 #include "voe_video_sync.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 int UpdateMeasurements(StreamSynchronization::Measurements* stream,
                        const RtpRtcp& rtp_rtcp, const RtpReceiver& receiver) {

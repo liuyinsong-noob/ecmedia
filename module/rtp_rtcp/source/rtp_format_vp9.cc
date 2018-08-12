@@ -25,7 +25,7 @@
     return false;                \
   }
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 // Length of VP9 payload descriptors' fixed part.
 const size_t kFixedPayloadDescriptorBytes = 1;
@@ -178,7 +178,7 @@ void QueuePacket(size_t start_pos,
 //      +-+-+-+-+-+-+-+-+
 //
 bool WritePictureId(const RTPVideoHeaderVP9& vp9,
-                    cloopenwebrtc::BitBufferWriter* writer) {
+                    yuntongxunwebrtc::BitBufferWriter* writer) {
   bool m_bit = (PictureIdLength(vp9) == 2);
   RETURN_FALSE_ON_ERROR(writer->WriteBits(m_bit ? 1 : 0, 1));
   RETURN_FALSE_ON_ERROR(writer->WriteBits(vp9.picture_id, m_bit ? 15 : 7));
@@ -194,7 +194,7 @@ bool WritePictureId(const RTPVideoHeaderVP9& vp9,
 //      +-+-+-+-+-+-+-+-+
 //
 bool WriteLayerInfoCommon(const RTPVideoHeaderVP9& vp9,
-                          cloopenwebrtc::BitBufferWriter* writer) {
+                          yuntongxunwebrtc::BitBufferWriter* writer) {
   RETURN_FALSE_ON_ERROR(writer->WriteBits(TemporalIdxField(vp9, 0), 3));
   RETURN_FALSE_ON_ERROR(writer->WriteBits(vp9.temporal_up_switch ? 1 : 0, 1));
   RETURN_FALSE_ON_ERROR(writer->WriteBits(SpatialIdxField(vp9, 0), 3));
@@ -211,13 +211,13 @@ bool WriteLayerInfoCommon(const RTPVideoHeaderVP9& vp9,
 //      +-+-+-+-+-+-+-+-+
 //
 bool WriteLayerInfoNonFlexibleMode(const RTPVideoHeaderVP9& vp9,
-                                   cloopenwebrtc::BitBufferWriter* writer) {
+                                   yuntongxunwebrtc::BitBufferWriter* writer) {
   RETURN_FALSE_ON_ERROR(writer->WriteUInt8(Tl0PicIdxField(vp9, 0)));
   return true;
 }
 
 bool WriteLayerInfo(const RTPVideoHeaderVP9& vp9,
-                    cloopenwebrtc::BitBufferWriter* writer) {
+                    yuntongxunwebrtc::BitBufferWriter* writer) {
   if (!WriteLayerInfoCommon(vp9, writer))
     return false;
 
@@ -235,7 +235,7 @@ bool WriteLayerInfo(const RTPVideoHeaderVP9& vp9,
 //                                                current P_DIFF.
 //
 bool WriteRefIndices(const RTPVideoHeaderVP9& vp9,
-                     cloopenwebrtc::BitBufferWriter* writer) {
+                     yuntongxunwebrtc::BitBufferWriter* writer) {
   if (!PictureIdPresent(vp9) ||
       vp9.num_ref_pics == 0 || vp9.num_ref_pics > kMaxVp9RefPics) {
     return false;
@@ -268,7 +268,7 @@ bool WriteRefIndices(const RTPVideoHeaderVP9& vp9,
 //      |    P_DIFF     | (OPTIONAL)    . R times    .
 //      +-+-+-+-+-+-+-+-+              -|           -|
 //
-bool WriteSsData(const RTPVideoHeaderVP9& vp9, cloopenwebrtc::BitBufferWriter* writer) {
+bool WriteSsData(const RTPVideoHeaderVP9& vp9, yuntongxunwebrtc::BitBufferWriter* writer) {
   DCHECK_GT(vp9.num_spatial_layers, 0U);
   DCHECK_LE(vp9.num_spatial_layers, kMaxVp9NumberOfSpatialLayers);
   DCHECK_LE(vp9.gof.num_frames_in_gof, kMaxVp9FramesInGof);
@@ -310,7 +310,7 @@ bool WriteSsData(const RTPVideoHeaderVP9& vp9, cloopenwebrtc::BitBufferWriter* w
 // M:   | EXTENDED PID  |
 //      +-+-+-+-+-+-+-+-+
 //
-bool ParsePictureId(cloopenwebrtc::BitBuffer* parser, RTPVideoHeaderVP9* vp9) {
+bool ParsePictureId(yuntongxunwebrtc::BitBuffer* parser, RTPVideoHeaderVP9* vp9) {
   uint32_t picture_id;
   uint32_t m_bit;
   RETURN_FALSE_ON_ERROR(parser->ReadBits(&m_bit, 1));
@@ -331,7 +331,7 @@ bool ParsePictureId(cloopenwebrtc::BitBuffer* parser, RTPVideoHeaderVP9* vp9) {
 // L:   |  T  |U|  S  |D|
 //      +-+-+-+-+-+-+-+-+
 //
-bool ParseLayerInfoCommon(cloopenwebrtc::BitBuffer* parser, RTPVideoHeaderVP9* vp9) {
+bool ParseLayerInfoCommon(yuntongxunwebrtc::BitBuffer* parser, RTPVideoHeaderVP9* vp9) {
   uint32_t t, u_bit, s, d_bit;
   RETURN_FALSE_ON_ERROR(parser->ReadBits(&t, 3));
   RETURN_FALSE_ON_ERROR(parser->ReadBits(&u_bit, 1));
@@ -352,7 +352,7 @@ bool ParseLayerInfoCommon(cloopenwebrtc::BitBuffer* parser, RTPVideoHeaderVP9* v
 //      |   TL0PICIDX   |
 //      +-+-+-+-+-+-+-+-+
 //
-bool ParseLayerInfoNonFlexibleMode(cloopenwebrtc::BitBuffer* parser,
+bool ParseLayerInfoNonFlexibleMode(yuntongxunwebrtc::BitBuffer* parser,
                                    RTPVideoHeaderVP9* vp9) {
   uint8_t tl0picidx;
   RETURN_FALSE_ON_ERROR(parser->ReadUInt8(&tl0picidx));
@@ -360,7 +360,7 @@ bool ParseLayerInfoNonFlexibleMode(cloopenwebrtc::BitBuffer* parser,
   return true;
 }
 
-bool ParseLayerInfo(cloopenwebrtc::BitBuffer* parser, RTPVideoHeaderVP9* vp9) {
+bool ParseLayerInfo(yuntongxunwebrtc::BitBuffer* parser, RTPVideoHeaderVP9* vp9) {
   if (!ParseLayerInfoCommon(parser, vp9))
     return false;
 
@@ -377,7 +377,7 @@ bool ParseLayerInfo(cloopenwebrtc::BitBuffer* parser, RTPVideoHeaderVP9* vp9) {
 //      +-+-+-+-+-+-+-+-+                    N=1: An additional P_DIFF follows
 //                                                current P_DIFF.
 //
-bool ParseRefIndices(cloopenwebrtc::BitBuffer* parser, RTPVideoHeaderVP9* vp9) {
+bool ParseRefIndices(yuntongxunwebrtc::BitBuffer* parser, RTPVideoHeaderVP9* vp9) {
   if (vp9->picture_id == kNoPictureId)
     return false;
 
@@ -423,7 +423,7 @@ bool ParseRefIndices(cloopenwebrtc::BitBuffer* parser, RTPVideoHeaderVP9* vp9) {
 //      |    P_DIFF     | (OPTIONAL)    . R times    .
 //      +-+-+-+-+-+-+-+-+              -|           -|
 //
-bool ParseSsData(cloopenwebrtc::BitBuffer* parser, RTPVideoHeaderVP9* vp9) {
+bool ParseSsData(yuntongxunwebrtc::BitBuffer* parser, RTPVideoHeaderVP9* vp9) {
   uint32_t n_s, y_bit, g_bit;
   RETURN_FALSE_ON_ERROR(parser->ReadBits(&n_s, 3));
   RETURN_FALSE_ON_ERROR(parser->ReadBits(&y_bit, 1));
@@ -629,7 +629,7 @@ bool RtpPacketizerVp9::WriteHeader(const PacketInfo& packet_info,
   bool e_bit = packet_info.layer_end;
   bool v_bit = hdr_.ss_data_available && b_bit;
 
-  cloopenwebrtc::BitBufferWriter writer(buffer, max_payload_length_);
+  yuntongxunwebrtc::BitBufferWriter writer(buffer, max_payload_length_);
   RETURN_FALSE_ON_ERROR(writer.WriteBits(i_bit ? 1 : 0, 1));
   RETURN_FALSE_ON_ERROR(writer.WriteBits(p_bit ? 1 : 0, 1));
   RETURN_FALSE_ON_ERROR(writer.WriteBits(l_bit ? 1 : 0, 1));
@@ -676,7 +676,7 @@ bool RtpDepacketizerVp9::Parse(ParsedPayload* parsed_payload,
   }
 
   // Parse mandatory first byte of payload descriptor.
-  cloopenwebrtc::BitBuffer parser(payload, payload_length);
+  yuntongxunwebrtc::BitBuffer parser(payload, payload_length);
   uint32_t i_bit, p_bit, l_bit, f_bit, b_bit, e_bit, v_bit;
   RETURN_FALSE_ON_ERROR(parser.ReadBits(&i_bit, 1));
   RETURN_FALSE_ON_ERROR(parser.ReadBits(&p_bit, 1));
@@ -743,4 +743,4 @@ bool RtpDepacketizerVp9::Parse(ParsedPayload* parsed_payload,
 
   return true;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

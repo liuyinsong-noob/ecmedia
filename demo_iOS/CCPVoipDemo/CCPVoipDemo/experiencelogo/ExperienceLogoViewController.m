@@ -98,7 +98,7 @@
     [rightView release];
     
     NSArray *imgArr = [[NSArray alloc] initWithObjects:@"new42.png", @"new46.png", @"new50.png", @"new48.png", nil];
-    NSArray *textArr = [[NSArray alloc] initWithObjects:@"登录cloopen.com并注册", @"填写注册信息", @"验证邮箱以及手机号", @"注册激活成功获得8元测试体验费", nil];
+    NSArray *textArr = [[NSArray alloc] initWithObjects:@"登录yuntongxun.com并注册", @"填写注册信息", @"验证邮箱以及手机号", @"注册激活成功获得8元测试体验费", nil];
     
     CGFloat frame_y = 30.0f;
     for (NSInteger i = 0; i<imgArr.count; i++)
@@ -265,7 +265,7 @@
         [self popPromptViewWithMsg:@"请输入密码！"];
     }
     [self displayProgressingView];
-    self.modelEngineVoip.serverIP = @"sandboxapp.cloopen.com";
+    self.modelEngineVoip.serverIP = @"sandboxapp.yuntongxun.com";
     self.modelEngineVoip.serverPort = 8883;
     self.modelEngineVoip.developerUserName = mailTextField.text;
     self.modelEngineVoip.developerUserPasswd = pwdTextField.text;

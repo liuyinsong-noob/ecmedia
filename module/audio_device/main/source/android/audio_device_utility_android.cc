@@ -17,7 +17,7 @@
 #include "../system_wrappers/include/critical_section_wrapper.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 AudioDeviceUtilityAndroid::AudioDeviceUtilityAndroid(const int32_t id) :
@@ -47,4 +47,4 @@ int32_t AudioDeviceUtilityAndroid::Init()
     return 0;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

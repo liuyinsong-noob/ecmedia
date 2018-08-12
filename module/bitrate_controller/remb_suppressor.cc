@@ -15,7 +15,7 @@
 
 #include "../system_wrappers/include/field_trial.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // If BWE falls more than this fraction from one REMB to the next,
 // classify this as a glitch.
@@ -114,7 +114,7 @@ bool RembSuppressor::Enabled() {
 
 void RembSuppressor::SetEnabled(bool enabled) {
   enabled_ = enabled &&
-             cloopenwebrtc::field_trial::FindFullName(
+             yuntongxunwebrtc::field_trial::FindFullName(
                  "WebRTC-ConditionalRembSuppression") == "Enabled";
 }
 

@@ -12,7 +12,7 @@
 
 #include "testing/gtest/include/gtest/gtest.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(SyncBuffer, CreateAndDestroy) {
   // Create a SyncBuffer with two channels and 10 samples each.
@@ -161,4 +161,4 @@ TEST(SyncBuffer, GetNextAudioInterleaved) {
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

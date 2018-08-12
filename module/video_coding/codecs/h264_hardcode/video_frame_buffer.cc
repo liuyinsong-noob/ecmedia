@@ -17,7 +17,7 @@
 // Aligning pointer to 64 bytes for improved performance, e.g. use SIMD.
 static const int kBufferAlignment = 64;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 
@@ -197,7 +197,7 @@ scoped_refptr<I420Buffer> I420Buffer::Copy(
   int height = buffer->height();
   scoped_refptr<I420Buffer> copy =
       new RefCountedObject<I420Buffer>(width, height);
-  CHECK(cloopenlibyuv::I420Copy(buffer->DataY(), buffer->StrideY(),
+  CHECK(yuntongxunlibyuv::I420Copy(buffer->DataY(), buffer->StrideY(),
                              buffer->DataU(), buffer->StrideU(),
                              buffer->DataV(), buffer->StrideV(),
                              copy->MutableDataY(), copy->StrideY(),

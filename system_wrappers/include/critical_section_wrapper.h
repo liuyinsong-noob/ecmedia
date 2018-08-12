@@ -15,7 +15,7 @@
 #include "../base/thread_annotations.h"
 #include "../module/common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class LOCKABLE CriticalSectionWrapper {
  public:
@@ -48,6 +48,6 @@ class SCOPED_LOCKABLE CriticalSectionScoped {
   CriticalSectionWrapper* ptr_crit_sec_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_INCLUDE_CRITICAL_SECTION_WRAPPER_H_

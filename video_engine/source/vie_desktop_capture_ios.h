@@ -20,7 +20,7 @@
 #include "libyuv.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class CriticalSectionWrapper;
 class EventWrapper;
@@ -71,7 +71,7 @@ protected:
 
     int SelectCapture(const DesktopShareType capture_type);
     void DeliverFrame();
-    int CaptrueShareFrame(cloopenwebrtc::I420VideoFrame& video_frame);
+    int CaptrueShareFrame(yuntongxunwebrtc::I420VideoFrame& video_frame);
 
     void CopyScreenList(ScreenCapturer::ScreenList &src_screen,ScreenList& dst_screen);
     void CopyWindowsList(WindowCapturer::WindowList &src_windows,WindowList& dst_windows);

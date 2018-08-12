@@ -20,7 +20,7 @@ using ::testing::SetArgPointee;
 using ::testing::InSequence;
 using ::testing::Invoke;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 static const size_t kMaxEncodedBytes = 1000;

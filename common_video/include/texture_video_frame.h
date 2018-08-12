@@ -20,7 +20,7 @@
 #include "../base/scoped_ref_ptr.h"
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class TextureVideoFrame : public I420VideoFrame {
  public:

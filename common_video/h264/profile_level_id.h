@@ -17,7 +17,7 @@
 #include "./base/optional.h"
 #include "./module/common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace H264 {
 
 // Map containting SDP codec parameters.
@@ -55,24 +55,24 @@ struct ProfileLevelId {
 // Parse profile level id that is represented as a string of 3 hex bytes.
 // Nothing will be returned if the string is not a recognized H264
 // profile level id.
-cloopenwebrtc::Optional<ProfileLevelId> ParseProfileLevelId(const char* str);
+yuntongxunwebrtc::Optional<ProfileLevelId> ParseProfileLevelId(const char* str);
 
 // Parse profile level id that is represented as a string of 3 hex bytes
 // contained in an SDP key-value map. A default profile level id will be
 // returned if the profile-level-id key is missing. Nothing will be returned if
 // the key is present but the string is invalid.
-cloopenwebrtc::Optional<ProfileLevelId> ParseSdpProfileLevelId(
+yuntongxunwebrtc::Optional<ProfileLevelId> ParseSdpProfileLevelId(
     const CodecParameterMap& params);
 
 // Given that a decoder supports up to a given frame size (in pixels) at up to a
 // given number of frames per second, return the highest H.264 level where it
 // can guarantee that it will be able to support all valid encoded streams that
 // are within that level.
-cloopenwebrtc::Optional<Level> SupportedLevel(int max_frame_pixel_count, float max_fps);
+yuntongxunwebrtc::Optional<Level> SupportedLevel(int max_frame_pixel_count, float max_fps);
 
 // Returns canonical string representation as three hex bytes of the profile
 // level id, or returns nothing for invalid profile level ids.
-cloopenwebrtc::Optional<std::string> ProfileLevelIdToString(
+yuntongxunwebrtc::Optional<std::string> ProfileLevelIdToString(
     const ProfileLevelId& profile_level_id);
 
 // Generate codec parameters that will be used as answer in an SDP negotiation
@@ -97,6 +97,6 @@ void GenerateProfileLevelIdForAnswer(
     CodecParameterMap* answer_params);
 
 }  // namespace H264
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_COMMON_VIDEO_H264_PROFILE_LEVEL_ID_H_

@@ -12,7 +12,7 @@
 #include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 #include "video_denoiser.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 #if DISPLAY || DISPLAYNEON
 static void CopyMem8x8(const uint8_t* src,

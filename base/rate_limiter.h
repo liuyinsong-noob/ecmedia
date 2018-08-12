@@ -17,7 +17,7 @@
 #include "../base/criticalsection.h"
 #include "../base/rate_statistics.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Clock;
 
@@ -43,7 +43,7 @@ class RateLimiter {
 
  private:
   Clock* const clock_;
-  cloopenwebrtc::CriticalSection lock_;
+  yuntongxunwebrtc::CriticalSection lock_;
   RateStatistics current_rate_ GUARDED_BY(lock_);
   int64_t window_size_ms_ GUARDED_BY(lock_);
   uint32_t max_rate_bps_ GUARDED_BY(lock_);
@@ -51,6 +51,6 @@ class RateLimiter {
   DISALLOW_IMPLICIT_CONSTRUCTORS(RateLimiter);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_RATE_LIMITER_H_

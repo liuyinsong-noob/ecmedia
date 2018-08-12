@@ -15,7 +15,7 @@
 #include "cloopenwebrtc/modules/audio_coding/neteq/tools/audio_loop.h"
 #include "cloopenwebrtc/test/testsupport/fileutils.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 using test::AudioLoop;
 
@@ -68,7 +68,7 @@ OpusTest::OpusTest()
 void OpusTest::PrepareSpeechData(int channel, int block_length_ms,
                                  int loop_length_ms) {
   const std::string file_name =
-        cloopenwebrtc::test::ResourcePath("audio_coding/speech_mono_32_48kHz", "pcm");
+        yuntongxunwebrtc::test::ResourcePath("audio_coding/speech_mono_32_48kHz", "pcm");
   if (loop_length_ms < block_length_ms) {
     loop_length_ms = block_length_ms;
   }

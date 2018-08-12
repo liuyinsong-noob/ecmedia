@@ -11,7 +11,7 @@
 #include "time_scheduler.h"
 #include "../system_wrappers/include/critical_section_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 TimeScheduler::TimeScheduler(const int64_t periodicityInMs)
     : _crit(CriticalSectionWrapper::CreateCriticalSection()),
       _isStarted(false),
@@ -98,4 +98,4 @@ int32_t TimeScheduler::TimeToNextUpdate(
     updateTimeInMS =  (updateTimeInMS < 0) ? 0 : updateTimeInMS;
     return 0;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

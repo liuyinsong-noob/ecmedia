@@ -57,7 +57,7 @@ struct WAVE_CHUNK_header
 };
 } // unnamed namespace
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 ModuleFileUtility::ModuleFileUtility(const WebRtc_Word32 id)
     : _wavFormatObj(),
       _dataSize(0),
@@ -2567,4 +2567,4 @@ WebRtc_UWord32 ModuleFileUtility::PlayoutPositionMs()
         return 0;
     }
 }
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

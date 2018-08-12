@@ -867,7 +867,7 @@ static void ice_check_list_gather_candidates(IceCheckList *cl, Session_Index *si
 {
 	IceStunServerCheck *check;
     /*update begin------------------Sean20130722----------for video ice------------*/
-//    cloopenwebrtc::VoEBase* base = NULL;
+//    yuntongxunwebrtc::VoEBase* base = NULL;
     void *base = NULL;
     /*update end--------------------Sean20130722----------for video ice------------*/
 	MSTimeSpec curtime = ice_current_time();
@@ -1072,12 +1072,12 @@ static void ice_send_stun_server_binding_request(void* base, const struct sockad
 
         if (IceNetworkAudio == isVideo) {
             //TODO: 
-			//cloopenwebrtc::VoEBase *network = static_cast<cloopenwebrtc::VoEBase *>(base);
+			//yuntongxunwebrtc::VoEBase *network = static_cast<yuntongxunwebrtc::VoEBase *>(base);
             //network->SendRaw(channel, (const WebRtc_Word8 *)buf, len, isRTCP,htons(servaddr->sin_port),inet_ntoa(servaddr->sin_addr));
         }
         else if (IceNetworkVideo == isVideo) {
 			//TODO: 
-			//cloopenwebrtc::ViENetwork *network = static_cast<cloopenwebrtc::ViENetwork *>(base);
+			//yuntongxunwebrtc::ViENetwork *network = static_cast<yuntongxunwebrtc::ViENetwork *>(base);
             //int transmitted_bytes;
             //network->SendUDPPacket(channel, (const WebRtc_Word8 *)buf, len, transmitted_bytes,isRTCP,htons(servaddr->sin_port),inet_ntoa(servaddr->sin_addr));
             //if (transmitted_bytes<=0) {
@@ -1120,22 +1120,22 @@ static void ice_send_binding_request(IceCheckList *cl, IceCandidatePair *pair, c
 	char tr_id_str[25];
 
 	//TODO:
-    //cloopenwebrtc::VoEBase *base = NULL;
-    //cloopenwebrtc::ViENetwork *network = NULL;
+    //yuntongxunwebrtc::VoEBase *base = NULL;
+    //yuntongxunwebrtc::ViENetwork *network = NULL;
     //if (IceNetworkAudio == cl->rtp_session->session_type)
     //{
-    //    base = (cloopenwebrtc::VoEBase *)rtp_session_get_voeBase(cl->rtp_session);
+    //    base = (yuntongxunwebrtc::VoEBase *)rtp_session_get_voeBase(cl->rtp_session);
     //}
     //else if (IceNetworkVideo == cl->rtp_session->session_type)
     //{
-    //    network = (cloopenwebrtc::ViENetwork *)rtp_session_get_vieNetwork(cl->rtp_session);
+    //    network = (yuntongxunwebrtc::ViENetwork *)rtp_session_get_vieNetwork(cl->rtp_session);
     //}
     //else
     {
         PrintConsole("WARNING: ice wrong network type!\n");
         return;
     }
-//    cloopenwebrtc::VoEBase *base = (cloopenwebrtc::VoEBase *)rtp_session->VoEBase;
+//    yuntongxunwebrtc::VoEBase *base = (yuntongxunwebrtc::VoEBase *)rtp_session->VoEBase;
     
 	transaction = ice_find_transaction(cl, pair);
 
@@ -1343,12 +1343,12 @@ static void ice_send_binding_response(const RtpSession *rtp_session, const OrtpE
         //struct	in_addr sin_addr;
         //sin_addr.s_addr = htonl(dest->addr);
         //if (IceNetworkAudio == rtp_session->session_type) {
-        //    ((cloopenwebrtc::VoEBase *)base)->SendRaw(rtp_session->channel, (const WebRtc_Word8 *)buf, len, recvport==rtp_session_get_local_port(rtp_session)?0:1,dest->port,inet_ntoa(sin_addr));
+        //    ((yuntongxunwebrtc::VoEBase *)base)->SendRaw(rtp_session->channel, (const WebRtc_Word8 *)buf, len, recvport==rtp_session_get_local_port(rtp_session)?0:1,dest->port,inet_ntoa(sin_addr));
         //}
         //else if (IceNetworkVideo == rtp_session->session_type)
         //{
         //    int transmitted_bytes;
-        //    ((cloopenwebrtc::ViENetwork *)base)->SendUDPPacket(rtp_session->channel, (const WebRtc_Word8 *)buf, len, transmitted_bytes,recvport==rtp_session_get_local_port(rtp_session)?0:1,dest->port,inet_ntoa(sin_addr));
+        //    ((yuntongxunwebrtc::ViENetwork *)base)->SendUDPPacket(rtp_session->channel, (const WebRtc_Word8 *)buf, len, transmitted_bytes,recvport==rtp_session_get_local_port(rtp_session)?0:1,dest->port,inet_ntoa(sin_addr));
         //}
         
 //		sendMessage(socket, buf, len, dest->addr, dest->port);
@@ -1412,11 +1412,11 @@ static void ice_send_error_response(const RtpSession *rtp_session, const OrtpEve
         //struct	in_addr sin_addr;
         //sin_addr.s_addr = htonl(dest->addr);
         //if (IceNetworkAudio == rtp_session->session_type) {
-        //    ((cloopenwebrtc::VoEBase *)base)->SendRaw(rtp_session->channel, (const WebRtc_Word8 *)buf, len, recvport==rtp_session_get_local_port(rtp_session)?0:1,dest->port,inet_ntoa(sin_addr));
+        //    ((yuntongxunwebrtc::VoEBase *)base)->SendRaw(rtp_session->channel, (const WebRtc_Word8 *)buf, len, recvport==rtp_session_get_local_port(rtp_session)?0:1,dest->port,inet_ntoa(sin_addr));
         //}
         //else if (IceNetworkVideo == rtp_session->session_type) {
         //    int transmitted_bytes;
-        //    ((cloopenwebrtc::ViENetwork *)base)->SendUDPPacket(rtp_session->channel, (const WebRtc_Word8 *)buf, len, transmitted_bytes,recvport==rtp_session_get_local_port(rtp_session)?0:1,dest->port,inet_ntoa(sin_addr));
+        //    ((yuntongxunwebrtc::ViENetwork *)base)->SendUDPPacket(rtp_session->channel, (const WebRtc_Word8 *)buf, len, transmitted_bytes,recvport==rtp_session_get_local_port(rtp_session)?0:1,dest->port,inet_ntoa(sin_addr));
         //}
         
 //		sendMessage(socket, buf, len, dest->addr, dest->port);
@@ -1467,11 +1467,11 @@ static void ice_send_indication(const IceCandidatePair *pair, const RtpSession *
         //struct	in_addr sin_addr;
         //sin_addr.s_addr = htonl(dest.addr);
         //if (IceNetworkAudio == rtp_session->session_type) {
-        //    ((cloopenwebrtc::VoEBase *)base)->SendRaw(0, (const WebRtc_Word8 *)buf, len, isRtcp,dest.port,inet_ntoa(sin_addr));
+        //    ((yuntongxunwebrtc::VoEBase *)base)->SendRaw(0, (const WebRtc_Word8 *)buf, len, isRtcp,dest.port,inet_ntoa(sin_addr));
         //}
         //else if (IceNetworkVideo == rtp_session->session_type) {
         //    int transmitted_bytes;
-        //    ((cloopenwebrtc::ViENetwork *)base)->SendUDPPacket(rtp_session->channel, (const WebRtc_Word8*)buf, len, transmitted_bytes,isRtcp,dest.port,inet_ntoa(sin_addr));
+        //    ((yuntongxunwebrtc::ViENetwork *)base)->SendUDPPacket(rtp_session->channel, (const WebRtc_Word8*)buf, len, transmitted_bytes,isRtcp,dest.port,inet_ntoa(sin_addr));
         //}
         
 	}
@@ -3121,7 +3121,7 @@ static void ice_send_stun_server_checks(IceStunServerCheck *check, IceCheckList 
 			check->next_transmission_time = ice_add_ms(curtime, ICE_DEFAULT_RTO_DURATION);
 //			ice_send_stun_server_binding_request(check->sock, (struct sockaddr *)&cl->session->ss, cl->session->ss_len, check);
 /*update begin------------------Sean20130723----------for video ice------------*/
-//            ice_send_stun_server_binding_request((cloopenwebrtc::VoEBase*)cl->rtp_session->VoEBase, (struct sockaddr *)&cl->session->ss, cl->session->ss_len, check);
+//            ice_send_stun_server_binding_request((yuntongxunwebrtc::VoEBase*)cl->rtp_session->VoEBase, (struct sockaddr *)&cl->session->ss, cl->session->ss_len, check);
             void *base = NULL;
             if (IceNetworkAudio == cl->rtp_session->session_type)
             {

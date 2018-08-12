@@ -62,8 +62,8 @@ CurlPost *g_curlpost = nullptr;
 #endif
 
 #define WEBRTC_TRACE_FILTER \
-cloopenwebrtc::kTraceStateInfo | cloopenwebrtc::kTraceWarning | cloopenwebrtc::kTraceError | cloopenwebrtc::kTraceCritical | \
-cloopenwebrtc::kTraceApiCall
+yuntongxunwebrtc::kTraceStateInfo | yuntongxunwebrtc::kTraceWarning | yuntongxunwebrtc::kTraceError | yuntongxunwebrtc::kTraceCritical | \
+yuntongxunwebrtc::kTraceApiCall
 
 enum {
     ERR_SDK_ALREADY_INIT =-1000,
@@ -127,7 +127,7 @@ void ECViECaptureObserver::NoPictureAlarm(const int capture_id, const CaptureAla
     }
 }
 #endif
-cloopenwebrtc::VoiceEngine* m_voe = NULL;
+yuntongxunwebrtc::VoiceEngine* m_voe = NULL;
 static StatsCollector *g_statsCollector = NULL;
 
 static VoeObserver* g_VoeObserver = NULL;
@@ -142,7 +142,7 @@ static ECViECaptureObserver* g_ECViECaptureObserver = NULL;
 
 
 #ifdef VIDEO_ENABLED
-cloopenwebrtc::VideoEngine* m_vie = NULL;
+yuntongxunwebrtc::VideoEngine* m_vie = NULL;
 static RecordVoip* g_recordVoip = NULL;
 static RecordLocal* g_recordLocal = NULL;
 static unsigned char* g_snapshotBuf = NULL;
@@ -163,7 +163,7 @@ char g_accountId[128]={'\0'};
 static char gVersionString[256]={'\0'};
 
 //static int m_cameraCount = 0;
-using namespace cloopenwebrtc;
+using namespace yuntongxunwebrtc;
 using namespace std;
 
 #define ECMEDIA_VERSION "ecmedia_version: v2.3.2.2"
@@ -213,13 +213,13 @@ long long g_max_log_size = MAX_LOG_SIZE;
 
 typedef void(*PrintConsoleHook_media)(int loglevel, const char *);
 PrintConsoleHook_media gPrintConsoleHook_media = NULL;
-cloopenwebrtc::CriticalSectionWrapper  *g_printConsole_lock;
+yuntongxunwebrtc::CriticalSectionWrapper  *g_printConsole_lock;
 static void media_init_print_log()
 {
     if (!g_media_TraceFlag) {
         return;
     }
-    g_printConsole_lock = cloopenwebrtc::CriticalSectionWrapper::CreateCriticalSection();
+    g_printConsole_lock = yuntongxunwebrtc::CriticalSectionWrapper::CreateCriticalSection();
     if (NULL == g_media_interface_fp)
     {
         g_media_interface_fp = fopen(g_log_media_filename, "ab");
@@ -237,7 +237,7 @@ static void media_uninit_print_log()
         return;
     }
     {
-        cloopenwebrtc::CriticalSectionScoped lock(g_printConsole_lock);
+        yuntongxunwebrtc::CriticalSectionScoped lock(g_printConsole_lock);
         if (g_media_interface_fp)
             fclose(g_media_interface_fp);
         g_media_interface_fp = NULL;
@@ -297,7 +297,7 @@ void PrintConsole(const char * fmt, ...)
     if (NULL == g_printConsole_lock) {
         return;
     }
-    cloopenwebrtc::CriticalSectionScoped lock(g_printConsole_lock);
+    yuntongxunwebrtc::CriticalSectionScoped lock(g_printConsole_lock);
     if (g_media_interface_fp) {
         fprintf(g_media_interface_fp, "%s\n", log_buffer);
         fflush(g_media_interface_fp);
@@ -365,7 +365,7 @@ const char* ECMedia_get_Version()
 
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     class ECMediaTraceCallBack : public TraceCallback {
     public:
         virtual void Print(const TraceLevel level,
@@ -377,7 +377,7 @@ namespace cloopenwebrtc {
     };
 }
 
-cloopenwebrtc::ECMediaTraceCallBack g_mediaTraceCallBack;
+yuntongxunwebrtc::ECMediaTraceCallBack g_mediaTraceCallBack;
 
 
 int ECMedia_set_trace(const char *logFileName,void *printhoolk,int level, int lenMb)
@@ -456,9 +456,9 @@ int ECMedia_un_trace()
 void ECMedia_set_android_objects(void* javaVM, void* env, void* context)
 {
 #if !defined(NO_VOIP_FUNCTION)
-    cloopenwebrtc::VoiceEngine::SetAndroidObjects(javaVM,env,context);
+    yuntongxunwebrtc::VoiceEngine::SetAndroidObjects(javaVM,env,context);
 #ifdef VIDEO_ENABLED
-    cloopenwebrtc::VideoEngine::SetAndroidObjects(javaVM,env,context);
+    yuntongxunwebrtc::VideoEngine::SetAndroidObjects(javaVM,env,context);
 #endif
     
 #endif
@@ -1606,7 +1606,7 @@ int ECMedia_DeRegister_voice_engine_observer()
 /*
  * AUDIO PROCESSING
  */
-int ECMedia_set_AgcStatus(bool agc_enabled, cloopenwebrtc::AgcModes agc_mode)
+int ECMedia_set_AgcStatus(bool agc_enabled, yuntongxunwebrtc::AgcModes agc_mode)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... agc_enabled=%d agc_mode=%d", __FUNCTION__, agc_enabled, agc_mode);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
@@ -1628,7 +1628,7 @@ int ECMedia_set_AgcStatus(bool agc_enabled, cloopenwebrtc::AgcModes agc_mode)
     }
 }
 
-int ECMedia_set_EcStatus(bool ec_enabled, cloopenwebrtc::EcModes ec_mode)
+int ECMedia_set_EcStatus(bool ec_enabled, yuntongxunwebrtc::EcModes ec_mode)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... ec_enabled=%d ec_mode=%d", __FUNCTION__, ec_enabled, ec_mode);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
@@ -1650,13 +1650,13 @@ int ECMedia_set_EcStatus(bool ec_enabled, cloopenwebrtc::EcModes ec_mode)
     }
 }
 
-int ECMedia_set_NsStatus(bool ns_enabled, cloopenwebrtc::NsModes ns_mode)
+int ECMedia_set_NsStatus(bool ns_enabled, yuntongxunwebrtc::NsModes ns_mode)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... ns_enabled=%s ns_mode=%d", __FUNCTION__, ns_enabled?"true":"false", ns_mode);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEAudioProcessing *audio = VoEAudioProcessing::GetInterface(m_voe);
     if (audio) {
-        int ret = audio->SetNsStatus(ns_enabled, cloopenwebrtc::kNsVeryHighSuppression);
+        int ret = audio->SetNsStatus(ns_enabled, yuntongxunwebrtc::kNsVeryHighSuppression);
         audio->Release();
         if (ret != 0) {
             PrintConsole("[ECMEDIA ERROR] %s failed to set ns status", __FUNCTION__);
@@ -1672,7 +1672,7 @@ int ECMedia_set_NsStatus(bool ns_enabled, cloopenwebrtc::NsModes ns_mode)
     }
 }
 
-int ECMedia_set_SetAecmMode(cloopenwebrtc::AecmModes aecm_mode, bool cng_enabled)
+int ECMedia_set_SetAecmMode(yuntongxunwebrtc::AecmModes aecm_mode, bool cng_enabled)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... aecm_mode=%d cng_enabled=%s", __FUNCTION__, aecm_mode, cng_enabled?"true":"false");
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
@@ -2108,7 +2108,7 @@ int ECMedia_get_media_statistics(int channelid, bool is_video, MediaStatisticsIn
         AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
         VoERTP_RTCP *rtp_rtcp = VoERTP_RTCP::GetInterface(m_voe);
         if(rtp_rtcp){
-            cloopenwebrtc::CallStatistics stats;
+            yuntongxunwebrtc::CallStatistics stats;
             rtp_rtcp->GetRTCPStatistics(channelid,stats);
             call_stats.bytesReceived = stats.bytesReceived;
             call_stats.bytesSent =stats.bytesSent;
@@ -2128,7 +2128,7 @@ int ECMedia_get_media_statistics(int channelid, bool is_video, MediaStatisticsIn
         VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
         ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
         if(rtp_rtcp){
-            cloopenwebrtc::CallStatistics stats;
+            yuntongxunwebrtc::CallStatistics stats;
             //rtp_rtcp->GetSentRTCPStatistics(channelid, stats.fractionLost, stats.cumulativeLost, stats.extendedMax, stats.jitterSamples, stats.rttMs);
             rtp_rtcp->GetReceivedRTCPStatistics(channelid, stats.fractionLost, stats.cumulativeLost, stats.extendedMax, stats.jitterSamples, stats.rttMs);
             rtp_rtcp->GetRTPStatistics(channelid, stats.bytesSent, stats.packetsSent, stats.bytesReceived, stats.packetsReceived);
@@ -3264,7 +3264,7 @@ int ECMedia_reset_remote_view(int channelid, void *video_window) {
 #endif
 
 #ifdef VIDEO_ENABLED
-int ECMedia_set_i420_framecallback(int channelid, cloopenwebrtc::ECMedia_I420FrameCallBack callback) {
+int ECMedia_set_i420_framecallback(int channelid, yuntongxunwebrtc::ECMedia_I420FrameCallBack callback) {
     PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d ", __FUNCTION__, channelid);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECodec *codec = ViECodec::GetInterface(m_vie);
@@ -3564,7 +3564,7 @@ int ECMedia_get_send_codec_video(int channelid, VideoCodec& videoCodec)
     }
 }
 
-int ECMedia_set_video_qm_mode(int channelid,  cloopenwebrtc::VCMQmResolutionMode mode) {
+int ECMedia_set_video_qm_mode(int channelid,  yuntongxunwebrtc::VCMQmResolutionMode mode) {
     PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d , VCMQmResolutionMode: %d",
                  __FUNCTION__, channelid, mode);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
@@ -4021,7 +4021,7 @@ ECMEDIA_API int ECMedia_start_record_remote_video(int audioChannel, int videoCha
     if (m_vie) {
         ViEFile *file = ViEFile::GetInterface(m_vie);
         if (file) {
-            file->RegisterVideoFrameStorageCallBack(videoChannel, (cloopenwebrtc::VCMFrameStorageCallback *)g_recordVoip);
+            file->RegisterVideoFrameStorageCallBack(videoChannel, (yuntongxunwebrtc::VCMFrameStorageCallback *)g_recordVoip);
             file->Release();
         }
         ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
@@ -4104,7 +4104,7 @@ ECMEDIA_API int ECMedia_start_record_local_video(int audioChannel, int videoChan
     if (m_vie) {
         ViENetwork *vietwork = ViENetwork::GetInterface(m_vie);
         if (vietwork) {
-            vietwork->RegisterEncoderDataObserver(videoChannel, (cloopenwebrtc::VCMPacketizationCallback *)g_recordVoip);
+            vietwork->RegisterEncoderDataObserver(videoChannel, (yuntongxunwebrtc::VCMPacketizationCallback *)g_recordVoip);
             vietwork->Release();
         }
         ViECodec *codec = ViECodec::GetInterface(m_vie);
@@ -4408,7 +4408,7 @@ int ECMedia_shutdown_srtp_video(int channel)
     return -1;
 }
 
-int ECMedia_enable_srtp_send_video(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
+int ECMedia_enable_srtp_send_video(int channel, yuntongxunwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... channelid: %d type: %d key: %s", __FUNCTION__, channel, crypt_type, key);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
@@ -4445,7 +4445,7 @@ int ECMedia_disable_srtp_send_video(int channel)
     return -1;
 }
 
-int ECMedia_enable_srtp_recv_video(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
+int ECMedia_enable_srtp_recv_video(int channel, yuntongxunwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... channelid: %d type: %d key: %s", __FUNCTION__, channel, crypt_type, key);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
@@ -4544,7 +4544,7 @@ int ECMedia_set_network_type(int audio_channelid, int video_channelid, const cha
         return -99;
     }
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-    VoEBase *base = cloopenwebrtc::VoEBase::GetInterface(m_voe);
+    VoEBase *base = yuntongxunwebrtc::VoEBase::GetInterface(m_voe);
     if (base) {
         base->SetNetworkType(audio_channelid, strcmp(type, "wifi")==0?true:false);
         base->Release();
@@ -4552,7 +4552,7 @@ int ECMedia_set_network_type(int audio_channelid, int video_channelid, const cha
 #ifdef VIDEO_ENABLED
     if (video_channelid >= 0) {
         VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-        ViENetwork *network = cloopenwebrtc::ViENetwork::GetInterface(m_vie);
+        ViENetwork *network = yuntongxunwebrtc::ViENetwork::GetInterface(m_vie);
         if (network) {
             network->setNetworkType(video_channelid, strcmp(type, "wifi")==0?true:false);
             network->Release();
@@ -4683,7 +4683,7 @@ int ECMedia_shutdown_srtp_audio(int channel)
     return -1;
 }
 
-int ECMedia_enable_srtp_send_audio(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
+int ECMedia_enable_srtp_send_audio(int channel, yuntongxunwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
 {
     PrintConsole("[ECMEDIA INFO] %s begins..., channelid: %d crypt_type: %d key: %s", __FUNCTION__, channel, crypt_type, key);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
@@ -4721,7 +4721,7 @@ int ECMedia_disable_srtp_send_audio(int channel)
     return -1;
 }
 
-int ECMedia_enable_srtp_recv_audio(int channel, cloopenwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
+int ECMedia_enable_srtp_recv_audio(int channel, yuntongxunwebrtc::ccp_srtp_crypto_suite_t crypt_type, const char* key)
 {
     PrintConsole("[ECMEDIA INFO] %s begins..., channelid: %d crypt_type: %d key: %s", __FUNCTION__, channel, crypt_type, key);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
@@ -5789,7 +5789,7 @@ int ECMedia_video_set_mix_mediastream(int channel, bool enable, char *mixture, u
 }
 
 //add by dingxf
-int ECMedia_set_remote_i420_framecallback(int channelid, cloopenwebrtc::ECMedia_I420FrameCallBack callback) {
+int ECMedia_set_remote_i420_framecallback(int channelid, yuntongxunwebrtc::ECMedia_I420FrameCallBack callback) {
 #ifdef VIDEO_ENABLED
 	PrintConsole("[ECMEDIA INFO] %s begins... channelid: %d", __FUNCTION__, channelid);
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);

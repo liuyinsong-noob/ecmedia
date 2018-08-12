@@ -32,7 +32,7 @@
 #include "vie_renderer.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ViEFile* ViEFile::GetInterface(VideoEngine* video_engine) {
 #ifdef WEBRTC_VIDEO_ENGINE_FILE_API
@@ -1115,4 +1115,4 @@ void ViECaptureSnapshot::DeliverFrame(int id, I420VideoFrame* video_frame,
 
 #endif
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

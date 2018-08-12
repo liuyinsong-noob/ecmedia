@@ -15,7 +15,7 @@
 #include "../base/checks.h"
 #include "ilbc.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 
@@ -94,4 +94,4 @@ bool AudioEncoderIlbc::EncodeInternal(uint32_t timestamp,
   return true;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

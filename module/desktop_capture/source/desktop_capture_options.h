@@ -23,7 +23,7 @@
 using namespace webrtc;
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // An object that stores initialization parameters for screen and window
 // capturers.
@@ -102,6 +102,6 @@ class DesktopCaptureOptions {
   bool disable_effects_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_DESKTOP_CAPTURE_OPTIONS_H_

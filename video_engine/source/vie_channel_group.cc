@@ -26,7 +26,7 @@
 #include "vie_encoder.h"
 #include "vie_remb.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 
 static const uint32_t kTimeOffsetSwitchThreshold = 30;
@@ -42,7 +42,7 @@ class WrappingBitrateEstimator : public RemoteBitrateEstimator {
         crit_sect_(CriticalSectionWrapper::CreateCriticalSection()),
         engine_id_(engine_id),
         min_bitrate_bps_(config.Get<RemoteBitrateEstimatorMinRate>().min_rate),
-        rbe_(new cloopenwebrtc::RemoteBitrateEstimatorAbsSendTime(observer, clock)),
+        rbe_(new yuntongxunwebrtc::RemoteBitrateEstimatorAbsSendTime(observer, clock)),
         using_absolute_send_time_(false),
         packets_since_absolute_send_time_(0) {
   }
@@ -92,7 +92,7 @@ class WrappingBitrateEstimator : public RemoteBitrateEstimator {
     return rbe_->GetStats(output);
   }
 
-  void SetConfig(const cloopenwebrtc::Config& config) {
+  void SetConfig(const yuntongxunwebrtc::Config& config) {
     CriticalSectionScoped cs(crit_sect_.get());
   }
 
@@ -219,7 +219,7 @@ void ChannelGroup::SetChannelRembStatus(int channel_id,
   }
 }
 
-void ChannelGroup::SetBandwidthEstimationConfig(const cloopenwebrtc::Config& config) {
+void ChannelGroup::SetBandwidthEstimationConfig(const yuntongxunwebrtc::Config& config) {
   WrappingBitrateEstimator* estimator =
       static_cast<WrappingBitrateEstimator*>(remote_bitrate_estimator_);
   estimator->SetConfig(config);

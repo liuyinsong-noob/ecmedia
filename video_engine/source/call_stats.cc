@@ -16,7 +16,7 @@
 #include "../system_wrappers/include/critical_section_wrapper.h"
 #include "../system_wrappers/include/tick_util.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 // Time interval for updating the observers.
 const int64_t kUpdateIntervalMs = 1000;

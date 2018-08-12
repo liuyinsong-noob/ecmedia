@@ -41,7 +41,7 @@ enum {
   kOverrun,
 };
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 OpenSlesInput::OpenSlesInput(
     const int32_t id, PlayoutDelayProvider* delay_provider)

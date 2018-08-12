@@ -16,7 +16,7 @@
 #include "../base/constructormagic.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // This class generates pseudo-random samples.
 class RandomVector {
@@ -46,5 +46,5 @@ class RandomVector {
   DISALLOW_COPY_AND_ASSIGN(RandomVector);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_RANDOM_VECTOR_H_

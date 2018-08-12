@@ -14,7 +14,7 @@
 #include "../system_wrappers/include/clock.h"
 #include <assert.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 // Number of RTCP SR reports to use to map between RTP and NTP.
 const size_t kNumRtcpReportsToUse = 2;
@@ -259,4 +259,4 @@ int CheckForWrapArounds(uint32_t new_timestamp, uint32_t old_timestamp) {
   return 0;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

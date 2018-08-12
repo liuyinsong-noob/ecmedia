@@ -15,7 +15,7 @@
 
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ScreenCapturerHelper::ScreenCapturerHelper()
     : invalid_region_lock_(RWLockWrapper::CreateRWLock()),
@@ -101,4 +101,4 @@ void ScreenCapturerHelper::ExpandToGrid(const DesktopRegion& region,
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

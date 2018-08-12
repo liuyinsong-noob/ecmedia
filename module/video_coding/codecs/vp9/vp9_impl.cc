@@ -31,7 +31,7 @@
 #include "../module/include/module_common_types.h"
 #include "../module/video_coding/codecs/vp9/screenshare_layers.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Only positive speeds, range for real-time coding currently is: 5 - 8.
 // Lower means slower/better quality, higher means fastest/lower quality.
@@ -1008,4 +1008,4 @@ const char* VP9DecoderImpl::ImplementationName() const {
   return "libvpx";
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -15,7 +15,7 @@
 
 #include "video_render.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Class definitions
 class VideoRenderFrames {

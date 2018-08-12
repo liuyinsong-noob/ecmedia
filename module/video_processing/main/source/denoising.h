@@ -17,7 +17,7 @@
 #include "typedefs.h"
 #include "video_processing.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VPMDenoising
 {

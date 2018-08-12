@@ -20,7 +20,7 @@
 #include "random_vector.h"
 #include "sync_buffer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(Merge, CreateAndDestroy) {
   int fs = 8000;
@@ -34,4 +34,4 @@ TEST(Merge, CreateAndDestroy) {
 
 // TODO(hlundin): Write more tests.
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

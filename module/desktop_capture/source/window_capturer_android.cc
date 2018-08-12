@@ -22,7 +22,7 @@
 
 #define AndroidJavaScreenCaptureClass "com/yuntongxun/ecsdk/core/voip/ScreenCaptureAndroid"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class ScreenCapturerAndroid : public ScreenCapturer {
  public:
@@ -86,7 +86,7 @@ WebRtc_Word32 ScreenCapturer::SetAndroidObjects(void* javaVM, void* env, void* j
 	// get java capture class type (note path to class packet)	               
 	jclass screenCaptureClassLocal = thisEnv->FindClass(AndroidJavaScreenCaptureClass);
 	if (!screenCaptureClassLocal) {
-	  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
 	               "%s: could not find java class", __FUNCTION__);
 	  return -1;
 	}
@@ -95,7 +95,7 @@ WebRtc_Word32 ScreenCapturer::SetAndroidObjects(void* javaVM, void* env, void* j
 	// after this function has returned)
 	ScreenCapturerAndroid::g_javaScreenCaptureClass = static_cast<jclass>(thisEnv->NewGlobalRef(screenCaptureClassLocal));
 	if (!ScreenCapturerAndroid::g_javaScreenCaptureClass) {
-	  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
  	               "%s: could not create android screen capture class reference",
 	               __FUNCTION__);
 	  return -1;
@@ -110,10 +110,10 @@ WebRtc_Word32 ScreenCapturer::SetAndroidObjects(void* javaVM, void* env, void* j
     { "ProvideScreeData", "(Ljava/lang/Object;[BIIIJ)V",
         (void*) &ScreenCapturerAndroid::ProvideScreeData };
 	if (thisEnv->RegisterNatives(ScreenCapturerAndroid::g_javaScreenCaptureClass, &nativeFunctions, 1) == 0) {
-	  WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, -1,
+	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, -1,
 	               "%s: Registered native functions", __FUNCTION__);
 	}	else {
-	  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
 	               "%s: Failed to register native functions",
 	               __FUNCTION__);
 	  return -1;
@@ -122,7 +122,7 @@ WebRtc_Word32 ScreenCapturer::SetAndroidObjects(void* javaVM, void* env, void* j
   // get the method ID for the void(void) constructor
   jmethodID cid = thisEnv->GetMethodID(ScreenCapturerAndroid::g_javaScreenCaptureClass, "<init>", "()V");
   if (cid == NULL) {
-       	  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+       	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
 	               "%s: Failed to get init method.",
 	               __FUNCTION__);
     return -1;
@@ -334,23 +334,23 @@ void JNICALL ScreenCapturerAndroid::ProvideScreeData(JNIEnv * env,
                                                      jlong context)
 {
     ScreenCapturerAndroid* captureModule = reinterpret_cast<ScreenCapturerAndroid*>(context);
-     WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture,
+     WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture,
             -1, "%s: IncomingFrame width:%d height:%d, length:%d, context:%d, captureModule:%p",
             __FUNCTION__, width, height, length, context, captureModule);
     
     if(captureModule && captureModule->callback_) {
-        cloopenwebrtc::scoped_ptr<BasicDesktopFrame> frame(new BasicDesktopFrame(DesktopSize(width, height)));
+        yuntongxunwebrtc::scoped_ptr<BasicDesktopFrame> frame(new BasicDesktopFrame(DesktopSize(width, height)));
         if (!frame.get()) {
-            WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideoCapture, -1, "%s: frame.get() failed.", __FUNCTION__);
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture, -1, "%s: frame.get() failed.", __FUNCTION__);
             captureModule->callback_->OnCaptureCompleted(NULL, kCapture_NoCaptureImage);
             return;
         }
 
         jbyte* desktopFrame = env->GetByteArrayElements(javaDesktopFrame, NULL);
         memcpy((frame.get())->data(), desktopFrame, length);
-        WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideoCapture, -1, "%s: gezhaoyou before  callback", __FUNCTION__);
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture, -1, "%s: gezhaoyou before  callback", __FUNCTION__);
         captureModule->callback_->OnCaptureCompleted(frame.release(), kCapture_Ok, NULL);
-        WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideoCapture, -1, "%s: gezhaoyou after  callback", __FUNCTION__);
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture, -1, "%s: gezhaoyou after  callback", __FUNCTION__);
         env->ReleaseByteArrayElements(javaDesktopFrame, desktopFrame, JNI_ABORT);
     }
 }
@@ -376,13 +376,13 @@ void JNICALL ScreenCapturerAndroid::ProvideScreeData(JNIEnv * env,
 //            return ;
 //        }
 //
-//        cloopenwebrtc::scoped_ptr<BasicDesktopFrame> frame(new BasicDesktopFrame(DesktopSize(bmpInfo.width, bmpInfo.height)));
+//        yuntongxunwebrtc::scoped_ptr<BasicDesktopFrame> frame(new BasicDesktopFrame(DesktopSize(bmpInfo.width, bmpInfo.height)));
 //        if (!frame.get()) {
 //            captureModule->callback_->OnCaptureCompleted(NULL, kCapture_NoCaptureImage);
 //            return;
 //        }
 //
-//        WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideoCapture,
+//        WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture,
 //                   -1, "%s: IncomingFrame width:%d height:%d format:%d stride:%d.",
 //                   __FUNCTION__, bmpInfo.width, bmpInfo.height, bmpInfo.format, bmpInfo.stride);
 //        if(bmpInfo.format == ANDROID_BITMAP_FORMAT_RGB_565)
@@ -401,4 +401,4 @@ ScreenCapturer* ScreenCapturer::Create() {
   return new ScreenCapturerAndroid();
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

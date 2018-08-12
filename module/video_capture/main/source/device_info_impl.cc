@@ -19,7 +19,7 @@
 #define abs(a) (a>=0?a:-a)
 #endif
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 namespace videocapturemodule
 {
@@ -155,7 +155,7 @@ int32_t DeviceInfoImpl::GetBestMatchedCapability(
     int32_t bestHeight = 0;
     int32_t bestFrameRate = 0;
     RawVideoType bestRawType = kVideoUnknown;
-    cloopenwebrtc::VideoCodecType bestCodecType = cloopenwebrtc::kVideoCodecUnknown;
+    yuntongxunwebrtc::VideoCodecType bestCodecType = yuntongxunwebrtc::kVideoCodecUnknown;
 
     const int32_t numberOfCapabilies =
         static_cast<int32_t>(_captureCapabilities.size());

@@ -16,7 +16,7 @@
 #include "audio_processing.h"
 #include "processing_component.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioBuffer;
 class CriticalSectionWrapper;
@@ -77,6 +77,6 @@ class GainControlImpl : public GainControl,
   bool was_analog_level_set_;
   bool stream_is_saturated_;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_GAIN_CONTROL_IMPL_H_

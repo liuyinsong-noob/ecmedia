@@ -17,7 +17,7 @@
 #include "byte_io.h"
 #include "common_header.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace rtcp {
 constexpr uint8_t Sdes::kPacketType;
 // Source Description (SDES) (RFC 3550).

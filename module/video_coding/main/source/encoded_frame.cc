@@ -13,11 +13,11 @@
 #include "generic_encoder.h"
 #include "jitter_buffer_common.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VCMEncodedFrame::VCMEncodedFrame()
 :
-cloopenwebrtc::EncodedImage(),
+yuntongxunwebrtc::EncodedImage(),
 _renderTimeMs(-1),
 _payloadType(0),
 _missingFrame(false),
@@ -27,9 +27,9 @@ _fragmentation()
     _codecSpecificInfo.codecType = kVideoCodecUnknown;
 }
 
-VCMEncodedFrame::VCMEncodedFrame(const cloopenwebrtc::EncodedImage& rhs)
+VCMEncodedFrame::VCMEncodedFrame(const yuntongxunwebrtc::EncodedImage& rhs)
 :
-cloopenwebrtc::EncodedImage(rhs),
+yuntongxunwebrtc::EncodedImage(rhs),
 _renderTimeMs(-1),
 _payloadType(0),
 _missingFrame(false),
@@ -49,7 +49,7 @@ _fragmentation()
 
 VCMEncodedFrame::VCMEncodedFrame(const VCMEncodedFrame& rhs)
   :
-    cloopenwebrtc::EncodedImage(rhs),
+    yuntongxunwebrtc::EncodedImage(rhs),
     _renderTimeMs(rhs._renderTimeMs),
     _payloadType(rhs._payloadType),
     _missingFrame(rhs._missingFrame),
@@ -162,7 +162,7 @@ void VCMEncodedFrame::VerifyAndAllocate(const uint32_t minimumSize)
     }
 }
 
-cloopenwebrtc::FrameType VCMEncodedFrame::ConvertFrameType(VideoFrameType frameType)
+yuntongxunwebrtc::FrameType VCMEncodedFrame::ConvertFrameType(VideoFrameType frameType)
 {
   switch(frameType) {
     case kKeyFrame:
@@ -176,7 +176,7 @@ cloopenwebrtc::FrameType VCMEncodedFrame::ConvertFrameType(VideoFrameType frameT
   }
 }
 
-VideoFrameType VCMEncodedFrame::ConvertFrameType(cloopenwebrtc::FrameType frame_type) {
+VideoFrameType VCMEncodedFrame::ConvertFrameType(yuntongxunwebrtc::FrameType frame_type) {
   switch (frame_type) {
     case kVideoFrameKey:
       return kKeyFrame;
@@ -189,7 +189,7 @@ VideoFrameType VCMEncodedFrame::ConvertFrameType(cloopenwebrtc::FrameType frame_
 }
 
 void VCMEncodedFrame::ConvertFrameTypes(
-    const std::vector<cloopenwebrtc::FrameType>& frame_types,
+    const std::vector<yuntongxunwebrtc::FrameType>& frame_types,
     std::vector<VideoFrameType>* video_frame_types) {
   assert(video_frame_types);
   video_frame_types->reserve(frame_types.size());

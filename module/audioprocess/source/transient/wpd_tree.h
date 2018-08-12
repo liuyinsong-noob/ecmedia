@@ -14,7 +14,7 @@
 #include "wpd_node.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Tree of a Wavelet Packet Decomposition (WPD).
 //
@@ -86,6 +86,6 @@ class WPDTree {
   scoped_ptr<scoped_ptr<WPDNode>[]> nodes_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_TRANSIENT_WPD_TREE_H_

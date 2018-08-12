@@ -19,7 +19,7 @@
 #include "clock.h"
 #include "scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace test {
 class InputAudioFile;
@@ -82,5 +82,5 @@ class AcmSendTestOldApi : public AudioPacketizationCallback,
 };
 
 }  // namespace test
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_ACM_SEND_TEST_H_

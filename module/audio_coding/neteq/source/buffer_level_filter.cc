@@ -12,7 +12,7 @@
 
 #include <algorithm>  // Provide access to std::max.
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 BufferLevelFilter::BufferLevelFilter() {
   Reset();
@@ -57,4 +57,4 @@ void BufferLevelFilter::SetTargetBufferLevel(int target_buffer_level) {
     level_factor_ = 254;
   }
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

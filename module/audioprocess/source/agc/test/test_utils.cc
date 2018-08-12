@@ -16,7 +16,7 @@
 
 #include "cloopenwebrtc/modules/interface/module_common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 float MicLevel2Gain(int gain_range_db, int level) {
   return (level - 127.0f) / 128.0f * gain_range_db / 2;

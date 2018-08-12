@@ -24,7 +24,7 @@
 #include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
 #include "../module/rtp_rtcp/source/forward_error_correction_internal.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class FecHeaderReader;
 class FecHeaderWriter;
@@ -90,7 +90,7 @@ class ForwardErrorCorrection {
                     // packets, but not required for media packets.
     bool is_fec;    // Set to true if this is an FEC packet and false
                     // otherwise.
-    cloopenwebrtc::scoped_refptr<Packet> pkt;  // Pointer to the packet storage.
+    yuntongxunwebrtc::scoped_refptr<Packet> pkt;  // Pointer to the packet storage.
   };
 
   // The recovered list parameter of DecodeFec() references structs of
@@ -106,7 +106,7 @@ class ForwardErrorCorrection {
                          // through the received packet list.
     bool returned;  // True when the packet already has been returned to the
                     // caller through the callback.
-    cloopenwebrtc::scoped_refptr<Packet> pkt;  // Pointer to the packet storage.
+    yuntongxunwebrtc::scoped_refptr<Packet> pkt;  // Pointer to the packet storage.
   };
 
   // Used to link media packets to their protecting FEC packets.
@@ -117,7 +117,7 @@ class ForwardErrorCorrection {
     ProtectedPacket();
     ~ProtectedPacket();
 
-    cloopenwebrtc::scoped_refptr<ForwardErrorCorrection::Packet> pkt;
+    yuntongxunwebrtc::scoped_refptr<ForwardErrorCorrection::Packet> pkt;
   };
 
   using ProtectedPacketList = std::list<std::unique_ptr<ProtectedPacket>>;
@@ -142,7 +142,7 @@ class ForwardErrorCorrection {
     size_t packet_mask_size;
     size_t protection_length;
     // Raw data.
-    cloopenwebrtc::scoped_refptr<ForwardErrorCorrection::Packet> pkt;
+    yuntongxunwebrtc::scoped_refptr<ForwardErrorCorrection::Packet> pkt;
   };
 
   using PacketList = std::list<std::unique_ptr<Packet>>;
@@ -413,6 +413,6 @@ class FecHeaderWriter {
   const size_t max_packet_overhead_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_FORWARD_ERROR_CORRECTION_H_

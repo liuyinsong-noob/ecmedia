@@ -13,7 +13,7 @@
 #include "cloopenwebrtc/test/testsupport/fileutils.h"
 #include "webrtc_cng.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 enum {
   kSidShortIntervalUpdate = 1,
@@ -51,7 +51,7 @@ CngTest::CngTest()
 void CngTest::SetUp() {
   FILE* input_file;
   const std::string file_name =
-        cloopenwebrtc::test::ResourcePath("audio_coding/testfile32kHz", "pcm");
+        yuntongxunwebrtc::test::ResourcePath("audio_coding/testfile32kHz", "pcm");
   input_file = fopen(file_name.c_str(), "rb");
   ASSERT_TRUE(input_file != NULL);
   ASSERT_EQ(640, static_cast<int32_t>(fread(speech_data_, sizeof(int16_t),

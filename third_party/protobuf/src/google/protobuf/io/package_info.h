@@ -36,7 +36,7 @@
 // It is not compiled into anything, but it may be read by an automated
 // documentation generator.
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 
 namespace protobuf {
 
@@ -51,4 +51,4 @@ namespace protobuf {
 namespace io {}
 
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google

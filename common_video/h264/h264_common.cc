@@ -10,7 +10,7 @@
 
 #include "../common_video/h264/h264_common.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace H264 {
 
 const uint8_t kNaluTypeMask = 0x1F;
@@ -83,7 +83,7 @@ std::vector<uint8_t> ParseRbsp(const uint8_t* data, size_t length) {
   return out;
 }
 
-void WriteRbsp(const uint8_t* bytes, size_t length, cloopenwebrtc::Buffer* destination) {
+void WriteRbsp(const uint8_t* bytes, size_t length, yuntongxunwebrtc::Buffer* destination) {
   static const uint8_t kZerosInStartSequence = 2;
   static const uint8_t kEmulationByte = 0x03u;
   size_t num_consecutive_zeros = 0;
@@ -107,4 +107,4 @@ void WriteRbsp(const uint8_t* bytes, size_t length, cloopenwebrtc::Buffer* desti
 }
 
 }  // namespace H264
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

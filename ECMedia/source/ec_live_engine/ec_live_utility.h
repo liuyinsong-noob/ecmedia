@@ -10,7 +10,7 @@
 #define ec_rtmp__utility_hpp
 
 #include "ec_live_common.h"
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     class Clock;
     
     class EC_Live_Utility {

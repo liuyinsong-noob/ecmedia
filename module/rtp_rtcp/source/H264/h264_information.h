@@ -15,7 +15,7 @@
 #include "typedefs.h"
 #include "rtp_utility.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 enum
 {
     KMaxNumberOfNALUs = 128,

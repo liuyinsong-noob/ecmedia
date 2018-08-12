@@ -17,7 +17,7 @@
 #include "module_common_types.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class FileCallback;
 
 class FilePlayer
@@ -107,5 +107,5 @@ protected:
     virtual ~FilePlayer() {}
 
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif // WEBRTC_MODULES_UTILITY_INTERFACE_FILE_PLAYER_H_

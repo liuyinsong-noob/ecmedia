@@ -50,7 +50,7 @@
 
 #include "FIFOSampleBuffer.h"
 
-using namespace cloopensoundtouch;
+using namespace yuntongxunsoundtouch;
 
 // Constructor
 FIFOSampleBuffer::FIFOSampleBuffer(int numChannels)

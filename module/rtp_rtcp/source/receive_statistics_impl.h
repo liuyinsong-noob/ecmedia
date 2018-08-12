@@ -20,7 +20,7 @@
 #include "../base/rate_statistics.h"
 #include "../system_wrappers/include/ntp_time.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class StreamStatisticianImpl : public StreamStatistician {
  public:
@@ -58,7 +58,7 @@ class StreamStatisticianImpl : public StreamStatistician {
   void NotifyRtcpCallback() LOCKS_EXCLUDED(stream_lock_);
 
   Clock* const clock_;
-  cloopenwebrtc::CriticalSection stream_lock_;
+  yuntongxunwebrtc::CriticalSection stream_lock_;
   RateStatistics incoming_bitrate_;
   uint32_t ssrc_;
   int max_reordering_threshold_;  // In number of packets or sequence numbers.
@@ -131,11 +131,11 @@ class ReceiveStatisticsImpl : public ReceiveStatistics,
   typedef std::map<uint32_t, StreamStatisticianImpl*> StatisticianImplMap;
 
   Clock* const clock_;
-  cloopenwebrtc::CriticalSection receive_statistics_lock_;
+  yuntongxunwebrtc::CriticalSection receive_statistics_lock_;
   StatisticianImplMap statisticians_;
 
   RtcpStatisticsCallback* rtcp_stats_callback_;
   StreamDataCountersCallback* rtp_stats_callback_;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RECEIVE_STATISTICS_IMPL_H_

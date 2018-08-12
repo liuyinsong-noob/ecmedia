@@ -62,7 +62,7 @@
 
 #include <google/protobuf/stubs/template_util.h>  // For true_type and false_type
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 namespace internal {
 
@@ -331,6 +331,6 @@ struct is_convertible
 
 }  // namespace internal
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 
 #endif  // GOOGLE_PROTOBUF_TYPE_TRAITS_H_

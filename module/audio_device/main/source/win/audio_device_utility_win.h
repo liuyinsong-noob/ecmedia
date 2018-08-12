@@ -15,7 +15,7 @@
 #include "audio_device.h"
 #include <windows.h>
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 class CriticalSectionWrapper;
 
@@ -36,6 +36,6 @@ private:
     AudioDeviceModule::ErrorCode    _lastError;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_AUDIO_DEVICE_AUDIO_DEVICE_UTILITY_WIN_H

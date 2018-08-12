@@ -11,7 +11,7 @@
 #include "spatial_resampler.h"
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VPMSimpleSpatialResampler::VPMSimpleSpatialResampler()
     : resampling_mode_(kFastRescaling),

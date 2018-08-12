@@ -46,7 +46,7 @@
 #include <google/protobuf/stubs/stl_util.h>
 
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 namespace io {
 
@@ -911,4 +911,4 @@ uint8* CodedOutputStream::WriteStringWithSizeToArray(const string& str,
 
 }  // namespace io
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google

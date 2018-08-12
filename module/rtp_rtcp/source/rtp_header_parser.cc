@@ -14,7 +14,7 @@
 #include "../module/rtp_rtcp/source/rtp_utility.h"
 #include "../system_wrappers/include/clock.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class RtpHeaderParserImpl : public RtpHeaderParser {
  public:
@@ -33,7 +33,7 @@ class RtpHeaderParserImpl : public RtpHeaderParser {
   virtual void setECMediaConferenceParticipantCallbackTimeInterVal(int timeInterVal);
 
  private:
-  cloopenwebrtc::CriticalSection critical_section_;
+  yuntongxunwebrtc::CriticalSection critical_section_;
   RtpHeaderExtensionMap rtp_header_extension_map_ GUARDED_BY(critical_section_);
   ECMedia_ConferenceParticipantCallback *_participantCallback; //added by zhaoyou.
   int callConferenceParticipantCallbacktimeInterVal_;
@@ -60,7 +60,7 @@ bool RtpHeaderParserImpl::Parse(const uint8_t* packet,
 
   RtpHeaderExtensionMap map;
   {
-    cloopenwebrtc::CritScope cs(&critical_section_);
+    yuntongxunwebrtc::CritScope cs(&critical_section_);
     map = rtp_header_extension_map_;
   }
 
@@ -111,12 +111,12 @@ bool RtpHeaderParserImpl::Parse(const uint8_t* packet,
 
 bool RtpHeaderParserImpl::RegisterRtpHeaderExtension(RTPExtensionType type,
                                                      uint8_t id) {
-  cloopenwebrtc::CritScope cs(&critical_section_);
+  yuntongxunwebrtc::CritScope cs(&critical_section_);
   return rtp_header_extension_map_.RegisterByType(id, type);
 }
 
 bool RtpHeaderParserImpl::DeregisterRtpHeaderExtension(RTPExtensionType type) {
-  cloopenwebrtc::CritScope cs(&critical_section_);
+  yuntongxunwebrtc::CritScope cs(&critical_section_);
   return rtp_header_extension_map_.Deregister(type) == 0;
 }
     

@@ -18,7 +18,7 @@
 #include "checks.h"
 #include "safe_conversions_impl.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Convenience function that returns true if the supplied value is in range
 // for the destination type.

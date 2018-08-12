@@ -19,7 +19,7 @@ namespace {
 const float kTolerance = 0.001f;
 }
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 using std::complex;
 
@@ -97,6 +97,6 @@ class MatrixTestHelpers {
   }
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_BEAMFORMER_MATRIX_TEST_HELPERS_H_

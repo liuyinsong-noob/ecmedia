@@ -10,7 +10,7 @@
 
 #include "../system_wrappers/source/rw_lock_posix.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 RWLockPosix::RWLockPosix() : lock_() {
 }
@@ -48,4 +48,4 @@ void RWLockPosix::ReleaseLockShared() {
   pthread_rwlock_unlock(&lock_);
 }
 
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

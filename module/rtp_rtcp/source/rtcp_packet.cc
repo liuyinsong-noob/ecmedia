@@ -12,12 +12,12 @@
 
 #include "../base/checks.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace rtcp {
 constexpr size_t RtcpPacket::kHeaderLength;
 
-cloopenwebrtc::Buffer RtcpPacket::Build() const {
-	cloopenwebrtc::Buffer packet(BlockLength());
+yuntongxunwebrtc::Buffer RtcpPacket::Build() const {
+	yuntongxunwebrtc::Buffer packet(BlockLength());
 
   size_t length = 0;
   bool created = Create(packet.data(), &length, packet.capacity(), nullptr);
@@ -82,4 +82,4 @@ void RtcpPacket::CreateHeader(
 }
 
 }  // namespace rtcp
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

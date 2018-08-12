@@ -44,7 +44,7 @@
 
 #define GOOGLE_PROTOBUF_HAS_ONEOF
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 namespace internal {
 
@@ -1680,4 +1680,4 @@ inline Type* GeneratedMessageReflection::AddField(
 
 }  // namespace internal
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google

@@ -21,7 +21,7 @@
 #include "../module/interface/module_common_types.h"
 #include "../module/remote_bitrate_estimator/include/send_time_history.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class BitrateController;
 class RtcEventLog;
@@ -62,8 +62,8 @@ class TransportFeedbackAdapter : public TransportFeedbackObserver,
       const rtcp::TransportFeedback& feedback);
 
   const bool send_side_bwe_with_overhead_;
-  cloopenwebrtc::CriticalSection lock_;
-  cloopenwebrtc::CriticalSection bwe_lock_;
+  yuntongxunwebrtc::CriticalSection lock_;
+  yuntongxunwebrtc::CriticalSection bwe_lock_;
   int transport_overhead_bytes_per_packet_ GUARDED_BY(&lock_);
   SendTimeHistory send_time_history_ GUARDED_BY(&lock_);
   std::unique_ptr<DelayBasedBwe> delay_based_bwe_ GUARDED_BY(&bwe_lock_);
@@ -75,6 +75,6 @@ class TransportFeedbackAdapter : public TransportFeedbackObserver,
   std::vector<PacketFeedback> last_packet_feedback_vector_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // cloopenwebrtc_MODULES_CONGESTION_CONTROLLER_TRANSPORT_FEEDBACK_ADAPTER_H_

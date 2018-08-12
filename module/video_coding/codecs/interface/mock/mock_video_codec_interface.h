@@ -17,7 +17,7 @@
 #include "modules/video_coding/codecs/interface/video_codec_interface.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class MockEncodedImageCallback : public EncodedImageCallback {
  public:
@@ -84,6 +84,6 @@ class MockVideoDecoder : public VideoDecoder {
   MOCK_METHOD0(Copy, VideoDecoder*());
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_VIDEO_CODING_CODECS_INTERFACE_MOCK_MOCK_VIDEO_CODEC_INTERFACE_H_

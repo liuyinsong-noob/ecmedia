@@ -14,7 +14,7 @@
 #include "audio_device_buffer.h"
 #include "audio_device.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioDeviceGeneric
 {
@@ -184,6 +184,6 @@ public:
 	virtual void RegisterSoundCardOnCallback(SoundCardOn soundcard_on_cb) {}
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_AUDIO_DEVICE_AUDIO_DEVICE_GENERIC_H

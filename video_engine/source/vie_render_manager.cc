@@ -19,7 +19,7 @@
 #include "vie_defines.h"
 #include "vie_renderer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ViERenderManagerScoped::ViERenderManagerScoped(
     const ViERenderManager& vie_render_manager)

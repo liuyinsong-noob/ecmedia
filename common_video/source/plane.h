@@ -15,7 +15,7 @@
 #include "../system_wrappers/include/scoped_ptr.h"
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Helper class for I420VideoFrame: Store plane data and perform basic plane
 // operations.

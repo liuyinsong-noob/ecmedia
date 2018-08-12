@@ -16,7 +16,7 @@
 #include "video_codec_interface.h"
 #include "../system_wrappers/include/field_trial.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 enum { kOneSecond90Khz = 90000 };
 

@@ -14,7 +14,7 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "rtp_payload_registry.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class MockRTPPayloadStrategy : public RTPPayloadStrategy {
  public:

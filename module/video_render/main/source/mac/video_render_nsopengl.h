@@ -32,7 +32,7 @@
 
 class Trace;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class EventTimerWrapper;
 class ThreadWrapper;
 class VideoRenderNSOpenGL;

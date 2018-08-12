@@ -16,7 +16,7 @@
 #include "shared_data.h"
 
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 class VoENetworkImpl: public VoENetwork

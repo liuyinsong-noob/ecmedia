@@ -13,7 +13,7 @@
 #include "critical_section_wrapper.h"
 #include "trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 ListItem::ListItem(const void* item)
     : next_(0),
       prev_(0),
@@ -286,4 +286,4 @@ void ListWrapper::PushFrontImpl(ListItem* item)
     first_ = item;
     size_++;
 }
-} //namespace cloopenwebrtc
+} //namespace yuntongxunwebrtc

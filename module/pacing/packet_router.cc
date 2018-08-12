@@ -16,7 +16,7 @@
 #include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
 #include "../module/rtp_rtcp/source/rtcp_packet/transport_feedback.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 PacketRouter::PacketRouter() : transport_seq_(0) {
   pacer_thread_checker_.DetachFromThread();
@@ -27,7 +27,7 @@ PacketRouter::~PacketRouter() {
 }
 
 void PacketRouter::AddRtpModule(RtpRtcp* rtp_module) {
-  cloopenwebrtc::CritScope cs(&modules_crit_);
+  yuntongxunwebrtc::CritScope cs(&modules_crit_);
   DCHECK(std::find(rtp_modules_.begin(), rtp_modules_.end(), rtp_module) ==
              rtp_modules_.end());
   // Put modules which can use regular payload packets (over rtx) instead of
@@ -40,7 +40,7 @@ void PacketRouter::AddRtpModule(RtpRtcp* rtp_module) {
 }
 
 void PacketRouter::RemoveRtpModule(RtpRtcp* rtp_module) {
-  cloopenwebrtc::CritScope cs(&modules_crit_);
+  yuntongxunwebrtc::CritScope cs(&modules_crit_);
   DCHECK(std::find(rtp_modules_.begin(), rtp_modules_.end(), rtp_module) !=
              rtp_modules_.end());
   rtp_modules_.remove(rtp_module);
@@ -52,7 +52,7 @@ bool PacketRouter::TimeToSendPacket(uint32_t ssrc,
                                     bool retransmission,
                                     const PacedPacketInfo& pacing_info) {
  // DCHECK(pacer_thread_checker_.CalledOnValidThread());
-  cloopenwebrtc::CritScope cs(&modules_crit_);
+  yuntongxunwebrtc::CritScope cs(&modules_crit_);
   for (auto* rtp_module : rtp_modules_) {
     if (!rtp_module->SendingMedia())
       continue;
@@ -69,7 +69,7 @@ size_t PacketRouter::TimeToSendPadding(size_t bytes_to_send,
                                        const PacedPacketInfo& pacing_info) {
  // DCHECK(pacer_thread_checker_.CalledOnValidThread());
   size_t total_bytes_sent = 0;
-  cloopenwebrtc::CritScope cs(&modules_crit_);
+  yuntongxunwebrtc::CritScope cs(&modules_crit_);
   // Rtp modules are ordered by which stream can most benefit from padding.
   for (RtpRtcp* module : rtp_modules_) {
     if (module->SendingMedia() && module->HasBweExtensions()) {
@@ -84,11 +84,11 @@ size_t PacketRouter::TimeToSendPadding(size_t bytes_to_send,
 }
 
 void PacketRouter::SetTransportWideSequenceNumber(uint16_t sequence_number) {
-  cloopenwebrtc::AtomicOps::ReleaseStore(&transport_seq_, sequence_number);
+  yuntongxunwebrtc::AtomicOps::ReleaseStore(&transport_seq_, sequence_number);
 }
 
 uint16_t PacketRouter::AllocateSequenceNumber() {
-  int prev_seq = cloopenwebrtc::AtomicOps::AcquireLoad(&transport_seq_);
+  int prev_seq = yuntongxunwebrtc::AtomicOps::AcquireLoad(&transport_seq_);
   int desired_prev_seq;
   int new_seq;
   do {
@@ -98,7 +98,7 @@ uint16_t PacketRouter::AllocateSequenceNumber() {
     // time the CAS operation was executed. Thus, if prev_seq is returned, the
     // operation was successful - otherwise we need to retry. Saving the
     // return value saves us a load on retry.
-    prev_seq = cloopenwebrtc::AtomicOps::CompareAndSwap(&transport_seq_, desired_prev_seq,
+    prev_seq = yuntongxunwebrtc::AtomicOps::CompareAndSwap(&transport_seq_, desired_prev_seq,
                                               new_seq);
   } while (prev_seq != desired_prev_seq);
 
@@ -106,7 +106,7 @@ uint16_t PacketRouter::AllocateSequenceNumber() {
 }
 
 bool PacketRouter::SendFeedback(rtcp::TransportFeedback* packet) {
-  cloopenwebrtc::CritScope cs(&modules_crit_);
+  yuntongxunwebrtc::CritScope cs(&modules_crit_);
   for (auto* rtp_module : rtp_modules_) {
     packet->SetSenderSsrc(rtp_module->SSRC());
     if (rtp_module->SendFeedbackPacket(*packet))
@@ -115,4 +115,4 @@ bool PacketRouter::SendFeedback(rtcp::TransportFeedback* packet) {
   return false;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

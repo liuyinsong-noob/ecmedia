@@ -50,7 +50,7 @@
 #include "librtmp/rtmp.h"
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 	static RTMPLiveSession *g_rtmpLiveSession = NULL;
 	int onReturnVideoWidthHeight(int width, int height, int channelid)

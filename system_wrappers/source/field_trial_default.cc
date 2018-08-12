@@ -14,7 +14,7 @@
 
 // Simple field trial implementation, which allows client to
 // specify desired flags in InitFieldTrialsFromString.
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace field_trial {
 
 static const char *trials_init_string = NULL;
@@ -62,4 +62,4 @@ const char* GetFieldTrialString() {
   return trials_init_string;
 }
 }  // namespace field_trial
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

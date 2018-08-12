@@ -16,7 +16,7 @@
 
 #include "audio_device_buffer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 FineAudioBuffer::FineAudioBuffer(AudioDeviceBuffer* device_buffer,
                                  int desired_frame_size_bytes,

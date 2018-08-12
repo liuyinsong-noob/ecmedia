@@ -33,7 +33,7 @@
 
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class TickInterval;
 
 class TickTime
@@ -343,6 +343,6 @@ inline TickInterval& TickInterval::operator-=(const TickInterval& rhs)
     _interval -= rhs._interval;
     return *this;
 }
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_SYSTEM_WRAPPERS_INTERFACE_TICK_UTIL_H_

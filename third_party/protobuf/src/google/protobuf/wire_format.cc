@@ -50,7 +50,7 @@
 
 
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 namespace internal {
 
@@ -1098,4 +1098,4 @@ void WireFormat::VerifyUTF8StringFallback(const char* data,
 
 }  // namespace internal
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google

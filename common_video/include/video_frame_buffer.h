@@ -20,7 +20,7 @@
 #include "../base/callback.h"
 #include "../base/scoped_ref_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Base class for native-handle buffer is a wrapper around a |native_handle|.
 // This is used for convenience as most native-handle implementations can share
@@ -47,7 +47,7 @@ class NativeHandleBuffer : public VideoFrameBuffer {
   const int height_;
 };
 
-class WrappedI420Buffer : public cloopenwebrtc::VideoFrameBuffer {
+class WrappedI420Buffer : public yuntongxunwebrtc::VideoFrameBuffer {
  public:
   WrappedI420Buffer(int width,
                     int height,
@@ -57,7 +57,7 @@ class WrappedI420Buffer : public cloopenwebrtc::VideoFrameBuffer {
                     int u_stride,
                     const uint8_t* v_plane,
                     int v_stride,
-                    const cloopenwebrtc::Callback0<void>& no_longer_used);
+                    const yuntongxunwebrtc::Callback0<void>& no_longer_used);
   int width() const override;
   int height() const override;
 
@@ -70,10 +70,10 @@ class WrappedI420Buffer : public cloopenwebrtc::VideoFrameBuffer {
 
   void* native_handle() const override;
 
-  cloopenwebrtc::scoped_refptr<VideoFrameBuffer> NativeToI420Buffer() override;
+  yuntongxunwebrtc::scoped_refptr<VideoFrameBuffer> NativeToI420Buffer() override;
 
  private:
-  friend class cloopenwebrtc::RefCountedObject<WrappedI420Buffer>;
+  friend class yuntongxunwebrtc::RefCountedObject<WrappedI420Buffer>;
   ~WrappedI420Buffer() override;
 
   const int width_;
@@ -84,9 +84,9 @@ class WrappedI420Buffer : public cloopenwebrtc::VideoFrameBuffer {
   const int y_stride_;
   const int u_stride_;
   const int v_stride_;
-  cloopenwebrtc::Callback0<void> no_longer_used_cb_;
+  yuntongxunwebrtc::Callback0<void> no_longer_used_cb_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_COMMON_VIDEO_INCLUDE_VIDEO_FRAME_BUFFER_H_

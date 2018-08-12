@@ -17,7 +17,7 @@
 
 #include "../common_video/include/video_frame_buffer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class CoreVideoFrameBuffer : public NativeHandleBuffer {
  public:
@@ -31,7 +31,7 @@ class CoreVideoFrameBuffer : public NativeHandleBuffer {
                        int crop_y);
   ~CoreVideoFrameBuffer() override;
 
-  cloopenwebrtc::scoped_refptr<VideoFrameBuffer> NativeToI420Buffer() override;
+  yuntongxunwebrtc::scoped_refptr<VideoFrameBuffer> NativeToI420Buffer() override;
   // Returns true if the internal pixel buffer needs to be cropped.
   bool RequiresCropping() const;
   // Crop and scales the internal pixel buffer to the output pixel buffer. The
@@ -54,6 +54,6 @@ class CoreVideoFrameBuffer : public NativeHandleBuffer {
   const int crop_y_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_COMMON_VIDEO_INCLUDE_COREVIDEO_FRAME_BUFFER_H_

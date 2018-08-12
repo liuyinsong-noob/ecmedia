@@ -69,7 +69,7 @@
 #include "video_render_android_impl.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VideoRender*
 VideoRender::CreateVideoRender(const int32_t id,

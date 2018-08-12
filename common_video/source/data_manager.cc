@@ -10,7 +10,7 @@
 
 #include "data_manager.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 typedef struct
@@ -83,4 +83,4 @@ termSource (j_decompress_ptr cinfo)
   //
 }
 
-} // end of namespace cloopenwebrtc
+} // end of namespace yuntongxunwebrtc

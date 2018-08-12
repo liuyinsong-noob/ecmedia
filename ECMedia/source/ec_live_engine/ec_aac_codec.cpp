@@ -9,7 +9,7 @@
 #include "ec_aac_codec.h"
 #include "ec_live_utility.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 #define AAC_CODEC_SAMPLE_RATE 44100
 #define AUDIO_CHANNEL_COUNT 2
     

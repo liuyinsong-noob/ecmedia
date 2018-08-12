@@ -15,7 +15,7 @@
 
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class BitrateController;
 class CallStats;
@@ -49,7 +49,7 @@ class ChannelGroup {
                             bool sender,
                             bool receiver,
                             ViEChannel* channel);
-  void SetBandwidthEstimationConfig(const cloopenwebrtc::Config& config);
+  void SetBandwidthEstimationConfig(const yuntongxunwebrtc::Config& config);
 
   BitrateController* GetBitrateController();
   CallStats* GetCallStats();

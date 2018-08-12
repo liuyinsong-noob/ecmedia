@@ -18,7 +18,7 @@
 #include "../module/include/module_common_types.h"
 #include "../module/rtp_rtcp/source/forward_error_correction.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace test {
 namespace fec {
 
@@ -129,6 +129,6 @@ class UlpfecPacketGenerator : public AugmentedPacketGenerator {
 
 }  // namespace fec
 }  // namespace test
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_FEC_TEST_HELPER_H_

@@ -20,7 +20,7 @@
 #include "./third_party/libyuv-android/include/libyuv.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const int k16ByteAlignment = 16;
 bool needFlipI420Frame = false;

@@ -14,7 +14,7 @@
 
 #include "../base/atomicops.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 template <class T>
 class RefCountedObject : public T {
@@ -56,6 +56,6 @@ class RefCountedObject : public T {
   mutable volatile int ref_count_ = 0;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_REFCOUNTEDOBJECT_H_

@@ -14,7 +14,7 @@
 #include "../system_wrappers/include/rw_lock_wrapper.h"
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 class TimestampExtrapolator

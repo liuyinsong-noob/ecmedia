@@ -15,7 +15,7 @@
 #import <UIKit/UIKit.h>
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 bool iOSH264HardEncoder = true;
 bool iOSH264HardDecoder = true;
 

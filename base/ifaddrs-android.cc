@@ -34,7 +34,7 @@ const int kMaxReadSize = 4096;
 
 }  // namespace
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 int set_ifname(struct ifaddrs* ifaddr, int interface) {
   char buf[IFNAMSIZ] = {0};
@@ -219,5 +219,5 @@ void freeifaddrs(struct ifaddrs* addrs) {
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // defined(WEBRTC_ANDROID)

@@ -13,7 +13,7 @@
 
 using ::std::string;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const int kOpusBlockDurationMs = 20;
 static const int kOpusSamplingKhz = 48;

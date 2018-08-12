@@ -47,7 +47,7 @@ void WebrtcAlsaErrorHandler(const char *file,
                           int err,
                           const char *fmt,...){};
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 static const unsigned int ALSA_PLAYOUT_FREQ = 48000;
 static const unsigned int ALSA_PLAYOUT_CH = 2;

@@ -14,19 +14,19 @@
 #include "system_wrappers/source/cpu_measurement_harness.h"
 #include "testsupport/fileutils.h"
 
-using cloopenwebrtc::CpuMeasurementHarness;
-using cloopenwebrtc::Trace;
-using cloopenwebrtc::kTraceWarning;
-using cloopenwebrtc::kTraceUtility;
+using yuntongxunwebrtc::CpuMeasurementHarness;
+using yuntongxunwebrtc::Trace;
+using yuntongxunwebrtc::kTraceWarning;
+using yuntongxunwebrtc::kTraceUtility;
 
-class Logger : public cloopenwebrtc::CpuTarget {
+class Logger : public yuntongxunwebrtc::CpuTarget {
  public:
   Logger() {
     Trace::CreateTrace();
-    std::string trace_file = cloopenwebrtc::test::OutputPath() +
+    std::string trace_file = yuntongxunwebrtc::test::OutputPath() +
         "trace_unittest.txt";
     Trace::SetTraceFile(trace_file.c_str());
-    Trace::SetLevelFilter(cloopenwebrtc::kTraceAll);
+    Trace::SetLevelFilter(yuntongxunwebrtc::kTraceAll);
   }
   virtual ~Logger() {
     Trace::ReturnTrace();

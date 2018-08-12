@@ -16,7 +16,7 @@
 #include "../common_types.h"
 #include "../module/remote_bitrate_estimator/include/bwe_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class OveruseEstimator {
  public:
@@ -68,6 +68,6 @@ class OveruseEstimator {
 
   DISALLOW_COPY_AND_ASSIGN(OveruseEstimator);
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_REMOTE_BITRATE_ESTIMATOR_OVERUSE_ESTIMATOR_H_

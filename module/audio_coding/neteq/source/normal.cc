@@ -22,7 +22,7 @@
 #include "decoder_database.h"
 #include "expand.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 int Normal::Process(const int16_t* input,
                     size_t length,
@@ -196,4 +196,4 @@ int Normal::Process(const int16_t* input,
   return static_cast<int>(length);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

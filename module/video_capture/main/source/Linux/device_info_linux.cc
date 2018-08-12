@@ -25,7 +25,7 @@
 #include "trace.h"
 
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 namespace videocapturemodule
 {
@@ -58,7 +58,7 @@ DeviceInfoLinux::~DeviceInfoLinux()
 
 WebRtc_UWord32 DeviceInfoLinux::NumberOfDevices()
 {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceApiCall, cloopenwebrtc::kTraceVideoCapture, _id, "%s", __FUNCTION__);
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceApiCall, yuntongxunwebrtc::kTraceVideoCapture, _id, "%s", __FUNCTION__);
 
     WebRtc_UWord32 count = 0;
     char device[20];
@@ -87,7 +87,7 @@ WebRtc_Word32 DeviceInfoLinux::GetDeviceName(
                                          char* /*productUniqueIdUTF8*/,
                                          WebRtc_UWord32 /*productUniqueIdUTF8Length*/)
 {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceApiCall, cloopenwebrtc::kTraceVideoCapture, _id, "%s", __FUNCTION__);
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceApiCall, yuntongxunwebrtc::kTraceVideoCapture, _id, "%s", __FUNCTION__);
 
     // Travel through /dev/video [0-63]
     WebRtc_UWord32 count = 0;
@@ -117,7 +117,7 @@ WebRtc_Word32 DeviceInfoLinux::GetDeviceName(
     struct v4l2_capability cap;
     if (ioctl(fd, VIDIOC_QUERYCAP, &cap) < 0)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                    "error in querying the device capability for device %s. errno = %d",
                    device, errno);
         close(fd);
@@ -136,7 +136,7 @@ WebRtc_Word32 DeviceInfoLinux::GetDeviceName(
     }
     else
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id, "buffer passed is too small");
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id, "buffer passed is too small");
         return -1;
     }
 
@@ -151,7 +151,7 @@ WebRtc_Word32 DeviceInfoLinux::GetDeviceName(
         }
         else
         {
-            WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                        "buffer passed is too small");
             return -1;
         }
@@ -171,10 +171,10 @@ WebRtc_Word32 DeviceInfoLinux::CreateCapabilityMap(
                             (WebRtc_Word32) strlen((char*) deviceUniqueIdUTF8);
     if (deviceUniqueIdUTF8Length > kVideoCaptureUniqueNameLength)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id, "Device name too long");
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id, "Device name too long");
         return -1;
     }
-    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                "CreateCapabilityMap called for device %s", deviceUniqueIdUTF8);
 
     /* detect /dev/video [0-63] entries */
@@ -214,7 +214,7 @@ WebRtc_Word32 DeviceInfoLinux::CreateCapabilityMap(
 
     if (!found)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id, "no matching device found");
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id, "no matching device found");
         return -1;
     }
 
@@ -236,7 +236,7 @@ WebRtc_Word32 DeviceInfoLinux::CreateCapabilityMap(
                                                    _lastUsedDeviceNameLength + 1);
     memcpy(_lastUsedDeviceName, deviceUniqueIdUTF8, _lastUsedDeviceNameLength + 1);
 
-    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id, "CreateCapabilityMap %d",
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id, "CreateCapabilityMap %d",
                _captureCapabilities.Size());
 
     return size;
@@ -313,7 +313,7 @@ WebRtc_Word32 DeviceInfoLinux::FillCapabilityMap(int fd)
 
                     _captureCapabilities.Insert(index, cap);
                     index++;
-                    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+                    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                                "Camera capability, width:%d height:%d type:%d fps:%d",
                                cap->width, cap->height, cap->rawType, cap->maxFPS);
                 }
@@ -321,7 +321,7 @@ WebRtc_Word32 DeviceInfoLinux::FillCapabilityMap(int fd)
         }
     }
 
-    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id, "CreateCapabilityMap %d",
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id, "CreateCapabilityMap %d",
                _captureCapabilities.Size());
     return _captureCapabilities.Size();
 }

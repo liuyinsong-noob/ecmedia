@@ -12,7 +12,7 @@
 
 #include "../base/checks.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ///////////////////////////////////////////////////////////////////////////////
 // SignalThread
@@ -151,4 +151,4 @@ bool SignalThread::Worker::IsProcessingMessages() {
   return false;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -16,7 +16,7 @@
 #include "neteq.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Forward declarations.
 class BufferLevelFilter;
@@ -164,5 +164,5 @@ class DecisionLogic {
   DISALLOW_COPY_AND_ASSIGN(DecisionLogic);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_DECISION_LOGIC_H_

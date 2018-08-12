@@ -21,7 +21,7 @@
 #include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 #ifndef WIN32  
     extern int printTime();
 #endif
@@ -131,7 +131,7 @@ RtcpBandwidthObserver* BitrateControllerImpl::CreateRtcpBandwidthObserver() {
 
 void BitrateControllerImpl::SetStartBitrate(int start_bitrate_bps) {
   {
-	cloopenwebrtc::CritScope cs(&critsect_);
+	yuntongxunwebrtc::CritScope cs(&critsect_);
     bandwidth_estimation_.SetSendBitrate(start_bitrate_bps);
   }
   MaybeTriggerOnNetworkChanged();
@@ -140,7 +140,7 @@ void BitrateControllerImpl::SetStartBitrate(int start_bitrate_bps) {
 void BitrateControllerImpl::SetMinMaxBitrate(int min_bitrate_bps,
                                              int max_bitrate_bps) {
   {
-    cloopenwebrtc::CritScope cs(&critsect_);
+    yuntongxunwebrtc::CritScope cs(&critsect_);
     bandwidth_estimation_.SetMinMaxBitrate(min_bitrate_bps, max_bitrate_bps);
   }
   MaybeTriggerOnNetworkChanged();
@@ -150,7 +150,7 @@ void BitrateControllerImpl::SetBitrates(int start_bitrate_bps,
                                         int min_bitrate_bps,
                                         int max_bitrate_bps) {
   {
-    cloopenwebrtc::CritScope cs(&critsect_);
+    yuntongxunwebrtc::CritScope cs(&critsect_);
     bandwidth_estimation_.SetBitrates(start_bitrate_bps,
                                       min_bitrate_bps,
                                       max_bitrate_bps);
@@ -162,7 +162,7 @@ void BitrateControllerImpl::ResetBitrates(int bitrate_bps,
                                           int min_bitrate_bps,
                                           int max_bitrate_bps) {
   {
-    cloopenwebrtc::CritScope cs(&critsect_);
+    yuntongxunwebrtc::CritScope cs(&critsect_);
     bandwidth_estimation_ = SendSideBandwidthEstimation(event_log_);
     bandwidth_estimation_.SetBitrates(bitrate_bps, min_bitrate_bps,
                                       max_bitrate_bps);
@@ -172,7 +172,7 @@ void BitrateControllerImpl::ResetBitrates(int bitrate_bps,
 
 void BitrateControllerImpl::SetReservedBitrate(uint32_t reserved_bitrate_bps) {
   {
-    cloopenwebrtc::CritScope cs(&critsect_);
+    yuntongxunwebrtc::CritScope cs(&critsect_);
     reserved_bitrate_bps_ = reserved_bitrate_bps;
   }
   MaybeTriggerOnNetworkChanged();
@@ -181,7 +181,7 @@ void BitrateControllerImpl::SetReservedBitrate(uint32_t reserved_bitrate_bps) {
 // This is called upon reception of REMB or TMMBR.
 void BitrateControllerImpl::OnReceiverEstimatedBitrate(uint32_t bitrate) {
   {
-    cloopenwebrtc::CritScope cs(&critsect_);
+    yuntongxunwebrtc::CritScope cs(&critsect_);
     bandwidth_estimation_.UpdateReceiverEstimate(clock_->TimeInMilliseconds(),
                                                  bitrate);
     BWE_TEST_LOGGING_PLOT(1, "REMB_kbps", clock_->TimeInMilliseconds(),
@@ -195,7 +195,7 @@ void BitrateControllerImpl::OnDelayBasedBweResult(
   if (!result.updated)
     return;
   {
-    cloopenwebrtc::CritScope cs(&critsect_);
+    yuntongxunwebrtc::CritScope cs(&critsect_);
     bandwidth_estimation_.UpdateDelayBasedEstimate(clock_->TimeInMilliseconds(),
                                                    result.target_bitrate_bps);
 
@@ -207,7 +207,7 @@ void BitrateControllerImpl::OnDelayBasedBweResult(
 		LOG(LS_INFO) << "--------------[bwe] bitrate_controller = "
 			<< result.target_bitrate_bps
 			<< " (update_probe)";
-		WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, -1,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, -1,
 			"--------------[bwe] bitrate_controller = %u (update_probe)", result.target_bitrate_bps);
       bandwidth_estimation_.SetSendBitrate(result.target_bitrate_bps);
     }
@@ -217,7 +217,7 @@ void BitrateControllerImpl::OnDelayBasedBweResult(
 
 int64_t BitrateControllerImpl::TimeUntilNextProcess() {
   const int64_t kBitrateControllerUpdateIntervalMs = 25;
-  cloopenwebrtc::CritScope cs(&critsect_);
+  yuntongxunwebrtc::CritScope cs(&critsect_);
   int64_t time_since_update_ms =
       clock_->TimeInMilliseconds() - last_bitrate_update_ms_;
   return std::max<int64_t>(
@@ -226,7 +226,7 @@ int64_t BitrateControllerImpl::TimeUntilNextProcess() {
 
 int32_t BitrateControllerImpl::Process() {
   {
-    cloopenwebrtc::CritScope cs(&critsect_);
+    yuntongxunwebrtc::CritScope cs(&critsect_);
     bandwidth_estimation_.UpdateEstimate(clock_->TimeInMilliseconds());
   }
   MaybeTriggerOnNetworkChanged();
@@ -240,7 +240,7 @@ void BitrateControllerImpl::OnReceivedRtcpReceiverReport(
     int number_of_packets,
     int64_t now_ms) {
   {
-    cloopenwebrtc::CritScope cs(&critsect_);
+    yuntongxunwebrtc::CritScope cs(&critsect_);
     bandwidth_estimation_.UpdateReceiverBlock(fraction_loss, rtt,
                                               number_of_packets, now_ms);
   }
@@ -262,13 +262,13 @@ void BitrateControllerImpl::MaybeTriggerOnNetworkChanged() {
 bool BitrateControllerImpl::GetNetworkParameters(uint32_t* bitrate,
                                                  uint8_t* fraction_loss,
                                                  int64_t* rtt) {
-  cloopenwebrtc::CritScope cs(&critsect_);
+  yuntongxunwebrtc::CritScope cs(&critsect_);
   int current_bitrate;
   bandwidth_estimation_.CurrentEstimate(&current_bitrate, fraction_loss, rtt);
   LOG(LS_INFO) << "--------------[bwe] bitrate_controller = "
 	            << current_bitrate;
 
-  WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, -1,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, -1,
 	  "--------------[bwe] bitrate_controller = %d", current_bitrate);
 
     
@@ -304,7 +304,7 @@ bool BitrateControllerImpl::GetNetworkParameters(uint32_t* bitrate,
 }
 
 bool BitrateControllerImpl::AvailableBandwidth(uint32_t* bandwidth) const {
-  cloopenwebrtc::CritScope cs(&critsect_);
+  yuntongxunwebrtc::CritScope cs(&critsect_);
   int bitrate;
   uint8_t fraction_loss;
   int64_t rtt;
@@ -317,4 +317,4 @@ bool BitrateControllerImpl::AvailableBandwidth(uint32_t* bandwidth) const {
   }
   return false;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

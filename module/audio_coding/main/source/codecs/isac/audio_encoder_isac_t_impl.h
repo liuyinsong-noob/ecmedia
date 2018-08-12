@@ -16,7 +16,7 @@
 #include "isac.h"
 #include "../system_wrappers/include/critical_section_wrapper.h"
 
-namespace cloopenwebrtc{
+namespace yuntongxunwebrtc{
 
 const int kIsacPayloadType = 103;
 

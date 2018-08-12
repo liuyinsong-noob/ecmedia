@@ -19,7 +19,7 @@
 #include "../system_wrappers/include/scoped_ptr.h"
 
 // RFC 5109
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 FecReceiver* FecReceiver::Create(RtpData* callback) {
   return new FecReceiverImpl(callback);

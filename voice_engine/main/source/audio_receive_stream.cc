@@ -21,7 +21,7 @@ inline float Q14ToFloat(uint32_t v) {
 }
 
 extern char* filename_path;
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 AudioReceiveStream::AudioReceiveStream(VoiceEngine* voe, int channelid)
 	:  voe_(voe),

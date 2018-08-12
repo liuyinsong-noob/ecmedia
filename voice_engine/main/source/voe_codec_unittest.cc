@@ -18,7 +18,7 @@
 #include "voe_hardware.h"
 #include "voice_engine_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace voe {
 namespace {
 
@@ -153,4 +153,4 @@ TEST(VoECodecInst, TestCompareCodecInstances) {
 
 }  // namespace
 }  // namespace voe
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

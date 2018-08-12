@@ -14,7 +14,7 @@
 // This is a private header for media_opt_util.cc.
 // It should not be included by other files.
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Table for average FEC recovery from packet loss, for XOR code.
 // From RPL model of random loss.

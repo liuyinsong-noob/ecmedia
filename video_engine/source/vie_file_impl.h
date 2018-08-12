@@ -20,7 +20,7 @@
 #include "vie_shared_data.h"
 #include "video_coding_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class ConditionVariableWrapper;
 class CriticalSectionWrapper;
@@ -134,6 +134,6 @@ class ViEFileImpl
   ViESharedData* shared_data_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_VIDEO_ENGINE_VIE_FILE_IMPL_H_

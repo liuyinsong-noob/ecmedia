@@ -13,7 +13,7 @@
 
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // A circular buffer tailored to the need of this project. It stores last
 // K samples of the input, and keeps track of the mean of the last samples.
@@ -65,5 +65,5 @@ class AgcCircularBuffer {
   double sum_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_AGC_CIRCULAR_BUFFER_H_

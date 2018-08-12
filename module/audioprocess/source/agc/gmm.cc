@@ -15,7 +15,7 @@
 
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const int kMaxDimension = 10;
 
@@ -58,4 +58,4 @@ double EvaluateGmm(const double* x, const GmmParameters& gmm_parameters) {
   return f;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -136,7 +136,7 @@ typedef struct SalIceRemoteCandidate {
 
 typedef struct SalSrtpCryptoAlgo {
 	unsigned int tag;
-	cloopenwebrtc::ccp_srtp_crypto_suite_t algo;
+	yuntongxunwebrtc::ccp_srtp_crypto_suite_t algo;
 	/* 41= 40 max(key_length for all algo) + '\0' */
 //	char master_key[41];//
     char master_key[65];

@@ -28,7 +28,7 @@
 #include "../base/win32.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Thread;
 
@@ -333,6 +333,6 @@ class SocketServerScope {
   DISALLOW_IMPLICIT_CONSTRUCTORS(SocketServerScope);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_THREAD_H_

@@ -95,7 +95,7 @@
 #include "acm_red.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -986,4 +986,4 @@ bool ACMCodecDB::OwnsDecoder(int codec_id) {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

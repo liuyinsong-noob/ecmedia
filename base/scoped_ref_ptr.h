@@ -65,7 +65,7 @@
 
 #include <memory>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 template <class T>
 class scoped_refptr {
@@ -158,6 +158,6 @@ class scoped_refptr {
   T* ptr_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_SCOPED_REF_PTR_H_

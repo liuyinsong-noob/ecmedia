@@ -13,7 +13,7 @@
 
 #include "../base/constructormagic.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class BufferLevelFilter {
  public:
@@ -43,5 +43,5 @@ class BufferLevelFilter {
   DISALLOW_COPY_AND_ASSIGN(BufferLevelFilter);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_BUFFER_LEVEL_FILTER_H_

@@ -14,7 +14,7 @@
 #include <memory>
 #include "../base/socketfactory.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class MessageQueue;
 // Needs to be forward declared because there's a circular dependency between
@@ -57,6 +57,6 @@ class SocketServer : public SocketFactory {
   NetworkBinderInterface* network_binder_ = nullptr;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_SOCKETSERVER_H_

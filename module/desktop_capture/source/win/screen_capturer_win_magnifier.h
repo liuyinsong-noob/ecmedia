@@ -23,7 +23,7 @@
 #include "scoped_thread_desktop.h"
 #include "../system_wrappers/include/atomic32.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class DesktopFrame;
 class DesktopRect;
@@ -39,7 +39,7 @@ class ScreenCapturerWinMagnifier : public ScreenCapturer {
   // screen is being captured, or the OS does not support Magnification API, or
   // the magnifier capturer fails (e.g. in Windows8 Metro mode).
   explicit ScreenCapturerWinMagnifier(
-      cloopenwebrtc::scoped_ptr<ScreenCapturer> fallback_capturer);
+      yuntongxunwebrtc::scoped_ptr<ScreenCapturer> fallback_capturer);
   virtual ~ScreenCapturerWinMagnifier();
 
   // Overridden from ScreenCapturer:
@@ -102,7 +102,7 @@ class ScreenCapturerWinMagnifier : public ScreenCapturer {
 
   static Atomic32 tls_index_;
 
-  cloopenwebrtc::scoped_ptr<ScreenCapturer> fallback_capturer_;
+  yuntongxunwebrtc::scoped_ptr<ScreenCapturer> fallback_capturer_;
   bool fallback_capturer_started_;
   Callback* callback_;
   ScreenId current_screen_id_;
@@ -117,7 +117,7 @@ class ScreenCapturerWinMagnifier : public ScreenCapturer {
   ScreenCaptureFrameQueue queue_;
 
   // Class to calculate the difference between two screen bitmaps.
-  cloopenwebrtc::scoped_ptr<Differ> differ_;
+  yuntongxunwebrtc::scoped_ptr<Differ> differ_;
 
   // Used to suppress duplicate logging of SetThreadExecutionState errors.
   bool set_thread_execution_state_failed_;
@@ -149,6 +149,6 @@ class ScreenCapturerWinMagnifier : public ScreenCapturer {
   DISALLOW_COPY_AND_ASSIGN(ScreenCapturerWinMagnifier);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_WIN_SCREEN_CAPTURER_WIN_MAGNIFIER_H_

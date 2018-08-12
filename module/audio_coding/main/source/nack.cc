@@ -17,7 +17,7 @@
 #include "module_common_types.h"
 #include "../system_wrappers/include/logging.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -226,4 +226,4 @@ std::vector<uint16_t> Nack::GetNackList(int64_t round_trip_time_ms) const {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -15,7 +15,7 @@
 #include <memory>
 #include <string>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace metrics {
 
 // This class does not actually exist. It is casted to an implementation defined
@@ -56,6 +56,6 @@ int NumSamples(const std::string& name);
 int MinSample(const std::string& name);
 
 }  // namespace metrics
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_INCLUDE_METRICS_DEFAULT_H_

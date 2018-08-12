@@ -21,7 +21,7 @@
 #include "cloopenwebrtc/test/testsupport/fileutils.h"
 #include "cloopenwebrtc/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const int kSampleRatesHz[] = {ts::kSampleRate8kHz,
                                      ts::kSampleRate16kHz,

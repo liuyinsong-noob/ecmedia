@@ -19,7 +19,7 @@
 
 #include "differ_block.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 extern int BlockDifference_SSE2_W16(const uint8_t* image1,
                                     const uint8_t* image2,
@@ -117,4 +117,4 @@ extern int BlockDifference_SSE2_W32(const uint8_t* image1,
   return 0;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

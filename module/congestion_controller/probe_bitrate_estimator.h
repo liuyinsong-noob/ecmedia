@@ -16,7 +16,7 @@
 
 #include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class ProbeBitrateEstimator {
  public:
@@ -44,6 +44,6 @@ class ProbeBitrateEstimator {
   std::map<int, AggregatedCluster> clusters_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_CONGESTION_CONTROLLER_PROBE_BITRATE_ESTIMATOR_H_

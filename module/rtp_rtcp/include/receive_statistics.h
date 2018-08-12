@@ -17,7 +17,7 @@
 #include "../module/interface/module_common_types.h"
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Clock;
 

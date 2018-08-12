@@ -13,7 +13,7 @@
 #include "cropped_desktop_frame.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 CroppingWindowCapturer::CroppingWindowCapturer(
     const DesktopCaptureOptions& options)
@@ -84,7 +84,7 @@ SharedMemory* CroppingWindowCapturer::CreateSharedMemory(size_t size) {
 }
 
 void CroppingWindowCapturer::OnCaptureCompleted(DesktopFrame* frame, CaptureErrCode errCode /*= 0*/ , DesktopRect *wind_rect /*= NULL*/) {
-  cloopenwebrtc::scoped_ptr<DesktopFrame> screen_frame(frame);
+  yuntongxunwebrtc::scoped_ptr<DesktopFrame> screen_frame(frame);
 
   if (!ShouldUseScreenCapturer()) {
 	WEBRTC_TRACE(kTraceStateInfo, kTraceAudioMixerServer, -1,
@@ -108,7 +108,7 @@ void CroppingWindowCapturer::OnCaptureCompleted(DesktopFrame* frame, CaptureErrC
     return;
   }
 
-  cloopenwebrtc::scoped_ptr<DesktopFrame> window_frame(
+  yuntongxunwebrtc::scoped_ptr<DesktopFrame> window_frame(
       CreateCroppedDesktopFrame(screen_frame.release(), window_rect));
   callback_->OnCaptureCompleted(window_frame.release(), kCapture_Ok);
 }
@@ -121,4 +121,4 @@ CroppingWindowCapturer::Create(const DesktopCaptureOptions& options) {
 }
 #endif
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

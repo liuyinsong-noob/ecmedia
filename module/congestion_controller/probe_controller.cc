@@ -18,7 +18,7 @@
 #include "../system_wrappers/include/metrics.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 #ifndef WIN32  
 	extern int printTime();
 #endif
@@ -68,7 +68,7 @@ ProbeController::ProbeController(PacedSender* pacer, Clock* clock)
 void ProbeController::SetBitrates(int64_t min_bitrate_bps,
                                   int64_t start_bitrate_bps,
                                   int64_t max_bitrate_bps) {
-  cloopenwebrtc::CritScope cs(&critsect_);
+  yuntongxunwebrtc::CritScope cs(&critsect_);
 
   if (start_bitrate_bps > 0)  {
     start_bitrate_bps_ = start_bitrate_bps;
@@ -114,7 +114,7 @@ void ProbeController::SetBitrates(int64_t min_bitrate_bps,
 }
 
 void ProbeController::OnNetworkStateChanged(NetworkState network_state) {
-  cloopenwebrtc::CritScope cs(&critsect_);
+  yuntongxunwebrtc::CritScope cs(&critsect_);
   network_state_ = network_state;
   if (network_state_ == kNetworkUp && state_ == State::kInit)
     InitiateExponentialProbing();
@@ -132,7 +132,7 @@ void ProbeController::InitiateExponentialProbing() {
 }
 
 void ProbeController::SetEstimatedBitrate(int64_t bitrate_bps) {
-  cloopenwebrtc::CritScope cs(&critsect_);
+  yuntongxunwebrtc::CritScope cs(&critsect_);
   int64_t now_ms = clock_->TimeInMilliseconds();
 
   if (mid_call_probing_waiting_for_result_ &&
@@ -151,7 +151,7 @@ void ProbeController::SetEstimatedBitrate(int64_t bitrate_bps) {
                  << " Minimum to probe further: "
                  << min_bitrate_to_probe_further_bps_;
 
-	WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, -1,
+	WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, -1,
 		"[Probe] Measured bitrate: %d, Minimum to probe further: %d)\n",
 		bitrate_bps, min_bitrate_to_probe_further_bps_);
       
@@ -181,7 +181,7 @@ void ProbeController::SetEstimatedBitrate(int64_t bitrate_bps) {
       bitrate_bps < 2 * estimated_bitrate_bps_ / 3 &&
       (now_ms - last_alr_probing_time_) > kAlrProbingIntervalMinMs) {
     LOG(LS_INFO) << "Detected big BW drop in ALR, start probe.";
-	WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, -1,
+	WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, -1,
 		"[Probe] Detected big BW drop in ALR, start probe. (estimated_bitrate_bps_ = %PRId64)", estimated_bitrate_bps_);
 #ifndef WIN32
 //      printTime();
@@ -203,12 +203,12 @@ void ProbeController::SetEstimatedBitrate(int64_t bitrate_bps) {
 }
 
 void ProbeController::EnablePeriodicAlrProbing(bool enable) {
-  cloopenwebrtc::CritScope cs(&critsect_);
+  yuntongxunwebrtc::CritScope cs(&critsect_);
   enable_periodic_alr_probing_ = enable;
 }
 
 void ProbeController::Process() {
-  cloopenwebrtc::CritScope cs(&critsect_);
+  yuntongxunwebrtc::CritScope cs(&critsect_);
 
   int64_t now_ms = clock_->TimeInMilliseconds();
 
@@ -219,7 +219,7 @@ void ProbeController::Process() {
     if (state_ == State::kWaitingForProbingResult) {
       LOG(LS_INFO) << "kWaitingForProbingResult: timeout";
 
-	  WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, -1,
+	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, -1,
 		  "[Probe] kWaitingForProbingResult: timeout");
 #ifndef WIN32
 //        printTime();
@@ -234,7 +234,7 @@ void ProbeController::Process() {
     return;
 
   // Probe bandwidth periodically when in ALR state.
-  cloopenwebrtc::Optional<int64_t> alr_start_time =
+  yuntongxunwebrtc::Optional<int64_t> alr_start_time =
       pacer_->GetApplicationLimitedRegionStartTime();
   if (alr_start_time) {
     int64_t next_probe_time_ms =
@@ -257,7 +257,7 @@ void ProbeController::InitiateProbing(
       bitrate = max_probe_bitrate_bps;
       probe_further = false;
     }
-    pacer_->CreateProbeCluster(cloopenwebrtc::dchecked_cast<int>(bitrate));
+    pacer_->CreateProbeCluster(yuntongxunwebrtc::dchecked_cast<int>(bitrate));
   }
   time_last_probing_initiated_ms_ = now_ms;
   if (probe_further) {
@@ -270,4 +270,4 @@ void ProbeController::InitiateProbing(
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

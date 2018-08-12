@@ -16,9 +16,9 @@
 #include "common_header.h"
 #include "rtp_utility.h"
 
-using cloopenwebrtc::RtpUtility::Word32Align;
+using yuntongxunwebrtc::RtpUtility::Word32Align;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace rtcp {
 constexpr uint8_t Rpsi::kFeedbackMessageType;
 // RFC 4585: Feedback format.

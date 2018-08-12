@@ -17,7 +17,7 @@
 #include "critical_section_wrapper.h"
 #include "trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VideoRenderMacCocoaImpl::VideoRenderMacCocoaImpl(const int32_t id,
         const VideoRenderType videoRenderType,

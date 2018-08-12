@@ -14,7 +14,7 @@
 
 #include "desktop.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ScopedThreadDesktop::ScopedThreadDesktop()
     : initial_(Desktop::GetThreadDesktop()) {
@@ -42,7 +42,7 @@ void ScopedThreadDesktop::Revert() {
 bool ScopedThreadDesktop::SetThreadDesktop(Desktop* desktop) {
   Revert();
 
-  cloopenwebrtc::scoped_ptr<Desktop> scoped_desktop(desktop);
+  yuntongxunwebrtc::scoped_ptr<Desktop> scoped_desktop(desktop);
 
   if (initial_->IsSame(*desktop))
     return true;
@@ -54,4 +54,4 @@ bool ScopedThreadDesktop::SetThreadDesktop(Desktop* desktop) {
   return true;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

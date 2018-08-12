@@ -14,6 +14,6 @@
      * create image fiter according fitler type.
      * @param type  video filter type.
      */
-    +(ECImageOutput<ECImageInput>*) createImageFiilterWithType: (cloopenwebrtc::ECImageFilterType) type;
+    +(ECImageOutput<ECImageInput>*) createImageFiilterWithType: (yuntongxunwebrtc::ECImageFilterType) type;
 
 @end

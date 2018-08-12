@@ -19,7 +19,7 @@
 #include <time.h>
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 void SleepMs(int msecs) {
 #ifdef _WIN32
@@ -33,4 +33,4 @@ void SleepMs(int msecs) {
 #endif
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

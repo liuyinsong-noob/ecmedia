@@ -15,7 +15,7 @@
 #include "../system_wrappers/include/cpu_features_wrapper.h"
 #include "../system_wrappers/include/tick_util.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VPMContentAnalysis::VPMContentAnalysis(bool runtime_cpu_detection)
     : orig_frame_(NULL),

@@ -12,7 +12,7 @@
 
 #include <assert.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TextureVideoFrame::TextureVideoFrame(NativeHandle* handle,
                                      int width,

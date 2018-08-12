@@ -80,7 +80,7 @@
 #include "RateTransposer.h"
 #include "cpu_detect.h"
 
-using namespace cloopensoundtouch;
+using namespace yuntongxunsoundtouch;
     
 /// test if two floating point numbers are equal
 #define TEST_FLOAT_EQUAL(a, b)  (fabs(a - b) < 1e-10)

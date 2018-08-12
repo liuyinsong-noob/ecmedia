@@ -17,7 +17,7 @@
 #include <cstddef>
 #include <string>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Simple C++ class for writing 16-bit PCM WAV files. All error handling is
 // by calls to CHECK(), making it unsuitable for anything but debug code.

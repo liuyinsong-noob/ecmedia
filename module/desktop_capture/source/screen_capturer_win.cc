@@ -14,11 +14,11 @@
 #include "screen_capturer_win_gdi.h"
 #include "screen_capturer_win_magnifier.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // static
 ScreenCapturer* ScreenCapturer::Create(const DesktopCaptureOptions& options) {
-  cloopenwebrtc::scoped_ptr<ScreenCapturer> gdi_capturer(
+  yuntongxunwebrtc::scoped_ptr<ScreenCapturer> gdi_capturer(
       new ScreenCapturerWinGdi(options));
   //now  disallow
   //if (options.allow_use_magnification_api())
@@ -27,4 +27,4 @@ ScreenCapturer* ScreenCapturer::Create(const DesktopCaptureOptions& options) {
   return gdi_capturer.release();
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

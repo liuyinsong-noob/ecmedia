@@ -14,7 +14,7 @@
 #include "../base/constructormagic.h"
 #include "packet.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Forward declarations.
 class DecoderDatabase;
@@ -87,5 +87,5 @@ class PayloadSplitter {
     int last_sn;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_PAYLOAD_SPLITTER_H_

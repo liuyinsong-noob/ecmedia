@@ -17,7 +17,7 @@
 #include "../api/video/i420_buffer.h"
 #include "../base/race_checker.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Simple buffer pool to avoid unnecessary allocations of I420Buffer objects.
 // The pool manages the memory of the I420Buffer returned from CreateBuffer.
@@ -37,7 +37,7 @@ class I420BufferPool {
   // Returns a buffer from the pool. If no suitable buffer exist in the pool
   // and there are less than |max_number_of_buffers| pending, a buffer is
   // created. Returns null otherwise.
-  cloopenwebrtc::scoped_refptr<I420Buffer> CreateBuffer(int width, int height);
+  yuntongxunwebrtc::scoped_refptr<I420Buffer> CreateBuffer(int width, int height);
   // Clears buffers_ and detaches the thread checker so that it can be reused
   // later from another thread.
   void Release();
@@ -45,10 +45,10 @@ class I420BufferPool {
  private:
   // Explicitly use a RefCountedObject to get access to HasOneRef,
   // needed by the pool to check exclusive access.
-  using PooledI420Buffer = cloopenwebrtc::RefCountedObject<I420Buffer>;
+  using PooledI420Buffer = yuntongxunwebrtc::RefCountedObject<I420Buffer>;
 
-  cloopenwebrtc::RaceChecker race_checker_;
-  std::list<cloopenwebrtc::scoped_refptr<PooledI420Buffer>> buffers_;
+  yuntongxunwebrtc::RaceChecker race_checker_;
+  std::list<yuntongxunwebrtc::scoped_refptr<PooledI420Buffer>> buffers_;
   // If true, newly allocated buffers are zero-initialized. Note that recycled
   // buffers are not zero'd before reuse. This is required of buffers used by
   // FFmpeg according to http://crbug.com/390941, which only requires it for the
@@ -59,6 +59,6 @@ class I420BufferPool {
   const size_t max_number_of_buffers_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_COMMON_VIDEO_INCLUDE_I420_BUFFER_POOL_H_

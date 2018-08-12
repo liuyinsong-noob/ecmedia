@@ -19,7 +19,7 @@
 #include "../module/rtp_rtcp/source/time_util.h"
 #include "../system_wrappers/include/clock.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const int64_t kStatisticsTimeoutMs = 8000;
 const int64_t kStatisticsProcessIntervalMs = 1000;
@@ -52,7 +52,7 @@ StreamStatisticianImpl::StreamStatisticianImpl(
       rtp_callback_(rtp_callback) {}
 
 void StreamStatisticianImpl::ResetStatistics() {
-  cloopenwebrtc::CritScope cs(&stream_lock_);
+  yuntongxunwebrtc::CritScope cs(&stream_lock_);
   last_report_inorder_packets_ = 0;
   last_report_old_packets_ = 0;
   last_report_seq_max_ = 0;
@@ -77,7 +77,7 @@ void StreamStatisticianImpl::IncomingPacket(const RTPHeader& header,
 void StreamStatisticianImpl::UpdateCounters(const RTPHeader& header,
                                             size_t packet_length,
                                             bool retransmitted) {
-  cloopenwebrtc::CritScope cs(&stream_lock_);
+  yuntongxunwebrtc::CritScope cs(&stream_lock_);
   bool in_order = InOrderPacketInternal(header.sequenceNumber);
   ssrc_ = header.ssrc;
   incoming_bitrate_.Update(packet_length, clock_->TimeInMilliseconds());
@@ -168,7 +168,7 @@ void StreamStatisticianImpl::NotifyRtpCallback() {
   StreamDataCounters data;
   uint32_t ssrc;
   {
-    cloopenwebrtc::CritScope cs(&stream_lock_);
+    yuntongxunwebrtc::CritScope cs(&stream_lock_);
     data = receive_counters_;
     ssrc = ssrc_;
   }
@@ -179,7 +179,7 @@ void StreamStatisticianImpl::NotifyRtcpCallback() {
   RtcpStatistics data;
   uint32_t ssrc;
   {
-    cloopenwebrtc::CritScope cs(&stream_lock_);
+    yuntongxunwebrtc::CritScope cs(&stream_lock_);
     data = last_reported_statistics_;
     ssrc = ssrc_;
   }
@@ -189,7 +189,7 @@ void StreamStatisticianImpl::NotifyRtcpCallback() {
 void StreamStatisticianImpl::FecPacketReceived(const RTPHeader& header,
                                                size_t packet_length) {
   {
-    cloopenwebrtc::CritScope cs(&stream_lock_);
+    yuntongxunwebrtc::CritScope cs(&stream_lock_);
     receive_counters_.fec.AddPacket(packet_length, header);
   }
   NotifyRtpCallback();
@@ -197,14 +197,14 @@ void StreamStatisticianImpl::FecPacketReceived(const RTPHeader& header,
 
 void StreamStatisticianImpl::SetMaxReorderingThreshold(
     int max_reordering_threshold) {
-  cloopenwebrtc::CritScope cs(&stream_lock_);
+  yuntongxunwebrtc::CritScope cs(&stream_lock_);
   max_reordering_threshold_ = max_reordering_threshold;
 }
 
 bool StreamStatisticianImpl::GetStatistics(RtcpStatistics* statistics,
                                            bool reset) {
   {
-    cloopenwebrtc::CritScope cs(&stream_lock_);
+    yuntongxunwebrtc::CritScope cs(&stream_lock_);
     if (received_seq_first_ == 0 &&
         receive_counters_.transmitted.payload_bytes == 0) {
       // We have not received anything.
@@ -306,7 +306,7 @@ RtcpStatistics StreamStatisticianImpl::CalculateRtcpStatistics() {
 
 void StreamStatisticianImpl::GetDataCounters(
     size_t* bytes_received, uint32_t* packets_received) const {
-  cloopenwebrtc::CritScope cs(&stream_lock_);
+  yuntongxunwebrtc::CritScope cs(&stream_lock_);
   if (bytes_received) {
     *bytes_received = receive_counters_.transmitted.payload_bytes +
                       receive_counters_.transmitted.header_bytes +
@@ -319,25 +319,25 @@ void StreamStatisticianImpl::GetDataCounters(
 
 void StreamStatisticianImpl::GetReceiveStreamDataCounters(
     StreamDataCounters* data_counters) const {
-  cloopenwebrtc::CritScope cs(&stream_lock_);
+  yuntongxunwebrtc::CritScope cs(&stream_lock_);
   *data_counters = receive_counters_;
 }
 
 uint32_t StreamStatisticianImpl::BitrateReceived() const {
-  cloopenwebrtc::CritScope cs(&stream_lock_);
+  yuntongxunwebrtc::CritScope cs(&stream_lock_);
   return incoming_bitrate_.Rate(clock_->TimeInMilliseconds()).value_or(0);
 }
 
 void StreamStatisticianImpl::LastReceiveTimeNtp(uint32_t* secs,
                                                 uint32_t* frac) const {
-  cloopenwebrtc::CritScope cs(&stream_lock_);
+  yuntongxunwebrtc::CritScope cs(&stream_lock_);
   *secs = last_receive_time_ntp_.seconds();
   *frac = last_receive_time_ntp_.fractions();
 }
 
 bool StreamStatisticianImpl::IsRetransmitOfOldPacket(
     const RTPHeader& header, int64_t min_rtt) const {
-  cloopenwebrtc::CritScope cs(&stream_lock_);
+  yuntongxunwebrtc::CritScope cs(&stream_lock_);
   if (InOrderPacketInternal(header.sequenceNumber)) {
     return false;
   }
@@ -371,7 +371,7 @@ bool StreamStatisticianImpl::IsRetransmitOfOldPacket(
 }
 
 bool StreamStatisticianImpl::IsPacketInOrder(uint16_t sequence_number) const {
-  cloopenwebrtc::CritScope cs(&stream_lock_);
+  yuntongxunwebrtc::CritScope cs(&stream_lock_);
   return InOrderPacketInternal(sequence_number);
 }
 
@@ -411,7 +411,7 @@ void ReceiveStatisticsImpl::IncomingPacket(const RTPHeader& header,
                                            bool retransmitted) {
   StreamStatisticianImpl* impl;
   {
-    cloopenwebrtc::CritScope cs(&receive_statistics_lock_);
+    yuntongxunwebrtc::CritScope cs(&receive_statistics_lock_);
     StatisticianImplMap::iterator it = statisticians_.find(header.ssrc);
     if (it != statisticians_.end()) {
       impl = it->second;
@@ -429,7 +429,7 @@ void ReceiveStatisticsImpl::IncomingPacket(const RTPHeader& header,
 
 void ReceiveStatisticsImpl::FecPacketReceived(const RTPHeader& header,
                                               size_t packet_length) {
-  cloopenwebrtc::CritScope cs(&receive_statistics_lock_);
+  yuntongxunwebrtc::CritScope cs(&receive_statistics_lock_);
   StatisticianImplMap::iterator it = statisticians_.find(header.ssrc);
   // Ignore FEC if it is the first packet.
   if (it != statisticians_.end()) {
@@ -438,7 +438,7 @@ void ReceiveStatisticsImpl::FecPacketReceived(const RTPHeader& header,
 }
 
 StatisticianMap ReceiveStatisticsImpl::GetActiveStatisticians() const {
-  cloopenwebrtc::CritScope cs(&receive_statistics_lock_);
+  yuntongxunwebrtc::CritScope cs(&receive_statistics_lock_);
   StatisticianMap active_statisticians;
   for (StatisticianImplMap::const_iterator it = statisticians_.begin();
        it != statisticians_.end(); ++it) {
@@ -455,7 +455,7 @@ StatisticianMap ReceiveStatisticsImpl::GetActiveStatisticians() const {
 
 StreamStatistician* ReceiveStatisticsImpl::GetStatistician(
     uint32_t ssrc) const {
-  cloopenwebrtc::CritScope cs(&receive_statistics_lock_);
+  yuntongxunwebrtc::CritScope cs(&receive_statistics_lock_);
   StatisticianImplMap::const_iterator it = statisticians_.find(ssrc);
   if (it == statisticians_.end())
     return NULL;
@@ -464,7 +464,7 @@ StreamStatistician* ReceiveStatisticsImpl::GetStatistician(
 
 void ReceiveStatisticsImpl::SetMaxReorderingThreshold(
     int max_reordering_threshold) {
-  cloopenwebrtc::CritScope cs(&receive_statistics_lock_);
+  yuntongxunwebrtc::CritScope cs(&receive_statistics_lock_);
   for (StatisticianImplMap::iterator it = statisticians_.begin();
        it != statisticians_.end(); ++it) {
     it->second->SetMaxReorderingThreshold(max_reordering_threshold);
@@ -473,7 +473,7 @@ void ReceiveStatisticsImpl::SetMaxReorderingThreshold(
 
 void ReceiveStatisticsImpl::RegisterRtcpStatisticsCallback(
     RtcpStatisticsCallback* callback) {
-  cloopenwebrtc::CritScope cs(&receive_statistics_lock_);
+  yuntongxunwebrtc::CritScope cs(&receive_statistics_lock_);
   if (callback != NULL)
     assert(rtcp_stats_callback_ == NULL);
   rtcp_stats_callback_ = callback;
@@ -481,20 +481,20 @@ void ReceiveStatisticsImpl::RegisterRtcpStatisticsCallback(
 
 void ReceiveStatisticsImpl::StatisticsUpdated(const RtcpStatistics& statistics,
                                               uint32_t ssrc) {
-  cloopenwebrtc::CritScope cs(&receive_statistics_lock_);
+  yuntongxunwebrtc::CritScope cs(&receive_statistics_lock_);
   if (rtcp_stats_callback_)
     rtcp_stats_callback_->StatisticsUpdated(statistics, ssrc);
 }
 
 void ReceiveStatisticsImpl::CNameChanged(const char* cname, uint32_t ssrc) {
-  cloopenwebrtc::CritScope cs(&receive_statistics_lock_);
+  yuntongxunwebrtc::CritScope cs(&receive_statistics_lock_);
   if (rtcp_stats_callback_)
     rtcp_stats_callback_->CNameChanged(cname, ssrc);
 }
 
 void ReceiveStatisticsImpl::RegisterRtpStatisticsCallback(
     StreamDataCountersCallback* callback) {
-  cloopenwebrtc::CritScope cs(&receive_statistics_lock_);
+  yuntongxunwebrtc::CritScope cs(&receive_statistics_lock_);
   if (callback != NULL)
     assert(rtp_stats_callback_ == NULL);
   rtp_stats_callback_ = callback;
@@ -502,7 +502,7 @@ void ReceiveStatisticsImpl::RegisterRtpStatisticsCallback(
 
 void ReceiveStatisticsImpl::DataCountersUpdated(const StreamDataCounters& stats,
                                                 uint32_t ssrc) {
-  cloopenwebrtc::CritScope cs(&receive_statistics_lock_);
+  yuntongxunwebrtc::CritScope cs(&receive_statistics_lock_);
   if (rtp_stats_callback_) {
     rtp_stats_callback_->DataCountersUpdated(stats, ssrc);
   }
@@ -537,4 +537,4 @@ void NullReceiveStatistics::RegisterRtcpStatisticsCallback(
 void NullReceiveStatistics::RegisterRtpStatisticsCallback(
     StreamDataCountersCallback* callback) {}
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

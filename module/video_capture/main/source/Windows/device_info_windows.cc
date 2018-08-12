@@ -19,7 +19,7 @@
 #include <Streams.h>
 #include <Dvdmedia.h>
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 namespace videocapturemodule
 {
@@ -72,7 +72,7 @@ DeviceInfoWindows::DeviceInfoWindows(const WebRtc_Word32 id)
             // apartment (STA). We are then prevented from using STA.
             // Details: hr = 0x80010106 <=> "Cannot change thread mode after it is set".
             //
-            WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideoCapture, _id,
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture, _id,
                          "VideoCaptureWindowsDSInfo::VideoCaptureWindowsDSInfo "
                          "CoInitializeEx(NULL, COINIT_APARTMENTTHREADED) => "
                          "RPC_E_CHANGED_MODE, error 0x%x",
@@ -97,7 +97,7 @@ WebRtc_Word32 DeviceInfoWindows::Init()
     //                              IID_ICreateDevEnum, (void **) &_dsDevEnum);
     //if (hr != NOERROR)
     //{
-    //    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+    //    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
     //                 "Failed to create CLSID_SystemDeviceEnum, error 0x%x", hr);
     //    return -1;
     //}
@@ -143,7 +143,7 @@ WebRtc_Word32 DeviceInfoWindows::GetDeviceInfo(
 		IID_ICreateDevEnum, (void **) &_dsDevEnum);
 	if (hr != NOERROR)
 	{
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
 			"Failed to create CLSID_SystemDeviceEnum, error 0x%x", hr);
 		return -1;
 	}
@@ -155,7 +155,7 @@ WebRtc_Word32 DeviceInfoWindows::GetDeviceInfo(
                                           &_dsMonikerDevEnum, 0);
     if (hr != NOERROR)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "Failed to enumerate CLSID_SystemDeviceEnum, error 0x%x."
                      " No webcam exist?", hr);
         return -1;
@@ -199,8 +199,8 @@ WebRtc_Word32 DeviceInfoWindows::GetDeviceInfo(
                                                              NULL);
                             if (convResult == 0)
                             {
-                                WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-                                             cloopenwebrtc::kTraceVideoCapture, _id,
+                                WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+                                             yuntongxunwebrtc::kTraceVideoCapture, _id,
                                              "Failed to convert device name to UTF8. %d",
                                              GetLastError());
 								RELEASE_AND_CLEAR(_dsMonikerDevEnum);
@@ -216,8 +216,8 @@ WebRtc_Word32 DeviceInfoWindows::GetDeviceInfo(
                                 strncpy_s((char *) deviceUniqueIdUTF8,
                                           deviceUniqueIdUTF8Length,
                                           (char *) deviceNameUTF8, convResult);
-                                WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-                                             cloopenwebrtc::kTraceVideoCapture, _id,
+                                WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+                                             yuntongxunwebrtc::kTraceVideoCapture, _id,
                                              "Failed to get deviceUniqueIdUTF8 using deviceNameUTF8");
                             }
                             else
@@ -232,8 +232,8 @@ WebRtc_Word32 DeviceInfoWindows::GetDeviceInfo(
                                                           NULL, NULL);
                                 if (convResult == 0)
                                 {
-                                    WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-                                                 cloopenwebrtc::kTraceVideoCapture, _id,
+                                    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+                                                 yuntongxunwebrtc::kTraceVideoCapture, _id,
                                                  "Failed to convert device name to UTF8. %d",
                                                  GetLastError());
 									RELEASE_AND_CLEAR(_dsMonikerDevEnum);
@@ -266,7 +266,7 @@ WebRtc_Word32 DeviceInfoWindows::GetDeviceInfo(
 
     if (deviceNameLength)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, _id, "%s %s",
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, _id, "%s %s",
                      __FUNCTION__, deviceNameUTF8);
     }
     return index;
@@ -282,7 +282,7 @@ IBaseFilter * DeviceInfoWindows::GetDeviceFilter(
         (WebRtc_Word32) strlen((char*) deviceUniqueIdUTF8); // UTF8 is also NULL terminated
     if (deviceUniqueIdUTF8Length > kVideoCaptureUniqueNameLength)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "Device name too long");
         return NULL;
     }
@@ -292,7 +292,7 @@ IBaseFilter * DeviceInfoWindows::GetDeviceFilter(
 		IID_ICreateDevEnum, (void **) &_dsDevEnum);
 	if (hr != NOERROR)
 	{
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
 			"Failed to create CLSID_SystemDeviceEnum, error 0x%x", hr);
 		return NULL;
 	}
@@ -303,7 +303,7 @@ IBaseFilter * DeviceInfoWindows::GetDeviceFilter(
                                                    &_dsMonikerDevEnum, 0);
     if (hr != NOERROR)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "Failed to enumerate CLSID_SystemDeviceEnum, error 0x%x."
                      " No webcam exist?", hr);
 		RELEASE_AND_CLEAR(_dsDevEnum);
@@ -353,7 +353,7 @@ IBaseFilter * DeviceInfoWindows::GetDeviceFilter(
                                               (void**) &captureFilter);
                         if (FAILED(hr))
                         {
-                            WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture,
+                            WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture,
                                          _id, "Failed to bind to the selected capture device %d",hr);
                         }
 
@@ -423,11 +423,11 @@ WebRtc_Word32 DeviceInfoWindows::CreateCapabilityMap(
         (WebRtc_Word32) strlen((char*) deviceUniqueIdUTF8);
     if (deviceUniqueIdUTF8Length > kVideoCaptureUniqueNameLength)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "Device name too long");
         return -1;
     }
-    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "CreateCapabilityMap called for device %s", deviceUniqueIdUTF8);
 
 
@@ -441,7 +441,7 @@ WebRtc_Word32 DeviceInfoWindows::CreateCapabilityMap(
     IPin* outputCapturePin = GetOutputPin(captureDevice);
     if (!outputCapturePin)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "Failed to get capture device output pin");
         RELEASE_AND_CLEAR(captureDevice);
         return -1;
@@ -451,7 +451,7 @@ WebRtc_Word32 DeviceInfoWindows::CreateCapabilityMap(
                                                (void **) &extDevice);
     if (SUCCEEDED(hr) && extDevice)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "This is an external device");
         extDevice->Release();
     }
@@ -461,7 +461,7 @@ WebRtc_Word32 DeviceInfoWindows::CreateCapabilityMap(
                                           (void**) &streamConfig);
     if (FAILED(hr))
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "Failed to get IID_IAMStreamConfig interface from capture device");
         return -1;
     }
@@ -472,7 +472,7 @@ WebRtc_Word32 DeviceInfoWindows::CreateCapabilityMap(
                                       (void**) &videoControlConfig);
     if (FAILED(hrVC))
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "IID_IAMVideoControl Interface NOT SUPPORTED");
     }
 
@@ -483,7 +483,7 @@ WebRtc_Word32 DeviceInfoWindows::CreateCapabilityMap(
     hr = streamConfig->GetNumberOfCapabilities(&count, &size);
     if (FAILED(hr))
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "Failed to GetNumberOfCapabilities");
         RELEASE_AND_CLEAR(videoControlConfig);
         RELEASE_AND_CLEAR(streamConfig);
@@ -509,7 +509,7 @@ WebRtc_Word32 DeviceInfoWindows::CreateCapabilityMap(
             if (pmt->majortype == MEDIATYPE_Video
                 && pmt->formattype == FORMAT_VideoInfo2)
             {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, _id,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, _id,
                              " Device support FORMAT_VideoInfo2");
                 supportFORMAT_VideoInfo2 = true;
                 VIDEOINFOHEADER2* h =
@@ -522,7 +522,7 @@ WebRtc_Word32 DeviceInfoWindows::CreateCapabilityMap(
             if (pmt->majortype == MEDIATYPE_Video
                 && pmt->formattype == FORMAT_VideoInfo)
             {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, _id,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, _id,
                              " Device support FORMAT_VideoInfo2");
                 supportFORMAT_VideoInfo = true;
             }
@@ -546,7 +546,7 @@ WebRtc_Word32 DeviceInfoWindows::CreateCapabilityMap(
                                          reinterpret_cast<BYTE*> (&caps));
         if (FAILED(hr))
         {
-            WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                          "Failed to GetStreamCaps");
             RELEASE_AND_CLEAR(videoControlConfig);
             RELEASE_AND_CLEAR(streamConfig);
@@ -614,7 +614,7 @@ WebRtc_Word32 DeviceInfoWindows::CreateCapabilityMap(
                 }
                 else // use existing method
                 {
-                    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture,
+                    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture,
                                  _id,
                                  "GetMaxAvailableFrameRate NOT SUPPORTED");
                     if (avgTimePerFrame > 0)
@@ -670,7 +670,7 @@ WebRtc_Word32 DeviceInfoWindows::CreateCapabilityMap(
             }
             else if (pmt->subtype == MEDIASUBTYPE_HDYC) // Seen used by Declink capture cards. Uses BT. 709 color. Not entiry correct to use UYVY. http://en.wikipedia.org/wiki/YCbCr
             {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideoCapture, _id,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture, _id,
                              "Device support HDYC.");
                 capability->rawType = kVideoUYVY;
             }
@@ -678,8 +678,8 @@ WebRtc_Word32 DeviceInfoWindows::CreateCapabilityMap(
             {
                 WCHAR strGuid[39];
                 StringFromGUID2(pmt->subtype, strGuid, 39);
-                WEBRTC_TRACE( cloopenwebrtc::kTraceWarning,
-                             cloopenwebrtc::kTraceVideoCapture, _id,
+                WEBRTC_TRACE( yuntongxunwebrtc::kTraceWarning,
+                             yuntongxunwebrtc::kTraceVideoCapture, _id,
                              "Device support unknown media type %ls, width %d, height %d",
                              strGuid);
                 delete capability;
@@ -694,7 +694,7 @@ WebRtc_Word32 DeviceInfoWindows::CreateCapabilityMap(
                                                       capability->width,
                                                       capability->height);
             _captureCapabilities.Insert(index++, capability);
-            WEBRTC_TRACE( cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+            WEBRTC_TRACE( yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                          "Camera capability, width:%d height:%d type:%d fps:%d",
                          capability->width, capability->height,
                          capability->rawType, capability->maxFPS);
@@ -713,7 +713,7 @@ WebRtc_Word32 DeviceInfoWindows::CreateCapabilityMap(
                                                    _lastUsedDeviceNameLength
                                                        + 1);
     memcpy(_lastUsedDeviceName, deviceUniqueIdUTF8, _lastUsedDeviceNameLength+ 1);
-    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "CreateCapabilityMap %d", _captureCapabilities.Size());
 
     return _captureCapabilities.Size();
@@ -734,7 +734,7 @@ void DeviceInfoWindows::GetProductId(const char* devicePath,
     if (!startPos)
     {
         strncpy_s((char*) productUniqueIdUTF8, productUniqueIdUTF8Length, "", 1);
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
                      "Failed to get the product Id");
         return;
     }
@@ -744,7 +744,7 @@ void DeviceInfoWindows::GetProductId(const char* devicePath,
     if (!pos || pos >= (char*) devicePath + strlen((char*) devicePath))
     {
         strncpy_s((char*) productUniqueIdUTF8, productUniqueIdUTF8Length, "", 1);
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
                      "Failed to get the product Id");
         return;
     }
@@ -760,7 +760,7 @@ void DeviceInfoWindows::GetProductId(const char* devicePath,
     else
     {
         strncpy_s((char*) productUniqueIdUTF8, productUniqueIdUTF8Length, "", 1);
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, -1,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
                      "Failed to get the product Id");
     }
 }
@@ -825,4 +825,4 @@ WebRtc_Word32 DeviceInfoWindows::DisplayCaptureSettingsDialogBox(
     return 0;
 }
 } // namespace videocapturemodule
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

@@ -16,7 +16,7 @@
 
 #include "video_capture.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VideoCaptureFactory {
  public:

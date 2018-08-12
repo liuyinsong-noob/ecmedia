@@ -18,7 +18,7 @@
 #include "transmit_mixer.h"
 #include "voice_engine_impl.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VoEVolumeControl* VoEVolumeControl::GetInterface(VoiceEngine* voiceEngine)
 {
@@ -568,4 +568,4 @@ int VoEVolumeControlImpl::GetSystemInputMute(bool& enabled)
     
 #endif  // #ifdef WEBRTC_VOICE_ENGINE_VOLUME_CONTROL_API
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

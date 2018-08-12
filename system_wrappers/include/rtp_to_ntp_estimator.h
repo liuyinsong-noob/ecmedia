@@ -16,7 +16,7 @@
 #include "../system_wrappers/include/ntp_time.h"
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 // Class for converting an RTP timestamp to the NTP domain in milliseconds.
 // The class needs to be trained with (at least 2) RTP/NTP timestamp pairs from
 // RTCP sender reports before the convertion can be done.
@@ -83,6 +83,6 @@ bool RtpToNtpMs(int64_t rtp_timestamp, const RtcpList& rtcp,
 // -1: backwards wrap around (i.e. reordering).
 int CheckForWrapArounds(uint32_t new_timestamp, uint32_t old_timestamp);
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_INCLUDE_RTP_TO_NTP_ESTIMATOR_H_

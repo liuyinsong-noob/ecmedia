@@ -16,7 +16,7 @@ extern "C" {
 #include "cloopenwebrtc/system_wrappers/interface/scoped_ptr.h"
 #include "cloopenwebrtc/test/testsupport/gtest_disable.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(EchoCancellationInternalTest, DelayCorrection) {
   scoped_ptr<AudioProcessing> ap(AudioProcessing::Create());

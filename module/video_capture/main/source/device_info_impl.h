@@ -17,7 +17,7 @@
 #include "video_capture_delay.h"
 #include "../system_wrappers/include/rw_lock_wrapper.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 namespace videocapturemodule
 {

@@ -41,7 +41,7 @@ typedef struct _TOKEN_MANDATORY_LABEL {
 #include "../base/stringutils.h"
 #include "../base/basictypes.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const char* win32_inet_ntop(int af, const void *src, char* dst, socklen_t size);
 int win32_inet_pton(int af, const char* src, void *dst);
@@ -124,7 +124,7 @@ inline bool IsCurrentProcessLowIntegrity() {
 
 bool AdjustCurrentProcessPrivilege(const TCHAR* privilege, bool to_enable);
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_WIN
 #endif  // WEBRTC_BASE_WIN32_H_

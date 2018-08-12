@@ -15,7 +15,7 @@
 #include "../system_wrappers/include/Trace.h"
 
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {  
     extern int printTime();
     
@@ -135,7 +135,7 @@ int H264Encoder::InitEncode(const VideoCodec* inst,
         return WEBRTC_VIDEO_CODEC_ERROR;
     }
 	
-	encoded_image_._size =  CalcBufferSize(cloopenwebrtc::kI420, codec_.width, codec_.height);
+	encoded_image_._size =  CalcBufferSize(yuntongxunwebrtc::kI420, codec_.width, codec_.height);
     encoded_image_._buffer = new uint8_t[encoded_image_._size];
     encoded_image_._length = 0;
     encoded_image_._completeFrame = false;
@@ -184,8 +184,8 @@ int H264Encoder::Encode(const I420VideoFrame& input_image,
 		codec_.width = input_image.width();
 		codec_.height = input_image.height();
 		frameType = kKeyFrame;
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-			cloopenwebrtc::kTraceVideoCoding,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+			yuntongxunwebrtc::kTraceVideoCoding,
 			0,
 			"x264_encoder_reconfig:_framewidth=%d _frameheight=%d", codec_.width, codec_.height);
         InitEncode(&codec_, num_of_cores_, 30000);
@@ -215,8 +215,8 @@ int H264Encoder::Encode(const I420VideoFrame& input_image,
 		framenum_++;
 	}
 	else{
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-			cloopenwebrtc::kTraceVideoCoding,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+			yuntongxunwebrtc::kTraceVideoCoding,
 			0,
 			"x264_encoder_encode() error=%d.", ret);
 	}
@@ -289,8 +289,8 @@ void H264Encoder::InitializeX264Pic(const I420VideoFrame& input_image, x264_pict
 
 	xpic.i_type=X264_TYPE_AUTO;
 	if(frame_type == kKeyFrame) {
-		WEBRTC_TRACE(cloopenwebrtc::kTraceApiCall,
-			cloopenwebrtc::kTraceVideoCoding,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceApiCall,
+			yuntongxunwebrtc::kTraceVideoCoding,
 			0,
 			"x264_encoder_intra_refresh called.");
 		xpic.i_type = X264_TYPE_IDR;
@@ -355,4 +355,4 @@ bool H264Encoder::CopyEncodedImage(RTPFragmentationHeader &fragment, void *xnals
 }
 
 
-} //namespace cloopenwebrtc
+} //namespace yuntongxunwebrtc

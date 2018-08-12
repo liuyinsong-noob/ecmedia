@@ -15,7 +15,7 @@
 #include "helpers_android.h"
 #include "trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static JavaVM* g_jvm_ = NULL;
 static JNIEnv* g_jni_env_ = NULL;

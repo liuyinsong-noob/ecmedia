@@ -47,7 +47,7 @@ TProtobufCoder::~TProtobufCoder()
 	m_nEncodedLen =0;
 }
 
-int TProtobufCoder::EncodeMessage(cloopen_google::protobuf::MessageLite* pmLite)
+int TProtobufCoder::EncodeMessage(yuntongxun_google::protobuf::MessageLite* pmLite)
 {
 	if(NULL==pmLite)
 	{
@@ -69,8 +69,8 @@ int TProtobufCoder::EncodeMessage(cloopen_google::protobuf::MessageLite* pmLite)
 		return ERR_PROTOBUF_CODER_NULL;
 	}
     memset(m_sEncodedData, 0, size);
-    cloopen_google::protobuf::io::ArrayOutputStream array_stream(m_sEncodedData, size);
-    cloopen_google::protobuf::io::CodedOutputStream output_stream(&array_stream);
+    yuntongxun_google::protobuf::io::ArrayOutputStream array_stream(m_sEncodedData, size);
+    yuntongxun_google::protobuf::io::CodedOutputStream output_stream(&array_stream);
     output_stream.WriteVarint32(pmLite->ByteSize());
     if(pmLite->SerializeToCodedStream(&output_stream))
 	{
@@ -83,7 +83,7 @@ int TProtobufCoder::EncodeMessage(cloopen_google::protobuf::MessageLite* pmLite)
 	return ret;
 }
 
-int TProtobufCoder::DecodeMessage(cloopen_google::protobuf::MessageLite* pmLite,char* inputData,int length)
+int TProtobufCoder::DecodeMessage(yuntongxun_google::protobuf::MessageLite* pmLite,char* inputData,int length)
 {
 	if(NULL==pmLite||NULL==inputData||length<=0)
 	{
@@ -91,9 +91,9 @@ int TProtobufCoder::DecodeMessage(cloopen_google::protobuf::MessageLite* pmLite,
 		return ERR_PROTOBUF_CODER_NULL;
 	}
 	int ret=PROTOBUF_CODER_OK;
-    cloopen_google::protobuf::io::CodedInputStream input((cloopen_google::protobuf::uint8*)inputData,length);
+    yuntongxun_google::protobuf::io::CodedInputStream input((yuntongxun_google::protobuf::uint8*)inputData,length);
     
-    cloopen_google::protobuf::uint32 sizea;
+    yuntongxun_google::protobuf::uint32 sizea;
     if (!input.ReadVarint32(&sizea)) {
 		ret=ERR_PROTOBUF_CODER_DECODE_READ_VARINT32;
 //        PrintConsole((char*)__FILE__, __LINE__,(char*)__FUNCTION__,LOG_LEVEL_ERR,"ret=%d",ret);
@@ -101,7 +101,7 @@ int TProtobufCoder::DecodeMessage(cloopen_google::protobuf::MessageLite* pmLite,
     };
     //printf("len=%d\r\n",sizea);
     // Tell the stream not to read beyond that size.
-    cloopen_google::protobuf::io::CodedInputStream::Limit limit = input.PushLimit(sizea);
+    yuntongxun_google::protobuf::io::CodedInputStream::Limit limit = input.PushLimit(sizea);
     
     // Parse the message.
     if (!pmLite->MergeFromCodedStream(&input)) {

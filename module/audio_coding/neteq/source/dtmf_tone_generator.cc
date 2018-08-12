@@ -32,7 +32,7 @@
 
 #include <assert.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // The filter coefficient a = 2*cos(2*pi*f/fs) for the low frequency tone, for
 // sample rates fs = {8000, 16000, 32000, 48000} Hz, and events 0 through 15.
@@ -189,4 +189,4 @@ int DtmfToneGenerator::Generate(int num_samples,
   return num_samples;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

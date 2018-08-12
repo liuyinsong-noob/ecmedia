@@ -14,13 +14,13 @@ namespace {
 constexpr size_t kDtmfOutbandMax = 20;
 }
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 DtmfQueue::DtmfQueue() {}
 
 DtmfQueue::~DtmfQueue() {}
 
 bool DtmfQueue::AddDtmf(const Event& event) {
-  cloopenwebrtc::CritScope lock(&dtmf_critsect_);
+  yuntongxunwebrtc::CritScope lock(&dtmf_critsect_);
   if (queue_.size() >= kDtmfOutbandMax) {
     return false;
   }
@@ -30,7 +30,7 @@ bool DtmfQueue::AddDtmf(const Event& event) {
 
 bool DtmfQueue::NextDtmf(Event* event) {
   DCHECK(event);
-  cloopenwebrtc::CritScope lock(&dtmf_critsect_);
+  yuntongxunwebrtc::CritScope lock(&dtmf_critsect_);
   if (queue_.empty()) {
     return false;
   }
@@ -41,7 +41,7 @@ bool DtmfQueue::NextDtmf(Event* event) {
 }
 
 bool DtmfQueue::PendingDtmf() const {
-  cloopenwebrtc::CritScope lock(&dtmf_critsect_);
+  yuntongxunwebrtc::CritScope lock(&dtmf_critsect_);
   return !queue_.empty();
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

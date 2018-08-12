@@ -18,7 +18,7 @@
 #include "../system_wrappers/include/thread_wrapper.h"
 #include "../system_wrappers/include/common.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 
 struct ParticipantFramePair {
@@ -155,7 +155,7 @@ bool AudioConferenceMixerImpl::Init() {
         return false;
 
 
-    cloopenwebrtc::Config config;
+    yuntongxunwebrtc::Config config;
     config.Set<ExperimentalAgc>(new ExperimentalAgc(false));
 	config.Set<ExperimentalNs>(new ExperimentalNs(false));
 	config.Set<Beamforming>(new Beamforming());
@@ -1047,4 +1047,4 @@ bool AudioConferenceMixerImpl::LimitMixedAudio(AudioFrame& mixedAudio) {
     }
     return true;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -12,7 +12,7 @@
 
 #include "../base/refcountedobject.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Reference count interface.
 class RefCountInterface {
@@ -24,6 +24,6 @@ class RefCountInterface {
   virtual ~RefCountInterface() {}
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_REFCOUNT_H_

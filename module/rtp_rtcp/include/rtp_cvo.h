@@ -13,7 +13,7 @@
 #include "../module/common_types.h"
 #include "../base/checks.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Please refer to http://www.etsi.org/deliver/etsi_ts/126100_126199/126114/
 // 12.07.00_60/ts_126114v120700p.pdf Section 7.4.5. The rotation of a frame is
@@ -52,5 +52,5 @@ inline VideoRotation ConvertCVOByteToVideoRotation(uint8_t cvo_byte) {
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_RTP_RTCP_INCLUDE_RTP_CVO_H_

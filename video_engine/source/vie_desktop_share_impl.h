@@ -16,7 +16,7 @@
 #include "vie_desktop_share.h"
 #include "vie_ref_count.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 
 class ViESharedData;
@@ -67,6 +67,6 @@ private:
     ViESharedData* shared_data_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // _VIE_DESKTOP_SHARE_IMPL_H_

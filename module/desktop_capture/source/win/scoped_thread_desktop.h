@@ -16,7 +16,7 @@
 #include "../base/constructormagic.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Desktop;
 
@@ -40,7 +40,7 @@ class ScopedThreadDesktop {
 
  private:
   // The desktop handle assigned to the calling thread by Set
-  cloopenwebrtc::scoped_ptr<Desktop> assigned_;
+  yuntongxunwebrtc::scoped_ptr<Desktop> assigned_;
 
   // The desktop handle assigned to the calling thread at creation.
   scoped_ptr<Desktop> initial_;
@@ -48,6 +48,6 @@ class ScopedThreadDesktop {
   DISALLOW_COPY_AND_ASSIGN(ScopedThreadDesktop);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_WIN_SCOPED_THREAD_DESKTOP_H_

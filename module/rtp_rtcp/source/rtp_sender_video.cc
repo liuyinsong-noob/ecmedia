@@ -28,7 +28,7 @@
 #include "../module/rtp_rtcp/source/rtp_header_extensions.h"
 #include "../module/rtp_rtcp/source/rtp_packet_to_send.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 constexpr size_t kRedForFecHeaderLength = 1;
@@ -107,7 +107,7 @@ void RTPSenderVideo::SendVideoPacket(std::unique_ptr<RtpPacketToSend> packet,
     LOG(LS_WARNING) << "Failed to send video packet " << seq_num;
     return;
   }
-  cloopenwebrtc::CritScope cs(&stats_crit_);
+  yuntongxunwebrtc::CritScope cs(&stats_crit_);
   video_bitrate_.Update(packet_size, clock_->TimeInMilliseconds());
   TRACE_EVENT_INSTANT2(TRACE_DISABLED_BY_DEFAULT("webrtc_rtp"),
                        "Video::PacketNormal", "timestamp", rtp_timestamp,
@@ -129,7 +129,7 @@ void RTPSenderVideo::SendVideoPacketAsRedMaybeWithUlpfec(
   StorageType fec_storage = kDontRetransmit;
   {
     // Only protect while creating RED and FEC packets, not when sending.
-    cloopenwebrtc::CritScope cs(&crit_);
+    yuntongxunwebrtc::CritScope cs(&crit_);
     red_packet->SetPayloadType(red_payload_type_);
     if (ulpfec_enabled()) {
       if (protect_media_packet) {
@@ -163,7 +163,7 @@ void RTPSenderVideo::SendVideoPacketAsRedMaybeWithUlpfec(
   size_t red_packet_size = red_packet->size();
   if (rtp_sender_->SendToNetwork(std::move(red_packet), media_packet_storage,
                                  RtpPacketSender::kLowPriority)) {
-    cloopenwebrtc::CritScope cs(&stats_crit_);
+    yuntongxunwebrtc::CritScope cs(&stats_crit_);
     video_bitrate_.Update(red_packet_size, clock_->TimeInMilliseconds());
     TRACE_EVENT_INSTANT2(TRACE_DISABLED_BY_DEFAULT("webrtc_rtp"),
                          "Video::PacketRed", "timestamp", rtp_timestamp,
@@ -181,7 +181,7 @@ void RTPSenderVideo::SendVideoPacketAsRedMaybeWithUlpfec(
     uint16_t fec_sequence_number = rtp_packet->SequenceNumber();
     if (rtp_sender_->SendToNetwork(std::move(rtp_packet), fec_storage,
                                    RtpPacketSender::kLowPriority)) {
-      cloopenwebrtc::CritScope cs(&stats_crit_);
+      yuntongxunwebrtc::CritScope cs(&stats_crit_);
       fec_bitrate_.Update(fec_packet->length(), clock_->TimeInMilliseconds());
       TRACE_EVENT_INSTANT2(TRACE_DISABLED_BY_DEFAULT("webrtc_rtp"),
                            "Video::PacketUlpfec", "timestamp", rtp_timestamp,
@@ -212,7 +212,7 @@ void RTPSenderVideo::SendVideoPacketWithFlexfec(
       uint16_t seq_num = fec_packet->SequenceNumber();
       if (rtp_sender_->SendToNetwork(std::move(fec_packet), kDontRetransmit,
                                      RtpPacketSender::kLowPriority)) {
-        cloopenwebrtc::CritScope cs(&stats_crit_);
+        yuntongxunwebrtc::CritScope cs(&stats_crit_);
         fec_bitrate_.Update(packet_length, clock_->TimeInMilliseconds());
         TRACE_EVENT_INSTANT2(TRACE_DISABLED_BY_DEFAULT("webrtc_rtp"),
                              "Video::PacketFlexfec", "timestamp", timestamp,
@@ -234,7 +234,7 @@ void RTPSenderVideo::SetUlpfecConfig(int red_payload_type,
   DCHECK_GE(ulpfec_payload_type, -1);
   DCHECK_LE(ulpfec_payload_type, 127);
 
-  cloopenwebrtc::CritScope cs(&crit_);
+  yuntongxunwebrtc::CritScope cs(&crit_);
   red_payload_type_ = red_payload_type;
   ulpfec_payload_type_ = ulpfec_payload_type;
 
@@ -251,7 +251,7 @@ void RTPSenderVideo::SetUlpfecConfig(int red_payload_type,
 
 void RTPSenderVideo::GetUlpfecConfig(int* red_payload_type,
                                      int* ulpfec_payload_type) const {
-  cloopenwebrtc::CritScope cs(&crit_);
+  yuntongxunwebrtc::CritScope cs(&crit_);
   *red_payload_type = red_payload_type_;
   *ulpfec_payload_type = ulpfec_payload_type_;
 }
@@ -280,16 +280,16 @@ size_t RTPSenderVideo::CalculateFecPacketOverhead() const {
 
 void RTPSenderVideo::SetFecParameters(const FecProtectionParams& delta_params,
                                       const FecProtectionParams& key_params) {
-  cloopenwebrtc::CritScope cs(&crit_);
+  yuntongxunwebrtc::CritScope cs(&crit_);
   delta_fec_params_ = delta_params;
   key_fec_params_ = key_params;
 }
 
-cloopenwebrtc::Optional<uint32_t> RTPSenderVideo::FlexfecSsrc() const {
+yuntongxunwebrtc::Optional<uint32_t> RTPSenderVideo::FlexfecSsrc() const {
   if (flexfec_sender_) {
-    return cloopenwebrtc::Optional<uint32_t>(flexfec_sender_->ssrc());
+    return yuntongxunwebrtc::Optional<uint32_t>(flexfec_sender_->ssrc());
   }
-  return cloopenwebrtc::Optional<uint32_t>();
+  return yuntongxunwebrtc::Optional<uint32_t>();
 }
 
 bool RTPSenderVideo::SendVideo(RtpVideoCodecTypes video_type,
@@ -314,7 +314,7 @@ bool RTPSenderVideo::SendVideo(RtpVideoCodecTypes video_type,
   bool red_enabled;
   int32_t retransmission_settings;
   {
-    cloopenwebrtc::CritScope cs(&crit_);
+    yuntongxunwebrtc::CritScope cs(&crit_);
     // According to
     // http://www.etsi.org/deliver/etsi_ts/126100_126199/126114/12.07.00_60/
     // ts_126114v120700p.pdf Section 7.4.5:
@@ -413,23 +413,23 @@ bool RTPSenderVideo::SendVideo(RtpVideoCodecTypes video_type,
 }
 
 uint32_t RTPSenderVideo::VideoBitrateSent() const {
-  cloopenwebrtc::CritScope cs(&stats_crit_);
+  yuntongxunwebrtc::CritScope cs(&stats_crit_);
   return video_bitrate_.Rate(clock_->TimeInMilliseconds()).value_or(0);
 }
 
 uint32_t RTPSenderVideo::FecOverheadRate() const {
-  cloopenwebrtc::CritScope cs(&stats_crit_);
+  yuntongxunwebrtc::CritScope cs(&stats_crit_);
   return fec_bitrate_.Rate(clock_->TimeInMilliseconds()).value_or(0);
 }
 
 int RTPSenderVideo::SelectiveRetransmissions() const {
-  cloopenwebrtc::CritScope cs(&crit_);
+  yuntongxunwebrtc::CritScope cs(&crit_);
   return retransmission_settings_;
 }
 
 void RTPSenderVideo::SetSelectiveRetransmissions(uint8_t settings) {
-  cloopenwebrtc::CritScope cs(&crit_);
+  yuntongxunwebrtc::CritScope cs(&crit_);
   retransmission_settings_ = settings;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

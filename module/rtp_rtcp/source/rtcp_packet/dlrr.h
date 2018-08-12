@@ -16,7 +16,7 @@
 
 #include "../base/basictypes.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace rtcp {
 struct ReceiveTimeInfo {
   // RFC 3611 4.5

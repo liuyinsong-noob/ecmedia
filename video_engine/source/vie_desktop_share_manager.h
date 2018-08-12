@@ -20,7 +20,7 @@
 #include "vie_manager_base.h"
 #include "vie_desktop_share.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class CriticalSectionWrapper;
 class ProcessThread;
@@ -80,6 +80,6 @@ class ViEDesktopShareScoped: private ViEManagerScopedBase {
                                       capture_observer) const;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_VIDEO_ENGINE_VIE_INPUT_MANAGER_H_

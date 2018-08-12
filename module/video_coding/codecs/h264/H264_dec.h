@@ -23,7 +23,7 @@ extern "C"
 #endif
 }
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
     class H264Decoder : public VideoDecoder
     {
@@ -113,7 +113,7 @@ namespace cloopenwebrtc
         
     };
     
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
     
 #endif /* defined(__video_coding__H264_dec__) */
 

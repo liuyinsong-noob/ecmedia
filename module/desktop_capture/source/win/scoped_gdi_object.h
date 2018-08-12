@@ -16,7 +16,7 @@
 #include "../base/constructormagic.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace win {
 
 // Scoper for GDI objects.
@@ -90,6 +90,6 @@ typedef ScopedGDIObject<HBITMAP, DeleteObjectTraits<HBITMAP> > ScopedBitmap;
 typedef ScopedGDIObject<HCURSOR, DestroyCursorTraits> ScopedCursor;
 
 }  // namespace win
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_WIN_SCOPED_GDI_HANDLE_H_

@@ -14,13 +14,13 @@
 #ifndef WEBRTC_MODULES_VIDEO_CODING_CODECS_INTERFACE_COMMON_CONSTANTS_H_
 #define WEBRTC_MODULES_VIDEO_CODING_CODECS_INTERFACE_COMMON_CONSTANTS_H_
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const int16_t kNoPictureId = -1;
 const int16_t kNoTl0PicIdx = -1;
 const uint8_t kNoTemporalIdx = 0xFF;
 const int kNoKeyIdx = -1;
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_VIDEO_CODING_CODECS_INTERFACE_COMMON_CONSTANTS_H_

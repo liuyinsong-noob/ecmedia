@@ -11,7 +11,7 @@
 
 extern char* filename_path;
 
-namespace cloopenwebrtc{
+namespace yuntongxunwebrtc{
 
 	AudioSendStream::AudioSendStream(VoiceEngine* voe, int channel_id)
 		: voe_(voe),

@@ -17,7 +17,7 @@
 #include "../module/remote_bitrate_estimator/include/bwe_defines.h"
 #include "../typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 enum RateControlRegion;
 
 bool AdaptiveThresholdExperimentIsDisabled();
@@ -58,6 +58,6 @@ class OveruseDetector {
 
   DISALLOW_COPY_AND_ASSIGN(OveruseDetector);
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_REMOTE_BITRATE_ESTIMATOR_OVERUSE_DETECTOR_H_

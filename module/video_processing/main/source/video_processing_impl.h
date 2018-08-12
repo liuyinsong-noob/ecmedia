@@ -18,7 +18,7 @@
 #include "deflickering.h"
 #include "frame_preprocessor.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class CriticalSectionWrapper;
 
 class VideoProcessingModuleImpl : public VideoProcessingModule {

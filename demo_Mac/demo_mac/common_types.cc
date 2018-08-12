@@ -16,7 +16,7 @@
 #include "../base/checks.h"
 #include "../base/stringutils.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const uint32_t BitrateAllocation::kMaxBitrateBps =
     std::numeric_limits<uint32_t>::max();
@@ -56,4 +56,4 @@ uint32_t BitrateAllocation::GetSpatialLayerSum(size_t spatial_index) const {
   return sum;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

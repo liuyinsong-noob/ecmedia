@@ -22,7 +22,7 @@
 #include "sync_buffer.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 int Merge::Process(int16_t* input, size_t input_length,
                    int16_t* external_mute_factor_array,
@@ -363,4 +363,4 @@ int Merge::RequiredFutureSamples() {
 }
 
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

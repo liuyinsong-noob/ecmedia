@@ -17,7 +17,7 @@ extern "C"
 #include "../system_wrappers/include/critical_section_wrapper.h"
 #include "../system_wrappers/include/clock.h"
 
-using namespace cloopenwebrtc;
+using namespace yuntongxunwebrtc;
 
 class h264_record
 {

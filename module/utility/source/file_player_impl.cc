@@ -19,7 +19,7 @@
 #endif
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 FilePlayer* FilePlayer::CreateFilePlayer(uint32_t instanceID,
                                          FileFormats fileFormat)
 {
@@ -671,4 +671,4 @@ int32_t VideoFilePlayerImpl::SetUpVideoDecoder()
 }
 #endif // WEBRTC_MODULE_UTILITY_VIDEO
 #endif
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -23,7 +23,7 @@
 #include "../module/rtp_rtcp/source/rtp_header_extensions.h"
 #include "../module/rtp_rtcp/source/rtp_packet_to_send.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 RTPSenderAudio::RTPSenderAudio(const int32_t id, Clock* clock, RTPSender* rtp_sender)
     : _id(id),
@@ -40,7 +40,7 @@ int32_t RTPSenderAudio::RegisterAudioPayload(
     const uint32_t rate,
     RtpUtility::Payload** payload) {
   if (RtpUtility::StringCompare(payloadName, "cn", 2)) {
-    cloopenwebrtc::CritScope cs(&send_audio_critsect_);
+    yuntongxunwebrtc::CritScope cs(&send_audio_critsect_);
     //  we can have multiple CNG payload types
     switch (frequency) {
       case 8000:
@@ -59,7 +59,7 @@ int32_t RTPSenderAudio::RegisterAudioPayload(
         return -1;
     }
   } else if (RtpUtility::StringCompare(payloadName, "telephone-event", 15)) {
-    cloopenwebrtc::CritScope cs(&send_audio_critsect_);
+    yuntongxunwebrtc::CritScope cs(&send_audio_critsect_);
     // Don't add it to the list
     // we dont want to allow send with a DTMF payloadtype
     dtmf_payload_type_ = payload_type;
@@ -77,7 +77,7 @@ int32_t RTPSenderAudio::RegisterAudioPayload(
 }
 
 bool RTPSenderAudio::MarkerBit(FrameType frame_type, int8_t payload_type) {
-  cloopenwebrtc::CritScope cs(&send_audio_critsect_);
+  yuntongxunwebrtc::CritScope cs(&send_audio_critsect_);
   // for audio true for first packet in a speech burst
   bool marker_bit = false;
   if (last_payload_type_ != payload_type) {
@@ -134,7 +134,7 @@ bool RTPSenderAudio::SendAudio(FrameType frame_type,
   uint8_t audio_level_dbov = 0;
   uint32_t dtmf_payload_freq = 0;
   {
-    cloopenwebrtc::CritScope cs(&send_audio_critsect_);
+    yuntongxunwebrtc::CritScope cs(&send_audio_critsect_);
     audio_level_dbov = audio_level_dbov_;
     dtmf_payload_freq = dtmf_payload_freq_;
   }
@@ -365,7 +365,7 @@ bool RTPSenderAudio::SendAudio(FrameType frame_type,
 
 
   {
-    cloopenwebrtc::CritScope cs(&send_audio_critsect_);
+    yuntongxunwebrtc::CritScope cs(&send_audio_critsect_);
     last_payload_type_ = payload_type;
   }
   TRACE_EVENT_ASYNC_END2("webrtc", "Audio", rtp_timestamp, "timestamp",
@@ -394,7 +394,7 @@ int32_t RTPSenderAudio::SetAudioLevel(uint8_t level_dbov) {
   if (level_dbov > 127) {
     return -1;
   }
-  cloopenwebrtc::CritScope cs(&send_audio_critsect_);
+  yuntongxunwebrtc::CritScope cs(&send_audio_critsect_);
   audio_level_dbov_ = level_dbov;
   return 0;
 }
@@ -408,7 +408,7 @@ int32_t RTPSenderAudio::SetLossRate(uint32_t loss_rate, uint8_t loss_rate_hd_ext
 		loss_rate = 0x0f;
 	}
 
-	cloopenwebrtc::CritScope cs(&send_audio_critsect_);
+	yuntongxunwebrtc::CritScope cs(&send_audio_critsect_);
 	loss_rate_hd_ext_version_ = loss_rate_hd_ext_version;
 	loss_rate_ = loss_rate;
 	return 0;
@@ -445,7 +445,7 @@ int32_t RTPSenderAudio::SendTelephoneEvent(uint8_t key,
                                            uint8_t level) {
   DtmfQueue::Event event;
   {
-    cloopenwebrtc::CritScope lock(&send_audio_critsect_);
+    yuntongxunwebrtc::CritScope lock(&send_audio_critsect_);
     if (dtmf_payload_type_ < 0) {
       // TelephoneEvent payloadtype not configured
       return -1;
@@ -515,4 +515,4 @@ bool RTPSenderAudio::SendTelephoneEventPacket(bool ended,
 
   return result;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

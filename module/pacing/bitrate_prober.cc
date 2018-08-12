@@ -19,7 +19,7 @@
 
 using namespace std;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     
 #ifndef WIN32  
 	extern int printTime();
@@ -109,7 +109,7 @@ void BitrateProber::CreateProbeCluster(int bitrate_bps, int64_t now_ms) {
                << cluster.pace_info.probe_cluster_min_probes << ":"
 			   << cluster.pace_info.probe_cluster_id << ")";
 
-  WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, -1,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, -1,
 	  "[Probe] Probe cluster(bitrate:min bytes : min packets : cluster id) : (%d:%d : %d : %d)",
 	  cluster.pace_info.send_bitrate_bps,
 	  cluster.pace_info.probe_cluster_min_bytes,
@@ -211,4 +211,4 @@ int64_t BitrateProber::GetNextProbeTime(const ProbeCluster& cluster) {
       cluster.pace_info.send_bitrate_bps;
   return cluster.time_started_ms + delta_ms;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

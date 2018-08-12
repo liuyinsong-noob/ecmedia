@@ -18,7 +18,7 @@
 #include "rtp_rtcp_defines.h"
 #include "../system_wrappers/include/clock.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class RembSuppressor {
  public:

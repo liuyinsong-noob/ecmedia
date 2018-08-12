@@ -18,7 +18,7 @@
 #include "rtp_rtcp_defines.h"
 #include "../module/rtp_rtcp/source/rtp_packet_to_send.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class RtpPacketizer {
  public:
@@ -69,5 +69,5 @@ class RtpDepacketizer {
                      const uint8_t* payload_data,
                      size_t payload_data_length) = 0;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_FORMAT_H_

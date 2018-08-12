@@ -37,7 +37,7 @@
 #include <vector>
 #include <google/protobuf/stubs/common.h>
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 
 #ifdef _MSC_VER
@@ -557,6 +557,6 @@ string Join(const Range& components,
 LIBPROTOBUF_EXPORT string ToHex(uint64 num);
 
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 
 #endif  // GOOGLE_PROTOBUF_STUBS_STRUTIL_H__

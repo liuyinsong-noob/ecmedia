@@ -18,7 +18,7 @@
 
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Config;
 class CpuOveruseObserver;

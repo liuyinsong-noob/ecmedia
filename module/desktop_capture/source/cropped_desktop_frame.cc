@@ -10,7 +10,7 @@
 
 #include "cropped_desktop_frame.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // A DesktopFrame that is a sub-rect of another DesktopFrame.
 class CroppedDesktopFrame : public DesktopFrame {
@@ -18,7 +18,7 @@ class CroppedDesktopFrame : public DesktopFrame {
   CroppedDesktopFrame(DesktopFrame* frame, const DesktopRect& rect);
 
  private:
-  cloopenwebrtc::scoped_ptr<DesktopFrame> frame_;
+  yuntongxunwebrtc::scoped_ptr<DesktopFrame> frame_;
 
   DISALLOW_COPY_AND_ASSIGN(CroppedDesktopFrame);
 };
@@ -42,4 +42,4 @@ CroppedDesktopFrame::CroppedDesktopFrame(DesktopFrame* frame,
       frame_(frame) {
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

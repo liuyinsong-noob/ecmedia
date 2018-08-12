@@ -19,7 +19,7 @@
 #include "packet.h"
 #include "packet_source.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace test {
 
 AcmReceiveTest::AcmReceiveTest(PacketSource* packet_source,
@@ -31,10 +31,10 @@ AcmReceiveTest::AcmReceiveTest(PacketSource* packet_source,
       audio_sink_(audio_sink),
       output_freq_hz_(output_freq_hz),
       exptected_output_channels_(exptected_output_channels) {
-  cloopenwebrtc::AudioCoding::Config config;
+  yuntongxunwebrtc::AudioCoding::Config config;
   config.clock = &clock_;
   config.playout_frequency_hz = output_freq_hz_;
-  acm_.reset(cloopenwebrtc::AudioCoding::Create(config));
+  acm_.reset(yuntongxunwebrtc::AudioCoding::Create(config));
 }
 
 void AcmReceiveTest::RegisterDefaultCodecs() {
@@ -96,7 +96,7 @@ void AcmReceiveTest::Run() {
       const int samples_per_block = output_freq_hz_ * 10 / 1000;
       EXPECT_EQ(samples_per_block, output_frame.samples_per_channel_);
       if (exptected_output_channels_ != kArbitraryChannels) {
-        if (output_frame.speech_type_ == cloopenwebrtc::AudioFrame::kPLC) {
+        if (output_frame.speech_type_ == yuntongxunwebrtc::AudioFrame::kPLC) {
           // Don't check number of channels for PLC output, since each test run
           // usually starts with a short period of mono PLC before decoding the
           // first packet.
@@ -124,4 +124,4 @@ void AcmReceiveTest::Run() {
 }
 
 }  // namespace test
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

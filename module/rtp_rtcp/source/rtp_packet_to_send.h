@@ -12,7 +12,7 @@
 
 #include "../module/rtp_rtcp/source/rtp_packet.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 // Class to hold rtp packet with metadata for sender side.
 class RtpPacketToSend : public rtp::Packet {
  public:
@@ -31,5 +31,5 @@ class RtpPacketToSend : public rtp::Packet {
   int64_t capture_time_ms_ = 0;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_PACKET_TO_SEND_H_

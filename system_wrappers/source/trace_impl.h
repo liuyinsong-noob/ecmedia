@@ -20,7 +20,7 @@
 #include "../base/platform_thread.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 #define WEBRTC_TRACE_MAX_MESSAGE_SIZE 1024
 // Total buffer size is WEBRTC_TRACE_NUM_ARRAY (number of buffer partitions) *
@@ -97,9 +97,9 @@ class TraceImpl : public Trace {
 
   const std::unique_ptr<FileWrapper> trace_file_ GUARDED_BY(crit_);
   std::string trace_file_path_ GUARDED_BY(crit_);
-  cloopenwebrtc::CriticalSection crit_;
+  yuntongxunwebrtc::CriticalSection crit_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_SOURCE_TRACE_IMPL_H_

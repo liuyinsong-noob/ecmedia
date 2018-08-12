@@ -17,7 +17,7 @@
 #include "desktop_frame.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // DesktopFrame implementation used by screen and window captures on Windows.
 // Frame data is stored in a GDI bitmap.
@@ -38,12 +38,12 @@ class DesktopFrameWin : public DesktopFrame {
                   HBITMAP bitmap);
 
   HBITMAP bitmap_;
-  cloopenwebrtc::scoped_ptr<SharedMemory> owned_shared_memory_;
+  yuntongxunwebrtc::scoped_ptr<SharedMemory> owned_shared_memory_;
 
   DISALLOW_COPY_AND_ASSIGN(DesktopFrameWin);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_DESKTOP_FRAME_WIN_H_
 

@@ -15,7 +15,7 @@
 
 #include "../system_wrappers/include/logging.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static android_LogPriority AndroidLogPriorityFromWebRtcLogLevel(
     TraceLevel webrtc_level) {
@@ -23,18 +23,18 @@ static android_LogPriority AndroidLogPriorityFromWebRtcLogLevel(
   // to DEBUG because they are highly verbose in webrtc code (which is
   // unfortunate).
   switch (webrtc_level) {
-    case cloopenwebrtc::kTraceStateInfo: return ANDROID_LOG_DEBUG;
-    case cloopenwebrtc::kTraceWarning: return ANDROID_LOG_WARN;
-    case cloopenwebrtc::kTraceError: return ANDROID_LOG_ERROR;
-    case cloopenwebrtc::kTraceCritical: return ANDROID_LOG_FATAL;
-    case cloopenwebrtc::kTraceApiCall: return ANDROID_LOG_VERBOSE;
-    case cloopenwebrtc::kTraceModuleCall: return ANDROID_LOG_VERBOSE;
-    case cloopenwebrtc::kTraceMemory: return ANDROID_LOG_VERBOSE;
-    case cloopenwebrtc::kTraceTimer: return ANDROID_LOG_VERBOSE;
-    case cloopenwebrtc::kTraceStream: return ANDROID_LOG_VERBOSE;
-    case cloopenwebrtc::kTraceDebug: return ANDROID_LOG_DEBUG;
-    case cloopenwebrtc::kTraceInfo: return ANDROID_LOG_DEBUG;
-    case cloopenwebrtc::kTraceTerseInfo: return ANDROID_LOG_INFO;
+    case yuntongxunwebrtc::kTraceStateInfo: return ANDROID_LOG_DEBUG;
+    case yuntongxunwebrtc::kTraceWarning: return ANDROID_LOG_WARN;
+    case yuntongxunwebrtc::kTraceError: return ANDROID_LOG_ERROR;
+    case yuntongxunwebrtc::kTraceCritical: return ANDROID_LOG_FATAL;
+    case yuntongxunwebrtc::kTraceApiCall: return ANDROID_LOG_VERBOSE;
+    case yuntongxunwebrtc::kTraceModuleCall: return ANDROID_LOG_VERBOSE;
+    case yuntongxunwebrtc::kTraceMemory: return ANDROID_LOG_VERBOSE;
+    case yuntongxunwebrtc::kTraceTimer: return ANDROID_LOG_VERBOSE;
+    case yuntongxunwebrtc::kTraceStream: return ANDROID_LOG_VERBOSE;
+    case yuntongxunwebrtc::kTraceDebug: return ANDROID_LOG_DEBUG;
+    case yuntongxunwebrtc::kTraceInfo: return ANDROID_LOG_DEBUG;
+    case yuntongxunwebrtc::kTraceTerseInfo: return ANDROID_LOG_INFO;
     default:
       LOG(LS_ERROR) << "Unexpected log level" << webrtc_level;
       return ANDROID_LOG_FATAL;
@@ -42,15 +42,15 @@ static android_LogPriority AndroidLogPriorityFromWebRtcLogLevel(
 }
 
 LogcatTraceContext::LogcatTraceContext() {
-  cloopenwebrtc::Trace::CreateTrace();
-  if (cloopenwebrtc::Trace::SetTraceCallback(this) != 0)
+  yuntongxunwebrtc::Trace::CreateTrace();
+  if (yuntongxunwebrtc::Trace::SetTraceCallback(this) != 0)
     assert(false);
 }
 
 LogcatTraceContext::~LogcatTraceContext() {
-  if (cloopenwebrtc::Trace::SetTraceCallback(NULL) != 0)
+  if (yuntongxunwebrtc::Trace::SetTraceCallback(NULL) != 0)
     assert(false);
-  cloopenwebrtc::Trace::ReturnTrace();
+  yuntongxunwebrtc::Trace::ReturnTrace();
 }
 
 void LogcatTraceContext::Print(TraceLevel level,
@@ -60,4 +60,4 @@ void LogcatTraceContext::Print(TraceLevel level,
                       "WEBRTC", "%.*s", length, message);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

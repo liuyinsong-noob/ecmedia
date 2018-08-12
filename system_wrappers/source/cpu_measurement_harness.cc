@@ -15,7 +15,7 @@
 
 const int kCpuCheckPeriodMs = 100;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 CpuMeasurementHarness* CpuMeasurementHarness::Create(
     CpuTarget* target,

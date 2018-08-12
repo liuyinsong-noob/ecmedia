@@ -19,7 +19,7 @@
 
 #include <stddef.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Returns a pointer to the first boundry of |alignment| bytes following the
 // address of |ptr|.
@@ -54,6 +54,6 @@ struct AlignedFreeDeleter {
   }
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_SYSTEM_WRAPPERS_INCLUDE_ALIGNED_MALLOC_H_

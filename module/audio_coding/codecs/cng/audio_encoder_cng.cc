@@ -14,7 +14,7 @@
 #include <memory>
 #include <limits>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 AudioEncoderCng::Config::Config()
     : sample_rate_hz(8000),
@@ -205,4 +205,4 @@ bool AudioEncoderCng::EncodeActive(size_t max_encoded_bytes,
   return true;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

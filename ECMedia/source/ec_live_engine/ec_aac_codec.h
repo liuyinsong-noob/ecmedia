@@ -12,7 +12,7 @@
 #include "ec_live_common.h"
 #include "acm_resampler.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     class EC_AAC_Codec {
 
     public:

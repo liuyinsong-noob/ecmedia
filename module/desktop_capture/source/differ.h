@@ -16,7 +16,7 @@
 #include "../system_wrappers/include/scoped_ptr.h"
 #include "desktop_region.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 typedef uint8_t DiffInfo;
 
@@ -76,7 +76,7 @@ class Differ {
   int bytes_per_row_;
 
   // Diff information for each block in the image.
-  cloopenwebrtc::scoped_array<DiffInfo> diff_info_;
+  yuntongxunwebrtc::scoped_array<DiffInfo> diff_info_;
 
   // Dimensions and total size of diff info array.
   int diff_info_width_;
@@ -86,6 +86,6 @@ class Differ {
   DISALLOW_COPY_AND_ASSIGN(Differ);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_DIFFER_H_

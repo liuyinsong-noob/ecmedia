@@ -87,7 +87,7 @@ static inline void rtc_MsanCheckInitialized(const volatile void* ptr,
 
 #ifdef __cplusplus
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 template <typename T>
 inline void AsanPoison(const T& mem) {
@@ -109,7 +109,7 @@ inline void MsanCheckInitialized(const T& mem) {
   rtc_MsanCheckInitialized(mem.data(), sizeof(mem.data()[0]), mem.size());
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // __cplusplus
 

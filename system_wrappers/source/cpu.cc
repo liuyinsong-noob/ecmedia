@@ -22,7 +22,7 @@
     #include "cpu_linux.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 CpuWrapper* CpuWrapper::CreateCpu()
 {
 #if defined(_WIN32)
@@ -35,4 +35,4 @@ CpuWrapper* CpuWrapper::CreateCpu()
     return new CpuLinux();
 #endif
 }
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

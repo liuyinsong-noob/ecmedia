@@ -14,7 +14,7 @@
 
 #include "../base/checks.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 RateStatistics::RateStatistics(int64_t window_size_ms, float scale)
     : buckets_(new Bucket[window_size_ms]()),
@@ -61,7 +61,7 @@ void RateStatistics::Update(size_t count, int64_t now_ms) {
   ++num_samples_;
 }
 
-cloopenwebrtc::Optional<uint32_t> RateStatistics::Rate(int64_t now_ms) const {
+yuntongxunwebrtc::Optional<uint32_t> RateStatistics::Rate(int64_t now_ms) const {
   // Yeah, this const_cast ain't pretty, but the alternative is to declare most
   // of the members as mutable...
   const_cast<RateStatistics*>(this)->EraseOld(now_ms);
@@ -71,11 +71,11 @@ cloopenwebrtc::Optional<uint32_t> RateStatistics::Rate(int64_t now_ms) const {
   int64_t active_window_size = now_ms - oldest_time_ + 1;
   if (num_samples_ == 0 || active_window_size <= 1 ||
       (num_samples_ <= 1 && active_window_size < current_window_size_ms_)) {
-    return cloopenwebrtc::Optional<uint32_t>();
+    return yuntongxunwebrtc::Optional<uint32_t>();
   }
 
   float scale = scale_ / active_window_size;
-  return cloopenwebrtc::Optional<uint32_t>(
+  return yuntongxunwebrtc::Optional<uint32_t>(
       static_cast<uint32_t>(accumulated_count_ * scale + 0.5f));
 }
 
@@ -118,4 +118,4 @@ bool RateStatistics::IsInitialized() const {
   return oldest_time_ != -max_window_size_ms_;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

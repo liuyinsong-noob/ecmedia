@@ -18,7 +18,7 @@
 // Default implementation of histogram methods for WebRTC clients that do not
 // want to provide their own implementation.
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace metrics {
 class Histogram;
 
@@ -39,7 +39,7 @@ class RtcHistogram {
     sample = std::min(sample, max_);
     sample = std::max(sample, min_ - 1);  // Underflow bucket.
 
-    cloopenwebrtc::CritScope cs(&crit_);
+    yuntongxunwebrtc::CritScope cs(&crit_);
     if (info_.samples.size() == kMaxSampleMapSize &&
         info_.samples.find(sample) == info_.samples.end()) {
       return;
@@ -49,7 +49,7 @@ class RtcHistogram {
 
   // Returns a copy (or nullptr if there are no samples) and clears samples.
   std::unique_ptr<SampleInfo> GetAndReset() {
-    cloopenwebrtc::CritScope cs(&crit_);
+    yuntongxunwebrtc::CritScope cs(&crit_);
     if (info_.samples.empty())
       return nullptr;
 
@@ -65,19 +65,19 @@ class RtcHistogram {
 
   // Functions only for testing.
   void Reset() {
-    cloopenwebrtc::CritScope cs(&crit_);
+    yuntongxunwebrtc::CritScope cs(&crit_);
     info_.samples.clear();
   }
 
   int NumEvents(int sample) const {
-    cloopenwebrtc::CritScope cs(&crit_);
+    yuntongxunwebrtc::CritScope cs(&crit_);
     const auto it = info_.samples.find(sample);
     return (it == info_.samples.end()) ? 0 : it->second;
   }
 
   int NumSamples() const {
     int num_samples = 0;
-    cloopenwebrtc::CritScope cs(&crit_);
+    yuntongxunwebrtc::CritScope cs(&crit_);
     for (const auto& sample : info_.samples) {
       num_samples += sample.second;
     }
@@ -85,12 +85,12 @@ class RtcHistogram {
   }
 
   int MinSample() const {
-    cloopenwebrtc::CritScope cs(&crit_);
+    yuntongxunwebrtc::CritScope cs(&crit_);
     return (info_.samples.empty()) ? -1 : info_.samples.begin()->first;
   }
 
  private:
-  cloopenwebrtc::CriticalSection crit_;
+  yuntongxunwebrtc::CriticalSection crit_;
   const int min_;
   const int max_;
   SampleInfo info_ GUARDED_BY(crit_);
@@ -107,7 +107,7 @@ class RtcHistogramMap {
                                 int min,
                                 int max,
                                 int bucket_count) {
-    cloopenwebrtc::CritScope cs(&crit_);
+    yuntongxunwebrtc::CritScope cs(&crit_);
     const auto& it = map_.find(name);
     if (it != map_.end())
       return reinterpret_cast<Histogram*>(it->second.get());
@@ -118,7 +118,7 @@ class RtcHistogramMap {
   }
 
   Histogram* GetEnumerationHistogram(const std::string& name, int boundary) {
-    cloopenwebrtc::CritScope cs(&crit_);
+    yuntongxunwebrtc::CritScope cs(&crit_);
     const auto& it = map_.find(name);
     if (it != map_.end())
       return reinterpret_cast<Histogram*>(it->second.get());
@@ -130,7 +130,7 @@ class RtcHistogramMap {
 
   void GetAndReset(
       std::map<std::string, std::unique_ptr<SampleInfo>>* histograms) {
-    cloopenwebrtc::CritScope cs(&crit_);
+    yuntongxunwebrtc::CritScope cs(&crit_);
     for (const auto& kv : map_) {
       std::unique_ptr<SampleInfo> info = kv.second->GetAndReset();
       if (info)
@@ -140,31 +140,31 @@ class RtcHistogramMap {
 
   // Functions only for testing.
   void Reset() {
-    cloopenwebrtc::CritScope cs(&crit_);
+    yuntongxunwebrtc::CritScope cs(&crit_);
     for (const auto& kv : map_)
       kv.second->Reset();
   }
 
   int NumEvents(const std::string& name, int sample) const {
-    cloopenwebrtc::CritScope cs(&crit_);
+    yuntongxunwebrtc::CritScope cs(&crit_);
     const auto& it = map_.find(name);
     return (it == map_.end()) ? 0 : it->second->NumEvents(sample);
   }
 
   int NumSamples(const std::string& name) const {
-    cloopenwebrtc::CritScope cs(&crit_);
+    yuntongxunwebrtc::CritScope cs(&crit_);
     const auto& it = map_.find(name);
     return (it == map_.end()) ? 0 : it->second->NumSamples();
   }
 
   int MinSample(const std::string& name) const {
-    cloopenwebrtc::CritScope cs(&crit_);
+    yuntongxunwebrtc::CritScope cs(&crit_);
     const auto& it = map_.find(name);
     return (it == map_.end()) ? -1 : it->second->MinSample();
   }
 
  private:
-  cloopenwebrtc::CriticalSection crit_;
+  yuntongxunwebrtc::CriticalSection crit_;
   std::map<std::string, std::unique_ptr<RtcHistogram>> map_ GUARDED_BY(crit_);
 
   DISALLOW_COPY_AND_ASSIGN(RtcHistogramMap);
@@ -177,10 +177,10 @@ class RtcHistogramMap {
 static RtcHistogramMap* volatile g_rtc_histogram_map = nullptr;
 
 void CreateMap() {
-  RtcHistogramMap* map = cloopenwebrtc::AtomicOps::AcquireLoadPtr(&g_rtc_histogram_map);
+  RtcHistogramMap* map = yuntongxunwebrtc::AtomicOps::AcquireLoadPtr(&g_rtc_histogram_map);
   if (map == nullptr) {
     RtcHistogramMap* new_map = new RtcHistogramMap();
-    RtcHistogramMap* old_map = cloopenwebrtc::AtomicOps::CompareAndSwapPtr(
+    RtcHistogramMap* old_map = yuntongxunwebrtc::AtomicOps::CompareAndSwapPtr(
         &g_rtc_histogram_map, static_cast<RtcHistogramMap*>(nullptr), new_map);
     if (old_map != nullptr)
       delete new_map;
@@ -196,7 +196,7 @@ static volatile int g_rtc_histogram_called = 0;
 // Gets the map (or nullptr).
 RtcHistogramMap* GetMap() {
 #if RTC_DCHECK_IS_ON
-  cloopenwebrtc::AtomicOps::ReleaseStore(&g_rtc_histogram_called, 1);
+  yuntongxunwebrtc::AtomicOps::ReleaseStore(&g_rtc_histogram_called, 1);
 #endif
   return g_rtc_histogram_map;
 }
@@ -269,7 +269,7 @@ SampleInfo::~SampleInfo() {}
 void Enable() {
   DCHECK(g_rtc_histogram_map == nullptr);
 #if RTC_DCHECK_IS_ON
-  DCHECK_EQ(0, cloopenwebrtc::AtomicOps::AcquireLoad(&g_rtc_histogram_called));
+  DCHECK_EQ(0, yuntongxunwebrtc::AtomicOps::AcquireLoad(&g_rtc_histogram_called));
 #endif
   CreateMap();
 }
@@ -304,4 +304,4 @@ int MinSample(const std::string& name) {
 }
 
 }  // namespace metrics
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

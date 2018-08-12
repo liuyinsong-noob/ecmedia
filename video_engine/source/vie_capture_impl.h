@@ -18,7 +18,7 @@
 #include "../common_types.h"
 #include "video_capture_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class ViESharedData;
 

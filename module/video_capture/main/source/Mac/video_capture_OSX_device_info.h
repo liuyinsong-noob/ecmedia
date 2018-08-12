@@ -15,7 +15,7 @@
 #include "map_wrapper.h"
 #import "video_capture_OSX_device_info_objc.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
     namespace videocapturemodule
     {
@@ -85,7 +85,7 @@ namespace cloopenwebrtc
             ECVideoCaptureOSXDeviceInfoObjC*    _captureInfo;
         };
     }  // namespace videocapturemodule
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif
 #endif

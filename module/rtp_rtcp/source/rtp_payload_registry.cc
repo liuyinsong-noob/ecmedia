@@ -18,7 +18,7 @@
 #include "../common_types.h"
 #include "../module/rtp_rtcp/source/byte_io.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 
@@ -127,7 +127,7 @@ int32_t RTPPayloadRegistry::RegisterReceivePayload(const CodecInst& audio_codec,
   if (!IsPayloadTypeValid(audio_codec.pltype))
     return -1;
 
-  cloopenwebrtc::CriticalSectionScoped cs(crit_sect_);
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_sect_);
 
   auto it = payload_type_map_.find(audio_codec.pltype);
   if (it != payload_type_map_.end()) {
@@ -159,7 +159,7 @@ int32_t RTPPayloadRegistry::RegisterReceivePayload(
   if (!IsPayloadTypeValid(video_codec.plType))
     return -1;
 
-  cloopenwebrtc::CriticalSectionScoped cs(crit_sect_);
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_sect_);
 
   auto it = payload_type_map_.find(video_codec.plType);
   if (it != payload_type_map_.end()) {
@@ -183,7 +183,7 @@ int32_t RTPPayloadRegistry::RegisterReceivePayload(
 
 int32_t RTPPayloadRegistry::DeRegisterReceivePayload(
     const int8_t payload_type) {
-  cloopenwebrtc::CriticalSectionScoped cs(crit_sect_);
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_sect_);
   payload_type_map_.erase(payload_type);
   return 0;
 }
@@ -206,7 +206,7 @@ void RTPPayloadRegistry::DeregisterAudioCodecOrRedTypeRegardlessOfPayloadType(
 int32_t RTPPayloadRegistry::ReceivePayloadType(const CodecInst& audio_codec,
                                                int8_t* payload_type) const {
   assert(payload_type);
-  cloopenwebrtc::CriticalSectionScoped cs(crit_sect_);
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_sect_);
 
   for (const auto& it : payload_type_map_) {
     if (PayloadIsCompatible(it.second, audio_codec)) {
@@ -220,7 +220,7 @@ int32_t RTPPayloadRegistry::ReceivePayloadType(const CodecInst& audio_codec,
 int32_t RTPPayloadRegistry::ReceivePayloadType(const VideoCodec& video_codec,
                                                int8_t* payload_type) const {
   assert(payload_type);
-  cloopenwebrtc::CriticalSectionScoped cs(crit_sect_);
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_sect_);
 
   for (const auto& it : payload_type_map_) {
     if (PayloadIsCompatible(it.second, video_codec)) {
@@ -232,12 +232,12 @@ int32_t RTPPayloadRegistry::ReceivePayloadType(const VideoCodec& video_codec,
 }
 
 bool RTPPayloadRegistry::RtxEnabled() const {
-  cloopenwebrtc::CriticalSectionScoped cs(crit_sect_);
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_sect_);
   return rtx_;
 }
 
 bool RTPPayloadRegistry::IsRtx(const RTPHeader& header) const {
-  cloopenwebrtc::CriticalSectionScoped cs(crit_sect_);
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_sect_);
   return IsRtxInternal(header);
 }
 
@@ -269,7 +269,7 @@ bool RTPPayloadRegistry::RestoreOriginalPacket(uint8_t* restored_packet,
                                        original_sequence_number);
   ByteWriter<uint32_t>::WriteBigEndian(restored_packet + 8, original_ssrc);
 
-  cloopenwebrtc::CriticalSectionScoped cs(crit_sect_);
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_sect_);
   if (!rtx_)
     return true;
 
@@ -296,20 +296,20 @@ bool RTPPayloadRegistry::RestoreOriginalPacket(uint8_t* restored_packet,
 }
 
 void RTPPayloadRegistry::SetRtxSsrc(uint32_t ssrc) {
-  cloopenwebrtc::CriticalSectionScoped cs(crit_sect_);
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_sect_);
   ssrc_rtx_ = ssrc;
   rtx_ = true;
 }
 
 bool RTPPayloadRegistry::GetRtxSsrc(uint32_t* ssrc) const {
-  cloopenwebrtc::CriticalSectionScoped cs(crit_sect_);
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_sect_);
   *ssrc = ssrc_rtx_;
   return rtx_;
 }
 
 void RTPPayloadRegistry::SetRtxPayloadType(int payload_type,
                                            int associated_payload_type) {
-  cloopenwebrtc::CriticalSectionScoped cs(crit_sect_);
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_sect_);
   if (payload_type < 0) {
     LOG(LS_ERROR) << "Invalid RTX payload type: " << payload_type;
     return;
@@ -320,7 +320,7 @@ void RTPPayloadRegistry::SetRtxPayloadType(int payload_type,
 }
 
 bool RTPPayloadRegistry::IsRed(const RTPHeader& header) const {
-  cloopenwebrtc::CriticalSectionScoped cs(crit_sect_);
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_sect_);
   auto it = payload_type_map_.find(header.payloadType);
   return it != payload_type_map_.end() && _stricmp(it->second.name, "red") == 0;
 }
@@ -332,7 +332,7 @@ bool RTPPayloadRegistry::IsEncapsulated(const RTPHeader& header) const {
 
 bool RTPPayloadRegistry::GetPayloadSpecifics(uint8_t payload_type,
                                              PayloadUnion* payload) const {
-  cloopenwebrtc::CriticalSectionScoped cs(crit_sect_);
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_sect_);
   auto it = payload_type_map_.find(payload_type);
 
   // Check that this is a registered payload type.
@@ -349,14 +349,14 @@ int RTPPayloadRegistry::GetPayloadTypeFrequency(
   if (!payload) {
     return -1;
   }
-  cloopenwebrtc::CriticalSectionScoped cs(crit_sect_);
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_sect_);
   return payload->audio ? payload->typeSpecific.Audio.frequency
                         : kVideoPayloadTypeFrequency;
 }
 
 const RtpUtility::Payload* RTPPayloadRegistry::PayloadTypeToPayload(
     uint8_t payload_type) const {
-  cloopenwebrtc::CriticalSectionScoped cs(crit_sect_);
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_sect_);
 
   auto it = payload_type_map_.find(payload_type);
 
@@ -369,13 +369,13 @@ const RtpUtility::Payload* RTPPayloadRegistry::PayloadTypeToPayload(
 }
 
 void RTPPayloadRegistry::SetIncomingPayloadType(const RTPHeader& header) {
-  cloopenwebrtc::CriticalSectionScoped cs(crit_sect_);
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_sect_);
   if (!IsRtxInternal(header))
     incoming_payload_type_ = header.payloadType;
 }
 
 bool RTPPayloadRegistry::ReportMediaPayloadType(uint8_t media_payload_type) {
-  cloopenwebrtc::CriticalSectionScoped cs(crit_sect_);
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_sect_);
   if (last_received_media_payload_type_ == media_payload_type) {
     // Media type unchanged.
     return true;
@@ -387,7 +387,7 @@ bool RTPPayloadRegistry::ReportMediaPayloadType(uint8_t media_payload_type) {
 // Returns -1 if a payload with name |payload_name| is not registered.
 int8_t RTPPayloadRegistry::GetPayloadTypeWithName(
     const char* payload_name) const {
-  cloopenwebrtc::CriticalSectionScoped cs(crit_sect_);
+  yuntongxunwebrtc::CriticalSectionScoped cs(crit_sect_);
   for (const auto& it : payload_type_map_) {
     if (_stricmp(it.second.name, payload_name) == 0)
       return it.first;
@@ -395,4 +395,4 @@ int8_t RTPPayloadRegistry::GetPayloadTypeWithName(
   return -1;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -12,7 +12,7 @@
 
 #include <algorithm>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 bool DesktopRect::Contains(const DesktopVector& point) const {
   return point.x() >= left() && point.x() < right() &&
@@ -44,5 +44,5 @@ void DesktopRect::Translate(int32_t dx, int32_t dy) {
   bottom_ += dy;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 

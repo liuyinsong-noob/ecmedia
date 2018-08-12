@@ -109,7 +109,7 @@
 #include "template_util.h"
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Function object which deletes its parameter, which must be a pointer.
 // If C is an array type, invokes 'delete[]' on the parameter; otherwise,
@@ -132,7 +132,7 @@ struct DefaultDeleter {
     // cannot convert to T*.
     enum { T_must_be_complete = sizeof(T) };
     enum { U_must_be_complete = sizeof(U) };
-    static_assert(cloopenwebrtc::is_convertible<U*, T*>::value,
+    static_assert(yuntongxunwebrtc::is_convertible<U*, T*>::value,
                   "U* must implicitly convert to T*");
   }
   inline void operator()(T* ptr) const {
@@ -182,13 +182,13 @@ namespace internal {
 template <typename T>
 struct ShouldAbortOnSelfReset {
   template <typename U>
-  static cloopenwebrtc::internal::NoType Test(const typename U::AllowSelfReset*);
+  static yuntongxunwebrtc::internal::NoType Test(const typename U::AllowSelfReset*);
 
   template <typename U>
-  static cloopenwebrtc::internal::YesType Test(...);
+  static yuntongxunwebrtc::internal::YesType Test(...);
 
   static const bool value =
-      sizeof(Test<T>(0)) == sizeof(cloopenwebrtc::internal::YesType);
+      sizeof(Test<T>(0)) == sizeof(yuntongxunwebrtc::internal::YesType);
 };
 
 // Minimal implementation of the core logic of scoped_ptr, suitable for
@@ -311,7 +311,7 @@ class scoped_ptr_impl {
 // unique_ptr<> features. Known deficiencies include not supporting move-only
 // deleters, function pointers as deleters, and deleters with reference
 // types.
-template <class T, class D = cloopenwebrtc::DefaultDeleter<T> >
+template <class T, class D = yuntongxunwebrtc::DefaultDeleter<T> >
 class scoped_ptr {
   RTC_MOVE_ONLY_TYPE_WITH_MOVE_CONSTRUCTOR_FOR_CPP_03(scoped_ptr)
 
@@ -350,7 +350,7 @@ class scoped_ptr {
   template <typename U, typename V>
   scoped_ptr(scoped_ptr<U, V>&& other)
       : impl_(&other.impl_) {
-    static_assert(!cloopenwebrtc::is_array<U>::value, "U cannot be an array");
+    static_assert(!yuntongxunwebrtc::is_array<U>::value, "U cannot be an array");
   }
 
   // operator=.  Allows assignment from a scoped_ptr rvalue for a convertible
@@ -365,7 +365,7 @@ class scoped_ptr {
   // scoped_ptr.
   template <typename U, typename V>
   scoped_ptr& operator=(scoped_ptr<U, V>&& rhs) {
-    static_assert(!cloopenwebrtc::is_array<U>::value, "U cannot be an array");
+    static_assert(!yuntongxunwebrtc::is_array<U>::value, "U cannot be an array");
     impl_.TakeState(&rhs.impl_);
     return *this;
   }
@@ -405,7 +405,7 @@ class scoped_ptr {
   // scoped_ptr2" will compile but do the wrong thing (i.e., convert
   // to Testable and then do the comparison).
  private:
-  typedef cloopenwebrtc::internal::scoped_ptr_impl<element_type, deleter_type>
+  typedef yuntongxunwebrtc::internal::scoped_ptr_impl<element_type, deleter_type>
       scoped_ptr::*Testable;
 
  public:
@@ -435,7 +435,7 @@ class scoped_ptr {
  private:
   // Needed to reach into |impl_| in the constructor.
   template <typename U, typename V> friend class scoped_ptr;
-  cloopenwebrtc::internal::scoped_ptr_impl<element_type, deleter_type> impl_;
+  yuntongxunwebrtc::internal::scoped_ptr_impl<element_type, deleter_type> impl_;
 
   // Forbidden for API compatibility with std::unique_ptr.
   explicit scoped_ptr(int disallow_construction_from_null);
@@ -512,7 +512,7 @@ class scoped_ptr<T[], D> {
   // Allow scoped_ptr<element_type> to be used in boolean expressions, but not
   // implicitly convertible to a real bool (which is dangerous).
  private:
-  typedef cloopenwebrtc::internal::scoped_ptr_impl<element_type, deleter_type>
+  typedef yuntongxunwebrtc::internal::scoped_ptr_impl<element_type, deleter_type>
       scoped_ptr::*Testable;
 
  public:
@@ -544,7 +544,7 @@ class scoped_ptr<T[], D> {
   enum { type_must_be_complete = sizeof(element_type) };
 
   // Actually hold the data.
-  cloopenwebrtc::internal::scoped_ptr_impl<element_type, deleter_type> impl_;
+  yuntongxunwebrtc::internal::scoped_ptr_impl<element_type, deleter_type> impl_;
 
   // Disable initialization from any type other than element_type*, by
   // providing a constructor that matches such an initialization, but is
@@ -636,17 +636,17 @@ public:
 }  // namespace webrtc
 
 template <class T, class D>
-void swap(cloopenwebrtc::scoped_ptr<T, D>& p1, cloopenwebrtc::scoped_ptr<T, D>& p2) {
+void swap(yuntongxunwebrtc::scoped_ptr<T, D>& p1, yuntongxunwebrtc::scoped_ptr<T, D>& p2) {
   p1.swap(p2);
 }
 
 template <class T, class D>
-bool operator==(T* p1, const cloopenwebrtc::scoped_ptr<T, D>& p2) {
+bool operator==(T* p1, const yuntongxunwebrtc::scoped_ptr<T, D>& p2) {
   return p1 == p2.get();
 }
 
 template <class T, class D>
-bool operator!=(T* p1, const cloopenwebrtc::scoped_ptr<T, D>& p2) {
+bool operator!=(T* p1, const yuntongxunwebrtc::scoped_ptr<T, D>& p2) {
   return p1 != p2.get();
 }
 
@@ -654,8 +654,8 @@ bool operator!=(T* p1, const cloopenwebrtc::scoped_ptr<T, D>& p2) {
 // Doing e.g. make_scoped_ptr(new FooBarBaz<type>(arg)) is a shorter notation
 // for scoped_ptr<FooBarBaz<type> >(new FooBarBaz<type>(arg))
 template <typename T>
-cloopenwebrtc::scoped_ptr<T> rtc_make_scoped_ptr(T* ptr) {
-  return cloopenwebrtc::scoped_ptr<T>(ptr);
+yuntongxunwebrtc::scoped_ptr<T> rtc_make_scoped_ptr(T* ptr) {
+  return yuntongxunwebrtc::scoped_ptr<T>(ptr);
 }
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_INTERFACE_SCOPED_PTR_H_

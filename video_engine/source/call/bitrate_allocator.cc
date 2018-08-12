@@ -20,7 +20,7 @@
 #include "../system_wrappers/include/clock.h"
 #include "../system_wrappers/include/metrics.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Allow packets to be transmitted in up to 2 times max video bitrate if the
 // bandwidth estimate allows it.

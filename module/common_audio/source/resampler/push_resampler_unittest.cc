@@ -13,7 +13,7 @@
 
 // Quality testing of PushResampler is handled through output_mixer_unittest.cc.
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(PushResamplerTest, VerifiesInputParameters) {
   PushResampler<int16_t> resampler;

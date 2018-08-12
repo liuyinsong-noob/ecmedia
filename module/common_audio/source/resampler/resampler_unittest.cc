@@ -14,7 +14,7 @@
 
 // TODO(andrew): this is a work-in-progress. Many more tests are needed.
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 const ResamplerType kTypes[] = {
   kResamplerSynchronous,

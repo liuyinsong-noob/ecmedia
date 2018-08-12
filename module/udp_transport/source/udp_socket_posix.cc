@@ -23,7 +23,7 @@
 #include "udp_socket_manager_wrapper.h"
 #include "udp_socket_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 UdpSocketPosix::UdpSocketPosix(const WebRtc_Word32 id, UdpSocketManager* mgr,
                                bool ipV6Enable)
 {
@@ -296,4 +296,4 @@ bool UdpSocketPosix::CleanUp()
     // immediately.
     return true;
 }
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

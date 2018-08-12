@@ -15,7 +15,7 @@
 #include "decision_logic.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Implementation of the DecisionLogic class for playout modes kPlayoutOn and
 // kPlayoutStreaming.
@@ -103,5 +103,5 @@ class DecisionLogicNormal : public DecisionLogic {
   DISALLOW_COPY_AND_ASSIGN(DecisionLogicNormal);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_DECISION_LOGIC_NORMAL_H_

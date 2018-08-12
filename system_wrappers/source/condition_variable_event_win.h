@@ -13,7 +13,7 @@
 
 #include <windows.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class ConditionVariableEventWin {
  public:
@@ -39,6 +39,6 @@ class ConditionVariableEventWin {
   HANDLE           events_[EVENT_COUNT];
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_SOURCE_CONDITION_VARIABLE_EVENT_WIN_H_

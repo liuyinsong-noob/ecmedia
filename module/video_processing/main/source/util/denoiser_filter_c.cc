@@ -12,7 +12,7 @@
 
 #include "denoiser_filter_c.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 void DenoiserFilterC::CopyMem16x16(const uint8_t* src,
                                    int src_stride,

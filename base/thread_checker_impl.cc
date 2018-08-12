@@ -14,7 +14,7 @@
 
 #include "../base/platform_thread.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ThreadCheckerImpl::ThreadCheckerImpl() : valid_thread_(CurrentThreadRef()) {
 }
@@ -35,4 +35,4 @@ void ThreadCheckerImpl::DetachFromThread() {
   valid_thread_ = 0;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

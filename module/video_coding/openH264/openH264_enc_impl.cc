@@ -34,7 +34,7 @@
 #define WELS_MAX(x, y) ((x) > (y) ? (x) : (y))
 #define WELS_ROUND(x) ((int32_t)(0.5+(x)))
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 OpenH264Encoder* OpenH264Encoder::Create() {
 
@@ -101,7 +101,7 @@ int OpenH264EncoderImpl::SetRates(uint32_t new_bitrate_kbit,
   bitrateInfo_.iBitrate = new_bitrate_kbit*1000;
   framerate_ = (float)new_framerate;
 
-  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCoding, -1,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCoding, -1,
 	  "OpenH264EncoderImpl::SetRates, new_bitrate_kbit=%u, new_framerate=%d",
 	  new_bitrate_kbit, new_framerate);
 
@@ -135,7 +135,7 @@ int OpenH264EncoderImpl::InitEncode(const VideoCodec* inst,
   if (encoder_ == NULL) {
 	ret_val = WelsCreateSVCEncoder(&encoder_);
     if (ret_val != 0) {
-     WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCoding, -1,
+     WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCoding, -1,
   	              "H264EncoderImpl::InitEncode() fails to create encoder ret_val %d",
     	           ret_val);
       return WEBRTC_VIDEO_CODEC_ERROR;
@@ -156,7 +156,7 @@ int OpenH264EncoderImpl::InitEncode(const VideoCodec* inst,
   ret_val != encoder_->InitializeExt (&sSvcParam);
 
   if (ret_val != 0) {
-	  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCoding, -1,
+	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCoding, -1,
 		  "H264EncoderImpl::InitEncode() fails to initialize encoder ret_val %d",
 		  ret_val);
 	  WelsDestroySVCEncoder(encoder_);
@@ -168,11 +168,11 @@ int OpenH264EncoderImpl::InitEncode(const VideoCodec* inst,
     codec_ = *inst;
   }
 
-  encoded_image_._size = CalcBufferSize(cloopenwebrtc::kI420, codec_.width, codec_.height);
+  encoded_image_._size = CalcBufferSize(yuntongxunwebrtc::kI420, codec_.width, codec_.height);
   encoded_image_._buffer = new uint8_t[encoded_image_._size];
   encoded_image_._completeFrame = true;
   inited_ = true;
-  WEBRTC_TRACE(cloopenwebrtc::kTraceApiCall, cloopenwebrtc::kTraceVideoCoding, -1,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceApiCall, yuntongxunwebrtc::kTraceVideoCoding, -1,
                "OpenH264EncoderImpl::InitEncode(width:%d, height:%d, framerate:%d, temporal num:%d, spatial num:%d)",
                inst->width, inst->height, inst->maxFramerate, 
 			   inst->codecSpecific.H264Svc.numberOfTemporalLayers, 
@@ -196,7 +196,7 @@ int OpenH264EncoderImpl::Encode(const RawImage& input_image,
 	bool send_keyframe = (frame_types == kKeyFrame);
 	if (send_keyframe) {
 		encoder_->ForceIntraFrame(true);
-		WEBRTC_TRACE(cloopenwebrtc::kTraceApiCall, cloopenwebrtc::kTraceVideoCoding, -1,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceApiCall, yuntongxunwebrtc::kTraceVideoCoding, -1,
 			"OpenH264EncoderImpl::ForceIntraFrame(width:%d, height:%d)",
 			input_image._width, input_image._height);
 	}
@@ -220,7 +220,7 @@ int OpenH264EncoderImpl::Encode(const RawImage& input_image,
 		encoder_->SetOption(ENCODER_OPTION_BITRATE, &bitrateInfo_);
 		encoder_->SetOption(ENCODER_OPTION_FRAME_RATE, &framerate_);
 
-		WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCoding, -1,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCoding, -1,
 			"OpenH264EncoderImpl::SetOption, new_bitrate_bit=%d, new_framerate=%f",
 			bitrateInfo_.iBitrate, framerate_);
 	}

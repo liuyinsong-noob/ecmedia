@@ -28,7 +28,7 @@
 #define START_CODEC_HEIGHT 288
 #define SLEEP(x) usleep(x * 1000);
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 class CriticalSectionWrapper;
 class EventWrapper;
@@ -55,7 +55,7 @@ public:
     int VideoCaptureInitThreadContext();
     int VideoCaptureTerminate();
     int VideoCaptureSetCaptureDevice(const char* deviceName, int size);
-	int UpdateCaptureSettings(int channel, cloopenwebrtc::VideoCodec& inst, bool def);
+	int UpdateCaptureSettings(int channel, yuntongxunwebrtc::VideoCodec& inst, bool def);
     int VideoCaptureRun();
     int VideoCaptureStop();
 
@@ -111,8 +111,8 @@ private: // variables
     CriticalSectionWrapper* _grabberCritsect;
     CriticalSectionWrapper* _videoMacCritsect;
     bool                    _terminated;
-    cloopenwebrtc::ThreadWrapper*  _grabberUpdateThread;
-    cloopenwebrtc::EventWrapper*           _grabberUpdateEvent;
+    yuntongxunwebrtc::ThreadWrapper*  _grabberUpdateThread;
+    yuntongxunwebrtc::EventWrapper*           _grabberUpdateEvent;
     SeqGrabComponent        _captureGrabber;
     Component               _captureDevice;
     char                    _captureDeviceDisplayName[64];

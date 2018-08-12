@@ -14,7 +14,7 @@
 #include "vpx/vp8cx.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ReferencePictureSelection::ReferencePictureSelection()
     : kRttConfidence(1.33),

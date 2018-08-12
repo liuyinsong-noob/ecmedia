@@ -13,7 +13,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "cloopenwebrtc/modules/audio_processing/transient/common.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(TransientSuppressorTest, TypingDetectionLogicWorksAsExpectedForMono) {
   static const int kNumChannels = 1;

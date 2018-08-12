@@ -7,7 +7,7 @@
 #import "video_capture_iOS_ObjC.h"
 #import <stdint.h>
 
-using namespace cloopenwebrtc;
+using namespace yuntongxunwebrtc;
 using namespace videocapturemodule;
 
 #include "msvideo.h"
@@ -17,7 +17,7 @@ using namespace videocapturemodule;
 
 //#define DEBUG_CAPTURE_YUV 1
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     class IVideoRender;
     class VideoRenderCallback;
 }
@@ -41,7 +41,7 @@ namespace cloopenwebrtc {
     MSAverageFPS averageFps;
     char fps_context[64];
     MSPicture *_pict;
-    cloopenwebrtc::videocapturemodule::VideoCaptureiOS* _owner;
+    yuntongxunwebrtc::videocapturemodule::VideoCaptureiOS* _owner;
     
     // about opengl doRenderFrame
     IVideoRender* _ptrRenderer;
@@ -66,7 +66,7 @@ namespace cloopenwebrtc {
 - (void)setBeautyFace:(BOOL)isEnable;
 - (void)setVideoFilter:(ECImageFilterType) filter;
 
-- (NSNumber*)registerOwner:(cloopenwebrtc::videocapturemodule::VideoCaptureiOS*)owner;
+- (NSNumber*)registerOwner:(yuntongxunwebrtc::videocapturemodule::VideoCaptureiOS*)owner;
 - (NSNumber*)setCaptureDeviceById:(char*)uniqueId;
 - (NSNumber*)setCaptureHeight:(int)height AndWidth:(int)width AndFrameRate:(int)frameRate;
 - (NSNumber*)startCapture;

@@ -49,7 +49,7 @@
 #include "vie_encryption_impl.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VideoEngineImpl
     : public ViEBaseImpl,

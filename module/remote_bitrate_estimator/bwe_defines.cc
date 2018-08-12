@@ -10,7 +10,7 @@
 
 #include "../system_wrappers/include/field_trial.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const char* kBweTypeHistogram = "WebRTC.BWE.Types";
 
@@ -18,11 +18,11 @@ namespace congestion_controller {
 int GetMinBitrateBps() {
   constexpr int kAudioMinBitrateBps = 5000;
   constexpr int kMinBitrateBps = 10000;
-  if (cloopenwebrtc::field_trial::IsEnabled("WebRTC-Audio-SendSideBwe")) {
+  if (yuntongxunwebrtc::field_trial::IsEnabled("WebRTC-Audio-SendSideBwe")) {
     return kAudioMinBitrateBps;
   }
   return kMinBitrateBps;
 }
 
 }  // namespace congestion_controller
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

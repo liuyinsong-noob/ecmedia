@@ -24,7 +24,7 @@
 #include "../base/timeutils.h"
 #include "../system_wrappers/include/rw_lock_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 NtpTime Clock::CurrentNtpTime() const {
   uint32_t seconds;
@@ -37,13 +37,13 @@ class RealTimeClock : public Clock {
   // Return a timestamp in milliseconds relative to some arbitrary source; the
   // source is fixed for this clock.
   int64_t TimeInMilliseconds() const override {
-    return cloopenwebrtc::TimeMillis();
+    return yuntongxunwebrtc::TimeMillis();
   }
 
   // Return a timestamp in microseconds relative to some arbitrary source; the
   // source is fixed for this clock.
   int64_t TimeInMicroseconds() const override {
-    return cloopenwebrtc::TimeMicros();
+    return yuntongxunwebrtc::TimeMicros();
   }
 
   // Retrieve an NTP absolute timestamp in seconds and fractions of a second.
@@ -128,7 +128,7 @@ class WindowsRealTimeClock : public RealTimeClock {
     DWORD t;
     LARGE_INTEGER elapsed_ms;
     {
-		cloopenwebrtc::CritScope lock(&crit_);
+		yuntongxunwebrtc::CritScope lock(&crit_);
       // time MUST be fetched inside the critical section to avoid non-monotonic
       // last_time_ms_ values that'll register as incorrect wraparounds due to
       // concurrent calls to GetTime.
@@ -179,7 +179,7 @@ class WindowsRealTimeClock : public RealTimeClock {
   }
 
   // mutable as time-accessing functions are const.
-  cloopenwebrtc::CriticalSection crit_;
+  yuntongxunwebrtc::CriticalSection crit_;
   mutable DWORD last_time_ms_;
   mutable LONG num_timer_wraps_;
   const ReferencePoint ref_point_;
@@ -268,4 +268,4 @@ void SimulatedClock::AdvanceTimeMicroseconds(int64_t microseconds) {
   time_us_ += microseconds;
 }
 
-};  // namespace cloopenwebrtc
+};  // namespace yuntongxunwebrtc

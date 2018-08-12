@@ -15,7 +15,7 @@
 #include "../system_wrappers/include/clock.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace voe {
 
@@ -39,7 +39,7 @@ class NetworkPredictor {
   int64_t last_loss_rate_update_time_ms_;
 
   // An exponential filter is used to predict packet loss rate.
-  scoped_ptr<cloopenwebrtc::ExpFilter> loss_rate_filter_;
+  scoped_ptr<yuntongxunwebrtc::ExpFilter> loss_rate_filter_;
 };
 
 }  // namespace voe

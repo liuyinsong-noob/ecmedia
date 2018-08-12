@@ -26,7 +26,7 @@
 #include "voice_engine_impl.h"
 #include "../base/timeutils.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 VoEBase* VoEBase::GetInterface(VoiceEngine* voiceEngine)
@@ -2584,4 +2584,4 @@ bool VoEBaseImpl::GetRecordingIsRecording()
     return _shared->audio_device()->Recording();
 }     
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

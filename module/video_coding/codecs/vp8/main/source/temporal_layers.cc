@@ -20,7 +20,7 @@
 #include "vpx/vpx_encoder.h"
 #include "vpx/vp8cx.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TemporalLayers::TemporalLayers(int numberOfTemporalLayers)
     : number_of_temporal_layers_(numberOfTemporalLayers),
@@ -216,4 +216,4 @@ void TemporalLayers::PopulateCodecSpecific(bool key_frame,
   }
   vp8_info->tl0PicIdx = tl0_pic_idx_;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

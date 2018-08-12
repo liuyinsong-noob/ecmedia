@@ -108,7 +108,7 @@ int Log(const char *format, ...) {
 // Validates the arguments given as command line flags and fills in the
 // TestConfig struct with all configurations needed for video processing.
 // Returns 0 if everything is OK, otherwise an exit code.
-int HandleCommandLineFlags(cloopenwebrtc::test::TestConfig* config) {
+int HandleCommandLineFlags(yuntongxunwebrtc::test::TestConfig* config) {
   // Validate the mandatory flags:
   if (FLAGS_input_filename == "" || FLAGS_width == -1 || FLAGS_height == -1) {
     printf("%s\n", google::ProgramUsage());
@@ -170,12 +170,12 @@ int HandleCommandLineFlags(cloopenwebrtc::test::TestConfig* config) {
   config->use_single_core = FLAGS_use_single_core;
 
   // Get codec specific configuration.
-  cloopenwebrtc::VideoCodingModule::Codec(cloopenwebrtc::kVideoCodecVP8,
+  yuntongxunwebrtc::VideoCodingModule::Codec(yuntongxunwebrtc::kVideoCodecVP8,
                                    config->codec_settings);
 
   // Check the temporal layers.
   if (FLAGS_temporal_layers < 0 ||
-      FLAGS_temporal_layers > cloopenwebrtc::kMaxTemporalStreams) {
+      FLAGS_temporal_layers > yuntongxunwebrtc::kMaxTemporalStreams) {
     fprintf(stderr, "Temporal layers number must be 0-4, was: %d\n",
             FLAGS_temporal_layers);
     return 13;
@@ -234,9 +234,9 @@ int HandleCommandLineFlags(cloopenwebrtc::test::TestConfig* config) {
             "'burst'\n.");
     return 10;
   }
-  config->networking_config.packet_loss_mode = cloopenwebrtc::test::kUniform;
+  config->networking_config.packet_loss_mode = yuntongxunwebrtc::test::kUniform;
   if (FLAGS_packet_loss_mode == "burst") {
-    config->networking_config.packet_loss_mode =  cloopenwebrtc::test::kBurst;
+    config->networking_config.packet_loss_mode =  yuntongxunwebrtc::test::kBurst;
   }
 
   if (FLAGS_packet_loss_probability < 0.0 ||
@@ -259,8 +259,8 @@ int HandleCommandLineFlags(cloopenwebrtc::test::TestConfig* config) {
   return 0;
 }
 
-void CalculateSsimVideoMetrics(cloopenwebrtc::test::TestConfig* config,
-                               cloopenwebrtc::test::QualityMetricsResult* result) {
+void CalculateSsimVideoMetrics(yuntongxunwebrtc::test::TestConfig* config,
+                               yuntongxunwebrtc::test::QualityMetricsResult* result) {
   Log("Calculating SSIM...\n");
   I420SSIMFromFiles(config->input_filename.c_str(),
                     config->output_filename.c_str(),
@@ -271,8 +271,8 @@ void CalculateSsimVideoMetrics(cloopenwebrtc::test::TestConfig* config,
   Log("  Max    : %3.2f (frame %d)\n", result->max, result->max_frame_number);
 }
 
-void CalculatePsnrVideoMetrics(cloopenwebrtc::test::TestConfig* config,
-                               cloopenwebrtc::test::QualityMetricsResult* result) {
+void CalculatePsnrVideoMetrics(yuntongxunwebrtc::test::TestConfig* config,
+                               yuntongxunwebrtc::test::QualityMetricsResult* result) {
   Log("Calculating PSNR...\n");
   I420PSNRFromFiles(config->input_filename.c_str(),
                     config->output_filename.c_str(),
@@ -283,7 +283,7 @@ void CalculatePsnrVideoMetrics(cloopenwebrtc::test::TestConfig* config,
   Log("  Max    : %3.2f (frame %d)\n", result->max, result->max_frame_number);
 }
 
-void PrintConfigurationSummary(const cloopenwebrtc::test::TestConfig& config) {
+void PrintConfigurationSummary(const yuntongxunwebrtc::test::TestConfig& config) {
   Log("Quality test with parameters:\n");
   Log("  Test name        : %s\n", config.name.c_str());
   Log("  Description      : %s\n", config.description.c_str());
@@ -304,9 +304,9 @@ void PrintConfigurationSummary(const cloopenwebrtc::test::TestConfig& config) {
       config.networking_config.packet_loss_burst_length);
 }
 
-void PrintCsvOutput(const cloopenwebrtc::test::Stats& stats,
-                    const cloopenwebrtc::test::QualityMetricsResult& ssim_result,
-                    const cloopenwebrtc::test::QualityMetricsResult& psnr_result) {
+void PrintCsvOutput(const yuntongxunwebrtc::test::Stats& stats,
+                    const yuntongxunwebrtc::test::QualityMetricsResult& ssim_result,
+                    const yuntongxunwebrtc::test::QualityMetricsResult& psnr_result) {
   Log("\nCSV output (recommended to run with --noverbose to skip the "
               "above output)\n");
   printf("frame_number encoding_successful decoding_successful "
@@ -317,9 +317,9 @@ void PrintCsvOutput(const cloopenwebrtc::test::Stats& stats,
       "ssim psnr\n");
 
   for (unsigned int i = 0; i < stats.stats_.size(); ++i) {
-    const cloopenwebrtc::test::FrameStatistic& f = stats.stats_[i];
-    const cloopenwebrtc::test::FrameResult& ssim = ssim_result.frames[i];
-    const cloopenwebrtc::test::FrameResult& psnr = psnr_result.frames[i];
+    const yuntongxunwebrtc::test::FrameStatistic& f = stats.stats_[i];
+    const yuntongxunwebrtc::test::FrameResult& ssim = ssim_result.frames[i];
+    const yuntongxunwebrtc::test::FrameResult& psnr = psnr_result.frames[i];
     printf("%4d, %d, %d, %2d, %2d, %6d, %6d, %5d, %7d, %d, %2d, %2d, "
            "%5.3f, %5.2f\n",
            f.frame_number,
@@ -339,10 +339,10 @@ void PrintCsvOutput(const cloopenwebrtc::test::Stats& stats,
   }
 }
 
-void PrintPythonOutput(const cloopenwebrtc::test::TestConfig& config,
-                       const cloopenwebrtc::test::Stats& stats,
-                       const cloopenwebrtc::test::QualityMetricsResult& ssim_result,
-                       const cloopenwebrtc::test::QualityMetricsResult& psnr_result) {
+void PrintPythonOutput(const yuntongxunwebrtc::test::TestConfig& config,
+                       const yuntongxunwebrtc::test::Stats& stats,
+                       const yuntongxunwebrtc::test::QualityMetricsResult& ssim_result,
+                       const yuntongxunwebrtc::test::QualityMetricsResult& psnr_result) {
   Log("\nPython output (recommended to run with --noverbose to skip the "
                "above output)\n");
   printf("test_configuration = ["
@@ -381,7 +381,7 @@ void PrintPythonOutput(const cloopenwebrtc::test::TestConfig& config,
          config.frame_length_in_bytes,
          config.use_single_core ? "True " : "False",
          config.keyframe_interval,
-         cloopenwebrtc::test::VideoCodecTypeToStr(config.codec_settings->codecType),
+         yuntongxunwebrtc::test::VideoCodecTypeToStr(config.codec_settings->codecType),
          config.codec_settings->width,
          config.codec_settings->height,
          config.codec_settings->startBitrate);
@@ -404,9 +404,9 @@ void PrintPythonOutput(const cloopenwebrtc::test::TestConfig& config,
          "}\n");
   printf("frame_data = [");
   for (unsigned int i = 0; i < stats.stats_.size(); ++i) {
-    const cloopenwebrtc::test::FrameStatistic& f = stats.stats_[i];
-    const cloopenwebrtc::test::FrameResult& ssim = ssim_result.frames[i];
-    const cloopenwebrtc::test::FrameResult& psnr = psnr_result.frames[i];
+    const yuntongxunwebrtc::test::FrameStatistic& f = stats.stats_[i];
+    const yuntongxunwebrtc::test::FrameResult& ssim = ssim_result.frames[i];
+    const yuntongxunwebrtc::test::FrameResult& psnr = psnr_result.frames[i];
     printf("{'frame_number': %d, "
            "'encoding_successful': %s, 'decoding_successful': %s, "
            "'encode_time': %d, 'decode_time': %d, "
@@ -423,7 +423,7 @@ void PrintPythonOutput(const cloopenwebrtc::test::TestConfig& config,
            f.decode_return_code,
            f.bit_rate_in_kbps,
            f.encoded_frame_length_in_bytes,
-           f.frame_type == cloopenwebrtc::kDeltaFrame ? "'Delta'" : "'Other'",
+           f.frame_type == yuntongxunwebrtc::kDeltaFrame ? "'Delta'" : "'Other'",
            f.packets_dropped,
            f.total_packets,
            ssim.value,
@@ -445,8 +445,8 @@ int main(int argc, char* argv[]) {
   google::ParseCommandLineFlags(&argc, &argv, true);
 
   // Create TestConfig and codec settings struct.
-  cloopenwebrtc::test::TestConfig config;
-  cloopenwebrtc::VideoCodec codec_settings;
+  yuntongxunwebrtc::test::TestConfig config;
+  yuntongxunwebrtc::VideoCodec codec_settings;
   config.codec_settings = &codec_settings;
 
   int return_code = HandleCommandLineFlags(&config);
@@ -457,26 +457,26 @@ int main(int argc, char* argv[]) {
 
   PrintConfigurationSummary(config);
 
-  cloopenwebrtc::VP8Encoder* encoder = cloopenwebrtc::VP8Encoder::Create();
-  cloopenwebrtc::VP8Decoder* decoder = cloopenwebrtc::VP8Decoder::Create();
-  cloopenwebrtc::test::Stats stats;
-  cloopenwebrtc::test::FrameReaderImpl frame_reader(config.input_filename,
+  yuntongxunwebrtc::VP8Encoder* encoder = yuntongxunwebrtc::VP8Encoder::Create();
+  yuntongxunwebrtc::VP8Decoder* decoder = yuntongxunwebrtc::VP8Decoder::Create();
+  yuntongxunwebrtc::test::Stats stats;
+  yuntongxunwebrtc::test::FrameReaderImpl frame_reader(config.input_filename,
                                              config.frame_length_in_bytes);
-  cloopenwebrtc::test::FrameWriterImpl frame_writer(config.output_filename,
+  yuntongxunwebrtc::test::FrameWriterImpl frame_writer(config.output_filename,
                                              config.frame_length_in_bytes);
   frame_reader.Init();
   frame_writer.Init();
-  cloopenwebrtc::test::PacketReader packet_reader;
+  yuntongxunwebrtc::test::PacketReader packet_reader;
 
-  cloopenwebrtc::test::PacketManipulatorImpl packet_manipulator(
+  yuntongxunwebrtc::test::PacketManipulatorImpl packet_manipulator(
       &packet_reader, config.networking_config, config.verbose);
   // By default the packet manipulator is seeded with a fixed random.
   // If disabled we must generate a new seed.
   if (FLAGS_disable_fixed_random_seed) {
     packet_manipulator.InitializeRandomSeed(time(NULL));
   }
-  cloopenwebrtc::test::VideoProcessor* processor =
-      new cloopenwebrtc::test::VideoProcessorImpl(encoder, decoder,
+  yuntongxunwebrtc::test::VideoProcessor* processor =
+      new yuntongxunwebrtc::test::VideoProcessorImpl(encoder, decoder,
                                            &frame_reader,
                                            &frame_writer,
                                            &packet_manipulator,
@@ -507,9 +507,9 @@ int main(int argc, char* argv[]) {
 
   stats.PrintSummary();
 
-  cloopenwebrtc::test::QualityMetricsResult ssim_result;
+  yuntongxunwebrtc::test::QualityMetricsResult ssim_result;
   CalculateSsimVideoMetrics(&config, &ssim_result);
-  cloopenwebrtc::test::QualityMetricsResult psnr_result;
+  yuntongxunwebrtc::test::QualityMetricsResult psnr_result;
   CalculatePsnrVideoMetrics(&config, &psnr_result);
 
   if (FLAGS_csv) {

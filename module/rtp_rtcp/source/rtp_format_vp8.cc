@@ -19,7 +19,7 @@
 #include "../module/rtp_rtcp/source/vp8_partition_aggregator.h"
 #include "../module/rtp_rtcp/source/rtp_packet_to_send.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 int ParseVP8PictureID(RTPVideoHeaderVP8* vp8,
                       const uint8_t** data,
@@ -742,4 +742,4 @@ bool RtpDepacketizerVp8::Parse(ParsedPayload* parsed_payload,
   parsed_payload->payload_length = payload_data_length;
   return true;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

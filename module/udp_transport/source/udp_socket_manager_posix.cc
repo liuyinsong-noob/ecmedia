@@ -19,7 +19,7 @@
 #include "../system_wrappers/include/trace.h"
 #include "udp_socket_posix.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 UdpSocketManagerPosix::UdpSocketManagerPosix()
     : UdpSocketManager(),
       _id(-1),
@@ -426,4 +426,4 @@ void UdpSocketManagerPosixImpl::UpdateSocketMap()
     }
     _critSectList->Leave();
 }
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

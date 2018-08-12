@@ -15,7 +15,7 @@
 
 #include "../base/checks.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const size_t kMtu = 1200;
 const uint32_t kAcceptedBitrateErrorBps = 50000;
@@ -613,4 +613,4 @@ void RemoteBitrateEstimatorTest::TestWrappingHelper(
   bitrate_estimator_->LatestEstimate(&ssrcs, &bitrate_after);
   EXPECT_LT(bitrate_after, bitrate_before);
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

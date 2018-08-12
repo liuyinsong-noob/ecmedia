@@ -13,7 +13,7 @@
 
 #include "cpu_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class CpuWrapperMac : public CpuWrapper
 {
 public:
@@ -43,6 +43,6 @@ private:
     WebRtc_Word64*  _lastTickCount;
     WebRtc_Word64   _lastTime;
 };
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_SYSTEM_WRAPPERS_SOURCE_CPU_MAC_H_

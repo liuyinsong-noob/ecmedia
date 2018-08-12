@@ -9,7 +9,7 @@
 #include "srs_librtmp.h"
 #include "event_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 #define MAX_RETRY_TIME 3 // max retry connect to rtmp server times.
     
     ECRtmpPublisher::ECRtmpPublisher(ECLiveStreamNetworkStatusCallBack callback, EC_RTMP_BitrateController *bc) :

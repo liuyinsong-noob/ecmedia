@@ -29,7 +29,7 @@
 #include "scoped_ptr.h"
 #include "fileutils.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 // The absolute difference between the input and output (the first channel) is
@@ -89,7 +89,7 @@ double MseInputOutput(const std::vector<int16_t>& input,
 class AudioDecoderTest : public ::testing::Test {
  protected:
   AudioDecoderTest()
-      : input_audio_(cloopenwebrtc::test::ProjectRootPath() +
+      : input_audio_(yuntongxunwebrtc::test::ProjectRootPath() +
                          "resources/audio_coding/testfile32kHz.pcm",
                      32000),
         codec_input_rate_hz_(32000),  // Legacy default value.
@@ -653,4 +653,4 @@ TEST(AudioDecoder, CodecSupported) {
   EXPECT_TRUE(CodecSupported(kDecoderOpus_2ch));
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

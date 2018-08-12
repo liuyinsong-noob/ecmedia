@@ -30,7 +30,7 @@
 //#define WEBRTC_TRACE(a,b,c,...)  __android_log_print(ANDROID_LOG_DEBUG, \
 //    "WebRTC AD jni", __VA_ARGS__)
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 JavaVM* globalJvm = NULL;
@@ -2976,4 +2976,4 @@ bool AudioDeviceAndroidJni::RecThreadProcess()
     return true;
 }
 
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

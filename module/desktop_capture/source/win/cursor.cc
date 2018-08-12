@@ -20,7 +20,7 @@
 #include "../system_wrappers/include/trace.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 
@@ -137,7 +137,7 @@ MouseCursor* CreateMouseCursorFromHCursor(HDC dc, HCURSOR cursor) {
 
   int width = bitmap_info.bmWidth;
   int height = bitmap_info.bmHeight;
-  cloopenwebrtc::scoped_ptr<uint32_t> mask_data( new uint32_t[width * height]);
+  yuntongxunwebrtc::scoped_ptr<uint32_t> mask_data( new uint32_t[width * height]);
 
   // Get pixel data from |scoped_mask| converting it to 32bpp along the way.
   // GetDIBits() sets the alpha component of every pixel to 0.
@@ -164,7 +164,7 @@ MouseCursor* CreateMouseCursorFromHCursor(HDC dc, HCURSOR cursor) {
   }
 
   uint32_t* mask_plane = mask_data.get();
-  cloopenwebrtc::scoped_ptr<DesktopFrame> image(
+  yuntongxunwebrtc::scoped_ptr<DesktopFrame> image(
       new BasicDesktopFrame(DesktopSize(width, height)));
   bool has_alpha = false;
 
@@ -248,4 +248,4 @@ MouseCursor* CreateMouseCursorFromHCursor(HDC dc, HCURSOR cursor) {
       image.release(), DesktopVector(hotspot_x, hotspot_y));
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

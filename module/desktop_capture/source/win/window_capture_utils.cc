@@ -10,7 +10,7 @@
 
 #include "window_capture_utils.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 bool
 GetCroppedWindowRect(HWND window,
@@ -43,4 +43,4 @@ GetCroppedWindowRect(HWND window,
   return true;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

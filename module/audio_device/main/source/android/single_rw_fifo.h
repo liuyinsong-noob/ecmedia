@@ -15,7 +15,7 @@
 #include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Implements a lock-free FIFO losely based on
 // http://src.chromium.org/viewvc/chrome/trunk/src/media/base/audio_fifo.cc

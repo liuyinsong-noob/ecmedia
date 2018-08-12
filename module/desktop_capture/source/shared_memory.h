@@ -20,7 +20,7 @@
 #include "../base/constructormagic.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // SharedMemory is a base class for shared memory. It stores all required
 // parameters of the buffer, but doesn't have any logic to allocate or destroy
@@ -76,7 +76,7 @@ private:
 	DISALLOW_COPY_AND_ASSIGN(FakeSharedMemory);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_SHARED_MEMORY_H_
 

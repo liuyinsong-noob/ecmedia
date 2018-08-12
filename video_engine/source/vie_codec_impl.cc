@@ -25,7 +25,7 @@
 #include "vie_input_manager.h"
 #include "vie_shared_data.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static void LogCodec(const VideoCodec& codec) {
   LOG(LS_INFO) << "CodecType " << codec.codecType
@@ -421,10 +421,10 @@ int ViECodecImpl::SetReceiveCodec(const int video_channel,
   VideoCodec video_codec_second;
   if (!stricmp(video_codec.plName, "VP8")) {//add h264 codec
 	  memcpy(&video_codec_second, &video_codec, sizeof(VideoCodec));
-	  memset(video_codec_second.plName, 0, cloopenwebrtc::kPayloadNameSize);
+	  memset(video_codec_second.plName, 0, yuntongxunwebrtc::kPayloadNameSize);
 	  memcpy(video_codec_second.plName, "H264", 4);
 	  video_codec_second.plType = 96;
-	  video_codec_second.codecType = cloopenwebrtc::kVideoCodecH264;
+	  video_codec_second.codecType = yuntongxunwebrtc::kVideoCodecH264;
 
 	  if (vie_channel->SetReceiveCodec(video_codec_second) != 0) {
 		  shared_data_->SetLastError(kViECodecUnknownError);
@@ -433,10 +433,10 @@ int ViECodecImpl::SetReceiveCodec(const int video_channel,
   }
   else if (!stricmp(video_codec.plName, "H264")) {//add vp8 codec
 	  memcpy(&video_codec_second, &video_codec, sizeof(VideoCodec));
-	  memset(video_codec_second.plName, 0, cloopenwebrtc::kPayloadNameSize);
+	  memset(video_codec_second.plName, 0, yuntongxunwebrtc::kPayloadNameSize);
 	  memcpy(video_codec_second.plName, "VP8", 3);
 	  video_codec_second.plType = 120;
-	  video_codec_second.codecType = cloopenwebrtc::kVideoCodecVP8;
+	  video_codec_second.codecType = yuntongxunwebrtc::kVideoCodecVP8;
 
 	  if (vie_channel->SetReceiveCodec(video_codec_second) != 0) {
 		  shared_data_->SetLastError(kViECodecUnknownError);

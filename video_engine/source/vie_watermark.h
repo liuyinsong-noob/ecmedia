@@ -25,7 +25,7 @@ extern "C"
 };
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 	/*struct WaterMark
 	{

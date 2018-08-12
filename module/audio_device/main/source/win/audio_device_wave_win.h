@@ -16,7 +16,7 @@
 
 #pragma comment( lib, "winmm.lib" )
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class EventWrapper;
 class EventTimerWrapper;
 class ThreadWrapper;
@@ -342,6 +342,6 @@ private:
 	bool _muteEnable;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_AUDIO_DEVICE_AUDIO_DEVICE_WAVE_WIN_H

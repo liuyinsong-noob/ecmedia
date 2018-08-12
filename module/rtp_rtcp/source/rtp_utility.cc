@@ -17,7 +17,7 @@
 #include "../module/rtp_rtcp/source/byte_io.h"
 #include "../module/rtp_rtcp/source/rtp_header_extensions.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 RtpData* NullObjectRtpData() {
   static NullRtpData null_rtp_data;
@@ -534,4 +534,4 @@ uint32_t BufferToUWord32(const uint8_t* dataBuffer) {
 }
 
 }  // namespace RtpUtility
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -11,7 +11,7 @@
 #include "device_info_impl.h"
 #include "video_capture_impl.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace videocapturemodule {
 

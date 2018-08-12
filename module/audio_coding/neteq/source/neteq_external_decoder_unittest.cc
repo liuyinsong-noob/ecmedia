@@ -23,7 +23,7 @@
 #include "fileutils.h"
 #include "gtest_disable.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 using ::testing::_;
 using ::testing::Return;
@@ -69,7 +69,7 @@ class NetEqExternalDecoderTest : public ::testing::Test {
 
   virtual void SetUp() {
     const std::string file_name =
-        cloopenwebrtc::test::ResourcePath("audio_coding/testfile32kHz", "pcm");
+        yuntongxunwebrtc::test::ResourcePath("audio_coding/testfile32kHz", "pcm");
     input_file_.reset(new test::InputAudioFile(file_name));
     assert(sample_rate_hz_ == 32000);
     NetEqDecoder decoder = kDecoderPCM16Bswb32kHz;
@@ -245,7 +245,7 @@ class LargeTimestampJumpTest : public NetEqExternalDecoderTest {
 
   void SetUp() OVERRIDE {
     const std::string file_name =
-        cloopenwebrtc::test::ResourcePath("audio_coding/testfile32kHz", "pcm");
+        yuntongxunwebrtc::test::ResourcePath("audio_coding/testfile32kHz", "pcm");
     input_file_.reset(new test::InputAudioFile(file_name));
     assert(sample_rate_hz_ == 8000);
     NetEqDecoder decoder = kDecoderPCM16B;
@@ -482,4 +482,4 @@ TEST_F(ShortTimestampJumpTest, JumpShorterThanHalfRangeAndWrap) {
   EXPECT_EQ(kRecovered, test_state_);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

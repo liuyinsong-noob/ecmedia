@@ -8,7 +8,7 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 #include "quality_scaler.h"
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 static const int kMinFps = 10;
 static const int kMeasureSeconds = 5;
 static const int kFramedropPercentThreshold = 60;
@@ -96,4 +96,4 @@ void QualityScaler::AdjustScale(bool up) {
     downscale_shift_ = 0;
   ClearSamples();
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

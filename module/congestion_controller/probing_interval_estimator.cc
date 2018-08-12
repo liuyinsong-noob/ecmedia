@@ -13,7 +13,7 @@
 #include <algorithm>
 #include <utility>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 constexpr int kMinIntervalMs = 2000;
@@ -39,7 +39,7 @@ ProbingIntervalEstimator::ProbingIntervalEstimator(
       aimd_rate_control_(aimd_rate_control) {}
 
 int64_t ProbingIntervalEstimator::GetIntervalMs() const {
-  cloopenwebrtc::Optional<int> bitrate_drop =
+  yuntongxunwebrtc::Optional<int> bitrate_drop =
       aimd_rate_control_->GetLastBitrateDecreaseBps();
   int increase_rate = aimd_rate_control_->GetNearMaxIncreaseRateBps();
 
@@ -52,4 +52,4 @@ int64_t ProbingIntervalEstimator::GetIntervalMs() const {
                min_interval_ms_));
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

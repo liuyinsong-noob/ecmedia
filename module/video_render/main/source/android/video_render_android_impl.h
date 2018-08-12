@@ -18,7 +18,7 @@
 #include "i_video_render.h"
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 //#define ANDROID_LOG
 

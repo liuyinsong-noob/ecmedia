@@ -15,7 +15,7 @@
 #include "cloopenwebrtc/modules/audio_coding/codecs/g722/include/g722_interface.h"
 #include "cloopenwebrtc/system_wrappers/interface/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioEncoderG722 : public AudioEncoder {
  public:

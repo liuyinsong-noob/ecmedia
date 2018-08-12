@@ -14,7 +14,7 @@
 #include "module/audio_device/main/source/audio_device_utility.h"
 #include "module/audio_device/main/include/audio_device.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class CriticalSectionWrapper;
 
 class AudioDeviceUtilityIOS: public AudioDeviceUtility {

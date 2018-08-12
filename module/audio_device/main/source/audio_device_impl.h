@@ -14,7 +14,7 @@
 #include "audio_device_buffer.h"
 #include "audio_device.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 class AudioDeviceGeneric;
@@ -233,6 +233,6 @@ private:
     mutable ErrorCode           _lastError;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_INTERFACE_AUDIO_DEVICE_IMPL_H_

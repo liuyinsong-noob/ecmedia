@@ -16,7 +16,7 @@
 #include "opus_interface.h"
 #include "audio_encoder.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioEncoderOpus : public AudioEncoder {
  public:

@@ -19,7 +19,7 @@
 #include "../base/thread_annotations.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AgcManagerDirect;
 class AudioBuffer;
@@ -238,6 +238,6 @@ private:
   //---end
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_AUDIO_PROCESSING_IMPL_H_

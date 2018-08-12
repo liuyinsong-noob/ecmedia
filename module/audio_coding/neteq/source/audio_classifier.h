@@ -24,7 +24,7 @@ extern "C" {
 #include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // This class provides a speech/music classification and is a wrapper over the
 // Opus classifier. It currently only supports 48 kHz mono or stereo with a
@@ -54,6 +54,6 @@ class AudioClassifier {
   TonalityAnalysisState analysis_state_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_AUDIO_CLASSIFIER_H_

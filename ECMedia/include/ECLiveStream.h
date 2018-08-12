@@ -17,7 +17,7 @@ struct RTMP;
 struct RTMPPacket;
 typedef int(*ReturnVideoWidthHeightM)(int width, int height, int channelid);
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     
     class RtpData;
     class VoiceEngine;

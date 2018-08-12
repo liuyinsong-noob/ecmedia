@@ -13,13 +13,13 @@
 
 #include <windows.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class MouseCursor;
 
 // Converts an HCURSOR into a |MouseCursor| instance.
 MouseCursor* CreateMouseCursorFromHCursor(HDC dc, HCURSOR cursor);
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_WIN_CURSOR_H_

@@ -20,9 +20,9 @@
 
 #pragma comment(lib,"winmm.lib")
 
-class Observer : public cloopenwebrtc::RemoteBitrateObserver {
+class Observer : public yuntongxunwebrtc::RemoteBitrateObserver {
  public:
-  explicit Observer(cloopenwebrtc::Clock* clock) : clock_(clock) {}
+  explicit Observer(yuntongxunwebrtc::Clock* clock) : clock_(clock) {}
 
   // Called when a receive channel group has a new bitrate estimate for the
   // incoming streams.
@@ -36,7 +36,7 @@ class Observer : public cloopenwebrtc::RemoteBitrateObserver {
   virtual ~Observer() {}
 
  private:
-  cloopenwebrtc::Clock* clock_;
+  yuntongxunwebrtc::Clock* clock_;
 };
 
 int main(int argc, char** argv) {
@@ -49,19 +49,19 @@ int main(int argc, char** argv) {
            "<extension id> is the id associated with the extension.\n");
     return -1;
   }
-  cloopenwebrtc::test::RtpFileReader* reader;
-  cloopenwebrtc::RemoteBitrateEstimator* estimator;
-  cloopenwebrtc::RtpHeaderParser* parser;
+  yuntongxunwebrtc::test::RtpFileReader* reader;
+  yuntongxunwebrtc::RemoteBitrateEstimator* estimator;
+  yuntongxunwebrtc::RtpHeaderParser* parser;
   std::string estimator_used;
-  cloopenwebrtc::SimulatedClock clock(0);
+  yuntongxunwebrtc::SimulatedClock clock(0);
   Observer observer(&clock);
   if (!ParseArgsAndSetupEstimator(argc, argv, &clock, &observer, &reader,
                                   &parser, &estimator, &estimator_used)) {
     return -1;
   }
-  cloopenwebrtc::scoped_ptr<cloopenwebrtc::test::RtpFileReader> rtp_reader(reader);
-  cloopenwebrtc::scoped_ptr<cloopenwebrtc::RtpHeaderParser> rtp_parser(parser);
-  cloopenwebrtc::scoped_ptr<cloopenwebrtc::RemoteBitrateEstimator> rbe(estimator);
+  yuntongxunwebrtc::scoped_ptr<yuntongxunwebrtc::test::RtpFileReader> rtp_reader(reader);
+  yuntongxunwebrtc::scoped_ptr<yuntongxunwebrtc::RtpHeaderParser> rtp_parser(parser);
+  yuntongxunwebrtc::scoped_ptr<yuntongxunwebrtc::RemoteBitrateEstimator> rbe(estimator);
 
   // Process the file.
   int packet_counter = 0;
@@ -69,7 +69,7 @@ int main(int argc, char** argv) {
   int64_t first_rtp_time_ms = -1;
   int abs_send_time_count = 0;
   int ts_offset_count = 0;
-  cloopenwebrtc::test::RtpPacket packet;
+  yuntongxunwebrtc::test::RtpPacket packet;
   if (!rtp_reader->NextPacket(&packet)) {
     printf("No RTP packet found\n");
     return 0;
@@ -78,7 +78,7 @@ int main(int argc, char** argv) {
   packet.time_ms = packet.time_ms - first_rtp_time_ms;
   while (true) {
     if (next_rtp_time_ms <= clock.TimeInMilliseconds()) {
-      cloopenwebrtc::RTPHeader header;
+      yuntongxunwebrtc::RTPHeader header;
       parser->Parse(packet.data, packet.length, &header);
       if (header.extension.hasAbsoluteSendTime)
         ++abs_send_time_count;

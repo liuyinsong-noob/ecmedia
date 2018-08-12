@@ -14,7 +14,7 @@
 #include "audio_encoder_isac_t.h"
 #include "isac.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 struct IsacFloat {
   typedef ISACStruct instance_type;

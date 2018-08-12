@@ -13,7 +13,7 @@
 
 #include "../base/constructormagic.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Helper class with generators for various signal transform windows.
 class WindowGenerator {

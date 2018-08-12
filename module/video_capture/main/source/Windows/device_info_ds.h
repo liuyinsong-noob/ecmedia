@@ -16,7 +16,7 @@
 
 #include <Dshow.h>
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 namespace videocapturemodule
 {

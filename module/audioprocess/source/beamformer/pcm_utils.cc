@@ -14,7 +14,7 @@
 #include "audio_util.h"
 #include "channel_buffer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 size_t PcmRead(FILE* file,
                size_t length,
@@ -87,4 +87,4 @@ void PcmWriteFromFloat(FILE* file,
   PcmWrite(file, length, num_channels, deinterleaved_buffer->channels());
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

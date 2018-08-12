@@ -15,7 +15,7 @@
 #include "differ_block.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 Differ::Differ(int width, int height, int bpp, int stride) {
   // Dimensions of screen.
@@ -207,4 +207,4 @@ void Differ::MergeBlocks(DesktopRegion* region) {
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

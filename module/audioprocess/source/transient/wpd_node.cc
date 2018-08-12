@@ -18,7 +18,7 @@
 #include "dyadic_decimator.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 WPDNode::WPDNode(size_t length,
                  const float* coefficients,
@@ -68,4 +68,4 @@ int WPDNode::set_data(const float* new_data, size_t length) {
   return 0;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -14,7 +14,7 @@
 #include "../base/checks.h"
 #include "../base/type_traits.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Many functions read from or write to arrays. The obvious way to do this is
 // to use two arguments, a pointer to the first element and an element count:
@@ -248,6 +248,6 @@ inline ArrayView<T> MakeArrayView(T* data, size_t size) {
   return ArrayView<T>(data, size);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_ARRAY_VIEW_H_

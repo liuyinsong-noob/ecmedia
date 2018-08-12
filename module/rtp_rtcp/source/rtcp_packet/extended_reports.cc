@@ -15,7 +15,7 @@
 #include "byte_io.h"
 #include "common_header.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace rtcp {
 constexpr uint8_t ExtendedReports::kPacketType;
 // From RFC 3611: RTP Control Protocol Extended Reports (RTCP XR).
@@ -55,7 +55,7 @@ bool ExtendedReports::Parse(const CommonHeader& packet) {
   rrtr_block_.reset();
   dlrr_block_.ClearItems();
   voip_metric_block_.reset();
-  target_bitrate_ = cloopenwebrtc::Optional<TargetBitrate>();
+  target_bitrate_ = yuntongxunwebrtc::Optional<TargetBitrate>();
 
   const uint8_t* current_block = packet.payload() + kXrBaseLength;
   const uint8_t* const packet_end =
@@ -115,7 +115,7 @@ void ExtendedReports::SetTargetBitrate(const TargetBitrate& bitrate) {
   if (target_bitrate_)
     LOG(LS_WARNING) << "TargetBitrate already set, overwriting.";
 
-  target_bitrate_ = cloopenwebrtc::Optional<TargetBitrate>(bitrate);
+  target_bitrate_ = yuntongxunwebrtc::Optional<TargetBitrate>(bitrate);
 }
 
 bool ExtendedReports::Create(uint8_t* packet,
@@ -199,9 +199,9 @@ void ExtendedReports::ParseVoipMetricBlock(const uint8_t* block,
 
 void ExtendedReports::ParseTargetBitrateBlock(const uint8_t* block,
                                               uint16_t block_length) {
-  target_bitrate_ = cloopenwebrtc::Optional<TargetBitrate>(TargetBitrate());
+  target_bitrate_ = yuntongxunwebrtc::Optional<TargetBitrate>(TargetBitrate());
   if (!target_bitrate_->Parse(block, block_length))
-    target_bitrate_ = cloopenwebrtc::Optional<TargetBitrate>();
+    target_bitrate_ = yuntongxunwebrtc::Optional<TargetBitrate>();
 }
 }  // namespace rtcp
 }  // namespace webrtc

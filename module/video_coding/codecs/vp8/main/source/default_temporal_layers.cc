@@ -20,7 +20,7 @@
 #include "vpx/vpx_encoder.h"
 #include "vpx/vp8cx.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 DefaultTemporalLayers::DefaultTemporalLayers(int numberOfTemporalLayers,
                                              uint8_t initial_tl0_pic_idx)

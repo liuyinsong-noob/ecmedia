@@ -16,7 +16,7 @@
 #include "acm_generic_codec.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class CriticalSectionWrapper;
 
@@ -134,6 +134,6 @@ class ACMISAC : public ACMGenericCodec, AudioDecoder {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_ACM_ISAC_H_

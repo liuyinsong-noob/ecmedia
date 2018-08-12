@@ -43,7 +43,7 @@
 #include <vector>
 #include <google/protobuf/stubs/common.h>
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
   namespace io {
     class CodedInputStream;         // coded_stream.h
@@ -314,5 +314,5 @@ inline void UnknownField::SetType(Type type) {
 
 }  // namespace protobuf
 
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 #endif  // GOOGLE_PROTOBUF_UNKNOWN_FIELD_SET_H__

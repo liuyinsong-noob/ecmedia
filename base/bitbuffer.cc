@@ -15,7 +15,7 @@
 
 #include "../base/checks.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Returns the lowest (right-most) |bit_count| bits in |byte|.
 uint8_t LowestBits(uint8_t byte, size_t bit_count) {
@@ -71,7 +71,7 @@ size_t CountBits(uint64_t val) {
 
 }  // namespace
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 BitBuffer::BitBuffer(const uint8_t* bytes, size_t byte_count)
     : bytes_(bytes), byte_count_(byte_count), byte_offset_(), bit_offset_() {
@@ -307,4 +307,4 @@ bool BitBufferWriter::WriteSignedExponentialGolomb(int32_t val) {
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -17,29 +17,29 @@
 #include "./base/bitbuffer.h"
 #include "./system_wrappers/include/logging.h"
 
-typedef cloopenwebrtc::Optional<cloopenwebrtc::SpsParser::SpsState> OptionalSps;
+typedef yuntongxunwebrtc::Optional<yuntongxunwebrtc::SpsParser::SpsState> OptionalSps;
 
 #define RETURN_EMPTY_ON_FAIL(x) \
   if (!(x)) {                   \
     return OptionalSps();       \
   }
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // General note: this is based off the 02/2014 version of the H.264 standard.
 // You can find it on this page:
 // http://www.itu.int/rec/T-REC-H.264
 
 // Unpack RBSP and parse SPS state from the supplied buffer.
-cloopenwebrtc::Optional<SpsParser::SpsState> SpsParser::ParseSps(const uint8_t* data,
+yuntongxunwebrtc::Optional<SpsParser::SpsState> SpsParser::ParseSps(const uint8_t* data,
                                                        size_t length) {
   std::vector<uint8_t> unpacked_buffer = H264::ParseRbsp(data, length);
-  cloopenwebrtc::BitBuffer bit_buffer(unpacked_buffer.data(), unpacked_buffer.size());
+  yuntongxunwebrtc::BitBuffer bit_buffer(unpacked_buffer.data(), unpacked_buffer.size());
   return ParseSpsUpToVui(&bit_buffer);
 }
 
-cloopenwebrtc::Optional<SpsParser::SpsState> SpsParser::ParseSpsUpToVui(
-    cloopenwebrtc::BitBuffer* buffer) {
+yuntongxunwebrtc::Optional<SpsParser::SpsState> SpsParser::ParseSpsUpToVui(
+    yuntongxunwebrtc::BitBuffer* buffer) {
   // Now, we need to use a bit buffer to parse through the actual AVC SPS
   // format. See Section 7.3.2.1.1 ("Sequence parameter set data syntax") of the
   // H.264 standard for a complete description.
@@ -218,4 +218,4 @@ cloopenwebrtc::Optional<SpsParser::SpsState> SpsParser::ParseSpsUpToVui(
   return OptionalSps(sps);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

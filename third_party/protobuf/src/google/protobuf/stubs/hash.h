@@ -48,7 +48,7 @@
 #include <set>
 #endif
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 
 #ifdef MISSING_HASH
@@ -227,6 +227,6 @@ struct streq {
 };
 
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 
 #endif  // GOOGLE_PROTOBUF_STUBS_HASH_H__

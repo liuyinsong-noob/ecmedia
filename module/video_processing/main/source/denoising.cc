@@ -13,7 +13,7 @@
 
 #include <cstring>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 enum { kSubsamplingTime = 0 };       // Down-sampling in time (unit: number of frames)
 enum { kSubsamplingWidth = 0 };      // Sub-sampling in width (unit: power of 2)
@@ -87,13 +87,13 @@ VPMDenoising::ProcessFrame(WebRtc_UWord8* frame,
 
     if (frame == NULL)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoPreocessing, _id, "Null frame pointer");
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoPreocessing, _id, "Null frame pointer");
         return VPM_GENERAL_ERROR;
     }
 
     if (width == 0 || height == 0)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoPreocessing, _id, "Invalid frame size");
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoPreocessing, _id, "Invalid frame size");
         return VPM_GENERAL_ERROR;
     }
 

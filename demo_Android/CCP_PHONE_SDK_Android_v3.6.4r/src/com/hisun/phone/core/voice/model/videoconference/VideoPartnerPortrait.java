@@ -5,7 +5,7 @@ package com.hisun.phone.core.voice.model.videoconference;
 * <p>Title: VideoPartnerPortrait.java</p>
 * <p>Description: </p>
 * <p>Copyright: Copyright (c) 2012</p>
-* <p>Company: http://www.cloopen.com</p>
+* <p>Company: http://www.yuntongxun.com</p>
 * @author Jorstin Chan
 * @date 2013-11-6
 * @version 13.5

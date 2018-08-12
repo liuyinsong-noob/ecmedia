@@ -14,7 +14,7 @@
 #include "../base/event.h"
 #include "../base/socketserver.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class NullSocketServer : public SocketServer {
  public:
@@ -33,6 +33,6 @@ class NullSocketServer : public SocketServer {
   Event event_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_NULLSOCKETSERVER_H_

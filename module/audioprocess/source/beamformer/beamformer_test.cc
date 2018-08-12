@@ -32,7 +32,7 @@ DEFINE_string(output_file_path,
               "beamformer_test_output.wav",
               "The absolute path to the output file.");
 
-using cloopenwebrtc::ChannelBuffer;
+using yuntongxunwebrtc::ChannelBuffer;
 
 int main(int argc, char* argv[]) {
   google::ParseCommandLineFlags(&argc, &argv, true);
@@ -55,14 +55,14 @@ int main(int argc, char* argv[]) {
 
   FILE* write_file = fopen(FLAGS_output_file_path.c_str(), "wb");
 
-  std::vector<cloopenwebrtc::Point> array_geometry;
+  std::vector<yuntongxunwebrtc::Point> array_geometry;
   for (int i = 0; i < FLAGS_num_input_channels; ++i) {
-    array_geometry.push_back(cloopenwebrtc::Point(i * FLAGS_mic_spacing, 0.f, 0.f));
+    array_geometry.push_back(yuntongxunwebrtc::Point(i * FLAGS_mic_spacing, 0.f, 0.f));
   }
-  cloopenwebrtc::Beamformer bf(array_geometry);
+  yuntongxunwebrtc::Beamformer bf(array_geometry);
   bf.Initialize(kChunkTimeMilliseconds, FLAGS_sample_rate);
   while (true) {
-    size_t samples_read = cloopenwebrtc::PcmReadToFloat(read_file,
+    size_t samples_read = yuntongxunwebrtc::PcmReadToFloat(read_file,
                                                  kInputSamplesPerChunk,
                                                  FLAGS_num_input_channels,
                                                  captured_audio_cb.channels());
@@ -77,7 +77,7 @@ int main(int argc, char* argv[]) {
                     kChunkSize,
                     captured_audio_cb.channels(),
                     NULL);
-    cloopenwebrtc::PcmWriteFromFloat(
+    yuntongxunwebrtc::PcmWriteFromFloat(
         write_file, kChunkSize, 1, captured_audio_cb.channels());
   }
   fclose(read_file);

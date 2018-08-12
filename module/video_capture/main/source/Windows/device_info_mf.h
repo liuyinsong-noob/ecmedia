@@ -13,7 +13,7 @@
 
 #include "device_info_impl.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace videocapturemodule {
 
 // Provides video capture device information using the Media Foundation API.

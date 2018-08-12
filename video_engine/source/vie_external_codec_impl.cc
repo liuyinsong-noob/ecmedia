@@ -19,7 +19,7 @@
 #include "vie_impl.h"
 #include "vie_shared_data.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ViEExternalCodec* ViEExternalCodec::GetInterface(VideoEngine* video_engine) {
 #ifdef WEBRTC_VIDEO_ENGINE_EXTERNAL_CODEC_API

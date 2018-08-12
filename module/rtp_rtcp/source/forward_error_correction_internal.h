@@ -14,7 +14,7 @@
 #include "../module/interface/module_common_types.h"
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Maximum number of media packets that can be protected
 // by these packet masks.
@@ -103,6 +103,6 @@ void CopyColumn(uint8_t* new_mask,
                 int old_bit_index);
 
 }  // namespace internal
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_FORWARD_ERROR_CORRECTION_INTERNAL_H_

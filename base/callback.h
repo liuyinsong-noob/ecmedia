@@ -65,7 +65,7 @@
 #include "../base/refcount.h"
 #include "../base/scoped_ref_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 template <class R>
 class Callback0 {
@@ -255,6 +255,6 @@ class Callback5 {
   };
   scoped_refptr<Helper> helper_;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_CALLBACK_H_

@@ -17,7 +17,7 @@
 
 #include "../base/constructormagic.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class DelayPeakDetector {
  public:
@@ -72,5 +72,5 @@ class DelayPeakDetector {
   DISALLOW_COPY_AND_ASSIGN(DelayPeakDetector);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_DELAY_PEAK_DETECTOR_H_

@@ -13,7 +13,7 @@
 
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Size (in pixels) of each square block used for diffing. This must be a
 // multiple of sizeof(uint64)/8.
@@ -26,6 +26,6 @@ const int kBytesPerPixel = 4;
 // are identical. One - the blocks are different.
 int BlockDifference(const uint8_t* image1, const uint8_t* image2, int stride);
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_DIFFER_BLOCK_H_

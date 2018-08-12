@@ -14,7 +14,7 @@
 #include <math.h>   // ceil
 #include <string.h> // memcpy
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace RTCPUtility {
 
@@ -27,7 +27,7 @@ NackStats::~NackStats() {}
 
 void NackStats::ReportRequest(uint16_t sequence_number) {
   if (requests_ == 0 ||
-      cloopenwebrtc::IsNewerSequenceNumber(sequence_number, max_sequence_number_)) {
+      yuntongxunwebrtc::IsNewerSequenceNumber(sequence_number, max_sequence_number_)) {
     max_sequence_number_ =  sequence_number;
     ++unique_requests_;
   }

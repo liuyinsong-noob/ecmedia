@@ -24,7 +24,7 @@
 #include "../base/thread_annotations.h"
 #include "../base/thread_checker_impl.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Do nothing implementation, for use in release mode.
 //
@@ -92,7 +92,7 @@ class SCOPED_LOCKABLE AnnounceOnThread {
   static bool IsCurrent(const ThreadLikeObject* thread_like_object) {
     return thread_like_object->IsCurrent();
   }
-  static bool IsCurrent(const cloopenwebrtc::ThreadChecker* checker) {
+  static bool IsCurrent(const yuntongxunwebrtc::ThreadChecker* checker) {
     return checker->CalledOnValidThread();
   }
 

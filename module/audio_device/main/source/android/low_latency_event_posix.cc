@@ -31,7 +31,7 @@
       eintr_wrapper_result;                                       \
     })
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const LowLatencyEvent::Handle LowLatencyEvent::kInvalidHandle = -1;
 const int LowLatencyEvent::kReadHandle = 0;

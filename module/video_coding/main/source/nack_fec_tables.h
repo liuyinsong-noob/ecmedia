@@ -11,7 +11,7 @@
 #ifndef WEBRTC_MODULES_VIDEO_CODING_SOURCE_NACK_FEC_TABLES_H_
 #define WEBRTC_MODULES_VIDEO_CODING_SOURCE_NACK_FEC_TABLES_H_
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 // Table for adjusting FEC rate for NACK/FEC protection method

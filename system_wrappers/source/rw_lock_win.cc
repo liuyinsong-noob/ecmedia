@@ -12,7 +12,7 @@
 
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static bool native_rw_locks_supported = false;
 static bool module_load_attempted = false;
@@ -94,4 +94,4 @@ bool RWLockWin::LoadModule() {
   return native_rw_locks_supported;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

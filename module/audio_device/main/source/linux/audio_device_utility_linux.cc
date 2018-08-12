@@ -12,7 +12,7 @@
 #include "cloopenwebrtc/system_wrappers/interface/critical_section_wrapper.h"
 #include "cloopenwebrtc/system_wrappers/interface/trace.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 AudioDeviceUtilityLinux::AudioDeviceUtilityLinux(const int32_t id) :

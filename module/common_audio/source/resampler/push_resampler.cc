@@ -16,7 +16,7 @@
 #include "resampler.h"
 #include "push_sinc_resampler.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 template <typename T>
 PushResampler<T>::PushResampler()

@@ -22,7 +22,7 @@
 
 struct AecCore;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioFrame;
 class Beamformer;
@@ -354,7 +354,7 @@ class AudioProcessing {
   // Same as above but uses an existing PlatformFile handle. Takes ownership
   // of |handle| and closes it at StopDebugRecording().
   // TODO(xians): Make this interface pure virtual.
-  virtual int StartDebugRecordingForPlatformFile(cloopenwebrtc::PlatformFile handle) {
+  virtual int StartDebugRecordingForPlatformFile(yuntongxunwebrtc::PlatformFile handle) {
       return -1;
   }
 

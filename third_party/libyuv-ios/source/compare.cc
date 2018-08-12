@@ -23,7 +23,7 @@
 #include "libyuv/video_common.h"
 
 #ifdef __cplusplus
-namespace cloopenlibyuv {
+namespace yuntongxunlibyuv {
 extern "C" {
 #endif
 

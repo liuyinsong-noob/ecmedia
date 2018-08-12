@@ -34,7 +34,7 @@
 #include <google/protobuf/stubs/strutil.h>
 #include <google/protobuf/stubs/stl_util.h>
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 namespace strings {
 
@@ -131,4 +131,4 @@ void SubstituteAndAppend(
 
 }  // namespace strings
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google

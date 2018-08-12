@@ -14,7 +14,7 @@
 
 #include "../base/checks.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 std::string NackConfig::ToString() const {
   std::stringstream ss;
   ss << "{rtp_history_ms: " << rtp_history_ms;
@@ -76,16 +76,16 @@ const int RtpExtension::kMinId = 1;
 const int RtpExtension::kMaxId = 14;
 
 bool RtpExtension::IsSupportedForAudio(const std::string& uri) {
-  return uri == cloopenwebrtc::RtpExtension::kAudioLevelUri ||
-         uri == cloopenwebrtc::RtpExtension::kTransportSequenceNumberUri;
+  return uri == yuntongxunwebrtc::RtpExtension::kAudioLevelUri ||
+         uri == yuntongxunwebrtc::RtpExtension::kTransportSequenceNumberUri;
 }
 
 bool RtpExtension::IsSupportedForVideo(const std::string& uri) {
-  return uri == cloopenwebrtc::RtpExtension::kTimestampOffsetUri ||
-         uri == cloopenwebrtc::RtpExtension::kAbsSendTimeUri ||
-         uri == cloopenwebrtc::RtpExtension::kVideoRotationUri ||
-         uri == cloopenwebrtc::RtpExtension::kTransportSequenceNumberUri ||
-         uri == cloopenwebrtc::RtpExtension::kPlayoutDelayUri;
+  return uri == yuntongxunwebrtc::RtpExtension::kTimestampOffsetUri ||
+         uri == yuntongxunwebrtc::RtpExtension::kAbsSendTimeUri ||
+         uri == yuntongxunwebrtc::RtpExtension::kVideoRotationUri ||
+         uri == yuntongxunwebrtc::RtpExtension::kTransportSequenceNumberUri ||
+         uri == yuntongxunwebrtc::RtpExtension::kPlayoutDelayUri;
 }
 
 VideoStream::VideoStream()
@@ -208,4 +208,4 @@ void VideoEncoderConfig::Vp9EncoderSpecificSettings::FillVideoCodecVp9(
   *vp9_settings = specifics_;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

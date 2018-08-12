@@ -17,7 +17,7 @@
 struct CELT_encinst_t_;
 struct CELT_decinst_t_;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class ACMCELT : public ACMGenericCodec {
  public:
@@ -69,6 +69,6 @@ class ACMCELT : public ACMGenericCodec {
   uint16_t dec_channels_;
 };
 
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_SOURCE_ACM_CELT_H_

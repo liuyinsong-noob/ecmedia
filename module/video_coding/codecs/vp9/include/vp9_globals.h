@@ -16,7 +16,7 @@
 
 #include "../module/video_coding/codecs/interface/common_constants.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const int16_t kMaxOneBytePictureId = 0x7F;    // 7 bits
 const int16_t kMaxTwoBytePictureId = 0x7FFF;  // 15 bits
@@ -205,6 +205,6 @@ struct RTPVideoHeaderVP9 {
   GofInfoVP9 gof;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_VIDEO_CODING_CODECS_VP9_INCLUDE_VP9_GLOBALS_H_

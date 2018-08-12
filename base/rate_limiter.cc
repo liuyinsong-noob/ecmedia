@@ -11,7 +11,7 @@
 #include "../base/rate_limiter.h"
 #include "../system_wrappers/include/clock.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 RateLimiter::RateLimiter(Clock* clock, int64_t max_window_ms)
     : clock_(clock),
@@ -27,9 +27,9 @@ RateLimiter::~RateLimiter() {}
 // calling SetMaxRate() and a timed maintenance thread periodically updating
 // the RTT.
 bool RateLimiter::TryUseRate(size_t packet_size_bytes) {
-  cloopenwebrtc::CritScope cs(&lock_);
+  yuntongxunwebrtc::CritScope cs(&lock_);
   int64_t now_ms = clock_->TimeInMilliseconds();
-  cloopenwebrtc::Optional<uint32_t> current_rate = current_rate_.Rate(now_ms);
+  yuntongxunwebrtc::Optional<uint32_t> current_rate = current_rate_.Rate(now_ms);
   if (current_rate) {
     // If there is a current rate, check if adding bytes would cause maximum
     // bitrate target to be exceeded. If there is NOT a valid current rate,
@@ -49,17 +49,17 @@ bool RateLimiter::TryUseRate(size_t packet_size_bytes) {
 }
 
 void RateLimiter::SetMaxRate(uint32_t max_rate_bps) {
-  cloopenwebrtc::CritScope cs(&lock_);
+  yuntongxunwebrtc::CritScope cs(&lock_);
   max_rate_bps_ = max_rate_bps;
 }
 
 // Set the window size over which to measure the current bitrate.
 // For retransmissions, this is typically the RTT.
 bool RateLimiter::SetWindowSize(int64_t window_size_ms) {
-  cloopenwebrtc::CritScope cs(&lock_);
+  yuntongxunwebrtc::CritScope cs(&lock_);
   window_size_ms_ = window_size_ms;
   return current_rate_.SetWindowSize(window_size_ms,
                                      clock_->TimeInMilliseconds());
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

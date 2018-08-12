@@ -41,7 +41,7 @@
 // Global counter to get an id for each new ViE instance.
 static WebRtc_Word32 g_vie_active_instance_counter = 0;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ViEBase* ViEBase::GetInterface(VideoEngine* video_engine) {
   if (!video_engine) {

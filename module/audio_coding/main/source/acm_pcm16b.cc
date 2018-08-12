@@ -17,7 +17,7 @@
 #include "../system_wrappers/include/trace.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -94,4 +94,4 @@ void ACMPCM16B::DestructEncoderSafe() {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

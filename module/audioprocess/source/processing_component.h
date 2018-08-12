@@ -15,7 +15,7 @@
 
 #include "../system_wrappers/include/common.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class ProcessingComponent {
  public:
@@ -48,6 +48,6 @@ class ProcessingComponent {
   int num_handles_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_PROCESSING_COMPONENT_H__

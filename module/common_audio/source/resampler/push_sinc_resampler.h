@@ -16,7 +16,7 @@
 #include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // A thin wrapper over SincResampler to provide a push-based interface as
 // required by WebRTC.

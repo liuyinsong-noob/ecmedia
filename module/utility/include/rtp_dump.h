@@ -19,7 +19,7 @@
 #include "../system_wrappers/include/file_wrapper.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class RtpDump
 {
 public:
@@ -48,5 +48,5 @@ public:
 protected:
     virtual ~RtpDump();
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif // WEBRTC_MODULES_UTILITY_INTERFACE_RTP_DUMP_H_

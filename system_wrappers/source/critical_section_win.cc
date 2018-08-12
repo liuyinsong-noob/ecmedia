@@ -10,7 +10,7 @@
 
 #include "critical_section_win.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 CriticalSectionWindows::CriticalSectionWindows()
 {
     InitializeCriticalSection(&crit);

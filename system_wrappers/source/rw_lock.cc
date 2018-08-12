@@ -19,7 +19,7 @@
 #include "../system_wrappers/source/rw_lock_posix.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 RWLockWrapper* RWLockWrapper::CreateRWLock() {
 #ifdef _WIN32
@@ -33,4 +33,4 @@ RWLockWrapper* RWLockWrapper::CreateRWLock() {
   return RWLockPosix::Create();
 #endif
 }
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

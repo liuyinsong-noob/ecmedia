@@ -78,12 +78,12 @@ NO_RETURN void rtc_FatalMessage(const char* file, int line, const char* msg);
 // TODO(ajm): Ideally, checks.h would be combined with logging.h, but
 // consolidation with system_wrappers/logging.h should happen first.
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Helper macro which avoids evaluating the arguments to a stream if
 // the condition doesn't hold.
 #define LAZY_STREAM(stream, condition)                                        \
-  !(condition) ? static_cast<void>(0) : cloopenwebrtc::FatalMessageVoidify() & (stream)
+  !(condition) ? static_cast<void>(0) : yuntongxunwebrtc::FatalMessageVoidify() & (stream)
 
 // The actual stream used isn't important. We reference condition in the code
 // but don't evaluate it; this is to avoid "unused variable" warnings (we do so
@@ -93,13 +93,13 @@ namespace cloopenwebrtc {
 #define EAT_STREAM_PARAMETERS(ignored) \
   (true ? true : ((void)(ignored), true))  \
       ? static_cast<void>(0)               \
-      : cloopenwebrtc::FatalMessageVoidify() & cloopenwebrtc::FatalMessage("", 0).stream()
+      : yuntongxunwebrtc::FatalMessageVoidify() & yuntongxunwebrtc::FatalMessage("", 0).stream()
 
 // Call RTC_EAT_STREAM_PARAMETERS with an argument that fails to compile if
 // values of the same types as |a| and |b| can't be compared with the given
 // operation, and that would evaluate |a| and |b| if evaluated.
 #define EAT_STREAM_PARAMETERS_OP(op, a, b) \
-  EAT_STREAM_PARAMETERS(((void)cloopenwebrtc::safe_cmp::op(a, b)))
+  EAT_STREAM_PARAMETERS(((void)yuntongxunwebrtc::safe_cmp::op(a, b)))
 
 // RTC_CHECK dies with a fatal error if condition is not true. It is *not*
 // controlled by NDEBUG or anything else, so the check will be executed
@@ -108,7 +108,7 @@ namespace cloopenwebrtc {
 // We make sure CHECK et al. always evaluates their arguments, as
 // doing CHECK(FunctionWithSideEffect()) is a common idiom.
 #define CHECK(condition)                                                    \
-  LAZY_STREAM(cloopenwebrtc::FatalMessage(__FILE__, __LINE__).stream(), !(condition)) \
+  LAZY_STREAM(yuntongxunwebrtc::FatalMessage(__FILE__, __LINE__).stream(), !(condition)) \
   << "Check failed: " #condition << std::endl << "# "
 
 // Helper macro for binary operators.
@@ -120,17 +120,17 @@ namespace cloopenwebrtc {
     /*
      
      Undefined symbols for architecture arm64:
-     "cloopenwebrtc::FatalMessage::FatalMessage(char const*, int, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >*)", referenced from:
-     cloopenwebrtc::AudioDecoderCng::AudioDecoderCng() in libccpapisdk.a(audio_decoder_impl.o)
+     "yuntongxunwebrtc::FatalMessage::FatalMessage(char const*, int, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> >*)", referenced from:
+     yuntongxunwebrtc::AudioDecoderCng::AudioDecoderCng() in libccpapisdk.a(audio_decoder_impl.o)
      ld: symbol(s) not found for architecture arm64
      clang: error: linker command failed with exit code 1 (use -v to see invocation)
      Showing first 200 warnings only
      */
 #define CHECK_OP(name, op, val1, val2)                      \
   if (std::string* _result =                                \
-      cloopenwebrtc::Check##name##Impl((val1), (val2),                \
+      yuntongxunwebrtc::Check##name##Impl((val1), (val2),                \
                              #val1 " " #op " " #val2))      \
-    cloopenwebrtc::FatalMessage(__FILE__, __LINE__, _result).stream()
+    yuntongxunwebrtc::FatalMessage(__FILE__, __LINE__, _result).stream()
 
 // Build the error message string.  This is separate from the "Impl"
 // function template because it is not performance critical and so can
@@ -172,16 +172,16 @@ std::string* MakeCheckOpString<std::string, std::string>(
   template <class t1, class t2>                                              \
   inline std::string* Check##name##Impl(const t1& v1, const t2& v2,          \
                                         const char* names) {                 \
-    if (cloopenwebrtc::safe_cmp::name(v1, v2))                                         \
+    if (yuntongxunwebrtc::safe_cmp::name(v1, v2))                                         \
       return nullptr;                                                        \
     else                                                                     \
-      return cloopenwebrtc::MakeCheckOpString(v1, v2, names);                          \
+      return yuntongxunwebrtc::MakeCheckOpString(v1, v2, names);                          \
   }                                                                          \
   inline std::string* Check##name##Impl(int v1, int v2, const char* names) { \
-    if (cloopenwebrtc::safe_cmp::name(v1, v2))                                         \
+    if (yuntongxunwebrtc::safe_cmp::name(v1, v2))                                         \
       return nullptr;                                                        \
     else                                                                     \
-      return cloopenwebrtc::MakeCheckOpString(v1, v2, names);                          \
+      return yuntongxunwebrtc::MakeCheckOpString(v1, v2, names);                          \
   }
 DEFINE_CHECK_OP_IMPL(Eq)
 DEFINE_CHECK_OP_IMPL(Ne)
@@ -230,7 +230,7 @@ class FatalMessageVoidify {
 
 #define UNREACHABLE_CODE_HIT false
 #define NOTREACHED() DCHECK(UNREACHABLE_CODE_HIT)
-#define FATAL() cloopenwebrtc::FatalMessage(__FILE__, __LINE__).stream()
+#define FATAL() yuntongxunwebrtc::FatalMessage(__FILE__, __LINE__).stream()
 // TODO(ajm): Consider adding NOTIMPLEMENTED and NOTREACHED macros when
 // base/logging.h and system_wrappers/logging.h are consolidated such that we
 // can match the Chromium behavior.
@@ -259,7 +259,7 @@ inline T CheckedDivExact(T a, T b) {
   return a / b;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #else  // __cplusplus not defined
 // C version. Lacks many features compared to the C++ version, but usage

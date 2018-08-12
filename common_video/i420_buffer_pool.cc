@@ -12,7 +12,7 @@
 
 #include "../base/checks.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 I420BufferPool::I420BufferPool(bool zero_initialize,
                                size_t max_number_of_buffers)
@@ -23,7 +23,7 @@ void I420BufferPool::Release() {
   buffers_.clear();
 }
 
-cloopenwebrtc::scoped_refptr<I420Buffer> I420BufferPool::CreateBuffer(int width,
+yuntongxunwebrtc::scoped_refptr<I420Buffer> I420BufferPool::CreateBuffer(int width,
                                                             int height) {
   RTC_DCHECK_RUNS_SERIALIZED(&race_checker_);
   // Release buffers with wrong resolution.
@@ -34,7 +34,7 @@ cloopenwebrtc::scoped_refptr<I420Buffer> I420BufferPool::CreateBuffer(int width,
       ++it;
   }
   // Look for a free buffer.
-  for (const cloopenwebrtc::scoped_refptr<PooledI420Buffer>& buffer : buffers_) {
+  for (const yuntongxunwebrtc::scoped_refptr<PooledI420Buffer>& buffer : buffers_) {
     // If the buffer is in use, the ref count will be >= 2, one from the list we
     // are looping over and one from the application. If the ref count is 1,
     // then the list we are looping over holds the only reference and it's safe
@@ -46,7 +46,7 @@ cloopenwebrtc::scoped_refptr<I420Buffer> I420BufferPool::CreateBuffer(int width,
   if (buffers_.size() >= max_number_of_buffers_)
     return nullptr;
   // Allocate new buffer.
-  cloopenwebrtc::scoped_refptr<PooledI420Buffer> buffer =
+  yuntongxunwebrtc::scoped_refptr<PooledI420Buffer> buffer =
       new PooledI420Buffer(width, height);
   if (zero_initialize_)
     buffer->InitializeData();
@@ -54,4 +54,4 @@ cloopenwebrtc::scoped_refptr<I420Buffer> I420BufferPool::CreateBuffer(int width,
   return buffer;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

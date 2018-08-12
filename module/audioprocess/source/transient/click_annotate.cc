@@ -18,9 +18,9 @@
 #include "file_wrapper.h"
 #include "scoped_ptr.h"
 
-using cloopenwebrtc::FileWrapper;
-using cloopenwebrtc::TransientDetector;
-using cloopenwebrtc::scoped_ptr;
+using yuntongxunwebrtc::FileWrapper;
+using yuntongxunwebrtc::TransientDetector;
+using yuntongxunwebrtc::scoped_ptr;
 
 // Application to generate a RTP timing file.
 // Opens the PCM file and divides the signal in frames.

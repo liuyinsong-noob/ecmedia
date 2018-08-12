@@ -18,7 +18,7 @@
 #include "platform_thread_types.h"
 #include "thread_checker.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 PlatformThreadId CurrentThreadId();
 PlatformThreadRef CurrentThreadRef();

@@ -18,7 +18,7 @@
 
 #include "common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class EncodedImageCallback;
 class I420FrameCallback;

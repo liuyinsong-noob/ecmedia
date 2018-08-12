@@ -13,7 +13,7 @@
 
 #include "video_capture_impl.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace videocapturemodule {
 
 // VideoCapture implementation that uses the Media Foundation API on Windows.

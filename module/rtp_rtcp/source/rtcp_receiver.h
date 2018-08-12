@@ -24,7 +24,7 @@
 #include "../system_wrappers/include/ntp_time.h"
 #include "../typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class VideoBitrateAllocationObserver;
 namespace rtcp {
 class CommonHeader;
@@ -227,13 +227,13 @@ class RTCPReceiver {
   const bool receiver_only_;
   ModuleRtpRtcp* const rtp_rtcp_;
 
-  cloopenwebrtc::CriticalSection feedbacks_lock_;
+  yuntongxunwebrtc::CriticalSection feedbacks_lock_;
   RtcpBandwidthObserver* const rtcp_bandwidth_observer_;
   RtcpIntraFrameObserver* const rtcp_intra_frame_observer_;
   TransportFeedbackObserver* const transport_feedback_observer_;
   VideoBitrateAllocationObserver* const bitrate_allocation_observer_;
 
-  cloopenwebrtc::CriticalSection rtcp_receiver_lock_;
+  yuntongxunwebrtc::CriticalSection rtcp_receiver_lock_;
   uint32_t main_ssrc_ GUARDED_BY(rtcp_receiver_lock_);
   uint32_t remote_ssrc_ GUARDED_BY(rtcp_receiver_lock_);
   std::set<uint32_t> registered_ssrcs_ GUARDED_BY(rtcp_receiver_lock_);
@@ -278,5 +278,5 @@ class RTCPReceiver {
   size_t num_skipped_packets_;
   int64_t last_skipped_packets_warning_ms_;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTCP_RECEIVER_H_

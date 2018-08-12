@@ -18,7 +18,7 @@
 #include "transmit_mixer.h"
 #include "voice_engine_impl.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VoEDtmf* VoEDtmf::GetInterface(VoiceEngine* voiceEngine)
 {
@@ -302,4 +302,4 @@ int VoEDtmfImpl::GetDtmfFeedbackStatus(bool& enabled, bool& directFeedback)
 }
 #endif  // #ifdef WEBRTC_VOICE_ENGINE_DTMF_API
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

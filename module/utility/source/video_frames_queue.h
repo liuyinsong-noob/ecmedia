@@ -19,7 +19,7 @@
 #include "engine_configurations.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VideoFramesQueue {
  public:
@@ -58,6 +58,6 @@ class VideoFramesQueue {
   // Estimated render delay.
   uint32_t _renderDelayMs;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif // WEBRTC_MODULE_UTILITY_VIDEO
 #endif  // WEBRTC_MODULES_UTILITY_SOURCE_VIDEO_FRAMES_QUEUE_H_

@@ -18,7 +18,7 @@
 #include "../base/bind.h"
 #include "../base/checks.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // FFmpeg's decoder, used by H264DecoderImpl, requires up to 8 bytes padding due
 // to optimized bitstream readers. See avcodec_decode_video2.
@@ -43,4 +43,4 @@ size_t EncodedImage::GetBufferPaddingBytes(VideoCodecType codec_type) {
   return 0;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

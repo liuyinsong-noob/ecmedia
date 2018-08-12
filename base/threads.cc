@@ -29,7 +29,7 @@
 #include "../base/scoped_autorelease_pool.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ThreadManager* ThreadManager::Instance() {
   RTC_DEFINE_STATIC_LOCAL(ThreadManager, thread_manager, ());
@@ -305,7 +305,7 @@ void* Thread::PreRun(void* pv) {
 #endif
   ThreadInit* init = static_cast<ThreadInit*>(pv);
   ThreadManager::Instance()->SetCurrentThread(init->thread);
-  cloopenwebrtc::SetCurrentThreadName(init->thread->name_.c_str());
+  yuntongxunwebrtc::SetCurrentThreadName(init->thread->name_.c_str());
 #if defined(WEBRTC_MAC)
   // Make sure the new thread has an autoreleasepool
   ScopedAutoreleasePool pool;
@@ -559,4 +559,4 @@ void ComThread::Run() {
 }
 #endif
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

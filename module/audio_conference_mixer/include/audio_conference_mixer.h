@@ -15,7 +15,7 @@
 #include "module.h"
 #include "module_common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class AudioMixerOutputReceiver;
 class AudioMixerStatusReceiver;
 class MixerParticipant;
@@ -80,6 +80,6 @@ public:
 protected:
     AudioConferenceMixer() {}
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_MODULES_AUDIO_CONFERENCE_MIXER_INTERFACE_AUDIO_CONFERENCE_MIXER_H_

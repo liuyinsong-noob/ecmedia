@@ -11,7 +11,7 @@
 #define WEBRTC_MODULES_VIDEO_CODING_UTILITY_QUALITY_SCALER_H_
 #include "../common_video/source/libyuv/include/scaler.h"
 #include "../module/video_coding/main/source/utility/include/moving_average.h"
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 	const int kDefaultLowQpDenominator = 3;
 	class QualityScaler {
 	public:

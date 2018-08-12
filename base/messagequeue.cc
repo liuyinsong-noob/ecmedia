@@ -17,7 +17,7 @@
 #include "../base/thread.h"
 #include "../base/trace_event.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 
 const int kMaxMsgLatency = 150;  // 150 ms
@@ -160,7 +160,7 @@ void MessageQueueManager::ProcessAllMessageQueuesInternal() {
   // we can't synchronously wait for queues_not_done to go to 0; we need to
   // process messages as well.
   while (AtomicOps::AcquireLoad(&queues_not_done) > 0) {
-    cloopenwebrtc::Thread::Current()->ProcessMessages(0);
+    yuntongxunwebrtc::Thread::Current()->ProcessMessages(0);
   }
 }
 
@@ -544,4 +544,4 @@ void MessageQueue::Dispatch(Message *pmsg) {
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

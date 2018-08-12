@@ -16,7 +16,7 @@
 
 #include "../base/constructormagic.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 struct Message;
 
@@ -70,6 +70,6 @@ class FunctorMessageHandler<void, FunctorT> : public MessageHandler {
   FunctorT functor_;
 };
 
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_BASE_MESSAGEHANDLER_H_

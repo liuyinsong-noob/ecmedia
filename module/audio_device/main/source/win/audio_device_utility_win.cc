@@ -22,7 +22,7 @@
 typedef void (WINAPI *PGNSI)(LPSYSTEM_INFO);
 typedef BOOL (WINAPI *PGPI)(DWORD, DWORD, DWORD, DWORD, PDWORD);
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 // ============================================================================
@@ -226,4 +226,4 @@ BOOL AudioDeviceUtilityWindows::GetOSDisplayString(LPTSTR pszOS)
    }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

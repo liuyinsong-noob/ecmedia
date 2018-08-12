@@ -13,7 +13,7 @@
 #include "../system_wrappers/include/logging.h"
 #include "../base/scoped_ref_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 
@@ -82,7 +82,7 @@ bool FlexfecReceiver::AddReceivedPacket(const RtpPacketReceived& packet) {
     // Insert packet payload into erasure code.
     // TODO(brandtr): Remove this memcpy when the FEC packet classes
     // are using COW buffers internally.
-    received_packet->pkt = cloopenwebrtc::scoped_refptr<Packet>(new Packet());
+    received_packet->pkt = yuntongxunwebrtc::scoped_refptr<Packet>(new Packet());
     auto payload = packet.payload();
     memcpy(received_packet->pkt->data, payload.data(), payload.size());
     received_packet->pkt->length = payload.size();
@@ -96,7 +96,7 @@ bool FlexfecReceiver::AddReceivedPacket(const RtpPacketReceived& packet) {
 
     // Insert entire packet into erasure code.
     // TODO(brandtr): Remove this memcpy too.
-    received_packet->pkt = cloopenwebrtc::scoped_refptr<Packet>(new Packet());
+    received_packet->pkt = yuntongxunwebrtc::scoped_refptr<Packet>(new Packet());
     memcpy(received_packet->pkt->data, packet.data(), packet.size());
     received_packet->pkt->length = packet.size();
   }
@@ -150,4 +150,4 @@ bool FlexfecReceiver::ProcessReceivedPackets() {
   return true;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

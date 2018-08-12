@@ -14,7 +14,7 @@
 #include "cloopenwebrtc/modules/audio_processing/include/audio_processing.h"
 #include "cloopenwebrtc/system_wrappers/interface/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class MockEchoCancellation : public EchoCancellation {
  public:

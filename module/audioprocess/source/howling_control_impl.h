@@ -14,7 +14,7 @@
 #include "audio_processing.h"
 #include "processing_component.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioBuffer;
 class CriticalSectionWrapper;

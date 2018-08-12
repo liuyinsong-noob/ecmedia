@@ -15,9 +15,9 @@
 
 #include "cloopenwebrtc/modules/bitrate_controller/remb_suppressor.h"
 
-class TestSuppressor : public cloopenwebrtc::RembSuppressor {
+class TestSuppressor : public yuntongxunwebrtc::RembSuppressor {
  public:
-  explicit TestSuppressor(cloopenwebrtc::Clock* clock) : RembSuppressor(clock) {}
+  explicit TestSuppressor(yuntongxunwebrtc::Clock* clock) : RembSuppressor(clock) {}
   virtual ~TestSuppressor() {}
 
   virtual bool Enabled() OVERRIDE { return true; }
@@ -40,7 +40,7 @@ class RembSuppressorTest : public ::testing::Test {
     return suppress;
   }
 
-  cloopenwebrtc::SimulatedClock clock_;
+  yuntongxunwebrtc::SimulatedClock clock_;
   TestSuppressor suppressor_;
 };
 

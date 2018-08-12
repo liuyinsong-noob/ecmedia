@@ -13,13 +13,13 @@
 #include "data_log.h"
 #include "gtest/gtest.h"
 
-using ::cloopenwebrtc::DataLog;
+using ::yuntongxunwebrtc::DataLog;
 
 TEST(TestDataLog, IntContainers) {
   int c = 5;
-  cloopenwebrtc::ValueContainer<int> v1(c);
+  yuntongxunwebrtc::ValueContainer<int> v1(c);
   c = 10;
-  cloopenwebrtc::ValueContainer<int> v2(c);
+  yuntongxunwebrtc::ValueContainer<int> v2(c);
   std::string s1, s2;
   v1.ToString(&s1);
   v2.ToString(&s2);
@@ -32,9 +32,9 @@ TEST(TestDataLog, IntContainers) {
 
 TEST(TestDataLog, DoubleContainers) {
   double c = 3.5;
-  cloopenwebrtc::ValueContainer<double> v1(c);
+  yuntongxunwebrtc::ValueContainer<double> v1(c);
   c = 10.3;
-  cloopenwebrtc::ValueContainer<double> v2(c);
+  yuntongxunwebrtc::ValueContainer<double> v2(c);
   std::string s1, s2;
   v1.ToString(&s1);
   v2.ToString(&s2);
@@ -48,9 +48,9 @@ TEST(TestDataLog, DoubleContainers) {
 TEST(TestDataLog, MultiValueContainers) {
   int a[3] = {1, 2, 3};
   int b[3] = {4, 5, 6};
-  cloopenwebrtc::MultiValueContainer<int> m1(a, 3);
-  cloopenwebrtc::MultiValueContainer<int> m2(b, 3);
-  cloopenwebrtc::MultiValueContainer<int> m3(a, 3);
+  yuntongxunwebrtc::MultiValueContainer<int> m1(a, 3);
+  yuntongxunwebrtc::MultiValueContainer<int> m2(b, 3);
+  yuntongxunwebrtc::MultiValueContainer<int> m3(a, 3);
   std::string s1, s2, s3;
   m1.ToString(&s1);
   m2.ToString(&s2);

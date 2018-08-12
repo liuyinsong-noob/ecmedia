@@ -5,7 +5,7 @@
    Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
    that can be found in the LICENSE file in the root of the web site.
  
-    				http://www.cloopen.com
+    				http://www.yuntongxun.com
  
    An additional intellectual property rights grant can be found
    in the file PATENTS.  All contributing project authors may
@@ -535,17 +535,17 @@
     <string name="experience_login_head">客户体验登录</string>
     <string name="experience_forget_password">忘记密码？</string>
     <string name="experience_input_regist_mail">请输入云通讯注册邮箱</string>
-    <string name="experience_regist_help_01">登录cloopen.com并注册</string>
+    <string name="experience_regist_help_01">登录yuntongxun.com并注册</string>
     <string name="experience_regist_help_02">填写注册信息</string>
     <string name="experience_regist_help_03">验证邮箱以及手机号</string>
     <string name="experience_regist_help_04">注册激活成功获得8元测试体验费</string>
     <string name="experience_forgetpwd_head">忘记密码帮助</string>
-    <string name="experience_forgetpwd_help_01">登录cloopen.com点击登录</string>
+    <string name="experience_forgetpwd_help_01">登录yuntongxun.com点击登录</string>
     <string name="experience_forgetpwd_help_02">点击右侧“忘记密码”</string>
     <string name="experience_forgetpwd_help_03">输入注册邮箱并按提示操作</string>
     <string name="experience_forgetpwd_help_04">重置密码成功，使用新密码登录</string>
     <string name="experience_account_head">账户信息</string>
-    <string name="experience_account_tip_str">您可以登录cloopen.com查询该账户基本信息、余额、应用计费等相关信息及创建新应用、充值等相关操作.</string>
+    <string name="experience_account_tip_str">您可以登录yuntongxun.com查询该账户基本信息、余额、应用计费等相关信息及创建新应用、充值等相关操作.</string>
     <string name="experience_account_btn_str">测试号码绑定</string>
 
     <!-- version 3.6 -->
@@ -559,7 +559,7 @@
     <!-- the mode experience login desc -->
     <string name="str_mode_experience_desc">用云通讯帐号登录使用</string>
     <!-- ccp launcher developer mode desc -->
-    <string name="str_developer_mode_desc">请按cloopen.com开发文档说明完善配置文件，并导入SD卡或描述文件来使用</string>
+    <string name="str_developer_mode_desc">请按yuntongxun.com开发文档说明完善配置文件，并导入SD卡或描述文件来使用</string>
     <!-- ccp experience developer mode desc -->
     <string name="str_experience_mode_desc">通过云通讯账户登录即可体验全部功能，但部分功能会因应用为上线而受到限制</string>
 
@@ -569,7 +569,7 @@
     <string name="str_ivr">IVR</string>
     <string name="str_more">More</string>
     <string name="str_developer_instructions">如果您是开发者
-       \n并已查阅cloopen.com中的
+       \n并已查阅yuntongxun.com中的
        \n相关开发文档，
        \n左侧属于您</string>
     <string name="str_experienc_instructions">如果您只想体验下云通讯的能力

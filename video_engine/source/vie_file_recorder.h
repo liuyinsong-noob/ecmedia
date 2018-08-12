@@ -16,7 +16,7 @@
 #include "vie_file.h"
 #include "voe_file.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class CriticalSectionWrapper;
 
@@ -60,6 +60,6 @@ class ViEFileRecorder : protected OutStream {
   VoEFile* voe_file_interface_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_VIDEO_ENGINE_VIE_FILE_RECORDER_H_

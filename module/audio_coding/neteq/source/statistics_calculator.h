@@ -17,7 +17,7 @@
 #include "neteq.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Forward declarations.
 class DecisionLogic;
@@ -105,5 +105,5 @@ class StatisticsCalculator {
   DISALLOW_COPY_AND_ASSIGN(StatisticsCalculator);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_STATISTICS_CALCULATOR_H_

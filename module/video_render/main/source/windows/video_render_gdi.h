@@ -7,7 +7,7 @@
 #include <windows.h>
 #include <Map>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 	class Trace;
 
 	class GDIChannel : public VideoRenderCallback
@@ -146,5 +146,5 @@ namespace cloopenwebrtc {
 	};
 
 
-} //namespace cloopenwebrtc
+} //namespace yuntongxunwebrtc
 #endif

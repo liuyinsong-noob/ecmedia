@@ -36,7 +36,7 @@
 #include "../base/win32.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 SocketAddress::SocketAddress() {
   Clear();
@@ -336,4 +336,4 @@ SocketAddress EmptySocketAddressWithFamily(int family) {
   return SocketAddress();
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

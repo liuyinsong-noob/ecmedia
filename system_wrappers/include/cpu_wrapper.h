@@ -13,7 +13,7 @@
 
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class CpuWrapper
 {
 public:
@@ -49,5 +49,5 @@ public:
 protected:
     CpuWrapper() {}
 };
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 #endif // WEBRTC_SYSTEM_WRAPPERS_INTERFACE_CPU_WRAPPER_H_

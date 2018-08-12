@@ -52,7 +52,7 @@
 
 #include "STTypes.h"
 
-namespace cloopensoundtouch
+namespace yuntongxunsoundtouch
 {
 
 /// Abstract base class for transposer implementations (linear, advanced vs integer, float etc)

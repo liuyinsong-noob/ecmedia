@@ -19,7 +19,7 @@
 #include "../base/constructormagic.h"
 #include "../base/criticalsection.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace internal {
 
@@ -106,7 +106,7 @@ class SwapQueue {
 
   // Resets the queue to have zero content wile maintaining the queue size.
   void Clear() {
-    cloopenwebrtc::CritScope cs(&crit_queue_);
+    yuntongxunwebrtc::CritScope cs(&crit_queue_);
     next_write_index_ = 0;
     next_read_index_ = 0;
     num_elements_ = 0;
@@ -121,7 +121,7 @@ class SwapQueue {
   bool Insert(T* input) WARN_UNUSED_RESULT {
     DCHECK(input);
 
-    cloopenwebrtc::CritScope cs(&crit_queue_);
+    yuntongxunwebrtc::CritScope cs(&crit_queue_);
 
     DCHECK(queue_item_verifier_(*input));
 
@@ -154,7 +154,7 @@ class SwapQueue {
   bool Remove(T* output) WARN_UNUSED_RESULT {
     DCHECK(output);
 
-    cloopenwebrtc::CritScope cs(&crit_queue_);
+    yuntongxunwebrtc::CritScope cs(&crit_queue_);
 
     DCHECK(queue_item_verifier_(*output));
 
@@ -181,14 +181,14 @@ class SwapQueue {
  private:
   // Verify that the queue slots complies with the ItemVerifier test.
   bool VerifyQueueSlots() {
-    cloopenwebrtc::CritScope cs(&crit_queue_);
+    yuntongxunwebrtc::CritScope cs(&crit_queue_);
     for (const auto& v : queue_) {
       DCHECK(queue_item_verifier_(v));
     }
     return true;
   }
 
-  cloopenwebrtc::CriticalSection crit_queue_;
+  yuntongxunwebrtc::CriticalSection crit_queue_;
 
   // TODO(peah): Change this to use std::function() once we can use C++11 std
   // lib.
@@ -206,6 +206,6 @@ class SwapQueue {
   DISALLOW_COPY_AND_ASSIGN(SwapQueue);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_SWAP_QUEUE_H_

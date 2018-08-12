@@ -15,7 +15,7 @@
 #include "packet.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Forward declaration.
 class DecoderDatabase;
@@ -155,5 +155,5 @@ class PacketBuffer {
   DISALLOW_COPY_AND_ASSIGN(PacketBuffer);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_PACKET_BUFFER_H_

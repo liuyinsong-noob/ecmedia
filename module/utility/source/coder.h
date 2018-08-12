@@ -16,7 +16,7 @@
 #include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class AudioFrame;
 
 class AudioCoder : public AudioPacketizationCallback
@@ -61,6 +61,6 @@ private:
 
     uint32_t _decodeTimestamp;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_MODULES_UTILITY_SOURCE_CODER_H_

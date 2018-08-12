@@ -64,7 +64,7 @@
 #include "../system_wrappers/include/event_wrapper.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 extern "C"
 {
     static void* StartThread(void* lpParameter)
@@ -398,4 +398,4 @@ void ThreadPosix::Run()
         _dead = true;
     }
 }
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

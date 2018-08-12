@@ -12,7 +12,7 @@
 #ifndef WEBRTC_SYSTEM_WRAPPERS_SOURCE_THREAD_WINDOWS_SET_NAME_H_
 #define WEBRTC_SYSTEM_WRAPPERS_SOURCE_THREAD_WINDOWS_SET_NAME_H_
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 struct THREADNAME_INFO
 {

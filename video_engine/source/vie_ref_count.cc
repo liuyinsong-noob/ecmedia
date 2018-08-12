@@ -12,7 +12,7 @@
 
 #include "../system_wrappers/include/critical_section_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ViERefCount::ViERefCount()
     : count_(0),

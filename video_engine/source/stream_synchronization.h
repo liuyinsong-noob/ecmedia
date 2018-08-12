@@ -16,7 +16,7 @@
 #include "../system_wrappers/include/rtp_to_ntp_estimator.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 struct ViESyncDelay;
 

@@ -22,7 +22,7 @@
 typedef int SOCKET;
 #endif // WEBRTC_POSIX
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Event constants for the Dispatcher class.
 enum DispatcherEvent {
@@ -224,6 +224,6 @@ class SocketDispatcher : public Dispatcher, public PhysicalSocket {
 #endif // WEBRTC_WIN
 };
 
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_BASE_PHYSICALSOCKETSERVER_H__

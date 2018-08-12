@@ -51,7 +51,7 @@
 #define GOOGLE_PROTOBUF_UTF8_VALIDATION_ENABLED
 #endif
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
   namespace io {
     class CodedInputStream;      // coded_stream.h
@@ -332,5 +332,5 @@ inline void WireFormat::VerifyUTF8StringNamedField(
 }  // namespace internal
 }  // namespace protobuf
 
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 #endif  // GOOGLE_PROTOBUF_WIRE_FORMAT_H__

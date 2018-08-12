@@ -19,7 +19,7 @@
 #include "webrtc_neteq.h"
 #include "webrtc_vad.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class CriticalSectionWrapper;
 class RWLockWrapper;
@@ -386,6 +386,6 @@ private:
     CriticalSectionWrapper* _callbackCritSect;
 };
 
-} //namespace cloopenwebrtc
+} //namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_SOURCE_ACM_NETEQ_H_

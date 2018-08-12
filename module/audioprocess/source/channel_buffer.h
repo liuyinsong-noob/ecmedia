@@ -16,7 +16,7 @@
 #include "checks.h"
 #include "audio_util.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Helper to encapsulate a contiguous data buffer with access to a pointer
 // array of the deinterleaved channels.
@@ -119,6 +119,6 @@ class IFChannelBuffer {
   mutable ChannelBuffer<float> fbuf_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_CHANNEL_BUFFER_H_

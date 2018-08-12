@@ -18,7 +18,7 @@
 #include "audio_multi_vector.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Forward declarations.
 class BackgroundNoise;
@@ -107,5 +107,5 @@ class TimeStretch {
   DISALLOW_COPY_AND_ASSIGN(TimeStretch);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_TIME_STRETCH_H_

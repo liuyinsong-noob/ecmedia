@@ -15,7 +15,7 @@
 #include "processing_component.h"
 #include "rms_level.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioBuffer;
 class CriticalSectionWrapper;
@@ -48,6 +48,6 @@ class LevelEstimatorImpl : public LevelEstimator,
   CriticalSectionWrapper* crit_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_LEVEL_ESTIMATOR_IMPL_H_

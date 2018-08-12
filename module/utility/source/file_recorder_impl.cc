@@ -23,7 +23,7 @@
 #endif
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 FileRecorder* FileRecorder::CreateFileRecorder(uint32_t instanceID,
                                                FileFormats fileFormat)
 {
@@ -645,7 +645,7 @@ int32_t AviRecorder::EncodeAndWriteVideoToFile(I420VideoFrame& videoFrame)
     if( STR_CASE_CMP(_videoCodecInst.plName, "I420") == 0)
     {
        size_t length =
-           cloopenwebrtc::CalcBufferSize(kI420, videoFrame.width(), videoFrame.height());
+           yuntongxunwebrtc::CalcBufferSize(kI420, videoFrame.width(), videoFrame.height());
         _videoEncodedData.VerifyAndAllocate(length);
 
         // I420 is raw data. No encoding needed (each sample is represented by
@@ -727,4 +727,4 @@ int32_t AviRecorder::WriteEncodedAudioData(
 
 #endif // WEBRTC_MODULE_UTILITY_VIDEO
 #endif
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

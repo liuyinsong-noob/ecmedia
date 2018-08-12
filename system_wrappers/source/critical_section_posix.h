@@ -15,7 +15,7 @@
 
 #include <pthread.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class CriticalSectionPosix : public CriticalSectionWrapper
 {
 public:
@@ -30,6 +30,6 @@ private:
     pthread_mutex_t _mutex;
     friend class ConditionVariablePosix;
 };
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_SYSTEM_WRAPPERS_SOURCE_CRITICAL_SECTION_POSIX_H_

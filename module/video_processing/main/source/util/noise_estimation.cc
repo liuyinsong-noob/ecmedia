@@ -13,7 +13,7 @@
 #include <android/log.h>
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 void NoiseEstimation::Init(int width, int height, CpuType cpu_type) {
   int mb_cols = width >> 4;

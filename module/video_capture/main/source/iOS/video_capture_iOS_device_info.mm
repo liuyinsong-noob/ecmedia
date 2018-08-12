@@ -14,7 +14,7 @@
 
 #include "video_capture.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
     namespace videocapturemodule
     {
@@ -75,7 +75,7 @@ namespace cloopenwebrtc
             // Not implemented. Mac doesn't use discrete steps in capabilities, rather
             // "analog". QTKit will do it's best to convert frames to what ever format
             // you ask for.
-//            WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+//            WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
 //                         "NumberOfCapabilities is not supported on the Mac platform.");
 //            return -1;
             switch (deviceCapabilityNumber) {
@@ -122,7 +122,7 @@ namespace cloopenwebrtc
             // Not implemented. Mac doesn't use discrete steps in capabilities, rather
             // "analog". QTKit will do it's best to convert frames to what ever format
             // you ask for.
-            WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                          "NumberOfCapabilities is not supported on the Mac platform.");
             return -1;
         }
@@ -146,9 +146,9 @@ namespace cloopenwebrtc
             // Not implemented. Mac doesn't use discrete steps in capabilities, rather
             // "analog". QTKit will do it's best to convert frames to what ever format
             // you ask for.
-            WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                          "NumberOfCapabilities is not supported on the Mac platform.");
             return -1;
         }
     }  // namespace videocapturemodule
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

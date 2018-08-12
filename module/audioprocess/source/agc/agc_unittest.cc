@@ -27,7 +27,7 @@ using ::testing::Lt;
 using ::testing::Mock;
 using ::testing::SaveArg;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 
 // The tested values depend on this assumed gain.

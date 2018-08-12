@@ -14,7 +14,7 @@
 #include "../base/constructormagic.h"
 #include "../module/remote_bitrate_estimator/include/bwe_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // A rate control implementation based on additive increases of
 // bitrate when no over-use is detected and multiplicative decreases when
@@ -48,7 +48,7 @@ class AimdRateControl {
   // maximal available bandwidth.
   virtual int GetNearMaxIncreaseRateBps() const;
 
-  virtual cloopenwebrtc::Optional<int> GetLastBitrateDecreaseBps() const;
+  virtual yuntongxunwebrtc::Optional<int> GetLastBitrateDecreaseBps() const;
 
  private:
   // Update the target bitrate according based on, among other things,
@@ -90,7 +90,7 @@ class AimdRateControl {
   float beta_;
   int64_t rtt_;
   bool in_experiment_;
-  cloopenwebrtc::Optional<int> last_decrease_;
+  yuntongxunwebrtc::Optional<int> last_decrease_;
 };
 }  // namespace webrtc
 

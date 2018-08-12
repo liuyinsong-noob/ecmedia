@@ -16,7 +16,7 @@
 #include "gmock/gmock.h"
 #include "module_common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class MockAgc : public Agc {
  public:
@@ -31,6 +31,6 @@ class MockAgc : public Agc {
   MOCK_CONST_METHOD0(standalone_vad_enabled, bool());
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_AGC_MOCK_AGC_H_

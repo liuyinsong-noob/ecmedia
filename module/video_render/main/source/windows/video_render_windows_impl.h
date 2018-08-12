@@ -17,7 +17,7 @@
 #include "i_video_render.h"
 #include "i_video_render_win.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class CriticalSectionWrapper;
 
 #define EXPAND(x)            x, sizeof(x)/sizeof(TCHAR)

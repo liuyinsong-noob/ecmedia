@@ -18,7 +18,7 @@
 #include "../module/rtp_rtcp/source/rtp_packet_to_send.h"
 #include "../typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace RtpFormatVideoGeneric {
 static const uint8_t kKeyFrameBit = 0x01;
 static const uint8_t kFirstPacketBit = 0x02;
@@ -69,5 +69,5 @@ class RtpDepacketizerGeneric : public RtpDepacketizer {
              const uint8_t* payload_data,
              size_t payload_data_length) override;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_FORMAT_VIDEO_GENERIC_H_

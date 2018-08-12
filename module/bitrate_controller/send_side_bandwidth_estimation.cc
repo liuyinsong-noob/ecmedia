@@ -22,7 +22,7 @@
 
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 const int64_t kBweIncreaseIntervalMs = 1000;
 const int64_t kBweDecreaseIntervalMs = 300;
@@ -76,7 +76,7 @@ SendSideBandwidthEstimation::SendSideBandwidthEstimation(RtcEventLog* event_log)
       event_log_(event_log),
       last_rtc_event_log_ms_(-1),
       in_timeout_experiment_(
-          cloopenwebrtc::field_trial::IsEnabled("WebRTC-FeedbackTimeout")) {
+          yuntongxunwebrtc::field_trial::IsEnabled("WebRTC-FeedbackTimeout")) {
  // DCHECK(event_log);
 }
 
@@ -139,7 +139,7 @@ void SendSideBandwidthEstimation::UpdateDelayBasedEstimate(
 	  << bitrate_bps
 	  << " (delay_based_bitrate_bps_)";
 
-   WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, -1,
+   WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, -1,
 	   "--------------[bwe] bitrate_controller = %u (delay_based_bitrate_bps_)", bitrate_bps);
 }
 
@@ -362,4 +362,4 @@ uint32_t SendSideBandwidthEstimation::CapBitrateToThresholds(
   }
   return bitrate;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

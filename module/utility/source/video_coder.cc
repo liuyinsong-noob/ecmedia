@@ -13,7 +13,7 @@
 #include "video_coder.h"
 #include "encoded_frame.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 VideoCoder::VideoCoder() : _vcm(VideoCodingModule::Create()), _decodedVideo(0) {
     _vcm->InitializeSender();
     _vcm->InitializeReceiver();
@@ -127,5 +127,5 @@ int32_t VideoCoder::SendData(
     _videoEncodedData->payloadSize = encoded_image._length;
     return 0;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif // WEBRTC_MODULE_UTILITY_VIDEO

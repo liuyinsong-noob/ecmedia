@@ -13,7 +13,7 @@
 #include <vector>
 #include "ec_live_common.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     class EventTimerWrapper;
     class EC_RTMP_BitrateControllerCallback {
     public:

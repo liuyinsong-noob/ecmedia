@@ -14,7 +14,7 @@
 
 #include "denoiser_filter_neon.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static int HorizontalAddS16x8(const int16x8_t v_16x8) {
   const int32x4_t a = vpaddlq_s16(v_16x8);

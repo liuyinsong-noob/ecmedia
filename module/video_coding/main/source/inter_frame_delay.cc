@@ -10,7 +10,7 @@
 
 #include "inter_frame_delay.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VCMInterFrameDelay::VCMInterFrameDelay(int64_t currentWallClock)
 {

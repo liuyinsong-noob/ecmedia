@@ -15,7 +15,7 @@
 
 #include "video_codec_interface.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VP8Encoder : public VideoEncoder {
  public:

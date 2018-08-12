@@ -10,7 +10,7 @@
 
 #include "cloopenwebrtc/modules/desktop_capture/screen_capturer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // static
 ScreenCapturer* ScreenCapturer::Create(const DesktopCaptureOptions& options) {

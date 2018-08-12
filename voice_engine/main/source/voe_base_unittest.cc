@@ -15,7 +15,7 @@
 #include "audio_processing.h"
 #include "scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VoEBaseTest : public ::testing::Test {
  protected:
@@ -47,4 +47,4 @@ TEST_F(VoEBaseTest, AudioProcessingCreatedAfterInit) {
   EXPECT_TRUE(base_->audio_processing() != NULL);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

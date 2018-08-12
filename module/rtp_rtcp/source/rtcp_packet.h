@@ -14,7 +14,7 @@
 #include "../base/basictypes.h"
 #include "../base/buffer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace rtcp {
 // Class for building RTCP packets.
 //
@@ -62,7 +62,7 @@ class RtcpPacket {
 
   // Convenience method mostly used for test. Creates packet without
   // fragmentation using BlockLength() to allocate big enough buffer.
-  cloopenwebrtc::Buffer Build() const;
+  yuntongxunwebrtc::Buffer Build() const;
 
   // Returns true if call to Create succeeded. Provided buffer reference
   // will be used for all calls to callback.
@@ -99,5 +99,5 @@ class RtcpPacket {
   size_t HeaderLength() const;
 };
 }  // namespace rtcp
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTCP_PACKET_H_

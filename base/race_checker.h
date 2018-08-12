@@ -15,7 +15,7 @@
 #include "../base/platform_thread.h"
 #include "../base/thread_annotations.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace internal {
 class RaceCheckerScope;
@@ -60,19 +60,19 @@ class SCOPED_LOCKABLE RaceCheckerScopeDoNothing {
 };
 
 }  // namespace internal
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #define RTC_CHECK_RUNS_SERIALIZED(x)               \
-  cloopenwebrtc::internal::RaceCheckerScope race_checker(x); \
+  yuntongxunwebrtc::internal::RaceCheckerScope race_checker(x); \
   RTC_CHECK(!race_checker.RaceDetected())
 
 #if RTC_DCHECK_IS_ON
 #define RTC_DCHECK_RUNS_SERIALIZED(x)              \
-  cloopenwebrtc::internal::RaceCheckerScope race_checker(x); \
+  yuntongxunwebrtc::internal::RaceCheckerScope race_checker(x); \
   DCHECK(!race_checker.RaceDetected())
 #else
 #define RTC_DCHECK_RUNS_SERIALIZED(x) \
-  cloopenwebrtc::internal::RaceCheckerScopeDoNothing race_checker(x)
+  yuntongxunwebrtc::internal::RaceCheckerScopeDoNothing race_checker(x)
 #endif
 
 #endif  // WEBRTC_BASE_RACE_CHECKER_H_

@@ -15,7 +15,7 @@
 #include "cloopenwebrtc/system_wrappers/interface/sleep.h"
 #include "cloopenwebrtc/system_wrappers/interface/thread_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const int kEventMsg = 1;
 

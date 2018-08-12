@@ -10,13 +10,13 @@
 
 #include "network_predictor.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace voe {
 
 NetworkPredictor::NetworkPredictor(Clock* clock)
     : clock_(clock),
       last_loss_rate_update_time_ms_(clock_->TimeInMilliseconds()),
-      loss_rate_filter_(new cloopenwebrtc::ExpFilter(0.9999f)) {
+      loss_rate_filter_(new yuntongxunwebrtc::ExpFilter(0.9999f)) {
 }
 
 void NetworkPredictor::UpdatePacketLossRate(uint8_t loss_rate) {
@@ -30,7 +30,7 @@ void NetworkPredictor::UpdatePacketLossRate(uint8_t loss_rate) {
 
 uint8_t NetworkPredictor::GetLossRate() {
   float value = loss_rate_filter_->filtered();
-  return (value == cloopenwebrtc::ExpFilter::kValueUndefined) ? 0 :
+  return (value == yuntongxunwebrtc::ExpFilter::kValueUndefined) ? 0 :
       static_cast<uint8_t>(value + 0.5);
 }
 }  // namespace voe

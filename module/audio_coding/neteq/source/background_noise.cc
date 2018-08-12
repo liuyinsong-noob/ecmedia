@@ -19,7 +19,7 @@
 #include "audio_multi_vector.h"
 #include "post_decode_vad.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 BackgroundNoise::BackgroundNoise(size_t num_channels)
     : num_channels_(num_channels),
@@ -257,4 +257,4 @@ void BackgroundNoise::SaveParameters(size_t channel,
   initialized_ = true;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

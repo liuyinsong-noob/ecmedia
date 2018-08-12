@@ -15,7 +15,7 @@
 #include "desktop_geometry.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class DesktopCaptureOptions;
 class DesktopFrame;
@@ -84,7 +84,7 @@ class MouseCursorMonitor {
   virtual void Capture() = 0;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_MOUSE_CURSOR_MONITOR_H_
 

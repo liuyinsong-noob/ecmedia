@@ -17,7 +17,7 @@
 struct G729_encinst_t_;
 struct G729_decinst_t_;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -51,6 +51,6 @@ class ACMG729 : public ACMGenericCodec {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_ACM_G729_H_

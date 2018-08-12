@@ -18,7 +18,7 @@
 #include "window_capture_utils.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class MouseCursorMonitorWin : public MouseCursorMonitor {
  public:
@@ -94,7 +94,7 @@ void MouseCursorMonitorWin::Capture() {
   if (last_cursor_ != cursor_info.hCursor) {
     last_cursor_ = cursor_info.hCursor;
     // Note that |cursor_info.hCursor| does not need to be freed.
-    cloopenwebrtc::scoped_ptr<MouseCursor> cursor(
+    yuntongxunwebrtc::scoped_ptr<MouseCursor> cursor(
         CreateMouseCursorFromHCursor(desktop_dc_, cursor_info.hCursor));
     if (cursor.get())
       callback_->OnMouseCursor(cursor.release());
@@ -171,4 +171,4 @@ MouseCursorMonitor* MouseCursorMonitor::CreateForScreen(
   return new MouseCursorMonitorWin(screen);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

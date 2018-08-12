@@ -24,7 +24,7 @@
 #include <stdio.h>
 #include <mmsystem.h>
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 void AudioDeviceUtility::WaitForKey()
@@ -44,7 +44,7 @@ bool AudioDeviceUtility::StringCompare(
 	return ((_strnicmp(str1, str2, length) == 0) ? true : false);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #elif defined(WEBRTC_LINUX) || defined(WEBRTC_MAC) || defined(MAC_IPHONE)
 
@@ -60,7 +60,7 @@ bool AudioDeviceUtility::StringCompare(
 
 #include <unistd.h>
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 void AudioDeviceUtility::WaitForKey()
@@ -107,6 +107,6 @@ bool AudioDeviceUtility::StringCompare(
     return (strncasecmp(str1, str2, length) == 0)?true: false;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // defined(WEBRTC_LINUX) || defined(WEBRTC_MAC)

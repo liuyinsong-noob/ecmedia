@@ -81,7 +81,7 @@
 #include <google/protobuf/stubs/atomicops.h>
 #include <google/protobuf/stubs/common.h>
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 
 #ifdef GOOGLE_PROTOBUF_NO_THREAD_SAFETY
@@ -116,7 +116,7 @@ enum {
 
 typedef internal::AtomicWord ProtobufOnceType;
 
-#define GOOGLE_PROTOBUF_ONCE_INIT ::cloopen_google::protobuf::ONCE_STATE_UNINITIALIZED
+#define GOOGLE_PROTOBUF_ONCE_INIT ::yuntongxun_google::protobuf::ONCE_STATE_UNINITIALIZED
 
 LIBPROTOBUF_EXPORT
 void GoogleOnceInitImpl(ProtobufOnceType* once, Closure* closure);
@@ -158,9 +158,9 @@ class GoogleOnceDynamic {
 };
 
 #define GOOGLE_PROTOBUF_DECLARE_ONCE(NAME) \
-  ::cloopen_google::protobuf::ProtobufOnceType NAME = GOOGLE_PROTOBUF_ONCE_INIT
+  ::yuntongxun_google::protobuf::ProtobufOnceType NAME = GOOGLE_PROTOBUF_ONCE_INIT
 
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 
 #endif  // GOOGLE_PROTOBUF_STUBS_ONCE_H__

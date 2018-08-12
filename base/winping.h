@@ -17,7 +17,7 @@
 #include "../base/basictypes.h"
 #include "../base/ipaddress.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // This class wraps a Win32 API for doing ICMP pinging.  This API, unlike the
 // the normal socket APIs (as implemented on Win9x), will return an error if
@@ -98,7 +98,7 @@ private:
     bool valid_;
 };
 
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_WIN 
 

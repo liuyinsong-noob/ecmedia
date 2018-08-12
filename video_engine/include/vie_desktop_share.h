@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VideoEngine;
 class VideoCaptureModule;

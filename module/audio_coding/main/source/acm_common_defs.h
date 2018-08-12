@@ -25,7 +25,7 @@
 #endif
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // 60 ms is the maximum block size we support. An extra 20 ms is considered
 // for safety if process() method is not called when it should be, i.e. we
@@ -95,6 +95,6 @@ struct WebRtcACMAudioBuff {
   uint32_t last_in_timestamp;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_ACM_COMMON_DEFS_H_

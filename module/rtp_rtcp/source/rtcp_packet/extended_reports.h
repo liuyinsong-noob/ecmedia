@@ -20,7 +20,7 @@
 #include "target_bitrate.h"
 #include "voip_metric.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace rtcp {
 class CommonHeader;
 
@@ -43,12 +43,12 @@ class ExtendedReports : public RtcpPacket {
   void SetTargetBitrate(const TargetBitrate& target_bitrate);
 
   uint32_t sender_ssrc() const { return sender_ssrc_; }
-  const cloopenwebrtc::Optional<Rrtr>& rrtr() const { return rrtr_block_; }
+  const yuntongxunwebrtc::Optional<Rrtr>& rrtr() const { return rrtr_block_; }
   const Dlrr& dlrr() const { return dlrr_block_; }
-  const cloopenwebrtc::Optional<VoipMetric>& voip_metric() const {
+  const yuntongxunwebrtc::Optional<VoipMetric>& voip_metric() const {
     return voip_metric_block_;
   }
-  const cloopenwebrtc::Optional<TargetBitrate>& target_bitrate() const {
+  const yuntongxunwebrtc::Optional<TargetBitrate>& target_bitrate() const {
     return target_bitrate_;
   }
 
@@ -79,10 +79,10 @@ class ExtendedReports : public RtcpPacket {
   void ParseTargetBitrateBlock(const uint8_t* block, uint16_t block_length);
 
   uint32_t sender_ssrc_;
-  cloopenwebrtc::Optional<Rrtr> rrtr_block_;
+  yuntongxunwebrtc::Optional<Rrtr> rrtr_block_;
   Dlrr dlrr_block_;  // Dlrr without items treated same as no dlrr block.
-  cloopenwebrtc::Optional<VoipMetric> voip_metric_block_;
-  cloopenwebrtc::Optional<TargetBitrate> target_bitrate_;
+  yuntongxunwebrtc::Optional<VoipMetric> voip_metric_block_;
+  yuntongxunwebrtc::Optional<TargetBitrate> target_bitrate_;
 };
 }  // namespace rtcp
 }  // namespace webrtc

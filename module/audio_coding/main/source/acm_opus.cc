@@ -34,7 +34,7 @@ buf[base]=(val)&0xff; \
 char *file_opus = NULL;
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     
     namespace acm2 {
         
@@ -164,7 +164,7 @@ namespace cloopenwebrtc {
             has_internal_fec_ = true;
             
             if (codec_id_ != ACMCodecDB::kOpus && codec_id != ACMCodecDB::kOpus8k && codec_id != ACMCodecDB::kOpus16k) {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                              "Wrong codec id for Opus.");
                 sample_freq_ = 0xFFFF;
                 bitrate_ = -1;
@@ -199,7 +199,7 @@ namespace cloopenwebrtc {
                                                     MAX_PAYLOAD_SIZE_BYTE, bitstream);
             // Check for error reported from encoder.
             if (*bitstream_len_byte < 0) {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                              "InternalEncode: Encode error for Opus");
                 *bitstream_len_byte = 0;
                 return -1;
@@ -230,41 +230,41 @@ namespace cloopenwebrtc {
             channels_ = codec_params->codec_inst.channels;
             
             if (ret < 0) {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                              "Encoder creation failed for Opus");
                 return ret;
             }
             ret = WebRtcOpus_SetBitRate(encoder_inst_ptr_,
                                         codec_params->codec_inst.rate);
             if (ret < 0) {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                              "Setting initial bitrate failed for Opus");
                 return ret;
             }
             
             ret = WebRtcOpus_SetMaxPlaybackRate(encoder_inst_ptr_, codec_params->codec_inst.plfreq);
             if (ret < 0) {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                              "Setting initial playback rate failed for Opus");
                 return ret;
             }
             
             ret = WebRtcOpus_SetPacketLossRate(encoder_inst_ptr_, 5);//sean test audio mixer, original 5
             if (ret < 0) {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                              "Setting initial playback loss rate failed for Opus");
                 return ret;
             }
             
             ret = WebRtcOpus_EnableFec(encoder_inst_ptr_);//sean just for mos
             if (ret < 0) {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                              "Setting initial Fec failed for Opus");
             }
             
                 ret = WebRtcOpus_EnableDtx(encoder_inst_ptr_);
                 if (ret < 0) {
-                    WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+                    WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                                  "Setting initial Dtx failed for Opus");
                 }
             
@@ -279,7 +279,7 @@ namespace cloopenwebrtc {
             const int kOpusComplexity5 = 5;
             WebRtcOpus_SetComplexity(encoder_inst_ptr_, kOpusComplexity5);
             if (ret < 0) {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                              "Setting complexity failed for Opus");
                 return ret;
             }
@@ -306,7 +306,7 @@ namespace cloopenwebrtc {
         
         int16_t ACMOpus::SetBitRateSafe(const int32_t rate) {
             if (rate < 6000 || rate > 510000) {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                              "SetBitRateSafe: Invalid rate Opus");
                 return -1;
             }
@@ -448,4 +448,4 @@ namespace cloopenwebrtc {
         
     }  // namespace acm2
     
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -13,7 +13,7 @@
 #include <assert.h>
 #include <windows.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 bool GetScreenList(ScreenCapturer::ScreenList* screens) {
   assert(screens->size() == 0);
@@ -93,4 +93,4 @@ DesktopRect GetScreenRect(ScreenId screen, const std::string& device_key) {
                                device_mode.dmPelsHeight);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

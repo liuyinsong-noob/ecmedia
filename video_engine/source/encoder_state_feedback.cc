@@ -16,7 +16,7 @@
 #include "../system_wrappers/include/critical_section_wrapper.h"
 #include "vie_encoder.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Helper class registered at the RTP module relaying callbacks to
 // EncoderStatFeedback.

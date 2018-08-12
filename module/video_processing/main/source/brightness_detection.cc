@@ -13,7 +13,7 @@
 
 #include <math.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VPMBrightnessDetection::VPMBrightnessDetection() :
     id_(0) {

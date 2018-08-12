@@ -35,7 +35,7 @@ DEFINE_GUID( IID_IDirectDraw7,0x15e65ec0,0x3b9c,0x11d2,0xb9,0x2f,0x00,0x60,0x97,
 // Blt with SRCCOPY should do this can we use it?
 // investigate DDLOCK_NOSYSLOCK 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 #define EXTRACT_BITS_RL(the_val, bits_start, bits_len) ((the_val >> (bits_start - 1)) & ((1 << bits_len) - 1)) 
 

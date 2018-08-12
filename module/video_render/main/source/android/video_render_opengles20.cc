@@ -28,7 +28,7 @@
 #include "../system_wrappers/include/trace.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const char VideoRenderOpenGles20::g_indices[] = { 0, 3, 2, 0, 2, 1 };
 

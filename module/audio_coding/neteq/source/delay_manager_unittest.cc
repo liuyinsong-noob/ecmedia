@@ -18,7 +18,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "mock_delay_peak_detector.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 using ::testing::Return;
 using ::testing::_;
@@ -294,4 +294,4 @@ TEST_F(DelayManagerTest, Failures) {
   EXPECT_FALSE(dm_->SetMaximumDelay(60));
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

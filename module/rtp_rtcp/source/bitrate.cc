@@ -13,7 +13,7 @@
 #include "rtp_utility.h"
 #include "../system_wrappers/include/critical_section_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 Bitrate::Bitrate(Clock* clock, Observer* observer)
     : clock_(clock),

@@ -20,7 +20,7 @@
 #include "../module/rtp_rtcp/source/rtp_utility.h"
 #include "../typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Handles audio RTP packets. This class is thread-safe.
 class RTPReceiverAudio : public RTPReceiverStrategy,
@@ -94,6 +94,6 @@ class RTPReceiverAudio : public RTPReceiverStrategy,
 
   ThreadUnsafeOneTimeEvent first_packet_received_;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_RECEIVER_AUDIO_H_

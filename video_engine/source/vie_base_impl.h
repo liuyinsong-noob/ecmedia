@@ -19,7 +19,7 @@
 #include "send_statistics_proxy.h"
 #include "receive_statistics_proxy.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Config;
 class Module;

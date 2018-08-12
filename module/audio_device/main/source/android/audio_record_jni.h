@@ -17,7 +17,7 @@
 #include "audio_device_defines.h"
 #include "audio_device_generic.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class EventWrapper;
 class ThreadWrapper;

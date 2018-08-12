@@ -16,7 +16,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "background_noise.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(TimeStretch, CreateAndDestroy) {
   const int kSampleRate = 8000;
@@ -49,4 +49,4 @@ TEST(TimeStretch, CreateUsingFactory) {
 
 // TODO(hlundin): Write more tests.
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

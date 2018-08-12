@@ -13,7 +13,7 @@
 
 #include "../base/constructormagic.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class CriticalSectionWrapper;
 
 class ListItem
@@ -102,6 +102,6 @@ private:
     ListItem* last_;
     unsigned int size_;
 };
-} //namespace cloopenwebrtc
+} //namespace yuntongxunwebrtc
 
 #endif // WEBRTC_SYSTEM_WRAPPERS_INTERFACE_LIST_WRAPPER_H_

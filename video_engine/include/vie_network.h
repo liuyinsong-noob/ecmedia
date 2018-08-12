@@ -22,7 +22,7 @@
 #include "common_types.h"
 //#include "StunMessageCallBack.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 typedef int (*onVideoConference)(int channelid, int status, int payload);
 typedef int (*onStunPacket)(int channelid, void *data, int len, const char *fromIP, int fromPort, bool isRTCP, bool isVideo);
@@ -112,7 +112,7 @@ class WEBRTC_DLLEXPORT ViENetwork {
   // TODO(holmer): Remove the default implementation when this has been fixed
   // in fakewebrtcvideoengine.cc.
   virtual bool SetBandwidthEstimationConfig(int video_channel,
-                                            const cloopenwebrtc::Config& config) {
+                                            const yuntongxunwebrtc::Config& config) {
     return false;
   }
 

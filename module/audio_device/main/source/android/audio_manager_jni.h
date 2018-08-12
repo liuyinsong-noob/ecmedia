@@ -16,7 +16,7 @@
 
 #include <jni.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioManagerJni {
  public:

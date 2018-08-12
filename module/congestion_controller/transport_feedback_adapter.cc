@@ -22,7 +22,7 @@
 #include "../module/utility/include/process_thread.h"
 #include "../system_wrappers/include/field_trial.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const int64_t kNoTimestamp = -1;
 const int64_t kSendTimeHistoryWindowMs = 60000;
@@ -46,7 +46,7 @@ TransportFeedbackAdapter::TransportFeedbackAdapter(
     Clock* clock,
     BitrateController* bitrate_controller)
     : send_side_bwe_with_overhead_(
-          cloopenwebrtc::field_trial::IsEnabled("cloopenwebrtc-SendSideBwe-WithOverhead")),
+          yuntongxunwebrtc::field_trial::IsEnabled("cloopenwebrtc-SendSideBwe-WithOverhead")),
       transport_overhead_bytes_per_packet_(0),
       send_time_history_(clock, kSendTimeHistoryWindowMs),
       event_log_(event_log),
@@ -58,14 +58,14 @@ TransportFeedbackAdapter::TransportFeedbackAdapter(
 TransportFeedbackAdapter::~TransportFeedbackAdapter() {}
 
 void TransportFeedbackAdapter::InitBwe() {
-  cloopenwebrtc::CritScope cs(&bwe_lock_);
+  yuntongxunwebrtc::CritScope cs(&bwe_lock_);
   delay_based_bwe_.reset(new DelayBasedBwe(event_log_, clock_));
 }
 
 void TransportFeedbackAdapter::AddPacket(uint16_t sequence_number,
                                          size_t length,
                                          const PacedPacketInfo& pacing_info) {
-  cloopenwebrtc::CritScope cs(&lock_);
+  yuntongxunwebrtc::CritScope cs(&lock_);
   if (send_side_bwe_with_overhead_) {
     length += transport_overhead_bytes_per_packet_;
   }
@@ -74,28 +74,28 @@ void TransportFeedbackAdapter::AddPacket(uint16_t sequence_number,
 
 void TransportFeedbackAdapter::OnSentPacket(uint16_t sequence_number,
                                             int64_t send_time_ms) {
-  cloopenwebrtc::CritScope cs(&lock_);
+  yuntongxunwebrtc::CritScope cs(&lock_);
   send_time_history_.OnSentPacket(sequence_number, send_time_ms);
 }
 
 void TransportFeedbackAdapter::SetStartBitrate(int start_bitrate_bps) {
-  cloopenwebrtc::CritScope cs(&bwe_lock_);
+  yuntongxunwebrtc::CritScope cs(&bwe_lock_);
   delay_based_bwe_->SetStartBitrate(start_bitrate_bps);
 }
 
 void TransportFeedbackAdapter::SetMinBitrate(int min_bitrate_bps) {
-  cloopenwebrtc::CritScope cs(&bwe_lock_);
+  yuntongxunwebrtc::CritScope cs(&bwe_lock_);
   delay_based_bwe_->SetMinBitrate(min_bitrate_bps);
 }
 
 void TransportFeedbackAdapter::SetTransportOverhead(
     int transport_overhead_bytes_per_packet) {
-  cloopenwebrtc::CritScope cs(&lock_);
+  yuntongxunwebrtc::CritScope cs(&lock_);
   transport_overhead_bytes_per_packet_ = transport_overhead_bytes_per_packet;
 }
 
 int64_t TransportFeedbackAdapter::GetProbingIntervalMs() const {
-  cloopenwebrtc::CritScope cs(&bwe_lock_);
+  yuntongxunwebrtc::CritScope cs(&bwe_lock_);
   return delay_based_bwe_->GetProbingIntervalMs();
 }
 
@@ -129,7 +129,7 @@ std::vector<PacketFeedback> TransportFeedbackAdapter::GetPacketFeedbackVector(
     return packet_feedback_vector;
   }
   {
-    cloopenwebrtc::CritScope cs(&lock_);
+    yuntongxunwebrtc::CritScope cs(&lock_);
     size_t failed_lookups = 0;
     int64_t offset_us = 0;
     int64_t timestamp_ms = 0;
@@ -157,7 +157,7 @@ void TransportFeedbackAdapter::OnTransportFeedback(
   last_packet_feedback_vector_ = GetPacketFeedbackVector(feedback);
   DelayBasedBwe::Result result;
   {
-    cloopenwebrtc::CritScope cs(&bwe_lock_);
+    yuntongxunwebrtc::CritScope cs(&bwe_lock_);
     result = delay_based_bwe_->IncomingPacketFeedbackVector(
         last_packet_feedback_vector_);
   }
@@ -172,8 +172,8 @@ TransportFeedbackAdapter::GetTransportFeedbackVector() const {
 
 void TransportFeedbackAdapter::OnRttUpdate(int64_t avg_rtt_ms,
                                            int64_t max_rtt_ms) {
-  cloopenwebrtc::CritScope cs(&bwe_lock_);
+  yuntongxunwebrtc::CritScope cs(&bwe_lock_);
   delay_based_bwe_->OnRttUpdate(avg_rtt_ms, max_rtt_ms);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

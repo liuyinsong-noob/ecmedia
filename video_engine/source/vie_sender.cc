@@ -19,7 +19,7 @@
 
 #include <time.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ViESender::ViESender(int channel_id)
     : channel_id_(channel_id),
@@ -140,7 +140,7 @@ int ViESender::SendRtp(int vie_id, const uint8_t* packet, size_t length, const P
   int bytes_sent = transport_->SendRtp(channel_id_, send_packet, send_packet_length);
 
   if (bytes_sent != send_packet_length) {
-	  WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideo, channel_id_,
+	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideo, channel_id_,
 		  "ViESender::SendPacket - Transport failed to send RTP packet");
   }
   {

@@ -21,7 +21,7 @@ extern "C" {
 
 #include "testing/gtest/include/gtest/gtest.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(EchoCancellationTest, CreateAndFreeHandlesErrors) {
   EXPECT_EQ(-1, WebRtcAec_Create(NULL));

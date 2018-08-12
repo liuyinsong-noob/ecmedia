@@ -20,7 +20,7 @@
 #include "checks.h"
 #include "logging.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const char kAnnexBHeaderBytes[4] = {0, 0, 0, 1};
 const size_t kAvccHeaderByteSize = sizeof(uint32_t);
@@ -29,7 +29,7 @@ bool H264CMSampleBufferToAnnexBBuffer(
     CMSampleBufferRef avcc_sample_buffer,
     bool is_keyframe,
     rtc::Buffer* annexb_buffer,
-    cloopenwebrtc::RTPFragmentationHeader** out_header) {
+    yuntongxunwebrtc::RTPFragmentationHeader** out_header) {
   DCHECK(avcc_sample_buffer);
   DCHECK(out_header);
   *out_header = nullptr;
@@ -140,7 +140,7 @@ bool H264CMSampleBufferToAnnexBBuffer(
   }
   DCHECK_EQ(bytes_remaining, (size_t)0);
 
-  cloopenwebrtc::RTPFragmentationHeader * header = new cloopenwebrtc::RTPFragmentationHeader();
+  yuntongxunwebrtc::RTPFragmentationHeader * header = new yuntongxunwebrtc::RTPFragmentationHeader();
   header->VerifyAndAllocateFragmentationHeader(frag_offsets.size());
   DCHECK_EQ(frag_lengths.size(), frag_offsets.size());
   for (size_t i = 0; i < frag_offsets.size(); ++i) {
@@ -163,8 +163,8 @@ bool H264AnnexBBufferToCMSampleBuffer(const uint8_t* annexb_buffer,
   DCHECK(video_format);
   *out_sample_buffer = nullptr;
 
-  cloopenwebrtc::AnnexBBufferReader reader(annexb_buffer, annexb_buffer_size);
-  if (cloopenwebrtc::H264AnnexBBufferHasVideoFormatDescription(annexb_buffer,
+  yuntongxunwebrtc::AnnexBBufferReader reader(annexb_buffer, annexb_buffer_size);
+  if (yuntongxunwebrtc::H264AnnexBBufferHasVideoFormatDescription(annexb_buffer,
                                                 annexb_buffer_size)) {
     // Advance past the SPS and PPS.
     const uint8_t* data = nullptr;
@@ -220,7 +220,7 @@ bool H264AnnexBBufferToCMSampleBuffer(const uint8_t* annexb_buffer,
   DCHECK(block_buffer_size == reader.BytesRemaining());
 
   // Write Avcc NALUs into block buffer memory.
-  cloopenwebrtc::AvccBufferWriter writer(reinterpret_cast<uint8_t*>(data_ptr),
+  yuntongxunwebrtc::AvccBufferWriter writer(reinterpret_cast<uint8_t*>(data_ptr),
                           block_buffer_size);
   while (reader.BytesRemaining() > 0) {
     const uint8_t* nalu_data_ptr = nullptr;
@@ -264,7 +264,7 @@ CMVideoFormatDescriptionRef CreateVideoFormatDescription(
                                                  annexb_buffer_size)) {
     return nullptr;
   }
-  cloopenwebrtc::AnnexBBufferReader reader(annexb_buffer, annexb_buffer_size);
+  yuntongxunwebrtc::AnnexBBufferReader reader(annexb_buffer, annexb_buffer_size);
   CMVideoFormatDescriptionRef description = nullptr;
   OSStatus status = noErr;
   // Parse the SPS and PPS into a CMVideoFormatDescription.
@@ -288,7 +288,7 @@ CMVideoFormatDescriptionRef CreateVideoFormatDescription(
   return description;
 }
 
-cloopenwebrtc::AnnexBBufferReader::AnnexBBufferReader(const uint8_t* annexb_buffer,
+yuntongxunwebrtc::AnnexBBufferReader::AnnexBBufferReader(const uint8_t* annexb_buffer,
                                        size_t length)
     : start_(annexb_buffer), offset_(0), next_offset_(0), length_(length) {
   DCHECK(annexb_buffer);

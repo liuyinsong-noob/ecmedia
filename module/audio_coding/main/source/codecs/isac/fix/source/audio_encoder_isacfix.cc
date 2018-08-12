@@ -12,7 +12,7 @@
 
 #include "cloopenwebrtc/modules/audio_coding/codecs/isac/audio_encoder_isac_t_impl.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const uint16_t IsacFix::kFixSampleRate;
 

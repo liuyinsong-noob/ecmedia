@@ -36,7 +36,7 @@ char *filename_path = NULL;
 
 #define WEBRTC_ABS(a) (((a) < 0) ? -(a) : (a))
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace voe {
 
 // TODO(ajm): The thread safety of this is dubious...

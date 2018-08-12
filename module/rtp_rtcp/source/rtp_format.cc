@@ -17,7 +17,7 @@
 #include "../module/rtp_rtcp/source/rtp_format_vp8.h"
 #include "../module/rtp_rtcp/source/rtp_format_vp9.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 RtpPacketizer* RtpPacketizer::Create(RtpVideoCodecTypes type,
                                      size_t max_payload_len,
                                      const RTPVideoTypeHeader* rtp_type_header,
@@ -56,4 +56,4 @@ RtpDepacketizer* RtpDepacketizer::Create(RtpVideoCodecTypes type) {
   }
   return NULL;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

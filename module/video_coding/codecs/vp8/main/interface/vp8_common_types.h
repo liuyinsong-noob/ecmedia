@@ -13,7 +13,7 @@
 
 #include "common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Ratio allocation between temporal streams:
 // Values as required for the VP8 codec (accumulating).

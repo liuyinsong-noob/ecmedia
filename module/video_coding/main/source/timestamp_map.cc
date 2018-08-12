@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include "timestamp_map.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Constructor. Optional parameter specifies maximum number of
 // coexisting timers.

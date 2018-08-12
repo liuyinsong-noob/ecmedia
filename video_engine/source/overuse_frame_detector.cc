@@ -22,7 +22,7 @@
 #include "../system_wrappers/include/critical_section_wrapper.h"
 #include "../system_wrappers/include/logging.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // TODO(mflodman) Test different values for all of these to trigger correctly,
 // avoid fluctuations etc.
@@ -55,8 +55,8 @@ const float kMaxExp = 7.0f;
 Statistics::Statistics() :
     sum_(0.0),
     count_(0),
-    filtered_samples_(new cloopenwebrtc::ExpFilter(kWeightFactorMean)),
-    filtered_variance_(new cloopenwebrtc::ExpFilter(kWeightFactor)) {
+    filtered_samples_(new yuntongxunwebrtc::ExpFilter(kWeightFactorMean)),
+    filtered_variance_(new yuntongxunwebrtc::ExpFilter(kWeightFactor)) {
   Reset();
 }
 
@@ -117,7 +117,7 @@ class OveruseFrameDetector::EncodeTimeAvg {
   EncodeTimeAvg()
       : kWeightFactor(0.5f),
         kInitialAvgEncodeTimeMs(5.0f),
-        filtered_encode_time_ms_(new cloopenwebrtc::ExpFilter(kWeightFactor)) {
+        filtered_encode_time_ms_(new yuntongxunwebrtc::ExpFilter(kWeightFactor)) {
     filtered_encode_time_ms_->Apply(1.0f, kInitialAvgEncodeTimeMs);
   }
   ~EncodeTimeAvg() {}
@@ -135,7 +135,7 @@ class OveruseFrameDetector::EncodeTimeAvg {
  private:
   const float kWeightFactor;
   const float kInitialAvgEncodeTimeMs;
-  scoped_ptr<cloopenwebrtc::ExpFilter> filtered_encode_time_ms_;
+  scoped_ptr<yuntongxunwebrtc::ExpFilter> filtered_encode_time_ms_;
 };
 
 // Class for calculating the processing usage on the send-side (the average
@@ -149,8 +149,8 @@ class OveruseFrameDetector::SendProcessingUsage {
         kInitialSampleDiffMs(40.0f),
         kMaxSampleDiffMs(45.0f),
         count_(0),
-        filtered_processing_ms_(new cloopenwebrtc::ExpFilter(kWeightFactorProcessing)),
-        filtered_frame_diff_ms_(new cloopenwebrtc::ExpFilter(kWeightFactorFrameDiff)) {
+        filtered_processing_ms_(new yuntongxunwebrtc::ExpFilter(kWeightFactorProcessing)),
+        filtered_frame_diff_ms_(new yuntongxunwebrtc::ExpFilter(kWeightFactorFrameDiff)) {
     Reset();
   }
   ~SendProcessingUsage() {}
@@ -208,8 +208,8 @@ class OveruseFrameDetector::SendProcessingUsage {
   const float kMaxSampleDiffMs;
   uint64_t count_;
   CpuOveruseOptions options_;
-  scoped_ptr<cloopenwebrtc::ExpFilter> filtered_processing_ms_;
-  scoped_ptr<cloopenwebrtc::ExpFilter> filtered_frame_diff_ms_;
+  scoped_ptr<yuntongxunwebrtc::ExpFilter> filtered_processing_ms_;
+  scoped_ptr<yuntongxunwebrtc::ExpFilter> filtered_frame_diff_ms_;
 };
 
 // Class for calculating the processing time of frames.
@@ -266,7 +266,7 @@ class OveruseFrameDetector::CaptureQueueDelay {
   CaptureQueueDelay()
       : kWeightFactor(0.5f),
         delay_ms_(0),
-        filtered_delay_ms_per_s_(new cloopenwebrtc::ExpFilter(kWeightFactor)) {
+        filtered_delay_ms_per_s_(new yuntongxunwebrtc::ExpFilter(kWeightFactor)) {
     filtered_delay_ms_per_s_->Apply(1.0f, 0.0f);
   }
   ~CaptureQueueDelay() {}
@@ -314,7 +314,7 @@ class OveruseFrameDetector::CaptureQueueDelay {
   const float kWeightFactor;
   std::list<int64_t> frames_;
   int delay_ms_;
-  scoped_ptr<cloopenwebrtc::ExpFilter> filtered_delay_ms_per_s_;
+  scoped_ptr<yuntongxunwebrtc::ExpFilter> filtered_delay_ms_per_s_;
 };
 
 OveruseFrameDetector::OveruseFrameDetector(Clock* clock)

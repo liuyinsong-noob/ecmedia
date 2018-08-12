@@ -11,7 +11,7 @@
 #include "module_common_types.h"
 #include "audio_frame_operations.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 void AudioFrameOperations::MonoToStereo(const int16_t* src_audio,
                                         int samples_per_channel,
@@ -106,4 +106,4 @@ int AudioFrameOperations::ScaleWithSat(float scale, AudioFrame& frame) {
   return 0;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

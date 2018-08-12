@@ -11,7 +11,7 @@
 #include "../system_wrappers/include/thread_wrapper.h"
 #include <stdio.h>
 
-using namespace cloopenwebrtc;
+using namespace yuntongxunwebrtc;
 
 typedef int (*onVoeCallbackOnError)(int channelid, int errCode);
 

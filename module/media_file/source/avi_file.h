@@ -17,7 +17,7 @@
 
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class CriticalSectionWrapper;
 class ListWrapper;
 
@@ -273,6 +273,6 @@ private:
 
     ListWrapper* _indexList; // Elements are of type AVIINDEXENTRY.
 };
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_MODULES_MEDIA_FILE_SOURCE_AVI_FILE_H_

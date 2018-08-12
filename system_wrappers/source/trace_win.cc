@@ -15,7 +15,7 @@
 
 #include "Mmsystem.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 TraceWindows::TraceWindows()
     : prev_api_tick_count_(0),
       prev_tick_count_(0) {
@@ -94,4 +94,4 @@ int32_t TraceWindows::AddDateTimeInfo(char* trace_message) const {
   return static_cast<int32_t>(strlen(trace_message) + 1);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

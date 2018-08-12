@@ -21,7 +21,7 @@
 #include "common_types.h"
 #include "../common_video/include/i420_video_frame.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VideoEngine;
 class VideoCaptureModule;

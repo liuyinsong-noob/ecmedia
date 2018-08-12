@@ -16,7 +16,7 @@
 #include "decision_logic.h"
 #include "delay_manager.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 StatisticsCalculator::StatisticsCalculator()
     : preemptive_samples_(0),
@@ -167,4 +167,4 @@ int StatisticsCalculator::CalculateQ14Ratio(uint32_t numerator,
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

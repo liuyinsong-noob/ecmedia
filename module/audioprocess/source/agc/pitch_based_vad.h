@@ -16,7 +16,7 @@
 #include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioFrame;
 class AgcCircularBuffer;
@@ -52,5 +52,5 @@ class PitchBasedVad {
   scoped_ptr<AgcCircularBuffer> circular_buffer_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_AGC_PITCH_BASED_VAD_H_

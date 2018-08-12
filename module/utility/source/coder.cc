@@ -12,7 +12,7 @@
 #include "module_common_types.h"
 #include "coder.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 AudioCoder::AudioCoder(uint32_t instanceID)
     : _acm(AudioCodingModule::Create(instanceID)),
       _receiveCodec(),
@@ -116,4 +116,4 @@ int32_t AudioCoder::SendData(
     _encodedLengthInBytes = payloadSize;
     return 0;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

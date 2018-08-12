@@ -48,11 +48,11 @@
 #include <google/protobuf/unknown_field_set.h>
 
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace upb {
-namespace cloopen_google_opensource {
+namespace yuntongxun_google_opensource {
 class GMR_Handlers;
-}  // namespace cloopen_google_opensource
+}  // namespace yuntongxun_google_opensource
 }  // namespace upb
 
 namespace protobuf {
@@ -339,7 +339,7 @@ class LIBPROTOBUF_EXPORT GeneratedMessageReflection : public Reflection {
 
   // To parse directly into a proto2 generated class, the class GMR_Handlers
   // needs access to member offsets and hasbits.
-  friend class LIBPROTOBUF_EXPORT upb::cloopen_google_opensource::GMR_Handlers;
+  friend class LIBPROTOBUF_EXPORT upb::yuntongxun_google_opensource::GMR_Handlers;
 
   const Descriptor* descriptor_;
   const Message* default_instance_;
@@ -500,5 +500,5 @@ inline To dynamic_cast_if_available(From from) {
 }  // namespace internal
 }  // namespace protobuf
 
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 #endif  // GOOGLE_PROTOBUF_GENERATED_MESSAGE_REFLECTION_H__

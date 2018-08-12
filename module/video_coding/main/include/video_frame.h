@@ -20,7 +20,7 @@
 #include "../module/typedefs.h"
 #include "../module/common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 enum PlaneType {
   kYPlane = 0,

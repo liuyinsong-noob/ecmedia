@@ -39,7 +39,7 @@ using ::testing::WithArg;
 using ::testing::Pointee;
 using ::testing::IsNull;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // This function is called when inserting a packet list into the mock packet
 // buffer. The purpose is to delete all inserted packets properly, to avoid
@@ -787,4 +787,4 @@ TEST_F(NetEqImplTest, CodecInternalCng) {
 
   EXPECT_CALL(mock_decoder, Die());
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -25,7 +25,7 @@
 #include <google/protobuf/extension_set.h>
 // @@protoc_insertion_point(includes)
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace rtclog {
 
 // Internal implementation detail -- do not call these.
@@ -118,7 +118,7 @@ const int MediaType_ARRAYSIZE = MediaType_MAX + 1;
 
 // ===================================================================
 
-class EventStream : public ::cloopen_google::protobuf::MessageLite {
+class EventStream : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   EventStream();
   virtual ~EventStream();
@@ -155,7 +155,7 @@ class EventStream : public ::cloopen_google::protobuf::MessageLite {
   // implements Message ----------------------------------------------
 
   EventStream* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const EventStream& from);
   void MergeFrom(const EventStream& from);
   void Clear();
@@ -163,9 +163,9 @@ class EventStream : public ::cloopen_google::protobuf::MessageLite {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -183,12 +183,12 @@ class EventStream : public ::cloopen_google::protobuf::MessageLite {
   inline int stream_size() const;
   inline void clear_stream();
   static const int kStreamFieldNumber = 1;
-  inline const ::cloopenwebrtc::rtclog::Event& stream(int index) const;
-  inline ::cloopenwebrtc::rtclog::Event* mutable_stream(int index);
-  inline ::cloopenwebrtc::rtclog::Event* add_stream();
-  inline const ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::Event >&
+  inline const ::yuntongxunwebrtc::rtclog::Event& stream(int index) const;
+  inline ::yuntongxunwebrtc::rtclog::Event* mutable_stream(int index);
+  inline ::yuntongxunwebrtc::rtclog::Event* add_stream();
+  inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::Event >&
       stream() const;
-  inline ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::Event >*
+  inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::Event >*
       mutable_stream();
 
   // @@protoc_insertion_point(class_scope:webrtc.rtclog.EventStream)
@@ -196,9 +196,9 @@ class EventStream : public ::cloopen_google::protobuf::MessageLite {
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::Event > stream_;
+  ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::Event > stream_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_rtc_5fevent_5flog_2eproto_impl();
   #else
@@ -212,7 +212,7 @@ class EventStream : public ::cloopen_google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class Event : public ::cloopen_google::protobuf::MessageLite {
+class Event : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   Event();
   virtual ~Event();
@@ -249,7 +249,7 @@ class Event : public ::cloopen_google::protobuf::MessageLite {
   // implements Message ----------------------------------------------
 
   Event* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const Event& from);
   void MergeFrom(const Event& from);
   void Clear();
@@ -257,9 +257,9 @@ class Event : public ::cloopen_google::protobuf::MessageLite {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -303,123 +303,123 @@ class Event : public ::cloopen_google::protobuf::MessageLite {
   inline bool has_timestamp_us() const;
   inline void clear_timestamp_us();
   static const int kTimestampUsFieldNumber = 1;
-  inline ::cloopen_google::protobuf::int64 timestamp_us() const;
-  inline void set_timestamp_us(::cloopen_google::protobuf::int64 value);
+  inline ::yuntongxun_google::protobuf::int64 timestamp_us() const;
+  inline void set_timestamp_us(::yuntongxun_google::protobuf::int64 value);
 
   // optional .webrtc.rtclog.Event.EventType type = 2;
   inline bool has_type() const;
   inline void clear_type();
   static const int kTypeFieldNumber = 2;
-  inline ::cloopenwebrtc::rtclog::Event_EventType type() const;
-  inline void set_type(::cloopenwebrtc::rtclog::Event_EventType value);
+  inline ::yuntongxunwebrtc::rtclog::Event_EventType type() const;
+  inline void set_type(::yuntongxunwebrtc::rtclog::Event_EventType value);
 
   // optional .webrtc.rtclog.RtpPacket rtp_packet = 3;
   inline bool has_rtp_packet() const;
   inline void clear_rtp_packet();
   static const int kRtpPacketFieldNumber = 3;
-  inline const ::cloopenwebrtc::rtclog::RtpPacket& rtp_packet() const;
-  inline ::cloopenwebrtc::rtclog::RtpPacket* mutable_rtp_packet();
-  inline ::cloopenwebrtc::rtclog::RtpPacket* release_rtp_packet();
-  inline void set_allocated_rtp_packet(::cloopenwebrtc::rtclog::RtpPacket* rtp_packet);
+  inline const ::yuntongxunwebrtc::rtclog::RtpPacket& rtp_packet() const;
+  inline ::yuntongxunwebrtc::rtclog::RtpPacket* mutable_rtp_packet();
+  inline ::yuntongxunwebrtc::rtclog::RtpPacket* release_rtp_packet();
+  inline void set_allocated_rtp_packet(::yuntongxunwebrtc::rtclog::RtpPacket* rtp_packet);
 
   // optional .webrtc.rtclog.RtcpPacket rtcp_packet = 4;
   inline bool has_rtcp_packet() const;
   inline void clear_rtcp_packet();
   static const int kRtcpPacketFieldNumber = 4;
-  inline const ::cloopenwebrtc::rtclog::RtcpPacket& rtcp_packet() const;
-  inline ::cloopenwebrtc::rtclog::RtcpPacket* mutable_rtcp_packet();
-  inline ::cloopenwebrtc::rtclog::RtcpPacket* release_rtcp_packet();
-  inline void set_allocated_rtcp_packet(::cloopenwebrtc::rtclog::RtcpPacket* rtcp_packet);
+  inline const ::yuntongxunwebrtc::rtclog::RtcpPacket& rtcp_packet() const;
+  inline ::yuntongxunwebrtc::rtclog::RtcpPacket* mutable_rtcp_packet();
+  inline ::yuntongxunwebrtc::rtclog::RtcpPacket* release_rtcp_packet();
+  inline void set_allocated_rtcp_packet(::yuntongxunwebrtc::rtclog::RtcpPacket* rtcp_packet);
 
   // optional .webrtc.rtclog.AudioPlayoutEvent audio_playout_event = 5;
   inline bool has_audio_playout_event() const;
   inline void clear_audio_playout_event();
   static const int kAudioPlayoutEventFieldNumber = 5;
-  inline const ::cloopenwebrtc::rtclog::AudioPlayoutEvent& audio_playout_event() const;
-  inline ::cloopenwebrtc::rtclog::AudioPlayoutEvent* mutable_audio_playout_event();
-  inline ::cloopenwebrtc::rtclog::AudioPlayoutEvent* release_audio_playout_event();
-  inline void set_allocated_audio_playout_event(::cloopenwebrtc::rtclog::AudioPlayoutEvent* audio_playout_event);
+  inline const ::yuntongxunwebrtc::rtclog::AudioPlayoutEvent& audio_playout_event() const;
+  inline ::yuntongxunwebrtc::rtclog::AudioPlayoutEvent* mutable_audio_playout_event();
+  inline ::yuntongxunwebrtc::rtclog::AudioPlayoutEvent* release_audio_playout_event();
+  inline void set_allocated_audio_playout_event(::yuntongxunwebrtc::rtclog::AudioPlayoutEvent* audio_playout_event);
 
   // optional .webrtc.rtclog.LossBasedBweUpdate loss_based_bwe_update = 6;
   inline bool has_loss_based_bwe_update() const;
   inline void clear_loss_based_bwe_update();
   static const int kLossBasedBweUpdateFieldNumber = 6;
-  inline const ::cloopenwebrtc::rtclog::LossBasedBweUpdate& loss_based_bwe_update() const;
-  inline ::cloopenwebrtc::rtclog::LossBasedBweUpdate* mutable_loss_based_bwe_update();
-  inline ::cloopenwebrtc::rtclog::LossBasedBweUpdate* release_loss_based_bwe_update();
-  inline void set_allocated_loss_based_bwe_update(::cloopenwebrtc::rtclog::LossBasedBweUpdate* loss_based_bwe_update);
+  inline const ::yuntongxunwebrtc::rtclog::LossBasedBweUpdate& loss_based_bwe_update() const;
+  inline ::yuntongxunwebrtc::rtclog::LossBasedBweUpdate* mutable_loss_based_bwe_update();
+  inline ::yuntongxunwebrtc::rtclog::LossBasedBweUpdate* release_loss_based_bwe_update();
+  inline void set_allocated_loss_based_bwe_update(::yuntongxunwebrtc::rtclog::LossBasedBweUpdate* loss_based_bwe_update);
 
   // optional .webrtc.rtclog.DelayBasedBweUpdate delay_based_bwe_update = 7;
   inline bool has_delay_based_bwe_update() const;
   inline void clear_delay_based_bwe_update();
   static const int kDelayBasedBweUpdateFieldNumber = 7;
-  inline const ::cloopenwebrtc::rtclog::DelayBasedBweUpdate& delay_based_bwe_update() const;
-  inline ::cloopenwebrtc::rtclog::DelayBasedBweUpdate* mutable_delay_based_bwe_update();
-  inline ::cloopenwebrtc::rtclog::DelayBasedBweUpdate* release_delay_based_bwe_update();
-  inline void set_allocated_delay_based_bwe_update(::cloopenwebrtc::rtclog::DelayBasedBweUpdate* delay_based_bwe_update);
+  inline const ::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate& delay_based_bwe_update() const;
+  inline ::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate* mutable_delay_based_bwe_update();
+  inline ::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate* release_delay_based_bwe_update();
+  inline void set_allocated_delay_based_bwe_update(::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate* delay_based_bwe_update);
 
   // optional .webrtc.rtclog.VideoReceiveConfig video_receiver_config = 8;
   inline bool has_video_receiver_config() const;
   inline void clear_video_receiver_config();
   static const int kVideoReceiverConfigFieldNumber = 8;
-  inline const ::cloopenwebrtc::rtclog::VideoReceiveConfig& video_receiver_config() const;
-  inline ::cloopenwebrtc::rtclog::VideoReceiveConfig* mutable_video_receiver_config();
-  inline ::cloopenwebrtc::rtclog::VideoReceiveConfig* release_video_receiver_config();
-  inline void set_allocated_video_receiver_config(::cloopenwebrtc::rtclog::VideoReceiveConfig* video_receiver_config);
+  inline const ::yuntongxunwebrtc::rtclog::VideoReceiveConfig& video_receiver_config() const;
+  inline ::yuntongxunwebrtc::rtclog::VideoReceiveConfig* mutable_video_receiver_config();
+  inline ::yuntongxunwebrtc::rtclog::VideoReceiveConfig* release_video_receiver_config();
+  inline void set_allocated_video_receiver_config(::yuntongxunwebrtc::rtclog::VideoReceiveConfig* video_receiver_config);
 
   // optional .webrtc.rtclog.VideoSendConfig video_sender_config = 9;
   inline bool has_video_sender_config() const;
   inline void clear_video_sender_config();
   static const int kVideoSenderConfigFieldNumber = 9;
-  inline const ::cloopenwebrtc::rtclog::VideoSendConfig& video_sender_config() const;
-  inline ::cloopenwebrtc::rtclog::VideoSendConfig* mutable_video_sender_config();
-  inline ::cloopenwebrtc::rtclog::VideoSendConfig* release_video_sender_config();
-  inline void set_allocated_video_sender_config(::cloopenwebrtc::rtclog::VideoSendConfig* video_sender_config);
+  inline const ::yuntongxunwebrtc::rtclog::VideoSendConfig& video_sender_config() const;
+  inline ::yuntongxunwebrtc::rtclog::VideoSendConfig* mutable_video_sender_config();
+  inline ::yuntongxunwebrtc::rtclog::VideoSendConfig* release_video_sender_config();
+  inline void set_allocated_video_sender_config(::yuntongxunwebrtc::rtclog::VideoSendConfig* video_sender_config);
 
   // optional .webrtc.rtclog.AudioReceiveConfig audio_receiver_config = 10;
   inline bool has_audio_receiver_config() const;
   inline void clear_audio_receiver_config();
   static const int kAudioReceiverConfigFieldNumber = 10;
-  inline const ::cloopenwebrtc::rtclog::AudioReceiveConfig& audio_receiver_config() const;
-  inline ::cloopenwebrtc::rtclog::AudioReceiveConfig* mutable_audio_receiver_config();
-  inline ::cloopenwebrtc::rtclog::AudioReceiveConfig* release_audio_receiver_config();
-  inline void set_allocated_audio_receiver_config(::cloopenwebrtc::rtclog::AudioReceiveConfig* audio_receiver_config);
+  inline const ::yuntongxunwebrtc::rtclog::AudioReceiveConfig& audio_receiver_config() const;
+  inline ::yuntongxunwebrtc::rtclog::AudioReceiveConfig* mutable_audio_receiver_config();
+  inline ::yuntongxunwebrtc::rtclog::AudioReceiveConfig* release_audio_receiver_config();
+  inline void set_allocated_audio_receiver_config(::yuntongxunwebrtc::rtclog::AudioReceiveConfig* audio_receiver_config);
 
   // optional .webrtc.rtclog.AudioSendConfig audio_sender_config = 11;
   inline bool has_audio_sender_config() const;
   inline void clear_audio_sender_config();
   static const int kAudioSenderConfigFieldNumber = 11;
-  inline const ::cloopenwebrtc::rtclog::AudioSendConfig& audio_sender_config() const;
-  inline ::cloopenwebrtc::rtclog::AudioSendConfig* mutable_audio_sender_config();
-  inline ::cloopenwebrtc::rtclog::AudioSendConfig* release_audio_sender_config();
-  inline void set_allocated_audio_sender_config(::cloopenwebrtc::rtclog::AudioSendConfig* audio_sender_config);
+  inline const ::yuntongxunwebrtc::rtclog::AudioSendConfig& audio_sender_config() const;
+  inline ::yuntongxunwebrtc::rtclog::AudioSendConfig* mutable_audio_sender_config();
+  inline ::yuntongxunwebrtc::rtclog::AudioSendConfig* release_audio_sender_config();
+  inline void set_allocated_audio_sender_config(::yuntongxunwebrtc::rtclog::AudioSendConfig* audio_sender_config);
 
   // optional .webrtc.rtclog.AudioNetworkAdaptation audio_network_adaptation = 16;
   inline bool has_audio_network_adaptation() const;
   inline void clear_audio_network_adaptation();
   static const int kAudioNetworkAdaptationFieldNumber = 16;
-  inline const ::cloopenwebrtc::rtclog::AudioNetworkAdaptation& audio_network_adaptation() const;
-  inline ::cloopenwebrtc::rtclog::AudioNetworkAdaptation* mutable_audio_network_adaptation();
-  inline ::cloopenwebrtc::rtclog::AudioNetworkAdaptation* release_audio_network_adaptation();
-  inline void set_allocated_audio_network_adaptation(::cloopenwebrtc::rtclog::AudioNetworkAdaptation* audio_network_adaptation);
+  inline const ::yuntongxunwebrtc::rtclog::AudioNetworkAdaptation& audio_network_adaptation() const;
+  inline ::yuntongxunwebrtc::rtclog::AudioNetworkAdaptation* mutable_audio_network_adaptation();
+  inline ::yuntongxunwebrtc::rtclog::AudioNetworkAdaptation* release_audio_network_adaptation();
+  inline void set_allocated_audio_network_adaptation(::yuntongxunwebrtc::rtclog::AudioNetworkAdaptation* audio_network_adaptation);
 
   // optional .webrtc.rtclog.BweProbeCluster probe_cluster = 17;
   inline bool has_probe_cluster() const;
   inline void clear_probe_cluster();
   static const int kProbeClusterFieldNumber = 17;
-  inline const ::cloopenwebrtc::rtclog::BweProbeCluster& probe_cluster() const;
-  inline ::cloopenwebrtc::rtclog::BweProbeCluster* mutable_probe_cluster();
-  inline ::cloopenwebrtc::rtclog::BweProbeCluster* release_probe_cluster();
-  inline void set_allocated_probe_cluster(::cloopenwebrtc::rtclog::BweProbeCluster* probe_cluster);
+  inline const ::yuntongxunwebrtc::rtclog::BweProbeCluster& probe_cluster() const;
+  inline ::yuntongxunwebrtc::rtclog::BweProbeCluster* mutable_probe_cluster();
+  inline ::yuntongxunwebrtc::rtclog::BweProbeCluster* release_probe_cluster();
+  inline void set_allocated_probe_cluster(::yuntongxunwebrtc::rtclog::BweProbeCluster* probe_cluster);
 
   // optional .webrtc.rtclog.BweProbeResult probe_result = 18;
   inline bool has_probe_result() const;
   inline void clear_probe_result();
   static const int kProbeResultFieldNumber = 18;
-  inline const ::cloopenwebrtc::rtclog::BweProbeResult& probe_result() const;
-  inline ::cloopenwebrtc::rtclog::BweProbeResult* mutable_probe_result();
-  inline ::cloopenwebrtc::rtclog::BweProbeResult* release_probe_result();
-  inline void set_allocated_probe_result(::cloopenwebrtc::rtclog::BweProbeResult* probe_result);
+  inline const ::yuntongxunwebrtc::rtclog::BweProbeResult& probe_result() const;
+  inline ::yuntongxunwebrtc::rtclog::BweProbeResult* mutable_probe_result();
+  inline ::yuntongxunwebrtc::rtclog::BweProbeResult* release_probe_result();
+  inline void set_allocated_probe_result(::yuntongxunwebrtc::rtclog::BweProbeResult* probe_result);
 
   // @@protoc_insertion_point(class_scope:webrtc.rtclog.Event)
  private:
@@ -454,21 +454,21 @@ class Event : public ::cloopen_google::protobuf::MessageLite {
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::cloopen_google::protobuf::int64 timestamp_us_;
-  ::cloopenwebrtc::rtclog::RtpPacket* rtp_packet_;
-  ::cloopenwebrtc::rtclog::RtcpPacket* rtcp_packet_;
-  ::cloopenwebrtc::rtclog::AudioPlayoutEvent* audio_playout_event_;
-  ::cloopenwebrtc::rtclog::LossBasedBweUpdate* loss_based_bwe_update_;
-  ::cloopenwebrtc::rtclog::DelayBasedBweUpdate* delay_based_bwe_update_;
-  ::cloopenwebrtc::rtclog::VideoReceiveConfig* video_receiver_config_;
-  ::cloopenwebrtc::rtclog::VideoSendConfig* video_sender_config_;
-  ::cloopenwebrtc::rtclog::AudioReceiveConfig* audio_receiver_config_;
-  ::cloopenwebrtc::rtclog::AudioSendConfig* audio_sender_config_;
-  ::cloopenwebrtc::rtclog::AudioNetworkAdaptation* audio_network_adaptation_;
-  ::cloopenwebrtc::rtclog::BweProbeCluster* probe_cluster_;
-  ::cloopenwebrtc::rtclog::BweProbeResult* probe_result_;
+  ::yuntongxun_google::protobuf::int64 timestamp_us_;
+  ::yuntongxunwebrtc::rtclog::RtpPacket* rtp_packet_;
+  ::yuntongxunwebrtc::rtclog::RtcpPacket* rtcp_packet_;
+  ::yuntongxunwebrtc::rtclog::AudioPlayoutEvent* audio_playout_event_;
+  ::yuntongxunwebrtc::rtclog::LossBasedBweUpdate* loss_based_bwe_update_;
+  ::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate* delay_based_bwe_update_;
+  ::yuntongxunwebrtc::rtclog::VideoReceiveConfig* video_receiver_config_;
+  ::yuntongxunwebrtc::rtclog::VideoSendConfig* video_sender_config_;
+  ::yuntongxunwebrtc::rtclog::AudioReceiveConfig* audio_receiver_config_;
+  ::yuntongxunwebrtc::rtclog::AudioSendConfig* audio_sender_config_;
+  ::yuntongxunwebrtc::rtclog::AudioNetworkAdaptation* audio_network_adaptation_;
+  ::yuntongxunwebrtc::rtclog::BweProbeCluster* probe_cluster_;
+  ::yuntongxunwebrtc::rtclog::BweProbeResult* probe_result_;
   int type_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_rtc_5fevent_5flog_2eproto_impl();
@@ -483,7 +483,7 @@ class Event : public ::cloopen_google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class RtpPacket : public ::cloopen_google::protobuf::MessageLite {
+class RtpPacket : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   RtpPacket();
   virtual ~RtpPacket();
@@ -520,7 +520,7 @@ class RtpPacket : public ::cloopen_google::protobuf::MessageLite {
   // implements Message ----------------------------------------------
 
   RtpPacket* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const RtpPacket& from);
   void MergeFrom(const RtpPacket& from);
   void Clear();
@@ -528,9 +528,9 @@ class RtpPacket : public ::cloopen_google::protobuf::MessageLite {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -555,15 +555,15 @@ class RtpPacket : public ::cloopen_google::protobuf::MessageLite {
   inline bool has_type() const;
   inline void clear_type();
   static const int kTypeFieldNumber = 2;
-  inline ::cloopenwebrtc::rtclog::MediaType type() const;
-  inline void set_type(::cloopenwebrtc::rtclog::MediaType value);
+  inline ::yuntongxunwebrtc::rtclog::MediaType type() const;
+  inline void set_type(::yuntongxunwebrtc::rtclog::MediaType value);
 
   // optional uint32 packet_length = 3;
   inline bool has_packet_length() const;
   inline void clear_packet_length();
   static const int kPacketLengthFieldNumber = 3;
-  inline ::cloopen_google::protobuf::uint32 packet_length() const;
-  inline void set_packet_length(::cloopen_google::protobuf::uint32 value);
+  inline ::yuntongxun_google::protobuf::uint32 packet_length() const;
+  inline void set_packet_length(::yuntongxun_google::protobuf::uint32 value);
 
   // optional bytes header = 4;
   inline bool has_header() const;
@@ -581,8 +581,8 @@ class RtpPacket : public ::cloopen_google::protobuf::MessageLite {
   inline bool has_probe_cluster_id() const;
   inline void clear_probe_cluster_id();
   static const int kProbeClusterIdFieldNumber = 5;
-  inline ::cloopen_google::protobuf::uint32 probe_cluster_id() const;
-  inline void set_probe_cluster_id(::cloopen_google::protobuf::uint32 value);
+  inline ::yuntongxun_google::protobuf::uint32 probe_cluster_id() const;
+  inline void set_probe_cluster_id(::yuntongxun_google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:webrtc.rtclog.RtpPacket)
  private:
@@ -599,13 +599,13 @@ class RtpPacket : public ::cloopen_google::protobuf::MessageLite {
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   bool incoming_;
   int type_;
   ::std::string* header_;
-  ::cloopen_google::protobuf::uint32 packet_length_;
-  ::cloopen_google::protobuf::uint32 probe_cluster_id_;
+  ::yuntongxun_google::protobuf::uint32 packet_length_;
+  ::yuntongxun_google::protobuf::uint32 probe_cluster_id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_rtc_5fevent_5flog_2eproto_impl();
   #else
@@ -619,7 +619,7 @@ class RtpPacket : public ::cloopen_google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class RtcpPacket : public ::cloopen_google::protobuf::MessageLite {
+class RtcpPacket : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   RtcpPacket();
   virtual ~RtcpPacket();
@@ -656,7 +656,7 @@ class RtcpPacket : public ::cloopen_google::protobuf::MessageLite {
   // implements Message ----------------------------------------------
 
   RtcpPacket* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const RtcpPacket& from);
   void MergeFrom(const RtcpPacket& from);
   void Clear();
@@ -664,9 +664,9 @@ class RtcpPacket : public ::cloopen_google::protobuf::MessageLite {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -691,8 +691,8 @@ class RtcpPacket : public ::cloopen_google::protobuf::MessageLite {
   inline bool has_type() const;
   inline void clear_type();
   static const int kTypeFieldNumber = 2;
-  inline ::cloopenwebrtc::rtclog::MediaType type() const;
-  inline void set_type(::cloopenwebrtc::rtclog::MediaType value);
+  inline ::yuntongxunwebrtc::rtclog::MediaType type() const;
+  inline void set_type(::yuntongxunwebrtc::rtclog::MediaType value);
 
   // optional bytes packet_data = 3;
   inline bool has_packet_data() const;
@@ -717,7 +717,7 @@ class RtcpPacket : public ::cloopen_google::protobuf::MessageLite {
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   bool incoming_;
   int type_;
@@ -735,7 +735,7 @@ class RtcpPacket : public ::cloopen_google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class AudioPlayoutEvent : public ::cloopen_google::protobuf::MessageLite {
+class AudioPlayoutEvent : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   AudioPlayoutEvent();
   virtual ~AudioPlayoutEvent();
@@ -772,7 +772,7 @@ class AudioPlayoutEvent : public ::cloopen_google::protobuf::MessageLite {
   // implements Message ----------------------------------------------
 
   AudioPlayoutEvent* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const AudioPlayoutEvent& from);
   void MergeFrom(const AudioPlayoutEvent& from);
   void Clear();
@@ -780,9 +780,9 @@ class AudioPlayoutEvent : public ::cloopen_google::protobuf::MessageLite {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -800,8 +800,8 @@ class AudioPlayoutEvent : public ::cloopen_google::protobuf::MessageLite {
   inline bool has_local_ssrc() const;
   inline void clear_local_ssrc();
   static const int kLocalSsrcFieldNumber = 2;
-  inline ::cloopen_google::protobuf::uint32 local_ssrc() const;
-  inline void set_local_ssrc(::cloopen_google::protobuf::uint32 value);
+  inline ::yuntongxun_google::protobuf::uint32 local_ssrc() const;
+  inline void set_local_ssrc(::yuntongxun_google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:webrtc.rtclog.AudioPlayoutEvent)
  private:
@@ -810,9 +810,9 @@ class AudioPlayoutEvent : public ::cloopen_google::protobuf::MessageLite {
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::cloopen_google::protobuf::uint32 local_ssrc_;
+  ::yuntongxun_google::protobuf::uint32 local_ssrc_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_rtc_5fevent_5flog_2eproto_impl();
   #else
@@ -826,7 +826,7 @@ class AudioPlayoutEvent : public ::cloopen_google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class LossBasedBweUpdate : public ::cloopen_google::protobuf::MessageLite {
+class LossBasedBweUpdate : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   LossBasedBweUpdate();
   virtual ~LossBasedBweUpdate();
@@ -863,7 +863,7 @@ class LossBasedBweUpdate : public ::cloopen_google::protobuf::MessageLite {
   // implements Message ----------------------------------------------
 
   LossBasedBweUpdate* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const LossBasedBweUpdate& from);
   void MergeFrom(const LossBasedBweUpdate& from);
   void Clear();
@@ -871,9 +871,9 @@ class LossBasedBweUpdate : public ::cloopen_google::protobuf::MessageLite {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -891,22 +891,22 @@ class LossBasedBweUpdate : public ::cloopen_google::protobuf::MessageLite {
   inline bool has_bitrate_bps() const;
   inline void clear_bitrate_bps();
   static const int kBitrateBpsFieldNumber = 1;
-  inline ::cloopen_google::protobuf::int32 bitrate_bps() const;
-  inline void set_bitrate_bps(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 bitrate_bps() const;
+  inline void set_bitrate_bps(::yuntongxun_google::protobuf::int32 value);
 
   // optional uint32 fraction_loss = 2;
   inline bool has_fraction_loss() const;
   inline void clear_fraction_loss();
   static const int kFractionLossFieldNumber = 2;
-  inline ::cloopen_google::protobuf::uint32 fraction_loss() const;
-  inline void set_fraction_loss(::cloopen_google::protobuf::uint32 value);
+  inline ::yuntongxun_google::protobuf::uint32 fraction_loss() const;
+  inline void set_fraction_loss(::yuntongxun_google::protobuf::uint32 value);
 
   // optional int32 total_packets = 3;
   inline bool has_total_packets() const;
   inline void clear_total_packets();
   static const int kTotalPacketsFieldNumber = 3;
-  inline ::cloopen_google::protobuf::int32 total_packets() const;
-  inline void set_total_packets(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 total_packets() const;
+  inline void set_total_packets(::yuntongxun_google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:webrtc.rtclog.LossBasedBweUpdate)
  private:
@@ -919,11 +919,11 @@ class LossBasedBweUpdate : public ::cloopen_google::protobuf::MessageLite {
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::cloopen_google::protobuf::int32 bitrate_bps_;
-  ::cloopen_google::protobuf::uint32 fraction_loss_;
-  ::cloopen_google::protobuf::int32 total_packets_;
+  ::yuntongxun_google::protobuf::int32 bitrate_bps_;
+  ::yuntongxun_google::protobuf::uint32 fraction_loss_;
+  ::yuntongxun_google::protobuf::int32 total_packets_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_rtc_5fevent_5flog_2eproto_impl();
   #else
@@ -937,7 +937,7 @@ class LossBasedBweUpdate : public ::cloopen_google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class DelayBasedBweUpdate : public ::cloopen_google::protobuf::MessageLite {
+class DelayBasedBweUpdate : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   DelayBasedBweUpdate();
   virtual ~DelayBasedBweUpdate();
@@ -974,7 +974,7 @@ class DelayBasedBweUpdate : public ::cloopen_google::protobuf::MessageLite {
   // implements Message ----------------------------------------------
 
   DelayBasedBweUpdate* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const DelayBasedBweUpdate& from);
   void MergeFrom(const DelayBasedBweUpdate& from);
   void Clear();
@@ -982,9 +982,9 @@ class DelayBasedBweUpdate : public ::cloopen_google::protobuf::MessageLite {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -1016,15 +1016,15 @@ class DelayBasedBweUpdate : public ::cloopen_google::protobuf::MessageLite {
   inline bool has_bitrate_bps() const;
   inline void clear_bitrate_bps();
   static const int kBitrateBpsFieldNumber = 1;
-  inline ::cloopen_google::protobuf::int32 bitrate_bps() const;
-  inline void set_bitrate_bps(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 bitrate_bps() const;
+  inline void set_bitrate_bps(::yuntongxun_google::protobuf::int32 value);
 
   // optional .webrtc.rtclog.DelayBasedBweUpdate.DetectorState detector_state = 2;
   inline bool has_detector_state() const;
   inline void clear_detector_state();
   static const int kDetectorStateFieldNumber = 2;
-  inline ::cloopenwebrtc::rtclog::DelayBasedBweUpdate_DetectorState detector_state() const;
-  inline void set_detector_state(::cloopenwebrtc::rtclog::DelayBasedBweUpdate_DetectorState value);
+  inline ::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate_DetectorState detector_state() const;
+  inline void set_detector_state(::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate_DetectorState value);
 
   // @@protoc_insertion_point(class_scope:webrtc.rtclog.DelayBasedBweUpdate)
  private:
@@ -1035,9 +1035,9 @@ class DelayBasedBweUpdate : public ::cloopen_google::protobuf::MessageLite {
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::cloopen_google::protobuf::int32 bitrate_bps_;
+  ::yuntongxun_google::protobuf::int32 bitrate_bps_;
   int detector_state_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_rtc_5fevent_5flog_2eproto_impl();
@@ -1052,7 +1052,7 @@ class DelayBasedBweUpdate : public ::cloopen_google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class VideoReceiveConfig : public ::cloopen_google::protobuf::MessageLite {
+class VideoReceiveConfig : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   VideoReceiveConfig();
   virtual ~VideoReceiveConfig();
@@ -1089,7 +1089,7 @@ class VideoReceiveConfig : public ::cloopen_google::protobuf::MessageLite {
   // implements Message ----------------------------------------------
 
   VideoReceiveConfig* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const VideoReceiveConfig& from);
   void MergeFrom(const VideoReceiveConfig& from);
   void Clear();
@@ -1097,9 +1097,9 @@ class VideoReceiveConfig : public ::cloopen_google::protobuf::MessageLite {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -1130,22 +1130,22 @@ class VideoReceiveConfig : public ::cloopen_google::protobuf::MessageLite {
   inline bool has_remote_ssrc() const;
   inline void clear_remote_ssrc();
   static const int kRemoteSsrcFieldNumber = 1;
-  inline ::cloopen_google::protobuf::uint32 remote_ssrc() const;
-  inline void set_remote_ssrc(::cloopen_google::protobuf::uint32 value);
+  inline ::yuntongxun_google::protobuf::uint32 remote_ssrc() const;
+  inline void set_remote_ssrc(::yuntongxun_google::protobuf::uint32 value);
 
   // optional uint32 local_ssrc = 2;
   inline bool has_local_ssrc() const;
   inline void clear_local_ssrc();
   static const int kLocalSsrcFieldNumber = 2;
-  inline ::cloopen_google::protobuf::uint32 local_ssrc() const;
-  inline void set_local_ssrc(::cloopen_google::protobuf::uint32 value);
+  inline ::yuntongxun_google::protobuf::uint32 local_ssrc() const;
+  inline void set_local_ssrc(::yuntongxun_google::protobuf::uint32 value);
 
   // optional .webrtc.rtclog.VideoReceiveConfig.RtcpMode rtcp_mode = 3;
   inline bool has_rtcp_mode() const;
   inline void clear_rtcp_mode();
   static const int kRtcpModeFieldNumber = 3;
-  inline ::cloopenwebrtc::rtclog::VideoReceiveConfig_RtcpMode rtcp_mode() const;
-  inline void set_rtcp_mode(::cloopenwebrtc::rtclog::VideoReceiveConfig_RtcpMode value);
+  inline ::yuntongxunwebrtc::rtclog::VideoReceiveConfig_RtcpMode rtcp_mode() const;
+  inline void set_rtcp_mode(::yuntongxunwebrtc::rtclog::VideoReceiveConfig_RtcpMode value);
 
   // optional bool remb = 4;
   inline bool has_remb() const;
@@ -1158,36 +1158,36 @@ class VideoReceiveConfig : public ::cloopen_google::protobuf::MessageLite {
   inline int rtx_map_size() const;
   inline void clear_rtx_map();
   static const int kRtxMapFieldNumber = 5;
-  inline const ::cloopenwebrtc::rtclog::RtxMap& rtx_map(int index) const;
-  inline ::cloopenwebrtc::rtclog::RtxMap* mutable_rtx_map(int index);
-  inline ::cloopenwebrtc::rtclog::RtxMap* add_rtx_map();
-  inline const ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtxMap >&
+  inline const ::yuntongxunwebrtc::rtclog::RtxMap& rtx_map(int index) const;
+  inline ::yuntongxunwebrtc::rtclog::RtxMap* mutable_rtx_map(int index);
+  inline ::yuntongxunwebrtc::rtclog::RtxMap* add_rtx_map();
+  inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtxMap >&
       rtx_map() const;
-  inline ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtxMap >*
+  inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtxMap >*
       mutable_rtx_map();
 
   // repeated .webrtc.rtclog.RtpHeaderExtension header_extensions = 6;
   inline int header_extensions_size() const;
   inline void clear_header_extensions();
   static const int kHeaderExtensionsFieldNumber = 6;
-  inline const ::cloopenwebrtc::rtclog::RtpHeaderExtension& header_extensions(int index) const;
-  inline ::cloopenwebrtc::rtclog::RtpHeaderExtension* mutable_header_extensions(int index);
-  inline ::cloopenwebrtc::rtclog::RtpHeaderExtension* add_header_extensions();
-  inline const ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtpHeaderExtension >&
+  inline const ::yuntongxunwebrtc::rtclog::RtpHeaderExtension& header_extensions(int index) const;
+  inline ::yuntongxunwebrtc::rtclog::RtpHeaderExtension* mutable_header_extensions(int index);
+  inline ::yuntongxunwebrtc::rtclog::RtpHeaderExtension* add_header_extensions();
+  inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtpHeaderExtension >&
       header_extensions() const;
-  inline ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtpHeaderExtension >*
+  inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtpHeaderExtension >*
       mutable_header_extensions();
 
   // repeated .webrtc.rtclog.DecoderConfig decoders = 7;
   inline int decoders_size() const;
   inline void clear_decoders();
   static const int kDecodersFieldNumber = 7;
-  inline const ::cloopenwebrtc::rtclog::DecoderConfig& decoders(int index) const;
-  inline ::cloopenwebrtc::rtclog::DecoderConfig* mutable_decoders(int index);
-  inline ::cloopenwebrtc::rtclog::DecoderConfig* add_decoders();
-  inline const ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::DecoderConfig >&
+  inline const ::yuntongxunwebrtc::rtclog::DecoderConfig& decoders(int index) const;
+  inline ::yuntongxunwebrtc::rtclog::DecoderConfig* mutable_decoders(int index);
+  inline ::yuntongxunwebrtc::rtclog::DecoderConfig* add_decoders();
+  inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::DecoderConfig >&
       decoders() const;
-  inline ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::DecoderConfig >*
+  inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::DecoderConfig >*
       mutable_decoders();
 
   // @@protoc_insertion_point(class_scope:webrtc.rtclog.VideoReceiveConfig)
@@ -1203,15 +1203,15 @@ class VideoReceiveConfig : public ::cloopen_google::protobuf::MessageLite {
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::cloopen_google::protobuf::uint32 remote_ssrc_;
-  ::cloopen_google::protobuf::uint32 local_ssrc_;
+  ::yuntongxun_google::protobuf::uint32 remote_ssrc_;
+  ::yuntongxun_google::protobuf::uint32 local_ssrc_;
   int rtcp_mode_;
   bool remb_;
-  ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtxMap > rtx_map_;
-  ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtpHeaderExtension > header_extensions_;
-  ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::DecoderConfig > decoders_;
+  ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtxMap > rtx_map_;
+  ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtpHeaderExtension > header_extensions_;
+  ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::DecoderConfig > decoders_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_rtc_5fevent_5flog_2eproto_impl();
   #else
@@ -1225,7 +1225,7 @@ class VideoReceiveConfig : public ::cloopen_google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class DecoderConfig : public ::cloopen_google::protobuf::MessageLite {
+class DecoderConfig : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   DecoderConfig();
   virtual ~DecoderConfig();
@@ -1262,7 +1262,7 @@ class DecoderConfig : public ::cloopen_google::protobuf::MessageLite {
   // implements Message ----------------------------------------------
 
   DecoderConfig* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const DecoderConfig& from);
   void MergeFrom(const DecoderConfig& from);
   void Clear();
@@ -1270,9 +1270,9 @@ class DecoderConfig : public ::cloopen_google::protobuf::MessageLite {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -1302,8 +1302,8 @@ class DecoderConfig : public ::cloopen_google::protobuf::MessageLite {
   inline bool has_payload_type() const;
   inline void clear_payload_type();
   static const int kPayloadTypeFieldNumber = 2;
-  inline ::cloopen_google::protobuf::int32 payload_type() const;
-  inline void set_payload_type(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 payload_type() const;
+  inline void set_payload_type(::yuntongxun_google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:webrtc.rtclog.DecoderConfig)
  private:
@@ -1314,10 +1314,10 @@ class DecoderConfig : public ::cloopen_google::protobuf::MessageLite {
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   ::std::string* name_;
-  ::cloopen_google::protobuf::int32 payload_type_;
+  ::yuntongxun_google::protobuf::int32 payload_type_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_rtc_5fevent_5flog_2eproto_impl();
   #else
@@ -1331,7 +1331,7 @@ class DecoderConfig : public ::cloopen_google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class RtpHeaderExtension : public ::cloopen_google::protobuf::MessageLite {
+class RtpHeaderExtension : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   RtpHeaderExtension();
   virtual ~RtpHeaderExtension();
@@ -1368,7 +1368,7 @@ class RtpHeaderExtension : public ::cloopen_google::protobuf::MessageLite {
   // implements Message ----------------------------------------------
 
   RtpHeaderExtension* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const RtpHeaderExtension& from);
   void MergeFrom(const RtpHeaderExtension& from);
   void Clear();
@@ -1376,9 +1376,9 @@ class RtpHeaderExtension : public ::cloopen_google::protobuf::MessageLite {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -1408,8 +1408,8 @@ class RtpHeaderExtension : public ::cloopen_google::protobuf::MessageLite {
   inline bool has_id() const;
   inline void clear_id();
   static const int kIdFieldNumber = 2;
-  inline ::cloopen_google::protobuf::int32 id() const;
-  inline void set_id(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 id() const;
+  inline void set_id(::yuntongxun_google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:webrtc.rtclog.RtpHeaderExtension)
  private:
@@ -1420,10 +1420,10 @@ class RtpHeaderExtension : public ::cloopen_google::protobuf::MessageLite {
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   ::std::string* name_;
-  ::cloopen_google::protobuf::int32 id_;
+  ::yuntongxun_google::protobuf::int32 id_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_rtc_5fevent_5flog_2eproto_impl();
   #else
@@ -1437,7 +1437,7 @@ class RtpHeaderExtension : public ::cloopen_google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class RtxConfig : public ::cloopen_google::protobuf::MessageLite {
+class RtxConfig : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   RtxConfig();
   virtual ~RtxConfig();
@@ -1474,7 +1474,7 @@ class RtxConfig : public ::cloopen_google::protobuf::MessageLite {
   // implements Message ----------------------------------------------
 
   RtxConfig* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const RtxConfig& from);
   void MergeFrom(const RtxConfig& from);
   void Clear();
@@ -1482,9 +1482,9 @@ class RtxConfig : public ::cloopen_google::protobuf::MessageLite {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -1502,15 +1502,15 @@ class RtxConfig : public ::cloopen_google::protobuf::MessageLite {
   inline bool has_rtx_ssrc() const;
   inline void clear_rtx_ssrc();
   static const int kRtxSsrcFieldNumber = 1;
-  inline ::cloopen_google::protobuf::uint32 rtx_ssrc() const;
-  inline void set_rtx_ssrc(::cloopen_google::protobuf::uint32 value);
+  inline ::yuntongxun_google::protobuf::uint32 rtx_ssrc() const;
+  inline void set_rtx_ssrc(::yuntongxun_google::protobuf::uint32 value);
 
   // optional int32 rtx_payload_type = 2;
   inline bool has_rtx_payload_type() const;
   inline void clear_rtx_payload_type();
   static const int kRtxPayloadTypeFieldNumber = 2;
-  inline ::cloopen_google::protobuf::int32 rtx_payload_type() const;
-  inline void set_rtx_payload_type(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 rtx_payload_type() const;
+  inline void set_rtx_payload_type(::yuntongxun_google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:webrtc.rtclog.RtxConfig)
  private:
@@ -1521,10 +1521,10 @@ class RtxConfig : public ::cloopen_google::protobuf::MessageLite {
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::cloopen_google::protobuf::uint32 rtx_ssrc_;
-  ::cloopen_google::protobuf::int32 rtx_payload_type_;
+  ::yuntongxun_google::protobuf::uint32 rtx_ssrc_;
+  ::yuntongxun_google::protobuf::int32 rtx_payload_type_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_rtc_5fevent_5flog_2eproto_impl();
   #else
@@ -1538,7 +1538,7 @@ class RtxConfig : public ::cloopen_google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class RtxMap : public ::cloopen_google::protobuf::MessageLite {
+class RtxMap : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   RtxMap();
   virtual ~RtxMap();
@@ -1575,7 +1575,7 @@ class RtxMap : public ::cloopen_google::protobuf::MessageLite {
   // implements Message ----------------------------------------------
 
   RtxMap* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const RtxMap& from);
   void MergeFrom(const RtxMap& from);
   void Clear();
@@ -1583,9 +1583,9 @@ class RtxMap : public ::cloopen_google::protobuf::MessageLite {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -1603,17 +1603,17 @@ class RtxMap : public ::cloopen_google::protobuf::MessageLite {
   inline bool has_payload_type() const;
   inline void clear_payload_type();
   static const int kPayloadTypeFieldNumber = 1;
-  inline ::cloopen_google::protobuf::int32 payload_type() const;
-  inline void set_payload_type(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 payload_type() const;
+  inline void set_payload_type(::yuntongxun_google::protobuf::int32 value);
 
   // optional .webrtc.rtclog.RtxConfig config = 2;
   inline bool has_config() const;
   inline void clear_config();
   static const int kConfigFieldNumber = 2;
-  inline const ::cloopenwebrtc::rtclog::RtxConfig& config() const;
-  inline ::cloopenwebrtc::rtclog::RtxConfig* mutable_config();
-  inline ::cloopenwebrtc::rtclog::RtxConfig* release_config();
-  inline void set_allocated_config(::cloopenwebrtc::rtclog::RtxConfig* config);
+  inline const ::yuntongxunwebrtc::rtclog::RtxConfig& config() const;
+  inline ::yuntongxunwebrtc::rtclog::RtxConfig* mutable_config();
+  inline ::yuntongxunwebrtc::rtclog::RtxConfig* release_config();
+  inline void set_allocated_config(::yuntongxunwebrtc::rtclog::RtxConfig* config);
 
   // @@protoc_insertion_point(class_scope:webrtc.rtclog.RtxMap)
  private:
@@ -1624,10 +1624,10 @@ class RtxMap : public ::cloopen_google::protobuf::MessageLite {
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::cloopenwebrtc::rtclog::RtxConfig* config_;
-  ::cloopen_google::protobuf::int32 payload_type_;
+  ::yuntongxunwebrtc::rtclog::RtxConfig* config_;
+  ::yuntongxun_google::protobuf::int32 payload_type_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_rtc_5fevent_5flog_2eproto_impl();
   #else
@@ -1641,7 +1641,7 @@ class RtxMap : public ::cloopen_google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class VideoSendConfig : public ::cloopen_google::protobuf::MessageLite {
+class VideoSendConfig : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   VideoSendConfig();
   virtual ~VideoSendConfig();
@@ -1678,7 +1678,7 @@ class VideoSendConfig : public ::cloopen_google::protobuf::MessageLite {
   // implements Message ----------------------------------------------
 
   VideoSendConfig* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const VideoSendConfig& from);
   void MergeFrom(const VideoSendConfig& from);
   void Clear();
@@ -1686,9 +1686,9 @@ class VideoSendConfig : public ::cloopen_google::protobuf::MessageLite {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -1706,53 +1706,53 @@ class VideoSendConfig : public ::cloopen_google::protobuf::MessageLite {
   inline int ssrcs_size() const;
   inline void clear_ssrcs();
   static const int kSsrcsFieldNumber = 1;
-  inline ::cloopen_google::protobuf::uint32 ssrcs(int index) const;
-  inline void set_ssrcs(int index, ::cloopen_google::protobuf::uint32 value);
-  inline void add_ssrcs(::cloopen_google::protobuf::uint32 value);
-  inline const ::cloopen_google::protobuf::RepeatedField< ::cloopen_google::protobuf::uint32 >&
+  inline ::yuntongxun_google::protobuf::uint32 ssrcs(int index) const;
+  inline void set_ssrcs(int index, ::yuntongxun_google::protobuf::uint32 value);
+  inline void add_ssrcs(::yuntongxun_google::protobuf::uint32 value);
+  inline const ::yuntongxun_google::protobuf::RepeatedField< ::yuntongxun_google::protobuf::uint32 >&
       ssrcs() const;
-  inline ::cloopen_google::protobuf::RepeatedField< ::cloopen_google::protobuf::uint32 >*
+  inline ::yuntongxun_google::protobuf::RepeatedField< ::yuntongxun_google::protobuf::uint32 >*
       mutable_ssrcs();
 
   // repeated .webrtc.rtclog.RtpHeaderExtension header_extensions = 2;
   inline int header_extensions_size() const;
   inline void clear_header_extensions();
   static const int kHeaderExtensionsFieldNumber = 2;
-  inline const ::cloopenwebrtc::rtclog::RtpHeaderExtension& header_extensions(int index) const;
-  inline ::cloopenwebrtc::rtclog::RtpHeaderExtension* mutable_header_extensions(int index);
-  inline ::cloopenwebrtc::rtclog::RtpHeaderExtension* add_header_extensions();
-  inline const ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtpHeaderExtension >&
+  inline const ::yuntongxunwebrtc::rtclog::RtpHeaderExtension& header_extensions(int index) const;
+  inline ::yuntongxunwebrtc::rtclog::RtpHeaderExtension* mutable_header_extensions(int index);
+  inline ::yuntongxunwebrtc::rtclog::RtpHeaderExtension* add_header_extensions();
+  inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtpHeaderExtension >&
       header_extensions() const;
-  inline ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtpHeaderExtension >*
+  inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtpHeaderExtension >*
       mutable_header_extensions();
 
   // repeated uint32 rtx_ssrcs = 3;
   inline int rtx_ssrcs_size() const;
   inline void clear_rtx_ssrcs();
   static const int kRtxSsrcsFieldNumber = 3;
-  inline ::cloopen_google::protobuf::uint32 rtx_ssrcs(int index) const;
-  inline void set_rtx_ssrcs(int index, ::cloopen_google::protobuf::uint32 value);
-  inline void add_rtx_ssrcs(::cloopen_google::protobuf::uint32 value);
-  inline const ::cloopen_google::protobuf::RepeatedField< ::cloopen_google::protobuf::uint32 >&
+  inline ::yuntongxun_google::protobuf::uint32 rtx_ssrcs(int index) const;
+  inline void set_rtx_ssrcs(int index, ::yuntongxun_google::protobuf::uint32 value);
+  inline void add_rtx_ssrcs(::yuntongxun_google::protobuf::uint32 value);
+  inline const ::yuntongxun_google::protobuf::RepeatedField< ::yuntongxun_google::protobuf::uint32 >&
       rtx_ssrcs() const;
-  inline ::cloopen_google::protobuf::RepeatedField< ::cloopen_google::protobuf::uint32 >*
+  inline ::yuntongxun_google::protobuf::RepeatedField< ::yuntongxun_google::protobuf::uint32 >*
       mutable_rtx_ssrcs();
 
   // optional int32 rtx_payload_type = 4;
   inline bool has_rtx_payload_type() const;
   inline void clear_rtx_payload_type();
   static const int kRtxPayloadTypeFieldNumber = 4;
-  inline ::cloopen_google::protobuf::int32 rtx_payload_type() const;
-  inline void set_rtx_payload_type(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 rtx_payload_type() const;
+  inline void set_rtx_payload_type(::yuntongxun_google::protobuf::int32 value);
 
   // optional .webrtc.rtclog.EncoderConfig encoder = 5;
   inline bool has_encoder() const;
   inline void clear_encoder();
   static const int kEncoderFieldNumber = 5;
-  inline const ::cloopenwebrtc::rtclog::EncoderConfig& encoder() const;
-  inline ::cloopenwebrtc::rtclog::EncoderConfig* mutable_encoder();
-  inline ::cloopenwebrtc::rtclog::EncoderConfig* release_encoder();
-  inline void set_allocated_encoder(::cloopenwebrtc::rtclog::EncoderConfig* encoder);
+  inline const ::yuntongxunwebrtc::rtclog::EncoderConfig& encoder() const;
+  inline ::yuntongxunwebrtc::rtclog::EncoderConfig* mutable_encoder();
+  inline ::yuntongxunwebrtc::rtclog::EncoderConfig* release_encoder();
+  inline void set_allocated_encoder(::yuntongxunwebrtc::rtclog::EncoderConfig* encoder);
 
   // @@protoc_insertion_point(class_scope:webrtc.rtclog.VideoSendConfig)
  private:
@@ -1763,13 +1763,13 @@ class VideoSendConfig : public ::cloopen_google::protobuf::MessageLite {
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::cloopen_google::protobuf::RepeatedField< ::cloopen_google::protobuf::uint32 > ssrcs_;
-  ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtpHeaderExtension > header_extensions_;
-  ::cloopen_google::protobuf::RepeatedField< ::cloopen_google::protobuf::uint32 > rtx_ssrcs_;
-  ::cloopenwebrtc::rtclog::EncoderConfig* encoder_;
-  ::cloopen_google::protobuf::int32 rtx_payload_type_;
+  ::yuntongxun_google::protobuf::RepeatedField< ::yuntongxun_google::protobuf::uint32 > ssrcs_;
+  ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtpHeaderExtension > header_extensions_;
+  ::yuntongxun_google::protobuf::RepeatedField< ::yuntongxun_google::protobuf::uint32 > rtx_ssrcs_;
+  ::yuntongxunwebrtc::rtclog::EncoderConfig* encoder_;
+  ::yuntongxun_google::protobuf::int32 rtx_payload_type_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_rtc_5fevent_5flog_2eproto_impl();
   #else
@@ -1783,7 +1783,7 @@ class VideoSendConfig : public ::cloopen_google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class EncoderConfig : public ::cloopen_google::protobuf::MessageLite {
+class EncoderConfig : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   EncoderConfig();
   virtual ~EncoderConfig();
@@ -1820,7 +1820,7 @@ class EncoderConfig : public ::cloopen_google::protobuf::MessageLite {
   // implements Message ----------------------------------------------
 
   EncoderConfig* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const EncoderConfig& from);
   void MergeFrom(const EncoderConfig& from);
   void Clear();
@@ -1828,9 +1828,9 @@ class EncoderConfig : public ::cloopen_google::protobuf::MessageLite {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -1860,8 +1860,8 @@ class EncoderConfig : public ::cloopen_google::protobuf::MessageLite {
   inline bool has_payload_type() const;
   inline void clear_payload_type();
   static const int kPayloadTypeFieldNumber = 2;
-  inline ::cloopen_google::protobuf::int32 payload_type() const;
-  inline void set_payload_type(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 payload_type() const;
+  inline void set_payload_type(::yuntongxun_google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:webrtc.rtclog.EncoderConfig)
  private:
@@ -1872,10 +1872,10 @@ class EncoderConfig : public ::cloopen_google::protobuf::MessageLite {
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   ::std::string* name_;
-  ::cloopen_google::protobuf::int32 payload_type_;
+  ::yuntongxun_google::protobuf::int32 payload_type_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_rtc_5fevent_5flog_2eproto_impl();
   #else
@@ -1889,7 +1889,7 @@ class EncoderConfig : public ::cloopen_google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class AudioReceiveConfig : public ::cloopen_google::protobuf::MessageLite {
+class AudioReceiveConfig : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   AudioReceiveConfig();
   virtual ~AudioReceiveConfig();
@@ -1926,7 +1926,7 @@ class AudioReceiveConfig : public ::cloopen_google::protobuf::MessageLite {
   // implements Message ----------------------------------------------
 
   AudioReceiveConfig* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const AudioReceiveConfig& from);
   void MergeFrom(const AudioReceiveConfig& from);
   void Clear();
@@ -1934,9 +1934,9 @@ class AudioReceiveConfig : public ::cloopen_google::protobuf::MessageLite {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -1954,26 +1954,26 @@ class AudioReceiveConfig : public ::cloopen_google::protobuf::MessageLite {
   inline bool has_remote_ssrc() const;
   inline void clear_remote_ssrc();
   static const int kRemoteSsrcFieldNumber = 1;
-  inline ::cloopen_google::protobuf::uint32 remote_ssrc() const;
-  inline void set_remote_ssrc(::cloopen_google::protobuf::uint32 value);
+  inline ::yuntongxun_google::protobuf::uint32 remote_ssrc() const;
+  inline void set_remote_ssrc(::yuntongxun_google::protobuf::uint32 value);
 
   // optional uint32 local_ssrc = 2;
   inline bool has_local_ssrc() const;
   inline void clear_local_ssrc();
   static const int kLocalSsrcFieldNumber = 2;
-  inline ::cloopen_google::protobuf::uint32 local_ssrc() const;
-  inline void set_local_ssrc(::cloopen_google::protobuf::uint32 value);
+  inline ::yuntongxun_google::protobuf::uint32 local_ssrc() const;
+  inline void set_local_ssrc(::yuntongxun_google::protobuf::uint32 value);
 
   // repeated .webrtc.rtclog.RtpHeaderExtension header_extensions = 3;
   inline int header_extensions_size() const;
   inline void clear_header_extensions();
   static const int kHeaderExtensionsFieldNumber = 3;
-  inline const ::cloopenwebrtc::rtclog::RtpHeaderExtension& header_extensions(int index) const;
-  inline ::cloopenwebrtc::rtclog::RtpHeaderExtension* mutable_header_extensions(int index);
-  inline ::cloopenwebrtc::rtclog::RtpHeaderExtension* add_header_extensions();
-  inline const ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtpHeaderExtension >&
+  inline const ::yuntongxunwebrtc::rtclog::RtpHeaderExtension& header_extensions(int index) const;
+  inline ::yuntongxunwebrtc::rtclog::RtpHeaderExtension* mutable_header_extensions(int index);
+  inline ::yuntongxunwebrtc::rtclog::RtpHeaderExtension* add_header_extensions();
+  inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtpHeaderExtension >&
       header_extensions() const;
-  inline ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtpHeaderExtension >*
+  inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtpHeaderExtension >*
       mutable_header_extensions();
 
   // @@protoc_insertion_point(class_scope:webrtc.rtclog.AudioReceiveConfig)
@@ -1985,11 +1985,11 @@ class AudioReceiveConfig : public ::cloopen_google::protobuf::MessageLite {
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::cloopen_google::protobuf::uint32 remote_ssrc_;
-  ::cloopen_google::protobuf::uint32 local_ssrc_;
-  ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtpHeaderExtension > header_extensions_;
+  ::yuntongxun_google::protobuf::uint32 remote_ssrc_;
+  ::yuntongxun_google::protobuf::uint32 local_ssrc_;
+  ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtpHeaderExtension > header_extensions_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_rtc_5fevent_5flog_2eproto_impl();
   #else
@@ -2003,7 +2003,7 @@ class AudioReceiveConfig : public ::cloopen_google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class AudioSendConfig : public ::cloopen_google::protobuf::MessageLite {
+class AudioSendConfig : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   AudioSendConfig();
   virtual ~AudioSendConfig();
@@ -2040,7 +2040,7 @@ class AudioSendConfig : public ::cloopen_google::protobuf::MessageLite {
   // implements Message ----------------------------------------------
 
   AudioSendConfig* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const AudioSendConfig& from);
   void MergeFrom(const AudioSendConfig& from);
   void Clear();
@@ -2048,9 +2048,9 @@ class AudioSendConfig : public ::cloopen_google::protobuf::MessageLite {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -2068,19 +2068,19 @@ class AudioSendConfig : public ::cloopen_google::protobuf::MessageLite {
   inline bool has_ssrc() const;
   inline void clear_ssrc();
   static const int kSsrcFieldNumber = 1;
-  inline ::cloopen_google::protobuf::uint32 ssrc() const;
-  inline void set_ssrc(::cloopen_google::protobuf::uint32 value);
+  inline ::yuntongxun_google::protobuf::uint32 ssrc() const;
+  inline void set_ssrc(::yuntongxun_google::protobuf::uint32 value);
 
   // repeated .webrtc.rtclog.RtpHeaderExtension header_extensions = 2;
   inline int header_extensions_size() const;
   inline void clear_header_extensions();
   static const int kHeaderExtensionsFieldNumber = 2;
-  inline const ::cloopenwebrtc::rtclog::RtpHeaderExtension& header_extensions(int index) const;
-  inline ::cloopenwebrtc::rtclog::RtpHeaderExtension* mutable_header_extensions(int index);
-  inline ::cloopenwebrtc::rtclog::RtpHeaderExtension* add_header_extensions();
-  inline const ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtpHeaderExtension >&
+  inline const ::yuntongxunwebrtc::rtclog::RtpHeaderExtension& header_extensions(int index) const;
+  inline ::yuntongxunwebrtc::rtclog::RtpHeaderExtension* mutable_header_extensions(int index);
+  inline ::yuntongxunwebrtc::rtclog::RtpHeaderExtension* add_header_extensions();
+  inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtpHeaderExtension >&
       header_extensions() const;
-  inline ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtpHeaderExtension >*
+  inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtpHeaderExtension >*
       mutable_header_extensions();
 
   // @@protoc_insertion_point(class_scope:webrtc.rtclog.AudioSendConfig)
@@ -2090,10 +2090,10 @@ class AudioSendConfig : public ::cloopen_google::protobuf::MessageLite {
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtpHeaderExtension > header_extensions_;
-  ::cloopen_google::protobuf::uint32 ssrc_;
+  ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtpHeaderExtension > header_extensions_;
+  ::yuntongxun_google::protobuf::uint32 ssrc_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_rtc_5fevent_5flog_2eproto_impl();
   #else
@@ -2107,7 +2107,7 @@ class AudioSendConfig : public ::cloopen_google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class AudioNetworkAdaptation : public ::cloopen_google::protobuf::MessageLite {
+class AudioNetworkAdaptation : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   AudioNetworkAdaptation();
   virtual ~AudioNetworkAdaptation();
@@ -2144,7 +2144,7 @@ class AudioNetworkAdaptation : public ::cloopen_google::protobuf::MessageLite {
   // implements Message ----------------------------------------------
 
   AudioNetworkAdaptation* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const AudioNetworkAdaptation& from);
   void MergeFrom(const AudioNetworkAdaptation& from);
   void Clear();
@@ -2152,9 +2152,9 @@ class AudioNetworkAdaptation : public ::cloopen_google::protobuf::MessageLite {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -2172,15 +2172,15 @@ class AudioNetworkAdaptation : public ::cloopen_google::protobuf::MessageLite {
   inline bool has_bitrate_bps() const;
   inline void clear_bitrate_bps();
   static const int kBitrateBpsFieldNumber = 1;
-  inline ::cloopen_google::protobuf::int32 bitrate_bps() const;
-  inline void set_bitrate_bps(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 bitrate_bps() const;
+  inline void set_bitrate_bps(::yuntongxun_google::protobuf::int32 value);
 
   // optional int32 frame_length_ms = 2;
   inline bool has_frame_length_ms() const;
   inline void clear_frame_length_ms();
   static const int kFrameLengthMsFieldNumber = 2;
-  inline ::cloopen_google::protobuf::int32 frame_length_ms() const;
-  inline void set_frame_length_ms(::cloopen_google::protobuf::int32 value);
+  inline ::yuntongxun_google::protobuf::int32 frame_length_ms() const;
+  inline void set_frame_length_ms(::yuntongxun_google::protobuf::int32 value);
 
   // optional float uplink_packet_loss_fraction = 3;
   inline bool has_uplink_packet_loss_fraction() const;
@@ -2207,8 +2207,8 @@ class AudioNetworkAdaptation : public ::cloopen_google::protobuf::MessageLite {
   inline bool has_num_channels() const;
   inline void clear_num_channels();
   static const int kNumChannelsFieldNumber = 6;
-  inline ::cloopen_google::protobuf::uint32 num_channels() const;
-  inline void set_num_channels(::cloopen_google::protobuf::uint32 value);
+  inline ::yuntongxun_google::protobuf::uint32 num_channels() const;
+  inline void set_num_channels(::yuntongxun_google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:webrtc.rtclog.AudioNetworkAdaptation)
  private:
@@ -2227,14 +2227,14 @@ class AudioNetworkAdaptation : public ::cloopen_google::protobuf::MessageLite {
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::cloopen_google::protobuf::int32 bitrate_bps_;
-  ::cloopen_google::protobuf::int32 frame_length_ms_;
+  ::yuntongxun_google::protobuf::int32 bitrate_bps_;
+  ::yuntongxun_google::protobuf::int32 frame_length_ms_;
   float uplink_packet_loss_fraction_;
   bool enable_fec_;
   bool enable_dtx_;
-  ::cloopen_google::protobuf::uint32 num_channels_;
+  ::yuntongxun_google::protobuf::uint32 num_channels_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_rtc_5fevent_5flog_2eproto_impl();
   #else
@@ -2248,7 +2248,7 @@ class AudioNetworkAdaptation : public ::cloopen_google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class BweProbeCluster : public ::cloopen_google::protobuf::MessageLite {
+class BweProbeCluster : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   BweProbeCluster();
   virtual ~BweProbeCluster();
@@ -2285,7 +2285,7 @@ class BweProbeCluster : public ::cloopen_google::protobuf::MessageLite {
   // implements Message ----------------------------------------------
 
   BweProbeCluster* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const BweProbeCluster& from);
   void MergeFrom(const BweProbeCluster& from);
   void Clear();
@@ -2293,9 +2293,9 @@ class BweProbeCluster : public ::cloopen_google::protobuf::MessageLite {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -2313,29 +2313,29 @@ class BweProbeCluster : public ::cloopen_google::protobuf::MessageLite {
   inline bool has_id() const;
   inline void clear_id();
   static const int kIdFieldNumber = 1;
-  inline ::cloopen_google::protobuf::uint32 id() const;
-  inline void set_id(::cloopen_google::protobuf::uint32 value);
+  inline ::yuntongxun_google::protobuf::uint32 id() const;
+  inline void set_id(::yuntongxun_google::protobuf::uint32 value);
 
   // optional uint64 bitrate_bps = 2;
   inline bool has_bitrate_bps() const;
   inline void clear_bitrate_bps();
   static const int kBitrateBpsFieldNumber = 2;
-  inline ::cloopen_google::protobuf::uint64 bitrate_bps() const;
-  inline void set_bitrate_bps(::cloopen_google::protobuf::uint64 value);
+  inline ::yuntongxun_google::protobuf::uint64 bitrate_bps() const;
+  inline void set_bitrate_bps(::yuntongxun_google::protobuf::uint64 value);
 
   // optional uint32 min_packets = 3;
   inline bool has_min_packets() const;
   inline void clear_min_packets();
   static const int kMinPacketsFieldNumber = 3;
-  inline ::cloopen_google::protobuf::uint32 min_packets() const;
-  inline void set_min_packets(::cloopen_google::protobuf::uint32 value);
+  inline ::yuntongxun_google::protobuf::uint32 min_packets() const;
+  inline void set_min_packets(::yuntongxun_google::protobuf::uint32 value);
 
   // optional uint32 min_bytes = 4;
   inline bool has_min_bytes() const;
   inline void clear_min_bytes();
   static const int kMinBytesFieldNumber = 4;
-  inline ::cloopen_google::protobuf::uint32 min_bytes() const;
-  inline void set_min_bytes(::cloopen_google::protobuf::uint32 value);
+  inline ::yuntongxun_google::protobuf::uint32 min_bytes() const;
+  inline void set_min_bytes(::yuntongxun_google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:webrtc.rtclog.BweProbeCluster)
  private:
@@ -2350,12 +2350,12 @@ class BweProbeCluster : public ::cloopen_google::protobuf::MessageLite {
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::cloopen_google::protobuf::uint64 bitrate_bps_;
-  ::cloopen_google::protobuf::uint32 id_;
-  ::cloopen_google::protobuf::uint32 min_packets_;
-  ::cloopen_google::protobuf::uint32 min_bytes_;
+  ::yuntongxun_google::protobuf::uint64 bitrate_bps_;
+  ::yuntongxun_google::protobuf::uint32 id_;
+  ::yuntongxun_google::protobuf::uint32 min_packets_;
+  ::yuntongxun_google::protobuf::uint32 min_bytes_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_rtc_5fevent_5flog_2eproto_impl();
   #else
@@ -2369,7 +2369,7 @@ class BweProbeCluster : public ::cloopen_google::protobuf::MessageLite {
 };
 // -------------------------------------------------------------------
 
-class BweProbeResult : public ::cloopen_google::protobuf::MessageLite {
+class BweProbeResult : public ::yuntongxun_google::protobuf::MessageLite {
  public:
   BweProbeResult();
   virtual ~BweProbeResult();
@@ -2406,7 +2406,7 @@ class BweProbeResult : public ::cloopen_google::protobuf::MessageLite {
   // implements Message ----------------------------------------------
 
   BweProbeResult* New() const;
-  void CheckTypeAndMergeFrom(const ::cloopen_google::protobuf::MessageLite& from);
+  void CheckTypeAndMergeFrom(const ::yuntongxun_google::protobuf::MessageLite& from);
   void CopyFrom(const BweProbeResult& from);
   void MergeFrom(const BweProbeResult& from);
   void Clear();
@@ -2414,9 +2414,9 @@ class BweProbeResult : public ::cloopen_google::protobuf::MessageLite {
 
   int ByteSize() const;
   bool MergePartialFromCodedStream(
-      ::cloopen_google::protobuf::io::CodedInputStream* input);
+      ::yuntongxun_google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
-      ::cloopen_google::protobuf::io::CodedOutputStream* output) const;
+      ::yuntongxun_google::protobuf::io::CodedOutputStream* output) const;
   void DiscardUnknownFields();
   int GetCachedSize() const { return _cached_size_; }
   private:
@@ -2449,22 +2449,22 @@ class BweProbeResult : public ::cloopen_google::protobuf::MessageLite {
   inline bool has_id() const;
   inline void clear_id();
   static const int kIdFieldNumber = 1;
-  inline ::cloopen_google::protobuf::uint32 id() const;
-  inline void set_id(::cloopen_google::protobuf::uint32 value);
+  inline ::yuntongxun_google::protobuf::uint32 id() const;
+  inline void set_id(::yuntongxun_google::protobuf::uint32 value);
 
   // optional .webrtc.rtclog.BweProbeResult.ResultType result = 2;
   inline bool has_result() const;
   inline void clear_result();
   static const int kResultFieldNumber = 2;
-  inline ::cloopenwebrtc::rtclog::BweProbeResult_ResultType result() const;
-  inline void set_result(::cloopenwebrtc::rtclog::BweProbeResult_ResultType value);
+  inline ::yuntongxunwebrtc::rtclog::BweProbeResult_ResultType result() const;
+  inline void set_result(::yuntongxunwebrtc::rtclog::BweProbeResult_ResultType value);
 
   // optional uint64 bitrate_bps = 3;
   inline bool has_bitrate_bps() const;
   inline void clear_bitrate_bps();
   static const int kBitrateBpsFieldNumber = 3;
-  inline ::cloopen_google::protobuf::uint64 bitrate_bps() const;
-  inline void set_bitrate_bps(::cloopen_google::protobuf::uint64 value);
+  inline ::yuntongxun_google::protobuf::uint64 bitrate_bps() const;
+  inline void set_bitrate_bps(::yuntongxun_google::protobuf::uint64 value);
 
   // @@protoc_insertion_point(class_scope:webrtc.rtclog.BweProbeResult)
  private:
@@ -2477,11 +2477,11 @@ class BweProbeResult : public ::cloopen_google::protobuf::MessageLite {
 
   ::std::string _unknown_fields_;
 
-  ::cloopen_google::protobuf::uint32 _has_bits_[1];
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::cloopen_google::protobuf::uint32 id_;
+  ::yuntongxun_google::protobuf::uint32 id_;
   int result_;
-  ::cloopen_google::protobuf::uint64 bitrate_bps_;
+  ::yuntongxun_google::protobuf::uint64 bitrate_bps_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_rtc_5fevent_5flog_2eproto_impl();
   #else
@@ -2507,24 +2507,24 @@ inline int EventStream::stream_size() const {
 inline void EventStream::clear_stream() {
   stream_.Clear();
 }
-inline const ::cloopenwebrtc::rtclog::Event& EventStream::stream(int index) const {
+inline const ::yuntongxunwebrtc::rtclog::Event& EventStream::stream(int index) const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.EventStream.stream)
   return stream_.Get(index);
 }
-inline ::cloopenwebrtc::rtclog::Event* EventStream::mutable_stream(int index) {
+inline ::yuntongxunwebrtc::rtclog::Event* EventStream::mutable_stream(int index) {
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.EventStream.stream)
   return stream_.Mutable(index);
 }
-inline ::cloopenwebrtc::rtclog::Event* EventStream::add_stream() {
+inline ::yuntongxunwebrtc::rtclog::Event* EventStream::add_stream() {
   // @@protoc_insertion_point(field_add:webrtc.rtclog.EventStream.stream)
   return stream_.Add();
 }
-inline const ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::Event >&
+inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::Event >&
 EventStream::stream() const {
   // @@protoc_insertion_point(field_list:webrtc.rtclog.EventStream.stream)
   return stream_;
 }
-inline ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::Event >*
+inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::Event >*
 EventStream::mutable_stream() {
   // @@protoc_insertion_point(field_mutable_list:webrtc.rtclog.EventStream.stream)
   return &stream_;
@@ -2548,11 +2548,11 @@ inline void Event::clear_timestamp_us() {
   timestamp_us_ = GOOGLE_LONGLONG(0);
   clear_has_timestamp_us();
 }
-inline ::cloopen_google::protobuf::int64 Event::timestamp_us() const {
+inline ::yuntongxun_google::protobuf::int64 Event::timestamp_us() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.Event.timestamp_us)
   return timestamp_us_;
 }
-inline void Event::set_timestamp_us(::cloopen_google::protobuf::int64 value) {
+inline void Event::set_timestamp_us(::yuntongxun_google::protobuf::int64 value) {
   set_has_timestamp_us();
   timestamp_us_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.Event.timestamp_us)
@@ -2572,12 +2572,12 @@ inline void Event::clear_type() {
   type_ = 0;
   clear_has_type();
 }
-inline ::cloopenwebrtc::rtclog::Event_EventType Event::type() const {
+inline ::yuntongxunwebrtc::rtclog::Event_EventType Event::type() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.Event.type)
-  return static_cast< ::cloopenwebrtc::rtclog::Event_EventType >(type_);
+  return static_cast< ::yuntongxunwebrtc::rtclog::Event_EventType >(type_);
 }
-inline void Event::set_type(::cloopenwebrtc::rtclog::Event_EventType value) {
-  assert(::cloopenwebrtc::rtclog::Event_EventType_IsValid(value));
+inline void Event::set_type(::yuntongxunwebrtc::rtclog::Event_EventType value) {
+  assert(::yuntongxunwebrtc::rtclog::Event_EventType_IsValid(value));
   set_has_type();
   type_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.Event.type)
@@ -2594,10 +2594,10 @@ inline void Event::clear_has_rtp_packet() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void Event::clear_rtp_packet() {
-  if (rtp_packet_ != NULL) rtp_packet_->::cloopenwebrtc::rtclog::RtpPacket::Clear();
+  if (rtp_packet_ != NULL) rtp_packet_->::yuntongxunwebrtc::rtclog::RtpPacket::Clear();
   clear_has_rtp_packet();
 }
-inline const ::cloopenwebrtc::rtclog::RtpPacket& Event::rtp_packet() const {
+inline const ::yuntongxunwebrtc::rtclog::RtpPacket& Event::rtp_packet() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.Event.rtp_packet)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   return rtp_packet_ != NULL ? *rtp_packet_ : *default_instance().rtp_packet_;
@@ -2605,19 +2605,19 @@ inline const ::cloopenwebrtc::rtclog::RtpPacket& Event::rtp_packet() const {
   return rtp_packet_ != NULL ? *rtp_packet_ : *default_instance_->rtp_packet_;
 #endif
 }
-inline ::cloopenwebrtc::rtclog::RtpPacket* Event::mutable_rtp_packet() {
+inline ::yuntongxunwebrtc::rtclog::RtpPacket* Event::mutable_rtp_packet() {
   set_has_rtp_packet();
-  if (rtp_packet_ == NULL) rtp_packet_ = new ::cloopenwebrtc::rtclog::RtpPacket;
+  if (rtp_packet_ == NULL) rtp_packet_ = new ::yuntongxunwebrtc::rtclog::RtpPacket;
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.Event.rtp_packet)
   return rtp_packet_;
 }
-inline ::cloopenwebrtc::rtclog::RtpPacket* Event::release_rtp_packet() {
+inline ::yuntongxunwebrtc::rtclog::RtpPacket* Event::release_rtp_packet() {
   clear_has_rtp_packet();
-  ::cloopenwebrtc::rtclog::RtpPacket* temp = rtp_packet_;
+  ::yuntongxunwebrtc::rtclog::RtpPacket* temp = rtp_packet_;
   rtp_packet_ = NULL;
   return temp;
 }
-inline void Event::set_allocated_rtp_packet(::cloopenwebrtc::rtclog::RtpPacket* rtp_packet) {
+inline void Event::set_allocated_rtp_packet(::yuntongxunwebrtc::rtclog::RtpPacket* rtp_packet) {
   delete rtp_packet_;
   rtp_packet_ = rtp_packet;
   if (rtp_packet) {
@@ -2639,10 +2639,10 @@ inline void Event::clear_has_rtcp_packet() {
   _has_bits_[0] &= ~0x00000008u;
 }
 inline void Event::clear_rtcp_packet() {
-  if (rtcp_packet_ != NULL) rtcp_packet_->::cloopenwebrtc::rtclog::RtcpPacket::Clear();
+  if (rtcp_packet_ != NULL) rtcp_packet_->::yuntongxunwebrtc::rtclog::RtcpPacket::Clear();
   clear_has_rtcp_packet();
 }
-inline const ::cloopenwebrtc::rtclog::RtcpPacket& Event::rtcp_packet() const {
+inline const ::yuntongxunwebrtc::rtclog::RtcpPacket& Event::rtcp_packet() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.Event.rtcp_packet)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   return rtcp_packet_ != NULL ? *rtcp_packet_ : *default_instance().rtcp_packet_;
@@ -2650,19 +2650,19 @@ inline const ::cloopenwebrtc::rtclog::RtcpPacket& Event::rtcp_packet() const {
   return rtcp_packet_ != NULL ? *rtcp_packet_ : *default_instance_->rtcp_packet_;
 #endif
 }
-inline ::cloopenwebrtc::rtclog::RtcpPacket* Event::mutable_rtcp_packet() {
+inline ::yuntongxunwebrtc::rtclog::RtcpPacket* Event::mutable_rtcp_packet() {
   set_has_rtcp_packet();
-  if (rtcp_packet_ == NULL) rtcp_packet_ = new ::cloopenwebrtc::rtclog::RtcpPacket;
+  if (rtcp_packet_ == NULL) rtcp_packet_ = new ::yuntongxunwebrtc::rtclog::RtcpPacket;
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.Event.rtcp_packet)
   return rtcp_packet_;
 }
-inline ::cloopenwebrtc::rtclog::RtcpPacket* Event::release_rtcp_packet() {
+inline ::yuntongxunwebrtc::rtclog::RtcpPacket* Event::release_rtcp_packet() {
   clear_has_rtcp_packet();
-  ::cloopenwebrtc::rtclog::RtcpPacket* temp = rtcp_packet_;
+  ::yuntongxunwebrtc::rtclog::RtcpPacket* temp = rtcp_packet_;
   rtcp_packet_ = NULL;
   return temp;
 }
-inline void Event::set_allocated_rtcp_packet(::cloopenwebrtc::rtclog::RtcpPacket* rtcp_packet) {
+inline void Event::set_allocated_rtcp_packet(::yuntongxunwebrtc::rtclog::RtcpPacket* rtcp_packet) {
   delete rtcp_packet_;
   rtcp_packet_ = rtcp_packet;
   if (rtcp_packet) {
@@ -2684,10 +2684,10 @@ inline void Event::clear_has_audio_playout_event() {
   _has_bits_[0] &= ~0x00000010u;
 }
 inline void Event::clear_audio_playout_event() {
-  if (audio_playout_event_ != NULL) audio_playout_event_->::cloopenwebrtc::rtclog::AudioPlayoutEvent::Clear();
+  if (audio_playout_event_ != NULL) audio_playout_event_->::yuntongxunwebrtc::rtclog::AudioPlayoutEvent::Clear();
   clear_has_audio_playout_event();
 }
-inline const ::cloopenwebrtc::rtclog::AudioPlayoutEvent& Event::audio_playout_event() const {
+inline const ::yuntongxunwebrtc::rtclog::AudioPlayoutEvent& Event::audio_playout_event() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.Event.audio_playout_event)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   return audio_playout_event_ != NULL ? *audio_playout_event_ : *default_instance().audio_playout_event_;
@@ -2695,19 +2695,19 @@ inline const ::cloopenwebrtc::rtclog::AudioPlayoutEvent& Event::audio_playout_ev
   return audio_playout_event_ != NULL ? *audio_playout_event_ : *default_instance_->audio_playout_event_;
 #endif
 }
-inline ::cloopenwebrtc::rtclog::AudioPlayoutEvent* Event::mutable_audio_playout_event() {
+inline ::yuntongxunwebrtc::rtclog::AudioPlayoutEvent* Event::mutable_audio_playout_event() {
   set_has_audio_playout_event();
-  if (audio_playout_event_ == NULL) audio_playout_event_ = new ::cloopenwebrtc::rtclog::AudioPlayoutEvent;
+  if (audio_playout_event_ == NULL) audio_playout_event_ = new ::yuntongxunwebrtc::rtclog::AudioPlayoutEvent;
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.Event.audio_playout_event)
   return audio_playout_event_;
 }
-inline ::cloopenwebrtc::rtclog::AudioPlayoutEvent* Event::release_audio_playout_event() {
+inline ::yuntongxunwebrtc::rtclog::AudioPlayoutEvent* Event::release_audio_playout_event() {
   clear_has_audio_playout_event();
-  ::cloopenwebrtc::rtclog::AudioPlayoutEvent* temp = audio_playout_event_;
+  ::yuntongxunwebrtc::rtclog::AudioPlayoutEvent* temp = audio_playout_event_;
   audio_playout_event_ = NULL;
   return temp;
 }
-inline void Event::set_allocated_audio_playout_event(::cloopenwebrtc::rtclog::AudioPlayoutEvent* audio_playout_event) {
+inline void Event::set_allocated_audio_playout_event(::yuntongxunwebrtc::rtclog::AudioPlayoutEvent* audio_playout_event) {
   delete audio_playout_event_;
   audio_playout_event_ = audio_playout_event;
   if (audio_playout_event) {
@@ -2729,10 +2729,10 @@ inline void Event::clear_has_loss_based_bwe_update() {
   _has_bits_[0] &= ~0x00000020u;
 }
 inline void Event::clear_loss_based_bwe_update() {
-  if (loss_based_bwe_update_ != NULL) loss_based_bwe_update_->::cloopenwebrtc::rtclog::LossBasedBweUpdate::Clear();
+  if (loss_based_bwe_update_ != NULL) loss_based_bwe_update_->::yuntongxunwebrtc::rtclog::LossBasedBweUpdate::Clear();
   clear_has_loss_based_bwe_update();
 }
-inline const ::cloopenwebrtc::rtclog::LossBasedBweUpdate& Event::loss_based_bwe_update() const {
+inline const ::yuntongxunwebrtc::rtclog::LossBasedBweUpdate& Event::loss_based_bwe_update() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.Event.loss_based_bwe_update)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   return loss_based_bwe_update_ != NULL ? *loss_based_bwe_update_ : *default_instance().loss_based_bwe_update_;
@@ -2740,19 +2740,19 @@ inline const ::cloopenwebrtc::rtclog::LossBasedBweUpdate& Event::loss_based_bwe_
   return loss_based_bwe_update_ != NULL ? *loss_based_bwe_update_ : *default_instance_->loss_based_bwe_update_;
 #endif
 }
-inline ::cloopenwebrtc::rtclog::LossBasedBweUpdate* Event::mutable_loss_based_bwe_update() {
+inline ::yuntongxunwebrtc::rtclog::LossBasedBweUpdate* Event::mutable_loss_based_bwe_update() {
   set_has_loss_based_bwe_update();
-  if (loss_based_bwe_update_ == NULL) loss_based_bwe_update_ = new ::cloopenwebrtc::rtclog::LossBasedBweUpdate;
+  if (loss_based_bwe_update_ == NULL) loss_based_bwe_update_ = new ::yuntongxunwebrtc::rtclog::LossBasedBweUpdate;
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.Event.loss_based_bwe_update)
   return loss_based_bwe_update_;
 }
-inline ::cloopenwebrtc::rtclog::LossBasedBweUpdate* Event::release_loss_based_bwe_update() {
+inline ::yuntongxunwebrtc::rtclog::LossBasedBweUpdate* Event::release_loss_based_bwe_update() {
   clear_has_loss_based_bwe_update();
-  ::cloopenwebrtc::rtclog::LossBasedBweUpdate* temp = loss_based_bwe_update_;
+  ::yuntongxunwebrtc::rtclog::LossBasedBweUpdate* temp = loss_based_bwe_update_;
   loss_based_bwe_update_ = NULL;
   return temp;
 }
-inline void Event::set_allocated_loss_based_bwe_update(::cloopenwebrtc::rtclog::LossBasedBweUpdate* loss_based_bwe_update) {
+inline void Event::set_allocated_loss_based_bwe_update(::yuntongxunwebrtc::rtclog::LossBasedBweUpdate* loss_based_bwe_update) {
   delete loss_based_bwe_update_;
   loss_based_bwe_update_ = loss_based_bwe_update;
   if (loss_based_bwe_update) {
@@ -2774,10 +2774,10 @@ inline void Event::clear_has_delay_based_bwe_update() {
   _has_bits_[0] &= ~0x00000040u;
 }
 inline void Event::clear_delay_based_bwe_update() {
-  if (delay_based_bwe_update_ != NULL) delay_based_bwe_update_->::cloopenwebrtc::rtclog::DelayBasedBweUpdate::Clear();
+  if (delay_based_bwe_update_ != NULL) delay_based_bwe_update_->::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate::Clear();
   clear_has_delay_based_bwe_update();
 }
-inline const ::cloopenwebrtc::rtclog::DelayBasedBweUpdate& Event::delay_based_bwe_update() const {
+inline const ::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate& Event::delay_based_bwe_update() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.Event.delay_based_bwe_update)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   return delay_based_bwe_update_ != NULL ? *delay_based_bwe_update_ : *default_instance().delay_based_bwe_update_;
@@ -2785,19 +2785,19 @@ inline const ::cloopenwebrtc::rtclog::DelayBasedBweUpdate& Event::delay_based_bw
   return delay_based_bwe_update_ != NULL ? *delay_based_bwe_update_ : *default_instance_->delay_based_bwe_update_;
 #endif
 }
-inline ::cloopenwebrtc::rtclog::DelayBasedBweUpdate* Event::mutable_delay_based_bwe_update() {
+inline ::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate* Event::mutable_delay_based_bwe_update() {
   set_has_delay_based_bwe_update();
-  if (delay_based_bwe_update_ == NULL) delay_based_bwe_update_ = new ::cloopenwebrtc::rtclog::DelayBasedBweUpdate;
+  if (delay_based_bwe_update_ == NULL) delay_based_bwe_update_ = new ::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate;
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.Event.delay_based_bwe_update)
   return delay_based_bwe_update_;
 }
-inline ::cloopenwebrtc::rtclog::DelayBasedBweUpdate* Event::release_delay_based_bwe_update() {
+inline ::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate* Event::release_delay_based_bwe_update() {
   clear_has_delay_based_bwe_update();
-  ::cloopenwebrtc::rtclog::DelayBasedBweUpdate* temp = delay_based_bwe_update_;
+  ::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate* temp = delay_based_bwe_update_;
   delay_based_bwe_update_ = NULL;
   return temp;
 }
-inline void Event::set_allocated_delay_based_bwe_update(::cloopenwebrtc::rtclog::DelayBasedBweUpdate* delay_based_bwe_update) {
+inline void Event::set_allocated_delay_based_bwe_update(::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate* delay_based_bwe_update) {
   delete delay_based_bwe_update_;
   delay_based_bwe_update_ = delay_based_bwe_update;
   if (delay_based_bwe_update) {
@@ -2819,10 +2819,10 @@ inline void Event::clear_has_video_receiver_config() {
   _has_bits_[0] &= ~0x00000080u;
 }
 inline void Event::clear_video_receiver_config() {
-  if (video_receiver_config_ != NULL) video_receiver_config_->::cloopenwebrtc::rtclog::VideoReceiveConfig::Clear();
+  if (video_receiver_config_ != NULL) video_receiver_config_->::yuntongxunwebrtc::rtclog::VideoReceiveConfig::Clear();
   clear_has_video_receiver_config();
 }
-inline const ::cloopenwebrtc::rtclog::VideoReceiveConfig& Event::video_receiver_config() const {
+inline const ::yuntongxunwebrtc::rtclog::VideoReceiveConfig& Event::video_receiver_config() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.Event.video_receiver_config)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   return video_receiver_config_ != NULL ? *video_receiver_config_ : *default_instance().video_receiver_config_;
@@ -2830,19 +2830,19 @@ inline const ::cloopenwebrtc::rtclog::VideoReceiveConfig& Event::video_receiver_
   return video_receiver_config_ != NULL ? *video_receiver_config_ : *default_instance_->video_receiver_config_;
 #endif
 }
-inline ::cloopenwebrtc::rtclog::VideoReceiveConfig* Event::mutable_video_receiver_config() {
+inline ::yuntongxunwebrtc::rtclog::VideoReceiveConfig* Event::mutable_video_receiver_config() {
   set_has_video_receiver_config();
-  if (video_receiver_config_ == NULL) video_receiver_config_ = new ::cloopenwebrtc::rtclog::VideoReceiveConfig;
+  if (video_receiver_config_ == NULL) video_receiver_config_ = new ::yuntongxunwebrtc::rtclog::VideoReceiveConfig;
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.Event.video_receiver_config)
   return video_receiver_config_;
 }
-inline ::cloopenwebrtc::rtclog::VideoReceiveConfig* Event::release_video_receiver_config() {
+inline ::yuntongxunwebrtc::rtclog::VideoReceiveConfig* Event::release_video_receiver_config() {
   clear_has_video_receiver_config();
-  ::cloopenwebrtc::rtclog::VideoReceiveConfig* temp = video_receiver_config_;
+  ::yuntongxunwebrtc::rtclog::VideoReceiveConfig* temp = video_receiver_config_;
   video_receiver_config_ = NULL;
   return temp;
 }
-inline void Event::set_allocated_video_receiver_config(::cloopenwebrtc::rtclog::VideoReceiveConfig* video_receiver_config) {
+inline void Event::set_allocated_video_receiver_config(::yuntongxunwebrtc::rtclog::VideoReceiveConfig* video_receiver_config) {
   delete video_receiver_config_;
   video_receiver_config_ = video_receiver_config;
   if (video_receiver_config) {
@@ -2864,10 +2864,10 @@ inline void Event::clear_has_video_sender_config() {
   _has_bits_[0] &= ~0x00000100u;
 }
 inline void Event::clear_video_sender_config() {
-  if (video_sender_config_ != NULL) video_sender_config_->::cloopenwebrtc::rtclog::VideoSendConfig::Clear();
+  if (video_sender_config_ != NULL) video_sender_config_->::yuntongxunwebrtc::rtclog::VideoSendConfig::Clear();
   clear_has_video_sender_config();
 }
-inline const ::cloopenwebrtc::rtclog::VideoSendConfig& Event::video_sender_config() const {
+inline const ::yuntongxunwebrtc::rtclog::VideoSendConfig& Event::video_sender_config() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.Event.video_sender_config)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   return video_sender_config_ != NULL ? *video_sender_config_ : *default_instance().video_sender_config_;
@@ -2875,19 +2875,19 @@ inline const ::cloopenwebrtc::rtclog::VideoSendConfig& Event::video_sender_confi
   return video_sender_config_ != NULL ? *video_sender_config_ : *default_instance_->video_sender_config_;
 #endif
 }
-inline ::cloopenwebrtc::rtclog::VideoSendConfig* Event::mutable_video_sender_config() {
+inline ::yuntongxunwebrtc::rtclog::VideoSendConfig* Event::mutable_video_sender_config() {
   set_has_video_sender_config();
-  if (video_sender_config_ == NULL) video_sender_config_ = new ::cloopenwebrtc::rtclog::VideoSendConfig;
+  if (video_sender_config_ == NULL) video_sender_config_ = new ::yuntongxunwebrtc::rtclog::VideoSendConfig;
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.Event.video_sender_config)
   return video_sender_config_;
 }
-inline ::cloopenwebrtc::rtclog::VideoSendConfig* Event::release_video_sender_config() {
+inline ::yuntongxunwebrtc::rtclog::VideoSendConfig* Event::release_video_sender_config() {
   clear_has_video_sender_config();
-  ::cloopenwebrtc::rtclog::VideoSendConfig* temp = video_sender_config_;
+  ::yuntongxunwebrtc::rtclog::VideoSendConfig* temp = video_sender_config_;
   video_sender_config_ = NULL;
   return temp;
 }
-inline void Event::set_allocated_video_sender_config(::cloopenwebrtc::rtclog::VideoSendConfig* video_sender_config) {
+inline void Event::set_allocated_video_sender_config(::yuntongxunwebrtc::rtclog::VideoSendConfig* video_sender_config) {
   delete video_sender_config_;
   video_sender_config_ = video_sender_config;
   if (video_sender_config) {
@@ -2909,10 +2909,10 @@ inline void Event::clear_has_audio_receiver_config() {
   _has_bits_[0] &= ~0x00000200u;
 }
 inline void Event::clear_audio_receiver_config() {
-  if (audio_receiver_config_ != NULL) audio_receiver_config_->::cloopenwebrtc::rtclog::AudioReceiveConfig::Clear();
+  if (audio_receiver_config_ != NULL) audio_receiver_config_->::yuntongxunwebrtc::rtclog::AudioReceiveConfig::Clear();
   clear_has_audio_receiver_config();
 }
-inline const ::cloopenwebrtc::rtclog::AudioReceiveConfig& Event::audio_receiver_config() const {
+inline const ::yuntongxunwebrtc::rtclog::AudioReceiveConfig& Event::audio_receiver_config() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.Event.audio_receiver_config)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   return audio_receiver_config_ != NULL ? *audio_receiver_config_ : *default_instance().audio_receiver_config_;
@@ -2920,19 +2920,19 @@ inline const ::cloopenwebrtc::rtclog::AudioReceiveConfig& Event::audio_receiver_
   return audio_receiver_config_ != NULL ? *audio_receiver_config_ : *default_instance_->audio_receiver_config_;
 #endif
 }
-inline ::cloopenwebrtc::rtclog::AudioReceiveConfig* Event::mutable_audio_receiver_config() {
+inline ::yuntongxunwebrtc::rtclog::AudioReceiveConfig* Event::mutable_audio_receiver_config() {
   set_has_audio_receiver_config();
-  if (audio_receiver_config_ == NULL) audio_receiver_config_ = new ::cloopenwebrtc::rtclog::AudioReceiveConfig;
+  if (audio_receiver_config_ == NULL) audio_receiver_config_ = new ::yuntongxunwebrtc::rtclog::AudioReceiveConfig;
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.Event.audio_receiver_config)
   return audio_receiver_config_;
 }
-inline ::cloopenwebrtc::rtclog::AudioReceiveConfig* Event::release_audio_receiver_config() {
+inline ::yuntongxunwebrtc::rtclog::AudioReceiveConfig* Event::release_audio_receiver_config() {
   clear_has_audio_receiver_config();
-  ::cloopenwebrtc::rtclog::AudioReceiveConfig* temp = audio_receiver_config_;
+  ::yuntongxunwebrtc::rtclog::AudioReceiveConfig* temp = audio_receiver_config_;
   audio_receiver_config_ = NULL;
   return temp;
 }
-inline void Event::set_allocated_audio_receiver_config(::cloopenwebrtc::rtclog::AudioReceiveConfig* audio_receiver_config) {
+inline void Event::set_allocated_audio_receiver_config(::yuntongxunwebrtc::rtclog::AudioReceiveConfig* audio_receiver_config) {
   delete audio_receiver_config_;
   audio_receiver_config_ = audio_receiver_config;
   if (audio_receiver_config) {
@@ -2954,10 +2954,10 @@ inline void Event::clear_has_audio_sender_config() {
   _has_bits_[0] &= ~0x00000400u;
 }
 inline void Event::clear_audio_sender_config() {
-  if (audio_sender_config_ != NULL) audio_sender_config_->::cloopenwebrtc::rtclog::AudioSendConfig::Clear();
+  if (audio_sender_config_ != NULL) audio_sender_config_->::yuntongxunwebrtc::rtclog::AudioSendConfig::Clear();
   clear_has_audio_sender_config();
 }
-inline const ::cloopenwebrtc::rtclog::AudioSendConfig& Event::audio_sender_config() const {
+inline const ::yuntongxunwebrtc::rtclog::AudioSendConfig& Event::audio_sender_config() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.Event.audio_sender_config)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   return audio_sender_config_ != NULL ? *audio_sender_config_ : *default_instance().audio_sender_config_;
@@ -2965,19 +2965,19 @@ inline const ::cloopenwebrtc::rtclog::AudioSendConfig& Event::audio_sender_confi
   return audio_sender_config_ != NULL ? *audio_sender_config_ : *default_instance_->audio_sender_config_;
 #endif
 }
-inline ::cloopenwebrtc::rtclog::AudioSendConfig* Event::mutable_audio_sender_config() {
+inline ::yuntongxunwebrtc::rtclog::AudioSendConfig* Event::mutable_audio_sender_config() {
   set_has_audio_sender_config();
-  if (audio_sender_config_ == NULL) audio_sender_config_ = new ::cloopenwebrtc::rtclog::AudioSendConfig;
+  if (audio_sender_config_ == NULL) audio_sender_config_ = new ::yuntongxunwebrtc::rtclog::AudioSendConfig;
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.Event.audio_sender_config)
   return audio_sender_config_;
 }
-inline ::cloopenwebrtc::rtclog::AudioSendConfig* Event::release_audio_sender_config() {
+inline ::yuntongxunwebrtc::rtclog::AudioSendConfig* Event::release_audio_sender_config() {
   clear_has_audio_sender_config();
-  ::cloopenwebrtc::rtclog::AudioSendConfig* temp = audio_sender_config_;
+  ::yuntongxunwebrtc::rtclog::AudioSendConfig* temp = audio_sender_config_;
   audio_sender_config_ = NULL;
   return temp;
 }
-inline void Event::set_allocated_audio_sender_config(::cloopenwebrtc::rtclog::AudioSendConfig* audio_sender_config) {
+inline void Event::set_allocated_audio_sender_config(::yuntongxunwebrtc::rtclog::AudioSendConfig* audio_sender_config) {
   delete audio_sender_config_;
   audio_sender_config_ = audio_sender_config;
   if (audio_sender_config) {
@@ -2999,10 +2999,10 @@ inline void Event::clear_has_audio_network_adaptation() {
   _has_bits_[0] &= ~0x00000800u;
 }
 inline void Event::clear_audio_network_adaptation() {
-  if (audio_network_adaptation_ != NULL) audio_network_adaptation_->::cloopenwebrtc::rtclog::AudioNetworkAdaptation::Clear();
+  if (audio_network_adaptation_ != NULL) audio_network_adaptation_->::yuntongxunwebrtc::rtclog::AudioNetworkAdaptation::Clear();
   clear_has_audio_network_adaptation();
 }
-inline const ::cloopenwebrtc::rtclog::AudioNetworkAdaptation& Event::audio_network_adaptation() const {
+inline const ::yuntongxunwebrtc::rtclog::AudioNetworkAdaptation& Event::audio_network_adaptation() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.Event.audio_network_adaptation)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   return audio_network_adaptation_ != NULL ? *audio_network_adaptation_ : *default_instance().audio_network_adaptation_;
@@ -3010,19 +3010,19 @@ inline const ::cloopenwebrtc::rtclog::AudioNetworkAdaptation& Event::audio_netwo
   return audio_network_adaptation_ != NULL ? *audio_network_adaptation_ : *default_instance_->audio_network_adaptation_;
 #endif
 }
-inline ::cloopenwebrtc::rtclog::AudioNetworkAdaptation* Event::mutable_audio_network_adaptation() {
+inline ::yuntongxunwebrtc::rtclog::AudioNetworkAdaptation* Event::mutable_audio_network_adaptation() {
   set_has_audio_network_adaptation();
-  if (audio_network_adaptation_ == NULL) audio_network_adaptation_ = new ::cloopenwebrtc::rtclog::AudioNetworkAdaptation;
+  if (audio_network_adaptation_ == NULL) audio_network_adaptation_ = new ::yuntongxunwebrtc::rtclog::AudioNetworkAdaptation;
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.Event.audio_network_adaptation)
   return audio_network_adaptation_;
 }
-inline ::cloopenwebrtc::rtclog::AudioNetworkAdaptation* Event::release_audio_network_adaptation() {
+inline ::yuntongxunwebrtc::rtclog::AudioNetworkAdaptation* Event::release_audio_network_adaptation() {
   clear_has_audio_network_adaptation();
-  ::cloopenwebrtc::rtclog::AudioNetworkAdaptation* temp = audio_network_adaptation_;
+  ::yuntongxunwebrtc::rtclog::AudioNetworkAdaptation* temp = audio_network_adaptation_;
   audio_network_adaptation_ = NULL;
   return temp;
 }
-inline void Event::set_allocated_audio_network_adaptation(::cloopenwebrtc::rtclog::AudioNetworkAdaptation* audio_network_adaptation) {
+inline void Event::set_allocated_audio_network_adaptation(::yuntongxunwebrtc::rtclog::AudioNetworkAdaptation* audio_network_adaptation) {
   delete audio_network_adaptation_;
   audio_network_adaptation_ = audio_network_adaptation;
   if (audio_network_adaptation) {
@@ -3044,10 +3044,10 @@ inline void Event::clear_has_probe_cluster() {
   _has_bits_[0] &= ~0x00001000u;
 }
 inline void Event::clear_probe_cluster() {
-  if (probe_cluster_ != NULL) probe_cluster_->::cloopenwebrtc::rtclog::BweProbeCluster::Clear();
+  if (probe_cluster_ != NULL) probe_cluster_->::yuntongxunwebrtc::rtclog::BweProbeCluster::Clear();
   clear_has_probe_cluster();
 }
-inline const ::cloopenwebrtc::rtclog::BweProbeCluster& Event::probe_cluster() const {
+inline const ::yuntongxunwebrtc::rtclog::BweProbeCluster& Event::probe_cluster() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.Event.probe_cluster)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   return probe_cluster_ != NULL ? *probe_cluster_ : *default_instance().probe_cluster_;
@@ -3055,19 +3055,19 @@ inline const ::cloopenwebrtc::rtclog::BweProbeCluster& Event::probe_cluster() co
   return probe_cluster_ != NULL ? *probe_cluster_ : *default_instance_->probe_cluster_;
 #endif
 }
-inline ::cloopenwebrtc::rtclog::BweProbeCluster* Event::mutable_probe_cluster() {
+inline ::yuntongxunwebrtc::rtclog::BweProbeCluster* Event::mutable_probe_cluster() {
   set_has_probe_cluster();
-  if (probe_cluster_ == NULL) probe_cluster_ = new ::cloopenwebrtc::rtclog::BweProbeCluster;
+  if (probe_cluster_ == NULL) probe_cluster_ = new ::yuntongxunwebrtc::rtclog::BweProbeCluster;
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.Event.probe_cluster)
   return probe_cluster_;
 }
-inline ::cloopenwebrtc::rtclog::BweProbeCluster* Event::release_probe_cluster() {
+inline ::yuntongxunwebrtc::rtclog::BweProbeCluster* Event::release_probe_cluster() {
   clear_has_probe_cluster();
-  ::cloopenwebrtc::rtclog::BweProbeCluster* temp = probe_cluster_;
+  ::yuntongxunwebrtc::rtclog::BweProbeCluster* temp = probe_cluster_;
   probe_cluster_ = NULL;
   return temp;
 }
-inline void Event::set_allocated_probe_cluster(::cloopenwebrtc::rtclog::BweProbeCluster* probe_cluster) {
+inline void Event::set_allocated_probe_cluster(::yuntongxunwebrtc::rtclog::BweProbeCluster* probe_cluster) {
   delete probe_cluster_;
   probe_cluster_ = probe_cluster;
   if (probe_cluster) {
@@ -3089,10 +3089,10 @@ inline void Event::clear_has_probe_result() {
   _has_bits_[0] &= ~0x00002000u;
 }
 inline void Event::clear_probe_result() {
-  if (probe_result_ != NULL) probe_result_->::cloopenwebrtc::rtclog::BweProbeResult::Clear();
+  if (probe_result_ != NULL) probe_result_->::yuntongxunwebrtc::rtclog::BweProbeResult::Clear();
   clear_has_probe_result();
 }
-inline const ::cloopenwebrtc::rtclog::BweProbeResult& Event::probe_result() const {
+inline const ::yuntongxunwebrtc::rtclog::BweProbeResult& Event::probe_result() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.Event.probe_result)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   return probe_result_ != NULL ? *probe_result_ : *default_instance().probe_result_;
@@ -3100,19 +3100,19 @@ inline const ::cloopenwebrtc::rtclog::BweProbeResult& Event::probe_result() cons
   return probe_result_ != NULL ? *probe_result_ : *default_instance_->probe_result_;
 #endif
 }
-inline ::cloopenwebrtc::rtclog::BweProbeResult* Event::mutable_probe_result() {
+inline ::yuntongxunwebrtc::rtclog::BweProbeResult* Event::mutable_probe_result() {
   set_has_probe_result();
-  if (probe_result_ == NULL) probe_result_ = new ::cloopenwebrtc::rtclog::BweProbeResult;
+  if (probe_result_ == NULL) probe_result_ = new ::yuntongxunwebrtc::rtclog::BweProbeResult;
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.Event.probe_result)
   return probe_result_;
 }
-inline ::cloopenwebrtc::rtclog::BweProbeResult* Event::release_probe_result() {
+inline ::yuntongxunwebrtc::rtclog::BweProbeResult* Event::release_probe_result() {
   clear_has_probe_result();
-  ::cloopenwebrtc::rtclog::BweProbeResult* temp = probe_result_;
+  ::yuntongxunwebrtc::rtclog::BweProbeResult* temp = probe_result_;
   probe_result_ = NULL;
   return temp;
 }
-inline void Event::set_allocated_probe_result(::cloopenwebrtc::rtclog::BweProbeResult* probe_result) {
+inline void Event::set_allocated_probe_result(::yuntongxunwebrtc::rtclog::BweProbeResult* probe_result) {
   delete probe_result_;
   probe_result_ = probe_result;
   if (probe_result) {
@@ -3165,12 +3165,12 @@ inline void RtpPacket::clear_type() {
   type_ = 0;
   clear_has_type();
 }
-inline ::cloopenwebrtc::rtclog::MediaType RtpPacket::type() const {
+inline ::yuntongxunwebrtc::rtclog::MediaType RtpPacket::type() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.RtpPacket.type)
-  return static_cast< ::cloopenwebrtc::rtclog::MediaType >(type_);
+  return static_cast< ::yuntongxunwebrtc::rtclog::MediaType >(type_);
 }
-inline void RtpPacket::set_type(::cloopenwebrtc::rtclog::MediaType value) {
-  assert(::cloopenwebrtc::rtclog::MediaType_IsValid(value));
+inline void RtpPacket::set_type(::yuntongxunwebrtc::rtclog::MediaType value) {
+  assert(::yuntongxunwebrtc::rtclog::MediaType_IsValid(value));
   set_has_type();
   type_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.RtpPacket.type)
@@ -3190,11 +3190,11 @@ inline void RtpPacket::clear_packet_length() {
   packet_length_ = 0u;
   clear_has_packet_length();
 }
-inline ::cloopen_google::protobuf::uint32 RtpPacket::packet_length() const {
+inline ::yuntongxun_google::protobuf::uint32 RtpPacket::packet_length() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.RtpPacket.packet_length)
   return packet_length_;
 }
-inline void RtpPacket::set_packet_length(::cloopen_google::protobuf::uint32 value) {
+inline void RtpPacket::set_packet_length(::yuntongxun_google::protobuf::uint32 value) {
   set_has_packet_length();
   packet_length_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.RtpPacket.packet_length)
@@ -3211,7 +3211,7 @@ inline void RtpPacket::clear_has_header() {
   _has_bits_[0] &= ~0x00000008u;
 }
 inline void RtpPacket::clear_header() {
-  if (header_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (header_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     header_->clear();
   }
   clear_has_header();
@@ -3222,7 +3222,7 @@ inline const ::std::string& RtpPacket::header() const {
 }
 inline void RtpPacket::set_header(const ::std::string& value) {
   set_has_header();
-  if (header_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (header_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     header_ = new ::std::string;
   }
   header_->assign(value);
@@ -3230,7 +3230,7 @@ inline void RtpPacket::set_header(const ::std::string& value) {
 }
 inline void RtpPacket::set_header(const char* value) {
   set_has_header();
-  if (header_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (header_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     header_ = new ::std::string;
   }
   header_->assign(value);
@@ -3238,7 +3238,7 @@ inline void RtpPacket::set_header(const char* value) {
 }
 inline void RtpPacket::set_header(const void* value, size_t size) {
   set_has_header();
-  if (header_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (header_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     header_ = new ::std::string;
   }
   header_->assign(reinterpret_cast<const char*>(value), size);
@@ -3246,7 +3246,7 @@ inline void RtpPacket::set_header(const void* value, size_t size) {
 }
 inline ::std::string* RtpPacket::mutable_header() {
   set_has_header();
-  if (header_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (header_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     header_ = new ::std::string;
   }
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.RtpPacket.header)
@@ -3254,16 +3254,16 @@ inline ::std::string* RtpPacket::mutable_header() {
 }
 inline ::std::string* RtpPacket::release_header() {
   clear_has_header();
-  if (header_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (header_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
     ::std::string* temp = header_;
-    header_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    header_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
 inline void RtpPacket::set_allocated_header(::std::string* header) {
-  if (header_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (header_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete header_;
   }
   if (header) {
@@ -3271,7 +3271,7 @@ inline void RtpPacket::set_allocated_header(::std::string* header) {
     header_ = header;
   } else {
     clear_has_header();
-    header_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    header_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:webrtc.rtclog.RtpPacket.header)
 }
@@ -3290,11 +3290,11 @@ inline void RtpPacket::clear_probe_cluster_id() {
   probe_cluster_id_ = 0u;
   clear_has_probe_cluster_id();
 }
-inline ::cloopen_google::protobuf::uint32 RtpPacket::probe_cluster_id() const {
+inline ::yuntongxun_google::protobuf::uint32 RtpPacket::probe_cluster_id() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.RtpPacket.probe_cluster_id)
   return probe_cluster_id_;
 }
-inline void RtpPacket::set_probe_cluster_id(::cloopen_google::protobuf::uint32 value) {
+inline void RtpPacket::set_probe_cluster_id(::yuntongxun_google::protobuf::uint32 value) {
   set_has_probe_cluster_id();
   probe_cluster_id_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.RtpPacket.probe_cluster_id)
@@ -3342,12 +3342,12 @@ inline void RtcpPacket::clear_type() {
   type_ = 0;
   clear_has_type();
 }
-inline ::cloopenwebrtc::rtclog::MediaType RtcpPacket::type() const {
+inline ::yuntongxunwebrtc::rtclog::MediaType RtcpPacket::type() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.RtcpPacket.type)
-  return static_cast< ::cloopenwebrtc::rtclog::MediaType >(type_);
+  return static_cast< ::yuntongxunwebrtc::rtclog::MediaType >(type_);
 }
-inline void RtcpPacket::set_type(::cloopenwebrtc::rtclog::MediaType value) {
-  assert(::cloopenwebrtc::rtclog::MediaType_IsValid(value));
+inline void RtcpPacket::set_type(::yuntongxunwebrtc::rtclog::MediaType value) {
+  assert(::yuntongxunwebrtc::rtclog::MediaType_IsValid(value));
   set_has_type();
   type_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.RtcpPacket.type)
@@ -3364,7 +3364,7 @@ inline void RtcpPacket::clear_has_packet_data() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void RtcpPacket::clear_packet_data() {
-  if (packet_data_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (packet_data_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     packet_data_->clear();
   }
   clear_has_packet_data();
@@ -3375,7 +3375,7 @@ inline const ::std::string& RtcpPacket::packet_data() const {
 }
 inline void RtcpPacket::set_packet_data(const ::std::string& value) {
   set_has_packet_data();
-  if (packet_data_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (packet_data_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     packet_data_ = new ::std::string;
   }
   packet_data_->assign(value);
@@ -3383,7 +3383,7 @@ inline void RtcpPacket::set_packet_data(const ::std::string& value) {
 }
 inline void RtcpPacket::set_packet_data(const char* value) {
   set_has_packet_data();
-  if (packet_data_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (packet_data_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     packet_data_ = new ::std::string;
   }
   packet_data_->assign(value);
@@ -3391,7 +3391,7 @@ inline void RtcpPacket::set_packet_data(const char* value) {
 }
 inline void RtcpPacket::set_packet_data(const void* value, size_t size) {
   set_has_packet_data();
-  if (packet_data_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (packet_data_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     packet_data_ = new ::std::string;
   }
   packet_data_->assign(reinterpret_cast<const char*>(value), size);
@@ -3399,7 +3399,7 @@ inline void RtcpPacket::set_packet_data(const void* value, size_t size) {
 }
 inline ::std::string* RtcpPacket::mutable_packet_data() {
   set_has_packet_data();
-  if (packet_data_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (packet_data_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     packet_data_ = new ::std::string;
   }
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.RtcpPacket.packet_data)
@@ -3407,16 +3407,16 @@ inline ::std::string* RtcpPacket::mutable_packet_data() {
 }
 inline ::std::string* RtcpPacket::release_packet_data() {
   clear_has_packet_data();
-  if (packet_data_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (packet_data_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
     ::std::string* temp = packet_data_;
-    packet_data_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    packet_data_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
 inline void RtcpPacket::set_allocated_packet_data(::std::string* packet_data) {
-  if (packet_data_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (packet_data_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete packet_data_;
   }
   if (packet_data) {
@@ -3424,7 +3424,7 @@ inline void RtcpPacket::set_allocated_packet_data(::std::string* packet_data) {
     packet_data_ = packet_data;
   } else {
     clear_has_packet_data();
-    packet_data_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    packet_data_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:webrtc.rtclog.RtcpPacket.packet_data)
 }
@@ -3447,11 +3447,11 @@ inline void AudioPlayoutEvent::clear_local_ssrc() {
   local_ssrc_ = 0u;
   clear_has_local_ssrc();
 }
-inline ::cloopen_google::protobuf::uint32 AudioPlayoutEvent::local_ssrc() const {
+inline ::yuntongxun_google::protobuf::uint32 AudioPlayoutEvent::local_ssrc() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.AudioPlayoutEvent.local_ssrc)
   return local_ssrc_;
 }
-inline void AudioPlayoutEvent::set_local_ssrc(::cloopen_google::protobuf::uint32 value) {
+inline void AudioPlayoutEvent::set_local_ssrc(::yuntongxun_google::protobuf::uint32 value) {
   set_has_local_ssrc();
   local_ssrc_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.AudioPlayoutEvent.local_ssrc)
@@ -3475,11 +3475,11 @@ inline void LossBasedBweUpdate::clear_bitrate_bps() {
   bitrate_bps_ = 0;
   clear_has_bitrate_bps();
 }
-inline ::cloopen_google::protobuf::int32 LossBasedBweUpdate::bitrate_bps() const {
+inline ::yuntongxun_google::protobuf::int32 LossBasedBweUpdate::bitrate_bps() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.LossBasedBweUpdate.bitrate_bps)
   return bitrate_bps_;
 }
-inline void LossBasedBweUpdate::set_bitrate_bps(::cloopen_google::protobuf::int32 value) {
+inline void LossBasedBweUpdate::set_bitrate_bps(::yuntongxun_google::protobuf::int32 value) {
   set_has_bitrate_bps();
   bitrate_bps_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.LossBasedBweUpdate.bitrate_bps)
@@ -3499,11 +3499,11 @@ inline void LossBasedBweUpdate::clear_fraction_loss() {
   fraction_loss_ = 0u;
   clear_has_fraction_loss();
 }
-inline ::cloopen_google::protobuf::uint32 LossBasedBweUpdate::fraction_loss() const {
+inline ::yuntongxun_google::protobuf::uint32 LossBasedBweUpdate::fraction_loss() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.LossBasedBweUpdate.fraction_loss)
   return fraction_loss_;
 }
-inline void LossBasedBweUpdate::set_fraction_loss(::cloopen_google::protobuf::uint32 value) {
+inline void LossBasedBweUpdate::set_fraction_loss(::yuntongxun_google::protobuf::uint32 value) {
   set_has_fraction_loss();
   fraction_loss_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.LossBasedBweUpdate.fraction_loss)
@@ -3523,11 +3523,11 @@ inline void LossBasedBweUpdate::clear_total_packets() {
   total_packets_ = 0;
   clear_has_total_packets();
 }
-inline ::cloopen_google::protobuf::int32 LossBasedBweUpdate::total_packets() const {
+inline ::yuntongxun_google::protobuf::int32 LossBasedBweUpdate::total_packets() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.LossBasedBweUpdate.total_packets)
   return total_packets_;
 }
-inline void LossBasedBweUpdate::set_total_packets(::cloopen_google::protobuf::int32 value) {
+inline void LossBasedBweUpdate::set_total_packets(::yuntongxun_google::protobuf::int32 value) {
   set_has_total_packets();
   total_packets_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.LossBasedBweUpdate.total_packets)
@@ -3551,11 +3551,11 @@ inline void DelayBasedBweUpdate::clear_bitrate_bps() {
   bitrate_bps_ = 0;
   clear_has_bitrate_bps();
 }
-inline ::cloopen_google::protobuf::int32 DelayBasedBweUpdate::bitrate_bps() const {
+inline ::yuntongxun_google::protobuf::int32 DelayBasedBweUpdate::bitrate_bps() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.DelayBasedBweUpdate.bitrate_bps)
   return bitrate_bps_;
 }
-inline void DelayBasedBweUpdate::set_bitrate_bps(::cloopen_google::protobuf::int32 value) {
+inline void DelayBasedBweUpdate::set_bitrate_bps(::yuntongxun_google::protobuf::int32 value) {
   set_has_bitrate_bps();
   bitrate_bps_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.DelayBasedBweUpdate.bitrate_bps)
@@ -3575,12 +3575,12 @@ inline void DelayBasedBweUpdate::clear_detector_state() {
   detector_state_ = 0;
   clear_has_detector_state();
 }
-inline ::cloopenwebrtc::rtclog::DelayBasedBweUpdate_DetectorState DelayBasedBweUpdate::detector_state() const {
+inline ::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate_DetectorState DelayBasedBweUpdate::detector_state() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.DelayBasedBweUpdate.detector_state)
-  return static_cast< ::cloopenwebrtc::rtclog::DelayBasedBweUpdate_DetectorState >(detector_state_);
+  return static_cast< ::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate_DetectorState >(detector_state_);
 }
-inline void DelayBasedBweUpdate::set_detector_state(::cloopenwebrtc::rtclog::DelayBasedBweUpdate_DetectorState value) {
-  assert(::cloopenwebrtc::rtclog::DelayBasedBweUpdate_DetectorState_IsValid(value));
+inline void DelayBasedBweUpdate::set_detector_state(::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate_DetectorState value) {
+  assert(::yuntongxunwebrtc::rtclog::DelayBasedBweUpdate_DetectorState_IsValid(value));
   set_has_detector_state();
   detector_state_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.DelayBasedBweUpdate.detector_state)
@@ -3604,11 +3604,11 @@ inline void VideoReceiveConfig::clear_remote_ssrc() {
   remote_ssrc_ = 0u;
   clear_has_remote_ssrc();
 }
-inline ::cloopen_google::protobuf::uint32 VideoReceiveConfig::remote_ssrc() const {
+inline ::yuntongxun_google::protobuf::uint32 VideoReceiveConfig::remote_ssrc() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.VideoReceiveConfig.remote_ssrc)
   return remote_ssrc_;
 }
-inline void VideoReceiveConfig::set_remote_ssrc(::cloopen_google::protobuf::uint32 value) {
+inline void VideoReceiveConfig::set_remote_ssrc(::yuntongxun_google::protobuf::uint32 value) {
   set_has_remote_ssrc();
   remote_ssrc_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.VideoReceiveConfig.remote_ssrc)
@@ -3628,11 +3628,11 @@ inline void VideoReceiveConfig::clear_local_ssrc() {
   local_ssrc_ = 0u;
   clear_has_local_ssrc();
 }
-inline ::cloopen_google::protobuf::uint32 VideoReceiveConfig::local_ssrc() const {
+inline ::yuntongxun_google::protobuf::uint32 VideoReceiveConfig::local_ssrc() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.VideoReceiveConfig.local_ssrc)
   return local_ssrc_;
 }
-inline void VideoReceiveConfig::set_local_ssrc(::cloopen_google::protobuf::uint32 value) {
+inline void VideoReceiveConfig::set_local_ssrc(::yuntongxun_google::protobuf::uint32 value) {
   set_has_local_ssrc();
   local_ssrc_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.VideoReceiveConfig.local_ssrc)
@@ -3652,12 +3652,12 @@ inline void VideoReceiveConfig::clear_rtcp_mode() {
   rtcp_mode_ = 1;
   clear_has_rtcp_mode();
 }
-inline ::cloopenwebrtc::rtclog::VideoReceiveConfig_RtcpMode VideoReceiveConfig::rtcp_mode() const {
+inline ::yuntongxunwebrtc::rtclog::VideoReceiveConfig_RtcpMode VideoReceiveConfig::rtcp_mode() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.VideoReceiveConfig.rtcp_mode)
-  return static_cast< ::cloopenwebrtc::rtclog::VideoReceiveConfig_RtcpMode >(rtcp_mode_);
+  return static_cast< ::yuntongxunwebrtc::rtclog::VideoReceiveConfig_RtcpMode >(rtcp_mode_);
 }
-inline void VideoReceiveConfig::set_rtcp_mode(::cloopenwebrtc::rtclog::VideoReceiveConfig_RtcpMode value) {
-  assert(::cloopenwebrtc::rtclog::VideoReceiveConfig_RtcpMode_IsValid(value));
+inline void VideoReceiveConfig::set_rtcp_mode(::yuntongxunwebrtc::rtclog::VideoReceiveConfig_RtcpMode value) {
+  assert(::yuntongxunwebrtc::rtclog::VideoReceiveConfig_RtcpMode_IsValid(value));
   set_has_rtcp_mode();
   rtcp_mode_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.VideoReceiveConfig.rtcp_mode)
@@ -3694,24 +3694,24 @@ inline int VideoReceiveConfig::rtx_map_size() const {
 inline void VideoReceiveConfig::clear_rtx_map() {
   rtx_map_.Clear();
 }
-inline const ::cloopenwebrtc::rtclog::RtxMap& VideoReceiveConfig::rtx_map(int index) const {
+inline const ::yuntongxunwebrtc::rtclog::RtxMap& VideoReceiveConfig::rtx_map(int index) const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.VideoReceiveConfig.rtx_map)
   return rtx_map_.Get(index);
 }
-inline ::cloopenwebrtc::rtclog::RtxMap* VideoReceiveConfig::mutable_rtx_map(int index) {
+inline ::yuntongxunwebrtc::rtclog::RtxMap* VideoReceiveConfig::mutable_rtx_map(int index) {
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.VideoReceiveConfig.rtx_map)
   return rtx_map_.Mutable(index);
 }
-inline ::cloopenwebrtc::rtclog::RtxMap* VideoReceiveConfig::add_rtx_map() {
+inline ::yuntongxunwebrtc::rtclog::RtxMap* VideoReceiveConfig::add_rtx_map() {
   // @@protoc_insertion_point(field_add:webrtc.rtclog.VideoReceiveConfig.rtx_map)
   return rtx_map_.Add();
 }
-inline const ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtxMap >&
+inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtxMap >&
 VideoReceiveConfig::rtx_map() const {
   // @@protoc_insertion_point(field_list:webrtc.rtclog.VideoReceiveConfig.rtx_map)
   return rtx_map_;
 }
-inline ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtxMap >*
+inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtxMap >*
 VideoReceiveConfig::mutable_rtx_map() {
   // @@protoc_insertion_point(field_mutable_list:webrtc.rtclog.VideoReceiveConfig.rtx_map)
   return &rtx_map_;
@@ -3724,24 +3724,24 @@ inline int VideoReceiveConfig::header_extensions_size() const {
 inline void VideoReceiveConfig::clear_header_extensions() {
   header_extensions_.Clear();
 }
-inline const ::cloopenwebrtc::rtclog::RtpHeaderExtension& VideoReceiveConfig::header_extensions(int index) const {
+inline const ::yuntongxunwebrtc::rtclog::RtpHeaderExtension& VideoReceiveConfig::header_extensions(int index) const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.VideoReceiveConfig.header_extensions)
   return header_extensions_.Get(index);
 }
-inline ::cloopenwebrtc::rtclog::RtpHeaderExtension* VideoReceiveConfig::mutable_header_extensions(int index) {
+inline ::yuntongxunwebrtc::rtclog::RtpHeaderExtension* VideoReceiveConfig::mutable_header_extensions(int index) {
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.VideoReceiveConfig.header_extensions)
   return header_extensions_.Mutable(index);
 }
-inline ::cloopenwebrtc::rtclog::RtpHeaderExtension* VideoReceiveConfig::add_header_extensions() {
+inline ::yuntongxunwebrtc::rtclog::RtpHeaderExtension* VideoReceiveConfig::add_header_extensions() {
   // @@protoc_insertion_point(field_add:webrtc.rtclog.VideoReceiveConfig.header_extensions)
   return header_extensions_.Add();
 }
-inline const ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtpHeaderExtension >&
+inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtpHeaderExtension >&
 VideoReceiveConfig::header_extensions() const {
   // @@protoc_insertion_point(field_list:webrtc.rtclog.VideoReceiveConfig.header_extensions)
   return header_extensions_;
 }
-inline ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtpHeaderExtension >*
+inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtpHeaderExtension >*
 VideoReceiveConfig::mutable_header_extensions() {
   // @@protoc_insertion_point(field_mutable_list:webrtc.rtclog.VideoReceiveConfig.header_extensions)
   return &header_extensions_;
@@ -3754,24 +3754,24 @@ inline int VideoReceiveConfig::decoders_size() const {
 inline void VideoReceiveConfig::clear_decoders() {
   decoders_.Clear();
 }
-inline const ::cloopenwebrtc::rtclog::DecoderConfig& VideoReceiveConfig::decoders(int index) const {
+inline const ::yuntongxunwebrtc::rtclog::DecoderConfig& VideoReceiveConfig::decoders(int index) const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.VideoReceiveConfig.decoders)
   return decoders_.Get(index);
 }
-inline ::cloopenwebrtc::rtclog::DecoderConfig* VideoReceiveConfig::mutable_decoders(int index) {
+inline ::yuntongxunwebrtc::rtclog::DecoderConfig* VideoReceiveConfig::mutable_decoders(int index) {
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.VideoReceiveConfig.decoders)
   return decoders_.Mutable(index);
 }
-inline ::cloopenwebrtc::rtclog::DecoderConfig* VideoReceiveConfig::add_decoders() {
+inline ::yuntongxunwebrtc::rtclog::DecoderConfig* VideoReceiveConfig::add_decoders() {
   // @@protoc_insertion_point(field_add:webrtc.rtclog.VideoReceiveConfig.decoders)
   return decoders_.Add();
 }
-inline const ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::DecoderConfig >&
+inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::DecoderConfig >&
 VideoReceiveConfig::decoders() const {
   // @@protoc_insertion_point(field_list:webrtc.rtclog.VideoReceiveConfig.decoders)
   return decoders_;
 }
-inline ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::DecoderConfig >*
+inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::DecoderConfig >*
 VideoReceiveConfig::mutable_decoders() {
   // @@protoc_insertion_point(field_mutable_list:webrtc.rtclog.VideoReceiveConfig.decoders)
   return &decoders_;
@@ -3792,7 +3792,7 @@ inline void DecoderConfig::clear_has_name() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void DecoderConfig::clear_name() {
-  if (name_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     name_->clear();
   }
   clear_has_name();
@@ -3803,7 +3803,7 @@ inline const ::std::string& DecoderConfig::name() const {
 }
 inline void DecoderConfig::set_name(const ::std::string& value) {
   set_has_name();
-  if (name_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     name_ = new ::std::string;
   }
   name_->assign(value);
@@ -3811,7 +3811,7 @@ inline void DecoderConfig::set_name(const ::std::string& value) {
 }
 inline void DecoderConfig::set_name(const char* value) {
   set_has_name();
-  if (name_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     name_ = new ::std::string;
   }
   name_->assign(value);
@@ -3819,7 +3819,7 @@ inline void DecoderConfig::set_name(const char* value) {
 }
 inline void DecoderConfig::set_name(const char* value, size_t size) {
   set_has_name();
-  if (name_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     name_ = new ::std::string;
   }
   name_->assign(reinterpret_cast<const char*>(value), size);
@@ -3827,7 +3827,7 @@ inline void DecoderConfig::set_name(const char* value, size_t size) {
 }
 inline ::std::string* DecoderConfig::mutable_name() {
   set_has_name();
-  if (name_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     name_ = new ::std::string;
   }
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.DecoderConfig.name)
@@ -3835,16 +3835,16 @@ inline ::std::string* DecoderConfig::mutable_name() {
 }
 inline ::std::string* DecoderConfig::release_name() {
   clear_has_name();
-  if (name_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
     ::std::string* temp = name_;
-    name_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    name_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
 inline void DecoderConfig::set_allocated_name(::std::string* name) {
-  if (name_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete name_;
   }
   if (name) {
@@ -3852,7 +3852,7 @@ inline void DecoderConfig::set_allocated_name(::std::string* name) {
     name_ = name;
   } else {
     clear_has_name();
-    name_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    name_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:webrtc.rtclog.DecoderConfig.name)
 }
@@ -3871,11 +3871,11 @@ inline void DecoderConfig::clear_payload_type() {
   payload_type_ = 0;
   clear_has_payload_type();
 }
-inline ::cloopen_google::protobuf::int32 DecoderConfig::payload_type() const {
+inline ::yuntongxun_google::protobuf::int32 DecoderConfig::payload_type() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.DecoderConfig.payload_type)
   return payload_type_;
 }
-inline void DecoderConfig::set_payload_type(::cloopen_google::protobuf::int32 value) {
+inline void DecoderConfig::set_payload_type(::yuntongxun_google::protobuf::int32 value) {
   set_has_payload_type();
   payload_type_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.DecoderConfig.payload_type)
@@ -3896,7 +3896,7 @@ inline void RtpHeaderExtension::clear_has_name() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void RtpHeaderExtension::clear_name() {
-  if (name_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     name_->clear();
   }
   clear_has_name();
@@ -3907,7 +3907,7 @@ inline const ::std::string& RtpHeaderExtension::name() const {
 }
 inline void RtpHeaderExtension::set_name(const ::std::string& value) {
   set_has_name();
-  if (name_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     name_ = new ::std::string;
   }
   name_->assign(value);
@@ -3915,7 +3915,7 @@ inline void RtpHeaderExtension::set_name(const ::std::string& value) {
 }
 inline void RtpHeaderExtension::set_name(const char* value) {
   set_has_name();
-  if (name_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     name_ = new ::std::string;
   }
   name_->assign(value);
@@ -3923,7 +3923,7 @@ inline void RtpHeaderExtension::set_name(const char* value) {
 }
 inline void RtpHeaderExtension::set_name(const char* value, size_t size) {
   set_has_name();
-  if (name_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     name_ = new ::std::string;
   }
   name_->assign(reinterpret_cast<const char*>(value), size);
@@ -3931,7 +3931,7 @@ inline void RtpHeaderExtension::set_name(const char* value, size_t size) {
 }
 inline ::std::string* RtpHeaderExtension::mutable_name() {
   set_has_name();
-  if (name_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     name_ = new ::std::string;
   }
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.RtpHeaderExtension.name)
@@ -3939,16 +3939,16 @@ inline ::std::string* RtpHeaderExtension::mutable_name() {
 }
 inline ::std::string* RtpHeaderExtension::release_name() {
   clear_has_name();
-  if (name_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
     ::std::string* temp = name_;
-    name_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    name_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
 inline void RtpHeaderExtension::set_allocated_name(::std::string* name) {
-  if (name_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete name_;
   }
   if (name) {
@@ -3956,7 +3956,7 @@ inline void RtpHeaderExtension::set_allocated_name(::std::string* name) {
     name_ = name;
   } else {
     clear_has_name();
-    name_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    name_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:webrtc.rtclog.RtpHeaderExtension.name)
 }
@@ -3975,11 +3975,11 @@ inline void RtpHeaderExtension::clear_id() {
   id_ = 0;
   clear_has_id();
 }
-inline ::cloopen_google::protobuf::int32 RtpHeaderExtension::id() const {
+inline ::yuntongxun_google::protobuf::int32 RtpHeaderExtension::id() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.RtpHeaderExtension.id)
   return id_;
 }
-inline void RtpHeaderExtension::set_id(::cloopen_google::protobuf::int32 value) {
+inline void RtpHeaderExtension::set_id(::yuntongxun_google::protobuf::int32 value) {
   set_has_id();
   id_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.RtpHeaderExtension.id)
@@ -4003,11 +4003,11 @@ inline void RtxConfig::clear_rtx_ssrc() {
   rtx_ssrc_ = 0u;
   clear_has_rtx_ssrc();
 }
-inline ::cloopen_google::protobuf::uint32 RtxConfig::rtx_ssrc() const {
+inline ::yuntongxun_google::protobuf::uint32 RtxConfig::rtx_ssrc() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.RtxConfig.rtx_ssrc)
   return rtx_ssrc_;
 }
-inline void RtxConfig::set_rtx_ssrc(::cloopen_google::protobuf::uint32 value) {
+inline void RtxConfig::set_rtx_ssrc(::yuntongxun_google::protobuf::uint32 value) {
   set_has_rtx_ssrc();
   rtx_ssrc_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.RtxConfig.rtx_ssrc)
@@ -4027,11 +4027,11 @@ inline void RtxConfig::clear_rtx_payload_type() {
   rtx_payload_type_ = 0;
   clear_has_rtx_payload_type();
 }
-inline ::cloopen_google::protobuf::int32 RtxConfig::rtx_payload_type() const {
+inline ::yuntongxun_google::protobuf::int32 RtxConfig::rtx_payload_type() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.RtxConfig.rtx_payload_type)
   return rtx_payload_type_;
 }
-inline void RtxConfig::set_rtx_payload_type(::cloopen_google::protobuf::int32 value) {
+inline void RtxConfig::set_rtx_payload_type(::yuntongxun_google::protobuf::int32 value) {
   set_has_rtx_payload_type();
   rtx_payload_type_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.RtxConfig.rtx_payload_type)
@@ -4055,11 +4055,11 @@ inline void RtxMap::clear_payload_type() {
   payload_type_ = 0;
   clear_has_payload_type();
 }
-inline ::cloopen_google::protobuf::int32 RtxMap::payload_type() const {
+inline ::yuntongxun_google::protobuf::int32 RtxMap::payload_type() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.RtxMap.payload_type)
   return payload_type_;
 }
-inline void RtxMap::set_payload_type(::cloopen_google::protobuf::int32 value) {
+inline void RtxMap::set_payload_type(::yuntongxun_google::protobuf::int32 value) {
   set_has_payload_type();
   payload_type_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.RtxMap.payload_type)
@@ -4076,10 +4076,10 @@ inline void RtxMap::clear_has_config() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void RtxMap::clear_config() {
-  if (config_ != NULL) config_->::cloopenwebrtc::rtclog::RtxConfig::Clear();
+  if (config_ != NULL) config_->::yuntongxunwebrtc::rtclog::RtxConfig::Clear();
   clear_has_config();
 }
-inline const ::cloopenwebrtc::rtclog::RtxConfig& RtxMap::config() const {
+inline const ::yuntongxunwebrtc::rtclog::RtxConfig& RtxMap::config() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.RtxMap.config)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   return config_ != NULL ? *config_ : *default_instance().config_;
@@ -4087,19 +4087,19 @@ inline const ::cloopenwebrtc::rtclog::RtxConfig& RtxMap::config() const {
   return config_ != NULL ? *config_ : *default_instance_->config_;
 #endif
 }
-inline ::cloopenwebrtc::rtclog::RtxConfig* RtxMap::mutable_config() {
+inline ::yuntongxunwebrtc::rtclog::RtxConfig* RtxMap::mutable_config() {
   set_has_config();
-  if (config_ == NULL) config_ = new ::cloopenwebrtc::rtclog::RtxConfig;
+  if (config_ == NULL) config_ = new ::yuntongxunwebrtc::rtclog::RtxConfig;
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.RtxMap.config)
   return config_;
 }
-inline ::cloopenwebrtc::rtclog::RtxConfig* RtxMap::release_config() {
+inline ::yuntongxunwebrtc::rtclog::RtxConfig* RtxMap::release_config() {
   clear_has_config();
-  ::cloopenwebrtc::rtclog::RtxConfig* temp = config_;
+  ::yuntongxunwebrtc::rtclog::RtxConfig* temp = config_;
   config_ = NULL;
   return temp;
 }
-inline void RtxMap::set_allocated_config(::cloopenwebrtc::rtclog::RtxConfig* config) {
+inline void RtxMap::set_allocated_config(::yuntongxunwebrtc::rtclog::RtxConfig* config) {
   delete config_;
   config_ = config;
   if (config) {
@@ -4121,24 +4121,24 @@ inline int VideoSendConfig::ssrcs_size() const {
 inline void VideoSendConfig::clear_ssrcs() {
   ssrcs_.Clear();
 }
-inline ::cloopen_google::protobuf::uint32 VideoSendConfig::ssrcs(int index) const {
+inline ::yuntongxun_google::protobuf::uint32 VideoSendConfig::ssrcs(int index) const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.VideoSendConfig.ssrcs)
   return ssrcs_.Get(index);
 }
-inline void VideoSendConfig::set_ssrcs(int index, ::cloopen_google::protobuf::uint32 value) {
+inline void VideoSendConfig::set_ssrcs(int index, ::yuntongxun_google::protobuf::uint32 value) {
   ssrcs_.Set(index, value);
   // @@protoc_insertion_point(field_set:webrtc.rtclog.VideoSendConfig.ssrcs)
 }
-inline void VideoSendConfig::add_ssrcs(::cloopen_google::protobuf::uint32 value) {
+inline void VideoSendConfig::add_ssrcs(::yuntongxun_google::protobuf::uint32 value) {
   ssrcs_.Add(value);
   // @@protoc_insertion_point(field_add:webrtc.rtclog.VideoSendConfig.ssrcs)
 }
-inline const ::cloopen_google::protobuf::RepeatedField< ::cloopen_google::protobuf::uint32 >&
+inline const ::yuntongxun_google::protobuf::RepeatedField< ::yuntongxun_google::protobuf::uint32 >&
 VideoSendConfig::ssrcs() const {
   // @@protoc_insertion_point(field_list:webrtc.rtclog.VideoSendConfig.ssrcs)
   return ssrcs_;
 }
-inline ::cloopen_google::protobuf::RepeatedField< ::cloopen_google::protobuf::uint32 >*
+inline ::yuntongxun_google::protobuf::RepeatedField< ::yuntongxun_google::protobuf::uint32 >*
 VideoSendConfig::mutable_ssrcs() {
   // @@protoc_insertion_point(field_mutable_list:webrtc.rtclog.VideoSendConfig.ssrcs)
   return &ssrcs_;
@@ -4151,24 +4151,24 @@ inline int VideoSendConfig::header_extensions_size() const {
 inline void VideoSendConfig::clear_header_extensions() {
   header_extensions_.Clear();
 }
-inline const ::cloopenwebrtc::rtclog::RtpHeaderExtension& VideoSendConfig::header_extensions(int index) const {
+inline const ::yuntongxunwebrtc::rtclog::RtpHeaderExtension& VideoSendConfig::header_extensions(int index) const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.VideoSendConfig.header_extensions)
   return header_extensions_.Get(index);
 }
-inline ::cloopenwebrtc::rtclog::RtpHeaderExtension* VideoSendConfig::mutable_header_extensions(int index) {
+inline ::yuntongxunwebrtc::rtclog::RtpHeaderExtension* VideoSendConfig::mutable_header_extensions(int index) {
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.VideoSendConfig.header_extensions)
   return header_extensions_.Mutable(index);
 }
-inline ::cloopenwebrtc::rtclog::RtpHeaderExtension* VideoSendConfig::add_header_extensions() {
+inline ::yuntongxunwebrtc::rtclog::RtpHeaderExtension* VideoSendConfig::add_header_extensions() {
   // @@protoc_insertion_point(field_add:webrtc.rtclog.VideoSendConfig.header_extensions)
   return header_extensions_.Add();
 }
-inline const ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtpHeaderExtension >&
+inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtpHeaderExtension >&
 VideoSendConfig::header_extensions() const {
   // @@protoc_insertion_point(field_list:webrtc.rtclog.VideoSendConfig.header_extensions)
   return header_extensions_;
 }
-inline ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtpHeaderExtension >*
+inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtpHeaderExtension >*
 VideoSendConfig::mutable_header_extensions() {
   // @@protoc_insertion_point(field_mutable_list:webrtc.rtclog.VideoSendConfig.header_extensions)
   return &header_extensions_;
@@ -4181,24 +4181,24 @@ inline int VideoSendConfig::rtx_ssrcs_size() const {
 inline void VideoSendConfig::clear_rtx_ssrcs() {
   rtx_ssrcs_.Clear();
 }
-inline ::cloopen_google::protobuf::uint32 VideoSendConfig::rtx_ssrcs(int index) const {
+inline ::yuntongxun_google::protobuf::uint32 VideoSendConfig::rtx_ssrcs(int index) const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.VideoSendConfig.rtx_ssrcs)
   return rtx_ssrcs_.Get(index);
 }
-inline void VideoSendConfig::set_rtx_ssrcs(int index, ::cloopen_google::protobuf::uint32 value) {
+inline void VideoSendConfig::set_rtx_ssrcs(int index, ::yuntongxun_google::protobuf::uint32 value) {
   rtx_ssrcs_.Set(index, value);
   // @@protoc_insertion_point(field_set:webrtc.rtclog.VideoSendConfig.rtx_ssrcs)
 }
-inline void VideoSendConfig::add_rtx_ssrcs(::cloopen_google::protobuf::uint32 value) {
+inline void VideoSendConfig::add_rtx_ssrcs(::yuntongxun_google::protobuf::uint32 value) {
   rtx_ssrcs_.Add(value);
   // @@protoc_insertion_point(field_add:webrtc.rtclog.VideoSendConfig.rtx_ssrcs)
 }
-inline const ::cloopen_google::protobuf::RepeatedField< ::cloopen_google::protobuf::uint32 >&
+inline const ::yuntongxun_google::protobuf::RepeatedField< ::yuntongxun_google::protobuf::uint32 >&
 VideoSendConfig::rtx_ssrcs() const {
   // @@protoc_insertion_point(field_list:webrtc.rtclog.VideoSendConfig.rtx_ssrcs)
   return rtx_ssrcs_;
 }
-inline ::cloopen_google::protobuf::RepeatedField< ::cloopen_google::protobuf::uint32 >*
+inline ::yuntongxun_google::protobuf::RepeatedField< ::yuntongxun_google::protobuf::uint32 >*
 VideoSendConfig::mutable_rtx_ssrcs() {
   // @@protoc_insertion_point(field_mutable_list:webrtc.rtclog.VideoSendConfig.rtx_ssrcs)
   return &rtx_ssrcs_;
@@ -4218,11 +4218,11 @@ inline void VideoSendConfig::clear_rtx_payload_type() {
   rtx_payload_type_ = 0;
   clear_has_rtx_payload_type();
 }
-inline ::cloopen_google::protobuf::int32 VideoSendConfig::rtx_payload_type() const {
+inline ::yuntongxun_google::protobuf::int32 VideoSendConfig::rtx_payload_type() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.VideoSendConfig.rtx_payload_type)
   return rtx_payload_type_;
 }
-inline void VideoSendConfig::set_rtx_payload_type(::cloopen_google::protobuf::int32 value) {
+inline void VideoSendConfig::set_rtx_payload_type(::yuntongxun_google::protobuf::int32 value) {
   set_has_rtx_payload_type();
   rtx_payload_type_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.VideoSendConfig.rtx_payload_type)
@@ -4239,10 +4239,10 @@ inline void VideoSendConfig::clear_has_encoder() {
   _has_bits_[0] &= ~0x00000010u;
 }
 inline void VideoSendConfig::clear_encoder() {
-  if (encoder_ != NULL) encoder_->::cloopenwebrtc::rtclog::EncoderConfig::Clear();
+  if (encoder_ != NULL) encoder_->::yuntongxunwebrtc::rtclog::EncoderConfig::Clear();
   clear_has_encoder();
 }
-inline const ::cloopenwebrtc::rtclog::EncoderConfig& VideoSendConfig::encoder() const {
+inline const ::yuntongxunwebrtc::rtclog::EncoderConfig& VideoSendConfig::encoder() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.VideoSendConfig.encoder)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   return encoder_ != NULL ? *encoder_ : *default_instance().encoder_;
@@ -4250,19 +4250,19 @@ inline const ::cloopenwebrtc::rtclog::EncoderConfig& VideoSendConfig::encoder() 
   return encoder_ != NULL ? *encoder_ : *default_instance_->encoder_;
 #endif
 }
-inline ::cloopenwebrtc::rtclog::EncoderConfig* VideoSendConfig::mutable_encoder() {
+inline ::yuntongxunwebrtc::rtclog::EncoderConfig* VideoSendConfig::mutable_encoder() {
   set_has_encoder();
-  if (encoder_ == NULL) encoder_ = new ::cloopenwebrtc::rtclog::EncoderConfig;
+  if (encoder_ == NULL) encoder_ = new ::yuntongxunwebrtc::rtclog::EncoderConfig;
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.VideoSendConfig.encoder)
   return encoder_;
 }
-inline ::cloopenwebrtc::rtclog::EncoderConfig* VideoSendConfig::release_encoder() {
+inline ::yuntongxunwebrtc::rtclog::EncoderConfig* VideoSendConfig::release_encoder() {
   clear_has_encoder();
-  ::cloopenwebrtc::rtclog::EncoderConfig* temp = encoder_;
+  ::yuntongxunwebrtc::rtclog::EncoderConfig* temp = encoder_;
   encoder_ = NULL;
   return temp;
 }
-inline void VideoSendConfig::set_allocated_encoder(::cloopenwebrtc::rtclog::EncoderConfig* encoder) {
+inline void VideoSendConfig::set_allocated_encoder(::yuntongxunwebrtc::rtclog::EncoderConfig* encoder) {
   delete encoder_;
   encoder_ = encoder;
   if (encoder) {
@@ -4288,7 +4288,7 @@ inline void EncoderConfig::clear_has_name() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline void EncoderConfig::clear_name() {
-  if (name_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     name_->clear();
   }
   clear_has_name();
@@ -4299,7 +4299,7 @@ inline const ::std::string& EncoderConfig::name() const {
 }
 inline void EncoderConfig::set_name(const ::std::string& value) {
   set_has_name();
-  if (name_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     name_ = new ::std::string;
   }
   name_->assign(value);
@@ -4307,7 +4307,7 @@ inline void EncoderConfig::set_name(const ::std::string& value) {
 }
 inline void EncoderConfig::set_name(const char* value) {
   set_has_name();
-  if (name_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     name_ = new ::std::string;
   }
   name_->assign(value);
@@ -4315,7 +4315,7 @@ inline void EncoderConfig::set_name(const char* value) {
 }
 inline void EncoderConfig::set_name(const char* value, size_t size) {
   set_has_name();
-  if (name_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     name_ = new ::std::string;
   }
   name_->assign(reinterpret_cast<const char*>(value), size);
@@ -4323,7 +4323,7 @@ inline void EncoderConfig::set_name(const char* value, size_t size) {
 }
 inline ::std::string* EncoderConfig::mutable_name() {
   set_has_name();
-  if (name_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     name_ = new ::std::string;
   }
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.EncoderConfig.name)
@@ -4331,16 +4331,16 @@ inline ::std::string* EncoderConfig::mutable_name() {
 }
 inline ::std::string* EncoderConfig::release_name() {
   clear_has_name();
-  if (name_ == &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ == &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     return NULL;
   } else {
     ::std::string* temp = name_;
-    name_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    name_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
     return temp;
   }
 }
 inline void EncoderConfig::set_allocated_name(::std::string* name) {
-  if (name_ != &::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+  if (name_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete name_;
   }
   if (name) {
@@ -4348,7 +4348,7 @@ inline void EncoderConfig::set_allocated_name(::std::string* name) {
     name_ = name;
   } else {
     clear_has_name();
-    name_ = const_cast< ::std::string*>(&::cloopen_google::protobuf::internal::GetEmptyStringAlreadyInited());
+    name_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   }
   // @@protoc_insertion_point(field_set_allocated:webrtc.rtclog.EncoderConfig.name)
 }
@@ -4367,11 +4367,11 @@ inline void EncoderConfig::clear_payload_type() {
   payload_type_ = 0;
   clear_has_payload_type();
 }
-inline ::cloopen_google::protobuf::int32 EncoderConfig::payload_type() const {
+inline ::yuntongxun_google::protobuf::int32 EncoderConfig::payload_type() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.EncoderConfig.payload_type)
   return payload_type_;
 }
-inline void EncoderConfig::set_payload_type(::cloopen_google::protobuf::int32 value) {
+inline void EncoderConfig::set_payload_type(::yuntongxun_google::protobuf::int32 value) {
   set_has_payload_type();
   payload_type_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.EncoderConfig.payload_type)
@@ -4395,11 +4395,11 @@ inline void AudioReceiveConfig::clear_remote_ssrc() {
   remote_ssrc_ = 0u;
   clear_has_remote_ssrc();
 }
-inline ::cloopen_google::protobuf::uint32 AudioReceiveConfig::remote_ssrc() const {
+inline ::yuntongxun_google::protobuf::uint32 AudioReceiveConfig::remote_ssrc() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.AudioReceiveConfig.remote_ssrc)
   return remote_ssrc_;
 }
-inline void AudioReceiveConfig::set_remote_ssrc(::cloopen_google::protobuf::uint32 value) {
+inline void AudioReceiveConfig::set_remote_ssrc(::yuntongxun_google::protobuf::uint32 value) {
   set_has_remote_ssrc();
   remote_ssrc_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.AudioReceiveConfig.remote_ssrc)
@@ -4419,11 +4419,11 @@ inline void AudioReceiveConfig::clear_local_ssrc() {
   local_ssrc_ = 0u;
   clear_has_local_ssrc();
 }
-inline ::cloopen_google::protobuf::uint32 AudioReceiveConfig::local_ssrc() const {
+inline ::yuntongxun_google::protobuf::uint32 AudioReceiveConfig::local_ssrc() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.AudioReceiveConfig.local_ssrc)
   return local_ssrc_;
 }
-inline void AudioReceiveConfig::set_local_ssrc(::cloopen_google::protobuf::uint32 value) {
+inline void AudioReceiveConfig::set_local_ssrc(::yuntongxun_google::protobuf::uint32 value) {
   set_has_local_ssrc();
   local_ssrc_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.AudioReceiveConfig.local_ssrc)
@@ -4436,24 +4436,24 @@ inline int AudioReceiveConfig::header_extensions_size() const {
 inline void AudioReceiveConfig::clear_header_extensions() {
   header_extensions_.Clear();
 }
-inline const ::cloopenwebrtc::rtclog::RtpHeaderExtension& AudioReceiveConfig::header_extensions(int index) const {
+inline const ::yuntongxunwebrtc::rtclog::RtpHeaderExtension& AudioReceiveConfig::header_extensions(int index) const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.AudioReceiveConfig.header_extensions)
   return header_extensions_.Get(index);
 }
-inline ::cloopenwebrtc::rtclog::RtpHeaderExtension* AudioReceiveConfig::mutable_header_extensions(int index) {
+inline ::yuntongxunwebrtc::rtclog::RtpHeaderExtension* AudioReceiveConfig::mutable_header_extensions(int index) {
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.AudioReceiveConfig.header_extensions)
   return header_extensions_.Mutable(index);
 }
-inline ::cloopenwebrtc::rtclog::RtpHeaderExtension* AudioReceiveConfig::add_header_extensions() {
+inline ::yuntongxunwebrtc::rtclog::RtpHeaderExtension* AudioReceiveConfig::add_header_extensions() {
   // @@protoc_insertion_point(field_add:webrtc.rtclog.AudioReceiveConfig.header_extensions)
   return header_extensions_.Add();
 }
-inline const ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtpHeaderExtension >&
+inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtpHeaderExtension >&
 AudioReceiveConfig::header_extensions() const {
   // @@protoc_insertion_point(field_list:webrtc.rtclog.AudioReceiveConfig.header_extensions)
   return header_extensions_;
 }
-inline ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtpHeaderExtension >*
+inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtpHeaderExtension >*
 AudioReceiveConfig::mutable_header_extensions() {
   // @@protoc_insertion_point(field_mutable_list:webrtc.rtclog.AudioReceiveConfig.header_extensions)
   return &header_extensions_;
@@ -4477,11 +4477,11 @@ inline void AudioSendConfig::clear_ssrc() {
   ssrc_ = 0u;
   clear_has_ssrc();
 }
-inline ::cloopen_google::protobuf::uint32 AudioSendConfig::ssrc() const {
+inline ::yuntongxun_google::protobuf::uint32 AudioSendConfig::ssrc() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.AudioSendConfig.ssrc)
   return ssrc_;
 }
-inline void AudioSendConfig::set_ssrc(::cloopen_google::protobuf::uint32 value) {
+inline void AudioSendConfig::set_ssrc(::yuntongxun_google::protobuf::uint32 value) {
   set_has_ssrc();
   ssrc_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.AudioSendConfig.ssrc)
@@ -4494,24 +4494,24 @@ inline int AudioSendConfig::header_extensions_size() const {
 inline void AudioSendConfig::clear_header_extensions() {
   header_extensions_.Clear();
 }
-inline const ::cloopenwebrtc::rtclog::RtpHeaderExtension& AudioSendConfig::header_extensions(int index) const {
+inline const ::yuntongxunwebrtc::rtclog::RtpHeaderExtension& AudioSendConfig::header_extensions(int index) const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.AudioSendConfig.header_extensions)
   return header_extensions_.Get(index);
 }
-inline ::cloopenwebrtc::rtclog::RtpHeaderExtension* AudioSendConfig::mutable_header_extensions(int index) {
+inline ::yuntongxunwebrtc::rtclog::RtpHeaderExtension* AudioSendConfig::mutable_header_extensions(int index) {
   // @@protoc_insertion_point(field_mutable:webrtc.rtclog.AudioSendConfig.header_extensions)
   return header_extensions_.Mutable(index);
 }
-inline ::cloopenwebrtc::rtclog::RtpHeaderExtension* AudioSendConfig::add_header_extensions() {
+inline ::yuntongxunwebrtc::rtclog::RtpHeaderExtension* AudioSendConfig::add_header_extensions() {
   // @@protoc_insertion_point(field_add:webrtc.rtclog.AudioSendConfig.header_extensions)
   return header_extensions_.Add();
 }
-inline const ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtpHeaderExtension >&
+inline const ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtpHeaderExtension >&
 AudioSendConfig::header_extensions() const {
   // @@protoc_insertion_point(field_list:webrtc.rtclog.AudioSendConfig.header_extensions)
   return header_extensions_;
 }
-inline ::cloopen_google::protobuf::RepeatedPtrField< ::cloopenwebrtc::rtclog::RtpHeaderExtension >*
+inline ::yuntongxun_google::protobuf::RepeatedPtrField< ::yuntongxunwebrtc::rtclog::RtpHeaderExtension >*
 AudioSendConfig::mutable_header_extensions() {
   // @@protoc_insertion_point(field_mutable_list:webrtc.rtclog.AudioSendConfig.header_extensions)
   return &header_extensions_;
@@ -4535,11 +4535,11 @@ inline void AudioNetworkAdaptation::clear_bitrate_bps() {
   bitrate_bps_ = 0;
   clear_has_bitrate_bps();
 }
-inline ::cloopen_google::protobuf::int32 AudioNetworkAdaptation::bitrate_bps() const {
+inline ::yuntongxun_google::protobuf::int32 AudioNetworkAdaptation::bitrate_bps() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.AudioNetworkAdaptation.bitrate_bps)
   return bitrate_bps_;
 }
-inline void AudioNetworkAdaptation::set_bitrate_bps(::cloopen_google::protobuf::int32 value) {
+inline void AudioNetworkAdaptation::set_bitrate_bps(::yuntongxun_google::protobuf::int32 value) {
   set_has_bitrate_bps();
   bitrate_bps_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.AudioNetworkAdaptation.bitrate_bps)
@@ -4559,11 +4559,11 @@ inline void AudioNetworkAdaptation::clear_frame_length_ms() {
   frame_length_ms_ = 0;
   clear_has_frame_length_ms();
 }
-inline ::cloopen_google::protobuf::int32 AudioNetworkAdaptation::frame_length_ms() const {
+inline ::yuntongxun_google::protobuf::int32 AudioNetworkAdaptation::frame_length_ms() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.AudioNetworkAdaptation.frame_length_ms)
   return frame_length_ms_;
 }
-inline void AudioNetworkAdaptation::set_frame_length_ms(::cloopen_google::protobuf::int32 value) {
+inline void AudioNetworkAdaptation::set_frame_length_ms(::yuntongxun_google::protobuf::int32 value) {
   set_has_frame_length_ms();
   frame_length_ms_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.AudioNetworkAdaptation.frame_length_ms)
@@ -4655,11 +4655,11 @@ inline void AudioNetworkAdaptation::clear_num_channels() {
   num_channels_ = 0u;
   clear_has_num_channels();
 }
-inline ::cloopen_google::protobuf::uint32 AudioNetworkAdaptation::num_channels() const {
+inline ::yuntongxun_google::protobuf::uint32 AudioNetworkAdaptation::num_channels() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.AudioNetworkAdaptation.num_channels)
   return num_channels_;
 }
-inline void AudioNetworkAdaptation::set_num_channels(::cloopen_google::protobuf::uint32 value) {
+inline void AudioNetworkAdaptation::set_num_channels(::yuntongxun_google::protobuf::uint32 value) {
   set_has_num_channels();
   num_channels_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.AudioNetworkAdaptation.num_channels)
@@ -4683,11 +4683,11 @@ inline void BweProbeCluster::clear_id() {
   id_ = 0u;
   clear_has_id();
 }
-inline ::cloopen_google::protobuf::uint32 BweProbeCluster::id() const {
+inline ::yuntongxun_google::protobuf::uint32 BweProbeCluster::id() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.BweProbeCluster.id)
   return id_;
 }
-inline void BweProbeCluster::set_id(::cloopen_google::protobuf::uint32 value) {
+inline void BweProbeCluster::set_id(::yuntongxun_google::protobuf::uint32 value) {
   set_has_id();
   id_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.BweProbeCluster.id)
@@ -4707,11 +4707,11 @@ inline void BweProbeCluster::clear_bitrate_bps() {
   bitrate_bps_ = GOOGLE_ULONGLONG(0);
   clear_has_bitrate_bps();
 }
-inline ::cloopen_google::protobuf::uint64 BweProbeCluster::bitrate_bps() const {
+inline ::yuntongxun_google::protobuf::uint64 BweProbeCluster::bitrate_bps() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.BweProbeCluster.bitrate_bps)
   return bitrate_bps_;
 }
-inline void BweProbeCluster::set_bitrate_bps(::cloopen_google::protobuf::uint64 value) {
+inline void BweProbeCluster::set_bitrate_bps(::yuntongxun_google::protobuf::uint64 value) {
   set_has_bitrate_bps();
   bitrate_bps_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.BweProbeCluster.bitrate_bps)
@@ -4731,11 +4731,11 @@ inline void BweProbeCluster::clear_min_packets() {
   min_packets_ = 0u;
   clear_has_min_packets();
 }
-inline ::cloopen_google::protobuf::uint32 BweProbeCluster::min_packets() const {
+inline ::yuntongxun_google::protobuf::uint32 BweProbeCluster::min_packets() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.BweProbeCluster.min_packets)
   return min_packets_;
 }
-inline void BweProbeCluster::set_min_packets(::cloopen_google::protobuf::uint32 value) {
+inline void BweProbeCluster::set_min_packets(::yuntongxun_google::protobuf::uint32 value) {
   set_has_min_packets();
   min_packets_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.BweProbeCluster.min_packets)
@@ -4755,11 +4755,11 @@ inline void BweProbeCluster::clear_min_bytes() {
   min_bytes_ = 0u;
   clear_has_min_bytes();
 }
-inline ::cloopen_google::protobuf::uint32 BweProbeCluster::min_bytes() const {
+inline ::yuntongxun_google::protobuf::uint32 BweProbeCluster::min_bytes() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.BweProbeCluster.min_bytes)
   return min_bytes_;
 }
-inline void BweProbeCluster::set_min_bytes(::cloopen_google::protobuf::uint32 value) {
+inline void BweProbeCluster::set_min_bytes(::yuntongxun_google::protobuf::uint32 value) {
   set_has_min_bytes();
   min_bytes_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.BweProbeCluster.min_bytes)
@@ -4783,11 +4783,11 @@ inline void BweProbeResult::clear_id() {
   id_ = 0u;
   clear_has_id();
 }
-inline ::cloopen_google::protobuf::uint32 BweProbeResult::id() const {
+inline ::yuntongxun_google::protobuf::uint32 BweProbeResult::id() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.BweProbeResult.id)
   return id_;
 }
-inline void BweProbeResult::set_id(::cloopen_google::protobuf::uint32 value) {
+inline void BweProbeResult::set_id(::yuntongxun_google::protobuf::uint32 value) {
   set_has_id();
   id_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.BweProbeResult.id)
@@ -4807,12 +4807,12 @@ inline void BweProbeResult::clear_result() {
   result_ = 0;
   clear_has_result();
 }
-inline ::cloopenwebrtc::rtclog::BweProbeResult_ResultType BweProbeResult::result() const {
+inline ::yuntongxunwebrtc::rtclog::BweProbeResult_ResultType BweProbeResult::result() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.BweProbeResult.result)
-  return static_cast< ::cloopenwebrtc::rtclog::BweProbeResult_ResultType >(result_);
+  return static_cast< ::yuntongxunwebrtc::rtclog::BweProbeResult_ResultType >(result_);
 }
-inline void BweProbeResult::set_result(::cloopenwebrtc::rtclog::BweProbeResult_ResultType value) {
-  assert(::cloopenwebrtc::rtclog::BweProbeResult_ResultType_IsValid(value));
+inline void BweProbeResult::set_result(::yuntongxunwebrtc::rtclog::BweProbeResult_ResultType value) {
+  assert(::yuntongxunwebrtc::rtclog::BweProbeResult_ResultType_IsValid(value));
   set_has_result();
   result_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.BweProbeResult.result)
@@ -4832,11 +4832,11 @@ inline void BweProbeResult::clear_bitrate_bps() {
   bitrate_bps_ = GOOGLE_ULONGLONG(0);
   clear_has_bitrate_bps();
 }
-inline ::cloopen_google::protobuf::uint64 BweProbeResult::bitrate_bps() const {
+inline ::yuntongxun_google::protobuf::uint64 BweProbeResult::bitrate_bps() const {
   // @@protoc_insertion_point(field_get:webrtc.rtclog.BweProbeResult.bitrate_bps)
   return bitrate_bps_;
 }
-inline void BweProbeResult::set_bitrate_bps(::cloopen_google::protobuf::uint64 value) {
+inline void BweProbeResult::set_bitrate_bps(::yuntongxun_google::protobuf::uint64 value) {
   set_has_bitrate_bps();
   bitrate_bps_ = value;
   // @@protoc_insertion_point(field_set:webrtc.rtclog.BweProbeResult.bitrate_bps)

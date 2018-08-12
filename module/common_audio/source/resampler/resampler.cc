@@ -20,7 +20,7 @@
 #include "signal_processing_library.h"
 
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 Resampler::Resampler()

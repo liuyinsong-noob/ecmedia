@@ -10,11 +10,11 @@
 
 #include "../base/asyncresolverinterface.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 AsyncResolverInterface::AsyncResolverInterface() {
 }
 
 AsyncResolverInterface::~AsyncResolverInterface() = default;
 
-};  // namespace cloopenwebrtc
+};  // namespace yuntongxunwebrtc

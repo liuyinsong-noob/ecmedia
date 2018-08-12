@@ -19,7 +19,7 @@
 #include "../module/rtp_rtcp/source/rtp_receiver_video.h"
 #include "../system_wrappers/include/clock.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 UlpfecReceiver* UlpfecReceiver::Create(RtpData* callback) {
   return new UlpfecReceiverImpl(callback);
@@ -35,7 +35,7 @@ UlpfecReceiverImpl::~UlpfecReceiverImpl() {
 }
 
 FecPacketCounter UlpfecReceiverImpl::GetPacketCounter() const {
-  cloopenwebrtc::CritScope cs(&crit_sect_);
+  yuntongxunwebrtc::CritScope cs(&crit_sect_);
   return packet_counter_;
 }
 
@@ -72,7 +72,7 @@ int32_t UlpfecReceiverImpl::AddReceivedRedPacket(
     const uint8_t* incoming_rtp_packet,
     size_t packet_length,
     uint8_t ulpfec_payload_type) {
-  cloopenwebrtc::CritScope cs(&crit_sect_);
+  yuntongxunwebrtc::CritScope cs(&crit_sect_);
 
   uint8_t red_header_length = 1;
   size_t payload_data_length = packet_length - header.headerLength;
@@ -244,4 +244,4 @@ int32_t UlpfecReceiverImpl::ProcessReceivedFec() {
   return 0;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

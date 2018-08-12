@@ -19,7 +19,7 @@
 
 #include "../base/sequenced_task_checker.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Clock;
 
@@ -152,7 +152,7 @@ class BitrateAllocator {
   bool EnoughBitrateForAllObservers(uint32_t bitrate,
                                     uint32_t sum_min_bitrates);
 
-  cloopenwebrtc::SequencedTaskChecker sequenced_checker_;
+  yuntongxunwebrtc::SequencedTaskChecker sequenced_checker_;
   LimitObserver* const limit_observer_ GUARDED_BY(&sequenced_checker_);
   // Stored in a list to keep track of the insertion order.
   ObserverConfigs bitrate_observer_configs_ GUARDED_BY(&sequenced_checker_);

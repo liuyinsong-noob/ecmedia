@@ -12,7 +12,7 @@
 #include "cloopenwebrtc/common_audio/include/audio_util.h"
 #include "cloopenwebrtc/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 void ExpectArraysEq(const int16_t* ref, const int16_t* test, int length) {
   for (int i = 0; i < length; ++i) {

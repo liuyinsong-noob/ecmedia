@@ -13,7 +13,7 @@
 #include <assert.h>
 #include <string.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 DesktopFrame::DesktopFrame(DesktopSize size,
                            int stride,
@@ -91,4 +91,4 @@ SharedMemoryDesktopFrame::~SharedMemoryDesktopFrame() {
   delete shared_memory_;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

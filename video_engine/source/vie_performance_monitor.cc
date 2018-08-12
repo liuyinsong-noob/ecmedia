@@ -19,7 +19,7 @@
 #include "vie_base.h"
 #include "vie_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 enum { kVieMonitorPeriodMs = 975 };
 enum { kVieCpuStartValue = 75 };
@@ -42,12 +42,12 @@ ViEPerformanceMonitor::~ViEPerformanceMonitor() {
 }
 
 int ViEPerformanceMonitor::Init(ViEBaseObserver* vie_base_observer) {
-  WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
                "%s", __FUNCTION__);
 
   CriticalSectionScoped cs(pointer_cs_);
   if (!vie_base_observer || vie_base_observer_) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
                  "%s: Bad input argument or observer already set",
                  __FUNCTION__);
     return -1;
@@ -56,7 +56,7 @@ int ViEPerformanceMonitor::Init(ViEBaseObserver* vie_base_observer) {
   cpu_ = CpuWrapper::CreateCpu();
   if (cpu_ == NULL) {
     // Performance monitoring not supported
-    WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideo,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideo,
                  ViEId(engine_id_), "%s: Not supported", __FUNCTION__);
     return 0;
   }
@@ -68,11 +68,11 @@ int ViEPerformanceMonitor::Init(ViEBaseObserver* vie_base_observer) {
                                                   "ViEPerformanceMonitor");
     unsigned int t_id = 0;
     if (monitor_thread_->Start(t_id)) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
                    "%s: Performance monitor thread started %u",
                    __FUNCTION__, t_id);
     } else {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
                    "%s: Could not start performance monitor", __FUNCTION__);
       monitor_event_.StopTimer();
       return -1;
@@ -83,7 +83,7 @@ int ViEPerformanceMonitor::Init(ViEBaseObserver* vie_base_observer) {
 }
 
 void ViEPerformanceMonitor::Terminate() {
-  WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
                "%s", __FUNCTION__);
 
   pointer_cs_->Enter();
@@ -141,4 +141,4 @@ bool ViEPerformanceMonitor::ViEMonitorProcess() {
   return true;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -19,14 +19,14 @@
 #include "video_codec_interface.h"
 #include "video_coding_defines.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 class VCMEncodedFrame : protected EncodedImage
 {
 public:
     VCMEncodedFrame();
-    VCMEncodedFrame(const cloopenwebrtc::EncodedImage& rhs);
+    VCMEncodedFrame(const yuntongxunwebrtc::EncodedImage& rhs);
     VCMEncodedFrame(const VCMEncodedFrame& rhs);
 
     ~VCMEncodedFrame();
@@ -47,8 +47,8 @@ public:
     /**
     *   Get the encoded image
     */
-    const cloopenwebrtc::EncodedImage& EncodedImage() const
-                       { return static_cast<const cloopenwebrtc::EncodedImage&>(*this); }
+    const yuntongxunwebrtc::EncodedImage& EncodedImage() const
+                       { return static_cast<const yuntongxunwebrtc::EncodedImage&>(*this); }
     /**
     *   Get pointer to frame buffer
     */
@@ -73,7 +73,7 @@ public:
     /**
     *   Get frame type
     */
-    cloopenwebrtc::FrameType FrameType() const {return ConvertFrameType(_frameType);}
+    yuntongxunwebrtc::FrameType FrameType() const {return ConvertFrameType(_frameType);}
     /**
     *   True if this frame is complete, false otherwise
     */
@@ -96,10 +96,10 @@ public:
 
     const RTPFragmentationHeader* FragmentationHeader() const;
 
-    static cloopenwebrtc::FrameType ConvertFrameType(VideoFrameType frameType);
-    static VideoFrameType ConvertFrameType(cloopenwebrtc::FrameType frameType);
+    static yuntongxunwebrtc::FrameType ConvertFrameType(VideoFrameType frameType);
+    static VideoFrameType ConvertFrameType(yuntongxunwebrtc::FrameType frameType);
     static void ConvertFrameTypes(
-        const std::vector<cloopenwebrtc::FrameType>& frame_types,
+        const std::vector<yuntongxunwebrtc::FrameType>& frame_types,
         std::vector<VideoFrameType>* video_frame_types);
 
 protected:
@@ -119,7 +119,7 @@ protected:
     uint8_t                 _payloadType;
     bool                          _missingFrame;
     CodecSpecificInfo             _codecSpecificInfo;
-    cloopenwebrtc::VideoCodecType        _codec;
+    yuntongxunwebrtc::VideoCodecType        _codec;
     RTPFragmentationHeader        _fragmentation;
 
 	//---begin

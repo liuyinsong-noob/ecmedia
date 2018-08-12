@@ -20,7 +20,7 @@ extern "C" {
 #include "audio_buffer.h"
 #include "../system_wrappers/include/critical_section_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 typedef void Handle;
 
@@ -376,4 +376,4 @@ int EchoCancellationImpl::GetHandleError(void* handle) const {
   assert(handle != NULL);
   return MapError(WebRtcAec_get_error_code(static_cast<Handle*>(handle)));
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

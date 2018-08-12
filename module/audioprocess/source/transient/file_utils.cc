@@ -14,7 +14,7 @@
 #include "scoped_ptr.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 int ConvertByteArrayToFloat(const uint8_t bytes[4], float* out) {
   if (!bytes || !out) {
@@ -254,4 +254,4 @@ size_t WriteDoubleBufferToFile(FileWrapper* file,
   return doubles_written;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

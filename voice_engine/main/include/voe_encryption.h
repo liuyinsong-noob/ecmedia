@@ -14,7 +14,7 @@
 //
 // Usage example, omitting error checking:
 //
-//  using namespace cloopenwebrtc;
+//  using namespace yuntongxunwebrtc;
 //  VoiceEngine* voe = VoiceEngine::Create();
 //  VoEEncryption* encrypt  = VoEEncryption::GetInterface(voe);
 //  ...
@@ -26,7 +26,7 @@
 
 #include "common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VoiceEngine;
 
@@ -78,6 +78,6 @@ protected:
     virtual ~VoEEncryption() {}
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  //  WEBRTC_VOICE_ENGINE_VOE_ENCRYPTION_H

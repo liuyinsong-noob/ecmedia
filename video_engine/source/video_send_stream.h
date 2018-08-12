@@ -20,7 +20,7 @@
 #include "frame_callback.h"
 #include "video_renderer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VideoEncoder;
 

@@ -41,7 +41,7 @@ enum {
   kUnderrun,
 };
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 OpenSlesOutput::OpenSlesOutput(const int32_t id)
     : id_(id),

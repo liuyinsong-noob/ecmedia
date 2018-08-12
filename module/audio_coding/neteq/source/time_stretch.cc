@@ -17,7 +17,7 @@
 #include "dsp_helper.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TimeStretch::ReturnCodes TimeStretch::Process(
     const int16_t* input,
@@ -213,4 +213,4 @@ bool TimeStretch::SpeechDetection(int32_t vec1_energy, int32_t vec2_energy,
   return left_side > right_side;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

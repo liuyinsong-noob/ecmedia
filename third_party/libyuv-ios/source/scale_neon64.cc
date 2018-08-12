@@ -13,7 +13,7 @@
 #include "libyuv/scale_row.h"
 
 #ifdef __cplusplus
-namespace cloopenlibyuv {
+namespace yuntongxunlibyuv {
 extern "C" {
 #endif
 

@@ -17,7 +17,7 @@
 #include "../common_types.h"
 #include "../module/pacing/paced_sender.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Clock;
 
@@ -54,7 +54,7 @@ class ProbeController {
                        std::initializer_list<int64_t> bitrates_to_probe,
                        bool probe_further) EXCLUSIVE_LOCKS_REQUIRED(critsect_);
 
-  cloopenwebrtc::CriticalSection critsect_;
+  yuntongxunwebrtc::CriticalSection critsect_;
   PacedSender* const pacer_;
   Clock* const clock_;
   NetworkState network_state_ GUARDED_BY(critsect_);
@@ -75,6 +75,6 @@ class ProbeController {
   DISALLOW_IMPLICIT_CONSTRUCTORS(ProbeController);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // cloopenwebrtc_MODULES_CONGESTION_CONTROLLER_PROBE_CONTROLLER_H_

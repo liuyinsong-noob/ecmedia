@@ -14,7 +14,7 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "cloopenwebrtc/modules/desktop_capture/screen_capturer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class MockScreenCapturer : public ScreenCapturer {
  public:

@@ -18,7 +18,7 @@
 #include "../system_wrappers/include/fix_interlocked_exchange_pointer_win.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 enum CountOperation {
   kRelease,

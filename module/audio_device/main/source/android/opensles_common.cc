@@ -14,7 +14,7 @@
 
 #include "audio_common.h"
 
-using cloopenwebrtc::kNumChannels;
+using yuntongxunwebrtc::kNumChannels;
 
 namespace webrtc_opensl {
 

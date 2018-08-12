@@ -12,7 +12,7 @@
 
 #include <string.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 BitstreamBuilder::BitstreamBuilder(WebRtc_UWord8* data, const WebRtc_UWord32 dataSize) :
     _data(data),
     _dataSize(dataSize),
@@ -577,4 +577,4 @@ BitstreamBuilder::AddSuffix(const WebRtc_UWord8 numBits, const WebRtc_UWord32 re
         }
     }
 }
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

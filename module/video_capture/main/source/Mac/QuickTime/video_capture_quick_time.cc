@@ -23,7 +23,7 @@
 #include "trace.h"
 #include <unistd.h>
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 VideoCaptureMacQuickTime::VideoCaptureMacQuickTime(WebRtc_Word32 iID) :
@@ -86,7 +86,7 @@ WebRtc_Word32 VideoCaptureMacQuickTime::Init(
     if (!_terminated)
     {
         _videoMacCritsect->Leave();
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Already Initialized", __FUNCTION__, __LINE__);
         return -1;
     }
@@ -95,18 +95,18 @@ WebRtc_Word32 VideoCaptureMacQuickTime::Init(
     if (err != noErr)
     {
         _videoMacCritsect->Leave();
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Could not retrieve OS version", __FUNCTION__,
                      __LINE__);
         return -1;
     }
 
-    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s:%d OS X version: %x,", __FUNCTION__, __LINE__, version);
     if (version < 0x00001040) // Older version than Mac OSX 10.4
     {
         _videoMacCritsect->Leave();
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d OS version not supported", __FUNCTION__, __LINE__);
         return -1;
     }
@@ -115,13 +115,13 @@ WebRtc_Word32 VideoCaptureMacQuickTime::Init(
     if (err != noErr)
     {
         _videoMacCritsect->Leave();
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Could not retrieve QuickTime version",
                      __FUNCTION__, __LINE__);
         return -1;
     }
 
-    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s:%d QuickTime version: %x", __FUNCTION__, __LINE__,
                  version);
     if (version < 0x07000000) // QT v. 7.x or newer (QT 5.0.2 0x05020000)
@@ -130,14 +130,14 @@ WebRtc_Word32 VideoCaptureMacQuickTime::Init(
         return -1;
     }
 
-    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s:%d EnterMovies()", __FUNCTION__, __LINE__);
     EnterMovies();
 
     if (VideoCaptureSetCaptureDevice((char*) deviceUniqueIdUTF8,
                                    kVideoCaptureProductIdLength) == -1)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d failed to set capture device: %s", __FUNCTION__,
                      __LINE__, deviceUniqueIdUTF8);
         _videoMacCritsect->Leave();
@@ -146,7 +146,7 @@ WebRtc_Word32 VideoCaptureMacQuickTime::Init(
 
     _terminated = false;
 
-    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s:%d successful initialization", __FUNCTION__, __LINE__);
     _videoMacCritsect->Leave();
 
@@ -156,7 +156,7 @@ WebRtc_Word32 VideoCaptureMacQuickTime::Init(
 WebRtc_Word32 VideoCaptureMacQuickTime::StartCapture(
     const VideoCaptureCapability& capability)
 {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id, "%s:%d "
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id, "%s:%d "
         "capability.width=%d, capability.height=%d ,capability.maxFPS=%d "
         "capability.expectedCaptureDelay=%d, capability.interlaced=%d",
         __FUNCTION__, __LINE__, capability.width, capability.height,
@@ -207,7 +207,7 @@ int VideoCaptureMacQuickTime::VideoCaptureTerminate()
     if (_terminated)
     {
         _videoMacCritsect->Leave();
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Already terminated", __FUNCTION__, __LINE__);
         return -1;
     }
@@ -275,13 +275,13 @@ int VideoCaptureMacQuickTime::VideoCaptureTerminate()
 }
 
 int VideoCaptureMacQuickTime::UpdateCaptureSettings(int channel,
-                                                    cloopenwebrtc::VideoCodec& inst,
+                                                    yuntongxunwebrtc::VideoCodec& inst,
                                                     bool def)
 {
 
     if (channel < 0)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Invalid channel number: %d", __FUNCTION__,
                      __LINE__, channel);
         return -1;
@@ -330,7 +330,7 @@ int VideoCaptureMacQuickTime::UpdateCaptureSettings(int channel,
         {
             _grabberCritsect->Leave();
             _videoMacCritsect->Leave();
-            WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                          "%s:%d Failed to start capturing", __FUNCTION__,
                          __LINE__);
             return -1;
@@ -349,7 +349,7 @@ int VideoCaptureMacQuickTime::CreateLocalGWorld(int width, int height)
 {
     if (_gWorld)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d GWorld already created", __FUNCTION__, __LINE__);
         return -1;
     }
@@ -375,7 +375,7 @@ int VideoCaptureMacQuickTime::CreateLocalGWorld(int width, int height)
 
     if (!LockPixels(GetGWorldPixMap(_gWorld)))
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Could not lock pixmap. Continuing anyhow",
                      __FUNCTION__, __LINE__);
     }
@@ -397,7 +397,7 @@ int VideoCaptureMacQuickTime::RemoveLocalGWorld()
 {
     if (!_gWorld)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d !gWorld", __FUNCTION__, __LINE__);
         return -1;
     }
@@ -407,7 +407,7 @@ int VideoCaptureMacQuickTime::RemoveLocalGWorld()
     _captureCapability.width = START_CODEC_WIDTH;
     _captureCapability.height = START_CODEC_HEIGHT;
 
-    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s:%d GWorld has been removed", __FUNCTION__, __LINE__);
     return 0;
 }
@@ -423,21 +423,21 @@ int VideoCaptureMacQuickTime::ConnectCaptureDevice()
     // Prepare the capture grabber if a capture device is already set
     if (!_captureGrabber)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d No capture device is selected", __FUNCTION__,
                      __LINE__);
         return -1;
     }
     if (_captureIsInitialized)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Capture device is already initialized",
                      __FUNCTION__, __LINE__);
         return -1;
     }
     if (!_gWorld)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d No GWorld is created", __FUNCTION__, __LINE__);
         return -1;
     }
@@ -450,14 +450,14 @@ int VideoCaptureMacQuickTime::ConnectCaptureDevice()
     // from the camera.
     if (SGSetGWorld(_captureGrabber, _gWorld, NULL ) != noErr)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Could not connect capture device", __FUNCTION__,
                      __LINE__);
         return -1;
     }
     if (SGSetDataRef(_captureGrabber, 0, 0, seqGrabDontMakeMovie) != noErr)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Could not configure capture device", __FUNCTION__,
                      __LINE__);
         return -1;
@@ -467,7 +467,7 @@ int VideoCaptureMacQuickTime::ConnectCaptureDevice()
     if (SGSetDataProc(_captureGrabber, NewSGDataUPP(SendProcess), (long) this)
         != noErr)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Could not set capture callback. Unable to receive "
                      "frames", __FUNCTION__, __LINE__);
         return -1;
@@ -490,7 +490,7 @@ int VideoCaptureMacQuickTime::ConnectCaptureDevice()
 
     int numDevicesTypes = (*deviceList)->count;
     bool captureDeviceFound = false;
-    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s:%d Found %d channel devices", __FUNCTION__, __LINE__,
                  numDevicesTypes);
 
@@ -498,7 +498,7 @@ int VideoCaptureMacQuickTime::ConnectCaptureDevice()
     for (int i = 0; i < numDevicesTypes; i++)
     {
         SGDeviceName deviceTypeName = (*deviceList)->entry[i];
-        WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Inspecting device number: %d", __FUNCTION__,
                      __LINE__, i);
         // Get the list with input devices
@@ -506,14 +506,14 @@ int VideoCaptureMacQuickTime::ConnectCaptureDevice()
         {
             SGDeviceInputList inputList = deviceTypeName.inputs;
             int numInputDev = (*inputList)->count;
-            WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, _id,
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, _id,
                          "%s:%d Device has %d inputs", __FUNCTION__, __LINE__,
                          numInputDev);
             for (int inputDevIndex = 0;
                  inputDevIndex < numInputDev;
                  inputDevIndex++)
             {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture,
                              _id, "%s:%d Inspecting input number: %d",
                              __FUNCTION__, __LINE__, inputDevIndex);
                 SGDeviceInputName deviceInputName =
@@ -526,14 +526,14 @@ int VideoCaptureMacQuickTime::ConnectCaptureDevice()
                 CFIndex devInNameLength =
                     PascalStringToCString(deviceInputName.name, devInName,
                                           sizeof(devInName));
-                WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture,
                              _id,
                              "%s:%d Converted pascal string with length:%d  "
                              "to: %s", __FUNCTION__, __LINE__,
                              sizeof(devInName), devInName);
                 if (devInNameLength < 0)
                 {
-                    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture,
+                    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture,
                                  _id,
                                  "%s:%d Failed to convert device name from "
                                  "pascal string to c string", __FUNCTION__,
@@ -543,8 +543,8 @@ int VideoCaptureMacQuickTime::ConnectCaptureDevice()
 
                 if (!strcmp(devInName, _captureDeviceDisplayName))
                 {
-                    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug,
-                                 cloopenwebrtc::kTraceVideoCapture, _id,
+                    WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug,
+                                 yuntongxunwebrtc::kTraceVideoCapture, _id,
                                  "%s:%d We have found our device: %s",
                                  __FUNCTION__, __LINE__,
                                  _captureDeviceDisplayName);
@@ -552,29 +552,29 @@ int VideoCaptureMacQuickTime::ConnectCaptureDevice()
                     if (SGSetChannelDevice(_captureChannel, deviceTypeName.name)
                         != noErr)
                     {
-                        WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-                                     cloopenwebrtc::kTraceVideoCapture, _id,
+                        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+                                     yuntongxunwebrtc::kTraceVideoCapture, _id,
                                      "%s:%d Could not set capture device type: "
                                      "%s",__FUNCTION__, __LINE__,
                                      deviceTypeName.name);
                         return -1;
                     }
 
-                    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo,
-                                 cloopenwebrtc::kTraceVideoCapture, _id,
+                    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo,
+                                 yuntongxunwebrtc::kTraceVideoCapture, _id,
                                  "%s:%d Capture device type is: %s",
                                  __FUNCTION__, __LINE__, deviceTypeName.name);
                     if (SGSetChannelDeviceInput(_captureChannel, inputDevIndex)
                         != noErr)
                     {
-                        WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-                                     cloopenwebrtc::kTraceVideoCapture, _id,
+                        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+                                     yuntongxunwebrtc::kTraceVideoCapture, _id,
                                      "%s:%d Could not set SG device",
                                      __FUNCTION__, __LINE__);
                         return -1;
                     }
 
-                    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture,
+                    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture,
                                  _id,
                                  "%s:%d Capture device: %s has successfully "
                                  "been set", __FUNCTION__, __LINE__,
@@ -585,7 +585,7 @@ int VideoCaptureMacQuickTime::ConnectCaptureDevice()
             }
             if (captureDeviceFound)
             {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture,
                              _id,
                              "%s:%d Capture device found, breaking from loops",
                              __FUNCTION__, __LINE__);
@@ -597,7 +597,7 @@ int VideoCaptureMacQuickTime::ConnectCaptureDevice()
 
     if (!captureDeviceFound)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Failed to find capture device: %s. Returning -1",
                      __FUNCTION__, __LINE__, _captureDeviceDisplayName);
         return -1;
@@ -610,7 +610,7 @@ int VideoCaptureMacQuickTime::ConnectCaptureDevice()
     captureSize.right = _captureCapability.width;
     captureSize.bottom = _captureCapability.height;
 
-    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s:%d Using capture rect: l:%d t:%d r:%d b:%d", __FUNCTION__,
                  __LINE__, captureSize.left, captureSize.top,
                  captureSize.right, captureSize.bottom);
@@ -623,7 +623,7 @@ int VideoCaptureMacQuickTime::ConnectCaptureDevice()
     if (err != noErr)
     {
         SGDisposeChannel(_captureGrabber, _captureChannel);
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Error setting SG channel to device", __FUNCTION__,
                      __LINE__);
         return -1;
@@ -637,24 +637,24 @@ int VideoCaptureMacQuickTime::ConnectCaptureDevice()
     if (compType == k2vuyPixelFormat)
     {
         _captureVideoType = kVideoUYVY;
-        WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Device delivers UYUV formatted frames",
                      __FUNCTION__, __LINE__);
     }
     else if (compType == kYUVSPixelFormat)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Device delivers YUY2 formatted frames",
                      __FUNCTION__, __LINE__);
         _captureVideoType = kVideoYUY2;
     }
     else
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Device delivers frames in an unknown format: 0x%x. "
                      "Consult QuickdrawTypes.h",
                      __FUNCTION__, __LINE__, compType);
-        WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Device delivers frames in an unknown format.",
                      __FUNCTION__, __LINE__);
         _captureVideoType = kVideoUnknown;
@@ -663,7 +663,7 @@ int VideoCaptureMacQuickTime::ConnectCaptureDevice()
     if (SGPrepare(_captureGrabber, false, true) != noErr)
     {
         _grabberCritsect->Leave();
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Error starting sequence grabber", __FUNCTION__,
                      __LINE__);
         return -1;
@@ -684,7 +684,7 @@ int VideoCaptureMacQuickTime::ConnectCaptureDevice()
     _captureIsInitialized = true;
     _sgPrepared = true;
 
-    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s:%d Success starting sequence grabber", __FUNCTION__,
                  __LINE__);
 
@@ -696,14 +696,14 @@ int VideoCaptureMacQuickTime::DisconnectCaptureDevice()
 {
     if (_sgStarted)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Capture device is still running. Returning -1",
                      __FUNCTION__, __LINE__);
         return -1;
     }
     if (!_sgPrepared)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d No capture device connected", __FUNCTION__,
                      __LINE__);
         return -1;
@@ -711,7 +711,7 @@ int VideoCaptureMacQuickTime::DisconnectCaptureDevice()
 
     // Close the capture channel
     SGStop(_captureGrabber);
-    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s:%d !!!! releasing sg stuff", __FUNCTION__, __LINE__);
     SGDisposeChannel(_captureGrabber, _captureChannel);
     SGRelease(_captureGrabber);
@@ -725,7 +725,7 @@ int VideoCaptureMacQuickTime::DisconnectCaptureDevice()
     _captureIsInitialized = false;
     _sgPrepared = false;
 
-    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s:%d Sequence grabber removed", __FUNCTION__, __LINE__);
 
     return 0;
@@ -738,14 +738,14 @@ int VideoCaptureMacQuickTime::DisconnectCaptureDevice()
 int VideoCaptureMacQuickTime::StartQuickTimeCapture()
 {
     _grabberCritsect->Enter();
-    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s:%d Attempting to start sequence grabber", __FUNCTION__,
                  __LINE__);
 
     if (_sgStarted)
     {
         _grabberCritsect->Leave();
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Sequence grabber already started", __FUNCTION__,
                      __LINE__);
         return 0;
@@ -753,7 +753,7 @@ int VideoCaptureMacQuickTime::StartQuickTimeCapture()
     if (!_sgPrepared)
     {
         _grabberCritsect->Leave();
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Sequence grabber not prepared properly",
                      __FUNCTION__, __LINE__);
         return 0;
@@ -762,7 +762,7 @@ int VideoCaptureMacQuickTime::StartQuickTimeCapture()
     if (SGStartRecord(_captureGrabber) != noErr)
     {
         _grabberCritsect->Leave();
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Error starting sequence grabber", __FUNCTION__,
                      __LINE__);
         return -1;
@@ -778,7 +778,7 @@ int VideoCaptureMacQuickTime::StartQuickTimeCapture()
         != noErr)
     {
         _grabberCritsect->Leave();
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Error accessing device properties", __FUNCTION__,
                      __LINE__);
         return -1;
@@ -803,7 +803,7 @@ int VideoCaptureMacQuickTime::StartQuickTimeCapture()
         != noErr)
     {
         _grabberCritsect->Leave();
-        WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Error starting decompress sequence", __FUNCTION__,
                      __LINE__);
         return -1;
@@ -817,7 +817,7 @@ int VideoCaptureMacQuickTime::StartQuickTimeCapture()
 int VideoCaptureMacQuickTime::StopQuickTimeCapture(bool* wasCapturing)
 {
     _grabberCritsect->Enter();
-    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s:%d wasCapturing=%d", __FUNCTION__, __LINE__, wasCapturing);
 
     if (!_sgStarted)
@@ -826,7 +826,7 @@ int VideoCaptureMacQuickTime::StopQuickTimeCapture(bool* wasCapturing)
             *wasCapturing = false;
 
         _grabberCritsect->Leave();
-        WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Sequence grabber was never started", __FUNCTION__,
                      __LINE__);
         return 0;
@@ -844,7 +844,7 @@ int VideoCaptureMacQuickTime::StopQuickTimeCapture(bool* wasCapturing)
     _grabberCritsect->Leave();
     if (error != noErr)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Could not stop sequence grabber", __FUNCTION__,
                      __LINE__);
         return -1;
@@ -986,13 +986,13 @@ int VideoCaptureMacQuickTime::SendFrame(SGChannel /*sgChannel*/, char* data,
 {
     if (!_sgPrepared)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Sequence Grabber is not initialized", __FUNCTION__,
                      __LINE__);
         return 0;
     }
 
-    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s:%d Frame has been delivered\n", __FUNCTION__, __LINE__);
 
     CodecFlags ignore;
@@ -1024,7 +1024,7 @@ int VideoCaptureMacQuickTime::SendFrame(SGChannel /*sgChannel*/, char* data,
                 break;
             default:
                 captureCapability.rawType = kVideoI420;
-                WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture,
                              _id, "%s:%d raw = I420 by default\n",
                              __FUNCTION__, __LINE__);
                 break;
@@ -1059,8 +1059,8 @@ int VideoCaptureMacQuickTime::SendFrame(SGChannel /*sgChannel*/, char* data,
                                                  length, 0, &ignore, NULL);
                     if (res != noErr && res != -8976) // 8796 ==  black frame
                     {
-                        WEBRTC_TRACE(cloopenwebrtc::kTraceWarning,
-                                     cloopenwebrtc::kTraceVideoCapture, _id,
+                        WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning,
+                                     yuntongxunwebrtc::kTraceVideoCapture, _id,
                                      "%s:%d Captured black frame. Not "
                                      "processing it", __FUNCTION__, __LINE__);
                         _grabberCritsect->Leave();
@@ -1088,8 +1088,8 @@ int VideoCaptureMacQuickTime::SendFrame(SGChannel /*sgChannel*/, char* data,
                 {
                     // Not a size we recognize, use the Mac internal scaling...
                     convertFrame = true;
-                    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug,
-                                 cloopenwebrtc::kTraceVideoCapture, _id,
+                    WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug,
+                                 yuntongxunwebrtc::kTraceVideoCapture, _id,
                                  "%s:%d Not correct incoming stream size for "
                                  "the format and configured size",
                                  __FUNCTION__, __LINE__);
@@ -1098,7 +1098,7 @@ int VideoCaptureMacQuickTime::SendFrame(SGChannel /*sgChannel*/, char* data,
             default:
 
                 // Not a video format we recognize, use the Mac internal scaling
-                WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideoCapture,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture,
                              _id, "%s:%d Unknown video frame format (default)",
                              __FUNCTION__, __LINE__);
                 convertFrame = true;
@@ -1107,7 +1107,7 @@ int VideoCaptureMacQuickTime::SendFrame(SGChannel /*sgChannel*/, char* data,
 
         if (convertFrame)
         {
-            WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, _id,
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, _id,
                          "%s:%d Unrecognized frame format. Converting frame",
                          __FUNCTION__, __LINE__);
 
@@ -1146,7 +1146,7 @@ int VideoCaptureMacQuickTime::SendFrame(SGChannel /*sgChannel*/, char* data,
     }
     else
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d No GWorld created, but frames are being delivered",
                      __FUNCTION__, __LINE__);
     }
@@ -1157,7 +1157,7 @@ int VideoCaptureMacQuickTime::SendFrame(SGChannel /*sgChannel*/, char* data,
 
 int VideoCaptureMacQuickTime::VideoCaptureInitThreadContext()
 {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s:%d ", __FUNCTION__, __LINE__);
     _videoMacCritsect->Enter();
     EnterMoviesOnThread( kQTEnterMoviesFlagDontSetComponentsThreadMode);
@@ -1194,7 +1194,7 @@ int VideoCaptureMacQuickTime::VideoCaptureSetCaptureDevice(
         CloseComponent(_captureGrabber);
         _captureDevice = NULL;
         _captureGrabber = NULL;
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d Old capture device removed", __FUNCTION__,
                      __LINE__);
     }
@@ -1210,7 +1210,7 @@ int VideoCaptureMacQuickTime::VideoCaptureSetCaptureDevice(
     {
         _grabberCritsect->Leave();
         _videoMacCritsect->Leave();
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "%s:%d 'size' is not valid", __FUNCTION__, __LINE__);
         return 0;
     }
@@ -1238,7 +1238,7 @@ int VideoCaptureMacQuickTime::VideoCaptureSetCaptureDevice(
             {
                 _grabberCritsect->Leave();
                 _videoMacCritsect->Leave();
-                WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture,
                              _id,
                              "%s:%d Could not initialize sequence grabber",
                              __FUNCTION__, __LINE__);
@@ -1251,7 +1251,7 @@ int VideoCaptureMacQuickTime::VideoCaptureSetCaptureDevice(
             // Couldn't open a sequence grabber
             _grabberCritsect->Leave();
             _videoMacCritsect->Leave();
-            WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                          "%s:%d Could not open a sequence grabber",
                          __FUNCTION__, __LINE__);
             return -1;
@@ -1277,7 +1277,7 @@ int VideoCaptureMacQuickTime::VideoCaptureSetCaptureDevice(
     {
         cpySize = sizeof(_captureDeviceDisplayName);
     }
-    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, _id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, _id,
                  "%s:%d Copying %d chars from deviceName to "
                  "_captureDeviceDisplayName (size=%d)\n",
                  __FUNCTION__, __LINE__, cpySize, size);
@@ -1328,7 +1328,7 @@ CFIndex VideoCaptureMacQuickTime::PascalStringToCString(
     const unsigned char* pascalString, char* cString, CFIndex bufferSize)
 {
 
-    WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, 0,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, 0,
                  "%s:%d Converting pascal string to c string", __FUNCTION__,
                  __LINE__);
     if (pascalString == NULL)
@@ -1353,7 +1353,7 @@ CFIndex VideoCaptureMacQuickTime::PascalStringToCString(
         NULL, pascalString, kCFStringEncodingMacRoman);
     if (cfString == NULL)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, 0,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, 0,
                      "%s:%d Error in CFStringCreateWithPascalString()",
                      __FUNCTION__, __LINE__);
         CFRelease(cfString);
@@ -1374,7 +1374,7 @@ CFIndex VideoCaptureMacQuickTime::PascalStringToCString(
     // This is fine; we will return a partial string.
     if (success == false && cfLength <= maxStringLength)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, 0,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, 0,
                      "%s:%d Error in CFStringGetCString()", __FUNCTION__,
                      __LINE__);
         CFRelease(cfString);

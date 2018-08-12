@@ -16,7 +16,7 @@
 #include "video_processing_defines.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VPMContentAnalysis {
  public:

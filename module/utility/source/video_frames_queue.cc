@@ -19,7 +19,7 @@
 #include "../system_wrappers/include/logging.h"
 #include "../system_wrappers/include/tick_util.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 VideoFramesQueue::VideoFramesQueue()
     : _renderDelayMs(10)
 {
@@ -108,5 +108,5 @@ int32_t VideoFramesQueue::SetRenderDelay(uint32_t renderDelay) {
   _renderDelayMs = renderDelay;
   return 0;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif // WEBRTC_MODULE_UTILITY_VIDEO

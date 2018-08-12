@@ -21,7 +21,7 @@
 
 #include "basictypes.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Event {
  public:

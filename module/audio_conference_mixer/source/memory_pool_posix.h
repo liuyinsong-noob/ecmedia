@@ -17,7 +17,7 @@
 #include "../system_wrappers/include/critical_section_wrapper.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 template<class MemoryType>
 class MemoryPoolImpl
 {
@@ -153,6 +153,6 @@ int32_t MemoryPoolImpl<MemoryType>::CreateMemory(
     }
     return 0;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_MODULES_AUDIO_CONFERENCE_MIXER_SOURCE_MEMORY_POOL_GENERIC_H_

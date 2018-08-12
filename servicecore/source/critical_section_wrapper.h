@@ -17,7 +17,7 @@
 #include "../base/thread_annotations.h"
 #include "common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class LOCKABLE CriticalSectionWrapper {
  public:
   // Factory method, constructor disabled

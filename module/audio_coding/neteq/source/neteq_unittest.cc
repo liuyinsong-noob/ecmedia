@@ -35,7 +35,7 @@
 
 DEFINE_bool(gen_ref, false, "Generate reference files.");
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static bool IsAllZero(const int16_t* buf, int buf_length) {
   bool all_zero = true;
@@ -340,19 +340,19 @@ void NetEqDecodingTest::DecodeAndCompare(const std::string& rtp_file,
 
   std::string ref_out_file = "";
   if (ref_file.empty()) {
-    ref_out_file = cloopenwebrtc::test::OutputPath() + "neteq_universal_ref.pcm";
+    ref_out_file = yuntongxunwebrtc::test::OutputPath() + "neteq_universal_ref.pcm";
   }
   RefFiles ref_files(ref_file, ref_out_file);
 
   std::string stat_out_file = "";
   if (stat_ref_file.empty()) {
-    stat_out_file = cloopenwebrtc::test::OutputPath() + "neteq_network_stats.dat";
+    stat_out_file = yuntongxunwebrtc::test::OutputPath() + "neteq_network_stats.dat";
   }
   RefFiles network_stat_files(stat_ref_file, stat_out_file);
 
   std::string rtcp_out_file = "";
   if (rtcp_ref_file.empty()) {
-    rtcp_out_file = cloopenwebrtc::test::OutputPath() + "neteq_rtcp_stats.dat";
+    rtcp_out_file = yuntongxunwebrtc::test::OutputPath() + "neteq_rtcp_stats.dat";
   }
   RefFiles rtcp_stat_files(rtcp_ref_file, rtcp_out_file);
 
@@ -407,24 +407,24 @@ void NetEqDecodingTest::PopulateCng(int frame_index,
 }
 
 TEST_F(NetEqDecodingTest, DISABLED_ON_ANDROID(TestBitExactness)) {
-  const std::string input_rtp_file = cloopenwebrtc::test::ProjectRootPath() +
+  const std::string input_rtp_file = yuntongxunwebrtc::test::ProjectRootPath() +
       "resources/audio_coding/neteq_universal_new.rtp";
   // Note that neteq4_universal_ref.pcm and neteq4_universal_ref_win_32.pcm
   // are identical. The latter could have been removed, but if clients still
   // have a copy of the file, the test will fail.
   const std::string input_ref_file =
-      cloopenwebrtc::test::ResourcePath("audio_coding/neteq4_universal_ref", "pcm");
+      yuntongxunwebrtc::test::ResourcePath("audio_coding/neteq4_universal_ref", "pcm");
 #if defined(_MSC_VER) && (_MSC_VER >= 1700)
   // For Visual Studio 2012 and later, we will have to use the generic reference
   // file, rather than the windows-specific one.
-  const std::string network_stat_ref_file = cloopenwebrtc::test::ProjectRootPath() +
+  const std::string network_stat_ref_file = yuntongxunwebrtc::test::ProjectRootPath() +
       "resources/audio_coding/neteq4_network_stats.dat";
 #else
   const std::string network_stat_ref_file =
-      cloopenwebrtc::test::ResourcePath("audio_coding/neteq4_network_stats", "dat");
+      yuntongxunwebrtc::test::ResourcePath("audio_coding/neteq4_network_stats", "dat");
 #endif
   const std::string rtcp_stat_ref_file =
-      cloopenwebrtc::test::ResourcePath("audio_coding/neteq4_rtcp_stats", "dat");
+      yuntongxunwebrtc::test::ResourcePath("audio_coding/neteq4_rtcp_stats", "dat");
 
   if (FLAGS_gen_ref) {
     DecodeAndCompare(input_rtp_file, "", "", "");
@@ -897,7 +897,7 @@ class NetEqBgnTest : public NetEqDecodingTest {
     // |sampling_rate_hz|. The output may sound weird, but the test is still
     // valid.
     ASSERT_TRUE(input.Init(
-        cloopenwebrtc::test::ResourcePath("audio_coding/testfile32kHz", "pcm"),
+        yuntongxunwebrtc::test::ResourcePath("audio_coding/testfile32kHz", "pcm"),
         10 * sampling_rate_hz,  // Max 10 seconds loop length.
         static_cast<size_t>(expected_samples_per_channel)));
 
@@ -1508,4 +1508,4 @@ TEST_F(NetEqDecodingTest, CngFirst) {
   EXPECT_EQ(kOutputNormal, type);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -16,7 +16,7 @@
 #include "../system_wrappers/include/static_instance.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class CriticalSectionWrapper;
 
 class SSRCDatabase

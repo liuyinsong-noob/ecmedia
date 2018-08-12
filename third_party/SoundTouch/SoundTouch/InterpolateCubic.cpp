@@ -38,7 +38,7 @@
 #include "InterpolateCubic.h"
 #include "STTypes.h"
 
-using namespace cloopensoundtouch;
+using namespace yuntongxunsoundtouch;
 
 // cubic interpolation coefficients
 static const float _coeffs[]= 

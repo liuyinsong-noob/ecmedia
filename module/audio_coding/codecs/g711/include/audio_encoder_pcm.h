@@ -15,7 +15,7 @@
 
 #include "audio_encoder.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioEncoderPcm : public AudioEncoder {
  public:
@@ -96,5 +96,5 @@ class AudioEncoderPcmU : public AudioEncoderPcm {
   static const int kSampleRateHz = 8000;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_CODECS_G711_INCLUDE_AUDIO_ENCODER_PCM_H_

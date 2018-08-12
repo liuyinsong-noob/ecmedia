@@ -26,7 +26,7 @@
 #define WEBRTC_ARCH_ARM_V7
 
 #endif
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Callback class for providing more data into the resampler.  Expects |frames|
 // of data to be rendered into |destination|; zero padded if not enough frames

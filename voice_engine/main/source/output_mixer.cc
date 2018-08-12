@@ -28,7 +28,7 @@ char *filenameRender_path=NULL;
 char *hubin_fil_path = NULL;
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace voe {
 
 #define ENERGY_MIN_8K    (2.0*1e8)

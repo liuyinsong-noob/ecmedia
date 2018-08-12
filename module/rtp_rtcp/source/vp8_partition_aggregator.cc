@@ -16,7 +16,7 @@
 #include <algorithm>
 #include <limits>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 PartitionTreeNode::PartitionTreeNode(PartitionTreeNode* parent,
                                      const size_t* size_vector,
@@ -265,4 +265,4 @@ size_t Vp8PartitionAggregator::CalcNumberOfFragments(
   return num_fragments;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

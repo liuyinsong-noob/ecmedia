@@ -42,7 +42,7 @@
 #include <google/protobuf/stubs/stl_util.h>
 #include <google/protobuf/stubs/map_util.h>
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 
 DescriptorDatabase::~DescriptorDatabase() {}
@@ -540,4 +540,4 @@ bool MergedDescriptorDatabase::FindAllExtensionNumbers(
 
 
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google

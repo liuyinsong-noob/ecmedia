@@ -4,7 +4,7 @@
  *  Use of this source code is governed by a Beijing Speedtong Information Technology Co.,Ltd license
  *  that can be found in the LICENSE file in the root of the web site.
  *
- *   http://www.cloopen.com
+ *   http://www.yuntongxun.com
  *
  *  An additional intellectual property rights grant can be found
  *  in the file PATENTS.  All contributing project authors may
@@ -221,7 +221,7 @@ public abstract class BaseRestHelper {
 //		if(sandbox) {
 //			return getSandboxServerUrl();
 //		}
-//		return getServerUrl("app.cloopen.com");
+//		return getServerUrl("app.yuntongxun.com");
 //	}
 	
 	public StringBuffer getSandboxServerUrl() {
@@ -230,9 +230,9 @@ public abstract class BaseRestHelper {
 	
 	private StringBuffer getServerUrl(String server) {
 		// 
-		if(!CCPApplication.getInstance().isDeveloperMode()&&"app.cloopen.com".equals(server)) {
+		if(!CCPApplication.getInstance().isDeveloperMode()&&"app.yuntongxun.com".equals(server)) {
 			CCPConfig.REST_SERVER_PORT = "8883";
-			server = "sandboxapp.cloopen.com";
+			server = "sandboxapp.yuntongxun.com";
 		}
 		
 		StringBuffer requestUrl = new StringBuffer("https://"
@@ -276,7 +276,7 @@ public abstract class BaseRestHelper {
 	 */
 	protected StringBuffer getDefaultRequestURL() {
 		
-		StringBuffer requestUrl = getServerUrl("app.cloopen.com");
+		StringBuffer requestUrl = getServerUrl("app.yuntongxun.com");
 		requestUrl.append("/General/GetDemoAccounts");
 		return requestUrl;
 	}

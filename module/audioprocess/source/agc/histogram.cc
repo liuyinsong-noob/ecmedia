@@ -15,7 +15,7 @@
 
 #include "module_common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const double kHistBinCenters[] = {
     7.59621091765857e-02,  9.02036021061016e-02,  1.07115112009343e-01,
@@ -225,4 +225,4 @@ double Histogram::CurrentRms() const {
   return mean_val;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

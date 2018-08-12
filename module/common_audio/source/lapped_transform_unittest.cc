@@ -19,7 +19,7 @@ using std::complex;
 
 namespace {
 
-class NoopCallback : public cloopenwebrtc::LappedTransform::Callback {
+class NoopCallback : public yuntongxunwebrtc::LappedTransform::Callback {
  public:
   NoopCallback() : block_num_(0) {}
 
@@ -41,7 +41,7 @@ class NoopCallback : public cloopenwebrtc::LappedTransform::Callback {
   int block_num_;
 };
 
-class FftCheckerCallback : public cloopenwebrtc::LappedTransform::Callback {
+class FftCheckerCallback : public yuntongxunwebrtc::LappedTransform::Callback {
  public:
   FftCheckerCallback() : block_num_(0) {}
 
@@ -81,7 +81,7 @@ void SetFloatArray(float value, int rows, int cols, float* const* array) {
 
 }  // namespace
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(LappedTransformTest, Windowless) {
   const int kChannels = 3;

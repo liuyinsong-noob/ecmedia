@@ -47,7 +47,7 @@
 #include "STTypes.h"
 #include "FIFOSampleBuffer.h"
 
-namespace cloopensoundtouch
+namespace yuntongxunsoundtouch
 {
 
 class AAFilter

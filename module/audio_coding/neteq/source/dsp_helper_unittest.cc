@@ -14,7 +14,7 @@
 #include "audio_multi_vector.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(DspHelper, RampSignalArray) {
   static const int kLen = 100;
@@ -86,4 +86,4 @@ TEST(DspHelper, RampSignalAudioMultiVector) {
     }
   }
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

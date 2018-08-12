@@ -58,7 +58,7 @@
 
 #include <google/protobuf/stubs/platform_macros.h>
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 namespace internal {
 
@@ -158,7 +158,7 @@ Atomic64 Release_Load(volatile const Atomic64* ptr);
 
 }  // namespace internal
 }  // namespace protobuf
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 
 // Include our platform specific implementation.
 #define GOOGLE_PROTOBUF_ATOMICOPS_ERROR \

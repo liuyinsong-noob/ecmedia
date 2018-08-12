@@ -13,7 +13,7 @@
 
 #include "denoiser_filter.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class DenoiserFilterSSE2 : public DenoiserFilter {
  public:

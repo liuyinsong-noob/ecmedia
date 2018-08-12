@@ -19,7 +19,7 @@
 #include "denoiser_filter_sse2.h"
 #include "../system_wrappers/include/cpu_features_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const int kMotionMagnitudeThreshold = 8 * 3;
 const int kSumDiffThreshold = 96;

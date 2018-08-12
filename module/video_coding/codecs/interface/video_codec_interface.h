@@ -21,7 +21,7 @@
 #include "video_decoder.h"
 #include "video_encoder.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 class RTPFragmentationHeader; // forward declaration

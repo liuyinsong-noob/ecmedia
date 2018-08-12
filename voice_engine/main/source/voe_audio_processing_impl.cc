@@ -36,7 +36,7 @@
     }                                                    \
   } while (0)
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 #if defined(WEBRTC_ANDROID) || defined(WEBRTC_IOS)
 static const EcModes kDefaultEcMode = kEcAecm;
@@ -1119,4 +1119,4 @@ bool VoEAudioProcessingImpl::IsStereoChannelSwappingEnabled() {
 
 #endif  // #ifdef WEBRTC_VOICE_ENGINE_AUDIO_PROCESSING_API
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

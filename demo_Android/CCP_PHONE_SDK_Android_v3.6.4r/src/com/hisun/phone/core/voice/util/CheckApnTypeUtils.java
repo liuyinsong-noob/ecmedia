@@ -28,7 +28,7 @@ import android.text.TextUtils;
 *   	2��Wap network: WAP (Mobile Unicom agent the same: 10.0.0.172:80), WAP (Telecommunications Agency: 10.0.0.200:80)
 *   So it can be abstracted three network types: Unicom mobile telecommunications WAP, WAP, the other is net type.</p>
 * <p>Copyright: Copyright (c) 2012</p>
-* <p>Company: http://www.cloopen.com</p>
+* <p>Company: http://www.yuntongxun.com</p>
 * @author Jorstin Chan
 * @date 2013-11-12
 * @version 3.5

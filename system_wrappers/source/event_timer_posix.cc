@@ -20,7 +20,7 @@
 
 #include "../base/checks.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // static
 EventTimerWrapper* EventTimerWrapper::Create() {
@@ -149,9 +149,9 @@ EventTypeWrapper EventTimerPosix::Wait(timespec* end_at, bool reset_event) {
   return ret_val == 0 ? kEventSignaled : kEventTimeout;
 }
 
-cloopenwebrtc::PlatformThread* EventTimerPosix::CreateThread() {
+yuntongxunwebrtc::PlatformThread* EventTimerPosix::CreateThread() {
   const char* kThreadName = "WebRtc_event_timer_thread";
-  return new cloopenwebrtc::PlatformThread(Run, this, kThreadName);
+  return new yuntongxunwebrtc::PlatformThread(Run, this, kThreadName);
 }
 
 bool EventTimerPosix::StartTimer(bool periodic, unsigned long time_ms) {
@@ -178,7 +178,7 @@ bool EventTimerPosix::StartTimer(bool periodic, unsigned long time_ms) {
   periodic_ = periodic;
   time_ms_ = time_ms;
   timer_thread_->Start();
-  timer_thread_->SetPriority(cloopenwebrtc::kRealtimePriority);
+  timer_thread_->SetPriority(yuntongxunwebrtc::kRealtimePriority);
   pthread_mutex_unlock(&mutex_);
 
   return true;
@@ -261,4 +261,4 @@ bool EventTimerPosix::StopTimer() {
   return true;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

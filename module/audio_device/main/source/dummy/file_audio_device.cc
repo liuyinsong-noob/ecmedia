@@ -12,7 +12,7 @@
 #include "sleep.h"
 #include "thread_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 int kRecordingFixedSampleRate = 48000;
 int kRecordingNumChannels = 2;
@@ -584,4 +584,4 @@ bool FileAudioDevice::RecThreadProcess()
     return true;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

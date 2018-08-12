@@ -37,7 +37,7 @@
 
 #include "data_log_impl.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class DataLog {
  public:
@@ -116,6 +116,6 @@ class DataLog {
   static int NextRow(const std::string& table_name);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_INTERFACE_DATA_LOG_H_

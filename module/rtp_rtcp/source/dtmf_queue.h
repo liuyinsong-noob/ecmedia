@@ -15,7 +15,7 @@
 
 #include "../base/criticalsection.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class DtmfQueue {
  public:
   struct Event {
@@ -33,9 +33,9 @@ class DtmfQueue {
   bool PendingDtmf() const;
 
  private:
-  cloopenwebrtc::CriticalSection dtmf_critsect_;
+  yuntongxunwebrtc::CriticalSection dtmf_critsect_;
   std::list<Event> queue_;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_DTMF_QUEUE_H_

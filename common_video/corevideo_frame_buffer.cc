@@ -15,7 +15,7 @@
 #include "../system_wrappers/include/logging.h"
 #include "../common_video/libyuv/include/webrtc_libyuv.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 CoreVideoFrameBuffer::CoreVideoFrameBuffer(CVPixelBufferRef pixel_buffer,
                                            int adapted_width,
@@ -49,7 +49,7 @@ CoreVideoFrameBuffer::~CoreVideoFrameBuffer() {
   CVBufferRelease(pixel_buffer_);
 }
 
-cloopenwebrtc::scoped_refptr<VideoFrameBuffer>
+yuntongxunwebrtc::scoped_refptr<VideoFrameBuffer>
 CoreVideoFrameBuffer::NativeToI420Buffer() {
   const OSType pixel_format = CVPixelBufferGetPixelFormatType(pixel_buffer_);
   DCHECK(pixel_format == kCVPixelFormatType_420YpCbCr8BiPlanarFullRange ||
@@ -70,7 +70,7 @@ CoreVideoFrameBuffer::NativeToI420Buffer() {
 
   // TODO(magjed): Use a frame buffer pool.
   NV12ToI420Scaler nv12_to_i420_scaler;
-  cloopenwebrtc::scoped_refptr<I420Buffer> buffer =
+  yuntongxunwebrtc::scoped_refptr<I420Buffer> buffer =
       new rtc::RefCountedObject<I420Buffer>(width_, height_);
   nv12_to_i420_scaler.NV12ToI420Scale(
       src_y, src_y_stride,
@@ -145,4 +145,4 @@ bool CoreVideoFrameBuffer::CropAndScaleTo(
   return true;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

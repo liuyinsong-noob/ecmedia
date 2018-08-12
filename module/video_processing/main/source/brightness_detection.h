@@ -16,7 +16,7 @@
 #include "video_processing.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VPMBrightnessDetection {
  public:

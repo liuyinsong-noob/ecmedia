@@ -50,7 +50,7 @@
 #endif
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 #ifdef ENABLE_RTC_EVENT_LOG
 
@@ -61,7 +61,7 @@ class RtcEventLogImpl final : public RtcEventLog {
 
   bool StartLogging(const std::string& file_name,
                     int64_t max_size_bytes) override;
-  bool StartLogging(cloopenwebrtc::PlatformFile platform_file,
+  bool StartLogging(yuntongxunwebrtc::PlatformFile platform_file,
                     int64_t max_size_bytes) override;
   void StopLogging() override;
 //   void LogVideoReceiveStreamConfig(
@@ -112,7 +112,7 @@ class RtcEventLogImpl final : public RtcEventLog {
   SwapQueue<std::unique_ptr<rtclog::Event> > event_queue_;
 
   RtcEventLogHelperThread helper_thread_;
-  cloopenwebrtc::ThreadChecker thread_checker_;
+  yuntongxunwebrtc::ThreadChecker thread_checker_;
 
   DISALLOW_COPY_AND_ASSIGN(RtcEventLogImpl);
 };
@@ -208,7 +208,7 @@ bool RtcEventLogImpl::StartLogging(const std::string& file_name,
   message.max_size_bytes = max_size_bytes <= 0
                                ? (std::numeric_limits<int64_t>::max)()
                                : max_size_bytes;
-  message.start_time = cloopenwebrtc::TimeMicros();
+  message.start_time = yuntongxunwebrtc::TimeMicros();
   message.stop_time = (std::numeric_limits<int64_t>::max)();
   message.file.reset(FileWrapper::Create());
   if (!message.file->OpenFile(file_name.c_str(), false)) {
@@ -224,7 +224,7 @@ bool RtcEventLogImpl::StartLogging(const std::string& file_name,
   return true;
 }
 
-bool RtcEventLogImpl::StartLogging(cloopenwebrtc::PlatformFile platform_file,
+bool RtcEventLogImpl::StartLogging(yuntongxunwebrtc::PlatformFile platform_file,
                                    int64_t max_size_bytes) {
   DCHECK(thread_checker_.CalledOnValidThread());
   RtcEventLogHelperThread::ControlMessage message;
@@ -232,15 +232,15 @@ bool RtcEventLogImpl::StartLogging(cloopenwebrtc::PlatformFile platform_file,
   message.max_size_bytes = max_size_bytes <= 0
                                ? (std::numeric_limits<int64_t>::max)()
                                : max_size_bytes;
-  message.start_time = cloopenwebrtc::TimeMicros();
+  message.start_time = yuntongxunwebrtc::TimeMicros();
   message.stop_time = (std::numeric_limits<int64_t>::max)();
   message.file.reset(FileWrapper::Create());
-  FILE* file_handle = cloopenwebrtc::FdopenPlatformFileForWriting(platform_file);
+  FILE* file_handle = yuntongxunwebrtc::FdopenPlatformFileForWriting(platform_file);
   if (!file_handle) {
     LOG(LS_ERROR) << "Can't open file. WebRTC event log not started.";
     // Even though we failed to open a FILE*, the platform_file is still open
     // and needs to be closed.
-    if (!cloopenwebrtc::ClosePlatformFile(platform_file)) {
+    if (!yuntongxunwebrtc::ClosePlatformFile(platform_file)) {
       LOG(LS_ERROR) << "Can't close file.";
     }
     return false;
@@ -262,7 +262,7 @@ void RtcEventLogImpl::StopLogging() {
   DCHECK(thread_checker_.CalledOnValidThread());
   RtcEventLogHelperThread::ControlMessage message;
   message.message_type = RtcEventLogHelperThread::ControlMessage::STOP_FILE;
-  message.stop_time = cloopenwebrtc::TimeMicros();
+  message.stop_time = yuntongxunwebrtc::TimeMicros();
   while (!message_queue_.Insert(&message)) {
     // TODO(terelius): We would like to have a blocking Insert function in the
     // SwapQueue, but for the time being we will just clear any previous
@@ -281,7 +281,7 @@ void RtcEventLogImpl::StopLogging() {
 // void RtcEventLogImpl::LogVideoReceiveStreamConfig(
 //     const VideoReceiveStream::Config& config) {
 //   std::unique_ptr<rtclog::Event> event(new rtclog::Event());
-//   event->set_timestamp_us(cloopenwebrtc::TimeMicros());
+//   event->set_timestamp_us(yuntongxunwebrtc::TimeMicros());
 //   event->set_type(rtclog::Event::VIDEO_RECEIVER_CONFIG_EVENT);
 // 
 //   rtclog::VideoReceiveConfig* receiver_config =
@@ -317,7 +317,7 @@ void RtcEventLogImpl::StopLogging() {
 // void RtcEventLogImpl::LogVideoSendStreamConfig(
 //     const VideoSendStream::Config& config) {
 //   std::unique_ptr<rtclog::Event> event(new rtclog::Event());
-//   event->set_timestamp_us(cloopenwebrtc::TimeMicros());
+//   event->set_timestamp_us(yuntongxunwebrtc::TimeMicros());
 //   event->set_type(rtclog::Event::VIDEO_SENDER_CONFIG_EVENT);
 // 
 //   rtclog::VideoSendConfig* sender_config = event->mutable_video_sender_config();
@@ -347,7 +347,7 @@ void RtcEventLogImpl::StopLogging() {
 // void RtcEventLogImpl::LogAudioReceiveStreamConfig(
 //     const AudioReceiveStream::Config& config) {
 //   std::unique_ptr<rtclog::Event> event(new rtclog::Event());
-//   event->set_timestamp_us(cloopenwebrtc::TimeMicros());
+//   event->set_timestamp_us(yuntongxunwebrtc::TimeMicros());
 //   event->set_type(rtclog::Event::AUDIO_RECEIVER_CONFIG_EVENT);
 // 
 //   rtclog::AudioReceiveConfig* receiver_config =
@@ -367,7 +367,7 @@ void RtcEventLogImpl::StopLogging() {
 // void RtcEventLogImpl::LogAudioSendStreamConfig(
 //     const AudioSendStream::Config& config) {
 //   std::unique_ptr<rtclog::Event> event(new rtclog::Event());
-//   event->set_timestamp_us(cloopenwebrtc::TimeMicros());
+//   event->set_timestamp_us(yuntongxunwebrtc::TimeMicros());
 //   event->set_type(rtclog::Event::AUDIO_SENDER_CONFIG_EVENT);
 // 
 //   rtclog::AudioSendConfig* sender_config = event->mutable_audio_sender_config();
@@ -414,7 +414,7 @@ void RtcEventLogImpl::LogRtpHeader(PacketDirection direction,
   }
 
   std::unique_ptr<rtclog::Event> rtp_event(new rtclog::Event());
-  rtp_event->set_timestamp_us(cloopenwebrtc::TimeMicros());
+  rtp_event->set_timestamp_us(yuntongxunwebrtc::TimeMicros());
   rtp_event->set_type(rtclog::Event::RTP_EVENT);
   rtp_event->mutable_rtp_packet()->set_incoming(direction == kIncomingPacket);
   rtp_event->mutable_rtp_packet()->set_type(ConvertMediaType(media_type));
@@ -430,7 +430,7 @@ void RtcEventLogImpl::LogRtcpPacket(PacketDirection direction,
                                     const uint8_t* packet,
                                     size_t length) {
   std::unique_ptr<rtclog::Event> rtcp_event(new rtclog::Event());
-  rtcp_event->set_timestamp_us(cloopenwebrtc::TimeMicros());
+  rtcp_event->set_timestamp_us(yuntongxunwebrtc::TimeMicros());
   rtcp_event->set_type(rtclog::Event::RTCP_EVENT);
   rtcp_event->mutable_rtcp_packet()->set_incoming(direction == kIncomingPacket);
   rtcp_event->mutable_rtcp_packet()->set_type(ConvertMediaType(media_type));
@@ -477,7 +477,7 @@ void RtcEventLogImpl::LogRtcpPacket(PacketDirection direction,
 
 void RtcEventLogImpl::LogAudioPlayout(uint32_t ssrc) {
   std::unique_ptr<rtclog::Event> event(new rtclog::Event());
-  event->set_timestamp_us(cloopenwebrtc::TimeMicros());
+  event->set_timestamp_us(yuntongxunwebrtc::TimeMicros());
   event->set_type(rtclog::Event::AUDIO_PLAYOUT_EVENT);
   auto playout_event = event->mutable_audio_playout_event();
   playout_event->set_local_ssrc(ssrc);
@@ -488,7 +488,7 @@ void RtcEventLogImpl::LogLossBasedBweUpdate(int32_t bitrate_bps,
                                             uint8_t fraction_loss,
                                             int32_t total_packets) {
   std::unique_ptr<rtclog::Event> event(new rtclog::Event());
-  event->set_timestamp_us(cloopenwebrtc::TimeMicros());
+  event->set_timestamp_us(yuntongxunwebrtc::TimeMicros());
   event->set_type(rtclog::Event::LOSS_BASED_BWE_UPDATE);
   auto bwe_event = event->mutable_loss_based_bwe_update();
   bwe_event->set_bitrate_bps(bitrate_bps);
@@ -500,7 +500,7 @@ void RtcEventLogImpl::LogLossBasedBweUpdate(int32_t bitrate_bps,
 void RtcEventLogImpl::LogDelayBasedBweUpdate(int32_t bitrate_bps,
                                              BandwidthUsage detector_state) {
   std::unique_ptr<rtclog::Event> event(new rtclog::Event());
-  event->set_timestamp_us(cloopenwebrtc::TimeMicros());
+  event->set_timestamp_us(yuntongxunwebrtc::TimeMicros());
   event->set_type(rtclog::Event::DELAY_BASED_BWE_UPDATE);
   auto bwe_event = event->mutable_delay_based_bwe_update();
   bwe_event->set_bitrate_bps(bitrate_bps);
@@ -511,7 +511,7 @@ void RtcEventLogImpl::LogDelayBasedBweUpdate(int32_t bitrate_bps,
 // void RtcEventLogImpl::LogAudioNetworkAdaptation(
 //     const AudioNetworkAdaptor::EncoderRuntimeConfig& config) {
 //   std::unique_ptr<rtclog::Event> event(new rtclog::Event());
-//   event->set_timestamp_us(cloopenwebrtc::TimeMicros());
+//   event->set_timestamp_us(yuntongxunwebrtc::TimeMicros());
 //   event->set_type(rtclog::Event::AUDIO_NETWORK_ADAPTATION_EVENT);
 //   auto audio_network_adaptation = event->mutable_audio_network_adaptation();
 //   if (config.bitrate_bps)
@@ -536,7 +536,7 @@ void RtcEventLogImpl::LogProbeClusterCreated(int id,
                                              int min_probes,
                                              int min_bytes) {
   std::unique_ptr<rtclog::Event> event(new rtclog::Event());
-  event->set_timestamp_us(cloopenwebrtc::TimeMicros());
+  event->set_timestamp_us(yuntongxunwebrtc::TimeMicros());
   event->set_type(rtclog::Event::BWE_PROBE_CLUSTER_CREATED_EVENT);
 
   auto probe_cluster = event->mutable_probe_cluster();
@@ -562,7 +562,7 @@ void RtcEventLogImpl::LogProbeResult(int id,
                                      rtclog::BweProbeResult::ResultType result,
                                      int bitrate_bps) {
   std::unique_ptr<rtclog::Event> event(new rtclog::Event());
-  event->set_timestamp_us(cloopenwebrtc::TimeMicros());
+  event->set_timestamp_us(yuntongxunwebrtc::TimeMicros());
   event->set_type(rtclog::Event::BWE_PROBE_RESULT_EVENT);
 
   auto probe_result = event->mutable_probe_result();
@@ -598,10 +598,10 @@ bool RtcEventLog::ParseRtcEventLog(const std::string& file_name,
 
 #endif  // ENABLE_RTC_EVENT_LOG
 
-bool RtcEventLogNullImpl::StartLogging(cloopenwebrtc::PlatformFile platform_file,
+bool RtcEventLogNullImpl::StartLogging(yuntongxunwebrtc::PlatformFile platform_file,
                                        int64_t max_size_bytes) {
   // The platform_file is open and needs to be closed.
-  if (!cloopenwebrtc::ClosePlatformFile(platform_file)) {
+  if (!yuntongxunwebrtc::ClosePlatformFile(platform_file)) {
     LOG(LS_ERROR) << "Can't close file.";
   }
   return false;

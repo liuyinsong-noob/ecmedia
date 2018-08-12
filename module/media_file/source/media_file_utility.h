@@ -17,7 +17,7 @@
 #include "common_types.h"
 #include "media_file_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class AviFile;
 class InStream;
 class OutStream;
@@ -345,5 +345,5 @@ private:
     VideoCodec _videoCodec;
 #endif
 };
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 #endif // WEBRTC_MODULES_MEDIA_FILE_SOURCE_MEDIA_FILE_UTILITY_H_

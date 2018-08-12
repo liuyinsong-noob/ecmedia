@@ -22,7 +22,7 @@
 #include "audio_device.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioDeviceBuffer;
 class CriticalSectionWrapper;

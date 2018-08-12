@@ -48,7 +48,7 @@
 #include "InterpolateShannon.h"
 #include "AAFilter.h"
 
-using namespace cloopensoundtouch;
+using namespace yuntongxunsoundtouch;
 
 // Define default interpolation algorithm here
 TransposerBase::ALGORITHM TransposerBase::algorithm = TransposerBase::LINEAR;

@@ -16,7 +16,7 @@
 #include "video_render_nsopengl.h"
 #include "trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VideoRenderIPhoneImpl::VideoRenderIPhoneImpl(const WebRtc_Word32 id,
         const VideoRenderType videoRenderType,
@@ -262,6 +262,6 @@ WebRtc_Word32 VideoRenderIPhoneImpl::FullScreenRender(void* window, const bool e
     return -1;
 }
 
-} //namespace cloopenwebrtc
+} //namespace yuntongxunwebrtc
 
 #endif // IPHONE_GLES_RENDERING

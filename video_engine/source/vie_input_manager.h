@@ -24,7 +24,7 @@
 #include "../system_wrappers/include/map_wrapper.h"
 #include "vie_file_player.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Config;
 class CriticalSectionWrapper;

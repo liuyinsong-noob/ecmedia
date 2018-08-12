@@ -17,7 +17,7 @@
 #include "../system_wrappers/include/rw_lock_wrapper.h"
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // January 1970, in NTP seconds.
 const uint32_t kNtpJan1970 = 2208988800UL;
@@ -87,6 +87,6 @@ class SimulatedClock : public Clock {
   std::unique_ptr<RWLockWrapper> lock_;
 };
 
-};  // namespace cloopenwebrtc
+};  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_INCLUDE_CLOCK_H_

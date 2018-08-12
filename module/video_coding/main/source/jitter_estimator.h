@@ -15,7 +15,7 @@
 #include "rtt_filter.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 class Clock;
@@ -154,7 +154,7 @@ private:
                                                  // but never goes above _nackLimit
     VCMRttFilter          _rttFilter;
 
-    cloopenwebrtc::RollingAccumulator<uint64_t> fps_counter_;
+    yuntongxunwebrtc::RollingAccumulator<uint64_t> fps_counter_;
     enum ExperimentFlag { kInit, kEnabled, kDisabled };
     ExperimentFlag low_rate_experiment_;
     const Clock* clock_;

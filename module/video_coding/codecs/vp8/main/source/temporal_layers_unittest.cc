@@ -16,7 +16,7 @@
 #include "vpx/vpx_encoder.h"
 #include "vpx/vp8cx.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 enum {
   kTemporalUpdateLast = VP8_EFLAG_NO_UPD_GF |

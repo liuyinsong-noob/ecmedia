@@ -15,7 +15,7 @@
 #include "packet.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Forward declaration.
 class DecoderDatabase;
@@ -64,5 +64,5 @@ class TimestampScaler {
   DISALLOW_COPY_AND_ASSIGN(TimestampScaler);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_TIMESTAMP_SCALER_H_

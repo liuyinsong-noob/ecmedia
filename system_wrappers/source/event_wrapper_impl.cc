@@ -24,7 +24,7 @@
 
 #include "../base/event.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class EventWrapperImpl : public EventWrapper {
  public:
@@ -38,12 +38,12 @@ class EventWrapperImpl : public EventWrapper {
 
   EventTypeWrapper Wait(unsigned long max_time) override {
     int to_wait = max_time == WEBRTC_EVENT_INFINITE ?
-        cloopenwebrtc::Event::kForever : static_cast<int>(max_time);
+        yuntongxunwebrtc::Event::kForever : static_cast<int>(max_time);
     return event_.Wait(to_wait) ? kEventSignaled : kEventTimeout;
   }
 
  private:
-	 cloopenwebrtc::Event event_;
+	 yuntongxunwebrtc::Event event_;
 };
 
 // static
@@ -51,4 +51,4 @@ EventWrapper* EventWrapper::Create() {
   return new EventWrapperImpl();
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

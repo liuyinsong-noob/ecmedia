@@ -32,7 +32,7 @@
 
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 
 enum { kVp8ErrorPropagationTh = 30 };
@@ -453,7 +453,7 @@ int VP8EncoderImpl::InitEncode(const VideoCodec* inst,
     if (encoded_images_[i]._buffer != NULL) {
       delete [] encoded_images_[i]._buffer;
     }
-    encoded_images_[i]._size = cloopenwebrtc::CalcBufferSize(kI420,
+    encoded_images_[i]._size = yuntongxunwebrtc::CalcBufferSize(kI420,
                                               codec_.width, codec_.height);
     encoded_images_[i]._buffer = new uint8_t[encoded_images_[i]._size];
     encoded_images_[i]._completeFrame = true;
@@ -937,8 +937,8 @@ int VP8EncoderImpl::UpdateCodecFrameSize(
     return WEBRTC_VIDEO_CODEC_ERROR;
   }
 
-  WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-			   cloopenwebrtc::kTraceVideoCoding,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+			   yuntongxunwebrtc::kTraceVideoCoding,
 				0,
 			   "quality scaler: down sampler, codec_.width =%d, codec_.height = %d", codec_.width,  codec_.height);
   return WEBRTC_VIDEO_CODEC_OK;
@@ -1504,4 +1504,4 @@ int VP8DecoderImpl::CopyReference(VP8DecoderImpl* copy) {
   return 0;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

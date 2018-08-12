@@ -21,7 +21,7 @@
 #include "../module/remote_bitrate_estimator/include/remote_bitrate_estimator.h"
 #include "../system_wrappers/include/critical_section_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class RemoteBitrateEstimatorSingleStream : public RemoteBitrateEstimator {
  public:
@@ -70,6 +70,6 @@ class RemoteBitrateEstimatorSingleStream : public RemoteBitrateEstimator {
   DISALLOW_IMPLICIT_CONSTRUCTORS(RemoteBitrateEstimatorSingleStream);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_REMOTE_BITRATE_ESTIMATOR_REMOTE_BITRATE_ESTIMATOR_SINGLE_STREAM_H_

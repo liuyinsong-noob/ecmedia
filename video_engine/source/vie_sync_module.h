@@ -22,7 +22,7 @@
 
 #include "rtp_receiver.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class CriticalSectionWrapper;
 class RtpRtcp;

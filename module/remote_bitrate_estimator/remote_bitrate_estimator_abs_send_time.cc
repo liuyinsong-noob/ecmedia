@@ -27,7 +27,7 @@
 
 using namespace std;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 enum {
   kTimestampGroupLengthMs = 5,
@@ -246,7 +246,7 @@ void RemoteBitrateEstimatorAbsSendTime::IncomingPacketInfo(
   // here.
 
   // Check if incoming bitrate estimate is valid, and if it needs to be reset.
-  cloopenwebrtc::Optional<uint32_t> incoming_bitrate =
+  yuntongxunwebrtc::Optional<uint32_t> incoming_bitrate =
       incoming_bitrate_.Rate(arrival_time_ms);
   if (incoming_bitrate) {
     incoming_bitrate_initialized_ = true;
@@ -269,7 +269,7 @@ void RemoteBitrateEstimatorAbsSendTime::IncomingPacketInfo(
   uint32_t target_bitrate_bps = 0;
   std::vector<uint32_t> ssrcs;
   {
-    cloopenwebrtc::CritScope lock(&crit_);
+    yuntongxunwebrtc::CritScope lock(&crit_);
 
     TimeoutStreams(now_ms);
     DCHECK(inter_arrival_.get());
@@ -320,7 +320,7 @@ void RemoteBitrateEstimatorAbsSendTime::IncomingPacketInfo(
           now_ms - last_update_ms_ > remote_rate_.GetFeedbackInterval()) {
         update_estimate = true;
       } else if (detector_.State() == kBwOverusing) {
-        cloopenwebrtc::Optional<uint32_t> incoming_rate =
+        yuntongxunwebrtc::Optional<uint32_t> incoming_rate =
             incoming_bitrate_.Rate(arrival_time_ms);
         if (incoming_rate &&
             remote_rate_.TimeToReduceFurther(now_ms, *incoming_rate)) {
@@ -378,12 +378,12 @@ void RemoteBitrateEstimatorAbsSendTime::TimeoutStreams(int64_t now_ms) {
 
 void RemoteBitrateEstimatorAbsSendTime::OnRttUpdate(int64_t avg_rtt_ms,
                                                     int64_t max_rtt_ms) {
-  cloopenwebrtc::CritScope lock(&crit_);
+  yuntongxunwebrtc::CritScope lock(&crit_);
   remote_rate_.SetRtt(avg_rtt_ms);
 }
 
 void RemoteBitrateEstimatorAbsSendTime::RemoveStream(uint32_t ssrc) {
-  cloopenwebrtc::CritScope lock(&crit_);
+  yuntongxunwebrtc::CritScope lock(&crit_);
   ssrcs_.erase(ssrc);
 }
 
@@ -396,7 +396,7 @@ bool RemoteBitrateEstimatorAbsSendTime::LatestEstimate(
   // thread.
   DCHECK(ssrcs);
   DCHECK(bitrate_bps);
-  cloopenwebrtc::CritScope lock(&crit_);
+  yuntongxunwebrtc::CritScope lock(&crit_);
   if (!remote_rate_.ValidEstimate()) {
     return false;
   }
@@ -412,7 +412,7 @@ bool RemoteBitrateEstimatorAbsSendTime::LatestEstimate(
 void RemoteBitrateEstimatorAbsSendTime::SetMinBitrate(int min_bitrate_bps) {
   // Called from both the configuration thread and the network thread. Shouldn't
   // be called from the network thread in the future.
-  cloopenwebrtc::CritScope lock(&crit_);
+  yuntongxunwebrtc::CritScope lock(&crit_);
   remote_rate_.SetMinBitrate(min_bitrate_bps);
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

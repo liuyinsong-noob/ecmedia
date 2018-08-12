@@ -24,7 +24,7 @@
 extern UIView *globalLocalVideo;
 
 
-using namespace cloopenwebrtc;
+using namespace yuntongxunwebrtc;
 using namespace videocapturemodule;
 
 static void capture_queue_cleanup(void* p) {

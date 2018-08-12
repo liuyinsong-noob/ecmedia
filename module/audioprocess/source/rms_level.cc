@@ -13,7 +13,7 @@
 #include <assert.h>
 #include <math.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const float kMaxSquaredLevel = 32768 * 32768;
 
@@ -58,4 +58,4 @@ int RMSLevel::RMS() {
   return static_cast<int>(rms + 0.5);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

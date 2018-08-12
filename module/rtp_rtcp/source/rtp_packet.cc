@@ -21,7 +21,7 @@
 #include "../module/rtp_rtcp/source/rtp_header_extensions.h"
 #include "../module/rtp_rtcp/source/byte_io.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace rtp {
 namespace {
 constexpr size_t kFixedHeaderSize = 12;
@@ -86,11 +86,11 @@ bool Packet::Parse(const uint8_t* buffer, size_t buffer_size) {
   return true;
 }
 
-bool Packet::Parse(cloopenwebrtc::ArrayView<const uint8_t> packet) {
+bool Packet::Parse(yuntongxunwebrtc::ArrayView<const uint8_t> packet) {
   return Parse(packet.data(), packet.size());
 }
 
-bool Packet::Parse(cloopenwebrtc::CopyOnWriteBuffer buffer) {
+bool Packet::Parse(yuntongxunwebrtc::CopyOnWriteBuffer buffer) {
   if (!ParseBuffer(buffer.cdata(), buffer.size())) {
     Clear();
     return false;
@@ -180,11 +180,11 @@ size_t Packet::padding_size() const {
   return padding_size_;
 }
 
-cloopenwebrtc::ArrayView<const uint8_t> Packet::payload() const {
-  return cloopenwebrtc::MakeArrayView(data() + payload_offset_, payload_size_);
+yuntongxunwebrtc::ArrayView<const uint8_t> Packet::payload() const {
+  return yuntongxunwebrtc::MakeArrayView(data() + payload_offset_, payload_size_);
 }
 
-cloopenwebrtc::CopyOnWriteBuffer Packet::Buffer() const {
+yuntongxunwebrtc::CopyOnWriteBuffer Packet::Buffer() const {
   return buffer_;
 }
 
@@ -556,4 +556,4 @@ void Packet::WriteAt(size_t offset, uint8_t byte) {
 }
 
 }  // namespace rtp
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

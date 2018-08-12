@@ -19,7 +19,7 @@
 #include "../module/common_types.h"
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 #if defined(WEBRTC_RESTRICT_LOGGING)
 // Disable all TRACE macros. The LOG macro is still functional.
@@ -84,6 +84,6 @@ class Trace {
   static volatile int level_filter_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_INCLUDE_TRACE_H_

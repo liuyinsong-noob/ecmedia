@@ -20,7 +20,7 @@
 
 #include "../base/platform_thread.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 enum State {
   kUp = 1,
@@ -45,14 +45,14 @@ class EventTimerPosix : public EventTimerWrapper {
   bool Process();
   EventTypeWrapper Wait(timespec* end_at, bool reset_state);
 
-  virtual cloopenwebrtc::PlatformThread* CreateThread();
+  virtual yuntongxunwebrtc::PlatformThread* CreateThread();
 
   pthread_cond_t  cond_;
   pthread_mutex_t mutex_;
   bool event_set_;
 
   // TODO(pbos): Remove unique_ptr and use PlatformThread directly.
-  std::unique_ptr<cloopenwebrtc::PlatformThread> timer_thread_;
+  std::unique_ptr<yuntongxunwebrtc::PlatformThread> timer_thread_;
   std::unique_ptr<EventTimerPosix> timer_event_;
   timespec       created_at_;
 
@@ -62,6 +62,6 @@ class EventTimerPosix : public EventTimerWrapper {
   bool is_stopping_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_SOURCE_EVENT_POSIX_H_

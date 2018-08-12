@@ -18,7 +18,7 @@
 #include "session_info.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VCMFrameBuffer : public VCMEncodedFrame {
  public:
@@ -70,7 +70,7 @@ class VCMFrameBuffer : public VCMEncodedFrame {
 
   int64_t LatestPacketTimeMs() const;
 
-  cloopenwebrtc::FrameType FrameType() const;
+  yuntongxunwebrtc::FrameType FrameType() const;
   void SetPreviousFrameLoss();
 
   // The number of packets discarded because the decoder can't make use of

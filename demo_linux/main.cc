@@ -3,9 +3,9 @@
 
 int main()
 {
-	cloopenwebrtc::AudioProcessing* audioProcessingModulePtr = cloopenwebrtc::AudioProcessing::Create();
+	yuntongxunwebrtc::AudioProcessing* audioProcessingModulePtr = yuntongxunwebrtc::AudioProcessing::Create();
   
-	cloopenwebrtc::AudioFrame frame;
+	yuntongxunwebrtc::AudioFrame frame;
 	frame.num_channels_ = 1;
 	frame.sample_rate_hz_ = audioProcessingModulePtr->input_sample_rate_hz();
 

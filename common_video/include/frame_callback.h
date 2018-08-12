@@ -16,7 +16,7 @@
 
 #include "../common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VideoFrame;
 
@@ -59,6 +59,6 @@ class EncodedFrameObserver {
   virtual ~EncodedFrameObserver() {}
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_COMMON_VIDEO_INCLUDE_FRAME_CALLBACK_H_

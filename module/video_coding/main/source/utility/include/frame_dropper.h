@@ -16,7 +16,7 @@
 #include "../system_wrappers/include/exp_filter.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 // The Frame Dropper implements a variant of the leaky bucket algorithm
@@ -74,15 +74,15 @@ private:
     void UpdateRatio();
     void CapAccumulator();
 
-    cloopenwebrtc::ExpFilter _keyFrameSizeAvgKbits;
-    cloopenwebrtc::ExpFilter _keyFrameRatio;
+    yuntongxunwebrtc::ExpFilter _keyFrameSizeAvgKbits;
+    yuntongxunwebrtc::ExpFilter _keyFrameRatio;
     float _keyFrameSpreadFrames;
     int32_t _keyFrameCount;
     float _accumulator; //fill()函数进行更新，单位：Kbits
     float _accumulatorMax;//0.5*target_bitrate
     float _targetBitRate;
     bool _dropNext;
-    cloopenwebrtc::ExpFilter _dropRatio;
+    yuntongxunwebrtc::ExpFilter _dropRatio;
     int32_t _dropCount;
     float _windowSize;
     float _incoming_frame_rate;

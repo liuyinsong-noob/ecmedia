@@ -16,7 +16,7 @@
 #include "audio_frame_operations.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const int kDefaultStandaloneVadMode = 3;
 
@@ -92,5 +92,5 @@ int StandaloneVad::set_mode(int mode) {
   return 0;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 

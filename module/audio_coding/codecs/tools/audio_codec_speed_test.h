@@ -16,7 +16,7 @@
 #include "cloopenwebrtc/system_wrappers/interface/scoped_ptr.h"
 #include "cloopenwebrtc/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Define coding parameter as
 // <channels, bit_rate, file_name, extension, if_save_output>.

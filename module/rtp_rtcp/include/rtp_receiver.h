@@ -14,7 +14,7 @@
 #include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
 #include "../typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 struct CodecInst;
 class RTPPayloadRegistry;
@@ -95,6 +95,6 @@ class RtpReceiver {
   virtual int32_t SetPacketTimeout(const WebRtc_UWord32 timeoutMS) = 0;
   virtual void PacketTimeout() = 0;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_INCLUDE_RTP_RECEIVER_H_

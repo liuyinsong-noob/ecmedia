@@ -52,7 +52,7 @@ private:
     bool is_vod;
     StHlsTaskCallback *callback_;
     bool running_;
-    cloopenwebrtc::EventWrapper *ts_wait_event_;
+    yuntongxunwebrtc::EventWrapper *ts_wait_event_;
 public:
     StHlsTask();
     virtual ~StHlsTask();

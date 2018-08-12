@@ -29,7 +29,7 @@
 //	}
 //}
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Detection constants
 // (Q4) Maximum allowed deviation for detection.
@@ -151,7 +151,7 @@ int32_t VPMDeflickering::ProcessFrame(I420VideoFrame* frame,
     sort_row_idx++;
   }
 
-  cloopenwebrtc::Sort(y_sorted, y_sub_size, cloopenwebrtc::TYPE_UWord8);
+  yuntongxunwebrtc::Sort(y_sorted, y_sub_size, yuntongxunwebrtc::TYPE_UWord8);
 
   uint32_t prob_idx_uw32 = 0;
   quant_uw8[0] = 0;
@@ -412,4 +412,4 @@ int32_t VPMDeflickering::DetectFlicker() {
   return ret_val;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

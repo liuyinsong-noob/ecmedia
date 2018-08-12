@@ -12,7 +12,7 @@
 #define WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_RTCP_CONFIG_H_
 
 // Configuration file for RTP utilities (RTPSender, RTPReceiver ...)
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 enum { kRtpRtcpMaxIdleTimeProcess = 5,
              kRtpRtcpBitrateProcessTimeMs = 10,
              kRtpRtcpPacketTimeoutProcessTimeMs = 100 };
@@ -44,6 +44,6 @@ enum { BW_HISTORY_SIZE = 35 };
 enum { RTP_MAX_BURST_SLEEP_TIME = 500 };
 enum { RTP_AUDIO_LEVEL_UNIQUE_ID = 0xbede };
 enum { RTP_MAX_PACKETS_PER_FRAME = 512 };  // must be multiple of 32
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_RTCP_CONFIG_H_

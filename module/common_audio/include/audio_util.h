@@ -16,7 +16,7 @@
 #include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc{
+namespace yuntongxunwebrtc{
 
 typedef std::numeric_limits<int16_t> limits_int16;
 

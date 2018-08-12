@@ -14,7 +14,7 @@
 #include "../system_wrappers/include/critical_section_wrapper.h"
 #include "../system_wrappers/source/trace_impl.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class TracePosix : public TraceImpl {
  public:
@@ -34,6 +34,6 @@ class TracePosix : public TraceImpl {
   CriticalSectionWrapper& crit_sect_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_SOURCE_TRACE_POSIX_H_

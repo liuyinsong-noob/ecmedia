@@ -16,7 +16,7 @@
 #include "../module/rtp_rtcp/source/byte_io.h"
 #include "../module/rtp_rtcp/source/forward_error_correction_internal.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 
@@ -128,4 +128,4 @@ void UlpfecHeaderWriter::FinalizeFecHeader(
   memcpy(&fec_packet->data[12], packet_mask, packet_mask_size);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

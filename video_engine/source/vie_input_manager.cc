@@ -29,7 +29,7 @@
  //add by dingxf
 #include "vie_file_capturer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ViEInputManager::ViEInputManager(const int engine_id, const Config& config)
     : config_(config),
@@ -381,7 +381,7 @@ int ViEInputManager::CreateExternalCaptureDevice(
   vie_frame_provider_map_[newcapture_id] = vie_capture;
   /*if (vie_frame_provider_map_.Insert(newcapture_id, vie_capture) != 0) {
 	  ReturnCaptureId(newcapture_id);
-	  WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
 		  "%s: Could not insert capture module for external capture.",
 		  __FUNCTION__);
 	  return kViECaptureDeviceUnknownError;
@@ -495,15 +495,15 @@ ViEFilePlayer* ViEInputManagerScoped::FilePlayer(int file_id) const {
 
 int ViEInputManager::CreateFilePlayer(const char* file_nameUTF8,
 	const bool loop,
-	const cloopenwebrtc::FileFormats file_format,
+	const yuntongxunwebrtc::FileFormats file_format,
 	VoiceEngine* voe_ptr, int& file_id) {
-		WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
 			"%s(device_unique_id: %s)", __FUNCTION__, file_nameUTF8);
 
 		CriticalSectionScoped cs(map_cs_.get());
 		int new_file_id = 0;
 		if (GetFreeFileId(new_file_id) == false) {
-			WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+			WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
 				"%s: Maximum supported number of file players already in use",
 				__FUNCTION__);
 			return kViEFileMaxNoOfFilesOpened;
@@ -514,7 +514,7 @@ int ViEInputManager::CreateFilePlayer(const char* file_nameUTF8,
 			voe_ptr);
 		if (!vie_file_player) {
 			ReturnFileId(new_file_id);
-			WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+			WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
 				"%s: Could not open file %s for playback", __FUNCTION__,
 				file_nameUTF8);
 			return kViEFileUnknownError;
@@ -523,7 +523,7 @@ int ViEInputManager::CreateFilePlayer(const char* file_nameUTF8,
 		vie_frame_provider_map_[new_file_id] = vie_file_player;
 		/*if (vie_frame_provider_map_.Insert(new_file_id, vie_file_player) != 0) {
 			ReturnCaptureId(new_file_id);
-			WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+			WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
 				"%s: Could not insert file player for %s", __FUNCTION__,
 				file_nameUTF8);
 			delete vie_file_player;
@@ -531,14 +531,14 @@ int ViEInputManager::CreateFilePlayer(const char* file_nameUTF8,
 		}*/
 
 		file_id = new_file_id;
-		WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
 			"%s(filename: %s, file_id: %d)", __FUNCTION__, file_nameUTF8,
 			new_file_id);
 		return 0;
 }
 
 int ViEInputManager::DestroyFilePlayer(int file_id) {
-	WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+	WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
 		"%s(file_id: %d)", __FUNCTION__, file_id);
 
 	ViEFilePlayer* vie_file_player = NULL;
@@ -550,14 +550,14 @@ int ViEInputManager::DestroyFilePlayer(int file_id) {
 		CriticalSectionScoped cs(map_cs_.get());
 		vie_file_player = ViEFilePlayerPtr(file_id);
 		if (!vie_file_player) {
-			WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+			WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
 				"%s(file_id: %d) - No such file player", __FUNCTION__,
 				file_id);
 			return -1;
 		}
 		int num_callbacks = vie_file_player->NumberOfRegisteredFrameCallbacks();
 		if (num_callbacks > 0) {
-			WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideo,
+			WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideo,
 				ViEId(engine_id_), "%s(file_id: %d) - %u registered "
 				"callbacks when destroying file player", __FUNCTION__,
 				file_id, num_callbacks);
@@ -574,7 +574,7 @@ int ViEInputManager::DestroyFilePlayer(int file_id) {
 }
 
 bool ViEInputManager::GetFreeFileId(int& free_file_id) {
-	WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, ViEId(engine_id_), "%s",
+	WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_), "%s",
 		__FUNCTION__);
 
 	for (int id = 0; id < kViEMaxFilePlayers; id++) {
@@ -582,7 +582,7 @@ bool ViEInputManager::GetFreeFileId(int& free_file_id) {
 			// We found a free capture device id.
 			free_file_id_[id] = false;
 			free_file_id = id + kViEFileIdBase;
-			WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+			WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
 				"%s: new id: %d", __FUNCTION__, free_file_id);
 			return true;
 		}
@@ -591,7 +591,7 @@ bool ViEInputManager::GetFreeFileId(int& free_file_id) {
 }
 
 void ViEInputManager::ReturnFileId(int file_id) {
-	WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+	WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
 		"%s(%d)", __FUNCTION__, file_id);
 
 	CriticalSectionScoped cs(map_cs_.get());

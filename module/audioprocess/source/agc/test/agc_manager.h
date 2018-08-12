@@ -14,7 +14,7 @@
 #include "cloopenwebrtc/modules/audio_processing/agc/agc_manager_direct.h"
 #include "cloopenwebrtc/system_wrappers/interface/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Agc;
 class AudioProcessing;

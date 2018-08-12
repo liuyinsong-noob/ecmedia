@@ -18,7 +18,7 @@
 #include "delay_peak_detector.h"
 #include "packet_buffer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(DecisionLogic, CreateAndDestroy) {
   int fs_hz = 8000;
@@ -55,4 +55,4 @@ TEST(DecisionLogic, CreateAndDestroy) {
 
 // TODO(hlundin): Write more tests.
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

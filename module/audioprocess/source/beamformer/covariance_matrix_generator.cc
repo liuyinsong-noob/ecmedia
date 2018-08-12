@@ -26,7 +26,7 @@ float BesselJ0(float x) {
 
 }  // namespace
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Calculates the boxcar-angular desired source distribution at a given
 // wavenumber, and stores it in |mat|.
@@ -151,4 +151,4 @@ void CovarianceMatrixGenerator::PhaseAlignmentMasks(int frequency_bin,
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

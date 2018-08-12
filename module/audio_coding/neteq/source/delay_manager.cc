@@ -20,7 +20,7 @@
 #include "module_common_types.h"
 #include "../system_wrappers/include/logging.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 DelayManager::DelayManager(int max_packets_in_buffer,
                            DelayPeakDetector* peak_detector)
@@ -422,4 +422,4 @@ int DelayManager::last_pack_cng_or_dtmf() const {
 void DelayManager::set_last_pack_cng_or_dtmf(int value) {
   last_pack_cng_or_dtmf_ = value;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

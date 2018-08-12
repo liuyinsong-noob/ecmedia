@@ -25,7 +25,7 @@ const unsigned int kDefaultMaxQp = 56;
 // Max qp for lowest spatial resolution when doing simulcast.
 const unsigned int kLowestResMaxQp = 45;
 
-uint32_t SumStreamTargetBitrate(int streams, const cloopenwebrtc::VideoCodec& codec) {
+uint32_t SumStreamTargetBitrate(int streams, const yuntongxunwebrtc::VideoCodec& codec) {
   uint32_t bitrate_sum = 0;
   for (int i = 0; i < streams; ++i) {
     bitrate_sum += codec.simulcastStream[i].targetBitrate;
@@ -33,7 +33,7 @@ uint32_t SumStreamTargetBitrate(int streams, const cloopenwebrtc::VideoCodec& co
   return bitrate_sum;
 }
 
-uint32_t SumStreamMaxBitrate(int streams, const cloopenwebrtc::VideoCodec& codec) {
+uint32_t SumStreamMaxBitrate(int streams, const yuntongxunwebrtc::VideoCodec& codec) {
   uint32_t bitrate_sum = 0;
   for (int i = 0; i < streams; ++i) {
     bitrate_sum += codec.simulcastStream[i].maxBitrate;
@@ -41,7 +41,7 @@ uint32_t SumStreamMaxBitrate(int streams, const cloopenwebrtc::VideoCodec& codec
   return bitrate_sum;
 }
 
-int NumberOfStreams(const cloopenwebrtc::VideoCodec& codec) {
+int NumberOfStreams(const yuntongxunwebrtc::VideoCodec& codec) {
   int streams =
       codec.numberOfSimulcastStreams < 1 ? 1 : codec.numberOfSimulcastStreams;
   uint32_t simulcast_max_bitrate = SumStreamMaxBitrate(streams, codec);
@@ -51,7 +51,7 @@ int NumberOfStreams(const cloopenwebrtc::VideoCodec& codec) {
   return streams;
 }
 
-bool ValidSimulcastResolutions(const cloopenwebrtc::VideoCodec& codec,
+bool ValidSimulcastResolutions(const yuntongxunwebrtc::VideoCodec& codec,
                                int num_streams) {
   if (codec.width != codec.simulcastStream[num_streams - 1].width ||
       codec.height != codec.simulcastStream[num_streams - 1].height) {
@@ -66,7 +66,7 @@ bool ValidSimulcastResolutions(const cloopenwebrtc::VideoCodec& codec,
   return true;
 }
 
-int VerifyCodec(const cloopenwebrtc::VideoCodec* inst) {
+int VerifyCodec(const yuntongxunwebrtc::VideoCodec* inst) {
   if (inst == NULL) {
     return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
   }
@@ -94,31 +94,31 @@ int VerifyCodec(const cloopenwebrtc::VideoCodec* inst) {
 // TL1 FrameDropper's max time to drop frames.
 const float kTl1MaxTimeToDropFrames = 20.0f;
 
-struct ScreenshareTemporalLayersFactory : cloopenwebrtc::TemporalLayers::Factory {
+struct ScreenshareTemporalLayersFactory : yuntongxunwebrtc::TemporalLayers::Factory {
   ScreenshareTemporalLayersFactory()
       : tl1_frame_dropper_(kTl1MaxTimeToDropFrames) {}
 
   virtual ~ScreenshareTemporalLayersFactory() {}
 
-  virtual cloopenwebrtc::TemporalLayers* Create(int num_temporal_layers,
+  virtual yuntongxunwebrtc::TemporalLayers* Create(int num_temporal_layers,
                                          uint8_t initial_tl0_pic_idx) const {
-    return new cloopenwebrtc::ScreenshareLayers(num_temporal_layers,
+    return new yuntongxunwebrtc::ScreenshareLayers(num_temporal_layers,
                                          rand(),
                                          &tl0_frame_dropper_,
                                          &tl1_frame_dropper_);
   }
 
-  mutable cloopenwebrtc::FrameDropper tl0_frame_dropper_;
-  mutable cloopenwebrtc::FrameDropper tl1_frame_dropper_;
+  mutable yuntongxunwebrtc::FrameDropper tl0_frame_dropper_;
+  mutable yuntongxunwebrtc::FrameDropper tl1_frame_dropper_;
 };
 
 }  // namespace
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 SimulcastEncoderAdapter::SimulcastEncoderAdapter(VideoEncoderFactory* factory)
     : factory_(factory), encoded_complete_callback_(NULL) {
-  memset(&codec_, 0, sizeof(cloopenwebrtc::VideoCodec));
+  memset(&codec_, 0, sizeof(yuntongxunwebrtc::VideoCodec));
 }
 
 SimulcastEncoderAdapter::~SimulcastEncoderAdapter() {
@@ -431,10 +431,10 @@ uint32_t SimulcastEncoderAdapter::GetStreamBitrate(int stream_idx,
 }
 
 void SimulcastEncoderAdapter::PopulateStreamCodec(
-    const cloopenwebrtc::VideoCodec* inst,
+    const yuntongxunwebrtc::VideoCodec* inst,
     int stream_index,
     bool highest_resolution_stream,
-    cloopenwebrtc::VideoCodec* stream_codec,
+    yuntongxunwebrtc::VideoCodec* stream_codec,
     bool* send_stream) {
   *stream_codec = *inst;
 
@@ -457,7 +457,7 @@ void SimulcastEncoderAdapter::PopulateStreamCodec(
     // kComplexityHigher, which maps to cpu_used = -4.
     int pixels_per_frame = stream_codec->width * stream_codec->height;
     if (pixels_per_frame < 352 * 288) {
-      stream_codec->codecSpecific.VP8.complexity = cloopenwebrtc::kComplexityHigher;
+      stream_codec->codecSpecific.VP8.complexity = yuntongxunwebrtc::kComplexityHigher;
     }
     // Turn off denoising for all streams but the highest resolution.
     stream_codec->codecSpecific.VP8.denoisingOn = false;

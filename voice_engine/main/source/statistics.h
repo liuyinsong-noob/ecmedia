@@ -16,7 +16,7 @@
 #include "voe_errors.h"
 #include "voice_engine_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class CriticalSectionWrapper;
 
 namespace voe {

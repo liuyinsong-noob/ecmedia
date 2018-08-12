@@ -40,7 +40,7 @@
     bool                                _captureInitialized;
 
     // WebRTC Custom classes
-    cloopenwebrtc::videocapturemodule::VideoCaptureMacQTKit* _owner;
+    yuntongxunwebrtc::videocapturemodule::VideoCaptureMacQTKit* _owner;
     VideoCaptureRecursiveLock*            _rLock;
 
     // QTKit variables
@@ -82,7 +82,7 @@
  ***************************************************************************/
 
 
-- (NSNumber*)registerOwner:(cloopenwebrtc::videocapturemodule::VideoCaptureMacQTKit*)owner;
+- (NSNumber*)registerOwner:(yuntongxunwebrtc::videocapturemodule::VideoCaptureMacQTKit*)owner;
 - (NSNumber*)setCaptureDeviceById:(char*)uniqueId;
 - (NSNumber*)setCaptureHeight:(int)height AndWidth:(int)width AndFrameRate:(int)frameRate;
 - (NSNumber*)startCapture;

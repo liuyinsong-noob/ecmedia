@@ -26,7 +26,7 @@
 #include "../module/rtp_rtcp/source/rtp_sender.h"
 #include "../module/rtp_rtcp/include/rtp_receiver.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 	class SSRCDatabase;
 
 class ModuleRtpRtcpImpl : public RtpRtcp, public RTCPReceiver::ModuleRtpRtcp {
@@ -114,7 +114,7 @@ class ModuleRtpRtcpImpl : public RtpRtcp, public RTCPReceiver::ModuleRtpRtcp {
   void SetRtxSendPayloadType(int payload_type,
                              int associated_payload_type) override;
 
-  cloopenwebrtc::Optional<uint32_t> FlexfecSsrc() const override;
+  yuntongxunwebrtc::Optional<uint32_t> FlexfecSsrc() const override;
 
   // Sends kRtcpByeCode when going from true to false.
   int32_t SetSendingStatus(bool sending) override;
@@ -260,7 +260,7 @@ class ModuleRtpRtcpImpl : public RtpRtcp, public RTCPReceiver::ModuleRtpRtcp {
   RtcpStatisticsCallback* GetRtcpStatisticsCallback() override;
 
     
-  void RegisterRtcpPacketTypeCounterObserverCallback(cloopenwebrtc::RtcpPacketTypeCounterObserver *observer) override;
+  void RegisterRtcpPacketTypeCounterObserverCallback(yuntongxunwebrtc::RtcpPacketTypeCounterObserver *observer) override;
   RtcpPacketTypeCounterObserver* GetRtcpPacketTypeCounterObserver() override;
   bool SendFeedbackPacket(const rtcp::TransportFeedback& packet) override;
   // (APP) Application specific data.
@@ -398,7 +398,7 @@ public:
   PacketLossStats receive_loss_stats_;
 
   // The processed RTT from RtcpRttStats.
-  cloopenwebrtc::CriticalSection critical_section_rtt_;
+  yuntongxunwebrtc::CriticalSection critical_section_rtt_;
   int64_t rtt_ms_;
 
   bool isSendingTmmbr;
@@ -412,6 +412,6 @@ public:
     int64_t lastSendTmmbrTime_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_RTCP_IMPL_H_

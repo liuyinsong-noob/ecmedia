@@ -14,7 +14,7 @@
 #include "../base/constructormagic.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // A vector in the 2D integer space. E.g. can be used to represent screen DPI.
 class DesktopVector {
@@ -139,7 +139,7 @@ class DesktopRect {
   int32_t bottom_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_DESKTOP_GEOMETRY_H_
 

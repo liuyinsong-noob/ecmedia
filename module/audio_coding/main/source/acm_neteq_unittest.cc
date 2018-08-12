@@ -10,6 +10,6 @@
 
 // This file contains unit tests for ACM's NetEQ wrapper (class ACMNetEQ).
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {}  // namespace

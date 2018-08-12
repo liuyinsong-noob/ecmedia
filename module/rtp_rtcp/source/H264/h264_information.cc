@@ -26,7 +26,7 @@
 
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 H264Information::H264Information(const bool SVC)
     : _SVC(SVC)
 

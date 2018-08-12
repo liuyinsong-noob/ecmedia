@@ -13,7 +13,7 @@
 
 #include "acm_generic_codec.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -37,6 +37,6 @@ class ACMDTMFPlayout : public ACMGenericCodec {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_ACM_DTMF_PLAYOUT_H_

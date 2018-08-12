@@ -23,7 +23,7 @@
 #include "fileutils.h"
 #include "gtest_disable.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 struct TestParameters {
   int frame_size;
@@ -84,7 +84,7 @@ class NetEqStereoTest : public ::testing::TestWithParam<TestParameters> {
 
   virtual void SetUp() {
     const std::string file_name =
-        cloopenwebrtc::test::ResourcePath("audio_coding/testfile32kHz", "pcm");
+        yuntongxunwebrtc::test::ResourcePath("audio_coding/testfile32kHz", "pcm");
     input_file_.reset(new test::InputAudioFile(file_name));
     NetEqDecoder mono_decoder;
     NetEqDecoder multi_decoder;
@@ -418,4 +418,4 @@ INSTANTIATE_TEST_CASE_P(MultiChannel,
                         NetEqStereoTestLosses,
                         ::testing::ValuesIn(GetTestParameters()));
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -15,7 +15,7 @@
 #include "audio_coding_module_typedefs.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class ACMDTMFDetection {
  public:
@@ -38,6 +38,6 @@ class ACMDTMFDetection {
   bool _init;
 };
 
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_SOURCE_ACM_DTMF_DETECTION_H_

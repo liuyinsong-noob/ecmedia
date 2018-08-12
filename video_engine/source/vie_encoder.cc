@@ -44,7 +44,7 @@
 #include "./video/encoder_rtcp_feedback.h"
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Margin on when we pause the encoder when the pacing buffer overflows relative
 // to the configured buffer delay.
@@ -160,8 +160,8 @@ ViEEncoder::ViEEncoder(int32_t engine_id,
   : engine_id_(engine_id),
     channel_id_(channel_id),
     number_of_cores_(number_of_cores),
-    vcm_(*cloopenwebrtc::VideoCodingModule::Create()),
-    vpm_(*cloopenwebrtc::VideoProcessingModule::Create(ViEModuleId(engine_id,
+    vcm_(*yuntongxunwebrtc::VideoCodingModule::Create()),
+    vpm_(*yuntongxunwebrtc::VideoProcessingModule::Create(ViEModuleId(engine_id,
                                                             channel_id))),
     callback_cs_(CriticalSectionWrapper::CreateCriticalSection()),
     data_cs_(CriticalSectionWrapper::CreateCriticalSection()),
@@ -267,11 +267,11 @@ bool ViEEncoder::Init() {
   qm_callback_->SetSendStatsCallback(send_statistics_proxy_.get());
 
 #ifdef VIDEOCODEC_VP8
-  VideoCodecType codec_type = cloopenwebrtc::kVideoCodecVP8;
+  VideoCodecType codec_type = yuntongxunwebrtc::kVideoCodecVP8;
 #elif VIDEOCODEC_H264
-    VideoCodecType codec_type = cloopenwebrtc::kVideoCodecH264;
+    VideoCodecType codec_type = yuntongxunwebrtc::kVideoCodecH264;
 #else
-  VideoCodecType codec_type = cloopenwebrtc::kVideoCodecI420;
+  VideoCodecType codec_type = yuntongxunwebrtc::kVideoCodecI420;
 #endif
 
   VideoCodec video_codec;
@@ -338,7 +338,7 @@ void ViEEncoder::UpdateHistograms() {
   if (elapsed_sec < metrics::kMinRunTimeInSeconds) {
     return;
   }
-  cloopenwebrtc::VCMFrameCount frames;
+  yuntongxunwebrtc::VCMFrameCount frames;
   if (vcm_.SentFrameCount(frames) != VCM_OK) {
     return;
   }
@@ -391,7 +391,7 @@ int32_t ViEEncoder::GetCodec(uint8_t list_index, VideoCodec* video_codec) {
   return 0;
 }
 
-int32_t ViEEncoder::RegisterExternalEncoder(cloopenwebrtc::VideoEncoder* encoder,
+int32_t ViEEncoder::RegisterExternalEncoder(yuntongxunwebrtc::VideoEncoder* encoder,
                                             uint8_t pl_type,
                                             bool internal_source) {
   if (encoder == NULL)
@@ -405,7 +405,7 @@ int32_t ViEEncoder::RegisterExternalEncoder(cloopenwebrtc::VideoEncoder* encoder
 }
 
 int32_t ViEEncoder::DeRegisterExternalEncoder(uint8_t pl_type) {
-  cloopenwebrtc::VideoCodec current_send_codec;
+  yuntongxunwebrtc::VideoCodec current_send_codec;
   if (vcm_.SendCodec(&current_send_codec) == VCM_OK) {
     uint32_t current_bitrate_bps = 0;
     if (vcm_.Bitrate(&current_bitrate_bps) != 0) {
@@ -443,7 +443,7 @@ int32_t ViEEncoder::DeRegisterExternalEncoder(uint8_t pl_type) {
   return 0;
 }
 
-int32_t ViEEncoder::SetEncoder(const cloopenwebrtc::VideoCodec& video_codec) {
+int32_t ViEEncoder::SetEncoder(const yuntongxunwebrtc::VideoCodec& video_codec) {
 
 
 	if (video_codec.codecType == kVideoCodecRED ||
@@ -845,9 +845,9 @@ void ViEEncoder::DeliverFrame(int id,
   }
 
 #ifdef VIDEOCODEC_VP8
-  if (vcm_.SendCodec() == cloopenwebrtc::kVideoCodecVP8) {
-    cloopenwebrtc::CodecSpecificInfo codec_specific_info;
-    codec_specific_info.codecType = cloopenwebrtc::kVideoCodecVP8;
+  if (vcm_.SendCodec() == yuntongxunwebrtc::kVideoCodecVP8) {
+    yuntongxunwebrtc::CodecSpecificInfo codec_specific_info;
+    codec_specific_info.codecType = yuntongxunwebrtc::kVideoCodecVP8;
     {
       CriticalSectionScoped cs(data_cs_.get());
       codec_specific_info.codecSpecific.VP8.hasReceivedRPSI =
@@ -868,9 +868,9 @@ void ViEEncoder::DeliverFrame(int id,
   }
 #endif
 #ifdef VIDEOCODEC_H264
-    if (vcm_.SendCodec() == cloopenwebrtc::kVideoCodecH264) {
-        cloopenwebrtc::CodecSpecificInfo codec_specific_info;
-        codec_specific_info.codecType = cloopenwebrtc::kVideoCodecH264;
+    if (vcm_.SendCodec() == yuntongxunwebrtc::kVideoCodecH264) {
+        yuntongxunwebrtc::CodecSpecificInfo codec_specific_info;
+        codec_specific_info.codecType = yuntongxunwebrtc::kVideoCodecH264;
 
         vcm_.AddVideoFrame(*decimated_frame, vpm_.ContentMetrics(),
                            &codec_specific_info);
@@ -889,7 +889,7 @@ void ViEEncoder::DelayChanged(int id, int frame_delay) {
 int ViEEncoder::GetPreferedFrameSettings(int* width,
                                          int* height,
                                          int* frame_rate) {
-  cloopenwebrtc::VideoCodec video_codec;
+  yuntongxunwebrtc::VideoCodec video_codec;
   memset(&video_codec, 0, sizeof(video_codec));
   if (vcm_.SendCodec(&video_codec) != VCM_OK) {
     return -1;
@@ -907,7 +907,7 @@ int ViEEncoder::SendKeyFrame() {
 
 int32_t ViEEncoder::SendCodecStatistics(
     uint32_t* num_key_frames, uint32_t* num_delta_frames) {
-  cloopenwebrtc::VCMFrameCount sent_frames;
+  yuntongxunwebrtc::VCMFrameCount sent_frames;
   if (vcm_.SentFrameCount(sent_frames) != VCM_OK) {
     return -1;
   }
@@ -951,17 +951,17 @@ int32_t ViEEncoder::UpdateProtectionMethod(bool enable_nack) {
 
   // Set Video Protection for VCM.
   if (fec_enabled && nack_enabled_) {
-    vcm_.SetVideoProtection(cloopenwebrtc::kProtectionNackFEC, true);
+    vcm_.SetVideoProtection(yuntongxunwebrtc::kProtectionNackFEC, true);
   } else {
-    vcm_.SetVideoProtection(cloopenwebrtc::kProtectionFEC, fec_enabled_);
-    vcm_.SetVideoProtection(cloopenwebrtc::kProtectionNackSender, nack_enabled_);
-    vcm_.SetVideoProtection(cloopenwebrtc::kProtectionNackFEC, false);
+    vcm_.SetVideoProtection(yuntongxunwebrtc::kProtectionFEC, fec_enabled_);
+    vcm_.SetVideoProtection(yuntongxunwebrtc::kProtectionNackSender, nack_enabled_);
+    vcm_.SetVideoProtection(yuntongxunwebrtc::kProtectionNackFEC, false);
   }
 
   if (fec_enabled_ || nack_enabled_) {
     vcm_.RegisterProtectionCallback(this);
     // The send codec must be registered to set correct MTU.
-    cloopenwebrtc::VideoCodec codec;
+    yuntongxunwebrtc::VideoCodec codec;
     if (vcm_.SendCodec(&codec) == 0) {
       uint16_t max_pay_load = default_rtp_rtcp_->MaxRtpPacketSize();
       uint32_t current_bitrate_bps = 0;
@@ -1002,7 +1002,7 @@ void ViEEncoder::SetSenderBufferingMode(int target_delay_ms) {
 int32_t ViEEncoder::SendData(
     const uint8_t payload_type,
     const EncodedImage& encoded_image,
-    const cloopenwebrtc::RTPFragmentationHeader& fragmentation_header,
+    const yuntongxunwebrtc::RTPFragmentationHeader& fragmentation_header,
     const RTPVideoHeader* rtp_video_hdr) {
   {
 	  CriticalSectionScoped cs(packet_observer_cs_.get());
@@ -1075,7 +1075,7 @@ int32_t ViEEncoder::RegisterCodecObserver(ViEEncoderObserver* observer) {
 
 int32_t ViEEncoder::RegisterCaptureObserver(void* capture, int capture_id){
     CriticalSectionScoped cs(callback_cs_.get());
-    capture_ = (cloopenwebrtc::ViECapture*)capture;
+    capture_ = (yuntongxunwebrtc::ViECapture*)capture;
     capture_id_ = capture_id;
     return 0;
 }
@@ -1420,4 +1420,4 @@ void QMVideoSettingsCallback::InitQMSetting(const uint32_t frame_rate,
 	}
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

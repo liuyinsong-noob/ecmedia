@@ -10,7 +10,7 @@
 
 #include "post_decode_vad.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 PostDecodeVad::~PostDecodeVad() {
   if (vad_instance_)
@@ -84,4 +84,4 @@ void PostDecodeVad::Update(int16_t* signal, int length,
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

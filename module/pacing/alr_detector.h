@@ -16,7 +16,7 @@
 #include "../module/pacing/paced_sender.h"
 #include "../typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Application limited region detector is a class that utilizes signals of
 // elapsed time and bytes sent to estimate whether network traffic is
@@ -37,16 +37,16 @@ class AlrDetector {
 
   // Returns time in milliseconds when the current application-limited region
   // started or empty result if the sender is currently not application-limited.
-  cloopenwebrtc::Optional<int64_t> GetApplicationLimitedRegionStartTime() const;
+  yuntongxunwebrtc::Optional<int64_t> GetApplicationLimitedRegionStartTime() const;
 
  private:
   RateStatistics rate_;
   int estimated_bitrate_bps_ = 0;
 
   // Non-empty in ALR state.
-  cloopenwebrtc::Optional<int64_t> alr_started_time_ms_;
+  yuntongxunwebrtc::Optional<int64_t> alr_started_time_ms_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_PACING_ALR_DETECTOR_H_

@@ -17,7 +17,7 @@
 #include "../module/common_types.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 
 	static const std::string SPLIT_TOKEN = "\t";
@@ -79,4 +79,4 @@ LogMessageEx::~LogMessageEx() {
 	strLast_ = strsub;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

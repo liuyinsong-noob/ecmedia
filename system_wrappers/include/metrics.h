@@ -86,11 +86,11 @@
 
 #define RTC_HISTOGRAM_COUNTS(name, sample, min, max, bucket_count) \
   RTC_HISTOGRAM_COMMON_BLOCK(name, sample, \
-      cloopenwebrtc::metrics::HistogramFactoryGetCounts(name, min, max, bucket_count))
+      yuntongxunwebrtc::metrics::HistogramFactoryGetCounts(name, min, max, bucket_count))
 
 #define RTC_HISTOGRAM_COUNTS_LINEAR(name, sample, min, max, bucket_count)      \
   RTC_HISTOGRAM_COMMON_BLOCK(name, sample,                                     \
-                             cloopenwebrtc::metrics::HistogramFactoryGetCountsLinear( \
+                             yuntongxunwebrtc::metrics::HistogramFactoryGetCountsLinear( \
                                  name, min, max, bucket_count))
 
 // Deprecated.
@@ -100,7 +100,7 @@
 
 #define RTC_HISTOGRAM_COUNTS_SPARSE(name, sample, min, max, bucket_count) \
   RTC_HISTOGRAM_COMMON_BLOCK_SLOW(name, sample, \
-      cloopenwebrtc::metrics::HistogramFactoryGetCounts(name, min, max, bucket_count))
+      yuntongxunwebrtc::metrics::HistogramFactoryGetCounts(name, min, max, bucket_count))
 
 // Histogram for percentage (evenly spaced buckets).
 #define RTC_HISTOGRAM_PERCENTAGE(name, sample) \
@@ -114,31 +114,31 @@
 // |boundary| should be above the max enumerator sample.
 #define RTC_HISTOGRAM_ENUMERATION(name, sample, boundary) \
   RTC_HISTOGRAM_COMMON_BLOCK(name, sample, \
-      cloopenwebrtc::metrics::HistogramFactoryGetEnumeration(name, boundary))
+      yuntongxunwebrtc::metrics::HistogramFactoryGetEnumeration(name, boundary))
 
 // The name of the histogram should not vary.
 // TODO(asapersson): Consider changing string to const char*.
 #define RTC_HISTOGRAM_COMMON_BLOCK(constant_name, sample,                  \
                                    factory_get_invocation)                 \
   do {                                                                     \
-    static cloopenwebrtc::metrics::Histogram* atomic_histogram_pointer = nullptr; \
-    cloopenwebrtc::metrics::Histogram* histogram_pointer =                        \
-        cloopenwebrtc::AtomicOps::AcquireLoadPtr(&atomic_histogram_pointer);         \
+    static yuntongxunwebrtc::metrics::Histogram* atomic_histogram_pointer = nullptr; \
+    yuntongxunwebrtc::metrics::Histogram* histogram_pointer =                        \
+        yuntongxunwebrtc::AtomicOps::AcquireLoadPtr(&atomic_histogram_pointer);         \
     if (!histogram_pointer) {                                              \
       histogram_pointer = factory_get_invocation;                          \
-      cloopenwebrtc::metrics::Histogram* prev_pointer =                           \
-          cloopenwebrtc::AtomicOps::CompareAndSwapPtr(                               \
+      yuntongxunwebrtc::metrics::Histogram* prev_pointer =                           \
+          yuntongxunwebrtc::AtomicOps::CompareAndSwapPtr(                               \
               &atomic_histogram_pointer,                                   \
-              static_cast<cloopenwebrtc::metrics::Histogram*>(nullptr),           \
+              static_cast<yuntongxunwebrtc::metrics::Histogram*>(nullptr),           \
               histogram_pointer);                                          \
       DCHECK(prev_pointer == nullptr ||                                \
                  prev_pointer == histogram_pointer);                       \
     }                                                                      \
     if (histogram_pointer) {                                               \
       DCHECK_EQ(constant_name,                                         \
-                    cloopenwebrtc::metrics::GetHistogramName(histogram_pointer))  \
+                    yuntongxunwebrtc::metrics::GetHistogramName(histogram_pointer))  \
           << "The name should not vary.";                                  \
-      cloopenwebrtc::metrics::HistogramAdd(histogram_pointer, sample);            \
+      yuntongxunwebrtc::metrics::HistogramAdd(histogram_pointer, sample);            \
     }                                                                      \
   } while (0)
 
@@ -147,9 +147,9 @@
 // May be used for histograms with infrequent updates.`
 #define RTC_HISTOGRAM_COMMON_BLOCK_SLOW(name, sample, factory_get_invocation) \
   do {                                                                        \
-    cloopenwebrtc::metrics::Histogram* histogram_pointer = factory_get_invocation;   \
+    yuntongxunwebrtc::metrics::Histogram* histogram_pointer = factory_get_invocation;   \
     if (histogram_pointer) {                                                  \
-      cloopenwebrtc::metrics::HistogramAdd(histogram_pointer, sample);               \
+      yuntongxunwebrtc::metrics::HistogramAdd(histogram_pointer, sample);               \
     }                                                                         \
   } while (0)
 
@@ -206,7 +206,7 @@
   } while (0)
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace metrics {
 
 // Time that should have elapsed for stats that are gathered once per call.
@@ -239,6 +239,6 @@ const std::string& GetHistogramName(Histogram* histogram_pointer);
 void HistogramAdd(Histogram* histogram_pointer, int sample);
 
 }  // namespace metrics
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_INCLUDE_METRICS_H_

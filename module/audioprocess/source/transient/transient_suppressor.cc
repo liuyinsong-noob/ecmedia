@@ -29,7 +29,7 @@ extern "C" {
 #include "../system_wrappers/include/scoped_ptr.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const float kMeanIIRCoefficient = 0.5f;
 static const float kVoiceThreshold = 0.02f;
@@ -421,4 +421,4 @@ void TransientSuppressor::SoftRestoration(float* spectral_mean) {
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

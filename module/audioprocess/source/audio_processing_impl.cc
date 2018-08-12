@@ -52,7 +52,7 @@
     }                        \
   } while (0)
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Throughout webrtc, it's assumed that success is represented by zero.
 static_assert(AudioProcessing::kNoError == 0, "kNoError must be zero");
@@ -1281,4 +1281,4 @@ bool AudioProcessingImpl::interleave_needed(bool is_data_processed) const {
 	return (fwd_out_format_.num_channels() != fwd_in_format_.num_channels() || is_data_processed);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

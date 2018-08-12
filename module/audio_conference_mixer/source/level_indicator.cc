@@ -10,7 +10,7 @@
 
 #include "level_indicator.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 // Array for adding smothing to level changes (ad-hoc).
 const uint32_t perm[] =
     {0,1,2,3,4,4,5,5,5,5,6,6,6,6,6,7,7,7,7,8,8,8,9,9,9,9,9,9,9,9,9,9,9};
@@ -73,4 +73,4 @@ int32_t LevelIndicator::GetLevel()
     return _currentLevel;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

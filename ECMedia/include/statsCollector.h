@@ -18,7 +18,7 @@
 
 #include "voe_base.h"
 
-using namespace cloopenwebrtc;
+using namespace yuntongxunwebrtc;
 class StatsCollector{
 public:
 	StatsCollector();
@@ -132,7 +132,7 @@ private:
 	FileWrapper *trace_file_;
 	EventWrapper *updateEvent_;
 
-	cloopenwebrtc::Clock*		clock_;
+	yuntongxunwebrtc::Clock*		clock_;
 	uint32_t	updateIntervalMs_;
 	int64_t		last_time_update_fullStats_;
 	int64_t		last_time_update_simplifiedStats_;
@@ -156,9 +156,9 @@ public:
 	static const int kFullStatsUpdateIntervalMs;
 	static const int kSimplifiedStatsUpdateIntervalMs;
 #ifdef VIDEO_ENABLED
-	cloopenwebrtc::VideoEngine *m_vie;
+	yuntongxunwebrtc::VideoEngine *m_vie;
 #endif
-	cloopenwebrtc::VoiceEngine *m_voe;
+	yuntongxunwebrtc::VoiceEngine *m_voe;
 	std::list<void*> pStatsPBList;
 };
 

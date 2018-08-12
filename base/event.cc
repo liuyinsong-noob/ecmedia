@@ -22,7 +22,7 @@
 
 #include "../base/checks.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 #if defined(WEBRTC_WIN)
 
@@ -133,4 +133,4 @@ bool Event::Wait(int milliseconds) {
 
 #endif
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -33,7 +33,7 @@
 //#include "file_wrapper.h"
 #include "../system_wrappers/include/stats_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Clock;
 class CriticalSectionWrapper;
@@ -90,14 +90,14 @@ class ReceiveStatisticsProxy : public Module,
   virtual void RtcpPacketTypesCounterUpdated(uint32_t ssrc,
 											 const RtcpPacketTypeCounter& packet_counter) OVERRIDE;
   // Overrides RtcpStatisticsCallback.
-  virtual void StatisticsUpdated(const cloopenwebrtc::RtcpStatistics& statistics,
+  virtual void StatisticsUpdated(const yuntongxunwebrtc::RtcpStatistics& statistics,
                                  uint32_t ssrc) OVERRIDE;
   virtual void CNameChanged(const char* cname, uint32_t ssrc) OVERRIDE;
 
 
 
   // Overrides StreamDataCountersCallback.
-  virtual void DataCountersUpdated(const cloopenwebrtc::StreamDataCounters& counters,
+  virtual void DataCountersUpdated(const yuntongxunwebrtc::StreamDataCounters& counters,
                                    uint32_t ssrc) OVERRIDE;
 #ifdef VIDEO_ENABLED
   //Overrides I420FrameCallback

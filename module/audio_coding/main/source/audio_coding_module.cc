@@ -16,7 +16,7 @@
 #include "../system_wrappers/include/clock.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Create module
 AudioCodingModule* AudioCodingModule::Create(int id) {
@@ -86,7 +86,7 @@ bool AudioCodingModule::IsCodecValid(const CodecInst& codec) {
   int codec_number = acm2::ACMCodecDB::CodecNumber(codec, &mirror_id);
 
   if (codec_number < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, -1,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, -1,
                  "Invalid codec setting");
     return false;
   } else {
@@ -98,4 +98,4 @@ AudioCoding* AudioCoding::Create(const Config& config) {
   return new AudioCodingImpl(config);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

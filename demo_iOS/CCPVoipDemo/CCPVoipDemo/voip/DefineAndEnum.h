@@ -16,7 +16,7 @@
 
 
 //REST服务器
-#define VOIP_SERVICEIP      @"app.cloopen.com"
+#define VOIP_SERVICEIP      @"app.yuntongxun.com"
 #define VOIP_SERVICEPORT    @"8883"
 
 #define CONFIG_FILE_NAME    @"config.plist"

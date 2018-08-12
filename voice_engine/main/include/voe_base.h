@@ -38,7 +38,7 @@
 
 //#include "StunMessageCallBack.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 typedef int (*SoundCardOn)(int deviceType);//0, playout; 1, record
 typedef int (*onReceivingDtmf)(int channelid, char dtmfch);
 typedef int (*onMediaPacketTimeout)(int channelid);

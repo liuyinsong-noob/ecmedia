@@ -11,7 +11,7 @@
 #ifndef WEBRTC_MODULES_AUDIO_CONFERENCE_MIXER_SOURCE_AUDIO_FRAME_MANIPULATOR_H_
 #define WEBRTC_MODULES_AUDIO_CONFERENCE_MIXER_SOURCE_AUDIO_FRAME_MANIPULATOR_H_
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class AudioFrame;
 
 // Updates the audioFrame's energy (based on its samples).
@@ -21,6 +21,6 @@ void CalculateEnergy(AudioFrame& audioFrame);
 void RampIn(AudioFrame& audioFrame);
 void RampOut(AudioFrame& audioFrame);
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_MODULES_AUDIO_CONFERENCE_MIXER_SOURCE_AUDIO_FRAME_MANIPULATOR_H_

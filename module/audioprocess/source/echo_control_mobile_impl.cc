@@ -18,7 +18,7 @@
 #include "../system_wrappers/include/critical_section_wrapper.h"
 #include "../system_wrappers/include/logging.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 typedef void Handle;
 
@@ -298,4 +298,4 @@ int EchoControlMobileImpl::GetHandleError(void* handle) const {
   assert(handle != NULL);
   return MapError(WebRtcAecm_get_error_code(static_cast<Handle*>(handle)));
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

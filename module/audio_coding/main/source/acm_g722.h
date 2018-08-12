@@ -17,7 +17,7 @@
 typedef struct WebRtcG722EncInst G722EncInst;
 typedef struct WebRtcG722DecInst G722DecInst;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -59,6 +59,6 @@ class ACMG722 : public ACMGenericCodec {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_ACM_G722_H_

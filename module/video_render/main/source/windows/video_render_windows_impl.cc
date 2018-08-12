@@ -22,7 +22,7 @@
 
 #include <tchar.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VideoRenderWindowsImpl::VideoRenderWindowsImpl(const int32_t id,
     const VideoRenderType videoRenderType, void* window, const bool fullscreen)

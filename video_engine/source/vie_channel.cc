@@ -52,7 +52,7 @@
 #define snprintf _snprintf
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 #ifdef WIN32
 static const ResolutionInst g_resolution_table[] = {
@@ -1416,7 +1416,7 @@ void ViEChannel::RegisterReceiveChannelRtcpStatisticsCallback(
   rtp_rtcp_->RegisterRtcpStatisticsCallback(callback);
 }
 
-void ViEChannel::RegisterReceiveChannelRtcpPacketTypeCounterObserverCallback(cloopenwebrtc::RtcpPacketTypeCounterObserver *observer)
+void ViEChannel::RegisterReceiveChannelRtcpPacketTypeCounterObserverCallback(yuntongxunwebrtc::RtcpPacketTypeCounterObserver *observer)
     {
         rtp_rtcp_->RegisterRtcpPacketTypeCounterObserverCallback(observer);
     }
@@ -2510,7 +2510,7 @@ void  ViEChannel::IncomingRTPPacket(const int8_t* rtp_packet,
 	/*uint16_t*/ seq_num = rtp_pp[2] << 8 | rtp_pp[3];
 	uint16_t transport_seq_num = rtp_pp[17] << 8 | rtp_pp[18];
 	
-       vie_receiver_.ReceivedRTPPacket(rtp_packet, rtp_packet_length,cloopenwebrtc::PacketTime());
+       vie_receiver_.ReceivedRTPPacket(rtp_packet, rtp_packet_length,yuntongxunwebrtc::PacketTime());
 }
 
 void  ViEChannel::IncomingRTCPPacket(const int8_t* rtcp_packet,
@@ -3384,7 +3384,7 @@ int32_t ViEChannel::SetKeepAliveStatus(
                                              const bool enable, const int8_t unknownPayloadType,
                                              const uint16_t deltaTransmitTimeMS)
 {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, ViEId(engine_id_, channel_id_),
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_, channel_id_),
                  "%s", __FUNCTION__);
     if (default_rtp_rtcp_ == nullptr)
     {
@@ -3392,14 +3392,14 @@ int32_t ViEChannel::SetKeepAliveStatus(
     }
     if (enable && default_rtp_rtcp_->RTPKeepalive())
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
                      ViEId(engine_id_, channel_id_),
                      "%s: RTP keepalive already enabled", __FUNCTION__);
         return -1;
     }
     else if (!enable && !default_rtp_rtcp_->RTPKeepalive())
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
                      ViEId(engine_id_, channel_id_),
                      "%s: RTP keepalive already disabled", __FUNCTION__);
         return -1;
@@ -3408,7 +3408,7 @@ int32_t ViEChannel::SetKeepAliveStatus(
     if (default_rtp_rtcp_->SetRTPKeepaliveStatus(enable, unknownPayloadType,
                                          deltaTransmitTimeMS) != 0)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
                      ViEId(engine_id_, channel_id_),
                      "%s: Could not set RTP keepalive status %d", __FUNCTION__,
                      enable);
@@ -3428,7 +3428,7 @@ int32_t ViEChannel::SetKeepAliveStatus(
 //         if (default_rtp_rtcp_->SetSendingStatus(true) != 0)
 //         {
 // 			default_rtp_rtcp_->SetRTPKeepaliveStatus(false, 0, 0);
-//             WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+//             WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
 //                          ViEId(engine_id_, channel_id_),
 //                          "%s: Could not start sending", __FUNCTION__);
 //             return -1;
@@ -3440,7 +3440,7 @@ int32_t ViEChannel::SetKeepAliveStatus(
 		default_rtp_rtcp_->ResetSendDataCountersRTP();
         if (default_rtp_rtcp_->SetSendingStatus(false) != 0)
         {
-            WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
                          ViEId(engine_id_, channel_id_),
                          "%s: Could not stop sending", __FUNCTION__);
             return -1;
@@ -3457,18 +3457,18 @@ int32_t ViEChannel::GetKeepAliveStatus(
                                              bool& enabled, int8_t& unknownPayloadType,
                                              uint16_t& deltaTransmitTimeMs)
 {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, ViEId(engine_id_, channel_id_),
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_, channel_id_),
                  "%s", __FUNCTION__);
     if (rtp_rtcp_->RTPKeepaliveStatus(&enabled, &unknownPayloadType,
                                       &deltaTransmitTimeMs) != 0)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
                      ViEId(engine_id_, channel_id_),
                      "%s: Could not get RTP keepalive status", __FUNCTION__);
         return -1;
     }
     WEBRTC_TRACE(
-                 cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, ViEId(engine_id_, channel_id_),
+                 yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_, channel_id_),
                  "%s: enabled = %d, unknownPayloadType = %d, deltaTransmitTimeMs = %ul",
                  __FUNCTION__, enabled, (int32_t) unknownPayloadType,
                  deltaTransmitTimeMs);

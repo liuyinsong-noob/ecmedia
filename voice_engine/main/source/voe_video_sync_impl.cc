@@ -16,7 +16,7 @@
 #include "voe_errors.h"
 #include "voice_engine_impl.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VoEVideoSync* VoEVideoSync::GetInterface(VoiceEngine* voiceEngine)
 {
@@ -250,4 +250,4 @@ int VoEVideoSyncImpl::GetLeastRequiredDelayMs(int channel) const {
 
 #endif  // #ifdef WEBRTC_VOICE_ENGINE_VIDEO_SYNC_API
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

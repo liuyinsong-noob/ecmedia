@@ -37,7 +37,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace safe_cmp {
 
 namespace safe_cmp_impl {
@@ -232,6 +232,6 @@ SAFECMP_MAKE_FUN(Ge)
 #undef SAFECMP_MAKE_FUN
 
 }  // namespace safe_cmp
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_SAFE_COMPARE_H_

@@ -8,8 +8,8 @@
 功能说明：网络电话、落地电话、点对点视频、实时对讲、语音群聊、即时消息、营销外呼、语音验证码
 
 ====================联系我们====================
-云通讯平台官网：http://www.cloopen.com/
+云通讯平台官网：http://www.yuntongxun.com/
 
-技术支持：support@cloopen.com/   
+技术支持：support@yuntongxun.com/   
 
 QQ群：163106824

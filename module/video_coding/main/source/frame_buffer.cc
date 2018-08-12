@@ -16,7 +16,7 @@
 #include "packet.h"
 #include "../system_wrappers/include/logging.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VCMFrameBuffer::VCMFrameBuffer()
   :
@@ -39,7 +39,7 @@ _latestPacketTimeMs(rhs._latestPacketTimeMs) {
     _sessionInfo.UpdateDataPointers(rhs._buffer, _buffer);
 }
 
-cloopenwebrtc::FrameType
+yuntongxunwebrtc::FrameType
 VCMFrameBuffer::FrameType() const {
     return _sessionInfo.FrameType();
 }

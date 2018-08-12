@@ -12,7 +12,7 @@
 
 #include "signal_processing_library.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 Accelerate::ReturnCodes Accelerate::Process(
     const int16_t* input,
@@ -85,4 +85,4 @@ Accelerate* AccelerateFactory::Create(
   return new Accelerate(sample_rate_hz, num_channels, background_noise);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

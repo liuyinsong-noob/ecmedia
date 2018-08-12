@@ -10,7 +10,7 @@
 
 #include "../system_wrappers/source/rw_lock_winxp_win.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 class ScopedLock {
  public:
@@ -76,4 +76,4 @@ void RWLockWinXP::ReleaseLockShared() {
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

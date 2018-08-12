@@ -19,7 +19,7 @@
 using ::testing::Invoke;
 using ::testing::Return;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class MockInitialize : public AudioProcessingImpl {
  public:

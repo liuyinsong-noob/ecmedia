@@ -16,7 +16,7 @@
 
 // Codec interface
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -54,4 +54,4 @@ void ACMPCMA::DestructEncoderSafe() {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

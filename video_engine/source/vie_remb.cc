@@ -20,7 +20,7 @@
 #include "../system_wrappers/include/tick_util.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const int kRembSendIntervalMs = 200;
 

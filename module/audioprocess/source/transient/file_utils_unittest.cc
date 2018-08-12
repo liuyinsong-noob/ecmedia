@@ -19,7 +19,7 @@
 #include "cloopenwebrtc/test/testsupport/fileutils.h"
 #include "cloopenwebrtc/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const uint8_t kPiBytesf[4] = {0xDB, 0x0F, 0x49, 0x40};
 static const uint8_t kEBytesf[4] = {0x54, 0xF8, 0x2D, 0x40};

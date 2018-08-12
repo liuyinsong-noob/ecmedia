@@ -49,7 +49,7 @@
 #include <google/protobuf/io/coded_stream.h>
 
 
-namespace cloopen_google {
+namespace yuntongxun_google {
 namespace protobuf {
 namespace internal {
 
@@ -856,5 +856,5 @@ inline int WireFormatLite::LengthDelimitedSize(int length) {
 }  // namespace internal
 }  // namespace protobuf
 
-}  // namespace cloopen_google
+}  // namespace yuntongxun_google
 #endif  // GOOGLE_PROTOBUF_WIRE_FORMAT_LITE_INL_H__

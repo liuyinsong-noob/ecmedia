@@ -13,7 +13,7 @@
 #include "trace.h"
 #include "critical_section_wrapper.h"
 #include "../../video_capture_config.h"
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
     
     namespace videocapturemodule
@@ -60,11 +60,11 @@ namespace cloopenwebrtc
         VideoCaptureiOS::~VideoCaptureiOS()
         {
             
-            WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceVideoCapture, _id,
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, _id,
                          "~VideoCaptureMacQTKit() called");
             if(_captureDevice)
             {
-                _captureDevice->registerOwner((cloopenwebrtc::videocapturemodule::VideoCaptureiOS *)nil);
+                _captureDevice->registerOwner((yuntongxunwebrtc::videocapturemodule::VideoCaptureiOS *)nil);
 //                [_captureDevice stopCapture];
 //                [_captureDevice release];
 //                _captureDevice->stopCapture();
@@ -97,7 +97,7 @@ namespace cloopenwebrtc
             _captureDevice = new VideoCaptureiOSInfo();
             if(NULL == _captureDevice)
             {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, id,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, id,
                              "Failed to create an instance of "
                              "VideoCaptureMacQTKitObjC");
                 return -1;
@@ -106,7 +106,7 @@ namespace cloopenwebrtc
 //            if(-1 == [[_captureDevice registerOwner:this] intValue])
             if(-1 == _captureDevice->registerOwner(this))
             {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, id,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, id,
                              "Failed to register owner for _captureDevice");
                 return -1;
             }
@@ -121,7 +121,7 @@ namespace cloopenwebrtc
             _captureInfo = new VideoCaptureiOSDeviceInfo(0);
             if(NULL == _captureInfo)
             {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, id, "Failed to create an instance of VideoCaptureMacQTKitInfoObjC");
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, id, "Failed to create an instance of VideoCaptureMacQTKitInfoObjC");
                 return -1;
             }
             
@@ -129,7 +129,7 @@ namespace cloopenwebrtc
             int captureDeviceCount = _captureInfo->NumberOfDevices();
             if(captureDeviceCount < 0)
             {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, id,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, id,
                              "No Capture Devices Present");
                 return -1;
             }
@@ -152,7 +152,7 @@ namespace cloopenwebrtc
 //                                                     WithLength:NAME_LENGTH]intValue])
                 if(-1 == _captureInfo->GetDeviceName(index,deviceNameUTF8,NAME_LENGTH,deviceUniqueIdUTF8,NAME_LENGTH,deviceProductUniqueIDUTF8,NAME_LENGTH))
                 {
-                    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+                    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                                  "GetDeviceName returned -1 for index %d", index);
                     return -1;
                 }
@@ -167,7 +167,7 @@ namespace cloopenwebrtc
             
             if(false == captureDeviceFound)
             {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                              "Failed to find capture device unique ID %s",
                              iDeviceUniqueIdUTF8);
                 return -1;
@@ -180,14 +180,14 @@ namespace cloopenwebrtc
             if(-1 == _captureDevice->setCaptureDeviceById((char *)deviceUniqueIdUTF8))
             {
                 strcpy((char*)_deviceUniqueId, (char*)deviceUniqueIdUTF8);
-                WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                              "Failed to set capture device %s (unique ID %s) even "
                              "though it was a valid return from "
                              "VideoCaptureMacQTKitInfo");
                 return -1;
             }
             
-            WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                          "successfully Init VideoCaptureMacQTKit" );
             return 0;
         }
@@ -204,7 +204,7 @@ namespace cloopenwebrtc
 //                                              AndWidth:_captureWidth AndFrameRate:_captureFrameRate]intValue])
             if(-1 == _captureDevice->setCaptureHeightAndWidthAndFrameRate(_captureHeight, _captureWidth, _captureFrameRate))
             {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, _id,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, _id,
                              "Could not set width=%d height=%d frameRate=%d",
                              _captureWidth, _captureHeight, _captureFrameRate);
                 return -1;

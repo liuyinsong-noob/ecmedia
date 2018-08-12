@@ -439,7 +439,7 @@ Version 2.1.2.17
 
 Version 2.1.2.16
 1、接口改变
-2、yuv缩放功能ECMEDIA_API int ECMedia_set_frame_scale_type(int channelid, cloopenwebrtc::FrameScaleType type);
+2、yuv缩放功能ECMEDIA_API int ECMedia_set_frame_scale_type(int channelid, clooyuntongxunwebrtc::eScaleType type);
 3、美颜接口int ECmedia_enable_EnableBeautyFilter(int captureid, bool enable); 
 
 Version 2.1.2.15

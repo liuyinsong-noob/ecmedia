@@ -22,13 +22,13 @@
 #include "vie_defines.h"
 #include "vie_file_player.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ViEDesktopShareManager::ViEDesktopShareManager(const int engine_id)
     : engine_id_(engine_id),
       map_cs_(CriticalSectionWrapper::CreateCriticalSection()),
       vie_frame_provider_map_() {
-  WEBRTC_TRACE(cloopenwebrtc::kTraceMemory, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceMemory, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
                "%s", __FUNCTION__);
 
   for (int idx = 0; idx < kViEMaxDesktopCapture; idx++) {
@@ -37,7 +37,7 @@ ViEDesktopShareManager::ViEDesktopShareManager(const int engine_id)
 }
 
 ViEDesktopShareManager::~ViEDesktopShareManager() {
-  WEBRTC_TRACE(cloopenwebrtc::kTraceMemory, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceMemory, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
                "%s", __FUNCTION__);
   while (vie_frame_provider_map_.Size() != 0) {
     MapItem* item = vie_frame_provider_map_.First();
@@ -52,13 +52,13 @@ ViEDesktopShareManager::~ViEDesktopShareManager() {
 
 
 int ViEDesktopShareManager::CreateDesktopCapturer(int& desktop_capture_id,const DesktopShareType desktop_share_type) {
-  WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
                "%s(device_unique_id)", __FUNCTION__);
   CriticalSectionScoped cs(map_cs_.get());
 
   int newcapture_id = 0;
   if (GetFreeDesktopCaptureId(newcapture_id) == false) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
                  "%s: Maximum supported number of capture devices already in "
                  "use", __FUNCTION__);
     return kViECaptureDeviceMaxNoDevicesAllocated;
@@ -66,25 +66,25 @@ int ViEDesktopShareManager::CreateDesktopCapturer(int& desktop_capture_id,const 
   VieDesktopCapturer* vie_desktop_capture = VieDesktopCapturer::CreateCapture(newcapture_id,desktop_share_type,engine_id_);
   if (!vie_desktop_capture) {
     ReturnDesktopCaptureId(newcapture_id);
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
                  "%s: Could not create capture module for", __FUNCTION__);
     return kViECaptureDeviceUnknownError;
   }
 
   if (vie_frame_provider_map_.Insert(newcapture_id, vie_desktop_capture) != 0) {
     ReturnDesktopCaptureId(newcapture_id);
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
                "%s: Could not insert capture module ", __FUNCTION__);
     return kViECaptureDeviceUnknownError;
   }
   desktop_capture_id = newcapture_id;
-  WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
                "%s (capture_id: %d)", __FUNCTION__, desktop_capture_id);
   return 0;
 }
 
 int ViEDesktopShareManager::DestroyDesktopCapture(const int desktop_capture_id) {
-  WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
                "%s(capture_id: %d)", __FUNCTION__, desktop_capture_id);
   VieDesktopCapturer* vie_capture = NULL;
   {
@@ -95,7 +95,7 @@ int ViEDesktopShareManager::DestroyDesktopCapture(const int desktop_capture_id) 
 
     vie_capture = VieDesktopCapturePtr(desktop_capture_id);
     if (!vie_capture) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
                    "%s(capture_id: %d) - No such capture device id",
                    __FUNCTION__, desktop_capture_id);
       return -1;
@@ -112,14 +112,14 @@ int ViEDesktopShareManager::DestroyDesktopCapture(const int desktop_capture_id) 
 }
 
 bool ViEDesktopShareManager::GetFreeDesktopCaptureId(int& freecapture_id) {
-  WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, ViEId(engine_id_), "%s",
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_), "%s",
                __FUNCTION__);
   for (int id = 0; id < kViEMaxDesktopCapture; id++) {
     if (free_desktop_capture_id_[id]) {
       // We found a free capture device id.
       free_desktop_capture_id_[id] = false;
       freecapture_id = id + kViEDesktopIdBase;
-      WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
                    "%s: new id: %d", __FUNCTION__, freecapture_id);
       return true;
     }
@@ -128,7 +128,7 @@ bool ViEDesktopShareManager::GetFreeDesktopCaptureId(int& freecapture_id) {
 }
 
 void ViEDesktopShareManager::ReturnDesktopCaptureId(int capture_id) {
-  WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideo, ViEId(engine_id_),
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, ViEId(engine_id_),
                "%s(%d)", __FUNCTION__, capture_id);
   CriticalSectionScoped cs(map_cs_.get());
   if (capture_id >= kViEDesktopIdBase &&
@@ -221,4 +221,4 @@ ViEFrameProviderBase* ViEDesktopShareScoped::FrameProvider(
       provider_id);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -30,7 +30,7 @@
 
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 
 static const uint32_t kTimeOffsetSwitchThreshold = 30;
@@ -66,44 +66,44 @@ void CongestionController::WrappingBitrateEstimator::IncomingPacket(
     int64_t arrival_time_ms,
     size_t payload_size,
     const RTPHeader& header) {
-  cloopenwebrtc::CritScope cs(&crit_sect_);
+  yuntongxunwebrtc::CritScope cs(&crit_sect_);
   PickEstimatorFromHeader(header);
   rbe_->IncomingPacket(arrival_time_ms, payload_size, header);
 }
 
 int32_t CongestionController::WrappingBitrateEstimator::Process() {
-  cloopenwebrtc::CritScope cs(&crit_sect_);
+  yuntongxunwebrtc::CritScope cs(&crit_sect_);
   rbe_->Process();
   return 0;
 }
 
 int64_t CongestionController::WrappingBitrateEstimator::TimeUntilNextProcess() {
-  cloopenwebrtc::CritScope cs(&crit_sect_);
+  yuntongxunwebrtc::CritScope cs(&crit_sect_);
   return rbe_->TimeUntilNextProcess();
 }
 
 void CongestionController::WrappingBitrateEstimator::OnRttUpdate(
     int64_t avg_rtt_ms, int64_t max_rtt_ms) {
-  cloopenwebrtc::CritScope cs(&crit_sect_);
+  yuntongxunwebrtc::CritScope cs(&crit_sect_);
   rbe_->OnRttUpdate(avg_rtt_ms, max_rtt_ms);
 }
 
 void CongestionController::WrappingBitrateEstimator::RemoveStream(
     unsigned int ssrc) {
-  cloopenwebrtc::CritScope cs(&crit_sect_);
+  yuntongxunwebrtc::CritScope cs(&crit_sect_);
   rbe_->RemoveStream(ssrc);
 }
 
 bool CongestionController::WrappingBitrateEstimator::LatestEstimate(
     std::vector<unsigned int>* ssrcs,
     unsigned int* bitrate_bps) const {
-  cloopenwebrtc::CritScope cs(&crit_sect_);
+  yuntongxunwebrtc::CritScope cs(&crit_sect_);
   return rbe_->LatestEstimate(ssrcs, bitrate_bps);
 }
 
 void CongestionController::WrappingBitrateEstimator::SetMinBitrate(
     int min_bitrate_bps) {
-  cloopenwebrtc::CritScope cs(&crit_sect_);
+  yuntongxunwebrtc::CritScope cs(&crit_sect_);
   rbe_->SetMinBitrate(min_bitrate_bps);
   min_bitrate_bps_ = min_bitrate_bps;
 }
@@ -289,7 +289,7 @@ void CongestionController::SignalNetworkState(NetworkState state) {
     pacer_->Pause();
   }
   {
-    cloopenwebrtc::CritScope cs(&critsect_);
+    yuntongxunwebrtc::CritScope cs(&critsect_);
     network_state_ = state;
   }
   probe_controller_->OnNetworkStateChanged(state);
@@ -302,7 +302,7 @@ void CongestionController::SetTransportOverhead(
       transport_overhead_bytes_per_packet);
 }
 
-void CongestionController::OnSentPacket(const cloopenwebrtc::SentPacket& sent_packet) {
+void CongestionController::OnSentPacket(const yuntongxunwebrtc::SentPacket& sent_packet) {
   // We're not interested in packets without an id, which may be stun packets,
   // etc, sent on the same transport.
   if (sent_packet.packet_id == -1)
@@ -360,7 +360,7 @@ bool CongestionController::HasNetworkParametersToReportChanged(
     uint32_t bitrate_bps,
     uint8_t fraction_loss,
     int64_t rtt) {
-  cloopenwebrtc::CritScope cs(&critsect_);
+  yuntongxunwebrtc::CritScope cs(&critsect_);
   bool changed =
       last_reported_bitrate_bps_ != bitrate_bps ||
       (bitrate_bps > 0 && (last_reported_fraction_loss_ != fraction_loss ||
@@ -380,8 +380,8 @@ bool CongestionController::IsSendQueueFull() const {
 }
 
 bool CongestionController::IsNetworkDown() const {
-  cloopenwebrtc::CritScope cs(&critsect_);
+  yuntongxunwebrtc::CritScope cs(&critsect_);
   return network_state_ == kNetworkDown;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

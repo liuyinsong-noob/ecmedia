@@ -13,7 +13,7 @@
 
 #include "atomic32.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // This class can be used for instantiating
 // reference counted objects.
@@ -77,6 +77,6 @@ class RefCountImpl : public T {
   Atomic32 ref_count_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // SYSTEM_WRAPPERS_INTERFACE_REF_COUNT_H_

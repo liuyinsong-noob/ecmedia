@@ -19,7 +19,7 @@
 #include "../module/common_types.h"
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Object that will be passed by the spawned thread when it enters the callback
 // function.

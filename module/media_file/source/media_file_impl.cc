@@ -24,7 +24,7 @@
 //    #define STR_NCASE_CMP strncasecmp
 //#endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 MediaFile* MediaFile::CreateMediaFile(const WebRtc_Word32 id)
 {
     return new MediaFileImpl(id);
@@ -1369,4 +1369,4 @@ bool MediaFileImpl::ValidFrequency(const WebRtc_UWord32 frequency)
                  "Frequency should be 8000, 16000 or 32000 (Hz)");
     return false;
 }
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

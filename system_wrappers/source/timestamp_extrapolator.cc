@@ -12,7 +12,7 @@
 
 #include <algorithm>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TimestampExtrapolator::TimestampExtrapolator(int64_t start_ms)
     : _rwLock(RWLockWrapper::CreateRWLock()),

@@ -19,7 +19,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Implementation of event for single waiter, single signal threads. Event
 // is sticky.

@@ -45,7 +45,7 @@
 #include <stddef.h>
 #include "STTypes.h"
 
-namespace cloopensoundtouch
+namespace yuntongxunsoundtouch
 {
 
 class FIRFilter 

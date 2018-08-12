@@ -204,8 +204,8 @@ public class CallbackHandler extends Handler {
 		if(msg.obj instanceof Bundle) {
 			bundle = (Bundle) msg.obj;
 			
-			if(bundle.containsKey(Device.CLOOPEN_REASON)) {
-				cloopenReason = (CloopenReason) bundle.getSerializable(Device.CLOOPEN_REASON);
+			if(bundle.containsKey(Device.yuntongxun_REASON)) {
+				cloopenReason = (CloopenReason) bundle.getSerializable(Device.yuntongxun_REASON);
 			}
 			
 		}
@@ -252,8 +252,8 @@ public class CallbackHandler extends Handler {
 		if(msg.obj instanceof Bundle) {
 			bundle = (Bundle) msg.obj;
 			
-			if(bundle.containsKey(Device.CLOOPEN_REASON)) {
-				cloopenReason = (CloopenReason) bundle.getSerializable(Device.CLOOPEN_REASON);
+			if(bundle.containsKey(Device.yuntongxun_REASON)) {
+				cloopenReason = (CloopenReason) bundle.getSerializable(Device.yuntongxun_REASON);
 			}
 			
 		}
@@ -308,8 +308,8 @@ public class CallbackHandler extends Handler {
 		if(msg.obj instanceof Bundle) {
 			bundle = (Bundle) msg.obj;
 			
-			if(bundle.containsKey(Device.CLOOPEN_REASON)) {
-				cloopenReason = (CloopenReason) bundle.getSerializable(Device.CLOOPEN_REASON);
+			if(bundle.containsKey(Device.yuntongxun_REASON)) {
+				cloopenReason = (CloopenReason) bundle.getSerializable(Device.yuntongxun_REASON);
 			}
 			
 		}
@@ -406,8 +406,8 @@ public class CallbackHandler extends Handler {
 		if(msg.obj instanceof Bundle) {
 			bundle = (Bundle) msg.obj;
 			
-			if(bundle.containsKey(Device.CLOOPEN_REASON)) {
-				cloopenReason = (CloopenReason) bundle.getSerializable(Device.CLOOPEN_REASON);
+			if(bundle.containsKey(Device.yuntongxun_REASON)) {
+				cloopenReason = (CloopenReason) bundle.getSerializable(Device.yuntongxun_REASON);
 			}
 			
 		}

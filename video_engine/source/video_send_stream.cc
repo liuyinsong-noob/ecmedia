@@ -1,7 +1,7 @@
 #include <sstream>
 #include "video_send_stream.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 std::string VideoSendStream::Config::EncoderSettings::ToString()
 {

@@ -16,7 +16,7 @@
 #include "desktop_frame.h"
 #include "mouse_cursor.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 
@@ -62,10 +62,10 @@ class DesktopFrameWithCursor : public DesktopFrame {
   virtual ~DesktopFrameWithCursor();
 
  private:
-  cloopenwebrtc::scoped_ptr<DesktopFrame> original_frame_;
+  yuntongxunwebrtc::scoped_ptr<DesktopFrame> original_frame_;
 
   DesktopVector restore_position_;
-  cloopenwebrtc::scoped_ptr<DesktopFrame> restore_frame_;
+  yuntongxunwebrtc::scoped_ptr<DesktopFrame> restore_frame_;
 
   DISALLOW_COPY_AND_ASSIGN(DesktopFrameWithCursor);
 };
@@ -196,4 +196,4 @@ void DesktopAndCursorComposer::ResetScreenDC()
 	}
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -19,13 +19,13 @@
 #include "desktop_capturer.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class DesktopCaptureOptions;
 
 class WindowCapturer : public DesktopCapturer {
  public:
-  typedef cloopenwebrtc::WindowId WindowId;
+  typedef yuntongxunwebrtc::WindowId WindowId;
 
   struct Window {
     WindowId id;
@@ -58,7 +58,7 @@ class WindowCapturer : public DesktopCapturer {
   virtual bool GetShareCaptureRect(int &width, int &height) = 0;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_WINDOW_CAPTURER_H_
 

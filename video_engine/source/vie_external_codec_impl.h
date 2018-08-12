@@ -14,7 +14,7 @@
 #include "vie_external_codec.h"
 #include "vie_ref_count.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class ViESharedData;
 

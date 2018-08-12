@@ -11,7 +11,7 @@
 #ifndef WEBRTC_SYSTEM_WRAPPERS_INCLUDE_FIELD_TRIAL_DEFAULT_H_
 #define WEBRTC_SYSTEM_WRAPPERS_INCLUDE_FIELD_TRIAL_DEFAULT_H_
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace field_trial {
 
 // Optionally initialize field trial from a string.
@@ -23,6 +23,6 @@ void InitFieldTrialsFromString(const char* trials_string);
 const char* GetFieldTrialString();
 
 }  // namespace field_trial
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_INCLUDE_FIELD_TRIAL_DEFAULT_H_

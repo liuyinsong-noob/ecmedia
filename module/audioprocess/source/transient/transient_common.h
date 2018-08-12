@@ -10,7 +10,7 @@
 
 #ifndef WEBRTC_MODULES_AUDIO_PROCESSING_TRANSIENT_COMMON_H_
 #define WEBRTC_MODULES_AUDIO_PROCESSING_TRANSIENT_COMMON_H_
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace ts {
 
 static const float kPi = 3.14159265358979323846f;
@@ -23,5 +23,5 @@ enum {
 };
 
 } // namespace ts
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_TRANSIENT_COMMON_H_

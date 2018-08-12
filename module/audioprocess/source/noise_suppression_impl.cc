@@ -23,7 +23,7 @@
 #include "ns_core.h"
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 #if defined(WEBRTC_NS_FLOAT)
 typedef NsHandle Handle;
@@ -188,4 +188,4 @@ int NoiseSuppressionImpl::GetHandleError(void* handle) const {
   assert(handle != NULL);
   return apm_->kUnspecifiedError;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

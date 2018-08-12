@@ -16,7 +16,7 @@
 #include "audio_multi_vector.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // This class provides a generator for DTMF tones.
 class DtmfToneGenerator {
@@ -51,5 +51,5 @@ class DtmfToneGenerator {
   DISALLOW_COPY_AND_ASSIGN(DtmfToneGenerator);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_DTMF_TONE_GENERATOR_H_

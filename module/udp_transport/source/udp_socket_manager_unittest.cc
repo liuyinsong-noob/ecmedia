@@ -20,7 +20,7 @@
 #include "gtest/gtest.h"
 #include "src/system_wrappers/interface/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(UdpSocketManager, CreateCallsInitAndDoesNotLeakMemory) {
   WebRtc_Word32 id = 42;

@@ -14,7 +14,7 @@
 #include "push_resampler.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace acm2 {
 
 class ACMResampler {
@@ -34,6 +34,6 @@ class ACMResampler {
 };
 
 }  // namespace acm2
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_ACM_RESAMPLER_H_

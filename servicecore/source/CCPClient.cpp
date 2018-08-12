@@ -479,7 +479,7 @@ static void* CheckProxyVaildFun(void *p)
 	return NULL;
 
     //	TRESTClient *client = new TRESTClient("10.0.19.11", 8881, "", "", "");//("app.cloopen.net", 8881, "", "", "");  //xinwei
-    TRESTClient *client = new TRESTClient("app.cloopen.com", 8881, "", "", "");//("app.cloopen.net", 8881, "", "", "");
+    TRESTClient *client = new TRESTClient("app.yuntongxun.com", 8881, "", "", "");//("app.cloopen.net", 8881, "", "", "");
     client->SetTraceFunc(PrintConsole);
     if( client->CheckProxyValid((char*)p, "", CHECK_PROXY_VALID_KEY, status) )
     // if( client->CheckProxyValid("42.121.118.111", "", CHECK_PROXY_VALID_KEY, status) )
@@ -567,7 +567,7 @@ static void* CheckPrivateCloud(void *lc)
         }
         else
         {
-            client = new TRESTClient("app.cloopen.com", 8881, "", "", "");
+            client = new TRESTClient("app.yuntongxun.com", 8881, "", "", "");
         }
         client->SetTraceFunc(PrintConsole);
         if( cfg && companyID && client->CheckPrivateProxyValid(companyID, cfg->realm, cfg->port, status) )
@@ -1601,7 +1601,7 @@ extern "C" int connectToCCPWithXML(const char *addressXML, const char *account, 
         fflush(traceFile);
     }
     //解析xml，生成proxyList
-    cloopenwebrtc::tinyxml2::XMLDocument doc;
+    yuntongxunwebrtc::tinyxml2::XMLDocument doc;
     if( doc.Parse(addressXML)!= 0) {
         PrintConsole("WARNING: connectToCCPWithMultiAddress ERROR: INVALID XML\n");
         if (traceFile) {
@@ -1613,7 +1613,7 @@ extern "C" int connectToCCPWithXML(const char *addressXML, const char *account, 
         }
 		return -1;
 	}
-    cloopenwebrtc::tinyxml2::XMLElement* rootElement = doc.RootElement();
+    yuntongxunwebrtc::tinyxml2::XMLElement* rootElement = doc.RootElement();
     int statusCode = atoi(rootElement->FirstChildElement("statusCode")->GetText());
     if (statusCode) {
         PrintConsole("WARNING: connectToCCPWithMultiAddress ERROR: WRONG STATUS CODE\n");
@@ -1626,7 +1626,7 @@ extern "C" int connectToCCPWithXML(const char *addressXML, const char *account, 
         }
         return -2;
     }
-    cloopenwebrtc::tinyxml2::XMLElement* switchElement = rootElement->FirstChildElement("Switch");
+    yuntongxunwebrtc::tinyxml2::XMLElement* switchElement = rootElement->FirstChildElement("Switch");
     if (switchElement) {
         //将proxyAddrList清空
         proxyAddrList *lastAddr = gProxyAddrLst->next;
@@ -1644,7 +1644,7 @@ extern "C" int connectToCCPWithXML(const char *addressXML, const char *account, 
             lastAddr = gProxyAddrLst->next;
         }
         lastAddr = gProxyAddrLst;
-        cloopenwebrtc::tinyxml2::XMLElement *clpssElement = switchElement->FirstChildElement("clpss");
+        yuntongxunwebrtc::tinyxml2::XMLElement *clpssElement = switchElement->FirstChildElement("clpss");
         if (!clpssElement) {
             PrintConsole("WARNING: connectToCCPWithMultiAddress ERROR: NO IP\n");
             if (traceFile) {
@@ -1658,11 +1658,11 @@ extern "C" int connectToCCPWithXML(const char *addressXML, const char *account, 
         }
         while (clpssElement) {
             proxyAddrList *tempAddr = new proxyAddrList;
-            cloopenwebrtc::tinyxml2::XMLElement *ipElement = clpssElement->FirstChildElement("ip");
+            yuntongxunwebrtc::tinyxml2::XMLElement *ipElement = clpssElement->FirstChildElement("ip");
             tempAddr->addr = new char[strlen(ipElement->GetText())+1];
             memcpy(tempAddr->addr, ipElement->GetText(), strlen(ipElement->GetText()));
             tempAddr->addr[strlen(ipElement->GetText())] = '\0';
-            cloopenwebrtc::tinyxml2::XMLElement *portElement = clpssElement->FirstChildElement("port");
+            yuntongxunwebrtc::tinyxml2::XMLElement *portElement = clpssElement->FirstChildElement("port");
             tempAddr->port = atoi(portElement->GetText());
             tempAddr->account = new char[strlen(account)+1];
             memcpy(tempAddr->account, account, strlen(account));
@@ -2812,7 +2812,7 @@ extern "C" int startRtpDump(const char *callid, int mediaType, const char *fileN
     int ret = findCall(callid, &pCall);
     if(ret != 0)
         return -1;
-    return g_pSerCore->serphone_core_start_rtp_dump(pCall, mediaType, fileName, (cloopenwebrtc::RTPDirections)direction);
+    return g_pSerCore->serphone_core_start_rtp_dump(pCall, mediaType, fileName, (yuntongxunwebrtc::RTPDirections)direction);
 }
 
 extern "C" int stopRtpDump(const char *callid, int mediaType, int direction)
@@ -2824,7 +2824,7 @@ extern "C" int stopRtpDump(const char *callid, int mediaType, int direction)
     int ret = findCall(callid, &pCall);
     if(ret != 0)
         return -1;
-    return g_pSerCore->serphone_core_stop_rtp_dump(pCall, mediaType, (cloopenwebrtc::RTPDirections)direction);
+    return g_pSerCore->serphone_core_stop_rtp_dump(pCall, mediaType, (yuntongxunwebrtc::RTPDirections)direction);
 }
 
 int getSpeakerInfo(SpeakerInfo **speakerinfo)
@@ -3353,7 +3353,7 @@ extern "C" int setAudioMode(int mode)
 extern "C" int PlayAudioFromRtpDump(int localPort, const char *ptName, int ploadType, int crypt_type, const char* key)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	return g_pSerCore->PlayAudioFromRtpDump(localPort, ptName, ploadType, (cloopenwebrtc::ccp_srtp_crypto_suite_t)crypt_type, key);
+	return g_pSerCore->PlayAudioFromRtpDump(localPort, ptName, ploadType, (yuntongxunwebrtc::ccp_srtp_crypto_suite_t)crypt_type, key);
 }
 
 extern "C" int StopPlayAudioFromRtpDump()
@@ -3365,7 +3365,7 @@ extern "C" int StopPlayAudioFromRtpDump()
 extern "C" int PlayVideoFromRtpDump(int localPort, const char *ptName, int ploadType, void *videoWindow, int crypt_type, const char* key)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	return g_pSerCore->PlayVideoFromRtpDump(localPort, ptName, ploadType, videoWindow, (cloopenwebrtc::ccp_srtp_crypto_suite_t)crypt_type, key);
+	return g_pSerCore->PlayVideoFromRtpDump(localPort, ptName, ploadType, videoWindow, (yuntongxunwebrtc::ccp_srtp_crypto_suite_t)crypt_type, key);
 }
 extern "C" int StopPlayVideoFromRtpDump()
 {
@@ -3717,7 +3717,7 @@ extern "C" int GetSendStats(const char* callid, int &encode_frame_rate, int &med
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	//TODO:
-	//cloopenwebrtc::VideoSendStream::Stats sendStats;
+	//yuntongxunwebrtc::VideoSendStream::Stats sendStats;
 	//if(!g_pSerCore->GetSendStats(callid, sendStats))
 	//{
 	//	encode_frame_rate = sendStats.encode_frame_rate;

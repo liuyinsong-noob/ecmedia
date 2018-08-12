@@ -15,7 +15,7 @@
 
 #include "audio_decoder.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 DecoderDatabase::DecoderDatabase()
     : active_decoder_(-1), active_cng_decoder_(-1) {}
@@ -257,4 +257,4 @@ int DecoderDatabase::CheckPayloadTypes(const PacketList& packet_list) const {
 }
 
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

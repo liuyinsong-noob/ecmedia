@@ -13,7 +13,7 @@
 
 #include "cpu_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class CpuLinux : public CpuWrapper
 {
 public:

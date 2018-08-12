@@ -17,7 +17,7 @@
 #include "../module/rtp_rtcp/source/rtp_utility.h"
 #include "../typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class RTPReceiverVideo : public RTPReceiverStrategy {
  public:
@@ -52,6 +52,6 @@ class RTPReceiverVideo : public RTPReceiverStrategy {
  private:
   OneTimeEvent first_packet_received_;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_RECEIVER_VIDEO_H_

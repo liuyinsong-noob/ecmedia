@@ -19,7 +19,7 @@ using ::testing::Return;
 using ::testing::ReturnNull;
 using ::testing::_;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(TimestampScaler, TestNoScaling) {
   MockDecoderDatabase db;
@@ -327,4 +327,4 @@ TEST(TimestampScaler, Failures) {
   EXPECT_CALL(db, Die());  // Called when database object is deleted.
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -20,7 +20,7 @@
 // input lengths. Also contains helper functions for buffer allocation, taking
 // care of any memory alignment requirements the underlying library might have.
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class RealFourier {
  public:

@@ -20,7 +20,7 @@
 #include "../system_wrappers/include/tick_util.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class FileRecorder
 {
@@ -86,5 +86,5 @@ protected:
     virtual ~FileRecorder() {}
 
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif // WEBRTC_MODULES_UTILITY_INTERFACE_FILE_RECORDER_H_

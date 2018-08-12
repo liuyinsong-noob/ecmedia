@@ -12,7 +12,7 @@
 
 #include "../module/interface/module_common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 RtcpNackStats::RtcpNackStats()
     : max_sequence_number_(0),
@@ -28,4 +28,4 @@ void RtcpNackStats::ReportRequest(uint16_t sequence_number) {
   ++requests_;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

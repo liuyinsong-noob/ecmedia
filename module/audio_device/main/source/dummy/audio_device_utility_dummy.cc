@@ -9,7 +9,7 @@
  */
 #include "audio_device_utility_dummy.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
   int32_t AudioDeviceUtilityDummy::Init() { return 0; }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 

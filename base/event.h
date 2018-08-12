@@ -20,7 +20,7 @@
 #error "Must define either WEBRTC_WIN or WEBRTC_POSIX."
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class Event {
  public:
@@ -49,6 +49,6 @@ class Event {
   DISALLOW_IMPLICIT_CONSTRUCTORS(Event);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_EVENT_H__

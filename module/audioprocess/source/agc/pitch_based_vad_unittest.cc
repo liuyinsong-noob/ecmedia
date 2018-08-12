@@ -17,7 +17,7 @@
 #include "gtest/gtest.h"
 #include "cloopenwebrtc/test/testsupport/fileutils.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(PitchBasedVadTest, VoicingProbabilityTest) {
   std::string spectral_peak_file_name = test::ResourcePath(

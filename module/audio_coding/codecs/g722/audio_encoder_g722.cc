@@ -14,7 +14,7 @@
 #include "cloopenwebrtc/base/checks.h"
 #include "cloopenwebrtc/modules/audio_coding/codecs/g722/include/g722_interface.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 

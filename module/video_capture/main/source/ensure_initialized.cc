@@ -12,7 +12,7 @@
 
 #ifndef ANDROID
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace videocapturemodule {
 void EnsureInitialized() {}
 }  // namespace videocapturemodule
@@ -26,7 +26,7 @@ void EnsureInitialized() {}
 #include "cloopenwebrtc/base/checks.h"
 #include "cloopenwebrtc/modules/video_capture/video_capture_internal.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace videocapturemodule {
 
 static pthread_once_t g_initialize_once = PTHREAD_ONCE_INIT;
@@ -36,7 +36,7 @@ void EnsureInitializedOnce() {
   jobject context = ::base::android::GetApplicationContext();
   JavaVM* jvm = NULL;
   CHECK_EQ(0, jni->GetJavaVM(&jvm));
-  CHECK_EQ(0, cloopenwebrtc::SetCaptureAndroidVM(jvm, context));
+  CHECK_EQ(0, yuntongxunwebrtc::SetCaptureAndroidVM(jvm, context));
 }
 
 void EnsureInitialized() {

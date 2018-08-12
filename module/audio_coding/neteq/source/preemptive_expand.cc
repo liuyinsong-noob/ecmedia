@@ -14,7 +14,7 @@
 
 #include "signal_processing_library.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 PreemptiveExpand::ReturnCodes PreemptiveExpand::Process(
     const int16_t* input,
@@ -107,4 +107,4 @@ PreemptiveExpand* PreemptiveExpandFactory::Create(
       sample_rate_hz, num_channels, background_noise, overlap_samples);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

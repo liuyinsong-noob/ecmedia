@@ -14,7 +14,7 @@
 
 #include <algorithm>  // swap
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Aligning pointer to 64 bytes for improved performance, e.g. use SIMD.
 static const int kBufferAlignment =  64;

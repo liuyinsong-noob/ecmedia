@@ -29,7 +29,7 @@
     #include <sys/time.h>
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 SSRCDatabase*
 SSRCDatabase::StaticInstance(CountOperation count_operation)
 {

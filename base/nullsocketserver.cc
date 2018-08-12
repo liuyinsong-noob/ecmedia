@@ -11,7 +11,7 @@
 #include "../base/checks.h"
 #include "../base/nullsocketserver.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 NullSocketServer::NullSocketServer() : event_(false, false) {}
 NullSocketServer::~NullSocketServer() {}
@@ -25,25 +25,25 @@ void NullSocketServer::WakeUp() {
   event_.Set();
 }
 
-cloopenwebrtc::Socket* NullSocketServer::CreateSocket(int /* type */) {
+yuntongxunwebrtc::Socket* NullSocketServer::CreateSocket(int /* type */) {
   NOTREACHED();
   return nullptr;
 }
 
-cloopenwebrtc::Socket* NullSocketServer::CreateSocket(int /* family */, int /* type */) {
+yuntongxunwebrtc::Socket* NullSocketServer::CreateSocket(int /* family */, int /* type */) {
   NOTREACHED();
   return nullptr;
 }
 
-cloopenwebrtc::AsyncSocket* NullSocketServer::CreateAsyncSocket(int /* type */) {
+yuntongxunwebrtc::AsyncSocket* NullSocketServer::CreateAsyncSocket(int /* type */) {
   NOTREACHED();
   return nullptr;
 }
 
-cloopenwebrtc::AsyncSocket* NullSocketServer::CreateAsyncSocket(int /* family */,
+yuntongxunwebrtc::AsyncSocket* NullSocketServer::CreateAsyncSocket(int /* family */,
                                                       int /* type */) {
   NOTREACHED();
   return nullptr;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -53,7 +53,7 @@
 #define LEGACY_BITEXACT
 char *neteq_debug;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 #ifndef WIN32
 int printTime();
 int printTime()
@@ -2076,4 +2076,4 @@ void NetEqImpl::CreateDecisionLogic() {
                                               delay_manager_.get(),
                                               buffer_level_filter_.get()));
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

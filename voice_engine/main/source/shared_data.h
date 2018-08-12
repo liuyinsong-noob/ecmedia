@@ -21,7 +21,7 @@
 
 class ProcessThread;
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class Config;
 class CriticalSectionWrapper;
 

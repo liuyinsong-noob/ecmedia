@@ -17,7 +17,7 @@
 #include "decoder_database.h"
 #include "sync_buffer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 Operations DecisionLogicFax::GetDecisionSpecialized(
     const SyncBuffer& sync_buffer,
@@ -99,4 +99,4 @@ Operations DecisionLogicFax::GetDecisionSpecialized(
 }
 
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

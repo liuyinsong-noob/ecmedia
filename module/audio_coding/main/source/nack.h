@@ -47,7 +47,7 @@
 // Please note that this class in not thread safe. The class must be protected
 // if different APIs are called from different threads.
 //
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -208,6 +208,6 @@ class Nack {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_CODING_MAIN_ACM2_NACK_H_

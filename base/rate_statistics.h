@@ -16,7 +16,7 @@
 #include "../base/optional.h"
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class RateStatistics {
  public:
@@ -42,7 +42,7 @@ class RateStatistics {
   // from a monotonic clock. Ie, it doesn't matter if this call moves the
   // window, since any subsequent call to Update or Rate would still have moved
   // the window as much or more.
-  cloopenwebrtc::Optional<uint32_t> Rate(int64_t now_ms) const;
+  yuntongxunwebrtc::Optional<uint32_t> Rate(int64_t now_ms) const;
 
   // Update the size of the averaging window. The maximum allowed value for
   // window_size_ms is max_window_size_ms as supplied in the constructor.
@@ -79,6 +79,6 @@ class RateStatistics {
   const int64_t max_window_size_ms_;
   int64_t current_window_size_ms_;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_RATE_STATISTICS_H_

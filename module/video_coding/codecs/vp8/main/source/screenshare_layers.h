@@ -17,7 +17,7 @@
 #include "frame_dropper.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 	struct CodecSpecificInfoVP8;
 

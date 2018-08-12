@@ -31,7 +31,7 @@
 #include "../base/win32.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 enum IPv6AddressFlag {
   IPV6_ADDRESS_FLAG_NONE =           0x00,
@@ -183,6 +183,6 @@ IPAddress GetAnyIP(int family);
 // counted.
 int CountIPMaskBits(IPAddress mask);
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_IPADDRESS_H_

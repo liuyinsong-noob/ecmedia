@@ -16,7 +16,7 @@ extern "C"
 
 //#define HAVE_H264_BITSTREAM
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
     
 //#define MAX_RTP_PKT_LENGTH      1400

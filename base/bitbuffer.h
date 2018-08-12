@@ -16,7 +16,7 @@
 
 #include "../base/constructormagic.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // A class, similar to ByteBuffer, that can parse bit-sized data out of a set of
 // bytes. Has a similar API to ByteBuffer, plus methods for reading bit-sized
@@ -121,6 +121,6 @@ class BitBufferWriter : public BitBuffer {
   DISALLOW_COPY_AND_ASSIGN(BitBufferWriter);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_BITBUFFER_H_

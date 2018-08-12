@@ -15,7 +15,7 @@
 
 #include "video_frame_buffer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class CoreVideoFrameBuffer : public NativeHandleBuffer {
  public:

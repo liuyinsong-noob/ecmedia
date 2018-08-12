@@ -15,7 +15,7 @@
 #include "ilbc.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AudioEncoderIlbc : public AudioEncoder {
  public:
@@ -51,5 +51,5 @@ class AudioEncoderIlbc : public AudioEncoder {
   IlbcEncoderInstance* encoder_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_CODECS_ILBC_INTERFACE_AUDIO_ENCODER_ILBC_H_

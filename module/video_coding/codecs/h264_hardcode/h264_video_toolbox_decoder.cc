@@ -28,7 +28,7 @@
 #if DEBUG_H264
 char *g_h264file = NULL;
 #endif
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     extern int getVopType( const unsigned char p);
     static const int64_t kMsPerSec = 1000;
     
@@ -286,7 +286,7 @@ NEED_BITS(iCurBits, pBufPtr, iLeftBits, iAllowedBytes, iReadBytes); \
     
 }  // namespace internal
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     H264VideoToolboxDecoder* H264VideoToolboxDecoder::Create() {
         return new H264VideoToolboxDecoder();
     }

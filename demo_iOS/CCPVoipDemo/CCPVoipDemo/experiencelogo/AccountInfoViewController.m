@@ -132,7 +132,7 @@
     infoLabel.numberOfLines = 0;
     infoLabel.lineBreakMode = NSLineBreakByWordWrapping;
     infoLabel.font = [UIFont systemFontOfSize:11.0f];
-    infoLabel.text = @"您可以登录cloopen.com查询该账户基本信息、余额、应用计费等相关信息及创建新应用、充值等相关操作.";
+    infoLabel.text = @"您可以登录yuntongxun.com查询该账户基本信息、余额、应用计费等相关信息及创建新应用、充值等相关操作.";
     infoLabel.textColor = [UIColor colorWithRed:204.0f/255.0f green:204.0f/255.0f blue:204.0f/255.0f alpha:1.0f];
     infoLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:infoLabel];

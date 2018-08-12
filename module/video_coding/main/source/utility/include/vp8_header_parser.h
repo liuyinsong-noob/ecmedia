@@ -9,7 +9,7 @@
  */
 #ifndef WEBRTC_MODULES_VIDEO_CODING_UTILITY_VP8_PARSE_HEADER_H_
 #define WEBRTC_MODULES_VIDEO_CODING_UTILITY_VP8_PARSE_HEADER_H_
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace vp8 {
 enum {
   MB_FEATURE_TREE_PROBS = 3,

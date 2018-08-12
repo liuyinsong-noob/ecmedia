@@ -17,7 +17,7 @@
 #include "../system_wrappers/include/tick_util.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const uint32_t KEventMaxWaitTimeMs = 200;
 const uint32_t kMinRenderDelayMs = 10;

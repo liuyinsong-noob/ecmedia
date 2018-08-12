@@ -18,7 +18,7 @@
 #include "qm_select_data.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // QM-METHOD class
 

@@ -52,7 +52,7 @@
 #include "FIRFilter.h"
 #include "cpu_detect.h"
 
-using namespace cloopensoundtouch;
+using namespace yuntongxunsoundtouch;
 
 /*****************************************************************************
  *

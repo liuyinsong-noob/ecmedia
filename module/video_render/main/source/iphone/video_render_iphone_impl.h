@@ -17,7 +17,7 @@
 
 #include "i_video_render.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class CriticalSectionWrapper;
 class VideoRenderNSOpenGL;
 
@@ -138,7 +138,7 @@ private:
 
 };
 
-} //namespace cloopenwebrtc
+} //namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_VIDEO_RENDER_MAIN_SOURCE_MAC_VIDEO_RENDER_IPHONE_IMPL_H_
 #endif	// IPHONE_GLES_RENDERING

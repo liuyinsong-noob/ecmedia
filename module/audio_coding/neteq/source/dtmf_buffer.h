@@ -17,7 +17,7 @@
 #include "../base/constructormagic.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 struct DtmfEvent {
   uint32_t timestamp;
@@ -112,5 +112,5 @@ class DtmfBuffer {
   DISALLOW_COPY_AND_ASSIGN(DtmfBuffer);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_NETEQ_DTMF_BUFFER_H_

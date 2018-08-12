@@ -22,7 +22,7 @@
 const char *g_render_noopengl = NULL;
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VideoChannelNSOpenGL::VideoChannelNSOpenGL(ECIOSDisplay *window, int iId, VideoRenderNSOpenGL* owner) :
 _displayWindow( window),
@@ -621,6 +621,6 @@ void VideoRenderNSOpenGL::UnlockAGLCntx()
     _nsglContextCritSec.Leave();
 }
 
-} //namespace cloopenwebrtc
+} //namespace yuntongxunwebrtc
 
 #endif // IPHONE_GLES_RENDERING

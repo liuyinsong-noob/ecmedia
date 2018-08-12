@@ -45,7 +45,7 @@
 #include "../module/rtp_rtcp/source/tmmbr_help.h"
 #include "../system_wrappers/include/ntp_time.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 
 using rtcp::CommonHeader;
@@ -70,7 +70,7 @@ struct RTCPReceiver::PacketInformation {
   uint64_t rpsi_picture_id = 0;
   uint32_t receiver_estimated_max_bitrate_bps = 0;
   std::unique_ptr<rtcp::TransportFeedback> transport_feedback;
-  cloopenwebrtc::Optional<BitrateAllocation> target_bitrate_allocation;
+  yuntongxunwebrtc::Optional<BitrateAllocation> target_bitrate_allocation;
 };
 
 // Structure for handing TMMBR and TMMBN rtcp messages (RFC5104, section 3.5.4).
@@ -153,12 +153,12 @@ bool RTCPReceiver::IncomingPacket(const uint8_t* packet, size_t packet_size) {
 }
 
 int64_t RTCPReceiver::LastReceivedReceiverReport() const {
-  cloopenwebrtc::CritScope lock(&rtcp_receiver_lock_);
+  yuntongxunwebrtc::CritScope lock(&rtcp_receiver_lock_);
   return last_received_rr_ms_;
 }
 
 void RTCPReceiver::SetRemoteSSRC(uint32_t ssrc) {
-  cloopenwebrtc::CritScope lock(&rtcp_receiver_lock_);
+  yuntongxunwebrtc::CritScope lock(&rtcp_receiver_lock_);
   // New SSRC reset old reports.
   memset(&remote_sender_info_, 0, sizeof(remote_sender_info_));
   last_received_sr_ntp_.Reset();
@@ -166,13 +166,13 @@ void RTCPReceiver::SetRemoteSSRC(uint32_t ssrc) {
 }
 
 uint32_t RTCPReceiver::RemoteSSRC() const {
-  cloopenwebrtc::CritScope lock(&rtcp_receiver_lock_);
+  yuntongxunwebrtc::CritScope lock(&rtcp_receiver_lock_);
   return remote_ssrc_;
 }
 
 void RTCPReceiver::SetSsrcs(uint32_t main_ssrc,
                             const std::set<uint32_t>& registered_ssrcs) {
-  cloopenwebrtc::CritScope lock(&rtcp_receiver_lock_);
+  yuntongxunwebrtc::CritScope lock(&rtcp_receiver_lock_);
   main_ssrc_ = main_ssrc;
   registered_ssrcs_ = registered_ssrcs;
 }
@@ -182,7 +182,7 @@ int32_t RTCPReceiver::RTT(uint32_t remote_ssrc,
                           int64_t* avg_rtt_ms,
                           int64_t* min_rtt_ms,
                           int64_t* max_rtt_ms) const {
-  cloopenwebrtc::CritScope lock(&rtcp_receiver_lock_);
+  yuntongxunwebrtc::CritScope lock(&rtcp_receiver_lock_);
 
   auto it = received_report_blocks_.find(main_ssrc_);
   if (it == received_report_blocks_.end())
@@ -213,13 +213,13 @@ int32_t RTCPReceiver::RTT(uint32_t remote_ssrc,
 }
 
 void RTCPReceiver::SetRtcpXrRrtrStatus(bool enable) {
-  cloopenwebrtc::CritScope lock(&rtcp_receiver_lock_);
+  yuntongxunwebrtc::CritScope lock(&rtcp_receiver_lock_);
   xr_rrtr_status_ = enable;
 }
 
 bool RTCPReceiver::GetAndResetXrRrRtt(int64_t* rtt_ms) {
   DCHECK(rtt_ms);
-  cloopenwebrtc::CritScope lock(&rtcp_receiver_lock_);
+  yuntongxunwebrtc::CritScope lock(&rtcp_receiver_lock_);
   if (xr_rr_rtt_ms_ == 0) {
     return false;
   }
@@ -235,7 +235,7 @@ bool RTCPReceiver::NTP(uint32_t* received_ntp_secs,
                        uint32_t* rtcp_arrival_time_secs,
                        uint32_t* rtcp_arrival_time_frac,
                        uint32_t* rtcp_timestamp) const {
-  cloopenwebrtc::CritScope lock(&rtcp_receiver_lock_);
+  yuntongxunwebrtc::CritScope lock(&rtcp_receiver_lock_);
   if (!last_received_sr_ntp_.Valid())
     return false;
 
@@ -261,7 +261,7 @@ bool RTCPReceiver::NTP(uint32_t* received_ntp_secs,
 bool RTCPReceiver::LastReceivedXrReferenceTimeInfo(
     rtcp::ReceiveTimeInfo* info) const {
   DCHECK(info);
-  cloopenwebrtc::CritScope lock(&rtcp_receiver_lock_);
+  yuntongxunwebrtc::CritScope lock(&rtcp_receiver_lock_);
   if (!last_received_xr_ntp_.Valid())
     return false;
 
@@ -278,7 +278,7 @@ bool RTCPReceiver::LastReceivedXrReferenceTimeInfo(
 
 int32_t RTCPReceiver::SenderInfoReceived(RTCPSenderInfo* sender_info) const {
   DCHECK(sender_info);
-  cloopenwebrtc::CritScope lock(&rtcp_receiver_lock_);
+  yuntongxunwebrtc::CritScope lock(&rtcp_receiver_lock_);
   if (!last_received_sr_ntp_.Valid())
     return -1;
 
@@ -290,7 +290,7 @@ int32_t RTCPReceiver::SenderInfoReceived(RTCPSenderInfo* sender_info) const {
 int32_t RTCPReceiver::StatisticsReceived(
     std::vector<RTCPReportBlock>* receive_blocks) const {
   DCHECK(receive_blocks);
-  cloopenwebrtc::CritScope lock(&rtcp_receiver_lock_);
+  yuntongxunwebrtc::CritScope lock(&rtcp_receiver_lock_);
   for (const auto& reports_per_receiver : received_report_blocks_)
     for (const auto& report : reports_per_receiver.second)
       receive_blocks->push_back(report.second.report_block);
@@ -299,14 +299,14 @@ int32_t RTCPReceiver::StatisticsReceived(
 
 void RTCPReceiver::GetPacketTypeCounter(
     RtcpPacketTypeCounter* packet_counter) const {
-  cloopenwebrtc::CritScope lock(&rtcp_receiver_lock_);
+  yuntongxunwebrtc::CritScope lock(&rtcp_receiver_lock_);
   *packet_counter = packet_type_counter_;
 }
 
 bool RTCPReceiver::ParseCompoundPacket(const uint8_t* packet_begin,
                                        const uint8_t* packet_end,
                                        PacketInformation* packet_information) {
-	cloopenwebrtc::CritScope lock(&rtcp_receiver_lock_);
+	yuntongxunwebrtc::CritScope lock(&rtcp_receiver_lock_);
 
   CommonHeader rtcp_block;
   for (const uint8_t* next_block = packet_begin; next_block != packet_end;
@@ -569,7 +569,7 @@ RTCPReceiver::TmmbrInformation* RTCPReceiver::GetTmmbrInformation(
 }
 
 bool RTCPReceiver::RtcpRrTimeout(int64_t rtcp_interval_ms) {
-  cloopenwebrtc::CritScope lock(&rtcp_receiver_lock_);
+  yuntongxunwebrtc::CritScope lock(&rtcp_receiver_lock_);
   if (last_received_rr_ms_ == 0)
     return false;
 
@@ -583,7 +583,7 @@ bool RTCPReceiver::RtcpRrTimeout(int64_t rtcp_interval_ms) {
 }
 
 bool RTCPReceiver::RtcpRrSequenceNumberTimeout(int64_t rtcp_interval_ms) {
-  cloopenwebrtc::CritScope lock(&rtcp_receiver_lock_);
+  yuntongxunwebrtc::CritScope lock(&rtcp_receiver_lock_);
   if (last_increased_sequence_number_ms_ == 0)
     return false;
 
@@ -598,7 +598,7 @@ bool RTCPReceiver::RtcpRrSequenceNumberTimeout(int64_t rtcp_interval_ms) {
 }
 
 bool RTCPReceiver::UpdateTmmbrTimers() {
-  cloopenwebrtc::CritScope lock(&rtcp_receiver_lock_);
+  yuntongxunwebrtc::CritScope lock(&rtcp_receiver_lock_);
 
   int64_t now_ms = clock_->TimeInMilliseconds();
   // Use audio define since we don't know what interval the remote peer use.
@@ -636,7 +636,7 @@ bool RTCPReceiver::UpdateTmmbrTimers() {
 }
 
 std::vector<rtcp::TmmbItem> RTCPReceiver::BoundingSet(bool* tmmbr_owner) {
-  cloopenwebrtc::CritScope lock(&rtcp_receiver_lock_);
+  yuntongxunwebrtc::CritScope lock(&rtcp_receiver_lock_);
   TmmbrInformation* tmmbr_info = GetTmmbrInformation(remote_ssrc_);
   if (!tmmbr_info)
     return std::vector<rtcp::TmmbItem>();
@@ -656,7 +656,7 @@ void RTCPReceiver::HandleSdes(const CommonHeader& rtcp_block,
   for (const rtcp::Sdes::Chunk& chunk : sdes.chunks()) {
     received_cnames_[chunk.ssrc] = chunk.cname;
     {
-      cloopenwebrtc::CritScope lock(&feedbacks_lock_);
+      yuntongxunwebrtc::CritScope lock(&feedbacks_lock_);
       if (stats_callback_)
         stats_callback_->CNameChanged(chunk.cname.c_str(), chunk.ssrc);
     }
@@ -961,13 +961,13 @@ void RTCPReceiver::NotifyTmmbrUpdated() {
 
 void RTCPReceiver::RegisterRtcpStatisticsCallback(
     RtcpStatisticsCallback* callback) {
-  cloopenwebrtc::CritScope cs(&feedbacks_lock_);
+  yuntongxunwebrtc::CritScope cs(&feedbacks_lock_);
 //    printf("seansean111 registerRtcpStatisticsCallback this:%p, callback:%p\n", this, callback);
   stats_callback_ = callback;
 }
 
 RtcpStatisticsCallback* RTCPReceiver::GetRtcpStatisticsCallback() {
-  cloopenwebrtc::CritScope cs(&feedbacks_lock_);
+  yuntongxunwebrtc::CritScope cs(&feedbacks_lock_);
   return stats_callback_;
 }
 
@@ -984,7 +984,7 @@ void RTCPReceiver::TriggerCallbacksFromRtcpPacket(
   std::set<uint32_t> registered_ssrcs;
   {
     // We don't want to hold this critsect when triggering the callbacks below.
-    cloopenwebrtc::CritScope lock(&rtcp_receiver_lock_);
+    yuntongxunwebrtc::CritScope lock(&rtcp_receiver_lock_);
     local_ssrc = main_ssrc_;
     registered_ssrcs = registered_ssrcs_;
   }
@@ -1074,7 +1074,7 @@ void RTCPReceiver::TriggerCallbacksFromRtcpPacket(
 
 //    printf("seansean111 this:%p, callback:%p\n", this, stats_callback_);
   if (!receiver_only_) {
-    cloopenwebrtc::CritScope cs(&feedbacks_lock_);
+    yuntongxunwebrtc::CritScope cs(&feedbacks_lock_);
     if (stats_callback_) {
       for (const auto& report_block : packet_information.report_blocks) {
         RtcpStatistics stats;
@@ -1099,7 +1099,7 @@ int32_t RTCPReceiver::CNAME(uint32_t remoteSSRC,
                             char cName[RTCP_CNAME_SIZE]) const {
   DCHECK(cName);
 
-  cloopenwebrtc::CritScope lock(&rtcp_receiver_lock_);
+  yuntongxunwebrtc::CritScope lock(&rtcp_receiver_lock_);
   auto received_cname_it = received_cnames_.find(remoteSSRC);
   if (received_cname_it == received_cnames_.end())
     return -1;
@@ -1110,7 +1110,7 @@ int32_t RTCPReceiver::CNAME(uint32_t remoteSSRC,
 }
 
 std::vector<rtcp::TmmbItem> RTCPReceiver::TmmbrReceived() {
-  cloopenwebrtc::CritScope lock(&rtcp_receiver_lock_);
+  yuntongxunwebrtc::CritScope lock(&rtcp_receiver_lock_);
   std::vector<rtcp::TmmbItem> candidates;
 
   int64_t now_ms = clock_->TimeInMilliseconds();
@@ -1134,13 +1134,13 @@ std::vector<rtcp::TmmbItem> RTCPReceiver::TmmbrReceived() {
 void RTCPReceiver::RegisterReceiveRtcpPacketTypeCounterObserver(RtcpPacketTypeCounterObserver* callback)
     {//receive_frame_count_observer_
 //        printf("seansean111 RegisterReceiveRtcpPacketTypeCounterObserver this:%p, callback:%p\n", this, callback);
-        cloopenwebrtc::CritScope lock(&feedbacks_lock_);
+        yuntongxunwebrtc::CritScope lock(&feedbacks_lock_);
         receive_frame_count_observer_ = callback;
     }
 RtcpPacketTypeCounterObserver* RTCPReceiver::GetReceiveRtcpPacketTypeCounterObserver()
     {
-        cloopenwebrtc::CritScope lock(&feedbacks_lock_);
+        yuntongxunwebrtc::CritScope lock(&feedbacks_lock_);
         return receive_frame_count_observer_;
     }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

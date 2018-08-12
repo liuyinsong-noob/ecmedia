@@ -21,7 +21,7 @@ extern webrtc_adm_linux_pulse::PulseAudioSymbolTable PaSymbolTable;
 #define LATE(sym) \
   LATESYM_GET(webrtc_adm_linux_pulse::PulseAudioSymbolTable, &PaSymbolTable, sym)
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 enum { kMaxRetryOnFailure = 2 };

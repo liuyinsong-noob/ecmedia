@@ -12,7 +12,7 @@
 
 #include <math.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const float ExpFilter::kValueUndefined = -1.0f;
 
@@ -40,4 +40,4 @@ float ExpFilter::Apply(float exp, float sample) {
 void ExpFilter::UpdateBase(float alpha) {
   alpha_ = alpha;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

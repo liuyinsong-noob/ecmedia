@@ -22,7 +22,7 @@
 #include "sync_buffer.h"
 #include "module_common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     extern int printTime();
 Operations DecisionLogicNormal::GetDecisionSpecialized(
     const SyncBuffer& sync_buffer,
@@ -235,4 +235,4 @@ bool DecisionLogicNormal::MaxWaitForPacket() const {
   return num_consecutive_expands_ >= kMaxWaitForPacket;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

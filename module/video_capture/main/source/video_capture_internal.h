@@ -14,7 +14,7 @@
 #ifdef ANDROID
 #include <jni.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // In order to be able to use the internal webrtc video capture
 // for android, the jvm objects must be set via this method.

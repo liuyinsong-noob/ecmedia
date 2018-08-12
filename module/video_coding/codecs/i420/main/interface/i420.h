@@ -14,7 +14,7 @@
 //#include "video_codec_interface.h"
 //#include "typedefs.h"
 //
-//namespace cloopenwebrtc
+//namespace yuntongxunwebrtc
 //{
 //
 //class I420Encoder : public VideoEncoder
@@ -151,6 +151,6 @@
 //
 //}; // end of WebRtcI420Decoder class
 //
-//} // namespace cloopenwebrtc
+//} // namespace yuntongxunwebrtc
 //
 //#endif // WEBRTC_MODULES_VIDEO_CODING_CODECS_I420_H_

@@ -34,7 +34,7 @@
    to execute concurrently.
 */
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VideoProcessingModule : public Module {
  public:

@@ -29,7 +29,7 @@
 
 //#define DEBUG_DECODER_BIT_STREAM
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class EncodedFrameObserver;
 class VideoEncoderRateObserver;
@@ -192,7 +192,7 @@ class VideoReceiver {
   void RegisterPreDecodeImageCallback(EncodedImageCallback* observer);
 
  protected:
-  int32_t Decode(const cloopenwebrtc::VCMEncodedFrame& frame)
+  int32_t Decode(const yuntongxunwebrtc::VCMEncodedFrame& frame)
       EXCLUSIVE_LOCKS_REQUIRED(_receiveCritSect);
   int32_t RequestKeyFrame();
   int32_t RequestSliceLossIndication(const uint64_t pictureID) const;

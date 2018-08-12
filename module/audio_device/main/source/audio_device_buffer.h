@@ -15,7 +15,7 @@
 #include "../system_wrappers/include/file_wrapper.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class CriticalSectionWrapper;
 
 const uint32_t kPulsePeriodMs = 1000;
@@ -119,6 +119,6 @@ private:
     int high_delay_counter_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_AUDIO_DEVICE_AUDIO_DEVICE_BUFFER_H

@@ -11,7 +11,7 @@
 #include "../system_wrappers/include/trace.h"
 #include "dtmf_inband_queue.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 DtmfInbandQueue::DtmfInbandQueue(int32_t id):
     _id(id),

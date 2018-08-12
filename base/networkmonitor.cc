@@ -18,10 +18,10 @@ const uint32_t UPDATE_NETWORKS_MESSAGE = 1;
 // This is set by NetworkMonitorFactory::SetFactory and the caller of
 // NetworkMonitorFactory::SetFactory must be responsible for calling
 // ReleaseFactory to destroy the factory.
-cloopenwebrtc::NetworkMonitorFactory* network_monitor_factory = nullptr;
+yuntongxunwebrtc::NetworkMonitorFactory* network_monitor_factory = nullptr;
 }  // namespace
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 NetworkMonitorInterface::NetworkMonitorInterface() {}
 
 NetworkMonitorInterface::~NetworkMonitorInterface() {}
@@ -59,4 +59,4 @@ NetworkMonitorFactory* NetworkMonitorFactory::GetFactory() {
   return network_monitor_factory;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

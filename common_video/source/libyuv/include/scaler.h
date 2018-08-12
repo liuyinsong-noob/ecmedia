@@ -19,7 +19,7 @@
 #include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Supported scaling types
 enum ScaleMethod {

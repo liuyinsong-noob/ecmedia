@@ -15,7 +15,7 @@
 
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 MovingMoments::MovingMoments(size_t length)
     : length_(length),
@@ -46,4 +46,4 @@ void MovingMoments::CalculateMoments(const float* in, size_t in_length,
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -21,7 +21,7 @@ extern webrtc_adm_linux_alsa::AlsaSymbolTable AlsaSymbolTable;
 #define LATE(sym) \
   LATESYM_GET(webrtc_adm_linux_alsa::AlsaSymbolTable, &AlsaSymbolTable, sym)
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 AudioMixerManagerLinuxALSA::AudioMixerManagerLinuxALSA(const int32_t id) :

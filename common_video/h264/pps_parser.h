@@ -13,11 +13,11 @@
 
 #include "./base/optional.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class BitBuffer;
 }
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // A class for parsing out picture parameter set (PPS) data from a H264 NALU.
 class PpsParser {
@@ -38,25 +38,25 @@ class PpsParser {
   };
 
   // Unpack RBSP and parse PPS state from the supplied buffer.
-  static cloopenwebrtc::Optional<PpsState> ParsePps(const uint8_t* data, size_t length);
+  static yuntongxunwebrtc::Optional<PpsState> ParsePps(const uint8_t* data, size_t length);
 
   static bool ParsePpsIds(const uint8_t* data,
                           size_t length,
                           uint32_t* pps_id,
                           uint32_t* sps_id);
 
-  static cloopenwebrtc::Optional<uint32_t> ParsePpsIdFromSlice(const uint8_t* data,
+  static yuntongxunwebrtc::Optional<uint32_t> ParsePpsIdFromSlice(const uint8_t* data,
                                                      size_t length);
 
  protected:
   // Parse the PPS state, for a bit buffer where RBSP decoding has already been
   // performed.
-  static cloopenwebrtc::Optional<PpsState> ParseInternal(cloopenwebrtc::BitBuffer* bit_buffer);
-  static bool ParsePpsIdsInternal(cloopenwebrtc::BitBuffer* bit_buffer,
+  static yuntongxunwebrtc::Optional<PpsState> ParseInternal(yuntongxunwebrtc::BitBuffer* bit_buffer);
+  static bool ParsePpsIdsInternal(yuntongxunwebrtc::BitBuffer* bit_buffer,
                                   uint32_t* pps_id,
                                   uint32_t* sps_id);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_COMMON_VIDEO_H264_PPS_PARSER_H_

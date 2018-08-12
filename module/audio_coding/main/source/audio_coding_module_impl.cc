@@ -27,7 +27,7 @@
 #include "../system_wrappers/include/trace.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -188,10 +188,10 @@ AudioCodingModuleImpl::AudioCodingModuleImpl(
   }
 
   if (InitializeReceiverSafe() < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "Cannot initialize receiver");
   }
-  WEBRTC_TRACE(cloopenwebrtc::kTraceMemory, cloopenwebrtc::kTraceAudioCoding, id_, "Created");
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceMemory, yuntongxunwebrtc::kTraceAudioCoding, id_, "Created");
 }
 
 AudioCodingModuleImpl::~AudioCodingModuleImpl() {
@@ -247,7 +247,7 @@ AudioCodingModuleImpl::~AudioCodingModuleImpl() {
 
   delete acm_crit_sect_;
   acm_crit_sect_ = NULL;
-  WEBRTC_TRACE(cloopenwebrtc::kTraceMemory, cloopenwebrtc::kTraceAudioCoding, id_,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceMemory, yuntongxunwebrtc::kTraceAudioCoding, id_,
                "Destroyed");
 }
 
@@ -309,7 +309,7 @@ int32_t AudioCodingModuleImpl::Process() {
       int static counter = 0;
     if (status < 0) {
       // Encode failed.
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                    "Process(): Encoding Failed");
         
       length_bytes = 0;
@@ -626,7 +626,7 @@ ACMGenericCodec* AudioCodingModuleImpl::CreateCodec(const CodecInst& codec) {
   my_codec = ACMCodecDB::CreateCodecInstance(codec);
   if (my_codec == NULL) {
     // Error, could not create the codec.
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "ACMCodecDB::CreateCodecInstance() failed in CreateCodec()");
     return my_codec;
   }
@@ -641,7 +641,7 @@ static int IsValidSendCodec(const CodecInst& send_codec,
                             int acm_id,
                             int* mirror_id) {
   if ((send_codec.channels != 1) && (send_codec.channels != 2)) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, acm_id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, acm_id,
                  "Wrong number of channels (%d, only mono and stereo are "
                  "supported) for %s encoder", send_codec.channels,
                  is_primary_encoder ? "primary" : "secondary");
@@ -650,7 +650,7 @@ static int IsValidSendCodec(const CodecInst& send_codec,
 
   int codec_id = ACMCodecDB::CodecNumber(send_codec, mirror_id);
   if (codec_id < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, acm_id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, acm_id,
                  "Invalid codec setting for the send codec.");
     return -1;
   }
@@ -659,7 +659,7 @@ static int IsValidSendCodec(const CodecInst& send_codec,
   // ACMCodecDB::CodecNumber().
   // Check if the payload-type is valid
   if (!ACMCodecDB::ValidPayloadType(send_codec.pltype)) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, acm_id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, acm_id,
                  "Invalid payload-type %d for %s.", send_codec.pltype,
                  send_codec.plname);
     return -1;
@@ -667,7 +667,7 @@ static int IsValidSendCodec(const CodecInst& send_codec,
 
   // Telephone-event cannot be a send codec.
   if (!STR_CASE_CMP(send_codec.plname, "telephone-event")) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, acm_id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, acm_id,
                  "telephone-event cannot be a send codec");
     *mirror_id = -1;
     return -1;
@@ -675,7 +675,7 @@ static int IsValidSendCodec(const CodecInst& send_codec,
 
   if (ACMCodecDB::codec_settings_[codec_id].channel_support
       < send_codec.channels) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, acm_id,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, acm_id,
                  "%d number of channels not supportedn for %s.",
                  send_codec.channels, send_codec.plname);
     *mirror_id = -1;
@@ -686,14 +686,14 @@ static int IsValidSendCodec(const CodecInst& send_codec,
     // If registering the secondary encoder, then RED and CN are not valid
     // choices as encoder.
     if (IsCodecRED(&send_codec)) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, acm_id,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, acm_id,
                    "RED cannot be secondary codec");
       *mirror_id = -1;
       return -1;
     }
 
     if (IsCodecCN(&send_codec)) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, acm_id,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, acm_id,
                    "DTX cannot be secondary codec");
       *mirror_id = -1;
       return -1;
@@ -725,7 +725,7 @@ int AudioCodingModuleImpl::RegisterSendCodec(const CodecInst& send_codec) {
     // ACMCodecDB::CodecNumber().
     // Check if the payload-type is valid
     if (!ACMCodecDB::ValidPayloadType(send_codec.pltype)) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                    "Invalid payload-type %d for %s.", send_codec.pltype,
                    send_codec.plname);
       return -1;
@@ -757,7 +757,7 @@ int AudioCodingModuleImpl::RegisterSendCodec(const CodecInst& send_codec) {
         break;
       }
       default: {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                      "RegisterSendCodec() failed, invalid frequency for CNG "
                      "registration");
         return -1;
@@ -770,7 +770,7 @@ int AudioCodingModuleImpl::RegisterSendCodec(const CodecInst& send_codec) {
   if (send_codec.channels == 2) {
     stereo_send_ = true;
     if (vad_enabled_ || dtx_enabled_) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceAudioCoding, id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceAudioCoding, id_,
                    "VAD/DTX is turned off, not supported when sending stereo.");
     }
     vad_enabled_ = false;
@@ -797,7 +797,7 @@ int AudioCodingModuleImpl::RegisterSendCodec(const CodecInst& send_codec) {
     if (codecs_[mirror_id] == NULL) {
       codecs_[mirror_id] = CreateCodec(send_codec);
       if (codecs_[mirror_id] == NULL) {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                      "Cannot Create the codec");
         return -1;
       }
@@ -824,10 +824,10 @@ int AudioCodingModuleImpl::RegisterSendCodec(const CodecInst& send_codec) {
       // Depending on that different messages are logged.
       if (!send_codec_registered_) {
         current_send_codec_idx_ = -1;
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                      "Cannot Initialize the encoder No Encoder is registered");
       } else {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                      "Cannot Initialize the encoder, continue encoding with "
                      "the previously registered codec");
       }
@@ -850,7 +850,7 @@ int AudioCodingModuleImpl::RegisterSendCodec(const CodecInst& send_codec) {
 //        codec_fec_enabled_ = false;
 //      } else {
 //        if (codec_ptr->SetFEC(codec_fec_enabled_ || send_codec.fecEnabled) < 0) {
-//          WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+//          WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
 //                       "Cannot set codec FEC");
 //          return -1;
 //        }
@@ -860,7 +860,7 @@ int AudioCodingModuleImpl::RegisterSendCodec(const CodecInst& send_codec) {
         } else {
             codec_fec_enabled_ = codec_params.codec_inst.fecEnabled;
             if (codec_ptr->SetFEC(codec_fec_enabled_) < 0) {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                              "Cannot set codec FEC");
                 return -1;
             }
@@ -892,7 +892,7 @@ int AudioCodingModuleImpl::RegisterSendCodec(const CodecInst& send_codec) {
       // Record it later when the sampling frequency is changed
       // successfully.
       if (!ACMCodecDB::ValidPayloadType(send_codec.pltype)) {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                      "Out of range payload type");
         return -1;
       }
@@ -930,7 +930,7 @@ int AudioCodingModuleImpl::RegisterSendCodec(const CodecInst& send_codec) {
       // Force initialization.
       if (codecs_[current_send_codec_idx_]->InitEncoder(&codec_params,
                                                         true) < 0) {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                      "Could not change the codec packet-size.");
         return -1;
       }
@@ -947,7 +947,7 @@ int AudioCodingModuleImpl::RegisterSendCodec(const CodecInst& send_codec) {
     // Check if a change in Rate is required.
     if (send_codec.rate != send_codec_inst_.rate) {
       if (codecs_[codec_id]->SetBitRate(send_codec.rate) < 0) {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                      "Could not change the codec rate.");
         return -1;
       }
@@ -959,7 +959,7 @@ int AudioCodingModuleImpl::RegisterSendCodec(const CodecInst& send_codec) {
     } else {
       codec_fec_enabled_ = send_codec.fecEnabled;
       if (codecs_[codec_id]->SetFEC(codec_fec_enabled_) < 0) {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                      "Cannot set codec FEC");
         return -1;
       }
@@ -973,12 +973,12 @@ int AudioCodingModuleImpl::RegisterSendCodec(const CodecInst& send_codec) {
 // Get current send codec.
 int AudioCodingModuleImpl::SendCodec(
     CodecInst* current_codec) const {
-  WEBRTC_TRACE(cloopenwebrtc::kTraceStream, cloopenwebrtc::kTraceAudioCoding, id_,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceStream, yuntongxunwebrtc::kTraceAudioCoding, id_,
                "SendCodec()");
   CriticalSectionScoped lock(acm_crit_sect_);
 
   if (!send_codec_registered_) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceStream, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceStream, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "SendCodec Failed, no codec is registered");
     return -1;
   }
@@ -992,12 +992,12 @@ int AudioCodingModuleImpl::SendCodec(
 
 // Get current send frequency.
 int AudioCodingModuleImpl::SendFrequency() const {
-  WEBRTC_TRACE(cloopenwebrtc::kTraceStream, cloopenwebrtc::kTraceAudioCoding, id_,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceStream, yuntongxunwebrtc::kTraceAudioCoding, id_,
                "SendFrequency()");
   CriticalSectionScoped lock(acm_crit_sect_);
 
   if (!send_codec_registered_) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceStream, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceStream, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "SendFrequency Failed, no codec is registered");
     return -1;
   }
@@ -1012,7 +1012,7 @@ int AudioCodingModuleImpl::SendBitrate() const {
   CriticalSectionScoped lock(acm_crit_sect_);
 
   if (!send_codec_registered_) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceStream, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceStream, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "SendBitrate Failed, no codec is registered");
     return -1;
   }
@@ -1044,7 +1044,7 @@ int AudioCodingModuleImpl::Add10MsData(
     const AudioFrame& audio_frame) {
   if (audio_frame.samples_per_channel_ <= 0) {
     assert(false);
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "Cannot Add 10 ms audio, payload length is negative or "
                  "zero");
     return -1;
@@ -1052,7 +1052,7 @@ int AudioCodingModuleImpl::Add10MsData(
 
   if (audio_frame.sample_rate_hz_ > 48000) {
     assert(false);
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "Cannot Add 10 ms audio, input frequency not valid");
     return -1;
   }
@@ -1060,14 +1060,14 @@ int AudioCodingModuleImpl::Add10MsData(
   // If the length and frequency matches. We currently just support raw PCM.
   if ((audio_frame.sample_rate_hz_ / 100)
       != audio_frame.samples_per_channel_) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "Cannot Add 10 ms audio, input frequency and length doesn't"
                  " match");
     return -1;
   }
 
   if (audio_frame.num_channels_ != 1 && audio_frame.num_channels_ != 2) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "Cannot Add 10 ms audio, invalid number of channels.");
     return -1;
   }
@@ -1252,7 +1252,7 @@ int AudioCodingModuleImpl::PreprocessToAddData(const AudioFrame& in_frame,
                                   dest_ptr_audio);
 
     if (preprocess_frame_.samples_per_channel_ < 0) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                    "Cannot add 10 ms audio, resampling failed");
       return -1;
     }
@@ -1282,7 +1282,7 @@ int AudioCodingModuleImpl::SetREDStatus(
   CriticalSectionScoped lock(acm_crit_sect_);
 
   if (enable_red == true && codec_fec_enabled_ == true) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "Codec internal FEC and RED cannot be co-enabled.");
 //    return -1;
   }
@@ -1302,7 +1302,7 @@ int AudioCodingModuleImpl::SetREDStatus(
 #else
     bool /* enable_red */) {
   red_enabled_ = false;
-  WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceAudioCoding, id_,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceAudioCoding, id_,
                "  WEBRTC_CODEC_RED is undefined => red_enabled_ = %d",
                red_enabled_);
   return -1;
@@ -1322,7 +1322,7 @@ int AudioCodingModuleImpl::SetCodecFEC(bool enable_codec_fec) {
   CriticalSectionScoped lock(acm_crit_sect_);
 
   if (enable_codec_fec == true && red_enabled_ == true) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "Codec internal FEC and RED cannot be co-enabled.");
     return -1;
   }
@@ -1330,7 +1330,7 @@ int AudioCodingModuleImpl::SetCodecFEC(bool enable_codec_fec) {
   // Set codec FEC.
   if (HaveValidEncoder("SetCodecFEC") &&
       codecs_[current_send_codec_idx_]->SetFEC(enable_codec_fec) < 0) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                    "Set codec internal FEC failed.");
     return -1;
   }
@@ -1342,7 +1342,7 @@ int AudioCodingModuleImpl::SetPacketLossRate(int loss_rate) {
   CriticalSectionScoped lock(acm_crit_sect_);
   if (HaveValidEncoder("SetPacketLossRate") &&
       codecs_[current_send_codec_idx_]->SetPacketLossRate(loss_rate) < 0) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                    "Set packet loss rate failed.");
     return -1;
   }
@@ -1385,7 +1385,7 @@ int AudioCodingModuleImpl::SetVADSafe(bool enable_dtx,
   // Sanity check of the mode.
   if ((mode != VADNormal) && (mode != VADLowBitrate)
       && (mode != VADAggr) && (mode != VADVeryAggr)) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "Invalid VAD Mode %d, no change is made to VAD/DTX status",
                  mode);
     return -1;
@@ -1394,7 +1394,7 @@ int AudioCodingModuleImpl::SetVADSafe(bool enable_dtx,
   // Check that the send codec is mono. We don't support VAD/DTX for stereo
   // sending.
   if ((enable_dtx || enable_vad) && stereo_send_) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "VAD/DTX not supported for stereo sending");
     dtx_enabled_ = false;
     vad_enabled_ = false;
@@ -1412,7 +1412,7 @@ int AudioCodingModuleImpl::SetVADSafe(bool enable_dtx,
   if (HaveValidEncoder("SetVAD") && codecs_[current_send_codec_idx_]->SetVAD(
       &dtx_enabled_, &vad_enabled_,  &vad_mode_) < 0) {
       // SetVAD failed.
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                    "SetVAD failed");
       vad_enabled_ = false;
       dtx_enabled_ = false;
@@ -1462,7 +1462,7 @@ int AudioCodingModuleImpl::InitializeReceiverSafe() {
     if (IsCodecRED(i) || IsCodecCN(i)) {
       uint8_t pl_type = static_cast<uint8_t>(ACMCodecDB::database_[i].pltype);
       if (receiver_.AddCodec(i, pl_type, 1, NULL) < 0) {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                      "Cannot register master codec.");
         return -1;
       }
@@ -1482,7 +1482,7 @@ int AudioCodingModuleImpl::ResetDecoder() {
 
 // Get current receive frequency.
 int AudioCodingModuleImpl::ReceiveFrequency() const {
-  WEBRTC_TRACE(cloopenwebrtc::kTraceStream, cloopenwebrtc::kTraceAudioCoding, id_,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceStream, yuntongxunwebrtc::kTraceAudioCoding, id_,
                "ReceiveFrequency()");
 
   CriticalSectionScoped lock(acm_crit_sect_);
@@ -1495,7 +1495,7 @@ int AudioCodingModuleImpl::ReceiveFrequency() const {
 
 // Get current playout frequency.
 int AudioCodingModuleImpl::PlayoutFrequency() const {
-  WEBRTC_TRACE(cloopenwebrtc::kTraceStream, cloopenwebrtc::kTraceAudioCoding, id_,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceStream, yuntongxunwebrtc::kTraceAudioCoding, id_,
                "PlayoutFrequency()");
 
   CriticalSectionScoped lock(acm_crit_sect_);
@@ -1509,7 +1509,7 @@ int AudioCodingModuleImpl::RegisterReceiveCodec(const CodecInst& codec) {
   CriticalSectionScoped lock(acm_crit_sect_);
 
   if (codec.channels > 2 || codec.channels < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "Unsupported number of channels, %d.", codec.channels);
     return -1;
   }
@@ -1517,7 +1517,7 @@ int AudioCodingModuleImpl::RegisterReceiveCodec(const CodecInst& codec) {
   // TODO(turajs) do we need this for NetEq 4?
   if (!receiver_initialized_) {
     if (InitializeReceiverSafe() < 0) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                    "Cannot initialize receiver, failed registering codec.");
       return -1;
     }
@@ -1527,14 +1527,14 @@ int AudioCodingModuleImpl::RegisterReceiveCodec(const CodecInst& codec) {
   int codec_id = ACMCodecDB::ReceiverCodecNumber(codec, &mirror_id);
 
   if (codec_id < 0 || codec_id >= ACMCodecDB::kNumCodecs) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "Wrong codec params to be registered as receive codec");
     return -1;
   }
 
   // Check if the payload-type is valid.
   if (!ACMCodecDB::ValidPayloadType(codec.pltype)) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "Invalid payload-type %d for %s.", codec.pltype,
                  codec.plname);
     return -1;
@@ -1544,7 +1544,7 @@ int AudioCodingModuleImpl::RegisterReceiveCodec(const CodecInst& codec) {
   // Get |decoder| associated with |codec|. |decoder| can be NULL if |codec|
   // does not own its decoder.
   if (GetAudioDecoder(codec, codec_id, mirror_id, &decoder) < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "Wrong codec params to be registered as receive codec");
     return -1;
   }
@@ -1584,7 +1584,7 @@ int AudioCodingModuleImpl::IncomingPacket(const uint8_t* incoming_payload,
 // Minimum playout delay (Used for lip-sync).
 int AudioCodingModuleImpl::SetMinimumPlayoutDelay(int time_ms) {
   if ((time_ms < 0) || (time_ms > 10000)) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "Delay must be in the range of 0-1000 milliseconds.");
     return -1;
   }
@@ -1593,7 +1593,7 @@ int AudioCodingModuleImpl::SetMinimumPlayoutDelay(int time_ms) {
 
 int AudioCodingModuleImpl::SetMaximumPlayoutDelay(int time_ms) {
   if ((time_ms < 0) || (time_ms > 10000)) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "Delay must be in the range of 0-1000 milliseconds.");
     return -1;
   }
@@ -1632,7 +1632,7 @@ int AudioCodingModuleImpl::PlayoutData10Ms(int desired_freq_hz,
                                            AudioFrame* audio_frame) {
   // GetAudio always returns 10 ms, at the requested sample rate.
   if (receiver_.GetAudio(desired_freq_hz, audio_frame) != 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "PlayoutData failed, RecOut Failed");
     return -1;
   }
@@ -1653,7 +1653,7 @@ int AudioCodingModuleImpl::NetworkStatistics(ACMNetworkStatistics* statistics) {
 }
 
 int AudioCodingModuleImpl::RegisterVADCallback(ACMVADCallback* vad_callback) {
-  WEBRTC_TRACE(cloopenwebrtc::kTraceDebug, cloopenwebrtc::kTraceAudioCoding, id_,
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceAudioCoding, id_,
                "RegisterVADCallback()");
   CriticalSectionScoped lock(callback_crit_sect_);
   vad_callback_ = vad_callback;
@@ -1692,7 +1692,7 @@ int AudioCodingModuleImpl::ReplaceInternalDTXWithWebRtc(bool use_webrtc_dtx) {
 
   if (!HaveValidEncoder("ReplaceInternalDTXWithWebRtc")) {
     WEBRTC_TRACE(
-        cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+        yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
         "Cannot replace codec internal DTX when no send codec is registered.");
     return -1;
   }
@@ -1703,7 +1703,7 @@ int AudioCodingModuleImpl::ReplaceInternalDTXWithWebRtc(bool use_webrtc_dtx) {
   if (res == 1) {
     vad_enabled_ = true;
   } else if (res < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "Failed to set ReplaceInternalDTXWithWebRtc(%d)",
                  use_webrtc_dtx);
     return res;
@@ -1777,18 +1777,18 @@ int AudioCodingModuleImpl::PlayoutTimestamp(uint32_t* timestamp) {
 bool AudioCodingModuleImpl::HaveValidEncoder(const char* caller_name) const {
   if ((!send_codec_registered_) || (current_send_codec_idx_ < 0) ||
       (current_send_codec_idx_ >= ACMCodecDB::kNumCodecs)) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "%s failed: No send codec is registered.", caller_name);
     return false;
   }
   if ((current_send_codec_idx_ < 0) ||
       (current_send_codec_idx_ >= ACMCodecDB::kNumCodecs)) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "%s failed: Send codec index out of range.", caller_name);
     return false;
   }
   if (codecs_[current_send_codec_idx_] == NULL) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                  "%s failed: Send codec is NULL pointer.", caller_name);
     return false;
   }
@@ -1845,7 +1845,7 @@ int AudioCodingModuleImpl::GetAudioDecoder(const CodecInst& codec, int codec_id,
     if (codecs_[mirror_id] == NULL) {
       codecs_[mirror_id] = CreateCodec(codec);
       if (codecs_[mirror_id] == NULL) {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, id_,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, id_,
                      "Cannot Create the codec");
         return -1;
       }
@@ -1918,7 +1918,7 @@ bool AudioCodingImpl::RegisterSendCodec(int encoder_type,
           encoder_type, &codec_name, &sample_rate_hz, &channels)) {
     return false;
   }
-  cloopenwebrtc::CodecInst codec;
+  yuntongxunwebrtc::CodecInst codec;
   AudioCodingModule::Codec(
       codec_name.c_str(), &codec, sample_rate_hz, channels);
   codec.pltype = payload_type;
@@ -1966,7 +1966,7 @@ bool AudioCodingImpl::RegisterReceiveCodec(int decoder_type,
           decoder_type, &codec_name, &sample_rate_hz, &channels)) {
     return false;
   }
-  cloopenwebrtc::CodecInst codec;
+  yuntongxunwebrtc::CodecInst codec;
   AudioCodingModule::Codec(
       codec_name.c_str(), &codec, sample_rate_hz, channels);
   codec.pltype = payload_type;
@@ -2180,4 +2180,4 @@ bool AudioCodingImpl::MapCodecTypeToParameters(int codec_type,
   return true;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

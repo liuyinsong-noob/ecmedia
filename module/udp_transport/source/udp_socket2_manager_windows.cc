@@ -16,7 +16,7 @@
 #include "../system_wrappers/include/aligned_malloc.h"
 #include "udp_socket2_windows.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 WebRtc_UWord32 UdpSocket2ManagerWindows::_numOfActiveManagers = 0;
 bool UdpSocket2ManagerWindows::_wsaInit = false;
 

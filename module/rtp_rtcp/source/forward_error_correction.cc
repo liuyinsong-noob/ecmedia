@@ -24,7 +24,7 @@
 #include "../module/rtp_rtcp/source/forward_error_correction_internal.h"
 #include "../module/rtp_rtcp/source/ulpfec_header_reader_writer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 // Transport header size in bytes. Assume UDP/IPv4 as a reasonable minimum.
@@ -742,4 +742,4 @@ size_t FecHeaderWriter::MaxPacketOverhead() const {
   return max_packet_overhead_;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -24,7 +24,7 @@
 
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 
@@ -434,4 +434,4 @@ void AgcManagerDirect::UpdateCompressor() {
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

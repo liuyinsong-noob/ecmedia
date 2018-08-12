@@ -41,7 +41,7 @@
 #include "../module/rtp_rtcp/source/time_util.h"
 #include "../module/rtp_rtcp/source/tmmbr_help.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 const uint32_t kRtcpAnyExtendedReports =
@@ -206,12 +206,12 @@ RTCPSender::RTCPSender(
 RTCPSender::~RTCPSender() {}
 
 RtcpMode RTCPSender::Status() const {
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
   return method_;
 }
 
 void RTCPSender::SetRTCPStatus(RtcpMode new_method) {
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
 
   if (method_ == RtcpMode::kOff && new_method != RtcpMode::kOff) {
     // When switching on, reschedule the next packet
@@ -223,7 +223,7 @@ void RTCPSender::SetRTCPStatus(RtcpMode new_method) {
 }
 
 bool RTCPSender::Sending() const {
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
   return sending_;
 }
 
@@ -231,7 +231,7 @@ int32_t RTCPSender::SetSendingStatus(const FeedbackState& feedback_state,
                                      bool sending) {
   bool sendRTCPBye = false;
   {
-    cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+    yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
 
     if (method_ != RtcpMode::kOff) {
       if (sending == false && sending_ == true) {
@@ -247,18 +247,18 @@ int32_t RTCPSender::SetSendingStatus(const FeedbackState& feedback_state,
 }
 
 bool RTCPSender::REMB() const {
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
   return remb_enabled_;
 }
 
 void RTCPSender::SetREMBStatus(bool enable) {
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
   remb_enabled_ = enable;
 }
 
 void RTCPSender::SetREMBData(uint32_t bitrate,
                              const std::vector<uint32_t>& ssrcs) {
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
   remb_bitrate_ = bitrate;
   remb_ssrcs_ = ssrcs;
 
@@ -270,12 +270,12 @@ void RTCPSender::SetREMBData(uint32_t bitrate,
 }
 
 bool RTCPSender::TMMBR() const {
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
   return IsFlagPresent(RTCPPacketType::kRtcpTmmbr);
 }
 
 void RTCPSender::SetTMMBRStatus(bool enable) {
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
   if (enable) {
     SetFlag(RTCPPacketType::kRtcpTmmbr, false);
   } else {
@@ -284,18 +284,18 @@ void RTCPSender::SetTMMBRStatus(bool enable) {
 }
 
 void RTCPSender::SetMaxRtpPacketSize(size_t max_packet_size) {
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
   max_packet_size_ = max_packet_size;
 }
 
 void RTCPSender::SetTimestampOffset(uint32_t timestamp_offset) {
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
   timestamp_offset_ = timestamp_offset;
 }
 
 void RTCPSender::SetLastRtpTime(uint32_t rtp_timestamp,
                                 int64_t capture_time_ms) {
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
   last_rtp_timestamp_ = rtp_timestamp;
   if (capture_time_ms < 0) {
     // We don't currently get a capture time from VoiceEngine.
@@ -306,7 +306,7 @@ void RTCPSender::SetLastRtpTime(uint32_t rtp_timestamp,
 }
 
 void RTCPSender::SetSSRC(uint32_t ssrc) {
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
 
   if (ssrc_ != 0) {
     // not first SetSSRC, probably due to a collision
@@ -318,7 +318,7 @@ void RTCPSender::SetSSRC(uint32_t ssrc) {
 }
 
 void RTCPSender::SetRemoteSSRC(uint32_t ssrc) {
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
   remote_ssrc_ = ssrc;
 }
 
@@ -327,7 +327,7 @@ int32_t RTCPSender::SetCNAME(const char* c_name) {
     return -1;
 
   DCHECK_LT(strlen(c_name), RTCP_CNAME_SIZE);
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
   cname_ = c_name;
   return 0;
 }
@@ -335,7 +335,7 @@ int32_t RTCPSender::SetCNAME(const char* c_name) {
 int32_t RTCPSender::AddMixedCNAME(uint32_t SSRC, const char* c_name) {
   DCHECK(c_name);
   DCHECK_LT(strlen(c_name), RTCP_CNAME_SIZE);
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
   if (csrc_cnames_.size() >= kRtpCsrcSize)
     return -1;
 
@@ -344,7 +344,7 @@ int32_t RTCPSender::AddMixedCNAME(uint32_t SSRC, const char* c_name) {
 }
 
 int32_t RTCPSender::RemoveMixedCNAME(uint32_t SSRC) {
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
   auto it = csrc_cnames_.find(SSRC);
 
   if (it == csrc_cnames_.end())
@@ -415,7 +415,7 @@ bool RTCPSender::TimeToSendRTCPReport(bool sendKeyframeBeforeRTP) const {
 
   int64_t now = clock_->TimeInMilliseconds();
 
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
 
   if (method_ == RtcpMode::kOff)
     return false;
@@ -438,7 +438,7 @@ bool RTCPSender::TimeToSendRTCPReport(bool sendKeyframeBeforeRTP) const {
 
 void RTCPSender::GetPacketTypeCounter(
     RtcpPacketTypeCounter* packet_counter) const {
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
   *packet_counter = packet_type_counter_;
 }
 
@@ -582,7 +582,7 @@ std::unique_ptr<rtcp::RtcpPacket> RTCPSender::BuildREMB(
 }
 
 void RTCPSender::SetTargetBitrate(unsigned int target_bitrate) {
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
   tmmbr_send_bps_ = target_bitrate;
 }
 
@@ -762,7 +762,7 @@ int32_t RTCPSender::SendCompoundRTCP(
   size_t max_packet_size;
 
   {
-    cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+    yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
     if (method_ == RtcpMode::kOff) {
       LOG(LS_WARNING) << "Can't send rtcp if it is disabled.";
       return -1;
@@ -939,7 +939,7 @@ bool RTCPSender::AddReportBlock(const FeedbackState& feedback_state,
 
 void RTCPSender::SetCsrcs(const std::vector<uint32_t>& csrcs) {
   DCHECK_LE(csrcs.size(), kRtpCsrcSize);
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
   csrcs_ = csrcs;
 }
 
@@ -951,7 +951,7 @@ int32_t RTCPSender::SetApplicationSpecificData(uint8_t subType,
     LOG(LS_ERROR) << "Failed to SetApplicationSpecificData.";
     return -1;
   }
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
 
   SetFlag(kRtcpApp, true);
   app_sub_type_ = subType;
@@ -964,7 +964,7 @@ int32_t RTCPSender::SetApplicationSpecificData(uint8_t subType,
 
 // TODO(sprang): Remove support for VoIP metrics? (Not used in receiver.)
 int32_t RTCPSender::SetRTCPVoIPMetrics(const RTCPVoIPMetric* VoIPMetric) {
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
   xr_voip_metric_.emplace(*VoIPMetric);
 
   SetFlag(kRtcpAnyExtendedReports, true);
@@ -972,17 +972,17 @@ int32_t RTCPSender::SetRTCPVoIPMetrics(const RTCPVoIPMetric* VoIPMetric) {
 }
 
 void RTCPSender::SendRtcpXrReceiverReferenceTime(bool enable) {
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
   xr_send_receiver_reference_time_enabled_ = enable;
 }
 
 bool RTCPSender::RtcpXrReceiverReferenceTime() const {
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
   return xr_send_receiver_reference_time_enabled_;
 }
 
 void RTCPSender::SetTmmbn(std::vector<rtcp::TmmbItem> bounding_set) {
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
   tmmbn_to_send_ = std::move(bounding_set);
   SetFlag(kRtcpTmmbn, true);
 }
@@ -1023,7 +1023,7 @@ bool RTCPSender::AllVolatileFlagsConsumed() const {
 }
 
 void RTCPSender::SetVideoBitrateAllocation(const BitrateAllocation& bitrate) {
-  cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+  yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
   video_bitrate_allocation_.emplace(bitrate);
   SetFlag(kRtcpAnyExtendedReports, true);
 }
@@ -1059,7 +1059,7 @@ bool RTCPSender::SendFeedbackPacket(const rtcp::TransportFeedback& packet) {
 
   size_t max_packet_size;
   {
-    cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+    yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
     if (method_ == RtcpMode::kOff)
       return false;
     max_packet_size = max_packet_size_;
@@ -1073,7 +1073,7 @@ bool RTCPSender::SendFeedbackPacket(const rtcp::TransportFeedback& packet) {
 
 void RTCPSender::SetRtcpPacketTypeCountObserver(RtcpPacketTypeCounterObserver *observer)
 {
-	cloopenwebrtc::CritScope lock(&critical_section_rtcp_sender_);
+	yuntongxunwebrtc::CritScope lock(&critical_section_rtcp_sender_);
 	packet_type_counter_observer_ = observer;
 }
  
@@ -1098,4 +1098,4 @@ int RTCPSender::SendSingleTMMBR(const FeedbackState& feedback_state,
 	size_t bytes_sent = container.SendPackets(max_packet_size);
 	return bytes_sent == 0 ? -1 : 0;
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

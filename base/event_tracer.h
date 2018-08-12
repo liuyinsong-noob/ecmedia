@@ -28,7 +28,7 @@
 
 #include <stdio.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 typedef const unsigned char* (*GetCategoryEnabledPtr)(const char* name);
 typedef void (*AddTraceEventPtr)(char phase,
@@ -68,9 +68,9 @@ class EventTracer {
       unsigned char flags);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace tracing {
 // Set up internal event tracer.
 void SetupInternalTracer();
@@ -80,6 +80,6 @@ void StopInternalCapture();
 // Make sure we run this, this will tear down the internal tracing.
 void ShutdownInternalTracer();
 }  // namespace tracing
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_BASE_EVENT_TRACER_H_

@@ -18,7 +18,7 @@
 #include "cloopenwebrtc/modules/audio_processing/splitting_filter.h"
 #include "cloopenwebrtc/common_audio/include/audio_util.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Generates a signal from presence or absence of sine waves of different
 // frequencies.

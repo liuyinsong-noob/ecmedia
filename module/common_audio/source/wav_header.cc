@@ -22,7 +22,7 @@
 #include "checks.h"
 #include "audio_util.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 
 struct ChunkHeader {

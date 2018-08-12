@@ -27,7 +27,7 @@
 
 static char configfile_name[PATH_MAX];
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 void RunHarness() {
 

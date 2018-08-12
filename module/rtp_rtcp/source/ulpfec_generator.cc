@@ -19,7 +19,7 @@
 #include "../module/rtp_rtcp/source/forward_error_correction.h"
 #include "../module/rtp_rtcp/source/rtp_utility.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 
@@ -248,4 +248,4 @@ void UlpfecGenerator::ResetState() {
   num_protected_frames_ = 0;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -19,7 +19,7 @@
 #include "../system_wrappers/include/logging.h"
 #include "../system_wrappers/include/trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const int kHighDelayThresholdMs = 300;
 static const int kLogHighDelayIntervalFrames = 500;  // 5 seconds.
@@ -595,4 +595,4 @@ int32_t AudioDeviceBuffer::GetPlayoutData(void* audioBuffer)
     return _playSamples;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

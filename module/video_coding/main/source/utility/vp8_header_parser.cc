@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include "vp8_header_parser.h"
 #include "logging.h"
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace vp8 {
 namespace {
 const size_t kCommonPayloadHeaderLength = 3;

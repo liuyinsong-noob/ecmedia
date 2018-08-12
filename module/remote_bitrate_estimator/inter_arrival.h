@@ -16,7 +16,7 @@
 #include "../base/constructormagic.h"
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Helper class to compute the inter-arrival time delta and the size delta
 // between two timestamp groups. A timestamp is a 32 bit unsigned number with
@@ -90,6 +90,6 @@ class InterArrival {
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(InterArrival);
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_REMOTE_BITRATE_ESTIMATOR_INTER_ARRIVAL_H_

@@ -11,7 +11,7 @@
 #include "../base/checks.h"
 #include "../base/stringutils.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 bool memory_check(const void* memory, int c, size_t count) {
   const char* char_memory = static_cast<const char*>(memory);
@@ -130,4 +130,4 @@ std::string string_trim(const std::string& s) {
   return s.substr(first, last - first + 1);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

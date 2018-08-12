@@ -18,7 +18,7 @@
 #include "wpd_node.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 WPDTree::WPDTree(size_t data_length, const float* high_pass_coefficients,
                  const float* low_pass_coefficients, size_t coefficients_length,
@@ -116,4 +116,4 @@ int WPDTree::Update(const float* data, size_t data_length) {
   return 0;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -15,7 +15,7 @@
 
 #include "../module/typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 struct RtcpMeasurement {
   RtcpMeasurement();

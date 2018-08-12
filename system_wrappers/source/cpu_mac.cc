@@ -16,7 +16,7 @@
 
 #include "tick_util.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 CpuWrapperMac::CpuWrapperMac()
     : _cpuCount(0),
       _cpuUsage(NULL), 
@@ -140,4 +140,4 @@ WebRtc_Word32 CpuWrapperMac::Update(WebRtc_Word64 timeDiffMS)
 
     return 0;
 }
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc

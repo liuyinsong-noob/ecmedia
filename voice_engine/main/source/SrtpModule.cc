@@ -8,7 +8,7 @@
 #include "../../third_party/srtp/include/srtp.h"
 #include "SrtpModule.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 SrtpModule* SrtpModule::CreateSrtpModule(const WebRtc_Word32 id)
     

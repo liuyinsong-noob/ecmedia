@@ -19,7 +19,7 @@
 #include "../system_wrappers/include/clock.h"
 #include "../system_wrappers/include/logging.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace vcm {
 
 class DebugRecorder {

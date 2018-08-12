@@ -23,7 +23,7 @@
 //	CCPNO_CIPHER_SHA1_80
 //};
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
     class VoeEncrySrtp : public SrtpModule
     {
     public:
@@ -57,8 +57,8 @@ namespace cloopenwebrtc {
         //   in_data: The data to encrypt. This data is bytes_in bytes long.
         //   out_data: The buffer to write the encrypted data to. You may write more
         //       bytes of encrypted data than what you got as input, up to a maximum
-        //       of cloopenwebrtc::kViEMaxMtu if you are encrypting in the video engine, or
-        //       cloopenwebrtc::kVoiceEngineMaxIpPacketSizeBytes for the voice engine.
+        //       of yuntongxunwebrtc::kViEMaxMtu if you are encrypting in the video engine, or
+        //       yuntongxunwebrtc::kVoiceEngineMaxIpPacketSizeBytes for the voice engine.
         //   bytes_in: The number of bytes in the input buffer.
         //   bytes_out: The number of bytes written in out_data.
         virtual void encrypt(
@@ -75,8 +75,8 @@ namespace cloopenwebrtc {
         //   in_data: The data to decrypt. This data is bytes_in bytes long.
         //   out_data: The buffer to write the decrypted data to. You may write more
         //       bytes of decrypted data than what you got as input, up to a maximum
-        //       of cloopenwebrtc::kViEMaxMtu if you are encrypting in the video engine, or
-        //       cloopenwebrtc::kVoiceEngineMaxIpPacketSizeBytes for the voice engine.
+        //       of yuntongxunwebrtc::kViEMaxMtu if you are encrypting in the video engine, or
+        //       yuntongxunwebrtc::kVoiceEngineMaxIpPacketSizeBytes for the voice engine.
         //   bytes_in: The number of bytes in the input buffer.
         //   bytes_out: The number of bytes written in out_data.
         virtual void decrypt(
@@ -156,7 +156,7 @@ namespace cloopenwebrtc {
         
     };
     
-} //namespace cloopenwebrtc
+} //namespace yuntongxunwebrtc
 
 
 #endif

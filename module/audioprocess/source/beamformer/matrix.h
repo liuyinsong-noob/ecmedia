@@ -36,7 +36,7 @@ std::complex<S> sqrt_wrapper(std::complex<S> x) {
 }
 } // namespace
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Matrix is a class for doing standard matrix operations on 2 dimensional
 // matrices of any size. Results of matrix operations are stored in the
@@ -368,6 +368,6 @@ class Matrix {
   DISALLOW_COPY_AND_ASSIGN(Matrix);
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_BEAMFORMER_MATRIX_H_

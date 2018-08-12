@@ -15,7 +15,7 @@
 #include "vie_network.h"
 #include "vie_ref_count.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class ViESharedData;
 
@@ -46,7 +46,7 @@ class ViENetworkImpl
 
   virtual bool SetBandwidthEstimationConfig(
       int video_channel,
-      const cloopenwebrtc::Config& config) OVERRIDE;
+      const yuntongxunwebrtc::Config& config) OVERRIDE;
 
 //---begin
 //  virtual int RegisterServiceCoreCallBack(int channel, ServiceCoreCallBack *messageCallBack, const char* call_id, int firewall_policy);

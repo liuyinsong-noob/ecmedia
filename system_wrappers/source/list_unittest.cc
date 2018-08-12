@@ -13,9 +13,9 @@
 #include "system_wrappers/interface/list_wrapper.h"
 #include "system_wrappers/interface/scoped_ptr.h"
 
-using ::cloopenwebrtc::ListWrapper;
-using ::cloopenwebrtc::ListItem;
-using ::cloopenwebrtc::scoped_ptr;
+using ::yuntongxunwebrtc::ListWrapper;
+using ::yuntongxunwebrtc::ListItem;
+using ::yuntongxunwebrtc::scoped_ptr;
 
 // Note: kNumberOfElements needs to be even.
 const unsigned int kNumberOfElements = 10;

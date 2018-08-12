@@ -18,7 +18,7 @@
 #include "../system_wrappers/include/logging.h"
 #include "../base/trace_event.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 RTPReceiverStrategy* RTPReceiverStrategy::CreateAudioStrategy(
     int32_t id, RtpData* data_callback) {
   return new RTPReceiverAudio(id, data_callback);
@@ -43,24 +43,24 @@ RTPReceiverAudio::RTPReceiverAudio(const int32_t id, RtpData* data_callback)
 // Outband TelephoneEvent(DTMF) detection
 void RTPReceiverAudio::SetTelephoneEventForwardToDecoder(
     bool forward_to_decoder) {
-  cloopenwebrtc::CritScope lock(&crit_sect_);
+  yuntongxunwebrtc::CritScope lock(&crit_sect_);
   telephone_event_forward_to_decoder_ = forward_to_decoder;
 }
 
 // Is forwarding of outband telephone events turned on/off?
 bool RTPReceiverAudio::TelephoneEventForwardToDecoder() const {
-  cloopenwebrtc::CritScope lock(&crit_sect_);
+  yuntongxunwebrtc::CritScope lock(&crit_sect_);
   return telephone_event_forward_to_decoder_;
 }
 
 bool RTPReceiverAudio::TelephoneEventPayloadType(
     int8_t payload_type) const {
-  cloopenwebrtc::CritScope lock(&crit_sect_);
+  yuntongxunwebrtc::CritScope lock(&crit_sect_);
   return telephone_event_payload_type_ == payload_type;
 }
 
 bool RTPReceiverAudio::CNGPayloadType(int8_t payload_type) {
-  cloopenwebrtc::CritScope lock(&crit_sect_);
+  yuntongxunwebrtc::CritScope lock(&crit_sect_);
   return payload_type == cng_nb_payload_type_ ||
          payload_type == cng_wb_payload_type_ ||
          payload_type == cng_swb_payload_type_ ||
@@ -106,7 +106,7 @@ bool RTPReceiverAudio::ShouldReportCsrcChanges(uint8_t payload_type) const {
 // -   G7221     frame         N/A
 int32_t RTPReceiverAudio::OnNewPayloadTypeCreated(
     const CodecInst& audio_codec) {
-  cloopenwebrtc::CritScope lock(&crit_sect_);
+  yuntongxunwebrtc::CritScope lock(&crit_sect_);
 
   if (RtpUtility::StringCompare(audio_codec.plname, "telephone-event", 15)) {
     telephone_event_payload_type_ = audio_codec.pltype;
@@ -179,7 +179,7 @@ void RTPReceiverAudio::CheckPayloadChanged(int8_t payload_type,
 }
 
 int RTPReceiverAudio::Energy(uint8_t array_of_energy[kRtpCsrcSize]) const {
-  cloopenwebrtc::CritScope cs(&crit_sect_);
+  yuntongxunwebrtc::CritScope cs(&crit_sect_);
 
   assert(num_energy_ <= kRtpCsrcSize);
 
@@ -221,7 +221,7 @@ int32_t RTPReceiverAudio::ParseAudioCodecSpecific(
   bool telephone_event_packet =
       TelephoneEventPayloadType(rtp_header->header.payloadType);
   if (telephone_event_packet) {
-    cloopenwebrtc::CritScope lock(&crit_sect_);
+    yuntongxunwebrtc::CritScope lock(&crit_sect_);
 
     // RFC 4733 2.3
     // 0                   1                   2                   3
@@ -266,7 +266,7 @@ int32_t RTPReceiverAudio::ParseAudioCodecSpecific(
   }
 
   {
-    cloopenwebrtc::CritScope lock(&crit_sect_);
+    yuntongxunwebrtc::CritScope lock(&crit_sect_);
 
     // Check if this is a CNG packet, receiver might want to know
     if (CNGPayloadType(rtp_header->header.payloadType)) {
@@ -305,4 +305,4 @@ int32_t RTPReceiverAudio::ParseAudioCodecSpecific(
   return data_callback_->OnReceivedPayloadData(
       payload_data, payload_length, rtp_header);
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

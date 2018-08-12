@@ -10,7 +10,7 @@
 
 #include "initial_delay_manager.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -239,4 +239,4 @@ void InitialDelayManager::UpdatePlayoutTimestamp(
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -10,7 +10,7 @@
 
 #include "trace.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 void Trace::CreateTrace()
 {

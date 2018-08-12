@@ -18,7 +18,7 @@
 #else
 #include "./third_party/libyuv-android/include/libyuv.h"
 #endif
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 Scaler::Scaler()
     : method_(kScaleBox),

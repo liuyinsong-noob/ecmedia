@@ -19,7 +19,7 @@
 #include "trace.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace acm2 {
 
@@ -81,7 +81,7 @@ int16_t ACMGSMFR::EnableDTX() {
     return 0;
   } else if (encoder_exist_) {
     if (WebRtcGSMFR_EncoderInit(encoder_inst_ptr_, 1) < 0) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                    "EnableDTX: cannot init encoder for GSMFR");
       return -1;
     }
@@ -97,7 +97,7 @@ int16_t ACMGSMFR::DisableDTX() {
     return 0;
   } else if (encoder_exist_) {
     if (WebRtcGSMFR_EncoderInit(encoder_inst_ptr_, 0) < 0) {
-      WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceAudioCoding, unique_id_,
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                    "DisableDTX: cannot init encoder for GSMFR");
       return -1;
     }
@@ -112,8 +112,8 @@ int16_t ACMGSMFR::DisableDTX() {
 int16_t ACMGSMFR::InternalInitEncoder(WebRtcACMCodecParams* codec_params) {
   if (WebRtcGSMFR_EncoderInit(encoder_inst_ptr_,
                               ((codec_params->enable_dtx) ? 1 : 0)) < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-                 cloopenwebrtc::kTraceAudioCoding,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+                 yuntongxunwebrtc::kTraceAudioCoding,
                  unique_id_,
                  "InternalInitEncoder: cannot init encoder for GSMFR");
   }
@@ -124,8 +124,8 @@ ACMGenericCodec* ACMGSMFR::CreateInstance(void) { return NULL; }
 
 int16_t ACMGSMFR::InternalCreateEncoder() {
   if (WebRtcGSMFR_CreateEnc(&encoder_inst_ptr_) < 0) {
-    WEBRTC_TRACE(cloopenwebrtc::kTraceError,
-                 cloopenwebrtc::kTraceAudioCoding,
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+                 yuntongxunwebrtc::kTraceAudioCoding,
                  unique_id_,
                  "InternalCreateEncoder: cannot create instance for GSMFR "
                  "encoder");
@@ -147,4 +147,4 @@ void ACMGSMFR::DestructEncoderSafe() {
 
 }  // namespace acm2
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

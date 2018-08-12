@@ -24,7 +24,7 @@
 #include "../module/rtp_rtcp/source/rtp_format_video_generic.h"
 #include "../module/rtp_rtcp/source/rtp_utility.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 RTPReceiverStrategy* RTPReceiverStrategy::CreateVideoStrategy(
     RtpData* data_callback) {
@@ -122,4 +122,4 @@ int32_t RTPReceiverVideo::InvokeOnInitializeDecoder(
   return 0;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

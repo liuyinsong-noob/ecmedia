@@ -16,7 +16,7 @@
 
 #include <stdint.h>
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Find block difference of dimension 16x16.
 extern int BlockDifference_SSE2_W16(const uint8_t* image1,
@@ -28,6 +28,6 @@ extern int BlockDifference_SSE2_W32(const uint8_t* image1,
                                     const uint8_t* image2,
                                     int stride);
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_DESKTOP_CAPTURE_DIFFER_BLOCK_SSE2_H_

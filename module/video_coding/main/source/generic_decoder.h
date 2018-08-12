@@ -17,7 +17,7 @@
 #include "timestamp_map.h"
 #include "timing.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 class VCMReceiveCallback;

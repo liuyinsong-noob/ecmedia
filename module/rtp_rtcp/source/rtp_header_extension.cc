@@ -16,7 +16,7 @@
 #include "../module/rtp_rtcp/source/rtp_header_extensions.h"
 #include "../module/rtp_rtcp/source/rtp_utility.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 
 using RtpUtility::Word32Align;
@@ -73,7 +73,7 @@ RtpHeaderExtensionMap::RtpHeaderExtensionMap() {
 }
 
 RtpHeaderExtensionMap::RtpHeaderExtensionMap(
-	cloopenwebrtc::ArrayView<const RtpExtension> extensions)
+	yuntongxunwebrtc::ArrayView<const RtpExtension> extensions)
     : RtpHeaderExtensionMap() {
   for (const RtpExtension& extension : extensions)
     RegisterByUri(extension.id, extension.uri);
@@ -149,4 +149,4 @@ bool RtpHeaderExtensionMap::Register(uint8_t id,
   return true;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

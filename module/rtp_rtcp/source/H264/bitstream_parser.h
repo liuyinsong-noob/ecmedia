@@ -13,7 +13,7 @@
 
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class BitstreamParser
 {
 public:
@@ -41,6 +41,6 @@ private:
     WebRtc_UWord32 _byteOffset;
     WebRtc_UWord8  _bitOffset;
 };
-} // namespace cloopenwebrtc
+} // namespace yuntongxunwebrtc
 
 #endif // WEBRTC_MODULES_RTP_RTCP_SOURCE_H264_BITSTREAM_PARSER_H_

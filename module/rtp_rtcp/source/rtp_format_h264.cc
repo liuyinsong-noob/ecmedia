@@ -26,7 +26,7 @@
 #include "../common_video/h264/sps_parser.h"
 #include "../system_wrappers/include/metrics.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 
 static const size_t kNalHeaderSize = 1;
@@ -123,9 +123,9 @@ void RtpPacketizerH264::SetPayloadData(
       // RtpDepacketizerH264::ParseSingleNalu (receive side, in orderer to
       // protect us from unknown or legacy send clients).
 
-      cloopenwebrtc::Optional<SpsParser::SpsState> sps;
+      yuntongxunwebrtc::Optional<SpsParser::SpsState> sps;
 
-      std::unique_ptr<cloopenwebrtc::Buffer> output_buffer(new cloopenwebrtc::Buffer());
+      std::unique_ptr<yuntongxunwebrtc::Buffer> output_buffer(new yuntongxunwebrtc::Buffer());
       // Add the type header to the output buffer first, so that the rewriter
       // can append modified payload on top of that.
       output_buffer->AppendData(buffer[0]);
@@ -453,11 +453,11 @@ bool RtpDepacketizerH264::ProcessStapAOrSingleNalu(
         // excessive decoder latency.
 
         // Copy any previous data first (likely just the first header).
-        std::unique_ptr<cloopenwebrtc::Buffer> output_buffer(new cloopenwebrtc::Buffer());
+        std::unique_ptr<yuntongxunwebrtc::Buffer> output_buffer(new yuntongxunwebrtc::Buffer());
         if (start_offset)
           output_buffer->AppendData(payload_data, start_offset);
 
-		cloopenwebrtc::Optional<SpsParser::SpsState> sps;
+		yuntongxunwebrtc::Optional<SpsParser::SpsState> sps;
 
         SpsVuiRewriter::ParseResult result = SpsVuiRewriter::ParseAndRewriteSps(
             &payload_data[start_offset], end_offset - start_offset, &sps,
@@ -539,7 +539,7 @@ bool RtpDepacketizerH264::ProcessStapAOrSingleNalu(
         parsed_payload->frame_type = kVideoFrameKey;
         FALLTHROUGH();
       case H264::NaluType::kSlice: {
-		  cloopenwebrtc::Optional<uint32_t> pps_id = PpsParser::ParsePpsIdFromSlice(
+		  yuntongxunwebrtc::Optional<uint32_t> pps_id = PpsParser::ParsePpsIdFromSlice(
             &payload_data[start_offset], end_offset - start_offset);
         if (pps_id) {
           nalu.pps_id = *pps_id;
@@ -594,7 +594,7 @@ bool RtpDepacketizerH264::ParseFuaNalu(
   if (first_fragment) {
     offset_ = 0;
     length_ -= kNalHeaderSize;
-    cloopenwebrtc::Optional<uint32_t> pps_id = PpsParser::ParsePpsIdFromSlice(
+    yuntongxunwebrtc::Optional<uint32_t> pps_id = PpsParser::ParsePpsIdFromSlice(
         payload_data + 2 * kNalHeaderSize, length_ - kNalHeaderSize);
     if (pps_id) {
       nalu.pps_id = *pps_id;
@@ -604,7 +604,7 @@ bool RtpDepacketizerH264::ParseFuaNalu(
                       << static_cast<int>(nalu.type);
     }
     uint8_t original_nal_header = fnri | original_nal_type;
-    modified_buffer_.reset(new cloopenwebrtc::Buffer());
+    modified_buffer_.reset(new yuntongxunwebrtc::Buffer());
     modified_buffer_->AppendData(payload_data + kNalHeaderSize, length_);
     (*modified_buffer_)[0] = original_nal_header;
   } else {
@@ -633,4 +633,4 @@ bool RtpDepacketizerH264::ParseFuaNalu(
   return true;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

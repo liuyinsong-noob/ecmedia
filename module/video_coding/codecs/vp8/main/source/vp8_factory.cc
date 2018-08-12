@@ -13,7 +13,7 @@
 #include "simulcast_encoder_adapter.h"
 #include "vp8_impl.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 bool VP8EncoderFactoryConfig::use_simulcast_adapter_ = false;
 

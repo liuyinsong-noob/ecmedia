@@ -41,7 +41,7 @@ extern "C"
 #endif
 };
 #include "vie_watermark.h"
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 const int kThreadWaitTimeMs = 100;
 
@@ -648,7 +648,7 @@ void ViECapturer::DeliverI420Frame(I420VideoFrame* video_frame) {
   }
   if (effect_filter_) {
     size_t length =
-        cloopenwebrtc::CalcBufferSize(kI420, video_frame->width(), video_frame->height());
+        yuntongxunwebrtc::CalcBufferSize(kI420, video_frame->width(), video_frame->height());
     scoped_ptr<uint8_t[]> video_buffer(new uint8_t[length]);
     ExtractBuffer(*video_frame, length, video_buffer.get());
     effect_filter_->Transform(length,
@@ -667,7 +667,7 @@ void ViECapturer::DeliverI420Frame(I420VideoFrame* video_frame) {
 			//unsigned long dwStart = GetTickCount();
 			int w = video_frame->width();
 			int h = video_frame->height();
-			size_t length = cloopenwebrtc::CalcBufferSize(kI420, w, h);
+			size_t length = yuntongxunwebrtc::CalcBufferSize(kI420, w, h);
 
 			/*dynamic init filter*/
 			static bool big_res = true;//default w > 400 && h > 400

@@ -25,7 +25,7 @@ enum SvcNaluType
 };
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class BitstreamParser
 {
 public:

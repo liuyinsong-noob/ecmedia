@@ -15,7 +15,7 @@
 
 #include "shared_data.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class VoEEncryptionImpl : public VoEEncryption
 {
@@ -51,6 +51,6 @@ private:
     voe::SharedData* _shared;
 };
 
-}   // namespace cloopenwebrtc
+}   // namespace yuntongxunwebrtc
 
 #endif  // #ifndef WEBRTC_VOICE_ENGINE_VOE_ENCRYPTION_IMPL_H

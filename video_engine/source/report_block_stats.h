@@ -17,7 +17,7 @@
 #include "common_types.h"
 #include "rtp_rtcp_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Helper class for rtcp statistics.
 class ReportBlockStats {

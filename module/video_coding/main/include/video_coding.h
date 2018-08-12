@@ -17,7 +17,7 @@
 #include "video_coding_defines.h"
 #include "../system_wrappers/include/event_wrapper.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 class Clock;

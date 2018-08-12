@@ -14,7 +14,7 @@
 #include "ec_live_common.h"
 #include "ec_rtmp_bitrate_controller.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
     enum RTMP_STATUS
     {

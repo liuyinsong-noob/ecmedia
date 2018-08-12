@@ -46,7 +46,7 @@ DEFINE_bool(ns, true, "enable noise suppression");
 DEFINE_bool(highpass, true, "enable high pass filter");
 DEFINE_string(filename, "", "filename for the -aec mode");
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 namespace {
 
 const char kUsage[] =
@@ -265,22 +265,22 @@ void PrintCodecs() {
 }  // namespace webrtc
 
 int main(int argc, char** argv) {
-  google::SetUsageMessage(cloopenwebrtc::kUsage);
+  google::SetUsageMessage(yuntongxunwebrtc::kUsage);
   google::ParseCommandLineFlags(&argc, &argv, true);
-  cloopenwebrtc::test::TraceToStderr trace_to_stderr;
+  yuntongxunwebrtc::test::TraceToStderr trace_to_stderr;
 
   if (FLAGS_parallel && FLAGS_aec) {
     printf("-parallel and -aec are not compatible\n");
     return 1;
   }
   if (FLAGS_devices) {
-    cloopenwebrtc::PrintDevices();
+    yuntongxunwebrtc::PrintDevices();
   }
   if (FLAGS_codecs) {
-    cloopenwebrtc::PrintCodecs();
+    yuntongxunwebrtc::PrintCodecs();
   }
   if (!FLAGS_devices && !FLAGS_codecs) {
-    cloopenwebrtc::RunHarness();
+    yuntongxunwebrtc::RunHarness();
   }
   return 0;
 }

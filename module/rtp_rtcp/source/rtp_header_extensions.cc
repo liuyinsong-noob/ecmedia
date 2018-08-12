@@ -15,7 +15,7 @@
 #include "../module/rtp_rtcp/include/rtp_cvo.h"
 #include "../module/rtp_rtcp/source/byte_io.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 // Absolute send time in RTP streams.
 //
 // The absolute send time is signaled to the receiver in-band using the
@@ -220,4 +220,4 @@ bool PlayoutDelayLimits::Write(uint8_t* data,
   return true;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

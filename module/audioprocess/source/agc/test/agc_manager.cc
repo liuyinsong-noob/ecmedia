@@ -20,7 +20,7 @@
 #include "cloopenwebrtc/voice_engine/include/voe_external_media.h"
 #include "cloopenwebrtc/voice_engine/include/voe_volume_control.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class AgcManagerVolume : public VolumeCallbacks {
  public:

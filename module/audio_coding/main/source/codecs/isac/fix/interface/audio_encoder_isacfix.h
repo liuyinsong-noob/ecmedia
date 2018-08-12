@@ -14,7 +14,7 @@
 #include "cloopenwebrtc/modules/audio_coding/codecs/isac/audio_encoder_isac_t.h"
 #include "cloopenwebrtc/modules/audio_coding/codecs/isac/fix/interface/isacfix.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 struct IsacFix {
   typedef ISACFIX_MainStruct instance_type;

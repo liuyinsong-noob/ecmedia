@@ -19,7 +19,7 @@
 #include "voice_engine_impl.h"
 #include "audio_coding_module_impl.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 VoENetwork* VoENetwork::GetInterface(VoiceEngine* voiceEngine)
@@ -137,7 +137,7 @@ int VoENetworkImpl::DeRegisterExternalPacketization(int channel)
 int VoENetworkImpl::ReceivedRTPPacket(int channel,
                                       const void* data,
                                       size_t length) {
-  return ReceivedRTPPacket(channel, data, length, cloopenwebrtc::PacketTime());
+  return ReceivedRTPPacket(channel, data, length, yuntongxunwebrtc::PacketTime());
 }
 
 int VoENetworkImpl::ReceivedRTPPacket(int channel,
@@ -388,4 +388,4 @@ bool VoENetworkImpl::IPv6IsEnabled(int channel)
     return false;
 #endif
 }
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

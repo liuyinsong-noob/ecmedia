@@ -20,7 +20,7 @@
 #include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
 #include "../system_wrappers/include/critical_section_wrapper.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class RtcEventLog;
 
@@ -101,5 +101,5 @@ class SendSideBandwidthEstimation {
   int64_t last_rtc_event_log_ms_;
   bool in_timeout_experiment_;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_BITRATE_CONTROLLER_SEND_SIDE_BANDWIDTH_ESTIMATION_H_

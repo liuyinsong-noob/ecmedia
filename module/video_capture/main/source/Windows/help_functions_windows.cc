@@ -10,7 +10,7 @@
 
 #include "help_functions_windows.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 namespace videocapturemodule
 {

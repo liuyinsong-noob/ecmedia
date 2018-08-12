@@ -36,7 +36,7 @@
     #include "video_frames_queue.h"
 #endif
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 // The largest decoded frame size in samples (60ms with 32kHz sample rate).
 enum { MAX_AUDIO_BUFFER_IN_SAMPLES = 60*32};
 enum { MAX_AUDIO_BUFFER_IN_BYTES = MAX_AUDIO_BUFFER_IN_SAMPLES*2};
@@ -189,5 +189,5 @@ private:
     int64_t _writtenVideoMS;
 };
 #endif // WEBRTC_MODULE_UTILITY_VIDEO
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif // WEBRTC_MODULES_UTILITY_SOURCE_FILE_RECORDER_IMPL_H_

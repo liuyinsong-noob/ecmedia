@@ -34,7 +34,7 @@
 #include "../module/rtp_rtcp/source/rtcp_packet/tmmb_item.h"
 #include "../typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class ModuleRtpRtcpImpl;
 class RtcEventLog;
@@ -205,7 +205,7 @@ class RTCPSender {
   RtcEventLog* const event_log_;
   Transport* /*const*/ transport_;
 
-  cloopenwebrtc::CriticalSection critical_section_rtcp_sender_;
+  yuntongxunwebrtc::CriticalSection critical_section_rtcp_sender_;
   bool using_nack_ GUARDED_BY(critical_section_rtcp_sender_);
   bool sending_ GUARDED_BY(critical_section_rtcp_sender_);
   bool remb_enabled_ GUARDED_BY(critical_section_rtcp_sender_);
@@ -255,7 +255,7 @@ class RTCPSender {
       GUARDED_BY(critical_section_rtcp_sender_);
 
   // XR VoIP metric
-  cloopenwebrtc::Optional<RTCPVoIPMetric> xr_voip_metric_
+  yuntongxunwebrtc::Optional<RTCPVoIPMetric> xr_voip_metric_
       GUARDED_BY(critical_section_rtcp_sender_);
 
   RtcpPacketTypeCounterObserver* packet_type_counter_observer_;
@@ -264,7 +264,7 @@ class RTCPSender {
 
   RtcpNackStats nack_stats_ GUARDED_BY(critical_section_rtcp_sender_);
 
-  cloopenwebrtc::Optional<BitrateAllocation> video_bitrate_allocation_
+  yuntongxunwebrtc::Optional<BitrateAllocation> video_bitrate_allocation_
       GUARDED_BY(critical_section_rtcp_sender_);
 
   void SetFlag(uint32_t type, bool is_volatile)
@@ -295,6 +295,6 @@ class RTCPSender {
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(RTCPSender);
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTCP_SENDER_H_

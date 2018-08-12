@@ -18,7 +18,7 @@
 
 #include "../system_wrappers/include/logging.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static const int kMaxChangeMs = 80;
 static const int kMaxDeltaDelayMs = 10000;

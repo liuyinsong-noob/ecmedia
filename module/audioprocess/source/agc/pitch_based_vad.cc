@@ -20,7 +20,7 @@
 #include "voice_gmm_tables.h"
 #include "module_common_types.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 static_assert(kNoiseGmmDim == kVoiceGmmDim,
               "noise and voice gmm dimension not equal");
@@ -119,4 +119,4 @@ int PitchBasedVad::UpdatePrior(double p) {
   return 0;
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

@@ -55,7 +55,7 @@
 
 
 //PrintConsoleHook gPrintConsoleHook = NULL;
-//cloopenwebrtc::CriticalSectionWrapper  *g_printConsole_lock_;
+//yuntongxunwebrtc::CriticalSectionWrapper  *g_printConsole_lock_;
 
 //static void init_print_log()
 //{
@@ -135,7 +135,7 @@
 //	if( NULL == g_interface_fp || NULL == g_printConsole_lock_ ) {
 //		return;
 //	}
-//	cloopenwebrtc::CriticalSectionScoped lock(g_printConsole_lock_);
+//	yuntongxunwebrtc::CriticalSectionScoped lock(g_printConsole_lock_);
 //	fprintf(g_interface_fp, "%s\n", log_buffer);
 //	fflush(g_interface_fp);
 //	g_log_line ++;
@@ -146,7 +146,7 @@ ServiceCore *serphone_core_new(const SerphoneCoreVTable *vtable,
 						const char *config_path, const char *factory_config_path, void* userdata)
 {
 	//init_print_log();
-	//g_printConsole_lock_ = cloopenwebrtc::CriticalSectionWrapper::CreateCriticalSection();
+	//g_printConsole_lock_ = yuntongxunwebrtc::CriticalSectionWrapper::CreateCriticalSection();
 
 //	ServiceCore *core=ms_new(ServiceCore,1); commented by zdm,类不能用这个函数，否则无法进入类构造函数
 	ServiceCore *core=new ServiceCore;

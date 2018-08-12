@@ -27,7 +27,7 @@
 #include "critical_section_wrapper.h"
 #include "video_capture_linux.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 namespace videocapturemodule
 {
@@ -103,7 +103,7 @@ WebRtc_Word32 VideoCaptureModuleV4L2::Init(const char* deviceUniqueIdUTF8)
     }
     if (!found)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id, "no matching device found");
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id, "no matching device found");
         return -1;
     }
     _deviceId = n; //store the device id
@@ -145,7 +145,7 @@ WebRtc_Word32 VideoCaptureModuleV4L2::StartCapture(
 
     if ((_deviceFd = open(device, O_RDWR | O_NONBLOCK, 0)) < 0)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                    "error in opening %s errono = %d", device, errno);
         return -1;
     }
@@ -188,7 +188,7 @@ WebRtc_Word32 VideoCaptureModuleV4L2::StartCapture(
     }
     if (!formatMatch)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                    "no supporting video formats found");
         return -1;
     }
@@ -203,7 +203,7 @@ WebRtc_Word32 VideoCaptureModuleV4L2::StartCapture(
     //set format and frame size now
     if (ioctl(_deviceFd, VIDIOC_S_FMT, &video_fmt) < 0)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                    "error in VIDIOC_S_FMT, errno = %d", errno);
         return -1;
     }
@@ -220,7 +220,7 @@ WebRtc_Word32 VideoCaptureModuleV4L2::StartCapture(
 
     if (!AllocateVideoBuffers())
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                    "failed to allocate video capture buffers");
         return -1;
     }
@@ -239,7 +239,7 @@ WebRtc_Word32 VideoCaptureModuleV4L2::StartCapture(
     type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     if (ioctl(_deviceFd, VIDIOC_STREAMON, &type) == -1)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                      "Failed to turn on stream");
         return -1;
     }
@@ -256,7 +256,7 @@ WebRtc_Word32 VideoCaptureModuleV4L2::StopCapture()
 
     CriticalSectionScoped cs(_captureCritSect);
 
-    WEBRTC_TRACE(cloopenwebrtc::kTraceInfo, cloopenwebrtc::kTraceVideoCapture, -1, "StopCapture(), was running: %d",
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideoCapture, -1, "StopCapture(), was running: %d",
                _captureStarted);
 
     if (!_captureStarted)
@@ -300,7 +300,7 @@ bool VideoCaptureModuleV4L2::AllocateVideoBuffers()
 
     if (ioctl(_deviceFd, VIDIOC_REQBUFS, &rbuffer) < 0)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                    "Could not get buffers from device. errno = %d", errno);
         return false;
     }
@@ -359,7 +359,7 @@ bool VideoCaptureModuleV4L2::DeAllocateVideoBuffers()
     type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     if (ioctl(_deviceFd, VIDIOC_STREAMOFF, &type) < 0)
     {
-        WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                    "VIDIOC_STREAMOFF error. errno: %d", errno);
     }
 
@@ -425,7 +425,7 @@ bool VideoCaptureModuleV4L2::CaptureProcess()
         {
             if (errno != EINTR)
             {
-                WEBRTC_TRACE(cloopenwebrtc::kTraceError, cloopenwebrtc::kTraceVideoCapture, _id,
+                WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, _id,
                            "could not sync on a buffer on device %s", strerror(errno));
                 _captureCritSect->Leave();
                 return true;
@@ -442,7 +442,7 @@ bool VideoCaptureModuleV4L2::CaptureProcess()
         // enqueue the buffer again
         if (ioctl(_deviceFd, VIDIOC_QBUF, &buf) == -1)
         {
-            WEBRTC_TRACE(cloopenwebrtc::kTraceWarning, cloopenwebrtc::kTraceVideoCapture, _id,
+            WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture, _id,
                        "Failed to enqueue capture buffer");
         }
     }

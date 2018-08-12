@@ -15,7 +15,7 @@
 #include "jitter_buffer_common.h"
 #include "packet.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VCMDecodingState::VCMDecodingState()
     : sequence_num_(0),

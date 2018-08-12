@@ -20,7 +20,7 @@ DEFINE_GUID(MEDIASUBTYPE_HDYC, 0x43594448, 0x0000, 0x0010, 0x80, 0x00, 0x00,
 
 #define RELEASE_AND_CLEAR(p) if (p) { (p) -> Release () ; (p) = NULL ; }
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 namespace videocapturemodule
 {

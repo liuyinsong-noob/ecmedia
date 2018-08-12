@@ -95,7 +95,7 @@ int gcd(int a, int b) {
 
 }  // namespace
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 Blocker::Blocker(int chunk_size,
                  int block_size,

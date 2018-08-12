@@ -18,7 +18,7 @@
 #include "../system_wrappers/include/timestamp_extrapolator.h"
 
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 VCMTiming::VCMTiming(Clock* clock,
                      VCMTiming* master_timing)

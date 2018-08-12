@@ -19,7 +19,7 @@
 #include "../module/rtp_rtcp/source/byte_io.h"
 #include "../module/rtp_rtcp/source/forward_error_correction_internal.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 
@@ -308,4 +308,4 @@ void FlexfecHeaderWriter::FinalizeFecHeader(
   }
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

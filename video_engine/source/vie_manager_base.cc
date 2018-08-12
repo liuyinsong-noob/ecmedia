@@ -13,7 +13,7 @@
 #include "../system_wrappers/include/rw_lock_wrapper.h"
 #include "vie_manager_base.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 ViEManagerBase::ViEManagerBase()
     : instance_rwlock_(*RWLockWrapper::CreateRWLock()) {

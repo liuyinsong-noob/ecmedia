@@ -15,7 +15,7 @@
 #include "complex_matrix.h"
 #include "audio_processing.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Enhances sound sources coming directly in front of a uniform linear array
 // and suppresses sound sources coming from all other directions. Operates on
@@ -173,6 +173,6 @@ class Beamformer : public LappedTransform::Callback {
   int interference_blocks_count_;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_BEAMFORMER_BEAMFORMER_H_

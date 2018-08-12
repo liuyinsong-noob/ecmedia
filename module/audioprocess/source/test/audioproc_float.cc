@@ -46,7 +46,7 @@ static const char kUsage[] =
     "All components are disabled by default. If any bi-directional components\n"
     "are enabled, only debug dump files are permitted.";
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 int main(int argc, char* argv[]) {
   {
@@ -151,5 +151,5 @@ int main(int argc, char* argv[]) {
 }  // namespace webrtc
 
 int main(int argc, char* argv[]) {
-  return cloopenwebrtc::main(argc, argv);
+  return yuntongxunwebrtc::main(argc, argv);
 }

@@ -13,7 +13,7 @@
 
 #include "rtp_dump.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 class CriticalSectionWrapper;
 class FileWrapper;
 class RtpDumpImpl : public RtpDump
@@ -45,5 +45,5 @@ private:
     FileWrapper& _file;
     uint32_t _startTime;
 };
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif // WEBRTC_MODULES_UTILITY_SOURCE_RTP_DUMP_IMPL_H_

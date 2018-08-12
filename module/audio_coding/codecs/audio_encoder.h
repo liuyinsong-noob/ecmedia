@@ -17,7 +17,7 @@
 #include "../base/checks.h"
 #include "typedefs.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // This is the interface class for encoders in AudioCoding module. Each codec
 // type must have an implementation of this class.
@@ -99,5 +99,5 @@ class AudioEncoder {
                               EncodedInfo* info) = 0;
 };
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc
 #endif  // WEBRTC_MODULES_AUDIO_CODING_CODECS_AUDIO_ENCODER_H_

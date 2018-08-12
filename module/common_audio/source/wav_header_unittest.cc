@@ -13,7 +13,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "cloopenwebrtc/common_audio/wav_header.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 // Doesn't take ownership of the buffer.
 class ReadableWavBuffer : public ReadableWav {

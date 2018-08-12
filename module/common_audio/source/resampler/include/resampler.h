@@ -18,7 +18,7 @@
 
 #include "typedefs.h"
 
-namespace cloopenwebrtc
+namespace yuntongxunwebrtc
 {
 
 // TODO(andrew): the implementation depends on the exact values of this enum.

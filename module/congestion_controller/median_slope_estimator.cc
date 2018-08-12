@@ -17,7 +17,7 @@
 #include "../module/remote_bitrate_estimator/include/bwe_defines.h"
 #include "../module/remote_bitrate_estimator/test/bwe_test_logging.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 constexpr unsigned int kDeltaCounterMax = 1000;
 
@@ -81,4 +81,4 @@ void MedianSlopeEstimator::Update(double recv_delta_ms,
   BWE_TEST_LOGGING_PLOT(1, "trendline_slope", arrival_time_ms, trendline_);
 }
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

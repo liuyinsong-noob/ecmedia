@@ -16,7 +16,7 @@
 #include "mock_decoder_database.h"
 #include "sync_buffer.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 TEST(ComfortNoise, CreateAndDestroy) {
   int fs = 8000;
@@ -28,4 +28,4 @@ TEST(ComfortNoise, CreateAndDestroy) {
 
 // TODO(hlundin): Write more tests.
 
-}  // namespace cloopenwebrtc
+}  // namespace yuntongxunwebrtc

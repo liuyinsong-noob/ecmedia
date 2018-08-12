@@ -16,7 +16,7 @@
 #include "video_render_android_impl.h"
 #include "video_render_defines.h"
 
-namespace cloopenwebrtc {
+namespace yuntongxunwebrtc {
 
 class CriticalSectionWrapper;
 
