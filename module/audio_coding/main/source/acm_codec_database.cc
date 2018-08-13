@@ -34,7 +34,7 @@
 #include "isac.h"
 #endif
 #ifdef WEBRTC_CODEC_ISACFX
-#include "cloopen/modules/audio_coding/codecs/isac/fix/interface/isacfix.h"
+#include "yuntongxun/modules/audio_coding/codecs/isac/fix/interface/isacfix.h"
 #endif
 #if (defined WEBRTC_CODEC_ISACFX) || (defined WEBRTC_CODEC_ISAC)
 #include "acm_isac.h"
@@ -53,19 +53,19 @@
 #include "acm_amr.h"
 #endif
 #ifdef WEBRTC_CODEC_AMRWB
-#include "cloopenwebrtc/modules/audio_coding/codecs/amrwb/include/amrwb_interface.h"
+#include "yuntongxunwebrtc/modules/audio_coding/codecs/amrwb/include/amrwb_interface.h"
 #include "acm_amrwb.h"
 #endif
 #ifdef WEBRTC_CODEC_G722
-#include "cloopenwebrtc/modules/audio_coding/codecs/g722/include/g722_interface.h"
+#include "yuntongxunwebrtc/modules/audio_coding/codecs/g722/include/g722_interface.h"
 #include "acm_g722.h"
 #endif
 #ifdef WEBRTC_CODEC_G722_1
-#include "cloopenwebrtc/modules/audio_coding/codecs/g7221/include/g7221_interface.h"
+#include "yuntongxunwebrtc/modules/audio_coding/codecs/g7221/include/g7221_interface.h"
 #include "acm_g7221.h"
 #endif
 #ifdef WEBRTC_CODEC_G722_1C
-#include "cloopenwebrtc/modules/audio_coding/codecs/g7221c/include/g7221c_interface.h"
+#include "yuntongxunwebrtc/modules/audio_coding/codecs/g7221c/include/g7221c_interface.h"
 #include "acm_g7221c.h"
 #endif
 #ifdef WEBRTC_CODEC_G729
@@ -73,11 +73,11 @@
 #include "acm_g729.h"
 #endif
 #ifdef WEBRTC_CODEC_G729_1
-#include "cloopenwebrtc/modules/audio_coding/codecs/g7291/include/g7291_interface.h"
+#include "yuntongxunwebrtc/modules/audio_coding/codecs/g7291/include/g7291_interface.h"
 #include "acm_g7291.h"
 #endif
 #ifdef WEBRTC_CODEC_GSMFR
-#include "cloopenwebrtc/modules/audio_coding/codecs/gsmfr/include/gsmfr_interface.h"
+#include "yuntongxunwebrtc/modules/audio_coding/codecs/gsmfr/include/gsmfr_interface.h"
 #include "acm_gsmfr.h"
 #endif
 #ifdef WEBRTC_CODEC_OPUS
@@ -85,7 +85,7 @@
 #include "acm_opus.h"
 #endif
 #ifdef WEBRTC_CODEC_SPEEX
-#include "cloopenwebrtc/modules/audio_coding/codecs/speex/include/speex_interface.h"
+#include "yuntongxunwebrtc/modules/audio_coding/codecs/speex/include/speex_interface.h"
 #include "acm_speex.h"
 #endif
 #ifdef WEBRTC_CODEC_AVT

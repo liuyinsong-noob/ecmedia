@@ -579,7 +579,7 @@ BOOL CserphonetestDlg::OnInitDialog()
 	callback.onIncomingCodecChanged = onIncomingCodecChanged;
 	callback.onRemoteVideoRatioChanged = onRemoteVideoRatioChanged;
 	//	callback.onGroupTextMessageReceived = onGroupTextMessageReceived;
-	setLogLevel(LOG_LEVEL_DEBUG);
+	setLogLevel(13);
 	setTraceFlag(true);
 	initialize( &callback);
 	m_enableP2PCtrl.AddString(_T("Yes"));

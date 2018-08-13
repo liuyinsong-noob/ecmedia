@@ -13,7 +13,7 @@
 #ifdef WEBRTC_CODEC_SPEEX
 // NOTE! Speex is not included in the open-source package. Modify this file or
 // your codec API to match the function calls and names of used Speex API file.
-#include "cloopenwebrtc/modules/audio_coding/main/codecs/speex/interface/speex_interface.h"
+#include "yuntongxunwebrtc/modules/audio_coding/main/codecs/speex/interface/speex_interface.h"
 #include "acm_codec_database.h"
 #include "acm_common_defs.h"
 #include "trace.h"

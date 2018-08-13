@@ -174,7 +174,7 @@ namespace yuntongxunwebrtc {
             return NULL;
         }
         frame->SetRenderTime(next_render_time_ms);
-        TRACE_EVENT_ASYNC_STEP1("cloopenwebrtc", "Video", frame->TimeStamp(),
+        TRACE_EVENT_ASYNC_STEP1("yuntongxunwebrtc", "Video", frame->TimeStamp(),
                                 "SetRenderTS", "render_time", next_render_time_ms);
         if (!frame->Complete()) {
             // Update stats for incomplete frames.

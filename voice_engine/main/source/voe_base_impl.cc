@@ -1049,7 +1049,7 @@ int VoEBaseImpl::StopSend(int channel)
     //return StopSend();
 }
 
-//int CloopenVoEBaseImpl::StartRecord(int channel)
+//int YuntongxunVoEBaseImpl::StartRecord(int channel)
 //{
 //    WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
 //                 "StartRecord(channel=%d)", channel);
@@ -1084,7 +1084,7 @@ int VoEBaseImpl::StopSend(int channel)
 //    return 0;
 //}
 //
-//int CloopenVoEBaseImpl::StopRecord(int channel)
+//int YuntongxunVoEBaseImpl::StopRecord(int channel)
 //{
 //    WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
 //                 "StopPlayout(channel=%d)", channel);
@@ -1412,7 +1412,7 @@ int VoEBaseImpl::ProcessRecordedDataWithAPM(
     //sean add begin 20140422 SetAudioGain
     if (_enlargeOutgoingGainFlag) {
         WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_shared->instance_id(), -1),
-                     "CloopenVoEBaseImpl::RecordedDataIsAvailable outgoing audio gain factor = %f\n",
+                     "YuntongxunVoEBaseImpl::RecordedDataIsAvailable outgoing audio gain factor = %f\n",
                      _enlargeOutgoingGainFactor);
         WebRtc_Word16 *multiplyByFactor = (WebRtc_Word16*)audio_data;
         int temp=0;
@@ -1498,7 +1498,7 @@ void VoEBaseImpl::GetPlayoutData(int sample_rate, int number_of_channels,
     //sean add begin 20140422 SetAudioGain
     if (_enlargeIncomingGainFlag) {
         WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_shared->instance_id(), -1),
-                     "CloopenVoEBaseImpl::NeedMorePlayData incoming audio gain factor = %f\n",
+                     "YuntongxunVoEBaseImpl::NeedMorePlayData incoming audio gain factor = %f\n",
                      _enlargeIncomingGainFactor);
         WebRtc_Word16 *multiplyByFactor = (WebRtc_Word16*)audio_data;
         int temp=0;
@@ -1642,7 +1642,7 @@ int VoEBaseImpl::NoiseSuppression(const void* audioSamples,
 	const WebRtc_UWord32 mixingFrequency)
 {
 	WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_shared->instance_id(), -1),
-		"CloopenVoEBaseImpl::NoiseSuppression(nSamples=%u, "
+		"YuntongxunVoEBaseImpl::NoiseSuppression(nSamples=%u, "
 		"nBytesPerSample=%u, nChannels=%u, samplesPerSec=%u, "
 		"totalDelayMS=%u, clockDrift=%d, currentMicLevel=%u)",
 		nSamples, nBytesPerSample, nChannels, samplesPerSec,

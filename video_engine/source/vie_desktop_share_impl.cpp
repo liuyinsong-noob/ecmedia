@@ -500,4 +500,4 @@ int ViEDesktopShareImpl::SetScreenShareActivity(int desktop_capture_id, void * a
     return 0;
 }
 
-} //cloopenwebrtc 
+} //yuntongxunwebrtc 

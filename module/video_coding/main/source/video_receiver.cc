@@ -451,7 +451,7 @@ int32_t VideoReceiver::Decode(uint16_t maxWaitTimeMs, bool shieldMosaic) {
 
 int32_t VideoReceiver::RequestSliceLossIndication(
     const uint64_t pictureID) const {
-  TRACE_EVENT1("cloopenwebrtc", "RequestSLI", "picture_id", pictureID);
+  TRACE_EVENT1("yuntongxunwebrtc", "RequestSLI", "picture_id", pictureID);
   CriticalSectionScoped cs(process_crit_sect_.get());
   if (_frameTypeCallback != NULL) {
     const int32_t ret =
@@ -466,7 +466,7 @@ int32_t VideoReceiver::RequestSliceLossIndication(
 }
 
 int32_t VideoReceiver::RequestKeyFrame() {
-  TRACE_EVENT0("cloopenwebrtc", "RequestKeyFrame");
+  TRACE_EVENT0("yuntongxunwebrtc", "RequestKeyFrame");
   CriticalSectionScoped process_cs(process_crit_sect_.get());
   if (_frameTypeCallback != NULL) {
     const int32_t ret = _frameTypeCallback->RequestKeyFrame();
@@ -482,7 +482,7 @@ int32_t VideoReceiver::RequestKeyFrame() {
 
 // Must be called from inside the receive side critical section.
 int32_t VideoReceiver::Decode(const VCMEncodedFrame& frame) {
-  TRACE_EVENT_ASYNC_STEP1("cloopenwebrtc",
+  TRACE_EVENT_ASYNC_STEP1("yuntongxunwebrtc",
                           "Video",
                           frame.TimeStamp(),
                           "Decode",
@@ -544,7 +544,7 @@ int32_t VideoReceiver::Decode(const VCMEncodedFrame& frame) {
     CriticalSectionScoped cs(process_crit_sect_.get());
     _scheduleKeyRequest = true;
   }
-  TRACE_EVENT_ASYNC_END0("cloopenwebrtc", "Video", frame.TimeStamp());
+  TRACE_EVENT_ASYNC_END0("yuntongxunwebrtc", "Video", frame.TimeStamp());
   return ret;
 }
 
@@ -602,7 +602,7 @@ int32_t VideoReceiver::IncomingPacket(const uint8_t* incomingPayload,
                                       size_t payloadLength,
                                       const WebRtcRTPHeader& rtpInfo) {
   if (rtpInfo.frameType == kVideoFrameKey) {
-    TRACE_EVENT1("cloopenwebrtc",
+    TRACE_EVENT1("yuntongxunwebrtc",
                  "VCM::PacketKeyFrame",
                  "seqnum",
                  rtpInfo.header.sequenceNumber);

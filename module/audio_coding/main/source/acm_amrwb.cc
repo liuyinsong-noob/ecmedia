@@ -13,7 +13,7 @@
 #ifdef WEBRTC_CODEC_AMRWB
 // NOTE! GSM AMR-wb is not included in the open-source package. The
 // following interface file is needed:
-#include "cloopen/modules/audio_coding/main/codecs/amrwb/interface/amrwb_interface.h"
+#include "yuntongxun/modules/audio_coding/main/codecs/amrwb/interface/amrwb_interface.h"
 #include "audio_coding_module_typedefs.h"
 #include "acm_common_defs.h"
 #include "rw_lock_wrapper.h"
@@ -276,7 +276,7 @@ int16_t ACMAMRwb::SetAMRwbEncoderPackingFormat(
   if ((packing_format != AMRBandwidthEfficient) &&
       (packing_format != AMROctetAlligned) &&
       (packing_format != AMRFileStorage)) {
-    WEBRTC_TRACE(cloopen::kTraceError, cloopen::kTraceAudioCoding, unique_id_,
+    WEBRTC_TRACE(yuntongxun::kTraceError, yuntongxun::kTraceAudioCoding, unique_id_,
                  "Invalid AMRwb encoder packing-format.");
     return -1;
   } else {

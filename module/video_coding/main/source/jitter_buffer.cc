@@ -105,7 +105,7 @@ void FrameList::CleanUpOldOrEmptyFrames(VCMDecodingState* decoding_state,
       break;
     }
     free_frames->push_back(oldest_frame);
-    TRACE_EVENT_INSTANT1("cloopenwebrtc", "JB::OldOrEmptyFrameDropped", "timestamp",
+    TRACE_EVENT_INSTANT1("yuntongxunwebrtc", "JB::OldOrEmptyFrameDropped", "timestamp",
                          oldest_frame->TimeStamp());
     erase(begin());
   }
@@ -490,7 +490,7 @@ VCMEncodedFrame* VCMJitterBuffer::ExtractAndSetDecode(uint32_t timestamp) {
     else
       return NULL;
   }
-  TRACE_EVENT_ASYNC_STEP0("cloopenwebrtc", "Video", timestamp, "Extract");
+  TRACE_EVENT_ASYNC_STEP0("yuntongxunwebrtc", "Video", timestamp, "Extract");
   // Frame pulled out from jitter buffer, update the jitter estimate.
   const bool retransmitted = (frame->GetNackCount() > 0);
   if (retransmitted) {
@@ -662,7 +662,7 @@ VCMFrameBufferEnum VCMJitterBuffer::InsertPacket(const VCMPacket& packet,
       frame->InsertPacket(packet, now_ms, decode_error_mode_, frame_data);
 
   if (previous_state != kStateComplete) {
-    TRACE_EVENT_ASYNC_BEGIN1("cloopenwebrtc", "Video", frame->TimeStamp(),
+    TRACE_EVENT_ASYNC_BEGIN1("yuntongxunwebrtc", "Video", frame->TimeStamp(),
                              "timestamp", frame->TimeStamp());
   }
 
@@ -1002,7 +1002,7 @@ bool VCMJitterBuffer::UpdateNackList(uint16_t sequence_number) {
     for (uint16_t i = latest_received_sequence_number_ + 1;
          IsNewerSequenceNumber(sequence_number, i); ++i) {
       missing_sequence_numbers_.insert(missing_sequence_numbers_.end(), i);
-      TRACE_EVENT_INSTANT1("cloopenwebrtc", "AddNack", "seqnum", i);
+      TRACE_EVENT_INSTANT1("yuntongxunwebrtc", "AddNack", "seqnum", i);
     }
     if (TooLargeNackList() && !HandleTooLargeNackList()) {
       LOG(LS_WARNING) << "Requesting key frame due to too large NACK list.";
@@ -1015,7 +1015,7 @@ bool VCMJitterBuffer::UpdateNackList(uint16_t sequence_number) {
     }
   } else {
     missing_sequence_numbers_.erase(sequence_number);
-    TRACE_EVENT_INSTANT1("cloopenwebrtc", "RemoveNack", "seqnum", sequence_number);
+    TRACE_EVENT_INSTANT1("yuntongxunwebrtc", "RemoveNack", "seqnum", sequence_number);
   }
   return true;
 }
@@ -1111,7 +1111,7 @@ bool VCMJitterBuffer::TryToIncreaseJitterBufferSize() {
     return false;
   free_frames_.push_back(new VCMFrameBuffer());
   ++max_number_of_frames_;
-  TRACE_COUNTER1("cloopenwebrtc", "JBMaxFrames", max_number_of_frames_);
+  TRACE_COUNTER1("yuntongxunwebrtc", "JBMaxFrames", max_number_of_frames_);
   return true;
 }
 
@@ -1131,7 +1131,7 @@ bool VCMJitterBuffer::RecycleFramesUntilKeyFrame() {
         &key_frame_it, &free_frames_);
     key_frame_found = key_frame_it != decodable_frames_.end();
   }
-  TRACE_EVENT_INSTANT0("cloopenwebrtc", "JB::RecycleFramesUntilKeyFrame");
+  TRACE_EVENT_INSTANT0("yuntongxunwebrtc", "JB::RecycleFramesUntilKeyFrame");
   if (key_frame_found) {
     LOG(LS_INFO) << "Found key frame while dropping frames.";
     // Reset last decoded state to make sure the next frame decoded is a key
@@ -1151,10 +1151,10 @@ bool VCMJitterBuffer::RecycleFramesUntilKeyFrame() {
 void VCMJitterBuffer::CountFrame(const VCMFrameBuffer& frame) {
   incoming_frame_count_++;
   if (frame.FrameType() == kVideoFrameKey) {
-    TRACE_EVENT_ASYNC_STEP0("cloopenwebrtc", "Video",
+    TRACE_EVENT_ASYNC_STEP0("yuntongxunwebrtc", "Video",
                             frame.TimeStamp(), "KeyComplete");
   } else {
-    TRACE_EVENT_ASYNC_STEP0("cloopenwebrtc", "Video",
+    TRACE_EVENT_ASYNC_STEP0("yuntongxunwebrtc", "Video",
                             frame.TimeStamp(), "DeltaComplete");
   }
 

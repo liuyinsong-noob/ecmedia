@@ -144,9 +144,9 @@ int32_t ViESyncModule::Process() {
     return 0;
   }
 
-  TRACE_COUNTER1("cloopenwebrtc", "SyncCurrentVideoDelay", current_video_delay_ms);
-  TRACE_COUNTER1("cloopenwebrtc", "SyncCurrentAudioDelay", current_audio_delay_ms);
-  TRACE_COUNTER1("cloopenwebrtc", "SyncRelativeDelay", relative_delay_ms);
+  TRACE_COUNTER1("yuntongxunwebrtc", "SyncCurrentVideoDelay", current_video_delay_ms);
+  TRACE_COUNTER1("yuntongxunwebrtc", "SyncCurrentAudioDelay", current_audio_delay_ms);
+  TRACE_COUNTER1("yuntongxunwebrtc", "SyncRelativeDelay", relative_delay_ms);
   int target_audio_delay_ms = 0;
   int target_video_delay_ms = current_video_delay_ms;
   // Calculate the necessary extra audio delay and desired total video

@@ -571,7 +571,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 #ifndef WIN32
 	ECMedia_init_audio();
 #endif
-	PrintConsole("cloopen trace %s begin\n",__FUNCTION__);
+	PrintConsole("yuntongxun trace %s begin\n",__FUNCTION__);
 	int used_pt=-1;
 	/* look for savp stream first */
 	const SalStreamDescription *stream=sal_media_description_find_stream(call->resultdesc,
@@ -707,7 +707,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 
 			if (codec_found) {
 				//add by xzq to trace the media
-				PrintConsole("cloopen trace %s middle 111\n",__FUNCTION__);
+				PrintConsole("yuntongxun trace %s middle 111\n",__FUNCTION__);
 				PrintConsole("Codec is : playload type = %d, payload name is %s  \n",
 					codec_params.pltype, codec_params.plname);
 
@@ -768,13 +768,13 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 			ECMedia_set_RTCP_status(call->m_AudioChannelID);
 			//rtp_rtcp->SetFECStatus(call->m_AudioChannelID,  true);
 
-			PrintConsole("cloopen trace %s middle 112\n",__FUNCTION__);
+			PrintConsole("yuntongxun trace %s middle 112\n",__FUNCTION__);
 			if(m_usedSpeakerIndex >= 0)
 				ECMedia_select_playout_device(m_usedSpeakerIndex);
 			if(m_usedMicrophoneIndex >= 0)
 				ECMedia_select_record_device(m_usedMicrophoneIndex);
 			//hardware->SetPlayoutDevice(0);
-			PrintConsole("cloopen trace %s middle 113.\n",__FUNCTION__);
+			PrintConsole("yuntongxun trace %s middle 113.\n",__FUNCTION__);
 			if ( local_stream){
 				switch(local_stream->dir)
 				{
@@ -802,7 +802,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 				ECMedia_audio_start_send(call->m_AudioChannelID);
                 ECMedia_audio_start_record();
 			}
-			PrintConsole("cloopen trace %s middle 114\n",__FUNCTION__);
+			PrintConsole("yuntongxun trace %s middle 114\n",__FUNCTION__);
 
 			//TODO:
 			//bool enabled = false;
@@ -826,7 +826,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 			//		exmedia->Release();
 			//	}
 			//}
-			PrintConsole("cloopen trace %s middle 115\n",__FUNCTION__);
+			PrintConsole("yuntongxun trace %s middle 115\n",__FUNCTION__);
 			call->current_params.in_conference=call->params.in_conference;
 
 			ECMedia_set_voe_cb(call->m_AudioChannelID, voe_callback);
@@ -834,7 +834,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 		}else PrintConsole("No audio stream accepted ?\n");
 	}
 #endif
-	PrintConsole("cloopen trace %s end\n",__FUNCTION__);
+	PrintConsole("yuntongxun trace %s end\n",__FUNCTION__);
 }
 
 

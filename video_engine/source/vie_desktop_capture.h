@@ -129,7 +129,7 @@ private:
 	int callback_id_;
 };
 
-} //cloopenwebrtc
+} //yuntongxunwebrtc
 
 
 #endif // WEBRTC_VIDEO_DESKTOP_SHARE_H_

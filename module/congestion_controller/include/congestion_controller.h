@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2012 The cloopenwebrtc project authors. All Rights Reserved.
+ *  Copyright (c) 2012 The yuntongxunwebrtc project authors. All Rights Reserved.
  *
  *  Use of this source code is governed by a BSD-style license
  *  that can be found in the LICENSE file in the root of the source
@@ -8,8 +8,8 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#ifndef cloopenwebrtc_MODULES_CONGESTION_CONTROLLER_INCLUDE_CONGESTION_CONTROLLER_H_
-#define cloopenwebrtc_MODULES_CONGESTION_CONTROLLER_INCLUDE_CONGESTION_CONTROLLER_H_
+#ifndef yuntongxunwebrtc_MODULES_CONGESTION_CONTROLLER_INCLUDE_CONGESTION_CONTROLLER_H_
+#define yuntongxunwebrtc_MODULES_CONGESTION_CONTROLLER_INCLUDE_CONGESTION_CONTROLLER_H_
 
 #include <memory>
 #include <vector>
@@ -186,4 +186,4 @@ class CongestionController : public CallStatsObserver, public Module {
 
 }  // namespace yuntongxunwebrtc
 
-#endif  // cloopenwebrtc_MODULES_CONGESTION_CONTROLLER_INCLUDE_CONGESTION_CONTROLLER_H_
+#endif  // yuntongxunwebrtc_MODULES_CONGESTION_CONTROLLER_INCLUDE_CONGESTION_CONTROLLER_H_

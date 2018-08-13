@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2016 The cloopenwebrtc project authors. All Rights Reserved.
+ *  Copyright (c) 2016 The yuntongxunwebrtc project authors. All Rights Reserved.
  *
  *  Use of this source code is governed by a BSD-style license
  *  that can be found in the LICENSE file in the root of the source
@@ -8,8 +8,8 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#ifndef cloopenwebrtc_MODULES_CONGESTION_CONTROLLER_PROBE_CONTROLLER_H_
-#define cloopenwebrtc_MODULES_CONGESTION_CONTROLLER_PROBE_CONTROLLER_H_
+#ifndef yuntongxunwebrtc_MODULES_CONGESTION_CONTROLLER_PROBE_CONTROLLER_H_
+#define yuntongxunwebrtc_MODULES_CONGESTION_CONTROLLER_PROBE_CONTROLLER_H_
 
 #include <initializer_list>
 
@@ -67,7 +67,7 @@ class ProbeController {
   int64_t last_alr_probing_time_ GUARDED_BY(critsect_);
   bool enable_periodic_alr_probing_ GUARDED_BY(critsect_);
 
-  // For cloopenwebrtc.BWE.MidCallProbing.* metric.
+  // For yuntongxunwebrtc.BWE.MidCallProbing.* metric.
   bool mid_call_probing_waiting_for_result_ GUARDED_BY(&critsect_);
   int64_t mid_call_probing_bitrate_bps_ GUARDED_BY(&critsect_);
   int64_t mid_call_probing_succcess_threshold_ GUARDED_BY(&critsect_);
@@ -77,4 +77,4 @@ class ProbeController {
 
 }  // namespace yuntongxunwebrtc
 
-#endif  // cloopenwebrtc_MODULES_CONGESTION_CONTROLLER_PROBE_CONTROLLER_H_
+#endif  // yuntongxunwebrtc_MODULES_CONGESTION_CONTROLLER_PROBE_CONTROLLER_H_

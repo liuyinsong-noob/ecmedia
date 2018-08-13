@@ -233,7 +233,7 @@ UdpTransportImpl::UdpTransportImpl(const WebRtc_Word32 id,
     memset(_localMulticastIP, 0, sizeof(_localMulticastIP));
 
     memset(&_filterIPAddress, 0, sizeof(_filterIPAddress));
-    memcpy(_mixture, "yuntongxuncloopenronglianyuntongxuncloopenronglianyuntongxuncloopenronglianyuntongxuncloopenronglian", 100);
+    memcpy(_mixture, "yuntongxunyuntongxunronglianyuntongxunyuntongxunronglianyuntongxunyuntongxunronglianyuntongxunyuntongxunronglian", 100);
     _mixture[100] = '\0';
     WEBRTC_TRACE(kTraceMemory, kTraceTransport, id, "%s created", __FUNCTION__);
 }

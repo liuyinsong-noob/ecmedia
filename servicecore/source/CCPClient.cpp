@@ -478,8 +478,8 @@ static void* CheckProxyVaildFun(void *p)
     if (!strcmp((char*)p,"103.5.126.154") || !strcmp((char*)p,"103.5.126.155") || !strcmp((char*)p,"10.0.19.11") || !strcmp((char *)p, "10.0.19.15") || !strcmp((char *)p, "211.157.178.195") || !strcmp((char *)p, "211.157.178.196") || !strcmp((char *)p, "192.168.2.190") || !strcmp((char *)p, "192.168.178.171") || !strcmp((char *)p, "192.168.1.3") || !strcmp((char *)p, "192.168.1.2") || !strcmp((char *)p, "211.157.178.211"))
 	return NULL;
 
-    //	TRESTClient *client = new TRESTClient("10.0.19.11", 8881, "", "", "");//("app.cloopen.net", 8881, "", "", "");  //xinwei
-    TRESTClient *client = new TRESTClient("app.yuntongxun.com", 8881, "", "", "");//("app.cloopen.net", 8881, "", "", "");
+    //	TRESTClient *client = new TRESTClient("10.0.19.11", 8881, "", "", "");//("app.yuntongxun.net", 8881, "", "", "");  //xinwei
+    TRESTClient *client = new TRESTClient("app.yuntongxun.com", 8881, "", "", "");//("app.yuntongxun.net", 8881, "", "", "");
     client->SetTraceFunc(PrintConsole);
     if( client->CheckProxyValid((char*)p, "", CHECK_PROXY_VALID_KEY, status) )
     // if( client->CheckProxyValid("42.121.118.111", "", CHECK_PROXY_VALID_KEY, status) )

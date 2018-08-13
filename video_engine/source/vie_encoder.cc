@@ -705,7 +705,7 @@ bool ViEEncoder::EncoderPaused() const {
 void ViEEncoder::TraceFrameDropStart() {
   // Start trace event only on the first frame after encoder is paused.
   if (!encoder_paused_and_dropped_frame_) {
-    TRACE_EVENT_ASYNC_BEGIN0("cloopenwebrtc", "EncoderPaused", this);
+    TRACE_EVENT_ASYNC_BEGIN0("yuntongxunwebrtc", "EncoderPaused", this);
   }
   encoder_paused_and_dropped_frame_ = true;
   return;
@@ -714,7 +714,7 @@ void ViEEncoder::TraceFrameDropStart() {
 void ViEEncoder::TraceFrameDropEnd() {
   // End trace event on first frame after encoder resumes, if frame was dropped.
   if (encoder_paused_and_dropped_frame_) {
-    TRACE_EVENT_ASYNC_END0("cloopenwebrtc", "EncoderPaused", this);
+    TRACE_EVENT_ASYNC_END0("yuntongxunwebrtc", "EncoderPaused", this);
   }
   encoder_paused_and_dropped_frame_ = false;
 }
@@ -779,7 +779,7 @@ void ViEEncoder::DeliverFrame(int id,
       kMsToRtpTimestamp *
       static_cast<uint32_t>(video_frame->render_time_ms());
 
-  TRACE_EVENT_ASYNC_STEP0("cloopenwebrtc", "Video", video_frame->render_time_ms(),
+  TRACE_EVENT_ASYNC_STEP0("yuntongxunwebrtc", "Video", video_frame->render_time_ms(),
                           "Encode");
   video_frame->set_timestamp(time_stamp);
 
@@ -1103,7 +1103,7 @@ void ViEEncoder::OnReceivedRPSI(uint32_t /*ssrc*/,
 
 void ViEEncoder::OnReceivedIntraFrameRequest(uint32_t ssrc) {
   // Key frame request from remote side, signal to VCM.
-  TRACE_EVENT0("cloopenwebrtc", "OnKeyFrameRequest");
+  TRACE_EVENT0("yuntongxunwebrtc", "OnKeyFrameRequest");
 
   int idx = 0;
   {

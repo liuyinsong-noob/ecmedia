@@ -290,7 +290,7 @@ int32_t VideoCaptureImpl::IncomingFrame(
     rawFrameType = kVideoNV21;
 #endif
 
-    TRACE_EVENT1("cloopenwebrtc", "VC::IncomingFrame", "capture_time", captureTime);
+    TRACE_EVENT1("yuntongxunwebrtc", "VC::IncomingFrame", "capture_time", captureTime);
 
     if (frameInfo.codecType == kVideoCodecUnknown)
     {

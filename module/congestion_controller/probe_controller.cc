@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2016 The cloopenwebrtc project authors. All Rights Reserved.
+ *  Copyright (c) 2016 The yuntongxunwebrtc project authors. All Rights Reserved.
  *
  *  Use of this source code is governed by a BSD-style license
  *  that can be found in the LICENSE file in the root of the source
@@ -104,7 +104,7 @@ void ProbeController::SetBitrates(int64_t min_bitrate_bps,
         mid_call_probing_waiting_for_result_ = true;
         mid_call_probing_bitrate_bps_ = max_bitrate_bps_;
 
-        RTC_HISTOGRAM_COUNTS_10000("cloopenwebrtc.BWE.MidCallProbing.Initiated",
+        RTC_HISTOGRAM_COUNTS_10000("yuntongxunwebrtc.BWE.MidCallProbing.Initiated",
                                    max_bitrate_bps_ / 1000);
 
         InitiateProbing(clock_->TimeInMilliseconds(), {max_bitrate_bps}, false);
@@ -137,9 +137,9 @@ void ProbeController::SetEstimatedBitrate(int64_t bitrate_bps) {
 
   if (mid_call_probing_waiting_for_result_ &&
       bitrate_bps >= mid_call_probing_succcess_threshold_) {
-    RTC_HISTOGRAM_COUNTS_10000("cloopenwebrtc.BWE.MidCallProbing.Success",
+    RTC_HISTOGRAM_COUNTS_10000("yuntongxunwebrtc.BWE.MidCallProbing.Success",
                                mid_call_probing_bitrate_bps_ / 1000);
-    RTC_HISTOGRAM_COUNTS_10000("cloopenwebrtc.BWE.MidCallProbing.ProbedKbps",
+    RTC_HISTOGRAM_COUNTS_10000("yuntongxunwebrtc.BWE.MidCallProbing.ProbedKbps",
                                bitrate_bps / 1000);
     mid_call_probing_waiting_for_result_ = false;
   }
@@ -189,7 +189,7 @@ void ProbeController::SetEstimatedBitrate(int64_t bitrate_bps) {
 //             estimated_bitrate_bps_);
 #endif
     // Track how often we probe in response to BW drop in ALR.
-    RTC_HISTOGRAM_COUNTS_10000("cloopenwebrtc.BWE.AlrProbingIntervalInS",
+    RTC_HISTOGRAM_COUNTS_10000("yuntongxunwebrtc.BWE.AlrProbingIntervalInS",
                                (now_ms - last_alr_probing_time_) / 1000);
     InitiateProbing(now_ms, {estimated_bitrate_bps_}, false);
     last_alr_probing_time_ = now_ms;

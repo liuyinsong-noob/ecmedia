@@ -454,7 +454,7 @@ void ViECapturer::OnIncomingCapturedFrame(const int32_t capture_id,
                                    video_frame.height(),
                                    video_frame.render_time_ms());
 
-  TRACE_EVENT_ASYNC_BEGIN1("cloopenwebrtc", "Video", video_frame.render_time_ms(),
+  TRACE_EVENT_ASYNC_BEGIN1("yuntongxunwebrtc", "Video", video_frame.render_time_ms(),
                            "render_time", video_frame.render_time_ms());
   if (video_frame.native_handle() != NULL) {
     captured_frame_.reset(video_frame.CloneFrame());

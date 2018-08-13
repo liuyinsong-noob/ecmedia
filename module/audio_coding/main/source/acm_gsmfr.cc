@@ -14,7 +14,7 @@
 // NOTE! GSM-FR is not included in the open-source package. Modify this file
 // or your codec API to match the function calls and names of used GSM-FR API
 // file.
-#include "cloopenwebrtc/modules/audio_coding/main/codecs/gsmfr/interface/gsmfr_interface.h"
+#include "yuntongxunwebrtc/modules/audio_coding/main/codecs/gsmfr/interface/gsmfr_interface.h"
 #include "acm_common_defs.h"
 #include "trace.h"
 #endif

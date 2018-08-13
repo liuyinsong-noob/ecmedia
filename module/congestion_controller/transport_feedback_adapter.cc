@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2015 The cloopenwebrtc project authors. All Rights Reserved.
+ *  Copyright (c) 2015 The yuntongxunwebrtc project authors. All Rights Reserved.
  *
  *  Use of this source code is governed by a BSD-style license
  *  that can be found in the LICENSE file in the root of the source
@@ -46,7 +46,7 @@ TransportFeedbackAdapter::TransportFeedbackAdapter(
     Clock* clock,
     BitrateController* bitrate_controller)
     : send_side_bwe_with_overhead_(
-          yuntongxunwebrtc::field_trial::IsEnabled("cloopenwebrtc-SendSideBwe-WithOverhead")),
+          yuntongxunwebrtc::field_trial::IsEnabled("yuntongxunwebrtc-SendSideBwe-WithOverhead")),
       transport_overhead_bytes_per_packet_(0),
       send_time_history_(clock, kSendTimeHistoryWindowMs),
       event_log_(event_log),

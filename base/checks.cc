@@ -43,7 +43,7 @@ namespace yuntongxunwebrtc {
 
 void VPrintError(const char* format, va_list args) {
 #if defined(WEBRTC_ANDROID)
-  __android_log_vprint(ANDROID_LOG_ERROR, "cloopenwebrtc", format, args);
+  __android_log_vprint(ANDROID_LOG_ERROR, "yuntongxunwebrtc", format, args);
 #else
   vfprintf(stderr, format, args);
 #endif

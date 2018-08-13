@@ -328,7 +328,7 @@ bool TRESTClient::CheckProxyValid(const std::string& proxy, const std::string& s
     std::string  sig;
 	sig.append(proxy);
 	sig.append(key);
-	sig.append("cloopen");
+	sig.append("yuntongxun");
 	signature = md5(sig);
     
     std::stringstream domain;
@@ -471,7 +471,7 @@ bool TRESTClient::CheckPrivateProxyValid(const std::string& companyID, const std
         return false;
 	}
     std::stringstream compositeString;
-    compositeString<<companyID<<proxy<<port<<"cloopenyuntongxun";
+    compositeString<<companyID<<proxy<<port<<"yuntongxunyuntongxun";
     if (strcmp(licenseElement->GetText(), md5(compositeString.str()).c_str())) {
          m_errorMsg="license not match";
         status = 11;

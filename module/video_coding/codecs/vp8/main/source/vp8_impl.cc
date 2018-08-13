@@ -736,7 +736,7 @@ int VP8EncoderImpl::Encode(
     const I420VideoFrame& frame,
     const CodecSpecificInfo* codec_specific_info,
     const std::vector<VideoFrameType>* frame_types) {
-  TRACE_EVENT1("cloopenwebrtc", "VP8::Encode", "timestamp", frame.timestamp());
+  TRACE_EVENT1("yuntongxunwebrtc", "VP8::Encode", "timestamp", frame.timestamp());
 
   if (!inited_) {
     return WEBRTC_VIDEO_CODEC_UNINITIALIZED;
@@ -1027,7 +1027,7 @@ int VP8EncoderImpl::GetEncodedPartitions(
         encoded_images_[encoder_idx]._timeStamp);
     if (send_stream_[stream_idx]) {
       if (encoded_images_[encoder_idx]._length > 0) {
-        TRACE_COUNTER_ID1("cloopenwebrtc", "EncodedFrameSize", encoder_idx,
+        TRACE_COUNTER_ID1("yuntongxunwebrtc", "EncodedFrameSize", encoder_idx,
                           encoded_images_[encoder_idx]._length);
         encoded_images_[encoder_idx]._encodedHeight =
             codec_.simulcastStream[stream_idx].height;
