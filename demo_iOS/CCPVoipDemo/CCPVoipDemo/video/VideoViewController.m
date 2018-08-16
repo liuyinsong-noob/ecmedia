@@ -697,13 +697,13 @@ extern BOOL globalisVoipView;
 -(void)switchCamera
 {
     [self.modelEngineVoip getStatsReports];
-//    curCameraIndex ++;
-//    if (curCameraIndex >= self.cameraInfoArr.count)
-//    {
-//        curCameraIndex = 0;
-//    }
-//    CameraDeviceInfo *camera = [self.cameraInfoArr objectAtIndex:curCameraIndex];
-//    [self.modelEngineVoip selectCamera:camera.index];
+    curCameraIndex ++;
+    if (curCameraIndex >= self.cameraInfoArr.count)
+    {
+        curCameraIndex = 0;
+    }
+    CameraDeviceInfo *camera = [self.cameraInfoArr objectAtIndex:curCameraIndex];
+    [self.modelEngineVoip selectCamera:camera.index];
 }
 
 

@@ -961,11 +961,37 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 			ECMedia_get_supported_codecs_video(codecArray);
 			for (int i = 0; i < num_codec; i++) {
 				codec_params = codecArray[i];
-				if ( strcasecmp( codec_params.plName, p->mime_type) == 0) {
-					codec_found = true;
-					codec_params.plType = used_pt;
-					break;
-				}
+                
+                //profile-level-id 2017-08-08 zhangning added
+                if ( strcasecmp( codec_params.plName, p->mime_type) == 0) {
+                    
+                    if( strcasecmp(p->mime_type, "VP8") == 0  ){
+                        codec_found = true;
+                        codec_params.plType = used_pt;
+                        break;
+                    }
+                    
+                    char value[8]   =   {0};
+                    if (strcasecmp(p->mime_type, "H264") == 0 &&
+                        fmtp_get_value(p->recv_fmtp,"profile-level-id",value,sizeof(value))){
+ 
+                        if ( yuntongxunwebrtc::kVideoCodecH264 == codec_params.codecType &&
+                            0 == strncmp( value, "42",2) ) {
+                            
+                            codec_found = true;
+                            codec_params.plType = used_pt;
+                            break;
+                        }
+                        if ( yuntongxunwebrtc::kVideoCodecH264HIGH == codec_params.codecType &&
+                            0 == strncmp( value, "6400", 4 ) ) {
+                            
+                            codec_found = true;
+                            codec_params.plType = used_pt;
+                            break;
+                        }
+                        
+                    }
+                }
 			}
             
 			delete []codecArray;
@@ -984,7 +1010,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
                     
 					codec_params.startBitrate = m_sendVideoWidth*m_sendVideoHeight*m_sendVideoFps *3*0.07/1000;
 					codec_params.maxBitrate = codec_params.startBitrate;
-					codec_params.minBitrate = codec_params.startBitrate/4;
+                    codec_params.minBitrate = 50;//codec_params.startBitrate/4;
 
 				}
 
@@ -1280,6 +1306,7 @@ int ServiceCore::startVideoCapture(SerPhoneCall *call)
 				m_sendVideoWidth = cap.width;
 				m_sendVideoHeight = cap.height;
 #endif
+                cap.maxfps = 7;
 				m_sendVideoFps = cap.maxfps;
 //			}
 

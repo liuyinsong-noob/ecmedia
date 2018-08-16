@@ -13,7 +13,6 @@
 		1AFBD1661DAE67D3009B8D23 /* libL16.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AFBD1611DAE6592009B8D23 /* libL16.a */; };
 		1F45C2502092BBF9008EEF78 /* aacencode.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F45C24B2092BBF8008EEF78 /* aacencode.cc */; };
 		1F45C35420932968008EEF78 /* aacdecode.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F45C34F20932968008EEF78 /* aacdecode.cc */; };
-		1F4E14A820E0BAF1006E756B /* IJKMediaFramework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F4E14A720E0BAF1006E756B /* IJKMediaFramework */; };
 		1F5BD28F20CA31A100943F52 /* libavfilter_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F5BD28E20CA31A000943F52 /* libavfilter_mac.a */; };
 		1F5BD29120CA31F100943F52 /* libfreetype_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F5BD29020CA31F100943F52 /* libfreetype_mac.a */; };
 		1F5BD2A120CA3AC900943F52 /* libpng_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F5BD2A020CA3AC800943F52 /* libpng_mac.a */; };
@@ -55,6 +54,7 @@
 		1F930DD11F6A9DAE00EBDE34 /* ec_rtmp_publisher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F930DC61F6A9DAE00EBDE34 /* ec_rtmp_publisher.cpp */; };
 		1F930DD21F6A9DAE00EBDE34 /* ec_rtmp_puller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F930DC81F6A9DAE00EBDE34 /* ec_rtmp_puller.cpp */; };
 		1F9AB0E71F8CB79F0046DF9D /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9AB0DF1F8CB76F0046DF9D /* libprotobuf.a */; };
+		1F9F4025211AD92500D5B588 /* IJKMediaFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F4E145120E0A91F006E756B /* IJKMediaFramework.framework */; };
 		1FA4AA911FC6C1E600936805 /* libECImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA4AA881FC6BB9F00936805 /* libECImage.a */; };
 		1FBB43FA1E728F35007DBD1D /* MediaStatisticsData.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FBB43F91E728F35007DBD1D /* MediaStatisticsData.pb.cc */; };
 		1FDB3E4C1E839BC30018FA08 /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FDB3DC91E837CD40018FA08 /* libsrtp.a */; };
@@ -1564,7 +1564,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F4E14A820E0BAF1006E756B /* IJKMediaFramework in Frameworks */,
+				1F9F4025211AD92500D5B588 /* IJKMediaFramework.framework in Frameworks */,
 				1FE95B5820CA61AA00ABC454 /* libfaac.a in Frameworks */,
 				1FE95B5620CA619900ABC454 /* libfaad.a in Frameworks */,
 				1F886D4620CA5D860073669C /* libvpx.a in Frameworks */,

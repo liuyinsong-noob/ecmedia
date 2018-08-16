@@ -397,11 +397,10 @@ int H264VideoToolboxEncoder::SetChannelParameters(uint32_t packet_loss,
 
 int H264VideoToolboxEncoder::SetRates(uint32_t new_bitrate_kbit,
                                       uint32_t frame_rate) {
-    
-//    printTime();printf("new bit rate %d\n", target_bitrate_bps_);
+  target_bitrate_bps_ = new_bitrate_kbit;
   bitrate_adjuster_.SetTargetBitrateBps(target_bitrate_bps_);
-  SetBitrateBps(bitrate_adjuster_.GetAdjustedBitrateBps());
-
+  int rate = bitrate_adjuster_.GetAdjustedBitrateBps();
+  SetBitrateBps(rate);
   return WEBRTC_VIDEO_CODEC_OK;
 }
 
@@ -420,7 +419,6 @@ WebRtc_Word32 H264VideoToolboxEncoder::SetPeriodicKeyFrames(bool enable)
     return WEBRTC_VIDEO_CODEC_OK;
 }
 
-    
 int H264VideoToolboxEncoder::ResetCompressionSession() {
   DestroyCompressionSession();
 
