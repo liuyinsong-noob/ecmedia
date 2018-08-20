@@ -1185,8 +1185,8 @@ void ViEEncoder::SetMinTransmitBitrate(int min_transmit_bitrate_kbps) {
 void ViEEncoder::OnNetworkChanged(uint32_t bitrate_bps,
                                   uint8_t fraction_lost,
                                   int64_t round_trip_time_ms) {
-  LOG(LS_VERBOSE) << "OnNetworkChanged, bitrate" << bitrate_bps
-                  << " packet loss " << fraction_lost
+  LOG(LS_VERBOSE) << "OnNetworkChanged, bitrate " << bitrate_bps
+                  << " packet loss " << (unsigned long)fraction_lost
                   << " rtt " << (unsigned long)round_trip_time_ms;
     if (capture_) {
         capture_->UpdateLossRate(capture_id_, ceil((fraction_lost/256.0)*100));

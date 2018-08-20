@@ -225,8 +225,9 @@ OutputMixer::NewMixedAudio(int32_t id,
                            const AudioFrame** uniqueAudioFrames,
                            uint32_t size)
 {
-    WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId,-1),
-                 "OutputMixer::NewMixedAudio(id=%d, size=%u)", id, size);
+    //WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId,-1),
+    //             "OutputMixer::NewMixedAudio(id=%d, size=%u)", id, size);
+	LOG_COUNT_F(LS_STREAM, 20) << "id = " << id << ", size = " << size;
 
     _audioFrame.CopyFrom(generalAudioFrame);
     _audioFrame.id_ = id;
@@ -708,9 +709,10 @@ int OutputMixer::StopRecordingPlayout()
 int OutputMixer::GetMixedAudio(int sample_rate_hz,
                                int num_channels,
                                AudioFrame* frame) {
-    WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId,-1),
-                 "OutputMixer::GetMixedAudio(sample_rate_hz=%d, num_channels=%d)",
-                 sample_rate_hz, num_channels);
+    //WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId,-1),
+    //             "OutputMixer::GetMixedAudio(sample_rate_hz=%d, num_channels=%d)",
+    //             sample_rate_hz, num_channels);
+	LOG_COUNT_F(LS_STREAM, 10) << " sample_rate_hz = " << sample_rate_hz << " num_channels = " << num_channels;
 
 #if 0
     if( _samplerate != _audioFrame.sample_rate_hz_ )

@@ -365,11 +365,13 @@ TransmitMixer::PrepareDemux(const void* audioSamples,
                             uint16_t currentMicLevel,
                             bool keyPressed)
 {
-    WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId, -1),
-                 "TransmitMixer::PrepareDemux(nSamples=%u, nChannels=%u,"
-                 "samplesPerSec=%u, totalDelayMS=%u, clockDrift=%d,"
-                 "currentMicLevel=%u)", nSamples, nChannels, samplesPerSec,
-                 totalDelayMS, clockDrift, currentMicLevel);
+    //WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId, -1),
+    //             "TransmitMixer::PrepareDemux(nSamples=%u, nChannels=%u,"
+    //             "samplesPerSec=%u, totalDelayMS=%u, clockDrift=%d,"
+    //             "currentMicLevel=%u)", nSamples, nChannels, samplesPerSec,
+    //             totalDelayMS, clockDrift, currentMicLevel);
+	LOG_COUNT_F(LS_STREAM, 10) << " nSamples = " << (unsigned long)nSamples << " nChannels = " << (unsigned long)nChannels << " samplesPerSec = " << (unsigned long)samplesPerSec
+		<< " totalDelayMS = " << (unsigned long)totalDelayMS << " clockDrift = " << (unsigned long)clockDrift << "currentMicLevel = " << (unsigned long)currentMicLevel;
 
     // --- Resample input audio and create/store the initial audio frame
     GenerateAudioFrame(static_cast<const int16_t*>(audioSamples),
@@ -620,8 +622,9 @@ TransmitMixer::PrepareDemux(const void* audioSamples,
 int32_t
 TransmitMixer::DemuxAndMix()
 {
-    WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId, -1),
-                 "TransmitMixer::DemuxAndMix()");
+    //WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId, -1),
+    //             "TransmitMixer::DemuxAndMix()");
+	LOG_COUNT_F(LS_STREAM, 50);
 
     for (ChannelManager::Iterator it(_channelManagerPtr); it.IsValid();
          it.Increment())
@@ -656,8 +659,9 @@ void TransmitMixer::DemuxAndMix(const int voe_channels[],
 int32_t
 TransmitMixer::EncodeAndSend()
 {
-    WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId, -1),
-                 "TransmitMixer::EncodeAndSend()");
+    //WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId, -1),
+    //             "TransmitMixer::EncodeAndSend()");
+	LOG_COUNT_F(LS_STREAM, 50);
 
     for (ChannelManager::Iterator it(_channelManagerPtr); it.IsValid();
          it.Increment())

@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include "../system_wrappers/include/logging.h"
 
 #if defined(_WIN32)
     #include <winsock2.h>
@@ -2329,7 +2330,8 @@ WebRtc_Word32 UdpTransportImpl::SendRTPPacketTo(const WebRtc_Word8* data,
 
 int UdpTransportImpl::SendRtp(int channelId, const uint8_t* packet, size_t length, const PacketOptions* options)
 {
-    WEBRTC_TRACE(kTraceStream, kTraceTransport, _id, "%s", __FUNCTION__);
+    //WEBRTC_TRACE(kTraceStream, kTraceTransport, _id, "%s", __FUNCTION__);
+	LOG_COUNT_F(LS_STREAM, 20) << " channelId = " << channelId << " length = " << length;
 
     CriticalSectionScoped cs(_crit);
 
@@ -2627,8 +2629,11 @@ void UdpTransportImpl::IncomingRTPFunction(const WebRtc_Word8* rtpPacket,
 	}
 
 	if (transportData) {
-		WEBRTC_TRACE(kTraceStream, kTraceTransport, _id,
-			"Incoming RTP packet from ip:%s port:%d len:%d, ssrc %u, local port %d", ipAddress, portNr, rtpPacketLength, rtpSsrc, _localPort);
+		//WEBRTC_TRACE(kTraceStream, kTraceTransport, _id,
+		//	"Incoming RTP packet from ip:%s port:%d len:%d, ssrc %u, local port %d", ipAddress, portNr, rtpPacketLength, rtpSsrc, _localPort);
+		LOG_COUNT_F(LS_STREAM, 10) << " Incoming RTP packet from ip: " << ipAddress << " port : " << portNr
+			<< " local port : " << _localPort << " len: " << rtpPacketLength << " ssrc: " << rtpSsrc;
+
         if (_packetCallback.size() == 0) {
             return;
         }
@@ -2730,8 +2735,9 @@ void UdpTransportImpl::IncomingRTCPFunction(const WebRtc_Word8* rtcpPacket,
 		SsrcChannelMap::iterator s_it = _packetCallback.find(ssrc_media);
 		if (s_it != _packetCallback.end()) {
 			transportData = s_it->second;
-			WEBRTC_TRACE(kTraceDebug, kTraceTransport, _id,
-				"Incoming RTCP packet find channel ssrc:%d type:%d.", rtcpSsrc, payloadType);
+			//WEBRTC_TRACE(kTraceDebug, kTraceTransport, _id,
+			//	"Incoming RTCP packet find channel ssrc:%d type:%d.", rtcpSsrc, payloadType);
+			LOG_COUNT_F(LS_DEBUG, 10) << "Incoming RTCP packet find channel ssrc: " << rtcpSsrc << " type: " << (long)payloadType;
 		}
 		else {
 			WEBRTC_TRACE(kTraceError, kTraceTransport, _id,
@@ -2744,12 +2750,15 @@ void UdpTransportImpl::IncomingRTCPFunction(const WebRtc_Word8* rtcpPacket,
 	}
 
 	if (transportData) {
-		WEBRTC_TRACE(kTraceStream, kTraceTransport, _id,
-                     "Found Incoming RTCP packet from ip:%s port:%d, ssrc %u, rtcp pt %d, onePort %s, local port %d", ipAddress,
-                     portNr, rtcpSsrc, payloadType, _onePort?"YES":"NO", _localPort);
-        if (_packetCallback.size() == 0) {
-            return;
-        }
+		//WEBRTC_TRACE(kTraceStream, kTraceTransport, _id,
+  //                   "Found Incoming RTCP packet from ip:%s port:%d, ssrc %u, rtcp pt %d, onePort %s, local port %d", ipAddress,
+  //                   portNr, rtcpSsrc, payloadType, _onePort?"YES":"NO", _localPort);
+		LOG_COUNT_F(LS_STREAM, 10) << " Found Incoming RTCP packet from ip: " << ipAddress << " port: " << portNr << " , ssrc  " << rtcpSsrc
+			<< " , rtcp pt  " << (unsigned long)payloadType << " , onePort  " << (_onePort ? "YES" : "NO") << ", local port " << _localPort;
+		if (_packetCallback.size() == 0) {
+			LOG_F(LS_WARNING) << " _packetCallback.size: " << _packetCallback.size();//add
+			return;
+		}
         transportData->IncomingRTCPPacket(rtcpPacket, rtcpPacketLength,
 			ipAddress, portNr);
 	}

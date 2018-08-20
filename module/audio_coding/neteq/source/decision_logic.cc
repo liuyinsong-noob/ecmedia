@@ -129,9 +129,12 @@ Operations DecisionLogic::GetDecision(const SyncBuffer& sync_buffer,
   const int cur_size_samples =
       samples_left + packet_buffer_.NumSamplesInBuffer(decoder_database_,
                                                        decoder_frame_length);
-  LOG(LS_VERBOSE) << "Buffers: " << packet_buffer_.NumPacketsInBuffer() <<
-      " packets * " << decoder_frame_length << " samples/packet + " <<
-      samples_left << " samples in sync buffer = " << cur_size_samples;
+  //LOG(LS_VERBOSE) << "Buffers: " << packet_buffer_.NumPacketsInBuffer() <<
+  //    " packets * " << decoder_frame_length << " samples/packet + " <<
+  //    samples_left << " samples in sync buffer = " << cur_size_samples;
+  LOG_COUNT_F(LS_VERBOSE, 10) << "Buffers: " << packet_buffer_.NumPacketsInBuffer() <<
+	  " packets * " << decoder_frame_length << " samples/packet + " <<
+	  samples_left << " samples in sync buffer = " << cur_size_samples;
 
   prev_time_scale_ = prev_time_scale_ &&
       (prev_mode == kModeAccelerateSuccess ||

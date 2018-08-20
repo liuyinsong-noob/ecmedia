@@ -133,12 +133,15 @@ int32_t VoEBaseImpl::RecordedDataIsAvailable(
         bool keyPressed,
         uint32_t& newMicLevel)
 {
-    WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_shared->instance_id(), -1),
-                 "VoEBaseImpl::RecordedDataIsAvailable(nSamples=%u, "
-                     "nBytesPerSample=%u, nChannels=%u, samplesPerSec=%u, "
-                     "totalDelayMS=%u, clockDrift=%d, micLevel=%u)",
-                 nSamples, nBytesPerSample, nChannels, samplesPerSec,
-                 totalDelayMS, clockDrift, micLevel);
+    //WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_shared->instance_id(), -1),
+    //             "VoEBaseImpl::RecordedDataIsAvailable(nSamples=%u, "
+    //                 "nBytesPerSample=%u, nChannels=%u, samplesPerSec=%u, "
+    //                 "totalDelayMS=%u, clockDrift=%d, micLevel=%u)",
+    //             nSamples, nBytesPerSample, nChannels, samplesPerSec,
+    //             totalDelayMS, clockDrift, micLevel);
+	LOG_COUNT_F(LS_STREAM, 10) << " nSamples = " << (unsigned long)nSamples << " nBytesPerSample = " << (unsigned long)nBytesPerSample << " nChannels = " << (unsigned long)nChannels << " samplesPerSec = "
+		<< (unsigned long)samplesPerSec << " totalDelayMS = " << (unsigned long)totalDelayMS << " clockDrift = " << (long)clockDrift << " micLevel = " << (unsigned long)micLevel;
+
     static time_t last = 0;
     int logInterval = 5;
 	if( time(NULL) > last + logInterval ) {
@@ -168,10 +171,11 @@ int32_t VoEBaseImpl::NeedMorePlayData(
         int64_t* elapsed_time_ms,
         int64_t* ntp_time_ms)
 {
-  WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_shared->instance_id(), -1),
-               "VoEBaseImpl::NeedMorePlayData(nSamples=%u, "
-               "nBytesPerSample=%d, nChannels=%d, samplesPerSec=%u)",
-               nSamples, nBytesPerSample, nChannels, samplesPerSec);
+  //WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_shared->instance_id(), -1),
+  //             "VoEBaseImpl::NeedMorePlayData(nSamples=%u, "
+  //             "nBytesPerSample=%d, nChannels=%d, samplesPerSec=%u)",
+  //             nSamples, nBytesPerSample, nChannels, samplesPerSec);
+	LOG_COUNT_F(LS_STREAM, 10) << " nSamples = " << (unsigned long)nSamples << " nBytesPerSample = " << (unsigned long)nBytesPerSample << " nChannels = " << (unsigned long)nChannels << " samplesPerSec = " << (unsigned long)samplesPerSec;
 
   GetPlayoutData(static_cast<int>(samplesPerSec),
                  static_cast<int>(nChannels),

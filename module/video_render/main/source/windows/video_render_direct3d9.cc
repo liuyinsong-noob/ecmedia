@@ -20,6 +20,7 @@
 #include "../system_wrappers/include/event_wrapper.h"
 #include "../system_wrappers/include/thread_wrapper.h"
 #include "../system_wrappers/include/trace.h"
+#include "../system_wrappers/include/logging.h"
 
 namespace yuntongxunwebrtc {
 
@@ -194,8 +195,9 @@ int32_t D3D9Channel::RenderFrame(const uint32_t streamId,
 
 // Called from video engine when a new frame should be rendered.
 int D3D9Channel::DeliverFrame(const I420VideoFrame& videoFrame) {
-  WEBRTC_TRACE(kTraceStream, kTraceVideo, -1,
-               "DeliverFrame to D3D9Channel");
+  //WEBRTC_TRACE(kTraceStream, kTraceVideo, -1,
+  //             "DeliverFrame to D3D9Channel");
+	LOG_COUNT_F(LS_STREAM, 50) << "DeliverFrame to D3D9Channel";
 
   CriticalSectionScoped cs(_critSect);
 
@@ -269,8 +271,9 @@ int D3D9Channel::DeliverFrame(const I420VideoFrame& videoFrame) {
 // Called by d3d channel owner to indicate the frame/texture has been rendered off
 int D3D9Channel::RenderOffFrame()
 {
-    WEBRTC_TRACE(kTraceStream, kTraceVideo, -1,
-                 "Frame has been rendered to the screen.");
+    //WEBRTC_TRACE(kTraceStream, kTraceVideo, -1,
+    //             "Frame has been rendered to the screen.");
+	LOG_COUNT_F(LS_STREAM, 10) << "Frame has been rendered to the screen.";
     CriticalSectionScoped cs(_critSect);
     _bufferIsUpdated = false;
     return 0;

@@ -58,7 +58,7 @@ namespace yuntongxunwebrtc {
 //  LS_WARNING: Something that may warrant investigation.
 //  LS_ERROR: Something that should not have occurred.
 enum LoggingSeverity {
-  LS_SENSITIVE, LS_VERBOSE, LS_INFO, LS_WARNING, LS_ERROR
+	LS_SENSITIVE, LS_VERBOSE, LS_STREAM, LS_DEBUG, LS_INFO, LS_WARNING, LS_ERROR
 };
 
 class LogMessage {
@@ -93,6 +93,30 @@ private:
 
 	std::string& strLast_;
 	bool bForeWriteLog_;
+};
+
+class LogMessageCounter
+{
+public:
+	LogMessageCounter(const char* file, int line, LoggingSeverity sev, std::string& strPrev, int64_t prevValue, int64_t currValue, int countinues, bool bWriteCurrLog = false, bool bWritePrevLog = false);
+	~LogMessageCounter();
+
+	//static bool Loggable(LoggingSeverity sev);
+	std::ostream& stream() { return print_stream_; }
+
+private:
+	// The ostream that buffers the formatted message before output
+	std::ostringstream print_stream_;
+
+	// The severity level of this message
+	LoggingSeverity severity_;
+	std::string& strPrev_;
+
+	int countinues_;
+	int64_t prevValue_;
+	int64_t currValue_;
+	bool bWriteCurrLog_;
+	bool bWritePrevLog_;
 };
 
 //////////////////////////////////////////////////////////////////////
@@ -203,7 +227,7 @@ LOG_ERR_EX(sev, err)
 // TODO(?): Add an "assert" wrapper that logs in the same manner.
 
 
-//optimize printing log infomation
+//optimize printing log infomation//optimize printing log infomation
 #define LOG_VALNAME_DECL(type,name,suffix) \
 	type name##suffix
 
@@ -212,6 +236,9 @@ LOG_ERR_EX(sev, err)
 
 #define LOG_VALNAME_INCREASEMENT(name,suffix) \
 	name##suffix ++
+
+#define LOG_VALTOVAL_SET(name,suffix,val) \
+	name##suffix = val##suffix
 
 #define LOG_VALNAME_SET(name,suffix,val) \
 	name##suffix = val
@@ -222,8 +249,34 @@ LOG_ERR_EX(sev, err)
 #define LOG_VALNAME_OPT_VALNAME(name,suffix,opt,valName) \
 	name##suffix = name##suffix opt valName##suffix
 
+#define GET_VALNAME_BY_CALC(name,suffix,opt,cv) \
+	(name##suffix opt cv)
+
+#define GET_VALNAME_BY_CALC_2(cv,opt,name,suffix) \
+	(cv opt name##suffix)
+
 #define IF_VALNAME_CHECK(name,suffix,opt,cv) \
 	if (name##suffix opt cv)
+
+#define IF_VALNAME_MULCHECK2_OR(suffix,name1,opt1,cv1,name2,opt2,cv2) \
+	if ((name1##suffix opt1 cv1) || (name2##suffix opt2 cv2))
+
+#define IF_VALNAME_MULCHECK2_AND(suffix,name1,opt1,cv1,name2,opt2,cv2) \
+	if ((name1##suffix opt1 cv1) && (name2##suffix opt2 cv2))
+
+#define IF_VALNAME_MULCHECK3_OR(suffix,name1,opt1,cv1,name2,opt2,cv2,name3,opt3,cv3) \
+	if ((name1##suffix opt1 cv1) || (name2##suffix opt2 cv2) || (name3##suffix opt3 cv3))
+
+#define IF_VALNAME_MULCHECK3_AND(suffix,name1,opt1,cv1,name2,opt2,cv2,name3,opt3,cv3) \
+	if ((name1##suffix opt1 cv1) && (name2##suffix opt2 cv2) && (name3##suffix opt3 cv3))
+
+#define GET_NAME_VAL_MULCHECK2(suffix,name1,opt1,cv1,name2,opt2,cv2,retPrev,retCurr) \
+	if (name1##suffix opt1 (cv1-1)) {\
+		retPrev##suffix = name1##suffix;\
+		retCurr##suffix = cv1;}\
+	else if(name2##suffix opt2 (cv2-1)) {\
+		retPrev##suffix = name2##suffix;\
+		retCurr##suffix = cv2;}
 
 #define LOG_BY_COUNT(sev,suffix,times)\
 	LOG_VALNAME_DECL_DEFAULT(static int64_t,count,suffix,times);\
@@ -238,6 +291,14 @@ LOG_ERR_EX(sev, err)
 		LOG(sev)
 
 
+#define LOG_COUNTER_EX_MSG(sev,last,prevvalue,currvalue,countinues,writecurr,writeprev) \
+	LOG_SEVERITY_PRECONDITION(sev) \
+	LogMessageCounter(__FILE__, __LINE__, sev, last, prevvalue, currvalue, countinues, writecurr, writeprev).stream()
+
+#define LOG_COUNTER_EX_DIFF(sev,name,suffix,prevvalue,currvalue,countinues,writeCurrLog,writePrevLog) \
+	LOG_COUNTER_EX_MSG(sev,name##suffix,prevvalue##suffix,currvalue##suffix,countinues,writeCurrLog,writePrevLog##suffix)
+
+
 #define LOG_SUB_COMMON_DIFF_MSG(sev,last,forewrite) \
 	LOG_SEVERITY_PRECONDITION(sev) \
 	LogMessageEx(__FILE__, __LINE__, sev, last, forewrite).stream()
@@ -245,13 +306,13 @@ LOG_ERR_EX(sev, err)
 #define LOG_SUB_COMMON_DIFF(sev,name,suffix,writelog) \
 	LOG_SUB_COMMON_DIFF_MSG(sev,name##suffix,writelog##suffix)
 
-#define LOG_BY_TIME(sev,suffix,timelong)\
+#define LOG_BY_TIME(sev,suffix,msTimelong)\
 	LOG_VALNAME_DECL(static int64_t,lastTime,suffix);\
 	LOG_VALNAME_DECL_DEFAULT(bool,writelog,suffix,false);\
 	LOG_VALNAME_DECL(int64_t,diff,suffix);\
 	LOG_VALNAME_SET(diff,suffix,Clock::GetRealTimeClock()->TimeInMicroseconds());\
 	LOG_VALNAME_OPT_VALNAME(diff,suffix,-,lastTime);\
-	IF_VALNAME_CHECK(diff,suffix,>=,timelong*1000)\
+	IF_VALNAME_CHECK(diff,suffix,>=,msTimelong*1000)\
 	{\
 		LOG_VALNAME_SET(lastTime,suffix,Clock::GetRealTimeClock()->TimeInMicroseconds());\
 		LOG_VALNAME_SET(writelog,suffix,true);\
@@ -272,19 +333,66 @@ LOG_ERR_EX(sev, err)
 	LOG_SUB_COMMON_DIFF(sev, lastStr, suffix, writelog)
 
 
-#define LOG_BY_TIME_CONTENT_DIFF(sev,suffix,timelong)\
+#define LOG_BY_TIME_CONTENT_DIFF(sev,suffix,msTimelong)\
 	LOG_VALNAME_DECL(static std::string, lastStr, suffix); \
 	LOG_VALNAME_DECL(static int64_t,lastTime,suffix);\
 	LOG_VALNAME_DECL_DEFAULT(bool,writelog,suffix,false);\
 	LOG_VALNAME_DECL(int64_t,diff,suffix);\
 	LOG_VALNAME_SET(diff,suffix,Clock::GetRealTimeClock()->TimeInMicroseconds());\
 	LOG_VALNAME_OPT_VALNAME(diff,suffix,-,lastTime);\
-	IF_VALNAME_CHECK(diff,suffix,>=,timelong*1000)\
+	IF_VALNAME_CHECK(diff,suffix,>=,msTimelong*1000)\
 	{\
 		LOG_VALNAME_SET(lastTime,suffix,Clock::GetRealTimeClock()->TimeInMicroseconds());\
 		LOG_VALNAME_SET(writelog,suffix,true);\
 	}\
 	LOG_SUB_COMMON_DIFF(sev, lastStr, suffix, writelog)
+
+
+#define LOG_BY_COUNT_CONTINUOUS(sev,suffix,times,cvalue)\
+	LOG_VALNAME_DECL(static std::string, lastStr, suffix); \
+	LOG_VALNAME_DECL(static int64_t,count,suffix);\
+	LOG_VALNAME_DECL_DEFAULT(static int64_t,cvalue1,suffix,cvalue);\
+	LOG_VALNAME_DECL_DEFAULT(bool,writeprevlog,suffix,false);\
+	LOG_VALNAME_DECL_DEFAULT(bool,writelog,suffix,false);\
+	LOG_VALNAME_DECL_DEFAULT(int64_t,prev,suffix,0);\
+	LOG_VALNAME_DECL_DEFAULT(int64_t,curr,suffix,0);\
+	LOG_VALNAME_DECL_DEFAULT(int,rest,suffix,0);\
+	LOG_VALNAME_INCREASEMENT(count,suffix);\
+	IF_VALNAME_MULCHECK2_OR(suffix,count,>=,times,cvalue1,!=,(cvalue-1)) \
+	{\
+		LOG_VALNAME_SET(rest,suffix,(times - GET_VALNAME_BY_CALC_2(times,-,count,suffix)));\
+		LOG_VALNAME_SET(writeprevlog,suffix,GET_VALNAME_BY_CALC(count,suffix,<,times));\
+		LOG_VALNAME_SET(count,suffix,0);\
+		LOG_VALNAME_SET(writelog,suffix,true);\
+	}\
+	LOG_VALTOVAL_SET(prev,suffix,cvalue1);\
+	LOG_VALNAME_SET(curr,suffix,cvalue);\
+	LOG_VALNAME_SET(cvalue1,suffix,cvalue);\
+	LOG_COUNTER_EX_DIFF(sev,lastStr,suffix,prev,curr,GET_VALNAME_BY_CALC(rest,suffix,-,0),GET_VALNAME_BY_CALC(writelog,suffix,==,true),writeprevlog)
+
+
+#define LOG_BY_COUNT_CONTINUOUS2(sev,suffix,times,cvalue1,cvalue2)\
+	LOG_VALNAME_DECL(static std::string, lastStr, suffix); \
+	LOG_VALNAME_DECL(static int64_t,count,suffix);\
+	LOG_VALNAME_DECL_DEFAULT(static int64_t,cvalue11,suffix,cvalue1);\
+	LOG_VALNAME_DECL_DEFAULT(static int64_t,cvalue22,suffix,cvalue2);\
+	LOG_VALNAME_DECL_DEFAULT(bool,writeprevlog,suffix,false);\
+	LOG_VALNAME_DECL_DEFAULT(bool,writelog,suffix,false);\
+	LOG_VALNAME_DECL_DEFAULT(int64_t,prev,suffix,0);\
+	LOG_VALNAME_DECL_DEFAULT(int64_t,curr,suffix,0);\
+	LOG_VALNAME_DECL_DEFAULT(int,rest,suffix,0);\
+	LOG_VALNAME_INCREASEMENT(count,suffix);\
+	IF_VALNAME_MULCHECK3_OR(suffix,count,>=,times,cvalue11,!=,(cvalue1-1),cvalue22,!=,(cvalue2-1)) \
+	{\
+		LOG_VALNAME_SET(rest,suffix,(times - GET_VALNAME_BY_CALC_2(times,-,count,suffix)));\
+		LOG_VALNAME_SET(writeprevlog,suffix,GET_VALNAME_BY_CALC(count,suffix,<,times));\
+		LOG_VALNAME_SET(count,suffix,0);\
+		LOG_VALNAME_SET(writelog,suffix,true);\
+	}\
+	GET_NAME_VAL_MULCHECK2(suffix,cvalue11,!=,cvalue1,cvalue22,!=,cvalue2,prev,curr)\
+	LOG_VALNAME_SET(cvalue11,suffix,cvalue1);\
+	LOG_VALNAME_SET(cvalue22,suffix,cvalue2);\
+	LOG_COUNTER_EX_DIFF(sev,lastStr,suffix,prev,curr,GET_VALNAME_BY_CALC(rest,suffix,-,0),GET_VALNAME_BY_CALC(writelog,suffix,==,true),writeprevlog)
 
 
 #define LOG_SUB_DIFF_MSG(sev,last) \
@@ -300,12 +408,12 @@ LOG_ERR_EX(sev, err)
 
 
 
-//timelong is how long (unit is in milliseconds)
-#define LOG_TIME(sev,timelong)\
-	LOG_BY_TIME(sev,__LINE__,timelong) << " (" << timelong << ": msecend) "
+//msTimelong is how long (unit is in milliseconds)
+#define LOG_TIME(sev,msTimelong)\
+	LOG_BY_TIME(sev,__LINE__,msTimelong) << " (" << msTimelong << ": msecend) "
 
-#define LOG_TIME_F(sev,timelong)\
-	LOG_TIME(sev,timelong) << __FUNCTION__ << ": "
+#define LOG_TIME_F(sev,msTimelong)\
+	LOG_TIME(sev,msTimelong) << __FUNCTION__ << ": "
 
 //times is the times of looping
 #define LOG_COUNT(sev,times)\
@@ -323,17 +431,29 @@ LOG_ERR_EX(sev, err)
 
 //the content of string is same with the previous and little the times, not write logging
 #define LOG_COUNT_CONTENT(sev,times)\
-	LOG_BY_COUNT_CONTENT_DIFF(sev,__LINE__,times) << " (" << times << ": times) "
+	LOG_BY_COUNT_CONTENT_DIFF(sev,__LINE__,times) << " (" << "times: " << times << ") "
 
 #define LOG_COUNT_CONTENT_F(sev,times)\
 	LOG_COUNT_CONTENT(sev,times) << __FUNCTION__ << ": "
 
-//timelong is how long (unit is in milliseconds). the content is same and short the time long, not  write logging.
+//msTimelong is how long (unit is in milliseconds). the content is same and short the time long, not  write logging.
 #define LOG_TIME_CONTENT(sev,timelong)\
 	LOG_BY_TIME_CONTENT_DIFF(sev,__LINE__,timelong) << " (" << timelong << ": msecend) "
 
 #define LOG_TIME_CONTENT_F(sev,timelong)\
 	LOG_TIME_CONTENT(sev,timelong) << __FUNCTION__ << ": "
+
+#define LOG_COUNT_CONTINUIOUS(sev,times,continueValueName)\
+	LOG_BY_COUNT_CONTINUOUS(sev,__LINE__,times,continueValueName) << " (" << "times: " << times << ") "
+
+#define LOG_COUNT_CONTINUIOUS_F(sev,times,continueValueName)\
+	LOG_COUNT_CONTINUIOUS(sev,times,continueValueName) << __FUNCTION__ << ": "
+
+#define LOG_COUNT_CONTINUIOUS2(sev,times,continueValueName1,continueValueName2)\
+	LOG_BY_COUNT_CONTINUOUS2(sev,__LINE__,times,continueValueName1,continueValueName2) << " (" << "times: " << times << ") "
+
+#define LOG_COUNT_CONTINUIOUS2_F(sev,times,continueValueName1,continueValueName2)\
+	LOG_COUNT_CONTINUIOUS2(sev,times,continueValueName1,continueValueName2) << __FUNCTION__ << ": "
 
     
 #endif  // LOG

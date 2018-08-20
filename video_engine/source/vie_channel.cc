@@ -2420,10 +2420,12 @@ void  ViEChannel::IncomingRTPPacket(const int8_t* rtp_packet,
     
     
     if (!RTCP) {
-        WEBRTC_TRACE(kTraceWarning, kTraceVideo, ViEId(engine_id_, channel_id_),
-                     "%s: myself channelid is %d, local_ssrc_main_=%u, remote_ssrc_=%u,  recieve rmote ssrc=%u, seq_num=%u",
-                     __FUNCTION__, channel_id_, local_ssrc_main_, remote_ssrc_, r_rtpSsrc, seq_num);
-    }
+        //WEBRTC_TRACE(kTraceWarning, kTraceVideo, ViEId(engine_id_, channel_id_),
+        //             "%s: myself channelid is %d, local_ssrc_main_=%u, remote_ssrc_=%u,  recieve rmote ssrc=%u, seq_num=%u",
+        //             __FUNCTION__, channel_id_, local_ssrc_main_, remote_ssrc_, r_rtpSsrc, seq_num);
+		LOG_COUNT_CONTINUIOUS_F(LS_WARNING, 20, seq_num) << " myself channelid is: " << channel_id_ << " local_ssrc_main_= "
+			<< local_ssrc_main_ << " remote_ssrc_ = " << remote_ssrc_ << " recieve rmote ssrc = " << r_rtpSsrc << " seq_num = " << seq_num;
+	}
     
 	{
 		CriticalSectionScoped cs(critsect_net_statistic.get());

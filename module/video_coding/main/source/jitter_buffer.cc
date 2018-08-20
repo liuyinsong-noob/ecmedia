@@ -666,8 +666,9 @@ VCMFrameBufferEnum VCMJitterBuffer::InsertPacket(const VCMPacket& packet,
                              "timestamp", frame->TimeStamp());
   }
 
-  LOG(LS_WARNING) << " Insert Packet w:" << packet.width << " h:" << packet.height << " seq:" << packet.seqNum << " masSeq:" 
-	  << packet.seqNum << " isFirstPacket:" << packet.isFirstPacket << " missing packet len:" << missing_sequence_numbers_.size();
+  //LOG(LS_WARNING) << " Insert Packet w:" << packet.width << " h:" << packet.height << " seq:" << packet.seqNum << " masSeq:" 
+  LOG_COUNT_CONTINUIOUS_F(LS_WARNING, 10, packet.seqNum) << " Insert Packet w:" << packet.width << " h:" << packet.height << " seq:" << packet.seqNum
+	  << " isFirstPacket:" << packet.isFirstPacket << " missing packet len:" << missing_sequence_numbers_.size();
 
   if (buffer_state > 0) {
     incoming_bit_count_ += packet.sizeBytes << 3;

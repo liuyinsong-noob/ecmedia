@@ -17,6 +17,7 @@
 #include "../system_wrappers/include/trace.h"
 #include "../system_wrappers/include/thread_wrapper.h"
 #include "../system_wrappers/include/common.h"
+#include "../system_wrappers/include/logging.h"
 
 namespace yuntongxunwebrtc {
 namespace {
@@ -635,9 +636,11 @@ void AudioConferenceMixerImpl::UpdateToMix(
     AudioFrameList* rampOutList,
     std::map<int, MixerParticipant*>* mixParticipantList,
     size_t& maxAudioFrameCounter) {
-    WEBRTC_TRACE(kTraceStream, kTraceAudioMixerServer, _id,
-                 "UpdateToMix(mixList,rampOutList,mixParticipantList,%d)",
-                 maxAudioFrameCounter);
+    //WEBRTC_TRACE(kTraceStream, kTraceAudioMixerServer, _id,
+    //             "UpdateToMix(mixList,rampOutList,mixParticipantList,%d)",
+    //             maxAudioFrameCounter);
+	LOG_COUNT_F(LS_STREAM, 20) << "maxAudioFrameCounter = " << maxAudioFrameCounter;
+
     const size_t mixListStartSize = mixList->size();
     AudioFrameList activeList;
     // Struct needed by the passive lists to keep track of which AudioFrame
@@ -818,8 +821,10 @@ void AudioConferenceMixerImpl::UpdateToMix(
 
 void AudioConferenceMixerImpl::GetAdditionalAudio(
     AudioFrameList* additionalFramesList) {
-    WEBRTC_TRACE(kTraceStream, kTraceAudioMixerServer, _id,
-                 "GetAdditionalAudio(additionalFramesList)");
+    //WEBRTC_TRACE(kTraceStream, kTraceAudioMixerServer, _id,
+    //             "GetAdditionalAudio(additionalFramesList)");
+	LOG_COUNT_F(LS_STREAM, 50);
+
     // The GetAudioFrame() callback may result in the participant being removed
     // from additionalParticipantList_. If that happens it will invalidate any
     // iterators. Create a copy of the participants list such that the list of
@@ -858,8 +863,10 @@ void AudioConferenceMixerImpl::GetAdditionalAudio(
 
 void AudioConferenceMixerImpl::UpdateMixedStatus(
     std::map<int, MixerParticipant*>& mixedParticipantsMap) {
-    WEBRTC_TRACE(kTraceStream, kTraceAudioMixerServer, _id,
-                 "UpdateMixedStatus(mixedParticipantsMap)");
+    //WEBRTC_TRACE(kTraceStream, kTraceAudioMixerServer, _id,
+    //             "UpdateMixedStatus(mixedParticipantsMap)");
+	LOG_COUNT_F(LS_STREAM, 50);
+
     assert(mixedParticipantsMap.size() <= kMaximumAmountOfMixedParticipants);
 
     // Loop through all participants. If they are in the mix map they
@@ -883,8 +890,10 @@ void AudioConferenceMixerImpl::UpdateMixedStatus(
 
 void AudioConferenceMixerImpl::ClearAudioFrameList(
     AudioFrameList* audioFrameList) {
-    WEBRTC_TRACE(kTraceStream, kTraceAudioMixerServer, _id,
-                 "ClearAudioFrameList(audioFrameList)");
+    //WEBRTC_TRACE(kTraceStream, kTraceAudioMixerServer, _id,
+    //             "ClearAudioFrameList(audioFrameList)");
+	LOG_COUNT_F(LS_STREAM, 20);
+
     for (AudioFrameList::iterator iter = audioFrameList->begin();
          iter != audioFrameList->end();
          ++iter) {
@@ -895,8 +904,9 @@ void AudioConferenceMixerImpl::ClearAudioFrameList(
 
 void AudioConferenceMixerImpl::UpdateVADPositiveParticipants(
     AudioFrameList* mixList) {
-    WEBRTC_TRACE(kTraceStream, kTraceAudioMixerServer, _id,
-                 "UpdateVADPositiveParticipants(mixList)");
+    //WEBRTC_TRACE(kTraceStream, kTraceAudioMixerServer, _id,
+    //             "UpdateVADPositiveParticipants(mixList)");
+	LOG_COUNT_F(LS_STREAM, 20);
 
     for (AudioFrameList::iterator iter = mixList->begin();
          iter != mixList->end();
@@ -961,8 +971,10 @@ bool AudioConferenceMixerImpl::RemoveParticipantFromList(
 int32_t AudioConferenceMixerImpl::MixFromList(
     AudioFrame& mixedAudio,
     const AudioFrameList* audioFrameList) {
-    WEBRTC_TRACE(kTraceStream, kTraceAudioMixerServer, _id,
-                 "MixFromList(mixedAudio, audioFrameList)");
+    //WEBRTC_TRACE(kTraceStream, kTraceAudioMixerServer, _id,
+    //             "MixFromList(mixedAudio, audioFrameList)");
+	LOG_COUNT_F(LS_STREAM, 50) << "MixFromList(mixedAudio, audioFrameList)";
+
     if(audioFrameList->empty()) return 0;
 
     uint32_t position = 0;
@@ -1006,8 +1018,9 @@ int32_t AudioConferenceMixerImpl::MixFromList(
 int32_t AudioConferenceMixerImpl::MixAnonomouslyFromList(
     AudioFrame& mixedAudio,
     const AudioFrameList* audioFrameList) {
-    WEBRTC_TRACE(kTraceStream, kTraceAudioMixerServer, _id,
-                 "MixAnonomouslyFromList(mixedAudio, audioFrameList)");
+    //WEBRTC_TRACE(kTraceStream, kTraceAudioMixerServer, _id,
+    //             "MixAnonomouslyFromList(mixedAudio, audioFrameList)");
+	LOG_COUNT_F(LS_STREAM, 50) << "MixFromList(mixedAudio, audioFrameList)";
 
     if(audioFrameList->empty()) return 0;
 

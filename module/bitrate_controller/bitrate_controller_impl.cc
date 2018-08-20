@@ -265,12 +265,12 @@ bool BitrateControllerImpl::GetNetworkParameters(uint32_t* bitrate,
   yuntongxunwebrtc::CritScope cs(&critsect_);
   int current_bitrate;
   bandwidth_estimation_.CurrentEstimate(&current_bitrate, fraction_loss, rtt);
-  LOG(LS_INFO) << "--------------[bwe] bitrate_controller = "
-	            << current_bitrate;
+  //LOG(LS_INFO) << "--------------[bwe] bitrate_controller = "
+	 //           << current_bitrate;
 
-  WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, -1,
-	  "--------------[bwe] bitrate_controller = %d", current_bitrate);
-
+  //WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, -1,
+	 // "--------------[bwe] bitrate_controller = %d", current_bitrate);
+  LOG_COUNT_F(LS_INFO, 10) << "--------------[bwe] bitrate_controller = " << current_bitrate;
     
 #ifndef WIN32
 //    printTime();

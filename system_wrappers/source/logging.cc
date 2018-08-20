@@ -79,4 +79,70 @@ LogMessageEx::~LogMessageEx() {
 	strLast_ = strsub;
 }
 
+
+LogMessageCounter::LogMessageCounter(const char* file, int line, LoggingSeverity sev, std::string& strPrev, int64_t prevValue, int64_t currValue, int countinues, bool bWriteCurrLog, bool bWritePrevLog)
+	: severity_(sev)
+	, prevValue_(prevValue)
+	, currValue_(currValue)
+	, countinues_(countinues)
+	, bWriteCurrLog_(bWriteCurrLog)
+	, bWritePrevLog_(bWritePrevLog)
+	, strPrev_(strPrev) {
+	print_stream_ << "(" << FilenameFromPath(file) << ":" << line << "): ";
+}
+
+LogMessageCounter::~LogMessageCounter() {
+	const std::string& str = print_stream_.str();
+
+	//out of order
+	if (currValue_ < prevValue_ && !strPrev_.empty())
+	{
+		if (countinues_ > 1)
+		{
+			Trace::Add(WebRtcSeverity(severity_), kTraceUndefined, 0, "(continuations %d: %lld--%lld) %s", countinues_, prevValue_ - countinues_ + 1, prevValue_, strPrev_.c_str());
+		}
+		Trace::Add(WebRtcSeverity(severity_), kTraceUndefined, 0, " (out-of-order: %lld-->%lld) %s", prevValue_, currValue_, str.c_str());
+	}
+	else
+	{
+		bool bMissing = false;
+		if (bWritePrevLog_ && !strPrev_.empty())
+		{
+			if (countinues_ > 1)
+			{
+				Trace::Add(WebRtcSeverity(severity_), kTraceUndefined, 0, "(continuations %d: %lld--%lld) %s", countinues_, prevValue_ - countinues_ + 1, prevValue_, strPrev_.c_str());
+			}
+			bMissing = true;
+		}
+
+		if (bWriteCurrLog_)
+		{
+			if (bMissing)
+			{
+				int64_t prev = prevValue_ + 1;
+				int64_t curr = currValue_ - 1;
+				int64_t missing = currValue_ - prevValue_ - 1;
+
+				missing = missing > 0 ? missing : 0;
+				curr = curr > 0 ? curr : 0;
+
+				if (missing == 1)
+				{
+					Trace::Add(WebRtcSeverity(severity_), kTraceUndefined, 0, " (lost %lld: %lld) %s", missing, prev, str.c_str());
+				}
+				else
+				{
+					Trace::Add(WebRtcSeverity(severity_), kTraceUndefined, 0, " (lost %lld: %lld--%lld) %s", missing, prev, curr, str.c_str());
+				}
+			}
+			else
+			{
+				Trace::Add(WebRtcSeverity(severity_), kTraceUndefined, 0, " (don't lost)%s", str.c_str());
+			}
+		}
+	}
+
+	strPrev_ = str;
+}
+
 }  // namespace yuntongxunwebrtc

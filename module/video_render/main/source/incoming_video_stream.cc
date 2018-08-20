@@ -28,6 +28,7 @@
 #include "../system_wrappers/include/thread_wrapper.h"
 #include "../system_wrappers/include/tick_util.h"
 #include "../system_wrappers/include/trace.h"
+#include "../system_wrappers/include/logging.h"
 
 namespace yuntongxunwebrtc {
 
@@ -90,9 +91,10 @@ VideoRenderCallback* IncomingVideoStream::ModuleCallback() {
 int32_t IncomingVideoStream::RenderFrame(const uint32_t stream_id,
                                          I420VideoFrame& video_frame) {
   CriticalSectionScoped csS(&stream_critsect_);
-  WEBRTC_TRACE(kTraceStream, kTraceVideoRenderer, module_id_,
-               "%s for stream %d, render time: %u", __FUNCTION__, stream_id_,
-               video_frame.render_time_ms());
+  //WEBRTC_TRACE(kTraceStream, kTraceVideoRenderer, module_id_,
+  //             "%s for stream %d, render time: %u", __FUNCTION__, stream_id_,
+  //             video_frame.render_time_ms());
+  LOG_COUNT_F(LS_STREAM, 10) << " stream id: " << stream_id_ << " render time:  " << video_frame.render_time_ms();
 
   if (!running_) {
     WEBRTC_TRACE(kTraceStream, kTraceVideoRenderer, module_id_,
@@ -342,10 +344,11 @@ bool IncomingVideoStream::IncomingVideoStreamProcess() {
       external_callback_->RenderFrame(stream_id_, *frame_to_render);
     } else {
       if (render_callback_) {
-        WEBRTC_TRACE(kTraceStream, kTraceVideoRenderer, module_id_,
-                     "%s: Render frame, time: %u for stream %d", __FUNCTION__,
-                     frame_to_render->render_time_ms(), stream_id_);
-        render_callback_->RenderFrame(stream_id_, *frame_to_render);
+        //WEBRTC_TRACE(kTraceStream, kTraceVideoRenderer, module_id_,
+        //             "%s: Render frame, time: %u for stream %d", __FUNCTION__,
+        //             frame_to_render->render_time_ms(), stream_id_);
+		  LOG_COUNT_F(LS_STREAM, 10) << " Render frame, time: " << frame_to_render->render_time_ms() << " for stream id: " << stream_id_;
+		  render_callback_->RenderFrame(stream_id_, *frame_to_render);
       }
     }
 

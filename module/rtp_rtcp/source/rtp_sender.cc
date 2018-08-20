@@ -630,8 +630,8 @@ int32_t RTPSender::ReSendPacket(uint16_t packet_id, int64_t min_resend_time) {
   if (!packet) {
     // Packet not found.
 	LOG(LS_ERROR) << "--------------[bwe][NACK][OnReceivedNack] Packet not found. seq_no = " << packet_id;
-	WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo, -1,
-		"--------------[bwe][NACK][OnReceivedNack] Packet not found. seq_no = %u", packet_id);
+	//WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo, -1,
+	//	"--------------[bwe][NACK][OnReceivedNack] Packet not found. seq_no = %u", packet_id);
 	return 0;
   }
 

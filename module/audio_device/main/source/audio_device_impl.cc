@@ -12,6 +12,7 @@
 #include "audio_device_config.h"
 #include "audio_device_impl.h"
 #include "../system_wrappers/include/ref_count.h"
+#include "../system_wrappers/include/logging.h"
 
 #include <assert.h>
 #include <string.h>
@@ -1334,19 +1335,26 @@ int32_t AudioDeviceModuleImpl::RecordingIsAvailable(bool* available)
 
 int32_t AudioDeviceModuleImpl::MaxMicrophoneVolume(uint32_t* maxVolume) const
 {
-    WEBRTC_TRACE(kTraceStream, kTraceAudioDevice, _id, "%s", __FUNCTION__);
+    //WEBRTC_TRACE(kTraceStream, kTraceAudioDevice, _id, "%s", __FUNCTION__);
     CHECK_INITIALIZED();
 
     uint32_t maxVol(0);
+	if (!maxVolume)
+	{
+		LOG_F(LS_WARNING) << "maxVolume is null pointer";
+		return -1;
+	}
 
     if (_ptrAudioDevice->MaxMicrophoneVolume(maxVol) == -1)
     {
+		LOG_F(LS_WARNING) << "_ptrAudioDevice->MaxMicrophoneVolume(maxVol) return -1. maxVol = " << maxVol;
         return -1;
     }
 
     *maxVolume = maxVol;
 
-    WEBRTC_TRACE(kTraceStream, kTraceAudioDevice, _id, "output: maxVolume=%d", *maxVolume);
+    //WEBRTC_TRACE(kTraceStream, kTraceAudioDevice, _id, "output: maxVolume=%d", *maxVolume);
+	LOG_COUNT_F(LS_STREAM, 50) << "output: maxVolume = " << maxVol;
     return (0);
 }
 

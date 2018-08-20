@@ -25,6 +25,7 @@
 #include "../system_wrappers/include/critical_section_wrapper.h"
 #include "../system_wrappers/include/rw_lock_wrapper.h"
 #include "../system_wrappers/include/trace.h"
+#include "../system_wrappers/include/logging.h"
 #include "typedefs.h"
 
 namespace yuntongxunwebrtc {
@@ -973,8 +974,10 @@ int AudioCodingModuleImpl::RegisterSendCodec(const CodecInst& send_codec) {
 // Get current send codec.
 int AudioCodingModuleImpl::SendCodec(
     CodecInst* current_codec) const {
-  WEBRTC_TRACE(yuntongxunwebrtc::kTraceStream, yuntongxunwebrtc::kTraceAudioCoding, id_,
-               "SendCodec()");
+  //WEBRTC_TRACE(yuntongxunwebrtc::kTraceStream, yuntongxunwebrtc::kTraceAudioCoding, id_,
+  //             "SendCodec()");
+	LOG_COUNT_F(LS_STREAM, 50);
+
   CriticalSectionScoped lock(acm_crit_sect_);
 
   if (!send_codec_registered_) {
@@ -1482,8 +1485,9 @@ int AudioCodingModuleImpl::ResetDecoder() {
 
 // Get current receive frequency.
 int AudioCodingModuleImpl::ReceiveFrequency() const {
-  WEBRTC_TRACE(yuntongxunwebrtc::kTraceStream, yuntongxunwebrtc::kTraceAudioCoding, id_,
-               "ReceiveFrequency()");
+  //WEBRTC_TRACE(yuntongxunwebrtc::kTraceStream, yuntongxunwebrtc::kTraceAudioCoding, id_,
+  //             "ReceiveFrequency()");
+	LOG_COUNT_F(LS_STREAM, 50);
 
   CriticalSectionScoped lock(acm_crit_sect_);
 
@@ -1495,8 +1499,9 @@ int AudioCodingModuleImpl::ReceiveFrequency() const {
 
 // Get current playout frequency.
 int AudioCodingModuleImpl::PlayoutFrequency() const {
-  WEBRTC_TRACE(yuntongxunwebrtc::kTraceStream, yuntongxunwebrtc::kTraceAudioCoding, id_,
-               "PlayoutFrequency()");
+  //WEBRTC_TRACE(yuntongxunwebrtc::kTraceStream, yuntongxunwebrtc::kTraceAudioCoding, id_,
+  //             "PlayoutFrequency()");
+	LOG_COUNT_F(LS_STREAM, 50);
 
   CriticalSectionScoped lock(acm_crit_sect_);
 
