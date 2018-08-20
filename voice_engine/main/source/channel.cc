@@ -5401,7 +5401,7 @@ void
     //WEBRTC_TRACE(kTraceStateInfo, kTraceVoice,
     //             VoEId(_instanceId,_channelId),
     //             "seq %u, ssrc %u\n", header.sequenceNumber, header.ssrc);
-	LOG_COUNT_CONTINUIOUS_F(LS_INFO, 10, header.sequenceNumber) << "seq: " << header.sequenceNumber << "ssrc: " << header.ssrc;
+	LOG_COUNT_CONTINUIOUS_F(LS_INFO, 10, header.sequenceNumber) << "seq: " << header.sequenceNumber << ", ssrc: " << header.ssrc;
     
     // audio loss rate, added by sean
     if (header.extension.hasLossRate) {
