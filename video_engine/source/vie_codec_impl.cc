@@ -246,7 +246,7 @@ int ViECodecImpl::SetSendCodec(const int video_channel,
 
   if (video_codec_internal.numberOfSimulcastStreams == 2 && video_codec_internal.codecType==kVideoCodecVP8)
   {
-	  video_codec_internal.codecSpecific.VP8.automaticResizeOn = false;
+	  video_codec_internal.codecSpecific.VP8.automaticResizeOn = true;
   }
 
   if (vie_encoder->SetEncoder(video_codec_internal) != 0) {

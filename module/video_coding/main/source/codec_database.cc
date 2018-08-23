@@ -56,7 +56,7 @@ VideoCodecVP8 VideoEncoder::GetDefaultVp8Settings() {
   vp8_settings.denoisingOn = true;
   vp8_settings.errorConcealmentOn = false;
   vp8_settings.automaticResizeOn = true/*false*/;
-  //vp8_settings.automaticResizeOn = false;//open vp8 simulcast
+  vp8_settings.automaticResizeOn = true;//open vp8 simulcast
   vp8_settings.frameDroppingOn = true;
   vp8_settings.keyFrameInterval = 200;
   return vp8_settings;
