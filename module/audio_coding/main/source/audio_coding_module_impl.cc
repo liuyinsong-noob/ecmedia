@@ -411,12 +411,12 @@ int32_t AudioCodingModuleImpl::Process() {
             //Adjust size according to loss rate 5, 3, 1
             //keep list size 5
             unsigned int list_size = 1;
-            if (loss_rate_*5 > 30 && loss_rate_*5 < 45 ) {
+            if ((loss_rate_*5 >= 30) && (loss_rate_*5 < 45) ) {
               list_size = 3;
-            } else if (loss_rate_*5 > 45) {
+            } else if (loss_rate_*5 >= 45) {
               list_size = 5;
             }
- 
+          printf("gezhaoyou trackback loss_rate:%d, list_size:%d\n",loss_rate_, list_size);
             while (red_list_.size() >= list_size) {
               RedBuf earse = red_list_.front();
               delete [] earse.buf;
@@ -1354,7 +1354,7 @@ int AudioCodingModuleImpl::SetPacketLossRate(int loss_rate) {
     
 int AudioCodingModuleImpl::SetPacketLossRateFromRtpHeaderExt(int loss_rate)
     {
-        if(loss_rate < 0) {
+        if(loss_rate <= 0) {
             return 0;
         }
         // todo: timer (n)ms trigger setting lossrate

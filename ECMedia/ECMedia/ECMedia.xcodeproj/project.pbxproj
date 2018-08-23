@@ -4147,6 +4147,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "583c75fa-c6d0-4347-bf3b-207c04539db7";
 				SKIP_INSTALL = YES;
+				STRIP_STYLE = debugging;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
@@ -4225,6 +4226,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "583c75fa-c6d0-4347-bf3b-207c04539db7";
 				SKIP_INSTALL = YES;
+				STRIP_STYLE = debugging;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
