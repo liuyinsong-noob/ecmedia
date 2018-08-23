@@ -8,11 +8,11 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "webrtc/modules/desktop_capture/mac/scoped_pixel_buffer_object.h"
+#include "scoped_pixel_buffer_object.h"
 
 #include <stddef.h>
 
-namespace webrtc {
+namespace yuntongxunwebrtc {
 
 ScopedPixelBufferObject::ScopedPixelBufferObject()
     : cgl_context_(NULL),

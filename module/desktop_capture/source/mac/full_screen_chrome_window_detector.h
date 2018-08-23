@@ -14,10 +14,10 @@
 #include <ApplicationServices/ApplicationServices.h>
 
 #include "../base/constructormagic.h"
-#include "../module/desktop_capture/source/desktop_capturer.h"
+#include "../module/desktop_capture/source/window_capturer.h"
 #include "../system_wrappers/include/atomic32.h"
 
-namespace webrtc {
+namespace yuntongxunwebrtc {
 
 // This is a work around for the Chrome tab full-screen behavior: Chrome
 // creates a new window in full-screen mode to show a tab full-screen and
@@ -57,11 +57,11 @@ class FullScreenChromeWindowDetector {
   // |previous_window_list_| is taken at least 500ms before the next Capture()
   // call. If we only save the last result, we may get false positive (i.e.
   // full-screen window exists in the list) if Capture() is called too soon.
-//  DesktopCapturer::SourceList current_window_list_;
-//  DesktopCapturer::SourceList previous_window_list_;
+  WindowCapturer::WindowList current_window_list_;
+  WindowCapturer::WindowList previous_window_list_;
   int64_t last_update_time_ns_;
 
-//  RTC_DISALLOW_COPY_AND_ASSIGN(FullScreenChromeWindowDetector);
+  DISALLOW_COPY_AND_ASSIGN(FullScreenChromeWindowDetector);
 };
 
 }  // namespace webrtc

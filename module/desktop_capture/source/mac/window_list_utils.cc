@@ -8,15 +8,15 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "webrtc/modules/desktop_capture/mac/window_list_utils.h"
+#include "window_list_utils.h"
 
 #include <ApplicationServices/ApplicationServices.h>
 
-#include "webrtc/base/macutils.h"
+#include "../../../macutils.h"
 
-namespace webrtc {
+namespace yuntongxunwebrtc {
 
-bool GetWindowList(DesktopCapturer::SourceList* windows,
+bool GetWindowList(WindowCapturer::WindowList* windows,
                    bool ignore_minimized) {
   // Only get on screen, non-desktop windows.
   CFArrayRef window_array = CGWindowListCopyWindowInfo(
@@ -59,7 +59,7 @@ bool GetWindowList(DesktopCapturer::SourceList* windows,
         continue;
       }
 
-      DesktopCapturer::Source window;
+      WindowCapturer::Window window;
       window.id = id;
       if (!rtc::ToUtf8(window_title, &(window.title)) ||
           window.title.empty()) {

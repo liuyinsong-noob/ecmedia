@@ -14,10 +14,10 @@
 #include <OpenGL/CGLMacro.h>
 #include <OpenGL/OpenGL.h>
 
-#include "webrtc/base/constructormagic.h"
-#include "webrtc/typedefs.h"
+#include "../../../../base/constructormagic.h"
+#include "../../../typedefs.h"
 
-namespace webrtc {
+namespace yuntongxunwebrtc {
 
 class ScopedPixelBufferObject {
  public:
@@ -33,7 +33,7 @@ class ScopedPixelBufferObject {
   CGLContextObj cgl_context_;
   GLuint pixel_buffer_object_;
 
-  RTC_DISALLOW_COPY_AND_ASSIGN(ScopedPixelBufferObject);
+  DISALLOW_COPY_AND_ASSIGN(ScopedPixelBufferObject);
 };
 
 }  // namespace webrtc

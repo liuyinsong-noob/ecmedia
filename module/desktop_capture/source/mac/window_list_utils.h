@@ -13,13 +13,13 @@
 
 #include <ApplicationServices/ApplicationServices.h>
 
-#include "webrtc/modules/desktop_capture/desktop_capturer.h"
-#include "webrtc/modules/desktop_capture/mac/desktop_configuration.h"
+#include "../window_capturer.h"
+#include "desktop_configuration.h"
 
-namespace webrtc {
+namespace yuntongxunwebrtc {
 
 // Another helper function to get the on-screen windows.
-bool GetWindowList(DesktopCapturer::SourceList* windows, bool ignore_minimized);
+bool GetWindowList(WindowCapturer::WindowList* windows, bool ignore_minimized);
 
 // Returns true if the window is occupying a full screen.
 bool IsWindowFullScreen(const MacDesktopConfiguration& desktop_config,

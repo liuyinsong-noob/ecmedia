@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		1F59114A208DB32A004D2053 /* vie_watermark.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F591149208DB329004D2053 /* vie_watermark.cc */; };
 		1F591321208F39A6004D2053 /* vie_file_capturer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F591320208F39A5004D2053 /* vie_file_capturer.cc */; };
-		1F5BD28D20C9383800943F52 /* vie_watermark.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F591149208DB329004D2053 /* vie_watermark.cc */; };
-		1F886D0220CA534D0073669C /* vie_file_capturer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F591320208F39A5004D2053 /* vie_file_capturer.cc */; };
 		1FDC7C041E7A6335002B9F7C /* video_send_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FDC7C031E7A6335002B9F7C /* video_send_stream.cc */; };
 		1FE07DFC1FE7AABE0018E762 /* encoder_rtcp_feedback.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4547E2CD1F15F2F60014FB7E /* encoder_rtcp_feedback.cc */; };
 		4547E2CF1F15F2F60014FB7E /* encoder_rtcp_feedback.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4547E2CD1F15F2F60014FB7E /* encoder_rtcp_feedback.cc */; };
@@ -858,6 +856,7 @@
 					ENABLE_GCC,
 					VIDEO_ENABLED,
 					WEBRTC_MAC,
+					ENABLE_SCREEN_SHARE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -971,7 +970,8 @@
 					WEBRTC_POSIX,
 					ENABLE_GCC,
 					VIDEO_ENABLED,
-					WEBRTC_IOS,
+					WEBRTC_MAC,
+					ENABLE_SCREEN_SHARE,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;

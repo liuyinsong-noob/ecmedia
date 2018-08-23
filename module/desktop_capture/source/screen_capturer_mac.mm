@@ -8,7 +8,7 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "webrtc/modules/desktop_capture/screen_capturer.h"
+#include "screen_capturer.h"
 
 #include <stddef.h>
 #include <set>
@@ -20,19 +20,19 @@
 #include <OpenGL/CGLMacro.h>
 #include <OpenGL/OpenGL.h>
 
-#include "webrtc/base/macutils.h"
-#include "webrtc/base/scoped_ptr.h"
-#include "webrtc/modules/desktop_capture/desktop_capture_options.h"
-#include "webrtc/modules/desktop_capture/desktop_frame.h"
-#include "webrtc/modules/desktop_capture/desktop_geometry.h"
-#include "webrtc/modules/desktop_capture/desktop_region.h"
-#include "webrtc/modules/desktop_capture/mac/desktop_configuration.h"
-#include "webrtc/modules/desktop_capture/mac/desktop_configuration_monitor.h"
-#include "webrtc/modules/desktop_capture/mac/scoped_pixel_buffer_object.h"
-#include "webrtc/modules/desktop_capture/screen_capture_frame_queue.h"
-#include "webrtc/modules/desktop_capture/screen_capturer_helper.h"
-#include "webrtc/system_wrappers/interface/logging.h"
-#include "webrtc/system_wrappers/interface/tick_util.h"
+#include "../../macutils.h"
+#include "../../../system_wrappers/include/scoped_ptr.h"
+#include "desktop_capture_options.h"
+#include "desktop_frame.h"
+#include "desktop_geometry.h"
+#include "desktop_region.h"
+#include "mac/desktop_configuration.h"
+#include "mac/desktop_configuration_monitor.h"
+#include "mac/scoped_pixel_buffer_object.h"
+#include "screen_capture_frame_queue.h"
+#include "screen_capturer_helper.h"
+#include "../../../system_wrappers/include/logging.h"
+#include "../../../system_wrappers/include/tick_util.h"
 
 namespace yuntongxunwebrtc {
 
@@ -201,7 +201,9 @@ class ScreenCapturerMac : public ScreenCapturer {
   void SetExcludedWindow(WindowId window) override;
   bool GetScreenList(ScreenList* screens) override;
   bool SelectScreen(ScreenId id) override;
-
+    bool GetShareCaptureRect(int &width, int &height) override;
+    
+    
  private:
   void GlBlitFast(const DesktopFrame& frame,
                   const DesktopRegion& region);
@@ -301,7 +303,7 @@ class InvertedDesktopFrame : public DesktopFrame {
   virtual ~InvertedDesktopFrame() {}
 
  private:
-  rtc::scoped_ptr<DesktopFrame> original_frame_;
+    scoped_ptr<DesktopFrame> original_frame_;
 
   DISALLOW_COPY_AND_ASSIGN(InvertedDesktopFrame);
 };
@@ -498,6 +500,12 @@ bool ScreenCapturerMac::SelectScreen(ScreenId id) {
   return true;
 }
 
+bool ScreenCapturerMac::GetShareCaptureRect(int &width, int &height){
+    width = screen_pixel_bounds_.width();
+    height = screen_pixel_bounds_.height();
+    return YES;
+}
+    
 void ScreenCapturerMac::GlBlitFast(const DesktopFrame& frame,
                                    const DesktopRegion& region) {
   // Clip to the size of our current screen.
@@ -957,7 +965,7 @@ void ScreenCapturerMac::ScreenUpdateMoveCallback(
 }
 
 DesktopFrame* ScreenCapturerMac::CreateFrame() {
-  rtc::scoped_ptr<DesktopFrame> frame(
+    scoped_ptr<DesktopFrame> frame(
       new BasicDesktopFrame(screen_pixel_bounds_.size()));
 
   frame->set_dpi(DesktopVector(kStandardDPI * dip_to_pixel_scale_,
@@ -971,9 +979,7 @@ DesktopFrame* ScreenCapturerMac::CreateFrame() {
 ScreenCapturer* ScreenCapturer::Create(const DesktopCaptureOptions& options) {
   if (!options.configuration_monitor())
     return NULL;
-
-  rtc::scoped_ptr<ScreenCapturerMac> capturer(
-      new ScreenCapturerMac(options.configuration_monitor()));
+    yuntongxunwebrtc::scoped_ptr<ScreenCapturerMac> capturer(new ScreenCapturerMac(options.configuration_monitor()));
   if (!capturer->Init())
     capturer.reset();
   return capturer.release();

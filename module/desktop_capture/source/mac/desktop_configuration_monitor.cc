@@ -8,13 +8,13 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "webrtc/modules/desktop_capture/mac/desktop_configuration_monitor.h"
+#include "desktop_configuration_monitor.h"
 
-#include "webrtc/modules/desktop_capture/mac/desktop_configuration.h"
-#include "webrtc/system_wrappers/include/event_wrapper.h"
-#include "webrtc/system_wrappers/include/logging.h"
+#include "desktop_configuration.h"
+#include "../../../../system_wrappers/include/event_wrapper.h"
+#include "../../../../system_wrappers/include/logging.h"
 
-namespace webrtc {
+namespace yuntongxunwebrtc {
 
 // The amount of time allowed for displays to reconfigure.
 static const int64_t kDisplayConfigurationEventTimeoutMs = 10 * 1000;

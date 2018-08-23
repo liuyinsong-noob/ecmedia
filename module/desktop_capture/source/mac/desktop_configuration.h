@@ -14,12 +14,12 @@
 #include <ApplicationServices/ApplicationServices.h>
 #include <vector>
 
-#include "../typedefs.h"
+#include "../../../typedefs.h"
 #include "../module/desktop_capture/source/desktop_geometry.h"
 
 using namespace yuntongxunwebrtc;
 
-namespace webrtc {
+namespace yuntongxunwebrtc {
 
 // Describes the configuration of a specific display.
 struct MacDisplayConfiguration {
