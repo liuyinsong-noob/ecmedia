@@ -27,7 +27,7 @@
 - (id) initWithACVFileData:(NSData*)data;
 
 
-unsigned short int16WithBytes(Byte* bytes);
+unsigned short ec_int16WithBytes(Byte* bytes);
 @end
 
 @implementation ECImageACVFile
@@ -46,10 +46,10 @@ unsigned short int16WithBytes(Byte* bytes);
         }
         
         Byte* rawBytes = (Byte*) [data bytes];
-        version        = int16WithBytes(rawBytes);
+        version        = ec_int16WithBytes(rawBytes);
         rawBytes+=2;
         
-        totalCurves    = int16WithBytes(rawBytes);
+        totalCurves    = ec_int16WithBytes(rawBytes);
         rawBytes+=2;
         
         NSMutableArray *curves = [NSMutableArray new];
@@ -58,7 +58,7 @@ unsigned short int16WithBytes(Byte* bytes);
         // The following is the data for each curve specified by count above
         for (NSInteger x = 0; x<totalCurves; x++)
         {
-            unsigned short pointCount = int16WithBytes(rawBytes);
+            unsigned short pointCount = ec_int16WithBytes(rawBytes);
             rawBytes+=2;
             
             NSMutableArray *points = [NSMutableArray new];
@@ -68,9 +68,9 @@ unsigned short int16WithBytes(Byte* bytes);
             // Curves dialog graph) and the second is the input value. All coordinates have range 0 to 255.
             for (NSInteger y = 0; y<pointCount; y++)
             {
-                unsigned short y = int16WithBytes(rawBytes);
+                unsigned short y = ec_int16WithBytes(rawBytes);
                 rawBytes+=2;
-                unsigned short x = int16WithBytes(rawBytes);
+                unsigned short x = ec_int16WithBytes(rawBytes);
                 rawBytes+=2;
 #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
                 [points addObject:[NSValue valueWithCGSize:CGSizeMake(x * pointRate, y * pointRate)]];
@@ -88,7 +88,7 @@ unsigned short int16WithBytes(Byte* bytes);
     return self;
 }
 
-unsigned short int16WithBytes(Byte* bytes) {
+unsigned short ec_int16WithBytes(Byte* bytes) {
     uint16_t result;
     memcpy(&result, bytes, sizeof(result));
     return CFSwapInt16BigToHost(result);

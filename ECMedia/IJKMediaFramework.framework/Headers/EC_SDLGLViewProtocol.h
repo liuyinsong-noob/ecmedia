@@ -26,7 +26,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef struct EC_Overlay IJKOverlay;
+typedef struct EC_Overlay EC_Overlay;
 struct EC_Overlay {
     int w;
     int h;
@@ -44,7 +44,7 @@ struct EC_Overlay {
 @property(nonatomic, readonly) CGFloat  fps;
 @property(nonatomic)        CGFloat  scaleFactor;
 @property(nonatomic)        BOOL  isThirdGLView;
-- (void) display_pixels: (IJKOverlay *) overlay;
+- (void) display_pixels: (EC_Overlay *) overlay;
 @end
 
 #endif /* IJKSDLGLViewProtocol_h */

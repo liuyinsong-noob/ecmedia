@@ -1,7 +1,7 @@
 #import "ECImageMonochromeFilter.h"
 
 #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
-NSString *const kGPUMonochromeFragmentShaderString = SHADER_STRING
+NSString *const kEC_MonochromeFragmentShaderString = SHADER_STRING
 (
  precision lowp float;
  
@@ -34,7 +34,7 @@ NSString *const kGPUMonochromeFragmentShaderString = SHADER_STRING
  }
 );
 #else
-NSString *const kGPUMonochromeFragmentShaderString = SHADER_STRING
+NSString *const kEC_MonochromeFragmentShaderString = SHADER_STRING
 (
  varying vec2 textureCoordinate;
  
@@ -73,7 +73,7 @@ NSString *const kGPUMonochromeFragmentShaderString = SHADER_STRING
 
 - (id)init;
 {
-    if (!(self = [super initWithFragmentShaderFromString:kGPUMonochromeFragmentShaderString]))
+    if (!(self = [super initWithFragmentShaderFromString:kEC_MonochromeFragmentShaderString]))
     {
 		return nil;
     }

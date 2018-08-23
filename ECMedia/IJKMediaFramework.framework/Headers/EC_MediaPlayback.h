@@ -24,14 +24,14 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSInteger, IJKMPMovieScalingMode) {
+typedef NS_ENUM(NSInteger, EC_MPMovieScalingMode) {
     EC_MPMovieScalingModeNone,       // No scaling
     EC_MPMovieScalingModeAspectFit,  // Uniform scale until one dimension fits
     EC_MPMovieScalingModeAspectFill, // Uniform scale until the movie fills the visible bounds. One dimension may have clipped contents
     EC_MPMovieScalingModeFill        // Non-uniform scale. Both render dimensions will exactly match the visible bounds
 };
 
-typedef NS_ENUM(NSInteger, IJKMPMoviePlaybackState) {
+typedef NS_ENUM(NSInteger, EC_MPMoviePlaybackState) {
     EC_MPMoviePlaybackStateStopped,
     EC_MPMoviePlaybackStatePlaying,
     EC_MPMoviePlaybackStatePaused,
@@ -40,14 +40,14 @@ typedef NS_ENUM(NSInteger, IJKMPMoviePlaybackState) {
     EC_MPMoviePlaybackStateSeekingBackward
 };
 
-typedef NS_OPTIONS(NSUInteger, IJKMPMovieLoadState) {
+typedef NS_OPTIONS(NSUInteger, EC_MPMovieLoadState) {
     EC_MPMovieLoadStateUnknown        = 0,
     EC_MPMovieLoadStatePlayable       = 1 << 0,
     EC_MPMovieLoadStatePlaythroughOK  = 1 << 1, // Playback will be automatically started in this state when shouldAutoplay is YES
     EC_MPMovieLoadStateStalled        = 1 << 2, // Playback will be automatically paused in this state, if started
 };
 
-typedef NS_ENUM(NSInteger, IJKMPMovieFinishReason) {
+typedef NS_ENUM(NSInteger, EC_MPMovieFinishReason) {
     EC_MPMovieFinishReasonPlaybackEnded,
     EC_MPMovieFinishReasonPlaybackError,
     EC_MPMovieFinishReasonUserExited
@@ -56,9 +56,9 @@ typedef NS_ENUM(NSInteger, IJKMPMovieFinishReason) {
 // -----------------------------------------------------------------------------
 // Thumbnails
 
-typedef NS_ENUM(NSInteger, IJKMPMovieTimeOption) {
-    IJKMPMovieTimeOptionNearestKeyFrame,
-    IJKMPMovieTimeOptionExact
+typedef NS_ENUM(NSInteger, EC_MPMovieTimeOption) {
+    EC_MPMovieTimeOptionNearestKeyFrame,
+    EC_MPMovieTimeOptionExact
 };
 
 @protocol EC_MediaPlayback;
@@ -82,8 +82,8 @@ typedef NS_ENUM(NSInteger, IJKMPMovieTimeOption) {
 @property(nonatomic, readonly)  NSInteger bufferingProgress;
 
 @property(nonatomic, readonly)  BOOL isPreparedToPlay;
-@property(nonatomic, readonly)  IJKMPMoviePlaybackState playbackState;
-@property(nonatomic, readonly)  IJKMPMovieLoadState loadState;
+@property(nonatomic, readonly)  EC_MPMoviePlaybackState playbackState;
+@property(nonatomic, readonly)  EC_MPMovieLoadState loadState;
 @property(nonatomic, readonly) int isSeekBuffering;
 @property(nonatomic, readonly) int isAudioSync;
 @property(nonatomic, readonly) int isVideoSync;
@@ -91,7 +91,7 @@ typedef NS_ENUM(NSInteger, IJKMPMovieTimeOption) {
 @property(nonatomic, readonly) int64_t numberOfBytesTransferred;
 
 @property(nonatomic, readonly) CGSize naturalSize;
-@property(nonatomic) IJKMPMovieScalingMode scalingMode;
+@property(nonatomic) EC_MPMovieScalingMode scalingMode;
 @property(nonatomic) BOOL shouldAutoplay;
 
 @property (nonatomic) BOOL allowsMediaAirPlay;
@@ -170,7 +170,7 @@ IJK_EXTERN NSString *const EC_MPMoviePlayerSeekVideoStartNotification;
 #pragma mark IJKMediaUrlOpenDelegate
 
 // Must equal to the defination in ijkavformat/ijkavformat.h
-typedef NS_ENUM(NSInteger, IJKMediaEvent) {
+typedef NS_ENUM(NSInteger, EC_MediaEvent) {
 
     // Notify Events
     IJKMediaEvent_WillHttpOpen         = 1,       // attr: url
@@ -197,11 +197,11 @@ typedef NS_ENUM(NSInteger, IJKMediaEvent) {
 @interface EC_MediaUrlOpenData: NSObject
 
 - (id)initWithUrl:(NSString *)url
-            event:(IJKMediaEvent)event
+            event:(EC_MediaEvent)event
      segmentIndex:(int)segmentIndex
      retryCounter:(int)retryCounter;
 
-@property(nonatomic, readonly) IJKMediaEvent event;
+@property(nonatomic, readonly) EC_MediaEvent event;
 @property(nonatomic, readonly) int segmentIndex;
 @property(nonatomic, readonly) int retryCounter;
 
@@ -214,14 +214,14 @@ typedef NS_ENUM(NSInteger, IJKMediaEvent) {
 
 @end
 
-@protocol IJKMediaUrlOpenDelegate <NSObject>
+@protocol EC_MediaUrlOpenDelegate <NSObject>
 
 - (void)willOpenUrl:(EC_MediaUrlOpenData*) urlOpenData;
 
 @end
 
-@protocol IJKMediaNativeInvokeDelegate <NSObject>
+@protocol EC_MediaNativeInvokeDelegate <NSObject>
 
-- (int)invoke:(IJKMediaEvent)event attributes:(NSDictionary *)attributes;
+- (int)invoke:(EC_MediaEvent)event attributes:(NSDictionary *)attributes;
 
 @end

@@ -97,7 +97,7 @@ NSString *const kECImageColorSwizzlingFragmentShaderString = SHADER_STRING
     _movieWriterContext = [[ECImageContext alloc] init];
     [_movieWriterContext useSharegroup:[[[ECImageContext sharedImageProcessingContext] context] sharegroup]];
 
-    runSynchronouslyOnContextQueue(_movieWriterContext, ^{
+    ec_runSynchronouslyOnContextQueue(_movieWriterContext, ^{
         [_movieWriterContext useAsCurrentContext];
         
         if ([ECImageContext supportsFastTextureUpload])
@@ -268,7 +268,7 @@ NSString *const kECImageColorSwizzlingFragmentShaderString = SHADER_STRING
 {
     alreadyFinishedRecording = NO;
     startTime = kCMTimeInvalid;
-    runSynchronouslyOnContextQueue(_movieWriterContext, ^{
+    ec_runSynchronouslyOnContextQueue(_movieWriterContext, ^{
         if (audioInputReadyCallback == NULL)
         {
             [assetWriter startWriting];
@@ -293,7 +293,7 @@ NSString *const kECImageColorSwizzlingFragmentShaderString = SHADER_STRING
     }
     
     isRecording = NO;
-    runSynchronouslyOnContextQueue(_movieWriterContext, ^{
+    ec_runSynchronouslyOnContextQueue(_movieWriterContext, ^{
         alreadyFinishedRecording = YES;
 
         if( assetWriter.status == AVAssetWriterStatusWriting && ! videoEncodingIsFinished )
@@ -317,13 +317,13 @@ NSString *const kECImageColorSwizzlingFragmentShaderString = SHADER_STRING
 
 - (void)finishRecordingWithCompletionHandler:(void (^)(void))handler;
 {
-    runSynchronouslyOnContextQueue(_movieWriterContext, ^{
+    ec_runSynchronouslyOnContextQueue(_movieWriterContext, ^{
         isRecording = NO;
         
         if (assetWriter.status == AVAssetWriterStatusCompleted || assetWriter.status == AVAssetWriterStatusCancelled || assetWriter.status == AVAssetWriterStatusUnknown)
         {
             if (handler)
-                runAsynchronouslyOnContextQueue(_movieWriterContext, handler);
+                ec_runAsynchronouslyOnContextQueue(_movieWriterContext, handler);
             return;
         }
         if( assetWriter.status == AVAssetWriterStatusWriting && ! videoEncodingIsFinished )
@@ -354,7 +354,7 @@ NSString *const kECImageColorSwizzlingFragmentShaderString = SHADER_STRING
             [assetWriter finishWriting];
 #pragma clang diagnostic pop
             if (handler)
-                runAsynchronouslyOnContextQueue(_movieWriterContext, handler);
+                ec_runAsynchronouslyOnContextQueue(_movieWriterContext, handler);
         }
 #endif
     });
@@ -376,7 +376,7 @@ NSString *const kECImageColorSwizzlingFragmentShaderString = SHADER_STRING
         
         if (CMTIME_IS_INVALID(startTime))
         {
-            runSynchronouslyOnContextQueue(_movieWriterContext, ^{
+            ec_runSynchronouslyOnContextQueue(_movieWriterContext, ^{
                 if ((audioInputReadyCallback == NULL) && (assetWriter.status != AVAssetWriterStatusWriting))
                 {
                     [assetWriter startWriting];
@@ -453,7 +453,7 @@ NSString *const kECImageColorSwizzlingFragmentShaderString = SHADER_STRING
         if( _encodingLiveVideo )
 
         {
-            runAsynchronouslyOnContextQueue(_movieWriterContext, write);
+            ec_runAsynchronouslyOnContextQueue(_movieWriterContext, write);
         }
         else
         {
@@ -484,7 +484,7 @@ NSString *const kECImageColorSwizzlingFragmentShaderString = SHADER_STRING
             {
                 if( videoInputReadyCallback && ! videoInputReadyCallback() && ! videoEncodingIsFinished )
                 {
-                    runAsynchronouslyOnContextQueue(_movieWriterContext, ^{
+                    ec_runAsynchronouslyOnContextQueue(_movieWriterContext, ^{
                         if( assetWriter.status == AVAssetWriterStatusWriting && ! videoEncodingIsFinished )
                         {
                             videoEncodingIsFinished = YES;
@@ -513,7 +513,7 @@ NSString *const kECImageColorSwizzlingFragmentShaderString = SHADER_STRING
             {
                 if( audioInputReadyCallback && ! audioInputReadyCallback() && ! audioEncodingIsFinished )
                 {
-                    runAsynchronouslyOnContextQueue(_movieWriterContext, ^{
+                    ec_runAsynchronouslyOnContextQueue(_movieWriterContext, ^{
                         if( assetWriter.status == AVAssetWriterStatusWriting && ! audioEncodingIsFinished )
                         {
                             audioEncodingIsFinished = YES;
@@ -586,7 +586,7 @@ NSString *const kECImageColorSwizzlingFragmentShaderString = SHADER_STRING
 
 - (void)destroyDataFBO;
 {
-    runSynchronouslyOnContextQueue(_movieWriterContext, ^{
+    ec_runSynchronouslyOnContextQueue(_movieWriterContext, ^{
         [_movieWriterContext useAsCurrentContext];
 
         if (movieFramebuffer)
@@ -682,7 +682,7 @@ NSString *const kECImageColorSwizzlingFragmentShaderString = SHADER_STRING
 
     if (CMTIME_IS_INVALID(startTime))
     {
-        runSynchronouslyOnContextQueue(_movieWriterContext, ^{
+        ec_runSynchronouslyOnContextQueue(_movieWriterContext, ^{
             if ((videoInputReadyCallback == NULL) && (assetWriter.status != AVAssetWriterStatusWriting))
             {
                 [assetWriter startWriting];
@@ -696,7 +696,7 @@ NSString *const kECImageColorSwizzlingFragmentShaderString = SHADER_STRING
     ECImageFramebuffer *inputFramebufferForBlock = firstInputFramebuffer;
     glFinish();
 
-    runAsynchronouslyOnContextQueue(_movieWriterContext, ^{
+    ec_runAsynchronouslyOnContextQueue(_movieWriterContext, ^{
         if (!assetWriterVideoInput.readyForMoreMediaData && _encodingLiveVideo)
         {
             [inputFramebufferForBlock unlock];

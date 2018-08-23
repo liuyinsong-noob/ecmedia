@@ -1,7 +1,7 @@
 #import "ECImageSolidColorGenerator.h"
 
 #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
-NSString *const kGPUSolidColorFragmentShaderString = SHADER_STRING
+NSString *const kEC_SolidColorFragmentShaderString = SHADER_STRING
 (
  precision lowp float;
 
@@ -17,7 +17,7 @@ NSString *const kGPUSolidColorFragmentShaderString = SHADER_STRING
  }
  );
 #else
-NSString *const kGPUSolidColorFragmentShaderString = SHADER_STRING
+NSString *const kEC_SolidColorFragmentShaderString = SHADER_STRING
 (
  varying vec2 textureCoordinate;
  uniform sampler2D inputImageTexture;
@@ -38,7 +38,7 @@ NSString *const kGPUSolidColorFragmentShaderString = SHADER_STRING
 
 - (id)init;
 {
-    if (!(self = [super initWithFragmentShaderFromString:kGPUSolidColorFragmentShaderString]))
+    if (!(self = [super initWithFragmentShaderFromString:kEC_SolidColorFragmentShaderString]))
     {
 		return nil;
     }

@@ -129,12 +129,12 @@ typedef enum EC_LogLevel {
 - (void)setSwsOptionIntValue:       (int64_t)value forKey:(NSString *)key;
 - (void)setPlayerOptionIntValue:    (int64_t)value forKey:(NSString *)key;
 
-@property (nonatomic, retain) id<IJKMediaUrlOpenDelegate> segmentOpenDelegate;
-@property (nonatomic, retain) id<IJKMediaUrlOpenDelegate> tcpOpenDelegate;
-@property (nonatomic, retain) id<IJKMediaUrlOpenDelegate> httpOpenDelegate;
-@property (nonatomic, retain) id<IJKMediaUrlOpenDelegate> liveOpenDelegate;
+@property (nonatomic, retain) id<EC_MediaUrlOpenDelegate> segmentOpenDelegate;
+@property (nonatomic, retain) id<EC_MediaUrlOpenDelegate> tcpOpenDelegate;
+@property (nonatomic, retain) id<EC_MediaUrlOpenDelegate> httpOpenDelegate;
+@property (nonatomic, retain) id<EC_MediaUrlOpenDelegate> liveOpenDelegate;
 
-@property (nonatomic, retain) id<IJKMediaNativeInvokeDelegate> nativeInvokeDelegate;
+@property (nonatomic, retain) id<EC_MediaNativeInvokeDelegate> nativeInvokeDelegate;
 
 - (void)didShutdown;
 

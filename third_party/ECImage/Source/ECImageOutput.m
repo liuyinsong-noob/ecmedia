@@ -3,7 +3,7 @@
 #import "ECImagePicture.h"
 #import <mach/mach.h>
 
-void runOnMainQueueWithoutDeadlocking(void (^block)(void))
+void ec_runOnMainQueueWithoutDeadlocking(void (^block)(void))
 {
 	if ([NSThread isMainThread])
 	{
@@ -54,7 +54,7 @@ void ec_runAsynchronouslyOnVideoProcessingQueue(void (^block)(void))
 	}
 }
 
-void runSynchronouslyOnContextQueue(ECImageContext *context, void (^block)(void))
+void ec_runSynchronouslyOnContextQueue(ECImageContext *context, void (^block)(void))
 {
     dispatch_queue_t videoProcessingQueue = [context contextQueue];
 #if !OS_OBJECT_USE_OBJC
@@ -73,7 +73,7 @@ void runSynchronouslyOnContextQueue(ECImageContext *context, void (^block)(void)
         }
 }
 
-void runAsynchronouslyOnContextQueue(ECImageContext *context, void (^block)(void))
+void ec_runAsynchronouslyOnContextQueue(ECImageContext *context, void (^block)(void))
 {
     dispatch_queue_t videoProcessingQueue = [context contextQueue];
     
@@ -93,7 +93,7 @@ void runAsynchronouslyOnContextQueue(ECImageContext *context, void (^block)(void
         }
 }
 
-void reportAvailableMemoryForECImage(NSString *tag) 
+void ec_reportAvailableMemoryForECImage(NSString *tag) 
 {    
     if (!tag)
         tag = @"Default";

@@ -1,7 +1,7 @@
 #import "ECImageFalseColorFilter.h"
 
 #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
-NSString *const kGPUFalseColorFragmentShaderString = SHADER_STRING
+NSString *const kEC_FalseColorFragmentShaderString = SHADER_STRING
 (
  precision lowp float;
  
@@ -23,7 +23,7 @@ NSString *const kGPUFalseColorFragmentShaderString = SHADER_STRING
  }
 );
 #else
-NSString *const kGPUFalseColorFragmentShaderString = SHADER_STRING
+NSString *const kEC_FalseColorFragmentShaderString = SHADER_STRING
 (
  varying vec2 textureCoordinate;
  
@@ -52,7 +52,7 @@ NSString *const kGPUFalseColorFragmentShaderString = SHADER_STRING
 
 - (id)init;
 {
-    if (!(self = [super initWithFragmentShaderFromString:kGPUFalseColorFragmentShaderString]))
+    if (!(self = [super initWithFragmentShaderFromString:kEC_FalseColorFragmentShaderString]))
     {
 		return nil;
     }

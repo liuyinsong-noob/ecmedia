@@ -405,19 +405,22 @@ int32_t AudioCodingModuleImpl::Process() {
             //  reconstruction is possible.
             red_active = true;
 
+            /****
+             * 丢包率从 rtp 拓展头中得到，计算公式为： real_loss_rate =  loss_rate_*5;
+             **/
             has_data_to_send = true;
             // Skip the following part for the first packet in a RED session.
 
             //Adjust size according to loss rate 5, 3, 1
             //keep list size 5
-            unsigned int list_size = 1;
+            unsigned int audio_red_packets_list_size = 1;
             if ((loss_rate_*5 >= 30) && (loss_rate_*5 < 45) ) {
-              list_size = 3;
+              audio_red_packets_list_size = 3;
             } else if (loss_rate_*5 >= 45) {
-              list_size = 5;
+              audio_red_packets_list_size = 5;
             }
-          printf("gezhaoyou trackback loss_rate:%d, list_size:%d\n",loss_rate_, list_size);
-            while (red_list_.size() >= list_size) {
+        
+            while (red_list_.size() >= audio_red_packets_list_size) {
               RedBuf earse = red_list_.front();
               delete [] earse.buf;
               red_list_.pop_front();
