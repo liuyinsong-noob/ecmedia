@@ -20,7 +20,7 @@ demo_Android/CCP_Demo_v3.6.4r/libs/armeabi/libECMedia.so
 
 #mac
 .DS_Store
-
+xcshareddata
 # c/c++
 # Prerequisites
 *.d
