@@ -16,7 +16,6 @@
 		753D2944211D6CDE0052BF15 /* desktop_configuration.mm in Sources */ = {isa = PBXBuildFile; fileRef = 753D293B211D6CDE0052BF15 /* desktop_configuration.mm */; };
 		753D2945211D6CDE0052BF15 /* scoped_pixel_buffer_object.cc in Sources */ = {isa = PBXBuildFile; fileRef = 753D293C211D6CDE0052BF15 /* scoped_pixel_buffer_object.cc */; };
 		753D2946211D6CDE0052BF15 /* desktop_configuration_monitor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 753D293E211D6CDE0052BF15 /* desktop_configuration_monitor.cc */; };
-		753D2948211D6EC40052BF15 /* window_capturer_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 753D2947211D6EC30052BF15 /* window_capturer_mac.mm */; };
 		753D2949211D6F1A0052BF15 /* window_capturer_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 753D2947211D6EC30052BF15 /* window_capturer_mac.mm */; };
 		753D2DFC2123D6580052BF15 /* screen_capturer_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 753D2DFB2123D6580052BF15 /* screen_capturer_mac.mm */; };
 		753D2E0021242BCB0052BF15 /* cropping_window_capturer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 753D2DFF21242BCB0052BF15 /* cropping_window_capturer.cc */; };
@@ -273,7 +272,6 @@
 				ADC50F491D8FC2F600A83C04 /* desktop_frame.cc in Sources */,
 				ADC50F4B1D8FC65200A83C04 /* window_capturer_ios.mm in Sources */,
 				ADC50F541D8FC7C500A83C04 /* desktop_region.cc in Sources */,
-				753D2948211D6EC40052BF15 /* window_capturer_mac.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
