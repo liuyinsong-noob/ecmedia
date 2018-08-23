@@ -1,3 +1,29 @@
+Version v2.3.2.3
+1. 接口不变
+2. [bugfix]: vp8 simultcast allow auto resize to avoid encode error
+3. [bugfix]: video stretching when iOS in landscape mode
+4. [bugfix]: update ijkplayer , because maybe link error with app
+5. [bugfix]: ijkplayer rtmp can't setting tcp rw timeout
+6. [bugfix]: video stretching when iOS in landscape mode
+7. [bugfix]:the video distortion when mac SDK view self
+8. [feature]: add api for setting conference participant callback time InterVal
+9. [bug fix]:compile error
+10. [bug fix]: audio project compile error
+11. [feature]: demo media statistics
+12. [bug fix]: Partially resolve media statistics, with send channel tts problem
+13. [bug fix]: ios donot send video stream
+14. [bugfix]: mac libs h264 not sending
+15. [bug fix]: ios ecimage support not preview when app in background
+16. [bug fix]: crash, deregister send rtcp when deleting channel
+17. [bug fix]: android compile error
+18. [bug fix]: send rtcp crash when end phone
+19. [feature]: add log token
+20. [feature]: optimize logging
+21. [feature]: add log token
+22. [feature]: optimize logging
+23. [feature]: add log token
+24. [feature]: optimize logging
+
 Version v2.3.2.2
 1. 接口不变
 2. [bugfix]: video stretching when iOS in landscape mode
