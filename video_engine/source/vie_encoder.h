@@ -309,6 +309,7 @@ class ViEEncoder
     int capture_id_;
 	uint32_t ssrc_index0; //base layer
 	uint32_t ssrc_index1; //higher layer
+    FILE *_bitStreamBeforeSend;
   //---end
 };
 

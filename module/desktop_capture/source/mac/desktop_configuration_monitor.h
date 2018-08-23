@@ -20,7 +20,7 @@
 #include "../module/desktop_capture/source/mac/desktop_configuration.h"
 #include "../system_wrappers/include/atomic32.h"
 
-namespace webrtc {
+namespace yuntongxunwebrtc {
 
 class EventWrapper;
 
@@ -59,7 +59,7 @@ class DesktopConfigurationMonitor {
   MacDesktopConfiguration desktop_configuration_;
   std::unique_ptr<EventWrapper> display_configuration_capture_event_;
 
-//  RTC_DISALLOW_COPY_AND_ASSIGN(DesktopConfigurationMonitor);
+  DISALLOW_COPY_AND_ASSIGN(DesktopConfigurationMonitor);
 };
 
 }  // namespace webrtc

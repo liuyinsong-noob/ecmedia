@@ -15,7 +15,14 @@
 #include "../system_wrappers/include/thread_wrapper.h"
 #include "../system_wrappers/include/tick_util.h"
 #include "vie_encoder.h"
-#if __APPLE__
+//#if __APPLE__
+//#include "window_capturer_ios.h"
+//#endif
+#ifdef WEBRTC_MAC
+#include "window_capturer.h"
+#include "screen_capturer.h"
+#endif
+#ifdef WEBRTC_iOS
 #include "window_capturer_ios.h"
 #endif
 
@@ -37,7 +44,11 @@ VieDesktopCapturer::VieDesktopCapturer(int id,int engine_id):
     yuntongxunwebrtc::kFullDesktopScreenId)),
 	screen_mouse_cursor_for_windows_(MouseCursorMonitor::CreateForScreen(DesktopCaptureOptions::CreateDefault(),
 		yuntongxunwebrtc::kFullDesktopScreenId)),
-
+#elif WEBRTC_MAC
+    screen_mouse_cursor_(MouseCursorMonitor::CreateForScreen(DesktopCaptureOptions::CreateDefault(),
+                                                             yuntongxunwebrtc::kFullDesktopScreenId)),
+    screen_mouse_cursor_for_windows_(MouseCursorMonitor::CreateForScreen(DesktopCaptureOptions::CreateDefault(),
+                                                                         yuntongxunwebrtc::kFullDesktopScreenId)),
 #else
     screen_mouse_cursor_(NULL),
 #endif
@@ -147,6 +158,8 @@ void VieDesktopCapturer::OnCaptureCompleted(DesktopFrame* frame, CaptureErrCode 
      * Android java 层直接向底层传入I420数据，旧版使用 ARGB565. zhaoyou
      */
     src_video_type = kI420;
+#elif defined(WEBRTC_MAC)
+    src_video_type = kARGB;
 #else
     src_video_type = kMJPG;
 #endif
@@ -210,7 +223,7 @@ int VieDesktopCapturer::SelectCapture(const DesktopShareType capture_type)
     
     bool VieDesktopCapturer::GetScreenList( ScreenList& screens )
 {
-#ifdef _WIN32
+//#ifdef _WIN32
     if(screen_capturer_ == NULL )
     {
         WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
@@ -223,13 +236,13 @@ int VieDesktopCapturer::SelectCapture(const DesktopShareType capture_type)
     
     CopyScreenList(screen_list,screens);
     return true;
-#endif
-    return false;
+//#endif
+//    return false;
 }
 
 bool VieDesktopCapturer::SelectScreen( ScreenId id )
 {
-#ifdef _WIN32
+//#ifdef _WIN32
     if(screen_capturer_ == NULL )
     {
         WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
@@ -238,13 +251,13 @@ bool VieDesktopCapturer::SelectScreen( ScreenId id )
     }
     share_capture_type_ = ShareScreen;
     return screen_capturer_->SelectScreen(id);
-#endif
-    return false;
+//#endif
+//    return false;
 }
     
     bool VieDesktopCapturer::GetWindowList( WindowList& windows )
 {
-#ifdef _WIN32
+//#ifdef _WIN32
     if(windows_capture_ == NULL)
     {
         WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
@@ -256,13 +269,13 @@ bool VieDesktopCapturer::SelectScreen( ScreenId id )
     
     CopyWindowsList(window_list,windows);
     return true;
-#endif
-    return false;
+//#endif
+//    return false;
 }
     
     bool VieDesktopCapturer::SelectWindow( WindowId id )
 {
-#ifdef _WIN32
+//#ifdef _WIN32
     if(windows_capture_ == NULL)
     {
         WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
@@ -283,8 +296,8 @@ bool VieDesktopCapturer::SelectScreen( ScreenId id )
     }
     share_capture_type_ = ShareWindow;
     return true;
-#endif
-    return false;
+//#endif
+//    return false;
 }
     
     
@@ -330,9 +343,27 @@ int VieDesktopCapturer::CaptrueShareFrame( yuntongxunwebrtc::I420VideoFrame& vid
     screen_capturer_->Capture(DesktopRegion());
 #endif
     
-#ifdef __APPLE__
+#ifdef WEBRTC_MAC
+    switch(share_capture_type_)
+    {
+        case ShareScreen:
+        {
+            screen_mouse_blender_->Capture(DesktopRegion());
+        }
+            break;
+        case ShareWindow:
+        {
+            screen_mouse_blender_->Capture(DesktopRegion());
+        }
+            break;
+        default:
+            break;
+    }
+#endif
+#ifdef WEBRTC_iOS
     screen_capturer_->Capture(DesktopRegion());
 #endif
+
     if(!has_share_frame_) {
         return -1;
     }
@@ -432,7 +463,27 @@ int VieDesktopCapturer::CreateDesktopCapture()
     }
     screen_mouse_blender_->Start(this);
 #endif
-#ifdef __APPLE__
+#ifdef WEBRTC_MAC
+    if(screen_mouse_cursor_ == NULL){
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
+                     -1,"CreateWindowCapture  get screen_mouse_cursor_  ERR ");
+        return -1;
+    }
+    screen_capturer_ = ScreenCapturer::Create();
+    if(screen_capturer_ == NULL){
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo, -1,"ScreenCapturer::Create() ERR ");
+        return -1;
+    }
+    screen_mouse_blender_.reset(new DesktopAndCursorComposer(screen_capturer_,screen_mouse_cursor_));
+    if (screen_mouse_blender_.get() == NULL){
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo, -1,"CreateDesktopCapture get  screen_mouse_blender_ ERR ");
+        return -1;
+    }
+    screen_mouse_blender_->Start(this);
+//    screen_capturer_ = ScreenCapturer::Create();
+//    screen_capturer_->Start(this);
+#endif
+#ifdef WEBRTC_iOS
     screen_capturer_ = ScreenCapturerIos::Create();
     screen_capturer_->Start(this);
 #endif
@@ -475,7 +526,26 @@ int VieDesktopCapturer::CreateWindowCapture()
 
     window_mouse_blender_->Start(this);
 #endif
-#ifdef __APPLE__
+#ifdef WEBRTC_MAC
+    if(screen_mouse_cursor_for_windows_ == NULL){
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo, -1,"CreateWindowCapture  get screen_mouse_cursor_  ERR ");
+        return -1;
+    }
+    windows_capture_ = CroppingWindowCapturer::Create(DesktopCaptureOptions::CreateDefault());
+    if ( windows_capture_ == NULL){
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo, -1,"CroppingWindowCapturer::Create ERR ");
+        return -1;
+    }
+    window_mouse_blender_.reset(new DesktopAndCursorComposer(windows_capture_, screen_mouse_cursor_for_windows_));
+    if (window_mouse_blender_.get() == NULL ){
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,  -1,"CreateDesktopCapture get  window_mouse_blender_  ERR ");
+        return -1;
+    }
+    window_mouse_blender_->Start(this);
+//    windows_capture_ = CroppingWindowCapturer::Create(DesktopCaptureOptions::CreateDefault());
+//    windows_capture_->Start(this);
+#endif
+#ifdef WEBRTC_iOS
     screen_capturer_ = ScreenCapturerIos::Create();
     screen_capturer_->Start(this);
 #endif
@@ -534,19 +604,19 @@ bool VieDesktopCapturer::ViEDesktopCaptureProcess()
 
 void VieDesktopCapturer::CopyScreenList( ScreenCapturer::ScreenList &src_screen,ScreenList& dst_screen )
 {
-#ifdef _WIN32
+//#ifdef _WIN32
     ScreenCapturer::ScreenList::iterator iter = src_screen.begin();
     while(iter != src_screen.end())
     {
         dst_screen.push_back(iter->id);
         iter++;
     }
-#endif
+//#endif
 }
 
 void VieDesktopCapturer::CopyWindowsList( WindowCapturer::WindowList &src_windows,WindowList& dst_windows )
 {
-#ifdef _WIN32
+//#ifdef _WIN32
     WindowCapturer::WindowList::iterator iter = src_windows.begin();
     while(iter != src_windows.end())
     {
@@ -556,7 +626,7 @@ void VieDesktopCapturer::CopyWindowsList( WindowCapturer::WindowList &src_window
         dst_windows.push_back(wind_);
         iter++;
     }
-#endif
+//#endif
 }
 
 void VieDesktopCapturer::DeliverFrame()
@@ -615,13 +685,13 @@ int VieDesktopCapturer::setCaptureErrCodeCb(int channelid, onDesktopCaptureErrCo
 
 int VieDesktopCapturer::setShareWindowChangeCb(int channelid, onDesktopShareFrameChange frameChangeCb)
 {
-#ifdef _WIN32
+//#ifdef _WIN32
 	CriticalSectionScoped cs(observer_cs_.get());
 	capture_frame_change_cb_ = frameChangeCb;
 	callback_id_ = channelid;
 	return 0;
-#endif
-    return -1;
+//#endif
+//    return -1;
 }
 
 WebRtc_Word32 VieDesktopCapturer::IncImageProcRefCount()

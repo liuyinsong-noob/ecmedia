@@ -8,13 +8,13 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "webrtc/modules/desktop_capture/mac/desktop_configuration.h"
+#include "desktop_configuration.h"
 
 #include <math.h>
 #include <algorithm>
 #include <Cocoa/Cocoa.h>
 
-#include "webrtc/system_wrappers/include/logging.h"
+#include "../../../../system_wrappers/include/logging.h"
 
 #if !defined(MAC_OS_X_VERSION_10_7) || \
     MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7
@@ -26,7 +26,7 @@
 
 #endif  // MAC_OS_X_VERSION_10_7
 
-namespace webrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 

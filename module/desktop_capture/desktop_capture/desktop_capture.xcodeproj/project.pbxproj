@@ -7,6 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		752EB9DB212E4965002CB4DD /* desktop_and_cursor_composer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 752EB9DA212E4965002CB4DD /* desktop_and_cursor_composer.cc */; };
+		753D2922211D69D10052BF15 /* desktop_geometry.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3EBAE21DE58BF400024454 /* desktop_geometry.cc */; };
+		753D2923211D69D10052BF15 /* desktop_frame.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADC50F481D8FC2F600A83C04 /* desktop_frame.cc */; };
+		753D2925211D69D10052BF15 /* desktop_region.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADC50F531D8FC7C500A83C04 /* desktop_region.cc */; };
+		753D2942211D6CDE0052BF15 /* full_screen_chrome_window_detector.cc in Sources */ = {isa = PBXBuildFile; fileRef = 753D2938211D6CDE0052BF15 /* full_screen_chrome_window_detector.cc */; };
+		753D2943211D6CDE0052BF15 /* window_list_utils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 753D2939211D6CDE0052BF15 /* window_list_utils.cc */; };
+		753D2944211D6CDE0052BF15 /* desktop_configuration.mm in Sources */ = {isa = PBXBuildFile; fileRef = 753D293B211D6CDE0052BF15 /* desktop_configuration.mm */; };
+		753D2945211D6CDE0052BF15 /* scoped_pixel_buffer_object.cc in Sources */ = {isa = PBXBuildFile; fileRef = 753D293C211D6CDE0052BF15 /* scoped_pixel_buffer_object.cc */; };
+		753D2946211D6CDE0052BF15 /* desktop_configuration_monitor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 753D293E211D6CDE0052BF15 /* desktop_configuration_monitor.cc */; };
+		753D2948211D6EC40052BF15 /* window_capturer_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 753D2947211D6EC30052BF15 /* window_capturer_mac.mm */; };
+		753D2949211D6F1A0052BF15 /* window_capturer_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 753D2947211D6EC30052BF15 /* window_capturer_mac.mm */; };
+		753D2DFC2123D6580052BF15 /* screen_capturer_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 753D2DFB2123D6580052BF15 /* screen_capturer_mac.mm */; };
+		753D2E0021242BCB0052BF15 /* cropping_window_capturer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 753D2DFF21242BCB0052BF15 /* cropping_window_capturer.cc */; };
+		753D2E0221242E640052BF15 /* desktop_capture_options.cc in Sources */ = {isa = PBXBuildFile; fileRef = 753D2E0121242E640052BF15 /* desktop_capture_options.cc */; };
+		753D2E0421242F140052BF15 /* cropped_desktop_frame.cc in Sources */ = {isa = PBXBuildFile; fileRef = 753D2E0321242F140052BF15 /* cropped_desktop_frame.cc */; };
+		75DA38BE212AB75F006D5431 /* screen_capturer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 75DA38BD212AB75F006D5431 /* screen_capturer.cc */; };
+		75DA38BF212AB7D4006D5431 /* screen_capturer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 75DA38BD212AB75F006D5431 /* screen_capturer.cc */; };
+		75DA38C1212AB8B8006D5431 /* shared_desktop_frame.cc in Sources */ = {isa = PBXBuildFile; fileRef = 75DA38C0212AB8B8006D5431 /* shared_desktop_frame.cc */; };
+		75DA38C3212AB91A006D5431 /* screen_capturer_helper.cc in Sources */ = {isa = PBXBuildFile; fileRef = 75DA38C2212AB919006D5431 /* screen_capturer_helper.cc */; };
+		75DA38C5212AB94C006D5431 /* screen_capture_frame_queue.cc in Sources */ = {isa = PBXBuildFile; fileRef = 75DA38C4212AB94B006D5431 /* screen_capture_frame_queue.cc */; };
+		75DA38CC212ACC98006D5431 /* mouse_cursor_monitor_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 75DA38CB212ACC97006D5431 /* mouse_cursor_monitor_mac.mm */; };
+		75DA38D0212AEC82006D5431 /* mouse_cursor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 75DA38CF212AEC82006D5431 /* mouse_cursor.cc */; };
 		AD3EBAE31DE58BF400024454 /* desktop_geometry.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD3EBAE21DE58BF400024454 /* desktop_geometry.cc */; };
 		ADC50F491D8FC2F600A83C04 /* desktop_frame.cc in Sources */ = {isa = PBXBuildFile; fileRef = ADC50F481D8FC2F600A83C04 /* desktop_frame.cc */; };
 		ADC50F4B1D8FC65200A83C04 /* window_capturer_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADC50F4A1D8FC65200A83C04 /* window_capturer_ios.mm */; };
@@ -14,6 +36,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		753D2927211D69D10052BF15 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ADE835621D8F7AF000CCD20D /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -26,6 +57,29 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		752EB9DA212E4965002CB4DD /* desktop_and_cursor_composer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = desktop_and_cursor_composer.cc; path = ../../source/desktop_and_cursor_composer.cc; sourceTree = "<group>"; };
+		753D292B211D69D10052BF15 /* libdesktop_capture_mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdesktop_capture_mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		753D2938211D6CDE0052BF15 /* full_screen_chrome_window_detector.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = full_screen_chrome_window_detector.cc; sourceTree = "<group>"; };
+		753D2939211D6CDE0052BF15 /* window_list_utils.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = window_list_utils.cc; sourceTree = "<group>"; };
+		753D293A211D6CDE0052BF15 /* desktop_configuration_monitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = desktop_configuration_monitor.h; sourceTree = "<group>"; };
+		753D293B211D6CDE0052BF15 /* desktop_configuration.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = desktop_configuration.mm; sourceTree = "<group>"; };
+		753D293C211D6CDE0052BF15 /* scoped_pixel_buffer_object.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scoped_pixel_buffer_object.cc; sourceTree = "<group>"; };
+		753D293D211D6CDE0052BF15 /* scoped_pixel_buffer_object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scoped_pixel_buffer_object.h; sourceTree = "<group>"; };
+		753D293E211D6CDE0052BF15 /* desktop_configuration_monitor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = desktop_configuration_monitor.cc; sourceTree = "<group>"; };
+		753D293F211D6CDE0052BF15 /* desktop_configuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = desktop_configuration.h; sourceTree = "<group>"; };
+		753D2940211D6CDE0052BF15 /* full_screen_chrome_window_detector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = full_screen_chrome_window_detector.h; sourceTree = "<group>"; };
+		753D2941211D6CDE0052BF15 /* window_list_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = window_list_utils.h; sourceTree = "<group>"; };
+		753D2947211D6EC30052BF15 /* window_capturer_mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = window_capturer_mac.mm; path = ../../source/window_capturer_mac.mm; sourceTree = "<group>"; };
+		753D2DFB2123D6580052BF15 /* screen_capturer_mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = screen_capturer_mac.mm; path = ../screen_capturer_mac.mm; sourceTree = "<group>"; };
+		753D2DFF21242BCB0052BF15 /* cropping_window_capturer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cropping_window_capturer.cc; path = ../cropping_window_capturer.cc; sourceTree = "<group>"; };
+		753D2E0121242E640052BF15 /* desktop_capture_options.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = desktop_capture_options.cc; path = ../desktop_capture_options.cc; sourceTree = "<group>"; };
+		753D2E0321242F140052BF15 /* cropped_desktop_frame.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cropped_desktop_frame.cc; path = ../cropped_desktop_frame.cc; sourceTree = "<group>"; };
+		75DA38BD212AB75F006D5431 /* screen_capturer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = screen_capturer.cc; path = ../../source/screen_capturer.cc; sourceTree = "<group>"; };
+		75DA38C0212AB8B8006D5431 /* shared_desktop_frame.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = shared_desktop_frame.cc; path = ../../source/shared_desktop_frame.cc; sourceTree = "<group>"; };
+		75DA38C2212AB919006D5431 /* screen_capturer_helper.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = screen_capturer_helper.cc; path = ../../source/screen_capturer_helper.cc; sourceTree = "<group>"; };
+		75DA38C4212AB94B006D5431 /* screen_capture_frame_queue.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = screen_capture_frame_queue.cc; path = ../../source/screen_capture_frame_queue.cc; sourceTree = "<group>"; };
+		75DA38CB212ACC97006D5431 /* mouse_cursor_monitor_mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = mouse_cursor_monitor_mac.mm; sourceTree = "<group>"; };
+		75DA38CF212AEC82006D5431 /* mouse_cursor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mouse_cursor.cc; path = ../../source/mouse_cursor.cc; sourceTree = "<group>"; };
 		AD3EBAE21DE58BF400024454 /* desktop_geometry.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = desktop_geometry.cc; path = ../../source/desktop_geometry.cc; sourceTree = "<group>"; };
 		ADC50F481D8FC2F600A83C04 /* desktop_frame.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = desktop_frame.cc; path = ../../source/desktop_frame.cc; sourceTree = "<group>"; };
 		ADC50F4A1D8FC65200A83C04 /* window_capturer_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = window_capturer_ios.mm; path = ../../source/window_capturer_ios.mm; sourceTree = "<group>"; };
@@ -35,6 +89,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		753D2926211D69D10052BF15 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ADE835611D8F7AF000CCD20D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -45,6 +106,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		753D2937211D6CDE0052BF15 /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				75DA38CB212ACC97006D5431 /* mouse_cursor_monitor_mac.mm */,
+				753D2E0321242F140052BF15 /* cropped_desktop_frame.cc */,
+				753D2E0121242E640052BF15 /* desktop_capture_options.cc */,
+				753D2DFF21242BCB0052BF15 /* cropping_window_capturer.cc */,
+				753D2DFB2123D6580052BF15 /* screen_capturer_mac.mm */,
+				753D2938211D6CDE0052BF15 /* full_screen_chrome_window_detector.cc */,
+				753D2939211D6CDE0052BF15 /* window_list_utils.cc */,
+				753D293A211D6CDE0052BF15 /* desktop_configuration_monitor.h */,
+				753D293B211D6CDE0052BF15 /* desktop_configuration.mm */,
+				753D293C211D6CDE0052BF15 /* scoped_pixel_buffer_object.cc */,
+				753D293D211D6CDE0052BF15 /* scoped_pixel_buffer_object.h */,
+				753D293E211D6CDE0052BF15 /* desktop_configuration_monitor.cc */,
+				753D293F211D6CDE0052BF15 /* desktop_configuration.h */,
+				753D2940211D6CDE0052BF15 /* full_screen_chrome_window_detector.h */,
+				753D2941211D6CDE0052BF15 /* window_list_utils.h */,
+			);
+			name = mac;
+			path = ../../source/mac;
+			sourceTree = "<group>";
+		};
 		ADE8355B1D8F7AF000CCD20D = {
 			isa = PBXGroup;
 			children = (
@@ -57,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				ADE835641D8F7AF000CCD20D /* libdesktop_capture.a */,
+				753D292B211D69D10052BF15 /* libdesktop_capture_mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -64,11 +149,19 @@
 		ADE835661D8F7AF000CCD20D /* desktop_capture */ = {
 			isa = PBXGroup;
 			children = (
+				753D2937211D6CDE0052BF15 /* mac */,
 				AD3EBAE21DE58BF400024454 /* desktop_geometry.cc */,
 				ADC50F481D8FC2F600A83C04 /* desktop_frame.cc */,
 				ADC50F531D8FC7C500A83C04 /* desktop_region.cc */,
 				ADC50F4A1D8FC65200A83C04 /* window_capturer_ios.mm */,
 				ADCEAFEA1DE6E4AB00778607 /* window_capturer_ios.h */,
+				753D2947211D6EC30052BF15 /* window_capturer_mac.mm */,
+				75DA38BD212AB75F006D5431 /* screen_capturer.cc */,
+				75DA38C0212AB8B8006D5431 /* shared_desktop_frame.cc */,
+				75DA38C2212AB919006D5431 /* screen_capturer_helper.cc */,
+				75DA38C4212AB94B006D5431 /* screen_capture_frame_queue.cc */,
+				75DA38CF212AEC82006D5431 /* mouse_cursor.cc */,
+				752EB9DA212E4965002CB4DD /* desktop_and_cursor_composer.cc */,
 			);
 			path = desktop_capture;
 			sourceTree = "<group>";
@@ -76,6 +169,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		753D2920211D69D10052BF15 /* desktop_capture_mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 753D2928211D69D10052BF15 /* Build configuration list for PBXNativeTarget "desktop_capture_mac" */;
+			buildPhases = (
+				753D2921211D69D10052BF15 /* Sources */,
+				753D2926211D69D10052BF15 /* Frameworks */,
+				753D2927211D69D10052BF15 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = desktop_capture_mac;
+			productName = desktop_capture;
+			productReference = 753D292B211D69D10052BF15 /* libdesktop_capture_mac.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		ADE835631D8F7AF000CCD20D /* desktop_capture */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = ADE8356D1D8F7AF000CCD20D /* Build configuration list for PBXNativeTarget "desktop_capture" */;
@@ -121,25 +231,103 @@
 			projectRoot = "";
 			targets = (
 				ADE835631D8F7AF000CCD20D /* desktop_capture */,
+				753D2920211D69D10052BF15 /* desktop_capture_mac */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		753D2921211D69D10052BF15 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				75DA38BF212AB7D4006D5431 /* screen_capturer.cc in Sources */,
+				75DA38C3212AB91A006D5431 /* screen_capturer_helper.cc in Sources */,
+				753D2949211D6F1A0052BF15 /* window_capturer_mac.mm in Sources */,
+				753D2944211D6CDE0052BF15 /* desktop_configuration.mm in Sources */,
+				753D2E0221242E640052BF15 /* desktop_capture_options.cc in Sources */,
+				753D2946211D6CDE0052BF15 /* desktop_configuration_monitor.cc in Sources */,
+				753D2E0421242F140052BF15 /* cropped_desktop_frame.cc in Sources */,
+				753D2942211D6CDE0052BF15 /* full_screen_chrome_window_detector.cc in Sources */,
+				75DA38CC212ACC98006D5431 /* mouse_cursor_monitor_mac.mm in Sources */,
+				753D2943211D6CDE0052BF15 /* window_list_utils.cc in Sources */,
+				753D2E0021242BCB0052BF15 /* cropping_window_capturer.cc in Sources */,
+				753D2922211D69D10052BF15 /* desktop_geometry.cc in Sources */,
+				75DA38C1212AB8B8006D5431 /* shared_desktop_frame.cc in Sources */,
+				753D2923211D69D10052BF15 /* desktop_frame.cc in Sources */,
+				753D2925211D69D10052BF15 /* desktop_region.cc in Sources */,
+				75DA38D0212AEC82006D5431 /* mouse_cursor.cc in Sources */,
+				75DA38C5212AB94C006D5431 /* screen_capture_frame_queue.cc in Sources */,
+				753D2945211D6CDE0052BF15 /* scoped_pixel_buffer_object.cc in Sources */,
+				752EB9DB212E4965002CB4DD /* desktop_and_cursor_composer.cc in Sources */,
+				753D2DFC2123D6580052BF15 /* screen_capturer_mac.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ADE835601D8F7AF000CCD20D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				AD3EBAE31DE58BF400024454 /* desktop_geometry.cc in Sources */,
+				75DA38BE212AB75F006D5431 /* screen_capturer.cc in Sources */,
 				ADC50F491D8FC2F600A83C04 /* desktop_frame.cc in Sources */,
 				ADC50F4B1D8FC65200A83C04 /* window_capturer_ios.mm in Sources */,
 				ADC50F541D8FC7C500A83C04 /* desktop_region.cc in Sources */,
+				753D2948211D6EC40052BF15 /* window_capturer_mac.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		753D2929211D69D10052BF15 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					WEBRTC_MAC,
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = (
+					../source/mac,
+					../source/,
+					../../../system_wrappers/include,
+					../../../module,
+					./desktop_capture/,
+					../../../base,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		753D292A211D69D10052BF15 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = WEBRTC_MAC;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = (
+					../source/mac,
+					../source/,
+					../../../system_wrappers/include,
+					../../../module,
+					./desktop_capture/,
+					../../../base,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		ADE8356B1D8F7AF000CCD20D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -231,6 +419,10 @@
 		ADE8356E1D8F7AF000CCD20D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../source/,
@@ -250,6 +442,7 @@
 		ADE8356F1D8F7AF000CCD20D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../source/,
@@ -269,6 +462,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		753D2928211D69D10052BF15 /* Build configuration list for PBXNativeTarget "desktop_capture_mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				753D2929211D69D10052BF15 /* Debug */,
+				753D292A211D69D10052BF15 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		ADE8355F1D8F7AF000CCD20D /* Build configuration list for PBXProject "desktop_capture" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

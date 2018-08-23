@@ -197,7 +197,8 @@ ViEEncoder::ViEEncoder(int32_t engine_id,
 	packet_router_(packet_router),
 	transport_feedback_observer_(transport_feedback_observer),
 	retransmission_rate_limiter_(retransmission_rate_limiter),
-	rtc_event_log_(rtc_event_log){ 
+	rtc_event_log_(rtc_event_log){
+        _bitStreamBeforeSend = fopen("encoderI420.bit", "wb");
   bitrate_observer_.reset(new ViEBitrateObserver(this));
   pacing_callback_.reset(new ViEPacedSenderCallback(this));
   send_statistics_proxy_.reset(new SendStatisticsProxy(channel_id));
@@ -772,7 +773,6 @@ void ViEEncoder::DeliverFrame(int id,
 
         free(imageBuffer);
     }
-    
   // Convert render time, in ms, to RTP timestamp.
   const int kMsToRtpTimestamp = 90;
   const uint32_t time_stamp =

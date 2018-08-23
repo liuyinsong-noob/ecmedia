@@ -8,19 +8,19 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "webrtc/modules/desktop_capture/mac/full_screen_chrome_window_detector.h"
+#include "full_screen_chrome_window_detector.h"
 
 #include <assert.h>
 #include <libproc.h>
 #include <string>
 
-#include "webrtc/base/macutils.h"
-#include "webrtc/base/timeutils.h"
-#include "webrtc/modules/desktop_capture/mac/window_list_utils.h"
-#include "webrtc/system_wrappers/include/logging.h"
+#include "../../macutils.h"
+#include "../../../base/timeutils.h"
+#include "window_list_utils.h"
+#include "../../../../system_wrappers/include/logging.h"
 
 
-namespace webrtc {
+namespace yuntongxunwebrtc {
 
 namespace {
 
@@ -171,7 +171,7 @@ CGWindowID FullScreenChromeWindowDetector::FindFullScreenWindow(
 void FullScreenChromeWindowDetector::UpdateWindowListIfNeeded(
     CGWindowID original_window) {
   if (IsChromeWindow(original_window) &&
-      (rtc::TimeNanos() - last_update_time_ns_) / rtc::kNumNanosecsPerMillisec
+      (TimeNanos() - last_update_time_ns_) / kNumNanosecsPerMillisec
           > kUpdateIntervalMs) {
     previous_window_list_.clear();
     previous_window_list_.swap(current_window_list_);
@@ -183,7 +183,7 @@ void FullScreenChromeWindowDetector::UpdateWindowListIfNeeded(
     }
 
     GetWindowList(&current_window_list_, false);
-    last_update_time_ns_ = rtc::TimeNanos();
+      last_update_time_ns_ = TimeNanos();
   }
 }
 
