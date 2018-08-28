@@ -5260,6 +5260,15 @@ void
 	const char* fromIP,
 	const WebRtc_UWord16 fromPort)
 {
+    unsigned int rtpSsrc = 0;
+    unsigned int ssrc = 0;
+    GetRemoteSSRC(ssrc);
+    rtpSsrc = ((unsigned char)incomingRtpPacket[8] << 24)
+    | ((unsigned char)incomingRtpPacket[9] << 16)
+    | ((unsigned char)incomingRtpPacket[10] << 8)
+    | (unsigned char)incomingRtpPacket[11];
+    if(rtpSsrc != ssrc)
+        return;
 	{
 		CriticalSectionScoped cs(critsect_net_statistic.get());
 		if(_startNetworkTime == 0)
