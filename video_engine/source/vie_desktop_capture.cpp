@@ -207,12 +207,12 @@ int VieDesktopCapturer::SelectCapture(const DesktopShareType capture_type)
             CreateWindowCapture();
             ret = CreateDesktopCapture();
             break;
-#ifdef _WIN32
+//#ifdef _WIN32
         case ShareWindow:
             CreateDesktopCapture();
             ret = CreateWindowCapture();
             break;
-#endif
+//#endif
         default:
             break;
     }
@@ -308,12 +308,12 @@ bool VieDesktopCapturer::SelectScreen( ScreenId id )
     {
         return screen_capturer_->GetShareCaptureRect(width, height);
     }
-#ifdef _WIN32
+//#ifdef _WIN32
     else if (share_capture_type_ == ShareWindow)
     {
         return windows_capture_->GetShareCaptureRect(width, height);
     }
-#endif // _WIN32
+//#endif // _WIN32
 #endif // __APPLE__
     return false;
     
@@ -353,7 +353,7 @@ int VieDesktopCapturer::CaptrueShareFrame( yuntongxunwebrtc::I420VideoFrame& vid
             break;
         case ShareWindow:
         {
-            screen_mouse_blender_->Capture(DesktopRegion());
+            window_mouse_blender_->Capture(DesktopRegion());
         }
             break;
         default:
@@ -410,11 +410,11 @@ int VieDesktopCapturer::StopDesktopShareCapture()
 	desktop_capture_thread_.SetNotAlive();
     shared_capture_enable_ = false;
 
-#ifdef _WIN32
+//#ifdef _WIN32
 	if (share_capture_type_ == ShareScreen) {
 		screen_mouse_blender_->ResetScreenDC();
 	}
-#endif
+//#endif
 
     return 0;
 }
