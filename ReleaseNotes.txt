@@ -1,3 +1,35 @@
+Version v2.3.2.4
+1. 接口不变
+2. [bugfix] rename ecimage 防止和gpuimage 冲突
+3. [bugfix] audio red not work correctly
+4. [bugfix]: vp8 simultcast allow auto resize to avoid encode error
+5. [feature]:mac support desktop share
+6. [bugfix]: mac Fit window change
+7. [feature]:mac support desktop share
+8. [bugfix]: mac Fit window change
+9. [bugfix]: video stretching when iOS in landscape mode
+10. [bugfix]: update ijkplayer , because maybe link error with app
+11. [bugfix]: ijkplayer rtmp can't setting tcp rw timeout
+12. [bugfix]: video stretching when iOS in landscape mode
+13. [bugfix]:the video distortion when mac SDK view self
+14. [feature]: add api for setting conference participant callback time InterVal
+15. [bug fix]:compile error
+16. [bug fix]: audio project compile error
+17. [feature]: demo media statistics
+18. [bug fix]: Partially resolve media statistics, with send channel tts problem
+19. [bug fix]: ios donot send video stream
+20. [bugfix]: mac libs h264 not sending
+21. [bug fix]: ios ecimage support not preview when app in background
+22. [bug fix]: crash, deregister send rtcp when deleting channel
+23. [bug fix]: android compile error
+24. [bug fix]: send rtcp crash when end phone
+25. [feature]: add log token
+26. [feature]: optimize logging
+27. [feature]: add log token
+28. [feature]: optimize logging
+29. [feature]: add log token
+30. [feature]: optimize logging
+
 Version v2.3.2.3
 1. 接口不变
 2. [bugfix]: vp8 simultcast allow auto resize to avoid encode error
