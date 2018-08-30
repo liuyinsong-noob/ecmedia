@@ -1019,7 +1019,8 @@ Channel::Channel(int32_t channelId,
 	_processDataFlag(false),
     _sendData(NULL),
     _receiveData(NULL),
-    _rtp_port(0)
+    _rtp_port(0),
+    _isSetRemoteSsrc(false)
 {
     WEBRTC_TRACE(kTraceMemory, kTraceVoice, VoEId(_instanceId,_channelId),
                  "Channel::Channel() - ctor");
@@ -3255,6 +3256,7 @@ Channel::SetRemoteSSRC(unsigned int ssrc)
     }
     rtp_receiver_->SetSSRC(ssrc);
     _remote_ssrc = ssrc;
+    _isSetRemoteSsrc = true;
     return 0;
 }
     
@@ -5267,7 +5269,7 @@ void
     | ((unsigned char)incomingRtpPacket[9] << 16)
     | ((unsigned char)incomingRtpPacket[10] << 8)
     | (unsigned char)incomingRtpPacket[11];
-    if(rtpSsrc != ssrc)
+    if((rtpSsrc != ssrc) && _isSetRemoteSsrc)
         return;
 	{
 		CriticalSectionScoped cs(critsect_net_statistic.get());

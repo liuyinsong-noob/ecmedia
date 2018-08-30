@@ -552,6 +552,7 @@ private:
     uint32_t _timeStamp;
     uint8_t _sendTelephoneEventPayloadType;
 	uint8_t _recvTelephoneEventPayloadType;
+    bool _isSetRemoteSsrc;
 
     RemoteNtpTimeEstimator ntp_estimator_ GUARDED_BY(ts_stats_lock_);
 
