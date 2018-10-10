@@ -1,3 +1,17 @@
+Version v2.3.2.6
+1. 接口不变
+2. [bugfix]: filter remote ssrc cause no voice
+3. [feature]: mac support window share
+4. [bugfix]: filter remote voice ssrc
+5. [bugfix]: filter remote voice ssrc
+6. [bugfix] rename ecimage 防止和gpuimage 冲突
+7. [bugfix] audio red not work correctly
+8. [bugfix]: vp8 simultcast allow auto resize to avoid encode error
+9. [feature]:mac support desktop share
+10. [bugfix]: mac Fit window change
+11. [feature]:mac support desktop share
+12. [bugfix]: mac Fit window change
+
 Version v2.3.2.4
 1. 接口不变
 2. [bugfix] rename ecimage 防止和gpuimage 冲突
