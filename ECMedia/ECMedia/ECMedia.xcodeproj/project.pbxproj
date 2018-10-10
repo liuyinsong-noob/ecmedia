@@ -54,10 +54,10 @@
 		1F930DD11F6A9DAE00EBDE34 /* ec_rtmp_publisher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F930DC61F6A9DAE00EBDE34 /* ec_rtmp_publisher.cpp */; };
 		1F930DD21F6A9DAE00EBDE34 /* ec_rtmp_puller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F930DC81F6A9DAE00EBDE34 /* ec_rtmp_puller.cpp */; };
 		1F9AB0E71F8CB79F0046DF9D /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9AB0DF1F8CB76F0046DF9D /* libprotobuf.a */; };
-		1F9F4025211AD92500D5B588 /* IJKMediaFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F4E145120E0A91F006E756B /* IJKMediaFramework.framework */; };
 		1FA4AA911FC6C1E600936805 /* libECImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA4AA881FC6BB9F00936805 /* libECImage.a */; };
 		1FBB43FA1E728F35007DBD1D /* MediaStatisticsData.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FBB43F91E728F35007DBD1D /* MediaStatisticsData.pb.cc */; };
 		1FDB3E4C1E839BC30018FA08 /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FDB3DC91E837CD40018FA08 /* libsrtp.a */; };
+		1FDBFA75216DBA2D00CD2BC3 /* IJKMediaFramework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FDBFA74216DBA2D00CD2BC3 /* IJKMediaFramework */; };
 		1FE07DCA1FE79E4A0018E762 /* libprotobuf_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9AB0E11F8CB76F0046DF9D /* libprotobuf_Mac.a */; };
 		1FE07DDF1FE7A5660018E762 /* libcommon_video_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45619CCB1F14D906008B2068 /* libcommon_video_Mac.a */; };
 		1FE07DE01FE7A6680018E762 /* srs_librtmp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F930D8C1F6A9D7A00EBDE34 /* srs_librtmp.cpp */; };
@@ -1339,6 +1339,7 @@
 		1FBB43F91E728F35007DBD1D /* MediaStatisticsData.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MediaStatisticsData.pb.cc; sourceTree = "<group>"; };
 		1FBB440D1E729473007DBD1D /* MediaStatisticsData.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaStatisticsData.pb.h; path = ../source/MediaStatisticsData.pb.h; sourceTree = "<group>"; };
 		1FDB3DBF1E837CD30018FA08 /* srtp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = srtp.xcodeproj; path = ../../../third_party/srtp/srtp.xcodeproj; sourceTree = "<group>"; };
+		1FDBFA74216DBA2D00CD2BC3 /* IJKMediaFramework */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = IJKMediaFramework; path = ../../third_party/ec_ijkplayer/IJKMediaFramework; sourceTree = "<group>"; };
 		1FE07DD51FE7A0110018E762 /* libSoundTouch_Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSoundTouch_Mac.a; path = "../../../../Library/Developer/Xcode/DerivedData/ECMacDemo_OC-fgxckyjqwlylmuckelwyhrfnqaqo/Build/Products/Debug/libSoundTouch_Mac.a"; sourceTree = "<group>"; };
 		1FE95AD420CA5F1900ABC454 /* libswscale_mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale_mac.a; path = ../libswscale_mac.a; sourceTree = "<group>"; };
 		1FE95B5520CA618100ABC454 /* libfaad.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfaad.a; sourceTree = "<group>"; };
@@ -1582,7 +1583,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F9F4025211AD92500D5B588 /* IJKMediaFramework.framework in Frameworks */,
 				1FE95B5820CA61AA00ABC454 /* libfaac.a in Frameworks */,
 				1FE95B5620CA619900ABC454 /* libfaad.a in Frameworks */,
 				1F886D4620CA5D860073669C /* libvpx.a in Frameworks */,
@@ -1596,6 +1596,7 @@
 				1F886D4120CA5D250073669C /* libswscale.a in Frameworks */,
 				1F886D4220CA5D250073669C /* libswresample.a in Frameworks */,
 				1F8EE0551E5D7B8B00C04C10 /* libavformat.a in Frameworks */,
+				1FDBFA75216DBA2D00CD2BC3 /* IJKMediaFramework in Frameworks */,
 				1F79652F1FE7B95100A254CA /* libremote_bitrate_estimator.a in Frameworks */,
 				1FA4AA911FC6C1E600936805 /* libECImage.a in Frameworks */,
 				1F9AB0E71F8CB79F0046DF9D /* libprotobuf.a in Frameworks */,
@@ -1687,6 +1688,7 @@
 			isa = PBXGroup;
 			children = (
 				1F4E14A720E0BAF1006E756B /* IJKMediaFramework */,
+				1FDBFA74216DBA2D00CD2BC3 /* IJKMediaFramework */,
 				1F4E145120E0A91F006E756B /* IJKMediaFramework.framework */,
 				1F4E14A320E0ABA0006E756B /* IJKMediaFramework.framework */,
 				1FE95B5720CA61AA00ABC454 /* libfaac.a */,
