@@ -54,6 +54,7 @@
 		1F930DD11F6A9DAE00EBDE34 /* ec_rtmp_publisher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F930DC61F6A9DAE00EBDE34 /* ec_rtmp_publisher.cpp */; };
 		1F930DD21F6A9DAE00EBDE34 /* ec_rtmp_puller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F930DC81F6A9DAE00EBDE34 /* ec_rtmp_puller.cpp */; };
 		1F9AB0E71F8CB79F0046DF9D /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9AB0DF1F8CB76F0046DF9D /* libprotobuf.a */; };
+		1F9CA82F2178AA940053DE1A /* libopus_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9CA82E2178AA940053DE1A /* libopus_Mac.a */; };
 		1FA4AA911FC6C1E600936805 /* libECImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA4AA881FC6BB9F00936805 /* libECImage.a */; };
 		1FBB43FA1E728F35007DBD1D /* MediaStatisticsData.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FBB43F91E728F35007DBD1D /* MediaStatisticsData.pb.cc */; };
 		1FDB3E4C1E839BC30018FA08 /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FDB3DC91E837CD40018FA08 /* libsrtp.a */; };
@@ -106,7 +107,6 @@
 		759C3EF020C7BEFE00BFAA6F /* aacencode.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F45C24B2092BBF8008EEF78 /* aacencode.cc */; };
 		AD01997D1D236579003C2BB9 /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD01997C1D23655A003C2BB9 /* libyuv.a */; };
 		AD1123011DAF1B7A006CDD38 /* librtmp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD056FBC1DAF1AB70007DB7A /* librtmp.a */; };
-		AD1123271DAF3108006CDD38 /* libopus_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1123261DAF3108006CDD38 /* libopus_Mac.a */; };
 		AD2DE0FC1D6BEA4C00FE3814 /* VoeObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD2DE0FB1D6BEA4C00FE3814 /* VoeObserver.cpp */; };
 		AD36336D1F44668100F0C20B /* libSoundTouch_Media.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD36336A1F44668100F0C20B /* libSoundTouch_Media.a */; };
 		AD3EBA9B1DE5327400024454 /* faaccodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFBD0B61DAE0A59009B8D23 /* faaccodec.cpp */; };
@@ -1335,6 +1335,8 @@
 		1F930DC81F6A9DAE00EBDE34 /* ec_rtmp_puller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ec_rtmp_puller.cpp; path = ec_live_engine/ec_rtmp_puller.cpp; sourceTree = "<group>"; };
 		1F930DC91F6A9DAE00EBDE34 /* ec_rtmp_puller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ec_rtmp_puller.h; path = ec_live_engine/ec_rtmp_puller.h; sourceTree = "<group>"; };
 		1F9AB0D71F8CB76E0046DF9D /* protobuf.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = protobuf.xcodeproj; path = ../../../third_party/protobuf/protobuf.xcodeproj; sourceTree = "<group>"; };
+		1F9CA82E2178AA940053DE1A /* libopus_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libopus_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F9CA8302178AB0D0053DE1A /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/lib/libc++.tbd"; sourceTree = DEVELOPER_DIR; };
 		1FA4AA801FC6BB9F00936805 /* ECImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ECImage.xcodeproj; path = ../../../third_party/ECImage/ECImage.xcodeproj; sourceTree = "<group>"; };
 		1FBB43F91E728F35007DBD1D /* MediaStatisticsData.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MediaStatisticsData.pb.cc; sourceTree = "<group>"; };
 		1FBB440D1E729473007DBD1D /* MediaStatisticsData.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaStatisticsData.pb.h; path = ../source/MediaStatisticsData.pb.h; sourceTree = "<group>"; };
@@ -1528,6 +1530,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F9CA82F2178AA940053DE1A /* libopus_Mac.a in Frameworks */,
 				753D2935211D6A1E0052BF15 /* libdesktop_capture_mac.a in Frameworks */,
 				1FE95AD520CA5F1900ABC454 /* libswscale_mac.a in Frameworks */,
 				1F886CF720CA426D0073669C /* libharfbuzz_mac.a in Frameworks */,
@@ -1549,7 +1552,6 @@
 				AD3EBB161DE5B71200024454 /* libx264_mac.a in Frameworks */,
 				AD3EBAA91DE5433F00024454 /* libfaad_osx.a in Frameworks */,
 				AD3EBAA71DE5432F00024454 /* libfaac_osx.a in Frameworks */,
-				AD1123271DAF3108006CDD38 /* libopus_Mac.a in Frameworks */,
 				ADC54AD61D48845700A5C852 /* libamrnb_Mac.a in Frameworks */,
 				ADC54AD71D48845700A5C852 /* libaudio_coding_module_Mac.a in Frameworks */,
 				ADC54AD81D48845700A5C852 /* libaudio_conference_mixer_mac.a in Frameworks */,
@@ -1687,6 +1689,8 @@
 		1AFBD11E1DAE560E009B8D23 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1F9CA8302178AB0D0053DE1A /* libc++.tbd */,
+				1F9CA82E2178AA940053DE1A /* libopus_Mac.a */,
 				1F4E14A720E0BAF1006E756B /* IJKMediaFramework */,
 				1FDBFA74216DBA2D00CD2BC3 /* IJKMediaFramework */,
 				1F4E145120E0A91F006E756B /* IJKMediaFramework.framework */,
