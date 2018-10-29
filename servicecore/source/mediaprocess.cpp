@@ -1306,7 +1306,7 @@ int ServiceCore::startVideoCapture(SerPhoneCall *call)
 				m_sendVideoWidth = cap.width;
 				m_sendVideoHeight = cap.height;
 #endif
-                cap.maxfps = 7;
+                cap.maxfps = 15;
 				m_sendVideoFps = cap.maxfps;
 //			}
 

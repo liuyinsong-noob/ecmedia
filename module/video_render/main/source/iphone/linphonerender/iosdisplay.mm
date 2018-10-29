@@ -396,9 +396,7 @@ enum TextureType
     if (!self.window) {
         return;
     }
-    if (!isRendering) {
-        return;
-    }
+    
     @synchronized(self)
     {
         if (width != _videoW || height != _videoH) {
@@ -535,6 +533,13 @@ enum TextureType
     // draw frame buffer
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     glBindRenderbuffer(GL_RENDERBUFFER, _renderBuffer);
+    if (UIApplicationStateActive == [UIApplication sharedApplication].applicationState) {
+        isRendering = YES;
+    }
+    else {
+        isRendering = NO;
+        return;
+    }
     [_glContext presentRenderbuffer:GL_RENDERBUFFER];
 }
 
@@ -603,14 +608,20 @@ enum TextureType
 
 - (void)appWillResignActive:(NSNotification *)noti
 {
-    isRendering = NO;
-    glFinish();
+    @synchronized(self)
+    {
+        isRendering = NO;
+        glFinish();
+    }
 }
 
 - (void)appDidEnterBackgroundFun:(NSNotification*)noti
 {
-    isRendering = NO;
-    glFinish();
+    @synchronized(self)
+    {
+        isRendering = NO;
+        glFinish();
+    }
 }
 
 - (void)appWillEnterForeground:(NSNotification *)noti

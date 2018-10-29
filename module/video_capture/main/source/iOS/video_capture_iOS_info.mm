@@ -77,11 +77,16 @@ namespace yuntongxunwebrtc
         }
         
         void VideoCaptureiOSInfo::setBeautyFace(bool enable) {
+#if 0
             [videoCaptureiOSObjc setBeautyFace:enable];
+#endif
         }
         
         void VideoCaptureiOSInfo::setVideoFilter(ECImageFilterType filterType) {
+#if 0
+            // now not support video filter, because of gpuimage crash when app in background.
             [videoCaptureiOSObjc setVideoFilter:filterType];
+#endif
         }
     }
 }

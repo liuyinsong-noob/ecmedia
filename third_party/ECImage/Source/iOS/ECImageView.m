@@ -503,11 +503,13 @@
 - (void)appWillResignActive:(NSNotification *)noti
 {
     isRendering = NO;
+    glFinish();
 }
 
 - (void)appDidEnterBackgroundFun:(NSNotification*)noti
 {
     isRendering = NO;
+    glFinish();
 }
 
 - (void)appWillEnterForeground:(NSNotification *)noti
