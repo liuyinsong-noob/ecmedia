@@ -410,11 +410,11 @@ int VieDesktopCapturer::StopDesktopShareCapture()
 	desktop_capture_thread_.SetNotAlive();
     shared_capture_enable_ = false;
 
-//#ifdef _WIN32
+#if defined _WIN32 || WEBRTC_MAC
 	if (share_capture_type_ == ShareScreen) {
 		screen_mouse_blender_->ResetScreenDC();
 	}
-//#endif
+#endif
 
     return 0;
 }
