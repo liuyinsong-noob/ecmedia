@@ -1,3 +1,10 @@
+Version 2.3.2.9
+1. 接口不变
+2. [bugfix] ioscapture retain cycle, not call dealloc
+3. [bugfix] 解决上海理想可能的崩溃
+4. [bugfix] remove gpuimage from ioscapture.mm
+5. [bugfix]: fix ecimage crash, when app in background,
+
 Version v2.3.2.6
 1. 接口不变
 2. [bugfix]: filter remote ssrc cause no voice
