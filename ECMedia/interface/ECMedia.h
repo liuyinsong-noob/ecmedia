@@ -91,6 +91,27 @@ ECMEDIA_API int ECMedia_audio_set_send_destination(int channelid, int rtp_port, 
  */
 ECMEDIA_API int ECMedia_audio_set_ssrc(int channelid, unsigned int localssrc, unsigned int remotessrc);
 
+    
+/**
+ 设置发送端 rtp 拓展头 audio level 开启状态
+
+ @param channelid channel id
+ @param enable 是否开启 audio level
+ @param id id
+ @return  正确返回0， 失败返回非0 或 -99;
+ */
+ECMEDIA_API int ECMedia_set_send_audiolevel_status(int channelid, bool enable, unsigned char id);
+/**
+ 设置接收端 rtp 拓展头 audio level 开启状态
+ 
+ @param channelid channel id
+ @param enable 是否开启 audio level
+ @param id id
+ @return  正确返回0， 失败返回非0 或 -99;
+ */
+ECMEDIA_API int ECMedia_set_receive_audiolevel_status(int channelid, bool enable, unsigned char id);
+    
+    
 ECMEDIA_API int ECMedia_audio_set_socks5_send_data(int channel_id, unsigned char *data, int length, bool isRTCP);
 /*
  *1

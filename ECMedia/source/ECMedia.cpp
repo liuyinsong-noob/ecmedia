@@ -878,6 +878,45 @@ int ECMedia_audio_set_ssrc(int channelid, unsigned int localssrc, unsigned int r
         return -99;
     }
 }
+
+int ECMedia_set_send_audiolevel_status(int channelid, bool enable, unsigned char id)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins...,channelid:%d, enable: %d, id: %d", __FUNCTION__,channelid, enable, id);
+    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    VoERTP_RTCP *rtp_rtcp = VoERTP_RTCP::GetInterface(m_voe);
+    if (rtp_rtcp)
+    {
+        int ret = rtp_rtcp->SetSendAudioLevelIndicationStatus(channelid, enable, id);
+        rtp_rtcp->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with ret:%d", __FUNCTION__, ret);
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to set send audio level, %s", __FUNCTION__);
+        return -99;
+    }
+}
+
+int ECMedia_set_receive_audiolevel_status(int channelid, bool enable, unsigned char id)
+{
+    PrintConsole("[ECMEDIA INFO] %s begins...,channelid:%d, enable: %d, id: %d", __FUNCTION__,channelid, enable, id);
+    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    VoERTP_RTCP *rtp_rtcp = VoERTP_RTCP::GetInterface(m_voe);
+    if (rtp_rtcp)
+    {
+        int ret = rtp_rtcp->SetReceiveAudioLevelIndicationStatus(channelid, enable, id);
+        rtp_rtcp->Release();
+        PrintConsole("[ECMEDIA INFO] %s end with ret:%d", __FUNCTION__, ret);
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA WARNNING] failed to set receive audio level, %s", __FUNCTION__);
+        return -99;
+    }
+}
+
 int ECMedia_set_local_receiver(int channelid, int rtp_port, int rtcp_port, bool ipv6)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... channelid:%d rtp_port:%d rtcp_port:%d, ipv6 %s",__FUNCTION__, channelid, rtp_port, rtcp_port, ipv6?"YES":"NO");
