@@ -1,3 +1,10 @@
+Version 2.3.2.10
+1. 接口不变
+2. [feature]: add rtp audio level status setting api
+3. [bugfix]: mouse screen support in mac and win
+4. [bugfix] ioscapture retain cycle, not call dealloc
+5. [bugfix]: fix ecimage crash, when app in background,
+
 Version 2.3.2.9
 1. 接口不变
 2. [bugfix] ioscapture retain cycle, not call dealloc
