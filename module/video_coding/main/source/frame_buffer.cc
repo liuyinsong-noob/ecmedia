@@ -232,8 +232,8 @@ VCMFrameBuffer::SetState(VCMFrameBufferStateEnum state) {
 		if (_state != kStateEmpty && _state != kStateIncomplete) {
 			LOG(LS_ERROR) << "Assert wrong state:" << _state << " low:" << _sessionInfo.LowSequenceNumber() << " high" << _sessionInfo.HighSequenceNumber();
 		}
-        assert(_state == kStateEmpty ||
-               _state == kStateIncomplete);
+//        assert(_state == kStateEmpty ||
+//               _state == kStateIncomplete);
         break;
     }
     _state = state;
