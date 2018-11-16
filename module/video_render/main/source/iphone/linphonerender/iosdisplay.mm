@@ -268,6 +268,8 @@ enum TextureType
     else
         isRendering = NO;
     
+    // init lastContentMode
+    _lastContentMode = UIViewContentModeScaleAspectFit;
     return YES;
 }
 
@@ -448,6 +450,14 @@ enum TextureType
 
 - (void)doRenderFrame
 {
+    /**
+     ** 防止UIView缩放模式由拉伸模式变为比例缩放模式后，UIView周围还残留之前图像
+     **/
+    if(_lastContentMode != self.contentMode) {
+        _lastContentMode = self.contentMode;
+        [self clearFrame];
+    }
+    
     [EAGLContext setCurrentContext:_glContext];
 
     CGSize size = self.bounds.size;

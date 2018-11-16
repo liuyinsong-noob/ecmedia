@@ -71,6 +71,9 @@
     
     // video preview scale factor
     GLsizei                 _viewScale;
+    
+    // record last contentmode
+    UIViewContentMode       _lastContentMode;
 @public
   
 }
