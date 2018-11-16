@@ -74,6 +74,12 @@
     
     // record last contentmode
     UIViewContentMode       _lastContentMode;
+    
+    // record uiview width
+    int _lastViewWidth;
+    
+    //record uiview height
+    int _lastViewHight;
 @public
   
 }

@@ -450,14 +450,18 @@ enum TextureType
 
 - (void)doRenderFrame
 {
-    /**
-     ** 防止UIView缩放模式由拉伸模式变为比例缩放模式后，UIView周围还残留之前图像
-     **/
+    // 防止UIView缩放模式由拉伸模式变为比例缩放模式后, UIView周围还残留之前图像
     if(_lastContentMode != self.contentMode) {
         _lastContentMode = self.contentMode;
         [self clearFrame];
     }
-    
+    // 防止UIView尺寸又大变小, UIView周围还残留之前图像
+    if((_lastViewWidth != self.frame.size.width) || (_lastViewHight != self.frame.size.height))  {
+        _lastViewWidth = self.frame.size.width;
+        _lastViewHight = self.frame.size.height;
+        [self clearFrame];
+    }
+
     [EAGLContext setCurrentContext:_glContext];
 
     CGSize size = self.bounds.size;
