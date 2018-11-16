@@ -1,3 +1,12 @@
+Version 2.3.2.12
+1. 接口不变
+2. [bugfix]: 防止UIView缩放模式由拉伸模式变为比例缩放模式后，UIView周围还残留之前图像
+3. [bugfix]: remove assert
+4. [feature]: add rtp audio level status setting api
+5. [bugfix]: mouse screen support in mac and win
+6. [bugfix] ioscapture retain cycle, not call dealloc
+7. [bugfix]: fix ecimage crash, when app in background,
+
 Version 2.3.2.10
 1. 接口不变
 2. [feature]: add rtp audio level status setting api
