@@ -455,15 +455,18 @@ enum TextureType
         _lastContentMode = self.contentMode;
         [self clearFrame];
     }
+    
     // 防止UIView尺寸又大变小, UIView周围还残留之前图像
-    if((_lastViewWidth != self.frame.size.width) || (_lastViewHight != self.frame.size.height))  {
-        _lastViewWidth = self.frame.size.width;
-        _lastViewHight = self.frame.size.height;
+    if((_lastViewWidth != (int)(self.parentView.bounds.size.width)) || (_lastViewHeight != (int)(self.parentView.bounds.size.height))) {
+        _lastViewWidth = self.parentView.bounds.size.width;
+        _lastViewHeight = self.parentView.bounds.size.height;
+        _parentScreenH = _lastViewHeight;
+        _parentScreenW = _lastViewWidth;
+        self.frame = self.parentView.bounds;
         [self clearFrame];
     }
-
+    
     [EAGLContext setCurrentContext:_glContext];
-
     CGSize size = self.bounds.size;
     
     int vpx = 0, vpy = 0, vpw = 1, vph = 1;

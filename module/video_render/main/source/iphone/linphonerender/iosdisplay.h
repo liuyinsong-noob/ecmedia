@@ -79,7 +79,7 @@
     int _lastViewWidth;
     
     //record uiview height
-    int _lastViewHight;
+    int _lastViewHeight;
 @public
   
 }

@@ -136,6 +136,11 @@ extern BOOL globalisVoipView;
     [self.bgView addSubview:tmpView1];
     [tmpView1 release];
     
+//    创建定时器，间隔0.5s 改变父view的frame
+//    [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(changeRemoteView) userInfo:nil repeats:YES];
+    
+    
+    
     UIView *tmpView2 = [[UIView alloc] initWithFrame:CGRectMake(15.0f, self.bgView.frame.size.height>480.0f?330.0f:283.0f, 80.0f, 107.0f)];
     tmpView1.backgroundColor = [UIColor clearColor];
     localVideoView = tmpView2;
@@ -173,6 +178,22 @@ extern BOOL globalisVoipView;
 
 }
 
+-(void)changeRemoteView {
+    static bool ischanged = true;
+    if(ischanged) {
+    CGRect tmp = remoteVideoView.frame;
+    tmp.size.height = tmp.size.height - 200;
+    tmp.size.width = tmp.size.width - 200;
+    remoteVideoView.frame = tmp;
+    ischanged = false;
+    } else {
+        CGRect tmp = remoteVideoView.frame;
+        tmp.size.height = tmp.size.height + 200;
+        tmp.size.width = tmp.size.width + 200;
+        remoteVideoView.frame = tmp;
+        ischanged = true;
+    }
+}
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
