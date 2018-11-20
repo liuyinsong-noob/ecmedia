@@ -234,6 +234,7 @@ class AudioDeviceIOS : public AudioDeviceGeneric {
   AudioUnit _auVoiceProcessing;
   void* _audioInterruptionObserver;
  private:
+    bool _isStopPlayout;
   bool _initialized;
   bool _isShutDown;
   bool _recording;

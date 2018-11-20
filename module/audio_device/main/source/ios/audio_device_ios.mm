@@ -27,6 +27,7 @@ AudioDeviceIOS::AudioDeviceIOS(const int32_t id)
     _id(id),
     _auVoiceProcessing(NULL),
     _audioInterruptionObserver(NULL),
+    _isStopPlayout(false),
     _initialized(false),
     _isShutDown(false),
     _recording(false),
@@ -1063,6 +1064,7 @@ int32_t AudioDeviceIOS::StartPlayout() {
     // This lock is (among other things) needed to avoid concurrency issues
     // with capture thread
     // shutting down Audio Unit
+    _isStopPlayout = false;
     CriticalSectionScoped lock(&_critSect);
 
     if (!_playIsInitialized) {
@@ -1105,7 +1107,7 @@ int32_t AudioDeviceIOS::StartPlayout() {
 
 int32_t AudioDeviceIOS::StopPlayout() {
     WEBRTC_TRACE(kTraceModuleCall, kTraceAudioDevice, _id, "%s", __FUNCTION__);
-
+    _isStopPlayout = true;
     CriticalSectionScoped lock(&_critSect);
 
     if (!_playIsInitialized) {
@@ -1664,8 +1666,8 @@ int32_t AudioDeviceIOS::ShutdownPlayOrRecord() {
             WEBRTC_TRACE(kTraceWarning, kTraceAudioDevice, _id,
                 "  Error stopping Audio Unit (result=%d)", result);
         }
-        
-        
+
+
         result = AudioUnitUninitialize(_auVoiceProcessing);
         if (0 != result) {
             WEBRTC_TRACE(kTraceWarning, kTraceAudioDevice, _id,
@@ -2000,14 +2002,16 @@ void AudioDeviceIOS::UpdatePlayoutDelay() {
         // AU latency
         Float64 f64(0);
         UInt32 size = sizeof(f64);
-        OSStatus result = AudioUnitGetProperty(
-            _auVoiceProcessing, kAudioUnitProperty_Latency,
-            kAudioUnitScope_Global, 0, &f64, &size);
-        if (0 != result) {
-            WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id,
-                         "error AU latency (result=%d)", result);
+        if(!_isStopPlayout){
+            OSStatus result = AudioUnitGetProperty(
+                                                   _auVoiceProcessing, kAudioUnitProperty_Latency,
+                                                   kAudioUnitScope_Global, 0, &f64, &size);
+            if (0 != result) {
+                WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id,
+                             "error AU latency (result=%d)", result);
+            }
+            assert(f64 >= 0);
         }
-        assert(f64 >= 0);
         totalDelaySeconds += f64;
 
         // To ms
