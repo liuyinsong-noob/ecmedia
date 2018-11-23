@@ -22,7 +22,7 @@
 #include "window_capturer.h"
 #include "screen_capturer.h"
 #endif
-#ifdef WEBRTC_iOS
+#ifdef WEBRTC_IOS
 #include "window_capturer_ios.h"
 #endif
 
@@ -360,7 +360,7 @@ int VieDesktopCapturer::CaptrueShareFrame( yuntongxunwebrtc::I420VideoFrame& vid
             break;
     }
 #endif
-#ifdef WEBRTC_iOS
+#ifdef WEBRTC_IOS
     screen_capturer_->Capture(DesktopRegion());
 #endif
 
@@ -483,8 +483,8 @@ int VieDesktopCapturer::CreateDesktopCapture()
 //    screen_capturer_ = ScreenCapturer::Create();
 //    screen_capturer_->Start(this);
 #endif
-#ifdef WEBRTC_iOS
-    screen_capturer_ = ScreenCapturerIos::Create();
+#ifdef WEBRTC_IOS
+    screen_capturer_ = ScreenCapturer::Create();
     screen_capturer_->Start(this);
 #endif
 #ifdef WEBRTC_ANDROID
@@ -545,8 +545,8 @@ int VieDesktopCapturer::CreateWindowCapture()
 //    windows_capture_ = CroppingWindowCapturer::Create(DesktopCaptureOptions::CreateDefault());
 //    windows_capture_->Start(this);
 #endif
-#ifdef WEBRTC_iOS
-    screen_capturer_ = ScreenCapturerIos::Create();
+#ifdef WEBRTC_IOS
+    screen_capturer_ = ScreenCapturer::Create();
     screen_capturer_->Start(this);
 #endif
     return 0;

@@ -21,6 +21,7 @@
 		753D2E0021242BCB0052BF15 /* cropping_window_capturer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 753D2DFF21242BCB0052BF15 /* cropping_window_capturer.cc */; };
 		753D2E0221242E640052BF15 /* desktop_capture_options.cc in Sources */ = {isa = PBXBuildFile; fileRef = 753D2E0121242E640052BF15 /* desktop_capture_options.cc */; };
 		753D2E0421242F140052BF15 /* cropped_desktop_frame.cc in Sources */ = {isa = PBXBuildFile; fileRef = 753D2E0321242F140052BF15 /* cropped_desktop_frame.cc */; };
+		7594334C21A56ECB0063000A /* desktop_capture_options.cc in Sources */ = {isa = PBXBuildFile; fileRef = 753D2E0121242E640052BF15 /* desktop_capture_options.cc */; };
 		75DA38BE212AB75F006D5431 /* screen_capturer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 75DA38BD212AB75F006D5431 /* screen_capturer.cc */; };
 		75DA38BF212AB7D4006D5431 /* screen_capturer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 75DA38BD212AB75F006D5431 /* screen_capturer.cc */; };
 		75DA38C1212AB8B8006D5431 /* shared_desktop_frame.cc in Sources */ = {isa = PBXBuildFile; fileRef = 75DA38C0212AB8B8006D5431 /* shared_desktop_frame.cc */; };
@@ -267,6 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7594334C21A56ECB0063000A /* desktop_capture_options.cc in Sources */,
 				AD3EBAE31DE58BF400024454 /* desktop_geometry.cc in Sources */,
 				75DA38BE212AB75F006D5431 /* screen_capturer.cc in Sources */,
 				ADC50F491D8FC2F600A83C04 /* desktop_frame.cc in Sources */,
