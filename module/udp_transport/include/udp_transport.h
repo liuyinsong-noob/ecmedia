@@ -152,6 +152,7 @@ private:
 public:
     
     static int Release(int rtp_port);
+    static int ReleaseAll();
 
     // Prepares the class for sending RTP packets to ipAddr:rtpPort and RTCP
     // packets to ipAddr:rtpPort+1 if rtcpPort is zero. Otherwise to

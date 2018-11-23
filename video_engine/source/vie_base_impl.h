@@ -63,8 +63,9 @@ class ViEBaseImpl
   virtual int LastError();
   //add by dingxf
   virtual int AddRemoteI420FrameCallback(const int video_channel, ECMedia_I420FrameCallBack callback);
-
- protected:
+ virtual int ReleaseAllUdp();
+ 
+protected:
   explicit ViEBaseImpl(const Config& config);
   virtual ~ViEBaseImpl();
 

@@ -5849,3 +5849,23 @@ int ECMedia_set_remote_i420_framecallback(int channelid, yuntongxunwebrtc::ECMed
 #endif
     return -1;
 }
+
+int ECMedia_releaseAll(){
+#ifdef VIDEO_ENABLED
+    PrintConsole("[ECMEDIA INFO] %s begins... ", __FUNCTION__);
+    ViEBase *base = ViEBase::GetInterface(m_vie);
+    if (base) {
+        int ret = base->ReleaseAllUdp();
+        base->Release();
+        PrintConsole("[ECMEDIA INFO] %s ends ...", __FUNCTION__);
+        return ret;
+    }
+    else
+    {
+        PrintConsole("[ECMEDIA ERROR] %s failed to get ViEBase", __FUNCTION__);
+        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        return -99;
+    }
+#endif
+    return -1;
+}

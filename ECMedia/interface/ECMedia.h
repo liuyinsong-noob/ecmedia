@@ -862,6 +862,8 @@ ECMEDIA_API int ECMedia_audio_set_mix_mediastream(int channel, bool enable, char
 
 ECMEDIA_API int ECMedia_video_set_mix_mediastream(int channel, bool enable, char *mixture, unsigned char version);
 
+ECMEDIA_API int ECMedia_releaseAll();
+
 #ifdef __cplusplus
 }
 #endif

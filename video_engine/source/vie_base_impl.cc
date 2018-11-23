@@ -36,6 +36,10 @@
 #include "video_capture_factory.h"
 #endif
 
+#ifndef WEBRTC_EXTERNAL_TRANSPORT
+#include "udp_transport.h"
+#endif
+
 #include "../system_wrappers/include/Trace.h"
 
 // Global counter to get an id for each new ViE instance.
@@ -474,5 +478,8 @@ int ret = 0;
 		"WEBRTC_ANDROID not defined for VideoEngine::SetAndroidObjects");
 	return -1;
 #endif
+}
+int ViEBaseImpl::ReleaseAllUdp(){
+    return UdpTransport::ReleaseAll();
 }
 }  // namespace webrtc

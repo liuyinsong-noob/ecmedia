@@ -275,7 +275,7 @@ class WEBRTC_DLLEXPORT ViEBase {
 
   //add by dingxf
   virtual int AddRemoteI420FrameCallback(const int video_channel, ECMedia_I420FrameCallBack callback) = 0;
-
+  virtual int ReleaseAllUdp() = 0;
  protected:
   ViEBase() {}
   virtual ~ViEBase() {}
