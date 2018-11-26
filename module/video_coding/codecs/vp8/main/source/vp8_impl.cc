@@ -497,8 +497,8 @@ int VP8EncoderImpl::InitEncode(const VideoCodec* inst,
   // rate control settings
   configurations_[0].rc_dropframe_thresh =
       inst->codecSpecific.VP8.frameDroppingOn ? 30 : 0;
-//  configurations_[0].rc_end_usage = VPX_CBR;
-  configurations_[0].rc_end_usage = VPX_VBR;
+  configurations_[0].rc_end_usage = VPX_CBR;
+  //configurations_[0].rc_end_usage = VPX_VBR;
   configurations_[0].g_pass = VPX_RC_ONE_PASS;
   // TODO(hellner): investigate why the following two lines produce
   // automaticResizeOn value of 3 when running
@@ -593,7 +593,9 @@ int VP8EncoderImpl::InitEncode(const VideoCodec* inst,
                1, NULL);
 
   if (encoders_.size() == 1) {
-    configurations_[0].rc_target_bitrate = inst->startBitrate;
+    
+   // configurations_[0].rc_target_bitrate = inst->startBitrate;
+       configurations_[0].rc_target_bitrate = 1000;
     temporal_layers_[0]->ConfigureBitrates(inst->startBitrate,
                                            inst->maxBitrate,
                                            inst->maxFramerate,

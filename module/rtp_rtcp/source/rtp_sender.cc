@@ -1017,19 +1017,19 @@ bool RTPSender::SendToNetwork(std::unique_ptr<RtpPacketToSend> packet,
   }
   packet->SetExtension<AbsoluteSendTime>(now_ms);
 
-  if (video_) {
-    BWE_TEST_LOGGING_PLOT_WITH_SSRC(1, "VideoTotBitrate_kbps", now_ms,
-                                    ActualSendBitrateKbit(), packet->Ssrc());
-    BWE_TEST_LOGGING_PLOT_WITH_SSRC(1, "VideoFecBitrate_kbps", now_ms,
-                                    FecOverheadRate() / 1000, packet->Ssrc());
-    BWE_TEST_LOGGING_PLOT_WITH_SSRC(1, "VideoNackBitrate_kbps", now_ms,
-                                    NackOverheadRate() / 1000, packet->Ssrc());
-  } else {
-    BWE_TEST_LOGGING_PLOT_WITH_SSRC(1, "AudioTotBitrate_kbps", now_ms,
-                                    ActualSendBitrateKbit(), packet->Ssrc());
-    BWE_TEST_LOGGING_PLOT_WITH_SSRC(1, "AudioNackBitrate_kbps", now_ms,
-                                    NackOverheadRate() / 1000, packet->Ssrc());
-  }
+//  if (video_) {
+//    BWE_TEST_LOGGING_PLOT_WITH_SSRC(1, "VideoTotBitrate_kbps", now_ms,
+//                                    ActualSendBitrateKbit(), packet->Ssrc());
+//    BWE_TEST_LOGGING_PLOT_WITH_SSRC(1, "VideoFecBitrate_kbps", now_ms,
+//                                    FecOverheadRate() / 1000, packet->Ssrc());
+//    BWE_TEST_LOGGING_PLOT_WITH_SSRC(1, "VideoNackBitrate_kbps", now_ms,
+//                                    NackOverheadRate() / 1000, packet->Ssrc());
+//  } else {
+//    BWE_TEST_LOGGING_PLOT_WITH_SSRC(1, "AudioTotBitrate_kbps", now_ms,
+//                                    ActualSendBitrateKbit(), packet->Ssrc());
+//    BWE_TEST_LOGGING_PLOT_WITH_SSRC(1, "AudioNackBitrate_kbps", now_ms,
+//                                    NackOverheadRate() / 1000, packet->Ssrc());
+//  }
 
   uint32_t ssrc = packet->Ssrc();
   yuntongxunwebrtc::Optional<uint32_t> flexfec_ssrc = FlexfecSsrc();

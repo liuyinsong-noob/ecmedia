@@ -118,10 +118,10 @@ void OveruseEstimator::Update(int64_t t_delta,
   prev_offset_ = offset_;
   offset_ = offset_ + K[1] * residual;
 
-  BWE_TEST_LOGGING_PLOT(1, "kc", now_ms, K[0]);
-  BWE_TEST_LOGGING_PLOT(1, "km", now_ms, K[1]);
-  BWE_TEST_LOGGING_PLOT(1, "slope_1/bps", now_ms, slope_);
-  BWE_TEST_LOGGING_PLOT(1, "var_noise", now_ms, var_noise_);
+//  BWE_TEST_LOGGING_PLOT(1, "kc", now_ms, K[0]);
+//  BWE_TEST_LOGGING_PLOT(1, "km", now_ms, K[1]);
+//  BWE_TEST_LOGGING_PLOT(1, "slope_1/bps", now_ms, slope_);
+//  BWE_TEST_LOGGING_PLOT(1, "var_noise", now_ms, var_noise_);
 }
 
 double OveruseEstimator::UpdateMinFramePeriod(double ts_delta) {

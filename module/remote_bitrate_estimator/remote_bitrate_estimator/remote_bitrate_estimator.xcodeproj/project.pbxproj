@@ -16,6 +16,7 @@
 		1F79653F1FE7B96300A254CA /* aimd_rate_control.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A821F14AE72008B2068 /* aimd_rate_control.cc */; };
 		1F7965401FE7B96300A254CA /* remote_bitrate_estimator_abs_send_time.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A8B1F14AE72008B2068 /* remote_bitrate_estimator_abs_send_time.cc */; };
 		1F7965411FE7B96300A254CA /* bwe_defines.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A841F14AE72008B2068 /* bwe_defines.cc */; };
+		451743552193E5F40018875F /* bwe_test_logging.cc in Sources */ = {isa = PBXBuildFile; fileRef = 451743532193E5F40018875F /* bwe_test_logging.cc */; };
 		45619A941F14AE72008B2068 /* aimd_rate_control.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A821F14AE72008B2068 /* aimd_rate_control.cc */; };
 		45619A951F14AE72008B2068 /* bwe_defines.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A841F14AE72008B2068 /* bwe_defines.cc */; };
 		45619A961F14AE72008B2068 /* inter_arrival.cc in Sources */ = {isa = PBXBuildFile; fileRef = 45619A851F14AE72008B2068 /* inter_arrival.cc */; };
@@ -50,6 +51,8 @@
 
 /* Begin PBXFileReference section */
 		1F7965471FE7B96300A254CA /* libremote_bitrate_estimator_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libremote_bitrate_estimator_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		451743532193E5F40018875F /* bwe_test_logging.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bwe_test_logging.cc; path = ../../../test/bwe_test_logging.cc; sourceTree = "<group>"; };
+		451743542193E5F40018875F /* bwe_test_logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bwe_test_logging.h; path = ../../../test/bwe_test_logging.h; sourceTree = "<group>"; };
 		4526C9141F14A937005949BB /* libremote_bitrate_estimator.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libremote_bitrate_estimator.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		45619A821F14AE72008B2068 /* aimd_rate_control.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aimd_rate_control.cc; path = ../../aimd_rate_control.cc; sourceTree = "<group>"; };
 		45619A831F14AE72008B2068 /* aimd_rate_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aimd_rate_control.h; path = ../../aimd_rate_control.h; sourceTree = "<group>"; };
@@ -87,6 +90,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		451743522193E5B60018875F /* test */ = {
+			isa = PBXGroup;
+			children = (
+				451743532193E5F40018875F /* bwe_test_logging.cc */,
+				451743542193E5F40018875F /* bwe_test_logging.h */,
+			);
+			path = test;
+			sourceTree = "<group>";
+		};
 		4526C90B1F14A937005949BB = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +119,7 @@
 		4526C9161F14A937005949BB /* remote_bitrate_estimator */ = {
 			isa = PBXGroup;
 			children = (
+				451743522193E5B60018875F /* test */,
 				45619A821F14AE72008B2068 /* aimd_rate_control.cc */,
 				45619A831F14AE72008B2068 /* aimd_rate_control.h */,
 				45619A841F14AE72008B2068 /* bwe_defines.cc */,
@@ -224,6 +237,7 @@
 				45619A9A1F14AE72008B2068 /* remote_bitrate_estimator_single_stream.cc in Sources */,
 				45619A9C1F14AE72008B2068 /* remote_estimator_proxy.cc in Sources */,
 				45619A971F14AE72008B2068 /* overuse_detector.cc in Sources */,
+				451743552193E5F40018875F /* bwe_test_logging.cc in Sources */,
 				45619A941F14AE72008B2068 /* aimd_rate_control.cc in Sources */,
 				45619A991F14AE72008B2068 /* remote_bitrate_estimator_abs_send_time.cc in Sources */,
 				45619A951F14AE72008B2068 /* bwe_defines.cc in Sources */,

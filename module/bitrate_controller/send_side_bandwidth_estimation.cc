@@ -21,6 +21,7 @@
 #include "../system_wrappers/include/metrics.h"
 
 #include "../system_wrappers/include/trace.h"
+#include "../module/remote_bitrate_estimator/test/bwe_test_logging.h"
 
 namespace yuntongxunwebrtc {
 namespace {
@@ -296,6 +297,8 @@ void SendSideBandwidthEstimation::UpdateEstimate(int64_t now_ms) {
       last_timeout_ms_ = now_ms;
     }
   }
+    BWE_TEST_LOGGING_PLOT(1, "LossBasedBwe", now_ms,
+                          bitrate_);
   uint32_t capped_bitrate = CapBitrateToThresholds(now_ms, bitrate_);
   if (capped_bitrate != bitrate_ ||
       last_fraction_loss_ != last_logged_fraction_loss_ ||

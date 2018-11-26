@@ -275,6 +275,8 @@ DelayBasedBwe::Result DelayBasedBwe::IncomingPacketFeedbackVector(
     if (result.updated)
       aggregated_result = result;
   }
+   int64_t now_ms = clock_->TimeInMilliseconds();
+   BWE_TEST_LOGGING_PLOT(1, "receiver_incoming_bitrate_", now_ms, receiver_incoming_bitrate_.bitrate_bps().value_or(0));
   if (delayed_feedback) {
     ++consecutive_delayed_feedbacks_;
   } else {
@@ -374,6 +376,7 @@ DelayBasedBwe::Result DelayBasedBwe::IncomingPacketFeedback(
     probing_bps =
         probe_bitrate_estimator_.HandleProbeAndEstimateBitrate(packet_feedback);
   }
+    
   yuntongxunwebrtc::Optional<uint32_t> acked_bitrate_bps =
       receiver_incoming_bitrate_.bitrate_bps();
   // Currently overusing the bandwidth.
@@ -401,8 +404,8 @@ DelayBasedBwe::Result DelayBasedBwe::IncomingPacketFeedback(
   }
   if (result.updated) {
     last_update_ms_ = now_ms;
-    BWE_TEST_LOGGING_PLOT(1, "target_bitrate_bps", now_ms,
-                          result.target_bitrate_bps);
+//    BWE_TEST_LOGGING_PLOT(1, "target_bitrate_bps", now_ms,
+//                          result.target_bitrate_bps);
     if (event_log_ && (result.target_bitrate_bps != last_logged_bitrate_ ||
                        detector_.State() != last_logged_state_)) {
       event_log_->LogDelayBasedBweUpdate(result.target_bitrate_bps,

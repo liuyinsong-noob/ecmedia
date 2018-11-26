@@ -31,6 +31,13 @@ extern char *g_h264file;
 extern char *g_render_noopengl;
 extern char *g_opengles_display;
 #endif
+
+#if 1
+extern char *filename_path_yuv;
+extern char *g_filename_bwe;
+extern char *filename_soft_encode_h264;
+#endif
+
 @implementation AppDelegate
 @synthesize modeEngineVoip;
 
@@ -80,14 +87,19 @@ extern char *g_opengles_display;
     
     size_t len = doc_path.length;
     
-    NSString* _filename5 = [doc_path stringByAppendingPathComponent:@"debug.pcm"];
+    NSString* _filename5 = [doc_path stringByAppendingPathComponent:@"bwe_test_logging_cbr_1M.txt"];
     size_t len5 = _filename5.length;
+    
+    filename_path_yuv = (char *)malloc(len5+1);//new char[len + 1];
+    memcpy(filename_path_yuv, [_filename5 UTF8String], len5);
+    filename_path_yuv[len5] = '\0';
+    
+    NSString* filename_h264 = [doc_path stringByAppendingPathComponent:@"soft_encoder_h264_cbr_1M.264"];
+    size_t len_filename_h264 = filename_h264.length;
 
- 
-//    filename_path_yuv = (char *)malloc(len5+1);//new char[len + 1];
-//    memcpy(filename_path_yuv, [_filename5 UTF8String], len5);
-//    filename_path_yuv[len5] = '\0';
-//    
+    filename_soft_encode_h264 = (char*)malloc(len_filename_h264+1);
+    memcpy(filename_soft_encode_h264, [filename_h264 UTF8String], len_filename_h264);
+    filename_soft_encode_h264[len_filename_h264] = '\0';
     
 #if 0
     size_t len = doc_path.length;

@@ -14,6 +14,7 @@
 #include "module_common_types.h"
 #include "../system_wrappers/include/Trace.h"
 
+char* filename_soft_encode_h264;
 
 namespace yuntongxunwebrtc
 {  
@@ -39,7 +40,7 @@ H264Encoder::H264Encoder()    : encoded_image_(),
     count(0){
         memset(&codec_, 0, sizeof(codec_));
 #ifdef HAVE_H264_BITSTREAM
-		_bitStreamBeforeSend = fopen("encoderH264.bit", "wb");
+		_bitStreamBeforeSend = fopen(filename_soft_encode_h264, "wb");
 #endif
 
 }
@@ -96,19 +97,24 @@ int H264Encoder::SetRates(uint32_t new_bitrate_kbit, uint32_t new_framerate,
     if(new_framerate < 5) {
         new_framerate = 5;
     }
+    
+    
 
-	if(encoder_) {
-		x264_param_t curparms;
-		x264_encoder_parameters((x264_t*)encoder_, &curparms);
-		curparms.i_fps_num = new_framerate;
-		curparms.i_fps_den = 1;
-		curparms.rc.i_vbv_max_bitrate = new_bitrate_kbit;
-		curparms.rc.i_vbv_buffer_size = new_bitrate_kbit;
+    if(encoder_) {
+        x264_param_t curparms;
+        x264_encoder_parameters((x264_t*)encoder_, &curparms);
+        curparms.i_fps_num = new_framerate;
+        curparms.i_fps_den = 1;
+        new_bitrate_kbit = new_bitrate_kbit*25/new_framerate;
+        curparms.rc.i_bitrate = new_bitrate_kbit;
+        curparms.rc.i_vbv_max_bitrate = new_bitrate_kbit;
+        curparms.rc.i_vbv_buffer_size = new_bitrate_kbit/new_framerate;
 
-		int retval = x264_encoder_reconfig(encoder_, &curparms);
-		if (retval < 0)	
-			return WEBRTC_VIDEO_CODEC_ERROR;
-	}
+        int retval = x264_encoder_reconfig(encoder_, &curparms);
+        if (retval < 0)
+            return WEBRTC_VIDEO_CODEC_ERROR;
+    }
+    
 	    return WEBRTC_VIDEO_CODEC_OK;
 }
 
@@ -267,7 +273,7 @@ void H264Encoder::SetX264EncodeParameters(x264_param_t &params, VideoCodecMode m
     }else{
         x264_param_apply_profile(p_params, x264_profile_names[0]);
     }
-    
+#ifdef CRF
 	p_params->i_level_idc = 40;  //编码复杂度
 	p_params->i_width=codec_.width;
 	p_params->i_height=codec_.height;
@@ -279,8 +285,27 @@ void H264Encoder::SetX264EncodeParameters(x264_param_t &params, VideoCodecMode m
 	p_params->b_repeat_headers;
 	p_params->i_keyint_max = 50;
 
+    p_params->rc.i_bitrate = codec_.startBitrate;
 	p_params->rc.i_vbv_max_bitrate = codec_.startBitrate;
 	p_params->rc.i_vbv_buffer_size = codec_.startBitrate;
+#else
+    codec_.startBitrate = codec_.startBitrate*25/codec_.maxFramerate;
+    //p_params->i_level_idc = 40;  //编码复杂度
+    p_params->i_width=codec_.width;
+    p_params->i_height=codec_.height;
+    p_params->i_fps_num = codec_.maxFramerate;
+    p_params->i_fps_den=1;
+    p_params->i_slice_max_size=1300;
+    p_params->b_annexb=1; //already set by defaule:默认支持字节流格式，即包含nal起始码前缀0x00 00 00 01；
+    //p_params->b_intra_refresh = true;
+    p_params->b_repeat_headers = 1;
+    //p_params->i_keyint_max = 50;
+    
+    p_params->rc.i_rc_method = X264_RC_ABR;
+    p_params->rc.i_bitrate = codec_.startBitrate;
+    p_params->rc.i_vbv_max_bitrate = codec_.startBitrate;
+    p_params->rc.i_vbv_buffer_size = (codec_.startBitrate/codec_.maxFramerate);
+#endif
 }
 
 void H264Encoder::InitializeX264Pic(const I420VideoFrame& input_image, x264_picture_t &xpic, x264_picture_t &oxpic, VideoFrameType frame_type)

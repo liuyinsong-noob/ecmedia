@@ -28,6 +28,8 @@
 #include "../module/rtp_rtcp/source/rtp_header_extensions.h"
 #include "../module/rtp_rtcp/source/rtp_packet_to_send.h"
 
+#include "../module/remote_bitrate_estimator/test/bwe_test_logging.h"
+
 namespace yuntongxunwebrtc {
 
 namespace {
@@ -112,6 +114,21 @@ void RTPSenderVideo::SendVideoPacket(std::unique_ptr<RtpPacketToSend> packet,
   TRACE_EVENT_INSTANT2(TRACE_DISABLED_BY_DEFAULT("webrtc_rtp"),
                        "Video::PacketNormal", "timestamp", rtp_timestamp,
                        "seqnum", seq_num);
+    
+    
+//    int64_t now_ms = clock_->TimeInMilliseconds();
+//    RTPHeader rtphd;
+//    packet.get()->GetHeader(&rtphd);
+//    int p_ty = rtphd.payloadType;
+//    if (p_ty > 100) {
+//        BWE_TEST_LOGGING_PLOT(1, "VP8_VideoBr_WithRtpHeader", now_ms, VideoBitrateSent());
+//    }else {
+    
+//    uint32_t br = VideoBitrateSent();
+//    if(br > 0 && br < 2.5 *1000000)
+//        BWE_TEST_LOGGING_PLOT(1, "H264_VideoBr_WithRtpHeader", now_ms, VideoBitrateSent());
+//    }
+    
 }
 
 void RTPSenderVideo::SendVideoPacketAsRedMaybeWithUlpfec(
@@ -303,6 +320,15 @@ bool RTPSenderVideo::SendVideo(RtpVideoCodecTypes video_type,
                                const RTPVideoHeader* video_header) {
   if (payload_size == 0)
     return false;
+    
+    //ylr
+    int64_t now_ms = clock_->TimeInMilliseconds();
+    if (video_type == kRtpVideoVp8) {
+        BWE_TEST_LOGGING_PLOT(1, "VP8_encoded_frame_size", now_ms, payload_size);
+    }else if(video_type == kRtpVideoH264) {
+        BWE_TEST_LOGGING_PLOT(1, "H264_encoded_frame_size", now_ms, payload_size);
+    }
+    
 
   // Create header that will be reused in all packets.
   std::unique_ptr<RtpPacketToSend> rtp_header = rtp_sender_->AllocatePacket();
@@ -406,6 +432,10 @@ bool RTPSenderVideo::SendVideo(RtpVideoCodecTypes video_type,
     }
     first = false;
   }
+    
+    uint32_t br = VideoBitrateSent();
+    if(br > 0 && br < 2.5 *1000000)
+        BWE_TEST_LOGGING_PLOT(1, "H264_VideoBr_WithRtpHeader", now_ms, VideoBitrateSent());
 
   TRACE_EVENT_ASYNC_END1("webrtc", "Video", capture_time_ms, "timestamp",
                          rtp_timestamp);

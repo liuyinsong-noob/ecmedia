@@ -15,7 +15,7 @@
 // build/gyp_chromium --depth=. webrtc/modules/modules.gyp
 //   -Denable_bwe_test_logging=1
 #ifndef BWE_TEST_LOGGING_COMPILE_TIME_ENABLE
-#define BWE_TEST_LOGGING_COMPILE_TIME_ENABLE 0
+#define BWE_TEST_LOGGING_COMPILE_TIME_ENABLE 1
 #endif  // BWE_TEST_LOGGING_COMPILE_TIME_ENABLE
 
 // BWE logging allows you to insert dynamically named log/plot points in the
@@ -129,7 +129,7 @@
 #include <string>
 
 #include "../base/constructormagic.h"
-#include "../common_types.h"
+//#include "../common_types.h"
 
 #define BWE_TEST_LOGGING_GLOBAL_CONTEXT(name) \
     do { \
@@ -335,6 +335,7 @@ class Logging {
   typedef std::map<uint32_t, ThreadState> ThreadMap;
 
   Logging();
+  ~Logging();
   void PushState(const std::string& append_to_tag, int64_t timestamp_ms,
                  bool enabled);
   void PopState();
@@ -342,6 +343,7 @@ class Logging {
   static Logging g_Logging;
   std::unique_ptr<CriticalSectionWrapper> crit_sect_;
   ThreadMap thread_map_;
+  FILE *pf_bwe;
 
   DISALLOW_COPY_AND_ASSIGN(Logging);
 };

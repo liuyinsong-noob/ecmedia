@@ -3653,7 +3653,7 @@
 				ORGANIZATIONNAME = hisun;
 				TargetAttributes = {
 					05F43B8216A92CAA00F6D053 = {
-						DevelopmentTeam = 2372872F55;
+						DevelopmentTeam = 6BXTM4435N;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -4752,7 +4752,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEPLOYMENT_POSTPROCESSING = NO;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 6BXTM4435N;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CCPVoipDemo/CCPVoipDemo-Prefix.pch";
@@ -4779,7 +4779,7 @@
 					"-lz",
 				);
 				OTHER_OSACOMPILEFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ronglian.audioVideo.demo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ronglian.audioVideo.demo11;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -4802,7 +4802,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEPLOYMENT_POSTPROCESSING = NO;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 6BXTM4435N;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CCPVoipDemo/CCPVoipDemo-Prefix.pch";
@@ -4829,7 +4829,7 @@
 					"-lz",
 				);
 				OTHER_OSACOMPILEFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ronglian.audioVideo.demo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ronglian.audioVideo.demo11;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";

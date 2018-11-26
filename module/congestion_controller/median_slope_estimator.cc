@@ -42,8 +42,8 @@ void MedianSlopeEstimator::Update(double recv_delta_ms,
     num_of_deltas_ = kDeltaCounterMax;
 
   accumulated_delay_ += delta_ms;
-  BWE_TEST_LOGGING_PLOT(1, "accumulated_delay_ms", arrival_time_ms,
-                        accumulated_delay_);
+//  BWE_TEST_LOGGING_PLOT(1, "accumulated_delay_ms", arrival_time_ms,
+//                        accumulated_delay_);
 
   // If the window is full, remove the |window_size_| - 1 slopes that belong to
   // the oldest point.
@@ -78,7 +78,7 @@ void MedianSlopeEstimator::Update(double recv_delta_ms,
   if (delay_hist_.size() == window_size_)
     trendline_ = median_filter_.GetPercentileValue();
 
-  BWE_TEST_LOGGING_PLOT(1, "trendline_slope", arrival_time_ms, trendline_);
+//  BWE_TEST_LOGGING_PLOT(1, "trendline_slope", arrival_time_ms, trendline_);
 }
 
 }  // namespace yuntongxunwebrtc

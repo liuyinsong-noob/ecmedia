@@ -242,7 +242,7 @@ VCMEncodedFrameCallback::Encoded(
         RTPVideoHeader rtpVideoHeader = RTPVideoHeader();
         RTPVideoHeader* rtpVideoHeaderPtr = &rtpVideoHeader;
         CopyCodecSpecific(codecSpecificInfo, &rtpVideoHeaderPtr);
-
+  
         int32_t callbackReturn = _sendCallback->SendData(
             _payloadType,
             encodedImage,

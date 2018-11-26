@@ -343,8 +343,8 @@ void RemoteBitrateEstimatorAbsSendTime::IncomingPacketInfo(
     }
   }
   if (update_estimate) {
-	BWE_TEST_LOGGING_PLOT(1, "REMB_kbps#1", now_ms, target_bitrate_bps/1000);
-	BWE_TEST_LOGGING_PLOT(1, "Incoming_bitrate_kbps#1", now_ms, *incoming_bitrate_.Rate(arrival_time_ms)/1000);
+//    BWE_TEST_LOGGING_PLOT(1, "REMB_kbps#1", now_ms, target_bitrate_bps/1000);
+//    BWE_TEST_LOGGING_PLOT(1, "Incoming_bitrate_kbps#1", now_ms, *incoming_bitrate_.Rate(arrival_time_ms)/1000);
     last_update_ms_ = now_ms;
     observer_->OnReceiveBitrateChanged(ssrcs, target_bitrate_bps);
   }

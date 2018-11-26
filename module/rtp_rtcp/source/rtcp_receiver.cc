@@ -1061,6 +1061,7 @@ void RTCPReceiver::TriggerCallbacksFromRtcpPacket(
 		registered_ssrcs.find(main_ssrc) != registered_ssrcs.end() ||
         registered_ssrcs.find(media_source_ssrc) != registered_ssrcs.end()) {
 	//if(true){
+    if(receiver_only_)
       transport_feedback_observer_->OnTransportFeedback(
           *packet_information.transport_feedback);
     }

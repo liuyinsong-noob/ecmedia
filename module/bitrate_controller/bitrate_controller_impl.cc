@@ -184,8 +184,8 @@ void BitrateControllerImpl::OnReceiverEstimatedBitrate(uint32_t bitrate) {
     yuntongxunwebrtc::CritScope cs(&critsect_);
     bandwidth_estimation_.UpdateReceiverEstimate(clock_->TimeInMilliseconds(),
                                                  bitrate);
-    BWE_TEST_LOGGING_PLOT(1, "REMB_kbps", clock_->TimeInMilliseconds(),
-                          bitrate / 1000);
+//    BWE_TEST_LOGGING_PLOT(1, "REMB_kbps", clock_->TimeInMilliseconds(),
+//                          bitrate / 1000);
   }
   MaybeTriggerOnNetworkChanged();
 }
@@ -200,8 +200,8 @@ void BitrateControllerImpl::OnDelayBasedBweResult(
                                                    result.target_bitrate_bps);
 
 #ifndef WIN32
-//      printTime();
-      // printf("[BWE] bitrate_controller = %d (is_probe = %s)\n", result.target_bitrate_bps, result.probe ? "True" : "false");
+    printTime();
+    printf("[BWE] bitrate_controller = %d (is_probe = %s)\n", result.target_bitrate_bps, result.probe ? "True" : "false");
 #endif
     if (result.probe) {
 		LOG(LS_INFO) << "--------------[bwe] bitrate_controller = "
@@ -209,8 +209,13 @@ void BitrateControllerImpl::OnDelayBasedBweResult(
 			<< " (update_probe)";
 		WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, -1,
 			"--------------[bwe] bitrate_controller = %u (update_probe)", result.target_bitrate_bps);
-      bandwidth_estimation_.SetSendBitrate(result.target_bitrate_bps);
+        bandwidth_estimation_.SetSendBitrate(result.target_bitrate_bps);
+        
+        BWE_TEST_LOGGING_PLOT(1, "DelayBasedBwe-probe", clock_->TimeInMilliseconds(),
+                              result.target_bitrate_bps);
     }
+    BWE_TEST_LOGGING_PLOT(1, "DelayBasedBwe", clock_->TimeInMilliseconds(),
+                            result.target_bitrate_bps);
   }
   MaybeTriggerOnNetworkChanged();
 }
@@ -273,8 +278,8 @@ bool BitrateControllerImpl::GetNetworkParameters(uint32_t* bitrate,
   LOG_COUNT_F(LS_INFO, 10) << "--------------[bwe] bitrate_controller = " << current_bitrate;
     
 #ifndef WIN32
-//    printTime();
-    // printf("[BWE] bitrate_controller = %d\n", current_bitrate);
+    printTime();
+     printf("[BWE] bitrate_controller = %d\n", current_bitrate);
 #endif
 
   *bitrate = current_bitrate;
@@ -293,12 +298,12 @@ bool BitrateControllerImpl::GetNetworkParameters(uint32_t* bitrate,
     new_bitrate = true;
   }
 
-  BWE_TEST_LOGGING_PLOT(1, "fraction_loss_%", clock_->TimeInMilliseconds(),
-                        (last_fraction_loss_ * 100) / 256);
-  BWE_TEST_LOGGING_PLOT(1, "rtt_ms", clock_->TimeInMilliseconds(),
-                        last_rtt_ms_);
-  BWE_TEST_LOGGING_PLOT(1, "Target_bitrate_kbps", clock_->TimeInMilliseconds(),
-                        last_bitrate_bps_ / 1000);
+//  BWE_TEST_LOGGING_PLOT(1, "fraction_loss_%", clock_->TimeInMilliseconds(),
+//                        (last_fraction_loss_ * 100) / 256);
+//  BWE_TEST_LOGGING_PLOT(1, "rtt_ms", clock_->TimeInMilliseconds(),
+//                        last_rtt_ms_);
+//  BWE_TEST_LOGGING_PLOT(1, "Target_bitrate_kbps", clock_->TimeInMilliseconds(),
+//                        last_bitrate_bps_ / 1000);
 
   return new_bitrate;
 }

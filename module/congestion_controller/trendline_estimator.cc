@@ -73,12 +73,12 @@ void TrendlineEstimator::Update(double recv_delta_ms,
 
   // Exponential backoff filter.
   accumulated_delay_ += delta_ms;
-  BWE_TEST_LOGGING_PLOT(1, "accumulated_delay_ms", arrival_time_ms,
-                        accumulated_delay_);
+//  BWE_TEST_LOGGING_PLOT(1, "accumulated_delay_ms", arrival_time_ms,
+//                        accumulated_delay_);
   smoothed_delay_ = smoothing_coef_ * smoothed_delay_ +
                     (1 - smoothing_coef_) * accumulated_delay_;
-  BWE_TEST_LOGGING_PLOT(1, "smoothed_delay_ms", arrival_time_ms,
-                        smoothed_delay_);
+//  BWE_TEST_LOGGING_PLOT(1, "smoothed_delay_ms", arrival_time_ms,
+//                        smoothed_delay_);
 
   // Simple linear regression.
   delay_hist_.push_back(std::make_pair(
@@ -91,7 +91,7 @@ void TrendlineEstimator::Update(double recv_delta_ms,
     trendline_ = LinearFitSlope(delay_hist_).value_or(trendline_);
   }
 
-  BWE_TEST_LOGGING_PLOT(1, "trendline_slope", arrival_time_ms, trendline_);
+//  BWE_TEST_LOGGING_PLOT(1, "trendline_slope", arrival_time_ms, trendline_);
 }
 
 }  // namespace yuntongxunwebrtc

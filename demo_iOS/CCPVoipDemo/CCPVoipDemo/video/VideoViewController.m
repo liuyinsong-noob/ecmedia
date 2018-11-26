@@ -70,6 +70,7 @@ extern BOOL globalisVoipView;
         
         //默认使用前置摄像头
         curCameraIndex = self.cameraInfoArr.count-1;
+        curCameraIndex = 0;
         if (curCameraIndex >= 0)
         {
             CameraDeviceInfo *camera = [self.cameraInfoArr objectAtIndex:curCameraIndex];
