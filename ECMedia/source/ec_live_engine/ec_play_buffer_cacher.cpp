@@ -357,7 +357,7 @@ namespace yuntongxunwebrtc{
             const size_t kMaxDataSizeSamples = 3840;
             int16_t temp_output[kMaxDataSizeSamples];
             
-            int samples_out = resampler_record_.Resample10Msec((int16_t*)pkt_audio->_data, audio_sampleRate_*audio_channels_, samplesPerSec, 1,  kMaxDataSizeSamples, (int16_t*)temp_output);
+            int samples_out = resampler_record_.Resample10Msec((int16_t*)pkt_audio->_data, audio_sampleRate_*audio_channels_, samplesPerSec*nChannels, 1,  kMaxDataSizeSamples, (int16_t*)temp_output);
             
 
             memcpy(audioSamples, (uint8_t*)temp_output, samples_out*sizeof(uint16_t));
