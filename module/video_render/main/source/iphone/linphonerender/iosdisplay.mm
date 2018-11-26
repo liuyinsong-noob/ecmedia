@@ -232,11 +232,9 @@ enum TextureType
                                    nil];
     
     [self setAutoresizingMask: UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-//    register notification
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackgroundFun:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [self registerNotification];
+    isRendering = YES;
+    
     // view scale
     self.contentScaleFactor = [UIScreen mainScreen].scale;
     _viewScale = [UIScreen mainScreen].scale;
@@ -262,12 +260,7 @@ enum TextureType
     glUniform1i(textureUniformY, 0);
     glUniform1i(textureUniformU, 1);
     glUniform1i(textureUniformV, 2);
-    if (UIApplicationStateActive == [UIApplication sharedApplication].applicationState) {
-        isRendering = YES;
-    }
-    else
-        isRendering = NO;
-    
+   
     // init lastContentMode
     _lastContentMode = UIViewContentModeScaleAspectFit;
     return YES;
@@ -396,6 +389,9 @@ enum TextureType
 {
     // render when view ready
     if (!self.window) {
+        return;
+    }
+    if(!isRendering) {
         return;
     }
     
@@ -550,13 +546,7 @@ enum TextureType
     // draw frame buffer
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     glBindRenderbuffer(GL_RENDERBUFFER, _renderBuffer);
-    if (UIApplicationStateActive == [UIApplication sharedApplication].applicationState) {
-        isRendering = YES;
-    }
-    else {
-        isRendering = NO;
-        return;
-    }
+ 
     [_glContext presentRenderbuffer:GL_RENDERBUFFER];
 }
 
@@ -576,14 +566,13 @@ enum TextureType
 #pragma mark - updatePreview
 - (void)updatePreview
 {
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         @synchronized(self)
         {
             [EAGLContext setCurrentContext:_glContext];
             [self destoryFrameAndRenderBuffer];
             [self createFrameAndRenderBuffer];
         }
-
         glViewport(0, 0, self.bounds.size.width*_viewScale, self.bounds.size.height*_viewScale);
     });
 }
@@ -648,6 +637,14 @@ enum TextureType
 
 -(void)appWillBecomeActive:(NSNotification *)noti {
     isRendering = YES;
+}
+
+-(void)registerNotification {
+    // register notification
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackgroundFun:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 @end

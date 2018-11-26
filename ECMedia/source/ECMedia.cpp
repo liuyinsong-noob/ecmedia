@@ -249,7 +249,7 @@ static void media_uninit_print_log()
 }
 
 void PrintConsole(const char * fmt, ...)
-{
+{  
     if (!g_media_TraceFlag) {
         return;
     }

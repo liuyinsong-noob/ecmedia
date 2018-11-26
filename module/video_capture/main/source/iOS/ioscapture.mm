@@ -192,6 +192,7 @@ char *globalFilePathcapture = NULL;
 	self = [super init];
 	if (self) {
 		[self initIOSCapture];
+        [self registerNotification];
 	}
 	return self;
 }
@@ -205,11 +206,12 @@ char *globalFilePathcapture = NULL;
 //}
 
 - (void)initIOSCapture {
+    isAppActive = YES;
+    
     if(_capture_session == nullptr) {
         _capture_session = [[AVCaptureSession alloc] init];
     }
     
-//	msframe = NULL;
     if (output != NULL) {
         return;
     }
@@ -266,9 +268,8 @@ char *globalFilePathcapture = NULL;
     for(int i= 0; i< height; i++) {
         memcpy(image_buffer+i*width*4, src_buff+bytesPerRow*i, width*4);
     }
-    
-    
-    if(_rawDataInput) {
+
+    if(_rawDataInput && isAppActive) {
         [_rawDataInput processARGBData:image_buffer imageSize:CGSizeMake(width, height)];
     }
     free(image_buffer);
@@ -708,6 +709,44 @@ char *globalFilePathcapture = NULL;
         }
     } );
 }
+
+
+- (void)appWillResignActive:(NSNotification *)noti
+{
+    @synchronized(self)
+    {
+        isAppActive = NO;
+        glFinish();
+    }
+}
+
+- (void)appDidEnterBackgroundFun:(NSNotification*)noti
+{
+    @synchronized(self)
+    {
+        isAppActive = NO;
+        glFinish();
+    }
+}
+
+- (void)appWillEnterForeground:(NSNotification *)noti
+{
+    isAppActive = YES;
+}
+
+-(void)appWillBecomeActive:(NSNotification *)noti {
+    isAppActive = YES;
+}
+
+-(void)registerNotification {
+    // register notification
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackgroundFun:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+}
+
+
 @end
 //#endif /*TARGET_IPHONE_SIMULATOR*/
 #endif

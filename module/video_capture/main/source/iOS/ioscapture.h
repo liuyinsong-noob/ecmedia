@@ -53,6 +53,7 @@ namespace yuntongxunwebrtc {
     BilteralFilterCore *bilteralFilter;
     KeyFrameDetectCore *keyframeDector;
     AVCaptureSession *_capture_session;
+    Boolean isAppActive;
 #if DEBUG_CAPTURE_YUV
     FILE *fout;
 #endif
@@ -90,6 +91,7 @@ namespace yuntongxunwebrtc {
 @property (nonatomic, retain) ECImageRawDataOutput *rawDataOutput;
 @property (nonatomic, retain) ECImageView *ecImageView;
 @property (nonatomic, retain) ECImageOutput<ECImageInput> *ecImageFilter;
+
 @end
 
 
