@@ -303,7 +303,7 @@ bool VieDesktopCapturer::SelectScreen( ScreenId id )
     
     bool VieDesktopCapturer::GetDesktopShareCaptureRect( int &width, int &height )
 {
-#ifndef __APPLE__
+//#ifndef __APPLE__
     if(share_capture_type_ ==  ShareScreen)
     {
         return screen_capturer_->GetShareCaptureRect(width, height);
@@ -314,7 +314,7 @@ bool VieDesktopCapturer::SelectScreen( ScreenId id )
         return windows_capture_->GetShareCaptureRect(width, height);
     }
 //#endif // _WIN32
-#endif // __APPLE__
+//#endif // __APPLE__
     return false;
     
 }

@@ -387,6 +387,13 @@ enum TextureType
  */
 - (void)renderI420Frame:(void *)framebufer width:(NSInteger)width height:(NSInteger)height
 {
+    if (UIApplicationStateActive == [UIApplication sharedApplication].applicationState) {
+        isRendering = YES;
+    }
+    else {
+        isRendering = NO;
+        return;
+    }
     // render when view ready
     if (!self.window) {
         return;
@@ -533,6 +540,13 @@ enum TextureType
         1.0f,   0.0f,
     };
 
+    if (UIApplicationStateActive == [UIApplication sharedApplication].applicationState) {
+        isRendering = YES;
+    }
+    else {
+        isRendering = NO;
+        return;
+    }
     // coordinate transformation
     glViewport(0, 0, _parentScreenW*_viewScale, _parentScreenH*_viewScale);
     
@@ -553,6 +567,13 @@ enum TextureType
 // not call
 - (void)clearFrame
 {
+    if (UIApplicationStateActive == [UIApplication sharedApplication].applicationState) {
+        isRendering = YES;
+    }
+    else {
+        isRendering = NO;
+        return;
+    }
     if ([self window])
     {
         [EAGLContext setCurrentContext:_glContext];

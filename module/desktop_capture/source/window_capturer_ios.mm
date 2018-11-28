@@ -96,22 +96,22 @@ void ScreenCapturerIos::Capture(const DesktopRegion& region) {
   // capturing - it somehow affects what we get from BitBlt() on the subsequent
   // captures.
 
+    int width = [UIScreen mainScreen].bounds.size.width * [UIScreen mainScreen].scale;
+    int height = [UIScreen mainScreen].bounds.size.height * [UIScreen mainScreen].scale;
     NSArray* windows = [[UIApplication sharedApplication] windows];
-    UIGraphicsBeginImageContext([UIScreen mainScreen].nativeBounds.size); //全屏截图，包括window nativeBounds:ios 8以上使用
+    UIGraphicsBeginImageContext(CGSizeMake(width, height)); //全屏截图，包括window nativeBounds:ios 8以上使用
     for (UIWindow *screenWindow in windows) {
-        [screenWindow drawViewHierarchyInRect:[UIScreen mainScreen].nativeBounds afterScreenUpdates:NO];
+        CGRect rect = CGRectMake(0, 0, width, height);
+        [screenWindow drawViewHierarchyInRect:rect afterScreenUpdates:NO];
     }
     
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
     // 保存到相册
-    // UIImageWriteToSavedPhotosAlbum(viewImage, nil, nil, nil);
+//     UIImageWriteToSavedPhotosAlbum(viewImage, nil, nil, nil);
     
     NSData *data = UIImageJPEGRepresentation(viewImage, 1.0f);
- 
-    int width = [UIScreen mainScreen].bounds.size.width * [UIScreen mainScreen].scale;
-    int height = [UIScreen mainScreen].bounds.size.height * [UIScreen mainScreen].scale;
     
     yuntongxunwebrtc::scoped_ptr<BasicDesktopFrame> frame(new BasicDesktopFrame(DesktopSize(width, height)));
     if (!frame.get()) {
