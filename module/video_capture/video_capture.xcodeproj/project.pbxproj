@@ -36,7 +36,7 @@
 		91C4CD0A169C0E9C00CC98EF /* video_capture_iOS_device_info.mm in Sources */ = {isa = PBXBuildFile; fileRef = 91C4CD08169C0E9B00CC98EF /* video_capture_iOS_device_info.mm */; };
 		91C4CD0E169C124800CC98EF /* video_capture_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 91C4CD0C169C124700CC98EF /* video_capture_iOS.h */; };
 		91C4CD0F169C124800CC98EF /* video_capture_iOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 91C4CD0D169C124700CC98EF /* video_capture_iOS.mm */; };
-		91DC03631A1C9C1E0088851B /* ioscapture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 55A7A47B16F83A71004970E2 /* ioscapture.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		91DC03631A1C9C1E0088851B /* ioscapture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 55A7A47B16F83A71004970E2 /* ioscapture.mm */; };
 		91DC03651A1CA0090088851B /* ioscapture.h in Headers */ = {isa = PBXBuildFile; fileRef = 91DC03641A1CA0090088851B /* ioscapture.h */; };
 		AD1F0F161D476BC200C33F53 /* device_info_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74FAB15C8C324001B246A /* device_info_impl.cc */; };
 		AD1F0F171D476BC200C33F53 /* device_info_external.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74FAE15C8C324001B246A /* device_info_external.cc */; };

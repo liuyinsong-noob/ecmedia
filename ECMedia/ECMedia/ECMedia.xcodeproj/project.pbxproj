@@ -55,7 +55,6 @@
 		1F930DD21F6A9DAE00EBDE34 /* ec_rtmp_puller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F930DC81F6A9DAE00EBDE34 /* ec_rtmp_puller.cpp */; };
 		1F9AB0E71F8CB79F0046DF9D /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9AB0DF1F8CB76F0046DF9D /* libprotobuf.a */; };
 		1F9CA82F2178AA940053DE1A /* libopus_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9CA82E2178AA940053DE1A /* libopus_Mac.a */; };
-		1FA4AA911FC6C1E600936805 /* libECImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA4AA881FC6BB9F00936805 /* libECImage.a */; };
 		1FBB43FA1E728F35007DBD1D /* MediaStatisticsData.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FBB43F91E728F35007DBD1D /* MediaStatisticsData.pb.cc */; };
 		1FDB3E4C1E839BC30018FA08 /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FDB3DC91E837CD40018FA08 /* libsrtp.a */; };
 		1FDBFA75216DBA2D00CD2BC3 /* IJKMediaFramework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FDBFA74216DBA2D00CD2BC3 /* IJKMediaFramework */; };
@@ -221,13 +220,6 @@
 			remoteGlobalIDString = 1F7965371FE7B96300A254CA;
 			remoteInfo = remote_bitrate_estimator_Mac;
 		};
-		1F8594B01FE286AC00CBFC11 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1FA4AA801FC6BB9F00936805 /* ECImage.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = BCF1A33314DDB1EC00852800;
-			remoteInfo = ECImage;
-		};
 		1F9AB0A31F8C7A8E0046DF9D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ADF92D821CB7B9720026DF61 /* pacing.xcodeproj */;
@@ -262,20 +254,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 0596B6421AAACEC10047B4CA;
 			remoteInfo = protobuf;
-		};
-		1FA4AA871FC6BB9F00936805 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1FA4AA801FC6BB9F00936805 /* ECImage.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BCF1A33414DDB1EC00852800;
-			remoteInfo = ECImage;
-		};
-		1FA4AA891FC6BB9F00936805 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1FA4AA801FC6BB9F00936805 /* ECImage.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BCE209E51943F20C002FEED8;
-			remoteInfo = ECImageFramework;
 		};
 		1FDB3DC81E837CD40018FA08 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1337,7 +1315,6 @@
 		1F9AB0D71F8CB76E0046DF9D /* protobuf.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = protobuf.xcodeproj; path = ../../../third_party/protobuf/protobuf.xcodeproj; sourceTree = "<group>"; };
 		1F9CA82E2178AA940053DE1A /* libopus_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libopus_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F9CA8302178AB0D0053DE1A /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/usr/lib/libc++.tbd"; sourceTree = DEVELOPER_DIR; };
-		1FA4AA801FC6BB9F00936805 /* ECImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ECImage.xcodeproj; path = ../../../third_party/ECImage/ECImage.xcodeproj; sourceTree = "<group>"; };
 		1FBB43F91E728F35007DBD1D /* MediaStatisticsData.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MediaStatisticsData.pb.cc; sourceTree = "<group>"; };
 		1FBB440D1E729473007DBD1D /* MediaStatisticsData.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaStatisticsData.pb.h; path = ../source/MediaStatisticsData.pb.h; sourceTree = "<group>"; };
 		1FDB3DBF1E837CD30018FA08 /* srtp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = srtp.xcodeproj; path = ../../../third_party/srtp/srtp.xcodeproj; sourceTree = "<group>"; };
@@ -1600,7 +1577,6 @@
 				1F8EE0551E5D7B8B00C04C10 /* libavformat.a in Frameworks */,
 				1FDBFA75216DBA2D00CD2BC3 /* IJKMediaFramework in Frameworks */,
 				1F79652F1FE7B95100A254CA /* libremote_bitrate_estimator.a in Frameworks */,
-				1FA4AA911FC6C1E600936805 /* libECImage.a in Frameworks */,
 				1F9AB0E71F8CB79F0046DF9D /* libprotobuf.a in Frameworks */,
 				AD36336D1F44668100F0C20B /* libSoundTouch_Media.a in Frameworks */,
 				450D727A1F17200D00CD5776 /* librtc_event_log.a in Frameworks */,
@@ -1847,15 +1823,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1FA4AA811FC6BB9F00936805 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				1FA4AA881FC6BB9F00936805 /* libECImage.a */,
-				1FA4AA8A1FC6BB9F00936805 /* ECImage.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		1FDB3DC01E837CD30018FA08 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1921,7 +1888,6 @@
 		55F3F7E01B8B0ABE00A19ED6 /* third_party */ = {
 			isa = PBXGroup;
 			children = (
-				1FA4AA801FC6BB9F00936805 /* ECImage.xcodeproj */,
 				1F9AB0D71F8CB76E0046DF9D /* protobuf.xcodeproj */,
 				1F099E2D1ED57CC200421B08 /* SoundTouch.xcodeproj */,
 				1FDB3DBF1E837CD30018FA08 /* srtp.xcodeproj */,
@@ -2615,7 +2581,6 @@
 			);
 			dependencies = (
 				1F6893881FF509370081B061 /* PBXTargetDependency */,
-				1F8594B11FE286AC00CBFC11 /* PBXTargetDependency */,
 				1F9AB0E61F8CB78F0046DF9D /* PBXTargetDependency */,
 				4506BEC11F1E12EA00C934C6 /* PBXTargetDependency */,
 				450D71EB1F15FB4A00CD5776 /* PBXTargetDependency */,
@@ -2726,10 +2691,6 @@
 				{
 					ProductGroup = ADC50F4D1D8FC66E00A83C04 /* Products */;
 					ProjectRef = ADC50F4C1D8FC66E00A83C04 /* desktop_capture.xcodeproj */;
-				},
-				{
-					ProductGroup = 1FA4AA811FC6BB9F00936805 /* Products */;
-					ProjectRef = 1FA4AA801FC6BB9F00936805 /* ECImage.xcodeproj */;
 				},
 				{
 					ProductGroup = ADB519F91B2807380009077D /* Products */;
@@ -2871,20 +2832,6 @@
 			fileType = archive.ar;
 			path = libprotobuf_Mac.a;
 			remoteRef = 1F9AB0E01F8CB76F0046DF9D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		1FA4AA881FC6BB9F00936805 /* libECImage.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libECImage.a;
-			remoteRef = 1FA4AA871FC6BB9F00936805 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		1FA4AA8A1FC6BB9F00936805 /* ECImage.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ECImage.framework;
-			remoteRef = 1FA4AA891FC6BB9F00936805 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		1FDB3DC91E837CD40018FA08 /* libsrtp.a */ = {
@@ -3478,11 +3425,6 @@
 			isa = PBXTargetDependency;
 			name = remote_bitrate_estimator_Mac;
 			targetProxy = 1F79654C1FE7BA8E00A254CA /* PBXContainerItemProxy */;
-		};
-		1F8594B11FE286AC00CBFC11 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ECImage;
-			targetProxy = 1F8594B01FE286AC00CBFC11 /* PBXContainerItemProxy */;
 		};
 		1F9AB0A41F8C7A8E0046DF9D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
