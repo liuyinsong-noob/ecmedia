@@ -6,7 +6,8 @@
 //  Copyright © 2018年 Brad Larson. All rights reserved.
 //
 
-#import "ECImage.h"
+//#import "ECImage.h"
+#import <UIKit/UIKit.h>
 #include "common_types.h"
 
 @interface ECImageFilterFactory : NSObject
@@ -14,6 +15,6 @@
      * create image fiter according fitler type.
      * @param type  video filter type.
      */
-    +(ECImageOutput<ECImageInput>*) createImageFiilterWithType: (yuntongxunwebrtc::ECImageFilterType) type;
+//    +(ECImageOutput<ECImageInput>*) createImageFiilterWithType: (yuntongxunwebrtc::ECImageFilterType) type;
 
 @end
