@@ -1171,6 +1171,7 @@ Channel::~Channel()
         _socketTransportModule->SubRecieveChannel(ssrc);
     }
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
+    LOG(LS_ERROR) << "xt log UdpTransport release  rtp_port %d" << _rtp_port;
     UdpTransport::Release(_rtp_port);
 #else
 	TcpTransport::Release(_rtp_port);
@@ -5269,8 +5270,11 @@ void
     | ((unsigned char)incomingRtpPacket[9] << 16)
     | ((unsigned char)incomingRtpPacket[10] << 8)
     | (unsigned char)incomingRtpPacket[11];
-    if((rtpSsrc != ssrc) && _isSetRemoteSsrc)
+    if((rtpSsrc != ssrc) && _isSetRemoteSsrc){
+        WEBRTC_TRACE(kTraceWarning, kTraceRtpRtcp, VoEId(_instanceId,_channelId),
+                     "setRemoteSsrc return, ssrc = %u", ssrc);
         return;
+    }
 	{
 		CriticalSectionScoped cs(critsect_net_statistic.get());
 		if(_startNetworkTime == 0)
