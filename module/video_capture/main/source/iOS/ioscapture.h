@@ -13,6 +13,7 @@ using namespace videocapturemodule;
 #include "msvideo.h"
 #include "bilteral_filter.h"
 #include "keyframe_detector.h"
+#include "image_filter_factory.h"
 
 //#define DEBUG_CAPTURE_YUV 1
 
@@ -21,11 +22,7 @@ namespace yuntongxunwebrtc {
     class VideoRenderCallback;
 }
 
-// AVCaptureVideoPreviewLayer with AVCaptureSession creation
-@interface ECAVCaptureVideoPreviewLayerEx : AVCaptureVideoPreviewLayer
-@end
-
-@interface ECIOSCaptureCCP : UIView<AVCaptureVideoDataOutputSampleBufferDelegate> {
+@interface ECIOSCaptureCCP : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate> {
 @private
     AVCaptureDeviceInput *input;
     AVCaptureVideoDataOutput * output;
@@ -44,6 +41,8 @@ namespace yuntongxunwebrtc {
     MSAverageFPS averageFps;
     char fps_context[64];
     MSPicture *_pict;
+    
+    
     yuntongxunwebrtc::videocapturemodule::VideoCaptureiOS* _owner;
     
     // about opengl doRenderFrame
@@ -53,6 +52,8 @@ namespace yuntongxunwebrtc {
     // UIView* parentView;
     BilteralFilterCore *bilteralFilter;
     KeyFrameDetectCore *keyframeDector;
+    AVCaptureSession *_capture_session;
+    Boolean isAppActive;
 #if DEBUG_CAPTURE_YUV
     FILE *fout;
 #endif
@@ -65,7 +66,8 @@ namespace yuntongxunwebrtc {
 - (MSVideoSize*)getSize;
 - (void)openDevice:(const char*) deviceId;
 - (void)setFps:(float) value;
-+ (Class)layerClass;
+- (void)setBeautyFace:(BOOL)isEnable;
+- (void)setVideoFilter:(ECImageFilterType) filter;
 
 - (NSNumber*)registerOwner:(yuntongxunwebrtc::videocapturemodule::VideoCaptureiOS*)owner;
 - (NSNumber*)setCaptureDeviceById:(char*)uniqueId;
@@ -83,11 +85,19 @@ namespace yuntongxunwebrtc {
 @property (nonatomic, retain, readonly) UIView* parentView;
 @property (nonatomic, assign) bool triggered;
 @property (nonatomic) dispatch_queue_t sessionQueue;
+
+// iamge filter
+@property (nonatomic, retain) ECImageRawDataInput *rawDataInput;
+@property (nonatomic, retain) ECImageRawDataOutput *rawDataOutput;
+@property (nonatomic, retain) ECImageView *ecImageView;
+@property (nonatomic, retain) ECImageOutput<ECImageInput> *ecImageFilter;
+
 @end
 
 
 static void capture_queue_cleanup(void* p) {
-    ECIOSCaptureCCP *capture = (ECIOSCaptureCCP *)p;
-    [capture release];
+    ECIOSCaptureCCP *capture = (__bridge_transfer ECIOSCaptureCCP*)p;
+    capture = nil;
 }
 #endif
+
