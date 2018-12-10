@@ -58,7 +58,6 @@
 		1FA4AA911FC6C1E600936805 /* libECImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA4AA881FC6BB9F00936805 /* libECImage.a */; };
 		1FBB43FA1E728F35007DBD1D /* MediaStatisticsData.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FBB43F91E728F35007DBD1D /* MediaStatisticsData.pb.cc */; };
 		1FDB3E4C1E839BC30018FA08 /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FDB3DC91E837CD40018FA08 /* libsrtp.a */; };
-		1FDBFA75216DBA2D00CD2BC3 /* IJKMediaFramework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FDBFA74216DBA2D00CD2BC3 /* IJKMediaFramework */; };
 		1FE07DCA1FE79E4A0018E762 /* libprotobuf_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9AB0E11F8CB76F0046DF9D /* libprotobuf_Mac.a */; };
 		1FE07DDF1FE7A5660018E762 /* libcommon_video_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45619CCB1F14D906008B2068 /* libcommon_video_Mac.a */; };
 		1FE07DE01FE7A6680018E762 /* srs_librtmp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F930D8C1F6A9D7A00EBDE34 /* srs_librtmp.cpp */; };
@@ -1598,7 +1597,6 @@
 				1F886D4120CA5D250073669C /* libswscale.a in Frameworks */,
 				1F886D4220CA5D250073669C /* libswresample.a in Frameworks */,
 				1F8EE0551E5D7B8B00C04C10 /* libavformat.a in Frameworks */,
-				1FDBFA75216DBA2D00CD2BC3 /* IJKMediaFramework in Frameworks */,
 				1F79652F1FE7B95100A254CA /* libremote_bitrate_estimator.a in Frameworks */,
 				1FA4AA911FC6C1E600936805 /* libECImage.a in Frameworks */,
 				1F9AB0E71F8CB79F0046DF9D /* libprotobuf.a in Frameworks */,
