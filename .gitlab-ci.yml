@@ -87,6 +87,7 @@ build_br_dev_android:
     stage: build
     allow_failure: true
     script: "python build_android.py"
+    script: "cp ../android_*.zip ~/.platform_build/platform_sdk/ecmedia_layer_libs/android/v2.3.x/"
     only:
       - develop@platform_sdk/ecmedia
     tags:
@@ -96,6 +97,7 @@ build_br_dev_ios:
     stage: build
     allow_failure: true
     script: "python build_ios.py"
+    script: "cp ../ios_*.zip ~/.platform_build/platform_sdk/ecmedia_layer_libs/ios/v2.3.x/"
     only:
       - develop@platform_sdk/ecmedia
     tags:
@@ -106,6 +108,7 @@ build_br_dev_win:
     stage: build
     allow_failure: true
     script: "python build_win.py"
+    script: "scp -i private.key ../windows_*.zip seanlee@192.168.178.218:~/.platform_build/platform_sdk/ecmedia_layer_libs/windows/v2.3.x/"
     only:
       - develop@platform_sdk/ecmedia
     tags:
