@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1F1EDA451F95E5F80018BD4C /* criticalsection.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F1EDA431F95E5F80018BD4C /* criticalsection.cc */; };
 		1F1EDA461F95E5F80018BD4C /* criticalsection.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F1EDA441F95E5F80018BD4C /* criticalsection.h */; };
-		1F886D0020CA50330073669C /* event.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1D5142087290F00749ACB /* event.cc */; };
 		1FD1D5152087291000749ACB /* event.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1D5142087290F00749ACB /* event.cc */; };
 		1FE07DB11FE791550018E762 /* stats_types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9F2201F345293005D11C5 /* stats_types.cc */; };
 		1FE07DB21FE791550018E762 /* event_tracer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72931F17455200CD5776 /* event_tracer.cc */; };
@@ -115,6 +114,7 @@
 		55AE06A015C82F8000CE4CF5 /* trace_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AE065515C82F8000CE4CF5 /* trace_impl.h */; };
 		55AE06A115C82F8000CE4CF5 /* trace_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE065615C82F8000CE4CF5 /* trace_posix.cc */; };
 		55AE06A215C82F8000CE4CF5 /* trace_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AE065715C82F8000CE4CF5 /* trace_posix.h */; };
+		75CE376A21BE600F0025685A /* thread_checker_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 75CE376921BE600F0025685A /* thread_checker_impl.cc */; };
 		75E13BE020C91975006625A1 /* event.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1FD1D5142087290F00749ACB /* event.cc */; };
 		AD1F0BB51D47605300C33F53 /* aligned_malloc.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE061015C82F8000CE4CF5 /* aligned_malloc.cc */; };
 		AD1F0BB71D47605300C33F53 /* condition_variable_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55AE061415C82F8000CE4CF5 /* condition_variable_posix.cc */; };
@@ -277,6 +277,7 @@
 		55AE065515C82F8000CE4CF5 /* trace_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trace_impl.h; sourceTree = "<group>"; };
 		55AE065615C82F8000CE4CF5 /* trace_posix.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = trace_posix.cc; sourceTree = "<group>"; };
 		55AE065715C82F8000CE4CF5 /* trace_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trace_posix.h; sourceTree = "<group>"; };
+		75CE376921BE600F0025685A /* thread_checker_impl.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = thread_checker_impl.cc; path = ../module/video_coding/codecs/h264_hardcode/thread_checker_impl.cc; sourceTree = "<group>"; };
 		AD1F0C071D47605300C33F53 /* libsystem_wrappers_Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libsystem_wrappers_Mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD2E2A031C58C5AF00FD311B /* metrics_default.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = metrics_default.cc; sourceTree = "<group>"; };
 		AD8D734E1C59AE7900FB246D /* exp_filter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = exp_filter.cc; sourceTree = "<group>"; };
@@ -310,6 +311,7 @@
 		5519D04B15C82C7E00719504 = {
 			isa = PBXGroup;
 			children = (
+				75CE376921BE600F0025685A /* thread_checker_impl.cc */,
 				1F1EDA431F95E5F80018BD4C /* criticalsection.cc */,
 				1F1EDA441F95E5F80018BD4C /* criticalsection.h */,
 				5519D09D15C82D0200719504 /* system_wrappers */,
@@ -620,6 +622,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75CE376A21BE600F0025685A /* thread_checker_impl.cc in Sources */,
 				45187B3E1F54260A004A2DBF /* stats_types.cc in Sources */,
 				55AE065B15C82F8000CE4CF5 /* aligned_malloc.cc in Sources */,
 				450D728E1F173EE100CD5776 /* logging.cc in Sources */,
@@ -788,6 +791,7 @@
 					./source/spreadsortlib,
 					./include,
 					"$(SRCROOT)/",
+					../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";
@@ -838,6 +842,7 @@
 					./source/spreadsortlib,
 					./include,
 					"$(SRCROOT)/",
+					../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OBJROOT = "$(SYMROOT)/build";

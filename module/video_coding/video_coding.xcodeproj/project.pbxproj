@@ -102,7 +102,6 @@
 		AD714A951D33898E00182A8C /* h264_video_toolbox_nalu.h in Headers */ = {isa = PBXBuildFile; fileRef = AD714A901D33898E00182A8C /* h264_video_toolbox_nalu.h */; };
 		AD714B121D34861000182A8C /* libyuv.h in Headers */ = {isa = PBXBuildFile; fileRef = AD714B111D34861000182A8C /* libyuv.h */; };
 		AD714B141D34867000182A8C /* convert_from.h in Headers */ = {isa = PBXBuildFile; fileRef = AD714B131D34867000182A8C /* convert_from.h */; };
-		AD714B421D348A8500182A8C /* thread_checker_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD714B3F1D348A8500182A8C /* thread_checker_impl.cc */; };
 		AD714B431D348A8500182A8C /* thread_checker_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = AD714B401D348A8500182A8C /* thread_checker_impl.h */; };
 		AD714B441D348A8500182A8C /* thread_checker.h in Headers */ = {isa = PBXBuildFile; fileRef = AD714B411D348A8500182A8C /* thread_checker.h */; };
 		AD714B4B1D34920700182A8C /* RTCUIApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = AD714B4A1D34920700182A8C /* RTCUIApplication.mm */; };
@@ -884,7 +883,6 @@
 				AD47AFCD1C58A1510057041A /* vp8_factory.cc in Sources */,
 				55AD153215C8A020008A2BDA /* jitter_buffer_common.cc in Sources */,
 				55AD153415C8A020008A2BDA /* jitter_estimator.cc in Sources */,
-				AD714B421D348A8500182A8C /* thread_checker_impl.cc in Sources */,
 				55AD153615C8A020008A2BDA /* media_opt_util.cc in Sources */,
 				55AD153815C8A020008A2BDA /* media_optimization.cc in Sources */,
 				55AD153C15C8A020008A2BDA /* packet.cc in Sources */,
