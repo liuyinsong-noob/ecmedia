@@ -17,6 +17,9 @@
 #include "../module/pacing/paced_sender.h"
 #include "../system_wrappers/include/trace.h"
 
+
+#include "../module/remote_bitrate_estimator/test/bwe_test_logging.h"
+
 using namespace std;
 
 namespace yuntongxunwebrtc {
@@ -88,7 +91,7 @@ void BitrateProber::OnIncomingPacket(size_t packet_size) {
 }
 
 void BitrateProber::CreateProbeCluster(int bitrate_bps, int64_t now_ms) {
-    return;
+  
   DCHECK(probing_state_ != ProbingState::kDisabled);
   while (!clusters_.empty() &&
          now_ms - clusters_.front().time_created_ms > kProbeClusterTimeoutMs) {
@@ -116,6 +119,8 @@ void BitrateProber::CreateProbeCluster(int bitrate_bps, int64_t now_ms) {
 	  cluster.pace_info.probe_cluster_min_bytes,
 	  cluster.pace_info.probe_cluster_min_probes,
 	  cluster.pace_info.probe_cluster_id);
+  BWE_TEST_LOGGING_PLOT(1, "CreateProbe_id", now_ms, cluster.pace_info.probe_cluster_id);
+  BWE_TEST_LOGGING_PLOT(1, "CreateProbe_Br", now_ms, bitrate_bps);
 #ifndef WIN32
     printTime();
     printf("[Probe] Probe cluster (bitrate:min bytes:min packets:cluster id): (%d:%d:%d:%d)\n",
@@ -156,7 +161,10 @@ int BitrateProber::TimeUntilNextProbe(int64_t now_ms) {
   if (next_probe_time_ms_ >= 0) {
     time_until_probe_ms = next_probe_time_ms_ - now_ms;
     if (time_until_probe_ms < -kMaxProbeDelayMs) {
-      ResetState(now_ms);
+      //ResetState(now_ms);
+	  LOG(LS_WARNING) << "Probe delay too high"
+		  << "(next_ms:" << next_probe_time_ms_
+		  << ", now_ms:" << now_ms << ")";
       return -1;
     }
   }
