@@ -87,6 +87,7 @@ const int VideoSenderStatisticsInner::kKStatsValueNameFirsReceivedFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameNacksReceivedFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameNacksRequestsReceivedFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameNacksUniqueRequestsReceivedFieldNumber;
+const int VideoSenderStatisticsInner::kKStatsValueNameLossFractionInPercentFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameAvgEncodeMsFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameEncodeUsagePercentFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameCapturedFrameWidthFieldNumber;
@@ -103,6 +104,8 @@ const int VideoSenderStatisticsInner::kKStatsValueNameCodecSettingStartBitrateFi
 const int VideoSenderStatisticsInner::kKStatsValueNameCodecSettingMinBitrateFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameCodecSettingMaxBitrateFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameCodecSettingTargetBitrateFieldNumber;
+const int VideoSenderStatisticsInner::kKStatsValueNameTargetEncFrameRateFieldNumber;
+const int VideoSenderStatisticsInner::kKStatsValueNameActualEncFrameRateFieldNumber;
 #endif  // !_MSC_VER
 
 VideoSenderStatisticsInner::VideoSenderStatisticsInner()
@@ -144,6 +147,7 @@ void VideoSenderStatisticsInner::SharedCtor() {
   kstatsvaluenamenacksreceived_ = 0;
   kstatsvaluenamenacksrequestsreceived_ = 0;
   kstatsvaluenamenacksuniquerequestsreceived_ = 0;
+  kstatsvaluenamelossfractioninpercent_ = 0;
   kstatsvaluenameavgencodems_ = 0;
   kstatsvaluenameencodeusagepercent_ = 0;
   kstatsvaluenamecapturedframewidth_ = 0;
@@ -160,6 +164,8 @@ void VideoSenderStatisticsInner::SharedCtor() {
   kstatsvaluenamecodecsettingminbitrate_ = 0;
   kstatsvaluenamecodecsettingmaxbitrate_ = 0;
   kstatsvaluenamecodecsettingtargetbitrate_ = 0;
+  kstatsvaluenametargetencframerate_ = 0;
+  kstatsvaluenameactualencframerate_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -224,12 +230,14 @@ void VideoSenderStatisticsInner::Clear() {
     ZR_(kstatsvaluenamerttinms_, kstatsvaluenameretransmitpacketsrate_);
   }
   if (_has_bits_[16 / 32] & 16711680) {
-    ZR_(kstatsvaluenamefirsreceived_, kstatsvaluenamecapturedframeheight_);
+    ZR_(kstatsvaluenamefirsreceived_, kstatsvaluenamecapturedframewidth_);
   }
   if (_has_bits_[24 / 32] & 4278190080) {
-    ZR_(kstatsvaluenamecapturedframerate_, kstatsvaluenamecodecsettingsimulcastnum_);
+    ZR_(kstatsvaluenamecapturedframeheight_, kstatsvaluenamecodecsettingframerate_);
   }
-  ZR_(kstatsvaluenamecodecsettingstartbitrate_, kstatsvaluenamecodecsettingtargetbitrate_);
+  if (_has_bits_[32 / 32] & 127) {
+    ZR_(kstatsvaluenamecodecsettingsimulcastnum_, kstatsvaluenameactualencframerate_);
+  }
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -545,13 +553,28 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(168)) goto parse_kStatsValueNameAvgEncodeMs;
+        if (input->ExpectTag(168)) goto parse_kStatsValueNameLossFractionInPercent;
         break;
       }
 
-      // optional int32 kStatsValueNameAvgEncodeMs = 21;
+      // optional int32 kStatsValueNameLossFractionInPercent = 21;
       case 21: {
         if (tag == 168) {
+         parse_kStatsValueNameLossFractionInPercent:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &kstatsvaluenamelossfractioninpercent_)));
+          set_has_kstatsvaluenamelossfractioninpercent();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(176)) goto parse_kStatsValueNameAvgEncodeMs;
+        break;
+      }
+
+      // optional int32 kStatsValueNameAvgEncodeMs = 22;
+      case 22: {
+        if (tag == 176) {
          parse_kStatsValueNameAvgEncodeMs:
           DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -560,13 +583,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(176)) goto parse_kStatsValueNameEncodeUsagePercent;
+        if (input->ExpectTag(184)) goto parse_kStatsValueNameEncodeUsagePercent;
         break;
       }
 
-      // optional int32 kStatsValueNameEncodeUsagePercent = 22;
-      case 22: {
-        if (tag == 176) {
+      // optional int32 kStatsValueNameEncodeUsagePercent = 23;
+      case 23: {
+        if (tag == 184) {
          parse_kStatsValueNameEncodeUsagePercent:
           DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -575,13 +598,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(184)) goto parse_kStatsValueNameCapturedFrameWidth;
+        if (input->ExpectTag(192)) goto parse_kStatsValueNameCapturedFrameWidth;
         break;
       }
 
-      // optional int32 kStatsValueNameCapturedFrameWidth = 23;
-      case 23: {
-        if (tag == 184) {
+      // optional int32 kStatsValueNameCapturedFrameWidth = 24;
+      case 24: {
+        if (tag == 192) {
          parse_kStatsValueNameCapturedFrameWidth:
           DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -590,13 +613,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(192)) goto parse_kStatsValueNameCapturedFrameHeight;
+        if (input->ExpectTag(200)) goto parse_kStatsValueNameCapturedFrameHeight;
         break;
       }
 
-      // optional int32 kStatsValueNameCapturedFrameHeight = 24;
-      case 24: {
-        if (tag == 192) {
+      // optional int32 kStatsValueNameCapturedFrameHeight = 25;
+      case 25: {
+        if (tag == 200) {
          parse_kStatsValueNameCapturedFrameHeight:
           DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -605,13 +628,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(200)) goto parse_kStatsValueNameCapturedFrameRate;
+        if (input->ExpectTag(208)) goto parse_kStatsValueNameCapturedFrameRate;
         break;
       }
 
-      // optional int32 kStatsValueNameCapturedFrameRate = 25;
-      case 25: {
-        if (tag == 200) {
+      // optional int32 kStatsValueNameCapturedFrameRate = 26;
+      case 26: {
+        if (tag == 208) {
          parse_kStatsValueNameCapturedFrameRate:
           DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -620,13 +643,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(208)) goto parse_kStatsValueNameQMFrameWidth;
+        if (input->ExpectTag(216)) goto parse_kStatsValueNameQMFrameWidth;
         break;
       }
 
-      // optional int32 kStatsValueNameQMFrameWidth = 26;
-      case 26: {
-        if (tag == 208) {
+      // optional int32 kStatsValueNameQMFrameWidth = 27;
+      case 27: {
+        if (tag == 216) {
          parse_kStatsValueNameQMFrameWidth:
           DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -635,13 +658,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(216)) goto parse_kStatsValueNameQMFrameHeight;
+        if (input->ExpectTag(224)) goto parse_kStatsValueNameQMFrameHeight;
         break;
       }
 
-      // optional int32 kStatsValueNameQMFrameHeight = 27;
-      case 27: {
-        if (tag == 216) {
+      // optional int32 kStatsValueNameQMFrameHeight = 28;
+      case 28: {
+        if (tag == 224) {
          parse_kStatsValueNameQMFrameHeight:
           DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -650,13 +673,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(224)) goto parse_kStatsValueNameQMFrameRate;
+        if (input->ExpectTag(232)) goto parse_kStatsValueNameQMFrameRate;
         break;
       }
 
-      // optional int32 kStatsValueNameQMFrameRate = 28;
-      case 28: {
-        if (tag == 224) {
+      // optional int32 kStatsValueNameQMFrameRate = 29;
+      case 29: {
+        if (tag == 232) {
          parse_kStatsValueNameQMFrameRate:
           DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -665,13 +688,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(232)) goto parse_kStatsValueNameCodecSettingFrameWidth;
+        if (input->ExpectTag(240)) goto parse_kStatsValueNameCodecSettingFrameWidth;
         break;
       }
 
-      // optional int32 kStatsValueNameCodecSettingFrameWidth = 29;
-      case 29: {
-        if (tag == 232) {
+      // optional int32 kStatsValueNameCodecSettingFrameWidth = 30;
+      case 30: {
+        if (tag == 240) {
          parse_kStatsValueNameCodecSettingFrameWidth:
           DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -680,13 +703,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(240)) goto parse_kStatsValueNameCodecSettingFrameHeight;
+        if (input->ExpectTag(248)) goto parse_kStatsValueNameCodecSettingFrameHeight;
         break;
       }
 
-      // optional int32 kStatsValueNameCodecSettingFrameHeight = 30;
-      case 30: {
-        if (tag == 240) {
+      // optional int32 kStatsValueNameCodecSettingFrameHeight = 31;
+      case 31: {
+        if (tag == 248) {
          parse_kStatsValueNameCodecSettingFrameHeight:
           DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -695,13 +718,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(248)) goto parse_kStatsValueNameCodecSettingFrameRate;
+        if (input->ExpectTag(256)) goto parse_kStatsValueNameCodecSettingFrameRate;
         break;
       }
 
-      // optional int32 kStatsValueNameCodecSettingFrameRate = 31;
-      case 31: {
-        if (tag == 248) {
+      // optional int32 kStatsValueNameCodecSettingFrameRate = 32;
+      case 32: {
+        if (tag == 256) {
          parse_kStatsValueNameCodecSettingFrameRate:
           DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -710,13 +733,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(256)) goto parse_kStatsValueNameCodecSettingSimulcastNum;
+        if (input->ExpectTag(264)) goto parse_kStatsValueNameCodecSettingSimulcastNum;
         break;
       }
 
-      // optional int32 kStatsValueNameCodecSettingSimulcastNum = 32;
-      case 32: {
-        if (tag == 256) {
+      // optional int32 kStatsValueNameCodecSettingSimulcastNum = 33;
+      case 33: {
+        if (tag == 264) {
          parse_kStatsValueNameCodecSettingSimulcastNum:
           DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -725,13 +748,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(264)) goto parse_kStatsValueNameCodecSettingStartBitrate;
+        if (input->ExpectTag(272)) goto parse_kStatsValueNameCodecSettingStartBitrate;
         break;
       }
 
-      // optional int32 kStatsValueNameCodecSettingStartBitrate = 33;
-      case 33: {
-        if (tag == 264) {
+      // optional int32 kStatsValueNameCodecSettingStartBitrate = 34;
+      case 34: {
+        if (tag == 272) {
          parse_kStatsValueNameCodecSettingStartBitrate:
           DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -740,13 +763,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(272)) goto parse_kStatsValueNameCodecSettingMinBitrate;
+        if (input->ExpectTag(280)) goto parse_kStatsValueNameCodecSettingMinBitrate;
         break;
       }
 
-      // optional int32 kStatsValueNameCodecSettingMinBitrate = 34;
-      case 34: {
-        if (tag == 272) {
+      // optional int32 kStatsValueNameCodecSettingMinBitrate = 35;
+      case 35: {
+        if (tag == 280) {
          parse_kStatsValueNameCodecSettingMinBitrate:
           DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -755,13 +778,13 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(280)) goto parse_kStatsValueNameCodecSettingMaxBitrate;
+        if (input->ExpectTag(288)) goto parse_kStatsValueNameCodecSettingMaxBitrate;
         break;
       }
 
-      // optional int32 kStatsValueNameCodecSettingMaxBitrate = 35;
-      case 35: {
-        if (tag == 280) {
+      // optional int32 kStatsValueNameCodecSettingMaxBitrate = 36;
+      case 36: {
+        if (tag == 288) {
          parse_kStatsValueNameCodecSettingMaxBitrate:
           DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -770,18 +793,48 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(288)) goto parse_kStatsValueNameCodecSettingTargetBitrate;
+        if (input->ExpectTag(296)) goto parse_kStatsValueNameCodecSettingTargetBitrate;
         break;
       }
 
-      // optional int32 kStatsValueNameCodecSettingTargetBitrate = 36;
-      case 36: {
-        if (tag == 288) {
+      // optional int32 kStatsValueNameCodecSettingTargetBitrate = 37;
+      case 37: {
+        if (tag == 296) {
          parse_kStatsValueNameCodecSettingTargetBitrate:
           DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &kstatsvaluenamecodecsettingtargetbitrate_)));
           set_has_kstatsvaluenamecodecsettingtargetbitrate();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(304)) goto parse_kStatsValueNameTargetEncFrameRate;
+        break;
+      }
+
+      // optional int32 kStatsValueNameTargetEncFrameRate = 38;
+      case 38: {
+        if (tag == 304) {
+         parse_kStatsValueNameTargetEncFrameRate:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &kstatsvaluenametargetencframerate_)));
+          set_has_kstatsvaluenametargetencframerate();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(312)) goto parse_kStatsValueNameActualEncFrameRate;
+        break;
+      }
+
+      // optional int32 kStatsValueNameActualEncFrameRate = 39;
+      case 39: {
+        if (tag == 312) {
+         parse_kStatsValueNameActualEncFrameRate:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &kstatsvaluenameactualencframerate_)));
+          set_has_kstatsvaluenameactualencframerate();
         } else {
           goto handle_unusual;
         }
@@ -915,84 +968,99 @@ void VideoSenderStatisticsInner::SerializeWithCachedSizes(
     ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(20, this->kstatsvaluenamenacksuniquerequestsreceived(), output);
   }
 
-  // optional int32 kStatsValueNameAvgEncodeMs = 21;
+  // optional int32 kStatsValueNameLossFractionInPercent = 21;
+  if (has_kstatsvaluenamelossfractioninpercent()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(21, this->kstatsvaluenamelossfractioninpercent(), output);
+  }
+
+  // optional int32 kStatsValueNameAvgEncodeMs = 22;
   if (has_kstatsvaluenameavgencodems()) {
-    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(21, this->kstatsvaluenameavgencodems(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(22, this->kstatsvaluenameavgencodems(), output);
   }
 
-  // optional int32 kStatsValueNameEncodeUsagePercent = 22;
+  // optional int32 kStatsValueNameEncodeUsagePercent = 23;
   if (has_kstatsvaluenameencodeusagepercent()) {
-    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(22, this->kstatsvaluenameencodeusagepercent(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(23, this->kstatsvaluenameencodeusagepercent(), output);
   }
 
-  // optional int32 kStatsValueNameCapturedFrameWidth = 23;
+  // optional int32 kStatsValueNameCapturedFrameWidth = 24;
   if (has_kstatsvaluenamecapturedframewidth()) {
-    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(23, this->kstatsvaluenamecapturedframewidth(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(24, this->kstatsvaluenamecapturedframewidth(), output);
   }
 
-  // optional int32 kStatsValueNameCapturedFrameHeight = 24;
+  // optional int32 kStatsValueNameCapturedFrameHeight = 25;
   if (has_kstatsvaluenamecapturedframeheight()) {
-    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(24, this->kstatsvaluenamecapturedframeheight(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(25, this->kstatsvaluenamecapturedframeheight(), output);
   }
 
-  // optional int32 kStatsValueNameCapturedFrameRate = 25;
+  // optional int32 kStatsValueNameCapturedFrameRate = 26;
   if (has_kstatsvaluenamecapturedframerate()) {
-    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(25, this->kstatsvaluenamecapturedframerate(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(26, this->kstatsvaluenamecapturedframerate(), output);
   }
 
-  // optional int32 kStatsValueNameQMFrameWidth = 26;
+  // optional int32 kStatsValueNameQMFrameWidth = 27;
   if (has_kstatsvaluenameqmframewidth()) {
-    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(26, this->kstatsvaluenameqmframewidth(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(27, this->kstatsvaluenameqmframewidth(), output);
   }
 
-  // optional int32 kStatsValueNameQMFrameHeight = 27;
+  // optional int32 kStatsValueNameQMFrameHeight = 28;
   if (has_kstatsvaluenameqmframeheight()) {
-    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(27, this->kstatsvaluenameqmframeheight(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(28, this->kstatsvaluenameqmframeheight(), output);
   }
 
-  // optional int32 kStatsValueNameQMFrameRate = 28;
+  // optional int32 kStatsValueNameQMFrameRate = 29;
   if (has_kstatsvaluenameqmframerate()) {
-    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(28, this->kstatsvaluenameqmframerate(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(29, this->kstatsvaluenameqmframerate(), output);
   }
 
-  // optional int32 kStatsValueNameCodecSettingFrameWidth = 29;
+  // optional int32 kStatsValueNameCodecSettingFrameWidth = 30;
   if (has_kstatsvaluenamecodecsettingframewidth()) {
-    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(29, this->kstatsvaluenamecodecsettingframewidth(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(30, this->kstatsvaluenamecodecsettingframewidth(), output);
   }
 
-  // optional int32 kStatsValueNameCodecSettingFrameHeight = 30;
+  // optional int32 kStatsValueNameCodecSettingFrameHeight = 31;
   if (has_kstatsvaluenamecodecsettingframeheight()) {
-    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(30, this->kstatsvaluenamecodecsettingframeheight(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(31, this->kstatsvaluenamecodecsettingframeheight(), output);
   }
 
-  // optional int32 kStatsValueNameCodecSettingFrameRate = 31;
+  // optional int32 kStatsValueNameCodecSettingFrameRate = 32;
   if (has_kstatsvaluenamecodecsettingframerate()) {
-    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(31, this->kstatsvaluenamecodecsettingframerate(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(32, this->kstatsvaluenamecodecsettingframerate(), output);
   }
 
-  // optional int32 kStatsValueNameCodecSettingSimulcastNum = 32;
+  // optional int32 kStatsValueNameCodecSettingSimulcastNum = 33;
   if (has_kstatsvaluenamecodecsettingsimulcastnum()) {
-    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(32, this->kstatsvaluenamecodecsettingsimulcastnum(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(33, this->kstatsvaluenamecodecsettingsimulcastnum(), output);
   }
 
-  // optional int32 kStatsValueNameCodecSettingStartBitrate = 33;
+  // optional int32 kStatsValueNameCodecSettingStartBitrate = 34;
   if (has_kstatsvaluenamecodecsettingstartbitrate()) {
-    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(33, this->kstatsvaluenamecodecsettingstartbitrate(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(34, this->kstatsvaluenamecodecsettingstartbitrate(), output);
   }
 
-  // optional int32 kStatsValueNameCodecSettingMinBitrate = 34;
+  // optional int32 kStatsValueNameCodecSettingMinBitrate = 35;
   if (has_kstatsvaluenamecodecsettingminbitrate()) {
-    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(34, this->kstatsvaluenamecodecsettingminbitrate(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(35, this->kstatsvaluenamecodecsettingminbitrate(), output);
   }
 
-  // optional int32 kStatsValueNameCodecSettingMaxBitrate = 35;
+  // optional int32 kStatsValueNameCodecSettingMaxBitrate = 36;
   if (has_kstatsvaluenamecodecsettingmaxbitrate()) {
-    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(35, this->kstatsvaluenamecodecsettingmaxbitrate(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(36, this->kstatsvaluenamecodecsettingmaxbitrate(), output);
   }
 
-  // optional int32 kStatsValueNameCodecSettingTargetBitrate = 36;
+  // optional int32 kStatsValueNameCodecSettingTargetBitrate = 37;
   if (has_kstatsvaluenamecodecsettingtargetbitrate()) {
-    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(36, this->kstatsvaluenamecodecsettingtargetbitrate(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(37, this->kstatsvaluenamecodecsettingtargetbitrate(), output);
+  }
+
+  // optional int32 kStatsValueNameTargetEncFrameRate = 38;
+  if (has_kstatsvaluenametargetencframerate()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(38, this->kstatsvaluenametargetencframerate(), output);
+  }
+
+  // optional int32 kStatsValueNameActualEncFrameRate = 39;
+  if (has_kstatsvaluenameactualencframerate()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(39, this->kstatsvaluenameactualencframerate(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -1148,120 +1216,141 @@ int VideoSenderStatisticsInner::ByteSize() const {
           this->kstatsvaluenamenacksuniquerequestsreceived());
     }
 
-    // optional int32 kStatsValueNameAvgEncodeMs = 21;
+    // optional int32 kStatsValueNameLossFractionInPercent = 21;
+    if (has_kstatsvaluenamelossfractioninpercent()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->kstatsvaluenamelossfractioninpercent());
+    }
+
+    // optional int32 kStatsValueNameAvgEncodeMs = 22;
     if (has_kstatsvaluenameavgencodems()) {
       total_size += 2 +
         ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameavgencodems());
     }
 
-    // optional int32 kStatsValueNameEncodeUsagePercent = 22;
+    // optional int32 kStatsValueNameEncodeUsagePercent = 23;
     if (has_kstatsvaluenameencodeusagepercent()) {
       total_size += 2 +
         ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameencodeusagepercent());
     }
 
-    // optional int32 kStatsValueNameCapturedFrameWidth = 23;
+    // optional int32 kStatsValueNameCapturedFrameWidth = 24;
     if (has_kstatsvaluenamecapturedframewidth()) {
       total_size += 2 +
         ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecapturedframewidth());
     }
 
-    // optional int32 kStatsValueNameCapturedFrameHeight = 24;
+  }
+  if (_has_bits_[24 / 32] & (0xffu << (24 % 32))) {
+    // optional int32 kStatsValueNameCapturedFrameHeight = 25;
     if (has_kstatsvaluenamecapturedframeheight()) {
       total_size += 2 +
         ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecapturedframeheight());
     }
 
-  }
-  if (_has_bits_[24 / 32] & (0xffu << (24 % 32))) {
-    // optional int32 kStatsValueNameCapturedFrameRate = 25;
+    // optional int32 kStatsValueNameCapturedFrameRate = 26;
     if (has_kstatsvaluenamecapturedframerate()) {
       total_size += 2 +
         ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecapturedframerate());
     }
 
-    // optional int32 kStatsValueNameQMFrameWidth = 26;
+    // optional int32 kStatsValueNameQMFrameWidth = 27;
     if (has_kstatsvaluenameqmframewidth()) {
       total_size += 2 +
         ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameqmframewidth());
     }
 
-    // optional int32 kStatsValueNameQMFrameHeight = 27;
+    // optional int32 kStatsValueNameQMFrameHeight = 28;
     if (has_kstatsvaluenameqmframeheight()) {
       total_size += 2 +
         ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameqmframeheight());
     }
 
-    // optional int32 kStatsValueNameQMFrameRate = 28;
+    // optional int32 kStatsValueNameQMFrameRate = 29;
     if (has_kstatsvaluenameqmframerate()) {
       total_size += 2 +
         ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameqmframerate());
     }
 
-    // optional int32 kStatsValueNameCodecSettingFrameWidth = 29;
+    // optional int32 kStatsValueNameCodecSettingFrameWidth = 30;
     if (has_kstatsvaluenamecodecsettingframewidth()) {
       total_size += 2 +
         ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingframewidth());
     }
 
-    // optional int32 kStatsValueNameCodecSettingFrameHeight = 30;
+    // optional int32 kStatsValueNameCodecSettingFrameHeight = 31;
     if (has_kstatsvaluenamecodecsettingframeheight()) {
       total_size += 2 +
         ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingframeheight());
     }
 
-    // optional int32 kStatsValueNameCodecSettingFrameRate = 31;
+    // optional int32 kStatsValueNameCodecSettingFrameRate = 32;
     if (has_kstatsvaluenamecodecsettingframerate()) {
       total_size += 2 +
         ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingframerate());
     }
 
-    // optional int32 kStatsValueNameCodecSettingSimulcastNum = 32;
+  }
+  if (_has_bits_[32 / 32] & (0xffu << (32 % 32))) {
+    // optional int32 kStatsValueNameCodecSettingSimulcastNum = 33;
     if (has_kstatsvaluenamecodecsettingsimulcastnum()) {
       total_size += 2 +
         ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingsimulcastnum());
     }
 
-  }
-  if (_has_bits_[32 / 32] & (0xffu << (32 % 32))) {
-    // optional int32 kStatsValueNameCodecSettingStartBitrate = 33;
+    // optional int32 kStatsValueNameCodecSettingStartBitrate = 34;
     if (has_kstatsvaluenamecodecsettingstartbitrate()) {
       total_size += 2 +
         ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingstartbitrate());
     }
 
-    // optional int32 kStatsValueNameCodecSettingMinBitrate = 34;
+    // optional int32 kStatsValueNameCodecSettingMinBitrate = 35;
     if (has_kstatsvaluenamecodecsettingminbitrate()) {
       total_size += 2 +
         ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingminbitrate());
     }
 
-    // optional int32 kStatsValueNameCodecSettingMaxBitrate = 35;
+    // optional int32 kStatsValueNameCodecSettingMaxBitrate = 36;
     if (has_kstatsvaluenamecodecsettingmaxbitrate()) {
       total_size += 2 +
         ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingmaxbitrate());
     }
 
-    // optional int32 kStatsValueNameCodecSettingTargetBitrate = 36;
+    // optional int32 kStatsValueNameCodecSettingTargetBitrate = 37;
     if (has_kstatsvaluenamecodecsettingtargetbitrate()) {
       total_size += 2 +
         ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenamecodecsettingtargetbitrate());
+    }
+
+    // optional int32 kStatsValueNameTargetEncFrameRate = 38;
+    if (has_kstatsvaluenametargetencframerate()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->kstatsvaluenametargetencframerate());
+    }
+
+    // optional int32 kStatsValueNameActualEncFrameRate = 39;
+    if (has_kstatsvaluenameactualencframerate()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->kstatsvaluenameactualencframerate());
     }
 
   }
@@ -1345,6 +1434,9 @@ void VideoSenderStatisticsInner::MergeFrom(const VideoSenderStatisticsInner& fro
     if (from.has_kstatsvaluenamenacksuniquerequestsreceived()) {
       set_kstatsvaluenamenacksuniquerequestsreceived(from.kstatsvaluenamenacksuniquerequestsreceived());
     }
+    if (from.has_kstatsvaluenamelossfractioninpercent()) {
+      set_kstatsvaluenamelossfractioninpercent(from.kstatsvaluenamelossfractioninpercent());
+    }
     if (from.has_kstatsvaluenameavgencodems()) {
       set_kstatsvaluenameavgencodems(from.kstatsvaluenameavgencodems());
     }
@@ -1354,11 +1446,11 @@ void VideoSenderStatisticsInner::MergeFrom(const VideoSenderStatisticsInner& fro
     if (from.has_kstatsvaluenamecapturedframewidth()) {
       set_kstatsvaluenamecapturedframewidth(from.kstatsvaluenamecapturedframewidth());
     }
+  }
+  if (from._has_bits_[24 / 32] & (0xffu << (24 % 32))) {
     if (from.has_kstatsvaluenamecapturedframeheight()) {
       set_kstatsvaluenamecapturedframeheight(from.kstatsvaluenamecapturedframeheight());
     }
-  }
-  if (from._has_bits_[24 / 32] & (0xffu << (24 % 32))) {
     if (from.has_kstatsvaluenamecapturedframerate()) {
       set_kstatsvaluenamecapturedframerate(from.kstatsvaluenamecapturedframerate());
     }
@@ -1380,11 +1472,11 @@ void VideoSenderStatisticsInner::MergeFrom(const VideoSenderStatisticsInner& fro
     if (from.has_kstatsvaluenamecodecsettingframerate()) {
       set_kstatsvaluenamecodecsettingframerate(from.kstatsvaluenamecodecsettingframerate());
     }
+  }
+  if (from._has_bits_[32 / 32] & (0xffu << (32 % 32))) {
     if (from.has_kstatsvaluenamecodecsettingsimulcastnum()) {
       set_kstatsvaluenamecodecsettingsimulcastnum(from.kstatsvaluenamecodecsettingsimulcastnum());
     }
-  }
-  if (from._has_bits_[32 / 32] & (0xffu << (32 % 32))) {
     if (from.has_kstatsvaluenamecodecsettingstartbitrate()) {
       set_kstatsvaluenamecodecsettingstartbitrate(from.kstatsvaluenamecodecsettingstartbitrate());
     }
@@ -1396,6 +1488,12 @@ void VideoSenderStatisticsInner::MergeFrom(const VideoSenderStatisticsInner& fro
     }
     if (from.has_kstatsvaluenamecodecsettingtargetbitrate()) {
       set_kstatsvaluenamecodecsettingtargetbitrate(from.kstatsvaluenamecodecsettingtargetbitrate());
+    }
+    if (from.has_kstatsvaluenametargetencframerate()) {
+      set_kstatsvaluenametargetencframerate(from.kstatsvaluenametargetencframerate());
+    }
+    if (from.has_kstatsvaluenameactualencframerate()) {
+      set_kstatsvaluenameactualencframerate(from.kstatsvaluenameactualencframerate());
     }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
@@ -1434,6 +1532,7 @@ void VideoSenderStatisticsInner::Swap(VideoSenderStatisticsInner* other) {
     std::swap(kstatsvaluenamenacksreceived_, other->kstatsvaluenamenacksreceived_);
     std::swap(kstatsvaluenamenacksrequestsreceived_, other->kstatsvaluenamenacksrequestsreceived_);
     std::swap(kstatsvaluenamenacksuniquerequestsreceived_, other->kstatsvaluenamenacksuniquerequestsreceived_);
+    std::swap(kstatsvaluenamelossfractioninpercent_, other->kstatsvaluenamelossfractioninpercent_);
     std::swap(kstatsvaluenameavgencodems_, other->kstatsvaluenameavgencodems_);
     std::swap(kstatsvaluenameencodeusagepercent_, other->kstatsvaluenameencodeusagepercent_);
     std::swap(kstatsvaluenamecapturedframewidth_, other->kstatsvaluenamecapturedframewidth_);
@@ -1450,6 +1549,8 @@ void VideoSenderStatisticsInner::Swap(VideoSenderStatisticsInner* other) {
     std::swap(kstatsvaluenamecodecsettingminbitrate_, other->kstatsvaluenamecodecsettingminbitrate_);
     std::swap(kstatsvaluenamecodecsettingmaxbitrate_, other->kstatsvaluenamecodecsettingmaxbitrate_);
     std::swap(kstatsvaluenamecodecsettingtargetbitrate_, other->kstatsvaluenamecodecsettingtargetbitrate_);
+    std::swap(kstatsvaluenametargetencframerate_, other->kstatsvaluenametargetencframerate_);
+    std::swap(kstatsvaluenameactualencframerate_, other->kstatsvaluenameactualencframerate_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_has_bits_[1], other->_has_bits_[1]);
     _unknown_fields_.swap(other->_unknown_fields_);

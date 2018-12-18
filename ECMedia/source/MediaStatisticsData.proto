@@ -32,30 +32,33 @@ message VideoSenderStatisticsInner
 	optional int32 kStatsValueNameNacksReceived = 18;
 	optional int32 kStatsValueNameNacksRequestsReceived = 19;
 	optional int32 kStatsValueNameNacksUniqueRequestsReceived = 20;
+	optional int32 kStatsValueNameLossFractionInPercent = 21;
 
 	//CPU Metrics
-	optional int32 kStatsValueNameAvgEncodeMs = 21;
-	optional int32 kStatsValueNameEncodeUsagePercent = 22;
+	optional int32 kStatsValueNameAvgEncodeMs = 22;
+	optional int32 kStatsValueNameEncodeUsagePercent = 23;
 
 	//capture
-	optional int32 kStatsValueNameCapturedFrameWidth = 23;
-	optional int32 kStatsValueNameCapturedFrameHeight = 24;
-	optional int32 kStatsValueNameCapturedFrameRate = 25;
+	optional int32 kStatsValueNameCapturedFrameWidth = 24;
+	optional int32 kStatsValueNameCapturedFrameHeight = 25;
+	optional int32 kStatsValueNameCapturedFrameRate = 26;
 
 	//QMSetting
-	optional int32 kStatsValueNameQMFrameWidth = 26;
-	optional int32 kStatsValueNameQMFrameHeight = 27;
-	optional int32 kStatsValueNameQMFrameRate = 28;
+	optional int32 kStatsValueNameQMFrameWidth = 27;
+	optional int32 kStatsValueNameQMFrameHeight = 28;
+	optional int32 kStatsValueNameQMFrameRate = 29;
 
 	//CodecSetting
-	optional int32 kStatsValueNameCodecSettingFrameWidth = 29;
-	optional int32 kStatsValueNameCodecSettingFrameHeight = 30;
-	optional int32 kStatsValueNameCodecSettingFrameRate = 31;
-	optional int32 kStatsValueNameCodecSettingSimulcastNum = 32;
-	optional int32 kStatsValueNameCodecSettingStartBitrate = 33;
-	optional int32 kStatsValueNameCodecSettingMinBitrate = 34;
-	optional int32 kStatsValueNameCodecSettingMaxBitrate = 35;
-	optional int32 kStatsValueNameCodecSettingTargetBitrate = 36;
+	optional int32 kStatsValueNameCodecSettingFrameWidth = 30;
+	optional int32 kStatsValueNameCodecSettingFrameHeight = 31;
+	optional int32 kStatsValueNameCodecSettingFrameRate = 32;
+	optional int32 kStatsValueNameCodecSettingSimulcastNum = 33;
+	optional int32 kStatsValueNameCodecSettingStartBitrate = 34;
+	optional int32 kStatsValueNameCodecSettingMinBitrate = 35;
+	optional int32 kStatsValueNameCodecSettingMaxBitrate = 36;
+	optional int32 kStatsValueNameCodecSettingTargetBitrate = 37;
+	optional int32 kStatsValueNameTargetEncFrameRate = 38;
+	optional int32 kStatsValueNameActualEncFrameRate = 39;
 }
 
 message VideoReceiverStatisticsInner

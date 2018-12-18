@@ -214,10 +214,17 @@ ViEEncoder::ViEEncoder(int32_t engine_id,
   configuration.event_log = rtc_event_log_;
   configuration.intra_frame_callback = this/*encoder_feedback_.get()*/;
   configuration.send_bitrate_observer = send_statistics_proxy_.get();
-
+        
+  //zhangning added 20181122
+  RtcpBandwidthObserver* bandwidth_observer =
+        bitrate_controller->CreateRtcpBandwidthObserver();
+  configuration.bandwidth_callback = bandwidth_observer;
+        
   default_rtp_rtcp_.reset(RtpRtcp::CreateRtpRtcp(configuration));
   //need to fix: ylr
   default_rtp_rtcp_->SetSendingMediaStatus(true);
+  //zhangning added 20181208
+  default_rtp_rtcp_->RegisterRtcpStatisticsCallback(send_statistics_proxy_.get());
 #ifdef ENABLE_GCC
   default_rtp_rtcp_->RegisterSendRtpHeaderExtension(kRtpExtensionTransportSequenceNumber, 5);
 #endif

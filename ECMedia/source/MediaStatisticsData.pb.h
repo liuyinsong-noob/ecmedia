@@ -245,117 +245,138 @@ class VideoSenderStatisticsInner : public ::yuntongxun_google::protobuf::Message
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamenacksuniquerequestsreceived() const;
   inline void set_kstatsvaluenamenacksuniquerequestsreceived(::yuntongxun_google::protobuf::int32 value);
 
-  // optional int32 kStatsValueNameAvgEncodeMs = 21;
+  // optional int32 kStatsValueNameLossFractionInPercent = 21;
+  inline bool has_kstatsvaluenamelossfractioninpercent() const;
+  inline void clear_kstatsvaluenamelossfractioninpercent();
+  static const int kKStatsValueNameLossFractionInPercentFieldNumber = 21;
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamelossfractioninpercent() const;
+  inline void set_kstatsvaluenamelossfractioninpercent(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 kStatsValueNameAvgEncodeMs = 22;
   inline bool has_kstatsvaluenameavgencodems() const;
   inline void clear_kstatsvaluenameavgencodems();
-  static const int kKStatsValueNameAvgEncodeMsFieldNumber = 21;
+  static const int kKStatsValueNameAvgEncodeMsFieldNumber = 22;
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameavgencodems() const;
   inline void set_kstatsvaluenameavgencodems(::yuntongxun_google::protobuf::int32 value);
 
-  // optional int32 kStatsValueNameEncodeUsagePercent = 22;
+  // optional int32 kStatsValueNameEncodeUsagePercent = 23;
   inline bool has_kstatsvaluenameencodeusagepercent() const;
   inline void clear_kstatsvaluenameencodeusagepercent();
-  static const int kKStatsValueNameEncodeUsagePercentFieldNumber = 22;
+  static const int kKStatsValueNameEncodeUsagePercentFieldNumber = 23;
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameencodeusagepercent() const;
   inline void set_kstatsvaluenameencodeusagepercent(::yuntongxun_google::protobuf::int32 value);
 
-  // optional int32 kStatsValueNameCapturedFrameWidth = 23;
+  // optional int32 kStatsValueNameCapturedFrameWidth = 24;
   inline bool has_kstatsvaluenamecapturedframewidth() const;
   inline void clear_kstatsvaluenamecapturedframewidth();
-  static const int kKStatsValueNameCapturedFrameWidthFieldNumber = 23;
+  static const int kKStatsValueNameCapturedFrameWidthFieldNumber = 24;
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecapturedframewidth() const;
   inline void set_kstatsvaluenamecapturedframewidth(::yuntongxun_google::protobuf::int32 value);
 
-  // optional int32 kStatsValueNameCapturedFrameHeight = 24;
+  // optional int32 kStatsValueNameCapturedFrameHeight = 25;
   inline bool has_kstatsvaluenamecapturedframeheight() const;
   inline void clear_kstatsvaluenamecapturedframeheight();
-  static const int kKStatsValueNameCapturedFrameHeightFieldNumber = 24;
+  static const int kKStatsValueNameCapturedFrameHeightFieldNumber = 25;
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecapturedframeheight() const;
   inline void set_kstatsvaluenamecapturedframeheight(::yuntongxun_google::protobuf::int32 value);
 
-  // optional int32 kStatsValueNameCapturedFrameRate = 25;
+  // optional int32 kStatsValueNameCapturedFrameRate = 26;
   inline bool has_kstatsvaluenamecapturedframerate() const;
   inline void clear_kstatsvaluenamecapturedframerate();
-  static const int kKStatsValueNameCapturedFrameRateFieldNumber = 25;
+  static const int kKStatsValueNameCapturedFrameRateFieldNumber = 26;
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecapturedframerate() const;
   inline void set_kstatsvaluenamecapturedframerate(::yuntongxun_google::protobuf::int32 value);
 
-  // optional int32 kStatsValueNameQMFrameWidth = 26;
+  // optional int32 kStatsValueNameQMFrameWidth = 27;
   inline bool has_kstatsvaluenameqmframewidth() const;
   inline void clear_kstatsvaluenameqmframewidth();
-  static const int kKStatsValueNameQMFrameWidthFieldNumber = 26;
+  static const int kKStatsValueNameQMFrameWidthFieldNumber = 27;
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameqmframewidth() const;
   inline void set_kstatsvaluenameqmframewidth(::yuntongxun_google::protobuf::int32 value);
 
-  // optional int32 kStatsValueNameQMFrameHeight = 27;
+  // optional int32 kStatsValueNameQMFrameHeight = 28;
   inline bool has_kstatsvaluenameqmframeheight() const;
   inline void clear_kstatsvaluenameqmframeheight();
-  static const int kKStatsValueNameQMFrameHeightFieldNumber = 27;
+  static const int kKStatsValueNameQMFrameHeightFieldNumber = 28;
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameqmframeheight() const;
   inline void set_kstatsvaluenameqmframeheight(::yuntongxun_google::protobuf::int32 value);
 
-  // optional int32 kStatsValueNameQMFrameRate = 28;
+  // optional int32 kStatsValueNameQMFrameRate = 29;
   inline bool has_kstatsvaluenameqmframerate() const;
   inline void clear_kstatsvaluenameqmframerate();
-  static const int kKStatsValueNameQMFrameRateFieldNumber = 28;
+  static const int kKStatsValueNameQMFrameRateFieldNumber = 29;
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameqmframerate() const;
   inline void set_kstatsvaluenameqmframerate(::yuntongxun_google::protobuf::int32 value);
 
-  // optional int32 kStatsValueNameCodecSettingFrameWidth = 29;
+  // optional int32 kStatsValueNameCodecSettingFrameWidth = 30;
   inline bool has_kstatsvaluenamecodecsettingframewidth() const;
   inline void clear_kstatsvaluenamecodecsettingframewidth();
-  static const int kKStatsValueNameCodecSettingFrameWidthFieldNumber = 29;
+  static const int kKStatsValueNameCodecSettingFrameWidthFieldNumber = 30;
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingframewidth() const;
   inline void set_kstatsvaluenamecodecsettingframewidth(::yuntongxun_google::protobuf::int32 value);
 
-  // optional int32 kStatsValueNameCodecSettingFrameHeight = 30;
+  // optional int32 kStatsValueNameCodecSettingFrameHeight = 31;
   inline bool has_kstatsvaluenamecodecsettingframeheight() const;
   inline void clear_kstatsvaluenamecodecsettingframeheight();
-  static const int kKStatsValueNameCodecSettingFrameHeightFieldNumber = 30;
+  static const int kKStatsValueNameCodecSettingFrameHeightFieldNumber = 31;
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingframeheight() const;
   inline void set_kstatsvaluenamecodecsettingframeheight(::yuntongxun_google::protobuf::int32 value);
 
-  // optional int32 kStatsValueNameCodecSettingFrameRate = 31;
+  // optional int32 kStatsValueNameCodecSettingFrameRate = 32;
   inline bool has_kstatsvaluenamecodecsettingframerate() const;
   inline void clear_kstatsvaluenamecodecsettingframerate();
-  static const int kKStatsValueNameCodecSettingFrameRateFieldNumber = 31;
+  static const int kKStatsValueNameCodecSettingFrameRateFieldNumber = 32;
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingframerate() const;
   inline void set_kstatsvaluenamecodecsettingframerate(::yuntongxun_google::protobuf::int32 value);
 
-  // optional int32 kStatsValueNameCodecSettingSimulcastNum = 32;
+  // optional int32 kStatsValueNameCodecSettingSimulcastNum = 33;
   inline bool has_kstatsvaluenamecodecsettingsimulcastnum() const;
   inline void clear_kstatsvaluenamecodecsettingsimulcastnum();
-  static const int kKStatsValueNameCodecSettingSimulcastNumFieldNumber = 32;
+  static const int kKStatsValueNameCodecSettingSimulcastNumFieldNumber = 33;
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingsimulcastnum() const;
   inline void set_kstatsvaluenamecodecsettingsimulcastnum(::yuntongxun_google::protobuf::int32 value);
 
-  // optional int32 kStatsValueNameCodecSettingStartBitrate = 33;
+  // optional int32 kStatsValueNameCodecSettingStartBitrate = 34;
   inline bool has_kstatsvaluenamecodecsettingstartbitrate() const;
   inline void clear_kstatsvaluenamecodecsettingstartbitrate();
-  static const int kKStatsValueNameCodecSettingStartBitrateFieldNumber = 33;
+  static const int kKStatsValueNameCodecSettingStartBitrateFieldNumber = 34;
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingstartbitrate() const;
   inline void set_kstatsvaluenamecodecsettingstartbitrate(::yuntongxun_google::protobuf::int32 value);
 
-  // optional int32 kStatsValueNameCodecSettingMinBitrate = 34;
+  // optional int32 kStatsValueNameCodecSettingMinBitrate = 35;
   inline bool has_kstatsvaluenamecodecsettingminbitrate() const;
   inline void clear_kstatsvaluenamecodecsettingminbitrate();
-  static const int kKStatsValueNameCodecSettingMinBitrateFieldNumber = 34;
+  static const int kKStatsValueNameCodecSettingMinBitrateFieldNumber = 35;
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingminbitrate() const;
   inline void set_kstatsvaluenamecodecsettingminbitrate(::yuntongxun_google::protobuf::int32 value);
 
-  // optional int32 kStatsValueNameCodecSettingMaxBitrate = 35;
+  // optional int32 kStatsValueNameCodecSettingMaxBitrate = 36;
   inline bool has_kstatsvaluenamecodecsettingmaxbitrate() const;
   inline void clear_kstatsvaluenamecodecsettingmaxbitrate();
-  static const int kKStatsValueNameCodecSettingMaxBitrateFieldNumber = 35;
+  static const int kKStatsValueNameCodecSettingMaxBitrateFieldNumber = 36;
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingmaxbitrate() const;
   inline void set_kstatsvaluenamecodecsettingmaxbitrate(::yuntongxun_google::protobuf::int32 value);
 
-  // optional int32 kStatsValueNameCodecSettingTargetBitrate = 36;
+  // optional int32 kStatsValueNameCodecSettingTargetBitrate = 37;
   inline bool has_kstatsvaluenamecodecsettingtargetbitrate() const;
   inline void clear_kstatsvaluenamecodecsettingtargetbitrate();
-  static const int kKStatsValueNameCodecSettingTargetBitrateFieldNumber = 36;
+  static const int kKStatsValueNameCodecSettingTargetBitrateFieldNumber = 37;
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingtargetbitrate() const;
   inline void set_kstatsvaluenamecodecsettingtargetbitrate(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 kStatsValueNameTargetEncFrameRate = 38;
+  inline bool has_kstatsvaluenametargetencframerate() const;
+  inline void clear_kstatsvaluenametargetencframerate();
+  static const int kKStatsValueNameTargetEncFrameRateFieldNumber = 38;
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenametargetencframerate() const;
+  inline void set_kstatsvaluenametargetencframerate(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 kStatsValueNameActualEncFrameRate = 39;
+  inline bool has_kstatsvaluenameactualencframerate() const;
+  inline void clear_kstatsvaluenameactualencframerate();
+  static const int kKStatsValueNameActualEncFrameRateFieldNumber = 39;
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameactualencframerate() const;
+  inline void set_kstatsvaluenameactualencframerate(::yuntongxun_google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:VideoSenderStatisticsInner)
  private:
@@ -399,6 +420,8 @@ class VideoSenderStatisticsInner : public ::yuntongxun_google::protobuf::Message
   inline void clear_has_kstatsvaluenamenacksrequestsreceived();
   inline void set_has_kstatsvaluenamenacksuniquerequestsreceived();
   inline void clear_has_kstatsvaluenamenacksuniquerequestsreceived();
+  inline void set_has_kstatsvaluenamelossfractioninpercent();
+  inline void clear_has_kstatsvaluenamelossfractioninpercent();
   inline void set_has_kstatsvaluenameavgencodems();
   inline void clear_has_kstatsvaluenameavgencodems();
   inline void set_has_kstatsvaluenameencodeusagepercent();
@@ -431,6 +454,10 @@ class VideoSenderStatisticsInner : public ::yuntongxun_google::protobuf::Message
   inline void clear_has_kstatsvaluenamecodecsettingmaxbitrate();
   inline void set_has_kstatsvaluenamecodecsettingtargetbitrate();
   inline void clear_has_kstatsvaluenamecodecsettingtargetbitrate();
+  inline void set_has_kstatsvaluenametargetencframerate();
+  inline void clear_has_kstatsvaluenametargetencframerate();
+  inline void set_has_kstatsvaluenameactualencframerate();
+  inline void clear_has_kstatsvaluenameactualencframerate();
 
   ::std::string _unknown_fields_;
 
@@ -455,6 +482,7 @@ class VideoSenderStatisticsInner : public ::yuntongxun_google::protobuf::Message
   ::yuntongxun_google::protobuf::int32 kstatsvaluenamenacksreceived_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenamenacksrequestsreceived_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenamenacksuniquerequestsreceived_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamelossfractioninpercent_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenameavgencodems_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenameencodeusagepercent_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenamecapturedframewidth_;
@@ -471,6 +499,8 @@ class VideoSenderStatisticsInner : public ::yuntongxun_google::protobuf::Message
   ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingminbitrate_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingmaxbitrate_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingtargetbitrate_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenametargetencframerate_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenameactualencframerate_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_MediaStatisticsData_2eproto_impl();
@@ -2082,15 +2112,39 @@ inline void VideoSenderStatisticsInner::set_kstatsvaluenamenacksuniquerequestsre
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameNacksUniqueRequestsReceived)
 }
 
-// optional int32 kStatsValueNameAvgEncodeMs = 21;
-inline bool VideoSenderStatisticsInner::has_kstatsvaluenameavgencodems() const {
+// optional int32 kStatsValueNameLossFractionInPercent = 21;
+inline bool VideoSenderStatisticsInner::has_kstatsvaluenamelossfractioninpercent() const {
   return (_has_bits_[0] & 0x00100000u) != 0;
 }
-inline void VideoSenderStatisticsInner::set_has_kstatsvaluenameavgencodems() {
+inline void VideoSenderStatisticsInner::set_has_kstatsvaluenamelossfractioninpercent() {
   _has_bits_[0] |= 0x00100000u;
 }
-inline void VideoSenderStatisticsInner::clear_has_kstatsvaluenameavgencodems() {
+inline void VideoSenderStatisticsInner::clear_has_kstatsvaluenamelossfractioninpercent() {
   _has_bits_[0] &= ~0x00100000u;
+}
+inline void VideoSenderStatisticsInner::clear_kstatsvaluenamelossfractioninpercent() {
+  kstatsvaluenamelossfractioninpercent_ = 0;
+  clear_has_kstatsvaluenamelossfractioninpercent();
+}
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenamelossfractioninpercent() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameLossFractionInPercent)
+  return kstatsvaluenamelossfractioninpercent_;
+}
+inline void VideoSenderStatisticsInner::set_kstatsvaluenamelossfractioninpercent(::yuntongxun_google::protobuf::int32 value) {
+  set_has_kstatsvaluenamelossfractioninpercent();
+  kstatsvaluenamelossfractioninpercent_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameLossFractionInPercent)
+}
+
+// optional int32 kStatsValueNameAvgEncodeMs = 22;
+inline bool VideoSenderStatisticsInner::has_kstatsvaluenameavgencodems() const {
+  return (_has_bits_[0] & 0x00200000u) != 0;
+}
+inline void VideoSenderStatisticsInner::set_has_kstatsvaluenameavgencodems() {
+  _has_bits_[0] |= 0x00200000u;
+}
+inline void VideoSenderStatisticsInner::clear_has_kstatsvaluenameavgencodems() {
+  _has_bits_[0] &= ~0x00200000u;
 }
 inline void VideoSenderStatisticsInner::clear_kstatsvaluenameavgencodems() {
   kstatsvaluenameavgencodems_ = 0;
@@ -2106,15 +2160,15 @@ inline void VideoSenderStatisticsInner::set_kstatsvaluenameavgencodems(::yuntong
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameAvgEncodeMs)
 }
 
-// optional int32 kStatsValueNameEncodeUsagePercent = 22;
+// optional int32 kStatsValueNameEncodeUsagePercent = 23;
 inline bool VideoSenderStatisticsInner::has_kstatsvaluenameencodeusagepercent() const {
-  return (_has_bits_[0] & 0x00200000u) != 0;
+  return (_has_bits_[0] & 0x00400000u) != 0;
 }
 inline void VideoSenderStatisticsInner::set_has_kstatsvaluenameencodeusagepercent() {
-  _has_bits_[0] |= 0x00200000u;
+  _has_bits_[0] |= 0x00400000u;
 }
 inline void VideoSenderStatisticsInner::clear_has_kstatsvaluenameencodeusagepercent() {
-  _has_bits_[0] &= ~0x00200000u;
+  _has_bits_[0] &= ~0x00400000u;
 }
 inline void VideoSenderStatisticsInner::clear_kstatsvaluenameencodeusagepercent() {
   kstatsvaluenameencodeusagepercent_ = 0;
@@ -2130,15 +2184,15 @@ inline void VideoSenderStatisticsInner::set_kstatsvaluenameencodeusagepercent(::
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameEncodeUsagePercent)
 }
 
-// optional int32 kStatsValueNameCapturedFrameWidth = 23;
+// optional int32 kStatsValueNameCapturedFrameWidth = 24;
 inline bool VideoSenderStatisticsInner::has_kstatsvaluenamecapturedframewidth() const {
-  return (_has_bits_[0] & 0x00400000u) != 0;
+  return (_has_bits_[0] & 0x00800000u) != 0;
 }
 inline void VideoSenderStatisticsInner::set_has_kstatsvaluenamecapturedframewidth() {
-  _has_bits_[0] |= 0x00400000u;
+  _has_bits_[0] |= 0x00800000u;
 }
 inline void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecapturedframewidth() {
-  _has_bits_[0] &= ~0x00400000u;
+  _has_bits_[0] &= ~0x00800000u;
 }
 inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecapturedframewidth() {
   kstatsvaluenamecapturedframewidth_ = 0;
@@ -2154,15 +2208,15 @@ inline void VideoSenderStatisticsInner::set_kstatsvaluenamecapturedframewidth(::
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCapturedFrameWidth)
 }
 
-// optional int32 kStatsValueNameCapturedFrameHeight = 24;
+// optional int32 kStatsValueNameCapturedFrameHeight = 25;
 inline bool VideoSenderStatisticsInner::has_kstatsvaluenamecapturedframeheight() const {
-  return (_has_bits_[0] & 0x00800000u) != 0;
+  return (_has_bits_[0] & 0x01000000u) != 0;
 }
 inline void VideoSenderStatisticsInner::set_has_kstatsvaluenamecapturedframeheight() {
-  _has_bits_[0] |= 0x00800000u;
+  _has_bits_[0] |= 0x01000000u;
 }
 inline void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecapturedframeheight() {
-  _has_bits_[0] &= ~0x00800000u;
+  _has_bits_[0] &= ~0x01000000u;
 }
 inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecapturedframeheight() {
   kstatsvaluenamecapturedframeheight_ = 0;
@@ -2178,15 +2232,15 @@ inline void VideoSenderStatisticsInner::set_kstatsvaluenamecapturedframeheight(:
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCapturedFrameHeight)
 }
 
-// optional int32 kStatsValueNameCapturedFrameRate = 25;
+// optional int32 kStatsValueNameCapturedFrameRate = 26;
 inline bool VideoSenderStatisticsInner::has_kstatsvaluenamecapturedframerate() const {
-  return (_has_bits_[0] & 0x01000000u) != 0;
+  return (_has_bits_[0] & 0x02000000u) != 0;
 }
 inline void VideoSenderStatisticsInner::set_has_kstatsvaluenamecapturedframerate() {
-  _has_bits_[0] |= 0x01000000u;
+  _has_bits_[0] |= 0x02000000u;
 }
 inline void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecapturedframerate() {
-  _has_bits_[0] &= ~0x01000000u;
+  _has_bits_[0] &= ~0x02000000u;
 }
 inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecapturedframerate() {
   kstatsvaluenamecapturedframerate_ = 0;
@@ -2202,15 +2256,15 @@ inline void VideoSenderStatisticsInner::set_kstatsvaluenamecapturedframerate(::y
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCapturedFrameRate)
 }
 
-// optional int32 kStatsValueNameQMFrameWidth = 26;
+// optional int32 kStatsValueNameQMFrameWidth = 27;
 inline bool VideoSenderStatisticsInner::has_kstatsvaluenameqmframewidth() const {
-  return (_has_bits_[0] & 0x02000000u) != 0;
+  return (_has_bits_[0] & 0x04000000u) != 0;
 }
 inline void VideoSenderStatisticsInner::set_has_kstatsvaluenameqmframewidth() {
-  _has_bits_[0] |= 0x02000000u;
+  _has_bits_[0] |= 0x04000000u;
 }
 inline void VideoSenderStatisticsInner::clear_has_kstatsvaluenameqmframewidth() {
-  _has_bits_[0] &= ~0x02000000u;
+  _has_bits_[0] &= ~0x04000000u;
 }
 inline void VideoSenderStatisticsInner::clear_kstatsvaluenameqmframewidth() {
   kstatsvaluenameqmframewidth_ = 0;
@@ -2226,15 +2280,15 @@ inline void VideoSenderStatisticsInner::set_kstatsvaluenameqmframewidth(::yunton
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameQMFrameWidth)
 }
 
-// optional int32 kStatsValueNameQMFrameHeight = 27;
+// optional int32 kStatsValueNameQMFrameHeight = 28;
 inline bool VideoSenderStatisticsInner::has_kstatsvaluenameqmframeheight() const {
-  return (_has_bits_[0] & 0x04000000u) != 0;
+  return (_has_bits_[0] & 0x08000000u) != 0;
 }
 inline void VideoSenderStatisticsInner::set_has_kstatsvaluenameqmframeheight() {
-  _has_bits_[0] |= 0x04000000u;
+  _has_bits_[0] |= 0x08000000u;
 }
 inline void VideoSenderStatisticsInner::clear_has_kstatsvaluenameqmframeheight() {
-  _has_bits_[0] &= ~0x04000000u;
+  _has_bits_[0] &= ~0x08000000u;
 }
 inline void VideoSenderStatisticsInner::clear_kstatsvaluenameqmframeheight() {
   kstatsvaluenameqmframeheight_ = 0;
@@ -2250,15 +2304,15 @@ inline void VideoSenderStatisticsInner::set_kstatsvaluenameqmframeheight(::yunto
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameQMFrameHeight)
 }
 
-// optional int32 kStatsValueNameQMFrameRate = 28;
+// optional int32 kStatsValueNameQMFrameRate = 29;
 inline bool VideoSenderStatisticsInner::has_kstatsvaluenameqmframerate() const {
-  return (_has_bits_[0] & 0x08000000u) != 0;
+  return (_has_bits_[0] & 0x10000000u) != 0;
 }
 inline void VideoSenderStatisticsInner::set_has_kstatsvaluenameqmframerate() {
-  _has_bits_[0] |= 0x08000000u;
+  _has_bits_[0] |= 0x10000000u;
 }
 inline void VideoSenderStatisticsInner::clear_has_kstatsvaluenameqmframerate() {
-  _has_bits_[0] &= ~0x08000000u;
+  _has_bits_[0] &= ~0x10000000u;
 }
 inline void VideoSenderStatisticsInner::clear_kstatsvaluenameqmframerate() {
   kstatsvaluenameqmframerate_ = 0;
@@ -2274,15 +2328,15 @@ inline void VideoSenderStatisticsInner::set_kstatsvaluenameqmframerate(::yuntong
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameQMFrameRate)
 }
 
-// optional int32 kStatsValueNameCodecSettingFrameWidth = 29;
+// optional int32 kStatsValueNameCodecSettingFrameWidth = 30;
 inline bool VideoSenderStatisticsInner::has_kstatsvaluenamecodecsettingframewidth() const {
-  return (_has_bits_[0] & 0x10000000u) != 0;
+  return (_has_bits_[0] & 0x20000000u) != 0;
 }
 inline void VideoSenderStatisticsInner::set_has_kstatsvaluenamecodecsettingframewidth() {
-  _has_bits_[0] |= 0x10000000u;
+  _has_bits_[0] |= 0x20000000u;
 }
 inline void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecodecsettingframewidth() {
-  _has_bits_[0] &= ~0x10000000u;
+  _has_bits_[0] &= ~0x20000000u;
 }
 inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingframewidth() {
   kstatsvaluenamecodecsettingframewidth_ = 0;
@@ -2298,15 +2352,15 @@ inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingframewidt
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingFrameWidth)
 }
 
-// optional int32 kStatsValueNameCodecSettingFrameHeight = 30;
+// optional int32 kStatsValueNameCodecSettingFrameHeight = 31;
 inline bool VideoSenderStatisticsInner::has_kstatsvaluenamecodecsettingframeheight() const {
-  return (_has_bits_[0] & 0x20000000u) != 0;
+  return (_has_bits_[0] & 0x40000000u) != 0;
 }
 inline void VideoSenderStatisticsInner::set_has_kstatsvaluenamecodecsettingframeheight() {
-  _has_bits_[0] |= 0x20000000u;
+  _has_bits_[0] |= 0x40000000u;
 }
 inline void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecodecsettingframeheight() {
-  _has_bits_[0] &= ~0x20000000u;
+  _has_bits_[0] &= ~0x40000000u;
 }
 inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingframeheight() {
   kstatsvaluenamecodecsettingframeheight_ = 0;
@@ -2322,15 +2376,15 @@ inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingframeheig
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingFrameHeight)
 }
 
-// optional int32 kStatsValueNameCodecSettingFrameRate = 31;
+// optional int32 kStatsValueNameCodecSettingFrameRate = 32;
 inline bool VideoSenderStatisticsInner::has_kstatsvaluenamecodecsettingframerate() const {
-  return (_has_bits_[0] & 0x40000000u) != 0;
+  return (_has_bits_[0] & 0x80000000u) != 0;
 }
 inline void VideoSenderStatisticsInner::set_has_kstatsvaluenamecodecsettingframerate() {
-  _has_bits_[0] |= 0x40000000u;
+  _has_bits_[0] |= 0x80000000u;
 }
 inline void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecodecsettingframerate() {
-  _has_bits_[0] &= ~0x40000000u;
+  _has_bits_[0] &= ~0x80000000u;
 }
 inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingframerate() {
   kstatsvaluenamecodecsettingframerate_ = 0;
@@ -2346,15 +2400,15 @@ inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingframerate
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingFrameRate)
 }
 
-// optional int32 kStatsValueNameCodecSettingSimulcastNum = 32;
+// optional int32 kStatsValueNameCodecSettingSimulcastNum = 33;
 inline bool VideoSenderStatisticsInner::has_kstatsvaluenamecodecsettingsimulcastnum() const {
-  return (_has_bits_[0] & 0x80000000u) != 0;
+  return (_has_bits_[1] & 0x00000001u) != 0;
 }
 inline void VideoSenderStatisticsInner::set_has_kstatsvaluenamecodecsettingsimulcastnum() {
-  _has_bits_[0] |= 0x80000000u;
+  _has_bits_[1] |= 0x00000001u;
 }
 inline void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecodecsettingsimulcastnum() {
-  _has_bits_[0] &= ~0x80000000u;
+  _has_bits_[1] &= ~0x00000001u;
 }
 inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingsimulcastnum() {
   kstatsvaluenamecodecsettingsimulcastnum_ = 0;
@@ -2370,15 +2424,15 @@ inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingsimulcast
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingSimulcastNum)
 }
 
-// optional int32 kStatsValueNameCodecSettingStartBitrate = 33;
+// optional int32 kStatsValueNameCodecSettingStartBitrate = 34;
 inline bool VideoSenderStatisticsInner::has_kstatsvaluenamecodecsettingstartbitrate() const {
-  return (_has_bits_[1] & 0x00000001u) != 0;
+  return (_has_bits_[1] & 0x00000002u) != 0;
 }
 inline void VideoSenderStatisticsInner::set_has_kstatsvaluenamecodecsettingstartbitrate() {
-  _has_bits_[1] |= 0x00000001u;
+  _has_bits_[1] |= 0x00000002u;
 }
 inline void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecodecsettingstartbitrate() {
-  _has_bits_[1] &= ~0x00000001u;
+  _has_bits_[1] &= ~0x00000002u;
 }
 inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingstartbitrate() {
   kstatsvaluenamecodecsettingstartbitrate_ = 0;
@@ -2394,15 +2448,15 @@ inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingstartbitr
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingStartBitrate)
 }
 
-// optional int32 kStatsValueNameCodecSettingMinBitrate = 34;
+// optional int32 kStatsValueNameCodecSettingMinBitrate = 35;
 inline bool VideoSenderStatisticsInner::has_kstatsvaluenamecodecsettingminbitrate() const {
-  return (_has_bits_[1] & 0x00000002u) != 0;
+  return (_has_bits_[1] & 0x00000004u) != 0;
 }
 inline void VideoSenderStatisticsInner::set_has_kstatsvaluenamecodecsettingminbitrate() {
-  _has_bits_[1] |= 0x00000002u;
+  _has_bits_[1] |= 0x00000004u;
 }
 inline void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecodecsettingminbitrate() {
-  _has_bits_[1] &= ~0x00000002u;
+  _has_bits_[1] &= ~0x00000004u;
 }
 inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingminbitrate() {
   kstatsvaluenamecodecsettingminbitrate_ = 0;
@@ -2418,15 +2472,15 @@ inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingminbitrat
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingMinBitrate)
 }
 
-// optional int32 kStatsValueNameCodecSettingMaxBitrate = 35;
+// optional int32 kStatsValueNameCodecSettingMaxBitrate = 36;
 inline bool VideoSenderStatisticsInner::has_kstatsvaluenamecodecsettingmaxbitrate() const {
-  return (_has_bits_[1] & 0x00000004u) != 0;
+  return (_has_bits_[1] & 0x00000008u) != 0;
 }
 inline void VideoSenderStatisticsInner::set_has_kstatsvaluenamecodecsettingmaxbitrate() {
-  _has_bits_[1] |= 0x00000004u;
+  _has_bits_[1] |= 0x00000008u;
 }
 inline void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecodecsettingmaxbitrate() {
-  _has_bits_[1] &= ~0x00000004u;
+  _has_bits_[1] &= ~0x00000008u;
 }
 inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingmaxbitrate() {
   kstatsvaluenamecodecsettingmaxbitrate_ = 0;
@@ -2442,15 +2496,15 @@ inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingmaxbitrat
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingMaxBitrate)
 }
 
-// optional int32 kStatsValueNameCodecSettingTargetBitrate = 36;
+// optional int32 kStatsValueNameCodecSettingTargetBitrate = 37;
 inline bool VideoSenderStatisticsInner::has_kstatsvaluenamecodecsettingtargetbitrate() const {
-  return (_has_bits_[1] & 0x00000008u) != 0;
+  return (_has_bits_[1] & 0x00000010u) != 0;
 }
 inline void VideoSenderStatisticsInner::set_has_kstatsvaluenamecodecsettingtargetbitrate() {
-  _has_bits_[1] |= 0x00000008u;
+  _has_bits_[1] |= 0x00000010u;
 }
 inline void VideoSenderStatisticsInner::clear_has_kstatsvaluenamecodecsettingtargetbitrate() {
-  _has_bits_[1] &= ~0x00000008u;
+  _has_bits_[1] &= ~0x00000010u;
 }
 inline void VideoSenderStatisticsInner::clear_kstatsvaluenamecodecsettingtargetbitrate() {
   kstatsvaluenamecodecsettingtargetbitrate_ = 0;
@@ -2464,6 +2518,54 @@ inline void VideoSenderStatisticsInner::set_kstatsvaluenamecodecsettingtargetbit
   set_has_kstatsvaluenamecodecsettingtargetbitrate();
   kstatsvaluenamecodecsettingtargetbitrate_ = value;
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameCodecSettingTargetBitrate)
+}
+
+// optional int32 kStatsValueNameTargetEncFrameRate = 38;
+inline bool VideoSenderStatisticsInner::has_kstatsvaluenametargetencframerate() const {
+  return (_has_bits_[1] & 0x00000020u) != 0;
+}
+inline void VideoSenderStatisticsInner::set_has_kstatsvaluenametargetencframerate() {
+  _has_bits_[1] |= 0x00000020u;
+}
+inline void VideoSenderStatisticsInner::clear_has_kstatsvaluenametargetencframerate() {
+  _has_bits_[1] &= ~0x00000020u;
+}
+inline void VideoSenderStatisticsInner::clear_kstatsvaluenametargetencframerate() {
+  kstatsvaluenametargetencframerate_ = 0;
+  clear_has_kstatsvaluenametargetencframerate();
+}
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenametargetencframerate() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameTargetEncFrameRate)
+  return kstatsvaluenametargetencframerate_;
+}
+inline void VideoSenderStatisticsInner::set_kstatsvaluenametargetencframerate(::yuntongxun_google::protobuf::int32 value) {
+  set_has_kstatsvaluenametargetencframerate();
+  kstatsvaluenametargetencframerate_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameTargetEncFrameRate)
+}
+
+// optional int32 kStatsValueNameActualEncFrameRate = 39;
+inline bool VideoSenderStatisticsInner::has_kstatsvaluenameactualencframerate() const {
+  return (_has_bits_[1] & 0x00000040u) != 0;
+}
+inline void VideoSenderStatisticsInner::set_has_kstatsvaluenameactualencframerate() {
+  _has_bits_[1] |= 0x00000040u;
+}
+inline void VideoSenderStatisticsInner::clear_has_kstatsvaluenameactualencframerate() {
+  _has_bits_[1] &= ~0x00000040u;
+}
+inline void VideoSenderStatisticsInner::clear_kstatsvaluenameactualencframerate() {
+  kstatsvaluenameactualencframerate_ = 0;
+  clear_has_kstatsvaluenameactualencframerate();
+}
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::kstatsvaluenameactualencframerate() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.kStatsValueNameActualEncFrameRate)
+  return kstatsvaluenameactualencframerate_;
+}
+inline void VideoSenderStatisticsInner::set_kstatsvaluenameactualencframerate(::yuntongxun_google::protobuf::int32 value) {
+  set_has_kstatsvaluenameactualencframerate();
+  kstatsvaluenameactualencframerate_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameActualEncFrameRate)
 }
 
 // -------------------------------------------------------------------

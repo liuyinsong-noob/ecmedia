@@ -549,6 +549,9 @@ void StatsCollector::VideoSenderInfo_AddBweStats(const VideoSendStream::Stats in
 		report->AddInt32(StatsReport::kStatsValueNameActualEncBitrate, info.actual_enc_bitrate_bps);
 		report->AddInt32(StatsReport::kStatsValueNameAvailableSendBandwidth, info.call.sendside_bwe_bps);
 		report->AddInt32(StatsReport::kStatsValueNameAvailableReceiveBandwidth, info.call.recv_bandwidth_bps);
+        //zhangn added 20181210
+        report->AddInt32(StatsReport::kStatsValueNameTargetEncFrameRate, info.target_enc_framerate);
+        report->AddInt32(StatsReport::kStatsValueNameActualEncFrameRate, info.actual_enc_framerate);
 	}
 	else { //TODO: simulcast
 	}
@@ -631,6 +634,7 @@ void StatsCollector::ExtractVideoSenderInfo(bool isFullStats)
 			{ StatsReport::kStatsValueNameTargetEncFrameRate, info.target_enc_framerate },
 			{ StatsReport::kStatsValueNameActualEncFrameRate, info.actual_enc_framerate },
 		};
+        
 		VideoSenderInfo_AddQMSetting(info, report);
 		VideoSenderInfo_AddBweStats(info, report);
 		VideoSenderInfo_AddNetworkStats(info, report);
@@ -845,9 +849,21 @@ void StatsCollector::LoadVideoSenderReportToPbBuffer(StatsContentType type,
 	value = report.FindValue(StatsReport::kStatsValueNameQMFrameHeight);
 	if (value)
 		statsData->set_kstatsvaluenameqmframeheight(value->int32_val());
+    
 	value = report.FindValue(StatsReport::kStatsValueNameQMFrameRate);
 	if (value)
 		statsData->set_kstatsvaluenameqmframerate(value->int32_val());
+    
+    //zhangn added 20181104
+    value = report.FindValue(StatsReport::kStatsValueNameLossFractionInPercent);
+    if (value)
+        statsData->set_kstatsvaluenamelossfractioninpercent(value->int32_val());
+    value = report.FindValue(StatsReport::kStatsValueNameTargetEncFrameRate);
+    if (value)
+        statsData->set_kstatsvaluenametargetencframerate(value->int32_val());
+    value = report.FindValue(StatsReport::kStatsValueNameActualEncFrameRate);
+    if (value)
+        statsData->set_kstatsvaluenameactualencframerate(value->int32_val());
 
 	if (type == kStatsContentFull)
 	{
