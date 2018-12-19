@@ -166,6 +166,9 @@ namespace yuntongxunwebrtc {
                     case RS_PLY_Played:
                     {
 						int ret = doReadRtmpData();
+                        // todo: 根据 ret 返回值，判断错误类型，决定是否停止读取流
+                        // bugfix: #128169
+                        // @see http://redmine.yuntongxun.com/redmine/issues/128169?issue_count=82&issue_position=1&next_issue_id=131511
                         if(ret == 0) {
                             if(!hasStreaming_) {
                                 hasStreaming_ = true;
@@ -173,14 +176,6 @@ namespace yuntongxunwebrtc {
                                     callback_(EC_LIVE_PLAY_SUCCESS);
                                 }
                             }
-                        } else {
-                            if(running_) {
-								rtmp_status_ = RS_PLY_Read_Faild;
-								if (callback_) {
-									callback_(EC_LIVE_PLAY_FAILED);
-								}
-                            }
-                            return false;
                         }
                     }
                     break;
