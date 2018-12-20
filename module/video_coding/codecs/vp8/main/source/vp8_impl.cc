@@ -531,8 +531,11 @@ int VP8EncoderImpl::InitEncode(const VideoCodec* inst,
   } else if (inst->codecSpecific.VP8.keyFrameInterval > 0) {
     configurations_[0].kf_mode = VPX_KF_AUTO;
     configurations_[0].kf_max_dist = inst->codecSpecific.VP8.keyFrameInterval;
-    configurations_[1].kf_mode = VPX_KF_AUTO;
-    configurations_[1].kf_max_dist = inst->codecSpecific.VP8.keyFrameInterval;
+	if (configurations_.size() > 1)
+	{
+		configurations_[1].kf_mode = VPX_KF_AUTO;
+		configurations_[1].kf_max_dist = inst->codecSpecific.VP8.keyFrameInterval;
+	}
       
   } else {
     configurations_[0].kf_mode = VPX_KF_DISABLED;
