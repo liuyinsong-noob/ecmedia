@@ -864,6 +864,22 @@ ECMEDIA_API int ECMedia_video_set_mix_mediastream(int channel, bool enable, char
 
 ECMEDIA_API int ECMedia_releaseAll();
 
+typedef struct DesktopShareConnectData_tag
+{
+	char ipRemote[60];
+	char codecName[60];//eg. h264 or vp8
+	int nVideoSsrc;
+	int nMaxFPS;
+	int nLocalVideoPort;
+	int nRemoteVideoPort;
+	int nDesktopShareChannelId;
+	int nDesktopShareCaptureId;
+	int nCodecPayloadType;//eg. 96 or 120
+	bool bRtcpMultiplexing;
+}DesktopShareConnectData;
+ECMEDIA_API bool ECMedia_StartDesktopShareConnect(DesktopShareConnectData* pConnectData);
+ECMEDIA_API bool ECMedia_StopDesktopShareConnect(DesktopShareConnectData* pConnectData);
+
 #ifdef __cplusplus
 }
 #endif

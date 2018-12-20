@@ -3560,7 +3560,7 @@ int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
         PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
         return ERR_INVALID_PARAM;
     }
-    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECodec *codec = ViECodec::GetInterface(m_vie);
     if (codec) {
         PrintConsole("[ECMEDIA INFO] %s plType:%d plname:%s", __FUNCTION__, videoCodec.plType,
@@ -3584,7 +3584,7 @@ int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
 int ECMedia_get_send_codec_video(int channelid, VideoCodec& videoCodec)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... and channelid: %d", __FUNCTION__, channelid);
-    AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECodec *codec = ViECodec::GetInterface(m_vie);
     if (codec) {
         int ret = codec->GetSendCodec(channelid, videoCodec);
@@ -5869,3 +5869,170 @@ int ECMedia_releaseAll(){
 #endif
     return -1;
 }
+
+bool ECMedia_StartDesktopShareConnect(DesktopShareConnectData* pConnectData)
+{
+	if (!pConnectData)
+	{
+		return false;
+	}
+
+	bool bRet = true;
+	int nCodecPayloadType = pConnectData->nCodecPayloadType;
+	bool bRtcpMultiplexing = pConnectData->bRtcpMultiplexing;
+	unsigned int nVideoSsrc = pConnectData->nVideoSsrc;
+	string strCodecName = pConnectData->codecName;
+
+	if (pConnectData->nCodecPayloadType >= 0)
+	{
+		nCodecPayloadType = pConnectData->nCodecPayloadType;
+	}
+	else
+	{
+		nCodecPayloadType = 96;
+	}
+
+	if (strlen(pConnectData->codecName) > 0)
+	{
+		strCodecName = pConnectData->codecName;
+	}
+	else
+	{
+		strCodecName = "H264";
+	}
+
+	int nShareWidth = 0, nShareHeight = 0;
+	int nMaxShareFps = pConnectData->nMaxFPS;
+	if (nMaxShareFps <= 0)
+	{
+		nMaxShareFps = 5;
+	}
+
+	bool bFoundCodec = false;
+	yuntongxunwebrtc::VideoCodec codec_params;
+
+	do 
+	{
+		bRet |= ECMedia_audio_create_channel(pConnectData->nDesktopShareChannelId, true) == 0;
+		if (!bRet) break;
+		bRet |= ECMedia_allocate_desktopShare_capture(pConnectData->nDesktopShareCaptureId, 0) == 0;
+		if (!bRet) break;
+		bRet |= ECMedia_connect_desktop_captureDevice(pConnectData->nDesktopShareCaptureId, pConnectData->nDesktopShareChannelId) == 0;
+		if (!bRet) break;
+		bRet |= ECMedia_get_desktop_capture_size(pConnectData->nDesktopShareCaptureId, nShareWidth, nShareHeight) == 0;
+		if (!bRet) break;
+		bRet |= ECMedia_start_desktop_capture(pConnectData->nDesktopShareCaptureId, nMaxShareFps) == 0;
+		if (!bRet) break;
+		bRet |= ECMedia_select_screen(pConnectData->nDesktopShareCaptureId, 0);
+		if (!bRet) break;
+		bRet |= ECMedia_get_send_codec_video(pConnectData->nDesktopShareChannelId, codec_params) == 0;
+		if (!bRet) break;
+
+		int num_codec = ECMedia_num_of_supported_codecs_video();
+		yuntongxunwebrtc::VideoCodec *codecArray = new yuntongxunwebrtc::VideoCodec[num_codec];
+		bRet |= ECMedia_get_supported_codecs_video(codecArray) == 0;
+		if (bRet)
+		{
+			if (!strCodecName.empty())
+			{
+				for (int i = 0; i < num_codec; i++) {
+					codec_params = codecArray[i];
+					if (strcmpi(codec_params.plName, strCodecName.c_str()) == 0)
+					{
+						bFoundCodec = true;
+						break;
+					}
+				}
+			}
+			if (!bFoundCodec && nCodecPayloadType >= 0)
+			{
+				for (int i = 0; i < num_codec; i++) {
+					codec_params = codecArray[i];
+					if (codec_params.plType == nCodecPayloadType)
+					{
+						bFoundCodec = true;
+						break;
+					}
+				}
+			}
+			delete[]codecArray;
+		}
+		if (strcmpi(codec_params.plName, "VP8") == 0)
+		{
+			codec_params.numberOfSimulcastStreams = 2;
+		}
+		else
+		{
+			codec_params.numberOfSimulcastStreams = 0;
+		}
+		codec_params.startBitrate = nShareWidth * nShareHeight * nMaxShareFps * 3 * 0.07 / 1000;
+		codec_params.maxBitrate = codec_params.startBitrate;
+		codec_params.minBitrate = codec_params.startBitrate >> 2;
+		codec_params.width = nShareWidth;
+		codec_params.height = nShareHeight;
+		codec_params.maxFramerate = nMaxShareFps;
+
+		int bOk = 0;
+		for (int count = 10, bOk = 1; bOk && count >= 0; count--)
+		{
+			bOk = ECMedia_video_set_local_receiver(pConnectData->nDesktopShareChannelId, pConnectData->nLocalVideoPort, pConnectData->nLocalVideoPort + (bRtcpMultiplexing ? 0 : 1));
+			pConnectData->nLocalVideoPort += bOk ? (bRtcpMultiplexing ? 1 : 2) : 0;
+		}
+		bRet |= bOk;
+		if (!bRet) break;
+		for (int count = 10, bOk = 1; bOk && count >= 0; count--)
+		{
+			bOk = ECMedia_video_set_send_destination(pConnectData->nDesktopShareChannelId, pConnectData->ipRemote, pConnectData->nRemoteVideoPort, pConnectData->ipRemote, pConnectData->nRemoteVideoPort + (bRtcpMultiplexing ? 0 : 1));
+			pConnectData->nRemoteVideoPort += bOk ? (bRtcpMultiplexing ? 1 : 2) : 0;
+		}
+		bRet |= bOk;
+		if (!bRet) break;
+
+		//setSsrcMediaType(nVideoSsrc, 1);
+		//setSsrcMediaAttribute(nVideoSsrc, codec_params.width, codec_params.height, codec_params.maxFramerate);
+
+		bRet |= ECMedia_video_set_local_ssrc(pConnectData->nDesktopShareChannelId, pConnectData->nVideoSsrc) == 0;
+		if (!bRet) break;
+
+		pConnectData->nVideoSsrc = nVideoSsrc;
+		pConnectData->nMaxFPS = nMaxShareFps;
+
+		bRet |= ECMedia_set_send_codec_video(pConnectData->nDesktopShareChannelId, codec_params) == 0;
+		if (!bRet) break;
+		bRet |= ECMedia_video_start_send(pConnectData->nDesktopShareChannelId) == 0;
+		if (!bRet) break;
+		bRet |= ECMedia_video_start_receive(pConnectData->nDesktopShareChannelId) == 0;
+
+	} while (false);
+
+	if (!bRet)
+	{
+		ECMedia_StopDesktopShareConnect(pConnectData);
+		pConnectData->nDesktopShareChannelId = -1;
+		pConnectData->nDesktopShareCaptureId = -1;
+	}
+
+	return bRet;
+}
+
+bool ECMedia_StopDesktopShareConnect(DesktopShareConnectData* pConnectData)
+{
+	if (!pConnectData || (pConnectData->nDesktopShareChannelId < 0 && pConnectData->nDesktopShareCaptureId < 0))
+	{
+		return false;
+	}
+
+	bool bRet = true;
+	if (pConnectData->nDesktopShareCaptureId > 0)
+	{
+		bRet |= ECMedia_stop_desktop_capture(pConnectData->nDesktopShareCaptureId) == 0;
+		bRet |= ECMedia_stop_render(pConnectData->nDesktopShareChannelId, pConnectData->nDesktopShareCaptureId) == 0;
+		bRet |= ECMedia_release_desktop_capture(pConnectData->nDesktopShareCaptureId) == 0;
+	}
+	bRet |= ECMedia_video_stop_receive(pConnectData->nDesktopShareChannelId) == 0;
+	bRet |= ECMedia_video_stop_send(pConnectData->nDesktopShareChannelId) == 0;
+	bRet |= ECMedia_delete_channel(pConnectData->nDesktopShareChannelId, true) == 0;
+
+	return bRet;
+}
+
