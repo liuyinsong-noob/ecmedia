@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F50454E204FF9B800B4CE29 /* image_filter_factory.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F50454C204FF9B800B4CE29 /* image_filter_factory.h */; };
-		1F50454F204FF9B800B4CE29 /* image_filter_factory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F50454D204FF9B800B4CE29 /* image_filter_factory.mm */; };
 		559BA9FD16F1DAFA00A4F78A /* msvideo_neon.c in Sources */ = {isa = PBXBuildFile; fileRef = 559BA9F916F1DAFA00A4F78A /* msvideo_neon.c */; };
 		559BA9FE16F1DAFA00A4F78A /* msvideo_neon.h in Headers */ = {isa = PBXBuildFile; fileRef = 559BA9FA16F1DAFA00A4F78A /* msvideo_neon.h */; };
 		559BA9FF16F1DAFA00A4F78A /* msvideo.c in Sources */ = {isa = PBXBuildFile; fileRef = 559BA9FB16F1DAFA00A4F78A /* msvideo.c */; };
@@ -36,7 +34,7 @@
 		91C4CD0A169C0E9C00CC98EF /* video_capture_iOS_device_info.mm in Sources */ = {isa = PBXBuildFile; fileRef = 91C4CD08169C0E9B00CC98EF /* video_capture_iOS_device_info.mm */; };
 		91C4CD0E169C124800CC98EF /* video_capture_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 91C4CD0C169C124700CC98EF /* video_capture_iOS.h */; };
 		91C4CD0F169C124800CC98EF /* video_capture_iOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 91C4CD0D169C124700CC98EF /* video_capture_iOS.mm */; };
-		91DC03631A1C9C1E0088851B /* ioscapture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 55A7A47B16F83A71004970E2 /* ioscapture.mm */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		91DC03631A1C9C1E0088851B /* ioscapture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 55A7A47B16F83A71004970E2 /* ioscapture.mm */; };
 		91DC03651A1CA0090088851B /* ioscapture.h in Headers */ = {isa = PBXBuildFile; fileRef = 91DC03641A1CA0090088851B /* ioscapture.h */; };
 		AD1F0F161D476BC200C33F53 /* device_info_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74FAB15C8C324001B246A /* device_info_impl.cc */; };
 		AD1F0F171D476BC200C33F53 /* device_info_external.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55A74FAE15C8C324001B246A /* device_info_external.cc */; };
@@ -83,8 +81,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1F50454C204FF9B800B4CE29 /* image_filter_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = image_filter_factory.h; path = iOS/image_filter_factory.h; sourceTree = "<group>"; };
-		1F50454D204FF9B800B4CE29 /* image_filter_factory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = image_filter_factory.mm; path = iOS/image_filter_factory.mm; sourceTree = "<group>"; };
 		559BA9F916F1DAFA00A4F78A /* msvideo_neon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = msvideo_neon.c; path = iOS/msvideo_neon.c; sourceTree = "<group>"; };
 		559BA9FA16F1DAFA00A4F78A /* msvideo_neon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = msvideo_neon.h; path = iOS/msvideo_neon.h; sourceTree = "<group>"; };
 		559BA9FB16F1DAFA00A4F78A /* msvideo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = msvideo.c; path = iOS/msvideo.c; sourceTree = "<group>"; };
@@ -252,8 +248,6 @@
 		914BAF0816990F8500B177A5 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				1F50454C204FF9B800B4CE29 /* image_filter_factory.h */,
-				1F50454D204FF9B800B4CE29 /* image_filter_factory.mm */,
 				AD42CD491D23CE18009C2E7A /* keyframe_detector.cpp */,
 				AD42CD4A1D23CE18009C2E7A /* bilteral_filter.cpp */,
 				91DC03641A1CA0090088851B /* ioscapture.h */,
@@ -315,7 +309,6 @@
 				55A74FE115C8C324001B246A /* video_capture_factory.h in Headers */,
 				55A74FEA15C8C324001B246A /* device_info_impl.h in Headers */,
 				55A7500215C8C324001B246A /* video_capture_config.h in Headers */,
-				1F50454E204FF9B800B4CE29 /* image_filter_factory.h in Headers */,
 				55A7500315C8C324001B246A /* video_capture_delay.h in Headers */,
 				ADC546E31D48497100A5C852 /* video_capture_mac.h in Headers */,
 				55A7500615C8C324001B246A /* video_capture_impl.h in Headers */,
@@ -420,7 +413,6 @@
 			files = (
 				55A74FE915C8C324001B246A /* device_info_impl.cc in Sources */,
 				55A74FEB15C8C324001B246A /* device_info_external.cc in Sources */,
-				1F50454F204FF9B800B4CE29 /* image_filter_factory.mm in Sources */,
 				AD42CD4C1D23CE18009C2E7A /* bilteral_filter.cpp in Sources */,
 				55A7500415C8C324001B246A /* video_capture_factory.cc in Sources */,
 				AD42CD4B1D23CE18009C2E7A /* keyframe_detector.cpp in Sources */,
