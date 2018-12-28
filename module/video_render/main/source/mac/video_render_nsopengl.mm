@@ -60,8 +60,6 @@ VideoChannelNSOpenGL::~VideoChannelNSOpenGL()
         glDeleteTextures(1, (const GLuint*) &_texture);
         _texture = 0;
     }
-    [_owner->_windowRef removeFromSuperview];
-    [_owner->_windowRef release];
 }
 
 int VideoChannelNSOpenGL::ChangeContext(NSOpenGLContext *nsglContext)
@@ -683,14 +681,13 @@ VideoRenderNSOpenGL::~VideoRenderNSOpenGL()
         {
             // Detach CocoaRenderView from full screen view back to
             // it's original parent.
-            [_windowRef removeFromSuperview];
-            [_windowRef release];
+//            [_windowRef removeFromSuperview];
+//            [_windowRef release];
 //            if(_windowRefSuperView)
 //            {
 //              [_windowRefSuperView addSubview:_windowRef];
 //              [_windowRef setFrame:_windowRefSuperViewFrame];
 //            }
-            WEBRTC_TRACE(kTraceDebug, kTraceVideoRenderer, 0, "%s:%d Attempting to release fullscreen window", __FUNCTION__, __LINE__);
             [_fullScreenWindow releaseFullScreen];
 
         }
@@ -718,6 +715,8 @@ VideoRenderNSOpenGL::~VideoRenderNSOpenGL()
         [_nsglContext makeCurrentContext];
         _nsglContext = nil;
     }
+    [_windowRef removeFromSuperview];
+    [_windowRef release];
 
     // Delete all channels
     std::map<int, VideoChannelNSOpenGL*>::iterator it = _nsglChannels.begin();
