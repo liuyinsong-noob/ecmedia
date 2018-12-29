@@ -5971,6 +5971,7 @@ bool ECMedia_StartDesktopShareConnect(DesktopShareConnectData* pConnectData)
 		codec_params.width = nShareWidth;
 		codec_params.height = nShareHeight;
 		codec_params.maxFramerate = nMaxShareFps;
+		codec_params.mode = kScreensharing;
 
 		int bOk = 0;
 		for (int count = 10, bOk = 1; bOk && count >= 0; count--)
