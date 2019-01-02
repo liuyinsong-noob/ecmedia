@@ -5870,6 +5870,7 @@ int ECMedia_releaseAll(){
     return -1;
 }
 
+#ifdef VIDEO_ENABLED
 bool ECMedia_StartDesktopShareConnect(DesktopShareConnectData* pConnectData)
 {
 	if (!pConnectData)
@@ -6036,4 +6037,5 @@ bool ECMedia_StopDesktopShareConnect(DesktopShareConnectData* pConnectData)
 
 	return bRet;
 }
+#endif
 
