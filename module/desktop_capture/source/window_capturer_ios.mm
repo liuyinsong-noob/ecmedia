@@ -129,9 +129,6 @@ void ScreenCapturerIos::Capture(const DesktopRegion& region) {
 ScreenCapturer* ScreenCapturer::Create(const DesktopCaptureOptions& options) {
   return new ScreenCapturerIos();
 }
-    
-ScreenCapturer* ScreenCapturer::Create() {
-    return new ScreenCapturerIos();
-}
+
 }  // namespace yuntongxunwebrtc
 

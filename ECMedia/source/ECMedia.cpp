@@ -5937,7 +5937,7 @@ bool ECMedia_StartDesktopShareConnect(DesktopShareConnectData* pConnectData)
 			{
 				for (int i = 0; i < num_codec; i++) {
 					codec_params = codecArray[i];
-					if (strcmpi(codec_params.plName, strCodecName.c_str()) == 0)
+					if (strcmp(codec_params.plName, strCodecName.c_str()) == 0)
 					{
 						bFoundCodec = true;
 						break;
@@ -5957,7 +5957,7 @@ bool ECMedia_StartDesktopShareConnect(DesktopShareConnectData* pConnectData)
 			}
 			delete[]codecArray;
 		}
-		if (strcmpi(codec_params.plName, "VP8") == 0)
+		if (strcmp(codec_params.plName, "VP8") == 0)
 		{
 			codec_params.numberOfSimulcastStreams = 2;
 		}
