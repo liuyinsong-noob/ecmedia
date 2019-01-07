@@ -76,6 +76,11 @@ class StreamStatisticianImpl : public StreamStatistician {
   uint16_t received_seq_max_;
   uint16_t received_seq_wraps_;
 
+  bool use_extend_transport_sequence_;
+  uint16_t extend_received_seq_max_;
+  uint16_t extend_received_seq_first_;
+  uint16_t extend_last_report_seq_max_;
+
   // Current counter values.
   size_t received_packet_overhead_;
   StreamDataCounters receive_counters_;

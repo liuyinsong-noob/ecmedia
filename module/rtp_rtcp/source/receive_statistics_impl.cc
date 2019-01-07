@@ -48,6 +48,10 @@ StreamStatisticianImpl::StreamStatisticianImpl(
       last_report_inorder_packets_(0),
       last_report_old_packets_(0),
       last_report_seq_max_(0),
+	  use_extend_transport_sequence_(false),
+      extend_received_seq_max_(0),
+	  extend_received_seq_first_(0),
+	  extend_last_report_seq_max_(0),
       rtcp_callback_(rtcp_callback),
       rtp_callback_(rtp_callback) {}
 
@@ -65,6 +69,11 @@ void StreamStatisticianImpl::ResetStatistics() {
   received_seq_first_ = 0;
   stored_sum_receive_counters_.Add(receive_counters_);
   receive_counters_ = StreamDataCounters();
+
+  use_extend_transport_sequence_ = false;
+  extend_received_seq_max_ = 0;
+  extend_received_seq_first_ = 0;
+  extend_last_report_seq_max_ = 0;
 }
 
 void StreamStatisticianImpl::IncomingPacket(const RTPHeader& header,
@@ -86,9 +95,17 @@ void StreamStatisticianImpl::UpdateCounters(const RTPHeader& header,
     receive_counters_.retransmitted.AddPacket(packet_length, header);
   }
 
+  if (header.extension.hasTransportSequenceNumber) {
+	  use_extend_transport_sequence_ = true;
+  }
+
   if (receive_counters_.transmitted.packets == 1) {
     received_seq_first_ = header.sequenceNumber;
     receive_counters_.first_packet_time_ms = clock_->TimeInMilliseconds();
+
+	if (header.extension.hasTransportSequenceNumber) {
+		extend_received_seq_first_ = header.extension.transportSequenceNumber;
+	}
   }
 
   // Count only the new packets received. That is, if packets 1, 2, 3, 5, 4, 6
@@ -105,6 +122,10 @@ void StreamStatisticianImpl::UpdateCounters(const RTPHeader& header,
     }
     // New max.
     received_seq_max_ = header.sequenceNumber;
+
+	if (header.extension.hasTransportSequenceNumber && !retransmitted) {
+		extend_received_seq_max_ = header.extension.transportSequenceNumber;
+	}
 
     // If new time stamp and more than one in-order packet received, calculate
     // new jitter statistics.
@@ -235,15 +256,26 @@ RtcpStatistics StreamStatisticianImpl::CalculateRtcpStatistics() {
   if (last_report_inorder_packets_ == 0) {
     // First time we send a report.
     last_report_seq_max_ = received_seq_first_ - 1;
+		extend_last_report_seq_max_ = extend_received_seq_first_ - 1;
   }
 
-  // Calculate fraction lost.
-  uint16_t exp_since_last = (received_seq_max_ - last_report_seq_max_);
+	// Calculate fraction lost.
+	uint16_t exp_since_last;
 
-  if (last_report_seq_max_ > received_seq_max_) {
-    // Can we assume that the seq_num can't go decrease over a full RTCP period?
-    exp_since_last = 0;
-  }
+	if (use_extend_transport_sequence_) {
+		exp_since_last = (extend_received_seq_max_ - extend_last_report_seq_max_);
+		if (extend_last_report_seq_max_ > extend_received_seq_max_) {
+			// Can we assume that the seq_num can't go decrease over a full RTCP period?
+			exp_since_last = 0;
+		}
+	}
+	else {
+		exp_since_last = (received_seq_max_ - last_report_seq_max_);
+		if (last_report_seq_max_ > received_seq_max_) {
+			// Can we assume that the seq_num can't go decrease over a full RTCP period?
+			exp_since_last = 0;
+		}
+    }
 
   // Number of received RTP packets since last report, counts all packets but
   // not re-transmissions.
@@ -260,9 +292,12 @@ RtcpStatistics StreamStatisticianImpl::CalculateRtcpStatistics() {
   // With NACK we don't count old packets as received since they are
   // re-transmitted. We use RTT to decide if a packet is re-ordered or
   // re-transmitted.
-  uint32_t retransmitted_packets =
-      receive_counters_.retransmitted.packets - last_report_old_packets_;
-  rec_since_last += retransmitted_packets;
+  if (!use_extend_transport_sequence_) {
+	  uint32_t retransmitted_packets =
+		 receive_counters_.retransmitted.packets - last_report_old_packets_;
+	  rec_since_last += retransmitted_packets;
+  }
+
 
   int32_t missing = 0;
   if (exp_since_last > rec_since_last) {
@@ -294,6 +329,7 @@ RtcpStatistics StreamStatisticianImpl::CalculateRtcpStatistics() {
       receive_counters_.retransmitted.packets;
   last_report_old_packets_ = receive_counters_.retransmitted.packets;
   last_report_seq_max_ = received_seq_max_;
+  extend_last_report_seq_max_ = extend_received_seq_max_;
   BWE_TEST_LOGGING_PLOT_WITH_SSRC(1, "cumulative_loss_pkts",
                                   clock_->TimeInMilliseconds(),
                                   cumulative_loss_, ssrc_);

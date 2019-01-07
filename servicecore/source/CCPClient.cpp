@@ -1,4 +1,4 @@
-#include "CCPClient.h"
+﻿#include "CCPClient.h"
 #include "CCPClient_Internal.h"
 #include "serphoneinterface.h"
 #include "serphonecall.h"
