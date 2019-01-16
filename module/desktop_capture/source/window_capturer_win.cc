@@ -295,9 +295,10 @@ void WindowCapturerWin::Capture(const DesktopRegion& region) {
   // capturing - it somehow affects what we get from BitBlt() on the subsequent
   // captures.
 
-	if (!IsAeroEnabled() || !previous_size_.equals(frame->size())) {
-		result = PrintWindow(window_, mem_dc, 0);
-	}
+  //only capture the area of windows
+	//if (!IsAeroEnabled() || !previous_size_.equals(frame->size())) {
+	//	result = PrintWindow(window_, mem_dc, 0);
+	//}
 	frame->size().height();
 	// Aero is enabled or PrintWindow() failed, use BitBlt.
 	if (!result) {
