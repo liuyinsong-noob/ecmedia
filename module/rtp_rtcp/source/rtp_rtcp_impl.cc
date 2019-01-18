@@ -1063,6 +1063,7 @@ void ModuleRtpRtcpImpl::SetRtcpRttStats(RtcpRttStats *rtcp_rtt_stats) {
 
 // send single tmmbr.
 int ModuleRtpRtcpImpl::SendSingleTMMBR(uint32_t bandwidth, uint32_t ssrc, uint32_t remote_ssrc) {
+    LOG(LS_INFO) << "SendSingleTMMBR bandwidth:"<<bandwidth<<" ssrc:"<<ssrc<<" remote_ssrc:"<< remote_ssrc;
     tmmbr_bandwidth = bandwidth;
     tmmbr_ssrc = ssrc;
     tmmbr_remote_ssrc = remote_ssrc;

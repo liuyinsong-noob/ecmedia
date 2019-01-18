@@ -1128,7 +1128,10 @@ int32_t ViEChannel::SetSSRC(const uint32_t SSRC,
 //maybe change remote ssrc but not calling "CancelRemoteSSRC()" and "StopReceive()"
 int32_t ViEChannel::RequestRemoteSSRC(const uint32_t SSRC) {
 	if (!isSVCChannel_)
+    {
+        LOG(LS_WARNING) <<"ViEChannel::RequestRemoteSSRC not svc channel, return 0";
 		return 0;
+    }
 
 	if (0 == SSRC) {
 		LOG(LS_WARNING) << "request ssrc is 0";

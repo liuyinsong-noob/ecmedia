@@ -1096,6 +1096,7 @@ int RTCPSender::SendSingleTMMBR(const FeedbackState& feedback_state,
 	std::unique_ptr<rtcp::RtcpPacket> packet = (this->*func)(context);
 	container.Append(packet.release());
 	size_t bytes_sent = container.SendPackets(max_packet_size);
+    LOG(LS_INFO)<<"RTCPSender::SendSingleTMMBR bytes_sent:"<<bytes_sent;
 	return bytes_sent == 0 ? -1 : 0;
 }
 }  // namespace yuntongxunwebrtc
