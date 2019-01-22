@@ -299,6 +299,9 @@ void PacedSender::SetEstimatedBitrate(uint32_t bitrate_bps) {
   CriticalSectionScoped cs(critsect_.get());
   estimated_bitrate_bps_ = bitrate_bps;
   padding_budget_->set_target_rate_kbps(0);
+
+  //padding_budget_->set_target_rate_kbps(
+  //	  min(estimated_bitrate_bps_ / 1000, max_padding_bitrate_kbps_));
   pacing_bitrate_kbps_ =
       max(min_send_bitrate_kbps_, estimated_bitrate_bps_ / 1000) *
       kDefaultPaceMultiplier;
@@ -315,6 +318,8 @@ void PacedSender::SetSendBitrateLimits(int min_send_bitrate_bps,
       kDefaultPaceMultiplier;
   max_padding_bitrate_kbps_ = padding_bitrate / 1000;
   padding_budget_->set_target_rate_kbps(0);
+//  padding_budget_->set_target_rate_kbps(
+//      min(estimated_bitrate_bps_ / 1000, max_padding_bitrate_kbps_));
 }
 
 void PacedSender::InsertPacket(RtpPacketSender::Priority priority,
@@ -374,13 +379,18 @@ int64_t PacedSender::AverageQueueTimeMs() {
 
 int64_t PacedSender::TimeUntilNextProcess() {
   CriticalSectionScoped cs(critsect_.get());
+
   if (prober_->IsProbing()) {
     int64_t ret = prober_->TimeUntilNextProbe(clock_->TimeInMilliseconds());
     if (ret > 0 || (ret == 0 && !probing_send_failure_))
       return ret;
   }
+
   int64_t elapsed_time_us = clock_->TimeInMicroseconds() - time_last_update_us_;
   int64_t elapsed_time_ms = (elapsed_time_us + 500) / 1000;
+
+  int wait_ms = kMinPacketLimitMs - elapsed_time_ms;
+
   return std::max<int64_t>(kMinPacketLimitMs - elapsed_time_ms, 0);
 }
 
@@ -444,15 +454,15 @@ int32_t PacedSender::Process() {
     if (packet_counter_ > 0) {
       int padding_needed = static_cast<int>(is_probing ? (recommended_probe_size - bytes_sent) : padding_budget_->bytes_remaining());
 
-//        if (padding_needed > 0) {
-//          bytes_sent += SendPadding(padding_needed, pacing_info);
-//        }
+       if (padding_needed > 0) {
+         bytes_sent += SendPadding(padding_needed, pacing_info);
+       }
     }
   }
   if (is_probing) {
     probing_send_failure_ = bytes_sent == 0;
-    if (!probing_send_failure_)
-      prober_->ProbeSent(clock_->TimeInMilliseconds(), bytes_sent);
+	if (!probing_send_failure_)
+		prober_->ProbeSent(clock_->TimeInMilliseconds(), bytes_sent);
   }
   alr_detector_->OnBytesSent(bytes_sent, now_us / 1000);
 
