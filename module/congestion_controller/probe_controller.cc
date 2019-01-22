@@ -151,16 +151,6 @@ void ProbeController::SetEstimatedBitrate(int64_t bitrate_bps) {
                  << " Minimum to probe further: "
                  << min_bitrate_to_probe_further_bps_;
 
-	WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, -1,
-		"[Probe] Measured bitrate: %d, Minimum to probe further: %d)\n",
-		bitrate_bps, min_bitrate_to_probe_further_bps_);
-      
-#ifndef WIN32
-      printTime();
-      printf("[Probe] Measured bitrate: %lld, Minimum to probe further: %lld)\n",
-             bitrate_bps, min_bitrate_to_probe_further_bps_);
-#endif
-
     if (min_bitrate_to_probe_further_bps_ != kExponentialProbingDisabled &&
         bitrate_bps > min_bitrate_to_probe_further_bps_) {
       // Double the probing bitrate.
@@ -181,14 +171,8 @@ void ProbeController::SetEstimatedBitrate(int64_t bitrate_bps) {
       bitrate_bps < 2 * estimated_bitrate_bps_ / 3 &&
       (now_ms - last_alr_probing_time_) > kAlrProbingIntervalMinMs) {
     LOG(LS_INFO) << "Detected big BW drop in ALR, start probe.";
-	WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, -1,
-		"[Probe] Detected big BW drop in ALR, start probe. (estimated_bitrate_bps_ = %PRId64)", estimated_bitrate_bps_);
-#ifndef WIN32
-      printTime();
-      printf("[Probe] Detected big BW drop in ALR, start probe.(estimated_bitrate_bps_ = %lld)\n",
-             estimated_bitrate_bps_);
-#endif
-    // Track how often we probe in response to BW drop in ALR.
+
+      // Track how often we probe in response to BW drop in ALR.
     RTC_HISTOGRAM_COUNTS_10000("yuntongxunwebrtc.BWE.AlrProbingIntervalInS",
                                (now_ms - last_alr_probing_time_) / 1000);
     InitiateProbing(now_ms, {estimated_bitrate_bps_}, false);
@@ -218,13 +202,6 @@ void ProbeController::Process() {
 
     if (state_ == State::kWaitingForProbingResult) {
       LOG(LS_INFO) << "kWaitingForProbingResult: timeout";
-
-	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, -1,
-		  "[Probe] kWaitingForProbingResult: timeout");
-#ifndef WIN32
-        printTime();
-        printf("[Probe] kWaitingForProbingResult: timeout\n");
-#endif
       state_ = State::kProbingComplete;
       min_bitrate_to_probe_further_bps_ = kExponentialProbingDisabled;
     }
@@ -243,7 +220,10 @@ void ProbeController::Process() {
     if (now_ms >= next_probe_time_ms) {
       InitiateProbing(now_ms, {estimated_bitrate_bps_ * 2}, true);
     }
-  }
+  }   
+
+  if (now_ms - time_last_probing_initiated_ms_ > 5000)
+	  InitiateProbing(now_ms, { estimated_bitrate_bps_ * 2 }, true);
 }
 
 void ProbeController::InitiateProbing(
