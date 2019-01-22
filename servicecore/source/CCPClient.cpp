@@ -4025,6 +4025,8 @@ extern "C" int audioEnableMagicSound(bool enabled, int pitch, int tempo, int rat
 //int ServiceCore::GetStatsData(int type, char* callid, void** pbDataArray, int *pArraySize)
 extern "C" int getStatsReports(const char ** reportsJsonOut)
 {
+	return 0;
+#if 0
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
     int ret = 0;
     if (g_pSerCore) {
@@ -4140,4 +4142,5 @@ extern "C" int getStatsReports(const char ** reportsJsonOut)
     }
     PrintConsole((char*)__FILE__, __LINE__, (char*)__FUNCTION__, (0 == ret || 200 == ret) ? LOG_LEVEL_INFO : LOG_LEVEL_ERR, "ret=%d,reportsJsonOut=%p\n", ret, reportsJsonOut);
     return ret;
+#endif
 }

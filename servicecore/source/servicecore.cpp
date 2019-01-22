@@ -4823,8 +4823,9 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
 #endif
 
 #ifdef VIDEO_ENABLED
-	serphone_core_assign_payload_type(&payload_type_h264,-1,"profile-level-id=42e01e; packetization-mode=1; max-br=452; max-mbps=11880");
-	serphone_core_assign_payload_type(&payload_type_vp8,120,NULL);
+    serphone_core_assign_payload_type(&payload_type_h264,-1,"profile-level-id=42e01e; packetization-mode=1; max-br=452; max-mbps=11880");
+	
+    serphone_core_assign_payload_type(&payload_type_vp8,120,NULL);
 
     //highprofile  ----zhangning 20170801 add---begin--
     serphone_core_assign_payload_type(&payload_type_h264,-1,"profile-level-id=64001e; packetization-mode=1");
@@ -6065,6 +6066,8 @@ void ServiceCore::serphone_core_reg_kickedoff()
 
 void ServiceCore::serphone_core_parse_capability_token(const char *token)
 {
+	return;
+#if 0
 #if !defined(NO_VOIP_FUNCTION)
     if(!token) {
         return ;
@@ -6102,6 +6105,7 @@ void ServiceCore::serphone_core_parse_capability_token(const char *token)
 		capability_conf.localrec,capability_conf.localrecvoip,capability_conf.hdvideo);
 #endif
     return;
+#endif
 }
 
 bool_t ServiceCore::serphone_core_set_process_audio_data_flag(SerPhoneCall *call,bool flag)

@@ -355,7 +355,7 @@ int ViEFileCapturer::ConvertBMPToVideoFrame(const char* fileUTF8, I420VideoFrame
 			delete[] pBuffer;
 		}
 	}
-	LOG_F(LS_INFO) << ret;
+//	LOG_F(LS_INFO) << ret;
 	return ret;
 }
 #endif
@@ -422,7 +422,7 @@ int ViEFileCapturer::ConvertJPEGToVideoFrame(const char* fileUTF8, I420VideoFram
 	delete[] image_buffer._buffer;
 	image_buffer._buffer = NULL;
 
-	LOG_F(LS_INFO) << fileUTF8;
+	//LOG_F(LS_INFO) << fileUTF8;
 	return ret;
 }
 

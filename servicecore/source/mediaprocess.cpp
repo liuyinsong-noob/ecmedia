@@ -1847,7 +1847,6 @@ void ServiceCore::serphone_call_init_media_streams(SerPhoneCall *call)
 			ECMedia_set_network_type(call->m_AudioChannelID, call->m_VideoChannelID, networkType);
 			ECMedia_video_set_local_receiver(call->m_VideoChannelID,call->video_port, call->video_port+1);
 			ECMedia_set_MTU(call->m_VideoChannelID,1450);
-			
             if (srtp_enable) {
                 int err = ECMedia_init_srtp_video(call->m_VideoChannelID);
                 if (err) {
@@ -4834,23 +4833,24 @@ int ServiceCore::GetReceiveChannelRtcpStatistics(const char* callid,
 		return -1;
 	}
 
+/*
 	//TODO:
-	//ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
+	ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
 
-	//if (!rtp_rtcp)
-	//{
-	//	return -1;
-	//}
+	if (!rtp_rtcp)
+	{
+		return -1;
+	}
 
-	//yuntongxunwebrtc::RtcpStatistics stats;
-	//rtp_rtcp->GetReceiveChannelRtcpStatistics(call->m_VideoChannelID, stats, rtt_ms);
+	yuntongxunwebrtc::RtcpStatistics stats;
+	rtp_rtcp->GetReceiveChannelRtcpStatistics(call->m_VideoChannelID, stats, rtt_ms);
 
-	//basic_stats.cumulative_lost = stats.cumulative_lost;
-	//basic_stats.fraction_lost = stats.fraction_lost;
-	//basic_stats.jitter = stats.jitter;
-	//basic_stats.extended_max_sequence_number = stats.extended_max_sequence_number;
+	basic_stats.cumulative_lost = stats.cumulative_lost;
+	basic_stats.fraction_lost = stats.fraction_lost;
+	basic_stats.jitter = stats.jitter;
+	basic_stats.extended_max_sequence_number = stats.extended_max_sequence_number;
 
-	//rtp_rtcp->Release();
+	rtp_rtcp->Release();*/
 	return 0;
 }
 
