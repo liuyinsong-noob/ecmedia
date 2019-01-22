@@ -315,7 +315,7 @@ size_t RTPSender::MaxPayloadSize() const {
   if (audio_configured_) {
     return max_packet_size_ - RtpHeaderLength();
   } else {
-    return max_packet_size_ - RtpHeaderLength()   // RTP overhead.
+     return max_packet_size_ - RtpHeaderLength()   // RTP overhead.
            - video_->FecPacketOverhead()          // FEC/ULP/RED overhead.
            - (RtxStatus() ? kRtxHeaderSize : 0);  // RTX overhead.
   }
@@ -611,6 +611,7 @@ size_t RTPSender::SendPadData(size_t bytes,
 
     bytes_sent += padding_bytes_in_packet;
     UpdateRtpStats(padding_packet, over_rtx, false);
+      
   }
 
   return bytes_sent;
@@ -630,8 +631,6 @@ int32_t RTPSender::ReSendPacket(uint16_t packet_id, int64_t min_resend_time) {
   if (!packet) {
     // Packet not found.
 	LOG(LS_ERROR) << "--------------[bwe][NACK][OnReceivedNack] Packet not found. seq_no = " << packet_id;
-	//WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo, -1,
-	//	"--------------[bwe][NACK][OnReceivedNack] Packet not found. seq_no = %u", packet_id);
 	return 0;
   }
 
@@ -673,8 +672,9 @@ bool RTPSender::SendPacketToNetwork(const RtpPacketToSend& packet,
 	  bool has_transport_id = packet.GetExtension<TransportSequenceNumber>(&transport_sequence_number);
 	  TransportFeedbackAdapter *transport_feedback_adapter = static_cast<TransportFeedbackAdapter*>(transport_feedback_observer_);
 	  transport_feedback_adapter->OnSentPacket(transport_sequence_number, clock_->TimeInMilliseconds());
-  }
+    }
 #endif
+
   if (transport_) {
     UpdateRtpOverhead(packet);
     bytes_sent = transport_->SendRtp(0, packet.data(), packet.size(), &options)
@@ -693,6 +693,7 @@ bool RTPSender::SendPacketToNetwork(const RtpPacketToSend& packet,
     LOG(LS_WARNING) << "Transport failed to send packet.";
     return false;
   }
+
   return true;
 }
 
@@ -809,6 +810,7 @@ bool RTPSender::PrepareAndSendPacket(std::unique_ptr<RtpPacketToSend> packet,
   {
     yuntongxunwebrtc::CritScope lock(&send_critsect_);
     media_has_been_sent_ = true;
+	_lastSent = clock_->TimeInMicroseconds();  // by ylr 2018.11.29
   }
   UpdateRtpStats(*packet_to_send, send_over_rtx, is_retransmit);
   return true;
@@ -1033,8 +1035,9 @@ bool RTPSender::SendToNetwork(std::unique_ptr<RtpPacketToSend> packet,
 
   uint32_t ssrc = packet->Ssrc();
   yuntongxunwebrtc::Optional<uint32_t> flexfec_ssrc = FlexfecSsrc();
-  //if (paced_sender_) {
-  if (paced_sender_ && packet->PayloadType()!=_keepAlivePayloadType){ //fixed by ylr;
+ // if (paced_sender_) {
+ // if (paced_sender_ && packet->PayloadType()!=_keepAlivePayloadType){ //fixed by ylr;
+  if (paced_sender_ && packet->payload_size() > 0) { //fixed by ylr;
     uint16_t seq_no = packet->SequenceNumber();
     // Correct offset between implementations of millisecond time stamps in
     // TickTime and Clock.
@@ -1225,7 +1228,7 @@ bool RTPSender::UpdateTransportSequenceNumber(RtpPacketToSend* packet,
     return false;
 
   *packet_id = transport_sequence_number_allocator_->AllocateSequenceNumber();
-
+    
   if (!packet->SetExtension<TransportSequenceNumber>(*packet_id))
     return false;
 
