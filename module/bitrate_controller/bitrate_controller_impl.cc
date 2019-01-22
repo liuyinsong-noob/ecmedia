@@ -199,23 +199,14 @@ void BitrateControllerImpl::OnDelayBasedBweResult(
     bandwidth_estimation_.UpdateDelayBasedEstimate(clock_->TimeInMilliseconds(),
                                                    result.target_bitrate_bps);
 
-#ifndef WIN32
-    printTime();
-    printf("[BWE] bitrate_controller = %d (is_probe = %s)\n", result.target_bitrate_bps, result.probe ? "True" : "false");
-#endif
     if (result.probe) {
-		LOG(LS_INFO) << "--------------[bwe] bitrate_controller = "
-			<< result.target_bitrate_bps
-			<< " (update_probe)";
 		WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, -1,
 			"--------------[bwe] bitrate_controller = %u (update_probe)", result.target_bitrate_bps);
         bandwidth_estimation_.SetSendBitrate(result.target_bitrate_bps);
         
-        BWE_TEST_LOGGING_PLOT(1, "DelayBasedBwe-probe", clock_->TimeInMilliseconds(),
-                              result.target_bitrate_bps);
+    //    BWE_TEST_LOGGING_PLOT(1, "DelayBasedBwe-probe", clock_->TimeInMilliseconds(),result.target_bitrate_bps);
     }
-    BWE_TEST_LOGGING_PLOT(1, "DelayBasedBwe", clock_->TimeInMilliseconds(),
-                            result.target_bitrate_bps);
+ //   BWE_TEST_LOGGING_PLOT(1, "DelayBasedBwe", clock_->TimeInMilliseconds(),result.target_bitrate_bps);
   }
   MaybeTriggerOnNetworkChanged();
 }
@@ -270,17 +261,10 @@ bool BitrateControllerImpl::GetNetworkParameters(uint32_t* bitrate,
   yuntongxunwebrtc::CritScope cs(&critsect_);
   int current_bitrate;
   bandwidth_estimation_.CurrentEstimate(&current_bitrate, fraction_loss, rtt);
-  //LOG(LS_INFO) << "--------------[bwe] bitrate_controller = "
-	 //           << current_bitrate;
 
-  //WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, -1,
-	 // "--------------[bwe] bitrate_controller = %d", current_bitrate);
-  LOG_COUNT_F(LS_INFO, 10) << "--------------[bwe] bitrate_controller = " << current_bitrate;
-    
-#ifndef WIN32
-    printTime();
-     printf("[BWE] bitrate_controller = %d\n", current_bitrate);
-#endif
+  WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, -1,
+	  "--------------[bwe] bitrate_controller = %d", current_bitrate);
+
 
   *bitrate = current_bitrate;
   *bitrate -= std::min(*bitrate, reserved_bitrate_bps_);

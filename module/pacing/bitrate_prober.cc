@@ -101,8 +101,8 @@ void BitrateProber::CreateProbeCluster(int bitrate_bps, int64_t now_ms) {
   ProbeCluster cluster;
   cluster.time_created_ms = now_ms;
   cluster.pace_info.probe_cluster_min_probes = kMinProbePacketsSent;
-  cluster.pace_info.probe_cluster_min_bytes =
-      bitrate_bps * kMinProbeDurationMs / 8000;
+  cluster.pace_info.probe_cluster_min_bytes = static_cast<int32_t>(
+      static_cast<int64_t>(bitrate_bps) * kMinProbeDurationMs / 8000);
   cluster.pace_info.send_bitrate_bps = bitrate_bps;
   cluster.pace_info.probe_cluster_id = next_cluster_id_++;
   clusters_.push(cluster);
@@ -119,17 +119,10 @@ void BitrateProber::CreateProbeCluster(int bitrate_bps, int64_t now_ms) {
 	  cluster.pace_info.probe_cluster_min_bytes,
 	  cluster.pace_info.probe_cluster_min_probes,
 	  cluster.pace_info.probe_cluster_id);
-  BWE_TEST_LOGGING_PLOT(1, "CreateProbe_id", now_ms, cluster.pace_info.probe_cluster_id);
-  BWE_TEST_LOGGING_PLOT(1, "CreateProbe_Br", now_ms, bitrate_bps);
-#ifndef WIN32
-    printTime();
-    printf("[Probe] Probe cluster (bitrate:min bytes:min packets:cluster id): (%d:%d:%d:%d)\n",
-           cluster.pace_info.send_bitrate_bps,
-           cluster.pace_info.probe_cluster_min_bytes,
-           cluster.pace_info.probe_cluster_min_probes,
-           cluster.pace_info.probe_cluster_id);
-#endif
-  // If we are already probing, continue to do so. Otherwise set it to
+ // BWE_TEST_LOGGING_PLOT(1, "CreateProbe_id", now_ms, cluster.pace_info.probe_cluster_id);
+ // BWE_TEST_LOGGING_PLOT(1, "CreateProbe_Br", now_ms, bitrate_bps);
+
+    // If we are already probing, continue to do so. Otherwise set it to
   // kInactive and wait for OnIncomingPacket to start the probing.
   if (probing_state_ != ProbingState::kActive)
     probing_state_ = ProbingState::kInactive;

@@ -137,6 +137,7 @@ std::vector<PacketFeedback> TransportFeedbackAdapter::GetPacketFeedbackVector(
       offset_us += packet.delta_us();
       timestamp_ms = current_offset_ms_ + (offset_us / 1000);
       PacketFeedback packet_feedback(timestamp_ms, packet.sequence_number());
+        
       if (!send_time_history_.GetFeedback(&packet_feedback, true))
         ++failed_lookups;
       packet_feedback_vector.push_back(packet_feedback);

@@ -359,8 +359,7 @@ void CongestionController::MaybeTriggerOnNetworkChanged() {
         transport_feedback_adapter_.GetProbingIntervalMs());
     remote_estimator_proxy_.OnBitrateChanged(bitrate_bps);
     
-    BWE_TEST_LOGGING_PLOT(1, "GCCBwe", clock_->TimeInMilliseconds(),
-                            bitrate_bps);
+   // BWE_TEST_LOGGING_PLOT(1, "GCCBwe", clock_->TimeInMilliseconds(),bitrate_bps);
   }
     
 }

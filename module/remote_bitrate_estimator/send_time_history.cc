@@ -44,8 +44,6 @@ void SendTimeHistory::AddAndRemoveOld(uint16_t sequence_number,
   int64_t creation_time_ms = now_ms;
   constexpr int64_t kNoArrivalTimeMs = -1;  // Arrival time is ignored.
   constexpr int64_t kNoSendTimeMs = -1;     // Send time is set by OnSentPacket.
-    
-    printf("add seq: %d         %d\n", sequence_number, unwrapped_seq_num);
 
   history_.insert(std::make_pair(
       unwrapped_seq_num,
@@ -72,12 +70,9 @@ bool SendTimeHistory::GetFeedback(PacketFeedback* packet_feedback,
     
   int64_t unwrapped_seq_num =
       seq_num_unwrapper_.Unwrap(packet_feedback->sequence_number);
-    
-    printf("Get seq: %d       %d\n", packet_feedback->sequence_number, unwrapped_seq_num);
   auto it = history_.find(unwrapped_seq_num);
     if (it == history_.end()){
-      printf("Get seq error: %d       %d\n", packet_feedback->sequence_number, unwrapped_seq_num);
-    return false;
+        return false;
     }
 
   // Save arrival_time not to overwrite it.

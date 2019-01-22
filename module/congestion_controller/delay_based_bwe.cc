@@ -26,6 +26,9 @@
 #include "../system_wrappers/include/metrics.h"
 #include "../typedefs.h"
 
+
+#include "../system_wrappers/include/trace.h"
+
 namespace {
 constexpr int kTimestampGroupLengthMs = 5;
 constexpr int kAbsSendTimeFraction = 18;
@@ -276,7 +279,7 @@ DelayBasedBwe::Result DelayBasedBwe::IncomingPacketFeedbackVector(
       aggregated_result = result;
   }
    int64_t now_ms = clock_->TimeInMilliseconds();
-   BWE_TEST_LOGGING_PLOT(1, "receiver_incoming_bitrate_", now_ms, receiver_incoming_bitrate_.bitrate_bps().value_or(0));
+  // BWE_TEST_LOGGING_PLOT(1, "receiver_incoming_bitrate_", now_ms, receiver_incoming_bitrate_.bitrate_bps().value_or(0));
   if (delayed_feedback) {
     ++consecutive_delayed_feedbacks_;
   } else {
@@ -376,6 +379,15 @@ DelayBasedBwe::Result DelayBasedBwe::IncomingPacketFeedback(
     probing_bps =
         probe_bitrate_estimator_.HandleProbeAndEstimateBitrate(packet_feedback);
   }
+   
+    if (packet_feedback.pacing_info.probe_cluster_id !=
+        PacedPacketInfo::kNotAProbe) {
+
+    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, -1,
+                 "[0][5555][4][2] Receive packet: [cluster_id : %d] [transort_seq : %hu] [arrival_time_ms: %lld]\n",
+                 packet_feedback.pacing_info.probe_cluster_id, packet_feedback.sequence_number, packet_feedback.arrival_time_ms);
+
+    }
     
   yuntongxunwebrtc::Optional<uint32_t> acked_bitrate_bps =
       receiver_incoming_bitrate_.bitrate_bps();

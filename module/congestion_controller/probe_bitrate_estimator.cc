@@ -67,6 +67,16 @@ int ProbeBitrateEstimator::HandleProbeAndEstimateBitrate(
   cluster->size_total += payload_size_bits;
   cluster->num_probes += 1;
 
+    
+    if (cluster->num_probes < kMinNumProbesValidCluster) {
+        printf("[twcc] [Probe-OnFeedback] [ cluster_id : transSeq_id : pkt_size_bytes ] [ %d : %hu : %lu ]\n",
+               cluster_id ,
+               packet_feedback.sequence_number,
+               packet_feedback.payload_size);
+    }
+    
+
+    
   if (cluster->num_probes < kMinNumProbesValidCluster)
   {
 	  return -1;
@@ -83,15 +93,7 @@ int ProbeBitrateEstimator::HandleProbeAndEstimateBitrate(
                  << " [cluster id: " << cluster_id
                  << "] [send interval: " << send_interval_ms << " ms]"
                  << " [receive interval: " << receive_interval_ms << " ms]";
-
-	WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, -1,
-		"[Probe] Probing unsuccessful, invalid send / receive interval[cluster id : %d][send interval : %.0f ms][receive interval : %.0f ms]",
-		cluster_id, send_interval_ms, receive_interval_ms);
       
-#ifndef WIN32
-      printTime();
-      printf("[Probe] Probing unsuccessful, invalid send/receive interval [cluster id: %d] [send interval: %.0f ms] [receive interval: %.0f ms]\n");
-#endif
     return -1;
   }
   // Since the |send_interval_ms| does not include the time it takes to actually
@@ -120,19 +122,8 @@ int ProbeBitrateEstimator::HandleProbeAndEstimateBitrate(
                  << " [ratio: " << receive_bps / 1000 << " / "
                  << send_bps / 1000 << " = " << ratio << " > kValidRatio ("
                  << kValidRatio << ")]";
-	WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, -1,
-		"[Probe] Probing unsuccessful, receive/send ratio too high [cluster id : %d][send : %.0f bytes / %.0f ms = %.0f kb/s]\
- [receive : %.0f bytes / %.0f ms = %.0f kb/s] [ratio: %.0f / %.0f = %.0f > kValidRatio ( %.0f )]",
-		cluster_id,
-		send_size, send_interval_ms, send_bps / 1000, 
-		receive_size, receive_interval_ms, receive_bps / 1000,
-		ratio, kValidRatio);
     return -1;
       
-#ifndef WIN32
-      printTime();
-      printf("[Probe] Probing unsuccessful, receive/send ratio too high [cluster id: %d] [send: %.0f bytes / %.0f ms = %.0f kb/s] [receive : %.0f bytes / %.0f ms = %.0f kb/s] [ratio: %.0f / %.0f = %d > kValidRatio(%d)]\n", cluster_id, send_size, send_interval_ms, send_bps/1000, receive_size, receive_interval_ms, receive_bps/1000, receive_bps/1000, send_bps/1000,  kValidRatio);
-#endif
   }
   LOG(LS_INFO) << "Probing successful"
                << " [cluster id: " << cluster_id << "] [send: " << send_size
@@ -142,10 +133,16 @@ int ProbeBitrateEstimator::HandleProbeAndEstimateBitrate(
                << receive_interval_ms << " ms = " << receive_bps / 1000
                << " kb/s]";
     
-#ifndef WIN32
-    printTime();
-    printf("[Probe] Probing successful, [cluster id: %d] [send: %.0f bytes / %.0f ms = %.0f kb/s] [receive : %.0f bytes / %.0f ms = %.0f kb/s]\n", cluster_id, send_size, send_interval_ms, send_bps/1000, receive_size, receive_interval_ms, receive_bps/1000);
-#endif
+    printf("[twcc] [Probe-OnFeedback] [success] [sendbr : rcvbr] [cluster_id : transSeq_id : pkt_size_bytes] [send_interval_ms : rcv_interval_ms] \
+[ %.0f : %.0f ] [ %.0f kb/s : %.0f kb/s] [ %d : %hu : %lu ]\n",
+		   send_interval_ms,
+		   receive_interval_ms,
+           send_bps/1000,
+           receive_bps/1000,
+           cluster_id ,
+           packet_feedback.sequence_number,
+           packet_feedback.payload_size);
+
   return (std::min)(send_bps, receive_bps);
 }
 

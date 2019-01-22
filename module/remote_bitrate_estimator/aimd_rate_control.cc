@@ -150,7 +150,6 @@ int AimdRateControl::GetNearMaxIncreaseRateBps() const {
   const int64_t response_time = in_experiment_ ? (rtt_ + 100) * 2 : rtt_ + 100;
 
   constexpr double kMinIncreaseRateBps = 4000;
-    printf("---------  rtt = %d, avg_packet_size_bits = %d \n", rtt_, avg_packet_size_bits);
   return static_cast<int>(max(
       kMinIncreaseRateBps, (avg_packet_size_bits * 1000) / response_time));
 }
@@ -179,7 +178,7 @@ uint32_t AimdRateControl::ChangeBitrate(uint32_t new_bitrate_bps,
   const float std_max_bit_rate = sqrt(var_max_bitrate_kbps_ *
                                       avg_max_bitrate_kbps_);
     
-    BWE_TEST_LOGGING_PLOT(1, "DelayBasedBwe-rcState", now_ms, rate_control_state_);
+//    BWE_TEST_LOGGING_PLOT(1, "DelayBasedBwe-rcState", now_ms, rate_control_state_);
 
   switch (rate_control_state_) {
     case kRcHold:
@@ -197,13 +196,13 @@ uint32_t AimdRateControl::ChangeBitrate(uint32_t new_bitrate_bps,
         uint32_t additive_increase_bps =
             AdditiveRateIncrease(now_ms, time_last_bitrate_change_);
         new_bitrate_bps += additive_increase_bps;
-          BWE_TEST_LOGGING_PLOT(1, "DelayBasedBwe-additive_increase_bps", now_ms, additive_increase_bps);
+        //  BWE_TEST_LOGGING_PLOT(1, "DelayBasedBwe-additive_increase_bps", now_ms, additive_increase_bps);
           
       } else {
         uint32_t multiplicative_increase_bps = MultiplicativeRateIncrease(
             now_ms, time_last_bitrate_change_, new_bitrate_bps);
         new_bitrate_bps += multiplicative_increase_bps;
-          BWE_TEST_LOGGING_PLOT(1, "DelayBasedBwe-multiplicative_increase_bps", now_ms, multiplicative_increase_bps);
+      //    BWE_TEST_LOGGING_PLOT(1, "DelayBasedBwe-multiplicative_increase_bps", now_ms, multiplicative_increase_bps);
       }
 
       time_last_bitrate_change_ = now_ms;

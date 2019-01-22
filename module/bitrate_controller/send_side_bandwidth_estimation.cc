@@ -139,9 +139,6 @@ void SendSideBandwidthEstimation::UpdateDelayBasedEstimate(
    LOG(LS_INFO) << "--------------[bwe] bitrate_controller = "
 	  << bitrate_bps
 	  << " (delay_based_bitrate_bps_)";
-
-   WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, -1,
-	   "--------------[bwe] bitrate_controller = %u (delay_based_bitrate_bps_)", bitrate_bps);
 }
 
 void SendSideBandwidthEstimation::UpdateReceiverBlock(uint8_t fraction_loss,
@@ -297,8 +294,7 @@ void SendSideBandwidthEstimation::UpdateEstimate(int64_t now_ms) {
       last_timeout_ms_ = now_ms;
     }
   }
-    BWE_TEST_LOGGING_PLOT(1, "LossBasedBwe", now_ms,
-                          bitrate_);
+ //   BWE_TEST_LOGGING_PLOT(1, "LossBasedBwe", now_ms, bitrate_);
   uint32_t capped_bitrate = CapBitrateToThresholds(now_ms, bitrate_);
   if (capped_bitrate != bitrate_ ||
       last_fraction_loss_ != last_logged_fraction_loss_ ||
