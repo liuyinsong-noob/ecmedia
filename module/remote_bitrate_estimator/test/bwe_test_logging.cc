@@ -23,7 +23,11 @@
 #include "../base/platform_thread.h"
 #include "../system_wrappers/include/critical_section_wrapper.h"
 
-char *filename_path_yuv;
+#ifdef WIN32
+char *filename_path_yuv = "bwe_test_logging_cbr_1M.txt";
+#else
+char *filename_path_yuv = "bwe_test_logging_cbr_1M.txt";
+#endif
 
 namespace yuntongxunwebrtc {
 	namespace testing {
@@ -128,10 +132,15 @@ namespace yuntongxunwebrtc {
 						alg_name.c_str(), state.timestamp_ms * 0.001, value);
                     
                     if (!pf_bwe) {
-                        pf_bwe = fopen(filename_path_yuv, "wb");
+#ifdef WIN32
+                        //pf_bwe = fopen("./bwe_test_logging_cbr_1M.txt", "wb");
+                       
+#else
+                         //pf_bwe = fopen(filename_path_yuv, "wb");
+#endif
                     }
-					fprintf(pf_bwe, "PLOT\t%d\t%s:%u@%s\t%f\t%f\n", figure, name.c_str(), ssrc,
-						alg_name.c_str(), state.timestamp_ms * 0.001, value);
+					//fprintf(pf_bwe, "PLOT\t%d\t%s:%u@%s\t%f\t%f\n", figure, name.c_str(), ssrc,
+						//alg_name.c_str(), state.timestamp_ms * 0.001, value);
 
 				}
 			}
@@ -216,12 +225,12 @@ namespace yuntongxunwebrtc {
 			Logging::Logging()
 				: crit_sect_(CriticalSectionWrapper::CreateCriticalSection()),
 				thread_map_() {
-				pf_bwe = fopen(filename_path_yuv, "wb");
+				//pf_bwe = fopen(filename_path_yuv, "wb");
 			}
 
 			Logging::~Logging()
 			{
-				fclose(pf_bwe);
+			//	fclose(pf_bwe);
 			}
 
 			Logging::State::State() : tag(""), timestamp_ms(0), enabled(true) {}
