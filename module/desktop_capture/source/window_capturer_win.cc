@@ -258,7 +258,7 @@ void WindowCapturerWin::Capture(const DesktopRegion& region) {
   cropped_rect =  DesktopRect::MakeXYWH(cropped_rect.left(),cropped_rect.top(),
 	  width, height);
 
-  HDC window_dc = GetDC(NULL);
+  HDC window_dc = GetDC(window_);
   if (!window_dc) {
 	WEBRTC_TRACE(kTraceWarning, kTraceVideoCapture, -1,
 		"Failed to get window DC: %d",GetLastError());
@@ -301,12 +301,14 @@ void WindowCapturerWin::Capture(const DesktopRegion& region) {
 	frame->size().height();
 	// Aero is enabled or PrintWindow() failed, use BitBlt.
 	if (!result) {
+		RECT rect;
+		GetWindowRect(window_, &rect);
 		result = BitBlt(mem_dc, 0, 0, 
 			frame->size().width(),
 			frame->size().height(),
 			window_dc,
-			cropped_rect.left(),
-			cropped_rect.top(),
+			cropped_rect.left() - rect.left,
+			cropped_rect.top() - rect.top,
 			SRCCOPY | CAPTUREBLT);
 	}
 
