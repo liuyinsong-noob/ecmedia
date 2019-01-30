@@ -426,9 +426,11 @@ enum TextureType
 
 - (void)setVideoSize:(GLuint)width height:(GLuint)height
 {
+    if(_videoW > 1 && _videoH > 1){
+        [self clearFrame];
+    }
     _videoW = width;
     _videoH = height;
-
     // I420 frame size : width * height * 3/2
     void *frameBuffer = malloc(width * height * 1.5);
     if(frameBuffer) {
@@ -590,6 +592,7 @@ enum TextureType
     dispatch_async(dispatch_get_main_queue(), ^{
         @synchronized(self)
         {
+            [self clearFrame];
             [EAGLContext setCurrentContext:_glContext];
             [self destoryFrameAndRenderBuffer];
             [self createFrameAndRenderBuffer];
