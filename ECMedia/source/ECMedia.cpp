@@ -3137,18 +3137,30 @@ int ECMedia_set_local_video_window(int deviceid, void *video_window)
         int ret = 0;
 #ifdef WIN32
         ViERender* render =  ViERender::GetInterface(m_vie);
-        ret = render->AddRenderer(deviceid,video_window,1,0,0,1,1,NULL);
-        if (ret) {
-            render->Release();
-            PrintConsole("[ECMEDIA ERROR] %s failed to add renderer", __FUNCTION__);
-            PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
-            return ret;
-        }
-        ret = render->StartRender(deviceid);
-        render->Release();
-        if (ret != 0) {
-            PrintConsole("[ECMEDIA ERROR] %s failed to start render", __FUNCTION__);
-        }
+		if (render)
+		{
+			ret = render->AddRenderer(deviceid, video_window, 1, 0, 0, 1, 1, NULL);
+			if (ret) {
+				render->Release();
+				PrintConsole("[ECMEDIA ERROR] %s failed to add renderer", __FUNCTION__);
+				PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
+				return ret;
+			}
+			ret = render->MirrorRenderStream(deviceid, true, false, true);
+			if (ret != 0) {
+				PrintConsole("[ECMEDIA ERROR] %s failed to mirror render stream", __FUNCTION__);
+			}
+			ret = render->StartRender(deviceid);
+			render->Release();
+			if (ret != 0) {
+				PrintConsole("[ECMEDIA ERROR] %s failed to start render", __FUNCTION__);
+			}
+		}
+		else
+		{
+			return -1;
+			PrintConsole("[ECMEDIA ERROR] %s render is null. ", __FUNCTION__);
+		}
 #else
         ret = capture->SetLocalVideoWindow(deviceid, video_window);
         capture->Release();
