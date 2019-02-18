@@ -70,7 +70,7 @@ VideoSender::VideoSender(Clock* clock,
       _mediaOpt(clock_),
       _sendStatsCallback(NULL),
       _codecDataBase(),
-      frame_dropper_enabled_(true),
+      frame_dropper_enabled_(false),//zhangn correcte true
       _sendStatsTimer(1000, clock_),
       qm_settings_callback_(NULL),
       protection_callback_(NULL)
