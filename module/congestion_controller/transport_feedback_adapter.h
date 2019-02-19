@@ -18,6 +18,7 @@
 #include "../base/thread_annotations.h"
 #include "../base/thread_checker.h"
 #include "../module/congestion_controller/delay_based_bwe.h"
+#include "../module/congestion_controller/network_control.h"
 #include "../module/interface/module_common_types.h"
 #include "../module/remote_bitrate_estimator/include/send_time_history.h"
 
@@ -32,7 +33,8 @@ class TransportFeedbackAdapter : public TransportFeedbackObserver,
  public:
   TransportFeedbackAdapter(RtcEventLog* event_log,
                            Clock* clock,
-                           BitrateController* bitrate_controller);
+                           BitrateController* bitrate_controller,
+                           NetworkControllerInterface* cc_controller);
   virtual ~TransportFeedbackAdapter();
 
   void InitBwe();
@@ -73,6 +75,7 @@ class TransportFeedbackAdapter : public TransportFeedbackObserver,
   int64_t last_timestamp_us_;
   BitrateController* const bitrate_controller_;
   std::vector<PacketFeedback> last_packet_feedback_vector_;
+  NetworkControllerInterface* const cc_controller_;
 };
 
 }  // namespace yuntongxunwebrtc

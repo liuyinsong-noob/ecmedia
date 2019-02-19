@@ -48,6 +48,7 @@
 
 /* Begin PBXFileReference section */
 		1FE07E1D1FE7B0070018E762 /* libcongestion_controller Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcongestion_controller Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4544BF14221A509300CA8453 /* network_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = network_control.h; path = ../../../network_control.h; sourceTree = "<group>"; };
 		45619C441F14C784008B2068 /* libcongestion_controller.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcongestion_controller.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		45619C501F14C7CD008B2068 /* congestion_controller.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = congestion_controller.cc; path = ../../../congestion_controller.cc; sourceTree = "<group>"; };
 		45619C511F14C7CD008B2068 /* delay_based_bwe.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = delay_based_bwe.cc; path = ../../../delay_based_bwe.cc; sourceTree = "<group>"; };
@@ -112,6 +113,7 @@
 				45619C551F14C7CD008B2068 /* probe_bitrate_estimator.cc */,
 				45619C561F14C7CD008B2068 /* probe_bitrate_estimator.h */,
 				45619C571F14C7CD008B2068 /* probe_controller.cc */,
+				4544BF14221A509300CA8453 /* network_control.h */,
 				45619C581F14C7CD008B2068 /* probe_controller.h */,
 				45619C591F14C7CD008B2068 /* probing_interval_estimator.cc */,
 				45619C5A1F14C7CD008B2068 /* probing_interval_estimator.h */,

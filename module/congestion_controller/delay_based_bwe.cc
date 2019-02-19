@@ -234,7 +234,8 @@ DelayBasedBwe::DelayBasedBwe(RtcEventLog* event_log, Clock* clock)
       median_slope_threshold_gain_(kDefaultMedianSlopeThresholdGain),
       consecutive_delayed_feedbacks_(0),
       last_logged_bitrate_(0),
-      last_logged_state_(kBwNormal) {
+      last_logged_state_(kBwNormal),
+        probe_bitrate_bps_(0){
   if (in_trendline_experiment_) {
     ReadTrendlineFilterExperimentParameters(&trendline_window_size_,
                                             &trendline_smoothing_coeff_,
@@ -373,21 +374,7 @@ DelayBasedBwe::Result DelayBasedBwe::IncomingPacketFeedback(
     }
   }
 
-  int probing_bps = 0;
-  if (packet_feedback.pacing_info.probe_cluster_id !=
-      PacedPacketInfo::kNotAProbe) {
-    probing_bps =
-        probe_bitrate_estimator_.HandleProbeAndEstimateBitrate(packet_feedback);
-  }
-   
-    if (packet_feedback.pacing_info.probe_cluster_id !=
-        PacedPacketInfo::kNotAProbe) {
-
-    WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceVideo, -1,
-                 "[0][5555][4][2] Receive packet: [cluster_id : %d] [transort_seq : %hu] [arrival_time_ms: %lld]\n",
-                 packet_feedback.pacing_info.probe_cluster_id, packet_feedback.sequence_number, packet_feedback.arrival_time_ms);
-
-    }
+  int probing_bps = probe_bitrate_bps_;
     
   yuntongxunwebrtc::Optional<uint32_t> acked_bitrate_bps =
       receiver_incoming_bitrate_.bitrate_bps();
@@ -477,4 +464,8 @@ void DelayBasedBwe::SetMinBitrate(int min_bitrate_bps) {
 int64_t DelayBasedBwe::GetProbingIntervalMs() const {
   return probing_interval_estimator_.GetIntervalMs();
 }
+    
+    void DelayBasedBwe::SetProbeBitrate(int probe_bitrate){
+        probe_bitrate_bps_ = probe_bitrate;
+    }
 }  // namespace webrtc

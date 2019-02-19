@@ -25,6 +25,8 @@ class ProbeBitrateEstimator {
   // Should be called for every probe packet we receive feedback about.
   // Returns the estimated bitrate if the probe completes a valid cluster.
   int HandleProbeAndEstimateBitrate(const PacketFeedback& packet_feedback);
+  
+    int FetchAndResetLastEstimatedBitrate();
 
  private:
   struct AggregatedCluster {
@@ -42,6 +44,8 @@ class ProbeBitrateEstimator {
   void EraseOldClusters(int64_t timestamp_ms);
 
   std::map<int, AggregatedCluster> clusters_;
+    
+    int estimated_bitrate_bps_;
 };
 
 }  // namespace yuntongxunwebrtc

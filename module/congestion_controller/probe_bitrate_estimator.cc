@@ -68,12 +68,16 @@ int ProbeBitrateEstimator::HandleProbeAndEstimateBitrate(
   cluster->num_probes += 1;
 
     
-    if (cluster->num_probes < kMinNumProbesValidCluster) {
-        printf("[twcc] [Probe-OnFeedback] [ cluster_id : transSeq_id : pkt_size_bytes ] [ %d : %hu : %lu ]\n",
-               cluster_id ,
-               packet_feedback.sequence_number,
-               packet_feedback.payload_size);
-    }
+//    if (cluster->num_probes < kMinNumProbesValidCluster) {
+//        if (packet_feedback.payload_size == 96) {
+//            int i;
+//            i=0;
+//        }
+//        printf("[twcc] [Probe-OnFeedback] [ cluster_id : transSeq_id : pkt_size_bytes ] [ %d : %hu : %lu ]\n",
+//               cluster_id ,
+//               packet_feedback.sequence_number,
+//               packet_feedback.payload_size);
+//    }
     
 
     
@@ -133,17 +137,19 @@ int ProbeBitrateEstimator::HandleProbeAndEstimateBitrate(
                << receive_interval_ms << " ms = " << receive_bps / 1000
                << " kb/s]";
     
-    printf("[twcc] [Probe-OnFeedback] [success] [sendbr : rcvbr] [cluster_id : transSeq_id : pkt_size_bytes] [send_interval_ms : rcv_interval_ms] \
-[ %.0f : %.0f ] [ %.0f kb/s : %.0f kb/s] [ %d : %hu : %lu ]\n",
-		   send_interval_ms,
-		   receive_interval_ms,
-           send_bps/1000,
-           receive_bps/1000,
-           cluster_id ,
-           packet_feedback.sequence_number,
-           packet_feedback.payload_size);
-
-  return (std::min)(send_bps, receive_bps);
+//    printf("[twcc] [Probe-OnFeedback] [success] [sendbr : rcvbr] [cluster_id : transSeq_id : pkt_size_bytes] [send_interval_ms : rcv_interval_ms] \
+//[ %.0f : %.0f ] [ %.0f kb/s : %.0f kb/s] [ %d : %hu : %lu ]\n",
+//           send_interval_ms,
+//           receive_interval_ms,
+//           send_bps/1000,
+//           receive_bps/1000,
+//           cluster_id ,
+//           packet_feedback.sequence_number,
+//           packet_feedback.payload_size);
+    
+    
+    estimated_bitrate_bps_ = (std::min)(send_bps, receive_bps);
+  return estimated_bitrate_bps_;
 }
 
 void ProbeBitrateEstimator::EraseOldClusters(int64_t timestamp_ms) {
@@ -155,4 +161,10 @@ void ProbeBitrateEstimator::EraseOldClusters(int64_t timestamp_ms) {
     }
   }
 }
+    
+    int ProbeBitrateEstimator::FetchAndResetLastEstimatedBitrate(){
+        int estimated_bitrate_bps = estimated_bitrate_bps_;
+        estimated_bitrate_bps_ = 0;
+        return estimated_bitrate_bps;
+    }
 }  // namespace webrtc

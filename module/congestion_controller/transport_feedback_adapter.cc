@@ -22,6 +22,7 @@
 #include "../module/utility/include/process_thread.h"
 #include "../system_wrappers/include/field_trial.h"
 
+
 namespace yuntongxunwebrtc {
 
 const int64_t kNoTimestamp = -1;
@@ -44,7 +45,8 @@ class PacketFeedbackComparator {
 TransportFeedbackAdapter::TransportFeedbackAdapter(
     RtcEventLog* event_log,
     Clock* clock,
-    BitrateController* bitrate_controller)
+    BitrateController* bitrate_controller,
+    NetworkControllerInterface* cc_controller)
     : send_side_bwe_with_overhead_(
           yuntongxunwebrtc::field_trial::IsEnabled("yuntongxunwebrtc-SendSideBwe-WithOverhead")),
       transport_overhead_bytes_per_packet_(0),
@@ -53,7 +55,8 @@ TransportFeedbackAdapter::TransportFeedbackAdapter(
       clock_(clock),
       current_offset_ms_(kNoTimestamp),
       last_timestamp_us_(kNoTimestamp),
-      bitrate_controller_(bitrate_controller) {}
+      bitrate_controller_(bitrate_controller),
+      cc_controller_(cc_controller){}
 
 TransportFeedbackAdapter::~TransportFeedbackAdapter() {}
 
@@ -69,6 +72,7 @@ void TransportFeedbackAdapter::AddPacket(uint16_t sequence_number,
   if (send_side_bwe_with_overhead_) {
     length += transport_overhead_bytes_per_packet_;
   }
+
   send_time_history_.AddAndRemoveOld(sequence_number, length, pacing_info);
 }
 
@@ -154,16 +158,25 @@ std::vector<PacketFeedback> TransportFeedbackAdapter::GetPacketFeedbackVector(
 }
 
 void TransportFeedbackAdapter::OnTransportFeedback(
-    const rtcp::TransportFeedback& feedback) {
-  last_packet_feedback_vector_ = GetPacketFeedbackVector(feedback);
-  DelayBasedBwe::Result result;
-  {
-    yuntongxunwebrtc::CritScope cs(&bwe_lock_);
-    result = delay_based_bwe_->IncomingPacketFeedbackVector(
-        last_packet_feedback_vector_);
-  }
-  if (result.updated)
-    bitrate_controller_->OnDelayBasedBweResult(result);
+                                                   const rtcp::TransportFeedback& feedback) {
+    last_packet_feedback_vector_ = GetPacketFeedbackVector(feedback);
+    
+    int probe_bitrate = 0;
+    if (cc_controller_) {
+        probe_bitrate = cc_controller_->OnTransportPacketsFeedback(last_packet_feedback_vector_);
+        delay_based_bwe_->SetProbeBitrate(probe_bitrate);
+    }
+    
+    DelayBasedBwe::Result result;
+    {
+        yuntongxunwebrtc::CritScope cs(&bwe_lock_);
+        result = delay_based_bwe_->IncomingPacketFeedbackVector(
+                                                                last_packet_feedback_vector_);
+    }
+    if (result.updated)
+        bitrate_controller_->OnDelayBasedBweResult(result);
+    
+    
 }
 
 std::vector<PacketFeedback>

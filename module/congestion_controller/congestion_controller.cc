@@ -177,7 +177,7 @@ CongestionController::CongestionController(
           new RateLimiter(clock, kRetransmitWindowSizeMs)),
       remote_bitrate_estimator_(remote_bitrate_observer, clock_),
       remote_estimator_proxy_(clock_, packet_router_),
-      transport_feedback_adapter_(event_log, clock_, bitrate_controller_.get()),
+      transport_feedback_adapter_(event_log, clock_, bitrate_controller_.get(), this),
       min_bitrate_bps_(congestion_controller::GetMinBitrateBps()),
       max_bitrate_bps_(0),
       last_reported_bitrate_bps_(0),
@@ -390,6 +390,19 @@ bool CongestionController::IsSendQueueFull() const {
 bool CongestionController::IsNetworkDown() const {
   yuntongxunwebrtc::CritScope cs(&critsect_);
   return network_state_ == kNetworkDown;
+}
+    
+int CongestionController::OnTransportPacketsFeedback(const std::vector<PacketFeedback>& packet_feedback_vector){
+    for (const auto& packet_feedback : packet_feedback_vector) {
+        if (packet_feedback.pacing_info.probe_cluster_id !=
+            PacedPacketInfo::kNotAProbe) {
+            probe_bitrate_estimator_.HandleProbeAndEstimateBitrate(packet_feedback);
+        }
+    }
+    
+    int probe_bitrate = probe_bitrate_estimator_.FetchAndResetLastEstimatedBitrate();
+    
+    return probe_bitrate;
 }
 
 }  // namespace yuntongxunwebrtc

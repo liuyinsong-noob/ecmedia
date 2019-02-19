@@ -17,6 +17,7 @@
 #include "../base/constructormagic.h"
 #include "../base/criticalsection.h"
 #include "../module/common_types.h"
+#include "../module/congestion_controller/network_control.h"
 #include "../module/congestion_controller/transport_feedback_adapter.h"
 #include "../module/interface/module.h"
 #include "../module/interface/module_common_types.h"
@@ -39,7 +40,7 @@ class RemoteBitrateObserver;
 class RtcEventLog;
 class TransportFeedbackObserver;
 
-class CongestionController : public CallStatsObserver, public Module {
+class CongestionController : public NetworkControllerInterface, public CallStatsObserver, public Module {
  public:
   // Observer class for bitrate changes announced due to change in bandwidth
   // estimate or due to that the send pacer is full. Fraction loss and rtt is
@@ -68,6 +69,9 @@ class CongestionController : public CallStatsObserver, public Module {
                        PacketRouter* packet_router,
                        std::unique_ptr<PacedSender> pacer);
   virtual ~CongestionController();
+    
+  //Implements NetworkControllerInterface
+  int OnTransportPacketsFeedback(const std::vector<PacketFeedback>& packet_feedback_vector);
 
   virtual void OnReceivedPacket(int64_t arrival_time_ms,
                                 size_t payload_size,
@@ -173,6 +177,7 @@ class CongestionController : public CallStatsObserver, public Module {
   WrappingBitrateEstimator remote_bitrate_estimator_;
   RemoteEstimatorProxy remote_estimator_proxy_;
   TransportFeedbackAdapter transport_feedback_adapter_;
+    ProbeBitrateEstimator probe_bitrate_estimator_;
   int min_bitrate_bps_;
   int max_bitrate_bps_;
   yuntongxunwebrtc::CriticalSection critsect_;

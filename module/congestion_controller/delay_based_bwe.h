@@ -57,7 +57,8 @@ class DelayBasedBwe {
   void SetStartBitrate(int start_bitrate_bps);
   void SetMinBitrate(int min_bitrate_bps);
   int64_t GetProbingIntervalMs() const;
-
+    
+    void SetProbeBitrate(int probe_bitrate);
  private:
   // Computes a bayesian estimate of the throughput given acks containing
   // the arrival time and payload size. Samples which are far from the current
@@ -105,7 +106,6 @@ class DelayBasedBwe {
   int64_t last_seen_packet_ms_;
   bool uma_recorded_;
   AimdRateControl rate_control_;
-  ProbeBitrateEstimator probe_bitrate_estimator_;
   size_t trendline_window_size_;
   double trendline_smoothing_coeff_;
   double trendline_threshold_gain_;
@@ -115,6 +115,7 @@ class DelayBasedBwe {
   int consecutive_delayed_feedbacks_;
   uint32_t last_logged_bitrate_;
   BandwidthUsage last_logged_state_;
+    int probe_bitrate_bps_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(DelayBasedBwe);
 };
