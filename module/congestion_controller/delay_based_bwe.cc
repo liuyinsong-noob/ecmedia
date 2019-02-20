@@ -269,16 +269,27 @@ DelayBasedBwe::Result DelayBasedBwe::IncomingPacketFeedbackVector(
     uma_recorded_ = true;
   }
   Result aggregated_result;
+    
   bool delayed_feedback = true;
-
-  for (const auto& packet_feedback : packet_feedback_vector) {
-    if (packet_feedback.send_time_ms < 0)
-      continue;
-    delayed_feedback = false;
-    Result result = IncomingPacketFeedback(packet_feedback);
-    if (result.updated)
-      aggregated_result = result;
-  }
+    
+    bool recovered_from_overuse = false;
+    BandwidthUsage prev_detector_state = detector_.State();
+    
+    for (const auto& packet_feedback : packet_feedback_vector) {
+        if (packet_feedback.send_time_ms < 0)
+            continue;
+        delayed_feedback = false;
+        Result result = IncomingPacketFeedback(packet_feedback);
+        if (result.updated)
+            aggregated_result = result;
+        if (prev_detector_state == BandwidthUsage::kBwUnderusing &&
+            detector_.State() == BandwidthUsage::kBwNormal) {
+            recovered_from_overuse = true;
+        }
+        prev_detector_state = detector_.State();
+    }
+    
+  
    int64_t now_ms = clock_->TimeInMilliseconds();
   // BWE_TEST_LOGGING_PLOT(1, "receiver_incoming_bitrate_", now_ms, receiver_incoming_bitrate_.bitrate_bps().value_or(0));
   if (delayed_feedback) {
@@ -465,7 +476,68 @@ int64_t DelayBasedBwe::GetProbingIntervalMs() const {
   return probing_interval_estimator_.GetIntervalMs();
 }
     
-    void DelayBasedBwe::SetProbeBitrate(int probe_bitrate){
-        probe_bitrate_bps_ = probe_bitrate;
+void DelayBasedBwe::SetProbeBitrate(int probe_bitrate){
+    probe_bitrate_bps_ = probe_bitrate;
+}
+    
+    
+DelayBasedBwe::Result DelayBasedBwe::MaybeUpdateEstimate(){
+    Result result;
+    bool recover_from_overuse = true;
+    bool in_alr = false;
+    yuntongxunwebrtc::Optional<uint32_t> acked_bitrate;
+    yuntongxunwebrtc::Optional<uint32_t> prev_bitrate_bps(prev_bitrate_);
+    int probe_bitrate = probe_bitrate_bps_;
+    
+    int64_t at_time = clock_->TimeInMilliseconds();
+    
+    if (detector_.State() == BandwidthUsage::kBwOverusing) {
+        if (in_alr &&
+            rate_control_.TimeToReduceFurther(at_time, prev_bitrate_)) {
+            result.updated =
+            UpdateEstimate(at_time, at_time, prev_bitrate_bps, &result.target_bitrate_bps);
+        } else if (acked_bitrate &&
+                   rate_control_.TimeToReduceFurther(at_time, *acked_bitrate)) {
+            result.updated =
+            UpdateEstimate(at_time, at_time, acked_bitrate, &result.target_bitrate_bps);
+        } else if (!acked_bitrate && rate_control_.ValidEstimate() ) {
+                  // && rate_control_.InitialTimeToReduceFurther(at_time)) {
+            // Overusing before we have a measured acknowledged bitrate. Reduce send
+            // rate by 50% every 200 ms.
+            // TODO(tschumim): Improve this and/or the acknowledged bitrate estimator
+            // so that we (almost) always have a bitrate estimate.
+            rate_control_.SetEstimate(rate_control_.LatestEstimate() / 2, at_time);
+            result.updated = true;
+            result.probe = false;
+            result.target_bitrate_bps = rate_control_.LatestEstimate();
+        }
+    } else {
+        if (probe_bitrate) {
+            result.probe = true;
+            result.updated = true;
+            result.target_bitrate_bps = probe_bitrate;
+            rate_control_.SetEstimate(probe_bitrate, at_time);
+        } else {
+            result.updated =
+            UpdateEstimate(at_time, at_time, acked_bitrate, &result.target_bitrate_bps);
+            //result.recovered_from_overuse = recovered_from_overuse;
+        }
     }
+    BandwidthUsage detector_state = detector_.State();
+    if ((result.updated && prev_bitrate_ != result.target_bitrate_bps) ||
+        detector_state != prev_state_) {
+        int bitrate = result.updated ? result.target_bitrate_bps : prev_bitrate_;
+        
+        //BWE_TEST_LOGGING_PLOT(1, "target_bitrate_bps", at_time.ms(), bitrate.bps());
+        
+//            if (event_log_) {
+//                event_log_->Log(absl::make_unique<RtcEventBweUpdateDelayBased>(
+//                                                                               bitrate.bps(), detector_state));
+//            }
+        
+        prev_bitrate_ = bitrate;
+        prev_state_ = detector_state;
+    }
+    return result;
+}
 }  // namespace webrtc

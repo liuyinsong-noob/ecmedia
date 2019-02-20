@@ -18,7 +18,7 @@ class NetworkControllerInterface {
 public:
     virtual ~NetworkControllerInterface() = default;
 
-    virtual int OnTransportPacketsFeedback(const std::vector<PacketFeedback>& packet_feedback_vector) = 0;
+    virtual void OnTransportPacketsFeedback(const std::vector<PacketFeedback>& packet_feedback_vector) = 0;
 };
     
     

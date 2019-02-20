@@ -71,7 +71,7 @@ class CongestionController : public NetworkControllerInterface, public CallStats
   virtual ~CongestionController();
     
   //Implements NetworkControllerInterface
-  int OnTransportPacketsFeedback(const std::vector<PacketFeedback>& packet_feedback_vector);
+  void OnTransportPacketsFeedback(const std::vector<PacketFeedback>& packet_feedback_vector);
 
   virtual void OnReceivedPacket(int64_t arrival_time_ms,
                                 size_t payload_size,
@@ -174,6 +174,7 @@ class CongestionController : public NetworkControllerInterface, public CallStats
   const std::unique_ptr<BitrateController> bitrate_controller_;
   const std::unique_ptr<ProbeController> probe_controller_;
   const std::unique_ptr<RateLimiter> retransmission_rate_limiter_;
+    const std::unique_ptr<DelayBasedBwe> delay_based_bwe_;
   WrappingBitrateEstimator remote_bitrate_estimator_;
   RemoteEstimatorProxy remote_estimator_proxy_;
   TransportFeedbackAdapter transport_feedback_adapter_;

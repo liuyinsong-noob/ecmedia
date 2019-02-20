@@ -175,17 +175,17 @@ CongestionController::CongestionController(
       probe_controller_(new ProbeController(pacer_.get(), clock_)),
       retransmission_rate_limiter_(
           new RateLimiter(clock, kRetransmitWindowSizeMs)),
+    delay_based_bwe_(new DelayBasedBwe(event_log, clock_)),
       remote_bitrate_estimator_(remote_bitrate_observer, clock_),
       remote_estimator_proxy_(clock_, packet_router_),
-      transport_feedback_adapter_(event_log, clock_, bitrate_controller_.get(), this),
+      transport_feedback_adapter_(event_log, clock_, this),
       min_bitrate_bps_(congestion_controller::GetMinBitrateBps()),
       max_bitrate_bps_(0),
       last_reported_bitrate_bps_(0),
       last_reported_fraction_loss_(0),
       last_reported_rtt_(0),
       network_state_(kNetworkUp) {
-  transport_feedback_adapter_.InitBwe();
-  transport_feedback_adapter_.SetMinBitrate(min_bitrate_bps_);
+  delay_based_bwe_->SetMinBitrate(min_bitrate_bps_);
 }
 
 CongestionController::~CongestionController() {}
@@ -218,9 +218,8 @@ void CongestionController::SetBweBitrates(int min_bitrate_bps,
 
   remote_bitrate_estimator_.SetMinBitrate(min_bitrate_bps);
   min_bitrate_bps_ = min_bitrate_bps;
-  if (start_bitrate_bps > 0)
-    transport_feedback_adapter_.SetStartBitrate(start_bitrate_bps);
-  transport_feedback_adapter_.SetMinBitrate(min_bitrate_bps_);
+    delay_based_bwe_->SetStartBitrate(start_bitrate_bps);
+    delay_based_bwe_->SetMinBitrate(min_bitrate_bps);
   MaybeTriggerOnNetworkChanged();
 }
 
@@ -238,9 +237,8 @@ void CongestionController::ResetBweAndBitrates(int bitrate_bps,
   // no longer exposed outside CongestionController.
   remote_bitrate_estimator_.SetMinBitrate(min_bitrate_bps);
 
-  transport_feedback_adapter_.InitBwe();
-  transport_feedback_adapter_.SetStartBitrate(bitrate_bps);
-  transport_feedback_adapter_.SetMinBitrate(min_bitrate_bps);
+  delay_based_bwe_->SetStartBitrate(bitrate_bps);
+  delay_based_bwe_->SetMinBitrate(min_bitrate_bps);
   // TODO(holmer): Trigger a new probe once mid-call probing is implemented.
   MaybeTriggerOnNetworkChanged();
 }
@@ -314,7 +312,7 @@ void CongestionController::OnSentPacket(const yuntongxunwebrtc::SentPacket& sent
 
 void CongestionController::OnRttUpdate(int64_t avg_rtt_ms, int64_t max_rtt_ms) {
   remote_bitrate_estimator_.OnRttUpdate(avg_rtt_ms, max_rtt_ms);
-  transport_feedback_adapter_.OnRttUpdate(avg_rtt_ms, max_rtt_ms);
+  delay_based_bwe_->OnRttUpdate(avg_rtt_ms, max_rtt_ms);
 }
 
 int64_t CongestionController::TimeUntilNextProcess() {
@@ -356,7 +354,7 @@ void CongestionController::MaybeTriggerOnNetworkChanged() {
       }
     observer_->OnNetworkChanged(
         bitrate_bps, fraction_loss, rtt,
-        transport_feedback_adapter_.GetProbingIntervalMs());
+        delay_based_bwe_->GetProbingIntervalMs());
     remote_estimator_proxy_.OnBitrateChanged(bitrate_bps);
     
    // BWE_TEST_LOGGING_PLOT(1, "GCCBwe", clock_->TimeInMilliseconds(),bitrate_bps);
@@ -392,7 +390,7 @@ bool CongestionController::IsNetworkDown() const {
   return network_state_ == kNetworkDown;
 }
     
-int CongestionController::OnTransportPacketsFeedback(const std::vector<PacketFeedback>& packet_feedback_vector){
+void CongestionController::OnTransportPacketsFeedback(const std::vector<PacketFeedback>& packet_feedback_vector){
     for (const auto& packet_feedback : packet_feedback_vector) {
         if (packet_feedback.pacing_info.probe_cluster_id !=
             PacedPacketInfo::kNotAProbe) {
@@ -401,8 +399,13 @@ int CongestionController::OnTransportPacketsFeedback(const std::vector<PacketFee
     }
     
     int probe_bitrate = probe_bitrate_estimator_.FetchAndResetLastEstimatedBitrate();
+    delay_based_bwe_->SetProbeBitrate(probe_bitrate);
     
-    return probe_bitrate;
+    DelayBasedBwe::Result result;
+    result = delay_based_bwe_->IncomingPacketFeedbackVector(packet_feedback_vector);
+    if (result.updated)
+        bitrate_controller_->OnDelayBasedBweResult(result);
+    
 }
 
 }  // namespace yuntongxunwebrtc

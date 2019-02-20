@@ -28,16 +28,13 @@ class BitrateController;
 class RtcEventLog;
 class ProcessThread;
 
-class TransportFeedbackAdapter : public TransportFeedbackObserver,
-                                 public CallStatsObserver {
+class TransportFeedbackAdapter : public TransportFeedbackObserver {
  public:
   TransportFeedbackAdapter(RtcEventLog* event_log,
                            Clock* clock,
-                           BitrateController* bitrate_controller,
                            NetworkControllerInterface* cc_controller);
   virtual ~TransportFeedbackAdapter();
 
-  void InitBwe();
   // Implements TransportFeedbackObserver.
   void AddPacket(uint16_t sequence_number,
                  size_t length,
@@ -50,30 +47,20 @@ class TransportFeedbackAdapter : public TransportFeedbackObserver,
   void OnTransportFeedback(const rtcp::TransportFeedback& feedback) override;
   std::vector<PacketFeedback> GetTransportFeedbackVector() const override;
 
-  // Implements CallStatsObserver.
-  void OnRttUpdate(int64_t avg_rtt_ms, int64_t max_rtt_ms) override;
 
-  void SetStartBitrate(int start_bitrate_bps);
-  void SetMinBitrate(int min_bitrate_bps);
   void SetTransportOverhead(int transport_overhead_bytes_per_packet);
-
-  int64_t GetProbingIntervalMs() const;
-
  private:
   std::vector<PacketFeedback> GetPacketFeedbackVector(
       const rtcp::TransportFeedback& feedback);
 
   const bool send_side_bwe_with_overhead_;
   yuntongxunwebrtc::CriticalSection lock_;
-  yuntongxunwebrtc::CriticalSection bwe_lock_;
   int transport_overhead_bytes_per_packet_ GUARDED_BY(&lock_);
   SendTimeHistory send_time_history_ GUARDED_BY(&lock_);
-  std::unique_ptr<DelayBasedBwe> delay_based_bwe_ GUARDED_BY(&bwe_lock_);
   RtcEventLog* const event_log_;
   Clock* const clock_;
   int64_t current_offset_ms_;
   int64_t last_timestamp_us_;
-  BitrateController* const bitrate_controller_;
   std::vector<PacketFeedback> last_packet_feedback_vector_;
   NetworkControllerInterface* const cc_controller_;
 };

@@ -82,6 +82,7 @@ class DelayBasedBwe {
     const bool in_experiment_;
   };
 
+    Result MaybeUpdateEstimate();
   Result IncomingPacketFeedback(const PacketFeedback& packet_feedback);
   Result OnLongFeedbackDelay(int64_t arrival_time_ms);
   // Updates the current remote rate estimate and returns true if a valid
@@ -116,6 +117,8 @@ class DelayBasedBwe {
   uint32_t last_logged_bitrate_;
   BandwidthUsage last_logged_state_;
     int probe_bitrate_bps_;
+    int prev_bitrate_;
+    BandwidthUsage prev_state_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(DelayBasedBwe);
 };
