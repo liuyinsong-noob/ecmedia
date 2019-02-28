@@ -168,7 +168,6 @@ int VP8EncoderImpl::Release() {
 
 int VP8EncoderImpl::SetRates(uint32_t new_bitrate_kbit, uint32_t new_framerate,
                              uint32_t minBitrate_kbit, uint32_t maxBitrate_kbit) {
-	new_bitrate_kbit = 350;
   if (!inited_) {
     return WEBRTC_VIDEO_CODEC_UNINITIALIZED;
   }
@@ -265,6 +264,7 @@ int VP8EncoderImpl::SetRates(uint32_t new_bitrate_kbit, uint32_t new_framerate,
       framerate = -1;
     }
     configurations_[i].rc_target_bitrate = target_bitrate;
+      printf("[ppp] vp8 encoder_%lu %u \n", i, target_bitrate);
     temporal_layers_[stream_idx]->ConfigureBitrates(target_bitrate,
                                                     max_bitrate,
                                                     framerate,
@@ -418,20 +418,6 @@ int VP8EncoderImpl::InitEncode(const VideoCodec* inst,
 
   timestamp_ = 0;
   codec_ = *inst;
-
-  { // for probe test
-#ifndef WIN32
-	  codec_.width = 240;
-	  codec_.height = 320;
-#else
-	  codec_.width = 320;
-	  codec_.height = 240;
-#endif
-	  codec_.startBitrate = 300;
-	  codec_.maxBitrate = 600;
-	  codec_.maxFramerate = 60;
-	  codec_.targetBitrate = 600;
-  }
 
   // Code expects simulcastStream resolutions to be correct, make sure they are
   // filled even when there are no simulcast layers.
@@ -597,8 +583,7 @@ int VP8EncoderImpl::InitEncode(const VideoCodec* inst,
 #endif
     
     
-#define PROBE_TEST_BY_YLR
-#ifndef PROBE_TEST_BY_YLR
+
   configurations_[0].g_w = inst->width;
   configurations_[0].g_h = inst->height;
 
@@ -623,25 +608,6 @@ int VP8EncoderImpl::InitEncode(const VideoCodec* inst,
                                            inst->maxFramerate,
                                            &configurations_[0]);
   } else {
-#else
-      configurations_[0].g_w = codec_.width;
-      configurations_[0].g_h = codec_.height;
-      configurations_[0].g_threads = NumberOfThreads(configurations_[0].g_w,
-                                                     configurations_[0].g_h,
-                                                     number_of_cores);
-      
-      vpx_img_wrap(&raw_images_[0], VPX_IMG_FMT_I420, codec_.width, codec_.height,
-                   1, NULL);
-      
-      if (encoders_.size() == 1) {
-          
-          configurations_[0].rc_target_bitrate = codec_.startBitrate;
-          temporal_layers_[0]->ConfigureBitrates(codec_.startBitrate,
-                                                 codec_.maxBitrate,
-                                                 codec_.maxFramerate,
-                                                 &configurations_[0]);
-      } else {
-#endif
     // Note the order we use is different from webm, we have lowest resolution
     // at position 0 and they have highest resolution at position 0.
     int stream_idx = encoders_.size() - 1;
