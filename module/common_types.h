@@ -1021,11 +1021,13 @@ public:
 struct RtcpStatistics {
 	RtcpStatistics()
 		: fraction_lost(0),
+    real_fraction_lost(0),
 		cumulative_lost(0),
 		extended_max_sequence_number(0),
 		jitter(0) {}
 
 	uint8_t fraction_lost;
+  uint8_t real_fraction_lost; //zhangn added for statistic 20190122
 	uint32_t cumulative_lost;
 	uint32_t extended_max_sequence_number;
 	uint32_t jitter;

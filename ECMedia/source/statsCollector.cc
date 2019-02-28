@@ -1106,8 +1106,9 @@ void StatsCollector::VideoReciverInfo_AddRtcpStats(const VideoReceiveStream::Sta
 		{ StatsReport::kStatsValueNameNacksRequestsSent, info.rtcp_packet_type_counts.nack_requests },
 		{ StatsReport::kStatsValueNameNacksUniqueRequestsSent, info.rtcp_packet_type_counts.unique_nack_requests },
 		{ StatsReport::kStatsValueNameFirsSent, info.rtcp_packet_type_counts.fir_packets },
-		{ StatsReport::kStatsValueNameLossFractionInPercent, info.rtcp_stats.fraction_lost*100/255},
-		{ StatsReport::kStatsValueNamePacketsLost, info.rtcp_stats.cumulative_lost },
+		//{ StatsReport::kStatsValueNameLossFractionInPercent, info.rtcp_stats.fraction_lost*100/255},
+    { StatsReport::kStatsValueNameLossFractionInPercent, info.rtcp_stats.real_fraction_lost*100/255},
+    { StatsReport::kStatsValueNamePacketsLost, info.rtcp_stats.cumulative_lost },
 		{ StatsReport::kStatsValueNameJitterReceived, info.rtcp_stats.jitter },
 	};
 	for (const auto& i : uint32)

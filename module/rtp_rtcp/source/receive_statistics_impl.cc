@@ -292,8 +292,9 @@ RtcpStatistics StreamStatisticianImpl::CalculateRtcpStatistics() {
   // With NACK we don't count old packets as received since they are
   // re-transmitted. We use RTT to decide if a packet is re-ordered or
   // re-transmitted.
+  uint32_t retransmitted_packets = 0;
   if (!use_extend_transport_sequence_) {
-	  uint32_t retransmitted_packets =
+	  retransmitted_packets =
 		 receive_counters_.retransmitted.packets - last_report_old_packets_;
 	  rec_since_last += retransmitted_packets;
   }
@@ -309,7 +310,18 @@ RtcpStatistics StreamStatisticianImpl::CalculateRtcpStatistics() {
     local_fraction_lost =
         static_cast<uint8_t>(255 * missing / exp_since_last);
   }
+  
+  //zhangn temp added
+  uint8_t real_lost = 0;
+  if (exp_since_last && !use_extend_transport_sequence_) {
+      // Scale 0 to 255, where 255 is 100% loss.
+      real_lost =
+      static_cast<uint8_t>(255 * (missing + retransmitted_packets) / exp_since_last);
+  }
+    
   stats.fraction_lost = local_fraction_lost;
+  stats.real_fraction_lost = real_lost;
+    
 
   // We need a counter for cumulative loss too.
   // TODO(danilchap): Ensure cumulative loss is below maximum value of 2^24.

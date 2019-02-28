@@ -138,7 +138,8 @@ void ReceiveStatisticsProxy::StatisticsUpdated(
   post_message(StatsReport::kStatsReportTypeVideoRecv,
   {
 	  StatsReport::Value(StatsReport::kStatsValueNameSsrc, ssrc, StatsReport::Value::kUInt32),
-	  StatsReport::Value(StatsReport::kStatsValueNameLossFractionInPercent, statistics.fraction_lost, StatsReport::Value::kUInt8),
+//    StatsReport::Value(StatsReport::kStatsValueNameLossFractionInPercent, statistics.fraction_lost, StatsReport::Value::kUInt8),
+    StatsReport::Value(StatsReport::kStatsValueNameLossFractionInPercent, statistics.real_fraction_lost, StatsReport::Value::kUInt8),
 	  StatsReport::Value(StatsReport::kStatsValueNamePacketsLost, statistics.cumulative_lost, StatsReport::Value::kUInt32),
 	  StatsReport::Value(StatsReport::kStatsValueNameJitterReceived, statistics.jitter, StatsReport::Value::kUInt32),
   });
