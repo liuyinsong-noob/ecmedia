@@ -583,12 +583,12 @@ bool ViEReceiver::IsPacketRetransmitted(const RTPHeader& header,
                                         bool in_order) const {
   // Retransmissions are handled separately if RTX is enabled.
     //transportSequenceNumber will set 0 after retransmitting
-    if (header.extension.hasTransportSequenceNumber) {
+    /*if (header.extension.hasTransportSequenceNumber) {
         if (header.extension.transportSequenceNumber != 0) {
             return false;
         }
         return true;
-    }
+    }*/
   if (rtp_payload_registry_->RtxEnabled())
     return false;
   StreamStatistician* statistician =

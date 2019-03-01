@@ -96,7 +96,7 @@ void StreamStatisticianImpl::UpdateCounters(const RTPHeader& header,
   }
 
   if (header.extension.hasTransportSequenceNumber) {
-	  use_extend_transport_sequence_ = true;
+    use_extend_transport_sequence_ = false; //true;
   }
 
   if (receive_counters_.transmitted.packets == 1) {
