@@ -42,7 +42,6 @@ ViEChannelManager::ViEChannelManager(
       voice_sync_interface_(NULL),
       voice_engine_(NULL),
       module_process_thread_(NULL),
-    module_process_thread_pacer_(NULL),
       engine_config_(config),
 #ifndef WEBRTC_EXTERNAL_TRANSPORT
     udptransport_critsect_(CriticalSectionWrapper::CreateCriticalSection()),
@@ -110,11 +109,9 @@ ViEChannelManager::~ViEChannelManager() {
 }
 
 void ViEChannelManager::SetModuleProcessThread(
-    ProcessThread* module_process_thread, ProcessThread* module_process_thread_pacer) {
+    ProcessThread* module_process_thread) {
   assert(!module_process_thread_);
   module_process_thread_ = module_process_thread;
-    assert(!module_process_thread_pacer_);
-    module_process_thread_pacer_ = module_process_thread_pacer;
 }
 
 int ViEChannelManager::CreateChannel(int* channel_id,
@@ -159,7 +156,6 @@ int ViEChannelManager::CreateChannel(int* channel_id,
                                            number_of_cores_,
                                            engine_config_,
                                            *module_process_thread_,
-        *module_process_thread_pacer_,
                                            bitrate_controller,
 										   paced_sender,
 										   &packet_router_,
@@ -275,7 +271,6 @@ int ViEChannelManager::CreateChannel(int* channel_id,
     vie_encoder = new ViEEncoder(engine_id_, new_channel_id, number_of_cores_,
                                  engine_config_,
                                  *module_process_thread_,
-                                 *module_process_thread_pacer_,
                                  bitrate_controller,
 								 congestion_controller_->pacer(),
 								 &packet_router_,
