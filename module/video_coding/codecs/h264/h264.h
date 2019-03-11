@@ -14,7 +14,7 @@ extern "C"
 #endif
 }
 
-#define HAVE_H264_BITSTREAM
+//#define HAVE_H264_BITSTREAM
 
 namespace yuntongxunwebrtc
 {
