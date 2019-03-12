@@ -184,7 +184,6 @@ int H264Encoder::Encode(const I420VideoFrame& input_image,
 
 	if(codec_.width != input_image.width() || codec_.height != input_image.height())
 	{
-        Release();
 //		x264_param_t curparms;
 //		x264_encoder_parameters(encoder_, &curparms);
 //		curparms.i_width = input_image.width();
@@ -290,6 +289,9 @@ void H264Encoder::SetX264EncodeParameters(x264_param_t &params, VideoCodecMode m
 	p_params->rc.i_vbv_buffer_size = codec_.startBitrate;
 #else
     codec_.startBitrate = codec_.startBitrate*25/codec_.maxFramerate;
+    if (codec_.startBitrate > codec_.maxBitrate) {
+        codec_.startBitrate = codec_.maxBitrate;
+    };
     //p_params->i_level_idc = 40;  //编码复杂度
     p_params->i_width=codec_.width;
     p_params->i_height=codec_.height;
