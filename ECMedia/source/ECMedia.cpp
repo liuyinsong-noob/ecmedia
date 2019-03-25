@@ -3573,6 +3573,10 @@ int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
         return ERR_INVALID_PARAM;
     }
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+    //Temp for higprofle by zhangn 20190325
+    if(videoCodec.codecType == kVideoCodecH264){
+      videoCodec.codecType = kVideoCodecH264HIGH;
+    }
     ViECodec *codec = ViECodec::GetInterface(m_vie);
     if (codec) {
         PrintConsole("[ECMEDIA INFO] %s plType:%d plname:%s", __FUNCTION__, videoCodec.plType,

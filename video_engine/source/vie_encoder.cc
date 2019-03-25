@@ -883,6 +883,17 @@ void ViEEncoder::DeliverFrame(int id,
         return;
     }
 #endif
+#ifdef kVideoCodecH264HIGH
+  if (vcm_.SendCodec() == yuntongxunwebrtc::kVideoCodecH264HIGH) {
+    yuntongxunwebrtc::CodecSpecificInfo codec_specific_info;
+    codec_specific_info.codecType = yuntongxunwebrtc::kVideoCodecH264;
+    
+    vcm_.AddVideoFrame(*decimated_frame, vpm_.ContentMetrics(),
+                       &codec_specific_info);
+    return;
+  }
+#endif
+  
   vcm_.AddVideoFrame(*decimated_frame);
 }
 
