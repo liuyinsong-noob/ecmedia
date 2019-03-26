@@ -69,22 +69,25 @@ int H264Encoder::Release() {
     return WEBRTC_VIDEO_CODEC_OK;
 }
 
-int H264Encoder::SetRates(uint32_t new_bitrate_kbit, uint32_t new_framerate) {
+int H264Encoder::SetRates(uint32_t new_bitrate_kbit, uint32_t new_framerate,
+                          uint32_t minBitrate_kbit, uint32_t maxBitrate_kbit) {
     if (!inited_) {
         return WEBRTC_VIDEO_CODEC_UNINITIALIZED;
     }
     if (new_framerate < 1) {
         return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
     }
-
+    codec_.minBitrate = minBitrate_kbit;
+    codec_.maxBitrate = maxBitrate_kbit;
+  
     // update bit rate
     if (codec_.maxBitrate > 0 && new_bitrate_kbit > codec_.maxBitrate) {
         new_bitrate_kbit = codec_.maxBitrate;
     }
     
-	if (codec_.maxFramerate >0 && new_framerate > codec_.maxFramerate){
-		new_framerate = codec_.maxFramerate;
-	}
+    if (codec_.maxFramerate >0 && new_framerate > codec_.maxFramerate){
+      new_framerate = codec_.maxFramerate;
+    }
     
     if (codec_.minBitrate > 0 && new_bitrate_kbit < codec_.minBitrate) {
         new_bitrate_kbit = codec_.minBitrate;

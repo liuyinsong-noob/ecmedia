@@ -260,7 +260,7 @@ int H264VideoToolboxEncoder::InitEncode(const VideoCodec* codec_settings,
   width_ = codec_settings->width;
   height_ = codec_settings->height;
   // We can only set average bitrate on the HW encoder.
-  target_bitrate_bps_ = codec_settings->startBitrate;
+  target_bitrate_bps_ = codec_settings->startBitrate * 1000;
   bitrate_adjuster_.SetTargetBitrateBps(target_bitrate_bps_);
   
     
@@ -364,7 +364,8 @@ WebRtc_Word32 H264VideoToolboxEncoder::Encode(
       input_image.timestamp()/*, input_image.rotation()*/);
 
   // Update the bitrate if needed.
-  SetBitrateBps(bitrate_adjuster_.GetAdjustedBitrateBps());
+  //SetBitrateBps(bitrate_adjuster_.GetAdjustedBitrateBps());
+  SetBitrateBps(target_bitrate_bps_); //zhangn added 20190311
 
   OSStatus status = VTCompressionSessionEncodeFrame(
       compression_session_, pixel_buffer, presentation_time_stamp,
@@ -396,11 +397,22 @@ int H264VideoToolboxEncoder::SetChannelParameters(uint32_t packet_loss,
 }
 
 int H264VideoToolboxEncoder::SetRates(uint32_t new_bitrate_kbit,
-                                      uint32_t frame_rate) {
-  target_bitrate_bps_ = new_bitrate_kbit;
+                                      uint32_t frame_rate,
+                                      uint32_t minBitrate_kbit,
+                                      uint32_t maxBitrate_kbit) {
+  if(0 < minBitrate_kbit && new_bitrate_kbit < minBitrate_kbit){
+    target_bitrate_bps_ = minBitrate_kbit * 1000;
+  }else if(0 < maxBitrate_kbit && new_bitrate_kbit > maxBitrate_kbit){
+    target_bitrate_bps_ = maxBitrate_kbit * 1000;
+  }else{
+    target_bitrate_bps_ = new_bitrate_kbit * 1000;
+  }
   bitrate_adjuster_.SetTargetBitrateBps(target_bitrate_bps_);
   int rate = bitrate_adjuster_.GetAdjustedBitrateBps();
-  SetBitrateBps(rate);
+  //SetBitrateBps(rate);
+  //  SetBitrateBps(new_bitrate_kbit);
+  SetBitrateBps(target_bitrate_bps_);
+    ::internal::SetVTSessionProperty(compression_session_, kVTCompressionPropertyKey_ExpectedFrameRate, frame_rate);
   return WEBRTC_VIDEO_CODEC_OK;
 }
 
@@ -530,8 +542,8 @@ void H264VideoToolboxEncoder::SetEncoderBitrateBps(uint32_t bitrate_bps) {
   if (compression_session_) {
       ::internal::SetVTSessionProperty(compression_session_,
                                    kVTCompressionPropertyKey_AverageBitRate,
-                                   bitrate_bps*1000);
-    encoder_bitrate_bps_ = bitrate_bps*1000;
+                                   bitrate_bps);
+    encoder_bitrate_bps_ = bitrate_bps;
   }
 }
 

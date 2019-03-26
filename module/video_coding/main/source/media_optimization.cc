@@ -206,6 +206,9 @@ uint32_t MediaOptimization::SetTargetRates(
   CriticalSectionScoped lock(crit_sect_.get());
   // TODO(holmer): Consider putting this threshold only on the video bitrate,
   // and not on protection.
+  if (0 == target_bitrate){
+      return target_bitrate;
+  }
   if (max_bit_rate_ > 0 &&
       target_bitrate > static_cast<uint32_t>(max_bit_rate_)) {
     target_bitrate = max_bit_rate_;
@@ -524,6 +527,12 @@ void MediaOptimization::SetQualityMode(int mode) {
     qm_resolution_->SetQmResolutionMode(VCMQmResolutionMode(mode));
 }
  
+uint32_t MediaOptimization::InputLimitBitrate(uint32_t& minBitrate, uint32_t& maxBitrate) {
+
+  uint32_t  estimateRate = 0;
+  return qm_resolution_->GetEstimateBitrate(estimateRate, minBitrate, maxBitrate);
+}
+    
 void MediaOptimization::PurgeOldFrameSamples(int64_t now_ms) {
   while (!encoded_frame_samples_.empty()) {
     if (now_ms - encoded_frame_samples_.front().time_complete_ms >

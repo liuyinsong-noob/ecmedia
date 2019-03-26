@@ -49,7 +49,8 @@ class H264VideoToolboxEncoder : public VideoEncoder {
 
   virtual int SetChannelParameters(uint32_t packet_loss, int64_t rtt) override;
 
-  virtual int SetRates(uint32_t new_bitrate_kbit, uint32_t frame_rate) override;
+  virtual int SetRates(uint32_t new_bitrate_kbit, uint32_t frame_rate,
+                       uint32_t minBitrate_kbit = 0, uint32_t maxBitrate_kbit = 0) override;
 
   virtual WebRtc_Word32 Release() override;
   virtual WebRtc_Word32 SetPeriodicKeyFrames(bool enable) override;

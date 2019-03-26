@@ -107,7 +107,8 @@ public:
     * Set new target bitrate (bits/s) and framerate.
     * Return Value: new bit rate if OK, otherwise <0s.
     */
-    int32_t SetRates(uint32_t target_bitrate, uint32_t frameRate);
+    int32_t SetRates(uint32_t target_bitrate, uint32_t frameRate,
+                     uint32_t minBitrate_kbit = 0, uint32_t maxBitrate_kbit = 0);
     /**
     * Set a new packet loss rate and a new round-trip time in milliseconds.
     */

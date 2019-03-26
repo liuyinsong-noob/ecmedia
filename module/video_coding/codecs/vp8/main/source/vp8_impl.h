@@ -61,7 +61,8 @@ class VP8EncoderImpl : public VP8Encoder {
 
   virtual int SetChannelParameters(uint32_t packet_loss, int64_t rtt);
 
-  virtual int SetRates(uint32_t new_bitrate_kbit, uint32_t frame_rate);
+  virtual int SetRates(uint32_t new_bitrate_kbit, uint32_t frame_rate,
+                       uint32_t minBitrate_kbit = 0, uint32_t maxBitrate_kbit = 0);
 
  private:
   void SetupTemporalLayers(int num_streams, int num_temporal_layers,

@@ -166,8 +166,8 @@ int VP8EncoderImpl::Release() {
   return ret_val;
 }
 
-int VP8EncoderImpl::SetRates(uint32_t new_bitrate_kbit,
-                                     uint32_t new_framerate) {
+int VP8EncoderImpl::SetRates(uint32_t new_bitrate_kbit, uint32_t new_framerate,
+                             uint32_t minBitrate_kbit, uint32_t maxBitrate_kbit) {
   if (!inited_) {
     return WEBRTC_VIDEO_CODEC_UNINITIALIZED;
   }
@@ -177,7 +177,9 @@ int VP8EncoderImpl::SetRates(uint32_t new_bitrate_kbit,
   if (new_framerate < 1) {
     return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
   }
-
+  
+  codec_.minBitrate = minBitrate_kbit;
+  codec_.maxBitrate = maxBitrate_kbit;
   if (codec_.maxBitrate > 0 && new_bitrate_kbit > codec_.maxBitrate) {
     new_bitrate_kbit = codec_.maxBitrate;
   }

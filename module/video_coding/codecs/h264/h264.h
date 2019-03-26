@@ -126,7 +126,8 @@ public:
     //          - frameRate        : The target frame rate
     //
     // Return value                : WEBRTC_VIDEO_CODEC_OK if OK, < 0 otherwise.
-    virtual WebRtc_Word32 SetRates(WebRtc_UWord32 newBitRate, WebRtc_UWord32 frameRate);
+    virtual WebRtc_Word32 SetRates(WebRtc_UWord32 newBitRate, WebRtc_UWord32 frameRate,
+                                   uint32_t minBitrate_kbit = 0, uint32_t maxBitrate_kbit = 0);
 
     // Use this function to enable or disable periodic key frames. Can be useful for codecs
     // which have other ways of stopping error propagation.

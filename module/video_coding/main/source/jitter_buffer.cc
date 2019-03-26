@@ -304,11 +304,14 @@ void VCMJitterBuffer::IncomingRateStatistics(unsigned int* framerate,
   assert(bitrate);
   CriticalSectionScoped cs(crit_sect_);
   const int64_t now = clock_->TimeInMilliseconds();
-  int64_t diff = now - time_last_incoming_frame_count_;
+  int64_t diff = now - time_last_incoming_bit_count_;
+    
+    *framerate = incoming_frame_rate_;
+    
   if (diff < 1000 && incoming_frame_rate_ > 0 && incoming_bit_rate_ > 0) {
     // Make sure we report something even though less than
     // 1 second has passed since last update.
-    *framerate = incoming_frame_rate_;
+//    *framerate = incoming_frame_rate_;
     *bitrate = incoming_bit_rate_;
   } else if (incoming_frame_count_ != 0) {
     // We have received frame(s) since last call to this function
@@ -317,21 +320,21 @@ void VCMJitterBuffer::IncomingRateStatistics(unsigned int* framerate,
     if (diff <= 0) {
       diff = 1;
     }
-    // we add 0.5f for rounding
-    float rate = 0.5f + ((incoming_frame_count_ * 1000.0f) / diff);
-    if (rate < 1.0f) {
-      rate = 1.0f;
-    }
-
-    // Calculate frame rate
-    // Let r be rate.
-    // r(0) = 1000*framecount/delta_time.
-    // (I.e. frames per second since last calculation.)
-    // frame_rate = r(0)/2 + r(-1)/2
-    // (I.e. fr/s average this and the previous calculation.)
-    *framerate = (incoming_frame_rate_ + static_cast<unsigned int>(rate)) / 2;
-    incoming_frame_rate_ = static_cast<unsigned int>(rate);
-
+//    // we add 0.5f for rounding
+//    float rate = 0.5f + ((incoming_frame_count_ * 1000.0f) / diff);
+//    if (rate < 1.0f) {
+//      rate = 1.0f;
+//    }
+//
+//    // Calculate frame rate
+//    // Let r be rate.
+//    // r(0) = 1000*framecount/delta_time.
+//    // (I.e. frames per second since last calculation.)
+//    // frame_rate = r(0)/2 + r(-1)/2
+//    // (I.e. fr/s average this and the previous calculation.)
+//    *framerate = (incoming_frame_rate_ + static_cast<unsigned int>(rate)) / 2;
+//    incoming_frame_rate_ = static_cast<unsigned int>(rate);
+      
     // Calculate bit rate
     if (incoming_bit_count_ == 0) {
       *bitrate = 0;
@@ -340,18 +343,18 @@ void VCMJitterBuffer::IncomingRateStatistics(unsigned int* framerate,
                        static_cast<unsigned int>(diff));
     }
     incoming_bit_rate_ = *bitrate;
-
+      printf("zhangn3355  diff:%d  framerate: %d  incoming_frame_rate_=%d incoming_frame_count_=%d\n\n", diff, *framerate, incoming_frame_rate_,incoming_frame_count_);
     // Reset count
-    incoming_frame_count_ = 0;
+//    incoming_frame_count_ = 0;
     incoming_bit_count_ = 0;
-    time_last_incoming_frame_count_ = now;
+    time_last_incoming_bit_count_ = now;
 
   } else {
     // No frames since last call
-    time_last_incoming_frame_count_ = clock_->TimeInMilliseconds();
-    *framerate = 0;
+    time_last_incoming_bit_count_ = clock_->TimeInMilliseconds();
+//    *framerate = 0;
     *bitrate = 0;
-    incoming_frame_rate_ = 0;
+//    incoming_frame_rate_ = 0;
     incoming_bit_rate_ = 0;
   }
 }
@@ -1150,7 +1153,22 @@ bool VCMJitterBuffer::RecycleFramesUntilKeyFrame() {
 
 // Must be called under the critical section |crit_sect_|.
 void VCMJitterBuffer::CountFrame(const VCMFrameBuffer& frame) {
-  incoming_frame_count_++;
+
+    CriticalSectionScoped cs(crit_sect_);
+    const int64_t begin = clock_->TimeInMilliseconds();
+    int64_t diff = begin - time_last_incoming_frame_count_;
+    
+    if( diff < 1000){
+        incoming_frame_count_++;
+    }else{
+        time_last_incoming_frame_count_ = begin;
+        incoming_frame_rate_ = incoming_frame_count_;
+        incoming_frame_count_ = 1;
+    }
+
+    
+  //incoming_frame_count_++;
+    
   if (frame.FrameType() == kVideoFrameKey) {
     TRACE_EVENT_ASYNC_STEP0("yuntongxunwebrtc", "Video",
                             frame.TimeStamp(), "KeyComplete");

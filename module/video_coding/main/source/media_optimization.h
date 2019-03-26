@@ -86,6 +86,9 @@ class MediaOptimization {
   VCMFrameCount SentFrameCount();
     
   void SetQualityMode(int mode);
+    
+  uint32_t InputLimitBitrate(uint32_t& minBitrate, uint32_t& maxBitrate);
+    
  private:
   enum {
     kFrameCountHistorySize = 90

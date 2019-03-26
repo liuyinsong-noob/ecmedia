@@ -119,7 +119,8 @@ class VideoEncoder {
   //          - framerate       : The target frame rate
   //
   // Return value                : WEBRTC_VIDEO_CODEC_OK if OK, < 0 otherwise.
-  virtual int32_t SetRates(uint32_t bitrate, uint32_t framerate) = 0;
+  virtual int32_t SetRates(uint32_t bitrate, uint32_t framerate,
+                           uint32_t minBitrate_kbit = 0, uint32_t maxBitrate_kbit = 0) = 0;
 
   virtual int32_t SetPeriodicKeyFrames(bool enable) { return -1; }
   virtual int32_t CodecConfigParameters(uint8_t* /*buffer*/, int32_t /*size*/) {

@@ -76,6 +76,17 @@ struct CodecSpecificInfoH264SVC
 	WebRtc_Word16    pictureId;         // negative value to skip pictureId
 	bool             nonReference;
 };
+    
+struct CodecSpecificInfoH264HIGH
+{
+    bool             last;
+    WebRtc_Word16    pictureId;         // negative value to skip pictureId
+    bool             nonReference;
+    uint8_t             nalu_header;
+    bool             single_nalu;
+    bool             stap_a;
+    bool             fu_a;
+};
 
 union CodecSpecificInfoUnion {
   CodecSpecificInfoGeneric generic;
@@ -83,6 +94,7 @@ union CodecSpecificInfoUnion {
   CodecSpecificInfoVP9 VP9;
   CodecSpecificInfoH264 H264;
   CodecSpecificInfoH264SVC	H264SVC;
+  CodecSpecificInfoH264HIGH  H264HIGH;
 };
 
 // Note: if any pointers are added to this struct or its sub-structs, it

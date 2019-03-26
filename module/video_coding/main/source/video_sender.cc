@@ -144,9 +144,10 @@ int32_t VideoSender::RegisterSendCodec(const VideoCodec* sendCodec,
       numLayers > 1 && sendCodec->mode == kScreensharing;
   if (disable_frame_dropper) {
     _mediaOpt.EnableFrameDropper(false);
-  } else if (frame_dropper_enabled_) {
-    _mediaOpt.EnableFrameDropper(true);
-  }
+  } //else if (frame_dropper_enabled_) { //Close drop frame. by zhangn 20190325
+  
+    _mediaOpt.EnableFrameDropper(frame_dropper_enabled_);
+  //}
   _nextFrameTypes.clear();
   _nextFrameTypes.resize(VCM_MAX(sendCodec->numberOfSimulcastStreams, 1),
                          kVideoFrameDelta);
@@ -253,12 +254,19 @@ int32_t VideoSender::SetChannelParameters(uint32_t target_bitrate,
                                                    rtt,
                                                    protection_callback_,
                                                    qm_settings_callback_);
+    if (0 == targetRate){
+      return ret;
+    }
     if (_encoder != NULL) {
       ret = _encoder->SetChannelParameters(lossRate, rtt);
       if (ret < 0) {
         return ret;
       }
-      ret = (int32_t)_encoder->SetRates(targetRate, _mediaOpt.InputFrameRate());
+      uint32_t frame_rate = _mediaOpt.InputFrameRate();
+
+      uint32_t minBitrate_kbit, maxBitrate_kbit = 0;
+      _mediaOpt.InputLimitBitrate(minBitrate_kbit, maxBitrate_kbit);
+      ret = (int32_t)_encoder->SetRates(targetRate, frame_rate, minBitrate_kbit, maxBitrate_kbit);
       if (ret < 0) {
         return ret;
       }

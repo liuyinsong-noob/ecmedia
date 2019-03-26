@@ -36,7 +36,8 @@ class VP8Encoder : public VideoEncoder {
 
   virtual int32_t SetChannelParameters(uint32_t packet_loss, int64_t rtt) = 0;
 
-  virtual int32_t SetRates(uint32_t bitrate, uint32_t framerate) = 0;
+  virtual int32_t SetRates(uint32_t bitrate, uint32_t framerate,
+                           uint32_t minBitrate_kbit = 0, uint32_t maxBitrate_kbit = 0) = 0;
 
 };  // end of VP8Encoder class
 

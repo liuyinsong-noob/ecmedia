@@ -55,21 +55,41 @@ const float kPacketLossRateFac = 1.0f;
 
 // Maximum possible transitional rate for down-sampling:
 // (units in kbps), for 30fps.
-const uint16_t kMaxRateQm[9] = {
-    0,     // QCIF
-    50,    // kHCIF
-    125,   // kQVGA
-    200,   // CIF
-    280,   // HVGA
-    400,   // VGA
-    700,   // QFULLHD
-    1000,  // WHD
-    1500   // FULLHD
-};
+//const uint16_t kMaxRateQm[9] = {
+//    0,     // QCIF
+//    50,    // kHCIF
+//    125,   // kQVGA
+//    200,   // CIF
+//    280,   // HVGA
+//    400,   // VGA
+//    700,   // QFULLHD
+//    1000,  // WHD
+//    1500   // FULLHD
+//};
+    const uint16_t kMaxRateQm[12] = {
+        70,  //BASIC        160  *  90
+        160, //HBASIC       320  *  180
+        280, //HVGA         480  *  270
+        400, //VGA          640  *  360
+        550, //FTFULLHD     800  *  450
+        700, //QFULLHD      960  *  540
+        850, //SFULLHD      1120 *   630
+        1000, //WHD         1280  *  720
+        1150, //TQFULLHD    1440  *  810
+        1300, //FSFULLHD    1600  *  900
+        1450, //ETFULLHD    1760  *  990
+        1500  //FULLHD      1920  *  1080
+    };
 
 // Frame rate scale for maximum transition rate.
+//const float kFrameRateFac[4] = {
+//    0.5f,    // Low
+//    0.7f,    // Middle level 1
+//    0.85f,   // Middle level 2
+//    1.0f,    // High
+//};
 const float kFrameRateFac[4] = {
-    0.5f,    // Low
+    0.6f,    // Low
     0.7f,    // Middle level 1
     0.85f,   // Middle level 2
     1.0f,    // High
@@ -176,15 +196,22 @@ const uint8_t kTemporalAction[27] = {
     3,       // D, H
     1,       // D, D
 };
+//Spatial change unit
+const float kBasicWidth = 90.0f;
+const float kBasicHeight = 160.0f;
 
+const float kMaxWidth = 720.0f;
+const float kMaxHeight = 1280.0f;
+    
 // Control the total amount of down-sampling allowed.
 const float kMaxSpatialDown = 8.0f;
 const float kMaxTempDown = 3.0f;
 const float kMaxTotalDown = 9.0f;
 
 // Minimum image size for a spatial down-sampling.
-const int kMinImageSize = 176 * 144;
-
+//const int kMinImageSize = 176 * 144;
+const int kMinImageSize = 160 * 90;
+    
 // Minimum frame rate for temporal down-sampling:
 // no frame rate reduction if incomingFrameRate <= MIN_FRAME_RATE.
 const int kMinFrameRate = 8;

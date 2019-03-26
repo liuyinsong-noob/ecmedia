@@ -48,7 +48,8 @@ class SimulcastEncoderAdapter : public VP8Encoder,
       EncodedImageCallback* callback) OVERRIDE;
   virtual int SetChannelParameters(uint32_t packet_loss, int64_t rtt) OVERRIDE;
   virtual int SetRates(uint32_t new_bitrate_kbit,
-                       uint32_t new_framerate) OVERRIDE;
+                       uint32_t new_framerate,
+                       uint32_t minBitrate_kbit = 0, uint32_t maxBitrate_kbit = 0) OVERRIDE;
 
   // Implements EncodedImageCallback
   virtual int32_t Encoded(

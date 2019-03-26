@@ -114,10 +114,11 @@ VCMGenericEncoder::SetChannelParameters(int32_t packetLoss, int64_t rtt)
 }
 
 int32_t
-VCMGenericEncoder::SetRates(uint32_t newBitRate, uint32_t frameRate)
+VCMGenericEncoder::SetRates(uint32_t newBitRate, uint32_t frameRate,
+                            uint32_t minBitrate_kbit, uint32_t maxBitrate_kbit)
 {
     uint32_t target_bitrate_kbps = (newBitRate + 500) / 1000;
-    int32_t ret = _encoder.SetRates(target_bitrate_kbps, frameRate);
+    int32_t ret = _encoder.SetRates(target_bitrate_kbps, frameRate, minBitrate_kbit, maxBitrate_kbit);
     if (ret < 0)
     {
         return ret;

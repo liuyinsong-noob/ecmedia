@@ -19,7 +19,7 @@ struct VideoContentMetrics;
 
 // QM interval time (in ms)
 enum {
-  kQmMinIntervalMs = 5000/*10000*/
+  kQmMinIntervalMs = 2000/*5000 10000*/
 };
 
 // Flag for NFD metric vs motion metric

@@ -42,22 +42,43 @@ struct VCMResolutionScale {
   bool change_resolution_temporal;
 };
 
-enum ImageType {
-  kQCIF = 0,            // 176x144
-  kHCIF,                // 264x216 = half(~3/4x3/4) CIF.
-  kQVGA,                // 320x240 = quarter VGA.
-  kCIF,                 // 352x288
-  kHVGA,                // 480x360 = half(~3/4x3/4) VGA.
-  kVGA,                 // 640x480
-  kQFULLHD,             // 960x540 = quarter FULLHD, and half(~3/4x3/4) WHD.
-  kWHD,                 // 1280x720
-  kFULLHD,              // 1920x1080
-  kNumImageTypes
-};
-
+//enum ImageType {
+//  kQCIF = 0,            // 176x144
+//  kHCIF,                // 264x216 = half(~3/4x3/4) CIF.
+//  kQVGA,                // 320x240 = quarter VGA.
+//  kCIF,                 // 352x288
+//  kHVGA,                // 480x360 = half(~3/4x3/4) VGA.
+//  kVGA,                 // 640x480
+//  kQFULLHD,             // 960x540 = quarter FULLHD, and half(~3/4x3/4) WHD.
+//  kWHD,                 // 1280x720
+//  kFULLHD,              // 1920x1080
+//  kNumImageTypes
+//};
+    enum ImageType {
+        kBASIC = 0,  //BASIC        160*90
+        kDBASIC,     //HBASIC       320*180
+        kHVGA,       //HVGA         480*270
+        kVGA,        //VGA          640*360
+        kFTFULLHD,   //FTFULLHD     800*450
+        kQFULLHD,    //QFULLHD      960*540
+        kSFULLHD,    //SFULLHD      1120*630
+        kWHD,        //WHD         1280*720
+        kTQFULLHD,   //TQFULLHD    1440*810
+        kFSFULLHD,   //FSFULLHD    1600*900
+        kETFULLHD,   //ETFULLHD    1760*990
+        kFULLHD,     //FULLHD      1920*1080
+        kNumImageTypes
+    };
+    
+//const uint32_t kSizeOfImageType[kNumImageTypes] =
+//{ 25344, 57024, 76800, 101376, 172800, 307200, 518400, 921600, 2073600 };
+    
 const uint32_t kSizeOfImageType[kNumImageTypes] =
-{ 25344, 57024, 76800, 101376, 172800, 307200, 518400, 921600, 2073600 };
-
+{ 14400, 57600, 129600, 230400, 360000, 518400, 705600, 921600, 1166400, 1440000, 1742400, 2073600 };
+  
+const uint32_t kNormalTargetBitrate[kNumImageTypes] =
+{ 70, 160, 280, 400, 550, 700, 850, 1000, 1150, 1300, 1450, 1600 };
+  
 enum FrameRateLevelClass {
   kFrameRateLow,
   kFrameRateMiddle1,
@@ -113,14 +134,23 @@ struct ResolutionAction {
 };
 
 // Down-sampling factors for spatial (width and height), and temporal.
+//const float kFactorWidthSpatial[kNumModesSpatial] =
+//    { 1.0f, 4.0f / 3.0f, 2.0f };
+//
+//const float kFactorHeightSpatial[kNumModesSpatial] =
+//    { 1.0f, 4.0f / 3.0f, 2.0f };
+//
+//const float kFactorTemporal[kNumModesTemporal] =
+//    { 1.0f, 1.5f, 2.0f };
+    
 const float kFactorWidthSpatial[kNumModesSpatial] =
-    { 1.0f, 4.0f / 3.0f, 2.0f };
+{ 0.0f, -1.0f, -2.0f };
 
 const float kFactorHeightSpatial[kNumModesSpatial] =
-    { 1.0f, 4.0f / 3.0f, 2.0f };
+{ 0.0f, -1.0f, -2.0f };
 
 const float kFactorTemporal[kNumModesTemporal] =
-    { 1.0f, 1.5f, 2.0f };
+{ 1.0f, 1.5f, 1.75f };
 
 enum EncoderState {
   kStableEncoding,    // Low rate mis-match, stable buffer levels.
@@ -156,7 +186,13 @@ class VCMQmMethod {
 
   // Get the imageType (CIF, VGA, HD, etc) for the system width/height.
   ImageType GetImageType(uint16_t width, uint16_t height);
-
+    
+  ImageType GetCurrentImageType(){
+    return GetImageType(width_, height_);
+  }
+  
+  uint32_t GetEstimateBitrate(uint32_t& estimateRate, uint32_t& minBitrate, uint32_t& maxBitrate);
+  
   // Return the closest image type.
   ImageType FindClosestImageType(uint16_t width, uint16_t height);
 
@@ -245,6 +281,8 @@ class VCMQmResolution : public VCMQmMethod {
   // Return true if the action is to go down in resolution.
   bool GoingDownResolution();
 
+  bool UpdateAdapteQMResolution();
+  
   // Check the condition for going up in resolution by the scale factors:
   // |facWidth|, |facHeight|, |facTemp|.
   // |scaleFac| is a scale factor for the transition rate.
