@@ -97,7 +97,8 @@ class OpenH264EncoderImpl : public OpenH264Encoder{
   //          - frame_rate       : The target frame rate
   //
   // Return value                : WEBRTC_VIDEO_CODEC_OK if OK, < 0 otherwise.
-  virtual int SetRates(uint32_t new_bitrate_kbit, uint32_t frame_rate);
+  virtual int SetRates(uint32_t new_bitrate_kbit, uint32_t frame_rate,
+						 uint32_t minBitrate_kbit = 0, uint32_t maxBitrate_kbit = 0);
 
  private:
 	void SetSVCEncoderParameters(const VideoCodec* codec_settings, SEncParamExt &sSvcParam);

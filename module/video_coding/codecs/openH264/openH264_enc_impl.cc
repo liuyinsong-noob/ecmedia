@@ -1,4 +1,4 @@
-/*
+ï»¿/*
  *  Copyright (c) 2012 The WebRTC project authors. All Rights Reserved.
  *
  *  Use of this source code is governed by a BSD-style license
@@ -81,19 +81,24 @@ int OpenH264EncoderImpl::Release() {
 }
 
 int OpenH264EncoderImpl::SetRates(uint32_t new_bitrate_kbit,
-                             uint32_t new_framerate) {
+                             uint32_t new_framerate, 
+							uint32_t minBitrate_kbit,
+							uint32_t maxBitrate_kbit) {
   if (!inited_) {
     return WEBRTC_VIDEO_CODEC_UNINITIALIZED;
   }
   if (codec_.codecSpecific.H264Svc.numberOfSpatialLayers > 1 
 	  || codec_.codecSpecific.H264Svc.numberOfTemporalLayers > 1)
   {
-	  return WEBRTC_VIDEO_CODEC_OK; //·Çµã¶Ôµã£¬ÎŞĞèµ÷½Ú×ÔÊÊÓ¦Ö¡ÂÊºÍÂëÂÊ
+	  return WEBRTC_VIDEO_CODEC_OK; //éç‚¹å¯¹ç‚¹ï¼Œæ— éœ€è°ƒèŠ‚è‡ªé€‚åº”å¸§ç‡å’Œç ç‡
   }
   
   if (new_framerate < 1) {
     return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
   }
+   codec_.minBitrate = minBitrate_kbit;
+   codec_.maxBitrate = maxBitrate_kbit;
+
   // update bit rate
   if (codec_.maxBitrate > 0 && new_bitrate_kbit > codec_.maxBitrate) {
     new_bitrate_kbit = codec_.maxBitrate;

@@ -343,7 +343,7 @@ void VCMJitterBuffer::IncomingRateStatistics(unsigned int* framerate,
                        static_cast<unsigned int>(diff));
     }
     incoming_bit_rate_ = *bitrate;
-      printf("zhangn3355  diff:%d  framerate: %d  incoming_frame_rate_=%d incoming_frame_count_=%d\n\n", diff, *framerate, incoming_frame_rate_,incoming_frame_count_);
+
     // Reset count
 //    incoming_frame_count_ = 0;
     incoming_bit_count_ = 0;

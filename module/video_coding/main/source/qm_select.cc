@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Copyright (c) 2012 The WebRTC project authors. All Rights Reserved.
  *
  *  Use of this source code is governed by a BSD-style license
@@ -121,52 +121,53 @@ void VCMQmMethod::ComputeSpatial() {
 //    return FindClosestImageType(width, height);
 //  }
 //}
-  
+
   uint32_t VCMQmMethod::GetEstimateBitrate(uint32_t& estimateRate, uint32_t& minBitrate, uint32_t& maxBitrate)
   {
-    float minScale = 0.7;
-    float maxScale = 1.4;//3.0/2.0;
-    float multiplier_factor = 1;
+
+    float minScale = 0.7f;
+    float maxScale = 1.4f;//3.0/2.0;
+    float multiplier_factor = 1.0f;
     
     ImageType image_type = GetImageType(width_, height_);
     estimateRate = kNormalTargetBitrate[image_type];
     switch (image_type) {
       case kBASIC:        //BASIC        160*90
-        multiplier_factor = 5.0;
+        multiplier_factor = 5.0f;
         //minBitrate = kNormalTargetBitrate[kBASIC] * minScale;
         break;
       case kDBASIC:       //HBASIC       320*180
-        multiplier_factor = 3.0;
+        multiplier_factor = 3.0f;
         break;
       case kHVGA:         //HVGA         480*270
-        multiplier_factor = 2.2;
+        multiplier_factor = 2.2f;
         break;
       case kVGA:          //VGA          640*360
-        multiplier_factor = 1.8;
+        multiplier_factor = 1.8f;
         break;
       case kFTFULLHD:     //FTFULLHD     800*450
-        multiplier_factor = 1.6;
+        multiplier_factor = 1.6f;
         break;
       case kQFULLHD:      //QFULLHD      960*540
-        multiplier_factor = 1.4;
+        multiplier_factor = 1.4f;
         break;
       case kSFULLHD:      //SFULLHD      1120*630
-        multiplier_factor = 1.25;
+        multiplier_factor = 1.25f;
         break;
       case kWHD:          //WHD         1280*720
-        multiplier_factor = 1.15;
+        multiplier_factor = 1.15f;
         break;
       case kTQFULLHD:     //TQFULLHD    1440*810
-        multiplier_factor = 1;
+        multiplier_factor = 1.0f;
         break;
       case kFSFULLHD:     //FSFULLHD    1600*900
-        multiplier_factor = 0.95;
+        multiplier_factor = 0.95f;
         break;
       case kETFULLHD:     //ETFULLHD    1760*990
-        multiplier_factor = 0.9;
+        multiplier_factor = 0.9f;
         break;
       case kFULLHD:       //FULLHD      1920*1080
-        multiplier_factor = 0.8;
+        multiplier_factor = 0.8f;
         //maxBitrate = kNormalTargetBitrate[image_type] * 3.0/2.0;
         break;
       case kNumImageTypes:
