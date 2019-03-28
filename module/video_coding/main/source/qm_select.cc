@@ -126,7 +126,7 @@ void VCMQmMethod::ComputeSpatial() {
   {
 
     float minScale = 0.7f;
-    float maxScale = 1.4f;//3.0/2.0;
+    float maxScale = 1.3f;//3.0/2.0;
     float multiplier_factor = 1.0f;
     
     ImageType image_type = GetImageType(width_, height_);
@@ -177,7 +177,7 @@ void VCMQmMethod::ComputeSpatial() {
     }
     
     //Loose Bit Rate Mode
-    estimateRate = kSizeOfImageType[image_type]/1024 * multiplier_factor;
+    estimateRate = kSizeOfImageType[image_type]/1200 * multiplier_factor;
     maxBitrate = estimateRate * maxScale;
     minBitrate = estimateRate * minScale;
     

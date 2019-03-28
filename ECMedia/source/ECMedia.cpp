@@ -3588,12 +3588,14 @@ int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
     videoCodec.height = scale * 160;
   }
 #endif
-  
+  //videoCodec.startBitrate = 700;
+  videoCodec.maxBitrate = 2000;
+  videoCodec.minBitrate = 100;
     //Temp for higprofle by zhangn 20190325
     if(videoCodec.codecType == kVideoCodecH264){
       videoCodec.codecType = kVideoCodecH264HIGH;
     }
-  
+
     ViECodec *codec = ViECodec::GetInterface(m_vie);
     if (codec) {
         PrintConsole("[ECMEDIA INFO] %s plType:%d plname:%s", __FUNCTION__, videoCodec.plType,

@@ -351,8 +351,14 @@ WebRtc_Word32 H264VideoToolboxEncoder::Encode(
         }
         count++;
     }
+  
+  int32_t timescale = 600;
+  if( kVideoCodecH264HIGH == codec_type_){
+    timescale = 1000;
+  }
+  
   CMTime presentation_time_stamp =
-      CMTimeMake(input_image.render_time_ms(), 600);
+      CMTimeMake(input_image.render_time_ms(), timescale);
   CFDictionaryRef frame_properties = nullptr;
   if (is_keyframe_required) {
     CFTypeRef keys[] = {kVTEncodeFrameOptionKey_ForceKeyFrame};
