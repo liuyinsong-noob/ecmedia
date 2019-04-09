@@ -470,14 +470,22 @@ char *globalFilePathcapture = NULL;
 			mOutputVideoSize.height=MS_VIDEO_SIZE_QVGA_H;
 			mDownScalingRequired=true;
 		}
-        else if (size.width*size.height == MS_VIDEO_SIZE_720P_W * MS_VIDEO_SIZE_720P_H)
-        {
-            [session setSessionPreset: AVCaptureSessionPreset1280x720];
-            mCameraVideoSize.width=MS_VIDEO_SIZE_720P_W;
-            mCameraVideoSize.height=MS_VIDEO_SIZE_720P_H;
-            mOutputVideoSize.width=MS_VIDEO_SIZE_720P_W;
-            mOutputVideoSize.height=MS_VIDEO_SIZE_720P_H;
-            mDownScalingRequired=false;
+        else if (size.width*size.height == MS_VIDEO_SIZE_720P_W * MS_VIDEO_SIZE_720P_H) {
+            if ([session canSetSessionPreset:AVCaptureSessionPreset1280x720]) {
+                [session setSessionPreset: AVCaptureSessionPreset1280x720];
+                mCameraVideoSize.width=MS_VIDEO_SIZE_720P_W;
+                mCameraVideoSize.height=MS_VIDEO_SIZE_720P_H;
+                mOutputVideoSize.width=MS_VIDEO_SIZE_720P_W;
+                mOutputVideoSize.height=MS_VIDEO_SIZE_720P_H;
+                mDownScalingRequired=false;
+            } else {
+                [session setSessionPreset: AVCaptureSessionPreset640x480];
+                mCameraVideoSize.width=MS_VIDEO_SIZE_VGA_W;
+                mCameraVideoSize.height=MS_VIDEO_SIZE_VGA_H;
+                mOutputVideoSize.width=MS_VIDEO_SIZE_QVGA_W;
+                mOutputVideoSize.height=MS_VIDEO_SIZE_QVGA_H;
+                mDownScalingRequired=true;
+            }
         }
         else if (size.width*size.height == MS_VIDEO_SIZE_960_540_W * MS_VIDEO_SIZE_960_540_H)
         {
