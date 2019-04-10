@@ -24,9 +24,9 @@ class BuildWindows(BuildBase):
             os.chdir(self.CompilePath)
             ret = -1
             if self.build_config.get('build_state', self.platform + '_video_state') == 'rebuild' :
-                ret =  os.system('devenv.com MyWebRtc.sln /rebuild "Release|Win32" /Project ECMedia')
+                ret = os.system('devenv.com MyWebRtc.sln /rebuild "Release|Win32" /Project ECMedia')
             else :
-                ret =  os.system('devenv.com MyWebRtc.sln /build "Release|Win32" /Project ECMedia')
+                ret = os.system('devenv.com MyWebRtc.sln /build "Release|Win32" /Project ECMedia')
             if ret != 0:
                 return ret
             if self.build_config.get('build_setting', 'windows_arch') == 'x32_only' :
@@ -72,12 +72,13 @@ class BuildWindows(BuildBase):
            os.mkdir(self.RarX64LibsPath)
 
         ecmediaTargetFile = os.path.join(self.LibFilesPath, 'Ecmedia.*')
-        x264TargetFile = os.path.join(self.LibFilesPath, 'libx264-148.dll')
+        x264TargetFile = os.path.join(self.ProjectPath, 'third_party', 'libx264', 'libx264_win', 'x86', 'bin', 'libx264-148.dll')
+        #print "%s"%x264TargetFile
         print os.system('copy ' + ecmediaTargetFile + ' ' + self.RarX32LibsPath)
         print os.system('copy ' + x264TargetFile + ' ' + self.RarX32LibsPath)
         
         ecmediaTargetFile = os.path.join(self.Libx64FilesPath, 'Ecmedia.*')
-        x264TargetFile = os.path.join(self.Libx64FilesPath, 'libx264-148.dll')
+        x264TargetFile = os.path.join(self.ProjectPath, 'third_party', 'libx264', 'libx264_win', 'x64', 'bin', 'libx264-148.dll')
         print os.system('copy ' + ecmediaTargetFile + ' ' + self.RarX64LibsPath)
         print os.system('copy ' + x264TargetFile + ' ' + self.RarX64LibsPath)
         
