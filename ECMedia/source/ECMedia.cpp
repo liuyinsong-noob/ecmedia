@@ -30,6 +30,7 @@
 
 #ifdef WIN32
 #include "codingHelper.h"
+#include  <direct.h>
 #endif
 
 #ifdef VIDEO_ENABLED
@@ -582,10 +583,15 @@ int ECMedia_ring_stop(int& channelid)
 int ECMedia_ring_start(int& channelid, const char *filename, bool loop)
 {
     PrintConsole("[ECMEDIA INFO] %s begins... channelid: %d filename: %s loop: %s", __FUNCTION__, channelid, filename, loop?"true":"false");
-    FILE *fp  = fopen(filename,"r") ;
+#ifdef WIN32
+    char buffer[1024];
+    getcwd(buffer, 1024);
+#endif
+    FILE *fp  = fopen(filename, "r") ;
     if( fp == NULL ) {
-        PrintConsole("[ECMEDIA ERROR] %s open file failed", __FUNCTION__);
-        PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+        #ifdef WIN32
+        PrintConsole("[ECMEDIA ERROR] %s open file failed, current work path is: %s", __FUNCTION__, buffer);
+        #endif
         return 0;
     }
     fclose(fp);
