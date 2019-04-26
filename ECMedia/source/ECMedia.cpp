@@ -600,13 +600,14 @@ int ECMedia_un_trace()
 
 void ECMedia_set_android_objects(void* javaVM, void* env, void* context)
 {
+     PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
 #if !defined(NO_VOIP_FUNCTION)
     yuntongxunwebrtc::VoiceEngine::SetAndroidObjects(javaVM,env,context);
 #ifdef VIDEO_ENABLED
     yuntongxunwebrtc::VideoEngine::SetAndroidObjects(javaVM,env,context);
 #endif
-    
 #endif
+     PrintConsole("[ECMEDIA INFO] %s end...", __FUNCTION__);
 }
 
 int ECMedia_init_video()
