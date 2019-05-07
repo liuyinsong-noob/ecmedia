@@ -3573,7 +3573,7 @@ static void ECMedia_reset_send_width_height(unsigned short& width, unsigned shor
 {
 #ifdef WIN32 //Updated by zhangn 20190326
   //only support (160*n,90*n) [0<n<=12]
-  if (0 != videoCodec.width % 160 || 0 != videoCodec.height % 90 ){
+  if (0 != width % 160 || 0 != height % 90 ){
     int scale = width/160;
     width = scale * 160;
     height = scale * 90;
