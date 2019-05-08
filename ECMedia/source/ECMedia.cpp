@@ -108,6 +108,150 @@ private:
     
 };
 #endif
+
+typedef struct CameraCaptureCbAndObserver_
+{
+	int counter;
+	onEcMediaNoCameraCaptureCb cb;
+	ECViECaptureObserver* obsv;
+
+	CameraCaptureCbAndObserver_()
+		:counter(0)
+		, cb(nullptr)
+		, obsv(nullptr)
+	{
+	}
+	CameraCaptureCbAndObserver_(const CameraCaptureCbAndObserver_& rOther) = delete;
+
+	CameraCaptureCbAndObserver_& operator=(const CameraCaptureCbAndObserver_& rOther) = delete;
+
+	CameraCaptureCbAndObserver_(CameraCaptureCbAndObserver_&& rOther)
+		:counter(rOther.counter)
+		, cb(std::move(rOther.cb))
+		, obsv(std::move(rOther.obsv))
+	{
+		rOther.counter = 0;
+		rOther.cb = nullptr;
+		rOther.obsv = nullptr;
+	}
+
+	CameraCaptureCbAndObserver_ & operator = (CameraCaptureCbAndObserver_&& rOther)
+	{
+		if (this != &rOther)
+		{
+			counter = rOther.counter;
+			rOther.counter = 0;
+
+			cb = rOther.cb;
+			rOther.cb = nullptr;
+
+			if (obsv)
+			{
+				delete obsv;
+				obsv = nullptr;
+			}
+			obsv = std::move(rOther.obsv);
+			rOther.obsv = nullptr;
+		}
+
+		return *this;
+	}
+
+	~CameraCaptureCbAndObserver_()
+	{
+		cb = nullptr;
+		if (obsv)
+		{
+			delete obsv;
+			obsv = nullptr;
+		}
+	}
+
+}CameraCaptureCbAndObserver;
+
+class ECViECaptureObserverManager
+{
+public:
+	static ECViECaptureObserverManager* getInst()
+	{
+		static ECViECaptureObserverManager inst;
+		return &inst;
+	}
+
+	bool addCaptureObserver(int deviceId, onEcMediaNoCameraCaptureCb cb)
+	{
+		if (deviceId > 0 && cb != nullptr)
+		{
+			yuntongxunwebrtc::CritScope lock(&map_lock);
+			ECViECaptureObserverMap::iterator it = mapObsv.find(deviceId);
+			if (it == mapObsv.end())
+			{
+				CameraCaptureCbAndObserver cameraObsv;
+				cameraObsv.counter++;
+				cameraObsv.cb = cb;
+				cameraObsv.obsv = new ECViECaptureObserver(cb);
+				mapObsv[deviceId] = std::move(cameraObsv);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	ECViECaptureObserver* requestCaptureObserver(int deviceId)
+	{
+		yuntongxunwebrtc::CritScope lock(&map_lock);
+		ECViECaptureObserverMap::iterator it = mapObsv.find(deviceId);
+		if (it != mapObsv.end())
+		{
+			it->second.counter++;
+			return it->second.obsv;
+		}
+		return nullptr;
+	}
+
+	bool releaseCaptureObserver(int deviceId)
+	{
+		return removeCaptureObserver(deviceId);
+	}
+
+	bool removeCaptureObserver(int deviceId)
+	{
+		yuntongxunwebrtc::CritScope lock(&map_lock);
+		ECViECaptureObserverMap::iterator it = mapObsv.find(deviceId);
+		if (it != mapObsv.end())
+		{
+			it->second.counter--;
+			if (it->second.counter == 0)
+			{
+				mapObsv.erase(it);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	void clearCaptureObserver()
+	{
+		yuntongxunwebrtc::CritScope lock(&map_lock);
+		ECViECaptureObserverMap::iterator it = mapObsv.begin();
+		while (it != mapObsv.end())
+		{
+			mapObsv.erase(it++);
+		}
+	}
+
+private:
+	ECViECaptureObserverManager() {};
+	~ECViECaptureObserverManager()
+	{
+		clearCaptureObserver();
+	};
+private:
+	yuntongxunwebrtc::CriticalSection map_lock;
+	typedef std::map<int, CameraCaptureCbAndObserver> ECViECaptureObserverMap;
+	ECViECaptureObserverMap mapObsv;
+};
+
 #ifdef VIDEO_ENABLED
 ECViECaptureObserver::ECViECaptureObserver(onEcMediaNoCameraCaptureCb fp)
 :m_firstStart(true),
@@ -136,10 +280,10 @@ static VoeObserver* g_VoeObserver = NULL;
 bool g_bGlobalAudioInDevice = false;
 HWAVEIN g_hWaveIn = NULL;
 #endif
-static onEcMediaNoCameraCaptureCb g_NoCameraCaptureCb = NULL;
-#ifdef VIDEO_ENABLED
-static ECViECaptureObserver* g_ECViECaptureObserver = NULL;
-#endif
+//static onEcMediaNoCameraCaptureCb g_NoCameraCaptureCb = NULL;
+//#ifdef VIDEO_ENABLED
+//static ECViECaptureObserver* g_ECViECaptureObserver = NULL;
+//#endif
 
 
 #ifdef VIDEO_ENABLED
@@ -3037,7 +3181,8 @@ int ECMedia_getOrientation(const char *id, ECMediaRotateCapturedFrame &tr)
 
 int ECMedia_set_no_camera_capture_cb(int deviceid, onEcMediaNoCameraCaptureCb no_camera_capture_cb)
 {
-    g_NoCameraCaptureCb = no_camera_capture_cb;
+    //g_NoCameraCaptureCb = no_camera_capture_cb;
+	ECViECaptureObserverManager::getInst()->addCaptureObserver(deviceid, no_camera_capture_cb);
     return 0;
 }
 
@@ -3048,14 +3193,19 @@ int ECMedia_start_capture(int deviceid, CameraCapability cam)
     ViECapture *capture = ViECapture::GetInterface(m_vie);
     if (capture) {
         
-        if (!g_ECViECaptureObserver) {
-            if (g_NoCameraCaptureCb) {
-                g_ECViECaptureObserver = new ECViECaptureObserver(g_NoCameraCaptureCb);
-            }
-        }
-        if (g_ECViECaptureObserver) {
-            capture->RegisterObserver(deviceid, *g_ECViECaptureObserver);
-        }
+		ECViECaptureObserver* obsv = ECViECaptureObserverManager::getInst()->requestCaptureObserver(deviceid);
+		if (obsv)
+		{
+			capture->RegisterObserver(deviceid, *obsv);
+		}
+        //if (!g_ECViECaptureObserver) {
+        //    if (g_NoCameraCaptureCb) {
+        //        g_ECViECaptureObserver = new ECViECaptureObserver(g_NoCameraCaptureCb);
+        //    }
+        //}
+        //if (g_ECViECaptureObserver) {
+        //    capture->RegisterObserver(deviceid, *g_ECViECaptureObserver);
+        //}
         
         CaptureCapability cap;
         cap.height = cam.height;
@@ -3084,12 +3234,13 @@ int ECMedia_stop_capture(int captureid)
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECapture *capture = ViECapture::GetInterface(m_vie);
     if (capture) {
-        if (g_ECViECaptureObserver) {
-            if (capture->DeregisterObserver(captureid) == 0) {
-                delete g_ECViECaptureObserver;
-                g_ECViECaptureObserver = NULL;
-            }
-        }
+		ECViECaptureObserverManager::getInst()->removeCaptureObserver(captureid);
+        //if (g_ECViECaptureObserver) {
+        //    if (capture->DeregisterObserver(captureid) == 0) {
+        //        delete g_ECViECaptureObserver;
+        //        g_ECViECaptureObserver = NULL;
+        //    }
+        //}
         
         int ret = capture->StopCapture(captureid);
         if (ret != 0) {
