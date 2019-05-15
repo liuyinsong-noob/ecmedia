@@ -132,6 +132,7 @@ bool StatsCollector::SetVideoEngin(VideoEngine *vie)
 	return false;
 }
 #endif
+
 bool StatsCollector::SetVoiceEngin(VoiceEngine* voe)
 {
 	m_voe = voe;
@@ -145,6 +146,7 @@ void StatsCollector::AddToReports(StatsReport::StatsReportType type, int channel
 	report = reports_full_.InsertNew(id);
 	report->SetReportType(type);
 	report->SetChannelId(channel_id);
+    
 	report = reports_simplifed_.InsertNew(id);
 	report->SetReportType((StatsReport::StatsReportType)(type + StatsReport::kStatsReportTypeAudioSend_Simplified));
 	report->SetChannelId(channel_id);
@@ -160,7 +162,6 @@ void StatsCollector::DeleteFromReports(StatsReport::StatsReportType type, int ch
 bool StatsCollector::AddVideoSendStatsProxy(int channelid)
 {
 #ifdef VIDEO_ENABLED
-//    printf("seansean AddVideoSendStatsProxy:%p, channelid:%d, m_vie:%p\n", this, channelid, m_vie);
 	if (!m_vie)
 	{
 		return false;
@@ -377,26 +378,24 @@ void StatsCollector::UpdateStats(bool isFullStats)
 void StatsCollector::GetStats(StatsContentType type, char* callid, void **pMediaStatisticsDataInnerArray, int *pArraySize)
 { 
 	CriticalSectionScoped lock(stream_crit_.get());
-	MediaStatisticsDataInner *pMediaStatisticsDataInner;
-	MediaStatisticsInner *mediaStatsInner;
-	
-	pMediaStatisticsDataInner = new MediaStatisticsDataInner();
-	mediaStatsInner = pMediaStatisticsDataInner->add_mediadata();
-	pMediaStatisticsDataInner->set_callid(callid);
+	MediaStatisticsDataInner * pMediaStatisticsDataInner = new MediaStatisticsDataInner();
+	MediaStatisticsInner     * mediaStatsInner = pMediaStatisticsDataInner->add_mediadata();
+	// set call id
+    pMediaStatisticsDataInner->set_callid(callid);
+    // report to pb buffer.
 	LoadReportsToPbBuffer(type, mediaStatsInner);
 
-	int size = pMediaStatisticsDataInner->ByteSize() + 8;
+	int size = pMediaStatisticsDataInner->ByteSize() + 8; // why add 8 byte?
 	*pMediaStatisticsDataInnerArray = new char[size];
 	memset(*pMediaStatisticsDataInnerArray, 0, size);
+    
+    // covert report to array stream
 	yuntongxun_google::protobuf::io::ArrayOutputStream array_stream(*pMediaStatisticsDataInnerArray, size);
 	yuntongxun_google::protobuf::io::CodedOutputStream output_stream(&array_stream);
 	output_stream.WriteVarint32(pMediaStatisticsDataInner->ByteSize());
-	if (pMediaStatisticsDataInner->SerializeToCodedStream(&output_stream))
-	{
+	if (pMediaStatisticsDataInner->SerializeToCodedStream(&output_stream)) {
 		*pArraySize = output_stream.ByteCount();
-	}
-	else
-	{
+	} else {
 		*pArraySize = -1;
 	}
 
@@ -703,6 +702,16 @@ void StatsCollector::LoadAudioSenderReportToPbBuffer(StatsContentType type,
 	value = report.FindValue(StatsReport::kStatsValueNameTimestamp);
 	if (value)
 		statsData->set_kstatsvaluenametimestamp(value->uint64_val());
+    
+    // send lossrate
+    value = report.FindValue(StatsReport::kStatsValueNameLossFractionInPercent);
+    if (value)
+        statsData->set_kstatsvaluenamelossfractioninpercent(value->int32_val());
+    
+    value = report.FindValue(StatsReport::kStatsValueNameTransmitBitrate);
+    if(value)
+        statsData->set_kstatsvaluenametransmitbitrate(value->int32_val());
+    
 	value = report.FindValue(StatsReport::kStatsValueNameCodecImplementationName);
 	if (value)
 		statsData->set_kstatsvaluenamecodecimplementationname(value->string_val());
@@ -778,6 +787,10 @@ void StatsCollector::LoadAudioReceiverReportToPbBuffer(StatsContentType type,
 	if (value)
 		statsData->set_kstatsvaluenamedecodingplccng(value->int32_val());
 
+    value = report.FindValue(StatsReport::kStatsValueNameTransmitBitrate);
+    if(value)
+        statsData->set_kstatsvaluenametransmitbitrate(value->int32_val());
+    
 	value = report.FindValue(StatsReport::kStatsValueNameLossFractionInPercent);
 	if (value)
 		statsData->set_kstatsvaluenamelossfractioninpercent(value->int32_val());
@@ -1071,7 +1084,6 @@ void StatsCollector::VideoReciverInfo_AddReceiveBasic(const VideoReceiveStream::
 void StatsCollector::VideoReciverInfo_AddReceiveStats(const VideoReceiveStream::Stats info,
 													StatsReport *report)
 {
-//    printf("seansean info.received_framerate:%d, info.total_bitrate_bps:%d, info.jitter_buffer_ms:%d\n", info.received_framerate, info.total_bitrate_bps, info.jitter_buffer_ms);
 	report->AddInt32(StatsReport::kStatsValueNameReceivedFrameRate, info.received_framerate);
 	report->AddInt32(StatsReport::kStatsValueNameReceivedTotalBitrate, info.total_bitrate_bps);
 	report->AddInt32(StatsReport::kStatsValueNameJitterBufferMs, info.jitter_buffer_ms);
@@ -1139,6 +1151,7 @@ void StatsCollector::AudioSenderInfo_AddBasic(const AudioSendStream::Stats info,
 void StatsCollector::AudioSenderInfo_AddNetworkStats(const AudioSendStream::Stats info,
 													StatsReport *report)
 {
+    report->AddInt32(StatsReport::kStatsValueNameTransmitBitrate, info.bitrate);
 	report->AddInt32(StatsReport::kStatsValueNameJitterReceived, info.jitter_ms);
 	report->AddInt32(StatsReport::kStatsValueNameRttInMs, static_cast<int32_t>(info.rtt_ms));
 	report->AddInt32(StatsReport::kStatsValueNameLossFractionInPercent, static_cast<int32_t>(info.fraction_lost));
@@ -1180,6 +1193,7 @@ void StatsCollector::AudioReceiverInfo_AddNetworkStats(const AudioReceiveStream:
 	report->AddInt32(StatsReport::kStatsValueNameLossFractionInPercent, info.fraction_lost);
 	report->AddInt32(StatsReport::kStatsValueNamePacketsLost, info.packets_lost);
 	report->AddInt32(StatsReport::kStatsValueNameJitterReceived, info.jitter_ms);
+    report->AddInt32(StatsReport::kStatsValueNameTransmitBitrate, info.bitrate);
 }
 
 StatsReport* StatsCollector::FindReport(bool isFullStats, int reportType, int channel_id)

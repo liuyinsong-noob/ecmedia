@@ -53,6 +53,7 @@ class AudioReceiveStream{
 	  }
 
     uint32_t remote_ssrc;
+    int32_t bitrate;
     int64_t bytes_rcvd;
     uint32_t packets_rcvd;
     uint32_t packets_lost;

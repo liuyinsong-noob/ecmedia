@@ -116,6 +116,7 @@ void AudioReceiveStream::UpdateStats()
 		CallStatistics callstats;
 		voe_rtprtcp->GetRemoteSSRC(channel_id_, audioRecvStats_.remote_ssrc);
 		voe_rtprtcp->GetRTCPStatistics(channel_id_, callstats);
+        audioRecvStats_.bitrate = callstats.received_bitrate;
 		audioRecvStats_.bytes_rcvd = callstats.bytesReceived;
 		audioRecvStats_.packets_rcvd = callstats.packetsReceived;
 		audioRecvStats_.packets_lost = callstats.cumulativeLost;

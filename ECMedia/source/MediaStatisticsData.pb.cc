@@ -2733,6 +2733,8 @@ const int AudioSenderStatisticsInner::kKStatsValueNameTimestampFieldNumber;
 const int AudioSenderStatisticsInner::kKStatsValueNameCodecImplementationNameFieldNumber;
 const int AudioSenderStatisticsInner::kKStatsValueNameAudioInputLevelFieldNumber;
 const int AudioSenderStatisticsInner::kKStatsValueNameRttInMsFieldNumber;
+const int AudioSenderStatisticsInner::kKStatsValueNameLossFractionInPercentFieldNumber;
+const int AudioSenderStatisticsInner::kKStatsValueNameTransmitBitrateFieldNumber;
 const int AudioSenderStatisticsInner::kKStatsValueNameEchoDelayMedianFieldNumber;
 const int AudioSenderStatisticsInner::kKStatsValueNameEchoDelayStdDevFieldNumber;
 const int AudioSenderStatisticsInner::kKStatsValueNameEchoReturnLossFieldNumber;
@@ -2764,6 +2766,8 @@ void AudioSenderStatisticsInner::SharedCtor() {
   kstatsvaluenamecodecimplementationname_ = const_cast< ::std::string*>(&::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited());
   kstatsvaluenameaudioinputlevel_ = 0;
   kstatsvaluenamerttinms_ = 0;
+  kstatsvaluenamelossfractioninpercent_ = 0;
+  kstatsvaluenametransmitbitrate_ = 0;
   kstatsvaluenameechodelaymedian_ = 0;
   kstatsvaluenameechodelaystddev_ = 0;
   kstatsvaluenameechoreturnloss_ = 0;
@@ -2821,14 +2825,14 @@ void AudioSenderStatisticsInner::Clear() {
 
   if (_has_bits_[0 / 32] & 255) {
     ZR_(kstatsvaluenamereporttype_, kstatsvaluenametimestamp_);
-    ZR_(kstatsvaluenameaudioinputlevel_, kstatsvaluenameechodelaystddev_);
+    ZR_(kstatsvaluenameaudioinputlevel_, kstatsvaluenametransmitbitrate_);
     if (has_kstatsvaluenamecodecimplementationname()) {
       if (kstatsvaluenamecodecimplementationname_ != &::yuntongxun_google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         kstatsvaluenamecodecimplementationname_->clear();
       }
     }
   }
-  ZR_(kstatsvaluenameechoreturnloss_, kstatsvaluenameechoreturnlossenhancement_);
+  ZR_(kstatsvaluenameechodelaymedian_, kstatsvaluenameechoreturnlossenhancement_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -2934,13 +2938,43 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(56)) goto parse_kStatsValueNameEchoDelayMedian;
+        if (input->ExpectTag(56)) goto parse_kStatsValueNameLossFractionInPercent;
         break;
       }
 
-      // optional int32 kStatsValueNameEchoDelayMedian = 7;
+      // optional int32 kStatsValueNameLossFractionInPercent = 7;
       case 7: {
         if (tag == 56) {
+         parse_kStatsValueNameLossFractionInPercent:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &kstatsvaluenamelossfractioninpercent_)));
+          set_has_kstatsvaluenamelossfractioninpercent();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(64)) goto parse_kStatsValueNameTransmitBitrate;
+        break;
+      }
+
+      // optional int32 kStatsValueNameTransmitBitrate = 8;
+      case 8: {
+        if (tag == 64) {
+         parse_kStatsValueNameTransmitBitrate:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &kstatsvaluenametransmitbitrate_)));
+          set_has_kstatsvaluenametransmitbitrate();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(72)) goto parse_kStatsValueNameEchoDelayMedian;
+        break;
+      }
+
+      // optional int32 kStatsValueNameEchoDelayMedian = 9;
+      case 9: {
+        if (tag == 72) {
          parse_kStatsValueNameEchoDelayMedian:
           DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -2949,13 +2983,13 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(64)) goto parse_kStatsValueNameEchoDelayStdDev;
+        if (input->ExpectTag(80)) goto parse_kStatsValueNameEchoDelayStdDev;
         break;
       }
 
-      // optional int32 kStatsValueNameEchoDelayStdDev = 8;
-      case 8: {
-        if (tag == 64) {
+      // optional int32 kStatsValueNameEchoDelayStdDev = 10;
+      case 10: {
+        if (tag == 80) {
          parse_kStatsValueNameEchoDelayStdDev:
           DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -2964,13 +2998,13 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(72)) goto parse_kStatsValueNameEchoReturnLoss;
+        if (input->ExpectTag(88)) goto parse_kStatsValueNameEchoReturnLoss;
         break;
       }
 
-      // optional int32 kStatsValueNameEchoReturnLoss = 9;
-      case 9: {
-        if (tag == 72) {
+      // optional int32 kStatsValueNameEchoReturnLoss = 11;
+      case 11: {
+        if (tag == 88) {
          parse_kStatsValueNameEchoReturnLoss:
           DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -2979,13 +3013,13 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(80)) goto parse_kStatsValueNameEchoReturnLossEnhancement;
+        if (input->ExpectTag(96)) goto parse_kStatsValueNameEchoReturnLossEnhancement;
         break;
       }
 
-      // optional int32 kStatsValueNameEchoReturnLossEnhancement = 10;
-      case 10: {
-        if (tag == 80) {
+      // optional int32 kStatsValueNameEchoReturnLossEnhancement = 12;
+      case 12: {
+        if (tag == 96) {
          parse_kStatsValueNameEchoReturnLossEnhancement:
           DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -3054,24 +3088,34 @@ void AudioSenderStatisticsInner::SerializeWithCachedSizes(
     ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(6, this->kstatsvaluenamerttinms(), output);
   }
 
-  // optional int32 kStatsValueNameEchoDelayMedian = 7;
+  // optional int32 kStatsValueNameLossFractionInPercent = 7;
+  if (has_kstatsvaluenamelossfractioninpercent()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(7, this->kstatsvaluenamelossfractioninpercent(), output);
+  }
+
+  // optional int32 kStatsValueNameTransmitBitrate = 8;
+  if (has_kstatsvaluenametransmitbitrate()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(8, this->kstatsvaluenametransmitbitrate(), output);
+  }
+
+  // optional int32 kStatsValueNameEchoDelayMedian = 9;
   if (has_kstatsvaluenameechodelaymedian()) {
-    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(7, this->kstatsvaluenameechodelaymedian(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(9, this->kstatsvaluenameechodelaymedian(), output);
   }
 
-  // optional int32 kStatsValueNameEchoDelayStdDev = 8;
+  // optional int32 kStatsValueNameEchoDelayStdDev = 10;
   if (has_kstatsvaluenameechodelaystddev()) {
-    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(8, this->kstatsvaluenameechodelaystddev(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(10, this->kstatsvaluenameechodelaystddev(), output);
   }
 
-  // optional int32 kStatsValueNameEchoReturnLoss = 9;
+  // optional int32 kStatsValueNameEchoReturnLoss = 11;
   if (has_kstatsvaluenameechoreturnloss()) {
-    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(9, this->kstatsvaluenameechoreturnloss(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(11, this->kstatsvaluenameechoreturnloss(), output);
   }
 
-  // optional int32 kStatsValueNameEchoReturnLossEnhancement = 10;
+  // optional int32 kStatsValueNameEchoReturnLossEnhancement = 12;
   if (has_kstatsvaluenameechoreturnlossenhancement()) {
-    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(10, this->kstatsvaluenameechoreturnlossenhancement(), output);
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(12, this->kstatsvaluenameechoreturnlossenhancement(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -3125,30 +3169,44 @@ int AudioSenderStatisticsInner::ByteSize() const {
           this->kstatsvaluenamerttinms());
     }
 
-    // optional int32 kStatsValueNameEchoDelayMedian = 7;
+    // optional int32 kStatsValueNameLossFractionInPercent = 7;
+    if (has_kstatsvaluenamelossfractioninpercent()) {
+      total_size += 1 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->kstatsvaluenamelossfractioninpercent());
+    }
+
+    // optional int32 kStatsValueNameTransmitBitrate = 8;
+    if (has_kstatsvaluenametransmitbitrate()) {
+      total_size += 1 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->kstatsvaluenametransmitbitrate());
+    }
+
+  }
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    // optional int32 kStatsValueNameEchoDelayMedian = 9;
     if (has_kstatsvaluenameechodelaymedian()) {
       total_size += 1 +
         ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameechodelaymedian());
     }
 
-    // optional int32 kStatsValueNameEchoDelayStdDev = 8;
+    // optional int32 kStatsValueNameEchoDelayStdDev = 10;
     if (has_kstatsvaluenameechodelaystddev()) {
       total_size += 1 +
         ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameechodelaystddev());
     }
 
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional int32 kStatsValueNameEchoReturnLoss = 9;
+    // optional int32 kStatsValueNameEchoReturnLoss = 11;
     if (has_kstatsvaluenameechoreturnloss()) {
       total_size += 1 +
         ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
           this->kstatsvaluenameechoreturnloss());
     }
 
-    // optional int32 kStatsValueNameEchoReturnLossEnhancement = 10;
+    // optional int32 kStatsValueNameEchoReturnLossEnhancement = 12;
     if (has_kstatsvaluenameechoreturnlossenhancement()) {
       total_size += 1 +
         ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
@@ -3190,14 +3248,20 @@ void AudioSenderStatisticsInner::MergeFrom(const AudioSenderStatisticsInner& fro
     if (from.has_kstatsvaluenamerttinms()) {
       set_kstatsvaluenamerttinms(from.kstatsvaluenamerttinms());
     }
+    if (from.has_kstatsvaluenamelossfractioninpercent()) {
+      set_kstatsvaluenamelossfractioninpercent(from.kstatsvaluenamelossfractioninpercent());
+    }
+    if (from.has_kstatsvaluenametransmitbitrate()) {
+      set_kstatsvaluenametransmitbitrate(from.kstatsvaluenametransmitbitrate());
+    }
+  }
+  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from.has_kstatsvaluenameechodelaymedian()) {
       set_kstatsvaluenameechodelaymedian(from.kstatsvaluenameechodelaymedian());
     }
     if (from.has_kstatsvaluenameechodelaystddev()) {
       set_kstatsvaluenameechodelaystddev(from.kstatsvaluenameechodelaystddev());
     }
-  }
-  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from.has_kstatsvaluenameechoreturnloss()) {
       set_kstatsvaluenameechoreturnloss(from.kstatsvaluenameechoreturnloss());
     }
@@ -3227,6 +3291,8 @@ void AudioSenderStatisticsInner::Swap(AudioSenderStatisticsInner* other) {
     std::swap(kstatsvaluenamecodecimplementationname_, other->kstatsvaluenamecodecimplementationname_);
     std::swap(kstatsvaluenameaudioinputlevel_, other->kstatsvaluenameaudioinputlevel_);
     std::swap(kstatsvaluenamerttinms_, other->kstatsvaluenamerttinms_);
+    std::swap(kstatsvaluenamelossfractioninpercent_, other->kstatsvaluenamelossfractioninpercent_);
+    std::swap(kstatsvaluenametransmitbitrate_, other->kstatsvaluenametransmitbitrate_);
     std::swap(kstatsvaluenameechodelaymedian_, other->kstatsvaluenameechodelaymedian_);
     std::swap(kstatsvaluenameechodelaystddev_, other->kstatsvaluenameechodelaystddev_);
     std::swap(kstatsvaluenameechoreturnloss_, other->kstatsvaluenameechoreturnloss_);
@@ -3262,6 +3328,7 @@ const int AudioReceiverStatisticsInner::kKStatsValueNameDecodingPLCCNGFieldNumbe
 const int AudioReceiverStatisticsInner::kKStatsValueNameLossFractionInPercentFieldNumber;
 const int AudioReceiverStatisticsInner::kKStatsValueNamePacketsLostFieldNumber;
 const int AudioReceiverStatisticsInner::kKStatsValueNameJitterReceivedFieldNumber;
+const int AudioReceiverStatisticsInner::kKStatsValueNameTransmitBitrateFieldNumber;
 #endif  // !_MSC_VER
 
 AudioReceiverStatisticsInner::AudioReceiverStatisticsInner()
@@ -3300,6 +3367,7 @@ void AudioReceiverStatisticsInner::SharedCtor() {
   kstatsvaluenamelossfractioninpercent_ = 0;
   kstatsvaluenamepacketslost_ = 0;
   kstatsvaluenamejitterreceived_ = 0;
+  kstatsvaluenametransmitbitrate_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -3363,7 +3431,7 @@ void AudioReceiverStatisticsInner::Clear() {
   if (_has_bits_[8 / 32] & 65280) {
     ZR_(kstatsvaluenameexpandrate_, kstatsvaluenamepacketslost_);
   }
-  kstatsvaluenamejitterreceived_ = 0;
+  ZR_(kstatsvaluenamejitterreceived_, kstatsvaluenametransmitbitrate_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -3634,6 +3702,21 @@ bool AudioReceiverStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(144)) goto parse_kStatsValueNameTransmitBitrate;
+        break;
+      }
+
+      // optional int32 kStatsValueNameTransmitBitrate = 18;
+      case 18: {
+        if (tag == 144) {
+         parse_kStatsValueNameTransmitBitrate:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &kstatsvaluenametransmitbitrate_)));
+          set_has_kstatsvaluenametransmitbitrate();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -3747,6 +3830,11 @@ void AudioReceiverStatisticsInner::SerializeWithCachedSizes(
   // optional int32 kStatsValueNameJitterReceived = 17;
   if (has_kstatsvaluenamejitterreceived()) {
     ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(17, this->kstatsvaluenamejitterreceived(), output);
+  }
+
+  // optional int32 kStatsValueNameTransmitBitrate = 18;
+  if (has_kstatsvaluenametransmitbitrate()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(18, this->kstatsvaluenametransmitbitrate(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -3875,6 +3963,13 @@ int AudioReceiverStatisticsInner::ByteSize() const {
           this->kstatsvaluenamejitterreceived());
     }
 
+    // optional int32 kStatsValueNameTransmitBitrate = 18;
+    if (has_kstatsvaluenametransmitbitrate()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->kstatsvaluenametransmitbitrate());
+    }
+
   }
   total_size += unknown_fields().size();
 
@@ -3947,6 +4042,9 @@ void AudioReceiverStatisticsInner::MergeFrom(const AudioReceiverStatisticsInner&
     if (from.has_kstatsvaluenamejitterreceived()) {
       set_kstatsvaluenamejitterreceived(from.kstatsvaluenamejitterreceived());
     }
+    if (from.has_kstatsvaluenametransmitbitrate()) {
+      set_kstatsvaluenametransmitbitrate(from.kstatsvaluenametransmitbitrate());
+    }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
@@ -3981,6 +4079,7 @@ void AudioReceiverStatisticsInner::Swap(AudioReceiverStatisticsInner* other) {
     std::swap(kstatsvaluenamelossfractioninpercent_, other->kstatsvaluenamelossfractioninpercent_);
     std::swap(kstatsvaluenamepacketslost_, other->kstatsvaluenamepacketslost_);
     std::swap(kstatsvaluenamejitterreceived_, other->kstatsvaluenamejitterreceived_);
+    std::swap(kstatsvaluenametransmitbitrate_, other->kstatsvaluenametransmitbitrate_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

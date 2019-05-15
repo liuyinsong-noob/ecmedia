@@ -687,6 +687,10 @@ private:
 
 	bool _pause;
     int _loss;
+    int32_t incoming_bitrate_ = 0;
+    int32_t period_packets_length_ = 0;
+    int64_t calculate_bitrate_ts_ = 0;
+    Clock* const clock_;
 public:
     int SetLoss(int loss);
 	int setNetworkType(bool isWifi);

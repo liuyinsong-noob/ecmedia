@@ -70,6 +70,8 @@ struct CallStatistics
     unsigned int jitterSamples;
     int64_t rttMs;
     size_t bytesSent;
+    int32_t send_bitarete;
+    int32_t received_bitrate;
     unsigned int packetsSent;
     size_t bytesReceived;
     unsigned int packetsReceived;

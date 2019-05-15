@@ -999,31 +999,45 @@ class AudioSenderStatisticsInner : public ::yuntongxun_google::protobuf::Message
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamerttinms() const;
   inline void set_kstatsvaluenamerttinms(::yuntongxun_google::protobuf::int32 value);
 
-  // optional int32 kStatsValueNameEchoDelayMedian = 7;
+  // optional int32 kStatsValueNameLossFractionInPercent = 7;
+  inline bool has_kstatsvaluenamelossfractioninpercent() const;
+  inline void clear_kstatsvaluenamelossfractioninpercent();
+  static const int kKStatsValueNameLossFractionInPercentFieldNumber = 7;
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamelossfractioninpercent() const;
+  inline void set_kstatsvaluenamelossfractioninpercent(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 kStatsValueNameTransmitBitrate = 8;
+  inline bool has_kstatsvaluenametransmitbitrate() const;
+  inline void clear_kstatsvaluenametransmitbitrate();
+  static const int kKStatsValueNameTransmitBitrateFieldNumber = 8;
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenametransmitbitrate() const;
+  inline void set_kstatsvaluenametransmitbitrate(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 kStatsValueNameEchoDelayMedian = 9;
   inline bool has_kstatsvaluenameechodelaymedian() const;
   inline void clear_kstatsvaluenameechodelaymedian();
-  static const int kKStatsValueNameEchoDelayMedianFieldNumber = 7;
+  static const int kKStatsValueNameEchoDelayMedianFieldNumber = 9;
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameechodelaymedian() const;
   inline void set_kstatsvaluenameechodelaymedian(::yuntongxun_google::protobuf::int32 value);
 
-  // optional int32 kStatsValueNameEchoDelayStdDev = 8;
+  // optional int32 kStatsValueNameEchoDelayStdDev = 10;
   inline bool has_kstatsvaluenameechodelaystddev() const;
   inline void clear_kstatsvaluenameechodelaystddev();
-  static const int kKStatsValueNameEchoDelayStdDevFieldNumber = 8;
+  static const int kKStatsValueNameEchoDelayStdDevFieldNumber = 10;
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameechodelaystddev() const;
   inline void set_kstatsvaluenameechodelaystddev(::yuntongxun_google::protobuf::int32 value);
 
-  // optional int32 kStatsValueNameEchoReturnLoss = 9;
+  // optional int32 kStatsValueNameEchoReturnLoss = 11;
   inline bool has_kstatsvaluenameechoreturnloss() const;
   inline void clear_kstatsvaluenameechoreturnloss();
-  static const int kKStatsValueNameEchoReturnLossFieldNumber = 9;
+  static const int kKStatsValueNameEchoReturnLossFieldNumber = 11;
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameechoreturnloss() const;
   inline void set_kstatsvaluenameechoreturnloss(::yuntongxun_google::protobuf::int32 value);
 
-  // optional int32 kStatsValueNameEchoReturnLossEnhancement = 10;
+  // optional int32 kStatsValueNameEchoReturnLossEnhancement = 12;
   inline bool has_kstatsvaluenameechoreturnlossenhancement() const;
   inline void clear_kstatsvaluenameechoreturnlossenhancement();
-  static const int kKStatsValueNameEchoReturnLossEnhancementFieldNumber = 10;
+  static const int kKStatsValueNameEchoReturnLossEnhancementFieldNumber = 12;
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameechoreturnlossenhancement() const;
   inline void set_kstatsvaluenameechoreturnlossenhancement(::yuntongxun_google::protobuf::int32 value);
 
@@ -1041,6 +1055,10 @@ class AudioSenderStatisticsInner : public ::yuntongxun_google::protobuf::Message
   inline void clear_has_kstatsvaluenameaudioinputlevel();
   inline void set_has_kstatsvaluenamerttinms();
   inline void clear_has_kstatsvaluenamerttinms();
+  inline void set_has_kstatsvaluenamelossfractioninpercent();
+  inline void clear_has_kstatsvaluenamelossfractioninpercent();
+  inline void set_has_kstatsvaluenametransmitbitrate();
+  inline void clear_has_kstatsvaluenametransmitbitrate();
   inline void set_has_kstatsvaluenameechodelaymedian();
   inline void clear_has_kstatsvaluenameechodelaymedian();
   inline void set_has_kstatsvaluenameechodelaystddev();
@@ -1060,6 +1078,8 @@ class AudioSenderStatisticsInner : public ::yuntongxun_google::protobuf::Message
   ::std::string* kstatsvaluenamecodecimplementationname_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenameaudioinputlevel_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenamerttinms_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenamelossfractioninpercent_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenametransmitbitrate_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenameechodelaymedian_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenameechodelaystddev_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenameechoreturnloss_;
@@ -1262,6 +1282,13 @@ class AudioReceiverStatisticsInner : public ::yuntongxun_google::protobuf::Messa
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamejitterreceived() const;
   inline void set_kstatsvaluenamejitterreceived(::yuntongxun_google::protobuf::int32 value);
 
+  // optional int32 kStatsValueNameTransmitBitrate = 18;
+  inline bool has_kstatsvaluenametransmitbitrate() const;
+  inline void clear_kstatsvaluenametransmitbitrate();
+  static const int kKStatsValueNameTransmitBitrateFieldNumber = 18;
+  inline ::yuntongxun_google::protobuf::int32 kstatsvaluenametransmitbitrate() const;
+  inline void set_kstatsvaluenametransmitbitrate(::yuntongxun_google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:AudioReceiverStatisticsInner)
  private:
   inline void set_has_kstatsvaluenamereporttype();
@@ -1298,6 +1325,8 @@ class AudioReceiverStatisticsInner : public ::yuntongxun_google::protobuf::Messa
   inline void clear_has_kstatsvaluenamepacketslost();
   inline void set_has_kstatsvaluenamejitterreceived();
   inline void clear_has_kstatsvaluenamejitterreceived();
+  inline void set_has_kstatsvaluenametransmitbitrate();
+  inline void clear_has_kstatsvaluenametransmitbitrate();
 
   ::std::string _unknown_fields_;
 
@@ -1320,6 +1349,7 @@ class AudioReceiverStatisticsInner : public ::yuntongxun_google::protobuf::Messa
   ::yuntongxun_google::protobuf::int32 kstatsvaluenamelossfractioninpercent_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenamepacketslost_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenamejitterreceived_;
+  ::yuntongxun_google::protobuf::int32 kstatsvaluenametransmitbitrate_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_MediaStatisticsData_2eproto_impl();
   #else
@@ -3520,15 +3550,63 @@ inline void AudioSenderStatisticsInner::set_kstatsvaluenamerttinms(::yuntongxun_
   // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameRttInMs)
 }
 
-// optional int32 kStatsValueNameEchoDelayMedian = 7;
-inline bool AudioSenderStatisticsInner::has_kstatsvaluenameechodelaymedian() const {
+// optional int32 kStatsValueNameLossFractionInPercent = 7;
+inline bool AudioSenderStatisticsInner::has_kstatsvaluenamelossfractioninpercent() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
-inline void AudioSenderStatisticsInner::set_has_kstatsvaluenameechodelaymedian() {
+inline void AudioSenderStatisticsInner::set_has_kstatsvaluenamelossfractioninpercent() {
   _has_bits_[0] |= 0x00000040u;
 }
-inline void AudioSenderStatisticsInner::clear_has_kstatsvaluenameechodelaymedian() {
+inline void AudioSenderStatisticsInner::clear_has_kstatsvaluenamelossfractioninpercent() {
   _has_bits_[0] &= ~0x00000040u;
+}
+inline void AudioSenderStatisticsInner::clear_kstatsvaluenamelossfractioninpercent() {
+  kstatsvaluenamelossfractioninpercent_ = 0;
+  clear_has_kstatsvaluenamelossfractioninpercent();
+}
+inline ::yuntongxun_google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenamelossfractioninpercent() const {
+  // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameLossFractionInPercent)
+  return kstatsvaluenamelossfractioninpercent_;
+}
+inline void AudioSenderStatisticsInner::set_kstatsvaluenamelossfractioninpercent(::yuntongxun_google::protobuf::int32 value) {
+  set_has_kstatsvaluenamelossfractioninpercent();
+  kstatsvaluenamelossfractioninpercent_ = value;
+  // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameLossFractionInPercent)
+}
+
+// optional int32 kStatsValueNameTransmitBitrate = 8;
+inline bool AudioSenderStatisticsInner::has_kstatsvaluenametransmitbitrate() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void AudioSenderStatisticsInner::set_has_kstatsvaluenametransmitbitrate() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void AudioSenderStatisticsInner::clear_has_kstatsvaluenametransmitbitrate() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void AudioSenderStatisticsInner::clear_kstatsvaluenametransmitbitrate() {
+  kstatsvaluenametransmitbitrate_ = 0;
+  clear_has_kstatsvaluenametransmitbitrate();
+}
+inline ::yuntongxun_google::protobuf::int32 AudioSenderStatisticsInner::kstatsvaluenametransmitbitrate() const {
+  // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.kStatsValueNameTransmitBitrate)
+  return kstatsvaluenametransmitbitrate_;
+}
+inline void AudioSenderStatisticsInner::set_kstatsvaluenametransmitbitrate(::yuntongxun_google::protobuf::int32 value) {
+  set_has_kstatsvaluenametransmitbitrate();
+  kstatsvaluenametransmitbitrate_ = value;
+  // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameTransmitBitrate)
+}
+
+// optional int32 kStatsValueNameEchoDelayMedian = 9;
+inline bool AudioSenderStatisticsInner::has_kstatsvaluenameechodelaymedian() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void AudioSenderStatisticsInner::set_has_kstatsvaluenameechodelaymedian() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void AudioSenderStatisticsInner::clear_has_kstatsvaluenameechodelaymedian() {
+  _has_bits_[0] &= ~0x00000100u;
 }
 inline void AudioSenderStatisticsInner::clear_kstatsvaluenameechodelaymedian() {
   kstatsvaluenameechodelaymedian_ = 0;
@@ -3544,15 +3622,15 @@ inline void AudioSenderStatisticsInner::set_kstatsvaluenameechodelaymedian(::yun
   // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameEchoDelayMedian)
 }
 
-// optional int32 kStatsValueNameEchoDelayStdDev = 8;
+// optional int32 kStatsValueNameEchoDelayStdDev = 10;
 inline bool AudioSenderStatisticsInner::has_kstatsvaluenameechodelaystddev() const {
-  return (_has_bits_[0] & 0x00000080u) != 0;
+  return (_has_bits_[0] & 0x00000200u) != 0;
 }
 inline void AudioSenderStatisticsInner::set_has_kstatsvaluenameechodelaystddev() {
-  _has_bits_[0] |= 0x00000080u;
+  _has_bits_[0] |= 0x00000200u;
 }
 inline void AudioSenderStatisticsInner::clear_has_kstatsvaluenameechodelaystddev() {
-  _has_bits_[0] &= ~0x00000080u;
+  _has_bits_[0] &= ~0x00000200u;
 }
 inline void AudioSenderStatisticsInner::clear_kstatsvaluenameechodelaystddev() {
   kstatsvaluenameechodelaystddev_ = 0;
@@ -3568,15 +3646,15 @@ inline void AudioSenderStatisticsInner::set_kstatsvaluenameechodelaystddev(::yun
   // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameEchoDelayStdDev)
 }
 
-// optional int32 kStatsValueNameEchoReturnLoss = 9;
+// optional int32 kStatsValueNameEchoReturnLoss = 11;
 inline bool AudioSenderStatisticsInner::has_kstatsvaluenameechoreturnloss() const {
-  return (_has_bits_[0] & 0x00000100u) != 0;
+  return (_has_bits_[0] & 0x00000400u) != 0;
 }
 inline void AudioSenderStatisticsInner::set_has_kstatsvaluenameechoreturnloss() {
-  _has_bits_[0] |= 0x00000100u;
+  _has_bits_[0] |= 0x00000400u;
 }
 inline void AudioSenderStatisticsInner::clear_has_kstatsvaluenameechoreturnloss() {
-  _has_bits_[0] &= ~0x00000100u;
+  _has_bits_[0] &= ~0x00000400u;
 }
 inline void AudioSenderStatisticsInner::clear_kstatsvaluenameechoreturnloss() {
   kstatsvaluenameechoreturnloss_ = 0;
@@ -3592,15 +3670,15 @@ inline void AudioSenderStatisticsInner::set_kstatsvaluenameechoreturnloss(::yunt
   // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameEchoReturnLoss)
 }
 
-// optional int32 kStatsValueNameEchoReturnLossEnhancement = 10;
+// optional int32 kStatsValueNameEchoReturnLossEnhancement = 12;
 inline bool AudioSenderStatisticsInner::has_kstatsvaluenameechoreturnlossenhancement() const {
-  return (_has_bits_[0] & 0x00000200u) != 0;
+  return (_has_bits_[0] & 0x00000800u) != 0;
 }
 inline void AudioSenderStatisticsInner::set_has_kstatsvaluenameechoreturnlossenhancement() {
-  _has_bits_[0] |= 0x00000200u;
+  _has_bits_[0] |= 0x00000800u;
 }
 inline void AudioSenderStatisticsInner::clear_has_kstatsvaluenameechoreturnlossenhancement() {
-  _has_bits_[0] &= ~0x00000200u;
+  _has_bits_[0] &= ~0x00000800u;
 }
 inline void AudioSenderStatisticsInner::clear_kstatsvaluenameechoreturnlossenhancement() {
   kstatsvaluenameechoreturnlossenhancement_ = 0;
@@ -4078,6 +4156,30 @@ inline void AudioReceiverStatisticsInner::set_kstatsvaluenamejitterreceived(::yu
   set_has_kstatsvaluenamejitterreceived();
   kstatsvaluenamejitterreceived_ = value;
   // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameJitterReceived)
+}
+
+// optional int32 kStatsValueNameTransmitBitrate = 18;
+inline bool AudioReceiverStatisticsInner::has_kstatsvaluenametransmitbitrate() const {
+  return (_has_bits_[0] & 0x00020000u) != 0;
+}
+inline void AudioReceiverStatisticsInner::set_has_kstatsvaluenametransmitbitrate() {
+  _has_bits_[0] |= 0x00020000u;
+}
+inline void AudioReceiverStatisticsInner::clear_has_kstatsvaluenametransmitbitrate() {
+  _has_bits_[0] &= ~0x00020000u;
+}
+inline void AudioReceiverStatisticsInner::clear_kstatsvaluenametransmitbitrate() {
+  kstatsvaluenametransmitbitrate_ = 0;
+  clear_has_kstatsvaluenametransmitbitrate();
+}
+inline ::yuntongxun_google::protobuf::int32 AudioReceiverStatisticsInner::kstatsvaluenametransmitbitrate() const {
+  // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.kStatsValueNameTransmitBitrate)
+  return kstatsvaluenametransmitbitrate_;
+}
+inline void AudioReceiverStatisticsInner::set_kstatsvaluenametransmitbitrate(::yuntongxun_google::protobuf::int32 value) {
+  set_has_kstatsvaluenametransmitbitrate();
+  kstatsvaluenametransmitbitrate_ = value;
+  // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameTransmitBitrate)
 }
 
 // -------------------------------------------------------------------
