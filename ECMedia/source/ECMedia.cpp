@@ -107,7 +107,7 @@ private:
     onEcMediaNoCameraCaptureCb m_callback;
     
 };
-#endif
+//#endif
 
 typedef struct CameraCaptureCbAndObserver_
 {
@@ -252,7 +252,7 @@ private:
 	ECViECaptureObserverMap mapObsv;
 };
 
-#ifdef VIDEO_ENABLED
+//#ifdef VIDEO_ENABLED
 ECViECaptureObserver::ECViECaptureObserver(onEcMediaNoCameraCaptureCb fp)
 :m_firstStart(true),
 m_callback(fp)
