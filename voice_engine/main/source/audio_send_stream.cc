@@ -89,13 +89,16 @@ namespace yuntongxunwebrtc{
 			CallStatistics callstats;
 			voe_rtprtcp->GetLocalSSRC(channel_id_, audioSendStats_.local_ssrc);
 			voe_rtprtcp->GetRTCPStatistics(channel_id_, callstats);
-			audioSendStats_.bytes_sent = callstats.bytesSent;
-			audioSendStats_.packets_sent = callstats.packetsSent;
-			audioSendStats_.jitter_ms = callstats.jitterSamples;
-			audioSendStats_.ext_seqnum = callstats.extendedMax;
-			audioSendStats_.packets_lost = callstats.cumulativeLost;
-			audioSendStats_.fraction_lost = callstats.fractionLost;
-			audioSendStats_.rtt_ms = callstats.rttMs;
+        
+			audioSendStats_.bytes_sent      = callstats.bytesSent;
+			audioSendStats_.packets_sent    = callstats.packetsSent;
+			audioSendStats_.jitter_ms       = callstats.jitterSamples;
+			audioSendStats_.ext_seqnum      = callstats.extendedMax;
+			audioSendStats_.packets_lost    = callstats.cumulativeLost;
+			audioSendStats_.fraction_lost   = callstats.fractionLost;
+			audioSendStats_.rtt_ms          = callstats.rttMs;
+            audioSendStats_.bitrate         = callstats.send_bitarete;
+        
 			voe_rtprtcp->Release();
 		}
 

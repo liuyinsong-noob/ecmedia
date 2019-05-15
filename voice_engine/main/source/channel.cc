@@ -1020,7 +1020,8 @@ Channel::Channel(int32_t channelId,
     _sendData(NULL),
     _receiveData(NULL),
     _rtp_port(0),
-    _isSetRemoteSsrc(false)
+    _isSetRemoteSsrc(false),
+    clock_(Clock::GetRealTimeClock())
 {
     WEBRTC_TRACE(kTraceMemory, kTraceVoice, VoEId(_instanceId,_channelId),
                  "Channel::Channel() - ctor");
@@ -3665,6 +3666,15 @@ Channel::GetRTPStatistics(CallStatistics& stats)
                  stats.bytesSent, stats.packetsSent, stats.bytesReceived,
                  stats.packetsReceived);
 
+    
+    uint32_t sending_bitrate = 0;
+    uint32_t t1 , t2, t3;
+    _rtpRtcpModule->BitrateSent(&sending_bitrate, &t1, &t2,  &t3);
+    // send bitrate
+    stats.send_bitarete = sending_bitrate;
+    // receive bitrate
+    stats.received_bitrate = incoming_bitrate_;
+   
     // --- Timestamps
     {
       CriticalSectionScoped lock(ts_stats_lock_.get());
@@ -4124,7 +4134,7 @@ Channel::GetNetworkStatistics(NetworkStatistics& stats)
     ACMNetworkStatistics acm_stats;
     int return_value = audio_coding_->NetworkStatistics(&acm_stats);
     if (return_value >= 0) {
-      memcpy(&stats, &acm_stats, sizeof(NetworkStatistics));
+      memcpy(&stats, &acm_stats, sizeof(NetworkStatistics)); // why memcpy
     }
     return return_value;
 }
@@ -5295,7 +5305,18 @@ void
 	if (dtmfret) {
 		return;
 	}
-
+    
+    // calculate audio incoming bitrate.
+    {
+        period_packets_length_ += rtpPacketLength;
+        int64_t ts_diff = clock_->TimeInMilliseconds() - calculate_bitrate_ts_; // in ms
+        if(ts_diff > 100) {
+            incoming_bitrate_ = period_packets_length_*1000/ts_diff;
+            calculate_bitrate_ts_ = clock_->TimeInMilliseconds();
+            period_packets_length_ = 0;
+        }
+    }
+    
 	//WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId,_channelId),
 	//	"Channel::IncomingRTPPacket(rtpPacketLength=%d,"
 	//	" fromIP=%s, fromPort=%u)",

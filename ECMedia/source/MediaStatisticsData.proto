@@ -120,12 +120,14 @@ message AudioSenderStatisticsInner
 
 	//network
 	optional int32 kStatsValueNameRttInMs = 6;
+	optional int32 kStatsValueNameLossFractionInPercent = 7;
+	optional int32 kStatsValueNameTransmitBitrate = 8;
 
-	//echo cancellation
-	optional int32 kStatsValueNameEchoDelayMedian = 7;
-	optional int32 kStatsValueNameEchoDelayStdDev = 8;
-	optional int32 kStatsValueNameEchoReturnLoss = 9;
-	optional int32 kStatsValueNameEchoReturnLossEnhancement = 10;
+	// echo cancellation
+	optional int32 kStatsValueNameEchoDelayMedian = 9;
+	optional int32 kStatsValueNameEchoDelayStdDev = 10;
+	optional int32 kStatsValueNameEchoReturnLoss = 11;
+	optional int32 kStatsValueNameEchoReturnLossEnhancement = 12;
 }
 
 message AudioReceiverStatisticsInner
@@ -156,6 +158,7 @@ message AudioReceiverStatisticsInner
 	optional int32 kStatsValueNameLossFractionInPercent = 15;
 	optional int32 kStatsValueNamePacketsLost = 16;
 	optional int32 kStatsValueNameJitterReceived = 17;
+	optional int32 kStatsValueNameTransmitBitrate = 18;
 }
 message MediaStatisticsInner
 {
