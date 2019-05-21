@@ -523,6 +523,10 @@ void StatsCollector::VideoSenderInfo_AddEncoderSetting(const VideoSendStream::St
 	report->AddInt32(StatsReport::kStatsValueNameCodecSettingMaxBitrate, encoder_settings.maxBitrate);
 	report->AddInt32(StatsReport::kStatsValueNameCodecSettingTargetBitrate, encoder_settings.targetBitrate);
 	report->AddString(StatsReport::kStatsValueNameCodecImplementationName, encoder_settings.payload_name);
+    
+    //zhangn added 20181210
+    report->AddInt32(StatsReport::kStatsValueNameTargetEncFrameRate, info.target_enc_framerate);
+    report->AddInt32(StatsReport::kStatsValueNameActualEncFrameRate, info.actual_enc_framerate);
 }
 
 void StatsCollector::VideoSenderInfo_AddQMSetting(const VideoSendStream::Stats info,
@@ -548,9 +552,6 @@ void StatsCollector::VideoSenderInfo_AddBweStats(const VideoSendStream::Stats in
 		report->AddInt32(StatsReport::kStatsValueNameActualEncBitrate, info.actual_enc_bitrate_bps);
 		report->AddInt32(StatsReport::kStatsValueNameAvailableSendBandwidth, info.call.sendside_bwe_bps);
 		report->AddInt32(StatsReport::kStatsValueNameAvailableReceiveBandwidth, info.call.recv_bandwidth_bps);
-        //zhangn added 20181210
-        report->AddInt32(StatsReport::kStatsValueNameTargetEncFrameRate, info.target_enc_framerate);
-        report->AddInt32(StatsReport::kStatsValueNameActualEncFrameRate, info.actual_enc_framerate);
 	}
 	else { //TODO: simulcast
 	}
@@ -559,45 +560,49 @@ void StatsCollector::VideoSenderInfo_AddBweStats(const VideoSendStream::Stats in
 void StatsCollector::VideoSenderInfo_AddNetworkStats(const VideoSendStream::Stats info,
 													StatsReport *report)
 {
-	if (info.config.encoder_settings.numberOfSimulcastStreams == 0)
-	{
-		report->AddInt32(StatsReport::kStatsValueNameLossFractionInPercent, info.stream.rtcp_stats.fraction_lost*100/255);
-		report->AddInt32(StatsReport::kStatsValueNameJitterReceived, static_cast<int32_t>(info.stream.rtcp_stats.jitter));
-		report->AddInt32(StatsReport::kStatsValueNameRttInMs, static_cast<int32_t>(info.call.rtt_ms));
-		report->AddInt32(StatsReport::kStatsValueNameBucketDelayInMs, info.call.pacer_delay_ms);
-	}
-	else { //TODO: simulcast
-	}
+    // we assume only has 2 stream
+    for(auto ssrc : info.ssrc_streams) {
+        auto it = info.substreams.find(ssrc);
+        if (it != info.substreams.end()) { // todo: 通过 ssrc 判断是普通流 还是共享流
+            report->AddInt32(StatsReport::kStatsValueNameLossFractionInPercent, it->second.rtcp_stats.fraction_lost*100/50);
+            report->AddInt32(StatsReport::kStatsValueNameJitterReceived, static_cast<int32_t>(it->second.rtcp_stats.jitter));
+            report->AddInt32(StatsReport::kStatsValueNameRttInMs, static_cast<int32_t>(info.call.rtt_ms));
+            report->AddInt32(StatsReport::kStatsValueNameBucketDelayInMs, info.call.pacer_delay_ms);
+        } else {
+            // todo simulcast
+        }
+    }
 }
 
-void StatsCollector::VideoSenderInfo_AddRtpStats(const VideoSendStream::Stats info,
-												StatsReport *report)
+void StatsCollector::VideoSenderInfo_AddRtpStats(const VideoSendStream::Stats info, StatsReport *report)
 {
-	if (info.config.encoder_settings.numberOfSimulcastStreams == 0)
-	{
-		report->AddInt32(StatsReport::kStatsValueNameTransmitBitrate, info.stream.total_stats.bitrate_bps);
-		report->AddInt32(StatsReport::kStatsValueNameRetransmitBitrate, info.stream.retransmit_stats.bitrate_bps);
-		report->AddInt32(StatsReport::kStatsValueNameTransmitPacketsRate, info.stream.total_stats.packet_rate);
-		report->AddInt32(StatsReport::kStatsValueNameRetransmitPacketsRate, info.stream.retransmit_stats.packet_rate);
-		report->AddInt32(StatsReport::kStatsValueNameFecBitrate, 0);
-		report->AddInt32(StatsReport::kStatsValueNameSsrc, *info.ssrc_streams.begin());
-	}
-	else { //TODO: simulcast
-	}
+    // we assume only has 2 stream
+    for(auto ssrc : info.ssrc_streams) {
+        auto it = info.substreams.find(ssrc);
+        if (it != info.substreams.end()) { // todo: 通过 ssrc 判断是普通流 还是共享流
+            report->AddInt32(StatsReport::kStatsValueNameTransmitBitrate, it->second.total_stats.bitrate_bps);
+            report->AddInt32(StatsReport::kStatsValueNameRetransmitBitrate, it->second.retransmit_stats.bitrate_bps);
+            report->AddInt32(StatsReport::kStatsValueNameTransmitPacketsRate, it->second.total_stats.packet_rate);
+            report->AddInt32(StatsReport::kStatsValueNameRetransmitPacketsRate, it->second.retransmit_stats.packet_rate);
+            report->AddInt32(StatsReport::kStatsValueNameFecBitrate, 0);
+            report->AddInt32(StatsReport::kStatsValueNameSsrc, ssrc);
+        } else {
+            // todo simulcast
+        }
+    }
 }
 
 void StatsCollector::VideoSenderInfo_AddRtcpStats(const VideoSendStream::Stats info,
 													StatsReport *report)
 {
-	if (info.config.encoder_settings.numberOfSimulcastStreams == 0)
-	{
+	if (info.config.encoder_settings.numberOfSimulcastStreams == 0) {
 		report->AddInt32(StatsReport::kStatsValueNamePacketsLost, info.stream.rtcp_stats.cumulative_lost);
 		report->AddInt32(StatsReport::kStatsValueNameFirsReceived, info.stream.rtcp_packet_type_counts.fir_packets);
 		report->AddInt32(StatsReport::kStatsValueNameNacksReceived, info.stream.rtcp_packet_type_counts.nack_packets);
 		report->AddInt32(StatsReport::kStatsValueNameNacksRequestsReceived, info.stream.rtcp_packet_type_counts.nack_requests);
 		report->AddInt32(StatsReport::kStatsValueNameNacksUniqueRequestsReceived, info.stream.rtcp_packet_type_counts.unique_nack_requests);
-	}
-	else { //TODO: simulcast
+	} else { //TODO: simulcast
+        
 	}
 }
 #endif

@@ -260,6 +260,8 @@ VideoSendStream::Stats SendStatisticsProxy::GetStats(bool isAvg, int64_t& timest
 
 void SendStatisticsProxy::GenerateAvgStats()
 {
+    CriticalSectionScoped lock(crit_.get());
+    
 	stats_average_ = stats_;
 	stats_average_.actual_enc_bitrate_bps = avg_rate_stats_.actual_enc_bitrate_bps.AvgRate();
 	stats_average_.actual_enc_framerate = avg_rate_stats_.actual_enc_framerate.AvgRate();
@@ -345,6 +347,7 @@ void SendStatisticsProxy::StatisticsUpdated(const RtcpStatistics& statistics,
 	else {
 		RtcpBlocksCounter rtcp_block = it->second;
 		rtcp_block.AddSample(statistics);
+        avg_rate_stats_.rtcp_blocks_map[ssrc] = rtcp_block;
 	}
 #ifdef WIN32
 	post_message(StatsReport::kStatsReportTypeVideoSend,
