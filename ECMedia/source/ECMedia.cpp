@@ -311,7 +311,7 @@ static char gVersionString[256]={'\0'};
 using namespace yuntongxunwebrtc;
 using namespace std;
 
-#define ECMEDIA_VERSION "ecmedia_version: v2.3.3.0"
+#define ECMEDIA_VERSION "ecmedia_version: v2.3.3.1"
 
 //extern bool g_media_TraceFlag;
 //void PrintConsole(const char * fmt,...){};
