@@ -3721,37 +3721,62 @@ int ECMedia_get_receive_playloadType_audio(int channelid, CodecInst& audioCodec)
 }
 
 #ifdef VIDEO_ENABLED
-static void ECMedia_reset_send_width_height(unsigned short& width, unsigned short& height)
+static void ECMedia_reset_send_codecinfo(VideoCodec& videoCodec)
 {
+	unsigned short scale = 0;
 #ifdef WIN32 //Updated by zhangn 20190326
-  //only support (160*n,90*n) [0<n<=12]
-  if (0 != width % 160 || 0 != height % 90 ){
-    int scale = width/160;
-    width = scale * 160;
-    height = scale * 90;
-  }
+	//only support (160*n,90*n) [0<n<=12]
+	if (0 != videoCodec.width % 160 || 0 != videoCodec.height % 90) {
+		scale = videoCodec.width / 160;
+		videoCodec.width = scale * 160;
+		videoCodec.height = scale * 90;
+	}
 #else
-  if (height > width){
-    if (0 != height % 160 || 0 != width % 90){
-      int scale = height/160;
-      width = scale * 90;
-      height = scale * 160;
-    }
-  }else{
-    if (0 != width % 160 || 0 != height % 90){
-      int scale = width/160;
-      width = scale * 160;
-      height = scale * 90;
-    }
-  }
+	if (videoCodec.height > videoCodec.width) {
+		if (0 != videoCodec.height % 160 || 0 != videoCodec.width % 90) {
+			scale = videoCodec.height / 160;
+			videoCodec.width = scale * 90;
+			videoCodec.height = scale * 160;
+		}
+	}
+	else {
+		if (0 != videoCodec.width % 160 || 0 != videoCodec.height % 90) {
+			scale = videoCodec.width / 160;
+			videoCodec.width = scale * 160;
+			videoCodec.height = scale * 90;
+		}
+	}
 #endif
-  if (width % 8)
-    width = (width/8 + 1)*8;
+	if (videoCodec.width % 8)
+		videoCodec.width = (videoCodec.width / 8 + 1) * 8;
 
-  if (height % 8)
-    height = (height/8 + 1)*8;
+	if (videoCodec.height % 8)
+		videoCodec.height = (videoCodec.height / 8 + 1) * 8;
+	
+	if (videoCodec.codecType == kVideoCodecH264) {
+		videoCodec.codecType = kVideoCodecH264HIGH;
+	}
+	if (kVideoCodecH264HIGH == videoCodec.codecType) {
+		switch (scale)
+		{
+		case 4://360p
+			videoCodec.maxBitrate = 800;
+			videoCodec.minBitrate = 100;
+			videoCodec.startBitrate = 350;
+			break;
+		case 8://720p
+			videoCodec.maxBitrate = 1200;
+			videoCodec.minBitrate = 100;
+			videoCodec.startBitrate = 600;
+			break;
+		// default:
+			// videoCodec.maxBitrate = 800;
+			// videoCodec.minBitrate = 100;
+			// videoCodec.startBitrate = 350;
+			// break;
+		}
+	}
 }
-
 int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
 {
     PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d videoCodec(width:%d height:%d pltype:%d plname:%s, startBitrate:%d, maxBitrate:%d, minBitrate:%d)",
@@ -3763,15 +3788,8 @@ int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
     }
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
   
-  ECMedia_reset_send_width_height(videoCodec.width,videoCodec.height);
-  
-  //videoCodec.startBitrate = 700;
-  videoCodec.maxBitrate = 2000;
-  videoCodec.minBitrate = 100;
-  //Temp for higprofle by zhangn 20190325
-  if(videoCodec.codecType == kVideoCodecH264){
-    videoCodec.codecType = kVideoCodecH264HIGH;
-  }
+  ECMedia_reset_send_codecinfo(videoCodec);
+
   PrintConsole("[ECMEDIA INFO] %s begins..., channelid:%d videoCodec(width:%d height:%d pltype:%d plname:%s, startBitrate:%d, maxBitrate:%d, minBitrate:%d)",
                __FUNCTION__, channelid, videoCodec.width,videoCodec.height, videoCodec.plType,videoCodec.plName, videoCodec.startBitrate,videoCodec.maxBitrate, videoCodec.minBitrate);
 

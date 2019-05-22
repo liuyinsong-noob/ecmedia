@@ -879,7 +879,7 @@ void ViEEncoder::DeliverFrame(int id,
         return;
     }
 #endif
-#ifdef kVideoCodecH264HIGH
+#ifdef VIDEOCODEC_H264_HIGH
   if (vcm_.SendCodec() == yuntongxunwebrtc::kVideoCodecH264HIGH) {
     yuntongxunwebrtc::CodecSpecificInfo codec_specific_info;
     codec_specific_info.codecType = yuntongxunwebrtc::kVideoCodecH264;

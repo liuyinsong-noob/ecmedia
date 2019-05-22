@@ -67,8 +67,8 @@ const float kPacketLossRateFac = 1.0f;
 //    1500   // FULLHD
 //};
     const uint16_t kMaxRateQm[12] = {
-        70,  //BASIC        160  *  90
-        160, //HBASIC       320  *  180
+        90,  //BASIC        160  *  90
+        180, //HBASIC       320  *  180
         280, //HVGA         480  *  270
         400, //VGA          640  *  360
         550, //FTFULLHD     800  *  450

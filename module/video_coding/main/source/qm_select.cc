@@ -133,7 +133,7 @@ void VCMQmMethod::ComputeSpatial() {
     estimateRate = kNormalTargetBitrate[image_type];
     switch (image_type) {
       case kBASIC:        //BASIC        160*90
-        multiplier_factor = 5.0f;
+        multiplier_factor = 6.1f;
         //minBitrate = kNormalTargetBitrate[kBASIC] * minScale;
         break;
       case kDBASIC:       //HBASIC       320*180
