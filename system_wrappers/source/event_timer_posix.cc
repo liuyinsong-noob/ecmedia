@@ -78,8 +78,10 @@ EventTypeWrapper EventTimerPosix::Wait(unsigned long timeout_ms) {
   if (!event_set_) {
     if (WEBRTC_EVENT_INFINITE != timeout_ms) {
       timespec end_at;
-//#if !defined(WEBRTC_MAC)
-#if !defined(WEBRTC_MAC) && !defined(WEBRTC_IOS)
+
+#if !(defined(WEBRTC_MAC) || defined(WEBRTC_IOS)) && \
+    !defined(WEBRTC_ANDROID) ||                     \
+      defined(HAVE_PTHREAD_COND_TIMEDWAIT_MONOTONIC)
       clock_gettime(CLOCK_MONOTONIC, &end_at);
 #else
       timeval value;
