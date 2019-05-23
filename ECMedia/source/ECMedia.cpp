@@ -6102,9 +6102,9 @@ int ECMedia_releaseAll(){
     return -1;
 }
 
-#ifdef VIDEO_ENABLED
 bool ECMedia_StartDesktopShareConnect(DesktopShareConnectData* pConnectData)
 {
+#ifdef VIDEO_ENABLED
 	if (!pConnectData)
 	{
 		return false;
@@ -6247,10 +6247,14 @@ bool ECMedia_StartDesktopShareConnect(DesktopShareConnectData* pConnectData)
 	}
 
 	return bRet;
+
+#endif
+	return -1;
 }
 
 bool ECMedia_StopDesktopShareConnect(DesktopShareConnectData* pConnectData)
 {
+#ifdef VIDEO_ENABLED
 	if (!pConnectData || (pConnectData->nDesktopShareChannelId < 0 && pConnectData->nDesktopShareCaptureId < 0))
 	{
 		return false;
@@ -6268,6 +6272,409 @@ bool ECMedia_StopDesktopShareConnect(DesktopShareConnectData* pConnectData)
 	bRet |= ECMedia_delete_channel(pConnectData->nDesktopShareChannelId, true) == 0;
 
 	return bRet;
-}
 #endif
+	return -1;
+}
 
+int ECMedia_set_local_offline_video_window(int deviceid, void *video_window)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins... deviceid:%d video_window:%p ", __FUNCTION__, deviceid, video_window);
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+	ViECapture *capture = ViECapture::GetInterface(m_vie);
+	if (capture) {
+		int ret = 0;
+#ifdef WIN32
+		ViERender* render = ViERender::GetInterface(m_vie);
+		if (render)
+		{
+			ret = render->AddRenderer(deviceid, video_window, 1, 0, 0, 1, 1, NULL);
+			if (ret) {
+				render->Release();
+				PrintConsole("[ECMEDIA ERROR] %s failed to add renderer", __FUNCTION__);
+				PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
+				return ret;
+			}
+			ret = render->StartRender(deviceid);
+			render->Release();
+			if (ret != 0) {
+				PrintConsole("[ECMEDIA ERROR] %s failed to start render", __FUNCTION__);
+			}
+		}
+		else
+		{
+			return -1;
+			PrintConsole("[ECMEDIA ERROR] %s render is null. ", __FUNCTION__);
+		}
+#else
+		ret = capture->SetLocalVideoWindow(deviceid, video_window);
+		capture->Release();
+#endif
+		PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
+		return ret;
+	}
+	else
+	{
+		PrintConsole("[ECMEDIA ERROR] %s failed to get ViECapture", __FUNCTION__);
+		PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+		return -99;
+	}
+}
+
+bool ECMedia_GetVideoCodec(int nCodecPayloadType, yuntongxunwebrtc::VideoCodec *pCodecParams = nullptr, CameraCapability *pCapability = nullptr)
+{
+	string strCodecName;
+	CameraCapability capability;
+	if (!pCapability)
+	{
+		capability.width = 640;
+		capability.height = 480;
+		capability.maxfps = 15;
+	}
+	else
+	{
+		memcpy(&capability, pCapability, sizeof(capability));
+	}
+
+	switch (nCodecPayloadType)
+	{
+	case 120:
+		strCodecName = "VP8";
+		break;
+	case 96:
+		strCodecName = "H264";
+		break;
+	default:
+		nCodecPayloadType = 96;
+		strCodecName = "H264";
+		break;
+	}
+
+	bool codec_found = false;
+	yuntongxunwebrtc::VideoCodec codec_params;
+
+	int num_codec = ECMedia_num_of_supported_codecs_video();
+	if (num_codec <= 0)
+	{
+		return false;
+	}
+	yuntongxunwebrtc::VideoCodec *codecArray = new yuntongxunwebrtc::VideoCodec[num_codec];
+	if (ECMedia_get_supported_codecs_video(codecArray) != 0)
+	{
+		return false;
+	}
+	for (int i = 0; i < num_codec; i++) {
+		codec_params = codecArray[i];
+		if (strcmpi(codec_params.plName, strCodecName.c_str()) == 0)
+		{
+			codec_found = true;
+			codec_params.plType = nCodecPayloadType;
+			break;
+		}
+	}
+	delete[]codecArray;
+
+	codec_params.startBitrate = capability.width * capability.height * capability.maxfps * 3 * 0.07 / 1000;
+	codec_params.maxBitrate = codec_params.startBitrate > 0 ? codec_params.startBitrate : 2500;
+	codec_params.minBitrate = codec_params.minBitrate > 0 ? codec_params.minBitrate : 50;
+
+	codec_params.width = capability.width;
+	codec_params.height = capability.height;
+	codec_params.maxFramerate = capability.maxfps;
+	if (pCodecParams)
+	{
+		memcpy(pCodecParams, &codec_params, sizeof(codec_params));
+	}
+	return true;
+}
+
+bool ECMedia_StopOfflineVideoConnect(int nChannelId, int nDeviceId)
+{
+	if (nChannelId < 0 || (nChannelId < 0 && nDeviceId < 0))
+	{
+		return false;
+	}
+
+	bool bRet = false;
+	if (nDeviceId > 0)
+	{
+		bRet |= ECMedia_stop_render(nChannelId, nDeviceId) == 0;
+		bRet |= ECMedia_stop_capture(nDeviceId) == 0;
+	}
+	bRet |= ECMedia_video_stop_receive(nChannelId) == 0;
+	bRet |= ECMedia_video_stop_send(nChannelId) == 0;
+	bRet |= ECMedia_delete_channel(nChannelId, true) == 0;
+
+	return bRet;
+}
+
+bool ECMedia_StartOfflineVideoConnect(int *pChannelId, int *pCaptureId, void* pLocalWindow, int nCodecPayloadType, yuntongxunwebrtc::VideoCodec *pCodecParams)
+{
+	if (!pChannelId || !pCaptureId)
+	{
+		return false;
+	}
+
+	int nCount = 0;
+	int nLocalVideoPort = 6778;
+	int nRemoteVideoPort = 8778;
+	bool bRet = true, bOk = false;
+	do
+	{
+		bRet |= ECMedia_audio_create_channel(*pChannelId, true) == 0;
+		if (!bRet) break;
+		if ((nCount = ECMdeia_num_of_capture_devices()) > 0)
+		{
+			int nIndex = 0;
+			while (nIndex < nCount)
+			{
+				char name[256] = { 0 }, id[256] = { 0 };
+				if (ECMedia_get_capture_device(nIndex, name, sizeof(name), id, sizeof(id)) >= 0)
+				{
+					bOk |= ECMedia_allocate_capture_device(id, strlen(id), *pCaptureId) == 0;
+					bOk |= ECmedia_enable_deflickering(*pCaptureId, true) == 0;
+					bOk |= ECmedia_enable_EnableBrightnessAlarm(*pCaptureId, true) == 0;
+					bOk |= ECMedia_set_CaptureDeviceID(*pCaptureId) == 0;
+					bOk |= ECMedia_connect_capture_device(*pCaptureId, *pChannelId) == 0;
+				}
+				bRet |= bOk;
+				if (bRet) break;
+				nIndex++;
+			}
+			if (nIndex == nCount && !bRet)
+			{
+				break;
+			}
+		}
+		else
+		{
+			PrintConsole("[ECMEDIA ERROR] %s no found capture devices.", __FUNCTION__);
+			bRet != false;
+			break;
+		}
+
+		if (pLocalWindow)
+		{
+			bRet |= ECMedia_set_local_offline_video_window(*pCaptureId, pLocalWindow) == 0;
+		}
+		if (!bRet) break;
+
+		CameraCapability capability;
+		capability.width = 640;
+		capability.height = 480;
+		capability.maxfps = 15;
+
+		yuntongxunwebrtc::VideoCodec codec_params;
+		bRet |= ECMedia_GetVideoCodec(nCodecPayloadType, &codec_params, &capability);
+		if (!bRet) break;
+		bRet |= ECMedia_set_send_codec_video(*pChannelId, codec_params) == 0;
+		if (!bRet) break;
+		bRet |= ECMedia_set_receive_codec_video(*pChannelId, codec_params) == 0;
+		if (!bRet) break;
+		bRet |= ECMedia_start_capture(*pCaptureId, capability) == 0;
+		if (!bRet) break;
+		for (int count = 10, bOk = 1; !bOk && count >= 0; count--)
+		{
+			bOk = ECMedia_video_set_local_receiver(*pChannelId, nLocalVideoPort, nLocalVideoPort) == 0;
+			nLocalVideoPort += bOk ? 0 : 1;
+		}
+		bRet |= bOk;
+		if (!bRet) break;
+		for (int count = 10, bOk = 1; !bOk && count >= 0; count--)
+		{
+			bOk = ECMedia_video_set_send_destination(*pChannelId, "127.0.0.1", nRemoteVideoPort, "127.0.0.1", nRemoteVideoPort) == 0;
+			nRemoteVideoPort += bOk ? 0 : 1;
+		}
+		bRet |= bOk;
+		if (!bRet) break;
+		bRet |= ECMedia_video_set_local_ssrc(*pChannelId, nLocalVideoPort) == 0;
+		if (!bRet) break;
+		bRet |= ECMedia_video_start_send(*pChannelId) == 0;
+		if (!bRet) break;
+		bRet |= ECMedia_video_start_receive(*pChannelId) == 0;
+		if (!bRet) break;
+		if (pCodecParams)
+		{
+			memcpy(pCodecParams, &codec_params, sizeof(codec_params));
+		}
+	} while (false);
+
+	if (!bRet)
+	{
+		ECMedia_StopOfflineVideoConnect(*pChannelId, *pCaptureId);
+	}
+
+	return bRet;
+}
+
+bool ECMedia_StopOfflineAudioConnect(int nChannelId)
+{
+	if (nChannelId < 0)
+	{
+		return -1;
+	}
+
+	bool bRet = false;
+	bRet |= ECMedia_DeRegister_voice_engine_observer() == 0;
+	bRet |= ECMedia_audio_stop_record() == 0;
+	bRet |= ECMedia_audio_stop_playout(nChannelId) == 0;
+	bRet |= ECMedia_audio_stop_receive(nChannelId) == 0;
+	bRet |= ECMedia_audio_stop_send(nChannelId) == 0;
+	bRet |= ECMedia_delete_channel(nChannelId, false) == 0;
+
+	return bRet;
+}
+
+bool ECMedia_StartOfflineAudioConnect(int *pChannelId)
+{
+	if (!pChannelId)
+	{
+		return false;
+	}
+
+	bool bRet = false;
+	int nLocalAudioPort = 5678;
+	int nRemoteAudioPort = 6789;
+
+	do
+	{
+		bRet |= ECMedia_audio_create_channel(*pChannelId, false) == 0;
+		if (!bRet) break;
+		bRet |= ECMedia_set_local_receiver(*pChannelId, nLocalAudioPort, nLocalAudioPort) == 0;
+		bRet |= ECMedia_audio_start_playout(*pChannelId) == 0;
+		ECMedia_audio_set_send_destination(*pChannelId, nRemoteAudioPort, "127.0.0.1", 0, nRemoteAudioPort, "127.0.0.1");
+		bRet |= ECMedia_audio_set_ssrc(*pChannelId, nLocalAudioPort, nRemoteAudioPort) == 0;
+		bRet |= ECMedia_audio_start_send(*pChannelId) == 0;
+		bRet |= ECMedia_audio_start_receive(*pChannelId) == 0;
+		bRet |= ECMedia_audio_start_record() == 0;
+	} while (false);
+
+	if (!bRet && *pChannelId >= 0)
+	{
+		ECMedia_StopOfflineAudioConnect(*pChannelId);
+	}
+
+	return bRet;
+}
+
+bool ECMedia_Start_record_offline_video(int nVideoChannelId, int nCodecPayloadType, const char* pFilename, yuntongxunwebrtc::VideoCodec *pCodecParams = nullptr)
+{
+	CodecInst audio_codec;
+	int num_codec = ECMedia_num_of_supported_codecs_audio();
+	if (num_codec > 0)
+	{
+		yuntongxunwebrtc::CodecInst *audioCodecArray = new yuntongxunwebrtc::CodecInst[num_codec];
+		if (m_vie && ECMedia_get_supported_codecs_audio(audioCodecArray) == 0)
+		{
+			for (int i = 0; i < num_codec; i++)
+			{
+				audio_codec = audioCodecArray[i];
+				if (strcmpi(audio_codec.plname, "PCMU") == 0)
+					//if (audio_codec.pltype == 110)
+				{
+					break;
+				}
+			}
+			delete[]audioCodecArray;
+
+			yuntongxunwebrtc::VideoCodec codec_params;
+			if (pCodecParams)
+			{
+				memcpy(&codec_params, pCodecParams, sizeof(codec_params));
+			}
+			else
+			{
+				if (!ECMedia_GetVideoCodec(nCodecPayloadType, &codec_params))
+				{
+					return false;
+				}
+			}
+
+			ViEFile *file_record = ViEFile::GetInterface(m_vie);
+			if (file_record)
+			{
+				memcpy(codec_params.plName, "I420", kPayloadNameSize);
+				if (file_record->StartRecordOutgoingVideo(nVideoChannelId, pFilename, AudioSource::MICROPHONE, audio_codec, codec_params) == 0)
+				{
+					file_record->Release();
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
+
+bool ECMedia_Stop_record_offline_video(int nVideoChannelId)
+{
+	if (m_vie)
+	{
+		ViEFile *file_record = ViEFile::GetInterface(m_vie);
+		if (file_record)
+		{
+			if (file_record->StopRecordOutgoingVideo(nVideoChannelId) == 0)
+			{
+				file_record->Release();
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool ECMedia_StartStoreLocalOfflineMediaToFile(int *pAudioChannelId, int *pVideoChannelId, int *pDeviceCaptureId, void *pLocalWindow, int nCodecPayloadType, const char* pFilename)
+{
+#ifdef VIDEO_ENABLED
+	yuntongxunwebrtc::VideoCodec videoCodec;
+	if (ECMedia_StartOfflineAudioConnect(pAudioChannelId) && ECMedia_StartOfflineVideoConnect(pVideoChannelId, pDeviceCaptureId, pLocalWindow, nCodecPayloadType, &videoCodec))
+	{
+		if (ECMedia_start_record_local_video(*pAudioChannelId, *pVideoChannelId, pFilename) == 0)
+		{
+			return true;
+		}
+		else
+		{
+			ECMedia_StopOfflineAudioConnect(*pAudioChannelId);
+			ECMedia_StopOfflineVideoConnect(*pVideoChannelId, *pDeviceCaptureId);
+		}
+	}
+#endif
+	return false;
+}
+
+bool ECMedia_StopStoreLocalOfflineMediaToFile(int nAudioChannelId, int nVideoChannelId, int nDeviceId)
+{
+#ifdef VIDEO_ENABLED
+	bool bOk = true;
+	bOk |= ECMedia_stop_record_local_video(nAudioChannelId, nVideoChannelId) == 0;
+	bOk |= ECMedia_StopOfflineAudioConnect(nAudioChannelId);
+	bOk |= ECMedia_StopOfflineVideoConnect(nVideoChannelId, nDeviceId);
+	return bOk;
+#else
+	return false;
+#endif
+}
+
+int ECMedia_SetLocalRenderWatermark(int nVideoDeviceId, bool bRenderWatermark)
+{
+	PrintConsole("[ECMEDIA INFO] %s begins...", __FUNCTION__);
+//#ifdef VIDEO_ENABLED
+//	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+//
+//	ViECapture *caputure = ViECapture::GetInterface(m_vie);
+//	if (caputure) {
+//		int ret = caputure->SetLocalRenderWatermark(nVideoDeviceId, bRenderWatermark);
+//		caputure->Release();
+//		PrintConsole("[ECMEDIA INFO] %s ends with video channelid %d, jbRenderWatermark: %d...", __FUNCTION__, nVideoDeviceId, bRenderWatermark);
+//		return ret;
+//	}
+//	else {
+//		PrintConsole("[ECMEDIA ERROR] %s failed to get ViEBase", __FUNCTION__);
+//		PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+//		return -99;
+//	}
+//
+//	return 0;
+//#endif
+	PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
+	return -99;
+}

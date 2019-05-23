@@ -880,6 +880,25 @@ typedef struct DesktopShareConnectData_tag
 ECMEDIA_API bool ECMedia_StartDesktopShareConnect(DesktopShareConnectData* pConnectData);
 ECMEDIA_API bool ECMedia_StopDesktopShareConnect(DesktopShareConnectData* pConnectData);
 
+ECMEDIA_API bool ECMedia_StartStoreLocalOfflineMediaToFile(int *pAudioChannelId, int *pVideoChannelId, int *pDeviceCaptureId, void *pLocalWindow, int nCodecPayloadType, const char* pFilename);
+ECMEDIA_API bool ECMedia_StopStoreLocalOfflineMediaToFile(int nAudioChannelId, int nVideoChannelId, int nDeviceId);
+/**
+* 设置水印，图片或者文本
+* @param deviceid deviceid
+* @param watermark 构造水印参数
+* @param width height capture的图像高和宽
+* @return  uccess 0, errno -99;
+*/
+ECMEDIA_API int ECMedia_set_watermark(int deviceid, yuntongxunwebrtc::WaterMark watermark, int width, int height);
+
+/**
+* 设置本地视频输出是否有水印
+* @param deviceid deviceid
+* @param bRenderWatermark true有，false没有(默认是没有的)
+* @return  uccess 0, errno -99;
+*/
+ECMEDIA_API int ECMedia_SetLocalRenderWatermark(int nVideoDeviceId, bool bRenderWatermark);
+
 #ifdef __cplusplus
 }
 #endif
