@@ -320,6 +320,7 @@ class OveruseFrameDetector::CaptureQueueDelay {
 OveruseFrameDetector::OveruseFrameDetector(Clock* clock)
     : crit_(CriticalSectionWrapper::CreateCriticalSection()),
       observer_(NULL),
+      init_num_(0),
       clock_(clock),
       next_process_time_(clock_->TimeInMilliseconds()),
       num_process_times_(0),
@@ -418,8 +419,9 @@ void OveruseFrameDetector::FrameCaptured(int width,
                                          int64_t capture_time_ms) {
   CriticalSectionScoped cs(crit_.get());
 
-  if (FrameSizeChanged(width*height) && observer_)
+  if ((FrameSizeChanged(width*height) || 0 == init_num_) && observer_)
   {
+    init_num_ = 1;
 	  observer_->FrameSizeChanged(width, height);
   } 
 

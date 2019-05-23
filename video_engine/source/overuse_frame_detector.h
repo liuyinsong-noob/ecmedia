@@ -123,6 +123,7 @@ class OveruseFrameDetector : public Module {
 
   // Observer getting overuse reports.
   CpuOveruseObserver* observer_ GUARDED_BY(crit_);
+  uint8_t init_num_;
 
   CpuOveruseOptions options_ GUARDED_BY(crit_);
 
