@@ -6279,6 +6279,7 @@ bool ECMedia_StopDesktopShareConnect(DesktopShareConnectData* pConnectData)
 int ECMedia_set_local_offline_video_window(int deviceid, void *video_window)
 {
 	PrintConsole("[ECMEDIA INFO] %s begins... deviceid:%d video_window:%p ", __FUNCTION__, deviceid, video_window);
+#ifdef VIDEO_ENABLED
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViECapture *capture = ViECapture::GetInterface(m_vie);
 	if (capture) {
@@ -6318,10 +6319,13 @@ int ECMedia_set_local_offline_video_window(int deviceid, void *video_window)
 		PrintConsole("[ECMEDIA INFO] %s ends...", __FUNCTION__);
 		return -99;
 	}
+#endif
+	return -1;
 }
 
 bool ECMedia_GetVideoCodec(int nCodecPayloadType, yuntongxunwebrtc::VideoCodec *pCodecParams = nullptr, CameraCapability *pCapability = nullptr)
 {
+#ifdef VIDEO_ENABLED
 	string strCodecName;
 	CameraCapability capability;
 	if (!pCapability)
@@ -6385,10 +6389,13 @@ bool ECMedia_GetVideoCodec(int nCodecPayloadType, yuntongxunwebrtc::VideoCodec *
 		memcpy(pCodecParams, &codec_params, sizeof(codec_params));
 	}
 	return true;
+#endif
+	return false;
 }
 
 bool ECMedia_StopOfflineVideoConnect(int nChannelId, int nDeviceId)
 {
+#ifdef VIDEO_ENABLED
 	if (nChannelId < 0 || (nChannelId < 0 && nDeviceId < 0))
 	{
 		return false;
@@ -6405,10 +6412,13 @@ bool ECMedia_StopOfflineVideoConnect(int nChannelId, int nDeviceId)
 	bRet |= ECMedia_delete_channel(nChannelId, true) == 0;
 
 	return bRet;
+#endif
+	return false;
 }
 
 bool ECMedia_StartOfflineVideoConnect(int *pChannelId, int *pCaptureId, void* pLocalWindow, int nCodecPayloadType, yuntongxunwebrtc::VideoCodec *pCodecParams)
 {
+#ifdef VIDEO_ENABLED
 	if (!pChannelId || !pCaptureId)
 	{
 		return false;
@@ -6504,10 +6514,13 @@ bool ECMedia_StartOfflineVideoConnect(int *pChannelId, int *pCaptureId, void* pL
 	}
 
 	return bRet;
+#endif
+	return false;
 }
 
 bool ECMedia_StopOfflineAudioConnect(int nChannelId)
 {
+#ifdef VIDEO_ENABLED
 	if (nChannelId < 0)
 	{
 		return -1;
@@ -6522,10 +6535,13 @@ bool ECMedia_StopOfflineAudioConnect(int nChannelId)
 	bRet |= ECMedia_delete_channel(nChannelId, false) == 0;
 
 	return bRet;
+#endif 
+	return -1;
 }
 
 bool ECMedia_StartOfflineAudioConnect(int *pChannelId)
 {
+#ifdef VIDEO_ENABLED
 	if (!pChannelId)
 	{
 		return false;
@@ -6554,10 +6570,13 @@ bool ECMedia_StartOfflineAudioConnect(int *pChannelId)
 	}
 
 	return bRet;
+#endif 
+	return false;
 }
 
 bool ECMedia_Start_record_offline_video(int nVideoChannelId, int nCodecPayloadType, const char* pFilename, yuntongxunwebrtc::VideoCodec *pCodecParams = nullptr)
 {
+#ifdef VIDEO_ENABLED
 	CodecInst audio_codec;
 	int num_codec = ECMedia_num_of_supported_codecs_audio();
 	if (num_codec > 0)
@@ -6601,11 +6620,13 @@ bool ECMedia_Start_record_offline_video(int nVideoChannelId, int nCodecPayloadTy
 			}
 		}
 	}
+#endif
 	return false;
 }
 
 bool ECMedia_Stop_record_offline_video(int nVideoChannelId)
 {
+#ifdef VIDEO_ENABLED
 	if (m_vie)
 	{
 		ViEFile *file_record = ViEFile::GetInterface(m_vie);
@@ -6618,6 +6639,7 @@ bool ECMedia_Stop_record_offline_video(int nVideoChannelId)
 			}
 		}
 	}
+#endif
 	return false;
 }
 
