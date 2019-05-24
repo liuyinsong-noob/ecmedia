@@ -97,7 +97,8 @@ int H264Encoder::SetRates(uint32_t new_bitrate_kbit, uint32_t new_framerate,
     if(new_framerate < 5) {
         new_framerate = 5;
     }
-    
+    codec_.startBitrate = new_bitrate_kbit;
+    codec_.maxFramerate = new_framerate;
     
 
     if(encoder_) {
@@ -105,7 +106,7 @@ int H264Encoder::SetRates(uint32_t new_bitrate_kbit, uint32_t new_framerate,
         x264_encoder_parameters((x264_t*)encoder_, &curparms);
         curparms.i_fps_num = new_framerate;
         curparms.i_fps_den = 1;
-        new_bitrate_kbit = new_bitrate_kbit*25/new_framerate;
+        //new_bitrate_kbit = new_bitrate_kbit*25/new_framerate;
         curparms.rc.i_bitrate = new_bitrate_kbit;
         curparms.rc.i_vbv_max_bitrate = new_bitrate_kbit;
         curparms.rc.i_vbv_buffer_size = new_bitrate_kbit/new_framerate;
@@ -288,10 +289,10 @@ void H264Encoder::SetX264EncodeParameters(x264_param_t &params, VideoCodecMode m
 	p_params->rc.i_vbv_max_bitrate = codec_.startBitrate;
 	p_params->rc.i_vbv_buffer_size = codec_.startBitrate;
 #else
-    codec_.startBitrate = codec_.startBitrate*25/codec_.maxFramerate;
-    if (codec_.startBitrate > codec_.maxBitrate) {
-        codec_.startBitrate = codec_.maxBitrate;
-    };
+//    codec_.startBitrate = codec_.startBitrate*25/codec_.maxFramerate;
+//    if (codec_.startBitrate > codec_.maxBitrate) {
+//        codec_.startBitrate = codec_.maxBitrate;
+//    };
     //p_params->i_level_idc = 40;  //编码复杂度
     p_params->i_width=codec_.width;
     p_params->i_height=codec_.height;

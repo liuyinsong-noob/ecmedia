@@ -6368,7 +6368,7 @@ bool ECMedia_GetVideoCodec(int nCodecPayloadType, yuntongxunwebrtc::VideoCodec *
 	}
 	for (int i = 0; i < num_codec; i++) {
 		codec_params = codecArray[i];
-		if (strcmpi(codec_params.plName, strCodecName.c_str()) == 0)
+		if (strcmp(codec_params.plName, strCodecName.c_str()) == 0)
 		{
 			codec_found = true;
 			codec_params.plType = nCodecPayloadType;
@@ -6581,7 +6581,7 @@ bool ECMedia_Start_record_offline_video(int nVideoChannelId, int nCodecPayloadTy
 			for (int i = 0; i < num_codec; i++)
 			{
 				audio_codec = audioCodecArray[i];
-				if (strcmpi(audio_codec.plname, "PCMU") == 0)
+				if (strcmp(audio_codec.plname, "PCMU") == 0)
 					//if (audio_codec.pltype == 110)
 				{
 					break;
