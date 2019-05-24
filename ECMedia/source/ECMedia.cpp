@@ -6520,7 +6520,6 @@ bool ECMedia_StartOfflineVideoConnect(int *pChannelId, int *pCaptureId, void* pL
 
 bool ECMedia_StopOfflineAudioConnect(int nChannelId)
 {
-#ifdef VIDEO_ENABLED
 	if (nChannelId < 0)
 	{
 		return -1;
@@ -6535,13 +6534,10 @@ bool ECMedia_StopOfflineAudioConnect(int nChannelId)
 	bRet |= ECMedia_delete_channel(nChannelId, false) == 0;
 
 	return bRet;
-#endif 
-	return -1;
 }
 
 bool ECMedia_StartOfflineAudioConnect(int *pChannelId)
 {
-#ifdef VIDEO_ENABLED
 	if (!pChannelId)
 	{
 		return false;
@@ -6570,8 +6566,6 @@ bool ECMedia_StartOfflineAudioConnect(int *pChannelId)
 	}
 
 	return bRet;
-#endif 
-	return false;
 }
 
 bool ECMedia_Start_record_offline_video(int nVideoChannelId, int nCodecPayloadType, const char* pFilename, yuntongxunwebrtc::VideoCodec *pCodecParams = nullptr)
