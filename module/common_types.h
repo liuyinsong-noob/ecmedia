@@ -947,7 +947,7 @@ public:
 	SimulcastStream     simulcastStream[kMaxSimulcastStreams];
 
 	VideoCodecMode      mode;
-
+  bool                manualMode; //Use for auto/manual adapt frame/bitrate/resolution(1:manual)
 	// When using an external encoder/decoder this allows to pass
 	// extra options without requiring webrtc to be aware of them.
 	Config*  extra_options;
@@ -971,7 +971,7 @@ public:
 			maxFramerate == other.maxFramerate &&
 			qpMax == other.qpMax &&
 			numberOfSimulcastStreams == other.numberOfSimulcastStreams &&
-			mode == other.mode;
+			mode == other.mode && manualMode == other.manualMode;
 		if (ret && codecType == kVideoCodecVP8) {
 			ret &= (codecSpecific.VP8 == other.codecSpecific.VP8);
 		}

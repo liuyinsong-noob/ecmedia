@@ -78,8 +78,11 @@ int H264Encoder::SetRates(uint32_t new_bitrate_kbit, uint32_t new_framerate,
     if (new_framerate < 1) {
         return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
     }
-    codec_.minBitrate = minBitrate_kbit;
-    codec_.maxBitrate = maxBitrate_kbit;
+  
+    if (!GetManalMode()){
+      codec_.minBitrate = minBitrate_kbit;
+      codec_.maxBitrate = maxBitrate_kbit;
+    }
   
     // update bit rate
     if (codec_.maxBitrate > 0 && new_bitrate_kbit > codec_.maxBitrate) {
@@ -97,10 +100,15 @@ int H264Encoder::SetRates(uint32_t new_bitrate_kbit, uint32_t new_framerate,
     if(new_framerate < 5) {
         new_framerate = 5;
     }
-    codec_.startBitrate = new_bitrate_kbit;
-    codec_.maxFramerate = new_framerate;
-    
 
+    if (GetManalMode()){
+      new_bitrate_kbit =codec_.startBitrate ;
+      new_framerate = codec_.maxFramerate ;
+    }else{
+      codec_.startBitrate = new_bitrate_kbit;
+      codec_.maxFramerate = new_framerate;
+    }
+  
     if(encoder_) {
         x264_param_t curparms;
         x264_encoder_parameters((x264_t*)encoder_, &curparms);
@@ -153,6 +161,8 @@ int H264Encoder::InitEncode(const VideoCodec* inst,
     // random start 16 bits is enough.
     picture_id_ = static_cast<uint16_t>(rand()) & 0x7FFF;
     inited_ = true;
+  
+    SetManualMode(inst->manualMode);
     return WEBRTC_VIDEO_CODEC_OK;
 }
     

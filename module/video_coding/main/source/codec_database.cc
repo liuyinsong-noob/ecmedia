@@ -369,9 +369,10 @@ bool VCMCodecDataBase::SetSendCodec(
   // shouldn't fail because the codec doesn't support changing the periodic key
   // frame setting.
   ptr_encoder_->SetPeriodicKeyFrames(periodic_key_frames_);
-
-  pending_encoder_reset_ = false;
-
+  
+  if (!send_codec->manualMode){
+   pending_encoder_reset_ = false;
+  }
   return true;
 }
 

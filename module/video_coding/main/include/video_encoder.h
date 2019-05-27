@@ -50,6 +50,7 @@ class VideoEncoder {
   static VideoCodecH264 GetDefaultH264Settings();
   static VideoCodecH264High GetH264HighSettings();
 
+  VideoEncoder():manual_mode_(false){}
   virtual ~VideoEncoder() {}
 
   // Initialize the encoder with the information from the codecSettings
@@ -126,6 +127,10 @@ class VideoEncoder {
   virtual int32_t CodecConfigParameters(uint8_t* /*buffer*/, int32_t /*size*/) {
     return -1;
   }
+  bool GetManalMode(){ return manual_mode_; }
+  void SetManualMode(bool enable){ manual_mode_ = enable; };
+private:
+  bool manual_mode_; //Use for manual set frame/bitrate/resolution
 };
 
 }  // namespace webrtc

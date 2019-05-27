@@ -459,7 +459,12 @@ int32_t ViEEncoder::SetEncoder(const yuntongxunwebrtc::VideoCodec& video_codec) 
 			<< video_codec.numberOfSimulcastStreams;
 		return -1;
 	}
-
+  
+  if (video_codec.manualMode){
+    vcm_.RegisterVideoQMCallback(NULL);
+  }else{
+    vcm_.RegisterVideoQMCallback(qm_callback_);
+  }
   // Setting target width and height for VPM.
   if (vpm_.SetTargetResolution(video_codec.width, video_codec.height,
                                video_codec.maxFramerate) != VPM_OK) {

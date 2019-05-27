@@ -3724,29 +3724,33 @@ int ECMedia_get_receive_playloadType_audio(int channelid, CodecInst& audioCodec)
 static void ECMedia_reset_send_codecinfo(VideoCodec& videoCodec)
 {
 	unsigned short scale = 0;
+  
+  if (!videoCodec.manualMode){
 #ifdef WIN32 //Updated by zhangn 20190326
-	//only support (160*n,90*n) [0<n<=12]
-	if (0 != videoCodec.width % 160 || 0 != videoCodec.height % 90) {
-		scale = videoCodec.width / 160;
-		videoCodec.width = scale * 160;
-		videoCodec.height = scale * 90;
-	}
+    //only support (160*n,90*n) [0<n<=12]
+    scale = videoCodec.width / 160;
+    if (0 != videoCodec.width % 160 || 0 != videoCodec.height % 90) {
+      videoCodec.width = scale * 160;
+      videoCodec.height = scale * 90;
+    }
 #else
-	if (videoCodec.height > videoCodec.width) {
-		if (0 != videoCodec.height % 160 || 0 != videoCodec.width % 90) {
-			scale = videoCodec.height / 160;
-			videoCodec.width = scale * 90;
-			videoCodec.height = scale * 160;
-		}
-	}
-	else {
-		if (0 != videoCodec.width % 160 || 0 != videoCodec.height % 90) {
-			scale = videoCodec.width / 160;
-			videoCodec.width = scale * 160;
-			videoCodec.height = scale * 90;
-		}
-	}
+    if (videoCodec.height > videoCodec.width) {
+      scale = videoCodec.height / 160;
+      if (0 != videoCodec.height % 160 || 0 != videoCodec.width % 90) {
+        videoCodec.width = scale * 90;
+        videoCodec.height = scale * 160;
+      }
+    }
+    else {
+      scale = videoCodec.width / 160;
+      if (0 != videoCodec.width % 160 || 0 != videoCodec.height % 90) {
+        videoCodec.width = scale * 160;
+        videoCodec.height = scale * 90;
+      }
+    }
 #endif
+  }
+  
 	if (videoCodec.width % 8)
 		videoCodec.width = (videoCodec.width / 8 + 1) * 8;
 
@@ -3756,26 +3760,29 @@ static void ECMedia_reset_send_codecinfo(VideoCodec& videoCodec)
 	if (videoCodec.codecType == kVideoCodecH264) {
 		videoCodec.codecType = kVideoCodecH264HIGH;
 	}
-	if (kVideoCodecH264HIGH == videoCodec.codecType) {
-		switch (scale)
-		{
-		case 4://360p
-			videoCodec.maxBitrate = 800;
-			videoCodec.minBitrate = 100;
-			videoCodec.startBitrate = 350;
-			break;
-		case 8://720p
-			videoCodec.maxBitrate = 1200;
-			videoCodec.minBitrate = 100;
-			videoCodec.startBitrate = 600;
-			break;
-		// default:
-			// videoCodec.maxBitrate = 800;
-			// videoCodec.minBitrate = 100;
-			// videoCodec.startBitrate = 350;
-			// break;
-		}
-	}
+  
+  if (!videoCodec.manualMode){
+    if (kVideoCodecH264HIGH == videoCodec.codecType) {
+      switch (scale)
+      {
+        case 4://360p
+          videoCodec.maxBitrate = 800;
+          videoCodec.minBitrate = 100;
+          videoCodec.startBitrate = 350;
+          break;
+        case 8://720p
+          videoCodec.maxBitrate = 1500;
+          videoCodec.minBitrate = 100;
+          videoCodec.startBitrate = 900;
+          break;
+        default:
+          videoCodec.maxBitrate = 1200;
+          videoCodec.minBitrate = 100;
+          videoCodec.startBitrate = 500;
+        break;
+      }
+    }
+  }
 }
 int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
 {
