@@ -348,6 +348,7 @@ bool StatsCollector::ProcessStatsCollector()
 {
 	updateEvent_->Wait(100);
 	const int64_t now = clock_->TimeInMilliseconds();
+    // 1000 ms
 	if (now > last_time_update_simplifiedStats_ + kSimplifiedStatsUpdateIntervalMs)
 	{
 		CriticalSectionScoped lock(stream_crit_.get());
@@ -355,13 +356,15 @@ bool StatsCollector::ProcessStatsCollector()
 		UpdateStats(false);
 		//LogToFile(false);
 	}
-	if (now > last_time_update_fullStats_ + kFullStatsUpdateIntervalMs)
-	{
-		CriticalSectionScoped lock(stream_crit_.get());
-		last_time_update_fullStats_ = now;
-		UpdateStats(true);
-		//LogToFile(true);
-	}
+    
+    // 5000 ms
+    if (now > last_time_update_fullStats_ + kFullStatsUpdateIntervalMs)
+    {
+        CriticalSectionScoped lock(stream_crit_.get());
+        last_time_update_fullStats_ = now;
+        UpdateStats(true);
+        //LogToFile(true);
+    }
 	return true;
 }
 
@@ -560,36 +563,52 @@ void StatsCollector::VideoSenderInfo_AddBweStats(const VideoSendStream::Stats in
 void StatsCollector::VideoSenderInfo_AddNetworkStats(const VideoSendStream::Stats info,
 													StatsReport *report)
 {
-    // we assume only has 2 stream
+    uint32_t fraction_lost = 0;
+    uint32_t jitter = 0;
     for(auto ssrc : info.ssrc_streams) {
         auto it = info.substreams.find(ssrc);
-        if (it != info.substreams.end()) { // todo: 通过 ssrc 判断是普通流 还是共享流
-            report->AddInt32(StatsReport::kStatsValueNameLossFractionInPercent, it->second.rtcp_stats.fraction_lost*100/50);
-            report->AddInt32(StatsReport::kStatsValueNameJitterReceived, static_cast<int32_t>(it->second.rtcp_stats.jitter));
-            report->AddInt32(StatsReport::kStatsValueNameRttInMs, static_cast<int32_t>(info.call.rtt_ms));
-            report->AddInt32(StatsReport::kStatsValueNameBucketDelayInMs, info.call.pacer_delay_ms);
+        if (it != info.substreams.end()) {
+            fraction_lost += it->second.rtcp_stats.fraction_lost*100/50;
+            jitter  += static_cast<int32_t>(it->second.rtcp_stats.jitter);
+      
         } else {
             // todo simulcast
         }
     }
+
+    report->AddInt32(StatsReport::kStatsValueNameLossFractionInPercent, fraction_lost);
+    report->AddInt32(StatsReport::kStatsValueNameJitterReceived, jitter);
+    report->AddInt32(StatsReport::kStatsValueNameRttInMs, static_cast<int32_t>(info.call.rtt_ms));
+    report->AddInt32(StatsReport::kStatsValueNameBucketDelayInMs, static_cast<int32_t>(info.call.pacer_delay_ms));
 }
 
 void StatsCollector::VideoSenderInfo_AddRtpStats(const VideoSendStream::Stats info, StatsReport *report)
 {
     // we assume only has 2 stream
+    uint32_t tx_br = 0;
+    uint32_t tx_rbr = 0;
+    uint32_t tx_pr = 0;
+    uint32_t tx_rpr = 0;
+    
     for(auto ssrc : info.ssrc_streams) {
         auto it = info.substreams.find(ssrc);
-        if (it != info.substreams.end()) { // todo: 通过 ssrc 判断是普通流 还是共享流
-            report->AddInt32(StatsReport::kStatsValueNameTransmitBitrate, it->second.total_stats.bitrate_bps);
-            report->AddInt32(StatsReport::kStatsValueNameRetransmitBitrate, it->second.retransmit_stats.bitrate_bps);
-            report->AddInt32(StatsReport::kStatsValueNameTransmitPacketsRate, it->second.total_stats.packet_rate);
-            report->AddInt32(StatsReport::kStatsValueNameRetransmitPacketsRate, it->second.retransmit_stats.packet_rate);
-            report->AddInt32(StatsReport::kStatsValueNameFecBitrate, 0);
-            report->AddInt32(StatsReport::kStatsValueNameSsrc, ssrc);
+        if (it != info.substreams.end()) {
+            tx_br   += it->second.total_stats.bitrate_bps;
+            tx_rbr  += it->second.retransmit_stats.bitrate_bps;
+            tx_pr   += it->second.total_stats.packet_rate;
+            tx_rpr  += it->second.retransmit_stats.packet_rate;
         } else {
             // todo simulcast
         }
     }
+    
+    report->AddInt32(StatsReport::kStatsValueNameTransmitBitrate, tx_br);
+    report->AddInt32(StatsReport::kStatsValueNameRetransmitBitrate, tx_rbr);
+    report->AddInt32(StatsReport::kStatsValueNameTransmitPacketsRate, tx_pr);
+    report->AddInt32(StatsReport::kStatsValueNameRetransmitPacketsRate, tx_rpr);
+    
+    report->AddInt32(StatsReport::kStatsValueNameFecBitrate, 0);
+    report->AddInt32(StatsReport::kStatsValueNameSsrc, 0);
 }
 
 void StatsCollector::VideoSenderInfo_AddRtcpStats(const VideoSendStream::Stats info,

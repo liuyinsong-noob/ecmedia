@@ -247,9 +247,7 @@ void SendStatisticsProxy::SuspendChange(int video_channel, bool is_suspended) {
 VideoSendStream::Stats SendStatisticsProxy::GetStats(bool isAvg, int64_t& timestamp) {
 	CriticalSectionScoped lock(crit_.get());
 	timestamp = yuntongxunwebrtc::Time();
-	if (isAvg)
-	{
-		//TODO: first copy stats_, then copy stats_avg
+	if (isAvg) {
 		GenerateAvgStats();		
 		return stats_average_;
 	}
@@ -257,7 +255,7 @@ VideoSendStream::Stats SendStatisticsProxy::GetStats(bool isAvg, int64_t& timest
 		return  stats_;
 	}
 }
-
+ 
 void SendStatisticsProxy::GenerateAvgStats()
 {
     CriticalSectionScoped lock(crit_.get());
@@ -280,15 +278,13 @@ void SendStatisticsProxy::GenerateAvgStats()
 		std::map<uint32_t, RtcpBlocksCounter>::iterator it_rtcp = avg_rate_stats_.rtcp_blocks_map.find(ssrc);
 		std::map<uint32_t,BitrateStatsCounter>::iterator it_total = avg_rate_stats_.total_stats_map.find(ssrc);
 		std::map<uint32_t, BitrateStatsCounter>::iterator it_retransmit = avg_rate_stats_.total_stats_map.find(ssrc);
-		if (stream && it_total!= avg_rate_stats_.total_stats_map.end())
-		{
+		if (stream && it_total!= avg_rate_stats_.total_stats_map.end()) {
 			stream->total_stats.bitrate_bps = it_total->second.AvgBitbitRate();
 			stream->total_stats.packet_rate = it_total->second.AvgPacketRate();
 			stream->retransmit_stats.bitrate_bps = it_retransmit->second.AvgBitbitRate();
 			stream->retransmit_stats.packet_rate = it_retransmit->second.AvgPacketRate();
 		}
-		if (stream && it_rtcp != avg_rate_stats_.rtcp_blocks_map.end())
-		{
+		if (stream && it_rtcp != avg_rate_stats_.rtcp_blocks_map.end()) {
 			stream->rtcp_stats.fraction_lost = it_rtcp->second.AvgFractionLost();
 			stream->rtcp_stats.jitter = it_rtcp->second.AvgJitter();
 		}
@@ -414,6 +410,8 @@ void SendStatisticsProxy::Notify(uint32_t total_stats,
 	uint32_t ssrc) {
 #if 1
 	CriticalSectionScoped lock(crit_.get());
+    
+
 	VideoSendStream::StreamStats *stream = GetStreamStats(ssrc);
 	if (!stream)
 	{
