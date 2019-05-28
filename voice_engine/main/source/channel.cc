@@ -5310,8 +5310,8 @@ void
     {
         period_packets_length_ += rtpPacketLength;
         int64_t ts_diff = clock_->TimeInMilliseconds() - calculate_bitrate_ts_; // in ms
-        if(ts_diff > 100) {
-            incoming_bitrate_ = period_packets_length_*1000/ts_diff;
+        if(ts_diff >= 1000) {
+            incoming_bitrate_ = period_packets_length_ * (1000.0/ts_diff);
             calculate_bitrate_ts_ = clock_->TimeInMilliseconds();
             period_packets_length_ = 0;
         }

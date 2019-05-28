@@ -3079,6 +3079,8 @@ int ECMedia_allocate_capture_device(const char *id, size_t len, int& deviceid)
         capture->Release();
         if (ret != 0) {
             PrintConsole("[ECMEDIA ERROR] %s failed to allocate capture device", __FUNCTION__);
+        } else {
+            g_statsCollector->SetVideoCaptureDeviceId(deviceid);
         }
         PrintConsole("[ECMEDIA INFO] %s ends... with code: %d ", __FUNCTION__, ret);
         return ret;

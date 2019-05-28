@@ -178,6 +178,7 @@ bool StatsCollector::AddVideoSendStatsProxy(int channelid)
 		if (vie_capture)
 		{
 			vie_capture->RegisterObserver(capDevId_, *pStatsProxy);
+        vie_capture->RegisterObserver(camCaptureId_, *pStatsProxy);
 			vie_capture->Release();
 		}
 		
@@ -584,12 +585,13 @@ void StatsCollector::VideoSenderInfo_AddNetworkStats(const VideoSendStream::Stat
 
 void StatsCollector::VideoSenderInfo_AddRtpStats(const VideoSendStream::Stats info, StatsReport *report)
 {
-    // we assume only has 2 stream
     uint32_t tx_br = 0;
     uint32_t tx_rbr = 0;
     uint32_t tx_pr = 0;
     uint32_t tx_rpr = 0;
-    
+    uint32_t name_ssrc = 0;
+ 
+    // we assume only has 2 stream
     for(auto ssrc : info.ssrc_streams) {
         auto it = info.substreams.find(ssrc);
         if (it != info.substreams.end()) {
@@ -597,6 +599,7 @@ void StatsCollector::VideoSenderInfo_AddRtpStats(const VideoSendStream::Stats in
             tx_rbr  += it->second.retransmit_stats.bitrate_bps;
             tx_pr   += it->second.total_stats.packet_rate;
             tx_rpr  += it->second.retransmit_stats.packet_rate;
+            name_ssrc = ssrc;
         } else {
             // todo simulcast
         }
@@ -608,7 +611,7 @@ void StatsCollector::VideoSenderInfo_AddRtpStats(const VideoSendStream::Stats in
     report->AddInt32(StatsReport::kStatsValueNameRetransmitPacketsRate, tx_rpr);
     
     report->AddInt32(StatsReport::kStatsValueNameFecBitrate, 0);
-    report->AddInt32(StatsReport::kStatsValueNameSsrc, 0);
+    report->AddInt32(StatsReport::kStatsValueNameSsrc, name_ssrc);
 }
 
 void StatsCollector::VideoSenderInfo_AddRtcpStats(const VideoSendStream::Stats info,
@@ -1136,15 +1139,13 @@ void StatsCollector::VideoReciverInfo_AddRtpStats(const VideoReceiveStream::Stat
 
 void StatsCollector::VideoReciverInfo_AddRtcpStats(const VideoReceiveStream::Stats info, StatsReport *report)
 {
-//    printf("seansean nack_packets:%u, nack_requests:%u, unique_nack_requests:%u, fir_packets:%u, fraction_lost:%u, cumulative_lost:%u, jitter:%u\n", info.rtcp_packet_type_counts.nack_packets,info.rtcp_packet_type_counts.nack_requests, info.rtcp_packet_type_counts.unique_nack_requests, info.rtcp_packet_type_counts.fir_packets, info.rtcp_stats.fraction_lost, info.rtcp_stats.cumulative_lost, info.rtcp_stats.jitter);
 	const Int32ForAdd uint32[] = {
 		{ StatsReport::kStatsValueNameNacksSent, info.rtcp_packet_type_counts.nack_packets },
 		{ StatsReport::kStatsValueNameNacksRequestsSent, info.rtcp_packet_type_counts.nack_requests },
 		{ StatsReport::kStatsValueNameNacksUniqueRequestsSent, info.rtcp_packet_type_counts.unique_nack_requests },
 		{ StatsReport::kStatsValueNameFirsSent, info.rtcp_packet_type_counts.fir_packets },
-		//{ StatsReport::kStatsValueNameLossFractionInPercent, info.rtcp_stats.fraction_lost*100/255},
-    { StatsReport::kStatsValueNameLossFractionInPercent, info.rtcp_stats.real_fraction_lost*100/255},
-    { StatsReport::kStatsValueNamePacketsLost, info.rtcp_stats.cumulative_lost },
+        { StatsReport::kStatsValueNameLossFractionInPercent, info.rtcp_stats.real_fraction_lost*100/255},
+        { StatsReport::kStatsValueNamePacketsLost, info.rtcp_stats.cumulative_lost },
 		{ StatsReport::kStatsValueNameJitterReceived, info.rtcp_stats.jitter },
 	};
 	for (const auto& i : uint32)
@@ -1223,8 +1224,7 @@ void StatsCollector::AudioReceiverInfo_AddNetworkStats(const AudioReceiveStream:
 StatsReport* StatsCollector::FindReport(bool isFullStats, int reportType, int channel_id)
 {
 	int64_t id = (static_cast<int64_t>(reportType) << 32 | channel_id);
-	if (isFullStats)
-	{
+	if (isFullStats) {
 		StatsReport *report = reports_full_.Find(id);
 		return report;
 	}

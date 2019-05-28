@@ -173,7 +173,7 @@ void ReceiveStatisticsProxy::OnDecodedFrame() {
 
   CriticalSectionScoped lock(crit_.get());
   decode_fps_estimator_.Update(1, now);
-  //stats_.decoded_framerate = decode_fps_estimator_.Rate(now);
+  stats_.decoded_framerate = decode_fps_estimator_.Rate(now).value_or(0);
 #ifdef WIN32
   post_message(StatsReport::kStatsReportTypeVideoRecv,
   {

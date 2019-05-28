@@ -32,6 +32,7 @@ public:
 	void DeleteVideoRecvStatsProxy(int channelid);
     bool SetVideoEngin(VideoEngine* vie);
     void SetVideoCaptureDeviceId(int capDevId) { capDevId_ = capDevId; }
+    void SetVideoCaptureId(int capture_id) { camCaptureId_ = capture_id; }
 #endif
 	bool AddAudioSendStatsProxy(int channelid);
 	void DeleteAudioSendStatsProxy(int channelid);
@@ -127,6 +128,7 @@ private:
 	
 private:
 	int		capDevId_;
+    int     camCaptureId_ = -1;
 	ThreadWrapper *thread_;
 	char*		file_name_;
 	FileWrapper *trace_file_;
