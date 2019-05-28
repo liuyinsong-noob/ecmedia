@@ -39,6 +39,9 @@ class RemoteBitrateEstimator;
 class RemoteBitrateObserver;
 class RtcEventLog;
 class TransportFeedbackObserver;
+    
+typedef std::map<int64_t, uint32_t> GCCResults;
+typedef std::map<int64_t, uint32_t>::value_type GCCResult;
 
 class CongestionController : public NetworkControllerInterface, public CallStatsObserver, public Module {
  public:
@@ -167,6 +170,11 @@ class CongestionController : public NetworkControllerInterface, public CallStats
   bool HasNetworkParametersToReportChanged(uint32_t bitrate_bps,
                                            uint8_t fraction_loss,
                                            int64_t rtt);
+   
+    
+  uint32_t GetMaxGccResultInLast5Secods(uint32_t new_gcc_value);
+    static bool GCCResultComparator(GCCResult a, GCCResult b);
+    
   Clock* const clock_;
   Observer* const observer_;
   PacketRouter* const packet_router_;
@@ -186,6 +194,10 @@ class CongestionController : public NetworkControllerInterface, public CallStats
   uint8_t last_reported_fraction_loss_ GUARDED_BY(critsect_);
   int64_t last_reported_rtt_ GUARDED_BY(critsect_);
   NetworkState network_state_ GUARDED_BY(critsect_);
+   
+
+  GCCResults gcc_result_history_;
+  uint32_t max_gcc_result_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(CongestionController);
 };
